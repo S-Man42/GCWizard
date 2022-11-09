@@ -323,9 +323,9 @@ class _MainViewState extends State<MainView> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       var countAppOpened = Prefs.getInt(PREFERENCE_APP_COUNT_OPENED);
 
-      if (countAppOpened > 1 && Prefs.getString('changelog_displayed') != CHANGELOG.keys.first) {
+      if (countAppOpened > 1 && Prefs.getString(PREFERENCE_CHANGELOG_DISPLAYED) != CHANGELOG.keys.first) {
         _showWhatsNewDialog();
-        Prefs.setString('changelog_displayed', CHANGELOG.keys.first);
+        Prefs.setString(PREFERENCE_CHANGELOG_DISPLAYED, CHANGELOG.keys.first);
         return;
       }
 

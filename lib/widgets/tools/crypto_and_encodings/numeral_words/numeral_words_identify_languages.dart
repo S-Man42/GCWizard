@@ -19,7 +19,6 @@ class NumeralWordsIdentifyLanguagesState extends State<NumeralWordsIdentifyLangu
 
   var _currentDecodeInput = '';
   GCWSwitchPosition _currentDecodeMode = GCWSwitchPosition.left;
-  var _currentLanguage = NumeralWordsLanguage.ALL;
 
   @override
   void initState() {
@@ -68,7 +67,7 @@ class NumeralWordsIdentifyLanguagesState extends State<NumeralWordsIdentifyLangu
     String output = '';
     detailedOutput = decodeNumeralwords(
       input: removeAccents(_currentDecodeInput.toLowerCase()),
-      language: _currentLanguage,
+      language: NumeralWordsLanguage.ALL,
       decodeModeWholeWords: _currentDecodeMode == GCWSwitchPosition.left, );
     for (int i = 0; i < detailedOutput.length; i++) {
       if (detailedOutput[i].number != '') if (detailedOutput[i].number.startsWith('numeralwords_'))
@@ -77,47 +76,33 @@ class NumeralWordsIdentifyLanguagesState extends State<NumeralWordsIdentifyLangu
         output = output + detailedOutput[i].number;
     }
 
-    List<List<String>> columnData = new List<List<String>>();
+    List<List<String>> columnData = [];
     var flexData;
     String columnDataRowNumber;
     String columnDataRowNumWord;
     String columnDataRowLanguage;
-    if (_currentLanguage == NumeralWordsLanguage.ALL) {
-      for (int i = 0; i < detailedOutput.length; i++) {
-        if (detailedOutput[i].number.startsWith('numeralwords_'))
-          columnDataRowNumber = i18n(context, detailedOutput[i].number);
-        else
-          columnDataRowNumber = detailedOutput[i].number;
-        if (detailedOutput[i].numWord.startsWith('numeralwords_'))
-          columnDataRowNumWord = i18n(context, detailedOutput[i].numWord);
-        else
-          columnDataRowNumWord = detailedOutput[i].numWord;
-        columnDataRowLanguage = i18n(context, detailedOutput[i].language);
-        int j = i + 1;
-        while (j < detailedOutput.length && detailedOutput[j].number == '') {
-          columnDataRowNumber = columnDataRowNumber + '\n' + '';
-          columnDataRowNumWord = columnDataRowNumWord + '\n' + detailedOutput[j].numWord;
-          columnDataRowLanguage = columnDataRowLanguage + '\n' + i18n(context, detailedOutput[j].language);
-          j++;
-        }
-        i = j - 1;
-        columnData.add([columnDataRowNumber, columnDataRowNumWord, columnDataRowLanguage]);
+
+    for (int i = 0; i < detailedOutput.length; i++) {
+      if (detailedOutput[i].number.startsWith('numeralwords_'))
+        columnDataRowNumber = i18n(context, detailedOutput[i].number);
+      else
+        columnDataRowNumber = detailedOutput[i].number;
+      if (detailedOutput[i].numWord.startsWith('numeralwords_'))
+        columnDataRowNumWord = i18n(context, detailedOutput[i].numWord);
+      else
+        columnDataRowNumWord = detailedOutput[i].numWord;
+      columnDataRowLanguage = i18n(context, detailedOutput[i].language);
+      int j = i + 1;
+      while (j < detailedOutput.length && detailedOutput[j].number == '') {
+        columnDataRowNumber = columnDataRowNumber + '\n' + '';
+        columnDataRowNumWord = columnDataRowNumWord + '\n' + detailedOutput[j].numWord;
+        columnDataRowLanguage = columnDataRowLanguage + '\n' + i18n(context, detailedOutput[j].language);
+        j++;
       }
-      flexData = [1, 3, 1];
-    } else {
-      for (int i = 0; i < detailedOutput.length; i++) {
-        if (detailedOutput[i].number.startsWith('numeralwords_'))
-          columnDataRowNumber = i18n(context, detailedOutput[i].number);
-        else
-          columnDataRowNumber = detailedOutput[i].number;
-        if (detailedOutput[i].numWord.startsWith('numeralwords_'))
-          columnDataRowNumWord = i18n(context, detailedOutput[i].numWord);
-        else
-          columnDataRowNumWord = detailedOutput[i].numWord;
-        columnData.add([columnDataRowNumber, columnDataRowNumWord]);
-      }
-      flexData = [1, 2];
+      i = j - 1;
+      columnData.add([columnDataRowNumber, columnDataRowNumWord, columnDataRowLanguage]);
     }
+    flexData = [1, 3, 1];
 
     return Column(
       children: <Widget>[

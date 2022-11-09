@@ -115,47 +115,24 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
         output = output + detailedOutput[i].number;
     }
 
-    List<List<String>> columnData = new List<List<String>>();
+    List<List<String>> columnData = [];
     var flexData;
     String columnDataRowNumber;
     String columnDataRowNumWord;
-    String columnDataRowLanguage;
-    if (_currentLanguage == NumeralWordsLanguage.ALL) {
-      for (int i = 0; i < detailedOutput.length; i++) {
-        if (detailedOutput[i].number.startsWith('numeralwords_'))
-          columnDataRowNumber = i18n(context, detailedOutput[i].number);
-        else
-          columnDataRowNumber = detailedOutput[i].number;
-        if (detailedOutput[i].numWord.startsWith('numeralwords_'))
-          columnDataRowNumWord = i18n(context, detailedOutput[i].numWord);
-        else
-          columnDataRowNumWord = detailedOutput[i].numWord;
-        columnDataRowLanguage = i18n(context, detailedOutput[i].language);
-        int j = i + 1;
-        while (j < detailedOutput.length && detailedOutput[j].number == '') {
-          columnDataRowNumber = columnDataRowNumber + '\n' + '';
-          columnDataRowNumWord = columnDataRowNumWord + '\n' + detailedOutput[j].numWord;
-          columnDataRowLanguage = columnDataRowLanguage + '\n' + i18n(context, detailedOutput[j].language);
-          j++;
-        }
-        i = j - 1;
-        columnData.add([columnDataRowNumber, columnDataRowNumWord, columnDataRowLanguage]);
-      }
-      flexData = [1, 3, 1];
-    } else {
-      for (int i = 0; i < detailedOutput.length; i++) {
-        if (detailedOutput[i].number.startsWith('numeralwords_'))
-          columnDataRowNumber = i18n(context, detailedOutput[i].number);
-        else
-          columnDataRowNumber = detailedOutput[i].number;
-        if (detailedOutput[i].numWord.startsWith('numeralwords_'))
-          columnDataRowNumWord = i18n(context, detailedOutput[i].numWord);
-        else
-          columnDataRowNumWord = detailedOutput[i].numWord;
-        columnData.add([columnDataRowNumber, columnDataRowNumWord]);
-      }
-      flexData = [1, 2];
+
+    for (int i = 0; i < detailedOutput.length; i++) {
+      if (detailedOutput[i].number.startsWith('numeralwords_'))
+        columnDataRowNumber = i18n(context, detailedOutput[i].number);
+      else
+        columnDataRowNumber = detailedOutput[i].number;
+      if (detailedOutput[i].numWord.startsWith('numeralwords_'))
+        columnDataRowNumWord = i18n(context, detailedOutput[i].numWord);
+      else
+        columnDataRowNumWord = detailedOutput[i].numWord;
+      columnData.add([columnDataRowNumber, columnDataRowNumWord]);
     }
+    flexData = [1, 2];
+
 
     if (_currentDecodeMode == GCWSwitchPosition.left) {
       _codeControllerHighlighted.text = _currentDecodeInput.toLowerCase();
@@ -168,7 +145,7 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
         GCWOutputText(
           text: output,
         ),
-        _currentLanguage == NumeralWordsLanguage.ALL ? Container () : GCWExpandableTextDivider (
+        output.length == 0 ? Container () : GCWExpandableTextDivider (
             text: i18n(context, 'numeralwords_syntax_highlight'),
             suppressTopSpace: false,
             child: GCWCodeTextField(
@@ -181,7 +158,7 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
           : GCWExpandableTextDivider(
               text: i18n(context, 'common_outputdetail'),
               suppressTopSpace: false,
-              expanded: false,
+              expanded: true,
               child:
                   Column(children: columnedMultiLineOutput(context, columnData, flexValues: flexData, copyColumn: 1)),
             ),

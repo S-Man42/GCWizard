@@ -247,7 +247,7 @@ class TextAnalysisState extends State<TextAnalysis> {
           Column(
             children: [
               Column(
-                children: columnedMultiLineOutput(context, group['common']),
+                children: columnedMultiLineOutput(context, group['common'], copyColumn: 1),
               ),
               Container(
                 height: 8 * DOUBLE_DEFAULT_MARGIN,
@@ -256,7 +256,7 @@ class TextAnalysisState extends State<TextAnalysis> {
           )
            : Container(),
         Column(
-          children: columnedMultiLineOutput(context, group['detailed'], hasHeader: true, flexValues: flexValues),
+          children: columnedMultiLineOutput(context, group['detailed'], hasHeader: true, flexValues: flexValues, copyColumn: 1),
         )
       ],
     );
@@ -357,7 +357,7 @@ class TextAnalysisState extends State<TextAnalysis> {
           [i18n(context, 'textanalysis_common_wordcount'), wordCount],
           [i18n(context, 'textanalysis_common_charactercount'), totalCharacterCount],
           [i18n(context, 'textanalysis_distinctcharacters'), totalDistinctCharacterCount],
-        ]),
+        ], copyColumn: 1),
       )
     );
 

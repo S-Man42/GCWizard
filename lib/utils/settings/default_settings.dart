@@ -202,7 +202,7 @@ void initDefaultSettings(PreferencesInitMode mode, {String reinitSinglePreferenc
   }
 
   if (reinitSinglePreference == PREFERENCE_TOOL_COUNT_SORT || _reinitAll || Prefs.get(PREFERENCE_TOOL_COUNT_SORT) == null) {
-    Prefs.setBool(PREFERENCE_TOOL_COUNT_SORT, true);
+    Prefs.setBool(PREFERENCE_TOOL_COUNT_SORT, false);
   }
 
   if (reinitSinglePreference == PREFERENCE_TOOLLIST_SHOW_DESCRIPTIONS || _reinitAll || Prefs.get(PREFERENCE_TOOLLIST_SHOW_DESCRIPTIONS) == null) {

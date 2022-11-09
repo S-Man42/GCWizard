@@ -113,7 +113,7 @@ class FormulaParser {
   static final Map<String, String> alternateOperators = {
     '-': '—–˗−‒',
     '/': ':÷',
-    '*': '×',
+    '*': '×•',
   };
 
   static final Map<String, String> alternateSpaces = {
