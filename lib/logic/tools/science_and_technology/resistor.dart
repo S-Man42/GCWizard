@@ -1,8 +1,5 @@
 import 'dart:math';
 
-import 'package:gc_wizard/utils/common_utils.dart';
-import 'package:intl/intl.dart';
-
 enum ResistorBandType { FIRST, SECOND, THIRD, MULTIPLIER, TOLERANCE, TEMPERATURE_COEFFICIENT }
 
 // source: https://en.wikipedia.org/wiki/Electronic_color_code#cite_note-IEC_60062_2016ECC-7
@@ -313,42 +310,6 @@ ResistorValue getResistorValue(List<ResistorBandColor> colors) {
     default:
       return null;
   }
-}
-
-formatResistorValue(double value) {
-  var formatter = NumberFormat('0.####');
-  return formatter.format(value) + ' ' + String.fromCharCode(937);
-}
-
-formatResistorTolerancedValueInterval(List<double> valueInterval) {
-  var formatter = NumberFormat('0.############');
-  return formatter.format(valueInterval[0]) +
-      ' ' +
-      String.fromCharCode(937) +
-      ' - ' +
-      formatter.format(valueInterval[1]) +
-      ' ' +
-      String.fromCharCode(937);
-}
-
-formatResistorTolerance(double tolerance) {
-  var formatter = NumberFormat('0.##');
-  return String.fromCharCode(177) + ' ' + formatter.format(tolerance * 100) + ' %';
-}
-
-formatResistorTemperatureCoefficient(double temperatureCoefficient) {
-  return temperatureCoefficient.floor().toString() +
-      ' ' +
-      String.fromCharCode(215) +
-      ' 10${stringToSuperscript('-6')} K${stringToSuperscript('-1')}';
-}
-
-formatResistorMultiplier(double multiplier) {
-  var valueExponential = multiplier.toStringAsExponential().split('e');
-  var value = '10' + stringToSuperscript(valueExponential[1].replaceFirst('+', ''));
-
-  var formatter = NumberFormat('###,###,###,##0.####');
-  return String.fromCharCode(215) + ' ' + value + ' = ${formatter.format(multiplier).replaceAll(',', ' ')}';
 }
 
 double eia96(int code, {String multiplicator: 'A'}) {

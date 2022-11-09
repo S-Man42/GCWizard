@@ -41,6 +41,38 @@ defaultFontSize() {
   return fontSize;
 }
 
+WidgetSpan superscriptedTextForRichText(String text, {TextStyle textStyle}) {
+  var style = textStyle ?? gcwTextStyle();
+
+  return WidgetSpan(
+    child: Transform.translate(
+      offset: Offset(0.0, -1 * defaultFontSize() / 2.0 ),
+      child: Text(
+        text,
+        style: style.copyWith(
+            fontSize: defaultFontSize() / 1.4
+        )
+      )
+    )
+  );
+}
+
+WidgetSpan subscriptedTextForRichText(String text, {TextStyle textStyle}) {
+  var style = textStyle ?? gcwTextStyle();
+
+  return WidgetSpan(
+      child: Transform.translate(
+          offset: Offset(0.0, defaultFontSize() / 4.0),
+          child: Text(
+              text,
+              style: style.copyWith(
+                  fontSize: defaultFontSize() / 1.4
+              )
+          )
+      )
+  );
+}
+
 List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> data,
     {List<int> flexValues = const [],
     int copyColumn,
@@ -80,7 +112,7 @@ List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> d
         .toList();
 
     if (copyColumn == null) copyColumn = rowData.length - 1;
-    var copyText = rowData[copyColumn].toString();
+    var copyText = rowData[copyColumn] is Widget ? null : rowData[copyColumn].toString();
     if (isFirst && hasHeader && copyAll) {
       copyText = '';
       data.where((row) => row != null).skip(1).forEach((dataRow) {
@@ -94,8 +126,8 @@ List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> d
           Expanded(
             child: Row(children: columns),
           ),
-          context == null
-              ? Container()
+          context == null || copyText == null || copyText.length == 0
+              ? Container(width: 21.0)
               : Container(
                   child: (((isFirst && hasHeader) & !copyAll) || suppressCopyButtons)
                       ? Container()
