@@ -198,6 +198,16 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                     '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title', useDefaultLanguage: true)}')));
   }
 
+
+  String _removeOuterSquareBrackets(String formula) {
+    formula = formula.trim();
+    if (formula.startsWith('[') && formula.endsWith(']')) {
+      formula = formula.substring(1, formula.length - 1);
+    }
+
+    return formula;
+  }
+
   _buildGroupList(BuildContext context) {
     var odd = true;
 
@@ -226,14 +236,14 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
               firstFormulaResult = calculated.results.first.result;
               break;
             case FormulaState.STATE_SINGLE_ERROR:
-              firstFormulaResult = '(${calculated.results.first.result})';
+              firstFormulaResult = '(${_removeOuterSquareBrackets(calculated.results.first.result)})';
               break;
             default:
-              firstFormulaResult = '(${formula.formula})';
+              firstFormulaResult = '(${_removeOuterSquareBrackets(formula.formula)})';
               break;
           }
 
-          formulaReferences.putIfAbsent('{${index + 1}}', () => firstFormulaResult);
+          formulaReferences.putIfAbsent('{${index + 1}}', () => RECURSIVE_FORMULA_REPLACEMENT_START + firstFormulaResult + RECURSIVE_FORMULA_REPLACEMENT_END);
 
           Widget output;
 

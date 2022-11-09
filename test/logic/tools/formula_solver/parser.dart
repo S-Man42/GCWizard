@@ -91,6 +91,10 @@ void main() {
       {'formula' : 'G', 'values': values, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '18', 'state': 'ok'}]}},
       {'formula' : '[G] + [F]', 'values': values, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '18 + 1', 'state': 'ok'}]}},
       {'formula' : '[G + F]', 'values': values, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '19', 'state': 'ok'}]}},
+
+      // special characters
+      {'formula' : 'A\u0009+\u00A0B', 'values': values, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '23', 'state': 'ok'}]}},
+
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -249,6 +253,11 @@ void main() {
 
       {'formula' : 'len(ABC) * bww(55)', 'values': <FormulaValue>[], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '30', 'state': 'ok'}]}},
       {'formula' : 'cs(bww(ABCDE)) * len(55)', 'values': <FormulaValue>[], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '12', 'state': 'ok'}]}},
+
+      {'formula' : 'bww(A)', 'values': [FormulaValue('A', '', type: FormulaValueType.TEXT)], 'expectedOutput' : {'state': 'error', 'output': [{'result': 'bww()', 'state': 'error'}]}},
+      {'formula' : 'bww(AB)', 'values': [FormulaValue('A', '', type: FormulaValueType.TEXT), FormulaValue('B', 'C', type: FormulaValueType.TEXT),], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '3', 'state': 'ok'}]}},
+      {'formula' : 'len(A)', 'values': [FormulaValue('A', '', type: FormulaValueType.TEXT)], 'expectedOutput' : {'state': 'error', 'output': [{'result': 'len()', 'state': 'error'}]}},
+      {'formula' : 'len(AB)', 'values': [FormulaValue('A', '', type: FormulaValueType.TEXT), FormulaValue('B', 'C', type: FormulaValueType.TEXT),], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '1', 'state': 'ok'}]}},
     ];
 
     _inputsToExpected.forEach((elem) {

@@ -82,7 +82,10 @@ class MultiDecoderToolCoordinateFormats extends GCWMultiDecoderTool {
                     coords = Quadtree.parse(input)?.toLatLng();
                     break;
                   case keyCoordsReverseWherigoWaldmeister:
-                    coords = Waldmeister.parse(input)?.toLatLng();
+                    coords = ReverseWherigoWaldmeister.parse(input)?.toLatLng();
+                    break;
+                  case keyCoordsReverseWherigoDay1976:
+                    coords = ReverseWherigoDay1976.parse(input)?.toLatLng();
                     break;
                   case keyCoordsSlippyMap:
                     coords = SlippyMap.parse(input)?.toLatLng();

@@ -197,11 +197,23 @@ void initDefaultSettings(PreferencesInitMode mode, {String reinitSinglePreferenc
     Prefs.setDouble(PREFERENCE_THEME_FONT_SIZE, Prefs.get('font_size') ?? 16.0); //font_size == pre version 1.2.0
   }
 
+  if (reinitSinglePreference == PREFERENCE_TOOL_COUNT || _reinitAll || Prefs.get(PREFERENCE_TOOL_COUNT) == null) {
+    Prefs.setString(PREFERENCE_TOOL_COUNT, '{}');
+  }
+
+  if (reinitSinglePreference == PREFERENCE_TOOL_COUNT_SORT || _reinitAll || Prefs.get(PREFERENCE_TOOL_COUNT_SORT) == null) {
+    Prefs.setBool(PREFERENCE_TOOL_COUNT_SORT, false);
+  }
+
   if (reinitSinglePreference == PREFERENCE_TOOLLIST_SHOW_DESCRIPTIONS || _reinitAll || Prefs.get(PREFERENCE_TOOLLIST_SHOW_DESCRIPTIONS) == null) {
     Prefs.setBool(PREFERENCE_TOOLLIST_SHOW_DESCRIPTIONS, true);
   }
 
   if (reinitSinglePreference == PREFERENCE_TOOLLIST_SHOW_EXAMPLES || _reinitAll || Prefs.get(PREFERENCE_TOOLLIST_SHOW_EXAMPLES) == null) {
     Prefs.setBool(PREFERENCE_TOOLLIST_SHOW_EXAMPLES, true);
+  }
+
+  if (reinitSinglePreference == PREFERENCE_WHERIGOANALYZER_EXPERTMODE || _reinitAll || Prefs.get(PREFERENCE_WHERIGOANALYZER_EXPERTMODE) == null) {
+    Prefs.setBool(PREFERENCE_WHERIGOANALYZER_EXPERTMODE, false);
   }
 }

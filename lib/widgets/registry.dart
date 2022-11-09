@@ -5,13 +5,14 @@ import 'package:gc_wizard/widgets/main_menu/about.dart';
 import 'package:gc_wizard/widgets/main_menu/call_for_contribution.dart';
 import 'package:gc_wizard/widgets/main_menu/changelog.dart';
 import 'package:gc_wizard/widgets/main_menu/licenses.dart';
-import 'package:gc_wizard/widgets/selector_lists/apparent_temperature.dart';
+import 'package:gc_wizard/widgets/selector_lists/apparent_temperature_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/astronomy_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/babylon_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/bcd_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/beaufort_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/braille_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/bundeswehr_talkingboard.dart';
 import 'package:gc_wizard/widgets/selector_lists/ccitt_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cistercian_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/colors_selection.dart';
@@ -40,10 +41,12 @@ import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_factorial_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_fermat_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_fibonacci_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_happynumbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_jacobsthal_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_jacobsthallucas_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_jacobsthaloblong_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_lucas_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_luckynumbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_lychrel_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_mersenne_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_mersenneexponents_selection.dart';
@@ -52,6 +55,7 @@ import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_pell_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_pelllucas_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_perfectnumbers_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_permutableprimes_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_primarypseudoperfectnumbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_recaman_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_selection.dart';
@@ -73,6 +77,9 @@ import 'package:gc_wizard/widgets/selector_lists/scrabble_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/segmentdisplay_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/shadoks_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/silverratio_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/sqrt2_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/sqrt3_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/sqrt5_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/symbol_table_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/telegraph_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/teletypewriter_selection.dart';
@@ -141,6 +148,8 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/book_cipher.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille/braille.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille/braille_dot_numbers.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bundeswehr_talkingboard/bundeswehr_auth.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bundeswehr_talkingboard/bundeswehr_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/burrows_wheeler.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chao.dart';
@@ -171,6 +180,8 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gray.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gronsfeld.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/hashes/hash_breaker.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/hashes/hashes.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/hashes/hashes_identification.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/hashes/hashes_overview.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/homophone.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/houdini.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/illiac.dart';
@@ -184,17 +195,20 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/spoo
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/maya_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/mexican_army_cipher_wheel.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/morse.dart';
-import 'tools/crypto_and_encodings/music_notes/music_notes.dart';
+import 'package:gc_wizard/widgets/tools/games/bowling.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/music_notes/music_notes.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/navajo.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_converter.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_lists.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_text_search.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_identify_languages.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/one_time_pad.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/playfair.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/pokemon.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/polybios.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/predator.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/prime_alphabet.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rabbit.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rail_fence.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rc4.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/reverse.dart';
@@ -279,6 +293,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/alcohol_mass.dart
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/heat_index.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/humidex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/summer_simmer.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/wet_bulb_temperature.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/windchill.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/easter/easter_date.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/easter/easter_years.dart';
@@ -314,6 +329,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/day
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/time_calculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/weekday.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/decabit.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/guitar_strings.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/divisor.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacids.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacids_table.dart';
@@ -327,19 +343,25 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_number
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/phi.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/pi.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/silver_ratio.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/sqrt2.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/sqrt3.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/sqrt5.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/keyboard_layout.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/keyboard_numbers.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/mathematical_constants.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/maya_calendar.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/music_notes/music_notes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/bell.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/catalan.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/factorial.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/fermat.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/fibonacci.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/happy_numbers.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/jacobsthal.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/jacobsthal_lucas.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/jacobsthal_oblong.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/lucas.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/lucky_numbers.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/lychrel.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/mersenne.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/mersenne_exponents.dart';
@@ -348,6 +370,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/pell.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/pell_lucas.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/perfect_numbers.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/permutable_primes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/primarypseudoperfect_numbers.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/recaman.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/sublime_numbers.dart';
@@ -369,7 +392,6 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/quadratic_equatio
 import 'package:gc_wizard/widgets/tools/science_and_technology/recycling.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_colorcodecalculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_eia96.dart';
-import 'tools/science_and_technology/astronomy/right_ascension_to_degree.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/fourteen_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/seven_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/sixteen_segments.dart';
@@ -389,6 +411,7 @@ import 'main_menu/settings/settings_coordinates.dart';
 import 'main_menu/settings/settings_general.dart';
 import 'main_menu/settings/settings_tools.dart';
 import 'tools/games/scrabble/scrabble.dart';
+import 'tools/science_and_technology/astronomy/right_ascension_to_degree.dart';
 import 'tools/science_and_technology/colors/ral_color_codes.dart';
 
 
@@ -526,6 +549,15 @@ initializeRegistry(BuildContext context) {
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: [
       'bookcipher',
+    ]),
+    GCWTool(tool: Bowling(), i18nPrefix: 'bowling', categories: [
+      ToolCategory.GAMES
+    ], searchKeys: [
+      'bowling',
+    ]),
+    GCWTool(tool: BundeswehrTalkingBoardSelection(), i18nPrefix: 'bundeswehr_talkingboard_selection', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
     ]),
     GCWTool(tool: BurrowsWheeler(), i18nPrefix: 'burrowswheeler', categories: [
       ToolCategory.CRYPTOGRAPHY
@@ -697,6 +729,12 @@ initializeRegistry(BuildContext context) {
     ], searchKeys: [
       'grid',
     ]),
+    GCWTool(tool: GuitarStrings(), i18nPrefix: 'guitarstrings', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'music',
+      'guitar',
+    ]),
     GCWTool(
         tool: HashSelection(), i18nPrefix: 'hashes_selection', categories: [ToolCategory.CRYPTOGRAPHY], searchKeys: []),
     GCWTool(tool: Hexadecimal(), i18nPrefix: 'hexadecimal', categories: [
@@ -837,8 +875,9 @@ initializeRegistry(BuildContext context) {
       'multidecoder',
     ]),
     GCWTool(tool: MusicNotes(), i18nPrefix: 'music_notes', categories: [
-      ToolCategory.CRYPTOGRAPHY
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: [
+      'music',
       'music_notes'
     ]),
     GCWTool(tool: Navajo(), i18nPrefix: 'navajo', categories: [
@@ -881,6 +920,7 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: Piano(), i18nPrefix: 'piano', categories: [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: [
+      'music'
       'music_notes',
       'piano',
     ]),
@@ -940,6 +980,11 @@ initializeRegistry(BuildContext context) {
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: [
       'quadraticequation',
+    ]),
+    GCWTool(tool: Rabbit(), i18nPrefix: 'rabbit', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'rabbit',
     ]),
     GCWTool(tool: RailFence(), i18nPrefix: 'railfence', categories: [
       ToolCategory.CRYPTOGRAPHY
@@ -1012,6 +1057,24 @@ initializeRegistry(BuildContext context) {
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: [
       'solitaire',
+    ]),
+    GCWTool(tool: SQRT2Selection(), i18nPrefix: 'sqrt2_selection', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'sqrt',
+      'irrationalnumbers',
+    ]),
+    GCWTool(tool: SQRT3Selection(), i18nPrefix: 'sqrt3_selection', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'sqrt',
+      'irrationalnumbers',
+    ]),
+    GCWTool(tool: SQRT5Selection(), i18nPrefix: 'sqrt5_selection', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'sqrt',
+      'irrationalnumbers',
     ]),
     GCWTool(tool: Stegano(), i18nPrefix: 'stegano', isBeta: true, categories: [
       ToolCategory.IMAGES_AND_FILES
@@ -1181,6 +1244,12 @@ initializeRegistry(BuildContext context) {
       'apparenttemperature',
       'apparenttemperature_windchill',
     ]),
+    GCWTool(tool: WetBulbTemperature(), i18nPrefix: 'wet_bulb_temperature', searchKeys: [
+      'apparenttemperature',
+      'apparenttemperature_wet_bulb_temperature',
+    ]),
+
+
     GCWTool(tool: Zodiac(), i18nPrefix: 'zodiac', searchKeys: [
       'symbol_alchemy',
       'symbol_planets',
@@ -1337,6 +1406,19 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: Beaufort(), i18nPrefix: 'beaufort', searchKeys: [
       'beaufort',
     ]),
+
+    // BundeswehrTalkingBoard Selection *******************************************************************************************
+    GCWTool(tool: BundeswehrTalkingBoardAuthentification(), i18nPrefix: 'bundeswehr_talkingboard_auth', categories: [
+    ], searchKeys: [
+      'bundeswehr_talkingboard_auth',
+      'bundeswehr_talkingboard',
+    ]),
+    GCWTool(tool: BundeswehrTalkingBoardObfuscation(), i18nPrefix: 'bundeswehr_talkingboard_code', categories: [
+    ], searchKeys: [
+      'bundeswehr_talkingboard',
+      'bundeswehr_talkingboard_code',
+    ]),
+
 
     //Braille Selection ****************************************************************
     GCWTool(tool: Braille(), i18nPrefix: 'braille', searchKeys: [
@@ -1853,63 +1935,132 @@ initializeRegistry(BuildContext context) {
       'hashes',
       'hashbreaker',
     ]),
-    GCWTool(tool: MD5(), i18nPrefix: 'hashes_md5', searchKeys: [
+    GCWTool(tool: HashOverview(), i18nPrefix: 'hashes_overview', searchKeys: [
       'hashes',
-      'hashes_md5',
+      'hashes_overview'
+    ]),
+    GCWTool(tool: HashIdentification(), i18nPrefix: 'hashes_identification', searchKeys: [
+      'hashes',
+      'hashes_identification'
     ]),
     GCWTool(tool: SHA1(), i18nPrefix: 'hashes_sha1', searchKeys: [
       'hashes',
       'hashes_sha1',
+    ]),
+    GCWTool(tool: SHA1HMac(), i18nPrefix: 'hashes_sha1hmac', searchKeys: [
+      'hashes',
+      'hashes_sha1',
+      'hashes_hmac',
     ]),
     GCWTool(tool: SHA224(), i18nPrefix: 'hashes_sha224', searchKeys: [
       'hashes',
       'hashes_sha2',
       'hashes_sha224',
     ]),
+    GCWTool(tool: SHA224HMac(), i18nPrefix: 'hashes_sha224hmac', searchKeys: [
+      'hashes',
+      'hashes_sha2',
+      'hashes_sha224',
+      'hashes_hmac',
+    ]),
     GCWTool(tool: SHA256(), i18nPrefix: 'hashes_sha256', searchKeys: [
       'hashes',
       'hashes_sha2',
       'hashes_sha256',
+    ]),
+    GCWTool(tool: SHA256HMac(), i18nPrefix: 'hashes_sha256hmac', searchKeys: [
+      'hashes',
+      'hashes_sha2',
+      'hashes_sha256',
+      'hashes_hmac',
     ]),
     GCWTool(tool: SHA384(), i18nPrefix: 'hashes_sha384', searchKeys: [
       'hashes',
       'hashes_sha2',
       'hashes_sha384',
     ]),
+    GCWTool(tool: SHA384HMac(), i18nPrefix: 'hashes_sha384hmac', searchKeys: [
+      'hashes',
+      'hashes_sha2',
+      'hashes_sha384',
+      'hashes_hmac',
+    ]),
     GCWTool(tool: SHA512(), i18nPrefix: 'hashes_sha512', searchKeys: [
       'hashes',
       'hashes_sha2',
       'hashes_sha512',
+    ]),
+    GCWTool(tool: SHA512HMac(), i18nPrefix: 'hashes_sha512hmac', searchKeys: [
+      'hashes',
+      'hashes_sha2',
+      'hashes_sha512',
+      'hashes_hmac',
     ]),
     GCWTool(tool: SHA512_224(), i18nPrefix: 'hashes_sha512.224', searchKeys: [
       'hashes',
       'hashes_sha2',
       'hashes_sha512_224',
     ]),
+    GCWTool(tool: SHA512_224HMac(), i18nPrefix: 'hashes_sha512.224hmac', searchKeys: [
+      'hashes',
+      'hashes_sha2',
+      'hashes_sha512_224',
+      'hashes_hmac',
+    ]),
     GCWTool(tool: SHA512_256(), i18nPrefix: 'hashes_sha512.256', searchKeys: [
       'hashes',
       'hashes_sha2',
       'hashes_sha512_256',
+    ]),
+    GCWTool(tool: SHA512_256HMac(), i18nPrefix: 'hashes_sha512.256hmac', searchKeys: [
+      'hashes',
+      'hashes_sha2',
+      'hashes_sha512_256',
+      'hashes_hmac',
     ]),
     GCWTool(tool: SHA3_224(), i18nPrefix: 'hashes_sha3.224', searchKeys: [
       'hashes',
       'hashes_sha3',
       'hashes_sha3_224',
     ]),
+    GCWTool(tool: SHA3_224HMac(), i18nPrefix: 'hashes_sha3.224hmac', searchKeys: [
+      'hashes',
+      'hashes_sha3',
+      'hashes_sha3_224',
+      'hashes_hmac',
+    ]),
     GCWTool(tool: SHA3_256(), i18nPrefix: 'hashes_sha3.256', searchKeys: [
       'hashes',
       'hashes_sha3',
       'hashes_sha3_256',
+    ]),
+    GCWTool(tool: SHA3_256HMac(), i18nPrefix: 'hashes_sha3.256hmac', searchKeys: [
+      'hashes',
+      'hashes_sha3',
+      'hashes_sha3_256',
+      'hashes_hmac',
     ]),
     GCWTool(tool: SHA3_384(), i18nPrefix: 'hashes_sha3.384', searchKeys: [
       'hashes',
       'hashes_sha3',
       'hashes_sha3_384',
     ]),
+    GCWTool(tool: SHA3_384HMac(), i18nPrefix: 'hashes_sha3.384hmac', searchKeys: [
+      'hashes',
+      'hashes_sha3',
+      'hashes_sha3_384',
+      'hashes_hmac',
+    ]),
     GCWTool(tool: SHA3_512(), i18nPrefix: 'hashes_sha3.512', searchKeys: [
       'hashes',
       'hashes_sha3',
       'hashes_sha3_512',
+    ]),
+    GCWTool(tool: SHA3_512HMac(), i18nPrefix: 'hashes_sha3.512hmac', searchKeys: [
+      'hashes',
+      'hashes_sha3',
+      'hashes_sha3_512',
+      'hashes_hmac',
     ]),
     GCWTool(tool: Keccak_128(), i18nPrefix: 'hashes_keccak128', searchKeys: [
       'hashes',
@@ -1952,36 +2103,89 @@ initializeRegistry(BuildContext context) {
       'hashes_ripemd',
       'hashes_ripemd_128',
     ]),
+    GCWTool(tool: RIPEMD_128HMac(), i18nPrefix: 'hashes_ripemd128hmac', searchKeys: [
+      'hashes',
+      'hashes_ripemd',
+      'hashes_ripemd_128',
+      'hashes_hmac',
+    ]),
     GCWTool(tool: RIPEMD_160(), i18nPrefix: 'hashes_ripemd160', searchKeys: [
       'hashes',
       'hashes_ripemd',
       'hashes_ripemd_160',
+    ]),
+    GCWTool(tool: RIPEMD_160HMac(), i18nPrefix: 'hashes_ripemd160hmac', searchKeys: [
+      'hashes',
+      'hashes_ripemd',
+      'hashes_ripemd_160',
+      'hashes_hmac',
     ]),
     GCWTool(tool: RIPEMD_256(), i18nPrefix: 'hashes_ripemd256', searchKeys: [
       'hashes',
       'hashes_ripemd',
       'hashes_ripemd_256',
     ]),
+    GCWTool(tool: RIPEMD_256HMac(), i18nPrefix: 'hashes_ripemd256hmac', searchKeys: [
+      'hashes',
+      'hashes_ripemd',
+      'hashes_ripemd_256',
+      'hashes_hmac',
+    ]),
     GCWTool(tool: RIPEMD_320(), i18nPrefix: 'hashes_ripemd320', searchKeys: [
       'hashes',
       'hashes_ripemd',
       'hashes_ripemd_320',
     ]),
+    GCWTool(tool: RIPEMD_320HMac(), i18nPrefix: 'hashes_ripemd320hmac', searchKeys: [
+      'hashes',
+      'hashes_ripemd',
+      'hashes_ripemd_320',
+      'hashes_hmac',
+    ]),
     GCWTool(tool: MD2(), i18nPrefix: 'hashes_md2', searchKeys: [
       'hashes',
       'hashes_md2',
+    ]),
+    GCWTool(tool: MD2HMac(), i18nPrefix: 'hashes_md2hmac', searchKeys: [
+      'hashes',
+      'hashes_md2',
+      'hashes_hmac',
     ]),
     GCWTool(tool: MD4(), i18nPrefix: 'hashes_md4', searchKeys: [
       'hashes',
       'hashes_md4',
     ]),
+    GCWTool(tool: MD4HMac(), i18nPrefix: 'hashes_md4hmac', searchKeys: [
+      'hashes',
+      'hashes_md4',
+      'hashes_hmac',
+    ]),
+    GCWTool(tool: MD5(), i18nPrefix: 'hashes_md5', searchKeys: [
+      'hashes',
+      'hashes_md5',
+    ]),
+    GCWTool(tool: MD5HMac(), i18nPrefix: 'hashes_md5hmac', searchKeys: [
+      'hashes',
+      'hashes_md5',
+      'hashes_hmac',
+    ]),
     GCWTool(tool: Tiger_192(), i18nPrefix: 'hashes_tiger192', searchKeys: [
       'hashes',
       'hashes_tiger_192',
     ]),
+    GCWTool(tool: Tiger_192HMac(), i18nPrefix: 'hashes_tiger192hmac', searchKeys: [
+      'hashes',
+      'hashes_tiger_192',
+      'hashes_hmac',
+    ]),
     GCWTool(tool: Whirlpool_512(), i18nPrefix: 'hashes_whirlpool512', searchKeys: [
       'hashes',
       'hashes_whirlpool_512',
+    ]),
+    GCWTool(tool: Whirlpool_512HMac(), i18nPrefix: 'hashes_whirlpool512hmac', searchKeys: [
+      'hashes',
+      'hashes_whirlpool_512',
+      'hashes_hmac',
     ]),
     GCWTool(tool: BLAKE2b_160(), i18nPrefix: 'hashes_blake2b160', searchKeys: [
       'hashes',
@@ -2088,6 +2292,10 @@ initializeRegistry(BuildContext context) {
       'numeralwords',
       'numeralwordsconverter',
     ]),
+    GCWTool(tool: NumeralWordsIdentifyLanguages(), i18nPrefix: 'numeralwords_identify_languages', searchKeys: [
+      'numeralwords',
+      'numeralwords_identifylanguages',
+    ]),
 
     //NumberSequenceSelection ****************************************************************************************
     GCWTool(tool: NumberSequenceFactorialSelection(), i18nPrefix: 'numbersequence_factorial', searchKeys: [
@@ -2104,6 +2312,7 @@ initializeRegistry(BuildContext context) {
     ]),
     GCWTool(tool: NumberSequenceMersennePrimesSelection(), i18nPrefix: 'numbersequence_mersenneprimes', searchKeys: [
       'numbersequence',
+      'primes',
       'numbersequence_mersenneprimesselection',
     ]),
     GCWTool(
@@ -2146,6 +2355,19 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: NumberSequenceSublimeNumbersSelection(), i18nPrefix: 'numbersequence_sublimenumbers', searchKeys: [
       'numbersequence',
       'numbersequence_sublimenumbersselection',
+    ]),
+    GCWTool(tool: NumberSequencePermutablePrimesSelection(), i18nPrefix: 'numbersequence_permutableprimes', searchKeys: [
+      'numbersequence',
+      'primes',
+      'numbersequence_permutableprimesselection',
+    ]),
+    GCWTool(tool: NumberSequenceLuckyNumbersSelection(), i18nPrefix: 'numbersequence_luckynumbers', searchKeys: [
+      'numbersequence',
+      'numbersequence_luckynumbersselection',
+    ]),
+    GCWTool(tool: NumberSequenceHappyNumbersSelection(), i18nPrefix: 'numbersequence_happynumbers', searchKeys: [
+      'numbersequence',
+      'numbersequence_happynumbersselection',
     ]),
     GCWTool(tool: NumberSequenceBellSelection(), i18nPrefix: 'numbersequence_bell', searchKeys: [
       'numbersequence',
@@ -2555,6 +2777,46 @@ initializeRegistry(BuildContext context) {
           'numbersequence_sublimenumbersselection',
         ]),
 
+    //NumberSequenceSelection Lucky numbers ****************************************************************************************
+    GCWTool(tool: NumberSequenceLuckyNumbersNthNumber(), i18nPrefix: 'numbersequence_nth', searchKeys: [
+      'numbersequence_luckynumbersselection',
+    ]),
+    GCWTool(tool: NumberSequenceLuckyNumbersRange(), i18nPrefix: 'numbersequence_range', searchKeys: [
+      'numbersequence_luckynumbersselection',
+    ]),
+    GCWTool(tool: NumberSequenceLuckyNumbersCheckNumber(), i18nPrefix: 'numbersequence_check', searchKeys: [
+      'numbersequence_luckynumbersselection',
+    ]),
+    GCWTool(tool: NumberSequenceLuckyNumbersDigits(), i18nPrefix: 'numbersequence_digits', searchKeys: [
+      'numbersequence_luckynumbersselection',
+    ]),
+    GCWTool(
+        tool: NumberSequenceLuckyNumbersContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
+        searchKeys: [
+          'numbersequence_luckynumbersselection',
+        ]),
+
+    //NumberSequenceSelection Happy numbers ****************************************************************************************
+    GCWTool(tool: NumberSequenceHappyNumbersNthNumber(), i18nPrefix: 'numbersequence_nth', searchKeys: [
+      'numbersequence_happynumbersselection',
+    ]),
+    GCWTool(tool: NumberSequenceHappyNumbersRange(), i18nPrefix: 'numbersequence_range', searchKeys: [
+      'numbersequence_happynumbersselection',
+    ]),
+    GCWTool(tool: NumberSequenceHappyNumbersCheckNumber(), i18nPrefix: 'numbersequence_check', searchKeys: [
+      'numbersequence_happynumbersselection',
+    ]),
+    GCWTool(tool: NumberSequenceHappyNumbersDigits(), i18nPrefix: 'numbersequence_digits', searchKeys: [
+      'numbersequence_happynumbersselection',
+    ]),
+    GCWTool(
+        tool: NumberSequenceHappyNumbersContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
+        searchKeys: [
+          'numbersequence_happynumbersselection',
+        ]),
+
     //NumberSequenceSelection PseudoPerfect numbers ****************************************************************************************
     GCWTool(tool: NumberSequencePrimaryPseudoPerfectNumbersNthNumber(), i18nPrefix: 'numbersequence_nth', searchKeys: [
       'numbersequence_primarypseudoperfectnumbersselection',
@@ -2594,6 +2856,27 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: NumberSequenceLychrelContainsDigits(), i18nPrefix: 'numbersequence_containsdigits', searchKeys: [
       'numbersequence_lychrelselection',
     ]),
+
+    //NumberSequenceSelection Mersenne Primes ****************************************************************************************
+    GCWTool(tool: NumberSequencePermutablePrimesNthNumber(), i18nPrefix: 'numbersequence_nth', searchKeys: [
+      'numbersequence_permutableprimesselection',
+    ]),
+    GCWTool(tool: NumberSequencePermutablePrimesRange(), i18nPrefix: 'numbersequence_range', searchKeys: [
+      'numbersequence_permutableprimesselection',
+    ]),
+    GCWTool(tool: NumberSequencePermutablePrimesCheckNumber(), i18nPrefix: 'numbersequence_check', searchKeys: [
+      'numbersequence_permutableprimesselection',
+    ]),
+    GCWTool(tool: NumberSequencePermutablePrimesDigits(), i18nPrefix: 'numbersequence_digits', searchKeys: [
+      'numbersequence_permutableprimesselection',
+    ]),
+    GCWTool(
+        tool: NumberSequencePermutablePrimesContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
+        searchKeys: [
+          'numbersequence_permutableprimesselection',
+        ]),
+
 
     //PeriodicTableSelection ***************************************************************************************
     GCWTool(tool: PeriodicTable(), i18nPrefix: 'periodictable', searchKeys: []),
@@ -2778,6 +3061,39 @@ initializeRegistry(BuildContext context) {
       'silverratiosearch',
     ]),
 
+    //SQRT 2 Selection **********************************************************************************************
+    GCWTool(tool: SQRT2NthDecimal(), i18nPrefix: 'irrationalnumbers_nthdecimal', searchKeys: [
+      '',
+    ]),
+    GCWTool(tool: SQRT2DecimalRange(), i18nPrefix: 'irrationalnumbers_decimalrange', searchKeys: [
+      '',
+    ]),
+    GCWTool(tool: SQRT2Search(), i18nPrefix: 'irrationalnumbers_search', searchKeys: [
+      '',
+    ]),
+
+    //SQRT 3 Selection **********************************************************************************************
+    GCWTool(tool: SQRT3NthDecimal(), i18nPrefix: 'irrationalnumbers_nthdecimal', searchKeys: [
+      '',
+    ]),
+    GCWTool(tool: SQRT3DecimalRange(), i18nPrefix: 'irrationalnumbers_decimalrange', searchKeys: [
+      '',
+    ]),
+    GCWTool(tool: SQRT3Search(), i18nPrefix: 'irrationalnumbers_search', searchKeys: [
+      '',
+    ]),
+
+    //SQRT 5 Selection **********************************************************************************************
+    GCWTool(tool: SQRT5NthDecimal(), i18nPrefix: 'irrationalnumbers_nthdecimal', searchKeys: [
+      '',
+    ]),
+    GCWTool(tool: SQRT5DecimalRange(), i18nPrefix: 'irrationalnumbers_decimalrange', searchKeys: [
+      '',
+    ]),
+    GCWTool(tool: SQRT5Search(), i18nPrefix: 'irrationalnumbers_search', searchKeys: [
+      '',
+    ]),
+
     //Symbol Tables **********************************************************************************************
     GCWTool(tool: SymbolTableExamplesSelect(), autoScroll: false, i18nPrefix: 'symboltablesexamples', searchKeys: [
       'symbol',
@@ -2851,6 +3167,7 @@ initializeRegistry(BuildContext context) {
       'symbol_ballet',
     ]),
     GCWSymbolTableTool(symbolKey: 'barbier', symbolSearchStrings: [
+      'braille',
       'symbol_barbier',
     ]),
     GCWSymbolTableTool(symbolKey: 'barcode39', symbolSearchStrings: [
@@ -2924,6 +3241,7 @@ initializeRegistry(BuildContext context) {
       'cistercian',
     ]),
     GCWSymbolTableTool(symbolKey: 'color_add', symbolSearchStrings: [
+      'color',
       'symbol_color_add',
     ]),
     GCWSymbolTableTool(symbolKey: 'color_code', symbolSearchStrings: [
@@ -3151,7 +3469,7 @@ initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'hylian_64', symbolSearchStrings: [
       'zelda',
-      'hylian_64',
+      'symbol_hylian_64',
     ]),
     GCWSymbolTableTool(symbolKey: 'hylian_albw_botw', symbolSearchStrings: [
       'zelda',
@@ -3161,7 +3479,10 @@ initializeRegistry(BuildContext context) {
       'zelda',
       'symbol_hylian_skywardsword',
     ]),
-    GCWSymbolTableTool(symbolKey: 'hylian_symbols', symbolSearchStrings: ['zelda']),
+    GCWSymbolTableTool(symbolKey: 'hylian_symbols', symbolSearchStrings: [
+      'zelda',
+      'symbol_hylian_symbols',
+    ]),
     GCWSymbolTableTool(symbolKey: 'hylian_twilight_princess_gcn', symbolSearchStrings: [
       'zelda',
       'symbol_hylian_twilightprincess_gcn',
@@ -3211,6 +3532,7 @@ initializeRegistry(BuildContext context) {
       'symbol_kabouter_abc_1947',
     ]),
     GCWSymbolTableTool(symbolKey: 'kartrak', symbolSearchStrings: [
+      'color',
       'barcodes',
       'symbol_kartrak',
     ]),
@@ -3311,26 +3633,32 @@ initializeRegistry(BuildContext context) {
       'symbol_ninjargon',
     ]),
     GCWSymbolTableTool(symbolKey: 'notes_doremi', symbolSearchStrings: [
+      'music',
       'music_notes',
       'symbol_notes_doremi',
     ]),
     GCWSymbolTableTool(symbolKey: 'notes_names_altoclef', symbolSearchStrings: [
+      'music',
       'music_notes',
       'symbol_notes_names_altoclef',
     ]),
     GCWSymbolTableTool(symbolKey: 'notes_names_bassclef', symbolSearchStrings: [
+      'music',
       'music_notes',
       'symbol_notes_names_bassclef',
     ]),
     GCWSymbolTableTool(symbolKey: 'notes_names_trebleclef', symbolSearchStrings: [
+      'music',
       'music_notes',
       'symbol_notes_names_trebleclef',
     ]),
     GCWSymbolTableTool(symbolKey: 'notes_notevalues', symbolSearchStrings: [
+      'music',
       'music_notes',
       'symbol_notes_notevalues',
     ]),
     GCWSymbolTableTool(symbolKey: 'notes_restvalues', symbolSearchStrings: [
+      'music',
       'music_notes',
       'symbol_notes_restvalues',
     ]),
@@ -3341,14 +3669,17 @@ initializeRegistry(BuildContext context) {
       'symbol_ogham',
     ]),
     GCWSymbolTableTool(symbolKey: 'optical_fiber_fotag', symbolSearchStrings: [
+      'color',
       'symbol_opticalfiber',
       'symbol_optical_fiber_fotag',
     ]),
     GCWSymbolTableTool(symbolKey: 'optical_fiber_iec60304', symbolSearchStrings: [
+      'color',
       'symbol_opticalfiber',
       'symbol_optical_fiber_iec60304',
     ]),
     GCWSymbolTableTool(symbolKey: 'optical_fiber_swisscom', symbolSearchStrings: [
+      'color',
       'symbol_opticalfiber',
       'optical_fiber_swisscom',
     ]),
@@ -3416,6 +3747,7 @@ initializeRegistry(BuildContext context) {
       'symbol_red_herring',
     ]),
     GCWSymbolTableTool(symbolKey: 'resistor', symbolSearchStrings: [
+      'color',
       'resistor_colorcode',
     ]),
     GCWSymbolTableTool(symbolKey: 'rhesus_a', symbolSearchStrings: [

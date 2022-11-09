@@ -17,7 +17,7 @@ class SymbolTableSelection extends GCWSelection {
       ].contains(className(element.tool));
     }).toList();
 
-    _toolList.sort((a, b) => sortToolListAlphabetically(a, b));
+    _toolList.sort((a, b) => sortToolList(a, b));
 
     _toolList.insert(0, registeredTools.firstWhere((element) {
       return [

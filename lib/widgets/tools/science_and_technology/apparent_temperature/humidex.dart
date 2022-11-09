@@ -26,9 +26,9 @@ class HumidexState extends State<Humidex> {
     return Column(
       children: <Widget>[
         GCWTwoOptionsSwitch(
-          title: i18n(context, 'humidex_unit'),
-          leftValue: i18n(context, 'humidex_unit_celsius'),
-          rightValue: i18n(context, 'humidex_unit_fahrenheit'),
+          title: i18n(context, 'common_measure_temperature'),
+          leftValue: i18n(context, 'common_unit_temperature_degc_name'),
+          rightValue: i18n(context, 'common_unit_temperature_degf_name'),
           value: _isMetric ? GCWSwitchPosition.left : GCWSwitchPosition.right,
           onChanged: (value) {
             setState(() {
@@ -48,16 +48,16 @@ class HumidexState extends State<Humidex> {
           padding: EdgeInsets.only(top: 10),
         ),
         GCWTwoOptionsSwitch(
-          leftValue: i18n(context, 'humidex_mode_humidity'),
-          rightValue: i18n(context, 'humidex_mode_dewpoint'),
+          leftValue: i18n(context, 'common_measure_humidity'),
+          rightValue: i18n(context, 'common_measure_dewpoint'),
           value: _isHumidity ? GCWSwitchPosition.left : GCWSwitchPosition.right,
           onChanged: (value) {
             setState(() {
               _isHumidity = value == GCWSwitchPosition.left;
               if (_isHumidity) {
-                mode = 'humidex_mode_humidity';
+                mode = 'common_measure_humidity';
               } else {
-                mode = 'humidex_mode_dewpoint';
+                mode = 'common_measure_dewpoint';
               }
             });
           },

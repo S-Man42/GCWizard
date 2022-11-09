@@ -5,6 +5,7 @@ import 'package:latlong2/latlong.dart';
 
 // Source: https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames
 
+
 LatLng slippyMapToLatLon(SlippyMap slippyMap) {
   var lon = slippyMap.x / pow(2.0, slippyMap.zoom) * 360.0 - 180.0;
 

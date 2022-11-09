@@ -43,6 +43,9 @@ import 'package:gc_wizard/widgets/selector_lists/scienceandtechnology_selection.
 import 'package:gc_wizard/widgets/selector_lists/scrabble_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/shadoks_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/silverratio_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/sqrt2_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/sqrt3_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/sqrt5_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/symbol_table_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/teletypewriter_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/tomtom_selection.dart';
@@ -80,6 +83,8 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bacon.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/beghilos.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/book_cipher.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bundeswehr_talkingboard/bundeswehr_auth.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bundeswehr_talkingboard/bundeswehr_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/burrows_wheeler.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chao.dart';
@@ -125,6 +130,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/playfair.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/pokemon.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/polybios.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/prime_alphabet.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rabbit.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rail_fence.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rc4.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/reverse.dart';
@@ -169,6 +175,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/zamonian_numbers.da
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/zc1.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulagroups.dart';
 import 'package:gc_wizard/widgets/tools/games/catan.dart';
+import 'package:gc_wizard/widgets/tools/games/bowling.dart';
 import 'package:gc_wizard/widgets/tools/games/sudoku/sudoku_solver.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/animated_image.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/animated_image_morse_code.dart';
@@ -188,6 +195,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperat
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/humidex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/summer_simmer.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/windchill.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/wet_bulb_temperature.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/moon_position.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/moon_rise_set.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/seasons.dart';
@@ -228,6 +236,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/hexadecimal.dart'
 import 'package:gc_wizard/widgets/tools/science_and_technology/iata_icao_search.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/ip_codes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/mathematical_constants.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/music_notes/music_notes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/atomic_numbers_to_text.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/periodic_table.dart';
@@ -247,11 +256,11 @@ import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:gc_wizard/widgets/utils/search_strings.dart';
 import 'package:prefs/prefs.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:gc_wizard/theme/theme.dart';
 
-import 'tools/crypto_and_encodings/music_notes/music_notes.dart';
-import 'tools/science_and_technology/astronomy/right_ascension_to_degree.dart';
-import 'tools/science_and_technology/colors/ral_color_codes.dart';
+
+import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/right_ascension_to_degree.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/colors/ral_color_codes.dart';
 
 class MainView extends StatefulWidget {
   @override
@@ -263,7 +272,7 @@ class _MainViewState extends State<MainView> {
   final _searchController = TextEditingController();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   var _searchText = '';
-  final _showSupportHintEveryN = 50;
+  final _SHOW_SUPPORT_HINT_EVERY_N = 50;
 
   @override
   void initState() {
@@ -315,13 +324,13 @@ class _MainViewState extends State<MainView> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       var countAppOpened = Prefs.getInt(PREFERENCE_APP_COUNT_OPENED);
 
-      if (countAppOpened > 1 && Prefs.getString('changelog_displayed') != CHANGELOG.keys.first) {
+      if (countAppOpened > 1 && Prefs.getString(PREFERENCE_CHANGELOG_DISPLAYED) != CHANGELOG.keys.first) {
         _showWhatsNewDialog();
-        Prefs.setString('changelog_displayed', CHANGELOG.keys.first);
+        Prefs.setString(PREFERENCE_CHANGELOG_DISPLAYED, CHANGELOG.keys.first);
         return;
       }
 
-      if (countAppOpened == 10 || countAppOpened % _showSupportHintEveryN == 0) {
+      if (countAppOpened > 0 && (countAppOpened == 10 || countAppOpened % _SHOW_SUPPORT_HINT_EVERY_N == 0)) {
         showGCWAlertDialog(
           context,
           i18n(context, 'common_support_title'),
@@ -347,7 +356,6 @@ class _MainViewState extends State<MainView> {
     Favorites.initialize();
 
     var toolList = (_isSearching && _searchText.length > 0) ? _getSearchedList() : null;
-
     return DefaultTabController(
       length: 3,
       initialIndex:
@@ -443,7 +451,6 @@ List<GCWTool> _categoryList;
 List<GCWTool> _mainToolList;
 
 refreshToolLists() {
-  refreshRegistry();
   _categoryList = null;
   _mainToolList = null;
 }
@@ -477,8 +484,11 @@ void _initStaticToolList() {
       className(Binary2Image()),
       className(BloodAlcoholContent()),
       className(BookCipher()),
+      className(Bowling()),
       className(BrailleSelection()),
       className(Brainfk()),
+      className(BundeswehrTalkingBoardAuthentification()),
+      className(BundeswehrTalkingBoardObfuscation()),
       className(BurrowsWheeler()),
       className(Caesar()),
       className(Calendar()),
@@ -611,6 +621,7 @@ void _initStaticToolList() {
       className(PrussiaTelegraph()),
       className(QrCode()),
       className(QuadraticEquation()),
+      className(Rabbit()),
       className(RailFence()),
       className(RALColorCodes()),
       className(RC4()),
@@ -639,6 +650,9 @@ void _initStaticToolList() {
       className(Skytale()),
       className(Solitaire()),
       className(SpoonLanguage()),
+      className(SQRT2Selection()),
+      className(SQRT3Selection()),
+      className(SQRT5Selection()),
       className(Stegano()),
       className(StraddlingCheckerboard()),
       className(Substitution()),
@@ -670,6 +684,7 @@ void _initStaticToolList() {
       className(WASD()),
       className(WaypointProjection()),
       className(Weekday()),
+      className(WetBulbTemperature()),
       className(WherigoSelection()),
       className(WheatstoneCookeNeedleTelegraph()),
       className(WhitespaceLanguage()),
@@ -681,8 +696,7 @@ void _initStaticToolList() {
       className(Zodiac()),
     ].contains(className(element.tool));
   }).toList();
-
-  _mainToolList.sort((a, b) => sortToolListAlphabetically(a, b));
+  _mainToolList.sort((a, b) => sortToolList(a, b));
 
   _categoryList = registeredTools.where((element) {
     return [
@@ -697,5 +711,5 @@ void _initStaticToolList() {
     ].contains(className(element.tool));
   }).toList();
 
-  _categoryList.sort((a, b) => sortToolListAlphabetically(a, b));
+  _categoryList.sort((a, b) => sortToolList(a, b));
 }

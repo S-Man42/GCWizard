@@ -9,10 +9,10 @@ Tradotto in 🇬🇧 🇩🇪 🇫🇷 🇰🇷
 <b>Evidenzia</b>
 
 <b>Generale</b>
-• Formula Solver: For handling multi stage variables
-• Multi Decoder: Enter an unknown code and let several decoders and calculators interpret it in a row
-• More than 200 sets of Symbol Tables: Direct decoding symbols to characters; save own encoding as an image
-• Online Manual: Every tool has its own manual page, translated into 🇬🇧 🇩🇪 🇫🇷
+• Risolvi-Formule: per gestire variabili a più livelli
+• Decoder multiplo: inserisci un codice sconosciuto, vari decifratori e calcolatori lo interpreteranno
+• Più di 200 set di Tavole dei Simboli: decodifica i simboli in lettere; salva il risultato come immagine
+• Manuale online: per ogni strumento c'è una pagina nel manuale, in 🇬🇧 🇩🇪 🇫🇷
 
 <b>Cryptography & Encodings</b>
 • Alphabet Values (A = 1, B = 2, ...): Configurable alphabets with language specific special character handling

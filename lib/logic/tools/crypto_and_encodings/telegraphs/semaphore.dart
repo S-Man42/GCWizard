@@ -16,7 +16,7 @@ final Map<String, List<String>> CODEBOOK_SEMAPHORE = {
   'L': ['l4', 'r2'],
   'M': ['l4', 'r3'],
   'N': ['l4', 'r4'],
-  'O': ['l3', 'l2'],
+  'O': ['l2', 'l3'],
   'P': ['l3', 'r1'],
   'Q': ['l3', 'r2'],
   'R': ['l3', 'r3'],
@@ -40,8 +40,8 @@ final Map<String, List<String>> CODEBOOK_SEMAPHORE = {
   '9': ['l2', 'l4'],
   'symboltables_semaphore_cancel': ['l2', 'r4'],
   //'symboltables_semaphore_correct':['l2', 'r5'],
-  'symboltables_semaphore_error': ['l2', 'r2'],
-  'symboltables_semaphore_attention': ['l2', 'r2'],
+  'symboltables_semaphore_error': ['l2', 'l4', 'r2', 'r4'],
+  //'symboltables_semaphore_attention': ['l2', 'r2'],
   'symboltables_semaphore_letters_following': ['l1', 'r3'],
   'symboltables_semaphore_numerals_following': ['l1', 'r2'],
   'symboltables_semaphore_rest': ['l5', 'r5'],
@@ -138,14 +138,18 @@ Map<String, dynamic> decodeSemaphore(List<String> inputs) {
 
     if (CODEBOOK.map((key, value) => MapEntry(key.join(), value.toString()))[input.split('').join()] == null) {
       char = char + UNKNOWN_ELEMENT;
-    } else {
+    }
+    else {
       symbol = CODEBOOK.map((key, value) => MapEntry(key.join(), value.toString()))[input.split('').join()];
       if (symbol == 'symboltables_semaphore_letters_following' ||
           symbol == 'symboltables_semaphore_numerals_following' ||
+          symbol == 'symboltables_semaphore_cancel' ||
+          symbol == 'symboltables_semaphore_error' ||
           symbol == 'symboltables_semaphore_rest') {
         switch (symbol) {
           case 'symboltables_semaphore_letters_following':
-          case 'symboltables_semaphore_rest':
+            if (letter_follows)
+              char = char + 'J';
             number_follows = false;
             letter_follows = true;
             break;
@@ -153,17 +157,28 @@ Map<String, dynamic> decodeSemaphore(List<String> inputs) {
             number_follows = true;
             letter_follows = false;
             break;
+          case 'symboltables_semaphore_rest':
+            char = char + ' ';
+            break;
+          case 'symboltables_semaphore_cancel':
+          case 'symboltables_semaphore_error':
+            char = char + symbol;
+            break;
         }
       } else {
-        if (letter_follows) if (LETTER.contains(symbol))
-          charH = symbol;
+        if (letter_follows)
+          if (LETTER.contains(symbol))
+            charH = symbol;
+          else
+            charH = LETTER2DIGIT[symbol];
         else
-          charH = LETTER2DIGIT[symbol];
-        else if (NUMBER.contains(symbol))
-          charH = symbol;
-        else
-          charH = DIGIT2LETTER[symbol];
-        if (charH != null) char = char + charH;
+          if (NUMBER.contains(symbol))
+            charH = symbol;
+          else
+            charH = DIGIT2LETTER[symbol];
+
+        if (charH != null)
+          char = char + charH;
       }
     }
 

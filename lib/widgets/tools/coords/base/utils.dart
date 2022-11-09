@@ -1,5 +1,6 @@
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
+import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/utils/settings/preferences.dart';
 import 'package:prefs/prefs.dart';
 
@@ -17,13 +18,13 @@ Map<String, String> defaultCoordFormat() {
         keyCoordsGaussKruegerGK4,
         keyCoordsGaussKruegerGK5
       ].contains(subtype)) {
-        subtype = keyCoordsGaussKruegerGK1;
+        subtype = getGaussKruegerTypKey();
         subtypeChanged = true;
       }
       break;
     case keyCoordsSlippyMap:
       if (int.tryParse(subtype) == null) {
-        subtype = '10';
+        subtype = DefaultSlippyZoom.toString();
         subtypeChanged = true;
       }
       break;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
+import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_textfield.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 
@@ -29,7 +30,7 @@ class GCWCoordsGaussKruegerState extends State<GCWCoordsGaussKrueger> {
   void initState() {
     super.initState();
 
-    _currentSubtype = _getSubTypeCode(widget.subtype);
+    _currentSubtype = getGkSubTypeCode(widget.subtype);
 
     _eastingController = TextEditingController(text: _currentEasting['text']);
     _northingController = TextEditingController(text: _currentNorthing['text']);
@@ -56,7 +57,7 @@ class GCWCoordsGaussKruegerState extends State<GCWCoordsGaussKrueger> {
       _eastingController.text = _currentEasting['value'].toString();
       _northingController.text = _currentNorthing['value'].toString();
     } else if (_subtypeChanged()) {
-      _currentSubtype = _getSubTypeCode(widget.subtype);
+      _currentSubtype = getGkSubTypeCode(widget.subtype);
       WidgetsBinding.instance.addPostFrameCallback((_) => _setCurrentValueAndEmitOnChange());
     }
 
@@ -82,30 +83,9 @@ class GCWCoordsGaussKruegerState extends State<GCWCoordsGaussKrueger> {
     ]);
   }
 
-  int _getSubTypeCode(String subtype) {
-    var code = 1;
-    switch (subtype) {
-      case keyCoordsGaussKruegerGK1:
-        code = 1;
-        break;
-      case keyCoordsGaussKruegerGK2:
-        code = 2;
-        break;
-      case keyCoordsGaussKruegerGK3:
-        code = 3;
-        break;
-      case keyCoordsGaussKruegerGK4:
-        code = 4;
-        break;
-      case keyCoordsGaussKruegerGK5:
-        code = 5;
-        break;
-    }
-    return code;
-  }
 
   bool _subtypeChanged() {
-    return _currentSubtype != _getSubTypeCode(widget.subtype);
+    return _currentSubtype != getGkSubTypeCode(widget.subtype);
   }
 
   _setCurrentValueAndEmitOnChange() {

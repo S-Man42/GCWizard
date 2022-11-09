@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
@@ -22,7 +23,8 @@ TextStyle gcwTextStyle({double fontSize = 0}) {
   return TextStyle(
       color: themeColors().mainFont(),
       fontSize: fontSize == 0 ? defaultFontSize() : fontSize,
-      fontFamily: 'Roboto Condensed');
+      fontFamily: 'Roboto'
+  );
 }
 
 TextStyle gcwBetaStyle() {
@@ -60,6 +62,7 @@ ThemeData buildTheme() {
   final ThemeColors colors = themeColors();
   final ThemeData base = colors.base();
   return ThemeData(
+      fontFamily: 'Roboto',
       brightness: base.brightness,
       scaffoldBackgroundColor: colors.primaryBackground(),
       primarySwatch: _generateMaterialColor(colors.primaryBackground()),

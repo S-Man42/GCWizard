@@ -9,6 +9,7 @@ import 'package:gc_wizard/widgets/favorites.dart';
 import 'package:gc_wizard/widgets/utils/AppBuilder.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:prefs/prefs.dart';
+import 'package:gc_wizard/widgets/main_view.dart';
 
 class GCWToolList extends StatefulWidget {
   final toolList;
@@ -63,7 +64,11 @@ class _GCWToolListState extends State<GCWToolList> {
       ),
       subtitle: _buildSubtitle(context, tool),
       onTap: () {
-        _navigateToSubPage(context);
+        setState(() {
+          _navigateToSubPage(context);
+          refreshToolLists();
+          AppBuilder.of(context).rebuild();
+        });
       },
       leading: tool.icon,
       trailing: IconButton(

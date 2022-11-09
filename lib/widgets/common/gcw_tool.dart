@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/i18n/supported_locales.dart';
@@ -8,7 +10,8 @@ import 'package:gc_wizard/widgets/common/gcw_symbol_container.dart';
 import 'package:gc_wizard/widgets/favorites.dart';
 import 'package:gc_wizard/widgets/selector_lists/gcw_selection.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:prefs/prefs.dart';
+import 'package:gc_wizard/utils/settings/preferences.dart';
 
 enum ToolCategory {
   CRYPTOGRAPHY,
@@ -140,6 +143,14 @@ class GCWTool extends StatefulWidget {
 class _GCWToolState extends State<GCWTool> {
   var _toolName;
   var _defaultLanguageToolName;
+
+  @override
+  void initState() {
+    _setToolCount(widget.id);
+
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -283,4 +294,21 @@ class _GCWToolState extends State<GCWTool> {
       ),
     );
   }
+}
+
+_setToolCount(String i18nPrefix) {
+  var toolCountsRaw = Prefs.get(PREFERENCE_TOOL_COUNT);
+  if (toolCountsRaw == null)
+    toolCountsRaw = '{}';
+
+  Map<String, int> toolCounts = Map<String, int>.from(jsonDecode(toolCountsRaw));
+  var currentToolCount = toolCounts[i18nPrefix];
+
+  if (currentToolCount == null)
+    currentToolCount = 0;
+
+  currentToolCount++;
+  toolCounts[i18nPrefix] = currentToolCount;
+
+  Prefs.setString(PREFERENCE_TOOL_COUNT, jsonEncode(toolCounts));
 }

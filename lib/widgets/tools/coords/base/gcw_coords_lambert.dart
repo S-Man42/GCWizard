@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/lambert.dart';
+import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_textfield.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
@@ -24,13 +24,13 @@ class GCWCoordsLambertState extends State<GCWCoordsLambert> {
   var _currentEasting = {'text': '', 'value': 0.0};
   var _currentNorthing = {'text': '', 'value': 0.0};
 
-  var _currentSubtype = LambertType.LAMBERT_93;
+  var _currentSubtype = DefaultLambertType;
 
   @override
   void initState() {
     super.initState();
 
-    _currentSubtype = _getSubType(widget.subtype);
+    _currentSubtype = getLambertType(widget.subtype);
 
     _eastingController = TextEditingController(text: _currentEasting['text']);
     _northingController = TextEditingController(text: _currentNorthing['text']);
@@ -57,7 +57,7 @@ class GCWCoordsLambertState extends State<GCWCoordsLambert> {
       _eastingController.text = _currentEasting['value'].toString();
       _northingController.text = _currentNorthing['value'].toString();
     } else if (_subtypeChanged()) {
-      _currentSubtype = _getSubType(widget.subtype);
+      _currentSubtype = getLambertType(widget.subtype);
       WidgetsBinding.instance.addPostFrameCallback((_) => _setCurrentValueAndEmitOnChange());
     }
 
@@ -83,27 +83,9 @@ class GCWCoordsLambertState extends State<GCWCoordsLambert> {
     ]);
   }
 
-  LambertType _getSubType(String subtype) {
-    switch (subtype) {
-      case keyCoordsLambert93: return LambertType.LAMBERT_93;
-      case keyCoordsLambert2008: return LambertType.LAMBERT_2008;
-      case keyCoordsLambertETRS89LCC: return LambertType.ETRS89_LCC;
-      case keyCoordsLambert72: return LambertType.LAMBERT_72;
-      case keyCoordsLambert93CC42: return LambertType.L93_CC42;
-      case keyCoordsLambert93CC43: return LambertType.L93_CC43;
-      case keyCoordsLambert93CC44: return LambertType.L93_CC44;
-      case keyCoordsLambert93CC45: return LambertType.L93_CC45;
-      case keyCoordsLambert93CC46: return LambertType.L93_CC46;
-      case keyCoordsLambert93CC47: return LambertType.L93_CC47;
-      case keyCoordsLambert93CC48: return LambertType.L93_CC48;
-      case keyCoordsLambert93CC49: return LambertType.L93_CC49;
-      case keyCoordsLambert93CC50: return LambertType.L93_CC50;
-      default: return LambertType.LAMBERT_93;
-    }
-  }
 
   bool _subtypeChanged() {
-    return _currentSubtype != _getSubType(widget.subtype);
+    return _currentSubtype != getLambertType(widget.subtype);
   }
 
   _setCurrentValueAndEmitOnChange() {

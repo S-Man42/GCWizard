@@ -13,6 +13,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:prefs/prefs.dart';
+import 'package:url_launcher/url_launcher.dart' as urlLauncher;
 
 String className(Widget widget) {
   return widget.runtimeType.toString();
@@ -38,6 +39,38 @@ defaultFontSize() {
   }
 
   return fontSize;
+}
+
+WidgetSpan superscriptedTextForRichText(String text, {TextStyle textStyle}) {
+  var style = textStyle ?? gcwTextStyle();
+
+  return WidgetSpan(
+    child: Transform.translate(
+      offset: Offset(0.0, -1 * defaultFontSize() / 2.0 ),
+      child: Text(
+        text,
+        style: style.copyWith(
+            fontSize: defaultFontSize() / 1.4
+        )
+      )
+    )
+  );
+}
+
+WidgetSpan subscriptedTextForRichText(String text, {TextStyle textStyle}) {
+  var style = textStyle ?? gcwTextStyle();
+
+  return WidgetSpan(
+      child: Transform.translate(
+          offset: Offset(0.0, defaultFontSize() / 4.0),
+          child: Text(
+              text,
+              style: style.copyWith(
+                  fontSize: defaultFontSize() / 1.4
+              )
+          )
+      )
+  );
 }
 
 List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> data,
@@ -79,7 +112,7 @@ List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> d
         .toList();
 
     if (copyColumn == null) copyColumn = rowData.length - 1;
-    var copyText = rowData[copyColumn].toString();
+    var copyText = rowData[copyColumn] is Widget ? null : rowData[copyColumn].toString();
     if (isFirst && hasHeader && copyAll) {
       copyText = '';
       data.where((row) => row != null).skip(1).forEach((dataRow) {
@@ -93,8 +126,8 @@ List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> d
           Expanded(
             child: Row(children: columns),
           ),
-          context == null
-              ? Container()
+          context == null || copyText == null || copyText.length == 0
+              ? Container(width: 21.0)
               : Container(
                   child: (((isFirst && hasHeader) & !copyAll) || suppressCopyButtons)
                       ? Container()
@@ -180,6 +213,44 @@ double maxScreenHeight(BuildContext context) {
   return MediaQuery.of(context).size.height - 100;
 }
 
-int sortToolListAlphabetically(GCWTool a, GCWTool b) {
+int _sortToolListAlphabetically(GCWTool a, GCWTool b) {
   return removeDiacritics(a.toolName).toLowerCase().compareTo(removeDiacritics(b.toolName).toLowerCase());
+}
+
+int sortToolList(GCWTool a, GCWTool b) {
+  if (Prefs.getBool(PREFERENCE_TOOL_COUNT_SORT) != null && !Prefs.getBool(PREFERENCE_TOOL_COUNT_SORT)) {
+    return _sortToolListAlphabetically(a, b);
+  }
+
+  Map<String, int> toolCounts =  Map<String, int>.from(jsonDecode(Prefs.get(PREFERENCE_TOOL_COUNT)));
+
+  var toolCountA = toolCounts[a.id];
+  var toolCountB = toolCounts[b.id];
+
+  if (toolCountA == null && toolCountB == null) {
+    return _sortToolListAlphabetically(a, b);
+  }
+
+  if (toolCountA == null && toolCountB != null) {
+    return 1;
+  }
+
+  if (toolCountA != null && toolCountB == null) {
+    return -1;
+  }
+
+  if (toolCountA != null && toolCountB != null) {
+    if (toolCountA == toolCountB) {
+      return _sortToolListAlphabetically(a, b);
+    } else {
+      return toolCountB.compareTo(toolCountA);
+    }
+  }
+
+  return null;
+}
+
+Future<bool> launchUrl(
+    Uri url) async {
+  return urlLauncher.launchUrl(url, mode: urlLauncher.LaunchMode.externalApplication);
 }

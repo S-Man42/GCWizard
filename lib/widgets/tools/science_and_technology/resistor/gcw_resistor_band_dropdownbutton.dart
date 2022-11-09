@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/resistor.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_formatter.dart';
 
 class GCWResistorBandDropDownButton extends StatefulWidget {
   final Function onChanged;
@@ -53,7 +55,7 @@ class GCWResistorBandDropDownButtonState extends State<GCWResistorBandDropDownBu
     return GCWDropDownButton(
       value: _currentValue,
       items: _colorValues.entries.map((colorValue) {
-        var textStyle = TextStyle(color: _colorAttributes[colorValue.key].textColor);
+        var textStyle = gcwTextStyle().copyWith(color: _colorAttributes[colorValue.key].textColor);
 
         return GCWDropDownMenuItem(
           value: colorValue.key,
@@ -67,7 +69,7 @@ class GCWResistorBandDropDownButtonState extends State<GCWResistorBandDropDownBu
                         Expanded(
                             child: Text(i18n(context, _colorAttributes[colorValue.key].name) + ':', style: textStyle),
                             flex: 1),
-                        Expanded(child: Text(_formatValue(colorValue.value), style: textStyle), flex: 2)
+                        Expanded(child: _formatValue(colorValue.value, textStyle), flex: 2)
                       ],
                     )))
           ]),
@@ -86,18 +88,26 @@ class GCWResistorBandDropDownButtonState extends State<GCWResistorBandDropDownBu
     widget.onChanged(_currentValue);
   }
 
-  _formatValue(value) {
+  Widget _formatValue(value, TextStyle textStyle) {
+    dynamic formatted;
+
     switch (widget.type) {
       case ResistorBandType.FIRST:
       case ResistorBandType.SECOND:
       case ResistorBandType.THIRD:
-        return formatResistorValue(value);
+        formatted = formatResistorValue(value); break;
       case ResistorBandType.MULTIPLIER:
-        return formatResistorMultiplier(value);
+        formatted = formatResistorMultiplier(value, textStyle); break;
       case ResistorBandType.TOLERANCE:
-        return formatResistorTolerance(value);
+        formatted = formatResistorTolerance(value); break;
       case ResistorBandType.TEMPERATURE_COEFFICIENT:
-        return formatResistorTemperatureCoefficient(value);
+        formatted = formatResistorTemperatureCoefficient(value, textStyle); break;
+    }
+
+    if (formatted is String) {
+      return Text(formatted, style: textStyle);
+    } else if (formatted is RichText) {
+      return formatted;
     }
   }
 }

@@ -26,7 +26,7 @@ class SummerSimmerIndexState extends State<SummerSimmerIndex> {
         Row(
           children: [
             Expanded(
-              child: GCWText(text: i18n(context, 'summersimmerindex_temperature')),
+              child: GCWText(text: i18n(context, 'common_measure_temperature')),
               flex: 1,
             ),
             Expanded(
@@ -34,8 +34,8 @@ class SummerSimmerIndexState extends State<SummerSimmerIndex> {
                   children: [
                     GCWTwoOptionsSwitch(
                       notitle: true,
-                      leftValue: i18n(context, 'summersimmerindex_unit_celsius'),
-                      rightValue: i18n(context, 'summersimmerindex_unit_fahrenheit'),
+                      leftValue: i18n(context, 'common_unit_temperature_degc_name'),
+                      rightValue: i18n(context, 'common_unit_temperature_degf_name'),
                       value: _isMetric ? GCWSwitchPosition.left : GCWSwitchPosition.right,
                       onChanged: (value) {
                         setState(() {
@@ -56,7 +56,7 @@ class SummerSimmerIndexState extends State<SummerSimmerIndex> {
           ],
         ),
         GCWDoubleSpinner(
-            title: i18n(context, 'summersimmerindex_humidity'),
+            title: i18n(context, 'common_measure_humidity'),
             value: _currentHumidity,
             min: 0.0,
             max: 100.0,

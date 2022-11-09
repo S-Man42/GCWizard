@@ -1,21 +1,22 @@
 name: gc_wizard
 description: GC Wizard
-version: 2.3.0+153
+version: 2.3.0+158
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
 
 dependencies:
-  archive: ^3.3.1
-  audioplayers: ^1.0.1
+  archive: ^3.3.2
+  audioplayers: ^1.1.1
   auto_size_text: ^3.0.0
   base32: ^2.1.3
   cached_network_image: ^3.2.2
-  dart_numerics: ^0.0.6
+  code_text_field:
+    git: https://github.com/BertrandBev/code_field
   diacritic: ^0.1.1
   encrypt: ^5.0.0
   exif: ^3.1.2
-  file_picker: ^5.0.1
+  file_picker: ^5.2.1
   file_picker_writable: ^2.0.3
   flutter:
     sdk: flutter
@@ -24,41 +25,46 @@ dependencies:
   flutter_map: ^1.1.1
   flutter_map_marker_popup: ^3.1.0+1
   flutter_map_tappable_polyline: ^3.2.0
-  fluttertoast: ^8.0.9
+  fluttertoast: ^8.1.1
   http: ^0.13.5
-  http_parser: ^4.0.1
-  image: ^3.2.0
+  http_parser: ^4.0.2
+  image: ^3.2.2
   intl: ^0.17.0
   location: ^4.4.0
   mask_text_input_formatter: ^2.4.0
   math_expressions: ^2.3.1
-  package_info_plus: ^1.4.3+1
+  package_info_plus: ^2.0.0
   path: ^1.8.1
   path_provider: ^2.0.11
-  permission_handler: ^10.0.0
+  permission_handler: ^10.1.0
   photo_view: ^0.14.0
-  pointycastle: ^3.6.1
+  pointycastle: ^3.6.2
   prefs: ^3.5.0
-  provider: ^6.0.3
+  provider: ^6.0.4
   qr: ^3.0.1
   r_scan: ^0.1.6+1
-  scrollable_positioned_list: ^0.3.2
+  scrollable_positioned_list: ^0.3.5
   touchable: ^1.0.2
-  tuple: ^2.0.0
+  tuple: ^2.0.1
   universal_html: ^2.0.4
   unrar_file: ^1.1.0
   uuid: ^3.0.6
-  url_launcher: ^6.1.5
-  utility: ^1.0.2
-  code_text_field: ^1.0.2
-  #xmp: ^1.0.2 # xml:4  :(
+  url_launcher: ^6.1.6
+  utility: ^1.0.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: 0.9.3
+  flutter_launcher_icons: 0.10.0
 
 flutter:
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto/Roboto-Bold.ttf
+        - asset: assets/fonts/Roboto/Roboto-BoldItalic.ttf
+        - asset: assets/fonts/Roboto/Roboto-Italic.ttf
+        - asset: assets/fonts/Roboto/Roboto-Regular.ttf
   uses-material-design: true
   assets:
     - assets/i18n/

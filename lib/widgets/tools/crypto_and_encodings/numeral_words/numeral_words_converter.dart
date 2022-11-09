@@ -1,5 +1,4 @@
 import 'dart:collection';
-
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/numeral_words.dart';
@@ -84,7 +83,6 @@ class NumeralWordsConverterState extends State<NumeralWordsConverter> {
           )
         else // encode
           GCWIntegerSpinner(
-            title: i18n(context, 'common_numeralbase_denary'),
             min: MIN_MAX_NUMBER[_currentLanguage][0],
             max: MIN_MAX_NUMBER[_currentLanguage][1],
             value: _currentNumber,
@@ -115,27 +113,24 @@ class NumeralWordsConverterState extends State<NumeralWordsConverter> {
 
     return GCWDefaultOutput(
         child: Column(children: <Widget>[
-      if (output.title != '')
-        Column(
-          children: <Widget>[
-            GCWTextDivider(text: i18n(context, output.title)),
-            GCWOutputText(
-              text: output.numbersystem,
-            )
-          ],
-        ),
-      if (_currentMode == GCWSwitchPosition.right) // decode
-        GCWTextDivider(text: i18n(context, 'common_numeralbase_denary'))
-      else
-        GCWTextDivider(text: i18n(context, 'numeralwords_converter_numeralword')),
-      if (_currentMode == GCWSwitchPosition.right) // decode
-        GCWOutputText(
-          text: output.number.toString(),
-        )
-      else
-        GCWOutputText(
-          text: output.numeralWord,
-        ),
-    ]));
+            if (output.title != '')
+                  Column(
+                    children: <Widget>[
+                      GCWTextDivider(text: i18n(context, output.title)),
+                      GCWOutputText(
+                        text: output.numbersystem,
+                      )
+                    ],
+                  ),
+
+            if (_currentMode == GCWSwitchPosition.right) // decode
+                  GCWOutputText(
+                    text: _currentDecodeInput.length == 0 ? '' : output.number.toString(),
+              )
+            else
+                  GCWOutputText(
+                    text: output.numeralWord,
+              ),
+          ]));
   }
 }

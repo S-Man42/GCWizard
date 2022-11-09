@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/supported_locales.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
 import 'package:gc_wizard/widgets/main_view.dart';
+import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/utils/search_strings.dart';
 
 class AppLocalizations {
@@ -37,6 +38,7 @@ class AppLocalizations {
     };
 
     // refresh toolNames needs a refreshed registry
+    refreshRegistry();
     refreshToolLists();
 
     await loadSearchStrings(locale.languageCode);

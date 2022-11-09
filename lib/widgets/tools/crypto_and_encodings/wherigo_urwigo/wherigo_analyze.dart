@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'dart:typed_data';
 import 'dart:ui';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/krevo.wherigotools/ucommons.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/urwigo_tools.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_analyze.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_analyze_gwc.dart';
@@ -15,6 +16,7 @@ import 'package:gc_wizard/widgets/common/gcw_expandable.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_soundplayer.dart';
+import 'package:gc_wizard/widgets/common/gcw_code_textfield.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_export_dialog.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hex_viewer.dart';
@@ -41,10 +43,6 @@ import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/gcw_file.dart';
 import 'package:intl/intl.dart';
 import 'package:prefs/prefs.dart';
-import 'package:code_text_field/code_text_field.dart';
-import 'package:highlight/languages/lua.dart';
-import 'package:flutter_highlight/themes/atom-one-dark.dart';
-import 'package:flutter_highlight/themes/atom-one-light.dart';
 
 class WherigoAnalyze extends StatefulWidget {
   @override
@@ -52,8 +50,6 @@ class WherigoAnalyze extends StatefulWidget {
 }
 
 class WherigoAnalyzeState extends State<WherigoAnalyze> {
-  ScrollController _scrollControllerHex;
-
   Uint8List _GWCbytes;
   Uint8List _LUAbytes;
 
@@ -120,14 +116,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   @override
   void initState() {
     super.initState();
-    _expertMode = Prefs.getString('wherigo_display_data_mode') == 'Expert';
+    _expertMode = Prefs.getBool(PREFERENCE_WHERIGOANALYZER_EXPERTMODE);
 
-     _codeControllerHighlightedLUA = CodeController(
-      text: _LUA_SourceCode,
-      language: lua,
-      theme: Prefs.getString(PREFERENCE_THEME_COLOR) == ThemeType.DARK.toString() ? atomOneDarkTheme : atomOneLightTheme,
-      stringMap: WHERIGO_SYNTAX_HIGHLIGHT_STRINGMAP,
-    );
+    _codeControllerHighlightedLUA = TextEditingController(text: _LUA_SourceCode);
   }
 
   _askFoSyntaxHighlighting() {
@@ -359,12 +350,26 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               Row(
                 children: <Widget>[
                   GCWIconButton(
-                    //icon: _expertMode ? Icons.plagiarism : Icons.note,
-                    icon: _expertMode ? Icons.psychology : Icons.account_circle,
+                    customIcon: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Icon(_expertMode ? Icons.psychology : Icons.psychology_outlined,
+                          color: themeColors().mainFont()
+                        ),
+                        _expertMode ? Container() :
+                          Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Icon(Icons.block, size: 35.0, color: themeColors().mainFont())
+                            ],
+                          ),
+                      ],
+                    ),
+
                     onPressed: () {
                       setState(() {
                         _expertMode = !_expertMode;
-                        _expertMode ? Prefs.setString('wherigo_display_data_mode', 'Expert') : Prefs.setString('wherigo_display_data_mode', 'User');
+                        Prefs.setBool(PREFERENCE_WHERIGOANALYZER_EXPERTMODE, _expertMode);
                         _displayCartridgeDataList = _setDisplayCartridgeDataList();
                         showToast(_expertMode ? i18n(context, 'wherigo_mode_expert') : i18n(context, 'wherigo_mode_user'));
                         if (!_expertMode && ( _displayedCartridgeData == WHERIGO.LUABYTECODE) ||
@@ -373,7 +378,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                                               _displayedCartridgeData == WHERIGO.LUAFILE ||
                                               _displayedCartridgeData == WHERIGO.TASKS ||
                                               _displayedCartridgeData == WHERIGO.TIMERS ||
-                                              _displayedCartridgeData == WHERIGO.IDENTIFIER
+                                              _displayedCartridgeData == WHERIGO.IDENTIFIER ||
+                                              _displayedCartridgeData == WHERIGO.RESULTS_GWC ||
+                                              _displayedCartridgeData == WHERIGO.RESULTS_LUA
                                             )
                           _displayedCartridgeData = WHERIGO.HEADER;
                       });
@@ -658,8 +665,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         if (_WherigoCartridgeLUA.Media.length > 0) {
           filename = _WherigoCartridgeLUA.Media[_mediaFileIndex - 1].MediaFilename;
           _outputMedia = [
-            [i18n(context, 'wherigo_media_id'), _WherigoCartridgeLUA.Media[_mediaFileIndex - 1].MediaID],
-            [i18n(context, 'wherigo_media_luaname'), _WherigoCartridgeLUA.Media[_mediaFileIndex - 1].MediaLUAName],
+            _expertMode ? [i18n(context, 'wherigo_media_id'), _WherigoCartridgeLUA.Media[_mediaFileIndex - 1].MediaID] : null,
+            _expertMode ? [i18n(context, 'wherigo_media_luaname'), _WherigoCartridgeLUA.Media[_mediaFileIndex - 1].MediaLUAName] : null,
             [i18n(context, 'wherigo_media_name'), _WherigoCartridgeLUA.Media[_mediaFileIndex - 1].MediaName],
             [
               i18n(context, 'wherigo_media_description'),
@@ -745,10 +752,11 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           children: <Widget>[
             GCWDefaultOutput(
                 child: (_currentSyntaxHighlighting == true)
-                    ? CodeField(
+                    ? GCWCodeTextField(
                         controller: _codeControllerHighlightedLUA,
-                        textStyle: TextStyle(fontFamily: 'SourceCode'),
-                        lineNumberStyle: LineNumberStyle(width: 80.0),
+                        language: CodeHighlightingLanguage.LUA,
+                        lineNumberStyle: GCWCodeTextFieldLineNumberStyle(width: 80.0),
+                        stringMap: WHERIGO_SYNTAX_HIGHLIGHT_STRINGMAP
                       )
                     : GCWOutputText(
                         text: _LUA_SourceCode,
@@ -1083,11 +1091,12 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                   children: <Widget>[
                     Column(
                         children: columnedMultiLineOutput(context,
-                            _outputAnswer(_WherigoCartridgeLUA.Inputs[_inputIndex - 1].InputAnswers[_answerIndex - 1]),
+                            _outputAnswer(_WherigoCartridgeLUA.Inputs[_inputIndex - 1], _WherigoCartridgeLUA.Inputs[_inputIndex - 1].InputAnswers[_answerIndex - 1]),
                             copyColumn: 1, flexValues: [2, 3, 3])),
                     GCWExpandableTextDivider(
                       expanded: false,
                       text: i18n(context, 'wherigo_output_answeractions'),
+                      suppressTopSpace: false,
                       child: Column(
                           children: _outputAnswerActionsWidgets(
                               _WherigoCartridgeLUA.Inputs[_inputIndex - 1].InputAnswers[_answerIndex - 1])),
@@ -1408,7 +1417,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   List<List<dynamic>> _outputZone(ZoneData data) {
     List<List<dynamic>> result = [
-      [i18n(context, 'wherigo_output_luaname'), data.ZoneLUAName],
+      _expertMode ? [i18n(context, 'wherigo_output_luaname'), data.ZoneLUAName] : null,
       _expertMode ? [i18n(context, 'wherigo_output_id'), data.ZoneID] : null,
       [i18n(context, 'wherigo_output_name'), data.ZoneName],
       [i18n(context, 'wherigo_output_description'), data.ZoneDescription],
@@ -1457,7 +1466,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   List<List<dynamic>> _outputItem(ItemData data) {
     List<List<dynamic>> result = [
-      [i18n(context, 'wherigo_output_luaname'), data.ItemLUAName],
+      _expertMode ? [i18n(context, 'wherigo_output_luaname'), data.ItemLUAName] : null,
       _expertMode ? [i18n(context, 'wherigo_output_id'), data.ItemID] : null,
       [i18n(context, 'wherigo_output_name'), data.ItemName],
       [i18n(context, 'wherigo_output_description'), data.ItemDescription],
@@ -1500,7 +1509,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   List<List<dynamic>> _outputTask(TaskData data) {
     return [
-      [i18n(context, 'wherigo_output_luaname'), data.TaskLUAName],
+      _expertMode ? [i18n(context, 'wherigo_output_luaname'), data.TaskLUAName] : null,
       _expertMode ? [i18n(context, 'wherigo_output_id'), data.TaskID] : null,
       [i18n(context, 'wherigo_output_name'), data.TaskName],
       [i18n(context, 'wherigo_output_description'), data.TaskDescription],
@@ -1527,7 +1536,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   List<List<dynamic>> _outputTimer(TimerData data) {
     return [
-      [i18n(context, 'wherigo_output_luaname'), data.TimerLUAName],
+      _expertMode ? [i18n(context, 'wherigo_output_luaname'), data.TimerLUAName] : null,
       _expertMode ? [i18n(context, 'wherigo_output_id'), data.TimerID] : null,
       [i18n(context, 'wherigo_output_name'), data.TimerName],
       [i18n(context, 'wherigo_output_description'), data.TimerDescription],
@@ -1542,11 +1551,11 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   List<List<dynamic>> _outputCharacter(CharacterData data) {
     List<List<dynamic>> result = [
-      [i18n(context, 'wherigo_output_luaname'), data.CharacterLUAName],
+      _expertMode ? [i18n(context, 'wherigo_output_luaname'), data.CharacterLUAName] : null,
       _expertMode ?[i18n(context, 'wherigo_output_id'), data.CharacterID] : null,
       [i18n(context, 'wherigo_output_name'), data.CharacterName],
       [i18n(context, 'wherigo_output_description'), data.CharacterDescription],
-    _expertMode ? [
+      _expertMode ? [
         i18n(context, 'wherigo_output_medianame'),
         data.CharacterMediaName +
             (data.CharacterMediaName != ''
@@ -1590,7 +1599,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   List<List<dynamic>> _outputInput(InputData data) {
     return [
-      [i18n(context, 'wherigo_output_luaname'), data.InputLUAName],
+      _expertMode ? [i18n(context, 'wherigo_output_luaname'), data.InputLUAName] : null,
       _expertMode ? [i18n(context, 'wherigo_output_id'), data.InputID] : null,
       [i18n(context, 'wherigo_output_name'), data.InputName],
       [i18n(context, 'wherigo_output_description'), data.InputDescription],
@@ -1769,15 +1778,40 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     return result;
   }
 
-  List<List<dynamic>> _outputAnswer(AnswerData data) {
-    List<String> answers = data.AnswerAnswer.split('\x01');
-    var hash = answers.length == 2 ? answers[1].trim() : null;
-    var answer = answers[0].trim();
+  List<List<dynamic>> _outputAnswer(InputData input, AnswerData data) {
+    List<List<dynamic>> result;
 
-    List<List<dynamic>> result = [
-      hash != null ? [i18n(context, 'wherigo_output_hash'), hash] : null,
-      [i18n(context, hash != null ? 'wherigo_output_answerdecrypted' : 'wherigo_output_answer'), answer],
-    ];
+    List<String> answers = data.AnswerAnswer.split('\x01');
+    var hash = answers[0].trim();
+    var answerAlphabetical = answers.length >= 2 ? answers[1].trim() : null;
+    var answerNumeric = answers.length == 3 ? answers[2].trim() : null;
+
+    if (input.InputType == 'MultipleChoice') {
+      result = [
+        answers.length > 1
+            ? [i18n(context, 'wherigo_output_hash'), hash, null]
+            : [i18n(context, 'wherigo_output_answer'), hash],
+      ];
+      if (hash != '0') {
+        for (int i = 0; i < input.InputChoices.length; i++) {
+          if (RSHash(input.InputChoices[i].toLowerCase()).toString() == hash)
+            result.add([i18n(context, 'wherigo_output_answerdecrypted'), input.InputChoices[i], null]);
+        };
+      }
+    }
+    else {
+      result = [
+        answers.length > 1
+            ? [i18n(context, 'wherigo_output_hash'), hash, null]
+            : [i18n(context, 'wherigo_output_answer'), hash],
+        answerAlphabetical != null
+            ? [i18n(context, 'wherigo_output_answerdecrypted'), i18n(context, 'common_letters'), answerAlphabetical]
+            : null,
+        answerNumeric != null
+            ? [i18n(context, 'wherigo_output_answerdecrypted'), i18n(context, 'common_numbers'), answerNumeric]
+            : null,
+      ];
+    }
 
     return result;
   }
@@ -2231,10 +2265,10 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 CountryID: '',
                 StateID: '',
                 UseLogging: '',
-                CreateDate: '',
-                PublishDate: '',
-                UpdateDate: '',
-                LastPlayedDate: '',
+                CreateDate: null,
+                PublishDate: null,
+                UpdateDate: null,
+                LastPlayedDate: null,
                 httpCode: _WherigoCartridgeLUA.httpCode,
                 httpMessage: _WherigoCartridgeLUA.httpMessage,
                 ResultStatus: ANALYSE_RESULT_STATUS.ERROR_HTTP,
@@ -2407,7 +2441,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   _buildHeader() {
     if (_WherigoCartridgeGWC != null && _WherigoCartridgeLUA != null) {
       _outputHeader = [
-        [i18n(context, 'wherigo_header_signature'), _WherigoCartridgeGWC.Signature],
+        _expertMode ? [i18n(context, 'wherigo_header_signature'), _WherigoCartridgeGWC.Signature] : null,
         [i18n(context, 'wherigo_header_numberofmediafiles'), (_WherigoCartridgeGWC.NumberOfObjects - 1).toString()],
         [
           i18n(context, 'wherigo_output_location'),
@@ -2438,14 +2472,15 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         [i18n(context, 'wherigo_header_startinglocation'), _WherigoCartridgeGWC.StartingLocationDescription],
         _expertMode ? [i18n(context, 'wherigo_header_state'), _WherigoCartridgeLUA.StateID] : null,
         _expertMode ? [i18n(context, 'wherigo_header_country'), _WherigoCartridgeLUA.CountryID] : null,
-        [i18n(context, 'wherigo_header_version'), _WherigoCartridgeGWC.Version],
-        [i18n(context, 'wherigo_header_creationdate'), _getCreationDate(_WherigoCartridgeGWC.DateOfCreation)],
-        _expertMode ? [i18n(context, 'wherigo_header_publish'), _WherigoCartridgeLUA.PublishDate] : null,
-        _expertMode ? [i18n(context, 'wherigo_header_update'), _WherigoCartridgeLUA.UpdateDate] : null,
-        _expertMode ? [i18n(context, 'wherigo_header_lastplayed'), _WherigoCartridgeLUA.LastPlayedDate] : null,
+        _expertMode ? [i18n(context, 'wherigo_header_version'), _WherigoCartridgeGWC.Version] : null,
+        [i18n(context, 'wherigo_header_creationdate') + ' (GWC)', _getCreationDate(_WherigoCartridgeGWC.DateOfCreation)],
+        _expertMode ? [i18n(context, 'wherigo_header_creationdate') + ' (LUA)', formatDate(_WherigoCartridgeLUA.CreateDate)] : null,
+        _expertMode ? [i18n(context, 'wherigo_header_publish'), formatDate(_WherigoCartridgeLUA.PublishDate)] : null,
+        _expertMode ? [i18n(context, 'wherigo_header_update'), formatDate(_WherigoCartridgeLUA.UpdateDate)] : null,
+        _expertMode ? [i18n(context, 'wherigo_header_lastplayed'), formatDate(_WherigoCartridgeLUA.LastPlayedDate)] : null,
         [i18n(context, 'wherigo_header_author'), _WherigoCartridgeGWC.Author],
         _expertMode ? [i18n(context, 'wherigo_header_company'), _WherigoCartridgeGWC.Company] : null,
-        [i18n(context, 'wherigo_header_device'), _WherigoCartridgeGWC.RecommendedDevice],
+        _expertMode ? [i18n(context, 'wherigo_header_device'), _WherigoCartridgeGWC.RecommendedDevice] : null,
         _expertMode ? [i18n(context, 'wherigo_header_deviceversion'), _WherigoCartridgeLUA.TargetDeviceVersion] : null,
         _expertMode ? [i18n(context, 'wherigo_header_logging'), i18n(context, 'common_' + _WherigoCartridgeLUA.UseLogging)] : null
       ];

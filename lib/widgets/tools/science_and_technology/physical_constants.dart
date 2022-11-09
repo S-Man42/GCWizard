@@ -5,6 +5,8 @@ import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class PhysicalConstants extends StatefulWidget {
   @override
@@ -57,26 +59,37 @@ class PhysicalConstantsState extends State<PhysicalConstants> {
       constantData['value'] != null
           ? [
               i18n(context, 'physical_constants_value'),
-              constantData['value'] +
-                  (constantData['exponent'] != null
-                      ? ' × 10' + stringToSuperscript(constantData['exponent'].toString())
-                      : '')
+              constantData['value'],
+              _buildExponent(constantData['exponent'])
             ]
           : null,
       constantData['standard_uncertainty'] != null
           ? [
               i18n(context, 'physical_constants_standard_uncertainty'),
-              constantData['standard_uncertainty'] +
-                  (constantData['exponent'] != null
-                      ? ' × 10' + stringToSuperscript(constantData['exponent'].toString())
-                      : '')
+              constantData['standard_uncertainty'],
+              _buildExponent(constantData['exponent'])
             ]
           : null,
       constantData['unit'] != null ? [i18n(context, 'physical_constants_unit'), constantData['unit']] : null
     ];
 
     return Column(
-      children: columnedMultiLineOutput(context, data, flexValues: [1, 2]),
+      children: columnedMultiLineOutput(context, data, flexValues: [2, 3, 2], copyColumn: 1),
+    );
+  }
+
+  _buildExponent(exponent) {
+    if (exponent == null)
+      return null;
+
+    return RichText(
+      text: TextSpan(
+        style: gcwTextStyle(),
+        children: [
+          TextSpan(text: ' × 10'),
+          superscriptedTextForRichText(exponent.toString())
+        ]
+      )
     );
   }
 }

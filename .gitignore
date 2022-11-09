@@ -75,7 +75,6 @@ crowdin.properties
 
 /android/key.properties
 /.flutter-plugins-dependencies
-/lib/generated_plugin_registrant.dart
 web
 /pubspec.lock
 /assets/tokens/mapbox

@@ -12,7 +12,7 @@ class GeneralCodebreakersSelection extends GCWSelection {
         .where(
             (element) => element.categories != null && element.categories.contains(ToolCategory.GENERAL_CODEBREAKERS))
         .toList();
-    _toolList.sort((a, b) => sortToolListAlphabetically(a, b));
+    _toolList.sort((a, b) => sortToolList(a, b));
 
     return Container(child: GCWToolList(toolList: _toolList));
   }

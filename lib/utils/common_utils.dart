@@ -222,13 +222,6 @@ Map<U, T> switchMapKeyValue<T, U>(Map<T, U> map, {keepFirstOccurence: false}) {
   return newMap.map((k, v) => MapEntry(v, k));
 }
 
-String stringToSuperscript(String text) {
-  return text.split('').map((character) {
-    var superscript = SUPERSCRIPT_CHARACTERS[character];
-    return superscript ?? character;
-  }).join();
-}
-
 double degreesToRadian(double degrees) {
   return degrees * pi / 180.0;
 }

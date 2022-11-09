@@ -409,7 +409,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
           className(SymbolTable()),
         ].contains(className(element.tool));
       }).toList();
-      _toolList.sort((a, b) => sortToolListAlphabetically(a, b));
+      _toolList.sort((a, b) => sortToolList(a, b));
 
       _compareSymbolItems = _toolList.map((tool) {
         return GCWDropDownMenuItem(

@@ -19,11 +19,12 @@ import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/common/units/gcw_unit_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/main_menu/settings/settings_preferences.dart';
+import 'package:gc_wizard/widgets/main_view.dart';
 import 'package:gc_wizard/widgets/utils/AppBuilder.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:prefs/prefs.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class GeneralSettings extends StatefulWidget {
   @override
@@ -155,6 +156,19 @@ class GeneralSettingsState extends State<GeneralSettings> {
           onChanged: (value) {
             setState(() {
               Prefs.setBool(PREFERENCE_TOOLLIST_SHOW_EXAMPLES, value);
+              AppBuilder.of(context).rebuild();
+            });
+          },
+        ),
+        GCWTwoOptionsSwitch(
+          value: Prefs.getBool(PREFERENCE_TOOL_COUNT_SORT) ? GCWSwitchPosition.left : GCWSwitchPosition.right,
+          leftValue: i18n(context, 'settings_general_toollist_toolcount_sort_on'),
+          rightValue: i18n(context, 'settings_general_toollist_toolcount_sort_off'),
+          title: i18n(context, 'settings_general_toollist_toolcount_sort'),
+          onChanged: (value) {
+            setState(() {
+              Prefs.setBool(PREFERENCE_TOOL_COUNT_SORT, value == GCWSwitchPosition.left);
+              refreshToolLists();
               AppBuilder.of(context).rebuild();
             });
           },

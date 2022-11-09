@@ -5,6 +5,8 @@ import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/gcw_resistor_band_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_formatter.dart';
+import 'package:gc_wizard/theme/theme.dart';
 
 class ResistorColorCodeCalculator extends StatefulWidget {
   @override
@@ -259,7 +261,7 @@ class ResistorColorCodeCalculatorState extends State<ResistorColorCodeCalculator
         resistorValue.temperatureCoefficient != null
             ? [
                 i18n(context, 'resistor_temperaturecoefficient'),
-                formatResistorTemperatureCoefficient(resistorValue.temperatureCoefficient)
+                formatResistorTemperatureCoefficient(resistorValue.temperatureCoefficient, gcwTextStyle())
               ]
             : null
       ];

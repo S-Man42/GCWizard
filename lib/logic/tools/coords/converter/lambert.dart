@@ -1,6 +1,7 @@
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/coords/external_libs/net.sf.geographiclib/lambert_conformal_conic.dart';
+import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:latlong2/latlong.dart';
 
 enum LambertType {
@@ -214,7 +215,7 @@ LambertConformalConic _lambertConformalConic(_LambertDefinition specificLambert,
   return lambertCC;
 }
 
-Lambert parseLambert(String input, {type: LambertType.LAMBERT_93}) {
+Lambert parseLambert(String input, {type: DefaultLambertType}) {
   RegExp regExp = RegExp(r'^\s*([\-0-9\.]+)(\s*\,\s*|\s+)([\-0-9\.]+)\s*$');
   var matches = regExp.allMatches(input);
   var _eastingString = '';

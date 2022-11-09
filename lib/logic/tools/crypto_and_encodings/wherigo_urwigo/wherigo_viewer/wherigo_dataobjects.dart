@@ -418,10 +418,10 @@ class WherigoCartridgeLUA {
   final String StateID;
   final String CountryID;
   final String UseLogging;
-  final String CreateDate;
-  final String PublishDate;
-  final String UpdateDate;
-  final String LastPlayedDate;
+  final DateTime CreateDate;
+  final DateTime PublishDate;
+  final DateTime UpdateDate;
+  final DateTime LastPlayedDate;
   final String httpCode;
   final String httpMessage;
 
@@ -450,10 +450,10 @@ class WherigoCartridgeLUA {
       this.CountryID = '',
       this.StateID = '',
       this.UseLogging = '',
-      this.CreateDate = '',
-      this.PublishDate = '',
-      this.UpdateDate = '',
-      this.LastPlayedDate = '',
+      this.CreateDate = null,
+      this.PublishDate = null,
+      this.UpdateDate = null,
+      this.LastPlayedDate = null,
       this.httpCode = '',
       this.httpMessage = ''});
 }
@@ -524,13 +524,11 @@ Map<WHERIGO, String> WHERIGO_DATA_FULL_USER = {
   WHERIGO.ZONES: 'wherigo_data_zone_list',
   WHERIGO.INPUTS: 'wherigo_data_input_list',
   WHERIGO.MESSAGES: 'wherigo_data_message_list',
-  WHERIGO.RESULTS_LUA: 'wherigo_data_results_lua',
 };
 
 Map<WHERIGO, String> WHERIGO_DATA_GWC_USER = {
   WHERIGO.HEADER: 'wherigo_data_header',
   WHERIGO.MEDIAFILES: 'wherigo_data_mediafiles',
-  WHERIGO.RESULTS_GWC: 'wherigo_data_results_gwc',
 };
 
 Map<WHERIGO, String> WHERIGO_DATA_LUA_USER = {
@@ -540,7 +538,6 @@ Map<WHERIGO, String> WHERIGO_DATA_LUA_USER = {
   WHERIGO.ZONES: 'wherigo_data_zone_list',
   WHERIGO.INPUTS: 'wherigo_data_input_list',
   WHERIGO.MESSAGES: 'wherigo_data_message_list',
-  WHERIGO.RESULTS_LUA: 'wherigo_data_results_lua',
 };
 
 final Map<String, String> HTTP_STATUS = {
