@@ -99,9 +99,12 @@ class MusicNotesState extends State<MusicNotes> {
     Map<String, bool> currentDisplay;
 
     var displays = _currentDisplays;
-    if (displays != null && displays.length > 0)
+    if (displays != null && displays.length > 0) {
       currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [], key: (e) => e, value: (e) => true);
-    else
+      currentDisplay.remove(altClef);
+      currentDisplay.remove(bassClef);
+      currentDisplay.remove(trebleClef);
+    } else
       currentDisplay = {};
 
     switch (_currentCode) {
