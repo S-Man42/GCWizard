@@ -432,8 +432,8 @@ class BundeswehrTalkingBoardAuthentificationState extends State<BundeswehrTalkin
   }
 
   void _buildNumeralCode(BuildContext context, {bool custom, String xAxis, String yAxis}) {
-    List<String> _colTitle;
-    List<String> _rowTitle;
+    List<String> _yAxisTitle;
+    List<String> _xAxisTitle;
     List<String> _numeralCode = [];
 
     if (custom) {
@@ -460,9 +460,9 @@ class BundeswehrTalkingBoardAuthentificationState extends State<BundeswehrTalkin
         return;
       }
 
-      _colTitle = yAxis.toUpperCase().split('');
-      _rowTitle = xAxis.toUpperCase().split('');
-    } else {
+      _yAxisTitle = yAxis.toUpperCase().split('');
+      _xAxisTitle = xAxis.toUpperCase().split('');
+    } else { // random
       List<String> alphabet = [
         'A',
         'B',
@@ -499,8 +499,9 @@ class BundeswehrTalkingBoardAuthentificationState extends State<BundeswehrTalkin
         description = description + alphabet[rnd];
         alphabet.removeAt(rnd);
       }
-      _colTitle = description.substring(0, 13).split('');
-      _rowTitle = description.substring(13).split('');
+
+      _xAxisTitle = description.substring(0, 13).split('');
+      _yAxisTitle = description.substring(13).split('');
     }
 
     _numeralCode.addAll('0123456789ABC'.split(''));
@@ -518,8 +519,8 @@ class BundeswehrTalkingBoardAuthentificationState extends State<BundeswehrTalkin
     _numeralCode.addAll('123456789STU0'.split(''));
 
     int i = 0;
-    _numeralCodeString = '   ' + _colTitle.join(' ') + '\n----------------------------\n ';
-    _rowTitle.forEach((row) {
+    _numeralCodeString = '   ' + _xAxisTitle.join(' ') + '\n----------------------------\n ';
+    _yAxisTitle.forEach((row) {
       _numeralCodeString = _numeralCodeString + row + ' ';
       for (int j = 0; j < 13; j++) {
         _numeralCodeString = _numeralCodeString + _numeralCode[i * 13 + j] + ' ';
@@ -527,8 +528,9 @@ class BundeswehrTalkingBoardAuthentificationState extends State<BundeswehrTalkin
       i++;
       _numeralCodeString = _numeralCodeString + '\n ';
     });
+
     _tableNumeralCode =
-        BundeswehrTalkingBoardAuthentificationTable(xAxis: _rowTitle, yAxis: _colTitle, Content: _numeralCode);
+        BundeswehrTalkingBoardAuthentificationTable(xAxis: _xAxisTitle, yAxis: _yAxisTitle, Content: _numeralCode);
   }
 
   bool _invalidSingleAxisTitle(String text) {
