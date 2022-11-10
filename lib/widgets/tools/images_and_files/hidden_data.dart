@@ -176,11 +176,16 @@ class HiddenDataState extends State<HiddenData> {
   Widget _buildOutput() {
     if (_unHideFile == null) return Container();
 
+    var _complete = false;
     var _hiddenDataList = hiddenData(_unHideFile);
+    _hiddenDataList.then((value) {_complete = true;});
+
     return FutureBuilder(
         future: _hiddenDataList,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.data == null || snapshot.data.isEmpty)
+          if (!_complete)
+            return Container();
+          else if (snapshot.data == null || snapshot.data.isEmpty)
             return GCWOutputText(text: i18n(context, 'hiddendata_nohiddendatafound'), suppressCopyButton: true);
           else
             return GCWFilesOutput(files: snapshot.data);
