@@ -77,7 +77,7 @@ class HiddenDataState extends State<HiddenData> {
     );
   }
 
-  _buildHideWidget() {
+  Widget _buildHideWidget() {
     return Column(
       children: [
         GCWOpenFile(
@@ -147,7 +147,7 @@ class HiddenDataState extends State<HiddenData> {
     );
   }
 
-  _buildUnhideWidget() {
+  Widget _buildUnhideWidget() {
     return Column(
       children: [
         Container(), // fixes strange behaviour: First GCWOpenFile widget from hide/unhide affect each other
