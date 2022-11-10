@@ -184,7 +184,7 @@ class HiddenDataState extends State<HiddenData> {
         future: _hiddenDataList,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (!_complete)
-            return Container();
+            return GCWOutputText(text: i18n(context, 'common_please_wait'), suppressCopyButton: true);
           else if (snapshot.data == null || snapshot.data.isEmpty)
             return GCWOutputText(text: i18n(context, 'hiddendata_nohiddendatafound'), suppressCopyButton: true);
           else
