@@ -111,6 +111,7 @@ BundeswehrTalkingBoardAuthentificationOutput buildAuthBundeswehr(
     String currentLetterCallSign,
     BundeswehrTalkingBoardAuthentificationTable tableNumeralCode,
     BundeswehrTalkingBoardAuthentificationTable tableAuthentificationCode) {
+
   if (tableNumeralCode == null || tableNumeralCode.Content.isEmpty)
     return BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CUSTOM_NUMERAL_TABLE);
 
@@ -124,7 +125,9 @@ BundeswehrTalkingBoardAuthentificationOutput buildAuthBundeswehr(
     return BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CALLSIGN_LETTER);
 
   if (currentCallSign.split('').contains(currentLetterCallSign)) {
+
     if (BUNDESWEHR_TALKINGBOARD_AUTH_TABLE_Y_AXIS.contains(currentLetterCallSign)) {
+
       List<String> tupel1 = [];
       for (int i = 0; i < tableNumeralCode.Content.length; i++) {
         if (tableNumeralCode.Content[i] == currentLetterCallSign) {
@@ -157,6 +160,7 @@ BundeswehrTalkingBoardAuthentificationOutput buildAuthBundeswehr(
           tupel3.add(t2 + t1);
         }
       }
+
       return BundeswehrTalkingBoardAuthentificationOutput(
           ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_OK, Tupel1: tupel1, Tupel2: tupel2, Tupel3: tupel3, Number: authCode);
     }
@@ -167,6 +171,7 @@ BundeswehrTalkingBoardAuthentificationOutput buildAuthBundeswehr(
 
 BundeswehrTalkingBoardAuthentificationOutput checkAuthBundeswehr(String currentCallSign, String currentAuth, String currentLetterAuth,
     BundeswehrTalkingBoardAuthentificationTable tableNumeralCode, BundeswehrTalkingBoardAuthentificationTable tableAuthentificationCode) {
+
   if (tableNumeralCode == null || tableNumeralCode.Content.isEmpty)
     return BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CUSTOM_NUMERAL_TABLE);
 
