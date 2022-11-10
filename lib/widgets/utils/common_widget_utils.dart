@@ -73,6 +73,47 @@ WidgetSpan subscriptedTextForRichText(String text, {TextStyle textStyle}) {
   );
 }
 
+/* Takes string input. If "_foo_" or "^bar^" exists, a RichText widget with
+   sub- or superscripted TextSpans will be created,
+   otherwise the input will be returned as String
+*/
+buildSubOrSuperscriptedRichTextIfNecessary(String input) {
+  var supSubRegExp = RegExp(r'(\^(.+?)\^|_(.+?)_)');
+
+  if (supSubRegExp.hasMatch(input) ) {
+    var textSpans = <InlineSpan>[];
+
+    var lastEnd = 0;
+    supSubRegExp.allMatches(input).forEach((element) {
+      textSpans.add(TextSpan(text: input.substring(lastEnd, element.start)));
+
+      var widgetSpan;
+      if (element.group(1).startsWith('_')) {
+        widgetSpan = subscriptedTextForRichText(element.group(1).replaceAll('_', ''));
+      } else {
+        widgetSpan = superscriptedTextForRichText(element.group(1).replaceAll('^', ''));
+      }
+
+      textSpans.add(widgetSpan);
+      lastEnd = element.end;
+    });
+
+    if (lastEnd < input.length) {
+      textSpans.add(TextSpan(text: input.substring(lastEnd)));
+    }
+
+    return RichText(
+        text: TextSpan(
+            style: gcwTextStyle(),
+            children: textSpans
+        )
+    );
+
+  } else {
+    return input;
+  }
+}
+
 List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> data,
     {List<int> flexValues = const [],
     int copyColumn,

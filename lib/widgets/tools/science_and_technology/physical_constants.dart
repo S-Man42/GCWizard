@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/physical_constants.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class PhysicalConstants extends StatefulWidget {
   @override
@@ -55,7 +53,11 @@ class PhysicalConstantsState extends State<PhysicalConstants> {
     Map<String, dynamic> constantData = PHYSICAL_CONSTANTS[_currentConstant];
 
     var data = [
-      constantData['symbol'] != null ? [i18n(context, 'physical_constants_symbol'), constantData['symbol']] : null,
+      constantData['symbol'] != null
+          ? [
+              i18n(context, 'physical_constants_symbol'),
+              buildSubOrSuperscriptedRichTextIfNecessary(constantData['symbol'])
+            ] : null,
       constantData['value'] != null
           ? [
               i18n(context, 'physical_constants_value'),
@@ -70,7 +72,11 @@ class PhysicalConstantsState extends State<PhysicalConstants> {
               _buildExponent(constantData['exponent'])
             ]
           : null,
-      constantData['unit'] != null ? [i18n(context, 'physical_constants_unit'), constantData['unit']] : null
+      constantData['unit'] != null
+          ? [
+              i18n(context, 'physical_constants_unit'),
+              buildSubOrSuperscriptedRichTextIfNecessary(constantData['unit'])
+            ] : null
     ];
 
     return Column(

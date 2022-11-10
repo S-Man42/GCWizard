@@ -9,6 +9,9 @@ import 'package:gc_wizard/widgets/selector_lists/e_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/phi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/pi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/silverratio_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/sqrt2_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/sqrt3_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/sqrt5_selection.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 
@@ -105,7 +108,7 @@ class MathematicalConstantsState extends State<MathematicalConstants> {
     }
 
     var data = [
-      constantData['symbol'] != null ?  [i18n(context, 'physical_constants_symbol'), constantData['symbol']] : null,
+      constantData['symbol'] != null ?  [i18n(context, 'physical_constants_symbol'), buildSubOrSuperscriptedRichTextIfNecessary(constantData['symbol'])] : null,
       [i18n(context, 'physical_constants_value'), constantData['value']],
       names != null ? [
         i18n(context, 'mathematical_constants_additionalnames'),
@@ -149,6 +152,18 @@ class MathematicalConstantsState extends State<MathematicalConstants> {
       case 'silverratio':
         widget = SilverRatioSelection();
         title = 'silverratio_selection_title';
+        break;
+      case 'sqrt2':
+        widget = SQRT2Selection();
+        title = 'sqrt2_selection_title';
+        break;
+      case 'sqrt3':
+        widget = SQRT3Selection();
+        title = 'sqrt3_selection_title';
+        break;
+      case 'sqrt5':
+        widget = SQRT5Selection();
+        title = 'sqrt5_selection_title';
         break;
       default: return Container();
     }
