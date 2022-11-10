@@ -2326,7 +2326,7 @@ Map<NumeralWordsLanguage, String> NUMERALWORDS_LANGUAGES_CONVERTER = {
   NumeralWordsLanguage.SHA: 'numeralwords_language_sha',
   NumeralWordsLanguage.ROU: 'common_language_romanian',
 };
-Map NumWords = {
+Map NUMERAL_WORDS = {
   NumeralWordsLanguage.AMH: AMHWordToNum,
   NumeralWordsLanguage.BAS: BASWordToNum,
   NumeralWordsLanguage.BRE: BREWordToNum,
@@ -2391,7 +2391,16 @@ Map NumWords = {
   NumeralWordsLanguage.VIECHUNOM: VIECHUNOMWordToNum,
   NumeralWordsLanguage.VOL: VOLWordToNum,
 };
-
+Map<NumeralWordsLanguage, List<String>> NUMERAL_WORDS_ACCENTS = {
+  NumeralWordsLanguage.DEU: ['dreißig', 'zwölf', 'fünf', ],
+  NumeralWordsLanguage.DNK: ['øst', ],
+  NumeralWordsLanguage.FIN: ['seitsemän', 'yhdeksän', 'neljä', ],
+  NumeralWordsLanguage.NOR: ['førti', 'øst', 'sør', ],
+  NumeralWordsLanguage.SVK: ['deväťdesiat', 'päťdesiat', 'devätnásť', 'pätnásť', 'deväť', 'päť', ],
+  NumeralWordsLanguage.SWE: ['väst', ],
+  NumeralWordsLanguage.TUR: ['dört', 'yüz', 'üç', ],
+  NumeralWordsLanguage.UNG: ['öt', ],
+};
 List<NumeralWordsDecodeOutput> decodeNumeralwords(
     { String input,
       NumeralWordsLanguage language,
@@ -2595,7 +2604,7 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
     Map searchLanguages = new Map();
     if (language == NumeralWordsLanguage.ALL) {
       // search element in all languages
-      NumWords.forEach((key, value) {
+      NUMERAL_WORDS.forEach((key, value) {
         // key: language  value: map
         var sKey = key;
         Map sValue = new Map();
@@ -2607,7 +2616,7 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
     } else {
       // search only in one language
       Map sValue = new Map();
-      NumWords[language].forEach((key, value) {
+      NUMERAL_WORDS[language].forEach((key, value) {
         sValue[removeAccents(key.toLowerCase())] = value;
       });
       searchLanguages[language] = sValue;
@@ -2711,7 +2720,7 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
         _alreadyFound = false;
         int oldValueInt = 0;
         String oldValueStr = '';
-        NumWords.forEach((key, value) {
+        NUMERAL_WORDS.forEach((key, value) {
           // forEach language
           var _language = key;
           value.forEach((key, value) {
@@ -2741,7 +2750,7 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
         });
       } else {
         // search for specific language
-        NumWords[language].forEach((key, value) {
+        NUMERAL_WORDS[language].forEach((key, value) {
           if (checkWord.startsWith(removeAccents(key))) {
             _alreadyFound = true;
             output.add(NumeralWordsDecodeOutput(value, removeAccents(key), NUMERALWORDS_LANGUAGES[language]));

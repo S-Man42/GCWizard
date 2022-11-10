@@ -103,16 +103,16 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
 
   Widget _buildOutput(BuildContext context) {
     List<NumeralWordsDecodeOutput> detailedOutput;
-    String output = '';
+    List<String> output = [];
     detailedOutput = decodeNumeralwords(
         input: removeAccents(_currentDecodeInput.toLowerCase()),
         language: _currentLanguage,
         decodeModeWholeWords: (_currentDecodeMode == GCWSwitchPosition.left));
     for (int i = 0; i < detailedOutput.length; i++) {
       if (detailedOutput[i].number != '') if (detailedOutput[i].number.startsWith('numeralwords_'))
-        output = output + ' ' + i18n(context, detailedOutput[i].number);
+        output.add(i18n(context, detailedOutput[i].number));
       else
-        output = output + detailedOutput[i].number;
+        output.add(detailedOutput[i].number);
     }
 
     List<List<String>> columnData = [];
@@ -143,12 +143,13 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
     return Column(
       children: <Widget>[
         GCWOutputText(
-          text: output,
+          text: output.join(' '),
         ),
         output.length == 0 ? Container () : GCWExpandableTextDivider (
             text: i18n(context, 'numeralwords_syntax_highlight'),
             suppressTopSpace: false,
             child: GCWCodeTextField(
+              wrap: true,
               controller: _codeControllerHighlighted,
               patternMap: _numeralWordsHiglightMap(),
             )
@@ -168,7 +169,19 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
 
   Map<String, TextStyle> _numeralWordsHiglightMap(){
     Map<String, TextStyle> result = {};
-    NumWords[_currentLanguage].forEach((key, value) {
+    if (NUMERAL_WORDS_ACCENTS[_currentLanguage] != null) {
+      NUMERAL_WORDS_ACCENTS[_currentLanguage].forEach((element) {
+        if (int.tryParse(NUMERAL_WORDS[_currentLanguage][removeAccents(element)]) < 10) {
+          result[r'' + element + ''] = TextStyle(color: Colors.red);
+          result[r'' + removeAccents(element) + ''] = TextStyle(color: Colors.red);
+        } else {
+          result[r'' + element + ''] = TextStyle(color: Colors.orange);
+          result[r'' + removeAccents(element) + ''] = TextStyle(color: Colors.orange);
+        }
+      });
+    }
+
+    NUMERAL_WORDS[_currentLanguage].forEach((key, value) {
       if (int.tryParse(value) == null)
         if (value.startsWith('numeral'))
           result[r'' + key + ''] = TextStyle(color: Colors.blue);

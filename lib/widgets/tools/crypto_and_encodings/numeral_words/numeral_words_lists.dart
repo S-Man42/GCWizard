@@ -71,7 +71,7 @@ class NumeralWordsListsState extends State<NumeralWordsLists> {
 
   Widget _buildOutput(BuildContext context) {
     Map<String, String> numeralWordsOverview = new Map<String, String>();
-    numeralWordsOverview = NumWords[_currentLanguage];
+    numeralWordsOverview = NUMERAL_WORDS[_currentLanguage];
 
     return GCWDefaultOutput(
       child: Column(
