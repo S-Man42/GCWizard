@@ -7,7 +7,9 @@ final _OFFSET = pow(16, 4) - 16 * pow(31, 3);
 final _NO_VALID_GC_CODE = 'gccode_novalidgcode';
 
 int gcCodeToID(String gcCode) {
-  if (gcCode == null || gcCode.length == 0) return null;
+  if (gcCode == null) return null;
+  gcCode = gcCode.trim();
+  if (gcCode.length == 0) return null;
 
   gcCode = gcCode.toUpperCase();
 
@@ -23,7 +25,10 @@ int gcCodeToID(String gcCode) {
   } else {
     if (gcCode.contains(RegExp('[ILOSU]'))) throw FormatException(_NO_VALID_GC_CODE);
 
-    return int.tryParse(convertBase(gcCode, 31, 10, alphabet: _ALPHABET)) + _OFFSET; //Base31 with negative offset
+    var value = int.tryParse(convertBase(gcCode, 31, 10, alphabet: _ALPHABET));
+    if (value == null) throw FormatException(_NO_VALID_GC_CODE);
+
+    return value + _OFFSET; //Base31 with negative offset
   }
 }
 
