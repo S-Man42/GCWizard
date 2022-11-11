@@ -155,12 +155,6 @@ class BundeswehrTalkingBoardAuthentificationState extends State<BundeswehrTalkin
                 onChanged: (value) {
                   setState(() {
                     _currentTableMode = value;
-                    _buildAuthTable(context,
-                        custom: _currentTableMode == GCWSwitchPosition.left, authTable: _currentAuthTableCustom);
-                    _buildNumeralCode(context,
-                        custom: _currentTableMode == GCWSwitchPosition.left,
-                        xAxis: _currentNumeralCodeXaxisCustom,
-                        yAxis: _currentNumeralCodeYaxisCustom);
                   });
                 },
               )
@@ -233,24 +227,21 @@ class BundeswehrTalkingBoardAuthentificationState extends State<BundeswehrTalkin
   Widget _calculateOutput(BuildContext context) {
     BundeswehrTalkingBoardAuthentificationOutput output;
 
-    if (_currentTableMode == GCWSwitchPosition.left) {
-      // custom tables
-      _buildNumeralCode(context,
-          custom: _currentTableMode == GCWSwitchPosition.left,
-          xAxis: _currentNumeralCodeXaxisCustom,
-          yAxis: _currentNumeralCodeYaxisCustom);
-      if (_numeralCodeString.startsWith('bundeswehr_')) {
-        return GCWText(
-          text: i18n(context, _numeralCodeString),
-        );
-      }
+    if (!_buildAuthTable(context,
+        custom: _currentTableMode == GCWSwitchPosition.left,
+        authTable: _currentAuthTableCustom)){
+      return GCWText(
+        text: i18n(context, _authTableString),
+      );
+    }
 
-      _buildAuthTable(context, custom: _currentTableMode == GCWSwitchPosition.left, authTable: _currentAuthTableCustom);
-      if (_authTableString.startsWith('bundeswehr_')) {
-        return GCWText(
-          text: i18n(context, _authTableString),
-        );
-      }
+    if (!_buildNumeralCode(context,
+        custom: _currentTableMode == GCWSwitchPosition.left,
+        xAxis: _currentNumeralCodeXaxisCustom,
+        yAxis: _currentNumeralCodeYaxisCustom)){
+      return GCWText(
+        text: i18n(context, _numeralCodeString),
+      );
     }
 
     if (_currentMode == GCWSwitchPosition.right) {
@@ -358,26 +349,26 @@ class BundeswehrTalkingBoardAuthentificationState extends State<BundeswehrTalkin
     }
   }
 
-  void _buildAuthTable(BuildContext context, {bool custom, String authTable}) {
+  bool _buildAuthTable(BuildContext context, {bool custom, String authTable}) {
     List<String> authCode = [];
     Map<String, Map<String, String>> _authTable = {};
 
     if (custom) {
       if (authTable == null || authTable == '') {
         _authTableString = BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CUSTOM_AUTH_TABLE;
-        return;
+        return false;
       }
 
       if (authTable.trim().split(' ').length != 65) {
         _tableAuthentificationCode = BundeswehrTalkingBoardAuthentificationTable(yAxis: [], xAxis: [], Content: []);
         _authTableString = BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_AUTH_TABLE;
-        return;
+        return false;
       }
       authTable.trim().split(' ').forEach((element) {
         if (element.length > 2) {
           _tableAuthentificationCode = BundeswehrTalkingBoardAuthentificationTable(yAxis: [], xAxis: [], Content: []);
           _authTableString = BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_AUTH_TABLE;
-          return;
+          return false;
         } else if (element.length == 1)
           authCode.add('0' + element);
         else
@@ -429,9 +420,11 @@ class BundeswehrTalkingBoardAuthentificationState extends State<BundeswehrTalkin
         yAxis: BUNDESWEHR_TALKINGBOARD_AUTH_TABLE_Y_AXIS,
         xAxis: BUNDESWEHR_TALKINGBOARD_AUTH_TABLE_X_AXIS,
         Content: authCode);
+
+    return true;
   }
 
-  void _buildNumeralCode(BuildContext context, {bool custom, String xAxis, String yAxis}) {
+  bool _buildNumeralCode(BuildContext context, {bool custom, String xAxis, String yAxis}) {
     List<String> _yAxisTitle;
     List<String> _xAxisTitle;
     List<String> _numeralCode = [];
@@ -439,25 +432,26 @@ class BundeswehrTalkingBoardAuthentificationState extends State<BundeswehrTalkin
     if (custom) {
       if (xAxis == null || xAxis == '' || yAxis == null || yAxis == '') {
         _numeralCodeString = BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CUSTOM_NUMERAL_TABLE;
-        return;
+        return false;
       }
 
       if (_invalidSingleAxisTitle(xAxis)) {
         _tableNumeralCode = BundeswehrTalkingBoardAuthentificationTable(yAxis: [], xAxis: [], Content: []);
         _numeralCodeString = BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_X_AXIS_NUMERAL_TABLE;
-        return;
+        return false;
       }
 
       if (_invalidSingleAxisTitle(yAxis)) {
         _tableNumeralCode = BundeswehrTalkingBoardAuthentificationTable(yAxis: [], xAxis: [], Content: []);
         _numeralCodeString = BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_Y_AXIS_NUMERAL_TABLE;
-        return;
+        return false;
       }
 
       if (_invalidAxisDescription(xAxis + yAxis)) {
+        print('invalid axis');
         _tableNumeralCode = BundeswehrTalkingBoardAuthentificationTable(yAxis: [], xAxis: [], Content: []);
         _numeralCodeString = BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_NUMERAL_TABLE;
-        return;
+        return false;
       }
 
       _yAxisTitle = yAxis.toUpperCase().split('');
@@ -529,24 +523,37 @@ class BundeswehrTalkingBoardAuthentificationState extends State<BundeswehrTalkin
       _numeralCodeString = _numeralCodeString + '\n ';
     });
 
-    _tableNumeralCode =
-        BundeswehrTalkingBoardAuthentificationTable(xAxis: _xAxisTitle, yAxis: _yAxisTitle, Content: _numeralCode);
+    _tableNumeralCode = BundeswehrTalkingBoardAuthentificationTable(
+        xAxis: _xAxisTitle,
+        yAxis: _yAxisTitle,
+        Content: _numeralCode);
+
+    return true;
   }
 
   bool _invalidSingleAxisTitle(String text) {
+    bool result = false;
     if (text.length != 13) return true;
     List<String> dublicates = [];
     text.split('').forEach((element) {
-      if (dublicates.contains(element)) return true;
+      if (dublicates.contains(element)) {
+        result = true;
+        return;
+      }
     });
-    return false;
+    return result;
   }
 
   bool _invalidAxisDescription(String text) {
+    bool result = false;
     List<String> dublicates = [];
     text.split('').forEach((element) {
-      if (dublicates.contains(element)) return true;
+      if (dublicates.contains(element)) {
+        result = true;
+        return;
+      }
+      dublicates.add(element);
     });
-    return false;
+    return result;
   }
 }
