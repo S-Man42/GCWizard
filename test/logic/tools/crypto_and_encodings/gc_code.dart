@@ -40,6 +40,8 @@ void main() {
       {'input' : 'GCFFFG'},
       {'input' : 'GCILOSU'},
       {'input' : 'GC85P9599999999999999'},
+      {'input' : 'GC85P95  99999999999999'},
+      {'input' : 'GC85P  95'},
     ];
 
     _inputsToExpected.forEach((elem) {
