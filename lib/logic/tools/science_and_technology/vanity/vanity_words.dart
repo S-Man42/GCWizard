@@ -374,14 +374,14 @@ List<VanityWordsDecodeOutput> decodeVanityWords(String text, NumeralWordsLanguag
         } else {
           // already found
           ambigous = true;
-          output.add(VanityWordsDecodeOutput(hDigits, hWord, NumWords[language][hWord.toString().toLowerCase()], true));
-          output.add(VanityWordsDecodeOutput(digits, word, NumWords[language][word.toString().toLowerCase()], true));
+          output.add(VanityWordsDecodeOutput(hDigits, hWord, NUMERAL_WORDS[language][hWord.toString().toLowerCase()], true));
+          output.add(VanityWordsDecodeOutput(digits, word, NUMERAL_WORDS[language][word.toString().toLowerCase()], true));
         }
       }
     }); // end decodingTable.forEach
 
     if (found && !ambigous) {
-      output.add(VanityWordsDecodeOutput(hDigits, hWord, NumWords[language][hWord.toString().toLowerCase()], false));
+      output.add(VanityWordsDecodeOutput(hDigits, hWord, NUMERAL_WORDS[language][hWord.toString().toLowerCase()], false));
       if (hDigits.length > 0) {
         text = text.substring(hDigits.length);
       }
