@@ -1,6 +1,6 @@
 # **HOWTO Raspberry Pi Server**
 
-<img src="C:\Users\thoma\OneDrive - EDV-Beratung und Softwareentwicklung\HOWTO raspi-Dateien\image001.png" style="zoom:80%;" />
+<img src="C:\Users\thoma\OneDrive - EDV-Beratung und Softwareentwicklung\HOWTO raspi-Dateien\raspi-final.jpg" style="zoom:80%;" />
 
 
 
@@ -700,7 +700,7 @@ if __name__=='__main__':
     print("{:3.1f}%, {:6.3f}V,{:9.6f}A, {:6.3f}W".format(p, bus_voltage, current/1000, power))
     
     if (p > 25): sys.exit(OK)
-    if (p > 10):  sys.exit(WARNING)
+    if (p > 10): sys.exit(WARNING)
     if (p > 2): sys.exit(CRITICAL)
     
     os.system("shutdown /s /t 1")
@@ -1211,6 +1211,12 @@ Obviously two errors could occur:
 Hence you have to install python3 and the smbus module.
 
 
+
+## Gehäuse
+
+Copyright 13.11.2022 Matthias Meyer, 14089 Berlin
+
+Druckplan liegt als TMZ.stl vor.
 
 
 
