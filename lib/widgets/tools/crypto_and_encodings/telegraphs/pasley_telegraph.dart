@@ -148,6 +148,8 @@ class PasleyTelegraphState extends State<PasleyTelegraph> {
         segmentFunction: (displayedSegments, readOnly) {
           return PasleyTelegraphSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
         },
+        horizontalSymbolPadding: 5,
+        verticalSymbolPadding: 5,
         segments: segments,
         readOnly: true);
   }

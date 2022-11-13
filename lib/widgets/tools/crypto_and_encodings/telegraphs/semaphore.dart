@@ -141,6 +141,8 @@ class SemaphoreTelegraphState extends State<SemaphoreTelegraph> {
         segmentFunction: (displayedSegments, readOnly) {
           return SemaphoreSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
         },
+        horizontalSymbolPadding: 5,
+        verticalSymbolPadding: 5,
         segments: segments,
         readOnly: true);
   }

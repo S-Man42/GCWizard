@@ -228,6 +228,8 @@ class SegmentDisplayState extends State<SegmentDisplay> {
               return null;
           }
         },
+        horizontalSymbolPadding: 5,
+        verticalSymbolPadding: 5,
         segments: segments,
         readOnly: true);
   }

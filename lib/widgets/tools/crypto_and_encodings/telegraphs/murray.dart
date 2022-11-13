@@ -158,6 +158,8 @@ class MurrayTelegraphState extends State<MurrayTelegraph> {
         segmentFunction: (displayedSegments, readOnly) {
           return MurraySegmentDisplay(segments: displayedSegments, readOnly: readOnly);
         },
+        horizontalSymbolPadding: 5,
+        verticalSymbolPadding: 5,
         segments: segments,
         readOnly: true);
   }

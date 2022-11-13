@@ -145,6 +145,8 @@ class CistercianNumbersState extends State<CistercianNumbers> {
         segmentFunction: (displayedSegments, readOnly) {
           return CistercianNumbersSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
         },
+        horizontalSymbolPadding: 5,
+        verticalSymbolPadding: 5,
         segments: segments,
         readOnly: true);
   }

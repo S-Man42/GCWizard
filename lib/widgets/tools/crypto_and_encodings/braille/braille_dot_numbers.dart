@@ -150,6 +150,8 @@ class BrailleDotNumbersState extends State<BrailleDotNumbers> {
           else
             return BrailleSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
         },
+        horizontalSymbolPadding: 5,
+        verticalSymbolPadding: 5,
         segments: segments,
         readOnly: true);
   }

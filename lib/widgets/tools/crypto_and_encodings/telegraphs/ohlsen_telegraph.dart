@@ -181,6 +181,8 @@ class OhlsenTelegraphState extends State<OhlsenTelegraph> {
         segmentFunction: (displayedSegments, readOnly) {
           return OhlsenSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
         },
+        horizontalSymbolPadding: 5,
+        verticalSymbolPadding: 5,
         segments: segments,
         readOnly: true);
   }

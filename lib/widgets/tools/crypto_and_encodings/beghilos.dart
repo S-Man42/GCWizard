@@ -88,6 +88,8 @@ class BeghilosState extends State<Beghilos> {
         segmentFunction: (displayedSegments, readOnly) {
           return SevenSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
         },
+        horizontalSymbolPadding: 5,
+        verticalSymbolPadding: 5,
         segments: _currentDisplays,
         readOnly: true));
 

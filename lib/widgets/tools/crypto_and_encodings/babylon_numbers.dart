@@ -127,6 +127,8 @@ class BabylonNumbersState extends State<BabylonNumbers> {
         segmentFunction: (displayedSegments, readOnly) {
           return BabylonNumbersSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
         },
+        horizontalSymbolPadding: 5,
+        verticalSymbolPadding: 5,
         segments: segments,
         readOnly: true);
   }

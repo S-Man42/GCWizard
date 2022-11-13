@@ -148,6 +148,8 @@ class PophamTelegraphState extends State<PophamTelegraph> {
         segmentFunction: (displayedSegments, readOnly) {
           return PophamTelegraphSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
         },
+        horizontalSymbolPadding: 5,
+        verticalSymbolPadding: 5,
         segments: segments,
         readOnly: true);
   }

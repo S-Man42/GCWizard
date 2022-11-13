@@ -325,6 +325,8 @@ class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
         segmentFunction: (displayedSegments, readOnly) {
           return EdelcrantzSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
         },
+        horizontalSymbolPadding: 5,
+        verticalSymbolPadding: 5,
         segments: segments,
         readOnly: true);
   }

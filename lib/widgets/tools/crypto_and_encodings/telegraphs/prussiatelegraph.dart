@@ -288,6 +288,8 @@ class PrussiaTelegraphState extends State<PrussiaTelegraph> {
         segmentFunction: (displayedSegments, readOnly) {
           return PrussiaTelegraphSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
         },
+        horizontalSymbolPadding: 5,
+        verticalSymbolPadding: 5,
         segments: segments,
         readOnly: true);
   }

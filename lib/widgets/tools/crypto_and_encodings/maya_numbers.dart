@@ -126,6 +126,8 @@ class MayaNumbersState extends State<MayaNumbers> {
         segmentFunction: (displayedSegments, readOnly) {
           return MayaNumbersSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
         },
+        horizontalSymbolPadding: 5,
+        verticalSymbolPadding: 5,
         segments: segments,
         readOnly: true);
   }

@@ -140,6 +140,8 @@ class PredatorState extends State<Predator> {
         segmentFunction: (displayedSegments, readOnly) {
           return PredatorSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
         },
+        horizontalSymbolPadding: 5,
+        verticalSymbolPadding: 5,
         segments: segments,
         readOnly: true);
   }
