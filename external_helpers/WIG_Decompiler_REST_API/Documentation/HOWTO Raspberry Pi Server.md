@@ -565,7 +565,7 @@ define service{
 
 ### Anpassungen für Waveshare UPS Hat
 
-python-script für die Abfrage erstellen
+#### python-script für die Abfrage erstellen
 
 ```
 sudo nano /usr/local/nagios/libexec/check_ups_hat
@@ -728,7 +728,7 @@ nagios ALL=NOPASSWD: /usr/local/nagios/libexec/check_ups_hat
 
 
 
-Befehl in der Datei `commands.cfg` erstellen
+#### Befehl in der Datei `commands.cfg` erstellen
 
 ```
 sudo nano /usr/local/nagios/etc/objects/commands.cfg
@@ -743,7 +743,7 @@ define command{
 
 
 
-Service in der Datei `localhost.cfg` erstellen
+#### Service in der Datei `localhost.cfg` erstellen
 
 ```
 sudo nano /usr/local/nagios/etc/objects/localhost.cfg
@@ -767,6 +767,87 @@ sudo systemctl restart nagios.service
 ```
 
 
+
+### Anpassungen für die Temperaturüberwachung
+
+#### python-script für die Abfrage erstellen
+
+```
+#!/usr/bin/python3
+from gpiozero import CPUTemperature
+import os
+
+OK = 0
+WARNING = 1
+CRITICAL = 2
+UNKNOWN = 3
+
+cpu = CPUTemperature()
+print(str(cpu.temperature)+"°C")
+
+if (cpu.temperature > 80.0): sys.exit(CRITICAL)
+if (cpu.temperature > 80.0): sys.exit(WARNING)
+```
+
+
+
+Die Datei ausführbar machen
+
+```
+sudo chmod 755 /usr/local/nagios/etc/objects/commands.cfg
+```
+
+
+
+nagios für die Ausführung dieser Datei in der Datei `sudoers` befähigen.
+
+```
+sudo visudo
+```
+
+```
+nagios ALL=NOPASSWD: /usr/local/nagios/libexec/check_temp
+```
+
+
+
+#### Befehl in der Datei `commands.cfg` erstellen
+
+```
+sudo nano /usr/local/nagios/etc/objects/commands.cfg
+```
+
+```
+define command{
+       command_name          check_temp
+       command_line          sudo /usr/bin/python /usr/local/nagios/libexec/check_temp
+}
+```
+
+
+
+#### Service in der Datei `localhost.cfg` erstellen
+
+```
+sudo nano /usr/local/nagios/etc/objects/localhost.cfg
+```
+
+```
+define service{
+       use                   local-service
+       host_name             localhost
+       service_description   Temperatur
+       check_command         check_temp
+}
+```
+
+
+
+nagios erneut starten
+
+```
+sudo systemctl restart nagios.service
+```
 
 
 
