@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/n_segment_display.dart';
 
 Widget buildSegmentDisplayOutput(int countColumns, List<dynamic> displays, {double verticalPadding: 5, double horizontalPadding: 5}) {
+  var _verticalPadding = verticalPadding ?? 5.0;
+  var _horizontalPadding = horizontalPadding ?? 5.0;
+
   var rows = <Widget>[];
   var countRows = (displays.length / countColumns).floor();
 
@@ -19,7 +22,7 @@ Widget buildSegmentDisplayOutput(int countColumns, List<dynamic> displays, {doub
 
         widget = Container(
           child: display,
-          padding: EdgeInsets.symmetric(horizontal: horizontalPadding ?? 5),
+          padding: EdgeInsets.symmetric(horizontal: _horizontalPadding),
         );
       } else {
         widget = Container();
@@ -28,7 +31,7 @@ Widget buildSegmentDisplayOutput(int countColumns, List<dynamic> displays, {doub
       columns.add(Expanded(
           child: Container(
         child: widget,
-        padding: EdgeInsets.symmetric(vertical: verticalPadding ?? 5),
+        padding: EdgeInsets.symmetric(vertical: _verticalPadding),
       )));
     }
 
@@ -75,8 +78,11 @@ Widget buildPunchtapeSegmentDisplayOutput(List<dynamic> displays) {
       ));
 }
 
-Future<ui.Image> buildSegmentDisplayImage(int countColumns, List<NSegmentDisplay> displays, bool upsideDown, {double verticalPadding: 2, double horizontalPadding: 2}) async {
+Future<ui.Image> buildSegmentDisplayImage(int countColumns, List<NSegmentDisplay> displays, bool upsideDown, {double verticalPadding, double horizontalPadding}) async {
   const double bounds = 3.0;
+  var _verticalPadding = verticalPadding ?? 5.0;
+  var _horizontalPadding = horizontalPadding ?? 5.0;
+
   var width = 0.0;
   var height = 0.0;
   var columnCounter = 0;
@@ -92,9 +98,9 @@ Future<ui.Image> buildSegmentDisplayImage(int countColumns, List<NSegmentDisplay
 
   // calc image size
   images.forEach((image) {
-    rowWidth += image.width + 2 * horizontalPadding;
+    rowWidth += image.width + 2 * _horizontalPadding;
     width = max(width, rowWidth);
-    rowHeight = max(rowHeight, image.height.toDouble() + 2 * verticalPadding);
+    rowHeight = max(rowHeight, image.height.toDouble() + 2 * _verticalPadding);
     columnCounter++;
 
     if (columnCounter >= countColumns) {
@@ -128,20 +134,20 @@ Future<ui.Image> buildSegmentDisplayImage(int countColumns, List<NSegmentDisplay
 
       if (imageIndex < images.length) {
         var image = images[imageIndex];
-        var middlePoint = ui.Offset(offset.dx + horizontalPadding + image.width / 2, offset.dy + verticalPadding + image.height / 2);
+        var middlePoint = ui.Offset(offset.dx + _horizontalPadding + image.width / 2, offset.dy + _verticalPadding + image.height / 2);
         if (upsideDown) {
           canvas.translate(middlePoint.dx, middlePoint.dy);
           canvas.rotate(pi);
           canvas.translate(-middlePoint.dx, -middlePoint.dy);
         }
-        canvas.drawImage(image, offset.translate(horizontalPadding, verticalPadding), paint);
+        canvas.drawImage(image, offset.translate(_horizontalPadding, _verticalPadding), paint);
         if (upsideDown) {
           canvas.translate(middlePoint.dx, middlePoint.dy);
           canvas.rotate(pi);
           canvas.translate(-middlePoint.dx, -middlePoint.dy);
         }
-        offset = offset.translate(image.width.toDouble() + 2 * horizontalPadding, 0);
-        rowHeight = max(rowHeight, image.height.toDouble() + 2 * verticalPadding);
+        offset = offset.translate(image.width.toDouble() + 2 * _horizontalPadding, 0);
+        rowHeight = max(rowHeight, image.height.toDouble() + 2 * _verticalPadding);
       }
     }
     offset = offset.translate(0, rowHeight);
