@@ -46,6 +46,7 @@
             this.projectPathLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.projectFolderTextBox = new System.Windows.Forms.TextBox();
             this.openProjectFolderButton = new System.Windows.Forms.Button();
+            this.startDefaultButton = new System.Windows.Forms.Button();
             this.configGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imageSizeUpDown)).BeginInit();
             this.statusStrip1.SuspendLayout();
@@ -237,11 +238,22 @@
             this.openProjectFolderButton.UseVisualStyleBackColor = true;
             this.openProjectFolderButton.Click += new System.EventHandler(this.openProjectFolderButton_Click);
             // 
+            // startDefaultButton
+            // 
+            this.startDefaultButton.Location = new System.Drawing.Point(114, 288);
+            this.startDefaultButton.Name = "startDefaultButton";
+            this.startDefaultButton.Size = new System.Drawing.Size(71, 52);
+            this.startDefaultButton.TabIndex = 5;
+            this.startDefaultButton.Text = "Start all\r\nstandard\r\nlanguages";
+            this.startDefaultButton.UseVisualStyleBackColor = true;
+            this.startDefaultButton.Click += new System.EventHandler(this.StartDefaultButton_Click);
+            // 
             // mainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(429, 381);
+            this.Controls.Add(this.startDefaultButton);
             this.Controls.Add(this.openProjectFolderButton);
             this.Controls.Add(this.projectFolderTextBox);
             this.Controls.Add(this.statusStrip1);
@@ -281,6 +293,7 @@
         private System.Windows.Forms.ToolStripStatusLabel projectPathLabel;
         private System.Windows.Forms.TextBox projectFolderTextBox;
         private System.Windows.Forms.Button openProjectFolderButton;
+        private System.Windows.Forms.Button startDefaultButton;
     }
 }
 
