@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Threading;
 using PdfSharp.Pdf;
+using System.Collections.Generic;
 
 namespace GC_Wizard_SymbolTables_Pdf
 {
@@ -41,6 +42,8 @@ namespace GC_Wizard_SymbolTables_Pdf
 
         private bool OnProcess { get; set; }
 
+        private List<SymbolTablesPdf> activeSymbolTablesPdfs { get; set; } = new List<SymbolTablesPdf>();
+
 
         public mainForm()
         {
@@ -75,21 +78,48 @@ namespace GC_Wizard_SymbolTables_Pdf
                 if (!symbolTablesPdf.validFolder(CurrentProjectPath))
                     return;
 
-                ThreadPool.QueueUserWorkItem(createPdf, CurrentProjectPath);
+                activeSymbolTablesPdfs.Clear();
+                ThreadPool.QueueUserWorkItem(createPdf, new List<String>() { CurrentProjectPath, Language });
             }
             catch (Exception)
             {
             }
         }
 
-        public void createPdf(object path)
+        private void StartDefaultButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (OnProcess)
+                    return;
+
+                var defaultLanguages = new List<String>() { "en", "de", "fr", "ko", "nl", "pl", "sk", "sv" };
+
+                var symbolTablesPdf = new SymbolTablesPdf();
+                if (!symbolTablesPdf.validFolder(CurrentProjectPath))
+                    return;
+
+                activeSymbolTablesPdfs.Clear();
+                foreach (var language in defaultLanguages)
+                    ThreadPool.QueueUserWorkItem(createPdf, new List<String>() { CurrentProjectPath, language });
+
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        public void createPdf(object data)
 
         {
             try
             {
-                OnProcess = true;
+                var path = ((List<String>)data)[0];
+                var language = ((List<String>)data)[1];
 
                 var symbolTablesPdf = new SymbolTablesPdf();
+
+                activeSymbolTablesPdfs.Add(symbolTablesPdf);
 
                 symbolTablesPdf.SymbolTablesCount_Changed += SymbolTablesCount_Changed;
                 symbolTablesPdf.SymbolImagesCount_Changed += SymbolImagesCount_Changed;
@@ -100,7 +130,7 @@ namespace GC_Wizard_SymbolTables_Pdf
                 symbolTablesPdf.BorderWidthRight = 30;// BorderWidth;
                 symbolTablesPdf.BorderWidthBottom = 20;// BorderWidth;
                 symbolTablesPdf.ImageSize = ImageSize;
-                symbolTablesPdf.Language = Language;
+                symbolTablesPdf.Language = language;
                 symbolTablesPdf.FontSizeName = FontSizeName;
                 symbolTablesPdf.FontSizeOverlay = 7; // FontSizeOverlay;
                 symbolTablesPdf.Orientation = Landscape ? PdfSharp.PageOrientation.Landscape : PdfSharp.PageOrientation.Portrait;
@@ -112,26 +142,27 @@ namespace GC_Wizard_SymbolTables_Pdf
                 symbolTablesPdf.SymbolImagesCount_Changed -= SymbolImagesCount_Changed;
                 symbolTablesPdf.Progress_Changed -= Progress_Changed;
 
-                OnProcess = false;
-                savePdf(document);
+                savePdf(document, language);
             }
             catch (Exception ex)
             {
                 OnProcess = false;
-                MessageBox.Show(ex.Message, "save Pdf");
+                MessageBox.Show(ex.Message, "create Pdf");
             }
         }
 
-        private void savePdf(PdfDocument document)
+
+
+        private void savePdf(PdfDocument document, String language)
         {
             try
             {
                 if (this.InvokeRequired)
-                    this.BeginInvoke(new Action<PdfDocument>(savePdf), new object[] { document });
+                    this.BeginInvoke(new Action<PdfDocument, String>(savePdf), new object[] { document, language });
                 else
                 {
                     var sfd = new SaveFileDialog();
-                    sfd.FileName = "symboltables_" + Language + ".pdf";
+                    sfd.FileName = "symboltables_" + language + ".pdf";
                     sfd.Filter = "pdf files (*.pdf)|*.pdf|All files (*.*)|*.*";
 
 
@@ -157,7 +188,13 @@ namespace GC_Wizard_SymbolTables_Pdf
             if (this.InvokeRequired)
                 this.BeginInvoke(new Action<object, EventArgs>(SymbolTablesCount_Changed), new object[] { sender, e });
             else if (sender is SymbolTablesPdf)
-                symbolTablesCount.Text = ((SymbolTablesPdf)sender).SymbolTablesCount.ToString();
+            {
+                int tablesSum = 0;
+                foreach (var symbolTablesPdf in activeSymbolTablesPdfs)
+                    tablesSum += symbolTablesPdf.SymbolTablesCount;
+
+                symbolTablesCount.Text = tablesSum.ToString();
+            }
         }
 
         void SymbolImagesCount_Changed(object sender, EventArgs e)
@@ -165,7 +202,13 @@ namespace GC_Wizard_SymbolTables_Pdf
             if (this.InvokeRequired)
                 this.BeginInvoke(new Action<object, EventArgs>(SymbolImagesCount_Changed), new object[] { sender, e });
             else if (sender is SymbolTablesPdf)
-                symbolTablesImageCount.Text = ((SymbolTablesPdf)sender).SymbolImagesCount.ToString();
+            {
+                int imagesSum = 0;
+                foreach (var symbolTablesPdf in activeSymbolTablesPdfs)
+                    imagesSum += symbolTablesPdf.SymbolImagesCount;
+
+                symbolTablesImageCount.Text = imagesSum.ToString();
+            }
         }
 
         void Progress_Changed(object sender, EventArgs e)
@@ -173,7 +216,15 @@ namespace GC_Wizard_SymbolTables_Pdf
             if (this.InvokeRequired)
                 this.BeginInvoke(new Action<object, EventArgs>(Progress_Changed), new object[] { sender, e });
             else if (sender is SymbolTablesPdf)
-                createProgressBar.Value = (int)((SymbolTablesPdf)sender).Progress;
+            {
+                double progressSum = 0;
+                foreach (var symbolTablesPdf in activeSymbolTablesPdfs)
+                    progressSum += symbolTablesPdf.Progress;
+
+                createProgressBar.Value = (int)(progressSum / activeSymbolTablesPdfs.Count);
+
+                OnProcess = progressSum != activeSymbolTablesPdfs.Count*100;
+            }
         }
 
         private void mainForm_Shown(object sender, EventArgs e)
