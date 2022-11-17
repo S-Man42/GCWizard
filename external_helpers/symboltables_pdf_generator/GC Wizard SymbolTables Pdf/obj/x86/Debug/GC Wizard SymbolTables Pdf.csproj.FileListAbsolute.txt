@@ -85,3 +85,14 @@ D:\GitHub\GCWizard\external_helpers\symboltables_pdf_generator\GC Wizard SymbolT
 D:\GitHub\GCWizard\external_helpers\symboltables_pdf_generator\GC Wizard SymbolTables Pdf\obj\x86\Debug\GC Wizard SymbolTables Pdf.csproj.AssemblyReference.cache
 D:\GitHub\GCWizard\external_helpers\symboltables_pdf_generator\GC Wizard SymbolTables Pdf\obj\x86\Debug\GC Wizard SymbolTables Pdf.csproj.CoreCompileInputs.cache
 D:\GitHub\GCWizard\external_helpers\symboltables_pdf_generator\GC Wizard SymbolTables Pdf\obj\x86\Debug\GC Wizard SymbolTables Pdf.csproj.CopyComplete
+D:\tmp\GitHub\GCWizard\external_helpers\symboltables_pdf_generator\GC Wizard SymbolTables Pdf\bin\Debug\GC Wizard SymbolTables Pdf.exe.config
+D:\tmp\GitHub\GCWizard\external_helpers\symboltables_pdf_generator\GC Wizard SymbolTables Pdf\bin\Debug\GC Wizard SymbolTables Pdf.exe
+D:\tmp\GitHub\GCWizard\external_helpers\symboltables_pdf_generator\GC Wizard SymbolTables Pdf\bin\Debug\GC Wizard SymbolTables Pdf.pdb
+D:\tmp\GitHub\GCWizard\external_helpers\symboltables_pdf_generator\GC Wizard SymbolTables Pdf\obj\x86\Debug\GC Wizard SymbolTables Pdf.csproj.AssemblyReference.cache
+D:\tmp\GitHub\GCWizard\external_helpers\symboltables_pdf_generator\GC Wizard SymbolTables Pdf\obj\x86\Debug\GC_Wizard_SymbolTables_Pdf.mainForm.resources
+D:\tmp\GitHub\GCWizard\external_helpers\symboltables_pdf_generator\GC Wizard SymbolTables Pdf\obj\x86\Debug\GC_Wizard_SymbolTables_Pdf.Properties.Resources.resources
+D:\tmp\GitHub\GCWizard\external_helpers\symboltables_pdf_generator\GC Wizard SymbolTables Pdf\obj\x86\Debug\GC Wizard SymbolTables Pdf.csproj.GenerateResource.cache
+D:\tmp\GitHub\GCWizard\external_helpers\symboltables_pdf_generator\GC Wizard SymbolTables Pdf\obj\x86\Debug\GC Wizard SymbolTables Pdf.csproj.CoreCompileInputs.cache
+D:\tmp\GitHub\GCWizard\external_helpers\symboltables_pdf_generator\GC Wizard SymbolTables Pdf\obj\x86\Debug\GC Wizard SymbolTables Pdf.csproj.CopyComplete
+D:\tmp\GitHub\GCWizard\external_helpers\symboltables_pdf_generator\GC Wizard SymbolTables Pdf\obj\x86\Debug\GC Wizard SymbolTables Pdf.exe
+D:\tmp\GitHub\GCWizard\external_helpers\symboltables_pdf_generator\GC Wizard SymbolTables Pdf\obj\x86\Debug\GC Wizard SymbolTables Pdf.pdb

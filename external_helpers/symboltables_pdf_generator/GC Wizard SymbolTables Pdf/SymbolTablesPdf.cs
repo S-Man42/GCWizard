@@ -74,6 +74,7 @@ namespace GC_Wizard_SymbolTables_Pdf
         private PdfOutline Outline { get; set; }
         private String ProjectPath { get; set; }
 
+
         private double _Progress = 0;
         public double Progress
         {
@@ -216,7 +217,7 @@ namespace GC_Wizard_SymbolTables_Pdf
         /// <param name="document"></param>
         private void drawSymbolTables(String path, PdfDocument document)
         {
-            var offset = new PointF();
+            PointF offset;
             var languagefile = File.ReadAllText(languageFileName(path));
             var licenseEntries = getLicenseEntries(File.ReadAllText(licenseFileName(path)), languagefile);
 
@@ -1454,6 +1455,12 @@ namespace GC_Wizard_SymbolTables_Pdf
                 case "ru":
                     contentTableName = "Оглавление";
                     break;
+                case "sk":
+                    contentTableName = "Obsah";
+                    break;
+                case "sv":
+                    contentTableName = "Innehållsförteckning";
+                    break;
                 case "tr":
                     contentTableName = "İçindekiler";
                     break;
@@ -1486,6 +1493,10 @@ namespace GC_Wizard_SymbolTables_Pdf
                     return "Źródło";
                 case "ru":
                     return "Источник";
+                case "sk":
+                    return "Zdroj";
+                case "sv":
+                    return "Lälla";
                 case "tr":
                     return "Kaynak";
                 default:
