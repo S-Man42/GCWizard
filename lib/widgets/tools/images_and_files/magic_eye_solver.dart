@@ -204,8 +204,10 @@ class MagicEyeSolverState extends State<MagicEyeSolver> {
   }
 
   void _saveOutputEncode(Tuple2<Uint8List, MagicEyeErrorCode> output) {
-    if (output == null)
+    if (output == null) {
       _encodeOutData = null;
+      return;
+    }
 
     _encodeOutData = output.item1;
     if (output.item2 == MagicEyeErrorCode.IMAGE_TOO_SMALL)
