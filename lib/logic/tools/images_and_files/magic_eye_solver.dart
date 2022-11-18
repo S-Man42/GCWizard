@@ -193,7 +193,7 @@ Tuple2<Uint8List, MagicEyeErrorCode> generateImage(Uint8List hiddenDataImage, Ui
   else
     texture = _generateColoredDotsTexture(_separation, resolutionY);
 
-  if (hiddenDataImage == null || textureImage== null)
+  if (hiddenDataImage == null || texture == null)
     return null;
 
   _textureWidth = _separation;
