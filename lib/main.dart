@@ -8,7 +8,7 @@ import 'package:gc_wizard/widgets/common/gcw_clipboard_editor.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/main_view.dart';
 import 'package:gc_wizard/widgets/tools/coords/utils/navigation_service.dart';
-import 'package:gc_wizard/widgets/utils/AppBuilder.dart';
+import 'package:gc_wizard/widgets/utils/app_builder.dart';
 import 'package:prefs/prefs.dart';
 import 'package:provider/provider.dart';
 

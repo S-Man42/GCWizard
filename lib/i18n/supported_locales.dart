@@ -6,7 +6,7 @@ final Map<Locale, Map<String, dynamic>> SUPPORTED_LOCALES = {
   Locale('de'): {'name_native': '🇩🇪 Deutsch', 'percent_translated': 100},
   Locale('el'): {'name_native': '🇬🇷 Ελληνικά', 'percent_translated': 5},
   Locale('en'): {'name_native': '🇬🇧🇺🇸 English', 'percent_translated': 100},
-  Locale('es'): {'name_native': '🇪🇸 Español', 'percent_translated': 8},
+  Locale('es'): {'name_native': '🇪🇸 Español', 'percent_translated': 17},
   Locale('fi'): {'name_native': '🇫🇮 Suomi', 'percent_translated': 51},
   Locale('fr'): {'name_native': '🇫🇷 Français', 'percent_translated': 84},
   Locale('it'): {'name_native': '🇮🇹 Italiano', 'percent_translated': 8},
