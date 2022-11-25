@@ -1,9 +1,8 @@
-import 'package:flutter/scheduler.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
-import 'package:gc_wizard/logic/tools/coords/intervals/coordinate_cell.dart';
-import 'package:gc_wizard/logic/tools/coords/intervals/interval_calculator.dart';
 import 'package:gc_wizard/logic/tools/coords/external_libs/net.sf.geographiclib/geodesic.dart';
 import 'package:gc_wizard/logic/tools/coords/external_libs/net.sf.geographiclib/geodesic_data.dart';
+import 'package:gc_wizard/logic/tools/coords/intervals/coordinate_cell.dart';
+import 'package:gc_wizard/logic/tools/coords/intervals/interval_calculator.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart' as utils;
 import 'package:gc_wizard/logic/tools/coords/vincenty/projection_vincenty.dart';
 import 'package:latlong2/latlong.dart';

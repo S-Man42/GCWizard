@@ -12,8 +12,6 @@
 
 import 'dart:math';
 
-import 'package:gc_wizard/logic/common/units/temperature.dart';
-
 enum WBT_HEATSTRESS_CONDITION { BLACK, PURPLE, BLUE, LIGHT_BLUE, GREEN, ORANGE, RED, DARK_RED }
 
 final Map<WBT_HEATSTRESS_CONDITION, double> WBT_HEAT_STRESS = {

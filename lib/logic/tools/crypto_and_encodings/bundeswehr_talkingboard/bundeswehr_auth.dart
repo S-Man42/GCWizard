@@ -1,4 +1,4 @@
-import 'dart:math';
+
 // https://www.reservistenverband.de/wp-content/uploads/2019/08/taschenkarte_fernmeldedienst_aller_truppen_nr.9_3.pdf
 // https://www.rk-ubstadt.de/?p=2079
 // https://www.geocaching.com/geocache/GC7DF7R_garnisonsgeschichte-6?guid=27ba9b97-31ab-473e-b35f-6d657e5d60b4

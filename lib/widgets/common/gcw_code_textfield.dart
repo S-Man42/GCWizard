@@ -1,13 +1,13 @@
-import 'package:flutter/material.dart';
 import 'package:code_text_field/code_text_field.dart';
-import 'package:prefs/prefs.dart';
-import 'package:gc_wizard/utils/settings/preferences.dart';
-import 'package:gc_wizard/theme/theme_colors.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_textselectioncontrols.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_highlight/themes/atom-one-dark.dart';
 import 'package:flutter_highlight/themes/atom-one-light.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/utils/settings/preferences.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_textselectioncontrols.dart';
 import 'package:highlight/highlight_core.dart';
 import 'package:highlight/languages/lua.dart';
+import 'package:prefs/prefs.dart';
 
 enum CodeHighlightingLanguage {LUA}
 

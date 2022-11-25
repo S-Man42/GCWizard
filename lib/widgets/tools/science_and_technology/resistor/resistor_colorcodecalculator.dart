@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/resistor.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/gcw_resistor_band_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_formatter.dart';
-import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class ResistorColorCodeCalculator extends StatefulWidget {
   @override

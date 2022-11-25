@@ -2,8 +2,8 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/supported_locales.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:gc_wizard/utils/settings/preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AppLanguage extends ChangeNotifier {
   static const Locale _defaultAppLocale = DEFAULT_LOCALE; // Locale('en', 'US');
