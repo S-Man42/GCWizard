@@ -134,11 +134,11 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
     }
     flexData = [1, 2];
 
-
     if (_currentDecodeMode == GCWSwitchPosition.left) {
       _codeControllerHighlighted.text = _currentDecodeInput.toLowerCase();
     } else {
-      _codeControllerHighlighted.text = removeAccents(_currentDecodeInput.toLowerCase()).replaceAll(RegExp(r'[^a-z0-9]'), '');
+      _codeControllerHighlighted.text =
+          removeAccents(_currentDecodeInput.toLowerCase()).replaceAll(RegExp(r'[^a-z0-9]'), '');
     }
 
     return Column(
@@ -146,29 +146,30 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
         GCWOutputText(
           text: output.join(' '),
         ),
-        output.length == 0 ? Container () : GCWExpandableTextDivider (
-            text: i18n(context, 'numeralwords_syntax_highlight'),
-            suppressTopSpace: false,
-            child: GCWCodeTextField(
-              wrap: true,
-              controller: _codeControllerHighlighted,
-              patternMap: _numeralWordsHiglightMap(),
-            )
-        ),
         output.length == 0
-          ? Container()
-          : GCWExpandableTextDivider(
-              text: i18n(context, 'common_outputdetail'),
-              suppressTopSpace: false,
-              expanded: true,
-              child:
-                  Column(children: columnedMultiLineOutput(context, columnData, flexValues: flexData, copyColumn: 1)),
-            ),
+            ? Container()
+            : GCWExpandableTextDivider(
+                text: i18n(context, 'numeralwords_syntax_highlight'),
+                suppressTopSpace: false,
+                child: GCWCodeTextField(
+                  wrap: true,
+                  controller: _codeControllerHighlighted,
+                  patternMap: _numeralWordsHiglightMap(),
+                )),
+        output.length == 0
+            ? Container()
+            : GCWExpandableTextDivider(
+                text: i18n(context, 'common_outputdetail'),
+                suppressTopSpace: false,
+                expanded: true,
+                child:
+                    Column(children: columnedMultiLineOutput(context, columnData, flexValues: flexData, copyColumn: 1)),
+              ),
       ],
     );
   }
 
-  Map<String, TextStyle> _numeralWordsHiglightMap(){
+  Map<String, TextStyle> _numeralWordsHiglightMap() {
     Map<String, TextStyle> result = {};
     if (NUMERAL_WORDS_ACCENTS[_currentLanguage] != null) {
       NUMERAL_WORDS_ACCENTS[_currentLanguage].forEach((element) {
@@ -183,26 +184,23 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
     }
 
     NUMERAL_WORDS[_currentLanguage].forEach((key, value) {
-      if (int.tryParse(value) == null)
-        if (value.startsWith('numeral'))
-          result[r'' + key + ''] = TextStyle(color: Colors.blue);
-        else
-          result[r'' + key + ''] = TextStyle(color: Colors.green);
+      if (int.tryParse(value) == null) if (value.startsWith('numeral'))
+        result[r'' + key + ''] = TextStyle(color: Colors.blue);
       else
-        if (int.parse(value) < 10)
-          result[r'' + key + ''] = TextStyle(color: Colors.red);
-        else
-          result[r'' + key + ''] = TextStyle(color: Colors.orange);
+        result[r'' + key + ''] = TextStyle(color: Colors.green);
+      else if (int.parse(value) < 10)
+        result[r'' + key + ''] = TextStyle(color: Colors.red);
+      else
+        result[r'' + key + ''] = TextStyle(color: Colors.orange);
     });
     return result;
   }
 
-  NumeralWordsLanguage _defaultLanguage(BuildContext context){
+  NumeralWordsLanguage _defaultLanguage(BuildContext context) {
     final Locale appLocale = Localizations.localeOf(context);
     if (isLocaleSupported(appLocale)) {
       return SUPPORTED_LANGUAGES_LOCALES[appLocale];
-    }
-    else {
+    } else {
       return SUPPORTED_LANGUAGES_LOCALES[DEFAULT_LOCALE];
     }
   }

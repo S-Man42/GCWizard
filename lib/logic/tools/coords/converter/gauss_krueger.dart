@@ -6,7 +6,6 @@ import 'package:gc_wizard/logic/tools/coords/ellipsoid_transform.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:latlong2/latlong.dart';
 
-
 GaussKrueger latLonToGaussKrueger(LatLng coord, int gkno, Ellipsoid ells) {
   int x = -1;
   switch (ells.name) {

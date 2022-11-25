@@ -247,8 +247,8 @@ class GCWMapViewState extends State<GCWMapView> {
                   opacity: 0.7,
                 ),
                 onTap: () {
-                  launchUrl(Uri.parse(
-                      i18n(context, _currentLayer == _LayerType.OPENSTREETMAP_MAPNIK ? OSM_URL : MAPBOX_SATELLITE_URL)));
+                  launchUrl(Uri.parse(i18n(
+                      context, _currentLayer == _LayerType.OPENSTREETMAP_MAPNIK ? OSM_URL : MAPBOX_SATELLITE_URL)));
                 },
               ),
             )

@@ -7,7 +7,6 @@ import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:intl/intl.dart';
 
-
 /// degree to Right ascension
 RightAscension raDegree2RightAscension(RaDeg ra) {
   if ((ra == null) || (ra.degrees == null)) return null;
@@ -30,7 +29,7 @@ RaDeg raRightAscension2Degree(RightAscension equatorial) {
 
   var sDeg = (s / 240.0);
   var deg = (h * 15.0) + (m / 4.0) + sDeg;
-  var _sign =   equatorial.sign == 0 ? 1 : equatorial.sign;
+  var _sign = equatorial.sign == 0 ? 1 : equatorial.sign;
 
   return RaDeg(_sign * deg);
 }
@@ -53,7 +52,7 @@ class RightAscension {
     this.seconds = sec.abs();
   }
 
-  int get milliseconds{
+  int get milliseconds {
     return ((this.seconds - this.seconds.truncate()) * 1000).round();
   }
 
@@ -62,21 +61,17 @@ class RightAscension {
     var _hours = duration.inHours;
     var _minutes = duration.inMinutes.abs().remainder(60);
     var _seconds = duration.inSeconds.abs().remainder(60);
-    var _mseconds  = (duration.abs().inMilliseconds - duration.abs().inSeconds * 1000).round();
+    var _mseconds = (duration.abs().inMilliseconds - duration.abs().inSeconds * 1000).round();
     var _msStr = _mseconds.toString().padLeft(3, '0');
     var _secondsD = double.parse('$_seconds.$_msStr');
-    return RightAscension (duration.isNegative ? -1 : 1, _hours, _minutes, _secondsD);
+    return RightAscension(duration.isNegative ? -1 : 1, _hours, _minutes, _secondsD);
   }
 
   Duration toDuration() {
     var duration = Duration(
-        hours: this.hours,
-        minutes: this.minutes,
-        seconds: this.seconds.truncate(),
-        milliseconds: this.milliseconds);
+        hours: this.hours, minutes: this.minutes, seconds: this.seconds.truncate(), milliseconds: this.milliseconds);
 
-    if (sign < 0)
-      duration = -duration;
+    if (sign < 0) duration = -duration;
 
     return duration;
   }
@@ -94,10 +89,8 @@ class RightAscension {
           int.parse(matches.first.group(3)),
           ((matches.first.group(5) == null) || matches.first.group(5).isEmpty)
               ? double.parse(matches.first.group(4))
-              : double.parse(matches.first.group(4) + matches.first.group(5))
-      );
-    }
-    else
+              : double.parse(matches.first.group(4) + matches.first.group(5)));
+    } else
       return null;
   }
 
@@ -105,7 +98,7 @@ class RightAscension {
   String toString() {
     var hourFormat = hours + (minutes / 60) + (seconds / 3600);
 
-    return (sign < 0 ? '-' : '') + formatHoursToHHmmss(hourFormat, limitHours: false );
+    return (sign < 0 ? '-' : '') + formatHoursToHHmmss(hourFormat, limitHours: false);
   }
 }
 
@@ -123,7 +116,7 @@ class RaDeg {
     return RaDeg(sign * (degrees.abs() + minutes / 60.0));
   }
 
-  static RaDeg fromDMS (int sign, int degrees, int minutes, double seconds) {
+  static RaDeg fromDMS(int sign, int degrees, int minutes, double seconds) {
     if (sign == null) sign = 1;
     if (degrees == null) degrees = 0;
     if (minutes == null) minutes = 0;
@@ -131,7 +124,7 @@ class RaDeg {
     return RaDeg(sign * (degrees.abs() + minutes / 60.0 + seconds / 60.0 / 60.0));
   }
 
-  static RaDeg fromDEC (int sign, double degrees) {
+  static RaDeg fromDEC(int sign, double degrees) {
     if (sign == null) sign = 1;
     if (degrees == null) degrees = 0.0;
     return RaDeg(sign * degrees);

@@ -45,16 +45,9 @@ WidgetSpan superscriptedTextForRichText(String text, {TextStyle textStyle}) {
   var style = textStyle ?? gcwTextStyle();
 
   return WidgetSpan(
-    child: Transform.translate(
-      offset: Offset(0.0, -1 * defaultFontSize() / 2.0 ),
-      child: Text(
-        text,
-        style: style.copyWith(
-            fontSize: defaultFontSize() / 1.4
-        )
-      )
-    )
-  );
+      child: Transform.translate(
+          offset: Offset(0.0, -1 * defaultFontSize() / 2.0),
+          child: Text(text, style: style.copyWith(fontSize: defaultFontSize() / 1.4))));
 }
 
 WidgetSpan subscriptedTextForRichText(String text, {TextStyle textStyle}) {
@@ -63,14 +56,7 @@ WidgetSpan subscriptedTextForRichText(String text, {TextStyle textStyle}) {
   return WidgetSpan(
       child: Transform.translate(
           offset: Offset(0.0, defaultFontSize() / 4.0),
-          child: Text(
-              text,
-              style: style.copyWith(
-                  fontSize: defaultFontSize() / 1.4
-              )
-          )
-      )
-  );
+          child: Text(text, style: style.copyWith(fontSize: defaultFontSize() / 1.4))));
 }
 
 /* Takes string input. If "_foo_" or "^bar^" exists, a RichText widget with
@@ -80,7 +66,7 @@ WidgetSpan subscriptedTextForRichText(String text, {TextStyle textStyle}) {
 buildSubOrSuperscriptedRichTextIfNecessary(String input) {
   var supSubRegExp = RegExp(r'(\^(.+?)\^|_(.+?)_)');
 
-  if (supSubRegExp.hasMatch(input) ) {
+  if (supSubRegExp.hasMatch(input)) {
     var textSpans = <InlineSpan>[];
 
     var lastEnd = 0;
@@ -102,13 +88,7 @@ buildSubOrSuperscriptedRichTextIfNecessary(String input) {
       textSpans.add(TextSpan(text: input.substring(lastEnd)));
     }
 
-    return RichText(
-        text: TextSpan(
-            style: gcwTextStyle(),
-            children: textSpans
-        )
-    );
-
+    return RichText(text: TextSpan(style: gcwTextStyle(), children: textSpans));
   } else {
     return input;
   }
@@ -263,7 +243,7 @@ int sortToolList(GCWTool a, GCWTool b) {
     return _sortToolListAlphabetically(a, b);
   }
 
-  Map<String, int> toolCounts =  Map<String, int>.from(jsonDecode(Prefs.get(PREFERENCE_TOOL_COUNT)));
+  Map<String, int> toolCounts = Map<String, int>.from(jsonDecode(Prefs.get(PREFERENCE_TOOL_COUNT)));
 
   var toolCountA = toolCounts[a.id];
   var toolCountB = toolCounts[b.id];
@@ -291,7 +271,6 @@ int sortToolList(GCWTool a, GCWTool b) {
   return null;
 }
 
-Future<bool> launchUrl(
-    Uri url) async {
+Future<bool> launchUrl(Uri url) async {
   return urlLauncher.launchUrl(url, mode: urlLauncher.LaunchMode.externalApplication);
 }

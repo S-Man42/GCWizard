@@ -57,13 +57,10 @@ class PhysicalConstantsState extends State<PhysicalConstants> {
           ? [
               i18n(context, 'physical_constants_symbol'),
               buildSubOrSuperscriptedRichTextIfNecessary(constantData['symbol'])
-            ] : null,
-      constantData['value'] != null
-          ? [
-              i18n(context, 'physical_constants_value'),
-              constantData['value'],
-              _buildExponent(constantData['exponent'])
             ]
+          : null,
+      constantData['value'] != null
+          ? [i18n(context, 'physical_constants_value'), constantData['value'], _buildExponent(constantData['exponent'])]
           : null,
       constantData['standard_uncertainty'] != null
           ? [
@@ -73,10 +70,8 @@ class PhysicalConstantsState extends State<PhysicalConstants> {
             ]
           : null,
       constantData['unit'] != null
-          ? [
-              i18n(context, 'physical_constants_unit'),
-              buildSubOrSuperscriptedRichTextIfNecessary(constantData['unit'])
-            ] : null
+          ? [i18n(context, 'physical_constants_unit'), buildSubOrSuperscriptedRichTextIfNecessary(constantData['unit'])]
+          : null
     ];
 
     return Column(
@@ -85,17 +80,11 @@ class PhysicalConstantsState extends State<PhysicalConstants> {
   }
 
   _buildExponent(exponent) {
-    if (exponent == null)
-      return null;
+    if (exponent == null) return null;
 
     return RichText(
-      text: TextSpan(
-        style: gcwTextStyle(),
-        children: [
-          TextSpan(text: ' × 10'),
-          superscriptedTextForRichText(exponent.toString())
-        ]
-      )
-    );
+        text: TextSpan(
+            style: gcwTextStyle(),
+            children: [TextSpan(text: ' × 10'), superscriptedTextForRichText(exponent.toString())]));
   }
 }

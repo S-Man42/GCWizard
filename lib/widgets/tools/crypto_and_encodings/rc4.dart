@@ -142,7 +142,8 @@ class RC4State extends State<RC4> {
           break;
       }
       return GCWDefaultOutput();
-    };
+    }
+    ;
 
     return GCWDefaultOutput(
       child: _currentOutput.output,

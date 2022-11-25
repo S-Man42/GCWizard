@@ -399,7 +399,8 @@ class FormulaPainter {
         return true;
       default:
         return false;
-    };
+    }
+    ;
   }
 
   bool _numberFunction(String functionName) {
@@ -411,7 +412,8 @@ class FormulaPainter {
         return true;
       default:
         return false;
-    };
+    }
+    ;
   }
 
   String _coloredSpecialFunctionsLiteral(String result, List<String> parts) {
@@ -491,8 +493,7 @@ class FormulaPainter {
   }
 
   String _variableValue(String variable) {
-    if ((_values == null) || !_values.containsKey(variable))
-        return null;
+    if ((_values == null) || !_values.containsKey(variable)) return null;
     return _values[variable];
   }
 
@@ -520,9 +521,8 @@ class FormulaPainter {
   String _coloredVariable(String result, List<String> parts, bool hasError) {
     var char = hasError ? 'R' : 'r';
     if (hasError && _wordFunction(_parentFunctionName))
-        char = _coloredWordFunctionVariable(parts[0]);
-    else if (_numberFunction(_parentFunctionName))
-      char = _coloredNumberFunctionVariable(parts[0]);
+      char = _coloredWordFunctionVariable(parts[0]);
+    else if (_numberFunction(_parentFunctionName)) char = _coloredNumberFunctionVariable(parts[0]);
 
     return _replaceRange(result, 0, parts[0].length, char);
   }
@@ -534,7 +534,7 @@ class FormulaPainter {
   String _coloredNumberFunctionVariable(String variable) {
     var variableValue = _variableValue(variable);
     if ((variableValue == null) || variableValue.isEmpty) return 'R';
-    if (_isNumberWithPoint(variableValue) == null)  return 'R';
+    if (_isNumberWithPoint(variableValue) == null) return 'R';
 
     return 'r';
   }

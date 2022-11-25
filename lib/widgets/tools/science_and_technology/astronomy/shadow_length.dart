@@ -88,12 +88,7 @@ class ShadowLengthState extends State<ShadowLength> {
 
   _buildOutput() {
     var shadowLen = shadowLength(
-        _currentHeight,
-        _currentCoords,
-        defaultEllipsoid(),
-        _currentDateTime['datetime'],
-        _currentDateTime['timezone']
-    );
+        _currentHeight, _currentCoords, defaultEllipsoid(), _currentDateTime['datetime'], _currentDateTime['timezone']);
 
     var lengthOutput = '';
     var _currentLength = shadowLen.length;

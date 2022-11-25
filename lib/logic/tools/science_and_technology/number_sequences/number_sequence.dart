@@ -80,12 +80,6 @@ enum NumberSequencesMode {
   HAPPY_NUMBERS,
 }
 
-
-
-
-
-
-
 final Zero = BigInt.zero;
 final One = BigInt.one;
 final Two = BigInt.two;

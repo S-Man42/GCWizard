@@ -17,9 +17,7 @@ class RGBPixel {
   }
 
   static RGBPixel getPixel(Uint8List data, int offset) {
-    return RGBPixel(data[offset + 0].toDouble(),
-                    data[offset + 1].toDouble(),
-                    data[offset + 2].toDouble());
+    return RGBPixel(data[offset + 0].toDouble(), data[offset + 1].toDouble(), data[offset + 2].toDouble());
   }
 
   RGBPixel setPixel(Uint8List data, int offset) {

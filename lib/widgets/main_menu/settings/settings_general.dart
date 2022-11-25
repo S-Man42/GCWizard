@@ -250,38 +250,27 @@ class GeneralSettingsState extends State<GeneralSettings> {
           },
         ),
 
-
         // always on bottom
-        Container(
-          margin: EdgeInsets.only(top: 25.0),
-          child: GCWDivider()
-        ),
+        Container(margin: EdgeInsets.only(top: 25.0), child: GCWDivider()),
         InkWell(
-          child: Icon(
-            Icons.more_horiz,
-            size: 20.0
-          ),
+          child: Icon(Icons.more_horiz, size: 20.0),
           onTap: () {
             showGCWAlertDialog(
               context,
               i18n(context, 'settings_preferences_warning_title'),
               i18n(context, 'settings_preferences_warning_text'),
               () {
-                Navigator.of(context).push(NoAnimationMaterialPageRoute(
-                    builder: (context) => GCWTool(
-                        tool: SettingsPreferences(),
-                        i18nPrefix: 'settings_preferences'))).whenComplete(() {
-                    setState(() {
-                      AppBuilder.of(context).rebuild();
-                    });
+                Navigator.of(context)
+                    .push(NoAnimationMaterialPageRoute(
+                        builder: (context) => GCWTool(tool: SettingsPreferences(), i18nPrefix: 'settings_preferences')))
+                    .whenComplete(() {
+                  setState(() {
+                    AppBuilder.of(context).rebuild();
+                  });
 
-                    showGCWAlertDialog(
-                      context,
-                      i18n(context, 'settings_preferences_aftermath_title'),
-                      i18n(context, 'settings_preferences_aftermath_text'),
-                      () {},
-                      cancelButton: false
-                    );
+                  showGCWAlertDialog(context, i18n(context, 'settings_preferences_aftermath_title'),
+                      i18n(context, 'settings_preferences_aftermath_text'), () {},
+                      cancelButton: false);
                 });
               },
             );

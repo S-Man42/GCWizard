@@ -12,10 +12,7 @@ class ScrabbleSelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
     final List<GCWTool> _toolList = registeredTools.where((element) {
-      return [
-        className(Scrabble()),
-        className(ScrabbleOverview())
-      ].contains(className(element.tool));
+      return [className(Scrabble()), className(ScrabbleOverview())].contains(className(element.tool));
     }).toList();
 
     return Container(child: GCWToolList(toolList: _toolList));

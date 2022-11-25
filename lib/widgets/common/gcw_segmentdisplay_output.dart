@@ -83,10 +83,10 @@ class _GCWSegmentDisplayOutputState extends State<GCWSegmentDisplayOutput> {
                 icon: Icons.save,
                 iconColor: (widget.segments == null) || (widget.segments.length == 0) ? themeColors().inActive() : null,
                 onPressed: () async {
-                  await buildSegmentDisplayImage(
-                      countColumns, _displays, _currentUpsideDown,
-                      horizontalPadding: widget.horizontalSymbolPadding,
-                      verticalPadding: widget.verticalSymbolPadding).then((image) {
+                  await buildSegmentDisplayImage(countColumns, _displays, _currentUpsideDown,
+                          horizontalPadding: widget.horizontalSymbolPadding,
+                          verticalPadding: widget.verticalSymbolPadding)
+                      .then((image) {
                     if (image != null)
                       image.toByteData(format: ui.ImageByteFormat.png).then((data) {
                         _exportFile(context, data.buffer.asUint8List());
@@ -142,11 +142,8 @@ class _GCWSegmentDisplayOutputState extends State<GCWSegmentDisplayOutput> {
         : _displays.map((display) {
             return Transform.rotate(angle: _currentUpsideDown ? pi : 0, child: display);
           }).toList();
-    return buildSegmentDisplayOutput(
-        countColumns,
-        viewList,
-        verticalPadding: widget.verticalSymbolPadding,
-        horizontalPadding: widget.horizontalSymbolPadding);
+    return buildSegmentDisplayOutput(countColumns, viewList,
+        verticalPadding: widget.verticalSymbolPadding, horizontalPadding: widget.horizontalSymbolPadding);
   }
 }
 

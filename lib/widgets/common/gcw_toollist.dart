@@ -97,7 +97,9 @@ class _GCWToolListState extends State<GCWToolList> {
 
   _buildSubtitle(BuildContext context, GCWTool tool) {
     var descriptionText;
-    if (Prefs.getBool(PREFERENCE_TOOLLIST_SHOW_DESCRIPTIONS) && tool.description != null && tool.description.length > 0) {
+    if (Prefs.getBool(PREFERENCE_TOOLLIST_SHOW_DESCRIPTIONS) &&
+        tool.description != null &&
+        tool.description.length > 0) {
       descriptionText = IgnorePointer(
           child: GCWText(
         text: tool.description,

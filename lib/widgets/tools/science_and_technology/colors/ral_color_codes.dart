@@ -103,7 +103,7 @@ class RALColorCodesState extends State<RALColorCodes> {
 
     return [
       Container(
-        margin: EdgeInsets.only(right: 4* DOUBLE_DEFAULT_MARGIN),
+        margin: EdgeInsets.only(right: 4 * DOUBLE_DEFAULT_MARGIN),
         height: 50,
         width: 50,
         decoration: BoxDecoration(
@@ -128,11 +128,13 @@ class RALColorCodesState extends State<RALColorCodes> {
     }
 
     return GCWOutput(
-      title: similarRALs.length == 1 ? i18n(context, 'common_output') : i18n(context, 'ralcolorcodes_mode_colorstoral_similarcolorsfound'),
-      child: Column(
-        children: columnedMultiLineOutput(context, similarRALs.map((e) => _buildRALColorOutput(e)).toList(), flexValues: [1, 2, 2], copyColumn: 1),
-      )
-    );
+        title: similarRALs.length == 1
+            ? i18n(context, 'common_output')
+            : i18n(context, 'ralcolorcodes_mode_colorstoral_similarcolorsfound'),
+        child: Column(
+          children: columnedMultiLineOutput(context, similarRALs.map((e) => _buildRALColorOutput(e)).toList(),
+              flexValues: [1, 2, 2], copyColumn: 1),
+        ));
   }
 
   _buildRALToColorOutput() {

@@ -151,7 +151,6 @@ class _GCWToolState extends State<GCWTool> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     // this is the case when Tool is not called by Registry but as subpage of another tool
@@ -298,14 +297,12 @@ class _GCWToolState extends State<GCWTool> {
 
 _setToolCount(String i18nPrefix) {
   var toolCountsRaw = Prefs.get(PREFERENCE_TOOL_COUNT);
-  if (toolCountsRaw == null)
-    toolCountsRaw = '{}';
+  if (toolCountsRaw == null) toolCountsRaw = '{}';
 
   Map<String, int> toolCounts = Map<String, int>.from(jsonDecode(toolCountsRaw));
   var currentToolCount = toolCounts[i18nPrefix];
 
-  if (currentToolCount == null)
-    currentToolCount = 0;
+  if (currentToolCount == null) currentToolCount = 0;
 
   currentToolCount++;
   toolCounts[i18nPrefix] = currentToolCount;

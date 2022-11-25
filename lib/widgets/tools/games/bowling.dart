@@ -62,7 +62,7 @@ class BowlingState extends State<Bowling> {
             Expanded(
               child: GCWText(
                 align: Alignment.center,
-                text:i18n(context, 'bowling_frame') + ' '+ ( _currentFrame + 1).toString() + ' / 10',
+                text: i18n(context, 'bowling_frame') + ' ' + (_currentFrame + 1).toString() + ' / 10',
               ),
             ),
             GCWIconButton(
@@ -78,79 +78,78 @@ class BowlingState extends State<Bowling> {
             ),
           ],
         ),
-        Row(
-          children: <Widget>[
-            Expanded(
-                flex: 1,
-                child: Container(
-                  child: GCWIntegerSpinner(
-                    layout: SpinnerLayout.VERTICAL,
-                    value: _currentThrow1,
-                    min: 0,
-                    max: 10,
-                    onChanged: (value) {
-                      setState(() {
-                        _currentThrow1 = value;
-                        if (_currentFrame < 9 || _currentThrow1 < 10) {
-                          _currentThrow2 = min(_currentThrow2, 10 - _currentThrow1);
-                        }
-                        if (_currentThrow1 == 10) {
-                          _currentThrow3 = min(_currentThrow3, 10 - _currentThrow2);
-                        }
+        Row(children: <Widget>[
+          Expanded(
+            flex: 1,
+            child: Container(
+              child: GCWIntegerSpinner(
+                layout: SpinnerLayout.VERTICAL,
+                value: _currentThrow1,
+                min: 0,
+                max: 10,
+                onChanged: (value) {
+                  setState(() {
+                    _currentThrow1 = value;
+                    if (_currentFrame < 9 || _currentThrow1 < 10) {
+                      _currentThrow2 = min(_currentThrow2, 10 - _currentThrow1);
+                    }
+                    if (_currentThrow1 == 10) {
+                      _currentThrow3 = min(_currentThrow3, 10 - _currentThrow2);
+                    }
 
-                        _calculateAndSetScore();
-                      });
-                    },
-                  ),
-                  margin: EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
-                ),
-            ),
-
-            Expanded(
-              flex: 1,
-              child: Container(
-                child: (_currentFrame < 9 && _currentThrow1 == 10) ? Container() : GCWIntegerSpinner(
-                  layout: SpinnerLayout.VERTICAL,
-                  value: _currentThrow2,
-                  min: 0,
-                  max: (_currentFrame == 9 && _currentThrow1 == 10) ? 10 : 10 - _currentThrow1,
-                  onChanged: (value) {
-                    setState(() {
-                      _currentThrow2 = value;
-                      if (_currentThrow1 == 10) {
-                        _currentThrow3 = min(_currentThrow3, 10 - _currentThrow2);
-                      }
-
-                      _calculateAndSetScore();
-                    });
-                  },
-                ),
-                margin: EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
+                    _calculateAndSetScore();
+                  });
+                },
               ),
+              margin: EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
             ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Container(
+              child: (_currentFrame < 9 && _currentThrow1 == 10)
+                  ? Container()
+                  : GCWIntegerSpinner(
+                      layout: SpinnerLayout.VERTICAL,
+                      value: _currentThrow2,
+                      min: 0,
+                      max: (_currentFrame == 9 && _currentThrow1 == 10) ? 10 : 10 - _currentThrow1,
+                      onChanged: (value) {
+                        setState(() {
+                          _currentThrow2 = value;
+                          if (_currentThrow1 == 10) {
+                            _currentThrow3 = min(_currentThrow3, 10 - _currentThrow2);
+                          }
 
-            (_currentFrame == 9 && _currentBowlingScore[_currentFrame].one + _currentBowlingScore[_currentFrame].two >= 10) ?
-              Expanded(
-                flex: 1,
-                    child: Container(
-                      child: GCWIntegerSpinner(
-                        layout: SpinnerLayout.VERTICAL,
-                        value: _currentThrow3,
-                        min: 0,
-                        max: _currentThrow1 == 10 ? 10 - _currentThrow2 : 10,
-                        onChanged: (value) {
-                          setState(() {
-                            _currentThrow3 = value;
+                          _calculateAndSetScore();
+                        });
+                      },
+                    ),
+              margin: EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
+            ),
+          ),
+          (_currentFrame == 9 &&
+                  _currentBowlingScore[_currentFrame].one + _currentBowlingScore[_currentFrame].two >= 10)
+              ? Expanded(
+                  flex: 1,
+                  child: Container(
+                    child: GCWIntegerSpinner(
+                      layout: SpinnerLayout.VERTICAL,
+                      value: _currentThrow3,
+                      min: 0,
+                      max: _currentThrow1 == 10 ? 10 - _currentThrow2 : 10,
+                      onChanged: (value) {
+                        setState(() {
+                          _currentThrow3 = value;
 
-                            _calculateAndSetScore();
-                          });
-                        },
-                      ),
-                      margin: EdgeInsets.only(left: DEFAULT_MARGIN),
-                    )
-                  ) : Container()
-          ]
-        ),
+                          _calculateAndSetScore();
+                        });
+                      },
+                    ),
+                    margin: EdgeInsets.only(left: DEFAULT_MARGIN),
+                  ))
+              : Container()
+        ]),
         _buildOutput(),
       ],
     );
@@ -161,17 +160,17 @@ class BowlingState extends State<Bowling> {
       children: <Widget>[
         GCWDefaultOutput(
           child: Column(
-            children: columnedMultiLineOutput(context, _buildBowlingScoreTable(), hasHeader: true, copyColumn: 4, flexValues: [2, 1, 1, 1, 2, 3]),
+            children: columnedMultiLineOutput(context, _buildBowlingScoreTable(),
+                hasHeader: true, copyColumn: 4, flexValues: [2, 1, 1, 1, 2, 3]),
           ),
         ),
         GCWTextDivider(
           text: i18n(context, 'bowling_scoreboard'),
         ),
         GCWOutput(
-          child: Column(
-            children: _buildBowlingScoreBoard(),
-          )
-        ),
+            child: Column(
+          children: _buildBowlingScoreBoard(),
+        )),
       ],
     );
   }
@@ -192,88 +191,93 @@ class BowlingState extends State<Bowling> {
     _currentFrameTotals = bowlingCalcFrameTotals(_currentBowlingScore);
   }
 
-  List<List<dynamic>> _buildBowlingScoreTable(){
+  List<List<dynamic>> _buildBowlingScoreTable() {
     List<List<dynamic>> result = [];
-    result.add([i18n(context, 'bowling_frame'), '1', '2', '3', i18n(context, 'bowling_total'), i18n(context, 'bowling_wholetotal')]);
+    result.add([
+      i18n(context, 'bowling_frame'),
+      '1',
+      '2',
+      '3',
+      i18n(context, 'bowling_total'),
+      i18n(context, 'bowling_wholetotal')
+    ]);
     for (int i = 0; i < 10; i++)
       result.add([
-          i + 1,
-          _currentBowlingScore[i].one,
-          (_currentBowlingScore[i].one == 10) && (i < 9) ? null : _currentBowlingScore[i].two,
-          (i == 9) && (_currentBowlingScore[i].one + _currentBowlingScore[i].two == 10) ? _currentBowlingScore[i].three : null,
-          _currentFrameTotals[i],
-          bowlingTotalAfterFrames(i, _currentFrameTotals)
+        i + 1,
+        _currentBowlingScore[i].one,
+        (_currentBowlingScore[i].one == 10) && (i < 9) ? null : _currentBowlingScore[i].two,
+        (i == 9) && (_currentBowlingScore[i].one + _currentBowlingScore[i].two == 10)
+            ? _currentBowlingScore[i].three
+            : null,
+        _currentFrameTotals[i],
+        bowlingTotalAfterFrames(i, _currentFrameTotals)
       ]);
     return result;
   }
 
   List<Widget> _buildBowlingScoreBoard() {
-    https://www.sportcalculators.com/bowling-score-calculator
+    https: //www.sportcalculators.com/bowling-score-calculator
     var score = <Widget>[];
     var scoreRow1 = <Widget>[];
     var scoreRow2 = <Widget>[];
 
-    for (int i = 0; i < 10; i++){
+    for (int i = 0; i < 10; i++) {
       scoreRow1.add(_buildCellRow1(i, 1));
       scoreRow1.add(_buildCellRow1(i, 2));
     }
     scoreRow1.add(_buildCellRow1(9, 3));
-    score.add(Row(children: scoreRow1,));
+    score.add(Row(
+      children: scoreRow1,
+    ));
 
-    for (int i = 0; i < 10; i++){
+    for (int i = 0; i < 10; i++) {
       i != 9 ? scoreRow2.add(_buildCellRow2(i)) : scoreRow2.add(_buildCellRow2_10());
     }
-    score.add(Row(children: scoreRow2,));
+    score.add(Row(
+      children: scoreRow2,
+    ));
 
     return score;
   }
 
-  Widget _buildCellRow1(int frame, int count){
+  Widget _buildCellRow1(int frame, int count) {
     return Container(
       height: defaultFontSize() * 1.5,
       decoration: BoxDecoration(
         color: Colors.white,
-        border: Border(
-            top: _border,
-            left: _border,
-            right: _border,
-            bottom: count != 1 ? _border : BorderSide.none),
+        border: Border(top: _border, left: _border, right: _border, bottom: count != 1 ? _border : BorderSide.none),
       ),
       child: Column(
         children: [
           Expanded(
               child: AutoSizeText(
-                bowlingBuildDataRow1(frame, count, _currentBowlingScore),
-                style: gcwTextStyle().copyWith(color: Colors.black),
-                minFontSize: AUTO_FONT_SIZE_MIN,
-                maxLines: 1,
-              )),
+            bowlingBuildDataRow1(frame, count, _currentBowlingScore),
+            style: gcwTextStyle().copyWith(color: Colors.black),
+            minFontSize: AUTO_FONT_SIZE_MIN,
+            maxLines: 1,
+          )),
         ],
       ),
       width: _cellWidth,
     );
   }
 
-  Widget _buildCellRow2(int frame){
+  Widget _buildCellRow2(int frame) {
     return Container(
       height: defaultFontSize() * 1.5,
       decoration: BoxDecoration(
         color: Colors.white,
-        border: Border(
-            top: BorderSide.none,
-            left: _border,
-            right: _border,
-            bottom: _border),
+        border: Border(top: BorderSide.none, left: _border, right: _border, bottom: _border),
       ),
       child: Column(
         children: [
           Expanded(
               child: AutoSizeText(
-                bowlingTotalAfterFrames(frame, _currentFrameTotals).toString(),
-                style: gcwTextStyle().copyWith(color: Colors.black),
-                minFontSize: AUTO_FONT_SIZE_MIN,
-                maxLines: 1,
-              )),
+            bowlingTotalAfterFrames(frame, _currentFrameTotals).toString(),
+            style: gcwTextStyle().copyWith(color: Colors.black),
+            minFontSize: AUTO_FONT_SIZE_MIN,
+            maxLines: 1,
+          )),
         ],
       ),
       width: _cellWidth * 2,
@@ -285,21 +289,17 @@ class BowlingState extends State<Bowling> {
       height: defaultFontSize() * 1.5,
       decoration: BoxDecoration(
         color: Colors.white,
-        border: Border(
-            top: BorderSide.none,
-            left: _border,
-            right: _border,
-            bottom: _border),
+        border: Border(top: BorderSide.none, left: _border, right: _border, bottom: _border),
       ),
       child: Column(
         children: [
           Expanded(
               child: AutoSizeText(
-                bowlingTotalAfterFrames(9, _currentFrameTotals).toString(),
-                style: gcwTextStyle().copyWith(color: Colors.black),
-                minFontSize: AUTO_FONT_SIZE_MIN,
-                maxLines: 1,
-              )),
+            bowlingTotalAfterFrames(9, _currentFrameTotals).toString(),
+            style: gcwTextStyle().copyWith(color: Colors.black),
+            minFontSize: AUTO_FONT_SIZE_MIN,
+            maxLines: 1,
+          )),
         ],
       ),
       width: _cellWidth * 3,

@@ -83,7 +83,6 @@ class GCWCoordsLambertState extends State<GCWCoordsLambert> {
     ]);
   }
 
-
   bool _subtypeChanged() {
     return _currentSubtype != getLambertType(widget.subtype);
   }

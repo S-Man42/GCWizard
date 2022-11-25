@@ -69,16 +69,11 @@ class MathematicalConstantsState extends State<MathematicalConstants> {
           additionalNames.add(constant.key);
           additionalNames.remove(name);
 
-          var mapValue = {
-            'value': value,
-            'additional_names': additionalNames
-          };
+          var mapValue = {'value': value, 'additional_names': additionalNames};
 
-          if (symbol != null)
-            mapValue.putIfAbsent('symbol', () => symbol);
+          if (symbol != null) mapValue.putIfAbsent('symbol', () => symbol);
 
-          if (tool != null)
-            mapValue.putIfAbsent('tool', () => tool);
+          if (tool != null) mapValue.putIfAbsent('tool', () => tool);
 
           _constants.putIfAbsent(mapKey, () => mapValue);
         });
@@ -102,18 +97,18 @@ class MathematicalConstantsState extends State<MathematicalConstants> {
     if (constantData['additional_names'] != null) {
       print(constantData['additional_names']);
 
-      names = constantData['additional_names']
-          .map<String>((name) => i18n(context, name))
-          .toList();
+      names = constantData['additional_names'].map<String>((name) => i18n(context, name)).toList();
     }
 
     var data = [
-      constantData['symbol'] != null ?  [i18n(context, 'physical_constants_symbol'), buildSubOrSuperscriptedRichTextIfNecessary(constantData['symbol'])] : null,
+      constantData['symbol'] != null
+          ? [
+              i18n(context, 'physical_constants_symbol'),
+              buildSubOrSuperscriptedRichTextIfNecessary(constantData['symbol'])
+            ]
+          : null,
       [i18n(context, 'physical_constants_value'), constantData['value']],
-      names != null ? [
-        i18n(context, 'mathematical_constants_additionalnames'),
-        names.join('\n')
-      ] : null
+      names != null ? [i18n(context, 'mathematical_constants_additionalnames'), names.join('\n')] : null
     ];
 
     var dataView = Column(
@@ -123,16 +118,12 @@ class MathematicalConstantsState extends State<MathematicalConstants> {
     var toolLink = _buildToolLink(constantData['tool']);
 
     return Column(
-      children: [
-        dataView,
-        toolLink
-      ],
+      children: [dataView, toolLink],
     );
   }
 
   _buildToolLink(String toolReference) {
-    if (toolReference == null)
-      return Container();
+    if (toolReference == null) return Container();
 
     Widget widget;
     String title;
@@ -165,7 +156,8 @@ class MathematicalConstantsState extends State<MathematicalConstants> {
         widget = SQRT5Selection();
         title = 'sqrt5_selection_title';
         break;
-      default: return Container();
+      default:
+        return Container();
     }
 
     return GCWButton(
@@ -174,10 +166,8 @@ class MathematicalConstantsState extends State<MathematicalConstants> {
         Navigator.push(
             context,
             NoAnimationMaterialPageRoute(
-                builder: (context) => GCWTool(
-                    tool: widget, toolName: i18n(context, title), i18nPrefix: '')));
+                builder: (context) => GCWTool(tool: widget, toolName: i18n(context, title), i18nPrefix: '')));
       },
     );
-
   }
 }

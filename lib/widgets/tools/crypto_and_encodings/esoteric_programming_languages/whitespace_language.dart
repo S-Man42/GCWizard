@@ -67,8 +67,9 @@ class WhitespaceLanguageState extends State<WhitespaceLanguage> {
     return GCWMultipleOutput(
       children: [
         _currentOutput.output +
-            (_currentOutput.error && (_currentOutput.errorText != null) ? '\n' +
-            (i18n(context, _currentOutput.errorText) ?? _currentOutput.errorText) : ''),
+            (_currentOutput.error && (_currentOutput.errorText != null)
+                ? '\n' + (i18n(context, _currentOutput.errorText) ?? _currentOutput.errorText)
+                : ''),
         GCWOutput(
           title: i18n(context, 'whitespace_language_readable_code'),
           child: GCWOutputText(

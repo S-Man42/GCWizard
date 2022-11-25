@@ -218,13 +218,17 @@ Map<String, Map<String, String>> RAL_COLOR_CODES = {
 
 MapEntry<String, Map<String, String>> _ralByRGB(RGB rgb) {
   var hexCode = HexCode.fromRGB(rgb);
-  return RAL_COLOR_CODES.entries.firstWhere((element) => element.value['colorcode'].toLowerCase() == hexCode.toString().toLowerCase(), orElse: () => null);
+  return RAL_COLOR_CODES.entries.firstWhere(
+      (element) => element.value['colorcode'].toLowerCase() == hexCode.toString().toLowerCase(),
+      orElse: () => null);
 }
 
 List<Map<String, String>> findSimilarRALColors(RGB rgb) {
   var ral = _ralByRGB(rgb);
   if (ral != null) {
-    return [{'ralcode': ral.key, 'colorcode': ral.value['colorcode'], 'name': ral.value['name']}];
+    return [
+      {'ralcode': ral.key, 'colorcode': ral.value['colorcode'], 'name': ral.value['name']}
+    ];
   }
 
   var RALRGBs = RAL_COLOR_CODES.values.map((ral) => HexCode(ral['colorcode']).toRGB()).toList();
@@ -238,7 +242,11 @@ List<Map<String, String>> findSimilarRALColors(RGB rgb) {
     if (nearestRGBs.length >= 5) {
       out = nearestRGBs.map((nearestRGB) {
         var nearestRAL = _ralByRGB(nearestRGB);
-        return {'ralcode': nearestRAL.key, 'colorcode': nearestRAL.value['colorcode'], 'name': nearestRAL.value['name']};
+        return {
+          'ralcode': nearestRAL.key,
+          'colorcode': nearestRAL.value['colorcode'],
+          'name': nearestRAL.value['name']
+        };
       }).toList();
 
       return out;

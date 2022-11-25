@@ -4,7 +4,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/krevo.
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/krevo.wherigotools/readustring.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/krevo.wherigotools/ucommons.dart';
 
-enum HASH {ALPHABETICAL, NUMERIC}
+enum HASH { ALPHABETICAL, NUMERIC }
 
 String findHashAlphabetical(int hashToFind, int len) {
   return findHash(hashToFind, len);

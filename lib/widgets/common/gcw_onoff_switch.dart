@@ -28,7 +28,8 @@ class GCWOnOffSwitchState extends State<GCWOnOffSwitch> {
     return Row(
       children: <Widget>[
         if (!widget.notitle)
-          Expanded(child: GCWText(text: (widget.title ?? i18n(context, 'common_mode')) + ':'), flex: widget.flexValues[0]),
+          Expanded(
+              child: GCWText(text: (widget.title ?? i18n(context, 'common_mode')) + ':'), flex: widget.flexValues[0]),
         Expanded(
             child: Container(
               child: Row(

@@ -203,17 +203,15 @@ class SymbolReplacerManualControlState extends State<SymbolReplacerManualControl
   Widget _identifiedSymbol() {
     if (widget.symbolImage?.compareSymbols == null) {
       return Expanded(
-        child: Column(children: [
-          Container()
-        ]),
+        child: Column(children: [Container()]),
         flex: 1,
       );
-    };
+    }
+    ;
 
     return Expanded(
       child: Column(children: [
-        AutoSizeText(
-            i18n(context, 'symbol_replacer_symbol'),
+        AutoSizeText(i18n(context, 'symbol_replacer_symbol'),
             textAlign: TextAlign.center,
             style: gcwTextStyle().copyWith(fontSize: defaultFontSize() - 2),
             minFontSize: AUTO_FONT_SIZE_MIN,

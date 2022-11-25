@@ -21,10 +21,7 @@ dynamic fontSizeSmall() {
 
 TextStyle gcwTextStyle({double fontSize = 0}) {
   return TextStyle(
-      color: themeColors().mainFont(),
-      fontSize: fontSize == 0 ? defaultFontSize() : fontSize,
-      fontFamily: 'Roboto'
-  );
+      color: themeColors().mainFont(), fontSize: fontSize == 0 ? defaultFontSize() : fontSize, fontFamily: 'Roboto');
 }
 
 TextStyle gcwBetaStyle() {

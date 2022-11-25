@@ -12,7 +12,7 @@ import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:intl/intl.dart';
 
-enum _SORT_TYPES {ALPHABETICAL, COUNT_GROUP, COUNT_OVERALL}
+enum _SORT_TYPES { ALPHABETICAL, COUNT_GROUP, COUNT_OVERALL }
 
 class TextAnalysis extends StatefulWidget {
   @override
@@ -67,66 +67,68 @@ class TextAnalysisState extends State<TextAnalysis> {
             });
           },
         ),
-        _currentOptions ? Column(
-          children: [
-            GCWDivider(),
-            GCWOnOffSwitch(
-              value: _currentCaseSensitive,
-              title: i18n(context, 'common_case_sensitive'),
-              onChanged: (value) {
-                setState(() {
-                  _currentCaseSensitive = value;
-                });
-              },
-            ),
-            GCWOnOffSwitch(
-              value: _currentUseLetters,
-              title: i18n(context, 'textanalysis_letters'),
-              onChanged: (value) {
-                setState(() {
-                  _currentUseLetters = value;
-                });
-              },
-            ),
-            GCWOnOffSwitch(
-              value: _currentUseNumbers,
-              title: i18n(context, 'textanalysis_numerals'),
-              onChanged: (value) {
-                setState(() {
-                  _currentUseNumbers = value;
-                });
-              },
-            ),
-            GCWOnOffSwitch(
-              value: _currentUseSpecialChars,
-              title: i18n(context, 'textanalysis_specialcharacters'),
-              onChanged: (value) {
-                setState(() {
-                  _currentUseSpecialChars = value;
-                });
-              },
-            ),
-            GCWOnOffSwitch(
-              value: _currentUseWhitespaceChars,
-              title: i18n(context, 'textanalysis_whitespacecharacters'),
-              onChanged: (value) {
-                setState(() {
-                  _currentUseWhitespaceChars = value;
-                });
-              },
-            ),
-            GCWOnOffSwitch(
-              value: _currentUseControlChars,
-              title: i18n(context, 'textanalysis_controlcharacters'),
-              onChanged: (value) {
-                setState(() {
-                  _currentUseControlChars = value;
-                });
-              },
-            ),
-            GCWDivider()
-          ],
-        ) : Container(),
+        _currentOptions
+            ? Column(
+                children: [
+                  GCWDivider(),
+                  GCWOnOffSwitch(
+                    value: _currentCaseSensitive,
+                    title: i18n(context, 'common_case_sensitive'),
+                    onChanged: (value) {
+                      setState(() {
+                        _currentCaseSensitive = value;
+                      });
+                    },
+                  ),
+                  GCWOnOffSwitch(
+                    value: _currentUseLetters,
+                    title: i18n(context, 'textanalysis_letters'),
+                    onChanged: (value) {
+                      setState(() {
+                        _currentUseLetters = value;
+                      });
+                    },
+                  ),
+                  GCWOnOffSwitch(
+                    value: _currentUseNumbers,
+                    title: i18n(context, 'textanalysis_numerals'),
+                    onChanged: (value) {
+                      setState(() {
+                        _currentUseNumbers = value;
+                      });
+                    },
+                  ),
+                  GCWOnOffSwitch(
+                    value: _currentUseSpecialChars,
+                    title: i18n(context, 'textanalysis_specialcharacters'),
+                    onChanged: (value) {
+                      setState(() {
+                        _currentUseSpecialChars = value;
+                      });
+                    },
+                  ),
+                  GCWOnOffSwitch(
+                    value: _currentUseWhitespaceChars,
+                    title: i18n(context, 'textanalysis_whitespacecharacters'),
+                    onChanged: (value) {
+                      setState(() {
+                        _currentUseWhitespaceChars = value;
+                      });
+                    },
+                  ),
+                  GCWOnOffSwitch(
+                    value: _currentUseControlChars,
+                    title: i18n(context, 'textanalysis_controlcharacters'),
+                    onChanged: (value) {
+                      setState(() {
+                        _currentUseControlChars = value;
+                      });
+                    },
+                  ),
+                  GCWDivider()
+                ],
+              )
+            : Container(),
         GCWDropDownButton(
           value: _currentSort,
           title: i18n(context, 'common_sortby'),
@@ -137,16 +139,19 @@ class TextAnalysisState extends State<TextAnalysis> {
           },
           items: _SORT_TYPES.values.map((type) {
             var childText;
-            switch(type) {
-              case _SORT_TYPES.ALPHABETICAL: childText = 'textanalysis_sort_alphabetical'; break;
-              case _SORT_TYPES.COUNT_GROUP: childText = 'textanalysis_sort_countgroup'; break;
-              case _SORT_TYPES.COUNT_OVERALL: childText = 'textanalysis_sort_countoverall'; break;
+            switch (type) {
+              case _SORT_TYPES.ALPHABETICAL:
+                childText = 'textanalysis_sort_alphabetical';
+                break;
+              case _SORT_TYPES.COUNT_GROUP:
+                childText = 'textanalysis_sort_countgroup';
+                break;
+              case _SORT_TYPES.COUNT_OVERALL:
+                childText = 'textanalysis_sort_countoverall';
+                break;
             }
 
-            return GCWDropDownMenuItem(
-              value: type,
-              child: i18n(context, childText)
-            );
+            return GCWDropDownMenuItem(value: type, child: i18n(context, childText));
           }).toList(),
         ),
         GCWDefaultOutput(child: _buildOutput())
@@ -160,9 +165,7 @@ class TextAnalysisState extends State<TextAnalysis> {
 
     var char = map[key];
 
-    return char.abbreviation + '   ' + char.symbols.first + '\n'
-        + i18n(context, char.name) + '\n'
-        + char.unicode;
+    return char.abbreviation + '   ' + char.symbols.first + '\n' + i18n(context, char.name) + '\n' + char.unicode;
   }
 
   _groupCount(Map<String, int> map) {
@@ -173,8 +176,7 @@ class TextAnalysisState extends State<TextAnalysis> {
     var numFormat = NumberFormat('0.00');
 
     var groupCount = _groupCount(map);
-    if (groupCount == 0)
-      return null;
+    if (groupCount == 0) return null;
 
     var groupCommon = [
       [i18n(context, 'textanalysis_count'), groupCount],
@@ -200,9 +202,7 @@ class TextAnalysisState extends State<TextAnalysis> {
       hasControlChars = hasControlChars || isControlChar;
 
       var data = [
-        isControlChar
-            ? _buildControlCharName(e.key)
-            : e.key,
+        isControlChar ? _buildControlCharName(e.key) : e.key,
         e.value,
         numFormat.format(e.value / totalCount * 100)
       ];
@@ -233,40 +233,40 @@ class TextAnalysisState extends State<TextAnalysis> {
   }
 
   _buildGroupWidget(Map<String, dynamic> group, {String title}) {
-    if (group == null)
-      return Container();
+    if (group == null) return Container();
 
-    var flexValues = _currentSort == _SORT_TYPES.COUNT_OVERALL ? [2, 1, 1] : [group['isControlCharGroup'] ? 2 : 1, 1, 1, 1];
+    var flexValues =
+        _currentSort == _SORT_TYPES.COUNT_OVERALL ? [2, 1, 1] : [group['isControlCharGroup'] ? 2 : 1, 1, 1, 1];
 
     var child = Column(
       children: [
-        _currentSort != _SORT_TYPES.COUNT_OVERALL ?
-          Column(
-            children: [
-              Column(
-                children: columnedMultiLineOutput(context, group['common'], copyColumn: 1),
-              ),
-              Container(
-                height: 8 * DOUBLE_DEFAULT_MARGIN,
+        _currentSort != _SORT_TYPES.COUNT_OVERALL
+            ? Column(
+                children: [
+                  Column(
+                    children: columnedMultiLineOutput(context, group['common'], copyColumn: 1),
+                  ),
+                  Container(
+                    height: 8 * DOUBLE_DEFAULT_MARGIN,
+                  )
+                ],
               )
-            ],
-          )
-           : Container(),
+            : Container(),
         Column(
-          children: columnedMultiLineOutput(context, group['detailed'], hasHeader: true, flexValues: flexValues, copyColumn: 1),
+          children: columnedMultiLineOutput(context, group['detailed'],
+              hasHeader: true, flexValues: flexValues, copyColumn: 1),
         )
       ],
     );
 
     return Column(
       children: [
-        Container(height: 5 * DOUBLE_DEFAULT_MARGIN,),
+        Container(
+          height: 5 * DOUBLE_DEFAULT_MARGIN,
+        ),
         _currentSort == _SORT_TYPES.COUNT_OVERALL
-          ? child
-          : GCWExpandableTextDivider(
-              text: i18n(context, 'common_group') + ': ' + i18n(context, title),
-              child: child
-            )
+            ? child
+            : GCWExpandableTextDivider(text: i18n(context, 'common_group') + ': ' + i18n(context, title), child: child)
       ],
     );
   }
@@ -274,20 +274,15 @@ class TextAnalysisState extends State<TextAnalysis> {
   _totalCount(TextAnalysisCharacterCounts analysis) {
     var total = 0;
 
-    if (_currentUseLetters)
-      total += _groupCount(analysis.letters);
+    if (_currentUseLetters) total += _groupCount(analysis.letters);
 
-    if (_currentUseNumbers)
-      total += _groupCount(analysis.numbers);
+    if (_currentUseNumbers) total += _groupCount(analysis.numbers);
 
-    if (_currentUseSpecialChars)
-      total += _groupCount(analysis.specialChars);
+    if (_currentUseSpecialChars) total += _groupCount(analysis.specialChars);
 
-    if (_currentUseWhitespaceChars)
-      total += _groupCount(analysis.whiteSpaces);
+    if (_currentUseWhitespaceChars) total += _groupCount(analysis.whiteSpaces);
 
-    if (_currentUseControlChars)
-      total += _groupCount(analysis.controlChars);
+    if (_currentUseControlChars) total += _groupCount(analysis.controlChars);
 
     return total;
   }
@@ -295,20 +290,15 @@ class TextAnalysisState extends State<TextAnalysis> {
   Set<String> _recognizedChars(TextAnalysisCharacterCounts analysis) {
     Set<String> chars = {};
 
-    if (_currentUseLetters)
-      chars.addAll(analysis.letters.keys);
+    if (_currentUseLetters) chars.addAll(analysis.letters.keys);
 
-    if (_currentUseNumbers)
-      chars.addAll(analysis.numbers.keys);
+    if (_currentUseNumbers) chars.addAll(analysis.numbers.keys);
 
-    if (_currentUseSpecialChars)
-      chars.addAll(analysis.specialChars.keys);
+    if (_currentUseSpecialChars) chars.addAll(analysis.specialChars.keys);
 
-    if (_currentUseWhitespaceChars)
-      chars.addAll(analysis.whiteSpaces.keys);
+    if (_currentUseWhitespaceChars) chars.addAll(analysis.whiteSpaces.keys);
 
-    if (_currentUseControlChars)
-      chars.addAll(analysis.controlChars.keys);
+    if (_currentUseControlChars) chars.addAll(analysis.controlChars.keys);
 
     return chars;
   }
@@ -320,21 +310,18 @@ class TextAnalysisState extends State<TextAnalysis> {
   _wordCount(Set<String> validChars) {
     var text = '';
     _currentInput.split('').forEach((char) {
-      if (validChars.contains(char))
-        text += char;
+      if (validChars.contains(char)) text += char;
     });
 
     return countWords(text);
   }
 
   _buildOutput() {
-    if (!(
-        _currentUseLetters
-      || _currentUseNumbers
-      || _currentUseSpecialChars
-      || _currentUseWhitespaceChars
-      || _currentUseControlChars
-    )) {
+    if (!(_currentUseLetters ||
+        _currentUseNumbers ||
+        _currentUseSpecialChars ||
+        _currentUseWhitespaceChars ||
+        _currentUseControlChars)) {
       return GCWText(
         text: i18n(context, 'textanalysis_noselection'),
       );
@@ -348,15 +335,17 @@ class TextAnalysisState extends State<TextAnalysis> {
     var wordCount = _wordCount(recognizedChars);
 
     var commonOutput = GCWExpandableTextDivider(
-      text: i18n(context, 'textanalysis_common_count'),
-      child: Column(
-        children: columnedMultiLineOutput(context, [
-          [i18n(context, 'textanalysis_common_wordcount'), wordCount],
-          [i18n(context, 'textanalysis_common_charactercount'), totalCharacterCount],
-          [i18n(context, 'textanalysis_distinctcharacters'), totalDistinctCharacterCount],
-        ], copyColumn: 1),
-      )
-    );
+        text: i18n(context, 'textanalysis_common_count'),
+        child: Column(
+          children: columnedMultiLineOutput(
+              context,
+              [
+                [i18n(context, 'textanalysis_common_wordcount'), wordCount],
+                [i18n(context, 'textanalysis_common_charactercount'), totalCharacterCount],
+                [i18n(context, 'textanalysis_distinctcharacters'), totalDistinctCharacterCount],
+              ],
+              copyColumn: 1),
+        ));
 
     if (_currentSort == _SORT_TYPES.COUNT_OVERALL) {
       return _buildOverallGroupOutput(analysis, commonOutput, totalCharacterCount);
@@ -365,34 +354,29 @@ class TextAnalysisState extends State<TextAnalysis> {
     }
   }
 
-  Column _buildOverallGroupOutput(TextAnalysisCharacterCounts analysis, GCWExpandableTextDivider commonOutput, totalCharacterCount) {
+  Column _buildOverallGroupOutput(
+      TextAnalysisCharacterCounts analysis, GCWExpandableTextDivider commonOutput, totalCharacterCount) {
     var allCharacters = <String, int>{};
-    if (_currentUseLetters)
-      allCharacters.addAll(analysis.letters);
-    if (_currentUseNumbers)
-      allCharacters.addAll(analysis.numbers);
-    if (_currentUseSpecialChars)
-      allCharacters.addAll(analysis.specialChars);
-    if (_currentUseWhitespaceChars)
-      allCharacters.addAll(analysis.whiteSpaces);
-    if (_currentUseControlChars)
-      allCharacters.addAll(analysis.controlChars);
+    if (_currentUseLetters) allCharacters.addAll(analysis.letters);
+    if (_currentUseNumbers) allCharacters.addAll(analysis.numbers);
+    if (_currentUseSpecialChars) allCharacters.addAll(analysis.specialChars);
+    if (_currentUseWhitespaceChars) allCharacters.addAll(analysis.whiteSpaces);
+    if (_currentUseControlChars) allCharacters.addAll(analysis.controlChars);
 
     var allCharactersOutput = _buildGroup(allCharacters, totalCharacterCount);
 
     return Column(
-      children: [
-        commonOutput,
-        _buildGroupWidget(allCharactersOutput)
-      ],
+      children: [commonOutput, _buildGroupWidget(allCharactersOutput)],
     );
   }
 
-  Column _buildGroupsOutput(TextAnalysisCharacterCounts analysis, totalCharacterCount, GCWExpandableTextDivider commonOutput) {
+  Column _buildGroupsOutput(
+      TextAnalysisCharacterCounts analysis, totalCharacterCount, GCWExpandableTextDivider commonOutput) {
     var letterOutput = _currentUseLetters ? _buildGroup(analysis.letters, totalCharacterCount) : null;
-    var numberOutput = _currentUseNumbers? _buildGroup(analysis.numbers, totalCharacterCount) : null;
+    var numberOutput = _currentUseNumbers ? _buildGroup(analysis.numbers, totalCharacterCount) : null;
     var specialCharsOutput = _currentUseSpecialChars ? _buildGroup(analysis.specialChars, totalCharacterCount) : null;
-    var whitespaceCharsOutput = _currentUseWhitespaceChars ? _buildGroup(analysis.whiteSpaces, totalCharacterCount) : null;
+    var whitespaceCharsOutput =
+        _currentUseWhitespaceChars ? _buildGroup(analysis.whiteSpaces, totalCharacterCount) : null;
     var controlCharsOutput = _currentUseControlChars ? _buildGroup(analysis.controlChars, totalCharacterCount) : null;
 
     return Column(
@@ -400,11 +384,16 @@ class TextAnalysisState extends State<TextAnalysis> {
         commonOutput,
         _currentUseLetters ? _buildGroupWidget(letterOutput, title: 'textanalysis_letters') : Container(),
         _currentUseNumbers ? _buildGroupWidget(numberOutput, title: 'textanalysis_numerals') : Container(),
-        _currentUseSpecialChars ? _buildGroupWidget(specialCharsOutput, title: 'textanalysis_specialcharacters') : Container(),
-        _currentUseWhitespaceChars ? _buildGroupWidget(whitespaceCharsOutput, title: 'textanalysis_whitespacecharacters') : Container(),
-        _currentUseControlChars ? _buildGroupWidget(controlCharsOutput, title: 'textanalysis_controlcharacters') : Container(),
+        _currentUseSpecialChars
+            ? _buildGroupWidget(specialCharsOutput, title: 'textanalysis_specialcharacters')
+            : Container(),
+        _currentUseWhitespaceChars
+            ? _buildGroupWidget(whitespaceCharsOutput, title: 'textanalysis_whitespacecharacters')
+            : Container(),
+        _currentUseControlChars
+            ? _buildGroupWidget(controlCharsOutput, title: 'textanalysis_controlcharacters')
+            : Container(),
       ],
     );
   }
-
 }

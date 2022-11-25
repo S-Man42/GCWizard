@@ -17,16 +17,19 @@ enum WBT_HEATSTRESS_CONDITION { BLACK, PURPLE, BLUE, LIGHT_BLUE, GREEN, ORANGE, 
 final Map<WBT_HEATSTRESS_CONDITION, double> WBT_HEAT_STRESS = {
   // https://sustainabilitymath.org/2020/06/01/what-is-our-wet-bulb-temperature-limit/
   // https://www.science.org/doi/10.1126/sciadv.aaw1838
-    WBT_HEATSTRESS_CONDITION.PURPLE: 23.0,
-    WBT_HEATSTRESS_CONDITION.BLUE: 25.0,
-    WBT_HEATSTRESS_CONDITION.LIGHT_BLUE: 27.0,
-    WBT_HEATSTRESS_CONDITION.GREEN: 29.0,
-    WBT_HEATSTRESS_CONDITION.ORANGE: 31.0,
-    WBT_HEATSTRESS_CONDITION.RED: 33.0,
-    WBT_HEATSTRESS_CONDITION.DARK_RED: 35.0,
+  WBT_HEATSTRESS_CONDITION.PURPLE: 23.0,
+  WBT_HEATSTRESS_CONDITION.BLUE: 25.0,
+  WBT_HEATSTRESS_CONDITION.LIGHT_BLUE: 27.0,
+  WBT_HEATSTRESS_CONDITION.GREEN: 29.0,
+  WBT_HEATSTRESS_CONDITION.ORANGE: 31.0,
+  WBT_HEATSTRESS_CONDITION.RED: 33.0,
+  WBT_HEATSTRESS_CONDITION.DARK_RED: 35.0,
 };
 
-double calculateWetBulbTemperature(double temperature, double humidity, ) {
+double calculateWetBulbTemperature(
+  double temperature,
+  double humidity,
+) {
   // https://rechneronline.de/air/wet-bulb-temperature.php
   return temperature * atan(0.151977 * sqrt((humidity + 8.313659))) +
       atan(temperature + humidity) -

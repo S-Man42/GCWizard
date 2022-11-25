@@ -16,7 +16,13 @@ class ShadowLength {
   ShadowLength(this.length, this.shadowEndPosition, this.sunPosition);
 }
 
-ShadowLength shadowLength(double objectHeight, LatLng coords, Ellipsoid ells, DateTime datetime, Duration timezone, ) {
+ShadowLength shadowLength(
+  double objectHeight,
+  LatLng coords,
+  Ellipsoid ells,
+  DateTime datetime,
+  Duration timezone,
+) {
   var julianDate = JulianDate(datetime, timezone);
   var sunPosition = SunPosition(coords, julianDate, ells);
   var shadowLen =

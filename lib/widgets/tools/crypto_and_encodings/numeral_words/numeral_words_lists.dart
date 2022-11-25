@@ -114,12 +114,11 @@ class NumeralWordsListsState extends State<NumeralWordsLists> {
     );
   }
 
-  NumeralWordsLanguage _defaultLanguage(BuildContext context){
+  NumeralWordsLanguage _defaultLanguage(BuildContext context) {
     final Locale appLocale = Localizations.localeOf(context);
     if (isLocaleSupported(appLocale)) {
       return SUPPORTED_LANGUAGES_LOCALES[appLocale];
-    }
-    else {
+    } else {
       return SUPPORTED_LANGUAGES_LOCALES[DEFAULT_LOCALE];
     }
   }

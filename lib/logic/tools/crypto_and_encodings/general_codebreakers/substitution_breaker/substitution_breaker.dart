@@ -3,6 +3,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/quadgrams.dart';
 
 enum SubstitutionBreakerAlphabet { ENGLISH, GERMAN, DUTCH, SPANISH, POLISH, GREEK, FRENCH, RUSSIAN }
+
 enum SubstitutionBreakerErrorCode {
   OK,
   MAX_ROUNDS_PARAMETER,

@@ -128,8 +128,7 @@ class CalendarState extends State<Calendar> {
     output['dates_calendar_system_juliancalendar'] =
         _DateOutputToString(context, JulianDateToJulianCalendar(jd, true), CalendarSystem.JULIANCALENDAR);
 
-    output['dates_calendar_system_modifiedjuliandate'] =
-        JulianDateToModifedJulianDate(jd);
+    output['dates_calendar_system_modifiedjuliandate'] = JulianDateToModifedJulianDate(jd);
 
     output['dates_calendar_system_gregoriancalendar'] =
         _DateOutputToString(context, JulianDateToGregorianCalendar(jd, true), CalendarSystem.GREGORIANCALENDAR);
@@ -137,8 +136,7 @@ class CalendarState extends State<Calendar> {
     output['dates_calendar_system_islamiccalendar'] =
         _DateOutputToString(context, JulianDateToIslamicCalendar(jd), CalendarSystem.ISLAMICCALENDAR);
 
-    output['dates_calendar_system_hebrewcalendar'] =
-        _HebrewDateToString(JulianDateToHebrewCalendar(jd), jd);
+    output['dates_calendar_system_hebrewcalendar'] = _HebrewDateToString(JulianDateToHebrewCalendar(jd), jd);
 
     output['dates_calendar_system_persiancalendar'] =
         _DateOutputToString(context, JulianDateToPersianYazdegardCalendar(jd), CalendarSystem.PERSIANYAZDEGARDCALENDAR);
@@ -147,16 +145,18 @@ class CalendarState extends State<Calendar> {
         _DateOutputToString(context, JulianDateToCopticCalendar(jd), CalendarSystem.COPTICCALENDAR);
 
     output['dates_calendar_system_mayacalendar_daycount'] =
-        _invalidMayaDate(jd) ? i18n(context, 'dates_calendar_error'): JulianDateToMayaDayCount(jd).toString();
+        _invalidMayaDate(jd) ? i18n(context, 'dates_calendar_error') : JulianDateToMayaDayCount(jd).toString();
 
     output['dates_calendar_system_mayacalendar_longcount'] =
-        _invalidMayaDate(jd) ? i18n(context, 'dates_calendar_error'): JulianDateToMayaLongCount(jd).join('.');
+        _invalidMayaDate(jd) ? i18n(context, 'dates_calendar_error') : JulianDateToMayaLongCount(jd).join('.');
 
-    output['dates_calendar_system_mayacalendar_haab'] =
-        _invalidMayaDate(jd) ? i18n(context, 'dates_calendar_error'): MayaLongCountToHaab(JulianDateToMayaLongCount(jd));
+    output['dates_calendar_system_mayacalendar_haab'] = _invalidMayaDate(jd)
+        ? i18n(context, 'dates_calendar_error')
+        : MayaLongCountToHaab(JulianDateToMayaLongCount(jd));
 
-    output['dates_calendar_system_mayacalendar_tzolkin'] =
-        _invalidMayaDate(jd) ? i18n(context, 'dates_calendar_error'): MayaLongCountToTzolkin(JulianDateToMayaLongCount(jd));
+    output['dates_calendar_system_mayacalendar_tzolkin'] = _invalidMayaDate(jd)
+        ? i18n(context, 'dates_calendar_error')
+        : MayaLongCountToTzolkin(JulianDateToMayaLongCount(jd));
 
     output['dates_calendar_system_potrzebiecalendar'] =
         _DateOutputToString(context, JulianDateToPotrzebieCalendar(jd), CalendarSystem.POTRZEBIECALENDAR);

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 
-
 // https://www.languagesandnumbers.com/how-to-count-in-volapuk/en/vol/
 // https://www.languagesandnumbers.com/how-to-count-in-danish/en/dan/
 // https://www.languagesandnumbers.com/how-to-count-in-solresol/en/solresol/
@@ -2392,20 +2391,46 @@ Map NUMERAL_WORDS = {
   NumeralWordsLanguage.VOL: VOLWordToNum,
 };
 Map<NumeralWordsLanguage, List<String>> NUMERAL_WORDS_ACCENTS = {
-  NumeralWordsLanguage.DEU: ['dreißig', 'zwölf', 'fünf', ],
-  NumeralWordsLanguage.DNK: ['øst', ],
-  NumeralWordsLanguage.FIN: ['seitsemän', 'yhdeksän', 'neljä', ],
-  NumeralWordsLanguage.NOR: ['førti', 'øst', 'sør', ],
-  NumeralWordsLanguage.SVK: ['deväťdesiat', 'päťdesiat', 'devätnásť', 'pätnásť', 'deväť', 'päť', ],
-  NumeralWordsLanguage.SWE: ['väst', ],
-  NumeralWordsLanguage.TUR: ['dört', 'yüz', 'üç', ],
-  NumeralWordsLanguage.UNG: ['öt', ],
+  NumeralWordsLanguage.DEU: [
+    'dreißig',
+    'zwölf',
+    'fünf',
+  ],
+  NumeralWordsLanguage.DNK: [
+    'øst',
+  ],
+  NumeralWordsLanguage.FIN: [
+    'seitsemän',
+    'yhdeksän',
+    'neljä',
+  ],
+  NumeralWordsLanguage.NOR: [
+    'førti',
+    'øst',
+    'sør',
+  ],
+  NumeralWordsLanguage.SVK: [
+    'deväťdesiat',
+    'päťdesiat',
+    'devätnásť',
+    'pätnásť',
+    'deväť',
+    'päť',
+  ],
+  NumeralWordsLanguage.SWE: [
+    'väst',
+  ],
+  NumeralWordsLanguage.TUR: [
+    'dört',
+    'yüz',
+    'üç',
+  ],
+  NumeralWordsLanguage.UNG: [
+    'öt',
+  ],
 };
 List<NumeralWordsDecodeOutput> decodeNumeralwords(
-    { String input,
-      NumeralWordsLanguage language,
-      bool decodeModeWholeWords}) {
-
+    {String input, NumeralWordsLanguage language, bool decodeModeWholeWords}) {
   RegExp expr;
   List<NumeralWordsDecodeOutput> output = new List<NumeralWordsDecodeOutput>();
   if (input == null || input == '') {
@@ -2673,10 +2698,10 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
       }
     }); //for each element to decode
     return output;
-  }
-  else // entire parts - search parts of words: weight => eight => 8
+  } else // entire parts - search parts of words: weight => eight => 8
   {
-    decodeText = input.replaceAll(RegExp(r'[\s]'), '')
+    decodeText = input
+        .replaceAll(RegExp(r'[\s]'), '')
         .replaceAll('^', '')
         .replaceAll('°', '')
         .replaceAll('!', '')
@@ -2767,8 +2792,8 @@ OutputConvertToNumber decodeNumeralWordToNumber(NumeralWordsLanguage _currentLan
 
   if (_currentLanguage == NumeralWordsLanguage.ROU) {
     if (_isROU(currentDecodeInput))
-      return OutputConvertToNumber(int.parse(_decodeROU(currentDecodeInput)),
-          convertBase(_decodeROU(currentDecodeInput), 10, 10), '', '');
+      return OutputConvertToNumber(
+          int.parse(_decodeROU(currentDecodeInput)), convertBase(_decodeROU(currentDecodeInput), 10, 10), '', '');
     else
       return OutputConvertToNumber(0, '', '', 'numeralwords_converter_error_rou');
   }
@@ -3066,14 +3091,12 @@ String _decodeNavi(String element) {
   return convertBase(octal, 8, 10);
 }
 
-String _decodeROU(String element){
-
-  int decodeTripel(String element, Map<String, String> ROU_numbers){
+String _decodeROU(String element) {
+  int decodeTripel(String element, Map<String, String> ROU_numbers) {
     List<String> syllables = [];
 
-    int decodeTupel(String element, Map<String, String> ROU_numbers){
-      if (element.contains('sprezece'))
-        return int.parse(ROU_numbers[element.trim()]);
+    int decodeTupel(String element, Map<String, String> ROU_numbers) {
+      if (element.contains('sprezece')) return int.parse(ROU_numbers[element.trim()]);
 
       syllables = element.split('si');
       if (syllables.length == 2)
@@ -3082,10 +3105,10 @@ String _decodeROU(String element){
         return int.parse(ROU_numbers[syllables[0].trim()]);
     }
 
-    if (element.contains('o suta'))
-      return 100 + decodeTupel(element.trim(), ROU_numbers);
+    if (element.contains('o suta')) return 100 + decodeTupel(element.trim(), ROU_numbers);
 
-    if (element.contains('sute')){ // element > 199
+    if (element.contains('sute')) {
+      // element > 199
       syllables = element.split('sute');
       return int.parse(ROU_numbers[syllables[0].trim()]) * 100 + decodeTupel(syllables[1].trim(), ROU_numbers);
     }
@@ -3102,7 +3125,8 @@ String _decodeROU(String element){
   if (syllables.length == 1) {
     return decodeTripel(syllables[0].trim(), ROU_numbers).toString();
   } else {
-    return (decodeTripel(syllables[0].trim(), ROU_numbers) * 1000 + decodeTripel(syllables[1].trim(), ROU_numbers)).toString();
+    return (decodeTripel(syllables[0].trim(), ROU_numbers) * 1000 + decodeTripel(syllables[1].trim(), ROU_numbers))
+        .toString();
   }
 }
 
@@ -3208,7 +3232,6 @@ OutputConvertToNumeralWord _encodeMinion(int currentNumber) {
   numeralWord = digits.join('').replaceAll('3', 'SAE').replaceAll('2', 'DUL').replaceAll('1', 'HANA');
   return OutputConvertToNumeralWord(numeralWord, '', '', '');
 }
-
 
 OutputConvertToNumeralWord _encodeNavi(int currentNumber) {
   String numeralWord = '';
@@ -3423,116 +3446,85 @@ OutputConvertToNumeralWord _encodeNavi(int currentNumber) {
 }
 
 OutputConvertToNumeralWord _encodeROU(int currentNumber) {
-
-  String encodeTripel(int currentNumber, Map<String, String> ROU_numbers){
+  String encodeTripel(int currentNumber, Map<String, String> ROU_numbers) {
     int hundred = 0;
     int ten = 0;
     int one = 0;
 
-    if (currentNumber == 0)
-      return '';
+    if (currentNumber == 0) return '';
 
     if (currentNumber < 20) {
       return ROU_numbers[currentNumber.toString()];
     }
 
     if (currentNumber < 100) {
-      if (currentNumber % 10 == 0)
-        return ROU_numbers[(currentNumber ~/ 10 * 10).toString()];
+      if (currentNumber % 10 == 0) return ROU_numbers[(currentNumber ~/ 10 * 10).toString()];
       return ROU_numbers[(currentNumber ~/ 10 * 10).toString()] + ' şi ' + ROU_numbers[(currentNumber % 10).toString()];
     }
 
     if (currentNumber < 120) {
       currentNumber = currentNumber - 100;
-      if (currentNumber == 0)
-        return 'o sută';
+      if (currentNumber == 0) return 'o sută';
       return 'o sută ' + ROU_numbers[(currentNumber).toString()];
     }
 
     if (currentNumber < 200) {
       currentNumber = currentNumber - 100;
-      return 'o sută '
-          + ROU_numbers[(currentNumber ~/ 10 * 10 ).toString()]
-          + ((currentNumber % 10 == 0)
-              ? ''
-              : ' şi ' + ROU_numbers[(currentNumber % 10).toString()]);
+      return 'o sută ' +
+          ROU_numbers[(currentNumber ~/ 10 * 10).toString()] +
+          ((currentNumber % 10 == 0) ? '' : ' şi ' + ROU_numbers[(currentNumber % 10).toString()]);
     }
 
-    if (currentNumber %100 == 0)
-      return ROU_numbers[(currentNumber ~/ 100).toString()] + ' sute';
+    if (currentNumber % 100 == 0) return ROU_numbers[(currentNumber ~/ 100).toString()] + ' sute';
 
     hundred = currentNumber ~/ 100;
     ten = (currentNumber - (currentNumber ~/ 100) * 100) ~/ 10;
     one = currentNumber % 10;
 
-    return ROU_numbers[hundred.toString()]
-        + ' sute '
-        + ( ten == 0
+    return ROU_numbers[hundred.toString()] +
+        ' sute ' +
+        (ten == 0
             ? ROU_numbers[one.toString()]
-            : ( ten == 1)
+            : (ten == 1)
                 ? ROU_numbers[(ten * 10 + one).toString()]
-                : ROU_numbers[(ten * 10).toString()] +  (one == 0
-                                                          ? ''
-                                                          : ' şi ' + ROU_numbers[one.toString()]
-                                                        )
-          );
+                : ROU_numbers[(ten * 10).toString()] + (one == 0 ? '' : ' şi ' + ROU_numbers[one.toString()]));
   }
 
   Map<String, String> ROU_numbers = switchMapKeyValue(ROUWordToNum);
   if (currentNumber < 20) {
     return OutputConvertToNumeralWord(
-        ROU_numbers[currentNumber.toString()],
-        currentNumber.toString(),
-        'common_numeralbase_decenary',
-        ''
-    );
+        ROU_numbers[currentNumber.toString()], currentNumber.toString(), 'common_numeralbase_decenary', '');
   }
   if (currentNumber < 100) {
     if (currentNumber % 10 == 0)
-      return OutputConvertToNumeralWord(
-          ROU_numbers[(currentNumber ~/ 10 * 10).toString()],
-          currentNumber.toString(),
-          'common_numeralbase_decenary',
-          ''
-      );
+      return OutputConvertToNumeralWord(ROU_numbers[(currentNumber ~/ 10 * 10).toString()], currentNumber.toString(),
+          'common_numeralbase_decenary', '');
     return OutputConvertToNumeralWord(
         ROU_numbers[(currentNumber ~/ 10 * 10).toString()] + ' şi ' + ROU_numbers[(currentNumber % 10).toString()],
         currentNumber.toString(),
         'common_numeralbase_decenary',
-        ''
-    );
+        '');
   }
   if (currentNumber < 1000) {
     return OutputConvertToNumeralWord(
-        encodeTripel(currentNumber, ROU_numbers),
-        currentNumber.toString(),
-        'common_numeralbase_decenary',
-        ''
-    );
+        encodeTripel(currentNumber, ROU_numbers), currentNumber.toString(), 'common_numeralbase_decenary', '');
   }
   if (currentNumber < 2000) {
-    return OutputConvertToNumeralWord(
-        'oh mie ' + encodeTripel(currentNumber - 1000, ROU_numbers),
-        currentNumber.toString(),
-        'common_numeralbase_decenary',
-        ''
-    );
+    return OutputConvertToNumeralWord('oh mie ' + encodeTripel(currentNumber - 1000, ROU_numbers),
+        currentNumber.toString(), 'common_numeralbase_decenary', '');
   }
   if (currentNumber < 10000) {
     return OutputConvertToNumeralWord(
         ROU_numbers[(currentNumber ~/ 1000).toString()] + ' mii ' + encodeTripel(currentNumber % 1000, ROU_numbers),
         currentNumber.toString(),
         'common_numeralbase_decenary',
-        ''
-    );
+        '');
   }
   return OutputConvertToNumeralWord(
       encodeTripel(currentNumber ~/ 1000, ROU_numbers) + ' de mii ' + encodeTripel(currentNumber % 1000, ROU_numbers),
       currentNumber.toString(),
       'common_numeralbase_decenary',
-      ''
-  );
-
+      '');
 }
 
 OutputConvertToNumeralWord _encodeShadok(int currentNumber) {
@@ -3580,7 +3572,6 @@ bool _isMinion(String element) {
   else
     return false;
 }
-
 
 bool _isNavi(String element) {
   element = element.replaceAll('zame', 'zamme').replaceAll('zamrr', 'zammrr');
@@ -3897,7 +3888,7 @@ NumeralWordsOutput _isNumeralWordTable(String input, NumeralWordsLanguage langua
   return NumeralWordsOutput(state, output, _languageList[language]);
 }
 
-bool _isROU(String element){
+bool _isROU(String element) {
   if (element != '') {
     element = element
         .replaceAll(' ', '')
@@ -3932,7 +3923,6 @@ bool _isROU(String element){
   }
   return false;
 }
-
 
 bool _isShadoks(String element) {
   if (element != '') if (element.replaceAll('ga', '').replaceAll('bu', '').replaceAll('zo', '').replaceAll('meu', '') ==

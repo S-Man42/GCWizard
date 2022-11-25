@@ -76,13 +76,12 @@ class GadeState extends State<Gade> {
     return Column(
       children: [
         GCWOutput(
-          title: i18n(context, 'common_input'),
-          child: Column(
-            children: columnedMultiLineOutput(context,
-                [[i18n(context, 'gade_parsed'), _input],
-                  [i18n(context, 'gade_sorted'), sortedStr]]
-          )
-        )),
+            title: i18n(context, 'common_input'),
+            child: Column(
+                children: columnedMultiLineOutput(context, [
+              [i18n(context, 'gade_parsed'), _input],
+              [i18n(context, 'gade_sorted'), sortedStr]
+            ]))),
         GCWDefaultOutput(
           child: Column(
             children: columnedMultiLineOutput(

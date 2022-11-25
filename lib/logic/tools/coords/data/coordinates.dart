@@ -45,9 +45,9 @@ const keyCoordsGaussKruegerGK2 = 'coords_gausskrueger_gk2';
 const keyCoordsGaussKruegerGK3 = 'coords_gausskrueger_gk3';
 const keyCoordsGaussKruegerGK4 = 'coords_gausskrueger_gk4';
 const keyCoordsGaussKruegerGK5 = 'coords_gausskrueger_gk5';
-const keyCoordsLambert= 'coords_lambert';
+const keyCoordsLambert = 'coords_lambert';
 const keyCoordsLambert93 = 'coords_lambert_93';
-const keyCoordsLambert2008= 'coords_lambert_2008';
+const keyCoordsLambert2008 = 'coords_lambert_2008';
 const keyCoordsLambertETRS89LCC = 'coords_lambert_etrs89lcc';
 const keyCoordsLambert72 = 'coords_lambert_72';
 const keyCoordsLambert93CC42 = 'coords_lambert_93_cc42';
@@ -103,22 +103,22 @@ List<CoordinateFormat> allCoordFormats = [
         CoordinateFormat(
             keyCoordsGaussKruegerGK5, 'coords_formatconverter_gausskrueger_gk5', 'R: 8837696.4, H: 5978779.5'),
       ]),
-  CoordinateFormat(keyCoordsLambert, 'coords_formatconverter_lambert', 'X: 8837763.4, Y: 5978799.1',
-      subtypes: [
-        CoordinateFormat(keyCoordsLambert93, 'coords_formatconverter_lambert_93', 'X: 8837763.4, Y: 5978799.1'),
-        CoordinateFormat(keyCoordsLambert2008, 'coords_formatconverter_lambert_2008', 'X: 8837763.4, Y: 5978799.1'),
-        CoordinateFormat(keyCoordsLambertETRS89LCC, 'coords_formatconverter_lambert_etrs89lcc', 'X: 8837763.4, Y: 5978799.1'),
-        CoordinateFormat(keyCoordsLambert72, 'coords_formatconverter_lambert_72', 'X: 8837763.4, Y: 5978799.1'),
-        CoordinateFormat(keyCoordsLambert93CC42, 'coords_formatconverter_lambert_l93cc42', 'X: 8837763.4, Y: 5978799.1'),
-        CoordinateFormat(keyCoordsLambert93CC43, 'coords_formatconverter_lambert_l93cc43', 'X: 8837763.4, Y: 5978799.1'),
-        CoordinateFormat(keyCoordsLambert93CC44, 'coords_formatconverter_lambert_l93cc44', 'X: 8837763.4, Y: 5978799.1'),
-        CoordinateFormat(keyCoordsLambert93CC45, 'coords_formatconverter_lambert_l93cc45', 'X: 8837763.4, Y: 5978799.1'),
-        CoordinateFormat(keyCoordsLambert93CC46, 'coords_formatconverter_lambert_l93cc46', 'X: 8837763.4, Y: 5978799.1'),
-        CoordinateFormat(keyCoordsLambert93CC47, 'coords_formatconverter_lambert_l93cc47', 'X: 8837763.4, Y: 5978799.1'),
-        CoordinateFormat(keyCoordsLambert93CC48, 'coords_formatconverter_lambert_l93cc48', 'X: 8837763.4, Y: 5978799.1'),
-        CoordinateFormat(keyCoordsLambert93CC49, 'coords_formatconverter_lambert_l93cc49', 'X: 8837763.4, Y: 5978799.1'),
-        CoordinateFormat(keyCoordsLambert93CC50, 'coords_formatconverter_lambert_l93cc50', 'X: 8837763.4, Y: 5978799.1'),
-      ]),
+  CoordinateFormat(keyCoordsLambert, 'coords_formatconverter_lambert', 'X: 8837763.4, Y: 5978799.1', subtypes: [
+    CoordinateFormat(keyCoordsLambert93, 'coords_formatconverter_lambert_93', 'X: 8837763.4, Y: 5978799.1'),
+    CoordinateFormat(keyCoordsLambert2008, 'coords_formatconverter_lambert_2008', 'X: 8837763.4, Y: 5978799.1'),
+    CoordinateFormat(
+        keyCoordsLambertETRS89LCC, 'coords_formatconverter_lambert_etrs89lcc', 'X: 8837763.4, Y: 5978799.1'),
+    CoordinateFormat(keyCoordsLambert72, 'coords_formatconverter_lambert_72', 'X: 8837763.4, Y: 5978799.1'),
+    CoordinateFormat(keyCoordsLambert93CC42, 'coords_formatconverter_lambert_l93cc42', 'X: 8837763.4, Y: 5978799.1'),
+    CoordinateFormat(keyCoordsLambert93CC43, 'coords_formatconverter_lambert_l93cc43', 'X: 8837763.4, Y: 5978799.1'),
+    CoordinateFormat(keyCoordsLambert93CC44, 'coords_formatconverter_lambert_l93cc44', 'X: 8837763.4, Y: 5978799.1'),
+    CoordinateFormat(keyCoordsLambert93CC45, 'coords_formatconverter_lambert_l93cc45', 'X: 8837763.4, Y: 5978799.1'),
+    CoordinateFormat(keyCoordsLambert93CC46, 'coords_formatconverter_lambert_l93cc46', 'X: 8837763.4, Y: 5978799.1'),
+    CoordinateFormat(keyCoordsLambert93CC47, 'coords_formatconverter_lambert_l93cc47', 'X: 8837763.4, Y: 5978799.1'),
+    CoordinateFormat(keyCoordsLambert93CC48, 'coords_formatconverter_lambert_l93cc48', 'X: 8837763.4, Y: 5978799.1'),
+    CoordinateFormat(keyCoordsLambert93CC49, 'coords_formatconverter_lambert_l93cc49', 'X: 8837763.4, Y: 5978799.1'),
+    CoordinateFormat(keyCoordsLambert93CC50, 'coords_formatconverter_lambert_l93cc50', 'X: 8837763.4, Y: 5978799.1'),
+  ]),
   CoordinateFormat(keyCoordsDutchGrid, 'RD (Rijksdriehoeks, DutchGrid)', 'X: 221216.7, Y: 550826.2'),
   CoordinateFormat(keyCoordsMaidenhead, 'Maidenhead Locator (QTH)', 'CN85TG09JU'),
   CoordinateFormat(keyCoordsMercator, 'Mercator', 'Y: 5667450.4, X: -13626989.9'),
@@ -435,6 +435,7 @@ class DMS extends BaseCoordinates {
 }
 
 enum HemisphereLatitude { North, South }
+
 enum HemisphereLongitude { East, West }
 
 // UTM with latitude Zones; Normal UTM is only separated into Hemispheres N and S

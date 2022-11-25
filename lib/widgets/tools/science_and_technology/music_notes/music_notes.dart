@@ -54,19 +54,20 @@ class MusicNotesState extends State<MusicNotes> {
           switch (codeBook) {
             case NotesCodebook.ALT:
               var tool = registeredTools.firstWhere((tool) => tool.i18nPrefix.contains('altoclef'));
-              return GCWDropDownMenuItem( value: NotesCodebook.ALT,
-                      child: _buildDropDownMenuItem( tool.icon, tool.toolName, null));
+              return GCWDropDownMenuItem(
+                  value: NotesCodebook.ALT, child: _buildDropDownMenuItem(tool.icon, tool.toolName, null));
             case NotesCodebook.TREBLE:
               var tool = registeredTools.firstWhere((tool) => tool.i18nPrefix.contains('trebleclef'));
-              return GCWDropDownMenuItem( value: NotesCodebook.TREBLE,
-                      child: _buildDropDownMenuItem( tool.icon, tool.toolName, null));
+              return GCWDropDownMenuItem(
+                  value: NotesCodebook.TREBLE, child: _buildDropDownMenuItem(tool.icon, tool.toolName, null));
             case NotesCodebook.BASS:
               var tool = registeredTools.firstWhere((tool) => tool.i18nPrefix.contains('bassclef'));
-              return GCWDropDownMenuItem( value: NotesCodebook.BASS,
-                      child: _buildDropDownMenuItem( tool.icon, tool.toolName, null));
+              return GCWDropDownMenuItem(
+                  value: NotesCodebook.BASS, child: _buildDropDownMenuItem(tool.icon, tool.toolName, null));
             default:
               return null;
-          };
+          }
+          ;
         }).toList(),
       ),
       GCWTwoOptionsSwitch(
@@ -232,7 +233,7 @@ class MusicNotesState extends State<MusicNotes> {
     }).join(' ');
   }
 
-Map<String, String> _buildTranslationMap(NotesCodebook codeBook) {
+  Map<String, String> _buildTranslationMap(NotesCodebook codeBook) {
     var keys = possibleNoteKeys(codeBook);
     var translationMap = Map<String, String>();
     String translation;
@@ -251,11 +252,10 @@ Map<String, String> _buildTranslationMap(NotesCodebook codeBook) {
         default:
           translation = null;
       }
-      if (translation != null && translation != '')
-        translationMap.addAll ({note: translation});
+      if (translation != null && translation != '') translationMap.addAll({note: translation});
     });
     return translationMap;
-}
+  }
 
   Widget _buildDropDownMenuItem(dynamic icon, String toolName, String description) {
     return Row(children: [
@@ -268,8 +268,8 @@ Map<String, String> _buildTranslationMap(NotesCodebook codeBook) {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(toolName, style: _gcwTextStyle),
-              ]))
+            Text(toolName, style: _gcwTextStyle),
+          ]))
     ]);
   }
 }

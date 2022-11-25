@@ -48,6 +48,7 @@ enum FileType {
   GWC,
   LUA
 }
+
 enum FileClass { IMAGE, ARCHIVE, SOUND, DATA, TEXT, BINARY }
 
 const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
@@ -608,8 +609,7 @@ Future<List<GCWFile>> extractArchive(GCWFile file) async {
         var output = BZip2Decoder().decodeBuffer(input);
         var fileName = file?.name ?? 'xxx';
         fileName = changeExtension(fileName, '');
-        if (extension(fileName) != '.tar')
-          fileName += '.tar';
+        if (extension(fileName) != '.tar') fileName += '.tar';
         return {GCWFile(name: fileName, bytes: output)}.toList();
       case FileType.GZIP:
         var output = OutputStream();

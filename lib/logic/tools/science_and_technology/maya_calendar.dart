@@ -252,14 +252,16 @@ DateOutput MayaDayCountToGregorianCalendar(int mayaDayCount) {
 }
 
 int MayaDayCountToJulianDate(int mayaDayCount) {
-  if (Prefs.getString(PREFERENCE_MAYACALENDAR_CORRELATION) == null || Prefs.getString(PREFERENCE_MAYACALENDAR_CORRELATION) == '')
+  if (Prefs.getString(PREFERENCE_MAYACALENDAR_CORRELATION) == null ||
+      Prefs.getString(PREFERENCE_MAYACALENDAR_CORRELATION) == '')
     return (mayaDayCount + _CORRELATION_NUMBER[THOMPSON]);
   else
     return (mayaDayCount + _CORRELATION_NUMBER[Prefs.getString(PREFERENCE_MAYACALENDAR_CORRELATION)]);
 }
 
 int JulianDateToMayaDayCount(double jd) {
-  if (Prefs.getString(PREFERENCE_MAYACALENDAR_CORRELATION) == null || Prefs.getString(PREFERENCE_MAYACALENDAR_CORRELATION) == '')
+  if (Prefs.getString(PREFERENCE_MAYACALENDAR_CORRELATION) == null ||
+      Prefs.getString(PREFERENCE_MAYACALENDAR_CORRELATION) == '')
     jd = jd - _CORRELATION_NUMBER[THOMPSON];
   else
     jd = jd - _CORRELATION_NUMBER[Prefs.getString(PREFERENCE_MAYACALENDAR_CORRELATION)];

@@ -28,7 +28,6 @@ class DayOfTheYearState extends State<DayOfTheYear> {
   var _currentYear = 0;
   var _currentDayOfTheYear = 1;
 
-
   @override
   void initState() {
     DateTime now = DateTime.now();
@@ -39,7 +38,7 @@ class DayOfTheYearState extends State<DayOfTheYear> {
     _currentYear = _currentEncodeDate.year;
     _currentDayOfTheYear = dayNumber(_currentEncodeDate);
 
-     super.initState();
+    super.initState();
   }
 
   @override
@@ -54,9 +53,7 @@ class DayOfTheYearState extends State<DayOfTheYear> {
             });
           },
         ),
-        _currentMode == GCWSwitchPosition.right
-          ? _decodeWidget()
-          : _encodeWidget(),
+        _currentMode == GCWSwitchPosition.right ? _decodeWidget() : _encodeWidget(),
         _buildOutput(context)
       ],
     );
@@ -64,25 +61,21 @@ class DayOfTheYearState extends State<DayOfTheYear> {
 
   Widget _decodeWidget() {
     return Column(
-      children: <Widget>[
-        GCWTextDivider(text: i18n(context, 'dates_day_of_the_year_date')),
-        _dayOfTheYearPicker()
-    ]);
+        children: <Widget>[GCWTextDivider(text: i18n(context, 'dates_day_of_the_year_date')), _dayOfTheYearPicker()]);
   }
 
   Widget _encodeWidget() {
-    return Column(
-      children: <Widget>[
-        GCWTextDivider(text: i18n(context, 'dates_weekday_date')),
-        GCWDateTimePicker(
-          config: {DateTimePickerConfig.DATE},
-          datetime: _currentDecodeDate,
-          onChanged: (value) {
-            setState(() {
-              _currentDecodeDate = value['datetime'];
-            });
-          },
-        ),
+    return Column(children: <Widget>[
+      GCWTextDivider(text: i18n(context, 'dates_weekday_date')),
+      GCWDateTimePicker(
+        config: {DateTimePickerConfig.DATE},
+        datetime: _currentDecodeDate,
+        onChanged: (value) {
+          setState(() {
+            _currentDecodeDate = value['datetime'];
+          });
+        },
+      ),
     ]);
   }
 
@@ -99,15 +92,13 @@ class DayOfTheYearState extends State<DayOfTheYear> {
           setState(() {
             _currentYear = value;
 
-            if (_currentYear
-                .toString()
-                .length == 4) {
-                FocusScope.of(context).requestFocus(_dayFocusNode);
+            if (_currentYear.toString().length == 4) {
+              FocusScope.of(context).requestFocus(_dayFocusNode);
             }
           });
         },
-      ): 5}
-    );
+      ): 5
+    });
 
     widgets.addAll({
       GCWIntegerSpinner(
@@ -122,7 +113,8 @@ class DayOfTheYearState extends State<DayOfTheYear> {
             _currentDayOfTheYear = value;
           });
         },
-      ): 4});
+      ): 4
+    });
 
     return Column(
       children: <Widget>[
@@ -148,49 +140,37 @@ class DayOfTheYearState extends State<DayOfTheYear> {
     var children = <Widget>[];
 
     if (_currentMode == GCWSwitchPosition.right) {
-      children.add(
-        GCWDefaultOutput(
-          child: dateFormat.format(outputData.date),
-        )
-      );
+      children.add(GCWDefaultOutput(
+        child: dateFormat.format(outputData.date),
+      ));
     } else {
-      children.add(
-        GCWDefaultOutput(
-          child: outputData.dayNumber,
-        )
-      );
+      children.add(GCWDefaultOutput(
+        child: outputData.dayNumber,
+      ));
     }
 
-    children.add(
-      GCWOutput(
-        title: i18n(context, 'dates_weekday'),
-        child: i18n(context, WEEKDAY[outputData.weekday]),
-      )
-    );
+    children.add(GCWOutput(
+      title: i18n(context, 'dates_weekday'),
+      child: i18n(context, WEEKDAY[outputData.weekday]),
+    ));
 
-    children.add(
-      GCWOutput(
-        title: 'ISO 8601',
-        child: Column(
+    children.add(GCWOutput(
+      title: 'ISO 8601',
+      child: Column(
           children: columnedMultiLineOutput(context, [
-            [i18n(context, 'dates_weekday_number'), outputData.weekday],
-            [i18n(context, 'dates_week_number'), outputData.weekNumberIso],
-          ])
-        ),
-      )
-    );
+        [i18n(context, 'dates_weekday_number'), outputData.weekday],
+        [i18n(context, 'dates_week_number'), outputData.weekNumberIso],
+      ])),
+    ));
 
-    children.add(
-      GCWOutput(
+    children.add(GCWOutput(
         title: i18n(context, 'dates_day_of_the_year_alternative'),
         child: Column(
           children: columnedMultiLineOutput(context, [
             [i18n(context, 'dates_weekday_number'), outputData.weekdayAlternate],
             [i18n(context, 'dates_week_number'), outputData.weekNumberAlternate],
           ]),
-        )
-      )
-    );
+        )));
 
     return Column(children: children);
   }

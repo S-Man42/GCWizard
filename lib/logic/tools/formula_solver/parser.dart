@@ -159,7 +159,8 @@ class FormulaParser {
     for (int i = 0; i < list.length; i++) {
       var matches = RegExp(list[i], caseSensitive: false).allMatches(formula);
       for (Match m in matches) {
-        safedFormulasMap.putIfAbsent(m.group(0), () => '$SAFED_FUNCTION_MARKER${safedFormulasMap.length}$SAFED_FUNCTION_MARKER');
+        safedFormulasMap.putIfAbsent(
+            m.group(0), () => '$SAFED_FUNCTION_MARKER${safedFormulasMap.length}$SAFED_FUNCTION_MARKER');
       }
       formula = substitution(formula, safedFormulasMap);
     }
@@ -171,11 +172,13 @@ class FormulaParser {
   // then it must be avoided, that 'ABC' will be furtherly replaced by variables A, B or C.
   // Because: When a former formula will be included, this one IS still ready calculated and does not need another calculation round
   String _safeFormulaReplacements(String formula) {
-    var formulaReplacementPattern = RegExp(RECURSIVE_FORMULA_REPLACEMENT_START + '(.*?)' + RECURSIVE_FORMULA_REPLACEMENT_END);
+    var formulaReplacementPattern =
+        RegExp(RECURSIVE_FORMULA_REPLACEMENT_START + '(.*?)' + RECURSIVE_FORMULA_REPLACEMENT_END);
     var matches = formulaReplacementPattern.allMatches(formula);
 
     for (Match m in matches) {
-      safedFormulaReplacementMap.putIfAbsent(m.group(0), () => '$SAFED_RECURSIVE_FORMULA_MARKER${safedFormulaReplacementMap.length}$SAFED_RECURSIVE_FORMULA_MARKER');
+      safedFormulaReplacementMap.putIfAbsent(m.group(0),
+          () => '$SAFED_RECURSIVE_FORMULA_MARKER${safedFormulaReplacementMap.length}$SAFED_RECURSIVE_FORMULA_MARKER');
       formula = substitution(formula, safedFormulaReplacementMap);
     }
 
@@ -311,7 +314,9 @@ class FormulaParser {
   String _reSubstituteFormula(String formula) {
     var substitutedFormula = substitution(formula, switchMapKeyValue(safedFormulasMap));
     substitutedFormula = substitution(substitutedFormula, switchMapKeyValue(safedFormulaReplacementMap));
-    return substitutedFormula.replaceAll(RECURSIVE_FORMULA_REPLACEMENT_START, '').replaceAll(RECURSIVE_FORMULA_REPLACEMENT_END, '');
+    return substitutedFormula
+        .replaceAll(RECURSIVE_FORMULA_REPLACEMENT_START, '')
+        .replaceAll(RECURSIVE_FORMULA_REPLACEMENT_END, '');
   }
 
   bool _isFullySubstituted(String tempSubstitutedFormula, substitutedFormula) {

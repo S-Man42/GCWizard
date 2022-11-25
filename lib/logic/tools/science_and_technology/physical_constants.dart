@@ -8,19 +8,9 @@ const Map<String, Map<String, dynamic>> PHYSICAL_CONSTANTS = {
     'standard_uncertainty': '0.000 000 000 50',
     'unit': 'kg'
   },
-  'physical_constants_avogadro': {
-    'symbol': 'N_a_',
-    'value': '6.022 140 76',
-    'exponent': 23,
-    'unit': 'mol^-1^'
-  },
+  'physical_constants_avogadro': {'symbol': 'N_a_', 'value': '6.022 140 76', 'exponent': 23, 'unit': 'mol^-1^'},
   'physical_constants_boltzmann': {'symbol': 'k', 'value': '1.380 649', 'exponent': -23, 'unit': 'J/K'},
-  'physical_constants_conductance_quantum': {
-    'symbol': 'G_0_',
-    'value': '7.748 091 729',
-    'exponent': -5,
-    'unit': 'S'
-  },
+  'physical_constants_conductance_quantum': {'symbol': 'G_0_', 'value': '7.748 091 729', 'exponent': -5, 'unit': 'S'},
   'physical_constants_electron_mass': {
     'symbol': 'm_e_',
     'value': '9.109 383 701 5',

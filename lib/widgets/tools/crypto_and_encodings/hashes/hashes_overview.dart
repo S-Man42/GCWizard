@@ -7,7 +7,6 @@ import 'package:gc_wizard/widgets/common/gcw_expandable.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class HashOverview extends StatefulWidget {
-
   @override
   _HashOverviewState createState() => _HashOverviewState();
 }
@@ -40,7 +39,6 @@ class _HashOverviewState extends State<HashOverview> {
             },
           ),
         ),
-
         _buildOutput(context)
       ],
     );
@@ -58,9 +56,6 @@ class _HashOverviewState extends State<HashOverview> {
       rows.add([i18n(context, key + '_title'), function(_currentValue, _currentKey)]);
     });
 
-    return GCWDefaultOutput(
-              child: Column(children: columnedMultiLineOutput(context, rows))
-          );
+    return GCWDefaultOutput(child: Column(children: columnedMultiLineOutput(context, rows)));
   }
 }
-

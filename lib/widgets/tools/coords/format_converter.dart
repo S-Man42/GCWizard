@@ -48,9 +48,8 @@ class FormatConverterState extends State<FormatConverter> {
           format: _currentOutputFormat,
           onChanged: (value) {
             setState(() {
-              if ((_currentCoordsFormat['format'] != keyCoordsALL && value['format'] == keyCoordsALL)
-                || (_currentCoordsFormat['format'] == keyCoordsALL && value['format'] != keyCoordsALL)
-              ) {
+              if ((_currentCoordsFormat['format'] != keyCoordsALL && value['format'] == keyCoordsALL) ||
+                  (_currentCoordsFormat['format'] == keyCoordsALL && value['format'] != keyCoordsALL)) {
                 _currentOutput = [];
                 _currentAllOutput = GCWDefaultOutput();
               }
@@ -92,11 +91,11 @@ class FormatConverterState extends State<FormatConverter> {
 
   Widget _calculateAllOutput(BuildContext context) {
     var children = <List<String>>[];
-    var ellipsoid= defaultEllipsoid();
+    var ellipsoid = defaultEllipsoid();
 
     allCoordFormats.forEach((coordFormat) {
-
-      try { // exception, when we have a type with a undefinied subtype
+      try {
+        // exception, when we have a type with a undefinied subtype
         var outputFormat = Map<String, String>();
         String name = coordFormat.name;
         outputFormat.addAll({'format': coordFormat.key});
@@ -105,14 +104,15 @@ class FormatConverterState extends State<FormatConverter> {
           case keyCoordsLambert:
             outputFormat.addAll({'subtype': getLambertKey()});
             name = i18n(context, coordFormat.name);
-            name += '\n' + i18n(context, coordFormat.subtypes
-                .firstWhere((element) => element.key == getLambertKey()).name);
+            name +=
+                '\n' + i18n(context, coordFormat.subtypes.firstWhere((element) => element.key == getLambertKey()).name);
             break;
           case keyCoordsGaussKrueger:
             outputFormat.addAll({'subtype': getGaussKruegerTypKey()});
             name = i18n(context, coordFormat.name);
-            name += '\n' + i18n(context, coordFormat.subtypes
-                .firstWhere((element) => element.key == getGaussKruegerTypKey()).name);
+            name += '\n' +
+                i18n(
+                    context, coordFormat.subtypes.firstWhere((element) => element.key == getGaussKruegerTypKey()).name);
             break;
           case keyCoordsSlippyMap:
             outputFormat.addAll({'subtype': DefaultSlippyZoom.toString()});
@@ -120,25 +120,23 @@ class FormatConverterState extends State<FormatConverter> {
         }
 
         children.add([name, formatCoordOutput(_currentCoords, outputFormat, ellipsoid)]);
-      } catch(e){};
+      } catch (e) {}
+      ;
     });
 
-    return GCWDefaultOutput(
-        child: Column(children: columnedMultiLineOutput(context, children))
-    );
+    return GCWDefaultOutput(child: Column(children: columnedMultiLineOutput(context, children)));
   }
 }
 
 class _GCWCoordsFormatSelectorAll extends GCWCoordsFormatSelector {
-
-  const _GCWCoordsFormatSelectorAll({Key key, onChanged, format}) :
-        super(key: key, onChanged: onChanged, format: format);
+  const _GCWCoordsFormatSelectorAll({Key key, onChanged, format})
+      : super(key: key, onChanged: onChanged, format: format);
 
   @override
   List<GCWDropDownMenuItem> getDropDownItems(BuildContext context) {
     var items = super.getDropDownItems(context);
-    items.insert(0, GCWDropDownMenuItem(
-        value: keyCoordsALL, child: i18n(context, 'coords_formatconverter_all_formats')));
+    items.insert(
+        0, GCWDropDownMenuItem(value: keyCoordsALL, child: i18n(context, 'coords_formatconverter_all_formats')));
     return items;
   }
 }

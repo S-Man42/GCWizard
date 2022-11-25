@@ -30,18 +30,18 @@ class _DefaultHashState extends State<_DefaultHash> {
           },
         ),
         widget.keyRequired
-          ? GCWTextField(
-            hintText: i18n(context, 'common_key'),
-            onChanged: (value) {
-              setState(() {
-                _currentKey = value;
-              });
-            },
-          )
-          : Container(),
+            ? GCWTextField(
+                hintText: i18n(context, 'common_key'),
+                onChanged: (value) {
+                  setState(() {
+                    _currentKey = value;
+                  });
+                },
+              )
+            : Container(),
         widget.keyRequired
-          ? GCWDefaultOutput(child: widget.hashFunction(_currentValue, _currentKey))
-          : GCWDefaultOutput(child: widget.hashFunction(_currentValue))
+            ? GCWDefaultOutput(child: widget.hashFunction(_currentValue, _currentKey))
+            : GCWDefaultOutput(child: widget.hashFunction(_currentValue))
       ],
     );
   }

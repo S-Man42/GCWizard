@@ -38,21 +38,15 @@ class IrrationalNumberCalculator {
   }
 
   List<IrrationalNumberDecimalOccurence> decimalOccurences(String input) {
-    if (input == null || input.length == 0)
-      return [];
+    if (input == null || input.length == 0) return [];
 
-    if (!input.contains(RegExp(r'[0-9]')))
-      throw Exception('irrationalnumbers_error_nonumbers');
+    if (!input.contains(RegExp(r'[0-9]'))) throw Exception('irrationalnumbers_error_nonumbers');
 
     var _input = input.replaceAll(RegExp(r'[^0-9]'), '.');
 
     var out = <IrrationalNumberDecimalOccurence>[];
     RegExp(_input).allMatches(irrationalNumber.decimalPart).map((RegExpMatch match) {
-      out.add(IrrationalNumberDecimalOccurence(
-        value: match.group(0),
-        start: match.start + 1,
-        end: match.end
-      ));
+      out.add(IrrationalNumberDecimalOccurence(value: match.group(0), start: match.start + 1, end: match.end));
     }).toList();
 
     return out;

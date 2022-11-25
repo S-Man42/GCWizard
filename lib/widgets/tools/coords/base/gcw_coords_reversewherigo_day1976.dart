@@ -80,7 +80,6 @@ class GCWCoordsReverseWherigoDay1976State extends State<GCWCoordsReverseWherigoD
   }
 
   _setCurrentValueAndEmitOnChange() {
-    widget
-        .onChanged(ReverseWherigoDay1976.parse(_currentA.toString() + '\n' + _currentB.toString()));
+    widget.onChanged(ReverseWherigoDay1976.parse(_currentA.toString() + '\n' + _currentB.toString()));
   }
 }

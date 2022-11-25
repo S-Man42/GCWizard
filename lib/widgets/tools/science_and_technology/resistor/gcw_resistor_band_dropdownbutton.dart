@@ -95,13 +95,17 @@ class GCWResistorBandDropDownButtonState extends State<GCWResistorBandDropDownBu
       case ResistorBandType.FIRST:
       case ResistorBandType.SECOND:
       case ResistorBandType.THIRD:
-        formatted = formatResistorValue(value); break;
+        formatted = formatResistorValue(value);
+        break;
       case ResistorBandType.MULTIPLIER:
-        formatted = formatResistorMultiplier(value, textStyle); break;
+        formatted = formatResistorMultiplier(value, textStyle);
+        break;
       case ResistorBandType.TOLERANCE:
-        formatted = formatResistorTolerance(value); break;
+        formatted = formatResistorTolerance(value);
+        break;
       case ResistorBandType.TEMPERATURE_COEFFICIENT:
-        formatted = formatResistorTemperatureCoefficient(value, textStyle); break;
+        formatted = formatResistorTemperatureCoefficient(value, textStyle);
+        break;
     }
 
     if (formatted is String) {

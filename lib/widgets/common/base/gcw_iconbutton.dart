@@ -60,15 +60,13 @@ class GCWIconButton extends StatelessWidget {
       height: buttonHeight,
       child: TextButton(
         style: TextButton.styleFrom(
-          padding: EdgeInsets.zero,
-          shape: RoundedRectangleBorder(
-              side: BorderSide(color: themeColors().accent(), width: 1, style: BorderStyle.solid),
-              borderRadius: BorderRadius.circular(ROUNDED_BORDER_RADIUS)),
-          backgroundColor: backgroundColor
-        ),
+            padding: EdgeInsets.zero,
+            shape: RoundedRectangleBorder(
+                side: BorderSide(color: themeColors().accent(), width: 1, style: BorderStyle.solid),
+                borderRadius: BorderRadius.circular(ROUNDED_BORDER_RADIUS)),
+            backgroundColor: backgroundColor),
         child: Transform.rotate(
-          child:
-              this.customIcon ?? Icon(this.icon, size: iconSize, color: this.iconColor ?? themeColors().mainFont()),
+          child: this.customIcon ?? Icon(this.icon, size: iconSize, color: this.iconColor ?? themeColors().mainFont()),
           angle: degreesToRadian(this.rotateDegrees ?? 0.0),
         ),
         onPressed: this.onPressed,

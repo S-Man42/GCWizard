@@ -83,7 +83,6 @@ class GCWCoordsGaussKruegerState extends State<GCWCoordsGaussKrueger> {
     ]);
   }
 
-
   bool _subtypeChanged() {
     return _currentSubtype != getGkSubTypeCode(widget.subtype);
   }

@@ -17,7 +17,6 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programmin
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/whitespace_language.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
-
 class EsotericProgrammingLanguageSelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {

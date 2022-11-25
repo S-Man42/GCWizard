@@ -9,12 +9,12 @@ import 'package:highlight/highlight_core.dart';
 import 'package:highlight/languages/lua.dart';
 import 'package:prefs/prefs.dart';
 
-enum CodeHighlightingLanguage {LUA}
+enum CodeHighlightingLanguage { LUA }
 
 class GCWCodeTextField extends StatefulWidget {
   final TextEditingController controller;
   final Map<String, TextStyle> patternMap; // Regexes
-  final Map<String, TextStyle> stringMap;  // complete strings
+  final Map<String, TextStyle> stringMap; // complete strings
   final Map<String, TextStyle> theme;
   final TextStyle textStyle;
   final bool readOnly;
@@ -23,7 +23,16 @@ class GCWCodeTextField extends StatefulWidget {
   final GCWCodeTextFieldLineNumberStyle lineNumberStyle;
 
   const GCWCodeTextField(
-      {Key key, this.controller, this.stringMap, this.patternMap, this.theme, this.textStyle, this.readOnly: true, this.wrap, this.language, this.lineNumberStyle})
+      {Key key,
+      this.controller,
+      this.stringMap,
+      this.patternMap,
+      this.theme,
+      this.textStyle,
+      this.readOnly: true,
+      this.wrap,
+      this.language,
+      this.lineNumberStyle})
       : super(key: key);
 
   @override
@@ -31,7 +40,6 @@ class GCWCodeTextField extends StatefulWidget {
 }
 
 class _GCWCodeTextFieldState extends State<GCWCodeTextField> {
-
   Mode _language;
 
   @override
@@ -40,7 +48,8 @@ class _GCWCodeTextFieldState extends State<GCWCodeTextField> {
 
     if (widget.language != null) {
       switch (widget.language) {
-        case CodeHighlightingLanguage.LUA: _language = lua;
+        case CodeHighlightingLanguage.LUA:
+          _language = lua;
       }
     }
   }
@@ -51,8 +60,7 @@ class _GCWCodeTextFieldState extends State<GCWCodeTextField> {
       controller: CodeController(
         text: widget.controller.text,
         language: _language,
-        theme: widget.theme ??
-            Prefs.getString(PREFERENCE_THEME_COLOR) == ThemeType.DARK.toString()
+        theme: widget.theme ?? Prefs.getString(PREFERENCE_THEME_COLOR) == ThemeType.DARK.toString()
             ? atomOneDarkTheme
             : atomOneLightTheme,
         patternMap: widget.patternMap,
@@ -65,11 +73,7 @@ class _GCWCodeTextFieldState extends State<GCWCodeTextField> {
           ? LineNumberStyle(
               width: widget.lineNumberStyle.width,
             )
-          : LineNumberStyle(
-              width: 0.0,
-              margin: 0.0,
-              textStyle: TextStyle(fontSize: 0.1, color: Colors.black87)
-            ),
+          : LineNumberStyle(width: 0.0, margin: 0.0, textStyle: TextStyle(fontSize: 0.1, color: Colors.black87)),
     );
   }
 }

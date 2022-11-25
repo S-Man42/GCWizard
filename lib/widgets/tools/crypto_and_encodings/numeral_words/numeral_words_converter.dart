@@ -114,24 +114,23 @@ class NumeralWordsConverterState extends State<NumeralWordsConverter> {
 
     return GCWDefaultOutput(
         child: Column(children: <Widget>[
-            if (output.title != '')
-                  Column(
-                    children: <Widget>[
-                      GCWTextDivider(text: i18n(context, output.title)),
-                      GCWOutputText(
-                        text: output.numbersystem,
-                      )
-                    ],
-                  ),
-
-            if (_currentMode == GCWSwitchPosition.right) // decode
-                  GCWOutputText(
-                    text: _currentDecodeInput.length == 0 ? '' : output.number.toString(),
-              )
-            else
-                  GCWOutputText(
-                    text: output.numeralWord,
-              ),
-          ]));
+      if (output.title != '')
+        Column(
+          children: <Widget>[
+            GCWTextDivider(text: i18n(context, output.title)),
+            GCWOutputText(
+              text: output.numbersystem,
+            )
+          ],
+        ),
+      if (_currentMode == GCWSwitchPosition.right) // decode
+        GCWOutputText(
+          text: _currentDecodeInput.length == 0 ? '' : output.number.toString(),
+        )
+      else
+        GCWOutputText(
+          text: output.numeralWord,
+        ),
+    ]));
   }
 }

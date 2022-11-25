@@ -356,8 +356,9 @@ class _MainViewState extends State<MainView> {
     var toolList = (_isSearching && _searchText.length > 0) ? _getSearchedList() : null;
     return DefaultTabController(
       length: 3,
-      initialIndex:
-          Prefs.getBool(PREFERENCE_TABS_USE_DEFAULT_TAB) ? Prefs.get(PREFERENCE_TABS_DEFAULT_TAB) : Prefs.get(PREFERENCE_TABS_LAST_VIEWED_TAB),
+      initialIndex: Prefs.getBool(PREFERENCE_TABS_USE_DEFAULT_TAB)
+          ? Prefs.get(PREFERENCE_TABS_DEFAULT_TAB)
+          : Prefs.get(PREFERENCE_TABS_LAST_VIEWED_TAB),
       child: Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
@@ -423,11 +424,9 @@ class _MainViewState extends State<MainView> {
   }
 
   List<GCWTool> _getSearchedList() {
-    var _sanitizedSearchText = removeAccents(_searchText.toLowerCase())
-        .replaceAll(ALLOWED_SEARCH_CHARACTERS, '');
+    var _sanitizedSearchText = removeAccents(_searchText.toLowerCase()).replaceAll(ALLOWED_SEARCH_CHARACTERS, '');
 
-    if (_sanitizedSearchText.length == 0)
-      return <GCWTool>[];
+    if (_sanitizedSearchText.length == 0) return <GCWTool>[];
 
     Set<String> _queryTexts = _sanitizedSearchText.split(REGEXP_SPLIT_STRINGLIST).toSet();
 

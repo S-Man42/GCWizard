@@ -47,7 +47,7 @@ class GeoMath {
    * @return asinh(\e x).
    **********************************************************************/
   static double asinh(double x) {
-    double y = x.abs();     // Enforce odd parity
+    double y = x.abs(); // Enforce odd parity
     y = log1p(y * (1 + y / (hypot(1.0, y) + 1)));
     return x < 0 ? -y : y;
   }
@@ -136,8 +136,7 @@ class GeoMath {
   static double hypot(double x, double y) {
     x = x.abs();
     y = y.abs();
-    double a = max(x, y),
-    b = min(x, y) / (a != 0.0 ? a : 1);
+    double a = max(x, y), b = min(x, y) / (a != 0.0 ? a : 1);
     return a * sqrt(1 + b * b);
   }
 
@@ -150,13 +149,16 @@ class GeoMath {
    * @return exp(\e x) - 1.
    **********************************************************************/
   static double expm1(double x) {
-    double y = exp(x),
-    z = y - 1;
+    double y = exp(x), z = y - 1;
     // The reasoning here is similar to that for log1p.  The expression
     // mathematically reduces to exp(x) - 1, and the factor z/log(y) = (y -
     // 1)/log(y) is a slowly varying quantity near y = 1 and is accurately
     // computed.
-    return x.abs() > 1 ? z : z == 0 ?  x : x * z / log(y);
+    return x.abs() > 1
+        ? z
+        : z == 0
+            ? x
+            : x * z / log(y);
   }
 
   /**

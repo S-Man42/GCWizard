@@ -25,16 +25,12 @@ String formatResistorTolerance(double tolerance) {
 
 RichText formatResistorTemperatureCoefficient(double temperatureCoefficient, TextStyle textStyle) {
   return RichText(
-    text: TextSpan(
-      style: textStyle,
-      children: [
-        TextSpan(text: temperatureCoefficient.floor().toString() + ' ' + String.fromCharCode(215) + ' 10'),
-        superscriptedTextForRichText('-6', textStyle: textStyle),
-        TextSpan(text: ' K'),
-        superscriptedTextForRichText('-1', textStyle: textStyle),
-      ]
-    )
-  );
+      text: TextSpan(style: textStyle, children: [
+    TextSpan(text: temperatureCoefficient.floor().toString() + ' ' + String.fromCharCode(215) + ' 10'),
+    superscriptedTextForRichText('-6', textStyle: textStyle),
+    TextSpan(text: ' K'),
+    superscriptedTextForRichText('-1', textStyle: textStyle),
+  ]));
 }
 
 RichText formatResistorMultiplier(double multiplier, TextStyle textStyle) {
@@ -42,13 +38,10 @@ RichText formatResistorMultiplier(double multiplier, TextStyle textStyle) {
   var formatter = NumberFormat('###,###,###,##0.####');
 
   return RichText(
-    text: TextSpan(
-      style: textStyle,
-      children: [
-        TextSpan(text: String.fromCharCode(215) + ' 10'),
-        superscriptedTextForRichText(valueExponential[1].replaceFirst('+', ''), textStyle: textStyle),
-        TextSpan(text: ' = ${formatter.format(multiplier).replaceAll(',', ' ')}')
-      ]
-    ),
+    text: TextSpan(style: textStyle, children: [
+      TextSpan(text: String.fromCharCode(215) + ' 10'),
+      superscriptedTextForRichText(valueExponential[1].replaceFirst('+', ''), textStyle: textStyle),
+      TextSpan(text: ' = ${formatter.format(multiplier).replaceAll(',', ' ')}')
+    ]),
   );
 }

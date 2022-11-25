@@ -3,12 +3,9 @@ import 'package:gc_wizard/logic/tools/coords/external_libs/net.makaney/makaney.d
 import 'package:latlong2/latlong.dart';
 
 LatLng makaneyToLatLon(Makaney makaney) {
-  if (makaney == null || makaney.text == null ||makaney.text.isEmpty)
-    return null;
+  if (makaney == null || makaney.text == null || makaney.text.isEmpty) return null;
 
-  var _text = makaney.text
-      .toLowerCase()
-      .replaceAll(RegExp(r'[^\-\+abo2zptscjkwmgnxqfd984ery3h5l76ui]'), '');
+  var _text = makaney.text.toLowerCase().replaceAll(RegExp(r'[^\-\+abo2zptscjkwmgnxqfd984ery3h5l76ui]'), '');
 
   var regexCheck = RegExp(r'\-?[a-z0-9]+(\+|\-)[a-z0-9]+');
   if (!regexCheck.hasMatch(_text)) {
@@ -16,8 +13,7 @@ LatLng makaneyToLatLon(Makaney makaney) {
   }
 
   var latLon = lib.makaneyToLatLon(_text);
-  if (latLon.contains(null))
-    return null;
+  if (latLon.contains(null)) return null;
 
   try {
     return LatLng(latLon[0], latLon[1]);
@@ -27,8 +23,7 @@ LatLng makaneyToLatLon(Makaney makaney) {
 }
 
 Makaney latLonToMakaney(LatLng latLon) {
-  if (latLon == null)
-    return null;
+  if (latLon == null) return null;
 
   return Makaney(lib.latLonToMakaney(latLon.latitude, latLon.longitude).toUpperCase());
 }

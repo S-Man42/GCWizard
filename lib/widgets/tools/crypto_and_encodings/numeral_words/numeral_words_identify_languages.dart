@@ -34,7 +34,6 @@ class NumeralWordsIdentifyLanguagesState extends State<NumeralWordsIdentifyLangu
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       children: <Widget>[
         GCWTextField(
@@ -68,7 +67,8 @@ class NumeralWordsIdentifyLanguagesState extends State<NumeralWordsIdentifyLangu
     detailedOutput = decodeNumeralwords(
       input: removeAccents(_currentDecodeInput.toLowerCase()),
       language: NumeralWordsLanguage.ALL,
-      decodeModeWholeWords: _currentDecodeMode == GCWSwitchPosition.left, );
+      decodeModeWholeWords: _currentDecodeMode == GCWSwitchPosition.left,
+    );
     for (int i = 0; i < detailedOutput.length; i++) {
       if (detailedOutput[i].number != '') if (detailedOutput[i].number.startsWith('numeralwords_'))
         output = output + ' ' + i18n(context, detailedOutput[i].number);
@@ -110,14 +110,14 @@ class NumeralWordsIdentifyLanguagesState extends State<NumeralWordsIdentifyLangu
           text: output,
         ),
         output.length == 0
-          ? Container()
-          : GCWExpandableTextDivider(
-              text: i18n(context, 'common_outputdetail'),
-              suppressTopSpace: false,
-              expanded: false,
-              child:
-                  Column(children: columnedMultiLineOutput(context, columnData, flexValues: flexData, copyColumn: 1)),
-            ),
+            ? Container()
+            : GCWExpandableTextDivider(
+                text: i18n(context, 'common_outputdetail'),
+                suppressTopSpace: false,
+                expanded: false,
+                child:
+                    Column(children: columnedMultiLineOutput(context, columnData, flexValues: flexData, copyColumn: 1)),
+              ),
       ],
     );
   }

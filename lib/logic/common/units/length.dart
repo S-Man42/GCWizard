@@ -74,7 +74,8 @@ final LENGTH_FURP = Length(
     inMeters: 0.002263348517438173216473 * 1000 * 1000); // 1000 Kp = 1 furshlugginer potrzebie
 
 // https://en.wikipedia.org/wiki/Smoot
-final LENGTH_SMOOT = Length(name: 'common_unit_length_smoot_name', symbol: 'smoot', inMeters: 5 * 0.3048 + 7 * 0.3048 / 12.0); // 5 ft 7 in
+final LENGTH_SMOOT = Length(
+    name: 'common_unit_length_smoot_name', symbol: 'smoot', inMeters: 5 * 0.3048 + 7 * 0.3048 / 12.0); // 5 ft 7 in
 
 final List<Unit> baseLengths = [
   LENGTH_METER,

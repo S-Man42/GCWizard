@@ -46,7 +46,7 @@ class WetBulbTemperatureState extends State<WetBulbTemperature> {
           title: i18n(context, 'common_measure_humidity'),
           initialUnit: HUMIDITY,
           min: 0.0,
-          max:100.0,
+          max: 100.0,
           unitList: humidity,
           onChanged: (value) {
             setState(() {
@@ -87,79 +87,69 @@ class WetBulbTemperatureState extends State<WetBulbTemperature> {
 
     return Column(
       children: [
-        GCWDefaultOutput(
-          child: WBT.toStringAsFixed(2) + ' ' + unit,
-          copyText: WBT.toString()
-        ),
+        GCWDefaultOutput(child: WBT.toStringAsFixed(2) + ' ' + unit, copyText: WBT.toString()),
         Row(
           children: [
-              Container(
-                  width: 50,
-                  child: GCWIconButton(
-                      icon: Icons.wb_sunny,
-                      iconColor: _colorWBT(WBT_C),
-                      backgroundColor: Color(0xFF4d4d4d)
-                  ),
-                  padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN)
+            Container(
+                width: 50,
+                child: GCWIconButton(
+                    icon: Icons.wb_sunny, iconColor: _colorWBT(WBT_C), backgroundColor: Color(0xFF4d4d4d)),
+                padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN)),
+            Expanded(
+              child: GCWOutput(
+                child: i18n(context, hintWBT),
               ),
-             Expanded(
-               child: GCWOutput(
-                 child: i18n(context, hintWBT),
-               ),
-             )
+            )
           ],
         )
-
       ],
     );
   }
 
-  String _calculateHintWBT(double WBT){
-    if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.PURPLE])
-      if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.BLUE])
-        if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.LIGHT_BLUE])
-          if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.GREEN])
-            if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.ORANGE])
-              if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.RED])
-                if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.RED])
-                  return 'wet_bulb_temperature_index_wbt_dark_red';
-                else
-                  return 'wet_bulb_temperature_index_wbt_red';
-              else
-                return 'wet_bulb_temperature_index_wbt_orange';
-            else
-              return 'wet_bulb_temperature_index_wbt_green';
-          else
-            return 'wet_bulb_temperature_index_wbt_light_blue';
-        else
-          return 'wet_bulb_temperature_index_wbt_blue';
-      else
-        return 'wet_bulb_temperature_index_wbt_purple';
+  String _calculateHintWBT(double WBT) {
+    if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.PURPLE]) if (WBT >
+        WBT_HEAT_STRESS[
+            WBT_HEATSTRESS_CONDITION.BLUE]) if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.LIGHT_BLUE]) if (WBT >
+        WBT_HEAT_STRESS[
+            WBT_HEATSTRESS_CONDITION.GREEN]) if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.ORANGE]) if (WBT >
+        WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.RED]) if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.RED])
+      return 'wet_bulb_temperature_index_wbt_dark_red';
+    else
+      return 'wet_bulb_temperature_index_wbt_red';
+    else
+      return 'wet_bulb_temperature_index_wbt_orange';
+    else
+      return 'wet_bulb_temperature_index_wbt_green';
+    else
+      return 'wet_bulb_temperature_index_wbt_light_blue';
+    else
+      return 'wet_bulb_temperature_index_wbt_blue';
+    else
+      return 'wet_bulb_temperature_index_wbt_purple';
     else
       return 'wet_bulb_temperature_index_wbt_black';
   }
 
-  Color _colorWBT(double WBT){
-    if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.PURPLE])
-      if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.BLUE])
-        if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.LIGHT_BLUE])
-          if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.GREEN])
-            if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.ORANGE])
-              if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.RED])
-                if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.DARK_RED])
-                  return Colors.red[900];
-                else
-                  return Colors.red;
-              else
-                return Colors.orange;
-            else
-              return Colors.green;
-          else
-            return Colors.lightBlue[200];
-        else
-          return Colors.blue;
-      else
-        return Colors.purple;
+  Color _colorWBT(double WBT) {
+    if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.PURPLE]) if (WBT >
+        WBT_HEAT_STRESS[
+            WBT_HEATSTRESS_CONDITION.BLUE]) if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.LIGHT_BLUE]) if (WBT >
+        WBT_HEAT_STRESS[
+            WBT_HEATSTRESS_CONDITION.GREEN]) if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.ORANGE]) if (WBT >
+        WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.RED]) if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.DARK_RED])
+      return Colors.red[900];
+    else
+      return Colors.red;
+    else
+      return Colors.orange;
+    else
+      return Colors.green;
+    else
+      return Colors.lightBlue[200];
+    else
+      return Colors.blue;
+    else
+      return Colors.purple;
     else
       return Colors.white;
   }

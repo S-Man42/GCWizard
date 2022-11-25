@@ -138,8 +138,7 @@ Map<String, dynamic> decodeSemaphore(List<String> inputs) {
 
     if (CODEBOOK.map((key, value) => MapEntry(key.join(), value.toString()))[input.split('').join()] == null) {
       char = char + UNKNOWN_ELEMENT;
-    }
-    else {
+    } else {
       symbol = CODEBOOK.map((key, value) => MapEntry(key.join(), value.toString()))[input.split('').join()];
       if (symbol == 'symboltables_semaphore_letters_following' ||
           symbol == 'symboltables_semaphore_numerals_following' ||
@@ -148,8 +147,7 @@ Map<String, dynamic> decodeSemaphore(List<String> inputs) {
           symbol == 'symboltables_semaphore_rest') {
         switch (symbol) {
           case 'symboltables_semaphore_letters_following':
-            if (letter_follows)
-              char = char + 'J';
+            if (letter_follows) char = char + 'J';
             number_follows = false;
             letter_follows = true;
             break;
@@ -166,19 +164,16 @@ Map<String, dynamic> decodeSemaphore(List<String> inputs) {
             break;
         }
       } else {
-        if (letter_follows)
-          if (LETTER.contains(symbol))
-            charH = symbol;
-          else
-            charH = LETTER2DIGIT[symbol];
+        if (letter_follows) if (LETTER.contains(symbol))
+          charH = symbol;
         else
-          if (NUMBER.contains(symbol))
-            charH = symbol;
-          else
-            charH = DIGIT2LETTER[symbol];
+          charH = LETTER2DIGIT[symbol];
+        else if (NUMBER.contains(symbol))
+          charH = symbol;
+        else
+          charH = DIGIT2LETTER[symbol];
 
-        if (charH != null)
-          char = char + charH;
+        if (charH != null) char = char + charH;
       }
     }
 

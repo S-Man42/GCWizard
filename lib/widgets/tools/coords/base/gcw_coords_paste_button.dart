@@ -20,7 +20,6 @@ class GCWCoordsPasteButton extends StatefulWidget {
 }
 
 class _GCWCoordsPasteButtonState extends State<GCWCoordsPasteButton> {
-
   @override
   Widget build(BuildContext context) {
     return GCWPasteButton(

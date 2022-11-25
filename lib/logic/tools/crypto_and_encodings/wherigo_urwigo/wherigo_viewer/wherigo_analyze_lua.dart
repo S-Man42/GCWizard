@@ -274,8 +274,12 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
         });
 
         RegExp(r'' + _obfuscatorFunction + '\\((.|\\s)*?\\)').allMatches(_LUAFile).forEach((obfuscatedText) {
-          _LUAFile = _LUAFile.replaceAll(obfuscatedText.group(0),
-              '"' + deObfuscateText(obfuscatedText.group(0).replaceAll(_obfuscatorFunction + '(', '').replaceAll(')', ''), _obfuscatorFunction, _obfuscatorTable) + '"');
+          _LUAFile = _LUAFile.replaceAll(
+              obfuscatedText.group(0),
+              '"' +
+                  deObfuscateText(obfuscatedText.group(0).replaceAll(_obfuscatorFunction + '(', '').replaceAll(')', ''),
+                      _obfuscatorFunction, _obfuscatorTable) +
+                  '"');
         });
         i = lines.length;
       }
@@ -343,16 +347,20 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
           lines[i].replaceAll(_CartridgeLUAName + '.UseLogging = ', '').replaceAll('"', '').trim().toLowerCase();
 
     if (lines[i].replaceAll(_CartridgeLUAName, '').trim().startsWith('.CreateDate'))
-      _CreateDate = _normalizeDate(lines[i].replaceAll(_CartridgeLUAName + '.CreateDate = ', '').replaceAll('"', '').trim());
+      _CreateDate =
+          _normalizeDate(lines[i].replaceAll(_CartridgeLUAName + '.CreateDate = ', '').replaceAll('"', '').trim());
 
     if (lines[i].replaceAll(_CartridgeLUAName, '').trim().startsWith('.PublishDate'))
-      _PublishDate = _normalizeDate(lines[i].replaceAll(_CartridgeLUAName + '.PublishDate = ', '').replaceAll('"', '').trim());
+      _PublishDate =
+          _normalizeDate(lines[i].replaceAll(_CartridgeLUAName + '.PublishDate = ', '').replaceAll('"', '').trim());
 
     if (lines[i].replaceAll(_CartridgeLUAName, '').trim().startsWith('.UpdateDate'))
-      _UpdateDate = _normalizeDate(lines[i].replaceAll(_CartridgeLUAName + '.UpdateDate = ', '').replaceAll('"', '').trim());
+      _UpdateDate =
+          _normalizeDate(lines[i].replaceAll(_CartridgeLUAName + '.UpdateDate = ', '').replaceAll('"', '').trim());
 
     if (lines[i].replaceAll(_CartridgeLUAName, '').trim().startsWith('.LastPlayedDate'))
-      _LastPlayedDate = _normalizeDate(lines[i].replaceAll(_CartridgeLUAName + '.LastPlayedDate = ', '').replaceAll('"', '').trim());
+      _LastPlayedDate =
+          _normalizeDate(lines[i].replaceAll(_CartridgeLUAName + '.LastPlayedDate = ', '').replaceAll('"', '').trim());
 
     // ----------------------------------------------------------------------------------------------------------------
     // search and get Media Object
@@ -1206,13 +1214,9 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
 
           if (lines[i].trim().endsWith('= tonumber(input)')) {
             _answerVariable = lines[i].trim().replaceAll(' = tonumber(input)', '');
-          }
-
-          else if (lines[i].trim().endsWith(' = input')) {
+          } else if (lines[i].trim().endsWith(' = input')) {
             _answerVariable = lines[i].trim().replaceAll(' = input', '');
-          }
-
-          else if (lines[i].trimLeft() == 'if input == nil then') {
+          } else if (lines[i].trimLeft() == 'if input == nil then') {
             i++;
             lines[i] = lines[i].trim();
             _answerVariable = 'input';
@@ -1228,38 +1232,34 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
 
           else if (_OnGetInputSectionEnd(lines[i])) {
             if (insideInputFunction) {
-                answerList.forEach((answer) {
-                  if (answer != 'NIL')
-                    Answers[inputObject].add(AnswerData(
-                      answer,
-                      answerHash,
-                      answerActions,
-                    ));
-                });
-                answerActions = [];
-                answerList = _getAnswers(i, lines[i], lines[i - 1], _obfuscatorFunction, _obfuscatorTable, _Variables);
+              answerList.forEach((answer) {
+                if (answer != 'NIL')
+                  Answers[inputObject].add(AnswerData(
+                    answer,
+                    answerHash,
+                    answerActions,
+                  ));
+              });
+              answerActions = [];
+              answerList = _getAnswers(i, lines[i], lines[i - 1], _obfuscatorFunction, _obfuscatorTable, _Variables);
             }
-          }
-
-          else if ((i + 1 < lines.length - 1) && _OnGetInputFunctionEnd(lines[i], lines[i + 1].trim())) {
+          } else if ((i + 1 < lines.length - 1) && _OnGetInputFunctionEnd(lines[i], lines[i + 1].trim())) {
             if (insideInputFunction) {
               insideInputFunction = false;
-                answerActions.forEach((element) {});
-                answerList.forEach((answer) {
-                  if (answer != 'NIL')
-                    Answers[inputObject].add(AnswerData(
-                      answer,
-                      answerHash,
-                      answerActions,
-                    ));
-                });
-                answerActions = [];
-                answerList = [];
-                _answerVariable = '';
+              answerActions.forEach((element) {});
+              answerList.forEach((answer) {
+                if (answer != 'NIL')
+                  Answers[inputObject].add(AnswerData(
+                    answer,
+                    answerHash,
+                    answerActions,
+                  ));
+              });
+              answerActions = [];
+              answerList = [];
+              _answerVariable = '';
             }
-          }
-
-          else if (lines[i].trimLeft().startsWith('Buttons')) {
+          } else if (lines[i].trimLeft().startsWith('Buttons')) {
             do {
               i++;
               lines[i] = lines[i].trim();
@@ -1321,7 +1321,6 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
       if (currentObjectSection == OBJECT_TYPE.MESSAGES) {
         if (lines[i].trimLeft().startsWith('_Urwigo.MessageBox(') ||
             lines[i].trimLeft().startsWith('Wherigo.MessageBox(')) {
-
           singleMessageDialog = [];
 
           if (lines[i].contains('Text = ') || lines[i].contains('Media = ')) {
@@ -1330,10 +1329,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
               do {
                 line = line.substring(1);
               } while (!line.startsWith('Text'));
-              line = line
-                  .replaceAll('Text = ', '')
-                  .replaceAll('(', '')
-                  .replaceAll('{', '');
+              line = line.replaceAll('Text = ', '').replaceAll('(', '').replaceAll('{', '');
               if (line.indexOf('"') != -1)
                 line = line.substring(0, line.indexOf('"')).replaceAll('"', '');
               else if (line.indexOf(',') != -1)
@@ -1355,9 +1351,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
                   .replaceAll('}', '');
               singleMessageDialog.add(ActionMessageElementData(ACTIONMESSAGETYPE.IMAGE, line));
             }
-          }
-
-          else {
+          } else {
             i++;
             lines[i] = lines[i].trim();
             sectionMessages = true;
@@ -1400,9 +1394,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
             } while (sectionMessages);
           }
           _Messages.add(singleMessageDialog);
-        }
-
-        else if (lines[i].trimLeft().startsWith('_Urwigo.Dialog(') ||
+        } else if (lines[i].trimLeft().startsWith('_Urwigo.Dialog(') ||
             lines[i].trimLeft().startsWith('Wherigo.Dialog(')) {
           sectionMessages = true;
           singleMessageDialog = [];
@@ -1415,10 +1407,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
                 do {
                   line = line.substring(1);
                 } while (!line.startsWith('Text'));
-                line = line
-                    .replaceAll('Text = ', '')
-                    .replaceAll('(', '')
-                    .replaceAll('{', '');
+                line = line.replaceAll('Text = ', '').replaceAll('(', '').replaceAll('{', '');
                 if (line.indexOf('"') != -1)
                   line = line.substring(0, line.indexOf('"')).replaceAll('"', '');
                 else if (line.indexOf(',') != -1)
@@ -1440,21 +1429,15 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
                     .replaceAll('}', '');
                 singleMessageDialog.add(ActionMessageElementData(ACTIONMESSAGETYPE.IMAGE, line));
               }
-            }
-
-            else if (lines[i].trimLeft().startsWith('Text = ') ||
+            } else if (lines[i].trimLeft().startsWith('Text = ') ||
                 lines[i].trimLeft().startsWith('Text = ' + _obfuscatorFunction + '(') ||
                 lines[i].trimLeft().startsWith('Text = (' + _obfuscatorFunction + '(')) {
               singleMessageDialog.add(ActionMessageElementData(
                   ACTIONMESSAGETYPE.TEXT, getTextData(lines[i], _obfuscatorFunction, _obfuscatorTable)));
-            }
-
-            else if (lines[i].trimLeft().startsWith('Media')) {
+            } else if (lines[i].trimLeft().startsWith('Media')) {
               singleMessageDialog.add(
                   ActionMessageElementData(ACTIONMESSAGETYPE.IMAGE, lines[i].trimLeft().replaceAll('Media = ', '')));
-            }
-
-            else if (lines[i].trimLeft().startsWith('Buttons')) {
+            } else if (lines[i].trimLeft().startsWith('Buttons')) {
               i++;
               lines[i] = lines[i].trim();
               do {
@@ -1474,9 +1457,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
             lines[i] = lines[i].trim();
           } while (sectionMessages && (i < lines.length));
           _Messages.add(singleMessageDialog);
-        }
-
-        else if (lines[i].trimLeft().startsWith('_Urwigo.OldDialog(')) {
+        } else if (lines[i].trimLeft().startsWith('_Urwigo.OldDialog(')) {
           i++;
           lines[i] = lines[i].trim();
           sectionMessages = true;
@@ -1489,10 +1470,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
                 do {
                   line = line.substring(1);
                 } while (!line.startsWith('Text'));
-                line = line
-                    .replaceAll('Text = ', '')
-                    .replaceAll('(', '')
-                    .replaceAll('{', '');
+                line = line.replaceAll('Text = ', '').replaceAll('(', '').replaceAll('{', '');
                 if (line.indexOf('"') != -1)
                   line = line.substring(0, line.indexOf('"')).replaceAll('"', '');
                 else if (line.indexOf(',') != -1)
@@ -1514,23 +1492,15 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
                     .replaceAll('}', '');
                 singleMessageDialog.add(ActionMessageElementData(ACTIONMESSAGETYPE.IMAGE, line));
               }
-            }
-
-            else if (lines[i].trimLeft().startsWith('})')) {
+            } else if (lines[i].trimLeft().startsWith('})')) {
               sectionMessages = false;
-            }
-
-            else if (lines[i].trimLeft().startsWith('Text = ')) {
+            } else if (lines[i].trimLeft().startsWith('Text = ')) {
               singleMessageDialog.add(ActionMessageElementData(
                   ACTIONMESSAGETYPE.TEXT, getTextData(lines[i], _obfuscatorFunction, _obfuscatorTable)));
-            }
-
-            else if (lines[i].trimLeft().startsWith('Media')) {
+            } else if (lines[i].trimLeft().startsWith('Media')) {
               singleMessageDialog.add(
                   ActionMessageElementData(ACTIONMESSAGETYPE.IMAGE, lines[i].trimLeft().replaceAll('Media = ', '')));
-            }
-
-            else if (lines[i].trimLeft().startsWith('Buttons')) {
+            } else if (lines[i].trimLeft().startsWith('Buttons')) {
               i++;
               lines[i] = lines[i].trim();
               do {
@@ -1539,9 +1509,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
                 i++;
                 lines[i] = lines[i].trim();
               } while (lines[i].trimLeft() != '}');
-            }
-
-            else
+            } else
               singleMessageDialog.add(
                   ActionMessageElementData(ACTIONMESSAGETYPE.TEXT, lines[i].replaceAll('{', '').replaceAll('}', '')));
 
@@ -1658,18 +1626,18 @@ List<String> _getAnswers(
       line.trim().startsWith('elseif input <= ') ||
       line.trim().startsWith('if ' + _answerVariable + ' == ') ||
       line.trim().startsWith('elseif ' + _answerVariable + ' == ')) {
-
     if (line.contains('<=') && line.contains('>=')) {
-      return [line
-          .trimLeft()
-          .replaceAll('if', '')
-          .replaceAll('else', '')
-          .replaceAll('==', '')
-          .replaceAll('then', '')
-          .replaceAll(' ', '')
-          .replaceAll('and', ' and ')
-          .replaceAll('or', ' or ')
-        ];
+      return [
+        line
+            .trimLeft()
+            .replaceAll('if', '')
+            .replaceAll('else', '')
+            .replaceAll('==', '')
+            .replaceAll('then', '')
+            .replaceAll(' ', '')
+            .replaceAll('and', ' and ')
+            .replaceAll('or', ' or ')
+      ];
     }
     return line
         .trimLeft()
@@ -1682,9 +1650,7 @@ List<String> _getAnswers(
         .replaceAll(' ', '')
         .replaceAll('and', ' and ')
         .split(RegExp(r'(or)'));
-  }
-
-  else if (RegExp(r'(_Urwigo.Hash)').hasMatch(line)) {
+  } else if (RegExp(r'(_Urwigo.Hash)').hasMatch(line)) {
     List<String> results = [];
     int hashvalue = 0;
     line = line.split('and')[0];
@@ -1713,12 +1679,14 @@ List<String> _getAnswers(
         .replaceAll('+', '');
     line.split('or').forEach((element) {
       hashvalue = int.parse(element.replaceAll('\D+', ''));
-      results.add(hashvalue.toString() + '\x01' + breakUrwigoHash(hashvalue, HASH.ALPHABETICAL).toString() + '\x01' + breakUrwigoHash(hashvalue, HASH.NUMERIC).toString());
+      results.add(hashvalue.toString() +
+          '\x01' +
+          breakUrwigoHash(hashvalue, HASH.ALPHABETICAL).toString() +
+          '\x01' +
+          breakUrwigoHash(hashvalue, HASH.NUMERIC).toString());
     });
     return results;
-  }
-
-  else if (line.trim().startsWith('if Wherigo.NoCaseEquals(') ||
+  } else if (line.trim().startsWith('if Wherigo.NoCaseEquals(') ||
       line.trim().startsWith('elseif Wherigo.NoCaseEquals(')) {
     if (_answerVariable == '') _answerVariable = _getVariable(lineBefore);
     line = line
@@ -1787,11 +1755,8 @@ ActionMessageElementData _handleAnswerLine(String line, String dtable, String ob
   line = line.trim();
   if (line.startsWith('Wherigo.PlayAudio')) {
     return ActionMessageElementData(ACTIONMESSAGETYPE.COMMAND, line.trim());
-  }
-
-  else if (line.startsWith('Wherigo.GetInput'))
+  } else if (line.startsWith('Wherigo.GetInput'))
     return ActionMessageElementData(ACTIONMESSAGETYPE.COMMAND, line.trim());
-
   else if (line.startsWith('_Urwigo') ||
       line.startsWith('Callback') ||
       line.startsWith('Wherigo') ||
@@ -1802,17 +1767,12 @@ ActionMessageElementData _handleAnswerLine(String line, String dtable, String ob
       line.startsWith('{') ||
       line.startsWith('}'))
     return null;
-
   else if (line.startsWith('Text = ')) {
     return ActionMessageElementData(ACTIONMESSAGETYPE.TEXT, getTextData(line, obfuscator, dtable));
-  }
-
-  else if (line.startsWith('Media = ')) {
+  } else if (line.startsWith('Media = ')) {
     return ActionMessageElementData(
         ACTIONMESSAGETYPE.IMAGE, line.trim().replaceAll('Media = ', '').replaceAll(',', ''));
-  }
-
-  else if (line.startsWith('Buttons = ')) {
+  } else if (line.startsWith('Buttons = ')) {
     if (line.endsWith('}') || line.endsWith('},')) {
       // single line
       return ActionMessageElementData(
@@ -1820,11 +1780,8 @@ ActionMessageElementData _handleAnswerLine(String line, String dtable, String ob
           getTextData(
               line.trim().replaceAll('Buttons = {', '').replaceAll('},', '').replaceAll('}', ''), obfuscator, dtable));
     }
-  }
-
-  else if (line.startsWith('if ') || line.startsWith('elseif ') || line.startsWith('else'))
+  } else if (line.startsWith('if ') || line.startsWith('elseif ') || line.startsWith('else'))
     return ActionMessageElementData(ACTIONMESSAGETYPE.CASE, line.trim());
-
   else {
     String actionLine = '';
     if (RegExp(r'(' + obfuscator + ')').hasMatch(line)) {
@@ -1860,13 +1817,18 @@ String _getVariable(String line) {
   return line;
 }
 
-DateTime _normalizeDate(String dateString){
-  if (dateString == null || dateString == '' || dateString == '1/1/0001 12:00:00 AM')
-    return null;
+DateTime _normalizeDate(String dateString) {
+  if (dateString == null || dateString == '' || dateString == '1/1/0001 12:00:00 AM') return null;
 
   List<String> dateTime = dateString.split(' ');
   List<String> date = dateTime[0].split('/');
   List<String> time = dateTime[1].split(':');
 
-  return DateTime(int.parse(date[2]), int.parse(date[0]), int.parse(date[1]), (dateTime.length == 3 && dateTime[2] == 'PM') ? int.parse(time[0]) + 12 : int.parse(time[0]), int.parse(time[1]), int.parse(time[2]));
+  return DateTime(
+      int.parse(date[2]),
+      int.parse(date[0]),
+      int.parse(date[1]),
+      (dateTime.length == 3 && dateTime[2] == 'PM') ? int.parse(time[0]) + 12 : int.parse(time[0]),
+      int.parse(time[1]),
+      int.parse(time[2]));
 }

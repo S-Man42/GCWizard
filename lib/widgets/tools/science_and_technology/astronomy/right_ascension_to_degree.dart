@@ -23,7 +23,6 @@ import 'package:gc_wizard/widgets/utils/textinputformatter/integer_textinputform
 
 import '../../../../logic/tools/science_and_technology/astronomy/right_ascension_to_degree.dart';
 
-
 class RightAscensionToDegree extends StatefulWidget {
   @override
   RightAscensionToDegreeState createState() => RightAscensionToDegreeState();
@@ -46,7 +45,7 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
   TextEditingController _decMilliDegreesController;
 
   var _currentRaDeg = RaDeg(0.0);
-  var _currentRightAscension = RightAscension(0, 0 ,0 , 0.0);
+  var _currentRightAscension = RightAscension(0, 0, 0, 0.0);
   var _currentDecryptFormat = keyCoordsDEC;
 
   var _currentDecSign = 1;
@@ -150,19 +149,18 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
             });
           },
         ),
-        _currentMode == GCWSwitchPosition.left ? Container() :
-        GCWTextDivider(
-            trailing: GCWPasteButton(
-              iconSize: IconButtonSize.SMALL,
-              onSelected: (text) {
-                setState(() {
-                  _parseRAPaste(text);
-                });
-              },
-            )),
         _currentMode == GCWSwitchPosition.left
-          ? _buildDecryptWidget()
-          : _buildHmsWidget(),
+            ? Container()
+            : GCWTextDivider(
+                trailing: GCWPasteButton(
+                iconSize: IconButtonSize.SMALL,
+                onSelected: (text) {
+                  setState(() {
+                    _parseRAPaste(text);
+                  });
+                },
+              )),
+        _currentMode == GCWSwitchPosition.left ? _buildDecryptWidget() : _buildHmsWidget(),
         Container(height: 10),
         _buildOutput()
       ],
@@ -172,9 +170,15 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
   Widget _buildDecryptWidget() {
     var _decryptWidget;
     switch (_currentDecryptFormat) {
-      case keyCoordsDEC: _decryptWidget = _buildDecPartRow(); break;
-      case keyCoordsDMM: _decryptWidget = _buildDmmPartRow(); break;
-      case keyCoordsDMS: _decryptWidget = _buildDmsPartRow(); break;
+      case keyCoordsDEC:
+        _decryptWidget = _buildDecPartRow();
+        break;
+      case keyCoordsDMM:
+        _decryptWidget = _buildDmmPartRow();
+        break;
+      case keyCoordsDMS:
+        _decryptWidget = _buildDmsPartRow();
+        break;
     }
 
     return Column(children: [
@@ -185,9 +189,15 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
             _currentDecryptFormat = newValue;
 
             switch (_currentDecryptFormat) {
-              case keyCoordsDEC: _setDecRightAscension(); break;
-              case keyCoordsDMM: _setDmmDegrees(); break;
-              case keyCoordsDMS: _setDmsRightAscension(); break;
+              case keyCoordsDEC:
+                _setDecRightAscension();
+                break;
+              case keyCoordsDMM:
+                _setDmmDegrees();
+                break;
+              case keyCoordsDMS:
+                _setDmsRightAscension();
+                break;
             }
           });
         },
@@ -213,7 +223,8 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
 
   Widget _buildHmsWidget() {
     return Column(children: [
-        GCWToolBar( children:[
+      GCWToolBar(
+        children: [
           GCWText(text: '+/-', align: Alignment.center),
           GCWText(text: 'h', align: Alignment.center),
           GCWText(text: ''),
@@ -223,24 +234,28 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
           GCWText(text: ''),
           GCWText(text: 'ms', align: Alignment.center)
         ],
-          flexValues: [5,5,1,5,1,5,1,8],
-        ),
-        GCWDateTimePicker(
-          config: {DateTimePickerConfig.SIGN, DateTimePickerConfig.TIME,
-                  DateTimePickerConfig.SECOND_AS_INT, DateTimePickerConfig.TIME_MSEC},
-          hoursController: _hoursController,
-          minutesController: _minutesController,
-          secondsController: _secondsController,
-          mSecondsController: _mSecondsController,
-          maxHours: null,
-          duration: _currentRightAscension.toDuration(),
-          onChanged: (value) {
-            setState(() {
-              _currentRightAscension = RightAscension.fromDuration(value['duration']);
-            });
-          },
-        ),
-       ]);
+        flexValues: [5, 5, 1, 5, 1, 5, 1, 8],
+      ),
+      GCWDateTimePicker(
+        config: {
+          DateTimePickerConfig.SIGN,
+          DateTimePickerConfig.TIME,
+          DateTimePickerConfig.SECOND_AS_INT,
+          DateTimePickerConfig.TIME_MSEC
+        },
+        hoursController: _hoursController,
+        minutesController: _minutesController,
+        secondsController: _secondsController,
+        mSecondsController: _mSecondsController,
+        maxHours: null,
+        duration: _currentRightAscension.toDuration(),
+        onChanged: (value) {
+          setState(() {
+            _currentRightAscension = RightAscension.fromDuration(value['duration']);
+          });
+        },
+      ),
+    ]);
   }
 
   Widget _buildDmmPartRow() {
@@ -290,7 +305,7 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
                     _currentDmmMinutes = ret['text'];
                     _setDmmDegrees();
 
-                     if (_currentDmmMinutes.length == 2) FocusScope.of(context).requestFocus(_dmmMilliMinutesFocusNode);
+                    if (_currentDmmMinutes.length == 2) FocusScope.of(context).requestFocus(_dmmMilliMinutesFocusNode);
                   });
                 }),
           ),
@@ -505,29 +520,20 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
   Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       return GCWOutput(
-        title: i18n(context, 'common_output') + ': ' + i18n(context, 'astronomy_position_rightascension'),
-        child: raDegree2RightAscension(_currentRaDeg).toString()
-      );
+          title: i18n(context, 'common_output') + ': ' + i18n(context, 'astronomy_position_rightascension'),
+          child: raDegree2RightAscension(_currentRaDeg).toString());
     } else {
       RaDeg output = raRightAscension2Degree(_currentRightAscension);
-      var dmm = DMMLatitude.from(doubleToDMMPart(output.degrees))
-          .format(6)
-          .replaceAll('N ', '')
-          .replaceAll('S ', '-');
+      var dmm = DMMLatitude.from(doubleToDMMPart(output.degrees)).format(6).replaceAll('N ', '').replaceAll('S ', '-');
 
-      var dms = DMSLatitude.from(doubleToDMSPart(output.degrees))
-          .format(6)
-          .replaceAll('N ', '')
-          .replaceAll('S ', '-');
+      var dms = DMSLatitude.from(doubleToDMSPart(output.degrees)).format(6).replaceAll('N ', '').replaceAll('S ', '-');
 
       var rows = columnedMultiLineOutput(context, [
         [getCoordinateFormatByKey(keyCoordsDEC).name, output.toString() + '°'],
         [getCoordinateFormatByKey(keyCoordsDMM).name, dmm],
         [getCoordinateFormatByKey(keyCoordsDMS).name, dms],
       ]);
-      return GCWDefaultOutput(
-        child: Column(children: rows)
-      );
+      return GCWDefaultOutput(child: Column(children: rows));
     }
   }
 

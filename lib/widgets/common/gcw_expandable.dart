@@ -11,7 +11,15 @@ class GCWExpandableTextDivider extends StatefulWidget {
   final suppressBottomSpace;
   final suppressTopSpace;
 
-  const GCWExpandableTextDivider({Key key, this.text: '', this.expanded: true, this.style, this.child, this.onChanged, this.suppressBottomSpace, this.suppressTopSpace: true})
+  const GCWExpandableTextDivider(
+      {Key key,
+      this.text: '',
+      this.expanded: true,
+      this.style,
+      this.child,
+      this.onChanged,
+      this.suppressBottomSpace,
+      this.suppressTopSpace: true})
       : super(key: key);
 
   @override

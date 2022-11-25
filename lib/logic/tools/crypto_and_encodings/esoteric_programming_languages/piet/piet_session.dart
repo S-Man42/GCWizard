@@ -1,4 +1,4 @@
-﻿//source: https://github.com/MatthewMooreZA/PietSharp
+//source: https://github.com/MatthewMooreZA/PietSharp
 
 import 'dart:math';
 
@@ -20,12 +20,12 @@ class PietResult {
 
   PietResult(
       {this.output = '',
-        this.input_expected = false,
-        this.input_number_expected = false,
-        this.error = false,
-        this.errorText = '',
-        this.finished = true,
-        this.state = null});
+      this.input_expected = false,
+      this.input_number_expected = false,
+      this.error = false,
+      this.errorText = '',
+      this.finished = true,
+      this.state = null});
 }
 
 var _input_required = false;
@@ -34,10 +34,7 @@ final _inputRequired = "input required";
 final maxOutputLength = 1000;
 
 Future<PietResult> interpretPiet(List<List<int>> data, String input,
-    {int timeOut = 15000,
-      bool multipleInputs = false,
-      PietSession continueState}) async {
-
+    {int timeOut = 15000, bool multipleInputs = false, PietSession continueState}) async {
   var pietSession = continueState ?? PietSession(data, timeOut: timeOut, multipleInputs: multipleInputs);
   if (input != null && !input.endsWith('\n')) input += '\n';
   pietSession.input = input;
@@ -45,9 +42,8 @@ Future<PietResult> interpretPiet(List<List<int>> data, String input,
   try {
     pietSession.run();
 
-    return PietResult(output: pietSession._output,
-        input_expected: _input_required,
-        input_number_expected: _input_required_number);
+    return PietResult(
+        output: pietSession._output, input_expected: _input_required, input_number_expected: _input_required_number);
   } catch (err) {
     if (err.message == _inputRequired) {
       return PietResult(
@@ -81,7 +77,7 @@ class PietSession {
   var _output = '';
 
   var _timeOut = 15000;
-  var _multipleInputs  = false;
+  var _multipleInputs = false;
 
   PietSession(List<List<int>> image, {int timeOut = 15000, bool multipleInputs = false}) {
     data = image;
@@ -95,9 +91,7 @@ class PietSession {
 
     _currentBlock = _builder.getBlockAt(0, 0);
 
-    var ops = BaseOperations(_stack, this,
-        () => _currentBlock,
-        (i) => _navigator.rotateDirectionPointer(i),
+    var ops = BaseOperations(_stack, this, () => _currentBlock, (i) => _navigator.rotateDirectionPointer(i),
         (i) => _navigator.toggleCodelChooser(i));
     _actionMap = ops.getMap();
   }
@@ -114,8 +108,7 @@ class PietSession {
     var newBlock = _builder.getBlockAt(result.x, result.y);
     var opCode = _opsResolver.resolve(_currentBlock, newBlock);
 
-    if (_actionMap.containsKey(opCode))
-      _actionMap[opCode]();
+    if (_actionMap.containsKey(opCode)) _actionMap[opCode]();
 
     _currentBlock = newBlock;
   }
@@ -135,8 +128,7 @@ class PietSession {
 
   void output(String value) {
     _output += value;
-    if (_output.length > maxOutputLength)
-      throw Exception('common_programming_error_maxiterations');
+    if (_output.length > maxOutputLength) throw Exception('common_programming_error_maxiterations');
   }
 
   int readInt() {

@@ -71,7 +71,6 @@ class MagicEyeSolverState extends State<MagicEyeSolver> {
           });
         },
       ),
-
       Container(height: 25),
       GCWIntegerSpinner(
         title: i18n(context, 'magic_eye_offset'),
@@ -87,7 +86,6 @@ class MagicEyeSolverState extends State<MagicEyeSolver> {
           });
         },
       ),
-
       GCWDefaultOutput(child: _buildOutputDecode())
     ]);
   }
@@ -104,10 +102,9 @@ class MagicEyeSolverState extends State<MagicEyeSolver> {
     ]);
   }
 
-
   GCWAsyncExecuterParameters _buildJobDataDecode() {
-    return GCWAsyncExecuterParameters(Tuple3<Uint8List, Image.Image, int>(
-        _decodeImage?.bytes, _decodeImageData, _displacement));
+    return GCWAsyncExecuterParameters(
+        Tuple3<Uint8List, Image.Image, int>(_decodeImage?.bytes, _decodeImageData, _displacement));
   }
 
   void _saveOutputDecode(Tuple3<Image.Image, Uint8List, int> output) {
@@ -119,7 +116,6 @@ class MagicEyeSolverState extends State<MagicEyeSolver> {
       setState(() {});
     });
   }
-
 
   Widget _encodeWidgets() {
     return Column(children: [
@@ -148,42 +144,42 @@ class MagicEyeSolverState extends State<MagicEyeSolver> {
     return Column(children: [
       GCWTextDivider(text: i18n(context, 'magic_eye_texture_image')),
       GCWDropDownButton(
-        value: _currentEncodeTextureType,
-        onChanged: (value) {
-          setState(() {
-            _currentEncodeTextureType = value;
-            _generateEncodeImage();
-          });
-        },
-        items:
-           [GCWDropDownMenuItem(
+          value: _currentEncodeTextureType,
+          onChanged: (value) {
+            setState(() {
+              _currentEncodeTextureType = value;
+              _generateEncodeImage();
+            });
+          },
+          items: [
+            GCWDropDownMenuItem(
               value: TextureType.BITMAP,
               child: i18n(context, 'magic_eye_texture_bitmap'),
-           ),
-           GCWDropDownMenuItem(
-            value: TextureType.COLORDOTS,
-            child: i18n(context, 'magic_eye_texture_colordots'),
-          ),
-          GCWDropDownMenuItem(
-            value: TextureType.GREYDOTS,
-            child: i18n(context, 'magic_eye_texture_graydots'),
-          )]
-        ),
-        _currentEncodeTextureType == TextureType.BITMAP
-        ? GCWOpenFile(
-            supportedFileTypes: SUPPORTED_IMAGE_TYPES,
-            file: _encodeTextureImage,
-            onLoaded: (_file) {
-              if (_file == null) {
-                showToast(i18n(context, 'common_loadfile_exception_notloaded'));
-                return;
-              }
-              _encodeTextureImage= _file;
-              _generateEncodeImage();
-            },
-          )
-        : Container(),
-      ]);
+            ),
+            GCWDropDownMenuItem(
+              value: TextureType.COLORDOTS,
+              child: i18n(context, 'magic_eye_texture_colordots'),
+            ),
+            GCWDropDownMenuItem(
+              value: TextureType.GREYDOTS,
+              child: i18n(context, 'magic_eye_texture_graydots'),
+            )
+          ]),
+      _currentEncodeTextureType == TextureType.BITMAP
+          ? GCWOpenFile(
+              supportedFileTypes: SUPPORTED_IMAGE_TYPES,
+              file: _encodeTextureImage,
+              onLoaded: (_file) {
+                if (_file == null) {
+                  showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+                  return;
+                }
+                _encodeTextureImage = _file;
+                _generateEncodeImage();
+              },
+            )
+          : Container(),
+    ]);
   }
 
   Widget _buildOutputEncode() {
@@ -210,8 +206,7 @@ class MagicEyeSolverState extends State<MagicEyeSolver> {
     }
 
     _encodeOutData = output.item1;
-    if (output.item2 == MagicEyeErrorCode.IMAGE_TOO_SMALL)
-        showToast(i18n(context, 'magic_eye_image_too_small'));
+    if (output.item2 == MagicEyeErrorCode.IMAGE_TOO_SMALL) showToast(i18n(context, 'magic_eye_image_too_small'));
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {});
@@ -220,8 +215,7 @@ class MagicEyeSolverState extends State<MagicEyeSolver> {
 
   void _generateEncodeImage() async {
     if (_encodeHiddenDataImage == null ||
-        (_currentEncodeTextureType == TextureType.BITMAP && _encodeTextureImage == null))
-      return;
+        (_currentEncodeTextureType == TextureType.BITMAP && _encodeTextureImage == null)) return;
 
     await showDialog(
       context: context,

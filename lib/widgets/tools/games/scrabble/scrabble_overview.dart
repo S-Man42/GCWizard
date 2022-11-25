@@ -38,26 +38,19 @@ class ScrabbleOverviewState extends State<ScrabbleOverview> {
   }
 
   _calculateOutput() {
-    var data = <List<dynamic>>[[
-      i18n(context, 'common_letter'),
-      i18n(context, 'common_value'),
-      i18n(context, 'scrabble_mode_frequency'),
-    ]];
-    data.addAll(
-      scrabbleSets[_currentScrabbleVersion].letters.entries.map((entry) {
-        return [
-          entry.key.replaceAll(' ', String.fromCharCode(9251)),
-          entry.value.value,
-          entry.value.frequency
-        ];
-      }).toList()
-    );
+    var data = <List<dynamic>>[
+      [
+        i18n(context, 'common_letter'),
+        i18n(context, 'common_value'),
+        i18n(context, 'scrabble_mode_frequency'),
+      ]
+    ];
+    data.addAll(scrabbleSets[_currentScrabbleVersion].letters.entries.map((entry) {
+      return [entry.key.replaceAll(' ', String.fromCharCode(9251)), entry.value.value, entry.value.frequency];
+    }).toList());
 
     return Column(
-      children: columnedMultiLineOutput(context, data,
-        hasHeader: true,
-        copyColumn: 0
-      ),
+      children: columnedMultiLineOutput(context, data, hasHeader: true, copyColumn: 0),
     );
   }
 }

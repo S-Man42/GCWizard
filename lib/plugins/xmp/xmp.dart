@@ -7,5 +7,6 @@ import 'package:xml/xml.dart';
 
 part 'src/constants.dart';
 part 'src/replacement.dart';
+
 /// parts
 part 'src/xmp.dart';

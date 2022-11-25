@@ -76,15 +76,9 @@ class ResistorEIA96State extends State<ResistorEIA96> {
 
   _buildSuperscriptedRichText(String before, String superscript, String after) {
     return RichText(
-      text: TextSpan(
-        style: gcwTextStyle(),
-        children: [
-          TextSpan(text: before),
-          superscriptedTextForRichText(superscript),
-          TextSpan(text: after)
-        ]
-      )
-    );
+        text: TextSpan(
+            style: gcwTextStyle(),
+            children: [TextSpan(text: before), superscriptedTextForRichText(superscript), TextSpan(text: after)]));
   }
 
   _buildOutput() {

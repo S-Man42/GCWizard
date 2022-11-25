@@ -11,8 +11,6 @@
 //
 // See <http://creativecommons.org/publicdomain/zero/1.0/>.
 
-
-
 class malbolgeOutput {
   final List<String> output;
   final List<String> assembler;

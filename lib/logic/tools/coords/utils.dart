@@ -21,7 +21,6 @@ double modLon(double x) {
 }
 
 String formatCoordOutput(LatLng _coords, Map<String, String> _outputFormat, Ellipsoid ells, [int precision]) {
-
   switch (_outputFormat['format']) {
     case keyCoordsDEC:
       return DEC.fromLatLon(_coords).toString(precision);
@@ -40,7 +39,8 @@ String formatCoordOutput(LatLng _coords, Map<String, String> _outputFormat, Elli
     case keyCoordsSwissGridPlus:
       return SwissGridPlus.fromLatLon(_coords, ells).toString();
     case keyCoordsGaussKrueger:
-      return GaussKrueger.fromLatLon(_coords, getGkSubTypeCode(_outputFormat['subtype'], defaultValue: 0), ells).toString();
+      return GaussKrueger.fromLatLon(_coords, getGkSubTypeCode(_outputFormat['subtype'], defaultValue: 0), ells)
+          .toString();
     case keyCoordsLambert:
       return Lambert.fromLatLon(_coords, getLambertType(_outputFormat['subtype'], defaultValue: null), ells).toString();
     case keyCoordsDutchGrid:
@@ -88,38 +88,65 @@ double normalizeBearing(double bearing) {
 
 LambertType getLambertType(String subtype, {defaultValue: DefaultLambertType}) {
   switch (subtype) {
-    case keyCoordsLambert93: return LambertType.LAMBERT_93;
-    case keyCoordsLambert2008: return LambertType.LAMBERT_2008;
-    case keyCoordsLambertETRS89LCC: return LambertType.ETRS89_LCC;
-    case keyCoordsLambert72: return LambertType.LAMBERT_72;
-    case keyCoordsLambert93CC42: return LambertType.L93_CC42;
-    case keyCoordsLambert93CC43: return LambertType.L93_CC43;
-    case keyCoordsLambert93CC44: return LambertType.L93_CC44;
-    case keyCoordsLambert93CC45: return LambertType.L93_CC45;
-    case keyCoordsLambert93CC46: return LambertType.L93_CC46;
-    case keyCoordsLambert93CC47: return LambertType.L93_CC47;
-    case keyCoordsLambert93CC48: return LambertType.L93_CC48;
-    case keyCoordsLambert93CC49: return LambertType.L93_CC49;
-    case keyCoordsLambert93CC50: return LambertType.L93_CC50;
-    default: return defaultValue;
+    case keyCoordsLambert93:
+      return LambertType.LAMBERT_93;
+    case keyCoordsLambert2008:
+      return LambertType.LAMBERT_2008;
+    case keyCoordsLambertETRS89LCC:
+      return LambertType.ETRS89_LCC;
+    case keyCoordsLambert72:
+      return LambertType.LAMBERT_72;
+    case keyCoordsLambert93CC42:
+      return LambertType.L93_CC42;
+    case keyCoordsLambert93CC43:
+      return LambertType.L93_CC43;
+    case keyCoordsLambert93CC44:
+      return LambertType.L93_CC44;
+    case keyCoordsLambert93CC45:
+      return LambertType.L93_CC45;
+    case keyCoordsLambert93CC46:
+      return LambertType.L93_CC46;
+    case keyCoordsLambert93CC47:
+      return LambertType.L93_CC47;
+    case keyCoordsLambert93CC48:
+      return LambertType.L93_CC48;
+    case keyCoordsLambert93CC49:
+      return LambertType.L93_CC49;
+    case keyCoordsLambert93CC50:
+      return LambertType.L93_CC50;
+    default:
+      return defaultValue;
   }
 }
 
 String getLambertKey({LambertType lambertType: DefaultLambertType}) {
   switch (lambertType) {
-    case LambertType.LAMBERT_93: return keyCoordsLambert93;
-    case LambertType.LAMBERT_2008: return keyCoordsLambert2008;
-    case LambertType.ETRS89_LCC: return keyCoordsLambertETRS89LCC;
-    case LambertType.LAMBERT_72: return keyCoordsLambert72;
-    case LambertType.L93_CC42: return keyCoordsLambert93CC42;
-    case LambertType.L93_CC43: return keyCoordsLambert93CC43;
-    case LambertType.L93_CC44: return keyCoordsLambert93CC44;
-    case LambertType.L93_CC45: return keyCoordsLambert93CC45;
-    case LambertType.L93_CC46: return keyCoordsLambert93CC46;
-    case LambertType.L93_CC47: return keyCoordsLambert93CC47;
-    case LambertType.L93_CC48: return keyCoordsLambert93CC48;
-    case LambertType.L93_CC49: return keyCoordsLambert93CC49;
-    case LambertType.L93_CC50: return keyCoordsLambert93CC50;
+    case LambertType.LAMBERT_93:
+      return keyCoordsLambert93;
+    case LambertType.LAMBERT_2008:
+      return keyCoordsLambert2008;
+    case LambertType.ETRS89_LCC:
+      return keyCoordsLambertETRS89LCC;
+    case LambertType.LAMBERT_72:
+      return keyCoordsLambert72;
+    case LambertType.L93_CC42:
+      return keyCoordsLambert93CC42;
+    case LambertType.L93_CC43:
+      return keyCoordsLambert93CC43;
+    case LambertType.L93_CC44:
+      return keyCoordsLambert93CC44;
+    case LambertType.L93_CC45:
+      return keyCoordsLambert93CC45;
+    case LambertType.L93_CC46:
+      return keyCoordsLambert93CC46;
+    case LambertType.L93_CC47:
+      return keyCoordsLambert93CC47;
+    case LambertType.L93_CC48:
+      return keyCoordsLambert93CC48;
+    case LambertType.L93_CC49:
+      return keyCoordsLambert93CC49;
+    case LambertType.L93_CC50:
+      return keyCoordsLambert93CC50;
   }
 }
 

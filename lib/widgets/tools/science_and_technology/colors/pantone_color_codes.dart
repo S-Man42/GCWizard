@@ -36,18 +36,14 @@ class PantoneColorCodesState extends State<PantoneColorCodes> {
     if (_colors == null) {
       _colors = PANTONE_COLOR_CODES_WITH_NAMES.values.map((color) {
         var name = i18n(context, color['name']);
-        if (color['prefix'] != null)
-          name = i18n(context, color['prefix']) + ' ' + name;
-        if (color['suffix'] != null)
-          name = name + ' ' + color['suffix'];
+        if (color['prefix'] != null) name = i18n(context, color['prefix']) + ' ' + name;
+        if (color['suffix'] != null) name = name + ' ' + color['suffix'];
         return {'name': name, 'colorcode': color['colorcode']};
       }).toList();
 
       _colors.sort((a, b) => a['name'].compareTo(b['name']));
 
-      _colors.addAll(
-          PANTONE_COLOR_CODES_ONLY_NUMBERS.values.toList()
-      );
+      _colors.addAll(PANTONE_COLOR_CODES_ONLY_NUMBERS.values.toList());
 
       _currentValue = _colors[0];
     }
@@ -66,35 +62,35 @@ class PantoneColorCodesState extends State<PantoneColorCodes> {
         ),
         _currentMode == GCWSwitchPosition.left
             ? Column(
-          children: [
-            GCWDropDownButton(
-                value: _currentValue,
-                onChanged: (newValue) {
-                  setState(() {
-                    _currentValue = newValue;
-                  });
-                },
-                items: _colors.map((color) {
-                  return GCWDropDownMenuItem(value: color, child: color['name']);
-                }).toList()),
-            GCWDefaultOutput(child: _buildPantoneToColorOutput())
-          ],
-        )
+                children: [
+                  GCWDropDownButton(
+                      value: _currentValue,
+                      onChanged: (newValue) {
+                        setState(() {
+                          _currentValue = newValue;
+                        });
+                      },
+                      items: _colors.map((color) {
+                        return GCWDropDownMenuItem(value: color, child: color['name']);
+                      }).toList()),
+                  GCWDefaultOutput(child: _buildPantoneToColorOutput())
+                ],
+              )
             : Column(
-          children: [
-            GCWColors(
-              color: _currentInputColor,
-              colorSpace: _currentColorSpace,
-              onChanged: (value) {
-                setState(() {
-                  _currentColorSpace = value['colorSpace'];
-                  _currentInputColor = value['color'];
-                });
-              },
-            ),
-            _buildColorToPantoneOutput()
-          ],
-        ),
+                children: [
+                  GCWColors(
+                    color: _currentInputColor,
+                    colorSpace: _currentColorSpace,
+                    onChanged: (value) {
+                      setState(() {
+                        _currentColorSpace = value['colorSpace'];
+                        _currentInputColor = value['color'];
+                      });
+                    },
+                  ),
+                  _buildColorToPantoneOutput()
+                ],
+              ),
       ],
     );
   }
@@ -104,7 +100,7 @@ class PantoneColorCodesState extends State<PantoneColorCodes> {
 
     return [
       Container(
-        margin: EdgeInsets.only(right: 4* DOUBLE_DEFAULT_MARGIN),
+        margin: EdgeInsets.only(right: 4 * DOUBLE_DEFAULT_MARGIN),
         height: 50,
         width: 50,
         decoration: BoxDecoration(
@@ -129,11 +125,13 @@ class PantoneColorCodesState extends State<PantoneColorCodes> {
     }
 
     return GCWOutput(
-        title: similarPantones.length == 1 ? i18n(context, 'common_output') : i18n(context, 'pantonecolorcodes_mode_colorstoral_similarcolorsfound'),
+        title: similarPantones.length == 1
+            ? i18n(context, 'common_output')
+            : i18n(context, 'pantonecolorcodes_mode_colorstoral_similarcolorsfound'),
         child: Column(
-          children: columnedMultiLineOutput(context, similarPantones.map((e) => _buildPantoneColorOutput(e)).toList(), flexValues: [1, 1, 2], copyColumn: 2),
-        )
-    );
+          children: columnedMultiLineOutput(context, similarPantones.map((e) => _buildPantoneColorOutput(e)).toList(),
+              flexValues: [1, 1, 2], copyColumn: 2),
+        ));
   }
 
   _buildPantoneToColorOutput() {

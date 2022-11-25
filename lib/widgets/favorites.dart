@@ -4,7 +4,7 @@ import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 
-enum FavoriteChangeStatus {ADD, REMOVE}
+enum FavoriteChangeStatus { ADD, REMOVE }
 
 class Favorites {
   static List<String> favoritedToolList;
@@ -26,8 +26,7 @@ class Favorites {
         break;
     }
 
-    if (changed)
-      Prefs.setStringList(PREFERENCE_FAVORITES, favoritedToolList);
+    if (changed) Prefs.setStringList(PREFERENCE_FAVORITES, favoritedToolList);
   }
 
   static initialize() {

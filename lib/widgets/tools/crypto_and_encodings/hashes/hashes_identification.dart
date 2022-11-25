@@ -6,7 +6,6 @@ import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class HashIdentification extends StatefulWidget {
-
   @override
   _HashIdentificationState createState() => _HashIdentificationState();
 }
@@ -25,7 +24,6 @@ class _HashIdentificationState extends State<HashIdentification> {
             });
           },
         ),
-
         _buildOutput(context)
       ],
     );
@@ -34,24 +32,18 @@ class _HashIdentificationState extends State<HashIdentification> {
   Widget _buildOutput(BuildContext context) {
     var rows = <List<String>>[];
     HASH_FUNCTIONS.forEach((key, function) {
-      if (_possibleHash(function(_currentValue)))
-        rows.add([i18n(context, key + '_title')]);
+      if (_possibleHash(function(_currentValue))) rows.add([i18n(context, key + '_title')]);
     });
 
     HASHKEY_FUNCTIONS.forEach((key, function) {
-      if (_possibleHash(function(_currentValue, null)))
-        rows.add([i18n(context, key + '_title')]);
+      if (_possibleHash(function(_currentValue, null))) rows.add([i18n(context, key + '_title')]);
     });
 
-    return GCWDefaultOutput(
-              child: Column(children: columnedMultiLineOutput(context, rows))
-          );
+    return GCWDefaultOutput(child: Column(children: columnedMultiLineOutput(context, rows)));
   }
 
   bool _possibleHash(String hash) {
-    if (hash == null || _currentValue == null)
-      return false;
+    if (hash == null || _currentValue == null) return false;
     return hash?.length == _currentValue.length;
   }
 }
-

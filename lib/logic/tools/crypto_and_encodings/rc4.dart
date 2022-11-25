@@ -3,7 +3,9 @@ import 'dart:math';
 import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 
 enum InputFormat { AUTO, TEXT, HEX, BINARY, ASCIIVALUES }
+
 enum OutputFormat { TEXT, HEX, BINARY, ASCIIVALUES }
+
 enum ErrorCode { OK, INPUT_FORMAT, KEY_FORMAT, MISSING_KEY }
 
 class RC4Output {

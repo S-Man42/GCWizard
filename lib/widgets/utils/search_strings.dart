@@ -68,7 +68,8 @@ void createIndexedSearchStrings() {
     if (tool.toolName != null) {
       _toolName = removeAccents(tool.toolName).toLowerCase().replaceAll(RegExp(r'\s+'), '');
     }
-    var _indexedSearchStrings = removeAccents(searchStrings.join(' ').toLowerCase()).replaceAll(ALLOWED_SEARCH_CHARACTERS, '');
+    var _indexedSearchStrings =
+        removeAccents(searchStrings.join(' ').toLowerCase()).replaceAll(ALLOWED_SEARCH_CHARACTERS, '');
     if (_indexedSearchStrings == null || _indexedSearchStrings.length == 0) {
       if (_toolName != null) tool.indexedSearchStrings = _toolName;
       continue;

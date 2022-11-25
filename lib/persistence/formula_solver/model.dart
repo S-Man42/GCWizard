@@ -40,8 +40,7 @@ class Formula {
       'formula': formula,
     };
 
-    if (name != null && name.isNotEmpty)
-      map.putIfAbsent('name', () => name);
+    if (name != null && name.isNotEmpty) map.putIfAbsent('name', () => name);
 
     return map;
   }
@@ -65,6 +64,7 @@ class Formula {
 }
 
 enum FormulaValueType { FIXED, INTERPOLATED, TEXT }
+
 const _FORMULAVALUETYPE_INTERPOLATE = 'interpolate';
 const _FORMULAVALUETYPE_TEXT = 'text';
 

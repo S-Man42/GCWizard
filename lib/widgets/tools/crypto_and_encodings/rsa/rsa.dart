@@ -90,37 +90,27 @@ class RSAState extends State<RSA> {
 
       var outputChildren = <Widget>[];
       if (_currentMode == GCWSwitchPosition.left) {
-        var inputAsText = _currentInput
-            .split('')
-            .map((char) {
+        var inputAsText = _currentInput.split('').map((char) {
           return BigInt.from(char.codeUnits.first);
-        })
-        .toList();
+        }).toList();
 
-        if (_currentInput
-            .replaceAll(RegExp(r'\s+'), '')
-            .replaceAll(RegExp(r'[0-9]'), '')
-            .length == 0) {
+        if (_currentInput.replaceAll(RegExp(r'\s+'), '').replaceAll(RegExp(r'[0-9]'), '').length == 0) {
           var inputAsInt = _currentInput
-            .split(RegExp(r'\s+'))
-            .where((chunk) => chunk != null)
-            .map((chunk) => BigInt.tryParse(chunk))
-            .toList();
+              .split(RegExp(r'\s+'))
+              .where((chunk) => chunk != null)
+              .map((chunk) => BigInt.tryParse(chunk))
+              .toList();
 
-          outputChildren.add(
-            GCWOutput(
-              child: encryptRSA(inputAsInt, ed, p, q).join(' '),
-              title: i18n(context, 'common_output') + ' (${i18n(context, 'rsa_encryption_output_textasnumbers')})',
-            )
-          );
+          outputChildren.add(GCWOutput(
+            child: encryptRSA(inputAsInt, ed, p, q).join(' '),
+            title: i18n(context, 'common_output') + ' (${i18n(context, 'rsa_encryption_output_textasnumbers')})',
+          ));
         }
 
-        outputChildren.add(
-          GCWOutput(
-            child: encryptRSA(inputAsText, ed, p, q).join(' '),
-            title: i18n(context, 'common_output') + ' (${i18n(context, 'rsa_encryption_output_textasascii')})',
-          )
-        );
+        outputChildren.add(GCWOutput(
+          child: encryptRSA(inputAsText, ed, p, q).join(' '),
+          title: i18n(context, 'common_output') + ' (${i18n(context, 'rsa_encryption_output_textasascii')})',
+        ));
       } else {
         var inputNumbers = _currentInput
             .split(RegExp(r'\s+'))
@@ -132,19 +122,15 @@ class RSAState extends State<RSA> {
             .toList();
 
         var outputNumbers = decryptRSA(inputNumbers, ed, p, q);
-        outputChildren.add(
-          GCWOutput(
-            child: outputNumbers.join(' '),
-            title: i18n(context, 'common_output') + ' (${i18n(context, 'rsa_decryption_output_numbers')})',
-          )
-        );
+        outputChildren.add(GCWOutput(
+          child: outputNumbers.join(' '),
+          title: i18n(context, 'common_output') + ' (${i18n(context, 'rsa_decryption_output_numbers')})',
+        ));
 
-        outputChildren.add(
-          GCWOutput(
-            child: outputNumbers.map((number) => String.fromCharCode(number.toInt())).join(''),
-            title: i18n(context, 'common_output') + ' (${i18n(context, 'rsa_decryption_output_numbersasascii')})',
-          )
-        );
+        outputChildren.add(GCWOutput(
+          child: outputNumbers.map((number) => String.fromCharCode(number.toInt())).join(''),
+          title: i18n(context, 'common_output') + ' (${i18n(context, 'rsa_decryption_output_numbersasascii')})',
+        ));
       }
 
       var d;

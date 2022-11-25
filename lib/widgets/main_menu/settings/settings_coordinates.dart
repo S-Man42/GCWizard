@@ -78,7 +78,8 @@ class CoordinatesSettingsState extends State<CoordinatesSettings> {
                     setState(() {
                       _currentDefaultHemisphereLongitude =
                           value > 0 ? HemisphereLongitude.East.toString() : HemisphereLongitude.West.toString();
-                      Prefs.setString(PREFERENCE_COORD_DEFAULT_HEMISPHERE_LONGITUDE, _currentDefaultHemisphereLongitude);
+                      Prefs.setString(
+                          PREFERENCE_COORD_DEFAULT_HEMISPHERE_LONGITUDE, _currentDefaultHemisphereLongitude);
                     });
                   }),
               flex: 4)

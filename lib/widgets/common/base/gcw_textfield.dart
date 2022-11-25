@@ -26,26 +26,26 @@ class GCWTextField extends StatefulWidget {
   final String title;
   final TextStyle style;
 
-  const GCWTextField(
-      {Key key,
-      this.onChanged,
-      this.controller,
-      this.validate,
-      this.inputFormatters,
-      this.keyboardType,
-      this.hintText,
-      this.hintColor,
-      this.labelText,
-      this.focusNode,
-      this.autofocus,
-      this.icon,
-      this.filled: false,
-      this.maxLength,
-      this.maxLines,
-      this.title,
-      this.fontSize,
-      this.style,})
-      : super(key: key);
+  const GCWTextField({
+    Key key,
+    this.onChanged,
+    this.controller,
+    this.validate,
+    this.inputFormatters,
+    this.keyboardType,
+    this.hintText,
+    this.hintColor,
+    this.labelText,
+    this.focusNode,
+    this.autofocus,
+    this.icon,
+    this.filled: false,
+    this.maxLength,
+    this.maxLines,
+    this.title,
+    this.fontSize,
+    this.style,
+  }) : super(key: key);
 
   @override
   _GCWTextFieldState createState() => _GCWTextFieldState();
@@ -124,9 +124,11 @@ class _GCWTextFieldState extends State<GCWTextField> {
             maxLines: widget.maxLines,
             focusNode: widget.focusNode,
             autofocus: widget.autofocus ?? false,
-            style: widget.style != null ? widget.style : TextStyle(
-                fontSize: widget.fontSize ?? defaultFontSize(),
-                color: widget.filled ? colors.textFieldFillText() : colors.mainFont()),
+            style: widget.style != null
+                ? widget.style
+                : TextStyle(
+                    fontSize: widget.fontSize ?? defaultFontSize(),
+                    color: widget.filled ? colors.textFieldFillText() : colors.mainFont()),
             maxLengthEnforcement: MaxLengthEnforcement.enforced,
             maxLength: widget.maxLength,
             selectionControls: GCWTextSelectionControls(),

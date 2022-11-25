@@ -12,7 +12,6 @@ class ToolSettings extends StatefulWidget {
 }
 
 class ToolSettingsState extends State<ToolSettings> {
-
   @override
   Widget build(BuildContext context) {
     return Column(

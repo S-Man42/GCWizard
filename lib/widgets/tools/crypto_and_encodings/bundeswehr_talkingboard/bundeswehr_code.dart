@@ -39,10 +39,10 @@ class BundeswehrTalkingBoardObfuscationState extends State<BundeswehrTalkingBoar
       WrapperForMaskTextInputFormatter(mask: '## ' * 1000 + '##', filter: {"#": RegExp(r'[a-zA-Z]')});
 
   var _numeralCodeyXAxisCodeMaskFormatter =
-  WrapperForMaskTextInputFormatter(mask: '#' * 13, filter: {"#": RegExp(r'[a-zA-Z]')});
+      WrapperForMaskTextInputFormatter(mask: '#' * 13, filter: {"#": RegExp(r'[a-zA-Z]')});
 
   var _numeralCodeYAxisCodeMaskFormatter =
-  WrapperForMaskTextInputFormatter(mask: '#' * 13, filter: {"#": RegExp(r'[a-zA-Z]')});
+      WrapperForMaskTextInputFormatter(mask: '#' * 13, filter: {"#": RegExp(r'[a-zA-Z]')});
 
   @override
   void initState() {
@@ -130,7 +130,8 @@ class BundeswehrTalkingBoardObfuscationState extends State<BundeswehrTalkingBoar
                         inputFormatters: [_numeralCodeyXAxisCodeMaskFormatter],
                         onChanged: (text) {
                           setState(() {
-                            _currentNumeralCodeXaxisCustom = (text == null || text == '') ? '' : _numeralCodeyXAxisCodeMaskFormatter.getMaskedText();
+                            _currentNumeralCodeXaxisCustom =
+                                (text == null || text == '') ? '' : _numeralCodeyXAxisCodeMaskFormatter.getMaskedText();
                           });
                         },
                       ),
@@ -140,7 +141,8 @@ class BundeswehrTalkingBoardObfuscationState extends State<BundeswehrTalkingBoar
                         inputFormatters: [_numeralCodeYAxisCodeMaskFormatter],
                         onChanged: (text) {
                           setState(() {
-                            _currentNumeralCodeYaxisCustom = (text == null || text == '') ? '' : _numeralCodeYAxisCodeMaskFormatter.getMaskedText();
+                            _currentNumeralCodeYaxisCustom =
+                                (text == null || text == '') ? '' : _numeralCodeYAxisCodeMaskFormatter.getMaskedText();
                           });
                         },
                       ),
@@ -167,7 +169,6 @@ class BundeswehrTalkingBoardObfuscationState extends State<BundeswehrTalkingBoar
           child: i18n(context, _numeralCodeString),
         );
       }
-
     }
     if (_currentMode == GCWSwitchPosition.right) // decrypt
       output = decodeBundeswehr(_currentDecode, _tableNumeralCode);
@@ -175,8 +176,8 @@ class BundeswehrTalkingBoardObfuscationState extends State<BundeswehrTalkingBoar
       output = encodeBundeswehr(_currentEncode, _tableNumeralCode);
     return GCWDefaultOutput(
         child: output.ResponseCode == BUNDESWEHR_TALKINGBOARD_CODE_RESPONSE_OK
-        ? output.Details
-        : i18n(context, output.ResponseCode));
+            ? output.Details
+            : i18n(context, output.ResponseCode));
   }
 
   void _buildNumeralCode(BuildContext context, {bool custom, String xAxis, String yAxis}) {

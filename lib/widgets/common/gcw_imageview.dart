@@ -19,6 +19,7 @@ import 'package:intl/intl.dart';
 import 'package:photo_view/photo_view.dart';
 
 enum GCWImageViewButtons { ALL, SAVE, VIEW_IN_TOOLS }
+
 enum GCWImageViewOpenInTools { METADATA, HEXVIEW, COLORCORRECTIONS, HIDDENDATA, FLIPROTATE }
 
 class GCWImageViewData {

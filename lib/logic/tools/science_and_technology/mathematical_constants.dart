@@ -17,7 +17,11 @@ const Map<String, Map<String, dynamic>> MATHEMATICAL_CONSTANTS = {
   'mathematical_constants_pi': {
     'symbol': '\u03c0',
     'value': '3.14159 26535 89793 23846 26433 83279 50288 ...',
-    'additional_names': ['mathematical_constants_archimedes', 'mathematical_constants_circlenumber', 'mathematical_constants_ludolph'],
+    'additional_names': [
+      'mathematical_constants_archimedes',
+      'mathematical_constants_circlenumber',
+      'mathematical_constants_ludolph'
+    ],
     'tool': 'pi'
   },
   'mathematical_constants_e': {
@@ -54,37 +58,21 @@ const Map<String, Map<String, dynamic>> MATHEMATICAL_CONSTANTS = {
     'value': '2.23606 79774 99789 69640 91736 68731 27623 ...',
     'tool': 'sqrt5'
   },
-  'mathematical_constants_hitchhiker': {
-    'value': '42'
-  },
-  'mathematical_constants_sheldonprime': {
-    'value': '73'
-  },
+  'mathematical_constants_hitchhiker': {'value': '42'},
+  'mathematical_constants_sheldonprime': {'value': '73'},
   'mathematical_constants_eulermascheroni': {
     'symbol': '\u03b3',
     'value': '0.57721 56649 01532 86060 65120 90082 40243 ...',
     'additional_names': ['mathematical_constants_eulerconstant'],
   },
-  'mathematical_constants_apery': {
-    'symbol': '\u03b6(3)',
-    'value': '1.20205 69031 59594 28539 97381 61511 44999 ...'
-  },
-  'mathematical_constants_edosborwein': {
-    'symbol': 'E_B_',
-    'value': '1.60669 51524 15291 76378 33015 23190 92458 ...'
-  },
+  'mathematical_constants_apery': {'symbol': '\u03b6(3)', 'value': '1.20205 69031 59594 28539 97381 61511 44999 ...'},
+  'mathematical_constants_edosborwein': {'symbol': 'E_B_', 'value': '1.60669 51524 15291 76378 33015 23190 92458 ...'},
   'mathematical_constants_ramanujansoldner': {
     'symbol': '\u03bc',
     'value': '1.45136 92348 83381 05028 39684 85892 02744 ...'
   },
-  'mathematical_constants_lemniscate': {
-    'symbol': '\u03D6',
-    'value': '2.62205 75542 92119 81046 48395 89891 11941 ...'
-  },
-  'mathematical_constants_legendre': {
-    'symbol': 'B_L_',
-    'value': '1.08366'
-  },
+  'mathematical_constants_lemniscate': {'symbol': '\u03D6', 'value': '2.62205 75542 92119 81046 48395 89891 11941 ...'},
+  'mathematical_constants_legendre': {'symbol': 'B_L_', 'value': '1.08366'},
   'mathematical_constants_conway': {
     'symbol': '\u03bb',
     'value': '1.30357 72690 34296 39125 70991 12152 55189 ...',
@@ -122,6 +110,10 @@ const Map<String, Map<String, dynamic>> MATHEMATICAL_CONSTANTS = {
   'mathematical_constants_plastic': {
     'symbol': '\u03c1',
     'value': '1.32471 79572 44746 02596 09088 54478 09734  ...',
-    'additional_names': ['mathematical_constants_platin', 'mathematical_constants_minimalpisot', 'mathematical_constants_siegel']
+    'additional_names': [
+      'mathematical_constants_platin',
+      'mathematical_constants_minimalpisot',
+      'mathematical_constants_siegel'
+    ]
   },
 };

@@ -178,7 +178,9 @@ class HiddenDataState extends State<HiddenData> {
 
     var _complete = false;
     var _hiddenDataList = hiddenData(_unHideFile);
-    _hiddenDataList.then((value) {_complete = true;});
+    _hiddenDataList.then((value) {
+      _complete = true;
+    });
 
     return FutureBuilder(
         future: _hiddenDataList,

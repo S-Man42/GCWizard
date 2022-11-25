@@ -25,9 +25,7 @@ Future<Uint8List> generatePiet(String input) async {
   _setBlockSize(input);
   _currentColor = _colorStack();
   var i = 0;
-  input
-      .split('')
-      .forEach((char) {
+  input.split('').forEach((char) {
     var block = _drawBlock(char.runes.first, i);
     i++;
     result.add(block);
@@ -36,7 +34,7 @@ Future<Uint8List> generatePiet(String input) async {
 
   var arrangment = _calcOutputArrangement(result.length);
 
-  var resultLines =  <List<int>>[];
+  var resultLines = <List<int>>[];
   var row = 0;
   var column = 0;
   var direction = Alignment.topRight;
@@ -47,16 +45,14 @@ Future<Uint8List> generatePiet(String input) async {
   result.forEach((mapEntry) {
     var block = mapEntry.value;
     if (mapEntry == result.last) {
-      if (direction == Alignment.bottomLeft)
-        block = _reverseBlock(block, _blockWidth);
-    };
+      if (direction == Alignment.bottomLeft) block = _reverseBlock(block, _blockWidth);
+    }
+    ;
 
     if (firstPixelColor != null) {
       pixelIndex = _searchFirstPixelIndex(block, direction);
-      if (pixelIndex != null && pixelIndex >= 0)
-        block[pixelIndex] = firstPixelColor;
-    } else if (mapEntry != result.first)
-      block = _removeLastPixel(block);
+      if (pixelIndex != null && pixelIndex >= 0) block[pixelIndex] = firstPixelColor;
+    } else if (mapEntry != result.first) block = _removeLastPixel(block);
 
     nextDirection = _getNextBlockDirection(row, column, arrangment);
 
@@ -67,10 +63,7 @@ Future<Uint8List> generatePiet(String input) async {
     } else
       firstPixelColor = mapEntry.key;
 
-
-    resultLines = _addBlockToResult(block, resultLines, row,
-        direction == Alignment.topRight);
-
+    resultLines = _addBlockToResult(block, resultLines, row, direction == Alignment.topRight);
 
     if (nextDirection == Alignment.topRight)
       column++;
@@ -78,8 +71,7 @@ Future<Uint8List> generatePiet(String input) async {
       row++;
     else if (nextDirection == Alignment.bottomLeft)
       column--;
-    else if (nextDirection == Alignment.topLeft)
-      row--;
+    else if (nextDirection == Alignment.topLeft) row--;
 
     direction = nextDirection;
   });
@@ -103,10 +95,11 @@ Future<Uint8List> _convertToImage(List<List<int>> resultLines) {
   for (var i = 0; i < knownColors.length; i++) {
     colorMap.addAll({mapList[i + 1]: Color(knownColors.elementAt(i) | 0xFF000000)});
     colorMapSwitched.addAll({knownColors.elementAt(i): mapList[i + 1]});
-  };
+  }
+  ;
 
   resultLines.forEach((line) {
-    var row ='';
+    var row = '';
     line.forEach((color) {
       row += colorMapSwitched[color];
     });
@@ -121,14 +114,13 @@ List<List<int>> _addBlockToResult(List<int> block, List<List<int>> resultLines, 
   row *= _blockHeight;
   if (resultLines.isEmpty) return lines;
 
-  while (resultLines.length  < row + _blockHeight)
-    resultLines.add(<int>[]);
+  while (resultLines.length < row + _blockHeight) resultLines.add(<int>[]);
 
   for (var i = row; i < row + _blockHeight; i++) {
     if (append)
-      resultLines[i].addAll(lines[i-row]);
+      resultLines[i].addAll(lines[i - row]);
     else
-      resultLines[i].insertAll(0, lines[i-row]);
+      resultLines[i].insertAll(0, lines[i - row]);
   }
   return resultLines;
 }
@@ -136,30 +128,32 @@ List<List<int>> _addBlockToResult(List<int> block, List<List<int>> resultLines, 
 Alignment _getNextBlockDirection(int row, int column, List<List<int>> outputArrangement) {
   var index = outputArrangement[row][column] + 1;
 
-  if ((column+1 < outputArrangement[row].length) && (outputArrangement[row][column+1] == index))
+  if ((column + 1 < outputArrangement[row].length) && (outputArrangement[row][column + 1] == index))
     return Alignment.topRight;
-  else if ((row+1 < outputArrangement.length) && (outputArrangement[row+1][column] == index))
+  else if ((row + 1 < outputArrangement.length) && (outputArrangement[row + 1][column] == index))
     return Alignment.bottomRight;
-  else if ((column-1 >= 0) && (outputArrangement[row][column-1] == index))
+  else if ((column - 1 >= 0) && (outputArrangement[row][column - 1] == index))
     return Alignment.bottomLeft;
-  else if ((row-1 >= 0) && (outputArrangement[row-1][column] == index))
-    return Alignment.topLeft;
+  else if ((row - 1 >= 0) && (outputArrangement[row - 1][column] == index)) return Alignment.topLeft;
 }
 
 List<List<int>> _calcOutputArrangement(int blockCount) {
   var sqr = sqrt(blockCount);
-  var columnCount = blockCount <= 2 ? 2 : blockCount <= 4 ? 2 : sqr.ceil();
+  var columnCount = blockCount <= 2
+      ? 2
+      : blockCount <= 4
+          ? 2
+          : sqr.ceil();
   columnCount = blockCount; //only 1 row
-  var rowCount = (blockCount/ columnCount).ceil();
+  var rowCount = (blockCount / columnCount).ceil();
   var lines = <List<int>>[];
   var direction = Alignment.topRight;
   var row = 0;
   var column = 0;
 
-  for (var i=0; i< rowCount; i++)
-    lines.add(List.filled(columnCount, -1));
+  for (var i = 0; i < rowCount; i++) lines.add(List.filled(columnCount, -1));
 
-  for (var i=0; i< rowCount * columnCount; i++) {
+  for (var i = 0; i < rowCount * columnCount; i++) {
     lines[row][column] = i;
 
     if (direction == Alignment.topRight) {
@@ -200,45 +194,41 @@ int _searchLastWhitePixelIndex(List<int> block, Alignment alignment) {
   int index;
   int index1;
   if (alignment == Alignment.topRight) {
-    for (var i = _blockWidth-2; i >= 0; i--) {
+    for (var i = _blockWidth - 2; i >= 0; i--) {
       index = _calcIndex(0, i, _blockWidth);
-      index1 = _calcIndex(0, i+1, _blockWidth);
+      index1 = _calcIndex(0, i + 1, _blockWidth);
       if ((block[index] != _white) && (block[index1] == _white)) {
         return index1;
-      } else if ((block[index] != _white) && (block[index1] != _white))
-        return -1;
+      } else if ((block[index] != _white) && (block[index1] != _white)) return -1;
     }
     return _calcIndex(0, 0, _blockWidth);
   } else if (alignment == Alignment.bottomRight) {
-    for (var i = _blockHeight-2; i >= 0; i--) {
-      index = _calcIndex(i, _blockWidth-1, _blockWidth);
-      index1 = _calcIndex(i+1, _blockWidth-1, _blockWidth);
-      if ((block[index] != _white) && (block[index+1] == _white)) {
+    for (var i = _blockHeight - 2; i >= 0; i--) {
+      index = _calcIndex(i, _blockWidth - 1, _blockWidth);
+      index1 = _calcIndex(i + 1, _blockWidth - 1, _blockWidth);
+      if ((block[index] != _white) && (block[index + 1] == _white)) {
         return index1;
-      } else if ((block[index] != _white) && (block[index1] != _white))
-        return -1;
+      } else if ((block[index] != _white) && (block[index1] != _white)) return -1;
     }
     return _calcIndex(0, _blockWidth - 1, _blockWidth);
   } else if (alignment == Alignment.bottomLeft) {
-    for (var i = 1; i < _blockWidth-1; i--) {
-      index = _calcIndex(_blockHeight-1, i, _blockWidth);
-      index1 = _calcIndex(_blockHeight-1, i-1, _blockWidth);
+    for (var i = 1; i < _blockWidth - 1; i--) {
+      index = _calcIndex(_blockHeight - 1, i, _blockWidth);
+      index1 = _calcIndex(_blockHeight - 1, i - 1, _blockWidth);
       if ((block[index] != _white) && (block[index1] == _white)) {
         return index1;
-      } else if ((block[index] != _white) && (block[index1] != _white))
-        return -1;
+      } else if ((block[index] != _white) && (block[index1] != _white)) return -1;
     }
-    return _calcIndex(0, _blockWidth-1, _blockWidth);
+    return _calcIndex(0, _blockWidth - 1, _blockWidth);
   } else if (alignment == Alignment.topLeft) {
-    for (var i = 1; i < _blockHeight-1; i--) {
+    for (var i = 1; i < _blockHeight - 1; i--) {
       index = _calcIndex(i, 0, _blockWidth);
-      index1 = _calcIndex(i-1, 0, _blockWidth);
+      index1 = _calcIndex(i - 1, 0, _blockWidth);
       if ((block[index] != _white) && (block[index1] == _white)) {
         return index1;
-      } else if ((block[index] != _white) && (block[index1] != _white))
-        return -1;
+      } else if ((block[index] != _white) && (block[index1] != _white)) return -1;
     }
-    return _calcIndex(_blockHeight-1, 0, _blockWidth);
+    return _calcIndex(_blockHeight - 1, 0, _blockWidth);
   }
 }
 
@@ -248,9 +238,9 @@ int _searchFirstPixelIndex(List<int> block, Alignment alignment) {
   } else if (alignment == Alignment.bottomRight) {
     return _calcIndex(0, _blockWidth - 1, _blockWidth);
   } else if (alignment == Alignment.bottomLeft) {
-    return _calcIndex(0, _blockWidth-1, _blockWidth);
+    return _calcIndex(0, _blockWidth - 1, _blockWidth);
   } else if (alignment == Alignment.topLeft) {
-    return _calcIndex(_blockHeight-1, 0, _blockWidth);
+    return _calcIndex(_blockHeight - 1, 0, _blockWidth);
   }
 }
 
@@ -307,8 +297,7 @@ MapEntry<int, List<int>> _drawWhiteBlock(int num) {
 
 List<List<int>> _splitToLines(List<int> block, int width) {
   var lines = <List<int>>[];
-  for (var i = 0; i < _blockHeight; i++)
-    lines.add(block.sublist(i * _blockWidth, (i + 1) * _blockWidth));
+  for (var i = 0; i < _blockHeight; i++) lines.add(block.sublist(i * _blockWidth, (i + 1) * _blockWidth));
 
   return lines;
 }
@@ -328,9 +317,8 @@ int _calcIndex(int row, int column, int width) {
   return row * width + column;
 }
 
-
 class _colorStack {
-  var _colorTable = [1 ,0];
+  var _colorTable = [1, 0];
 
   int RGB() {
     return knownColors.elementAt(_colorTable[1] * 3 + _colorTable[0]);
@@ -347,9 +335,3 @@ class _colorStack {
     return RGB();
   }
 }
-
-
-
-
-
-

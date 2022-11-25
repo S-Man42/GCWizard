@@ -92,13 +92,11 @@ class UrwigoHashBreakerState extends State<UrwigoHashBreaker> {
   Widget _buildOutput(BuildContext context) {
     if (_currentMode == GCWSwitchPosition.right) {
       return GCWDefaultOutput(
-        child: Column(
-          children: columnedMultiLineOutput(context, [
-            [i18n(context, 'common_letters'), _currentOutputAlphabetical],
-            [i18n(context, 'common_numbers'), _currentOutputNumeric]
-          ])
-        )
-      );
+          child: Column(
+              children: columnedMultiLineOutput(context, [
+        [i18n(context, 'common_letters'), _currentOutputAlphabetical],
+        [i18n(context, 'common_numbers'), _currentOutputNumeric]
+      ])));
     } else {
       return GCWDefaultOutput(child: RSHash(_currentTextInput).toString());
     }

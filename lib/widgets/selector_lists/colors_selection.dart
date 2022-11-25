@@ -16,11 +16,8 @@ class ColorsSelection extends GCWSelection {
       if (className(element.tool) == className(SymbolTable()) &&
           (element.tool as SymbolTable).symbolKey.startsWith('color_code')) return true;
 
-      return [
-        className(ColorTool()),
-        className(PantoneColorCodes()),
-        className(RALColorCodes())
-      ].contains(className(element.tool));
+      return [className(ColorTool()), className(PantoneColorCodes()), className(RALColorCodes())]
+          .contains(className(element.tool));
     }).toList();
 
     return Container(child: GCWToolList(toolList: _toolList));
