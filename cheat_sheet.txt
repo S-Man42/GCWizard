@@ -121,14 +121,15 @@ Actual Release:
 		- Reviewing may take a few days
 	- Repeat with Gold Versions:
 		- Recommendation: Wait until Normal versions really passed the official reviews to be sure that nothing went wrong
-		- Android: Copy icons android/app/src/main/res/icons_gold into main icon directory
-		- iOS: Copy icons ios/Runner/Assets.xcassets/AppIcon.appiconset/icons_gold into main icon directory
-		- Android (change package name to gc_wizard_gold):
-			1. in file: android/app/src/main/AndroidManifest.xml (and name to "GC Wizard Gold", too)
-			2. in file: android/app/build.gradle -> defaultConfig
+		- Android:
+		    - Replace normal icons in android/app/src/main/res with android/app/src/main/res/icons_gold
+		    - change package name to gc_wizard_gold:
+			    - in file: android/app/src/main/AndroidManifest.xml (and name to "GC Wizard Gold", too)
+			    - in file: android/app/build.gradle -> defaultConfig
 		- iOS:
-			1. change bundle identifier in XCode/Info.plist in ios/Runner to de.sman42.gcWizardGold
-			2. change Display Name to GC Wizard Gold
+		    - Replace normal icons in ios/Runner/Assets.xcassets/AppIcon.appiconset/ with ios/Runner/Assets.xcassets/AppIcon.appiconset/icons_gold
+			- change bundle identifier in XCode/Info.plist in ios/Runner to de.sman42.gcWizardGold
+			- change Display Name to GC Wizard Gold
 		- Release process same
 		- After releases don't forget to restore normal version (git reset --HARD)
 	- Web:
