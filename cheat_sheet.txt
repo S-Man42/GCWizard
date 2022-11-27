@@ -116,7 +116,8 @@ Actual Release:
 		- Add changelogs for all supported languages
 			- If changelog translation in a supported language is not provided, add EN changelog manually
 		- Add Build Version (from TestFlight)
-		- Save/Send to Review
+		- Save/Send to Review -> now it's only on status "Ready for review"
+		- Menu/General/App Reviews -> Transmit to Review
 		- Reviewing may take a few days
 	- Repeat with Gold Versions:
 		- Recommendation: Wait until Normal versions really passed the official reviews to be sure that nothing went wrong
