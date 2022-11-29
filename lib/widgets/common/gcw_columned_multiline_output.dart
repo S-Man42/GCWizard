@@ -14,6 +14,8 @@ class GCWColumnedMultilineOutput extends StatefulWidget {
   final bool copyAll;
   final List<Function> tappables;
   final double fontSize;
+  final List<Widget> firstRows;
+  final List<Widget> lastRows;
 
   const GCWColumnedMultilineOutput(
       {Key key,
@@ -24,7 +26,9 @@ class GCWColumnedMultilineOutput extends StatefulWidget {
         this.hasHeader: false,
         this.copyAll: false,
         this.tappables,
-        this.fontSize})
+        this.fontSize,
+        this.firstRows,
+        this.lastRows})
       : super(key: key);
 
   @override
@@ -35,8 +39,12 @@ class _GCWColumnedMultilineOutputState extends State<GCWColumnedMultilineOutput>
   @override
   Widget build(BuildContext context) {
 
+    var rows = columnedMultiLineOutputRows();
+    if (widget.firstRows != null) rows.insertAll(0, widget.firstRows);
+    if (widget.lastRows != null) rows.addAll(widget.lastRows);
+
     return Column(
-      children: columnedMultiLineOutputRows()
+      children: rows
     );
   }
 

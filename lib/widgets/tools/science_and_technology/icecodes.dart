@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/icecodes.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/common/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
@@ -116,13 +117,12 @@ class IceCodesState extends State<IceCodes> {
   _buildOutput() {
     var iceCode = ICECODES[_currentIceCodeSystem];
     return GCWDefaultOutput(
-        child: Column(
-      children: columnedMultiLineOutput(
-          context,
-          iceCode[_currentIceCodeSubSystem].entries.map((entry) {
-            return [entry.key, i18n(context, entry.value)];
-          }).toList(),
-          flexValues: [1, 5]),
-    ));
+      child: GCWColumnedMultilineOutput(
+        data: iceCode[_currentIceCodeSubSystem].entries.map((entry) {
+                return [entry.key, i18n(context, entry.value)];
+              }).toList(),
+        flexValues: [1, 5]
+      )
+    );
   }
 }

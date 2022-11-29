@@ -6,6 +6,7 @@ import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_code_textfield.dart';
+import 'package:gc_wizard/widgets/common/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_expandable.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
@@ -126,14 +127,12 @@ class BefungeState extends State<Befunge> {
           GCWExpandableTextDivider(
             expanded: false,
             text: i18n(context, 'common_programming_debug'),
-            child: Column(
-                children: columnedMultiLineOutput(
-              context,
-              columnData,
-              flexValues: [2, 2, 3, 5],
-              suppressCopyButtons: true,
-              hasHeader: true,
-            )),
+            child: GCWColumnedMultilineOutput(
+                data: columnData,
+                flexValues: [2, 2, 3, 5],
+                suppressCopyButtons: true,
+                hasHeader: true,
+            )
           )
         ],
       );

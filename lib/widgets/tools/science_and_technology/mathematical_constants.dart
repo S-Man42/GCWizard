@@ -111,7 +111,7 @@ class MathematicalConstantsState extends State<MathematicalConstants> {
       names != null ? [i18n(context, 'mathematical_constants_additionalnames'), names.join('\n')] : null
     ];
 
-    var dataView = Column(
+    var dataView = output(
       children: columnedMultiLineOutput(context, data, flexValues: [1, 2]),
     );
 
@@ -122,7 +122,7 @@ class MathematicalConstantsState extends State<MathematicalConstants> {
     );
   }
 
-  _buildToolLink(String toolReference) {
+  Widget _buildToolLink(String toolReference) {
     if (toolReference == null) return Container();
 
     Widget widget;

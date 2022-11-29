@@ -5,13 +5,13 @@ import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_dropdown_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/gcw_enigma_rotor_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/wrapper_for_masktextinputformatter.dart';
 
 class Enigma extends StatefulWidget {
@@ -204,15 +204,15 @@ class EnigmaState extends State<Enigma> {
           text: alphabet_AZ.keys.join() + '\n' + currentRotor.alphabet,
           copyText: currentRotor.alphabet,
         ),
-        Column(
-          children: columnedMultiLineOutput(context, [
+        GCWColumnedMultilineOutput(
+          data: [
             [i18n(context, 'common_type'), _rotorType(currentRotor.type)],
             [
               i18n(context, 'enigma_turnovers'),
               (currentRotor.turnovers ?? '').isEmpty ? i18n(context, 'common_none') : currentRotor.turnovers
             ]
-          ]),
-        )
+          ]
+        ),
       ],
     );
   }
