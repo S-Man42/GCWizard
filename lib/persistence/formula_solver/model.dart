@@ -30,21 +30,30 @@ class FormulaGroup {
 class Formula {
   int id;
   String formula;
+  String name;
 
   Formula(this.formula);
 
-  Map<String, dynamic> toMap() => {
-        'id': id,
-        'formula': formula,
-      };
+  Map<String, dynamic> toMap() {
+    var map = {
+      'id': id,
+      'formula': formula,
+    };
+
+    if (name != null && name.isNotEmpty) map.putIfAbsent('name', () => name);
+
+    return map;
+  }
 
   Formula.fromJson(Map<String, dynamic> json)
       : id = json['id'],
-        formula = json['formula'];
+        formula = json['formula'],
+        name = json['name'];
 
   static Formula fromFormula(Formula formula) {
     var newFormula = Formula(formula.formula);
     newFormula.id = formula.id;
+    newFormula.name = formula.name;
     return newFormula;
   }
 
@@ -55,6 +64,7 @@ class Formula {
 }
 
 enum FormulaValueType { FIXED, INTERPOLATED, TEXT }
+
 const _FORMULAVALUETYPE_INTERPOLATE = 'interpolate';
 const _FORMULAVALUETYPE_TEXT = 'text';
 

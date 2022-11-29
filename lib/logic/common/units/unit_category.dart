@@ -1,4 +1,3 @@
-import 'package:gc_wizard/logic/common/units/typography.dart';
 import 'package:gc_wizard/logic/common/units/angle.dart';
 import 'package:gc_wizard/logic/common/units/area.dart';
 import 'package:gc_wizard/logic/common/units/density.dart';
@@ -10,6 +9,7 @@ import 'package:gc_wizard/logic/common/units/power.dart';
 import 'package:gc_wizard/logic/common/units/pressure.dart';
 import 'package:gc_wizard/logic/common/units/temperature.dart';
 import 'package:gc_wizard/logic/common/units/time.dart';
+import 'package:gc_wizard/logic/common/units/typography.dart';
 import 'package:gc_wizard/logic/common/units/unit.dart';
 import 'package:gc_wizard/logic/common/units/velocity.dart';
 import 'package:gc_wizard/logic/common/units/volume.dart';

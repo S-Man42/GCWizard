@@ -1,6 +1,6 @@
 import 'package:latlong2/latlong.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/chsh/geohex4j/geohex.dart';
+import 'package:gc_wizard/logic/tools/coords/external_libs/chsh/geohex4j/geohex.dart';
 
 LatLng geoHexToLatLon(GeoHex geoHex) {
   try {

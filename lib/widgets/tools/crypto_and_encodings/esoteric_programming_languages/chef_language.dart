@@ -204,8 +204,7 @@ class ChefState extends State<Chef> {
       // interpret chef
       if (isValid(_currentInput)) {
         try {
-          output = buildOutputText(
-              interpretChef(language, _currentRecipe.toLowerCase().replaceAll('  ', ' '), _currentInput));
+          output = buildOutputText(interpretChef(language, _currentRecipe, _currentInput));
         } catch (e) {
           output = buildOutputText([
             'common_programming_error_runtime',
@@ -225,7 +224,7 @@ class ChefState extends State<Chef> {
   String buildOutputText(List<String> outputList) {
     String output = '';
     outputList.forEach((element) {
-      if (element != null) if (element.startsWith('chef_')) {
+      if (element != null) if (element.startsWith('chef_') || element.startsWith('common_programming')) {
         output = output + i18n(context, element) + '\n';
       } else
         output = output + element + '\n';

@@ -1,7 +1,7 @@
 import 'package:gc_wizard/logic/tools/coords/data/distance_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
-import 'package:gc_wizard/logic/tools/coords/karney/net.sf.geographiclib/geodesic.dart';
-import 'package:gc_wizard/logic/tools/coords/karney/net.sf.geographiclib/geodesic_data.dart';
+import 'package:gc_wizard/logic/tools/coords/external_libs/net.sf.geographiclib/geodesic.dart';
+import 'package:gc_wizard/logic/tools/coords/external_libs/net.sf.geographiclib/geodesic_data.dart';
 import 'package:gc_wizard/logic/tools/coords/vincenty/distance_bearing_vincenty.dart';
 import 'package:latlong2/latlong.dart';
 

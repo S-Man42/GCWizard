@@ -1,8 +1,11 @@
-import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 import 'dart:math';
 
+import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
+
 enum InputFormat { AUTO, TEXT, HEX, BINARY, ASCIIVALUES }
+
 enum OutputFormat { TEXT, HEX, BINARY, ASCIIVALUES }
+
 enum ErrorCode { OK, INPUT_FORMAT, KEY_FORMAT, MISSING_KEY }
 
 class RC4Output {
@@ -16,52 +19,23 @@ RC4Output cryptRC4(
     String input, InputFormat inputFormat, String key, InputFormat keyFormat, OutputFormat outputFormat) {
   if (input == null || input == '') return RC4Output('', ErrorCode.OK);
 
-  var inputList = _convertInputToIntList(input, inputFormat);
+  var inputList = convertInputToIntList(input, inputFormat);
   if (inputList == null || inputList.length == 0) return RC4Output('', ErrorCode.INPUT_FORMAT);
 
   if (key == null || key == '') return RC4Output('', ErrorCode.MISSING_KEY);
 
-  var keyList = _convertInputToIntList(key, keyFormat);
+  var keyList = convertInputToIntList(key, keyFormat);
   if (keyList == null || keyList.length == 0) return RC4Output('', ErrorCode.KEY_FORMAT);
 
   var outList = _rc4(inputList, keyList);
-  var out = '';
-
-  outList.forEach((item) {
-    switch (outputFormat) {
-      case OutputFormat.TEXT:
-        item = item % pow(2, 16);
-        if (item < 33 || (item > 126 && item < 161))
-          out += ".";
-        else
-          out += String.fromCharCode(item);
-        break;
-      case OutputFormat.HEX:
-        if (out != '') out += ' ';
-
-        out += convertBase(item.toString(), 10, 16).padLeft(2, '0');
-        break;
-      case OutputFormat.BINARY:
-        if (out != '') out += ' ';
-
-        out += convertBase(item.toString(), 10, 2);
-        break;
-      case OutputFormat.ASCIIVALUES:
-        if (out != '') out += ' ';
-
-        out += item.toString();
-        break;
-      default:
-        break;
-    }
-  });
+  var out = formatOutput(outList, outputFormat);
 
   return new RC4Output(out, ErrorCode.OK);
 }
 
 List<int> _rc4(List<int> input, List<int> key) {
-  var s = List<int>(256);
-  var out = List<int>();
+  var s = List<int>.filled(256, 0);
+  var out = <int>[];
   var i;
   for (i = 0; i <= 255; ++i) s[i] = i;
 
@@ -92,14 +66,14 @@ List<int> _rc4(List<int> input, List<int> key) {
   return out;
 }
 
-List<int> _convertInputToIntList(String input, InputFormat format) {
-  var out = new List<int>();
+List<int> convertInputToIntList(String input, InputFormat format) {
+  var out = <int>[];
 
   if (input == null || input == '') return null;
 
   switch (format) {
     case InputFormat.AUTO:
-      return _convertInputToIntList(input, _autoType(input));
+      return convertInputToIntList(input, _autoType(input));
       break;
     case InputFormat.TEXT:
       return input.codeUnits;
@@ -144,7 +118,7 @@ InputFormat _autoType(String input) {
 }
 
 List<int> _convertToIntList(String input, int base) {
-  var out = new List<int>();
+  var out = <int>[];
 
   if (input.contains(' ')) {
     input.split(' ').forEach((text) {
@@ -155,7 +129,7 @@ List<int> _convertToIntList(String input, int base) {
   }
 
   // invalid input ??
-  if (out == null) return new List<int>();
+  if (out == null) return <int>[];
 
   return out;
 }
@@ -170,4 +144,39 @@ List<int> _addToIntList(String input, int base, List<int> list) {
   list.add(int.tryParse(valueString));
 
   return list;
+}
+
+String formatOutput(List<int> outList, OutputFormat outputFormat) {
+  if (outList == null) return null;
+  var out = '';
+
+  outList.forEach((item) {
+    switch (outputFormat) {
+      case OutputFormat.TEXT:
+        item = item % pow(2, 16);
+        if (item < 33 || (item > 126 && item < 161))
+          out += ".";
+        else
+          out += String.fromCharCode(item);
+        break;
+      case OutputFormat.HEX:
+        if (out != '') out += ' ';
+
+        out += convertBase(item.toString(), 10, 16).padLeft(2, '0');
+        break;
+      case OutputFormat.BINARY:
+        if (out != '') out += ' ';
+
+        out += convertBase(item.toString(), 10, 2).padLeft(8, '0');
+        break;
+      case OutputFormat.ASCIIVALUES:
+        if (out != '') out += ' ';
+
+        out += item.toString();
+        break;
+      default:
+        break;
+    }
+  });
+  return out;
 }

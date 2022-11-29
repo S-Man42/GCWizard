@@ -1,6 +1,6 @@
-import 'dart:math';
 import 'dart:collection';
 import 'dart:isolate';
+import 'dart:math';
 
 final RegExp VARIABLESTRING =
     RegExp(r'^((\s*\d+(\s*\-\s*(\d*|\d+\s*#\s*\d*))?)\s*,)*(\s*\d*|(\s*\d+\s*\-\s*(\d*|\d+\s*#\s*\d*)))\s*$');

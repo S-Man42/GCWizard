@@ -1,6 +1,6 @@
-import 'package:latlong2/latlong.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/taisukef/geo3x3/geo3x3.dart' as Geo3x3Converter;
+import 'package:gc_wizard/logic/tools/coords/external_libs/taisukef/geo3x3/geo3x3.dart' as Geo3x3Converter;
+import 'package:latlong2/latlong.dart';
 
 LatLng geo3x3ToLatLon(Geo3x3 geo3x3) {
   var latLon = Geo3x3Converter.Geo3x3.decode(geo3x3.text.toUpperCase());

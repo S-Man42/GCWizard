@@ -52,9 +52,9 @@ class GCWCoordsReverseWherigoWaldmeisterState extends State<GCWCoordsReverseWher
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      var waldmeister = widget.coordinates is Waldmeister
-          ? widget.coordinates as Waldmeister
-          : Waldmeister.fromLatLon(widget.coordinates.toLatLng());
+      var waldmeister = widget.coordinates is ReverseWherigoWaldmeister
+          ? widget.coordinates as ReverseWherigoWaldmeister
+          : ReverseWherigoWaldmeister.fromLatLon(widget.coordinates.toLatLng());
       _currentA = int.tryParse(waldmeister.a);
       _currentB = int.tryParse(waldmeister.b);
       _currentC = int.tryParse(waldmeister.c);
@@ -109,7 +109,7 @@ class GCWCoordsReverseWherigoWaldmeisterState extends State<GCWCoordsReverseWher
   }
 
   _setCurrentValueAndEmitOnChange() {
-    widget
-        .onChanged(Waldmeister.parse(_currentA.toString() + '\n' + _currentB.toString() + '\n' + _currentC.toString()));
+    widget.onChanged(ReverseWherigoWaldmeister.parse(
+        _currentA.toString() + '\n' + _currentB.toString() + '\n' + _currentC.toString()));
   }
 }

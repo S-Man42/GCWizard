@@ -84,33 +84,33 @@ final List<RegExp> matchersENG = [
 ];
 
 final List<RegExp> matchersDEU = [
-  RegExp(r'^(den |die |das )?([a-zäöüß0-9 -]+) aus (dem )?kühlschrank nehmen$'),
-  RegExp(r'^(den |die |das )?([a-zäöüß0-9 -]+) in( die)?( (\d+)(te))? (rühr)?schüssel geben$'),
-  RegExp(r'^(den |die |das )?([a-zäöüß0-9 -]+)( in( die)?( (\d+)(te))? (rühr)?schüssel)? unterheben$'),
-  RegExp(r'^alle festen zutaten(( (zu)?(( )?de)?(r)?)?( (\d+)(ten))? (rühr)?schüssel)? hinzugeben$'),
+  RegExp(r'^(den |die |das )?([a-z0-9 -]+) aus (dem )?kuehlschrank nehmen$'),
+  RegExp(r'^(den |die |das )?([a-z0-9 -]+) in( die)?( (\d+)(te))? (ruehr)?schuessel geben$'),
+  RegExp(r'^(den |die |das )?([a-z0-9 -]+)( in( die)?( (\d+)(te))? (ruehr)?schuessel)? unterheben$'),
+  RegExp(r'^alle festen zutaten(( (zu)?(( )?de)?(r)?)?( (\d+)(ten))? (ruehr)?schuessel)? hinzugeben$'),
   RegExp(
-      r'^(den |die |das )?([a-zäöüß0-9 -]+?)( (zu |mit |aus |in (der |die )?)((\d+)(te(n)?) )?(rühr)?schüssel)?( )?(dazugeben|hinzufügen|abschöpfen|entfernen|kombinieren|teilen)$'),
+      r'^(den |die |das )?([a-z0-9 -]+?)( (zu |mit |aus |in (der |die )?)((\d+)(te(n)?) )?(ruehr)?schuessel)?( )?(dazugeben|hinzufuegen|abschöpfen|entfernen|kombinieren|teilen)$'),
   RegExp(
-      r'^inhalt(e)? der ((\d+)(ten) )?(rühr)?schüssel( auf dem stövchen)?( erhitzen| zerlassen| schmelzen| verflüssigen)$'),
-  RegExp(r'^(den |die |das )?([a-zäöüß0-9 -]+)( erhitzen| zerlassen| schmelzen| verflüssigen)$'),
-  RegExp(r'^((die )?((\d+)(te ))?(rühr)?schüssel )?für (\d+) minute(n)? umrühren$'),
-  RegExp(r'^(das |die |den )?([a-zäöüß0-9 -]+) (in (die )?((\d+)(te) )?(rühr)?schüssel )?unterrühren$'),
-  RegExp(r'^inhalt der ((\d+)(ten ))?(rühr)?schüssel gut verrühren$'),
-  RegExp(r'^((\d+)(te) )?(rühr)?schüssel (abwaschen|säubern)$'),
+      r'^inhalt(e)? der ((\d+)(ten) )?(ruehr)?schuessel( auf dem stoevchen)?( erhitzen| zerlassen| schmelzen| verfluessigen)$'),
+  RegExp(r'^(den |die |das )?([a-z0-9 -]+)( erhitzen| zerlassen| schmelzen| verfluessigen)$'),
+  RegExp(r'^((die )?((\d+)(te ))?(ruehr)?schuessel )?fuer (\d+) minute(n)? umruehren$'),
+  RegExp(r'^(das |die |den )?([a-z0-9 -]+) (in (die )?((\d+)(te) )?(ruehr)?schuessel )?unterruehren$'),
+  RegExp(r'^inhalt der ((\d+)(ten ))?(ruehr)?schuessel gut verruehren$'),
+  RegExp(r'^((\d+)(te) )?(ruehr)?schuessel (abwaschen|saeubern)$'),
   RegExp(
-      r'^(inhalt(e)?( der)?( (\d+)(te(n)?))? )?(rühr)?schüssel( auf| in)( die| das| den| ein(e)?(n)?)?( (\d+)(te(n)?))? (servier(schale|platte)|teller|backblech) (gießen|stürzen|schütten)$'),
+      r'^(inhalt(e)?( der)?( (\d+)(te(n)?))? )?(ruehr)?schuessel( auf| in)( die| das| den| ein(e)?(n)?)?( (\d+)(te(n)?))? (servier(schale|platte)|teller|backblech) (giessen|stuerzen|schuetten)$'),
   RegExp(r'^(zur seite stellen|stelle beiseite)'),
-  RegExp(r'^(einfrieren|gefriere)( für (\d+) stunde(n)?)?$'),
-  RegExp(r'^serviere mit (dem |einem )?([a-zäöüß0-9 ]+)$'),
+  RegExp(r'^(einfrieren|gefriere)( fuer (\d+) stunde(n)?)?$'),
+  RegExp(r'^serviere mit (dem |einem )?([a-z0-9 ]+)$'),
   RegExp(r'^vorschlag: (.*)$'),
-  RegExp(r'^solange ([a-zäöüß0-9]+) bis ((das |den |die )?([a-zäöüß0-9 -]+))? zur weiterarbeitung bereit$'),
-  RegExp(r'^(das |den |die )?([a-zäöüß0-9]+) ([a-zäöüß0-9 ]+)$')
+  RegExp(r'^solange ([a-z0-9]+) bis ((das |den |die )?([a-z0-9 -]+))? zur weiterarbeitung bereit$'),
+  RegExp(r'^(das |den |die )?([a-z0-9]+) ([a-z0-9 ]+)$')
 ];
 
-final RegExp MeasureType = RegExp(r'^heaped$|^level$|^gestrichen$|^gehäuft$');
+final RegExp MeasureType = RegExp(r'^heaped$|^level$|^gestrichen$|^gehaeuft$');
 final RegExp MeasureDry = RegExp(r'^g(r)?$|^kg$|^pinch(es)?$|^prise(n)$');
 final RegExp MeasureLiquid = RegExp(r'^ml$|^l$|^dash(es)?$|^drop(s)?$|^spritzer$|^tropfen$');
-final RegExp MeasureElse = RegExp(r'^cup(s)?$|^tasse(n)?$|^teaspoon(s)?$|^tablespoon(s)?$|^teelöffel$|^esslöffel$');
+final RegExp MeasureElse = RegExp(r'^cup(s)?$|^tasse(n)?$|^teaspoon(s)?$|^tablespoon(s)?$|^teeloeffel$|^essloeffel$');
 
 final Map Messages = {
   'DEU': {

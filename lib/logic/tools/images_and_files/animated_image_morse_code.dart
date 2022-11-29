@@ -1,10 +1,11 @@
 import 'dart:isolate';
 import 'dart:math';
 import 'dart:typed_data';
+
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/morse.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/animated_image.dart' as animated_image;
-import 'package:tuple/tuple.dart';
 import 'package:image/image.dart' as Image;
+import 'package:tuple/tuple.dart';
 
 Future<Map<String, dynamic>> analyseImageMorseCodeAsync(dynamic jobData) async {
   if (jobData == null) return null;

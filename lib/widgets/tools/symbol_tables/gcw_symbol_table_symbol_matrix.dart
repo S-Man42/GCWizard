@@ -10,8 +10,8 @@ import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_symbol_container.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
-import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_replacer/symbol_replacer.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_zoom_buttons.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_replacer/symbol_replacer.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table_data.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
@@ -69,7 +69,7 @@ class GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> 
               child: GCWOnOffSwitch(
                 value: _currentShowOverlayedSymbols,
                 title: i18n(context, 'symboltables_showoverlay'),
-                flex: [
+                flexValues: [
                   _decryptionSwitchPartWidth,
                   _decryptionSwitchPartWidth,
                   max(100 - 2 * _decryptionSwitchPartWidth, 0)

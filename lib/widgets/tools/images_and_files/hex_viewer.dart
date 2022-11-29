@@ -14,8 +14,8 @@ import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
 import 'package:gc_wizard/widgets/common/gcw_textviewer.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
-import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:gc_wizard/widgets/utils/gcw_file.dart';
+import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 
 class HexViewer extends StatefulWidget {
   final GCWFile platformFile;

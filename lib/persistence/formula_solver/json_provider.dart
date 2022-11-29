@@ -2,10 +2,11 @@ import 'dart:convert';
 
 import 'package:gc_wizard/persistence/formula_solver/model.dart';
 import 'package:gc_wizard/persistence/utils.dart';
+import 'package:gc_wizard/utils/settings/preferences.dart';
 import 'package:prefs/prefs.dart';
 
 void refreshFormulas() {
-  var formulas = Prefs.getStringList('formulasolver_formulas');
+  var formulas = Prefs.getStringList(PREFERENCE_FORMULASOLVER_FORMULAS);
   if (formulas == null || formulas.length == 0) return;
 
   formulaGroups = formulas.where((group) => group.length > 0).map((group) {
@@ -16,7 +17,7 @@ void refreshFormulas() {
 _saveData() {
   var jsonData = formulaGroups.map((group) => jsonEncode(group.toMap())).toList();
 
-  Prefs.setStringList('formulasolver_formulas', jsonData);
+  Prefs.setStringList(PREFERENCE_FORMULASOLVER_FORMULAS, jsonData);
 }
 
 int insertGroup(FormulaGroup group) {

@@ -8,9 +8,9 @@ import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_key_value_editor.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
-import 'package:gc_wizard/widgets/common/gcw_key_value_editor.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/variablestring_textinputformatter.dart';
 
 final _ALERT_COMBINATIONS = 100000;

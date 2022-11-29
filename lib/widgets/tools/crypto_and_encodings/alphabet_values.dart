@@ -8,6 +8,7 @@ import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
+import 'package:gc_wizard/utils/settings/preferences.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_divider.dart';
@@ -18,8 +19,8 @@ import 'package:gc_wizard/widgets/common/gcw_crosstotal_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_list_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
-import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_key_value_editor.dart';
+import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/text_onlydigitsandcomma_textinputformatter.dart';
 import 'package:prefs/prefs.dart';
 
@@ -58,7 +59,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
     _encodeController = TextEditingController(text: _currentEncodeInput);
     _decodeController = TextEditingController(text: _currentDecodeInput['text']);
 
-    _storedAlphabets = Prefs.getStringList('alphabetvalues_custom_alphabets');
+    _storedAlphabets = Prefs.getStringList(PREFERENCE_ALPHABET_CUSTOM_ALPHABETS);
     _alphabets = List<Alphabet>.from(ALL_ALPHABETS);
     _alphabets.addAll(_storedAlphabets.map<Alphabet>((storedAlphabet) {
       var alphabet = Map<String, dynamic>.from(jsonDecode(storedAlphabet));
@@ -69,7 +70,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
           alphabet: Map<String, String>.from(alphabet['alphabet']));
     }).toList());
 
-    _currentAlphabetKey = Prefs.get('alphabetvalues_default_alphabet');
+    _currentAlphabetKey = Prefs.get(PREFERENCE_ALPHABET_DEFAULT_ALPHABET);
     _setAlphabet();
   }
 
@@ -92,7 +93,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
     _currentReverseAlphabet = GCWSwitchPosition.left;
     _currentCustomizeAlphabet = GCWSwitchPosition.left;
 
-    Prefs.setString('alphabetvalues_default_alphabet', _currentAlphabetKey);
+    Prefs.setString(PREFERENCE_ALPHABET_DEFAULT_ALPHABET, _currentAlphabetKey);
 
     _setReverseLabels();
   }
@@ -437,7 +438,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
         _setAlphabet();
 
         _storedAlphabets.removeWhere((storedAlphabet) => jsonDecode(storedAlphabet)['key'] == removeableKey);
-        Prefs.setStringList('alphabetvalues_custom_alphabets', _storedAlphabets);
+        Prefs.setStringList(PREFERENCE_ALPHABET_CUSTOM_ALPHABETS, _storedAlphabets);
         _alphabets.removeWhere((alphabet) => alphabet.key == removeableKey);
       });
     });
@@ -486,7 +487,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
 
               _storedAlphabets.add(
                   jsonEncode({'key': newAlphabet.key, 'name': newAlphabet.name, 'alphabet': newAlphabet.alphabet}));
-              Prefs.setStringList('alphabetvalues_custom_alphabets', _storedAlphabets);
+              Prefs.setStringList(PREFERENCE_ALPHABET_CUSTOM_ALPHABETS, _storedAlphabets);
 
               setState(() {
                 _alphabets.add(newAlphabet);

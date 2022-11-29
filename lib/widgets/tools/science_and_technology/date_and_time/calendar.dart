@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/science_and_technology/date_and_time/calendar.dart';
 import 'package:gc_wizard/logic/common/date_utils.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/date_and_time/calendar.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/maya_calendar.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_date_picker.dart';
+import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
-import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
-import 'package:gc_wizard/logic/tools/science_and_technology/maya_calendar.dart';
-import 'package:intl/intl.dart';
 
 class Calendar extends StatefulWidget {
   @override
@@ -125,26 +124,40 @@ class CalendarState extends State<Calendar> {
     }
 
     output['dates_calendar_system_juliandate'] = (jd + 0.5).floor();
+
     output['dates_calendar_system_juliancalendar'] =
         _DateOutputToString(context, JulianDateToJulianCalendar(jd, true), CalendarSystem.JULIANCALENDAR);
+
     output['dates_calendar_system_modifiedjuliandate'] = JulianDateToModifedJulianDate(jd);
+
     output['dates_calendar_system_gregoriancalendar'] =
         _DateOutputToString(context, JulianDateToGregorianCalendar(jd, true), CalendarSystem.GREGORIANCALENDAR);
+
     output['dates_calendar_system_islamiccalendar'] =
         _DateOutputToString(context, JulianDateToIslamicCalendar(jd), CalendarSystem.ISLAMICCALENDAR);
+
     output['dates_calendar_system_hebrewcalendar'] = _HebrewDateToString(JulianDateToHebrewCalendar(jd), jd);
+
     output['dates_calendar_system_persiancalendar'] =
         _DateOutputToString(context, JulianDateToPersianYazdegardCalendar(jd), CalendarSystem.PERSIANYAZDEGARDCALENDAR);
+
     output['dates_calendar_system_copticcalendar'] =
         _DateOutputToString(context, JulianDateToCopticCalendar(jd), CalendarSystem.COPTICCALENDAR);
-    // reuse lib/widget/tools/science_and_technology/maya_calendar.dart
-    output['dates_calendar_system_mayacalendar_daycount'] = JulianDateToMayaDayCount(jd).toString();
+
+    output['dates_calendar_system_mayacalendar_daycount'] =
+        _invalidMayaDate(jd) ? i18n(context, 'dates_calendar_error') : JulianDateToMayaDayCount(jd).toString();
+
     output['dates_calendar_system_mayacalendar_longcount'] =
-        MayaDayCountToMayaLongCount(JulianDateToMayaDayCount(jd)).join('.');
-    output['dates_calendar_system_mayacalendar_haab'] =
-        MayaLongCountToHaab(MayaDayCountToMayaLongCount(JulianDateToMayaDayCount(jd)));
-    output['dates_calendar_system_mayacalendar_tzolkin'] =
-        MayaLongCountToTzolkin(MayaDayCountToMayaLongCount(JulianDateToMayaDayCount(jd)));
+        _invalidMayaDate(jd) ? i18n(context, 'dates_calendar_error') : JulianDateToMayaLongCount(jd).join('.');
+
+    output['dates_calendar_system_mayacalendar_haab'] = _invalidMayaDate(jd)
+        ? i18n(context, 'dates_calendar_error')
+        : MayaLongCountToHaab(JulianDateToMayaLongCount(jd));
+
+    output['dates_calendar_system_mayacalendar_tzolkin'] = _invalidMayaDate(jd)
+        ? i18n(context, 'dates_calendar_error')
+        : MayaLongCountToTzolkin(JulianDateToMayaLongCount(jd));
+
     output['dates_calendar_system_potrzebiecalendar'] =
         _DateOutputToString(context, JulianDateToPotrzebieCalendar(jd), CalendarSystem.POTRZEBIECALENDAR);
 
@@ -197,5 +210,9 @@ class CalendarState extends State<Calendar> {
       case CalendarSystem.POTRZEBIECALENDAR:
         return date.day + '. ' + MONTH_NAMES[calendar][int.parse(date.month)].toString() + ' ' + date.year;
     }
+  }
+
+  bool _invalidMayaDate(double jd) {
+    return (JulianDateToMayaDayCount(jd) < 0);
   }
 }

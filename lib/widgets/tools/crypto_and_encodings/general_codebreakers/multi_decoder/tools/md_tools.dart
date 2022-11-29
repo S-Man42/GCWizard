@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wasd.dart';
-import 'package:gc_wizard/logic/tools/games/scrabble_sets.dart';
+import 'package:gc_wizard/logic/tools/games/scrabble/scrabble_sets.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/keyboard.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/vanity/phone_models.dart';
 import 'package:gc_wizard/persistence/multi_decoder/json_provider.dart';
@@ -39,8 +39,8 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreaker
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_numeralbases.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_one_time_pad.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_playfair.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_polybios.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_pokemon.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_polybios.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_reverse.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_roman_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_rot18.dart';
@@ -342,11 +342,15 @@ initializeMultiToolDecoder(BuildContext context) {
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS), MDT_INTERNALNAMES_COORDINATEFORMATS,
         options: [MultiDecoderToolOption(MDT_COORDINATEFORMATS_OPTION_FORMAT, keyCoordsGeo3x3)]),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS), MDT_INTERNALNAMES_COORDINATEFORMATS,
+        options: [MultiDecoderToolOption(MDT_COORDINATEFORMATS_OPTION_FORMAT, keyCoordsMakaney)]),
+    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS), MDT_INTERNALNAMES_COORDINATEFORMATS,
         options: [MultiDecoderToolOption(MDT_COORDINATEFORMATS_OPTION_FORMAT, keyCoordsOpenLocationCode)]),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS), MDT_INTERNALNAMES_COORDINATEFORMATS,
         options: [MultiDecoderToolOption(MDT_COORDINATEFORMATS_OPTION_FORMAT, keyCoordsQuadtree)]),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS), MDT_INTERNALNAMES_COORDINATEFORMATS,
         options: [MultiDecoderToolOption(MDT_COORDINATEFORMATS_OPTION_FORMAT, keyCoordsReverseWherigoWaldmeister)]),
+    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS), MDT_INTERNALNAMES_COORDINATEFORMATS,
+        options: [MultiDecoderToolOption(MDT_COORDINATEFORMATS_OPTION_FORMAT, keyCoordsReverseWherigoDay1976)]),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_VIGENERE), MDT_INTERNALNAMES_VIGENERE),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_PLAYFAIR), MDT_INTERNALNAMES_PLAYFAIR),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_POLYBIOS), MDT_INTERNALNAMES_POLYBIOS),

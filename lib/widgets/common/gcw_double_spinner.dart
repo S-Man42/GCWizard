@@ -14,6 +14,7 @@ class GCWDoubleSpinner extends StatefulWidget {
   final value;
   final min;
   final max;
+  final controller;
   final numberDecimalDigits;
   final SpinnerLayout layout;
   final focusNode;
@@ -27,6 +28,7 @@ class GCWDoubleSpinner extends StatefulWidget {
       this.min,
       this.max,
       this.numberDecimalDigits: 2,
+      this.controller,
       this.layout: SpinnerLayout.HORIZONTAL,
       this.focusNode,
       this.suppressOverflow: false})
@@ -54,7 +56,10 @@ class GCWDoubleSpinnerState extends State<GCWDoubleSpinner> {
     if (widget.numberDecimalDigits > 0) formatString += '.' + '#' * widget.numberDecimalDigits;
     _numberFormat = NumberFormat(formatString);
 
-    _controller = TextEditingController(text: _numberFormat.format(_currentValue));
+    if (widget.controller != null)
+      _controller = widget.controller;
+    else
+      _controller = TextEditingController(text: _numberFormat.format(_currentValue));
   }
 
   @override

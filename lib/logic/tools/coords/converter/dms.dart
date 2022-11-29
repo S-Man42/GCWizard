@@ -26,13 +26,13 @@ DMS latLonToDMS(LatLng coord) {
 DMS _DECToDMS(DEC coord) {
   var normalizedCoord = normalizeDEC(coord);
 
-  var lat = DMSLatitude.from(_doubleToDMSPart(normalizedCoord.latitude));
-  var lon = DMSLongitude.from(_doubleToDMSPart(normalizedCoord.longitude));
+  var lat = DMSLatitude.from(doubleToDMSPart(normalizedCoord.latitude));
+  var lon = DMSLongitude.from(doubleToDMSPart(normalizedCoord.longitude));
 
   return DMS(lat, lon);
 }
 
-DMSPart _doubleToDMSPart(double value) {
+DMSPart doubleToDMSPart(double value) {
   var _sign = coordinateSign(value);
 
   int _degrees = value.abs().floor();

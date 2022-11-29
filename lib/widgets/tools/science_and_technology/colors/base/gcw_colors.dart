@@ -1,18 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/colors/colors.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/colors/base/gcw_color_cmy.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/colors/base/gcw_color_cmyk.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/colors/base/gcw_color_hex.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/colors/base/gcw_color_hsi.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/colors/base/gcw_color_hsl.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/colors/base/gcw_color_hsv.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/colors/base/gcw_color_rgb.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/colors/base/gcw_color_ycbcr.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/colors/base/gcw_color_yiq.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/colors/base/gcw_color_ypbpr.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/colors/base/gcw_color_yuv.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/colors/colors_hue.dart';
+import 'package:gc_wizard/widgets/common/gcw_colorpicker.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/colors/base/gcw_color_values_picker.dart';
 
 class GCWColors extends StatefulWidget {
   final Function onChanged;
@@ -26,178 +16,64 @@ class GCWColors extends StatefulWidget {
 }
 
 class GCWColorsState extends State<GCWColors> {
-  String _currentColorSpace;
   dynamic _currentColor = defaultColor;
+  HSVColor _currentColorPickerColor;
+  String _currentColorSpace = keyColorSpaceRGB;
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
+
     _currentColorSpace = widget.colorSpace ?? defaultColorSpace;
     _currentColor = widget.color ?? defaultColor;
 
-    List<Map<String, dynamic>> _colorWidgets = [
-      {
-        'colorSpace': getColorSpaceByKey(keyColorSpaceRGB),
-        'widget': GCWColorRGB(
-          color: _currentColorSpace == keyColorSpaceRGB ? _currentColor : null,
-          onChanged: (newValue) {
-            setState(() {
-              _currentColor = newValue;
-              _setCurrentValueAndEmitOnChange();
-            });
-          },
-        ),
-      },
-      {
-        'colorSpace': getColorSpaceByKey(keyColorSpaceHex),
-        'widget': GCWColorHexCode(
-          color: _currentColorSpace == keyColorSpaceHex ? _currentColor : null,
-          onChanged: (newValue) {
-            setState(() {
-              _currentColor = newValue;
-              _setCurrentValueAndEmitOnChange();
-            });
-          },
-        ),
-      },
-      {
-        'colorSpace': getColorSpaceByKey(keyColorSpaceHSV),
-        'widget': GCWColorHSV(
-          color: _currentColorSpace == keyColorSpaceHSV ? _currentColor : null,
-          onChanged: (newValue) {
-            setState(() {
-              _currentColor = newValue;
-              _setCurrentValueAndEmitOnChange();
-            });
-          },
-        ),
-      },
-      {
-        'colorSpace': getColorSpaceByKey(keyColorSpaceHSL),
-        'widget': GCWColorHSL(
-          color: _currentColorSpace == keyColorSpaceHSL ? _currentColor : null,
-          onChanged: (newValue) {
-            setState(() {
-              _currentColor = newValue;
-              _setCurrentValueAndEmitOnChange();
-            });
-          },
-        ),
-      },
-      {
-        'colorSpace': getColorSpaceByKey(keyColorSpaceHSI),
-        'widget': GCWColorHSI(
-          color: _currentColorSpace == keyColorSpaceHSI ? _currentColor : null,
-          onChanged: (newValue) {
-            setState(() {
-              _currentColor = newValue;
-              _setCurrentValueAndEmitOnChange();
-            });
-          },
-        ),
-      },
-      {
-        'colorSpace': getColorSpaceByKey(keyColorSpaceCMYK),
-        'widget': GCWColorCMYK(
-          color: _currentColorSpace == keyColorSpaceCMYK ? _currentColor : null,
-          onChanged: (newValue) {
-            setState(() {
-              _currentColor = newValue;
-              _setCurrentValueAndEmitOnChange();
-            });
-          },
-        ),
-      },
-      {
-        'colorSpace': getColorSpaceByKey(keyColorSpaceCMY),
-        'widget': GCWColorCMY(
-          color: _currentColorSpace == keyColorSpaceCMY ? _currentColor : null,
-          onChanged: (newValue) {
-            setState(() {
-              _currentColor = newValue;
-              _setCurrentValueAndEmitOnChange();
-            });
-          },
-        ),
-      },
-      {
-        'colorSpace': getColorSpaceByKey(keyColorSpaceYUV),
-        'widget': GCWColorYUV(
-          color: _currentColorSpace == keyColorSpaceYUV ? _currentColor : null,
-          onChanged: (newValue) {
-            setState(() {
-              _currentColor = newValue;
-              _setCurrentValueAndEmitOnChange();
-            });
-          },
-        ),
-      },
-      {
-        'colorSpace': getColorSpaceByKey(keyColorSpaceYPbPr),
-        'widget': GCWColorYPbPr(
-          color: _currentColorSpace == keyColorSpaceYPbPr ? _currentColor : null,
-          onChanged: (newValue) {
-            setState(() {
-              _currentColor = newValue;
-              _setCurrentValueAndEmitOnChange();
-            });
-          },
-        ),
-      },
-      {
-        'colorSpace': getColorSpaceByKey(keyColorSpaceYCbCr),
-        'widget': GCWColorYCbCr(
-          color: _currentColorSpace == keyColorSpaceYCbCr ? _currentColor : null,
-          onChanged: (newValue) {
-            setState(() {
-              _currentColor = newValue;
-              _setCurrentValueAndEmitOnChange();
-            });
-          },
-        ),
-      },
-      {
-        'colorSpace': getColorSpaceByKey(keyColorSpaceYIQ),
-        'widget': GCWColorYIQ(
-          color: _currentColorSpace == keyColorSpaceYIQ ? _currentColor : null,
-          onChanged: (newValue) {
-            setState(() {
-              _currentColor = newValue;
-              _setCurrentValueAndEmitOnChange();
-            });
-          },
-        ),
-      },
-    ];
+    _setColorPickerColor(_currentColor);
+  }
 
-    List<ColorSpace> _onlyColorSpaces = _colorWidgets.map((entry) => entry['colorSpace'] as ColorSpace).toList();
+  _setColorPickerColor(dynamic color) {
+    var rgb = convertColorSpace(color, _currentColorSpace, keyColorSpaceRGB);
+    var sysColor = Color.fromARGB(255, rgb.red.round(), rgb.green.round(), rgb.blue.round());
+    _currentColorPickerColor = HSVColor.fromColor(sysColor);
+  }
 
-    Column _widget = Column(
-      children: <Widget>[
-        GCWDropDownButton(
-          value: _currentColorSpace,
-          onChanged: (newValue) {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          child: GCWColorPicker(
+            hsvColor: _currentColorPickerColor,
+            onChanged: (color) {
+              setState(() {
+                _currentColorPickerColor = color;
+
+                HSV hsv = HSV(color.hue, color.saturation, color.value);
+                _currentColor = convertColorSpace(hsv, keyColorSpaceHSV, _currentColorSpace);
+
+                _setCurrentValueAndEmitOnChange();
+              });
+            },
+          ),
+          padding: EdgeInsets.only(bottom: 20.0),
+        ),
+        GCWColorValuesPicker(
+          color: _currentColor,
+          colorSpace: _currentColorSpace,
+          onChanged: (result) {
             setState(() {
-              _currentColor = convertColorSpace(_currentColor, _currentColorSpace, newValue);
-              _currentColorSpace = newValue;
+              _currentColorSpace = result['colorSpace'];
+              _currentColor = result['color'];
+
+              HSV colorPickerColor = convertColorSpace(_currentColor, _currentColorSpace, keyColorSpaceHSV);
+              _currentColorPickerColor =
+                  HSVColor.fromAHSV(1.0, colorPickerColor.hue, colorPickerColor.saturation, colorPickerColor.value);
 
               _setCurrentValueAndEmitOnChange();
             });
           },
-          items: _onlyColorSpaces.map((colorSpace) {
-            return GCWDropDownMenuItem(
-              value: colorSpace.key,
-              child: i18n(context, colorSpace.name),
-            );
-          }).toList(),
-        ),
+        )
       ],
     );
-
-    var _currentWidget = _colorWidgets.firstWhere((entry) => entry['colorSpace'].key == _currentColorSpace)['widget'];
-
-    _widget.children.add(_currentWidget);
-
-    return _widget;
   }
 
   _setCurrentValueAndEmitOnChange() {

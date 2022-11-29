@@ -56,6 +56,10 @@ class CMYK {
     return CMYK(cyan, magenta, yellow, k);
   }
 
+  String toCMYKString() {
+    return '${(cyan * 100).round()}, ${(magenta * 100).round()}, ${(yellow * 100).round()}, ${(key * 100).round()}';
+  }
+
   @override
   toString() {
     return 'CMYK($cyan, $magenta, $yellow, $key)';

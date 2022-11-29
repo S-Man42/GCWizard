@@ -3,7 +3,6 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/widgets/common/gcw_colorpicker.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/colors/base/hsv_picker.dart';
 
 class MapPolylineEditor extends StatefulWidget {
   final dynamic polyline;

@@ -50,7 +50,7 @@ class GCWDialogButton extends StatefulWidget {
 class _GCWDialogButtonState extends State<GCWDialogButton> {
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
+    return TextButton(
       //TODO: GCWText instead Text; currently with GCWText onPressed() is not called
       child: Text(
         widget.text,

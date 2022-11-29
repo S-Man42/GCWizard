@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
+import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
@@ -13,10 +14,17 @@ class GCWCoordsFormatSelector extends StatefulWidget {
   const GCWCoordsFormatSelector({Key key, this.onChanged, this.format}) : super(key: key);
 
   @override
-  _GCWCoordsFormatSelectorState createState() => _GCWCoordsFormatSelectorState();
+  GCWCoordsFormatSelectorState createState() => GCWCoordsFormatSelectorState();
+
+  List<GCWDropDownMenuItem> getDropDownItems(BuildContext context) {
+    return allCoordFormats.map((entry) {
+      return GCWDropDownMenuItem(
+          value: entry.key, child: i18n(context, entry.name) ?? entry.name, subtitle: entry.example);
+    }).toList();
+  }
 }
 
-class _GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
+class GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
   var _currentFormat = defaultCoordFormat()['format'];
   var _currentSubtype = defaultCoordFormat()['subtype'];
 
@@ -38,10 +46,13 @@ class _GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
 
               switch (_currentFormat) {
                 case keyCoordsGaussKrueger:
-                  _currentSubtype = keyCoordsGaussKruegerGK1;
+                  _currentSubtype = getGaussKruegerTypKey();
+                  break;
+                case keyCoordsLambert:
+                  _currentSubtype = getLambertKey();
                   break;
                 case keyCoordsSlippyMap:
-                  _currentSubtype = '10';
+                  _currentSubtype = DefaultSlippyZoom.toInt().toString();
                   break;
                 default:
                   _currentSubtype = null;
@@ -50,10 +61,7 @@ class _GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
               _emitOnChange();
             });
           },
-          items: allCoordFormats.map((entry) {
-            return GCWDropDownMenuItem(
-                value: entry.key, child: i18n(context, entry.name) ?? entry.name, subtitle: entry.example);
-          }).toList(),
+          items: widget.getDropDownItems(context),
         ),
         _buildSubtype()
       ],
@@ -61,11 +69,14 @@ class _GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
   }
 
   _buildSubtype() {
-    switch (widget.format['format'] ?? _currentFormat) {
+    var format = widget.format['format'] ?? _currentFormat;
+
+    switch (format) {
       case keyCoordsGaussKrueger:
+      case keyCoordsLambert:
         return GCWDropDownButton(
           value: _currentSubtype,
-          items: getCoordinateFormatByKey(keyCoordsGaussKrueger).subtypes.map((subtype) {
+          items: getCoordinateFormatByKey(format).subtypes.map((subtype) {
             return GCWDropDownMenuItem(
               value: subtype.key,
               child: i18n(context, subtype.name),
@@ -83,7 +94,7 @@ class _GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
           min: 0.0,
           max: 30.0,
           title: i18n(context, 'coords_formatconverter_slippymap_zoom') + ' (Z)',
-          value: double.tryParse(_currentSubtype == null ? '10' : _currentSubtype),
+          value: double.tryParse(_currentSubtype == null ? DefaultSlippyZoom : _currentSubtype),
           onChanged: (value) {
             setState(() {
               _currentSubtype = NumberFormat('0.00000').format(value);

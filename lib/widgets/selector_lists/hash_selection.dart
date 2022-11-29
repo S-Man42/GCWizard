@@ -3,10 +3,12 @@ import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/common/gcw_toollist.dart';
 import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/selector_lists/gcw_selection.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/hashes/hash_breaker.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/hashes/hashes.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/hashes/hashes_identification.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/hashes/hashes_overview.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/wherigo_urwigo/urwigo_hashbreaker.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/hashes/hashes.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/hashes/hash_breaker.dart';
 
 class HashSelection extends GCWSelection {
   @override
@@ -15,12 +17,16 @@ class HashSelection extends GCWSelection {
       return [
         className(HashBreaker()),
         className(UrwigoHashBreaker()),
+        className(HashOverview()),
+        className(HashIdentification()),
         className(MD5()),
         className(SHA1()),
         className(SHA224()),
         className(SHA256()),
         className(SHA384()),
         className(SHA512()),
+        className(SHA512_224()),
+        className(SHA512_256()),
         className(SHA3_224()),
         className(SHA3_256()),
         className(SHA3_384()),
@@ -43,7 +49,27 @@ class HashSelection extends GCWSelection {
         className(RIPEMD_256()),
         className(RIPEMD_320()),
         className(Tiger_192()),
-        className(Whirlpool_512())
+        className(Whirlpool_512()),
+        className(MD5HMac()),
+        className(SHA1HMac()),
+        className(SHA224HMac()),
+        className(SHA256HMac()),
+        className(SHA384HMac()),
+        className(SHA512HMac()),
+        className(SHA512_224HMac()),
+        className(SHA512_256HMac()),
+        className(SHA3_224HMac()),
+        className(SHA3_256HMac()),
+        className(SHA3_384HMac()),
+        className(SHA3_512HMac()),
+        className(MD2HMac()),
+        className(MD4HMac()),
+        className(RIPEMD_128HMac()),
+        className(RIPEMD_160HMac()),
+        className(RIPEMD_256HMac()),
+        className(RIPEMD_320HMac()),
+        className(Tiger_192HMac()),
+        className(Whirlpool_512HMac()),
       ].contains(className(element.tool));
     }).toList();
 

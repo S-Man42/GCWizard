@@ -49,7 +49,7 @@ class GCWCoordsDutchGridState extends State<GCWCoordsDutchGrid> {
 
     return Column(children: <Widget>[
       GCWDoubleTextField(
-          hintText: i18n(context, 'coords_formatconverter_dutchgrid_x'),
+          hintText: i18n(context, 'coords_formatconverter_easting'),
           controller: _xController,
           onChanged: (ret) {
             setState(() {
@@ -58,7 +58,7 @@ class GCWCoordsDutchGridState extends State<GCWCoordsDutchGrid> {
             });
           }),
       GCWDoubleTextField(
-          hintText: i18n(context, 'coords_formatconverter_dutchgrid_y'),
+          hintText: i18n(context, 'coords_formatconverter_northing'),
           controller: _yController,
           onChanged: (ret) {
             setState(() {

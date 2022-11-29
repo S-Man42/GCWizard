@@ -10,6 +10,7 @@ class GCWIconButton extends StatelessWidget {
   final IconData icon;
   final Widget customIcon;
   IconButtonSize size;
+  final double iconSize;
   final Color iconColor;
   final Color backgroundColor;
   final double rotateDegrees;
@@ -20,6 +21,7 @@ class GCWIconButton extends StatelessWidget {
       this.icon,
       this.customIcon,
       this.size,
+      this.iconSize,
       this.iconColor,
       this.backgroundColor,
       this.rotateDegrees})
@@ -39,39 +41,38 @@ class GCWIconButton extends StatelessWidget {
       case IconButtonSize.NORMAL:
         containerWidth = 40.0;
         buttonHeight = 38.0;
-        iconSize = null;
+        iconSize = this.iconSize ?? null;
         break;
       case IconButtonSize.SMALL:
         containerWidth = 32.0;
         buttonHeight = 28.0;
-        iconSize = 20.0;
+        iconSize = this.iconSize ?? 20.0;
         break;
       case IconButtonSize.TINY:
         containerWidth = 21.0;
         buttonHeight = 18.0;
-        iconSize = 17.0;
+        iconSize = this.iconSize ?? 17.0;
         break;
     }
 
     return Container(
       width: containerWidth,
-      child: ButtonTheme(
-        height: buttonHeight,
-        child: FlatButton(
-          color: backgroundColor,
-          padding: EdgeInsets.zero,
-          child: Transform.rotate(
-            child:
-                this.customIcon ?? Icon(this.icon, size: iconSize, color: this.iconColor ?? themeColors().mainFont()),
-            angle: degreesToRadian(this.rotateDegrees ?? 0.0),
-          ),
-          onPressed: this.onPressed,
-          shape: RoundedRectangleBorder(
-              side: BorderSide(color: themeColors().accent(), width: 1, style: BorderStyle.solid),
-              borderRadius: BorderRadius.circular(ROUNDED_BORDER_RADIUS)),
+      height: buttonHeight,
+      child: TextButton(
+        style: TextButton.styleFrom(
+            padding: EdgeInsets.zero,
+            shape: RoundedRectangleBorder(
+                side: BorderSide(color: themeColors().accent(), width: 1, style: BorderStyle.solid),
+                borderRadius: BorderRadius.circular(ROUNDED_BORDER_RADIUS)),
+            backgroundColor: backgroundColor),
+        child: Transform.rotate(
+          child: this.customIcon ?? Icon(this.icon, size: iconSize, color: this.iconColor ?? themeColors().mainFont()),
+          angle: degreesToRadian(this.rotateDegrees ?? 0.0),
         ),
+        onPressed: this.onPressed,
       ),
       padding: EdgeInsets.only(left: 2, right: 2),
+      margin: EdgeInsets.only(top: 4, bottom: 4),
     );
   }
 }

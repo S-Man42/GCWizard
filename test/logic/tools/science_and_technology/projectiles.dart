@@ -1,10 +1,10 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/logic/tools/science_and_technology/projectiles.dart';
 import 'package:gc_wizard/logic/common/units/energy.dart';
 import 'package:gc_wizard/logic/common/units/mass.dart';
+import 'package:gc_wizard/logic/common/units/unit_category.dart';
 import 'package:gc_wizard/logic/common/units/unit_prefix.dart';
 import 'package:gc_wizard/logic/common/units/velocity.dart';
-import 'package:gc_wizard/logic/common/units/unit_category.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/projectiles.dart';
 import 'package:intl/intl.dart';
 
 void main() {

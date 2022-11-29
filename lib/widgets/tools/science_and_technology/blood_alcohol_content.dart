@@ -11,7 +11,6 @@ import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
-import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/common/units/gcw_unit_input.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:intl/intl.dart';
@@ -36,8 +35,6 @@ class BloodAlcoholContentState extends State<BloodAlcoholContent> {
   var _currentMass = 0.0;
   var _currentHeight = 0.0;
   var _currentAge = 0;
-
-  var _currentOutputUnit = GCWSwitchPosition.right;
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +113,8 @@ class BloodAlcoholContentState extends State<BloodAlcoholContent> {
           title: i18n(context, 'bloodalcoholcontent_person_age'),
           value: _currentAge,
           min: 0,
-          overflow: SpinnerOverflowType.SUPPRESS_OVERFLOW,
+          max: 999,
+          // overflow: SpinnerOverflowType.ALLOW_OVERFLOW,
           onChanged: (value) {
             setState(() {
               _currentAge = value;

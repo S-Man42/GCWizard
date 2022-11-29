@@ -388,7 +388,7 @@ void main() {
       {'input' : 'a', 'expectedOutput' : true},
       {'input' : 'aaa', 'expectedOutput' : true},
       {'input' : 'AaaA', 'expectedOutput' : true},
-      {'input' : 'ABCÄÖÜßàé', 'expectedOutput' : true},
+      {'input' : 'ABCÄÖÜß\u1e9eàé', 'expectedOutput' : true},
 
       {'input' : 'a a', 'expectedOutput' : false},
       {'input' : 'a1', 'expectedOutput' : false},
@@ -399,6 +399,28 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
         var _actual = isOnlyLetters(elem['input']);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
+
+  group("CommonUtils.isOnlyNumerals:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : null, 'expectedOutput' : false},
+      {'input' : '', 'expectedOutput' : false},
+
+      {'input' : '0', 'expectedOutput' : true},
+      {'input' : '000', 'expectedOutput' : true},
+      {'input' : '1001', 'expectedOutput' : true},
+
+      {'input' : '0 1', 'expectedOutput' : false},
+      {'input' : 'a1', 'expectedOutput' : false},
+      {'input' : '0.1', 'expectedOutput' : false}
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}', () {
+        var _actual = isOnlyNumerals(elem['input']);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -434,6 +456,98 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, precision: ${elem['precision']}', () {
         var _actual = round(elem['input'], precision: elem['precision']);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
+
+  group("CommonUtils.extractIntegerFromText:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : null, 'expectedOutput' : null},
+      {'input' : '', 'expectedOutput' : null},
+
+      {'input' : 'a', 'expectedOutput' : null},
+      {'input' : '12', 'expectedOutput' : 12},
+      {'input' : '123,4', 'expectedOutput' : 1234},
+      {'input' : '123,4', 'expectedOutput' : 1234},
+
+      {'input' : '1 2', 'expectedOutput' : 12},
+      {'input' : 'a1', 'expectedOutput' : 1},
+      {'input' : '1a2', 'expectedOutput' : 12}
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}', () {
+        var _actual = extractIntegerFromText(elem['input']);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
+
+  group("CommonUtils.separateDecimalPlaces:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : null, 'expectedOutput' : null},
+
+      {'input' : 0.0, 'expectedOutput' : 0},
+      {'input' : 1.2, 'expectedOutput' : 2},
+      {'input' : .2, 'expectedOutput' : 2},
+      {'input' : 1.0, 'expectedOutput' : 0},
+      {'input' : 123.4, 'expectedOutput' : 4},
+      {'input' : 12.345, 'expectedOutput' : 345},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}', () {
+        var _actual = separateDecimalPlaces(elem['input']);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
+
+  group("CommonUtils.formatDurationToHHmmss:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : null, 'expectedOutput' : null},
+      {'input' : Duration(days: 1, hours: 10, seconds: 33, milliseconds: 100), 'days': true, 'milliseconds': true, 'limitHours': true, 'expectedOutput' : '1:10:00:33.000'},
+      {'input' : Duration(days: 1, hours: 10, seconds: 33, milliseconds: 100), 'days': true, 'milliseconds': false, 'limitHours': true, 'expectedOutput' : '1:10:00:33'},
+      {'input' : Duration(days: 1, hours: 10, seconds: 33, milliseconds: 100), 'days': false, 'milliseconds': true, 'limitHours': true, 'expectedOutput' : '10:00:33.000'},
+      {'input' : Duration(days: 1, hours: 10, seconds: 33, milliseconds: 100), 'days': false, 'milliseconds': false, 'limitHours': true, 'expectedOutput' : '10:00:33'},
+      {'input' : Duration(days: 1, hours: 10, seconds: 33, milliseconds: 100), 'days': false, 'milliseconds': false, 'limitHours': false, 'expectedOutput' : '34:00:33'},
+      {'input' : Duration(days: 1, hours: 10, seconds: 33, milliseconds: 100), 'days': true, 'milliseconds': true, 'limitHours': true, 'expectedOutput' : '1:10:00:33.000'},
+      {'input' : Duration(days: 1, hours: 10, seconds: 33, milliseconds: 100), 'days': true, 'milliseconds': true, 'limitHours': false, 'expectedOutput' : '1:10:00:33.000'},
+      {'input' : Duration(days: 1, hours: 10, seconds: 33, milliseconds: 100), 'days': true, 'milliseconds': false, 'limitHours': false, 'expectedOutput' : '1:10:00:33'},
+
+      {'input' : Duration(days: -1, hours: -33, seconds: -33, milliseconds: -100), 'days': true, 'milliseconds': false, 'limitHours': false, 'expectedOutput' : '-2:09:00:33'},
+      {'input' : Duration(days: -1, hours: -33, seconds: -33, milliseconds: -100), 'days': true, 'milliseconds': false, 'limitHours': true, 'expectedOutput' : '-2:09:00:33'},
+      {'input' : Duration(days: -1, hours: -33, seconds: -33, milliseconds: -100), 'days': false, 'milliseconds': false, 'limitHours': true, 'expectedOutput' : '-09:00:33'},
+      {'input' : Duration(hours: -33, seconds: -33, milliseconds: -100), 'days': true, 'milliseconds': false, 'limitHours': false, 'expectedOutput' : '-1:09:00:33'},
+      {'input' : Duration(hours: -10, seconds: -33, milliseconds: -100), 'days': true, 'milliseconds': false, 'limitHours': true, 'expectedOutput' : '-0:10:00:33'},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}, days: ${elem['days']}, milliseconds: ${elem['milliseconds']}, limitHours: ${elem['limitHours']}', () {
+        var _actual = formatDurationToHHmmss(elem['input'], days: elem['days'], milliseconds: elem['milliseconds'], limitHours: elem['limitHours']);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
+
+  group("CommonUtils.formatHoursToHHmmss:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : null, 'expectedOutput' : null},
+      {'input' : 1.23456789, 'milliseconds': true, 'limitHours': true, 'expectedOutput' : '01:14:04.444'},
+      {'input' : 1.23456789, 'milliseconds': false, 'limitHours': true, 'expectedOutput' : '01:14:04'},
+      {'input' : 1.23456789, 'milliseconds': true, 'limitHours': false, 'expectedOutput' : '01:14:04.444'},
+      {'input' : 1.23456789, 'milliseconds': false, 'limitHours': false, 'expectedOutput' : '01:14:04'},
+
+      {'input' : 99.23456789, 'milliseconds': true, 'limitHours': true, 'expectedOutput' : '03:14:04.444'},
+      {'input' : 99.23456789, 'milliseconds': false, 'limitHours': true, 'expectedOutput' : '03:14:04'},
+      {'input' : 99.23456789, 'milliseconds': true, 'limitHours': false, 'expectedOutput' : '99:14:04.444'},
+      {'input' : 99.23456789, 'milliseconds': false, 'limitHours': false, 'expectedOutput' : '99:14:04'},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}, milliseconds: ${elem['milliseconds']}, limitHours: ${elem['limitHours']}', () {
+        var _actual = formatHoursToHHmmss(elem['input'], milliseconds: elem['milliseconds'], limitHours: elem['limitHours']);
         expect(_actual, elem['expectedOutput']);
       });
     });

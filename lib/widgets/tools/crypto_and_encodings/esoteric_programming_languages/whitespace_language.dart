@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/whitespace_language.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
@@ -66,7 +66,10 @@ class WhitespaceLanguageState extends State<WhitespaceLanguage> {
 
     return GCWMultipleOutput(
       children: [
-        _currentOutput.output + (_currentOutput.error ? '\n' + _currentOutput.errorText : ''),
+        _currentOutput.output +
+            (_currentOutput.error && (_currentOutput.errorText != null)
+                ? '\n' + (i18n(context, _currentOutput.errorText) ?? _currentOutput.errorText)
+                : ''),
         GCWOutput(
           title: i18n(context, 'whitespace_language_readable_code'),
           child: GCWOutputText(

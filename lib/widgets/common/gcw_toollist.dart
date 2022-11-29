@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/utils/settings/preferences.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_delete_alertdialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/favorites.dart';
-import 'package:gc_wizard/widgets/utils/AppBuilder.dart';
+import 'package:gc_wizard/widgets/main_view.dart';
+import 'package:gc_wizard/widgets/utils/app_builder.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:prefs/prefs.dart';
 
@@ -62,7 +64,11 @@ class _GCWToolListState extends State<GCWToolList> {
       ),
       subtitle: _buildSubtitle(context, tool),
       onTap: () {
-        _navigateToSubPage(context);
+        setState(() {
+          _navigateToSubPage(context);
+          refreshToolLists();
+          AppBuilder.of(context).rebuild();
+        });
       },
       leading: tool.icon,
       trailing: IconButton(
@@ -71,8 +77,7 @@ class _GCWToolListState extends State<GCWToolList> {
         onPressed: () {
           if (tool.isFavorite) {
             showDeleteAlertDialog(context, tool.toolName, () {
-              tool.isFavorite = false;
-              Favorites.update(tool, FavoriteChangeStatus.remove);
+              Favorites.update(tool.id, FavoriteChangeStatus.REMOVE);
 
               setState(() {
                 AppBuilder.of(context).rebuild();
@@ -80,8 +85,7 @@ class _GCWToolListState extends State<GCWToolList> {
             });
           } else {
             setState(() {
-              tool.isFavorite = true;
-              Favorites.update(tool, FavoriteChangeStatus.add);
+              Favorites.update(tool.id, FavoriteChangeStatus.ADD);
 
               AppBuilder.of(context).rebuild();
             });
@@ -93,7 +97,9 @@ class _GCWToolListState extends State<GCWToolList> {
 
   _buildSubtitle(BuildContext context, GCWTool tool) {
     var descriptionText;
-    if (Prefs.getBool('toollist_show_descriptions') && tool.description != null && tool.description.length > 0) {
+    if (Prefs.getBool(PREFERENCE_TOOLLIST_SHOW_DESCRIPTIONS) &&
+        tool.description != null &&
+        tool.description.length > 0) {
       descriptionText = IgnorePointer(
           child: GCWText(
         text: tool.description,
@@ -102,7 +108,7 @@ class _GCWToolListState extends State<GCWToolList> {
     }
 
     var exampleText;
-    if (Prefs.getBool('toollist_show_examples') && tool.example != null && tool.example.length > 0) {
+    if (Prefs.getBool(PREFERENCE_TOOLLIST_SHOW_EXAMPLES) && tool.example != null && tool.example.length > 0) {
       exampleText = IgnorePointer(child: GCWText(text: tool.example, style: gcwDescriptionTextStyle()));
     }
 

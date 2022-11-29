@@ -1,5 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/logic/tools/science_and_technology/number_sequence.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/number_sequences/number_sequence.dart';
 
 void main() {
   group("numbersequence.getNumberAt:", () {

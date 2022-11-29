@@ -9,7 +9,6 @@ import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/tools/games/sudoku/sudoku_board.dart';
-import 'package:prefs/prefs.dart';
 
 class SudokuSolver extends StatefulWidget {
   @override

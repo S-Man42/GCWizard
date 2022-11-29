@@ -11,6 +11,8 @@ Map<String, String> _COMMON_SEARCHSTRINGS;
 Map<String, String> _EN_SEARCHSTRINGS;
 Map<String, String> _LOCALE_SEARCHSTRINGS;
 
+final ALLOWED_SEARCH_CHARACTERS = RegExp(r'[^a-z0-9α-ω¥, ]');
+
 Future loadSearchStrings(String languageCode) async {
   if (_COMMON_SEARCHSTRINGS == null) {
     _COMMON_SEARCHSTRINGS = await _getSearchStringsForLocale('common');
@@ -66,7 +68,8 @@ void createIndexedSearchStrings() {
     if (tool.toolName != null) {
       _toolName = removeAccents(tool.toolName).toLowerCase().replaceAll(RegExp(r'\s+'), '');
     }
-    var _indexedSearchStrings = removeAccents(searchStrings.join(' ').toLowerCase());
+    var _indexedSearchStrings =
+        removeAccents(searchStrings.join(' ').toLowerCase()).replaceAll(ALLOWED_SEARCH_CHARACTERS, '');
     if (_indexedSearchStrings == null || _indexedSearchStrings.length == 0) {
       if (_toolName != null) tool.indexedSearchStrings = _toolName;
       continue;

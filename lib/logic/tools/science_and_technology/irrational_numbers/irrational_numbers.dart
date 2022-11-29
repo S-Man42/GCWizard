@@ -37,11 +37,26 @@ class IrrationalNumberCalculator {
     return irrationalNumber.decimalPart.substring(start - 1, start + length - 1);
   }
 
-  int decimalOccurence(String input) {
-    if (input == null || input.length == 0) return null;
+  List<IrrationalNumberDecimalOccurence> decimalOccurences(String input) {
+    if (input == null || input.length == 0) return [];
 
-    int index = irrationalNumber.decimalPart.indexOf(input);
+    if (!input.contains(RegExp(r'[0-9]'))) throw Exception('irrationalnumbers_error_nonumbers');
 
-    return index >= 0 ? index + 1 : null;
+    var _input = input.replaceAll(RegExp(r'[^0-9]'), '.');
+
+    var out = <IrrationalNumberDecimalOccurence>[];
+    RegExp(_input).allMatches(irrationalNumber.decimalPart).map((RegExpMatch match) {
+      out.add(IrrationalNumberDecimalOccurence(value: match.group(0), start: match.start + 1, end: match.end));
+    }).toList();
+
+    return out;
   }
+}
+
+class IrrationalNumberDecimalOccurence {
+  final String value;
+  final int start;
+  final int end;
+
+  const IrrationalNumberDecimalOccurence({this.value, this.start, this.end});
 }

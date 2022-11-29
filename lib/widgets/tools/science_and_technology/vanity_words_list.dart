@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/numeral_words.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/vanity/vanity_words.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
@@ -56,7 +55,7 @@ class VanityWordsListState extends State<VanityWordsList> {
   Widget _buildOutput(BuildContext context) {
     Map<String, String> vanityWordsOverview = new Map<String, String>();
     vanityWordsOverview = VanWords[_currentLanguage];
-    if (_currentLanguage == NumeralWordsLanguage.DEU) NumWords[_currentLanguage]['fünf'] = '5';
+    if (_currentLanguage == NumeralWordsLanguage.DEU) NUMERAL_WORDS[_currentLanguage]['fünf'] = '5';
 
     return GCWDefaultOutput(
         child: Column(
@@ -66,9 +65,9 @@ class VanityWordsListState extends State<VanityWordsList> {
             return [
               entry.key,
               entry.value,
-              NumWords[_currentLanguage][(entry.value).toLowerCase()].toString().startsWith('numeralwords_')
-                  ? i18n(context, NumWords[_currentLanguage][(entry.value).toLowerCase()]) + ' '
-                  : NumWords[_currentLanguage][entry.value.toLowerCase()]
+              NUMERAL_WORDS[_currentLanguage][(entry.value).toLowerCase()].toString().startsWith('numeralwords_')
+                  ? i18n(context, NUMERAL_WORDS[_currentLanguage][(entry.value).toLowerCase()]) + ' '
+                  : NUMERAL_WORDS[_currentLanguage][entry.value.toLowerCase()]
             ];
           }).toList(),
           flexValues: [2, 2, 1]),

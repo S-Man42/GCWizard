@@ -1,5 +1,4 @@
 import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
 
 final Map<int, List<String>> _numbersToSegments = {
   0: [],

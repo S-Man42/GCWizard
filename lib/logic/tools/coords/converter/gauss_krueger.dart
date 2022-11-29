@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/coords/ellipsoid_transform.dart';
+import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:latlong2/latlong.dart';
 
 GaussKrueger latLonToGaussKrueger(LatLng coord, int gkno, Ellipsoid ells) {
@@ -146,7 +147,7 @@ LatLng gaussKruegerToLatLon(GaussKrueger gaussKrueger, Ellipsoid ells) {
   return coord;
 }
 
-GaussKrueger parseGaussKrueger(String input, {gaussKruegerCode: 1}) {
+GaussKrueger parseGaussKrueger(String input, {int gaussKruegerCode: DefaultGaussKruegerType}) {
   RegExp regExp = RegExp(r'^\s*([\-0-9\.]+)(\s*\,\s*|\s+)([\-0-9\.]+)\s*$');
   var matches = regExp.allMatches(input);
   var _eastingString = '';
@@ -158,7 +159,7 @@ GaussKrueger parseGaussKrueger(String input, {gaussKruegerCode: 1}) {
     _northingString = match.group(3);
   }
   if (matches.length == 0) {
-    regExp = RegExp(r'^\s*(R|r)\:?\s*([\-0-9\.]+)(\s*\,?\s*)(H|h)\:?\s*([\-0-9\.]+)\s*$');
+    regExp = RegExp(r'^\s*(R|r|X|x)\:?\s*([\-0-9\.]+)(\s*\,?\s*)(H|h|Y|y)\:?\s*([\-0-9\.]+)\s*$');
     matches = regExp.allMatches(input);
     if (matches.length > 0) {
       var match = matches.elementAt(0);

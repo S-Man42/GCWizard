@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/science_and_technology/apparent_temperature/heat_index.dart';
 import 'package:gc_wizard/logic/common/units/temperature.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/apparent_temperature/heat_index.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
@@ -25,14 +25,14 @@ class HeatIndexState extends State<HeatIndex> {
       children: <Widget>[
         Row(
           children: [
-            Expanded(child: GCWText(text: i18n(context, 'heatindex_temperature')), flex: 1),
+            Expanded(child: GCWText(text: i18n(context, 'common_measure_temperature')), flex: 1),
             Expanded(
                 child: Column(
                   children: [
                     GCWTwoOptionsSwitch(
                       notitle: true,
-                      leftValue: i18n(context, 'heatindex_unit_celsius'),
-                      rightValue: i18n(context, 'heatindex_unit_fahrenheit'),
+                      leftValue: i18n(context, 'common_unit_temperature_degc_name'),
+                      rightValue: i18n(context, 'common_unit_temperature_degf_name'),
                       value: _isMetric ? GCWSwitchPosition.left : GCWSwitchPosition.right,
                       onChanged: (value) {
                         setState(() {
@@ -53,7 +53,7 @@ class HeatIndexState extends State<HeatIndex> {
           ],
         ),
         GCWDoubleSpinner(
-            title: i18n(context, 'heatindex_humidity'),
+            title: i18n(context, 'common_measure_humidity'),
             value: _currentHumidity,
             min: 0.0,
             max: 100.0,

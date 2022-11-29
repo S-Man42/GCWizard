@@ -1,31 +1,35 @@
 import 'dart:math';
 
-import 'package:gc_wizard/logic/tools/coords/converter/dutchgrid.dart';
-import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
-import 'package:intl/intl.dart';
-import 'package:latlong2/latlong.dart';
-import 'package:gc_wizard/utils/constants.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
-
 import 'package:gc_wizard/logic/tools/coords/converter/dec.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/dmm.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/dms.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/dutchgrid.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/gauss_krueger.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/geo3x3.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/geohash.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/geohex.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/lambert.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/maidenhead.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/makaney.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/mercator.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/mgrs.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/natural_area_code.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/open_location_code.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/quadtree.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/reverse_wherigo_day1976.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/reverse_wherigo_waldmeister.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/slippy_map.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/swissgrid.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/utm.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/xyz.dart';
+import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
+import 'package:gc_wizard/logic/tools/coords/utils.dart';
+import 'package:gc_wizard/utils/constants.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
+import 'package:intl/intl.dart';
+import 'package:latlong2/latlong.dart';
 
+const keyCoordsALL = 'coords_all';
 const keyCoordsDEC = 'coords_dec';
 const keyCoordsDMM = 'coords_dmm';
 const keyCoordsDMS = 'coords_dms';
@@ -41,6 +45,20 @@ const keyCoordsGaussKruegerGK2 = 'coords_gausskrueger_gk2';
 const keyCoordsGaussKruegerGK3 = 'coords_gausskrueger_gk3';
 const keyCoordsGaussKruegerGK4 = 'coords_gausskrueger_gk4';
 const keyCoordsGaussKruegerGK5 = 'coords_gausskrueger_gk5';
+const keyCoordsLambert = 'coords_lambert';
+const keyCoordsLambert93 = 'coords_lambert_93';
+const keyCoordsLambert2008 = 'coords_lambert_2008';
+const keyCoordsLambertETRS89LCC = 'coords_lambert_etrs89lcc';
+const keyCoordsLambert72 = 'coords_lambert_72';
+const keyCoordsLambert93CC42 = 'coords_lambert_93_cc42';
+const keyCoordsLambert93CC43 = 'coords_lambert_93_cc43';
+const keyCoordsLambert93CC44 = 'coords_lambert_93_cc44';
+const keyCoordsLambert93CC45 = 'coords_lambert_93_cc45';
+const keyCoordsLambert93CC46 = 'coords_lambert_93_cc46';
+const keyCoordsLambert93CC47 = 'coords_lambert_93_cc47';
+const keyCoordsLambert93CC48 = 'coords_lambert_93_cc48';
+const keyCoordsLambert93CC49 = 'coords_lambert_93_cc49';
+const keyCoordsLambert93CC50 = 'coords_lambert_93_cc50';
 const keyCoordsMaidenhead = 'coords_maidenhead';
 const keyCoordsMercator = 'coords_mercator';
 const keyCoordsNaturalAreaCode = 'coords_naturalareacode';
@@ -49,8 +67,10 @@ const keyCoordsGeohash = 'coords_geohash';
 const keyCoordsGeoHex = 'coords_geohex';
 const keyCoordsGeo3x3 = 'coords_geo3x3';
 const keyCoordsOpenLocationCode = 'coords_openlocationcode';
+const keyCoordsMakaney = 'coords_makaney';
 const keyCoordsQuadtree = 'coords_quadtree';
 const keyCoordsReverseWherigoWaldmeister = 'coords_reversewhereigo_waldmeister'; // typo known. DO NOT change!
+const keyCoordsReverseWherigoDay1976 = 'coords_reversewhereigo_day1976';
 
 class CoordinateFormat {
   final key;
@@ -83,6 +103,22 @@ List<CoordinateFormat> allCoordFormats = [
         CoordinateFormat(
             keyCoordsGaussKruegerGK5, 'coords_formatconverter_gausskrueger_gk5', 'R: 8837696.4, H: 5978779.5'),
       ]),
+  CoordinateFormat(keyCoordsLambert, 'coords_formatconverter_lambert', 'X: 8837763.4, Y: 5978799.1', subtypes: [
+    CoordinateFormat(keyCoordsLambert93, 'coords_formatconverter_lambert_93', 'X: 8837763.4, Y: 5978799.1'),
+    CoordinateFormat(keyCoordsLambert2008, 'coords_formatconverter_lambert_2008', 'X: 8837763.4, Y: 5978799.1'),
+    CoordinateFormat(
+        keyCoordsLambertETRS89LCC, 'coords_formatconverter_lambert_etrs89lcc', 'X: 8837763.4, Y: 5978799.1'),
+    CoordinateFormat(keyCoordsLambert72, 'coords_formatconverter_lambert_72', 'X: 8837763.4, Y: 5978799.1'),
+    CoordinateFormat(keyCoordsLambert93CC42, 'coords_formatconverter_lambert_l93cc42', 'X: 8837763.4, Y: 5978799.1'),
+    CoordinateFormat(keyCoordsLambert93CC43, 'coords_formatconverter_lambert_l93cc43', 'X: 8837763.4, Y: 5978799.1'),
+    CoordinateFormat(keyCoordsLambert93CC44, 'coords_formatconverter_lambert_l93cc44', 'X: 8837763.4, Y: 5978799.1'),
+    CoordinateFormat(keyCoordsLambert93CC45, 'coords_formatconverter_lambert_l93cc45', 'X: 8837763.4, Y: 5978799.1'),
+    CoordinateFormat(keyCoordsLambert93CC46, 'coords_formatconverter_lambert_l93cc46', 'X: 8837763.4, Y: 5978799.1'),
+    CoordinateFormat(keyCoordsLambert93CC47, 'coords_formatconverter_lambert_l93cc47', 'X: 8837763.4, Y: 5978799.1'),
+    CoordinateFormat(keyCoordsLambert93CC48, 'coords_formatconverter_lambert_l93cc48', 'X: 8837763.4, Y: 5978799.1'),
+    CoordinateFormat(keyCoordsLambert93CC49, 'coords_formatconverter_lambert_l93cc49', 'X: 8837763.4, Y: 5978799.1'),
+    CoordinateFormat(keyCoordsLambert93CC50, 'coords_formatconverter_lambert_l93cc50', 'X: 8837763.4, Y: 5978799.1'),
+  ]),
   CoordinateFormat(keyCoordsDutchGrid, 'RD (Rijksdriehoeks, DutchGrid)', 'X: 221216.7, Y: 550826.2'),
   CoordinateFormat(keyCoordsMaidenhead, 'Maidenhead Locator (QTH)', 'CN85TG09JU'),
   CoordinateFormat(keyCoordsMercator, 'Mercator', 'Y: 5667450.4, X: -13626989.9'),
@@ -90,8 +126,10 @@ List<CoordinateFormat> allCoordFormats = [
   CoordinateFormat(keyCoordsOpenLocationCode, 'OpenLocationCode (OLC, PlusCode)', '84QV7HRP+CM3'),
   CoordinateFormat(keyCoordsSlippyMap, 'Slippy Map Tiles', 'Z: 15, X: 5241, Y: 11749'),
   CoordinateFormat(keyCoordsReverseWherigoWaldmeister, 'Reverse Wherigo (Waldmeister)', '042325, 436113, 935102'),
+  CoordinateFormat(keyCoordsReverseWherigoDay1976, 'Reverse Wherigo (Day1976)', '3f8f1, z4ee4'),
   CoordinateFormat(keyCoordsGeohash, 'Geohash', 'c20cwkvr4'),
   CoordinateFormat(keyCoordsQuadtree, 'Quadtree', '021230223311203323'),
+  CoordinateFormat(keyCoordsMakaney, 'Makaney (MKC)', 'M97F-BBOOI'),
   CoordinateFormat(keyCoordsGeoHex, 'GeoHex', 'RU568425483853568'),
   CoordinateFormat(keyCoordsGeo3x3, 'Geo3x3', 'W7392967941169'),
 ];
@@ -397,6 +435,7 @@ class DMS extends BaseCoordinates {
 }
 
 enum HemisphereLatitude { North, South }
+
 enum HemisphereLongitude { East, West }
 
 // UTM with latitude Zones; Normal UTM is only separated into Hemispheres N and S
@@ -556,13 +595,40 @@ class GaussKrueger extends BaseCoordinates {
     return latLonToGaussKrueger(coord, gkno, ells);
   }
 
-  static GaussKrueger parse(String input, {gaussKruegerCode: 1}) {
+  static GaussKrueger parse(String input, {gaussKruegerCode: DefaultGaussKruegerType}) {
     return parseGaussKrueger(input, gaussKruegerCode: gaussKruegerCode);
   }
 
   @override
   String toString() {
     return 'R: ${easting}\nH: ${northing}';
+  }
+}
+
+class Lambert extends BaseCoordinates {
+  String get key => keyCoordsLambert;
+  LambertType type;
+  double easting;
+  double northing;
+
+  Lambert(this.type, this.easting, this.northing);
+
+  LatLng toLatLng({Ellipsoid ells}) {
+    if (ells == null) ells = defaultEllipsoid();
+    return lambertToLatLon(this, ells);
+  }
+
+  static Lambert fromLatLon(LatLng coord, LambertType type, Ellipsoid ells) {
+    return latLonToLambert(coord, type, ells);
+  }
+
+  static Lambert parse(String input, {type: DefaultLambertType}) {
+    return parseLambert(input, type: type);
+  }
+
+  @override
+  String toString() {
+    return 'X: ${easting}\nY: ${northing}';
   }
 }
 
@@ -633,7 +699,7 @@ class SlippyMap extends BaseCoordinates {
     return latLonToSlippyMap(coord, zoom);
   }
 
-  static SlippyMap parse(String input, {zoom: 10.0}) {
+  static SlippyMap parse(String input, {zoom: DefaultSlippyZoom}) {
     return parseSlippyMap(input, zoom: zoom);
   }
 
@@ -643,27 +709,51 @@ class SlippyMap extends BaseCoordinates {
   }
 }
 
-class Waldmeister extends BaseCoordinates {
+class ReverseWherigoWaldmeister extends BaseCoordinates {
   String get key => keyCoordsReverseWherigoWaldmeister;
   String a, b, c;
 
-  Waldmeister(this.a, this.b, this.c);
+  ReverseWherigoWaldmeister(this.a, this.b, this.c);
 
   LatLng toLatLng() {
-    return waldmeisterToLatLon(this);
+    return reverseWIGWaldmeisterToLatLon(this);
   }
 
-  static Waldmeister fromLatLon(LatLng coord) {
-    return latLonToWaldmeister(coord);
+  static ReverseWherigoWaldmeister fromLatLon(LatLng coord) {
+    return latLonToReverseWIGWaldmeister(coord);
   }
 
-  static Waldmeister parse(String input) {
-    return parseWaldmeister(input);
+  static ReverseWherigoWaldmeister parse(String input) {
+    return parseReverseWherigoWaldmeister(input);
   }
 
   @override
   String toString() {
     return '$a\n$b\n$c';
+  }
+}
+
+class ReverseWherigoDay1976 extends BaseCoordinates {
+  String get key => keyCoordsReverseWherigoDay1976;
+  String s, t;
+
+  ReverseWherigoDay1976(this.s, this.t);
+
+  LatLng toLatLng() {
+    return reverseWIGDay1976ToLatLon(this);
+  }
+
+  static ReverseWherigoDay1976 fromLatLon(LatLng coord) {
+    return latLonToReverseWIGDay1976(coord);
+  }
+
+  static ReverseWherigoDay1976 parse(String input) {
+    return parseReverseWherigoDay1976(input);
+  }
+
+  @override
+  String toString() {
+    return '$s\n$t';
   }
 }
 
@@ -709,6 +799,30 @@ class Maidenhead extends BaseCoordinates {
 
   static Maidenhead parse(String input) {
     return parseMaidenhead(input);
+  }
+
+  @override
+  String toString() {
+    return text;
+  }
+}
+
+class Makaney extends BaseCoordinates {
+  String get key => keyCoordsMakaney;
+  String text;
+
+  Makaney(this.text);
+
+  LatLng toLatLng() {
+    return makaneyToLatLon(this);
+  }
+
+  static Makaney fromLatLon(LatLng coord) {
+    return latLonToMakaney(coord);
+  }
+
+  static Makaney parse(String input) {
+    return parseMakaney(input);
   }
 
   @override

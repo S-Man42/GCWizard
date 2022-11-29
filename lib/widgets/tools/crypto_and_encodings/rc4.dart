@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/rc4.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 
 class RC4 extends StatefulWidget {
   @override
@@ -132,7 +132,7 @@ class RC4State extends State<RC4> {
     } else if (_currentOutput.errorCode != ErrorCode.OK) {
       switch (_currentOutput.errorCode) {
         case ErrorCode.MISSING_KEY:
-          showToast(i18n(context, 'rc4_error_missing_key'));
+          return GCWDefaultOutput(child: i18n(context, 'rc4_error_missing_key'));
           break;
         case ErrorCode.KEY_FORMAT:
           showToast(i18n(context, 'rc4_error_key_format'));

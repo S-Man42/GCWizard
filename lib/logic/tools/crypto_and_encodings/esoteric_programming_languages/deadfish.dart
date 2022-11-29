@@ -1,7 +1,5 @@
 import 'dart:math';
 
-import 'package:intl/intl.dart';
-
 String encodeDeadfish(text) {
   if (text == null || text == '') return '';
 

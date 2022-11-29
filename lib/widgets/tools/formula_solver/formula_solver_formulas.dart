@@ -10,6 +10,7 @@ import 'package:gc_wizard/persistence/variable_coordinate/model.dart' as var_coo
 import 'package:gc_wizard/theme/fixed_colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/utils/settings/preferences.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_divider.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
@@ -48,9 +49,12 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
 
   var _newFormulaController;
   var _editFormulaController;
+  var _editNameController;
   var _currentNewFormula = '';
   var _currentEditedFormula = '';
   var _currentEditId;
+  var _currentEditedName = '';
+  var _currentEditNameId;
 
   Map<int, Map<int, Map<String, dynamic>>> _foundCoordinates = {};
 
@@ -62,6 +66,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
     super.initState();
     _newFormulaController = TextEditingController(text: _currentNewFormula);
     _editFormulaController = TextEditingController(text: _currentEditedFormula);
+    _editNameController = TextEditingController(text: _currentEditedName);
 
     refreshFormulas();
 
@@ -72,6 +77,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
   void dispose() {
     _newFormulaController.dispose();
     _editFormulaController.dispose();
+    _editNameController.dispose();
     _editFocusNode.dispose();
 
     super.dispose();
@@ -192,6 +198,15 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                     '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title', useDefaultLanguage: true)}')));
   }
 
+  String _removeOuterSquareBrackets(String formula) {
+    formula = formula.trim();
+    if (formula.startsWith('[') && formula.endsWith(']')) {
+      formula = formula.substring(1, formula.length - 1);
+    }
+
+    return formula;
+  }
+
   _buildGroupList(BuildContext context) {
     var odd = true;
 
@@ -204,7 +219,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
               TODO: TECHNICAL DEBT:
               - Violation of layer separation principle (https://en.wikipedia.org/wiki/Separation_of_concerns)
               - Logic should be completely separated from UI (
-                  In fact, this is for the recursive/referenced formulas... An therefore, this is part of
+                  In fact, this is for the recursive/referenced formulas... And therefore, this is part of
                   the logic. It needs to be moved from the frontend part
                 )
            */
@@ -220,14 +235,15 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
               firstFormulaResult = calculated.results.first.result;
               break;
             case FormulaState.STATE_SINGLE_ERROR:
-              firstFormulaResult = '(${calculated.results.first.result})';
+              firstFormulaResult = '(${_removeOuterSquareBrackets(calculated.results.first.result)})';
               break;
             default:
-              firstFormulaResult = '(${formula.formula})';
+              firstFormulaResult = '(${_removeOuterSquareBrackets(formula.formula)})';
               break;
           }
 
-          formulaReferences.putIfAbsent('{${index + 1}}', () => firstFormulaResult);
+          formulaReferences.putIfAbsent('{${index + 1}}',
+              () => RECURSIVE_FORMULA_REPLACEMENT_START + firstFormulaResult + RECURSIVE_FORMULA_REPLACEMENT_END);
 
           Widget output;
 
@@ -247,69 +263,114 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
           if (_foundFormulaCoordinates.isNotEmpty)
             _foundCoordinates.putIfAbsent(index + 1, () => _foundFormulaCoordinates);
 
+          var hasName = formula.name != null && formula.name.isNotEmpty;
+
           Widget row = Container(
             padding: EdgeInsets.only(top: DEFAULT_MARGIN),
             child: Row(
               children: <Widget>[
-                Expanded(
-                  child: _currentEditId == formula.id
-                      ? Padding(
-                          child: GCWTextField(
-                            controller: _editFormulaController,
-                            focusNode: _editFocusNode,
-                            onChanged: (text) {
-                              setState(() {
-                                _currentEditedFormula = text;
-                              });
-                            },
-                          ),
-                          padding: EdgeInsets.only(
-                            right: 2,
-                          ),
-                        )
-                      : Column(children: <Widget>[
-                          Row(
-                            children: [
-                              Container(child: GCWText(text: (index + 1).toString() + '.'), width: 35),
-                              Flexible(
-                                child: _buildFormulaText(formula.formula, widget.group.values, index + 1),
-                              )
-                            ],
-                          ),
-                          IntrinsicHeight(
-                              child: Row(
-                            children: <Widget>[
-                              Container(
-                                child: [FormulaState.STATE_SINGLE_OK, FormulaState.STATE_EXPANDED_OK]
-                                        .contains(calculated.state)
-                                    ? Icon(
-                                        Icons.check,
-                                        color: _themeColors.mainFont(),
-                                      )
-                                    : Icon(
-                                        Icons.priority_high,
-                                        color: themeColors().formulaError(),
-                                      ),
-                                width: 35,
-                                alignment: Alignment.topLeft,
-                              ),
-                              Flexible(child: _buildFormulaOutput(index, calculated, _foundFormulaCoordinates))
-                            ],
-                          ))
-                        ]),
-                  flex: 1,
-                ),
                 _currentEditId == formula.id
+                    ? Expanded(
+                        child: Padding(
+                        child: GCWTextField(
+                          controller: _editFormulaController,
+                          focusNode: _editFocusNode,
+                          onChanged: (text) {
+                            setState(() {
+                              _currentEditedFormula = text;
+                            });
+                          },
+                        ),
+                        padding: EdgeInsets.only(
+                          right: 2,
+                        ),
+                      ))
+                    : Container(),
+                _currentEditNameId == formula.id
+                    ? Expanded(
+                        child: Padding(
+                        child: GCWTextField(
+                          controller: _editNameController,
+                          focusNode: _editFocusNode,
+                          onChanged: (text) {
+                            setState(() {
+                              _currentEditedName = text;
+                            });
+                          },
+                        ),
+                        padding: EdgeInsets.only(
+                          right: 2,
+                        ),
+                      ))
+                    : Container(),
+                _currentEditId != formula.id && _currentEditNameId != formula.id
+                    ? Expanded(
+                        child: Column(children: <Widget>[
+                        hasName
+                            ? Row(
+                                children: [
+                                  Flexible(
+                                      child: Column(
+                                    children: [
+                                      Container(height: 2 * DOUBLE_DEFAULT_MARGIN),
+                                      GCWTextDivider(
+                                        text: formula.name,
+                                        suppressTopSpace: true,
+                                      ),
+                                    ],
+                                  ))
+                                ],
+                              )
+                            : Container(),
+                        Row(
+                          children: [
+                            Container(child: GCWText(text: (index + 1).toString() + '.'), width: 35),
+                            Flexible(
+                              child: _buildFormulaText(formula.formula, widget.group.values, index + 1),
+                            )
+                          ],
+                        ),
+                        IntrinsicHeight(
+                            child: Row(
+                          children: <Widget>[
+                            Container(
+                              child: [FormulaState.STATE_SINGLE_OK, FormulaState.STATE_EXPANDED_OK]
+                                      .contains(calculated.state)
+                                  ? Icon(
+                                      Icons.check,
+                                      color: _themeColors.mainFont(),
+                                    )
+                                  : Icon(
+                                      Icons.priority_high,
+                                      color: themeColors().formulaError(),
+                                    ),
+                              width: 35,
+                              alignment: Alignment.topLeft,
+                            ),
+                            Flexible(child: _buildFormulaOutput(index, calculated, _foundFormulaCoordinates))
+                          ],
+                        ))
+                      ]))
+                    : Container(),
+                _currentEditId == formula.id || _currentEditNameId == formula.id
                     ? GCWIconButton(
                         icon: Icons.check,
                         onPressed: () {
-                          formula.formula = _currentEditedFormula;
-                          _updateFormula(formula);
-
-                          setState(() {
-                            _currentEditId = null;
-                            _editFormulaController.clear();
-                          });
+                          if (_currentEditId == formula.id) {
+                            formula.formula = _currentEditedFormula;
+                            _updateFormula(formula);
+                            setState(() {
+                              _currentEditId = null;
+                              _editFormulaController.clear();
+                            });
+                          } else if (_currentEditNameId == formula.id) {
+                            formula.name = _currentEditedName;
+                            _updateFormula(formula);
+                            setState(() {
+                              _currentEditNameId = null;
+                              _editNameController.clear();
+                            });
+                          }
                         },
                       )
                     : Container(),
@@ -340,6 +401,15 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                                           _updateFormula(formula);
                                           setState(() {});
                                         });
+                                      })),
+                              GCWPopupMenuItem(
+                                  child: iconedGCWPopupMenuItem(
+                                      context, Icons.text_fields, 'formulasolver_formulas_nameformula'),
+                                  action: (index) => setState(() {
+                                        _currentEditNameId = formula.id;
+                                        _currentEditedName = formula.name;
+                                        _editNameController.text = formula.name;
+                                        FocusScope.of(context).requestFocus(_editFocusNode);
                                       })),
                               GCWPopupMenuItem(
                                   child: iconedGCWPopupMenuItem(
@@ -398,7 +468,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
             ),
           );
 
-          if (_currentEditId != formula.id) {
+          if (_currentEditId != formula.id && _currentEditNameId != formula.id) {
             row = IntrinsicHeight(child: row);
           }
 
@@ -425,7 +495,8 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                   size: IconButtonSize.SMALL,
                   onPressed: () {
                     setState(() {
-                      Prefs.setBool('formulasolver_coloredformulas', !Prefs.getBool('formulasolver_coloredformulas'));
+                      Prefs.setBool(PREFERENCE_FORMULASOLVER_COLOREDFORMULAS,
+                          !Prefs.getBool(PREFERENCE_FORMULASOLVER_COLOREDFORMULAS));
                     });
                   },
                 ),
@@ -600,8 +671,10 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
     });
 
     return SelectableText.rich(TextSpan(
-        children: _buildTextSpans(formula,
-            formulaPainter.paintFormula(formula, vals, formulaIndex, Prefs.getBool('formulasolver_coloredformulas')))));
+        children: _buildTextSpans(
+            formula,
+            formulaPainter.paintFormula(
+                formula, vals, formulaIndex, Prefs.getBool(PREFERENCE_FORMULASOLVER_COLOREDFORMULAS)))));
   }
 
   List<InlineSpan> _buildTextSpans(String formula, String formulaColors) {

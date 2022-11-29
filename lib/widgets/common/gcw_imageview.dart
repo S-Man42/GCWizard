@@ -19,6 +19,7 @@ import 'package:intl/intl.dart';
 import 'package:photo_view/photo_view.dart';
 
 enum GCWImageViewButtons { ALL, SAVE, VIEW_IN_TOOLS }
+
 enum GCWImageViewOpenInTools { METADATA, HEXVIEW, COLORCORRECTIONS, HIDDENDATA, FLIPROTATE }
 
 class GCWImageViewData {
@@ -161,6 +162,7 @@ class _GCWImageViewState extends State<GCWImageView> {
 
   _createToolbar() {
     var iconSize = widget.toolBarRight ? IconButtonSize.NORMAL : IconButtonSize.SMALL;
+    var padding = widget.toolBarRight ? 2 * DOUBLE_DEFAULT_MARGIN : null;
 
     return [
       GCWIconButton(

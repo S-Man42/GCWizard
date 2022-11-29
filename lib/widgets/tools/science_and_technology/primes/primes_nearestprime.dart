@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/primes/primes.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_output.dart';
 
 class NearestPrime extends StatefulWidget {
   @override

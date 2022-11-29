@@ -1,4 +1,5 @@
 import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/segment_display.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/painter.dart';
@@ -58,18 +59,18 @@ class NSegmentDisplayState extends State<NSegmentDisplay> {
             child: AspectRatio(
                 aspectRatio: widget.aspectRatio,
                 child: CanvasTouchDetector(
-                  builder: (context) {
-                    return CustomPaint(
-                        painter: SegmentDisplayPainter(context, widget.type, _segments, (key, value) {
-                      if (widget.readOnly) return;
+                    gesturesToOverride: [GestureType.onTapDown],
+                    builder: (context) {
+                      return CustomPaint(
+                          painter: SegmentDisplayPainter(context, widget.type, _segments, (key, value) {
+                        if (widget.readOnly) return;
 
-                      setState(() {
-                        _segments[key] = value;
-                        widget.onChanged(_segments);
-                      });
-                    }, customPaint: widget.customPaint));
-                  },
-                )))
+                        setState(() {
+                          _segments[key] = value;
+                          widget.onChanged(_segments);
+                        });
+                      }, customPaint: widget.customPaint));
+                    })))
       ],
     );
   }

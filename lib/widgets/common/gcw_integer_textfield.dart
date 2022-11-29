@@ -1,8 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/integer_textinputformatter.dart';
-
-import 'dart:math';
 
 class GCWIntegerTextField extends StatefulWidget {
   final TextEditingController controller;

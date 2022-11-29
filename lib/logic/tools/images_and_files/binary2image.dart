@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
@@ -8,9 +9,7 @@ import 'package:gc_wizard/utils/common_utils.dart';
 Map<String, Color> colorMap = {
   '0': Colors.white,
   '1': Colors.black,
-  '2': Colors.redAccent,
-
-  ///light red
+  '2': Colors.redAccent, //light red
   '3': Colors.yellow.shade100, //light yellow
   '4': Colors.lightGreen,
   '5': Colors.cyanAccent, //light cyan,

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
-import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/astronomy/julian_date.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/astronomy/moon_rise_set.dart' as logic;
 import 'package:gc_wizard/utils/common_utils.dart';
@@ -10,7 +9,6 @@ import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
-import 'package:prefs/prefs.dart';
 
 class MoonRiseSet extends StatefulWidget {
   @override
@@ -40,8 +38,7 @@ class MoonRiseSetState extends State<MoonRiseSet> {
           text: i18n(context, 'astronomy_riseset_date'),
         ),
         GCWDateTimePicker(
-          type: DateTimePickerType.DATE_ONLY,
-          withTimezones: true,
+          config: {DateTimePickerConfig.DATE, DateTimePickerConfig.TIMEZONES},
           onChanged: (datetime) {
             setState(() {
               _currentDateTime = datetime;
@@ -58,7 +55,7 @@ class MoonRiseSetState extends State<MoonRiseSet> {
         _currentCoords,
         JulianDate(_currentDateTime['datetime'], _currentDateTime['timezone']),
         _currentDateTime['timezone'],
-        getEllipsoidByName(Prefs.get('coord_default_ellipsoid_name')));
+        defaultEllipsoid());
 
     var outputs = [
       [

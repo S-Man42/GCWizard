@@ -84,7 +84,6 @@ class NumeralWordsConverterState extends State<NumeralWordsConverter> {
           )
         else // encode
           GCWIntegerSpinner(
-            title: i18n(context, 'common_numeralbase_denary'),
             min: MIN_MAX_NUMBER[_currentLanguage][0],
             max: MIN_MAX_NUMBER[_currentLanguage][1],
             value: _currentNumber,
@@ -125,12 +124,8 @@ class NumeralWordsConverterState extends State<NumeralWordsConverter> {
           ],
         ),
       if (_currentMode == GCWSwitchPosition.right) // decode
-        GCWTextDivider(text: i18n(context, 'common_numeralbase_denary'))
-      else
-        GCWTextDivider(text: i18n(context, 'numeralwords_converter_numeralword')),
-      if (_currentMode == GCWSwitchPosition.right) // decode
         GCWOutputText(
-          text: output.number.toString(),
+          text: _currentDecodeInput.length == 0 ? '' : output.number.toString(),
         )
       else
         GCWOutputText(

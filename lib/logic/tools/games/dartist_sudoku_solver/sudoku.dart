@@ -11,10 +11,6 @@
     Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
  */
 
-// Port of Solving Every Sudoku Puzzle by Peter Norvig (http://norvig.com/sudoku.html)
-
-import "dart:math" as Math;
-
 int _MAX_SOLUTIONS = 1000;
 int _FOUND_SOLUTIONS = 0;
 

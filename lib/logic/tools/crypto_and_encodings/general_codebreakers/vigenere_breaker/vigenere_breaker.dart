@@ -1,12 +1,15 @@
 import 'dart:math';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/guballa.de/breaker.dart'
-    as guballa;
+
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/guballa.de/breaker.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/bigrams/bigrams.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/guballa.de/breaker.dart'
+    as guballa;
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere.dart';
 
 enum VigenereBreakerType { VIGENERE, AUTOKEYVIGENERE, BEAUFORT }
+
 enum VigenereBreakerAlphabet { ENGLISH, GERMAN, SPANISH, FRENCH }
+
 enum VigenereBreakerErrorCode {
   OK,
   KEY_LENGTH,

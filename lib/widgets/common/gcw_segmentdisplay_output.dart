@@ -1,11 +1,13 @@
 import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/utils/settings/preferences.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/n_segment_display.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/utils.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/segment_display_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:intl/intl.dart';
 import 'package:prefs/prefs.dart';
@@ -21,6 +23,8 @@ class GCWSegmentDisplayOutput extends StatefulWidget {
   final bool readOnly;
   final Widget trailing;
   final bool showZoomButtons;
+  final double verticalSymbolPadding;
+  final double horizontalSymbolPadding;
 
   const GCWSegmentDisplayOutput(
       {Key key,
@@ -29,7 +33,9 @@ class GCWSegmentDisplayOutput extends StatefulWidget {
       this.segments,
       this.readOnly,
       this.trailing,
-      this.showZoomButtons: true})
+      this.showZoomButtons: true,
+      this.verticalSymbolPadding,
+      this.horizontalSymbolPadding})
       : super(key: key);
 
   @override
@@ -50,8 +56,8 @@ class _GCWSegmentDisplayOutputState extends State<GCWSegmentDisplayOutput> {
   Widget build(BuildContext context) {
     final mediaQueryData = MediaQuery.of(context);
     var countColumns = mediaQueryData.orientation == Orientation.portrait
-        ? Prefs.get('symboltables_countcolumns_portrait')
-        : Prefs.get('symboltables_countcolumns_landscape');
+        ? Prefs.get(PREFERENCE_SYMBOLTABLES_COUNTCOLUMNS_PORTRAIT)
+        : Prefs.get(PREFERENCE_SYMBOLTABLES_COUNTCOLUMNS_LANDSCAPE);
 
     return Column(children: <Widget>[
       GCWTextDivider(
@@ -77,7 +83,10 @@ class _GCWSegmentDisplayOutputState extends State<GCWSegmentDisplayOutput> {
                 icon: Icons.save,
                 iconColor: (widget.segments == null) || (widget.segments.length == 0) ? themeColors().inActive() : null,
                 onPressed: () async {
-                  await buildSegmentDisplayImage(countColumns, _displays, _currentUpsideDown).then((image) {
+                  await buildSegmentDisplayImage(countColumns, _displays, _currentUpsideDown,
+                          horizontalPadding: widget.horizontalSymbolPadding,
+                          verticalPadding: widget.verticalSymbolPadding)
+                      .then((image) {
                     if (image != null)
                       image.toByteData(format: ui.ImageByteFormat.png).then((data) {
                         _exportFile(context, data.buffer.asUint8List());
@@ -95,8 +104,8 @@ class _GCWSegmentDisplayOutputState extends State<GCWSegmentDisplayOutput> {
                   setState(() {
                     int newCountColumn = max(countColumns - 1, 1);
                     mediaQueryData.orientation == Orientation.portrait
-                        ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
-                        : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
+                        ? Prefs.setInt(PREFERENCE_SYMBOLTABLES_COUNTCOLUMNS_PORTRAIT, newCountColumn)
+                        : Prefs.setInt(PREFERENCE_SYMBOLTABLES_COUNTCOLUMNS_LANDSCAPE, newCountColumn);
                   });
                 },
               ),
@@ -108,8 +117,8 @@ class _GCWSegmentDisplayOutputState extends State<GCWSegmentDisplayOutput> {
                   setState(() {
                     int newCountColumn = countColumns + 1;
                     mediaQueryData.orientation == Orientation.portrait
-                        ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
-                        : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
+                        ? Prefs.setInt(PREFERENCE_SYMBOLTABLES_COUNTCOLUMNS_PORTRAIT, newCountColumn)
+                        : Prefs.setInt(PREFERENCE_SYMBOLTABLES_COUNTCOLUMNS_LANDSCAPE, newCountColumn);
                   });
                 },
               ),
@@ -133,7 +142,8 @@ class _GCWSegmentDisplayOutputState extends State<GCWSegmentDisplayOutput> {
         : _displays.map((display) {
             return Transform.rotate(angle: _currentUpsideDown ? pi : 0, child: display);
           }).toList();
-    return buildSegmentDisplayOutput(countColumns, viewList);
+    return buildSegmentDisplayOutput(countColumns, viewList,
+        verticalPadding: widget.verticalSymbolPadding, horizontalPadding: widget.horizontalSymbolPadding);
   }
 }
 

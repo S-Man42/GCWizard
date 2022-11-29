@@ -35,7 +35,7 @@ class CountriesState extends State<Countries> {
         if (widget.fields.length == 1)
           GCWTwoOptionsSwitch(
             value: _currentSwitchSort,
-            title: i18n(context, 'countries_sort'),
+            title: i18n(context, 'common_sortby'),
             leftValue: i18n(context, _currentSortList[0]),
             rightValue: i18n(context, _currentSortList[1]),
             onChanged: (value) {
@@ -47,7 +47,7 @@ class CountriesState extends State<Countries> {
           ),
         if (widget.fields.length > 1)
           GCWDropDownButton(
-            title: i18n(context, 'countries_sort'),
+            title: i18n(context, 'common_sortby'),
             value: _currentSort,
             onChanged: (value) {
               setState(() {

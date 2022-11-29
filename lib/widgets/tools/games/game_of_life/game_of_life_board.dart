@@ -22,6 +22,7 @@ class GameOfLifeBoardState extends State<GameOfLifeBoard> {
             child: AspectRatio(
                 aspectRatio: 1 / 1,
                 child: CanvasTouchDetector(
+                  gesturesToOverride: [GestureType.onTapDown],
                   builder: (context) {
                     return CustomPaint(
                         painter: GameOfLifePainter(context, widget.size, widget.state, (int x, int y, bool value) {

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/segment_display.dart';
 import 'package:gc_wizard/widgets/common/gcw_touchcanvas.dart';
-import 'package:touchable/touchable.dart';
 
-defaultSegmentPaint() {
+Paint defaultSegmentPaint() {
   var paint = Paint();
   paint.strokeWidth = 0;
   paint.style = PaintingStyle.fill;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
+import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
@@ -15,12 +16,15 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_geo3x3.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_geohash.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_geohex.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_maidenhead.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_makaney.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_mercator.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_lambert.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_mgrs.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_naturalareacode.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_openlocationcode.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_paste_button.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_quadtree.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_reversewherigo_day1976.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_reversewherigo_waldmeister.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_slippymap.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_swissgrid.dart';
@@ -182,6 +186,18 @@ class GCWCoordsState extends State<GCWCoords> {
         ),
       },
       {
+        'coordFormat': getCoordinateFormatByKey(keyCoordsLambert),
+        'widget': GCWCoordsLambert(
+          coordinates: _pastedCoords,
+          subtype: _currentCoordsFormat['subtype'],
+          onChanged: (newValue) {
+            setState(() {
+              _setCurrentValueAndEmitOnChange(newValue);
+            });
+          },
+        ),
+      },
+      {
         'coordFormat': getCoordinateFormatByKey(keyCoordsDutchGrid),
         'widget': GCWCoordsDutchGrid(
           coordinates: _pastedCoords,
@@ -229,7 +245,18 @@ class GCWCoordsState extends State<GCWCoords> {
         'coordFormat': getCoordinateFormatByKey(keyCoordsSlippyMap),
         'widget': GCWCoordsSlippyMap(
           coordinates: _pastedCoords,
-          zoom: _currentCoordsFormat['subtype'],
+          zoom: double.tryParse(_currentCoordsFormat['subtype'] ?? DefaultSlippyZoom.toString()),
+          onChanged: (newValue) {
+            setState(() {
+              _setCurrentValueAndEmitOnChange(newValue);
+            });
+          },
+        ),
+      },
+      {
+        'coordFormat': getCoordinateFormatByKey(keyCoordsMakaney),
+        'widget': GCWCoordsMakaney(
+          coordinates: _pastedCoords,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -295,6 +322,17 @@ class GCWCoordsState extends State<GCWCoords> {
       {
         'coordFormat': getCoordinateFormatByKey(keyCoordsReverseWherigoWaldmeister),
         'widget': GCWCoordsReverseWherigoWaldmeister(
+          coordinates: _pastedCoords,
+          onChanged: (newValue) {
+            setState(() {
+              _setCurrentValueAndEmitOnChange(newValue);
+            });
+          },
+        ),
+      },
+      {
+        'coordFormat': getCoordinateFormatByKey(keyCoordsReverseWherigoDay1976),
+        'widget': GCWCoordsReverseWherigoDay1976(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
             setState(() {
@@ -414,20 +452,10 @@ class GCWCoordsState extends State<GCWCoords> {
       case keyCoordsSwissGridPlus:
         break;
       case keyCoordsGaussKrueger:
-      case keyCoordsGaussKruegerGK1:
-        _currentCoordsFormat.addAll({'subtype': keyCoordsGaussKruegerGK1});
+        _currentCoordsFormat.addAll({'subtype': getGaussKruegerTypKey()});
         break;
-      case keyCoordsGaussKruegerGK2:
-        _currentCoordsFormat.addAll({'subtype': keyCoordsGaussKruegerGK2});
-        break;
-      case keyCoordsGaussKruegerGK3:
-        _currentCoordsFormat.addAll({'subtype': keyCoordsGaussKruegerGK3});
-        break;
-      case keyCoordsGaussKruegerGK4:
-        _currentCoordsFormat.addAll({'subtype': keyCoordsGaussKruegerGK4});
-        break;
-      case keyCoordsGaussKruegerGK5:
-        _currentCoordsFormat.addAll({'subtype': keyCoordsGaussKruegerGK5});
+      case keyCoordsLambert:
+        _currentCoordsFormat.addAll({'subtype': getLambertKey()});
         break;
       case keyCoordsDutchGrid:
       case keyCoordsMaidenhead:
@@ -435,14 +463,16 @@ class GCWCoordsState extends State<GCWCoords> {
       case keyCoordsNaturalAreaCode:
         break;
       case keyCoordsSlippyMap:
-        _currentCoordsFormat.addAll({'subtype': '10.0'});
+        _currentCoordsFormat.addAll({'subtype': DefaultSlippyZoom.toString()});
         break;
       case keyCoordsGeohash:
       case keyCoordsGeoHex:
       case keyCoordsGeo3x3:
       case keyCoordsOpenLocationCode:
       case keyCoordsQuadtree:
+      case keyCoordsMakaney:
       case keyCoordsReverseWherigoWaldmeister:
+      case keyCoordsReverseWherigoDay1976:
         break;
       default:
         _currentCoordsFormat = {'format': keyCoordsDMM};

@@ -5,6 +5,7 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/image_processing.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/utils/settings/preferences.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_slider.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
@@ -17,8 +18,8 @@ import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
-import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:gc_wizard/widgets/utils/gcw_file.dart';
+import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:image/image.dart' as img;
 import 'package:prefs/prefs.dart';
 
@@ -76,7 +77,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
   };
 
   _currentDataInit({int previewSize}) {
-    var previewHeight = previewSize ?? Prefs.getInt('imagecolorcorrections_maxpreviewheight');
+    var previewHeight = previewSize ?? Prefs.getInt(PREFERENCE_IMAGECOLORCORRECTIONS_MAXPREVIEWHEIGHT);
 
     img.Image image = img.decodeImage(_originalData.bytes);
 
@@ -149,7 +150,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
           GCWTextDivider(
               suppressTopSpace: true,
               text: i18n(context, 'image_colorcorrections_previewsize_title', parameters: [
-                i18n(context, PREVIEW_VALUES[Prefs.get('imagecolorcorrections_maxpreviewheight')]['title'])
+                i18n(context, PREVIEW_VALUES[Prefs.get(PREFERENCE_IMAGECOLORCORRECTIONS_MAXPREVIEWHEIGHT)]['title'])
               ]),
               trailing: GCWPopupMenu(
                   iconData: Icons.settings,
@@ -175,7 +176,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
                                 ),
                                 action: (index) {
                                   setState(() {
-                                    Prefs.setInt('imagecolorcorrections_maxpreviewheight', key);
+                                    Prefs.setInt(PREFERENCE_IMAGECOLORCORRECTIONS_MAXPREVIEWHEIGHT, key);
 
                                     _originalPreview = _currentDataInit(previewSize: key);
                                     _currentPreview = img.Image.from(_originalPreview);
@@ -445,7 +446,7 @@ img.Image _doAdjustColor(_AdjustColorInput input) {
 
   final pixels = image.getBytes();
   for (var i = 0, len = pixels.length; i < len; i += 4) {
-    var pixel = RGBPixel(pixels[i].toDouble(), pixels[i + 1].toDouble(), pixels[i + 2].toDouble());
+    var pixel = RGBPixel.getPixel(pixels, i);
 
     if (input.red != 0.0 || input.green != 0.0 || input.blue != 0.0)
       pixel = colorOffset(pixel, input.red, input.green, input.blue);
@@ -465,9 +466,7 @@ img.Image _doAdjustColor(_AdjustColorInput input) {
 
     if (input.grayscale) pixel = grayscale(pixel);
 
-    pixels[i] = pixel.red.round().clamp(0, 255);
-    pixels[i + 1] = pixel.green.round().clamp(0, 255);
-    pixels[i + 2] = pixel.blue.round().clamp(0, 255);
+    pixel.setPixel(pixels, i);
   }
 
   return image;

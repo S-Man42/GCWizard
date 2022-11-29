@@ -1,4 +1,5 @@
 import 'dart:math';
+
 import 'package:diacritic/diacritic.dart';
 import 'package:tuple/tuple.dart';
 

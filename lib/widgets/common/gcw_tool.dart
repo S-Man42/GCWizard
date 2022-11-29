@@ -1,14 +1,17 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/i18n/supported_locales.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/utils/settings/preferences.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_symbol_container.dart';
+import 'package:gc_wizard/widgets/favorites.dart';
 import 'package:gc_wizard/widgets/selector_lists/gcw_selection.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 enum ToolCategory {
   CRYPTOGRAPHY,
@@ -97,8 +100,7 @@ class GCWTool extends StatefulWidget {
   final isBeta;
 
   var icon;
-  var _id = '';
-  var _isFavorite = false;
+  var id = '';
 
   var toolName;
   var defaultLanguageToolName;
@@ -121,8 +123,7 @@ class GCWTool extends StatefulWidget {
       this.isBeta: false,
       this.suppressHelpButton: false})
       : super(key: key) {
-    this._id = className(tool) + '_' + (i18nPrefix ?? '');
-    this._isFavorite = Prefs.getStringList('favorites').contains('$_id');
+    this.id = className(tool) + '_' + (i18nPrefix ?? '');
 
     if (iconPath != null) {
       this.icon = GCWSymbolContainer(
@@ -132,19 +133,7 @@ class GCWTool extends StatefulWidget {
   }
 
   bool get isFavorite {
-    return this._isFavorite;
-  }
-
-  void set isFavorite(bool isFavorite) {
-    _isFavorite = isFavorite;
-
-    var _favorites = Prefs.getStringList('favorites');
-    if (isFavorite && !_favorites.contains(_id)) {
-      _favorites.add(_id);
-    } else if (!isFavorite) {
-      while (_favorites.contains(_id)) _favorites.remove(_id);
-    }
-    Prefs.setStringList('favorites', _favorites);
+    return Favorites.isFavorite(id);
   }
 
   @override
@@ -154,6 +143,13 @@ class GCWTool extends StatefulWidget {
 class _GCWToolState extends State<GCWTool> {
   var _toolName;
   var _defaultLanguageToolName;
+
+  @override
+  void initState() {
+    _setToolCount(widget.id);
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -229,7 +225,7 @@ class _GCWToolState extends State<GCWTool> {
     return IconButton(
       icon: Icon(Icons.help),
       onPressed: () {
-        launch(url);
+        launchUrl(Uri.parse(url));
       },
     );
   }
@@ -260,11 +256,11 @@ class _GCWToolState extends State<GCWTool> {
                   i18n(context, button.title),
                   i18n(context, button.text),
                   () {
-                    launch(i18n(context, url) ?? url);
+                    launchUrl(Uri.parse(i18n(context, url) ?? url));
                   },
                 );
               } else
-                launch(i18n(context, url));
+                launchUrl(Uri.parse(i18n(context, url)));
             },
           ));
       });
@@ -297,4 +293,19 @@ class _GCWToolState extends State<GCWTool> {
       ),
     );
   }
+}
+
+_setToolCount(String i18nPrefix) {
+  var toolCountsRaw = Prefs.get(PREFERENCE_TOOL_COUNT);
+  if (toolCountsRaw == null) toolCountsRaw = '{}';
+
+  Map<String, int> toolCounts = Map<String, int>.from(jsonDecode(toolCountsRaw));
+  var currentToolCount = toolCounts[i18nPrefix];
+
+  if (currentToolCount == null) currentToolCount = 0;
+
+  currentToolCount++;
+  toolCounts[i18nPrefix] = currentToolCount;
+
+  Prefs.setString(PREFERENCE_TOOL_COUNT, jsonEncode(toolCounts));
 }

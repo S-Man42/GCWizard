@@ -1,19 +1,20 @@
-import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
-import 'package:gc_wizard/widgets/common/gcw_symbol_container.dart';
-import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
-import 'package:prefs/prefs.dart';
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/symbol_tables/symbol_replacer.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/utils/settings/preferences.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/gcw_symbol_container.dart';
+import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
+import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_symbol_matrix.dart';
-import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table_data.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_replacer/symbol_replacer_symboldata.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table_data.dart';
+import 'package:prefs/prefs.dart';
 
 class SymbolReplacerManualSetter extends StatefulWidget {
   final SymbolReplacerImage symbolImage;
@@ -52,8 +53,8 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
   Widget build(BuildContext context) {
     final mediaQueryData = MediaQuery.of(context);
     var countColumns = mediaQueryData.orientation == Orientation.portrait
-        ? Prefs.get('symboltables_countcolumns_portrait')
-        : Prefs.get('symboltables_countcolumns_landscape');
+        ? Prefs.get(PREFERENCE_SYMBOLTABLES_COUNTCOLUMNS_PORTRAIT)
+        : Prefs.get(PREFERENCE_SYMBOLTABLES_COUNTCOLUMNS_LANDSCAPE);
 
     if (_init) {
       _fillSymbolDataItems(widget.symbolImage.compareSymbols);
@@ -213,7 +214,7 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
             },
           ),
         ],
-        flex: [3, 1],
+        flexValues: [3, 1],
       ),
       Row(
         children: [

@@ -8,7 +8,6 @@ import 'package:gc_wizard/widgets/main_menu/gcw_mainmenuentry_stub.dart';
 import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class CallForContribution extends StatefulWidget {
   @override
@@ -34,7 +33,7 @@ class CallForContributionState extends State<CallForContribution> {
             text: i18n(context, 'callforcontribution_7'),
             recognizer: new TapGestureRecognizer()
               ..onTap = () {
-                launch('https://github.com/S-Man42/GCWizard');
+                launchUrl(Uri.parse('https://github.com/S-Man42/GCWizard'));
               },
             style: gcwHyperlinkTextStyle()),
         TextSpan(
@@ -93,7 +92,7 @@ class CallForContributionState extends State<CallForContribution> {
             style: gcwHyperlinkTextStyle().copyWith(fontSize: defaultFontSize() + 2),
           ),
           onTap: () {
-            launch(i18n(context, 'common_support_link'));
+            launchUrl(Uri.parse(i18n(context, 'common_support_link')));
           },
         ),
         GCWDivider(),

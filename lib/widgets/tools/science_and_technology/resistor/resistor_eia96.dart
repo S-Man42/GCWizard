@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/resistor.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_formatter.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class ResistorEIA96 extends StatefulWidget {
   @override
@@ -45,14 +47,14 @@ class ResistorEIA96State extends State<ResistorEIA96> {
                 child: GCWDropDownButton(
               value: _currentMultiplicator,
               items: {
-                'Y': 'Y = 10' + stringToSuperscript('-2') + ' = 0.01',
-                'X': 'X = 10' + stringToSuperscript('-1') + ' = 0.1',
-                'A': 'A = 10' + stringToSuperscript('0') + ' = 1',
-                'B': 'B = 10' + stringToSuperscript('1') + ' = 10',
-                'C': 'C = 10' + stringToSuperscript('2') + ' = 100',
-                'D': 'D = 10' + stringToSuperscript('3') + ' = 1 000',
-                'E': 'E = 10' + stringToSuperscript('4') + ' = 10 000',
-                'F': 'F = 10' + stringToSuperscript('5') + ' = 100 000',
+                'Y': _buildSuperscriptedRichText('Y = 10', '-2', ' = 0.01'),
+                'X': _buildSuperscriptedRichText('X = 10', '-', ' = 0.1'),
+                'A': _buildSuperscriptedRichText('A = 10', '0', ' = 1'),
+                'B': _buildSuperscriptedRichText('B = 10', '1', ' = 10'),
+                'C': _buildSuperscriptedRichText('C = 10', '2', ' = 100'),
+                'D': _buildSuperscriptedRichText('D = 10', '3', ' = 1 000'),
+                'E': _buildSuperscriptedRichText('E = 10', '4', ' = 10 000'),
+                'F': _buildSuperscriptedRichText('F = 10', '5', ' = 100 000'),
               }.entries.map((entry) {
                 return GCWDropDownMenuItem(
                   value: entry.key,
@@ -70,6 +72,13 @@ class ResistorEIA96State extends State<ResistorEIA96> {
         _buildOutput()
       ],
     );
+  }
+
+  _buildSuperscriptedRichText(String before, String superscript, String after) {
+    return RichText(
+        text: TextSpan(
+            style: gcwTextStyle(),
+            children: [TextSpan(text: before), superscriptedTextForRichText(superscript), TextSpan(text: after)]));
   }
 
   _buildOutput() {

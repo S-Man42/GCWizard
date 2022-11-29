@@ -27,6 +27,14 @@ class RGB {
     return _percentage(blue);
   }
 
+  String toRBGString() {
+    return '${red.round()}, ${green.round()}, ${blue.round()}';
+  }
+
+  bool equals(RGB rgb) {
+    return red == rgb.red && green == rgb.green && blue == rgb.blue;
+  }
+
   @override
   toString() {
     return 'RGB($red, $green, $blue)';
@@ -78,4 +86,27 @@ class HexCode {
   toString() {
     return '#' + hexCode;
   }
+}
+
+double _rgbDistance(RGB a, RGB b) {
+  return sqrt(pow(a.red - b.red, 2) + pow(a.green - b.green, 2) + pow(a.blue - b.blue, 2));
+}
+
+List<RGB> findNearestRGBs(RGB fromRGB, List<RGB> toRGBs, {int distance: 32}) {
+  var out = <RGB>[];
+
+  toRGBs.forEach((toRGB) {
+    var actualDistance = _rgbDistance(fromRGB, toRGB);
+
+    if (actualDistance <= distance) out.add(toRGB);
+  });
+
+  out.sort((a, b) {
+    var aDistance = _rgbDistance(a, fromRGB);
+    var bDistance = _rgbDistance(b, fromRGB);
+
+    return aDistance.compareTo(bDistance);
+  });
+
+  return out;
 }

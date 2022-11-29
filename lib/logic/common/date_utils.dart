@@ -559,3 +559,8 @@ double PotrzebieCalendarToJulianDate(DateTime date) {
 
   return jd_p_zero + days;
 }
+
+/// calc day in the year
+int dayNumber(DateTime date) {
+  return date.difference(DateTime(date.year)).inDays + 1;
+}

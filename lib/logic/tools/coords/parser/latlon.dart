@@ -35,7 +35,10 @@ List<BaseCoordinates> parseCoordinates(String text, {wholeString = false}) {
     coord = MGRS.parse(text);
     if (coord != null) coords.add(coord);
 
-    coord = Waldmeister.parse(text);
+    coord = ReverseWherigoWaldmeister.parse(text);
+    if (coord != null) coords.add(coord);
+
+    coord = ReverseWherigoDay1976.parse(text);
     if (coord != null) coords.add(coord);
 
     coord = XYZ.parse(text);
@@ -54,6 +57,9 @@ List<BaseCoordinates> parseCoordinates(String text, {wholeString = false}) {
     }
 
     coord = GaussKrueger.parse(text);
+    if (coord != null) coords.add(coord);
+
+    coord = Lambert.parse(text);
     if (coord != null) coords.add(coord);
 
     coord = DutchGrid.parse(text);
@@ -80,12 +86,16 @@ List<BaseCoordinates> parseCoordinates(String text, {wholeString = false}) {
     coord = OpenLocationCode.parse(text);
     if (coord != null) coords.add(coord);
 
+    coord = Makaney.parse(text);
+    if (coord != null) coords.add(coord);
+
     coord = Quadtree.parse(text);
     if (coord != null) coords.add(coord);
 
     coord = SlippyMap.parse(text);
     if (coord != null) coords.add(coord);
   } catch (e) {}
+
   return coords;
 }
 

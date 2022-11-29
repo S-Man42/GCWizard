@@ -4,14 +4,15 @@ import 'package:gc_wizard/i18n/app_language.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/i18n/supported_locales.dart';
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/utils/default_settings.dart';
 import 'package:gc_wizard/widgets/common/gcw_clipboard_editor.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/main_view.dart';
 import 'package:gc_wizard/widgets/tools/coords/utils/navigation_service.dart';
-import 'package:gc_wizard/widgets/utils/AppBuilder.dart';
+import 'package:gc_wizard/widgets/utils/app_builder.dart';
 import 'package:prefs/prefs.dart';
 import 'package:provider/provider.dart';
+
+import 'utils/settings/default_settings.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +20,7 @@ void main() async {
   await Prefs.init();
   AppLanguage appLanguage = AppLanguage();
   await appLanguage.fetchLocale();
-  initDefaultSettings();
+  initDefaultSettings(PreferencesInitMode.STARTUP);
 
   runApp(App(
     appLanguage: appLanguage,

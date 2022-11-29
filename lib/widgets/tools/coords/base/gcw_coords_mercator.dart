@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_textfield.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 
 class GCWCoordsMercator extends StatefulWidget {
   final Function onChanged;
@@ -50,7 +50,7 @@ class GCWCoordsMercatorState extends State<GCWCoordsMercator> {
 
     return Column(children: <Widget>[
       GCWDoubleTextField(
-          hintText: i18n(context, 'coords_formatconverter_mercator_easting'),
+          hintText: i18n(context, 'coords_formatconverter_easting'),
           controller: _EastingController,
           onChanged: (ret) {
             setState(() {
@@ -59,7 +59,7 @@ class GCWCoordsMercatorState extends State<GCWCoordsMercator> {
             });
           }),
       GCWDoubleTextField(
-          hintText: i18n(context, 'coords_formatconverter_mercator_northing'),
+          hintText: i18n(context, 'coords_formatconverter_northing'),
           controller: _NorthingController,
           onChanged: (ret) {
             setState(() {

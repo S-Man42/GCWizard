@@ -1,8 +1,10 @@
 import 'dart:math';
+
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/chef_international.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/kitchen.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/recipe.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/primes/primes.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/chef_international.dart';
+import 'package:gc_wizard/utils/common_utils.dart';
 
 List<String> _getAuxiliaryRecipe(String name, int value, List<String> ingredientOne, ingredientTwo, String language) {
   List<String> output = new List<String>();
@@ -320,7 +322,7 @@ bool isValid(String input) {
 List<String> interpretChef(String language, recipe, input) {
   if (recipe == null || recipe == '') return new List<String>();
 
-  return decodeChef(language, recipe, input);
+  return decodeChef(language, normalizeUmlauts(recipe.toLowerCase().replaceAll(RegExp(r' +'), ' ')), input);
 }
 
 List<String> decodeChef(String language, recipe, additionalIngredients) {
@@ -328,8 +330,10 @@ List<String> decodeChef(String language, recipe, additionalIngredients) {
   List<String> result = [];
   if (interpreter.valid) {
     interpreter.bake(language, additionalIngredients);
+
     if (interpreter.valid) {
       result.addAll(interpreter.meal);
+
       if (interpreter.liquefyMissing) {
         result.add('\n');
         result.add('chef_warning_liquefy_missing_title');
@@ -344,8 +348,10 @@ List<String> decodeChef(String language, recipe, additionalIngredients) {
           result.add('» Schüssel in eine Servierschale stürzen. «');
       }
       return result;
-    } else // runtime error
+    } else {
+      // runtime error
       return interpreter.error;
+    }
   } else {
     // invalid recipe
     return interpreter.error;
@@ -489,13 +495,13 @@ class Chef {
       s0 = recipe[i];
     }
     readRecipe = recipe.join('\n');
-    readRecipe.split("\n\n").forEach((element) {
-      line = element.trim();
+    recipe = readRecipe.split("\n\n");
+    for (int i = 0; i < recipe.length; i++) {
+      line = recipe[i];
       if (line.startsWith("ingredients") || line.startsWith("zutaten")) {
         if (progress > 3) {
           valid = false;
           _addError(language, 2, progress);
-          return '';
         }
         progress = 3;
         r.setIngredients(line, language);
@@ -503,39 +509,33 @@ class Chef {
         if (r.error) {
           this.error.addAll(r.errorList);
           valid = false;
-          return '';
         }
       } else if (line.startsWith("cooking time") || line.startsWith("garzeit")) {
         if (progress > 4) {
           valid = false;
           _addError(language, 3, progress);
-          return '';
         }
         progress = 4;
         r.setCookingTime(line, language);
         if (r.error) {
           this.error.addAll(r.errorList);
           this.valid = false;
-          return '';
         }
       } else if (line.startsWith("pre-heat oven") || line.startsWith("pre heat oven") || line.startsWith("ofen auf")) {
         if (progress > 5) {
           valid = false;
           _addError(language, 4, progress);
-          return '';
         }
         progress = 5;
         r.setOvenTemp(line, language);
         if (r.error) {
           this.error.addAll(r.errorList);
           this.valid = false;
-          return '';
         }
       } else if (line.startsWith("method") || line.startsWith("zubereitung")) {
         if (progress > 5) {
           valid = false;
           _addError(language, 5, progress);
-          return '';
         }
         progress = 6;
         r.setMethod(line, language);
@@ -544,13 +544,11 @@ class Chef {
         if (r.error) {
           this.error.addAll(r.errorList);
           this.valid = false;
-          return '';
         }
       } else if (line.startsWith("serves") || line.startsWith("portionen")) {
         if (progress != 6) {
           valid = false;
           _addError(language, 6, progress);
-          return '';
         }
         progress = 0;
         r.setServes(line, language);
@@ -558,7 +556,6 @@ class Chef {
         if (r.error) {
           this.error.addAll(r.errorList);
           this.valid = false;
-          return '';
         }
       } else {
         if (progress == 0 || progress >= 6) {
@@ -589,10 +586,11 @@ class Chef {
               ''
             ]);
           }
-          return '';
         }
       }
-    });
+    }
+    ; // for each element of the recipe
+
     if (mainrecipe == null) {
       valid = false;
       error.addAll([
@@ -600,8 +598,8 @@ class Chef {
         Messages[language]['chef_error_structure_recipe_empty_missing_title'],
         ''
       ]);
-      return;
     }
+
     if (!titleFound) {
       valid = false;
       error.addAll([
@@ -609,7 +607,6 @@ class Chef {
         Messages[language]['chef_error_structure_recipe_missing_title'],
         ''
       ]);
-      return;
     }
     if (!ingredientsFound) {
       valid = false;
@@ -618,7 +615,6 @@ class Chef {
         Messages[language]['chef_error_structure_recipe_empty_ingredients'],
         ''
       ]);
-      return;
     }
     if (!methodsFound) {
       valid = false;
@@ -627,8 +623,8 @@ class Chef {
         Messages[language]['chef_error_structure_recipe_empty_methods'],
         ''
       ]);
-      return;
     }
+
     if (!servesFound && !refrigerateFound) {
       valid = false;
       error.addAll([
@@ -636,7 +632,6 @@ class Chef {
         Messages[language]['chef_error_structure_recipe_empty_serves'],
         ''
       ]);
-      return;
     }
   } // chef
 

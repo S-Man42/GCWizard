@@ -4,9 +4,12 @@
 // https://en.wikipedia.org/wiki/Tzolk%CA%BCin
 // https://www.hermetic.ch/cal_stud/maya/chap2g.htm
 // https://rolfrost.de/maya.html
+// Javascript sources Public Domain
+// https://www.fourmilab.ch/documents/calendar/
 
 import 'package:gc_wizard/logic/common/date_utils.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
+import 'package:gc_wizard/utils/settings/preferences.dart';
 import 'package:prefs/prefs.dart';
 
 enum CORRELATION { THOMPSON, SMILEY, WEITZEL }
@@ -249,18 +252,33 @@ DateOutput MayaDayCountToGregorianCalendar(int mayaDayCount) {
 }
 
 int MayaDayCountToJulianDate(int mayaDayCount) {
-  if (Prefs.getString('mayacalendar_correlation') == null || Prefs.getString('mayacalendar_correlation') == '')
+  if (Prefs.getString(PREFERENCE_MAYACALENDAR_CORRELATION) == null ||
+      Prefs.getString(PREFERENCE_MAYACALENDAR_CORRELATION) == '')
     return (mayaDayCount + _CORRELATION_NUMBER[THOMPSON]);
   else
-    return (mayaDayCount + _CORRELATION_NUMBER[Prefs.getString('mayacalendar_correlation')]);
+    return (mayaDayCount + _CORRELATION_NUMBER[Prefs.getString(PREFERENCE_MAYACALENDAR_CORRELATION)]);
 }
 
 int JulianDateToMayaDayCount(double jd) {
-  if (Prefs.getString('mayacalendar_correlation') == null || Prefs.getString('mayacalendar_correlation') == '')
+  if (Prefs.getString(PREFERENCE_MAYACALENDAR_CORRELATION) == null ||
+      Prefs.getString(PREFERENCE_MAYACALENDAR_CORRELATION) == '')
     jd = jd - _CORRELATION_NUMBER[THOMPSON];
   else
-    jd = jd - _CORRELATION_NUMBER[Prefs.getString('mayacalendar_correlation')];
+    jd = jd - _CORRELATION_NUMBER[Prefs.getString(PREFERENCE_MAYACALENDAR_CORRELATION)];
   return jd.round();
+}
+
+List<int> JulianDateToMayaLongCount(double jd) {
+  List<int> MayaLongCount = [];
+
+  int mayaDayCount = JulianDateToMayaDayCount(jd);
+
+  for (int i = mayaCalendarSystem.length; i > 0; i--) {
+    MayaLongCount.add((mayaDayCount / mayaCalendarSystem[i - 1]).floor());
+    mayaDayCount = mayaDayCount % mayaCalendarSystem[i - 1];
+  }
+
+  return MayaLongCount;
 }
 
 List<int> MayaDayCountToMayaLongCount(int MayaDayCount) {
@@ -268,6 +286,7 @@ List<int> MayaDayCountToMayaLongCount(int MayaDayCount) {
   List<int> result = [];
   for (int i = longCount.length; i > 0; i--) result.add(_toNumber(longCount[i - 1]));
   for (int i = longCount.length; i < 9; i++) result.add(0);
+
   return result.reversed.toList();
 }
 

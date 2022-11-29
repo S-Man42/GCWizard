@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
@@ -27,6 +26,9 @@ enum WHERIGO {
 const DATA_TYPE_LUA = 'LUA-Sourcecode';
 const DATA_TYPE_GWC = 'GWC-Cartridge';
 
+const EXPERT_MODE = true;
+const USER_MODE = false;
+
 enum FILE_LOAD_STATE { NULL, GWC, LUA, FULL }
 
 enum BUILDER { EARWIGO, URWIGO, GROUNDSPEAK, WHERIGOKIT, UNKNOWN }
@@ -34,6 +36,7 @@ enum BUILDER { EARWIGO, URWIGO, GROUNDSPEAK, WHERIGOKIT, UNKNOWN }
 enum ANALYSE_RESULT_STATUS { OK, ERROR_GWC, ERROR_LUA, ERROR_HTTP, NONE }
 
 enum OBJECT_TYPE { MEDIA, CARTRIDGE, ZONE, CHARACTER, ITEM, TASK, VARIABLES, TIMER, INPUT, MESSAGES }
+
 OBJECT_TYPE currentObjectSection;
 
 const MEDIATYPE_UNK = 0;
@@ -415,10 +418,10 @@ class WherigoCartridgeLUA {
   final String StateID;
   final String CountryID;
   final String UseLogging;
-  final String CreateDate;
-  final String PublishDate;
-  final String UpdateDate;
-  final String LastPlayedDate;
+  final DateTime CreateDate;
+  final DateTime PublishDate;
+  final DateTime UpdateDate;
+  final DateTime LastPlayedDate;
   final String httpCode;
   final String httpMessage;
 
@@ -447,22 +450,30 @@ class WherigoCartridgeLUA {
       this.CountryID = '',
       this.StateID = '',
       this.UseLogging = '',
-      this.CreateDate = '',
-      this.PublishDate = '',
-      this.UpdateDate = '',
-      this.LastPlayedDate = '',
+      this.CreateDate = null,
+      this.PublishDate = null,
+      this.UpdateDate = null,
+      this.LastPlayedDate = null,
       this.httpCode = '',
       this.httpMessage = ''});
 }
 
-Map<FILE_LOAD_STATE, Map<WHERIGO, String>> WHERIGO_DATA = {
-  FILE_LOAD_STATE.NULL: {},
-  FILE_LOAD_STATE.GWC: WHERIGO_DATA_GWC,
-  FILE_LOAD_STATE.LUA: WHERIGO_DATA_LUA,
-  FILE_LOAD_STATE.FULL: WHERIGO_DATA_FULL,
+Map<bool, Map<FILE_LOAD_STATE, Map<WHERIGO, String>>> WHERIGO_DATA = {
+  EXPERT_MODE: {
+    FILE_LOAD_STATE.NULL: {},
+    FILE_LOAD_STATE.GWC: WHERIGO_DATA_GWC_EXPERT,
+    FILE_LOAD_STATE.LUA: WHERIGO_DATA_LUA_EXPERT,
+    FILE_LOAD_STATE.FULL: WHERIGO_DATA_FULL_EXPERT,
+  },
+  USER_MODE: {
+    FILE_LOAD_STATE.NULL: {},
+    FILE_LOAD_STATE.GWC: WHERIGO_DATA_GWC_USER,
+    FILE_LOAD_STATE.LUA: WHERIGO_DATA_LUA_USER,
+    FILE_LOAD_STATE.FULL: WHERIGO_DATA_FULL_USER,
+  }
 };
 
-Map<WHERIGO, String> WHERIGO_DATA_FULL = {
+Map<WHERIGO, String> WHERIGO_DATA_FULL_EXPERT = {
   WHERIGO.HEADER: 'wherigo_data_header',
   WHERIGO.LUABYTECODE: 'wherigo_data_luabytecode',
   WHERIGO.MEDIAFILES: 'wherigo_data_mediafiles',
@@ -481,7 +492,7 @@ Map<WHERIGO, String> WHERIGO_DATA_FULL = {
   WHERIGO.RESULTS_LUA: 'wherigo_data_results_lua',
 };
 
-Map<WHERIGO, String> WHERIGO_DATA_GWC = {
+Map<WHERIGO, String> WHERIGO_DATA_GWC_EXPERT = {
   WHERIGO.HEADER: 'wherigo_data_header',
   WHERIGO.LUABYTECODE: 'wherigo_data_luabytecode',
   WHERIGO.MEDIAFILES: 'wherigo_data_mediafiles',
@@ -489,7 +500,7 @@ Map<WHERIGO, String> WHERIGO_DATA_GWC = {
   WHERIGO.RESULTS_GWC: 'wherigo_data_results_gwc',
 };
 
-Map<WHERIGO, String> WHERIGO_DATA_LUA = {
+Map<WHERIGO, String> WHERIGO_DATA_LUA_EXPERT = {
   WHERIGO.OBFUSCATORTABLE: 'wherigo_data_obfuscatortable',
   WHERIGO.LUAFILE: 'wherigo_data_lua',
   WHERIGO.MEDIAFILES: 'wherigo_data_mediafiles',
@@ -502,6 +513,31 @@ Map<WHERIGO, String> WHERIGO_DATA_LUA = {
   WHERIGO.MESSAGES: 'wherigo_data_message_list',
   WHERIGO.IDENTIFIER: 'wherigo_data_identifier_list',
   WHERIGO.RESULTS_LUA: 'wherigo_data_results_lua',
+};
+
+Map<WHERIGO, String> WHERIGO_DATA_FULL_USER = {
+  WHERIGO.HEADER: 'wherigo_data_header',
+  WHERIGO.MEDIAFILES: 'wherigo_data_mediafiles',
+  WHERIGO.RESULTS_GWC: 'wherigo_data_results_gwc',
+  WHERIGO.ITEMS: 'wherigo_data_item_list',
+  WHERIGO.CHARACTER: 'wherigo_data_character_list',
+  WHERIGO.ZONES: 'wherigo_data_zone_list',
+  WHERIGO.INPUTS: 'wherigo_data_input_list',
+  WHERIGO.MESSAGES: 'wherigo_data_message_list',
+};
+
+Map<WHERIGO, String> WHERIGO_DATA_GWC_USER = {
+  WHERIGO.HEADER: 'wherigo_data_header',
+  WHERIGO.MEDIAFILES: 'wherigo_data_mediafiles',
+};
+
+Map<WHERIGO, String> WHERIGO_DATA_LUA_USER = {
+  WHERIGO.MEDIAFILES: 'wherigo_data_mediafiles',
+  WHERIGO.ITEMS: 'wherigo_data_item_list',
+  WHERIGO.CHARACTER: 'wherigo_data_character_list',
+  WHERIGO.ZONES: 'wherigo_data_zone_list',
+  WHERIGO.INPUTS: 'wherigo_data_input_list',
+  WHERIGO.MESSAGES: 'wherigo_data_message_list',
 };
 
 final Map<String, String> HTTP_STATUS = {

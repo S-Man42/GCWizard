@@ -1,73 +1,70 @@
 name: gc_wizard
 description: GC Wizard
-version: 2.2.1+151
+version: 2.3.0+162
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
 
 dependencies:
-  archive: ^3.3.0
-  audioplayers: ^0.20.1
+  archive: ^3.3.2
+  audioplayers: ^1.1.1
   auto_size_text: ^3.0.0
-  base32: ^2.0.0
-  cached_network_image: ^3.1.0
+  base32: ^2.1.3
+  cached_network_image: ^3.2.2
+  code_text_field:
+    git: https://github.com/BertrandBev/code_field
   diacritic: ^0.1.1
-  file_picker: ^4.5.0
-  file_picker_writable: ^2.0.1
   encrypt: ^5.0.0
-  exif: ^3.1.1
+  exif: ^3.1.2
+  file_picker: ^5.2.1
+  file_picker_writable: ^2.0.3
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  flutter_map: ^0.14.0
-  flutter_map_marker_popup: ^2.1.2
-  flutter_map_tappable_polyline: ^3.1.0
-  fluttertoast: ^8.0.9
-  http: ^0.13.4
-  http_parser: ^4.0.0
-  image: ^3.1.3
+  flutter_map: ^1.1.1
+  flutter_map_marker_popup: ^3.1.0+1
+  flutter_map_tappable_polyline: ^3.2.0
+  fluttertoast: ^8.1.1
+  http: ^0.13.5
+  http_parser: ^4.0.2
+  image: ^3.2.2
   intl: ^0.17.0
-  location: ^4.3.0
-  mask_text_input_formatter: ^2.0.0
-  math_expressions: ^2.3.0
-  package_info_plus: ^1.4.0
-  path: ^1.8.0
-  path_provider: ^2.0.9
-  permission_handler: ^9.2.0
-  #photo_view: ^0.13.0
-  pointycastle: ^3.5.1
-  prefs: ^3.3.0
-  provider: ^6.0.1
-  qr: ^3.0.0
+  location: ^4.4.0
+  mask_text_input_formatter: ^2.4.0
+  math_expressions: ^2.3.1
+  package_info_plus: ^2.0.0
+  path: ^1.8.1
+  path_provider: ^2.0.11
+  permission_handler: ^10.1.0
+  photo_view: ^0.14.0
+  pointycastle: ^3.6.2
+  prefs: ^3.5.0
+  provider: ^6.0.4
+  qr: ^3.0.1
   r_scan: ^0.1.6+1
-  scrollable_positioned_list: ^0.2.3
-  touchable: ^1.0.0
-  tuple: ^2.0.0
+  scrollable_positioned_list: ^0.3.5
+  touchable: ^1.0.2
+  tuple: ^2.0.1
   universal_html: ^2.0.4
   unrar_file: ^1.1.0
   uuid: ^3.0.6
-  url_launcher: ^6.0.20
-  utility: ^1.0.1
-  code_text_field: ^1.0.2
-  #xmp: ^1.0.2 # xml:4  :(
-
-dependency_overrides:
-  # https://stackoverflow.com/questions/70404718/error-with-photoview-looking-up-a-deactivated-widgets-ancestor-is-unsafe/71010204#71010204
-  # avoids error "Looking up a deactivated widget's ancestor is unsafe"
-  # The problem is coming from photo_view package.
-  # should be removed as soon the plugin is updated
-  photo_view:
-    git:
-      url: https://github.com/bluefireteam/photo_view
-      ref: master
+  url_launcher: ^6.1.6
+  utility: ^1.0.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: 0.9.2
+  flutter_launcher_icons: 0.10.0
 
 flutter:
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto/Roboto-Bold.ttf
+        - asset: assets/fonts/Roboto/Roboto-BoldItalic.ttf
+        - asset: assets/fonts/Roboto/Roboto-Italic.ttf
+        - asset: assets/fonts/Roboto/Roboto-Regular.ttf
   uses-material-design: true
   assets:
     - assets/i18n/
@@ -81,6 +78,7 @@ flutter:
     - assets/symbol_tables/albhed/
     - assets/symbol_tables/alchemy/
     - assets/symbol_tables/alchemy_alphabet/
+    - assets/symbol_tables/alien_mushrooms/
     - assets/symbol_tables/alphabetum_arabum/
     - assets/symbol_tables/alphabetum_egiptiorum/
     - assets/symbol_tables/alphabetum_gothicum/
@@ -125,6 +123,7 @@ flutter:
     - assets/symbol_tables/cookewheatstone_5/
     - assets/symbol_tables/country_flags/
     - assets/symbol_tables/covenant/
+    - assets/symbol_tables/crystal/
     - assets/symbol_tables/cyrillic/
     - assets/symbol_tables/cyrillic_numbers/
     - assets/symbol_tables/daedric/
@@ -180,6 +179,7 @@ flutter:
     - assets/symbol_tables/hexahue/
     - assets/symbol_tables/hieratic_numerals/
     - assets/symbol_tables/hieroglyphs/
+    - assets/symbol_tables/hieroglyphs_v2/
     - assets/symbol_tables/hobbit_runes/
     - assets/symbol_tables/hvd/
     - assets/symbol_tables/hylian_64/
@@ -273,6 +273,7 @@ flutter:
     - assets/symbol_tables/rhesus_c1/
     - assets/symbol_tables/rhesus_c2/
     - assets/symbol_tables/rm4scc/
+    - assets/symbol_tables/robots/
     - assets/symbol_tables/romulan/
     - assets/symbol_tables/runes/
     - assets/symbol_tables/sanluca/

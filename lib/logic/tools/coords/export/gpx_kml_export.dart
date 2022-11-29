@@ -1,11 +1,12 @@
 import 'dart:io';
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:xml/xml.dart';
-import 'package:intl/intl.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
+import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:xml/xml.dart';
 
 Future<File> exportCoordinates(BuildContext context, List<GCWMapPoint> points, List<GCWMapPolyline> polylines,
     {bool kmlFormat = false, String json}) async {

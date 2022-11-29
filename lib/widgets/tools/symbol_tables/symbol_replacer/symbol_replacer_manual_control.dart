@@ -1,20 +1,21 @@
-import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
-import 'package:gc_wizard/widgets/common/gcw_symbol_container.dart';
-import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
-import 'package:prefs/prefs.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/symbol_tables/symbol_replacer.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
-import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
+import 'package:gc_wizard/utils/settings/preferences.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
+import 'package:gc_wizard/widgets/common/gcw_symbol_container.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
-import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
+import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_symbol_matrix.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_replacer/symbol_replacer_manual_setter.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table_data.dart';
-import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_symbol_matrix.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
+import 'package:prefs/prefs.dart';
 
 class SymbolReplacerManualControl extends StatefulWidget {
   final SymbolReplacerImage symbolImage;
@@ -50,8 +51,8 @@ class SymbolReplacerManualControlState extends State<SymbolReplacerManualControl
   Widget build(BuildContext context) {
     final mediaQueryData = MediaQuery.of(context);
     var countColumns = mediaQueryData.orientation == Orientation.portrait
-        ? Prefs.get('symboltables_countcolumns_portrait')
-        : Prefs.get('symboltables_countcolumns_landscape');
+        ? Prefs.get(PREFERENCE_SYMBOLTABLES_COUNTCOLUMNS_PORTRAIT)
+        : Prefs.get(PREFERENCE_SYMBOLTABLES_COUNTCOLUMNS_LANDSCAPE);
 
     return Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
       widget.symbolImage != null ? _buildEditRow() : Container(),
@@ -194,25 +195,39 @@ class SymbolReplacerManualControlState extends State<SymbolReplacerManualControl
           ),
           flex: 1,
         ),
-        Expanded(
-          child: Column(children: [
-            GCWText(
-                text: "Source",
-                align: Alignment.topCenter,
-                style: gcwTextStyle().copyWith(fontSize: defaultFontSize() - 2)),
-            Row(children: [
-              Expanded(child: Container(), flex: 1),
-              Container(
-                  height: 80,
-                  child: _getGroupSymbol(_selectedSymbolData) == null
-                      ? Container(width: 80, color: Colors.white)
-                      : GCWSymbolContainer(symbol: Image.memory(_getGroupSymbol(_selectedSymbolData).bytes))),
-              Expanded(child: Container(), flex: 1),
-            ])
-          ]),
-          flex: 1,
-        )
+        _identifiedSymbol()
       ],
+    );
+  }
+
+  Widget _identifiedSymbol() {
+    if (widget.symbolImage?.compareSymbols == null) {
+      return Expanded(
+        child: Column(children: [Container()]),
+        flex: 1,
+      );
+    }
+    ;
+
+    return Expanded(
+      child: Column(children: [
+        AutoSizeText(i18n(context, 'symbol_replacer_symbol'),
+            textAlign: TextAlign.center,
+            style: gcwTextStyle().copyWith(fontSize: defaultFontSize() - 2),
+            minFontSize: AUTO_FONT_SIZE_MIN,
+            maxLines: 2),
+        Container(height: 3),
+        Row(children: [
+          Expanded(child: Container(), flex: 1),
+          Container(
+              height: 80,
+              child: _getGroupSymbol(_selectedSymbolData) == null
+                  ? Container(width: 80, color: Colors.white)
+                  : GCWSymbolContainer(symbol: Image.memory(_getGroupSymbol(_selectedSymbolData).bytes))),
+          Expanded(child: Container(), flex: 1),
+        ])
+      ]),
+      flex: 1,
     );
   }
 

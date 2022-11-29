@@ -14,6 +14,7 @@ import 'package:intl/intl.dart';
 import 'gcw_exported_file_dialog.dart';
 
 enum TextExportMode { TEXT, QR }
+
 enum PossibleExportMode { TEXTONLY, QRONLY, BOTH }
 
 class GCWTextExport extends StatefulWidget {

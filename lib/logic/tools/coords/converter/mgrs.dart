@@ -1,7 +1,6 @@
 import 'package:gc_wizard/logic/tools/coords/converter/utm.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
-import 'package:gc_wizard/utils/constants.dart';
 import 'package:latlong2/latlong.dart';
 
 String digraphLettersEast = "ABCDEFGHJKLMNPQRSTUVWXYZ"; //without I and O

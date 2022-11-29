@@ -29,8 +29,6 @@ class VanityMultitapState extends State<VanityMultitap> {
   PhoneModel _currentModel = phoneModelByName(NAME_PHONEMODEL_NOKIA_3210);
   int _currentLanguageId = 0;
 
-  bool _currentEncodeCaseSensitive = false;
-
   @override
   void initState() {
     super.initState();

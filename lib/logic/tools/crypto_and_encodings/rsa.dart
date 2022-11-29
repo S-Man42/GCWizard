@@ -1,5 +1,4 @@
 import 'package:gc_wizard/logic/tools/science_and_technology/primes/primes.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
 
 BigInt phi(BigInt p, BigInt q) {
   if (!isPrime(p)) throw Exception('rsa_error_p.not.prime');
@@ -29,24 +28,16 @@ BigInt _encryptInteger(BigInt value, BigInt e, BigInt N) {
   return value.modPow(e, N);
 }
 
-String encryptRSA(String input, BigInt e, BigInt p, BigInt q) {
-  if (input == null || input.length == 0) return '';
+List<BigInt> encryptRSA(List<BigInt> input, BigInt e, BigInt p, BigInt q) {
+  if (input == null || input.length == 0) return null;
 
-  if (e == null || p == null || q == null) return '';
+  if (e == null || p == null || q == null) return null;
 
   var _N = N(p, q);
 
   if (!validateE(e, p, q)) throw Exception('rsa_error_phi.e.not.coprime');
 
-  if (isInteger(input)) {
-    var number = BigInt.tryParse(input);
-    return _encryptInteger(number, e, _N).toString();
-  } else {
-    return input.split('').map((character) {
-      var number = BigInt.from(character.codeUnitAt(0));
-      return _encryptInteger(number, e, _N);
-    }).join(' ');
-  }
+  return input.where((number) => number != null).map((number) => _encryptInteger(number, e, _N)).toList();
 }
 
 BigInt calculateD(BigInt e, BigInt p, BigInt q) {
@@ -71,38 +62,16 @@ BigInt _decryptInteger(BigInt value, BigInt d, BigInt N) {
   return value.modPow(d, N);
 }
 
-String decryptRSA(String input, BigInt d, BigInt p, BigInt q) {
-  if (input == null || input.length == 0) return '';
+List<BigInt> decryptRSA(List<BigInt> input, BigInt d, BigInt p, BigInt q) {
+  if (input == null || input.length == 0) return null;
 
-  input = input.replaceAll('\s+', ' ');
-  if (input == ' ') return '';
+  if (d == null || p == null || q == null) return null;
 
-  if (d == null || p == null || q == null) return '';
+  return input.where((number) => number != null).map((number) {
+    var _N = N(p, q);
 
-  var clearText = input
-      .split(' ')
-      .map((value) {
-        var _N = N(p, q);
+    if (!validateD(d, p, q)) throw Exception('rsa_error_phi.d.not.coprime');
 
-        if (!validateD(d, p, q)) throw Exception('rsa_error_phi.d.not.coprime');
-
-        if (isInteger(value)) {
-          var number = BigInt.tryParse(value);
-          return [_decryptInteger(number, d, _N)];
-        } else {
-          return value.split('').map((character) {
-            var number = BigInt.from(character.codeUnitAt(0));
-            return _decryptInteger(number, d, _N);
-          }).toList();
-        }
-      })
-      .expand((i) => i) // flattens potential nested list
-      .toList();
-
-  //Check if nonASCII value included. If only ASCII values, this will be null. The output will be converted into ASCII chars
-  var nonASCII =
-      clearText.firstWhere((element) => element > BigInt.from(255) || element < BigInt.from(32), orElse: () => null);
-  if (nonASCII != null) return clearText.join(' ');
-
-  return clearText.map((character) => String.fromCharCode(character.toInt())).join();
+    return _decryptInteger(number, d, _N);
+  }).toList();
 }

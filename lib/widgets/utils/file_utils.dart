@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
-import 'package:universal_html/html.dart' as html;
+
 import 'package:archive/archive_io.dart';
 import 'package:collection/collection.dart';
 import 'package:file_picker_writable/file_picker_writable.dart';
@@ -15,6 +15,7 @@ import 'package:image/image.dart' as img;
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:universal_html/html.dart' as html;
 import 'package:unrar_file/unrar_file.dart';
 
 enum FileType {
@@ -47,6 +48,7 @@ enum FileType {
   GWC,
   LUA
 }
+
 enum FileClass { IMAGE, ARCHIVE, SOUND, DATA, TEXT, BINARY }
 
 const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
@@ -565,7 +567,6 @@ Future<Uint8List> createZipFile(String fileName, String extension, List<Uint8Lis
       encoder.addFile(imageFileTmp, fileNameZip);
       imageFileTmp.delete();
     }
-    ;
 
     encoder.close();
 
@@ -606,11 +607,14 @@ Future<List<GCWFile>> extractArchive(GCWFile file) async {
         return _archiveToPlatformFileList(TarDecoder().decodeBuffer(input));
       case FileType.BZIP2:
         var output = BZip2Decoder().decodeBuffer(input);
-        return {GCWFile(name: changeExtension(file?.name ?? 'bzip', '.tar'), bytes: output)}.toList();
+        var fileName = file?.name ?? 'xxx';
+        fileName = changeExtension(fileName, '');
+        if (extension(fileName) != '.tar') fileName += '.tar';
+        return {GCWFile(name: fileName, bytes: output)}.toList();
       case FileType.GZIP:
         var output = OutputStream();
         GZipDecoder().decodeStream(input, output);
-        return {GCWFile(name: changeExtension(file?.name ?? 'gzip', '.xxx'), bytes: output?.getBytes())}.toList();
+        return {GCWFile(name: changeExtension(file?.name ?? 'xxx', '.gzip'), bytes: output?.getBytes())}.toList();
       case FileType.RAR:
         return await extractRarArchive(file);
         break;

@@ -5,8 +5,9 @@
 // - http://search.cpan.org/~beatnik/Acme-Beatnik-0.02/Beatnik.pm
 // - https://github.com/catseye/Beatnik
 
-import 'package:gc_wizard/logic/tools/games/scrabble.dart';
 import 'dart:math';
+
+import 'package:gc_wizard/logic/tools/games/scrabble/scrabble.dart';
 
 class BeatnikOutput {
   final List<String> output;
@@ -233,7 +234,7 @@ BeatnikOutput interpretBeatnik(var ScrabbleVersion, String sourcecode, input) {
 
   for (int i = 0; i < program.length; i++) {
     if (!normalized) {
-      _currentValues = textToLetterValues(program[i], ScrabbleVersion);
+      _currentValues = scrabbleTextToLetterValues(program[i], ScrabbleVersion);
       value = 0;
       for (int j = 0; j < _currentValues.length; j++) {
         value = value + _currentValues[j];

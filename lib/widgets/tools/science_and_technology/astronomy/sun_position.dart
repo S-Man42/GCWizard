@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
-import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/astronomy/julian_date.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/astronomy/sun_position.dart' as logic;
 import 'package:gc_wizard/utils/common_utils.dart';
@@ -12,7 +11,6 @@ import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/utils.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:intl/intl.dart';
-import 'package:prefs/prefs.dart';
 
 class SunPosition extends StatefulWidget {
   @override
@@ -42,8 +40,7 @@ class SunPositionState extends State<SunPosition> {
           text: i18n(context, 'astronomy_postion_datetime'),
         ),
         GCWDateTimePicker(
-          type: DateTimePickerType.DATETIME,
-          withTimezones: true,
+          config: {DateTimePickerConfig.DATE, DateTimePickerConfig.TIME, DateTimePickerConfig.TIMEZONES},
           onChanged: (datetime) {
             setState(() {
               _currentDateTime = datetime;
@@ -60,8 +57,7 @@ class SunPositionState extends State<SunPosition> {
 
     var julianDate = JulianDate(_currentDateTime['datetime'], _currentDateTime['timezone']);
 
-    var sunPosition =
-        logic.SunPosition(_currentCoords, julianDate, getEllipsoidByName(Prefs.get('coord_default_ellipsoid_name')));
+    var sunPosition = logic.SunPosition(_currentCoords, julianDate, defaultEllipsoid());
 
     var outputsSun = [
       [i18n(context, 'astronomy_position_eclipticlongitude'), format.format(sunPosition.eclipticLongitude) + '°'],

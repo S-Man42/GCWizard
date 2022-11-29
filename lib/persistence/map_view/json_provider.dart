@@ -2,10 +2,11 @@ import 'dart:convert';
 
 import 'package:gc_wizard/persistence/map_view/model.dart';
 import 'package:gc_wizard/persistence/utils.dart';
+import 'package:gc_wizard/utils/settings/preferences.dart';
 import 'package:prefs/prefs.dart';
 
 void refreshMapViews() {
-  var rawMapViews = Prefs.getStringList('mapview_mapviews');
+  var rawMapViews = Prefs.getStringList(PREFERENCE_MAPVIEW_MAPVIEWS);
   if (rawMapViews == null || rawMapViews.length == 0) return;
 
   mapViews = rawMapViews.where((view) => view.length > 0).map((view) {
@@ -23,7 +24,7 @@ clearMapViewDAO(MapViewDAO view) {
 _saveData() {
   var jsonData = mapViews.map((view) => jsonEncode(view.toMap())).toList();
 
-  Prefs.setStringList('mapview_mapviews', jsonData);
+  Prefs.setStringList(PREFERENCE_MAPVIEW_MAPVIEWS, jsonData);
 }
 
 int insertMapViewDAO(MapViewDAO view) {

@@ -6,6 +6,7 @@ import 'package:gc_wizard/logic/common/units/length.dart';
 import 'package:gc_wizard/logic/common/units/unit.dart';
 import 'package:gc_wizard/logic/tools/coords/distance_and_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
+import 'package:gc_wizard/utils/settings/preferences.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
@@ -42,7 +43,7 @@ class CoordinateAveragingState extends State<CoordinateAveraging> {
   void initState() {
     super.initState();
 
-    _DEFAULT_LENGTH_UNIT = getUnitBySymbol(allLengths(), Prefs.get('default_length_unit'));
+    _DEFAULT_LENGTH_UNIT = getUnitBySymbol(allLengths(), Prefs.get(PREFERENCE_DEFAULT_LENGTH_UNIT));
     _clearMeasurements();
   }
 

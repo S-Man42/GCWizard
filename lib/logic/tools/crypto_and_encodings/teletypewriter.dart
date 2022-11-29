@@ -1647,6 +1647,7 @@ final _NUMBERS_FOLLOW = {
   TeletypewriterCodebook.CCITT_ITA3: 50,
   TeletypewriterCodebook.CCITT_ITA4: 54,
   TeletypewriterCodebook.CCIR476: 54,
+  TeletypewriterCodebook.Z22: 27,
   TeletypewriterCodebook.TTS: 54,
   TeletypewriterCodebook.ILLIAC: 27,
   TeletypewriterCodebook.ALGOL: 62,
@@ -1667,6 +1668,7 @@ final _LETTERS_FOLLOW = {
   TeletypewriterCodebook.CCITT_ITA3: 56,
   TeletypewriterCodebook.CCITT_ITA4: 62,
   TeletypewriterCodebook.CCIR476: 127,
+  TeletypewriterCodebook.Z22: 31,
   TeletypewriterCodebook.TTS: 54,
   TeletypewriterCodebook.ILLIAC: 20,
   TeletypewriterCodebook.ALGOL: 54,
@@ -1705,6 +1707,7 @@ int _EncodeAZ(TeletypewriterCodebook language, String text) {
       return AZToCCITT_ITA2_1929[text];
       break;
     case TeletypewriterCodebook.CCITT_ITA2_1931:
+    case TeletypewriterCodebook.Z22:
       return AZToCCITT_ITA2_1931[text];
       break;
     case TeletypewriterCodebook.CCITT_ITA2_MTK2:
@@ -1767,6 +1770,7 @@ int _EncodeNumber(TeletypewriterCodebook language, String text) {
       return NumbersToCCITT_ITA2_1929[text];
       break;
     case TeletypewriterCodebook.CCITT_ITA2_1931:
+    case TeletypewriterCodebook.Z22:
       return NumbersToCCITT_ITA2_1931[text];
       break;
     case TeletypewriterCodebook.CCITT_ITA2_MTK2:
@@ -1829,6 +1833,7 @@ String _DecodeAZ(TeletypewriterCodebook language, int code) {
       return CCITT_ITA2_1929ToAZ[code];
       break;
     case TeletypewriterCodebook.CCITT_ITA2_1931:
+    case TeletypewriterCodebook.Z22:
       return CCITT_ITA2_1931ToAZ[code];
       break;
     case TeletypewriterCodebook.CCITT_ITA2_MTK2:
@@ -1891,6 +1896,7 @@ String _DecodeNumber(TeletypewriterCodebook language, int code) {
       return CCITT_ITA2_1929ToNumbers[code];
       break;
     case TeletypewriterCodebook.CCITT_ITA2_1931:
+    case TeletypewriterCodebook.Z22:
       return CCITT_ITA2_1931ToNumbers[code];
       break;
     case TeletypewriterCodebook.CCITT_ITA2_MTK2:
@@ -1997,6 +2003,7 @@ String encodeTeletypewriter(String input, TeletypewriterCodebook language) {
     case TeletypewriterCodebook.CCIR476:
     case TeletypewriterCodebook.ILLIAC:
     case TeletypewriterCodebook.TTS:
+    case TeletypewriterCodebook.Z22:
     case TeletypewriterCodebook.ALGOL:
       removeAccents(input.toUpperCase()).split('').forEach((character) {
         if (isLetterMode) {
@@ -2025,15 +2032,15 @@ String encodeTeletypewriter(String input, TeletypewriterCodebook language) {
       return out.join(' ');
       break;
     case TeletypewriterCodebook.CCITT_IA5:
-      return encodeTeletypewriter_ITA5(input);
+      return encodeTeletypewriter_IA5(input);
       break;
     case TeletypewriterCodebook.ZC1:
-      return encodeZC1(input);
+      return encodeTeletypewriter_ZC1(input);
       break;
   }
 }
 
-String encodeTeletypewriter_ITA5(String input) {
+String encodeTeletypewriter_IA5(String input) {
   if (input == null || input.length == 0) return '';
 
   List<int> out = [];
@@ -2044,7 +2051,7 @@ String encodeTeletypewriter_ITA5(String input) {
   return out.join(' ');
 }
 
-String encodeZC1(String input) {
+String encodeTeletypewriter_ZC1(String input) {
   if (input == null || input.length == 0) return '';
 
   List<int> out = [];
@@ -2114,6 +2121,7 @@ String decodeTeletypewriter(
     case TeletypewriterCodebook.CCITT_ITA3:
     case TeletypewriterCodebook.CCITT_ITA4:
     case TeletypewriterCodebook.CCIR476:
+    case TeletypewriterCodebook.Z22:
     case TeletypewriterCodebook.ILLIAC:
     case TeletypewriterCodebook.TTS:
     case TeletypewriterCodebook.ALGOL:
@@ -2138,30 +2146,32 @@ String decodeTeletypewriter(
       return out;
       break;
     case TeletypewriterCodebook.CCITT_IA5:
-      return decodeTeletypewriter_ITA5(values);
+      return decodeTeletypewriter_IA5(values);
+      break;
+    case TeletypewriterCodebook.ZC1:
+      return decodeTeletypewriter_ZC1(values);
       break;
   }
 }
 
-String decodeTeletypewriter_ITA5(List<int> values) {
+String decodeTeletypewriter_IA5(List<int> values) {
   if (values == null || values.length == 0) return '';
 
   String out = '';
 
   values.forEach((value) {
-    out = out + String.fromCharCode(value);
+    if (value < 128) out = out + String.fromCharCode(value);
   });
 
   return out;
 }
 
-String decodeZC1(List<int> values) {
+String decodeTeletypewriter_ZC1(List<int> values) {
   if (values == null || values.length == 0) return '';
 
   String out = '';
-
   values.forEach((value) {
-    out = out + ZC1ToAZ[value];
+    if (ZC1ToAZ[value] != null) out = out + ZC1ToAZ[value];
   });
 
   return out;
