@@ -39,7 +39,6 @@ class _GCWColumnedMultilineOutputState extends State<GCWColumnedMultilineOutput>
 
     var rows = columnedMultiLineOutputRows();
     if (widget.firstRows != null) rows.insertAll(0, widget.firstRows);
-    if (widget.lastRows != null) rows.addAll(widget.lastRows);
 
     return Column(
       children: rows
