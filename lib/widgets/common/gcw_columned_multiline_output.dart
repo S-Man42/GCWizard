@@ -99,16 +99,16 @@ class _GCWColumnedMultilineOutputState extends State<GCWColumnedMultilineOutput>
             context == null || copyText == null || copyText.length == 0
                 ? Container(width: 21.0)
                 : Container(
-              child: (((isFirst && widget.hasHeader) & !widget.copyAll) || widget.suppressCopyButtons)
-                  ? Container()
-                  : GCWIconButton(
-                icon: Icons.content_copy,
-                iconSize: 14,
-                size: IconButtonSize.TINY,
-                onPressed: () {
-                  insertIntoGCWClipboard(context, copyText);
-                },
-              ),
+                    child: (((isFirst && widget.hasHeader) & !widget.copyAll) || widget.suppressCopyButtons)
+                        ? Container()
+                        : GCWIconButton(
+                            icon: Icons.content_copy,
+                            iconSize: 14,
+                            size: IconButtonSize.TINY,
+                            onPressed: () {
+                              insertIntoGCWClipboard(context, copyText);
+                            },
+                  )     ,
             )
           ],
         ),

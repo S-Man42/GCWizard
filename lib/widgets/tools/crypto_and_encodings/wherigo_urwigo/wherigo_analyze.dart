@@ -514,9 +514,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               ),
             ]),
           ),
-          Column(
-              children:
-                  (_outputHeader.join('') == '[]') ? [Container()] : columnedMultiLineOutput(context, _outputHeader))
+            GCWColumnedMultilineOutput(
+                data: (_outputHeader.join('') == '[]') ? [[]] : _outputHeader
+            )
         ]);
         break;
 
