@@ -3943,6 +3943,7 @@
   "sudokusolver_solve": "Vyriešiť",
   "sudokusolver_clearcalculated": "Vymazať výpočet",
   "sudokusolver_clearall": "Zmazať všetko",
+  "sudokusolver_clearall_board": "everything",
   "sudokusolver_error": "Nedá sa vyriešiť.",
   "sudokusolver_maximumsolutions": "Bol dosiahnutý maximálny počet riešení; ďalšie sú možné",
   "summersimmerindex_title": "Index letnej horúčavy",

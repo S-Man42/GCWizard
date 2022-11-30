@@ -3943,6 +3943,7 @@
   "sudokusolver_solve": "해결하기",
   "sudokusolver_clearcalculated": "계산 지우기",
   "sudokusolver_clearall": "모두 지우기",
+  "sudokusolver_clearall_board": "everything",
   "sudokusolver_error": "해결할 수 없었습니다",
   "sudokusolver_maximumsolutions": "최대 해결책에 도달; 더 많은 해결책 가능",
   "summersimmerindex_title": "여름철 보글보글 지수",

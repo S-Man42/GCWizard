@@ -3943,6 +3943,7 @@
   "sudokusolver_solve": "Çöz",
   "sudokusolver_clearcalculated": "Çözümü Temizle",
   "sudokusolver_clearall": "Tümünü temizle",
+  "sudokusolver_clearall_board": "everything",
   "sudokusolver_error": "Çözülemedi.",
   "sudokusolver_maximumsolutions": "Maximum solutions reached; more possible",
   "summersimmerindex_title": "Summer Simmer Index",

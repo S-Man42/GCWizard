@@ -3943,6 +3943,7 @@
   "sudokusolver_solve": "Oplossen",
   "sudokusolver_clearcalculated": "Verwijder berekening",
   "sudokusolver_clearall": "Wis alles",
+  "sudokusolver_clearall_board": "everything",
   "sudokusolver_error": "Kan niet worden opgelost.",
   "sudokusolver_maximumsolutions": "Maximum aantal oplossingen bereikt; meer mogelijk",
   "summersimmerindex_title": "Summer Simmer Index",

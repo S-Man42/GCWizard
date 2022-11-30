@@ -3943,6 +3943,7 @@
   "sudokusolver_solve": "Solve",
   "sudokusolver_clearcalculated": "Clear Calculation",
   "sudokusolver_clearall": "Usuń wszystko",
+  "sudokusolver_clearall_board": "everything",
   "sudokusolver_error": "Could not be solved.",
   "sudokusolver_maximumsolutions": "Osiągnięto maksymalną liczbę rozwiązań; istnieją następne",
   "summersimmerindex_title": "Summer Simmer Index",

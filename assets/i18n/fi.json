@@ -3943,6 +3943,7 @@
   "sudokusolver_solve": "Ratkaise",
   "sudokusolver_clearcalculated": "Tyhjennä laskelma",
   "sudokusolver_clearall": "Tyhjennä kaikki",
+  "sudokusolver_clearall_board": "everything",
   "sudokusolver_error": "Ei voitu ratkaista.",
   "sudokusolver_maximumsolutions": "Maximum solutions reached; more possible",
   "summersimmerindex_title": "Summer Simmer -indeksi",

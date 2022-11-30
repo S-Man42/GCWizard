@@ -3943,6 +3943,7 @@
   "sudokusolver_solve": "Beräkna",
   "sudokusolver_clearcalculated": "Radera beräkning",
   "sudokusolver_clearall": "Radera allt",
+  "sudokusolver_clearall_board": "everything",
   "sudokusolver_error": "Kunde inte lösas.",
   "sudokusolver_maximumsolutions": "Maximalt antal lösningar har uppnåtts, fler är möjliga",
   "summersimmerindex_title": "Summer Simmer Index",
