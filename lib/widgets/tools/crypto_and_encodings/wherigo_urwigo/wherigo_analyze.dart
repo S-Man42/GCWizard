@@ -138,7 +138,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           GCWDialogButton(
               text: i18n(context, 'common_ok'),
               onPressed: () {
-                setState(() {
+                setState(() {f
                   _currentSyntaxHighlighting = true;
                 });
               }),
