@@ -138,7 +138,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           GCWDialogButton(
               text: i18n(context, 'common_ok'),
               onPressed: () {
-                setState(() {
+                setState(() {f
                   _currentSyntaxHighlighting = true;
                 });
               }),
@@ -757,7 +757,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                         controller: _codeControllerHighlightedLUA,
                         language: CodeHighlightingLanguage.LUA,
                         lineNumberStyle: GCWCodeTextFieldLineNumberStyle(width: 80.0),
-                        stringMap: WHERIGO_SYNTAX_HIGHLIGHT_STRINGMAP)
+                        patternMap: WHERIGO_SYNTAX_HIGHLIGHT_STRINGMAP)
                     : GCWOutputText(
                         text: _LUA_SourceCode,
                       ),
