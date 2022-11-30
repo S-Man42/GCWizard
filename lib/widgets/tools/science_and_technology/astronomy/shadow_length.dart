@@ -86,7 +86,7 @@ class ShadowLengthState extends State<ShadowLength> {
     );
   }
 
-  _buildOutput() {
+  Widget _buildOutput() {
     var shadowLen = shadowLength(
         _currentHeight, _currentCoords, defaultEllipsoid(), _currentDateTime['datetime'], _currentDateTime['timezone']);
 

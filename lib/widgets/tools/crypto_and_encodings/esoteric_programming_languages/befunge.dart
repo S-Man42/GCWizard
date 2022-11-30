@@ -99,7 +99,7 @@ class BefungeState extends State<Befunge> {
     ]);
   }
 
-  _buildOutput() {
+  Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       BefungeOutput output = interpretBefunge(_currentInterpret, input: _currentInput);
       String outputText = '';

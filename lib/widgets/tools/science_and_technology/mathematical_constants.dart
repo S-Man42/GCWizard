@@ -91,7 +91,7 @@ class MathematicalConstantsState extends State<MathematicalConstants> {
     _currentConstant = _orderedConstantKeys.first;
   }
 
-  _buildOutput() {
+  Widget _buildOutput() {
     Map<String, dynamic> constantData = _constants[_currentConstant];
 
     List<String> names;

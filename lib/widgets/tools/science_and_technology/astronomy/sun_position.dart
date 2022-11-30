@@ -52,7 +52,7 @@ class SunPositionState extends State<SunPosition> {
     );
   }
 
-  _buildOutput() {
+  Widget _buildOutput() {
     var format = NumberFormat('0.000');
 
     var julianDate = JulianDate(_currentDateTime['datetime'], _currentDateTime['timezone']);

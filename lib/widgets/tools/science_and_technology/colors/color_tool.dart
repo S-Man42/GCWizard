@@ -65,7 +65,7 @@ class ColorToolState extends State<ColorTool> {
     );
   }
 
-  _buildOutput() {
+  Widget _buildOutput() {
     var colorSpaceOutputs;
 
     switch (_currentOutputColorSpace) {

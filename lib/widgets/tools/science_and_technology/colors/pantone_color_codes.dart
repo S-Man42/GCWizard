@@ -114,7 +114,7 @@ class PantoneColorCodesState extends State<PantoneColorCodes> {
     ];
   }
 
-  _buildColorToPantoneOutput() {
+  Widget _buildColorToPantoneOutput() {
     RGB rgb = convertColorSpace(_currentInputColor, _currentColorSpace, keyColorSpaceRGB);
     List<Map<String, String>> similarPantones = findSimilarPantoneColors(rgb, _colors);
 
@@ -136,7 +136,7 @@ class PantoneColorCodesState extends State<PantoneColorCodes> {
         );
   }
 
-  _buildPantoneToColorOutput() {
+  Widget _buildPantoneToColorOutput() {
     var rgbColor = HexCode(_currentValue['colorcode']).toRGB();
 
     var name = _currentValue['name'];

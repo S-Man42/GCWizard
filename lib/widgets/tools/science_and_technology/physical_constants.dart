@@ -50,7 +50,7 @@ class PhysicalConstantsState extends State<PhysicalConstants> {
     );
   }
 
-  _buildOutput() {
+  Widget _buildOutput() {
     Map<String, dynamic> constantData = PHYSICAL_CONSTANTS[_currentConstant];
 
     var data = [
@@ -82,7 +82,7 @@ class PhysicalConstantsState extends State<PhysicalConstants> {
     );
   }
 
-  _buildExponent(exponent) {
+  Widget _buildExponent(exponent) {
     if (exponent == null) return null;
 
     return RichText(

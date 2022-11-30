@@ -173,7 +173,7 @@ class EnigmaState extends State<Enigma> {
     }
   }
 
-  _buildRotorInformation() {
+  Widget _buildRotorInformation() {
     List<EnigmaRotorConfiguration> _allRotors = [];
     if (_currentReflectorMode) _allRotors.add(_currentReflector);
 
@@ -217,7 +217,7 @@ class EnigmaState extends State<Enigma> {
     );
   }
 
-  _buildRotors() {
+  Widget _buildRotors() {
     while (_currentRotors.length < _currentNumberRotors) {
       _currentRotors.add(GCWEnigmaRotorDropDownButton(
         position: _currentRotors.length,
@@ -244,7 +244,7 @@ class EnigmaState extends State<Enigma> {
     );
   }
 
-  _buildOutput() {
+  Widget _buildOutput() {
     if (!_isTextChange) {
       FocusScope.of(context).requestFocus(new FocusNode());
     } else {

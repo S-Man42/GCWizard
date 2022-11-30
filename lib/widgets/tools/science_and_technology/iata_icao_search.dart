@@ -106,7 +106,7 @@ class IATAICAOSearchState extends State<IATAICAOSearch> {
     );
   }
 
-  _buildOutput() {
+  Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       // search for name
       if (_currentInputName == null || _currentInputName == "") return Container();

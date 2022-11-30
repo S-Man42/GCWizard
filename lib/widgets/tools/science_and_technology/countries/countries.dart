@@ -67,7 +67,7 @@ class CountriesState extends State<Countries> {
     );
   }
 
-  _buildOutput() {
+  Widget _buildOutput() {
 
     var field = _currentSort == 0 ? widget.fields[0] : widget.fields[_currentSort - 1];
     var flexValues = List<int>.generate(widget.fields.length, (index) => 1);

@@ -114,7 +114,7 @@ class IceCodesState extends State<IceCodes> {
     );
   }
 
-  _buildOutput() {
+  Widget _buildOutput() {
     var iceCode = ICECODES[_currentIceCodeSystem];
     return GCWDefaultOutput(
       child: GCWColumnedMultilineOutput(

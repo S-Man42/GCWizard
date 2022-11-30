@@ -58,7 +58,7 @@ class GadeState extends State<Gade> {
     );
   }
 
-  _buildOutput() {
+  Widget _buildOutput() {
     String _input;
     if (_currentParseLetters) {
       _input = AlphabetValues(alphabet: alphabetAZ.alphabet)

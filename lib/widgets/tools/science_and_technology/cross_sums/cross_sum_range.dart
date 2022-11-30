@@ -105,7 +105,7 @@ class CrossSumRangeState extends State<CrossSumRange> {
   }
 
   _calculateOutput() {
-    _buildOutput(output) {
+    List<Widget> _buildOutput(output) {
       return [
         GCWOutputText(
           text: '${i18n(context, 'common_count')}: ${output.length}',

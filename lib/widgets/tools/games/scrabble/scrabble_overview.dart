@@ -37,7 +37,7 @@ class ScrabbleOverviewState extends State<ScrabbleOverview> {
     );
   }
 
-  _calculateOutput() {
+  Widget _calculateOutput() {
     var data = <List<dynamic>>[
       [
         i18n(context, 'common_letter'),

@@ -81,7 +81,7 @@ class CalendarState extends State<Calendar> {
     );
   }
 
-  _buildOutput() {
+  Widget _buildOutput() {
     double jd = 0.0;
     Map output = new Map();
     switch (_currentCalendarSystem) {

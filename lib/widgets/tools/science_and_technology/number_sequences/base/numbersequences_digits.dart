@@ -47,7 +47,7 @@ class NumberSequenceDigitsState extends State<NumberSequenceDigits> {
     );
   }
 
-  _buildOutput() {
+  Widget _buildOutput() {
     List<List<String>> columnData = [];
     getNumbersWithNDigits(widget.mode, _currentInputN).forEach((element) {
       columnData.add([element.toString()]);

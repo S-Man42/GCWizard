@@ -100,7 +100,7 @@ class CrossSumRangeFrequencyState extends State<CrossSumRangeFrequency> {
     });
   }
 
-  _calculateOutput() {
+  Widget _calculateOutput() {
     var outputData = _currentFrequencies.entries.map((frequency) {
       return [frequency.key, frequency.value];
     }).toList();

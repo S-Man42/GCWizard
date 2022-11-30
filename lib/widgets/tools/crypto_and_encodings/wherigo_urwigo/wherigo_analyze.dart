@@ -420,7 +420,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         ));
   }
 
-  _buildOutput(BuildContext context) {
+  Widget _buildOutput(BuildContext context) {
     if ((_GWCbytes == null || _GWCbytes == []) && (_LUAbytes == null || _LUAbytes == [])) return Container();
 
     if (_WherigoCartridgeGWC == null && _WherigoCartridgeLUA == null) {

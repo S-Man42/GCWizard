@@ -51,7 +51,7 @@ class DivisorState extends State<Divisor> {
     );
   }
 
-  _buildOutput() {
+  Widget _buildOutput() {
     var divs = divisors(_currentInputN);
 
     return Column(

@@ -59,8 +59,6 @@ class NumberSequenceContainsDigitsState extends State<NumberSequenceContainsDigi
     List<List<String>> columnData = [];
     PositionOfSequenceOutput detailedOutput;
 
-    var flexData;
-
     detailedOutput = getFirstPositionOfSequence(widget.mode, currentInputN.toString(), widget.maxIndex);
 
     columnData.add([
@@ -71,12 +69,10 @@ class NumberSequenceContainsDigitsState extends State<NumberSequenceContainsDigi
     columnData.add(
         [detailedOutput.number, detailedOutput.positionSequence.toString(), detailedOutput.positionDigits.toString()]);
 
-    flexData = [4, 2, 1];
-
     _currentOutput = GCWDefaultOutput(
         child: GCWColumnedMultilineOutput(
             data: columnData,
-            flexValues: flexData,
+            flexValues: [4, 2, 1],
             copyColumn: 0,
             hasHeader: true
         ));

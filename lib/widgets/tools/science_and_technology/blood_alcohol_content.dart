@@ -128,7 +128,7 @@ class BloodAlcoholContentState extends State<BloodAlcoholContent> {
     );
   }
 
-  _buildOutput() {
+  Widget _buildOutput() {
     var alcMass = alcoholMassInG(VOLUME_MILLILITER.fromCubicMeter(_currentVolume), _currentPercent);
     var nf = NumberFormat('0.000');
 

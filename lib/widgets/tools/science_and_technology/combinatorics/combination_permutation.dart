@@ -44,7 +44,7 @@ class CombinationPermutationState extends State<CombinationPermutation> {
     );
   }
 
-  _buildOutput(BuildContext context) {
+  Widget _buildOutput(BuildContext context) {
     if (_currentInput == null || _currentInput.length == 0) {
       return GCWDefaultOutput();
     }
