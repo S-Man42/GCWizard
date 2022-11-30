@@ -37,7 +37,7 @@ class _GCWColumnedMultilineOutputState extends State<GCWColumnedMultilineOutput>
   @override
   Widget build(BuildContext context) {
 
-    var rows = columnedMultiLineOutputRows();
+    var rows = _columnedMultiLineOutputRows();
     if (widget.firstRows != null) rows.insertAll(0, widget.firstRows);
 
     return Column(
@@ -46,7 +46,7 @@ class _GCWColumnedMultilineOutputState extends State<GCWColumnedMultilineOutput>
   }
 
 
-  List<Widget> columnedMultiLineOutputRows() {
+  List<Widget> _columnedMultiLineOutputRows() {
     var odd = true;
     var isFirst = true;
     var copyColumn = widget.copyColumn;
