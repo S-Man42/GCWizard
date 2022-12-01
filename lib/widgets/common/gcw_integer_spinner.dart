@@ -61,6 +61,9 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
 
       _controller = TextEditingController(text: _currentValue.toString());
     }
+    if (widget.leftPadZeros != null && widget.leftPadZeros > 0)
+      _controller = TextEditingController(text: _currentValue.toString().padLeft(widget.leftPadZeros, '0'));
+
   }
 
   @override
@@ -178,8 +181,10 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
       if (widget.leftPadZeros != null && widget.leftPadZeros > 0) {
         text = text.padLeft(widget.leftPadZeros, '0');
       }
+setState(() {
+  _controller.text = text;
+});
 
-      _controller.text = text;
     }
 
     widget.onChanged(_currentValue);
