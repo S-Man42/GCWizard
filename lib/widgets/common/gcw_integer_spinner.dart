@@ -58,12 +58,8 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
       _controller = widget.controller;
     } else {
       if (widget.value != null) _currentValue = widget.value;
-
-      _controller = TextEditingController(text: _currentValue.toString());
     }
-    if (widget.leftPadZeros != null && widget.leftPadZeros > 0)
-      _controller = TextEditingController(text: _currentValue.toString().padLeft(widget.leftPadZeros, '0'));
-
+    _controller = TextEditingController(text: _formatText(_currentValue));
   }
 
   @override
@@ -77,7 +73,7 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
     if (widget.value != null) {
       _currentValue = widget.value;
 
-      if (_externalChange) _controller.text = _currentValue.toString();
+      if (_externalChange) _controller.text = _formatText(_currentValue);
     }
 
     _externalChange = true;
@@ -175,18 +171,16 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
   }
 
   _setCurrentValueAndEmitOnChange({setTextFieldText: false}) {
-    if (setTextFieldText) {
-      var text = _currentValue.toString();
-
-      if (widget.leftPadZeros != null && widget.leftPadZeros > 0) {
-        text = text.padLeft(widget.leftPadZeros, '0');
-      }
-setState(() {
-  _controller.text = text;
-});
-
-    }
+    if (setTextFieldText)
+      _controller.text = _formatText(_currentValue);
 
     widget.onChanged(_currentValue);
+  }
+
+  String _formatText(int value) {
+    if (widget.leftPadZeros != null && widget.leftPadZeros > 0)
+      return value.toString().padLeft(widget.leftPadZeros, '0');
+    else
+      return value.toString();
   }
 }
