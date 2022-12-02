@@ -6,6 +6,7 @@ import 'package:gc_wizard/i18n/supported_locales.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/gcw_clipboard_editor.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
+import 'package:gc_wizard/widgets/main_menu/deep_link.dart';
 import 'package:gc_wizard/widgets/main_view.dart';
 import 'package:gc_wizard/widgets/tools/coords/utils/navigation_service.dart';
 import 'package:gc_wizard/widgets/utils/app_builder.dart';
@@ -53,11 +54,14 @@ class App extends StatelessWidget {
               home: MainView(),
               navigatorKey: NavigationService.instance.navigationKey,
               routes: {
-                // Required extra way because normal Navigator.of(context) way
-                // crashes because of some NULL problems on TextSelectionControls menu
-                'clipboard_editor': (BuildContext context) => GCWTool(
-                    tool: GCWClipboardEditor(), toolName: i18n(context, 'clipboardeditor_title'), i18nPrefix: '')
-              },
+                  ExtractArgumentsScreen.routeName: (context) =>
+                  const ExtractArgumentsScreen(),
+                },
+              //   // Required extra way because normal Navigator.of(context) way
+              //   // crashes because of some NULL problems on TextSelectionControls menu
+              //   'clipboard_editor': (BuildContext context) => GCWTool(
+              //       tool: GCWClipboardEditor(), toolName: i18n(context, 'clipboardeditor_title'), i18nPrefix: '')
+              // },
             );
           });
         }));
