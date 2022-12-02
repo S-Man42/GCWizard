@@ -35,7 +35,7 @@ class GCWCoordsReverseWherigoWaldmeisterState extends State<GCWCoordsReverseWher
     _ControllerB = TextEditingController(text: _currentB.toString());
     _ControllerC = TextEditingController(text: _currentC.toString());
 
-    _integerInputFormatter = IntegerTextInputFormatter(min: 0, max: 999999);
+    _integerInputFormatter = IntegerTextInputFormatter(min: 0, max: 999999);;
 
     _FocusNodeA = FocusNode();
     _FocusNodeB = FocusNode();
