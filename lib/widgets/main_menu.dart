@@ -93,16 +93,13 @@ buildMainMenu(BuildContext context) {
   );
 
   return Drawer(
-    child: Column(
-      children: <Widget>[
-        header,
-        Expanded(
+      child: Column(
+    children: <Widget>[
+      header,
+      Expanded(
           child: ListView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            padding: EdgeInsets.zero, // Remove any padding from the ListView.
-            children: menuEntries
-            ),
-          ),
+              padding: EdgeInsets.zero, // Remove any padding from the ListView.
+              children: menuEntries)),
       footer,
     ],
   ));
@@ -125,12 +122,11 @@ _buildSettingsItem(BuildContext context) {
       'toolName': i18n(context, 'mainmenu_settings_tools_title'),
       'icon': Icons.category
     },
-    // ML 12/2022: Postponed to 3.0.0 because of encoding issues
-    // {
-    //   'tool': registeredTools.firstWhere((tool) => className(tool.tool) == className(SaveRestoreSettings())),
-    //   'toolName': i18n(context, 'mainmenu_settings_saverestore_title'),
-    //   'icon': Icons.save
-    // },
+    {
+      'tool': registeredTools.firstWhere((tool) => className(tool.tool) == className(SaveRestoreSettings())),
+      'toolName': i18n(context, 'mainmenu_settings_saverestore_title'),
+      'icon': Icons.save
+    },
   ];
 
   return ExpansionTile(
