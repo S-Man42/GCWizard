@@ -54,14 +54,30 @@ class App extends StatelessWidget {
               home: MainView(),
               navigatorKey: NavigationService.instance.navigationKey,
               routes: {
-                  ExtractArgumentsScreen.routeName: (context) =>
-                  const ExtractArgumentsScreen(),
-                },
-              //   // Required extra way because normal Navigator.of(context) way
-              //   // crashes because of some NULL problems on TextSelectionControls menu
-              //   'clipboard_editor': (BuildContext context) => GCWTool(
-              //       tool: GCWClipboardEditor(), toolName: i18n(context, 'clipboardeditor_title'), i18nPrefix: '')
-              // },
+                // Required extra way because normal Navigator.of(context) way
+                // crashes because of some NULL problems on TextSelectionControls menu
+                'clipboard_editor': (BuildContext context) => GCWTool(
+                    tool: GCWClipboardEditor(), toolName: i18n(context, 'clipboardeditor_title'), i18nPrefix: '')
+              },
+              onGenerateRoute: (settings) {
+                // Cast the arguments to the correct
+                // type: ScreenArguments.
+                final args = ScreenArguments(settings);
+                var route = createRoute(context, args);
+
+                return route;
+
+
+                // The code only supports
+                // PassArgumentsScreen.routeName right now.
+                // Other values need to be implemented if we
+                // add them. The assertion here will help remind
+                // us of that higher up in the call stack, since
+                // this assertion would otherwise fire somewhere
+                // in the framework.
+                assert(false, 'Need to implement ${settings.name}');
+                return null;
+              },
             );
           });
         }));

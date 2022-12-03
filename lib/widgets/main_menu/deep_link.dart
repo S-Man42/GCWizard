@@ -1,35 +1,28 @@
-// A Widget that extracts the necessary arguments from
-// the ModalRoute.
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/widgets/registry.dart';
+import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 
-class ExtractArgumentsScreen extends StatelessWidget {
-  const ExtractArgumentsScreen({key});
 
-  static const routeName = '/extractArguments';
+// A Widget that accepts the necessary arguments via the
+// constructor.
+NoAnimationMaterialPageRoute createRoute (BuildContext context, ScreenArguments arguments) {
+  if (arguments?.title == null) return null;
+  var name = arguments.title .replaceFirst('/', '').toLowerCase();
 
-  @override
-  Widget build(BuildContext context) {
-    // Extract the arguments from the current ModalRoute
-    // settings and cast them as ScreenArguments.
-    final args = ModalRoute.of(context)?.settings.arguments as ScreenArguments;
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(args.title),
-      ),
-      body: Center(
-        child: Text(args.message),
-      ),
-    );
-  }
+  var tool = registeredTools.firstWhere((tool) => tool.i18nPrefix == name);
+  if (tool== null) return null;
+  return NoAnimationMaterialPageRoute(builder: (context) => tool);
 }
 
 // You can pass any object to the arguments parameter.
 // In this example, create a class that contains both
 // a customizable title and message.
 class ScreenArguments {
-  final String title;
-  final String message;
+  String title;
+  String message;
 
-  ScreenArguments(this.title, this.message);
+  ScreenArguments(RouteSettings setting) {
+    title = setting.name;
+    message = setting.arguments;
+  }
 }
