@@ -533,28 +533,25 @@ class BundeswehrTalkingBoardAuthentificationState extends State<BundeswehrTalkin
   }
 
   bool _invalidSingleAxisTitle(String text) {
-    bool result = false;
     if (text.length != 13) return true;
     List<String> dublicates = [];
     text.split('').forEach((element) {
-      if (dublicates.contains(element)) {
-        result = true;
+      if (dublicates.contains(element))
         return;
-      }
+      else
+        dublicates.add(element);
     });
-    return result;
+    return (dublicates.length != text.length);
   }
 
   bool _invalidAxisDescription(String text) {
-    bool result = false;
     List<String> dublicates = [];
     text.split('').forEach((element) {
-      if (dublicates.contains(element)) {
-        result = true;
+      if (dublicates.contains(element))
         return;
-      }
-      dublicates.add(element);
+      else
+        dublicates.add(element);
     });
-    return result;
+    return (dublicates.length != text.length);
   }
 }
