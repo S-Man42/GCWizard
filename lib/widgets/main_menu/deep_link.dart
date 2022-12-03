@@ -7,7 +7,7 @@ import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 // constructor.
 NoAnimationMaterialPageRoute createRoute (BuildContext context, ScreenArguments arguments) {
   if (arguments?.title == null) return null;
-  var name = arguments.title .replaceFirst('/', '').toLowerCase();
+  var name = arguments.title.toLowerCase();
 
   var tool = registeredTools.firstWhere((tool) => tool.i18nPrefix == name);
   if (tool== null) return null;
@@ -19,10 +19,23 @@ NoAnimationMaterialPageRoute createRoute (BuildContext context, ScreenArguments 
 // a customizable title and message.
 class ScreenArguments {
   String title;
-  String message;
+  List<MapEntry<String, String>> arguments;
 
   ScreenArguments(RouteSettings setting) {
-    title = setting.name;
-    message = setting.arguments;
+    var regExp = RegExp(r'^(\/)([^?#]+)\??([^#]+)');
+    var match = regExp.firstMatch(setting.name);
+    if (match != null) {
+      title = match.group(2);
+      if (match.groupCount > 2) {
+        regExp = RegExp(r'([\w]+)=([\w]+)\&?');
+        var matches = regExp.allMatches(match.group(3));
+        if (matches != null) {
+          arguments = <MapEntry<String, String>>[];
+          matches.forEach((match) {
+            arguments.add(MapEntry<String, String>(match.group(1), match.group(2)));
+          });
+        }
+      }
+    }
   }
 }
