@@ -450,7 +450,7 @@
   "bundeswehr_talkingboard_auth_response_invalid_authentification_letter":  "ERROR: Letter does not belong to the Authentication Code",
   "bundeswehr_talkingboard_auth_response_invalid_autentification_code": "ERROR: Authentication code is faulty",
   "bundeswehr_talkingboard_auth_response_empty_custom_table_auth": "HINT: Empty Table \"Authentication Code\"",
-  "bundeswehr_talkingboard_auth_response_empty_custom_table_numeral": "HINT: Empty Table \"Numeral Code\"",
+  "bundeswehr_talkingboard_auth_response_empty_custom_table_numeral": "HINT: Empty Table \"Numeral Code\". Check for missing X-Axis, Y-Axis Description",
   "bundeswehr_talkingboard_auth_response_empty_callsign": "HINT: Missing Callsign",
   "bundeswehr_talkingboard_auth_response_empty_callsign_letter": "HINT: Missing Callsign Letter",
   "bundeswehr_talkingboard_auth_response_empty_authcode": "HINT: Missing Authentication Code",
