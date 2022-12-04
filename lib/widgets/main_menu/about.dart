@@ -222,7 +222,7 @@ class AboutState extends State<About> {
                     '\'kinderarzt\'',
                     '\'Klumpenkukuk\'',
                     '\'LupiMus\'',
-                    'Lutz \'DL3BZZ\' S.',
+                    'Lutz \'DL3BZZ\'',
                     '\'mahoplus\'',
                     'Markus M.',
                     'Martin Sch.',
