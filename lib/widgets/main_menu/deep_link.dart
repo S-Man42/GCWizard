@@ -11,7 +11,8 @@ NoAnimationMaterialPageRoute createRoute (BuildContext context, ScreenArguments 
 
   var tool = registeredTools.firstWhere((tool) => tool.i18nPrefix == name);
   if (tool== null) return null;
-  return NoAnimationMaterialPageRoute(builder: (context) => tool);
+  // arguments settings only for view the path in the url
+  return NoAnimationMaterialPageRoute(builder: (context) => tool, settings: arguments.settings);
 }
 
 // You can pass any object to the arguments parameter.
@@ -20,10 +21,15 @@ NoAnimationMaterialPageRoute createRoute (BuildContext context, ScreenArguments 
 class ScreenArguments {
   String title;
   List<MapEntry<String, String>> arguments;
+  RouteSettings settings;
+
 
   ScreenArguments(RouteSettings setting) {
-    var regExp = RegExp(r'^(\/)([^?#]+)\??([^#]+)');
+    var regExp = RegExp(r'^(\/)([^#?]+)\??([^\.]*)');
     var match = regExp.firstMatch(setting.name);
+
+    settings = setting;
+
     if (match != null) {
       title = match.group(2);
       if (match.groupCount > 2) {
