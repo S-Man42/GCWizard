@@ -30,16 +30,18 @@ class _GCWToolListState extends State<GCWToolList> {
       behavior: ScrollConfiguration.of(context).copyWith(
         dragDevices: {
           PointerDeviceKind.touch,
-          PointerDeviceKind.mouse
+          PointerDeviceKind.mouse,
+          PointerDeviceKind.trackpad,
+          PointerDeviceKind.stylus,
         },
       ),
-      child: _buildItems(),
+      child:  _buildItems(),
     );
   }
 
   Widget _buildItems() {
     return ListView.separated(
-      physics: AlwaysScrollableScrollPhysics(),
+      physics: const AlwaysScrollableScrollPhysics(),
       itemCount: widget.toolList.length,
       separatorBuilder: (BuildContext context, int index) => Divider(),
       itemBuilder: (BuildContext context, int i) {
