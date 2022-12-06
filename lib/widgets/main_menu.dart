@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
@@ -93,13 +95,26 @@ buildMainMenu(BuildContext context) {
   );
 
   return Drawer(
-      child: Column(
-    children: <Widget>[
-      header,
-      Expanded(
-          child: ListView(
+    child: Column(
+      children: <Widget>[
+        header,
+        Expanded(
+          child: ScrollConfiguration(
+            behavior: ScrollConfiguration.of(context).copyWith(
+              dragDevices: {
+                PointerDeviceKind.touch,
+                PointerDeviceKind.mouse,
+                PointerDeviceKind.trackpad,
+                PointerDeviceKind.stylus,
+              },
+            ),
+            child: ListView(
+              physics: const AlwaysScrollableScrollPhysics(),
               padding: EdgeInsets.zero, // Remove any padding from the ListView.
-              children: menuEntries)),
+              children: menuEntries
+            ),
+          ),
+        ),
       footer,
     ],
   ));

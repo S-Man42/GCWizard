@@ -35,7 +35,7 @@ class _GCWToolListState extends State<GCWToolList> {
           PointerDeviceKind.stylus,
         },
       ),
-      child:  _buildItems(),
+      child: _buildItems(),
     );
   }
 
