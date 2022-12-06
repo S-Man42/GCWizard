@@ -104,8 +104,6 @@ buildMainMenu(BuildContext context) {
               dragDevices: {
                 PointerDeviceKind.touch,
                 PointerDeviceKind.mouse,
-                PointerDeviceKind.trackpad,
-                PointerDeviceKind.stylus,
               },
             ),
             child: ListView(

@@ -31,8 +31,6 @@ class _GCWToolListState extends State<GCWToolList> {
         dragDevices: {
           PointerDeviceKind.touch,
           PointerDeviceKind.mouse,
-          PointerDeviceKind.trackpad,
-          PointerDeviceKind.stylus,
         },
       ),
       child: _buildItems(),
