@@ -5301,6 +5301,8 @@
   "wasd_custom_down" : "Down",
   "wasd_custom_right" : "Right",
   "wasd_custom_left" : "Left",
+  "wasd_output_mode_g" : "Graphics",
+  "wasd_output_mode_t" : "Text, Graphics",
   "weathersymbols_title": "Weather Symbols",
   "weathersymbols_description": "Symbols and their meanings",
   "weathersymbols_a_0": "Rising then falling. Now higher than, or the same as, 3 hours ago.",
