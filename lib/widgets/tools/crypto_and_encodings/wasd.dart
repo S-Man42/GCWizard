@@ -321,7 +321,8 @@ class WASDState extends State<WASD> {
                   _outEncodeData == null ? null : _exportFile(context, _outEncodeData);
                 },
               )),
-        if (_currentOutputMode == GCWSwitchPosition.right) //text & graphic
+        if (_currentMode == GCWSwitchPosition.left ||
+            (_currentMode == GCWSwitchPosition.right && _currentOutputMode == GCWSwitchPosition.right)) //text & graphic
              GCWDefaultOutput(child: _buildOutput())
       ],
     );
