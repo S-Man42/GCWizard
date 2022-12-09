@@ -28,7 +28,7 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
     super.initState();
 
     _currentBoard = List<List<Map<String, dynamic>>>.generate(
-        rowCount, (index) => List<Map<String, dynamic>>.generate(rowCount+1, (index) => null));
+        rowCount, (index) => List<Map<String, dynamic>>.generate(index+1, (index) => null));
   }
 
   @override
@@ -120,7 +120,7 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
                 onPressed: () {
                   setState(() {
                     for (int i = 0; i < rowCount; i++) {
-                      for (int j = 0; j < j+1; j++) {
+                      for (int j = 0; j < i + 1; j++) {
                         if (_currentBoard[i][j] != null && _currentBoard[i][j]['type'] == NumberPyramidFillType.CALCULATED)
                           _currentBoard[i][j] = null;
                       }
@@ -138,7 +138,7 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
                 onPressed: () {
                   setState(() {
                     _currentBoard = List<List<Map<String, dynamic>>>.generate(
-                        rowCount, (index) => List<Map<String, dynamic>>.generate(rowCount + 1, (index) => null));
+                        rowCount, (index) => List<Map<String, dynamic>>.generate(index + 1, (index) => null));
 
                     _currentSolutions = null;
                   });
@@ -154,7 +154,7 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
 
   _showSolution() {
     for (int i = 0; i < rowCount; i++) {
-      for (int j = 0; j < rowCount + 1; j++) {
+      for (int j = 0; j < i + 1; j++) {
         if (_currentBoard[i][j] != null && _currentBoard[i][j]['type'] == NumberPyramidFillType.USER_FILLED) continue;
 
         _currentBoard[i][j] = {'value': _currentSolutions[_currentSolution][i][j], 'type': NumberPyramidFillType.CALCULATED};

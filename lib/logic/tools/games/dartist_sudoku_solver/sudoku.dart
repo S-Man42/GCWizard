@@ -119,8 +119,7 @@ List<Map> _searchAll(Map values) {
   if (_squares.every((s) => values[s].length == 1)) {
     _FOUND_SOLUTIONS++;
     return <Map>[values];
-  }
-  ;
+  };
 
   var s2 = _order(_squares.where((s) => values[s].length > 1).toList(), on: (s) => values[s].length).first;
 

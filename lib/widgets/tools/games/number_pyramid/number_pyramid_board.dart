@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
@@ -65,9 +67,6 @@ class NumberPyramidBoardPainter extends CustomPainter {
     ThemeColors colors = themeColors();
 
     var paint = Paint();
-
-    paint.style = PaintingStyle.stroke;
-
     paint.strokeWidth = 1;
 
     double widthOuter = size.width;
@@ -76,7 +75,7 @@ class NumberPyramidBoardPainter extends CustomPainter {
     double yOuter = 0 * heightOuter;
     int rowCount =  this.board.length;
     double widthInner = widthOuter / rowCount;
-    double heightInner = heightOuter / rowCount;
+    double heightInner = min(heightOuter / rowCount, widthInner / 2);
 
     for (int i = 0; i < rowCount; i++) {
       double xInner = (widthOuter + xOuter - (i+1) * widthInner) / 2;
