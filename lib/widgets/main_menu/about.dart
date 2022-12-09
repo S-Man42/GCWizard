@@ -3,6 +3,7 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_divider.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
+import 'package:gc_wizard/widgets/common/gcw_singlechildscrollview.dart';
 import 'package:gc_wizard/widgets/main_menu/gcw_mainmenuentry_stub.dart';
 import 'package:gc_wizard/widgets/main_menu/licenses.dart';
 import 'package:gc_wizard/widgets/registry.dart';
@@ -56,7 +57,9 @@ class AboutState extends State<About> {
 
   @override
   Widget build(BuildContext context) {
-    var content = Column(
+    var content = ListView(
+      primary: true,
+      physics: const AlwaysScrollableScrollPhysics(),
       children: <Widget>[
         Text('GC Wizard - Geocache Wizard', style: gcwTextStyle().copyWith(fontWeight: FontWeight.bold)),
         GCWDivider(),
