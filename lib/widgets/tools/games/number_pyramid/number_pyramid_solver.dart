@@ -1,13 +1,14 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/games/sudoku_solver.dart';
+import 'package:gc_wizard/logic/tools/games/number_pyramid_solver.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
+import 'package:gc_wizard/widgets/common/gcw_expandable.dart';
+import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/tools/games/number_pyramid/number_pyramid_board.dart';
 
 class NumberPyramidSolver extends StatefulWidget {
@@ -20,23 +21,44 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
   List<List<List<int>>> _currentSolutions;
   int _currentSolution = 0;
 
-  final int _MAX_SOLUTIONS = 1000;
-  var rowCount = 5;
+  final int _MAX_SOLUTIONS = 10;
+  var rowCount = 3;
+  var _currentExpanded = true;
 
   @override
   void initState() {
     super.initState();
 
-    _currentBoard = List<List<Map<String, dynamic>>>.generate(
-        rowCount, (index) => List<Map<String, dynamic>>.generate(index+1, (index) => null));
+    _currentBoard = _generatePyramid();
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
+        GCWExpandableTextDivider(
+            text: i18n(context, 'Row Count'),
+            expanded: _currentExpanded,
+            onChanged: (value) {
+              setState(() {
+                _currentExpanded = value;
+              });
+            },
+            child: GCWIntegerSpinner(
+              title: 'Row Count',
+              value: rowCount,
+              min: 1,
+              onChanged: (value) {
+                setState(() {
+                  rowCount = value;
+                  _currentBoard = _generatePyramid(useEntrys: true);
+                });
+              },
+            ),
+        ),
+        Container(height: 10),
         Container(
-          constraints: BoxConstraints(maxWidth: min(500, MediaQuery.of(context).size.height * 0.8)),
+          constraints: BoxConstraints(maxWidth: min(100.0 * rowCount, MediaQuery.of(context).size.width)),
           child: NumberPyramidBoard(
             board: _currentBoard,
             onChanged: (newBoard) {
@@ -96,11 +118,11 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
                       List<List<int>> solveableBoard = _currentBoard.map((column) {
                         return column
                             .map((row) =>
-                                row != null && row['type'] == NumberPyramidFillType.USER_FILLED ? row['value'] as int : 0)
+                                row != null && row['type'] == NumberPyramidFillType.USER_FILLED ? row['value'] as int : null) //0
                             .toList();
                       }).toList();
 
-                      _currentSolutions = solveSudoku(solveableBoard, _MAX_SOLUTIONS);
+                      _currentSolutions = solvePyramid(solveableBoard, _MAX_SOLUTIONS);
                       if (_currentSolutions == null) {
                         showToast(i18n(context, 'sudokusolver_error'));
                       } else {
@@ -137,8 +159,7 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
                 text: i18n(context, 'sudokusolver_clearall'),
                 onPressed: () {
                   setState(() {
-                    _currentBoard = List<List<Map<String, dynamic>>>.generate(
-                        rowCount, (index) => List<Map<String, dynamic>>.generate(index + 1, (index) => null));
+                    _currentBoard = _generatePyramid();
 
                     _currentSolutions = null;
                   });
@@ -160,5 +181,21 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
         _currentBoard[i][j] = {'value': _currentSolutions[_currentSolution][i][j], 'type': NumberPyramidFillType.CALCULATED};
       }
     }
+  }
+
+  List<List<Map<String, dynamic>>> _generatePyramid({useEntrys : false}) {
+    var pyramid =  List<List<Map<String, dynamic>>>.generate(
+        rowCount, (index) => List<Map<String, dynamic>>.generate(index+1, (index) => null));
+
+    if (useEntrys && _currentBoard != null) {
+      for (var layer=0; layer < min(_currentBoard.length, rowCount); layer++) {
+        for (var brick=0; brick < pyramid[layer].length; brick++) {
+          if (_currentBoard[layer][brick] != null)
+            pyramid[layer][brick]= _currentBoard[layer][brick];
+        }
+      }
+    }
+
+    return pyramid;
   }
 }

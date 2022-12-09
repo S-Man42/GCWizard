@@ -60,9 +60,9 @@ class _GCWCodeTextFieldState extends State<GCWCodeTextField> {
       controller: CodeController(
         text: widget.controller.text,
         language: _language,
-        theme: widget.theme ?? Prefs.getString(PREFERENCE_THEME_COLOR) == ThemeType.DARK.toString()
-            ? atomOneDarkTheme
-            : atomOneLightTheme,
+        // theme: widget.theme ?? Prefs.getString(PREFERENCE_THEME_COLOR) == ThemeType.DARK.toString()
+        //     ? atomOneDarkTheme
+        //     : atomOneLightTheme,
         patternMap: widget.patternMap,
       ),
       readOnly: widget.readOnly,

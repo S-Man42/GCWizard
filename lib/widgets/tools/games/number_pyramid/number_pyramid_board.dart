@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
@@ -29,12 +28,12 @@ class NumberPyramidBoardState extends State<NumberPyramidBoard> {
       children: <Widget>[
         Expanded(
             child: AspectRatio(
-                aspectRatio: 1 / 1,
+                aspectRatio: 1 / 0.5,
                 child: CanvasTouchDetector(
                   gesturesToOverride: [GestureType.onTapDown],
                   builder: (context) {
                     return CustomPaint(
-                        painter: NumberPyramidBoardPainter(context, widget.type, widget.board, (x, y, value) {
+                      painter: NumberPyramidBoardPainter(context, widget.type, widget.board, (x, y, value) {
                       setState(() {
                         if (value == null) {
                           widget.board[x][y] = null;
@@ -67,7 +66,12 @@ class NumberPyramidBoardPainter extends CustomPainter {
     ThemeColors colors = themeColors();
 
     var paint = Paint();
+    var paintBack = Paint();
     paint.strokeWidth = 1;
+    paint.style = PaintingStyle.stroke;
+    paint.color = colors.accent();
+    paintBack.style = PaintingStyle.fill;
+    paintBack.color = colors.gridBackground();
 
     double widthOuter = size.width;
     double heightOuter = size.height;
@@ -82,21 +86,14 @@ class NumberPyramidBoardPainter extends CustomPainter {
       double yInner = yOuter + i * heightInner;
 
       for (int j = 0; j < i+1; j++) {
-
-        paint.style = PaintingStyle.fill;
-        paint.color = colors.gridBackground();
-
         var boardY = j;
         var boardX = i;
 
-        _touchCanvas.drawRect(Rect.fromLTWH(xInner, yInner, widthInner, heightInner), paint,
+        _touchCanvas.drawRect(Rect.fromLTWH(xInner, yInner, widthInner, heightInner), paintBack,
             onTapDown: (tapDetail) {
-          _removeCalculated(board);
-          _showInputDialog(boardX, boardY);
-        });
-
-        paint.style = PaintingStyle.stroke;
-        paint.color = colors.accent();
+              _removeCalculated(board);
+              _showInputDialog(boardX, boardY);
+            });
 
         _touchCanvas.drawRect(Rect.fromLTWH(xInner, yInner, widthInner, heightInner), paint);
 
