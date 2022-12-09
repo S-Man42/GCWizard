@@ -272,6 +272,7 @@ import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulagro
 import 'package:gc_wizard/widgets/tools/games/bowling.dart';
 import 'package:gc_wizard/widgets/tools/games/catan.dart';
 import 'package:gc_wizard/widgets/tools/games/game_of_life/game_of_life.dart';
+import 'package:gc_wizard/widgets/tools/games/number_pyramid/number_pyramid_solver.dart';
 import 'package:gc_wizard/widgets/tools/games/scrabble/scrabble_overview.dart';
 import 'package:gc_wizard/widgets/tools/games/sudoku/sudoku_solver.dart';
 import 'package:gc_wizard/widgets/tools/general_tools/grid_generator/grid.dart';
@@ -885,6 +886,12 @@ initializeRegistry(BuildContext context) {
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: [
       'navajo',
+    ]),
+    GCWTool(tool: NumberPyramidSolver(), i18nPrefix: 'numberpyramidsolver', categories: [
+      ToolCategory.GAMES
+    ], searchKeys: [
+      'games',
+      'games_numberpyramidsolver',
     ]),
     GCWTool(
         tool: NumberSequenceSelection(),
