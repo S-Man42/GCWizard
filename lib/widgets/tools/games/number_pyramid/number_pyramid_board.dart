@@ -5,6 +5,7 @@ import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
+import 'package:gc_wizard/widgets/common/gcw_integer_textfield.dart';
 import 'package:touchable/touchable.dart';
 
 enum NumberPyramidFillType { USER_FILLED, CALCULATED }
@@ -128,6 +129,19 @@ class NumberPyramidBoardPainter extends CustomPainter {
 
   _showInputDialog(int x, y) {
     var columns = <Widget>[];
+    int _value = 0;
+
+    columns.add(
+      Container(
+        width: 100,
+        height: 30,
+        child:         GCWIntegerTextField(
+            onChanged:  (ret) {
+              _value = ret['value'];
+            }
+      )
+
+    ));
 
     for (int i = 0; i < 3; i++) {
       var rows = <Widget>[];
@@ -138,8 +152,9 @@ class NumberPyramidBoardPainter extends CustomPainter {
           text: value.toString(),
           textStyle: gcwTextStyle().copyWith(fontSize: 32, color: themeColors().dialogText()),
           onPressed: () {
-            Navigator.of(context).pop();
-            setBoxValue(x, y, value);
+            _value = i * 3 + j + 1;
+            // Navigator.of(context).pop();
+            // setBoxValue(x, y, value);
           },
         ));
       }
@@ -154,6 +169,14 @@ class NumberPyramidBoardPainter extends CustomPainter {
       onPressed: () {
         Navigator.of(context).pop();
         setBoxValue(x, y, null);
+      },
+    ));
+
+    columns.add(GCWButton(
+      text: 'Enter',
+      onPressed: () {
+        Navigator.of(context).pop();
+        setBoxValue(x, y, _value);
       },
     ));
 

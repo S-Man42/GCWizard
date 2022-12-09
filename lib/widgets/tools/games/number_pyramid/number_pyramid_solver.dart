@@ -22,7 +22,7 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
   int _currentSolution = 0;
 
   final int _MAX_SOLUTIONS = 10;
-  var rowCount = 3;
+  var _rowCount = 3;
   var _currentExpanded = true;
 
   @override
@@ -46,11 +46,11 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
             },
             child: GCWIntegerSpinner(
               title: 'Row Count',
-              value: rowCount,
+              value: _rowCount,
               min: 1,
               onChanged: (value) {
                 setState(() {
-                  rowCount = value;
+                  _rowCount = value;
                   _currentBoard = _generatePyramid(useEntrys: true);
                 });
               },
@@ -58,7 +58,7 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
         ),
         Container(height: 10),
         Container(
-          constraints: BoxConstraints(maxWidth: min(100.0 * rowCount, MediaQuery.of(context).size.width)),
+          constraints: BoxConstraints(maxWidth: min(100.0 * _rowCount, MediaQuery.of(context).size.width)),
           child: NumberPyramidBoard(
             board: _currentBoard,
             onChanged: (newBoard) {
@@ -141,7 +141,7 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
                 text: i18n(context, 'sudokusolver_clearcalculated'),
                 onPressed: () {
                   setState(() {
-                    for (int i = 0; i < rowCount; i++) {
+                    for (int i = 0; i < _rowCount; i++) {
                       for (int j = 0; j < i + 1; j++) {
                         if (_currentBoard[i][j] != null && _currentBoard[i][j]['type'] == NumberPyramidFillType.CALCULATED)
                           _currentBoard[i][j] = null;
@@ -174,7 +174,7 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
   }
 
   _showSolution() {
-    for (int i = 0; i < rowCount; i++) {
+    for (int i = 0; i < _rowCount; i++) {
       for (int j = 0; j < i + 1; j++) {
         if (_currentBoard[i][j] != null && _currentBoard[i][j]['type'] == NumberPyramidFillType.USER_FILLED) continue;
 
@@ -185,10 +185,10 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
 
   List<List<Map<String, dynamic>>> _generatePyramid({useEntrys : false}) {
     var pyramid =  List<List<Map<String, dynamic>>>.generate(
-        rowCount, (index) => List<Map<String, dynamic>>.generate(index+1, (index) => null));
+        _rowCount, (index) => List<Map<String, dynamic>>.generate(index+1, (index) => null));
 
     if (useEntrys && _currentBoard != null) {
-      for (var layer=0; layer < min(_currentBoard.length, rowCount); layer++) {
+      for (var layer=0; layer < min(_currentBoard.length, _rowCount); layer++) {
         for (var brick=0; brick < pyramid[layer].length; brick++) {
           if (_currentBoard[layer][brick] != null)
             pyramid[layer][brick]= _currentBoard[layer][brick];

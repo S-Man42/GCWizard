@@ -7,14 +7,14 @@
 import 'dart:math';
 
 var _MAX_SOLUTIONS = 10;
-var _globalMaxValue = 100;
+var _globalMaxValue = 1000;
 List<List<List<int>>> _solutions;
 
 /* Asserts that a given pyramid is valid
 			Keyword arguments:
 			pyramid -- The pyramid to be checked
 */
-bool _AssertValidPyramid(List<List<int>> pyramid) {
+bool _assertValidPyramid(List<List<int>> pyramid) {
 
   if (pyramid == null) return false;
   for (var layer=0; layer < pyramid.length - 1; layer++) {
@@ -24,7 +24,7 @@ bool _AssertValidPyramid(List<List<int>> pyramid) {
   return true;
 }
 
-bool _IsSolved(List<List<int>> pyramid) {
+bool _isSolved(List<List<int>> pyramid) {
 
   for (var layer=0; layer < pyramid.length - 1; layer++) {
     for (var brick=0; brick < pyramid[layer].length; brick++) {
@@ -47,7 +47,7 @@ bool _IsSolved(List<List<int>> pyramid) {
 			Keyword arguments:
 			pyramid -- The pyramid to be checked
 */
-bool _IsSolveable(List<List<int>> pyramid) {
+bool _isSolveable(List<List<int>> pyramid) {
 
   for (var layer=0; layer < pyramid.length - 1; layer++) {
     for (var brick=0; brick < pyramid[layer].length; brick++) {
@@ -68,7 +68,7 @@ bool _IsSolveable(List<List<int>> pyramid) {
   return true;
 }
 
-int _GetMaxValue(List<List<int>> pyramid, int layer, int brick) {
+int _getMaxValue(List<List<int>> pyramid, int layer, int brick) {
   /* Tries to find the maximum possible value for a specific brick
 
 			Keyword arguments:
@@ -81,8 +81,8 @@ int _GetMaxValue(List<List<int>> pyramid, int layer, int brick) {
     return pyramid[layer][brick];
 
   // recursively search for parent value
-  var left = (layer > 0 && brick > 0) ? _GetMaxValue(pyramid, layer - 1, brick - 1) : _globalMaxValue;
-  var right = (layer > 0 && brick < layer) ? _GetMaxValue(pyramid, layer - 1, brick) : _globalMaxValue;
+  var left = (layer > 0 && brick > 0) ? _getMaxValue(pyramid, layer - 1, brick - 1) : _globalMaxValue;
+  var right = (layer > 0 && brick < layer) ? _getMaxValue(pyramid, layer - 1, brick) : _globalMaxValue;
 
   return min(left, right);
 }
@@ -93,25 +93,25 @@ int _GetMaxValue(List<List<int>> pyramid, int layer, int brick) {
 			pyramid -- The pyramid
 			brick -- Index of the brick (always bottom layer!)
 */
-void _SolveGuess(List<List<int>> pyramid, int brick) {
+void _solveGuess(List<List<int>> pyramid, int brick) {
   if (_solutions.length >= _MAX_SOLUTIONS)
     return;
 
   var lastLayer = pyramid.length - 1 ;
   var brickValue = pyramid[lastLayer][brick];
   var startValue = (brickValue != null) ? brickValue : 0;
-  var endValue = (brickValue != null) ? brickValue + 1 : _GetMaxValue(pyramid, lastLayer, brick);
+  var endValue = (brickValue != null) ? brickValue + 1 : _getMaxValue(pyramid, lastLayer, brick);
 
   for (var currentValue=startValue; currentValue <= endValue; currentValue++) {
     pyramid[lastLayer][brick] = currentValue;
 
     // is the pyramid solveable with these values
-    if (_IsSolveable(pyramid)) {
+    if (_isSolveable(pyramid)) {
       // try to repair
-      var repairedPyramid = _SolveRepair(_copyPyramid(pyramid));
-      if (!_IsSolved(repairedPyramid))
+      var repairedPyramid = _solveRepair(_copyPyramid(pyramid));
+      if (!_isSolved(repairedPyramid))
         if ((brick + 1) < pyramid.length)
-          _SolveGuess(repairedPyramid, brick + 1);
+          _solveGuess(repairedPyramid, brick + 1);
         else
           if (_solutions.length < _MAX_SOLUTIONS)
             _solutions.add(repairedPyramid);
@@ -132,7 +132,7 @@ List<List<int>> _copyPyramid(List<List<int>> pyramid) {
 			Keyword arguments:
 			pyramid -- The pyramid
 */
-List<List<int>> _SolveRepair(List<List<int>> pyramid) {
+List<List<int>> _solveRepair(List<List<int>> pyramid) {
   var repairedSomething = true;
 
   while (repairedSomething) {
@@ -173,13 +173,13 @@ List<List<int>> _SolveRepair(List<List<int>> pyramid) {
 List<List<List<int>>> solve(List<List<int>> pyramid, {int maxSolutions}) {
   if (maxSolutions != null && maxSolutions > 0) _MAX_SOLUTIONS = maxSolutions;
 
-  if (!_AssertValidPyramid(pyramid)) return null;
+  if (!_assertValidPyramid(pyramid)) return null;
 
   _solutions = [];
 
-  pyramid = _SolveRepair(pyramid);
-  if (!_IsSolved(pyramid))
-    _SolveGuess(pyramid, 0);
+  pyramid = _solveRepair(pyramid);
+  if (!_isSolved(pyramid))
+    _solveGuess(pyramid, 0);
   else
     _solutions.add(pyramid);
 
