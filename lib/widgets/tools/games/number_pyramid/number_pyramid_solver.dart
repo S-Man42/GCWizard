@@ -74,7 +74,7 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
           ),
         ),
         GCWIntegerSpinner(
-          title: 'Value',
+          title: i18n(context, 'common_value'),
           min: 0,
           value: _currentValue,
           onChanged: (value) {
