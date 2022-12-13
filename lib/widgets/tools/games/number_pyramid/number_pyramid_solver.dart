@@ -24,6 +24,7 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
   final int _MAX_SOLUTIONS = 10;
   var rowCount = 3;
   var _currentExpanded = true;
+  int currentValue;
 
   @override
   void initState() {
@@ -51,7 +52,7 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
               onChanged: (value) {
                 setState(() {
                   rowCount = value;
-                  _currentBoard = _generatePyramid(useEntrys: true);
+                  _currentBoard = _generatePyramid(useOldEntrys: true);
                 });
               },
             ),
@@ -67,7 +68,11 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
                 _currentSolutions = null;
               });
             },
+            showBoxValue: showBoxvalue,
           ),
+        ),
+        GCWIntegerSpinner(
+          min: 0,
         ),
         if (_currentSolutions != null && _currentSolutions.length > 1)
           Container(
@@ -183,11 +188,11 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
     }
   }
 
-  List<List<Map<String, dynamic>>> _generatePyramid({useEntrys : false}) {
+  List<List<Map<String, dynamic>>> _generatePyramid({useOldEntrys : false}) {
     var pyramid =  List<List<Map<String, dynamic>>>.generate(
         rowCount, (index) => List<Map<String, dynamic>>.generate(index+1, (index) => null));
 
-    if (useEntrys && _currentBoard != null) {
+    if (useOldEntrys && _currentBoard != null) {
       for (var layer=0; layer < min(_currentBoard.length, rowCount); layer++) {
         for (var brick=0; brick < pyramid[layer].length; brick++) {
           if (_currentBoard[layer][brick] != null)
@@ -197,5 +202,11 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
     }
 
     return pyramid;
+  }
+
+  void showBoxvalue(int x, int y) {
+    setState(() {
+      currentValue = _currentBoard[x][y]['value'];
+    });
   }
 }
