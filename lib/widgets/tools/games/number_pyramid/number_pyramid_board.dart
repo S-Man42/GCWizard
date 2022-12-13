@@ -12,10 +12,11 @@ enum NumberPyramidFillType { USER_FILLED, CALCULATED }
 
 class NumberPyramidBoard extends StatefulWidget {
   final NumberPyramidFillType type;
+  final Function(int, int) showBoxValue;
   final Function onChanged;
   final List<List<Map<String, dynamic>>> board;
 
-  NumberPyramidBoard({Key key, this.onChanged, this.board, this.type: NumberPyramidFillType.CALCULATED})
+  NumberPyramidBoard({Key key, this.onChanged, this.showBoxValue, this.board, this.type: NumberPyramidFillType.CALCULATED})
       : super(key: key);
 
   @override
@@ -35,17 +36,17 @@ class NumberPyramidBoardState extends State<NumberPyramidBoard> {
                   builder: (context) {
                     return CustomPaint(
                       painter: NumberPyramidBoardPainter(context, widget.type, widget.board, (x, y, value) {
-                      setState(() {
-                        if (value == null) {
-                          widget.board[x][y] = null;
-                          widget.onChanged(widget.board);
-                          return;
-                        }
+                          setState(() {
+                            if (value == null)
+                              widget.board[x][y] = null;
+                            else
+                              widget.board[x][y] = {'value': value, 'type': NumberPyramidFillType.USER_FILLED};
 
-                        widget.board[x][y] = {'value': value, 'type': NumberPyramidFillType.USER_FILLED};
-                        widget.onChanged(widget.board);
-                      });
-                    }));
+                            widget.onChanged(widget.board);
+                          });
+                        },
+                        widget.showBoxValue)
+                    );
                   },
                 )))
       ],
@@ -55,11 +56,12 @@ class NumberPyramidBoardState extends State<NumberPyramidBoard> {
 
 class NumberPyramidBoardPainter extends CustomPainter {
   final Function(int, int, int) setBoxValue;
+  final Function(int, int) showBoxValue;
   final List<List<Map<String, dynamic>>> board;
   final BuildContext context;
   final NumberPyramidFillType type;
 
-  NumberPyramidBoardPainter(this.context, this.type, this.board, this.setBoxValue);
+  NumberPyramidBoardPainter(this.context, this.type, this.board, this.setBoxValue, this.showBoxValue);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -93,7 +95,8 @@ class NumberPyramidBoardPainter extends CustomPainter {
         _touchCanvas.drawRect(Rect.fromLTWH(xInner, yInner, widthInner, heightInner), paintBack,
             onTapDown: (tapDetail) {
               _removeCalculated(board);
-              _showInputDialog(boardX, boardY);
+              //_showInputDialog(boardX, boardY);
+              showBoxValue(boardX, boardY);
             });
 
         _touchCanvas.drawRect(Rect.fromLTWH(xInner, yInner, widthInner, heightInner), paint);
