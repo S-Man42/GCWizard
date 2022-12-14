@@ -366,7 +366,7 @@ Future<bool> checkStoragePermission() async {
 Future<Uint8List> saveByteDataToFile(BuildContext context, Uint8List data, String fileName,
     {String subDirectory}) async {
   if (kIsWeb) {
-    var blob = new html.Blob([data], 'image/png');
+    var blob = html.Blob([data], 'image/png');
     html.AnchorElement(
       href: html.Url.createObjectUrl(blob),
     )
@@ -560,7 +560,7 @@ Future<Uint8List> createZipFile(String fileName, String extension, List<Uint8Lis
       var tmpPath = '$tmpDir/$fileNameZip';
       if (File(tmpPath).existsSync()) File(tmpPath).delete();
 
-      File imageFileTmp = new File(tmpPath);
+      File imageFileTmp = File(tmpPath);
       imageFileTmp = await imageFileTmp.create();
       imageFileTmp = await imageFileTmp.writeAsBytes(imageBytes);
 
@@ -599,7 +599,7 @@ Future<List<GCWFile>> extractArchive(GCWFile file) async {
   if (fileClass(file.fileType) != FileClass.ARCHIVE) return null;
 
   try {
-    InputStream input = new InputStream(file.bytes.buffer.asByteData());
+    InputStream input = InputStream(file.bytes.buffer.asByteData());
     switch (file.fileType) {
       case FileType.ZIP:
         return _archiveToPlatformFileList(ZipDecoder().decodeBuffer(input));

@@ -34,14 +34,14 @@ _sanitizeVariableDoubleText(String text) {
 }
 
 _addBrackets(String formula) {
-  RegExp regExp = new RegExp(r'\[.+?\]');
+  RegExp regExp = RegExp(r'\[.+?\]');
   if (regExp.hasMatch(formula)) return formula;
 
   return '[$formula]';
 }
 
 _removeBrackets(String formula) {
-  RegExp regExp = new RegExp(r'\[.+?\]');
+  RegExp regExp = RegExp(r'\[.+?\]');
   if (!regExp.hasMatch(formula)) return formula;
 
   return formula.substring(1, formula.length - 1);
