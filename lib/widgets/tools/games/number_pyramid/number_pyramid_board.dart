@@ -9,6 +9,7 @@ import 'package:gc_wizard/widgets/common/gcw_integer_textfield.dart';
 import 'package:touchable/touchable.dart';
 
 enum NumberPyramidFillType { USER_FILLED, CALCULATED }
+Point<int> _selectedBox;
 
 class NumberPyramidBoard extends StatefulWidget {
   final NumberPyramidFillType type;
@@ -84,6 +85,7 @@ class NumberPyramidBoardPainter extends CustomPainter {
     double widthInner = widthOuter / rowCount;
     double heightInner = min(heightOuter / rowCount, widthInner / 2);
 
+
     for (int i = 0; i < rowCount; i++) {
       double xInner = (widthOuter + xOuter - (i+1) * widthInner) / 2;
       double yInner = yOuter + i * heightInner;
@@ -96,9 +98,14 @@ class NumberPyramidBoardPainter extends CustomPainter {
             onTapDown: (tapDetail) {
               _removeCalculated(board);
               //_showInputDialog(boardX, boardY);
+              _selectedBox = Point<int>(boardX, boardY);
               showBoxValue(boardX, boardY);
             });
 
+        paint.color = colors.accent();
+        if (_selectedBox != null && _selectedBox.x == i  && _selectedBox.y == j) {
+          paint.color = colors.focused();
+        }
         _touchCanvas.drawRect(Rect.fromLTWH(xInner, yInner, widthInner, heightInner), paint);
 
         if (board[boardX][boardY] != null) {

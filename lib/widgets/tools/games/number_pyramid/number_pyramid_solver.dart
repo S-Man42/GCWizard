@@ -73,12 +73,17 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
             showBoxValue: _showBoxValue,
           ),
         ),
+        Container(height: 10),
         GCWIntegerSpinner(
           title: i18n(context, 'common_value'),
           min: 0,
+          max: 99999,
           value: _currentValue,
           onChanged: (value) {
-            _setBoxValue(_boardX, _boardY, value);
+            setState(() {
+              _currentValue = value;
+              _setBoxValue(_boardX, _boardY, value);
+            });
           },
         ),
         if (_currentSolutions != null && _currentSolutions.length > 1)
@@ -149,34 +154,35 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
             ),
             Expanded(
                 child: Container(
-              child: GCWButton(
-                text: i18n(context, 'sudokusolver_clearcalculated'),
-                onPressed: () {
-                  setState(() {
-                    for (int i = 0; i < _rowCount; i++) {
-                      for (int j = 0; j < i + 1; j++) {
-                        if (_currentBoard[i][j] != null && _currentBoard[i][j]['type'] == NumberPyramidFillType.CALCULATED)
-                          _currentBoard[i][j] = null;
-                      }
-                    }
-                    _currentSolutions = null;
-                  });
-                },
-              ),
-              padding: EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
-            )),
+                  child: GCWButton(
+                    text: i18n(context, 'sudokusolver_clearcalculated'),
+                    onPressed: () {
+                      setState(() {
+                        for (int i = 0; i < _rowCount; i++) {
+                          for (int j = 0; j < i + 1; j++) {
+                            if (_currentBoard[i][j] != null && _currentBoard[i][j]['type'] == NumberPyramidFillType.CALCULATED)
+                              _currentBoard[i][j] = null;
+                          }
+                        }
+                        _currentSolutions = null;
+                      });
+                    },
+                  ),
+                  padding: EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
+                )
+            ),
             Expanded(
                 child: Container(
-              child: GCWButton(
-                text: i18n(context, 'sudokusolver_clearall'),
-                onPressed: () {
-                  setState(() {
-                    _currentBoard = _generatePyramid();
+                  child: GCWButton(
+                    text: i18n(context, 'sudokusolver_clearall'),
+                    onPressed: () {
+                      setState(() {
+                        _currentBoard = _generatePyramid();
 
-                    _currentSolutions = null;
-                  });
-                },
-              ),
+                        _currentSolutions = null;
+                      });
+                    },
+                  ),
               padding: EdgeInsets.only(left: DEFAULT_MARGIN),
             ))
           ],
@@ -215,16 +221,20 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
     setState(() {
       _boardX = x;
       _boardY = y;
-      _currentValue = _currentBoard[x][y]['value'];
+      _currentValue = _currentBoard[x][y] == null ? 0 : _currentBoard[x][y]['value'];
     });
   }
 
   void _setBoxValue(int x, int y, int value) {
+    int oldValue;
+    if (_currentBoard[x][y] != null )
+      oldValue = _currentBoard[x][y]['value'];
+    if (value != oldValue)
+      _currentSolutions = null;
+
     if (value == null)
-      _currentBoard[x][y] = null;
+      _currentBoard[x][y] = {'value': null, 'type': NumberPyramidFillType.CALCULATED};
     else
       _currentBoard[x][y] = {'value': value, 'type': NumberPyramidFillType.USER_FILLED};
-
-    _currentSolutions = null;
   }
 }
