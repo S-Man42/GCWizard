@@ -166,9 +166,9 @@ malbolgeOutput interpretMalbolge(String program, String STDIN, bool strict) {
   String opcode = '';
   bool halt = false;
   int input = 0;
-  List<String> output = new List<String>();
-  List<String> assembler = new List<String>();
-  List<String> mnemonic = new List<String>();
+  List<String> output = <String>[];
+  List<String> assembler = <String>[];
+  List<String> mnemonic = <String>[];
   String STDOUT = '';
 
   while (!halt) {

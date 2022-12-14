@@ -45,7 +45,7 @@ class Quadgrams extends guballa.Quadgrams {
                 (quadgrams[i + 4] == 0) | (quadgrams[i + 4] == null) &&
                 (quadgrams[i + 5] == 0) | (quadgrams[i + 5] == null)) ||
             (i + zeroCount >= quadgrams.length)) {
-          var quadgramList = List<int>();
+          var quadgramList = <int>[];
           quadgramList.addAll(quadgrams.getRange(
               blockStart, (i + zeroCount >= quadgrams.length) ? quadgrams.length : min(i + 1, quadgrams.length)));
           map.addAll({blockStart: quadgramList});

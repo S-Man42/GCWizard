@@ -39,7 +39,7 @@ Map<String, List<String>> _createAmscoGrid(String input, String key, bool oneCha
   input = input.toUpperCase();
 
   for (int i = 0; i < key.toString().length; i++) {
-    grid.addAll({key[i]: List<String>()});
+    grid.addAll({key[i]: <String>[]});
   }
 
   int i = 0;

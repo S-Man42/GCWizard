@@ -277,7 +277,7 @@ class GeodesicLine {
     }
 
     if ((_caps & GeodesicMask.CAP_C4) != 0) {
-      _C4a = new List<double>.generate(_nC4_, (index) => 0.0);
+      _C4a = List<double>.generate(_nC4_, (index) => 0.0);
       g.C4f(eps, _C4a);
       // Multiplier = a^2 * e^2 * cos(alpha0) * sin(alpha0)
       _A4 = GeoMath.sq(_a) * _calp0 * _salp0 * g.e2;
@@ -332,7 +332,7 @@ class GeodesicLine {
    **********************************************************************/
   GeodesicData Position(bool arcmode, double s12_a12, int outmask) {
     outmask &= _caps & GeodesicMask.OUT_MASK;
-    GeodesicData r = new GeodesicData();
+    GeodesicData r = GeodesicData();
     if (!(_Init() && (arcmode || (_caps & (GeodesicMask.OUT_MASK & GeodesicMask.DISTANCE_IN)) != 0)))
       // Uninitialized or impossible distance calculation requested
       return r;
@@ -346,7 +346,7 @@ class GeodesicLine {
       // Interpret s12_a12 as spherical arc length
       r.a12 = s12_a12;
       sig12 = toRadians(s12_a12);
-      Pair p = new Pair();
+      Pair p = Pair();
       GeoMath.sincosd(p, s12_a12);
       ssig12 = p.first;
       csig12 = p.second;
