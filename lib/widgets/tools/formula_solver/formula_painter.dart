@@ -54,7 +54,7 @@ class FormulaPainter {
     formula = formula.toUpperCase();
     this.formula = formula;
 
-    RegExp regExp = new RegExp(r'(\[)(.+?|\s*)(\])');
+    RegExp regExp = RegExp(r'(\[)(.+?|\s*)(\])');
     var matches = regExp.allMatches(formula);
     if (matches.isNotEmpty) {
       // formel references

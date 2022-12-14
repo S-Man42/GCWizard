@@ -127,7 +127,7 @@ List<Map> _searchAll(Map values) {
   var output = <Map>[];
 
   values[s2].split('').forEach((d) {
-    var result = _searchAll(_assign(new Map.from(values), s2, d));
+    var result = _searchAll(_assign(Map.from(values), s2, d));
     if (result == null) return;
 
     output.addAll(result.where((element) => element != null));

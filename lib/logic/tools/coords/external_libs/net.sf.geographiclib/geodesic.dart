@@ -281,8 +281,8 @@ class Geodesic {
     // and max(0.001, abs(f)) stops etol2 getting too large in the nearly
     // spherical case.
     _etol2 = 0.1 * _tol2_ / sqrt(max(0.001, f.abs()) * min(1.0, 1 - f / 2) / 2);
-    if (!(GeoMath.isfinite(a) && a > 0)) throw new Exception("Equatorial radius is not positive");
-    if (!(GeoMath.isfinite(b) && b > 0)) throw new Exception("Polar semi-axis is not positive");
+    if (!(GeoMath.isfinite(a) && a > 0)) throw Exception("Equatorial radius is not positive");
+    if (!(GeoMath.isfinite(b) && b > 0)) throw Exception("Polar semi-axis is not positive");
     _A3x = List<double>.generate(nA3x_, (index) => 0.0);
     _C3x = List<double>.generate(nC3x_, (index) => 0.0);
     _C4x = List<double>.generate(nC4x_, (index) => 0.0);
@@ -413,8 +413,8 @@ class Geodesic {
   }
 
   _InverseData _inverseInt(double lat1, double lon1, double lat2, double lon2, int outmask) {
-    _InverseData result = new _InverseData();
-    Pair p = new Pair();
+    _InverseData result = _InverseData();
+    Pair p = Pair();
     GeodesicData r = result._g;
     // Compute longitude difference (AngDiff does this carefully).  Result is
     // in [-180, 180] but -180 is only for west-going geodesics.  180 is for
@@ -516,7 +516,7 @@ class Geodesic {
     List<double> C3a = List<double>.generate(nC3_, (index) => 0.0);
 
     bool meridian = lat1 == -90 || slam12 == 0;
-    _LengthsV v = new _LengthsV();
+    _LengthsV v = _LengthsV();
 
     if (meridian) {
       // Endpoints are on a single full meridian, so the geodesic might lie on
@@ -616,7 +616,7 @@ class Geodesic {
         int numit = 0;
         // Bracketing range
         double _salp1a = tiny_, _calp1a = 1, _salp1b = tiny_, _calp1b = -1;
-        _Lambda12V w = new _Lambda12V();
+        _Lambda12V w = _Lambda12V();
         for (bool tripn = false, tripb = false; numit < _maxit2_; ++numit) {
           // the WGS84 test set: mean = 1.47, sd = 1.25, max = 16
           // WGS84 and random input: mean = 2.85, sd = 0.60
@@ -1011,7 +1011,7 @@ class Geodesic {
     // salp2 and calp2 and function value is sig12.
 
     // To hold sig12, _salp1, _calp1, salp2, calp2, dnm.
-    _InverseStartV w = new _InverseStartV();
+    _InverseStartV w = _InverseStartV();
     w._sig12 = -1; // Return value
     double
         // bet12 = bet2 - bet1 in [0, pi); bet12a = bet2 + bet1 in (-pi, 0]
@@ -1522,7 +1522,7 @@ class _InverseData {
   double _salp1, _calp1, _salp2, _calp2;
 
   _InverseData() {
-    _g = new GeodesicData();
+    _g = GeodesicData();
   }
 }
 

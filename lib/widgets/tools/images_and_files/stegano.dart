@@ -265,7 +265,7 @@ class _SteganoState extends State<Stegano> {
         //child: CircularProgressIndicator(),
         child: CircularProgressIndicator(
           backgroundColor: Colors.white,
-          valueColor: new AlwaysStoppedAnimation<Color>(Colors.amber),
+          valueColor: AlwaysStoppedAnimation<Color>(Colors.amber),
           strokeWidth: 8, //20,
         ),
       )
