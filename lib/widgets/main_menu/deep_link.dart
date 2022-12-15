@@ -8,9 +8,18 @@ import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 NoAnimationMaterialPageRoute createRoute (BuildContext context, ScreenArguments arguments) {
   if (arguments?.title == null) return null;
   var name = arguments.title.toLowerCase();
-
   var tool = registeredTools.firstWhere((tool) => tool.i18nPrefix == name);
+
+  if (tool == null) {
+    switch (name) {
+      case 'symboltables':
+        if (arguments.arguments != null && !arguments.arguments.isNotEmpty)
+          registeredTools.firstWhere((tool) => tool.i18nPrefix == arguments.arguments[0]);
+    }
+  }
+
   if (tool== null) return null;
+
   // arguments settings only for view the path in the url
   return NoAnimationMaterialPageRoute(builder: (context) => tool, settings: arguments.settings);
 }
