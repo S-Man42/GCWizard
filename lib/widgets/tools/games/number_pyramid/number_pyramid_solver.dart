@@ -60,18 +60,24 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
             ),
         ),
         Container(height: 10),
-        Container(
-          constraints: BoxConstraints(maxWidth: min(100.0 * _rowCount, MediaQuery.of(context).size.width)),
-          child: NumberPyramidBoard(
-            board: _currentBoard,
-            onChanged: (newBoard) {
-              setState(() {
-                _currentBoard = newBoard;
-                _currentSolutions = null;
-              });
-            },
-            showBoxValue: _showBoxValue,
-          ),
+        SingleChildScrollView(
+          child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              physics: AlwaysScrollableScrollPhysics(),
+              child: Container(
+                constraints: BoxConstraints(maxWidth: min(100.0 * _rowCount, MediaQuery.of(context).size.width)),
+                child: NumberPyramidBoard(
+                  board: _currentBoard,
+                  onChanged: (newBoard) {
+                    setState(() {
+                      _currentBoard = newBoard;
+                      _currentSolutions = null;
+                    });
+                  },
+                  showBoxValue: _showBoxValue,
+                ),
+              ),
+            ),
         ),
         Container(height: 10),
         GCWIntegerSpinner(
