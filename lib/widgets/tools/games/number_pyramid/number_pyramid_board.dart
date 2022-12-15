@@ -71,6 +71,7 @@ class NumberPyramidBoardPainter extends CustomPainter {
 
     var paint = Paint();
     var paintBack = Paint();
+    Rect selectedRect;
     paint.strokeWidth = 1;
     paint.style = PaintingStyle.stroke;
     paint.color = colors.accent();
@@ -102,10 +103,10 @@ class NumberPyramidBoardPainter extends CustomPainter {
               showBoxValue(boardX, boardY);
             });
 
-        paint.color = colors.accent();
-        if (_selectedBox != null && _selectedBox.x == i  && _selectedBox.y == j) {
-          paint.color = colors.focused();
-        }
+
+        if (_selectedBox != null && _selectedBox.x == i  && _selectedBox.y == j)
+          selectedRect = Rect.fromLTWH(xInner, yInner, widthInner, heightInner);
+
         _touchCanvas.drawRect(Rect.fromLTWH(xInner, yInner, widthInner, heightInner), paint);
 
         if (board[boardX][boardY] != null) {
@@ -126,6 +127,11 @@ class NumberPyramidBoardPainter extends CustomPainter {
 
         xInner += widthInner;
       }
+    }
+
+    if (selectedRect != null) {
+      paint.color = colors.focused();
+      _touchCanvas.drawRect(selectedRect, paint);
     }
   }
 
