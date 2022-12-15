@@ -15,6 +15,9 @@ NoAnimationMaterialPageRoute createRoute (BuildContext context, ScreenArguments 
       case 'symboltables':
         if (arguments.arguments != null && !arguments.arguments.isNotEmpty)
           registeredTools.firstWhere((tool) => tool.i18nPrefix == arguments.arguments[0]);
+        break;
+      case 'format_converter': // coords converter
+
     }
   }
 
