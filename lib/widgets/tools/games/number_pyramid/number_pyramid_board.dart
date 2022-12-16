@@ -113,10 +113,17 @@ class NumberPyramidBoardPainter extends CustomPainter {
           var textColor =
               board[boardX][boardY]['type'] == NumberPyramidFillType.USER_FILLED ? colors.accent() : colors.mainFont();
 
+          var fontsize = heightInner * 0.8;
           TextSpan span = TextSpan(
-              style: gcwTextStyle().copyWith(color: textColor, fontSize: heightInner * 0.8),
+              style: gcwTextStyle().copyWith(color: textColor, fontSize: fontsize),
               text: board[boardX][boardY]['value'].toString());
           TextPainter textPainter = TextPainter(text: span, textDirection: TextDirection.ltr);
+          while (textPainter.width > widthInner) {
+            fontsize *= 0.95;
+            if (fontsize < heightInner * 0.8 * 0.5) // min. 50% fontsize
+              break;
+            textPainter = TextPainter(text: span, textDirection: TextDirection.ltr);
+          }
           textPainter.layout();
 
           textPainter.paint(
