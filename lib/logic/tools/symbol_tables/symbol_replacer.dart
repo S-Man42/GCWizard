@@ -239,6 +239,7 @@ class SymbolReplacerImage {
       _useCompareSymbols(_usedCompareSymbolsImage);
       _usedCompareSymbols = compareSymbols;
       this.compareSymbols = compareSymbols;
+      mergeSymbolGroups();
     }
 
     // rebuild image
@@ -286,6 +287,25 @@ class SymbolReplacerImage {
 
     removeFromGroup(symbols.first);
     for (var i = 1; i < symbols.length; i++) addToGroup(symbols[i], symbols.first.symbolGroup);
+  }
+
+  /// <summary>
+  /// merge SymbolGroups with same compareSymbol
+  /// </summary>
+  mergeSymbolGroups() {
+    if ((symbolGroups == null) || symbolGroups.isEmpty) return;
+
+    for (var i= 0; i< symbolGroups.length; i++) {
+      var compareSymbol = symbolGroups[i].compareSymbol;
+      var groups = symbolGroups.where((group) => group.compareSymbol == compareSymbol);
+      if (groups.length > 1) {
+        for (var x = groups.length -1; x > 0; x--) {
+          for (var y = groups.elementAt(x).symbols.length -1; y >= 0; y--) {
+            _addSymbolToGroup(groups.elementAt(x).symbols[y], groups.elementAt(0));
+          }
+        }
+      }
+    }
   }
 
   /// <summary>
