@@ -5541,6 +5541,7 @@
   "wherigo_header_cartridgename": "Name of Cartridge",
   "wherigo_header_company": "Company",
   "wherigo_header_completion": "Completion Code",
+  "wherigo_header_completion_full": "Completion Code, total",
   "wherigo_header_country": "Country ID",
   "wherigo_header_creationdate": "Date of creation",
   "wherigo_header_latitude": "Latitude",
