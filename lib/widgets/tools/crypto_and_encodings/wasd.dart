@@ -187,9 +187,9 @@ class WASDState extends State<WASD> {
       height: 55,
       width: 40,
       child: GCWButton(
-        text: text,
+        text: text.toUpperCase(),
         onPressed: () {
-          _addInput(text);
+          _addInput(text.toUpperCase());
         },
       ),
     );
@@ -214,6 +214,16 @@ class WASDState extends State<WASD> {
           onChanged: (value) {
             setState(() {
               _currentKeyboardControls = value;
+              if (value == WASD_TYPE.NUMERIC) {
+                _currentUp = '8';
+                _currentLeft = '4';
+                _currentDown = '2';
+                _currentRight = '6';
+                _currentUpLeft = '7';
+                _currentUpRight = '9';
+                _currentDownLeft = '1';
+                _currentDownRight = '3';
+              } else
               if (value != WASD_TYPE.CUSTOM) {
                 _currentUp = KEYBOARD_CONTROLS[value][0];
                 _currentLeft = KEYBOARD_CONTROLS[value][1];
@@ -273,11 +283,11 @@ class WASDState extends State<WASD> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        _buildButton(_currentUpLeft),
+                        _currentUpLeft != ' ' ? _buildButton(_currentUpLeft) : Container(),
                         Container(width: 20),
                         _buildButton(_currentUp),
                         Container(width: 20),
-                        _buildButton(_currentUpRight),
+                        _currentUpRight != ' ' ? _buildButton(_currentUpRight) : Container(),
                       ],
                     ),
                     Row(
@@ -293,11 +303,11 @@ class WASDState extends State<WASD> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        _buildButton(_currentDownLeft),
+                        _currentDownLeft != ' ' ? _buildButton(_currentDownLeft) : Container(),
                         Container(width: 20),
                         _buildButton(_currentDown),
                         Container(width: 20),
-                        _buildButton(_currentDownRight),
+                        _currentDownRight != ' ' ? _buildButton(_currentDownRight) : Container(),
                       ],
                     ),
                   ],

@@ -5298,6 +5298,7 @@
   "wasd_encode_text" : "Text",
   "wasd_encode_graphic" : "Graphics",
   "wasd_keyboard_custom" : "Custom controls",
+  "wasd_keyboard_keypad": "Numeric Keypad - 84267913",
   "wasd_control_set" : "Control Set",
   "wasd_custom_up" : "↑",
   "wasd_custom_upright" : "↗",

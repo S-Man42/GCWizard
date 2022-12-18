@@ -30,7 +30,7 @@ class Offset {
   Offset(this.xOffset, this.yOffset, this.leftBorder);
 }
 
-enum WASD_TYPE { CURSORS, WASD, IJMK, ESDF, ULDR, OLUR, VLZR, WQSE, ARROWS, NWSE, NWSO, CUSTOM }
+enum WASD_TYPE { CURSORS, WASD, IJMK, ESDF, ULDR, OLUR, VLZR, WQSE, ARROWS, NWSE, NWSO, NUMERIC, CUSTOM }
 
 enum WASD_DIRECTION { UP, DOWN, LEFT, RIGHT, START, UPLEFT, UPRIGHT, DOWNLEFT, DOWNRIGHT }
 
@@ -48,6 +48,7 @@ Map<WASD_TYPE, String> KEYBOARD_CONTROLS = {
   WASD_TYPE.WQSE: 'WQSE    ',
   WASD_TYPE.IJMK: 'IJMKUON;',
   WASD_TYPE.VLZR: 'VLZR',
+  WASD_TYPE.NUMERIC: 'wasd_keyboard_keypad',
   WASD_TYPE.CUSTOM: 'wasd_keyboard_custom',
 };
 
