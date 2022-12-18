@@ -134,8 +134,12 @@ class WASDState extends State<WASD> {
 
     return Expanded(
       child: Column(children: <Widget>[
-        GCWTextDivider(
-          text: title,
+        Text(
+          title,
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 24),
+          textAlign: TextAlign.center,
         ),
         GCWTextField(
             inputFormatters: [_maskInputFormatter],
