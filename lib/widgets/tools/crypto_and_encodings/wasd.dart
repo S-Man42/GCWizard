@@ -29,7 +29,11 @@ class WASDState extends State<WASD> {
   TextEditingController _encodeController;
   TextEditingController _decodeController;
   TextEditingController _upController;
+  TextEditingController _upLeftController;
+  TextEditingController _upRightController;
   TextEditingController _downController;
+  TextEditingController _downLeftController;
+  TextEditingController _downRightController;
   TextEditingController _leftController;
   TextEditingController _rightController;
 
@@ -39,7 +43,11 @@ class WASDState extends State<WASD> {
   var _currentDecodeInput = '';
   var _currentUp = '↑';
   var _currentLeft = '←';
+  var _currentUpLeft = '↖';
+  var _currentUpRight = '↗';
   var _currentDown = '↓';
+  var _currentDownLeft = '↙';
+  var _currentDownRight = '↘';
   var _currentRight = '→';
   var _currentMode = GCWSwitchPosition.right; // decode
   var _currentOutputMode = GCWSwitchPosition.left; // only graphic
@@ -57,7 +65,11 @@ class WASDState extends State<WASD> {
     _encodeController = TextEditingController(text: _currentEncodeInput);
     _decodeController = TextEditingController(text: _currentDecodeInput);
     _upController = TextEditingController(text: _currentUp);
+    _upLeftController = TextEditingController(text: _currentUpLeft);
+    _upRightController = TextEditingController(text: _currentUpRight);
     _downController = TextEditingController(text: _currentDown);
+    _downLeftController = TextEditingController(text: _currentDownLeft);
+    _downRightController = TextEditingController(text: _currentDownRight);
     _leftController = TextEditingController(text: _currentLeft);
     _rightController = TextEditingController(text: _currentRight);
   }
@@ -67,7 +79,11 @@ class WASDState extends State<WASD> {
     _encodeController.dispose();
     _decodeController.dispose();
     _upController.dispose();
+    _upLeftController.dispose();
+    _upRightController.dispose();
     _downController.dispose();
+    _downLeftController.dispose();
+    _downRightController.dispose();
     _leftController.dispose();
     _rightController.dispose();
 
@@ -82,6 +98,14 @@ class WASDState extends State<WASD> {
         _currentCustomKeyController = _upController;
         title_key += 'up';
         break;
+      case WASD_DIRECTION.UPLEFT:
+        _currentCustomKeyController = _upLeftController;
+        title_key += 'upleft';
+        break;
+      case WASD_DIRECTION.UPRIGHT:
+        _currentCustomKeyController = _upRightController;
+        title_key += 'upright';
+        break;
       case WASD_DIRECTION.LEFT:
         _currentCustomKeyController = _leftController;
         title_key += 'left';
@@ -89,6 +113,14 @@ class WASDState extends State<WASD> {
       case WASD_DIRECTION.DOWN:
         _currentCustomKeyController = _downController;
         title_key += 'down';
+        break;
+      case WASD_DIRECTION.DOWNLEFT:
+        _currentCustomKeyController = _downLeftController;
+        title_key += 'downleft';
+        break;
+      case WASD_DIRECTION.DOWNRIGHT:
+        _currentCustomKeyController = _downRightController;
+        title_key += 'downright';
         break;
       case WASD_DIRECTION.RIGHT:
         _currentCustomKeyController = _rightController;
@@ -115,11 +147,23 @@ class WASDState extends State<WASD> {
                   case WASD_DIRECTION.UP:
                     _currentUp = text;
                     break;
+                  case WASD_DIRECTION.UPLEFT:
+                    _currentUpLeft = text;
+                    break;
+                  case WASD_DIRECTION.UPRIGHT:
+                    _currentUpRight = text;
+                    break;
                   case WASD_DIRECTION.LEFT:
                     _currentLeft = text;
                     break;
                   case WASD_DIRECTION.DOWN:
                     _currentDown = text;
+                    break;
+                  case WASD_DIRECTION.DOWNLEFT:
+                    _currentDownLeft = text;
+                    break;
+                  case WASD_DIRECTION.DOWNRIGHT:
+                    _currentDownRight = text;
                     break;
                   case WASD_DIRECTION.RIGHT:
                     _currentRight = text;
@@ -171,10 +215,18 @@ class WASDState extends State<WASD> {
                 _currentLeft = KEYBOARD_CONTROLS[value][1];
                 _currentDown = KEYBOARD_CONTROLS[value][2];
                 _currentRight = KEYBOARD_CONTROLS[value][3];
+                _currentUpLeft = KEYBOARD_CONTROLS[value][4];
+                _currentUpRight = KEYBOARD_CONTROLS[value][5];
+                _currentDownLeft = KEYBOARD_CONTROLS[value][6];
+                _currentDownRight = KEYBOARD_CONTROLS[value][7];
 
                 _upController.text = _currentUp;
+                _upLeftController.text = _currentUpLeft;
+                _upRightController.text = _currentUpRight;
                 _leftController.text = _currentLeft;
                 _downController.text = _currentDown;
+                _downLeftController.text = _currentDownLeft;
+                _downRightController.text = _currentDownRight;
                 _rightController.text = _currentRight;
               }
 
@@ -193,9 +245,17 @@ class WASDState extends State<WASD> {
             children: <Widget>[
               _buildCustomInput(WASD_DIRECTION.UP),
               Container(width: DOUBLE_DEFAULT_MARGIN),
+              _buildCustomInput(WASD_DIRECTION.UPLEFT),
+              Container(width: DOUBLE_DEFAULT_MARGIN),
+              _buildCustomInput(WASD_DIRECTION.UPRIGHT),
+              Container(width: DOUBLE_DEFAULT_MARGIN),
               _buildCustomInput(WASD_DIRECTION.LEFT),
               Container(width: DOUBLE_DEFAULT_MARGIN),
               _buildCustomInput(WASD_DIRECTION.DOWN),
+              Container(width: DOUBLE_DEFAULT_MARGIN),
+              _buildCustomInput(WASD_DIRECTION.DOWNLEFT),
+              Container(width: DOUBLE_DEFAULT_MARGIN),
+              _buildCustomInput(WASD_DIRECTION.DOWNRIGHT),
               Container(width: DOUBLE_DEFAULT_MARGIN),
               _buildCustomInput(WASD_DIRECTION.RIGHT)
             ],
@@ -206,15 +266,34 @@ class WASDState extends State<WASD> {
               Expanded(
                 child: Column(
                   children: [
-                    _buildButton(_currentUp),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        _buildButton(_currentUpLeft),
+                        Container(width: 20),
+                        _buildButton(_currentUp),
+                        Container(width: 20),
+                        _buildButton(_currentUpRight),
+                      ],
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         _buildButton(_currentLeft),
                         Container(width: 20),
-                        _buildButton(_currentDown),
+                        Container(),
                         Container(width: 20),
                         _buildButton(_currentRight),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        _buildButton(_currentDownLeft),
+                        Container(width: 20),
+                        _buildButton(_currentDown),
+                        Container(width: 20),
+                        _buildButton(_currentDownRight),
                       ],
                     ),
                   ],
@@ -329,7 +408,7 @@ class WASDState extends State<WASD> {
   }
 
   _createGraphicOutputDecodeData() {
-    var out = decodeWASDGraphic(_currentDecodeInput, [_currentUp, _currentLeft, _currentDown, _currentRight]);
+    var out = decodeWASDGraphic(_currentDecodeInput, [_currentUp, _currentLeft, _currentDown, _currentRight, _currentUpLeft, _currentUpRight, _currentDownLeft, _currentDownRight]);
 
     _outDecodeData = null;
     binary2image(out, false, false).then((value) {

@@ -29,21 +29,21 @@ class Offset {
 
 enum WASD_TYPE { CURSORS, WASD, IJMK, ESDF, ULDR, OLUR, VLZR, WQSE, ARROWS, NWSE, NWSO, CUSTOM }
 
-enum WASD_DIRECTION { UP, DOWN, LEFT, RIGHT, START }
+enum WASD_DIRECTION { UP, DOWN, LEFT, RIGHT, START, UPLEFT, UPRIGHT, DOWNLEFT, DOWNRIGHT }
 
 final _SEGMENT_LENGTH = 5;
 
 Map<WASD_TYPE, String> KEYBOARD_CONTROLS = {
-  WASD_TYPE.CURSORS: '↑←↓→',
-  WASD_TYPE.NWSE: 'NWSE',
-  WASD_TYPE.NWSO: 'NWSO',
-  WASD_TYPE.ARROWS: '^<v>',
-  WASD_TYPE.WASD: 'WASD',
-  WASD_TYPE.ULDR: 'ULDR',
-  WASD_TYPE.OLUR: 'OLUR',
-  WASD_TYPE.ESDF: 'ESDF',
-  WASD_TYPE.WQSE: 'WQSE',
-  WASD_TYPE.IJMK: 'IJMK',
+  WASD_TYPE.CURSORS: '↑←↓→↖↗↙↘',
+  WASD_TYPE.NWSE: 'NWSE    ',
+  WASD_TYPE.NWSO: 'NWSO    ',
+  WASD_TYPE.ARROWS: '^<v>    ',
+  WASD_TYPE.WASD: 'WASDQEYX',
+  WASD_TYPE.ULDR: 'ULDR    ',
+  WASD_TYPE.OLUR: 'OLUR    ',
+  WASD_TYPE.ESDF: 'ESDFWRXC',
+  WASD_TYPE.WQSE: 'WQSE    ',
+  WASD_TYPE.IJMK: 'IJMKUON;',
   WASD_TYPE.VLZR: 'VLZR',
   WASD_TYPE.CUSTOM: 'wasd_keyboard_custom',
 };
@@ -187,13 +187,16 @@ _normalizeControlSet(List<String> controlSet) {
   if (normalized[1] == null || normalized[1].isEmpty) normalized[1] = '←';
   if (normalized[2] == null || normalized[2].isEmpty) normalized[2] = '↓';
   if (normalized[3] == null || normalized[3].isEmpty) normalized[3] = '→';
+  if (normalized[4] == null || normalized[4].isEmpty) normalized[3] = '↖';
+  if (normalized[5] == null || normalized[5].isEmpty) normalized[3] = '↗';
+  if (normalized[6] == null || normalized[6].isEmpty) normalized[3] = '↙';
+  if (normalized[7] == null || normalized[7].isEmpty) normalized[3] = '↘';
 
   return normalized.map((e) => e.toUpperCase()).toList();
 }
 
 String decodeWASDGraphic(String input, List<String> controlSet) {
   if (input == '' || input == null) return '';
-
   controlSet = _normalizeControlSet(controlSet);
 
   int x = 0;
@@ -211,7 +214,276 @@ String decodeWASDGraphic(String input, List<String> controlSet) {
 
   Map<String, String> sentence = new Map();
 
-  var direction = WASD_DIRECTION.START;
+  var comingFrom = WASD_DIRECTION.START;
+
+  _setXYDirection(String newDirection){
+    switch (newDirection) {
+      case '↓': // back, down
+        switch (comingFrom) {
+          case WASD_DIRECTION.UP:
+            y++;
+            break;
+          case WASD_DIRECTION.UPLEFT:
+            //y++;
+          y--;
+            x--;
+            break;
+          case WASD_DIRECTION.UPRIGHT:
+            //y--;
+            x++;
+            break;
+          case WASD_DIRECTION.DOWN:
+            y--;
+            break;
+          case WASD_DIRECTION.DOWNLEFT:
+            //y--;
+            x--;
+            break;
+          case WASD_DIRECTION.DOWNRIGHT:
+            //y--;
+            x++;
+            break;
+          case WASD_DIRECTION.LEFT:
+            x--;
+            break;
+          case WASD_DIRECTION.RIGHT:
+            x++;
+            break;
+        }
+        break;
+
+      case '↑': // forward, up
+        switch (comingFrom) {
+          case WASD_DIRECTION.UP:
+            y++;
+            break;
+          case WASD_DIRECTION.UPLEFT:
+            //y++;
+            x--;
+            break;
+          case WASD_DIRECTION.UPRIGHT:
+            //y++;
+            x++;
+            break;
+          case WASD_DIRECTION.DOWN:
+            y--;
+            break;
+          case WASD_DIRECTION.DOWNLEFT:
+            //y--;
+            x--;
+            break;
+          case WASD_DIRECTION.DOWNRIGHT:
+            //y--;
+            x++;
+            break;
+          case WASD_DIRECTION.LEFT:
+            x--;
+            break;
+          case WASD_DIRECTION.RIGHT:
+            x++;
+            break;
+        }
+        break;
+
+      case '←': // left
+        switch (comingFrom) {
+          case WASD_DIRECTION.UP:
+            y++;
+            break;
+          case WASD_DIRECTION.UPLEFT:
+            y++;
+            x--;
+            break;
+          case WASD_DIRECTION.UPRIGHT:
+            y++;
+            //x++;
+            break;
+          case WASD_DIRECTION.DOWN:
+            y--;
+            break;
+          case WASD_DIRECTION.DOWNLEFT:
+            y--;
+            x--;
+            break;
+          case WASD_DIRECTION.DOWNRIGHT:
+            y--;
+            //x++;
+            break;
+          case WASD_DIRECTION.LEFT:
+            x--;
+            break;
+          case WASD_DIRECTION.RIGHT:
+            x++;
+            break;
+        }
+        break;
+
+      case '→': // right
+        switch (comingFrom) {
+          case WASD_DIRECTION.UP:
+            y++;
+            break;
+          case WASD_DIRECTION.UPLEFT:
+            y++;
+            x--;
+            break;
+          case WASD_DIRECTION.UPRIGHT:
+            y++;
+            x++;
+            break;
+          case WASD_DIRECTION.DOWN:
+            y--;
+            break;
+          case WASD_DIRECTION.DOWNLEFT:
+            y++;
+            x--;
+            break;
+          case WASD_DIRECTION.DOWNRIGHT:
+            y--;
+            x++;
+            break;
+          case WASD_DIRECTION.LEFT:
+            x--;
+            break;
+          case WASD_DIRECTION.RIGHT:
+            x++;
+            break;
+        }
+        break;
+
+      case '↖':
+        switch (comingFrom) {
+          case WASD_DIRECTION.UP:
+            y++;
+            break;
+          case WASD_DIRECTION.UPLEFT:
+            y++;
+            x--;
+            break;
+          case WASD_DIRECTION.UPRIGHT:
+            y++;
+            x++;
+            break;
+          case WASD_DIRECTION.DOWN:
+            y--;
+            break;
+          case WASD_DIRECTION.DOWNLEFT:
+            y--;
+            x--;
+            break;
+          case WASD_DIRECTION.DOWNRIGHT:
+            y--;
+            x++;
+            break;
+          case WASD_DIRECTION.LEFT:
+            x--;
+            break;
+          case WASD_DIRECTION.RIGHT:
+            x++;
+            break;
+        }
+        break;
+
+      case '↗':
+        switch (comingFrom) {
+          case WASD_DIRECTION.UP:
+            y++;
+            break;
+          case WASD_DIRECTION.UPLEFT:
+            y++;
+            x--;
+            break;
+          case WASD_DIRECTION.UPRIGHT:
+            y++;
+            x++;
+            break;
+          case WASD_DIRECTION.DOWN:
+            y--;
+            break;
+          case WASD_DIRECTION.DOWNLEFT:
+            y--;
+            x--;
+            break;
+          case WASD_DIRECTION.DOWNRIGHT:
+            y--;
+            x++;
+            break;
+          case WASD_DIRECTION.LEFT:
+            x--;
+            break;
+          case WASD_DIRECTION.RIGHT:
+            x++;
+            break;
+        }
+        break;
+
+      case '↙':
+        switch (comingFrom) {
+          case WASD_DIRECTION.UP:
+            y++;
+            break;
+          case WASD_DIRECTION.UPLEFT:
+            y--;y--;
+            x--;
+            break;
+          case WASD_DIRECTION.UPRIGHT:
+            y++;
+            x++;
+            break;
+          case WASD_DIRECTION.DOWN:
+            y--;
+            break;
+          case WASD_DIRECTION.DOWNLEFT:
+            y--;
+            x--;
+            break;
+          case WASD_DIRECTION.DOWNRIGHT:
+            y--;
+            x++;
+            break;
+          case WASD_DIRECTION.LEFT:
+            x--;
+            break;
+          case WASD_DIRECTION.RIGHT:
+            x++;
+            break;
+        }
+        break;
+
+      case '↘':
+        switch (comingFrom) {
+          case WASD_DIRECTION.UP:
+            y++;
+            break;
+          case WASD_DIRECTION.UPLEFT:
+            y--;
+            x--;
+            break;
+          case WASD_DIRECTION.UPRIGHT:
+            y++;
+            x++;
+            break;
+          case WASD_DIRECTION.DOWN:
+            y--;
+            break;
+          case WASD_DIRECTION.DOWNLEFT:
+            y--;
+            x--;
+            break;
+          case WASD_DIRECTION.DOWNRIGHT:
+            y--;
+            x++;
+            break;
+          case WASD_DIRECTION.LEFT:
+            x--;
+            break;
+          case WASD_DIRECTION.RIGHT:
+            x++;
+            break;
+        }
+        break;
+    }
+  }
 
   _normalizeDecodingInput(input, controlSet).split(' ').forEach((word) {
     // draw picture per letter
@@ -225,116 +497,93 @@ String decodeWASDGraphic(String input, List<String> controlSet) {
     minLetterX = 0;
     minLetterY = 0;
 
-    direction = WASD_DIRECTION.START;
+    comingFrom = WASD_DIRECTION.START;
 
     Map<String, String> letter = new Map();
 
     word.split('').forEach((element) {
       switch (element) {
         case '↓': // back, down
-          switch (direction) {
-            case WASD_DIRECTION.UP:
-              y++;
-              break;
-            case WASD_DIRECTION.DOWN:
-              y--;
-              break;
-            case WASD_DIRECTION.LEFT:
-              x--;
-              break;
-            case WASD_DIRECTION.RIGHT:
-              x++;
-              break;
-          }
+          _setXYDirection(element);
           for (int i = 0; i < _SEGMENT_LENGTH; i++) {
             y++;
             letter[x.toString() + '|' + (y).toString()] = '1';
           }
-          direction = WASD_DIRECTION.UP;
-          if (y < minLetterY) minLetterY = y;
-          if (x < minLetterX) minLetterX = x;
-          if (y > maxLetterY) maxLetterY = y;
-          if (x > maxLetterX) maxLetterX = x;
+          comingFrom = WASD_DIRECTION.UP;
           break;
 
         case '↑': // forward, up
-          switch (direction) {
-            case WASD_DIRECTION.UP:
-              y++;
-              break;
-            case WASD_DIRECTION.DOWN:
-              y--;
-              break;
-            case WASD_DIRECTION.LEFT:
-              x--;
-              break;
-            case WASD_DIRECTION.RIGHT:
-              x++;
-              break;
-          }
+          _setXYDirection(element);
           for (int i = 0; i < _SEGMENT_LENGTH; i++) {
             y--;
             letter[x.toString() + '|' + (y).toString()] = '1';
           }
-          direction = WASD_DIRECTION.DOWN;
-          if (y < minLetterY) minLetterY = y - 1;
-          if (x < minLetterX) minLetterX = x;
-          if (y > maxLetterY) maxLetterY = y + 1;
-          if (x > maxLetterX) maxLetterX = x;
+          comingFrom = WASD_DIRECTION.DOWN;
           break;
 
         case '←': // left
-          switch (direction) {
-            case WASD_DIRECTION.UP:
-              y++;
-              break;
-            case WASD_DIRECTION.DOWN:
-              y--;
-              break;
-            case WASD_DIRECTION.LEFT:
-              x--;
-              break;
-            case WASD_DIRECTION.RIGHT:
-              x++;
-              break;
-          }
+          _setXYDirection(element);
           for (int i = 0; i < _SEGMENT_LENGTH; i++) {
             x--;
             letter[x.toString() + '|' + (y).toString()] = '1';
           }
-          direction = WASD_DIRECTION.LEFT;
-          if (y < minLetterY) minLetterY = y;
-          if (x < minLetterX) minLetterX = x;
-          if (y > maxLetterY) maxLetterY = y;
-          if (x > maxLetterX) maxLetterX = x;
+          comingFrom = WASD_DIRECTION.LEFT;
           break;
 
         case '→': // right
-          switch (direction) {
-            case WASD_DIRECTION.UP:
-              y++;
-              break;
-            case WASD_DIRECTION.DOWN:
-              y--;
-              break;
-            case WASD_DIRECTION.LEFT:
-              x--;
-              break;
-            case WASD_DIRECTION.RIGHT:
-              x++;
-              break;
-          }
+          _setXYDirection(element);
           for (int i = 0; i < _SEGMENT_LENGTH; i++) {
             x++;
             letter[x.toString() + '|' + (y).toString()] = '1';
           }
-          direction = WASD_DIRECTION.RIGHT;
-          if (y < minLetterY) minLetterY = y;
-          if (x < minLetterX) minLetterX = x;
-          if (y > maxLetterY) maxLetterY = y;
-          if (x > maxLetterX) maxLetterX = x;
+          comingFrom = WASD_DIRECTION.RIGHT;
+          break;
+
+        case '↖':
+          _setXYDirection(element);
+          comingFrom = WASD_DIRECTION.UPLEFT;
+          for (int i = 0; i < _SEGMENT_LENGTH; i++) {
+            x--;
+            y--;
+            letter[x.toString() + '|' + (y).toString()] = '1';
+          }
+          break;
+
+        case '↗':
+          _setXYDirection(element);
+          comingFrom = WASD_DIRECTION.UPRIGHT;
+          for (int i = 0; i < _SEGMENT_LENGTH; i++) {
+            x++;
+            y--;
+            letter[x.toString() + '|' + (y).toString()] = '1';
+          }
+          break;
+
+        case '↙':
+          _setXYDirection(element);
+          comingFrom = WASD_DIRECTION.DOWNLEFT;
+          for (int i = 0; i < _SEGMENT_LENGTH; i++) {
+            x--;
+            y++;
+            letter[x.toString() + '|' + (y).toString()] = '1';
+          }
+          break;
+
+        case '↘':
+          _setXYDirection(element);
+          comingFrom = WASD_DIRECTION.DOWNRIGHT;
+          for (int i = 0; i < _SEGMENT_LENGTH; i++) {
+            x++;
+            y++;
+            letter[x.toString() + '|' + (y).toString()] = '1';
+          }
           break;
       }
+      if (y < minLetterY) minLetterY = y - 1;
+      if (x < minLetterX) minLetterX = x - 1;
+      if (y > maxLetterY) maxLetterY = y + 1;
+      if (x > maxLetterX) maxLetterX = x + 1;
+
       if (maxLetterY > maxSentenceY) maxSentenceY = maxLetterY;
       if (minLetterY < minSentenceY) minSentenceY = minLetterY;
     }); // for Each letter
