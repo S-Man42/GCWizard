@@ -3854,6 +3854,7 @@
   "settings_saverestore_save_button": "Save",
   "settings_saverestore_restore": "Restore settings from file",
   "settings_saverestore_restore_success": "Settings restored successfully.",
+  "settings_saverestore_restore_failed": "ERROR: Restore settings failed.",
   "settings_saverestore_restore_restart": "Some setting changes may need a manual app restart to take effect.",
   "settings_saverestore_restore_button": "Load",
   "settings_saverestore_restore_warning_title": "Really restore data?",
