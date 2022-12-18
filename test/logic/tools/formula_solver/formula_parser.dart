@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/logic/tools/formula_solver/parser.dart';
+import 'package:gc_wizard/logic/tools/formula_solver/formula_parser.dart';
 import 'package:gc_wizard/persistence/formula_solver/model.dart';
 
 void main() {

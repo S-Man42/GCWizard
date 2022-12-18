@@ -1,4 +1,4 @@
-import 'package:gc_wizard/logic/tools/formula_solver/parser.dart';
+import 'package:gc_wizard/logic/tools/formula_solver/formula_parser.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 
 class FormulaPainter {
@@ -49,8 +49,8 @@ class FormulaPainter {
     _variables = _toUpperCaseAndSort(_variables);
     _variablesRegEx = _variables.map((variable) => variable).join('|');
 
+    formula = normalizeCharacters(formula);
     formula = FormulaParser.normalizeMathematicalSymbols(formula);
-    formula = FormulaParser.normalizeSpaces(formula);
     formula = formula.toUpperCase();
     this.formula = formula;
 

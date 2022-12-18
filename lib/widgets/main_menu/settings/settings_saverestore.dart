@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
@@ -42,7 +43,7 @@ class SaveRestoreSettingsState extends State<SaveRestoreSettings> {
             keys.forEach((key) {
               prefsMap.putIfAbsent(key, () => Prefs.get(key));
             });
-            var json = jsonEncode(prefsMap);
+            var json = normalizeCharacters(jsonEncode(prefsMap));
 
             var outputData = Uint8List.fromList(json.codeUnits);
 
@@ -63,21 +64,24 @@ class SaveRestoreSettingsState extends State<SaveRestoreSettings> {
               i18n(context, 'settings_saverestore_restore_warning_text'), () {
 
                 showOpenFileDialog(context, [FileType.GCW], (GCWFile file) {
-                  var jsonString = String.fromCharCodes(file.bytes);
-                  Map<String, dynamic> prefsMap = jsonDecode(jsonString);
+                  try {
+                    var jsonString = normalizeCharacters(String.fromCharCodes(file.bytes));
+                    Map<String, dynamic> prefsMap = jsonDecode(jsonString);
 
-                  initDefaultSettings(PreferencesInitMode.REINIT_ALL);
-                  prefsMap.entries.forEach((entry) {
-                    setUntypedPref(entry.key, entry.value);
-                  });
+                    initDefaultSettings(PreferencesInitMode.REINIT_ALL);
+                    prefsMap.entries.forEach((entry) {
+                      setUntypedPref(entry.key, entry.value);
+                    });
 
-                  setState(() {
-                    setThemeColorsByName(Prefs.get(PREFERENCE_THEME_COLOR));
-                    AppBuilder.of(context).rebuild();
-                  });
+                    setState(() {
+                      setThemeColorsByName(Prefs.get(PREFERENCE_THEME_COLOR));
+                      AppBuilder.of(context).rebuild();
+                    });
 
-                  showToast(i18n(context, 'settings_saverestore_restore_success'));
-
+                    showToast(i18n(context, 'settings_saverestore_restore_success'));
+                  } catch(e) {
+                    showToast(i18n(context, 'settings_saverestore_restore_failed'));
+                  }
                   return false;
                 });
               },
