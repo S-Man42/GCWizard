@@ -90,98 +90,6 @@ class WASDState extends State<WASD> {
     super.dispose();
   }
 
-  _buildCustomInput(WASD_DIRECTION key) {
-    var title_key = 'wasd_custom_';
-
-    switch (key) {
-      case WASD_DIRECTION.UP:
-        _currentCustomKeyController = _upController;
-        title_key += 'up';
-        break;
-      case WASD_DIRECTION.UPLEFT:
-        _currentCustomKeyController = _upLeftController;
-        title_key += 'upleft';
-        break;
-      case WASD_DIRECTION.UPRIGHT:
-        _currentCustomKeyController = _upRightController;
-        title_key += 'upright';
-        break;
-      case WASD_DIRECTION.LEFT:
-        _currentCustomKeyController = _leftController;
-        title_key += 'left';
-        break;
-      case WASD_DIRECTION.DOWN:
-        _currentCustomKeyController = _downController;
-        title_key += 'down';
-        break;
-      case WASD_DIRECTION.DOWNLEFT:
-        _currentCustomKeyController = _downLeftController;
-        title_key += 'downleft';
-        break;
-      case WASD_DIRECTION.DOWNRIGHT:
-        _currentCustomKeyController = _downRightController;
-        title_key += 'downright';
-        break;
-      case WASD_DIRECTION.RIGHT:
-        _currentCustomKeyController = _rightController;
-        title_key += 'right';
-        break;
-      default:
-        return;
-    }
-
-    var title = i18n(context, title_key);
-
-    return Expanded(
-      child: Column(children: <Widget>[
-        Text(
-          title,
-          style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 24),
-          textAlign: TextAlign.center,
-        ),
-        GCWTextField(
-            inputFormatters: [_maskInputFormatter],
-            hintText: title,
-            controller: _currentCustomKeyController,
-            onChanged: (text) {
-              setState(() {
-                switch (key) {
-                  case WASD_DIRECTION.UP:
-                    _currentUp = text;
-                    break;
-                  case WASD_DIRECTION.UPLEFT:
-                    _currentUpLeft = text;
-                    break;
-                  case WASD_DIRECTION.UPRIGHT:
-                    _currentUpRight = text;
-                    break;
-                  case WASD_DIRECTION.LEFT:
-                    _currentLeft = text;
-                    break;
-                  case WASD_DIRECTION.DOWN:
-                    _currentDown = text;
-                    break;
-                  case WASD_DIRECTION.DOWNLEFT:
-                    _currentDownLeft = text;
-                    break;
-                  case WASD_DIRECTION.DOWNRIGHT:
-                    _currentDownRight = text;
-                    break;
-                  case WASD_DIRECTION.RIGHT:
-                    _currentRight = text;
-                    break;
-                  default:
-                    return;
-                }
-                _updateDrawing();
-              });
-            }),
-      ]),
-    );
-  }
-
   _buildButton(String text) {
     return Container(
       height: 55,
@@ -257,21 +165,173 @@ class WASDState extends State<WASD> {
         if (_currentKeyboardControls == WASD_TYPE.CUSTOM)
           Row(
             children: <Widget>[
-              _buildCustomInput(WASD_DIRECTION.UP),
+              Expanded(
+                child: Column(children: <Widget>[
+                  Text(
+                    i18n(context, 'wasd_custom_up'),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24),
+                    textAlign: TextAlign.center,
+                  ),
+                  GCWTextField(
+                      inputFormatters: [_maskInputFormatter],
+                      hintText: i18n(context, 'wasd_custom_up'),
+                      controller: _upController,
+                      onChanged: (text) {
+                        setState(() {
+                              _currentUp = text;
+                          });
+                        })
+                      ]),
+              ),
               Container(width: DOUBLE_DEFAULT_MARGIN),
-              _buildCustomInput(WASD_DIRECTION.UPLEFT),
+              Expanded(
+                child: Column(children: <Widget>[
+                  Text(
+                    i18n(context, 'wasd_custom_upleft'),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24),
+                    textAlign: TextAlign.center,
+                  ),
+                  GCWTextField(
+                      inputFormatters: [_maskInputFormatter],
+                      hintText: i18n(context, 'wasd_custom_upleft'),
+                      controller: _upLeftController,
+                      onChanged: (text) {
+                        setState(() {
+                          _currentUpLeft = text;
+                        });
+                      })
+                ]),
+              ),
               Container(width: DOUBLE_DEFAULT_MARGIN),
-              _buildCustomInput(WASD_DIRECTION.UPRIGHT),
+              Expanded(
+                child: Column(children: <Widget>[
+                  Text(
+                    i18n(context, 'wasd_custom_upright'),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24),
+                    textAlign: TextAlign.center,
+                  ),
+                  GCWTextField(
+                      inputFormatters: [_maskInputFormatter],
+                      hintText: i18n(context, 'wasd_custom_upright'),
+                      controller: _upRightController,
+                      onChanged: (text) {
+                        setState(() {
+                          _currentUpRight = text;
+                        });
+                      })
+                ]),
+              ),
               Container(width: DOUBLE_DEFAULT_MARGIN),
-              _buildCustomInput(WASD_DIRECTION.LEFT),
+              Expanded(
+                child: Column(children: <Widget>[
+                  Text(
+                    i18n(context, 'wasd_custom_left'),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24),
+                    textAlign: TextAlign.center,
+                  ),
+                  GCWTextField(
+                      inputFormatters: [_maskInputFormatter],
+                      hintText: i18n(context, 'wasd_custom_left'),
+                      controller: _leftController,
+                      onChanged: (text) {
+                        setState(() {
+                          _currentLeft = text;
+                        });
+                      })
+                ]),
+              ),
               Container(width: DOUBLE_DEFAULT_MARGIN),
-              _buildCustomInput(WASD_DIRECTION.DOWN),
+              Expanded(
+                child: Column(children: <Widget>[
+                  Text(
+                    i18n(context, 'wasd_custom_down'),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24),
+                    textAlign: TextAlign.center,
+                  ),
+                  GCWTextField(
+                      inputFormatters: [_maskInputFormatter],
+                      hintText: i18n(context, 'wasd_custom_down'),
+                      controller: _downController,
+                      onChanged: (text) {
+                        setState(() {
+                          _currentDown = text;
+                        });
+                      })
+                ]),
+              ),
               Container(width: DOUBLE_DEFAULT_MARGIN),
-              _buildCustomInput(WASD_DIRECTION.DOWNLEFT),
+              Expanded(
+                child: Column(children: <Widget>[
+                  Text(
+                    i18n(context, 'wasd_custom_downleft'),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24),
+                    textAlign: TextAlign.center,
+                  ),
+                  GCWTextField(
+                      inputFormatters: [_maskInputFormatter],
+                      hintText: i18n(context, 'wasd_custom_downleft'),
+                      controller: _downLeftController,
+                      onChanged: (text) {
+                        setState(() {
+                          _currentDownLeft = text;
+                        });
+                      })
+                ]),
+              ),
               Container(width: DOUBLE_DEFAULT_MARGIN),
-              _buildCustomInput(WASD_DIRECTION.DOWNRIGHT),
+              Expanded(
+                child: Column(children: <Widget>[
+                  Text(
+                    i18n(context, 'wasd_custom_downright'),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24),
+                    textAlign: TextAlign.center,
+                  ),
+                  GCWTextField(
+                      inputFormatters: [_maskInputFormatter],
+                      hintText: i18n(context, 'wasd_custom_downright'),
+                      controller: _downRightController,
+                      onChanged: (text) {
+                        setState(() {
+                          _currentDownRight = text;
+                        });
+                      })
+                ]),
+              ),
               Container(width: DOUBLE_DEFAULT_MARGIN),
-              _buildCustomInput(WASD_DIRECTION.RIGHT)
+              Expanded(
+                child: Column(children: <Widget>[
+                  Text(
+                    i18n(context, 'wasd_custom_right'),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24),
+                    textAlign: TextAlign.center,
+                  ),
+                  GCWTextField(
+                      inputFormatters: [_maskInputFormatter],
+                      hintText: i18n(context, 'wasd_custom_right'),
+                      controller: _rightController,
+                      onChanged: (text) {
+                        setState(() {
+                          _currentRight = text;
+                        });
+                      })
+                ]),
+              ),
             ],
           ),
         if (_currentMode == GCWSwitchPosition.right)
