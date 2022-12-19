@@ -14,9 +14,7 @@ class GCWMainMenuEntryStub extends StatefulWidget {
 class GCWMainMenuEntryStubState extends State<GCWMainMenuEntryStub> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-        physics: AlwaysScrollableScrollPhysics(),
-        primary: true,
+    return Container(
         padding: EdgeInsets.only(top: 20, bottom: 20),
         child: Column(
           children: <Widget>[
