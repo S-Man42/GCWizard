@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/games/number_pyramid_solver.dart';
@@ -17,7 +16,7 @@ class NumberPyramidSolver extends StatefulWidget {
 }
 
 class NumberPyramidSolverState extends State<NumberPyramidSolver> {
-  List<List<Map<String, dynamic>>> _currentBoard;
+  NumberPyramid _currentBoard;
   List<List<List<int>>> _currentSolutions;
   int _currentSolution = 0;
 
@@ -32,7 +31,7 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
   void initState() {
     super.initState();
 
-    _currentBoard = _generatePyramid();
+    _currentBoard = NumberPyramid(_rowCount);
   }
 
   @override
@@ -54,7 +53,7 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
               onChanged: (value) {
                 setState(() {
                   _rowCount = value;
-                  _currentBoard = _generatePyramid(useOldEntrys: true);
+                  _currentBoard = NumberPyramid(_rowCount, oldPyramid: _currentBoard);
                 });
               },
             ),
@@ -65,7 +64,7 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
               scrollDirection: Axis.horizontal,
               physics: AlwaysScrollableScrollPhysics(),
               child: Container(
-                constraints: BoxConstraints(maxWidth: min(100.0 * _rowCount, MediaQuery.of(context).size.width)),
+                constraints: BoxConstraints(maxWidth: 100.0 * _rowCount), //min(100.0 * _rowCount, MediaQuery.of(context).size.width)),
                 child: NumberPyramidBoard(
                   board: _currentBoard,
                   onChanged: (newBoard) {
@@ -88,7 +87,8 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
           onChanged: (value) {
             setState(() {
               _currentValue = value;
-              _setBoxValue(_boardX, _boardY, value);
+              if (_currentBoard.setValue(_boardX, _boardY, value, NumberPyramidFillType.USER_FILLED))
+                _currentBoard.removeCalculated();
             });
           },
         ),
@@ -138,12 +138,7 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
                   text: i18n(context, 'sudokusolver_solve'),
                   onPressed: () {
                     setState(() {
-                      List<List<int>> solveableBoard = _currentBoard.map((column) {
-                        return column
-                            .map((row) =>
-                                row != null && row['type'] == NumberPyramidFillType.USER_FILLED ? row['value'] as int : null) //0
-                            .toList();
-                      }).toList();
+                      var solveableBoard = _currentBoard.solveableBoard();
 
                       _currentSolutions = solvePyramid(solveableBoard, _MAX_SOLUTIONS);
                       if (_currentSolutions == null) {
@@ -164,12 +159,8 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
                     text: i18n(context, 'sudokusolver_clearcalculated'),
                     onPressed: () {
                       setState(() {
-                        for (int i = 0; i < _rowCount; i++) {
-                          for (int j = 0; j < i + 1; j++) {
-                            if (_currentBoard[i][j] != null && _currentBoard[i][j]['type'] == NumberPyramidFillType.CALCULATED)
-                              _currentBoard[i][j] = null;
-                          }
-                        }
+                        _currentBoard.removeCalculated();
+
                         _currentSolutions = null;
                       });
                     },
@@ -183,7 +174,7 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
                     text: i18n(context, 'sudokusolver_clearall'),
                     onPressed: () {
                       setState(() {
-                        _currentBoard = _generatePyramid();
+                        _currentBoard = NumberPyramid(_rowCount);
 
                         _currentSolutions = null;
                       });
@@ -198,49 +189,20 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
   }
 
   _showSolution() {
-    for (int i = 0; i < _rowCount; i++) {
-      for (int j = 0; j < i + 1; j++) {
-        if (_currentBoard[i][j] != null && _currentBoard[i][j]['type'] == NumberPyramidFillType.USER_FILLED) continue;
+    for (int y = 0; y < _rowCount; y++) {
+      for (int x = 0; x < _currentBoard.getColumnsCount(y); x++) {
+        if (_currentBoard.getType(x, y) == NumberPyramidFillType.USER_FILLED) continue;
 
-        _currentBoard[i][j] = {'value': _currentSolutions[_currentSolution][i][j], 'type': NumberPyramidFillType.CALCULATED};
+        _currentBoard.setValue(x, y,  _currentSolutions[_currentSolution][y][x], NumberPyramidFillType.CALCULATED);
       }
     }
-  }
-
-  List<List<Map<String, dynamic>>> _generatePyramid({useOldEntrys : false}) {
-    var pyramid =  List<List<Map<String, dynamic>>>.generate(
-        _rowCount, (index) => List<Map<String, dynamic>>.generate(index+1, (index) => null));
-
-    if (useOldEntrys && _currentBoard != null) {
-      for (var layer=0; layer < min(_currentBoard.length, _rowCount); layer++) {
-        for (var brick=0; brick < pyramid[layer].length; brick++) {
-          if (_currentBoard[layer][brick] != null)
-            pyramid[layer][brick]= _currentBoard[layer][brick];
-        }
-      }
-    }
-
-    return pyramid;
   }
 
   void _showBoxValue(int x, int y) {
     setState(() {
       _boardX = x;
       _boardY = y;
-      _currentValue = _currentBoard[x][y] == null ? 0 : _currentBoard[x][y]['value'];
+      _currentValue = _currentBoard.getValue(x, y) ?? 0;
     });
-  }
-
-  void _setBoxValue(int x, int y, int value) {
-    int oldValue;
-    if (_currentBoard[x][y] != null )
-      oldValue = _currentBoard[x][y]['value'];
-    if (value != oldValue)
-      _currentSolutions = null;
-
-    if (value == null)
-      _currentBoard[x][y] = {'value': null, 'type': NumberPyramidFillType.CALCULATED};
-    else
-      _currentBoard[x][y] = {'value': value, 'type': NumberPyramidFillType.USER_FILLED};
   }
 }
