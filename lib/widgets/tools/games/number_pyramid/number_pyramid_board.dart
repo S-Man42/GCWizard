@@ -117,13 +117,25 @@ class NumberPyramidBoardPainter extends CustomPainter {
               style: gcwTextStyle().copyWith(color: textColor, fontSize: fontsize),
               text: board.getValue(boardX, boardY).toString());
           TextPainter textPainter = TextPainter(text: span, textDirection: TextDirection.ltr);
-          // while (textPainter.width > widthInner) {
-          //   fontsize *= 0.95;
-          //   if (fontsize < heightInner * 0.8 * 0.5) // min. 50% fontsize
-          //     break;
-          //   textPainter = TextPainter(text: span, textDirection: TextDirection.ltr);
-          // }
           textPainter.layout();
+          while (textPainter.width > widthInner) {
+            fontsize *= 0.95;
+            if (fontsize < heightInner * 0.8 * 0.5) { // min. 50% fontsize
+              var splitPos = (span.text.length / 2).ceil();
+              span = TextSpan(
+                  style: span.style.copyWith(fontSize: fontsize),
+                  text: span.text.substring(0, splitPos) + '\n' + span.text.substring(splitPos));
+              textPainter = TextPainter(text: span, textDirection: TextDirection.ltr);
+              textPainter.layout();
+              break;
+            }
+
+            span = TextSpan(
+                style: span.style.copyWith(fontSize: fontsize),
+                text: span.text);
+            textPainter = TextPainter(text: span, textDirection: TextDirection.ltr);
+            textPainter.layout();
+          }
 
           textPainter.paint(
               canvas,
