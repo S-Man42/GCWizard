@@ -5,10 +5,12 @@ import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_expandable.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/tools/games/number_pyramid/number_pyramid_board.dart';
+import 'package:gc_wizard/widgets/utils/textinputformatter/integer_textinputformatter.dart';
 
 class NumberPyramidSolver extends StatefulWidget {
   @override
@@ -26,12 +28,24 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
   int _currentValue;
   int _boardX;
   int _boardY;
+  TextEditingController _currentInputController;
+  IntegerTextInputFormatter _integerInputFormatter;
+
 
   @override
   void initState() {
     super.initState();
+    _currentInputController = TextEditingController();
+    _integerInputFormatter = IntegerTextInputFormatter(min: 0, max: 999999);
 
     _currentBoard = NumberPyramid(_rowCount);
+  }
+
+  @override
+  void dispose() {
+    _currentInputController.dispose();
+
+    super.dispose();
   }
 
   @override
@@ -79,14 +93,16 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
             ),
         ),
         Container(height: 10),
-        GCWIntegerSpinner(
+        GCWTextField(
           title: i18n(context, 'common_value'),
-          min: 0,
-          max: 99999,
-          value: _currentValue,
+          controller: _currentInputController,
+          inputFormatters: [_integerInputFormatter],
+          // min: 0,
+          // max: 99999,
+          // value: _currentValue,
           onChanged: (value) {
             setState(() {
-              _currentValue = value;
+              _currentValue = int.tryParse(value);
               if (_currentBoard.setValue(_boardX, _boardY, value, NumberPyramidFillType.USER_FILLED))
                 _currentBoard.removeCalculated();
             });
