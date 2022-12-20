@@ -49,7 +49,8 @@ class NumberPyramidBoardState extends State<NumberPyramidBoard> {
                         widget.showBoxValue)
                     );
                   },
-                )))
+                ))
+        )
       ],
     );
   }
@@ -86,24 +87,22 @@ class NumberPyramidBoardPainter extends CustomPainter {
     double heightInner = min(heightOuter /  board.getRowsCount(), widthInner / 2);
 
 
-    for (int i = 0; i < board.getRowsCount(); i++) {
-      double xInner = (widthOuter + xOuter - (i+1) * widthInner) / 2;
-      double yInner = yOuter + i * heightInner;
+    for (int y = 0; y < board.getRowsCount(); y++) {
+      double xInner = (widthOuter + xOuter - (y+1) * widthInner) / 2;
+      double yInner = yOuter + y * heightInner;
 
-      for (int j = 0; j < board.getColumnsCount(i); j++) {
-        var boardY = i;
-        var boardX = j;
+      for (int x = 0; x < board.getColumnsCount(y); x++) {
+        var boardY = y;
+        var boardX = x;
 
         _touchCanvas.drawRect(Rect.fromLTWH(xInner, yInner, widthInner, heightInner), paintBack,
             onTapDown: (tapDetail) {
-              //_removeCalculated(board);
-              //_showInputDialog(boardX, boardY);
               _selectedBox = Point<int>(boardX, boardY);
               showBoxValue(boardX, boardY);
             });
 
 
-        if (_selectedBox != null && _selectedBox.x == j  && _selectedBox.y == i)
+        if (_selectedBox != null && _selectedBox.x == x  && _selectedBox.y == y)
           selectedRect = Rect.fromLTWH(xInner, yInner, widthInner, heightInner);
 
         _touchCanvas.drawRect(Rect.fromLTWH(xInner, yInner, widthInner, heightInner), paint);
@@ -113,34 +112,26 @@ class NumberPyramidBoardPainter extends CustomPainter {
               board.getType(boardX, boardY) == NumberPyramidFillType.USER_FILLED ? colors.accent() : colors.mainFont();
 
           var fontsize = heightInner * 0.8;
-          TextSpan span = TextSpan(
-              style: gcwTextStyle().copyWith(color: textColor, fontSize: fontsize),
-              text: board.getValue(boardX, boardY).toString());
-          TextPainter textPainter = TextPainter(text: span, textDirection: TextDirection.ltr);
-          textPainter.layout();
+          var text = board.getValue(boardX, boardY).toString();
+          var textPainter = _buildTextPainter(text, textColor, fontsize);
+
           while (textPainter.width > widthInner) {
             fontsize *= 0.95;
             if (fontsize < heightInner * 0.8 * 0.5) { // min. 50% fontsize
-              var splitPos = (span.text.length / 2).ceil();
-              span = TextSpan(
-                  style: span.style.copyWith(fontSize: fontsize),
-                  text: span.text.substring(0, splitPos) + '\n' + span.text.substring(splitPos));
-              textPainter = TextPainter(text: span, textDirection: TextDirection.ltr);
-              textPainter.layout();
+              if (text == null || text.length < 2) break;
+              var splitPos = (text.length / 2).ceil();
+              text = text.substring(0, splitPos) + '\n' + text.substring(splitPos);
+              textPainter = _buildTextPainter(text, textColor, fontsize);
               break;
             }
 
-            span = TextSpan(
-                style: span.style.copyWith(fontSize: fontsize),
-                text: span.text);
-            textPainter = TextPainter(text: span, textDirection: TextDirection.ltr);
-            textPainter.layout();
+            textPainter = _buildTextPainter(text, textColor, fontsize);
           }
 
           textPainter.paint(
               canvas,
-              Offset(xInner + (widthInner - textPainter.width) * 0.5,
-                  yInner + (heightInner - textPainter.height) * 0.5));
+              Offset(xInner + (widthInner  - textPainter.width) * 0.5,
+                     yInner + (heightInner - textPainter.height) * 0.5));
         }
 
         xInner += widthInner;
@@ -153,67 +144,14 @@ class NumberPyramidBoardPainter extends CustomPainter {
     }
   }
 
-  _showInputDialog(int x, y) {
-    var columns = <Widget>[];
-    int _value = 0;
+  TextPainter _buildTextPainter(String text, Color color, double fontsize) {
+    TextSpan span = TextSpan(
+        style: gcwTextStyle().copyWith(color: color, fontSize: fontsize),
+        text: text);
+    TextPainter textPainter = TextPainter(text: span, textDirection: TextDirection.ltr);
+    textPainter.layout();
 
-    columns.add(
-      Container(
-        width: 100,
-        height: 30,
-        child:         GCWIntegerTextField(
-            onChanged:  (ret) {
-              _value = ret['value'];
-            }
-      )
-
-    ));
-
-    for (int i = 0; i < 3; i++) {
-      var rows = <Widget>[];
-      for (int j = 0; j < 3; j++) {
-        var value = i * 3 + j + 1;
-
-        rows.add(GCWButton(
-          text: value.toString(),
-          textStyle: gcwTextStyle().copyWith(fontSize: 32, color: themeColors().dialogText()),
-          onPressed: () {
-            _value = i * 3 + j + 1;
-            // Navigator.of(context).pop();
-            // setBoxValue(x, y, value);
-          },
-        ));
-      }
-
-      columns.add(Row(
-        children: rows,
-      ));
-    }
-
-    columns.add(GCWButton(
-      text: i18n(context, 'sudokusolver_removevalue'),
-      onPressed: () {
-        Navigator.of(context).pop();
-        setBoxValue(x, y, null);
-      },
-    ));
-
-    columns.add(GCWButton(
-      text: 'Enter',
-      onPressed: () {
-        Navigator.of(context).pop();
-        setBoxValue(x, y, _value);
-      },
-    ));
-
-    showGCWDialog(
-        context,
-        i18n(context, 'sudokusolver_entervalue'),
-        Container(
-          height: 300,
-          child: Column(children: columns),
-        ),
-        []);
+    return textPainter;
   }
 
   @override

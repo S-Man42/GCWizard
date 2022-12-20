@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:gc_wizard/logic/tools/games/dennistreysa_number_pyramid_solver/pyramid.dart';
@@ -10,7 +11,6 @@ List<List<List<int>>> solvePyramid(List<List<int>> pyramid, int maxSolutions) {
 
 class NumberPyramid {
 	List<List<Map<String, dynamic>>> pyramid;
-	var columnCount;
 	var rowCount;
 
 	NumberPyramid(int rowCount, {NumberPyramid oldPyramid}) {
@@ -19,7 +19,7 @@ class NumberPyramid {
 				rowCount, (index) => List<Map<String, dynamic>>.generate(index+1, (index) => null));
 
 		if (oldPyramid != null) {
-			for (var layer=0; layer < min(oldPyramid.rowCount, rowCount); layer++) {
+			for (var layer=0; layer < min(oldPyramid.getRowsCount(), rowCount); layer++) {
 				for (var brick=0; brick < pyramid[layer].length; brick++) {
 					if (oldPyramid.pyramid[layer][brick] != null)
 						pyramid[layer][brick]= oldPyramid.pyramid[layer][brick];
@@ -70,8 +70,6 @@ class NumberPyramid {
 		return !(pyramid == null || y >= pyramid.length || pyramid[y] == null || x >= pyramid[y].length);
 	}
 
-
-
 	List<List<int>> solveableBoard() {
 		var board = <List<int>>[];
 		for (var y = 0; y < pyramid.length; y++) {
@@ -92,19 +90,24 @@ class NumberPyramid {
 		}
 	}
 
-	// String toJson() {
-	// 	var list = <String>[];
-	// 	for(var y = 0; y < matrix.length; y++) {
-	// 		for (var x = 0; x < matrix[y].length; x++) {
-	// 			if ( matrix[y][x] != null || !matrix[y][x].isEmpty)
-	// 				list.add(jsonEncode({'x': x, 'y': y, 'value': matrix[y][x]}));
-	// 		}
-	// 	}
-	//
-	// 	var json = jsonEncode({'columns': columnCount, 'rows': rowCount, 'values': jsonEncode(list)});
-	//
-	// 	return json;
-	// }
+	String toJson() {
+		var list = <String>[];
+		for(var y = 0; y < pyramid.length; y++) {
+			for (var x = 0; x < pyramid[y].length; x++) {
+				var value = getValue(x, y);
+				var type = getType(x, y);
+				if (value != null) {
+					var entryList = {'x': x, 'y': y, 'value': value};
+					if (type == NumberPyramidFillType.CALCULATED) entryList.addAll({'ud': 1});
+					list.add(jsonEncode(entryList));
+				}
+			}
+		}
+
+		var json = jsonEncode({'columns': getColumnsCount(rowCount), 'rows': rowCount, 'values': jsonEncode(list)});
+
+		return json;
+	}
 
 
 	// static SymbolMatrix fromJson(String text) {
