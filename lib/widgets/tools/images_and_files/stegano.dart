@@ -234,7 +234,6 @@ class _SteganoState extends State<Stegano> {
     if (_encoding) {
       return loading();
     }
-    ;
 
     if (_decodedText == null) {
       return [];

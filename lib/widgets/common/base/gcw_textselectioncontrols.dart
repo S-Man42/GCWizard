@@ -1,4 +1,4 @@
-/*** https://ktuusj.medium.com/flutter-custom-selection-toolbar-3acbe7937dd3 ***/
+/* https://ktuusj.medium.com/flutter-custom-selection-toolbar-3acbe7937dd3 ***/
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:gc_wizard/widgets/common/gcw_paste_button.dart';

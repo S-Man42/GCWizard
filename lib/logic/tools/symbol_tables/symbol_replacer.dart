@@ -54,7 +54,7 @@ Future<SymbolReplacerImage> replaceSymbols(Uint8List image, int blackLevel, doub
   if ((image == null) && (symbolImage == null)) return null;
   if (symbolImage == null) symbolImage = SymbolReplacerImage(image);
 
-  symbolImage.splitAndGroupSymbols((blackLevel * 255 / 100).toInt(), similarityLevel,
+  symbolImage.splitAndGroupSymbols(blackLevel * 255 ~/ 100, similarityLevel,
       gap: gap,
       compareSymbols: compareSymbols,
       similarityCompareLevel: similarityCompareLevel,
@@ -595,7 +595,7 @@ class SymbolReplacerImage {
     // calc possible steps
     if (_mergeDistanceSteps == null) _mergeDistanceSteps = _calcMergeDistances();
 
-    var minLineDistance = null;
+    double minLineDistance;
 
     for (var i = 0; i < lines.length - 1; i++) {
       var dist = lines[i + 1].size.top - lines[i].size.bottom;
@@ -1266,12 +1266,12 @@ class ImageHashing {
         int gray = (pixel & 0x00ff0000) >> 16;
         gray += (pixel & 0x0000ff00) >> 8;
         gray += (pixel & 0x000000ff);
-        gray = (gray / 12).toInt();
+        gray = gray ~/ 12;
 
         grayscale[x + (y * 8)] = gray;
         averageValue += gray;
       }
-    averageValue = (averageValue / 64).toInt();
+    averageValue = averageValue ~/ 64;
 
     // Compute the hash: each bit is a pixel
     // 1 = higher than average, 0 = lower than average

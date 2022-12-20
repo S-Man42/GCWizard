@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:pointycastle/api.dart';
 import 'package:pointycastle/export.dart';
 
 // Wrapper for PointyCastle library

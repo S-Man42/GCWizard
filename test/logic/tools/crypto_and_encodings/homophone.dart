@@ -267,8 +267,8 @@ Map<String, String> replaceMap(int rotation, int multiplier, Alphabet alphabet){
             map = fillMap(15, 7, offset, map);
             map = fillMap(07, 3, offset, map);
             map = fillMap(03, 3, offset, map);
-        };
-    };
+        }
+    }
   } else if (alphabet == alphabetGreek1) {
     switch (rotation) {
       case 500:
