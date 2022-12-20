@@ -214,7 +214,7 @@ class BundeswehrTalkingBoardAuthentificationState extends State<BundeswehrTalkin
                     setState(() {
                       _currentAuthTableCustom =
                           (text == null || text == '') ? '' : _authTableMaskFormatter.getMaskedText();
-                      ;
+
                     });
                   },
                 ),

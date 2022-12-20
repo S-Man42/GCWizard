@@ -206,7 +206,6 @@ bool _checkNormalize(List<String> instructions) {
       i = instructions.length;
     }
   }
-  ;
   return result;
 }
 

@@ -111,7 +111,6 @@ AmscoOutput decryptAmsco(String input, String key, bool oneCharStart) {
     });
     row += 1;
   }
-  ;
 
   return AmscoOutput(output, _amscoGridToString(grid), ErrorCode.OK);
 }
@@ -134,7 +133,6 @@ String _amscoGridToString(Map<String, List<String>> grid) {
     output += '\n';
     row += 1;
   }
-  ;
 
   return output;
 }

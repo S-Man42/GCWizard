@@ -73,7 +73,6 @@ class Recipe {
         this.methods.add(m);
       }
     }
-    ;
   }
 
   void setCookingTime(String cookingtime, language) {

@@ -400,7 +400,6 @@ class FormulaPainter {
       default:
         return false;
     }
-    ;
   }
 
   bool _numberFunction(String functionName) {
@@ -413,7 +412,6 @@ class FormulaPainter {
       default:
         return false;
     }
-    ;
   }
 
   String _coloredSpecialFunctionsLiteral(String result, List<String> parts) {

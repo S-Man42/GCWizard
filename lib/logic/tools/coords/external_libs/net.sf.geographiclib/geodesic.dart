@@ -19,7 +19,7 @@ import 'package:gc_wizard/logic/tools/coords/external_libs/net.sf.geographiclib/
 import 'package:gc_wizard/logic/tools/coords/external_libs/net.sf.geographiclib/math.dart';
 import 'package:gc_wizard/logic/tools/coords/external_libs/net.sf.geographiclib/pair.dart';
 
-/**
+/*
  * Geodesic calculations.
  * <p>
  * The shortest path between two points on a ellipsoid at (<i>lat1</i>,
@@ -213,7 +213,7 @@ import 'package:gc_wizard/logic/tools/coords/external_libs/net.sf.geographiclib/
  * }}</pre>
  **********************************************************************/
 class Geodesic {
-  /**
+  /*
    * The order of the expansions used by Geodesic.
    **********************************************************************/
   static final int GEOGRAPHICLIB_GEODESIC_ORDER = 6;
@@ -250,7 +250,7 @@ class Geodesic {
   double _n, _etol2;
   List<double> _A3x, _C3x, _C4x;
 
-  /**
+  /*
    * Constructor for a ellipsoid with
    * <p>
    * @param a equatorial radius (meters).
@@ -292,7 +292,7 @@ class Geodesic {
     C4coeff();
   }
 
-  /**
+  /*
    * Solve the direct geodesic problem where the length of the geodesic
    * is specified in terms of distance.
    * <p>
@@ -320,7 +320,7 @@ class Geodesic {
     return _direct(lat1, lon1, azi1, false, s12, GeodesicMask.STANDARD);
   }
 
-  /**
+  /*
    * The general direct geodesic problem.  {@link #Direct Direct} and
    * {@link #ArcDirect ArcDirect} are defined in terms of this function.
    * <p>
@@ -384,7 +384,7 @@ class Geodesic {
         Position(arcmode, s12_a12, outmask);
   }
 
-  /**
+  /*
    * Solve the inverse geodesic problem.
    * <p>
    * @param lat1 latitude of point 1 (degrees).
@@ -805,7 +805,7 @@ class Geodesic {
     return result;
   }
 
-  /**
+  /*
    * Solve the inverse geodesic problem with a subset of the geodesic results
    * returned.
    * <p>

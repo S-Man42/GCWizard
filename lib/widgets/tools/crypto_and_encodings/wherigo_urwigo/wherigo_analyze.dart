@@ -1828,7 +1828,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           if (RSHash(input.InputChoices[i].toLowerCase()).toString() == hash)
             result.add([i18n(context, 'wherigo_output_answerdecrypted'), input.InputChoices[i], null]);
         }
-        ;
       }
     } else {
       result = [

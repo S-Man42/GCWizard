@@ -19,7 +19,7 @@ import 'package:gc_wizard/logic/tools/coords/external_libs/net.sf.geographiclib/
 import 'package:gc_wizard/logic/tools/coords/external_libs/net.sf.geographiclib/math.dart';
 import 'package:gc_wizard/logic/tools/coords/external_libs/net.sf.geographiclib/pair.dart';
 
-/**
+/*
  * A geodesic line.
  * <p>
  * GeodesicLine facilitates the determination of a series of points on a single
@@ -139,7 +139,7 @@ class GeodesicLine {
   // index zero elements of _C1a, _C1pa, _C2a, _C3a are unused
   List<double> _C1a, _C1pa, _C2a, _C3a, _C4a; // all the elements of _C4a are used
   int _caps;
-  /**
+  /*
    * Constructor for a geodesic line staring at latitude <i>lat1</i>, longitude
    * <i>lon1</i>, and azimuth <i>azi1</i> (all in degrees) with a subset of the
    * capabilities included.
@@ -285,7 +285,7 @@ class GeodesicLine {
     }
   }
 
-  /**
+  /*
    * The general position function.  {@link #Position(double, int) Position}
    * and {@link #ArcPosition(double, int) ArcPosition} are defined in terms of
    * this function.
@@ -482,7 +482,7 @@ class GeodesicLine {
     return r;
   }
 
-  /**
+  /*
    * @return true if the object has been initialized.
    **********************************************************************/
   bool _Init() {

@@ -11,7 +11,7 @@ class ParseVariableLatLonJobData {
   final Map<String, String> substitutions;
   final Map<String, dynamic> projectionData;
 
-  ParseVariableLatLonJobData({this.coordinate = null, this.substitutions = null, this.projectionData = const {}});
+  ParseVariableLatLonJobData({this.coordinate, this.substitutions, this.projectionData = const {}});
 }
 
 Map<String, LatLng> _parseCoordText(String text) {

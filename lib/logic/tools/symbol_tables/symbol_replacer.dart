@@ -26,7 +26,7 @@ class ReplaceSymbolsInput {
       this.symbolImage,
       this.compareSymbols,
       this.similarityCompareLevel: 80.0,
-      this.mergeDistance}) {}
+      this.mergeDistance});
 }
 
 Future<SymbolReplacerImage> replaceSymbolsAsync(dynamic jobData) async {
@@ -172,7 +172,7 @@ class SymbolReplacerImage {
       List<Map<String, SymbolReplacerSymbolData>> compareSymbols,
       double similarityCompareLevel = 80,
       bool groupSymbols = true,
-      double mergeDistance = null}) {
+      double mergeDistance}) {
     if (_image == null) return;
     if (_bmp == null) _bmp = Image.decodeImage(_image);
     if (_bmp == null) return;
@@ -510,7 +510,6 @@ class SymbolReplacerImage {
           group.symbols.add(symbol1);
           symbol1.symbolGroup = group;
         }
-        ;
       }
     }
   }
@@ -602,7 +601,6 @@ class SymbolReplacerImage {
       var dist = lines[i + 1].size.top - lines[i].size.bottom;
       if (dist > 0 && (minLineDistance == null || minLineDistance > dist)) minLineDistance = dist;
     }
-    ;
 
     var _mergeDistance = 0.0;
     // calc init merge distance

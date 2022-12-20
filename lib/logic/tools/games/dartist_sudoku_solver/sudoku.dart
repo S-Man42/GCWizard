@@ -120,7 +120,6 @@ List<Map> _searchAll(Map values) {
     _FOUND_SOLUTIONS++;
     return <Map>[values];
   }
-  ;
 
   var s2 = _order(_squares.where((s) => values[s].length > 1).toList(), on: (s) => values[s].length).first;
 

@@ -111,7 +111,6 @@ class AnimatedImageState extends State<AnimatedImage> {
         ]);
       });
     }
-    ;
 
     return Column(children: <Widget>[
       _play
@@ -145,9 +144,7 @@ class AnimatedImageState extends State<AnimatedImage> {
         }
         list.add(GCWImageViewData(local.GCWFile(bytes: images[i]), description: description));
       }
-      ;
     }
-    ;
     return list;
   }
 

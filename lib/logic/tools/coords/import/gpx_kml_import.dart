@@ -44,7 +44,7 @@ Future<MapViewDAO> importCoordinatesFile(GCWFile file) async {
 }
 
 MapViewDAO parseCoordinatesFile(String xml, {bool kmlFormat = false}) {
-  MapViewDAO result = null;
+  MapViewDAO result;
   try {
     var xmlDoc = XmlDocument.parse(xml);
     if (kmlFormat)

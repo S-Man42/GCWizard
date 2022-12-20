@@ -212,7 +212,6 @@ class _SteganoState extends State<Stegano> {
     if (_encoding) {
       return loading();
     }
-    ;
 
     if (_encodedPictureData == null) {
       return [];

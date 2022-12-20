@@ -385,7 +385,7 @@ class Chef {
     recipes = new Map<String, Recipe>();
     liquefyMissing = true;
     int progress = 0;
-    Recipe r = null;
+    Recipe r;
     String title = '';
     String line = '';
     bool mainrecipeFound = false;
@@ -588,7 +588,7 @@ class Chef {
         }
       }
     }
-    ; // for each element of the recipe
+    // for each element of the recipe
 
     if (mainrecipe == null) {
       valid = false;
