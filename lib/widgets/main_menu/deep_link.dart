@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 
@@ -8,23 +9,27 @@ import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 NoAnimationMaterialPageRoute createRoute (BuildContext context, ScreenArguments arguments) {
   if (arguments?.title == null) return null;
   var name = arguments.title.toLowerCase();
-  var tool = registeredTools.firstWhere((tool) => tool.i18nPrefix == name);
+  List<GCWTool> tools;
+  try {
+    tools = registeredTools.where((tool) => tool.i18nPrefix == name).toList();
 
-  if (tool == null) {
-    switch (name) {
-      case 'symboltables':
-        if (arguments.arguments != null && !arguments.arguments.isNotEmpty)
-          registeredTools.firstWhere((tool) => tool.i18nPrefix == arguments.arguments[0]);
-        break;
-      case 'format_converter': // coords converter
+    if (tools == null || tools.isEmpty) {
+      switch (name) {
+        case 'symboltables':
+          if (arguments.arguments != null && arguments.arguments.isNotEmpty) {
+            name = 'symboltables_' + arguments.arguments[0].value;
+            tools = registeredTools.where((tool) => tool.i18nPrefix == name).toList();
+          }
+          break;
+        case 'format_converter': // coords converter
 
+      }
     }
-  }
-
-  if (tool== null) return null;
+  } catch (e) {}
+  if (tools == null || tools.isEmpty) return null;
 
   // arguments settings only for view the path in the url
-  return NoAnimationMaterialPageRoute(builder: (context) => tool, settings: arguments.settings);
+  return NoAnimationMaterialPageRoute(builder: (context) => tools[0], settings: arguments.settings);
 }
 
 // You can pass any object to the arguments parameter.
@@ -46,12 +51,15 @@ class ScreenArguments {
       title = match.group(2);
       if (match.groupCount > 2) {
         regExp = RegExp(r'([\w]+)=([\w]+)\&?');
-        var matches = regExp.allMatches(match.group(3));
-        if (matches != null) {
+        var argumentString = match.group(3);
+        var matches = regExp.allMatches(argumentString);
+        if (matches != null && argumentString.isNotEmpty) {
           arguments = <MapEntry<String, String>>[];
           matches.forEach((match) {
             arguments.add(MapEntry<String, String>(match.group(1), match.group(2)));
           });
+          if (matches.isEmpty)
+            arguments.add(MapEntry<String, String>('argument', argumentString));
         }
       }
     }
