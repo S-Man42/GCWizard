@@ -466,6 +466,7 @@ FileType getFileType(Uint8List blobBytes, {FileType defaultType = FileType.TXT})
   for (var fileType in _FILE_TYPES.keys) {
     var _magicBytes = magicBytes(fileType);
     var offset = magicBytesOffset(fileType) ?? 0;
+    if (_magicBytes == null) continue;
 
     for (var bytes in _magicBytes) {
       if (blobBytes != null &&

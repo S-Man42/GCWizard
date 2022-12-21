@@ -93,13 +93,16 @@ buildMainMenu(BuildContext context) {
   );
 
   return Drawer(
-      child: Column(
-    children: <Widget>[
-      header,
-      Expanded(
+    child: Column(
+      children: <Widget>[
+        header,
+        Expanded(
           child: ListView(
-              padding: EdgeInsets.zero, // Remove any padding from the ListView.
-              children: menuEntries)),
+            physics: const AlwaysScrollableScrollPhysics(),
+            padding: EdgeInsets.zero, // Remove any padding from the ListView.
+            children: menuEntries
+            ),
+          ),
       footer,
     ],
   ));
