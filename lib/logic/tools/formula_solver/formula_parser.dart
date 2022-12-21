@@ -124,6 +124,8 @@ class FormulaParser {
     //'-': '—–˗−‒', // not required here, because normalized in common_utils.normalizeCharacters()
     '/': ':÷',
     '*': '×•',
+    'pi': '\u03A0\u03C0\u220F\u1D28',
+    'phi': '\u03A6\u03C6\u03d5\u0278',
   };
 
   FormulaParser({unlimitedExpanded: false}) {
@@ -208,8 +210,6 @@ class FormulaParser {
 
 
   Map<String, dynamic> _parseFormula(String formula, List<FormulaValue> values, bool expandValues) {
-    formula = normalizeCharacters(formula);
-    formula = normalizeMathematicalSymbols(formula);
     safedFormulasMap = {};
 
     List<FormulaValue> preparedValues = _prepareValues(values);
@@ -343,6 +343,9 @@ class FormulaParser {
   }
 
   dynamic _evaluateFormula(String formula) {
+    formula = normalizeCharacters(formula);
+    formula = normalizeMathematicalSymbols(formula);
+
     // Remove Brackets; the formula evaluation only needs the internal content
     var hasBrackets = formula.startsWith('[') && formula.endsWith(']');
     formula = hasBrackets ? formula.substring(1, formula.length - 1) : formula;
