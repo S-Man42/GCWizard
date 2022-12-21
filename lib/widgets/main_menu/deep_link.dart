@@ -13,17 +13,44 @@ NoAnimationMaterialPageRoute createRoute (BuildContext context, ScreenArguments 
   try {
     tools = registeredTools.where((tool) => tool.i18nPrefix == name).toList();
 
-    if (tools == null || tools.isEmpty) {
-      switch (name) {
-        case 'symboltables':
-          if (arguments.arguments != null && arguments.arguments.isNotEmpty) {
-            name = 'symboltables_' + arguments.arguments[0].value;
-            tools = registeredTools.where((tool) => tool.i18nPrefix == name).toList();
-          }
-          break;
-        case 'format_converter': // coords converter
+    //registeredTools.forEach((element) {print(element.i18nPrefix); });
 
-      }
+    if (tools == null || tools.isEmpty) {
+      var groups = {
+        'astronomy',
+        'base',
+        'bcd',
+        'bundeswehr',
+        'coords',
+        'countries',
+        'crosssum',
+        'dates',
+        'dna',
+        'earwigo',
+        'hashes',
+        'irrationalnumbers',
+        'numbersequence',
+        'primes',
+        'rotation',
+        'segmentdisplay',
+        'symboltables',
+        'telegraph',
+        'urwigo',
+        'vanity',
+      };
+
+      var specialEntrys= (
+        {'symboltables_examples': 'symboltablesexamples'}
+      );
+
+      //case 'format_converter': // coords converter
+
+      if (groups.contains(name) && (arguments.arguments != null && arguments.arguments.isNotEmpty)) {
+        name = name + '_' + arguments.arguments[0].value;
+        if (specialEntrys.keys.contains(name))
+          name = specialEntrys[name];
+       }
+      tools = registeredTools.where((tool) => tool.i18nPrefix == name).toList();
     }
   } catch (e) {}
   if (tools == null || tools.isEmpty) return null;
