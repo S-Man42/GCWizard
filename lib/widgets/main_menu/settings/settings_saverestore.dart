@@ -43,13 +43,12 @@ class SaveRestoreSettingsState extends State<SaveRestoreSettings> {
             keys.forEach((key) {
               prefsMap.putIfAbsent(key, () => Prefs.get(key));
             });
-            var json = normalizeCharacters(jsonEncode(prefsMap));
+            var json = jsonEncode(prefsMap);
 
+            //Uint8 is not enough here for special some special characters or Korean characters!!!
             var outputData = Uint8List.fromList(json.codeUnits);
 
             _exportSettings(context, outputData);
-
-            showToast(i18n(context, 'settings_saverestore_save_success'));
           },
         ),
         GCWTextDivider(
@@ -65,7 +64,7 @@ class SaveRestoreSettingsState extends State<SaveRestoreSettings> {
 
                 showOpenFileDialog(context, [FileType.GCW], (GCWFile file) {
                   try {
-                    var jsonString = normalizeCharacters(String.fromCharCodes(file.bytes));
+                    var jsonString = String.fromCharCodes(file.bytes);
                     Map<String, dynamic> prefsMap = jsonDecode(jsonString);
 
                     initDefaultSettings(PreferencesInitMode.REINIT_ALL);
@@ -103,8 +102,8 @@ class SaveRestoreSettingsState extends State<SaveRestoreSettings> {
     String timestamp = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now());
     String outputFilename = 'settings_${timestamp}.gcw';
 
-    var value = await saveByteDataToFile(context, data, outputFilename);
+    await saveByteDataToFile(context, data, outputFilename);
 
-    if (value != null) print('Saved');//showExportedFileDialog(context, fileType: FileType.PNG);
+    showToast(i18n(context, 'settings_saverestore_save_success'));
   }
 }
