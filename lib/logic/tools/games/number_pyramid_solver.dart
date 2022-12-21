@@ -98,8 +98,9 @@ class NumberPyramid {
 				var type = getType(x, y);
 				if (value != null) {
 					var entryList = {'x': x, 'y': y, 'value': value};
-					if (type == NumberPyramidFillType.CALCULATED) entryList.addAll({'ud': 1});
-					list.add(jsonEncode(entryList));
+					// if (type == NumberPyramidFillType.USER_FILLED) entryList.addAll({'ud': 1});
+					// list.add(jsonEncode(entryList));
+					list.add(jsonEncode(ArrayEntry(x, y, value.toString(), type == NumberPyramidFillType.USER_FILLED)));
 				}
 			}
 		}
@@ -110,28 +111,52 @@ class NumberPyramid {
 	}
 
 
-	// static SymbolMatrix fromJson(String text) {
-	// 	if (text == null) return null;
-	// 	var json = jsonDecode(text);
-	// 	if (json == null) return null;
-	//
-	// 	SymbolMatrix matrix;
-	// 	var rowCount = jsonDecode(json)['rows'];
-	// 	var columnCount = jsonDecode(json)['columns'];
-	// 	var values = jsonDecode(json)['values'];
-	// 	if (rowCount == null || columnCount == null) return null;
-	//
-	// 	matrix = SymbolMatrix(rowCount, columnCount);
-	// 	if (values != null) {
-	// 		for (var jsonElement in values) {
-	// 			var element = jsonDecode(jsonElement);
-	// 			var x = element['x'];
-	// 			var y = element['y'];
-	// 			var value = element['value'];
-	// 			if (x != null && y != null && value != null)
-	// 				matrix.setValue(y, x, value);
-	// 		}
-	// 	}
-	// 	return matrix;
-	// }
+	static NumberPyramid fromJson(String text) {
+		if (text == null) return null;
+		var json = jsonDecode(text);
+		if (json == null) return null;
+
+		NumberPyramid pyramid;
+		var rowCount = jsonDecode(json)['rows'];
+		var values = jsonDecode(json)['values'];
+		if (rowCount == null) return null;
+
+		pyramid = NumberPyramid(rowCount);
+		if (values != null) {
+			for (var jsonElement in values) {
+				var element = jsonDecode(jsonElement);
+				var x = element['x'];
+				var y = element['y'];
+				var value = element['value'];
+				var ud = element['ud'];
+				if (x != null && y != null && value != null) {
+					var type = (ud == '1') ? NumberPyramidFillType.USER_FILLED : NumberPyramidFillType.CALCULATED;
+					pyramid.setValue(y, x, value, type);
+				}
+			}
+		}
+		return pyramid;
+	}
+}
+
+class ArrayEntry {
+	final int x;
+	final int y;
+	final String value;
+	final bool userDefinied;
+
+	ArrayEntry(this.x, this.y, this.value, this.userDefinied);
+
+	ArrayEntry.fromJson(Map<String, dynamic> json)
+			: x = json['x'],
+				y = json['y'],
+				value = json['v'],
+				userDefinied = json['ud'];
+
+	Map<String, dynamic> toJson() => {
+		'x': x,
+		'y': y,
+		'v': value,
+		'ud': userDefinied
+	};
 }

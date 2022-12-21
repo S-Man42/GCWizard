@@ -1,12 +1,8 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/games/number_pyramid_solver.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
-import 'package:gc_wizard/widgets/common/gcw_integer_textfield.dart';
 import 'package:touchable/touchable.dart';
 
 Point<int> _selectedBox;
@@ -79,10 +75,11 @@ class NumberPyramidBoardPainter extends CustomPainter {
     paintBack.style = PaintingStyle.fill;
     paintBack.color = colors.gridBackground();
 
-    double widthOuter = size.width;
-    double heightOuter = size.height;
-    double xOuter = 0 * widthOuter;
-    double yOuter = 0 * heightOuter;
+    const border = 2;
+    double widthOuter = size.width - 2*border;
+    double heightOuter = size.height - 2*border;
+    double xOuter = border.toDouble();
+    double yOuter = border.toDouble();
     double widthInner = widthOuter / board.getRowsCount();
     double heightInner = min(heightOuter /  board.getRowsCount(), widthInner / 2);
 

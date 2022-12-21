@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/games/number_pyramid_solver.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/logic/tools/games/number_pyramid_solver.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
@@ -9,8 +9,12 @@ import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_expandable.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
+import 'package:gc_wizard/widgets/common/gcw_paste_button.dart';
+import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/tools/games/number_pyramid/number_pyramid_board.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/integer_textinputformatter.dart';
+
 
 class NumberPyramidSolver extends StatefulWidget {
   @override
@@ -73,12 +77,29 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
             ),
         ),
         Container(height: 10),
+        GCWTextDivider(
+            trailing: Row(children: <Widget>[
+              GCWPasteButton(
+                iconSize: IconButtonSize.SMALL,
+                onSelected: _parseClipboard,
+              ),
+              GCWIconButton(
+                size: IconButtonSize.SMALL,
+                icon: Icons.content_copy,
+                onPressed: () {
+                  var copyText = _currentBoard.toJson();
+                  if (copyText == null) return;
+                  insertIntoGCWClipboard(context, copyText);
+                },
+              )
+            ])
+        ),
         SingleChildScrollView(
           child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               physics: AlwaysScrollableScrollPhysics(),
               child: Container(
-                constraints: BoxConstraints(maxWidth: 100.0 * _rowCount), //min(100.0 * _rowCount, MediaQuery.of(context).size.width)),
+                constraints: BoxConstraints(maxWidth: 100.0 * _rowCount),
                 child: NumberPyramidBoard(
                   board: _currentBoard,
                   onChanged: (newBoard) {
@@ -103,7 +124,7 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
           onChanged: (value) {
             setState(() {
               _currentValue = int.tryParse(value);
-              if (_currentBoard.setValue(_boardX, _boardY, value, NumberPyramidFillType.USER_FILLED))
+              if (_currentBoard.setValue(_boardX, _boardY, _currentValue, NumberPyramidFillType.USER_FILLED))
                 _currentBoard.removeCalculated();
             });
           },
@@ -218,7 +239,21 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
     setState(() {
       _boardX = x;
       _boardY = y;
-      _currentValue = _currentBoard.getValue(x, y) ?? 0;
+      _currentValue = _currentBoard.getValue(x, y);
+      _currentInputController.text = _currentValue == null ? '' : _currentValue.toString();
+    });
+  }
+
+  _parseClipboard(text) {
+    setState(() {
+      var matrix = NumberPyramid.fromJson(text);
+      if (matrix == null) {
+        _currentBoard = null;
+        _rowCount = 3;
+      } else {
+        _currentBoard = matrix;
+        _rowCount = matrix.rowCount;
+      }
     });
   }
 }
