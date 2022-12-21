@@ -49,7 +49,7 @@ NoAnimationMaterialPageRoute createRoute (BuildContext context, ScreenArguments 
         name = name + '_' + arguments.arguments[0].value;
         if (specialEntrys.keys.contains(name))
           name = specialEntrys[name];
-       }
+      }
       tools = registeredTools.where((tool) => tool.i18nPrefix == name).toList();
     }
   } catch (e) {}
