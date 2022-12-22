@@ -60,8 +60,8 @@ class MapPointDAO {
   MapPointDAO.fromJson(Map<String, dynamic> json)
       : uuid = json['uuid'],
         name = json['name'],
-        latitude = json['latitude'],
-        longitude = json['longitude'],
+        latitude = _jsonDouble(json['latitude']),
+        longitude = _jsonDouble(json['longitude']),
         coordinateFormat = json['coordinateFormat'],
         isVisible = json['isVisible'] ?? true,
         color = json['color'],
