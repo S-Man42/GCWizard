@@ -1,3 +1,5 @@
+import 'package:gc_wizard/utils/common_utils.dart';
+
 List<MapViewDAO> mapViews = [];
 
 class MapViewDAO {
@@ -63,13 +65,20 @@ class MapPointDAO {
         coordinateFormat = json['coordinateFormat'],
         isVisible = json['isVisible'] ?? true,
         color = json['color'],
-        radius = json['radius'],
+        radius = _jsonDouble(json['radius']),
         circleColorSameAsColor = json['circleColorSameAsColor'],
         circleColor = json['circleColor'];
 
   @override
   String toString() {
     return toMap().toString();
+  }
+
+  static double _jsonDouble(dynamic value) {
+    if (value is int)
+      return value * 1.0;
+    else
+      return value;
   }
 }
 
