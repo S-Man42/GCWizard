@@ -427,21 +427,21 @@ class FormulaPainter {
   }
 
   List<String> _isFaculty(String formula) {
-    RegExp regex = RegExp(r'^(\s*)(!)(\s*)');
+    RegExp regex = RegExp(r'^(\s*)(!)(\s*)', unicode: true);
 
     var match = regex.firstMatch(formula);
     if (match == null) return null;
 
-    regex = RegExp(r'(\d)');
+    regex = RegExp(r'(\d)', unicode: true);
     var matchNumber = regex.firstMatch(this.formula);
-    regex = RegExp(r'(' + _variablesRegEx + ')');
+    regex = RegExp(r'(' + _variablesRegEx + ')', unicode: true);
     var matchVariable = regex.firstMatch(this.formula);
 
     return (matchNumber == null && matchVariable == null) ? null : [match.group(0)];
   }
 
   List<String> _isLiteral(String formula) {
-    RegExp regex = RegExp(r'^([\(\{])');
+    RegExp regex = RegExp(r'^([\(\{])', unicode: true);
     var match = regex.firstMatch(formula);
 
     if (match == null) return null;
@@ -468,7 +468,7 @@ class FormulaPainter {
   }
 
   List<String> _isConstant(String formula) {
-    RegExp regex = RegExp(r'^\b(' + _constantsRegEx + r')\b');
+    RegExp regex = RegExp(r'^\b(' + _constantsRegEx + r')\b', unicode: true);
     var match = regex.firstMatch(formula);
 
     return (match == null) ? null : [match.group(0)];
@@ -500,7 +500,7 @@ class FormulaPainter {
   /// return VariableName (group(1))
   RegExpMatch _variableMatch(String formula) {
     if (_variablesRegEx.isEmpty) return null;
-    RegExp regex = RegExp(r'^(' + _variablesRegEx + ')');
+    RegExp regex = RegExp(r'^(' + _variablesRegEx + ')', unicode: true);
     return regex.firstMatch(formula);
   }
 
@@ -540,7 +540,7 @@ class FormulaPainter {
   }
 
   List<String> _isNumberWithPoint(String formula) {
-    RegExp regex = RegExp('^$numberRegEx');
+    RegExp regex = RegExp('^$numberRegEx', unicode: true);
     var match = regex.firstMatch(formula);
     if (match == null) return null;
 
@@ -549,7 +549,7 @@ class FormulaPainter {
   }
 
   List<String> _isNumber(String formula) {
-    RegExp regex = RegExp(r'^(\d)+');
+    RegExp regex = RegExp(r'^(\d)+', unicode: true);
     var match = regex.firstMatch(formula);
 
     return (match == null) ? null : [match.group(0)];

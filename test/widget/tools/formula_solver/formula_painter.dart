@@ -11,6 +11,8 @@ void main() {
     };
 
     List<Map<String, dynamic>> _inputsToExpected = [
+      {'formula' : 'π', 'values': values, 'expectedOutput' : 'g'},
+
       {'formula' : null, 'values': null, 'expectedOutput' : null},
       {'formula' : null, 'values': <String, String>{}, 'expectedOutput' : null},
       {'formula' : null, 'expectedOutput' : null},
@@ -63,6 +65,8 @@ void main() {
       {'formula' : 'E * PI', 'values': values, 'expectedOutput' : 'rrbbgg'},
       {'formula' : 'π', 'values': values, 'expectedOutput' : 'g'},
       {'formula' : 'E * π', 'values': values, 'expectedOutput' : 'rrbbg'},
+      {'formula' : 'Φ', 'values': values, 'expectedOutput' : 'g'},
+      {'formula' : 'E * Φ', 'values': values, 'expectedOutput' : 'rrbbg'},
       {'formula' : 'E [PI]', 'values': values, 'expectedOutput' : 'ttbggb'},
       {'formula' : '[A*B*2].[C+d+D];', 'values': values, 'expectedOutput' : 'brbrbgbtbrbrbrbt'},
       {'formula' : 'N 52 [QR].[S+T*U*2] E 12 [V*W].[XY + Z]', 'values': values, 'expectedOutput' : 'tttttbrrbtbrbrbrbgbttttttbrbrbtbrrrbbrb'},
