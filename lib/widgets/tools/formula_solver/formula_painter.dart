@@ -427,21 +427,21 @@ class FormulaPainter {
   }
 
   List<String> _isFaculty(String formula) {
-    RegExp regex = RegExp(r'^(\s*)(!)(\s*)');
+    RegExp regex = RegExp(r'^(\s*)(!)(\s*)', unicode: true);
 
     var match = regex.firstMatch(formula);
     if (match == null) return null;
 
-    regex = RegExp(r'(\d)');
+    regex = RegExp(r'(\d)', unicode: true);
     var matchNumber = regex.firstMatch(this.formula);
-    regex = RegExp(r'(' + _variablesRegEx + ')');
+    regex = RegExp(r'(' + _variablesRegEx + ')', unicode: true);
     var matchVariable = regex.firstMatch(this.formula);
 
     return (matchNumber == null && matchVariable == null) ? null : [match.group(0)];
   }
 
   List<String> _isLiteral(String formula) {
-    RegExp regex = RegExp(r'^([\(\{])');
+    RegExp regex = RegExp(r'^([\(\{])', unicode: true);
     var match = regex.firstMatch(formula);
 
     if (match == null) return null;
@@ -468,18 +468,7 @@ class FormulaPainter {
   }
 
   List<String> _isConstant(String formula) {
-    //extract all non-ascii chars, like Pi or Phi
-    var specialChars = _constantsRegEx.replaceAll(RegExp(r'[A-Za-z0-9\|_]'), '');
-    //add special chars to allowed character (next to \w == ASCII chars)
-    var wordChars = r'[\w' + specialChars + r']';
-    // \b does not allow non-ASCII chars
-    //https://stackoverflow.com/a/61754724/3984221
-    // so, \b must be manipulated. Following expressing equals the internal representation of \b, which is now enhanced
-    // to use the specialChars as well
-    //https://stackoverflow.com/a/12712840/3984221
-    var wordBoundary = '(?:(?<!$wordChars)(?=$wordChars)|(?<=$wordChars)(?!$wordChars))';
-    RegExp regex = RegExp('^$wordBoundary(' + _constantsRegEx + ')$wordBoundary');
-
+    RegExp regex = RegExp(r'^\b(' + _constantsRegEx + r')\b', unicode: true);
     var match = regex.firstMatch(formula);
 
     return (match == null) ? null : [match.group(0)];
@@ -511,7 +500,7 @@ class FormulaPainter {
   /// return VariableName (group(1))
   RegExpMatch _variableMatch(String formula) {
     if (_variablesRegEx.isEmpty) return null;
-    RegExp regex = RegExp(r'^(' + _variablesRegEx + ')');
+    RegExp regex = RegExp(r'^(' + _variablesRegEx + ')', unicode: true);
     return regex.firstMatch(formula);
   }
 
@@ -551,7 +540,7 @@ class FormulaPainter {
   }
 
   List<String> _isNumberWithPoint(String formula) {
-    RegExp regex = RegExp('^$numberRegEx');
+    RegExp regex = RegExp('^$numberRegEx', unicode: true);
     var match = regex.firstMatch(formula);
     if (match == null) return null;
 
@@ -560,7 +549,7 @@ class FormulaPainter {
   }
 
   List<String> _isNumber(String formula) {
-    RegExp regex = RegExp(r'^(\d)+');
+    RegExp regex = RegExp(r'^(\d)+', unicode: true);
     var match = regex.firstMatch(formula);
 
     return (match == null) ? null : [match.group(0)];
