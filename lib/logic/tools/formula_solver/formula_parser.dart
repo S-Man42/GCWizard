@@ -25,6 +25,8 @@ const RECURSIVE_FORMULA_REPLACEMENT_END = '\u0000}';
 const SAFED_FUNCTION_MARKER = '\x01';
 const SAFED_RECURSIVE_FORMULA_MARKER = '\x02';
 
+const _PHI = 1.6180339887498948482045868343656381177;
+
 class FormulaParser {
   ContextModel _context;
   Parser parser;
@@ -39,7 +41,15 @@ class FormulaParser {
     'log2e': log2e,
     'log10e': log10e,
     'pi': pi,
-    'phi': 1.6180339887498948482045868343656381177,
+    '\u03A0': pi,
+    '\u03C0': pi,
+    '\u220F': pi,
+    '\u1D28': pi,
+    'phi': _PHI,
+    '\u03A6': _PHI,
+    '\u03C6': _PHI,
+    '\u03d5': _PHI,
+    '\u0278': _PHI,
     'sqrt1_2': sqrt1_2,
     'sqrt2': sqrt2,
   };
@@ -114,8 +124,6 @@ class FormulaParser {
     //'-': '—–˗−‒', // not required here, because normalized in common_utils.normalizeCharacters()
     '/': ':÷',
     '*': '×•',
-    'pi': '\u03A0\u03C0\u220F\u1D28',
-    'phi': '\u03A6\u03C6\u03d5\u0278',
   };
 
   FormulaParser({unlimitedExpanded: false}) {
@@ -200,6 +208,8 @@ class FormulaParser {
 
 
   Map<String, dynamic> _parseFormula(String formula, List<FormulaValue> values, bool expandValues) {
+    formula = normalizeCharacters(formula);
+    formula = normalizeMathematicalSymbols(formula);
     safedFormulasMap = {};
 
     List<FormulaValue> preparedValues = _prepareValues(values);
@@ -333,9 +343,6 @@ class FormulaParser {
   }
 
   dynamic _evaluateFormula(String formula) {
-    formula = normalizeCharacters(formula);
-    formula = normalizeMathematicalSymbols(formula);
-
     // Remove Brackets; the formula evaluation only needs the internal content
     var hasBrackets = formula.startsWith('[') && formula.endsWith(']');
     formula = hasBrackets ? formula.substring(1, formula.length - 1) : formula;
