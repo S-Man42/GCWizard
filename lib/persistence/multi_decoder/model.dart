@@ -1,4 +1,4 @@
-import 'package:gc_wizard/utils/common_utils.dart';
+import 'package:gc_wizard/utils/json_utils.dart';
 
 List<MultiDecoderTool> multiDecoderTools = [];
 
