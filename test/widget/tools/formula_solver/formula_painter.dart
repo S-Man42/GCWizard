@@ -312,7 +312,8 @@ void main() {
       {'formula' : 'A', 'values': {'A': ''}, 'expectedOutput' : 'R'},
       {'formula' : 'A', 'values': {'A': '1'}, 'expectedOutput' : 'r'},
 
-
+      // Unicode Values
+      {'formula' : 'Θ', 'values': {'Θ': '1'}, 'expectedOutput' : 'r'},
 
     ];
 
