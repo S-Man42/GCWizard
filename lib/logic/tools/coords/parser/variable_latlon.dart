@@ -11,7 +11,7 @@ class ParseVariableLatLonJobData {
   final Map<String, String> substitutions;
   final Map<String, dynamic> projectionData;
 
-  ParseVariableLatLonJobData({this.coordinate = null, this.substitutions = null, this.projectionData = const {}});
+  ParseVariableLatLonJobData({this.coordinate, this.substitutions, this.projectionData = const {}});
 }
 
 Map<String, LatLng> _parseCoordText(String text) {
@@ -34,14 +34,14 @@ _sanitizeVariableDoubleText(String text) {
 }
 
 _addBrackets(String formula) {
-  RegExp regExp = new RegExp(r'\[.+?\]');
+  RegExp regExp = RegExp(r'\[.+?\]');
   if (regExp.hasMatch(formula)) return formula;
 
   return '[$formula]';
 }
 
 _removeBrackets(String formula) {
-  RegExp regExp = new RegExp(r'\[.+?\]');
+  RegExp regExp = RegExp(r'\[.+?\]');
   if (!regExp.hasMatch(formula)) return formula;
 
   return formula.substring(1, formula.length - 1);
