@@ -5540,7 +5540,7 @@
   "wherigo_header_cartridgename": "Name der Cartridge",
   "wherigo_header_company": "Firma",
   "wherigo_header_completion": "Fertigstellungscode",
-  "wherigo_header_completion_full": "Completion Code, total",
+  "wherigo_header_completion_full": "Abschluss-Code, gesamt",
   "wherigo_header_country": "Landeskennung",
   "wherigo_header_creationdate": "Erstelldatum",
   "wherigo_header_latitude": "Latitude",
