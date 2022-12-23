@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/widgets/common/gcw_tool.dart';
-import 'package:gc_wizard/widgets/common/gcw_toollist.dart';
+import 'package:gc_wizard/tools/common/gcw_tool/widget/gcw_tool.dart';
+import 'package:gc_wizard/tools/common/gcw_toollist/widget/gcw_toollist.dart';
 import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/selector_lists/gcw_selection.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gronsfeld.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trithemius.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vigenere.dart';
-import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/widget/vigenere_breaker.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/gronsfeld/widget/gronsfeld.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/trithemius/widget/trithemius.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/vigenere/widget/vigenere.dart';
+import 'package:gc_wizard/tools/utils/common_widget_utils/widget/common_widget_utils.dart';
 
 class VigenereSelection extends GCWSelection {
   @override

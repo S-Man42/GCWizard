@@ -4,8 +4,8 @@ import 'dart:typed_data';
 
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/rendering.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/rotator.dart';
-import 'package:gc_wizard/logic/tools/science_and_technology/colors/colors_rgb.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/logic/rotator.dart';
+import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors_rgb.dart';
 import 'package:intl/intl.dart';
 
 import 'alphabets.dart';

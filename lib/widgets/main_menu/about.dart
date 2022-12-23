@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_divider.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
+import 'package:gc_wizard/tools/common/base/gcw_divider/widget/gcw_divider.dart';
+import 'package:gc_wizard/tools/common/base/gcw_text/widget/gcw_text.dart';
 import 'package:gc_wizard/widgets/main_menu/gcw_mainmenuentry_stub.dart';
 import 'package:gc_wizard/widgets/main_menu/licenses.dart';
 import 'package:gc_wizard/widgets/registry.dart';
-import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
-import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
+import 'package:gc_wizard/tools/utils/common_widget_utils/widget/common_widget_utils.dart';
+import 'package:gc_wizard/tools/utils/no_animation_material_page_route/widget/no_animation_material_page_route.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 final ABOUT_MAINTAINER = 'Mark \'S-Man42\' Lorenz';
