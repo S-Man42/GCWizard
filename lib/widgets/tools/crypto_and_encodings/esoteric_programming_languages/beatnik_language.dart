@@ -139,7 +139,7 @@ class BeatnikState extends State<Beatnik> {
             .add([_output.debug[i].pc, _output.debug[i].command, _output.debug[i].stack, _output.debug[i].output]);
       }
     }
-    ;
+
     _outputData = buildOutputText(_output.output);
 
     return Column(

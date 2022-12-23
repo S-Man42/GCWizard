@@ -762,7 +762,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                         controller: _codeControllerHighlightedLUA,
                         language: CodeHighlightingLanguage.LUA,
                         lineNumberStyle: GCWCodeTextFieldLineNumberStyle(width: 80.0),
-                        stringMap: WHERIGO_SYNTAX_HIGHLIGHT_STRINGMAP)
+                        patternMap: WHERIGO_SYNTAX_HIGHLIGHT_STRINGMAP)
                     : GCWOutputText(
                         text: _LUA_SourceCode,
                       ),
@@ -1837,7 +1837,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           if (RSHash(input.InputChoices[i].toLowerCase()).toString() == hash)
             result.add([i18n(context, 'wherigo_output_answerdecrypted'), input.InputChoices[i], null]);
         }
-        ;
       }
     } else {
       result = [
@@ -2508,9 +2507,12 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         _expertMode ? [i18n(context, 'wherigo_header_splashscreen'), _WherigoCartridgeGWC.Splashscreen] : null,
         [i18n(context, 'wherigo_header_player'), _WherigoCartridgeGWC.Player],
         _expertMode ? [i18n(context, 'wherigo_header_playerid'), _WherigoCartridgeGWC.PlayerID.toString()] : null,
-        [i18n(context, 'wherigo_header_completion'), _WherigoCartridgeGWC.CompletionCode],
+        [i18n(context, 'wherigo_header_completion'), (_WherigoCartridgeGWC.CompletionCode.length > 15) ? _WherigoCartridgeGWC.CompletionCode.substring(0,15) : _WherigoCartridgeGWC.CompletionCode],
         _expertMode
             ? [i18n(context, 'wherigo_header_lengthcompletion'), _WherigoCartridgeGWC.LengthOfCompletionCode.toString()]
+            : null,
+        _expertMode
+            ? [i18n(context, 'wherigo_header_completion_full'), _WherigoCartridgeGWC.CompletionCode]
             : null,
         [
           i18n(context, 'wherigo_header_cartridgename'),

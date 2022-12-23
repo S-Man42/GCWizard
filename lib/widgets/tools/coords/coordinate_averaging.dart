@@ -156,7 +156,7 @@ class CoordinateAveragingState extends State<CoordinateAveraging> {
     });
   }
 
-  /**
+  /*
    * Ported from:
    * https://github.com/davidvavra/GPS-Averaging/blob/master/app/src/main/java/org/destil/gpsaveraging/measure/Measurements.java
    * *

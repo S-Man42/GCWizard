@@ -78,12 +78,12 @@ class NumeralWordsListsState extends State<NumeralWordsLists> {
     return GCWDefaultOutput(
       child: GCWColumnedMultilineOutput(
           data: numeralWordsOverview.entries.map((entry) {
-                  if (int.tryParse(entry.value) != null) {
-                    return [entry.value, entry.key];
-                  };
-                }).toList(),
-          flexValues: [1, 3],
-          fontSize: defaultFontSize() + _valueFontsizeOffset
+              if (int.tryParse(entry.value) != null) {
+                return [entry.value, entry.key];
+              }
+            }).toList(),
+            flexValues: [1, 3],
+            fontSize: defaultFontSize() + _valueFontsizeOffset
       ),
       trailing: ZOOMABLE_LANGUAGE.contains(_currentLanguage)
           ? Row(

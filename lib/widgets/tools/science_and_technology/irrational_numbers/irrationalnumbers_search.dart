@@ -95,7 +95,7 @@ class IrrationalNumbersSearchState extends State<IrrationalNumbersSearch> {
                   child: GCWText(
                       align: Alignment.center,
                       text:
-                          '${_currentSolution + 1}/${_totalCurrentSolutions}' // + (_currentSolutions.length >= _MAX_SOLUTIONS ? ' *' : ''),
+                          '${_currentSolution + 1}/$_totalCurrentSolutions' // + (_currentSolutions.length >= _MAX_SOLUTIONS ? ' *' : ''),
                       ),
                 ),
                 GCWIconButton(

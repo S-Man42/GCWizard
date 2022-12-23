@@ -121,7 +121,6 @@ class FormatConverterState extends State<FormatConverter> {
 
         children.add([name, formatCoordOutput(_currentCoords, outputFormat, ellipsoid)]);
       } catch (e) {}
-      ;
     });
 
     return GCWDefaultOutput(child: GCWColumnedMultilineOutput( data: children));
