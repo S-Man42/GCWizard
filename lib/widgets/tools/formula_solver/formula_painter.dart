@@ -472,7 +472,10 @@ class FormulaPainter {
     var specialChars = _constantsRegEx.replaceAll(RegExp(r'[A-Za-z0-9\|_]'), '');
     //add special chars to allowed character (next to \w == ASCII chars)
     var wordChars = r'[\w' + specialChars + r']';
-    //this expression == \b; but \b does not allow non-ASCII chars, that's why it is manipulated here
+    // \b does not allow non-ASCII chars
+    //https://stackoverflow.com/a/61754724/3984221
+    // so, \b must be manipulated. Following expressing equals the internal representation of \b, which is now enhanced
+    // to use the specialChars as well
     //https://stackoverflow.com/a/12712840/3984221
     var wordBoundary = '(?:(?<!$wordChars)(?=$wordChars)|(?<=$wordChars)(?!$wordChars))';
     RegExp regex = RegExp('^$wordBoundary(' + _constantsRegEx + ')$wordBoundary');
