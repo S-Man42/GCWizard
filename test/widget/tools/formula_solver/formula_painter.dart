@@ -11,8 +11,6 @@ void main() {
     };
 
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'formula' : 'π', 'values': values, 'expectedOutput' : 'g'},
-
       {'formula' : null, 'values': null, 'expectedOutput' : null},
       {'formula' : null, 'values': <String, String>{}, 'expectedOutput' : null},
       {'formula' : null, 'expectedOutput' : null},
