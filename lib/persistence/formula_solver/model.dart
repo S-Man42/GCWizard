@@ -1,3 +1,5 @@
+import 'package:gc_wizard/utils/common_utils.dart';
+
 List<FormulaGroup> formulaGroups = [];
 
 class FormulaGroup {
@@ -16,8 +18,8 @@ class FormulaGroup {
       };
 
   FormulaGroup.fromJson(Map<String, dynamic> json)
-      : name = json['name'],
-        id = json['id'],
+      : name = jsonString(json['name']),
+        id = jsonInt(json['id']),
         formulas = List<Formula>.from(json['formulas'].map((formula) => Formula.fromJson(formula))),
         values = List<FormulaValue>.from(json['values'].map((value) => FormulaValue.fromJson(value)));
 
@@ -46,9 +48,9 @@ class Formula {
   }
 
   Formula.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        formula = json['formula'],
-        name = json['name'];
+      : id = jsonInt(json['id']),
+        formula = jsonString(json['formula']),
+        name = jsonString(json['name']);
 
   static Formula fromFormula(Formula formula) {
     var newFormula = Formula(formula.formula);
@@ -88,10 +90,10 @@ class FormulaValue {
   FormulaValue(this.key, this.value, {this.type});
 
   FormulaValue.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        key = json['key'],
-        value = json['value'],
-        type = _readType(json['type']);
+      : id = jsonInt(json['id']),
+        key = jsonString(json['key']),
+        value = jsonString(json['value']),
+        type = _readType(jsonString(json['type']));
 
   Map<String, dynamic> toMap() {
     var map = {

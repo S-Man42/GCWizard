@@ -18,8 +18,8 @@ class MapViewDAO {
       };
 
   MapViewDAO.fromJson(Map<String, dynamic> json)
-      : name = json['name'],
-        id = json['id'],
+      : name = jsonString(json['name']),
+        id = jsonInt(json['id']),
         points = List<MapPointDAO>.from(json['points'].map((point) => MapPointDAO.fromJson(point))),
         polylines = List<MapPolylineDAO>.from(json['polylines'].map((polyline) => MapPolylineDAO.fromJson(polyline)));
 
@@ -58,27 +58,20 @@ class MapPointDAO {
       };
 
   MapPointDAO.fromJson(Map<String, dynamic> json)
-      : uuid = json['uuid'],
-        name = json['name'],
-        latitude = _jsonDouble(json['latitude']),
-        longitude = _jsonDouble(json['longitude']),
-        coordinateFormat = json['coordinateFormat'],
-        isVisible = json['isVisible'] ?? true,
-        color = json['color'],
-        radius = _jsonDouble(json['radius']),
-        circleColorSameAsColor = json['circleColorSameAsColor'],
-        circleColor = json['circleColor'];
+      : uuid = jsonString(json['uuid']),
+        name = jsonString(json['name']),
+        latitude = jsonDouble(json['latitude']),
+        longitude = jsonDouble(json['longitude']),
+        coordinateFormat = jsonString(json['coordinateFormat']),
+        isVisible = jsonBool(json['isVisible']) ?? true,
+        color = jsonString(json['color']),
+        radius = jsonDouble(json['radius']),
+        circleColorSameAsColor = jsonBool(json['circleColorSameAsColor']),
+        circleColor = jsonString(json['circleColor']);
 
   @override
   String toString() {
     return toMap().toString();
-  }
-
-  static double _jsonDouble(dynamic value) {
-    if (value is int)
-      return value * 1.0;
-    else
-      return value;
   }
 }
 
@@ -92,9 +85,9 @@ class MapPolylineDAO {
   Map<String, dynamic> toMap() => {'uuid': uuid, 'pointUUIDs': pointUUIDs, 'color': color};
 
   MapPolylineDAO.fromJson(Map<String, dynamic> json)
-      : uuid = json['uuid'],
-        pointUUIDs = List<String>.from(json['pointUUIDs']),
-        color = json['color'];
+      : uuid = jsonString(json['uuid']),
+        pointUUIDs = List<String>.from(jsonStringList(json['pointUUIDs'])),
+        color = jsonString(json['color']);
 
   @override
   String toString() {
