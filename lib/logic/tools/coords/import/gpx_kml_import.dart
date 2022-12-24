@@ -20,11 +20,11 @@ Future<MapViewDAO> importCoordinatesFile(GCWFile file) async {
 
   switch (type) {
     case FileType.GPX:
-      var xml = String.fromCharCodes(file.bytes);
+      var xml = convertBytesToString(file.bytes);
       return parseCoordinatesFile(xml);
       break;
     case FileType.KML:
-      var xml = String.fromCharCodes(file.bytes);
+      var xml = convertBytesToString(file.bytes);
       return parseCoordinatesFile(xml, kmlFormat: true);
       break;
     case FileType.KMZ:
@@ -34,7 +34,7 @@ Future<MapViewDAO> importCoordinatesFile(GCWFile file) async {
       if (archive.files.isNotEmpty) {
         var file = archive.first;
         file.decompress();
-        var xml = String.fromCharCodes(file.content);
+        var xml = convertBytesToString(file.content);
         return parseCoordinatesFile(xml, kmlFormat: true);
       }
       break;

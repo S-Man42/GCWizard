@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
@@ -404,35 +405,7 @@ Future<Uint8List> saveByteDataToFile(BuildContext context, Uint8List data, Strin
 }
 
 Future<File> saveStringToFile(BuildContext context, String data, String fileName, {String subDirectory}) async {
-  File fileX;
-
-  if (kIsWeb) {
-    var blob = html.Blob([data], 'text/plain', 'native');
-    html.AnchorElement(
-      href: html.Url.createObjectUrl(blob),
-    )
-      ..setAttribute("download", fileName)
-      ..click();
-
-    fileX = File(data);
-  } else {
-    var storagePermission = await checkStoragePermission();
-    if (!storagePermission) {
-      showToast(i18n(context, 'common_exportfile_nowritepermission'));
-      return null;
-    }
-
-    fileName = _limitFileNameLength(fileName);
-    final fileInfo = await FilePickerWritable().openFileForCreate(
-      fileName: fileName,
-      writer: (file) async {
-        await file.writeAsString(data);
-        fileX = file;
-      },
-    );
-    if (fileInfo == null) return null;
-  }
-  return fileX;
+ saveByteDataToFile(context, convertStringToBytes(data), fileName);
 }
 
 String _limitFileNameLength(String fileName) {
@@ -447,9 +420,14 @@ Future<Uint8List> readByteDataFromFile(String fileName) async {
   return fileIn.readAsBytes();
 }
 
-Future<String> readStringFromFile(String fileName) async {
-  var fileIn = File(fileName);
-  return fileIn.readAsString();
+Uint8List convertStringToBytes(String text) {
+  if (text == null) return null;
+  return utf8.encode(text);
+}
+
+String convertBytesToString(Uint8List data) {
+  if (data = null) return null;
+  return utf8.decode(data);
 }
 
 bool isImage(Uint8List blobBytes) {
