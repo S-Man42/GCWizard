@@ -426,7 +426,7 @@ Uint8List convertStringToBytes(String text) {
 }
 
 String convertBytesToString(Uint8List data) {
-  if (data = null) return null;
+  if (data == null) return null;
   return utf8.decode(data);
 }
 
