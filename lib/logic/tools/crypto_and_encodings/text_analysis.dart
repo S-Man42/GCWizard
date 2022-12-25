@@ -3,7 +3,7 @@ import 'package:gc_wizard/utils/common_utils.dart';
 
 final String _WORD_SEPARATORS = r'[^A-Za-z0-9\-ß\u1e9e]';
 
-class ControlCharacter{
+class ControlCharacter {
   final int asciiValue;
   final String unicode;
   final String name;
@@ -15,13 +15,17 @@ class ControlCharacter{
 }
 
 final Map<String, ControlCharacter> WHITESPACE_CHARACTERS = {
-  '\u0009': ControlCharacter(9, 'U+0009', 'textanalysis_whitespace_charactertabulation', 'TAB/HT', '\\t', ['\u21e5',  '\u21b9',  '\u2409']),
-  '\u000A': ControlCharacter(10, 'U+000A', 'textanalysis_whitespace_linefeed', 'LF', '\\n', ['\u21B5', '\u23CE', '\u00B6', '\u240A',  '\u2424']),
+  '\u0009': ControlCharacter(
+      9, 'U+0009', 'textanalysis_whitespace_charactertabulation', 'TAB/HT', '\\t', ['\u21e5', '\u21b9', '\u2409']),
+  '\u000A': ControlCharacter(10, 'U+000A', 'textanalysis_whitespace_linefeed', 'LF', '\\n',
+      ['\u21B5', '\u23CE', '\u00B6', '\u240A', '\u2424']),
   '\u000B': ControlCharacter(11, 'U+000B', 'textanalysis_whitespace_linetabulation', 'VT', '\\v', ['\u240B']),
   '\u000C': ControlCharacter(12, 'U+000C', 'textanalysis_whitespace_formfeed', 'FF', '\\f', ['\u21A1', '\u240C']),
-  '\u000D': ControlCharacter(13, 'U+000D', 'textanalysis_whitespace_carriagereturn', 'CR', '\\r', ['\u00B6', '\u21B5', '\u23CE', '\u240D']),
+  '\u000D': ControlCharacter(
+      13, 'U+000D', 'textanalysis_whitespace_carriagereturn', 'CR', '\\r', ['\u00B6', '\u21B5', '\u23CE', '\u240D']),
   '\u0020': ControlCharacter(32, 'U+0020', 'textanalysis_whitespace_space', 'SP', null, ['\u2423', '\u2420']),
-  '\u0085': ControlCharacter(133, 'U+0085', 'textanalysis_whitespace_nextline', 'NEL', null, ['\u21B5', '\u23CE', '\u2424']),
+  '\u0085':
+      ControlCharacter(133, 'U+0085', 'textanalysis_whitespace_nextline', 'NEL', null, ['\u21B5', '\u23CE', '\u2424']),
 };
 
 final Map<String, ControlCharacter> CONTROL_CHARACTERS = {
@@ -34,7 +38,6 @@ final Map<String, ControlCharacter> CONTROL_CHARACTERS = {
   '\u0006': ControlCharacter(6, 'U+0006', 'textanalysis_control_acknowledge', 'ACK', null, ['\u2406']),
   '\u0007': ControlCharacter(7, 'U+0007', 'textanalysis_control_bell', 'BEL', '\\a', ['\u237E', '\u2407']),
   '\u0008': ControlCharacter(8, 'U+0008', 'textanalysis_control_backspace', 'BS', null, ['\u232B', '\u2408']),
-
   '\u000E': ControlCharacter(14, 'U+000E', 'textanalysis_control_shiftout', 'SO', null, ['\u240E']),
   '\u000F': ControlCharacter(15, 'U+000F', 'textanalysis_control_shiftin', 'SI', null, ['\u240F']),
   '\u0010': ControlCharacter(16, 'U+0010', 'textanalysis_control_datalinkescape', 'DEL', null, ['\u2410']),
@@ -53,7 +56,6 @@ final Map<String, ControlCharacter> CONTROL_CHARACTERS = {
   '\u001D': ControlCharacter(29, 'U+001D', 'textanalysis_control_groupseparator', 'GS', null, ['\u241D']),
   '\u001E': ControlCharacter(30, 'U+001E', 'textanalysis_control_recordseparator', 'RS', null, ['\u241E']),
   '\u001F': ControlCharacter(31, 'U+001F', 'textanalysis_control_unitseparator', 'US', null, ['\u241F']),
-
   '\u007F': ControlCharacter(127, 'U+007F', 'textanalysis_control_delete', 'DEL', null, ['\u232B', '\u2408']),
 };
 
@@ -68,14 +70,13 @@ class TextAnalysisCharacterCounts {
 }
 
 int countWords(String text) {
-  if (text == null || text.isEmpty)
-    return 0;
+  if (text == null || text.isEmpty) return 0;
 
   return removeDiacritics(text)
       .split(RegExp(_WORD_SEPARATORS))
       .where((word) => word != null && word.isNotEmpty)
       .toList()
-      .length;      
+      .length;
 }
 
 Map<String, int> _addOrIncreaseCount(Map<String, int> map, String character) {
@@ -92,11 +93,10 @@ Map<String, int> _analyzeLetters(String text, bool caseSensitive) {
   if (!caseSensitive) {
     text = text.toUpperCase().replaceAll('ß', '\u1e9e');
   }
-  
+
   var letters = Map<String, int>();
   text.split('').forEach((character) {
-    if (!isOnlyLetters(character))
-      return;
+    if (!isOnlyLetters(character)) return;
 
     _addOrIncreaseCount(letters, character);
   });
@@ -118,8 +118,7 @@ Map<String, int> _analyzeNumbers(String text) {
 Map<String, int> _analyzeWhitespaces(String text) {
   var whiteSpaces = Map<String, int>();
   text.split('').forEach((character) {
-    if (WHITESPACE_CHARACTERS.containsKey(character))
-      _addOrIncreaseCount(whiteSpaces, character);
+    if (WHITESPACE_CHARACTERS.containsKey(character)) _addOrIncreaseCount(whiteSpaces, character);
   });
 
   return whiteSpaces;
@@ -134,25 +133,21 @@ Map<String, int> _analyzeControlChars(String text, {bool includingWhitespaceChar
   }
 
   text.split('').forEach((character) {
-    if (characters.containsKey(character))
-      _addOrIncreaseCount(controls, character);
+    if (characters.containsKey(character)) _addOrIncreaseCount(controls, character);
   });
 
   return controls;
 }
 
 Map<String, int> _analyzeSpecialChars(String text) {
-  text = removeAccents(text)
-      .toUpperCase()
-      .replaceAll(RegExp(r'[A-Z0-9ß\u1e9e]'), '');
+  text = removeAccents(text).toUpperCase().replaceAll(RegExp(r'[A-Z0-9ß\u1e9e]'), '');
 
   var controlsAndWhiteSpaces = WHITESPACE_CHARACTERS.keys.toList();
   controlsAndWhiteSpaces.addAll(CONTROL_CHARACTERS.keys.toList());
 
   var specialChars = Map<String, int>();
   text.split('').forEach((character) {
-    if (controlsAndWhiteSpaces.contains(character))
-      return;
+    if (controlsAndWhiteSpaces.contains(character)) return;
 
     _addOrIncreaseCount(specialChars, character);
   });
@@ -161,11 +156,10 @@ Map<String, int> _analyzeSpecialChars(String text) {
 }
 
 TextAnalysisCharacterCounts analyzeText(String text, {bool caseSensitive: true}) {
-  if (text == null)
-    return null;
-  
+  if (text == null) return null;
+
   var out = TextAnalysisCharacterCounts();
-  
+
   out.letters = _analyzeLetters(text, caseSensitive);
   out.numbers = _analyzeNumbers(text);
   out.specialChars = _analyzeSpecialChars(text);

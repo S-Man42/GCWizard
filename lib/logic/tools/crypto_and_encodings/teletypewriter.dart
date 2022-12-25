@@ -2160,8 +2160,7 @@ String decodeTeletypewriter_IA5(List<int> values) {
   String out = '';
 
   values.forEach((value) {
-    if (value < 128)
-      out = out + String.fromCharCode(value);
+    if (value < 128) out = out + String.fromCharCode(value);
   });
 
   return out;
@@ -2172,8 +2171,7 @@ String decodeTeletypewriter_ZC1(List<int> values) {
 
   String out = '';
   values.forEach((value) {
-    if (ZC1ToAZ[value] != null)
-      out = out + ZC1ToAZ[value];
+    if (ZC1ToAZ[value] != null) out = out + ZC1ToAZ[value];
   });
 
   return out;

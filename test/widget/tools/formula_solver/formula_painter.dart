@@ -61,6 +61,8 @@ void main() {
       {'formula' : 'pi', 'values': values, 'expectedOutput' : 'gg'},
       {'formula' : 'pi * A', 'values': values, 'expectedOutput' : 'gggbbr'},
       {'formula' : 'E * PI', 'values': values, 'expectedOutput' : 'rrbbgg'},
+      {'formula' : 'π', 'values': values, 'expectedOutput' : 'g'},
+      {'formula' : 'E * π', 'values': values, 'expectedOutput' : 'rrbbg'},
       {'formula' : 'E [PI]', 'values': values, 'expectedOutput' : 'ttbggb'},
       {'formula' : '[A*B*2].[C+d+D];', 'values': values, 'expectedOutput' : 'brbrbgbtbrbrbrbt'},
       {'formula' : 'N 52 [QR].[S+T*U*2] E 12 [V*W].[XY + Z]', 'values': values, 'expectedOutput' : 'tttttbrrbtbrbrbrbgbttttttbrbrbtbrrrbbrb'},
@@ -107,6 +109,25 @@ void main() {
       {'formula' : 'max(1,2,3,4)', 'expectedOutput' : 'bbbbgbgbgbgb'},
       {'formula' : 'cs(33)', 'expectedOutput' : 'bbbggb'},
       {'formula' : 'cs(33 , 444,  55)', 'expectedOutput' : 'bbbgggbggggbggggb'},
+      {'formula' : 'cs(A)', 'values': <String, String>{}, 'expectedOutput' : 'bbbRb'},
+      {'formula' : 'cs(A)', 'values': {'A': null}, 'expectedOutput' : 'bbbRb'},
+      {'formula' : 'cs(A)', 'values': {'A': ''}, 'expectedOutput' : 'bbbRb'},
+      {'formula' : 'cs(A)', 'values': {'A': '1'}, 'expectedOutput' : 'bbbrb'},
+      {'formula' : 'cs(A)', 'values': {'A': 'X'}, 'expectedOutput' : 'bbbRb'}, // no number in number function
+      {'formula' : 'cs(AB)', 'values': {'A': '1'}, 'expectedOutput' : 'bbbrRb'},
+      {'formula' : 'cs(AB)', 'values': {'A': '1', 'B': null}, 'expectedOutput' : 'bbbrRb'},
+      {'formula' : 'cs(AB)', 'values': {'A': '1', 'B': ''}, 'expectedOutput' : 'bbbrRb'},
+      {'formula' : 'cs(AB)', 'values': {'A': '1', 'B': '2'}, 'expectedOutput' : 'bbbrrb'},
+      {'formula' : 'cs(AB)', 'values': {'A': '1', 'B': 'Y'}, 'expectedOutput' : 'bbbrRb'},
+      {'formula' : 'csi(AB)', 'values': {'A': '1'}, 'expectedOutput' : 'bbbbrRb'},
+      {'formula' : 'csi(AB)', 'values': {'A': '1', 'B': null}, 'expectedOutput' : 'bbbbrRb'},
+      {'formula' : 'csi(AB)', 'values': {'A': '1', 'B': ''}, 'expectedOutput' : 'bbbbrRb'},
+      {'formula' : 'csi(AB)', 'values': {'A': '1', 'B': '2'}, 'expectedOutput' : 'bbbbrrb'},
+      {'formula' : 'csi(AB)', 'values': {'A': '1', 'B': 'Y'}, 'expectedOutput' : 'bbbbrRb'},
+
+
+      {'formula' : 'min(A)', 'values': {'A': 'X'}, 'expectedOutput' : 'bbbbRb'}, // no number in number function
+      {'formula' : 'max(A)', 'values': {'A': 'X'}, 'expectedOutput' : 'bbbbRb'}, // no number in number function
 
       {'formula' : 'bww(c)', 'values': {'C':'1'}, 'expectedOutput' : 'bbbbrb'},
       {'formula' : 'bww(c)', 'expectedOutput' : 'bbbbgb'},
@@ -118,6 +139,16 @@ void main() {
       {'formula' : 'bww(xcz, abc)', 'values': {'C':'1'}, 'expectedOutput' : 'bbbbgrgggggrb'},
       {'formula' : 'bww(223)', 'values': {'C':'1'}, 'expectedOutput' : 'bbbbgggb'},
       {'formula' : 'bww(223)', 'expectedOutput' : 'bbbbgggb'},
+      {'formula' : 'bww(A)', 'values': <String, String>{}, 'expectedOutput' : 'bbbbgb'},  // no set variable makes any text inside a text function to pure text input (= green)
+      {'formula' : 'bww(A)', 'values': {'A': null}, 'expectedOutput' : 'bbbbRb'},
+      {'formula' : 'bww(A)', 'values': {'A': ''}, 'expectedOutput' : 'bbbbRb'},
+      {'formula' : 'bww(A)', 'values': {'A': '1'}, 'expectedOutput' : 'bbbbrb'},
+      {'formula' : 'bww(A)', 'values': {'A': 'X'}, 'expectedOutput' : 'bbbbrb'},
+      {'formula' : 'bww(AB)', 'values': {'A': '1'}, 'expectedOutput' : 'bbbbrgb'},  // no set variable makes any text inside a text function to pure text input (= green)
+      {'formula' : 'bww(AB)', 'values': {'A': '1', 'B': null}, 'expectedOutput' : 'bbbbrRb'},
+      {'formula' : 'bww(AB)', 'values': {'A': '1', 'B': ''}, 'expectedOutput' : 'bbbbrRb'},
+      {'formula' : 'bww(AB)', 'values': {'A': '1', 'B': '2'}, 'expectedOutput' : 'bbbbrrb'},
+      {'formula' : 'bww(AB)', 'values': {'A': '1', 'B': 'Y'}, 'expectedOutput' : 'bbbbrrb'},
       {'formula' : 'av(c)', 'values': {'C':'1'}, 'expectedOutput' : 'bbbrb'},
       {'formula' : 'av(c)', 'expectedOutput' : 'bbbgb'},
       {'formula' : 'av(xyz)', 'expectedOutput' : 'bbbgggb'},
@@ -270,6 +301,15 @@ void main() {
       {'formula' : 'csi(log(bww(A),2), log(2,bww(A)), log(bww(A)))', 'expectedOutput' : 'bbbbbbbbbbbbgbbgbbbbbbbgbbbbbgbbbbbbbbRRRRRRbb'},
       {'formula' : 'log(2, 2, round(12, 3))', 'expectedOutput' : 'bbbbgbggBBBBBBBBGGBGGBb'},
       {'formula' : 'N [log(2,bww(ABC))!]° [log(cs(23,23), csi(123,1,2,3))] E [csi(log(bww(A), 2))]°', 'expectedOutput' : 'ttbbbbbgbbbbbgggbbbbttbbbbbbbbggbggbbbbbbbgggbgbgbgbbbtttbbbbbbbbbbbbbgbbggbbbt'},
+
+      //empty variables are always hint for forgotten values, so always R
+      {'formula' : 'A', 'values': <String, String>{}, 'expectedOutput' : 'R'},
+      {'formula' : 'A', 'values': {'A': null}, 'expectedOutput' : 'R'},
+      {'formula' : 'A', 'values': {'A': ''}, 'expectedOutput' : 'R'},
+      {'formula' : 'A', 'values': {'A': '1'}, 'expectedOutput' : 'r'},
+
+
+
     ];
 
     _inputsToExpected.forEach((elem) {

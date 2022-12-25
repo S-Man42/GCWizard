@@ -54,33 +54,28 @@ class GuitarStringsState extends State<GuitarStrings> {
             });
           },
         ),
-        _currentMode == GCWSwitchPosition.left
-            ? _buildEncryption()
-            : _buildDecryption()
+        _currentMode == GCWSwitchPosition.left ? _buildEncryption() : _buildDecryption()
       ],
     );
   }
 
   _buildEncryption() {
-    return Column(
-      children: [
-        GCWTextField(
-          controller: _encryptionController,
-          onChanged: (value) {
-            setState(() {
-              _currentEncryptionText = value;
-            });
-          },
-        ),
-        _buildEncryptionOutput()
-      ]
-    );
+    return Column(children: [
+      GCWTextField(
+        controller: _encryptionController,
+        onChanged: (value) {
+          setState(() {
+            _currentEncryptionText = value;
+          });
+        },
+      ),
+      _buildEncryptionOutput()
+    ]);
   }
 
   _buildEncryptionOutput() {
     var _tabs = textToGuitarTabs(_currentEncryptionText);
-    if (_tabs == null || _tabs.isEmpty)
-      return Container();
+    if (_tabs == null || _tabs.isEmpty) return Container();
 
     return _buildASCIITabs(_tabs, i18n(context, 'common_output'));
   }
@@ -98,14 +93,20 @@ class GuitarStringsState extends State<GuitarStrings> {
         GCWDropDownSpinner(
           title: i18n(context, 'guitarstrings_string'),
           index: _currentString,
-          items: [0,1,2,3,4,5].map((stringName) {
+          items: [0, 1, 2, 3, 4, 5].map((stringName) {
             switch (stringName) {
-              case 0: return '1: e\' (E4)';
-              case 1: return '2: ${_bOrH().toLowerCase()} (${_bOrH().toUpperCase()}3)';
-              case 2: return '3: g (G3)';
-              case 3: return '4: d (D3)';
-              case 4: return '5: A (A2)';
-              case 5: return '6: E (E2)';
+              case 0:
+                return '1: e\' (E4)';
+              case 1:
+                return '2: ${_bOrH().toLowerCase()} (${_bOrH().toUpperCase()}3)';
+              case 2:
+                return '3: g (G3)';
+              case 3:
+                return '4: d (D3)';
+              case 4:
+                return '5: A (A2)';
+              case 5:
+                return '6: E (E2)';
             }
           }).toList(),
           onChanged: (value) {
@@ -152,7 +153,10 @@ class GuitarStringsState extends State<GuitarStrings> {
             },
           )
         ]),
-        _buildASCIITabs(tabs, i18n(context, 'guitarstrings_tabs'),),
+        _buildASCIITabs(
+          tabs,
+          i18n(context, 'guitarstrings_tabs'),
+        ),
         GCWDefaultOutput(
           child: _buildDecryptionOutput(),
         )
@@ -191,34 +195,31 @@ class GuitarStringsState extends State<GuitarStrings> {
           out[outItem] += '---';
         }
       }
-
     });
 
     var outputText = out.values.join('\n');
 
     return GCWOutput(
-      title: title,
-      child: Row(
-        children: [
-          Expanded(
-            child: AutoSizeText(
+        title: title,
+        child: Row(
+          children: [
+            Expanded(
+                child: AutoSizeText(
               outputText,
               minFontSize: 5,
               style: gcwMonotypeTextStyle(),
               maxLines: 6,
-            )
-          ),
-
-
-          outputText != null && outputText.length > 0 ? GCWIconButton(
-            size: IconButtonSize.SMALL,
-            icon: Icons.content_copy,
-            onPressed: () {
-              insertIntoGCWClipboard(context, outputText);
-            },
-          ) : Container()
-        ],
-      )
-    );
+            )),
+            outputText != null && outputText.length > 0
+                ? GCWIconButton(
+                    size: IconButtonSize.SMALL,
+                    icon: Icons.content_copy,
+                    onPressed: () {
+                      insertIntoGCWClipboard(context, outputText);
+                    },
+                  )
+                : Container()
+          ],
+        ));
   }
 }

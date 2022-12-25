@@ -31,6 +31,7 @@ enum IceCodeSystem {
   WMO,
   SIGRID,
 }
+
 Map<IceCodeSystem, String> ICECODE_SYSTEM = {
   IceCodeSystem.EU: 'icecodes_system_eu',
   IceCodeSystem.BALTIC: 'icecodes_system_baltic',
@@ -53,6 +54,7 @@ enum IceCodeSubSystem {
   K,
   SIGRID
 }
+
 Map<IceCodeSubSystem, String> ICECODE_SUBSYSTEM_EU = {
   IceCodeSubSystem.CONDITION: 'icecodes_system_eu_condition',
   IceCodeSubSystem.ACCESSIBILITY: 'icecodes_system_eu_accessibility',

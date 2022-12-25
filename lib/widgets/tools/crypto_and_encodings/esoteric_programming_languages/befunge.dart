@@ -5,14 +5,11 @@ import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/gcw_code_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_expandable.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
-import 'package:code_text_field/code_text_field.dart';
-import 'package:flutter_highlight/themes/atom-one-dark.dart';
-import 'package:flutter_highlight/themes/atom-one-light.dart';
-import 'package:prefs/prefs.dart';
 
 class Befunge extends StatefulWidget {
   @override
@@ -38,10 +35,7 @@ class BefungeState extends State<Befunge> {
     _befungeGenerateController = TextEditingController(text: _currentGenerate);
     _befungeInterpretController = TextEditingController(text: _currentInterpret);
     _inputController = TextEditingController(text: _currentInput);
-    _codeGenerateController = CodeController(
-      text: _sourceCodeGenerated,
-      theme: Prefs.getString('theme_color') == ThemeType.DARK.toString() ? atomOneDarkTheme : atomOneLightTheme,
-    );
+    _codeGenerateController = TextEditingController(text: _sourceCodeGenerated);
   }
 
   @override
@@ -145,7 +139,7 @@ class BefungeState extends State<Befunge> {
       );
     } else
       return GCWDefaultOutput(
-        child: CodeField(
+        child: GCWCodeTextField(
           controller: _codeGenerateController,
           textStyle: gcwMonotypeTextStyle(),
         ),

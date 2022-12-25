@@ -89,11 +89,7 @@ class HexCode {
 }
 
 double _rgbDistance(RGB a, RGB b) {
-  return sqrt(
-      pow(a.red - b.red, 2)
-          + pow(a.green - b.green, 2)
-          + pow(a.blue - b.blue, 2)
-  );
+  return sqrt(pow(a.red - b.red, 2) + pow(a.green - b.green, 2) + pow(a.blue - b.blue, 2));
 }
 
 List<RGB> findNearestRGBs(RGB fromRGB, List<RGB> toRGBs, {int distance: 32}) {
@@ -102,8 +98,7 @@ List<RGB> findNearestRGBs(RGB fromRGB, List<RGB> toRGBs, {int distance: 32}) {
   toRGBs.forEach((toRGB) {
     var actualDistance = _rgbDistance(fromRGB, toRGB);
 
-    if (actualDistance <= distance)
-      out.add(toRGB);
+    if (actualDistance <= distance) out.add(toRGB);
   });
 
   out.sort((a, b) {

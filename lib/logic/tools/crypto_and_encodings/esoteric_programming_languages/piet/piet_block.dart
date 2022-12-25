@@ -1,4 +1,4 @@
-﻿import 'dart:math';
+import 'dart:math';
 
 class PietBlock {
   int _color = 0;
@@ -23,20 +23,27 @@ class PietBlock {
     return _pixels.contains(point);
   }
 
-  Point get northLeft => _pixels.reduce((current, next) => ((current.y < next.y) || ((current.y == next.y) && current.x < next.x)) ? current : next);
+  Point get northLeft => _pixels.reduce(
+      (current, next) => ((current.y < next.y) || ((current.y == next.y) && current.x < next.x)) ? current : next);
 
-  Point get northRight  => _pixels.reduce((current, next) => ((current.y < next.y) || ((current.y == next.y) && current.x > next.x)) ? current : next);
+  Point get northRight => _pixels.reduce(
+      (current, next) => ((current.y < next.y) || ((current.y == next.y) && current.x > next.x)) ? current : next);
 
-  Point get eastLeft  => _pixels.reduce((current, next) => ((current.x > next.x) || ((current.x == next.x) && current.y < next.y)) ? current : next);
+  Point get eastLeft => _pixels.reduce(
+      (current, next) => ((current.x > next.x) || ((current.x == next.x) && current.y < next.y)) ? current : next);
 
-  Point get eastRight => _pixels.reduce((current, next) => ((current.x > next.x) || ((current.x == next.x) && current.y > next.y)) ? current : next);
+  Point get eastRight => _pixels.reduce(
+      (current, next) => ((current.x > next.x) || ((current.x == next.x) && current.y > next.y)) ? current : next);
 
-  Point get southLeft => _pixels.reduce((current, next) => ((current.y > next.y) || ((current.y == next.y) && current.x > next.x)) ? current : next);
+  Point get southLeft => _pixels.reduce(
+      (current, next) => ((current.y > next.y) || ((current.y == next.y) && current.x > next.x)) ? current : next);
 
-  Point get southRight => _pixels.reduce((current, next) => ((current.y > next.y) || ((current.y == next.y) && current.x < next.x)) ? current : next);
+  Point get southRight => _pixels.reduce(
+      (current, next) => ((current.y > next.y) || ((current.y == next.y) && current.x < next.x)) ? current : next);
 
-  Point get westLeft  => _pixels.reduce((current, next) => ((current.x < next.x) || ((current.x == next.x) && current.y > next.y)) ? current : next);
+  Point get westLeft => _pixels.reduce(
+      (current, next) => ((current.x < next.x) || ((current.x == next.x) && current.y > next.y)) ? current : next);
 
-  Point get westRight => _pixels.reduce((current, next) => ((current.x < next.x) || ((current.x == next.x) && current.y < next.y)) ? current : next);
+  Point get westRight => _pixels.reduce(
+      (current, next) => ((current.x < next.x) || ((current.x == next.x) && current.y < next.y)) ? current : next);
 }
-

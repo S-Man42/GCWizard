@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:dart_numerics/dart_numerics.dart';
+import 'package:gc_wizard/logic/common/math_utils.dart';
 import 'package:gc_wizard/logic/tools/coords/external_libs/net.sf.geographiclib/geo_math.dart';
 import 'package:gc_wizard/logic/tools/coords/external_libs/net.sf.geographiclib/math.dart';
 
@@ -83,7 +83,6 @@ import 'package:gc_wizard/logic/tools/coords/external_libs/net.sf.geographiclib/
  **********************************************************************/
 
 class LambertConformalConic {
-
   double _a, _f, _r, _fm, _e2, _e, _e2m;
   double _sign, _n, _nc, _t0nm1, _scale, _lat0, _k0;
   double _scbet0, _tchi0, _scchi0, _psi0, _nrho0;
@@ -101,8 +100,9 @@ class LambertConformalConic {
   // e * atanh(e * x) = log( ((1 + e*x)/(1 - e*x))^(e/2) ) if f >= 0
   // - sqrt(-e2) * atan( sqrt(-e2) * x)                    if f < 0
   double eatanhe(double x) {
-    return _f >= 0 ? _e * GeoMath.atanh(_e * x) : - _e * atan(_e * x);
+    return _f >= 0 ? _e * GeoMath.atanh(_e * x) : -_e * atan(_e * x);
   }
+
   // Divided differences
   // Definition: Df(x,y) = (f(x)-f(y))/(x-y)
   // See: W. M. Kahan and R. J. Fateman,
@@ -128,9 +128,7 @@ class LambertConformalConic {
   static double Dsn(double x, double y, double sx, double sy) {
     // sx = x/hyp(x)
     double t = x * y;
-    return t > 0
-        ? (x + y) * GeoMath.sq( (sx * sy)/t ) / (sx + sy)
-        : (x - y != 0 ? (sx - sy) / (x - y) : 1);
+    return t > 0 ? (x + y) * GeoMath.sq((sx * sy) / t) / (sx + sy) : (x - y != 0 ? (sx - sy) / (x - y) : 1);
   }
 
   // // Dlog1p(x,y) = log1p((x-y)/(1+y)/(x-y)
@@ -147,8 +145,8 @@ class LambertConformalConic {
 
   // Dexp(x,y) = exp((x+y)/2) * 2*sinh((x-y)/2)/(x-y)
   static double Dexp(double x, double y) {
-    double t = (x - y)/2;
-    return (t != 0 ? sinh(t)/t : 1.0) * exp((x + y)/2);
+    double t = (x - y) / 2;
+    return (t != 0 ? sinh(t) / t : 1.0) * exp((x + y) / 2);
   }
 
   // Dsinh(x,y) = 2*sinh((x-y)/2)/(x-y) * cosh((x+y)/2)
@@ -157,8 +155,8 @@ class LambertConformalConic {
   //   cosh((x+y)/2) = sqrt( (sinh(x)*sinh(y) + cosh(x)*cosh(y) + 1)/2 )
   static double Dsinh(double x, double y, double sx, double sy, double cx, double cy) {
     // sx = sinh(x), cx = cosh(x)
-    double t = (x  - y)/2;
-    return (t != 0 ? sinh(t)/t : 1.0) * sqrt((sx * sy + cx * cy + 1) /2);
+    double t = (x - y) / 2;
+    return (t != 0 ? sinh(t) / t : 1.0) * sqrt((sx * sy + cx * cy + 1) / 2);
   }
 
   // Dasinh(x,y) = asinh((x-y)*(x+y)/(x*sqrt(1+y^2)+y*sqrt(1+x^2)))/(x-y)
@@ -166,9 +164,7 @@ class LambertConformalConic {
   static double Dasinh(double x, double y, double hx, double hy) {
     // hx = hyp(x)
     double t = x - y;
-    return t != 0
-        ? GeoMath.asinh(x*y > 0 ? t * (x+y) / (x*hy + y*hx) : x*hy - y*hx) / t
-        : 1/hx;
+    return t != 0 ? GeoMath.asinh(x * y > 0 ? t * (x + y) / (x * hy + y * hx) : x * hy - y * hx) / t : 1 / hx;
   }
 
   // Deatanhe(x,y) = eatanhe((x-y)/(1-e^2*x*y))/(x-y)
@@ -196,30 +192,23 @@ class LambertConformalConic {
 
   LambertConformalConic(double a, double f, double stdlat1, double stdlat2, double k1) {
     _a = a;
-    _f = f <= 1 ? f : 1/f;
-    _r = 1/f;
+    _f = f <= 1 ? f : 1 / f;
+    _r = 1 / f;
     _fm = 1 - _f;
     _e2 = _f * (2 - _f);
     _e = sqrt(_e2.abs());
     _e2m = (1 - _e2);
 
-    if (!(GeoMath.isfinite(_a) && _a > 0))
-      throw Exception("Major radius is not positive");
-    if (!(GeoMath.isfinite(_f) && _f < 1))
-      throw Exception("Minor radius is not positive");
-    if (!(GeoMath.isfinite(k1) && k1 > 0))
-      throw Exception("Scale is not positive");
-    if (!(stdlat1.abs() <= 90))
-      throw Exception("Standard latitude 1 not in [-90, 90]");
-    if (!(stdlat2.abs() <= 90))
-      throw Exception("Standard latitude 2 not in [-90, 90]");
+    if (!(GeoMath.isfinite(_a) && _a > 0)) throw Exception("Major radius is not positive");
+    if (!(GeoMath.isfinite(_f) && _f < 1)) throw Exception("Minor radius is not positive");
+    if (!(GeoMath.isfinite(k1) && k1 > 0)) throw Exception("Scale is not positive");
+    if (!(stdlat1.abs() <= 90)) throw Exception("Standard latitude 1 not in [-90, 90]");
+    if (!(stdlat2.abs() <= 90)) throw Exception("Standard latitude 2 not in [-90, 90]");
 
-    double phi1 = stdlat1 * GeoMath.degree(),
-        phi2 = stdlat2 * GeoMath.degree();
+    double phi1 = stdlat1 * GeoMath.degree(), phi2 = stdlat2 * GeoMath.degree();
 
     _init(sin(phi1), stdlat1.abs() != 90 ? cos(phi1) : 0, sin(phi2), stdlat2.abs() != 90 ? cos(phi2) : 0, k1);
   }
-
 
   void _init(double sphi1, double cphi1, double sphi2, double cphi2, double k1) {
     double r;
@@ -232,12 +221,13 @@ class LambertConformalConic {
 
     bool polar = (cphi1 == 0);
 
-    cphi1 = max(epsx_, cphi1);   // Avoid singularities at poles
+    cphi1 = max(epsx_, cphi1); // Avoid singularities at poles
     cphi2 = max(epsx_, cphi2);
     // Determine hemisphere of tangent latitude
     _sign = sphi1 + sphi2 >= 0 ? 1 : -1;
     // Internally work with tangent latitude positive
-    sphi1 *= _sign; sphi2 *= _sign;
+    sphi1 *= _sign;
+    sphi2 *= _sign;
     if (sphi1 > sphi2) {
       // swap(sphi1, sphi2);
       var _sphi = sphi2;
@@ -248,7 +238,7 @@ class LambertConformalConic {
       cphi2 = cphi1;
       cphi1 = _cphi;
     }
-    double tphi1 = sphi1/cphi1, tphi2 = sphi2/cphi2, tphi0;
+    double tphi1 = sphi1 / cphi1, tphi2 = sphi2 / cphi2, tphi0;
     //
     // Snyder: 15-8: n = (log(m1) - log(m2))/(log(t1)-log(t2))
     //
@@ -267,24 +257,28 @@ class LambertConformalConic {
     // Then n = Db(tphi2, tphi1)/Dc(tphi2, tphi1)
     // In limit tphi2 -> tphi1, n -> sphi1
     //
-    double tbet1 = _fm * tphi1, scbet1 = hyp(tbet1),
-    tbet2 = _fm * tphi2, scbet2 = hyp(tbet2);
-    double scphi1 = 1/cphi1,
-    xi1 = eatanhe(sphi1), shxi1 = sinh(xi1), chxi1 = hyp(shxi1),
-    tchi1 = chxi1 * tphi1 - shxi1 * scphi1, scchi1 = hyp(tchi1),
-    scphi2 = 1/cphi2,
-    xi2 = eatanhe(sphi2), shxi2 = sinh(xi2), chxi2 = hyp(shxi2),
-    tchi2 = chxi2 * tphi2 - shxi2 * scphi2, scchi2 = hyp(tchi2),
-    psi1 = GeoMath.asinh(tchi1);
+    double tbet1 = _fm * tphi1, scbet1 = hyp(tbet1), tbet2 = _fm * tphi2, scbet2 = hyp(tbet2);
+    double scphi1 = 1 / cphi1,
+        xi1 = eatanhe(sphi1),
+        shxi1 = sinh(xi1),
+        chxi1 = hyp(shxi1),
+        tchi1 = chxi1 * tphi1 - shxi1 * scphi1,
+        scchi1 = hyp(tchi1),
+        scphi2 = 1 / cphi2,
+        xi2 = eatanhe(sphi2),
+        shxi2 = sinh(xi2),
+        chxi2 = hyp(shxi2),
+        tchi2 = chxi2 * tphi2 - shxi2 * scphi2,
+        scchi2 = hyp(tchi2),
+        psi1 = GeoMath.asinh(tchi1);
     if (tphi2 - tphi1 != 0) {
       // Db(tphi2, tphi1)
-      double num = Dlog1p(
-          GeoMath.sq(tbet2)/(1 + scbet2),
-          GeoMath.sq(tbet1)/(1 + scbet1)
-      ) * Dhyp(tbet2, tbet1, scbet2, scbet1) * _fm;
+      double num = Dlog1p(GeoMath.sq(tbet2) / (1 + scbet2), GeoMath.sq(tbet1) / (1 + scbet1)) *
+          Dhyp(tbet2, tbet1, scbet2, scbet1) *
+          _fm;
       // Dc(tphi2, tphi1)
-      double den =  Dasinh(tphi2, tphi1, scphi2, scphi1) - Deatanhe(sphi2, sphi1) * Dsn(tphi2, tphi1, sphi2, sphi1);
-      _n = num/den;
+      double den = Dasinh(tphi2, tphi1, scphi2, scphi1) - Deatanhe(sphi2, sphi1) * Dsn(tphi2, tphi1, sphi2, sphi1);
+      _n = num / den;
 
       if (_n < 0.25)
         _nc = sqrt((1 - _n) * (1 + _n));
@@ -307,26 +301,30 @@ class LambertConformalConic {
         //     - (tbet2 + tbet1)/(scbet2 + scbet1)
         double t;
         // s1 = (scbet1 - scchi1) * (scbet1 + scchi1)
-        double s1 = (tphi1 * (2 * shxi1 * chxi1 * scphi1 - _e2 * tphi1) - GeoMath.sq(shxi1) * (1 + 2 * GeoMath.sq(tphi1))),
-        s2 = (tphi2 * (2 * shxi2 * chxi2 * scphi2 - _e2 * tphi2) - GeoMath.sq(shxi2) * (1 + 2 * GeoMath.sq(tphi2))),
-        // t1 = scbet1 - tchi1
-        t1 = tchi1 < 0 ? scbet1 - tchi1 : (s1 + 1)/(scbet1 + tchi1),
-        t2 = tchi2 < 0 ? scbet2 - tchi2 : (s2 + 1)/(scbet2 + tchi2),
-        a2 = -(s2 / (scbet2 + scchi2) + t2) / (2 * scbet2),
-        a1 = -(s1 / (scbet1 + scchi1) + t1) / (2 * scbet1);
+        double s1 =
+                (tphi1 * (2 * shxi1 * chxi1 * scphi1 - _e2 * tphi1) - GeoMath.sq(shxi1) * (1 + 2 * GeoMath.sq(tphi1))),
+            s2 = (tphi2 * (2 * shxi2 * chxi2 * scphi2 - _e2 * tphi2) - GeoMath.sq(shxi2) * (1 + 2 * GeoMath.sq(tphi2))),
+            // t1 = scbet1 - tchi1
+            t1 = tchi1 < 0 ? scbet1 - tchi1 : (s1 + 1) / (scbet1 + tchi1),
+            t2 = tchi2 < 0 ? scbet2 - tchi2 : (s2 + 1) / (scbet2 + tchi2),
+            a2 = -(s2 / (scbet2 + scchi2) + t2) / (2 * scbet2),
+            a1 = -(s1 / (scbet1 + scchi1) + t1) / (2 * scbet1);
         t = Dlog1p(a2, a1) / den;
 
         // multiply by (tchi2 + scchi2 + tchi1 + scchi1)/(4*scbet1*scbet2) * fm
-        t *= ( ( (tchi2 >= 0 ? scchi2 + tchi2 : 1/(scchi2 - tchi2)) + (tchi1 >= 0 ? scchi1 + tchi1 : 1/(scchi1 - tchi1)) ) / (4 * scbet1 * scbet2) ) * _fm;
+        t *= (((tchi2 >= 0 ? scchi2 + tchi2 : 1 / (scchi2 - tchi2)) +
+                    (tchi1 >= 0 ? scchi1 + tchi1 : 1 / (scchi1 - tchi1))) /
+                (4 * scbet1 * scbet2)) *
+            _fm;
 
         // Rewrite
         // Q = (1 - (tbet2 + tbet1)/(scbet2 + scbet1)) -
         //     (1 - ((scbet2 + scbet1)/fm)/((scchi2 + scchi1)/D(tchi2, tchi1)))
         //   = tbm - tam
         // where
-        double tbm = ( ((tbet1 > 0 ? 1/(scbet1+tbet1) : scbet1 - tbet1) +
-        (tbet2 > 0 ? 1/(scbet2+tbet2) : scbet2 - tbet2)) /
-        (scbet1+scbet2) );
+        double tbm = (((tbet1 > 0 ? 1 / (scbet1 + tbet1) : scbet1 - tbet1) +
+                (tbet2 > 0 ? 1 / (scbet2 + tbet2) : scbet2 - tbet2)) /
+            (scbet1 + scbet2));
 
         // tam = (1 - ((scbet2+scbet1)/fm)/((scchi2+scchi1)/D(tchi2, tchi1)))
         //
@@ -336,11 +334,10 @@ class LambertConformalConic {
         // then
         //   tam = D(tchi2, tchi1) * (dchi - dbet) / (scchi1 + scchi2)
         double
-        // D(tchi2, tchi1)
-        dtchi = den / Dasinh(tchi2, tchi1, scchi2, scchi1),
-        // (scbet2 + scbet1)/fm - (scphi2 + scphi1)
-        dbet = (_e2/_fm) * ( 1 / (scbet2 + _fm * scphi2) +
-        1 / (scbet1 + _fm * scphi1) );
+            // D(tchi2, tchi1)
+            dtchi = den / Dasinh(tchi2, tchi1, scchi2, scchi1),
+            // (scbet2 + scbet1)/fm - (scphi2 + scphi1)
+            dbet = (_e2 / _fm) * (1 / (scbet2 + _fm * scphi2) + 1 / (scbet1 + _fm * scphi1));
 
         // dchi = (scchi2 + scchi1)/D(tchi2, tchi1) - (scphi2 + scphi1)
         // Let
@@ -354,28 +351,37 @@ class LambertConformalConic {
         // then
         // dchi = ((mu2 + mu1) - D(nu2, nu1) * (scphi2 +  scphi1)) /
         //         D(tchi2, tchi1)
-        double xiZ = eatanhe(1.0), shxiZ = sinh(xiZ), chxiZ = hyp(shxiZ),
-        // These are differences not divided differences
-        // dxiZ1 = xiZ - xi1; dshxiZ1 = shxiZ - shxi; dchxiZ1 = chxiZ - chxi
-        dxiZ1 = Deatanhe(1.0, sphi1)/(scphi1*(tphi1+scphi1)),
-        dxiZ2 = Deatanhe(1.0, sphi2)/(scphi2*(tphi2+scphi2)),
-        dshxiZ1 = Dsinh(xiZ, xi1, shxiZ, shxi1, chxiZ, chxi1) * dxiZ1,
-        dshxiZ2 = Dsinh(xiZ, xi2, shxiZ, shxi2, chxiZ, chxi2) * dxiZ2,
-        dchxiZ1 = Dhyp(shxiZ, shxi1, chxiZ, chxi1) * dshxiZ1,
-        dchxiZ2 = Dhyp(shxiZ, shxi2, chxiZ, chxi2) * dshxiZ2,
-        // mu1 + mu2
-        amu12 = (- scphi1 * dchxiZ1 + tphi1 * dshxiZ1 - scphi2 * dchxiZ2 + tphi2 * dshxiZ2),
-        // D(xi2, xi1)
-        dxi = Deatanhe(sphi1, sphi2) * Dsn(tphi2, tphi1, sphi2, sphi1),
-        // D(nu2, nu1)
-        dnu12 = ( (_f * 4 * scphi2 * dshxiZ2 > _f * scphi1 * dshxiZ1
-            // Use divided differences
-            ? (dshxiZ1 + dshxiZ2)/2 * Dhyp(tphi1, tphi2, scphi1, scphi2) - ( (scphi1 + scphi2)/2 * Dsinh(xi1, xi2, shxi1, shxi2, chxi1, chxi2) * dxi )
-            // Use ratio of differences
-            : (scphi2 * dshxiZ2 - scphi1 * dshxiZ1)/(tphi2 - tphi1)) + ( (tphi1 + tphi2)/2 * Dhyp(shxi1, shxi2, chxi1, chxi2) * Dsinh(xi1, xi2, shxi1, shxi2, chxi1, chxi2) * dxi ) - (dchxiZ1 + dchxiZ2)/2 ),
-        // dtchi * dchi
-        dchia = (amu12 - dnu12 * (scphi2 + scphi1)),
-        tam = (dchia - dtchi * dbet) / (scchi1 + scchi2);
+        double xiZ = eatanhe(1.0),
+            shxiZ = sinh(xiZ),
+            chxiZ = hyp(shxiZ),
+            // These are differences not divided differences
+            // dxiZ1 = xiZ - xi1; dshxiZ1 = shxiZ - shxi; dchxiZ1 = chxiZ - chxi
+            dxiZ1 = Deatanhe(1.0, sphi1) / (scphi1 * (tphi1 + scphi1)),
+            dxiZ2 = Deatanhe(1.0, sphi2) / (scphi2 * (tphi2 + scphi2)),
+            dshxiZ1 = Dsinh(xiZ, xi1, shxiZ, shxi1, chxiZ, chxi1) * dxiZ1,
+            dshxiZ2 = Dsinh(xiZ, xi2, shxiZ, shxi2, chxiZ, chxi2) * dxiZ2,
+            dchxiZ1 = Dhyp(shxiZ, shxi1, chxiZ, chxi1) * dshxiZ1,
+            dchxiZ2 = Dhyp(shxiZ, shxi2, chxiZ, chxi2) * dshxiZ2,
+            // mu1 + mu2
+            amu12 = (-scphi1 * dchxiZ1 + tphi1 * dshxiZ1 - scphi2 * dchxiZ2 + tphi2 * dshxiZ2),
+            // D(xi2, xi1)
+            dxi = Deatanhe(sphi1, sphi2) * Dsn(tphi2, tphi1, sphi2, sphi1),
+            // D(nu2, nu1)
+            dnu12 = ((_f * 4 * scphi2 * dshxiZ2 > _f * scphi1 * dshxiZ1
+                    // Use divided differences
+                    ? (dshxiZ1 + dshxiZ2) / 2 * Dhyp(tphi1, tphi2, scphi1, scphi2) -
+                        ((scphi1 + scphi2) / 2 * Dsinh(xi1, xi2, shxi1, shxi2, chxi1, chxi2) * dxi)
+                    // Use ratio of differences
+                    : (scphi2 * dshxiZ2 - scphi1 * dshxiZ1) / (tphi2 - tphi1)) +
+                ((tphi1 + tphi2) /
+                    2 *
+                    Dhyp(shxi1, shxi2, chxi1, chxi2) *
+                    Dsinh(xi1, xi2, shxi1, shxi2, chxi1, chxi2) *
+                    dxi) -
+                (dchxiZ1 + dchxiZ2) / 2),
+            // dtchi * dchi
+            dchia = (amu12 - dnu12 * (scphi2 + scphi1)),
+            tam = (dchia - dtchi * dbet) / (scchi1 + scchi2);
         t *= tbm - tam;
         _nc = sqrt(max(0.0, t) * (1 + _n));
       }
@@ -384,36 +390,38 @@ class LambertConformalConic {
       _n /= r;
       _nc /= r;
       tphi0 = _n / _nc;
-
     } else {
       tphi0 = tphi1;
-      _nc = 1/hyp(tphi0);
+      _nc = 1 / hyp(tphi0);
       _n = tphi0 * _nc;
-      if (polar)
-        _nc = 0;
+      if (polar) _nc = 0;
     }
 
     _scbet0 = hyp(_fm * tphi0);
     double shxi0 = sinh(eatanhe(_n));
-    _tchi0 = tphi0 * hyp(shxi0) - shxi0 * hyp(tphi0); _scchi0 = hyp(_tchi0);
+    _tchi0 = tphi0 * hyp(shxi0) - shxi0 * hyp(tphi0);
+    _scchi0 = hyp(_tchi0);
     _psi0 = GeoMath.asinh(_tchi0);
 
     _lat0 = atan(_sign * tphi0) / GeoMath.degree();
-    _t0nm1 = GeoMath.expm1(- _n * _psi0); // Snyder's t0^n - 1
+    _t0nm1 = GeoMath.expm1(-_n * _psi0); // Snyder's t0^n - 1
     // a * k1 * m1/t1^n = a * k1 * m2/t2^n = a * k1 * n * (Snyder's F)
     // = a * k1 / (scbet1 * exp(-n * psi1))
-    _scale = _a * k1 / scbet1 *
-    // exp(n * psi1) = exp(- (1 - n) * psi1) * exp(psi1)
-    // with (1-n) = nc^2/(1+n) and exp(-psi1) = scchi1 + tchi1
-      exp( - (GeoMath.sq(_nc)/(1 + _n)) * psi1 )
-      * (tchi1 >= 0 ? scchi1 + tchi1 : 1 / (scchi1 - tchi1));
+    _scale = _a *
+        k1 /
+        scbet1 *
+        // exp(n * psi1) = exp(- (1 - n) * psi1) * exp(psi1)
+        // with (1-n) = nc^2/(1+n) and exp(-psi1) = scchi1 + tchi1
+        exp(-(GeoMath.sq(_nc) / (1 + _n)) * psi1) *
+        (tchi1 >= 0 ? scchi1 + tchi1 : 1 / (scchi1 - tchi1));
     // Scale at phi0 = k0 = k1 * (scbet0*exp(-n*psi0))/(scbet1*exp(-n*psi1))
     //                    = k1 * scbet0/scbet1 * exp(n * (psi1 - psi0))
     // psi1 - psi0 = Dasinh(tchi1, tchi0) * (tchi1 - tchi0)
-    _k0 = k1 * (_scbet0/scbet1) * exp( - (GeoMath.sq(_nc)/(1 + _n)) *
-    Dasinh(tchi1, _tchi0, scchi1, _scchi0) * (tchi1 - _tchi0))
-    * (tchi1 >= 0 ? scchi1 + tchi1 : 1 / (scchi1 - tchi1)) /
-    (_scchi0 + _tchi0);
+    _k0 = k1 *
+        (_scbet0 / scbet1) *
+        exp(-(GeoMath.sq(_nc) / (1 + _n)) * Dasinh(tchi1, _tchi0, scchi1, _scchi0) * (tchi1 - _tchi0)) *
+        (tchi1 >= 0 ? scchi1 + tchi1 : 1 / (scchi1 - tchi1)) /
+        (_scchi0 + _tchi0);
     _nrho0 = polar ? 0 : _a * _k0 / _scbet0;
   }
 
@@ -457,21 +465,35 @@ class LambertConformalConic {
     // where nrho0 = n * rho0, drho = rho - rho0
     // and drho is evaluated with divided differences
     double lam = lon * GeoMath.degree(),
-    phi = lat * GeoMath.degree(),
-    sphi = sin(phi), cphi = lat.abs() != 90 ? cos(phi) : epsx_,
-    tphi = sphi/cphi, tbet = _fm * tphi, scbet = hyp(tbet),
-    scphi = 1/cphi, shxi = sinh(eatanhe(sphi)),
-    tchi = hyp(shxi) * tphi - shxi * scphi, scchi = hyp(tchi),
-    psi = GeoMath.asinh(tchi),
-    theta = _n * lam, stheta = sin(theta), ctheta = cos(theta),
-    dpsi = Dasinh(tchi, _tchi0, scchi, _scchi0) * (tchi - _tchi0),
-    drho = - _scale * (2 * _nc < 1 && dpsi != 0
-        ? (exp(GeoMath.sq(_nc)/(1 + _n) * psi ) * (tchi > 0 ? 1/(scchi + tchi) : (scchi - tchi)) - (_t0nm1 + 1))/(-_n)
-        : Dexp(-_n * psi, -_n * _psi0) * dpsi);
+        phi = lat * GeoMath.degree(),
+        sphi = sin(phi),
+        cphi = lat.abs() != 90 ? cos(phi) : epsx_,
+        tphi = sphi / cphi,
+        tbet = _fm * tphi,
+        scbet = hyp(tbet),
+        scphi = 1 / cphi,
+        shxi = sinh(eatanhe(sphi)),
+        tchi = hyp(shxi) * tphi - shxi * scphi,
+        scchi = hyp(tchi),
+        psi = GeoMath.asinh(tchi),
+        theta = _n * lam,
+        stheta = sin(theta),
+        ctheta = cos(theta),
+        dpsi = Dasinh(tchi, _tchi0, scchi, _scchi0) * (tchi - _tchi0),
+        drho = -_scale *
+            (2 * _nc < 1 && dpsi != 0
+                ? (exp(GeoMath.sq(_nc) / (1 + _n) * psi) * (tchi > 0 ? 1 / (scchi + tchi) : (scchi - tchi)) -
+                        (_t0nm1 + 1)) /
+                    (-_n)
+                : Dexp(-_n * psi, -_n * _psi0) * dpsi);
 
     var x = (_nrho0 + _n * drho) * (_n != 0 ? stheta / _n : lam);
-    var y = _nrho0 * (_n != 0 ? (ctheta < 0 ? 1 - ctheta : GeoMath.sq(stheta)/(1 + ctheta)) / _n : 0) - drho * ctheta;
-    var k = _k0 * (scbet/_scbet0) / (exp( - (GeoMath.sq(_nc)/(1 + _n)) * dpsi ) * (tchi >= 0 ? scchi + tchi : 1 / (scchi - tchi)) / (_scchi0 + _tchi0));
+    var y = _nrho0 * (_n != 0 ? (ctheta < 0 ? 1 - ctheta : GeoMath.sq(stheta) / (1 + ctheta)) / _n : 0) - drho * ctheta;
+    var k = _k0 *
+        (scbet / _scbet0) /
+        (exp(-(GeoMath.sq(_nc) / (1 + _n)) * dpsi) *
+            (tchi >= 0 ? scchi + tchi : 1 / (scchi - tchi)) /
+            (_scchi0 + _tchi0));
     y *= _sign;
     var gamma = _sign * theta / GeoMath.degree();
 
@@ -511,19 +533,22 @@ class LambertConformalConic {
     // psi = -log(t), so
     // dpsi = - Dlog1p(t^n-1, t0^n-1) * drho / scale
     y *= _sign;
-    double nx = _n * x, ny = _n * y, y1 = _nrho0 - ny,
-    den = GeoMath.hypot(nx, y1) + _nrho0, // 0 implies origin with polar aspect
-    drho = den != 0 ? (x*nx - 2*y*_nrho0 + y*ny) / den : 0,
-    tnm1 = _t0nm1 + _n * drho/_scale,
-    dpsi = (den == 0 ? 0 : (tnm1 + 1 != 0 ? - Dlog1p(tnm1, _t0nm1) * drho / _scale : ahypover_));
+    double nx = _n * x,
+        ny = _n * y,
+        y1 = _nrho0 - ny,
+        den = GeoMath.hypot(nx, y1) + _nrho0, // 0 implies origin with polar aspect
+        drho = den != 0 ? (x * nx - 2 * y * _nrho0 + y * ny) / den : 0,
+        tnm1 = _t0nm1 + _n * drho / _scale,
+        dpsi = (den == 0 ? 0 : (tnm1 + 1 != 0 ? -Dlog1p(tnm1, _t0nm1) * drho / _scale : ahypover_));
 
     double tchi;
     if (2 * _n <= 1) {
       // tchi = sinh(psi)
-      double
-      psi = _psi0 + dpsi, tchia = sinh(psi), scchi = hyp(tchia),
-      dtchi = Dsinh(psi, _psi0, tchia, _tchi0, scchi, _scchi0) * dpsi;
-      tchi = _tchi0 + dtchi;    // Update tchi using divided difference
+      double psi = _psi0 + dpsi,
+          tchia = sinh(psi),
+          scchi = hyp(tchia),
+          dtchi = Dsinh(psi, _psi0, tchia, _tchi0, scchi, _scchi0) * dpsi;
+      tchi = _tchi0 + dtchi; // Update tchi using divided difference
     } else {
       // tchi = sinh(-1/n * log(tn))
       //      = sinh((1-1/n) * log(tn) - log(tn))
@@ -532,29 +557,24 @@ class LambertConformalConic {
       // (1-1/n) = - nc^2/(n*(1+n))
       // cosh(log(tn)) = (tn + 1/tn)/2; sinh(log(tn)) = (tn - 1/tn)/2
       double tn = tnm1 + 1 == 0 ? epsx_ : tnm1 + 1,
-      sh = sinh( -GeoMath.sq(_nc)/(_n * (1 + _n)) * (2 * tn > 1 ? GeoMath.log1p(tnm1) : log(tn)) );
-      tchi = sh * (tn + 1/tn)/2 - hyp(sh) * (tnm1 * (tn + 1)/tn)/2;
+          sh = sinh(-GeoMath.sq(_nc) / (_n * (1 + _n)) * (2 * tn > 1 ? GeoMath.log1p(tnm1) : log(tn)));
+      tchi = sh * (tn + 1 / tn) / 2 - hyp(sh) * (tnm1 * (tn + 1) / tn) / 2;
     }
-  
+
     // Use Newton's method to solve for tphi
-    double tphi = tchi,
-    stol = tol_ * max(1.0, tchi.abs());
+    double tphi = tchi, stol = tol_ * max(1.0, tchi.abs());
     // min iterations = 1, max iterations = 2; mean = 1.99
     for (int i = 0; i < numit_; ++i) {
-    double scphi = hyp(tphi),
-    shxi = sinh( eatanhe( tphi / scphi ) ),
-    tchia = hyp(shxi) * tphi - shxi * scphi,
-    dtphi = (tchi - tchia) * (1 + _e2m * GeoMath.sq(tphi)) /
-    ( _e2m * scphi * hyp(tchia) );
-    tphi += dtphi;
-    if (!(dtphi.abs() >= stol))
-      break;
+      double scphi = hyp(tphi),
+          shxi = sinh(eatanhe(tphi / scphi)),
+          tchia = hyp(shxi) * tphi - shxi * scphi,
+          dtphi = (tchi - tchia) * (1 + _e2m * GeoMath.sq(tphi)) / (_e2m * scphi * hyp(tchia));
+      tphi += dtphi;
+      if (!(dtphi.abs() >= stol)) break;
     }
     // log(t) = -asinh(tan(chi)) = -psi
     var gamma = atan2(nx, y1);
-    double phi = _sign * atan(tphi),
-    scbet = hyp(_fm * tphi), scchi = hyp(tchi),
-    lam = _n != 0 ? gamma / _n : x / y1;
+    double phi = _sign * atan(tphi), scbet = hyp(_fm * tphi), scchi = hyp(tchi), lam = _n != 0 ? gamma / _n : x / y1;
     var lat = phi / GeoMath.degree();
     var lon = lam / GeoMath.degree();
 
@@ -566,20 +586,23 @@ class LambertConformalConic {
     else
       lon += lon0;
 
-    var k = _k0 * (scbet/_scbet0) / (exp(_nc != 0 ? - (GeoMath.sq(_nc)/(1 + _n)) * dpsi : 0) * (tchi >= 0 ? scchi + tchi : 1 / (scchi - tchi)) / (_scchi0 + _tchi0));
+    var k = _k0 *
+        (scbet / _scbet0) /
+        (exp(_nc != 0 ? -(GeoMath.sq(_nc) / (1 + _n)) * dpsi : 0) *
+            (tchi >= 0 ? scchi + tchi : 1 / (scchi - tchi)) /
+            (_scchi0 + _tchi0));
     gamma /= _sign * GeoMath.degree();
 
     return GeographicLibLambertLatLon(lat, lon, gamma, k);
   }
-
 } // class GeographicLib
 
 class GeographicLibLambert {
-  final double x; 
-  final double y; 
-  final double gamma; 
+  final double x;
+  final double y;
+  final double gamma;
   final double k;
-  
+
   GeographicLibLambert(this.x, this.y, this.gamma, this.k);
 }
 

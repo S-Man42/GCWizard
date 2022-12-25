@@ -10,7 +10,7 @@ It was originally created to offer Geocachers an offline tool to support them wi
 
 Meanwhile the project became very huge and might be practicable for many non-Geocaching issues.
 
-Translated into 🇬🇧 🇩🇪 🇫🇷 🇰🇷 🇳🇱 (Crowdin: [Translate into your language](https://crowdin.com/project/gc-wizard))
+Translated into 🇬🇧 🇩🇪 🇫🇷 🇰🇷 🇳🇱 🇸🇰 🇸🇪 (Crowdin: [Translate into your language](https://crowdin.com/project/gc-wizard))
 
 Based on **Flutter/Dart**.
 
@@ -24,7 +24,7 @@ Based on **Flutter/Dart**.
 ### General
 * **Formula Solver**: For handling variables in multi stage caches
 * **Multi Decoder**: Enter an unknown code and let several decoders and calculators interpret it in a row
-* More than **200 sets of Symbol Tables**: Direct decoding symbols to characters; save own encoding as an image
+* More than **250 sets of Symbol Tables**: Direct decoding symbols to characters; save own encoding as an image
 * **[Online Manual](https://blog.gcwizard.net/manual/en/)**: Every tool has its own manual page, translated into 🇬🇧 🇩🇪
 
 ### Cryptography & Encodings

@@ -19,6 +19,7 @@ import 'package:universal_html/html.dart' as html;
 import 'package:unrar_file/unrar_file.dart';
 
 enum FileType {
+  GCW, // GCWizard's own suffix. e.g. for settings
   ZIP,
   RAR,
   TAR,
@@ -46,11 +47,17 @@ enum FileType {
   KMZ,
   LUAC,
   GWC,
-  LUA
+  LUA,
 }
+
 enum FileClass { IMAGE, ARCHIVE, SOUND, DATA, TEXT, BINARY }
 
 const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
+  // GCWizard's own suffix. e.g. for settings
+  FileType.GCW: {
+    'extensions': ['gcw']
+  },
+
   // https://en.wikipedia.org/wiki/List_of_file_signatures
   // https://wiki.selfhtml.org/wiki/MIME-Type/%C3%9Cbersicht   oder   https://www.iana.org/assignments/media-types/media-types.xhtml
   FileType.JPEG: {
@@ -459,6 +466,7 @@ FileType getFileType(Uint8List blobBytes, {FileType defaultType = FileType.TXT})
   for (var fileType in _FILE_TYPES.keys) {
     var _magicBytes = magicBytes(fileType);
     var offset = magicBytesOffset(fileType) ?? 0;
+    if (_magicBytes == null) continue;
 
     for (var bytes in _magicBytes) {
       if (blobBytes != null &&
@@ -608,8 +616,7 @@ Future<List<GCWFile>> extractArchive(GCWFile file) async {
         var output = BZip2Decoder().decodeBuffer(input);
         var fileName = file?.name ?? 'xxx';
         fileName = changeExtension(fileName, '');
-        if (extension(fileName) != '.tar')
-          fileName += '.tar';
+        if (extension(fileName) != '.tar') fileName += '.tar';
         return {GCWFile(name: fileName, bytes: output)}.toList();
       case FileType.GZIP:
         var output = OutputStream();

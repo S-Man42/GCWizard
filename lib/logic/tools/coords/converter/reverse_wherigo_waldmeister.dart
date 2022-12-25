@@ -2,7 +2,7 @@ import 'package:gc_wizard/logic/tools/coords/converter/dec.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:latlong2/latlong.dart';
 
-LatLng waldmeisterToLatLon(Waldmeister waldmeister) {
+LatLng reverseWIGWaldmeisterToLatLon(ReverseWherigoWaldmeister waldmeister) {
   int a = int.tryParse(waldmeister.a);
   int b = int.tryParse(waldmeister.b);
   int c = int.tryParse(waldmeister.c);
@@ -65,7 +65,7 @@ LatLng waldmeisterToLatLon(Waldmeister waldmeister) {
   return decToLatLon(DEC(_lat, _lon));
 }
 
-Waldmeister latLonToWaldmeister(LatLng coord) {
+ReverseWherigoWaldmeister latLonToReverseWIGWaldmeister(LatLng coord) {
   var _lat = coord.latitude;
   var _lon = coord.longitude;
 
@@ -204,10 +204,10 @@ Waldmeister latLonToWaldmeister(LatLng coord) {
         ((_lon % 10000000 - _lon % 1000000) ~/ 1000000).toString();
   }
 
-  return Waldmeister(a, b, c);
+  return ReverseWherigoWaldmeister(a, b, c);
 }
 
-Waldmeister parseWaldmeister(String input) {
+ReverseWherigoWaldmeister parseReverseWherigoWaldmeister(String input) {
   RegExp regExp = RegExp(r'^\s*([0-9]+)(\s*,\s*|\s+)([0-9]+)(\s*,\s*|\s+)([0-9]+)\s*$');
   var matches = regExp.allMatches(input);
   if (matches.length == 0) return null;
@@ -220,5 +220,5 @@ Waldmeister parseWaldmeister(String input) {
 
   if (a == null || b == null || c == null) return null;
 
-  return Waldmeister(match.group(1), match.group(3), match.group(5));
+  return ReverseWherigoWaldmeister(match.group(1), match.group(3), match.group(5));
 }

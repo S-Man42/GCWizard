@@ -1,10 +1,9 @@
 import 'package:gc_wizard/logic/tools/games/scrabble/scrabble_sets.dart';
 
-enum _SCRABBLE_MODE {FREQUENCY, LETTER_VALUE}
+enum _SCRABBLE_MODE { FREQUENCY, LETTER_VALUE }
 
 List<int> _textToValues(String text, String scrabbleVersion, _SCRABBLE_MODE mode) {
-  if (text == null || text.isEmpty)
-    return [];
+  if (text == null || text.isEmpty) return [];
 
   List<int> output = [];
   ScrabbleSet set = scrabbleSets[scrabbleVersion];
@@ -19,11 +18,7 @@ List<int> _textToValues(String text, String scrabbleVersion, _SCRABBLE_MODE mode
         var tile = text.substring(0, tileLength);
         if (set.existLetter(tile) || tileLength == 1) {
           if (set.existLetter(tile)) {
-            output.add(
-                mode == _SCRABBLE_MODE.FREQUENCY
-                    ? set.letterFrequency(tile)
-                    : set.letterValue(tile)
-            );
+            output.add(mode == _SCRABBLE_MODE.FREQUENCY ? set.letterFrequency(tile) : set.letterValue(tile));
           } else {
             output.add(0);
           }

@@ -10,17 +10,9 @@ import 'package:image/image.dart' as Image;
 import 'image_processing.dart';
 import 'package:tuple/tuple.dart';
 
+enum TextureType { GREYDOTS, COLORDOTS, BITMAP }
 
-enum TextureType {
-  GREYDOTS,
-  COLORDOTS,
-  BITMAP
-}
-
-enum MagicEyeErrorCode {
-  OK,
-  IMAGE_TOO_SMALL
-}
+enum MagicEyeErrorCode { OK, IMAGE_TOO_SMALL }
 
 const int MIN_DISPLACEMENT_ALLOWED = 10;
 const MAX_TESTED_LINES_COUNT = 50;
@@ -38,7 +30,6 @@ Uint32List _pixels;
 Uint8List _texturePixels;
 Uint8List _depthBytes;
 
-
 Future<Tuple3<Image.Image, Uint8List, int>> decodeImageAsync(dynamic jobData) async {
   if (jobData == null) return null;
 
@@ -47,10 +38,8 @@ Future<Tuple3<Image.Image, Uint8List, int>> decodeImageAsync(dynamic jobData) as
   int displacement = jobData.parameters.item3;
 
   if (image == null) return null;
-  if (imageData == null)
-    imageData = Image.decodeImage(image);
-  if (displacement == null)
-    displacement = magicEyeSolver(imageData);
+  if (imageData == null) imageData = Image.decodeImage(image);
+  if (displacement == null) displacement = magicEyeSolver(imageData);
 
   var outputImage = createResultImage(imageData, displacement);
   var result = Tuple3<Image.Image, Uint8List, int>(imageData, outputImage, displacement);
@@ -98,8 +87,7 @@ List<int> _computeTestedLines(Image.Image image) {
   var lines = <int>[];
   var delta = (image.height < MAX_TESTED_LINES_COUNT) ? 1 : (image.height / MAX_TESTED_LINES_COUNT);
 
-  for (double i = 0; i < image.height; i += delta)
-    lines.add(i.floor());
+  for (double i = 0; i < image.height; i += delta) lines.add(i.floor());
 
   return lines;
 }
@@ -110,19 +98,16 @@ int _computeBestDisplacement(List<double> differences) {
   var highestGradientIndex = 1;
   var highestGradient = -1.0;
 
-  for (var i = 2; i < differences.length - 1; i++)
-  {
+  for (var i = 2; i < differences.length - 1; i++) {
     var gradient = differences[i + 1] - differences[i];
-    if (gradient > highestGradient)
-    {
+    if (gradient > highestGradient) {
       highestGradientIndex = i;
       highestGradient = gradient;
     }
   }
   // The gradient helps determine the end of the lowest plateau.
   // Once found, check what was just before because maybe it was better
-  for (var i = 0; i < 3; i++)
-  {
+  for (var i = 0; i < 3; i++) {
     if (highestGradientIndex > 0 && differences[highestGradientIndex - 1] < differences[highestGradientIndex])
       highestGradientIndex--;
   }
@@ -135,8 +120,7 @@ Uint8List createResultImage(Image.Image image, int displacement) {
   var bitmap = Image.Image(image.width, image.height);
 
   for (int y = 0; y < bitmap.height; y++)
-    for (int x = 0; x < displacement; x++)
-      bitmap.setPixel(x, y, image.getPixel(x, y));
+    for (int x = 0; x < displacement; x++) bitmap.setPixel(x, y, image.getPixel(x, y));
 
   for (int y = 0; y < bitmap.height; y++) {
     for (int x = displacement; x < bitmap.width; x++) {
@@ -167,7 +151,9 @@ Future<Tuple2<Uint8List, MagicEyeErrorCode>> generateImageAsync(dynamic jobData)
   return Future.value(outputData);
 }
 
-Tuple2<Uint8List, MagicEyeErrorCode> generateImage(Uint8List hiddenDataImage, Uint8List textureImage, TextureType textureType, {SendPort sendAsyncPort}) {
+Tuple2<Uint8List, MagicEyeErrorCode> generateImage(
+    Uint8List hiddenDataImage, Uint8List textureImage, TextureType textureType,
+    {SendPort sendAsyncPort}) {
   var bInterpolateDepthmap = true;
   var oversample = 2;
   Image.Image texture;
@@ -175,8 +161,7 @@ Tuple2<Uint8List, MagicEyeErrorCode> generateImage(Uint8List hiddenDataImage, Ui
   _fieldDepth = 0.33333;
   _separation = 128;
 
-  if ((hiddenDataImage == null) | ((textureType == TextureType.BITMAP) && (textureImage == null)))
-    return null;
+  if ((hiddenDataImage == null) | ((textureType == TextureType.BITMAP) && (textureImage == null))) return null;
 
   var depthmap = Image.decodeImage(hiddenDataImage);
   var resolutionX = depthmap.width;
@@ -185,19 +170,17 @@ Tuple2<Uint8List, MagicEyeErrorCode> generateImage(Uint8List hiddenDataImage, Ui
   if (resolutionX < 3 * _separation)
     return Tuple2<Uint8List, MagicEyeErrorCode>(null, MagicEyeErrorCode.IMAGE_TOO_SMALL);
 
-
   if ((textureType == TextureType.BITMAP) || ((textureType == null) && (textureImage != null)))
-    texture= Image.decodeImage(textureImage);
+    texture = Image.decodeImage(textureImage);
   else if (textureType == TextureType.GREYDOTS)
     texture = _generateGrayDotsTexture(_separation, resolutionY);
   else
     texture = _generateColoredDotsTexture(_separation, resolutionY);
 
-  if (hiddenDataImage == null || textureImage== null)
-    return null;
+  if (hiddenDataImage == null || texture == null) return null;
 
   _textureWidth = _separation;
-  _textureHeight = ((_separation * texture.height)/ texture.width).toInt();
+  _textureHeight = ((_separation * texture.height) / texture.width).toInt();
 
   // Cache some intermediaries
   _lineWidth = resolutionX;
@@ -206,7 +189,6 @@ Tuple2<Uint8List, MagicEyeErrorCode> generateImage(Uint8List hiddenDataImage, Ui
   _depthScale = oversample;
 
   _fieldDepth = _fieldDepth.clamp(0, 1);
-
 
   // Apply oversampling factor to relevant settings
   if (oversample > 1) {
@@ -219,7 +201,7 @@ Tuple2<Uint8List, MagicEyeErrorCode> generateImage(Uint8List hiddenDataImage, Ui
       _depthScale = 1;
     }
   }
-  _midpoint = (_lineWidth/ 2).toInt();
+  _midpoint = (_lineWidth / 2).toInt();
 
   // Convert texture to RGB24 and scale it to fit the separation (preserving ratio but doubling width for HQ mode)
   var bmTexture = Image.copyResize(texture, width: _textureWidth, height: _textureHeight);
@@ -243,16 +225,14 @@ Tuple2<Uint8List, MagicEyeErrorCode> generateImage(Uint8List hiddenDataImage, Ui
   var generatedLines = 0;
   var _progressStep = max(_rows ~/ 100, 1); // 100 steps
 
-  if (sendAsyncPort != null)
-    sendAsyncPort.send({'progress': 0.0});
+  if (sendAsyncPort != null) sendAsyncPort.send({'progress': 0.0});
 
   initHoroptic();
 
   for (int y = 0; y < _rows; y++) {
     _doLineHoroptic(y);
 
-    if (sendAsyncPort != null && (generatedLines % _progressStep == 0))
-      sendAsyncPort.send({'progress': y/ _rows});
+    if (sendAsyncPort != null && (generatedLines % _progressStep == 0)) sendAsyncPort.send({'progress': y / _rows});
   }
 
   var bmStereogram = Image.Image.fromBytes(_lineWidth, _rows, _pixels.buffer.asUint8List(),
@@ -266,10 +246,9 @@ Tuple2<Uint8List, MagicEyeErrorCode> generateImage(Uint8List hiddenDataImage, Ui
   return Tuple2<Uint8List, MagicEyeErrorCode>(encodeTrimmedPng(bmStereogram), MagicEyeErrorCode.OK);
 }
 
-
 List<int> centreOut;
 
-void initHoroptic(){
+void initHoroptic() {
   // Create an array of offsets which alternate pixels from the center out to the edges
   centreOut = List<int>.filled(_lineWidth, 0);
   int offset = _midpoint;
@@ -303,17 +282,18 @@ void _doLineHoroptic(int y) {
     double zh = sqrt(pow(20 * _separation, 2) - pow(i - _midpoint, 2));
 
     // Scale to the range [0,1] and adjust to displacement from the far plane
-    zh = 1.0 - (zh/ (20 * _separation));
+    zh = 1.0 - (zh / (20 * _separation));
 
     // Separation of pixels on image plane for this point
     // Note - divide ZH by FieldDepth as the horopter is independant
     // of field depth, but sep macro is not.
-    int s = round(_sep(depthLine[i] - (zh/ _fieldDepth))).toInt();
+    int s = round(_sep(depthLine[i] - (zh / _fieldDepth))).toInt();
 
-    int left = (i - (s/ 2)).toInt(); // The pixel on the image plane for the left eye
-    int right = left + s;           // And for the right eye
+    int left = (i - (s / 2)).toInt(); // The pixel on the image plane for the left eye
+    int right = left + s; // And for the right eye
 
-    if ((0 <= left) && (right < _lineWidth)) {  // If both points lie within the image bounds ...
+    if ((0 <= left) && (right < _lineWidth)) {
+      // If both points lie within the image bounds ...
       // Decide whether we want to constrain the left or right pixel
       // Want to avoid constraint loops, so always constrain outermost pixel to innermost
       // Should depend if one or the other is already constrained I suppose
@@ -322,14 +302,12 @@ void _doLineHoroptic(int y) {
 
       // Find an unconstrained pixel and constrain ourselves to it
       // Uh-oh, what happens if they become constrained to each other?  Constrainee is flagged as unconstrained, I suppose
-      while (constraints[constrainer] != constrainer)
-        constrainer = constraints[constrainer];
+      while (constraints[constrainer] != constrainer) constrainer = constraints[constrainer];
 
       constraints[constrainee] = constrainer;
 
       // Points can only be hidden by a point closer to the centre, i.e. one we've already processed
-      if (depthLine[i] > max_depth)
-        max_depth = depthLine[i];
+      if (depthLine[i] > max_depth) max_depth = depthLine[i];
     }
   }
 
@@ -338,8 +316,7 @@ void _doLineHoroptic(int y) {
     int pix = i;
 
     // Find an unconstrained pixel
-    while (constraints[pix] != pix)
-      pix = constraints[pix];
+    while (constraints[pix] != pix) pix = constraints[pix];
 
     // And get the RGBs from the tiled texture at that point
     _setStereoPixel(i, y, _getTexturePixel(pix, y));
@@ -356,14 +333,14 @@ int _rgbPixelColor(RGBPixel pixel) {
 }
 
 double _getDepthFloat(int x, int y) {
-  int tp = ((y * _depthWidth) + (x/ _depthScale)).toInt() * _channelCount;
-  return ((_depthBytes[tp]/255.0 + _depthBytes[tp+1]/255.0 + _depthBytes[tp+2])/255.0); // (RGBA)
+  int tp = ((y * _depthWidth) + (x / _depthScale)).toInt() * _channelCount;
+  return ((_depthBytes[tp] / 255.0 + _depthBytes[tp + 1] / 255.0 + _depthBytes[tp + 2]) / 255.0); // (RGBA)
 }
 
 /// Helper to calculate stereo separation in pixels of a point at depth Z
 double _sep(double z) {
   z = z.clamp(0.0, 1.0);
-  return ((1 - _fieldDepth * z) * (2 * _separation)/ (2 - _fieldDepth * z));
+  return ((1 - _fieldDepth * z) * (2 * _separation) / (2 - _fieldDepth * z));
 }
 
 /// Return which of two values is furthest from a mid-point (or indeed any point)
@@ -385,8 +362,7 @@ Image.Image _generateColoredDotsTexture(int resX, int resY) {
   Random random = new Random();
   var pixels = Uint8List(resX * resY * _channelCount); // (RGBA)
 
-  for (int i = 0; i < pixels.length; i++)
-    pixels[i] = random.nextInt(256);
+  for (int i = 0; i < pixels.length; i++) pixels[i] = random.nextInt(256);
 
   return Image.Image.fromBytes(resX, resY, pixels, format: Image.Format.rgba, channels: Image.Channels.rgba);
 }

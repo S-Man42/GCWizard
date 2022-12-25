@@ -6,9 +6,13 @@ import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:touchable/touchable.dart';
 
 enum GridType { BOXES, LINES, INTERSECTIONS }
+
 enum GridEnumerationStart { TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT }
+
 enum GridBoxEnumerationStartDirection { UP, DOWN, LEFT, RIGHT }
+
 enum GridBoxEnumerationBehaviour { ALIGNED, ALTERNATED, SPIRAL }
+
 enum GridPaintColor { BLACK, WHITE, RED, YELLOW, BLUE, GREEN }
 
 enum _TapMode { SINGLE, ROW, COLUMN, ALL }
@@ -264,52 +268,52 @@ class GridPainterState extends State<GridPainter> {
             child: AspectRatio(
                 aspectRatio: widget.countColumns / widget.countRows,
                 child: CanvasTouchDetector(
-                  gesturesToOverride: [GestureType.onTapDown],
-                  builder: (context) {
-                  return CustomPaint(
-                      painter: CustomGridPainter(
-                          context,
-                          widget.type,
-                          widget.countRows,
-                          widget.countColumns,
-                          widget.tapColor,
-                          _boxEnumeration,
-                          widget.columnEnumeration,
-                          widget.rowEnumeration,
-                          gridState, (int i, int j, int countRows, int countColumns, _TapMode mode) {
-                    setState(() {
-                      if (gridState == null) gridState = <int, Map<int, GridPaintColor>>{};
+                    gesturesToOverride: [GestureType.onTapDown],
+                    builder: (context) {
+                      return CustomPaint(
+                          painter: CustomGridPainter(
+                              context,
+                              widget.type,
+                              widget.countRows,
+                              widget.countColumns,
+                              widget.tapColor,
+                              _boxEnumeration,
+                              widget.columnEnumeration,
+                              widget.rowEnumeration,
+                              gridState, (int i, int j, int countRows, int countColumns, _TapMode mode) {
+                        setState(() {
+                          if (gridState == null) gridState = <int, Map<int, GridPaintColor>>{};
 
-                      if (gridState[i] == null) {
-                        gridState[i] = <int, GridPaintColor>{};
-                      }
+                          if (gridState[i] == null) {
+                            gridState[i] = <int, GridPaintColor>{};
+                          }
 
-                      var delete = gridState[i][j] == widget.tapColor;
+                          var delete = gridState[i][j] == widget.tapColor;
 
-                      switch (mode) {
-                        case _TapMode.ALL:
-                          for (int k = 0; k <= countRows; k++) {
-                            for (int l = 0; l <= countColumns; l++) {
-                              _setColor(k, l, delete);
-                            }
+                          switch (mode) {
+                            case _TapMode.ALL:
+                              for (int k = 0; k <= countRows; k++) {
+                                for (int l = 0; l <= countColumns; l++) {
+                                  _setColor(k, l, delete);
+                                }
+                              }
+                              break;
+                            case _TapMode.COLUMN:
+                              for (int k = 0; k <= countRows; k++) {
+                                _setColor(k, j, delete);
+                              }
+                              break;
+                            case _TapMode.ROW:
+                              for (int l = 0; l <= countColumns; l++) {
+                                _setColor(i, l, delete);
+                              }
+                              break;
+                            case _TapMode.SINGLE:
+                              _setColor(i, j, delete);
                           }
-                          break;
-                        case _TapMode.COLUMN:
-                          for (int k = 0; k <= countRows; k++) {
-                            _setColor(k, j, delete);
-                          }
-                          break;
-                        case _TapMode.ROW:
-                          for (int l = 0; l <= countColumns; l++) {
-                            _setColor(i, l, delete);
-                          }
-                          break;
-                        case _TapMode.SINGLE:
-                          _setColor(i, j, delete);
-                      }
-                    });
-                  }));
-                })))
+                        });
+                      }));
+                    })))
       ],
     );
   }

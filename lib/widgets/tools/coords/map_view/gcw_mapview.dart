@@ -39,13 +39,12 @@ import 'package:gc_wizard/widgets/tools/coords/map_view/mapview_persistence_adap
 import 'package:gc_wizard/widgets/tools/coords/utils/user_location.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
-import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:gc_wizard/widgets/utils/gcw_file.dart';
+import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 import 'package:prefs/prefs.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 enum _LayerType { OPENSTREETMAP_MAPNIK, MAPBOX_SATELLITE }
 
@@ -248,8 +247,8 @@ class GCWMapViewState extends State<GCWMapView> {
                   opacity: 0.7,
                 ),
                 onTap: () {
-                  launchUrl(Uri.parse(
-                      i18n(context, _currentLayer == _LayerType.OPENSTREETMAP_MAPNIK ? OSM_URL : MAPBOX_SATELLITE_URL)));
+                  launchUrl(Uri.parse(i18n(
+                      context, _currentLayer == _LayerType.OPENSTREETMAP_MAPNIK ? OSM_URL : MAPBOX_SATELLITE_URL)));
                 },
               ),
             )
@@ -388,7 +387,7 @@ class GCWMapViewState extends State<GCWMapView> {
                             i18nPrefix: 'coords_openmap_lineeditor'))).whenComplete(() {
                   setState(() {
                     Navigator.pop(context);
-                    if (child is GCWMapPolyline) {
+                    if (child is GCWMapLine) {
                       _persistanceAdapter.updateMapPolyline(child.parent);
                     }
                   });

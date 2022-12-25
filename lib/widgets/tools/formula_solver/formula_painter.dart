@@ -1,4 +1,4 @@
-import 'package:gc_wizard/logic/tools/formula_solver/parser.dart';
+import 'package:gc_wizard/logic/tools/formula_solver/formula_parser.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 
 class FormulaPainter {
@@ -9,22 +9,10 @@ class FormulaPainter {
   Map<String, String> _values;
   var _variables = <String>[];
   var _functions = <String>[];
-  var _specialFunctions = {
-    'LOG', // 1 comma
-    'NTH', // 0 - 2 commas
-    'ROUND', // 0 or 1 comma
-    'MIN', // comma 0 or more times
-    'MAX', // comma 0 or more times
-    'CS', // comma 0 or more times
-    'CSI', // comma 0 or more times
-    'BWW', // 0 comma
-    'AV', // 0 comma
-    'LEN', // 0 comma
-    'NRT' // 1 comma
-  };
   var _constants = <String>[];
   int _formulaId;
   bool _operatorBevor;
+  String _parentFunctionName;
   String formula;
 
   String _operatorsRegEx;
@@ -61,6 +49,7 @@ class FormulaPainter {
     _variables = _toUpperCaseAndSort(_variables);
     _variablesRegEx = _variables.map((variable) => variable).join('|');
 
+    formula = normalizeCharacters(formula);
     formula = FormulaParser.normalizeMathematicalSymbols(formula);
     formula = formula.toUpperCase();
     this.formula = formula;
@@ -345,7 +334,6 @@ class FormulaPainter {
 
   List<String> _isSpecialFunctionsLiteral(String formula, List<String> parts) {
     var functionName = parts[0].trim();
-    var wordFunction = false;
 
     var result = <String>[];
     var arguments = _separateArguments(formula);
@@ -376,7 +364,6 @@ class FormulaPainter {
       case 'AV':
       case 'LEN':
         maxCommaCount == minCommaCount;
-        wordFunction = true;
         break;
       default:
         maxCommaCount = minCommaCount;
@@ -385,21 +372,48 @@ class FormulaPainter {
     maxCommaCount = maxCommaCount == null ? null : maxCommaCount * 2 + 1;
     if (arguments.length < minCommaCount) return null;
 
+    _parentFunctionName = functionName;
     for (var i = 0; i < arguments.length; i++) {
       if (maxCommaCount != null && i >= maxCommaCount) {
         var subresult = _paintSubFormula(arguments[i], 0);
         result.add(subresult.toUpperCase());
       } else if (arguments[i] == ',')
-        result.add(wordFunction ? 'g' : 'b');
+        result.add(_wordFunction(functionName) ? 'g' : 'b');
       else {
         _operatorBevor = true;
         var subresult = _paintSubFormula(arguments[i], 0);
-        if (wordFunction) subresult = subresult.replaceAll('R', 'g');
+        if (_wordFunction(functionName) && _emptyValues()) subresult = subresult.replaceAll('R', 'g');
         result.add(subresult);
       }
     }
+    _parentFunctionName = null;
 
     return result;
+  }
+
+  bool _wordFunction(String functionName) {
+    switch (functionName) {
+      case 'BWW':
+      case 'AV':
+      case 'LEN':
+        return true;
+      default:
+        return false;
+    }
+    ;
+  }
+
+  bool _numberFunction(String functionName) {
+    switch (functionName) {
+      case 'MIN':
+      case 'MAX':
+      case 'CS':
+      case 'CSI':
+        return true;
+      default:
+        return false;
+    }
+    ;
   }
 
   String _coloredSpecialFunctionsLiteral(String result, List<String> parts) {
@@ -454,7 +468,18 @@ class FormulaPainter {
   }
 
   List<String> _isConstant(String formula) {
-    RegExp regex = RegExp(r'^\b(' + _constantsRegEx + r')\b');
+    //extract all non-ascii chars, like Pi or Phi
+    var specialChars = _constantsRegEx.replaceAll(RegExp(r'[A-Za-z0-9\|_]'), '');
+    //add special chars to allowed character (next to \w == ASCII chars)
+    var wordChars = r'[\w' + specialChars + r']';
+    // \b does not allow non-ASCII chars
+    //https://stackoverflow.com/a/61754724/3984221
+    // so, \b must be manipulated. Following expressing equals the internal representation of \b, which is now enhanced
+    // to use the specialChars as well
+    //https://stackoverflow.com/a/12712840/3984221
+    var wordBoundary = '(?:(?<!$wordChars)(?=$wordChars)|(?<=$wordChars)(?!$wordChars))';
+    RegExp regex = RegExp('^$wordBoundary(' + _constantsRegEx + ')$wordBoundary');
+
     var match = regex.firstMatch(formula);
 
     return (match == null) ? null : [match.group(0)];
@@ -465,22 +490,33 @@ class FormulaPainter {
   }
 
   List<String> _isVariable(String formula) {
-    if (_variablesRegEx.isEmpty) return null;
-    RegExp regex = RegExp(r'^(' + _variablesRegEx + ')');
-    var match = regex.firstMatch(formula);
+    var match = _variableMatch(formula);
 
     return (match == null) ? null : [match.group(0)];
   }
 
   bool _isEmptyVariable(String formula) {
-    if (_variablesRegEx.isEmpty) return null;
-    RegExp regex = RegExp(r'^(' + _variablesRegEx + ')');
-    var match = regex.firstMatch(formula);
+    var match = _variableMatch(formula);
     if (match == null) return true;
 
-    return ((_values != null) &&
-        (_values.containsKey(match.group(1))) &&
-        ((_values[match.group(1)] == null) || (_values[match.group(1)].isEmpty)));
+    var variableValue = _variableValue(match.group(1));
+    return variableValue == null || variableValue.isEmpty;
+  }
+
+  String _variableValue(String variable) {
+    if ((_values == null) || !_values.containsKey(variable)) return null;
+    return _values[variable];
+  }
+
+  /// return VariableName (group(1))
+  RegExpMatch _variableMatch(String formula) {
+    if (_variablesRegEx.isEmpty) return null;
+    RegExp regex = RegExp(r'^(' + _variablesRegEx + ')');
+    return regex.firstMatch(formula);
+  }
+
+  bool _emptyValues() {
+    return (_values == null) || (_values.isEmpty);
   }
 
   List<String> _isInvalidVariable(String formula) {
@@ -494,7 +530,24 @@ class FormulaPainter {
   }
 
   String _coloredVariable(String result, List<String> parts, bool hasError) {
-    return _replaceRange(result, 0, parts[0].length, hasError ? 'R' : 'r');
+    var char = hasError ? 'R' : 'r';
+    if (hasError && _wordFunction(_parentFunctionName))
+      char = _coloredWordFunctionVariable(parts[0]);
+    else if (_numberFunction(_parentFunctionName)) char = _coloredNumberFunctionVariable(parts[0]);
+
+    return _replaceRange(result, 0, parts[0].length, char);
+  }
+
+  String _coloredWordFunctionVariable(String variable) {
+    return (_isVariable(variable) == null || !_isEmptyVariable(variable)) ? 'g' : 'R';
+  }
+
+  String _coloredNumberFunctionVariable(String variable) {
+    var variableValue = _variableValue(variable);
+    if ((variableValue == null) || variableValue.isEmpty) return 'R';
+    if (_isNumberWithPoint(variableValue) == null) return 'R';
+
+    return 'r';
   }
 
   List<String> _isNumberWithPoint(String formula) {

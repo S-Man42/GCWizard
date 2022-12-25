@@ -36,9 +36,9 @@ int extractIntegerFromText(String text) {
   return int.tryParse(digits);
 }
 
-int separateDecimalPlaces (double value) {
+int separateDecimalPlaces(double value) {
   if (value == null) return null;
-  var valueSplitted =  value.toString().split('.');
+  var valueSplitted = value.toString().split('.');
 
   if (valueSplitted.length < 2)
     return 0;
@@ -174,8 +174,7 @@ String formatHoursToHHmmss(double hours, {milliseconds: true, limitHours: true})
   var h = time.hour;
   var min = time.minute;
   var sec = time.second + time.millisecond / 1000.0;
-  if (!limitHours)
-    h += (time.day - 1) * 24 + (time.month -1) * 31;
+  if (!limitHours) h += (time.day - 1) * 24 + (time.month - 1) * 31;
 
   var secondsStr = milliseconds ? NumberFormat('00.000').format(sec) : NumberFormat('00').format(sec.truncate());
   //Values like 59.999999999 may be rounded to 60.0. So in that case,
@@ -197,11 +196,11 @@ String formatHoursToHHmmss(double hours, {milliseconds: true, limitHours: true})
 }
 
 String formatDurationToHHmmss(Duration duration, {days: true, milliseconds: true, limitHours: true}) {
-  if(duration == null) return null;
+  if (duration == null) return null;
 
   var sign = duration.isNegative ? '-' : '';
   var _duration = duration.abs();
-  var hours = days ? _duration.inHours.remainder(24) : _duration.inHours ;
+  var hours = days ? _duration.inHours.remainder(24) : _duration.inHours;
   var minutes = _duration.inMinutes.remainder(60);
   var seconds = _duration.inSeconds.remainder(60);
   var dayValue = limitHours ? _duration.inDays : _duration.inDays;
@@ -210,7 +209,7 @@ String formatDurationToHHmmss(Duration duration, {days: true, milliseconds: true
 
   return sign +
       (days ? dayValue.toString() + ':' : '') +
-      formatHoursToHHmmss(hourFormat, milliseconds: milliseconds, limitHours: limitHours );
+      formatHoursToHHmmss(hourFormat, milliseconds: milliseconds, limitHours: limitHours);
 }
 
 Map<U, T> switchMapKeyValue<T, U>(Map<T, U> map, {keepFirstOccurence: false}) {
@@ -220,13 +219,6 @@ Map<U, T> switchMapKeyValue<T, U>(Map<T, U> map, {keepFirstOccurence: false}) {
   if (keepFirstOccurence) newMap = LinkedHashMap.fromEntries(map.entries.toList().reversed);
 
   return newMap.map((k, v) => MapEntry(v, k));
-}
-
-String stringToSuperscript(String text) {
-  return text.split('').map((character) {
-    var superscript = SUPERSCRIPT_CHARACTERS[character];
-    return superscript ?? character;
-  }).join();
 }
 
 double degreesToRadian(double degrees) {
@@ -384,4 +376,31 @@ dynamic round(double number, {int precision: 0}) {
 
   var exp = pow(10, precision);
   return (number * exp).round() / exp;
+}
+
+String removeControlCharacters(String input) {
+  if (input == null || input.isEmpty)
+    return input;
+
+  var removedCodes = input.codeUnits.where((element) => element >= 32).toList();
+  return String.fromCharCodes(removedCodes);
+}
+
+String normalizeCharacters(String input) {
+  if (input == null || input.isEmpty)
+    return input;
+
+  final Map<String, String> _ALTERNATE_CHARACTERS = {
+    // https://www.compart.com/de/unicode/category/Zs and Tab
+    ' ': '\u0009\u000B\u00A0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2007\u2008\u2009\u200A\u202F\u205F\u3000',
+    '"': '\u201e\u201f\u201d\u201c',
+    '\'': '\u201b\u201a\u2019\u2018',
+    '-': '\u2014\u2013\u02d7\u2212\u2012',
+  };
+
+  _ALTERNATE_CHARACTERS.forEach((key, value) {
+    input = input.replaceAll(RegExp('[$value]'), key);
+  });
+
+  return input;
 }

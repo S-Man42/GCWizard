@@ -1,4 +1,5 @@
-﻿import 'dart:core';
+import 'dart:core';
+
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/piet_block.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/piet_session.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/piet_stack.dart';
@@ -31,7 +32,8 @@ class BaseOperations {
   Function _toggleCodelChooser;
   PietSession _session;
 
-  BaseOperations(PietStack stack, PietSession session, Function getExitedBlock, Function toggleDirectionPointer, Function toggleCodelChooser) {
+  BaseOperations(PietStack stack, PietSession session, Function getExitedBlock, Function toggleDirectionPointer,
+      Function toggleCodelChooser) {
     _stack = stack;
     _session = session;
     _getExitedBlock = getExitedBlock;
@@ -110,7 +112,9 @@ class BaseOperations {
   void inChar() {
     var val = _session.readChar();
     if (val != null && val.isNotEmpty)
-      val.runes.forEach((char) {_stack.push(char); });
+      val.runes.forEach((char) {
+        _stack.push(char);
+      });
   }
 
   void outNumeric() {
@@ -125,24 +129,23 @@ class BaseOperations {
 
   Map<PietOps, void Function()> getMap() {
     return {
-        PietOps.Push : this.push,
-        PietOps.Pop : this.pop,
-        PietOps.Add : this.add,
-        PietOps.Subtract : this.subtract,
-        PietOps.Multiply : this.multiply,
-        PietOps.Divide : this.divide,
-        PietOps.Mod : this.mod,
-        PietOps.Not : this.not,
-        PietOps.Greater : this.greater,
-        PietOps.Pointer : this.pointer,
-        PietOps.Switch : this.switch_,
-        PietOps.Duplicate : this.duplicate,
-        PietOps.Roll : this.roll,
-        PietOps.InputChar : this.inChar,
-        PietOps.InputNumber : this.inNumber,
-        PietOps.OutputNumber : this.outNumeric,
-        PietOps.OutputChar : this.outChar
-      };
+      PietOps.Push: this.push,
+      PietOps.Pop: this.pop,
+      PietOps.Add: this.add,
+      PietOps.Subtract: this.subtract,
+      PietOps.Multiply: this.multiply,
+      PietOps.Divide: this.divide,
+      PietOps.Mod: this.mod,
+      PietOps.Not: this.not,
+      PietOps.Greater: this.greater,
+      PietOps.Pointer: this.pointer,
+      PietOps.Switch: this.switch_,
+      PietOps.Duplicate: this.duplicate,
+      PietOps.Roll: this.roll,
+      PietOps.InputChar: this.inChar,
+      PietOps.InputNumber: this.inNumber,
+      PietOps.OutputNumber: this.outNumeric,
+      PietOps.OutputChar: this.outChar
+    };
   }
 }
-

@@ -2,7 +2,7 @@
 
 import 'package:gc_wizard/logic/common/date_utils.dart';
 
-class DayOfTheYearOutput{
+class DayOfTheYearOutput {
   final DateTime date;
   final int dayNumber;
   final int weekday;
@@ -11,12 +11,7 @@ class DayOfTheYearOutput{
   final int weekNumberAlternate;
 
   DayOfTheYearOutput(
-      this.date,
-      this.dayNumber,
-      this.weekday,
-      this.weekdayAlternate,
-      this.weekNumberIso,
-      this.weekNumberAlternate);
+      this.date, this.dayNumber, this.weekday, this.weekdayAlternate, this.weekNumberIso, this.weekNumberAlternate);
 }
 
 DayOfTheYearOutput calculateDayInfos(int year, int day) {
@@ -29,14 +24,9 @@ DayOfTheYearOutput calculateDayInfos(int year, int day) {
 DayOfTheYearOutput calculateDateInfos(DateTime date) {
   if (date == null) return null;
 
-  return DayOfTheYearOutput(date,
-      dayNumber(date),
-      date.weekday,
-      _weekdayAlternate(date.weekday),
-      isoWeekOfYear(date),
+  return DayOfTheYearOutput(date, dayNumber(date), date.weekday, _weekdayAlternate(date.weekday), isoWeekOfYear(date),
       alternateWeekOfYear(date));
 }
-
 
 int _weekdayAlternate(int weekday) {
   weekday = (weekday + 1) % 7;
@@ -44,7 +34,7 @@ int _weekdayAlternate(int weekday) {
 }
 
 int isoWeekOfYear(DateTime date) {
-  if (date == null)  return null;
+  if (date == null) return null;
 
   // Get the monday of week 1
   final DateTime mondayWeek1 = _isoWeek1Monday(date);
@@ -80,7 +70,7 @@ int isoWeekOfYear(DateTime date) {
 }
 
 int alternateWeekOfYear(DateTime date) {
-  if (date == null)  return null;
+  if (date == null) return null;
 
   // Get the monday of week 1
   final DateTime mondayWeek1 = _alternateWeek1Monday(date);
@@ -109,7 +99,7 @@ int alternateWeekOfYear(DateTime date) {
   int week = (diffInDays ~/ 7) + 1;
 
   // On Sunday add 1.
-  if (date.weekday  == 7) {
+  if (date.weekday == 7) {
     return week + 1;
   }
   return week;
@@ -125,9 +115,7 @@ int _ordinalDate(DateTime date) {
   final DAYS_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
   final monthsBefore = DAYS_IN_MONTH.getRange(0, date.month - 1);
 
-  int days = monthsBefore.length > 0
-      ? monthsBefore.reduce((value, element) => value + element)
-      : 0;
+  int days = monthsBefore.length > 0 ? monthsBefore.reduce((value, element) => value + element) : 0;
 
   if (date.month > 2 && _isLeapYear(date)) {
     days += 1;

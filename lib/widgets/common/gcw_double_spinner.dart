@@ -60,7 +60,6 @@ class GCWDoubleSpinnerState extends State<GCWDoubleSpinner> {
       _controller = widget.controller;
     else
       _controller = TextEditingController(text: _numberFormat.format(_currentValue));
-
   }
 
   @override

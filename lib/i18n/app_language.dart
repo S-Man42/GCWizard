@@ -2,6 +2,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/supported_locales.dart';
+import 'package:gc_wizard/utils/settings/preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AppLanguage extends ChangeNotifier {
@@ -11,7 +12,7 @@ class AppLanguage extends ChangeNotifier {
   Locale get appLocal => _appLocale ?? _defaultAppLocale;
   Future<Locale> fetchLocale() async {
     var prefs = await SharedPreferences.getInstance();
-    String lang = prefs.getString('language_code');
+    String lang = prefs.getString(PREFERENCE_LANGUAGE_CODE);
     if (lang == null) {
       Locale platformLocale = getPlatformLocale();
       _appLocale = isLocaleSupported(platformLocale) ? platformLocale : _defaultAppLocale;
@@ -34,7 +35,7 @@ class AppLanguage extends ChangeNotifier {
     }
 
     _appLocale = Locale(locale.languageCode);
-    await prefs.setString('language_code', _appLocale.languageCode);
+    await prefs.setString(PREFERENCE_LANGUAGE_CODE, _appLocale.languageCode);
 
     notifyListeners();
   }

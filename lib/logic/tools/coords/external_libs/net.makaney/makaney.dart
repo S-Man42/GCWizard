@@ -32,48 +32,48 @@ import 'dart:math';
 var _zbase33 = 'abo2zptscjkwmgnxqfd984ery3h5l76ui';
 var _mbase = 33;
 
-double _base33ToDecimal (String str) {
+double _base33ToDecimal(String str) {
   var sign = 1;
   if (str[0] == '-') {
     sign = -1;
     str = str.substring(1);
-  }
-  else if (str[0] == '+') str = str.substring(1);
+  } else if (str[0] == '+') str = str.substring(1);
   str = str.toLowerCase();
   var sum = 0.0;
-  for (var i=0; i < str.length; i++)
-    sum += _zbase33.indexOf(str[(str.length - 1) - i]) * pow(_mbase, i);
+  for (var i = 0; i < str.length; i++) sum += _zbase33.indexOf(str[(str.length - 1) - i]) * pow(_mbase, i);
   return sign * sum;
 }
 
-String _decimalToBase33 (int n) {
-  if (n == 0) {return 'A';}
+String _decimalToBase33(int n) {
+  if (n == 0) {
+    return 'A';
+  }
   var x = n.abs();
   var code = '';
   while (x > 0) {
     code = _zbase33[x % _mbase] + code;
     x = (x / _mbase).floor();
   }
-  return ((n<0) ? '-'+code : code);
+  return ((n < 0) ? '-' + code : code);
 }
 
-List<double> makaneyToLatLon (String str) {
+List<double> makaneyToLatLon(String str) {
   var pos = str.indexOf('+');
 
   var lon;
   if (pos != -1)
-    lon = _base33ToDecimal(str.substring(pos))/10000;
+    lon = _base33ToDecimal(str.substring(pos)) / 10000;
   else {
     pos = str.lastIndexOf('-');
-    lon = _base33ToDecimal(str.substring(pos))/10000;
+    lon = _base33ToDecimal(str.substring(pos)) / 10000;
   }
 
-  var lat = _base33ToDecimal(str.substring(0, pos))/10000;
+  var lat = _base33ToDecimal(str.substring(0, pos)) / 10000;
 
   return [lat, lon];
 }
 
-String latLonToMakaney (double lat, double lon) {
+String latLonToMakaney(double lat, double lon) {
   var _lat = _decimalToBase33((lat * 10000).floor());
   var _lon = _decimalToBase33((lon * 10000).floor());
 
@@ -82,4 +82,3 @@ String latLonToMakaney (double lat, double lon) {
   else
     return _lat + '+' + _lon;
 }
-

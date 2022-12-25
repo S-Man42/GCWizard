@@ -9,7 +9,6 @@ import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 final ABOUT_MAINTAINER = 'Mark \'S-Man42\' Lorenz';
 
@@ -79,6 +78,7 @@ class AboutState extends State<About> {
         _buildUrl('faq'),
         _buildUrl('blog'),
         _buildUrl('twitter'),
+        _buildUrl('mastodon'),
         _buildUrl('facebook'),
         _buildUrl('webversion'),
         GCWDivider(),
@@ -118,7 +118,6 @@ class AboutState extends State<About> {
                       text: [
                             'Andy \'Puma66\' (Special Support)',
                             'Andreas \'TeamBirdy2404\' (Manual & Symbol Tables)',
-                            'Ludovic Valente \'LudoO\' (Code & Translation FR)',
                             'Mike B. (Code & Symbol Tables)',
                             'Thomas \'TMZ\' Z. (Code & Symbol Tables)',
                           ].join('\n') +
@@ -139,11 +138,13 @@ class AboutState extends State<About> {
                   TextSpan(
                       text: [
                             '\'\xc4ggsb\xe4rde\' (Symbol Tables)',
+                            '\'andre0707\' (Day1976 Code)',
                             '\'capoaira\' (Code)',
                             'Dennis \'dennistreysa\' (Code)',
                             'Frank \'Wizardland\' (podKst.de) (Hardware)',
                             '\'Geo-Link\' (Hardware & Symbol Tables)',
                             'Karl B. (Coords Algorithms)',
+                            'Ludovic Valente \'LudoO\' (Code & Translation FR)',
                             'Michael D. (Symbol Tables)',
                             'Nina \'nike1972\' G. (Nina\'s Schmierblo(g)ck) (Manual)',
                             '\'moenk\' (GK Coords)',
@@ -166,6 +167,7 @@ class AboutState extends State<About> {
                             '\'bimsor\' (DK)',
                             'Cavit A. (TR)',
                             '\'crazedllama\' (KO)',
+                            '\'drobec\' (SK)',
                             '\'emrszon\' (ES)',
                             '\'hakuchi\' (IT)',
                             '\'Henrike71\' (NL, SV)',
@@ -181,10 +183,14 @@ class AboutState extends State<About> {
                             'Paweł B. (PL)',
                             '\'QouiZ\' (EL)',
                             '\'proXmiii\' (SK)',
+                            '\'S182\' (IT)',
                             'Silvia O. (SK)',
                             '\'tkemer\' (EL)',
                             '\'Todclerc\' (NL)',
+                            '\'verturin\' (FR, IT)',
                             '\'vike91\' (FI)',
+                            '\'Vojta_\' (CZ)',
+                            '\'Willa_Lecznica\' (PL)',
                             '\'Xoyn\' (RU)',
                           ].join(', ') +
                           '\n')
@@ -199,11 +205,13 @@ class AboutState extends State<About> {
                     '\'4-Everus\'',
                     '\'83_Seth\'',
                     'Andreas E.',
+                    '\'baer2006\'',
                     '\'Cycle73\'',
                     '\'Don Rodolphos\'',
                     '\'Headbanger-Berlin\'',
                     'Felix Z.',
                     '\'Filu - Aye, Käppn! - 43\' & \'Stormi - Aaarrh - 2061\'',
+                    '\'finding tresor\'',
                     '\'Flosphor\'',
                     'Franz K.',
                     '\'Freakyfinder\'',
@@ -212,12 +220,17 @@ class AboutState extends State<About> {
                     'Isidore S.',
                     'Johannes C.',
                     'Jonas M.',
+                    '\'kinderarzt\'',
                     '\'Klumpenkukuk\'',
                     '\'LupiMus\'',
+                    'Lutz \'DL3BZZ\'',
                     '\'mahoplus\'',
                     'Markus M.',
                     'Martin Sch.',
+                    'Martina F.',
                     '\'mgo\'',
+                    'Michael St.',
+                    '\'Mondlinger\'',
                     '\'MrDosinger\' & \'MsDosinger\'',
                     '\'Nebelsturm\'',
                     'Niki R.',
@@ -227,14 +240,17 @@ class AboutState extends State<About> {
                     'Peter S.-H.',
                     '\'radlerandi\'',
                     'Richard M.',
+                    '\'schatzi-s\'',
                     '\'Sechsfüssler\'',
                     'Stefan J.',
+                    'Stefan K.',
                     'Team \'kesteri\'',
                     'Thomas B.',
                     '\'tebarius\'',
                     '\'tomcat06\'',
                     '\'Vyrembi\'',
-                    '\'WeinWalker\''
+                    '\'WeinWalker\'',
+                    '\'zoRRo\''
                   ].join(', '))
                 ], style: gcwTextStyle()),
               ),

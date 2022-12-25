@@ -77,7 +77,7 @@ class HiddenDataState extends State<HiddenData> {
     );
   }
 
-  _buildHideWidget() {
+  Widget _buildHideWidget() {
     return Column(
       children: [
         GCWOpenFile(
@@ -147,7 +147,7 @@ class HiddenDataState extends State<HiddenData> {
     );
   }
 
-  _buildUnhideWidget() {
+  Widget _buildUnhideWidget() {
     return Column(
       children: [
         Container(), // fixes strange behaviour: First GCWOpenFile widget from hide/unhide affect each other
@@ -176,11 +176,18 @@ class HiddenDataState extends State<HiddenData> {
   Widget _buildOutput() {
     if (_unHideFile == null) return Container();
 
+    var _complete = false;
     var _hiddenDataList = hiddenData(_unHideFile);
+    _hiddenDataList.then((value) {
+      _complete = true;
+    });
+
     return FutureBuilder(
         future: _hiddenDataList,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.data == null || snapshot.data.isEmpty)
+          if (!_complete)
+            return GCWOutputText(text: i18n(context, 'common_please_wait'), suppressCopyButton: true);
+          else if (snapshot.data == null || snapshot.data.isEmpty)
             return GCWOutputText(text: i18n(context, 'hiddendata_nohiddendatafound'), suppressCopyButton: true);
           else
             return GCWFilesOutput(files: snapshot.data);

@@ -16,6 +16,7 @@ import 'package:gc_wizard/logic/tools/coords/converter/mgrs.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/natural_area_code.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/open_location_code.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/quadtree.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/reverse_wherigo_day1976.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/reverse_wherigo_waldmeister.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/slippy_map.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/swissgrid.dart';
@@ -44,9 +45,9 @@ const keyCoordsGaussKruegerGK2 = 'coords_gausskrueger_gk2';
 const keyCoordsGaussKruegerGK3 = 'coords_gausskrueger_gk3';
 const keyCoordsGaussKruegerGK4 = 'coords_gausskrueger_gk4';
 const keyCoordsGaussKruegerGK5 = 'coords_gausskrueger_gk5';
-const keyCoordsLambert= 'coords_lambert';
+const keyCoordsLambert = 'coords_lambert';
 const keyCoordsLambert93 = 'coords_lambert_93';
-const keyCoordsLambert2008= 'coords_lambert_2008';
+const keyCoordsLambert2008 = 'coords_lambert_2008';
 const keyCoordsLambertETRS89LCC = 'coords_lambert_etrs89lcc';
 const keyCoordsLambert72 = 'coords_lambert_72';
 const keyCoordsLambert93CC42 = 'coords_lambert_93_cc42';
@@ -69,6 +70,7 @@ const keyCoordsOpenLocationCode = 'coords_openlocationcode';
 const keyCoordsMakaney = 'coords_makaney';
 const keyCoordsQuadtree = 'coords_quadtree';
 const keyCoordsReverseWherigoWaldmeister = 'coords_reversewhereigo_waldmeister'; // typo known. DO NOT change!
+const keyCoordsReverseWherigoDay1976 = 'coords_reversewhereigo_day1976';
 
 class CoordinateFormat {
   final key;
@@ -101,22 +103,22 @@ List<CoordinateFormat> allCoordFormats = [
         CoordinateFormat(
             keyCoordsGaussKruegerGK5, 'coords_formatconverter_gausskrueger_gk5', 'R: 8837696.4, H: 5978779.5'),
       ]),
-  CoordinateFormat(keyCoordsLambert, 'coords_formatconverter_lambert', 'X: 8837763.4, Y: 5978799.1',
-      subtypes: [
-        CoordinateFormat(keyCoordsLambert93, 'coords_formatconverter_lambert_93', 'X: 8837763.4, Y: 5978799.1'),
-        CoordinateFormat(keyCoordsLambert2008, 'coords_formatconverter_lambert_2008', 'X: 8837763.4, Y: 5978799.1'),
-        CoordinateFormat(keyCoordsLambertETRS89LCC, 'coords_formatconverter_lambert_etrs89lcc', 'X: 8837763.4, Y: 5978799.1'),
-        CoordinateFormat(keyCoordsLambert72, 'coords_formatconverter_lambert_72', 'X: 8837763.4, Y: 5978799.1'),
-        CoordinateFormat(keyCoordsLambert93CC42, 'coords_formatconverter_lambert_l93cc42', 'X: 8837763.4, Y: 5978799.1'),
-        CoordinateFormat(keyCoordsLambert93CC43, 'coords_formatconverter_lambert_l93cc43', 'X: 8837763.4, Y: 5978799.1'),
-        CoordinateFormat(keyCoordsLambert93CC44, 'coords_formatconverter_lambert_l93cc44', 'X: 8837763.4, Y: 5978799.1'),
-        CoordinateFormat(keyCoordsLambert93CC45, 'coords_formatconverter_lambert_l93cc45', 'X: 8837763.4, Y: 5978799.1'),
-        CoordinateFormat(keyCoordsLambert93CC46, 'coords_formatconverter_lambert_l93cc46', 'X: 8837763.4, Y: 5978799.1'),
-        CoordinateFormat(keyCoordsLambert93CC47, 'coords_formatconverter_lambert_l93cc47', 'X: 8837763.4, Y: 5978799.1'),
-        CoordinateFormat(keyCoordsLambert93CC48, 'coords_formatconverter_lambert_l93cc48', 'X: 8837763.4, Y: 5978799.1'),
-        CoordinateFormat(keyCoordsLambert93CC49, 'coords_formatconverter_lambert_l93cc49', 'X: 8837763.4, Y: 5978799.1'),
-        CoordinateFormat(keyCoordsLambert93CC50, 'coords_formatconverter_lambert_l93cc50', 'X: 8837763.4, Y: 5978799.1'),
-      ]),
+  CoordinateFormat(keyCoordsLambert, 'coords_formatconverter_lambert', 'X: 8837763.4, Y: 5978799.1', subtypes: [
+    CoordinateFormat(keyCoordsLambert93, 'coords_formatconverter_lambert_93', 'X: 8837763.4, Y: 5978799.1'),
+    CoordinateFormat(keyCoordsLambert2008, 'coords_formatconverter_lambert_2008', 'X: 8837763.4, Y: 5978799.1'),
+    CoordinateFormat(
+        keyCoordsLambertETRS89LCC, 'coords_formatconverter_lambert_etrs89lcc', 'X: 8837763.4, Y: 5978799.1'),
+    CoordinateFormat(keyCoordsLambert72, 'coords_formatconverter_lambert_72', 'X: 8837763.4, Y: 5978799.1'),
+    CoordinateFormat(keyCoordsLambert93CC42, 'coords_formatconverter_lambert_l93cc42', 'X: 8837763.4, Y: 5978799.1'),
+    CoordinateFormat(keyCoordsLambert93CC43, 'coords_formatconverter_lambert_l93cc43', 'X: 8837763.4, Y: 5978799.1'),
+    CoordinateFormat(keyCoordsLambert93CC44, 'coords_formatconverter_lambert_l93cc44', 'X: 8837763.4, Y: 5978799.1'),
+    CoordinateFormat(keyCoordsLambert93CC45, 'coords_formatconverter_lambert_l93cc45', 'X: 8837763.4, Y: 5978799.1'),
+    CoordinateFormat(keyCoordsLambert93CC46, 'coords_formatconverter_lambert_l93cc46', 'X: 8837763.4, Y: 5978799.1'),
+    CoordinateFormat(keyCoordsLambert93CC47, 'coords_formatconverter_lambert_l93cc47', 'X: 8837763.4, Y: 5978799.1'),
+    CoordinateFormat(keyCoordsLambert93CC48, 'coords_formatconverter_lambert_l93cc48', 'X: 8837763.4, Y: 5978799.1'),
+    CoordinateFormat(keyCoordsLambert93CC49, 'coords_formatconverter_lambert_l93cc49', 'X: 8837763.4, Y: 5978799.1'),
+    CoordinateFormat(keyCoordsLambert93CC50, 'coords_formatconverter_lambert_l93cc50', 'X: 8837763.4, Y: 5978799.1'),
+  ]),
   CoordinateFormat(keyCoordsDutchGrid, 'RD (Rijksdriehoeks, DutchGrid)', 'X: 221216.7, Y: 550826.2'),
   CoordinateFormat(keyCoordsMaidenhead, 'Maidenhead Locator (QTH)', 'CN85TG09JU'),
   CoordinateFormat(keyCoordsMercator, 'Mercator', 'Y: 5667450.4, X: -13626989.9'),
@@ -124,6 +126,7 @@ List<CoordinateFormat> allCoordFormats = [
   CoordinateFormat(keyCoordsOpenLocationCode, 'OpenLocationCode (OLC, PlusCode)', '84QV7HRP+CM3'),
   CoordinateFormat(keyCoordsSlippyMap, 'Slippy Map Tiles', 'Z: 15, X: 5241, Y: 11749'),
   CoordinateFormat(keyCoordsReverseWherigoWaldmeister, 'Reverse Wherigo (Waldmeister)', '042325, 436113, 935102'),
+  CoordinateFormat(keyCoordsReverseWherigoDay1976, 'Reverse Wherigo (Day1976)', '3f8f1, z4ee4'),
   CoordinateFormat(keyCoordsGeohash, 'Geohash', 'c20cwkvr4'),
   CoordinateFormat(keyCoordsQuadtree, 'Quadtree', '021230223311203323'),
   CoordinateFormat(keyCoordsMakaney, 'Makaney (MKC)', 'M97F-BBOOI'),
@@ -432,6 +435,7 @@ class DMS extends BaseCoordinates {
 }
 
 enum HemisphereLatitude { North, South }
+
 enum HemisphereLongitude { East, West }
 
 // UTM with latitude Zones; Normal UTM is only separated into Hemispheres N and S
@@ -705,27 +709,51 @@ class SlippyMap extends BaseCoordinates {
   }
 }
 
-class Waldmeister extends BaseCoordinates {
+class ReverseWherigoWaldmeister extends BaseCoordinates {
   String get key => keyCoordsReverseWherigoWaldmeister;
   String a, b, c;
 
-  Waldmeister(this.a, this.b, this.c);
+  ReverseWherigoWaldmeister(this.a, this.b, this.c);
 
   LatLng toLatLng() {
-    return waldmeisterToLatLon(this);
+    return reverseWIGWaldmeisterToLatLon(this);
   }
 
-  static Waldmeister fromLatLon(LatLng coord) {
-    return latLonToWaldmeister(coord);
+  static ReverseWherigoWaldmeister fromLatLon(LatLng coord) {
+    return latLonToReverseWIGWaldmeister(coord);
   }
 
-  static Waldmeister parse(String input) {
-    return parseWaldmeister(input);
+  static ReverseWherigoWaldmeister parse(String input) {
+    return parseReverseWherigoWaldmeister(input);
   }
 
   @override
   String toString() {
     return '$a\n$b\n$c';
+  }
+}
+
+class ReverseWherigoDay1976 extends BaseCoordinates {
+  String get key => keyCoordsReverseWherigoDay1976;
+  String s, t;
+
+  ReverseWherigoDay1976(this.s, this.t);
+
+  LatLng toLatLng() {
+    return reverseWIGDay1976ToLatLon(this);
+  }
+
+  static ReverseWherigoDay1976 fromLatLon(LatLng coord) {
+    return latLonToReverseWIGDay1976(coord);
+  }
+
+  static ReverseWherigoDay1976 parse(String input) {
+    return parseReverseWherigoDay1976(input);
+  }
+
+  @override
+  String toString() {
+    return '$s\n$t';
   }
 }
 

@@ -21,11 +21,6 @@ class GCWCoordsPasteButton extends StatefulWidget {
 
 class _GCWCoordsPasteButtonState extends State<GCWCoordsPasteButton> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return GCWPasteButton(
       iconSize: widget.size,
@@ -37,6 +32,7 @@ class _GCWCoordsPasteButtonState extends State<GCWCoordsPasteButton> {
 
   _parseClipboardAndSetCoords(text) {
     var parsed = parseCoordinates(text);
+
     if (parsed == null || parsed.length == 0) {
       showToast(i18n(context, 'coords_common_clipboard_nocoordsfound'));
       widget.onPasted(null);

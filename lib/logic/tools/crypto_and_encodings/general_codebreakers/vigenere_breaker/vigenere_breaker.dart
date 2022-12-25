@@ -7,7 +7,9 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere.dart';
 
 enum VigenereBreakerType { VIGENERE, AUTOKEYVIGENERE, BEAUFORT }
+
 enum VigenereBreakerAlphabet { ENGLISH, GERMAN, SPANISH, FRENCH }
+
 enum VigenereBreakerErrorCode {
   OK,
   KEY_LENGTH,

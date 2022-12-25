@@ -37,9 +37,7 @@ List<BigInt> encryptRSA(List<BigInt> input, BigInt e, BigInt p, BigInt q) {
 
   if (!validateE(e, p, q)) throw Exception('rsa_error_phi.e.not.coprime');
 
-  return input
-      .where((number) => number != null)
-      .map((number) => _encryptInteger(number, e, _N)).toList();
+  return input.where((number) => number != null).map((number) => _encryptInteger(number, e, _N)).toList();
 }
 
 BigInt calculateD(BigInt e, BigInt p, BigInt q) {
@@ -69,14 +67,11 @@ List<BigInt> decryptRSA(List<BigInt> input, BigInt d, BigInt p, BigInt q) {
 
   if (d == null || p == null || q == null) return null;
 
-  return input
-      .where((number) => number != null)
-      .map((number) {
-        var _N = N(p, q);
+  return input.where((number) => number != null).map((number) {
+    var _N = N(p, q);
 
-        if (!validateD(d, p, q)) throw Exception('rsa_error_phi.d.not.coprime');
+    if (!validateD(d, p, q)) throw Exception('rsa_error_phi.d.not.coprime');
 
-        return _decryptInteger(number, d, _N);
-      })
-      .toList();
+    return _decryptInteger(number, d, _N);
+  }).toList();
 }

@@ -71,47 +71,45 @@ class IrrationalNumbersSearchState extends State<IrrationalNumbersSearch> {
   }
 
   _calculateOutput() {
-    if (_errorMessage != null)
-      return i18n(context, _errorMessage);
+    if (_errorMessage != null) return i18n(context, _errorMessage);
 
-    if (_currentInput.isEmpty)
-      return '';
+    if (_currentInput.isEmpty) return '';
 
     _totalCurrentSolutions = _solutions.length;
 
-    if (_solutions.length == 0)
-      return '';
+    if (_solutions.length == 0) return '';
 
-    var selector = (_totalCurrentSolutions != null && _totalCurrentSolutions > 1) ?
-      Container(
-        child: Row(
-          children: [
-            GCWIconButton(
-              icon: Icons.arrow_back_ios,
-              onPressed: () {
-                setState(() {
-                  _currentSolution = (_currentSolution - 1 + _totalCurrentSolutions) % _totalCurrentSolutions;
-                });
-              },
+    var selector = (_totalCurrentSolutions != null && _totalCurrentSolutions > 1)
+        ? Container(
+            child: Row(
+              children: [
+                GCWIconButton(
+                  icon: Icons.arrow_back_ios,
+                  onPressed: () {
+                    setState(() {
+                      _currentSolution = (_currentSolution - 1 + _totalCurrentSolutions) % _totalCurrentSolutions;
+                    });
+                  },
+                ),
+                Expanded(
+                  child: GCWText(
+                      align: Alignment.center,
+                      text:
+                          '${_currentSolution + 1}/${_totalCurrentSolutions}' // + (_currentSolutions.length >= _MAX_SOLUTIONS ? ' *' : ''),
+                      ),
+                ),
+                GCWIconButton(
+                  icon: Icons.arrow_forward_ios,
+                  onPressed: () {
+                    setState(() {
+                      _currentSolution = (_currentSolution + 1) % _totalCurrentSolutions;
+                    });
+                  },
+                ),
+              ],
             ),
-            Expanded(
-              child: GCWText(
-                align: Alignment.center,
-                text: '${_currentSolution + 1}/${_totalCurrentSolutions}' // + (_currentSolutions.length >= _MAX_SOLUTIONS ? ' *' : ''),
-              ),
-            ),
-            GCWIconButton(
-              icon: Icons.arrow_forward_ios,
-              onPressed: () {
-                setState(() {
-                  _currentSolution = (_currentSolution + 1) % _totalCurrentSolutions;
-                });
-              },
-            ),
-          ],
-        ),
-        margin: EdgeInsets.symmetric(vertical: 5 * DOUBLE_DEFAULT_MARGIN)
-      ) : Container();
+            margin: EdgeInsets.symmetric(vertical: 5 * DOUBLE_DEFAULT_MARGIN))
+        : Container();
 
     var _solution = _solutions[_currentSolution];
 
@@ -119,15 +117,16 @@ class IrrationalNumbersSearchState extends State<IrrationalNumbersSearch> {
       _hasWildCards ? [i18n(context, 'common_value'), _solution.value] : null,
       [i18n(context, 'common_start'), _solution.start],
       [i18n(context, 'common_end'), _solution.end]
-    ], flexValues: [2, 3]);
+    ], flexValues: [
+      2,
+      3
+    ]);
 
-    return Column(
-      children: [
-        selector,
-        Column(
-          children: output,
-        )
-      ]
-    );
+    return Column(children: [
+      selector,
+      Column(
+        children: output,
+      )
+    ]);
   }
 }

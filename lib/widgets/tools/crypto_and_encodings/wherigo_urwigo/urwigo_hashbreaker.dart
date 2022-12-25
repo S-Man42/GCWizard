@@ -7,6 +7,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class UrwigoHashBreaker extends StatefulWidget {
   @override
@@ -15,7 +16,8 @@ class UrwigoHashBreaker extends StatefulWidget {
 
 class UrwigoHashBreakerState extends State<UrwigoHashBreaker> {
   var _currentInput = 0;
-  var _currentOutput = '';
+  var _currentOutputNumeric = '29735'; // Value for initial Hash == 0;
+  var _currentOutputAlphabetical = 'bgqv'; // Value for initial Hash == 0;
 
   var _inputController;
 
@@ -67,7 +69,8 @@ class UrwigoHashBreakerState extends State<UrwigoHashBreaker> {
                     text: i18n(context, 'common_submit_button_text'),
                     onPressed: () {
                       setState(() {
-                        _currentOutput = breakUrwigoHash(_currentInput);
+                        _currentOutputAlphabetical = breakUrwigoHash(_currentInput, HASH.ALPHABETICAL);
+                        _currentOutputNumeric = breakUrwigoHash(_currentInput, HASH.NUMERIC);
                       });
                     },
                   ),
@@ -88,7 +91,12 @@ class UrwigoHashBreakerState extends State<UrwigoHashBreaker> {
 
   Widget _buildOutput(BuildContext context) {
     if (_currentMode == GCWSwitchPosition.right) {
-      return GCWDefaultOutput(child: _currentOutput);
+      return GCWDefaultOutput(
+          child: Column(
+              children: columnedMultiLineOutput(context, [
+        [i18n(context, 'common_letters'), _currentOutputAlphabetical],
+        [i18n(context, 'common_numbers'), _currentOutputNumeric]
+      ])));
     } else {
       return GCWDefaultOutput(child: RSHash(_currentTextInput).toString());
     }

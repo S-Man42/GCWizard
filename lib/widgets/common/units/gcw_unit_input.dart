@@ -3,7 +3,6 @@ import 'package:gc_wizard/logic/common/units/unit.dart';
 import 'package:gc_wizard/logic/common/units/unit_category.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
-import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/units/gcw_unit_dropdownbutton.dart';
 
 class GCWUnitInput extends StatefulWidget {

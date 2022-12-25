@@ -1,9 +1,10 @@
-﻿import 'dart:core';
+import 'dart:core';
 import 'dart:math';
 
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/piet_block.dart';
 
-const knownColors = [ //format RGB
+const knownColors = [
+  //format RGB
   // reds
   0xFFC0C0, // light
   0xFF0000,
@@ -93,4 +94,3 @@ class PietBlockerBuilder {
     if (xOffset != -1) _buildPietBlockRec(newX, newY, 1, 0);
   }
 }
-

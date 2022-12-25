@@ -50,7 +50,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   SymbolReplacerImage _symbolImage;
   local.GCWFile _platformFile;
   double _blackLevel = 50.0;
-  double _similarityLevel = 100.0;
+  double _similarityLevel = 90.0;
   double _similarityCompareLevel = 80.0;
   var _currentSimpleMode = GCWSwitchPosition.left;
   List<GCWDropDownMenuItem> _compareSymbolItems;
@@ -409,7 +409,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
           className(SymbolTable()),
         ].contains(className(element.tool));
       }).toList();
-      _toolList.sort((a, b) => sortToolListAlphabetically(a, b));
+      _toolList.sort((a, b) => sortToolList(a, b));
 
       _compareSymbolItems = _toolList.map((tool) {
         return GCWDropDownMenuItem(

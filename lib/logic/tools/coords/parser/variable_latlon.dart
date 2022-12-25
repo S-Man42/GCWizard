@@ -1,7 +1,7 @@
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
 import 'package:gc_wizard/logic/tools/coords/projection.dart';
-import 'package:gc_wizard/logic/tools/formula_solver/parser.dart';
+import 'package:gc_wizard/logic/tools/formula_solver/formula_parser.dart';
 import 'package:gc_wizard/persistence/formula_solver/model.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:latlong2/latlong.dart';

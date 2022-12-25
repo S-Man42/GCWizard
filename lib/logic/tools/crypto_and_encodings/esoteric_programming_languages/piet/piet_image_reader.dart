@@ -1,5 +1,6 @@
-﻿import 'dart:core';
+import 'dart:core';
 import 'dart:typed_data';
+
 import 'package:image/image.dart' as img;
 
 class PietImageReader {
@@ -51,4 +52,3 @@ class PietImageReader {
     return minCount;
   }
 }
-

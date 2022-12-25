@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
@@ -6,7 +8,8 @@ import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_delete_alertdialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/favorites.dart';
-import 'package:gc_wizard/widgets/utils/AppBuilder.dart';
+import 'package:gc_wizard/widgets/main_view.dart';
+import 'package:gc_wizard/widgets/utils/app_builder.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:prefs/prefs.dart';
 
@@ -22,11 +25,21 @@ class GCWToolList extends StatefulWidget {
 class _GCWToolListState extends State<GCWToolList> {
   @override
   Widget build(BuildContext context) {
-    return _buildItems();
+
+    return ScrollConfiguration(
+      behavior: ScrollConfiguration.of(context).copyWith(
+        dragDevices: {
+          PointerDeviceKind.touch,
+          PointerDeviceKind.mouse
+        },
+      ),
+      child: _buildItems(),
+    );
   }
 
   Widget _buildItems() {
     return ListView.separated(
+      physics: AlwaysScrollableScrollPhysics(),
       itemCount: widget.toolList.length,
       separatorBuilder: (BuildContext context, int index) => Divider(),
       itemBuilder: (BuildContext context, int i) {
@@ -63,7 +76,11 @@ class _GCWToolListState extends State<GCWToolList> {
       ),
       subtitle: _buildSubtitle(context, tool),
       onTap: () {
-        _navigateToSubPage(context);
+        setState(() {
+          _navigateToSubPage(context);
+          refreshToolLists();
+          AppBuilder.of(context).rebuild();
+        });
       },
       leading: tool.icon,
       trailing: IconButton(
@@ -92,7 +109,9 @@ class _GCWToolListState extends State<GCWToolList> {
 
   _buildSubtitle(BuildContext context, GCWTool tool) {
     var descriptionText;
-    if (Prefs.getBool(PREFERENCE_TOOLLIST_SHOW_DESCRIPTIONS) && tool.description != null && tool.description.length > 0) {
+    if (Prefs.getBool(PREFERENCE_TOOLLIST_SHOW_DESCRIPTIONS) &&
+        tool.description != null &&
+        tool.description.length > 0) {
       descriptionText = IgnorePointer(
           child: GCWText(
         text: tool.description,

@@ -1,4 +1,4 @@
-﻿import 'package:tuple/tuple.dart';
+import 'package:tuple/tuple.dart';
 
 class PietStack {
   List<int> _stack = <int>[];
@@ -25,18 +25,12 @@ class PietStack {
   }
 
   int divide() {
-    _applyTernaryIf(
-        (int s1, int s2) => (s2 / s1).toInt(),
-        (_, int s2) => s2 != 0
-    );
+    _applyTernaryIf((int s1, int s2) => (s2 / s1).toInt(), (_, int s2) => s2 != 0);
   }
 
   int mod() {
     // per the spec take the second value mod the first
-    _applyTernaryIf(
-        (int s1, int s2) => m(s2, s1),
-        (int s1, _) => s1 != 0
-    );
+    _applyTernaryIf((int s1, int s2) => m(s2, s1), (int s1, _) => s1 != 0);
   }
 
   /// <summary>
@@ -135,19 +129,16 @@ class PietStack {
 
     var stack1 = PietStack();
     var stack2 = PietStack();
-    for (var i = 0; i < depth; i++)
-    {
+    for (var i = 0; i < depth; i++) {
       if (i < absoluteIterations)
         stack1.push(pop());
       else
         stack2.push(pop());
     }
 
-    while (stack1.length > 0)
-      push(stack1.pop());
+    while (stack1.length > 0) push(stack1.pop());
 
-    while (stack2.length > 0)
-      push(stack2.pop());
+    while (stack2.length > 0) push(stack2.pop());
 
     return true;
   }
@@ -159,21 +150,17 @@ class PietStack {
 
     var stack1 = PietStack();
     var stack2 = PietStack();
-    for (var i = depth; i > 0; i--)
-    {
+    for (var i = depth; i > 0; i--) {
       if (i <= absoluteIterations)
         stack1.push(pop());
       else
         stack2.push(pop());
     }
 
-    while (stack2.length > 0)
-      push(stack2.pop());
+    while (stack2.length > 0) push(stack2.pop());
 
-    while (stack1.length > 0)
-      push(stack1.pop());
+    while (stack1.length > 0) push(stack1.pop());
 
     return true;
   }
 }
-

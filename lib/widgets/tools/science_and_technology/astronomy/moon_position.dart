@@ -57,8 +57,7 @@ class MoonPositionState extends State<MoonPosition> {
 
     var julianDate = JulianDate(_currentDateTime['datetime'], _currentDateTime['timezone']);
 
-    var moonPosition =
-        logic.MoonPosition(_currentCoords, julianDate, defaultEllipsoid());
+    var moonPosition = logic.MoonPosition(_currentCoords, julianDate, defaultEllipsoid());
 
     var outputsMoon = [
       [i18n(context, 'astronomy_position_eclipticlongitude'), format.format(moonPosition.eclipticLongitude) + '°'],

@@ -9,6 +9,9 @@ import 'package:gc_wizard/widgets/selector_lists/e_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/phi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/pi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/silverratio_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/sqrt2_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/sqrt3_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/sqrt5_selection.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 
@@ -66,16 +69,11 @@ class MathematicalConstantsState extends State<MathematicalConstants> {
           additionalNames.add(constant.key);
           additionalNames.remove(name);
 
-          var mapValue = {
-            'value': value,
-            'additional_names': additionalNames
-          };
+          var mapValue = {'value': value, 'additional_names': additionalNames};
 
-          if (symbol != null)
-            mapValue.putIfAbsent('symbol', () => symbol);
+          if (symbol != null) mapValue.putIfAbsent('symbol', () => symbol);
 
-          if (tool != null)
-            mapValue.putIfAbsent('tool', () => tool);
+          if (tool != null) mapValue.putIfAbsent('tool', () => tool);
 
           _constants.putIfAbsent(mapKey, () => mapValue);
         });
@@ -99,18 +97,18 @@ class MathematicalConstantsState extends State<MathematicalConstants> {
     if (constantData['additional_names'] != null) {
       print(constantData['additional_names']);
 
-      names = constantData['additional_names']
-          .map<String>((name) => i18n(context, name))
-          .toList();
+      names = constantData['additional_names'].map<String>((name) => i18n(context, name)).toList();
     }
 
     var data = [
-      constantData['symbol'] != null ?  [i18n(context, 'physical_constants_symbol'), constantData['symbol']] : null,
+      constantData['symbol'] != null
+          ? [
+              i18n(context, 'physical_constants_symbol'),
+              buildSubOrSuperscriptedRichTextIfNecessary(constantData['symbol'])
+            ]
+          : null,
       [i18n(context, 'physical_constants_value'), constantData['value']],
-      names != null ? [
-        i18n(context, 'mathematical_constants_additionalnames'),
-        names.join('\n')
-      ] : null
+      names != null ? [i18n(context, 'mathematical_constants_additionalnames'), names.join('\n')] : null
     ];
 
     var dataView = Column(
@@ -120,16 +118,12 @@ class MathematicalConstantsState extends State<MathematicalConstants> {
     var toolLink = _buildToolLink(constantData['tool']);
 
     return Column(
-      children: [
-        dataView,
-        toolLink
-      ],
+      children: [dataView, toolLink],
     );
   }
 
   _buildToolLink(String toolReference) {
-    if (toolReference == null)
-      return Container();
+    if (toolReference == null) return Container();
 
     Widget widget;
     String title;
@@ -150,7 +144,20 @@ class MathematicalConstantsState extends State<MathematicalConstants> {
         widget = SilverRatioSelection();
         title = 'silverratio_selection_title';
         break;
-      default: return Container();
+      case 'sqrt2':
+        widget = SQRT2Selection();
+        title = 'sqrt2_selection_title';
+        break;
+      case 'sqrt3':
+        widget = SQRT3Selection();
+        title = 'sqrt3_selection_title';
+        break;
+      case 'sqrt5':
+        widget = SQRT5Selection();
+        title = 'sqrt5_selection_title';
+        break;
+      default:
+        return Container();
     }
 
     return GCWButton(
@@ -159,10 +166,8 @@ class MathematicalConstantsState extends State<MathematicalConstants> {
         Navigator.push(
             context,
             NoAnimationMaterialPageRoute(
-                builder: (context) => GCWTool(
-                    tool: widget, toolName: i18n(context, title), i18nPrefix: '')));
+                builder: (context) => GCWTool(tool: widget, toolName: i18n(context, title), i18nPrefix: '')));
       },
     );
-
   }
 }

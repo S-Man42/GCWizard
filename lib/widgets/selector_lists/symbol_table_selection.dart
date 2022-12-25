@@ -17,7 +17,7 @@ class SymbolTableSelection extends GCWSelection {
       ].contains(className(element.tool));
     }).toList();
 
-    _toolList.sort((a, b) => sortToolListAlphabetically(a, b));
+    _toolList.sort((a, b) => sortToolList(a, b));
 
     _toolList.insert(0, registeredTools.firstWhere((element) {
       return [
@@ -36,7 +36,7 @@ class SymbolTableSelection extends GCWSelection {
 }
 
 String symboltablesDownloadLink(BuildContext context) {
-  final _SUPPORTED_LANGUAGES = ['de', 'en', 'fr', 'ko', 'nl'];
+  final _SUPPORTED_LANGUAGES = ['de', 'en', 'fr', 'ko', 'nl', 'sv', 'se'];
   var locale = Localizations.localeOf(context).languageCode;
 
   var usedLocale = 'en';

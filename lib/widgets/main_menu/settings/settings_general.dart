@@ -19,11 +19,12 @@ import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/common/units/gcw_unit_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/main_menu/settings/settings_preferences.dart';
-import 'package:gc_wizard/widgets/utils/AppBuilder.dart';
+import 'package:gc_wizard/widgets/main_view.dart';
+import 'package:gc_wizard/widgets/utils/app_builder.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:prefs/prefs.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class GeneralSettings extends StatefulWidget {
   @override
@@ -159,6 +160,19 @@ class GeneralSettingsState extends State<GeneralSettings> {
             });
           },
         ),
+        GCWTwoOptionsSwitch(
+          value: Prefs.getBool(PREFERENCE_TOOL_COUNT_SORT) ? GCWSwitchPosition.left : GCWSwitchPosition.right,
+          leftValue: i18n(context, 'settings_general_toollist_toolcount_sort_on'),
+          rightValue: i18n(context, 'settings_general_toollist_toolcount_sort_off'),
+          title: i18n(context, 'settings_general_toollist_toolcount_sort'),
+          onChanged: (value) {
+            setState(() {
+              Prefs.setBool(PREFERENCE_TOOL_COUNT_SORT, value == GCWSwitchPosition.left);
+              refreshToolLists();
+              AppBuilder.of(context).rebuild();
+            });
+          },
+        ),
         GCWTextDivider(text: i18n(context, 'settings_general_defaulttab')),
         GCWTwoOptionsSwitch(
           title: i18n(context, 'settings_general_defaulttab_atstart'),
@@ -236,38 +250,27 @@ class GeneralSettingsState extends State<GeneralSettings> {
           },
         ),
 
-
         // always on bottom
-        Container(
-          margin: EdgeInsets.only(top: 25.0),
-          child: GCWDivider()
-        ),
+        Container(margin: EdgeInsets.only(top: 25.0), child: GCWDivider()),
         InkWell(
-          child: Icon(
-            Icons.more_horiz,
-            size: 20.0
-          ),
+          child: Icon(Icons.more_horiz, size: 20.0),
           onTap: () {
             showGCWAlertDialog(
               context,
               i18n(context, 'settings_preferences_warning_title'),
               i18n(context, 'settings_preferences_warning_text'),
               () {
-                Navigator.of(context).push(NoAnimationMaterialPageRoute(
-                    builder: (context) => GCWTool(
-                        tool: SettingsPreferences(),
-                        i18nPrefix: 'settings_preferences'))).whenComplete(() {
-                    setState(() {
-                      AppBuilder.of(context).rebuild();
-                    });
+                Navigator.of(context)
+                    .push(NoAnimationMaterialPageRoute(
+                        builder: (context) => GCWTool(tool: SettingsPreferences(), i18nPrefix: 'settings_preferences')))
+                    .whenComplete(() {
+                  setState(() {
+                    AppBuilder.of(context).rebuild();
+                  });
 
-                    showGCWAlertDialog(
-                      context,
-                      i18n(context, 'settings_preferences_aftermath_title'),
-                      i18n(context, 'settings_preferences_aftermath_text'),
-                      () {},
-                      cancelButton: false
-                    );
+                  showGCWAlertDialog(context, i18n(context, 'settings_preferences_aftermath_title'),
+                      i18n(context, 'settings_preferences_aftermath_text'), () {},
+                      cancelButton: false);
                 });
               },
             );

@@ -111,10 +111,11 @@ class PietState extends State<Piet> {
     if (_originalData?.bytes == null) return GCWDefaultOutput();
     if (_currentInterpreterOutput == null) return GCWDefaultOutput(child: i18n(context, 'common_please_wait'));
 
-    return GCWDefaultOutput( child:
-      (_currentInterpreterOutput.output ?? '') +
-          (_currentInterpreterOutput.error && (_currentInterpreterOutput.errorText != null) ? '\n' +
-          (i18n(context, _currentInterpreterOutput.errorText) ?? _currentInterpreterOutput.errorText) : ''),
+    return GCWDefaultOutput(
+      child: (_currentInterpreterOutput.output ?? '') +
+          (_currentInterpreterOutput.error && (_currentInterpreterOutput.errorText != null)
+              ? '\n' + (i18n(context, _currentInterpreterOutput.errorText) ?? _currentInterpreterOutput.errorText)
+              : ''),
     );
   }
 
@@ -125,7 +126,8 @@ class PietState extends State<Piet> {
 
     var imageReader = PietImageReader();
     var _pietPixels = _currentInterpreterOutput?.state?.data ?? imageReader.readImage(_originalData.bytes);
-    var currentOutputFuture = interpretPiet(_pietPixels, _currentInterpreterInput, continueState: _currentInterpreterOutput?.state);
+    var currentOutputFuture =
+        interpretPiet(_pietPixels, _currentInterpreterInput, continueState: _currentInterpreterOutput?.state);
 
     currentOutputFuture.then((output) {
       if (output.finished) {
@@ -167,10 +169,7 @@ class PietState extends State<Piet> {
   Widget _buildGeneratorOutput(BuildContext context) {
     if (_currentGeneratorOutput == null) return GCWDefaultOutput();
 
-    return GCWDefaultOutput( child:
-      GCWImageView(
-        imageData: GCWImageViewData(GCWFile(bytes: _currentGeneratorOutput))
-    ));
+    return GCWDefaultOutput(child: GCWImageView(imageData: GCWImageViewData(GCWFile(bytes: _currentGeneratorOutput))));
   }
 
   void _calcGeneratorOutput() async {

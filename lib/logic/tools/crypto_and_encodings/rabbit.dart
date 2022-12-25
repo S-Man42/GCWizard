@@ -7,7 +7,9 @@ import 'dart:typed_data';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/rc4.dart' as rc4;
 
 enum InputFormat { AUTO, TEXT, HEX, BINARY, ASCIIVALUES }
+
 enum OutputFormat { TEXT, HEX, BINARY, ASCIIVALUES }
+
 enum ErrorCode { OK, INPUT_FORMAT, KEY_FORMAT, MISSING_KEY, IV_FORMAT }
 
 class RabbitOutput {
@@ -19,12 +21,8 @@ class RabbitOutput {
   RabbitOutput(this.output, this.keyHexFormat, this.ivHexFormat, this.errorCode);
 }
 
-RabbitOutput cryptRabbit(
-    String input, InputFormat inputFormat,
-    String key, InputFormat keyFormat,
-    String initializationVector, InputFormat ivFormat,
-    OutputFormat outputFormat ) {
-
+RabbitOutput cryptRabbit(String input, InputFormat inputFormat, String key, InputFormat keyFormat,
+    String initializationVector, InputFormat ivFormat, OutputFormat outputFormat) {
   if (input == null || input == '') return RabbitOutput('', null, null, ErrorCode.OK);
 
   var inputList = rc4.convertInputToIntList(input, _convertInputFormatEnum(inputFormat));
@@ -55,9 +53,7 @@ RabbitOutput cryptRabbit(
   var output = rabbit.cryptData(inputData);
 
   return RabbitOutput(rc4.formatOutput(output, _convertOutputFormatEnum(outputFormat)),
-      rc4.formatOutput(keyData, rc4.OutputFormat.HEX),
-      rc4.formatOutput(ivData, rc4.OutputFormat.HEX),
-      ErrorCode.OK);
+      rc4.formatOutput(keyData, rc4.OutputFormat.HEX), rc4.formatOutput(ivData, rc4.OutputFormat.HEX), ErrorCode.OK);
 }
 
 Uint8List _generateData(List<int> data, int length) {
@@ -65,14 +61,13 @@ Uint8List _generateData(List<int> data, int length) {
 
   var list = Uint8List(length);
   list.fillRange(0, list.length, 0);
-  for (var i = 0; i< min(data.length, length); i++)
-    list[i] = data[i] & 0xFF;
+  for (var i = 0; i < min(data.length, length); i++) list[i] = data[i] & 0xFF;
 
   return list;
 }
 
 rc4.InputFormat _convertInputFormatEnum(InputFormat inputFormat) {
-  switch(inputFormat) {
+  switch (inputFormat) {
     case InputFormat.TEXT:
       return rc4.InputFormat.TEXT;
     case InputFormat.HEX:
@@ -87,7 +82,7 @@ rc4.InputFormat _convertInputFormatEnum(InputFormat inputFormat) {
 }
 
 rc4.OutputFormat _convertOutputFormatEnum(OutputFormat outputFormat) {
-  switch(outputFormat) {
+  switch (outputFormat) {
     case OutputFormat.HEX:
       return rc4.OutputFormat.HEX;
     case OutputFormat.BINARY:
@@ -131,18 +126,16 @@ class Rabbit {
 
     var output = Uint8List(msg.length);
     /* Encrypt/decrypt the data */
-    for (var i=0; i < msg.length; i++)
-      output[i] = msg[i] ^ keyStream[i];
+    for (var i = 0; i < msg.length; i++) output[i] = msg[i] ^ keyStream[i];
 
     return output;
   }
-
 
   Uint8List keyStreamBytes(int length) {
     if (!initialized)
       // Cannot get KeyStream if object not initialized! Call Initialize(x[,x]) first!
       return null;
-    if (length== null || length < 1)
+    if (length == null || length < 1)
       // Length must be an integer greater than 1.");
       return null;
 
@@ -180,7 +173,7 @@ class Rabbit {
   }
 
   int _fromBytesToUInt32(Uint8List list, int offset) {
-    return ByteData.sublistView(list, offset, offset+4).getUint32(0, Endian.little);
+    return ByteData.sublistView(list, offset, offset + 4).getUint32(0, Endian.little);
   }
 
   Uint8List _fromUInt32ToBytes(Uint32List list) {
@@ -213,8 +206,7 @@ class Rabbit {
     int i;
 
     /* Save old counter values */
-    for (i = 0; i < 8; i++)
-      c_old[i] = ctx.counters[i];
+    for (i = 0; i < 8; i++) c_old[i] = ctx.counters[i];
 
     /* Calculate new counter values */
     ctx.counters[0] = _uint32(ctx.counters[0] + 0x4D34D34D + ctx.carry);
@@ -228,8 +220,7 @@ class Rabbit {
     ctx.carry = (ctx.counters[7] < c_old[7] ? 1 : 0);
 
     /* Calculate the g-values */
-    for (i = 0; i < 8; i++)
-      g[i] = _g(_uint32(ctx.state[i] + ctx.counters[i]));
+    for (i = 0; i < 8; i++) g[i] = _g(_uint32(ctx.state[i] + ctx.counters[i]));
 
     /* Calculate new state values */
     ctx.state[0] = _uint32(g[0] + _rotateLeft(g[7], 16) + _rotateLeft(g[6], 16));
@@ -243,15 +234,14 @@ class Rabbit {
   }
 
   /* Key setup */
-  void _keySetup(Uint8List key){
+  void _keySetup(Uint8List key) {
     /* Temporary variables */
     var k = Uint32List.fromList([0, 0, 0, 0]);
     int i;
 
     /* Generate four subkeys */
     if (key != null) {
-      for (i = 0; i< k.length; i++)
-        k[i] = _fromBytesToUInt32(key, i*4); // 16 Bytes to 4 UInt32
+      for (i = 0; i < k.length; i++) k[i] = _fromBytesToUInt32(key, i * 4); // 16 Bytes to 4 UInt32
     }
 
     /* Generate initial state variables */
@@ -278,12 +268,10 @@ class Rabbit {
     _master.carry = 0;
 
     /* Iterate the system four times */
-    for (i = 0; i < 4; i++)
-      _nextState(_master);
+    for (i = 0; i < 4; i++) _nextState(_master);
 
     /* Modify the counters */
-    for (i = 0; i < 8; i++)
-      _master.counters[i] ^= _master.state[(i + 4) & 0x7];
+    for (i = 0; i < 8; i++) _master.counters[i] ^= _master.state[(i + 4) & 0x7];
 
     /* Copy master instance to work instance */
     _working = _master.clone(true); // include counters
@@ -291,7 +279,8 @@ class Rabbit {
 
   /* IV setup */
   bool _ivSetup(Uint8List iv) {
-    if (iv == null) return false;;
+    if (iv == null) return false;
+    ;
 
     /* Temporary variables */
     var ii = Uint32List.fromList([0, 0, 0, 0]);
@@ -317,8 +306,7 @@ class Rabbit {
     _working.counters[7] = _master.counters[7] ^ ii[3];
 
     /* Iterate the system four times */
-    for (i = 0; i < 4; i++)
-      _nextState(_working);
+    for (i = 0; i < 4; i++) _nextState(_working);
 
     return true;
   }
@@ -338,16 +326,13 @@ class _context {
   _context clone(bool IncludeCounters) {
     var temp = _context();
     temp.carry = this.carry;
-    if (IncludeCounters)
-      temp.counters.setRange(0, this.counters.length, this.counters);
+    if (IncludeCounters) temp.counters.setRange(0, this.counters.length, this.counters);
     temp.state.setRange(0, this.state.length, this.state);
     return temp;
   }
 
   void clear() {
     carry = 0;
-    for (int i = 0; i < counters.length; i++)
-      counters[i] = state[i] = 0;
+    for (int i = 0; i < counters.length; i++) counters[i] = state[i] = 0;
   }
 }
-

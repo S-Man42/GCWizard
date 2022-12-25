@@ -23,6 +23,7 @@ enum KeyboardType {
   FRA_AZERTY,
   FRA_BEPO
 }
+
 final Map QWERTZ_T1NumberToSymbol = {
   '1': '!',
   '2': '"',

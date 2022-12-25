@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
+import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_textfield.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 
@@ -82,7 +82,6 @@ class GCWCoordsLambertState extends State<GCWCoordsLambert> {
           }),
     ]);
   }
-
 
   bool _subtypeChanged() {
     return _currentSubtype != getLambertType(widget.subtype);
