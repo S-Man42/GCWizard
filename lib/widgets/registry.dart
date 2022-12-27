@@ -118,6 +118,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/algol.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/alphabet_values.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/amsco.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/atbash.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/avemaria.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/babylon_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bacon.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base122.dart';
@@ -485,6 +486,11 @@ initializeRegistry(BuildContext context) {
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: [
       'atbash',
+    ]),
+    GCWTool(tool: AveMaria(), i18nPrefix: 'avemaria', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'avemaria',
     ]),
     GCWTool(
         tool: BabylonNumbersSelection(),

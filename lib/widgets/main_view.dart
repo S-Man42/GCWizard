@@ -79,6 +79,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/algol.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/alphabet_values.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/amsco.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/atbash.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/avemaria.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bacon.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/beghilos.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
@@ -468,6 +469,7 @@ void _initStaticToolList() {
       className(ASCIIValues()),
       className(Atbash()),
       className(AtomicNumbersToText()),
+      className(AveMaria()),
       className(BabylonNumbersSelection()),
       className(Bacon()),
       className(BaseSelection()),
