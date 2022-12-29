@@ -68,13 +68,13 @@ bool _isSolveable(List<List<int>> pyramid) {
   return true;
 }
 
-int _getMaxValue(List<List<int>> pyramid, int layer, int brick) {
-  /* Tries to find the maximum possible value for a specific brick
-
+/* Tries to find the maximum possible value for a specific brick
 			Keyword arguments:
 			pyramid -- The pyramid
 			layer/brick -- The location of the brick to get the max value for
-		*/
+*/
+int _getMaxValue(List<List<int>> pyramid, int layer, int brick) {
+
 
   // if brick already has a value, this is the maximum
   if (pyramid[layer][brick] != null)
@@ -88,7 +88,6 @@ int _getMaxValue(List<List<int>> pyramid, int layer, int brick) {
 }
 
 /* Tries to find a solution for a given pyramid and brick by guessing values
-
 			Keyword arguments:
 			pyramid -- The pyramid
 			brick -- Index of the brick (always bottom layer!)
@@ -109,12 +108,11 @@ void _solveGuess(List<List<int>> pyramid, int brick) {
     if (_isSolveable(pyramid)) {
       // try to repair
       var repairedPyramid = _solveRepair(_copyPyramid(pyramid));
-      if (!_isSolved(repairedPyramid))
+      if (!_isSolved(repairedPyramid)) {
         if ((brick + 1) < pyramid.length)
           _solveGuess(repairedPyramid, brick + 1);
-        else
-          if (_solutions.length < _MAX_SOLUTIONS)
-            _solutions.add(repairedPyramid);
+      } else if (_solutions.length < _MAX_SOLUTIONS)
+        _solutions.add(repairedPyramid);
     }
   }
 }
@@ -128,7 +126,6 @@ List<List<int>> _copyPyramid(List<List<int>> pyramid) {
 }
 
 /* Tries to find a solution for a given pyramid by repairing it
-
 			Keyword arguments:
 			pyramid -- The pyramid
 */
