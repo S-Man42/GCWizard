@@ -117,21 +117,21 @@ class NumberPyramid {
 		if (json == null) return null;
 
 		NumberPyramid pyramid;
-		var rowCount = jsonDecode(json)['rows'];
-		var values = jsonDecode(json)['values'];
+		var rowCount = json['rows'];
+		var values = json['values'];
 		if (rowCount == null) return null;
 
 		pyramid = NumberPyramid(rowCount);
 		if (values != null) {
-			for (var jsonElement in values) {
+			for (var jsonElement in jsonDecode(values)) {
 				var element = jsonDecode(jsonElement);
 				var x = element['x'];
 				var y = element['y'];
-				var value = element['value'];
+				var value = element['v'];
 				var ud = element['ud'];
 				if (x != null && y != null && value != null) {
 					var type = (ud == '1') ? NumberPyramidFillType.USER_FILLED : NumberPyramidFillType.CALCULATED;
-					pyramid.setValue(y, x, value, type);
+					pyramid.setValue(y, x, int.tryParse(value), type);
 				}
 			}
 		}

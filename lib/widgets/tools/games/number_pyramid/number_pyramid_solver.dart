@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
@@ -32,15 +34,17 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
   int _currentValue;
   int _boardX;
   int _boardY;
+  double _scale = 1;
   TextEditingController _currentInputController;
   IntegerTextInputFormatter _integerInputFormatter;
-
+  FocusNode _currentValueFocusNode;
 
   @override
   void initState() {
     super.initState();
     _currentInputController = TextEditingController();
     _integerInputFormatter = IntegerTextInputFormatter(min: 0, max: 999999);
+    _currentValueFocusNode = FocusNode();
 
     _currentBoard = NumberPyramid(_rowCount);
   }
@@ -48,6 +52,7 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
   @override
   void dispose() {
     _currentInputController.dispose();
+    _currentValueFocusNode.dispose();
 
     super.dispose();
   }
@@ -79,6 +84,25 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
         Container(height: 10),
         GCWTextDivider(
             trailing: Row(children: <Widget>[
+              GCWIconButton(
+                size: IconButtonSize.SMALL,
+                icon: Icons.zoom_in,
+                onPressed: () {
+                  setState(() {
+                    _scale += 0.1;
+                  });
+                },
+              ),
+              GCWIconButton(
+                size: IconButtonSize.SMALL,
+                icon: Icons.zoom_out,
+                onPressed: () {
+                  setState(() {
+                    _scale = max(0.1, _scale - 0.1);
+                  });
+                },
+              ),
+              Container(width: 5),
               GCWPasteButton(
                 iconSize: IconButtonSize.SMALL,
                 onSelected: _parseClipboard,
@@ -99,7 +123,7 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
               scrollDirection: Axis.horizontal,
               physics: AlwaysScrollableScrollPhysics(),
               child: Container(
-                constraints: BoxConstraints(maxWidth: 100.0 * _rowCount),
+                constraints: BoxConstraints(maxWidth: 100.0 * _rowCount * _scale),
                 child: NumberPyramidBoard(
                   board: _currentBoard,
                   onChanged: (newBoard) {
@@ -118,9 +142,8 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
           title: i18n(context, 'common_value'),
           controller: _currentInputController,
           inputFormatters: [_integerInputFormatter],
-          // min: 0,
-          // max: 99999,
-          // value: _currentValue,
+          //autofocus: true,
+          focusNode: _currentValueFocusNode,
           onChanged: (value) {
             setState(() {
               _currentValue = int.tryParse(value);
@@ -241,6 +264,9 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
       _boardY = y;
       _currentValue = _currentBoard.getValue(x, y);
       _currentInputController.text = _currentValue == null ? '' : _currentValue.toString();
+      //_currentValueFocusNode.requestFocus(); 
+      FocusScope.of(context).requestFocus(_currentValueFocusNode);
+      //FocusScope.withExternalFocusNode(child: child, focusScopeNode: focusScopeNode).of(context)
     });
   }
 
