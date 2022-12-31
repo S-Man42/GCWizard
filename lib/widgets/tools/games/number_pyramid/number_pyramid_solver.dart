@@ -130,6 +130,8 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
                     setState(() {
                       _currentBoard = newBoard;
                       _currentSolutions = null;
+                      selectedBox = null;
+                      _showBoxValue(null, null);
                     });
                   },
                   showBoxValue: _showBoxValue,
@@ -264,13 +266,11 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
       _boardY = y;
       _currentValue = _currentBoard.getValue(x, y);
       _currentInputController.text = _currentValue == null ? '' : _currentValue.toString();
-      // _currentInputController.
-      // _currentInputController.selection = TextSelection(baseOffset: 0, extentOffset: _currentValue == null ? 0: _currentValue.toString().length));
-      //_currentValueFocusNode.requestFocus();
-      //FocusScope.of(context).previousFocus();
-      //FocusScope.of(context).requestFocus(_currentValueFocusNode);
-      //FocusScope.withExternalFocusNode(child: child, focusScopeNode: focusScopeNode).of(context)
-      print(FocusScope.of(context).focusedChild.toString());
+
+      if (_currentBoard.validPosition(x, y))
+        _currentValueFocusNode.requestFocus();
+      else
+        _currentValueFocusNode.unfocus();
     });
   }
 
@@ -284,6 +284,8 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
         _currentBoard = matrix;
         _rowCount = matrix.rowCount;
       }
+      selectedBox = null;
+      _showBoxValue(null, null);
     });
   }
 }

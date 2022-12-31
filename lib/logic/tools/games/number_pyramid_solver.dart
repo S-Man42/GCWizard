@@ -37,16 +37,16 @@ class NumberPyramid {
 	}
 
 	int getValue(int x, int y) {
-		if (!_validPosition(x, y) || pyramid[y][x] == null)
+		if (!validPosition(x, y) || pyramid[y][x] == null)
 			return null;
 		return pyramid[y][x]['value'];
 	}
 
-	// return value changed
+	/// return value changed
 	bool setValue(int x, int y, int value, NumberPyramidFillType type) {
 		int oldValue;
 		bool valueChanged = false;
-		if (!_validPosition(x, y)) return false;
+		if (!validPosition(x, y)) return false;
 
 		oldValue = getValue(x, y);
 		if (value != oldValue)
@@ -58,7 +58,7 @@ class NumberPyramid {
 	}
 
 	NumberPyramidFillType getType(int x, int y) {
-		if (!_validPosition(x, y)) return null;
+		if (!validPosition(x, y)) return null;
 
 		if (pyramid[y][x] != null)
 			return pyramid[y][x]['type'];
@@ -66,8 +66,10 @@ class NumberPyramid {
 		return null;
 	}
 
-	bool _validPosition(int x, int y) {
-		return !(pyramid == null || y >= pyramid.length || pyramid[y] == null || x >= pyramid[y].length);
+	bool validPosition(int x, int y) {
+		return !(pyramid == null || x == null || y == null ||
+				y < 0 || y >= pyramid.length || pyramid[y] == null ||
+				x < 0 || x >= pyramid[y].length);
 	}
 
 	List<List<int>> solveableBoard() {
@@ -91,16 +93,15 @@ class NumberPyramid {
 	}
 
 	String toJson() {
-		var list = <String>[];
+		var list = <Map<String, dynamic>>[];
 		for(var y = 0; y < pyramid.length; y++) {
 			for (var x = 0; x < pyramid[y].length; x++) {
 				var value = getValue(x, y);
 				var type = getType(x, y);
 				if (value != null) {
-					var entryList = {'x': x, 'y': y, 'value': value};
-					// if (type == NumberPyramidFillType.USER_FILLED) entryList.addAll({'ud': 1});
-					// list.add(jsonEncode(entryList));
-					list.add(jsonEncode(ArrayEntry(x, y, value.toString(), type == NumberPyramidFillType.USER_FILLED)));
+					var entryList = <String, dynamic>{'x': x, 'y': y, 'value': value};
+					if (type == NumberPyramidFillType.USER_FILLED) entryList.addAll({'ud': true});
+					list.add(entryList);
 				}
 			}
 		}
@@ -137,26 +138,4 @@ class NumberPyramid {
 		}
 		return pyramid;
 	}
-}
-
-class ArrayEntry {
-	final int x;
-	final int y;
-	final String value;
-	final bool userDefinied;
-
-	ArrayEntry(this.x, this.y, this.value, this.userDefinied);
-
-	ArrayEntry.fromJson(Map<String, dynamic> json)
-			: x = json['x'],
-				y = json['y'],
-				value = json['v'],
-				userDefinied = json['ud'];
-
-	Map<String, dynamic> toJson() => {
-		'x': x,
-		'y': y,
-		'v': value,
-		'ud': userDefinied
-	};
 }

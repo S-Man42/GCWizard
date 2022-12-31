@@ -5,7 +5,7 @@ import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:touchable/touchable.dart';
 
-Point<int> _selectedBox;
+Point<int> selectedBox;
 
 class NumberPyramidBoard extends StatefulWidget {
   final NumberPyramidFillType type;
@@ -83,7 +83,6 @@ class NumberPyramidBoardPainter extends CustomPainter {
     double widthInner = widthOuter / board.getRowsCount();
     double heightInner = min(heightOuter /  board.getRowsCount(), widthInner / 2);
 
-
     for (int y = 0; y < board.getRowsCount(); y++) {
       double xInner = (widthOuter + xOuter - (y+1) * widthInner) / 2;
       double yInner = yOuter + y * heightInner;
@@ -94,12 +93,11 @@ class NumberPyramidBoardPainter extends CustomPainter {
 
         _touchCanvas.drawRect(Rect.fromLTWH(xInner, yInner, widthInner, heightInner), paintBack,
             onTapDown: (tapDetail) {
-              _selectedBox = Point<int>(boardX, boardY);
+              selectedBox = Point<int>(boardX, boardY);
               showBoxValue(boardX, boardY);
             });
 
-
-        if (_selectedBox != null && _selectedBox.x == x  && _selectedBox.y == y)
+        if (selectedBox != null && selectedBox.x == x && selectedBox.y == y)
           selectedRect = Rect.fromLTWH(xInner, yInner, widthInner, heightInner);
 
         _touchCanvas.drawRect(Rect.fromLTWH(xInner, yInner, widthInner, heightInner), paint);
