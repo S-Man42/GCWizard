@@ -119,14 +119,14 @@ List<Map> _searchAll(Map values) {
   if (_squares.every((s) => values[s].length == 1)) {
     _FOUND_SOLUTIONS++;
     return <Map>[values];
-  };
+  }
 
   var s2 = _order(_squares.where((s) => values[s].length > 1).toList(), on: (s) => values[s].length).first;
 
   var output = <Map>[];
 
   values[s2].split('').forEach((d) {
-    var result = _searchAll(_assign(new Map.from(values), s2, d));
+    var result = _searchAll(_assign(Map.from(values), s2, d));
     if (result == null) return;
 
     output.addAll(result.where((element) => element != null));
