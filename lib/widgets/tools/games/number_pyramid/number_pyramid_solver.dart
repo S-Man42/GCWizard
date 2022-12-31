@@ -70,7 +70,7 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
               });
             },
             child: GCWIntegerSpinner(
-              title: 'Row Count',
+              title: i18n(context, 'Row Count'),
               value: _rowCount,
               min: 1,
               onChanged: (value) {
