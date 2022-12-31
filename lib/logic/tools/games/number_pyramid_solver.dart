@@ -93,7 +93,7 @@ class NumberPyramid {
 	}
 
 	String toJson() {
-		var list = <Map<String, dynamic>>[];
+		var list = <String>[];
 		for(var y = 0; y < pyramid.length; y++) {
 			for (var x = 0; x < pyramid[y].length; x++) {
 				var value = getValue(x, y);
@@ -101,7 +101,7 @@ class NumberPyramid {
 				if (value != null) {
 					var entryList = <String, dynamic>{'x': x, 'y': y, 'value': value};
 					if (type == NumberPyramidFillType.USER_FILLED) entryList.addAll({'ud': true});
-					list.add(entryList);
+					list.add(jsonEncode(entryList));
 				}
 			}
 		}
@@ -131,7 +131,7 @@ class NumberPyramid {
 				var value = element['v'];
 				var ud = element['ud'];
 				if (x != null && y != null && value != null) {
-					var type = (ud == '1') ? NumberPyramidFillType.USER_FILLED : NumberPyramidFillType.CALCULATED;
+					var type = (ud == true) ? NumberPyramidFillType.USER_FILLED : NumberPyramidFillType.CALCULATED;
 					pyramid.setValue(y, x, int.tryParse(value), type);
 				}
 			}
