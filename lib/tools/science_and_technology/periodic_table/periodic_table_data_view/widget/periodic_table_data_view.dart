@@ -2,15 +2,15 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/tools/common/units/logic/temperature.dart';
+import 'package:gc_wizard/common_widgets/units/logic/temperature.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/roman_numbers/roman_numbers/logic/roman_numbers.dart';
 import 'package:gc_wizard/tools/science_and_technology/logic/periodic_table.dart';
-import 'package:gc_wizard/tools/common/base/gcw_dropdownbutton/widget/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/tools/common/base/gcw_output_text/widget/gcw_output_text.dart';
-import 'package:gc_wizard/tools/common/gcw_columned_multiline_output/widget/gcw_columned_multiline_output.dart';
-import 'package:gc_wizard/tools/common/gcw_text_divider/widget/gcw_text_divider.dart';
-import 'package:gc_wizard/tools/common/gcw_tool/widget/gcw_tool.dart';
-import 'package:gc_wizard/tools/common/gcw_twooptions_switch/widget/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/widget/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_output_text/widget/gcw_output_text.dart';
+import 'package:gc_wizard/common_widgets/gcw_columned_multiline_output/widget/gcw_columned_multiline_output.dart';
+import 'package:gc_wizard/common_widgets/gcw_text_divider/widget/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/gcw_tool/widget/gcw_tool.dart';
+import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/widget/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/tools/utils/no_animation_material_page_route/widget/no_animation_material_page_route.dart';
 import 'package:intl/intl.dart';
 

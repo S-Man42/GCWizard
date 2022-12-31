@@ -1,5 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/tools/formula_solver/formula_painter/widget/formula_painter.dart';
+import 'package:gc_wizard/tools/formula_solver/logic/formula_painter.dart';
 
 void main() {
   var formulaPainter = FormulaPainter();

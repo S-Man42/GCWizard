@@ -1,5 +1,5 @@
 import 'package:gc_wizard/tools/coords/data/logic/ellipsoid.dart';
-import 'package:gc_wizard/tools/coords/logic/projection.dart';
+import 'package:gc_wizard/tools/coords/waypoint_projection/logic/projection.dart';
 import 'package:latlong2/latlong.dart';
 
 Map<String, dynamic> segmentBearings(

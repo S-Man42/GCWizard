@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:gc_wizard/tools/coords/data/logic/ellipsoid.dart';
-import 'package:gc_wizard/tools/coords/logic/projection.dart';
-import 'package:gc_wizard/tools/coords/logic/utils.dart' as coordUtils;
+import 'package:gc_wizard/tools/coords/waypoint_projection/logic/projection.dart';
+import 'package:gc_wizard/tools/coords/utils/format_getter.dart' as coordUtils;
 import 'package:gc_wizard/tools/science_and_technology/astronomy/logic/julian_date.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/sun_position/logic/sun_position.dart';
 import 'package:gc_wizard/utils/common_utils.dart';

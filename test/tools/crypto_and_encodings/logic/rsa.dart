@@ -1,5 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/tools/crypto_and_encodings/logic/rsa.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/rsa/logic/rsa.dart';
 
 void main() {
   group("RSA.encryptRSA:", () {

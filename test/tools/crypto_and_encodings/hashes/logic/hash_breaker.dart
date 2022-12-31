@@ -1,5 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/tools/common/parser/logic/variable_string_expander.dart';
+import 'package:gc_wizard/common_widgets/parser/logic/variable_string_expander.dart';
 import "package:gc_wizard/tools/crypto_and_encodings/hashes/hash_breaker/logic/hash_breaker.dart";
 import "package:gc_wizard/tools/crypto_and_encodings/hashes/hashes/logic/hashes.dart";
 

@@ -5,12 +5,12 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/images_and_files/binary2image/logic/binary2image.dart';
 import 'package:gc_wizard/tools/images_and_files/qr_code/logic/qr_code.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
-import 'package:gc_wizard/tools/common/base/gcw_iconbutton/widget/gcw_iconbutton.dart';
-import 'package:gc_wizard/tools/common/base/gcw_textfield/widget/gcw_textfield.dart';
-import 'package:gc_wizard/tools/common/gcw_default_output/widget/gcw_default_output.dart';
-import 'package:gc_wizard/tools/common/gcw_exported_file_dialog/widget/gcw_exported_file_dialog.dart';
-import 'package:gc_wizard/tools/common/gcw_onoff_switch/widget/gcw_onoff_switch.dart';
-import 'package:gc_wizard/tools/common/gcw_output/widget/gcw_output.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_iconbutton/widget/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_textfield/widget/gcw_textfield.dart';
+import 'package:gc_wizard/common_widgets/gcw_default_output/widget/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/gcw_exported_file_dialog/widget/gcw_exported_file_dialog.dart';
+import 'package:gc_wizard/common_widgets/gcw_onoff_switch/widget/gcw_onoff_switch.dart';
+import 'package:gc_wizard/common_widgets/gcw_output/widget/gcw_output.dart';
 import 'package:gc_wizard/tools/utils/file_utils/widget/file_utils.dart';
 import 'package:intl/intl.dart';
 

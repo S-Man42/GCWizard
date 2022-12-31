@@ -2,7 +2,7 @@
 
 import 'dart:math';
 
-import 'package:gc_wizard/tools/common/units/logic/temperature.dart';
+import 'package:gc_wizard/common_widgets/units/logic/temperature.dart';
 
 double calculateHumidex(double temperature, double humidity, Temperature temperatureUnit, bool isHumidity) {
   double humidex = 0;

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/tools/common/date_utils/logic/date_utils.dart';
-import 'package:gc_wizard/tools/common/gcw_datetime_picker/widget/gcw_datetime_picker.dart';
-import 'package:gc_wizard/tools/common/gcw_default_output/widget/gcw_default_output.dart';
-import 'package:gc_wizard/tools/common/gcw_text_divider/widget/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/date_utils/logic/date_utils.dart';
+import 'package:gc_wizard/common_widgets/gcw_datetime_picker/widget/gcw_datetime_picker.dart';
+import 'package:gc_wizard/common_widgets/gcw_default_output/widget/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/gcw_text_divider/widget/gcw_text_divider.dart';
 
 class Weekday extends StatefulWidget {
   @override

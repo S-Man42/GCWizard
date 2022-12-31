@@ -1,5 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/tools/common/units/logic/temperature.dart';
+import 'package:gc_wizard/common_widgets/units/logic/temperature.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/humidex/logic/humidex.dart';
 
 void main() {

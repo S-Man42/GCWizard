@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
-import 'package:gc_wizard/tools/common/parser/logic/variable_string_expander.dart';
+import 'package:gc_wizard/common_widgets/parser/logic/variable_string_expander.dart';
 
 class VariableStringTextInputFormatter extends TextInputFormatter {
   RegExp _exp;

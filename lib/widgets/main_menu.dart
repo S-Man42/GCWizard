@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
-import 'package:gc_wizard/tools/common/base/gcw_text/widget/gcw_text.dart';
-import 'package:gc_wizard/tools/common/gcw_tool/widget/gcw_tool.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_text/widget/gcw_text.dart';
+import 'package:gc_wizard/common_widgets/gcw_tool/widget/gcw_tool.dart';
 import 'package:gc_wizard/widgets/main_menu/about.dart';
 import 'package:gc_wizard/widgets/main_menu/call_for_contribution.dart';
 import 'package:gc_wizard/widgets/main_menu/changelog.dart';

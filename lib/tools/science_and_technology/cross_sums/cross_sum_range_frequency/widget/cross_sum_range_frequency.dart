@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/science_and_technology/logic/cross_sum.dart';
-import 'package:gc_wizard/tools/common/base/gcw_dialog/widget/gcw_dialog.dart';
-import 'package:gc_wizard/tools/common/gcw_columned_multiline_output/widget/gcw_columned_multiline_output.dart';
-import 'package:gc_wizard/tools/common/gcw_default_output/widget/gcw_default_output.dart';
-import 'package:gc_wizard/tools/common/gcw_integer_spinner/widget/gcw_integer_spinner.dart';
-import 'package:gc_wizard/tools/common/gcw_submit_button/widget/gcw_submit_button.dart';
-import 'package:gc_wizard/tools/common/gcw_text_divider/widget/gcw_text_divider.dart';
-import 'package:gc_wizard/tools/common/gcw_twooptions_switch/widget/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_dialog/widget/gcw_dialog.dart';
+import 'package:gc_wizard/common_widgets/gcw_columned_multiline_output/widget/gcw_columned_multiline_output.dart';
+import 'package:gc_wizard/common_widgets/gcw_default_output/widget/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/gcw_integer_spinner/widget/gcw_integer_spinner.dart';
+import 'package:gc_wizard/common_widgets/gcw_submit_button/widget/gcw_submit_button.dart';
+import 'package:gc_wizard/common_widgets/gcw_text_divider/widget/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/widget/gcw_twooptions_switch.dart';
 
 final _ALERT_MAX_RANGE = 25000;
 

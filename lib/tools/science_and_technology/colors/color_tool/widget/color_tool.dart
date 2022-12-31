@@ -5,9 +5,9 @@ import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors_cmyk.
 import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors_hue.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors_rgb.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors_yuv.dart';
-import 'package:gc_wizard/tools/common/base/gcw_dropdownbutton/widget/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/tools/common/gcw_columned_multiline_output/widget/gcw_columned_multiline_output.dart';
-import 'package:gc_wizard/tools/common/gcw_text_divider/widget/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/widget/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/common_widgets/gcw_columned_multiline_output/widget/gcw_columned_multiline_output.dart';
+import 'package:gc_wizard/common_widgets/gcw_text_divider/widget/gcw_text_divider.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/base/gcw_colors/widget/gcw_colors.dart';
 import 'package:intl/intl.dart';
 

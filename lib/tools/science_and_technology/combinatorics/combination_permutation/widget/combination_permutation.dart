@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/science_and_technology/combinatorics/combination/logic/combination.dart';
 import 'package:gc_wizard/tools/science_and_technology/combinatorics/permutation/logic/permutation.dart';
-import 'package:gc_wizard/tools/common/base/gcw_output_text/widget/gcw_output_text.dart';
-import 'package:gc_wizard/tools/common/base/gcw_textfield/widget/gcw_textfield.dart';
-import 'package:gc_wizard/tools/common/gcw_columned_multiline_output/widget/gcw_columned_multiline_output.dart';
-import 'package:gc_wizard/tools/common/gcw_default_output/widget/gcw_default_output.dart';
-import 'package:gc_wizard/tools/common/gcw_onoff_switch/widget/gcw_onoff_switch.dart';
-import 'package:gc_wizard/tools/common/gcw_text_divider/widget/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_output_text/widget/gcw_output_text.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_textfield/widget/gcw_textfield.dart';
+import 'package:gc_wizard/common_widgets/gcw_columned_multiline_output/widget/gcw_columned_multiline_output.dart';
+import 'package:gc_wizard/common_widgets/gcw_default_output/widget/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/gcw_onoff_switch/widget/gcw_onoff_switch.dart';
+import 'package:gc_wizard/common_widgets/gcw_text_divider/widget/gcw_text_divider.dart';
 
 class CombinationPermutation extends StatefulWidget {
   @override

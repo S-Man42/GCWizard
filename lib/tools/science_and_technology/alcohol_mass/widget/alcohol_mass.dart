@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/tools/common/units/logic/mass.dart';
-import 'package:gc_wizard/tools/common/units/logic/unit_category.dart';
-import 'package:gc_wizard/tools/common/units/logic/volume.dart';
+import 'package:gc_wizard/common_widgets/units/logic/mass.dart';
+import 'package:gc_wizard/common_widgets/units/logic/unit_category.dart';
+import 'package:gc_wizard/common_widgets/units/logic/volume.dart';
 import 'package:gc_wizard/tools/science_and_technology/logic/alcohol.dart';
-import 'package:gc_wizard/tools/common/base/gcw_dropdownbutton/widget/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/tools/common/base/gcw_text/widget/gcw_text.dart';
-import 'package:gc_wizard/tools/common/gcw_default_output/widget/gcw_default_output.dart';
-import 'package:gc_wizard/tools/common/gcw_double_spinner/widget/gcw_double_spinner.dart';
-import 'package:gc_wizard/tools/common/gcw_text_divider/widget/gcw_text_divider.dart';
-import 'package:gc_wizard/tools/common/units/gcw_unit_dropdownbutton/widget/gcw_unit_dropdownbutton.dart';
-import 'package:gc_wizard/tools/common/units/gcw_unit_input/widget/gcw_unit_input.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/widget/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_text/widget/gcw_text.dart';
+import 'package:gc_wizard/common_widgets/gcw_default_output/widget/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/gcw_double_spinner/widget/gcw_double_spinner.dart';
+import 'package:gc_wizard/common_widgets/gcw_text_divider/widget/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/units/gcw_unit_dropdownbutton/widget/gcw_unit_dropdownbutton.dart';
+import 'package:gc_wizard/common_widgets/units/gcw_unit_input/widget/gcw_unit_input.dart';
 import 'package:intl/intl.dart';
 
 final _ALCOHOL_MASS = 'alcoholmass_alcoholmass';

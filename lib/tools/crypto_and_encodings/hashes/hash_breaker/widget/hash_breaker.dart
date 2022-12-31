@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/tools/common/parser/logic/variable_string_expander.dart';
+import 'package:gc_wizard/common_widgets/parser/logic/variable_string_expander.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/hashes/hash_breaker/logic/hash_breaker.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/hashes/hashes/logic/hashes.dart';
-import 'package:gc_wizard/tools/common/base/gcw_dialog/widget/gcw_dialog.dart';
-import 'package:gc_wizard/tools/common/base/gcw_dropdownbutton/widget/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/tools/common/base/gcw_textfield/widget/gcw_textfield.dart';
-import 'package:gc_wizard/tools/common/gcw_async_executer/widget/gcw_async_executer.dart';
-import 'package:gc_wizard/tools/common/gcw_default_output/widget/gcw_default_output.dart';
-import 'package:gc_wizard/tools/common/gcw_key_value_editor/widget/gcw_key_value_editor.dart';
-import 'package:gc_wizard/tools/common/gcw_submit_button/widget/gcw_submit_button.dart';
-import 'package:gc_wizard/tools/common/gcw_text_divider/widget/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_dialog/widget/gcw_dialog.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/widget/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_textfield/widget/gcw_textfield.dart';
+import 'package:gc_wizard/common_widgets/gcw_async_executer/widget/gcw_async_executer.dart';
+import 'package:gc_wizard/common_widgets/gcw_default_output/widget/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/gcw_key_value_editor/widget/gcw_key_value_editor.dart';
+import 'package:gc_wizard/common_widgets/gcw_submit_button/widget/gcw_submit_button.dart';
+import 'package:gc_wizard/common_widgets/gcw_text_divider/widget/gcw_text_divider.dart';
 import 'package:gc_wizard/tools/utils/textinputformatter/variablestring_textinputformatter/widget/variablestring_textinputformatter.dart';
 
 final _ALERT_COMBINATIONS = 100000;

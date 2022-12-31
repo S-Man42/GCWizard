@@ -1,10 +1,10 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/tools/common/units/logic/unit_category.dart';
+import 'package:gc_wizard/common_widgets/units/logic/unit_category.dart';
 import 'package:gc_wizard/tools/coords/data/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/coords/parser/logic/variable_latlon.dart';
 import 'package:latlong2/latlong.dart';
 
-import '../utils.dart';
+import '../format_getter.dart';
 
 void main() {
   group("Parser.variableLatLon.parseVariableLatLon:", () {

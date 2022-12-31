@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:gc_wizard/tools/coords/data/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/coords/distance_and_bearing/logic/distance_and_bearing.dart';
-import 'package:gc_wizard/tools/coords/logic/utils.dart' as utils;
+import 'package:gc_wizard/tools/coords/utils/format_getter.dart' as utils;
 import 'package:latlong2/latlong.dart';
 
 class Interval {

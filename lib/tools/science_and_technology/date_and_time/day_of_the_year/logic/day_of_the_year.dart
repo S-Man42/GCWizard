@@ -1,6 +1,6 @@
 //weeknumber code: https://gist.github.com/Maistho/e38da422ad5c097c635ccf708ec68251
 
-import 'package:gc_wizard/tools/common/date_utils/logic/date_utils.dart';
+import 'package:gc_wizard/common_widgets/date_utils/logic/date_utils.dart';
 
 class DayOfTheYearOutput {
   final DateTime date;

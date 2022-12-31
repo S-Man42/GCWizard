@@ -4,13 +4,13 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/polybios/logic/polybios.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/straddling_checkerboard/logic/straddling_checkerboard.dart';
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/tools/common/base/gcw_dropdownbutton/widget/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/tools/common/base/gcw_output_text/widget/gcw_output_text.dart';
-import 'package:gc_wizard/tools/common/base/gcw_textfield/widget/gcw_textfield.dart';
-import 'package:gc_wizard/tools/common/gcw_multiple_output/widget/gcw_multiple_output.dart';
-import 'package:gc_wizard/tools/common/gcw_output/widget/gcw_output.dart';
-import 'package:gc_wizard/tools/common/gcw_text_divider/widget/gcw_text_divider.dart';
-import 'package:gc_wizard/tools/common/gcw_twooptions_switch/widget/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/widget/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_output_text/widget/gcw_output_text.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_textfield/widget/gcw_textfield.dart';
+import 'package:gc_wizard/common_widgets/gcw_multiple_output/widget/gcw_multiple_output.dart';
+import 'package:gc_wizard/common_widgets/gcw_output/widget/gcw_output.dart';
+import 'package:gc_wizard/common_widgets/gcw_text_divider/widget/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/widget/gcw_twooptions_switch.dart';
 
 class StraddlingCheckerboard extends StatefulWidget {
   @override

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/burrows_wheeler/logic/burrows_wheeler.dart';
-import 'package:gc_wizard/tools/common/base/gcw_output_text/widget/gcw_output_text.dart';
-import 'package:gc_wizard/tools/common/base/gcw_textfield/widget/gcw_textfield.dart';
-import 'package:gc_wizard/tools/common/gcw_default_output/widget/gcw_default_output.dart';
-import 'package:gc_wizard/tools/common/gcw_integer_spinner/widget/gcw_integer_spinner.dart';
-import 'package:gc_wizard/tools/common/gcw_multiple_output/widget/gcw_multiple_output.dart';
-import 'package:gc_wizard/tools/common/gcw_output/widget/gcw_output.dart';
-import 'package:gc_wizard/tools/common/gcw_text_divider/widget/gcw_text_divider.dart';
-import 'package:gc_wizard/tools/common/gcw_twooptions_switch/widget/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_output_text/widget/gcw_output_text.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_textfield/widget/gcw_textfield.dart';
+import 'package:gc_wizard/common_widgets/gcw_default_output/widget/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/gcw_integer_spinner/widget/gcw_integer_spinner.dart';
+import 'package:gc_wizard/common_widgets/gcw_multiple_output/widget/gcw_multiple_output.dart';
+import 'package:gc_wizard/common_widgets/gcw_output/widget/gcw_output.dart';
+import 'package:gc_wizard/common_widgets/gcw_text_divider/widget/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/widget/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/tools/utils/textinputformatter/wrapper_for_masktextinputformatter/widget/wrapper_for_masktextinputformatter.dart';
 
 class BurrowsWheeler extends StatefulWidget {

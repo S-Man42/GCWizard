@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/coords/antipodes/logic/antipodes.dart';
-import 'package:gc_wizard/tools/coords/data/logic/coordinates.dart';
-import 'package:gc_wizard/tools/coords/logic/utils.dart';
+import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
+import 'package:gc_wizard/tools/coords/utils/format_getter.dart';
 import 'package:gc_wizard/theme/fixed_colors.dart';
-import 'package:gc_wizard/tools/common/gcw_submit_button/widget/gcw_submit_button.dart';
+import 'package:gc_wizard/common_widgets/gcw_submit_button/widget/gcw_submit_button.dart';
 import 'package:gc_wizard/tools/coords/base/gcw_coords/widget/gcw_coords.dart';
 import 'package:gc_wizard/tools/coords/base/gcw_coords_output/widget/gcw_coords_output.dart';
 import 'package:gc_wizard/tools/coords/base/gcw_coords_outputformat/widget/gcw_coords_outputformat.dart';
-import 'package:gc_wizard/tools/coords/base/utils/widget/utils.dart';
-import 'package:gc_wizard/tools/coords/map_view/gcw_map_geometries/widget/gcw_map_geometries.dart';
+import 'package:gc_wizard/tools/coords/base/utils/widget/format_getter.dart';
+import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 
 class Antipodes extends StatefulWidget {
   @override

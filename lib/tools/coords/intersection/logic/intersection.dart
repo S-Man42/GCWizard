@@ -1,7 +1,7 @@
-import 'package:gc_wizard/tools/coords/data/logic/distance_bearing.dart';
+import 'package:gc_wizard/tools/coords/logic/distance_bearing.dart';
 import 'package:gc_wizard/tools/coords/data/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/coords/distance_and_bearing/logic/distance_and_bearing.dart';
-import 'package:gc_wizard/tools/coords/logic/intersect_lines.dart';
+import 'package:gc_wizard/tools/coords/intersect_bearings/logic/intersect_lines.dart';
 import 'package:latlong2/latlong.dart';
 
 class IntersectionJobData {

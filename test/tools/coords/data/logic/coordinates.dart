@@ -1,5 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/tools/coords/data/logic/coordinates.dart';
+import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
 
 void main() {
   group("Coordinate.normalizeDEC:", () {
