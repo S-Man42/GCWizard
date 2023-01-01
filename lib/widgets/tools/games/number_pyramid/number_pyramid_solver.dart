@@ -62,7 +62,7 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
     return Column(
       children: <Widget>[
         GCWExpandableTextDivider(
-            text: i18n(context, 'Row Count'),
+            text: i18n(context, 'common_row_count'),
             expanded: _currentExpanded,
             onChanged: (value) {
               setState(() {
@@ -70,7 +70,7 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
               });
             },
             child: GCWIntegerSpinner(
-              title: i18n(context, 'Row Count'),
+              title: i18n(context, 'common_row_count'),
               value: _rowCount,
               min: 1,
               onChanged: (value) {
