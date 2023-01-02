@@ -43,6 +43,7 @@ NoAnimationMaterialPageRoute createRoute (BuildContext context, ScreenArguments 
         {'symboltables_examples': 'symboltablesexamples'}
       );
 
+
       //case 'format_converter': // coords converter
 
       if (groups.contains(name) && (arguments.arguments != null && arguments.arguments.isNotEmpty)) {
@@ -73,6 +74,10 @@ class ScreenArguments {
     var match = regExp.firstMatch(setting.name);
 
     settings = setting;
+    var uri = Uri.parse(setting.name);
+    uri.queryParameters.forEach((k, v) {
+      print('key: $k - value: $v');
+    });
 
     if (match != null) {
       title = match.group(2);
