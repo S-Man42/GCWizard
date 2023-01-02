@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/registry.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/multi_decoder.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 
 
@@ -47,7 +48,7 @@ NoAnimationMaterialPageRoute createRoute (BuildContext context, ScreenArguments 
       //case 'format_converter': // coords converter
 
       if (groups.contains(name) && (arguments.arguments != null && arguments.arguments.isNotEmpty)) {
-        name = name + '_' + arguments.arguments[0].value;
+        name = name + '_' + arguments.arguments.entries.first.value;
         if (specialEntrys.keys.contains(name))
           name = specialEntrys[name];
       }
@@ -56,8 +57,12 @@ NoAnimationMaterialPageRoute createRoute (BuildContext context, ScreenArguments 
   } catch (e) {}
   if (tools == null || tools.isEmpty) return null;
 
+  var gcwTool = tools.first;
   // arguments settings only for view the path in the url
-  return NoAnimationMaterialPageRoute(builder: (context) => tools[0], settings: arguments.settings);
+  if (tools.first.acceptArguments) {
+    gcwTool = gcwTool.clone((gcwTool.tool as dynamic)(arguments: arguments.arguments));
+  }
+  return NoAnimationMaterialPageRoute(builder: (context) => gcwTool, settings: arguments.settings);
 }
 
 // You can pass any object to the arguments parameter.
@@ -65,7 +70,7 @@ NoAnimationMaterialPageRoute createRoute (BuildContext context, ScreenArguments 
 // a customizable title and message.
 class ScreenArguments {
   String title;
-  List<MapEntry<String, String>> arguments;
+  Map<String, dynamic> arguments;
   RouteSettings settings;
 
 
@@ -74,10 +79,6 @@ class ScreenArguments {
 
     var uri = Uri.parse(setting.name);
     title = uri.pathSegments[0];
-    arguments = <MapEntry<String, String>>[];
-
-    uri.queryParameters.forEach((key, value) {
-      arguments.add(MapEntry<String, String>(key, value));
-    });
+    arguments = uri.queryParameters;
   }
 }

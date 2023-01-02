@@ -25,6 +25,10 @@ import 'package:gc_wizard/widgets/utils/gcw_file.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 
 class MultiDecoder extends StatefulWidget {
+  final Map<String, String> arguments;
+
+  const MultiDecoder({Key key, this.arguments}) : super(key: key);
+
   @override
   MultiDecoderState createState() => MultiDecoderState();
 }
@@ -43,6 +47,11 @@ class MultiDecoderState extends State<MultiDecoder> {
   @override
   void initState() {
     super.initState();
+
+    if (widget.arguments != null) {
+      _currentInput = widget.arguments['input'] ?? _currentInput;
+    }
+
     _controller = TextEditingController(text: _currentInput);
 
     refreshMultiDecoderTools();

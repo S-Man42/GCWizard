@@ -90,15 +90,16 @@ class GCWTool extends StatefulWidget {
   final Widget tool;
   final String i18nPrefix;
   final List<ToolCategory> categories;
-  final autoScroll;
-  final suppressToolMargin;
-  final iconPath;
+  final bool autoScroll;
+  final bool suppressToolMargin;
+  final String iconPath;
   final List<String> searchKeys;
   String indexedSearchStrings;
   final List<GCWToolActionButtonsEntry> buttonList;
   final bool suppressHelpButton;
   final String helpSearchString;
-  final isBeta;
+  final bool isBeta;
+  final bool acceptArguments;
 
   var icon;
   var id = '';
@@ -122,6 +123,7 @@ class GCWTool extends StatefulWidget {
       this.buttonList,
       this.helpSearchString,
       this.isBeta: false,
+      this.acceptArguments: false,
       this.suppressHelpButton: false})
       : super(key: key) {
     this.id = className(tool) + '_' + (i18nPrefix ?? '');
@@ -135,6 +137,26 @@ class GCWTool extends StatefulWidget {
 
   bool get isFavorite {
     return Favorites.isFavorite(id);
+  }
+
+  GCWTool clone(Widget tool) {
+    var t = GCWTool(
+        tool: tool,
+        toolName: this.toolName,
+        defaultLanguageToolName: this.defaultLanguageToolName,
+        i18nPrefix: this.i18nPrefix,
+        categories: this.categories,
+        autoScroll: this.autoScroll,
+        suppressToolMargin: this.suppressToolMargin,
+        iconPath: this.iconPath,
+        searchKeys: this.searchKeys,
+        buttonList: this.buttonList,
+        helpSearchString: this.helpSearchString,
+        isBeta: this.isBeta,
+        acceptArguments: this.acceptArguments,
+        suppressHelpButton: this.suppressHelpButton);
+
+    return t;
   }
 
   @override
