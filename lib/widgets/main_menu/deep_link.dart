@@ -70,30 +70,14 @@ class ScreenArguments {
 
 
   ScreenArguments(RouteSettings setting) {
-    var regExp = RegExp(r'^(\/)([^#?]+)\??([^\.]*)');
-    var match = regExp.firstMatch(setting.name);
-
     settings = setting;
-    var uri = Uri.parse(setting.name);
-    uri.queryParameters.forEach((k, v) {
-      print('key: $k - value: $v');
-    });
 
-    if (match != null) {
-      title = match.group(2);
-      if (match.groupCount > 2) {
-        regExp = RegExp(r'([\w]+)=([\w]+)\&?');
-        var argumentString = match.group(3);
-        var matches = regExp.allMatches(argumentString);
-        if (matches != null && argumentString.isNotEmpty) {
-          arguments = <MapEntry<String, String>>[];
-          matches.forEach((match) {
-            arguments.add(MapEntry<String, String>(match.group(1), match.group(2)));
-          });
-          if (matches.isEmpty)
-            arguments.add(MapEntry<String, String>('argument', argumentString));
-        }
-      }
-    }
+    var uri = Uri.parse(setting.name);
+    title = uri.pathSegments[0];
+    arguments = <MapEntry<String, String>>[];
+
+    uri.queryParameters.forEach((key, value) {
+      arguments.add(MapEntry<String, String>(key, value));
+    });
   }
 }
