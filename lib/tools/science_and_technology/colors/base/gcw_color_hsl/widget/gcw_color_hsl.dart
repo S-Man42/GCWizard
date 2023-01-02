@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors_hue.dart';
-import 'package:gc_wizard/common_widgets/gcw_double_spinner/widget/gcw_double_spinner.dart';
+import 'package:gc_wizard/common_widgets/gcw_double_spinner/gcw_double_spinner.dart';
 
 class GCWColorHSL extends StatefulWidget {
   final Function onChanged;

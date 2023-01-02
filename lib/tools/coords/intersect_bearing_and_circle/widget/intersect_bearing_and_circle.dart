@@ -8,9 +8,9 @@ import 'package:gc_wizard/tools/coords/intersect_bearing_and_circle/logic/inters
 import 'package:gc_wizard/tools/coords/waypoint_projection/logic/projection.dart';
 import 'package:gc_wizard/tools/coords/utils/format_getter.dart';
 import 'package:gc_wizard/theme/fixed_colors.dart';
-import 'package:gc_wizard/common_widgets/gcw_async_executer/widget/gcw_async_executer.dart';
-import 'package:gc_wizard/common_widgets/gcw_distance/widget/gcw_distance.dart';
-import 'package:gc_wizard/common_widgets/gcw_submit_button/widget/gcw_submit_button.dart';
+import 'package:gc_wizard/common_widgets/gcw_async_executer/gcw_async_executer.dart';
+import 'package:gc_wizard/common_widgets/gcw_distance/gcw_distance.dart';
+import 'package:gc_wizard/common_widgets/gcw_submit_button/gcw_submit_button.dart';
 import 'package:gc_wizard/tools/coords/base/gcw_coords/widget/gcw_coords.dart';
 import 'package:gc_wizard/tools/coords/base/gcw_coords_bearing/widget/gcw_coords_bearing.dart';
 import 'package:gc_wizard/tools/coords/base/gcw_coords_output/widget/gcw_coords_output.dart';

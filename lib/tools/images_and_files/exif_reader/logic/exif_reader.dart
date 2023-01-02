@@ -5,7 +5,7 @@ import 'package:gc_wizard/tools/coords/converter/logic/dec.dart';
 import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/parser/logic/latlon.dart';
 import 'package:gc_wizard/plugins/xmp/xmp.dart';
-import 'package:gc_wizard/common_widgets/gcw_imageview/widget/gcw_imageview.dart';
+import 'package:gc_wizard/common_widgets/gcw_imageview/gcw_imageview.dart';
 import 'package:gc_wizard/tools/utils/gcw_file/widget/gcw_file.dart' as local;
 import 'package:latlong2/latlong.dart';
 

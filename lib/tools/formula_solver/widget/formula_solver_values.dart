@@ -5,8 +5,8 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/persistence/formula_solver/json_provider.dart';
 import 'package:gc_wizard/persistence/formula_solver/model.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
-import 'package:gc_wizard/common_widgets/gcw_key_value_editor/widget/gcw_key_value_editor.dart';
-import 'package:gc_wizard/common_widgets/gcw_text_divider/widget/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/gcw_key_value_editor/gcw_key_value_editor.dart';
+import 'package:gc_wizard/common_widgets/gcw_text_divider/gcw_text_divider.dart';
 
 class FormulaSolverFormulaValues extends StatefulWidget {
   final FormulaGroup group;

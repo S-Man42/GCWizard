@@ -5,10 +5,10 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/i18n/supported_locales.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/numeral_words/logic/numeral_words.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/widget/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_iconbutton/widget/gcw_iconbutton.dart';
-import 'package:gc_wizard/common_widgets/gcw_columned_multiline_output/widget/gcw_columned_multiline_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_default_output/widget/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_iconbutton/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/gcw_columned_multiline_output/gcw_columned_multiline_output.dart';
+import 'package:gc_wizard/common_widgets/gcw_default_output/gcw_default_output.dart';
 import 'package:gc_wizard/tools/utils/common_widget_utils/widget/common_widget_utils.dart';
 
 class NumeralWordsLists extends StatefulWidget {

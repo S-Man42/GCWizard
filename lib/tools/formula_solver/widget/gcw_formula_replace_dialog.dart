@@ -4,12 +4,12 @@ import 'package:gc_wizard/persistence/formula_solver/model.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_checkbox/widget/gcw_checkbox.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dialog/widget/gcw_dialog.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_divider/widget/gcw_divider.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_iconbutton/widget/gcw_iconbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_text/widget/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/gcw_text_divider/widget/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_checkbox/gcw_checkbox.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_dialog/gcw_dialog.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_divider/gcw_divider.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_iconbutton/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_text/gcw_text.dart';
+import 'package:gc_wizard/common_widgets/gcw_text_divider/gcw_text_divider.dart';
 
 List<String> _newFormulas;
 

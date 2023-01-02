@@ -1,7 +1,7 @@
 import 'package:archive/archive.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/widget/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_table_data/widget/symbol_table_data.dart';
 
 class CountriesFlags extends StatefulWidget {

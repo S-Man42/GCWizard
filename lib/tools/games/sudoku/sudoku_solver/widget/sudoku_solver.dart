@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/games/sudoku/logic/sudoku_solver.dart';
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_button/widget/gcw_button.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_iconbutton/widget/gcw_iconbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_text/widget/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_toast/widget/gcw_toast.dart';
-import 'package:gc_wizard/common_widgets/gcw_delete_alertdialog/widget/gcw_delete_alertdialog.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_button/gcw_button.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_iconbutton/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_text/gcw_text.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_toast/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_delete_alertdialog/gcw_delete_alertdialog.dart';
 import 'package:gc_wizard/tools/games/sudoku/sudoku_solver/widget/sudoku_board.dart';
-import 'package:gc_wizard/common_widgets/gcw_delete_alertdialog/widget/gcw_delete_alertdialog.dart';
+import 'package:gc_wizard/common_widgets/gcw_delete_alertdialog/gcw_delete_alertdialog.dart';
 
 class SudokuSolver extends StatefulWidget {
   @override

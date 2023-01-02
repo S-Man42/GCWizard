@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/units/logic/length.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_textfield/widget/gcw_textfield.dart';
-import 'package:gc_wizard/common_widgets/gcw_colorpicker/widget/gcw_colorpicker.dart';
-import 'package:gc_wizard/common_widgets/gcw_distance/widget/gcw_distance.dart';
-import 'package:gc_wizard/common_widgets/gcw_onoff_switch/widget/gcw_onoff_switch.dart';
-import 'package:gc_wizard/common_widgets/gcw_text_divider/widget/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_textfield/gcw_textfield.dart';
+import 'package:gc_wizard/common_widgets/gcw_colorpicker/gcw_colorpicker.dart';
+import 'package:gc_wizard/common_widgets/gcw_distance/gcw_distance.dart';
+import 'package:gc_wizard/common_widgets/gcw_onoff_switch/gcw_onoff_switch.dart';
+import 'package:gc_wizard/common_widgets/gcw_text_divider/gcw_text_divider.dart';
 import 'package:gc_wizard/tools/coords/base/gcw_coords/widget/gcw_coords.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 

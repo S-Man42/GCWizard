@@ -3,11 +3,11 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/date_utils/logic/date_utils.dart';
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/calendar/logic/calendar.dart';
 import 'package:gc_wizard/tools/science_and_technology/maya_calendar/logic/maya_calendar.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/widget/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/common_widgets/gcw_columned_multiline_output/widget/gcw_columned_multiline_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_date_picker/widget/gcw_date_picker.dart';
-import 'package:gc_wizard/common_widgets/gcw_default_output/widget/gcw_default_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_double_spinner/widget/gcw_double_spinner.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/common_widgets/gcw_columned_multiline_output/gcw_columned_multiline_output.dart';
+import 'package:gc_wizard/common_widgets/gcw_date_picker/gcw_date_picker.dart';
+import 'package:gc_wizard/common_widgets/gcw_default_output/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/gcw_double_spinner/gcw_double_spinner.dart';
 
 class Calendar extends StatefulWidget {
   @override

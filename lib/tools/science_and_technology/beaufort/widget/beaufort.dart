@@ -3,12 +3,12 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/units/logic/unit_category.dart';
 import 'package:gc_wizard/common_widgets/units/logic/velocity.dart' as logic;
 import 'package:gc_wizard/tools/science_and_technology/beaufort/logic/beaufort.dart';
-import 'package:gc_wizard/common_widgets/gcw_default_output/widget/gcw_default_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_integer_spinner/widget/gcw_integer_spinner.dart';
-import 'package:gc_wizard/common_widgets/gcw_text_divider/widget/gcw_text_divider.dart';
-import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/widget/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/common_widgets/units/gcw_unit_dropdownbutton/widget/gcw_unit_dropdownbutton.dart';
-import 'package:gc_wizard/common_widgets/units/gcw_unit_input/widget/gcw_unit_input.dart';
+import 'package:gc_wizard/common_widgets/gcw_default_output/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/gcw_integer_spinner/gcw_integer_spinner.dart';
+import 'package:gc_wizard/common_widgets/gcw_text_divider/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/common_widgets/units/gcw_unit_dropdownbutton/gcw_unit_dropdownbutton.dart';
+import 'package:gc_wizard/common_widgets/units/gcw_unit_input/gcw_unit_input.dart';
 import 'package:intl/intl.dart';
 
 class Beaufort extends StatefulWidget {

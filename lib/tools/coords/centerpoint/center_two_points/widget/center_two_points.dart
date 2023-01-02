@@ -7,7 +7,7 @@ import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/utils/format_getter.dart';
 import 'package:gc_wizard/theme/fixed_colors.dart';
 import 'package:gc_wizard/utils/constants.dart';
-import 'package:gc_wizard/common_widgets/gcw_submit_button/widget/gcw_submit_button.dart';
+import 'package:gc_wizard/common_widgets/gcw_submit_button/gcw_submit_button.dart';
 import 'package:gc_wizard/tools/coords/base/gcw_coords/widget/gcw_coords.dart';
 import 'package:gc_wizard/tools/coords/base/gcw_coords_output/widget/gcw_coords_output.dart';
 import 'package:gc_wizard/tools/coords/base/gcw_coords_outputformat_distance/widget/gcw_coords_outputformat_distance.dart';

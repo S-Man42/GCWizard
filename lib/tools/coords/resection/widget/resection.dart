@@ -7,8 +7,8 @@ import 'package:gc_wizard/tools/coords/distance_and_bearing/logic/distance_and_b
 import 'package:gc_wizard/tools/coords/resection/logic/resection.dart';
 import 'package:gc_wizard/tools/coords/utils/format_getter.dart';
 import 'package:gc_wizard/theme/fixed_colors.dart';
-import 'package:gc_wizard/common_widgets/gcw_async_executer/widget/gcw_async_executer.dart';
-import 'package:gc_wizard/common_widgets/gcw_submit_button/widget/gcw_submit_button.dart';
+import 'package:gc_wizard/common_widgets/gcw_async_executer/gcw_async_executer.dart';
+import 'package:gc_wizard/common_widgets/gcw_submit_button/gcw_submit_button.dart';
 import 'package:gc_wizard/tools/coords/base/gcw_coords/widget/gcw_coords.dart';
 import 'package:gc_wizard/tools/coords/base/gcw_coords_angle/widget/gcw_coords_angle.dart';
 import 'package:gc_wizard/tools/coords/base/gcw_coords_output/widget/gcw_coords_output.dart';

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/units/logic/temperature.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/heat_index/logic/heat_index.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_text/widget/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/gcw_double_spinner/widget/gcw_double_spinner.dart';
-import 'package:gc_wizard/common_widgets/gcw_multiple_output/widget/gcw_multiple_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_output/widget/gcw_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/widget/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_text/gcw_text.dart';
+import 'package:gc_wizard/common_widgets/gcw_double_spinner/gcw_double_spinner.dart';
+import 'package:gc_wizard/common_widgets/gcw_multiple_output/gcw_multiple_output.dart';
+import 'package:gc_wizard/common_widgets/gcw_output/gcw_output.dart';
+import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/gcw_twooptions_switch.dart';
 
 class HeatIndex extends StatefulWidget {
   @override
