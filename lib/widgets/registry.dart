@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/tools/common/gcw_tool/widget/gcw_tool.dart';
+import 'package:gc_wizard/common_widgets/gcw_tool/widget/gcw_tool.dart';
 import 'package:gc_wizard/widgets/main_menu/about.dart';
 import 'package:gc_wizard/widgets/main_menu/call_for_contribution.dart';
 import 'package:gc_wizard/widgets/main_menu/changelog.dart';
@@ -105,11 +105,11 @@ import 'package:gc_wizard/tools/coords/intersect_four_points/widget/intersect_fo
 import 'package:gc_wizard/tools/coords/intersect_three_circles/widget/intersect_three_circles.dart';
 import 'package:gc_wizard/tools/coords/intersect_two_circles/widget/intersect_two_circles.dart';
 import 'package:gc_wizard/tools/coords/intersection/widget/intersection.dart';
-import 'package:gc_wizard/tools/coords/map_view/map_view/widget/map_view.dart';
+import 'package:gc_wizard/tools/coords/map_view/widget/map_view.dart';
 import 'package:gc_wizard/tools/coords/resection/widget/resection.dart';
 import 'package:gc_wizard/tools/coords/segment_bearings/widget/segment_bearings.dart';
 import 'package:gc_wizard/tools/coords/segment_line/widget/segment_line.dart';
-import 'package:gc_wizard/tools/coords/variable_coordinate/variable_coordinate_formulas/widget/variable_coordinate_formulas.dart';
+import 'package:gc_wizard/tools/coords/variable_coordinate/variable_coordinate/widget/variable_coordinate_formulas.dart';
 import 'package:gc_wizard/tools/coords/waypoint_projection/widget/waypoint_projection.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/abaddon/widget/abaddon.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/adfgvx/widget/adfgvx.dart';
@@ -269,10 +269,10 @@ import 'package:gc_wizard/tools/crypto_and_encodings/wherigo_urwigo/wherigo_anal
 import 'package:gc_wizard/tools/crypto_and_encodings/z22/widget/z22.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/zamonian_numbers/widget/zamonian_numbers.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/zc1/widget/zc1.dart';
-import 'package:gc_wizard/tools/formula_solver/formula_solver_formulagroups/widget/formula_solver_formulagroups.dart';
+import 'package:gc_wizard/tools/formula_solver/widget/formula_solver_formulagroups.dart';
 import 'package:gc_wizard/tools/games/bowling/widget/bowling.dart';
 import 'package:gc_wizard/tools/games/catan/widget/catan.dart';
-import 'package:gc_wizard/tools/games/game_of_life/game_of_life/widget/game_of_life.dart';
+import 'package:gc_wizard/tools/games/game_of_life/widget/game_of_life.dart';
 import 'package:gc_wizard/tools/games/scrabble/scrabble_overview/widget/scrabble_overview.dart';
 import 'package:gc_wizard/tools/games/sudoku/sudoku_solver/widget/sudoku_solver.dart';
 import 'package:gc_wizard/tools/general_tools/grid_generator/grid/widget/grid.dart';

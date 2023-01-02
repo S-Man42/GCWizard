@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:gc_wizard/tools/common/date_utils/logic/date_utils.dart';
+import 'package:gc_wizard/common_widgets/date_utils/logic/date_utils.dart';
 
 class JulianDate {
   double julianDateUTCNoon;

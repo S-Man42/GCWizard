@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/shadoks_numbers/logic/shadoks_numbers.dart';
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/tools/common/base/gcw_iconbutton/widget/gcw_iconbutton.dart';
-import 'package:gc_wizard/tools/common/gcw_integer_spinner/widget/gcw_integer_spinner.dart';
-import 'package:gc_wizard/tools/common/gcw_output/widget/gcw_output.dart';
-import 'package:gc_wizard/tools/common/gcw_segmentdisplay_output/widget/gcw_segmentdisplay_output.dart';
-import 'package:gc_wizard/tools/common/gcw_toolbar/widget/gcw_toolbar.dart';
-import 'package:gc_wizard/tools/common/gcw_twooptions_switch/widget/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_iconbutton/widget/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/gcw_integer_spinner/widget/gcw_integer_spinner.dart';
+import 'package:gc_wizard/common_widgets/gcw_output/widget/gcw_output.dart';
+import 'package:gc_wizard/common_widgets/gcw_segmentdisplay_output/widget/gcw_segmentdisplay_output.dart';
+import 'package:gc_wizard/common_widgets/gcw_toolbar/widget/gcw_toolbar.dart';
+import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/widget/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/shadoks_numbers_segment_display/widget/shadoks_numbers_segment_display.dart';
 
 class ShadoksNumbers extends StatefulWidget {

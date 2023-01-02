@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/symbol_replacer_symboldata/widget/symbol_replacer_symboldata.dart';
+import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/symbol_replacer/widget/symbol_replacer_symboldata.dart';
 import 'package:gc_wizard/tools/utils/file_utils/widget/file_utils.dart';
 import 'package:image/image.dart' as Image;
 

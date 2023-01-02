@@ -4,11 +4,11 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
-import 'package:gc_wizard/tools/common/base/gcw_button/widget/gcw_button.dart';
-import 'package:gc_wizard/tools/common/base/gcw_text/widget/gcw_text.dart';
-import 'package:gc_wizard/tools/common/base/gcw_dialog/widget/gcw_dialog.dart';
-import 'package:gc_wizard/tools/common/gcw_openfile/widget/gcw_openfile.dart';
-import 'package:gc_wizard/tools/common/gcw_text_divider/widget/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_button/widget/gcw_button.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_text/widget/gcw_text.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_dialog/widget/gcw_dialog.dart';
+import 'package:gc_wizard/common_widgets/gcw_openfile/widget/gcw_openfile.dart';
+import 'package:gc_wizard/common_widgets/gcw_text_divider/widget/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/main_menu/settings/preferences_utils.dart';
 import 'package:gc_wizard/tools/utils/app_builder/widget/app_builder.dart';
 import 'package:gc_wizard/tools/utils/file_utils/widget/file_utils.dart';
@@ -20,7 +20,7 @@ import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/tools/utils/common_widget_utils/widget/common_widget_utils.dart';
 import 'package:gc_wizard/utils/settings/default_settings.dart';
-import 'package:gc_wizard/tools/common/base/gcw_toast/widget/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_toast/widget/gcw_toast.dart';
 
 class SaveRestoreSettings extends StatefulWidget {
   @override

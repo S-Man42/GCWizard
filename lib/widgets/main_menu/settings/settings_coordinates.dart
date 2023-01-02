@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/tools/coords/data/logic/coordinates.dart';
+import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/data/logic/ellipsoid.dart';
 import 'package:gc_wizard/utils/settings/preferences.dart';
-import 'package:gc_wizard/tools/common/base/gcw_text/widget/gcw_text.dart';
-import 'package:gc_wizard/tools/common/gcw_text_divider/widget/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_text/widget/gcw_text.dart';
+import 'package:gc_wizard/common_widgets/gcw_text_divider/widget/gcw_text_divider.dart';
 import 'package:gc_wizard/tools/coords/base/gcw_coords_ellipsoid/widget/gcw_coords_ellipsoid.dart';
 import 'package:gc_wizard/tools/coords/base/gcw_coords_formatselector/widget/gcw_coords_formatselector.dart';
 import 'package:gc_wizard/tools/coords/base/gcw_coords_sign_dropdownbutton/widget/gcw_coords_sign_dropdownbutton.dart';
-import 'package:gc_wizard/tools/coords/base/utils/widget/utils.dart';
+import 'package:gc_wizard/tools/coords/base/utils/widget/format_getter.dart';
 import 'package:prefs/prefs.dart';
 
 class CoordinatesSettings extends StatefulWidget {

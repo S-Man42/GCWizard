@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/tools/science_and_technology/logic/numeral_bases.dart';
-import 'package:gc_wizard/tools/common/gcw_numeralbase_spinner/widget/gcw_numeralbase_spinner.dart';
+import 'package:gc_wizard/common_widgets/gcw_numeralbase_spinner/widget/gcw_numeralbase_spinner.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/gcw_multi_decoder_tool/widget/gcw_multi_decoder_tool.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/gcw_multi_decoder_tool_configuration/widget/gcw_multi_decoder_tool_configuration.dart';
 

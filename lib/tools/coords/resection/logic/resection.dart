@@ -1,7 +1,7 @@
 import 'package:gc_wizard/tools/coords/data/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/coords/intervals/logic/coordinate_cell.dart';
 import 'package:gc_wizard/tools/coords/intervals/logic/interval_calculator.dart';
-import 'package:gc_wizard/tools/coords/logic/utils.dart' as utils;
+import 'package:gc_wizard/tools/coords/utils/format_getter.dart' as utils;
 import 'package:latlong2/latlong.dart';
 
 class ResectionJobData {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors.dart';
-import 'package:gc_wizard/tools/common/base/gcw_dropdownbutton/widget/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/widget/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/base/gcw_color_cmy/widget/gcw_color_cmy.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/base/gcw_color_cmyk/widget/gcw_color_cmyk.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/base/gcw_color_hex/widget/gcw_color_hex.dart';

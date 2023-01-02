@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors_yuv.dart';
-import 'package:gc_wizard/tools/common/gcw_double_spinner/widget/gcw_double_spinner.dart';
+import 'package:gc_wizard/common_widgets/gcw_double_spinner/widget/gcw_double_spinner.dart';
 
 class GCWColorYPbPr extends StatefulWidget {
   final Function onChanged;

@@ -3,12 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/telegraphs/popham_telegraph/logic/popham_telegraph.dart';
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/tools/common/base/gcw_iconbutton/widget/gcw_iconbutton.dart';
-import 'package:gc_wizard/tools/common/base/gcw_textfield/widget/gcw_textfield.dart';
-import 'package:gc_wizard/tools/common/gcw_output/widget/gcw_output.dart';
-import 'package:gc_wizard/tools/common/gcw_segmentdisplay_output/widget/gcw_segmentdisplay_output.dart';
-import 'package:gc_wizard/tools/common/gcw_toolbar/widget/gcw_toolbar.dart';
-import 'package:gc_wizard/tools/common/gcw_twooptions_switch/widget/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_iconbutton/widget/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_textfield/widget/gcw_textfield.dart';
+import 'package:gc_wizard/common_widgets/gcw_output/widget/gcw_output.dart';
+import 'package:gc_wizard/common_widgets/gcw_segmentdisplay_output/widget/gcw_segmentdisplay_output.dart';
+import 'package:gc_wizard/common_widgets/gcw_toolbar/widget/gcw_toolbar.dart';
+import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/widget/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/telegraphs/popham_segment_display/widget/popham_segment_display.dart';
 
 class PophamTelegraph extends StatefulWidget {

@@ -3,7 +3,7 @@ import 'dart:math';
 
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/tools/coords/antipodes/logic/antipodes.dart';
-import 'package:gc_wizard/tools/coords/data/logic/distance_bearing.dart';
+import 'package:gc_wizard/tools/coords/logic/distance_bearing.dart';
 import 'package:gc_wizard/tools/coords/data/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/coords/external_libs/net.sf/logic/geodesic.dart';
 import 'package:gc_wizard/tools/coords/external_libs/net.sf/logic/geodesic_data.dart';

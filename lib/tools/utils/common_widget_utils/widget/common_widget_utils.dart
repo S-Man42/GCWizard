@@ -8,10 +8,10 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/utils/settings/preferences.dart';
-import 'package:gc_wizard/tools/common/base/gcw_iconbutton/widget/gcw_iconbutton.dart';
-import 'package:gc_wizard/tools/common/base/gcw_text/widget/gcw_text.dart';
-import 'package:gc_wizard/tools/common/base/gcw_toast/widget/gcw_toast.dart';
-import 'package:gc_wizard/tools/common/gcw_tool/widget/gcw_tool.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_iconbutton/widget/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_text/widget/gcw_text.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_toast/widget/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_tool/widget/gcw_tool.dart';
 import 'package:prefs/prefs.dart';
 import 'package:url_launcher/url_launcher.dart' as urlLauncher;
 
