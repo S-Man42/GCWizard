@@ -60,7 +60,16 @@ NoAnimationMaterialPageRoute createRoute (BuildContext context, ScreenArguments 
   var gcwTool = tools.first;
   // arguments settings only for view the path in the url
   if (tools.first.acceptArguments) {
-    gcwTool = gcwTool.clone((gcwTool.tool as dynamic)(arguments: arguments.arguments));
+    try {
+      (gcwTool.tool as dynamic).args = arguments.arguments;
+      // var t = (gcwTool.tool as dynamic)(arguments: arguments.arguments);
+      // gcwTool = gcwTool.copyWith(t); // (gcwTool.tool as dynamic)(arguments: arguments.arguments)
+    } catch ( e)
+    {
+       print(e);
+    }
+
+    // test MultiDecoder
   }
   return NoAnimationMaterialPageRoute(builder: (context) => gcwTool, settings: arguments.settings);
 }

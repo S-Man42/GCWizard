@@ -139,7 +139,7 @@ class GCWTool extends StatefulWidget {
     return Favorites.isFavorite(id);
   }
 
-  GCWTool clone(Widget tool) {
+  GCWTool copyWith(Widget tool) {
     var t = GCWTool(
         tool: tool,
         toolName: this.toolName,

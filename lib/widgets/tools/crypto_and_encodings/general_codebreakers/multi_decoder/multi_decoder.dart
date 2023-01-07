@@ -25,9 +25,13 @@ import 'package:gc_wizard/widgets/utils/gcw_file.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 
 class MultiDecoder extends StatefulWidget {
-  final Map<String, String> arguments;
+  Map<String, String> arguments;
 
-  const MultiDecoder({Key key, this.arguments}) : super(key: key);
+  MultiDecoder({Key key}) : super(key: key);
+
+  void set args(Map<String, String> args) {
+    this.arguments = args;
+  }
 
   @override
   MultiDecoderState createState() => MultiDecoderState();
