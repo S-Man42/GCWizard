@@ -296,7 +296,6 @@ class SymbolReplacerState extends State<SymbolReplacer> {
                   _replaceSymbols(false);
                 });
               }
-              ;
             }),
         Container(width: 5),
         GCWIconButton(
@@ -512,7 +511,6 @@ class SymbolReplacerState extends State<SymbolReplacer> {
 
         return symbolTableViewData.data.images;
       }
-      ;
     }).toList());
 
     return GCWAsyncExecuterParameters(
