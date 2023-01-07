@@ -390,8 +390,6 @@ String normalizeCharacters(String input) {
   if (input == null || input.isEmpty)
     return input;
 
-  input = removeControlCharacters(input);
-
   final Map<String, String> _ALTERNATE_CHARACTERS = {
     // https://www.compart.com/de/unicode/category/Zs and Tab
     ' ': '\u0009\u000B\u00A0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2007\u2008\u2009\u200A\u202F\u205F\u3000',

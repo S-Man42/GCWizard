@@ -26,7 +26,7 @@ class ReplaceSymbolsInput {
       this.symbolImage,
       this.compareSymbols,
       this.similarityCompareLevel: 80.0,
-      this.mergeDistance}) {}
+      this.mergeDistance});
 }
 
 Future<SymbolReplacerImage> replaceSymbolsAsync(dynamic jobData) async {
@@ -54,7 +54,7 @@ Future<SymbolReplacerImage> replaceSymbols(Uint8List image, int blackLevel, doub
   if ((image == null) && (symbolImage == null)) return null;
   if (symbolImage == null) symbolImage = SymbolReplacerImage(image);
 
-  symbolImage.splitAndGroupSymbols((blackLevel * 255 / 100).toInt(), similarityLevel,
+  symbolImage.splitAndGroupSymbols(blackLevel * 255 ~/ 100, similarityLevel,
       gap: gap,
       compareSymbols: compareSymbols,
       similarityCompareLevel: similarityCompareLevel,
@@ -172,7 +172,7 @@ class SymbolReplacerImage {
       List<Map<String, SymbolReplacerSymbolData>> compareSymbols,
       double similarityCompareLevel = 80,
       bool groupSymbols = true,
-      double mergeDistance = null}) {
+      double mergeDistance}) {
     if (_image == null) return;
     if (_bmp == null) _bmp = Image.decodeImage(_image);
     if (_bmp == null) return;
@@ -532,7 +532,6 @@ class SymbolReplacerImage {
           group.symbols.add(symbol1);
           symbol1.symbolGroup = group;
         }
-        ;
       }
     }
   }
@@ -618,13 +617,12 @@ class SymbolReplacerImage {
     // calc possible steps
     if (_mergeDistanceSteps == null) _mergeDistanceSteps = _calcMergeDistances();
 
-    var minLineDistance = null;
+    double minLineDistance;
 
     for (var i = 0; i < lines.length - 1; i++) {
       var dist = lines[i + 1].size.top - lines[i].size.bottom;
       if (dist > 0 && (minLineDistance == null || minLineDistance > dist)) minLineDistance = dist;
     }
-    ;
 
     var _mergeDistance = 0.0;
     // calc init merge distance
@@ -1047,12 +1045,12 @@ class ImageHashing {
         int gray = (pixel & 0x00ff0000) >> 16;
         gray += (pixel & 0x0000ff00) >> 8;
         gray += (pixel & 0x000000ff);
-        gray = (gray / 12).toInt();
+        gray = gray ~/ 12;
 
         grayscale[x + (y * 8)] = gray;
         averageValue += gray;
       }
-    averageValue = (averageValue / 64).toInt();
+    averageValue = averageValue ~/ 64;
 
     // Compute the hash: each bit is a pixel
     // 1 = higher than average, 0 = lower than average
