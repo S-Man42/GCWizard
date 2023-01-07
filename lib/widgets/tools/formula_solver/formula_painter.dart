@@ -54,7 +54,7 @@ class FormulaPainter {
     formula = formula.toUpperCase();
     this.formula = formula;
 
-    RegExp regExp = new RegExp(r'(\[)(.+?|\s*)(\])');
+    RegExp regExp = RegExp(r'(\[)(.+?|\s*)(\])');
     var matches = regExp.allMatches(formula);
     if (matches.isNotEmpty) {
       // formel references
@@ -400,7 +400,6 @@ class FormulaPainter {
       default:
         return false;
     }
-    ;
   }
 
   bool _numberFunction(String functionName) {
@@ -413,7 +412,6 @@ class FormulaPainter {
       default:
         return false;
     }
-    ;
   }
 
   String _coloredSpecialFunctionsLiteral(String result, List<String> parts) {
