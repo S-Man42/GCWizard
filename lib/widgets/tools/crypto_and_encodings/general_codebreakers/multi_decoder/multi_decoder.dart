@@ -80,7 +80,10 @@ class MultiDecoderState extends State<MultiDecoder> {
 
     _refreshMDTTools();
 
-    if (_currentOutput == null) _initOutput();
+    if (_currentOutput == null) {
+      _initOutput();
+      if (widget?.webParameter['calc'] == 'true') _calculateOutput();
+    };
 
     return Column(
       children: <Widget>[

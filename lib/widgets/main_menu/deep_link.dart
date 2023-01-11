@@ -42,6 +42,7 @@ class ScreenArguments {
 
     var uri = Uri.parse(setting.name);
     title = uri.pathSegments[0];
+    // toolname?parameter1=xxx&parameter2=xxx
     arguments = uri.queryParameters;
   }
 }
