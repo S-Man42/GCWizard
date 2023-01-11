@@ -9,6 +9,7 @@ import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_web_statefulwidget.dart';
 import 'package:gc_wizard/widgets/common/gcw_expandable.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
@@ -24,14 +25,10 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreaker
 import 'package:gc_wizard/widgets/utils/gcw_file.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 
-class MultiDecoder extends StatefulWidget {
-  Map<String, String> arguments;
 
-  MultiDecoder({Key key}) : super(key: key);
+class MultiDecoder extends GCWWebStatefulWidget {
 
-  void set args(Map<String, String> args) {
-    this.arguments = args;
-  }
+  MultiDecoder({Key key}): super(key: key);
 
   @override
   MultiDecoderState createState() => MultiDecoderState();
@@ -52,8 +49,8 @@ class MultiDecoderState extends State<MultiDecoder> {
   void initState() {
     super.initState();
 
-    if (widget.arguments != null) {
-      _currentInput = widget.arguments['input'] ?? _currentInput;
+    if (widget.webParameter != null) {
+      _currentInput = widget.webParameter['input'] ?? _currentInput;
     }
 
     _controller = TextEditingController(text: _currentInput);

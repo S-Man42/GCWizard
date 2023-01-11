@@ -99,7 +99,6 @@ class GCWTool extends StatefulWidget {
   final bool suppressHelpButton;
   final String helpSearchString;
   final bool isBeta;
-  final bool acceptArguments;
 
   var icon;
   var id = '';
@@ -123,7 +122,6 @@ class GCWTool extends StatefulWidget {
       this.buttonList,
       this.helpSearchString,
       this.isBeta: false,
-      this.acceptArguments: false,
       this.suppressHelpButton: false})
       : super(key: key) {
     this.id = className(tool) + '_' + (i18nPrefix ?? '');
@@ -153,7 +151,6 @@ class GCWTool extends StatefulWidget {
         buttonList: this.buttonList,
         helpSearchString: this.helpSearchString,
         isBeta: this.isBeta,
-        acceptArguments: this.acceptArguments,
         suppressHelpButton: this.suppressHelpButton);
 
     return t;

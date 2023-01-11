@@ -872,7 +872,7 @@ initializeRegistry(BuildContext context) {
     ]),
     GCWTool(
         tool: MorseSelection(), i18nPrefix: 'morse_selection', categories: [ToolCategory.CRYPTOGRAPHY], searchKeys: []),
-    GCWTool(tool: MultiDecoder(), i18nPrefix: 'multidecoder', acceptArguments: true, categories: [
+    GCWTool(tool: MultiDecoder(), i18nPrefix: 'multidecoder', categories: [
       ToolCategory.GENERAL_CODEBREAKERS
     ], searchKeys: [
       'multidecoder',

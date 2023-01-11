@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_web_statefulwidget.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/multi_decoder.dart';
@@ -13,64 +14,18 @@ NoAnimationMaterialPageRoute createRoute (BuildContext context, ScreenArguments 
   List<GCWTool> tools;
   try {
     tools = registeredTools.where((tool) => tool.i18nPrefix == name).toList();
-
-    //registeredTools.forEach((element) {print(element.i18nPrefix); });
-
-    if (tools == null || tools.isEmpty) {
-      var groups = {
-        'astronomy',
-        'base',
-        'bcd',
-        'bundeswehr',
-        'coords',
-        'countries',
-        'crosssum',
-        'dates',
-        'dna',
-        'earwigo',
-        'hashes',
-        'irrationalnumbers',
-        'numbersequence',
-        'primes',
-        'rotation',
-        'segmentdisplay',
-        'symboltables',
-        'telegraph',
-        'urwigo',
-        'vanity',
-      };
-
-      var specialEntrys= (
-        {'symboltables_examples': 'symboltablesexamples'}
-      );
-
-
-      //case 'format_converter': // coords converter
-
-      if (groups.contains(name) && (arguments.arguments != null && arguments.arguments.isNotEmpty)) {
-        name = name + '_' + arguments.arguments.entries.first.value;
-        if (specialEntrys.keys.contains(name))
-          name = specialEntrys[name];
-      }
-      tools = registeredTools.where((tool) => tool.i18nPrefix == name).toList();
-    }
   } catch (e) {}
   if (tools == null || tools.isEmpty) return null;
 
   var gcwTool = tools.first;
-  // arguments settings only for view the path in the url
-  if (tools.first.acceptArguments) {
+  if (gcwTool.tool is GCWWebStatefulWidget) {
     try {
-      (gcwTool.tool as dynamic).args = arguments.arguments;
-      // var t = (gcwTool.tool as dynamic)(arguments: arguments.arguments);
-      // gcwTool = gcwTool.copyWith(t); // (gcwTool.tool as dynamic)(arguments: arguments.arguments)
-    } catch ( e)
-    {
-       print(e);
-    }
-
-    // test MultiDecoder
+      (gcwTool.tool as GCWWebStatefulWidget).webQueryParameter = arguments.arguments;
+    } catch (e) {}
   }
+  // test MultiDecoder
+
+  // arguments settings only for view the path in the url
   return NoAnimationMaterialPageRoute(builder: (context) => gcwTool, settings: arguments.settings);
 }
 
@@ -81,7 +36,6 @@ class ScreenArguments {
   String title;
   Map<String, dynamic> arguments;
   RouteSettings settings;
-
 
   ScreenArguments(RouteSettings setting) {
     settings = setting;

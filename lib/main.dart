@@ -59,7 +59,7 @@ class App extends StatelessWidget {
                 'clipboard_editor': (BuildContext context) => GCWTool(
                     tool: GCWClipboardEditor(), toolName: i18n(context, 'clipboardeditor_title'), i18nPrefix: '')
               },
-              onGenerateRoute: (settings) {
+              onGenerateRoute: (RouteSettings settings) {
                 // Cast the arguments to the correct
                 // type: ScreenArguments.
                 final args = ScreenArguments(settings);
