@@ -3,6 +3,7 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_web_statefulwidget.dart';
 import 'package:gc_wizard/widgets/common/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
@@ -13,7 +14,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 
-class FormatConverter extends StatefulWidget {
+class FormatConverter extends GCWWebStatefulWidget {
   @override
   FormatConverterState createState() => FormatConverterState();
 }
@@ -28,12 +29,35 @@ class FormatConverterState extends State<FormatConverter> {
   Widget _currentAllOutput = GCWDefaultOutput();
 
   @override
+  void initState() {
+    super.initState();
+
+    if (widget.hasWebParameter()) {
+      var formatString = widget.getWebParameter(WebParameter.fromformat);
+      if (formatString != null) {
+        try {
+          var format = getCoordinateFormatByKey(formatString);
+          if (format != null) _currentCoordsFormat = {'format': formatString};
+        } catch (e) {}
+      }
+      formatString = widget.getWebParameter(WebParameter.toformat);
+      if (formatString != null) {
+        try {
+          var format = getCoordinateFormatByKey(formatString);
+          if (format != null) _currentOutputFormat = {'format': formatString};
+        } catch (e) {}
+      }
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
         GCWCoords(
           title: i18n(context, 'coords_formatconverter_coord'),
           coordsFormat: _currentCoordsFormat,
+          webParameter: widget.webParameter,
           onChanged: (ret) {
             setState(() {
               _currentCoordsFormat = ret['coordsFormat'];

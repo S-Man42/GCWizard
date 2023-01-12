@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
+import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_web_statefulwidget.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_dec.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_dmm.dart';
@@ -37,7 +39,7 @@ import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 
-class GCWCoords extends StatefulWidget {
+class GCWCoords extends GCWWebStatefulWidget {
   final Function onChanged;
   final Map<String, String> coordsFormat;
   final LatLng coordinates;
@@ -45,15 +47,16 @@ class GCWCoords extends StatefulWidget {
   final bool notitle;
   final bool restoreCoordinates;
 
-  const GCWCoords(
+  GCWCoords(
       {Key key,
       this.title,
       this.coordinates,
       this.onChanged,
       this.coordsFormat,
       this.notitle: false,
-      this.restoreCoordinates: false})
-      : super(key: key);
+      this.restoreCoordinates: false,
+      Map<String, String>  webParameter})
+      : super(key: key, webParameter: webParameter);
 
   @override
   GCWCoordsState createState() => GCWCoordsState();
@@ -80,6 +83,16 @@ class GCWCoordsState extends State<GCWCoords> {
         ? null
         : DEC.fromLatLon(widget.coordinates ?? defaultCoordinate);
     _pastedCoords = _currentValue;
+
+    if (widget.hasWebParameter()) {
+      var input = widget.getWebParameter(WebParameter.input);
+      if (input != null) {
+        var parsed = parseCoordinates(input);
+        if (parsed != null && parsed.isNotEmpty) {
+          _setCoords(parsed);
+        }
+      }
+    }
   }
 
   @override

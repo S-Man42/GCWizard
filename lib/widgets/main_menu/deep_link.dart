@@ -45,10 +45,14 @@ class ScreenArguments {
     // MultiDecoder?input=Test%20String
     //Morse?input=Test%20String&modeencode=true
     //Morse?input=...%20---
+    //Morse?input=test
     //alphabetvalues?input=Test
     //alphabetvalues?input=Test&modeencode=true
     //alphabetvalues?input=Test12&modeencode=true
     //alphabetvalues?input=1%202%203%204&modeencode=true
+    //coords_formatconverter?fromformat=coords_utm
+    //coords_formatconverter?fromformat=coords_utm?toformat=coords_utm ->Error
+    //coords_formatconverter?input=N48°23.123%20E9°12.456
 
     // toolname?parameter1=xxx&parameter2=xxx
     arguments = uri.queryParameters;
