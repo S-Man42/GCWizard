@@ -6,12 +6,13 @@ import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_web_statefulwidget.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
-class Morse extends StatefulWidget {
+class Morse extends GCWWebStatefulWidget {
   @override
   MorseState createState() => MorseState();
 }
@@ -27,6 +28,16 @@ class MorseState extends State<Morse> {
   @override
   void initState() {
     super.initState();
+
+    if (widget.hasWebParameter()) {
+      if (widget.getWebParameter(WebParameter.modedecode) == null)
+        _currentMode = GCWSwitchPosition.left;
+      if (_currentMode == GCWSwitchPosition.left)
+        _currentEncodeInput = widget.getWebParameter(WebParameter.input) ?? _currentEncodeInput;
+      else {
+        _currentDecodeInput = widget.getWebParameter(WebParameter.input) ?? _currentDecodeInput;
+      }
+    }
 
     _encodeController = TextEditingController(text: _currentEncodeInput);
     _decodeController = TextEditingController(text: _currentDecodeInput);
