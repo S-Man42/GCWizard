@@ -14,13 +14,13 @@ abstract class GCWWebStatefulWidget extends StatefulWidget {
   }
 
   String getWebParameter(WebParameter parameter) {
-    return webParameter[parameter.toString()];
+    return webParameter[parameter.name];
   }
 }
 
 enum WebParameter {
   input,
-  modedecode,
+  modeencode,
   parameter1,
   parameter2,
   fromformat,
