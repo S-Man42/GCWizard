@@ -15,6 +15,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_divider.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_web_statefulwidget.dart';
 import 'package:gc_wizard/widgets/common/gcw_crosstotal_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_list_textfield.dart';
@@ -24,7 +25,7 @@ import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/text_onlydigitsandcomma_textinputformatter.dart';
 import 'package:prefs/prefs.dart';
 
-class AlphabetValues extends StatefulWidget {
+class AlphabetValues extends GCWWebStatefulWidget {
   @override
   AlphabetValuesState createState() => AlphabetValuesState();
 }
@@ -55,6 +56,16 @@ class AlphabetValuesState extends State<AlphabetValues> {
   @override
   void initState() {
     super.initState();
+
+    if (widget.hasWebParameter()) {
+      if (widget.getWebParameter(WebParameter.modedecode) != null)
+        _currentMode = GCWSwitchPosition.right;
+      if (_currentMode == GCWSwitchPosition.left)
+        _currentEncodeInput = widget.getWebParameter(WebParameter.input) ?? _currentEncodeInput;
+      else {
+        _currentDecodeInput['text'] = widget.getWebParameter(WebParameter.input) ?? _currentDecodeInput['text'];
+      }
+    }
 
     _encodeController = TextEditingController(text: _currentEncodeInput);
     _decodeController = TextEditingController(text: _currentDecodeInput['text']);

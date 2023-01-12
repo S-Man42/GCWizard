@@ -20,7 +20,10 @@ abstract class GCWWebStatefulWidget extends StatefulWidget {
 
 enum WebParameter {
   input,
+  modedecode,
   parameter1,
-  parameter2
+  parameter2,
+  fromformat,
+  toformat
 }
 
