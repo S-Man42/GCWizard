@@ -356,6 +356,10 @@ class GCWCoordsState extends State<GCWCoords> {
       },
     ];
 
+    if (widget.webParameterInit && _pastedCoords != null) {
+      widget.webParameterInit = false;
+      _setCurrentValueAndEmitOnChange();
+    }
     _pastedCoords = null;
 
     Column _widget;
@@ -434,7 +438,8 @@ class GCWCoordsState extends State<GCWCoords> {
   }
 
   _setCurrentValueAndEmitOnChange([BaseCoordinates newValue]) {
-    widget.onChanged({'coordsFormat': _currentCoordsFormat, 'value': (newValue ?? _currentValue)?.toLatLng()});
+    if (!widget.webParameterInit)
+     widget.onChanged({'coordsFormat': _currentCoordsFormat, 'value': (newValue ?? _currentValue)?.toLatLng()});
   }
 
   _setCoords(List<BaseCoordinates> pastedCoords) {

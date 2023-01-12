@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 abstract class GCWWebStatefulWidget extends StatefulWidget {
   Map<String, String> webParameter;
+  bool webParameterInit = true;
 
   GCWWebStatefulWidget({Key key, this.webParameter}): super(key: key);
 
