@@ -49,8 +49,8 @@ class MultiDecoderState extends State<MultiDecoder> {
   void initState() {
     super.initState();
 
-    if (widget.webParameter != null) {
-      _currentInput = widget.webParameter['input'] ?? _currentInput;
+    if (widget.hasWebParameter()) {
+      _currentInput = widget.getWebParameter(WebParameter.input);
     }
 
     _controller = TextEditingController(text: _currentInput);
@@ -82,7 +82,7 @@ class MultiDecoderState extends State<MultiDecoder> {
 
     if (_currentOutput == null) {
       _initOutput();
-      if (widget?.webParameter['calc'] == 'true') _calculateOutput();
+      if (widget.hasWebParameter()) _calculateOutput();
     };
 
     return Column(
