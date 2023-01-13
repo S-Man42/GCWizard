@@ -3,11 +3,12 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/rotator.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_web_statefulwidget.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 
-class RotationGeneral extends StatefulWidget {
+class RotationGeneral extends GCWWebStatefulWidget {
   @override
   RotationGeneralState createState() => RotationGeneralState();
 }
@@ -21,6 +22,13 @@ class RotationGeneralState extends State<RotationGeneral> {
   @override
   void initState() {
     super.initState();
+
+    if (widget.hasWebParameter()) {
+      _currentInput = widget.getWebParameter(WebParameter.input) ?? _currentInput;
+      var key = widget.getWebParameter(WebParameter.parameter1);
+      if (key != null) _currentKey = int.tryParse(key) ?? _currentKey;
+    }
+
     _controller = TextEditingController(text: _currentInput);
   }
 
