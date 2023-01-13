@@ -1,17 +1,17 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_divider/gcw_divider.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_iconbutton/gcw_iconbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_toast/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_divider.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/gcw_toast/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/gcw_async_executer/gcw_async_executer.dart';
-import 'package:gc_wizard/common_widgets/gcw_columned_multiline_output/gcw_columned_multiline_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_default_output/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/gcw_exported_file_dialog/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/common_widgets/gcw_gallery/gcw_gallery.dart';
 import 'package:gc_wizard/common_widgets/gcw_imageview/gcw_imageview.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile/gcw_openfile.dart';
-import 'package:gc_wizard/common_widgets/gcw_output/gcw_output.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool/gcw_tool.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';

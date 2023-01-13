@@ -2,20 +2,20 @@ import 'dart:math';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_button/gcw_button.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dialog/gcw_dialog.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_iconbutton/gcw_iconbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_slider/gcw_slider.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_text/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_toast/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
+import 'package:gc_wizard/common_widgets/gcw_dialog/gcw_dialog.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/gcw_slider/gcw_slider.dart';
+import 'package:gc_wizard/common_widgets/gcw_text/gcw_text.dart';
+import 'package:gc_wizard/common_widgets/gcw_toast/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/gcw_async_executer/gcw_async_executer.dart';
-import 'package:gc_wizard/common_widgets/gcw_default_output/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/gcw_imageview/gcw_imageview.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile/gcw_openfile.dart';
-import 'package:gc_wizard/common_widgets/gcw_text_divider/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool/gcw_tool.dart';
-import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
@@ -252,7 +252,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     return Row(
       children: [
         Expanded(
-          child: GCWDropDownButton(
+          child: GCWDropDown(
             value: _currentSymbolTableViewData,
             onChanged: (value) {
               setState(() {
@@ -326,7 +326,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
             style: gcwDialogTextStyle(),
             suppressTopSpace: true,
           ),
-          GCWDropDownButton(
+          GCWDropDown(
             value: _currentAlphabet,
             alternativeColor: true,
             onChanged: (value) {

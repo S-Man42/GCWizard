@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_textfield/gcw_textfield.dart';
-import 'package:gc_wizard/common_widgets/gcw_default_output/gcw_default_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_output/gcw_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_segmentdisplay_output/gcw_segmentdisplay_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/segmentdisplay_output.dart';
+import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/braille/braille_euro_segment_display/widget/braille_euro_segment_display.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/braille/braille_segment_display/widget/braille_segment_display.dart';
@@ -49,7 +49,7 @@ class BrailleDotNumbersState extends State<BrailleDotNumbers> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWDropDownButton(
+        GCWDropDown(
           value: _currentLanguage,
           onChanged: (value) {
             setState(() {
@@ -143,7 +143,7 @@ class BrailleDotNumbersState extends State<BrailleDotNumbers> {
   }
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
-    return GCWSegmentDisplayOutput(
+    return SegmentDisplayOutput(
         segmentFunction: (displayedSegments, readOnly) {
           if (_currentLanguage == BrailleLanguage.EUR)
             return BrailleEuroSegmentDisplay(segments: displayedSegments, readOnly: readOnly);

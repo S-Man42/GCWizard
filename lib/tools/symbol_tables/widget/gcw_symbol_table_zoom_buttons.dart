@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_iconbutton/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/configuration/settings/preferences.dart';
 import 'package:prefs/prefs.dart';
 

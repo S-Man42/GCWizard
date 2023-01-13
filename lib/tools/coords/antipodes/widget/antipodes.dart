@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/coord/gcw_coords/gcw_coords.dart';
-import 'package:gc_wizard/common_widgets/coord/gcw_coords_output/gcw_coords_output.dart';
-import 'package:gc_wizard/common_widgets/coord/gcw_coords_output/gcw_coords_outputformat.dart';
-import 'package:gc_wizard/common_widgets/gcw_submit_button/gcw_submit_button.dart';
+import 'package:gc_wizard/tools/coords/widget/gcw_coords/gcw_coords.dart';
+import 'package:gc_wizard/tools/coords/widget/gcw_coords_output/gcw_coords_output.dart';
+import 'package:gc_wizard/tools/coords/widget/gcw_coords_output/gcw_coords_outputformat.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/fixed_colors.dart';
 import 'package:gc_wizard/tools/coords/antipodes/logic/antipodes.dart';

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dialog/gcw_dialog.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_divider/gcw_divider.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_text/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/gcw_integer_spinner/gcw_integer_spinner.dart';
-import 'package:gc_wizard/common_widgets/gcw_onoff_switch/gcw_onoff_switch.dart';
-import 'package:gc_wizard/common_widgets/gcw_stateful_dropdownbutton/gcw_stateful_dropdownbutton.dart';
-import 'package:gc_wizard/common_widgets/gcw_text_divider/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/gcw_dialog/gcw_dialog.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_divider.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/gcw_text/gcw_text.dart';
+import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
+import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_stateful_dropdown.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool/gcw_tool.dart';
-import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/common_widgets/units/gcw_unit_dropdownbutton/gcw_unit_dropdownbutton.dart';
+import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/widget/gcw_unit_dropdown.dart';
 import 'package:gc_wizard/configuration/settings/preferences.dart';
 import 'package:gc_wizard/i18n/app_language.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
@@ -55,7 +55,7 @@ class GeneralSettingsState extends State<GeneralSettings> {
                         // data loaded:
                         final currentLocale = snapshot.data;
 
-                        return GCWStatefulDropDownButton(
+                        return GCWStatefulDropDown(
                             items: SUPPORTED_LOCALES.entries.map((locale) {
                               String languageName = locale.value['name_native'];
 
@@ -93,7 +93,7 @@ class GeneralSettingsState extends State<GeneralSettings> {
         Row(children: [
           Expanded(child: GCWText(text: i18n(context, 'settings_general_i18n_defaultlengthunit'))),
           Expanded(
-            child: GCWUnitDropDownButton(
+            child: GCWUnitDropDown(
                 unitList: allLengths(),
                 value: getUnitBySymbol(allLengths(), Prefs.get(PREFERENCE_DEFAULT_LENGTH_UNIT)),
                 onChanged: (Length value) {
@@ -186,7 +186,7 @@ class GeneralSettingsState extends State<GeneralSettings> {
           },
         ),
         Prefs.getBool(PREFERENCE_TABS_USE_DEFAULT_TAB)
-            ? GCWDropDownButton(
+            ? GCWDropDown(
                 value: Prefs.get(PREFERENCE_TABS_DEFAULT_TAB),
                 items: [
                   {

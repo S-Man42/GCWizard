@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dialog/gcw_dialog.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_iconbutton/gcw_iconbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_output_text/gcw_output_text.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_text/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_textfield/gcw_textfield.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_toast/gcw_toast.dart';
-import 'package:gc_wizard/common_widgets/coord/gcw_coords_output/gcw_coords_output.dart';
-import 'package:gc_wizard/common_widgets/coord/gcw_coords_output/gcw_coords_outputformat.dart';
+import 'package:gc_wizard/common_widgets/gcw_dialog/gcw_dialog.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
+import 'package:gc_wizard/common_widgets/gcw_text/gcw_text.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
+import 'package:gc_wizard/common_widgets/gcw_toast/gcw_toast.dart';
+import 'package:gc_wizard/tools/coords/widget/gcw_coords_output/gcw_coords_output.dart';
+import 'package:gc_wizard/tools/coords/widget/gcw_coords_output/gcw_coords_outputformat.dart';
 import 'package:gc_wizard/common_widgets/gcw_key_value_editor/gcw_key_value_editor.dart';
-import 'package:gc_wizard/common_widgets/gcw_onoff_switch/gcw_onoff_switch.dart';
-import 'package:gc_wizard/common_widgets/gcw_submit_button/gcw_submit_button.dart';
-import 'package:gc_wizard/common_widgets/gcw_text_divider/gcw_text_divider.dart';
-import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/common_widgets/units/gcw_unit_dropdownbutton/gcw_unit_dropdownbutton.dart';
+import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/widget/gcw_unit_dropdown.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/persistence/formula_solver/model.dart' as formula_base;
 import 'package:gc_wizard/persistence/variable_coordinate/json_provider.dart';
@@ -263,7 +263,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
                       )),
                   Expanded(
                       flex: 1,
-                      child: GCWUnitDropDownButton(
+                      child: GCWUnitDropDown(
                           unitList: allLengths(),
                           value: _currentLengthUnit,
                           onChanged: (Length value) {

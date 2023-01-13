@@ -2,10 +2,10 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_iconbutton/gcw_iconbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_text/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_toast/gcw_toast.dart';
-import 'package:gc_wizard/common_widgets/gcw_default_output/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/gcw_text/gcw_text.dart';
+import 'package:gc_wizard/common_widgets/gcw_toast/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile/gcw_openfile.dart';
 import 'package:gc_wizard/common_widgets/gcw_textviewer/gcw_textviewer.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool/gcw_tool.dart';

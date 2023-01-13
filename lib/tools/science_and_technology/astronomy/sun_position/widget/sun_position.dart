@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/coord/gcw_coords/gcw_coords.dart';
-import 'package:gc_wizard/common_widgets/gcw_columned_multiline_output/gcw_columned_multiline_output.dart';
+import 'package:gc_wizard/tools/coords/widget/gcw_coords/gcw_coords.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/gcw_datetime_picker/gcw_datetime_picker.dart';
-import 'package:gc_wizard/common_widgets/gcw_text_divider/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/utils/default_getter.dart';

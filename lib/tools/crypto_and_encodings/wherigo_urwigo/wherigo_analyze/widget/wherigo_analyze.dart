@@ -3,24 +3,24 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_button/gcw_button.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dialog/gcw_dialog.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_iconbutton/gcw_iconbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_output_text/gcw_output_text.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_text/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_toast/gcw_toast.dart';
-import 'package:gc_wizard/common_widgets/coord/gcw_coords_export_dialog/gcw_coords_export_dialog.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
+import 'package:gc_wizard/common_widgets/gcw_dialog/gcw_dialog.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
+import 'package:gc_wizard/common_widgets/gcw_text/gcw_text.dart';
+import 'package:gc_wizard/common_widgets/gcw_toast/gcw_toast.dart';
+import 'package:gc_wizard/tools/coords/widget/gcw_coords_export_dialog.dart';
 import 'package:gc_wizard/common_widgets/gcw_async_executer/gcw_async_executer.dart';
-import 'package:gc_wizard/common_widgets/gcw_code_textfield/gcw_code_textfield.dart';
-import 'package:gc_wizard/common_widgets/gcw_columned_multiline_output/gcw_columned_multiline_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_default_output/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_code_textfield.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/gcw_exported_file_dialog/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/common_widgets/gcw_files_output/gcw_files_output.dart';
 import 'package:gc_wizard/common_widgets/gcw_imageview/gcw_imageview.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile/gcw_openfile.dart';
-import 'package:gc_wizard/common_widgets/gcw_output/gcw_output.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/gcw_soundplayer/gcw_soundplayer.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool/gcw_tool.dart';
 import 'package:gc_wizard/configuration/settings/preferences.dart';
@@ -385,7 +385,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                     },
                   ),
                   Expanded(
-                    child: GCWDropDownButton(
+                    child: GCWDropDown(
                       value: _displayedCartridgeData,
                       onChanged: (value) {
                         setState(() {

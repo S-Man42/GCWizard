@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/gcw_columned_multiline_output/gcw_columned_multiline_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_text_divider/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/widgets/main_menu/gcw_mainmenuentry_stub.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/common_widgets/gcw_text_divider/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/configuration/settings/preferences.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/science_and_technology/maya_calendar/logic/maya_calendar.dart';
@@ -19,7 +19,7 @@ class ToolSettingsState extends State<ToolSettings> {
         GCWTextDivider(
           text: i18n(context, 'settings_mayacalendar_title'),
         ),
-        GCWDropDownButton(
+        GCWDropDown(
           value: Prefs.get(PREFERENCE_MAYACALENDAR_CORRELATION),
           onChanged: (value) {
             setState(() {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_iconbutton/gcw_iconbutton.dart';
-import 'package:gc_wizard/common_widgets/gcw_text_divider/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 
 class GCWExpandableTextDivider extends StatefulWidget {
   final String text;

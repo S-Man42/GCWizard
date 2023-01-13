@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/common_widgets/gcw_stateful_dropdownbutton/gcw_stateful_dropdownbutton.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_stateful_dropdown.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/logic/alphabet_values.dart' as logic;
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/gcw_multi_decoder_tool/widget/gcw_multi_decoder_tool.dart';
@@ -29,7 +29,7 @@ class MultiDecoderToolAlphabetValues extends GCWMultiDecoderTool {
             },
             options: options,
             configurationWidget: GCWMultiDecoderToolConfiguration(widgets: {
-              MDT_ALPHABETVALUES_OPTION_ALPHABET: GCWStatefulDropDownButton(
+              MDT_ALPHABETVALUES_OPTION_ALPHABET: GCWStatefulDropDown(
                 value: options[MDT_ALPHABETVALUES_OPTION_ALPHABET],
                 items: ALL_ALPHABETS.map((alphabet) {
                   return GCWDropDownMenuItem(

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_output_text/gcw_output_text.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_textfield/gcw_textfield.dart';
-import 'package:gc_wizard/common_widgets/gcw_default_output/gcw_default_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_multiple_output/gcw_multiple_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_onoff_switch/gcw_onoff_switch.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_multiple_output.dart';
+import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/science_and_technology/combinatorics/permutation/logic/permutation.dart';
 

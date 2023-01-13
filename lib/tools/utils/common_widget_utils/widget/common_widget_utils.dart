@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_toast/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_toast/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool/gcw_tool.dart';
 import 'package:gc_wizard/configuration/settings/preferences.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_output_text/gcw_output_text.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_textfield/gcw_textfield.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_toast/gcw_toast.dart';
-import 'package:gc_wizard/common_widgets/gcw_alphabetdropdown/gcw_alphabetdropdown.dart';
-import 'package:gc_wizard/common_widgets/gcw_alphabetmodification_dropdownbutton/gcw_alphabetmodification_dropdownbutton.dart';
-import 'package:gc_wizard/common_widgets/gcw_default_output/gcw_default_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_multiple_output/gcw_multiple_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_output/gcw_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_text_divider/gcw_text_divider.dart';
-import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
+import 'package:gc_wizard/common_widgets/gcw_toast/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_alphabetdropdown.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_alphabetmodification_dropdown.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_multiple_output.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/bifid/logic/bifid.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/polybios/logic/polybios.dart';
@@ -110,7 +110,7 @@ class BifidState extends State<Bifid> {
         ),
 
         _currentMatrixMode == GCWSwitchPosition.left
-            ? GCWAlphabetModificationDropDownButton(
+            ? GCWAlphabetModificationDropDown(
                 value: _currentModificationMode,
                 onChanged: (value) {
                   setState(() {

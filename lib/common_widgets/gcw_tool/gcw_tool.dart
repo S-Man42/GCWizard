@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dialog/gcw_dialog.dart';
-import 'package:gc_wizard/common_widgets/gcw_symbol_container/gcw_symbol_container.dart';
+import 'package:gc_wizard/common_widgets/gcw_dialog/gcw_dialog.dart';
+import 'package:gc_wizard/tools/symbol_tables/widget/gcw_symbol_container.dart';
 import 'package:gc_wizard/configuration/settings/preferences.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/i18n/supported_locales.dart';

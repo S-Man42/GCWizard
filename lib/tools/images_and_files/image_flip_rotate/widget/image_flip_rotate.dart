@@ -1,9 +1,9 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_button/gcw_button.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_iconbutton/gcw_iconbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_toast/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/gcw_toast/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/gcw_imageview/gcw_imageview.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile/gcw_openfile.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool/gcw_tool.dart';

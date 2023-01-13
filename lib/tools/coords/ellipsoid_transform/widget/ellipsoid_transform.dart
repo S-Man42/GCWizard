@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/common_widgets/coord/gcw_coords/gcw_coords.dart';
-import 'package:gc_wizard/common_widgets/coord/gcw_coords_output/gcw_coords_output.dart';
-import 'package:gc_wizard/common_widgets/coord/gcw_coords_output/gcw_coords_outputformat.dart';
-import 'package:gc_wizard/common_widgets/gcw_submit_button/gcw_submit_button.dart';
-import 'package:gc_wizard/common_widgets/gcw_text_divider/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/tools/coords/widget/gcw_coords/gcw_coords.dart';
+import 'package:gc_wizard/tools/coords/widget/gcw_coords_output/gcw_coords_output.dart';
+import 'package:gc_wizard/tools/coords/widget/gcw_coords_output/gcw_coords_outputformat.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/coords/ellipsoid_transform/logic/ellipsoid_transform.dart';
 import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
@@ -49,7 +49,7 @@ class EllipsoidTransformState extends State<EllipsoidTransform> {
         GCWTextDivider(
           text: i18n(context, 'coords_ellipsoidtransform_fromellipsoiddate'),
         ),
-        GCWDropDownButton(
+        GCWDropDown(
           value: _currentFromDate,
           onChanged: (newValue) {
             setState(() {
@@ -66,7 +66,7 @@ class EllipsoidTransformState extends State<EllipsoidTransform> {
         GCWTextDivider(
           text: i18n(context, 'coords_ellipsoidtransform_toellipsoiddate'),
         ),
-        GCWDropDownButton(
+        GCWDropDown(
           value: _currentToDate,
           onChanged: (newValue) {
             setState(() {

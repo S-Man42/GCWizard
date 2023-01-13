@@ -1,15 +1,15 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_iconbutton/gcw_iconbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_slider/gcw_slider.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_toast/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/gcw_slider/gcw_slider.dart';
+import 'package:gc_wizard/common_widgets/gcw_toast/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/gcw_async_executer/gcw_async_executer.dart';
 import 'package:gc_wizard/common_widgets/gcw_imageview/gcw_imageview.dart';
-import 'package:gc_wizard/common_widgets/gcw_onoff_switch/gcw_onoff_switch.dart';
+import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile/gcw_openfile.dart';
 import 'package:gc_wizard/common_widgets/gcw_popup_menu/gcw_popup_menu.dart';
-import 'package:gc_wizard/common_widgets/gcw_text_divider/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool/gcw_tool.dart';
 import 'package:gc_wizard/configuration/settings/preferences.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';

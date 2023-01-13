@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/gcw_abc_spinner/gcw_abc_spinner.dart';
+import 'package:gc_wizard/common_widgets/spinners/gcw_abc_spinner.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/gcw_multi_decoder_tool/widget/gcw_multi_decoder_tool.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/gcw_multi_decoder_tool_configuration/widget/gcw_multi_decoder_tool_configuration.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rotation/logic/rotator.dart';

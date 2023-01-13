@@ -1,15 +1,15 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dialog/gcw_dialog.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_iconbutton/gcw_iconbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_text/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_textfield/gcw_textfield.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_toast/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_dialog/gcw_dialog.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/gcw_text/gcw_text.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
+import 'package:gc_wizard/common_widgets/gcw_toast/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/gcw_delete_alertdialog/gcw_delete_alertdialog.dart';
-import 'package:gc_wizard/common_widgets/gcw_paste_button/gcw_paste_button.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_paste_button.dart';
 import 'package:gc_wizard/common_widgets/gcw_popup_menu/gcw_popup_menu.dart';
-import 'package:gc_wizard/common_widgets/gcw_text_divider/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_text_export/gcw_text_export.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool/gcw_tool.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';

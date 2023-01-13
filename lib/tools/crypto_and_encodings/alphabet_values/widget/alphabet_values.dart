@@ -2,18 +2,18 @@ import 'dart:collection';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_button/gcw_button.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dialog/gcw_dialog.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_divider/gcw_divider.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_iconbutton/gcw_iconbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_textfield/gcw_textfield.dart';
-import 'package:gc_wizard/common_widgets/gcw_crosstotal_output/gcw_crosstotal_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_default_output/gcw_default_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_integer_list_textfield/gcw_integer_list_textfield.dart';
-import 'package:gc_wizard/common_widgets/gcw_integer_spinner/gcw_integer_spinner.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
+import 'package:gc_wizard/common_widgets/gcw_dialog/gcw_dialog.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_divider.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
+import 'package:gc_wizard/tools/science_and_technology/cross_sums/widget/crosstotal_output.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_integer_list_textfield.dart';
+import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/gcw_key_value_editor/gcw_key_value_editor.dart';
-import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/configuration/settings/preferences.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
@@ -249,7 +249,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
             Row(
               children: [
                 Expanded(
-                  child: GCWDropDownButton(
+                  child: GCWDropDown(
                     value: _currentAlphabetKey,
                     items: _alphabets.map((Alphabet alphabet) {
                       return GCWDropDownMenuItem(
@@ -513,12 +513,12 @@ class AlphabetValuesState extends State<AlphabetValues> {
     var alphabet = _getFinalAlphabet();
 
     if (_currentMode == GCWSwitchPosition.left) {
-      return GCWCrosstotalOutput(
+      return CrosstotalOutput(
           text: _currentEncodeInput,
           values: logic.AlphabetValues(alphabet: alphabet).textToValues(_currentEncodeInput, keepNumbers: true));
     } else {
       var text = logic.AlphabetValues(alphabet: alphabet).valuesToText(List<int>.from(_currentDecodeInput['values']));
-      return GCWCrosstotalOutput(text: text, values: List<int>.from(_currentDecodeInput['values']));
+      return CrosstotalOutput(text: text, values: List<int>.from(_currentDecodeInput['values']));
     }
   }
 

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_iconbutton/gcw_iconbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_textfield/gcw_textfield.dart';
-import 'package:gc_wizard/common_widgets/gcw_default_output/gcw_default_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_segmentdisplay_output/gcw_segmentdisplay_output.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/segmentdisplay_output.dart';
 import 'package:gc_wizard/common_widgets/gcw_toolbar/gcw_toolbar.dart';
-import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/predator/logic/predator.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/predator_segment_display/widget/predator_segment_display.dart';
@@ -136,7 +136,7 @@ class PredatorState extends State<Predator> {
   }
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
-    return GCWSegmentDisplayOutput(
+    return SegmentDisplayOutput(
         segmentFunction: (displayedSegments, readOnly) {
           return PredatorSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
         },

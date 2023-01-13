@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_text/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/gcw_default_output/gcw_default_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_double_spinner/gcw_double_spinner.dart';
-import 'package:gc_wizard/common_widgets/gcw_text_divider/gcw_text_divider.dart';
-import 'package:gc_wizard/common_widgets/units/gcw_units/gcw_units.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/gcw_text/gcw_text.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/spinners/gcw_double_spinner.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/widget/gcw_units.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/angle.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/area.dart';
@@ -94,7 +94,7 @@ class UnitConverterState extends State<UnitConverter> {
         GCWTextDivider(
           text: i18n(context, 'unitconverter_unit'),
         ),
-        GCWDropDownButton(
+        GCWDropDown(
           value: _currentCategory,
           items: _categories.map((category) {
             return GCWDropDownMenuItem(value: category, child: i18n(context, category['category'].key));

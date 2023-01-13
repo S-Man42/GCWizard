@@ -1,18 +1,18 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_output_text/gcw_output_text.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_text/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_textfield/gcw_textfield.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_toast/gcw_toast.dart';
-import 'package:gc_wizard/common_widgets/gcw_default_output/gcw_default_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_dropdown_spinner/gcw_dropdown_spinner.dart';
-import 'package:gc_wizard/common_widgets/gcw_integer_spinner/gcw_integer_spinner.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
+import 'package:gc_wizard/common_widgets/gcw_text/gcw_text.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
+import 'package:gc_wizard/common_widgets/gcw_toast/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/spinners/gcw_dropdown_spinner.dart';
+import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/gcw_key_value_editor/gcw_key_value_editor.dart';
-import 'package:gc_wizard/common_widgets/gcw_multiple_output/gcw_multiple_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_output/gcw_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_multiple_output.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
+import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/homophone/logic/homophone.dart';
 import 'package:gc_wizard/tools/utils/textinputformatter/wrapper_for_masktextinputformatter/widget/wrapper_for_masktextinputformatter.dart';
@@ -127,7 +127,7 @@ class HomophoneState extends State<Homophone> {
         Row(children: <Widget>[
           Expanded(child: GCWText(text: i18n(context, 'homophone_keytype') + ':'), flex: 1),
           Expanded(
-              child: GCWDropDownButton(
+              child: GCWDropDown(
                 value: _currentKeyType,
                 onChanged: (value) {
                   setState(() {
@@ -190,7 +190,7 @@ class HomophoneState extends State<Homophone> {
         Row(children: <Widget>[
           Expanded(child: GCWText(text: i18n(context, 'common_alphabet') + ':'), flex: 1),
           Expanded(
-              child: GCWDropDownButton(
+              child: GCWDropDown(
                 value: _currentAlphabet,
                 onChanged: (value) {
                   setState(() {

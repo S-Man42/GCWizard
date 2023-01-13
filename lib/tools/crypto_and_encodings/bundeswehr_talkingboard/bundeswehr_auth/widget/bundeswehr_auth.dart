@@ -2,14 +2,14 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_output_text/gcw_output_text.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_text/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_textfield/gcw_textfield.dart';
-import 'package:gc_wizard/common_widgets/gcw_dropdown_spinner/gcw_dropdown_spinner.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
+import 'package:gc_wizard/common_widgets/gcw_text/gcw_text.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
+import 'package:gc_wizard/common_widgets/spinners/gcw_dropdown_spinner.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable/gcw_expandable.dart';
-import 'package:gc_wizard/common_widgets/gcw_text_divider/gcw_text_divider.dart';
-import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/bundeswehr_talkingboard/bundeswehr_auth/logic/bundeswehr_auth.dart';
@@ -288,7 +288,7 @@ class BundeswehrTalkingBoardAuthentificationState extends State<BundeswehrTalkin
                         child: Text(
                       _currentLetterCallSign.toUpperCase(),
                     )),
-                    GCWDropDownButton(
+                    GCWDropDown(
                       onChanged: (value) {
                         setState(() {});
                       },
@@ -311,7 +311,7 @@ class BundeswehrTalkingBoardAuthentificationState extends State<BundeswehrTalkin
                         child: Text(
                       output.Number[0],
                     )),
-                    GCWDropDownButton(
+                    GCWDropDown(
                       onChanged: (value) {
                         setState(() {});
                       },
@@ -334,7 +334,7 @@ class BundeswehrTalkingBoardAuthentificationState extends State<BundeswehrTalkin
                         child: Text(
                       output.Number[1],
                     )),
-                    GCWDropDownButton(
+                    GCWDropDown(
                       onChanged: (value) {
                         setState(() {});
                       },

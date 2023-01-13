@@ -1,12 +1,12 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_output_text/gcw_output_text.dart';
-import 'package:gc_wizard/common_widgets/gcw_columned_multiline_output/gcw_columned_multiline_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_text_divider/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool/gcw_tool.dart';
-import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/roman_numbers/roman_numbers/logic/roman_numbers.dart';
 import 'package:gc_wizard/tools/science_and_technology/periodic_table/logic/periodic_table.dart';
@@ -150,7 +150,7 @@ class PeriodicTableDataViewState extends State<PeriodicTableDataView> {
     return Column(
       children: <Widget>[
         GCWTextDivider(text: i18n(context, 'periodictable_attribute')),
-        GCWDropDownButton(
+        GCWDropDown(
           value: _currentCategory,
           items: _categories.entries.map((category) {
             return GCWDropDownMenuItem(
@@ -167,7 +167,7 @@ class PeriodicTableDataViewState extends State<PeriodicTableDataView> {
         ),
         _valueCategories.contains(_currentCategory)
             ? Container()
-            : GCWDropDownButton(
+            : GCWDropDown(
                 value: _currentValueCategoryValue,
                 items: _currentValueCategoryListItems,
                 onChanged: (value) {

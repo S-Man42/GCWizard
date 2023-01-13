@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/gcw_alphabetmodification_dropdownbutton/gcw_alphabetmodification_dropdownbutton.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_alphabetmodification_dropdown.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/gcw_multi_decoder_tool/widget/gcw_multi_decoder_tool.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/gcw_multi_decoder_tool_configuration/widget/gcw_multi_decoder_tool_configuration.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_playfair/widget/md_tool_playfair.dart';
@@ -24,7 +24,7 @@ class MultiDecoderToolPolybios extends GCWMultiDecoderTool {
             requiresKey: true,
             options: options,
             configurationWidget: GCWMultiDecoderToolConfiguration(widgets: {
-              MDT_POLYBIOS_OPTION_MODE: GCWAlphabetModificationDropDownButton(
+              MDT_POLYBIOS_OPTION_MODE: GCWAlphabetModificationDropDown(
                 suppressTitle: true,
                 value: _parseStringToEnum(options[MDT_POLYBIOS_OPTION_MODE]),
                 onChanged: (newValue) {

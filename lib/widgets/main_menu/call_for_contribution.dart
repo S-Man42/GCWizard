@@ -1,6 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_divider/gcw_divider.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_divider.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/tools/utils/common_widget_utils/widget/common_widget_utils.dart';

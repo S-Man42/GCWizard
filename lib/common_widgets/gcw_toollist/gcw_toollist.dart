@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_text/gcw_text.dart';
+import 'package:gc_wizard/common_widgets/gcw_text/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_delete_alertdialog/gcw_delete_alertdialog.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool/gcw_tool.dart';
 import 'package:gc_wizard/configuration/settings/preferences.dart';

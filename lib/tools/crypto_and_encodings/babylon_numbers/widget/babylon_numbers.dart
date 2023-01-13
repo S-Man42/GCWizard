@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_iconbutton/gcw_iconbutton.dart';
-import 'package:gc_wizard/common_widgets/gcw_integer_spinner/gcw_integer_spinner.dart';
-import 'package:gc_wizard/common_widgets/gcw_output/gcw_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_segmentdisplay_output/gcw_segmentdisplay_output.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/segmentdisplay_output.dart';
 import 'package:gc_wizard/common_widgets/gcw_toolbar/gcw_toolbar.dart';
-import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/babylon_numbers/logic/babylon_numbers.dart';
@@ -123,7 +123,7 @@ class BabylonNumbersState extends State<BabylonNumbers> {
   }
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
-    return GCWSegmentDisplayOutput(
+    return SegmentDisplayOutput(
         segmentFunction: (displayedSegments, readOnly) {
           return BabylonNumbersSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
         },

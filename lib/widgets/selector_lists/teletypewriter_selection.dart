@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/gcw_toollist/gcw_toollist.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/teletypewriter/ancient_teletypewriter/widget/ancient_teletypewriter.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/teletypewriter/ccitt_teletypewriter/widget/ccitt_teletypewriter.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/teletypewriter/other_teletypewriter/widget/other_teletypewriter.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/teletypewriter/punchtape/widget/punchtape.dart';
+import 'package:gc_wizard/tools/science_and_technology/teletypewriter/ancient_teletypewriter/widget/ancient_teletypewriter.dart';
+import 'package:gc_wizard/tools/science_and_technology/teletypewriter/ccitt_teletypewriter/widget/ccitt_teletypewriter.dart';
+import 'package:gc_wizard/tools/science_and_technology/teletypewriter/other_teletypewriter/widget/other_teletypewriter.dart';
+import 'package:gc_wizard/tools/science_and_technology/teletypewriter/punchtape/widget/punchtape.dart';
 import 'package:gc_wizard/tools/symbol_tables/widget/symbol_table.dart';
 import 'package:gc_wizard/tools/utils/common_widget_utils/widget/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/registry.dart';

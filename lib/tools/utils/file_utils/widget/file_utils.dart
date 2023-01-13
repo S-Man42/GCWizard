@@ -9,7 +9,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_toast/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_toast/gcw_toast.dart';
 import 'package:gc_wizard/tools/utils/gcw_file/widget/gcw_file.dart';
 import 'package:image/image.dart' as img;
 import 'package:path/path.dart';

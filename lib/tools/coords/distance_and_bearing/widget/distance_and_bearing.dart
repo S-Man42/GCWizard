@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_output_text/gcw_output_text.dart';
-import 'package:gc_wizard/common_widgets/coord/gcw_coords/gcw_coords.dart';
-import 'package:gc_wizard/common_widgets/coord/gcw_coords_output/gcw_coords_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_submit_button/gcw_submit_button.dart';
-import 'package:gc_wizard/common_widgets/gcw_text_divider/gcw_text_divider.dart';
-import 'package:gc_wizard/common_widgets/units/gcw_unit_dropdownbutton/gcw_unit_dropdownbutton.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
+import 'package:gc_wizard/tools/coords/widget/gcw_coords/gcw_coords.dart';
+import 'package:gc_wizard/tools/coords/widget/gcw_coords_output/gcw_coords_output.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/widget/gcw_unit_dropdown.dart';
 import 'package:gc_wizard/configuration/settings/preferences.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/coords/distance_and_bearing/logic/distance_and_bearing.dart';
@@ -73,7 +73,7 @@ class DistanceBearingState extends State<DistanceBearing> {
         GCWTextDivider(
           text: i18n(context, 'coords_distancebearing_outputunit'),
         ),
-        GCWUnitDropDownButton(
+        GCWUnitDropDown(
             unitList: allLengths(),
             value: _currentOutputUnit,
             onlyShowSymbols: false,

@@ -1,6 +1,6 @@
 import 'package:archive/archive.dart';
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/symbol_tables/logic/symbol_table_data.dart';
 
@@ -51,7 +51,7 @@ class CountriesFlagsState extends State<CountriesFlags> {
 
     return Column(
       children: [
-        GCWDropDownButton(
+        GCWDropDown(
           value: _currentImageKey,
           items: _images.map((image) {
             return GCWDropDownMenuItem(value: image.keys.first, child: image.keys.first);

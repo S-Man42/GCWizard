@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/common_widgets/gcw_stateful_dropdownbutton/gcw_stateful_dropdownbutton.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_stateful_dropdown.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/gcw_multi_decoder_tool/widget/gcw_multi_decoder_tool.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/gcw_multi_decoder_tool_configuration/widget/gcw_multi_decoder_tool_configuration.dart';
@@ -25,7 +25,7 @@ class MultiDecoderToolWasd extends GCWMultiDecoderTool {
             },
             options: options,
             configurationWidget: GCWMultiDecoderToolConfiguration(widgets: {
-              MDT_WASD_OPTION_SET: GCWStatefulDropDownButton(
+              MDT_WASD_OPTION_SET: GCWStatefulDropDown(
                 value: switchMapKeyValue(KEYBOARD_CONTROLS)[options[MDT_WASD_OPTION_SET]],
                 onChanged: (newValue) {
                   options[MDT_WASD_OPTION_SET] = KEYBOARD_CONTROLS[newValue];

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/common_widgets/gcw_columned_multiline_output/gcw_columned_multiline_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_default_output/gcw_default_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_dropdown_spinner/gcw_dropdown_spinner.dart';
-import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/spinners/gcw_dropdown_spinner.dart';
+import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/science_and_technology/piano/logic/piano.dart';
 
@@ -36,7 +36,7 @@ class PianoState extends State<Piano> {
     var field = _currentSort == 0 ? fields[0] : fields[_currentSort - 1];
     return Column(
       children: <Widget>[
-        GCWDropDownButton(
+        GCWDropDown(
           title: i18n(context, 'piano_sort'),
           value: _currentSort,
           onChanged: (value) {
