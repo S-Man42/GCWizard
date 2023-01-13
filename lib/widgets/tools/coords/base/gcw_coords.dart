@@ -93,6 +93,7 @@ class GCWCoordsState extends State<GCWCoords> {
         }
       }
     }
+    widget.webParameterInitActive = false;
   }
 
   @override
@@ -356,10 +357,6 @@ class GCWCoordsState extends State<GCWCoords> {
       },
     ];
 
-    if (widget.webParameterInit && _pastedCoords != null) {
-      widget.webParameterInit = false;
-      _setCurrentValueAndEmitOnChange();
-    }
     _pastedCoords = null;
 
     Column _widget;
@@ -438,8 +435,9 @@ class GCWCoordsState extends State<GCWCoords> {
   }
 
   _setCurrentValueAndEmitOnChange([BaseCoordinates newValue]) {
-    if (!widget.webParameterInit)
-     widget.onChanged({'coordsFormat': _currentCoordsFormat, 'value': (newValue ?? _currentValue)?.toLatLng()});
+    var map = {'coordsFormat': _currentCoordsFormat, 'value': (newValue ?? _currentValue)?.toLatLng()};
+    if (widget.webParameterInitActive) map.addAll({'webParameterInitActive': true});
+    widget.onChanged(map);
   }
 
   _setCoords(List<BaseCoordinates> pastedCoords) {

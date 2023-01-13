@@ -52,7 +52,7 @@ class ScreenArguments {
     //alphabetvalues?input=1%202%203%204&modeencode=true
     //coords_formatconverter?fromformat=coords_utm
     //coords_formatconverter?fromformat=coords_utm?toformat=coords_utm ->Error
-    //coords_formatconverter?input=N48%C2%B023.123%20E9%C2%B012.456     N48°23.123%20E9°12.456
+    //coords_formatconverter?input=N48%C2%B023.123%20E9%C2%B012.456     N48°23.123 E9°12.456
     //rotation_general?input=test&parameter1=4&result=json
 
     // toolname?parameter1=xxx&parameter2=xxx

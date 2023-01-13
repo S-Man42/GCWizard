@@ -59,10 +59,17 @@ class FormatConverterState extends State<FormatConverter> {
           coordsFormat: _currentCoordsFormat,
           webParameter: widget.webParameter,
           onChanged: (ret) {
-            setState(() {
-              _currentCoordsFormat = ret['coordsFormat'];
-              _currentCoords = ret['value'];
-            });
+            _currentCoordsFormat = ret['coordsFormat'];
+            _currentCoords = ret['value'];
+            // Otherwise widget exception when initializing with web parameters
+            if (ret['webParameterInitActive'] == null)
+              setState(() {});
+            else {
+              _calculateOutput(context);
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                setState(() {});
+              });
+            }
           },
         ),
         GCWTextDivider(
