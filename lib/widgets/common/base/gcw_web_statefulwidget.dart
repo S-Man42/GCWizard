@@ -19,7 +19,7 @@ abstract class GCWWebStatefulWidget extends StatefulWidget {
   }
 
   bool sendJsonResultToWeb() {
-    return webParameter['result'] == 'json';
+    return getWebParameter(WebParameter.result) == 'json';
   }
 
   sendResultToWeb(String json) {
@@ -33,6 +33,7 @@ enum WebParameter {
   parameter1,
   parameter2,
   fromformat,
-  toformat
+  toformat,
+  result
 }
 

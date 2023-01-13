@@ -54,6 +54,7 @@ class RotationGeneralState extends State<RotationGeneral> {
         ),
         GCWIntegerSpinner(
           title: i18n(context, 'common_key'),
+          value: _currentKey,
           onChanged: (value) {
             setState(() {
               _currentKey = value;
@@ -73,7 +74,7 @@ class RotationGeneralState extends State<RotationGeneral> {
     var outputReverse = Rotator().rotate(_currentInput, reverseKey);
 
     if (widget.sendJsonResultToWeb()) {
-      widget.sendResultToWeb(_toJson(output, outputReverse))
+      widget.sendResultToWeb(_toJson(output, outputReverse));
     }
 
     return Column(
