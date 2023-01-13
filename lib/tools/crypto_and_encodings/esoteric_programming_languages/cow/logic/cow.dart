@@ -36,7 +36,7 @@
 // and forwarded to geocache.wizard@gmail.com
 //---------------------------------------------------------
 
-import 'package:gc_wizard/utils/common_utils.dart';
+import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
 
 final ERROR_COW_INVALIDCODE = 'common_programming_error_invalid_opcode';
 final ERROR_COW_LOOPNOTOPEND = 'cow_error_nomatchingMOO';

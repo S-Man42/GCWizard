@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/befunge/logic/befunge.dart';
-import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_iconbutton/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_textfield/gcw_textfield.dart';
 import 'package:gc_wizard/common_widgets/gcw_code_textfield/gcw_code_textfield.dart';
@@ -10,6 +6,10 @@ import 'package:gc_wizard/common_widgets/gcw_columned_multiline_output/gcw_colum
 import 'package:gc_wizard/common_widgets/gcw_default_output/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/befunge/logic/befunge.dart';
 import 'package:gc_wizard/tools/utils/common_widget_utils/widget/common_widget_utils.dart';
 
 class Befunge extends StatefulWidget {

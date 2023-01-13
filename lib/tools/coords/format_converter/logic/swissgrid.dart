@@ -1,9 +1,9 @@
 import 'dart:math';
 
+import 'package:gc_wizard/tools/coords/ellipsoid_transform/logic/ellipsoid_transform.dart';
 import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/logic/ellipsoid.dart';
-import 'package:gc_wizard/tools/coords/ellipsoid_transform/logic/ellipsoid_transform.dart';
-import 'package:gc_wizard/utils/constants.dart';
+import 'package:gc_wizard/utils/logic_utils/constants.dart';
 import 'package:latlong2/latlong.dart';
 
 SwissGridPlus latLonToSwissGridPlus(LatLng coord, Ellipsoid ells) {

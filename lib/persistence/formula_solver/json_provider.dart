@@ -1,8 +1,8 @@
 import 'dart:convert';
 
+import 'package:gc_wizard/configuration/settings/preferences.dart';
 import 'package:gc_wizard/persistence/formula_solver/model.dart';
 import 'package:gc_wizard/persistence/utils.dart';
-import 'package:gc_wizard/utils/settings/preferences.dart';
 import 'package:prefs/prefs.dart';
 
 void refreshFormulas() {

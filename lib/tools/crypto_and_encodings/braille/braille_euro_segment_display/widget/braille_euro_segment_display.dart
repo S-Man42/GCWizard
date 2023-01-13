@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/tools/science_and_technology/logic/segment_display.dart';
-import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/gcw_touchcanvas/gcw_touchcanvas.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/base/n_segment_display/widget/n_segment_display.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/base/painter/widget/painter.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/logic/segment_display.dart';
 
 const _INITIAL_SEGMENTS = <String, bool>{
   '1': false,

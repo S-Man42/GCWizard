@@ -1,5 +1,5 @@
-import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/external_libs/net/logic/makaney.dart' as lib;
+import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
 import 'package:latlong2/latlong.dart';
 
 LatLng makaneyToLatLon(Makaney makaney) {

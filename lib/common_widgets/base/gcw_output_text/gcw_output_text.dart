@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_iconbutton/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_textselectioncontrols/gcw_textselectioncontrols.dart';
+import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/tools/utils/common_widget_utils/widget/common_widget_utils.dart';
 
 class GCWOutputText extends StatefulWidget {

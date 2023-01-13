@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/units/logic/unit.dart';
-import 'package:gc_wizard/common_widgets/units/logic/unit_category.dart';
-import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/gcw_double_spinner/gcw_double_spinner.dart';
 import 'package:gc_wizard/common_widgets/units/gcw_unit_dropdownbutton/gcw_unit_dropdownbutton.dart';
+import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit_category.dart';
 
 class GCWUnitInput extends StatefulWidget {
   final min;

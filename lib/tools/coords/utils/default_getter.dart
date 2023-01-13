@@ -1,8 +1,9 @@
-import 'package:gc_wizard/tools/coords/converter/logic/lambert.dart';
+import 'package:gc_wizard/configuration/settings/preferences.dart';
+import 'package:gc_wizard/tools/coords/format_converter/logic/lambert.dart';
 import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/logic/ellipsoid.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
-import 'package:latlong2/latlong.dart';
+import 'package:gc_wizard/tools/coords/utils/format_getter.dart';
+import 'package:prefs/prefs.dart';
 
 const DefaultLambertType = LambertType.LAMBERT_93;
 const DefaultGaussKruegerType = 1;

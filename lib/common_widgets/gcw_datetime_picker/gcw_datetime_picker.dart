@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_text/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_double_spinner/gcw_double_spinner.dart';
 import 'package:gc_wizard/common_widgets/gcw_dropdown_spinner/gcw_dropdown_spinner.dart';
 import 'package:gc_wizard/common_widgets/gcw_integer_spinner/gcw_integer_spinner.dart';
+import 'package:gc_wizard/common_widgets/gcw_sign_dropdownbutton/gcw_sign_dropdownbutton.dart';
 import 'package:gc_wizard/common_widgets/gcw_toolbar/gcw_toolbar.dart';
-import 'package:gc_wizard/tools/coords/base/gcw_coords_sign_dropdownbutton/widget/gcw_coords_sign_dropdownbutton.dart';
 import 'package:gc_wizard/tools/utils/common_widget_utils/widget/common_widget_utils.dart';
+import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
 
 enum DateTimePickerConfig {
   /// Show sign selection
@@ -228,7 +228,7 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
 
     if (widget.config.contains(DateTimePickerConfig.SIGN)) {
       widgets.addAll({
-        GCWCoordsSignDropDownButton(
+        GCWSignDropDownButton(
             itemList: ['+', '-'],
             value: _currentSign,
             onChanged: (value) {

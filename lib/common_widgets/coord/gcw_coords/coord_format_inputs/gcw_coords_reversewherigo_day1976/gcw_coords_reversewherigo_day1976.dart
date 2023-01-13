@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_textfield/gcw_textfield.dart';
+import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
 
 class GCWCoordsReverseWherigoDay1976 extends StatefulWidget {
   final Function onChanged;

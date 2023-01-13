@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_textfield/gcw_textfield.dart';
+import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
 
 class GCWIntegerListTextField extends StatefulWidget {
   final TextEditingController controller;

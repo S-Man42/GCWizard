@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_iconbutton/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_textfield/gcw_textfield.dart';
+import 'package:gc_wizard/common_widgets/gcw_default_output/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/gcw_segmentdisplay_output/gcw_segmentdisplay_output.dart';
+import 'package:gc_wizard/common_widgets/gcw_toolbar/gcw_toolbar.dart';
+import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/tools/science_and_technology/logic/music_notes.dart';
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/utils/constants.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/widget/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_iconbutton/widget/gcw_iconbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_textfield/widget/gcw_textfield.dart';
-import 'package:gc_wizard/common_widgets/gcw_default_output/widget/gcw_default_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_segmentdisplay_output/widget/gcw_segmentdisplay_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_toolbar/widget/gcw_toolbar.dart';
-import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/widget/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/widgets/registry.dart';
+import 'package:gc_wizard/tools/science_and_technology/music_notes/logic/music_notes.dart';
 import 'package:gc_wizard/tools/science_and_technology/music_notes/music_notes_segment_display/widget/music_notes_segment_display.dart';
+import 'package:gc_wizard/utils/logic_utils/constants.dart';
+import 'package:gc_wizard/widgets/registry.dart';
 
 class MusicNotes extends StatefulWidget {
   @override

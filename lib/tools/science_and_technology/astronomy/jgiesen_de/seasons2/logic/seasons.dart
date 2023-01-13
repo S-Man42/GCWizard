@@ -9,7 +9,7 @@ adapted by Juergen Giesen
 
 import 'dart:math';
 
-import 'package:gc_wizard/utils/common_utils.dart';
+import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
 
 Map<String, DateTime> computeSeasons(int year) {
   return {'spring': _spring(year), 'summer': _summer(year), 'autumn': _autumn(year), 'winter': _winter(year)};

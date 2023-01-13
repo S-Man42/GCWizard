@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/tomtom/logic/tomtom.dart';
-import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_button/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_iconbutton/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_textfield/gcw_textfield.dart';
@@ -9,6 +6,9 @@ import 'package:gc_wizard/common_widgets/gcw_default_output/gcw_default_output.d
 import 'package:gc_wizard/common_widgets/gcw_text_divider/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_toolbar/gcw_toolbar.dart';
 import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/tomtom/logic/tomtom.dart';
 import 'package:gc_wizard/tools/utils/common_widget_utils/widget/common_widget_utils.dart';
 
 class TomTom extends StatefulWidget {

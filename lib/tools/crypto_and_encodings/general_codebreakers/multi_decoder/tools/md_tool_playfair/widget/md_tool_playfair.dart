@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/playfair/logic/playfair.dart';
-import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/common_widgets/gcw_alphabetmodification_dropdownbutton/gcw_alphabetmodification_dropdownbutton.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/gcw_multi_decoder_tool/widget/gcw_multi_decoder_tool.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/gcw_multi_decoder_tool_configuration/widget/gcw_multi_decoder_tool_configuration.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/playfair/logic/playfair.dart';
+import 'package:gc_wizard/utils/logic_utils/constants.dart';
 
 const MDT_INTERNALNAMES_PLAYFAIR = 'multidecoder_tool_playfair_title';
 const MDT_PLAYFAIR_OPTION_MODE = 'multidecoder_tool_playfair_option_mode';

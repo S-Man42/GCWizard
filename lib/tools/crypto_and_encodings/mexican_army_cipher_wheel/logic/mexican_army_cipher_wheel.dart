@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:gc_wizard/utils/alphabets.dart';
+import 'package:gc_wizard/utils/logic_utils/alphabets.dart';
 
 int _getMaxValue(int wheelNo) {
   switch (wheelNo) {

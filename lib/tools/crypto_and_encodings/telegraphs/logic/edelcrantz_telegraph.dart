@@ -16,8 +16,8 @@
     Erika Tanhua-Piiroinen, Tampere University Finland'
  */
 
-import 'package:gc_wizard/utils/common_utils.dart';
-import 'package:gc_wizard/utils/constants.dart';
+import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
+import 'package:gc_wizard/utils/logic_utils/constants.dart';
 
 enum EdelcrantzCodebook { YEAR_1795, YEAR_1808, MUSEUM }
 

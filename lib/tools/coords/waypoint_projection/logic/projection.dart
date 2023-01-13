@@ -1,16 +1,16 @@
-import 'package:gc_wizard/tools/coords/data/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/coords/external_libs/net.sf/logic/geodesic.dart';
 import 'package:gc_wizard/tools/coords/external_libs/net.sf/logic/geodesic_data.dart';
 import 'package:gc_wizard/tools/coords/intervals/logic/coordinate_cell.dart';
 import 'package:gc_wizard/tools/coords/intervals/logic/interval_calculator.dart';
-import 'package:gc_wizard/tools/coords/utils/format_getter.dart' as utils;
-import 'package:gc_wizard/tools/coords/vincenty/logic/projection_vincenty.dart';
+import 'package:gc_wizard/tools/coords/logic/ellipsoid.dart';
+import 'package:gc_wizard/tools/coords/utils/format_getter.dart' as formatGetter;
+import 'package:gc_wizard/tools/coords/waypoint_projection/logic/vincenty/projection_vincenty.dart';
 import 'package:latlong2/latlong.dart';
 
 LatLng projection(LatLng coord, double bearingDeg, double distance, Ellipsoid ellipsoid) {
   if (distance == 0.0) return coord;
 
-  bearingDeg = utils.normalizeBearing(bearingDeg);
+  bearingDeg = formatGetter.normalizeBearing(bearingDeg);
 
   GeodesicData projected =
       Geodesic(ellipsoid.a, ellipsoid.f).direct(coord.latitude, coord.longitude, bearingDeg, distance);
@@ -26,7 +26,7 @@ LatLng projectionRadian(LatLng coord, double bearingRad, double distance, Ellips
 LatLng projectionVincenty(LatLng coord, double bearing, double distance, Ellipsoid ellipsoid) {
   if (distance == 0.0) return coord;
 
-  bearing = utils.normalizeBearing(bearing);
+  bearing = formatGetter.normalizeBearing(bearing);
 
   return vincentyDirect(coord, degToRadian(bearing), distance, ellipsoid);
 }
@@ -57,7 +57,7 @@ class _ReverseProjectionCalculator extends IntervalCalculator {
 }
 
 List<LatLng> reverseProjection(LatLng coord, double bearing, double distance, Ellipsoid ellipsoid) {
-  bearing = utils.normalizeBearing(bearing);
+  bearing = formatGetter.normalizeBearing(bearing);
 
   return _ReverseProjectionCalculator({'coord': coord, 'bearing': bearing, 'distance': distance}, ellipsoid).check();
 }

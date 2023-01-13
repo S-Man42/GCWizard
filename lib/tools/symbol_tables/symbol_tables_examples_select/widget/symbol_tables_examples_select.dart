@@ -1,16 +1,16 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_button/gcw_button.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_dialog/gcw_dialog.dart';
+import 'package:gc_wizard/common_widgets/gcw_text_divider/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/gcw_tool/gcw_tool.dart';
+import 'package:gc_wizard/configuration/settings/preferences.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/utils/settings/preferences.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_button/widget/gcw_button.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dialog/widget/gcw_dialog.dart';
-import 'package:gc_wizard/common_widgets/gcw_text_divider/widget/gcw_text_divider.dart';
-import 'package:gc_wizard/common_widgets/gcw_tool/widget/gcw_tool.dart';
-import 'package:gc_wizard/tools/symbol_tables/gcw_symbol_table_symbol_matrix/widget/gcw_symbol_table_symbol_matrix.dart';
-import 'package:gc_wizard/tools/symbol_tables/symbol_table_data/widget/symbol_table_data.dart';
+import 'package:gc_wizard/tools/symbol_tables/logic/symbol_table_data.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_tables_examples_select/widget/symbol_tables_examples.dart';
+import 'package:gc_wizard/tools/symbol_tables/widget/gcw_symbol_table_symbol_matrix.dart';
 import 'package:gc_wizard/tools/utils/no_animation_material_page_route/widget/no_animation_material_page_route.dart';
 import 'package:prefs/prefs.dart';
 

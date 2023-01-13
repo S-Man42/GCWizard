@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_text/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_double_textfield/gcw_double_textfield.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/tools/utils/common_widget_utils/widget/common_widget_utils.dart';
 import 'package:gc_wizard/tools/utils/textinputformatter/double_bearing_textinputformatter/widget/double_bearing_textinputformatter.dart';
+import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
 
 final _NO_COMPASS_DIRECTION = '-';
 

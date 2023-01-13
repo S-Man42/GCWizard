@@ -1,8 +1,8 @@
 import 'dart:math';
 
-import 'package:gc_wizard/common_widgets/math_utils/logic/math_utils.dart';
 import 'package:gc_wizard/tools/coords/external_libs/net.sf/logic/geo_math.dart';
 import 'package:gc_wizard/tools/coords/external_libs/net.sf/logic/math.dart';
+import 'package:gc_wizard/utils/logic_utils/math_utils.dart';
 
 /***********************************************************************
     Dart port of C++ implementation of

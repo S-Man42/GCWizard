@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_button/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_iconbutton/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/coord/gcw_coords_export_dialog/gcw_coords_export_dialog.dart';
 import 'package:gc_wizard/common_widgets/gcw_multiple_output/gcw_multiple_output.dart';
 import 'package:gc_wizard/common_widgets/gcw_output/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/gcw_toolbar/gcw_toolbar.dart';
-import 'package:gc_wizard/tools/coords/base/gcw_coords_export_dialog/widget/gcw_coords_export_dialog.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/map_view/widget/gcw_mapview.dart';
 

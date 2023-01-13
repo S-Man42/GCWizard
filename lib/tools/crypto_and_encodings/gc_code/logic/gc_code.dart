@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:gc_wizard/tools/science_and_technology/logic/numeral_bases.dart';
+import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
 
 final _ALPHABET = '0123456789ABCDEFGHJKMNPQRTVWXYZ';
 final _OFFSET = pow(16, 4) - 16 * pow(31, 3);

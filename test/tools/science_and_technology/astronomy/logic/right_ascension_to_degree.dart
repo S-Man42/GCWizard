@@ -1,5 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
-import '../../../../../lib/logic/tools/science_and_technology/astronomy/right_ascension_to_degree.dart';
+import 'package:gc_wizard/tools/science_and_technology/astronomy/right_ascension_to_degree/logic/right_ascension_to_degree.dart';
 
 void main() {
 

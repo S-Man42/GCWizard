@@ -1,5 +1,5 @@
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:gc_wizard/tools/symbol_tables/symbol_table_data/widget/symbol_table_data.dart';
+import 'package:gc_wizard/tools/symbol_tables/logic/symbol_table_data.dart';
 
 class SymbolReplacerSymbolTableViewData {
   final String symbolKey;

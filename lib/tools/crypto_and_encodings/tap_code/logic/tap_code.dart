@@ -1,7 +1,7 @@
 import 'package:gc_wizard/tools/crypto_and_encodings/polybios/logic/polybios.dart';
-import 'package:gc_wizard/utils/alphabets.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
-import 'package:gc_wizard/utils/constants.dart';
+import 'package:gc_wizard/utils/logic_utils/alphabets.dart';
+import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
+import 'package:gc_wizard/utils/logic_utils/constants.dart';
 
 const TAPCODE_KEY = '12345';
 

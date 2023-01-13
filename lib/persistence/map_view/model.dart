@@ -1,5 +1,3 @@
-import 'package:gc_wizard/utils/common_utils.dart';
-
 List<MapViewDAO> mapViews = [];
 
 class MapViewDAO {

@@ -2,9 +2,9 @@
 
 import 'dart:math';
 
-import 'package:gc_wizard/tools/coords/converter/logic/dec.dart' as dec;
-import 'package:gc_wizard/tools/coords/parser/logic/latlon.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
+import 'package:gc_wizard/tools/coords/coordinate_format_parser/logic/latlon.dart';
+import 'package:gc_wizard/tools/coords/format_converter/logic/dec.dart' as dec;
+import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
 import 'package:intl/intl.dart';
 
 /// degree to Right ascension

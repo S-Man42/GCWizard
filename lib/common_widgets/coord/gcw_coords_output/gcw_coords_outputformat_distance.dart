@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/common_widgets/units/logic/length.dart';
-import 'package:gc_wizard/common_widgets/units/logic/unit_category.dart';
-import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/common_widgets/coord/gcw_coords/coord_format_inputs/gcw_coords_formatselector/gcw_coords_formatselector.dart';
 import 'package:gc_wizard/common_widgets/gcw_text_divider/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/units/gcw_unit_dropdownbutton/gcw_unit_dropdownbutton.dart';
-import 'package:gc_wizard/tools/coords/base/gcw_coords_formatselector/widget/gcw_coords_formatselector.dart';
-import 'package:gc_wizard/tools/coords/base/utils/widget/format_getter.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/tools/coords/utils/default_getter.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/length.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit_category.dart';
 
 class GCWCoordsOutputFormatDistance extends StatefulWidget {
   final coordFormat;

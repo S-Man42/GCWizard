@@ -1,9 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/tools/images_and_files/visual_cryptography/logic/visual_cryptography.dart';
-import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_button/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_divider/gcw_divider.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_text/gcw_text.dart';
@@ -17,6 +14,9 @@ import 'package:gc_wizard/common_widgets/gcw_openfile/gcw_openfile.dart';
 import 'package:gc_wizard/common_widgets/gcw_submit_button/gcw_submit_button.dart';
 import 'package:gc_wizard/common_widgets/gcw_text_divider/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/tools/images_and_files/visual_cryptography/logic/visual_cryptography.dart';
 import 'package:gc_wizard/tools/utils/file_picker/widget/file_picker.dart';
 import 'package:gc_wizard/tools/utils/gcw_file/widget/gcw_file.dart';
 import 'package:image/image.dart' as img;

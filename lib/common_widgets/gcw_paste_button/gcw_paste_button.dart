@@ -3,16 +3,16 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/theme/theme_colors.dart';
-import 'package:gc_wizard/utils/settings/preferences.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_iconbutton/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_toast/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/gcw_popup_menu/gcw_popup_menu.dart';
 import 'package:gc_wizard/common_widgets/gcw_text_divider/gcw_text_divider.dart';
-import 'package:gc_wizard/tools/coords/utils/navigation_service/widget/navigation_service.dart';
+import 'package:gc_wizard/configuration/settings/preferences.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/tools/utils/common_widget_utils/widget/common_widget_utils.dart';
+import 'package:gc_wizard/widgets/navigation_service/widget/navigation_service.dart';
 import 'package:intl/intl.dart';
 import 'package:prefs/prefs.dart';
 

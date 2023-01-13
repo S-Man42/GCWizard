@@ -1,10 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/karol_robot/logic/karol_robot.dart';
-import 'package:gc_wizard/tools/images_and_files/binary2image/logic/binary2image.dart';
-import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_iconbutton/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_output_text/gcw_output_text.dart';
@@ -14,6 +10,10 @@ import 'package:gc_wizard/common_widgets/gcw_exported_file_dialog/gcw_exported_f
 import 'package:gc_wizard/common_widgets/gcw_output/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/gcw_text_divider/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/karol_robot/logic/karol_robot.dart';
+import 'package:gc_wizard/tools/images_and_files/binary2image/logic/binary2image.dart';
 import 'package:gc_wizard/tools/utils/file_utils/widget/file_utils.dart';
 import 'package:gc_wizard/tools/utils/textinputformatter/wrapper_for_masktextinputformatter/widget/wrapper_for_masktextinputformatter.dart';
 import 'package:intl/intl.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/pokemon/logic/pokemon.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/gcw_multi_decoder_tool/widget/gcw_multi_decoder_tool.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/pokemon/logic/pokemon.dart';
 
 const MDT_INTERNALNAMES_POKEMON = 'pokemon_code_title';
 

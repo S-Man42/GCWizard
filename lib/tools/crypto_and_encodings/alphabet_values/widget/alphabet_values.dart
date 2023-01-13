@@ -2,13 +2,6 @@ import 'dart:collection';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/logic/alphabet_values.dart' as logic;
-import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/utils/alphabets.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
-import 'package:gc_wizard/utils/constants.dart';
-import 'package:gc_wizard/utils/settings/preferences.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_button/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_dialog/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_divider/gcw_divider.dart';
@@ -21,7 +14,14 @@ import 'package:gc_wizard/common_widgets/gcw_integer_list_textfield/gcw_integer_
 import 'package:gc_wizard/common_widgets/gcw_integer_spinner/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/gcw_key_value_editor/gcw_key_value_editor.dart';
 import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/configuration/settings/preferences.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/logic/alphabet_values.dart' as logic;
 import 'package:gc_wizard/tools/utils/textinputformatter/text_onlydigitsandcomma_textinputformatter/widget/text_onlydigitsandcomma_textinputformatter.dart';
+import 'package:gc_wizard/utils/logic_utils/alphabets.dart';
+import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
+import 'package:gc_wizard/utils/logic_utils/constants.dart';
 import 'package:prefs/prefs.dart';
 
 class AlphabetValues extends StatefulWidget {

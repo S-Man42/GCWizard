@@ -1,4 +1,4 @@
-import 'package:gc_wizard/utils/common_utils.dart';
+import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
 
 // https://de.wikipedia.org/wiki/Affine_Chiffre
 // https://en.wikipedia.org/wiki/Affine_cipher

@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
 
-class GCWCoordsSignDropDownButton extends StatefulWidget {
+class GCWSignDropDownButton extends StatefulWidget {
   final Function onChanged;
   final int value;
   final List<dynamic> itemList;
 
-  const GCWCoordsSignDropDownButton({Key key, this.itemList, this.onChanged, this.value: 1}) : super(key: key);
+  const GCWSignDropDownButton({Key key, this.itemList, this.onChanged, this.value: 1}) : super(key: key);
 
   @override
-  _GCWCoordsSignDropDownButtonState createState() => _GCWCoordsSignDropDownButtonState();
+  _GCWSignDropDownButtonState createState() => _GCWSignDropDownButtonState();
 }
 
-class _GCWCoordsSignDropDownButtonState extends State<GCWCoordsSignDropDownButton> {
+class _GCWSignDropDownButtonState extends State<GCWSignDropDownButton> {
   var _dropdownValue = 1;
 
   @override

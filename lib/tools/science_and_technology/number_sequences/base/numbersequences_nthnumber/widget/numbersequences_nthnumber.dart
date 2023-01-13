@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/gcw_default_output/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/gcw_integer_spinner/gcw_integer_spinner.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/science_and_technology/number_sequences/logic/number_sequence.dart';
-import 'package:gc_wizard/common_widgets/gcw_default_output/widget/gcw_default_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_integer_spinner/widget/gcw_integer_spinner.dart';
 
 class NumberSequenceNthNumber extends StatefulWidget {
   final NumberSequencesMode mode;

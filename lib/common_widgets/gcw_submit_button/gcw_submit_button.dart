@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_button/gcw_button.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
 
 class GCWSubmitButton extends StatefulWidget {
   final Function onPressed;

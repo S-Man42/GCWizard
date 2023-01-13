@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/common_widgets/gcw_columned_multiline_output/gcw_columned_multiline_output.dart';
+import 'package:gc_wizard/common_widgets/gcw_text_divider/gcw_text_divider.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/tools/science_and_technology/colors/base/gcw_colors/widget/gcw_colors.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors_cmyk.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors_hue.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors_rgb.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors_yuv.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/common_widgets/gcw_columned_multiline_output/gcw_columned_multiline_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_text_divider/gcw_text_divider.dart';
-import 'package:gc_wizard/tools/science_and_technology/colors/base/gcw_colors/widget/gcw_colors.dart';
 import 'package:intl/intl.dart';
 
 class ColorTool extends StatefulWidget {

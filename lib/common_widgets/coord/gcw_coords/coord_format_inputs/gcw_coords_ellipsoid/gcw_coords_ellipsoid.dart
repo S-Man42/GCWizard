@@ -1,15 +1,15 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/tools/coords/data/logic/ellipsoid.dart';
-import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_text/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_columned_multiline_output/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/gcw_double_textfield/gcw_double_textfield.dart';
 import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/tools/coords/base/utils/widget/format_getter.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/tools/coords/logic/ellipsoid.dart';
+import 'package:gc_wizard/tools/coords/utils/default_getter.dart';
+import 'package:gc_wizard/utils/logic_utils/constants.dart';
 
 class GCWCoordsEllipsoid extends StatefulWidget {
   final Function onChanged;

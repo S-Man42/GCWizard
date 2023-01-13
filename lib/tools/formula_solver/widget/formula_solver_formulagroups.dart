@@ -1,11 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/persistence/formula_solver/json_provider.dart';
-import 'package:gc_wizard/persistence/formula_solver/model.dart';
-import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_dialog/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_iconbutton/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_text/gcw_text.dart';
@@ -17,9 +12,14 @@ import 'package:gc_wizard/common_widgets/gcw_popup_menu/gcw_popup_menu.dart';
 import 'package:gc_wizard/common_widgets/gcw_text_divider/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_text_export/gcw_text_export.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool/gcw_tool.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/persistence/formula_solver/json_provider.dart';
+import 'package:gc_wizard/persistence/formula_solver/model.dart';
+import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/tools/formula_solver/widget/formula_solver_formulas.dart';
 import 'package:gc_wizard/tools/utils/no_animation_material_page_route/widget/no_animation_material_page_route.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
+import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
 
 class FormulaSolverFormulaGroups extends StatefulWidget {
   @override

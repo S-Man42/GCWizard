@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/base/gcw_textfield/gcw_textfield.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_textfield/gcw_textfield.dart';
 import 'package:gc_wizard/tools/utils/textinputformatter/coords_text_geo3x3_textinputformatter/widget/coords_text_geo3x3_textinputformatter.dart';
 
 class GCWCoordsGeo3x3 extends StatefulWidget {

@@ -1,8 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/tools/science_and_technology/guitar_strings/logic/guitar_strings.dart';
-import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_iconbutton/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_textfield/gcw_textfield.dart';
 import 'package:gc_wizard/common_widgets/gcw_default_output/gcw_default_output.dart';
@@ -11,6 +8,9 @@ import 'package:gc_wizard/common_widgets/gcw_integer_spinner/gcw_integer_spinner
 import 'package:gc_wizard/common_widgets/gcw_output/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/gcw_toolbar/gcw_toolbar.dart';
 import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/tools/science_and_technology/guitar_strings/logic/guitar_strings.dart';
 import 'package:gc_wizard/tools/utils/common_widget_utils/widget/common_widget_utils.dart';
 import 'package:tuple/tuple.dart';
 

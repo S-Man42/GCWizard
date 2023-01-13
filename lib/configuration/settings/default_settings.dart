@@ -1,17 +1,17 @@
 import 'dart:convert';
 
-import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
-import 'package:gc_wizard/tools/coords/data/logic/ellipsoid.dart';
-import 'package:gc_wizard/tools/science_and_technology/maya_calendar/logic/maya_calendar.dart';
+import 'package:gc_wizard/configuration/settings/preferences.dart';
 import 'package:gc_wizard/persistence/multi_decoder/json_provider.dart';
 import 'package:gc_wizard/persistence/multi_decoder/model.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
-import 'package:gc_wizard/utils/alphabets.dart';
-import 'package:gc_wizard/utils/settings/preferences.dart';
+import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
+import 'package:gc_wizard/tools/coords/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_base/widget/md_tool_base.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_bcd/widget/md_tool_bcd.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_ccitt1/widget/md_tool_ccitt1.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_ccitt2/widget/md_tool_ccitt2.dart';
+import 'package:gc_wizard/tools/science_and_technology/maya_calendar/logic/maya_calendar.dart';
+import 'package:gc_wizard/utils/logic_utils/alphabets.dart';
 import 'package:prefs/prefs.dart';
 
 enum PreferencesInitMode { STARTUP, REINIT_ALL, REINIT_SINGLE }

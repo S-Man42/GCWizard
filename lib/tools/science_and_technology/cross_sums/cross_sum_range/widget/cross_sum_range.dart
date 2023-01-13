@@ -1,8 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/tools/science_and_technology/logic/cross_sum.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_dialog/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_output_text/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_columned_multiline_output/gcw_columned_multiline_output.dart';
@@ -10,6 +8,9 @@ import 'package:gc_wizard/common_widgets/gcw_integer_spinner/gcw_integer_spinner
 import 'package:gc_wizard/common_widgets/gcw_multiple_output/gcw_multiple_output.dart';
 import 'package:gc_wizard/common_widgets/gcw_submit_button/gcw_submit_button.dart';
 import 'package:gc_wizard/common_widgets/gcw_text_divider/gcw_text_divider.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/tools/science_and_technology/cross_sums/logic/cross_sum.dart';
+import 'package:gc_wizard/tools/science_and_technology/cross_sums/logic/cross_sum.dart';
 
 final _ALERT_MAX_OUTPUT = 200;
 final _ALERT_MAX_RANGE = 25000;

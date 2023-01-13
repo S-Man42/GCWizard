@@ -1,6 +1,6 @@
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/logic/alphabet_values.dart';
-import 'package:gc_wizard/utils/alphabets.dart';
+import 'package:gc_wizard/utils/logic_utils/alphabets.dart';
 
 void main() {
   /********** AlphabetValues ****************/

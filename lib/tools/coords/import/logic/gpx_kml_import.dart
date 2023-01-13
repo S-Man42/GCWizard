@@ -2,16 +2,16 @@ import 'dart:ui';
 
 import 'package:archive/archive_io.dart';
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/tools/coords/logic/distance_bearing.dart';
-import 'package:gc_wizard/tools/coords/distance_and_bearing/logic/distance_and_bearing.dart';
-import 'package:gc_wizard/tools/coords/intersect_bearings/logic/intersect_lines.dart';
 import 'package:gc_wizard/persistence/map_view/model.dart';
-import 'package:gc_wizard/utils/constants.dart';
-import 'package:gc_wizard/tools/coords/base/utils/widget/format_getter.dart';
+import 'package:gc_wizard/tools/coords/distance_and_bearing/logic/distance_and_bearing.dart';
+import 'package:gc_wizard/tools/coords/intersect_lines/logic/intersect_lines.dart';
+import 'package:gc_wizard/tools/coords/logic/distance_bearing.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/mapview_persistence_adapter.dart';
+import 'package:gc_wizard/tools/coords/utils/default_getter.dart';
 import 'package:gc_wizard/tools/utils/file_utils/widget/file_utils.dart';
 import 'package:gc_wizard/tools/utils/gcw_file/widget/gcw_file.dart';
+import 'package:gc_wizard/utils/logic_utils/constants.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:xml/xml.dart';
 

@@ -6,8 +6,8 @@
   Bilddatenbank der Museumsstiftung Post und Telekommunikation
  */
 
-import 'package:gc_wizard/utils/common_utils.dart';
-import 'package:gc_wizard/utils/constants.dart';
+import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
+import 'package:gc_wizard/utils/logic_utils/constants.dart';
 
 final CODEBOOK_PRUSSIA = {
   // codebook classe 5.2

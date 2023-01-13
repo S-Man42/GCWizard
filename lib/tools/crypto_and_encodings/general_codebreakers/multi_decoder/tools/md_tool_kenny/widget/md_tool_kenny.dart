@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/kenny/logic/kenny.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/gcw_multi_decoder_tool/widget/gcw_multi_decoder_tool.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/kenny/logic/kenny.dart';
 
 const MDT_INTERNALNAMES_KENNY = 'multidecoder_tool_kenny_title';
 

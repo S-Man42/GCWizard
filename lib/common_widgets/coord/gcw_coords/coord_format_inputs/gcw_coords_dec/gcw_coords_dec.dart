@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
-import 'package:gc_wizard/tools/coords/utils/format_getter.dart';
-import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_text/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_integer_textfield/gcw_integer_textfield.dart';
-import 'package:gc_wizard/tools/coords/base/gcw_coords_sign_dropdownbutton/widget/gcw_coords_sign_dropdownbutton.dart';
-import 'package:gc_wizard/tools/coords/base/utils/widget/format_getter.dart';
+import 'package:gc_wizard/common_widgets/gcw_sign_dropdownbutton/gcw_sign_dropdownbutton.dart';
+import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
+import 'package:gc_wizard/tools/coords/utils/default_getter.dart';
+import 'package:gc_wizard/tools/coords/utils/format_getter.dart';
 import 'package:gc_wizard/tools/utils/textinputformatter/coords_integer_degrees_lat_textinputformatter/widget/coords_integer_degrees_lat_textinputformatter.dart';
 import 'package:gc_wizard/tools/utils/textinputformatter/coords_integer_degrees_lon_textinputformatter/widget/coords_integer_degrees_lon_textinputformatter.dart';
 
@@ -84,7 +84,7 @@ class GCWCoordsDECState extends State<GCWCoordsDEC> {
         children: <Widget>[
           Expanded(
             flex: 6,
-            child: GCWCoordsSignDropDownButton(
+            child: GCWSignDropDownButton(
                 itemList: ['+', '-'],
                 value: _currentLatSign,
                 onChanged: (value) {
@@ -140,7 +140,7 @@ class GCWCoordsDECState extends State<GCWCoordsDEC> {
         children: <Widget>[
           Expanded(
             flex: 6,
-            child: GCWCoordsSignDropDownButton(
+            child: GCWSignDropDownButton(
                 itemList: ['+', '-'],
                 value: _currentLonSign,
                 onChanged: (value) {

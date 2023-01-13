@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/telegraphs/logic/prussian_telegraph.dart';
-import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_iconbutton/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_output_text/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_textfield/gcw_textfield.dart';
@@ -11,6 +8,9 @@ import 'package:gc_wizard/common_widgets/gcw_segmentdisplay_output/gcw_segmentdi
 import 'package:gc_wizard/common_widgets/gcw_text_divider/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_toolbar/gcw_toolbar.dart';
 import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/telegraphs/logic/prussian_telegraph.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/telegraphs/prussiatelegraph_segment_display/widget/prussiatelegraph_segment_display.dart';
 
 class PrussiaTelegraph extends StatefulWidget {

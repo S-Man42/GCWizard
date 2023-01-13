@@ -1,8 +1,8 @@
 import 'dart:convert';
 
+import 'package:gc_wizard/configuration/settings/preferences.dart';
 import 'package:gc_wizard/persistence/map_view/model.dart';
 import 'package:gc_wizard/persistence/utils.dart';
-import 'package:gc_wizard/utils/settings/preferences.dart';
 import 'package:prefs/prefs.dart';
 
 void refreshMapViews() {

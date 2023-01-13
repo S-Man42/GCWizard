@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/tools/science_and_technology/logic/segment_display.dart';
-import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/common_widgets/gcw_stateful_dropdownbutton/gcw_stateful_dropdownbutton.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/gcw_multi_decoder_tool/widget/gcw_multi_decoder_tool.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/gcw_multi_decoder_tool_configuration/widget/gcw_multi_decoder_tool_configuration.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/logic/segment_display.dart';
+import 'package:gc_wizard/utils/logic_utils/constants.dart';
 
 const MDT_INTERNALNAMES_SEGMENTDISPLAY = 'multidecoder_tool_segmentdisplay_title';
 const MDT_SEGMENTDISPLAY_OPTION_NUMBERSEGMENTS = 'multidecoder_tool_segmentdisplay_option_numbersegments';

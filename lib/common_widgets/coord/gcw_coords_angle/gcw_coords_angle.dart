@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_text/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_double_textfield/gcw_double_textfield.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/utils/textinputformatter/double_bearing_textinputformatter/widget/double_bearing_textinputformatter.dart';
 
 class GCWAngle extends StatefulWidget {

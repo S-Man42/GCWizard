@@ -1,9 +1,6 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/numeral_words/logic/numeral_words.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_output_text/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_textfield/gcw_textfield.dart';
@@ -11,6 +8,9 @@ import 'package:gc_wizard/common_widgets/gcw_default_output/gcw_default_output.d
 import 'package:gc_wizard/common_widgets/gcw_integer_spinner/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/gcw_text_divider/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/numeral_words/logic/numeral_words.dart';
+import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
 
 class NumeralWordsConverter extends StatefulWidget {
   @override

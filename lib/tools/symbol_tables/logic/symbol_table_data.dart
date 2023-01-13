@@ -5,7 +5,7 @@ import 'package:archive/archive.dart';
 import 'package:archive/archive_io.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/tools/symbol_tables/symbol_table_data_specialsorts/widget/symbol_table_data_specialsorts.dart';
+import 'package:gc_wizard/tools/symbol_tables/logic/symbol_table_data_specialsorts.dart';
 
 final SYMBOLTABLES_ASSETPATH = 'assets/symbol_tables/';
 

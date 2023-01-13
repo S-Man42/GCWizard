@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/common_widgets/coord/gcw_coords/coord_format_inputs/gcw_coords_formatselector/gcw_coords_formatselector.dart';
 import 'package:gc_wizard/common_widgets/gcw_text_divider/gcw_text_divider.dart';
-import 'package:gc_wizard/tools/coords/base/gcw_coords_formatselector/widget/gcw_coords_formatselector.dart';
-import 'package:gc_wizard/tools/coords/base/utils/widget/format_getter.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/tools/coords/utils/default_getter.dart';
 
 class GCWCoordsOutputFormat extends StatefulWidget {
   final Map<String, String> coordFormat;

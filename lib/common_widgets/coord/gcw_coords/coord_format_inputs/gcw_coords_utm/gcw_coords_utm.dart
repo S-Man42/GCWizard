@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/tools/coords/converter/logic/utm.dart';
-import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
-import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/common_widgets/gcw_double_textfield/gcw_double_textfield.dart';
 import 'package:gc_wizard/common_widgets/gcw_integer_textfield/gcw_integer_textfield.dart';
-import 'package:gc_wizard/tools/coords/base/utils/widget/format_getter.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/tools/coords/format_converter/logic/utm.dart';
+import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
+import 'package:gc_wizard/tools/coords/utils/default_getter.dart';
 import 'package:gc_wizard/tools/utils/textinputformatter/coords_integer_utm_lonzone_textinputformatter/widget/coords_integer_utm_lonzone_textinputformatter.dart';
 
 class GCWCoordsUTM extends StatefulWidget {

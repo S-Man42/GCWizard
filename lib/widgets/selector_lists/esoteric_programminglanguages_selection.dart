@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/gcw_tool/widget/gcw_tool.dart';
-import 'package:gc_wizard/common_widgets/gcw_toollist/widget/gcw_toollist.dart';
-import 'package:gc_wizard/widgets/registry.dart';
-import 'package:gc_wizard/widgets/selector_lists/gcw_selection.dart';
+import 'package:gc_wizard/common_widgets/gcw_tool/gcw_tool.dart';
+import 'package:gc_wizard/common_widgets/gcw_toollist/gcw_toollist.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/beatnik_language/widget/beatnik_language.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/befunge/widget/befunge.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/brainfk/widget/brainfk.dart';
@@ -16,6 +14,8 @@ import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_langua
 import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/piet/widget/piet.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/whitespace_language/widget/whitespace_language.dart';
 import 'package:gc_wizard/tools/utils/common_widget_utils/widget/common_widget_utils.dart';
+import 'package:gc_wizard/widgets/registry.dart';
+import 'package:gc_wizard/widgets/selector_lists/gcw_selection.dart';
 
 class EsotericProgrammingLanguageSelection extends GCWSelection {
   @override

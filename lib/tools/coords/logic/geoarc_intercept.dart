@@ -1,10 +1,10 @@
 import 'dart:math';
 
-import 'package:gc_wizard/tools/coords/data/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/coords/distance_and_bearing/logic/distance_and_bearing.dart';
+import 'package:gc_wizard/tools/coords/logic/ellipsoid.dart';
+import 'package:gc_wizard/tools/coords/utils/math_utils.dart';
 import 'package:gc_wizard/tools/coords/waypoint_projection/logic/projection.dart';
-import 'package:gc_wizard/tools/coords/utils/format_getter.dart';
-import 'package:gc_wizard/utils/constants.dart';
+import 'package:gc_wizard/utils/logic_utils/constants.dart';
 import 'package:latlong2/latlong.dart';
 
 // All these functions are completely... Really? I don't even know what they do...

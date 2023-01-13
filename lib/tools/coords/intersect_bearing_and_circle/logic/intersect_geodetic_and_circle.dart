@@ -1,8 +1,8 @@
-import 'package:gc_wizard/tools/coords/data/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/coords/distance_and_bearing/logic/distance_and_bearing.dart';
+import 'package:gc_wizard/tools/coords/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/coords/logic/geoarc_intercept.dart';
-import 'package:gc_wizard/tools/coords/waypoint_projection/logic/projection.dart';
 import 'package:gc_wizard/tools/coords/utils/format_getter.dart' as utils;
+import 'package:gc_wizard/tools/coords/waypoint_projection/logic/projection.dart';
 import 'package:latlong2/latlong.dart';
 
 class IntersectGeodeticAndCircleJobData {

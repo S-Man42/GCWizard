@@ -1,4 +1,4 @@
-import 'package:gc_wizard/utils/alphabets.dart';
+import 'package:gc_wizard/utils/logic_utils/alphabets.dart';
 
 List<int> encryptCipherWheel(String input, int key) {
   if (input == null) return <int>[];

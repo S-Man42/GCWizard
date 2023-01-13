@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/text_analysis/logic/text_analysis.dart';
-import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_divider/gcw_divider.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_text/gcw_text.dart';
@@ -10,6 +7,9 @@ import 'package:gc_wizard/common_widgets/gcw_columned_multiline_output/gcw_colum
 import 'package:gc_wizard/common_widgets/gcw_default_output/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/gcw_onoff_switch/gcw_onoff_switch.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/text_analysis/logic/text_analysis.dart';
 import 'package:intl/intl.dart';
 
 enum _SORT_TYPES { ALPHABETICAL, COUNT_GROUP, COUNT_OVERALL }

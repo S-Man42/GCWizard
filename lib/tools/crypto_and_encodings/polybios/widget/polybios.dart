@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/polybios/logic/polybios.dart';
-import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_output_text/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/base/gcw_textfield/gcw_textfield.dart';
 import 'package:gc_wizard/common_widgets/gcw_alphabetdropdown/gcw_alphabetdropdown.dart';
@@ -11,6 +8,9 @@ import 'package:gc_wizard/common_widgets/gcw_multiple_output/gcw_multiple_output
 import 'package:gc_wizard/common_widgets/gcw_output/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/gcw_text_divider/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/polybios/logic/polybios.dart';
+import 'package:gc_wizard/utils/logic_utils/constants.dart';
 
 class Polybios extends StatefulWidget {
   @override
