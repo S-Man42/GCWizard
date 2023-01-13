@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/rotator.dart';
@@ -67,11 +69,17 @@ class RotationGeneralState extends State<RotationGeneral> {
     if (_currentInput == null || _currentInput.isEmpty) return GCWDefaultOutput();
 
     var reverseKey = modulo(26 - _currentKey, 26);
+    var output = Rotator().rotate(_currentInput, _currentKey);
+    var outputReverse = Rotator().rotate(_currentInput, reverseKey);
+
+    if (widget.sendJsonResultToWeb()) {
+      widget.sendResultToWeb(_toJson(output, outputReverse))
+    }
 
     return Column(
       children: [
         GCWDefaultOutput(
-          child: Rotator().rotate(_currentInput, _currentKey),
+          child: output,
         ),
         GCWOutput(
           title: i18n(context, 'rotation_general_reverse') +
@@ -80,9 +88,13 @@ class RotationGeneralState extends State<RotationGeneral> {
               ': ' +
               reverseKey.toString() +
               ')',
-          child: Rotator().rotate(_currentInput, reverseKey),
+          child: outputReverse,
         ),
       ],
     );
+  }
+
+  String _toJson(String output, String outputReverse) {
+    return jsonEncode({'output': output, 'outputreverse': outputReverse});
   }
 }
