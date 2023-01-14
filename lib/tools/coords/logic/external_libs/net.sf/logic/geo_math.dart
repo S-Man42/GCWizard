@@ -10,10 +10,7 @@
  * https://sourceforge.net/projects/geographiclib/
 
  **********************************************************************/
-import 'dart:math';
-
-import 'package:gc_wizard/tools/coords/external_libs/net.sf/logic/math.dart';
-import 'package:gc_wizard/tools/coords/external_libs/net.sf/logic/pair.dart';
+part of '../geographic_lib.dart';
 
 /*
  * Mathematical functions needed by GeographicLib.
@@ -21,7 +18,7 @@ import 'package:gc_wizard/tools/coords/external_libs/net.sf/logic/pair.dart';
  * Define mathematical functions and constants so that any version of Java
  * can be used.
  **********************************************************************/
-class GeoMath {
+class _GeoMath {
   /*
    * The number of binary digits in the fraction of a double precision
    * number (equivalent to C++'s {@code numeric_limits<double>::digits}).

@@ -1,4 +1,4 @@
-import 'dart:math';
+part of '../geographic_lib.dart';
 
 /*
  * Constant by which to multiply an angular value in degrees to obtain an

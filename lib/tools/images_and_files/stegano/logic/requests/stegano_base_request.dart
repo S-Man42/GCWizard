@@ -1,10 +1,10 @@
 import 'dart:typed_data';
 
-class BaseRequest {
+class SteganoBaseRequest {
   final Uint8List imageData;
   final String key;
 
-  BaseRequest(this.imageData, {this.key});
+  SteganoBaseRequest(this.imageData, {this.key});
 
   bool canEncrypt() {
     return (key != null && key.isNotEmpty);

@@ -1,6 +1,7 @@
 part of '../xmp.dart';
 
 class XMP {
+
   ///
   ///Extracts `XMP Data` from the image
   ///

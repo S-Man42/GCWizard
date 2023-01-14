@@ -10,6 +10,7 @@
  * https://sourceforge.net/projects/geographiclib/
 
  **********************************************************************/
+part of '../geographic_lib.dart';
 
 /*
  * The results of geodesic calculations.

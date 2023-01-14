@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-String padKey(String key) {
+String steganoPadKey(String key) {
   if (key.length > 32) {
     throw FlutterError('cryption_key_length_greater_than_32');
   }

@@ -10,14 +10,7 @@
  * https://sourceforge.net/projects/geographiclib/
 
  **********************************************************************/
-import 'dart:math';
-
-import 'package:gc_wizard/tools/coords/external_libs/net.sf/logic/geo_math.dart';
-import 'package:gc_wizard/tools/coords/external_libs/net.sf/logic/geodesic.dart';
-import 'package:gc_wizard/tools/coords/external_libs/net.sf/logic/geodesic_data.dart';
-import 'package:gc_wizard/tools/coords/external_libs/net.sf/logic/geodesic_mask.dart';
-import 'package:gc_wizard/tools/coords/external_libs/net.sf/logic/math.dart';
-import 'package:gc_wizard/tools/coords/external_libs/net.sf/logic/pair.dart';
+part of '../geographic_lib.dart';
 
 /*
  * A geodesic line.
@@ -185,11 +178,11 @@ class GeodesicLine {
    * </ul>
    **********************************************************************/
   GeodesicLine(Geodesic g, double lat1, double lon1, double azi1, int caps) {
-    azi1 = GeoMath.AngNormalize(azi1);
+    azi1 = _GeoMath.AngNormalize(azi1);
     double salp1, calp1;
     Pair p = new Pair();
     // Guard against underflow in salp0
-    GeoMath.sincosd(p, GeoMath.AngRound(azi1));
+    _GeoMath.sincosd(p, _GeoMath.AngRound(azi1));
     salp1 = p.first;
     calp1 = p.second;
     _LineInit(g, lat1, lon1, azi1, salp1, calp1, caps, p);
@@ -204,20 +197,20 @@ class GeodesicLine {
     // Always allow latitude and azimuth and unrolling the longitude
     _caps = caps | GeodesicMask.LATITUDE | GeodesicMask.AZIMUTH | GeodesicMask.LONG_UNROLL;
 
-    _lat1 = GeoMath.LatFix(lat1);
+    _lat1 = _GeoMath.LatFix(lat1);
     _lon1 = lon1;
     _azi1 = azi1;
     _salp1 = salp1;
     _calp1 = calp1;
     double cbet1, sbet1;
-    GeoMath.sincosd(p, GeoMath.AngRound(_lat1));
+    _GeoMath.sincosd(p, _GeoMath.AngRound(_lat1));
     sbet1 = _f1 * p.first;
     cbet1 = p.second;
     // Ensure cbet1 = +epsilon at poles
-    GeoMath.norm(p, sbet1, cbet1);
+    _GeoMath.norm(p, sbet1, cbet1);
     sbet1 = p.first;
     cbet1 = max(Geodesic.tiny_, p.second);
-    _dn1 = sqrt(1 + g.ep2 * GeoMath.sq(sbet1));
+    _dn1 = sqrt(1 + g.ep2 * _GeoMath.sq(sbet1));
 
     // Evaluate alp0 from sin(alp1) * cos(bet1) = sin(alp0),
     _salp0 = _salp1 * cbet1; // alp0 in [0, pi/2 - |bet1|]
@@ -236,12 +229,12 @@ class GeodesicLine {
     _ssig1 = sbet1;
     _somg1 = _salp0 * sbet1;
     _csig1 = _comg1 = sbet1 != 0 || _calp1 != 0 ? cbet1 * _calp1 : 1;
-    GeoMath.norm(p, _ssig1, _csig1);
+    _GeoMath.norm(p, _ssig1, _csig1);
     _ssig1 = p.first;
     _csig1 = p.second; // sig1 in (-pi, pi]
     // GeoMath.norm(_somg1, _comg1); -- don't need to normalize!
 
-    _k2 = GeoMath.sq(_calp0) * g.ep2;
+    _k2 = _GeoMath.sq(_calp0) * g.ep2;
     double eps = _k2 / (2 * (1 + sqrt(1 + _k2)) + _k2);
 
     if ((_caps & GeodesicMask.CAP_C1) != 0) {
@@ -280,7 +273,7 @@ class GeodesicLine {
       _C4a = List<double>.generate(_nC4_, (index) => 0.0);
       g.C4f(eps, _C4a);
       // Multiplier = a^2 * e^2 * cos(alpha0) * sin(alpha0)
-      _A4 = GeoMath.sq(_a) * _calp0 * _salp0 * g.e2;
+      _A4 = _GeoMath.sq(_a) * _calp0 * _salp0 * g.e2;
       _B41 = Geodesic.SinCosSeries(false, _ssig1, _csig1, _C4a);
     }
   }
@@ -338,7 +331,7 @@ class GeodesicLine {
       return r;
     r.lat1 = _lat1;
     r.azi1 = _azi1;
-    r.lon1 = ((outmask & GeodesicMask.LONG_UNROLL) != 0) ? _lon1 : GeoMath.AngNormalize(_lon1);
+    r.lon1 = ((outmask & GeodesicMask.LONG_UNROLL) != 0) ? _lon1 : _GeoMath.AngNormalize(_lon1);
 
     // Avoid warning about uninitialized B12.
     double sig12, ssig12, csig12, B12 = 0, AB1 = 0;
@@ -347,7 +340,7 @@ class GeodesicLine {
       r.a12 = s12_a12;
       sig12 = toRadians(s12_a12);
       Pair p = Pair();
-      GeoMath.sincosd(p, s12_a12);
+      _GeoMath.sincosd(p, s12_a12);
       ssig12 = p.first;
       csig12 = p.second;
     } else {
@@ -385,7 +378,7 @@ class GeodesicLine {
         double ssig2 = _ssig1 * csig12 + _csig1 * ssig12, csig2 = _csig1 * csig12 - _ssig1 * ssig12;
         B12 = Geodesic.SinCosSeries(true, ssig2, csig2, _C1a);
         double serr = (1 + _A1m1) * (sig12 + (B12 - _B11)) - s12_a12 / _b;
-        sig12 = sig12 - serr / sqrt(1 + _k2 * GeoMath.sq(ssig2));
+        sig12 = sig12 - serr / sqrt(1 + _k2 * _GeoMath.sq(ssig2));
         ssig12 = sin(sig12);
         csig12 = cos(sig12);
         // Update B12 below
@@ -397,7 +390,7 @@ class GeodesicLine {
     // sig2 = sig1 + sig12
     ssig2 = _ssig1 * csig12 + _csig1 * ssig12;
     csig2 = _csig1 * csig12 - _ssig1 * ssig12;
-    double dn2 = sqrt(1 + _k2 * GeoMath.sq(ssig2));
+    double dn2 = sqrt(1 + _k2 * _GeoMath.sq(ssig2));
     if ((outmask & (GeodesicMask.DISTANCE | GeodesicMask.REDUCEDLENGTH | GeodesicMask.GEODESICSCALE)) != 0) {
       if (arcmode || _f.abs() > 0.01) B12 = Geodesic.SinCosSeries(true, ssig2, csig2, _C1a);
       AB1 = (1 + _A1m1) * (B12 - _B11);
@@ -431,12 +424,12 @@ class GeodesicLine {
       double lon12 = toDegrees(lam12);
       r.lon2 = ((outmask & GeodesicMask.LONG_UNROLL) != 0)
           ? _lon1 + lon12
-          : GeoMath.AngNormalize(r.lon1 + GeoMath.AngNormalize(lon12));
+          : _GeoMath.AngNormalize(r.lon1 + _GeoMath.AngNormalize(lon12));
     }
 
-    if ((outmask & GeodesicMask.LATITUDE) != 0) r.lat2 = GeoMath.atan2d(sbet2, _f1 * cbet2);
+    if ((outmask & GeodesicMask.LATITUDE) != 0) r.lat2 = _GeoMath.atan2d(sbet2, _f1 * cbet2);
 
-    if ((outmask & GeodesicMask.AZIMUTH) != 0) r.azi2 = GeoMath.atan2d(salp2, calp2);
+    if ((outmask & GeodesicMask.AZIMUTH) != 0) r.azi2 = _GeoMath.atan2d(salp2, calp2);
 
     if ((outmask & (GeodesicMask.REDUCEDLENGTH | GeodesicMask.GEODESICSCALE)) != 0) {
       double B22 = Geodesic.SinCosSeries(true, ssig2, csig2, _C2a),
@@ -474,7 +467,7 @@ class GeodesicLine {
             (csig12 <= 0
                 ? _csig1 * (1 - csig12) + ssig12 * _ssig1
                 : ssig12 * (_csig1 * ssig12 / (1 + csig12) + _ssig1));
-        calp12 = GeoMath.sq(_salp0) + GeoMath.sq(_calp0) * _csig1 * csig2;
+        calp12 = _GeoMath.sq(_salp0) + _GeoMath.sq(_calp0) * _csig1 * csig2;
       }
       r.S12 = _c2 * atan2(salp12, calp12) + _A4 * (B42 - _B41);
     }

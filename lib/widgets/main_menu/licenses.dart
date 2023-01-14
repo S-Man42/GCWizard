@@ -53,7 +53,8 @@ class LicensesState extends State<Licenses> {
           ['universal_html', 'Apache 2.0 License'],
           ['uuid', 'MIT License'],
           ['url_launcher', 'BSD-3-Clause License'],
-          ['utility', 'MIT License']
+          ['utility', 'MIT License'],
+          ['xmp', 'MIT License'], // it used not in pubspec but directly embedded because of conflicts of internal dependencies
       ]),
       GCWTextDivider(text: i18n(context, 'licenses_fonts')),
       GCWColumnedMultilineOutput(

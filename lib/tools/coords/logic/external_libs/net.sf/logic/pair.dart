@@ -11,6 +11,8 @@
 
  **********************************************************************/
 
+part of '../geographic_lib.dart';
+
 /*
  * A pair of double precision numbers.
  * <p>

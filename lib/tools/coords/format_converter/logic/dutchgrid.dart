@@ -1,4 +1,4 @@
-import 'package:gc_wizard/tools/coords/external_libs/djvanderlaan/rijksdriehoek/logic/rijksdriehoek_js.dart';
+import 'package:gc_wizard/tools/coords/logic/external_libs/djvanderlaan/rijksdriehoek/logic/rijksdriehoek_js.dart';
 import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
 import 'package:latlong2/latlong.dart';
 

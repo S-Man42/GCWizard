@@ -1,10 +1,10 @@
 import 'package:encrypt/encrypt.dart' as crypto;
 import 'package:flutter/foundation.dart';
-import 'package:gc_wizard/plugins/flutter_steganography/requests/encode_request.dart';
+import 'package:gc_wizard/tools/images_and_files/stegano/logic/requests/stegano_encode_request.dart';
 import 'package:gc_wizard/tools/utils/file_utils/widget/file_utils.dart';
 import 'package:image/image.dart';
 
-import 'pad_key.dart';
+import 'package:gc_wizard/tools/images_and_files/stegano/logic/stegano_pad_key.dart';
 
 int _encodeOnePixel(int pixel, int msg) {
   if (msg != 1 && msg != 0) {
@@ -15,13 +15,13 @@ int _encodeOnePixel(int pixel, int msg) {
   return encoded;
 }
 
-Uint8List encodeMessageIntoImage(EncodeRequest req) {
+Uint8List encodeSteganoMessageIntoImage(SteganoEncodeRequest req) {
   Image origin = decodeImage(req.imageData);
   Uint8List img = origin.getBytes();
   String msg = req.message;
   String token = req.key;
   if (req.canEncrypt()) {
-    crypto.Key key = crypto.Key.fromUtf8(padKey(token));
+    crypto.Key key = crypto.Key.fromUtf8(steganoPadKey(token));
     crypto.IV iv = crypto.IV.fromLength(16);
     crypto.Encrypter encrypter = crypto.Encrypter(crypto.AES(key));
     crypto.Encrypted encrypted = encrypter.encrypt(msg, iv: iv);
@@ -58,7 +58,7 @@ Uint8List encodeMessageIntoImage(EncodeRequest req) {
   return data;
 }
 
-Future<Uint8List> encodeMessageIntoImageAsync(EncodeRequest req) async {
-  final Uint8List res = await compute(encodeMessageIntoImage, req);
+Future<Uint8List> encodeSteganoMessageIntoImageAsync(SteganoEncodeRequest req) async {
+  final Uint8List res = await compute(encodeSteganoMessageIntoImage, req);
   return res;
 }

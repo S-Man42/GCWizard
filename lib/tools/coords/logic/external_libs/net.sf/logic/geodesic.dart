@@ -10,14 +10,7 @@
  * https://sourceforge.net/projects/geographiclib/
 
  **********************************************************************/
-import 'dart:math';
-
-import 'package:gc_wizard/tools/coords/external_libs/net.sf/logic/geo_math.dart';
-import 'package:gc_wizard/tools/coords/external_libs/net.sf/logic/geodesic_data.dart';
-import 'package:gc_wizard/tools/coords/external_libs/net.sf/logic/geodesic_line.dart';
-import 'package:gc_wizard/tools/coords/external_libs/net.sf/logic/geodesic_mask.dart';
-import 'package:gc_wizard/tools/coords/external_libs/net.sf/logic/math.dart';
-import 'package:gc_wizard/tools/coords/external_libs/net.sf/logic/pair.dart';
+part of '../geographic_lib.dart';
 
 /*
  * Geodesic calculations.
@@ -230,7 +223,7 @@ class Geodesic {
   static final int nC4_ = GEOGRAPHICLIB_GEODESIC_ORDER;
   static final int nC4x_ = (nC4_ * (nC4_ + 1)) ~/ 2;
   static final int _maxit1_ = 20;
-  static final int _maxit2_ = _maxit1_ + GeoMath.digits + 10;
+  static final int _maxit2_ = _maxit1_ + _GeoMath.digits + 10;
 
   // Underflow guard.  We require
   //   tiny_ * epsilon() > 0
@@ -264,11 +257,11 @@ class Geodesic {
     f = _f;
     f1 = 1 - f;
     e2 = f * (2 - f);
-    ep2 = e2 / GeoMath.sq(f1); // e2 / (1 - e2)
+    ep2 = e2 / _GeoMath.sq(f1); // e2 / (1 - e2)
     _n = f / (2 - f);
     b = a * f1;
-    c2 = (GeoMath.sq(a) +
-            GeoMath.sq(b) * (e2 == 0 ? 1 : (e2 > 0 ? GeoMath.atanh(sqrt(e2)) : atan(sqrt(-e2))) / sqrt(e2.abs()))) /
+    c2 = (_GeoMath.sq(a) +
+            _GeoMath.sq(b) * (e2 == 0 ? 1 : (e2 > 0 ? _GeoMath.atanh(sqrt(e2)) : atan(sqrt(-e2))) / sqrt(e2.abs()))) /
         2; // authalic radius squared
     // The sig12 threshold for "really short".  Using the auxiliary sphere
     // solution with dnm computed at (bet1 + bet2) / 2, the relative error in
@@ -281,8 +274,8 @@ class Geodesic {
     // and max(0.001, abs(f)) stops etol2 getting too large in the nearly
     // spherical case.
     _etol2 = 0.1 * _tol2_ / sqrt(max(0.001, f.abs()) * min(1.0, 1 - f / 2) / 2);
-    if (!(GeoMath.isfinite(a) && a > 0)) throw Exception("Equatorial radius is not positive");
-    if (!(GeoMath.isfinite(b) && b > 0)) throw Exception("Polar semi-axis is not positive");
+    if (!(_GeoMath.isfinite(a) && a > 0)) throw Exception("Equatorial radius is not positive");
+    if (!(_GeoMath.isfinite(b) && b > 0)) throw Exception("Polar semi-axis is not positive");
     _A3x = List<double>.generate(nA3x_, (index) => 0.0);
     _C3x = List<double>.generate(nC3x_, (index) => 0.0);
     _C4x = List<double>.generate(nC4x_, (index) => 0.0);
@@ -419,29 +412,29 @@ class Geodesic {
     // Compute longitude difference (AngDiff does this carefully).  Result is
     // in [-180, 180] but -180 is only for west-going geodesics.  180 is for
     // east-going and meridional geodesics.
-    r.lat1 = lat1 = GeoMath.LatFix(lat1);
-    r.lat2 = lat2 = GeoMath.LatFix(lat2);
+    r.lat1 = lat1 = _GeoMath.LatFix(lat1);
+    r.lat2 = lat2 = _GeoMath.LatFix(lat2);
     // If really close to the equator, treat as on equator.
-    lat1 = GeoMath.AngRound(lat1);
-    lat2 = GeoMath.AngRound(lat2);
+    lat1 = _GeoMath.AngRound(lat1);
+    lat2 = _GeoMath.AngRound(lat2);
     double lon12, lon12s;
-    GeoMath.AngDiff(p, lon1, lon2);
+    _GeoMath.AngDiff(p, lon1, lon2);
     lon12 = p.first;
     lon12s = p.second;
     if ((outmask & GeodesicMask.LONG_UNROLL) != 0) {
       r.lon1 = lon1;
       r.lon2 = (lon1 + lon12) + lon12s;
     } else {
-      r.lon1 = GeoMath.AngNormalize(lon1);
-      r.lon2 = GeoMath.AngNormalize(lon2);
+      r.lon1 = _GeoMath.AngNormalize(lon1);
+      r.lon2 = _GeoMath.AngNormalize(lon2);
     }
     // Make longitude difference positive.
     int lonsign = lon12 >= 0 ? 1 : -1;
     // If very close to being on the same half-meridian, then make it so.
-    lon12 = lonsign * GeoMath.AngRound(lon12);
-    lon12s = GeoMath.AngRound((180 - lon12) - lonsign * lon12s);
+    lon12 = lonsign * _GeoMath.AngRound(lon12);
+    lon12s = _GeoMath.AngRound((180 - lon12) - lonsign * lon12s);
     double lam12 = toRadians(lon12), slam12, clam12;
-    GeoMath.sincosd(p, lon12 > 90 ? lon12s : lon12);
+    _GeoMath.sincosd(p, lon12 > 90 ? lon12s : lon12);
     slam12 = p.first;
     clam12 = (lon12 > 90 ? -1 : 1) * p.second;
 
@@ -474,21 +467,21 @@ class Geodesic {
 
     double sbet1, cbet1, sbet2, cbet2, s12x, m12x;
 
-    GeoMath.sincosd(p, lat1);
+    _GeoMath.sincosd(p, lat1);
     sbet1 = f1 * p.first;
     cbet1 = p.second;
     // Ensure cbet1 = +epsilon at poles; doing the fix on beta means that sig12
     // will be <= 2*tiny for two points at the same pole.
-    GeoMath.norm(p, sbet1, cbet1);
+    _GeoMath.norm(p, sbet1, cbet1);
     sbet1 = p.first;
     cbet1 = p.second;
     cbet1 = max(tiny_, cbet1);
 
-    GeoMath.sincosd(p, lat2);
+    _GeoMath.sincosd(p, lat2);
     sbet2 = f1 * p.first;
     cbet2 = p.second;
     // Ensure cbet2 = +epsilon at poles
-    GeoMath.norm(p, sbet2, cbet2);
+    _GeoMath.norm(p, sbet2, cbet2);
     sbet2 = p.first;
     cbet2 = p.second;
     cbet2 = max(tiny_, cbet2);
@@ -507,7 +500,7 @@ class Geodesic {
       if (sbet2.abs() == -sbet1) cbet2 = cbet1;
     }
 
-    double dn1 = sqrt(1 + ep2 * GeoMath.sq(sbet1)), dn2 = sqrt(1 + ep2 * GeoMath.sq(sbet2));
+    double dn1 = sqrt(1 + ep2 * _GeoMath.sq(sbet1)), dn2 = sqrt(1 + ep2 * _GeoMath.sq(sbet2));
 
     double a12, sig12, _calp1, _salp1, calp2, salp2;
     // index zero elements of these arrays are unused
@@ -596,7 +589,7 @@ class Geodesic {
       if (sig12 >= 0) {
         // Short lines (InverseStart sets salp2, calp2, dnm)
         s12x = sig12 * b * dnm;
-        m12x = GeoMath.sq(dnm) * b * sin(sig12 / dnm);
+        m12x = _GeoMath.sq(dnm) * b * sin(sig12 / dnm);
         if ((outmask & GeodesicMask.GEODESICSCALE) != 0) r.M12 = r.M21 = cos(sig12 / dnm);
         a12 = toDegrees(sig12);
         omg12 = lam12 / (f1 * dnm);
@@ -650,7 +643,7 @@ class Geodesic {
             if (n_salp1 > 0 && dalp1.abs() < pi) {
               _calp1 = _calp1 * cdalp1 - _salp1 * sdalp1;
               _salp1 = n_salp1;
-              GeoMath.norm(p, _salp1, _calp1);
+              _GeoMath.norm(p, _salp1, _calp1);
               _salp1 = p.first;
               _calp1 = p.second;
               // In some regimes we don't get quadratic convergence because
@@ -670,7 +663,7 @@ class Geodesic {
           // WGS84 and random input: mean = 4.74, sd = 0.99
           _salp1 = (_salp1a + _salp1b) / 2;
           _calp1 = (_calp1a + _calp1b) / 2;
-          GeoMath.norm(p, _salp1, _calp1);
+          _GeoMath.norm(p, _salp1, _calp1);
           _salp1 = p.first;
           _calp1 = p.second;
           tripn = false;
@@ -721,14 +714,14 @@ class Geodesic {
             csig1 = _calp1 * cbet1,
             ssig2 = sbet2,
             csig2 = calp2 * cbet2,
-            k2 = GeoMath.sq(calp0) * ep2,
+            k2 = _GeoMath.sq(calp0) * ep2,
             eps = k2 / (2 * (1 + sqrt(1 + k2)) + k2),
             // Multiplier = a^2 * e^2 * cos(alpha0) * sin(alpha0).
-            A4 = GeoMath.sq(a) * calp0 * salp0 * e2;
-        GeoMath.norm(p, ssig1, csig1);
+            A4 = _GeoMath.sq(a) * calp0 * salp0 * e2;
+        _GeoMath.norm(p, ssig1, csig1);
         ssig1 = p.first;
         csig1 = p.second;
-        GeoMath.norm(p, ssig2, csig2);
+        _GeoMath.norm(p, ssig2, csig2);
         ssig2 = p.first;
         csig2 = p.second;
         List<double> C4a = List<double>.generate(nC4_, (index) => 0.0);
@@ -852,8 +845,8 @@ class Geodesic {
     _InverseData result = _inverseInt(lat1, lon1, lat2, lon2, outmask);
     GeodesicData r = result._g;
     if ((outmask & GeodesicMask.AZIMUTH) != 0) {
-      r.azi1 = GeoMath.atan2d(result._salp1, result._calp1);
-      r.azi2 = GeoMath.atan2d(result._salp2, result._calp2);
+      r.azi1 = _GeoMath.atan2d(result._salp1, result._calp1);
+      r.azi2 = _GeoMath.atan2d(result._salp2, result._calp2);
     }
     return r;
   }
@@ -946,13 +939,13 @@ class Geodesic {
     // Solve k^4+2*k^3-(x^2+y^2-1)*k^2-2*y^2*k-y^2 = 0 for positive root k.
     // This solution is adapted from Geocentric::Reverse.
     double k;
-    double p = GeoMath.sq(x), q = GeoMath.sq(y), r = (p + q - 1) / 6;
+    double p = _GeoMath.sq(x), q = _GeoMath.sq(y), r = (p + q - 1) / 6;
     if (!(q == 0 && r <= 0)) {
       double
           // Avoid possible division by zero when r = 0 by multiplying equations
           // for s and t by r^3 and r, resp.
           S = p * q / 4, // S = r^3 * s
-          r2 = GeoMath.sq(r),
+          r2 = _GeoMath.sq(r),
           r3 = r * r2,
           // The discriminant of the quadratic equation for T3.  This is zero on
           // the evolute curve p^(1/3)+q^(1/3) = 1
@@ -975,13 +968,13 @@ class Geodesic {
         // avoids cancellation.  Note that disc < 0 implies that r < 0.
         u += 2 * r * cos(ang / 3);
       }
-      double v = sqrt(GeoMath.sq(u) + q), // guaranteed positive
+      double v = sqrt(_GeoMath.sq(u) + q), // guaranteed positive
           // Avoid loss of accuracy when u < 0.
           uv = u < 0 ? q / (v - u) : u + v, // u+v, guaranteed positive
           w = (uv - q) / (2 * v); // positive?
       // Rearrange expression for k to avoid loss of accuracy due to
       // subtraction.  Division by 0 not possible because uv > 0, w >= 0.
-      k = uv / (sqrt(uv + GeoMath.sq(w)) + w); // guaranteed positive
+      k = uv / (sqrt(uv + _GeoMath.sq(w)) + w); // guaranteed positive
     } else {
       // q == 0 && r <= 0
       // y = 0 with |x| <= 1.  Handle this case directly.
@@ -1021,10 +1014,10 @@ class Geodesic {
     bool shortline = cbet12 >= 0 && sbet12 < 0.5 && cbet2 * lam12 < 0.5;
     double somg12, comg12;
     if (shortline) {
-      double sbetm2 = GeoMath.sq(sbet1 + sbet2);
+      double sbetm2 = _GeoMath.sq(sbet1 + sbet2);
       // sin((bet1+bet2)/2)^2
       // =  (sbet1 + sbet2)^2 / ((sbet1 + sbet2)^2 + (cbet1 + cbet2)^2)
-      sbetm2 /= sbetm2 + GeoMath.sq(cbet1 + cbet2);
+      sbetm2 /= sbetm2 + _GeoMath.sq(cbet1 + cbet2);
       w._dnm = sqrt(1 + ep2 * sbetm2);
       double omg12 = lam12 / (f1 * w._dnm);
       somg12 = sin(omg12);
@@ -1036,23 +1029,23 @@ class Geodesic {
 
     w._salp1 = cbet2 * somg12;
     w._calp1 = comg12 >= 0
-        ? sbet12 + cbet2 * sbet1 * GeoMath.sq(somg12) / (1 + comg12)
-        : sbet12a - cbet2 * sbet1 * GeoMath.sq(somg12) / (1 - comg12);
+        ? sbet12 + cbet2 * sbet1 * _GeoMath.sq(somg12) / (1 + comg12)
+        : sbet12a - cbet2 * sbet1 * _GeoMath.sq(somg12) / (1 - comg12);
 
     double ssig12 = hypot(w._salp1, w._calp1), csig12 = sbet1 * sbet2 + cbet1 * cbet2 * comg12;
 
     if (shortline && ssig12 < _etol2) {
       // really short lines
       w._salp2 = cbet1 * somg12;
-      w._calp2 = sbet12 - cbet1 * sbet2 * (comg12 >= 0 ? GeoMath.sq(somg12) / (1 + comg12) : 1 - comg12);
-      GeoMath.norm(p, w._salp2, w._calp2);
+      w._calp2 = sbet12 - cbet1 * sbet2 * (comg12 >= 0 ? _GeoMath.sq(somg12) / (1 + comg12) : 1 - comg12);
+      _GeoMath.norm(p, w._salp2, w._calp2);
       w._salp2 = p.first;
       w._calp2 = p.second;
       // Set return value
       w._sig12 = atan2(ssig12, csig12);
     } else if (_n.abs() > 0.1 || // Skip astroid calc if too eccentric
         csig12 >= 0 ||
-        ssig12 >= 6 * _n.abs() * pi * GeoMath.sq(cbet1)) {
+        ssig12 >= 6 * _n.abs() * pi * _GeoMath.sq(cbet1)) {
       // Nothing to do, zeroth order spherical approximation is OK
     } else {
       // Scale lam12 and bet2 to x, y coordinate system where antipodal point
@@ -1067,7 +1060,7 @@ class Geodesic {
         // In fact f == 0 does not get here
         // x = dlong, y = dlat
         {
-          double k2 = GeoMath.sq(sbet1) * ep2, eps = k2 / (2 * (1 + sqrt(1 + k2)) + k2);
+          double k2 = _GeoMath.sq(sbet1) * ep2, eps = k2 / (2 * (1 + sqrt(1 + k2)) + k2);
           lamscale = f * cbet1 * A3f(eps) * pi;
         }
         betscale = lamscale * cbet1;
@@ -1087,7 +1080,7 @@ class Geodesic {
         m0 = v._m0;
 
         x = -1 + m12b / (cbet1 * cbet2 * m0 * pi);
-        betscale = x < -0.01 ? sbet12a / x : -f * GeoMath.sq(cbet1) * pi;
+        betscale = x < -0.01 ? sbet12a / x : -f * _GeoMath.sq(cbet1) * pi;
         lamscale = betscale / cbet1;
         y = lam12x / lamscale;
       }
@@ -1096,10 +1089,10 @@ class Geodesic {
         // strip near cut
         if (f >= 0) {
           w._salp1 = min(1.0, -x);
-          w._calp1 = -sqrt(1 - GeoMath.sq(w._salp1));
+          w._calp1 = -sqrt(1 - _GeoMath.sq(w._salp1));
         } else {
           w._calp1 = max(x > -_tol1_ ? 0.0 : -1.0, x);
-          w._salp1 = sqrt(1 - GeoMath.sq(w._calp1));
+          w._salp1 = sqrt(1 - _GeoMath.sq(w._calp1));
         }
       } else {
         // Estimate alp1, by solving the astroid problem.
@@ -1142,12 +1135,12 @@ class Geodesic {
         comg12 = -cos(omg12a);
         // Update spherical estimate of alp1 using omg12 instead of lam12
         w._salp1 = cbet2 * somg12;
-        w._calp1 = sbet12a - cbet2 * sbet1 * GeoMath.sq(somg12) / (1 - comg12);
+        w._calp1 = sbet12a - cbet2 * sbet1 * _GeoMath.sq(somg12) / (1 - comg12);
       }
     }
     // Sanity check on starting guess.  Backwards check allows NaN through.
     if (!(w._salp1 <= 0)) {
-      GeoMath.norm(p, w._salp1, w._calp1);
+      _GeoMath.norm(p, w._salp1, w._calp1);
       w._salp1 = p.first;
       w._calp1 = p.second;
     } else {
@@ -1195,7 +1188,7 @@ class Geodesic {
     w.ssig1 = sbet1;
     somg1 = salp0 * sbet1;
     w.csig1 = comg1 = _calp1 * cbet1;
-    GeoMath.norm(p, w.ssig1, w.csig1);
+    _GeoMath.norm(p, w.ssig1, w.csig1);
     w.ssig1 = p.first;
     w.csig1 = p.second;
     // GeoMath.norm(somg1, comg1); -- don't need to normalize!
@@ -1210,7 +1203,7 @@ class Geodesic {
     // and subst for calp0 and rearrange to give (choose positive sqrt
     // to give alp2 in [0, pi/2]).
     w.calp2 = cbet2 != cbet1 || sbet2.abs() != -sbet1
-        ? sqrt(GeoMath.sq(_calp1 * cbet1) +
+        ? sqrt(_GeoMath.sq(_calp1 * cbet1) +
                 (cbet1 < -sbet1 ? (cbet2 - cbet1) * (cbet1 + cbet2) : (sbet1 - sbet2) * (sbet1 + sbet2))) /
             cbet2
         : _calp1.abs();
@@ -1219,7 +1212,7 @@ class Geodesic {
     w.ssig2 = sbet2;
     somg2 = salp0 * sbet2;
     w.csig2 = comg2 = w.calp2 * cbet2;
-    GeoMath.norm(p, w.ssig2, w.csig2);
+    _GeoMath.norm(p, w.ssig2, w.csig2);
     w.ssig2 = p.first;
     w.csig2 = p.second;
     // GeoMath.norm(somg2, comg2); -- don't need to normalize!
@@ -1233,7 +1226,7 @@ class Geodesic {
     // eta = omg12 - lam120
     double eta = atan2(somg12 * clam120 - comg12 * slam120, comg12 * clam120 + somg12 * slam120);
     double B312;
-    double k2 = GeoMath.sq(calp0) * ep2;
+    double k2 = _GeoMath.sq(calp0) * ep2;
     w.eps = k2 / (2 * (1 + sqrt(1 + k2)) + k2);
     C3f(w.eps, C3a);
     B312 = (SinCosSeries(true, w.ssig2, w.csig2, C3a) - SinCosSeries(true, w.ssig1, w.csig1, C3a));
@@ -1254,7 +1247,7 @@ class Geodesic {
 
   double A3f(double eps) {
     // Evaluate A3
-    return GeoMath.polyval(nA3_ - 1, _A3x, 0, eps);
+    return _GeoMath.polyval(nA3_ - 1, _A3x, 0, eps);
   }
 
   void C3f(double eps, List<double> c) {
@@ -1266,7 +1259,7 @@ class Geodesic {
       // l is index of C3[l]
       int m = nC3_ - l - 1; // order of polynomial in eps
       mult *= eps;
-      c[l] = mult * GeoMath.polyval(m, _C3x, o, eps);
+      c[l] = mult * _GeoMath.polyval(m, _C3x, o, eps);
       o += m + 1;
     }
   }
@@ -1279,7 +1272,7 @@ class Geodesic {
     for (int l = 0; l < nC4_; ++l) {
       // l is index of C4[l]
       int m = nC4_ - l - 1; // order of polynomial in eps
-      c[l] = mult * GeoMath.polyval(m, _C4x, o, eps);
+      c[l] = mult * _GeoMath.polyval(m, _C4x, o, eps);
       o += m + 1;
       mult *= eps;
     }
@@ -1292,7 +1285,7 @@ class Geodesic {
       1, 4, 64, 0, 256,
     ];
     int m = nA1_ ~/ 2;
-    double t = GeoMath.polyval(m, coeff, 0, GeoMath.sq(eps)) / coeff[m + 1];
+    double t = _GeoMath.polyval(m, coeff, 0, _GeoMath.sq(eps)) / coeff[m + 1];
     return (t + eps) / (1 - eps);
   }
 
@@ -1312,12 +1305,12 @@ class Geodesic {
       // C1[6]/eps^6, polynomial in eps2 of order 0
       -7, 2048,
     ];
-    double eps2 = GeoMath.sq(eps), d = eps;
+    double eps2 = _GeoMath.sq(eps), d = eps;
     int o = 0;
     for (int l = 1; l <= nC1_; ++l) {
       // l is index of C1p[l]
       int m = (nC1_ - l) ~/ 2; // order of polynomial in eps^2
-      c[l] = d * GeoMath.polyval(m, coeff, o, eps2) / coeff[o + m + 1];
+      c[l] = d * _GeoMath.polyval(m, coeff, o, eps2) / coeff[o + m + 1];
       o += m + 2;
       d *= eps;
     }
@@ -1339,12 +1332,12 @@ class Geodesic {
       // C1p[6]/eps^6, polynomial in eps2 of order 0
       38081, 61440,
     ];
-    double eps2 = GeoMath.sq(eps), d = eps;
+    double eps2 = _GeoMath.sq(eps), d = eps;
     int o = 0;
     for (int l = 1; l <= nC1p_; ++l) {
       // l is index of C1p[l]
       int m = (nC1p_ - l) ~/ 2; // order of polynomial in eps^2
-      c[l] = d * GeoMath.polyval(m, coeff, o, eps2) / coeff[o + m + 1];
+      c[l] = d * _GeoMath.polyval(m, coeff, o, eps2) / coeff[o + m + 1];
       o += m + 2;
       d *= eps;
     }
@@ -1357,7 +1350,7 @@ class Geodesic {
       -11, -28, -192, 0, 256,
     ];
     int m = nA2_ ~/ 2;
-    double t = GeoMath.polyval(m, coeff, 0, GeoMath.sq(eps)) / coeff[m + 1];
+    double t = _GeoMath.polyval(m, coeff, 0, _GeoMath.sq(eps)) / coeff[m + 1];
     return (t - eps) / (1 + eps);
   }
 
@@ -1377,12 +1370,12 @@ class Geodesic {
       // C2[6]/eps^6, polynomial in eps2 of order 0
       77, 2048,
     ];
-    double eps2 = GeoMath.sq(eps), d = eps;
+    double eps2 = _GeoMath.sq(eps), d = eps;
     int o = 0;
     for (int l = 1; l <= nC2_; ++l) {
       // l is index of C2[l]
       int m = (nC2_ - l) ~/ 2; // order of polynomial in eps^2
-      c[l] = d * GeoMath.polyval(m, coeff, o, eps2) / coeff[o + m + 1];
+      c[l] = d * _GeoMath.polyval(m, coeff, o, eps2) / coeff[o + m + 1];
       o += m + 2;
       d *= eps;
     }
@@ -1408,7 +1401,7 @@ class Geodesic {
     for (int j = nA3_ - 1; j >= 0; --j) {
       // coeff of eps^j
       int m = min(nA3_ - j - 1, j); // order of polynomial in n
-      _A3x[k++] = GeoMath.polyval(m, coeff, o, _n) / coeff[o + m + 1];
+      _A3x[k++] = _GeoMath.polyval(m, coeff, o, _n) / coeff[o + m + 1];
       o += m + 2;
     }
   }
@@ -1453,7 +1446,7 @@ class Geodesic {
       for (int j = nC3_ - 1; j >= l; --j) {
         // coeff of eps^j
         int m = min(nC3_ - j - 1, j); // order of polynomial in n
-        _C3x[k++] = GeoMath.polyval(m, coeff, o, _n) / coeff[o + m + 1];
+        _C3x[k++] = _GeoMath.polyval(m, coeff, o, _n) / coeff[o + m + 1];
         o += m + 2;
       }
     }
@@ -1510,7 +1503,7 @@ class Geodesic {
       for (int j = nC4_ - 1; j >= l; --j) {
         // coeff of eps^j
         int m = nC4_ - j - 1; // order of polynomial in n
-        _C4x[k++] = GeoMath.polyval(m, coeff, o, _n) / coeff[o + m + 1];
+        _C4x[k++] = _GeoMath.polyval(m, coeff, o, _n) / coeff[o + m + 1];
         o += m + 2;
       }
     }
