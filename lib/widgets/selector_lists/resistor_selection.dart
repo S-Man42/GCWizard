@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/gcw_tool/gcw_tool.dart';
-import 'package:gc_wizard/common_widgets/gcw_toollist/gcw_toollist.dart';
+import 'package:gc_wizard/common_widgets/gcw_tool.dart';
+import 'package:gc_wizard/common_widgets/gcw_toollist.dart';
 import 'package:gc_wizard/tools/science_and_technology/resistor/resistor_colorcodecalculator/widget/resistor_colorcodecalculator.dart';
 import 'package:gc_wizard/tools/science_and_technology/resistor/resistor_eia96/widget/resistor_eia96.dart';
 import 'package:gc_wizard/tools/symbol_tables/widget/symbol_table.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/gcw_touchcanvas/gcw_touchcanvas.dart';
+import 'package:gc_wizard/common_widgets/gcw_touchcanvas.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/logic/segment_display.dart';
 
 Paint defaultSegmentPaint() {

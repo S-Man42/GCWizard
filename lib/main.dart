@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:gc_wizard/common_widgets/gcw_clipboard_editor/gcw_clipboard_editor.dart';
-import 'package:gc_wizard/common_widgets/gcw_tool/gcw_tool.dart';
+import 'package:gc_wizard/common_widgets/gcw_clipboard_editor.dart';
+import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/configuration/settings/default_settings.dart';
 import 'package:gc_wizard/i18n/app_language.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';

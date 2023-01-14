@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/tools/coords/widget/gcw_coords/coord_format_inputs/gcw_coords_dec/gcw_coords_dec.dart';
 import 'package:gc_wizard/tools/coords/widget/gcw_coords/coord_format_inputs/gcw_coords_dmm/gcw_coords_dmm.dart';
 import 'package:gc_wizard/tools/coords/widget/gcw_coords/coord_format_inputs/gcw_coords_dms/gcw_coords_dms.dart';

@@ -2,7 +2,7 @@ import 'package:code_text_field/code_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_highlight/themes/atom-one-dark.dart';
 import 'package:flutter_highlight/themes/atom-one-light.dart';
-import 'package:gc_wizard/common_widgets/gcw_textselectioncontrols/gcw_textselectioncontrols.dart';
+import 'package:gc_wizard/common_widgets/gcw_textselectioncontrols.dart';
 import 'package:gc_wizard/configuration/settings/preferences.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:highlight/highlight_core.dart';

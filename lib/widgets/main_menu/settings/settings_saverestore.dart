@@ -3,10 +3,10 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
-import 'package:gc_wizard/common_widgets/gcw_dialog/gcw_dialog.dart';
-import 'package:gc_wizard/common_widgets/gcw_text/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast/gcw_toast.dart';
-import 'package:gc_wizard/common_widgets/gcw_openfile/gcw_openfile.dart';
+import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
+import 'package:gc_wizard/common_widgets/gcw_text.dart';
+import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/configuration/settings/default_settings.dart';
 import 'package:gc_wizard/configuration/settings/preferences.dart';

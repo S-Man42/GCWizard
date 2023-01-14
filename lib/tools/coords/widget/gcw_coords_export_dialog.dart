@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/gcw_dialog/gcw_dialog.dart';
-import 'package:gc_wizard/common_widgets/gcw_exported_file_dialog/gcw_exported_file_dialog.dart';
-import 'package:gc_wizard/common_widgets/gcw_text_export/gcw_text_export.dart';
+import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
+import 'package:gc_wizard/common_widgets/dialogs/gcw_exported_file_dialog.dart';
+import 'package:gc_wizard/common_widgets/gcw_text_export.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/coords/export/logic/gpx_kml_export.dart' as coordinatesExport;
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';

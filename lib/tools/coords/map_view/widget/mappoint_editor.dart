@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/coords/widget/gcw_coords/gcw_coords.dart';
-import 'package:gc_wizard/common_widgets/gcw_colorpicker/gcw_colorpicker.dart';
-import 'package:gc_wizard/common_widgets/gcw_distance/gcw_distance.dart';
+import 'package:gc_wizard/common_widgets/gcw_colorpicker.dart';
+import 'package:gc_wizard/common_widgets/gcw_distance.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
