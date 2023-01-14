@@ -45,8 +45,12 @@ class FormatConverterState extends State<FormatConverter> {
       formatString = widget.getWebParameter(WebParameter.toformat);
       if (formatString != null) {
         try {
-          var format = getCoordinateFormatByKey(formatString);
-          if (format != null) _currentOutputFormat = {'format': formatString};
+          if (formatString == keyCoordsALL)
+            _currentOutputFormat = {'format': formatString};
+          else {
+            var format = getCoordinateFormatByKey(formatString);
+            if (format != null) _currentOutputFormat = {'format': formatString};
+          }
         } catch (e) {}
       }
     }
@@ -121,7 +125,11 @@ class FormatConverterState extends State<FormatConverter> {
     else {
       var output = formatCoordOutput(_currentCoords, _currentOutputFormat, defaultEllipsoid());
       _currentOutput = [output];
-      sendResultToWeb({_currentOutputFormat['format']: output});
+      if (widget.sendJsonResultToWeb()) {
+        var key = _currentOutputFormat['format'];
+        var name = getCoordinateFormatByKey(key)?.name;
+        _sendResultToWeb({_buildJson(key, name, output)}.toList());
+      }
     }
   }
 
@@ -129,6 +137,7 @@ class FormatConverterState extends State<FormatConverter> {
     var children = <List<String>>[];
     var ellipsoid = defaultEllipsoid();
     var outputFormat = Map<String, String>();
+    var jsonOutput = <String>[];
 
     allCoordFormats.forEach((coordFormat) {
       try {
@@ -155,18 +164,25 @@ class FormatConverterState extends State<FormatConverter> {
             break;
         }
 
-        children.add([name, formatCoordOutput(_currentCoords, outputFormat, ellipsoid)]);
+        var output = formatCoordOutput(_currentCoords, outputFormat, ellipsoid);
+        if (widget.sendJsonResultToWeb())
+          jsonOutput.add(_buildJson(coordFormat.key, name, output));
+
+        children.add([name, output]);
       } catch (e) {}
     });
 
-    sendResultToWeb(outputFormat);
+    if (widget.sendJsonResultToWeb())
+      _sendResultToWeb(jsonOutput);
 
     return GCWDefaultOutput(child: GCWColumnedMultilineOutput( data: children));
   }
 
-  sendResultToWeb(Map<String, String> output) {
-    if (widget.sendJsonResultToWeb())
+  void _sendResultToWeb(List<String> output) {
       widget.sendResultToWeb(jsonEncode(output));
+  }
+  String _buildJson(String format, String label, String output){
+    return jsonEncode({'format': format, 'label': label, 'output': output});
   }
 }
 
