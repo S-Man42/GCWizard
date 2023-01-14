@@ -73,9 +73,8 @@ class RotationGeneralState extends State<RotationGeneral> {
     var output = Rotator().rotate(_currentInput, _currentKey);
     var outputReverse = Rotator().rotate(_currentInput, reverseKey);
 
-    if (widget.sendJsonResultToWeb()) {
+    if (widget.sendJsonResultToWeb())
       widget.sendResultToWeb(_toJson(output, outputReverse));
-    }
 
     return Column(
       children: [

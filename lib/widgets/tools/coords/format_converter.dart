@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
@@ -116,18 +118,21 @@ class FormatConverterState extends State<FormatConverter> {
   _calculateOutput(BuildContext context) {
     if (_currentOutputFormat['format'] == keyCoordsALL)
       _currentAllOutput = _calculateAllOutput(context);
-    else
-      _currentOutput = [formatCoordOutput(_currentCoords, _currentOutputFormat, defaultEllipsoid())];
+    else {
+      var output = formatCoordOutput(_currentCoords, _currentOutputFormat, defaultEllipsoid());
+      _currentOutput = [output];
+      sendResultToWeb({_currentOutputFormat['format']: output});
+    }
   }
 
   Widget _calculateAllOutput(BuildContext context) {
     var children = <List<String>>[];
     var ellipsoid = defaultEllipsoid();
+    var outputFormat = Map<String, String>();
 
     allCoordFormats.forEach((coordFormat) {
       try {
         // exception, when we have a type with a undefinied subtype
-        var outputFormat = Map<String, String>();
         String name = coordFormat.name;
         outputFormat.addAll({'format': coordFormat.key});
 
@@ -154,7 +159,14 @@ class FormatConverterState extends State<FormatConverter> {
       } catch (e) {}
     });
 
+    sendResultToWeb(outputFormat);
+
     return GCWDefaultOutput(child: GCWColumnedMultilineOutput( data: children));
+  }
+
+  sendResultToWeb(Map<String, String> output) {
+    if (widget.sendJsonResultToWeb())
+      widget.sendResultToWeb(jsonEncode(output));
   }
 }
 

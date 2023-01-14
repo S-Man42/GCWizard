@@ -23,6 +23,7 @@ abstract class GCWWebStatefulWidget extends StatefulWidget {
   }
 
   sendResultToWeb(String json) {
+    print(json);
     return;
   }
 }
