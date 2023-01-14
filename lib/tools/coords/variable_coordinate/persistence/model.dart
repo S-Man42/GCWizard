@@ -1,4 +1,4 @@
-import 'package:gc_wizard/persistence/formula_solver/model.dart';
+import 'package:gc_wizard/tools/formula_solver/persistence/model.dart';
 
 List<Formula> formulas = [];
 

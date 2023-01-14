@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:gc_wizard/persistence/formula_solver/model.dart';
+import 'package:gc_wizard/tools/formula_solver/persistence/model.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/logic/alphabet_values.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
 import 'package:gc_wizard/utils/logic_utils/alphabets.dart';

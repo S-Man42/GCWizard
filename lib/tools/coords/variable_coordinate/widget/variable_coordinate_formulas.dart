@@ -6,10 +6,10 @@ import 'package:gc_wizard/common_widgets/dialogs/gcw_delete_alertdialog.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/persistence/variable_coordinate/json_provider.dart';
-import 'package:gc_wizard/persistence/variable_coordinate/model.dart';
+import 'package:gc_wizard/tools/coords/variable_coordinate/persistence/json_provider.dart';
+import 'package:gc_wizard/tools/coords/variable_coordinate/persistence/model.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
-import 'package:gc_wizard/tools/coords/variable_coordinate/variable_coordinate/widget/variable_coordinate.dart';
+import 'package:gc_wizard/tools/coords/variable_coordinate/widget/variable_coordinate.dart';
 import 'package:gc_wizard/tools/utils/no_animation_material_page_route/widget/no_animation_material_page_route.dart';
 
 class VariableCoordinateFormulas extends StatefulWidget {

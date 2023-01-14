@@ -23,7 +23,7 @@ import 'package:gc_wizard/theme/fixed_colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/tools/coords/coordinate_format_parser/logic/latlon.dart';
-import 'package:gc_wizard/tools/coords/import/logic/gpx_kml_import.dart';
+import 'package:gc_wizard/tools/coords/logic/gpx_kml_import.dart';
 import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';

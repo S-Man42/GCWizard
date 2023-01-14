@@ -2,8 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:gc_wizard/persistence/map_view/json_provider.dart';
-import 'package:gc_wizard/persistence/map_view/model.dart';
+import 'package:gc_wizard/tools/coords/map_view/persistence/json_provider.dart';
+import 'package:gc_wizard/tools/coords/map_view/persistence/model.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/map_view/widget/gcw_mapview.dart';
 import 'package:gc_wizard/tools/coords/utils/default_getter.dart';

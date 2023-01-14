@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:gc_wizard/configuration/settings/preferences.dart';
-import 'package:gc_wizard/persistence/multi_decoder/json_provider.dart';
-import 'package:gc_wizard/persistence/multi_decoder/model.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/persistence/json_provider.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/persistence/model.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/logic/ellipsoid.dart';

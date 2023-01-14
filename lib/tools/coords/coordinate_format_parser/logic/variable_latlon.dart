@@ -1,4 +1,4 @@
-import 'package:gc_wizard/persistence/formula_solver/model.dart';
+import 'package:gc_wizard/tools/formula_solver/persistence/model.dart';
 import 'package:gc_wizard/tools/coords/coordinate_format_parser/logic/latlon.dart';
 import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/waypoint_projection/logic/projection.dart';

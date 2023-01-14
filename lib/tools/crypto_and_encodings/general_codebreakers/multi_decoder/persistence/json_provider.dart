@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:gc_wizard/configuration/settings/preferences.dart';
-import 'package:gc_wizard/persistence/multi_decoder/model.dart';
-import 'package:gc_wizard/persistence/utils.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/persistence/model.dart';
+import 'package:gc_wizard/utils/logic_utils/persistence_utils.dart';
 import 'package:prefs/prefs.dart';
 
 void refreshMultiDecoderTools() {

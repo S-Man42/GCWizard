@@ -25,7 +25,7 @@ import 'package:gc_wizard/tools/coords/intersect_two_circles/widget/intersect_tw
 import 'package:gc_wizard/tools/coords/intersection/widget/intersection.dart';
 import 'package:gc_wizard/tools/coords/map_view/widget/map_view.dart';
 import 'package:gc_wizard/tools/coords/resection/widget/resection.dart';
-import 'package:gc_wizard/tools/coords/variable_coordinate/variable_coordinate/widget/variable_coordinate_formulas.dart';
+import 'package:gc_wizard/tools/coords/variable_coordinate/widget/variable_coordinate_formulas.dart';
 import 'package:gc_wizard/tools/coords/waypoint_projection/widget/waypoint_projection.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/abaddon/widget/abaddon.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/adfgvx/widget/adfgvx.dart';
