@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/tools/symbol_tables/encryption_painters/symbol_table_encryption_default/widget/symbol_table_encryption_default.dart';
-import 'package:gc_wizard/tools/symbol_tables/encryption_painters/symbol_table_encryption_sizes/widget/symbol_table_encryption_sizes.dart';
-import 'package:gc_wizard/tools/symbol_tables/symbol_table_data/widget/symbol_table_data.dart';
+import 'package:gc_wizard/tools/symbol_tables/logic/symbol_table_data.dart';
+import 'package:gc_wizard/tools/symbol_tables/special_encryption_painters/symbol_table_encryption_default/widget/symbol_table_encryption_default.dart';
+import 'package:gc_wizard/tools/symbol_tables/special_encryption_painters/symbol_table_encryption_sizes/widget/symbol_table_encryption_sizes.dart';
 
 class SymbolTablePaintData {
   Canvas canvas;

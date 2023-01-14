@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:gc_wizard/utils/constants.dart';
+import 'package:gc_wizard/utils/logic_utils/constants.dart';
 
 final _baseSegmentsCistercianSegment = [
   'a',

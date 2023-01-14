@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/configuration/settings/preferences.dart';
 import 'package:gc_wizard/theme/theme_colors_dark.dart';
 import 'package:gc_wizard/theme/theme_colors_light.dart';
-import 'package:gc_wizard/utils/settings/preferences.dart';
 import 'package:prefs/prefs.dart';
 
 enum ThemeType { DARK, LIGHT }

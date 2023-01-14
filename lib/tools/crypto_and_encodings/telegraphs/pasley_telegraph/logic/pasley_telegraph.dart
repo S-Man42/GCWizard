@@ -1,6 +1,6 @@
 //Fred B. Wrixon, Geheimsprachen, Könemann-Verlag, ISBN 978-3-8331-2562-1, S. 450
 
-import 'package:gc_wizard/utils/constants.dart';
+import 'package:gc_wizard/utils/logic_utils/constants.dart';
 
 final Map<String, List<String>> PASLEY = {
   ' ': [],

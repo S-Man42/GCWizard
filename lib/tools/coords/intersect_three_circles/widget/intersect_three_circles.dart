@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/common_widgets/units/logic/length.dart';
-import 'package:gc_wizard/common_widgets/units/logic/unit_category.dart';
-import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
-import 'package:gc_wizard/tools/coords/intersect_three_circles/logic/intersect_three_circles.dart';
-import 'package:gc_wizard/tools/coords/utils/format_getter.dart';
-import 'package:gc_wizard/theme/fixed_colors.dart';
-import 'package:gc_wizard/utils/constants.dart';
+import 'package:gc_wizard/tools/coords/widget/gcw_coords/gcw_coords.dart';
+import 'package:gc_wizard/tools/coords/widget/gcw_coords_output/gcw_coords_output.dart';
+import 'package:gc_wizard/tools/coords/widget/gcw_coords_output/gcw_coords_outputformat_distance.dart';
 import 'package:gc_wizard/common_widgets/gcw_async_executer/gcw_async_executer.dart';
 import 'package:gc_wizard/common_widgets/gcw_distance/gcw_distance.dart';
-import 'package:gc_wizard/common_widgets/gcw_submit_button/gcw_submit_button.dart';
-import 'package:gc_wizard/tools/coords/base/gcw_coords/widget/gcw_coords.dart';
-import 'package:gc_wizard/tools/coords/base/gcw_coords_output/widget/gcw_coords_output.dart';
-import 'package:gc_wizard/tools/coords/base/gcw_coords_outputformat_distance/widget/gcw_coords_outputformat_distance.dart';
-import 'package:gc_wizard/tools/coords/base/utils/widget/format_getter.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/theme/fixed_colors.dart';
+import 'package:gc_wizard/tools/coords/intersect_three_circles/logic/intersect_three_circles.dart';
+import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
+import 'package:gc_wizard/tools/coords/utils/default_getter.dart';
+import 'package:gc_wizard/tools/coords/utils/format_getter.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/length.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit_category.dart';
+import 'package:gc_wizard/utils/logic_utils/constants.dart';
 
 class IntersectThreeCircles extends StatefulWidget {
   @override

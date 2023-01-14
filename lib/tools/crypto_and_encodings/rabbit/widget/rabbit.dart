@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/gcw_text/gcw_text.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
+import 'package:gc_wizard/common_widgets/gcw_toast/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/gcw_expandable/gcw_expandable.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rabbit/logic/rabbit.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_text/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_textfield/gcw_textfield.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_toast/gcw_toast.dart';
-import 'package:gc_wizard/common_widgets/gcw_default_output/gcw_default_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_expandable/gcw_expandable.dart';
-import 'package:gc_wizard/common_widgets/gcw_text_divider/gcw_text_divider.dart';
 
 class Rabbit extends StatefulWidget {
   @override
@@ -54,7 +54,7 @@ class RabbitState extends State<Rabbit> {
         Row(children: <Widget>[
           Expanded(child: GCWText(text: i18n(context, 'rc4_format') + ':'), flex: 1),
           Expanded(
-              child: GCWDropDownButton(
+              child: GCWDropDown(
                 value: _currentInputFormat,
                 onChanged: (value) {
                   setState(() {
@@ -82,7 +82,7 @@ class RabbitState extends State<Rabbit> {
         Row(children: <Widget>[
           Expanded(child: GCWText(text: i18n(context, 'rc4_format') + ':'), flex: 1),
           Expanded(
-              child: GCWDropDownButton(
+              child: GCWDropDown(
                 value: _currentKeyFormat,
                 onChanged: (value) {
                   setState(() {
@@ -118,7 +118,7 @@ class RabbitState extends State<Rabbit> {
               Row(children: <Widget>[
                 Expanded(child: GCWText(text: i18n(context, 'rc4_format') + ':'), flex: 1),
                 Expanded(
-                    child: GCWDropDownButton(
+                    child: GCWDropDown(
                       value: _currentIvFormat,
                       onChanged: (value) {
                         setState(() {
@@ -139,7 +139,7 @@ class RabbitState extends State<Rabbit> {
         Row(children: <Widget>[
           Expanded(child: GCWText(text: i18n(context, 'rc4_format') + ':'), flex: 1),
           Expanded(
-              child: GCWDropDownButton(
+              child: GCWDropDown(
                 value: _currentOutputFormat,
                 onChanged: (value) {
                   setState(() {

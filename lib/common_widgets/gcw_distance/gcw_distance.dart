@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_double_textfield.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/widget/gcw_unit_dropdown.dart';
+import 'package:gc_wizard/configuration/settings/preferences.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/common_widgets/units/logic/length.dart';
-import 'package:gc_wizard/common_widgets/units/logic/unit.dart';
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/utils/settings/preferences.dart';
-import 'package:gc_wizard/common_widgets/gcw_double_textfield/gcw_double_textfield.dart';
-import 'package:gc_wizard/common_widgets/units/gcw_unit_dropdownbutton/gcw_unit_dropdownbutton.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/length.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
 import 'package:prefs/prefs.dart';
 
 class GCWDistance extends StatefulWidget {
@@ -72,7 +72,7 @@ class _GCWDistanceState extends State<GCWDistance> {
                 padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN))),
         Expanded(
           flex: 1,
-          child: GCWUnitDropDownButton(
+          child: GCWUnitDropDown(
               unitList: allLengths(),
               value: _currentLengthUnit,
               onChanged: (Length value) {

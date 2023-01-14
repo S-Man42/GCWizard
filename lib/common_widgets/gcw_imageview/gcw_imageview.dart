@@ -1,12 +1,12 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_iconbutton/gcw_iconbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_text/gcw_text.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/gcw_text/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_exported_file_dialog/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/common_widgets/gcw_imageview_fullscreen/gcw_imageview_fullscreen.dart';
 import 'package:gc_wizard/common_widgets/gcw_popup_menu/gcw_popup_menu.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/tools/images_and_files/exif_reader/widget/exif_reader.dart';
 import 'package:gc_wizard/tools/images_and_files/hex_viewer/widget/hex_viewer.dart';
 import 'package:gc_wizard/tools/images_and_files/hidden_data/widget/hidden_data.dart';

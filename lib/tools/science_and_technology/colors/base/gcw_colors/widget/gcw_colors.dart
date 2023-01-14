@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors.dart';
-import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors_hue.dart';
 import 'package:gc_wizard/common_widgets/gcw_colorpicker/gcw_colorpicker.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/base/gcw_color_values_picker/widget/gcw_color_values_picker.dart';
+import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors.dart';
+import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors_hue.dart';
 
 class GCWColors extends StatefulWidget {
   final Function onChanged;

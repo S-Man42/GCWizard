@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/gcw_text/gcw_text.dart';
+import 'package:gc_wizard/common_widgets/gcw_toast/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
+import 'package:gc_wizard/common_widgets/gcw_datetime_picker/gcw_datetime_picker.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_integer_textfield.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_paste_button.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_sign_dropdown.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/gcw_toolbar/gcw_toolbar.dart';
+import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/tools/coords/converter/logic/dmm.dart';
-import 'package:gc_wizard/tools/coords/converter/logic/dms.dart';
+import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/tools/coords/format_converter/logic/dmm.dart';
+import 'package:gc_wizard/tools/coords/format_converter/logic/dms.dart';
 import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/right_ascension_to_degree/logic/right_ascension_to_degree.dart';
-import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_iconbutton/gcw_iconbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_text/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_toast/gcw_toast.dart';
-import 'package:gc_wizard/common_widgets/gcw_columned_multiline_output/gcw_columned_multiline_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_datetime_picker/gcw_datetime_picker.dart';
-import 'package:gc_wizard/common_widgets/gcw_default_output/gcw_default_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_integer_textfield/gcw_integer_textfield.dart';
-import 'package:gc_wizard/common_widgets/gcw_output/gcw_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_paste_button/gcw_paste_button.dart';
-import 'package:gc_wizard/common_widgets/gcw_text_divider/gcw_text_divider.dart';
-import 'package:gc_wizard/common_widgets/gcw_toolbar/gcw_toolbar.dart';
-import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/tools/coords/base/gcw_coords_sign_dropdownbutton/widget/gcw_coords_sign_dropdownbutton.dart';
 import 'package:gc_wizard/tools/utils/textinputformatter/integer_minutesseconds_textinputformatter/widget/integer_minutesseconds_textinputformatter.dart';
 import 'package:gc_wizard/tools/utils/textinputformatter/integer_textinputformatter/widget/integer_textinputformatter.dart';
 
@@ -182,7 +182,7 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
     }
 
     return Column(children: [
-      GCWDropDownButton(
+      GCWDropDown(
         value: _currentDecryptFormat,
         onChanged: (newValue) {
           setState(() {
@@ -264,7 +264,7 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
         children: <Widget>[
           Expanded(
             flex: 6,
-            child: GCWCoordsSignDropDownButton(
+            child: GCWSignDropDown(
                 itemList: ['+', '-'],
                 value: _currentDmmSign,
                 onChanged: (value) {
@@ -342,7 +342,7 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
         children: <Widget>[
           Expanded(
             flex: 6,
-            child: GCWCoordsSignDropDownButton(
+            child: GCWSignDropDown(
                 itemList: ['+', '-'],
                 value: _currentDmsSign,
                 onChanged: (value) {
@@ -464,7 +464,7 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
         children: <Widget>[
           Expanded(
             flex: 6,
-            child: GCWCoordsSignDropDownButton(
+            child: GCWSignDropDown(
                 itemList: ['+', '-'],
                 value: _currentDecSign,
                 onChanged: (value) {

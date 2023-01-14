@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/gcw_text/gcw_text.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/science_and_technology/ip_codes/logic/ip_codes.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_text/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/gcw_columned_multiline_output/gcw_columned_multiline_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_default_output/gcw_default_output.dart';
 
 class IPCodes extends StatefulWidget {
   @override
@@ -18,7 +18,7 @@ class IPCodesState extends State<IPCodes> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWDropDownButton(
+        GCWDropDown(
           value: _currentIPClass,
           items: IP_CODES.keys.map((clazz) {
             return GCWDropDownMenuItem(

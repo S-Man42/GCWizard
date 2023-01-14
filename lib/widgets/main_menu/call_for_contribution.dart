@@ -1,13 +1,13 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_divider.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_divider/widget/gcw_divider.dart';
+import 'package:gc_wizard/tools/utils/common_widget_utils/widget/common_widget_utils.dart';
+import 'package:gc_wizard/tools/utils/no_animation_material_page_route/widget/no_animation_material_page_route.dart';
 import 'package:gc_wizard/widgets/main_menu/about.dart';
 import 'package:gc_wizard/widgets/main_menu/gcw_mainmenuentry_stub.dart';
 import 'package:gc_wizard/widgets/registry.dart';
-import 'package:gc_wizard/tools/utils/common_widget_utils/widget/common_widget_utils.dart';
-import 'package:gc_wizard/tools/utils/no_animation_material_page_route/widget/no_animation_material_page_route.dart';
 
 class CallForContribution extends StatefulWidget {
   @override

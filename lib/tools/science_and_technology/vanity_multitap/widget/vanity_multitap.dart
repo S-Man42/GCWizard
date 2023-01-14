@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
+import 'package:gc_wizard/common_widgets/gcw_text/gcw_text.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
+import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/science_and_technology/vanity/logic/phone_models.dart';
 import 'package:gc_wizard/tools/science_and_technology/vanity/logic/vanity.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/widget/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_output_text/widget/gcw_output_text.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_text/widget/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_textfield/widget/gcw_textfield.dart';
-import 'package:gc_wizard/common_widgets/gcw_default_output/widget/gcw_default_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_output/widget/gcw_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/widget/gcw_twooptions_switch.dart';
 
 class VanityMultitap extends StatefulWidget {
   @override
@@ -84,7 +84,7 @@ class VanityMultitapState extends State<VanityMultitap> {
         if (_currentSimpleMode == GCWSwitchPosition.left)
           Column(
             children: [
-              GCWDropDownButton(
+              GCWDropDown(
                   value: _currentSimpleModel,
                   onChanged: (newValue) {
                     setState(() {
@@ -112,7 +112,7 @@ class VanityMultitapState extends State<VanityMultitap> {
                     ),
                   ),
                   Expanded(
-                      child: GCWDropDownButton(
+                      child: GCWDropDown(
                           value: _currentModel,
                           onChanged: (newValue) {
                             setState(() {
@@ -136,7 +136,7 @@ class VanityMultitapState extends State<VanityMultitap> {
                     )),
                     Expanded(
                         child: _currentModel.languages.length > 1
-                            ? GCWDropDownButton(
+                            ? GCWDropDown(
                                 value: _currentLanguageId,
                                 onChanged: (newValue) {
                                   setState(() {

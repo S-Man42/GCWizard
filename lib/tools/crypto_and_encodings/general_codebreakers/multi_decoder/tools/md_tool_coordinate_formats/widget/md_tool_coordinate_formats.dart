@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_stateful_dropdown.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
+import 'package:gc_wizard/tools/coords/utils/default_getter.dart';
 import 'package:gc_wizard/tools/coords/utils/format_getter.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/common_widgets/gcw_stateful_dropdownbutton/gcw_stateful_dropdownbutton.dart';
-import 'package:gc_wizard/tools/coords/base/utils/widget/format_getter.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/gcw_multi_decoder_tool/widget/gcw_multi_decoder_tool.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/gcw_multi_decoder_tool_configuration/widget/gcw_multi_decoder_tool_configuration.dart';
 import 'package:latlong2/latlong.dart';
@@ -102,7 +102,7 @@ class MultiDecoderToolCoordinateFormats extends GCWMultiDecoderTool {
             },
             options: options,
             configurationWidget: GCWMultiDecoderToolConfiguration(widgets: {
-              MDT_COORDINATEFORMATS_OPTION_FORMAT: GCWStatefulDropDownButton(
+              MDT_COORDINATEFORMATS_OPTION_FORMAT: GCWStatefulDropDown(
                 value: options[MDT_COORDINATEFORMATS_OPTION_FORMAT],
                 onChanged: (newValue) {
                   options[MDT_COORDINATEFORMATS_OPTION_FORMAT] = newValue;

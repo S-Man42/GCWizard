@@ -2,12 +2,13 @@
 
 import 'dart:math';
 import 'dart:typed_data';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/piet/logic/piet_blocker_builder.dart';
 import 'package:gc_wizard/tools/images_and_files/binary2image/logic/binary2image.dart';
-import 'package:gc_wizard/utils/alphabets.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
+import 'package:gc_wizard/utils/logic_utils/alphabets.dart';
+import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
 
 var _blockHeight = 12;
 var _blockWidth = 12;

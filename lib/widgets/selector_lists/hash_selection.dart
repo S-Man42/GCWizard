@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/gcw_tool/widget/gcw_tool.dart';
-import 'package:gc_wizard/common_widgets/gcw_toollist/widget/gcw_toollist.dart';
-import 'package:gc_wizard/widgets/registry.dart';
-import 'package:gc_wizard/widgets/selector_lists/gcw_selection.dart';
+import 'package:gc_wizard/common_widgets/gcw_tool/gcw_tool.dart';
+import 'package:gc_wizard/common_widgets/gcw_toollist/gcw_toollist.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/hashes/hash_breaker/widget/hash_breaker.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/hashes/hashes/widget/hashes.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/hashes/hashes_identification/widget/hashes_identification.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/hashes/hashes_overview/widget/hashes_overview.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/wherigo_urwigo/urwigo_hashbreaker/widget/urwigo_hashbreaker.dart';
 import 'package:gc_wizard/tools/utils/common_widget_utils/widget/common_widget_utils.dart';
+import 'package:gc_wizard/widgets/registry.dart';
+import 'package:gc_wizard/widgets/selector_lists/gcw_selection.dart';
 
 class HashSelection extends GCWSelection {
   @override

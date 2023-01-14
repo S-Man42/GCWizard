@@ -1,5 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/tools/coords/data/logic/ellipsoid.dart';
+import 'package:gc_wizard/tools/coords/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/coords/resection/logic/resection.dart';
 import 'package:latlong2/latlong.dart';
 

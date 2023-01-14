@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/gcw_text/gcw_text.dart';
+import 'package:gc_wizard/tools/coords/widget/gcw_coords/coord_format_inputs/gcw_coords_ellipsoid/gcw_coords_ellipsoid.dart';
+import 'package:gc_wizard/tools/coords/widget/gcw_coords/coord_format_inputs/gcw_coords_formatselector/gcw_coords_formatselector.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_sign_dropdown.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
+import 'package:gc_wizard/configuration/settings/preferences.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
-import 'package:gc_wizard/tools/coords/data/logic/ellipsoid.dart';
-import 'package:gc_wizard/utils/settings/preferences.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_text/widget/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/gcw_text_divider/widget/gcw_text_divider.dart';
-import 'package:gc_wizard/tools/coords/base/gcw_coords_ellipsoid/widget/gcw_coords_ellipsoid.dart';
-import 'package:gc_wizard/tools/coords/base/gcw_coords_formatselector/widget/gcw_coords_formatselector.dart';
-import 'package:gc_wizard/tools/coords/base/gcw_coords_sign_dropdownbutton/widget/gcw_coords_sign_dropdownbutton.dart';
-import 'package:gc_wizard/tools/coords/base/utils/widget/format_getter.dart';
+import 'package:gc_wizard/tools/coords/logic/ellipsoid.dart';
+import 'package:gc_wizard/tools/coords/utils/default_getter.dart';
 import 'package:prefs/prefs.dart';
 
 class CoordinatesSettings extends StatefulWidget {
@@ -52,7 +52,7 @@ class CoordinatesSettingsState extends State<CoordinatesSettings> {
               ),
               flex: 1),
           Expanded(
-              child: GCWCoordsSignDropDownButton(
+              child: GCWSignDropDown(
                   itemList: [i18n(context, 'coords_common_north'), i18n(context, 'coords_common_south')],
                   value: _currentDefaultHemisphereLatitude == HemisphereLatitude.North.toString() ? 1 : -1,
                   onChanged: (value) {
@@ -71,7 +71,7 @@ class CoordinatesSettingsState extends State<CoordinatesSettings> {
               ),
               flex: 1),
           Expanded(
-              child: GCWCoordsSignDropDownButton(
+              child: GCWSignDropDown(
                   itemList: [i18n(context, 'coords_common_east'), i18n(context, 'coords_common_west')],
                   value: _currentDefaultHemisphereLongitude == HemisphereLongitude.East.toString() ? 1 : -1,
                   onChanged: (value) {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/games/scrabble/logic/scrabble_sets.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/common_widgets/gcw_columned_multiline_output/gcw_columned_multiline_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_default_output/gcw_default_output.dart';
 
 class ScrabbleOverview extends StatefulWidget {
   @override
@@ -17,7 +17,7 @@ class ScrabbleOverviewState extends State<ScrabbleOverview> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWDropDownButton(
+        GCWDropDown(
           value: _currentScrabbleVersion,
           onChanged: (value) {
             setState(() {

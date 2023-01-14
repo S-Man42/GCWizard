@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/widget/gcw_unit_dropdown.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/widget/gcw_unit_input.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/common_widgets/units/logic/unit_category.dart';
-import 'package:gc_wizard/common_widgets/units/logic/velocity.dart' as logic;
 import 'package:gc_wizard/tools/science_and_technology/beaufort/logic/beaufort.dart';
-import 'package:gc_wizard/common_widgets/gcw_default_output/gcw_default_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_integer_spinner/gcw_integer_spinner.dart';
-import 'package:gc_wizard/common_widgets/gcw_text_divider/gcw_text_divider.dart';
-import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/common_widgets/units/gcw_unit_dropdownbutton/gcw_unit_dropdownbutton.dart';
-import 'package:gc_wizard/common_widgets/units/gcw_unit_input/gcw_unit_input.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit_category.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/velocity.dart' as logic;
 import 'package:intl/intl.dart';
 
 class Beaufort extends StatefulWidget {
@@ -61,7 +61,7 @@ class BeaufortState extends State<Beaufort> {
                     },
                   ),
                   GCWTextDivider(text: i18n(context, 'common_outputunit')),
-                  GCWUnitDropDownButton(
+                  GCWUnitDropDown(
                     unitCategory: UNITCATEGORY_VELOCITY,
                     onChanged: (value) {
                       setState(() {

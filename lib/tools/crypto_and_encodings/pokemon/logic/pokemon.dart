@@ -1,7 +1,7 @@
 // https://www.geocaching.com/geocache/GC975GK_professor-birk
 // Piluffme luflorsasesa Florlusasa manpison sonsaflortu SesamkatuMansamsonsonpi lupi sakla arsaklatusa Regsammansasonsamtu seregflorsakarda lufftulu saflortusa Assaklamonflortululufftuar zuluffson Arsasamflapiflakasatu mosamkarkardasa Reglufftumanda
 
-import 'package:gc_wizard/utils/constants.dart';
+import 'package:gc_wizard/utils/logic_utils/constants.dart';
 
 Map<String, String> _POKEMON = {
 // http://fbcs.bplaced.net/multi_encoder_decoder.html

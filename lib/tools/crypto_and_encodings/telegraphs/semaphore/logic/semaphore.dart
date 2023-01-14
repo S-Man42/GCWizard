@@ -1,5 +1,5 @@
-import 'package:gc_wizard/utils/common_utils.dart';
-import 'package:gc_wizard/utils/constants.dart';
+import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
+import 'package:gc_wizard/utils/logic_utils/constants.dart';
 
 final Map<String, List<String>> CODEBOOK_SEMAPHORE = {
   'A': ['l4', 'r5'],

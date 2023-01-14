@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/gcw_crosstotal_output/gcw_crosstotal_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_integer_spinner/gcw_integer_spinner.dart';
+import 'package:gc_wizard/tools/science_and_technology/cross_sums/widget/crosstotal_output.dart';
+import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 
 class CrossSum extends StatefulWidget {
   @override
@@ -27,7 +27,7 @@ class CrossSumState extends State<CrossSum> {
             });
           },
         ),
-        GCWCrosstotalOutput(text: _currentValue.toString(), values: [_currentValue], suppressSums: true)
+        CrosstotalOutput(text: _currentValue.toString(), values: [_currentValue], suppressSums: true)
       ],
     );
   }

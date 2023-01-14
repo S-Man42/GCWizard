@@ -3,12 +3,12 @@ import 'dart:math';
 
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/tools/coords/antipodes/logic/antipodes.dart';
-import 'package:gc_wizard/tools/coords/logic/distance_bearing.dart';
-import 'package:gc_wizard/tools/coords/data/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/coords/external_libs/net.sf/logic/geodesic.dart';
 import 'package:gc_wizard/tools/coords/external_libs/net.sf/logic/geodesic_data.dart';
-import 'package:gc_wizard/tools/coords/vincenty/logic/distance_bearing_vincenty.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
+import 'package:gc_wizard/tools/coords/logic/distance_bearing.dart';
+import 'package:gc_wizard/tools/coords/logic/ellipsoid.dart';
+import 'package:gc_wizard/tools/coords/waypoint_projection/logic/vincenty/distance_bearing_vincenty.dart';
+import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
 import 'package:latlong2/latlong.dart';
 
 import 'utils.dart';

@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_divider.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/gcw_text/gcw_text.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
+import 'package:gc_wizard/common_widgets/gcw_delete_alertdialog/gcw_delete_alertdialog.dart';
+import 'package:gc_wizard/common_widgets/gcw_expandable/gcw_expandable.dart';
+import 'package:gc_wizard/common_widgets/gcw_popup_menu/gcw_popup_menu.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/gcw_tool/gcw_tool.dart';
+import 'package:gc_wizard/configuration/settings/preferences.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/tools/coords/parser/logic/latlon.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
-import 'package:gc_wizard/tools/formula_solver/logic/formula_parser.dart';
 import 'package:gc_wizard/persistence/formula_solver/json_provider.dart';
 import 'package:gc_wizard/persistence/formula_solver/model.dart';
 import 'package:gc_wizard/persistence/variable_coordinate/json_provider.dart' as var_coords_provider;
@@ -10,27 +18,18 @@ import 'package:gc_wizard/persistence/variable_coordinate/model.dart' as var_coo
 import 'package:gc_wizard/theme/fixed_colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
-import 'package:gc_wizard/utils/settings/preferences.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_button/gcw_button.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_divider/gcw_divider.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_iconbutton/gcw_iconbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_text/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_textfield/gcw_textfield.dart';
-import 'package:gc_wizard/common_widgets/gcw_delete_alertdialog/gcw_delete_alertdialog.dart';
-import 'package:gc_wizard/common_widgets/gcw_expandable/gcw_expandable.dart';
-import 'package:gc_wizard/common_widgets/gcw_popup_menu/gcw_popup_menu.dart';
-import 'package:gc_wizard/common_widgets/gcw_text_divider/gcw_text_divider.dart';
-import 'package:gc_wizard/common_widgets/gcw_tool/gcw_tool.dart';
+import 'package:gc_wizard/tools/coords/coordinate_format_parser/logic/latlon.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/map_view/widget/gcw_mapview.dart';
 import 'package:gc_wizard/tools/coords/variable_coordinate/variable_coordinate/widget/variable_coordinate.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
 import 'package:gc_wizard/tools/formula_solver/logic/formula_painter.dart';
+import 'package:gc_wizard/tools/formula_solver/logic/formula_parser.dart';
 import 'package:gc_wizard/tools/formula_solver/widget/formula_solver_values.dart';
+import 'package:gc_wizard/tools/formula_solver/widget/gcw_formula_replace_dialog.dart';
 import 'package:gc_wizard/tools/utils/common_widget_utils/widget/common_widget_utils.dart';
 import 'package:gc_wizard/tools/utils/no_animation_material_page_route/widget/no_animation_material_page_route.dart';
 import 'package:prefs/prefs.dart';
-
-import 'package:gc_wizard/tools/formula_solver/widget/gcw_formula_replace_dialog.dart';
 
 class FormulaSolverFormulas extends StatefulWidget {
   final FormulaGroup group;

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/gcw_text/gcw_text.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_integer_list_textfield.dart';
+import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/tools/science_and_technology/logic/periodic_table.dart';
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/utils/constants.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_text/widget/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_textfield/widget/gcw_textfield.dart';
-import 'package:gc_wizard/common_widgets/gcw_default_output/widget/gcw_default_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_integer_list_textfield/widget/gcw_integer_list_textfield.dart';
-import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/widget/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/tools/science_and_technology/periodic_table/logic/periodic_table.dart';
+import 'package:gc_wizard/utils/logic_utils/constants.dart';
 
 class AtomicNumbersToText extends StatefulWidget {
   @override

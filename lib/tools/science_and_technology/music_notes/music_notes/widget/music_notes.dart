@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/segmentdisplay_output.dart';
+import 'package:gc_wizard/common_widgets/gcw_toolbar/gcw_toolbar.dart';
+import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/tools/science_and_technology/logic/music_notes.dart';
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/utils/constants.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/widget/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_iconbutton/widget/gcw_iconbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_textfield/widget/gcw_textfield.dart';
-import 'package:gc_wizard/common_widgets/gcw_default_output/widget/gcw_default_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_segmentdisplay_output/widget/gcw_segmentdisplay_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_toolbar/widget/gcw_toolbar.dart';
-import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/widget/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/widgets/registry.dart';
+import 'package:gc_wizard/tools/science_and_technology/music_notes/logic/music_notes.dart';
 import 'package:gc_wizard/tools/science_and_technology/music_notes/music_notes_segment_display/widget/music_notes_segment_display.dart';
+import 'package:gc_wizard/utils/logic_utils/constants.dart';
+import 'package:gc_wizard/widgets/registry.dart';
 
 class MusicNotes extends StatefulWidget {
   @override
@@ -43,7 +43,7 @@ class MusicNotesState extends State<MusicNotes> {
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
-      GCWDropDownButton(
+      GCWDropDown(
         value: _currentCode,
         onChanged: (value) {
           setState(() {
@@ -183,7 +183,7 @@ class MusicNotesState extends State<MusicNotes> {
   }
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
-    return GCWSegmentDisplayOutput(
+    return SegmentDisplayOutput(
         segmentFunction: (displayedSegments, readOnly) {
           displayedSegments = filterVisibleHelpLines(displayedSegments);
           return NotesSegmentDisplay(segments: displayedSegments, readOnly: readOnly);

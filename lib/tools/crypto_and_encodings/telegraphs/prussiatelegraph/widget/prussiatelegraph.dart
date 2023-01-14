@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/telegraphs/logic/prussian_telegraph.dart';
-import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_iconbutton/gcw_iconbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_output_text/gcw_output_text.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_textfield/gcw_textfield.dart';
-import 'package:gc_wizard/common_widgets/gcw_output/gcw_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_segmentdisplay_output/gcw_segmentdisplay_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_text_divider/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/segmentdisplay_output.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_toolbar/gcw_toolbar.dart';
-import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/telegraphs/logic/prussian_telegraph.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/telegraphs/prussiatelegraph_segment_display/widget/prussiatelegraph_segment_display.dart';
 
 class PrussiaTelegraph extends StatefulWidget {
@@ -284,7 +284,7 @@ class PrussiaTelegraphState extends State<PrussiaTelegraph> {
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
     segments = _buildShutters(segments);
-    return GCWSegmentDisplayOutput(
+    return SegmentDisplayOutput(
         segmentFunction: (displayedSegments, readOnly) {
           return PrussiaTelegraphSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
         },

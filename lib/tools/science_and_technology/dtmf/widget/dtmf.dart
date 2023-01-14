@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/tools/science_and_technology/dtmf/logic/dtmf.dart';
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_iconbutton/gcw_iconbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_output_text/gcw_output_text.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_textfield/gcw_textfield.dart';
-import 'package:gc_wizard/common_widgets/gcw_text_divider/gcw_text_divider.dart';
-import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/tools/science_and_technology/dtmf/logic/dtmf.dart';
 import 'package:gc_wizard/tools/utils/common_widget_utils/widget/common_widget_utils.dart';
 import 'package:gc_wizard/tools/utils/textinputformatter/wrapper_for_masktextinputformatter/widget/wrapper_for_masktextinputformatter.dart';
 
@@ -73,7 +73,7 @@ class DTMFState extends State<DTMF> {
                 children: [
                   Expanded(
                       child: Container(
-                    child: GCWDropDownButton(
+                    child: GCWDropDown(
                       value: _currentDecryptLowFrequency,
                       items: DTMF_FREQUENCIES_LOW.map((frequency) {
                         return GCWDropDownMenuItem(
@@ -91,7 +91,7 @@ class DTMFState extends State<DTMF> {
                   )),
                   Expanded(
                       child: Container(
-                    child: GCWDropDownButton(
+                    child: GCWDropDown(
                       value: _currentDecryptHighFrequency,
                       items: DTMF_FREQUENCIES_HIGH.map((frequency) {
                         return GCWDropDownMenuItem(

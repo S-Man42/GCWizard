@@ -2,9 +2,9 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
-import 'package:gc_wizard/utils/constants.dart';
-import 'package:gc_wizard/common_widgets/gcw_tool/widget/gcw_tool.dart';
+import 'package:gc_wizard/common_widgets/gcw_tool/gcw_tool.dart';
+import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
+import 'package:gc_wizard/utils/logic_utils/constants.dart';
 import 'package:gc_wizard/widgets/registry.dart';
 
 Map<String, String> _COMMON_SEARCHSTRINGS;

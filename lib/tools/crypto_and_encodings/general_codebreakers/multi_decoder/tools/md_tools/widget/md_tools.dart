@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/wasd/logic/wasd.dart';
-import 'package:gc_wizard/tools/games/scrabble/logic/scrabble_sets.dart';
-import 'package:gc_wizard/tools/science_and_technology/logic/keyboard.dart';
-import 'package:gc_wizard/tools/science_and_technology/vanity/logic/phone_models.dart';
 import 'package:gc_wizard/persistence/multi_decoder/json_provider.dart';
 import 'package:gc_wizard/persistence/multi_decoder/model.dart';
-import 'package:gc_wizard/utils/constants.dart';
+import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/gcw_multi_decoder_tool/widget/gcw_multi_decoder_tool.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_alphabet_values/widget/md_tool_alphabet_values.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_ascii/widget/md_tool_ascii.dart';
@@ -52,6 +47,11 @@ import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_vanity_multitap/widget/md_tool_vanity_multitap.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_vigenere/widget/md_tool_vigenere.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_wasd/widget/md_tool_wasd.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/wasd/logic/wasd.dart';
+import 'package:gc_wizard/tools/games/scrabble/logic/scrabble_sets.dart';
+import 'package:gc_wizard/tools/science_and_technology/keyboard/logic/keyboard.dart';
+import 'package:gc_wizard/tools/science_and_technology/vanity/logic/phone_models.dart';
+import 'package:gc_wizard/utils/logic_utils/constants.dart';
 
 final List<String> mdtToolsRegistry = [
   MDT_INTERNALNAMES_ROTATION,

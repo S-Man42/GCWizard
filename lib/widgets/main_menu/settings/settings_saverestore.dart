@@ -2,25 +2,24 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
+import 'package:gc_wizard/common_widgets/gcw_dialog/gcw_dialog.dart';
+import 'package:gc_wizard/common_widgets/gcw_text/gcw_text.dart';
+import 'package:gc_wizard/common_widgets/gcw_toast/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_openfile/gcw_openfile.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
+import 'package:gc_wizard/configuration/settings/default_settings.dart';
+import 'package:gc_wizard/configuration/settings/preferences.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_button/widget/gcw_button.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_text/widget/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dialog/widget/gcw_dialog.dart';
-import 'package:gc_wizard/common_widgets/gcw_openfile/widget/gcw_openfile.dart';
-import 'package:gc_wizard/common_widgets/gcw_text_divider/widget/gcw_text_divider.dart';
-import 'package:gc_wizard/widgets/main_menu/settings/preferences_utils.dart';
+import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/tools/utils/app_builder/widget/app_builder.dart';
+import 'package:gc_wizard/tools/utils/common_widget_utils/widget/common_widget_utils.dart';
 import 'package:gc_wizard/tools/utils/file_utils/widget/file_utils.dart';
 import 'package:gc_wizard/tools/utils/gcw_file/widget/gcw_file.dart';
+import 'package:gc_wizard/widgets/main_menu/settings/preferences_utils.dart';
 import 'package:intl/intl.dart';
 import 'package:prefs/prefs.dart';
-import 'package:gc_wizard/utils/settings/preferences.dart';
-import 'package:gc_wizard/theme/theme_colors.dart';
-import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/tools/utils/common_widget_utils/widget/common_widget_utils.dart';
-import 'package:gc_wizard/utils/settings/default_settings.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_toast/widget/gcw_toast.dart';
 
 class SaveRestoreSettings extends StatefulWidget {
   @override

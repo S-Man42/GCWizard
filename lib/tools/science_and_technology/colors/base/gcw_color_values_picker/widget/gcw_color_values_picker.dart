@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/base/gcw_color_cmy/widget/gcw_color_cmy.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/base/gcw_color_cmyk/widget/gcw_color_cmyk.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/base/gcw_color_hex/widget/gcw_color_hex.dart';
@@ -13,6 +12,7 @@ import 'package:gc_wizard/tools/science_and_technology/colors/base/gcw_color_ycb
 import 'package:gc_wizard/tools/science_and_technology/colors/base/gcw_color_yiq/widget/gcw_color_yiq.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/base/gcw_color_ypbpr/widget/gcw_color_ypbpr.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/base/gcw_color_yuv/widget/gcw_color_yuv.dart';
+import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors.dart';
 
 class GCWColorValuesPicker extends StatefulWidget {
   final Function onChanged;
@@ -173,7 +173,7 @@ class GCWColorValuesPickerState extends State<GCWColorValuesPicker> {
 
     Column _widget = Column(
       children: <Widget>[
-        GCWDropDownButton(
+        GCWDropDown(
           value: _currentColorSpace,
           onChanged: (newValue) {
             setState(() {

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/common_widgets/parser/logic/variable_string_expander.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/hashes/hash_breaker/logic/hash_breaker.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/hashes/hashes/logic/hashes.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dialog/gcw_dialog.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_textfield/gcw_textfield.dart';
+import 'package:gc_wizard/common_widgets/gcw_dialog/gcw_dialog.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/common_widgets/gcw_async_executer/gcw_async_executer.dart';
-import 'package:gc_wizard/common_widgets/gcw_default_output/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/gcw_key_value_editor/gcw_key_value_editor.dart';
-import 'package:gc_wizard/common_widgets/gcw_submit_button/gcw_submit_button.dart';
-import 'package:gc_wizard/common_widgets/gcw_text_divider/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/hashes/hash_breaker/logic/hash_breaker.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/hashes/logic/hashes.dart';
 import 'package:gc_wizard/tools/utils/textinputformatter/variablestring_textinputformatter/widget/variablestring_textinputformatter.dart';
+import 'package:gc_wizard/utils/logic_utils/variable_string_expander.dart';
 
 final _ALERT_COMBINATIONS = 100000;
 
@@ -87,7 +87,7 @@ class _HashBreakerState extends State<HashBreaker> {
         GCWTextDivider(
           text: i18n(context, 'hashes_hashbreaker_searchconfiguration'),
         ),
-        GCWDropDownButton(
+        GCWDropDown(
           value: _currentHashFunction,
           onChanged: (newValue) {
             setState(() {

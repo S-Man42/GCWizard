@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/numeral_words/logic/numeral_words.dart';
 import 'package:gc_wizard/tools/science_and_technology/vanity/logic/vanity_words.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/widget/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_output_text/widget/gcw_output_text.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_textfield/widget/gcw_textfield.dart';
-import 'package:gc_wizard/common_widgets/gcw_columned_multiline_output/widget/gcw_columned_multiline_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_output/widget/gcw_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_text_divider/widget/gcw_text_divider.dart';
+import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
 
 class VanityWordsTextSearch extends StatefulWidget {
   @override
@@ -42,7 +42,7 @@ class VanityWordsTextSearchState extends State<VanityWordsTextSearch> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWDropDownButton(
+        GCWDropDown(
           value: _currentLanguage,
           onChanged: (value) {
             setState(() {

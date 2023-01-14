@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/gcw_tool/gcw_tool.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/science_and_technology/mathematical_constants/logic/mathematical_constants.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_button/widget/gcw_button.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/widget/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/common_widgets/gcw_columned_multiline_output/widget/gcw_columned_multiline_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_default_output/widget/gcw_default_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_tool/widget/gcw_tool.dart';
+import 'package:gc_wizard/tools/utils/common_widget_utils/widget/common_widget_utils.dart';
+import 'package:gc_wizard/tools/utils/no_animation_material_page_route/widget/no_animation_material_page_route.dart';
 import 'package:gc_wizard/widgets/selector_lists/e_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/phi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/pi_selection.dart';
@@ -13,8 +15,6 @@ import 'package:gc_wizard/widgets/selector_lists/silverratio_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/sqrt2_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/sqrt3_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/sqrt5_selection.dart';
-import 'package:gc_wizard/tools/utils/common_widget_utils/widget/common_widget_utils.dart';
-import 'package:gc_wizard/tools/utils/no_animation_material_page_route/widget/no_animation_material_page_route.dart';
 
 class MathematicalConstants extends StatefulWidget {
   @override
@@ -35,7 +35,7 @@ class MathematicalConstantsState extends State<MathematicalConstants> {
 
     return Column(
       children: <Widget>[
-        GCWDropDownButton(
+        GCWDropDown(
           value: _currentConstant,
           onChanged: (value) {
             setState(() {

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/tools/science_and_technology/logic/keyboard.dart';
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/widget/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_output_text/widget/gcw_output_text.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_textfield/widget/gcw_textfield.dart';
-import 'package:gc_wizard/common_widgets/gcw_default_output/widget/gcw_default_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_text_divider/widget/gcw_text_divider.dart';
+import 'package:gc_wizard/tools/science_and_technology/keyboard/logic/keyboard.dart';
 
 class KeyboardLayout extends StatefulWidget {
   @override
@@ -52,7 +52,7 @@ class KeyboardLayoutState extends State<KeyboardLayout> {
                 child: Column(
                   children: <Widget>[
                     GCWTextDivider(text: i18n(context, 'keyboard_from')),
-                    GCWDropDownButton(
+                    GCWDropDown(
                       value: _currentKeyboardFrom,
                       onChanged: (value) {
                         setState(() {
@@ -74,7 +74,7 @@ class KeyboardLayoutState extends State<KeyboardLayout> {
                 child: Column(
                   children: <Widget>[
                     GCWTextDivider(text: i18n(context, 'keyboard_to')),
-                    GCWDropDownButton(
+                    GCWDropDown(
                       value: _currentKeyboardTo,
                       onChanged: (value) {
                         setState(() {

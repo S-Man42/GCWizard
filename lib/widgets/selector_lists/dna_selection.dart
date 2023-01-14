@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/gcw_tool/widget/gcw_tool.dart';
-import 'package:gc_wizard/common_widgets/gcw_toollist/widget/gcw_toollist.dart';
-import 'package:gc_wizard/widgets/registry.dart';
-import 'package:gc_wizard/widgets/selector_lists/gcw_selection.dart';
+import 'package:gc_wizard/common_widgets/gcw_tool/gcw_tool.dart';
+import 'package:gc_wizard/common_widgets/gcw_toollist/gcw_toollist.dart';
 import 'package:gc_wizard/tools/science_and_technology/dna/dna_aminoacids/widget/dna_aminoacids.dart';
 import 'package:gc_wizard/tools/science_and_technology/dna/dna_aminoacids_table/widget/dna_aminoacids_table.dart';
 import 'package:gc_wizard/tools/science_and_technology/dna/dna_nucleicacidsequence/widget/dna_nucleicacidsequence.dart';
 import 'package:gc_wizard/tools/utils/common_widget_utils/widget/common_widget_utils.dart';
+import 'package:gc_wizard/widgets/registry.dart';
+import 'package:gc_wizard/widgets/selector_lists/gcw_selection.dart';
 
 class DNASelection extends GCWSelection {
   @override

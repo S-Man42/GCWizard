@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/tools/science_and_technology/logic/resistor.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/widget/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/common_widgets/gcw_default_output/widget/gcw_default_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_integer_spinner/widget/gcw_integer_spinner.dart';
+import 'package:gc_wizard/tools/science_and_technology/resistor/logic/resistor.dart';
 import 'package:gc_wizard/tools/science_and_technology/resistor/resistor_formatter/widget/resistor_formatter.dart';
 import 'package:gc_wizard/tools/utils/common_widget_utils/widget/common_widget_utils.dart';
 
@@ -44,7 +44,7 @@ class ResistorEIA96State extends State<ResistorEIA96> {
               },
             )),
             Expanded(
-                child: GCWDropDownButton(
+                child: GCWDropDown(
               value: _currentMultiplicator,
               items: {
                 'Y': _buildSuperscriptedRichText('Y = 10', '-2', ' = 0.01'),

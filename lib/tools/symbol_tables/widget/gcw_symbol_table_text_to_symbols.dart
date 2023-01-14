@@ -4,21 +4,21 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
+import 'package:gc_wizard/common_widgets/gcw_exported_file_dialog/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_button/widget/gcw_button.dart';
-import 'package:gc_wizard/common_widgets/gcw_exported_file_dialog/widget/gcw_exported_file_dialog.dart';
-import 'package:gc_wizard/tools/symbol_tables/encryption_painters/symbol_table_encryption_colorhoney/widget/symbol_table_encryption_colorhoney.dart';
-import 'package:gc_wizard/tools/symbol_tables/encryption_painters/symbol_table_encryption_colortokki/widget/symbol_table_encryption_colortokki.dart';
-import 'package:gc_wizard/tools/symbol_tables/encryption_painters/symbol_table_encryption_default/widget/symbol_table_encryption_default.dart';
-import 'package:gc_wizard/tools/symbol_tables/encryption_painters/symbol_table_encryption_paint_data/widget/symbol_table_encryption_paint_data.dart';
-import 'package:gc_wizard/tools/symbol_tables/encryption_painters/symbol_table_encryption_puzzlecode/widget/symbol_table_encryption_puzzlecode.dart';
-import 'package:gc_wizard/tools/symbol_tables/encryption_painters/symbol_table_encryption_sizes/widget/symbol_table_encryption_sizes.dart';
-import 'package:gc_wizard/tools/symbol_tables/encryption_painters/symbol_table_encryption_stipplecode/widget/symbol_table_encryption_stipplecode.dart';
-import 'package:gc_wizard/tools/symbol_tables/encryption_painters/symbol_table_encryption_tenctonese/widget/symbol_table_encryption_tenctonese.dart';
-import 'package:gc_wizard/tools/symbol_tables/symbol_table_data/widget/symbol_table_data.dart';
+import 'package:gc_wizard/tools/symbol_tables/logic/symbol_table_data.dart';
+import 'package:gc_wizard/tools/symbol_tables/special_encryption_painters/symbol_table_encryption_colorhoney/widget/symbol_table_encryption_colorhoney.dart';
+import 'package:gc_wizard/tools/symbol_tables/special_encryption_painters/symbol_table_encryption_colortokki/widget/symbol_table_encryption_colortokki.dart';
+import 'package:gc_wizard/tools/symbol_tables/special_encryption_painters/symbol_table_encryption_default/widget/symbol_table_encryption_default.dart';
+import 'package:gc_wizard/tools/symbol_tables/special_encryption_painters/symbol_table_encryption_paint_data/widget/symbol_table_encryption_paint_data.dart';
+import 'package:gc_wizard/tools/symbol_tables/special_encryption_painters/symbol_table_encryption_puzzlecode/widget/symbol_table_encryption_puzzlecode.dart';
+import 'package:gc_wizard/tools/symbol_tables/special_encryption_painters/symbol_table_encryption_sizes/widget/symbol_table_encryption_sizes.dart';
+import 'package:gc_wizard/tools/symbol_tables/special_encryption_painters/symbol_table_encryption_stipplecode/widget/symbol_table_encryption_stipplecode.dart';
+import 'package:gc_wizard/tools/symbol_tables/special_encryption_painters/symbol_table_encryption_tenctonese/widget/symbol_table_encryption_tenctonese.dart';
 import 'package:gc_wizard/tools/utils/file_utils/widget/file_utils.dart';
+import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
 import 'package:intl/intl.dart';
 
 class GCWSymbolTableTextToSymbols extends StatefulWidget {

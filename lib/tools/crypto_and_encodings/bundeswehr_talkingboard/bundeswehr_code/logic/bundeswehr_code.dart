@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:gc_wizard/tools/crypto_and_encodings/bundeswehr_talkingboard/bundeswehr_auth/logic/bundeswehr_auth.dart';
-import 'package:gc_wizard/utils/constants.dart';
+import 'package:gc_wizard/utils/logic_utils/constants.dart';
 
 const BUNDESWEHR_TALKINGBOARD_CODE_RESPONSE_OK = 'bundeswehr_talkingboard_auth_response_ok';
 

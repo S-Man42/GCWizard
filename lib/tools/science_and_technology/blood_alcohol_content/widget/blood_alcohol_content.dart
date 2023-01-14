@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/gcw_text/gcw_text.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/spinners/gcw_double_spinner.dart';
+import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/widget/gcw_unit_input.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/common_widgets/units/logic/length.dart';
-import 'package:gc_wizard/common_widgets/units/logic/mass.dart';
-import 'package:gc_wizard/common_widgets/units/logic/unit_category.dart';
-import 'package:gc_wizard/common_widgets/units/logic/volume.dart';
-import 'package:gc_wizard/tools/science_and_technology/logic/alcohol.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_text/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/gcw_columned_multiline_output/gcw_columned_multiline_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_default_output/gcw_default_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_double_spinner/gcw_double_spinner.dart';
-import 'package:gc_wizard/common_widgets/gcw_integer_spinner/gcw_integer_spinner.dart';
-import 'package:gc_wizard/common_widgets/gcw_text_divider/gcw_text_divider.dart';
-import 'package:gc_wizard/common_widgets/units/gcw_unit_input/gcw_unit_input.dart';
+import 'package:gc_wizard/tools/science_and_technology/alcohol_mass/logic/alcohol_mass.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/length.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/mass.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit_category.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/volume.dart';
 import 'package:intl/intl.dart';
 
 class BloodAlcoholContent extends StatefulWidget {
@@ -73,7 +73,7 @@ class BloodAlcoholContentState extends State<BloodAlcoholContent> {
           ],
         ),
         GCWTextDivider(text: i18n(context, 'bloodalcoholcontent_person')),
-        GCWDropDownButton(
+        GCWDropDown(
           title: i18n(context, 'bloodalcoholcontent_person_gender'),
           value: _currentGender,
           items: BloodAlcoholGender.values.map((mode) {

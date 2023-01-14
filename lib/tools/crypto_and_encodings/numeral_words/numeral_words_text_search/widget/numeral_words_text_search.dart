@@ -1,19 +1,19 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_code_textfield.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/gcw_expandable/gcw_expandable.dart';
+import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/i18n/supported_locales.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/numeral_words/logic/numeral_words.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_output_text/gcw_output_text.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_textfield/gcw_textfield.dart';
-import 'package:gc_wizard/common_widgets/gcw_code_textfield/gcw_code_textfield.dart';
-import 'package:gc_wizard/common_widgets/gcw_columned_multiline_output/gcw_columned_multiline_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_default_output/gcw_default_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_expandable/gcw_expandable.dart';
-import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/tools/utils/app_builder/widget/app_builder.dart';
+import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
 
 class NumeralWordsTextSearch extends StatefulWidget {
   @override
@@ -61,7 +61,7 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
 
     return Column(
       children: <Widget>[
-        GCWDropDownButton(
+        GCWDropDown(
           value: _currentLanguage,
           onChanged: (value) {
             setState(() {

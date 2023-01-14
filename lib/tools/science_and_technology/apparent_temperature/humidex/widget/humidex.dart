@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_divider.dart';
+import 'package:gc_wizard/common_widgets/spinners/gcw_double_spinner.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_multiple_output.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
+import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/common_widgets/units/logic/temperature.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/humidex/logic/humidex.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_divider/gcw_divider.dart';
-import 'package:gc_wizard/common_widgets/gcw_double_spinner/gcw_double_spinner.dart';
-import 'package:gc_wizard/common_widgets/gcw_multiple_output/gcw_multiple_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_output/gcw_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/temperature.dart';
 
 class Humidex extends StatefulWidget {
   @override

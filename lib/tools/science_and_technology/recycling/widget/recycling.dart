@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/science_and_technology/recycling/logic/recycling.dart';
-import 'package:gc_wizard/common_widgets/gcw_columned_multiline_output/widget/gcw_columned_multiline_output.dart';
 
 class Recycling extends StatefulWidget {
   @override

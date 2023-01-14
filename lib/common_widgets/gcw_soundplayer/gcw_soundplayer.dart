@@ -5,9 +5,9 @@ import 'dart:math';
 import 'package:audioplayers/audioplayers.dart'; // https://pub.dev/packages/audioplayers
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/gcw_text/gcw_text.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_iconbutton/gcw_iconbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_text/gcw_text.dart';
 import 'package:gc_wizard/tools/utils/gcw_file/widget/gcw_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';

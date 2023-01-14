@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
+import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/tools/science_and_technology/logic/resistor.dart';
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/common_widgets/gcw_columned_multiline_output/widget/gcw_columned_multiline_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_integer_spinner/widget/gcw_integer_spinner.dart';
-import 'package:gc_wizard/common_widgets/gcw_text_divider/widget/gcw_text_divider.dart';
-import 'package:gc_wizard/tools/science_and_technology/resistor/gcw_resistor_band_dropdownbutton/widget/gcw_resistor_band_dropdownbutton.dart';
+import 'package:gc_wizard/tools/science_and_technology/resistor/logic/resistor.dart';
 import 'package:gc_wizard/tools/science_and_technology/resistor/resistor_formatter/widget/resistor_formatter.dart';
+import 'package:gc_wizard/tools/science_and_technology/resistor/resistor_colorcodecalculator/widget/resistor_band_dropdown.dart';
 
 class ResistorColorCodeCalculator extends StatefulWidget {
   @override
@@ -28,16 +28,16 @@ class ResistorColorCodeCalculatorState extends State<ResistorColorCodeCalculator
   var _currentNumberBands = 3;
   var _changed = false;
 
-  var _resistorBandDropDownButton_fourBands_first;
-  var _resistorBandDropDownButton_fourBands_second;
-  var _resistorBandDropDownButton_fourBands_multiplier;
-  var _resistorBandDropDownButton_fourBands_tolerance;
-  var _resistorBandDropDownButton_sixBands_first;
-  var _resistorBandDropDownButton_sixBands_second;
-  var _resistorBandDropDownButton_sixBands_third;
-  var _resistorBandDropDownButton_sixBands_multiplier;
-  var _resistorBandDropDownButton_sixBands_tolerance;
-  var _resistorBandDropDownButton_sixBands_temperatureCoefficient;
+  var _resistorBandDropDown_fourBands_first;
+  var _resistorBandDropDown_fourBands_second;
+  var _resistorBandDropDown_fourBands_multiplier;
+  var _resistorBandDropDown_fourBands_tolerance;
+  var _resistorBandDropDown_sixBands_first;
+  var _resistorBandDropDown_sixBands_second;
+  var _resistorBandDropDown_sixBands_third;
+  var _resistorBandDropDown_sixBands_multiplier;
+  var _resistorBandDropDown_sixBands_tolerance;
+  var _resistorBandDropDown_sixBands_temperatureCoefficient;
 
   ResistorBandColor _currentResistorColor_fourBands_first = defaultResistorBandColor;
   ResistorBandColor _currentResistorColor_fourBands_second = defaultResistorBandColor;
@@ -77,23 +77,23 @@ class ResistorColorCodeCalculatorState extends State<ResistorColorCodeCalculator
           ),
           padding: EdgeInsets.only(bottom: 10.0),
         ),
-        [3, 4].contains(_currentNumberBands) ? _resistorBandDropDownButton_fourBands_first : Container(),
-        [3, 4].contains(_currentNumberBands) ? _resistorBandDropDownButton_fourBands_second : Container(),
-        [3, 4].contains(_currentNumberBands) ? _resistorBandDropDownButton_fourBands_multiplier : Container(),
-        [4].contains(_currentNumberBands) ? _resistorBandDropDownButton_fourBands_tolerance : Container(),
-        [5, 6].contains(_currentNumberBands) ? _resistorBandDropDownButton_sixBands_first : Container(),
-        [5, 6].contains(_currentNumberBands) ? _resistorBandDropDownButton_sixBands_second : Container(),
-        [5, 6].contains(_currentNumberBands) ? _resistorBandDropDownButton_sixBands_third : Container(),
-        [5, 6].contains(_currentNumberBands) ? _resistorBandDropDownButton_sixBands_multiplier : Container(),
-        [5, 6].contains(_currentNumberBands) ? _resistorBandDropDownButton_sixBands_tolerance : Container(),
-        [6].contains(_currentNumberBands) ? _resistorBandDropDownButton_sixBands_temperatureCoefficient : Container(),
+        [3, 4].contains(_currentNumberBands) ? _resistorBandDropDown_fourBands_first : Container(),
+        [3, 4].contains(_currentNumberBands) ? _resistorBandDropDown_fourBands_second : Container(),
+        [3, 4].contains(_currentNumberBands) ? _resistorBandDropDown_fourBands_multiplier : Container(),
+        [4].contains(_currentNumberBands) ? _resistorBandDropDown_fourBands_tolerance : Container(),
+        [5, 6].contains(_currentNumberBands) ? _resistorBandDropDown_sixBands_first : Container(),
+        [5, 6].contains(_currentNumberBands) ? _resistorBandDropDown_sixBands_second : Container(),
+        [5, 6].contains(_currentNumberBands) ? _resistorBandDropDown_sixBands_third : Container(),
+        [5, 6].contains(_currentNumberBands) ? _resistorBandDropDown_sixBands_multiplier : Container(),
+        [5, 6].contains(_currentNumberBands) ? _resistorBandDropDown_sixBands_tolerance : Container(),
+        [6].contains(_currentNumberBands) ? _resistorBandDropDown_sixBands_temperatureCoefficient : Container(),
         _buildOutput()
       ],
     );
   }
 
   _buildResistors() {
-    _resistorBandDropDownButton_fourBands_first = GCWResistorBandDropDownButton(
+    _resistorBandDropDown_fourBands_first = ResistorBandDropDown(
       color: _currentResistorColor_fourBands_first,
       type: ResistorBandType.FIRST,
       numberBands: 4,
@@ -104,7 +104,7 @@ class ResistorColorCodeCalculatorState extends State<ResistorColorCodeCalculator
       },
     );
 
-    _resistorBandDropDownButton_fourBands_second = GCWResistorBandDropDownButton(
+    _resistorBandDropDown_fourBands_second = ResistorBandDropDown(
       color: _currentResistorColor_fourBands_second,
       type: ResistorBandType.SECOND,
       numberBands: 4,
@@ -115,7 +115,7 @@ class ResistorColorCodeCalculatorState extends State<ResistorColorCodeCalculator
       },
     );
 
-    _resistorBandDropDownButton_fourBands_multiplier = GCWResistorBandDropDownButton(
+    _resistorBandDropDown_fourBands_multiplier = ResistorBandDropDown(
       color: _currentResistorColor_fourBands_multiplier,
       type: ResistorBandType.MULTIPLIER,
       numberBands: 4,
@@ -126,7 +126,7 @@ class ResistorColorCodeCalculatorState extends State<ResistorColorCodeCalculator
       },
     );
 
-    _resistorBandDropDownButton_fourBands_tolerance = GCWResistorBandDropDownButton(
+    _resistorBandDropDown_fourBands_tolerance = ResistorBandDropDown(
       color: _currentResistorColor_fourBands_tolerance,
       type: ResistorBandType.TOLERANCE,
       numberBands: 4,
@@ -137,7 +137,7 @@ class ResistorColorCodeCalculatorState extends State<ResistorColorCodeCalculator
       },
     );
 
-    _resistorBandDropDownButton_sixBands_first = GCWResistorBandDropDownButton(
+    _resistorBandDropDown_sixBands_first = ResistorBandDropDown(
       color: _currentResistorColor_sixBands_first,
       type: ResistorBandType.FIRST,
       numberBands: 6,
@@ -148,7 +148,7 @@ class ResistorColorCodeCalculatorState extends State<ResistorColorCodeCalculator
       },
     );
 
-    _resistorBandDropDownButton_sixBands_second = GCWResistorBandDropDownButton(
+    _resistorBandDropDown_sixBands_second = ResistorBandDropDown(
       color: _currentResistorColor_sixBands_second,
       type: ResistorBandType.SECOND,
       numberBands: 6,
@@ -159,7 +159,7 @@ class ResistorColorCodeCalculatorState extends State<ResistorColorCodeCalculator
       },
     );
 
-    _resistorBandDropDownButton_sixBands_third = GCWResistorBandDropDownButton(
+    _resistorBandDropDown_sixBands_third = ResistorBandDropDown(
       color: _currentResistorColor_sixBands_third,
       type: ResistorBandType.THIRD,
       numberBands: 6,
@@ -170,7 +170,7 @@ class ResistorColorCodeCalculatorState extends State<ResistorColorCodeCalculator
       },
     );
 
-    _resistorBandDropDownButton_sixBands_multiplier = GCWResistorBandDropDownButton(
+    _resistorBandDropDown_sixBands_multiplier = ResistorBandDropDown(
       color: _currentResistorColor_sixBands_multiplier,
       type: ResistorBandType.MULTIPLIER,
       numberBands: 6,
@@ -181,7 +181,7 @@ class ResistorColorCodeCalculatorState extends State<ResistorColorCodeCalculator
       },
     );
 
-    _resistorBandDropDownButton_sixBands_tolerance = GCWResistorBandDropDownButton(
+    _resistorBandDropDown_sixBands_tolerance = ResistorBandDropDown(
       color: _currentResistorColor_sixBands_tolerance,
       type: ResistorBandType.TOLERANCE,
       numberBands: 6,
@@ -192,7 +192,7 @@ class ResistorColorCodeCalculatorState extends State<ResistorColorCodeCalculator
       },
     );
 
-    _resistorBandDropDownButton_sixBands_temperatureCoefficient = GCWResistorBandDropDownButton(
+    _resistorBandDropDown_sixBands_temperatureCoefficient = ResistorBandDropDown(
       color: _currentResistorColor_sixBands_temperatureCoefficient,
       type: ResistorBandType.TEMPERATURE_COEFFICIENT,
       numberBands: 6,

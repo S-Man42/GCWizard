@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:gc_wizard/tools/science_and_technology/logic/numeral_bases.dart';
+import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
 
 Uint8List hexstring2file(String input) {
   if (_isBinary(input))

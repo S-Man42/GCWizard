@@ -1,4 +1,4 @@
-import 'package:gc_wizard/utils/crosstotals.dart';
+import 'package:gc_wizard/utils/logic_utils/crosstotals.dart';
 
 enum CrossSumType { NORMAL, ITERATED }
 

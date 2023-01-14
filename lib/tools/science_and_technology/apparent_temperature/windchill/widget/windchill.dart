@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/spinners/gcw_double_spinner.dart';
+import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/common_widgets/units/logic/temperature.dart';
-import 'package:gc_wizard/common_widgets/units/logic/velocity.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/windchill/logic/windchill.dart';
-import 'package:gc_wizard/common_widgets/gcw_default_output/gcw_default_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_double_spinner/gcw_double_spinner.dart';
-import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/temperature.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/velocity.dart';
 import 'package:intl/intl.dart';
 
 class Windchill extends StatefulWidget {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/playfair/logic/playfair.dart';
-import 'package:gc_wizard/utils/constants.dart';
-import 'package:gc_wizard/common_widgets/gcw_alphabetmodification_dropdownbutton/gcw_alphabetmodification_dropdownbutton.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_alphabetmodification_dropdown.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/gcw_multi_decoder_tool/widget/gcw_multi_decoder_tool.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/gcw_multi_decoder_tool_configuration/widget/gcw_multi_decoder_tool_configuration.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/playfair/logic/playfair.dart';
+import 'package:gc_wizard/utils/logic_utils/constants.dart';
 
 const MDT_INTERNALNAMES_PLAYFAIR = 'multidecoder_tool_playfair_title';
 const MDT_PLAYFAIR_OPTION_MODE = 'multidecoder_tool_playfair_option_mode';
@@ -21,7 +21,7 @@ class MultiDecoderToolPlayfair extends GCWMultiDecoderTool {
             requiresKey: true,
             options: options,
             configurationWidget: GCWMultiDecoderToolConfiguration(widgets: {
-              MDT_PLAYFAIR_OPTION_MODE: GCWAlphabetModificationDropDownButton(
+              MDT_PLAYFAIR_OPTION_MODE: GCWAlphabetModificationDropDown(
                 suppressTitle: true,
                 value: _parseStringToEnum(options[MDT_PLAYFAIR_OPTION_MODE]),
                 allowedModifications: [

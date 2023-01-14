@@ -76,7 +76,7 @@ ThemeData buildTheme() {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(ROUNDED_BORDER_RADIUS)),
           )),
-      canvasColor: colors.inputBackground(), //background of DropDownButton
+      canvasColor: colors.inputBackground(), //background of DropDown
       inputDecorationTheme: base.inputDecorationTheme.copyWith(
         hintStyle: TextStyle(color: colors.textFieldHintText()),
         fillColor: colors.inputBackground(),

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/gcw_tool/widget/gcw_tool.dart';
-import 'package:gc_wizard/common_widgets/gcw_toollist/widget/gcw_toollist.dart';
+import 'package:gc_wizard/common_widgets/gcw_tool/gcw_tool.dart';
+import 'package:gc_wizard/common_widgets/gcw_toollist/gcw_toollist.dart';
+import 'package:gc_wizard/tools/science_and_technology/icecodes/widget/icecodes.dart';
+import 'package:gc_wizard/tools/symbol_tables/widget/symbol_table.dart';
+import 'package:gc_wizard/tools/utils/common_widget_utils/widget/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/selector_lists/gcw_selection.dart';
-import 'package:gc_wizard/tools/science_and_technology/icecodes/widget/icecodes.dart';
-import 'package:gc_wizard/tools/symbol_tables/symbol_table/widget/symbol_table.dart';
-import 'package:gc_wizard/tools/utils/common_widget_utils/widget/common_widget_utils.dart';
 
 class IceCodesSelection extends GCWSelection {
   @override

@@ -1,4 +1,4 @@
-import 'package:gc_wizard/tools/coords/converter/logic/dec.dart';
+import 'package:gc_wizard/tools/coords/format_converter/logic/dec.dart';
 import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
 import 'package:latlong2/latlong.dart';
 

@@ -4,7 +4,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_langua
 import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/logic/kitchen.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/logic/recipe.dart';
 import 'package:gc_wizard/tools/science_and_technology/primes/logic/primes.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
+import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
 
 List<String> _getAuxiliaryRecipe(String name, int value, List<String> ingredientOne, ingredientTwo, String language) {
   List<String> output = <String>[];

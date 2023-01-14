@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/gcw_text/gcw_text.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/spinners/gcw_double_spinner.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/widget/gcw_units.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/common_widgets/units/logic/angle.dart';
-import 'package:gc_wizard/common_widgets/units/logic/area.dart';
-import 'package:gc_wizard/common_widgets/units/logic/density.dart';
-import 'package:gc_wizard/common_widgets/units/logic/energy.dart';
-import 'package:gc_wizard/common_widgets/units/logic/force.dart';
-import 'package:gc_wizard/common_widgets/units/logic/length.dart';
-import 'package:gc_wizard/common_widgets/units/logic/mass.dart';
-import 'package:gc_wizard/common_widgets/units/logic/power.dart';
-import 'package:gc_wizard/common_widgets/units/logic/pressure.dart';
-import 'package:gc_wizard/common_widgets/units/logic/temperature.dart';
-import 'package:gc_wizard/common_widgets/units/logic/time.dart';
-import 'package:gc_wizard/common_widgets/units/logic/typography.dart';
-import 'package:gc_wizard/common_widgets/units/logic/unit.dart';
-import 'package:gc_wizard/common_widgets/units/logic/unit_category.dart';
-import 'package:gc_wizard/common_widgets/units/logic/unit_prefix.dart';
-import 'package:gc_wizard/common_widgets/units/logic/velocity.dart';
-import 'package:gc_wizard/common_widgets/units/logic/volume.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/widget/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_text/widget/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/gcw_default_output/widget/gcw_default_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_double_spinner/widget/gcw_double_spinner.dart';
-import 'package:gc_wizard/common_widgets/gcw_text_divider/widget/gcw_text_divider.dart';
-import 'package:gc_wizard/common_widgets/units/gcw_units/widget/gcw_units.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/angle.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/area.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/density.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/energy.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/force.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/length.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/mass.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/power.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/pressure.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/temperature.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/time.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/typography.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit_category.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit_prefix.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/velocity.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/volume.dart';
 import 'package:intl/intl.dart';
 
 final List<Map<String, dynamic>> _categories = [
@@ -94,7 +94,7 @@ class UnitConverterState extends State<UnitConverter> {
         GCWTextDivider(
           text: i18n(context, 'unitconverter_unit'),
         ),
-        GCWDropDownButton(
+        GCWDropDown(
           value: _currentCategory,
           items: _categories.map((category) {
             return GCWDropDownMenuItem(value: category, child: i18n(context, category['category'].key));

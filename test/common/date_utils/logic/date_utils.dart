@@ -1,5 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/common_widgets/date_utils/logic/date_utils.dart';
+import 'package:gc_wizard/utils/logic_utils/date_utils.dart';
 
 void main() {
   group("DayCalculator.JulianDateToGregorianCalendar:", () {

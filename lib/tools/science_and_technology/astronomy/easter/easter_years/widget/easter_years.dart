@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/tools/science_and_technology/astronomy/logic/easter.dart';
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/common_widgets/gcw_default_output/gcw_default_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_text_divider/gcw_text_divider.dart';
+import 'package:gc_wizard/tools/science_and_technology/astronomy/logic/easter.dart';
 
 class EasterYears extends StatefulWidget {
   @override
@@ -38,7 +38,7 @@ class EasterYearsState extends State<EasterYears> {
           children: [
             Expanded(
                 child: Container(
-              child: GCWDropDownButton(
+              child: GCWDropDown(
                 value: _currentMonth,
                 items: [
                   GCWDropDownMenuItem(
@@ -70,7 +70,7 @@ class EasterYearsState extends State<EasterYears> {
             )),
             Expanded(
               child: Container(
-                child: GCWDropDownButton(
+                child: GCWDropDown(
                   value: _currentDay,
                   items: _currentDayList.map((day) {
                     return GCWDropDownMenuItem(

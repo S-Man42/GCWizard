@@ -7,7 +7,7 @@
 //
 //
 import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/brainfk/logic/brainfk.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
+import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
 
 const HOHOHO_ERROR_INVALID_PROGRAM = 'hohoho_error_syntax_invalidprogram';
 

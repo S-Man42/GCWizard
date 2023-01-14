@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_stateful_dropdown.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/teletypewriter/logic/teletypewriter.dart';
-import 'package:gc_wizard/tools/science_and_technology/logic/numeral_bases.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/common_widgets/gcw_stateful_dropdownbutton/gcw_stateful_dropdownbutton.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/gcw_multi_decoder_tool/widget/gcw_multi_decoder_tool.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/gcw_multi_decoder_tool_configuration/widget/gcw_multi_decoder_tool_configuration.dart';
+import 'package:gc_wizard/tools/science_and_technology/teletypewriter/logic/teletypewriter.dart';
+import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
+import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
 
 const MDT_INTERNALNAMES_CCITT1 = 'multidecoder_tool_ccitt1_title';
 const MDT_CCITT1_OPTION_MODE = 'common_mode';
@@ -33,7 +33,7 @@ class MultiDecoderToolCcitt1 extends GCWMultiDecoderTool {
             },
             options: options,
             configurationWidget: GCWMultiDecoderToolConfiguration(widgets: {
-              MDT_CCITT1_OPTION_MODE: GCWStatefulDropDownButton(
+              MDT_CCITT1_OPTION_MODE: GCWStatefulDropDown(
                 value: options[MDT_CCITT1_OPTION_MODE],
                 onChanged: (newValue) {
                   options[MDT_CCITT1_OPTION_MODE] = newValue;

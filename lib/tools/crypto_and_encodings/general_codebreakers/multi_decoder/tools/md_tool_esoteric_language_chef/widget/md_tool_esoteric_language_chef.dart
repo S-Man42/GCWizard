@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_stateful_dropdown.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/logic/chef_language.dart'
     as chef;
-import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/common_widgets/gcw_stateful_dropdownbutton/gcw_stateful_dropdownbutton.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/widget/chef_language.dart'
     as chefWidget;
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/gcw_multi_decoder_tool/widget/gcw_multi_decoder_tool.dart';
@@ -34,7 +34,7 @@ class MultiDecoderToolEsotericLanguageChef extends GCWMultiDecoderTool {
             },
             options: options,
             configurationWidget: GCWMultiDecoderToolConfiguration(widgets: {
-              MDT_ESOTERIC_LANGUAGE_CHEF_OPTION_MODE: GCWStatefulDropDownButton(
+              MDT_ESOTERIC_LANGUAGE_CHEF_OPTION_MODE: GCWStatefulDropDown(
                 value: options[MDT_ESOTERIC_LANGUAGE_CHEF_OPTION_MODE],
                 onChanged: (newValue) {
                   options[MDT_ESOTERIC_LANGUAGE_CHEF_OPTION_MODE] = newValue;

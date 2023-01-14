@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
+import 'package:gc_wizard/tools/science_and_technology/cross_sums/widget/crosstotal_output.dart';
+import 'package:gc_wizard/tools/science_and_technology/cross_sums/widget/crosstotal_switch.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/tools/games/scrabble/scrabble/logic/scrabble.dart';
 import 'package:gc_wizard/tools/games/scrabble/logic/scrabble_sets.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_textfield/gcw_textfield.dart';
-import 'package:gc_wizard/common_widgets/gcw_crosstotal_output/gcw_crosstotal_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_crosstotal_switch/gcw_crosstotal_switch.dart';
-import 'package:gc_wizard/common_widgets/gcw_default_output/gcw_default_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_twooptions_switch/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/tools/games/scrabble/scrabble/logic/scrabble.dart';
+import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
 
 class Scrabble extends StatefulWidget {
   @override
@@ -51,7 +51,7 @@ class ScrabbleState extends State<Scrabble> {
             });
           },
         ),
-        GCWDropDownButton(
+        GCWDropDown(
           value: _currentScrabbleVersion,
           onChanged: (value) {
             setState(() {
@@ -78,7 +78,7 @@ class ScrabbleState extends State<Scrabble> {
             });
           },
         ),
-        GCWCrosstotalSwitch(
+        CrosstotalSwitch(
           onChanged: (value) {
             setState(() {
               _currentCrosstotalMode = value;
@@ -88,7 +88,7 @@ class ScrabbleState extends State<Scrabble> {
         ),
         GCWDefaultOutput(child: _output),
         _currentCrosstotalMode
-            ? GCWCrosstotalOutput(text: _currentInput, values: List<int>.from(_currentValues))
+            ? CrosstotalOutput(text: _currentInput, values: List<int>.from(_currentValues))
             : Container()
       ],
     );

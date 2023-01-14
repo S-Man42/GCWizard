@@ -3,7 +3,33 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
+import 'package:gc_wizard/common_widgets/gcw_dialog/gcw_dialog.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
+import 'package:gc_wizard/common_widgets/gcw_text/gcw_text.dart';
+import 'package:gc_wizard/common_widgets/gcw_toast/gcw_toast.dart';
+import 'package:gc_wizard/tools/coords/widget/gcw_coords_export_dialog.dart';
+import 'package:gc_wizard/common_widgets/gcw_async_executer/gcw_async_executer.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_code_textfield.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/gcw_expandable/gcw_expandable.dart';
+import 'package:gc_wizard/common_widgets/gcw_exported_file_dialog/gcw_exported_file_dialog.dart';
+import 'package:gc_wizard/common_widgets/gcw_files_output/gcw_files_output.dart';
+import 'package:gc_wizard/common_widgets/gcw_imageview/gcw_imageview.dart';
+import 'package:gc_wizard/common_widgets/gcw_openfile/gcw_openfile.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
+import 'package:gc_wizard/common_widgets/gcw_soundplayer/gcw_soundplayer.dart';
+import 'package:gc_wizard/common_widgets/gcw_tool/gcw_tool.dart';
+import 'package:gc_wizard/configuration/settings/preferences.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
+import 'package:gc_wizard/tools/coords/map_view/widget/gcw_mapview.dart';
+import 'package:gc_wizard/tools/coords/utils/default_getter.dart';
 import 'package:gc_wizard/tools/coords/utils/format_getter.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/wherigo_urwigo/krevo/logic/ucommons.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/wherigo_urwigo/logic/urwigo_tools.dart';
@@ -11,37 +37,11 @@ import 'package:gc_wizard/tools/crypto_and_encodings/wherigo_urwigo/wherigo_view
 import 'package:gc_wizard/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/logic/wherigo_analyze_gwc.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/logic/wherigo_analyze_lua.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/logic/wherigo_dataobjects.dart';
-import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/theme/theme_colors.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
-import 'package:gc_wizard/utils/settings/preferences.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_button/gcw_button.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dialog/gcw_dialog.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_dropdownbutton/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_iconbutton/gcw_iconbutton.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_output_text/gcw_output_text.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_text/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/base/gcw_toast/gcw_toast.dart';
-import 'package:gc_wizard/common_widgets/gcw_async_executer/gcw_async_executer.dart';
-import 'package:gc_wizard/common_widgets/gcw_code_textfield/gcw_code_textfield.dart';
-import 'package:gc_wizard/common_widgets/gcw_columned_multiline_output/gcw_columned_multiline_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_default_output/gcw_default_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_expandable/gcw_expandable.dart';
-import 'package:gc_wizard/common_widgets/gcw_exported_file_dialog/gcw_exported_file_dialog.dart';
-import 'package:gc_wizard/common_widgets/gcw_files_output/gcw_files_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_imageview/gcw_imageview.dart';
-import 'package:gc_wizard/common_widgets/gcw_openfile/gcw_openfile.dart';
-import 'package:gc_wizard/common_widgets/gcw_output/gcw_output.dart';
-import 'package:gc_wizard/common_widgets/gcw_soundplayer/gcw_soundplayer.dart';
-import 'package:gc_wizard/common_widgets/gcw_tool/gcw_tool.dart';
-import 'package:gc_wizard/tools/coords/base/gcw_coords_export_dialog/widget/gcw_coords_export_dialog.dart';
-import 'package:gc_wizard/tools/coords/base/utils/widget/format_getter.dart';
-import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
-import 'package:gc_wizard/tools/coords/map_view/widget/gcw_mapview.dart';
 import 'package:gc_wizard/tools/images_and_files/hex_viewer/widget/hex_viewer.dart';
 import 'package:gc_wizard/tools/utils/common_widget_utils/widget/common_widget_utils.dart';
 import 'package:gc_wizard/tools/utils/file_utils/widget/file_utils.dart';
 import 'package:gc_wizard/tools/utils/gcw_file/widget/gcw_file.dart';
+import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:prefs/prefs.dart';
@@ -385,7 +385,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                     },
                   ),
                   Expanded(
-                    child: GCWDropDownButton(
+                    child: GCWDropDown(
                       value: _displayedCartridgeData,
                       onChanged: (value) {
                         setState(() {

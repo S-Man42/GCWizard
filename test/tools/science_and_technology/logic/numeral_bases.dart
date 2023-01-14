@@ -1,5 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/tools/science_and_technology/logic/numeral_bases.dart';
+import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
 
 void main() {
   group("NumeralBases.convert:", () {

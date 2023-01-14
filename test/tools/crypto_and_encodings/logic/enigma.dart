@@ -1,6 +1,6 @@
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/tools/crypto_and_encodings/enigma/logic/enigma.dart';
-import 'package:gc_wizard/utils/alphabets.dart';
+import 'package:gc_wizard/utils/logic_utils/alphabets.dart';
 
 void main() {
   // test double-step anomaly by checking the rotor setting after calculation

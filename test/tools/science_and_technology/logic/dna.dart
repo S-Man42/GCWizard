@@ -1,5 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/tools/science_and_technology/logic/dna.dart';
+import 'package:gc_wizard/tools/science_and_technology/dna/logic/dna.dart';
 
 void main() {
   group("DNA.encodeRNANucleobaseSequence:", () {
