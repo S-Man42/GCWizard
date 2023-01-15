@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/widgets/main_menu/deep_link.dart';
 
 abstract class GCWWebStatefulWidget extends StatefulWidget {
   Map<String, String> webParameter;
@@ -22,9 +23,9 @@ abstract class GCWWebStatefulWidget extends StatefulWidget {
     return getWebParameter(WebParameter.result) == 'json';
   }
 
-  sendResultToWeb(String json) {
+  void sendResultToWeb(String json) {
     print(json);
-    return;
+    //sendWebResult(json);
   }
 }
 

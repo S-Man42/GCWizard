@@ -181,6 +181,7 @@ class FormatConverterState extends State<FormatConverter> {
   void _sendResultToWeb(List<String> output) {
       widget.sendResultToWeb(jsonEncode(output));
   }
+
   String _buildJson(String format, String label, String output){
     return jsonEncode({'format': format, 'label': label, 'output': output});
   }

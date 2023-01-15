@@ -98,7 +98,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
     return _alphabets.firstWhere((alphabet) => alphabet.key == key);
   }
 
-  _setAlphabet() {
+  void _setAlphabet() {
     _currentAlphabet = _getAlphabetByKey(_currentAlphabetKey).alphabet;
     _currentIsEditingAlphabet = false;
     _currentOffset = 0;
@@ -110,7 +110,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
     _setReverseLabels();
   }
 
-  _setReverseLabels() {
+  void _setReverseLabels() {
     var firstEntry = _currentAlphabet.entries.first;
     var lastEntry = _currentAlphabet.entries.last;
 
@@ -123,7 +123,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
         lastEntry.key + '-' + firstEntry.key + ' ' + String.fromCharCode(8594) + ' ' + firstValue + '-' + lastValue;
   }
 
-  _setValueOffset(String value) {
+  String _setValueOffset(String value) {
     return value.split(',').map((value) => int.tryParse(value) + _currentOffset).join(',');
   }
 
@@ -145,11 +145,11 @@ class AlphabetValuesState extends State<AlphabetValues> {
     return Map<String, String>.fromEntries(reversedMap.entries);
   }
 
-  _addNewLetter2(String letter, String value, BuildContext context) {
+  void _addNewLetter2(String letter, String value, BuildContext context) {
     _addNewLetter(letter, value, context, adjust: true);
   }
 
-  _addNewLetter(String letter, String value, BuildContext context, {adjust: false}) {
+  void _addNewLetter(String letter, String value, BuildContext context, {adjust: false}) {
     if (letter == null || letter.length == 0 || value == null) return;
 
     value = value
@@ -193,7 +193,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
     }
   }
 
-  _removeEntry(dynamic id, BuildContext context) {
+  void _removeEntry(dynamic id, BuildContext context) {
     var _valueToDelete = _currentCustomizedAlphabet[id];
     var _isList = _valueToDelete.contains(',');
 
@@ -306,7 +306,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
     );
   }
 
-  _generateItemDescription(Alphabet alphabet) {
+  String _generateItemDescription(Alphabet alphabet) {
     var description = i18n(context, alphabet.key + '_description');
     if (description != null && description.length > 0) return description;
 
@@ -326,7 +326,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
     return description;
   }
 
-  _buildEditingAlphabet() {
+  Widget _buildEditingAlphabet() {
     return Column(
       children: [
         GCWTwoOptionsSwitch(
@@ -355,7 +355,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
     );
   }
 
-  _buildEditingAlphabetCustomizing() {
+  Widget _buildEditingAlphabetCustomizing() {
     var isCustomAlphabet = _getAlphabetByKey(_currentAlphabetKey).type == AlphabetType.CUSTOM;
 
     return Column(
@@ -438,7 +438,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
     );
   }
 
-  _removeAlphabet() {
+  void _removeAlphabet() {
     showGCWAlertDialog(
         context,
         i18n(context, 'alphabetvalues_edit_mode_customize_deletealphabet'),
@@ -456,7 +456,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
     });
   }
 
-  _saveAlphabet() {
+  void _saveAlphabet() {
     showGCWDialog(
         context,
         i18n(context, 'alphabetvalues_edit_mode_customize_savealphabet'),
@@ -509,7 +509,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
         ]);
   }
 
-  _getFinalAlphabet() {
+  Map<String, String> _getFinalAlphabet() {
     var alphabet = _currentAlphabet;
     if (_currentCustomizeAlphabet == GCWSwitchPosition.right) {
       alphabet = _currentCustomizedAlphabet;
@@ -534,7 +534,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
     }
   }
 
-  _calculateOutput() {
+  String _calculateOutput() {
     var alphabet = _getFinalAlphabet();
 
     if (_currentMode == GCWSwitchPosition.left) {
@@ -544,5 +544,15 @@ class AlphabetValuesState extends State<AlphabetValues> {
     } else {
       return logic.AlphabetValues(alphabet: alphabet).valuesToText(List<int>.from(_currentDecodeInput['values']));
     }
+  }
+
+  void _sendResultToWeb(List<String> output) {
+    // if (widget.sendJsonResultToWeb())
+    //   _sendResultToWeb(jsonOutput);
+    widget.sendResultToWeb(jsonEncode(output));
+  }
+
+  String _buildJson(String format, String label, String output){
+    return jsonEncode({'format': format, 'label': label, 'output': output});
   }
 }
