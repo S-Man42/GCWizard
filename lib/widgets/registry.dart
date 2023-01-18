@@ -395,7 +395,6 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/fourteen_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/seven_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/sixteen_segments.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/triangle.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/unit_converter.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_multitap.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_singletap.dart';
@@ -1162,11 +1161,6 @@ initializeRegistry(BuildContext context) {
         i18nPrefix: 'textanalysis',
         categories: [ToolCategory.CRYPTOGRAPHY],
         searchKeys: ['alphabetvalues', 'asciivalues', 'textanalysis']),
-    GCWTool(tool: Triangle(), i18nPrefix: 'triangle', categories: [
-      ToolCategory.SCIENCE_AND_TECHNOLOGY
-    ], searchKeys: [
-      'triangle',
-    ]),
     GCWTool(tool: Trifid(), i18nPrefix: 'trifid', categories: [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: [
