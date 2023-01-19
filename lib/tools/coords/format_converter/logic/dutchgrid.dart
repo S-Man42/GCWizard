@@ -1,14 +1,17 @@
-import 'package:gc_wizard/tools/coords/logic/external_libs/djvanderlaan/rijksdriehoek/logic/rijksdriehoek_js.dart';
+import 'dart:math';
+
 import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
 import 'package:latlong2/latlong.dart';
 
+part 'package:gc_wizard/tools/coords/format_converter/logic/external_libs/djvanderlaan.rijksdriehoek/rijksdriehoek_js.dart';
+
 DutchGrid latLonToDutchGrid(LatLng coord) {
-  var dutchGrid = rijksdriehoek(coord.longitude, coord.latitude);
+  var dutchGrid = _rijksdriehoek(coord.longitude, coord.latitude);
   return DutchGrid(dutchGrid[0], dutchGrid[1]);
 }
 
 LatLng dutchGridToLatLon(DutchGrid dutchGrid) {
-  var latLon = rijksdriehoekInverse(dutchGrid.x, dutchGrid.y);
+  var latLon = _rijksdriehoekInverse(dutchGrid.x, dutchGrid.y);
   return LatLng(latLon[1], latLon[0]);
 }
 

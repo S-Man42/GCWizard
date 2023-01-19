@@ -1,7 +1,12 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
-import 'package:gc_wizard/tools/coords/widget/gcw_coords/coord_format_inputs/gcw_coords_ellipsoid/gcw_coords_ellipsoid.dart';
-import 'package:gc_wizard/tools/coords/widget/gcw_coords/coord_format_inputs/gcw_coords_formatselector/gcw_coords_formatselector.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
+import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_double_textfield.dart';
+import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords_formatselector.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_sign_dropdown.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/configuration/settings/preferences.dart';
@@ -9,7 +14,10 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/coords/utils/default_getter.dart';
+import 'package:gc_wizard/utils/logic_utils/constants.dart';
 import 'package:prefs/prefs.dart';
+
+part 'package:gc_wizard/widgets/main_menu/settings/ellipsoid_picker.dart';
 
 class CoordinatesSettings extends StatefulWidget {
   @override
@@ -87,7 +95,7 @@ class CoordinatesSettingsState extends State<CoordinatesSettings> {
         GCWTextDivider(
           text: i18n(context, 'settings_coordinates_defaultrotationellipsoid'),
         ),
-        GCWCoordsEllipsoid(
+        _EllipsoidPicker(
           onChanged: (ells) {
             _currentDefaultEllipsoid = ells;
 

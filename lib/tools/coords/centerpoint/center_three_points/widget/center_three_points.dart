@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/tools/coords/widget/gcw_coords/gcw_coords.dart';
-import 'package:gc_wizard/tools/coords/widget/gcw_coords_output/gcw_coords_output.dart';
-import 'package:gc_wizard/tools/coords/widget/gcw_coords_output/gcw_coords_outputformat_distance.dart';
+import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
+import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coords_output.dart';
+import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coords_outputformat_distance.dart';
 import 'package:gc_wizard/common_widgets/gcw_async_executer.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';

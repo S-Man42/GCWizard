@@ -1,5 +1,5 @@
 import 'package:gc_wizard/tools/coords/logic/ellipsoid.dart';
-import 'package:gc_wizard/tools/science_and_technology/astronomy/astronomie_info/logic/astronomy.dart';
+import 'package:gc_wizard/tools/science_and_technology/astronomy/logic/external_libs/astronomie_info/astronomy.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/logic/julian_date.dart';
 import 'package:latlong2/latlong.dart';
 

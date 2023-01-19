@@ -1,6 +1,9 @@
-import 'package:gc_wizard/tools/coords/logic/external_libs/net/logic/makaney.dart' as lib;
+import 'dart:math';
+
 import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
 import 'package:latlong2/latlong.dart';
+
+part 'package:gc_wizard/tools/coords/format_converter/logic/external_libs/net.makaney/makaney.dart';
 
 LatLng makaneyToLatLon(Makaney makaney) {
   if (makaney == null || makaney.text == null || makaney.text.isEmpty) return null;
@@ -12,7 +15,7 @@ LatLng makaneyToLatLon(Makaney makaney) {
     return null;
   }
 
-  var latLon = lib.makaneyToLatLon(_text);
+  var latLon = _makaneyToLatLon(_text);
   if (latLon.contains(null)) return null;
 
   try {
@@ -25,7 +28,7 @@ LatLng makaneyToLatLon(Makaney makaney) {
 Makaney latLonToMakaney(LatLng latLon) {
   if (latLon == null) return null;
 
-  return Makaney(lib.latLonToMakaney(latLon.latitude, latLon.longitude).toUpperCase());
+  return Makaney(_latLonToMakaney(latLon.latitude, latLon.longitude).toUpperCase());
 }
 
 Makaney parseMakaney(String input) {
