@@ -62,7 +62,7 @@ class App extends StatelessWidget {
               onGenerateRoute: (RouteSettings settings) {
                 // Cast the arguments to the correct
                 // type: ScreenArguments.
-                final args = ScreenArguments(settings);
+                final args = parseUrl(settings.name);
                 var route = createRoute(context, args);
 
                 return route;

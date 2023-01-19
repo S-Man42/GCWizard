@@ -1,7 +1,7 @@
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 
-import '../../GCWizard/lib/logic/tools/crypto_and_encodings/reverse.dart';
+import '../../../lib/widgets/main_menu/deep_link.dart';
 
 //http://localhost:4044/?sortIndex=2&sortAsc=0&offset=100&pageSize=50
 
@@ -19,6 +19,9 @@ Future main() async {
 }
 
 Response _echoRequest(Request request) {
+  var arguments = parseUrl(request.handlerPath);
+  var gcwTool = findGCWTool(arguments);
+
   return Response.ok('Request for "${request.url}"  ' + DateTime.now().toString());
 }
 
