@@ -1,5 +1,5 @@
 name: gcw_server
-description: GC Wizard REST API
+description: GC Wizard API
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
