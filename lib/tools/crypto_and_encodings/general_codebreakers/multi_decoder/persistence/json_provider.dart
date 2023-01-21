@@ -10,7 +10,7 @@ void refreshMultiDecoderTools() {
   if (tools == null || tools.length == 0) return;
 
   multiDecoderTools = tools.where((tool) => tool.length > 0).map((tool) {
-    return MultiDecoderTool.fromJson(jsonDecode(tool));
+    return MultiDecoderToolEntity.fromJson(jsonDecode(tool));
   }).toList();
 }
 
@@ -19,7 +19,7 @@ _saveData() {
   Prefs.setStringList(PREFERENCE_MULTIDECODER_TOOLS, jsonData);
 }
 
-int insertMultiDecoderTool(MultiDecoderTool tool) {
+int insertMultiDecoderTool(MultiDecoderToolEntity tool) {
   tool.name = tool.name ?? '';
   var id = newID(multiDecoderTools.map((group) => group.id).toList());
   tool.id = id;
@@ -70,7 +70,7 @@ void updateMultiDecoderTools() {
   _saveData();
 }
 
-void updateMultiDecoderTool(MultiDecoderTool tool) {
+void updateMultiDecoderTool(MultiDecoderToolEntity tool) {
   multiDecoderTools = multiDecoderTools.map((currentTool) {
     if (currentTool.id == tool.id) return tool;
 

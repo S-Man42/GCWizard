@@ -1,16 +1,16 @@
-List<MultiDecoderTool> multiDecoderTools = [];
+List<MultiDecoderToolEntity> multiDecoderTools = [];
 
-MultiDecoderTool findMultiDecoderToolById(int id) {
+MultiDecoderToolEntity findMultiDecoderToolById(int id) {
   return multiDecoderTools.firstWhere((tool) => tool.id == id);
 }
 
-class MultiDecoderTool {
+class MultiDecoderToolEntity {
   int id;
   String name;
   String internalToolName;
   List<MultiDecoderToolOption> options;
 
-  MultiDecoderTool(this.name, this.internalToolName, {this.options: const []});
+  MultiDecoderToolEntity(this.name, this.internalToolName, {this.options: const []});
 
   Map<String, dynamic> toMap() => {
         'id': id,
@@ -19,7 +19,7 @@ class MultiDecoderTool {
         'options': options.map((option) => option.toMap()).toList()
       };
 
-  MultiDecoderTool.fromJson(Map<String, dynamic> json)
+  MultiDecoderToolEntity.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         name = json['name'],
         internalToolName = json['decoderFunctionName'],
