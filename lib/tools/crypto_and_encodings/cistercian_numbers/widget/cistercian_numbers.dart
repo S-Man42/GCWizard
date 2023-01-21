@@ -10,7 +10,12 @@ import 'package:gc_wizard/common_widgets/gcw_toolbar.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/cistercian_numbers/logic/cistercian_numbers.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/cistercian_numbers_segment_display/widget/cistercian_numbers_segment_display.dart';
+import 'package:gc_wizard/common_widgets/gcw_touchcanvas.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/n_segment_display.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/segmentdisplay_painter.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/logic/segment_display.dart';
+
+part 'package:gc_wizard/tools/crypto_and_encodings/cistercian_numbers/widget/cistercian_numbers_segment_display.dart';
 
 class CistercianNumbers extends StatefulWidget {
   @override
@@ -52,7 +57,8 @@ class CistercianNumbersState extends State<CistercianNumbers> {
           });
         },
       ),
-      _currentMode == GCWSwitchPosition.left // encrypt: input number => output segment
+      _currentMode ==
+              GCWSwitchPosition.left // encrypt: input number => output segment
           ? GCWTextField(
               controller: _inputEncodeController,
               onChanged: (text) {
@@ -74,7 +80,8 @@ class CistercianNumbersState extends State<CistercianNumbers> {
 
     var displays = _currentDisplays; //<List<String>>[];
     if (displays != null && displays.length > 0)
-      currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [], key: (e) => e, value: (e) => true);
+      currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [],
+          key: (e) => e, value: (e) => true);
     else
       currentDisplay = {};
 
@@ -98,11 +105,12 @@ class CistercianNumbersState extends State<CistercianNumbers> {
       children: <Widget>[
         Container(
           width: 180,
-          padding: EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
+          padding: EdgeInsets.only(
+              top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
           child: Row(
             children: <Widget>[
               Expanded(
-                child: CistercianNumbersSegmentDisplay(
+                child: _CistercianNumbersSegmentDisplay(
                   segments: currentDisplay,
                   onChanged: onChanged,
                 ),
@@ -143,7 +151,8 @@ class CistercianNumbersState extends State<CistercianNumbers> {
   Widget _buildDigitalOutput(List<List<String>> segments) {
     return SegmentDisplayOutput(
         segmentFunction: (displayedSegments, readOnly) {
-          return CistercianNumbersSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
+          return _CistercianNumbersSegmentDisplay(
+              segments: displayedSegments, readOnly: readOnly);
         },
         segments: segments,
         readOnly: true);
@@ -165,7 +174,10 @@ class CistercianNumbersState extends State<CistercianNumbers> {
       }).join(' ');
       var segments = decodeCistercian(output);
       return Column(
-        children: <Widget>[_buildDigitalOutput(segments['displays']), GCWDefaultOutput(child: segments['text'])],
+        children: <Widget>[
+          _buildDigitalOutput(segments['displays']),
+          GCWDefaultOutput(child: segments['text'])
+        ],
       );
     }
   }

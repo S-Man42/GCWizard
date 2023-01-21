@@ -180,7 +180,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_langua
 import 'package:gc_wizard/tools/crypto_and_encodings/fox/widget/fox.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/gade/widget/gade.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/gc_code/widget/gc_code.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/multi_decoder/widget/multi_decoder.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/multi_decoder.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/widget/substitution_breaker.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/widget/vigenere_breaker.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/gray/widget/gray.dart';

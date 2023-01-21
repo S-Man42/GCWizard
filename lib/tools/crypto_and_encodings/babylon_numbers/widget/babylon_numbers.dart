@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
-import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
-import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
-import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/segmentdisplay_output.dart';
 import 'package:gc_wizard/common_widgets/gcw_toolbar.dart';
+import 'package:gc_wizard/common_widgets/gcw_touchcanvas.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
+import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/babylon_numbers/logic/babylon_numbers.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/babylon_numbers_segment_display/widget/babylon_numbers_segment_display.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/logic/segment_display.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/n_segment_display.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/segmentdisplay_output.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/segmentdisplay_painter.dart';
+
+part 'package:gc_wizard/tools/crypto_and_encodings/babylon_numbers/widget/babylon_numbers_segment_display.dart';
 
 class BabylonNumbers extends StatefulWidget {
   @override
@@ -32,7 +37,8 @@ class BabylonNumbersState extends State<BabylonNumbers> {
           });
         },
       ),
-      _currentMode == GCWSwitchPosition.left // encrypt: input number => output segment
+      _currentMode ==
+              GCWSwitchPosition.left // encrypt: input number => output segment
           ? GCWIntegerSpinner(
               min: 0,
               overflow: SpinnerOverflowType.SUPPRESS_OVERFLOW,
@@ -56,7 +62,8 @@ class BabylonNumbersState extends State<BabylonNumbers> {
 
     var displays = _currentDisplays;
     if (displays != null && displays.length > 0)
-      currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [], key: (e) => e, value: (e) => true);
+      currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [],
+          key: (e) => e, value: (e) => true);
     else
       currentDisplay = {};
 
@@ -80,11 +87,12 @@ class BabylonNumbersState extends State<BabylonNumbers> {
       children: <Widget>[
         Container(
           width: 200,
-          padding: EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 10),
+          padding: EdgeInsets.only(
+              top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 10),
           child: Row(
             children: <Widget>[
               Expanded(
-                child: BabylonNumbersSegmentDisplay(
+                child: _BabylonNumbersSegmentDisplay(
                   segments: currentDisplay,
                   onChanged: onChanged,
                 ),
@@ -125,7 +133,8 @@ class BabylonNumbersState extends State<BabylonNumbers> {
   Widget _buildDigitalOutput(List<List<String>> segments) {
     return SegmentDisplayOutput(
         segmentFunction: (displayedSegments, readOnly) {
-          return BabylonNumbersSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
+          return _BabylonNumbersSegmentDisplay(
+              segments: displayedSegments, readOnly: readOnly);
         },
         segments: segments,
         readOnly: true);
@@ -149,8 +158,12 @@ class BabylonNumbersState extends State<BabylonNumbers> {
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments['displays']),
-          GCWOutput(title: i18n(context, 'babylonnumbers_single_numbers'), child: segments['numbers'].join(' ')),
-          GCWOutput(title: i18n(context, 'babylonnumbers_sexagesimal'), child: segments['sexagesimal'])
+          GCWOutput(
+              title: i18n(context, 'babylonnumbers_single_numbers'),
+              child: segments['numbers'].join(' ')),
+          GCWOutput(
+              title: i18n(context, 'babylonnumbers_sexagesimal'),
+              child: segments['sexagesimal'])
         ],
       );
     }

@@ -1,15 +1,15 @@
-import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
-import 'package:gc_wizard/common_widgets/dropdowns/gcw_abc_dropdown.dart';
-import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/enigma/logic/enigma.dart';
+part of 'package:gc_wizard/tools/crypto_and_encodings/enigma/widget/enigma.dart';
 
 class EnigmaRotorDropDown extends StatefulWidget {
   final Function onChanged;
   final EnigmaRotorType type;
   final position;
 
-  const EnigmaRotorDropDown({Key key, this.position, this.type: EnigmaRotorType.STANDARD, this.onChanged})
+  const EnigmaRotorDropDown(
+      {Key key,
+      this.position,
+      this.type: EnigmaRotorType.STANDARD,
+      this.onChanged})
       : super(key: key);
 
   @override
@@ -46,7 +46,9 @@ class EnigmaRotorDropDownState extends State<EnigmaRotorDropDown> {
             child: Container(
                 child: GCWDropDown(
                   value: _currentRotor,
-                  items: allEnigmaRotors.where((rotor) => rotor.type == widget.type).map((rotor) {
+                  items: allEnigmaRotors
+                      .where((rotor) => rotor.type == widget.type)
+                      .map((rotor) {
                     return GCWDropDownMenuItem(
                       value: rotor.name,
                       child: '${rotor.name}',
@@ -100,8 +102,10 @@ class EnigmaRotorDropDownState extends State<EnigmaRotorDropDown> {
   _setCurrentValueAndEmitOnChange() {
     widget.onChanged({
       'position': widget.position,
-      'rotorConfiguration': EnigmaRotorConfiguration(getEnigmaRotorByName(_currentRotor),
-          offset: _currentOffset, setting: _currentSetting)
+      'rotorConfiguration': EnigmaRotorConfiguration(
+          getEnigmaRotorByName(_currentRotor),
+          offset: _currentOffset,
+          setting: _currentSetting)
     });
   }
 }

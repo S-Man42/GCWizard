@@ -12,7 +12,7 @@ import 'package:gc_wizard/common_widgets/gcw_toolbar.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 
 import 'package:gc_wizard/tools/crypto_and_encodings/braille/braille_euro_segment_display/widget/braille_euro_segment_display.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/braille/braille_segment_display/widget/braille_segment_display.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/braille/widget/braille_segment_display.dart';
 
 class Braille extends StatefulWidget {
   @override
@@ -55,7 +55,9 @@ class BrailleState extends State<Braille> {
           return GCWDropDownMenuItem(
               value: mode.key,
               child: i18n(context, mode.value['title']),
-              subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']) : null);
+              subtitle: mode.value['subtitle'] != null
+                  ? i18n(context, mode.value['subtitle'])
+                  : null);
         }).toList(),
       ),
       GCWTwoOptionsSwitch(
@@ -66,7 +68,8 @@ class BrailleState extends State<Braille> {
           });
         },
       ),
-      if (_currentMode == GCWSwitchPosition.left) // encrypt: input number => output segment
+      if (_currentMode ==
+          GCWSwitchPosition.left) // encrypt: input number => output segment
         GCWTextField(
           controller: _encodeController,
           onChanged: (text) {
@@ -89,7 +92,8 @@ class BrailleState extends State<Braille> {
 
     var displays = _currentDisplays;
     if (displays != null && displays.length > 0)
-      currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [], key: (e) => e, value: (e) => true);
+      currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [],
+          key: (e) => e, value: (e) => true);
     else
       currentDisplay = {};
 
@@ -114,7 +118,8 @@ class BrailleState extends State<Braille> {
         Container(
           width: 180,
           height: 200,
-          padding: EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
+          padding: EdgeInsets.only(
+              top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
           child: Row(
             children: <Widget>[
               if (_currentLanguage == BrailleLanguage.EUR)
@@ -168,9 +173,11 @@ class BrailleState extends State<Braille> {
     return SegmentDisplayOutput(
         segmentFunction: (displayedSegments, readOnly) {
           if (_currentLanguage == BrailleLanguage.EUR)
-            return BrailleEuroSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
+            return BrailleEuroSegmentDisplay(
+                segments: displayedSegments, readOnly: readOnly);
           else
-            return BrailleSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
+            return BrailleSegmentDisplay(
+                segments: displayedSegments, readOnly: readOnly);
         },
         segments: segments,
         readOnly: true);
@@ -179,7 +186,8 @@ class BrailleState extends State<Braille> {
   Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       //encode
-      List<List<String>> segments = encodeBraille(_currentEncodeInput, _currentLanguage);
+      List<List<String>> segments =
+          encodeBraille(_currentEncodeInput, _currentLanguage);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments),
@@ -194,21 +202,26 @@ class BrailleState extends State<Braille> {
         if (character != null) return character.join();
       }).toList();
       var segments = decodeBraille(output, _currentLanguage, false);
-      var segmentsBasicDigits = decodeBraille(output, BrailleLanguage.BASIC, false);
-      var segmentsBasicLetters = decodeBraille(output, BrailleLanguage.BASIC, true);
+      var segmentsBasicDigits =
+          decodeBraille(output, BrailleLanguage.BASIC, false);
+      var segmentsBasicLetters =
+          decodeBraille(output, BrailleLanguage.BASIC, true);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments['displays']),
           if (_currentLanguage == BrailleLanguage.SIMPLE)
             Column(
               children: [
-                GCWDefaultOutput(child: _normalizeChars(segments['chars'].join())),
-                if (segmentsBasicLetters['chars'].join().toUpperCase() != segments['chars'].join())
+                GCWDefaultOutput(
+                    child: _normalizeChars(segments['chars'].join())),
+                if (segmentsBasicLetters['chars'].join().toUpperCase() !=
+                    segments['chars'].join())
                   GCWOutput(
                     title: i18n(context, 'brailledotnumbers_basic_letters'),
                     child: segmentsBasicLetters['chars'].join().toUpperCase(),
                   ),
-                if (segmentsBasicDigits['chars'].join().toUpperCase() != segments['chars'].join())
+                if (segmentsBasicDigits['chars'].join().toUpperCase() !=
+                    segments['chars'].join())
                   GCWOutput(
                     title: i18n(context, 'brailledotnumbers_basic_digits'),
                     child: segmentsBasicDigits['chars'].join().toUpperCase(),
@@ -224,12 +237,18 @@ class BrailleState extends State<Braille> {
 
   String _normalizeChars(String input) {
     if (input.endsWith('NUMBER FOLLOWS>'))
-      return input.replaceAll('<NUMBER FOLLOWS>', '').replaceAll('<ANTOINE NUMBER FOLLOWS>', '') +
+      return input
+              .replaceAll('<NUMBER FOLLOWS>', '')
+              .replaceAll('<ANTOINE NUMBER FOLLOWS>', '') +
           i18n(context, 'symboltables_braille_de_number_follows');
     else if (input.endsWith('ANTOINE NUMBER FOLLOWS>'))
-      return input.replaceAll('<NUMBER FOLLOWS>', '').replaceAll('<ANTOINE NUMBER FOLLOWS>', '') +
+      return input
+              .replaceAll('<NUMBER FOLLOWS>', '')
+              .replaceAll('<ANTOINE NUMBER FOLLOWS>', '') +
           i18n(context, 'symboltables_braille_en_mathmatics_follows');
     else
-      return input.replaceAll('<NUMBER FOLLOWS>', '').replaceAll('<ANTOINE NUMBER FOLLOWS>', '');
+      return input
+          .replaceAll('<NUMBER FOLLOWS>', '')
+          .replaceAll('<ANTOINE NUMBER FOLLOWS>', '');
   }
 }

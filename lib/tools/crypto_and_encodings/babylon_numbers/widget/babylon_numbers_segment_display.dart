@@ -1,8 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/gcw_touchcanvas.dart';
-import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/n_segment_display.dart';
-import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/segmentdisplay_painter.dart';
-import 'package:gc_wizard/tools/science_and_technology/segment_display/logic/segment_display.dart';
+part of 'package:gc_wizard/tools/crypto_and_encodings/babylon_numbers/widget/babylon_numbers.dart';
 
 const _INITIAL_SEGMENTS = <String, bool>{
   'a': false,
@@ -34,23 +30,33 @@ double _relativeY(Size size, double y) {
 
 final _TRANSPARENT_COLOR = Color.fromARGB(0, 0, 0, 0);
 
-class BabylonNumbersSegmentDisplay extends NSegmentDisplay {
+class _BabylonNumbersSegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
   final bool readOnly;
   final Function onChanged;
   final bool tapeStyle;
 
-  BabylonNumbersSegmentDisplay({Key key, this.segments, this.readOnly: false, this.onChanged, this.tapeStyle: false})
+  _BabylonNumbersSegmentDisplay(
+      {Key key,
+      this.segments,
+      this.readOnly: false,
+      this.onChanged,
+      this.tapeStyle: false})
       : super(
             key: key,
             initialSegments: _INITIAL_SEGMENTS,
-            aspectRatio: _BABYLON_RELATIVE_DISPLAY_WIDTH / _BABYLON_RELATIVE_DISPLAY_HEIGHT,
+            aspectRatio: _BABYLON_RELATIVE_DISPLAY_WIDTH /
+                _BABYLON_RELATIVE_DISPLAY_HEIGHT,
             segments: segments,
             readOnly: readOnly,
             onChanged: onChanged,
             type: SegmentDisplayType.CUSTOM,
-            customPaint: (GCWTouchCanvas canvas, Size size, Map<String, bool> currentSegments, Function setSegmentState,
-                Color segment_color_on, Color segment_color_off) {
+            customPaint: (GCWTouchCanvas canvas,
+                Size size,
+                Map<String, bool> currentSegments,
+                Function setSegmentState,
+                Color segment_color_on,
+                Color segment_color_off) {
               var paint = sketchSegmentPaint();
               var SEGMENTS_COLOR_ON = segment_color_on;
               var SEGMENTS_COLOR_OFF = segment_color_off;
@@ -63,17 +69,21 @@ class BabylonNumbersSegmentDisplay extends NSegmentDisplay {
                 {'segment': 'd', 'startX': 90.0, 'startY': 0.0},
                 {'segment': 'e', 'startX': 90.0, 'startY': 40.0}
               ].forEach((element) {
-                paint.color = currentSegments[element['segment']] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF; // 10
+                paint.color = currentSegments[element['segment']]
+                    ? SEGMENTS_COLOR_ON
+                    : SEGMENTS_COLOR_OFF; // 10
                 var path = Path();
 
                 double startX = element['startX'];
                 double startY = element['startY'];
 
                 path.moveTo(_relativeX(size, startX), _relativeY(size, startY));
-                path.relativeLineTo(_relativeX(size, -20), _relativeY(size, 20));
+                path.relativeLineTo(
+                    _relativeX(size, -20), _relativeY(size, 20));
                 path.relativeLineTo(_relativeX(size, 20), _relativeY(size, 20));
 
-                path.moveTo(_relativeX(size, startX - 5), _relativeY(size, startY + 5));
+                path.moveTo(
+                    _relativeX(size, startX - 5), _relativeY(size, startY + 5));
                 path.relativeLineTo(_relativeX(size, 0), _relativeY(size, 30));
                 canvas.touchCanvas.drawPath(path, paint);
 
@@ -84,8 +94,10 @@ class BabylonNumbersSegmentDisplay extends NSegmentDisplay {
                 path.relativeLineTo(_relativeX(size, 20), _relativeY(size, 0));
                 path.close();
 
-                canvas.touchCanvas.drawPath(path, paint, onTapDown: (tapDetail) {
-                  setSegmentState(element['segment'], !currentSegments[element['segment']]);
+                canvas.touchCanvas.drawPath(path, paint,
+                    onTapDown: (tapDetail) {
+                  setSegmentState(
+                      element['segment'], !currentSegments[element['segment']]);
                 });
               });
 
@@ -100,7 +112,9 @@ class BabylonNumbersSegmentDisplay extends NSegmentDisplay {
                 {'segment': 'm', 'startX': 140.0, 'startY': 70.0},
                 {'segment': 'n', 'startX': 170.0, 'startY': 70.0}
               ].forEach((element) {
-                paint.color = currentSegments[element['segment']] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF; // 10
+                paint.color = currentSegments[element['segment']]
+                    ? SEGMENTS_COLOR_ON
+                    : SEGMENTS_COLOR_OFF; // 10
                 var path = Path();
 
                 double startX = element['startX'];
@@ -108,24 +122,30 @@ class BabylonNumbersSegmentDisplay extends NSegmentDisplay {
 
                 path.moveTo(_relativeX(size, startX), _relativeY(size, startY));
                 path.relativeLineTo(_relativeX(size, 10), _relativeY(size, 10));
-                path.moveTo(_relativeX(size, startX + 10), _relativeY(size, startY + 10));
-                path.relativeLineTo(_relativeX(size, 10), _relativeY(size, -10));
+                path.moveTo(_relativeX(size, startX + 10),
+                    _relativeY(size, startY + 10));
+                path.relativeLineTo(
+                    _relativeX(size, 10), _relativeY(size, -10));
                 path.moveTo(_relativeX(size, startX), _relativeY(size, startY));
                 path.relativeLineTo(_relativeX(size, 20), _relativeY(size, 0));
 
-                path.moveTo(_relativeX(size, startX + 10), _relativeY(size, startY + 10));
+                path.moveTo(_relativeX(size, startX + 10),
+                    _relativeY(size, startY + 10));
                 path.relativeLineTo(_relativeX(size, 0), _relativeY(size, 10));
                 canvas.touchCanvas.drawPath(path, paint);
 
                 paint.color = _TRANSPARENT_COLOR;
-                path.moveTo(_relativeX(size, startX - 5), _relativeY(size, startY - 5));
+                path.moveTo(
+                    _relativeX(size, startX - 5), _relativeY(size, startY - 5));
                 path.relativeLineTo(_relativeX(size, 30), _relativeY(size, 0));
                 path.relativeLineTo(_relativeX(size, 0), _relativeY(size, 30));
                 path.relativeLineTo(_relativeX(size, -30), _relativeY(size, 0));
                 path.close();
 
-                canvas.touchCanvas.drawPath(path, paint, onTapDown: (tapDetail) {
-                  setSegmentState(element['segment'], !currentSegments[element['segment']]);
+                canvas.touchCanvas.drawPath(path, paint,
+                    onTapDown: (tapDetail) {
+                  setSegmentState(
+                      element['segment'], !currentSegments[element['segment']]);
                 });
               });
             });
