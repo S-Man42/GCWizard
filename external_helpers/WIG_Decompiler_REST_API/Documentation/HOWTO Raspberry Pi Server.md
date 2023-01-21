@@ -932,6 +932,8 @@ source ~/.bashrc
 - https://linuxhint.com/change-default-port-of-tomcat-server/#:~:text=Changing%20Default%20Port%201%201.%20Locating%20the%20Server.xml,Port%20Number%20...%204%204.%20Restarting%20Tomcat%20
 - https://www.howtoforge.de/anleitung/so-installieren-und-konfigurieren-sie-apache-tomcat-85-unter-ubuntu-1604/
 - https://tomcat.apache.org/
+- [A Step By Step Guide to Tomcat Performance Monitoring (stackify.com)](https://stackify.com/tomcat-performance-monitoring/)
+- [Home · javamelody/javamelody Wiki (github.com)](https://github.com/javamelody/javamelody)
 
 
 
@@ -1096,6 +1098,52 @@ Anzupassender Inhalt
 ```
 <Connector port="xxxx" protocol=“http/1.1“ …/>
 ```
+
+
+
+## Enable Performance Management
+
+Tomcat performance monitoring can be done with JMX beans or a monitoring tool.
+
+One way of obtaining the values of the MBeans is through the Manager App that comes with Tomcat. This app is protected, so to access it, you need to first define a user and password by adding the following in the conf/tomcat-users.xml file:
+
+```
+<role rolename="manager-gui"/>
+<role rolename="manager-jmx"/>
+<user username=... password=... roles="manager-gui, manager-jmx"/>
+```
+
+The Manager App interface contains some minimal information on the server status.
+
+Information on the JMX beans can be found at http://localhost:7323/manager/jmxproxy.   The information is in text format, as it is intended for tool processing.
+
+To retrieve data about a specific bean, you can add parameters to the URL that represent the name of the bean and attribute you want:
+
+```
+http://localhost:7323/manager/jmxproxy/?get=java.lang:type=Memory&att=HeapMemoryUsage
+```
+
+Overall, this tool can be useful for a quick check, but it’s limited and unreliable, so not recommended for production instances.
+
+
+
+### Enabling Tomcat Performance Monitoring with JavaMelody
+
+If you’re using Maven, simply add the [javamelody-core](https://search.maven.org/#search|ga|1|a%3A"javamelody-core") dependency to the pom.xml:
+
+```
+<dependency>
+    <groupId>net.bull.javamelody</groupId>
+    <artifactId>javamelody-core</artifactId>
+    <version>1.69.0</version>
+</dependency>
+```
+
+In this way, you can enable monitoring of your web application.
+
+After deploying the application on Tomcat, you can access the monitoring screens at the /monitoring URL.
+
+JavaMelody contains useful graphs for displaying information related to various performance measures, as well as a way to find the values of the Tomcat JMX beans.
 
 
 
