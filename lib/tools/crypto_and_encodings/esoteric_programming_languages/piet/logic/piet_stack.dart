@@ -1,4 +1,4 @@
-import 'package:tuple/tuple.dart';
+part of 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/piet/logic/piet_language.dart';
 
 class PietStack {
   List<int> _stack = <int>[];

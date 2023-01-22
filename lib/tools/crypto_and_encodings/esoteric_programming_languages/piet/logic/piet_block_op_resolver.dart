@@ -1,9 +1,4 @@
-import 'dart:math';
-
-import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/piet/logic/base_operations.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/piet/logic/piet_block.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/piet/logic/piet_blocker_builder.dart';
-import 'package:tuple/tuple.dart';
+part of 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/piet/logic/piet_language.dart';
 
 enum HueColor { Red, Yellow, Green, Cyan, Blue, Magenta }
 

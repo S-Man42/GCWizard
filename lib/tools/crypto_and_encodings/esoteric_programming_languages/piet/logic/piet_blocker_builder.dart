@@ -1,7 +1,4 @@
-import 'dart:core';
-import 'dart:math';
-
-import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/piet/logic/piet_block.dart';
+part of 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/piet/logic/piet_language.dart';
 
 const knownColors = [
   //format RGB

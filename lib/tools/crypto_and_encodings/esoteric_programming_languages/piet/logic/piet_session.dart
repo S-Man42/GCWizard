@@ -1,13 +1,4 @@
-//source: https://github.com/MatthewMooreZA/PietSharp
-
-import 'dart:math';
-
-import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/piet/logic/base_operations.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/piet/logic/piet_block.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/piet/logic/piet_block_op_resolver.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/piet/logic/piet_blocker_builder.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/piet/logic/piet_navigator.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/piet/logic/piet_stack.dart';
+part of 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/piet/logic/piet_language.dart';
 
 class PietResult {
   final String output;

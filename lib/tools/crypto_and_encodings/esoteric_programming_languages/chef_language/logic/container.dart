@@ -1,24 +1,23 @@
-import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/logic/component.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/logic/ingredient.dart';
+part of 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/logic/chef_language.dart';
 
-class Container {
-  List<Component> _contents;
+class _Container {
+  List<_Component> _contents;
 
-  Container(Container container) {
-    _contents = new List<Component>();
+  _Container(_Container container) {
+    _contents = new List<_Component>();
     if (container != null) _contents.addAll(container._contents);
   }
 
-  void push(Component c) {
+  void push(_Component c) {
     if (c != null) _contents.add(c);
   }
 
-  Component peek() {
+  _Component peek() {
     var c = _contents[_contents.length - 1];
     return c;
   }
 
-  Component pop() {
+  _Component pop() {
     if (_contents.length != 0) {
       var c = _contents.removeAt(_contents.length - 1);
       return c;
@@ -29,7 +28,7 @@ class Container {
     return _contents.length;
   }
 
-  void combine(Container c) {
+  void combine(_Container c) {
     if (c != null) if (c._contents != null) _contents.addAll(c._contents);
   }
 
@@ -40,13 +39,13 @@ class Container {
   }
 
   void clean() {
-    _contents = new List<Component>();
+    _contents = new List<_Component>();
   }
 
   String serve() {
     String result = "";
     for (int i = _contents.length; i > 0; i--) {
-      if (_contents[i - 1].getState() == State.Dry) {
+      if (_contents[i - 1].getState() == _State.Dry) {
         result = result + _contents[i - 1].getValue().toString() + '';
       } else {
         // return charCodes

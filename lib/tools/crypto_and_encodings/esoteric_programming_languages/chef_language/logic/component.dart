@@ -1,17 +1,17 @@
-import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/logic/ingredient.dart';
+part of 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/logic/chef_language.dart';
 
-class Component {
-  State _state;
+class _Component {
+  _State _state;
   int _value;
   String _name;
 
-  Component(int n, State s, String name) {
+  _Component(int n, _State s, String name) {
     _value = n;
     _state = s;
     _name = name;
   }
 
-  Component.Contructor1(Ingredient ingredient) {
+  _Component.Contructor1(_Ingredient ingredient) {
     _value = ingredient.getAmount();
     _state = ingredient.getState();
     _name = ingredient.getName();
@@ -25,11 +25,11 @@ class Component {
     _value = n;
   }
 
-  State getState() {
+  _State getState() {
     return _state;
   }
 
-  void setState(State s) {
+  void setState(_State s) {
     _state = s;
   }
 
@@ -42,11 +42,11 @@ class Component {
   }
 
   //@Override
-  Component clone() {
-    return Component(_value, _state, _name);
+  _Component clone() {
+    return _Component(_value, _state, _name);
   }
 
   void liquefy() {
-    _state = State.Liquid;
+    _state = _State.Liquid;
   }
 }

@@ -1,5 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/logic/brainfk_derivative.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/brainfk/logic/brainfk_derivative.dart';
 
 void main() {
   group("Ook.interpretOok:", () {

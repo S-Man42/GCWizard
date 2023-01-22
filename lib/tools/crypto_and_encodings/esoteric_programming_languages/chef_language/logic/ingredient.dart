@@ -1,35 +1,35 @@
-import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/logic/chef_international.dart';
+part of 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/logic/chef_language.dart';
 
-enum State { Dry, Liquid }
+enum _State { Dry, Liquid }
 
-class Ingredient {
+class _Ingredient {
   String _name;
   int _amount;
-  State _state;
+  _State _state;
   bool _error;
   List<String> _errorList;
 
-  Ingredient(String ingredient) {
+  _Ingredient(String ingredient) {
     _errorList = <String>[];
 
     //var tokens = ingredient.replaceAll('-', ' ').split(' ');
     var tokens = ingredient.trim().split(' ');
     int i = 0;
-    _state = State.Dry;
+    _state = _State.Dry;
     if (RegExp(r'^([0-9]+)[ a-z]*').hasMatch(tokens[i])) {
       _amount = int.parse(RegExp(r'^([0-9]+)[ a-zäöüß]*').firstMatch(tokens[i]).group(1));
       i++;
       if (i < tokens.length) {
-        if (MeasureType.hasMatch(tokens[i])) {
-          _state = State.Dry;
+        if (_MeasureType.hasMatch(tokens[i])) {
+          _state = _State.Dry;
           i++;
-        } else if (MeasureDry.hasMatch(tokens[i])) {
-          _state = State.Dry;
+        } else if (_MeasureDry.hasMatch(tokens[i])) {
+          _state = _State.Dry;
           i++;
-        } else if (MeasureLiquid.hasMatch(tokens[i])) {
-          _state = State.Liquid;
+        } else if (_MeasureLiquid.hasMatch(tokens[i])) {
+          _state = _State.Liquid;
           i++;
-        } else if (MeasureElse.hasMatch(tokens[i])) {
+        } else if (_MeasureElse.hasMatch(tokens[i])) {
           i++;
         }
       } else {
@@ -38,7 +38,7 @@ class Ingredient {
     } else {
       // no amount
       _amount = 0;
-      _state = State.Dry;
+      _state = _State.Dry;
     }
     _name = '';
     while (i < tokens.length) {
@@ -84,20 +84,20 @@ class Ingredient {
     _amount = n;
   }
 
-  State getState() {
+  _State getState() {
     return _state;
   }
 
-  void setState(State s) {
+  void setState(_State s) {
     _state = s;
   }
 
   void liquefy() {
-    _state = State.Liquid;
+    _state = _State.Liquid;
   }
 
   void dry() {
-    _state = State.Dry;
+    _state = _State.Dry;
   }
 
   String getName() {
