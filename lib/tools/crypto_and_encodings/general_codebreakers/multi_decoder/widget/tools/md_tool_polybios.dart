@@ -9,7 +9,7 @@ import 'package:gc_wizard/utils/logic_utils/constants.dart';
 const MDT_INTERNALNAMES_POLYBIOS = 'multidecoder_tool_polybios_title';
 const MDT_POLYBIOS_OPTION_MODE = 'multidecoder_tool_polybios_option_mode';
 
-class MultiDecoderToolPolybios extends BaseMultiDecoderTool {
+class MultiDecoderToolPolybios extends AbstractMultiDecoderTool {
   MultiDecoderToolPolybios(
       {Key key, int id, String name, Map<String, dynamic> options})
       : super(

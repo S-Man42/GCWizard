@@ -8,7 +8,13 @@ import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/shadoks_numbers/logic/shadoks_numbers.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/shadoks_numbers_segment_display/widget/shadoks_numbers_segment_display.dart';
+import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/gcw_touchcanvas.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/n_segment_display.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/segmentdisplay_painter.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/logic/segment_display.dart';
+
+part 'package:gc_wizard/tools/crypto_and_encodings/shadoks_numbers/widget/shadoks_numbers_segment_display.dart';
 
 class ShadoksNumbers extends StatefulWidget {
   @override
@@ -87,7 +93,7 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
           child: Row(
             children: <Widget>[
               Expanded(
-                child: ShadoksNumbersSegmentDisplay(
+                child: _ShadoksNumbersSegmentDisplay(
                   segments: _currentDisplay,
                   onChanged: onChanged,
                 ),
@@ -150,9 +156,9 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
     return result;
   }
 
-  Widget _ShadoksNumbersSegmentDisplay({Map<String, bool> segments, bool readOnly}) {
+  Widget _SanatizedShadoksNumbersSegmentDisplay({Map<String, bool> segments, bool readOnly}) {
     segments.putIfAbsent('a', () => false);
-    return ShadoksNumbersSegmentDisplay(segments: segments, readOnly: true);
+    return _ShadoksNumbersSegmentDisplay(segments: segments, readOnly: true);
   }
 
   Widget _buildOutput() {
@@ -164,7 +170,7 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
         children: <Widget>[
           SegmentDisplayOutput(
               segmentFunction: (displayedSegments, readOnly) {
-                return _ShadoksNumbersSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
+                return _SanatizedShadoksNumbersSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
               },
               segments: segments,
               readOnly: true),
@@ -190,7 +196,7 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
         children: <Widget>[
           SegmentDisplayOutput(
               segmentFunction: (displayedSegments, readOnly) {
-                return _ShadoksNumbersSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
+                return _SanatizedShadoksNumbersSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
               },
               segments: segments['displays'],
               readOnly: true),

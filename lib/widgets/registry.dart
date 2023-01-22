@@ -122,7 +122,7 @@ import 'package:gc_wizard/tools/coords/waypoint_projection/widget/waypoint_proje
 import 'package:gc_wizard/tools/crypto_and_encodings/abaddon/widget/abaddon.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/adfgvx/widget/adfgvx.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/affine/widget/affine.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/algol/widget/algol.dart';
+import 'package:gc_wizard/tools/science_and_technology/teletypewriter/algol/widget/algol.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/widget/alphabet_values.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/amsco/widget/amsco.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/atbash/widget/atbash.dart';
@@ -191,7 +191,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/hashes/hashes_identificatio
 import 'package:gc_wizard/tools/crypto_and_encodings/hashes/hashes_overview/widget/hashes_overview.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/homophone/widget/homophone.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/houdini/widget/houdini.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/illiac/widget/illiac.dart';
+import 'package:gc_wizard/tools/science_and_technology/teletypewriter/illiac/widget/illiac.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/kamasutra/widget/kamasutra.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/kenny/widget/kenny.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/language_games/chicken_language/widget/chicken_language.dart';
@@ -240,18 +240,18 @@ import 'package:gc_wizard/tools/crypto_and_encodings/straddling_checkerboard/wid
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/widget/substitution.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/tap_code/widget/tap_code.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/tapir/widget/tapir.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/telegraphs/chappe/widget/chappe.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/telegraphs/edelcrantz/widget/edelcrantz.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/telegraphs/gauss_weber_telegraph/widget/gauss_weber_telegraph.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/telegraphs/murray/widget/murray.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/telegraphs/ohlsen_telegraph/widget/ohlsen_telegraph.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/telegraphs/pasley_telegraph/widget/pasley_telegraph.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/telegraphs/popham_telegraph/widget/popham_telegraph.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/telegraphs/prussiatelegraph/widget/prussiatelegraph.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/telegraphs/schilling_canstatt_telegraph/widget/schilling_canstatt_telegraph.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/telegraphs/semaphore/widget/semaphore.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/telegraphs/wheatstone_cooke_5_needles/widget/wheatstone_cooke_5_needles.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/telegraphs/wigwag/widget/wigwag.dart';
+import 'package:gc_wizard/tools/science_and_technology/telegraphs/chappe/widget/chappe.dart';
+import 'package:gc_wizard/tools/science_and_technology/telegraphs/edelcrantz/widget/edelcrantz.dart';
+import 'package:gc_wizard/tools/science_and_technology/telegraphs/gauss_weber_telegraph/widget/gauss_weber_telegraph.dart';
+import 'package:gc_wizard/tools/science_and_technology/telegraphs/murray/widget/murray.dart';
+import 'package:gc_wizard/tools/science_and_technology/telegraphs/ohlsen_telegraph/widget/ohlsen_telegraph.dart';
+import 'package:gc_wizard/tools/science_and_technology/telegraphs/pasley_telegraph/widget/pasley_telegraph.dart';
+import 'package:gc_wizard/tools/science_and_technology/telegraphs/popham_telegraph/widget/popham_telegraph.dart';
+import 'package:gc_wizard/tools/science_and_technology/telegraphs/prussia_telegraph/widget/prussia_telegraph.dart';
+import 'package:gc_wizard/tools/science_and_technology/telegraphs/schilling_canstatt_telegraph/widget/schilling_canstatt_telegraph.dart';
+import 'package:gc_wizard/tools/science_and_technology/telegraphs/semaphore/widget/semaphore.dart';
+import 'package:gc_wizard/tools/science_and_technology/telegraphs/wheatstone_cooke_5_needles/widget/wheatstone_cooke_5_needles.dart';
+import 'package:gc_wizard/tools/science_and_technology/telegraphs/wigwag/widget/wigwag.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/ancient_teletypewriter/widget/ancient_teletypewriter.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/ccitt1/widget/ccitt1.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/ccitt2/widget/ccitt2.dart';
@@ -266,16 +266,16 @@ import 'package:gc_wizard/tools/crypto_and_encodings/text_analysis/widget/text_a
 import 'package:gc_wizard/tools/crypto_and_encodings/tomtom/widget/tomtom.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/trifid/widget/trifid.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/trithemius/widget/trithemius.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/tts/widget/tts.dart';
+import 'package:gc_wizard/tools/science_and_technology/teletypewriter/tts/widget/tts.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/vigenere/widget/vigenere.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/wasd/widget/wasd.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/wherigo_urwigo/earwigo_text_deobfuscation/widget/earwigo_text_deobfuscation.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/wherigo_urwigo/urwigo_hashbreaker/widget/urwigo_hashbreaker.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/wherigo_urwigo/urwigo_text_deobfuscation/widget/urwigo_text_deobfuscation.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/wherigo_urwigo/wherigo_analyze/widget/wherigo_analyze.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/z22/widget/z22.dart';
+import 'package:gc_wizard/tools/wherigo/earwigo_text_deobfuscation/widget/earwigo_text_deobfuscation.dart';
+import 'package:gc_wizard/tools/wherigo/urwigo_hashbreaker/widget/urwigo_hashbreaker.dart';
+import 'package:gc_wizard/tools/wherigo/urwigo_text_deobfuscation/widget/urwigo_text_deobfuscation.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_analyze.dart';
+import 'package:gc_wizard/tools/science_and_technology/teletypewriter/z22/widget/z22.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/zamonian_numbers/widget/zamonian_numbers.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/zc1/widget/zc1.dart';
+import 'package:gc_wizard/tools/science_and_technology/teletypewriter/zc1/widget/zc1.dart';
 import 'package:gc_wizard/tools/formula_solver/widget/formula_solver_formulagroups.dart';
 import 'package:gc_wizard/tools/games/bowling/widget/bowling.dart';
 import 'package:gc_wizard/tools/games/catan/widget/catan.dart';
@@ -439,7 +439,7 @@ initializeRegistry(BuildContext context) {
       'alcoholmass',
     ]),
     GCWTool(tool: ALGOL(), i18nPrefix: 'algol', categories: [
-      ToolCategory.CRYPTOGRAPHY
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: [
       'algol',
     ]),
@@ -785,7 +785,7 @@ initializeRegistry(BuildContext context) {
       searchKeys: [],
     ),
     GCWTool(tool: ILLIAC(), i18nPrefix: 'illiac', categories: [
-      ToolCategory.CRYPTOGRAPHY
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: [
       'illiac',
     ]),
@@ -1137,7 +1137,7 @@ initializeRegistry(BuildContext context) {
     GCWTool(
         tool: TeletypewriterSelection(),
         i18nPrefix: 'teletypewriter_selection',
-        categories: [ToolCategory.CRYPTOGRAPHY],
+        categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
         searchKeys: []),
     GCWTool(tool: TeletypewriterPunchTape(), i18nPrefix: 'punchtape', categories: [
       ToolCategory.CRYPTOGRAPHY
@@ -1171,7 +1171,7 @@ initializeRegistry(BuildContext context) {
         categories: [ToolCategory.CRYPTOGRAPHY],
         searchKeys: []),
     GCWTool(tool: TTS(), i18nPrefix: 'tts', categories: [
-      ToolCategory.CRYPTOGRAPHY
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: [
       'tts',
     ]),
@@ -1212,7 +1212,7 @@ initializeRegistry(BuildContext context) {
         categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
         searchKeys: ['weather', 'weather_clouds', 'weather_a']),
     GCWTool(tool: Z22(), i18nPrefix: 'z22', categories: [
-      ToolCategory.CRYPTOGRAPHY
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: [
       'z22',
     ]),
@@ -1222,7 +1222,7 @@ initializeRegistry(BuildContext context) {
       'symbol_zamonian',
     ]),
     GCWTool(tool: ZC1(), i18nPrefix: 'zc1', categories: [
-      ToolCategory.CRYPTOGRAPHY
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: [
       'zc1',
     ]),

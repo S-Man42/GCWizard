@@ -7,7 +7,7 @@ class MultiDecoder extends StatefulWidget {
 
 class MultiDecoderState extends State<MultiDecoder> {
   var _controller;
-  List<BaseMultiDecoderTool> mdtTools;
+  List<AbstractMultiDecoderTool> mdtTools;
 
   String _currentInput = '';
   Widget _currentOutput;
@@ -126,7 +126,7 @@ class MultiDecoderState extends State<MultiDecoder> {
     );
   }
 
-  _toolTitle(BaseMultiDecoderTool tool) {
+  _toolTitle(AbstractMultiDecoderTool tool) {
     var optionValues = tool.options.values.map((value) {
       var result = value;
 

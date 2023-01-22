@@ -7,7 +7,7 @@ import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numer
 const MDT_INTERNALNAMES_NUMERALBASES = 'multidecoder_tool_numeralbases_title';
 const MDT_NUMERALBASES_OPTION_FROM = 'multidecoder_tool_numeralbases_option_from';
 
-class MultiDecoderToolNumeralBases extends BaseMultiDecoderTool {
+class MultiDecoderToolNumeralBases extends AbstractMultiDecoderTool {
   MultiDecoderToolNumeralBases({Key key, int id, String name, Map<String, dynamic> options})
       : super(
             key: key,

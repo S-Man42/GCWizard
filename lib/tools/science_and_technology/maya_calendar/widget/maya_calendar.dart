@@ -7,7 +7,7 @@ import 'package:gc_wizard/common_widgets/gcw_toolbar.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/maya_numbers_segment_display/widget/maya_numbers_segment_display.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/maya_numbers/widget/maya_numbers_segment_display.dart';
 import 'package:gc_wizard/tools/science_and_technology/maya_calendar/logic/maya_calendar.dart';
 import 'package:gc_wizard/utils/logic_utils/date_utils.dart';
 

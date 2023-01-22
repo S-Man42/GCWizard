@@ -11,7 +11,7 @@ import 'package:gc_wizard/utils/logic_utils/constants.dart';
 const MDT_INTERNALNAMES_ALPHABETVALUES = 'multidecoder_tool_alphabetvalues_title';
 const MDT_ALPHABETVALUES_OPTION_ALPHABET = 'multidecoder_tool_alphabetvalues_option_alphabet';
 
-class MultiDecoderToolAlphabetValues extends BaseMultiDecoderTool {
+class MultiDecoderToolAlphabetValues extends AbstractMultiDecoderTool {
   MultiDecoderToolAlphabetValues({Key key, int id, String name, Map<String, dynamic> options, BuildContext context})
       : super(
             key: key,

@@ -10,7 +10,7 @@ import 'package:gc_wizard/tools/science_and_technology/vanity/logic/vanity.dart'
 const MDT_INTERNALNAMES_VANITYMULTITAP = 'multidecoder_tool_vanitymultitap_title';
 const MDT_VANITYMULTITAP_OPTION_PHONEMODEL = 'multidecoder_tool_vanitymultitap_option_phonemodel';
 
-class MultiDecoderToolVanityMultitap extends BaseMultiDecoderTool {
+class MultiDecoderToolVanityMultitap extends AbstractMultiDecoderTool {
   //artifact from 1.5.0
   static String _ensureBackwardsCompatibility(String modelName) {
     switch (modelName) {

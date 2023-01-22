@@ -5,7 +5,7 @@ import 'package:gc_wizard/tools/images_and_files/binary2image/logic/binary2image
 
 const MDT_INTERNALNAMES_BINARY2IMAGE = 'multidecoder_tool_binary2image_title';
 
-class MultiDecoderBinary2Image extends BaseMultiDecoderTool {
+class MultiDecoderBinary2Image extends AbstractMultiDecoderTool {
   MultiDecoderBinary2Image({Key key, int id, String name, Map<String, dynamic> options})
       : super(
             key: key,

@@ -7,7 +7,13 @@ import 'package:gc_wizard/common_widgets/gcw_toolbar.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/predator/logic/predator.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/predator_segment_display/widget/predator_segment_display.dart';
+import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/gcw_touchcanvas.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/n_segment_display.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/segmentdisplay_painter.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/logic/segment_display.dart';
+
+part 'package:gc_wizard/tools/crypto_and_encodings/predator/widget/predator_segment_display.dart';
 
 class Predator extends StatefulWidget {
   @override
@@ -97,7 +103,7 @@ class PredatorState extends State<Predator> {
           child: Row(
             children: <Widget>[
               Expanded(
-                child: PredatorSegmentDisplay(
+                child: _PredatorSegmentDisplay(
                   segments: currentDisplay,
                   onChanged: onChanged,
                 ),
@@ -138,7 +144,7 @@ class PredatorState extends State<Predator> {
   Widget _buildDigitalOutput(List<List<String>> segments) {
     return SegmentDisplayOutput(
         segmentFunction: (displayedSegments, readOnly) {
-          return PredatorSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
+          return _PredatorSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
         },
         segments: segments,
         readOnly: true);

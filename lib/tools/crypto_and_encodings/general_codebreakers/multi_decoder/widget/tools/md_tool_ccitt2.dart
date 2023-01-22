@@ -14,7 +14,7 @@ const MDT_CCITT2_OPTION_MODE = 'common_mode';
 const MDT_CCITT2_OPTION_MODE_DENARY = 'common_numeralbase_denary';
 const MDT_CCITT2_OPTION_MODE_BINARY = 'common_numeralbase_binary';
 
-class MultiDecoderToolCcitt2 extends BaseMultiDecoderTool {
+class MultiDecoderToolCcitt2 extends AbstractMultiDecoderTool {
   MultiDecoderToolCcitt2({Key key, int id, String name, Map<String, dynamic> options, BuildContext context})
       : super(
             key: key,

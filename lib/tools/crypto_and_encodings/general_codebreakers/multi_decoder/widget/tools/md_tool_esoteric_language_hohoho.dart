@@ -5,7 +5,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_
 
 const MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_HOHOHO = 'hohoho_title';
 
-class MultiDecoderToolEsotericLanguageHohoho extends BaseMultiDecoderTool {
+class MultiDecoderToolEsotericLanguageHohoho extends AbstractMultiDecoderTool {
   MultiDecoderToolEsotericLanguageHohoho({Key key, int id, String name, Map<String, dynamic> options})
       : super(
             key: key,

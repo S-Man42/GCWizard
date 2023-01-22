@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/multi_decoder.dart';
 
-abstract class BaseMultiDecoderTool {
+abstract class AbstractMultiDecoderTool {
   final int id;
   String name;
   final String internalToolName;
@@ -10,7 +10,7 @@ abstract class BaseMultiDecoderTool {
   final bool optionalKey;
   Map<String, dynamic> options = {};
 
-  BaseMultiDecoderTool(
+  AbstractMultiDecoderTool(
       {Key key,
       this.id,
       this.name,

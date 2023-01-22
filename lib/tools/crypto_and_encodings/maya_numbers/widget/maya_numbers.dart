@@ -8,7 +8,7 @@ import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/maya_numbers/logic/maya_numbers.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/maya_numbers_segment_display/widget/maya_numbers_segment_display.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/maya_numbers/widget/maya_numbers_segment_display.dart';
 
 class MayaNumbers extends StatefulWidget {
   @override

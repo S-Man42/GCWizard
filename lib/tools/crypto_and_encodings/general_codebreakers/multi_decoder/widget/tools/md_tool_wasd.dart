@@ -11,7 +11,7 @@ import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
 const MDT_INTERNALNAMES_WASD = 'multidecoder_tool_wasd_title';
 const MDT_WASD_OPTION_SET = 'wasd_control_set';
 
-class MultiDecoderToolWasd extends BaseMultiDecoderTool {
+class MultiDecoderToolWasd extends AbstractMultiDecoderTool {
   MultiDecoderToolWasd({Key key, int id, String name, Map<String, dynamic> options, BuildContext context})
       : super(
             key: key,

@@ -10,7 +10,7 @@ const MDT_INTERNALNAMES_KEYBOARDLAYOUT = 'multidecoder_tool_keyboardlayout_title
 const MDT_KEYBOARDLAYOUT_OPTION_FROM = 'keyboard_from';
 const MDT_KEYBOARDLAYOUT_OPTION_TO = 'keyboard_to';
 
-class MultiDecoderToolKeyboardLayout extends BaseMultiDecoderTool {
+class MultiDecoderToolKeyboardLayout extends AbstractMultiDecoderTool {
   MultiDecoderToolKeyboardLayout({Key key, int id, String name, Map<String, dynamic> options, BuildContext context})
       : super(
             key: key,

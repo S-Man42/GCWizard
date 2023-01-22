@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/bcd/logic/bcd.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/bcd/widget/bcd.dart';
 
-class BCDGray extends BCD {
+class BCDGray extends AbstractBCD {
   BCDGray({Key key})
       : super(
           key: key,

@@ -11,7 +11,7 @@ import 'package:gc_wizard/tools/games/scrabble/logic/scrabble_sets.dart';
 const MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BEATNIK = 'beatnik_title';
 const MDT_ESOTERIC_LANGUAGE_BEATNIK_OPTION_MODE = 'beatnik_hint_scrabble';
 
-class MultiDecoderToolEsotericLanguageBeatnik extends BaseMultiDecoderTool {
+class MultiDecoderToolEsotericLanguageBeatnik extends AbstractMultiDecoderTool {
   MultiDecoderToolEsotericLanguageBeatnik(
       {Key key, int id, String name, Map<String, dynamic> options, BuildContext context})
       : super(

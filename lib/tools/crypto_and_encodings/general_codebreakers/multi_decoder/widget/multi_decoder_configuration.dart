@@ -14,7 +14,7 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
   int _currentEditId;
 
   List<String> _sortedToolRegistry;
-  List<BaseMultiDecoderTool> mdtTools;
+  List<AbstractMultiDecoderTool> mdtTools;
 
   @override
   void initState() {
@@ -71,7 +71,7 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
     mdtTools.insert(0, _multiDecoderToolToGCWMultiDecoderTool(context, tool));
   }
 
-  _updateTool(BaseMultiDecoderTool tool) {
+  _updateTool(AbstractMultiDecoderTool tool) {
     var multiDecoderTool = model.findMultiDecoderToolById(tool.id);
     multiDecoderTool.name = tool.name;
     multiDecoderTool.options = tool.options.entries.map((option) {

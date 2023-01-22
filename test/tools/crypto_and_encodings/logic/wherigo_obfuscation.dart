@@ -1,6 +1,6 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/tools/crypto_and_encodings/wherigo_urwigo/logic/earwigo_tools.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/wherigo_urwigo/logic/urwigo_tools.dart';
+import 'package:gc_wizard/tools/wherigo/logic/earwigo_tools.dart';
+import 'package:gc_wizard/tools/wherigo/logic/urwigo_tools.dart';
 
 void main() {
   group("Obfuscation.Earwigo_GSUB_WIG:", () {

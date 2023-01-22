@@ -9,7 +9,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_
 const MDT_INTERNALNAMES_BCD = 'multidecoder_tool_bcd_title';
 const MDT_BCD_OPTION_BCDFUNCTION = 'multidecoder_tool_bcd_option_bcdfunction';
 
-class MultiDecoderToolBCD extends BaseMultiDecoderTool {
+class MultiDecoderToolBCD extends AbstractMultiDecoderTool {
   MultiDecoderToolBCD({Key key, int id, String name, Map<String, dynamic> options, BuildContext context})
       : super(
             key: key,

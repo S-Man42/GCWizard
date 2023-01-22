@@ -4,17 +4,17 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/base/logic/base.dart';
 
-class Base extends StatefulWidget {
+abstract class AbstractBase extends StatefulWidget {
   final Function encode;
   final Function decode;
 
-  Base({Key key, this.encode, this.decode}) : super(key: key);
+  AbstractBase({Key key, this.encode, this.decode}) : super(key: key);
 
   @override
-  BaseState createState() => BaseState();
+  AbstractBaseState createState() => AbstractBaseState();
 }
 
-class BaseState extends State<Base> {
+class AbstractBaseState extends State<AbstractBase> {
   var _inputController;
 
   String _currentInput = '';

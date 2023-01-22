@@ -4,24 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
 import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
 
-// https://www.languagesandnumbers.com/how-to-count-in-volapuk/en/vol/
-// https://www.languagesandnumbers.com/how-to-count-in-danish/en/dan/
-// https://www.languagesandnumbers.com/how-to-count-in-solresol/en/solresol/
-// https://www.languagesandnumbers.com/how-to-count-in-german/en/deu/
-// https://www.languagesandnumbers.com/how-to-count-in-english/en/eng/
-// https://www.languagesandnumbers.com/how-to-count-in-polish/en/pol/
-// https://www.languagesandnumbers.com/how-to-count-in-portuguese-portugal/en/por-prt/
-// https://www.languagesandnumbers.com/how-to-count-in-english/en/eng/
-// https://www.languagesandnumbers.com/how-to-count-in-russian/en/rus/
-// https://www.languagesandnumbers.com/how-to-count-in-spanish/en/spa/
-// https://www.languagesandnumbers.com/how-to-count-in-italian/en/ita/
-// https://www.languagesandnumbers.com/how-to-count-in-french/en/fra/
-// https://www.languagesandnumbers.com/how-to-count-in-danish/en/dan/
-// https://www.languagesandnumbers.com/how-to-count-in-danish/en/dan/
-// https://www.languagesandnumbers.com/how-to-count-in-danish/en/dan/
-// https://www.languagesandnumbers.com/how-to-count-in-bulgarian/en/bul/
-// https://www.languagesandnumbers.com/how-to-count-in-slovak/en/slk/
-// https://www.languagesandnumbers.com/how-to-count-in-czech/en/ces/
 // https://de.wikibrief.org/wiki/Romanian_numbers
 // https://de.wikipedia.org/wiki/Griechische_Zahlw%C3%B6rter
 //

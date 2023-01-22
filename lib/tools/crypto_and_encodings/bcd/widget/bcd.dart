@@ -5,16 +5,16 @@ import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/bcd/logic/bcd.dart';
 import 'package:gc_wizard/tools/utils/textinputformatter/wrapper_for_masktextinputformatter/widget/wrapper_for_masktextinputformatter.dart';
 
-class BCD extends StatefulWidget {
+abstract class AbstractBCD extends StatefulWidget {
   final BCDType type;
 
-  BCD({Key key, this.type}) : super(key: key);
+  AbstractBCD({Key key, this.type}) : super(key: key);
 
   @override
-  BCDState createState() => BCDState();
+  AbstractBCDState createState() => AbstractBCDState();
 }
 
-class BCDState extends State<BCD> {
+class AbstractBCDState extends State<AbstractBCD> {
   var _encodeController;
   var _decodeController;
 

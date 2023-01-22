@@ -14,7 +14,7 @@ const MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE_OPTION_MODE = 'common_language';
 
 const MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE_OPTION_BRAINFK = 'brainfk_title';
 
-class MultiDecoderToolEsotericLanguageBrainfkDerivate extends BaseMultiDecoderTool {
+class MultiDecoderToolEsotericLanguageBrainfkDerivate extends AbstractMultiDecoderTool {
   MultiDecoderToolEsotericLanguageBrainfkDerivate(
       {Key key, int id, String name, Map<String, dynamic> options, BuildContext context})
       : super(

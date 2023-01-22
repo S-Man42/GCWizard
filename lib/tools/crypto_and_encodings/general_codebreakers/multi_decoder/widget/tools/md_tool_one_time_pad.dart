@@ -7,7 +7,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/one_time_pad/logic/one_time
 const MDT_INTERNALNAMES_ONETIMEPAD = 'multidecoder_tool_onetimepad_title';
 const MDT_ONETIMEPAD_OPTION_KEY = 'onetimepad_keyoffset';
 
-class MultiDecoderToolOneTimePad extends BaseMultiDecoderTool {
+class MultiDecoderToolOneTimePad extends AbstractMultiDecoderTool {
   MultiDecoderToolOneTimePad({Key key, int id, String name, Map<String, dynamic> options})
       : super(
             key: key,

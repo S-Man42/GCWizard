@@ -11,7 +11,7 @@ const MDT_GCCODE_OPTION_MODE = 'multidecoder_tool_gccode_option_mode';
 const MDT_GCCODE_OPTION_MODE_IDTOGCCODE = 'multidecoder_tool_gccode_option_mode_id.to.gccode';
 const MDT_GCCODE_OPTION_MODE_GCCODETOID = 'multidecoder_tool_gccode_option_mode_gccode.to.id';
 
-class MultiDecoderToolGCCode extends BaseMultiDecoderTool {
+class MultiDecoderToolGCCode extends AbstractMultiDecoderTool {
   MultiDecoderToolGCCode({Key key, int id, String name, Map<String, dynamic> options, BuildContext context})
       : super(
             key: key,

@@ -5,7 +5,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/pokemon/logic/pokemon.dart'
 
 const MDT_INTERNALNAMES_POKEMON = 'pokemon_code_title';
 
-class MultiDecoderToolPokemon extends BaseMultiDecoderTool {
+class MultiDecoderToolPokemon extends AbstractMultiDecoderTool {
   MultiDecoderToolPokemon({Key key, int id, String name, Map<String, dynamic> options})
       : super(
             key: key,

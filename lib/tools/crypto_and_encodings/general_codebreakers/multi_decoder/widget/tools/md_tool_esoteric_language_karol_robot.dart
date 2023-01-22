@@ -6,7 +6,7 @@ import 'package:gc_wizard/tools/images_and_files/binary2image/logic/binary2image
 
 const MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_KAROL_ROBOT = 'karol_robot_title';
 
-class MultiDecoderToolEsotericLanguageKarolRobot extends BaseMultiDecoderTool {
+class MultiDecoderToolEsotericLanguageKarolRobot extends AbstractMultiDecoderTool {
   MultiDecoderToolEsotericLanguageKarolRobot({Key key, int id, String name, Map<String, dynamic> options})
       : super(
             key: key,

@@ -8,7 +8,7 @@ import 'package:gc_wizard/utils/logic_utils/constants.dart';
 const MDT_INTERNALNAMES_PLAYFAIR = 'multidecoder_tool_playfair_title';
 const MDT_PLAYFAIR_OPTION_MODE = 'multidecoder_tool_playfair_option_mode';
 
-class MultiDecoderToolPlayfair extends BaseMultiDecoderTool {
+class MultiDecoderToolPlayfair extends AbstractMultiDecoderTool {
   MultiDecoderToolPlayfair({Key key, int id, String name, Map<String, dynamic> options})
       : super(
             key: key,

@@ -126,9 +126,9 @@ _multiDecoderToolOptionToGCWMultiDecoderToolOptions(
   return gcwOptions;
 }
 
-BaseMultiDecoderTool _multiDecoderToolToGCWMultiDecoderTool(
+AbstractMultiDecoderTool _multiDecoderToolToGCWMultiDecoderTool(
     BuildContext context, MultiDecoderToolEntity mdtTool) {
-  BaseMultiDecoderTool gcwTool;
+  AbstractMultiDecoderTool gcwTool;
 
   var options =
       _initialOptions[mdtTool.internalToolName] ?? <String, dynamic>{};

@@ -7,7 +7,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/vigenere/logic/vigenere.dar
 const MDT_INTERNALNAMES_VIGENERE = 'multidecoder_tool_vigenere_title';
 const MDT_VIGENERE_OPTION_KEY = 'onetimepad_keyoffset';
 
-class MultiDecoderToolVigenere extends BaseMultiDecoderTool {
+class MultiDecoderToolVigenere extends AbstractMultiDecoderTool {
   MultiDecoderToolVigenere({Key key, int id, String name, Map<String, dynamic> options})
       : super(
             key: key,

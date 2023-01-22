@@ -7,7 +7,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/rotation/logic/rotator.dart
 const MDT_INTERNALNAMES_ROTATION = 'multidecoder_tool_rotation_title';
 const MDT_ROTATION_OPTION_KEY = 'multidecoder_tool_rotation_option_key';
 
-class MultiDecoderToolRotation extends BaseMultiDecoderTool {
+class MultiDecoderToolRotation extends AbstractMultiDecoderTool {
   MultiDecoderToolRotation({Key key, int id, String name, Map<String, dynamic> options})
       : super(
             key: key,

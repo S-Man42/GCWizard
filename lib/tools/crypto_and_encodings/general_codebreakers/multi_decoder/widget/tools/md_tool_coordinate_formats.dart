@@ -12,7 +12,7 @@ import 'package:latlong2/latlong.dart';
 const MDT_INTERNALNAMES_COORDINATEFORMATS = 'multidecoder_tool_coordinateformats_title';
 const MDT_COORDINATEFORMATS_OPTION_FORMAT = 'multidecoder_tool_coordinateformats_option_format';
 
-class MultiDecoderToolCoordinateFormats extends BaseMultiDecoderTool {
+class MultiDecoderToolCoordinateFormats extends AbstractMultiDecoderTool {
   MultiDecoderToolCoordinateFormats({Key key, int id, String name, Map<String, dynamic> options, BuildContext context})
       : super(
             key: key,
