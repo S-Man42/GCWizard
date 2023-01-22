@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_stateful_dropdown.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/bacon/logic/bacon.dart';
-
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/multi_decoder.dart';
 
 const MDT_INTERNALNAMES_BACON = 'multidecoder_tool_bacon_title';

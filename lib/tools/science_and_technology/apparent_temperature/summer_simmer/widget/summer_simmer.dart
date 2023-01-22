@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/spinners/gcw_double_spinner.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_multiple_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
+import 'package:gc_wizard/common_widgets/spinners/gcw_double_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/summer_simmer/logic/summer_simmer.dart';

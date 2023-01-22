@@ -8,9 +8,9 @@ import 'package:gc_wizard/common_widgets/dialogs/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
-import 'package:gc_wizard/tools/science_and_technology/teletypewriter/logic/teletypewriter.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/n_segment_display.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/segment_display_utils.dart';
+import 'package:gc_wizard/tools/science_and_technology/teletypewriter/logic/teletypewriter.dart';
 import 'package:gc_wizard/tools/utils/file_utils/widget/file_utils.dart';
 import 'package:intl/intl.dart';
 

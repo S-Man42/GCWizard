@@ -6,7 +6,6 @@ import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_langua
     as chef;
 import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/widget/chef_language.dart'
     as chefWidget;
-
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/multi_decoder.dart';
 
 const MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_CHEF = 'chef_title';

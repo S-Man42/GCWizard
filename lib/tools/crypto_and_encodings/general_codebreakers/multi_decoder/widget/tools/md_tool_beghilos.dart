@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/beghilos/logic/beghilos.dart';
-
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/multi_decoder.dart';
 
 const MDT_INTERNALNAMES_BEGHILOS = 'multidecoder_tool_beghilos_title';

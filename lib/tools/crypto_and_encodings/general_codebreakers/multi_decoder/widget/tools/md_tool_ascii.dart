@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/multi_decoder.dart';
 
 const MDT_INTERNALNAMES_ASCII = 'multidecoder_tool_ascii_title';

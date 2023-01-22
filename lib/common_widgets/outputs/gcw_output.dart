@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 
 class GCWOutput extends StatefulWidget {
   final dynamic child; // could be Widget or String

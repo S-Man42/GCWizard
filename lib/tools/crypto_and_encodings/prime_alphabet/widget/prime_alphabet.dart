@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_dropdown_spinner.dart';
-import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/prime_alphabet/logic/prime_alphabet.dart';
 import 'package:gc_wizard/tools/science_and_technology/primes/logic/primes_list.dart';

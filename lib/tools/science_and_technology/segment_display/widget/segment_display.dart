@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
-import 'package:gc_wizard/common_widgets/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
-import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
-import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/segmentdisplay_output.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_toolbar.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/14_segment_display/widget/14_segment_display.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/16_segment_display/widget/16_segment_display.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/7_segment_display/widget/7_segment_display.dart';
-import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/n_segment_display.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/logic/segment_display.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/n_segment_display.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/segmentdisplay_output.dart';
 import 'package:gc_wizard/utils/logic_utils/constants.dart';
 
 class SegmentDisplay extends StatefulWidget {

@@ -1,9 +1,9 @@
 import 'dart:typed_data';
 
-import 'package:gc_wizard/tools/images_and_files/stegano/logic/stegano_decoder.dart';
-import 'package:gc_wizard/tools/images_and_files/stegano/logic/stegano_encoder.dart';
 import 'package:gc_wizard/tools/images_and_files/stegano/logic/requests/stegano_decode_request.dart';
 import 'package:gc_wizard/tools/images_and_files/stegano/logic/requests/stegano_encode_request.dart';
+import 'package:gc_wizard/tools/images_and_files/stegano/logic/stegano_decoder.dart';
+import 'package:gc_wizard/tools/images_and_files/stegano/logic/stegano_encoder.dart';
 import 'package:gc_wizard/tools/utils/gcw_file/widget/gcw_file.dart' as local;
 
 const int MAX_LENGTH = 5000;

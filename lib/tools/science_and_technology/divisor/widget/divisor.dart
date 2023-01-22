@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
-import 'package:gc_wizard/tools/science_and_technology/cross_sums/widget/crosstotal_output.dart';
-import 'package:gc_wizard/tools/science_and_technology/cross_sums/widget/crosstotal_switch.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
+import 'package:gc_wizard/tools/science_and_technology/cross_sums/widget/crosstotal_output.dart';
+import 'package:gc_wizard/tools/science_and_technology/cross_sums/widget/crosstotal_switch.dart';
 import 'package:gc_wizard/tools/science_and_technology/divisor/logic/divisor.dart';
 
 class Divisor extends StatefulWidget {

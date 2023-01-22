@@ -1,25 +1,19 @@
-import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
-import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/theme/theme_colors.dart';
-import 'package:touchable/touchable.dart';
+part of 'package:gc_wizard/tools/games/sudoku/sudoku_solver/widget/sudoku_solver.dart';
 
-enum SudokuFillType { USER_FILLED, CALCULATED }
+enum _SudokuFillType { USER_FILLED, CALCULATED }
 
-class SudokuBoard extends StatefulWidget {
-  final SudokuFillType type;
+class _SudokuBoard extends StatefulWidget {
+  final _SudokuFillType type;
   final Function onChanged;
   final List<List<Map<String, dynamic>>> board;
 
-  SudokuBoard({Key key, this.onChanged, this.board, this.type: SudokuFillType.CALCULATED}) : super(key: key);
+  _SudokuBoard({Key key, this.onChanged, this.board, this.type: _SudokuFillType.CALCULATED}) : super(key: key);
 
   @override
-  SudokuBoardState createState() => SudokuBoardState();
+  _SudokuBoardState createState() => _SudokuBoardState();
 }
 
-class SudokuBoardState extends State<SudokuBoard> {
+class _SudokuBoardState extends State<_SudokuBoard> {
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -39,7 +33,7 @@ class SudokuBoardState extends State<SudokuBoard> {
                           return;
                         }
 
-                        widget.board[x][y] = {'value': value, 'type': SudokuFillType.USER_FILLED};
+                        widget.board[x][y] = {'value': value, 'type': _SudokuFillType.USER_FILLED};
                         widget.onChanged(widget.board);
                       });
                     }));
@@ -54,7 +48,7 @@ class SudokuBoardPainter extends CustomPainter {
   final Function(int, int, int) setBoxValue;
   final List<List<Map<String, dynamic>>> board;
   final BuildContext context;
-  final SudokuFillType type;
+  final _SudokuFillType type;
 
   SudokuBoardPainter(this.context, this.type, this.board, this.setBoxValue);
 
@@ -106,7 +100,7 @@ class SudokuBoardPainter extends CustomPainter {
 
             if (board[boardX][boardY] != null) {
               var textColor =
-                  board[boardX][boardY]['type'] == SudokuFillType.USER_FILLED ? colors.accent() : colors.mainFont();
+                  board[boardX][boardY]['type'] == _SudokuFillType.USER_FILLED ? colors.accent() : colors.mainFont();
 
               TextSpan span = TextSpan(
                   style: gcwTextStyle().copyWith(color: textColor, fontSize: heightInner * 0.8),
@@ -136,7 +130,7 @@ class SudokuBoardPainter extends CustomPainter {
   _removeCalculated(List<List<Map<String, dynamic>>> board) {
     for (int i = 0; i < 9; i++) {
       for (int j = 0; j < 9; j++) {
-        if (board[i][j] != null && board[i][j]['type'] == SudokuFillType.CALCULATED) board[i][j] = null;
+        if (board[i][j] != null && board[i][j]['type'] == _SudokuFillType.CALCULATED) board[i][j] = null;
       }
     }
   }

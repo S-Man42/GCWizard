@@ -1,11 +1,11 @@
 import 'dart:convert';
 
 import 'package:gc_wizard/configuration/settings/preferences.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/persistence/json_provider.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/persistence/model.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/logic/ellipsoid.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/persistence/json_provider.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/persistence/model.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/tools/md_tool_base.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/tools/md_tool_bcd.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/tools/md_tool_ccitt1.dart';

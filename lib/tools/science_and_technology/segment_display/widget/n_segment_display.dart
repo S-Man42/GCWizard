@@ -1,8 +1,8 @@
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/segmentdisplay_painter.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/logic/segment_display.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/segmentdisplay_painter.dart';
 import 'package:touchable/touchable.dart';
 
 class NSegmentDisplay extends StatefulWidget {

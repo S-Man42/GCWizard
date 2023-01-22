@@ -1,10 +1,9 @@
 import 'package:encrypt/encrypt.dart' as crypto;
 import 'package:flutter/foundation.dart';
 import 'package:gc_wizard/tools/images_and_files/stegano/logic/requests/stegano_encode_request.dart';
+import 'package:gc_wizard/tools/images_and_files/stegano/logic/stegano_pad_key.dart';
 import 'package:gc_wizard/tools/utils/file_utils/widget/file_utils.dart';
 import 'package:image/image.dart';
-
-import 'package:gc_wizard/tools/images_and_files/stegano/logic/stegano_pad_key.dart';
 
 int _encodeOnePixel(int pixel, int msg) {
   if (msg != 1 && msg != 0) {

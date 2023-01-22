@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords_formatselector.dart';
+import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords_paste_button.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_sign_dropdown.dart';
 import 'package:gc_wizard/common_widgets/gcw_distance.dart';
@@ -8,8 +11,6 @@ import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_double_textfield.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_integer_textfield.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
-import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords_paste_button.dart';
-import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/mgrs.dart';
@@ -17,10 +18,15 @@ import 'package:gc_wizard/tools/coords/format_converter/logic/utm.dart';
 import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/utils/default_getter.dart';
 import 'package:gc_wizard/tools/coords/utils/format_getter.dart';
+import 'package:gc_wizard/tools/utils/textinputformatter/coords_integer_degrees_lat_textinputformatter/widget/coords_integer_degrees_lat_textinputformatter.dart';
+import 'package:gc_wizard/tools/utils/textinputformatter/coords_integer_degrees_lon_textinputformatter/widget/coords_integer_degrees_lon_textinputformatter.dart';
+import 'package:gc_wizard/tools/utils/textinputformatter/coords_integer_utm_lonzone_textinputformatter/widget/coords_integer_utm_lonzone_textinputformatter.dart';
 import 'package:gc_wizard/tools/utils/textinputformatter/coords_text_geo3x3_textinputformatter/widget/coords_text_geo3x3_textinputformatter.dart';
 import 'package:gc_wizard/tools/utils/textinputformatter/coords_text_geohash_textinputformatter/widget/coords_text_geohash_textinputformatter.dart';
 import 'package:gc_wizard/tools/utils/textinputformatter/coords_text_geohex_textinputformatter/widget/coords_text_geohex_textinputformatter.dart';
+import 'package:gc_wizard/tools/utils/textinputformatter/coords_text_maidenhead_textinputformatter/widget/coords_text_maidenhead_textinputformatter.dart';
 import 'package:gc_wizard/tools/utils/textinputformatter/coords_text_makaney_textinputformatter/widget/coords_text_makaney_textinputformatter.dart';
+import 'package:gc_wizard/tools/utils/textinputformatter/coords_text_naturalareacode_textinputformatter/widget/coords_text_naturalareacode_textinputformatter.dart';
 import 'package:gc_wizard/tools/utils/textinputformatter/integer_minutesseconds_textinputformatter/widget/integer_minutesseconds_textinputformatter.dart';
 import 'package:gc_wizard/tools/utils/textinputformatter/integer_textinputformatter/widget/integer_textinputformatter.dart';
 import 'package:gc_wizard/tools/utils/textinputformatter/wrapper_for_masktextinputformatter/widget/wrapper_for_masktextinputformatter.dart';
@@ -28,14 +34,6 @@ import 'package:gc_wizard/widgets/user_location/widget/user_location.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
-import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords_formatselector.dart';
-
-import 'package:gc_wizard/tools/utils/textinputformatter/coords_integer_utm_lonzone_textinputformatter/widget/coords_integer_utm_lonzone_textinputformatter.dart';
-
-import 'package:gc_wizard/tools/utils/textinputformatter/coords_integer_degrees_lat_textinputformatter/widget/coords_integer_degrees_lat_textinputformatter.dart';
-import 'package:gc_wizard/tools/utils/textinputformatter/coords_integer_degrees_lon_textinputformatter/widget/coords_integer_degrees_lon_textinputformatter.dart';
-import 'package:gc_wizard/tools/utils/textinputformatter/coords_text_maidenhead_textinputformatter/widget/coords_text_maidenhead_textinputformatter.dart';
-import 'package:gc_wizard/tools/utils/textinputformatter/coords_text_naturalareacode_textinputformatter/widget/coords_text_naturalareacode_textinputformatter.dart';
 
 part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/gcw_coords_dec.dart';
 part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/gcw_coords_dmm.dart';

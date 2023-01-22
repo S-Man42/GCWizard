@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
-import 'package:gc_wizard/common_widgets/textfields/gcw_integer_list_textfield.dart';
-import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/segmentdisplay_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_integer_list_textfield.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/beghilos/logic/beghilos.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/7_segment_display/widget/7_segment_display.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/logic/segment_display.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/segmentdisplay_output.dart';
 import 'package:gc_wizard/utils/logic_utils/constants.dart';
 
 class Beghilos extends StatefulWidget {

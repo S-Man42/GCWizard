@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/malbolge/logic/malbolge.dart';
-
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/multi_decoder.dart';
 
 const MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_MALBOLGE = 'malbolge_title';

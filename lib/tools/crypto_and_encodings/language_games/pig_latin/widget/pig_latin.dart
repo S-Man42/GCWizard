@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/language_games/pig_latin/logic/pig_latin.dart';
 
 class PigLatin extends StatefulWidget {

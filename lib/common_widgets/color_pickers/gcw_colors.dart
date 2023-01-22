@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/color_pickers/gcw_colorpicker.dart';
-import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors.dart';
-import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors_hue.dart';
-
-import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_double_spinner.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
@@ -15,7 +11,6 @@ import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors_rgb.d
 import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors_yuv.dart';
 import 'package:gc_wizard/tools/utils/textinputformatter/wrapper_for_masktextinputformatter/widget/wrapper_for_masktextinputformatter.dart';
 
-part 'package:gc_wizard/common_widgets/color_pickers/gcw_color_values_picker.dart';
 part 'package:gc_wizard/common_widgets/color_pickers/color_spaces/gcw_color_cmy.dart';
 part 'package:gc_wizard/common_widgets/color_pickers/color_spaces/gcw_color_cmyk.dart';
 part 'package:gc_wizard/common_widgets/color_pickers/color_spaces/gcw_color_hex.dart';
@@ -27,6 +22,7 @@ part 'package:gc_wizard/common_widgets/color_pickers/color_spaces/gcw_color_ycbc
 part 'package:gc_wizard/common_widgets/color_pickers/color_spaces/gcw_color_yiq.dart';
 part 'package:gc_wizard/common_widgets/color_pickers/color_spaces/gcw_color_ypbpr.dart';
 part 'package:gc_wizard/common_widgets/color_pickers/color_spaces/gcw_color_yuv.dart';
+part 'package:gc_wizard/common_widgets/color_pickers/gcw_color_values_picker.dart';
 
 class GCWColors extends StatefulWidget {
   final Function onChanged;

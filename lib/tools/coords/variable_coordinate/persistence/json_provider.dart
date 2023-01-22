@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:gc_wizard/configuration/settings/preferences.dart';
+import 'package:gc_wizard/tools/coords/variable_coordinate/persistence/model.dart';
 import 'package:gc_wizard/tools/formula_solver/persistence/model.dart' as formula_model;
 import 'package:gc_wizard/utils/logic_utils/persistence_utils.dart';
-import 'package:gc_wizard/tools/coords/variable_coordinate/persistence/model.dart';
 import 'package:prefs/prefs.dart';
 
 void refreshFormulas() {

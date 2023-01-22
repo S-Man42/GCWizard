@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/switches/gcw_switch.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
+import 'package:gc_wizard/common_widgets/switches/gcw_switch.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 

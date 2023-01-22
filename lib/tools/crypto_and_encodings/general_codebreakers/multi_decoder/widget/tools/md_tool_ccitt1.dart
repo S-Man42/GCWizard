@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_stateful_dropdown.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/multi_decoder.dart';
-import 'package:gc_wizard/tools/science_and_technology/teletypewriter/logic/teletypewriter.dart';
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
+import 'package:gc_wizard/tools/science_and_technology/teletypewriter/logic/teletypewriter.dart';
 import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
 
 const MDT_INTERNALNAMES_CCITT1 = 'multidecoder_tool_ccitt1_title';
