@@ -1,19 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
-import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
-import 'package:gc_wizard/common_widgets/dividers/gcw_divider.dart';
-import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
-import 'package:gc_wizard/common_widgets/gcw_checkbox.dart';
-import 'package:gc_wizard/common_widgets/gcw_text.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/theme/theme_colors.dart';
-import 'package:gc_wizard/tools/formula_solver/persistence/model.dart';
-import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
+part of 'package:gc_wizard/tools/formula_solver/widget/formula_solver_formulas.dart';
 
 List<String> _newFormulas;
 
-showFormulaReplaceDialog(BuildContext context, List<Formula> formulas,
+_showFormulaReplaceDialog(BuildContext context, List<Formula> formulas,
     {Widget contentWidget, int dialogHeight, Function onOkPressed}) {
   var _output = formulas.map((formula) => Formula.fromFormula(formula)).toList();
   // var _output = formulas.map((formula) => Formula.fromJson(formula.toMap())).toList();
@@ -21,7 +10,7 @@ showFormulaReplaceDialog(BuildContext context, List<Formula> formulas,
   showGCWDialog(
       context,
       i18n(context, 'formulasolver_formulas_modifyformula'),
-      GCWFormulaReplace(formulas: List<Formula>.from(formulas)),
+      _FormulaReplace(formulas: List<Formula>.from(formulas)),
       [
         GCWDialogButton(
             text: i18n(context, 'common_ok'),
@@ -38,16 +27,16 @@ showFormulaReplaceDialog(BuildContext context, List<Formula> formulas,
       cancelButton: true);
 }
 
-class GCWFormulaReplace extends StatefulWidget {
+class _FormulaReplace extends StatefulWidget {
   final List<Formula> formulas;
 
-  const GCWFormulaReplace({Key key, this.formulas}) : super(key: key);
+  const _FormulaReplace({Key key, this.formulas}) : super(key: key);
 
   @override
-  GCWFormulaReplaceState createState() => GCWFormulaReplaceState();
+  _FormulaReplaceState createState() => _FormulaReplaceState();
 }
 
-class GCWFormulaReplaceState extends State<GCWFormulaReplace> {
+class _FormulaReplaceState extends State<_FormulaReplace> {
   bool _currentValueBracket = false;
   bool _currentValueBraces = false;
   bool _currentValueMultiply = false;

@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_delete_alertdialog.dart';
+import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_divider.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/gcw_checkbox.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/gcw_popup_menu.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
@@ -26,10 +28,12 @@ import 'package:gc_wizard/tools/formula_solver/logic/formula_parser.dart';
 import 'package:gc_wizard/tools/formula_solver/persistence/json_provider.dart';
 import 'package:gc_wizard/tools/formula_solver/persistence/model.dart';
 import 'package:gc_wizard/tools/formula_solver/widget/formula_solver_values.dart';
-import 'package:gc_wizard/tools/formula_solver/widget/gcw_formula_replace_dialog.dart';
 import 'package:gc_wizard/tools/utils/common_widget_utils/widget/common_widget_utils.dart';
 import 'package:gc_wizard/tools/utils/no_animation_material_page_route/widget/no_animation_material_page_route.dart';
+import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
 import 'package:prefs/prefs.dart';
+
+part 'package:gc_wizard/tools/formula_solver/widget/formula_replace_dialog.dart';
 
 class FormulaSolverFormulas extends StatefulWidget {
   final FormulaGroup group;
@@ -391,7 +395,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                                   child: iconedGCWPopupMenuItem(
                                       context, Icons.edit, 'formulasolver_formulas_modifyformula'),
                                   action: (index) => setState(() {
-                                        showFormulaReplaceDialog(context, [formula], onOkPressed: (value) {
+                                        _showFormulaReplaceDialog(context, [formula], onOkPressed: (value) {
                                           if (value.first == null ||
                                               value.first.formula == null ||
                                               formula.formula == value.first.formula) return;
@@ -507,7 +511,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                               child:
                                   iconedGCWPopupMenuItem(context, Icons.edit, 'formulasolver_formulas_modifyformulas'),
                               action: (index) => setState(() {
-                                    showFormulaReplaceDialog(context, widget.group.formulas, onOkPressed: (value) {
+                                    _showFormulaReplaceDialog(context, widget.group.formulas, onOkPressed: (value) {
                                       if (value == null) return;
 
                                       for (int i = 0; i < widget.group.formulas.length; i++) {
