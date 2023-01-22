@@ -10,19 +10,21 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
-import 'package:gc_wizard/tools/general_tools/grid_generator/grid_painter/widget/grid_painter.dart';
 import 'package:gc_wizard/utils/logic_utils/variable_string_expander.dart';
+import 'package:touchable/touchable.dart';
+
+part 'package:gc_wizard/tools/general_tools/grid_generator/grid/widget/grid_painter.dart';
 
 class _GridConfiguration {
-  GridType type;
+  _GridType type;
   int width;
   int height;
   String enumeration;
   String columnEnumeration;
   String rowEnumeration;
-  GridEnumerationStart enumerationStart;
-  GridBoxEnumerationStartDirection enumerationStartDirection;
-  GridBoxEnumerationBehaviour enumerationBehaviour;
+  _GridEnumerationStart enumerationStart;
+  _GridBoxEnumerationStartDirection enumerationStartDirection;
+  _GridBoxEnumerationBehaviour enumerationBehaviour;
 
   _GridConfiguration(this.type, this.width, this.height,
       {this.enumeration,
@@ -34,69 +36,69 @@ final _GRID_CUSTOM_KEY = 'grid_custom';
 
 final _GRID_CONFIGURATIONS = {
   _GRID_CUSTOM_KEY: _GridConfiguration(
-    GridType.BOXES,
+    _GridType.BOXES,
     10,
     10,
     enumeration: '1-100',
   ),
   'grid_intersections_5x5':
-      _GridConfiguration(GridType.INTERSECTIONS, 5, 5, columnEnumeration: '12345', rowEnumeration: '12345'),
+      _GridConfiguration(_GridType.INTERSECTIONS, 5, 5, columnEnumeration: '12345', rowEnumeration: '12345'),
   'grid_intersections_6x6':
-      _GridConfiguration(GridType.INTERSECTIONS, 6, 6, columnEnumeration: '123456', rowEnumeration: '123456'),
+      _GridConfiguration(_GridType.INTERSECTIONS, 6, 6, columnEnumeration: '123456', rowEnumeration: '123456'),
   'grid_intersections_7x7':
-      _GridConfiguration(GridType.INTERSECTIONS, 7, 7, columnEnumeration: '1234567', rowEnumeration: '1,2,3,4,5-7'),
+      _GridConfiguration(_GridType.INTERSECTIONS, 7, 7, columnEnumeration: '1234567', rowEnumeration: '1,2,3,4,5-7'),
   'grid_intersections_8x8':
-      _GridConfiguration(GridType.INTERSECTIONS, 8, 8, columnEnumeration: '12345678', rowEnumeration: '12345678'),
+      _GridConfiguration(_GridType.INTERSECTIONS, 8, 8, columnEnumeration: '12345678', rowEnumeration: '12345678'),
   'grid_intersections_9x9':
-      _GridConfiguration(GridType.INTERSECTIONS, 9, 9, columnEnumeration: '123456789', rowEnumeration: '123456789'),
-  'grid_intersections_10x10': _GridConfiguration(GridType.INTERSECTIONS, 10, 10,
+      _GridConfiguration(_GridType.INTERSECTIONS, 9, 9, columnEnumeration: '123456789', rowEnumeration: '123456789'),
+  'grid_intersections_10x10': _GridConfiguration(_GridType.INTERSECTIONS, 10, 10,
       columnEnumeration: '1 2 3 4 5 6 7 8 9 10', rowEnumeration: '1 2 3 4 5 6 7 8 9 10'),
   'grid_boxes_5x5': _GridConfiguration(
-    GridType.BOXES,
+    _GridType.BOXES,
     5,
     5,
     enumeration: '1-25',
   ),
   'grid_boxes_6x6': _GridConfiguration(
-    GridType.BOXES,
+    _GridType.BOXES,
     6,
     6,
     enumeration: '1-36',
   ),
   'grid_boxes_7x7': _GridConfiguration(
-    GridType.BOXES,
+    _GridType.BOXES,
     7,
     7,
     enumeration: '1-49',
   ),
-  'grid_boxes_8x8': _GridConfiguration(GridType.BOXES, 8, 8, enumeration: '1-64'),
+  'grid_boxes_8x8': _GridConfiguration(_GridType.BOXES, 8, 8, enumeration: '1-64'),
   'grid_boxes_9x9': _GridConfiguration(
-    GridType.BOXES,
+    _GridType.BOXES,
     9,
     9,
     enumeration: '1-81',
   ),
   'grid_boxes_10x10': _GridConfiguration(
-    GridType.BOXES,
+    _GridType.BOXES,
     10,
     10,
     enumeration: '1-100',
   ),
-  'grid_chessboard': _GridConfiguration(GridType.BOXES, 8, 8, columnEnumeration: 'ABCDEFGH', rowEnumeration: '1-8'),
+  'grid_chessboard': _GridConfiguration(_GridType.BOXES, 8, 8, columnEnumeration: 'ABCDEFGH', rowEnumeration: '1-8'),
   'grid_germanlotto': _GridConfiguration(
-    GridType.BOXES,
+    _GridType.BOXES,
     7,
     7,
     enumeration: '1-49',
   ),
   'grid_germantoto6from45': _GridConfiguration(
-    GridType.BOXES,
+    _GridType.BOXES,
     7,
     7,
     enumeration: '1-45',
   ),
   'grid_eurojackpot5from50': _GridConfiguration(
-    GridType.BOXES,
+    _GridType.BOXES,
     10,
     5,
     enumeration: '1-50',
@@ -109,7 +111,7 @@ class Grid extends StatefulWidget {
 }
 
 class GridState extends State<Grid> {
-  var _currentColor = GridPaintColor.RED;
+  var _currentColor = _GridPaintColor.RED;
   var _currentGridConfiguration = 'grid_boxes_10x10';
 
   var _isConfiguration = false;
@@ -150,19 +152,19 @@ class GridState extends State<Grid> {
   }
 
   _initializeDefaultGrid() {
-    _currentConfigType = _GRID_CONFIGURATIONS[_currentGridConfiguration].type ?? GridType.BOXES;
+    _currentConfigType = _GRID_CONFIGURATIONS[_currentGridConfiguration].type ?? _GridType.BOXES;
     _currentConfigColumns = _GRID_CONFIGURATIONS[_currentGridConfiguration].width ?? 10;
     _currentConfigRows = _GRID_CONFIGURATIONS[_currentGridConfiguration].height ?? 10;
     _currentConfigBoxEnumeration = _GRID_CONFIGURATIONS[_currentGridConfiguration].enumeration ?? '';
     _currentConfigColumnEnumeration = _GRID_CONFIGURATIONS[_currentGridConfiguration].columnEnumeration ?? '';
     _currentConfigRowEnumeration = _GRID_CONFIGURATIONS[_currentGridConfiguration].rowEnumeration ?? '';
     _currentConfigBoxEnumerationStart =
-        _GRID_CONFIGURATIONS[_currentGridConfiguration].enumerationStart ?? GridEnumerationStart.TOP_LEFT;
+        _GRID_CONFIGURATIONS[_currentGridConfiguration].enumerationStart ?? _GridEnumerationStart.TOP_LEFT;
     _currentConfigBoxEnumerationStartDirection =
         _GRID_CONFIGURATIONS[_currentGridConfiguration].enumerationStartDirection ??
-            GridBoxEnumerationStartDirection.RIGHT;
+            _GridBoxEnumerationStartDirection.RIGHT;
     _currentConfigBoxEnumerationBehaviour =
-        _GRID_CONFIGURATIONS[_currentGridConfiguration].enumerationBehaviour ?? GridBoxEnumerationBehaviour.ALIGNED;
+        _GRID_CONFIGURATIONS[_currentGridConfiguration].enumerationBehaviour ?? _GridBoxEnumerationBehaviour.ALIGNED;
 
     _boxEnumerationController.text = _currentConfigBoxEnumeration;
     _columnEnumerationController.text = _currentConfigColumnEnumeration;
@@ -173,14 +175,14 @@ class GridState extends State<Grid> {
 
   _possibleStartDirections() {
     switch (_currentConfigBoxEnumerationStart) {
-      case GridEnumerationStart.TOP_LEFT:
-        return [GridBoxEnumerationStartDirection.RIGHT, GridBoxEnumerationStartDirection.DOWN];
-      case GridEnumerationStart.TOP_RIGHT:
-        return [GridBoxEnumerationStartDirection.LEFT, GridBoxEnumerationStartDirection.DOWN];
-      case GridEnumerationStart.BOTTOM_LEFT:
-        return [GridBoxEnumerationStartDirection.RIGHT, GridBoxEnumerationStartDirection.UP];
-      case GridEnumerationStart.BOTTOM_RIGHT:
-        return [GridBoxEnumerationStartDirection.LEFT, GridBoxEnumerationStartDirection.UP];
+      case _GridEnumerationStart.TOP_LEFT:
+        return [_GridBoxEnumerationStartDirection.RIGHT, _GridBoxEnumerationStartDirection.DOWN];
+      case _GridEnumerationStart.TOP_RIGHT:
+        return [_GridBoxEnumerationStartDirection.LEFT, _GridBoxEnumerationStartDirection.DOWN];
+      case _GridEnumerationStart.BOTTOM_LEFT:
+        return [_GridBoxEnumerationStartDirection.RIGHT, _GridBoxEnumerationStartDirection.UP];
+      case _GridEnumerationStart.BOTTOM_RIGHT:
+        return [_GridBoxEnumerationStartDirection.LEFT, _GridBoxEnumerationStartDirection.UP];
     }
   }
 
@@ -253,9 +255,9 @@ class GridState extends State<Grid> {
           title: i18n(context, 'grid_type_title'),
           value: _currentConfigType,
           items: {
-            GridType.BOXES: 'grid_boxes_title',
-            GridType.INTERSECTIONS: 'grid_intersections_title',
-            GridType.LINES: 'grid_lines_title',
+            _GridType.BOXES: 'grid_boxes_title',
+            _GridType.INTERSECTIONS: 'grid_intersections_title',
+            _GridType.LINES: 'grid_lines_title',
           }
               .map((type, name) {
                 return MapEntry(type, GCWDropDownMenuItem(value: type, child: i18n(context, name)));
@@ -290,7 +292,7 @@ class GridState extends State<Grid> {
             });
           },
         ),
-        _currentConfigType == GridType.BOXES
+        _currentConfigType == _GridType.BOXES
             ? Row(
                 children: [
                   Expanded(child: GCWText(text: i18n(context, 'grid_boxenumeration') + ':'), flex: 1),
@@ -345,7 +347,7 @@ class GridState extends State<Grid> {
                 flex: 3)
           ],
         ),
-        _currentConfigType == GridType.BOXES ? _buildBoxEnumerationOptions() : Container()
+        _currentConfigType == _GridType.BOXES ? _buildBoxEnumerationOptions() : Container()
       ],
     );
   }
@@ -357,10 +359,10 @@ class GridState extends State<Grid> {
           title: i18n(context, 'grid_boxes_start_title'),
           value: _currentConfigBoxEnumerationStart,
           items: {
-            GridEnumerationStart.TOP_LEFT: 'grid_boxes_start_topleft',
-            GridEnumerationStart.TOP_RIGHT: 'grid_boxes_start_topright',
-            GridEnumerationStart.BOTTOM_LEFT: 'grid_boxes_start_bottomleft',
-            GridEnumerationStart.BOTTOM_RIGHT: 'grid_boxes_start_bottomright',
+            _GridEnumerationStart.TOP_LEFT: 'grid_boxes_start_topleft',
+            _GridEnumerationStart.TOP_RIGHT: 'grid_boxes_start_topright',
+            _GridEnumerationStart.BOTTOM_LEFT: 'grid_boxes_start_bottomleft',
+            _GridEnumerationStart.BOTTOM_RIGHT: 'grid_boxes_start_bottomright',
           }
               .map((corner, name) {
                 return MapEntry(corner, GCWDropDownMenuItem(value: corner, child: i18n(context, name)));
@@ -386,16 +388,16 @@ class GridState extends State<Grid> {
           items: _currentConfigBoxEnumerationStartDirections.map<GCWDropDownMenuItem>((direction) {
             var name;
             switch (direction) {
-              case GridBoxEnumerationStartDirection.RIGHT:
+              case _GridBoxEnumerationStartDirection.RIGHT:
                 name = 'grid_boxes_startdirection_right';
                 break;
-              case GridBoxEnumerationStartDirection.LEFT:
+              case _GridBoxEnumerationStartDirection.LEFT:
                 name = 'grid_boxes_startdirection_left';
                 break;
-              case GridBoxEnumerationStartDirection.UP:
+              case _GridBoxEnumerationStartDirection.UP:
                 name = 'grid_boxes_startdirection_up';
                 break;
-              case GridBoxEnumerationStartDirection.DOWN:
+              case _GridBoxEnumerationStartDirection.DOWN:
                 name = 'grid_boxes_startdirection_down';
                 break;
             }
@@ -412,15 +414,15 @@ class GridState extends State<Grid> {
           title: i18n(context, 'grid_boxes_behaviour_title'),
           value: _currentConfigBoxEnumerationBehaviour,
           items: {
-            GridBoxEnumerationBehaviour.ALIGNED: {
+            _GridBoxEnumerationBehaviour.ALIGNED: {
               'title': 'grid_boxes_behaviour_aligned_title',
               'description': 'grid_boxes_behaviour_aligned_description'
             },
-            GridBoxEnumerationBehaviour.ALTERNATED: {
+            _GridBoxEnumerationBehaviour.ALTERNATED: {
               'title': 'grid_boxes_behaviour_alternated_title',
               'description': 'grid_boxes_behaviour_alternated_description'
             },
-            GridBoxEnumerationBehaviour.SPIRAL: {
+            _GridBoxEnumerationBehaviour.SPIRAL: {
               'title': 'grid_boxes_behaviour_spiral_title',
               'description': 'grid_boxes_behaviour_spiral_description'
             },
@@ -450,7 +452,7 @@ class GridState extends State<Grid> {
       children: [
         Container(
           constraints: BoxConstraints(maxWidth: min(500, MediaQuery.of(context).size.height * 0.8)),
-          child: GridPainter(
+          child: _GridPainter(
             tapColor: _currentColor,
             type: _currentConfigType,
             countColumns: _currentConfigColumns,
@@ -464,7 +466,7 @@ class GridState extends State<Grid> {
           ),
           margin: EdgeInsets.symmetric(vertical: 20.0),
         ),
-        Row(children: GridPaintColor.values.map((color) => _buildColorField(color)).toList())
+        Row(children: _GridPaintColor.values.map((color) => _buildColorField(color)).toList())
       ],
     );
   }
@@ -489,15 +491,15 @@ class GridState extends State<Grid> {
     return enumeration.split('').toList();
   }
 
-  Expanded _buildColorField(GridPaintColor color) {
+  Expanded _buildColorField(_GridPaintColor color) {
     return Expanded(
         child: InkWell(
       child: Container(
         height: 50,
         decoration: _getColorDecoration(color),
         margin: EdgeInsets.only(
-          left: GridPaintColor.values.indexOf(color) == 0 ? 0.0 : DEFAULT_MARGIN,
-          right: GridPaintColor.values.indexOf(color) == GridPaintColor.values.length - 1 ? 0.0 : DEFAULT_MARGIN,
+          left: _GridPaintColor.values.indexOf(color) == 0 ? 0.0 : DEFAULT_MARGIN,
+          right: _GridPaintColor.values.indexOf(color) == _GridPaintColor.values.length - 1 ? 0.0 : DEFAULT_MARGIN,
         ),
       ),
       onTap: () {
@@ -508,10 +510,10 @@ class GridState extends State<Grid> {
     ));
   }
 
-  BoxDecoration _getColorDecoration(GridPaintColor color) {
+  BoxDecoration _getColorDecoration(_GridPaintColor color) {
     return _currentColor == color
-        ? BoxDecoration(color: GRID_COLORS[color]['color'], border: Border.all(color: themeColors().accent(), width: 5))
+        ? BoxDecoration(color: _GRID_COLORS[color]['color'], border: Border.all(color: themeColors().accent(), width: 5))
         : BoxDecoration(
-            color: GRID_COLORS[color]['color'], border: Border.all(color: themeColors().mainFont(), width: 1.0));
+            color: _GRID_COLORS[color]['color'], border: Border.all(color: themeColors().mainFont(), width: 1.0));
   }
 }

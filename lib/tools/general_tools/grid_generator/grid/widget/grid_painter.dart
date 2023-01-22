@@ -1,49 +1,44 @@
-import 'dart:math';
+part of 'package:gc_wizard/tools/general_tools/grid_generator/grid/widget/grid.dart';
 
-import 'package:flutter/material.dart';
-import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/theme/theme_colors.dart';
-import 'package:touchable/touchable.dart';
+enum _GridType { BOXES, LINES, INTERSECTIONS }
 
-enum GridType { BOXES, LINES, INTERSECTIONS }
+enum _GridEnumerationStart { TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT }
 
-enum GridEnumerationStart { TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT }
+enum _GridBoxEnumerationStartDirection { UP, DOWN, LEFT, RIGHT }
 
-enum GridBoxEnumerationStartDirection { UP, DOWN, LEFT, RIGHT }
+enum _GridBoxEnumerationBehaviour { ALIGNED, ALTERNATED, SPIRAL }
 
-enum GridBoxEnumerationBehaviour { ALIGNED, ALTERNATED, SPIRAL }
-
-enum GridPaintColor { BLACK, WHITE, RED, YELLOW, BLUE, GREEN }
+enum _GridPaintColor { BLACK, WHITE, RED, YELLOW, BLUE, GREEN }
 
 enum _TapMode { SINGLE, ROW, COLUMN, ALL }
 
-final GRID_COLORS = {
-  GridPaintColor.BLACK: {'color': Colors.black, 'fontColor': Colors.white},
-  GridPaintColor.WHITE: {'color': Colors.white, 'fontColor': Colors.black},
-  GridPaintColor.RED: {'color': Colors.red, 'fontColor': Colors.black},
-  GridPaintColor.YELLOW: {'color': Colors.yellow, 'fontColor': Colors.black},
-  GridPaintColor.BLUE: {'color': Colors.indigo, 'fontColor': Colors.white},
-  GridPaintColor.GREEN: {'color': Colors.green, 'fontColor': Colors.black},
+final _GRID_COLORS = {
+  _GridPaintColor.BLACK: {'color': Colors.black, 'fontColor': Colors.white},
+  _GridPaintColor.WHITE: {'color': Colors.white, 'fontColor': Colors.black},
+  _GridPaintColor.RED: {'color': Colors.red, 'fontColor': Colors.black},
+  _GridPaintColor.YELLOW: {'color': Colors.yellow, 'fontColor': Colors.black},
+  _GridPaintColor.BLUE: {'color': Colors.indigo, 'fontColor': Colors.white},
+  _GridPaintColor.GREEN: {'color': Colors.green, 'fontColor': Colors.black},
 };
 
-class GridPainter extends StatefulWidget {
-  final GridType type;
+class _GridPainter extends StatefulWidget {
+  final _GridType type;
   final int countRows;
   final int countColumns;
-  final GridPaintColor tapColor;
+  final _GridPaintColor tapColor;
   final List<String> boxEnumeration;
   final List<String> columnEnumeration;
   final List<String> rowEnumeration;
-  GridEnumerationStart boxEnumerationStart;
-  GridBoxEnumerationBehaviour boxEnumerationBehaviour;
-  GridBoxEnumerationStartDirection boxEnumerationStartDirection;
+  _GridEnumerationStart boxEnumerationStart;
+  _GridBoxEnumerationBehaviour boxEnumerationBehaviour;
+  _GridBoxEnumerationStartDirection boxEnumerationStartDirection;
 
-  GridPainter({
+  _GridPainter({
     Key key,
-    this.type: GridType.BOXES,
+    this.type: _GridType.BOXES,
     this.countRows: 10,
     this.countColumns: 10,
-    this.tapColor: GridPaintColor.BLACK,
+    this.tapColor: _GridPaintColor.BLACK,
     this.boxEnumeration,
     this.columnEnumeration,
     this.rowEnumeration,
@@ -51,17 +46,17 @@ class GridPainter extends StatefulWidget {
     this.boxEnumerationStartDirection,
     this.boxEnumerationBehaviour,
   }) : super(key: key) {
-    if (boxEnumerationStart == null) boxEnumerationStart = GridEnumerationStart.TOP_LEFT;
-    if (boxEnumerationStartDirection == null) boxEnumerationStartDirection = GridBoxEnumerationStartDirection.RIGHT;
-    if (boxEnumerationBehaviour == null) boxEnumerationBehaviour = GridBoxEnumerationBehaviour.ALIGNED;
+    if (boxEnumerationStart == null) boxEnumerationStart = _GridEnumerationStart.TOP_LEFT;
+    if (boxEnumerationStartDirection == null) boxEnumerationStartDirection = _GridBoxEnumerationStartDirection.RIGHT;
+    if (boxEnumerationBehaviour == null) boxEnumerationBehaviour = _GridBoxEnumerationBehaviour.ALIGNED;
   }
 
   @override
-  GridPainterState createState() => GridPainterState();
+  _GridPainterState createState() => _GridPainterState();
 }
 
-class GridPainterState extends State<GridPainter> {
-  Map<int, Map<int, GridPaintColor>> gridState;
+class _GridPainterState extends State<_GridPainter> {
+  Map<int, Map<int, _GridPaintColor>> gridState;
   List<String> _boxEnumeration;
   List<String> _originalBoxEnumeration;
 
@@ -75,12 +70,12 @@ class GridPainterState extends State<GridPainter> {
     else
       boxEnumeration = widget.boxEnumeration;
 
-    var i = widget.boxEnumerationStart == GridEnumerationStart.TOP_LEFT ||
-            widget.boxEnumerationStart == GridEnumerationStart.TOP_RIGHT
+    var i = widget.boxEnumerationStart == _GridEnumerationStart.TOP_LEFT ||
+            widget.boxEnumerationStart == _GridEnumerationStart.TOP_RIGHT
         ? 0
         : (widget.countRows - 1);
-    var j = widget.boxEnumerationStart == GridEnumerationStart.TOP_LEFT ||
-            widget.boxEnumerationStart == GridEnumerationStart.BOTTOM_LEFT
+    var j = widget.boxEnumerationStart == _GridEnumerationStart.TOP_LEFT ||
+            widget.boxEnumerationStart == _GridEnumerationStart.BOTTOM_LEFT
         ? 0
         : (widget.countColumns - 1);
 
@@ -91,13 +86,13 @@ class GridPainterState extends State<GridPainter> {
       helper[i][j] = widget.boxEnumeration[idx++];
 
       switch (currentDirection) {
-        case GridBoxEnumerationStartDirection.UP:
+        case _GridBoxEnumerationStartDirection.UP:
           if (i > 0 && helper[i - 1][j] == null) {
             i--;
           } else {
             switch (widget.boxEnumerationBehaviour) {
-              case GridBoxEnumerationBehaviour.ALIGNED:
-                if (widget.boxEnumerationStart == GridEnumerationStart.BOTTOM_LEFT) {
+              case _GridBoxEnumerationBehaviour.ALIGNED:
+                if (widget.boxEnumerationStart == _GridEnumerationStart.BOTTOM_LEFT) {
                   j++;
                 } else {
                   j--;
@@ -105,22 +100,22 @@ class GridPainterState extends State<GridPainter> {
 
                 i = widget.countRows - 1;
                 break;
-              case GridBoxEnumerationBehaviour.ALTERNATED:
-                if (widget.boxEnumerationStart == GridEnumerationStart.TOP_LEFT ||
-                    widget.boxEnumerationStart == GridEnumerationStart.BOTTOM_LEFT) {
+              case _GridBoxEnumerationBehaviour.ALTERNATED:
+                if (widget.boxEnumerationStart == _GridEnumerationStart.TOP_LEFT ||
+                    widget.boxEnumerationStart == _GridEnumerationStart.BOTTOM_LEFT) {
                   j++;
                 } else {
                   j--;
                 }
-                currentDirection = GridBoxEnumerationStartDirection.DOWN;
+                currentDirection = _GridBoxEnumerationStartDirection.DOWN;
                 break;
-              case GridBoxEnumerationBehaviour.SPIRAL:
+              case _GridBoxEnumerationBehaviour.SPIRAL:
                 if (j + 1 < widget.countColumns && helper[i][j + 1] == null) {
                   j++;
-                  currentDirection = GridBoxEnumerationStartDirection.RIGHT;
+                  currentDirection = _GridBoxEnumerationStartDirection.RIGHT;
                 } else {
                   j--;
-                  currentDirection = GridBoxEnumerationStartDirection.LEFT;
+                  currentDirection = _GridBoxEnumerationStartDirection.LEFT;
                 }
 
                 break;
@@ -128,13 +123,13 @@ class GridPainterState extends State<GridPainter> {
           }
           break;
 
-        case GridBoxEnumerationStartDirection.DOWN:
+        case _GridBoxEnumerationStartDirection.DOWN:
           if (i + 1 < widget.countRows && helper[i + 1][j] == null) {
             i++;
           } else {
             switch (widget.boxEnumerationBehaviour) {
-              case GridBoxEnumerationBehaviour.ALIGNED:
-                if (widget.boxEnumerationStart == GridEnumerationStart.TOP_LEFT) {
+              case _GridBoxEnumerationBehaviour.ALIGNED:
+                if (widget.boxEnumerationStart == _GridEnumerationStart.TOP_LEFT) {
                   j++;
                 } else {
                   j--;
@@ -142,22 +137,22 @@ class GridPainterState extends State<GridPainter> {
 
                 i = 0;
                 break;
-              case GridBoxEnumerationBehaviour.ALTERNATED:
-                if (widget.boxEnumerationStart == GridEnumerationStart.TOP_LEFT ||
-                    widget.boxEnumerationStart == GridEnumerationStart.BOTTOM_LEFT) {
+              case _GridBoxEnumerationBehaviour.ALTERNATED:
+                if (widget.boxEnumerationStart == _GridEnumerationStart.TOP_LEFT ||
+                    widget.boxEnumerationStart == _GridEnumerationStart.BOTTOM_LEFT) {
                   j++;
                 } else {
                   j--;
                 }
-                currentDirection = GridBoxEnumerationStartDirection.UP;
+                currentDirection = _GridBoxEnumerationStartDirection.UP;
                 break;
-              case GridBoxEnumerationBehaviour.SPIRAL:
+              case _GridBoxEnumerationBehaviour.SPIRAL:
                 if (j + 1 < widget.countColumns && helper[i][j + 1] == null) {
                   j++;
-                  currentDirection = GridBoxEnumerationStartDirection.RIGHT;
+                  currentDirection = _GridBoxEnumerationStartDirection.RIGHT;
                 } else {
                   j--;
-                  currentDirection = GridBoxEnumerationStartDirection.LEFT;
+                  currentDirection = _GridBoxEnumerationStartDirection.LEFT;
                 }
 
                 break;
@@ -165,13 +160,13 @@ class GridPainterState extends State<GridPainter> {
           }
           break;
 
-        case GridBoxEnumerationStartDirection.LEFT:
+        case _GridBoxEnumerationStartDirection.LEFT:
           if (j > 0 && helper[i][j - 1] == null) {
             j--;
           } else {
             switch (widget.boxEnumerationBehaviour) {
-              case GridBoxEnumerationBehaviour.ALIGNED:
-                if (widget.boxEnumerationStart == GridEnumerationStart.TOP_RIGHT) {
+              case _GridBoxEnumerationBehaviour.ALIGNED:
+                if (widget.boxEnumerationStart == _GridEnumerationStart.TOP_RIGHT) {
                   i++;
                 } else {
                   i--;
@@ -179,22 +174,22 @@ class GridPainterState extends State<GridPainter> {
 
                 j = widget.countColumns - 1;
                 break;
-              case GridBoxEnumerationBehaviour.ALTERNATED:
-                if (widget.boxEnumerationStart == GridEnumerationStart.TOP_LEFT ||
-                    widget.boxEnumerationStart == GridEnumerationStart.TOP_RIGHT) {
+              case _GridBoxEnumerationBehaviour.ALTERNATED:
+                if (widget.boxEnumerationStart == _GridEnumerationStart.TOP_LEFT ||
+                    widget.boxEnumerationStart == _GridEnumerationStart.TOP_RIGHT) {
                   i++;
                 } else {
                   i--;
                 }
-                currentDirection = GridBoxEnumerationStartDirection.RIGHT;
+                currentDirection = _GridBoxEnumerationStartDirection.RIGHT;
                 break;
-              case GridBoxEnumerationBehaviour.SPIRAL:
+              case _GridBoxEnumerationBehaviour.SPIRAL:
                 if (i + 1 < widget.countRows && helper[i + 1][j] == null) {
                   i++;
-                  currentDirection = GridBoxEnumerationStartDirection.DOWN;
+                  currentDirection = _GridBoxEnumerationStartDirection.DOWN;
                 } else {
                   i--;
-                  currentDirection = GridBoxEnumerationStartDirection.UP;
+                  currentDirection = _GridBoxEnumerationStartDirection.UP;
                 }
 
                 break;
@@ -202,13 +197,13 @@ class GridPainterState extends State<GridPainter> {
           }
           break;
 
-        case GridBoxEnumerationStartDirection.RIGHT:
+        case _GridBoxEnumerationStartDirection.RIGHT:
           if (j + 1 < widget.countColumns && helper[i][j + 1] == null) {
             j++;
           } else {
             switch (widget.boxEnumerationBehaviour) {
-              case GridBoxEnumerationBehaviour.ALIGNED:
-                if (widget.boxEnumerationStart == GridEnumerationStart.TOP_LEFT) {
+              case _GridBoxEnumerationBehaviour.ALIGNED:
+                if (widget.boxEnumerationStart == _GridEnumerationStart.TOP_LEFT) {
                   i++;
                 } else {
                   i--;
@@ -216,22 +211,22 @@ class GridPainterState extends State<GridPainter> {
 
                 j = 0;
                 break;
-              case GridBoxEnumerationBehaviour.ALTERNATED:
-                if (widget.boxEnumerationStart == GridEnumerationStart.TOP_LEFT ||
-                    widget.boxEnumerationStart == GridEnumerationStart.TOP_RIGHT) {
+              case _GridBoxEnumerationBehaviour.ALTERNATED:
+                if (widget.boxEnumerationStart == _GridEnumerationStart.TOP_LEFT ||
+                    widget.boxEnumerationStart == _GridEnumerationStart.TOP_RIGHT) {
                   i++;
                 } else {
                   i--;
                 }
-                currentDirection = GridBoxEnumerationStartDirection.LEFT;
+                currentDirection = _GridBoxEnumerationStartDirection.LEFT;
                 break;
-              case GridBoxEnumerationBehaviour.SPIRAL:
+              case _GridBoxEnumerationBehaviour.SPIRAL:
                 if (i + 1 < widget.countRows && helper[i + 1][j] == null) {
                   i++;
-                  currentDirection = GridBoxEnumerationStartDirection.DOWN;
+                  currentDirection = _GridBoxEnumerationStartDirection.DOWN;
                 } else {
                   i--;
-                  currentDirection = GridBoxEnumerationStartDirection.UP;
+                  currentDirection = _GridBoxEnumerationStartDirection.UP;
                 }
 
                 break;
@@ -253,7 +248,7 @@ class GridPainterState extends State<GridPainter> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.type == GridType.BOXES && _originalBoxEnumeration != widget.boxEnumeration) {
+    if (widget.type == _GridType.BOXES && _originalBoxEnumeration != widget.boxEnumeration) {
       _boxEnumeration = _fillBoxEnumeration();
       _originalBoxEnumeration = widget.boxEnumeration;
     }
@@ -267,7 +262,7 @@ class GridPainterState extends State<GridPainter> {
                     gesturesToOverride: [GestureType.onTapDown],
                     builder: (context) {
                       return CustomPaint(
-                          painter: CustomGridPainter(
+                          painter: _CustomGridPainter(
                               context,
                               widget.type,
                               widget.countRows,
@@ -278,10 +273,10 @@ class GridPainterState extends State<GridPainter> {
                               widget.rowEnumeration,
                               gridState, (int i, int j, int countRows, int countColumns, _TapMode mode) {
                         setState(() {
-                          if (gridState == null) gridState = <int, Map<int, GridPaintColor>>{};
+                          if (gridState == null) gridState = <int, Map<int, _GridPaintColor>>{};
 
                           if (gridState[i] == null) {
-                            gridState[i] = <int, GridPaintColor>{};
+                            gridState[i] = <int, _GridPaintColor>{};
                           }
 
                           var delete = gridState[i][j] == widget.tapColor;
@@ -316,7 +311,7 @@ class GridPainterState extends State<GridPainter> {
 
   void _setColor(int i, int j, bool delete) {
     if (gridState[i] == null) {
-      gridState[i] = <int, GridPaintColor>{};
+      gridState[i] = <int, _GridPaintColor>{};
     }
 
     gridState[i].remove(j);
@@ -327,19 +322,19 @@ class GridPainterState extends State<GridPainter> {
   }
 }
 
-class CustomGridPainter extends CustomPainter {
+class _CustomGridPainter extends CustomPainter {
   final BuildContext context;
-  final GridType type;
+  final _GridType type;
   final int countRows;
   final int countColumns;
-  final GridPaintColor tapColor;
+  final _GridPaintColor tapColor;
   final List<String> boxEnumeration;
   final List<String> columnEnumeration;
   final List<String> rowEnumeration;
-  final Map<int, Map<int, GridPaintColor>> gridState;
+  final Map<int, Map<int, _GridPaintColor>> gridState;
   final Function(int, int, int, int, _TapMode) onTapped;
 
-  CustomGridPainter(
+  _CustomGridPainter(
     this.context,
     this.type,
     this.countRows,
@@ -366,13 +361,13 @@ class CustomGridPainter extends CustomPainter {
     var paint = Paint();
 
     switch (type) {
-      case GridType.BOXES:
+      case _GridType.BOXES:
         _drawBoxesBoard(size, paint, _touchCanvas, canvas);
         break;
-      case GridType.INTERSECTIONS:
+      case _GridType.INTERSECTIONS:
         _drawPointsBoard(size, paint, _touchCanvas, canvas);
         break;
-      case GridType.LINES:
+      case _GridType.LINES:
         _drawGridBoard(size, paint, _touchCanvas, canvas);
         break;
     }
@@ -438,7 +433,7 @@ class CustomGridPainter extends CustomPainter {
         var y = i * boxHeight / 2;
 
         if (gridState != null && gridState[i] != null && gridState[i][j] != null) {
-          paint.color = GRID_COLORS[gridState[i][j]]['color'];
+          paint.color = _GRID_COLORS[gridState[i][j]]['color'];
           paint.style = PaintingStyle.stroke;
           paint.strokeWidth = 6;
 
@@ -573,7 +568,7 @@ class CustomGridPainter extends CustomPainter {
         var y = i * boxHeight;
 
         paint.color = gridState != null && gridState[i] != null && gridState[i][j] != null
-            ? GRID_COLORS[gridState[i][j]]['color']
+            ? _GRID_COLORS[gridState[i][j]]['color']
             : paint.color.withOpacity(0.0);
 
         paint.style = PaintingStyle.fill;
@@ -601,7 +596,7 @@ class CustomGridPainter extends CustomPainter {
         var y = i * boxHeight;
 
         paint.color = gridState != null && gridState[i] != null && gridState[i][j] != null
-            ? GRID_COLORS[gridState[i][j]]['color']
+            ? _GRID_COLORS[gridState[i][j]]['color']
             : themeColors().gridBackground();
         paint.style = PaintingStyle.fill;
 
@@ -645,7 +640,7 @@ class CustomGridPainter extends CustomPainter {
         if (enumerationText == null || enumerationText.isEmpty) continue;
 
         var textColor = gridState != null && gridState[i] != null && gridState[i][j] != null && i > 0 && j > 0
-            ? GRID_COLORS[gridState[i][j]]['fontColor']
+            ? _GRID_COLORS[gridState[i][j]]['fontColor']
             : themeColors().mainFont();
 
         TextPainter textPainter = _setFontSize(textColor, enumerationText, boxHeight, boxWidth);
