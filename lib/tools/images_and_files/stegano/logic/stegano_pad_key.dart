@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
+part of 'package:gc_wizard/tools/images_and_files/stegano/logic/stegano.dart';
 
-String steganoPadKey(String key) {
+String _steganoPadKey(String key) {
   if (key.length > 32) {
-    throw FlutterError('cryption_key_length_greater_than_32');
+    throw Exception('cryption_key_length_greater_than_32');
   }
   String paddedKey = key;
   int padCnt = 32 - key.length;

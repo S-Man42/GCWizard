@@ -1,10 +1,8 @@
-import 'dart:typed_data';
+part of 'package:gc_wizard/tools/images_and_files/stegano/logic/stegano.dart';
 
-import 'stegano_base_request.dart';
-
-class SteganoEncodeRequest extends SteganoBaseRequest {
+class _SteganoEncodeRequest extends _SteganoBaseRequest {
   final String message;
   final String filename;
 
-  SteganoEncodeRequest(Uint8List imageData, this.message, {String key, this.filename}) : super(imageData, key: key);
+  _SteganoEncodeRequest(Uint8List imageData, this.message, {String key, this.filename}) : super(imageData, key: key);
 }

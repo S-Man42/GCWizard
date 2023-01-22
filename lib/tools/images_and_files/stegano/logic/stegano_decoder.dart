@@ -1,9 +1,4 @@
-import 'package:encrypt/encrypt.dart' as crypto;
-import 'package:flutter/foundation.dart';
-import 'package:gc_wizard/tools/images_and_files/stegano/logic/requests/stegano_decode_request.dart';
-import 'package:image/image.dart';
-
-import 'stegano_pad_key.dart';
+part of 'package:gc_wizard/tools/images_and_files/stegano/logic/stegano.dart';
 
 int _extractLastBit(int pixel) {
   int lastBit = pixel & 1;
@@ -25,7 +20,7 @@ int _assembleBit(Uint8List byte) {
   return assembled;
 }
 
-String decodeSteganoMessageFromImage(SteganoDecodeRequest req) {
+String _decodeSteganoMessageFromImage(_SteganoDecodeRequest req) {
   Image origin = decodeImage(req.imageData);
   Uint8List img = origin.getBytes();
 
@@ -63,7 +58,7 @@ String decodeSteganoMessageFromImage(SteganoDecodeRequest req) {
 
   String token = req.key;
   if (req.canEncrypt()) {
-    crypto.Key key = crypto.Key.fromUtf8(steganoPadKey(token));
+    crypto.Key key = crypto.Key.fromUtf8(_steganoPadKey(token));
     crypto.IV iv = crypto.IV.fromLength(16);
     crypto.Encrypter encrypter = crypto.Encrypter(crypto.AES(key));
     crypto.Encrypted encryptedMsg = crypto.Encrypted.fromBase64(msg);
@@ -72,7 +67,7 @@ String decodeSteganoMessageFromImage(SteganoDecodeRequest req) {
   return msg;
 }
 
-Future<String> decodeSteganoMessageFromImageAsync(SteganoDecodeRequest req) async {
-  final String res = await compute(decodeSteganoMessageFromImage, req);
+Future<String> _decodeSteganoMessageFromImageAsync(_SteganoDecodeRequest req) async {
+  final String res = await compute(_decodeSteganoMessageFromImage, req);
   return res;
 }
