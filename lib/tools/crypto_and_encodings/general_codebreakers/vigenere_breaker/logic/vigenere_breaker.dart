@@ -1,9 +1,7 @@
 import 'dart:math';
 
-import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/guballa/logic/breaker.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/bigrams/logic/bigrams.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/guballa/logic/breaker.dart'
-    as guballa;
+import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/guballa/logic/breaker.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/vigenere/logic/vigenere.dart';
 
 enum VigenereBreakerType { VIGENERE, AUTOKEYVIGENERE, BEAUFORT }
@@ -123,7 +121,7 @@ VigenereBreakerResult break_cipher(String input, VigenereBreakerType vigenereBre
   _progressStep = max(_countCombinations ~/ 100, 1); // 100 steps
 
   for (int keyLength = keyLengthMin; keyLength <= keyLengthMax; keyLength++) {
-    var breakerResult = guballa.break_vigenere(cipher_bin, keyLength, vigenereSquare, bigrams.bigrams,
+    var breakerResult = break_vigenere(cipher_bin, keyLength, vigenereSquare, bigrams.bigrams,
         vigenereBreakerType == VigenereBreakerType.AUTOKEYVIGENERE,
         counterFunction: counterFunction);
     var result = VigenereBreakerResult();

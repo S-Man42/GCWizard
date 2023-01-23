@@ -1,25 +1,25 @@
 part of 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/piet/logic/piet_language.dart';
 
-enum Direction { East, South, West, North }
+enum _Direction { East, South, West, North }
 
-enum CodelChoice { Left, Right }
+enum _CodelChoice { Left, Right }
 
-class PietNavigator {
-  var _direction = Direction.East;
-  Direction get direction => _direction;
+class _PietNavigator {
+  var _direction = _Direction.East;
+  _Direction get direction => _direction;
 
-  var _codelChooser = CodelChoice.Left;
-  CodelChoice get codelChooser => _codelChooser;
+  var _codelChooser = _CodelChoice.Left;
+  _CodelChoice get codelChooser => _codelChooser;
 
   List<List<int>> _data;
 
-  final int white = knownColors[18];
-  final int black = knownColors[19];
+  final int white = _knownColors[18];
+  final int black = _knownColors[19];
 
   int _width;
   int _height;
 
-  PietNavigator(List<List<int>> data) {
+  _PietNavigator(List<List<int>> data) {
     _data = data;
     _width = _data[0].length;
     _height = _data.length;
@@ -28,7 +28,7 @@ class PietNavigator {
   Point _currentPoint = Point<int>(0, 0);
   Point get currentPoint => _currentPoint;
 
-  Tuple2<bool, Point<int>> tryNavigate(PietBlock block) {
+  Tuple2<bool, Point<int>> tryNavigate(_PietBlock block) {
     Point<int> result;
     int failureCount = 0;
 
@@ -39,21 +39,21 @@ class PietNavigator {
 
       if (moveStraight)
         exitPoint = currentPoint;
-      else if (direction == Direction.East && codelChooser == CodelChoice.Left)
+      else if (direction == _Direction.East && codelChooser == _CodelChoice.Left)
         exitPoint = block.eastLeft;
-      else if (direction == Direction.East && codelChooser == CodelChoice.Right)
+      else if (direction == _Direction.East && codelChooser == _CodelChoice.Right)
         exitPoint = block.eastRight;
-      else if (direction == Direction.South && codelChooser == CodelChoice.Left)
+      else if (direction == _Direction.South && codelChooser == _CodelChoice.Left)
         exitPoint = block.southLeft;
-      else if (direction == Direction.South && codelChooser == CodelChoice.Right)
+      else if (direction == _Direction.South && codelChooser == _CodelChoice.Right)
         exitPoint = block.southRight;
-      else if (direction == Direction.West && codelChooser == CodelChoice.Left)
+      else if (direction == _Direction.West && codelChooser == _CodelChoice.Left)
         exitPoint = block.westLeft;
-      else if (direction == Direction.West && codelChooser == CodelChoice.Right)
+      else if (direction == _Direction.West && codelChooser == _CodelChoice.Right)
         exitPoint = block.westRight;
-      else if (direction == Direction.North && codelChooser == CodelChoice.Left)
+      else if (direction == _Direction.North && codelChooser == _CodelChoice.Left)
         exitPoint = block.northLeft;
-      else if (direction == Direction.North && codelChooser == CodelChoice.Right)
+      else if (direction == _Direction.North && codelChooser == _CodelChoice.Right)
         exitPoint = block.northRight;
       else
         return throw Exception('common_programming_error_invalid_opcode');
@@ -63,16 +63,16 @@ class PietNavigator {
         while (_stillInBlock(exitPoint, block)) {
           prevStep = exitPoint;
           switch (direction) {
-            case Direction.East:
+            case _Direction.East:
               exitPoint = Point<int>(exitPoint.x + 1, exitPoint.y);
               break;
-            case Direction.South:
+            case _Direction.South:
               exitPoint = Point<int>(exitPoint.x, exitPoint.y + 1);
               break;
-            case Direction.West:
+            case _Direction.West:
               exitPoint = Point<int>(exitPoint.x - 1, exitPoint.y);
               break;
-            case Direction.North:
+            case _Direction.North:
               exitPoint = Point<int>(exitPoint.x, exitPoint.y - 1);
               break;
             default:
@@ -84,13 +84,13 @@ class PietNavigator {
       }
 
       Point nextStep;
-      if (direction == Direction.East)
+      if (direction == _Direction.East)
         nextStep = Point<int>(exitPoint.x + 1, exitPoint.y);
-      else if (direction == Direction.South)
+      else if (direction == _Direction.South)
         nextStep = Point<int>(exitPoint.x, exitPoint.y + 1);
-      else if (direction == Direction.West)
+      else if (direction == _Direction.West)
         nextStep = Point<int>(exitPoint.x - 1, exitPoint.y);
-      else if (direction == Direction.North)
+      else if (direction == _Direction.North)
         nextStep = Point<int>(exitPoint.x, exitPoint.y - 1);
       else
         return throw Exception('common_programming_error_invalid_opcode');
@@ -120,7 +120,7 @@ class PietNavigator {
     return Tuple2<bool, Point<int>>(false, result);
   }
 
-  bool _stillInBlock(Point exitPoint, PietBlock block) {
+  bool _stillInBlock(Point exitPoint, _PietBlock block) {
     return exitPoint.x >= 0 &&
         exitPoint.y >= 0 &&
         exitPoint.x < _width &&
@@ -133,10 +133,10 @@ class PietNavigator {
   /// </summary>
   /// <param name="turns">I</param>
   void rotateDirectionPointer(int turns) {
-    _direction = Direction.values[(direction.index + turns) % 4];
+    _direction = _Direction.values[(direction.index + turns) % 4];
   }
 
   void toggleCodelChooser(int times) {
-    _codelChooser = CodelChoice.values[(codelChooser.index + times.abs()) % 2];
+    _codelChooser = _CodelChoice.values[(codelChooser.index + times.abs()) % 2];
   }
 }

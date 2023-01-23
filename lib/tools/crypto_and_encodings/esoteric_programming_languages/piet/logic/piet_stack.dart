@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/piet/logic/piet_language.dart';
 
-class PietStack {
+class _PietStack {
   List<int> _stack = <int>[];
   int get length => _stack.length;
 
@@ -127,8 +127,8 @@ class PietStack {
     // if we need to rotate 3 items 7 items, then we can skip the full cycles and just the the 1
     int absoluteIterations = iterations % depth;
 
-    var stack1 = PietStack();
-    var stack2 = PietStack();
+    var stack1 = _PietStack();
+    var stack2 = _PietStack();
     for (var i = 0; i < depth; i++) {
       if (i < absoluteIterations)
         stack1.push(pop());
@@ -148,8 +148,8 @@ class PietStack {
     // if we need to rotate 3 items 7 items, then we can skip the full cycles and just the the 1
     int absoluteIterations = iterations % depth;
 
-    var stack1 = PietStack();
-    var stack2 = PietStack();
+    var stack1 = _PietStack();
+    var stack2 = _PietStack();
     for (var i = depth; i > 0; i--) {
       if (i <= absoluteIterations)
         stack1.push(pop());

@@ -1,10 +1,7 @@
-import 'dart:io';
-
-import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/guballa/logic/breaker.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
+part of 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/logic/substitution_logic_aggregator.dart';
 
 /// Basic functions for encoding/decoding substitution ciphers with a given key
-class Key {
+class BreakerKey {
   /*
    The first character of the alphabet corresponds to the first character of the
   key, the second character of the alphabet to the second character of the key,
@@ -32,7 +29,7 @@ class Key {
   /// :param key: The key to use. Must have the same length than alphabet. (It is case insensitive.)
   /// :param str alphabet: The set of characters which define the alphabet.
   ///         Characters which are not in the alphabet will be ignored when transcoding.
-  Key(String key, {String alphabet = DEFAULT_ALPHABET}) {
+  BreakerKey(String key, {String alphabet = DEFAULT_ALPHABET}) {
     this._alphabet = check_alphabet(alphabet);
     if (this._alphabet == null) return;
     this._key = check_key(key, this._alphabet);

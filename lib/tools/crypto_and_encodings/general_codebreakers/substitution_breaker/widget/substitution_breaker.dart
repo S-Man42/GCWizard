@@ -15,7 +15,11 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/logic/substitution_breaker.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/logic/quadgrams.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/logic/substitution_logic_aggregator.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/logic/substitution_breaker_enums.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/widget/quadgram_loader.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/widget/substitution_breaker_items.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/logic/substitution_breaker_result.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/widget/substitution.dart';
 import 'package:gc_wizard/tools/utils/no_animation_material_page_route/widget/no_animation_material_page_route.dart';
 
@@ -58,7 +62,7 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
               _currentAlphabet = value;
             });
           },
-          items: BreakerAlphabetItems(context).entries.map((alphabet) {
+          items: SubstitutionBreakerAlphabetItems(context).entries.map((alphabet) {
             return GCWDropDownMenuItem(
               value: alphabet.key,
               child: alphabet.value,
@@ -138,30 +142,6 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
     );
   }
 
-  static Future<Quadgrams> loadQuadgramsAssets(SubstitutionBreakerAlphabet alphabet, BuildContext context,
-      Map<SubstitutionBreakerAlphabet, Quadgrams> quadgramsMap, List<bool> isLoading) async {
-    while (isLoading[0]) {}
-
-    if (quadgramsMap.containsKey(alphabet)) return quadgramsMap[alphabet];
-
-    isLoading[0] = true;
-
-    Quadgrams quadgrams = getQuadgrams(alphabet);
-
-    String data = await DefaultAssetBundle.of(context).loadString(quadgrams.assetLocation);
-    Map<String, dynamic> jsonData = jsonDecode(data);
-    quadgrams.quadgramsCompressed = Map<int, List<int>>();
-    jsonData.entries.forEach((entry) {
-      quadgrams.quadgramsCompressed.putIfAbsent(int.tryParse(entry.key), () => List<int>.from(entry.value));
-    });
-
-    quadgramsMap.putIfAbsent(alphabet, () => quadgrams);
-
-    isLoading[0] = false;
-
-    return quadgrams;
-  }
-
   Future<GCWAsyncExecuterParameters> _buildJobData() async {
     _currentOutput = null;
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -189,18 +169,4 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
       setState(() {});
     });
   }
-}
-
-Map<SubstitutionBreakerAlphabet, String> BreakerAlphabetItems(BuildContext context) {
-  var breakerAlphabetItems = {
-    SubstitutionBreakerAlphabet.ENGLISH: i18n(context, 'common_language_english'),
-    SubstitutionBreakerAlphabet.GERMAN: i18n(context, 'common_language_german'),
-    SubstitutionBreakerAlphabet.DUTCH: i18n(context, 'common_language_dutch'),
-    SubstitutionBreakerAlphabet.SPANISH: i18n(context, 'common_language_spanish'),
-    SubstitutionBreakerAlphabet.POLISH: i18n(context, 'common_language_polish'),
-    SubstitutionBreakerAlphabet.GREEK: i18n(context, 'common_language_greek'),
-    SubstitutionBreakerAlphabet.FRENCH: i18n(context, 'common_language_french'),
-    SubstitutionBreakerAlphabet.RUSSIAN: i18n(context, 'common_language_russian'),
-  };
-  return breakerAlphabetItems;
 }

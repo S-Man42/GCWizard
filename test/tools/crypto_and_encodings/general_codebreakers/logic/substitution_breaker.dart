@@ -1,7 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/guballa/logic/breaker.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/guballa/logic/key.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/logic/quadgrams.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/logic/substitution_logic_aggregator.dart';
 
 void main() {
   group("substitution_breaker.check_alphabet:", () {
@@ -15,7 +13,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = Key.check_alphabet(elem['input']);
+        var _actual = BreakerKey.check_alphabet(elem['input']);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -35,7 +33,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = Key.check_key(elem['input'], elem['alphabet']);
+        var _actual = BreakerKey.check_key(elem['input'], elem['alphabet']);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -51,7 +49,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var key = Key('abcdefghijklmnopqrstuvwxyz');
+        var key = BreakerKey('abcdefghijklmnopqrstuvwxyz');
         var _actual = key.decode(elem['input']);
         expect(_actual, elem['expectedOutput']);
       });
@@ -68,7 +66,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var key = Key('abcdefghijklmnopqrstuvwxyz');
+        var key = BreakerKey('abcdefghijklmnopqrstuvwxyz');
         var _actual = key.encode(elem['input']);
         expect(_actual, elem['expectedOutput']);
       });

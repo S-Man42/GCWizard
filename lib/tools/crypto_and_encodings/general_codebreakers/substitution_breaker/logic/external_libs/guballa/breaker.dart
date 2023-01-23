@@ -1,6 +1,4 @@
-import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/guballa/logic/key.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/logic/quadgrams.dart';
-import 'package:tuple/tuple.dart';
+part of 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/logic/substitution_logic_aggregator.dart';
 
 enum ErrorCode {
   OK,
@@ -199,7 +197,7 @@ BreakerResult break_cipher(Quadgrams quadgrams, String ciphertext, {int maxRound
     }
   }
   var key_str = best_key.map((x) => _alphabet[x]).join();
-  var _key = Key(key_str, alphabet: _alphabet);
+  var _key = BreakerKey(key_str, alphabet: _alphabet);
   var seconds = (DateTime.now().difference(start_time)).inMilliseconds / 1000;
 
   return BreakerResult(

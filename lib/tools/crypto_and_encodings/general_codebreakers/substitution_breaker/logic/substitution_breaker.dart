@@ -1,17 +1,6 @@
-import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/guballa/logic/breaker.dart'
-    as guballa;
-import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/logic/quadgrams.dart';
-
-enum SubstitutionBreakerAlphabet { ENGLISH, GERMAN, DUTCH, SPANISH, POLISH, GREEK, FRENCH, RUSSIAN }
-
-enum SubstitutionBreakerErrorCode {
-  OK,
-  MAX_ROUNDS_PARAMETER,
-  CONSOLIDATE_PARAMETER,
-  TEXT_TOO_SHORT,
-  ALPHABET_TOO_LONG,
-  WRONG_GENERATE_TEXT
-}
+import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/logic/substitution_breaker_enums.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/logic/substitution_breaker_result.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/logic/substitution_logic_aggregator.dart';
 
 class SubstitutionBreakerJobData {
   final String input;
@@ -20,57 +9,42 @@ class SubstitutionBreakerJobData {
   SubstitutionBreakerJobData({this.input = '', this.quadgrams});
 }
 
-class SubstitutionBreakerResult {
-  final String ciphertext;
-  final String plaintext;
-  final String key;
-  final String alphabet;
-  final SubstitutionBreakerErrorCode errorCode;
-
-  SubstitutionBreakerResult(
-      {this.ciphertext = '',
-      this.plaintext = '',
-      this.key = '',
-      this.alphabet = '',
-      this.errorCode = SubstitutionBreakerErrorCode.OK});
-}
-
 Future<SubstitutionBreakerResult> break_cipherAsync(dynamic jobData) async {
   if (jobData.parameters == null) return SubstitutionBreakerResult(errorCode: SubstitutionBreakerErrorCode.OK);
 
-  var output = break_cipher(jobData.parameters.input, jobData.parameters.quadgrams);
+  var output = _break_cipher(jobData.parameters.input, jobData.parameters.quadgrams);
 
   if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
 
   return output;
 }
 
-SubstitutionBreakerResult break_cipher(String input, Quadgrams quadgrams) {
+SubstitutionBreakerResult _break_cipher(String input, Quadgrams quadgrams) {
   if (input == null || input == '' || quadgrams == null)
     return SubstitutionBreakerResult(errorCode: SubstitutionBreakerErrorCode.OK);
 
-  return _convertBreakerResult(guballa.break_cipher(quadgrams, input));
+  return _convertBreakerResult(break_cipher(quadgrams, input));
 }
 
-SubstitutionBreakerResult _convertBreakerResult(guballa.BreakerResult breakerResult) {
+SubstitutionBreakerResult _convertBreakerResult(BreakerResult breakerResult) {
   SubstitutionBreakerErrorCode errorCode;
   switch (breakerResult.errorCode) {
-    case guballa.ErrorCode.OK:
+    case ErrorCode.OK:
       errorCode = SubstitutionBreakerErrorCode.OK;
       break;
-    case guballa.ErrorCode.MAX_ROUNDS_PARAMETER:
+    case ErrorCode.MAX_ROUNDS_PARAMETER:
       errorCode = SubstitutionBreakerErrorCode.MAX_ROUNDS_PARAMETER;
       break;
-    case guballa.ErrorCode.CONSOLIDATE_PARAMETER:
+    case ErrorCode.CONSOLIDATE_PARAMETER:
       errorCode = SubstitutionBreakerErrorCode.CONSOLIDATE_PARAMETER;
       break;
-    case guballa.ErrorCode.TEXT_TOO_SHORT:
+    case ErrorCode.TEXT_TOO_SHORT:
       errorCode = SubstitutionBreakerErrorCode.TEXT_TOO_SHORT;
       break;
-    case guballa.ErrorCode.ALPHABET_TOO_LONG:
+    case ErrorCode.ALPHABET_TOO_LONG:
       errorCode = SubstitutionBreakerErrorCode.ALPHABET_TOO_LONG;
       break;
-    case guballa.ErrorCode.WRONG_GENERATE_TEXT:
+    case ErrorCode.WRONG_GENERATE_TEXT:
       errorCode = SubstitutionBreakerErrorCode.WRONG_GENERATE_TEXT;
       break;
   }
@@ -82,4 +56,35 @@ SubstitutionBreakerResult _convertBreakerResult(guballa.BreakerResult breakerRes
     alphabet: breakerResult.alphabet,
     errorCode: errorCode,
   );
+}
+
+Quadgrams getQuadgrams(SubstitutionBreakerAlphabet alphabet) {
+  switch (alphabet) {
+    case SubstitutionBreakerAlphabet.ENGLISH:
+      return EnglishQuadgrams();
+      break;
+    case SubstitutionBreakerAlphabet.GERMAN:
+      return GermanQuadgrams();
+      break;
+    case SubstitutionBreakerAlphabet.DUTCH:
+      return DutchQuadgrams();
+      break;
+    case SubstitutionBreakerAlphabet.SPANISH:
+      return SpanishQuadgrams();
+      break;
+    case SubstitutionBreakerAlphabet.POLISH:
+      return PolishQuadgrams();
+      break;
+    case SubstitutionBreakerAlphabet.GREEK:
+      return GreekQuadgrams();
+      break;
+    case SubstitutionBreakerAlphabet.FRENCH:
+      return FrenchQuadgrams();
+      break;
+    case SubstitutionBreakerAlphabet.RUSSIAN:
+      return RussianQuadgrams();
+      break;
+    default:
+      return null;
+  }
 }

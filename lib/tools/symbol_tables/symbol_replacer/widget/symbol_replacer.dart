@@ -20,8 +20,12 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/logic/substitution_breaker.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/logic/quadgrams.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/logic/substitution_breaker_enums.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/logic/substitution_breaker_result.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/logic/substitution_logic_aggregator.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/widget/quadgram_loader.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/widget/substitution_breaker.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/widget/substitution_breaker_items.dart';
 import 'package:gc_wizard/tools/symbol_tables/logic/symbol_table_data.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/logic/symbol_replacer.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_replacer_manual_control.dart';
@@ -334,7 +338,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
                 _currentAlphabet = value;
               });
             },
-            items: BreakerAlphabetItems(context).entries.map((alphabet) {
+            items: SubstitutionBreakerAlphabetItems(context).entries.map((alphabet) {
               return GCWDropDownMenuItem(
                 value: alphabet.key,
                 child: alphabet.value,
@@ -467,7 +471,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     if (_symbolImage.symbolGroups == null) return null;
 
     var quadgrams =
-        await SubstitutionBreakerState.loadQuadgramsAssets(_currentAlphabet, context, _quadgrams, _isLoading);
+        await loadQuadgramsAssets(_currentAlphabet, context, _quadgrams, _isLoading);
     if (_symbolImage.symbolGroups.length > quadgrams.alphabet.length) {
       showToast(i18n(context, 'symbol_replacer_automatic_groups'));
       return null;

@@ -1,11 +1,4 @@
-import 'dart:io';
-import 'dart:math';
-
-import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/guballa/logic/breaker.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/guballa/logic/generate_quadgrams.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/logic/quadgrams.dart';
-import 'package:gc_wizard/tools/utils/file_utils/widget/file_utils.dart';
-import 'package:path/path.dart' as path;
+part of 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/logic/substitution_logic_aggregator.dart';
 
 // main() {
 //   generate_quadgram();
@@ -42,10 +35,10 @@ bool generate_quadgram() {
 
   _inputsToExpected.forEach((elem) async {
     var filePath =
-        path.current + "/lib/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/";
+        current + "/lib/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/logic/quadgrams/";
     var fileIn = File(normalizePath(filePath + elem['input']));
     var fileOut = File(normalizePath(filePath + elem['fileOut']));
-    filePath = path.current + "/assets/quadgrams/";
+    filePath = current + "/assets/quadgrams/";
     var fileAsset = File(normalizePath(filePath + elem['assetName']));
 
     var _actual =
@@ -67,7 +60,7 @@ BreakerResult generateFiles(File quadgram_fh, File asset_fh, String className, S
     quadgrams_sum += quadgramsInt[i];
   }
   sb.write(
-      "import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/logic/quadgrams.dart';\n");
+      "part of 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/logic/substitution_logic.dart';\n");
   sb.write("\n");
   sb.write("class " + className + " extends Quadgrams {\n");
   sb.write("\n");

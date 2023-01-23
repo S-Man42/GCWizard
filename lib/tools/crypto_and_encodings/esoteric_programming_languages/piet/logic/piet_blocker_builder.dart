@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/piet/logic/piet_language.dart';
 
-const knownColors = [
+const _knownColors = [
   //format RGB
   // reds
   0xFFC0C0, // light
@@ -32,33 +32,33 @@ const knownColors = [
   0x000000
 ];
 
-class PietBlockerBuilder {
+class _PietBlockerBuilder {
   // we if want to support custom colors and operations going forward
   // we'll need to allow extensions to add to this collection
 
   List<List<int>> _data;
-  PietBlock _block;
-  var _blockCache = Map<Point<int>, PietBlock>();
+  _PietBlock _block;
+  var _blockCache = Map<Point<int>, _PietBlock>();
   int _width;
   int _height;
 
-  PietBlockerBuilder(List<List<int>> data) {
+  _PietBlockerBuilder(List<List<int>> data) {
     _data = data;
     _width = _data[0].length;
     _height = _data.length;
   }
 
-  PietBlock getBlockAt(int x, int y) {
+  _PietBlock getBlockAt(int x, int y) {
     return _buildPietBlock(x, y);
   }
 
-  PietBlock _buildPietBlock(int x, int y) {
+  _PietBlock _buildPietBlock(int x, int y) {
     var point = Point<int>(x, y);
     if (_blockCache.containsKey(point)) return _blockCache[point];
     int targetColor = _data[y][x];
-    var knownColor = knownColors.contains(targetColor);
+    var knownColor = _knownColors.contains(targetColor);
 
-    _block = PietBlock(targetColor, knownColor);
+    _block = _PietBlock(targetColor, knownColor);
     _buildPietBlockRec(x, y, 0, 0);
     _blockCache.addAll({point: _block});
 

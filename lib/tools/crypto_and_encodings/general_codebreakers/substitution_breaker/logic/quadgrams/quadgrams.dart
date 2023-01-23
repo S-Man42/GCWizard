@@ -1,18 +1,6 @@
-import 'dart:math';
+part of 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/logic/substitution_logic_aggregator.dart';
 
-import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/guballa/logic/quadgrams.dart'
-    as guballa;
-import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/logic/substitution_breaker.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/logic/dutch_quadgrams.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/logic/english_quadgrams.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/logic/french_quadgrams.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/logic/german_quadgrams.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/logic/greek_quadgrams.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/logic/polish_quadgrams.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/logic/russian_quadgrams.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/logic/spanish_quadgrams.dart';
-
-class Quadgrams extends guballa.Quadgrams {
+class Quadgrams extends _BaseGuballaQuadgrams {
   static const int maxAlphabetLength = 32;
   Map<int, List<int>> quadgramsCompressed;
   String assetLocation;
@@ -39,11 +27,11 @@ class Quadgrams extends guballa.Quadgrams {
       if (blockStart >= 0) {
         // if five 0 => new list
         if (((i + zeroCount < quadgrams.length) &&
-                (quadgrams[i + 1] == 0) | (quadgrams[i + 1] == null) &&
-                (quadgrams[i + 2] == 0) | (quadgrams[i + 2] == null) &&
-                (quadgrams[i + 3] == 0) | (quadgrams[i + 3] == null) &&
-                (quadgrams[i + 4] == 0) | (quadgrams[i + 4] == null) &&
-                (quadgrams[i + 5] == 0) | (quadgrams[i + 5] == null)) ||
+            (quadgrams[i + 1] == 0) | (quadgrams[i + 1] == null) &&
+            (quadgrams[i + 2] == 0) | (quadgrams[i + 2] == null) &&
+            (quadgrams[i + 3] == 0) | (quadgrams[i + 3] == null) &&
+            (quadgrams[i + 4] == 0) | (quadgrams[i + 4] == null) &&
+            (quadgrams[i + 5] == 0) | (quadgrams[i + 5] == null)) ||
             (i + zeroCount >= quadgrams.length)) {
           var quadgramList = <int>[];
           quadgramList.addAll(quadgrams.getRange(
@@ -134,36 +122,5 @@ class Quadgrams extends guballa.Quadgrams {
       }
     });
     return sb.toString();
-  }
-}
-
-Quadgrams getQuadgrams(SubstitutionBreakerAlphabet alphabet) {
-  switch (alphabet) {
-    case SubstitutionBreakerAlphabet.ENGLISH:
-      return EnglishQuadgrams();
-      break;
-    case SubstitutionBreakerAlphabet.GERMAN:
-      return GermanQuadgrams();
-      break;
-    case SubstitutionBreakerAlphabet.DUTCH:
-      return DutchQuadgrams();
-      break;
-    case SubstitutionBreakerAlphabet.SPANISH:
-      return SpanishQuadgrams();
-      break;
-    case SubstitutionBreakerAlphabet.POLISH:
-      return PolishQuadgrams();
-      break;
-    case SubstitutionBreakerAlphabet.GREEK:
-      return GreekQuadgrams();
-      break;
-    case SubstitutionBreakerAlphabet.FRENCH:
-      return FrenchQuadgrams();
-      break;
-    case SubstitutionBreakerAlphabet.RUSSIAN:
-      return RussianQuadgrams();
-      break;
-    default:
-      return null;
   }
 }

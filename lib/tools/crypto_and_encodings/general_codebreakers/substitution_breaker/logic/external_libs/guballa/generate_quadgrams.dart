@@ -1,14 +1,4 @@
-import 'dart:async';
-import 'dart:io';
-import 'dart:math';
-
-import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/guballa/logic/breaker.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/guballa/logic/key.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/logic/generate_quadgrams.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/logic/quadgrams.dart';
-
-String _alphabet;
-List<int> _quadgrams;
+part of 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/logic/substitution_logic_aggregator.dart';
 
 /// method to generate quadgrams from a text file
 /// :param corpus_fh: the file handle of the text corpus file to process
@@ -19,7 +9,7 @@ List<int> _quadgrams;
 /// :param alphabet: the alphabet to apply with this text file.
 Future<BreakerResult> generateQuadgrams(
     File corpus_fh, File quadgram_fh, File asset_fh, String className, String assetName, String alphabet) async {
-  _alphabet = Key.check_alphabet(alphabet);
+  _alphabet = BreakerKey.check_alphabet(alphabet);
   if (_alphabet.length > Quadgrams.maxAlphabetLength) {
     // Alphabet must have less or equal than 32 characters
     return BreakerResult(alphabet: _alphabet, errorCode: ErrorCode.ALPHABET_TOO_LONG);

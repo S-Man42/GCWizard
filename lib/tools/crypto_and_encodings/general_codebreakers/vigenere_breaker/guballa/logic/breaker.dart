@@ -118,3 +118,21 @@ BreakerResult break_vigenereAutoKey(
 
   return BreakerResult(key: key);
 }
+
+/// Implements an iterator for a given text string
+/// :param str txt: the text string to process
+/// :param str alphabet: the alphabet to apply with this text string
+/// :return: an iterator which iterates over all characters of the text string which are present in the alphabet.
+Iterable<int> iterateText(String text, String alphabet, {ignoreNonLetters: true}) sync* {
+  var trans = alphabet.toLowerCase();
+  int index = -1;
+
+  text = text.toLowerCase();
+  for (int i = 0; i < text.length; i++) {
+    index = trans.indexOf(text[i]);
+    if (index >= 0)
+      yield index;
+    else if (!ignoreNonLetters) yield -1;
+  }
+}
+

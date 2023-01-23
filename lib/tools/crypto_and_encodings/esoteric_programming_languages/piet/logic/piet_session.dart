@@ -7,7 +7,7 @@ class PietResult {
   final bool error;
   final String errorText;
   final bool finished;
-  final PietSession state;
+  final _PietSession state;
 
   PietResult(
       {this.output = '',
@@ -22,11 +22,11 @@ class PietResult {
 var _input_required = false;
 var _input_required_number = false;
 final _inputRequired = "input required";
-final maxOutputLength = 1000;
+final _maxOutputLength = 1000;
 
 Future<PietResult> interpretPiet(List<List<int>> data, String input,
-    {int timeOut = 15000, bool multipleInputs = false, PietSession continueState}) async {
-  var pietSession = continueState ?? PietSession(data, timeOut: timeOut, multipleInputs: multipleInputs);
+    {int timeOut = 15000, bool multipleInputs = false, _PietSession continueState}) async {
+  var pietSession = continueState ?? _PietSession(data, timeOut: timeOut, multipleInputs: multipleInputs);
   if (input != null && !input.endsWith('\n')) input += '\n';
   pietSession.input = input;
 
@@ -53,16 +53,16 @@ Future<PietResult> interpretPiet(List<List<int>> data, String input,
   }
 }
 
-class PietSession {
-  PietBlock _currentBlock;
-  Map<PietOps, Function> _actionMap;
+class _PietSession {
+  _PietBlock _currentBlock;
+  Map<_PietOps, Function> _actionMap;
 
   List<List<int>> data;
 
-  PietStack _stack;
-  PietBlockOpResolver _opsResolver;
-  PietBlockerBuilder _builder;
-  PietNavigator _navigator;
+  _PietStack _stack;
+  _PietBlockOpResolver _opsResolver;
+  _PietBlockerBuilder _builder;
+  _PietNavigator _navigator;
 
   String input;
   var _output = '';
@@ -70,19 +70,19 @@ class PietSession {
   var _timeOut = 15000;
   var _multipleInputs = false;
 
-  PietSession(List<List<int>> image, {int timeOut = 15000, bool multipleInputs = false}) {
+  _PietSession(List<List<int>> image, {int timeOut = 15000, bool multipleInputs = false}) {
     data = image;
 
-    _builder = PietBlockerBuilder(data);
-    _navigator = PietNavigator(data);
-    _opsResolver = PietBlockOpResolver();
-    _stack = PietStack();
+    _builder = _PietBlockerBuilder(data);
+    _navigator = _PietNavigator(data);
+    _opsResolver = _PietBlockOpResolver();
+    _stack = _PietStack();
     _timeOut = max(timeOut, 100);
     _multipleInputs = multipleInputs;
 
     _currentBlock = _builder.getBlockAt(0, 0);
 
-    var ops = BaseOperations(_stack, this, () => _currentBlock, (i) => _navigator.rotateDirectionPointer(i),
+    var ops = _BaseOperations(_stack, this, () => _currentBlock, (i) => _navigator.rotateDirectionPointer(i),
         (i) => _navigator.toggleCodelChooser(i));
     _actionMap = ops.getMap();
   }
@@ -119,7 +119,7 @@ class PietSession {
 
   void output(String value) {
     _output += value;
-    if (_output.length > maxOutputLength) throw Exception('common_programming_error_maxiterations');
+    if (_output.length > _maxOutputLength) throw Exception('common_programming_error_maxiterations');
   }
 
   int readInt() {

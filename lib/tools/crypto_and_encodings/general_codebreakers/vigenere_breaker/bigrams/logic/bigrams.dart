@@ -1,8 +1,9 @@
-import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/guballa/logic/breaker.dart';
+// import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/logic/external_libs/guballa/breaker.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/bigrams/logic/english_bigrams.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/bigrams/logic/french_bigrams.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/bigrams/logic/german_bigrams.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/bigrams/logic/spanish_bigrams.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/guballa/logic/breaker.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/logic/vigenere_breaker.dart';
 
 class Bigrams {

@@ -6,8 +6,8 @@ var _blockHeight = 12;
 var _blockWidth = 12;
 const _minBlockSize = 5;
 
-final int _white = knownColors.elementAt(18);
-final int _black = knownColors.elementAt(19);
+final int _white = _knownColors.elementAt(18);
+final int _black = _knownColors.elementAt(19);
 _colorStack _currentColor;
 
 Future<Uint8List> generatePiet(String input) async {
@@ -82,9 +82,9 @@ Future<Uint8List> _convertToImage(List<List<int>> resultLines) {
   var colorMapSwitched = Map<int, String>();
   var mapList = switchMapKeyValue(alphabet_AZ);
 
-  for (var i = 0; i < knownColors.length; i++) {
-    colorMap.addAll({mapList[i + 1]: Color(knownColors.elementAt(i) | 0xFF000000)});
-    colorMapSwitched.addAll({knownColors.elementAt(i): mapList[i + 1]});
+  for (var i = 0; i < _knownColors.length; i++) {
+    colorMap.addAll({mapList[i + 1]: Color(_knownColors.elementAt(i) | 0xFF000000)});
+    colorMapSwitched.addAll({_knownColors.elementAt(i): mapList[i + 1]});
   }
 
   resultLines.forEach((line) {
@@ -310,7 +310,7 @@ class _colorStack {
   var _colorTable = [1, 0];
 
   int RGB() {
-    return knownColors.elementAt(_colorTable[1] * 3 + _colorTable[0]);
+    return _knownColors.elementAt(_colorTable[1] * 3 + _colorTable[0]);
   }
 
   int pushColor() {

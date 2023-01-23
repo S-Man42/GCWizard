@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/piet/logic/piet_language.dart';
 
-class PietBlock {
+class _PietBlock {
   int _color = 0;
   int get color => _color;
   bool _knownColor = false;
@@ -8,7 +8,7 @@ class PietBlock {
 
   var _pixels = Set<Point<int>>();
 
-  PietBlock(int color, bool knownColor) {
+  _PietBlock(int color, bool knownColor) {
     _color = color;
     _knownColor = knownColor;
   }
