@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/logic/substitution_logic_aggregator.dart';
 
-enum ErrorCode {
+enum BreakerErrorCode {
   OK,
   MAX_ROUNDS_PARAMETER,
   CONSOLIDATE_PARAMETER,
@@ -29,7 +29,7 @@ class BreakerResult {
   int nbr_rounds;
   double keys_per_second;
   double seconds;
-  ErrorCode errorCode;
+  BreakerErrorCode errorCode;
 
   BreakerResult(
       {this.ciphertext = '',
@@ -41,7 +41,7 @@ class BreakerResult {
       this.nbr_rounds = 0,
       this.keys_per_second = 0,
       this.seconds = 0,
-      this.errorCode = ErrorCode.OK});
+      this.errorCode = BreakerErrorCode.OK});
 }
 
 const DEFAULT_ALPHABET = "abcdefghijklmnopqrstuvwxyz";
@@ -142,10 +142,10 @@ BreakerResult break_cipher(Quadgrams quadgrams, String ciphertext, {int maxRound
 
   if ((maxRounds < 1) || (maxRounds > 10000))
     // maximum number of rounds not in the valid range 1..10000"
-    return BreakerResult(errorCode: ErrorCode.MAX_ROUNDS_PARAMETER);
+    return BreakerResult(errorCode: BreakerErrorCode.MAX_ROUNDS_PARAMETER);
   if ((consolidate < 1) || (consolidate > 30))
     // consolidate parameter out of valid range 1..30"
-    return BreakerResult(errorCode: ErrorCode.CONSOLIDATE_PARAMETER);
+    return BreakerResult(errorCode: BreakerErrorCode.CONSOLIDATE_PARAMETER);
 
   var start_time = DateTime.now();
   var nbr_keys = 0;
@@ -156,7 +156,7 @@ BreakerResult break_cipher(Quadgrams quadgrams, String ciphertext, {int maxRound
 
   if (cipher_bin.length < 4)
     // ciphertext is too short
-    return BreakerResult(errorCode: ErrorCode.TEXT_TOO_SHORT);
+    return BreakerResult(errorCode: BreakerErrorCode.TEXT_TOO_SHORT);
 
   var char_positions = <List<int>>[];
   for (int idx = 0; idx < _alphabet.length; idx++) {
@@ -210,5 +210,5 @@ BreakerResult break_cipher(Quadgrams quadgrams, String ciphertext, {int maxRound
       nbr_rounds: round_cntr,
       keys_per_second: (nbr_keys / seconds),
       seconds: seconds,
-      errorCode: ErrorCode.OK);
+      errorCode: BreakerErrorCode.OK);
 }

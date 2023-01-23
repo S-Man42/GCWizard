@@ -12,7 +12,7 @@ Future<BreakerResult> generateQuadgrams(
   _alphabet = BreakerKey.check_alphabet(alphabet);
   if (_alphabet.length > Quadgrams.maxAlphabetLength) {
     // Alphabet must have less or equal than 32 characters
-    return BreakerResult(alphabet: _alphabet, errorCode: ErrorCode.ALPHABET_TOO_LONG);
+    return BreakerResult(alphabet: _alphabet, errorCode: BreakerErrorCode.ALPHABET_TOO_LONG);
   }
 
   var iterator = _file_iterator(corpus_fh, _alphabet);
@@ -40,7 +40,7 @@ Future<BreakerResult> generateQuadgrams(
     });
   } on Exception {
     // More than three characters from the given alphabet are required
-    return BreakerResult(errorCode: ErrorCode.WRONG_GENERATE_TEXT);
+    return BreakerResult(errorCode: BreakerErrorCode.WRONG_GENERATE_TEXT);
   }
 
   double quadgram_sum = 0;

@@ -44,7 +44,7 @@ bool generate_quadgram() {
     var _actual =
         await generateQuadgrams(fileIn, fileOut, fileAsset, elem['className'], elem['assetName'], elem['alphabet']);
 
-    result = result && (_actual.errorCode == ErrorCode.OK);
+    result = result && (_actual.errorCode == BreakerErrorCode.OK);
   });
 
   return result;
@@ -80,7 +80,7 @@ BreakerResult generateFiles(File quadgram_fh, File asset_fh, String className, S
   asset_fh.writeAsStringSync(Quadgrams.quadgramsMapToString(Quadgrams.compressQuadgrams(quadgramsInt)));
 
   if (quadgrams_sum == 0 || max_val == 0)
-    return BreakerResult(alphabet: alphabet, fitness: max_val, errorCode: ErrorCode.WRONG_GENERATE_TEXT);
+    return BreakerResult(alphabet: alphabet, fitness: max_val, errorCode: BreakerErrorCode.WRONG_GENERATE_TEXT);
   else
-    return BreakerResult(alphabet: alphabet, fitness: max_val, errorCode: ErrorCode.OK);
+    return BreakerResult(alphabet: alphabet, fitness: max_val, errorCode: BreakerErrorCode.OK);
 }

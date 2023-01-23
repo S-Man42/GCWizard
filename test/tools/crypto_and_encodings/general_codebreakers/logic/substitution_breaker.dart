@@ -77,7 +77,7 @@ void main() {
     final List<int> quadgrams = [0,0,0,747,0,0,0,0,0,0,11,12,13,0,0,0,17];
 
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'input' : quadgrams, 'errorCode' : ErrorCode.OK, 'expectedOutput' : '{"3":[747],"10":[11,12,13,0,0,0,17]}'},
+      {'input' : quadgrams, 'errorCode' : BreakerErrorCode.OK, 'expectedOutput' : '{"3":[747],"10":[11,12,13,0,0,0,17]}'},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -96,8 +96,8 @@ void main() {
     final Map<int, List<int>> quadgramsCpmpressed1 = {3:[747],10:[11,12,13],16:[17]};
 
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'input' : quadgramsCpmpressed, 'size' : 17, 'errorCode' : ErrorCode.OK, 'expectedOutput' : quadgrams},
-      {'input' : quadgramsCpmpressed1, 'size' : 17, 'errorCode' : ErrorCode.OK, 'expectedOutput' : quadgrams},
+      {'input' : quadgramsCpmpressed, 'size' : 17, 'errorCode' : BreakerErrorCode.OK, 'expectedOutput' : quadgrams},
+      {'input' : quadgramsCpmpressed1, 'size' : 17, 'errorCode' : BreakerErrorCode.OK, 'expectedOutput' : quadgrams},
     ];
 
     _inputsToExpected.forEach((elem) async {

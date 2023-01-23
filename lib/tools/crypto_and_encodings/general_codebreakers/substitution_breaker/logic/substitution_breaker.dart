@@ -29,22 +29,22 @@ SubstitutionBreakerResult _break_cipher(String input, Quadgrams quadgrams) {
 SubstitutionBreakerResult _convertBreakerResult(BreakerResult breakerResult) {
   SubstitutionBreakerErrorCode errorCode;
   switch (breakerResult.errorCode) {
-    case ErrorCode.OK:
+    case BreakerErrorCode.OK:
       errorCode = SubstitutionBreakerErrorCode.OK;
       break;
-    case ErrorCode.MAX_ROUNDS_PARAMETER:
+    case BreakerErrorCode.MAX_ROUNDS_PARAMETER:
       errorCode = SubstitutionBreakerErrorCode.MAX_ROUNDS_PARAMETER;
       break;
-    case ErrorCode.CONSOLIDATE_PARAMETER:
+    case BreakerErrorCode.CONSOLIDATE_PARAMETER:
       errorCode = SubstitutionBreakerErrorCode.CONSOLIDATE_PARAMETER;
       break;
-    case ErrorCode.TEXT_TOO_SHORT:
+    case BreakerErrorCode.TEXT_TOO_SHORT:
       errorCode = SubstitutionBreakerErrorCode.TEXT_TOO_SHORT;
       break;
-    case ErrorCode.ALPHABET_TOO_LONG:
+    case BreakerErrorCode.ALPHABET_TOO_LONG:
       errorCode = SubstitutionBreakerErrorCode.ALPHABET_TOO_LONG;
       break;
-    case ErrorCode.WRONG_GENERATE_TEXT:
+    case BreakerErrorCode.WRONG_GENERATE_TEXT:
       errorCode = SubstitutionBreakerErrorCode.WRONG_GENERATE_TEXT;
       break;
   }
