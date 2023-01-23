@@ -310,7 +310,7 @@ class Geodesic {
    * path: the longitudinal extent must not exceed of 180&deg;.)
    **********************************************************************/
   GeodesicData direct(double lat1, double lon1, double azi1, double s12) {
-    return _direct(lat1, lon1, azi1, false, s12, GeodesicMask.STANDARD);
+    return _direct(lat1, lon1, azi1, false, s12, _GeodesicMask.STANDARD);
   }
 
   /*
@@ -371,8 +371,8 @@ class Geodesic {
    **********************************************************************/
   GeodesicData _direct(double lat1, double lon1, double azi1, bool arcmode, double s12_a12, int outmask) {
     // Automatically supply DISTANCE_IN if necessary
-    if (!arcmode) outmask |= GeodesicMask.DISTANCE_IN;
-    return new GeodesicLine(this, lat1, lon1, azi1, outmask)
+    if (!arcmode) outmask |= _GeodesicMask.DISTANCE_IN;
+    return new _GeodesicLine(this, lat1, lon1, azi1, outmask)
         . // Note the dot!
         Position(arcmode, s12_a12, outmask);
   }
@@ -402,12 +402,12 @@ class Geodesic {
    * is used to refine the solution.
    **********************************************************************/
   GeodesicData inverse(double lat1, double lon1, double lat2, double lon2) {
-    return _inverse(lat1, lon1, lat2, lon2, GeodesicMask.STANDARD);
+    return _inverse(lat1, lon1, lat2, lon2, _GeodesicMask.STANDARD);
   }
 
   _InverseData _inverseInt(double lat1, double lon1, double lat2, double lon2, int outmask) {
     _InverseData result = _InverseData();
-    Pair p = Pair();
+    _Pair p = _Pair();
     GeodesicData r = result._g;
     // Compute longitude difference (AngDiff does this carefully).  Result is
     // in [-180, 180] but -180 is only for west-going geodesics.  180 is for
@@ -421,7 +421,7 @@ class Geodesic {
     _GeoMath.AngDiff(p, lon1, lon2);
     lon12 = p.first;
     lon12s = p.second;
-    if ((outmask & GeodesicMask.LONG_UNROLL) != 0) {
+    if ((outmask & _GeodesicMask.LONG_UNROLL) != 0) {
       r.lon1 = lon1;
       r.lon2 = (lon1 + lon12) + lon12s;
     } else {
@@ -433,7 +433,7 @@ class Geodesic {
     // If very close to being on the same half-meridian, then make it so.
     lon12 = lonsign * _GeoMath.AngRound(lon12);
     lon12s = _GeoMath.AngRound((180 - lon12) - lonsign * lon12s);
-    double lam12 = toRadians(lon12), slam12, clam12;
+    double lam12 = _toRadians(lon12), slam12, clam12;
     _GeoMath.sincosd(p, lon12 > 90 ? lon12s : lon12);
     slam12 = p.first;
     clam12 = (lon12 > 90 ? -1 : 1) * p.second;
@@ -530,10 +530,10 @@ class Geodesic {
       // sig12 = sig2 - sig1
       sig12 = atan2(max(0.0, csig1 * ssig2 - ssig1 * csig2), csig1 * csig2 + ssig1 * ssig2);
       _Lengths(v, _n, sig12, ssig1, csig1, dn1, ssig2, csig2, dn2, cbet1, cbet2,
-          outmask | GeodesicMask.DISTANCE | GeodesicMask.REDUCEDLENGTH, C1a, C2a);
+          outmask | _GeodesicMask.DISTANCE | _GeodesicMask.REDUCEDLENGTH, C1a, C2a);
       s12x = v._s12b;
       m12x = v._m12b;
-      if ((outmask & GeodesicMask.GEODESICSCALE) != 0) {
+      if ((outmask & _GeodesicMask.GEODESICSCALE) != 0) {
         r.M12 = v._M12;
         r.M21 = v._M21;
       }
@@ -551,7 +551,7 @@ class Geodesic {
             (sig12 < _tol0_ && (s12x < 0 || m12x < 0))) sig12 = m12x = s12x = 0;
         m12x *= b;
         s12x *= b;
-        a12 = toDegrees(sig12);
+        a12 = _toDegrees(sig12);
       } else
         // m12 < 0, i.e., prolate and too close to anti-podal
         meridian = false;
@@ -568,7 +568,7 @@ class Geodesic {
       s12x = a * lam12;
       sig12 = omg12 = lam12 / f1;
       m12x = b * sin(sig12);
-      if ((outmask & GeodesicMask.GEODESICSCALE) != 0) r.M12 = r.M21 = cos(sig12);
+      if ((outmask & _GeodesicMask.GEODESICSCALE) != 0) r.M12 = r.M21 = cos(sig12);
       a12 = lon12 / f1;
     } else if (!meridian) {
       // Now point1 and point2 belong within a hemisphere bounded by a
@@ -590,8 +590,8 @@ class Geodesic {
         // Short lines (InverseStart sets salp2, calp2, dnm)
         s12x = sig12 * b * dnm;
         m12x = _GeoMath.sq(dnm) * b * sin(sig12 / dnm);
-        if ((outmask & GeodesicMask.GEODESICSCALE) != 0) r.M12 = r.M21 = cos(sig12 / dnm);
-        a12 = toDegrees(sig12);
+        if ((outmask & _GeodesicMask.GEODESICSCALE) != 0) r.M12 = r.M21 = cos(sig12 / dnm);
+        a12 = _toDegrees(sig12);
         omg12 = lam12 / (f1 * dnm);
       } else {
         // Newton's method.  This is a straightforward solution of f(alp1) =
@@ -674,21 +674,21 @@ class Geodesic {
           // Ensure that the reduced length and geodesic scale are computed in
           // a "canonical" way, with the I2 integral.
           int lengthmask = outmask |
-              ((outmask & (GeodesicMask.REDUCEDLENGTH | GeodesicMask.GEODESICSCALE)) != 0
-                  ? GeodesicMask.DISTANCE
-                  : GeodesicMask.NONE);
+              ((outmask & (_GeodesicMask.REDUCEDLENGTH | _GeodesicMask.GEODESICSCALE)) != 0
+                  ? _GeodesicMask.DISTANCE
+                  : _GeodesicMask.NONE);
           _Lengths(v, eps, sig12, ssig1, csig1, dn1, ssig2, csig2, dn2, cbet1, cbet2, lengthmask, C1a, C2a);
           s12x = v._s12b;
           m12x = v._m12b;
-          if ((outmask & GeodesicMask.GEODESICSCALE) != 0) {
+          if ((outmask & _GeodesicMask.GEODESICSCALE) != 0) {
             r.M12 = v._M12;
             r.M21 = v._M21;
           }
         }
         m12x *= b;
         s12x *= b;
-        a12 = toDegrees(sig12);
-        if ((outmask & GeodesicMask.AREA) != 0) {
+        a12 = _toDegrees(sig12);
+        if ((outmask & _GeodesicMask.AREA) != 0) {
           // omg12 = lam12 - domg12
           double sdomg12 = sin(domg12), cdomg12 = cos(domg12);
           somg12 = slam12 * cdomg12 - clam12 * sdomg12;
@@ -697,15 +697,15 @@ class Geodesic {
       }
     }
 
-    if ((outmask & GeodesicMask.DISTANCE) != 0) r.s12 = 0 + s12x; // Convert -0 to 0
+    if ((outmask & _GeodesicMask.DISTANCE) != 0) r.s12 = 0 + s12x; // Convert -0 to 0
 
-    if ((outmask & GeodesicMask.REDUCEDLENGTH) != 0) r.m12 = 0 + m12x; // Convert -0 to 0
+    if ((outmask & _GeodesicMask.REDUCEDLENGTH) != 0) r.m12 = 0 + m12x; // Convert -0 to 0
 
-    if ((outmask & GeodesicMask.AREA) != 0) {
+    if ((outmask & _GeodesicMask.AREA) != 0) {
       double
           // From Lambda12: sin(alp1) * cos(bet1) = sin(alp0)
           salp0 = _salp1 * cbet1,
-          calp0 = hypot(_calp1, _salp1 * sbet1); // calp0 > 0
+          calp0 = _hypot(_calp1, _salp1 * sbet1); // calp0 > 0
       double alp12;
       if (calp0 != 0 && salp0 != 0) {
         double
@@ -777,7 +777,7 @@ class Geodesic {
         _calp1 = calp2;
         calp2 = t;
       }
-      if ((outmask & GeodesicMask.GEODESICSCALE) != 0) {
+      if ((outmask & _GeodesicMask.GEODESICSCALE) != 0) {
         double t = r.M12;
         r.M12 = r.M21;
         r.M21 = t;
@@ -841,10 +841,10 @@ class Geodesic {
    * always included in the returned result.
    **********************************************************************/
   GeodesicData _inverse(double lat1, double lon1, double lat2, double lon2, int outmask) {
-    outmask &= GeodesicMask.OUT_MASK;
+    outmask &= _GeodesicMask.OUT_MASK;
     _InverseData result = _inverseInt(lat1, lon1, lat2, lon2, outmask);
     GeodesicData r = result._g;
-    if ((outmask & GeodesicMask.AZIMUTH) != 0) {
+    if ((outmask & _GeodesicMask.AZIMUTH) != 0) {
       r.azi1 = _GeoMath.atan2d(result._salp1, result._calp1);
       r.azi2 = _GeoMath.atan2d(result._salp2, result._calp2);
     }
@@ -892,14 +892,14 @@ class Geodesic {
       List<double> C2a) {
     // Return m12b = (reduced length)/_b; also calculate s12b = distance/_b,
     // and m0 = coefficient of secular term in expression for reduced length.
-    outmask &= GeodesicMask.OUT_MASK;
+    outmask &= _GeodesicMask.OUT_MASK;
     // v to hold compute s12b, m12b, m0, M12, M21;
 
     double m0x = 0, J12 = 0, A1 = 0, A2 = 0;
-    if ((outmask & (GeodesicMask.DISTANCE | GeodesicMask.REDUCEDLENGTH | GeodesicMask.GEODESICSCALE)) != 0) {
+    if ((outmask & (_GeodesicMask.DISTANCE | _GeodesicMask.REDUCEDLENGTH | _GeodesicMask.GEODESICSCALE)) != 0) {
       A1 = A1m1f(eps);
       C1f(eps, C1a);
-      if ((outmask & (GeodesicMask.REDUCEDLENGTH | GeodesicMask.GEODESICSCALE)) != 0) {
+      if ((outmask & (_GeodesicMask.REDUCEDLENGTH | _GeodesicMask.GEODESICSCALE)) != 0) {
         A2 = A2m1f(eps);
         C2f(eps, C2a);
         m0x = A1 - A2;
@@ -907,27 +907,27 @@ class Geodesic {
       }
       A1 = 1 + A1;
     }
-    if ((outmask & GeodesicMask.DISTANCE) != 0) {
+    if ((outmask & _GeodesicMask.DISTANCE) != 0) {
       double B1 = SinCosSeries(true, ssig2, csig2, C1a) - SinCosSeries(true, ssig1, csig1, C1a);
       // Missing a factor of _b
       v._s12b = A1 * (sig12 + B1);
-      if ((outmask & (GeodesicMask.REDUCEDLENGTH | GeodesicMask.GEODESICSCALE)) != 0) {
+      if ((outmask & (_GeodesicMask.REDUCEDLENGTH | _GeodesicMask.GEODESICSCALE)) != 0) {
         double B2 = SinCosSeries(true, ssig2, csig2, C2a) - SinCosSeries(true, ssig1, csig1, C2a);
         J12 = m0x * sig12 + (A1 * B1 - A2 * B2);
       }
-    } else if ((outmask & (GeodesicMask.REDUCEDLENGTH | GeodesicMask.GEODESICSCALE)) != 0) {
+    } else if ((outmask & (_GeodesicMask.REDUCEDLENGTH | _GeodesicMask.GEODESICSCALE)) != 0) {
       // Assume here that nC1_ >= nC2_
       for (int l = 1; l <= nC2_; ++l) C2a[l] = A1 * C1a[l] - A2 * C2a[l];
       J12 = m0x * sig12 + (SinCosSeries(true, ssig2, csig2, C2a) - SinCosSeries(true, ssig1, csig1, C2a));
     }
-    if ((outmask & GeodesicMask.REDUCEDLENGTH) != 0) {
+    if ((outmask & _GeodesicMask.REDUCEDLENGTH) != 0) {
       v._m0 = m0x;
       // Missing a factor of _b.
       // Add parens around (csig1 * ssig2) and (ssig1 * csig2) to ensure
       // accurate cancellation in the case of coincident points.
       v._m12b = dn2 * (csig1 * ssig2) - dn1 * (ssig1 * csig2) - csig1 * csig2 * J12;
     }
-    if ((outmask & GeodesicMask.GEODESICSCALE) != 0) {
+    if ((outmask & _GeodesicMask.GEODESICSCALE) != 0) {
       double csig12 = csig1 * csig2 + ssig1 * ssig2;
       double t = ep2 * (cbet1 - cbet2) * (cbet1 + cbet2) / (dn1 + dn2);
       v._M12 = csig12 + (t * ssig2 - csig2 * J12) * ssig1 / dn1;
@@ -958,7 +958,7 @@ class Geodesic {
         // of the way the T is used in definition of u.
         T3 += T3 < 0 ? -sqrt(disc) : sqrt(disc); // T3 = (r * t)^3
         // N.B. cbrt always returns the double root.  cbrt(-8) = -2.
-        double T = cbrt(T3); // T = r * t
+        double T = _cbrt(T3); // T = r * t
         // T can be zero; but then r2 / T -> 0.
         u += T + (T != 0 ? r2 / T : 0);
       } else {
@@ -997,7 +997,7 @@ class Geodesic {
       // Scratch areas of the right size
       List<double> C1a,
       List<double> C2a,
-      Pair p,
+      _Pair p,
       _LengthsV v) {
     // Return a starting point for Newton's method in _salp1 and _calp1 (function
     // value is -1).  If Newton's method doesn't need to be used, return also
@@ -1032,7 +1032,7 @@ class Geodesic {
         ? sbet12 + cbet2 * sbet1 * _GeoMath.sq(somg12) / (1 + comg12)
         : sbet12a - cbet2 * sbet1 * _GeoMath.sq(somg12) / (1 - comg12);
 
-    double ssig12 = hypot(w._salp1, w._calp1), csig12 = sbet1 * sbet2 + cbet1 * cbet2 * comg12;
+    double ssig12 = _hypot(w._salp1, w._calp1), csig12 = sbet1 * sbet2 + cbet1 * cbet2 * comg12;
 
     if (shortline && ssig12 < _etol2) {
       // really short lines
@@ -1074,7 +1074,7 @@ class Geodesic {
         double m12b, m0;
         // In the case of lon12 = 180, this repeats a calculation made in
         // Inverse.
-        _Lengths(v, _n, pi + bet12a, sbet1, -cbet1, dn1, sbet2, cbet2, dn2, cbet1, cbet2, GeodesicMask.REDUCEDLENGTH,
+        _Lengths(v, _n, pi + bet12a, sbet1, -cbet1, dn1, sbet2, cbet2, dn2, cbet1, cbet2, _GeodesicMask.REDUCEDLENGTH,
             C1a, C2a);
         m12b = v._m12b;
         m0 = v._m0;
@@ -1167,7 +1167,7 @@ class Geodesic {
       List<double> C1a,
       List<double> C2a,
       List<double> C3a,
-      Pair p,
+      _Pair p,
       _LengthsV v) {
     // Object to hold lam12, salp2, calp2, sig12, ssig1, csig1, ssig2, csig2,
     // eps, domg12, dlam12;
@@ -1180,7 +1180,7 @@ class Geodesic {
     double
         // sin(alp1) * cos(bet1) = sin(alp0)
         salp0 = _salp1 * cbet1,
-        calp0 = hypot(_calp1, _salp1 * sbet1); // calp0 > 0
+        calp0 = _hypot(_calp1, _salp1 * sbet1); // calp0 > 0
 
     double somg1, comg1, somg2, comg2, somg12, comg12;
     // tan(bet1) = tan(sig1) * cos(alp1)
@@ -1238,7 +1238,7 @@ class Geodesic {
         w.dlam12 = -2 * f1 * dn1 / sbet1;
       else {
         _Lengths(v, w.eps, w.sig12, w.ssig1, w.csig1, dn1, w.ssig2, w.csig2, dn2, cbet1, cbet2,
-            GeodesicMask.REDUCEDLENGTH, C1a, C2a);
+            _GeodesicMask.REDUCEDLENGTH, C1a, C2a);
         w.dlam12 = v._m12b;
         w.dlam12 *= f1 / (w.calp2 * cbet2);
       }

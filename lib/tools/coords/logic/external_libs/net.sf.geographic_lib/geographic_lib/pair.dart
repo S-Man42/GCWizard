@@ -18,7 +18,7 @@ part of 'package:gc_wizard/tools/coords/logic/external_libs/net.sf.geographic_li
  * <p>
  * This duplicates the C++ class {@code std::pair<double, double>}.
  **********************************************************************/
-class Pair {
+class _Pair {
   /*
    * The first member of the pair.
    **********************************************************************/

@@ -25,7 +25,7 @@ part of 'package:gc_wizard/tools/coords/logic/external_libs/net.sf.geographic_li
  * Geodesic#Line(double, double, double, int) Geodesic.Line} what capabilities
  * should be included in the {@link GeodesicLine} object.
  **********************************************************************/
-class GeodesicMask {
+class _GeodesicMask {
   static final int CAP_NONE = 0;
   static final int CAP_C1 = 1 << 0;
   static final int CAP_C1p = 1 << 1;

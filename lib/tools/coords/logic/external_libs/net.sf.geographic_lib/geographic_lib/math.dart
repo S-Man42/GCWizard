@@ -21,7 +21,7 @@ final double _RADIANS_TO_DEGREES = 57.29577951308232;
  * @return  the measurement of the angle {@code angdeg}
  *          in radians.
  */
-double toRadians(double angdeg) {
+double _toRadians(double angdeg) {
   return angdeg * _DEGREES_TO_RADIANS;
 }
 
@@ -36,7 +36,7 @@ double toRadians(double angdeg) {
  * @return  the measurement of the angle {@code angrad}
  *          in degrees.
  */
-double toDegrees(double angrad) {
+double _toDegrees(double angrad) {
   return angrad * _RADIANS_TO_DEGREES;
 }
 
@@ -46,14 +46,14 @@ double toDegrees(double angrad) {
  * @param {number} y gives the sign of the result.
  * @returns {number} value with the magnitude of x and with the sign of y.
  */
-double copySign(double x, double y) {
+double _copySign(double x, double y) {
   return x.abs() * (y < 0 || (y == 0 && 1 / y < 0) ? -1 : 1);
 }
 
-double hypot(double x, double y) {
+double _hypot(double x, double y) {
   return sqrt(pow(x, 2) + pow(y, 2));
 }
 
-double cbrt(double x) {
+double _cbrt(double x) {
   return pow(x.abs(), 1.0 / 3.0) * x.sign;
 }

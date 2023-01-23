@@ -94,7 +94,7 @@ class _GeoMath {
    * @param sinx the sine.
    * @param cosx the cosine.
    **********************************************************************/
-  static void norm(Pair p, double sinx, double cosx) {
+  static void norm(_Pair p, double sinx, double cosx) {
     double r = hypot(sinx, cosx);
     p.first = sinx / r;
     p.second = cosx / r;
@@ -110,7 +110,7 @@ class _GeoMath {
    * <p>
    * See D. E. Knuth, TAOCP, Vol 2, 4.2.2, Theorem B.
    **********************************************************************/
-  static void sum(Pair p, double u, double v) {
+  static void sum(_Pair p, double u, double v) {
     double s = u + v;
     double up = s - v;
     double vpp = s - up;
@@ -254,7 +254,7 @@ class _GeoMath {
    * <i>e</i> is the truncation error.  If <i>d</i> = &minus;180, then <i>e</i>
    * &gt; 0; If <i>d</i> = 180, then <i>e</i> &le; 0.
    **********************************************************************/
-  static void AngDiff(Pair p, double x, double y) {
+  static void AngDiff(_Pair p, double x, double y) {
     sum(p, AngNormalize(-x), AngNormalize(y));
     double d = AngNormalize(p.first), t = p.second;
     sum(p, d == 180 && t > 0 ? -180 : d, t);
@@ -270,7 +270,7 @@ class _GeoMath {
    * The results obey exactly the elementary properties of the trigonometric
    * functions, e.g., sin 9&deg; = cos 81&deg; = &minus; sin 123456789&deg;.
    **********************************************************************/
-  static void sincosd(Pair p, double x) {
+  static void sincosd(_Pair p, double x) {
     // In order to minimize round-off errors, this function exactly reduces
     // the argument to the range [-45, 45] before converting it to radians.
     double r;
@@ -279,7 +279,7 @@ class _GeoMath {
     q = (r / 90).round().toInt(); // If r is NaN this returns 0
     r -= 90 * q;
     // now abs(r) <= 45
-    r = toRadians(r);
+    r = _toRadians(r);
     // Possibly could call the gnu extension sincos
     double s = sin(r), c = cos(r);
     double sinx, cosx;
@@ -339,7 +339,7 @@ class _GeoMath {
       ++q;
     }
     // here x >= 0 and x >= abs(y), so angle is in [-pi/4, pi/4]
-    double ang = toDegrees(atan2(y, x));
+    double ang = _toDegrees(atan2(y, x));
     switch (q) {
       // Note that atan2d(-0.0, 1.0) will return -0.  However, we expect that
       // atan2d will not be called with y = -0.  If need be, include

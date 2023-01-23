@@ -89,7 +89,7 @@ class LambertConformalConic {
   static final int numit_ = 5;
 
   static double hyp(double x) {
-    return hypot(1.0, x);
+    return _hypot(1.0, x);
   }
 
   // e * atanh(e * x) = log( ((1 + e*x)/(1 - e*x))^(e/2) ) if f >= 0
