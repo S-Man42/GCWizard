@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/logic/substitution_logic_aggregator.dart';
 
-class Quadgrams extends _BaseGuballaQuadgrams {
+class Quadgrams extends _Quadgrams {
   static const int maxAlphabetLength = 32;
   Map<int, List<int>> quadgramsCompressed;
   String assetLocation;
