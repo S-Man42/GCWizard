@@ -1,7 +1,6 @@
 import 'dart:isolate';
 import 'dart:math';
 import 'dart:typed_data';
-import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_replacer_symboldata.dart';
@@ -125,16 +124,6 @@ class SymbolReplacerImage {
     if (_outputImageBytes != null) return _outputImageBytes;
 
     _outputImageBytes = encodeTrimmedPng(_mergeBorderData());
-    return _outputImageBytes;
-  }
-
-  /// <summary>
-  /// Image with text
-  /// </summary>
-  Uint8List getReplacedImage() {
-    if (_outputImageBytes != null) return _outputImageBytes;
-
-    _outputImageBytes = encodeTrimmedPng(_mergeSymbolTextData());
     return _outputImageBytes;
   }
 
@@ -399,44 +388,6 @@ class SymbolReplacerImage {
   }
 
   /// <summary>
-  /// creates an image where the recognized symbols is replaced by the text
-  /// </summary>
-  Image.Image _mergeSymbolTextData() {
-    var bmp = Image.Image(_bmp.width, _bmp.height);
-
-    Image.fillRect(bmp, 0, 0, bmp.width, bmp.height, Colors.white.value);
-
-    symbolGroups.forEach((symbolGroup) {
-      if ((symbolGroup.text == null) || (symbolGroup.text == '')) {
-        symbolGroup.symbols.forEach((symbol) {
-          Image.drawImage(bmp, symbol.bmp, dstX: symbol.refPoint.dx.toInt(), dstY: symbol.refPoint.dy.toInt());
-        });
-      } else {
-        var font = Image.arial_14;
-        ui.Offset offset;
-        symbolGroup.symbols.forEach((symbol) {
-          if (symbol.row.size.height < 24) {
-            font = Image.arial_14;
-            offset = ui.Offset(-3, -7);
-          } else if (symbol.row.size.height < 48) {
-            font = Image.arial_24;
-            offset = ui.Offset(-6, -12);
-          } else {
-            font = Image.arial_48;
-            offset = ui.Offset(-14, -24);
-          }
-
-          Image.drawString(bmp, font, (symbol.refPoint.dx + symbol.bmp.width / 2 + offset.dx).toInt(),
-              (symbol.row.size.center.dy + offset.dy).toInt(), symbolGroup.text,
-              color: Colors.indigo.value);
-        });
-      }
-    });
-
-    return bmp;
-  }
-
-  /// <summary>
   /// creates an image with frames around the symbols
   /// </summary>
   Image.Image _mergeBorderData() {
@@ -491,7 +442,7 @@ class SymbolReplacerImage {
   /// Cut line and add to sourceLines
   /// </summary>
   _cutLine(int startIndex, int endIndex) {
-    var rect = ui.Rect.fromLTWH(0, startIndex.toDouble(), _bmp.width.toDouble(), (endIndex - startIndex).toDouble());
+    var rect = Rectangle(0, startIndex.toDouble(), _bmp.width.toDouble(), (endIndex - startIndex).toDouble());
 
     if (rect.height > 0)
       _sourceLines.add(_SymbolRow(
@@ -663,7 +614,7 @@ class SymbolReplacerImage {
     if (lines == null) return;
     if (maxDistance == null) return;
 
-    var rectList = <ui.Rect>[];
+    var rectList = <Rectangle>[];
     var symbolList = <Symbol>[];
     var changed = false;
 
@@ -679,7 +630,7 @@ class SymbolReplacerImage {
         for (int y = x + 1; y < symbolList.length; y++) {
           if (symbolList[x] != null && symbolList[y] != null) {
             // overlaps rectangles ?
-            if (rectList[x].overlaps(rectList[y])) {
+            if (rectList[x].intersects(rectList[y])) {
               var line = _searchSymbolRow(symbolList[y]);
               if (line != null) {
                 // merge symbols
@@ -713,9 +664,9 @@ class SymbolReplacerImage {
   /// Merge symbols
   /// </summary>
   mergeSymbol(Symbol symbol1, Symbol symbol2, _SymbolRow line) {
-    var box = symbol1._borderRectangle().expandToInclude(symbol2._borderRectangle());
+    var box = symbol1._borderRectangle().boundingBox(symbol2._borderRectangle());
 
-    symbol1.refPoint = box.topLeft;
+    symbol1.refPoint = Offset(box.left, box.top);
     symbol1.bmp = Image.copyCrop(_bmp, box.left.toInt(), box.top.toInt(), box.width.toInt(), box.height.toInt());
 
     var group = _searchSymbolGroup(symbol2);
@@ -737,11 +688,11 @@ class SymbolReplacerImage {
 }
 
 class _SymbolRow {
-  ui.Rect size;
+  Rectangle size;
   Image.Image bmp;
   var symbols = <Symbol>[];
 
-  _SymbolRow(ui.Rect size, Image.Image bmp) {
+  _SymbolRow(Rectangle size, Image.Image bmp) {
     this.size = size;
     this.bmp = bmp;
   }
@@ -822,12 +773,12 @@ class _SymbolRow {
   /// <summary>
   /// Cut symbol and add to symbols
   /// </summary>
-  ui.Rect _cutSymbol(int startIndex, int endIndex, int blackLevel) {
-    var rect = ui.Rect.fromLTWH(startIndex.toDouble(), 0, (endIndex - startIndex).toDouble(), bmp.height.toDouble());
+  Rectangle _cutSymbol(int startIndex, int endIndex, int blackLevel) {
+    var rect = Rectangle(startIndex.toDouble(), 0, (endIndex - startIndex).toDouble(), bmp.height.toDouble());
 
     if (rect.width > 0) {
       var box = _boundingBox(bmp, rect, blackLevel);
-      var refPoint = ui.Offset(box.left, box.top);
+      var refPoint = Offset(box.left, box.top);
       refPoint = refPoint.translate(size.left, size.top);
       symbols.add(Symbol(refPoint,
           Image.copyCrop(bmp, box.left.toInt(), box.top.toInt(), box.width.toInt(), box.height.toInt()), this));
@@ -838,7 +789,7 @@ class _SymbolRow {
   /// <summary>
   /// determine the bounding rectangle for the symbol
   /// </summary>
-  ui.Rect _boundingBox(Image.Image bmp, ui.Rect rect, int blackLevel) {
+  Rectangle _boundingBox(Image.Image bmp, Rectangle rect, int blackLevel) {
     var startRow = rect.top.toInt();
     var endRow = rect.bottom.toInt() - 1;
 
@@ -855,19 +806,19 @@ class _SymbolRow {
         break;
       }
     }
-    return ui.Rect.fromLTWH(rect.left, startRow.toDouble(), rect.width, (endRow - startRow).toDouble());
+    return Rectangle(rect.left, startRow.toDouble(), rect.width, (endRow - startRow).toDouble());
   }
 }
 
 class Symbol {
-  ui.Offset refPoint;
+  Offset refPoint;
   Image.Image bmp;
   int hash;
   _SymbolRow row;
   SymbolGroup symbolGroup;
   Uint8List _outputImageBytes;
 
-  Symbol(ui.Offset refPoint, Image.Image bmp, _SymbolRow row) {
+  Symbol(Offset refPoint, Image.Image bmp, _SymbolRow row) {
     this.refPoint = refPoint;
     this.bmp = bmp;
     this.row = row;
@@ -886,23 +837,25 @@ class Symbol {
     return _rectangleDistance(_borderRectangle(), symbol2._borderRectangle());
   }
 
-  ui.Rect _borderRectangle() {
-    return ui.Rect.fromLTWH(refPoint.dx, refPoint.dy, bmp.width.toDouble(), bmp.height.toDouble());
+  Rectangle _borderRectangle() {
+    return Rectangle(refPoint.dx, refPoint.dy, bmp.width.toDouble(), bmp.height.toDouble());
   }
 
   /// <summary>
   /// inflate rectangle
   /// </summary>
-  ui.Rect _borderRectangleWithOffset(double sizeOffset) {
-    return _borderRectangle().inflate(sizeOffset);
+  Rectangle _borderRectangleWithOffset(double sizeOffset) {
+    var rect = _borderRectangle();
+    return Rectangle(rect.left - sizeOffset, rect.top - sizeOffset,
+        rect.right + sizeOffset, rect.bottom + sizeOffset); //.inflate(sizeOffset);
   }
 
   /// <summary>
   /// determine the minimum distance between the rectangles that is greater than 0
   /// </summary>
-  static double _rectangleDistance(ui.Rect rect1, ui.Rect rect2) {
-    var m1 = rect1.center;
-    var m2 = rect2.center;
+  static double _rectangleDistance(Rectangle rect1, Rectangle rect2) {
+    var m1 = Offset(rect1.left + rect1.width / 2.0, rect1.top + rect1.height / 2.0); //center;
+    var m2 = Offset(rect2.left + rect2.width / 2.0, rect2.top + rect2.height / 2.0); //center;;
     var dist1 = (m1.dx - m2.dx).abs() - (rect1.width + rect2.width) / 2;
     var dist2 = (m1.dy - m2.dy).abs() - (rect1.height + rect2.height) / 2;
 
