@@ -1,38 +1,37 @@
 import 'dart:math';
 import 'dart:typed_data';
-import 'dart:ui' as ui;
+import 'dart:ui';
 
-import 'package:flutter/material.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
-import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
+import 'package:gc_wizard/utils/common_utils.dart';
 
 Map<String, Color> colorMap = {
-  '0': Colors.white,
-  '1': Colors.black,
-  '2': Colors.redAccent, //light red
-  '3': Colors.yellow.shade100, //light yellow
-  '4': Colors.lightGreen,
-  '5': Colors.cyanAccent, //light cyan,
-  '6': Colors.lightBlue,
-  '7': Colors.pinkAccent.shade100, //light magenta,
-  '8': Colors.red,
-  '9': Colors.yellowAccent,
-  'A': Colors.green,
-  'B': Colors.cyan,
-  'C': Colors.blue,
-  'D': Colors.purpleAccent, //magenta,
-  'E': Colors.red.shade900, //dark red,
-  'F': Colors.yellow, //dark yellow,
-  'G': Colors.green.shade900, //dark green,
-  'H': Colors.cyan.shade900, //dark cyan,
-  'I': Colors.blue.shade900, //dark blue,
-  'J': Colors.purple, //dark magenta
-  'K': Colors.orange,
-  'L': Colors.deepOrange,
-  'M': Colors.orangeAccent,
-  'N': Colors.brown,
-  'O': Colors.brown.shade900,
-  '#': Colors.grey.shade300,
+  '0': Color(0xFFFFFFFF), //Colors.white
+  '1': Color(0xFF000000), //Colors.black
+  '2': Color(0xFFFF5252), //Colors.redAccent //light red
+  '3': Color(0xFFFFF9C4), //Colors.yellow.shade100 //light yellow
+  '4': Color(0xFF8BC34A), //Colors.lightGreen
+  '5': Color(0xFF18FFFF), //Colors.cyanAccent //light cyan,
+  '6': Color(0xFF03A9F4), //Colors.lightBlue
+  '7': Color(0xFFFF80AB), //Colors.pinkAccent.shade100 //light magenta,
+  '8': Color(0xFFF44336), //Colors.red,
+  '9': Color(0xFFFFFF00), //Colors.yellowAccent
+  'A': Color(0xFF4CAF50), //Colors.green
+  'B': Color(0xFF00BCD4), //Colors.cyan
+  'C': Color(0xFF2196F3), //Colors.blue
+  'D': Color(0xFFE040FB), //Colors.purpleAccent //magenta,
+  'E': Color(0xFFB71C1C), //Colors.red.shade900 //dark red,
+  'F': Color(0xFFFFEB3B), //Colors.yellow, //dark yellow,
+  'G': Color(0xFF1B5E20), //Colors.green.shade900 //dark green,
+  'H': Color(0xFF006064), //Colors.cyan.shade900 //dark cyan,
+  'I': Color(0xFF0D47A1), //Colors.blue.shade900 //dark blue,
+  'J': Color(0xFF9C27B0), //Colors.purple //dark magenta
+  'K': Color(0xFFFF9800), //Colors.orange
+  'L': Color(0xFFFF5722), //Colors.deepOrange
+  'M': Color(0xFFFFAB40), //Colors.orangeAccent
+  'N': Color(0xFF795548), //Colors.brown
+  'O': Color(0xFF3E2723), //Colors.brown.shade900
+  '#': Color(0xFFE0E0E0), //Colors.grey.shade300
 };
 
 Future<Uint8List> binary2image(String input, bool squareFormat, bool invers) async {
@@ -131,18 +130,18 @@ Future<Uint8List> input2Image(List<String> lines,
   width = width * pointSize + 2 * bounds;
   height = height * pointSize + 2 * bounds;
 
-  final canvasRecorder = ui.PictureRecorder();
-  final canvas = ui.Canvas(canvasRecorder, ui.Rect.fromLTWH(0, 0, width, height));
+  final canvasRecorder = PictureRecorder();
+  final canvas = Canvas(canvasRecorder, Rect.fromLTWH(0, 0, width, height));
 
   final paint = Paint()
-    ..color = Colors.white
+    ..color = colorMap.values.first //Colors.white
     ..style = PaintingStyle.fill;
 
   canvas.drawRect(Rect.fromLTWH(0, 0, width, height), paint);
   if (colors == null) colors = colorMap;
   for (int row = 0; row < lines.length; row++) {
     for (int column = 0; column < lines[row].length; column++) {
-      paint.color = Colors.white;
+      paint.color = colorMap.values.first; // Colors.white
       if (colors.containsKey(lines[row][column])) paint.color = colors[lines[row][column]];
 
       if (lines[row][column] != '0')
@@ -152,7 +151,7 @@ Future<Uint8List> input2Image(List<String> lines,
   }
 
   final img = await canvasRecorder.endRecording().toImage(width.floor(), height.floor());
-  final data = await img.toByteData(format: ui.ImageByteFormat.png);
+  final data = await img.toByteData(format: ImageByteFormat.png);
 
   return trimNullBytes(data.buffer.asUint8List());
 }
