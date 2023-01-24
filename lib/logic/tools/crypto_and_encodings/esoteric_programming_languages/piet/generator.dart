@@ -2,8 +2,6 @@
 
 import 'dart:math';
 import 'dart:typed_data';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/piet_blocker_builder.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/binary2image.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
@@ -16,6 +14,13 @@ const _minBlockSize = 5;
 final int _white = knownColors.elementAt(18);
 final int _black = knownColors.elementAt(19);
 _colorStack _currentColor;
+
+enum Alignment {
+  topLeft,
+  topRight,
+  bottomLeft,
+  bottomRight
+}
 
 Future<Uint8List> generatePiet(String input) async {
   var result = <MapEntry<int, List<int>>>[];
@@ -85,12 +90,12 @@ void _setBlockSize(String input) {
 
 Future<Uint8List> _convertToImage(List<List<int>> resultLines) {
   var lines = <String>[];
-  var colorMap = Map<String, Color>();
+  var colorMap = Map<String, int>();
   var colorMapSwitched = Map<int, String>();
   var mapList = switchMapKeyValue(alphabet_AZ);
 
   for (var i = 0; i < knownColors.length; i++) {
-    colorMap.addAll({mapList[i + 1]: Color(knownColors.elementAt(i) | 0xFF000000)});
+    colorMap.addAll({mapList[i + 1]: (knownColors.elementAt(i) | 0xFF000000)});
     colorMapSwitched.addAll({knownColors.elementAt(i): mapList[i + 1]});
   }
 

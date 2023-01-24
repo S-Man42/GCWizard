@@ -35,6 +35,30 @@ Map<String, Color> colorMap = {
   '#': Colors.grey.shade300,
 };
 
+Map<String, Color> colorMap1 = {
+  '0': Colors.white, //white
+  '1': Colors.black, // black
+  '2': Color(0xFFC0C0),
+  '3': Color(0xFFFFC0), //light red
+  '4': Color(0xC0FFC0), //light yellow
+  '5': Color(0xC0FFFF), //light green,
+  '6': Color(0xC0C0FF), //light cyan,
+  '7': Color(0xFFC0FF), //light blue
+  '8': Colors.red, //light magenta,
+  '9': Colors.yellow,
+  'A': Colors.green,
+  'B': Colors.cyan,
+  'C': Colors.blue,
+  'D': Color(0xFF00FF),
+  'E': Color(0xC00000), //magenta,
+  'F': Color(0xC0C000), //dark red,
+  'G': Color(0x00C000), //dark yellow,
+  'H': Color(0x00C0C0), //dark green,
+  'I': Color(0x0000C0), //dark cyan,
+  'J': Color(0xC000C0) //dark blue,
+};
+
+
 Future<Uint8List> binary2image(String input, bool squareFormat, bool invers) async {
   var filter = _buildFilter(input);
   if (filter.length < 2) return null;

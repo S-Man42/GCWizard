@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:gcw_server/APIMapper.dart';
-import 'package:gcw_server/RotatorAPIMapper.dart';
+import 'APIMapper.dart';
+import 'RotatorAPIMapper.dart';
 
 String request(String toolName, Map<String, String> queryParams) {
   APIMapper myAPIMapper;
