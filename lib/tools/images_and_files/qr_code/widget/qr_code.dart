@@ -12,6 +12,7 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/tools/images_and_files/qr_code/logic/qr_code.dart';
+import 'package:gc_wizard/tools/utils/common_widget_utils/widget/common_widget_utils.dart';
 import 'package:gc_wizard/tools/utils/file_picker/widget/file_picker.dart';
 import 'package:gc_wizard/tools/utils/file_utils/widget/file_utils.dart';
 import 'package:gc_wizard/tools/utils/gcw_file/widget/gcw_file.dart';
@@ -144,11 +145,12 @@ class QrCodeState extends State<QrCode> {
         }
         lastCurrentInputLength = _currentInput == null ? 0 : _currentInput.length;
 
-        generateBarCode(currentInput, moduleSize: _currentModulSize, border: 2 * _currentModulSize).then((qr_code) {
-          setState(() {
-            _outDataEncrypt = qr_code;
-          });
-        });
+        input2Image(generateBarCode(currentInput, moduleSize: _currentModulSize, border: 2 * _currentModulSize))
+            .then((qr_code) {
+                setState(() {
+                  _outDataEncrypt = qr_code;
+                });
+              });
       } else {
         if (_outData == null) return;
 
