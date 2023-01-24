@@ -17,7 +17,7 @@ enum Alignment {
   bottomRight
 }
 
-Future<Uint8List> generatePiet(String input) async {
+ImageData generatePiet(String input) {
   var result = <MapEntry<int, List<int>>>[];
 
   _setBlockSize(input);
@@ -84,7 +84,7 @@ void _setBlockSize(String input) {
   _blockWidth = _max;
 }
 
-Future<Uint8List> _convertToImage(List<List<int>> resultLines) {
+ImageData _convertToImage(List<List<int>> resultLines) {
   var lines = <String>[];
   var colorMap = Map<String, Color>();
   var colorMapSwitched = Map<int, String>();
@@ -103,7 +103,7 @@ Future<Uint8List> _convertToImage(List<List<int>> resultLines) {
     lines.add(row);
   });
 
-  return input2Image(lines, colors: colorMap, bounds: 0, pointSize: 1);
+  return ImageData(lines, colorMap, bounds: 0, pointSize: 1);
 }
 
 List<List<int>> _addBlockToResult(List<int> block, List<List<int>> resultLines, int row, bool append) {

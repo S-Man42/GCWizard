@@ -34,7 +34,16 @@ Map<String, Color> colorMap = {
   '#': Color(0xFFE0E0E0), //Colors.grey.shade300
 };
 
-Future<Uint8List> binary2image(String input, bool squareFormat, bool invers) async {
+class ImageData {
+  final List<String> lines;
+  final Map<String, Color> colors;
+  final int bounds;
+  final double pointSize;
+
+  ImageData(this.lines, this.colors, {this.bounds = 10, this.pointSize = 5.0});
+}
+
+ImageData binary2image(String input, bool squareFormat, bool invers) {
   var filter = _buildFilter(input);
   if (filter.length < 2) return null;
 
@@ -52,11 +61,7 @@ Future<Uint8List> binary2image(String input, bool squareFormat, bool invers) asy
     input = input.replaceAll(RegExp('[ ]'), '\n');
   }
 
-  return await _binary2Image(input);
-}
-
-Future<Uint8List> byteColor2image(String input) async {
-  return await _binary2Image(input);
+  return binary2Image(input);
 }
 
 String _buildFilter(String input) {
@@ -106,52 +111,13 @@ String _filterInput(String input, String filter) {
   return input.replaceAll(RegExp('[^$filter]'), '');
 }
 
-Future<Uint8List> _binary2Image(String input) async {
+ImageData binary2Image(String input) {
   if (input == '' || input == null) return null;
 
   var lines = input.split('\n');
 
   if (lines.length == 1)
-    lines.addAll([lines[0], lines[0], lines[0], lines[0], lines[0], lines[0], lines[0], lines[0], lines[0]]);
-  return input2Image(lines);
+    lines.addAll(List<String>.filled(9, lines[0]));
+  return ImageData(lines, colorMap);
 }
 
-Future<Uint8List> input2Image(List<String> lines,
-    {Map<String, Color> colors, int bounds = 10, double pointSize = 5.0}) async {
-  var width = 0.0;
-  var height = 0.0;
-
-  if (lines == null) return null;
-
-  lines.forEach((line) {
-    width = max(width, line.length.toDouble());
-    height++;
-  });
-  width = width * pointSize + 2 * bounds;
-  height = height * pointSize + 2 * bounds;
-
-  final canvasRecorder = PictureRecorder();
-  final canvas = Canvas(canvasRecorder, Rect.fromLTWH(0, 0, width, height));
-
-  final paint = Paint()
-    ..color = colorMap.values.first //Colors.white
-    ..style = PaintingStyle.fill;
-
-  canvas.drawRect(Rect.fromLTWH(0, 0, width, height), paint);
-  if (colors == null) colors = colorMap;
-  for (int row = 0; row < lines.length; row++) {
-    for (int column = 0; column < lines[row].length; column++) {
-      paint.color = colorMap.values.first; // Colors.white
-      if (colors.containsKey(lines[row][column])) paint.color = colors[lines[row][column]];
-
-      if (lines[row][column] != '0')
-        canvas.drawRect(
-            Rect.fromLTWH(column * pointSize + bounds, row * pointSize + bounds, pointSize, pointSize), paint);
-    }
-  }
-
-  final img = await canvasRecorder.endRecording().toImage(width.floor(), height.floor());
-  final data = await img.toByteData(format: ImageByteFormat.png);
-
-  return trimNullBytes(data.buffer.asUint8List());
-}
