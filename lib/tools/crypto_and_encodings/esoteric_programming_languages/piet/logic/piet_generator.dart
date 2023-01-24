@@ -86,12 +86,12 @@ void _setBlockSize(String input) {
 
 ImageData _convertToImage(List<List<int>> resultLines) {
   var lines = <String>[];
-  var colorMap = Map<String, Color>();
+  var colorMap = Map<String, int>();
   var colorMapSwitched = Map<int, String>();
   var mapList = switchMapKeyValue(alphabet_AZ);
 
   for (var i = 0; i < _knownColors.length; i++) {
-    colorMap.addAll({mapList[i + 1]: Color(_knownColors.elementAt(i) | 0xFF000000)});
+    colorMap.addAll({mapList[i + 1]: (_knownColors.elementAt(i) | 0xFF000000)});
     colorMapSwitched.addAll({_knownColors.elementAt(i): mapList[i + 1]});
   }
 

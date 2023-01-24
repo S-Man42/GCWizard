@@ -200,15 +200,15 @@ Future<Uint8List> input2Image(ImageData imageData)  async {
   final canvas = Canvas(canvasRecorder, Rect.fromLTWH(0, 0, width, height));
 
   final paint = Paint()
-    ..color = imageData.colors.values.first //Colors.white
+    ..color = Color(imageData.colors.values.first) //Colors.white
     ..style = PaintingStyle.fill;
 
   canvas.drawRect(Rect.fromLTWH(0, 0, width, height), paint);
   for (int row = 0; row < imageData.lines.length; row++) {
     for (int column = 0; column < imageData.lines[row].length; column++) {
-      paint.color = imageData.colors.values.first; // Colors.white
+      paint.color = Color(imageData.colors.values.first); // Colors.white
       if (imageData.colors.containsKey(imageData.lines[row][column]))
-        paint.color = imageData.colors[imageData.lines[row][column]];
+        paint.color = Color(imageData.colors[imageData.lines[row][column]]);
 
       if (imageData.lines[row][column] != '0')
         canvas.drawRect(
