@@ -2,8 +2,8 @@ import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui';
 
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
+import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
 
 Map<String, Color> colorMap = {
   '0': Color(0xFFFFFFFF), //Colors.white

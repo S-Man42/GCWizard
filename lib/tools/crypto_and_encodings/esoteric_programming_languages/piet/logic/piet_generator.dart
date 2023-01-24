@@ -10,6 +10,13 @@ final int _white = _knownColors.elementAt(18);
 final int _black = _knownColors.elementAt(19);
 _colorStack _currentColor;
 
+enum Alignment {
+  topLeft,
+  topRight,
+  bottomLeft,
+  bottomRight
+}
+
 Future<Uint8List> generatePiet(String input) async {
   var result = <MapEntry<int, List<int>>>[];
 
@@ -38,6 +45,7 @@ Future<Uint8List> generatePiet(String input) async {
     if (mapEntry == result.last) {
       if (direction == Alignment.bottomLeft) block = _reverseBlock(block, _blockWidth);
     }
+    ;
 
     if (firstPixelColor != null) {
       pixelIndex = _searchFirstPixelIndex(block, direction);
