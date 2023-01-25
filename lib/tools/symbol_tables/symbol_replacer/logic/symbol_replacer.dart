@@ -396,7 +396,7 @@ class SymbolReplacerImage {
     Image.drawImage(bmp, _bmp);
 
     symbols.forEach((symbol) {
-      var rect = Rectangle(
+      var rect = Rectangle<int>(
         symbol.refPoint.dx.toInt(),
         symbol.refPoint.dy.toInt(),
         symbol.bmp.width,
@@ -442,7 +442,7 @@ class SymbolReplacerImage {
   /// Cut line and add to sourceLines
   /// </summary>
   _cutLine(int startIndex, int endIndex) {
-    var rect = Rectangle(0, startIndex.toDouble(), _bmp.width.toDouble(), (endIndex - startIndex).toDouble());
+    var rect = Rectangle<double>(0, startIndex.toDouble(), _bmp.width.toDouble(), (endIndex - startIndex).toDouble());
 
     if (rect.height > 0)
       _sourceLines.add(_SymbolRow(
@@ -614,7 +614,7 @@ class SymbolReplacerImage {
     if (lines == null) return;
     if (maxDistance == null) return;
 
-    var rectList = <Rectangle>[];
+    var rectList = <Rectangle<double>>[];
     var symbolList = <Symbol>[];
     var changed = false;
 
@@ -688,11 +688,11 @@ class SymbolReplacerImage {
 }
 
 class _SymbolRow {
-  Rectangle size;
+  Rectangle<double> size;
   Image.Image bmp;
   var symbols = <Symbol>[];
 
-  _SymbolRow(Rectangle size, Image.Image bmp) {
+  _SymbolRow(Rectangle<double> size, Image.Image bmp) {
     this.size = size;
     this.bmp = bmp;
   }
@@ -773,8 +773,8 @@ class _SymbolRow {
   /// <summary>
   /// Cut symbol and add to symbols
   /// </summary>
-  Rectangle _cutSymbol(int startIndex, int endIndex, int blackLevel) {
-    var rect = Rectangle(startIndex.toDouble(), 0, (endIndex - startIndex).toDouble(), bmp.height.toDouble());
+  Rectangle<double> _cutSymbol(int startIndex, int endIndex, int blackLevel) {
+    var rect = Rectangle<double>(startIndex.toDouble(), 0, (endIndex - startIndex).toDouble(), bmp.height.toDouble());
 
     if (rect.width > 0) {
       var box = _boundingBox(bmp, rect, blackLevel);
@@ -789,7 +789,7 @@ class _SymbolRow {
   /// <summary>
   /// determine the bounding rectangle for the symbol
   /// </summary>
-  Rectangle _boundingBox(Image.Image bmp, Rectangle rect, int blackLevel) {
+  Rectangle<double> _boundingBox(Image.Image bmp, Rectangle<double> rect, int blackLevel) {
     var startRow = rect.top.toInt();
     var endRow = rect.bottom.toInt() - 1;
 
@@ -806,7 +806,7 @@ class _SymbolRow {
         break;
       }
     }
-    return Rectangle(rect.left, startRow.toDouble(), rect.width, (endRow - startRow).toDouble());
+    return Rectangle<double>(rect.left, startRow.toDouble(), rect.width, (endRow - startRow).toDouble());
   }
 }
 
@@ -837,23 +837,23 @@ class Symbol {
     return _rectangleDistance(_borderRectangle(), symbol2._borderRectangle());
   }
 
-  Rectangle _borderRectangle() {
+  Rectangle<double> _borderRectangle() {
     return Rectangle(refPoint.dx, refPoint.dy, bmp.width.toDouble(), bmp.height.toDouble());
   }
 
   /// <summary>
   /// inflate rectangle
   /// </summary>
-  Rectangle _borderRectangleWithOffset(double sizeOffset) {
+  Rectangle<double> _borderRectangleWithOffset(double sizeOffset) {
     var rect = _borderRectangle();
-    return Rectangle(rect.left - sizeOffset, rect.top - sizeOffset,
+    return Rectangle<double>(rect.left - sizeOffset, rect.top - sizeOffset,
         rect.right + sizeOffset, rect.bottom + sizeOffset); //.inflate(sizeOffset);
   }
 
   /// <summary>
   /// determine the minimum distance between the rectangles that is greater than 0
   /// </summary>
-  static double _rectangleDistance(Rectangle rect1, Rectangle rect2) {
+  static double _rectangleDistance(Rectangle<double> rect1, Rectangle<double> rect2) {
     var m1 = Offset(rect1.left + rect1.width / 2.0, rect1.top + rect1.height / 2.0); //center;
     var m2 = Offset(rect2.left + rect2.width / 2.0, rect2.top + rect2.height / 2.0); //center;;
     var dist1 = (m1.dx - m2.dx).abs() - (rect1.width + rect2.width) / 2;
