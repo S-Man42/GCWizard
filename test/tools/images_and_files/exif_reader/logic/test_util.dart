@@ -9,7 +9,7 @@ List<io.FileSystemEntity> readSamples() {
   io.Directory dir = new io.Directory(testDirPath);
   Set<String> allowedExtensions = {'.jpg', '.tiff'};
   var files = dir.listSync(recursive: true).where((file) => (allowedExtensions.contains(getFileExtension(file.path))));
-  return files;
+  return files.toList();
 }
 
 List<FileSample> readSampleTest1() {
