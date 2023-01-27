@@ -80,7 +80,7 @@ class _PietSession {
     _timeOut = max(timeOut, 100);
     _multipleInputs = multipleInputs;
 
-    _currentBlock = _builder.getBlockAt(0, 0);
+    _currentBlock = _builder._getBlockAt(0, 0);
 
     var ops = _BaseOperations(_stack, this, () => _currentBlock, (i) => _navigator.rotateDirectionPointer(i),
         (i) => _navigator.toggleCodelChooser(i));
@@ -96,7 +96,7 @@ class _PietSession {
     if (!ret.item1) _running = false;
     result = ret.item2;
 
-    var newBlock = _builder.getBlockAt(result.x, result.y);
+    var newBlock = _builder._getBlockAt(result.x, result.y);
     var opCode = _opsResolver.resolve(_currentBlock, newBlock);
 
     if (_actionMap.containsKey(opCode)) _actionMap[opCode]();
