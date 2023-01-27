@@ -100,6 +100,9 @@ void main() {
       {'input' : 'LEUCHTTURM.gif',
           'expectedOutputMorse' : ' | -.-.- -. ..... ----- ..... --... .-.-.- .---- .---- -.... . ----- .---- .---- .---- ---.. .---- ---.. ....- | -.-. ',
           'expectedOutputText' : ' N5057.116E01118184 C'},
+      {'input' : 'bibliothek.gif', 'secondMarked' : true,
+        'expectedOutputMorse' : ' | -... ..- . -.-. .... . .-. .-- ..- .-. -- ',
+        'expectedOutputText' : ' BUECHERWURM'},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -110,9 +113,20 @@ void main() {
         List<List<int>> imagesFiltered = _outData["imagesFiltered"];
 
         var _marked =  List.filled(images.length, false);
-        imagesFiltered[0].forEach((idx) {
-          _marked[idx] = true;
-        });
+
+        if (elem['secondMarked'] != null) {
+          imagesFiltered[1].forEach((idx) {
+            _marked[idx] = true;
+          });
+          imagesFiltered[2].forEach((idx) {
+            _marked[idx] = true;
+          });
+        } else {
+          imagesFiltered[0].forEach((idx) {
+            _marked[idx] = true;
+          });
+        }
+
 
         var _actual = decodeMorseCode(durations, _marked);
         expect(_actual['morse'], elem['expectedOutputMorse']);
