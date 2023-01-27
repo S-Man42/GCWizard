@@ -2,7 +2,7 @@ import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/tools/coords/centroid/logic/centroid.dart';
 import 'package:latlong2/latlong.dart';
 
-import 'utils.dart';
+import 'package:gc_wizard/tools/coords/utils/utils.dart';
 
 void main() {
   group("Centroid.centroid:", () {

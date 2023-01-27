@@ -1,9 +1,8 @@
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/tools/coords/intersection/logic/intersection.dart';
 import 'package:gc_wizard/tools/coords/logic/ellipsoid.dart';
+import 'package:gc_wizard/tools/coords/utils/utils.dart';
 import 'package:latlong2/latlong.dart';
-
-import 'utils.dart';
 
 void main() {
  group("Intersection.intersection:", () {
