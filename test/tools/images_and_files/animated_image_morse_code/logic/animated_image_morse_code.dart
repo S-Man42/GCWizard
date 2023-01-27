@@ -1,19 +1,17 @@
+import 'dart:io' as io;
+import 'dart:typed_data';
+
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/tools/images_and_files/animated_image_morse_code/logic/animated_image_morse_code.dart';
-import 'package:tuple/tuple.dart';
-
-import 'dart:io' as io;
-
 import 'package:gc_wizard/tools/utils/file_utils/widget/file_utils.dart';
+import 'package:tuple/tuple.dart';
 import 'package:path/path.dart' as path;
 
 var testDirPath = 'test/resources/animated_image_morse_code/';
 
-List<io.FileSystemEntity> readSamples() {
-  io.Directory dir = new io.Directory(testDirPath);
-  Set<String> allowedExtensions = {'.gif'};
-  var files = dir.listSync(recursive: true).where((file) => (allowedExtensions.contains(getFileExtension(file.path))));
-  return files;
+Uint8List _getFileData(String name) {
+  io.File file = io.File(path.join(testDirPath, name));
+  return file.readAsBytesSync();
 }
 
 void main() {
@@ -91,6 +89,35 @@ void main() {
       test('input: ${elem['input']}', () {
         var _actual = foundSignalTimes(elem['input']);
         expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
+
+  group("animated_image_morse_code.analyseImageMorseCode:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : 'Der kleine Preuße.gif', ''
+          'expectedOutputMorse' : ' | ..-. ..- . -. ..-. -.. .-. . .. -.. .-. . .. .- -.-. .... - -. . ..- -. -. ..- .-.. .-.. -. . ..- -. | -. ..- .-.. -. ..- .-.. .-.. .- -.-. .... - --.. .-- . .. -. . ..- -. ... . -.-. .... ... -. . .. | -. ...- .. . .-. ',
+          'expectedOutputText' : ' FUENFDREIDREIACHTNEUNNULLNEUN NULNULLACHTZWEINEUNSECHSNEI NVIER'},
+      {'input' : 'LEUCHTTURM.gif',
+          'expectedOutputMorse' : ' | -.-.- -. ..... ----- ..... --... .-.-.- .---- .---- -.... . ----- .---- .---- .---- ---.. .---- ---.. ....- | -.-. ',
+          'expectedOutputText' : ' N5057.116E01118184 C'},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}', () async {
+        var _outData = await analyseImageMorseCode(_getFileData(elem['input']));
+        List<int> durations = _outData["durations"];
+        List<Uint8List> images = _outData["images"];
+        List<List<int>> imagesFiltered = _outData["imagesFiltered"];
+
+        var _marked =  List.filled(images.length, false);
+        imagesFiltered[0].forEach((idx) {
+          _marked[idx] = true;
+        });
+
+        var _actual = decodeMorseCode(durations, _marked);
+        expect(_actual['morse'], elem['expectedOutputMorse']);
+        expect(_actual['text'], elem['expectedOutputText']);
       });
     });
   });
