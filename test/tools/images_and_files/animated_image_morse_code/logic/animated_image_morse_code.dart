@@ -3,7 +3,6 @@ import 'dart:typed_data';
 
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/tools/images_and_files/animated_image_morse_code/logic/animated_image_morse_code.dart';
-import 'package:gc_wizard/tools/utils/file_utils/widget/file_utils.dart';
 import 'package:tuple/tuple.dart';
 import 'package:path/path.dart' as path;
 
