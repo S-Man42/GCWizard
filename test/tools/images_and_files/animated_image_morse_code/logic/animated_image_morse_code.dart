@@ -2,6 +2,20 @@ import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/tools/images_and_files/animated_image_morse_code/logic/animated_image_morse_code.dart';
 import 'package:tuple/tuple.dart';
 
+import 'dart:io' as io;
+
+import 'package:gc_wizard/tools/utils/file_utils/widget/file_utils.dart';
+import 'package:path/path.dart' as path;
+
+var testDirPath = 'test/resources/animated_image_morse_code/';
+
+List<io.FileSystemEntity> readSamples() {
+  io.Directory dir = new io.Directory(testDirPath);
+  Set<String> allowedExtensions = {'.gif'};
+  var files = dir.listSync(recursive: true).where((file) => (allowedExtensions.contains(getFileExtension(file.path))));
+  return files;
+}
+
 void main() {
   var signal1 = <Tuple2<bool, int>>[
       Tuple2<bool, int>(true, 400),
