@@ -44,8 +44,8 @@ class _PietBlockerBuilder {
 
   _PietBlockerBuilder(List<List<int>> data) {
     _data = data;
-    _width = _data[0].length;
-    _height = _data.length;
+    _width = _data.length;
+    _height = _data[0].length;
   }
 
   _PietBlock _getBlockAt(int x, int y) {
@@ -55,14 +55,14 @@ class _PietBlockerBuilder {
   _PietBlock _buildPietBlock(int x, int y) {
     var point = Point<int>(x, y);
     if (_blockCache.containsKey(point)) return _blockCache[point];
-    int targetColor = _data[y][x];
+    int targetColor = _data[x][y];
     var knownColor = _knownColors.contains(targetColor);
 
     _block = _PietBlock(targetColor, knownColor);
     _buildPietBlockRec(x, y, targetColor);
     _blockCache.addAll({point: _block});
 
-    print("block: " + _block.blockCount.toString() + "color: " + _knownColors.indexOf(targetColor).toString());
+     print("block: " + x.toString() + '/' + y.toString() + ' ' + _block.blockCount.toString() + " color: " + (targetColor).toString()); //_knownColors.indexOf(targetColor).toString()
     return _block;
   }
 
@@ -94,33 +94,27 @@ class _PietBlockerBuilder {
   // }
 
   void _buildPietBlockRec(int x, int y, int currentColor) {
-    // ArrayList<PietCodel> accumulator = new ArrayList<>();
     var queue = Set<Point<int>>();
     queue.add(Point<int>(x, y));
-try {
-  while (!queue.isEmpty) {
-    var queuePixel = queue.first;
-    queue.remove(queuePixel);
-    _block.addPixel(queuePixel);
-    x = queuePixel.x;
-    y = queuePixel.y;
 
-    _addIsValidBlock(x + 1, y, currentColor, queue);
-    _addIsValidBlock(x, y + 1, currentColor, queue);
-    _addIsValidBlock(x - 1, y, currentColor, queue);
-    _addIsValidBlock(x, y - 1, currentColor, queue);
-  }
-}catch (e) {
-  e==e;
-}
-    queue =queue;
-    // return accumulator;
+    while (!queue.isEmpty) {
+      var queuePixel = queue.last;
+      queue.remove(queuePixel);
+      _block.addPixel(queuePixel);
+      x = queuePixel.x;
+      y = queuePixel.y;
+
+      _addIsValidBlock(x + 1, y, currentColor, queue);
+      _addIsValidBlock(x, y + 1, currentColor, queue);
+      _addIsValidBlock(x - 1, y, currentColor, queue);
+      _addIsValidBlock(x, y - 1, currentColor, queue);
+    }
   }
 
   Set<Point<int>> _addIsValidBlock(int x, int y, int color, Set<Point<int>> queue) {
     if (x < 0 || x >= _width || y < 0 || y >= _height) // out of bounds
       return queue;
-    if (color == _data[x][y] && !_block.containsPixel(Point<int>(x, y)))
+    if (_data[x][y] == color && !_block.containsPixel(Point<int>(x, y)))
       queue.add(Point<int>(x, y));
     return queue;
   }

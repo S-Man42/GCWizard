@@ -14,15 +14,29 @@ Uint8List _getFileData(String name) {
 }
 
 void main() {
-  group("animated_image_morse_code.analyseImageMorseCode:", () {
+  group("piet.interpretPiet:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'input' : 'erat2_big.png', 'inputText' : '5', 'expectedOutput' : '  '},
-      {'input' : 'fibonacci_big.gif', 'inputText' : '', 'expectedOutput' : '  '},
-      {'input' : 'hanoibig.gif', 'inputText' : '', 'expectedOutput' : '-5\b2-6 0\b'},
-      {'input' : 'hello_medium.gif', 'inputText' : '', 'expectedOutput' : 'Hello world!'},
-      {'input' : 'hello_world_big.png', 'inputText' : '', 'expectedOutput' : 'Hello world!'},
-      {'input' : 'nprime.gif', 'inputText' : 'Y\n', 'expectedOutput' : '  '},
-      {'input' : 'primetest.png', 'inputText' : 'n', 'expectedOutput' : '  '},
+      {'input' : 'nfib.png', 'inputText' : '', 'expectedOutput' :
+      ''},
+
+      //{'input' : 'erat2_big.png', 'inputText' : '5', 'expectedOutput' : '  '},
+      //{'input' : 'fibonacci_big.gif', 'inputText' : '', 'expectedOutput' : '  '},
+      {'input' : 'hanoibig.gif', 'inputText' : null, 'expectedOutput' : '-5\b2-6 0\b'},
+      {'input' : 'hello_medium.gif', 'inputText' : null, 'expectedOutput' : 'Hello world!'},
+      {'input' : 'hello_world_big.png', 'inputText' : null, 'expectedOutput' : 'Hello world!'},
+      {'input' : 'nprime.gif', 'inputText' : '5', 'expectedOutput' : 'Y\n'},
+      {'input' : 'nprime.gif', 'inputText' : '6', 'expectedOutput' : 'N\n'},
+      {'input' : 'primetest.png', 'inputText' : '7', 'expectedOutput' : 'Y\n'},
+      {'input' : 'nprime-big.gif', 'inputText' : '17', 'expectedOutput' : 'Y\n'},
+
+      {'input' : 'hi.png', 'inputText' : '', 'expectedOutput' : 'Hi'},
+      {'input' : 'loop.gif', 'inputText' : '', 'expectedOutput' : '  '},
+      {'input' : 'loop-big.gif', 'inputText' : '', 'expectedOutput' : '  '},
+      {'input' : 'nfib.png', 'inputText' : '', 'expectedOutput' :
+      ''},
+      {'input' : 'nfib-big.gif', 'inputText' : '', 'expectedOutput' : '  '},
+      {'input' : 'nhello.gif', 'inputText' : '', 'expectedOutput' : '  '},
+      {'input' : 'nhello-big.gif', 'inputText' : '', 'expectedOutput' : '  '},
     ];
 
     _inputsToExpected.forEach((elem) {

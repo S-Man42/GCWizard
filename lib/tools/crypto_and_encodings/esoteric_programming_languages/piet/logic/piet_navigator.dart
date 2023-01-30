@@ -21,8 +21,8 @@ class _PietNavigator {
 
   _PietNavigator(List<List<int>> data) {
     _data = data;
-    _width = _data[0].length;
-    _height = _data.length;
+    _width = _data.length;
+    _height = _data[0].length;
   }
 
   Point _currentPoint = Point<int>(0, 0);
@@ -98,8 +98,8 @@ class _PietNavigator {
       bool isOutOfBounds = nextStep.x < 0 || nextStep.y < 0 || nextStep.x >= _width || nextStep.y >= _height;
 
       // you're blocked if the target is a black codel or you're out of bounds
-      bool isBlocked = isOutOfBounds || _data[nextStep.y][nextStep.x] == black;
-
+      bool isBlocked = isOutOfBounds || _data[nextStep.x][nextStep.y] == black;
+print('exitPoint: ' +exitPoint.toString() + ' nextStep: ' + nextStep.toString());
       if (!isBlocked) {
         _currentPoint = nextStep;
         result = nextStep;

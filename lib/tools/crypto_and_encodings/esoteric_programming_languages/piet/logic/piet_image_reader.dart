@@ -13,12 +13,12 @@ class PietImageReader {
     var step = _estimateCodelSize(image);
     var codels = <List<int>>[];
 
-    int outY = 0;
-    for (var y = 0; y < image.height; y += step, outY++) {
+    int outX = 0;
+    for (var x = 0; x < image.width; x += step, outX++) {
       codels.add(<int>[]);
-      for (var x = 0; x < image.width; x += step) {
+      for (var y = 0; y < image.height; y += step) {
         var pix = image.getPixel(x, y);
-        codels[outY].add(_toRgb(pix));
+        codels[outX].add(_toRgb(pix));
       }
     }
     return codels;

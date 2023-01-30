@@ -120,8 +120,8 @@ class _BaseOperations {
 
   void outChar() {
     var result = _stack.pop();
-    print("out: " + result.toString());
-    if (result != null) _session.output(String.fromCharCode(result%255));
+    // print("out: " + result.toString());
+    if (result != null) _session.output(String.fromCharCode(result));
   }
 
   Map<_PietOps, void Function()> getMap() {
