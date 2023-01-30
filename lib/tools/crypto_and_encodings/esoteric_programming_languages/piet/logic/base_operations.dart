@@ -120,7 +120,6 @@ class _BaseOperations {
 
   void outChar() {
     var result = _stack.pop();
-    // print("out: " + result.toString());
     if (result != null) _session.output(String.fromCharCode(result));
   }
 

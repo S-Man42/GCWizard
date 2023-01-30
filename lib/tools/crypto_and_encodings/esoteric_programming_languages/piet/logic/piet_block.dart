@@ -5,9 +5,7 @@ class _PietBlock {
 
   int get color => _color;
   bool _knownColor = false;
-
   bool get knownColor => _knownColor;
-
   var _pixels = Set<Point<int>>();
 
   _PietBlock(int color, bool knownColor) {
