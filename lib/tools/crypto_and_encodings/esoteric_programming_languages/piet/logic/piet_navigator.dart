@@ -99,7 +99,7 @@ class _PietNavigator {
 
       // you're blocked if the target is a black codel or you're out of bounds
       bool isBlocked = isOutOfBounds || _data[nextStep.x][nextStep.y] == black;
-//print('exitPoint: ' +exitPoint.toString() + ' nextStep: ' + nextStep.toString());
+
       if (!isBlocked) {
         _currentPoint = nextStep;
         result = nextStep;

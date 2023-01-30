@@ -70,7 +70,7 @@ class _PietSession {
   var _output = '';
 
   var _timeOut;
-  var _multipleInputs = false;
+  var _multipleInputs;
 
   _PietSession(List<List<int>> image, {int timeOut = 15000, bool multipleInputs = false}) {
     data = image;
