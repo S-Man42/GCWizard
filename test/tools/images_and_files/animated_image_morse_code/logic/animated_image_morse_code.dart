@@ -1,6 +1,17 @@
+import 'dart:io' as io;
+import 'dart:typed_data';
+
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/tools/images_and_files/animated_image_morse_code/logic/animated_image_morse_code.dart';
 import 'package:tuple/tuple.dart';
+import 'package:path/path.dart' as path;
+
+var testDirPath = 'test/resources/animated_image_morse_code/';
+
+Uint8List _getFileData(String name) {
+  io.File file = io.File(path.join(testDirPath, name));
+  return file.readAsBytesSync();
+}
 
 void main() {
   var signal1 = <Tuple2<bool, int>>[
@@ -77,6 +88,49 @@ void main() {
       test('input: ${elem['input']}', () {
         var _actual = foundSignalTimes(elem['input']);
         expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
+
+  group("animated_image_morse_code.analyseImageMorseCode:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : 'Der kleine Preuße.gif', ''
+          'expectedOutputMorse' : ' | ..-. ..- . -. ..-. -.. .-. . .. -.. .-. . .. .- -.-. .... - -. . ..- -. -. ..- .-.. .-.. -. . ..- -. | -. ..- .-.. -. ..- .-.. .-.. .- -.-. .... - --.. .-- . .. -. . ..- -. ... . -.-. .... ... -. . .. | -. ...- .. . .-. ',
+          'expectedOutputText' : ' FUENFDREIDREIACHTNEUNNULLNEUN NULNULLACHTZWEINEUNSECHSNEI NVIER'},
+      {'input' : 'LEUCHTTURM.gif',
+          'expectedOutputMorse' : ' | -.-.- -. ..... ----- ..... --... .-.-.- .---- .---- -.... . ----- .---- .---- .---- ---.. .---- ---.. ....- | -.-. ',
+          'expectedOutputText' : ' N5057.116E01118184 C'},
+      {'input' : 'bibliothek.gif', 'secondMarked' : true,
+        'expectedOutputMorse' : ' | -... ..- . -.-. .... . .-. .-- ..- .-. -- ',
+        'expectedOutputText' : ' BUECHERWURM'},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}', () async {
+        var _outData = await analyseImageMorseCode(_getFileData(elem['input']));
+        List<int> durations = _outData["durations"];
+        List<Uint8List> images = _outData["images"];
+        List<List<int>> imagesFiltered = _outData["imagesFiltered"];
+
+        var _marked =  List.filled(images.length, false);
+
+        if (elem['secondMarked'] != null) {
+          imagesFiltered[1].forEach((idx) {
+            _marked[idx] = true;
+          });
+          imagesFiltered[2].forEach((idx) {
+            _marked[idx] = true;
+          });
+        } else {
+          imagesFiltered[0].forEach((idx) {
+            _marked[idx] = true;
+          });
+        }
+
+
+        var _actual = decodeMorseCode(durations, _marked);
+        expect(_actual['morse'], elem['expectedOutputMorse']);
+        expect(_actual['text'], elem['expectedOutputText']);
       });
     });
   });
