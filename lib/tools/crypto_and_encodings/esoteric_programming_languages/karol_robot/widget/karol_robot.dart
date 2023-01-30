@@ -14,6 +14,7 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/karol_robot/logic/karol_robot.dart';
 import 'package:gc_wizard/tools/images_and_files/binary2image/logic/binary2image.dart';
+import 'package:gc_wizard/tools/utils/common_widget_utils/widget/common_widget_utils.dart';
 import 'package:gc_wizard/tools/utils/file_utils/widget/file_utils.dart';
 import 'package:gc_wizard/tools/utils/textinputformatter/wrapper_for_masktextinputformatter/widget/wrapper_for_masktextinputformatter.dart';
 import 'package:intl/intl.dart';
@@ -158,7 +159,7 @@ class KarolRobotState extends State<KarolRobot> {
 
   _createDecodeOutput(String output) {
     _outDecodeData = null;
-    byteColor2image(output).then((value) {
+    input2Image(binary2Image(output)).then((value) {
       setState(() {
         _outDecodeData = value;
       });
@@ -175,7 +176,7 @@ class KarolRobotState extends State<KarolRobot> {
 
   _createEncodeOutput(String output) {
     _outEncodeData = null;
-    byteColor2image(output).then((value) {
+    input2Image(binary2Image(output)).then((value) {
       setState(() {
         _outEncodeData = value;
       });

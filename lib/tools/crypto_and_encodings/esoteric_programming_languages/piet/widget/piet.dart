@@ -12,6 +12,7 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/piet/logic/piet_image_reader.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/piet/logic/piet_language.dart';
+import 'package:gc_wizard/tools/utils/common_widget_utils/widget/common_widget_utils.dart';
 import 'package:gc_wizard/tools/utils/file_picker/widget/file_picker.dart';
 import 'package:gc_wizard/tools/utils/file_utils/widget/file_utils.dart';
 import 'package:gc_wizard/tools/utils/gcw_file/widget/gcw_file.dart';
@@ -174,7 +175,7 @@ class PietState extends State<Piet> {
   void _calcGeneratorOutput() async {
     _currentGeneratorOutput = null;
     var generatorOutput = generatePiet(_currentGeneratorInput);
-    generatorOutput.then((output) {
+    input2Image(generatorOutput).then((output) {
       setState(() {
         _currentGeneratorOutput = output;
       });

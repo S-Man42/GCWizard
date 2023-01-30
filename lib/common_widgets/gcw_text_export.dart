@@ -59,7 +59,7 @@ class GCWTextExportState extends State<GCWTextExport> {
   }
 
   _buildQRCode() {
-    generateBarCode(_currentExportText).then((qr_code) {
+    input2Image(generateBarCode(_currentExportText)).then((qr_code) {
       setState(() {
         _qrImageData = qr_code;
       });
@@ -142,7 +142,7 @@ Future<dynamic> _exportEncryption(BuildContext context, String text, TextExportM
   if (mode == TextExportMode.TEXT) {
     return saveStringToFile(context, text, 'txt_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.txt');
   } else {
-    final data = await generateBarCode(text);
+    final data = await input2Image(generateBarCode(text));
 
     return await saveByteDataToFile(
         context, data, 'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');

@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:archive/archive_io.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/tools/coords/distance_and_bearing/logic/distance_and_bearing.dart';

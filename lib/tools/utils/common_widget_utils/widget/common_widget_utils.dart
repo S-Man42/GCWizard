@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,8 @@ import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/configuration/settings/preferences.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
+import 'package:gc_wizard/tools/images_and_files/binary2image/logic/binary2image.dart';
 import 'package:prefs/prefs.dart';
 import 'package:url_launcher/url_launcher.dart' as urlLauncher;
 
@@ -178,4 +181,44 @@ int sortToolList(GCWTool a, GCWTool b) {
 
 Future<bool> launchUrl(Uri url) async {
   return urlLauncher.launchUrl(url, mode: urlLauncher.LaunchMode.externalApplication);
+}
+
+Future<Uint8List> input2Image(ImageData imageData)  async {
+  var width = 0.0;
+  var height = 0.0;
+
+  if (imageData == null || imageData.lines == null || imageData.colors == null) return null;
+
+  imageData.lines.forEach((line) {
+    width = max(width, line.length.toDouble());
+    height++;
+  });
+  width = width * imageData.pointSize + 2 * imageData.bounds;
+  height = height * imageData.pointSize + 2 * imageData.bounds;
+
+  final canvasRecorder = PictureRecorder();
+  final canvas = Canvas(canvasRecorder, Rect.fromLTWH(0, 0, width, height));
+
+  final paint = Paint()
+    ..color = Color(imageData.colors.values.first) //Colors.white
+    ..style = PaintingStyle.fill;
+
+  canvas.drawRect(Rect.fromLTWH(0, 0, width, height), paint);
+  for (int row = 0; row < imageData.lines.length; row++) {
+    for (int column = 0; column < imageData.lines[row].length; column++) {
+      paint.color = Color(imageData.colors.values.first); // Colors.white
+      if (imageData.colors.containsKey(imageData.lines[row][column]))
+        paint.color = Color(imageData.colors[imageData.lines[row][column]]);
+
+      if (imageData.lines[row][column] != '0')
+        canvas.drawRect(
+            Rect.fromLTWH(column * imageData.pointSize + imageData.bounds, row * imageData.pointSize + imageData.bounds,
+                imageData.pointSize, imageData.pointSize), paint);
+    }
+  }
+
+  final img = await canvasRecorder.endRecording().toImage(width.floor(), height.floor());
+  final data = await img.toByteData(format: ImageByteFormat.png);
+
+  return trimNullBytes(data.buffer.asUint8List());
 }

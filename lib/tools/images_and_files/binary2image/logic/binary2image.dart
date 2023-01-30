@@ -1,41 +1,47 @@
 import 'dart:math';
-import 'dart:typed_data';
-import 'dart:ui' as ui;
 
-import 'package:flutter/material.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
 import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
 
-Map<String, Color> colorMap = {
-  '0': Colors.white,
-  '1': Colors.black,
-  '2': Colors.redAccent, //light red
-  '3': Colors.yellow.shade100, //light yellow
-  '4': Colors.lightGreen,
-  '5': Colors.cyanAccent, //light cyan,
-  '6': Colors.lightBlue,
-  '7': Colors.pinkAccent.shade100, //light magenta,
-  '8': Colors.red,
-  '9': Colors.yellowAccent,
-  'A': Colors.green,
-  'B': Colors.cyan,
-  'C': Colors.blue,
-  'D': Colors.purpleAccent, //magenta,
-  'E': Colors.red.shade900, //dark red,
-  'F': Colors.yellow, //dark yellow,
-  'G': Colors.green.shade900, //dark green,
-  'H': Colors.cyan.shade900, //dark cyan,
-  'I': Colors.blue.shade900, //dark blue,
-  'J': Colors.purple, //dark magenta
-  'K': Colors.orange,
-  'L': Colors.deepOrange,
-  'M': Colors.orangeAccent,
-  'N': Colors.brown,
-  'O': Colors.brown.shade900,
-  '#': Colors.grey.shade300,
+Map<String, int> colorMap = {
+  '0': 0xFFFFFFFF, //Colors.white
+  '1': 0xFF000000, //Colors.black
+  '2': 0xFFFF5252, //Colors.redAccent //light red
+  '3': 0xFFFFF9C4, //Colors.yellow.shade100 //light yellow
+  '4': 0xFF8BC34A, //Colors.lightGreen
+  '5': 0xFF18FFFF, //Colors.cyanAccent //light cyan,
+  '6': 0xFF03A9F4, //Colors.lightBlue
+  '7': 0xFFFF80AB, //Colors.pinkAccent.shade100 //light magenta,
+  '8': 0xFFF44336, //Colors.red,
+  '9': 0xFFFFFF00, //Colors.yellowAccent
+  'A': 0xFF4CAF50, //Colors.green
+  'B': 0xFF00BCD4, //Colors.cyan
+  'C': 0xFF2196F3, //Colors.blue
+  'D': 0xFFE040FB, //Colors.purpleAccent //magenta,
+  'E': 0xFFB71C1C, //Colors.red.shade900 //dark red,
+  'F': 0xFFFFEB3B, //Colors.yellow, //dark yellow,
+  'G': 0xFF1B5E20, //Colors.green.shade900 //dark green,
+  'H': 0xFF006064, //Colors.cyan.shade900 //dark cyan,
+  'I': 0xFF0D47A1, //Colors.blue.shade900 //dark blue,
+  'J': 0xFF9C27B0, //Colors.purple //dark magenta
+  'K': 0xFFFF9800, //Colors.orange
+  'L': 0xFFFF5722, //Colors.deepOrange
+  'M': 0xFFFFAB40, //Colors.orangeAccent
+  'N': 0xFF795548, //Colors.brown
+  'O': 0xFF3E2723, //Colors.brown.shade900
+  '#': 0xFFE0E0E0, //Colors.grey.shade300
 };
 
-Future<Uint8List> binary2image(String input, bool squareFormat, bool invers) async {
+class ImageData {
+  final List<String> lines;
+  final Map<String, int> colors;
+  final int bounds;
+  final double pointSize;
+
+  ImageData(this.lines, this.colors, {this.bounds = 10, this.pointSize = 5.0});
+}
+
+ImageData binary2image(String input, bool squareFormat, bool invers) {
   var filter = _buildFilter(input);
   if (filter.length < 2) return null;
 
@@ -53,11 +59,7 @@ Future<Uint8List> binary2image(String input, bool squareFormat, bool invers) asy
     input = input.replaceAll(RegExp('[ ]'), '\n');
   }
 
-  return await _binary2Image(input);
-}
-
-Future<Uint8List> byteColor2image(String input) async {
-  return await _binary2Image(input);
+  return binary2Image(input);
 }
 
 String _buildFilter(String input) {
@@ -107,52 +109,13 @@ String _filterInput(String input, String filter) {
   return input.replaceAll(RegExp('[^$filter]'), '');
 }
 
-Future<Uint8List> _binary2Image(String input) async {
+ImageData binary2Image(String input) {
   if (input == '' || input == null) return null;
 
   var lines = input.split('\n');
 
   if (lines.length == 1)
-    lines.addAll([lines[0], lines[0], lines[0], lines[0], lines[0], lines[0], lines[0], lines[0], lines[0]]);
-  return input2Image(lines);
+    lines.addAll(List<String>.filled(9, lines[0]));
+  return ImageData(lines, colorMap);
 }
 
-Future<Uint8List> input2Image(List<String> lines,
-    {Map<String, Color> colors, int bounds = 10, double pointSize = 5.0}) async {
-  var width = 0.0;
-  var height = 0.0;
-
-  if (lines == null) return null;
-
-  lines.forEach((line) {
-    width = max(width, line.length.toDouble());
-    height++;
-  });
-  width = width * pointSize + 2 * bounds;
-  height = height * pointSize + 2 * bounds;
-
-  final canvasRecorder = ui.PictureRecorder();
-  final canvas = ui.Canvas(canvasRecorder, ui.Rect.fromLTWH(0, 0, width, height));
-
-  final paint = Paint()
-    ..color = Colors.white
-    ..style = PaintingStyle.fill;
-
-  canvas.drawRect(Rect.fromLTWH(0, 0, width, height), paint);
-  if (colors == null) colors = colorMap;
-  for (int row = 0; row < lines.length; row++) {
-    for (int column = 0; column < lines[row].length; column++) {
-      paint.color = Colors.white;
-      if (colors.containsKey(lines[row][column])) paint.color = colors[lines[row][column]];
-
-      if (lines[row][column] != '0')
-        canvas.drawRect(
-            Rect.fromLTWH(column * pointSize + bounds, row * pointSize + bounds, pointSize, pointSize), paint);
-    }
-  }
-
-  final img = await canvasRecorder.endRecording().toImage(width.floor(), height.floor());
-  final data = await img.toByteData(format: ui.ImageByteFormat.png);
-
-  return trimNullBytes(data.buffer.asUint8List());
-}
