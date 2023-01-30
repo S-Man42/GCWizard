@@ -9,10 +9,11 @@ import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/n_segment_display.dart';
-import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/segment_display_utils.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/logic/teletypewriter.dart';
 import 'package:gc_wizard/tools/utils/file_utils/widget/file_utils.dart';
 import 'package:intl/intl.dart';
+
+part 'package:gc_wizard/tools/science_and_technology/teletypewriter/punchtape_segment_display/widget/punchtape_segmentdisplay_output_utils.dart';
 
 class PunchtapeSegmentDisplayOutput extends StatefulWidget {
   final bool upsideDownButton;
@@ -74,7 +75,7 @@ class _PunchtapeSegmentDisplayOutputState extends State<PunchtapeSegmentDisplayO
                 icon: Icons.save,
                 iconColor: (widget.segments == null) || (widget.segments.length == 0) ? themeColors().inActive() : null,
                 onPressed: () async {
-                  await buildPunchtapeSegmentDisplayImage(_displays, _currentUpsideDown).then((image) {
+                  await _buildPunchtapeSegmentDisplayImage(_displays, _currentUpsideDown).then((image) {
                     if (image != null)
                       image.toByteData(format: ui.ImageByteFormat.png).then((data) {
                         _exportFile(context, data.buffer.asUint8List());
@@ -104,13 +105,6 @@ class _PunchtapeSegmentDisplayOutputState extends State<PunchtapeSegmentDisplayO
         : _displays.map((display) {
             return Transform.rotate(angle: _currentUpsideDown ? pi : 0, child: display);
           }).toList();
-    return buildPunchtapeSegmentDisplayOutput(viewList);
+    return _buildPunchtapeSegmentDisplayOutput(viewList);
   }
-}
-
-_exportFile(BuildContext context, Uint8List data) async {
-  var value =
-      await saveByteDataToFile(context, data, 'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
-
-  if (value != null) showExportedFileDialog(context, fileType: FileType.PNG, contentWidget: Image.memory(data));
 }

@@ -1,24 +1,19 @@
-import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/tools/science_and_technology/resistor/logic/resistor.dart';
-import 'package:gc_wizard/tools/science_and_technology/resistor/resistor_formatter/widget/resistor_formatter.dart';
+part of 'package:gc_wizard/tools/science_and_technology/resistor/resistor_colorcodecalculator/widget/resistor_colorcodecalculator.dart';
 
-class ResistorBandDropDown extends StatefulWidget {
+class _ResistorBandDropDown extends StatefulWidget {
   final Function onChanged;
   final ResistorBandType type;
   final int numberBands;
   final ResistorBandColor color;
 
-  const ResistorBandDropDown({Key key, this.color, this.type, this.numberBands, this.onChanged})
+  const _ResistorBandDropDown({Key key, this.color, this.type, this.numberBands, this.onChanged})
       : super(key: key);
 
   @override
-  ResistorBandDropDownState createState() => ResistorBandDropDownState();
+  _ResistorBandDropDownState createState() => _ResistorBandDropDownState();
 }
 
-class ResistorBandDropDownState extends State<ResistorBandDropDown> {
+class _ResistorBandDropDownState extends State<_ResistorBandDropDown> {
   final _colorAttributes = {
     ResistorBandColor.PINK: _ResistorColorAttributes('common_color_pink', Color(0xffffb6c1), Colors.black),
     ResistorBandColor.SILVER: _ResistorColorAttributes('common_color_silver', Color(0xffd3d3d3), Colors.black),

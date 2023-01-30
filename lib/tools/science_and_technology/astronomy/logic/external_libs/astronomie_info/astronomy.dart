@@ -71,7 +71,7 @@ double _mod2Pi(double x) {
  * @param lon geographical longitude in degree
  * @return    the name <code>String</code> of a sign
  */
-AstrologicalSign sign(double lon) {
+AstrologicalSign _sign(double lon) {
   var signs = AstrologicalSign.values;
 
   return signs[(lon * _RAD / 30.0).floor()];
@@ -309,7 +309,7 @@ Coor sunPosition(double TDT, double earthRadius, [double geolat = 0, double lmst
     sunCoor = _equ2Altaz(sunCoor, TDT, geolat, lmst);
   }
 
-  sunCoor.sign = sign(sunCoor.lon);
+  sunCoor.sign = _sign(sunCoor.lon);
   return sunCoor;
 }
 
@@ -388,7 +388,7 @@ Coor moonPosition(Coor sunCoor, double TDT, [Coor observer, double lmst = 0, boo
     p = 2 * (moonCoor.moonAge / (90.0 * _DEG)).roundToDouble() + 1;
 
   moonCoor.moonPhase = MoonPhase.values[p.floor() % 7];
-  moonCoor.sign = sign(moonCoor.lon);
+  moonCoor.sign = _sign(moonCoor.lon);
 
   return moonCoor;
 }

@@ -10,10 +10,10 @@ class NumeralBaseSpinner extends StatefulWidget {
   const NumeralBaseSpinner({Key key, this.onChanged, this.value: 10}) : super(key: key);
 
   @override
-  NumeralBaseSpinnerState createState() => NumeralBaseSpinnerState();
+  _NumeralBaseSpinnerState createState() => _NumeralBaseSpinnerState();
 }
 
-class NumeralBaseSpinnerState extends State<NumeralBaseSpinner> {
+class _NumeralBaseSpinnerState extends State<NumeralBaseSpinner> {
   int _currentValue;
 
   final list2To62 = List.generate(61, (i) => i + 2);

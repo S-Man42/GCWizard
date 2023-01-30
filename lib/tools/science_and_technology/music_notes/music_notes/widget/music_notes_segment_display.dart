@@ -1,12 +1,4 @@
-import 'dart:math';
-import 'dart:typed_data';
-
-import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/gcw_touchcanvas.dart';
-import 'package:gc_wizard/tools/science_and_technology/music_notes/logic/music_notes.dart';
-import 'package:gc_wizard/tools/science_and_technology/segment_display/logic/segment_display.dart';
-import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/n_segment_display.dart';
-import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/segmentdisplay_painter.dart';
+part of 'package:gc_wizard/tools/science_and_technology/music_notes/music_notes/widget/music_notes.dart';
 
 final _INITIAL_SEGMENTS = <String, bool>{
   bLabel: false,
@@ -57,13 +49,13 @@ const _NOTES_RELATIVE_DISPLAY_WIDTH = 380;
 const _NOTES_RELATIVE_DISPLAY_WIDTH_OUTPUT = 160;
 const _NOTES_RELATIVE_DISPLAY_HEIGHT = 445;
 
-class NotesSegmentDisplay extends NSegmentDisplay {
+class _NotesSegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
   final bool readOnly;
   final Function onChanged;
   final bool tapeStyle;
 
-  NotesSegmentDisplay({Key key, this.segments, this.readOnly: false, this.onChanged, this.tapeStyle: false})
+  _NotesSegmentDisplay({Key key, this.segments, this.readOnly: false, this.onChanged, this.tapeStyle: false})
       : super(
             key: key,
             initialSegments: _INITIAL_SEGMENTS,

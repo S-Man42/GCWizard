@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
 import 'package:latlong2/latlong.dart';
 
-// https://carto.com/blog/center-of-points/
+// https://web.archive.org/web/20221205184246/https://carto.com/blog/center-of-points/
 LatLng centroid(List<LatLng> coords) {
   if (coords == null || coords.isEmpty) return null;
 

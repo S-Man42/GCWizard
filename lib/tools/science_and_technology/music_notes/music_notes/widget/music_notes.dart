@@ -1,17 +1,25 @@
+import 'dart:math';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/gcw_toolbar.dart';
+import 'package:gc_wizard/common_widgets/gcw_touchcanvas.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/tools/science_and_technology/music_notes/logic/music_notes.dart';
-import 'package:gc_wizard/tools/science_and_technology/music_notes/music_notes_segment_display/widget/music_notes_segment_display.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/logic/segment_display.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/n_segment_display.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/segmentdisplay_output.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/segmentdisplay_painter.dart';
 import 'package:gc_wizard/utils/logic_utils/constants.dart';
 import 'package:gc_wizard/widgets/registry.dart';
+
+part 'package:gc_wizard/tools/science_and_technology/music_notes/music_notes/widget/music_notes_segment_display.dart';
 
 class MusicNotes extends StatefulWidget {
   @override
@@ -144,7 +152,7 @@ class MusicNotesState extends State<MusicNotes> {
           child: Row(
             children: <Widget>[
               Expanded(
-                child: NotesSegmentDisplay(
+                child: _NotesSegmentDisplay(
                   segments: currentDisplay,
                   onChanged: onChanged,
                 ),
@@ -186,7 +194,7 @@ class MusicNotesState extends State<MusicNotes> {
     return SegmentDisplayOutput(
         segmentFunction: (displayedSegments, readOnly) {
           displayedSegments = filterVisibleHelpLines(displayedSegments);
-          return NotesSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
+          return _NotesSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
         },
         segments: segments,
         horizontalSymbolPadding: 0,

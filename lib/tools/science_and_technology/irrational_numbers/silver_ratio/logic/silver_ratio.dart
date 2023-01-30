@@ -2,7 +2,7 @@ import 'package:gc_wizard/tools/science_and_technology/irrational_numbers/logic/
 
 //https://apod.nasa.gov/htmltest/gifcity/sqrt2.1mil
 
-final DS = IrrationalNumber(
+final SilverRatio = IrrationalNumber(
     symbol: String.fromCharCode(948),
     integerPart: '2',
     decimalPart:
