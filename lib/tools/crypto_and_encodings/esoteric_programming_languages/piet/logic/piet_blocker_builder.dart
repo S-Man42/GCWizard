@@ -62,7 +62,7 @@ class _PietBlockerBuilder {
     _buildPietBlockRec(x, y, targetColor);
     _blockCache.addAll({point: _block});
 
-     print("block: " + x.toString() + '/' + y.toString() + ' ' + _block.blockCount.toString() + " color: " + (targetColor).toString()); //_knownColors.indexOf(targetColor).toString()
+//     print("block: " + x.toString() + '/' + y.toString() + ' ' + _block.blockCount.toString() + " color: " + (targetColor).toString()); //_knownColors.indexOf(targetColor).toString()
     return _block;
   }
 
