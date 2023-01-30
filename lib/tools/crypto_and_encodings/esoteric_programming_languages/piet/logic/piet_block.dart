@@ -25,45 +25,22 @@ class _PietBlock {
     return _pixels.contains(point);
   }
 
-  Point get northLeft {
-    var _point = _pixels.reduce((current, next) => (current.y < next.y) ? current : next);
-    return _pixels.where((point) => point.y == _point.y).reduce((current, next) => (current.x < next.x) ? current : next);
-  }
-
-  Point get northRight {
-    var _point = _pixels.reduce((current, next) => (current.y < next.y) ? current : next);
-    return _pixels.where((point) => point.y == _point.y).reduce((current, next) => (current.x > next.x) ? current : next);
-  }
-
-  Point get eastLeft {
-    var _point = _pixels.reduce((current, next) => (current.x > next.x) ? current : next);
-    return _pixels.where((point) => point.x == _point.x).reduce((current, next) => (current.y < next.y) ? current : next);
-  }
-
-  Point get eastRight {
-    var _point = _pixels.reduce((current, next) => (current.x > next.x) ? current : next);
-    return _pixels.where((point) => point.x == _point.x).reduce((current, next) => (current.y > next.y) ? current : next);
-  }
-
-  Point get southLeft {
-    var _point = _pixels.reduce((current, next) => (current.y > next.y) ? current : next);
-    return _pixels.where((point) => point.y == _point.y).reduce((current, next) => (current.x > next.x) ? current : next);
-  }
-
-  Point get southRight {
-    var _point = _pixels.reduce((current, next) => (current.y > next.y) ? current : next);
-    return _pixels.where((point) => point.y == _point.y).reduce((current, next) => (current.x < next.x) ? current : next);
-  }
-
-  Point get westLeft {
-    var _point = _pixels.reduce((current, next) => (current.x < next.x) ? current : next);
-    return _pixels.where((point) => point.x == _point.x).reduce((current, next) => (current.y > next.y) ? current : next);
-  }
-
-  Point get westRight {
-    var _point = _pixels.reduce((current, next) => (current.x < next.x) ? current : next);
-    return _pixels.where((point) => point.x == _point.x).reduce((current, next) => (current.y < next.y) ? current : next);
-  }
+  Point get northLeft => _pixels.reduce(
+          (current, next) => ((current.y < next.y) || ((current.y == next.y) && current.x < next.x)) ? current : next);
+  Point get northRight => _pixels.reduce(
+          (current, next) => ((current.y < next.y) || ((current.y == next.y) && current.x > next.x)) ? current : next);
+  Point get eastLeft => _pixels.reduce(
+          (current, next) => ((current.x > next.x) || ((current.x == next.x) && current.y < next.y)) ? current : next);
+  Point get eastRight => _pixels.reduce(
+          (current, next) => ((current.x > next.x) || ((current.x == next.x) && current.y > next.y)) ? current : next);
+  Point get southLeft => _pixels.reduce(
+          (current, next) => ((current.y > next.y) || ((current.y == next.y) && current.x > next.x)) ? current : next);
+  Point get southRight => _pixels.reduce(
+          (current, next) => ((current.y > next.y) || ((current.y == next.y) && current.x < next.x)) ? current : next);
+  Point get westLeft => _pixels.reduce(
+          (current, next) => ((current.x < next.x) || ((current.x == next.x) && current.y > next.y)) ? current : next);
+  Point get westRight => _pixels.reduce(
+          (current, next) => ((current.x < next.x) || ((current.x == next.x) && current.y < next.y)) ? current : next);
 }
 
 
