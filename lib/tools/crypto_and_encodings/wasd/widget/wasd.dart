@@ -332,7 +332,7 @@ class WASDState extends State<WASD> {
     var out = decodeWASDGraphic(_currentDecodeInput, [_currentUp, _currentLeft, _currentDown, _currentRight]);
 
     _outDecodeData = null;
-    binary2image(out, false, false).then((value) {
+    input2Image(binary2image(out, false, false)).then((value) {
       setState(() {
         _outDecodeData = value;
       });
@@ -353,7 +353,7 @@ class WASDState extends State<WASD> {
         [_currentUp, _currentLeft, _currentDown, _currentRight]);
 
     _outEncodeData = null;
-    binary2image(out, false, false).then((value) {
+    input2Image(binary2image(out, false, false)).then((value) {
       setState(() {
         _outEncodeData = value;
       });

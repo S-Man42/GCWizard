@@ -10,7 +10,14 @@ final int _white = _knownColors.elementAt(18);
 final int _black = _knownColors.elementAt(19);
 _colorStack _currentColor;
 
-Future<Uint8List> generatePiet(String input) async {
+enum Alignment {
+  topLeft,
+  topRight,
+  bottomLeft,
+  bottomRight
+}
+
+ImageData generatePiet(String input) {
   var result = <MapEntry<int, List<int>>>[];
 
   _setBlockSize(input);
@@ -38,6 +45,7 @@ Future<Uint8List> generatePiet(String input) async {
     if (mapEntry == result.last) {
       if (direction == Alignment.bottomLeft) block = _reverseBlock(block, _blockWidth);
     }
+    ;
 
     if (firstPixelColor != null) {
       pixelIndex = _searchFirstPixelIndex(block, direction);
@@ -76,14 +84,14 @@ void _setBlockSize(String input) {
   _blockWidth = _max;
 }
 
-Future<Uint8List> _convertToImage(List<List<int>> resultLines) {
+ImageData _convertToImage(List<List<int>> resultLines) {
   var lines = <String>[];
-  var colorMap = Map<String, Color>();
+  var colorMap = Map<String, int>();
   var colorMapSwitched = Map<int, String>();
   var mapList = switchMapKeyValue(alphabet_AZ);
 
   for (var i = 0; i < _knownColors.length; i++) {
-    colorMap.addAll({mapList[i + 1]: Color(_knownColors.elementAt(i) | 0xFF000000)});
+    colorMap.addAll({mapList[i + 1]: (_knownColors.elementAt(i) | 0xFF000000)});
     colorMapSwitched.addAll({_knownColors.elementAt(i): mapList[i + 1]});
   }
 
@@ -95,7 +103,7 @@ Future<Uint8List> _convertToImage(List<List<int>> resultLines) {
     lines.add(row);
   });
 
-  return input2Image(lines, colors: colorMap, bounds: 0, pointSize: 1);
+  return ImageData(lines, colorMap, bounds: 0, pointSize: 1);
 }
 
 List<List<int>> _addBlockToResult(List<int> block, List<List<int>> resultLines, int row, bool append) {

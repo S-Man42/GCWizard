@@ -1,8 +1,6 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
-import 'dart:typed_data';
 
 import 'package:gc_wizard/tools/images_and_files/binary2image/logic/binary2image.dart';
 import 'package:gc_wizard/utils/logic_utils/alphabets.dart';
