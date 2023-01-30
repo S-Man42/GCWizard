@@ -44,50 +44,51 @@ class _PietBlockerBuilder {
 
   _PietBlockerBuilder(List<List<int>> data) {
     _data = data;
-    _width = _data[0].length;
-    _height = _data.length;
+    _width = _data.length;
+    _height = _data[0].length;
   }
 
-  _PietBlock getBlockAt(int x, int y) {
+  _PietBlock _getBlockAt(int x, int y) {
     return _buildPietBlock(x, y);
   }
 
   _PietBlock _buildPietBlock(int x, int y) {
     var point = Point<int>(x, y);
     if (_blockCache.containsKey(point)) return _blockCache[point];
-    int targetColor = _data[y][x];
+    int targetColor = _data[x][y];
     var knownColor = _knownColors.contains(targetColor);
 
     _block = _PietBlock(targetColor, knownColor);
-    _buildPietBlockRec(x, y, 0, 0);
+    _buildPietBlockRec(x, y, targetColor);
     _blockCache.addAll({point: _block});
 
     return _block;
   }
 
-  void _buildPietBlockRec(int x, int y, int xOffset, int yOffset) {
-    var newX = x + xOffset;
-    var newY = y + yOffset;
+  void _buildPietBlockRec(int x, int y, int currentColor) {
+    var queue = Set<Point<int>>();
+    queue.add(Point<int>(x, y));
 
-    if (newX < 0 || newX >= _width || newY < 0 || newY >= _height) // out of bounds
-      return;
+    while (!queue.isEmpty) {
+      var queuePixel = queue.last;
+      queue.remove(queuePixel);
+      _block.addPixel(queuePixel);
+      x = queuePixel.x;
+      y = queuePixel.y;
 
-    var currentColor = _data[newY][newX];
-    if (currentColor != _block.color) // colors don't match - you hit an edge
-      return;
+      _addIsValidBlock(x + 1, y, currentColor, queue); // right
+      _addIsValidBlock(x, y + 1, currentColor, queue); // bottom
+      _addIsValidBlock(x - 1, y, currentColor, queue); // left
+      _addIsValidBlock(x, y - 1, currentColor, queue); // top
+    }
+  }
 
-    if (!_block.addPixel(Point<int>(newX, newY))) return;
-
-    // top
-    if (yOffset != 1) _buildPietBlockRec(newX, newY, 0, -1);
-
-    // bottom
-    if (yOffset != -1) _buildPietBlockRec(newX, newY, 0, 1);
-
-    // left
-    if (xOffset != 1) _buildPietBlockRec(newX, newY, -1, 0);
-
-    // right
-    if (xOffset != -1) _buildPietBlockRec(newX, newY, 1, 0);
+  Set<Point<int>> _addIsValidBlock(int x, int y, int color, Set<Point<int>> queue) {
+    if (x < 0 || x >= _width || y < 0 || y >= _height) // out of bounds
+      return queue;
+    // colors don't match - you hit an edge
+    if (_data[x][y] == color && !_block.containsPixel(Point<int>(x, y)))
+      queue.add(Point<int>(x, y));
+    return queue;
   }
 }

@@ -1,3 +1,5 @@
+// source: https://github.com/MatthewMooreZA/PietSharp
+
 part of 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/piet/logic/piet_language.dart';
 
 class PietResult {
@@ -67,8 +69,8 @@ class _PietSession {
   String input;
   var _output = '';
 
-  var _timeOut = 15000;
-  var _multipleInputs = false;
+  var _timeOut;
+  var _multipleInputs;
 
   _PietSession(List<List<int>> image, {int timeOut = 15000, bool multipleInputs = false}) {
     data = image;
@@ -80,7 +82,7 @@ class _PietSession {
     _timeOut = max(timeOut, 100);
     _multipleInputs = multipleInputs;
 
-    _currentBlock = _builder.getBlockAt(0, 0);
+    _currentBlock = _builder._getBlockAt(0, 0);
 
     var ops = _BaseOperations(_stack, this, () => _currentBlock, (i) => _navigator.rotateDirectionPointer(i),
         (i) => _navigator.toggleCodelChooser(i));
@@ -96,7 +98,7 @@ class _PietSession {
     if (!ret.item1) _running = false;
     result = ret.item2;
 
-    var newBlock = _builder.getBlockAt(result.x, result.y);
+    var newBlock = _builder._getBlockAt(result.x, result.y);
     var opCode = _opsResolver.resolve(_currentBlock, newBlock);
 
     if (_actionMap.containsKey(opCode)) _actionMap[opCode]();
