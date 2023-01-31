@@ -1,14 +1,15 @@
 import 'dart:convert';
 import 'dart:ui';
 
+import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/favorites.dart';
-import 'package:gc_wizard/application/selector_lists/gcw_selection.dart';
+import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/supported_locales.dart';
+import 'package:gc_wizard/application/settings/logic/preferences.dart';
+import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
-import 'package:gc_wizard/configuration/settings/preferences.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/i18n/supported_locales.dart';
-import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/common_widgets/gcw_selection.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
 import 'package:gc_wizard/tools/symbol_tables/widget/gcw_symbol_container.dart';
 import 'package:gc_wizard/utils/common_widget_utils.dart';
@@ -309,4 +310,41 @@ _setToolCount(String i18nPrefix) {
   toolCounts[i18nPrefix] = currentToolCount;
 
   Prefs.setString(PREFERENCE_TOOL_COUNT, jsonEncode(toolCounts));
+}
+
+int _sortToolListAlphabetically(GCWTool a, GCWTool b) {
+  return removeDiacritics(a.toolName).toLowerCase().compareTo(removeDiacritics(b.toolName).toLowerCase());
+}
+
+int sortToolList(GCWTool a, GCWTool b) {
+  if (Prefs.getBool(PREFERENCE_TOOL_COUNT_SORT) != null && !Prefs.getBool(PREFERENCE_TOOL_COUNT_SORT)) {
+    return _sortToolListAlphabetically(a, b);
+  }
+
+  Map<String, int> toolCounts = Map<String, int>.from(jsonDecode(Prefs.get(PREFERENCE_TOOL_COUNT)));
+
+  var toolCountA = toolCounts[a.id];
+  var toolCountB = toolCounts[b.id];
+
+  if (toolCountA == null && toolCountB == null) {
+    return _sortToolListAlphabetically(a, b);
+  }
+
+  if (toolCountA == null && toolCountB != null) {
+    return 1;
+  }
+
+  if (toolCountA != null && toolCountB == null) {
+    return -1;
+  }
+
+  if (toolCountA != null && toolCountB != null) {
+    if (toolCountA == toolCountB) {
+      return _sortToolListAlphabetically(a, b);
+    } else {
+      return toolCountB.compareTo(toolCountA);
+    }
+  }
+
+  return null;
 }

@@ -1,5 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/utils/logic_utils/variable_string_expander.dart';
+import 'package:gc_wizard/common/variable_string_expander/logic/variable_string_expander.dart';
 
 void main() {
 

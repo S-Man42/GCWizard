@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
 
 class CrosstotalSwitch extends StatefulWidget {
   final Function onChanged;

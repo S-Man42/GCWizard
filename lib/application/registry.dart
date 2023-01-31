@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/main_menu/about.dart';
 import 'package:gc_wizard/application/main_menu/call_for_contribution.dart';
 import 'package:gc_wizard/application/main_menu/changelog.dart';
 import 'package:gc_wizard/application/main_menu/licenses.dart';
-import 'package:gc_wizard/application/main_menu/settings/settings_coordinates.dart';
-import 'package:gc_wizard/application/main_menu/settings/settings_general.dart';
-import 'package:gc_wizard/application/main_menu/settings/settings_saverestore.dart';
-import 'package:gc_wizard/application/main_menu/settings/settings_tools.dart';
+import 'package:gc_wizard/application/search_strings.dart';
 import 'package:gc_wizard/application/selector_lists/apparent_temperature_selection.dart';
 import 'package:gc_wizard/application/selector_lists/astronomy_selection.dart';
 import 'package:gc_wizard/application/selector_lists/babylon_numbers_selection.dart';
@@ -89,8 +87,11 @@ import 'package:gc_wizard/application/selector_lists/tomtom_selection.dart';
 import 'package:gc_wizard/application/selector_lists/vanity_selection.dart';
 import 'package:gc_wizard/application/selector_lists/vigenere_selection.dart';
 import 'package:gc_wizard/application/selector_lists/wherigo_urwigo_selection.dart';
+import 'package:gc_wizard/application/settings/widget/settings_coordinates.dart';
+import 'package:gc_wizard/application/settings/widget/settings_general.dart';
+import 'package:gc_wizard/application/settings/widget/settings_saverestore.dart';
+import 'package:gc_wizard/application/settings/widget/settings_tools.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/coords/antipodes/widget/antipodes.dart';
 import 'package:gc_wizard/tools/coords/centerpoint/center_three_points/widget/center_three_points.dart';
 import 'package:gc_wizard/tools/coords/centerpoint/center_two_points/widget/center_two_points.dart';
@@ -411,7 +412,6 @@ import 'package:gc_wizard/tools/wherigo/earwigo_text_deobfuscation/widget/earwig
 import 'package:gc_wizard/tools/wherigo/urwigo_hashbreaker/widget/urwigo_hashbreaker.dart';
 import 'package:gc_wizard/tools/wherigo/urwigo_text_deobfuscation/widget/urwigo_text_deobfuscation.dart';
 import 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_analyze.dart';
-import 'package:gc_wizard/utils/search_strings.dart';
 
 List<GCWTool> registeredTools;
 

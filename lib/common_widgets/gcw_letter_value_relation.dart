@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_abc_spinner.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
-import 'package:gc_wizard/theme/theme.dart';
 
 class GCWLetterValueRelation extends StatefulWidget {
   final Function onChanged;

@@ -1,29 +1,27 @@
-import 'package:flutter/material.dart';
-import 'package:gc_wizard/theme/theme_colors.dart';
+part of 'package:gc_wizard/application/theme/theme_colors.dart';
 
-class ThemeColorsLight extends ThemeColors {
+class _ThemeColorsDark extends ThemeColors {
+  static const _lightGray = Color(0xFFD8D8D8);
+  static const _gray = Color(0x40D8D8D8);
+  static const _darkGray = Color(0xFF26282F);
+
   ThemeData _base;
-
-  static const _creme = Color(0xFFF5F3ED);
-  static const _darkGray = Color(0xFF404040);
-  static const _gray = Color(0xFF919191);
-  static const _lightGray = Color(0xFFD1D1D1);
 
   @override
   ThemeData base() {
-    if (_base == null) _base = ThemeData.light();
+    if (_base == null) _base = ThemeData.dark();
 
     return _base;
   }
 
   @override
   Color accent() {
-    return Colors.orange;
+    return Colors.orangeAccent;
   }
 
   @override
   Color focused() {
-    return Colors.cyan;
+    return Colors.greenAccent;
   }
 
   @override
@@ -33,17 +31,17 @@ class ThemeColorsLight extends ThemeColors {
 
   @override
   Color inputBackground() {
-    return Colors.white;
+    return _darkGray;
   }
 
   @override
   Color mainFont() {
-    return Colors.black;
+    return Colors.white;
   }
 
   @override
   Color outputListOddRows() {
-    return _lightGray;
+    return _gray;
   }
 
   @override
@@ -58,7 +56,7 @@ class ThemeColorsLight extends ThemeColors {
 
   @override
   Color primaryBackground() {
-    return _creme;
+    return Color(0xFF33333D);
   }
 
   @override
@@ -68,22 +66,22 @@ class ThemeColorsLight extends ThemeColors {
 
   @override
   Color textFieldHintText() {
-    return _gray;
+    return Color.fromRGBO(150, 150, 150, 1.0);
   }
 
   @override
   Color messageBackground() {
-    return Colors.white;
+    return _darkGray;
   }
 
   @override
   Color switchThumb1() {
-    return _gray;
+    return _lightGray;
   }
 
   @override
   Color switchTrack1() {
-    return _lightGray.withOpacity(0.5);
+    return _darkGray;
   }
 
   @override
@@ -98,15 +96,15 @@ class ThemeColorsLight extends ThemeColors {
 
   @override
   Color checkBoxActiveColor() {
-    return _gray;
+    return _lightGray;
   }
 
   @override
   Color checkBoxFillColor(Set<MaterialState> states) {
     if (states.contains(MaterialState.disabled)) {
-      return _lightGray.withOpacity(0.5);
+      return _darkGray;
     }
-    return _lightGray.withOpacity(0.5);
+    return _darkGray;
   }
 
   @override
@@ -134,17 +132,17 @@ class ThemeColorsLight extends ThemeColors {
 
   @override
   Color listSubtitle() {
-    return _darkGray;
+    return _lightGray;
   }
 
   @override
   Color gridBackground() {
-    return Colors.white;
+    return Color.fromARGB(255, 85, 85, 85);
   }
 
   @override
   Color hyperLinkText() {
-    return Colors.deepOrange;
+    return accent();
   }
 
   @override
@@ -159,21 +157,21 @@ class ThemeColorsLight extends ThemeColors {
 
   @override
   Color formulaNumber() {
-    return Color.fromRGBO(48, 145, 0, 1);
+    return Colors.lightGreen;
   }
 
   @override
   Color formulaVariable() {
-    return Color.fromRGBO(255, 135, 0, 1);
+    return Colors.orange;
   }
 
   @override
   Color formulaMath() {
-    return Colors.indigoAccent;
+    return Colors.lightBlue;
   }
 
   @override
   Color formulaError() {
-    return Colors.red;
+    return Colors.redAccent;
   }
 }

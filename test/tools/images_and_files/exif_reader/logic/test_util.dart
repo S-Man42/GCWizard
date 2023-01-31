@@ -3,7 +3,7 @@ import 'dart:io' as io;
 import 'package:gc_wizard/common/file_utils.dart';
 import 'package:path/path.dart' as path;
 
-var testDirPath = 'test/resources/exif/';
+var testDirPath = 'test/images_and_files/exif_reader/resources/';
 
 List<io.FileSystemEntity> readSamples() {
   io.Directory dir = new io.Directory(testDirPath);

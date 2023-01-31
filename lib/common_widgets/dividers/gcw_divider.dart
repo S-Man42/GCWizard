@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/application/theme/theme_colors.dart';
 
 class GCWDivider extends StatelessWidget {
   final Color color;

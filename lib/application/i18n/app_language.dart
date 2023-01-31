@@ -1,8 +1,8 @@
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/configuration/settings/preferences.dart';
-import 'package:gc_wizard/i18n/supported_locales.dart';
+import 'package:gc_wizard/application/i18n/supported_locales.dart';
+import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AppLanguage extends ChangeNotifier {

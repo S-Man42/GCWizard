@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/configuration/settings/preferences.dart';
-import 'package:gc_wizard/theme/theme_colors_dark.dart';
-import 'package:gc_wizard/theme/theme_colors_light.dart';
+import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:prefs/prefs.dart';
+
+part 'package:gc_wizard/application/theme/themes/theme_colors_dark.dart';
+part 'package:gc_wizard/application/theme/themes/theme_colors_light.dart';
 
 enum ThemeType { DARK, LIGHT }
 
@@ -67,10 +68,10 @@ setThemeColorsByName(String themeColor) {
 setThemeColors(ThemeType type) {
   switch (type) {
     case ThemeType.DARK:
-      _themeColors = ThemeColorsDark();
+      _themeColors = _ThemeColorsDark();
       break;
     case ThemeType.LIGHT:
-      _themeColors = ThemeColorsLight();
+      _themeColors = _ThemeColorsLight();
       break;
     default:
       return null;

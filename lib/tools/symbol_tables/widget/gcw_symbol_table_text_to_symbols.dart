@@ -4,11 +4,11 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common/file_utils.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_exported_file_dialog.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/tools/symbol_tables/logic/symbol_table_data.dart';
 import 'package:gc_wizard/tools/symbol_tables/special_encryption_painters/symbol_table_encryption_colorhoney/widget/symbol_table_encryption_colorhoney.dart';
 import 'package:gc_wizard/tools/symbol_tables/special_encryption_painters/symbol_table_encryption_colortokki/widget/symbol_table_encryption_colortokki.dart';

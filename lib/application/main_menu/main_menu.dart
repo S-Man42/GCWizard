@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/main_menu/about.dart';
 import 'package:gc_wizard/application/main_menu/call_for_contribution.dart';
 import 'package:gc_wizard/application/main_menu/changelog.dart';
+import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/registry.dart';
-import 'package:gc_wizard/common/no_animation_material_page_route.dart';
+import 'package:gc_wizard/application/settings/widget/settings_coordinates.dart';
+import 'package:gc_wizard/application/settings/widget/settings_general.dart';
+import 'package:gc_wizard/application/settings/widget/settings_tools.dart';
+import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/utils/common_widget_utils.dart';
-
-import 'main_menu/settings/settings_coordinates.dart';
-import 'main_menu/settings/settings_general.dart';
-import 'main_menu/settings/settings_tools.dart';
 
 buildMainMenu(BuildContext context) {
   var header = SizedBox(

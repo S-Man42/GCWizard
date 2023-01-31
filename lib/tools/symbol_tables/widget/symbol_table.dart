@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/configuration/settings/preferences.dart';
 import 'package:gc_wizard/tools/symbol_tables/logic/symbol_table_data.dart';
 import 'package:gc_wizard/tools/symbol_tables/widget/gcw_symbol_table_decryption.dart';
 import 'package:gc_wizard/tools/symbol_tables/widget/gcw_symbol_table_encryption.dart';

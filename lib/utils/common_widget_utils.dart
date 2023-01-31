@@ -1,25 +1,19 @@
-import 'dart:convert';
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
-import 'package:gc_wizard/common_widgets/gcw_tool.dart';
-import 'package:gc_wizard/configuration/settings/preferences.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
+import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/settings/logic/preferences.dart';
+import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/tools/images_and_files/binary2image/logic/binary2image.dart';
+import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
 import 'package:prefs/prefs.dart';
 import 'package:url_launcher/url_launcher.dart' as urlLauncher;
 
 String className(Widget widget) {
   return widget.runtimeType.toString();
 }
-
-enum SpinnerLayout { HORIZONTAL, VERTICAL }
 
 String printErrorMessage(BuildContext context, String message) {
   return i18n(context, 'common_error') + ': ' + i18n(context, message);
@@ -94,29 +88,6 @@ buildSubOrSuperscriptedRichTextIfNecessary(String input) {
   }
 }
 
-insertIntoGCWClipboard(BuildContext context, String text, {useGlobalClipboard: true}) {
-  if (useGlobalClipboard) Clipboard.setData(ClipboardData(text: text));
-
-  var gcwClipboard = Prefs.getStringList(PREFERENCE_CLIPBOARD_ITEMS);
-
-  var existingText = gcwClipboard.firstWhere((item) => jsonDecode(item)['text'] == text, orElse: () => null);
-
-  if (existingText != null) {
-    gcwClipboard.remove(existingText);
-    gcwClipboard.insert(
-        0,
-        jsonEncode(
-            {'text': jsonDecode(existingText)['text'], 'created': DateTime.now().millisecondsSinceEpoch.toString()}));
-  } else {
-    gcwClipboard.insert(0, jsonEncode({'text': text, 'created': DateTime.now().millisecondsSinceEpoch.toString()}));
-    while (gcwClipboard.length > Prefs.get(PREFERENCE_CLIPBOARD_MAX_ITEMS)) gcwClipboard.removeLast();
-  }
-
-  Prefs.setStringList(PREFERENCE_CLIPBOARD_ITEMS, gcwClipboard);
-
-  if (useGlobalClipboard) showToast(i18n(context, 'common_clipboard_copied') + ':\n' + text);
-}
-
 String textControllerInsertText(String input, String currentText, TextEditingController textController) {
   var cursorPosition = max(textController.selection.end, 0);
 
@@ -140,43 +111,6 @@ String textControllerDoBackSpace(String currentText, TextEditingController textC
 
 double maxScreenHeight(BuildContext context) {
   return MediaQuery.of(context).size.height - 100;
-}
-
-int _sortToolListAlphabetically(GCWTool a, GCWTool b) {
-  return removeDiacritics(a.toolName).toLowerCase().compareTo(removeDiacritics(b.toolName).toLowerCase());
-}
-
-int sortToolList(GCWTool a, GCWTool b) {
-  if (Prefs.getBool(PREFERENCE_TOOL_COUNT_SORT) != null && !Prefs.getBool(PREFERENCE_TOOL_COUNT_SORT)) {
-    return _sortToolListAlphabetically(a, b);
-  }
-
-  Map<String, int> toolCounts = Map<String, int>.from(jsonDecode(Prefs.get(PREFERENCE_TOOL_COUNT)));
-
-  var toolCountA = toolCounts[a.id];
-  var toolCountB = toolCounts[b.id];
-
-  if (toolCountA == null && toolCountB == null) {
-    return _sortToolListAlphabetically(a, b);
-  }
-
-  if (toolCountA == null && toolCountB != null) {
-    return 1;
-  }
-
-  if (toolCountA != null && toolCountB == null) {
-    return -1;
-  }
-
-  if (toolCountA != null && toolCountB != null) {
-    if (toolCountA == toolCountB) {
-      return _sortToolListAlphabetically(a, b);
-    } else {
-      return toolCountB.compareTo(toolCountA);
-    }
-  }
-
-  return null;
 }
 
 Future<bool> launchUrl(Uri url) async {

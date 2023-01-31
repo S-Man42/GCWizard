@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:gc_wizard/theme/fixed_colors.dart';
+import 'package:gc_wizard/application/theme/fixed_colors.dart';
 import 'package:gc_wizard/tools/images_and_files/binary2image/logic/binary2image.dart';
 import 'package:qr/qr.dart' as qr;
 import 'package:r_scan/r_scan.dart' as scan;

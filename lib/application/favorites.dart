@@ -1,7 +1,6 @@
 import 'package:gc_wizard/application/registry.dart';
+import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
-import 'package:gc_wizard/configuration/settings/preferences.dart';
-import 'package:gc_wizard/utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 
 enum FavoriteChangeStatus { ADD, REMOVE }

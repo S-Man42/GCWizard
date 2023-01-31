@@ -6,7 +6,7 @@ import 'package:gc_wizard/tools/images_and_files/animated_image_morse_code/logic
 import 'package:tuple/tuple.dart';
 import 'package:path/path.dart' as path;
 
-var testDirPath = 'test/resources/animated_image_morse_code/';
+var testDirPath = 'test/images_and_files/animated_image_morse_code/resources/';
 
 Uint8List _getFileData(String name) {
   io.File file = io.File(path.join(testDirPath, name));

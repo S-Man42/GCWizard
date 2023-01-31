@@ -1,4 +1,4 @@
-part of 'package:gc_wizard/application/main_menu/settings/settings_coordinates.dart';
+part of 'package:gc_wizard/application/settings/widget/settings_coordinates.dart';
 
 class _EllipsoidPicker extends StatefulWidget {
   final Function onChanged;

@@ -6,7 +6,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_langua
 import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/piet/logic/piet_language.dart';
 import 'package:path/path.dart' as path;
 
-var testDirPath = 'test/resources/piet/';
+var testDirPath = 'test/tools/crypto_and_encodings/esoteric_programming_languages/piet/resources/';
 
 Uint8List _getFileData(String name) {
   io.File file = io.File(path.join(testDirPath, name));

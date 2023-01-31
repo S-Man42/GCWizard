@@ -1,12 +1,12 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/main_menu/about.dart';
-import 'package:gc_wizard/application/main_menu/gcw_mainmenuentry_stub.dart';
+import 'package:gc_wizard/application/main_menu/mainmenuentry_stub.dart';
+import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/registry.dart';
-import 'package:gc_wizard/common/no_animation_material_page_route.dart';
+import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_divider.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/utils/common_widget_utils.dart';
 
 class CallForContribution extends StatefulWidget {
@@ -83,7 +83,7 @@ class CallForContributionState extends State<CallForContribution> {
       ], style: gcwTextStyle()),
     );
 
-    return GCWMainMenuEntryStub(
+    return MainMenuEntryStub(
         content: Column(
       children: [
         InkWell(

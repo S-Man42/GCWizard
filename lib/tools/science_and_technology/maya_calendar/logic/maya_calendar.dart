@@ -7,7 +7,7 @@
 // Javascript sources Public Domain
 // https://www.fourmilab.ch/documents/calendar/
 
-import 'package:gc_wizard/configuration/settings/preferences.dart';
+import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
 import 'package:gc_wizard/utils/logic_utils/date_utils.dart';
 import 'package:prefs/prefs.dart';

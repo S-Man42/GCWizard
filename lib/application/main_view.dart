@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/favorites.dart';
-import 'package:gc_wizard/application/main_menu.dart';
+import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/main_menu/changelog.dart';
+import 'package:gc_wizard/application/main_menu/main_menu.dart';
+import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/registry.dart';
+import 'package:gc_wizard/application/search_strings.dart';
 import 'package:gc_wizard/application/selector_lists/babylon_numbers_selection.dart';
 import 'package:gc_wizard/application/selector_lists/base_selection.dart';
 import 'package:gc_wizard/application/selector_lists/bcd_selection.dart';
@@ -42,14 +45,12 @@ import 'package:gc_wizard/application/selector_lists/teletypewriter_selection.da
 import 'package:gc_wizard/application/selector_lists/tomtom_selection.dart';
 import 'package:gc_wizard/application/selector_lists/vanity_selection.dart';
 import 'package:gc_wizard/application/selector_lists/wherigo_urwigo_selection.dart';
-import 'package:gc_wizard/common/no_animation_material_page_route.dart';
+import 'package:gc_wizard/application/settings/logic/preferences.dart';
+import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/gcw_toollist.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
-import 'package:gc_wizard/configuration/settings/preferences.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/tools/coords/antipodes/widget/antipodes.dart';
 import 'package:gc_wizard/tools/coords/centerpoint/center_three_points/widget/center_three_points.dart';
 import 'package:gc_wizard/tools/coords/centerpoint/center_two_points/widget/center_two_points.dart';
@@ -256,7 +257,6 @@ import 'package:gc_wizard/tools/wherigo/urwigo_text_deobfuscation/widget/urwigo_
 import 'package:gc_wizard/utils/common_widget_utils.dart';
 import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
 import 'package:gc_wizard/utils/logic_utils/constants.dart';
-import 'package:gc_wizard/utils/search_strings.dart';
 import 'package:prefs/prefs.dart';
 
 class MainView extends StatefulWidget {

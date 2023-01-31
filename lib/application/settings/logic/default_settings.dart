@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:gc_wizard/configuration/settings/preferences.dart';
-import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/application/settings/logic/preferences.dart';
+import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/persistence/json_provider.dart';

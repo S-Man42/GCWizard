@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/image_viewers/gcw_imageview.dart';
-import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 

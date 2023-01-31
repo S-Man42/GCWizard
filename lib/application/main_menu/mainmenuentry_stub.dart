@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/application/theme/theme.dart';
+import 'package:gc_wizard/application/theme/theme_colors.dart';
 
-class GCWMainMenuEntryStub extends StatefulWidget {
+class MainMenuEntryStub extends StatefulWidget {
   final Widget content;
 
-  const GCWMainMenuEntryStub({Key key, this.content}) : super(key: key);
+  const MainMenuEntryStub({Key key, this.content}) : super(key: key);
 
   @override
-  GCWMainMenuEntryStubState createState() => GCWMainMenuEntryStubState();
+  MainMenuEntryStubState createState() => MainMenuEntryStubState();
 }
 
-class GCWMainMenuEntryStubState extends State<GCWMainMenuEntryStub> {
+class MainMenuEntryStubState extends State<MainMenuEntryStub> {
   @override
   Widget build(BuildContext context) {
     return Container(
