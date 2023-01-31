@@ -104,6 +104,7 @@ class SymbolReplacerImage {
   int _blackLevel;
   double _similarityLevel;
   int _gap;
+  double symbolScale = 1.0;
 
   SymbolReplacerImage(Uint8List image) {
     _image = image;
@@ -233,6 +234,8 @@ class SymbolReplacerImage {
 
     // rebuild image
     _outputImageBytes = null;
+
+    symbolScale = calcSymbolScale();
   }
 
   /// <summary>
@@ -254,8 +257,11 @@ class SymbolReplacerImage {
   /// </summary>
   removeFromGroup(Symbol symbol) {
     if (symbol == null) return;
-    if (symbol.symbolGroup != null) symbol.symbolGroup?.symbols?.remove(symbol);
     var symbolGroup = SymbolGroup();
+    if (symbol.symbolGroup != null) {
+      symbol.symbolGroup?.symbols?.remove(symbol);
+      symbolGroup.manualText = symbol.symbolGroup.manualText;
+    }
     symbolGroups.add(symbolGroup);
 
     _addSymbolToGroup(symbol, symbolGroup);
@@ -306,6 +312,7 @@ class SymbolReplacerImage {
     symbolGroups.forEach((group) {
       group.text = null;
       group.compareSymbol = null;
+      group.manualText = false;
     });
   }
 
@@ -685,6 +692,17 @@ class SymbolReplacerImage {
       symbols.addAll(lineClone.symbols);
     });
   }
+
+  double calcSymbolScale() {
+    if (symbols == null) return 1.0;
+    var maxSize = 0;
+
+    symbols.forEach((symbol) {
+      maxSize = max(maxSize, symbol.bmp.width);
+      maxSize = max(maxSize, symbol.bmp.height);
+    });
+    return (maxSize > 0) ? max(maxSize/ 150, 0.05) : 1.0;
+  }
 }
 
 class _SymbolRow {
@@ -877,6 +895,7 @@ class SymbolGroup {
   bool viewGroupImage = false;
   var symbols = <Symbol>[];
   SymbolReplacerSymbolData compareSymbol;
+  bool manualText = false;
 
   Uint8List getImage() {
     if (symbols.isNotEmpty) return symbols.first.getImage();

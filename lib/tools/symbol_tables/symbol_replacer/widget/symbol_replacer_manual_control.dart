@@ -68,12 +68,14 @@ class SymbolReplacerManualControlState extends State<SymbolReplacerManualControl
         var _symbolData = _symbolMap[symbol];
         var _displayText = symbol?.symbolGroup?.text ?? '';
         if (_symbolData?.values?.first?.displayName != _displayText) {
-          _symbolMap[symbol] = _cloneSymbolData(_symbolData, _displayText);
+          _symbolMap[symbol] = cloneSymbolData(_symbolData, _displayText, symbol?.symbolGroup?.manualText);
           if (_selectedSymbolData == _symbolData) _selectedSymbolData = _symbolMap[symbol]?.values?.first;
         }
       } else
         _symbolMap.addAll({
-          symbol: {null: SymbolData(bytes: symbol.getImage(), displayName: symbol?.symbolGroup?.text ?? '')}
+          symbol: {null: SymbolData(bytes: symbol.getImage(),
+              displayName: symbol?.symbolGroup?.text ?? '',
+              markedOverlay: symbol?.symbolGroup?.manualText)}
         });
     });
 
@@ -86,6 +88,7 @@ class SymbolReplacerManualControlState extends State<SymbolReplacerManualControl
       onChanged: () => setState(() {}),
       selectable: true,
       overlayOn: true,
+      scale: widget?.symbolImage.symbolScale,
       onSymbolTapped: (String tappedText, SymbolData imageData) {
         setState(() {
           _selectGroupSymbols(imageData, (imageData.primarySelected || imageData.secondarySelected));
@@ -94,40 +97,30 @@ class SymbolReplacerManualControlState extends State<SymbolReplacerManualControl
     ));
   }
 
-  Map<String, SymbolData> _cloneSymbolData(Map<String, SymbolData> image, String text) {
-    var symbolData = SymbolData(bytes: image.values.first.bytes, displayName: text ?? '');
-    symbolData.primarySelected = image.values.first.primarySelected;
-    symbolData.secondarySelected = image.values.first.secondarySelected;
-    return {null: symbolData};
-  }
-
-  Symbol _getSymbol(SymbolData imageData) {
-    return _symbolMap.entries.firstWhere((entry) => entry.value.values.first == imageData, orElse: () => null)?.key;
-  }
 
   _selectGroupSymbols(SymbolData imageData, bool selected) {
-    Symbol _symbol = _getSymbol(imageData);
+    Symbol _symbol = getSymbol(imageData, _symbolMap);
 
     if (!(_addActiv || _removeActiv))
       _selectedSymbolData = selected ? imageData : null;
     else
-      selected = _symbol?.symbolGroup == _getSymbol(_selectedSymbolData)?.symbolGroup;
+      selected = _symbol?.symbolGroup == getSymbol(_selectedSymbolData, _symbolMap)?.symbolGroup;
 
     if (_addActiv && !selected) {
-      widget.symbolImage.addToGroup(_symbol, _getSymbol(_selectedSymbolData)?.symbolGroup);
+      widget.symbolImage.addToGroup(_symbol, getSymbol(_selectedSymbolData, _symbolMap)?.symbolGroup);
       imageData.primarySelected = true;
-      _symbol = _getSymbol(_selectedSymbolData);
+      _symbol = getSymbol(_selectedSymbolData, _symbolMap);
       selected = true;
     }
 
     if (_removeActiv && selected) {
       if (_selectedSymbolData == imageData) {
-        var symbolGroup = _getSymbol(_selectedSymbolData)?.symbolGroup;
+        var symbolGroup = getSymbol(_selectedSymbolData, _symbolMap)?.symbolGroup;
         widget.symbolImage.removeFromGroup(_symbol);
         _selectedSymbolData = symbolGroup.symbols.isEmpty ? null : _symbolMap[symbolGroup.symbols.first]?.values?.first;
       } else
         widget.symbolImage.removeFromGroup(_symbol);
-      _symbol = _getSymbol(_selectedSymbolData);
+      _symbol = getSymbol(_selectedSymbolData, _symbolMap);
     }
 
     if (selected)
@@ -146,7 +139,7 @@ class SymbolReplacerManualControlState extends State<SymbolReplacerManualControl
   }
 
   _getGroupSymbol(SymbolData imageData) {
-    Symbol _symbol = _getSymbol(imageData);
+    Symbol _symbol = getSymbol(imageData, _symbolMap);
     if (_symbol?.symbolGroup != null) return _symbol.symbolGroup.compareSymbol;
   }
 
