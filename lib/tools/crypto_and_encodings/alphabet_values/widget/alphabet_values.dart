@@ -11,6 +11,7 @@ import 'package:gc_wizard/common_widgets/gcw_key_value_editor.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/common_widgets/text_input_formatters/gcw_onlydigitsandcomma_textinputformatter.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_integer_list_textfield.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/configuration/settings/preferences.dart';
@@ -18,7 +19,6 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/logic/alphabet_values.dart' as logic;
 import 'package:gc_wizard/tools/science_and_technology/cross_sums/widget/crosstotal_output.dart';
-import 'package:gc_wizard/tools/utils/textinputformatter/text_onlydigitsandcomma_textinputformatter/widget/text_onlydigitsandcomma_textinputformatter.dart';
 import 'package:gc_wizard/utils/logic_utils/alphabets.dart';
 import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
 import 'package:gc_wizard/utils/logic_utils/constants.dart';
@@ -383,7 +383,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
         GCWKeyValueEditor(
             keyHintText: i18n(context, 'alphabetvalues_edit_mode_customize_letter'),
             valueHintText: i18n(context, 'alphabetvalues_edit_mode_customize_value'),
-            valueInputFormatters: [TextOnlyDigitsAndCommaInputFormatter()],
+            valueInputFormatters: [GCWOnlyDigitsAndCommaInputFormatter()],
             alphabetInstertButtonLabel: i18n(context, 'alphabetvalues_edit_mode_customize_addletter'),
             alphabetAddAndAdjustLetterButtonLabel:
                 i18n(context, 'alphabetvalues_edit_mode_customize_addandadjustletter'),

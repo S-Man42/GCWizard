@@ -12,6 +12,8 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.d
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/common_widgets/text_input_formatters/gcw_integer_textinputformatter.dart';
+import 'package:gc_wizard/common_widgets/text_input_formatters/gcw_minutesseconds_textinputformatter.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_integer_textfield.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
@@ -19,8 +21,6 @@ import 'package:gc_wizard/tools/coords/format_converter/logic/dmm.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/dms.dart';
 import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/right_ascension_to_degree/logic/right_ascension_to_degree.dart';
-import 'package:gc_wizard/tools/utils/textinputformatter/integer_minutesseconds_textinputformatter/widget/integer_minutesseconds_textinputformatter.dart';
-import 'package:gc_wizard/tools/utils/textinputformatter/integer_textinputformatter/widget/integer_textinputformatter.dart';
 
 
 class RightAscensionToDegree extends StatefulWidget {
@@ -279,7 +279,7 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
               child: Container(
                 child: GCWIntegerTextField(
                     hintText: 'DD',
-                    textInputFormatter: IntegerTextInputFormatter(min: 0),
+                    textInputFormatter: GCWIntegerTextInputFormatter(min: 0),
                     controller: _DmmDegreesController,
                     onChanged: (ret) {
                       setState(() {
@@ -297,7 +297,7 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
             flex: 6,
             child: GCWIntegerTextField(
                 hintText: 'MM',
-                textInputFormatter: IntegerMinutesSecondsTextInputFormatter(),
+                textInputFormatter: GCWMinutesSecondsTextInputFormatter(),
                 controller: _DmmMinutesController,
                 focusNode: _dmmMinutesFocusNode,
                 onChanged: (ret) {
@@ -357,7 +357,7 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
               child: Container(
                 child: GCWIntegerTextField(
                     hintText: 'DD',
-                    textInputFormatter: IntegerTextInputFormatter(min: 0),
+                    textInputFormatter: GCWIntegerTextInputFormatter(min: 0),
                     controller: _DmsDegreesController,
                     onChanged: (ret) {
                       setState(() {
@@ -375,7 +375,7 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
             flex: 6,
             child: GCWIntegerTextField(
                 hintText: 'MM',
-                textInputFormatter: IntegerMinutesSecondsTextInputFormatter(),
+                textInputFormatter: GCWMinutesSecondsTextInputFormatter(),
                 controller: _DmsMinutesController,
                 focusNode: _dmsMinutesFocusNode,
                 onChanged: (ret) {
@@ -395,7 +395,7 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
             flex: 6,
             child: GCWIntegerTextField(
                 hintText: 'SS',
-                textInputFormatter: IntegerMinutesSecondsTextInputFormatter(),
+                textInputFormatter: GCWMinutesSecondsTextInputFormatter(),
                 controller: _DmsSecondsController,
                 focusNode: _dmsSecondsFocusNode,
                 onChanged: (ret) {
@@ -479,7 +479,7 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
               child: Container(
                 child: GCWIntegerTextField(
                     hintText: 'DD',
-                    textInputFormatter: IntegerTextInputFormatter(min: 0),
+                    textInputFormatter: GCWIntegerTextInputFormatter(min: 0),
                     controller: _decDegreesController,
                     onChanged: (ret) {
                       setState(() {

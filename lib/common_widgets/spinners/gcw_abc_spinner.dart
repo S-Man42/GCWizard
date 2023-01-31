@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_dropdown_spinner.dart';
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/tools/utils/common_widget_utils/widget/common_widget_utils.dart';
+import 'package:gc_wizard/utils/common_widget_utils.dart';
 import 'package:gc_wizard/utils/logic_utils/alphabets.dart';
 
 class GCWABCSpinner extends StatefulWidget {

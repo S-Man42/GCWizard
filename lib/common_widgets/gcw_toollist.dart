@@ -1,16 +1,16 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/application/favorites.dart';
+import 'package:gc_wizard/application/main_view.dart';
+import 'package:gc_wizard/common/app_builder.dart';
+import 'package:gc_wizard/common/no_animation_material_page_route.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_delete_alertdialog.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/configuration/settings/preferences.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
-import 'package:gc_wizard/tools/utils/app_builder/widget/app_builder.dart';
-import 'package:gc_wizard/tools/utils/no_animation_material_page_route/widget/no_animation_material_page_route.dart';
-import 'package:gc_wizard/widgets/favorites.dart';
-import 'package:gc_wizard/widgets/main_view.dart';
 import 'package:prefs/prefs.dart';
 
 class GCWToolList extends StatefulWidget {

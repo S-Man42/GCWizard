@@ -11,7 +11,7 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/tools/science_and_technology/guitar_strings/logic/guitar_strings.dart';
-import 'package:gc_wizard/tools/utils/common_widget_utils/widget/common_widget_utils.dart';
+import 'package:gc_wizard/utils/common_widget_utils.dart';
 import 'package:tuple/tuple.dart';
 
 class GuitarStrings extends StatefulWidget {

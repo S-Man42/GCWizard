@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/text_input_formatters/gcw_double_textinputformatter.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
-import 'package:gc_wizard/tools/utils/textinputformatter/double_textinputformatter/widget/double_textinputformatter.dart';
 
 class GCWDoubleTextField extends StatefulWidget {
   final TextEditingController controller;
@@ -36,7 +36,7 @@ class _GCWDoubleTextFieldState extends State<GCWDoubleTextField> {
     super.initState();
 
     _doubleInputFormatter =
-        DoubleTextInputFormatter(min: widget.min, max: widget.max, numberDecimalDigits: widget.numberDecimalDigits);
+        GCWDoubleTextInputFormatter(min: widget.min, max: widget.max, numberDecimalDigits: widget.numberDecimalDigits);
   }
 
   @override

@@ -10,7 +10,7 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/hashes/hash_breaker/logic/hash_breaker.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/hashes/logic/hashes.dart';
-import 'package:gc_wizard/tools/utils/textinputformatter/variablestring_textinputformatter/widget/variablestring_textinputformatter.dart';
+import 'package:gc_wizard/common_widgets/text_input_formatters/variablestring_textinputformatter.dart';
 import 'package:gc_wizard/utils/logic_utils/variable_string_expander.dart';
 
 final _ALERT_COMBINATIONS = 100000;

@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/common_widgets/text_input_formatters/gcw_double_textinputformatter.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/tools/science_and_technology/complex_numbers/logic/complex_numbers.dart';
-import 'package:gc_wizard/tools/utils/textinputformatter/double_textinputformatter/widget/double_textinputformatter.dart';
 
 class ComplexNumbers extends StatefulWidget {
   @override
@@ -55,7 +55,7 @@ class ComplexNumbersState extends State<ComplexNumbers> {
                   Expanded(
                       child: GCWTextField(
                     controller: _aController,
-                    inputFormatters: [DoubleTextInputFormatter(min: -1.0 * pow(2, 63), max: 1.0 * pow(2, 63))],
+                    inputFormatters: [GCWDoubleTextInputFormatter(min: -1.0 * pow(2, 63), max: 1.0 * pow(2, 63))],
                     hintText: i18n(context, 'complex_numbers_hint_a'),
                     onChanged: (value) {
                       setState(() {
@@ -67,7 +67,7 @@ class ComplexNumbersState extends State<ComplexNumbers> {
                   Expanded(
                       child: GCWTextField(
                     controller: _bController,
-                    inputFormatters: [DoubleTextInputFormatter(min: -1.0 * pow(2, 63), max: 1.0 * pow(2, 63))],
+                    inputFormatters: [GCWDoubleTextInputFormatter(min: -1.0 * pow(2, 63), max: 1.0 * pow(2, 63))],
                     hintText: i18n(context, 'complex_numbers_hint_b'),
                     onChanged: (value) {
                       setState(() {
@@ -82,7 +82,7 @@ class ComplexNumbersState extends State<ComplexNumbers> {
                   Expanded(
                       child: GCWTextField(
                     controller: _radiusController,
-                    inputFormatters: [DoubleTextInputFormatter(min: -1.0 * pow(2, 63), max: 1.0 * pow(2, 63))],
+                    inputFormatters: [GCWDoubleTextInputFormatter(min: -1.0 * pow(2, 63), max: 1.0 * pow(2, 63))],
                     hintText: i18n(context, 'complex_numbers_hint_radius'),
                     onChanged: (value) {
                       setState(() {
@@ -94,7 +94,7 @@ class ComplexNumbersState extends State<ComplexNumbers> {
                   Expanded(
                       child: GCWTextField(
                     controller: _angleController,
-                    inputFormatters: [DoubleTextInputFormatter(min: -1.0 * pow(2, 63), max: 1.0 * pow(2, 63))],
+                    inputFormatters: [GCWDoubleTextInputFormatter(min: -1.0 * pow(2, 63), max: 1.0 * pow(2, 63))],
                     hintText: i18n(context, 'complex_numbers_hint_angle'),
                     onChanged: (value) {
                       setState(() {

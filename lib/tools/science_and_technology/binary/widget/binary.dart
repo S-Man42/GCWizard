@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/common_widgets/text_input_formatters/gcw_only01andspace_textinputformatter.dart';
+import 'package:gc_wizard/common_widgets/text_input_formatters/gcw_onlydigitsandspace_textinputformatter.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
-import 'package:gc_wizard/tools/utils/textinputformatter/text_only01andspace_textinputformatter/widget/text_only01andspace_textinputformatter.dart';
-import 'package:gc_wizard/tools/utils/textinputformatter/text_onlydigitsandspace_textinputformatter/widget/text_onlydigitsandspace_textinputformatter.dart';
 
 class Binary extends StatefulWidget {
   @override
@@ -39,7 +39,7 @@ class BinaryState extends State<Binary> {
       children: <Widget>[
         _currentMode == GCWSwitchPosition.left
             ? GCWTextField(
-                inputFormatters: [TextOnlyDigitsAndSpaceInputFormatter()],
+                inputFormatters: [GCWOnlyDigitsAndSpaceInputFormatter()],
                 controller: _decimalController,
                 onChanged: (value) {
                   setState(() {
@@ -48,7 +48,7 @@ class BinaryState extends State<Binary> {
                 },
               )
             : GCWTextField(
-                inputFormatters: [TextOnly01AndSpaceInputFormatter()],
+                inputFormatters: [GCWOnly01AndSpaceInputFormatter()],
                 controller: _binaryController,
                 onChanged: (value) {
                   setState(() {

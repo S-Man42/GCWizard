@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
+import 'package:gc_wizard/common_widgets/text_input_formatters/gcw_bearing_textinputformatter.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_double_textfield.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/tools/utils/textinputformatter/double_bearing_textinputformatter/widget/double_bearing_textinputformatter.dart';
 
 class GCWAngle extends StatefulWidget {
   final Function onChanged;
@@ -38,7 +38,7 @@ class _GCWAngleState extends State<GCWAngle> {
         child: GCWDoubleTextField(
           hintText: widget.hintText ?? i18n(context, 'common_bearing_hint'),
           controller: _angleController,
-          textInputFormatter: DoubleBearingTextInputFormatter(),
+          textInputFormatter: GCWBearingTextInputFormatter(),
           onChanged: (ret) {
             setState(() {
               _currentAngle['value'] = ret['value'];

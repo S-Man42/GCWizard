@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/text_input_formatters/gcw_integer_textinputformatter.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
-import 'package:gc_wizard/tools/utils/textinputformatter/integer_textinputformatter/widget/integer_textinputformatter.dart';
 
 class GCWIntegerTextField extends StatefulWidget {
   final TextEditingController controller;
@@ -35,7 +35,7 @@ class _GCWIntegerTextFieldState extends State<GCWIntegerTextField> {
   void initState() {
     super.initState();
 
-    _integerInputFormatter = IntegerTextInputFormatter(min: widget.min, max: widget.max);
+    _integerInputFormatter = GCWIntegerTextInputFormatter(min: widget.min, max: widget.max);
   }
 
   @override

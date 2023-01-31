@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:gc_wizard/common/file_utils.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
-import 'package:gc_wizard/tools/utils/file_utils/widget/file_utils.dart';
 import 'package:path/path.dart';
 import 'package:tuple/tuple.dart';
 

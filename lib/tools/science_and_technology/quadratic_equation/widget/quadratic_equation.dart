@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
+import 'package:gc_wizard/common_widgets/text_input_formatters/gcw_double_textinputformatter.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/tools/science_and_technology/quadratic_equation/logic/quadratic_equation.dart';
-import 'package:gc_wizard/tools/utils/textinputformatter/double_textinputformatter/widget/double_textinputformatter.dart';
 
 class QuadraticEquation extends StatefulWidget {
   @override
@@ -52,7 +52,7 @@ class QuadraticEquationState extends State<QuadraticEquation> {
             Expanded(
                 child: GCWTextField(
               controller: _aController,
-              inputFormatters: [DoubleTextInputFormatter(min: -1.0 * pow(2, 63), max: 1.0 * pow(2, 63))],
+              inputFormatters: [GCWDoubleTextInputFormatter(min: -1.0 * pow(2, 63), max: 1.0 * pow(2, 63))],
               hintText: i18n(context, 'quadratic_equation_hint_a'),
               onChanged: (value) {
                 setState(() {
@@ -64,7 +64,7 @@ class QuadraticEquationState extends State<QuadraticEquation> {
             Expanded(
                 child: GCWTextField(
               controller: _bController,
-              inputFormatters: [DoubleTextInputFormatter(min: -1.0 * pow(2, 63), max: 1.0 * pow(2, 63))],
+              inputFormatters: [GCWDoubleTextInputFormatter(min: -1.0 * pow(2, 63), max: 1.0 * pow(2, 63))],
               hintText: i18n(context, 'quadratic_equation_hint_b'),
               onChanged: (value) {
                 setState(() {
@@ -76,7 +76,7 @@ class QuadraticEquationState extends State<QuadraticEquation> {
             Expanded(
                 child: GCWTextField(
               controller: _cController,
-              inputFormatters: [DoubleTextInputFormatter(min: -1.0 * pow(2, 63), max: 1.0 * pow(2, 63))],
+              inputFormatters: [GCWDoubleTextInputFormatter(min: -1.0 * pow(2, 63), max: 1.0 * pow(2, 63))],
               hintText: i18n(context, 'quadratic_equation_hint_c'),
               onChanged: (value) {
                 setState(() {

@@ -2,11 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gc_wizard/application/main_view.dart';
+import 'package:gc_wizard/application/registry.dart';
 import 'package:gc_wizard/i18n/supported_locales.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
-import 'package:gc_wizard/tools/utils/search_strings/widget/search_strings.dart';
-import 'package:gc_wizard/widgets/main_view.dart';
-import 'package:gc_wizard/widgets/registry.dart';
+import 'package:gc_wizard/utils/search_strings.dart';
 
 class AppLocalizations {
   final Locale locale;

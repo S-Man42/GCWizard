@@ -2,7 +2,7 @@ import 'dart:isolate';
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:gc_wizard/tools/utils/file_utils/widget/file_utils.dart';
+import 'package:gc_wizard/common/file_utils.dart';
 import 'package:image/image.dart' as Image;
 
 Future<Map<String, dynamic>> analyseImageAsync(dynamic jobData) async {

@@ -2,8 +2,8 @@ import 'dart:typed_data';
 
 import 'package:encrypt/encrypt.dart' as crypto;
 import 'package:flutter/foundation.dart';
-import 'package:gc_wizard/tools/utils/file_utils/widget/file_utils.dart';
-import 'package:gc_wizard/tools/utils/gcw_file/widget/gcw_file.dart' as local;
+import 'package:gc_wizard/common/file_utils.dart';
+import 'package:gc_wizard/common/gcw_file.dart' as local;
 import 'package:image/image.dart';
 
 part 'package:gc_wizard/tools/images_and_files/stegano/logic/requests/stegano_base_request.dart';

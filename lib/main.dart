@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:gc_wizard/application/main_view.dart';
+import 'package:gc_wizard/application/navigation_service/widget/navigation_service.dart';
+import 'package:gc_wizard/common/app_builder.dart';
 import 'package:gc_wizard/common_widgets/gcw_clipboard_editor.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/configuration/settings/default_settings.dart';
@@ -7,9 +10,6 @@ import 'package:gc_wizard/i18n/app_language.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/i18n/supported_locales.dart';
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/tools/utils/app_builder/widget/app_builder.dart';
-import 'package:gc_wizard/widgets/main_view.dart';
-import 'package:gc_wizard/widgets/navigation_service/widget/navigation_service.dart';
 import 'package:prefs/prefs.dart';
 import 'package:provider/provider.dart';
 

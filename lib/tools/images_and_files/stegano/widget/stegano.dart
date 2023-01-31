@@ -1,6 +1,8 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common/file_utils.dart';
+import 'package:gc_wizard/common/gcw_file.dart' as local;
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
@@ -10,9 +12,6 @@ import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/images_and_files/stegano/logic/stegano.dart';
-import 'package:gc_wizard/tools/utils/file_picker/widget/file_picker.dart';
-import 'package:gc_wizard/tools/utils/file_utils/widget/file_utils.dart';
-import 'package:gc_wizard/tools/utils/gcw_file/widget/gcw_file.dart' as local;
 
 class Stegano extends StatefulWidget {
   final local.GCWFile file;

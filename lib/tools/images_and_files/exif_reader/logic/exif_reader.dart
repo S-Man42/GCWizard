@@ -1,12 +1,12 @@
 import 'dart:typed_data';
 
 import 'package:exif/exif.dart';
+import 'package:gc_wizard/common/gcw_file.dart' as local;
 import 'package:gc_wizard/common_widgets/image_viewers/gcw_imageview.dart';
 import 'package:gc_wizard/tools/coords/coordinate_format_parser/logic/latlon.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/dec.dart';
 import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
 import 'package:gc_wizard/tools/images_and_files/exif_reader/logic/external_libs/justkawal.xmp/xmp.dart';
-import 'package:gc_wizard/tools/utils/gcw_file/widget/gcw_file.dart' as local;
 import 'package:latlong2/latlong.dart';
 
 const String TIFF_THUMBNAIL = 'TIFFThumbnail';

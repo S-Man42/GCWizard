@@ -1,9 +1,9 @@
+import 'package:gc_wizard/tools/science_and_technology/number_sequences/logic/number_sequence.dart';
 import 'package:gc_wizard/tools/science_and_technology/number_sequences/widget/numbersequences_check.dart';
 import 'package:gc_wizard/tools/science_and_technology/number_sequences/widget/numbersequences_containsdigits.dart';
 import 'package:gc_wizard/tools/science_and_technology/number_sequences/widget/numbersequences_digits.dart';
 import 'package:gc_wizard/tools/science_and_technology/number_sequences/widget/numbersequences_nthnumber.dart';
 import 'package:gc_wizard/tools/science_and_technology/number_sequences/widget/numbersequences_range.dart';
-import 'package:gc_wizard/tools/science_and_technology/number_sequences/logic/number_sequence.dart';
 
 class NumberSequenceFibonacciCheckNumber extends NumberSequenceCheckNumber {
   NumberSequenceFibonacciCheckNumber() : super(mode: NumberSequencesMode.FIBONACCI, maxIndex: 111111);

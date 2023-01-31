@@ -3,9 +3,9 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:audioplayers/audioplayers.dart' as Audio;
+import 'package:gc_wizard/common/file_utils.dart';
+import 'package:gc_wizard/common/gcw_file.dart';
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
-import 'package:gc_wizard/tools/utils/file_utils/widget/file_utils.dart';
-import 'package:gc_wizard/tools/utils/gcw_file/widget/gcw_file.dart';
 import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
 import 'package:image/image.dart' as Image;
 import 'package:tuple/tuple.dart';

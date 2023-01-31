@@ -17,7 +17,7 @@ import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/n_
 import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/segmentdisplay_output.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/segmentdisplay_painter.dart';
 import 'package:gc_wizard/utils/logic_utils/constants.dart';
-import 'package:gc_wizard/widgets/registry.dart';
+import 'package:gc_wizard/application/registry.dart';
 
 part 'package:gc_wizard/tools/science_and_technology/music_notes/music_notes/widget/music_notes_segment_display.dart';
 

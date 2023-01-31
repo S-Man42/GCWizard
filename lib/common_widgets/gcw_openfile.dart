@@ -1,9 +1,15 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:isolate';
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:file_picker/file_picker.dart' as filePicker;
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:gc_wizard/common/file_utils.dart';
+import 'package:gc_wizard/common/gcw_file.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/gcw_async_executer.dart';
@@ -15,10 +21,11 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
-import 'package:gc_wizard/tools/utils/file_picker/widget/file_picker.dart';
-import 'package:gc_wizard/tools/utils/file_utils/widget/file_utils.dart';
-import 'package:gc_wizard/tools/utils/gcw_file/widget/gcw_file.dart';
 import 'package:http/http.dart' as http;
+
+// Not supported by file picker plugin
+const _UNSUPPORTED_FILEPICKERPLUGIN_TYPES = [FileType.GPX, FileType.GCW];
+final SUPPORTED_IMAGE_TYPES = fileTypesByFileClass(FileClass.IMAGE);
 
 class GCWOpenFile extends StatefulWidget {
   final Function onLoaded;
@@ -71,7 +78,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
       text: i18n(context, 'common_loadfile_open'),
       onPressed: () {
         _currentExpanded = true;
-        openFileExplorer(allowedFileTypes: widget.supportedFileTypes).then((GCWFile file) {
+        _openFileExplorer(allowedFileTypes: widget.supportedFileTypes).then((GCWFile file) {
           if (file != null && file.bytes != null) {
             setState(() {
               _loadedFile = file;
@@ -340,3 +347,56 @@ Future<dynamic> _downloadFileAsync(dynamic jobData) async {
   await result;
   return result;
 }
+
+/// Open File Picker dialog
+///
+/// Returns null if nothing was selected.
+///
+/// * [allowedFileTypes] specifies a list of file extensions that will be displayed for selection, if empty - files with any extension are displayed. Example: `['jpg', 'jpeg']`
+Future<GCWFile> _openFileExplorer({List<FileType> allowedFileTypes}) async {
+  try {
+    if (_hasUnsupportedTypes(allowedFileTypes)) allowedFileTypes = null;
+
+    var files = (await filePicker.FilePicker.platform.pickFiles(
+        type: allowedFileTypes == null ? filePicker.FileType.any : filePicker.FileType.custom,
+        allowMultiple: false,
+        allowedExtensions:
+        allowedFileTypes == null ? null : allowedFileTypes.map((type) => fileExtension(type)).toList()))
+        ?.files;
+
+    if (allowedFileTypes == null) files = _filterFiles(files, allowedFileTypes);
+
+    if (files == null || files.length == 0) return null;
+
+    var bytes = await _getFileData(files.first);
+    var path = kIsWeb ? null : files.first.path;
+
+    return GCWFile(path: path, name: files.first.name, bytes: bytes);
+  } on PlatformException catch (e) {
+    print("Unsupported operation " + e.toString());
+  }
+  return null;
+}
+
+Future<Uint8List> _getFileData(filePicker.PlatformFile file) async {
+  return kIsWeb ? Future.value(file.bytes) : readByteDataFromFile(file.path);
+}
+
+List<filePicker.PlatformFile> _filterFiles(List<filePicker.PlatformFile> files, List<FileType> allowedFileTypes) {
+  if (files == null || allowedFileTypes == null) return files;
+
+  var allowedExtensions = fileExtensions(allowedFileTypes);
+
+  return files.where((element) => allowedExtensions.contains(element.extension)).toList();
+}
+
+bool _hasUnsupportedTypes(List<FileType> allowedExtensions) {
+  if (allowedExtensions == null) return false;
+  if (kIsWeb) return false;
+
+  for (int i = 0; i < allowedExtensions.length; i++) {
+    if (_UNSUPPORTED_FILEPICKERPLUGIN_TYPES.contains(allowedExtensions[i])) return true;
+  }
+  return false;
+}
+

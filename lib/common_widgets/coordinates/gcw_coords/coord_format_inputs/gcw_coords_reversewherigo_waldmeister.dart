@@ -23,7 +23,7 @@ class _GCWCoordsReverseWherigoWaldmeisterState extends State<_GCWCoordsReverseWh
   var _currentB = 0;
   var _currentC = 0;
 
-  IntegerTextInputFormatter _integerInputFormatter;
+  GCWIntegerTextInputFormatter _integerInputFormatter;
 
   @override
   void initState() {
@@ -32,7 +32,7 @@ class _GCWCoordsReverseWherigoWaldmeisterState extends State<_GCWCoordsReverseWh
     _ControllerB = TextEditingController(text: _currentB.toString());
     _ControllerC = TextEditingController(text: _currentC.toString());
 
-    _integerInputFormatter = IntegerTextInputFormatter(min: 0, max: 999999);
+    _integerInputFormatter = GCWIntegerTextInputFormatter(min: 0, max: 999999);
 
     _FocusNodeA = FocusNode();
     _FocusNodeB = FocusNode();

@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:exif/exif.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gc_wizard/tools/images_and_files/exif_reader/logic/exif_reader.dart';
-import 'package:gc_wizard/tools/utils/gcw_file/widget/gcw_file.dart' as local;
+import 'package:gc_wizard/common/gcw_file.dart' as local;
 import 'package:latlong2/latlong.dart';
 
 runSamplesTest(FileSystemEntity file) async {
