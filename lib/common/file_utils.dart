@@ -21,6 +21,7 @@ import 'package:unrar_file/unrar_file.dart';
 enum FileType {
   GCW, // GCWizard's own suffix. e.g. for settings
   ZIP,
+  _7z,
   RAR,
   TAR,
   SEVEN_ZIP,
@@ -119,6 +120,14 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
       [0x50, 0x4B, 0x03, 0x04]
     ],
     'mime_types': ['application/zip', 'application/octet-stream', 'application/x-zip-compressed'],
+    'file_class': FileClass.ARCHIVE
+  },
+  FileType._7z: {
+    'extensions': ['7z'],
+    'magic_bytes': <List<int>>[
+      [0x37, 0x7A, 0xBC, 0xAF, 0x27, 0x1C]
+    ],
+    'mime_types': ['application/x-7z-compressed'],
     'file_class': FileClass.ARCHIVE
   },
   FileType.TAR: {

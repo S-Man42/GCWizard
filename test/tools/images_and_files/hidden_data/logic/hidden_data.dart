@@ -113,7 +113,7 @@ void main() {
           ''},
       {'input' : 'hidden15.jpg', 'expectedOutput' :
           'hidden15.jpg, JPEG, 243577 bytes, \n'
-          '    <<!!!HIDDEN_FILE!!!>>_1, TXT, 104345 bytes, \n'
+          '    <<!!!HIDDEN_FILE!!!>>_1, _7z, 104345 bytes, \n'
           ''},
 
       {'input' : 'nano.png', 'expectedOutput' : 'hidden1.jpg, JPEG, 1489 bytes, '},
@@ -127,7 +127,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () async {
-        var _actual = await hiddenData(GCWFile(name: elem['input'], bytes:_getFileData(elem['input'])));
+        var _actual = await hiddenData(GCWFile(name: elem['input'], bytes: _getFileData(elem['input'])));
         expect(_fileStructureToString(_actual), elem['expectedOutput']);
       });
     });
