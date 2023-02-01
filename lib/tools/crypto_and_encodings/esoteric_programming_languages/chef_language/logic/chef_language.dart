@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:gc_wizard/tools/science_and_technology/primes/logic/primes.dart';
-import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
+import 'package:gc_wizard/utils/logic_utils/string_utils.dart';
 import 'package:intl/intl.dart';
 
 part 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/logic/chef_international.dart';

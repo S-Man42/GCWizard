@@ -4,7 +4,7 @@ import 'package:gc_wizard/tools/coords/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/logic/external_libs/astronomie_info/astronomy.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/logic/julian_date.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/utils/logic/utils.dart';
-import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
+import 'package:gc_wizard/utils/logic_utils/math_utils.dart';
 import 'package:latlong2/latlong.dart';
 
 class MoonPosition {

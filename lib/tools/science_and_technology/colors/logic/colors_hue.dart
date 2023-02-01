@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors_rgb.dart';
-import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
+import 'package:gc_wizard/utils/logic_utils/math_utils.dart';
 
 enum _HueType { HSV, HSL, HSI }
 

@@ -31,7 +31,7 @@ LatLng vincentyDirect(LatLng coord, double bearing, double dist, Ellipsoid ells)
   double _cosSigma = cos(_sigma);
   double _cos2SigmaM = cos(2.0 * _sigma1 + _sigma);
   int _iterLimit = 0;
-  while ((_sigma - _sigmaP).abs() > epsilon && ++_iterLimit < 100) {
+  while ((_sigma - _sigmaP).abs() > practical_epsilon && ++_iterLimit < 100) {
     _cos2SigmaM = cos(2.0 * _sigma1 + _sigma);
     _sinSigma = sin(_sigma);
     _cosSigma = cos(_sigma);

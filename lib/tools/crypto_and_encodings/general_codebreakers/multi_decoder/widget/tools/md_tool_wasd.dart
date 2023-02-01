@@ -5,7 +5,7 @@ import 'package:gc_wizard/common_widgets/dropdowns/gcw_stateful_dropdown.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/multi_decoder.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/wasd/logic/wasd.dart';
 import 'package:gc_wizard/tools/images_and_files/binary2image/logic/binary2image.dart';
-import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
+import 'package:gc_wizard/utils/logic_utils/collection_utils.dart';
 
 const MDT_INTERNALNAMES_WASD = 'multidecoder_tool_wasd_title';
 const MDT_WASD_OPTION_SET = 'wasd_control_set';

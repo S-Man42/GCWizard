@@ -1,4 +1,3 @@
-import 'package:gc_wizard/utils/logic_utils/date_utils.dart';
 import 'package:week_of_year/week_of_year.dart';
 
 class DayOfTheYearOutput {
@@ -101,4 +100,8 @@ DateTime _alternateWeek1Monday(DateTime date) {
     jan1.month,
     jan1.day - jan1.weekday + 1,
   );
+}
+/// calc day in the year
+int dayNumber(DateTime date) {
+  return date.difference(DateTime(date.year)).inDays + 1;
 }

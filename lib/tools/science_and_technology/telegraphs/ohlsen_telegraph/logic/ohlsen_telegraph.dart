@@ -3,7 +3,7 @@ Anne Solberg
 Norsk Teknisk Museum, Oslo
  */
 
-import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
+import 'package:gc_wizard/utils/logic_utils/collection_utils.dart';
 import 'package:gc_wizard/utils/logic_utils/constants.dart';
 
 final CODEBOOK_OHLSEN = {

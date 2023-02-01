@@ -9,7 +9,7 @@ import 'package:gc_wizard/tools/coords/utils/default_getter.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/logic/julian_date.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/moon_position/logic/moon_position.dart' as logic;
 import 'package:gc_wizard/tools/science_and_technology/astronomy/utils/widget/utils.dart';
-import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
+import 'package:gc_wizard/utils/logic_utils/datetime_utils.dart';
 import 'package:intl/intl.dart';
 
 class MoonPosition extends StatefulWidget {

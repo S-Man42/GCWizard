@@ -1,9 +1,9 @@
-import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
+import 'package:gc_wizard/utils/logic_utils/collection_utils.dart';
 
 // https://de.wikipedia.org/wiki/Affine_Chiffre
 // https://en.wikipedia.org/wiki/Affine_cipher
 
-final AZToAffineDigit = {
+final _AZToAffineDigit = {
   'A': 0,
   'B': 1,
   'C': 2,
@@ -31,9 +31,9 @@ final AZToAffineDigit = {
   'Y': 24,
   'Z': 25
 };
-final AffineDigitToAZ = switchMapKeyValue(AZToAffineDigit);
+final _AffineDigitToAZ = switchMapKeyValue(_AZToAffineDigit);
 
-final reverseKeyA = {1: 1, 3: 9, 5: 21, 7: 15, 9: 3, 11: 19, 15: 7, 17: 23, 19: 11, 21: 5, 23: 17, 25: 25};
+final _reverseKeyA = {1: 1, 3: 9, 5: 21, 7: 15, 9: 3, 11: 19, 15: 7, 17: 23, 19: 11, 21: 5, 23: 17, 25: 25};
 
 String encodeAffine(String input, int keyA, int keyB) {
   int affinePlain = 0;
@@ -44,12 +44,12 @@ String encodeAffine(String input, int keyA, int keyB) {
   return input.toUpperCase().split('').map((character) {
     if (character == ' ') return ' ';
 
-    affinePlain = AZToAffineDigit[character];
+    affinePlain = _AZToAffineDigit[character];
     if (affinePlain == null) return '';
 
     affinePlain = (keyA * affinePlain + keyB) % 26;
 
-    affineCipher = AffineDigitToAZ[affinePlain];
+    affineCipher = _AffineDigitToAZ[affinePlain];
     return affineCipher != null ? affineCipher : '';
   }).join();
 }
@@ -63,10 +63,10 @@ String decodeAffine(String input, int keyA, int keyB) {
   return input.toUpperCase().split('').map((character) {
     if (character == ' ') return ' ';
 
-    affineCipher = AZToAffineDigit[character];
-    affineCipher = reverseKeyA[keyA] * (affineCipher - keyB) % 26;
+    affineCipher = _AZToAffineDigit[character];
+    affineCipher = _reverseKeyA[keyA] * (affineCipher - keyB) % 26;
 
-    affinePlain = AffineDigitToAZ[affineCipher];
+    affinePlain = _AffineDigitToAZ[affineCipher];
     return affinePlain != null ? affinePlain : '';
   }).join();
 }

@@ -8,7 +8,7 @@ import 'package:gc_wizard/tools/games/scrabble/logic/scrabble_sets.dart';
 import 'package:gc_wizard/tools/games/scrabble/scrabble/logic/scrabble.dart';
 import 'package:gc_wizard/tools/science_and_technology/cross_sums/widget/crosstotal_output.dart';
 import 'package:gc_wizard/tools/science_and_technology/cross_sums/widget/crosstotal_switch.dart';
-import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
+import 'package:gc_wizard/utils/logic_utils/collection_utils.dart';
 
 class Scrabble extends StatefulWidget {
   @override

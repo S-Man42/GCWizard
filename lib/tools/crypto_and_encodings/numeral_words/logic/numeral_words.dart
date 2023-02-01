@@ -2,7 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
-import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
+import 'package:gc_wizard/utils/logic_utils/collection_utils.dart';
+import 'package:gc_wizard/utils/logic_utils/string_utils.dart';
 
 // https://de.wikibrief.org/wiki/Romanian_numbers
 // https://de.wikipedia.org/wiki/Griechische_Zahlw%C3%B6rter

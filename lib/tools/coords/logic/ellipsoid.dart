@@ -21,7 +21,7 @@ class Ellipsoid {
   Ellipsoid(this.name, this.a, this.invf, {this.type: EllipsoidType.STANDARD});
 
   double get b {
-    return a * (1 - 1 / (invf == 0.0 ? epsilon : invf));
+    return a * (1 - 1 / (invf == 0.0 ? practical_epsilon : invf));
   }
 
   double get sphereRad {
@@ -29,11 +29,11 @@ class Ellipsoid {
   }
 
   double get f {
-    return 1.0 / (invf == 0.0 ? epsilon : invf);
+    return 1.0 / (invf == 0.0 ? practical_epsilon : invf);
   }
 
   double get e {
-    return sqrt(a * a - b * b) / (a == 0.0 ? epsilon : a);
+    return sqrt(a * a - b * b) / (a == 0.0 ? practical_epsilon : a);
   }
 
   double get e2 {

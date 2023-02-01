@@ -30,7 +30,7 @@ import 'package:gc_wizard/tools/formula_solver/logic/formula_parser.dart';
 import 'package:gc_wizard/tools/formula_solver/persistence/json_provider.dart';
 import 'package:gc_wizard/tools/formula_solver/persistence/model.dart';
 import 'package:gc_wizard/tools/formula_solver/widget/formula_solver_values.dart';
-import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
+import 'package:gc_wizard/utils/logic_utils/math_utils.dart';
 import 'package:prefs/prefs.dart';
 
 part 'package:gc_wizard/tools/formula_solver/widget/formula_replace_dialog.dart';

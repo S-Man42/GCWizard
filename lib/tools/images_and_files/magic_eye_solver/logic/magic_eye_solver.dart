@@ -7,7 +7,7 @@ import 'dart:typed_data';
 
 import 'package:gc_wizard/common/file_utils.dart';
 import 'package:gc_wizard/tools/images_and_files/logic/rgb_pixel.dart';
-import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
+import 'package:gc_wizard/utils/logic_utils/math_utils.dart';
 import 'package:image/image.dart' as Image;
 import 'package:tuple/tuple.dart';
 

@@ -21,7 +21,7 @@ double _signAzimuthDifference(double az1, double az2) {
 double _findLinearRoot(List<double> x, List<double> errArray) {
   double root;
 
-  if ((errArray[0] - errArray[1]).abs() < epsilon) {
+  if ((errArray[0] - errArray[1]).abs() < practical_epsilon) {
     root = x[0];
   } else {
     root = -errArray[0] * (x[1] - x[0]) / (errArray[1] - errArray[0]) + x[0];

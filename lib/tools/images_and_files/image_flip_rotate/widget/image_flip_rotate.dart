@@ -13,7 +13,7 @@ import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/gcw_toolbar.dart';
 import 'package:gc_wizard/common_widgets/image_viewers/gcw_imageview.dart';
-import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
+import 'package:gc_wizard/utils/logic_utils/math_utils.dart';
 import 'package:image/image.dart' as img;
 
 class ImageFlipRotate extends StatefulWidget {

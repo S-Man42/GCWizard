@@ -1,5 +1,5 @@
 import 'package:diacritic/diacritic.dart';
-import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
+import 'package:gc_wizard/utils/logic_utils/string_utils.dart';
 
 final String _WORD_SEPARATORS = r'[^A-Za-z0-9\-ß\u1e9e]';
 

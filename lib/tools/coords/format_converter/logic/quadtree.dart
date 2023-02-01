@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
-import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
+import 'package:gc_wizard/utils/logic_utils/math_utils.dart';
 import 'package:latlong2/latlong.dart';
 
 var _TILESIZE = 256;

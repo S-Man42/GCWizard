@@ -1,6 +1,7 @@
 import 'package:intl/intl.dart';
 
-const double epsilon = 0.5e-15;
+const double practical_epsilon = 0.5e-15;
+const double theoretical_epsilon = double.minPositive;
 const double doubleTolerance = 1.0e-9;
 final NumberFormat doubleFormat = NumberFormat('0.0###');
 

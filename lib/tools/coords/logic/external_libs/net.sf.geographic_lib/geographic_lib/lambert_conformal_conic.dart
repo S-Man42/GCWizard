@@ -81,7 +81,7 @@ class LambertConformalConic {
   double _a, _f, _r, _fm, _e2, _e, _e2m;
   double _sign, _n, _nc, _t0nm1, _scale, _lat0, _k0;
   double _scbet0, _tchi0, _scchi0, _psi0, _nrho0;
-  static double eps_ = epsilon;
+  static double eps_ = Geodesic._tol0_;
   static double epsx_ = _GeoMath.sq(eps_);
   static double tol_ = 0.1 * sqrt(eps_);
   // static double ahypover_ = real(numeric_limits<real>::digits) * log(real(numeric_limits<real>::radix)) + 2;

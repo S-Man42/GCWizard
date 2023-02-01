@@ -1,7 +1,8 @@
+import 'package:gc_wizard/common/alphabets.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
-import 'package:gc_wizard/utils/logic_utils/alphabets.dart';
-import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
+import 'package:gc_wizard/utils/logic_utils/collection_utils.dart';
+import 'package:gc_wizard/utils/logic_utils/string_utils.dart';
 
 /*
  * Main idea of algorithm:

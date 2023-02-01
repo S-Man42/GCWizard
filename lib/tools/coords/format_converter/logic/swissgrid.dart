@@ -111,7 +111,7 @@ LatLng swissGridToLatLon(SwissGrid coord, Ellipsoid ells) {
   double lat = b;
   double phi = 1000;
 
-  while ((phi - lat).abs() > epsilon) {
+  while ((phi - lat).abs() > practical_epsilon) {
     phi = lat;
     double S = 1 / alpha * (log(tan(pi / 4.0 + b / 2.0)) - K) + E * log(tan(pi / 4.0 + (asin(E * sin(lat)) / 2.0)));
     lat = 2 * atan(exp(S)) - pi / 2.0;

@@ -5,7 +5,7 @@ import 'package:gc_wizard/tools/coords/utils/format_getter.dart' as coordUtils;
 import 'package:gc_wizard/tools/coords/waypoint_projection/logic/projection.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/logic/julian_date.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/sun_position/logic/sun_position.dart';
-import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
+import 'package:gc_wizard/utils/logic_utils/math_utils.dart';
 import 'package:latlong2/latlong.dart';
 
 class ShadowLength {

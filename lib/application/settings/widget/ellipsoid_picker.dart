@@ -181,11 +181,11 @@ class _EllipsoidPickerState extends State<_EllipsoidPicker> {
           break;
         case keyMinorAxis:
           var b = max<double>(second, 1.0);
-          var invF = a / max<double>(a - b, epsilon);
+          var invF = a / max<double>(a - b, practical_epsilon);
           _currentEllipsoid = Ellipsoid(null, a, invF, type: EllipsoidType.USER_DEFINED);
           break;
         case keyFlattening:
-          _currentEllipsoid = Ellipsoid(null, a, 1.0 / min<double>(1.0 / 1.01, max<double>(second, epsilon)),
+          _currentEllipsoid = Ellipsoid(null, a, 1.0 / min<double>(1.0 / 1.01, max<double>(second, practical_epsilon)),
               type: EllipsoidType.USER_DEFINED);
           break;
       }

@@ -1,5 +1,8 @@
 import "package:flutter_test/flutter_test.dart";
+import 'package:gc_wizard/utils/logic_utils/collection_utils.dart';
 import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
+import 'package:gc_wizard/utils/logic_utils/math_utils.dart';
+import 'package:gc_wizard/utils/logic_utils/string_utils.dart';
 
 void main() {
   group("CommonUtils.insertCharacter:", () {
@@ -89,78 +92,6 @@ void main() {
           _actual = switchMapKeyValue(elem['map']);
         else
           _actual = switchMapKeyValue(elem['map'], keepFirstOccurence: elem['keepFirstOccurence']);
-        expect(_actual, elem['expectedOutput']);
-      });
-    });
-  });
-
-  group("CommonUtils.digitsToAlpha:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
-      {'input' : null, 'aValue': null, 'removeNonDigits' : null, 'expectedOutput' : null},
-      {'input' : null, 'aValue': null, 'removeNonDigits' : true, 'expectedOutput' : null},
-      {'input' : null, 'aValue': 0, 'removeNonDigits' : null, 'expectedOutput' : null},
-      {'input' : '', 'aValue': null, 'removeNonDigits' : null, 'expectedOutput' : ''},
-
-      {'input' : '', 'aValue': 0, 'removeNonDigits' : null, 'expectedOutput' : ''},
-      {'input' : '', 'aValue': null, 'removeNonDigits' : false, 'expectedOutput' : ''},
-
-      {'input' : null, 'aValue': 0, 'removeNonDigits' : true, 'expectedOutput' : null},
-
-      {'input' : '', 'aValue': 0, 'removeNonDigits' : true, 'expectedOutput' : ''},
-
-      {'input' : '0', 'aValue': 0, 'removeNonDigits' : true, 'expectedOutput' : 'A'},
-      {'input' : '9', 'aValue': 0, 'removeNonDigits' : true, 'expectedOutput' : 'J'},
-
-      {'input' : '0', 'aValue': 1, 'removeNonDigits' : true, 'expectedOutput' : 'B'},
-      {'input' : '9', 'aValue': 1, 'removeNonDigits' : true, 'expectedOutput' : 'K'},
-
-      {'input' : '0', 'aValue': 13, 'removeNonDigits' : true, 'expectedOutput' : 'N'},
-      {'input' : '9', 'aValue': 13, 'removeNonDigits' : true, 'expectedOutput' : 'W'},
-
-      {'input' : '0', 'aValue': 26, 'removeNonDigits' : true, 'expectedOutput' : 'A'},
-      {'input' : '9', 'aValue': 26, 'removeNonDigits' : true, 'expectedOutput' : 'J'},
-      {'input' : '0', 'aValue': 39, 'removeNonDigits' : true, 'expectedOutput' : 'N'},
-      {'input' : '9', 'aValue': 39, 'removeNonDigits' : true, 'expectedOutput' : 'W'},
-      {'input' : '0', 'aValue': 52, 'removeNonDigits' : true, 'expectedOutput' : 'A'},
-      {'input' : '9', 'aValue': 52, 'removeNonDigits' : true, 'expectedOutput' : 'J'},
-
-      {'input' : '0', 'aValue': -1, 'removeNonDigits' : true, 'expectedOutput' : 'Z'},
-      {'input' : '9', 'aValue': -1, 'removeNonDigits' : true, 'expectedOutput' : 'I'},
-      {'input' : '0', 'aValue': -13, 'removeNonDigits' : true, 'expectedOutput' : 'N'},
-      {'input' : '9', 'aValue': -13, 'removeNonDigits' : true, 'expectedOutput' : 'W'},
-      {'input' : '0', 'aValue': -26, 'removeNonDigits' : true, 'expectedOutput' : 'A'},
-      {'input' : '9', 'aValue': -26, 'removeNonDigits' : true, 'expectedOutput' : 'J'},
-      {'input' : '0', 'aValue': -39, 'removeNonDigits' : true, 'expectedOutput' : 'N'},
-      {'input' : '9', 'aValue': -39, 'removeNonDigits' : true, 'expectedOutput' : 'W'},
-      {'input' : '0', 'aValue': -52, 'removeNonDigits' : true, 'expectedOutput' : 'A'},
-      {'input' : '9', 'aValue': -52, 'removeNonDigits' : true, 'expectedOutput' : 'J'},
-
-      {'input' : '0123456789', 'aValue': 0, 'removeNonDigits' : true, 'expectedOutput' : 'ABCDEFGHIJ'},
-      {'input' : '97531', 'aValue': 0, 'removeNonDigits' : true, 'expectedOutput' : 'JHFDB'},
-
-      {'input' : '0123456789', 'aValue': 21, 'removeNonDigits' : true, 'expectedOutput' : 'VWXYZABCDE'},
-      {'input' : '97531', 'aValue': 21, 'removeNonDigits' : true, 'expectedOutput' : 'ECAYW'},
-
-      {'input' : '0123456789', 'aValue': -5, 'removeNonDigits' : true, 'expectedOutput' : 'VWXYZABCDE'},
-      {'input' : '97531', 'aValue': -5, 'removeNonDigits' : true, 'expectedOutput' : 'ECAYW'},
-
-      {'input' : ' 0 !"1§ 2% 3 4. 5 6b 7 s8 E9- ', 'aValue': 0, 'removeNonDigits' : true, 'expectedOutput' : 'ABCDEFGHIJ'},
-      {'input' : '  !"§ %  .  b  s E- ', 'aValue': 0, 'removeNonDigits' : true, 'expectedOutput' : ''},
-
-      {'input' : ' 0 !"1§ 2% 3 4. 5 6b 7 s8 E9- ', 'aValue': 0, 'removeNonDigits' : false, 'expectedOutput' : ' A !"B§ C% D E. F Gb H sI EJ- '},
-      {'input' : '  !"§ %  .  b  s E- ', 'aValue': 0, 'removeNonDigits' : false, 'expectedOutput' : '  !"§ %  .  b  s E- '},
-
-      {'input' : ' 0 !"1§ 2% 3 4. 5 6b 7 s8 E9- ', 'aValue': 13, 'removeNonDigits' : true, 'expectedOutput' : 'NOPQRSTUVW'},
-      {'input' : '  !"§ %  .  b  s E- ', 'aValue': 13, 'removeNonDigits' : true, 'expectedOutput' : ''},
-
-      {'input' : ' 0 !"1§ 2% 3 4. 5 6b 7 s8 E9- ', 'aValue': 13, 'removeNonDigits' : false, 'expectedOutput' : ' N !"O§ P% Q R. S Tb U sV EW- '},
-      {'input' : '  !"§ %  .  b  s E- ', 'aValue': 13, 'removeNonDigits' : false, 'expectedOutput' : '  !"§ %  .  b  s E- '},
-
-    ];
-
-    _inputsToExpected.forEach((elem) {
-      test('input: ${elem['input']}, aValue: ${elem['aValue']}, removeNonDigits: ${elem['removeNonDigits']}', () {
-        var _actual = digitsToAlpha(elem['input'], aValue: elem['aValue'], removeNonDigits: elem['removeNonDigits']);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -498,56 +429,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = separateDecimalPlaces(elem['input']);
-        expect(_actual, elem['expectedOutput']);
-      });
-    });
-  });
-
-  group("CommonUtils.formatDurationToHHmmss:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : null},
-      {'input' : Duration(days: 1, hours: 10, seconds: 33, milliseconds: 100), 'days': true, 'milliseconds': true, 'limitHours': true, 'expectedOutput' : '1:10:00:33.000'},
-      {'input' : Duration(days: 1, hours: 10, seconds: 33, milliseconds: 100), 'days': true, 'milliseconds': false, 'limitHours': true, 'expectedOutput' : '1:10:00:33'},
-      {'input' : Duration(days: 1, hours: 10, seconds: 33, milliseconds: 100), 'days': false, 'milliseconds': true, 'limitHours': true, 'expectedOutput' : '10:00:33.000'},
-      {'input' : Duration(days: 1, hours: 10, seconds: 33, milliseconds: 100), 'days': false, 'milliseconds': false, 'limitHours': true, 'expectedOutput' : '10:00:33'},
-      {'input' : Duration(days: 1, hours: 10, seconds: 33, milliseconds: 100), 'days': false, 'milliseconds': false, 'limitHours': false, 'expectedOutput' : '34:00:33'},
-      {'input' : Duration(days: 1, hours: 10, seconds: 33, milliseconds: 100), 'days': true, 'milliseconds': true, 'limitHours': true, 'expectedOutput' : '1:10:00:33.000'},
-      {'input' : Duration(days: 1, hours: 10, seconds: 33, milliseconds: 100), 'days': true, 'milliseconds': true, 'limitHours': false, 'expectedOutput' : '1:10:00:33.000'},
-      {'input' : Duration(days: 1, hours: 10, seconds: 33, milliseconds: 100), 'days': true, 'milliseconds': false, 'limitHours': false, 'expectedOutput' : '1:10:00:33'},
-
-      {'input' : Duration(days: -1, hours: -33, seconds: -33, milliseconds: -100), 'days': true, 'milliseconds': false, 'limitHours': false, 'expectedOutput' : '-2:09:00:33'},
-      {'input' : Duration(days: -1, hours: -33, seconds: -33, milliseconds: -100), 'days': true, 'milliseconds': false, 'limitHours': true, 'expectedOutput' : '-2:09:00:33'},
-      {'input' : Duration(days: -1, hours: -33, seconds: -33, milliseconds: -100), 'days': false, 'milliseconds': false, 'limitHours': true, 'expectedOutput' : '-09:00:33'},
-      {'input' : Duration(hours: -33, seconds: -33, milliseconds: -100), 'days': true, 'milliseconds': false, 'limitHours': false, 'expectedOutput' : '-1:09:00:33'},
-      {'input' : Duration(hours: -10, seconds: -33, milliseconds: -100), 'days': true, 'milliseconds': false, 'limitHours': true, 'expectedOutput' : '-0:10:00:33'},
-    ];
-
-    _inputsToExpected.forEach((elem) {
-      test('input: ${elem['input']}, days: ${elem['days']}, milliseconds: ${elem['milliseconds']}, limitHours: ${elem['limitHours']}', () {
-        var _actual = formatDurationToHHmmss(elem['input'], days: elem['days'], milliseconds: elem['milliseconds'], limitHours: elem['limitHours']);
-        expect(_actual, elem['expectedOutput']);
-      });
-    });
-  });
-
-  group("CommonUtils.formatHoursToHHmmss:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : null},
-      {'input' : 1.23456789, 'milliseconds': true, 'limitHours': true, 'expectedOutput' : '01:14:04.444'},
-      {'input' : 1.23456789, 'milliseconds': false, 'limitHours': true, 'expectedOutput' : '01:14:04'},
-      {'input' : 1.23456789, 'milliseconds': true, 'limitHours': false, 'expectedOutput' : '01:14:04.444'},
-      {'input' : 1.23456789, 'milliseconds': false, 'limitHours': false, 'expectedOutput' : '01:14:04'},
-
-      {'input' : 99.23456789, 'milliseconds': true, 'limitHours': true, 'expectedOutput' : '03:14:04.444'},
-      {'input' : 99.23456789, 'milliseconds': false, 'limitHours': true, 'expectedOutput' : '03:14:04'},
-      {'input' : 99.23456789, 'milliseconds': true, 'limitHours': false, 'expectedOutput' : '99:14:04.444'},
-      {'input' : 99.23456789, 'milliseconds': false, 'limitHours': false, 'expectedOutput' : '99:14:04'},
-    ];
-
-    _inputsToExpected.forEach((elem) {
-      test('input: ${elem['input']}, milliseconds: ${elem['milliseconds']}, limitHours: ${elem['limitHours']}', () {
-        var _actual = formatHoursToHHmmss(elem['input'], milliseconds: elem['milliseconds'], limitHours: elem['limitHours']);
+        var _actual = fractionPartAsInteger(elem['input']);
         expect(_actual, elem['expectedOutput']);
       });
     });

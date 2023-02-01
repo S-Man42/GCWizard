@@ -391,7 +391,7 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
             onChanged: (value) {
               setState(() {
                 _currentSecond = value.truncate();
-                _currentMilliSecond = separateDecimalPlaces(value);
+                _currentMilliSecond = fractionPartAsInteger(value);
                 _setCurrentValueAndEmitOnChange();
               });
             },

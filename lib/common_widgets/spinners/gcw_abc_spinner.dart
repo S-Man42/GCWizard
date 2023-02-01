@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
+import 'package:gc_wizard/common/alphabets.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_dropdown_spinner.dart';
 import 'package:gc_wizard/common_widgets/spinners/spinner_constants.dart';
-import 'package:gc_wizard/utils/logic_utils/alphabets.dart';
 
 class GCWABCSpinner extends StatefulWidget {
   final Function onChanged;

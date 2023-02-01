@@ -76,7 +76,7 @@ DistanceBearingData vincentyInverse(LatLng coord1, LatLng coord2, Ellipsoid ells
             ells.f *
             _sinAlpha *
             (_sigma + _C * _sinSigma * (_cos2SigmaM + _C * _cosSigma * (-1.0 + 2.0 * _cos2SigmaM * _cos2SigmaM)));
-  } while ((_lambda - _lambdaP).abs() > epsilon && ++_iterLimit < 40);
+  } while ((_lambda - _lambdaP).abs() > practical_epsilon && ++_iterLimit < 40);
 
   double uSq = _cosSqAlpha * (_a * _a - ells.b * ells.b) / (ells.b * ells.b);
   double A = 1.0 + uSq / 16384.0 * (4096.0 + uSq * (-768.0 + uSq * (320.0 - 175.0 * uSq)));

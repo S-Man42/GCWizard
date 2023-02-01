@@ -7,7 +7,7 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_integer_list_textfield.d
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/logic/teletypewriter.dart';
-import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
+import 'package:gc_wizard/utils/logic_utils/collection_utils.dart';
 import 'package:gc_wizard/utils/logic_utils/constants.dart';
 
 class Teletypewriter extends StatefulWidget {

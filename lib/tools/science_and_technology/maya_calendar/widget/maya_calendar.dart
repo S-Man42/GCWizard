@@ -9,7 +9,7 @@ import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/maya_numbers/widget/maya_numbers_segment_display.dart';
 import 'package:gc_wizard/tools/science_and_technology/maya_calendar/logic/maya_calendar.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/segmentdisplay_output.dart';
-import 'package:gc_wizard/utils/logic_utils/date_utils.dart';
+import 'package:intl/intl.dart';
 
 class MayaCalendar extends StatefulWidget {
   @override
@@ -148,6 +148,7 @@ class MayaCalendarState extends State<MayaCalendar> {
 
   Widget _buildOutput() {
     Map outputDates = new Map();
+    var dateFormat = DateFormat('yMMMMd', Localizations.localeOf(context).toString());
 
     if (_currentMode == GCWSwitchPosition.left) {
       //encode
@@ -162,10 +163,8 @@ class MayaCalendarState extends State<MayaCalendar> {
           MayaLongCountToHaab(segments['numbers']);
       outputDates[i18n(context, 'mayacalendar_juliandate')] =
           MayaDayCountToJulianDate(MayaLongCountToMayaDayCount(segments['numbers']));
-      outputDates[i18n(context, 'mayacalendar_gregoriancalendar')] =
-          gregorian.day + ' ' + i18n(context, MONTH[int.parse(gregorian.month)]) + ' ' + gregorian.year;
-      outputDates[i18n(context, 'mayacalendar_juliancalendar')] =
-          julian.day + ' ' + i18n(context, MONTH[int.parse(julian.month)]) + ' ' + julian.year;
+      outputDates[i18n(context, 'mayacalendar_gregoriancalendar')] = dateFormat.format(gregorian);
+      outputDates[i18n(context, 'mayacalendar_juliancalendar')] = dateFormat.format(julian);
 
       return Column(
         children: <Widget>[
@@ -194,8 +193,8 @@ class MayaCalendarState extends State<MayaCalendar> {
           '   ' +
           MayaLongCountToHaab(segments['numbers']);
       outputDates[i18n(context, 'mayacalendar_juliandate')] = MayaDayCountToJulianDate(segments['vigesimal']);
-      outputDates[i18n(context, 'mayacalendar_gregoriancalendar')] = _DateOutputToString(context, gregorian);
-      outputDates[i18n(context, 'mayacalendar_juliancalendar')] = _DateOutputToString(context, julian);
+      outputDates[i18n(context, 'mayacalendar_gregoriancalendar')] = dateFormat.format(gregorian);
+      outputDates[i18n(context, 'mayacalendar_juliancalendar')] = dateFormat.format(julian);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments['displays']),
@@ -207,18 +206,6 @@ class MayaCalendarState extends State<MayaCalendar> {
           ),
         ],
       );
-    }
-  }
-
-  String _DateOutputToString(BuildContext context, DateOutput date) {
-    final Locale appLocale = Localizations.localeOf(context);
-    switch (appLocale.languageCode) {
-      case 'de':
-        return date.day + '. ' + i18n(context, MONTH[int.parse(date.month)]) + ' ' + date.year;
-      case 'fr':
-        return date.day + ' ' + i18n(context, MONTH[int.parse(date.month)]).toLowerCase() + ' ' + date.year;
-      default:
-        return date.year + ' ' + i18n(context, MONTH[int.parse(date.month)]) + ' ' + date.day;
     }
   }
 }

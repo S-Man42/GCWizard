@@ -289,8 +289,8 @@ _restoreCircles(List<GCWMapPoint> points, List<GCWMapPolyline> lines) {
 }
 
 bool _isClosedLine(GCWMapPolyline line) {
-  return ((line.points.first.point.latitude - line.points.last.point.latitude) < epsilon) &&
-      ((line.points.first.point.longitude - line.points.last.point.longitude) < epsilon);
+  return ((line.points.first.point.latitude - line.points.last.point.latitude) < practical_epsilon) &&
+      ((line.points.first.point.longitude - line.points.last.point.longitude) < practical_epsilon);
 }
 
 bool _completeCircle(GCWMapPolyline line, List<GCWMapPoint> points) {

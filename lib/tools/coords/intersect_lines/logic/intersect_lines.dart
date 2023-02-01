@@ -68,7 +68,7 @@ LatLng intersectBearings(LatLng coord1, double az13, LatLng coord2, double az23,
   int br = 0;
   bool broke = false;
 
-  while (d > epsilon) {
+  while (d > practical_epsilon) {
     if (br > 50) {
       //adjusted these values empirical
       broke = true;

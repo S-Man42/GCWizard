@@ -1,5 +1,5 @@
+import 'package:gc_wizard/common/alphabets.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rotation/logic/rotator.dart';
-import 'package:gc_wizard/utils/logic_utils/alphabets.dart';
 
 String encryptOneTimePad(String input, String key, {int keyOffset}) {
   if (input == null) return '';

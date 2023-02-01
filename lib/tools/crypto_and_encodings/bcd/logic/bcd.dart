@@ -7,7 +7,7 @@
 // https://www.itwissen.info/Glixon-Code-Glixon-code.html
 // http://www.ahok.de/en/hoklas-code.html#:~:text=Three%20of%20the%20four%20bits%20of%20Tompkins%27s%20code,least%20significant%20bits.%20It%27s%20known%20as%20%22reflected%20code%22.
 
-import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
+import 'package:gc_wizard/utils/logic_utils/collection_utils.dart';
 
 final DigitToBCDOriginal = {
   '0': "0000",
@@ -202,22 +202,22 @@ final DigitToBCD1of10 = {
   '9': '1000000000'
 };
 
-var BCDOriginalToDigit = switchMapKeyValue(DigitToBCDOriginal);
-var BCDAikenToDigit = switchMapKeyValue(DigitToBCDAiken);
-var BCDStibitzToDigit = switchMapKeyValue(DigitToBCDStibitz);
-var BCDGrayToDigit = switchMapKeyValue(DigitToBCDGray);
-var BCDGlixonToDigit = switchMapKeyValue(DigitToBCDGlixon);
-var BCDOBrienToDigit = switchMapKeyValue(DigitToBCDOBrien);
-var BCDPetherickToDigit = switchMapKeyValue(DigitToBCDPetherick);
-var BCDTompkinsToDigit = switchMapKeyValue(DigitToBCDTompkins);
-var BCDLibawCraigToDigit = switchMapKeyValue(DigitToBCDLibawCraig);
-var BCDGrayExcessToDigit = switchMapKeyValue(DigitToBCDGrayExcess);
-var BCDHammingToDigit = switchMapKeyValue(DigitToBCDHamming);
-var BCD1of10ToDigit = switchMapKeyValue(DigitToBCD1of10);
-var BCD2of5ToDigit = switchMapKeyValue(DigitToBCD2of5);
-var BCD2of5PlanetToDigit = switchMapKeyValue(DigitToBCD2of5Planet);
-var BCD2of5PostnetToDigit = switchMapKeyValue(DigitToBCD2of5Postnet);
-var BCDBiquinaerToDigit = switchMapKeyValue(DigitToBCDBiquinaer);
+var _BCDOriginalToDigit = switchMapKeyValue(DigitToBCDOriginal);
+var _BCDAikenToDigit = switchMapKeyValue(DigitToBCDAiken);
+var _BCDStibitzToDigit = switchMapKeyValue(DigitToBCDStibitz);
+var _BCDGrayToDigit = switchMapKeyValue(DigitToBCDGray);
+var _BCDGlixonToDigit = switchMapKeyValue(DigitToBCDGlixon);
+var _BCDOBrienToDigit = switchMapKeyValue(DigitToBCDOBrien);
+var _BCDPetherickToDigit = switchMapKeyValue(DigitToBCDPetherick);
+var _BCDTompkinsToDigit = switchMapKeyValue(DigitToBCDTompkins);
+var _BCDLibawCraigToDigit = switchMapKeyValue(DigitToBCDLibawCraig);
+var _BCDGrayExcessToDigit = switchMapKeyValue(DigitToBCDGrayExcess);
+var _BCDHammingToDigit = switchMapKeyValue(DigitToBCDHamming);
+var _BCD1of10ToDigit = switchMapKeyValue(DigitToBCD1of10);
+var _BCD2of5ToDigit = switchMapKeyValue(DigitToBCD2of5);
+var _BCD2of5PlanetToDigit = switchMapKeyValue(DigitToBCD2of5Planet);
+var _BCD2of5PostnetToDigit = switchMapKeyValue(DigitToBCD2of5Postnet);
+var _BCDBiquinaerToDigit = switchMapKeyValue(DigitToBCDBiquinaer);
 
 enum BCDType {
   ORIGINAL,
@@ -237,25 +237,6 @@ enum BCDType {
   HAMMING,
   BIQUINARY
 }
-
-final Map<String, BCDType> BCD_TYPES = {
-  'bcd_original': BCDType.ORIGINAL,
-  'bcd_1of10': BCDType.ONEOFTEN,
-  'bcd_2of5': BCDType.TWOOFFIVE,
-  'bcd_2of5planet': BCDType.PLANET,
-  'bcd_2of5postnet': BCDType.POSTNET,
-  'bcd_aiken': BCDType.AIKEN,
-  'bcd_biquinary': BCDType.BIQUINARY,
-  'bcd_glixon': BCDType.GLIXON,
-  'bcd_gray': BCDType.GRAY,
-  'bcd_grayexcess': BCDType.GRAYEXCESS,
-  'bcd_hamming': BCDType.HAMMING,
-  'bcd_libawcraig': BCDType.LIBAWCRAIG,
-  'bcd_obrien': BCDType.OBRIEN,
-  'bcd_petherick': BCDType.PETHERICK,
-  'bcd_stibitz': BCDType.STIBITZ,
-  'bcd_tompkins': BCDType.TOMPKINS,
-};
 
 String encodeBCD(String input, BCDType type) {
   if (input == null || input == '') return '';
@@ -325,52 +306,52 @@ String decodeBCD(String input, BCDType type) {
   var bcdMap;
   switch (type) {
     case BCDType.ORIGINAL:
-      bcdMap = BCDOriginalToDigit;
+      bcdMap = _BCDOriginalToDigit;
       break;
     case BCDType.AIKEN:
-      bcdMap = BCDAikenToDigit;
+      bcdMap = _BCDAikenToDigit;
       break;
     case BCDType.STIBITZ:
-      bcdMap = BCDStibitzToDigit;
+      bcdMap = _BCDStibitzToDigit;
       break;
     case BCDType.GRAY:
-      bcdMap = BCDGrayToDigit;
+      bcdMap = _BCDGrayToDigit;
       break;
     case BCDType.GLIXON:
-      bcdMap = BCDGlixonToDigit;
+      bcdMap = _BCDGlixonToDigit;
       break;
     case BCDType.OBRIEN:
-      bcdMap = BCDOBrienToDigit;
+      bcdMap = _BCDOBrienToDigit;
       break;
     case BCDType.PETHERICK:
-      bcdMap = BCDPetherickToDigit;
+      bcdMap = _BCDPetherickToDigit;
       break;
     case BCDType.TOMPKINS:
-      bcdMap = BCDTompkinsToDigit;
+      bcdMap = _BCDTompkinsToDigit;
       break;
     case BCDType.LIBAWCRAIG:
-      bcdMap = BCDLibawCraigToDigit;
+      bcdMap = _BCDLibawCraigToDigit;
       break;
     case BCDType.GRAYEXCESS:
-      bcdMap = BCDGrayExcessToDigit;
+      bcdMap = _BCDGrayExcessToDigit;
       break;
     case BCDType.TWOOFFIVE:
-      bcdMap = BCD2of5ToDigit;
+      bcdMap = _BCD2of5ToDigit;
       break;
     case BCDType.PLANET:
-      bcdMap = BCD2of5PlanetToDigit;
+      bcdMap = _BCD2of5PlanetToDigit;
       break;
     case BCDType.POSTNET:
-      bcdMap = BCD2of5PostnetToDigit;
+      bcdMap = _BCD2of5PostnetToDigit;
       break;
     case BCDType.ONEOFTEN:
-      bcdMap = BCD1of10ToDigit;
+      bcdMap = _BCD1of10ToDigit;
       break;
     case BCDType.HAMMING:
-      bcdMap = BCDHammingToDigit;
+      bcdMap = _BCDHammingToDigit;
       break;
     case BCDType.BIQUINARY:
-      bcdMap = BCDBiquinaerToDigit;
+      bcdMap = _BCDBiquinaerToDigit;
       break;
   }
 

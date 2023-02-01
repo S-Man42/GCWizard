@@ -9,7 +9,7 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.d
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/numeral_words/logic/numeral_words.dart';
 import 'package:gc_wizard/utils/common_widget_utils.dart';
-import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
+import 'package:gc_wizard/utils/logic_utils/collection_utils.dart';
 
 class NumeralWordsLists extends StatefulWidget {
   @override

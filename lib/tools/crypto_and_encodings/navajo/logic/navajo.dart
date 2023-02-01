@@ -1,7 +1,7 @@
 // https://www.history.navy.mil/research/library/online-reading-room/title-list-alphabetically/n/navajo-code-talker-dictionary.html
 // https://www.ancestrycdn.com/aa-k12/1112/assets/Navajo-Code-Talkers-dictionary.pdf
 
-import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
+import 'package:gc_wizard/utils/logic_utils/collection_utils.dart';
 import 'package:gc_wizard/utils/logic_utils/constants.dart';
 
 final Map NAVAJO_ENCODE_ALPHABET = {

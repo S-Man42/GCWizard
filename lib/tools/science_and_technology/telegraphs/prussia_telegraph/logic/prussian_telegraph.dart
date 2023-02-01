@@ -2,11 +2,7 @@
 // https://trepo.tuni.fi/bitstream/handle/10024/102557/1513599679.pdf?sequence=1&isAllowed=y
 // https://en.wikipedia.org/wiki/Telegraph_code#Edelcrantz_code
 
-/*
-  Bilddatenbank der Museumsstiftung Post und Telekommunikation
- */
-
-import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
+import 'package:gc_wizard/utils/logic_utils/collection_utils.dart';
 import 'package:gc_wizard/utils/logic_utils/constants.dart';
 
 final CODEBOOK_PRUSSIA = {

@@ -8,7 +8,7 @@ import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/utils/default_getter.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/logic/julian_date.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/sun_rise_set/logic/sun_rise_set.dart' as logic;
-import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
+import 'package:gc_wizard/utils/logic_utils/datetime_utils.dart';
 
 class SunRiseSet extends StatefulWidget {
   @override

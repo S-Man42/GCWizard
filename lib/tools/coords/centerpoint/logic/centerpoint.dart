@@ -93,7 +93,7 @@ Map<String, dynamic> _calculateCenterPointThreePoints(LatLng coord1, LatLng coor
 
   int c = 0;
 
-  while (d > epsilon) {
+  while (d > practical_epsilon) {
     c++;
     if (c > 1000) {
       dist = originalDist;

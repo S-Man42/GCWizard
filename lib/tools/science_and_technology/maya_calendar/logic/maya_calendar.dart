@@ -9,7 +9,7 @@
 
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
-import 'package:gc_wizard/utils/logic_utils/date_utils.dart';
+import 'package:gc_wizard/utils/logic_utils/datetime_utils.dart';
 import 'package:prefs/prefs.dart';
 
 enum CORRELATION { THOMPSON, SMILEY, WEITZEL }
@@ -243,12 +243,12 @@ int MayaLongCountToMayaDayCount(List<int> longCount) {
   return dayCount;
 }
 
-DateOutput MayaDayCountToJulianCalendar(int mayaDayCount) {
-  return JulianDateToJulianCalendar(MayaDayCountToJulianDate(mayaDayCount) * 1.0, true);
+DateTime MayaDayCountToJulianCalendar(int mayaDayCount) {
+  return JulianDateToJulianCalendar(MayaDayCountToJulianDate(mayaDayCount) * 1.0);
 }
 
-DateOutput MayaDayCountToGregorianCalendar(int mayaDayCount) {
-  return JulianDateToGregorianCalendar(MayaDayCountToJulianDate(mayaDayCount) * 1.0, true);
+DateTime MayaDayCountToGregorianCalendar(int mayaDayCount) {
+  return JulianDateToGregorianCalendar(MayaDayCountToJulianDate(mayaDayCount) * 1.0);
 }
 
 int MayaDayCountToJulianDate(int mayaDayCount) {

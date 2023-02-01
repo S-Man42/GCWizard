@@ -7,7 +7,8 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_double_spinner.dart';
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/calendar/logic/calendar.dart';
 import 'package:gc_wizard/tools/science_and_technology/maya_calendar/logic/maya_calendar.dart';
-import 'package:gc_wizard/utils/logic_utils/date_utils.dart';
+import 'package:gc_wizard/utils/logic_utils/datetime_utils.dart';
+import 'package:intl/intl.dart';
 
 class Calendar extends StatefulWidget {
   @override
@@ -126,12 +127,12 @@ class CalendarState extends State<Calendar> {
     output['dates_calendar_system_juliandate'] = (jd + 0.5).floor();
 
     output['dates_calendar_system_juliancalendar'] =
-        _DateOutputToString(context, JulianDateToJulianCalendar(jd, true), CalendarSystem.JULIANCALENDAR);
+        _DateOutputToString(context, JulianDateToJulianCalendar(jd), CalendarSystem.JULIANCALENDAR);
 
     output['dates_calendar_system_modifiedjuliandate'] = JulianDateToModifedJulianDate(jd);
 
     output['dates_calendar_system_gregoriancalendar'] =
-        _DateOutputToString(context, JulianDateToGregorianCalendar(jd, true), CalendarSystem.GREGORIANCALENDAR);
+        _DateOutputToString(context, JulianDateToGregorianCalendar(jd), CalendarSystem.GREGORIANCALENDAR);
 
     output['dates_calendar_system_islamiccalendar'] =
         _DateOutputToString(context, JulianDateToIslamicCalendar(jd), CalendarSystem.ISLAMICCALENDAR);
@@ -158,8 +159,7 @@ class CalendarState extends State<Calendar> {
         ? i18n(context, 'dates_calendar_error')
         : MayaLongCountToTzolkin(JulianDateToMayaLongCount(jd));
 
-    output['dates_calendar_system_potrzebiecalendar'] =
-        _DateOutputToString(context, JulianDateToPotrzebieCalendar(jd), CalendarSystem.POTRZEBIECALENDAR);
+    output['dates_calendar_system_potrzebiecalendar'] = _PotrzebieToString(jd);
 
     return GCWDefaultOutput(
         child: GCWColumnedMultilineOutput(
@@ -171,43 +171,46 @@ class CalendarState extends State<Calendar> {
     );
   }
 
-  String _HebrewDateToString(DateOutput HebrewDate, double jd) {
-    if (int.parse(HebrewDate.year) < 0) return i18n(context, 'dates_calendar_error');
+  String _PotrzebieToString(double jd) {
+    PotrzebieCalendarOutput p = JulianDateToPotrzebieCalendar(jd);
 
-    if (typeOfJewYear(JewishYearLength(jd)).contains('embolistic'))
-      return HebrewDate.day +
-          '. ' +
-          MONTH_NAMES[CalendarSystem.HEBREWCALENDAR][int.parse(HebrewDate.month)].toString() +
-          ' ' +
-          HebrewDate.year;
-    else {
-      int month = int.parse(HebrewDate.month);
-      if (month > 6) month = 1 + int.parse(HebrewDate.month);
-      return HebrewDate.day + ' ' + MONTH_NAMES[CalendarSystem.HEBREWCALENDAR][month] + ' ' + HebrewDate.year;
-    }
+    var locale = Localizations.localeOf(context).toString();
+    var monthName = MONTH_NAMES[CalendarSystem.POTRZEBIECALENDAR][p.date.month].toString();
+    var dateStr = replaceMonthNameWithCustomString(p.date, 'yMMMMd', locale, monthName);
+
+    return dateStr.replaceFirst(p.date.year.toString(), '${p.date.year} ${p.suffix}');
   }
 
-  String _DateOutputToString(context, DateOutput date, CalendarSystem calendar) {
-    final Locale appLocale = Localizations.localeOf(context);
+  String _HebrewDateToString(DateTime hebrewDate, double jd) {
+    if (hebrewDate.year < 0) return i18n(context, 'dates_calendar_error');
+
+    var hebrewMonth =  MONTH_NAMES[CalendarSystem.HEBREWCALENDAR][hebrewDate.month];
+
+    if (! typeOfJewYear(JewishYearLength(jd)).contains('embolistic')) {
+      if (hebrewDate.month > 6) {
+        hebrewMonth =  MONTH_NAMES[CalendarSystem.HEBREWCALENDAR][hebrewDate.month + 1];
+      }
+    }
+
+    var locale = Localizations.localeOf(context).toString();
+    return replaceMonthNameWithCustomString(hebrewDate, 'yMMMMd', locale, hebrewMonth);
+  }
+
+  String _DateOutputToString(context, DateTime date, CalendarSystem calendar) {
+    var locale = Localizations.localeOf(context).toString();
+
     switch (calendar) {
       case CalendarSystem.ISLAMICCALENDAR:
       case CalendarSystem.PERSIANYAZDEGARDCALENDAR:
       case CalendarSystem.COPTICCALENDAR:
-        if (int.parse(date.year) < 0) return i18n(context, 'dates_calendar_error');
-        return date.day + '. ' + MONTH_NAMES[calendar][int.parse(date.month)].toString() + ' ' + date.year;
+        if (date.year < 0) return i18n(context, 'dates_calendar_error');
+        var monthName = MONTH_NAMES[calendar][date.month];
+        return replaceMonthNameWithCustomString(date, 'yMMMMd', locale, monthName);
       case CalendarSystem.GREGORIANCALENDAR:
       case CalendarSystem.JULIANCALENDAR:
-        switch (appLocale.languageCode) {
-          case 'de':
-            return date.day + '. ' + i18n(context, MONTH[int.parse(date.month)]) + ' ' + date.year;
-          case 'fr':
-            return date.day + ' ' + i18n(context, MONTH[int.parse(date.month)]).toLowerCase() + ' ' + date.year;
-          default:
-            return date.year + ' ' + i18n(context, MONTH[int.parse(date.month)]) + ' ' + date.day;
-        }
-        break;
-      case CalendarSystem.POTRZEBIECALENDAR:
-        return date.day + '. ' + MONTH_NAMES[calendar][int.parse(date.month)].toString() + ' ' + date.year;
+        return DateFormat('yMMMMd', locale).format(date);
+      default:
+        return null;
     }
   }
 
