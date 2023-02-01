@@ -111,6 +111,10 @@ void main() {
           '            donald.jpg, JPEG, 17708 bytes, \n'
           '            garfield.jpg, JPEG, 27696 bytes, \n'
           ''},
+      {'input' : 'hidden15.jpg', 'expectedOutput' :
+          'hidden15.jpg, JPEG, 243577 bytes, \n'
+          '    <<!!!HIDDEN_FILE!!!>>_1, TXT, 104345 bytes, \n'
+          ''},
 
       {'input' : 'nano.png', 'expectedOutput' : 'hidden1.jpg, JPEG, 1489 bytes, '},
       {'input' : 'QuickResponse.jpg', 'expectedOutput' : 'hidden1.jpg, JPEG, 1489 bytes, '},
