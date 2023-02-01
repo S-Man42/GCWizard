@@ -18,9 +18,9 @@ import 'package:prefs/prefs.dart';
 
 class SymbolReplacerManualSetter extends StatefulWidget {
   final SymbolReplacerImage symbolImage;
-  List<Symbol> viewSymbols;
+  final List<Symbol> viewSymbols;
 
-  SymbolReplacerManualSetter({Key key, this.symbolImage, this.viewSymbols}) : super(key: key);
+  const SymbolReplacerManualSetter({Key key, this.symbolImage, this.viewSymbols}) : super(key: key);
 
   @override
   SymbolReplacerManualSetterState createState() => SymbolReplacerManualSetterState();
@@ -74,7 +74,6 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
               widget.viewSymbols?.first?.symbolGroup?.compareSymbol == null)) _currentMode = GCWSwitchPosition.right;
 
       _init = false;
-      _debugOutput();
     }
 
     return Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
@@ -91,12 +90,10 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
         var _symbolData = _symbolMap[symbol];
         var _displayText = symbol?.symbolGroup?.text ?? '';
         if (_symbolData?.values?.first?.displayName != _displayText)
-          _symbolMap[symbol] = cloneSymbolData(_symbolData, _displayText, symbol?.symbolGroup?.manualText);
+          _symbolMap[symbol] = _cloneSymbolData(_symbolData, _displayText);
       } else
         _symbolMap.addAll({
-          symbol: {null: SymbolData(bytes: symbol.getImage(),
-              displayName: symbol?.symbolGroup?.text ?? '',
-              markedOverlay: symbol?.symbolGroup?.manualText)}
+          symbol: {null: SymbolData(bytes: symbol.getImage(), displayName: symbol?.symbolGroup?.text ?? '')}
         });
     });
   }
@@ -124,7 +121,6 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
       onChanged: () => setState(() {}),
       selectable: true,
       overlayOn: true,
-      scale: widget?.symbolImage?.symbolScale,
       onSymbolTapped: (String tappedText, SymbolData symbolData) {
         setState(() {
           _selectSymbol(symbolData);
@@ -138,6 +134,17 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
     _editValueController.text = symbolData.displayName;
   }
 
+  Map<String, SymbolData> _cloneSymbolData(Map<String, SymbolData> image, String text) {
+    var symbolData = SymbolData(bytes: image.values.first.bytes, displayName: text ?? '');
+    symbolData.primarySelected = image.values.first.primarySelected;
+    symbolData.secondarySelected = image.values.first.secondarySelected;
+    return {null: symbolData};
+  }
+
+  Symbol _getSymbol(SymbolData imageData) {
+    return _symbolMap.entries.firstWhere((entry) => entry.value.values.first == imageData, orElse: () => null)?.key;
+  }
+
   _setSelectedSymbolsText(String text, {SymbolReplacerSymbolData symbolData}) {
     if (_symbolMap != null) {
       var selectedSymbols = <Symbol>[];
@@ -149,7 +156,6 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
       if ((selectedSymbols != null) && selectedSymbols.isNotEmpty && (selectedSymbols?.first?.symbolGroup != null)) {
         selectedSymbols.first.symbolGroup.text = text;
         selectedSymbols.first.symbolGroup.compareSymbol = symbolData;
-        selectedSymbols.first.symbolGroup.manualText = true;
       }
     }
   }
@@ -239,61 +245,11 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
           )),
         ],
       ),
-      _changeGroupRow()
     ]);
   }
 
-  Widget _changeGroupRow() {
-    var currentGroup = widget.viewSymbols?.first?.symbolGroup;
-    var currentGroupIndex = currentGroup == null ? -1 : widget.symbolImage.symbolGroups.indexOf(currentGroup);
-
-    return Row(
-      children: [
-        Expanded(
-            child: GCWIconButton(
-              icon: Icons.arrow_back,
-              //text: 'prev. Group', //i18n(context, 'symboltablesexamples_selectall'),
-              //margin: EdgeInsets.only(top: 5.0, bottom: 5.0),
-              iconColor: currentGroupIndex > 0
-                  ? null
-                  : themeColors().inActive(),
-              onPressed: () {
-                setState(() {
-                  _selectSymbolGroup(currentGroupIndex, -1);
-                });
-              },
-            )),
-        Container(width: DOUBLE_DEFAULT_MARGIN),
-        Expanded(
-            child: GCWIconButton(
-              icon: Icons.arrow_forward,
-              //text: 'next Group', //i18n(context, 'symboltablesexamples_deselectall'),
-              //margin: EdgeInsets.only(top: 5.0, bottom: 5.0),
-              iconColor: currentGroupIndex >= 0 && currentGroupIndex <  -1
-                  ? null
-                  : themeColors().inActive(),
-              onPressed: () {
-                setState(() {
-                  _selectSymbolGroup(currentGroupIndex, 1);
-                });
-              },
-            )),
-      ],
-    );
-  }
-
-  void _selectSymbolGroup(int index, int offset) {
-    var newIndex = (index ?? - 1) + offset;
-    if (newIndex < 0) newIndex = widget.symbolImage.symbolGroups.length - 1;
-    if (newIndex >= widget.symbolImage.symbolGroups.length) newIndex = 0;
-
-    widget.viewSymbols = widget.symbolImage.symbolGroups[newIndex].symbols;
-    _init = true;
-    _symbolMap = Map<Symbol, Map<String, SymbolData>>();
-  }
-
   _selectSymbolDataItem(SymbolData symbolData) {
-    var compareSymbol = getSymbol(symbolData, _symbolMap)?.symbolGroup?.compareSymbol;
+    var compareSymbol = _getSymbol(symbolData)?.symbolGroup?.compareSymbol;
     if ((widget.symbolImage?.compareSymbols != null) && (compareSymbol != null)) {
       for (GCWDropDownMenuItem item in _symbolDataItems)
         if ((item.value is Map<String, SymbolReplacerSymbolData>) &&
@@ -325,25 +281,4 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
               ]))
         ]));
   }
-
-  _debugOutput() {
-    var count = 0;
-    widget.symbolImage.symbolGroups.forEach((group) {
-      count += group.symbols.length;
-    });
-    print('symbols: ' + widget.symbolImage.symbols.length.toString() + ' groups: ' +
-        widget.symbolImage.symbolGroups.length.toString() +'/ ' + count.toString());
-  }
-}
-
-Map<String, SymbolData> cloneSymbolData(Map<String, SymbolData> image, String text, bool markedOverlay) {
-  var symbolData = SymbolData(bytes: image.values.first.bytes, displayName: text ?? '');
-  symbolData.primarySelected = image.values.first.primarySelected;
-  symbolData.secondarySelected = image.values.first.secondarySelected;
-  symbolData.markedOverlay = markedOverlay;
-  return {null: symbolData};
-}
-
-Symbol getSymbol(SymbolData imageData, Map<Symbol, Map<String, SymbolData>> symbolMap) {
-  return symbolMap.entries.firstWhere((entry) => entry.value.values.first == imageData, orElse: () => null)?.key;
 }

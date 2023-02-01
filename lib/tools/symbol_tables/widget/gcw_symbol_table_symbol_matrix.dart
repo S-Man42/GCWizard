@@ -25,7 +25,6 @@ class GCWSymbolTableSymbolMatrix extends StatefulWidget {
   final bool overlayOn;
   final String symbolKey;
   final bool fixed;
-  final double scale;
 
   const GCWSymbolTableSymbolMatrix(
       {Key key,
@@ -37,8 +36,7 @@ class GCWSymbolTableSymbolMatrix extends StatefulWidget {
       this.onSymbolTapped,
       this.fixed: false,
       this.overlayOn: true,
-      this.symbolKey,
-      this.scale: 1.0})
+      this.symbolKey})
       : super(key: key);
 
   @override
@@ -95,12 +93,12 @@ class GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> 
         ],
       ),
       widget.fixed
-          ? _buildDecryptionButtonMatrix(widget.countColumns, widget.selectable, widget.onSymbolTapped, widget.scale)
+          ? _buildDecryptionButtonMatrix(widget.countColumns, widget.selectable, widget.onSymbolTapped)
           : Expanded(
               child: SingleChildScrollView(
                   physics: AlwaysScrollableScrollPhysics(),
                   primary: true,
-                  child: _buildDecryptionButtonMatrix(widget.countColumns, widget.selectable, widget.onSymbolTapped, widget.scale)))
+                  child: _buildDecryptionButtonMatrix(widget.countColumns, widget.selectable, widget.onSymbolTapped)))
     ]);
   }
 
@@ -108,7 +106,7 @@ class GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> 
     return text == ' ' ? String.fromCharCode(9251) : text;
   }
 
-  _buildDecryptionButtonMatrix(int countColumns, bool selectable, Function onSymbolTapped, double scale) {
+  _buildDecryptionButtonMatrix(int countColumns, bool selectable, Function onSymbolTapped) {
     if (_imageData == null) return Container();
 
     var rows = <Widget>[];
@@ -137,7 +135,7 @@ class GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> 
                   borderColor:
                       image.primarySelected ? colors.dialog() : (image.secondarySelected ? colors.focused() : null),
                   borderWidth: image.primarySelected || image.secondarySelected ? 5.0 : null,
-                  symbol: Image.memory(image.bytes, scale: scale),
+                  symbol: Image.memory(image.bytes),
                 ),
                 _currentShowOverlayedSymbols
                     ? Opacity(
@@ -151,7 +149,7 @@ class GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> 
                           ),
                           height: defaultFontSize() + 5,
                           decoration: ShapeDecoration(
-                              color: (image.markedOverlay == true) ? colors.focused() : colors.dialog(),
+                              color: colors.dialog(),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.all(Radius.circular(ROUNDED_BORDER_RADIUS)),
                               )),

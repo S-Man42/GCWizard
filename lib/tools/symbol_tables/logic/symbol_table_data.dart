@@ -181,12 +181,11 @@ class SymbolData {
   final List<int> bytes;
   bool primarySelected = false;
   bool secondarySelected = false;
-  bool markedOverlay = false;
   final String displayName;
   ui.Image standardImage;
   ui.Image specialEncryptionImage;
 
-  SymbolData({this.path, this.bytes, this.displayName, this.standardImage, this.specialEncryptionImage, this.markedOverlay});
+  SymbolData({this.path, this.bytes, this.displayName, this.standardImage, this.specialEncryptionImage});
 
   Size imageSize() {
     return Size(standardImage.width.toDouble(), standardImage.height.toDouble());
