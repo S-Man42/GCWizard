@@ -37,6 +37,12 @@ Future<Tuple3<Image.Image, Uint8List, int>> decodeImageAsync(dynamic jobData) as
   Uint8List image = jobData.parameters.item1;
   Image.Image imageData = jobData.parameters.item2;
   int displacement = jobData.parameters.item3;
+  
+  return decodeImage(image, imageData, displacement, sendAsyncPort: jobData.sendAsyncPort);
+}
+
+Future<Tuple3<Image.Image, Uint8List, int>> decodeImage(Uint8List image, Image.Image imageData, int displacement,
+   {SendPort sendAsyncPort}) async {
 
   if (image == null) return null;
   if (imageData == null) imageData = Image.decodeImage(image);
@@ -45,7 +51,7 @@ Future<Tuple3<Image.Image, Uint8List, int>> decodeImageAsync(dynamic jobData) as
   var outputImage = createResultImage(imageData, displacement);
   var result = Tuple3<Image.Image, Uint8List, int>(imageData, outputImage, displacement);
 
-  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(result);
+  if (sendAsyncPort != null) sendAsyncPort.send(result);
 
   return Future.value(result);
 }
