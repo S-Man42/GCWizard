@@ -2,11 +2,8 @@ import 'dart:io' as io;
 import 'dart:typed_data';
 
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/common_widgets/gcw_async_executer.dart';
 import 'package:gc_wizard/tools/images_and_files/magic_eye_solver/logic/magic_eye_solver.dart';
-import 'package:image/image.dart' as Image;
 import 'package:path/path.dart' as path;
-import 'package:tuple/tuple.dart';
 
 var testDirPath = 'test/tools/images_and_files/magic_eye_solver/resources/';
 
@@ -31,7 +28,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () async {
-        var _actual = await decodeImageAsync(GCWAsyncExecuterParameters(Tuple3<Uint8List, Image.Image, int>(_getFileData(elem['input']), null, null)));
+        var _actual = await decodeImage(_getFileData(elem['input']), null, null);
         expect(_actual.item3, elem['expectedOutput']);
       });
     });
