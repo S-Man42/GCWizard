@@ -11,7 +11,7 @@ void main() {
       {'a' : '',   'b' : null, 'c' : null, 'expectedOutput' : ['']},
       {'a' : '',   'b' : '',   'c' : '',   'expectedOutput' : ['']},
 
-      {'a' : '0.0', 'b' : '0.0', 'c' : '0.0', 'expectedOutput' : ['quadratic_equation_hint_a_b_null', 'NaN', 'NaN']},
+      {'a' : '0.0', 'b' : '0.0', 'c' : '0.0', 'expectedOutput' : ['quadratic_equation_hint_a_b_null', '0.0', 'NaN']},
       {'a' : '1.0', 'b' : '1.0', 'c' : '1.0', 'expectedOutput' : ['quadratic_equation_hint_complex', '-0.5 + i * 0.8660254', '-0.5 - i * 0.8660254']},
       {'a' : '1.0', 'b' : '2.0', 'c' : '1.0', 'expectedOutput' : ['-1.0', '-1.0']},
       {'a' : '1.0', 'b' : '2.0', 'c' : '0.0', 'expectedOutput' : ['0.0', '-2.0']},

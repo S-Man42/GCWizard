@@ -4,25 +4,25 @@ import 'package:gc_wizard/tools/science_and_technology/number_sequences/_common/
 void main() {
   group("numbersequence.getNumberAt:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'sequence' : NumberSequencesMode.CATALAN,          'position' : 30, 'expectedOutput' : 3814986502092304},
-      {'sequence' : NumberSequencesMode.RECAMAN,          'position' : 30, 'expectedOutput' : 45},
-      {'sequence' : NumberSequencesMode.LUCAS,            'position' : 30, 'expectedOutput' : 1860498},
-      {'sequence' : NumberSequencesMode.FIBONACCI,        'position' : 30, 'expectedOutput' : 832040},
-      {'sequence' : NumberSequencesMode.JACOBSTAHL,       'position' : 30, 'expectedOutput' : 357913941},
-      {'sequence' : NumberSequencesMode.JACOBSTHAL_LUCAS, 'position' : 30, 'expectedOutput' : 1073741825},
-      {'sequence' : NumberSequencesMode.PELL,             'position' : 30, 'expectedOutput' : 107578520350},
-      {'sequence' : NumberSequencesMode.MERSENNE_FERMAT,  'position' : 30, 'expectedOutput' : 1073741825},
-      {'sequence' : NumberSequencesMode.MERSENNE,         'position' : 30, 'expectedOutput' : 1073741823},
-      {'sequence' : NumberSequencesMode.PELL_LUCAS,       'position' : 30, 'expectedOutput' : 304278004998},
-      {'sequence' : NumberSequencesMode.FERMAT,           'position' :  5, 'expectedOutput' : 4294967297},
-      {'sequence' : NumberSequencesMode.FACTORIAL,        'position' : 20, 'expectedOutput' : 2432902008176640000},
-      {'sequence' : NumberSequencesMode.LYCHREL,          'position' : 20, 'expectedOutput' : 1767},
+      {'sequence' : NumberSequencesMode.CATALAN,          'position' : 30, 'expectedOutput' : BigInt.from(3814986502092304)},
+      {'sequence' : NumberSequencesMode.RECAMAN,          'position' : 30, 'expectedOutput' : BigInt.from(45)},
+      {'sequence' : NumberSequencesMode.LUCAS,            'position' : 30, 'expectedOutput' : BigInt.from(1860498)},
+      {'sequence' : NumberSequencesMode.FIBONACCI,        'position' : 30, 'expectedOutput' : BigInt.from(832040)},
+      {'sequence' : NumberSequencesMode.JACOBSTAHL,       'position' : 30, 'expectedOutput' : BigInt.from(357913941)},
+      {'sequence' : NumberSequencesMode.JACOBSTHAL_LUCAS, 'position' : 30, 'expectedOutput' : BigInt.from(1073741825)},
+      {'sequence' : NumberSequencesMode.PELL,             'position' : 30, 'expectedOutput' : BigInt.from(107578520350)},
+      {'sequence' : NumberSequencesMode.MERSENNE_FERMAT,  'position' : 30, 'expectedOutput' : BigInt.from(1073741825)},
+      {'sequence' : NumberSequencesMode.MERSENNE,         'position' : 30, 'expectedOutput' : BigInt.from(1073741823)},
+      {'sequence' : NumberSequencesMode.PELL_LUCAS,       'position' : 30, 'expectedOutput' : BigInt.from(304278004998)},
+      {'sequence' : NumberSequencesMode.FERMAT,           'position' :  5, 'expectedOutput' : BigInt.from(4294967297)},
+      {'sequence' : NumberSequencesMode.FACTORIAL,        'position' : 20, 'expectedOutput' : BigInt.from(2432902008176640000)},
+      {'sequence' : NumberSequencesMode.LYCHREL,          'position' : 20, 'expectedOutput' : BigInt.from(1767)},
     ];
 
     _inputsToExpected.forEach((elem) {
       test('sequence: ${elem['sequence']}, position: ${elem['position']}', () {
-        var _actual = getNumberAt(elem['sequence'], elem['position']).toInt();
-        expect(_actual, BigInt.from(elem['expectedOutput']));
+        var _actual = getNumberAt(elem['sequence'], elem['position']);
+        expect(_actual, elem['expectedOutput']);
       });
     });
   });
@@ -94,7 +94,7 @@ void main() {
       {'sequence' : NumberSequencesMode.PELL,             'digits' : 4, 'expectedOutput' : [2378,5741]},
       {'sequence' : NumberSequencesMode.PELL_LUCAS,       'digits' : 4, 'expectedOutput' : [1154,2786,6726]},
       {'sequence' : NumberSequencesMode.FACTORIAL,        'digits' : 3, 'expectedOutput' : [120,720]},
-      {'sequence' : NumberSequencesMode.LYCHREL,          'digits' : 3, 'expectedOutput' : [196, 295, 394, 493, 592, 689, 691, 788, 790, 879, 887, 978, 986]},
+      {'sequence' : NumberSequencesMode.LYCHREL,          'digits' : 3, 'expectedOutput' : [196, 295, 394, 493, 592, 689, 691, 788, 790, 879, 887, 978, 986]}, // Mark test
     ];
 
     _inputsToExpected.forEach((elem) {
