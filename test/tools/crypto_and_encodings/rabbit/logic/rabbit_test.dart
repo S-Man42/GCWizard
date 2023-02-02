@@ -88,7 +88,7 @@ void main() {
         'expectedOutput': RabbitOutput('1E DD 30 D4', '54 65 73 74 54 65 73 74 54 65 73 74 54 65 73 74', '00 00 00 00 00 00 00 00', ErrorCode.OK)
       },
       {'input': '02 6C DB CD', 'inputFormat': InputFormat.AUTO, 'key': 'Test', 'keyFormat': InputFormat.AUTO, 'iv': null, 'ivFormat': InputFormat.AUTO, 'outputFormat': OutputFormat.BINARY,
-        'expectedOutput': RabbitOutput('1010100 1100101 1110011 1110100', '54 65 73 74 00 00 00 00 00 00 00 00 00 00 00 00', '00 00 00 00 00 00 00 00', ErrorCode.OK)
+        'expectedOutput': RabbitOutput('01010100 01100101 01110011 01110100', '54 65 73 74 00 00 00 00 00 00 00 00 00 00 00 00', '00 00 00 00 00 00 00 00', ErrorCode.OK)
       },
       {'input': '1010100 1100101 1110011 1110100', 'inputFormat': InputFormat.AUTO, 'key': 'Test', 'keyFormat': InputFormat.AUTO, 'iv': null, 'ivFormat': InputFormat.AUTO, 'outputFormat': OutputFormat.HEX,
         'expectedOutput': RabbitOutput('02 6C DB CD', '54 65 73 74 00 00 00 00 00 00 00 00 00 00 00 00', '00 00 00 00 00 00 00 00', ErrorCode.OK)
