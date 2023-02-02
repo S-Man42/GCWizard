@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_language.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/i18n/supported_locales.dart';
-import 'package:gc_wizard/application/view_categories/all_tools_view.dart';
+import 'package:gc_wizard/application/category_views/all_tools_view.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/application/settings/widget/settings_preferences.dart';
