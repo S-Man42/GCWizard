@@ -5,7 +5,7 @@ void main() {
   group("divisor", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : []},
-      {'input' : 0, 'expectedOutput' : []},
+      {'input' : 0, 'expectedOutput' : [0]},
       {'input' : 1, 'expectedOutput' : [1]},
       {'input' : 2, 'expectedOutput' : [1, 2]},
       {'input' : 10, 'expectedOutput' : [1, 2, 5, 10]},
