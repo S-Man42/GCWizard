@@ -44,7 +44,7 @@ void main() {
     });
   });
 
-  group("CCITT1.decodeCCITT1:", () {
+  group("CCITT1.decodeCCITT1:", () { // Mark test
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : <int>[], 'expectedOutput' : ''},
@@ -57,7 +57,7 @@ void main() {
       {'expectedOutput' : '123', 'input' : [8, 4, 2, 1]},
       {'expectedOutput' : '1 2 3', 'input' : [8, 4, 8, 2, 8, 1]},
       {'expectedOutput' : '.=7/', 'input' : [8, 20, 30, 10, 29]},
-      {'expectedOutput' : '.=7/', 'input' : [8, 20, 30, 17]},
+      {'expectedOutput' : '.=7/', 'input' : [8, 20, 30, 17]}, // Mark test
 
       {'expectedOutput' : 'AB 12', 'input' : [4, 9, 8, 4, 2]},
       {'expectedOutput' : '12 AB', 'input' : [8, 4, 2, 16, 4, 9]},

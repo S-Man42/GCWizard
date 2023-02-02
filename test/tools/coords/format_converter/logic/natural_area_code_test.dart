@@ -3,6 +3,7 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:latlong2/latlong.dart';
 
 void main() {
+  // Mark test
   group("Converter.naturalAreaCode.latlonToNaturalAreaCode:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'coord': LatLng(51.907002, 9.113159), 'expectedOutput': NaturalAreaCode('HQRGL6Z7', 'RMJ1H830')},

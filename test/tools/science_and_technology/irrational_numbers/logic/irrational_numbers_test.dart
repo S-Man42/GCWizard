@@ -74,7 +74,7 @@ void main() {
     });
   });
 
-  group("IrrationalNumberCalculator.decimalOccurence:", () {
+  group("IrrationalNumberCalculator.decimalOccurence:", () { // Mark test
     var irCalculator = IrrationalNumberCalculator(irrationalNumber: PI);
 
     List<Map<String, dynamic>> _inputsToExpected = [

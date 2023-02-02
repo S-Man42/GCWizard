@@ -76,7 +76,7 @@ void main() {
       {'expectedOutput' : 'THEWRLDISNTFAIR', 'input' : 'ACTCATGAATGGCGATTAGATATTTCTAATACTTTCGCTATTCGA'},
       {'expectedOutput' : 'THEWRLDISNTFAI', 'input' : 'ACTCATGAATGGCGATTAGATATTTCTAATACTTTCGCTATTC'},
 
-      {'expectedOutput' : 'THEWRLDISNTFAI', 'input' : 'THIS IS MY WORLD'},
+      {'expectedOutput' : 'THEWRLDISNTFAI', 'input' : 'THIS IS MY WORLD'},// Mark test
     ];
 
     _inputsToExpected.forEach((elem) {
