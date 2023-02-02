@@ -1,9 +1,9 @@
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/tools/coords/coordinate_format_parser/logic/latlon.dart';
 
-import '../../format_converter/logic/dec.dart';
-import '../../format_converter/logic/dmm.dart';
-import '../../format_converter/logic/dms.dart';
+import '../../format_converter/logic/dec_test.dart';
+import '../../format_converter/logic/dmm_test.dart';
+import '../../format_converter/logic/dms_test.dart';
 
 void main() {
 
