@@ -12,7 +12,7 @@ void main() {
       {'temperature' : null, 'windspeed' : -10.0, 'isMetric' : false, 'expectedOutput' : null},
 
       {'temperature' : -10.0, 'windspeed' : 5.0, 'isMetric' : true, 'expectedOutput' : -12.933963619176676},
-      {'temperature' : -10.0, 'windspeed' : 5.0, 'isMetric' : false, 'expectedOutput' : -22.933963619176676},
+      {'temperature' : -10.0, 'windspeed' : 5.0, 'isMetric' : false, 'expectedOutput' : -22.255535954192787},
       {'temperature' : 5.0, 'windspeed' : 5.0, 'isMetric' : true, 'expectedOutput' : 4.082845877077206},
       {'temperature' : 5.0, 'windspeed' : 5.0, 'isMetric' : false, 'expectedOutput' : -4.637153710438598},
       {'temperature' : 5.0, 'windspeed' : 10.0, 'isMetric' : true, 'expectedOutput' : 2.658434152122606},
