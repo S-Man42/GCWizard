@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
-import 'package:gc_wizard/common/variable_string_expander/logic/variable_string_expander.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_paste_button.dart';
@@ -16,7 +15,8 @@ import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/formula_solver/persistence/model.dart';
-import 'package:gc_wizard/utils/logic_utils/math_utils.dart';
+import 'package:gc_wizard/utils/math_utils.dart';
+import 'package:gc_wizard/utils/variable_string_expander.dart';
 
 /*
   TODO: TECHNICAL DEBT:

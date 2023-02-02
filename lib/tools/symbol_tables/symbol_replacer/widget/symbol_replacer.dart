@@ -7,7 +7,6 @@ import 'package:gc_wizard/application/navigation/no_animation_material_page_rout
 import 'package:gc_wizard/application/registry.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
-import 'package:gc_wizard/common/gcw_file.dart' as local;
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
@@ -34,7 +33,8 @@ import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_repl
 import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_replacer_symboldata.dart';
 import 'package:gc_wizard/tools/symbol_tables/widget/gcw_symbol_table_tool.dart';
 import 'package:gc_wizard/tools/symbol_tables/widget/symbol_table.dart';
-import 'package:gc_wizard/utils/common_widget_utils.dart';
+import 'package:gc_wizard/utils/file_utils/gcw_file.dart' as local;
+import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:tuple/tuple.dart';
 
 class SymbolReplacer extends StatefulWidget {

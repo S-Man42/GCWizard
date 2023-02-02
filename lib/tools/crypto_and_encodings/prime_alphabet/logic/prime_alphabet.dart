@@ -1,7 +1,7 @@
-import 'package:gc_wizard/common/alphabets.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/homophone/logic/homophone.dart';
 import 'package:gc_wizard/tools/science_and_technology/primes/logic/primes.dart';
-import 'package:gc_wizard/utils/logic_utils/constants.dart';
+import 'package:gc_wizard/utils/alphabets.dart';
+import 'package:gc_wizard/utils/constants.dart';
 
 String decryptPrimeAlphabet(List<int> input, {int firstRecognizedPrime: 2}) {
   if (input == null || input.isEmpty) return '';

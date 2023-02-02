@@ -3,8 +3,8 @@ import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_stateful_dropdown.dart';
 import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
-import 'package:gc_wizard/tools/coords/utils/default_getter.dart';
-import 'package:gc_wizard/tools/coords/utils/format_getter.dart';
+import 'package:gc_wizard/tools/coords/logic/default_coord_getter.dart';
+import 'package:gc_wizard/tools/coords/logic/coord_format_getter.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/multi_decoder.dart';
 import 'package:latlong2/latlong.dart';
 

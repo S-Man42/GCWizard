@@ -1,6 +1,6 @@
 import 'dart:io' as io;
 
-import 'package:gc_wizard/common/file_utils.dart';
+import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:path/path.dart' as path;
 
 var testDirPath = 'test/tools/images_and_files/exif_reader/resources/';

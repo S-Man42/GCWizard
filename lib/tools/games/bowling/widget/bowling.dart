@@ -13,7 +13,6 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/spinners/spinner_constants.dart';
 import 'package:gc_wizard/tools/games/bowling/logic/bowling.dart';
-import 'package:gc_wizard/utils/common_widget_utils.dart';
 
 class Bowling extends StatefulWidget {
   @override

@@ -1,4 +1,4 @@
-import 'package:gc_wizard/utils/logic_utils/collection_utils.dart';
+import 'package:gc_wizard/utils/collection_utils.dart';
 
 /*
   Schilling Canstatt:

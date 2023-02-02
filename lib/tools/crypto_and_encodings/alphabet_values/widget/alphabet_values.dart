@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
-import 'package:gc_wizard/common/alphabets.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
@@ -20,8 +19,9 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_integer_list_textfield.d
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/logic/alphabet_values.dart' as logic;
 import 'package:gc_wizard/tools/science_and_technology/cross_sums/widget/crosstotal_output.dart';
-import 'package:gc_wizard/utils/logic_utils/collection_utils.dart';
-import 'package:gc_wizard/utils/logic_utils/constants.dart';
+import 'package:gc_wizard/utils/alphabets.dart';
+import 'package:gc_wizard/utils/collection_utils.dart';
+import 'package:gc_wizard/utils/constants.dart';
 import 'package:prefs/prefs.dart';
 
 class AlphabetValues extends StatefulWidget {

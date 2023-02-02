@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
-import 'package:gc_wizard/common/file_utils.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/tools/symbol_tables/logic/symbol_table_data.dart';
@@ -18,7 +17,8 @@ import 'package:gc_wizard/tools/symbol_tables/special_encryption_painters/symbol
 import 'package:gc_wizard/tools/symbol_tables/special_encryption_painters/symbol_table_encryption_sizes/widget/symbol_table_encryption_sizes.dart';
 import 'package:gc_wizard/tools/symbol_tables/special_encryption_painters/symbol_table_encryption_stipplecode/widget/symbol_table_encryption_stipplecode.dart';
 import 'package:gc_wizard/tools/symbol_tables/special_encryption_painters/symbol_table_encryption_tenctonese/widget/symbol_table_encryption_tenctonese.dart';
-import 'package:gc_wizard/utils/logic_utils/collection_utils.dart';
+import 'package:gc_wizard/utils/collection_utils.dart';
+import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
 import 'package:intl/intl.dart';
 
 class GCWSymbolTableTextToSymbols extends StatefulWidget {

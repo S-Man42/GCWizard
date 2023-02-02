@@ -5,7 +5,7 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rotation/logic/rotator.dart';
-import 'package:gc_wizard/utils/logic_utils/math_utils.dart';
+import 'package:gc_wizard/utils/math_utils.dart';
 
 class RotationGeneral extends StatefulWidget {
   @override

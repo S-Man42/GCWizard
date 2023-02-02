@@ -1,7 +1,7 @@
-import 'package:gc_wizard/common/alphabets.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/logic/crypt_alphabet_modification.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/polybios/logic/polybios.dart';
-import 'package:gc_wizard/utils/logic_utils/constants.dart';
-import 'package:gc_wizard/utils/logic_utils/string_utils.dart';
+import 'package:gc_wizard/utils/alphabets.dart';
+import 'package:gc_wizard/utils/string_utils.dart';
 
 Map<String, List<int>> _createKeyGrid(String key, AlphabetModificationMode mode) {
   if (key == null) key = '';

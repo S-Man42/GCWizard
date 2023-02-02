@@ -1,6 +1,6 @@
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/tools/science_and_technology/segment_display/logic/segment_display.dart';
-import 'package:gc_wizard/utils/logic_utils/constants.dart';
+import 'package:gc_wizard/utils/constants.dart';
 
 void main() {
   group("SegmentDisplay.encodeSegment:", () {

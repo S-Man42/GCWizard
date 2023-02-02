@@ -6,7 +6,7 @@ import 'package:gc_wizard/common_widgets/gcw_datetime_picker.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/utils/logic_utils/datetime_utils.dart';
+import 'package:gc_wizard/utils/datetime_utils.dart';
 
 // enabling int value to get passed as reference
 class _WrapperForInt {

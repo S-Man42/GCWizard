@@ -13,7 +13,6 @@ import 'package:gc_wizard/tools/symbol_tables/logic/symbol_table_data.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_replacer.dart';
 import 'package:gc_wizard/tools/symbol_tables/widget/gcw_symbol_container.dart';
 import 'package:gc_wizard/tools/symbol_tables/widget/gcw_symbol_table_zoom_buttons.dart';
-import 'package:gc_wizard/utils/common_widget_utils.dart';
 
 class GCWSymbolTableSymbolMatrix extends StatefulWidget {
   final int countColumns;

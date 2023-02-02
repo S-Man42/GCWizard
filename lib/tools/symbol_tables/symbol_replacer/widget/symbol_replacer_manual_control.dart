@@ -14,7 +14,6 @@ import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/logic/symbol_repla
 import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_replacer_manual_setter.dart';
 import 'package:gc_wizard/tools/symbol_tables/widget/gcw_symbol_container.dart';
 import 'package:gc_wizard/tools/symbol_tables/widget/gcw_symbol_table_symbol_matrix.dart';
-import 'package:gc_wizard/utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 
 class SymbolReplacerManualControl extends StatefulWidget {

@@ -1,5 +1,5 @@
-import 'package:gc_wizard/common/alphabets.dart';
 import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
+import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:latlong2/latlong.dart';
 
 LatLng maidenheadToLatLon(Maidenhead maidenhead) {

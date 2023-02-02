@@ -1,6 +1,6 @@
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/tools/coords/centroid/logic/centroid.dart';
-import 'package:gc_wizard/tools/coords/utils/utils.dart';
+import 'package:gc_wizard/utils/coordinate_utils.dart';
 import 'package:latlong2/latlong.dart';
 
 void main() {

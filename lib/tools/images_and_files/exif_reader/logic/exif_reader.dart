@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:exif/exif.dart';
-import 'package:gc_wizard/common/gcw_file.dart' as local;
+import 'package:gc_wizard/utils/file_utils/gcw_file.dart' as local;
 import 'package:gc_wizard/common_widgets/image_viewers/gcw_imageview.dart';
 import 'package:gc_wizard/tools/coords/coordinate_format_parser/logic/latlon.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/dec.dart';

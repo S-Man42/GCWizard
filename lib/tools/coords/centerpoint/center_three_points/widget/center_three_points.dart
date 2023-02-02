@@ -7,13 +7,13 @@ import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coord
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coords_outputformat_distance.dart';
 import 'package:gc_wizard/common_widgets/gcw_async_executer.dart';
 import 'package:gc_wizard/tools/coords/centerpoint/logic/centerpoint.dart';
+import 'package:gc_wizard/tools/coords/logic/coord_format_getter.dart';
 import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
+import 'package:gc_wizard/tools/coords/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
-import 'package:gc_wizard/tools/coords/utils/default_getter.dart';
-import 'package:gc_wizard/tools/coords/utils/format_getter.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/length.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit_category.dart';
-import 'package:gc_wizard/utils/logic_utils/constants.dart';
+import 'package:gc_wizard/utils/constants.dart';
 import 'package:latlong2/latlong.dart';
 
 class CenterThreePoints extends StatefulWidget {

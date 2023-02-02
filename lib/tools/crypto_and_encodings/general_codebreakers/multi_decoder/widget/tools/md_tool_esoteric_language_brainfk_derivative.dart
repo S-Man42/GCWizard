@@ -5,7 +5,7 @@ import 'package:gc_wizard/common_widgets/dropdowns/gcw_stateful_dropdown.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/brainfk/logic/brainfk.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/brainfk/logic/brainfk_derivative.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/multi_decoder.dart';
-import 'package:gc_wizard/utils/logic_utils/collection_utils.dart';
+import 'package:gc_wizard/utils/collection_utils.dart';
 
 const MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE =
     'multidecoder_tool_esotericlanguage_brainfk_derivate_title';

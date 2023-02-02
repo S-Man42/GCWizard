@@ -7,7 +7,7 @@
 // https://www.itwissen.info/Glixon-Code-Glixon-code.html
 // http://www.ahok.de/en/hoklas-code.html#:~:text=Three%20of%20the%20four%20bits%20of%20Tompkins%27s%20code,least%20significant%20bits.%20It%27s%20known%20as%20%22reflected%20code%22.
 
-import 'package:gc_wizard/utils/logic_utils/collection_utils.dart';
+import 'package:gc_wizard/utils/collection_utils.dart';
 
 final DigitToBCDOriginal = {
   '0': "0000",

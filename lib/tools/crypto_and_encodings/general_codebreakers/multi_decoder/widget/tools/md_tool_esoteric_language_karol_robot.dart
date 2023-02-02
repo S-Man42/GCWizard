@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/karol_robot/logic/karol_robot.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/multi_decoder.dart';
 import 'package:gc_wizard/tools/images_and_files/binary2image/logic/binary2image.dart';
-import 'package:gc_wizard/utils/common_widget_utils.dart';
+import 'package:gc_wizard/utils/ui_dependent_utils/image_utils/image_utils.dart';
 
 const MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_KAROL_ROBOT = 'karol_robot_title';
 

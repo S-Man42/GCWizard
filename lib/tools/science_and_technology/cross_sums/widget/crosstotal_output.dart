@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
-import 'package:gc_wizard/utils/logic_utils/crosstotals.dart';
+import 'package:gc_wizard/tools/science_and_technology/cross_sums/logic/crosstotals.dart';
 
 enum CROSSTOTAL_INPUT_TYPE { LETTERS, NUMBERS }
 

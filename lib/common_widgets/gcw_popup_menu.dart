@@ -3,7 +3,7 @@ import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
-import 'package:gc_wizard/utils/logic_utils/math_utils.dart';
+import 'package:gc_wizard/utils/math_utils.dart';
 
 class GCWPopupMenu extends StatefulWidget {
   final List<GCWPopupMenuItem> Function(BuildContext context) menuItemBuilder;

@@ -1,7 +1,7 @@
 // imports
 import 'dart:math';
 
-import 'package:gc_wizard/utils/logic_utils/math_utils.dart';
+import 'package:gc_wizard/utils/math_utils.dart';
 
 // parts
 part 'package:gc_wizard/tools/coords/logic/external_libs/net.sf.geographic_lib/geographic_lib/geo_math.dart';

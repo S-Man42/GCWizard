@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
-import 'package:gc_wizard/common/alphabets.dart';
 import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/persistence/json_provider.dart';
@@ -12,6 +11,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/tools/md_tool_ccitt1.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/tools/md_tool_ccitt2.dart';
 import 'package:gc_wizard/tools/science_and_technology/maya_calendar/logic/maya_calendar.dart';
+import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:prefs/prefs.dart';
 
 enum PreferencesInitMode { STARTUP, REINIT_ALL, REINIT_SINGLE }

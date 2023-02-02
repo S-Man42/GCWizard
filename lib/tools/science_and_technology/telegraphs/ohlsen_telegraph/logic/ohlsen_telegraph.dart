@@ -3,8 +3,8 @@ Anne Solberg
 Norsk Teknisk Museum, Oslo
  */
 
-import 'package:gc_wizard/utils/logic_utils/collection_utils.dart';
-import 'package:gc_wizard/utils/logic_utils/constants.dart';
+import 'package:gc_wizard/utils/collection_utils.dart';
+import 'package:gc_wizard/utils/constants.dart';
 
 final CODEBOOK_OHLSEN = {
   '000': 'seilere sees, som kommme vestlig fra.',

@@ -3,10 +3,10 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:audioplayers/audioplayers.dart' as Audio;
-import 'package:gc_wizard/common/file_utils.dart';
-import 'package:gc_wizard/common/gcw_file.dart';
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
-import 'package:gc_wizard/utils/logic_utils/collection_utils.dart';
+import 'package:gc_wizard/utils/collection_utils.dart';
+import 'package:gc_wizard/utils/file_utils/file_utils.dart';
+import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:image/image.dart' as Image;
 import 'package:tuple/tuple.dart';
 

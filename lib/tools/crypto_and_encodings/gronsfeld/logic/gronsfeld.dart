@@ -1,6 +1,6 @@
-import 'package:gc_wizard/common/alphabets.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rotation/logic/rotator.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/vigenere/logic/vigenere.dart';
+import 'package:gc_wizard/utils/alphabets.dart';
 
 String encryptGronsfeld(String input, String key, bool autoKey, {int aValue = 0}) {
   if (input == null) return '';

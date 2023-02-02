@@ -17,8 +17,8 @@
 import 'dart:math';
 
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
-import 'package:gc_wizard/utils/logic_utils/collection_utils.dart';
-import 'package:gc_wizard/utils/logic_utils/constants.dart';
+import 'package:gc_wizard/utils/collection_utils.dart';
+import 'package:gc_wizard/utils/constants.dart';
 
 class Offset {
   final int xOffset;

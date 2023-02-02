@@ -7,7 +7,7 @@ import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/prime_alphabet/logic/prime_alphabet.dart';
 import 'package:gc_wizard/tools/science_and_technology/primes/logic/primes_list.dart';
-import 'package:gc_wizard/utils/logic_utils/constants.dart';
+import 'package:gc_wizard/utils/constants.dart';
 
 class PrimeAlphabet extends StatefulWidget {
   @override

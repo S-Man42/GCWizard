@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
-import 'package:gc_wizard/common/alphabets.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_stateful_dropdown.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/logic/alphabet_values.dart' as logic;
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/multi_decoder.dart';
-import 'package:gc_wizard/utils/logic_utils/constants.dart';
+import 'package:gc_wizard/utils/alphabets.dart';
+import 'package:gc_wizard/utils/constants.dart';
 
 const MDT_INTERNALNAMES_ALPHABETVALUES = 'multidecoder_tool_alphabetvalues_title';
 const MDT_ALPHABETVALUES_OPTION_ALPHABET = 'multidecoder_tool_alphabetvalues_option_alphabet';

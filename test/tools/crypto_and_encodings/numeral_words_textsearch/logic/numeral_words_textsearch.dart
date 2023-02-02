@@ -1,6 +1,6 @@
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/tools/crypto_and_encodings/numeral_words/logic/numeral_words.dart';
-import 'package:gc_wizard/utils/logic_utils/string_utils.dart';
+import 'package:gc_wizard/utils/string_utils.dart';
 
 void main(){
   group("NumeralWords.decodeNumeralwordsEntireWordsDEU:", () {

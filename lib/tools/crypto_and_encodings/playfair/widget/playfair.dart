@@ -4,8 +4,8 @@ import 'package:gc_wizard/common_widgets/dropdowns/gcw_alphabetmodification_drop
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/logic/crypt_alphabet_modification.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/playfair/logic/playfair.dart';
-import 'package:gc_wizard/utils/logic_utils/constants.dart';
 
 class Playfair extends StatefulWidget {
   @override

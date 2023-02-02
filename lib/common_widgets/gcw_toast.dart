@@ -1,6 +1,6 @@
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
-import 'package:gc_wizard/utils/common_widget_utils.dart';
 
 showToast(String text, {int duration = 3}) {
   const _MAX_LENGTH = 800;

@@ -1,14 +1,14 @@
 import 'dart:math';
 
-import 'package:gc_wizard/common/alphabets.dart';
-import 'package:gc_wizard/common/variable_string_expander/logic/variable_string_expander.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/logic/alphabet_values.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
 import 'package:gc_wizard/tools/formula_solver/persistence/model.dart';
-import 'package:gc_wizard/utils/logic_utils/collection_utils.dart';
-import 'package:gc_wizard/utils/logic_utils/crosstotals.dart';
-import 'package:gc_wizard/utils/logic_utils/math_utils.dart';
-import 'package:gc_wizard/utils/logic_utils/string_utils.dart';
+import 'package:gc_wizard/tools/science_and_technology/cross_sums/logic/crosstotals.dart';
+import 'package:gc_wizard/utils/alphabets.dart';
+import 'package:gc_wizard/utils/collection_utils.dart';
+import 'package:gc_wizard/utils/math_utils.dart';
+import 'package:gc_wizard/utils/string_utils.dart';
+import 'package:gc_wizard/utils/variable_string_expander.dart';
 import 'package:intl/intl.dart';
 import 'package:math_expressions/math_expressions.dart';
 

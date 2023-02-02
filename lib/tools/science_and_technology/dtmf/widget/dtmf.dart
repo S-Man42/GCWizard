@@ -9,7 +9,7 @@ import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/text_input_formatters/wrapper_for_masktextinputformatter.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/science_and_technology/dtmf/logic/dtmf.dart';
-import 'package:gc_wizard/utils/common_widget_utils.dart';
+import 'package:gc_wizard/utils/ui_dependent_utils/text_widget_utils.dart';
 
 class DTMF extends StatefulWidget {
   @override

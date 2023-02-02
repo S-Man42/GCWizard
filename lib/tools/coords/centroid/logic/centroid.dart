@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:gc_wizard/utils/logic_utils/math_utils.dart';
+import 'package:gc_wizard/utils/math_utils.dart';
 import 'package:latlong2/latlong.dart';
 
 // https://web.archive.org/web/20221205184246/https://carto.com/blog/center-of-points/

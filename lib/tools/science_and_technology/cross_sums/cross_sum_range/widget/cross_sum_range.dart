@@ -9,7 +9,7 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.d
 import 'package:gc_wizard/common_widgets/outputs/gcw_multiple_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
-import 'package:gc_wizard/tools/science_and_technology/cross_sums/logic/cross_sum.dart';
+import 'package:gc_wizard/tools/science_and_technology/cross_sums/logic/crosstotals_range.dart';
 
 final _ALERT_MAX_OUTPUT = 200;
 final _ALERT_MAX_RANGE = 25000;

@@ -9,7 +9,6 @@ import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/roman_numbers/roman_numbers/logic/roman_numbers.dart';
 import 'package:gc_wizard/tools/science_and_technology/periodic_table/logic/periodic_table.dart';
 import 'package:gc_wizard/tools/science_and_technology/periodic_table/periodic_table_data_view/widget/periodic_table_data_view.dart';
-import 'package:gc_wizard/utils/common_widget_utils.dart';
 
 const _LEGEND_WIDTH = 2;
 const _LEGEND_START_IUPAC_GROUP = 6;

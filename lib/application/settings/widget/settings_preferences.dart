@@ -14,7 +14,6 @@ import 'package:gc_wizard/common_widgets/spinners/gcw_double_spinner.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
-import 'package:gc_wizard/utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 
 const _PREF_VALUE_MAX_LENGTH = 300;

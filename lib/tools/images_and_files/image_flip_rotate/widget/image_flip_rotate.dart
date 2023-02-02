@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
-import 'package:gc_wizard/common/file_utils.dart';
-import 'package:gc_wizard/common/gcw_file.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
@@ -13,7 +11,9 @@ import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/gcw_toolbar.dart';
 import 'package:gc_wizard/common_widgets/image_viewers/gcw_imageview.dart';
-import 'package:gc_wizard/utils/logic_utils/math_utils.dart';
+import 'package:gc_wizard/utils/file_utils/file_utils.dart';
+import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
+import 'package:gc_wizard/utils/math_utils.dart';
 import 'package:image/image.dart' as img;
 
 class ImageFlipRotate extends StatefulWidget {
@@ -113,7 +113,7 @@ class ImageFlipRotateState extends State<ImageFlipRotate> {
                   icon: Icons.rotate_left,
                   onPressed: () {
                     setState(() {
-                      _currentRotate = modulo(_currentRotate - 90, 360);
+                      _currentRotate = modulo360(_currentRotate - 90);
                     });
                   },
                 ),
@@ -121,7 +121,7 @@ class ImageFlipRotateState extends State<ImageFlipRotate> {
                   icon: Icons.rotate_right,
                   onPressed: () {
                     setState(() {
-                      _currentRotate = modulo(_currentRotate + 90, 360);
+                      _currentRotate = modulo360(_currentRotate + 90);
                     });
                   },
                 ),
@@ -167,7 +167,7 @@ img.Image _doFlipRotate(_FlipRotateInput input) {
   if (input.flipHorizontally) image = img.flipHorizontal(image);
   if (input.flipVertically) image = img.flipVertical(image);
 
-  var rotate = modulo(input.rotate, 360.0);
+  var rotate = modulo360(input.rotate);
   if (rotate > 0) {
     image = img.copyRotate(image, rotate, interpolation: img.Interpolation.cubic);
   }

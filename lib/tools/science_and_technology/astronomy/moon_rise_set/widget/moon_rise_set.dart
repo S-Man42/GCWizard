@@ -5,10 +5,10 @@ import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_datetime_picker.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
-import 'package:gc_wizard/tools/coords/utils/default_getter.dart';
+import 'package:gc_wizard/tools/coords/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/logic/julian_date.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/moon_rise_set/logic/moon_rise_set.dart' as logic;
-import 'package:gc_wizard/utils/logic_utils/datetime_utils.dart';
+import 'package:gc_wizard/utils/datetime_utils.dart';
 
 class MoonRiseSet extends StatefulWidget {
   @override

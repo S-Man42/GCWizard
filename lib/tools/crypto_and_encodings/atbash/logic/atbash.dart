@@ -1,5 +1,5 @@
-import 'package:gc_wizard/common/alphabets.dart';
-import 'package:gc_wizard/utils/logic_utils/string_utils.dart';
+import 'package:gc_wizard/utils/alphabets.dart';
+import 'package:gc_wizard/utils/string_utils.dart';
 
 String atbash(String input) {
   if (input == null || input.length == 0) return '';

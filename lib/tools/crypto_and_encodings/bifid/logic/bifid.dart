@@ -1,5 +1,5 @@
+import 'package:gc_wizard/tools/crypto_and_encodings/logic/crypt_alphabet_modification.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/polybios/logic/polybios.dart';
-import 'package:gc_wizard/utils/logic_utils/constants.dart';
 
 class BifidOutput {
   final String state;

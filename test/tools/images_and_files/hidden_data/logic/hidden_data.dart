@@ -1,10 +1,10 @@
 import 'dart:io' as io;
 import 'dart:typed_data';
 
-import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/common/gcw_file.dart';
-import 'package:gc_wizard/common/file_utils.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:gc_wizard/tools/images_and_files/hidden_data/logic/hidden_data.dart';
+import 'package:gc_wizard/utils/file_utils/file_utils.dart';
+import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:path/path.dart' as path;
 
 var testDirPath = 'test/tools/images_and_files/hidden_data/resources/';

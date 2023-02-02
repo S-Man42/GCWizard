@@ -5,7 +5,6 @@ import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_textselectioncontrols.dart';
 import 'package:gc_wizard/common_widgets/text_input_formatters/wrapper_for_masktextinputformatter.dart';
-import 'package:gc_wizard/utils/common_widget_utils.dart';
 
 class GCWTextField extends StatefulWidget {
   final TextEditingController controller;

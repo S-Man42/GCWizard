@@ -4,7 +4,7 @@ import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/tools/science_and_technology/irrational_numbers/logic/irrational_numbers.dart';
-import 'package:gc_wizard/utils/common_widget_utils.dart';
+import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 
 class IrrationalNumbersDecimalRange extends StatefulWidget {
   final IrrationalNumber irrationalNumber;

@@ -5,7 +5,6 @@ import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
-import 'package:gc_wizard/common/gcw_file.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
@@ -66,11 +65,12 @@ import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/tools/md_tool_vanity_multitap.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/tools/md_tool_vigenere.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/tools/md_tool_wasd.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/logic/crypt_alphabet_modification.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/wasd/logic/wasd.dart';
 import 'package:gc_wizard/tools/games/scrabble/logic/scrabble_sets.dart';
 import 'package:gc_wizard/tools/science_and_technology/keyboard/logic/keyboard.dart';
 import 'package:gc_wizard/tools/science_and_technology/vanity/logic/phone_models.dart';
-import 'package:gc_wizard/utils/logic_utils/constants.dart';
+import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 
 part 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/base_multi_decoder_tool.dart';
 part 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/md_tools.dart';

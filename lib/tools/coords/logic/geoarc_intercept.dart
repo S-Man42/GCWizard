@@ -2,9 +2,8 @@ import 'dart:math';
 
 import 'package:gc_wizard/tools/coords/distance_and_bearing/logic/distance_and_bearing.dart';
 import 'package:gc_wizard/tools/coords/logic/ellipsoid.dart';
-import 'package:gc_wizard/tools/coords/utils/math_utils.dart';
 import 'package:gc_wizard/tools/coords/waypoint_projection/logic/projection.dart';
-import 'package:gc_wizard/utils/logic_utils/constants.dart';
+import 'package:gc_wizard/utils/constants.dart';
 import 'package:latlong2/latlong.dart';
 
 // All these functions are completely... Really? I don't even know what they do...
@@ -15,7 +14,11 @@ bool _isApprox(double a, double b) {
 }
 
 double _signAzimuthDifference(double az1, double az2) {
-  return mod(az1 - az2 + pi, 2 * pi) - pi;
+  return _mod(az1 - az2 + pi, 2 * pi) - pi;
+}
+
+double _mod(double x, double y) {
+  return x - y * (x / y).floor();
 }
 
 double _findLinearRoot(List<double> x, List<double> errArray) {

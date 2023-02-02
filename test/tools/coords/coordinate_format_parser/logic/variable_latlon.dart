@@ -1,7 +1,7 @@
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/tools/coords/coordinate_format_parser/logic/variable_latlon.dart';
 import 'package:gc_wizard/tools/coords/logic/ellipsoid.dart';
-import 'package:gc_wizard/tools/coords/utils/utils.dart';
+import 'package:gc_wizard/utils/coordinate_utils.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit_category.dart';
 import 'package:latlong2/latlong.dart';
 

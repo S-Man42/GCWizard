@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:gc_wizard/application/theme/fixed_colors.dart';
 import 'package:gc_wizard/tools/images_and_files/binary2image/logic/binary2image.dart';
+import 'package:gc_wizard/utils/ui_dependent_utils/image_utils/drawable_image_data.dart';
 import 'package:qr/qr.dart' as qr;
 import 'package:r_scan/r_scan.dart' as scan;
 
@@ -18,7 +19,7 @@ Future<String> scanBytes(Uint8List bytes) async {
 }
 
 /// Generating Bar Code
-ImageData generateBarCode(String code, {int moduleSize = 5, int border = 10}) {
+DrawableImageData generateBarCode(String code, {int moduleSize = 5, int border = 10}) {
   if (code == null || code == "") return null;
 
   var qrCode = qr.QrCode.fromData(
@@ -28,7 +29,7 @@ ImageData generateBarCode(String code, {int moduleSize = 5, int border = 10}) {
   moduleSize = max(1, moduleSize);
   var _colorMap = {'0': COLOR_QR_BACKGROUND, '1': colorMap.values.elementAt(1)};
 
-  return ImageData(_createQrCode(qrCode), _colorMap, bounds: border, pointSize: moduleSize.toDouble());
+  return DrawableImageData(_createQrCode(qrCode), _colorMap, bounds: border, pointSize: moduleSize.toDouble());
 }
 
 List<String> _createQrCode(qr.QrCode qrCode) {

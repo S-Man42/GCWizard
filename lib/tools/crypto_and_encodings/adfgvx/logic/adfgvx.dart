@@ -1,6 +1,6 @@
 import 'package:gc_wizard/tools/crypto_and_encodings/logic/transposition.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/polybios/logic/polybios.dart';
-import 'package:gc_wizard/utils/logic_utils/string_utils.dart';
+import 'package:gc_wizard/utils/string_utils.dart';
 
 enum _ADFGVXMode { ADFGX, ADFGVX }
 

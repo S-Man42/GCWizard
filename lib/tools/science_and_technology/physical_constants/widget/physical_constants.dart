@@ -5,7 +5,7 @@ import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/tools/science_and_technology/physical_constants/logic/physical_constants.dart';
-import 'package:gc_wizard/utils/common_widget_utils.dart';
+import 'package:gc_wizard/utils/ui_dependent_utils/text_widget_utils.dart';
 
 class PhysicalConstants extends StatefulWidget {
   @override

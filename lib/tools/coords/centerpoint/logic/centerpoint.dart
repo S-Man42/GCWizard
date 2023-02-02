@@ -4,7 +4,7 @@ import 'package:gc_wizard/tools/coords/distance_and_bearing/logic/distance_and_b
 import 'package:gc_wizard/tools/coords/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/coords/segment_line/logic/segment_line.dart';
 import 'package:gc_wizard/tools/coords/waypoint_projection/logic/projection.dart';
-import 'package:gc_wizard/utils/logic_utils/constants.dart';
+import 'package:gc_wizard/utils/constants.dart';
 import 'package:latlong2/latlong.dart';
 
 class CenterPointJobData {

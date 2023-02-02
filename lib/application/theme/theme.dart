@@ -1,8 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
-import 'package:gc_wizard/utils/common_widget_utils.dart';
+import 'package:prefs/prefs.dart';
 
 final FONT_SIZE_MIN = 10;
 final FONT_SIZE_MAX = 30;
@@ -118,3 +119,23 @@ int _shadeValue(int value, double factor) => max(0, min(value - (value * factor)
 
 Color _shadeColor(Color color, double factor) => Color.fromRGBO(
     _shadeValue(color.red, factor), _shadeValue(color.green, factor), _shadeValue(color.blue, factor), 1);
+
+defaultFontSize() {
+  var fontSize = Prefs.get(PREFERENCE_THEME_FONT_SIZE);
+
+  if (fontSize < FONT_SIZE_MIN) {
+    Prefs.setDouble(PREFERENCE_THEME_FONT_SIZE, FONT_SIZE_MIN.toDouble());
+    return FONT_SIZE_MIN;
+  }
+
+  if (fontSize > FONT_SIZE_MAX) {
+    Prefs.setDouble(PREFERENCE_THEME_FONT_SIZE, FONT_SIZE_MAX.toDouble());
+    return FONT_SIZE_MAX;
+  }
+
+  return fontSize;
+}
+
+double maxScreenHeight(BuildContext context) {
+  return MediaQuery.of(context).size.height - 100;
+}

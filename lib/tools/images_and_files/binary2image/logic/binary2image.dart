@@ -1,7 +1,8 @@
 import 'dart:math';
 
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
-import 'package:gc_wizard/utils/logic_utils/string_utils.dart';
+import 'package:gc_wizard/utils/string_utils.dart';
+import 'package:gc_wizard/utils/ui_dependent_utils/image_utils/drawable_image_data.dart';
 
 Map<String, int> colorMap = {
   '0': 0xFFFFFFFF, //Colors.white
@@ -32,16 +33,7 @@ Map<String, int> colorMap = {
   '#': 0xFFE0E0E0, //Colors.grey.shade300
 };
 
-class ImageData {
-  final List<String> lines;
-  final Map<String, int> colors;
-  final int bounds;
-  final double pointSize;
-
-  ImageData(this.lines, this.colors, {this.bounds = 10, this.pointSize = 5.0});
-}
-
-ImageData binary2image(String input, bool squareFormat, bool invers) {
+DrawableImageData binary2image(String input, bool squareFormat, bool invers) {
   var filter = _buildFilter(input);
   if (filter.length < 2) return null;
 
@@ -109,13 +101,13 @@ String _filterInput(String input, String filter) {
   return input.replaceAll(RegExp('[^$filter]'), '');
 }
 
-ImageData binary2Image(String input) {
+DrawableImageData binary2Image(String input) {
   if (input == '' || input == null) return null;
 
   var lines = input.split('\n');
 
   if (lines.length == 1)
     lines.addAll(List<String>.filled(9, lines[0]));
-  return ImageData(lines, colorMap);
+  return DrawableImageData(lines, colorMap);
 }
 

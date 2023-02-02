@@ -22,9 +22,9 @@ import 'package:gc_wizard/tools/coords/format_converter/logic/slippy_map.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/swissgrid.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/utm.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/xyz.dart';
+import 'package:gc_wizard/tools/coords/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/logic/ellipsoid.dart';
-import 'package:gc_wizard/tools/coords/utils/default_getter.dart';
-import 'package:gc_wizard/utils/logic_utils/constants.dart';
+import 'package:gc_wizard/utils/constants.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 

@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/tools/formula_solver/persistence/model.dart';
-import 'package:gc_wizard/utils/logic_utils/persistence_utils.dart';
+import 'package:gc_wizard/utils/persistence_utils.dart';
 import 'package:prefs/prefs.dart';
 
 void refreshFormulas() {

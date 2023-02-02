@@ -12,10 +12,10 @@ import 'package:gc_wizard/tools/coords/intersection/logic/intersection.dart';
 import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/logic/distance_bearing.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
-import 'package:gc_wizard/tools/coords/utils/default_getter.dart';
-import 'package:gc_wizard/tools/coords/utils/format_getter.dart';
 import 'package:gc_wizard/tools/coords/waypoint_projection/logic/projection.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:gc_wizard/tools/coords/logic/coord_format_getter.dart';
+import 'package:gc_wizard/tools/coords/logic/default_coord_getter.dart';
 
 class Intersection extends StatefulWidget {
   @override

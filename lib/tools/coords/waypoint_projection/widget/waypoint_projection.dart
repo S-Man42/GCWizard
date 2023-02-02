@@ -8,10 +8,10 @@ import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coord
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coords_outputformat.dart';
 import 'package:gc_wizard/common_widgets/gcw_distance.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
+import 'package:gc_wizard/tools/coords/logic/coord_format_getter.dart';
 import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
+import 'package:gc_wizard/tools/coords/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
-import 'package:gc_wizard/tools/coords/utils/default_getter.dart';
-import 'package:gc_wizard/tools/coords/utils/format_getter.dart';
 import 'package:gc_wizard/tools/coords/waypoint_projection/logic/projection.dart';
 
 class WaypointProjection extends StatefulWidget {

@@ -1,5 +1,5 @@
 import 'package:gc_wizard/tools/formula_solver/logic/formula_parser.dart';
-import 'package:gc_wizard/utils/logic_utils/string_utils.dart';
+import 'package:gc_wizard/utils/string_utils.dart';
 
 class FormulaPainter {
   static final _operators = {'+', '-', '*', '/', '^', '%'};

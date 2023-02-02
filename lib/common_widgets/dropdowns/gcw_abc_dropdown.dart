@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common/alphabets.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/utils/alphabets.dart';
 
 class GCWABCDropDown extends StatefulWidget {
   final Function onChanged;

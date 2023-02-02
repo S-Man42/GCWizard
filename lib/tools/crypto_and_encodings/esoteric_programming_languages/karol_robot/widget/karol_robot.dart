@@ -3,7 +3,6 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
-import 'package:gc_wizard/common/file_utils.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
@@ -16,7 +15,9 @@ import 'package:gc_wizard/common_widgets/text_input_formatters/wrapper_for_maskt
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/karol_robot/logic/karol_robot.dart';
 import 'package:gc_wizard/tools/images_and_files/binary2image/logic/binary2image.dart';
-import 'package:gc_wizard/utils/common_widget_utils.dart';
+import 'package:gc_wizard/utils/file_utils/file_utils.dart';
+import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
+import 'package:gc_wizard/utils/ui_dependent_utils/image_utils/image_utils.dart';
 import 'package:intl/intl.dart';
 
 class KarolRobot extends StatefulWidget {

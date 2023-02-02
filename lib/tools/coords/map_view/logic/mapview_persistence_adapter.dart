@@ -2,14 +2,14 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:gc_wizard/tools/coords/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/map_view/persistence/json_provider.dart';
 import 'package:gc_wizard/tools/coords/map_view/persistence/model.dart';
 import 'package:gc_wizard/tools/coords/map_view/widget/gcw_mapview.dart';
-import 'package:gc_wizard/tools/coords/utils/default_getter.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
-import 'package:gc_wizard/utils/logic_utils/collection_utils.dart';
-import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
+import 'package:gc_wizard/utils/collection_utils.dart';
+import 'package:gc_wizard/utils/ui_dependent_utils/color_utils.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:uuid/uuid.dart';
 

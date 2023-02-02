@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:gc_wizard/tools/coords/logic/ellipsoid.dart';
-import 'package:gc_wizard/tools/coords/utils/math_utils.dart';
-import 'package:gc_wizard/utils/logic_utils/constants.dart';
+import 'package:gc_wizard/utils/constants.dart';
+import 'package:gc_wizard/utils/math_utils.dart';
 import 'package:latlong2/latlong.dart';
 
 LatLng vincentyDirect(LatLng coord, double bearing, double dist, Ellipsoid ells) {
@@ -60,6 +60,14 @@ LatLng vincentyDirect(LatLng coord, double bearing, double dist, Ellipsoid ells)
           (_sigma + _C * _sinSigma * (_cos2SigmaM + _C * _cosSigma * (-1.0 + 2.0 * _cos2SigmaM * _cos2SigmaM)));
 
   _lat2 = radianToDeg(_lat2);
-  lon = modLon(radianToDeg(lon + _L));
+  lon = _modLon(radianToDeg(lon + _L));
   return LatLng(_lat2, lon);
+}
+
+double _modLon(double x) {
+  x = modulo360(x);
+
+  if (x > 180) x -= 360;
+
+  return x;
 }

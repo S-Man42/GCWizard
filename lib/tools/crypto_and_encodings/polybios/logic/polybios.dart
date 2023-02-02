@@ -1,8 +1,7 @@
 import 'dart:math';
 
-import 'package:gc_wizard/common/alphabets.dart';
-import 'package:gc_wizard/utils/logic_utils/common_utils.dart';
-import 'package:gc_wizard/utils/logic_utils/constants.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/logic/crypt_alphabet_modification.dart';
+import 'package:gc_wizard/utils/alphabets.dart';
 
 enum PolybiosMode { AZ09, ZA90, CUSTOM }
 

@@ -1,5 +1,5 @@
 import 'package:gc_wizard/tools/science_and_technology/vanity/logic/phone_models.dart';
-import 'package:gc_wizard/utils/logic_utils/constants.dart';
+import 'package:gc_wizard/utils/constants.dart';
 
 PhoneCaseMode _getModeFromState(String state) {
   switch (state.split('_')[0]) {

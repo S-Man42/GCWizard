@@ -1,5 +1,5 @@
-import 'package:gc_wizard/utils/logic_utils/collection_utils.dart';
-import 'package:gc_wizard/utils/logic_utils/string_utils.dart';
+import 'package:gc_wizard/utils/collection_utils.dart';
+import 'package:gc_wizard/utils/string_utils.dart';
 
 final AZToTapir = {
   ' ': '83', '\n': '80', 'A': '0', 'E': '1', 'I': '2', 'N': '3', 'R': '4', 'B': '50', 'BE': '51', 'C': '52', 'CH': '53',

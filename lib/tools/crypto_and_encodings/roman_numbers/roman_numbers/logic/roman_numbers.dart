@@ -1,5 +1,5 @@
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
-import 'package:gc_wizard/utils/logic_utils/collection_utils.dart';
+import 'package:gc_wizard/utils/collection_utils.dart';
 
 enum RomanNumberType {
   ONLY_ADDITION,

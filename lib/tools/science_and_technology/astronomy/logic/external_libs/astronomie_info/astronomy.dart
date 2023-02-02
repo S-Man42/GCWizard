@@ -34,7 +34,7 @@
 import 'dart:math';
 
 import 'package:gc_wizard/tools/coords/logic/ellipsoid.dart';
-import 'package:gc_wizard/tools/science_and_technology/astronomy/utils/logic/utils.dart';
+import 'package:gc_wizard/tools/science_and_technology/astronomy/logic/astronomy_constants.dart';
 
 const double _DEG = pi / 180.0;
 const double _RAD = 180.0 / pi;

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
-import 'package:gc_wizard/common/alphabets.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_abc_dropdown.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
@@ -14,6 +13,7 @@ import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
 import 'package:gc_wizard/common_widgets/text_input_formatters/wrapper_for_masktextinputformatter.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/enigma/logic/enigma.dart';
+import 'package:gc_wizard/utils/alphabets.dart';
 
 part 'package:gc_wizard/tools/crypto_and_encodings/enigma/widget/enigma_rotor_dropdown.dart';
 

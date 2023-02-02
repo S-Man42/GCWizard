@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:gc_wizard/tools/science_and_technology/primes/logic/primes_list.dart';
 import 'package:gc_wizard/tools/science_and_technology/primes/logic/probably_prime.dart';
-import 'package:gc_wizard/utils/logic_utils/collection_utils.dart';
+import 'package:gc_wizard/utils/collection_utils.dart';
 
 bool isPrime(BigInt x) {
   return isProbablePrime(x, 16);

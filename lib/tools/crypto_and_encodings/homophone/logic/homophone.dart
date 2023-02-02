@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:gc_wizard/common/alphabets.dart';
+import 'package:gc_wizard/utils/alphabets.dart';
 
 class HomophoneOutput {
   final String output;
