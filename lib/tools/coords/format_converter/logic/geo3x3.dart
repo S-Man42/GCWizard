@@ -1,4 +1,4 @@
-import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:latlong2/latlong.dart';
 
 part 'package:gc_wizard/tools/coords/format_converter/logic/external_libs/taisukef.geo3x3/geo3x3.dart';

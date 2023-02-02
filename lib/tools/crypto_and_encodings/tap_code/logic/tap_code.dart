@@ -1,4 +1,4 @@
-import 'package:gc_wizard/tools/crypto_and_encodings/logic/crypt_alphabet_modification.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/_common/logic/crypt_alphabet_modification.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/polybios/logic/polybios.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/string_utils.dart';

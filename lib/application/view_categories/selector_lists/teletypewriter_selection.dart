@@ -7,7 +7,7 @@ import 'package:gc_wizard/tools/science_and_technology/teletypewriter/ancient_te
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/ccitt_teletypewriter/widget/ccitt_teletypewriter.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/other_teletypewriter/widget/other_teletypewriter.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/punchtape/widget/punchtape.dart';
-import 'package:gc_wizard/tools/symbol_tables/widget/symbol_table.dart';
+import 'package:gc_wizard/tools/symbol_tables/_common/widget/symbol_table.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 
 class TeletypewriterSelection extends GCWSelection {

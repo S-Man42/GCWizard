@@ -1,5 +1,5 @@
 import 'package:gc_wizard/tools/coords/format_converter/logic/dec.dart';
-import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:latlong2/latlong.dart';
 
 String _valueToLetter(int value) {

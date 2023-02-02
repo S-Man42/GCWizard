@@ -8,7 +8,7 @@ import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/numeral_words/logic/numeral_words.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/numeral_words/_common/logic/numeral_words.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 
 class NumeralWordsLists extends StatefulWidget {

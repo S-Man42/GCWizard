@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:gc_wizard/tools/images_and_files/logic/rgb_pixel.dart';
+import 'package:gc_wizard/tools/images_and_files/_common/logic/rgb_pixel.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors_hue.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors_rgb.dart';
 

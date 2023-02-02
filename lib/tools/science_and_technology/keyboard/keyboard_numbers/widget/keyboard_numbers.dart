@@ -5,7 +5,7 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.d
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
-import 'package:gc_wizard/tools/science_and_technology/keyboard/logic/keyboard.dart';
+import 'package:gc_wizard/tools/science_and_technology/keyboard/_common/logic/keyboard.dart';
 
 class KeyboardNumbers extends StatefulWidget {
   @override

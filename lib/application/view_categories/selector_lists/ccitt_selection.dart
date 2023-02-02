@@ -10,7 +10,7 @@ import 'package:gc_wizard/tools/science_and_technology/teletypewriter/ccitt4/wid
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/ccitt5/widget/ccitt5.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/ccitt_ccir476/widget/ccitt_ccir476.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/punchtape/widget/punchtape.dart';
-import 'package:gc_wizard/tools/symbol_tables/widget/symbol_table.dart';
+import 'package:gc_wizard/tools/symbol_tables/_common/widget/symbol_table.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 
 class CCITTSelection extends GCWSelection {

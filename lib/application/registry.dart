@@ -406,7 +406,7 @@ import 'package:gc_wizard/tools/science_and_technology/vanity/vanity_words_searc
 import 'package:gc_wizard/tools/science_and_technology/weather_symbols/widget/weather_symbols.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_replacer.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_tables_examples_select/widget/symbol_tables_examples_select.dart';
-import 'package:gc_wizard/tools/symbol_tables/widget/gcw_symbol_table_tool.dart';
+import 'package:gc_wizard/tools/symbol_tables/_common/widget/gcw_symbol_table_tool.dart';
 import 'package:gc_wizard/tools/uncategorized/zodiac/widget/zodiac.dart';
 import 'package:gc_wizard/tools/wherigo/earwigo_text_deobfuscation/widget/earwigo_text_deobfuscation.dart';
 import 'package:gc_wizard/tools/wherigo/urwigo_hashbreaker/widget/urwigo_hashbreaker.dart';

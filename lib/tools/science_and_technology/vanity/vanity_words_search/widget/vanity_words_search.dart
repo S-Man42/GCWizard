@@ -6,8 +6,8 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.d
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/numeral_words/logic/numeral_words.dart';
-import 'package:gc_wizard/tools/science_and_technology/vanity/logic/vanity_words.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/numeral_words/_common/logic/numeral_words.dart';
+import 'package:gc_wizard/tools/science_and_technology/vanity/_common/logic/vanity_words.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 
 class VanityWordsTextSearch extends StatefulWidget {

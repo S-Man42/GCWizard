@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:latlong2/latlong.dart';
 
 const int _DEFAULT_PRECISION = 8;

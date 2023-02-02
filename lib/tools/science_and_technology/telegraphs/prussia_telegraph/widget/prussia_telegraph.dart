@@ -10,10 +10,10 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
-import 'package:gc_wizard/tools/science_and_technology/segment_display/logic/segment_display.dart';
-import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/n_segment_display.dart';
-import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/segmentdisplay_output.dart';
-import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/segmentdisplay_painter.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/widget/n_segment_display.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/widget/segmentdisplay_output.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/widget/segmentdisplay_painter.dart';
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/prussia_telegraph/logic/prussian_telegraph.dart';
 
 part 'package:gc_wizard/tools/science_and_technology/telegraphs/prussia_telegraph/widget/prussia_telegraph_segment_display.dart';

@@ -6,7 +6,7 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_integer_list_textfield.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
-import 'package:gc_wizard/tools/science_and_technology/periodic_table/logic/periodic_table.dart';
+import 'package:gc_wizard/tools/science_and_technology/periodic_table/_common/logic/periodic_table.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
 class AtomicNumbersToText extends StatefulWidget {

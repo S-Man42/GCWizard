@@ -1,4 +1,4 @@
-import 'package:gc_wizard/tools/crypto_and_encodings/logic/transposition.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/_common/logic/transposition.dart';
 
 String encryptSkytale(String input, {int countRows, int countColumns, int countLettersPerCell: 1}) {
   return encryptTransposition(input,

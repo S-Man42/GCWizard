@@ -19,7 +19,7 @@ import 'package:gc_wizard/common_widgets/text_input_formatters/gcw_minutessecond
 import 'package:gc_wizard/common_widgets/textfields/gcw_integer_textfield.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/dmm.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/dms.dart';
-import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/right_ascension_to_degree/logic/right_ascension_to_degree.dart';
 
 

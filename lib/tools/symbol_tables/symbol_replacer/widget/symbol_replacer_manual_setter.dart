@@ -9,11 +9,11 @@ import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/gcw_toolbar.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
-import 'package:gc_wizard/tools/symbol_tables/logic/symbol_table_data.dart';
+import 'package:gc_wizard/tools/symbol_tables/_common/logic/symbol_table_data.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/logic/symbol_replacer.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_replacer_symboldata.dart';
-import 'package:gc_wizard/tools/symbol_tables/widget/gcw_symbol_container.dart';
-import 'package:gc_wizard/tools/symbol_tables/widget/gcw_symbol_table_symbol_matrix.dart';
+import 'package:gc_wizard/tools/symbol_tables/_common/widget/gcw_symbol_container.dart';
+import 'package:gc_wizard/tools/symbol_tables/_common/widget/gcw_symbol_table_symbol_matrix.dart';
 import 'package:prefs/prefs.dart';
 
 class SymbolReplacerManualSetter extends StatefulWidget {

@@ -1,5 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/tools/science_and_technology/teletypewriter/logic/teletypewriter.dart';
+import 'package:gc_wizard/tools/science_and_technology/teletypewriter/_common/logic/teletypewriter.dart';
 
 void main() {
   group("CCITT2.encodeCCITT2:", () {

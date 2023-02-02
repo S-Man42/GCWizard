@@ -1,5 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/tools/science_and_technology/periodic_table/logic/periodic_table.dart';
+import 'package:gc_wizard/tools/science_and_technology/periodic_table/_common/logic/periodic_table.dart';
 
 void main() {
   group("PeriodicTable.atomicNumbersToText:", () {

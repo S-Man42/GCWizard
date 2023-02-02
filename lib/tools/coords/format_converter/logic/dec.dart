@@ -1,5 +1,5 @@
 import 'package:gc_wizard/tools/coords/coordinate_format_parser/logic/latlon.dart';
-import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:latlong2/latlong.dart';
 
 LatLng decToLatLon(DEC dec) {

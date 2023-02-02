@@ -10,7 +10,7 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.d
 import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/roman_numbers/roman_numbers/logic/roman_numbers.dart';
-import 'package:gc_wizard/tools/science_and_technology/periodic_table/logic/periodic_table.dart';
+import 'package:gc_wizard/tools/science_and_technology/periodic_table/_common/logic/periodic_table.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/temperature.dart';
 import 'package:intl/intl.dart';
 

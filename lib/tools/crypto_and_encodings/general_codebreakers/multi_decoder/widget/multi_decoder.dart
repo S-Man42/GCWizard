@@ -18,7 +18,7 @@ import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/image_viewers/gcw_imageview.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
-import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/persistence/json_provider.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/persistence/model.dart' as model;
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/persistence/model.dart';
@@ -65,11 +65,11 @@ import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/tools/md_tool_vanity_multitap.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/tools/md_tool_vigenere.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/tools/md_tool_wasd.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/logic/crypt_alphabet_modification.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/_common/logic/crypt_alphabet_modification.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/wasd/logic/wasd.dart';
 import 'package:gc_wizard/tools/games/scrabble/logic/scrabble_sets.dart';
-import 'package:gc_wizard/tools/science_and_technology/keyboard/logic/keyboard.dart';
-import 'package:gc_wizard/tools/science_and_technology/vanity/logic/phone_models.dart';
+import 'package:gc_wizard/tools/science_and_technology/keyboard/_common/logic/keyboard.dart';
+import 'package:gc_wizard/tools/science_and_technology/vanity/_common/logic/phone_models.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 
 part 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/base_multi_decoder_tool.dart';

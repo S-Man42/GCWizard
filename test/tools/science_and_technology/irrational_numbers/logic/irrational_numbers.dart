@@ -1,5 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/tools/science_and_technology/irrational_numbers/logic/irrational_numbers.dart';
+import 'package:gc_wizard/tools/science_and_technology/irrational_numbers/_common/logic/irrational_numbers.dart';
 import 'package:gc_wizard/tools/science_and_technology/irrational_numbers/pi/logic/pi.dart';
 
 void main() {

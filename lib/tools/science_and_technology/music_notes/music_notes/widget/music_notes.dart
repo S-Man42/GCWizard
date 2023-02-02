@@ -13,10 +13,10 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/science_and_technology/music_notes/logic/music_notes.dart';
-import 'package:gc_wizard/tools/science_and_technology/segment_display/logic/segment_display.dart';
-import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/n_segment_display.dart';
-import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/segmentdisplay_output.dart';
-import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/segmentdisplay_painter.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/widget/n_segment_display.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/widget/segmentdisplay_output.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/widget/segmentdisplay_painter.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
 part 'package:gc_wizard/tools/science_and_technology/music_notes/music_notes/widget/music_notes_segment_display.dart';

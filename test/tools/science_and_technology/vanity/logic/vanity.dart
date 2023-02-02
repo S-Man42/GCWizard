@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:gc_wizard/tools/science_and_technology/vanity/logic/phone_models.dart';
-import 'package:gc_wizard/tools/science_and_technology/vanity/logic/vanity.dart';
+import 'package:gc_wizard/tools/science_and_technology/vanity/_common/logic/phone_models.dart';
+import 'package:gc_wizard/tools/science_and_technology/vanity/_common/logic/vanity.dart';
 
 void main() {
   group("Vanity.decodeVanityMultitap:", () {

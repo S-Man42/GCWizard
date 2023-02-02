@@ -1,5 +1,5 @@
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
-import 'package:gc_wizard/tools/science_and_technology/teletypewriter/logic/teletypewriter.dart';
+import 'package:gc_wizard/tools/science_and_technology/teletypewriter/_common/logic/teletypewriter.dart';
 
 List<String> decenary2segments(String decenary, bool order12345, TeletypewriterCodebook language) {
   // 0 ... 31 => 00000 ... 11111

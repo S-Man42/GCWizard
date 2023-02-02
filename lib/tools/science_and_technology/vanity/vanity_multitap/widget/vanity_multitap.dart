@@ -7,8 +7,8 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
-import 'package:gc_wizard/tools/science_and_technology/vanity/logic/phone_models.dart';
-import 'package:gc_wizard/tools/science_and_technology/vanity/logic/vanity.dart';
+import 'package:gc_wizard/tools/science_and_technology/vanity/_common/logic/phone_models.dart';
+import 'package:gc_wizard/tools/science_and_technology/vanity/_common/logic/vanity.dart';
 
 class VanityMultitap extends StatefulWidget {
   @override

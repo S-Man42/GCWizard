@@ -11,7 +11,7 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/braille/braille_euro_segment_display/widget/braille_euro_segment_display.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/braille/logic/braille.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/braille/widget/braille_segment_display.dart';
-import 'package:gc_wizard/tools/science_and_technology/segment_display/widget/segmentdisplay_output.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/widget/segmentdisplay_output.dart';
 
 class Braille extends StatefulWidget {
   @override

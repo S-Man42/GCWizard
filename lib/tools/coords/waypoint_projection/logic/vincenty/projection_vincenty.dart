@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:gc_wizard/tools/coords/logic/ellipsoid.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/math_utils.dart';
 import 'package:latlong2/latlong.dart';

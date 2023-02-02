@@ -1,5 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/tools/science_and_technology/resistor/logic/resistor.dart';
+import 'package:gc_wizard/tools/science_and_technology/resistor/_common/logic/resistor.dart';
 
 void main() {
   group("Resistor.resistor:", () {

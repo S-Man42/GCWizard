@@ -18,9 +18,9 @@ import 'package:gc_wizard/common_widgets/text_input_formatters/variablestring_te
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/common_widgets/units/gcw_unit_dropdown.dart';
 import 'package:gc_wizard/tools/coords/coordinate_format_parser/logic/variable_latlon.dart';
-import 'package:gc_wizard/tools/coords/logic/coord_format_getter.dart';
-import 'package:gc_wizard/tools/coords/logic/coordinates.dart';
-import 'package:gc_wizard/tools/coords/logic/default_coord_getter.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coord_format_getter.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/variable_coordinate/persistence/json_provider.dart';
 import 'package:gc_wizard/tools/coords/variable_coordinate/persistence/model.dart';

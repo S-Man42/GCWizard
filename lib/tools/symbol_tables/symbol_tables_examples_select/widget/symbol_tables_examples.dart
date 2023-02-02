@@ -5,10 +5,10 @@ import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
-import 'package:gc_wizard/tools/symbol_tables/logic/symbol_table_data.dart';
-import 'package:gc_wizard/tools/symbol_tables/widget/gcw_symbol_table_text_to_symbols.dart';
-import 'package:gc_wizard/tools/symbol_tables/widget/gcw_symbol_table_tool.dart';
-import 'package:gc_wizard/tools/symbol_tables/widget/gcw_symbol_table_zoom_buttons.dart';
+import 'package:gc_wizard/tools/symbol_tables/_common/logic/symbol_table_data.dart';
+import 'package:gc_wizard/tools/symbol_tables/_common/widget/gcw_symbol_table_text_to_symbols.dart';
+import 'package:gc_wizard/tools/symbol_tables/_common/widget/gcw_symbol_table_tool.dart';
+import 'package:gc_wizard/tools/symbol_tables/_common/widget/gcw_symbol_table_zoom_buttons.dart';
 import 'package:prefs/prefs.dart';
 
 class SymbolTableExamples extends StatefulWidget {

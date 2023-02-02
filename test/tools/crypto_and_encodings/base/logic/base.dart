@@ -1,5 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/tools/crypto_and_encodings/base/logic/base.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/base/_common/logic/base.dart';
 
 void main() {
 

@@ -1,4 +1,4 @@
-import 'package:gc_wizard/tools/science_and_technology/primes/logic/primes.dart';
+import 'package:gc_wizard/tools/science_and_technology/primes/_common/logic/primes.dart';
 
 BigInt phi(BigInt p, BigInt q) {
   if (!isPrime(p)) throw Exception('rsa_error_p.not.prime');

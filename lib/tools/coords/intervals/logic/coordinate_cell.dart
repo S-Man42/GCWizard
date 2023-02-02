@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:gc_wizard/tools/coords/distance_and_bearing/logic/distance_and_bearing.dart';
-import 'package:gc_wizard/tools/coords/logic/ellipsoid.dart';
-import 'package:gc_wizard/tools/coords/logic/coord_format_getter.dart' as utils;
+import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coord_format_getter.dart' as utils;
 import 'package:latlong2/latlong.dart';
 
 class Interval {
