@@ -75,10 +75,9 @@ Widget hexDataOutput(BuildContext context, List<Uint8List> outData) {
   if (outData == null) return Container();
 
   var children = outData.map((Uint8List _outData) {
-    var _class = fileClass(getFileType(_outData));
     var file = GCWFile(bytes: _outData);
 
-    switch (_class) {
+    switch (file.fileClass) {
       case FileClass.IMAGE:
         try {
           return GCWImageView(imageData: GCWImageViewData(file));
@@ -92,15 +91,15 @@ Widget hexDataOutput(BuildContext context, List<Uint8List> outData) {
         return GCWSoundPlayer(file: file);
 
       case FileClass.ARCHIVE:
-        FileType fileType = getFileType(_outData);
+        var fileType = file.fileType;
         if (fileType == FileType.ZIP) {
           try {
-            InputStream input = new InputStream(_outData.buffer.asByteData());
+            InputStream input = InputStream(_outData.buffer.asByteData());
             return (_archiveWidget(context, ZipDecoder().decodeBuffer(input), fileType));
           } catch (e) {}
         } else if (fileType == FileType.TAR) {
           try {
-            InputStream input = new InputStream(_outData.buffer.asByteData());
+            InputStream input = InputStream(_outData.buffer.asByteData());
             return (_archiveWidget(context, TarDecoder().decodeBuffer(input), fileType));
           } catch (e) {}
         } else {
