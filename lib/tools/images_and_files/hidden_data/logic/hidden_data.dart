@@ -54,7 +54,7 @@ Future<Tuple2<List<GCWFile>, int>> _hiddenData(GCWFile data, int fileIndexCounte
     if (dataClone.children != null && dataClone.children.length > 0) {
       // check for hidden archives (other types are checked)
       await Future.forEach(dataClone.children, (data) async {
-        if (fileClass(getFileType(data.bytes)) == FileClass.ARCHIVE) result = await _hiddenData(data, result.item2);
+        if (data.fileClass == FileClass.ARCHIVE) result = await _hiddenData(data, result.item2);
       });
     }
   }
