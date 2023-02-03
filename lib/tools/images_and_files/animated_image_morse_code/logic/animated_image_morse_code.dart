@@ -38,7 +38,7 @@ Future<Map<String, dynamic>> analyseImageMorseCode(Uint8List bytes, {SendPort se
 Future<Uint8List> createImageAsync(dynamic jobData) async {
   if (jobData == null) return null;
 
-  var output = await createImage(
+  var output = await _createImage(
       jobData.parameters.item1, jobData.parameters.item2, jobData.parameters.item3, jobData.parameters.item4,
       sendAsyncPort: jobData.sendAsyncPort);
 
@@ -47,7 +47,7 @@ Future<Uint8List> createImageAsync(dynamic jobData) async {
   return output;
 }
 
-Future<Uint8List> createImage(Uint8List highImage, Uint8List lowImage, String input, int ditDuration,
+Future<Uint8List> _createImage(Uint8List highImage, Uint8List lowImage, String input, int ditDuration,
     {SendPort sendAsyncPort}) async {
   input = encodeMorse(input);
   if (input == null || input == '') return null;
