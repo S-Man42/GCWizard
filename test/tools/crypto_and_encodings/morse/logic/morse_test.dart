@@ -7,10 +7,10 @@ void main() {
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
-      {'input' : 'SOS', 'expectedOutput' : '... --- ...'},
-      {'input' : 'ABc deF', 'expectedOutput' : '.- -... -.-. | -.. . ..-.'},
+      {'input' : 'SOS', 'expectedOutput' : '... --- ...'},
+      {'input' : 'ABc deF', 'expectedOutput' : '.- -... -.-. | -.. . ..-.'},
       {'input' : [String.fromCharCode(197).toLowerCase(), String.fromCharCode(192), String.fromCharCode(196), String.fromCharCode(223), '.', '-', '_', '@'].join()
-        , 'expectedOutput' : '.--.- .--.- .-.- ...--.. .-.-.- -....- ..--.- .--.-.'},
+        , 'expectedOutput' : '.--.- .--.- .-.- ...--.. .-.-.- -....- ..--.- .--.-.'},
     ];
 
     _inputsToExpected.forEach((elem) {

@@ -40,7 +40,7 @@ const _BASE30 = [
 
 // source: http://www.nacgeo.com/nacsite/documents/nac.asp
 
-String _latlonComponentToNACComponent(component, precision) {
+String _latlonComponentToNACComponent(double component, int precision) {
   var a = <int>[];
   var an = component;
   while (a.length < precision) {
@@ -56,7 +56,7 @@ String _latlonComponentToNACComponent(component, precision) {
   }).join();
 }
 
-NaturalAreaCode latLonToNaturalAreaCode(LatLng coords, {int precision: _DEFAULT_PRECISION}) {
+NaturalAreaCode latLonToNaturalAreaCode(LatLng coords, {int precision : _DEFAULT_PRECISION}) {
   var lon = (coords.longitude + 180.0) / 360.0;
   var lat = (coords.latitude + 90.0) / 180.0;
 

@@ -31,8 +31,8 @@ void main() {
 
   group("MayaNumbers.decodeMayaNumbers:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : {'displays': [[]], 'numbers': [0], 'vigesimal' : BigInt.from(0)}},
-      {'input' : <String>[], 'expectedOutput' : {'displays': [[]], 'numbers': [0], 'vigesimal' : BigInt.from(0)}},
+      {'input' : null, 'expectedOutput' : {'displays': [], 'numbers': [0], 'vigesimal' : BigInt.from(0)}},
+      {'input' : <String>[], 'expectedOutput' : {'displays': [], 'numbers': [0], 'vigesimal' : BigInt.from(0)}},
 
       {'input' : <String>[''], 'expectedOutput' : {'displays': [[]], 'numbers': [0], 'vigesimal' : BigInt.from(0)}},
       {'input' : <String>['d'], 'expectedOutput' : {'displays': [['d']], 'numbers': [1], 'vigesimal' : BigInt.from(1)}},

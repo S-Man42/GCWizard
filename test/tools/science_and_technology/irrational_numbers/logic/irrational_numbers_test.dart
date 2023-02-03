@@ -74,18 +74,18 @@ void main() {
     });
   });
 
-  group("IrrationalNumberCalculator.decimalOccurence:", () {
+  group("IrrationalNumberCalculator.decimalOccurence:", () { // Mark test
     var irCalculator = IrrationalNumberCalculator(irrationalNumber: PI);
 
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : null},
-      {'input' : '', 'expectedOutput' : null},
+      {'input' : null, 'expectedOutput' : []},
+      {'input' : '', 'expectedOutput' : []},
 
       {'input' : '1', 'expectedOutput' : 1},
       {'input' : '141', 'expectedOutput' : 1},
       {'input' : '41', 'expectedOutput' : 2},
       {'input' : '939937510', 'expectedOutput' : 42},
-      {'input' : '19851026', 'expectedOutput' : null},
+      {'input' : '19851026', 'expectedOutput' : []},
     ];
 
     _inputsToExpected.forEach((elem) {

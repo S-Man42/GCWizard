@@ -55,7 +55,7 @@ void main(){
         ]},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    _inputsToExpected.forEach((elem) { // Mark test
       test('input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
         var _actual = decodeVanityWords(removeAccents(elem['input'].toString().toLowerCase()), elem['language']);
         var length = elem['expectedOutput'].length;
