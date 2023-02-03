@@ -19,7 +19,7 @@ String _fileDescription(GCWFile file) {
 
   if (file == null) return '';
   output += (file.name != null ? file.name : '') + ', ';
-  var fileType = getFileType(file.bytes);
+  var fileType = file.fileType;
   output += (fileType != null ? fileType.name : '') + ', ';
   output += (file.bytes != null ? file.bytes.length.toString() : '0') + ' bytes, ';
 

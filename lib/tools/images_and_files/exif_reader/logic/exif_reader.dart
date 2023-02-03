@@ -9,13 +9,13 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/images_and_files/exif_reader/logic/external_libs/justkawal.xmp/xmp.dart';
 import 'package:latlong2/latlong.dart';
 
-const String TIFF_THUMBNAIL = 'TIFFThumbnail';
-const String JPEG_THUMBNAIL = 'JPEGThumbnail';
-const String GPS_LAT = 'GPS GPSLatitude';
-const String GPS_LNG = 'GPS GPSLongitude';
-const String GPS_LAT_REF = 'GPS GPSLatitudeRef';
-const String GPS_LNG_REF = 'GPS GPSLongitudeRef';
-const String RDF_LOCATION = 'Rdf Location';
+const String _TIFF_THUMBNAIL = 'TIFFThumbnail';
+const String _JPEG_THUMBNAIL = 'JPEGThumbnail';
+const String _GPS_LAT = 'GPS GPSLatitude';
+const String _GPS_LNG = 'GPS GPSLongitude';
+const String _GPS_LAT_REF = 'GPS GPSLatitudeRef';
+const String _GPS_LNG_REF = 'GPS GPSLongitudeRef';
+const String _RDF_LOCATION = 'Rdf Location';
 
 Future<Map<String, IfdTag>> parseExif(local.GCWFile file) async {
   Map<String, IfdTag> data;
@@ -38,15 +38,15 @@ Future<Map<String, IfdTag>> parseExif(local.GCWFile file) async {
 }
 
 GCWImageViewData completeThumbnail(Map<String, IfdTag> data) {
-  if (data.containsKey(JPEG_THUMBNAIL)) {
+  if (data.containsKey(_JPEG_THUMBNAIL)) {
     // print('File has JPEG thumbnail');
-    var _jpgBytes = data[JPEG_THUMBNAIL].values;
-    data.remove(JPEG_THUMBNAIL);
+    var _jpgBytes = data[_JPEG_THUMBNAIL].values;
+    data.remove(_JPEG_THUMBNAIL);
     return GCWImageViewData(local.GCWFile(bytes: _jpgBytes.toList()));
-  } else if (data.containsKey(TIFF_THUMBNAIL)) {
+  } else if (data.containsKey(_TIFF_THUMBNAIL)) {
     // print('File has TIFF thumbnail');
-    var _tiffBytes = data[TIFF_THUMBNAIL].values;
-    data.remove(TIFF_THUMBNAIL);
+    var _tiffBytes = data[_TIFF_THUMBNAIL].values;
+    data.remove(_TIFF_THUMBNAIL);
     return GCWImageViewData(local.GCWFile(bytes: _tiffBytes.toList()));
   }
   return null;
@@ -58,17 +58,17 @@ GCWImageViewData completeThumbnail(Map<String, IfdTag> data) {
 ///
 LatLng completeGPSData(Map<String, IfdTag> data) {
   try {
-    if (data.containsKey(GPS_LAT) &&
-        data.containsKey(GPS_LNG) &&
-        data.containsKey(GPS_LAT_REF) &&
-        data.containsKey(GPS_LNG_REF)) {
-      IfdTag latRef = data[GPS_LAT_REF];
-      IfdTag lat = data[GPS_LAT];
+    if (data.containsKey(_GPS_LAT) &&
+        data.containsKey(_GPS_LNG) &&
+        data.containsKey(_GPS_LAT_REF) &&
+        data.containsKey(_GPS_LNG_REF)) {
+      IfdTag latRef = data[_GPS_LAT_REF];
+      IfdTag lat = data[_GPS_LAT];
       double _lat = _getCoordDecFromIfdTag(lat, latRef.printable, true);
       if (_lat.isNaN) return null;
 
-      IfdTag lngRef = data[GPS_LNG_REF];
-      IfdTag lng = data[GPS_LNG];
+      IfdTag lngRef = data[_GPS_LNG_REF];
+      IfdTag lng = data[_GPS_LNG];
       double _lng = _getCoordDecFromIfdTag(lng, lngRef.printable, false);
       if (_lng.isNaN) return null;
 
@@ -90,8 +90,8 @@ LatLng completeGPSData(Map<String, IfdTag> data) {
 LatLng completeGPSDataFromXmp(Map<String, dynamic> xmpTags) {
   LatLng point;
   try {
-    if (xmpTags.containsKey(RDF_LOCATION)) {
-      String latlng = xmpTags[RDF_LOCATION];
+    if (xmpTags.containsKey(_RDF_LOCATION)) {
+      String latlng = xmpTags[_RDF_LOCATION];
       var pt = parseStandardFormats(latlng, wholeString: true);
       if (pt != null) {
         point = pt['coordinate'];

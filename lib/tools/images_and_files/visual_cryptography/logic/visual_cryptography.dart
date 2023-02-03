@@ -13,7 +13,7 @@ int blackColor = Colors.black.value;
 Future<Uint8List> decodeImagesAsync(dynamic jobData) async {
   if (jobData == null) return null;
 
-  var output = await decodeImages(
+  var output = await _decodeImages(
       jobData.parameters.item1, jobData.parameters.item2, jobData.parameters.item3, jobData.parameters.item4);
 
   if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
@@ -21,7 +21,7 @@ Future<Uint8List> decodeImagesAsync(dynamic jobData) async {
   return output;
 }
 
-Future<Uint8List> decodeImages(Uint8List image1, Uint8List image2, int offsetX, int offsetY) {
+Future<Uint8List> _decodeImages(Uint8List image1, Uint8List image2, int offsetX, int offsetY) {
   if (image1 == null || image2 == null) return null;
 
   var _image1 = Image.decodeImage(image1);
@@ -60,7 +60,7 @@ Image.Image _pasteImage(Image.Image targetImage, Image.Image image, int offsetX,
 Future<Tuple2<int, int>> offsetAutoCalcAsync(dynamic jobData) async {
   if (jobData == null) return null;
 
-  var output = await offsetAutoCalc(
+  var output = await _offsetAutoCalc(
       jobData.parameters.item1, jobData.parameters.item2, jobData.parameters.item3, jobData.parameters.item4,
       sendAsyncPort: jobData.sendAsyncPort);
 
@@ -69,7 +69,7 @@ Future<Tuple2<int, int>> offsetAutoCalcAsync(dynamic jobData) async {
   return output;
 }
 
-Future<Tuple2<int, int>> offsetAutoCalc(Uint8List image1, Uint8List image2, int offsetX, int offsetY,
+Future<Tuple2<int, int>> _offsetAutoCalc(Uint8List image1, Uint8List image2, int offsetX, int offsetY,
     {SendPort sendAsyncPort}) {
   if (image1 == null || image2 == null) return null;
 
@@ -150,7 +150,7 @@ Uint8List cleanImage(Uint8List image1, Uint8List image2, int offsetX, int offset
 Future<Tuple2<Uint8List, Uint8List>> encodeImagesAsync(dynamic jobData) async {
   if (jobData == null) return null;
 
-  var output = await encodeImage(jobData.parameters.item1, jobData.parameters.item2, jobData.parameters.item3,
+  var output = await _encodeImage(jobData.parameters.item1, jobData.parameters.item2, jobData.parameters.item3,
       jobData.parameters.item4, jobData.parameters.item5);
 
   if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
@@ -158,7 +158,7 @@ Future<Tuple2<Uint8List, Uint8List>> encodeImagesAsync(dynamic jobData) async {
   return output;
 }
 
-Future<Tuple2<Uint8List, Uint8List>> encodeImage(
+Future<Tuple2<Uint8List, Uint8List>> _encodeImage(
     Uint8List image, Uint8List keyImage, int offsetX, int offsetY, int scale) {
   if (image == null) return null;
 
