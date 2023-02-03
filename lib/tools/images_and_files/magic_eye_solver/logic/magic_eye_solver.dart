@@ -15,8 +15,8 @@ enum TextureType { GREYDOTS, COLORDOTS, BITMAP }
 
 enum MagicEyeErrorCode { OK, IMAGE_TOO_SMALL }
 
-const int MIN_DISPLACEMENT_ALLOWED = 10;
-const MAX_TESTED_LINES_COUNT = 50;
+const int _MIN_DISPLACEMENT_ALLOWED = 10;
+const _MAX_TESTED_LINES_COUNT = 50;
 const int _channelCount = 4;
 double _fieldDepth;
 int _separation;
@@ -46,9 +46,9 @@ Future<Tuple3<Image.Image, Uint8List, int>> decodeImage(Uint8List image, Image.I
 
   if (image == null) return null;
   if (imageData == null) imageData = Image.decodeImage(image);
-  if (displacement == null) displacement = magicEyeSolver(imageData);
+  if (displacement == null) displacement = _magicEyeSolver(imageData);
 
-  var outputImage = createResultImage(imageData, displacement);
+  var outputImage = _createResultImage(imageData, displacement);
   var result = Tuple3<Image.Image, Uint8List, int>(imageData, outputImage, displacement);
 
   if (sendAsyncPort != null) sendAsyncPort.send(result);
@@ -57,7 +57,7 @@ Future<Tuple3<Image.Image, Uint8List, int>> decodeImage(Uint8List image, Image.I
 }
 
 /// calculate the displacement
-int magicEyeSolver(Image.Image image) {
+int _magicEyeSolver(Image.Image image) {
   if (image == null) return null;
 
   var testedLines = _computeTestedLines(image);
@@ -65,7 +65,7 @@ int magicEyeSolver(Image.Image image) {
 
   var differences = <double>[]; // displacement=0 is considered as unavailable so set a high value for it
 
-  for (int displacement = MIN_DISPLACEMENT_ALLOWED; displacement <= maxDisplacementAllowed; displacement++) {
+  for (int displacement = _MIN_DISPLACEMENT_ALLOWED; displacement <= maxDisplacementAllowed; displacement++) {
     var totalDifference = 0.0;
     testedLines.forEach((y) {
       for (int x = displacement; x < image.width; x++) {
@@ -85,14 +85,14 @@ int magicEyeSolver(Image.Image image) {
     var averageDifference = totalDifference / nbPixels;
     differences.add(averageDifference);
   }
-  return _computeBestDisplacement(differences) + MIN_DISPLACEMENT_ALLOWED;
+  return _computeBestDisplacement(differences) + _MIN_DISPLACEMENT_ALLOWED;
 }
 
 List<int> _computeTestedLines(Image.Image image) {
   if (image == null) return null;
 
   var lines = <int>[];
-  var delta = (image.height < MAX_TESTED_LINES_COUNT) ? 1 : (image.height / MAX_TESTED_LINES_COUNT);
+  var delta = (image.height < _MAX_TESTED_LINES_COUNT) ? 1 : (image.height / _MAX_TESTED_LINES_COUNT);
 
   for (double i = 0; i < image.height; i += delta) lines.add(i.floor());
 
@@ -121,7 +121,7 @@ int _computeBestDisplacement(List<double> differences) {
   return highestGradientIndex;
 }
 
-Uint8List createResultImage(Image.Image image, int displacement) {
+Uint8List _createResultImage(Image.Image image, int displacement) {
   if (image == null || displacement == null) return null;
 
   var bitmap = Image.Image(image.width, image.height);
@@ -151,14 +151,14 @@ Future<Tuple2<Uint8List, MagicEyeErrorCode>> generateImageAsync(dynamic jobData)
   Uint8List textureImage = jobData.parameters.item2;
   TextureType textureType = jobData.parameters.item3;
 
-  var outputData = generateImage(hiddenImage, textureImage, textureType);
+  var outputData = _generateImage(hiddenImage, textureImage, textureType);
 
   if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(outputData);
 
   return Future.value(outputData);
 }
 
-Tuple2<Uint8List, MagicEyeErrorCode> generateImage(
+Tuple2<Uint8List, MagicEyeErrorCode> _generateImage(
     Uint8List hiddenDataImage, Uint8List textureImage, TextureType textureType,
     {SendPort sendAsyncPort}) {
   var bInterpolateDepthmap = true;
@@ -234,7 +234,7 @@ Tuple2<Uint8List, MagicEyeErrorCode> generateImage(
 
   if (sendAsyncPort != null) sendAsyncPort.send({'progress': 0.0});
 
-  initHoroptic();
+  _initHoroptic();
 
   for (int y = 0; y < _rows; y++) {
     _doLineHoroptic(y);
@@ -255,7 +255,7 @@ Tuple2<Uint8List, MagicEyeErrorCode> generateImage(
 
 List<int> centreOut;
 
-void initHoroptic() {
+void _initHoroptic() {
   // Create an array of offsets which alternate pixels from the center out to the edges
   centreOut = List<int>.filled(_lineWidth, 0);
   int offset = _midpoint;
