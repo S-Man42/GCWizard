@@ -26,6 +26,20 @@ int _fileSize(Uint8List bytes) {
   }
 }
 
+/// File size calculation is possible for these data types
+List<FileType> _fileSizeCalculationAviable() {
+  return <FileType>[
+    FileType.JPEG,
+    FileType.PNG,
+    FileType.GIF,
+    FileType.BMP,
+    FileType.ZIP,
+    FileType.RAR,
+    FileType.TAR,
+    FileType.MP3
+  ];
+}
+
 int _jpgImageSize(Uint8List data) {
   var sum = 0;
   if (data == null) return null;

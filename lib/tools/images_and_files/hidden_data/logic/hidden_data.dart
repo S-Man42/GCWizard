@@ -26,7 +26,7 @@ Future<Tuple2<List<GCWFile>, int>> _hiddenData(GCWFile data, int fileIndexCounte
   var childrenList = <GCWFile>[];
 
   // unpack archives
-  if (fileClass(getFileType(data.bytes)) == FileClass.ARCHIVE) {
+  if (data.fileClass == FileClass.ARCHIVE) {
     // clone bytes (I have no idea why this is actually necessary)
     var children = await extractArchive(GCWFile(name: data.name, bytes: Uint8List.fromList(data.bytes.sublist(0))));
     //if (children != null) childrenList.addAll(children);
@@ -45,7 +45,7 @@ Future<Tuple2<List<GCWFile>, int>> _hiddenData(GCWFile data, int fileIndexCounte
   });
 
   // search for magic bytes (hidden files) in the parent block (e.g. thumbnails) (if not a archive)
-  if (data.bytes != null && fileClass(getFileType(data.bytes)) != FileClass.ARCHIVE) {
+  if (data.bytes != null && data.fileClass != FileClass.ARCHIVE) {
     // new file with correct size
     var dataClone = GCWFile(name: data.name, bytes: Uint8List.fromList(data.bytes.sublist(0, _fileSize(data.bytes))));
     result = await _searchMagicBytesHeader(dataClone, result.item2);
@@ -100,19 +100,7 @@ Future<Tuple2<List<GCWFile>, int>> _splitFile(GCWFile data, int fileIndexCounter
 
 /// search on any position magic bytes
 Future<Tuple2<List<GCWFile>, int>> _searchMagicBytesHeader(GCWFile data, int fileIndexCounter) async {
-  // checked file types header (have file size calculation)
-  var fileTypeList = <FileType>[
-    FileType.JPEG,
-    FileType.PNG,
-    FileType.GIF,
-    FileType.BMP,
-    FileType.ZIP,
-    FileType.RAR,
-    FileType.TAR,
-    FileType.MP3
-  ];
-
-  var result = await _searchMagicBytes(data, fileTypeList, fileIndexCounter);
+  var result = await _searchMagicBytes(data, _fileSizeCalculationAviable(), fileIndexCounter);
   _addChildren(data, result?.item1);
 
   return Future.value(Tuple2<List<GCWFile>, int>([data], result?.item2 ?? fileIndexCounter));
@@ -178,7 +166,7 @@ Future<Tuple2<List<GCWFile>, int>> _searchMagicBytes(
 Future<bool> _checkFileValid(GCWFile data) async {
   var result = true;
   try {
-    var _fileClass = fileClass(getFileType(data?.bytes));
+    var _fileClass = data?.fileClass;
     if (_fileClass == FileClass.IMAGE)
       result = Image.decodeImage(data.bytes) != null;
     else if (_fileClass == FileClass.SOUND) {
