@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:file_picker_writable/file_picker_writable.dart';
@@ -44,36 +45,8 @@ Future<Uint8List> saveByteDataToFile(BuildContext context, Uint8List data, Strin
   return data;
 }
 
-Future<File> saveStringToFile(BuildContext context, String data, String fileName, {String subDirectory}) async {
-  File fileX;
-
-  if (kIsWeb) {
-    var blob = html.Blob([data], 'text/plain', 'native');
-    html.AnchorElement(
-      href: html.Url.createObjectUrl(blob),
-    )
-      ..setAttribute("download", fileName)
-      ..click();
-
-    fileX = File(data);
-  } else {
-    var storagePermission = await checkStoragePermission();
-    if (!storagePermission) {
-      showToast(i18n(context, 'common_exportfile_nowritepermission'));
-      return null;
-    }
-
-    fileName = _limitFileNameLength(fileName);
-    final fileInfo = await FilePickerWritable().openFileForCreate(
-      fileName: fileName,
-      writer: (file) async {
-        await file.writeAsString(data);
-        fileX = file;
-      },
-    );
-    if (fileInfo == null) return null;
-  }
-  return fileX;
+Future<Uint8List> saveStringToFile(BuildContext context, String data, String fileName, {String subDirectory}) async {
+  return saveByteDataToFile(context, convertStringToBytes(data), fileName);
 }
 
 String _limitFileNameLength(String fileName) {
@@ -81,4 +54,10 @@ String _limitFileNameLength(String fileName) {
   if (fileName.length <= maxLength) return fileName;
   var extension = getFileExtension(fileName);
   return getFileBaseNameWithoutExtension(fileName).substring(0, maxLength - extension.length) + extension;
+}
+
+
+Uint8List convertStringToBytes(String text) {
+  if (text == null) return null;
+  return utf8.encode(text);
 }
