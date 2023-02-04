@@ -320,7 +320,7 @@ BeatnikOutput interpretBeatnik(var ScrabbleVersion, String sourcecode, input) {
             ], scrabbleProgram, assemblerProgram, mnemonicProgram, debugProgram);
           break;
         case 8: // push input
-          if (inputindex < inputlist.length - 1) {
+          if (inputindex < inputlist.length) {
             stack.push(inputlist[inputindex].codeUnitAt(0));
             inputindex++;
           } else {
