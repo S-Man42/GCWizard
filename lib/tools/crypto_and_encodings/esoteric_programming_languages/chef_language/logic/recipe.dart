@@ -33,9 +33,9 @@ class _Recipe {
         _Ingredient ing = new _Ingredient(ingredientLine);
         if (ing.getName() == 'INVALID') {
           error = true;
-          this.errorList.add(_Messages[language]['chef_error_syntax']);
-          this.errorList.add(_Messages[language]['chef_error_syntax_ingredient']);
-          this.errorList.add(_Messages[language]['chef_error_syntax_ingredient_name']);
+          this.errorList.add(CHEF_Messages[language]['chef_error_syntax']);
+          this.errorList.add(CHEF_Messages[language]['chef_error_syntax_ingredient']);
+          this.errorList.add(CHEF_Messages[language]['chef_error_syntax_ingredient_name']);
           this.errorList.add(f.format(i).toString() + ' : ' + ingredientLine);
           this.errorList.add('');
           return;
@@ -60,10 +60,10 @@ class _Recipe {
         method.replaceAll("zubereitung:", "zubereitung.").replaceAll("\n", " ").replaceAll(". ", ".").split('.');
     for (int i = 1; i < methodList.length - 1; i++) {
       var m = new _Method(methodList[i], i, language);
-      if (m.type == _Type.Invalid || m.type == _Type.Unbekannt) {
+      if (m.type == CHEF_Method.Invalid || m.type == CHEF_Method.Unbekannt) {
         this.error = true;
-        this.errorList.add(_Messages[language]['chef_error_syntax']);
-        this.errorList.add(_Messages[language]['chef_error_syntax_method']);
+        this.errorList.add(CHEF_Messages[language]['chef_error_syntax']);
+        this.errorList.add(CHEF_Messages[language]['chef_error_syntax_method']);
         this.errorList.add(f.format(i).toString() + ' : ' + methodList[i]);
         this.errorList.add('');
       } else {
@@ -78,8 +78,8 @@ class _Recipe {
       this.cookingtime = int.parse(expr.firstMatch(cookingtime).group(2));
     } else {
       this.error = true;
-      errorList.add(_Messages[language]['chef_error_syntax']);
-      errorList.add(_Messages[language]['chef_error_syntax_cooking_time']);
+      errorList.add(CHEF_Messages[language]['chef_error_syntax']);
+      errorList.add(CHEF_Messages[language]['chef_error_syntax_cooking_time']);
       errorList.add(cookingtime);
       errorList.add('');
     }
@@ -95,8 +95,8 @@ class _Recipe {
       }
     } else {
       this.error = true;
-      errorList.add(_Messages[language]['chef_error_syntax']);
-      errorList.add(_Messages[language]['chef_error_syntax_oven_temperature']);
+      errorList.add(CHEF_Messages[language]['chef_error_syntax']);
+      errorList.add(CHEF_Messages[language]['chef_error_syntax_oven_temperature']);
       errorList.add(oventemp);
       errorList.add('');
     }
@@ -107,9 +107,9 @@ class _Recipe {
       this.serves = int.parse(RegExp(r'^(serves |portionen(:)? )(\d*)(\.)$').firstMatch(serves).group(3));
     } else {
       this.error = true;
-      errorList.add(_Messages[language]['chef_error_syntax']);
-      errorList.add(_Messages[language]['chef_error_syntax_serves']);
-      errorList.add(_Messages[language]['chef_error_syntax_serves_without_number']);
+      errorList.add(CHEF_Messages[language]['chef_error_syntax']);
+      errorList.add(CHEF_Messages[language]['chef_error_syntax_serves']);
+      errorList.add(CHEF_Messages[language]['chef_error_syntax_serves_without_number']);
       errorList.add(serves);
       errorList.add('');
     }

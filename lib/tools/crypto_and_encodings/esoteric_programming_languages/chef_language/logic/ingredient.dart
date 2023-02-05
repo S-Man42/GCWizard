@@ -20,16 +20,16 @@ class _Ingredient {
       _amount = int.parse(RegExp(r'^([0-9]+)[ a-zäöüß]*').firstMatch(tokens[i]).group(1));
       i++;
       if (i < tokens.length) {
-        if (_MeasureType.hasMatch(tokens[i])) {
+        if (CHEF_MeasureType.hasMatch(tokens[i])) {
           _state = _State.Dry;
           i++;
-        } else if (_MeasureDry.hasMatch(tokens[i])) {
+        } else if (CHEF_MeasureDry.hasMatch(tokens[i])) {
           _state = _State.Dry;
           i++;
-        } else if (_MeasureLiquid.hasMatch(tokens[i])) {
+        } else if (CHEF_MeasureLiquid.hasMatch(tokens[i])) {
           _state = _State.Liquid;
           i++;
-        } else if (_MeasureElse.hasMatch(tokens[i])) {
+        } else if (CHEF_MeasureElse.hasMatch(tokens[i])) {
           i++;
         }
       } else {
