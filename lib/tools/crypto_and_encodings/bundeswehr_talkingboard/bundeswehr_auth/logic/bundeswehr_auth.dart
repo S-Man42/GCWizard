@@ -310,6 +310,9 @@ String _normalizeAuthCode(String currentAuth) {
 }
 
 bool _tableIsInvalid(BundeswehrTalkingBoardAuthentificationTable table, BundeswehrTalkingBoardAuthentificationTableType type){
+  if (table == null) {
+    return true;
+  }
   switch (type) {
     case BundeswehrTalkingBoardAuthentificationTableType.AUTHENTIFICATIONTABLE:
       return (table.xAxis.length != 5 || table.yAxis.length != 13 || table.Content.length < 65);
