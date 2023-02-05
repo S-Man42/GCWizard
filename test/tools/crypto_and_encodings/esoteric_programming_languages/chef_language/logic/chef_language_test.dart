@@ -738,20 +738,20 @@ Serves.''';
 
     List<Map<String, dynamic>> _inputsToExpected = [
       {'language' : 'ENG', 'input' : '',  'recipe' : testNoInput, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_missing_input']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : testPutNoInput,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_method_step','1 : Type.Verb','chef_error_runtime_ingredient_not_found']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : testFoldEmptyBow,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_folded_from_empty_mixing_bowl','chef_error_runtime_method_step','1 : Type.Fold => 1']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : testAddEmptyBowl,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_add_to_empty_mixing_bowl','chef_error_runtime_method_step','1 : Type.Add => 1']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : testRemoveEmptyBowl,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_remove_from_empty_mixing_bowl','chef_error_runtime_method_step','1 : Type.Remove => 1']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : testCombineEmptyBowl,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_combine_with_empty_mixing_bowl','chef_error_runtime_method_step','1 : Type.Combine => 1']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : testDivideEmptyBowl,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_divide_from_empty_mixing_bowl','chef_error_runtime_method_step','1 : Type.Divide => 1']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testPutNoInput,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_method_step','1 : _CHEF_Method.Verb','chef_error_runtime_ingredient_not_found']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testFoldEmptyBow,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_folded_from_empty_mixing_bowl','chef_error_runtime_method_step','1 : _CHEF_Method.Fold => 1']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testAddEmptyBowl,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_add_to_empty_mixing_bowl','chef_error_runtime_method_step','1 : _CHEF_Method.Add => 1']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testRemoveEmptyBowl,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_remove_from_empty_mixing_bowl','chef_error_runtime_method_step','1 : _CHEF_Method.Remove => 1']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testCombineEmptyBowl,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_combine_with_empty_mixing_bowl','chef_error_runtime_method_step','1 : _CHEF_Method.Combine => 1']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testDivideEmptyBowl,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_divide_from_empty_mixing_bowl','chef_error_runtime_method_step','1 : _CHEF_Method.Divide => 1']},
       {'language' : 'ENG', 'input' : '',   'recipe' : testAddryNoIngredients,   'isValid' : true, 'expectedOutput' : ['0']},
       {'language' : 'ENG', 'input' : '',   'recipe' : testLiquefyEmptyBowl,   'isValid' : true, 'expectedOutput' : ['']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : testStirEmptyBowl,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_stir_empty_mixing_bowl','chef_error_runtime_method_step','1 : Type.Stir => 1']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testStirEmptyBowl,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_stir_empty_mixing_bowl','chef_error_runtime_method_step','1 : _CHEF_Method.Stir => 1']},
       {'language' : 'ENG', 'input' : '',   'recipe' : testStirNoIngredient,   'isValid' : true, 'expectedOutput' : ['4351']},
       {'language' : 'ENG', 'input' : '',   'recipe' : testStirEmptyIngredient,   'isValid' : true, 'expectedOutput' : ['5431']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : testLoopWrongEnd,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_method_loop','1 : Type.Verb',]},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testLoopWrongEnd,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_method_loop','1 : _CHEF_Method.Verb',]},
       {'language' : 'ENG', 'input' : '',   'recipe' : testLoopWrongStart,   'isValid' : true, 'expectedOutput' : ['chef_error_syntax','chef_error_syntax_method','1 : count',]},
-      {'language' : 'ENG', 'input' : '',   'recipe' : testServeNoRecipe,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_method_step','3 : Type.Verb']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testServeNoRecipe,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_method_step','3 : _CHEF_Method.Verb']},
       {'language' : 'ENG', 'input' : '',   'recipe' : testServeNoNumber,   'isValid' : true, 'expectedOutput' : ['chef_error_syntax','chef_error_syntax_serves','chef_error_syntax_serves_without_number','serves.']},
     ];
 
@@ -3065,7 +3065,7 @@ Portionen: 1.''';
 
     List<Map<String, dynamic>> _inputsToExpected = [
       {'language' : 'ENG', 'input' : '',  'recipe' : GC6HRCE, 'expectedOutput' : ['21m296g E013 17.699N52 25.763']},
-      {'language' : 'DEU', 'input' : '',  'recipe' : GC9CAQJ, 'expectedOutput' : ['809711711510111098114ot1310']},  // works in emulator
+      {'language' : 'DEU', 'input' : '',  'recipe' : GC9CAQJ, 'expectedOutput' : ['809711711510111098114ot1310', '',' chef_warning_liquefy_missing_title', '» Inhalt der Schüssel auf dem Stövchen erhitzen. «', 'chef_warning_liquefy_missing_hint', '» Schüssel in eine Servierschale stürzen. «']},  // works in emulator
       {'language' : 'DEU', 'input' : '',  'recipe' : GC9CAQJKorrigiert, 'expectedOutput' : ['Pausenbrot']}, // works in emulator
       {'language' : 'DEU', 'input' : '',  'recipe' : GC7NYHW, 'expectedOutput' : ['5256176325256.565452326932484857176324848.55249']},
       {'language' : 'DEU', 'input' : '',  'recipe' : GC8WY5T, 'expectedOutput' : ['783253491763250534651525332326932541763251494657515213106511010310110811032105110325410932Hö104101']},
