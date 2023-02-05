@@ -358,7 +358,7 @@ List<VanityWordsDecodeOutput> decodeVanityWords(String text, NumeralWordsLanguag
   bool ambigous = false;
   String hDigits = '';
   String hWord = '';
-  text = text.replaceAll('\n', '0').replaceAll(' ', '0');
+  text = text.replaceAll('\n', ' ');
   //text = text.replaceAll('\n', '').replaceAll('0', '').replaceAll('1', '').replaceAll(' ', '');
   while (text.length > 0) {
     found = false;

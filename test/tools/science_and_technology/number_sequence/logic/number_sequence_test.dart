@@ -102,7 +102,10 @@ void main() {
         var _actual = getNumbersWithNDigits(elem['sequence'], elem['digits']);
         var length = elem['expectedOutput'].length;
         for (int i = 0; i < length; i++) {
-          expect(_actual[i], BigInt.from(elem['expectedOutput'][i]));
+          if (_actual[i].runtimeType.toString() == 'String')
+            expect(BigInt.parse(_actual[i]), BigInt.from(elem['expectedOutput'][i]));
+          else
+            expect(_actual[i], BigInt.from(elem['expectedOutput'][i]));
         }
       });
     });
