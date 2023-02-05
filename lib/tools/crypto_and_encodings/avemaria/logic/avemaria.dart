@@ -3,7 +3,7 @@
 
 import 'dart:math';
 
-Map<String, List<String>> AVE_MARIA_ENCODE = {
+Map<String, List<String>> _AVE_MARIA_ENCODE = {
   'A': ['deus', 'clemens'],
   'B': ['creator', 'clementissimus'],
   'C': ['conditor', 'pius'],
@@ -31,7 +31,7 @@ Map<String, List<String>> AVE_MARIA_ENCODE = {
   'Y': ['pastor', 'conctipotens'],
   'Z': ['moderator', 'magnificus'],
 };
-Map<String, String> AVE_MARIA_DECODE = {
+Map<String, String> _AVE_MARIA_DECODE = {
   'deus': 'A',
   'clemens': 'A',
   'creator': 'B',
@@ -80,36 +80,32 @@ Map<String, String> AVE_MARIA_DECODE = {
   'magnificus': 'Z',
 };
 
-initializeAVEMARIA(){
-  AVE_MARIA_DECODE = {};
-  AVE_MARIA_ENCODE.forEach((key, value) {
-    value.forEach((element) {
-      AVE_MARIA_DECODE[element] = key;
-    });
-  });
-}
-
 String decodeAveMaria(String chiffre) {
-  if (chiffre == null || chiffre =='')
-    return '';
+  if (chiffre == null || chiffre == '') return '';
 
   List<String> result = [];
-  chiffre.toLowerCase().split(' ').forEach((element) {
-    result.add(AVE_MARIA_DECODE[element]);
+  List<String> code = chiffre.toLowerCase().split('  ');
+
+  code.forEach((word) {
+    word.split(' ').forEach((letter) {
+      if (_AVE_MARIA_DECODE[letter] == null)
+        result.add(' ');
+      else
+        result.add(_AVE_MARIA_DECODE[letter]);}
+    );
   });
   return result.join('');
 }
 
 String encodeAveMaria(String plain) {
-  if (plain == null || plain =='')
-    return '';
+  if (plain == null || plain == '') return '';
 
   List<String> result = [];
   plain.toUpperCase().split('').forEach((element) {
     if (element == ' ')
       result.add(' ');
     else
-      result.add(AVE_MARIA_ENCODE[element][Random().nextInt(2)]);
+      result.add(_AVE_MARIA_ENCODE[element][Random().nextInt(2)]);
   });
   return result.join(' ');
 }
