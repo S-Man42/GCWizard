@@ -476,7 +476,7 @@ String KarolRobotOutputDecode(String program) {
 
   String outputLine = '##';
   List<String> output = new List();
-  output.add(outputLine.padRight(maxX + 1, '#'));
+  output.add(outputLine.padRight(maxX + 2, '#'));
   for (y = 0; y < maxY; y++) {
     outputLine = '##';
     for (x = 0; x < maxX; x++) {
