@@ -42,16 +42,16 @@ List<String> _getAuxiliaryRecipe(String name, int value, List<String> ingredient
   }
   output.add(name);
   output.add('');
-  output.add(_getText(CHEF_textId.Ingredients, '', language));
+  output.add(_getText(_CHEF_textId.Ingredients, '', language));
   output.add(nOne.toString() + ' ' + ingredientOne[0] + ' ' + ingredientOne[1]);
   output.add(nTwo.toString() + ' ' + ingredientTwo[0] + ' ' + ingredientTwo[1]);
   output.add('');
-  output.add(_getText(CHEF_textId.Method, '', language));
-  output.add(_getText(CHEF_textId.Put, ingredientOne[1], language));
+  output.add(_getText(_CHEF_textId.Method, '', language));
+  output.add(_getText(_CHEF_textId.Put, ingredientOne[1], language));
   if (combine)
-    output.add(_getText(CHEF_textId.Combine, ingredientTwo[1], language));
+    output.add(_getText(_CHEF_textId.Combine, ingredientTwo[1], language));
   else
-    output.add(_getText(CHEF_textId.Add, ingredientTwo[1], language));
+    output.add(_getText(_CHEF_textId.Add, ingredientTwo[1], language));
   return output;
 }
 
@@ -87,19 +87,19 @@ String generateChef(
 
   // fill the lists for the ingredients depending on language
   if (language == 'ENG') {
-    itemListDry.addAll(CHEF_itemListDryENG);
-    itemListLiquid.addAll(CHEF_itemListLiquidENG);
-    itemListAuxiliary.addAll(CHEF_itemListAuxiliaryENG);
-    itemListMeasure.addAll(CHEF_measuresENG);
-    itemListMeasuresLiquid.addAll(CHEF_liquidMeasuresENG);
-    itemListMeasuresDry.addAll(CHEF_dryMeasuresENG);
+    itemListDry.addAll(_CHEF_itemListDryENG);
+    itemListLiquid.addAll(_CHEF_itemListLiquidENG);
+    itemListAuxiliary.addAll(_CHEF_itemListAuxiliaryENG);
+    itemListMeasure.addAll(_CHEF_measuresENG);
+    itemListMeasuresLiquid.addAll(_CHEF_liquidMeasuresENG);
+    itemListMeasuresDry.addAll(_CHEF_dryMeasuresENG);
   } else {
-    itemListDry.addAll(CHEF_itemListDryDEU);
-    itemListLiquid.addAll(CHEF_itemListLiquidDEU);
-    itemListAuxiliary.addAll(CHEF_itemListAuxiliaryDEU);
-    itemListMeasure.addAll(CHEF_measuresDEU);
-    itemListMeasuresLiquid.addAll(CHEF_liquidMeasuresDEU);
-    itemListMeasuresDry.addAll(CHEF_dryMeasuresDEU);
+    itemListDry.addAll(_CHEF_itemListDryDEU);
+    itemListLiquid.addAll(_CHEF_itemListLiquidDEU);
+    itemListAuxiliary.addAll(_CHEF_itemListAuxiliaryDEU);
+    itemListMeasure.addAll(_CHEF_measuresDEU);
+    itemListMeasuresLiquid.addAll(_CHEF_liquidMeasuresDEU);
+    itemListMeasuresDry.addAll(_CHEF_dryMeasuresDEU);
   }
 
   if (auxiliary) {
@@ -153,10 +153,10 @@ String generateChef(
             measure = itemListMeasuresLiquid.elementAt(random.nextInt(itemListMeasuresLiquid.length));
             ingredientList.add(value.toString() + ' ' + measure + ' ' + item);
             amount[value] = item;
-            methodList.add(_getText(CHEF_textId.Put, amount[value], language));
+            methodList.add(_getText(_CHEF_textId.Put, amount[value], language));
           } else {
             // digit was already processed
-            methodList.add(_getText(CHEF_textId.Put, amount[value], language));
+            methodList.add(_getText(_CHEF_textId.Put, amount[value], language));
           }
         } else if (value < 100) {
           // => number 10-99 => store number as char with charcode 10 - 99 => dry, unspecific ingredients
@@ -170,7 +170,7 @@ String generateChef(
             ingredientListed[item] = item;
             ingredientList.add(value.toString() + ' ' + measure + ' ' + item);
             amount[value] = item;
-            methodList.add(_getText(CHEF_textId.Put, amount[value], language));
+            methodList.add(_getText(_CHEF_textId.Put, amount[value], language));
           } else {
             // number was already processed
             if (itemListLiquid.contains(amount[value])) {
@@ -183,9 +183,9 @@ String generateChef(
               ingredientListed[item] = item;
               ingredientList.add(value.toString() + ' ' + measure + ' ' + item);
               amount[value] = item;
-              methodList.add(_getText(CHEF_textId.Put, amount[value], language));
+              methodList.add(_getText(_CHEF_textId.Put, amount[value], language));
             } else {
-              methodList.add(_getText(CHEF_textId.Put, amount[value], language));
+              methodList.add(_getText(_CHEF_textId.Put, amount[value], language));
             }
           }
         } else {
@@ -221,10 +221,10 @@ String generateChef(
           auxiliaryRecipes[auxiliaryName] =
               _getAuxiliaryRecipe(auxiliaryName, value, ingredientOne, ingredientTwo, language);
           if (i > 0) {
-            methodList.add(_getText(CHEF_textId.Pour, '', language));
-            methodList.add(_getText(CHEF_textId.Clean, '', language));
+            methodList.add(_getText(_CHEF_textId.Pour, '', language));
+            methodList.add(_getText(_CHEF_textId.Clean, '', language));
           }
-          methodList.add(_getText(CHEF_textId.Serve_with, auxiliaryName, language));
+          methodList.add(_getText(_CHEF_textId.Serve_with, auxiliaryName, language));
         }
       } else {
         // element is a string of non-digits  => Liquid ingredients
@@ -243,10 +243,10 @@ String generateChef(
             ingredientListed[item] = item;
             ingredientList.add(value.toString() + ' ' + measure + ' ' + item);
             amount[value] = item;
-            methodList.add(_getText(CHEF_textId.Put, amount[value], language));
+            methodList.add(_getText(_CHEF_textId.Put, amount[value], language));
           } else {
             // character was already processed {
-            methodList.add(_getText(CHEF_textId.Put, amount[value], language));
+            methodList.add(_getText(_CHEF_textId.Put, amount[value], language));
           }
         });
       }
@@ -276,9 +276,9 @@ String generateChef(
         ingredientListed[item] = item;
         ingredientList.add(value.toString() + ' ' + measure + ' ' + item);
         amount[value] = item;
-        methodList.add(_getText(CHEF_textId.Put, amount[value], language));
+        methodList.add(_getText(_CHEF_textId.Put, amount[value], language));
       } else {
-        methodList.add(_getText(CHEF_textId.Put, amount[value], language));
+        methodList.add(_getText(_CHEF_textId.Put, amount[value], language));
       }
     });
   }
@@ -286,21 +286,21 @@ String generateChef(
   output.writeln(title + '.');
   output.writeln('');
   if (remark != '') output.writeln(remark + '\n');
-  output.writeln(_getText(CHEF_textId.Ingredients, '', language));
+  output.writeln(_getText(_CHEF_textId.Ingredients, '', language));
   output.writeln(ingredientList.join('\n'));
   output.writeln('');
   if (int.tryParse(time) != null) {
-    output.writeln(_getText(CHEF_textId.Cooking_time, time, language) + '\n');
+    output.writeln(_getText(_CHEF_textId.Cooking_time, time, language) + '\n');
   }
   if (int.tryParse(temperature) != null) {
-    output.writeln(_getText(CHEF_textId.Pre_heat_oven, temperature, language) + '\n');
+    output.writeln(_getText(_CHEF_textId.Pre_heat_oven, temperature, language) + '\n');
   }
-  output.writeln(_getText(CHEF_textId.Method, '', language));
+  output.writeln(_getText(_CHEF_textId.Method, '', language));
   output.writeln(methodList.join('\n'));
-  if (!auxiliary) output.writeln(_getText(CHEF_textId.Liquefy_contents, '', language));
-  output.writeln(_getText(CHEF_textId.Pour, '', language));
+  if (!auxiliary) output.writeln(_getText(_CHEF_textId.Liquefy_contents, '', language));
+  output.writeln(_getText(_CHEF_textId.Pour, '', language));
   output.writeln('');
-  output.writeln(_getText(CHEF_textId.Serves, '', language));
+  output.writeln(_getText(_CHEF_textId.Serves, '', language));
 
   auxiliaryRecipes.forEach((key, value) {
     output.writeln('\n');
@@ -365,10 +365,10 @@ List<String> _decodeChef(String language, recipe, additionalIngredients) {
 
 bool _isMethod(String testString) {
   bool result = false;
-  CHEF_matchersDEU.forEach((element) {
+  _CHEF_matchersDEU.forEach((element) {
     if (element.hasMatch(testString)) result = true;
   });
-  CHEF_matchersENG.forEach((element) {
+  _CHEF_matchersENG.forEach((element) {
     if (element.hasMatch(testString)) result = true;
   });
   return result;
@@ -582,13 +582,13 @@ class _Chef {
           if (!progressError) {
             progressError = true;
             if (mainrecipeFound) {
-              error.add(CHEF_Messages[language]['chef_error_structure_subrecipe']);
+              error.add(_CHEF_Messages[language]['chef_error_structure_subrecipe']);
             }
             error.addAll([
-              CHEF_Messages[language]['chef_error_structure_recipe_read_unexpected_comments_title'],
-              CHEF_Messages[language][_progressToExpected(language, progress)],
-              CHEF_Messages[language]['chef_hint_recipe_hint'],
-              CHEF_Messages[language][_structHint(language, progress)],
+              _CHEF_Messages[language]['chef_error_structure_recipe_read_unexpected_comments_title'],
+              _CHEF_Messages[language][_progressToExpected(language, progress)],
+              _CHEF_Messages[language]['chef_hint_recipe_hint'],
+              _CHEF_Messages[language][_structHint(language, progress)],
               ''
             ]);
           }
@@ -600,8 +600,8 @@ class _Chef {
     if (mainrecipe == null) {
       valid = false;
       error.addAll([
-        CHEF_Messages[language]['chef_error_structure_recipe'],
-        CHEF_Messages[language]['chef_error_structure_recipe_empty_missing_title'],
+        _CHEF_Messages[language]['chef_error_structure_recipe'],
+        _CHEF_Messages[language]['chef_error_structure_recipe_empty_missing_title'],
         ''
       ]);
     }
@@ -609,24 +609,24 @@ class _Chef {
     if (!titleFound) {
       valid = false;
       error.addAll([
-        CHEF_Messages[language]['chef_error_structure_recipe'],
-        CHEF_Messages[language]['chef_error_structure_recipe_missing_title'],
+        _CHEF_Messages[language]['chef_error_structure_recipe'],
+        _CHEF_Messages[language]['chef_error_structure_recipe_missing_title'],
         ''
       ]);
     }
     if (!ingredientsFound) {
       valid = false;
       error.addAll([
-        CHEF_Messages[language]['chef_error_structure_recipe'],
-        CHEF_Messages[language]['chef_error_structure_recipe_empty_ingredients'],
+        _CHEF_Messages[language]['chef_error_structure_recipe'],
+        _CHEF_Messages[language]['chef_error_structure_recipe_empty_ingredients'],
         ''
       ]);
     }
     if (!methodsFound) {
       valid = false;
       error.addAll([
-        CHEF_Messages[language]['chef_error_structure_recipe'],
-        CHEF_Messages[language]['chef_error_structure_recipe_empty_methods'],
+        _CHEF_Messages[language]['chef_error_structure_recipe'],
+        _CHEF_Messages[language]['chef_error_structure_recipe_empty_methods'],
         ''
       ]);
     }
@@ -634,8 +634,8 @@ class _Chef {
     if (!servesFound && !refrigerateFound) {
       valid = false;
       error.addAll([
-        CHEF_Messages[language]['chef_error_structure_recipe'],
-        CHEF_Messages[language]['chef_error_structure_recipe_empty_serves'],
+        _CHEF_Messages[language]['chef_error_structure_recipe'],
+        _CHEF_Messages[language]['chef_error_structure_recipe_empty_serves'],
         ''
       ]);
     }
@@ -649,20 +649,20 @@ class _Chef {
   }
 
   void _addError(String language, int progressToExpected, int progress) {
-    error.add(CHEF_Messages[language]['chef_error_structure_recipe']);
+    error.add(_CHEF_Messages[language]['chef_error_structure_recipe']);
     if (progressToExpected >= 0) {
       error.addAll([
-        CHEF_Messages[language]['chef_error_structure_recipe_read_unexpected'],
+        _CHEF_Messages[language]['chef_error_structure_recipe_read_unexpected'],
         _progressToExpected(language, progressToExpected),
-        CHEF_Messages[language]['chef_error_structure_recipe_expecting'],
+        _CHEF_Messages[language]['chef_error_structure_recipe_expecting'],
         _progressToExpected(language, progress),
         ''
       ]);
     } else {
       error.addAll([
-        CHEF_Messages[language]['chef_error_structure_recipe_read_unexpected_comments_title'],
+        _CHEF_Messages[language]['chef_error_structure_recipe_read_unexpected_comments_title'],
         _progressToExpected(language, progress),
-        CHEF_Messages[language]['chef_hint_recipe_hint'],
+        _CHEF_Messages[language]['chef_hint_recipe_hint'],
         _structHint(language, progress)
       ]);
     }
@@ -672,38 +672,38 @@ class _Chef {
   String _structHint(String language, int progress) {
     switch (progress) {
       case 2:
-        return CHEF_Messages[language]['chef_hint_recipe_ingredients'];
+        return _CHEF_Messages[language]['chef_hint_recipe_ingredients'];
       case 3:
-        return CHEF_Messages[language]['chef_hint_recipe_methods'];
+        return _CHEF_Messages[language]['chef_hint_recipe_methods'];
       case 4:
-        return CHEF_Messages[language]['chef_hint_recipe_oven_temperature'];
+        return _CHEF_Messages[language]['chef_hint_recipe_oven_temperature'];
     }
-    return CHEF_Messages[language]["chef_hint_no_hint_available"];
+    return _CHEF_Messages[language]["chef_hint_no_hint_available"];
   }
 
   String _progressToExpected(String language, int progress) {
     String output = '';
     switch (progress) {
       case 0:
-        output = CHEF_Messages[language]['chef_error_structure_recipe_title'];
+        output = _CHEF_Messages[language]['chef_error_structure_recipe_title'];
         break;
       case 1:
-        output = CHEF_Messages[language]['chef_error_structure_recipe_comments'];
+        output = _CHEF_Messages[language]['chef_error_structure_recipe_comments'];
         break;
       case 2:
-        output = CHEF_Messages[language]['chef_error_structure_recipe_ingredient_list'];
+        output = _CHEF_Messages[language]['chef_error_structure_recipe_ingredient_list'];
         break;
       case 3:
-        output = CHEF_Messages[language]['chef_error_structure_recipe_cooking_time'];
+        output = _CHEF_Messages[language]['chef_error_structure_recipe_cooking_time'];
         break;
       case 4:
-        output = CHEF_Messages[language]['chef_error_structure_recipe_oven_temperature'];
+        output = _CHEF_Messages[language]['chef_error_structure_recipe_oven_temperature'];
         break;
       case 5:
-        output = CHEF_Messages[language]['chef_error_structure_recipe_methods'];
+        output = _CHEF_Messages[language]['chef_error_structure_recipe_methods'];
         break;
       case 6:
-        output = CHEF_Messages[language]['chef_error_structure_recipe_serve_amount'];
+        output = _CHEF_Messages[language]['chef_error_structure_recipe_serve_amount'];
         break;
     }
     return output;

@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/logic/chef_language.dart';
 
-enum CHEF_textId {
+enum _CHEF_textId {
   Put,
   Ingredients,
   Cooking_time,
@@ -16,7 +16,7 @@ enum CHEF_textId {
   Combine
 }
 
-enum CHEF_Method {
+enum _CHEF_Method {
   Take,
   Put,
   Fold,
@@ -63,7 +63,7 @@ enum CHEF_Method {
   Unbekannt
 }
 
-final List<RegExp> CHEF_matchersENG = [
+final List<RegExp> _CHEF_matchersENG = [
   RegExp(r'^take( the)? ([a-z0-9 -]+) from( the)? refrigerator$'),
   RegExp(r'^(put|fold)( the)? ([a-z0-9 -]+) into( the)?( (\d+)(nd|rd|th|st))? mixing bowl$'),
   RegExp(r'^add( the)? dry ingredients (to ((the )?(\d+)(nd|rd|th|st) )?mixing bowl)?$'),
@@ -85,7 +85,7 @@ final List<RegExp> CHEF_matchersENG = [
   RegExp(r'^([a-z0-9]+)( the)? ([a-z0-9 -]+)$')
 ];
 
-final List<RegExp> CHEF_matchersDEU = [
+final List<RegExp> _CHEF_matchersDEU = [
   RegExp(r'^(den |die |das )?([a-z0-9 -]+) aus (dem )?kuehlschrank nehmen$'),
   RegExp(r'^(den |die |das )?([a-z0-9 -]+) in( die)?( (\d+)(te))? (ruehr)?schuessel geben$'),
   RegExp(r'^(den |die |das )?([a-z0-9 -]+)( in( die)?( (\d+)(te))? (ruehr)?schuessel)? unterheben$'),
@@ -109,12 +109,12 @@ final List<RegExp> CHEF_matchersDEU = [
   RegExp(r'^(das |den |die )?([a-z0-9]+) ([a-z0-9 ]+)$')
 ];
 
-final RegExp CHEF_MeasureType = RegExp(r'^heaped$|^level$|^gestrichen$|^gehaeuft$');
-final RegExp CHEF_MeasureDry = RegExp(r'^g(r)?$|^kg$|^pinch(es)?$|^prise(n)$');
-final RegExp CHEF_MeasureLiquid = RegExp(r'^ml$|^l$|^dash(es)?$|^drop(s)?$|^spritzer$|^tropfen$');
-final RegExp CHEF_MeasureElse = RegExp(r'^cup(s)?$|^tasse(n)?$|^teaspoon(s)?$|^tablespoon(s)?$|^teeloeffel$|^essloeffel$');
+final RegExp _CHEF_MeasureType = RegExp(r'^heaped$|^level$|^gestrichen$|^gehaeuft$');
+final RegExp _CHEF_MeasureDry = RegExp(r'^g(r)?$|^kg$|^pinch(es)?$|^prise(n)$');
+final RegExp _CHEF_MeasureLiquid = RegExp(r'^ml$|^l$|^dash(es)?$|^drop(s)?$|^spritzer$|^tropfen$');
+final RegExp _CHEF_MeasureElse = RegExp(r'^cup(s)?$|^tasse(n)?$|^teaspoon(s)?$|^tablespoon(s)?$|^teeloeffel$|^essloeffel$');
 
-final Map CHEF_Messages = {
+final Map _CHEF_Messages = {
   'DEU': {
     "chef_error_structure_recipe": "chef_error_structure_recipe",
     "chef_error_structure_subrecipe": "chef_error_structure_subrecipe",
@@ -227,19 +227,19 @@ final Map CHEF_Messages = {
   }
 };
 
-final List<String> CHEF_liquidMeasuresDEU = ['ml', 'l', 'Spritzer', 'Tropfen'];
+final List<String> _CHEF_liquidMeasuresDEU = ['ml', 'l', 'Spritzer', 'Tropfen'];
 
-final List<String> CHEF_liquidMeasuresENG = ['ml', 'l', 'dashes', 'drops'];
+final List<String> _CHEF_liquidMeasuresENG = ['ml', 'l', 'dashes', 'drops'];
 
-final List<String> CHEF_dryMeasuresDEU = ['g', 'kg', 'Prisen'];
+final List<String> _CHEF_dryMeasuresDEU = ['g', 'kg', 'Prisen'];
 
-final List<String> CHEF_dryMeasuresENG = ['g', 'kg', 'pinches'];
+final List<String> _CHEF_dryMeasuresENG = ['g', 'kg', 'pinches'];
 
-final List<String> CHEF_measuresDEU = ['Teelöffel', 'Esslöffel', 'Tasse'];
+final List<String> _CHEF_measuresDEU = ['Teelöffel', 'Esslöffel', 'Tasse'];
 
-final List<String> CHEF_measuresENG = ['teaspoons', 'tablespoons', 'cups'];
+final List<String> _CHEF_measuresENG = ['teaspoons', 'tablespoons', 'cups'];
 
-final List<String> CHEF_itemListLiquidENG = [
+final List<String> _CHEF_itemListLiquidENG = [
   'milk',
   'water',
   'oil',
@@ -295,7 +295,7 @@ final List<String> CHEF_itemListLiquidENG = [
   'lillet'
 ];
 
-final List<String> CHEF_itemListLiquidDEU = [
+final List<String> _CHEF_itemListLiquidDEU = [
   'Milch',
   'Wasser',
   'Öl',
@@ -351,7 +351,7 @@ final List<String> CHEF_itemListLiquidDEU = [
   'Lillet'
 ];
 
-final List<String> CHEF_itemListDryENG = [
+final List<String> _CHEF_itemListDryENG = [
   'flour',
   'white sugar',
   'salt',
@@ -404,7 +404,7 @@ final List<String> CHEF_itemListDryENG = [
   'banana chips'
 ];
 
-final List<String> CHEF_itemListDryDEU = [
+final List<String> _CHEF_itemListDryDEU = [
   'Mehl',
   'weißer Zucker',
   'Salz',
@@ -455,97 +455,97 @@ final List<String> CHEF_itemListDryDEU = [
   'Bananenchips'
 ];
 
-final List<List<String>> CHEF_itemListAuxiliaryDEU = [
+final List<List<String>> _CHEF_itemListAuxiliaryDEU = [
   ['fluffige ', 'leichte ', 'cremige ', 'schwere ', 'luftige '],
   ['bittere ', 'sauere ', 'süße ', 'scharfe ', 'salzige '],
   ['Honig', 'Senf', 'Ketchup', 'Curry', 'Preiselbeeren'],
   ['soße', 'dressings', 'toppings', 'chips', 'relish']
 ];
 
-final List<List<String>> CHEF_itemListAuxiliaryENG = [
+final List<List<String>> _CHEF_itemListAuxiliaryENG = [
   ['fluffy ', 'light ', 'creamy ', 'heavy ', 'uncongested '],
   ['bitter ', 'sour ', 'sweet ', 'hot ', 'salty '],
   ['honey', 'mustard', 'ketchup', 'curry', 'cranberry'],
   ['sauce', 'dressing', 'topping', 'chips', 'relish']
 ];
 
-String _getText(CHEF_textId id, String parameter, language) {
+String _getText(_CHEF_textId id, String parameter, language) {
   var text = '';
   switch (id) {
-    case CHEF_textId.Put:
+    case _CHEF_textId.Put:
       if (language == 'ENG')
         text = 'Put %1 into the mixing bowl.';
       else
         text = '%1 in die Schüssel geben.';
       break;
-    case CHEF_textId.Add:
+    case _CHEF_textId.Add:
       if (language == 'ENG')
         text = 'Add %1 into the mixing bowl.';
       else
         text = '%1 dazugeben.';
       break;
-    case CHEF_textId.Combine:
+    case _CHEF_textId.Combine:
       if (language == 'ENG')
         text = 'Combine %1 into mixing bowl.';
       else
         text = '%1 kombinieren.';
       break;
-    case CHEF_textId.Ingredients:
+    case _CHEF_textId.Ingredients:
       if (language == 'ENG')
         text = 'Ingredients.';
       else
         text = 'Zutaten:';
       break;
-    case CHEF_textId.Cooking_time:
+    case _CHEF_textId.Cooking_time:
       if (language == 'ENG')
         text = 'Cooking time: %1 minutes.';
       else
         text = 'Garzeit: %1 Minuten.';
       break;
-    case CHEF_textId.Pre_heat_oven:
+    case _CHEF_textId.Pre_heat_oven:
       if (language == 'ENG')
         text = 'Pre-heat oven to %1 degrees Celsius.';
       else
         text = 'Ofen auf %1 Grad Celsius vorheizen.';
       break;
-    case CHEF_textId.Method:
+    case _CHEF_textId.Method:
       if (language == 'ENG')
         text = 'Method.';
       else
         text = 'Zubereitung:';
       break;
-    case CHEF_textId.Liquefy:
+    case _CHEF_textId.Liquefy:
       if (language == 'ENG')
         text = 'Liquefy %1.';
       else
         text = '%1 zerlassen.';
       break;
-    case CHEF_textId.Liquefy_contents:
+    case _CHEF_textId.Liquefy_contents:
       if (language == 'ENG')
         text = 'Liquefy contents of the mixing bowl.';
       else
         text = 'Inhalt der Schüssel auf dem Stövchen erhitzen.';
       break;
-    case CHEF_textId.Pour:
+    case _CHEF_textId.Pour:
       if (language == 'ENG')
         text = 'Pour contents of the mixing bowl into the baking dish.';
       else
         text = 'Schüssel in eine Servierschale stürzen.';
       break;
-    case CHEF_textId.Serves:
+    case _CHEF_textId.Serves:
       if (language == 'ENG')
         text = 'Serves 1.';
       else
         text = 'Portionen: 1.';
       break;
-    case CHEF_textId.Serve_with:
+    case _CHEF_textId.Serve_with:
       if (language == 'ENG')
         text = 'Serve with %1.';
       else
         text = 'Serviere mit %1.';
       break;
       break;
-    case CHEF_textId.Clean:
+    case _CHEF_textId.Clean:
       if (language == 'ENG')
         text = 'Clean %1 mixing bowl.';
       else
