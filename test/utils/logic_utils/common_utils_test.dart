@@ -290,8 +290,7 @@ void main() {
 
   group("CommonUtils.allSameCharacters:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : null},
-      {'input' : '', 'expectedOutput' : null},
+      {'input' : '', 'expectedOutput' : false},
 
       {'input' : 'a', 'expectedOutput' : true},
       {'input' : 'aaa', 'expectedOutput' : true},
@@ -394,10 +393,9 @@ void main() {
 
   group("CommonUtils.extractIntegerFromText:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : null},
-      {'input' : '', 'expectedOutput' : null},
+      {'input' : '', 'expectedOutput' : 0},
 
-      {'input' : 'a', 'expectedOutput' : null},
+      {'input' : 'a', 'expectedOutput' : 0},
       {'input' : '12', 'expectedOutput' : 12},
       {'input' : '123,4', 'expectedOutput' : 1234},
       {'input' : '123,4', 'expectedOutput' : 1234},
