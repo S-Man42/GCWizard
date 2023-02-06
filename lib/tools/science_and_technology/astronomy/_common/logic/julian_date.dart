@@ -9,7 +9,7 @@ class JulianDate {
   double terrestrialDynamicalTime;
 
   JulianDate(DateTime datetime, Duration timezone) {
-    julianDateUTCNoon = GregorianCalendarToJulianDate(datetime);
+    julianDateUTCNoon = gregorianCalendarToJulianDate(datetime);
 
     julianDate = julianDateUTCNoon +
         (datetime.hour - timezone.inMinutes / 60.0 + datetime.minute / 60.0 + datetime.second / 3600.0) / 24.0;

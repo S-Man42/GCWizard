@@ -7,7 +7,7 @@ class GameOfLifeBoard extends StatefulWidget {
   final Function onChanged;
   final List<List<bool>> state;
 
-  GameOfLifeBoard({Key key, this.size, this.onChanged, this.state}) : super(key: key);
+  GameOfLifeBoard({Key? key, this.size, this.onChanged, this.state}) : super(key: key);
 
   @override
   GameOfLifeBoardState createState() => GameOfLifeBoardState();

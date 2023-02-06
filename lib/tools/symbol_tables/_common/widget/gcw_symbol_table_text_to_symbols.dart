@@ -32,7 +32,7 @@ class GCWSymbolTableTextToSymbols extends StatefulWidget {
   final bool specialEncryption;
 
   const GCWSymbolTableTextToSymbols(
-      {Key key,
+      {Key? key,
       this.text,
       this.ignoreUnknown,
       this.data,
@@ -80,7 +80,7 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
                 text: i18n(context, 'common_exportfile_saveoutput'),
                 onPressed: () {
                   _exportEncryption(widget.countColumns, _data.isCaseSensitive()).then((value) {
-                    if (value == null) {
+                    if (value == false) {
                       return;
                     }
 
@@ -188,7 +188,7 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
     }
   }
 
-  Future<Uint8List> _exportEncryption(int countColumns, isCaseSensitive) async {
+  Future<bool> _exportEncryption(int countColumns, isCaseSensitive) async {
     var imageIndexes = _getImageIndexes(isCaseSensitive);
 
     var countRows = (imageIndexes.length / countColumns).floor();

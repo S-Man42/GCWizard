@@ -11,7 +11,7 @@ class GCWAlphabetModificationDropDown extends StatefulWidget {
   final bool suppressTitle;
 
   const GCWAlphabetModificationDropDown(
-      {Key key, this.onChanged, this.value, this.allowedModifications, this.suppressTitle: false})
+      {Key? key, this.onChanged, this.value, this.allowedModifications, this.suppressTitle: false})
       : super(key: key);
 
   @override

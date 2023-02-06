@@ -12,7 +12,7 @@ class GCWCoordsPasteButton extends StatefulWidget {
   final Widget customIcon;
   final Color backgroundColor;
 
-  const GCWCoordsPasteButton({Key key, this.onPasted, this.size, this.backgroundColor, this.customIcon})
+  const GCWCoordsPasteButton({Key? key, this.onPasted, this.size, this.backgroundColor, this.customIcon})
       : super(key: key);
 
   @override

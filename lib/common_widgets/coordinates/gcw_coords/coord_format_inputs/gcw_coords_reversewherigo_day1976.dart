@@ -4,7 +4,7 @@ class _GCWCoordsReverseWherigoDay1976 extends StatefulWidget {
   final Function onChanged;
   final BaseCoordinates coordinates;
 
-  const _GCWCoordsReverseWherigoDay1976({Key key, this.onChanged, this.coordinates}) : super(key: key);
+  const _GCWCoordsReverseWherigoDay1976({Key? key, this.onChanged, this.coordinates}) : super(key: key);
 
   @override
   _GCWCoordsReverseWherigoDay1976State createState() => _GCWCoordsReverseWherigoDay1976State();

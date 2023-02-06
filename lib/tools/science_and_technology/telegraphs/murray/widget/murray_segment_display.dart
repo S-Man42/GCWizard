@@ -12,7 +12,7 @@ class _MurraySegmentDisplay extends NSegmentDisplay {
   final Function onChanged;
   final bool tapeStyle;
 
-  _MurraySegmentDisplay({Key key, this.segments, this.readOnly: false, this.onChanged, this.tapeStyle: false})
+  _MurraySegmentDisplay({Key? key, this.segments, this.readOnly: false, this.onChanged, this.tapeStyle: false})
       : super(
             key: key,
             initialSegments: _INITIAL_SEGMENTS,

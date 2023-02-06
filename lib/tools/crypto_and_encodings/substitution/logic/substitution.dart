@@ -1,13 +1,11 @@
 import 'dart:collection';
 
-String substitution(String input, Map<String, String> substitutions, {bool caseSensitive: true}) {
+String substitution(String? input, Map<String, String> substitutions, {bool caseSensitive: true}) {
   if (input == null || input.length == 0) return '';
 
   if (!caseSensitive) {
     input = input.toUpperCase();
   }
-
-  if (substitutions == null) return input;
 
   if (substitutions.keys.where((key) => key.length != 0).isEmpty) return input;
 
@@ -41,11 +39,11 @@ String substitution(String input, Map<String, String> substitutions, {bool caseS
   //So find first -> replace it -> A__BA. Second occurrence not found anymore
   keys.forEach((key) {
     int i = 0;
-    while (input.indexOf(key, i) >= 0) {
-      var index = input.indexOf(key, i);
+    while (input!.indexOf(key, i) >= 0) {
+      var index = input!.indexOf(key, i);
       replacements.putIfAbsent(index, () => key);
 
-      input = input.replaceRange(index, index + key.length, String.fromCharCode(0) * key.length);
+      input = input!.replaceRange(index, index + key.length, String.fromCharCode(0) * key.length);
 
       i = index + key.length;
     }
@@ -53,7 +51,7 @@ String substitution(String input, Map<String, String> substitutions, {bool caseS
 
   //Unconsidered elements are put into the index map and the substitution map
   //The will be replaced by themselves.
-  input.split('').asMap().forEach((index, character) {
+  input!.split('').asMap().forEach((index, character) {
     if (character != String.fromCharCode(0)) {
       replacements.putIfAbsent(index, () => character);
       substCopy.putIfAbsent(character, () => character);

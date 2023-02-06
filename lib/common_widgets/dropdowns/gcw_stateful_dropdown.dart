@@ -8,7 +8,7 @@ class GCWStatefulDropDown extends StatefulWidget {
   final value;
   final DropdownButtonBuilder selectedItemBuilder;
 
-  const GCWStatefulDropDown({Key key, this.value, this.items, this.onChanged, this.selectedItemBuilder})
+  const GCWStatefulDropDown({Key? key, this.value, this.items, this.onChanged, this.selectedItemBuilder})
       : super(key: key);
 
   @override

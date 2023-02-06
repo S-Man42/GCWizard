@@ -244,11 +244,11 @@ int MayaLongCountToMayaDayCount(List<int> longCount) {
 }
 
 DateTime MayaDayCountToJulianCalendar(int mayaDayCount) {
-  return JulianDateToJulianCalendar(MayaDayCountToJulianDate(mayaDayCount) * 1.0);
+  return julianDateToJulianCalendar(MayaDayCountToJulianDate(mayaDayCount) * 1.0);
 }
 
 DateTime MayaDayCountToGregorianCalendar(int mayaDayCount) {
-  return JulianDateToGregorianCalendar(MayaDayCountToJulianDate(mayaDayCount) * 1.0);
+  return julianDateToGregorianCalendar(MayaDayCountToJulianDate(mayaDayCount) * 1.0);
 }
 
 int MayaDayCountToJulianDate(int mayaDayCount) {

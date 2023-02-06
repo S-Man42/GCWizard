@@ -5,7 +5,7 @@ class _GCWCoordsLambert extends StatefulWidget {
   final BaseCoordinates coordinates;
   final String subtype;
 
-  const _GCWCoordsLambert({Key key, this.onChanged, this.coordinates, this.subtype: keyCoordsGaussKruegerGK1})
+  const _GCWCoordsLambert({Key? key, this.onChanged, this.coordinates, this.subtype: keyCoordsGaussKruegerGK1})
       : super(key: key);
 
   @override

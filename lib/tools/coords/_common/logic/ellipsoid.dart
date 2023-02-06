@@ -13,7 +13,7 @@ const ELLIPSOID_NAME_KRASOVSKY1940 = 'Krasovsky 1940';
 enum EllipsoidType { STANDARD, USER_DEFINED }
 
 class Ellipsoid {
-  String name;
+  String? name;
   double a;
   double invf;
   EllipsoidType type;

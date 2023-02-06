@@ -25,7 +25,7 @@ class BrailleSegmentDisplay extends NSegmentDisplay {
   final bool tapeStyle;
 
   BrailleSegmentDisplay(
-      {Key key,
+      {Key? key,
       this.segments,
       this.readOnly: false,
       this.onChanged,

@@ -20,7 +20,7 @@ import 'package:gc_wizard/utils/string_utils.dart';
 class HexViewer extends StatefulWidget {
   final GCWFile platformFile;
 
-  const HexViewer({Key key, this.platformFile}) : super(key: key);
+  const HexViewer({Key? key, this.platformFile}) : super(key: key);
 
   @override
   HexViewerState createState() => HexViewerState();

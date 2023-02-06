@@ -20,7 +20,7 @@ class MayaNumbersSegmentDisplay extends NSegmentDisplay {
   final Function onChanged;
   final bool tapeStyle;
 
-  MayaNumbersSegmentDisplay({Key key, this.segments, this.readOnly: false, this.onChanged, this.tapeStyle: false})
+  MayaNumbersSegmentDisplay({Key? key, this.segments, this.readOnly: false, this.onChanged, this.tapeStyle: false})
       : super(
             key: key,
             initialSegments: _INITIAL_SEGMENTS,

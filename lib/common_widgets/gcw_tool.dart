@@ -110,7 +110,7 @@ class GCWTool extends StatefulWidget {
   var example;
 
   GCWTool(
-      {Key key,
+      {Key? key,
       this.tool,
       this.toolName,
       this.defaultLanguageToolName,
@@ -212,8 +212,7 @@ class _GCWToolState extends State<GCWTool> {
         searchString = _toolName;
       }
     } else {
-      searchString = i18n(context, widget.helpSearchString, useDefaultLanguage: _needsDefaultHelp(appLocale)) ??
-          widget.helpSearchString;
+      searchString = i18n(context, widget.helpSearchString, useDefaultLanguage: _needsDefaultHelp(appLocale), ifTranslationNotExists: widget.helpSearchString);
     }
 
     searchString = _normalizeSearchString(searchString);
@@ -258,7 +257,7 @@ class _GCWToolState extends State<GCWTool> {
                   i18n(context, button.title),
                   i18n(context, button.text),
                   () {
-                    launchUrl(Uri.parse(i18n(context, url) ?? url));
+                    launchUrl(Uri.parse(i18n(context, url, ifTranslationNotExists: url)));
                   },
                 );
               } else

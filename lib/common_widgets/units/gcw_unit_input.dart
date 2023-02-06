@@ -19,7 +19,7 @@ class GCWUnitInput extends StatefulWidget {
   final Function onChanged;
 
   GCWUnitInput(
-      {Key key,
+      {Key? key,
       this.title,
       this.min,
       this.max,

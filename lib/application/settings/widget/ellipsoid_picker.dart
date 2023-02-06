@@ -2,34 +2,32 @@ part of 'package:gc_wizard/application/settings/widget/settings_coordinates.dart
 
 class _EllipsoidPicker extends StatefulWidget {
   final Function onChanged;
-  final Ellipsoid ellipsoid;
 
-  const _EllipsoidPicker({Key key, this.ellipsoid, this.onChanged}) : super(key: key);
+  const _EllipsoidPicker({Key? key, required this.onChanged}) : super(key: key);
 
   @override
   _EllipsoidPickerState createState() => _EllipsoidPickerState();
 }
 
 class _EllipsoidPickerState extends State<_EllipsoidPicker> {
-  static const keyInverseFlattening = 'inverse_flattening';
-  static const keyFlattening = 'flattening';
-  static const keyMinorAxis = 'minor_axis';
+  static const _keyInverseFlattening = 'inverse_flattening';
+  static const _keyFlattening = 'flattening';
+  static const _keyMinorAxis = 'minor_axis';
 
-  TextEditingController _firstUserValueController;
-  TextEditingController _secondUserValueController;
-  Map<String, dynamic> _firstUserValue;
-  Map<String, dynamic> _secondUserValue;
+  late TextEditingController _firstUserValueController;
+  late TextEditingController _secondUserValueController;
+  late Map<String, dynamic> _firstUserValue;
+  late Map<String, dynamic> _secondUserValue;
 
-  GCWSwitchPosition _currentMode;
-  var _currentEllipsoidUser2ndValue = keyMinorAxis;
-  Ellipsoid _currentStandardEllipsoid;
+  late GCWSwitchPosition _currentMode;
+  String _currentEllipsoidUser2ndValue = _keyMinorAxis;
+  late Ellipsoid _currentStandardEllipsoid;
 
-  Ellipsoid _currentEllipsoid;
+  Ellipsoid _currentEllipsoid = defaultEllipsoid();
   @override
   void initState() {
     super.initState();
 
-    _currentEllipsoid = widget.ellipsoid ?? defaultEllipsoid();
     _currentMode = _currentEllipsoid.type == EllipsoidType.STANDARD ? GCWSwitchPosition.left : GCWSwitchPosition.right;
 
     if (_currentEllipsoid.type == EllipsoidType.USER_DEFINED) {
@@ -57,9 +55,9 @@ class _EllipsoidPickerState extends State<_EllipsoidPicker> {
   @override
   Widget build(BuildContext context) {
     final _secondUserValues = [
-      {'key': keyMinorAxis, 'name': i18n(context, 'coords_ellipsoid_minoraxis')},
-      {'key': keyInverseFlattening, 'name': i18n(context, 'coords_ellipsoid_inverseflattening')},
-      {'key': keyFlattening, 'name': i18n(context, 'coords_ellipsoid_flattening')},
+      {'key': _keyMinorAxis, 'name': i18n(context, 'coords_ellipsoid_minoraxis')},
+      {'key': _keyInverseFlattening, 'name': i18n(context, 'coords_ellipsoid_inverseflattening')},
+      {'key': _keyFlattening, 'name': i18n(context, 'coords_ellipsoid_flattening')},
     ];
 
     return Column(children: <Widget>[
@@ -80,7 +78,7 @@ class _EllipsoidPickerState extends State<_EllipsoidPicker> {
               items: allEllipsoids.map((ellipsoid) {
                 return GCWDropDownMenuItem(
                   value: ellipsoid,
-                  child: i18n(context, ellipsoid.name) ?? ellipsoid.name,
+                  child: i18n(context, ellipsoid.name!, ifTranslationNotExists: ellipsoid.name!),
                 );
               }).toList(),
               onChanged: (newValue) {
@@ -168,7 +166,7 @@ class _EllipsoidPickerState extends State<_EllipsoidPicker> {
       _secondUserValueController.clear();
       _firstUserValue = defaultDoubleText;
       _secondUserValue = defaultDoubleText;
-      _currentEllipsoidUser2ndValue = keyMinorAxis;
+      _currentEllipsoidUser2ndValue = _keyMinorAxis;
 
       _currentEllipsoid = _currentStandardEllipsoid;
     } else {
@@ -176,15 +174,15 @@ class _EllipsoidPickerState extends State<_EllipsoidPicker> {
       var second = _secondUserValue['value'];
 
       switch (_currentEllipsoidUser2ndValue) {
-        case keyInverseFlattening:
+        case _keyInverseFlattening:
           _currentEllipsoid = Ellipsoid(null, a, max<double>(second, 1.01), type: EllipsoidType.USER_DEFINED);
           break;
-        case keyMinorAxis:
+        case _keyMinorAxis:
           var b = max<double>(second, 1.0);
           var invF = a / max<double>(a - b, practical_epsilon);
           _currentEllipsoid = Ellipsoid(null, a, invF, type: EllipsoidType.USER_DEFINED);
           break;
-        case keyFlattening:
+        case _keyFlattening:
           _currentEllipsoid = Ellipsoid(null, a, 1.0 / min<double>(1.0 / 1.01, max<double>(second, practical_epsilon)),
               type: EllipsoidType.USER_DEFINED);
           break;

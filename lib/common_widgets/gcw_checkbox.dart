@@ -17,7 +17,7 @@ class GCWCheckBox extends StatefulWidget {
   final MaterialStateProperty<Color> overlayColor;
 
   const GCWCheckBox(
-      {Key key,
+      {Key? key,
       this.value,
       this.onChanged,
       this.title,

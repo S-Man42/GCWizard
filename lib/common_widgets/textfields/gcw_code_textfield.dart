@@ -23,7 +23,7 @@ class GCWCodeTextField extends StatefulWidget {
   final GCWCodeTextFieldLineNumberStyle lineNumberStyle;
 
   const GCWCodeTextField(
-      {Key key,
+      {Key? key,
       this.controller,
       this.stringMap,
       this.patternMap,

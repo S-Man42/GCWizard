@@ -8,7 +8,7 @@ class GCWCoordsOutputFormat extends StatefulWidget {
   final Map<String, String> coordFormat;
   final Function onChanged;
 
-  const GCWCoordsOutputFormat({Key key, this.coordFormat, this.onChanged}) : super(key: key);
+  const GCWCoordsOutputFormat({Key? key, this.coordFormat, this.onChanged}) : super(key: key);
 
   @override
   GCWCoordsOutputFormatState createState() => GCWCoordsOutputFormatState();

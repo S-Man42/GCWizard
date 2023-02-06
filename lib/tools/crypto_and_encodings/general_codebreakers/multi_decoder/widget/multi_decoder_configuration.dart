@@ -229,7 +229,7 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
                                 value += '_title';
                               }
 
-                              return '${i18n(context, entry.key)}: ${i18n(context, value.toString()) ?? value}';
+                              return '${i18n(context, entry.key)}: ${i18n(context, value.toString(), ifTranslationNotExists: value)}';
                             }).join('\n'),
                             style: gcwDescriptionTextStyle(),
                           ),

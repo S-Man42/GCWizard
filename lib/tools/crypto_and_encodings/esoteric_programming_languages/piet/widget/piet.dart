@@ -113,7 +113,7 @@ class PietState extends State<Piet> {
     return GCWDefaultOutput(
       child: (_currentInterpreterOutput.output ?? '') +
           (_currentInterpreterOutput.error && (_currentInterpreterOutput.errorText != null)
-              ? '\n' + (i18n(context, _currentInterpreterOutput.errorText) ?? _currentInterpreterOutput.errorText)
+              ? '\n' + (i18n(context, _currentInterpreterOutput.errorText, ifTranslationNotExists: _currentInterpreterOutput.errorText))
               : ''),
     );
   }

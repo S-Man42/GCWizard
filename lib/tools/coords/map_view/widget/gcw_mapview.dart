@@ -61,7 +61,7 @@ class GCWMapView extends StatefulWidget {
   String json;
   final bool isEditable;
 
-  GCWMapView({Key key, this.points, this.polylines, this.json, this.isEditable: false}) : super(key: key) {
+  GCWMapView({Key? key, this.points, this.polylines, this.json, this.isEditable: false}) : super(key: key) {
     if (points == null) points = [];
     if (polylines == null) polylines = [];
   }

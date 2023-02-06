@@ -37,7 +37,7 @@ class _BabylonNumbersSegmentDisplay extends NSegmentDisplay {
   final bool tapeStyle;
 
   _BabylonNumbersSegmentDisplay(
-      {Key key,
+      {Key? key,
       this.segments,
       this.readOnly: false,
       this.onChanged,

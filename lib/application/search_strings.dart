@@ -7,14 +7,14 @@ import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 
-Map<String, String> _COMMON_SEARCHSTRINGS;
-Map<String, String> _EN_SEARCHSTRINGS;
-Map<String, String> _LOCALE_SEARCHSTRINGS;
+Map<String, String> _COMMON_SEARCHSTRINGS = {};
+Map<String, String> _EN_SEARCHSTRINGS = {};
+Map<String, String> _LOCALE_SEARCHSTRINGS = {};
 
 final ALLOWED_SEARCH_CHARACTERS = RegExp(r'[^a-z0-9α-ω¥, ]');
 
 Future loadSearchStrings(String languageCode) async {
-  if (_COMMON_SEARCHSTRINGS == null) {
+  if (_COMMON_SEARCHSTRINGS.isEmpty) {
     _COMMON_SEARCHSTRINGS = await _getSearchStringsForLocale('common');
     _EN_SEARCHSTRINGS = await _getSearchStringsForLocale('en');
   }
@@ -47,11 +47,11 @@ Future<Map<String, String>> _getSearchStringsForLocale(String locale) async {
 
 // Build indexed strings for each tool : concatenated lower case no accent
 void createIndexedSearchStrings() {
-  if (registeredTools == null) return;
+  if (registeredTools.isEmpty) return;
 
   for (GCWTool tool in registeredTools) {
     List<String> searchStrings = [];
-    if (tool.searchKeys == null || tool.searchKeys.where((element) => element != null && element.isNotEmpty).isEmpty)
+    if (tool.searchKeys.where((element) => element.isNotEmpty).isEmpty)
       continue;
 
     for (String searchKey in tool.searchKeys) {

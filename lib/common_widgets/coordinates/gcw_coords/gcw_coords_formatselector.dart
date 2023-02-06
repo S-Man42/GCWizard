@@ -11,7 +11,7 @@ class GCWCoordsFormatSelector extends StatefulWidget {
   final Function onChanged;
   final Map<String, String> format;
 
-  const GCWCoordsFormatSelector({Key key, this.onChanged, this.format}) : super(key: key);
+  const GCWCoordsFormatSelector({Key? key, this.onChanged, this.format}) : super(key: key);
 
   @override
   GCWCoordsFormatSelectorState createState() => GCWCoordsFormatSelectorState();
@@ -19,7 +19,7 @@ class GCWCoordsFormatSelector extends StatefulWidget {
   List<GCWDropDownMenuItem> getDropDownItems(BuildContext context) {
     return allCoordFormats.map((entry) {
       return GCWDropDownMenuItem(
-          value: entry.key, child: i18n(context, entry.name) ?? entry.name, subtitle: entry.example);
+          value: entry.key, child: i18n(context, entry.name, ifTranslationNotExists: entry.name), subtitle: entry.example);
     }).toList();
   }
 }

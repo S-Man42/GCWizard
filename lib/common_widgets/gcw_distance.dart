@@ -17,7 +17,7 @@ class GCWDistance extends StatefulWidget {
   final controller;
 
   const GCWDistance(
-      {Key key, this.onChanged, this.hintText, this.value, this.unit, this.allowNegativeValues: false, this.controller})
+      {Key? key, this.onChanged, this.hintText, this.value, this.unit, this.allowNegativeValues: false, this.controller})
       : super(key: key);
 
   @override

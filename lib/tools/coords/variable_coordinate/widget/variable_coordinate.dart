@@ -38,7 +38,7 @@ final _TOOMANY_COUNT = 5000;
 class VariableCoordinate extends StatefulWidget {
   final Formula formula;
 
-  const VariableCoordinate({Key key, this.formula}) : super(key: key);
+  const VariableCoordinate({Key? key, this.formula}) : super(key: key);
 
   @override
   VariableCoordinateState createState() => VariableCoordinateState();

@@ -36,7 +36,7 @@ class GCWOpenFile extends StatefulWidget {
   final suppressHeader;
 
   const GCWOpenFile(
-      {Key key,
+      {Key? key,
       this.onLoaded,
       this.supportedFileTypes,
       this.title,

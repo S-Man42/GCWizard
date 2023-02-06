@@ -7,7 +7,7 @@ class _SudokuBoard extends StatefulWidget {
   final Function onChanged;
   final List<List<Map<String, dynamic>>> board;
 
-  _SudokuBoard({Key key, this.onChanged, this.board, this.type: _SudokuFillType.CALCULATED}) : super(key: key);
+  _SudokuBoard({Key? key, this.onChanged, this.board, this.type: _SudokuFillType.CALCULATED}) : super(key: key);
 
   @override
   _SudokuBoardState createState() => _SudokuBoardState();

@@ -12,7 +12,7 @@ const MDT_INTERNALNAMES_COORDINATEFORMATS = 'multidecoder_tool_coordinateformats
 const MDT_COORDINATEFORMATS_OPTION_FORMAT = 'multidecoder_tool_coordinateformats_option_format';
 
 class MultiDecoderToolCoordinateFormats extends AbstractMultiDecoderTool {
-  MultiDecoderToolCoordinateFormats({Key key, int id, String name, Map<String, dynamic> options, BuildContext context})
+  MultiDecoderToolCoordinateFormats({Key? key, int id, String name, Map<String, dynamic> options, BuildContext context})
       : super(
             key: key,
             id: id,
@@ -109,7 +109,7 @@ class MultiDecoderToolCoordinateFormats extends AbstractMultiDecoderTool {
                 items: allCoordFormats.where((format) => format.key != keyCoordsSlippyMap).map((format) {
                   return GCWDropDownMenuItem(
                     value: format.key,
-                    child: i18n(context, format.name) ?? format.name,
+                    child: i18n(context, format.name, ifTranslationNotExists: format.name),
                   );
                 }).toList(),
               ),

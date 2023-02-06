@@ -4,7 +4,7 @@ class _GCWCoordsDMS extends StatefulWidget {
   final Function onChanged;
   final BaseCoordinates coordinates;
 
-  const _GCWCoordsDMS({Key key, this.onChanged, this.coordinates}) : super(key: key);
+  const _GCWCoordsDMS({Key? key, this.onChanged, this.coordinates}) : super(key: key);
 
   @override
   _GCWCoordsDMSState createState() => _GCWCoordsDMSState();

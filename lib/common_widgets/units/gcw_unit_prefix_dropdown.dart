@@ -5,7 +5,7 @@ class _GCWUnitPrefixDropDown extends StatefulWidget {
   final UnitPrefix value;
   final bool onlyShowSymbols;
 
-  const _GCWUnitPrefixDropDown({Key key, this.onChanged, this.value, this.onlyShowSymbols}) : super(key: key);
+  const _GCWUnitPrefixDropDown({Key? key, this.onChanged, this.value, this.onlyShowSymbols}) : super(key: key);
 
   @override
   _GCWUnitPrefixDropDownState createState() => _GCWUnitPrefixDropDownState();
@@ -38,7 +38,7 @@ class _GCWUnitPrefixDropDownState extends State<_GCWUnitPrefixDropDown> {
               child: GCWText(
                   text: widget.onlyShowSymbols
                       ? prefix.symbol ?? ''
-                      : ((i18n(context, prefix.key) ?? '') + (prefix.symbol == null ? '' : ' (${prefix.symbol})'))),
+                      : ((i18n(context, prefix.key, ifTranslationNotExists: '')) + (prefix.symbol == null ? '' : ' (${prefix.symbol})'))),
               alignment: Alignment.centerLeft,
             );
           }).toList();

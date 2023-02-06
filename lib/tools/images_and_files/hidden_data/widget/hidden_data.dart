@@ -22,7 +22,7 @@ import 'package:intl/intl.dart';
 class HiddenData extends StatefulWidget {
   final GCWFile platformFile;
 
-  const HiddenData({Key key, this.platformFile}) : super(key: key);
+  const HiddenData({Key? key, this.platformFile}) : super(key: key);
 
   @override
   HiddenDataState createState() => HiddenDataState();
@@ -207,7 +207,7 @@ class HiddenDataState extends State<HiddenData> {
     if (ext.length <= 1 || ext.last.length >= 5) fileName = fileName + '.' + fileExtension(file.fileType);
 
     var value = await saveByteDataToFile(context, file.bytes, fileName);
-    if (value != null) showExportedFileDialog(context, fileType: file.fileType);
+    if (value) showExportedFileDialog(context, fileType: file.fileType);
   }
 }
 

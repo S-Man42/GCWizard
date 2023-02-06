@@ -19,15 +19,15 @@ import 'package:prefs/prefs.dart';
 class GCWPasteButton extends StatefulWidget {
   final Function onSelected;
   final Function onBeforePressed;
-  final IconButtonSize iconSize;
+  final IconButtonSize? iconSize;
   final Widget customIcon;
   final Color backgroundColor;
-  final bool isTextSelectionToolBarButton;
-  final EdgeInsets textSelectionToolBarButtonPadding;
-  final String textSelectionToolBarButtonLabel;
+  final bool? isTextSelectionToolBarButton;
+  final EdgeInsets? textSelectionToolBarButtonPadding;
+  final String? textSelectionToolBarButtonLabel;
 
   const GCWPasteButton(
-      {Key key,
+      {Key? key,
       this.onSelected,
       this.onBeforePressed,
       this.iconSize,

@@ -5,7 +5,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/roman_numbers/chronogram/lo
 const MDT_INTERNALNAMES_CHRONOGRAM = 'multidecoder_tool_chronogram_title';
 
 class MultiDecoderToolChronogram extends AbstractMultiDecoderTool {
-  MultiDecoderToolChronogram({Key key, int id, String name, Map<String, dynamic> options})
+  MultiDecoderToolChronogram({Key? key, int id, String name, Map<String, dynamic> options})
       : super(
             key: key,
             id: id,

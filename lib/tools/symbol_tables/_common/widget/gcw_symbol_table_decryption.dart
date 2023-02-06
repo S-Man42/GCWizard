@@ -15,7 +15,7 @@ class GCWSymbolTableDecryption extends StatefulWidget {
   final Function onAfterDecrypt;
 
   const GCWSymbolTableDecryption(
-      {Key key, this.data, this.countColumns, this.mediaQueryData, this.onChanged, this.onAfterDecrypt})
+      {Key? key, this.data, this.countColumns, this.mediaQueryData, this.onChanged, this.onAfterDecrypt})
       : super(key: key);
 
   @override

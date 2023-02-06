@@ -11,7 +11,7 @@ import 'package:gc_wizard/tools/science_and_technology/number_sequences/_common/
 class NumberSequenceRange extends StatefulWidget {
   final NumberSequencesMode mode;
   final int maxIndex;
-  const NumberSequenceRange({Key key, this.mode, this.maxIndex}) : super(key: key);
+  const NumberSequenceRange({Key? key, this.mode, this.maxIndex}) : super(key: key);
 
   @override
   NumberSequenceRangeState createState() => NumberSequenceRangeState();

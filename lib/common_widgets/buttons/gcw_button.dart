@@ -4,11 +4,11 @@ import 'package:gc_wizard/application/theme/theme_colors.dart';
 
 class GCWButton extends StatefulWidget {
   final String text;
-  final Function onPressed;
-  final TextStyle textStyle;
-  final EdgeInsetsGeometry margin;
+  final VoidCallback onPressed;
+  final TextStyle? textStyle;
+  final EdgeInsetsGeometry? margin;
 
-  const GCWButton({Key key, this.text, this.onPressed, this.textStyle, this.margin}) : super(key: key);
+  const GCWButton({Key? key, required this.text, required this.onPressed, this.textStyle, this.margin}) : super(key: key);
 
   @override
   _GCWButtonState createState() => _GCWButtonState();

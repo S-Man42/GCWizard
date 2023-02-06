@@ -186,7 +186,7 @@ class WASDState extends State<WASD> {
           items: KEYBOARD_CONTROLS.entries.map((mode) {
             return GCWDropDownMenuItem(
               value: mode.key,
-              child: i18n(context, mode.value) ?? mode.value,
+              child: i18n(context, mode.value, ifTranslationNotExists: mode.value),
             );
           }).toList(),
         ),
@@ -374,7 +374,7 @@ class WASDState extends State<WASD> {
     var value =
         await saveByteDataToFile(context, data, 'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
 
-    if (value != null) showExportedFileDialog(context, fileType: FileType.PNG, contentWidget: Image.memory(data));
+    if (value) showExportedFileDialog(context, fileType: FileType.PNG, contentWidget: Image.memory(data));
   }
 
   _buildOutput() {

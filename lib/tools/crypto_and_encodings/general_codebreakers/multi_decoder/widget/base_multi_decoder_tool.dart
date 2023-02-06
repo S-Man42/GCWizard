@@ -11,7 +11,7 @@ abstract class AbstractMultiDecoderTool {
   Map<String, dynamic> options = {};
 
   AbstractMultiDecoderTool(
-      {Key key,
+      {Key? key,
       this.id,
       this.name,
       this.internalToolName,

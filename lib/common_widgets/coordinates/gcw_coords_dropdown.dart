@@ -6,7 +6,7 @@ class GCWCoordsDropDown extends StatefulWidget {
   final String value;
   final List<dynamic> itemList;
 
-  const GCWCoordsDropDown({Key key, this.itemList, this.onChanged, this.value}) : super(key: key);
+  const GCWCoordsDropDown({Key? key, this.itemList, this.onChanged, this.value}) : super(key: key);
 
   @override
   _GCWCoordsDropDownState createState() => _GCWCoordsDropDownState();

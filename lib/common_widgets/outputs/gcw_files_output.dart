@@ -22,7 +22,7 @@ class GCWFilesOutput extends StatefulWidget {
   final bool suppressHiddenDataMessage;
   final Set<GCWImageViewButtons> suppressedButtons;
 
-  const GCWFilesOutput({Key key, @required this.files, this.suppressHiddenDataMessage = false, this.suppressedButtons})
+  const GCWFilesOutput({Key? key, @required this.files, this.suppressHiddenDataMessage = false, this.suppressedButtons})
       : super(key: key);
 
   @override
@@ -188,6 +188,6 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
     if (ext.length <= 1 || ext.last.length >= 5) fileName = fileName + '.' + fileExtension(file.fileType);
 
     var value = await saveByteDataToFile(context, file.bytes, fileName);
-    if (value != null) showExportedFileDialog(context, fileType: file.fileType);
+    if (value) showExportedFileDialog(context, fileType: file.fileType);
   }
 }

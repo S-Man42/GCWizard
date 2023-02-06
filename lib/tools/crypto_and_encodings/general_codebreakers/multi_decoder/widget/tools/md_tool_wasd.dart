@@ -11,7 +11,7 @@ const MDT_INTERNALNAMES_WASD = 'multidecoder_tool_wasd_title';
 const MDT_WASD_OPTION_SET = 'wasd_control_set';
 
 class MultiDecoderToolWasd extends AbstractMultiDecoderTool {
-  MultiDecoderToolWasd({Key key, int id, String name, Map<String, dynamic> options, BuildContext context})
+  MultiDecoderToolWasd({Key? key, int id, String name, Map<String, dynamic> options, BuildContext context})
       : super(
             key: key,
             id: id,
@@ -32,7 +32,7 @@ class MultiDecoderToolWasd extends AbstractMultiDecoderTool {
                 items: KEYBOARD_CONTROLS.entries.where((element) => element.key != WASD_TYPE.CUSTOM).map((mode) {
                   return GCWDropDownMenuItem(
                     value: mode.key,
-                    child: i18n(context, mode.value) ?? mode.value,
+                    child: i18n(context, mode.value, ifTranslationNotExists: mode.value),
                   );
                 }).toList(),
               ),

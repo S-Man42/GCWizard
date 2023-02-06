@@ -29,7 +29,7 @@ void main() async {
 class App extends StatelessWidget {
   final AppLanguage appLanguage;
 
-  App({this.appLanguage});
+  App({required this.appLanguage});
 
   @override
   Widget build(BuildContext context) {

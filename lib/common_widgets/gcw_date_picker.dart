@@ -11,7 +11,7 @@ class GCWDatePicker extends StatefulWidget {
   final date;
   final CalendarSystem type;
 
-  const GCWDatePicker({Key key, this.onChanged, this.date, this.type: CalendarSystem.GREGORIANCALENDAR})
+  const GCWDatePicker({Key? key, this.onChanged, this.date, this.type: CalendarSystem.GREGORIANCALENDAR})
       : super(key: key);
 
   @override

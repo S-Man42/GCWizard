@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:xml/xml.dart';
 
-Future<File> exportCoordinates(BuildContext context, List<GCWMapPoint> points, List<GCWMapPolyline> polylines,
+Future<bool> exportCoordinates(BuildContext context, List<GCWMapPoint> points, List<GCWMapPolyline> polylines,
     {bool kmlFormat = false, String json}) async {
   String data;
   String extension;
@@ -18,7 +18,7 @@ Future<File> exportCoordinates(BuildContext context, List<GCWMapPoint> points, L
   }
 
   if ((points == null || points.length == 0) && (polylines == null || polylines.length == 0) && (json == null))
-    return null;
+    return false;
 
   if (json != null) {
     data = json;
@@ -33,9 +33,9 @@ Future<File> exportCoordinates(BuildContext context, List<GCWMapPoint> points, L
 
   try {
     var fileName = 'coords_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + extension;
-    return saveStringToFile(context, data, fileName, subDirectory: 'coordinate_export');
+    return saveStringToFile(context, data, fileName);
   } on Exception {
-    return null;
+    return false;
   }
 }
 

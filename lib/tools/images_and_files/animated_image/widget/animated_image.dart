@@ -25,7 +25,7 @@ import 'package:intl/intl.dart';
 class AnimatedImage extends StatefulWidget {
   final local.GCWFile platformFile;
 
-  const AnimatedImage({Key key, this.platformFile}) : super(key: key);
+  const AnimatedImage({Key? key, this.platformFile}) : super(key: key);
 
   @override
   AnimatedImageState createState() => AnimatedImageState();
@@ -204,7 +204,7 @@ class AnimatedImageState extends State<AnimatedImage> {
       var value = await saveByteDataToFile(context, bytes,
           'anim_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
 
-      if (value != null) showExportedFileDialog(context, fileType: fileType);
+      if (value) showExportedFileDialog(context, fileType: fileType);
     });
   }
 }

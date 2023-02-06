@@ -3,7 +3,7 @@ import 'dart:isolate';
 import 'dart:math';
 
 final RegExp VARIABLESTRING =
-    RegExp(r'^((\s*\d+(\s*\-\s*(\d*|\d+\s*#\s*\d*))?)\s*,)*(\s*\d*|(\s*\d+\s*\-\s*(\d*|\d+\s*#\s*\d*)))\s*$');
+    RegExp(r'^((\s*\d+(\s*-\s*(\d*|\d+\s*#\s*\d*))?)\s*,)*(\s*\d*|(\s*\d+\s*-\s*(\d*|\d+\s*#\s*\d*)))\s*$');
 
 enum VariableStringExpanderBreakCondition { RUN_ALL, BREAK_ON_FIRST_FOUND }
 
@@ -43,10 +43,10 @@ enum VariableStringExpanderBreakCondition { RUN_ALL, BREAK_ON_FIRST_FOUND }
      - Decision for 2. Best Cost/Price-Balance
  */
 class VariableStringExpander {
-  String _input;
-  Map<String, String> _substitutions;
-  Function onAfterExpandedText;
-  SendPort sendAsyncPort;
+  String? _input;
+  Map<String, String>? _substitutions;
+  Function? onAfterExpandedText;
+  SendPort? sendAsyncPort;
 
   VariableStringExpanderBreakCondition breakCondition;
   bool orderAndUnique;
@@ -62,9 +62,9 @@ class VariableStringExpander {
   List<List<String>> _expandedVariableGroups = [];
   List<String> _substitutionKeys = [];
 
-  List<String> _variableGroups;
-  int _countVariableGroups;
-  String _variableGroup;
+  List<String> _variableGroups = [];
+  int _countVariableGroups = -1;
+  String _variableGroup = '';
 
   List<Map<String, dynamic>> _results = [];
   List<String> _uniqueResults = [];
@@ -73,7 +73,7 @@ class VariableStringExpander {
   List<int> _countVariableValues = [];
   int _currentVariableIndex = -1;
 
-  int _countCombinations;
+  int _countCombinations = -1;
 
   // Expands a "compressed" variable group like "5-10" to "5,6,7,8,9,10"
   List<String> _expandVariableGroup(String group) {
@@ -83,8 +83,6 @@ class VariableStringExpander {
       output = SplayTreeSet<String>();
     else
       output = <String>[];
-
-    if (group == null) return [];
 
     group = group.replaceAll(RegExp(r'[^\d,\-#]'), '');
 
@@ -99,8 +97,8 @@ class VariableStringExpander {
         return;
       }
 
-      var start = int.tryParse(rangeBounds[0]);
-      var end = int.tryParse(rangeBounds[1]);
+      var start = int.parse(rangeBounds[0]);
+      var end = int.parse(rangeBounds[1]);
 
       if (start == end) {
         output.add(start.toString());
@@ -108,7 +106,7 @@ class VariableStringExpander {
       }
 
       var increment = 1;
-      if (rangeParts.length > 1) increment = int.tryParse(rangeParts[1]);
+      if (rangeParts.length > 1) increment = int.parse(rangeParts[1]);
 
       if (start < end) {
         for (int i = start; i <= end; i += increment) output.add(i.toString());
@@ -149,8 +147,9 @@ class VariableStringExpander {
     return false;
   }
 
-  int _variableGroupIndex, _variableValueIndex;
-  String _result;
+  int _variableGroupIndex = -1;
+  int _variableValueIndex = -1;
+  String _result = '';
 
   Map<String, String> _getCurrentVariables() {
     Map<String, String> variables = {};
@@ -169,25 +168,24 @@ class VariableStringExpander {
     do {
       _substitute();
 
-      _result = onAfterExpandedText(_result);
-      if (_result != null) {
-        if (_uniqueResults.contains(_result)) continue;
+      _result = onAfterExpandedText!(_result);
 
-        _results.add({'text': _result, 'variables': _getCurrentVariables()});
+      if (_uniqueResults.contains(_result)) continue;
 
-        if (breakCondition == VariableStringExpanderBreakCondition.BREAK_ON_FIRST_FOUND) break;
-      }
+      _results.add({'text': _result, 'variables': _getCurrentVariables()});
+
+      if (breakCondition == VariableStringExpanderBreakCondition.BREAK_ON_FIRST_FOUND) break;
 
       progress++;
       if (sendAsyncPort != null && (progress % progressStep == 0)) {
-        sendAsyncPort.send({'progress': progress / _countCombinations});
+        sendAsyncPort!.send({'progress': progress / _countCombinations});
       }
     } while (_setIndexes() == false);
   }
 
   // do the substitution of the variables set with their specific values given by their counted indexes
   void _substitute() {
-    _result = _input;
+    _result = _input!;
     for (_variableGroupIndex = 0; _variableGroupIndex < _countVariableGroups; _variableGroupIndex++) {
       _variableGroup = _variableGroups[_variableGroupIndex];
 
@@ -203,16 +201,16 @@ class VariableStringExpander {
   }
 
   List<Map<String, dynamic>> run({onlyPrecheck: false}) {
-    if (_input == null || _input.length == 0) return [];
+    if (_input == null || _input?.length == 0) return [];
 
-    if (_substitutions == null || _substitutions.length == 0) {
+    if (_substitutions == null || _substitutions!.length == 0) {
       return [
         {'text': _input, 'variables': {}}
       ];
     }
 
     // expand all groups, initialize lists
-    for (MapEntry<String, String> substitution in _substitutions.entries) {
+    for (MapEntry<String, String> substitution in _substitutions!.entries) {
       if (!VARIABLESTRING.hasMatch(substitution.value)) {
         return [
           {'text': _input, 'variables': {}}
@@ -241,10 +239,10 @@ class VariableStringExpander {
 
     // Find matching formula groups
     RegExp regExp = RegExp(r'\[.+?\]');
-    if (regExp.hasMatch(_input)) {
-      _variableGroups = regExp.allMatches(_input.trim()).map((elem) => elem.group(0)).toList();
+    if (regExp.hasMatch(_input!)) {
+      _variableGroups = regExp.allMatches(_input!.trim()).map((elem) => elem.group(0)!).toList();
     } else {
-      _variableGroups = [_input];
+      _variableGroups = [_input!];
     }
     _countVariableGroups = _variableGroups.length;
 

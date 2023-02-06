@@ -5,13 +5,9 @@ class _ThemeColorsDark extends ThemeColors {
   static const _gray = Color(0x40D8D8D8);
   static const _darkGray = Color(0xFF26282F);
 
-  ThemeData _base;
-
   @override
   ThemeData base() {
-    if (_base == null) _base = ThemeData.dark();
-
-    return _base;
+    return ThemeData.dark();
   }
 
   @override

@@ -14,7 +14,7 @@ class GCWOutputText extends StatefulWidget {
   final dynamic copyText;
 
   const GCWOutputText(
-      {Key key,
+      {Key? key,
       this.text,
       this.align: Alignment.centerLeft,
       this.isMonotype: false,

@@ -33,7 +33,7 @@ PrefType getPrefType(String key) {
     return PrefType.BOOL;
   } catch (e) {}
 
-  return null;
+  throw Exception('Unexpected Preference Type');
 }
 
 setUntypedPref(String key, dynamic value) {

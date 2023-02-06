@@ -9,8 +9,6 @@ Future<Uint8List> input2Image(DrawableImageData imageData)  async {
   var width = 0.0;
   var height = 0.0;
 
-  if (imageData == null || imageData.lines == null || imageData.colors == null) return null;
-
   imageData.lines.forEach((line) {
     width = max(width, line.length.toDouble());
     height++;
@@ -30,7 +28,7 @@ Future<Uint8List> input2Image(DrawableImageData imageData)  async {
     for (int column = 0; column < imageData.lines[row].length; column++) {
       paint.color = Color(imageData.colors.values.first); // Colors.white
       if (imageData.colors.containsKey(imageData.lines[row][column]))
-        paint.color = Color(imageData.colors[imageData.lines[row][column]]);
+        paint.color = Color(imageData.colors[imageData.lines[row][column]]!);
 
       if (imageData.lines[row][column] != '0')
         canvas.drawRect(
@@ -41,6 +39,8 @@ Future<Uint8List> input2Image(DrawableImageData imageData)  async {
 
   final img = await canvasRecorder.endRecording().toImage(width.floor(), height.floor());
   final data = await img.toByteData(format: ImageByteFormat.png);
+  if (data == null)
+    throw Exception('Image data not created.');
 
   return trimNullBytes(data.buffer.asUint8List());
 }

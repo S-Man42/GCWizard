@@ -17,7 +17,7 @@ class GCWTwoOptionsSwitch extends StatefulWidget {
   final bool notitle;
 
   const GCWTwoOptionsSwitch(
-      {Key key,
+      {Key? key,
       this.onChanged,
       this.title,
       this.leftValue,

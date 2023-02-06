@@ -8,7 +8,7 @@ class GCWColorPicker extends StatefulWidget {
   final Function onChanged;
   final HSVColor hsvColor;
 
-  const GCWColorPicker({Key key, @required this.hsvColor, @required this.onChanged}) : super(key: key);
+  const GCWColorPicker({Key? key, @required this.hsvColor, @required this.onChanged}) : super(key: key);
 
   @override
   GCWColorPickerState createState() => GCWColorPickerState();

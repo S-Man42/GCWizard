@@ -53,7 +53,7 @@ class GeneralSettingsState extends State<GeneralSettings> {
                         );
                       } else {
                         // data loaded:
-                        final currentLocale = snapshot.data;
+                        final Locale? currentLocale = snapshot.data;
 
                         return GCWStatefulDropDown(
                             items: SUPPORTED_LOCALES.entries.map((locale) {
@@ -68,7 +68,7 @@ class GeneralSettingsState extends State<GeneralSettings> {
                               return GCWDropDownMenuItem(
                                   value: locale.key.languageCode, child: languageName, subtitle: subtitle);
                             }).toList(),
-                            value: isLocaleSupported(currentLocale)
+                            value: currentLocale != null && isLocaleSupported(currentLocale)
                                 ? currentLocale.languageCode
                                 : DEFAULT_LOCALE.languageCode,
                             onChanged: (newValue) {

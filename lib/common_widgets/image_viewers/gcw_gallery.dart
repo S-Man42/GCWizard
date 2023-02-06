@@ -9,7 +9,7 @@ class GCWGallery extends StatefulWidget {
   final List<GCWImageViewData> imageData;
   final Function onDoubleTap;
 
-  const GCWGallery({Key key, @required this.imageData, this.onDoubleTap}) : super(key: key);
+  const GCWGallery({Key? key, @required this.imageData, this.onDoubleTap}) : super(key: key);
 
   @override
   _GCWGalleryState createState() => _GCWGalleryState();

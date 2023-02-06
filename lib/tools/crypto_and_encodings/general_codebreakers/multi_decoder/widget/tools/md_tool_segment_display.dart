@@ -9,7 +9,7 @@ const MDT_INTERNALNAMES_SEGMENTDISPLAY = 'multidecoder_tool_segmentdisplay_title
 const MDT_SEGMENTDISPLAY_OPTION_NUMBERSEGMENTS = 'multidecoder_tool_segmentdisplay_option_numbersegments';
 
 class MultiDecoderToolSegmentDisplay extends AbstractMultiDecoderTool {
-  MultiDecoderToolSegmentDisplay({Key key, int id, String name, Map<String, dynamic> options})
+  MultiDecoderToolSegmentDisplay({Key? key, int id, String name, Map<String, dynamic> options})
       : super(
             key: key,
             id: id,
