@@ -25,8 +25,8 @@ class GCWTextExport extends StatefulWidget {
 
   const GCWTextExport(
       {Key? key,
-      this.text,
-      this.onModeChanged,
+      required this.text,
+      required this.onModeChanged,
       this.possibileExportMode = PossibleExportMode.BOTH,
       this.initMode = TextExportMode.QR})
       : super(key: key);
@@ -38,10 +38,10 @@ class GCWTextExport extends StatefulWidget {
 class GCWTextExportState extends State<GCWTextExport> {
   var _currentMode = TextExportMode.QR;
 
-  TextEditingController _textExportController;
+  late TextEditingController _textExportController;
   var _currentExportText;
 
-  Uint8List _qrImageData;
+  late Uint8List _qrImageData;
 
   @override
   void initState() {
