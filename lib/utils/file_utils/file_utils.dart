@@ -505,36 +505,40 @@ Future<bool> _deleteFile(String path) async {
 }
 
 Future<Uint8List> createZipFile(String fileName, String extension, List<Uint8List> imageList) async {
-  String tmpDir = (await getTemporaryDirectory()).path;
-  var counter = 0;
-  var zipPath = '$tmpDir/gcwizardtmp.zip';
-  var pointIndex = fileName.lastIndexOf('.');
-  // FileType extension = getFileType(imageList[0]);
-  if (pointIndex > 0) fileName = fileName.substring(0, pointIndex);
+  try {
+    String tmpDir = (await getTemporaryDirectory()).path;
+    var counter = 0;
+    var zipPath = '$tmpDir/gcwizardtmp.zip';
+    var pointIndex = fileName.lastIndexOf('.');
+    // FileType extension = getFileType(imageList[0]);
+    if (pointIndex > 0) fileName = fileName.substring(0, pointIndex);
 
-  var encoder = ZipFileEncoder();
-  encoder.create(zipPath);
+    var encoder = ZipFileEncoder();
+    encoder.create(zipPath);
 
-  for (Uint8List imageBytes in imageList) {
-    counter++;
-    var fileNameZip = '$fileName' + '_$counter$extension';
-    var tmpPath = '$tmpDir/$fileNameZip';
-    if (File(tmpPath).existsSync()) File(tmpPath).delete();
+    for (Uint8List imageBytes in imageList) {
+      counter++;
+      var fileNameZip = '$fileName' + '_$counter$extension';
+      var tmpPath = '$tmpDir/$fileNameZip';
+      if (File(tmpPath).existsSync()) File(tmpPath).delete();
 
-    File imageFileTmp = File(tmpPath);
-    imageFileTmp = await imageFileTmp.create();
-    imageFileTmp = await imageFileTmp.writeAsBytes(imageBytes);
+      File imageFileTmp = File(tmpPath);
+      imageFileTmp = await imageFileTmp.create();
+      imageFileTmp = await imageFileTmp.writeAsBytes(imageBytes);
 
-    encoder.addFile(imageFileTmp, fileNameZip);
-    imageFileTmp.delete();
+      encoder.addFile(imageFileTmp, fileNameZip);
+      imageFileTmp.delete();
+    }
+
+    encoder.close();
+
+    var bytes = File(encoder.zipPath).readAsBytesSync();
+    await File(encoder.zipPath).delete();
+
+    return bytes;
+  } catch(e) {
+    throw Exception('ZIP file not created');
   }
-
-  encoder.close();
-
-  var bytes = File(encoder.zipPath).readAsBytesSync();
-  await File(encoder.zipPath).delete();
-
-  return bytes;
 }
 
 List<GCWFile> _archiveToPlatformFileList(Archive archive) {
