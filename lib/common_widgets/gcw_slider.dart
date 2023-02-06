@@ -6,7 +6,7 @@ import 'package:gc_wizard/common_widgets/gcw_text.dart';
 class GCWSlider extends StatefulWidget {
   final String title;
   final Function onChanged;
-  final Function onChangeEnd;
+  final Function? onChangeEnd;
   final double value;
   final double min;
   final double max;
@@ -14,12 +14,12 @@ class GCWSlider extends StatefulWidget {
 
   const GCWSlider(
       {Key? key,
-      this.title,
-      this.value,
-      this.onChanged,
+      required this.title,
+      required this.value,
+      required this.onChanged,
       this.onChangeEnd,
-      this.min,
-      this.max,
+      required this.min,
+      required this.max,
       this.suppressReset: false})
       : super(key: key);
 
@@ -43,7 +43,7 @@ class _GCWSliderState extends State<GCWSlider> {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        if ((widget.title ?? '').length > 0) Expanded(child: GCWText(text: widget.title + ':')),
+        if (widget.title.isNotEmpty) Expanded(child: GCWText(text: widget.title + ':')),
         Expanded(
           child: Slider(
             value: widget.value ?? _currentValue,
@@ -52,12 +52,12 @@ class _GCWSliderState extends State<GCWSlider> {
             onChanged: (value) {
               setState(() {
                 _currentValue = value;
-                if (widget.onChanged != null) widget.onChanged(_currentValue);
+                widget.onChanged(_currentValue);
               });
             },
             onChangeEnd: (value) {
               setState(() {
-                if (widget.onChangeEnd != null) widget.onChangeEnd(_currentValue);
+                if (widget.onChangeEnd != null) widget.onChangeEnd!(_currentValue);
               });
             },
             activeColor: themeColors().switchThumb2(),
@@ -72,8 +72,8 @@ class _GCWSliderState extends State<GCWSlider> {
             onPressed: () {
               setState(() {
                 _currentValue = _initialValue;
-                if (widget.onChanged != null) widget.onChanged(_currentValue);
-                if (widget.onChangeEnd != null) widget.onChangeEnd(_currentValue);
+                widget.onChanged(_currentValue);
+                if (widget.onChangeEnd != null) widget.onChangeEnd!(_currentValue);
               });
             },
           )

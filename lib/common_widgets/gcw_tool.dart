@@ -82,10 +82,10 @@ class GCWToolActionButtonsEntry {
   final String title; // - title-string to be shown in the dialog
   final String text; // - message-text to be shown in the dialog
   final IconData icon; // - icon tto be shown in the appbar
-  final Function onPressed;
+  final Function? onPressed;
 
   GCWToolActionButtonsEntry({required this.showDialog, required this.url, required this.title,
-      required this.text, required this.icon, required this.onPressed});
+      required this.text, required this.icon, this.onPressed});
 }
 
 class GCWTool extends StatefulWidget {
@@ -247,7 +247,7 @@ class _GCWToolState extends State<GCWTool> {
           icon: Icon(button.icon),
           onPressed: () {
             if (button.onPressed != null) {
-              button.onPressed();
+              button.onPressed!();
               return;
             }
 
