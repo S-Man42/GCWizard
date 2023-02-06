@@ -17,7 +17,7 @@ enum PlayerState { stopped, playing, paused }
 class GCWSoundPlayer extends StatefulWidget {
   final GCWFile file;
 
-  const GCWSoundPlayer({Key? key, @required this.file}) : super(key: key);
+  const GCWSoundPlayer({Key? key, required this.file}) : super(key: key);
 
   @override
   _GCWSoundPlayerState createState() => _GCWSoundPlayerState();
@@ -25,13 +25,13 @@ class GCWSoundPlayer extends StatefulWidget {
 
 class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
   AudioCache audioCache = AudioCache();
-  AudioPlayer advancedPlayer;
+  late AudioPlayer advancedPlayer;
 
-  StreamSubscription<Duration> _onPositionChangedStream;
-  StreamSubscription<Duration> _onDurationChangedStream;
-  StreamSubscription _onCompletionStream;
+  late StreamSubscription<Duration> _onPositionChangedStream;
+  late StreamSubscription<Duration> _onDurationChangedStream;
+  late StreamSubscription _onCompletionStream;
 
-  File _audioFile;
+  late File _audioFile;
   var _loadedFileBytes;
 
   var _currentPositionInMS;
@@ -132,7 +132,7 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
         GCWIconButton(
           icon: Icons.stop,
           iconColor: _isLoaded && !isStopped ? null : themeColors().inActive(),
-          onPressed: isPlaying || isPaused ? () => _audioPlayerStop() : null,
+          onPressed: isPlaying || isPaused ? () => _audioPlayerStop() : () => {},
         ),
         Expanded(
             child: Slider(
