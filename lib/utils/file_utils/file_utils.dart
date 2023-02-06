@@ -505,7 +505,7 @@ Future<bool> _deleteFile(String path) async {
 }
 
 Future<Uint8List> createZipFile(String fileName, String extension, List<Uint8List> imageList) async {
-  try {
+  try{
     String tmpDir = (await getTemporaryDirectory()).path;
     var counter = 0;
     var zipPath = '$tmpDir/gcwizardtmp.zip';
@@ -539,7 +539,6 @@ Future<Uint8List> createZipFile(String fileName, String extension, List<Uint8Lis
   } catch(e) {
     throw Exception('ZIP file not created');
   }
-}
 
 List<GCWFile> _archiveToPlatformFileList(Archive archive) {
   return archive.files
