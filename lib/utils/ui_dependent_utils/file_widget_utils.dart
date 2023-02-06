@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:convert';
 import 'dart:typed_data';
 
@@ -46,7 +45,7 @@ Future<Uint8List> saveByteDataToFile(BuildContext context, Uint8List data, Strin
 }
 
 Future<Uint8List> saveStringToFile(BuildContext context, String data, String fileName, {String subDirectory}) async {
-  return saveByteDataToFile(context, convertStringToBytes(data), fileName);
+  return saveByteDataToFile(context, _convertStringToBytes(data), fileName);
 }
 
 String _limitFileNameLength(String fileName) {
@@ -56,8 +55,7 @@ String _limitFileNameLength(String fileName) {
   return getFileBaseNameWithoutExtension(fileName).substring(0, maxLength - extension.length) + extension;
 }
 
-
-Uint8List convertStringToBytes(String text) {
+Uint8List _convertStringToBytes(String text) {
   if (text == null) return null;
   return utf8.encode(text);
 }
