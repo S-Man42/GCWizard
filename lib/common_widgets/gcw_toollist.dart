@@ -17,7 +17,7 @@ class GCWToolList extends StatefulWidget {
   final toolList;
   final Function onChangedFavorite;
 
-  const GCWToolList({Key? key, this.toolList, this.onChangedFavorite}) : super(key: key);
+  const GCWToolList({Key? key, this.toolList, required this.onChangedFavorite}) : super(key: key);
 
   _GCWToolListState createState() => _GCWToolListState();
 }

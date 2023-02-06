@@ -430,7 +430,7 @@ class _MainViewState extends State<MainView> {
     Set<String> _queryTexts = _sanitizedSearchText.split(REGEXP_SPLIT_STRINGLIST).toSet();
 
     return registeredTools.where((tool) {
-      if (tool.indexedSearchStrings == null) return false;
+      if (tool.indexedSearchStrings.isEmpty) return false;
 
       //Search result as AND result of separated words
       for (final q in _queryTexts) {

@@ -8,7 +8,7 @@ class ImagesAndFilesSelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
     final List<GCWTool> _toolList = registeredTools
-        .where((element) => element.categories != null && element.categories.contains(ToolCategory.IMAGES_AND_FILES))
+        .where((element) => element.categories.contains(ToolCategory.IMAGES_AND_FILES))
         .toList();
 
     _toolList.sort((a, b) => sortToolList(a, b));

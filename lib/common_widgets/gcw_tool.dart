@@ -84,7 +84,8 @@ class GCWToolActionButtonsEntry {
   final IconData icon; // - icon tto be shown in the appbar
   final Function onPressed;
 
-  GCWToolActionButtonsEntry({this.showDialog, this.url, this.title, this.text, this.icon, this.onPressed});
+  GCWToolActionButtonsEntry({required this.showDialog, required this.url, required this.title,
+      required this.text, required this.icon, required this.onPressed});
 }
 
 class GCWTool extends StatefulWidget {
@@ -95,7 +96,7 @@ class GCWTool extends StatefulWidget {
   final suppressToolMargin;
   final iconPath;
   final List<String> searchKeys;
-  String indexedSearchStrings;
+  String indexedSearchStrings = '';
   final List<GCWToolActionButtonsEntry> buttonList;
   final bool suppressHelpButton;
   final String helpSearchString;
@@ -111,17 +112,17 @@ class GCWTool extends StatefulWidget {
 
   GCWTool(
       {Key? key,
-      this.tool,
+      required this.tool,
       this.toolName,
       this.defaultLanguageToolName,
-      this.i18nPrefix,
-      this.categories,
+      required this.i18nPrefix,
+      this.categories: const [],
       this.autoScroll: true,
       this.suppressToolMargin: false,
       this.iconPath,
-      this.searchKeys,
-      this.buttonList,
-      this.helpSearchString,
+      this.searchKeys: const [],
+      this.buttonList: const [],
+      this.helpSearchString: '',
       this.isBeta: false,
       this.suppressHelpButton: false})
       : super(key: key) {
@@ -196,7 +197,7 @@ class _GCWToolState extends State<GCWTool> {
         (SUPPORTED_HELPLOCALES == null || !SUPPORTED_HELPLOCALES.contains(appLocale.languageCode));
   }
 
-  Widget _buildHelpButton() {
+  Widget? _buildHelpButton() {
     if (widget.suppressHelpButton) return null;
 
     // add button with url for searching knowledge base with toolName
@@ -204,7 +205,7 @@ class _GCWToolState extends State<GCWTool> {
 
     String searchString = '';
 
-    if (widget.helpSearchString == null || widget.helpSearchString.isEmpty) {
+    if (widget.helpSearchString.isEmpty) {
       if (_needsDefaultHelp(appLocale)) {
         // fallback to en if unsupported locale
         searchString = _defaultLanguageToolName;
@@ -235,39 +236,37 @@ class _GCWToolState extends State<GCWTool> {
     List<Widget> buttonList = <Widget>[];
 
     // add further buttons as defined in registry
-    if (widget.buttonList != null) {
-      widget.buttonList.forEach((button) {
-        String url = '';
-        if (button.url == '') // 404-Page asking for help
-          url = i18n(context, 'common_error_url'); // https://blog.gcwizard.net/manual/uncategorized/404/
-        else
-          url = button.url;
-        if (button.url != null && button.url.length != 0)
-          buttonList.add(IconButton(
-            icon: Icon(button.icon),
-            onPressed: () {
-              if (button.onPressed != null) {
-                button.onPressed();
-                return;
-              }
+    widget.buttonList.forEach((button) {
+      String url = '';
+      if (button.url == '') // 404-Page asking for help
+        url = i18n(context, 'common_error_url'); // https://blog.gcwizard.net/manual/uncategorized/404/
+      else
+        url = button.url;
+      if (button.url != null && button.url.length != 0)
+        buttonList.add(IconButton(
+          icon: Icon(button.icon),
+          onPressed: () {
+            if (button.onPressed != null) {
+              button.onPressed();
+              return;
+            }
 
-              if (button.showDialog) {
-                showGCWAlertDialog(
-                  context,
-                  i18n(context, button.title),
-                  i18n(context, button.text),
-                  () {
-                    launchUrl(Uri.parse(i18n(context, url, ifTranslationNotExists: url)));
-                  },
-                );
-              } else
-                launchUrl(Uri.parse(i18n(context, url)));
-            },
-          ));
-      });
-    }
+            if (button.showDialog) {
+              showGCWAlertDialog(
+                context,
+                i18n(context, button.title),
+                i18n(context, button.text),
+                () {
+                  launchUrl(Uri.parse(i18n(context, url, ifTranslationNotExists: url)));
+                },
+              );
+            } else
+              launchUrl(Uri.parse(i18n(context, url)));
+          },
+        ));
+    });
 
-    Widget helpButton = _buildHelpButton();
+    Widget? helpButton = _buildHelpButton();
     if (helpButton != null) buttonList.add(helpButton);
 
     return buttonList;
@@ -345,5 +344,5 @@ int sortToolList(GCWTool a, GCWTool b) {
     }
   }
 
-  return null;
+  return 0;
 }

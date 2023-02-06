@@ -8,7 +8,7 @@ class CryptographySelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
     final List<GCWTool> _toolList = registeredTools
-        .where((element) => element.categories != null && element.categories.contains(ToolCategory.CRYPTOGRAPHY))
+        .where((element) => element.categories.contains(ToolCategory.CRYPTOGRAPHY))
         .toList();
     _toolList.sort((a, b) => sortToolList(a, b));
 

@@ -9,7 +9,7 @@ class GeneralCodebreakersSelection extends GCWSelection {
   Widget build(BuildContext context) {
     final List<GCWTool> _toolList = registeredTools
         .where(
-            (element) => element.categories != null && element.categories.contains(ToolCategory.GENERAL_CODEBREAKERS))
+            (element) => element.categories.contains(ToolCategory.GENERAL_CODEBREAKERS))
         .toList();
     _toolList.sort((a, b) => sortToolList(a, b));
 
