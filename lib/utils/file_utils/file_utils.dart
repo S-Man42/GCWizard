@@ -536,7 +536,7 @@ Future<Uint8List> createZipFile(String fileName, String extension, List<Uint8Lis
     await File(encoder.zipPath).delete();
 
     return bytes;
-  } catch(e) {
+  } catch (e) {
     throw Exception('ZIP file not created');
   }
 }
