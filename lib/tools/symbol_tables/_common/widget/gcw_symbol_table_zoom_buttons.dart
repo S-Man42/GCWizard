@@ -10,7 +10,7 @@ class GCWSymbolTableZoomButtons extends StatefulWidget {
   final MediaQueryData mediaQueryData;
   final Function onChanged;
 
-  const GCWSymbolTableZoomButtons({Key key, this.countColumns, this.mediaQueryData, this.onChanged}) : super(key: key);
+  const GCWSymbolTableZoomButtons({Key? key, this.countColumns, this.mediaQueryData, this.onChanged}) : super(key: key);
 
   @override
   GCWSymbolTableZoomButtonsState createState() => GCWSymbolTableZoomButtonsState();

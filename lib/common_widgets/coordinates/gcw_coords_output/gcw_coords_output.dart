@@ -20,7 +20,7 @@ class GCWCoordsOutput extends StatefulWidget {
   final String title;
 
   GCWCoordsOutput(
-      {Key key, this.outputs, this.copyTexts, this.points, this.polylines, this.mapButtonTop: false, this.title})
+      {Key? key, this.outputs, this.copyTexts, this.points, this.polylines, this.mapButtonTop: false, this.title})
       : super(key: key) {
     if (points == null) this.points = [];
     if (polylines == null) this.polylines = [];

@@ -108,11 +108,11 @@ enum AlphabetType { STANDARD, CUSTOM }
 
 class Alphabet {
   final String key;
-  final String name;
+  final String? name;
   final AlphabetType type;
   final Map<String, String> alphabet;
 
-  const Alphabet({this.key, this.alphabet, this.name, this.type: AlphabetType.CUSTOM});
+  const Alphabet({required this.key, required this.alphabet, this.name, this.type: AlphabetType.CUSTOM});
 }
 
 final Alphabet alphabetAZ = Alphabet(
@@ -580,5 +580,5 @@ Map<String, int> getLetterFrequenciesFromAlphabet(Alphabet alphabet) {
   if (alphabet == alphabetGreek2) return letterFrequencyAlphabetGreek2;
   if (alphabet == alphabetRussian1) return letterFrequencyAlphabetRussian1;
 
-  return null;
+  throw Exception('No letter frequency found');
 }

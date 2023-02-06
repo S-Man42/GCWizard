@@ -39,7 +39,7 @@ showCoordinatesExportDialog(BuildContext context, List<GCWMapPoint> points, List
       text: 'KML',
       onPressed: () async {
         coordinatesExport.exportCoordinates(context, points, polylines, kmlFormat: true).then((value) {
-          if (value != null) _showExportedFileDialog(context, FileType.KML);
+          if (value) _showExportedFileDialog(context, FileType.KML);
         });
       },
     )

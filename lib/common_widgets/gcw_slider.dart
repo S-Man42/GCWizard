@@ -13,7 +13,7 @@ class GCWSlider extends StatefulWidget {
   final bool suppressReset;
 
   const GCWSlider(
-      {Key key,
+      {Key? key,
       this.title,
       this.value,
       this.onChanged,

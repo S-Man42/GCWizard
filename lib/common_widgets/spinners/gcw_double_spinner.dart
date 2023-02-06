@@ -21,7 +21,7 @@ class GCWDoubleSpinner extends StatefulWidget {
   final suppressOverflow;
 
   GCWDoubleSpinner(
-      {Key key,
+      {Key? key,
       this.onChanged,
       this.title,
       this.value,

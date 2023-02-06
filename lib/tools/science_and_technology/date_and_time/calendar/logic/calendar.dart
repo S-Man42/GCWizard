@@ -40,7 +40,7 @@ int Weekday(double JD) {
 }
 
 int JulianDay(DateTime date) {
-  return 1 + (GregorianCalendarToJulianDate(date) - GregorianCalendarToJulianDate(DateTime(date.year, 1, 1))).toInt();
+  return 1 + (gregorianCalendarToJulianDate(date) - gregorianCalendarToJulianDate(DateTime(date.year, 1, 1))).toInt();
 }
 
 DateTime JulianDateToIslamicCalendar(double jd) {
@@ -194,7 +194,7 @@ int cyear2pesach(int xx) {
 }
 
 int JewishYearLength(double jd) {
-  DateTime GregorianDate = JulianDateToGregorianCalendar(jd);
+  DateTime GregorianDate = julianDateToGregorianCalendar(jd);
   int jyearlength = 0;
   int cy = GregorianDate.year;
   int pd = cyear2pesach(cy);
@@ -203,7 +203,7 @@ int JewishYearLength(double jd) {
     pd = pd - 31;
     pm = 4;
   }
-  int pjd = (GregorianCalendarToJulianDate(DateTime(cy, pm, pd)) + 0.5).floor();
+  int pjd = (gregorianCalendarToJulianDate(DateTime(cy, pm, pd)) + 0.5).floor();
   int jnyjd = pjd + 163;
   int jy = cy + 3761;
   if (jd < jnyjd) {
@@ -214,7 +214,7 @@ int JewishYearLength(double jd) {
       pdprev = pdprev - 31;
       pmprev = 4;
     }
-    int pjdprev = (GregorianCalendarToJulianDate(DateTime(cy - 1, pmprev, pdprev)) + 0.5).floor();
+    int pjdprev = (gregorianCalendarToJulianDate(DateTime(cy - 1, pmprev, pdprev)) + 0.5).floor();
 
     jyearlength = pjd - pjdprev;
   } else {
@@ -224,7 +224,7 @@ int JewishYearLength(double jd) {
       pdnext = pdnext - 31;
       pmnext = 4;
     }
-    int pjnext = (GregorianCalendarToJulianDate(DateTime(cy + 1, pmnext, pdnext)) + 0.5).floor();
+    int pjnext = (gregorianCalendarToJulianDate(DateTime(cy + 1, pmnext, pdnext)) + 0.5).floor();
 
     jyearlength = pjnext - pjd;
   }
@@ -235,7 +235,7 @@ int JewishYearLength(double jd) {
 DateTime JulianDateToHebrewCalendar(double jd) {
   int jday = 1;
   int jmonth = 1;
-  DateTime GregorianDate = JulianDateToGregorianCalendar(jd);
+  DateTime GregorianDate = julianDateToGregorianCalendar(jd);
   int cy = GregorianDate.year;
   int pd = cyear2pesach(cy);
   int pm = 3;
@@ -243,7 +243,7 @@ DateTime JulianDateToHebrewCalendar(double jd) {
     pd = pd - 31;
     pm = 4;
   }
-  int pjd = (GregorianCalendarToJulianDate(DateTime(cy, pm, pd)) + 0.5).floor();
+  int pjd = (gregorianCalendarToJulianDate(DateTime(cy, pm, pd)) + 0.5).floor();
   int jnyjd = pjd + 163;
 
   int jy = cy + 3761;
@@ -256,7 +256,7 @@ DateTime JulianDateToHebrewCalendar(double jd) {
       pdprev = pdprev - 31;
       pmprev = 4;
     }
-    int pjdprev = (GregorianCalendarToJulianDate(DateTime(cy - 1, pmprev, pdprev)) + 0.5).floor();
+    int pjdprev = (gregorianCalendarToJulianDate(DateTime(cy - 1, pmprev, pdprev)) + 0.5).floor();
 
     int jyearlength = pjd - pjdprev;
     int days = (jd + 0.5).floor() - pjdprev - 163;
@@ -270,7 +270,7 @@ DateTime JulianDateToHebrewCalendar(double jd) {
       pdnext = pdnext - 31;
       pmnext = 4;
     }
-    int pjnext = (GregorianCalendarToJulianDate(DateTime(cy + 1, pmnext, pdnext)) + 0.5).floor();
+    int pjnext = (gregorianCalendarToJulianDate(DateTime(cy + 1, pmnext, pdnext)) + 0.5).floor();
 
     int jyearlength = pjnext - pjd;
     int days = (jd + 0.5).floor() - pjd - 163;
@@ -293,7 +293,7 @@ double HebrewCalendarToJulianDate(DateTime date) {
     pd = pd - 31;
     pm = 4;
   }
-  int pjd = (GregorianCalendarToJulianDate(DateTime(cy, pm, pd)) + 0.5).floor();
+  int pjd = (gregorianCalendarToJulianDate(DateTime(cy, pm, pd)) + 0.5).floor();
   int jnyjd = pjd + 163;
   int pdnext = cyear2pesach(cy + 1);
   int pmnext = 3;
@@ -301,7 +301,7 @@ double HebrewCalendarToJulianDate(DateTime date) {
     pdnext = pdnext - 31;
     pmnext = 4;
   }
-  int pjnext = (GregorianCalendarToJulianDate(DateTime(cy + 1, pmnext, pdnext)) + 0.5).floor();
+  int pjnext = (gregorianCalendarToJulianDate(DateTime(cy + 1, pmnext, pdnext)) + 0.5).floor();
   int jyearlength = pjnext - pjd;
 
   int days = daysInJewYear(d, m, jyearlength);
@@ -346,7 +346,7 @@ class PotrzebieCalendarOutput{
 PotrzebieCalendarOutput JulianDateToPotrzebieCalendar(double jd) {
 // Day 0 in the Potrzebie-System is 01.10.1952
 // Before MAD - B.M.   -   zero   -   Cowzofski Madi C.M
-  double jd_p_zero = GregorianCalendarToJulianDate(DateTime(1952, 10, 1));
+  double jd_p_zero = gregorianCalendarToJulianDate(DateTime(1952, 10, 1));
   int diff = (jd - jd_p_zero).round();
   bool bm = (diff < 0);
   if (diff < 0) diff = diff * -1;
@@ -365,7 +365,7 @@ double PotrzebieCalendarToJulianDate(DateTime date) {
 
   int days = p_y * 100 + p_m * 10 + p_d;
 
-  double jd_p_zero = GregorianCalendarToJulianDate(DateTime(1952, 10, 1)).floorToDouble() - 1;
+  double jd_p_zero = gregorianCalendarToJulianDate(DateTime(1952, 10, 1)).floorToDouble() - 1;
 
   return jd_p_zero + days;
 }

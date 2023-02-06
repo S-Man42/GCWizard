@@ -4,7 +4,7 @@ class _GCWCoordsMaidenhead extends StatefulWidget {
   final Function onChanged;
   final BaseCoordinates coordinates;
 
-  const _GCWCoordsMaidenhead({Key key, this.onChanged, this.coordinates}) : super(key: key);
+  const _GCWCoordsMaidenhead({Key? key, this.onChanged, this.coordinates}) : super(key: key);
 
   @override
   _GCWCoordsMaidenheadState createState() => _GCWCoordsMaidenheadState();

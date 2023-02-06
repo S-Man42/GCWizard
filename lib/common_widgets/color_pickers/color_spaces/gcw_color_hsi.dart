@@ -4,7 +4,7 @@ class _GCWColorHSI extends StatefulWidget {
   final Function onChanged;
   final HSI color;
 
-  const _GCWColorHSI({Key key, this.onChanged, this.color}) : super(key: key);
+  const _GCWColorHSI({Key? key, this.onChanged, this.color}) : super(key: key);
 
   @override
   _GCWColorHSIState createState() => _GCWColorHSIState();

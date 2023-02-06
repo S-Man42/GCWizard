@@ -27,19 +27,19 @@ final Map<int, String> MONTH = {
 
 enum _CalendarType{JULIAN, GREGORIAN}
 
-DateTime JulianDateToGregorianCalendar(double jd) {
+DateTime julianDateToGregorianCalendar(double jd) {
   return _JDToCal(jd, _CalendarType.GREGORIAN);
 }
 
-DateTime JulianDateToJulianCalendar(double jd) {
+DateTime julianDateToJulianCalendar(double jd) {
   return _JDToCal(jd, _CalendarType.JULIAN);
 }
 
-double GregorianCalendarToJulianDate(DateTime date) {
+double gregorianCalendarToJulianDate(DateTime date) {
   return _calToJD(date, _CalendarType.GREGORIAN);
 }
 
-double JulianCalendarToJulianDate(DateTime date) {
+double julianCalendarToJulianDate(DateTime date) {
   return _calToJD(date, _CalendarType.JULIAN);
 }
 
@@ -87,13 +87,10 @@ DateTime _JDToCal(double jd, _CalendarType type) {
 }
 
 String replaceMonthNameWithCustomString(DateTime date, String datePattern, String locale, String customMonth) {
-  if (date == null || datePattern == null || locale == null || customMonth == null)
-    return null;
-
-  if (!datePattern.contains('MMMM'))
-    return null;
-
   var dateStr = DateFormat(datePattern, locale).format(date);
+  if (!datePattern.contains('MMMM'))
+    return dateStr;
+
   var monthName = DateFormat('MMMM', locale).format(date);
 
   return dateStr.replaceFirst(monthName, customMonth);
@@ -124,7 +121,6 @@ DateTime hoursToHHmmss(double hours) {
 }
 
 String formatHoursToHHmmss(double hours, {milliseconds: true, limitHours: true}) {
-  if (hours == null) return null;
   var time = hoursToHHmmss(hours);
 
   var h = time.hour;
@@ -152,8 +148,6 @@ String formatHoursToHHmmss(double hours, {milliseconds: true, limitHours: true})
 }
 
 String formatDurationToHHmmss(Duration duration, {days: true, milliseconds: true, limitHours: true}) {
-  if (duration == null) return null;
-
   var sign = duration.isNegative ? '-' : '';
   var _duration = duration.abs();
   var hours = days ? _duration.inHours.remainder(24) : _duration.inHours;

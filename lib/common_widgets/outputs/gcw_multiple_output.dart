@@ -11,7 +11,7 @@ class GCWMultipleOutput extends StatefulWidget {
   final String title;
 
   const GCWMultipleOutput(
-      {Key key,
+      {Key? key,
       @required this.children,
       this.suppressDefaultTitle: false,
       this.trailing,

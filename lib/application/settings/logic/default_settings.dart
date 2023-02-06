@@ -16,11 +16,9 @@ import 'package:prefs/prefs.dart';
 
 enum PreferencesInitMode { STARTUP, REINIT_ALL, REINIT_SINGLE }
 
-void initDefaultSettings(PreferencesInitMode mode, {String reinitSinglePreference}) {
+void initDefaultSettings(PreferencesInitMode mode, {String reinitSinglePreference: ''}) {
   if (mode == PreferencesInitMode.REINIT_SINGLE) {
-    if (reinitSinglePreference == null || reinitSinglePreference.isEmpty) return;
-  } else {
-    reinitSinglePreference = '';
+    if (reinitSinglePreference.isEmpty) return;
   }
 
   var _reinitAll = mode == PreferencesInitMode.REINIT_ALL;
@@ -63,7 +61,11 @@ void initDefaultSettings(PreferencesInitMode mode, {String reinitSinglePreferenc
   } else {
     clipboardData.removeWhere((item) {
       try {
-        var created = DateTime.fromMillisecondsSinceEpoch(int.tryParse(jsonDecode(item)['created']));
+        var createdMS = int.tryParse(jsonDecode(item)['created']);
+        if (createdMS == null)
+          return true;
+
+        var created = DateTime.fromMillisecondsSinceEpoch(createdMS);
         return created
             .isBefore(DateTime.now().subtract(Duration(days: Prefs.get(PREFERENCE_CLIPBOARD_KEEP_ENTRIES_IN_DAYS))));
       } catch (e) {

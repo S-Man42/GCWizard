@@ -5,7 +5,7 @@ class _GCWColorValuesPicker extends StatefulWidget {
   final dynamic color;
   final String colorSpace;
 
-  const _GCWColorValuesPicker({Key key, this.onChanged, this.colorSpace, this.color}) : super(key: key);
+  const _GCWColorValuesPicker({Key? key, this.onChanged, this.colorSpace, this.color}) : super(key: key);
 
   @override
   _GCWColorValuesPickerState createState() => _GCWColorValuesPickerState();

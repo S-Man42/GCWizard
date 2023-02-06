@@ -10,7 +10,7 @@ class Substitution extends StatefulWidget {
   final String input;
   final Map<String, String> substitutions;
 
-  const Substitution({Key key, this.input, this.substitutions}) : super(key: key);
+  const Substitution({Key? key, this.input, this.substitutions}) : super(key: key);
 
   @override
   SubstitutionState createState() => SubstitutionState();

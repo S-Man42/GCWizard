@@ -4,7 +4,7 @@ class _GCWColorYIQ extends StatefulWidget {
   final Function onChanged;
   final YIQ color;
 
-  const _GCWColorYIQ({Key key, this.onChanged, this.color}) : super(key: key);
+  const _GCWColorYIQ({Key? key, this.onChanged, this.color}) : super(key: key);
 
   @override
   _GCWColorYIQState createState() => _GCWColorYIQState();

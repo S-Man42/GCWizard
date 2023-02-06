@@ -14,7 +14,7 @@ class GCWIntegerTextField extends StatefulWidget {
   final FocusNode focusNode;
 
   const GCWIntegerTextField(
-      {Key key,
+      {Key? key,
       this.onChanged,
       this.controller,
       this.textInputFormatter,

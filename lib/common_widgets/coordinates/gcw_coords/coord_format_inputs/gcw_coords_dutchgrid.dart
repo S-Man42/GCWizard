@@ -4,7 +4,7 @@ class _GCWCoordsDutchGrid extends StatefulWidget {
   final Function onChanged;
   final BaseCoordinates coordinates;
 
-  const _GCWCoordsDutchGrid({Key key, this.onChanged, this.coordinates}) : super(key: key);
+  const _GCWCoordsDutchGrid({Key? key, this.onChanged, this.coordinates}) : super(key: key);
 
   @override
   _GCWCoordsDutchGridState createState() => _GCWCoordsDutchGridState();

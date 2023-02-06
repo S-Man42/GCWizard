@@ -14,7 +14,7 @@ class Teletypewriter extends StatefulWidget {
   final TeletypewriterCodebook defaultCodebook;
   final Map<TeletypewriterCodebook, Map<String, String>> codebook;
 
-  Teletypewriter({Key key, this.defaultCodebook, this.codebook}) : super(key: key);
+  Teletypewriter({Key? key, this.defaultCodebook, this.codebook}) : super(key: key);
 
   @override
   TeletypewriterState createState() => TeletypewriterState();

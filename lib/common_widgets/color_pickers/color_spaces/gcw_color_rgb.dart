@@ -4,7 +4,7 @@ class _GCWColorRGB extends StatefulWidget {
   final Function onChanged;
   final RGB color;
 
-  const _GCWColorRGB({Key key, this.onChanged, this.color}) : super(key: key);
+  const _GCWColorRGB({Key? key, this.onChanged, this.color}) : super(key: key);
 
   @override
   _GCWColorRGBState createState() => _GCWColorRGBState();

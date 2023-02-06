@@ -7,7 +7,7 @@ import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 class MapPolylineEditor extends StatefulWidget {
   final dynamic polyline;
 
-  const MapPolylineEditor({Key key, this.polyline}) : super(key: key);
+  const MapPolylineEditor({Key? key, this.polyline}) : super(key: key);
 
   @override
   MapPolylineEditorState createState() => MapPolylineEditorState();

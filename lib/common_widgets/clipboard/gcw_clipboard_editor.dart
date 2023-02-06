@@ -18,7 +18,7 @@ import 'package:prefs/prefs.dart';
 class GCWClipboardEditor extends StatefulWidget {
   final FormulaGroup group;
 
-  const GCWClipboardEditor({Key key, this.group}) : super(key: key);
+  const GCWClipboardEditor({Key? key, this.group}) : super(key: key);
 
   @override
   GCWClipboardEditorState createState() => GCWClipboardEditorState();

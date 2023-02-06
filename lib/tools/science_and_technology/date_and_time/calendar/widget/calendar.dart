@@ -26,7 +26,7 @@ class CalendarState extends State<Calendar> {
   void initState() {
     DateTime now = DateTime.now();
     _currentDate = DateTime(now.year, now.month, now.day);
-    _currentJulianDate = GregorianCalendarToJulianDate(_currentDate);
+    _currentJulianDate = gregorianCalendarToJulianDate(_currentDate);
     super.initState();
   }
 
@@ -97,11 +97,11 @@ class CalendarState extends State<Calendar> {
         output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]);
         break;
       case CalendarSystem.GREGORIANCALENDAR:
-        jd = GregorianCalendarToJulianDate(_currentDate);
+        jd = gregorianCalendarToJulianDate(_currentDate);
         output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]);
         break;
       case CalendarSystem.JULIANCALENDAR:
-        jd = JulianCalendarToJulianDate(_currentDate);
+        jd = julianCalendarToJulianDate(_currentDate);
         output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]);
         break;
       case CalendarSystem.ISLAMICCALENDAR:
@@ -129,12 +129,12 @@ class CalendarState extends State<Calendar> {
     output['dates_calendar_system_juliandate'] = (jd + 0.5).floor();
 
     output['dates_calendar_system_juliancalendar'] =
-        _DateOutputToString(context, JulianDateToJulianCalendar(jd), CalendarSystem.JULIANCALENDAR);
+        _DateOutputToString(context, julianDateToJulianCalendar(jd), CalendarSystem.JULIANCALENDAR);
 
     output['dates_calendar_system_modifiedjuliandate'] = JulianDateToModifedJulianDate(jd);
 
     output['dates_calendar_system_gregoriancalendar'] =
-        _DateOutputToString(context, JulianDateToGregorianCalendar(jd), CalendarSystem.GREGORIANCALENDAR);
+        _DateOutputToString(context, julianDateToGregorianCalendar(jd), CalendarSystem.GREGORIANCALENDAR);
 
     output['dates_calendar_system_islamiccalendar'] =
         _DateOutputToString(context, JulianDateToIslamicCalendar(jd), CalendarSystem.ISLAMICCALENDAR);

@@ -4,7 +4,7 @@ class _GCWCoordsDEC extends StatefulWidget {
   final Function onChanged;
   BaseCoordinates coordinates;
 
-  _GCWCoordsDEC({Key key, this.onChanged, this.coordinates}) : super(key: key);
+  _GCWCoordsDEC({Key? key, this.onChanged, this.coordinates}) : super(key: key);
 
   @override
   _GCWCoordsDECState createState() => _GCWCoordsDECState();

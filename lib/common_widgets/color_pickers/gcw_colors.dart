@@ -29,7 +29,7 @@ class GCWColors extends StatefulWidget {
   final dynamic color;
   final String colorSpace;
 
-  const GCWColors({Key key, this.onChanged, this.colorSpace, this.color}) : super(key: key);
+  const GCWColors({Key? key, this.onChanged, this.colorSpace, this.color}) : super(key: key);
 
   @override
   GCWColorsState createState() => GCWColorsState();

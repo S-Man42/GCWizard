@@ -21,7 +21,7 @@ import 'package:intl/intl.dart';
 class QrCode extends StatefulWidget {
   final GCWFile platformFile;
 
-  const QrCode({Key key, this.platformFile}) : super(key: key);
+  const QrCode({Key? key, this.platformFile}) : super(key: key);
 
   @override
   QrCodeState createState() => QrCodeState();
@@ -172,6 +172,6 @@ class QrCodeState extends State<QrCode> {
     var value = await saveByteDataToFile(
         context, data, "img_" + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
 
-    if (value != null) showExportedFileDialog(context, fileType: fileType);
+    if (value) showExportedFileDialog(context, fileType: fileType);
   }
 }

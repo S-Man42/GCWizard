@@ -17,7 +17,7 @@ import 'package:intl/intl.dart';
 class PeriodicTableDataView extends StatefulWidget {
   final int atomicNumber;
 
-  const PeriodicTableDataView({Key key, this.atomicNumber}) : super(key: key);
+  const PeriodicTableDataView({Key? key, this.atomicNumber}) : super(key: key);
 
   @override
   PeriodicTableDataViewState createState() => PeriodicTableDataViewState();

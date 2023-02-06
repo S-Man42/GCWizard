@@ -10,7 +10,7 @@ const MDT_POLYBIOS_OPTION_MODE = 'multidecoder_tool_polybios_option_mode';
 
 class MultiDecoderToolPolybios extends AbstractMultiDecoderTool {
   MultiDecoderToolPolybios(
-      {Key key, int id, String name, Map<String, dynamic> options})
+      {Key? key, int id, String name, Map<String, dynamic> options})
       : super(
             key: key,
             id: id,

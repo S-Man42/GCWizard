@@ -413,7 +413,7 @@ import 'package:gc_wizard/tools/wherigo/urwigo_hashbreaker/widget/urwigo_hashbre
 import 'package:gc_wizard/tools/wherigo/urwigo_text_deobfuscation/widget/urwigo_text_deobfuscation.dart';
 import 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_analyze.dart';
 
-List<GCWTool> registeredTools;
+List<GCWTool> registeredTools = [];
 
 initializeRegistry(BuildContext context) {
   registeredTools = [
@@ -4124,5 +4124,5 @@ initializeRegistry(BuildContext context) {
 }
 
 refreshRegistry() {
-  registeredTools = null;
+  registeredTools = [];
 }

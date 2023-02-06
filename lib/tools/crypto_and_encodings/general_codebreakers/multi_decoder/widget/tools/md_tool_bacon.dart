@@ -10,7 +10,7 @@ const MDT_BACON_OPTION_MODE_01 = '01';
 const MDT_BACON_OPTION_MODE_AB = 'AB';
 
 class MultiDecoderToolBacon extends AbstractMultiDecoderTool {
-  MultiDecoderToolBacon({Key key, int id, String name, Map<String, dynamic> options})
+  MultiDecoderToolBacon({Key? key, int id, String name, Map<String, dynamic> options})
       : super(
             key: key,
             id: id,

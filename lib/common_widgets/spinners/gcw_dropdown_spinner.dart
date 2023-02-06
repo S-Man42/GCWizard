@@ -13,7 +13,7 @@ class GCWDropDownSpinner extends StatefulWidget {
   final String title;
 
   const GCWDropDownSpinner(
-      {Key key, this.onChanged, this.title, this.index, this.items, this.layout: SpinnerLayout.HORIZONTAL})
+      {Key? key, this.onChanged, this.title, this.index, this.items, this.layout: SpinnerLayout.HORIZONTAL})
       : super(key: key);
 
   @override

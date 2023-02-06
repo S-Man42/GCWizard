@@ -18,7 +18,7 @@ class GCWUnits extends StatefulWidget {
   final Map<String, dynamic> value;
 
   GCWUnits(
-      {Key key,
+      {Key? key,
       this.unitCategory,
       this.onChanged,
       this.onlyShowUnitSymbols: false,

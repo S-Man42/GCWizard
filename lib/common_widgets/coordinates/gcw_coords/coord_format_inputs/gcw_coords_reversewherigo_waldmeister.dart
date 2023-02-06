@@ -4,7 +4,7 @@ class _GCWCoordsReverseWherigoWaldmeister extends StatefulWidget {
   final Function onChanged;
   final BaseCoordinates coordinates;
 
-  const _GCWCoordsReverseWherigoWaldmeister({Key key, this.onChanged, this.coordinates}) : super(key: key);
+  const _GCWCoordsReverseWherigoWaldmeister({Key? key, this.onChanged, this.coordinates}) : super(key: key);
 
   @override
   _GCWCoordsReverseWherigoWaldmeisterState createState() => _GCWCoordsReverseWherigoWaldmeisterState();

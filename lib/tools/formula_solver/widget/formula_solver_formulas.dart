@@ -38,7 +38,7 @@ part 'package:gc_wizard/tools/formula_solver/widget/formula_replace_dialog.dart'
 class FormulaSolverFormulas extends StatefulWidget {
   final FormulaGroup group;
 
-  const FormulaSolverFormulas({Key key, this.group}) : super(key: key);
+  const FormulaSolverFormulas({Key? key, this.group}) : super(key: key);
 
   @override
   FormulaSolverFormulasState createState() => FormulaSolverFormulasState();

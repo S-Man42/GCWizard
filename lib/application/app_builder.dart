@@ -4,13 +4,17 @@ import 'package:flutter/material.dart';
 class AppBuilder extends StatefulWidget {
   final Function(BuildContext) builder;
 
-  const AppBuilder({Key key, this.builder}) : super(key: key);
+  const AppBuilder({Key? key, required this.builder}) : super(key: key);
 
   @override
   AppBuilderState createState() => new AppBuilderState();
 
   static AppBuilderState of(BuildContext context) {
-    return context.findAncestorStateOfType<AppBuilderState>();
+    var newState = context.findAncestorStateOfType<AppBuilderState>();
+    if (newState == null)
+      throw Exception('No AppBuilderState created');
+
+    return newState;
   }
 }
 

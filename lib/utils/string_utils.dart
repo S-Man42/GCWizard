@@ -4,11 +4,10 @@ import 'package:diacritic/diacritic.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 
 int extractIntegerFromText(String text) {
-  if (text == null) return null;
   var digits = text.replaceAll(RegExp(r'[^0-9]'), '');
-  if (digits.length == 0) return null;
+  if (digits.length == 0) return 0;
 
-  return int.tryParse(digits);
+  return int.parse(digits);
 }
 
 String normalizeUmlauts(String input) {
@@ -50,8 +49,6 @@ String removeNonLetters(String text) {
 }
 
 String insertCharacter(String text, int index, String character) {
-  if (text == null || character == null) return text;
-
   if (index < 0) index = 0;
 
   if (index > text.length) index = text.length;
@@ -64,7 +61,7 @@ String insertSpaceEveryNthCharacter(String input, int n) {
 }
 
 String insertEveryNthCharacter(String input, int n, String textToInsert) {
-  if (n == null || n <= 0) return input; //TODO Exception
+  if (n <= 0) return input;
 
   String out = '';
   int i = 0;
@@ -82,7 +79,7 @@ String insertEveryNthCharacter(String input, int n, String textToInsert) {
 }
 
 bool isUpperCase(String letter) {
-  if (letter == null || letter.length == 0) return false;
+  if (letter.length == 0) return false;
   if (letter == 'ß') return false;
   if (letter == 'ẞ') return true; // Capital ß
 
@@ -90,44 +87,38 @@ bool isUpperCase(String letter) {
 }
 
 String removeDuplicateCharacters(String input) {
-  if (input == null) return null;
-
   return input.split('').toSet().join();
 }
 
 bool hasDuplicateCharacters(String input) {
-  if (input == null) return false;
-
   return input != removeDuplicateCharacters(input);
 }
 
 int countCharacters(String input, String characters) {
-  if (input == null || characters == null) return 0;
-
   return input.replaceAll(RegExp('[^$characters]'), '').length;
 }
 
 bool allSameCharacters(String input) {
-  if (input == null || input.isEmpty) return null;
+  if (input.isEmpty) return false;
 
   var firstCharacter = input[0];
   return input.replaceAll(firstCharacter, '').length == 0;
 }
 
 bool isOnlyLetters(String input) {
-  if (input == null || input.isEmpty) return false;
+  if (input.isEmpty) return false;
 
   return removeAccents(input).replaceAll(RegExp(r'[A-Za-z]'), '').length == 0;
 }
 
 bool isOnlyNumerals(String input) {
-  if (input == null || input.isEmpty) return false;
+  if (input.isEmpty) return false;
 
   return input.replaceAll(RegExp(r'[0-9]'), '').length == 0;
 }
 
 String removeControlCharacters(String input) {
-  if (input == null || input.isEmpty)
+  if (input.isEmpty)
     return input;
 
   var removedCodes = input.codeUnits.where((element) => element >= 32).toList();
@@ -135,7 +126,7 @@ String removeControlCharacters(String input) {
 }
 
 String normalizeCharacters(String input) {
-  if (input == null || input.isEmpty)
+  if (input.isEmpty)
     return input;
 
   final Map<String, String> _ALTERNATE_CHARACTERS = {

@@ -4,7 +4,7 @@ class GCWCoordsMGRS extends StatefulWidget {
   final Function onChanged;
   final BaseCoordinates coordinates;
 
-  const GCWCoordsMGRS({Key key, this.onChanged, this.coordinates}) : super(key: key);
+  const GCWCoordsMGRS({Key? key, this.onChanged, this.coordinates}) : super(key: key);
 
   @override
   _GCWCoordsMGRSState createState() => _GCWCoordsMGRSState();

@@ -31,7 +31,7 @@ class _CistercianNumbersSegmentDisplay extends NSegmentDisplay {
   final bool tapeStyle;
 
   _CistercianNumbersSegmentDisplay(
-      {Key key,
+      {Key? key,
       this.segments,
       this.readOnly: false,
       this.onChanged,

@@ -17,7 +17,7 @@ class GCWColumnedMultilineOutput extends StatefulWidget {
   final List<Widget> firstRows;
 
   const GCWColumnedMultilineOutput(
-      {Key key,
+      {Key? key,
         @required this.data,
         this.flexValues = const [],
         this.copyColumn,

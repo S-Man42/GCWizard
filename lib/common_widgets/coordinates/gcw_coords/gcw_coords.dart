@@ -69,7 +69,7 @@ class GCWCoords extends StatefulWidget {
   final bool restoreCoordinates;
 
   const GCWCoords(
-      {Key key,
+      {Key? key,
       this.title,
       this.coordinates,
       this.onChanged,

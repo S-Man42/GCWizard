@@ -12,7 +12,7 @@ class GCWCoordsOutputFormatDistance extends StatefulWidget {
   final coordFormat;
   final Function onChanged;
 
-  const GCWCoordsOutputFormatDistance({Key key, this.coordFormat, this.onChanged}) : super(key: key);
+  const GCWCoordsOutputFormatDistance({Key? key, this.coordFormat, this.onChanged}) : super(key: key);
 
   @override
   GCWCoordsOutputFormatDistanceState createState() => GCWCoordsOutputFormatDistanceState();

@@ -348,8 +348,8 @@ class _MainViewState extends State<MainView> {
 
   @override
   Widget build(BuildContext context) {
-    if (registeredTools == null) initializeRegistry(context);
-    if (_mainToolList == null) _initStaticToolList();
+    if (registeredTools.isEmpty) initializeRegistry(context);
+    if (_mainToolList.isEmpty) _initStaticToolList();
     Favorites.initialize();
 
     var toolList = (_isSearching && _searchText.length > 0) ? _getSearchedList() : null;
@@ -419,7 +419,7 @@ class _MainViewState extends State<MainView> {
           width: 35.0,
           height: 35.0,
         ),
-        onPressed: () => _scaffoldKey.currentState.openDrawer());
+        onPressed: () => _scaffoldKey.currentState?.openDrawer());
   }
 
   List<GCWTool> _getSearchedList() {
@@ -443,12 +443,12 @@ class _MainViewState extends State<MainView> {
   }
 }
 
-List<GCWTool> _categoryList;
-List<GCWTool> _mainToolList;
+List<GCWTool> _categoryList = [];
+List<GCWTool> _mainToolList = [];
 
 refreshToolLists() {
-  _categoryList = null;
-  _mainToolList = null;
+  _categoryList = [];
+  _mainToolList = [];
 }
 
 void _initStaticToolList() {

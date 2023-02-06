@@ -11,7 +11,7 @@ import 'package:gc_wizard/utils/alphabets.dart';
 class FormulaSolverFormulaValues extends StatefulWidget {
   final FormulaGroup group;
 
-  const FormulaSolverFormulaValues({Key key, this.group}) : super(key: key);
+  const FormulaSolverFormulaValues({Key? key, this.group}) : super(key: key);
 
   @override
   FormulaSolverFormulaValuesState createState() => FormulaSolverFormulaValuesState();

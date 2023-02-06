@@ -9,7 +9,7 @@ import 'package:photo_view/photo_view.dart';
 class GCWImageViewFullScreen extends StatefulWidget {
   final Uint8List imageData;
 
-  const GCWImageViewFullScreen({Key key, @required this.imageData}) : super(key: key);
+  const GCWImageViewFullScreen({Key? key, @required this.imageData}) : super(key: key);
 
   @override
   GCWImageViewFullScreenState createState() => GCWImageViewFullScreenState();

@@ -7,13 +7,13 @@ List<int> textToIntList(String text, {bool allowNegativeValues: false}) {
   var regex = allowNegativeValues ? RegExp(r'[^\-0-9]') : RegExp(r'[^0-9]');
 
   var list = text.split(regex);
-  list.removeWhere((value) => value == null || value == '');
+  list.removeWhere((value) => value == '');
 
-  return list.map((value) => value == '-' ? 0 : int.tryParse(value)).toList();
+  return list.map((value) => value == '-' ? 0 : int.parse(value)).toList();
 }
 
 List<String> textToBinaryList(String text) {
-  if (text == null || text.length == 0) return [];
+  if (text.length == 0) return [];
 
   final regex = RegExp(r'[01]+');
 
@@ -25,8 +25,6 @@ String intListToString(List<int> list, {String delimiter: ''}) {
 }
 
 Map<U, T> switchMapKeyValue<T, U>(Map<T, U> map, {keepFirstOccurence: false}) {
-  if (map == null) return null;
-
   var newMap = map;
   if (keepFirstOccurence) newMap = LinkedHashMap.fromEntries(map.entries.toList().reversed);
 
@@ -60,8 +58,6 @@ int binarySearch<T extends Comparable<Object>>(List<T> sortedList, T value) {
 }
 
 Uint8List trimNullBytes(Uint8List bytes) {
-  if (bytes == null) return null;
-
   if (bytes.last != 0 && bytes.first != 0) return bytes;
 
   var tempList = List<int>.from(bytes);

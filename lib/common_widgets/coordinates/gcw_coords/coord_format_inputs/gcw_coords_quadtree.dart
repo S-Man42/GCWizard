@@ -4,7 +4,7 @@ class _GCWCoordsQuadtree extends StatefulWidget {
   final Function onChanged;
   final BaseCoordinates coordinates;
 
-  const _GCWCoordsQuadtree({Key key, this.onChanged, this.coordinates}) : super(key: key);
+  const _GCWCoordsQuadtree({Key? key, this.onChanged, this.coordinates}) : super(key: key);
 
   @override
   _GCWCoordsQuadtreeState createState() => _GCWCoordsQuadtreeState();

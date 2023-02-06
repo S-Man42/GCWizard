@@ -4,7 +4,7 @@ class _GCWCoordsSwissGridPlus extends StatefulWidget {
   final Function onChanged;
   final BaseCoordinates coordinates;
 
-  const _GCWCoordsSwissGridPlus({Key key, this.onChanged, this.coordinates}) : super(key: key);
+  const _GCWCoordsSwissGridPlus({Key? key, this.onChanged, this.coordinates}) : super(key: key);
 
   @override
   _GCWCoordsSwissGridPlusState createState() => _GCWCoordsSwissGridPlusState();

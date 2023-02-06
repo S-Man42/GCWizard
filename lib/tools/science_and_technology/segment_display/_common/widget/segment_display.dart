@@ -19,7 +19,7 @@ import 'package:gc_wizard/utils/constants.dart';
 class SegmentDisplay extends StatefulWidget {
   final SegmentDisplayType type;
 
-  SegmentDisplay({Key key, this.type}) : super(key: key);
+  SegmentDisplay({Key? key, this.type}) : super(key: key);
 
   @override
   SegmentDisplayState createState() => SegmentDisplayState();

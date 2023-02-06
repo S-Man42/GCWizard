@@ -25,7 +25,7 @@ class GCWIntegerSpinner extends StatefulWidget {
   final SpinnerOverflowType overflow;
 
   const GCWIntegerSpinner(
-      {Key key,
+      {Key? key,
       this.onChanged,
       this.title,
       this.value,

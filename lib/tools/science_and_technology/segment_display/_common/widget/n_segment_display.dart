@@ -18,7 +18,7 @@ class NSegmentDisplay extends StatefulWidget {
   NSegmentDisplayState nSegmentDisplayState;
 
   NSegmentDisplay(
-      {Key key,
+      {Key? key,
       this.initialSegments,
       this.type,
       this.segments,

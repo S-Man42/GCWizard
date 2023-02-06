@@ -14,7 +14,7 @@ class GeneralCharsetValues extends StatefulWidget {
   final Function decode;
   final String charsetName;
 
-  GeneralCharsetValues({Key key, this.encode, this.decode, this.charsetName}) : super(key: key);
+  GeneralCharsetValues({Key? key, this.encode, this.decode, this.charsetName}) : super(key: key);
 
   @override
   GeneralCharsetValuesState createState() => GeneralCharsetValuesState();
@@ -75,8 +75,8 @@ class GeneralCharsetValuesState extends State<GeneralCharsetValues> {
               ),
         GCWTwoOptionsSwitch(
           value: _currentMode,
-          leftValue: 'A-Z → ' + (i18n(context, widget.charsetName) ?? '123'),
-          rightValue: (i18n(context, widget.charsetName) ?? '123') + ' → A-Z',
+          leftValue: 'A-Z → ' + (i18n(context, widget.charsetName, ifTranslationNotExists: '123')),
+          rightValue: (i18n(context, widget.charsetName, ifTranslationNotExists: '123')) + ' → A-Z',
           onChanged: (value) {
             setState(() {
               _currentMode = value;

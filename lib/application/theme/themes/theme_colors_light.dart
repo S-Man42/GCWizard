@@ -1,8 +1,6 @@
 part of 'package:gc_wizard/application/theme/theme_colors.dart';
 
 class _ThemeColorsLight extends ThemeColors {
-  ThemeData _base;
-
   static const _creme = Color(0xFFF5F3ED);
   static const _darkGray = Color(0xFF404040);
   static const _gray = Color(0xFF919191);
@@ -10,9 +8,7 @@ class _ThemeColorsLight extends ThemeColors {
 
   @override
   ThemeData base() {
-    if (_base == null) _base = ThemeData.light();
-
-    return _base;
+    return ThemeData.light();
   }
 
   @override

@@ -42,7 +42,7 @@ class SymbolReplacer extends StatefulWidget {
   final String symbolKey;
   final List<Map<String, SymbolData>> imageData;
 
-  const SymbolReplacer({Key key, this.platformFile, this.symbolKey, this.imageData}) : super(key: key);
+  const SymbolReplacer({Key? key, this.platformFile, this.symbolKey, this.imageData}) : super(key: key);
 
   @override
   SymbolReplacerState createState() => SymbolReplacerState();

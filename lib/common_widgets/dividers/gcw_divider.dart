@@ -4,7 +4,7 @@ import 'package:gc_wizard/application/theme/theme_colors.dart';
 class GCWDivider extends StatelessWidget {
   final Color color;
 
-  GCWDivider({Key key, this.color}) : super(key: key);
+  GCWDivider({Key? key, this.color}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

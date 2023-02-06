@@ -9,7 +9,7 @@ class GCWLetterValueRelation extends StatefulWidget {
   final int minValue;
   final int startValue;
 
-  const GCWLetterValueRelation({Key key, this.onChanged, this.minValue: 1, this.startValue: 1}) : super(key: key);
+  const GCWLetterValueRelation({Key? key, this.onChanged, this.minValue: 1, this.startValue: 1}) : super(key: key);
 
   @override
   GCWLetterValueRelationState createState() => GCWLetterValueRelationState();

@@ -5,7 +5,7 @@ class _GCWCoordsGaussKrueger extends StatefulWidget {
   final BaseCoordinates coordinates;
   final String subtype;
 
-  const _GCWCoordsGaussKrueger({Key key, this.onChanged, this.coordinates, this.subtype: keyCoordsGaussKruegerGK1})
+  const _GCWCoordsGaussKrueger({Key? key, this.onChanged, this.coordinates, this.subtype: keyCoordsGaussKruegerGK1})
       : super(key: key);
 
   @override

@@ -23,7 +23,7 @@ class GCWSymbolTableEncryption extends StatefulWidget {
   final bool alwaysIgnoreUnknown;
 
   const GCWSymbolTableEncryption(
-      {Key key,
+      {Key? key,
       this.data,
       this.countColumns,
       this.mediaQueryData,

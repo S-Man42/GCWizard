@@ -4,7 +4,7 @@ class _GCWCoordsMercator extends StatefulWidget {
   final Function onChanged;
   final BaseCoordinates coordinates;
 
-  const _GCWCoordsMercator({Key key, this.onChanged, this.coordinates}) : super(key: key);
+  const _GCWCoordsMercator({Key? key, this.onChanged, this.coordinates}) : super(key: key);
 
   @override
   _GCWCoordsMercatorState createState() => _GCWCoordsMercatorState();

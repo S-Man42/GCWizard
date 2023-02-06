@@ -12,7 +12,7 @@ class GCWABCSpinner extends StatefulWidget {
   final String title;
 
   const GCWABCSpinner(
-      {Key key,
+      {Key? key,
       this.value: 1,
       this.onChanged,
       this.layout: SpinnerLayout.HORIZONTAL,

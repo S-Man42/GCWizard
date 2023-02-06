@@ -11,7 +11,7 @@ const MDT_ROMANNUMBERS_OPTION_MODE_SUBTRACTION = 'multidecoder_tool_romannumbers
 const MDT_ROMANNUMBERS_OPTION_MODE_ADDITION = 'multidecoder_tool_romannumbers_option_mode_onlyaddition';
 
 class MultiDecoderToolRomanNumbers extends AbstractMultiDecoderTool {
-  MultiDecoderToolRomanNumbers({Key key, int id, String name, Map<String, dynamic> options, BuildContext context})
+  MultiDecoderToolRomanNumbers({Key? key, int id, String name, Map<String, dynamic> options, BuildContext context})
       : super(
             key: key,
             id: id,

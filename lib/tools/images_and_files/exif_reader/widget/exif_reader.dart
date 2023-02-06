@@ -31,7 +31,7 @@ import 'package:prefs/prefs.dart';
 class ExifReader extends StatefulWidget {
   final local.GCWFile file;
 
-  ExifReader({Key key, this.file}) : super(key: key);
+  ExifReader({Key? key, this.file}) : super(key: key);
 
   @override
   _ExifReaderState createState() => _ExifReaderState();
@@ -185,7 +185,7 @@ class _ExifReaderState extends State<ExifReader> {
     if (_tableTags != null) {
       _tableTags.forEach((section, tags) {
         widgets.add(GCWOutput(
-            title: i18n(context, "exif_section_" + section) ?? section ?? '',
+            title: i18n(context, "exif_section_" + section, ifTranslationNotExists: section ?? ''),
             child: GCWColumnedMultilineOutput(
                 data: tags == null ? [] : tags,
             ),

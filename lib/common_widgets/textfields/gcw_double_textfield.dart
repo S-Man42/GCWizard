@@ -13,7 +13,7 @@ class GCWDoubleTextField extends StatefulWidget {
   final numberDecimalDigits;
 
   const GCWDoubleTextField(
-      {Key key,
+      {Key? key,
       this.onChanged,
       this.controller,
       this.textInputFormatter,

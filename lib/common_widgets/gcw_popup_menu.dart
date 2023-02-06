@@ -134,7 +134,7 @@ iconedGCWPopupMenuItem(BuildContext context, IconData icon, String title,
         ),
         onLongPress: onLongPress,
       ),
-      Text(i18n(context, title) ?? title, style: TextStyle(color: color))
+      Text(i18n(context, title, ifTranslationNotExists: title), style: TextStyle(color: color))
     ],
   );
 }

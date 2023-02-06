@@ -5,7 +5,7 @@ class _GCWCoordsSlippyMap extends StatefulWidget {
   final BaseCoordinates coordinates;
   final double zoom;
 
-  const _GCWCoordsSlippyMap({Key key, this.onChanged, this.coordinates, this.zoom: DefaultSlippyZoom}) : super(key: key);
+  const _GCWCoordsSlippyMap({Key? key, this.onChanged, this.coordinates, this.zoom: DefaultSlippyZoom}) : super(key: key);
 
   @override
   _GCWCoordsSlippyMapState createState() => _GCWCoordsSlippyMapState();

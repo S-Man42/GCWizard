@@ -12,7 +12,7 @@ class GCWDropDown extends StatefulWidget {
   final bool alternativeColor;
 
   const GCWDropDown(
-      {Key key,
+      {Key? key,
       this.value,
       this.items,
       this.onChanged,

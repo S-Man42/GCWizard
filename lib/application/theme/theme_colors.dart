@@ -7,7 +7,7 @@ part 'package:gc_wizard/application/theme/themes/theme_colors_light.dart';
 
 enum ThemeType { DARK, LIGHT }
 
-ThemeColors _themeColors;
+late ThemeColors _themeColors;
 
 abstract class ThemeColors {
   ThemeData base();

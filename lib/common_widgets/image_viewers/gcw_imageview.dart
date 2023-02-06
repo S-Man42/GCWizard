@@ -42,7 +42,7 @@ class GCWImageView extends StatefulWidget {
   final Set<GCWImageViewOpenInTools> suppressOpenInTool;
 
   const GCWImageView(
-      {Key key,
+      {Key? key,
       @required this.imageData,
       this.toolBarRight: true,
       this.extension,
@@ -289,6 +289,6 @@ class _GCWImageViewState extends State<GCWImageView> {
 
     var value = await saveByteDataToFile(context, data, outputFilename);
 
-    if (value != null) showExportedFileDialog(context, fileType: FileType.PNG);
+    if (value) showExportedFileDialog(context, fileType: FileType.PNG);
   }
 }

@@ -26,7 +26,7 @@ class GCWSymbolTableSymbolMatrix extends StatefulWidget {
   final bool fixed;
 
   const GCWSymbolTableSymbolMatrix(
-      {Key key,
+      {Key? key,
       this.imageData,
       this.countColumns,
       this.mediaQueryData,

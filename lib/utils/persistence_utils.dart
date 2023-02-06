@@ -7,5 +7,5 @@ int newID(List<int> existingIDs) {
     if (!existingIDs.contains(i)) return i;
   }
 
-  return null;
+  throw Exception('No id generated');
 }

@@ -128,7 +128,7 @@ class MultiDecoderState extends State<MultiDecoder> {
 
   _toolTitle(AbstractMultiDecoderTool tool) {
     var optionValues = tool.options.values.map((value) {
-      var result = value;
+      String result = value;
 
       if (tool.internalToolName == MDT_INTERNALNAMES_COORDINATEFORMATS) {
         result = getCoordinateFormatByKey(value).name;
@@ -137,7 +137,7 @@ class MultiDecoderState extends State<MultiDecoder> {
         result += '_title';
       }
 
-      return i18n(context, result.toString()) ?? result;
+      return i18n(context, result, ifTranslationNotExists: result);
     }).join(', ');
 
     var result = tool.name;
