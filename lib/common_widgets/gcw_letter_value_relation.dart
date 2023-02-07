@@ -9,14 +9,14 @@ class GCWLetterValueRelation extends StatefulWidget {
   final int minValue;
   final int startValue;
 
-  const GCWLetterValueRelation({Key? key, this.onChanged, this.minValue: 1, this.startValue: 1}) : super(key: key);
+  const GCWLetterValueRelation({Key? key, required this.onChanged, this.minValue: 1, this.startValue: 1}) : super(key: key);
 
   @override
   GCWLetterValueRelationState createState() => GCWLetterValueRelationState();
 }
 
 class GCWLetterValueRelationState extends State<GCWLetterValueRelation> {
-  int _currentKey;
+  late int _currentKey;
   int _currentLetterValue = 1;
 
   @override
