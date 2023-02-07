@@ -10,14 +10,14 @@ import 'package:prefs/prefs.dart';
 
 class GCWDistance extends StatefulWidget {
   final Function onChanged;
-  final String hintText;
-  final double value;
-  final Length unit;
+  final String? hintText;
+  final double? value;
+  final Length? unit;
   final allowNegativeValues;
   final controller;
 
   const GCWDistance(
-      {Key? key, this.onChanged, this.hintText, this.value, this.unit, this.allowNegativeValues: false, this.controller})
+      {Key? key, required this.onChanged, this.hintText, this.value, this.unit, this.allowNegativeValues: false, this.controller})
       : super(key: key);
 
   @override
@@ -28,21 +28,21 @@ class _GCWDistanceState extends State<GCWDistance> {
   var _controller;
 
   var _currentInput = {'text': '', 'value': 0.0};
-  Length _currentLengthUnit;
+  late Length _currentLengthUnit;
 
   @override
   void initState() {
     super.initState();
 
-    if (widget.value != null) _currentInput = {'text': widget.value.toString(), 'value': widget.value};
+    if (widget.value != null) _currentInput = {'text': widget.value.toString(), 'value': widget.value!};
 
     if (widget.controller != null) {
       _controller = widget.controller;
     } else {
-      _controller = TextEditingController(text: _currentInput['text']);
+      _controller = TextEditingController(text: _currentInput['text'] as String?);
     }
 
-    _currentLengthUnit = widget.unit ?? getUnitBySymbol(allLengths(), Prefs.get(PREFERENCE_DEFAULT_LENGTH_UNIT));
+    _currentLengthUnit = (widget.unit ?? getUnitBySymbol(allLengths(), Prefs.get(PREFERENCE_DEFAULT_LENGTH_UNIT))) as Length;
   }
 
   @override
@@ -89,7 +89,7 @@ class _GCWDistanceState extends State<GCWDistance> {
   _setCurrentValueAndEmitOnChange([setTextFieldText = false]) {
     if (setTextFieldText) _controller.text = _currentInput['value'].toString();
 
-    double _currentValue = _currentInput['value'];
+    double _currentValue = _currentInput['value'] as double;
     var _meters = _currentLengthUnit.toMeter(_currentValue);
     widget.onChanged(_meters);
   }
