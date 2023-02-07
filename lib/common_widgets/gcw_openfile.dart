@@ -31,14 +31,14 @@ class GCWOpenFile extends StatefulWidget {
   final Function onLoaded;
   final List<FileType> supportedFileTypes;
   final bool isDialog;
-  final String title;
-  final GCWFile file;
+  final String? title;
+  final GCWFile? file;
   final suppressHeader;
 
   const GCWOpenFile(
       {Key? key,
-      this.onLoaded,
-      this.supportedFileTypes,
+      required this.onLoaded,
+      required this.supportedFileTypes,
       this.title,
       this.isDialog: false,
       this.file,
@@ -51,13 +51,13 @@ class GCWOpenFile extends StatefulWidget {
 
 class _GCWOpenFileState extends State<GCWOpenFile> {
   var _urlController;
-  String _currentUrl;
-  Uri _currentUri;
+  String? _currentUrl;
+  Uri? _currentUri;
 
   var _currentMode = GCWSwitchPosition.left;
   var _currentExpanded = true;
 
-  GCWFile _loadedFile;
+  GCWFile? _loadedFile;
 
   @override
   void initState() {
@@ -118,7 +118,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
         });
   }
 
-  Future<GCWAsyncExecuterParameters> _buildJobDataDownload() async {
+  Future<GCWAsyncExecuterParameters?> _buildJobDataDownload() async {
     _currentExpanded = true;
     _currentUri = null;
 
@@ -127,7 +127,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
       return null;
     }
 
-    await _getAndValidateUri(_currentUrl.trim()).then((uri) {
+    await _getAndValidateUri(_currentUrl?.trim()).then((uri) {
       if (uri == null) {
         showToast(i18n(context, 'common_loadfile_exception_url'));
         return null;
@@ -179,9 +179,9 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
 
   _saveDownload(dynamic data) {
     _loadedFile = null;
-    if (data is Uint8List) {
+    if (data is Uint8List&& _currentUrl != null) {
       _loadedFile =
-          GCWFile(name: Uri.decodeFull(_currentUrl).split('/').last.split('?').first, path: _currentUrl, bytes: data);
+          GCWFile(name: Uri.decodeFull(_currentUrl!).split('/').last.split('?').first, path: _currentUrl, bytes: data);
     } else if (data is String) showToast(i18n(context, data));
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -218,7 +218,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
             ? content
             : GCWExpandableTextDivider(
                 text:
-                    i18n(context, 'common_loadfile_showopen') + (widget.title != null ? ' (' + widget.title + ')' : ''),
+                    i18n(context, 'common_loadfile_showopen') + (widget.title != null ? ' (' + widget.title! + ')' : ''),
                 expanded: _currentExpanded,
                 onChanged: (value) {
                   setState(() {
@@ -228,12 +228,12 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
                 child: content),
         if (_currentExpanded && _loadedFile != null)
           GCWText(
-            text: i18n(context, 'common_loadfile_currentlyloaded') + ': ' + (_loadedFile.name ?? ''),
+            text: i18n(context, 'common_loadfile_currentlyloaded') + ': ' + (_loadedFile?.name ?? ''),
             style: gcwTextStyle().copyWith(fontSize: fontSizeSmall()),
           ),
         if (!_currentExpanded && _loadedFile != null)
           GCWText(
-            text: i18n(context, 'common_loadfile_loaded') + ': ' + (_loadedFile.name ?? ''),
+            text: i18n(context, 'common_loadfile_loaded') + ': ' + (_loadedFile?.name ?? ''),
           )
       ],
     );
@@ -246,7 +246,8 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
       if (mimeTypes(fileType).contains(contentType)) return true;
     }
 
-    var _urlFileType = fileTypeByFilename(_currentUrl.split('?').first);
+    var _fileName = _currentUrl?.split('?').first;
+    var _urlFileType = _fileName == null ? null : fileTypeByFilename(_fileName);
 
     if (_urlFileType != null && widget.supportedFileTypes.contains(_urlFileType)) {
       return true;
@@ -255,10 +256,11 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
     return false;
   }
 
-  Future<Uri> _getAndValidateUri(String url) async {
+  Future<Uri?> _getAndValidateUri(String? url) async {
     const _HTTP = 'http://';
     const _HTTPS = 'https://';
 
+    if (url == null) return null;
     var prefixes = [_HTTP, _HTTPS];
     if (url.startsWith(_HTTP)) {
       url = url.replaceAll(_HTTP, '');
@@ -272,7 +274,8 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
         var response = await http.head(uri);
 
         if (response.statusCode ~/ 100 == 2) {
-          if (_validateContentType(response.headers[HttpHeaders.contentTypeHeader])) {
+          var contentType = response.headers[HttpHeaders.contentTypeHeader];
+          if ((contentType != null) && _validateContentType(contentType)) {
             return uri;
           } else {
             showToast(i18n(context, 'common_loadfile_exception_supportedfiletype'));
