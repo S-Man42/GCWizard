@@ -13,7 +13,7 @@ enum SpinnerOverflowType {
 }
 
 class GCWIntegerSpinner extends StatefulWidget {
-  final Function onChanged;
+  final void Function(int) onChanged;
   final String? title;
   final int value;
   final int min;
@@ -29,13 +29,13 @@ class GCWIntegerSpinner extends StatefulWidget {
       required this.onChanged,
       this.title,
       required this.value,
-      this.min: -9007199254740991,
-      this.max: 9007199254740992,
+      this.min= -9007199254740991,
+      this.max= 9007199254740992,
       this.leftPadZeros,
       this.controller,
-      this.layout: SpinnerLayout.HORIZONTAL,
+      this.layout= SpinnerLayout.HORIZONTAL,
       this.focusNode,
-      this.overflow:
+      this.overflow=
           SpinnerOverflowType.ALLOW_OVERFLOW // TODO: Automatically true if this.min == null || this.max == null
       })
       : super(key: key);
@@ -57,7 +57,7 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
     if (widget.controller != null) {
       _controller = widget.controller!;
     } else {
-      if (widget.value != null) _currentValue = widget.value;
+      _currentValue = widget.value;
 
       _controller = TextEditingController(text: _currentValue.toString());
     }
@@ -71,11 +71,8 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.value != null) {
-      _currentValue = widget.value;
-
-      if (_externalChange) _controller.text = _currentValue.toString();
-    }
+    _currentValue = widget.value;
+    if (_externalChange) _controller.text = _currentValue.toString();
 
     _externalChange = true;
 
@@ -84,11 +81,10 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
 
   _decreaseValue() {
     setState(() {
-      if (widget.min == null || _currentValue > widget.min || widget.overflow == SpinnerOverflowType.OVERFLOW_MAX) {
+      if (_currentValue > widget.min || widget.overflow == SpinnerOverflowType.OVERFLOW_MAX) {
         _currentValue--;
       } else if ([SpinnerOverflowType.ALLOW_OVERFLOW, SpinnerOverflowType.OVERFLOW_MIN].contains(widget.overflow) &&
-          _currentValue == widget.min &&
-          widget.max != null) {
+          _currentValue == widget.min) {
         _currentValue = widget.max;
       }
 
@@ -98,11 +94,10 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
 
   _increaseValue() {
     setState(() {
-      if (widget.max == null || _currentValue < widget.max || widget.overflow == SpinnerOverflowType.OVERFLOW_MIN) {
+      if (_currentValue < widget.max || widget.overflow == SpinnerOverflowType.OVERFLOW_MIN) {
         _currentValue++;
       } else if ([SpinnerOverflowType.ALLOW_OVERFLOW, SpinnerOverflowType.OVERFLOW_MAX].contains(widget.overflow) &&
-          _currentValue == widget.max &&
-          widget.min != null) {
+          _currentValue == widget.max) {
         _currentValue = widget.min;
       }
 
@@ -171,13 +166,12 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
     }
   }
 
-  _setCurrentValueAndEmitOnChange({setTextFieldText: false}) {
+  _setCurrentValueAndEmitOnChange({setTextFieldText= false}) {
     if (setTextFieldText) {
       var text = _currentValue.toString();
 
-      if (widget.leftPadZeros != null && widget.leftPadZeros! > 0) {
+      if (widget.leftPadZeros != null && widget.leftPadZeros! > 0)
         text = text.padLeft(widget.leftPadZeros!, '0');
-      }
 
       _controller.text = text;
     }
