@@ -315,6 +315,7 @@ Future<dynamic?> _downloadFileAsync(dynamic jobData) async {
   Future<Uint8List>? result;
   SendPort sendAsyncPort = jobData?.sendAsyncPort;
   Uri uri = jobData?.parameters;
+  String? outString;
 
   var request = http.Request("GET", uri);
   var client = http.Client();
@@ -338,15 +339,21 @@ Future<dynamic?> _downloadFileAsync(dynamic jobData) async {
         sendAsyncPort.send({'progress': (_received + value.length) / _total});
       }
       _received += value.length;
-    }),
-    onDone: () {
-      if (_bytes == null || _bytes.isEmpty) return 'common_loadfile_exception_nofile';
-
-      var uint8List = Uint8List.fromList(_bytes);
-      if (sendAsyncPort != null) sendAsyncPort.send(uint8List);
-      result = Future.value(uint8List);
-    });
+    },
+      onDone: () {
+        if (_bytes.isEmpty) {
+          outString = 'common_loadfile_exception_nofile';
+          if (sendAsyncPort != null) sendAsyncPort.send(outString);
+        } else {
+          var uint8List = Uint8List.fromList(_bytes);
+          if (sendAsyncPort != null) sendAsyncPort.send(uint8List);
+          result = Future.value(uint8List);
+        }
+      }
+    );
   });
+
+  if (outString != null) return outString;
 
   await result;
   return result;
