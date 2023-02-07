@@ -6,14 +6,17 @@ class Temperature extends Unit {
   late Function toKelvin;
   late Function fromKelvin;
 
-  Temperature({required String name, required String symbol, bool isReference = false})
-      : super(name, symbol, isReference, toKelvin, fromKelvin) {
-    toKelvin = this.toKelvin;
-    fromKelvin = this.fromKelvin;
-  }
+  Temperature({required String name, required String symbol, bool isReference = false,
+    required this.toKelvin, required this.fromKelvin})
+      : super(name, symbol, isReference, toKelvin, fromKelvin);
 }
 
-final TEMPERATURE_KELVIN = Temperature(name: 'common_unit_temperature_k_name', symbol: 'K', isReference: true);
+final TEMPERATURE_KELVIN = Temperature(
+    name: 'common_unit_temperature_k_name',
+    symbol: 'K',
+    toKelvin: (e) => e,
+    fromKelvin: (e) => e,
+    isReference: true);
 
 final TEMPERATURE_CELSIUS = Temperature(
     name: 'common_unit_temperature_degc_name',
