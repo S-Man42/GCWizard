@@ -23,14 +23,14 @@ Future<Map<String, dynamic>> breakHashAsync(dynamic jobData) async {
       jobData.parameters.hashFunction,
       sendAsyncPort: jobData.sendAsyncPort);
 
-  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }
 
 Map<String, dynamic> breakHash(
     String input, String searchMask, Map<String, String> substitutions, Function hashFunction,
-    {SendPort sendAsyncPort}) {
+    {SendPort? sendAsyncPort}) {
   if (input == null ||
       input.length == 0 ||
       searchMask == null ||

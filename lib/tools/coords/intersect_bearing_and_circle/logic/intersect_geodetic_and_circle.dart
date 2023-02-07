@@ -26,7 +26,7 @@ Future<List<LatLng>> intersectGeodeticAndCircleAsync(dynamic jobData) async {
   var output = intersectGeodeticAndCircle(jobData.parameters.startGeodetic, jobData.parameters.bearingGeodetic,
       jobData.parameters.centerPoint, jobData.parameters.radiusCircle, jobData.parameters.ells);
 
-  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }

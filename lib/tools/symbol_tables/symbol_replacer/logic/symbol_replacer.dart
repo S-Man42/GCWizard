@@ -39,7 +39,7 @@ Future<SymbolReplacerImage> replaceSymbolsAsync(dynamic jobData) async {
       similarityCompareLevel: jobData.parameters.similarityCompareLevel,
       mergeDistance: jobData.parameters.mergeDistance);
 
-  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }
@@ -894,14 +894,14 @@ Future<List<Map<String, SymbolReplacerSymbolData>>> searchSymbolTableAsync(dynam
   var output =
       await searchSymbolTable(jobData.parameters.item1, jobData.parameters.item2, sendAsyncPort: jobData.sendAsyncPort);
 
-  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }
 
 List<Map<String, SymbolReplacerSymbolData>> searchSymbolTable(
     SymbolReplacerImage image, List<List<Map<String, SymbolReplacerSymbolData>>> compareSymbols,
-    {SendPort sendAsyncPort}) {
+    {SendPort? sendAsyncPort}) {
   if (image == null) return null;
   if (compareSymbols == null) return null;
   var progress = 0;

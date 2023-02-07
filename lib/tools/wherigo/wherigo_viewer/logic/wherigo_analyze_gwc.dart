@@ -180,7 +180,7 @@ bool isInvalidCartridge(Uint8List byteList) {
   }
 }
 
-Future<Map<String, dynamic>> getCartridgeGWC(Uint8List byteListGWC, bool offline, {SendPort sendAsyncPort}) async {
+Future<Map<String, dynamic>> getCartridgeGWC(Uint8List byteListGWC, bool offline, {SendPort? sendAsyncPort}) async {
   var out = Map<String, dynamic>();
   List<String> _ResultsGWC = [];
   ANALYSE_RESULT_STATUS _Status = ANALYSE_RESULT_STATUS.OK;
@@ -336,7 +336,7 @@ Future<Map<String, dynamic>> getCartridgeGWC(Uint8List byteListGWC, bool offline
         _CompletionCode = _ASCIIZ.ASCIIZ;
         _offset = _ASCIIZ.offset;
 
-        //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 5}); }
+        // sendAsyncPort?.send({'progress': 5});
 
       } catch (exception) {
         _Status = ANALYSE_RESULT_STATUS.ERROR_GWC;
@@ -355,7 +355,7 @@ Future<Map<String, dynamic>> getCartridgeGWC(Uint8List byteListGWC, bool offline
             0, 0, Uint8List.sublistView(byteListGWC, _offset, _offset + _MediaFileLength), _MediaFileLength));
         _offset = _offset + _MediaFileLength;
 
-        //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 7}); }
+        //sendAsyncPort?.send({'progress': 7});
       } catch (exception) {
         _Status = ANALYSE_RESULT_STATUS.ERROR_GWC;
         _ResultsGWC.add('wherigo_error_runtime');

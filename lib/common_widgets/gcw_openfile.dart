@@ -313,18 +313,18 @@ Future<dynamic?> _downloadFileAsync(dynamic jobData) async {
   int _received = 0;
   List<int> _bytes = [];
   Future<Uint8List>? result;
-  SendPort sendAsyncPort = jobData?.sendAsyncPort;
+  SendPort? sendAsyncPort = jobData?.sendAsyncPort;
   Uri uri = jobData?.parameters;
   String? outString;
 
   var request = http.Request("GET", uri);
   var client = http.Client();
   await client.send(request).timeout(Duration(seconds: 10), onTimeout: () {
-    if (sendAsyncPort != null) sendAsyncPort.send(null);
+    sendAsyncPort?.send(null);
     return Future.value(null); //http.Response('Error', 500);
   }).then((http.StreamedResponse response) async {
     if (response.statusCode != 200) {
-      if (sendAsyncPort != null) sendAsyncPort.send('common_loadfile_exception_responsestatus');
+      sendAsyncPort?.send('common_loadfile_exception_responsestatus');
       return 'common_loadfile_exception_responsestatus';
     }
     _total = response.contentLength ?? 0;
@@ -336,17 +336,17 @@ Future<dynamic?> _downloadFileAsync(dynamic jobData) async {
       if (_total != 0 &&
           sendAsyncPort != null &&
           (_received % progressStep > (_received + value.length) % progressStep)) {
-        sendAsyncPort.send({'progress': (_received + value.length) / _total});
+        sendAsyncPort?.send({'progress': (_received + value.length) / _total});
       }
       _received += value.length;
     },
       onDone: () {
         if (_bytes.isEmpty) {
           outString = 'common_loadfile_exception_nofile';
-          if (sendAsyncPort != null) sendAsyncPort.send(outString);
+          sendAsyncPort?.send(outString);
         } else {
           var uint8List = Uint8List.fromList(_bytes);
-          if (sendAsyncPort != null) sendAsyncPort.send(uint8List);
+          sendAsyncPort?.send(uint8List);
           result = Future.value(uint8List);
         }
       }
