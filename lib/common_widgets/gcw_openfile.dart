@@ -78,7 +78,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
       text: i18n(context, 'common_loadfile_open'),
       onPressed: () {
         _currentExpanded = true;
-        _openFileExplorer(allowedFileTypes: widget.supportedFileTypes).then((GCWFile file) {
+        _openFileExplorer(allowedFileTypes: widget.supportedFileTypes)?.then((GCWFile? file) {
           if (file != null && file.bytes != null) {
             setState(() {
               _loadedFile = file;
@@ -179,7 +179,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
 
   _saveDownload(dynamic data) {
     _loadedFile = null;
-    if (data is Uint8List&& _currentUrl != null) {
+    if (data is Uint8List && _currentUrl != null) {
       _loadedFile =
           GCWFile(name: Uri.decodeFull(_currentUrl!).split('/').last.split('?').first, path: _currentUrl, bytes: data);
     } else if (data is String) showToast(i18n(context, data));
@@ -308,11 +308,11 @@ showOpenFileDialog(BuildContext context, List<FileType> supportedFileTypes, Func
       []);
 }
 
-Future<dynamic> _downloadFileAsync(dynamic jobData) async {
+Future<dynamic?> _downloadFileAsync(dynamic jobData) async {
   int _total = 0;
   int _received = 0;
   List<int> _bytes = [];
-  Future<Uint8List> result;
+  Future<Uint8List>? result;
   SendPort sendAsyncPort = jobData?.sendAsyncPort;
   Uri uri = jobData?.parameters;
 
@@ -320,7 +320,7 @@ Future<dynamic> _downloadFileAsync(dynamic jobData) async {
   var client = http.Client();
   await client.send(request).timeout(Duration(seconds: 10), onTimeout: () {
     if (sendAsyncPort != null) sendAsyncPort.send(null);
-    return null; //http.Response('Error', 500);
+    return Future.value(null); //http.Response('Error', 500);
   }).then((http.StreamedResponse response) async {
     if (response.statusCode != 200) {
       if (sendAsyncPort != null) sendAsyncPort.send('common_loadfile_exception_responsestatus');
@@ -338,7 +338,8 @@ Future<dynamic> _downloadFileAsync(dynamic jobData) async {
         sendAsyncPort.send({'progress': (_received + value.length) / _total});
       }
       _received += value.length;
-    }).onDone(() {
+    }),
+    onDone: () {
       if (_bytes == null || _bytes.isEmpty) return 'common_loadfile_exception_nofile';
 
       var uint8List = Uint8List.fromList(_bytes);
@@ -356,18 +357,18 @@ Future<dynamic> _downloadFileAsync(dynamic jobData) async {
 /// Returns null if nothing was selected.
 ///
 /// * [allowedFileTypes] specifies a list of file extensions that will be displayed for selection, if empty - files with any extension are displayed. Example: `['jpg', 'jpeg']`
-Future<GCWFile> _openFileExplorer({List<FileType> allowedFileTypes}) async {
+Future<GCWFile?> _openFileExplorer({required List<FileType> allowedFileTypes}) async {
   try {
-    if (_hasUnsupportedTypes(allowedFileTypes)) allowedFileTypes = null;
+    if (_hasUnsupportedTypes(allowedFileTypes)) allowedFileTypes = [];
 
     var files = (await filePicker.FilePicker.platform.pickFiles(
-        type: allowedFileTypes == null ? filePicker.FileType.any : filePicker.FileType.custom,
+        type: allowedFileTypes.isEmpty ? filePicker.FileType.any : filePicker.FileType.custom,
         allowMultiple: false,
         allowedExtensions:
-        allowedFileTypes == null ? null : allowedFileTypes.map((type) => fileExtension(type)).toList()))
+        allowedFileTypes.isEmpty ? null : allowedFileTypes.map((type) => fileExtension(type)).toList()))
         ?.files;
 
-    if (allowedFileTypes == null) files = _filterFiles(files, allowedFileTypes);
+    if (allowedFileTypes.isEmpty && files != null) files = _filterFiles(files, allowedFileTypes);
 
     if (files == null || files.length == 0) return null;
 
@@ -382,7 +383,7 @@ Future<GCWFile> _openFileExplorer({List<FileType> allowedFileTypes}) async {
 }
 
 Future<Uint8List> _getFileData(filePicker.PlatformFile file) async {
-  return kIsWeb ? Future.value(file.bytes) : readByteDataFromFile(file.path);
+  return kIsWeb ? Future.value(file.bytes) : (file.path == null) ? Future.value(null) : readByteDataFromFile(file.path!);
 }
 
 List<filePicker.PlatformFile> _filterFiles(List<filePicker.PlatformFile> files, List<FileType> allowedFileTypes) {
