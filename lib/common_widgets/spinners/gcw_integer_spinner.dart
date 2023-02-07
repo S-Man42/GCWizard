@@ -14,21 +14,21 @@ enum SpinnerOverflowType {
 
 class GCWIntegerSpinner extends StatefulWidget {
   final Function onChanged;
-  final title;
+  final String? title;
   final int value;
   final int min;
   final int max;
-  final int leftPadZeros;
-  final controller;
+  final int? leftPadZeros;
+  final TextEditingController? controller;
   final SpinnerLayout layout;
-  final FocusNode focusNode;
+  final FocusNode? focusNode;
   final SpinnerOverflowType overflow;
 
   const GCWIntegerSpinner(
       {Key? key,
-      this.onChanged,
+      required this.onChanged,
       this.title,
-      this.value,
+      required this.value,
       this.min: -9007199254740991,
       this.max: 9007199254740992,
       this.leftPadZeros,
@@ -45,7 +45,7 @@ class GCWIntegerSpinner extends StatefulWidget {
 }
 
 class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
-  TextEditingController _controller;
+  late TextEditingController _controller;
   var _currentValue = 0;
 
   var _externalChange = true;
@@ -55,7 +55,7 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
     super.initState();
 
     if (widget.controller != null) {
-      _controller = widget.controller;
+      _controller = widget.controller!;
     } else {
       if (widget.value != null) _currentValue = widget.value;
 
@@ -111,7 +111,7 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
   }
 
   Widget _buildTitle() {
-    return widget.title == null ? Container() : Expanded(child: GCWText(text: widget.title + ':'), flex: 1);
+    return (widget.title == null) ? Container() : Expanded(child: GCWText(text: widget.title! + ':'), flex: 1);
   }
 
   Widget _buildTextField() {
@@ -175,8 +175,8 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
     if (setTextFieldText) {
       var text = _currentValue.toString();
 
-      if (widget.leftPadZeros != null && widget.leftPadZeros > 0) {
-        text = text.padLeft(widget.leftPadZeros, '0');
+      if (widget.leftPadZeros != null && widget.leftPadZeros! > 0) {
+        text = text.padLeft(widget.leftPadZeros!, '0');
       }
 
       _controller.text = text;
