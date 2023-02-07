@@ -4,14 +4,13 @@ import 'package:gc_wizard/common_widgets/dividers/gcw_divider.dart';
 
 class GCWTextDivider extends StatefulWidget {
   final String text;
-  final Widget trailing;
-  final bottom;
-  final TextStyle style;
-  final bool suppressTopSpace;
-  final bool suppressBottomSpace;
+  final Widget? trailing;
+  final TextStyle? style;
+  final bool? suppressTopSpace;
+  final bool? suppressBottomSpace;
 
   const GCWTextDivider(
-      {Key? key, this.text: '', this.trailing, this.bottom, this.style, this.suppressTopSpace, this.suppressBottomSpace})
+      {Key? key, this.text: '', this.trailing, this.style, this.suppressTopSpace, this.suppressBottomSpace})
       : super(key: key);
 
   @override

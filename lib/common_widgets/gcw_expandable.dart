@@ -4,9 +4,9 @@ import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 
 class GCWExpandableTextDivider extends StatefulWidget {
   final String text;
-  final TextStyle style;
+  final TextStyle? style;
   final bool expanded;
-  final Widget child;
+  final Widget? child;
   final Function onChanged;
   final suppressBottomSpace;
   final suppressTopSpace;
@@ -17,7 +17,7 @@ class GCWExpandableTextDivider extends StatefulWidget {
       this.expanded: true,
       this.style,
       this.child,
-      this.onChanged,
+      required this.onChanged,
       this.suppressBottomSpace,
       this.suppressTopSpace: true})
       : super(key: key);
@@ -49,7 +49,6 @@ class _GCWExpandableTextDividerState extends State<GCWExpandableTextDivider> {
             suppressTopSpace: widget.suppressTopSpace,
             suppressBottomSpace: widget.suppressBottomSpace,
             style: widget.style,
-            bottom: 0.0,
             trailing: GCWIconButton(
               icon: _currentExpanded ? Icons.arrow_drop_up : Icons.arrow_drop_down,
               size: IconButtonSize.TINY,
