@@ -83,8 +83,8 @@ final TIMEZONES = [
 
 class GCWDateTimePicker extends StatefulWidget {
   final Function onChanged;
-  final DateTime datetime;
-  final Duration duration;
+  final DateTime? datetime;
+  final Duration? duration;
   final Set<DateTimePickerConfig> config;
   final Duration timezoneOffset;
   final int minDays;
@@ -92,20 +92,20 @@ class GCWDateTimePicker extends StatefulWidget {
   final int maxHours;
   final double maxSeconds;
 
-  final TextEditingController yearController;
-  final TextEditingController monthController;
-  final TextEditingController dayController;
-  final TextEditingController hoursController;
-  final TextEditingController minutesController;
-  final TextEditingController secondsController;
-  final TextEditingController mSecondsController;
+  final TextEditingController? yearController;
+  final TextEditingController? monthController;
+  final TextEditingController? dayController;
+  final TextEditingController? hoursController;
+  final TextEditingController? minutesController;
+  final TextEditingController? secondsController;
+  final TextEditingController? mSecondsController;
 
   const GCWDateTimePicker({
-    Key key,
-    this.onChanged,
+    Key? key,
+    required this.onChanged,
     this.datetime,
     this.duration,
-    this.config,
+    required this.config,
     this.timezoneOffset: const Duration(hours: 0),
     this.minDays: 1,
     this.maxDays: 31,
@@ -136,12 +136,12 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
   var _currentTimezoneOffset = 0;
   var _currentTimezoneOffsetIndex;
 
-  var _monthFocusNode;
-  var _dayFocusNode;
-  var _hourFocusNode;
-  var _minuteFocusNode;
-  var _secondFocusNode;
-  var _msecondFocusNode;
+  late FocusNode _monthFocusNode;
+  late FocusNode _dayFocusNode;
+  late FocusNode _hourFocusNode;
+  late FocusNode _minuteFocusNode;
+  late FocusNode _secondFocusNode;
+  late FocusNode _msecondFocusNode;
 
   @override
   void initState() {
@@ -200,7 +200,7 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
     if (widget.config.contains(DateTimePickerConfig.TIME)) {
       if (widget.duration != null) {
         // update with new values (paste, ..)
-        if (_currentSign != (widget.duration.isNegative ? -1 : 1)) _currentSign = widget.duration.isNegative ? -1 : 1;
+        if (_currentSign != (widget.duration?.isNegative ? -1 : 1)) _currentSign = widget.duration?.isNegative ? -1 : 1;
         if (_currentHour != widget.duration.inHours.abs()) _currentHour = widget.duration.inHours.abs().remainder(24);
         if (_currentMinute != widget.duration.inMinutes.abs().remainder(60))
           _currentMinute = widget.duration.inMinutes.abs().remainder(60);
@@ -210,19 +210,17 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
           _currentMilliSecond = _durationMilliseconds(widget.duration);
       } else if (widget.datetime != null) {
         // update with new values (paste, ..)
-        if (_currentHour != widget.datetime.hour) _currentHour = widget.datetime.hour;
-        if (_currentMinute == widget.datetime.minute) _currentMinute = widget.datetime.minute;
-        if (_currentSecond == widget.datetime.second) _currentSecond = widget.datetime.second;
-        if (_currentMilliSecond == widget.datetime.millisecond) _currentMilliSecond = widget.datetime.millisecond;
+        if (_currentHour != widget.datetime?.hour) _currentHour = widget.datetime.hour!;
+        if (_currentMinute == widget.datetime?.minute) _currentMinute = widget.datetime.minute;
+        if (_currentSecond == widget.datetime?.second) _currentSecond = widget.datetime.second;
+        if (_currentMilliSecond == widget.datetime?.millisecond) _currentMilliSecond = widget.datetime.millisecond!;
       }
     } else if (widget.config.contains(DateTimePickerConfig.DATE)) {
       if (widget.datetime != null) {
         // update with new values (paste, ..)
-        if (_currentYear != widget.datetime.year) _currentYear = widget.datetime.year;
-        if (_currentMonth != widget.datetime.month) _currentMonth = widget.datetime.month;
-        if (_currentDay != widget.datetime.day) {
-          _currentDay = widget.datetime.day;
-        }
+        if (_currentYear != widget.datetime?.year) _currentYear = widget.datetime.year;
+        if (_currentMonth != widget.datetime?.month) _currentMonth = widget.datetime.month;
+        if (_currentDay != widget.datetime?.day) _currentDay = widget.datetime.day!;
       }
     }
 
