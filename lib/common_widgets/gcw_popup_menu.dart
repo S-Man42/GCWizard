@@ -134,7 +134,7 @@ iconedGCWPopupMenuItem(BuildContext context, IconData icon, String title,
           ),
           padding: EdgeInsets.only(right: 10),
         ),
-        onLongPress: onLongPress,
+        onLongPress: () => onLongPress,
       ),
       Text(i18n(context, title, ifTranslationNotExists: title), style: TextStyle(color: color))
     ],
