@@ -42,8 +42,8 @@ class GCWKeyValueEditor extends StatefulWidget {
   final Function onNewEntryChanged;
   final String keyHintText;
   final TextEditingController keyController;
-  final List<TextInputFormatter> keyInputFormatters;
-  final List<TextInputFormatter> valueInputFormatters;
+  final List<TextInputFormatter>? keyInputFormatters;
+  final List<TextInputFormatter>? valueInputFormatters;
   final String valueHintText;
   final int valueFlex;
   final Function onAddEntry;
@@ -64,12 +64,12 @@ class GCWKeyValueEditor extends StatefulWidget {
   final Function onRemoveEntry;
 
   const GCWKeyValueEditor({
-    Key key,
+    Key? key,
     this.keyHintText,
     this.keyController,
     this.keyInputFormatters,
     this.onNewEntryChanged,
-    this.valueHintText,
+    required this.valueHintText,
     this.valueInputFormatters,
     this.valueFlex,
     this.onAddEntry,

@@ -7,15 +7,15 @@ import 'package:gc_wizard/common_widgets/gcw_textselectioncontrols.dart';
 import 'package:gc_wizard/common_widgets/text_input_formatters/wrapper_for_masktextinputformatter.dart';
 
 class GCWTextField extends StatefulWidget {
-  final TextEditingController controller;
-  final Function onChanged;
-  final Function validate;
-  final List<TextInputFormatter> inputFormatters;
-  final TextInputType keyboardType;
+  final TextEditingController? controller;
+  final void Function(String) onChanged;
+  final String? Function(String?)? validate;
+  final List<TextInputFormatter>? inputFormatters;
+  final TextInputType? keyboardType;
   final hintText;
   final hintColor;
   final labelText;
-  final FocusNode focusNode;
+  final FocusNode? focusNode;
   final autofocus;
   final icon;
   final filled;
@@ -23,11 +23,11 @@ class GCWTextField extends StatefulWidget {
   final maxLines;
   final fontSize;
   final String title;
-  final TextStyle style;
+  final TextStyle? style;
 
   const GCWTextField({
-    Key key,
-    this.onChanged,
+    Key? key,
+    required this.onChanged,
     this.controller,
     this.validate,
     this.inputFormatters,
@@ -41,7 +41,7 @@ class GCWTextField extends StatefulWidget {
     this.filled: false,
     this.maxLength,
     this.maxLines,
-    this.title,
+    this.title: '',
     this.fontSize,
     this.style,
   }) : super(key: key);
@@ -51,7 +51,7 @@ class GCWTextField extends StatefulWidget {
 }
 
 class _GCWTextFieldState extends State<GCWTextField> {
-  TextEditingController _controller;
+  late TextEditingController _controller;
 
   @override
   void initState() {
@@ -59,8 +59,8 @@ class _GCWTextFieldState extends State<GCWTextField> {
 
     if (widget.focusNode != null && widget.controller != null) {
       widget.focusNode?.addListener(() {
-        if (widget.focusNode?.hasFocus) {
-          widget?.controller?.selection = TextSelection(baseOffset: 0, extentOffset: widget?.controller?.text.length);
+        if (widget.focusNode?.hasFocus == true) {
+          widget?.controller?.selection = TextSelection(baseOffset: 0, extentOffset: widget?.controller?.text.length ?? 0);
         }
       });
     }
@@ -98,14 +98,14 @@ class _GCWTextFieldState extends State<GCWTextField> {
                           padding: EdgeInsets.only(right: 5, top: 5, bottom: 5),
                         ),
                         onTap: () {
-                          if (widget.controller != null) widget.controller.clear();
+                          if (widget.controller != null) widget.controller?.clear();
 
                           _controller.clear();
 
                           if (widget.onChanged != null) widget.onChanged('');
 
                           if (widget.inputFormatters != null) {
-                            widget.inputFormatters.forEach((formatter) {
+                            widget.inputFormatters?.forEach((formatter) {
                               if (formatter is WrapperForMaskTextInputFormatter) {
                                 formatter.clear();
                               }
