@@ -3,24 +3,24 @@ import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 
 class GCWCheckBox extends StatefulWidget {
-  final Function onChanged;
+  final Function<bool?>? onChanged;
   final String title;
-  final value;
+  final bool value;
   final bool notitle;
   final bool tristate;
-  final TextStyle textStyle;
-  final Color activeColor;
-  final MaterialStateProperty<Color> fillColor;
-  final Color checkColor;
-  final Color focusColor;
-  final Color hoverColor;
-  final MaterialStateProperty<Color> overlayColor;
+  final TextStyle? textStyle;
+  final Color? activeColor;
+  final MaterialStateProperty<Color>? fillColor;
+  final Color? checkColor;
+  final Color? focusColor;
+  final Color? hoverColor;
+  final MaterialStateProperty<Color>? overlayColor;
 
   const GCWCheckBox(
       {Key? key,
-      this.value,
-      this.onChanged,
-      this.title,
+      required this.value,
+      required this.onChanged,
+      required this.title,
       this.notitle: false,
       this.tristate = false,
       this.textStyle,
