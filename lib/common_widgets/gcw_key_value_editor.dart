@@ -40,7 +40,7 @@ import 'package:gc_wizard/utils/variable_string_expander.dart';
 
 class GCWKeyValueEditor extends StatefulWidget {
   final Function onNewEntryChanged;
-  final String keyHintText;
+  final String? keyHintText;
   final TextEditingController keyController;
   final List<TextInputFormatter>? keyInputFormatters;
   final List<TextInputFormatter>? valueInputFormatters;

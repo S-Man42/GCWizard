@@ -12,16 +12,16 @@ class GCWTextField extends StatefulWidget {
   final String? Function(String?)? validate;
   final List<TextInputFormatter>? inputFormatters;
   final TextInputType? keyboardType;
-  final hintText;
-  final hintColor;
-  final labelText;
+  final String? hintText;
+  final Color? hintColor;
+  final String? labelText;
   final FocusNode? focusNode;
-  final autofocus;
-  final icon;
-  final filled;
-  final maxLength;
-  final maxLines;
-  final fontSize;
+  final bool? autofocus;
+  final Widget? icon;
+  final bool? filled;
+  final int? maxLength;
+  final int? maxLines;
+  final double? fontSize;
   final String title;
   final TextStyle? style;
 
@@ -80,7 +80,7 @@ class _GCWTextFieldState extends State<GCWTextField> {
                 hintText: widget.hintText,
                 hintStyle: gcwTextStyle().copyWith(color: widget.hintColor ?? themeColors().textFieldHintText()),
                 labelText: widget.labelText,
-                fillColor: widget.filled ? colors.textFieldFill() : null,
+                fillColor: widget.filled == true ? colors.textFieldFill() : null,
                 filled: widget.filled,
                 prefixIcon: widget.icon,
                 isDense: true,
@@ -127,7 +127,7 @@ class _GCWTextFieldState extends State<GCWTextField> {
                 ? widget.style
                 : TextStyle(
                     fontSize: widget.fontSize ?? defaultFontSize(),
-                    color: widget.filled ? colors.textFieldFillText() : colors.mainFont()),
+                    color: widget.filled == true ? colors.textFieldFillText() : colors.mainFont()),
             maxLengthEnforcement: MaxLengthEnforcement.enforced,
             maxLength: widget.maxLength,
             selectionControls: GCWTextSelectionControls(),
