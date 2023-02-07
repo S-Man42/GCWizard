@@ -1,21 +1,21 @@
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
 
 class Mass extends Unit {
-  Function toGram;
-  Function fromGram;
+  late Function toGram;
+  late Function fromGram;
 
   Mass({
-    String name,
-    String symbol,
-    bool isReference: false,
-    double inGram: 1.0,
+    required String name,
+    required String symbol,
+    bool isReference = false,
+    required double inGram,
   }) : super(name, symbol, isReference, (e) => e * inGram, (e) => e / inGram) {
     toGram = this.toReference;
     fromGram = this.fromReference;
   }
 }
 
-final MASS_GRAM = Mass(name: 'common_unit_mass_g_name', symbol: 'g', isReference: true);
+final MASS_GRAM = Mass(name: 'common_unit_mass_g_name', symbol: 'g', inGram: 1.0, isReference: true);
 
 final MASS_TON = Mass(name: 'common_unit_mass_t_name', symbol: 't', inGram: 1000.0 * 1000.0);
 

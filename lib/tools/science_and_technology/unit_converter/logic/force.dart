@@ -1,10 +1,10 @@
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
 
 class Force extends Unit {
-  Function toNewton;
-  Function fromNewton;
+  late Function toNewton;
+  late Function fromNewton;
 
-  Force({String name, String symbol, bool isReference: false, double inNewton})
+  Force({required String name, required String symbol, bool isReference: false, required double inNewton})
       : super(name, symbol, isReference, (e) => e * inNewton, (e) => e / inNewton) {
     toNewton = this.toReference;
     fromNewton = this.fromReference;
@@ -14,6 +14,7 @@ class Force extends Unit {
 final FORCE_NEWTON = Force(
   name: 'common_unit_force_n_name',
   symbol: 'N',
+  inNewton: 1.0,
   isReference: true,
 );
 

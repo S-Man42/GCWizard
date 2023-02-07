@@ -1,17 +1,17 @@
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
 
 class Velocity extends Unit {
-  Function toMS;
-  Function fromMS;
+  late Function toMS;
+  late Function fromMS;
 
-  Velocity({String name, String symbol, bool isReference: false, double inMS})
+  Velocity({required String name, required String symbol, bool isReference = false, required double inMS})
       : super(name, symbol, isReference, (e) => e * inMS, (e) => e / inMS) {
     toMS = this.toReference;
     fromMS = this.fromReference;
   }
 }
 
-final VELOCITY_MS = Velocity(name: 'common_unit_velocity_ms_name', symbol: 'm/s', isReference: true);
+final VELOCITY_MS = Velocity(name: 'common_unit_velocity_ms_name', symbol: 'm/s', isReference: true, inMS: 1.0);
 
 final VELOCITY_KMH = Velocity(name: 'common_unit_velocity_kmh_name', symbol: 'km/h', inMS: 1.0 / 3.6);
 

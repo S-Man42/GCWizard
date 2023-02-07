@@ -3,11 +3,14 @@ import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit
 //https://de.wikipedia.org/wiki/Newtonskala
 
 class Temperature extends Unit {
-  final Function toKelvin;
-  final Function fromKelvin;
+  late Function toKelvin;
+  late Function fromKelvin;
 
-  Temperature({String name, String symbol, bool isReference: false, this.toKelvin, this.fromKelvin})
-      : super(name, symbol, isReference, toKelvin, fromKelvin);
+  Temperature({required String name, required String symbol, bool isReference = false})
+      : super(name, symbol, isReference, toKelvin, fromKelvin) {
+    toKelvin = this.toKelvin;
+    fromKelvin = this.fromKelvin;
+  }
 }
 
 final TEMPERATURE_KELVIN = Temperature(name: 'common_unit_temperature_k_name', symbol: 'K', isReference: true);
