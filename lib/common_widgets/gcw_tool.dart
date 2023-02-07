@@ -116,15 +116,15 @@ class GCWTool extends StatefulWidget {
       this.toolName,
       this.defaultLanguageToolName,
       required this.i18nPrefix,
-      this.categories: const [],
-      this.autoScroll: true,
-      this.suppressToolMargin: false,
+      this.categories = const [],
+      this.autoScroll = true,
+      this.suppressToolMargin= false,
       this.iconPath,
-      this.searchKeys: const [],
-      this.buttonList: const [],
-      this.helpSearchString: '',
-      this.isBeta: false,
-      this.suppressHelpButton: false})
+      this.searchKeys = const [],
+      this.buttonList = const [],
+      this.helpSearchString = '',
+      this.isBeta = false,
+      this.suppressHelpButton = false})
       : super(key: key) {
     this.id = className(tool) + '_' + (i18nPrefix ?? '');
 
@@ -173,8 +173,6 @@ class _GCWToolState extends State<GCWTool> {
   }
 
   String _normalizeSearchString(String text) {
-    if (text == null) return '';
-
     text = text.trim().toLowerCase();
     text = text
         .replaceAll(RegExp(r"['`´]"), ' ')
@@ -193,8 +191,7 @@ class _GCWToolState extends State<GCWTool> {
   }
 
   bool _needsDefaultHelp(Locale appLocale) {
-    return !isLocaleSupported(appLocale) ||
-        (SUPPORTED_HELPLOCALES == null || !SUPPORTED_HELPLOCALES.contains(appLocale.languageCode));
+    return !isLocaleSupported(appLocale) || (!SUPPORTED_HELPLOCALES.contains(appLocale.languageCode));
   }
 
   Widget? _buildHelpButton() {
@@ -242,7 +239,7 @@ class _GCWToolState extends State<GCWTool> {
         url = i18n(context, 'common_error_url'); // https://blog.gcwizard.net/manual/uncategorized/404/
       else
         url = button.url;
-      if (button.url != null && button.url.length != 0)
+      if (button.url.length != 0)
         buttonList.add(IconButton(
           icon: Icon(button.icon),
           onPressed: () {
@@ -315,9 +312,8 @@ int _sortToolListAlphabetically(GCWTool a, GCWTool b) {
 }
 
 int sortToolList(GCWTool a, GCWTool b) {
-  if (Prefs.getBool(PREFERENCE_TOOL_COUNT_SORT) != null && !Prefs.getBool(PREFERENCE_TOOL_COUNT_SORT)) {
+  if (!Prefs.getBool(PREFERENCE_TOOL_COUNT_SORT))
     return _sortToolListAlphabetically(a, b);
-  }
 
   Map<String, int> toolCounts = Map<String, int>.from(jsonDecode(Prefs.get(PREFERENCE_TOOL_COUNT)));
 

@@ -83,7 +83,7 @@ class _GCWToolListState extends State<GCWToolList> {
       },
       leading: tool.icon,
       trailing: IconButton(
-        icon: tool.isFavorite ?? false ? Icon(Icons.star) : Icon(Icons.star_border),
+        icon: tool.isFavorite ? Icon(Icons.star) : Icon(Icons.star_border),
         color: themeColors().mainFont(),
         onPressed: () {
           if (tool.isFavorite) {

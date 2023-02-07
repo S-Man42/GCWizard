@@ -19,14 +19,14 @@ class GCWTextViewer extends StatefulWidget {
 class GCWTextViewerState extends State<GCWTextViewer> {
   @override
   Widget build(BuildContext context) {
-    var text = widget.text ?? '';
+    var text = widget.text;
 
     return Column(
       children: [
         GCWButton(
           text: i18n(context, 'common_copy'),
           onPressed: () {
-            if (widget.text == null || widget.text.isEmpty) return;
+            if (widget.text.isEmpty) return;
 
             insertIntoGCWClipboard(context, widget.text);
           },
@@ -48,7 +48,7 @@ openInTextViewer(BuildContext context, String text) {
       context,
       NoAnimationMaterialPageRoute(
           builder: (context) => GCWTool(
-                tool: GCWTextViewer(text: text ?? ''),
+                tool: GCWTextViewer(text: text),
                 toolName: i18n(context, 'textviewer_title'),
                 i18nPrefix: '',
                 suppressHelpButton: true,

@@ -23,13 +23,13 @@ class GCWPopupMenu extends StatefulWidget {
     Key? key,
     required this.menuItemBuilder,
     required this.iconData,
-    this.customIcon: null,
+    this.customIcon,
     this.rotateDegrees,
-    this.size: IconButtonSize.NORMAL,
+    this.size = IconButtonSize.NORMAL,
     this.iconColor,
     this.backgroundColor,
     this.onBeforePressed,
-    this.isTextSelectionToolBarButton: false,
+    this.isTextSelectionToolBarButton = false,
     this.textSelectionToolBarButtonPadding,
     this.textSelectionToolBarButtonLabel,
   }) : super(key: key);
@@ -117,11 +117,11 @@ class GCWPopupMenuItem {
   final void Function()? onLongPress;
   final bool isDivider;
 
-  GCWPopupMenuItem({required this.child, required this.action, this.onLongPress, this.isDivider: false});
+  GCWPopupMenuItem({required this.child, required this.action, this.onLongPress, this.isDivider = false});
 }
 
 iconedGCWPopupMenuItem(BuildContext context, IconData icon, String title,
-    {double rotateDegrees: 0.0, Function? onLongPress}) {
+    {double rotateDegrees = 0.0, Function? onLongPress}) {
   var color = themeColors().dialogText();
 
   return Row(

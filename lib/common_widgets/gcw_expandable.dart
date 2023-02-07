@@ -7,19 +7,19 @@ class GCWExpandableTextDivider extends StatefulWidget {
   final TextStyle? style;
   final bool expanded;
   final Widget? child;
-  final Function onChanged;
+  final void Function (bool) onChanged ;
   final suppressBottomSpace;
   final suppressTopSpace;
 
   const GCWExpandableTextDivider(
       {Key? key,
-      this.text: '',
-      this.expanded: true,
+      this.text = '',
+      this.expanded = true,
       this.style,
       this.child,
       required this.onChanged,
       this.suppressBottomSpace,
-      this.suppressTopSpace: true})
+      this.suppressTopSpace = true})
       : super(key: key);
 
   @override
@@ -27,19 +27,19 @@ class GCWExpandableTextDivider extends StatefulWidget {
 }
 
 class _GCWExpandableTextDividerState extends State<GCWExpandableTextDivider> {
-  var _currentExpanded;
+  bool? _currentExpanded;
 
   _toggleExpand() {
     setState(() {
-      _currentExpanded = !_currentExpanded;
+      _currentExpanded = !_currentExpanded!;
 
-      if (widget.onChanged != null) widget.onChanged(_currentExpanded);
+      widget.onChanged(_currentExpanded!);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_currentExpanded == null || widget.onChanged != null) _currentExpanded = widget.expanded;
+    if (_currentExpanded == null) _currentExpanded = widget.expanded;
 
     return Column(
       children: [
@@ -50,14 +50,14 @@ class _GCWExpandableTextDividerState extends State<GCWExpandableTextDivider> {
             suppressBottomSpace: widget.suppressBottomSpace,
             style: widget.style,
             trailing: GCWIconButton(
-              icon: _currentExpanded ? Icons.arrow_drop_up : Icons.arrow_drop_down,
+              icon: _currentExpanded! ? Icons.arrow_drop_up : Icons.arrow_drop_down,
               size: IconButtonSize.TINY,
               onPressed: () => _toggleExpand(),
             ),
           ),
           onTap: () => _toggleExpand(),
         ),
-        if (_currentExpanded)
+        if (_currentExpanded!)
           Container(
             child: widget.child,
           ),

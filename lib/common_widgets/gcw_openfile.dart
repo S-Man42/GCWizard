@@ -28,7 +28,7 @@ const _UNSUPPORTED_FILEPICKERPLUGIN_TYPES = [FileType.GPX, FileType.GCW];
 final SUPPORTED_IMAGE_TYPES = fileTypesByFileClass(FileClass.IMAGE);
 
 class GCWOpenFile extends StatefulWidget {
-  final Function onLoaded;
+  final void Function (GCWFile?) onLoaded;
   final List<FileType> supportedFileTypes;
   final bool isDialog;
   final String? title;
@@ -40,9 +40,9 @@ class GCWOpenFile extends StatefulWidget {
       required this.onLoaded,
       required this.supportedFileTypes,
       this.title,
-      this.isDialog: false,
+      this.isDialog = false,
       this.file,
-      this.suppressHeader: false})
+      this.suppressHeader = false})
       : super(key: key);
 
   @override
@@ -240,11 +240,8 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
   }
 
   bool _validateContentType(String contentType) {
-    if (widget.supportedFileTypes == null) return true;
-
-    for (FileType fileType in widget.supportedFileTypes) {
+    for (FileType fileType in widget.supportedFileTypes)
       if (mimeTypes(fileType).contains(contentType)) return true;
-    }
 
     var _fileName = _currentUrl?.split('?').first;
     var _urlFileType = _fileName == null ? null : fileTypeByFilename(_fileName);
@@ -308,7 +305,7 @@ showOpenFileDialog(BuildContext context, List<FileType> supportedFileTypes, Func
       []);
 }
 
-Future<dynamic?> _downloadFileAsync(dynamic jobData) async {
+Future<dynamic> _downloadFileAsync(dynamic jobData) async {
   int _total = 0;
   int _received = 0;
   List<int> _bytes = [];
@@ -394,8 +391,6 @@ Future<Uint8List> _getFileData(filePicker.PlatformFile file) async {
 }
 
 List<filePicker.PlatformFile> _filterFiles(List<filePicker.PlatformFile> files, List<FileType> allowedFileTypes) {
-  if (files == null || allowedFileTypes == null) return files;
-
   var allowedExtensions = fileExtensions(allowedFileTypes);
 
   return files.where((element) => allowedExtensions.contains(element.extension)).toList();
@@ -405,9 +400,9 @@ bool _hasUnsupportedTypes(List<FileType> allowedExtensions) {
   if (allowedExtensions == null) return false;
   if (kIsWeb) return false;
 
-  for (int i = 0; i < allowedExtensions.length; i++) {
+  for (int i = 0; i < allowedExtensions.length; i++)
     if (_UNSUPPORTED_FILEPICKERPLUGIN_TYPES.contains(allowedExtensions[i])) return true;
-  }
+
   return false;
 }
 

@@ -20,7 +20,7 @@ class GCWSlider extends StatefulWidget {
       this.onChangeEnd,
       required this.min,
       required this.max,
-      this.suppressReset: false})
+      this.suppressReset = false})
       : super(key: key);
 
   @override
@@ -46,7 +46,7 @@ class _GCWSliderState extends State<GCWSlider> {
         if (widget.title.isNotEmpty) Expanded(child: GCWText(text: widget.title + ':')),
         Expanded(
           child: Slider(
-            value: widget.value ?? _currentValue,
+            value: widget.value,
             min: widget.min,
             max: widget.max,
             onChanged: (value) {

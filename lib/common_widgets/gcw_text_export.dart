@@ -41,13 +41,13 @@ class GCWTextExportState extends State<GCWTextExport> {
   late TextEditingController _textExportController;
   var _currentExportText;
 
-  late Uint8List _qrImageData;
+  Uint8List? _qrImageData;
 
   @override
   void initState() {
     super.initState();
 
-    _currentExportText = widget.text ?? '';
+    _currentExportText = widget.text;
     _currentMode = widget.initMode;
     _textExportController = TextEditingController(text: _currentExportText);
   }
@@ -93,7 +93,7 @@ class GCWTextExportState extends State<GCWTextExport> {
                   )
                 : Container(),
             _currentMode == TextExportMode.QR
-                ? (_qrImageData == null ? Container() : Image.memory(_qrImageData))
+                ? (_qrImageData == null ? Container() : Image.memory(_qrImageData!))
                 : Column(
                     children: <Widget>[
                       GCWTextField(

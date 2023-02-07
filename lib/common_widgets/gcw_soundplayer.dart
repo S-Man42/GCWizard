@@ -180,7 +180,7 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
     setState(() => playerState = PlayerState.paused);
   }
 
-  _audioPlayerPlay({bool seek: false}) async {
+  _audioPlayerPlay({bool seek = false}) async {
     if (kIsWeb) {
       // do nothing - web does not support local filö or byte array
     } else {
