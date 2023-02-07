@@ -1,12 +1,12 @@
 import 'package:flutter/services.dart';
 
 class GCWIntegerTextInputFormatter extends TextInputFormatter {
-  RegExp _exp;
+  late RegExp _exp;
 
   final int min;
-  final int max;
+  final int? max;
 
-  GCWIntegerTextInputFormatter({this.min, this.max}) {
+  GCWIntegerTextInputFormatter({required this.min, this.max}) {
     _exp = new RegExp(_buildRegex());
   }
 
@@ -25,23 +25,23 @@ class GCWIntegerTextInputFormatter extends TextInputFormatter {
     if (min == null) {
       if (max == null)
         regex = '^\-?[0-9]*\$';
-      else if (max < 0) {
-        regex = '^(\-[0-9]{0,${max.abs().toString().length}})?\$';
-      } else if (max >= 0) {
+      else if (max! < 0) {
+        regex = '^(\-[0-9]{0,${max?.abs().toString().length}})?\$';
+      } else if (max! >= 0) {
         regex = '^((-[0-9]*)|([0-9]{0,${max.toString().length}}))\$';
       }
     } else if (min < 0) {
       if (max == null)
         regex = '^((\-[0-9]{0,${min.abs().toString().length}})|([0-9]*))\$';
-      else if (max < 0) {
+      else if (max! < 0) {
         regex = '^(\-[0-9]{0,${min.abs().toString().length}})?\$';
-      } else if (max >= 0) {
+      } else if (max! >= 0) {
         regex = '^((\-[0-9]{0,${min.abs().toString().length}})|([0-9]{0,${max.toString().length}}))\$';
       }
     } else if (min >= 0) {
       if (max == null)
         regex = '^[0-9]*\$';
-      else if (max >= 0) {
+      else if (max! >= 0) {
         regex = '^[0-9]{0,${max.toString().length}}\$';
       }
     }
@@ -65,7 +65,7 @@ class GCWIntegerTextInputFormatter extends TextInputFormatter {
 
     if (min != null && _newInt < min) return false;
 
-    if (max != null && _newInt > max) return false;
+    if (max != null && _newInt > max!) return false;
 
     return true;
   }

@@ -5,17 +5,17 @@ import 'package:gc_wizard/common_widgets/text_input_formatters/gcw_integer_texti
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 
 class GCWIntegerTextField extends StatefulWidget {
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final Function onChanged;
   final textInputFormatter;
-  final hintText;
-  final min;
-  final max;
-  final FocusNode focusNode;
+  final String? hintText;
+  final int? min;
+  final int? max;
+  final FocusNode? focusNode;
 
   const GCWIntegerTextField(
       {Key? key,
-      this.onChanged,
+      required this.onChanged,
       this.controller,
       this.textInputFormatter,
       this.hintText,
@@ -46,9 +46,9 @@ class _GCWIntegerTextFieldState extends State<GCWIntegerTextField> {
         setState(() {
           var _value = ['', '-'].contains(text) ? max<int>(widget.min ?? 0, 0) : int.tryParse(text);
 
-          if (widget.min != null && _value < widget.min) _value = widget.min;
+          if (widget.min != null && _value! < widget.min!) _value = widget.min;
 
-          if (widget.max != null && _value > widget.max) _value = widget.max;
+          if (widget.max != null && _value > widget.max!) _value = widget.max;
 
           widget.onChanged({'text': text, 'value': _value});
         });
