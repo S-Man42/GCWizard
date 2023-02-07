@@ -16,7 +16,7 @@ Future<List<LatLng>> equilateralTriangleAsync(dynamic jobData) async {
 
   var output = equilateralTriangle(jobData.parameters.coord1, jobData.parameters.coord2, jobData.parameters.ells);
 
-  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }

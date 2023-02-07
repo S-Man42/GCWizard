@@ -53,7 +53,7 @@ Future<Map<String, dynamic>> parseVariableLatLonAsync(dynamic jobData) async {
   var output = parseVariableLatLon(jobData.parameters.coordinate, jobData.parameters.substitutions,
       projectionData: jobData.parameters.projectionData);
 
-  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
+  jobData?.sendAsyncPort?.send(output);
 
   return output;
 }

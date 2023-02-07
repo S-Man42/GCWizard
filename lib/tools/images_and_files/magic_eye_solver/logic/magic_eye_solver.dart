@@ -51,7 +51,7 @@ Future<Tuple3<Image.Image, Uint8List, int>> decodeImage(Uint8List image, Image.I
   var outputImage = _createResultImage(imageData, displacement);
   var result = Tuple3<Image.Image, Uint8List, int>(imageData, outputImage, displacement);
 
-  if (sendAsyncPort != null) sendAsyncPort.send(result);
+  sendAsyncPort?.send(result);
 
   return Future.value(result);
 }
@@ -153,14 +153,14 @@ Future<Tuple2<Uint8List, MagicEyeErrorCode>> generateImageAsync(dynamic jobData)
 
   var outputData = _generateImage(hiddenImage, textureImage, textureType);
 
-  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(outputData);
+  jobData.sendAsyncPort?.send(outputData);
 
   return Future.value(outputData);
 }
 
 Tuple2<Uint8List, MagicEyeErrorCode> _generateImage(
     Uint8List hiddenDataImage, Uint8List textureImage, TextureType textureType,
-    {SendPort sendAsyncPort}) {
+    {SendPort? sendAsyncPort}) {
   var bInterpolateDepthmap = true;
   var oversample = 2;
   Image.Image texture;
@@ -232,14 +232,15 @@ Tuple2<Uint8List, MagicEyeErrorCode> _generateImage(
   var generatedLines = 0;
   var _progressStep = max(_rows ~/ 100, 1); // 100 steps
 
-  if (sendAsyncPort != null) sendAsyncPort.send({'progress': 0.0});
+  sendAsyncPort?.send({'progress': 0.0});
 
   _initHoroptic();
 
   for (int y = 0; y < _rows; y++) {
     _doLineHoroptic(y);
 
-    if (sendAsyncPort != null && (generatedLines % _progressStep == 0)) sendAsyncPort.send({'progress': y / _rows});
+    if (sendAsyncPort != null && (generatedLines % _progressStep == 0))
+      sendAsyncPort?.send({'progress': y / _rows});
   }
 
   var bmStereogram = Image.Image.fromBytes(_lineWidth, _rows, _pixels.buffer.asUint8List(),

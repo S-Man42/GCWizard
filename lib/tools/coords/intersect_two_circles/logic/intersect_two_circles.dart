@@ -38,7 +38,7 @@ Future<List<LatLng>> intersectTwoCirclesAsync(dynamic jobData) async {
   var output = intersectTwoCircles(jobData.parameters.coord1, jobData.parameters.radius1, jobData.parameters.coord2,
       jobData.parameters.radius2, jobData.parameters.ells);
 
-  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }

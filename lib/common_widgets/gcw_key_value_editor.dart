@@ -133,7 +133,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
 
   @override
   void dispose() {
-    if (widget.onDispose != null) widget.onDispose(_currentKeyInput, _currentValueInput, context);
+    if (widget.onDispose != null) widget.onDispose!(_currentKeyInput, _currentValueInput, context);
 
     _inputController.dispose();
     if (widget.keyController == null) _keyController.dispose();
@@ -246,7 +246,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
   Widget _alphabetAddLetterButton() {
     return Container(
         child: GCWButton(
-          text: widget.alphabetInstertButtonLabel,
+          text: widget.alphabetInstertButtonLabel ?? '',
           onPressed: () {
             setState(() {
               _addEntry(_currentKeyInput, _currentValueInput);
@@ -259,7 +259,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
   Widget _alphabetAddAndAdjustLetterButton() {
     return Container(
         child: GCWButton(
-          text: widget.alphabetAddAndAdjustLetterButtonLabel,
+          text: widget.alphabetAddAndAdjustLetterButtonLabel ?? '',
           onPressed: () => _isAddAndAdjustEnabled()
               ? () {
                   setState(() {
@@ -302,7 +302,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
   }
 
   bool _isAddAndAdjustEnabled() {
-    if (widget.keyValueMap?.containsKey(_currentKeyInput.toUpperCase())) return false;
+    if (widget.keyValueMap == null || widget.keyValueMap.containsKey(_currentKeyInput.toUpperCase())) return false;
 
     if (_currentValueInput.contains(',')) return false;
 
@@ -315,41 +315,43 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
 
   Widget _buildList() {
     var odd = false;
-    List<Widget> rows;
+    List<Widget>? rows;
     if (widget.formulaValueList != null) {
-      rows = widget.formulaValueList.map((entry) {
+      rows = widget.formulaValueList?.map((entry) {
         odd = !odd;
         return _buildRow(entry, odd);
       }).toList();
     } else {
-      rows = (widget.keyKeyValueMap?.entries ?? widget.keyValueMap?.entries).map((entry) {
+      rows = (widget.keyKeyValueMap?.entries ?? widget.keyValueMap?.entries)?.map((entry) {
         odd = !odd;
         return _buildRow(entry, odd);
       }).toList();
     }
 
-    rows.insert(
-      0,
-      GCWTextDivider(
-          text: widget.dividerText == null ? "" : widget.dividerText,
-          trailing: Row(children: <Widget>[
-            GCWPasteButton(
-              iconSize: IconButtonSize.SMALL,
-              onSelected: _pasteClipboard,
-            ),
-            GCWIconButton(
-              size: IconButtonSize.SMALL,
-              icon: Icons.content_copy,
-              onPressed: () {
-                var copyText = _toJson();
-                if (copyText == null) return;
-                insertIntoGCWClipboard(context, copyText);
-              },
-            )
-          ])),
-    );
+    if (rows != null) {
+      rows.insert(
+        0,
+        GCWTextDivider(
+            text: widget.dividerText ?? '',
+            trailing: Row(children: <Widget>[
+              GCWPasteButton(
+                iconSize: IconButtonSize.SMALL,
+                onSelected: _pasteClipboard,
+              ),
+              GCWIconButton(
+                size: IconButtonSize.SMALL,
+                icon: Icons.content_copy,
+                onPressed: () {
+                  var copyText = _toJson();
+                  if (copyText == null) return;
+                  insertIntoGCWClipboard(context, copyText);
+                },
+              )
+            ])),
+      );
+    }
 
-    return Column(children: rows);
+    return rows == null ? Container() : Column(children: rows);
   }
 
   Widget _buildRow(dynamic entry, bool odd) {

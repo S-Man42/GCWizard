@@ -72,7 +72,7 @@ Future<VigenereBreakerResult> break_cipherAsync(dynamic jobData) async {
       jobData.parameters.ignoreNonLetters,
       counterFunction: progressCounter);
 
-  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }
@@ -80,7 +80,7 @@ Future<VigenereBreakerResult> break_cipherAsync(dynamic jobData) async {
 progressCounter() {
   _progress++;
   if (_sendAsyncPort != null && (_progress % _progressStep == 0))
-    _sendAsyncPort.send({'progress': _progress / _countCombinations});
+    _sendAsyncPort?.send({'progress': _progress / _countCombinations});
 }
 
 VigenereBreakerResult break_cipher(String input, VigenereBreakerType vigenereBreakerType,

@@ -10,12 +10,12 @@ Future<Map<String, dynamic>> analyseImageAsync(dynamic jobData) async {
 
   var output = await analyseImage(jobData.parameters, sendAsyncPort: jobData.sendAsyncPort);
 
-  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }
 
-Future<Map<String, dynamic>> analyseImage(Uint8List bytes, {Function filterImages, SendPort sendAsyncPort}) async {
+Future<Map<String, dynamic>> analyseImage(Uint8List bytes, {Function filterImages, SendPort? sendAsyncPort}) async {
   try {
     var progress = 0;
     final decoder = Image.findDecoderForData(bytes);
@@ -58,7 +58,7 @@ Future<Map<String, dynamic>> analyseImage(Uint8List bytes, {Function filterImage
 
         progress++;
         if (sendAsyncPort != null && (progress % progressStep == 0)) {
-          sendAsyncPort.send({'progress': progress / animation.length});
+          sendAsyncPort?.send({'progress': progress / animation.length});
         }
       }
     }

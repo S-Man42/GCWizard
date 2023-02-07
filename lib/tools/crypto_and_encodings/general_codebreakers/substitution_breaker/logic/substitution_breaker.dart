@@ -14,7 +14,7 @@ Future<SubstitutionBreakerResult> break_cipherAsync(dynamic jobData) async {
 
   var output = _break_cipher(jobData.parameters.input, jobData.parameters.quadgrams);
 
-  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }

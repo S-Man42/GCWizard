@@ -67,7 +67,7 @@ Future<List<Intersect>> intersectThreeCirclesAsync(dynamic jobData) async {
       jobData.parameters.accuracy,
       jobData.parameters.ells);
 
-  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }
