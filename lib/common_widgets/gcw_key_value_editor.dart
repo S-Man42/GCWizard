@@ -39,29 +39,29 @@ import 'package:gc_wizard/utils/variable_string_expander.dart';
 */
 
 class GCWKeyValueEditor extends StatefulWidget {
-  final Function onNewEntryChanged;
+  final Function? onNewEntryChanged;
   final String? keyHintText;
-  final TextEditingController keyController;
+  final TextEditingController? keyController;
   final List<TextInputFormatter>? keyInputFormatters;
   final List<TextInputFormatter>? valueInputFormatters;
   final String valueHintText;
-  final int valueFlex;
-  final Function onAddEntry;
-  final Function onAddEntry2;
-  final Function onDispose;
-  final String alphabetInstertButtonLabel;
-  final String alphabetAddAndAdjustLetterButtonLabel;
+  final int? valueFlex;
+  final Function? onAddEntry;
+  final Function? onAddEntry2;
+  final Function? onDispose;
+  final String? alphabetInstertButtonLabel;
+  final String? alphabetAddAndAdjustLetterButtonLabel;
 
-  final Widget middleWidget;
+  final Widget? middleWidget;
 
-  final Map<int, Map<String, String>> keyKeyValueMap;
-  final Map<String, String> keyValueMap;
-  final List<FormulaValue> formulaValueList;
+  final Map<int, Map<String, String>>? keyKeyValueMap;
+  final Map<String, String>? keyValueMap;
+  final List<FormulaValue>? formulaValueList;
   final bool varcoords;
-  final String dividerText;
+  final String? dividerText;
   final bool editAllowed;
-  final Function onUpdateEntry;
-  final Function onRemoveEntry;
+  final Function? onUpdateEntry;
+  final Function? onRemoveEntry;
 
   const GCWKeyValueEditor({
     Key? key,
@@ -93,12 +93,12 @@ class GCWKeyValueEditor extends StatefulWidget {
 }
 
 class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
-  TextEditingController _inputController;
-  TextEditingController _keyController;
-  TextEditingController _valueController;
+  late TextEditingController _inputController;
+  late TextEditingController _keyController;
+  late TextEditingController _valueController;
 
-  TextEditingController _editKeyController;
-  TextEditingController _editValueController;
+  late TextEditingController _editKeyController;
+  late TextEditingController _editValueController;
 
   var _currentInput = '';
   var _currentKeyInput = '';
@@ -110,7 +110,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
   var _currentEditedFormulaValueTypeInput = FormulaValueType.FIXED;
   var _currentEditId;
 
-  FocusNode _focusNodeEditValue;
+  late FocusNode _focusNodeEditValue;
 
   @override
   void initState() {
@@ -120,7 +120,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
     if (widget.keyController == null)
       _keyController = TextEditingController(text: _currentKeyInput);
     else {
-      _keyController = widget.keyController;
+      _keyController = widget.keyController!;
       _currentKeyInput = _keyController.text;
     }
     _valueController = TextEditingController(text: _currentValueInput);
@@ -260,10 +260,10 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
     return Container(
         child: GCWButton(
           text: widget.alphabetAddAndAdjustLetterButtonLabel,
-          onPressed: _isAddAndAdjustEnabled()
+          onPressed: () => _isAddAndAdjustEnabled()
               ? () {
                   setState(() {
-                    if (widget.onAddEntry2 != null) widget.onAddEntry2(_currentKeyInput, _currentValueInput, context);
+                    if (widget.onAddEntry2 != null) widget.onAddEntry2!(_currentKeyInput, _currentValueInput, context);
 
                     _onNewEntryChanged(true);
                   });
@@ -276,9 +276,9 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
   void _addEntry(String key, String value, {bool clearInput: true, formulaType: FormulaValueType.FIXED}) {
     if (widget.onAddEntry != null) {
       if (widget.formulaValueList == null)
-        widget.onAddEntry(key, value, context);
+        widget.onAddEntry!(key, value, context);
       else
-        widget.onAddEntry(key, value, formulaType, context);
+        widget.onAddEntry!(key, value, formulaType, context);
     }
 
     if (clearInput) _onNewEntryChanged(true);
@@ -298,11 +298,11 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
 
       _currentFormulaValueTypeInput = FormulaValueType.FIXED;
     }
-    if (widget.onNewEntryChanged != null) widget.onNewEntryChanged(_currentKeyInput, _currentValueInput, context);
+    if (widget.onNewEntryChanged != null) widget.onNewEntryChanged!(_currentKeyInput, _currentValueInput, context);
   }
 
-  _isAddAndAdjustEnabled() {
-    if (widget.keyValueMap.containsKey(_currentKeyInput.toUpperCase())) return false;
+  bool _isAddAndAdjustEnabled() {
+    if (widget.keyValueMap?.containsKey(_currentKeyInput.toUpperCase())) return false;
 
     if (_currentValueInput.contains(',')) return false;
 
@@ -438,7 +438,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
           icon: Icons.remove,
           onPressed: () {
             setState(() {
-              if (widget.onRemoveEntry != null) widget.onRemoveEntry(_getEntryId(entry), context);
+              if (widget.onRemoveEntry != null) widget.onRemoveEntry!(_getEntryId(entry), context);
             });
           },
         )
@@ -474,7 +474,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
             onPressed: () {
               if (widget.onUpdateEntry != null) {
                 if (widget.formulaValueList == null) {
-                  widget.onUpdateEntry(_currentEditId, _currentEditedKey, _currentEditedValue);
+                  widget.onUpdateEntry!(_currentEditId, _currentEditedKey, _currentEditedValue);
                 } else {
                   if (_currentEditedFormulaValueTypeInput == FormulaValueType.INTERPOLATED) {
                     if (!VARIABLESTRING.hasMatch(_currentEditedValue.toLowerCase())) {
@@ -482,7 +482,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
                       return;
                     }
                   }
-                  widget.onUpdateEntry(
+                  widget.onUpdateEntry!(
                       _currentEditId, _currentEditedKey, _currentEditedValue, _currentEditedFormulaValueTypeInput);
                 }
               }
@@ -508,7 +508,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
 
                 if (widget.formulaValueList != null)
                   _currentEditedFormulaValueTypeInput =
-                      widget.formulaValueList.firstWhere((element) => element.id == _currentEditId).type;
+                      widget.formulaValueList?.firstWhere((element) => element.id == _currentEditId).type;
               });
             },
           );
@@ -535,31 +535,30 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
       return entry.value;
   }
 
-  String _toJson() {
-    List<MapEntry> json;
+  String? _toJson() {
+    List<MapEntry<String, String>>? json = [];
     if (widget.formulaValueList != null) {
-      json = widget.formulaValueList.map((entry) {
-        return MapEntry(entry.key, entry.value);
+      json = widget.formulaValueList?.map((entry) {
+        return MapEntry<String, String>(entry.key, entry.value);
       }).toList();
     } else if (widget.keyKeyValueMap != null) {
-      json = <MapEntry>[];
-      widget.keyKeyValueMap.entries.forEach((entry) {
-        json.addAll(entry.value.entries);
+       widget.keyKeyValueMap!.entries.forEach((entry) {
+        json?.addAll(entry.value.entries);
       });
-    } else if (widget.keyValueMap != null) json = widget.keyValueMap.entries.toList();
+    } else if (widget.keyValueMap != null) json = widget.keyValueMap?.entries.toList();
 
-    var list = json.map((e) {
+    var list = json?.map((e) {
       return jsonEncode({'key': e.key, 'value': e.value});
     }).toList();
 
-    if (list.isEmpty) return null;
+    if (list == null || list.isEmpty) return null;
 
     return jsonEncode(list);
   }
 
   void _pasteClipboard(String text) {
     var json = jsonDecode(text);
-    List<MapEntry> list;
+    List<MapEntry>? list;
     if (json is List<dynamic>)
       list = _fromJson(json);
     else
@@ -573,7 +572,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
     }
   }
 
-  List<MapEntry> _fromJson(List<dynamic> json) {
+  List<MapEntry>? _fromJson(List<dynamic> json) {
     var list = <MapEntry>[];
     if (json == null) return null;
     String key;
@@ -589,7 +588,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
     return list.length == 0 ? null : list;
   }
 
-  List<MapEntry> _parseClipboardText(String text) {
+  List<MapEntry>? _parseClipboardText(String text) {
     var list = <MapEntry>[];
     if (text == null) return null;
 
