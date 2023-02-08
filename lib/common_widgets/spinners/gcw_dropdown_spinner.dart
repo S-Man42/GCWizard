@@ -6,7 +6,7 @@ import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/spinners/spinner_constants.dart';
 
 class GCWDropDownSpinner extends StatefulWidget {
-  final Function onChanged;
+  final void Function(int) onChanged;
   final int index;
   final List<dynamic> items;
   final SpinnerLayout layout;
