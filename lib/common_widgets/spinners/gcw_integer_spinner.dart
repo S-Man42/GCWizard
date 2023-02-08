@@ -119,7 +119,7 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
           setState(() {
             _externalChange = false;
 
-            _currentValue = ret['value'];
+            _currentValue = ret['value'] is int ? ret['value'] as int : _currentValue;
             _setCurrentValueAndEmitOnChange();
           });
         });

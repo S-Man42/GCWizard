@@ -5,7 +5,7 @@ import 'package:gc_wizard/utils/collection_utils.dart';
 
 class GCWIntegerListTextField extends StatefulWidget {
   final TextEditingController? controller;
-  final void Function(Map<String, dynamic>) onChanged;
+  final void Function(Map<String, Object?>) onChanged;
   final String? hintText;
 
   const GCWIntegerListTextField({

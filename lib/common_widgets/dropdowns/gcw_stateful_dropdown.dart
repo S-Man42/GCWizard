@@ -3,7 +3,7 @@ import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 
 //TODO: Maybe we should make the normal GCWDropDown stateful.
 class GCWStatefulDropDown extends StatefulWidget {
-  final void Function(dynamic) onChanged;
+  final void Function(Object?) onChanged;
   final List<GCWDropDownMenuItem> items;
   final value;
   final DropdownButtonBuilder? selectedItemBuilder;

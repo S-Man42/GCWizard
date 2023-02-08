@@ -133,7 +133,7 @@ class GCWDoubleSpinnerState extends State<GCWDoubleSpinner> {
           setState(() {
             _externalChange = false;
 
-            _currentValue = ret['value'];
+            _currentValue = ret['value'] is double ? ret['value'] as double : _currentValue;
 
             _setCurrentValueAndEmitOnChange();
           });

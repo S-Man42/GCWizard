@@ -6,7 +6,7 @@ import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 
 class GCWColumnedMultilineOutput extends StatefulWidget {
-  final List<List<dynamic>> data;
+  final List<List<Object?>> data;
   final List<int> flexValues;
   final int? copyColumn;
   final bool suppressCopyButtons;

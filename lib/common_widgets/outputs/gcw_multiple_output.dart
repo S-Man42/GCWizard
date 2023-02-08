@@ -4,7 +4,7 @@ import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 
 class GCWMultipleOutput extends StatefulWidget {
-  final List<dynamic> children;
+  final List<Object?> children;
   final String? title;
   final bool suppressDefaultTitle;
   final Widget? trailing;

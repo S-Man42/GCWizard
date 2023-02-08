@@ -6,7 +6,7 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 
 class GCWIntegerTextField extends StatefulWidget {
   final TextEditingController? controller;
-  final void Function(Map<String, dynamic>) onChanged;
+  final void Function(Map<String, Object?>) onChanged;
   final textInputFormatter;
   final String? hintText;
   final int? min;
@@ -50,7 +50,7 @@ class _GCWIntegerTextFieldState extends State<GCWIntegerTextField> {
 
           if (widget.max != null && _value > widget.max!) _value = widget.max;
 
-          widget.onChanged({'text': text, 'value': _value});
+          widget.onChanged(<String, Object?>{'text': text, 'value': _value});
         });
       },
       controller: widget.controller,

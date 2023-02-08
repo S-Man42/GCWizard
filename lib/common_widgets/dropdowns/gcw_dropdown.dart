@@ -4,7 +4,7 @@ import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 
 class GCWDropDown extends StatefulWidget {
-  final void Function(dynamic) onChanged;
+  final void Function(Object?) onChanged;
   final List<GCWDropDownMenuItem> items;
   final value;
   final DropdownButtonBuilder? selectedItemBuilder;

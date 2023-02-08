@@ -5,7 +5,7 @@ import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 class GCWSignDropDown extends StatefulWidget {
   final void Function(int) onChanged;
   final int? value;
-  final List<dynamic> itemList;
+  final List<String> itemList;
 
   const GCWSignDropDown({Key? key, required this.itemList, required this.onChanged, this.value = 1}) : super(key: key);
 
@@ -22,8 +22,8 @@ class _GCWSignDropDownState extends State<GCWSignDropDown> {
       value: widget.value ?? _dropdownValue,
       onChanged: (newValue) {
         setState(() {
-          _dropdownValue = newValue;
-          widget.onChanged(newValue);
+          _dropdownValue = newValue is int ? newValue as int : _dropdownValue;
+          widget.onChanged(_dropdownValue);
         });
       },
       items: widget.itemList.map((char) {

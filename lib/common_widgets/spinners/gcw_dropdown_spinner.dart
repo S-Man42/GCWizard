@@ -8,7 +8,7 @@ import 'package:gc_wizard/common_widgets/spinners/spinner_constants.dart';
 class GCWDropDownSpinner extends StatefulWidget {
   final void Function(int) onChanged;
   final int index;
-  final List<dynamic> items;
+  final List<Object> items;
   final SpinnerLayout layout;
   final String? title;
 
@@ -89,7 +89,7 @@ class GCWDropDownSpinnerState extends State<GCWDropDownSpinner> {
         value: widget.index % widget.items.length,
         onChanged: (newValue) {
           setState(() {
-            _setValueAndEmitOnChange(newValue);
+            _setValueAndEmitOnChange(newValue as int);
           });
         },
         items: (widget.items is List<GCWDropDownMenuItem>)
