@@ -25,7 +25,7 @@ class GCWABCSpinner extends StatefulWidget {
 }
 
 class GCWABCSpinnerState extends State<GCWABCSpinner> {
-  var _currentValue;
+  int? _currentValue;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ class GCWABCSpinnerState extends State<GCWABCSpinner> {
       onChanged: (value) {
         setState(() {
           _currentValue = value;
-          widget.onChanged(_currentValue + 1);
+          widget.onChanged(_currentValue! + 1);
         });
       },
     );
