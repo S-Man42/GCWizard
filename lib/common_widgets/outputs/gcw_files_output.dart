@@ -20,7 +20,7 @@ import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
 class GCWFilesOutput extends StatefulWidget {
   final List<GCWFile> files;
   final bool suppressHiddenDataMessage;
-  final Set<GCWImageViewButtons> suppressedButtons;
+  final Set<GCWImageViewButtons>? suppressedButtons;
 
   const GCWFilesOutput({Key? key, required this.files, this.suppressHiddenDataMessage = false, this.suppressedButtons})
       : super(key: key);
@@ -35,7 +35,7 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
     return Column(children: <Widget>[_buildFileTree(widget.files, [])]);
   }
 
-  Widget _buildFileTree(List<GCWFile> files, List<String> parents, {level: 0}) {
+  Widget _buildFileTree(List<GCWFile> files, List<String> parents, {level = 0}) {
     var isFirst = true;
     var children = files.map((GCWFile file) {
       var hasChildren = file.children != null && file.children!.isNotEmpty;
@@ -119,7 +119,7 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
             Container(child: GCWSoundPlayer(file: file), margin: EdgeInsets.only(left: 42)),
           if (hasChildren)
             Container(
-              child: _buildFileTree(file.children, newParents, level: level + 1),
+              child: _buildFileTree(file.children ?? [], newParents, level: level + 1),
             ),
           if (level == 0 && isFirst) GCWDivider(),
           if (!widget.suppressHiddenDataMessage)
@@ -182,8 +182,8 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
       return;
     }
 
-    var fileName = file.name.replaceFirst(HIDDEN_FILE_IDENTIFIER, 'hidden_file');
-    var ext = file.name.split('.');
+    var fileName = file.name == null ? '' : file.name!.replaceFirst(HIDDEN_FILE_IDENTIFIER, 'hidden_file');
+    var ext = fileName.split('.');
 
     if (ext.length <= 1 || ext.last.length >= 5) fileName = fileName + '.' + fileExtension(file.fileType);
 
