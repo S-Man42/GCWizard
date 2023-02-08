@@ -224,7 +224,7 @@ class DMMPart {
 
   DMMPart(this.sign, this.degrees, this.minutes);
 
-  Map<String, dynamic> _formatParts(bool isLatitude, [int precision]) {
+  Map<String, Object> _formatParts(bool isLatitude, [int precision = 10]) {
     var _minutesStr = NumberFormat(_dmmAndDMSNumberFormat(precision)).format(minutes);
     var _degrees = degrees;
     var _sign = _getCoordinateSignString(sign, isLatitude);
@@ -245,7 +245,7 @@ class DMMPart {
     };
   }
 
-  String _format(bool isLatitude, [int precision]) {
+  String _format(bool isLatitude, [int precision = 10]) {
     var formattedParts = _formatParts(isLatitude, precision);
 
     return formattedParts['sign']['formatted'] +
@@ -269,11 +269,11 @@ class DMMLatitude extends DMMPart {
     return DMMLatitude(dmmPart.sign, dmmPart.degrees, dmmPart.minutes);
   }
 
-  Map<String, dynamic> formatParts([int precision]) {
+  Map<String, Object> formatParts([int precision = 10]) {
     return super._formatParts(true, precision);
   }
 
-  String format([int precision]) {
+  String format([int precision = 10]) {
     return super._format(true, precision);
   }
 }
@@ -314,7 +314,7 @@ class DMM extends BaseCoordinates {
   }
 
   @override
-  String toString([int precision]) {
+  String toString([int precision = 10]) {
     return '${latitude.format(precision)}\n${longitude.format(precision)}';
   }
 }

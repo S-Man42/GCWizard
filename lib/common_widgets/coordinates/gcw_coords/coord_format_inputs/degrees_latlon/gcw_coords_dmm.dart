@@ -1,23 +1,23 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _GCWCoordsDMM extends StatefulWidget {
-  final Function onChanged;
+  final void Function(DMM) onChanged;
   final BaseCoordinates coordinates;
 
-  const _GCWCoordsDMM({Key? key, this.onChanged, this.coordinates}) : super(key: key);
+  const _GCWCoordsDMM({Key? key, required this.onChanged, required this.coordinates}) : super(key: key);
 
   @override
   _GCWCoordsDMMState createState() => _GCWCoordsDMMState();
 }
 
 class _GCWCoordsDMMState extends State<_GCWCoordsDMM> {
-  TextEditingController _LatDegreesController;
-  TextEditingController _LatMinutesController;
-  TextEditingController _LatMilliMinutesController;
+  late TextEditingController _LatDegreesController;
+  late TextEditingController _LatMinutesController;
+  late TextEditingController _LatMilliMinutesController;
 
-  TextEditingController _LonDegreesController;
-  TextEditingController _LonMinutesController;
-  TextEditingController _LonMilliMinutesController;
+  late TextEditingController _LonDegreesController;
+  late TextEditingController _LonMinutesController;
+  late TextEditingController _LonMilliMinutesController;
 
   int _currentLatSign = defaultHemiphereLatitude();
   int _currentLonSign = defaultHemiphereLongitude();
@@ -29,10 +29,10 @@ class _GCWCoordsDMMState extends State<_GCWCoordsDMM> {
   String _currentLonMinutes = '';
   String _currentLonMilliMinutes = '';
 
-  FocusNode _latMinutesFocusNode;
-  FocusNode _latMilliMinutesFocusNode;
-  FocusNode _lonMinutesFocusNode;
-  FocusNode _lonMilliMinutesFocusNode;
+  FocusNode _latMinutesFocusNode = FocusNode();
+  FocusNode _latMilliMinutesFocusNode = FocusNode();
+  FocusNode _lonMinutesFocusNode = FocusNode();
+  FocusNode _lonMilliMinutesFocusNode = FocusNode();
 
   @override
   void initState() {
@@ -44,11 +44,6 @@ class _GCWCoordsDMMState extends State<_GCWCoordsDMM> {
     _LonDegreesController = TextEditingController(text: _currentLonDegrees);
     _LonMinutesController = TextEditingController(text: _currentLonMinutes);
     _LonMilliMinutesController = TextEditingController(text: _currentLonMilliMinutes);
-
-    _latMinutesFocusNode = FocusNode();
-    _latMilliMinutesFocusNode = FocusNode();
-    _lonMinutesFocusNode = FocusNode();
-    _lonMilliMinutesFocusNode = FocusNode();
   }
 
   @override
@@ -75,10 +70,10 @@ class _GCWCoordsDMMState extends State<_GCWCoordsDMM> {
       var lat = dmm.latitude.formatParts(10);
       var lon = dmm.longitude.formatParts(10);
 
-      _currentLatDegrees = lat['degrees'];
-      _currentLatMinutes = lat['minutes'].split('.')[0];
-      _currentLatMilliMinutes = lat['minutes'].split('.')[1];
-      _currentLatSign = widget.coordinates.isDefault() ? defaultHemiphereLatitude() : lat['sign']['value'];
+      _currentLatDegrees = lat['degrees'] as String;
+      _currentLatMinutes = (lat['minutes'] as String).split('.')[0];
+      _currentLatMilliMinutes = (lat['minutes'] as String).split('.')[1];
+      _currentLatSign = widget.coordinates.isDefault() ? defaultHemiphereLatitude() : (lat['sign'] as Map<String, Object>)!['value'] as int;
 
       _currentLonDegrees = lon['degrees'];
       _currentLonMinutes = lon['minutes'].split('.')[0];
@@ -118,7 +113,7 @@ class _GCWCoordsDMMState extends State<_GCWCoordsDMM> {
                     controller: _LatDegreesController,
                     onChanged: (ret) {
                       setState(() {
-                        _currentLatDegrees = ret['text'];
+                        _currentLatDegrees = ret['text'] as String;
                         _setCurrentValueAndEmitOnChange();
 
                         if (_currentLatDegrees.length == 2) FocusScope.of(context).requestFocus(_latMinutesFocusNode);
@@ -139,7 +134,7 @@ class _GCWCoordsDMMState extends State<_GCWCoordsDMM> {
                 focusNode: _latMinutesFocusNode,
                 onChanged: (ret) {
                   setState(() {
-                    _currentLatMinutes = ret['text'];
+                    _currentLatMinutes = ret['text'] as String;
                     _setCurrentValueAndEmitOnChange();
 
                     if (_currentLatMinutes.length == 2) FocusScope.of(context).requestFocus(_latMilliMinutesFocusNode);
@@ -159,7 +154,7 @@ class _GCWCoordsDMMState extends State<_GCWCoordsDMM> {
                 focusNode: _latMilliMinutesFocusNode,
                 onChanged: (ret) {
                   setState(() {
-                    _currentLatMilliMinutes = ret['text'];
+                    _currentLatMilliMinutes = ret['text'] as String;
                     _setCurrentValueAndEmitOnChange();
                   });
                 }),
@@ -193,7 +188,7 @@ class _GCWCoordsDMMState extends State<_GCWCoordsDMM> {
                     controller: _LonDegreesController,
                     onChanged: (ret) {
                       setState(() {
-                        _currentLonDegrees = ret['text'];
+                        _currentLonDegrees = ret['text'] as String;
                         _setCurrentValueAndEmitOnChange();
 
                         if (_currentLonDegrees.length == 3) FocusScope.of(context).requestFocus(_lonMinutesFocusNode);
@@ -214,7 +209,7 @@ class _GCWCoordsDMMState extends State<_GCWCoordsDMM> {
                 focusNode: _lonMinutesFocusNode,
                 onChanged: (ret) {
                   setState(() {
-                    _currentLonMinutes = ret['text'];
+                    _currentLonMinutes = ret['text'] as String;
                     _setCurrentValueAndEmitOnChange();
 
                     if (_currentLonMinutes.length == 2) FocusScope.of(context).requestFocus(_lonMilliMinutesFocusNode);
@@ -234,7 +229,7 @@ class _GCWCoordsDMMState extends State<_GCWCoordsDMM> {
                 focusNode: _lonMilliMinutesFocusNode,
                 onChanged: (ret) {
                   setState(() {
-                    _currentLonMilliMinutes = ret['text'];
+                    _currentLonMilliMinutes = ret['text'] as String;
                     _setCurrentValueAndEmitOnChange();
                   });
                 }),

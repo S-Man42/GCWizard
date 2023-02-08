@@ -10,12 +10,19 @@ import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit
 
 part 'package:gc_wizard/common_widgets/units/gcw_unit_prefix_dropdown.dart';
 
+class GCWUnitsReturnValue {
+  final UnitPrefix prefix;
+  final Unit value;
+
+  GCWUnitsReturnValue(this.prefix, this.value);
+}
+
 class GCWUnits extends StatefulWidget {
   final UnitCategory unitCategory;
-  final void Function(Map<String, dynamic>) onChanged;
+  final void Function(Map<String, Object>) onChanged;
   final bool onlyShowUnitSymbols;
   final bool onlyShowPrefixSymbols;
-  final Map<String, dynamic>? value;
+  final GCWUnitsReturnValue? value;
 
   GCWUnits(
       {Key? key,
@@ -37,8 +44,8 @@ class _GCWUnitsState extends State<GCWUnits> {
   @override
   Widget build(BuildContext context) {
     if (widget.value != null) {
-      _currentPrefix = widget.value!['prefix'];
-      _currentUnit = widget.value!['unit'];
+      _currentPrefix = widget.value!.prefix;
+      _currentUnit = widget.value!.value;
     } else {
       _currentPrefix = UNITPREFIX_NONE;
       _currentUnit = widget.unitCategory.defaultUnit;

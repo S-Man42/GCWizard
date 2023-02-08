@@ -64,7 +64,7 @@ class SaveRestoreSettingsState extends State<SaveRestoreSettings> {
                 showOpenFileDialog(context, [FileType.GCW], (GCWFile file) {
                   try {
                     var jsonString = String.fromCharCodes(file.bytes);
-                    Map<String, dynamic> prefsMap = jsonDecode(jsonString);
+                    Map<String, Object> prefsMap = jsonDecode(jsonString);
 
                     initDefaultSettings(PreferencesInitMode.REINIT_ALL);
                     prefsMap.entries.forEach((entry) {

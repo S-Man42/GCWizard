@@ -1,31 +1,31 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _GCWCoordsDMS extends StatefulWidget {
-  final Function onChanged;
+  final void Function(DMS) onChanged;
   final BaseCoordinates coordinates;
 
-  const _GCWCoordsDMS({Key? key, this.onChanged, this.coordinates}) : super(key: key);
+  const _GCWCoordsDMS({Key? key, required this.onChanged, required this.coordinates}) : super(key: key);
 
   @override
   _GCWCoordsDMSState createState() => _GCWCoordsDMSState();
 }
 
 class _GCWCoordsDMSState extends State<_GCWCoordsDMS> {
-  TextEditingController _LatDegreesController;
-  TextEditingController _LatMinutesController;
-  TextEditingController _LatSecondsController;
-  TextEditingController _LatMilliSecondsController;
-  TextEditingController _LonDegreesController;
-  TextEditingController _LonMinutesController;
-  TextEditingController _LonSecondsController;
-  TextEditingController _LonMilliSecondsController;
+  late TextEditingController _LatDegreesController;
+  late TextEditingController _LatMinutesController;
+  late TextEditingController _LatSecondsController;
+  late TextEditingController _LatMilliSecondsController;
+  late TextEditingController _LonDegreesController;
+  late TextEditingController _LonMinutesController;
+  late TextEditingController _LonSecondsController;
+  late TextEditingController _LonMilliSecondsController;
 
-  FocusNode _latMinutesFocusNode;
-  FocusNode _latSecondsFocusNode;
-  FocusNode _latMilliSecondsFocusNode;
-  FocusNode _lonMinutesFocusNode;
-  FocusNode _lonSecondsFocusNode;
-  FocusNode _lonMilliSecondsFocusNode;
+  FocusNode _latMinutesFocusNode = FocusNode();
+  FocusNode _latSecondsFocusNode = FocusNode();
+  FocusNode _latMilliSecondsFocusNode = FocusNode();
+  FocusNode _lonMinutesFocusNode = FocusNode();
+  FocusNode _lonSecondsFocusNode = FocusNode();
+  FocusNode _lonMilliSecondsFocusNode = FocusNode();
 
   int _currentLatSign = defaultHemiphereLatitude();
   int _currentLonSign = defaultHemiphereLongitude();
@@ -51,13 +51,6 @@ class _GCWCoordsDMSState extends State<_GCWCoordsDMS> {
     _LonMinutesController = TextEditingController(text: _currentLonMinutes);
     _LonSecondsController = TextEditingController(text: _currentLonSeconds);
     _LonMilliSecondsController = TextEditingController(text: _currentLonMilliSeconds);
-
-    _latMinutesFocusNode = FocusNode();
-    _latSecondsFocusNode = FocusNode();
-    _latMilliSecondsFocusNode = FocusNode();
-    _lonMinutesFocusNode = FocusNode();
-    _lonSecondsFocusNode = FocusNode();
-    _lonMilliSecondsFocusNode = FocusNode();
   }
 
   @override
@@ -135,7 +128,7 @@ class _GCWCoordsDMSState extends State<_GCWCoordsDMS> {
                     controller: _LatDegreesController,
                     onChanged: (ret) {
                       setState(() {
-                        _currentLatDegrees = ret['text'];
+                        _currentLatDegrees = ret['text'] as String;
                         _setCurrentValueAndEmitOnChange();
 
                         if (_currentLatDegrees.length == 2) FocusScope.of(context).requestFocus(_latMinutesFocusNode);
@@ -156,7 +149,7 @@ class _GCWCoordsDMSState extends State<_GCWCoordsDMS> {
                 focusNode: _latMinutesFocusNode,
                 onChanged: (ret) {
                   setState(() {
-                    _currentLatMinutes = ret['text'];
+                    _currentLatMinutes = ret['text'] as String;
                     _setCurrentValueAndEmitOnChange();
 
                     if (_currentLatMinutes.length == 2) FocusScope.of(context).requestFocus(_latSecondsFocusNode);
@@ -176,7 +169,7 @@ class _GCWCoordsDMSState extends State<_GCWCoordsDMS> {
                 focusNode: _latSecondsFocusNode,
                 onChanged: (ret) {
                   setState(() {
-                    _currentLatSeconds = ret['text'];
+                    _currentLatSeconds = ret['text'] as String;
                     _setCurrentValueAndEmitOnChange();
 
                     if (_currentLatSeconds.length == 2) FocusScope.of(context).requestFocus(_latMilliSecondsFocusNode);
@@ -196,7 +189,7 @@ class _GCWCoordsDMSState extends State<_GCWCoordsDMS> {
                 focusNode: _latMilliSecondsFocusNode,
                 onChanged: (ret) {
                   setState(() {
-                    _currentLatMilliSeconds = ret['text'];
+                    _currentLatMilliSeconds = ret['text'] as String;
                     _setCurrentValueAndEmitOnChange();
                   });
                 }),
@@ -230,7 +223,7 @@ class _GCWCoordsDMSState extends State<_GCWCoordsDMS> {
                     controller: _LonDegreesController,
                     onChanged: (ret) {
                       setState(() {
-                        _currentLonDegrees = ret['text'];
+                        _currentLonDegrees = ret['text'] as String;
                         _setCurrentValueAndEmitOnChange();
 
                         if (_currentLonDegrees.length == 3) FocusScope.of(context).requestFocus(_lonMinutesFocusNode);
@@ -251,7 +244,7 @@ class _GCWCoordsDMSState extends State<_GCWCoordsDMS> {
                 focusNode: _lonMinutesFocusNode,
                 onChanged: (ret) {
                   setState(() {
-                    _currentLonMinutes = ret['text'];
+                    _currentLonMinutes = ret['text'] as String;
                     _setCurrentValueAndEmitOnChange();
 
                     if (_currentLonMinutes.length == 2) FocusScope.of(context).requestFocus(_lonSecondsFocusNode);
@@ -271,7 +264,7 @@ class _GCWCoordsDMSState extends State<_GCWCoordsDMS> {
                 focusNode: _lonSecondsFocusNode,
                 onChanged: (ret) {
                   setState(() {
-                    _currentLonSeconds = ret['text'];
+                    _currentLonSeconds = ret['text'] as String;
                     _setCurrentValueAndEmitOnChange();
 
                     if (_currentLonSeconds.length == 2) {
@@ -293,7 +286,7 @@ class _GCWCoordsDMSState extends State<_GCWCoordsDMS> {
                 focusNode: _lonMilliSecondsFocusNode,
                 onChanged: (ret) {
                   setState(() {
-                    _currentLonMilliSeconds = ret['text'];
+                    _currentLonMilliSeconds = ret['text'] as String;
                     _setCurrentValueAndEmitOnChange();
                   });
                 }),

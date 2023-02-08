@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-final Map<Locale, Map<String, dynamic>> SUPPORTED_LOCALES = {
+final Map<Locale, Map<String, Object>> SUPPORTED_LOCALES = {
   Locale('cz'): {'name_native': '🇨🇿 Čeština', 'percent_translated': 10},
   Locale('da'): {'name_native': '🇩🇰 Dansk', 'percent_translated': 2},
   Locale('de'): {'name_native': '🇩🇪 Deutsch', 'percent_translated': 100},

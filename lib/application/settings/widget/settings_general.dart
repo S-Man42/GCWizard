@@ -57,7 +57,7 @@ class GeneralSettingsState extends State<GeneralSettings> {
 
                         return GCWStatefulDropDown(
                             items: SUPPORTED_LOCALES.entries.map((locale) {
-                              String languageName = locale.value['name_native'];
+                              String languageName = locale.value['name_native'] as String;
 
                               var subtitle;
                               if (locale.value['percent_translated'] as int < 90) {

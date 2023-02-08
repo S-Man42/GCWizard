@@ -1,19 +1,19 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
-class GCWCoordsMGRS extends StatefulWidget {
-  final Function onChanged;
+class _GCWCoordsMGRS extends StatefulWidget {
+  final void Function(MGRS) onChanged;
   final BaseCoordinates coordinates;
 
-  const GCWCoordsMGRS({Key? key, this.onChanged, this.coordinates}) : super(key: key);
+  const _GCWCoordsMGRS({Key? key, required this.onChanged, required this.coordinates}) : super(key: key);
 
   @override
   _GCWCoordsMGRSState createState() => _GCWCoordsMGRSState();
 }
 
-class _GCWCoordsMGRSState extends State<GCWCoordsMGRS> {
-  TextEditingController _LonZoneController;
-  TextEditingController _EastingController;
-  TextEditingController _NorthingController;
+class _GCWCoordsMGRSState extends State<_GCWCoordsMGRS> {
+  late TextEditingController _LonZoneController;
+  late TextEditingController _EastingController;
+  late TextEditingController _NorthingController;
 
   var _currentLatZone = 'A';
   var _currentDigraphEasting = 'A';
@@ -26,10 +26,10 @@ class _GCWCoordsMGRSState extends State<GCWCoordsMGRS> {
   @override
   void initState() {
     super.initState();
-    _LonZoneController = TextEditingController(text: _currentLonZone['text']);
+    _LonZoneController = TextEditingController(text: _currentLonZone['text'] as String);
 
-    _EastingController = TextEditingController(text: _currentEasting['text']);
-    _NorthingController = TextEditingController(text: _currentNorthing['text']);
+    _EastingController = TextEditingController(text: _currentEasting['text'] as String);
+    _NorthingController = TextEditingController(text: _currentNorthing['text'] as String);
   }
 
   @override
@@ -68,7 +68,7 @@ class _GCWCoordsMGRSState extends State<GCWCoordsMGRS> {
                 hintText: i18n(context, 'coords_formatconverter_mgrs_lonzone'),
                 textInputFormatter: _UTMLonZoneTextInputFormatter(),
                 controller: _LonZoneController,
-                onChanged: (ret) {
+                onChanged: (Map<String, Object> ret) {
                   setState(() {
                     _currentLonZone = ret;
                     //   _setCurrentValueAndEmitOnChange();

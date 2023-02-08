@@ -154,7 +154,7 @@ class GCWCoordsState extends State<GCWCoords> {
       },
       {
         'coordFormat': getCoordinateFormatByKey(keyCoordsMGRS),
-        'widget': GCWCoordsMGRS(
+        'widget': _GCWCoordsMGRS(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
             setState(() {

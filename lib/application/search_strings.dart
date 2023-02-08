@@ -37,7 +37,7 @@ Future<Map<String, String>> _getSearchStringsForLocale(String locale) async {
 
   if (file == null) file = '{}';
 
-  Map<String, dynamic> _rawStrings = json.decode(file);
+  Map<String, Object> _rawStrings = json.decode(file);
   Map<String, String> _strings = _rawStrings.map((key, value) {
     return MapEntry(key, value.toString());
   });

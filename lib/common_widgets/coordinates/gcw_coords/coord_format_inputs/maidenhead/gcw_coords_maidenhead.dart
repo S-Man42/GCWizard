@@ -1,17 +1,17 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _GCWCoordsMaidenhead extends StatefulWidget {
-  final Function onChanged;
+  final Function(Maidenhead) onChanged;
   final BaseCoordinates coordinates;
 
-  const _GCWCoordsMaidenhead({Key? key, this.onChanged, this.coordinates}) : super(key: key);
+  const _GCWCoordsMaidenhead({Key? key, required this.onChanged, required this.coordinates}) : super(key: key);
 
   @override
   _GCWCoordsMaidenheadState createState() => _GCWCoordsMaidenheadState();
 }
 
 class _GCWCoordsMaidenheadState extends State<_GCWCoordsMaidenhead> {
-  TextEditingController _controller;
+  late TextEditingController _controller;
   var _currentCoord = '';
 
   @override

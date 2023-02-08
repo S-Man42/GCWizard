@@ -4,10 +4,13 @@ import 'package:diacritic/diacritic.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 
 int extractIntegerFromText(String text) {
-  var digits = text.replaceAll(RegExp(r'[^0-9]'), '');
+  var digits = text.replaceAll(RegExp(r'[^\-0-9]'), '');
+  var signed = digits.startsWith('-');
+  digits = digits.replaceAll('-', '');
+
   if (digits.length == 0) return 0;
 
-  return int.parse(digits);
+  return int.parse(digits) * (signed ? -1 : 1);
 }
 
 String normalizeUmlauts(String input) {

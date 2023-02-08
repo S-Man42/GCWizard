@@ -1,17 +1,17 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _GCWCoordsMakaney extends StatefulWidget {
-  final Function onChanged;
+  final void Function(Makaney) onChanged;
   final BaseCoordinates coordinates;
 
-  const _GCWCoordsMakaney({Key? key, this.onChanged, this.coordinates}) : super(key: key);
+  const _GCWCoordsMakaney({Key? key, required this.onChanged, required this.coordinates}) : super(key: key);
 
   @override
   _GCWCoordsMakaneyState createState() => _GCWCoordsMakaneyState();
 }
 
 class _GCWCoordsMakaneyState extends State<_GCWCoordsMakaney> {
-  TextEditingController _controller;
+  late TextEditingController _controller;
   var _currentCoord = '';
 
   @override

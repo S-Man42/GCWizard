@@ -10,3 +10,7 @@ int fractionPartAsInteger(double value) {
 bool doubleEquals(double a, double b, {double tolerance: 1e-10}) {
   return (a - b).abs() < tolerance;
 }
+
+bool isDouble(String text) {
+  return double.tryParse(text) != null;
+}
