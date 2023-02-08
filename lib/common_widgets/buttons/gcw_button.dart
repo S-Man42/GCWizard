@@ -4,7 +4,7 @@ import 'package:gc_wizard/application/theme/theme_colors.dart';
 
 class GCWButton extends StatefulWidget {
   final String text;
-  final VoidCallback onPressed;
+  final void Function() onPressed;
   final TextStyle? textStyle;
   final EdgeInsetsGeometry? margin;
 

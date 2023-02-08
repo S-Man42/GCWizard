@@ -22,6 +22,8 @@ class ColorSpace {
   ColorSpace(this.key, this.name);
 }
 
+abstract class GCWColor {}
+
 final String defaultColorSpace = keyColorSpaceRGB;
 final RGB defaultColor = RGB(255.0, 155.0, 0.0);
 final int COLOR_DOUBLE_PRECISION = 5;

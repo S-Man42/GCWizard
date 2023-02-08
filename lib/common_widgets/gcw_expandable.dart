@@ -7,7 +7,7 @@ class GCWExpandableTextDivider extends StatefulWidget {
   final TextStyle? style;
   final bool expanded;
   final Widget? child;
-  final void Function (bool) onChanged ;
+  final void Function(bool)? onChanged;
   final suppressBottomSpace;
   final suppressTopSpace;
 
@@ -17,7 +17,7 @@ class GCWExpandableTextDivider extends StatefulWidget {
       this.expanded = true,
       this.style,
       this.child,
-      required this.onChanged,
+      this.onChanged,
       this.suppressBottomSpace,
       this.suppressTopSpace = true})
       : super(key: key);
@@ -33,7 +33,8 @@ class _GCWExpandableTextDividerState extends State<GCWExpandableTextDivider> {
     setState(() {
       _currentExpanded = !_currentExpanded!;
 
-      widget.onChanged(_currentExpanded!);
+      if (widget.onChanged != null)
+        widget.onChanged!(_currentExpanded!);
     });
   }
 

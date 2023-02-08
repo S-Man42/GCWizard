@@ -25,27 +25,27 @@ part 'package:gc_wizard/common_widgets/color_pickers/color_spaces/gcw_color_yuv.
 part 'package:gc_wizard/common_widgets/color_pickers/gcw_color_values_picker.dart';
 
 class GCWColors extends StatefulWidget {
-  final Function onChanged;
-  final dynamic color;
+  final void Function(Map<String, Object>) onChanged;
+  final GCWColor color;
   final String colorSpace;
 
-  const GCWColors({Key? key, this.onChanged, this.colorSpace, this.color}) : super(key: key);
+  const GCWColors({Key? key, required this.onChanged, required this.colorSpace, required this.color}) : super(key: key);
 
   @override
   GCWColorsState createState() => GCWColorsState();
 }
 
 class GCWColorsState extends State<GCWColors> {
-  dynamic _currentColor = defaultColor;
-  HSVColor _currentColorPickerColor;
+  GCWColor _currentColor = defaultColor;
+  late HSVColor _currentColorPickerColor;
   String _currentColorSpace = keyColorSpaceRGB;
 
   @override
   void initState() {
     super.initState();
 
-    _currentColorSpace = widget.colorSpace ?? defaultColorSpace;
-    _currentColor = widget.color ?? defaultColor;
+    _currentColorSpace = widget.colorSpace;
+    _currentColor = widget.color;
 
     _setColorPickerColor(_currentColor);
   }
@@ -79,10 +79,10 @@ class GCWColorsState extends State<GCWColors> {
         _GCWColorValuesPicker(
           color: _currentColor,
           colorSpace: _currentColorSpace,
-          onChanged: (result) {
+          onChanged: (Map<String, Object> result) {
             setState(() {
-              _currentColorSpace = result['colorSpace'];
-              _currentColor = result['color'];
+              _currentColorSpace = result['colorSpace'] as String;
+              _currentColor = result['color'] as GCWColor;
 
               HSV colorPickerColor = convertColorSpace(_currentColor, _currentColorSpace, keyColorSpaceHSV);
               _currentColorPickerColor =

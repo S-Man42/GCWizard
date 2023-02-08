@@ -8,7 +8,7 @@ import 'package:gc_wizard/common_widgets/text_input_formatters/wrapper_for_maskt
 
 class GCWTextField extends StatefulWidget {
   final TextEditingController? controller;
-  final void Function(String) onChanged;
+  final void Function(String)? onChanged;
   final String? Function(String?)? validate;
   final List<TextInputFormatter>? inputFormatters;
   final TextInputType? keyboardType;
@@ -27,7 +27,7 @@ class GCWTextField extends StatefulWidget {
 
   const GCWTextField({
     Key? key,
-    required this.onChanged,
+    this.onChanged,
     this.controller,
     this.validate,
     this.inputFormatters,
@@ -60,7 +60,7 @@ class _GCWTextFieldState extends State<GCWTextField> {
     if (widget.focusNode != null && widget.controller != null) {
       widget.focusNode?.addListener(() {
         if (widget.focusNode?.hasFocus == true) {
-          widget?.controller?.selection = TextSelection(baseOffset: 0, extentOffset: widget?.controller?.text.length ?? 0);
+          widget.controller?.selection = TextSelection(baseOffset: 0, extentOffset: widget.controller?.text.length ?? 0);
         }
       });
     }
@@ -102,7 +102,7 @@ class _GCWTextFieldState extends State<GCWTextField> {
 
                           _controller.clear();
 
-                          if (widget.onChanged != null) widget.onChanged('');
+                          if (widget.onChanged != null) widget.onChanged!('');
 
                           if (widget.inputFormatters != null) {
                             widget.inputFormatters?.forEach((formatter) {
@@ -134,7 +134,7 @@ class _GCWTextFieldState extends State<GCWTextField> {
           );
         }));
 
-    if ((widget.title ?? '').isEmpty) return textField;
+    if (widget.title.isEmpty) return textField;
 
     return Row(
       children: [

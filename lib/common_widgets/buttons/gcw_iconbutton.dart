@@ -6,7 +6,7 @@ import 'package:gc_wizard/utils/math_utils.dart';
 enum IconButtonSize { NORMAL, SMALL, TINY }
 
 class GCWIconButton extends StatelessWidget {
-  final VoidCallback onPressed;
+  final void Function() onPressed;
   final IconData? icon;
   final Widget? customIcon;
   IconButtonSize? size;
