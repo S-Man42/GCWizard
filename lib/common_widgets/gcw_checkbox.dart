@@ -3,7 +3,7 @@ import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 
 class GCWCheckBox extends StatefulWidget {
-  final Function<bool?>? onChanged;
+  final void Function(bool?) onChanged;
   final String title;
   final bool value;
   final bool notitle;
@@ -21,7 +21,7 @@ class GCWCheckBox extends StatefulWidget {
       required this.value,
       required this.onChanged,
       required this.title,
-      this.notitle: false,
+      this.notitle = false,
       this.tristate = false,
       this.textStyle,
       this.activeColor,
@@ -50,7 +50,7 @@ class GCWCheckBoxState extends State<GCWCheckBox> {
                 children: <Widget>[
                   Expanded(child: Container(), flex: 1),
                   Checkbox(
-                    value: widget.value ?? _currentValue,
+                    value: widget.value,
                     onChanged: widget.onChanged,
                     activeColor: widget.activeColor ?? themeColors().checkBoxActiveColor(),
                     fillColor: widget.fillColor ?? MaterialStateColor.resolveWith(themeColors().checkBoxFillColor),
