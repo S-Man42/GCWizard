@@ -5,7 +5,7 @@ import 'package:gc_wizard/common_widgets/spinners/gcw_abc_spinner.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 
 class GCWLetterValueRelation extends StatefulWidget {
-  final void Function (int) onChanged;
+  final void Function(int) onChanged;
   final int minValue;
   final int startValue;
 
