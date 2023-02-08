@@ -23,7 +23,7 @@ void main() {
     });
   });
 
-  group("DoubleTypeUtils.separateDecimalPlaces:", () {
+  group("DoubleTypeUtils.fractionPartAsInteger:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
 
