@@ -44,9 +44,9 @@ class _GCWIntegerTextFieldState extends State<GCWIntegerTextField> {
       hintText: widget.hintText,
       onChanged: (text) {
         setState(() {
-          var _value = ['', '-'].contains(text) ? max<int>(widget.min ?? 0, 0) : int.tryParse(text);
+          var _value = ['', '-'].contains(text) ? max<int>(widget.min ?? 0, 0) : int.tryParse(text); //Mark nullable ?
 
-          if (widget.min != null && _value! < widget.min!) _value = widget.min;
+          if (widget.min != null && _value < widget.min!) _value = widget.min;
 
           if (widget.max != null && _value > widget.max!) _value = widget.max;
 

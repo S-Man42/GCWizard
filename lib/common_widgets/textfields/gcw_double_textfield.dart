@@ -46,7 +46,7 @@ class _GCWDoubleTextFieldState extends State<GCWDoubleTextField> {
       hintText: widget.hintText,
       onChanged: (text) {
         setState(() {
-          double _value;
+          double _value; //Mark nullable ?
 
           text = text.replaceFirst(',', '.');
 
