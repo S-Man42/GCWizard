@@ -96,9 +96,10 @@ class GeneralSettingsState extends State<GeneralSettings> {
             child: GCWUnitDropDown(
                 unitList: allLengths(),
                 value: getUnitBySymbol(allLengths(), Prefs.get(PREFERENCE_DEFAULT_LENGTH_UNIT)),
-                onChanged: (Length value) {
+                onChanged: (Unit value) {
                   setState(() {
-                    Prefs.setString(PREFERENCE_DEFAULT_LENGTH_UNIT, value.symbol);
+                    if (value is Length)
+                      Prefs.setString(PREFERENCE_DEFAULT_LENGTH_UNIT, value.symbol);
                   });
                 }),
           ),

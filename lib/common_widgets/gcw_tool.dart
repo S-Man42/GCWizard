@@ -105,7 +105,7 @@ class GCWTool extends StatefulWidget {
   var icon;
   var id = '';
 
-  String? toolName; //Mark nullable ?
+  String? toolName;
   String? defaultLanguageToolName;
   String? description;
   String? example;
@@ -156,7 +156,7 @@ class _GCWToolState extends State<GCWTool> {
 
   @override
   Widget build(BuildContext context) {
-    // this is the case when Tool is not called by Registry but as subpage of another tool
+    // this is the case when tool is not called by Registry but as subpage of another tool
     _toolName = widget.toolName ?? i18n(context, widget.i18nPrefix + '_title');
 
     _defaultLanguageToolName =
@@ -307,7 +307,19 @@ _setToolCount(String i18nPrefix) {
 }
 
 int _sortToolListAlphabetically(GCWTool a, GCWTool b) {
-  return removeDiacritics(a.toolName).toLowerCase().compareTo(removeDiacritics(b.toolName).toLowerCase());
+  var aName = a.toolName;
+  var bName = b.toolName;
+
+  if (aName == null && bName == null)
+    return 0;
+
+  if (aName == null && bName != null)
+    return 1;
+
+  if (bName == null && aName != null)
+    return -1;
+
+  return removeDiacritics(aName!).toLowerCase().compareTo(removeDiacritics(bName!).toLowerCase());
 }
 
 int sortToolList(GCWTool a, GCWTool b) {
