@@ -5,13 +5,13 @@ import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/_common/logic/crypt_alphabet_modification.dart';
 
 class GCWAlphabetModificationDropDown extends StatefulWidget {
-  final Function onChanged;
-  final value;
-  final List<AlphabetModificationMode> allowedModifications;
+  final void Function(AlphabetModificationMode) onChanged;
+  final AlphabetModificationMode? value;
+  final List<AlphabetModificationMode>? allowedModifications;
   final bool suppressTitle;
 
   const GCWAlphabetModificationDropDown(
-      {Key? key, this.onChanged, this.value, this.allowedModifications, this.suppressTitle: false})
+      {Key? key, required this.onChanged, required this.value, this.allowedModifications, this.suppressTitle = false})
       : super(key: key);
 
   @override
@@ -19,8 +19,8 @@ class GCWAlphabetModificationDropDown extends StatefulWidget {
 }
 
 class GCWAlphabetModificationDropDownState extends State<GCWAlphabetModificationDropDown> {
-  AlphabetModificationMode _currentValue;
-  List<Map<String, dynamic>> modifications;
+  AlphabetModificationMode? _currentValue;
+  late List<Map<String, dynamic>> modifications;
 
   var allModifications = [
     {'mode': AlphabetModificationMode.J_TO_I, 'text': 'common_alphabetmodification_jtoi'},
@@ -38,7 +38,7 @@ class GCWAlphabetModificationDropDownState extends State<GCWAlphabetModification
     } else {
       modifications = [];
       allModifications.forEach((modification) {
-        if (widget.allowedModifications.contains(modification['mode'])) modifications.add(modification);
+        if (widget.allowedModifications!.contains(modification['mode'])) modifications.add(modification);
       });
     }
   }
@@ -55,7 +55,7 @@ class GCWAlphabetModificationDropDownState extends State<GCWAlphabetModification
               onChanged: (newValue) {
                 setState(() {
                   _currentValue = newValue;
-                  widget.onChanged(_currentValue);
+                  widget.onChanged(_currentValue!);
                 });
               },
               items: modifications.map((entry) {
