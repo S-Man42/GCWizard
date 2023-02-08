@@ -44,7 +44,7 @@ class GCWDoubleSpinnerState extends State<GCWDoubleSpinner> {
   bool _externalChange = true;
 
   var _currentValue = 0.0;
-  var _numberFormat;
+  late NumberFormat _numberFormat;
 
   @override
   void initState() {
@@ -71,11 +71,9 @@ class GCWDoubleSpinnerState extends State<GCWDoubleSpinner> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.value != null) {
-      _currentValue = widget.value;
+    _currentValue = widget.value;
 
-      if (_externalChange) _controller.text = _numberFormat.format(_currentValue);
-    }
+    if (_externalChange) _controller.text = _numberFormat.format(_currentValue);
 
     _externalChange = true;
 
@@ -121,7 +119,7 @@ class GCWDoubleSpinnerState extends State<GCWDoubleSpinner> {
   }
 
   Widget _buildTitle() {
-    return widget.title == null ? Container() : Expanded(child: GCWText(text: widget.title + ':'), flex: 1);
+    return widget.title == null ? Container() : Expanded(child: GCWText(text: widget.title! + ':'), flex: 1);
   }
 
   Widget _buildTextField() {

@@ -6,7 +6,7 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 
 class GCWIntegerTextField extends StatefulWidget {
   final TextEditingController? controller;
-  final Function onChanged;
+  final void Function(Map<String, dynamic>) onChanged;
   final textInputFormatter;
   final String? hintText;
   final int? min;
