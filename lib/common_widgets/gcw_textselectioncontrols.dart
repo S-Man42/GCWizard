@@ -88,7 +88,7 @@ class GCWTextSelectionControls extends MaterialTextSelectionControls {
 
 class GCWTextSelectionToolbar extends StatefulWidget {
   const GCWTextSelectionToolbar({
-    Key key,
+    Key? key,
     this.anchorAbove,
     this.anchorBelow,
     this.clipboardStatus,
@@ -106,10 +106,10 @@ class GCWTextSelectionToolbar extends StatefulWidget {
   final Offset anchorBelow;
   final ClipboardStatusNotifier clipboardStatus;
   final TextSelectionDelegate delegate;
-  final Function handleCopy;
-  final Function handleCut;
+  final void Function() handleCopy;
+  final void Function() handleCut;
   // final Function handlePaste;
-  final Function handleSelectAll;
+  final void Function() handleSelectAll;
 
   /// Custom
   final Function handleGCWPasteButton;
