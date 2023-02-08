@@ -11,6 +11,7 @@ import 'package:gc_wizard/application/app_builder.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_delete_alertdialog.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
+import 'package:gc_wizard/utils/constants.dart';
 import 'package:prefs/prefs.dart';
 
 class GCWToolList extends StatefulWidget {
@@ -67,7 +68,7 @@ class _GCWToolListState extends State<GCWToolList> {
             ),
           Expanded(
             child: Text(
-              tool.toolName,
+              tool.toolName ?? UNKNOWN_ELEMENT,
               style: gcwTextStyle(),
             ),
           )
@@ -87,7 +88,7 @@ class _GCWToolListState extends State<GCWToolList> {
         color: themeColors().mainFont(),
         onPressed: () {
           if (tool.isFavorite) {
-            showDeleteAlertDialog(context, tool.toolName, () {
+            showDeleteAlertDialog(context, tool.toolName ?? UNKNOWN_ELEMENT, () {
               Favorites.update(tool.id, FavoriteChangeStatus.REMOVE);
 
               setState(() {
@@ -110,17 +111,17 @@ class _GCWToolListState extends State<GCWToolList> {
     var descriptionText;
     if (Prefs.getBool(PREFERENCE_TOOLLIST_SHOW_DESCRIPTIONS) &&
         tool.description != null &&
-        tool.description.length > 0) {
+        tool.description!.length > 0) {
       descriptionText = IgnorePointer(
           child: GCWText(
-        text: tool.description,
+        text: tool.description!,
         style: gcwDescriptionTextStyle(),
       ));
     }
 
     var exampleText;
-    if (Prefs.getBool(PREFERENCE_TOOLLIST_SHOW_EXAMPLES) && tool.example != null && tool.example.length > 0) {
-      exampleText = IgnorePointer(child: GCWText(text: tool.example, style: gcwDescriptionTextStyle()));
+    if (Prefs.getBool(PREFERENCE_TOOLLIST_SHOW_EXAMPLES) && tool.example != null && tool.example!.length > 0) {
+      exampleText = IgnorePointer(child: GCWText(text: tool.example!, style: gcwDescriptionTextStyle()));
     }
 
     var content;
