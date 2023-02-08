@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 
-class GCWCoordsDropDown extends StatefulWidget {
+class GCWCoordsDropDown extends StatefulWidget { // Mark brauchen wir das noch ?
   final Function onChanged;
   final String value;
   final List<dynamic> itemList;
 
-  const GCWCoordsDropDown({Key? key, this.itemList, this.onChanged, this.value}) : super(key: key);
+  const GCWCoordsDropDown({Key? key, required this.itemList, required this.onChanged, this.value}) : super(key: key);
 
   @override
   _GCWCoordsDropDownState createState() => _GCWCoordsDropDownState();

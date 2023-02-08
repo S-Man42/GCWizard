@@ -46,17 +46,17 @@ final List<Map<String, dynamic>> COMPASS_ROSE = [
 ];
 
 class GCWBearing extends StatefulWidget {
-  final Function onChanged;
-  final String hintText;
+  final void Function(Map<String, dynamic>) onChanged;
+  final String? hintText;
 
-  const GCWBearing({Key? key, this.onChanged, this.hintText}) : super(key: key);
+  const GCWBearing({Key? key, required this.onChanged, this.hintText}) : super(key: key);
 
   @override
   _GCWBearingState createState() => _GCWBearingState();
 }
 
 class _GCWBearingState extends State<GCWBearing> {
-  TextEditingController _bearingController;
+  late TextEditingController _bearingController;
   var _currentBearing = {'text': '', 'value': 0.0};
 
   var _currentCompassValue;
@@ -64,7 +64,7 @@ class _GCWBearingState extends State<GCWBearing> {
   @override
   void initState() {
     super.initState();
-    _bearingController = TextEditingController(text: _currentBearing['text']);
+    _bearingController = TextEditingController(text: _currentBearing['text'] as String?);
   }
 
   @override
