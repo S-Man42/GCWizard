@@ -224,11 +224,20 @@ void main() {
       {'input' : 'a', 'expectedOutput' : 0},
       {'input' : '12', 'expectedOutput' : 12},
       {'input' : '123,4', 'expectedOutput' : 1234},
-      {'input' : '123,4', 'expectedOutput' : 1234},
 
       {'input' : '1 2', 'expectedOutput' : 12},
       {'input' : 'a1', 'expectedOutput' : 1},
-      {'input' : '1a2', 'expectedOutput' : 12}
+      {'input' : '1a2', 'expectedOutput' : 12},
+
+      {'input' : '-a', 'expectedOutput' : 0},
+      {'input' : '-12', 'expectedOutput' : -12},
+      {'input' : '-123,4', 'expectedOutput' : -1234},
+      {'input' : '-12-3,4', 'expectedOutput' : -1234},
+
+      {'input' : ' - 1 2', 'expectedOutput' : -12},
+      {'input' : ' - 1 -2', 'expectedOutput' : -12},
+      {'input' : '-a1', 'expectedOutput' : -1},
+      {'input' : '1a-2', 'expectedOutput' : 12}
     ];
 
     _inputsToExpected.forEach((elem) {
