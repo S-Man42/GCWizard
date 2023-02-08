@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 class GCWIntegerTextInputFormatter extends TextInputFormatter {
   late RegExp _exp;
 
-  final int min;
+  final int? min;
   final int? max;
 
   GCWIntegerTextInputFormatter({required this.min, this.max}) {
@@ -26,19 +26,19 @@ class GCWIntegerTextInputFormatter extends TextInputFormatter {
       if (max == null)
         regex = '^\-?[0-9]*\$';
       else if (max! < 0) {
-        regex = '^(\-[0-9]{0,${max?.abs().toString().length}})?\$';
+        regex = '^(\-[0-9]{0,${max!.abs().toString().length}})?\$';
       } else if (max! >= 0) {
         regex = '^((-[0-9]*)|([0-9]{0,${max.toString().length}}))\$';
       }
-    } else if (min < 0) {
+    } else if (min! < 0) {
       if (max == null)
-        regex = '^((\-[0-9]{0,${min.abs().toString().length}})|([0-9]*))\$';
+        regex = '^((\-[0-9]{0,${min!.abs().toString().length}})|([0-9]*))\$';
       else if (max! < 0) {
-        regex = '^(\-[0-9]{0,${min.abs().toString().length}})?\$';
+        regex = '^(\-[0-9]{0,${min!.abs().toString().length}})?\$';
       } else if (max! >= 0) {
-        regex = '^((\-[0-9]{0,${min.abs().toString().length}})|([0-9]{0,${max.toString().length}}))\$';
+        regex = '^((\-[0-9]{0,${min!.abs().toString().length}})|([0-9]{0,${max.toString().length}}))\$';
       }
-    } else if (min >= 0) {
+    } else if (min! >= 0) {
       if (max == null)
         regex = '^[0-9]*\$';
       else if (max! >= 0) {
@@ -53,7 +53,7 @@ class GCWIntegerTextInputFormatter extends TextInputFormatter {
     if (value.startsWith('-')) {
       if (min == null) return true;
 
-      if (min.abs().toString().length > value.substring(1).length) return true;
+      if (min!.abs().toString().length > value.substring(1).length) return true;
     } else {
       if (max == null) return true;
 
@@ -63,7 +63,7 @@ class GCWIntegerTextInputFormatter extends TextInputFormatter {
     var _newInt = int.tryParse(value);
     if (_newInt == null) return false;
 
-    if (min != null && _newInt < min) return false;
+    if (min != null && _newInt < min!) return false;
 
     if (max != null && _newInt > max!) return false;
 
