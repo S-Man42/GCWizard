@@ -123,7 +123,7 @@ class GCWDatePickerState extends State<GCWDatePicker> {
           });
         },
       );
-    if (type == CalendarSystem.JULIANCALENDAR || type == CalendarSystem.GREGORIANCALENDAR)
+    else if (type == CalendarSystem.JULIANCALENDAR || type == CalendarSystem.GREGORIANCALENDAR)
       return GCWIntegerSpinner(
         focusNode: _monthFocusNode,
         layout: SpinnerLayout.VERTICAL,
@@ -141,6 +141,8 @@ class GCWDatePickerState extends State<GCWDatePicker> {
           });
         },
       );
+    else
+      return Container();
   }
 
   _setCurrentNamedCalendarValueAndEmitOnChange() {
