@@ -22,7 +22,7 @@ class GCWFilesOutput extends StatefulWidget {
   final bool suppressHiddenDataMessage;
   final Set<GCWImageViewButtons> suppressedButtons;
 
-  const GCWFilesOutput({Key? key, @required this.files, this.suppressHiddenDataMessage = false, this.suppressedButtons})
+  const GCWFilesOutput({Key? key, required this.files, this.suppressHiddenDataMessage = false, this.suppressedButtons})
       : super(key: key);
 
   @override
@@ -38,7 +38,7 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
   Widget _buildFileTree(List<GCWFile> files, List<String> parents, {level: 0}) {
     var isFirst = true;
     var children = files.map((GCWFile file) {
-      var hasChildren = file.children != null && file.children.isNotEmpty;
+      var hasChildren = file.children != null && file.children!.isNotEmpty;
 
       var actionButton = _buildActionButton(file);
 

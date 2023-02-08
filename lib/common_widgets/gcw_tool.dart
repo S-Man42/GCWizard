@@ -82,7 +82,7 @@ class GCWToolActionButtonsEntry {
   final String title; // - title-string to be shown in the dialog
   final String text; // - message-text to be shown in the dialog
   final IconData icon; // - icon tto be shown in the appbar
-  final Function? onPressed;
+  final void Function()? onPressed;
 
   GCWToolActionButtonsEntry({required this.showDialog, required this.url, required this.title,
       required this.text, required this.icon, this.onPressed});

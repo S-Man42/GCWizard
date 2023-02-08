@@ -16,7 +16,7 @@ import 'package:prefs/prefs.dart';
 class GCWToolList extends StatefulWidget {
   final toolList;
 
-  const GCWToolList({Key? key, this.toolList}) : super(key: key);
+  const GCWToolList({Key? key, required this.toolList}) : super(key: key);
 
   _GCWToolListState createState() => _GCWToolListState();
 }

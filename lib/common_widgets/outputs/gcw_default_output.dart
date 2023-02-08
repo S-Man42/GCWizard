@@ -6,9 +6,9 @@ class GCWDefaultOutput extends StatefulWidget {
   final dynamic child;
   final bool suppressCopyButton;
   final copyText;
-  final Widget trailing;
+  final Widget? trailing;
 
-  const GCWDefaultOutput({Key? key, this.child, this.suppressCopyButton: false, this.copyText, this.trailing})
+  const GCWDefaultOutput({Key? key, this.child, this.suppressCopyButton = false, this.copyText, this.trailing})
       : super(key: key);
 
   @override
