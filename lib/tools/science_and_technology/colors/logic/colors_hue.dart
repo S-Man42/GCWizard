@@ -120,10 +120,10 @@ _toRGB(double hue, double saturation, double thirdComponent, _HueType type) {
   return RGB(red, green, blue);
 }
 
-class HSV extends GCWColor {
-  double hue;
-  double saturation;
-  double value;
+class HSV extends GCWBaseColor {
+  late double hue;
+  late double saturation;
+  late double value;
 
   HSV(double hue, double saturation, double value) {
     this.hue = min(360.0, max(0.0, hue));
@@ -139,6 +139,7 @@ class HSV extends GCWColor {
     return value * 100.0;
   }
 
+  @override
   RGB toRGB() {
     return _toRGB(hue, saturation, value, _HueType.HSV);
   }
@@ -154,10 +155,10 @@ class HSV extends GCWColor {
   }
 }
 
-class HSL extends GCWColor {
-  double hue;
-  double saturation;
-  double lightness;
+class HSL extends GCWBaseColor {
+  late double hue;
+  late double saturation;
+  late double lightness;
 
   HSL(double hue, double saturation, double lightness) {
     this.hue = min(360.0, max(0.0, hue));
@@ -165,6 +166,7 @@ class HSL extends GCWColor {
     this.lightness = min(1.0, max(0.0, lightness));
   }
 
+  @override
   RGB toRGB() {
     return _toRGB(hue, saturation, lightness, _HueType.HSL);
   }
@@ -180,10 +182,10 @@ class HSL extends GCWColor {
   }
 }
 
-class HSI extends GCWColor {
-  double hue;
-  double saturation;
-  double intensity;
+class HSI extends GCWBaseColor {
+  late double hue;
+  late double saturation;
+  late double intensity;
 
   HSI(double hue, double saturation, double intensity) {
     this.hue = min(360.0, max(0.0, hue));
@@ -193,6 +195,7 @@ class HSI extends GCWColor {
 
   //TODO: Although every source I found has the same formulas, the precision lacks a little bit; finding a better approach!
   //source: https://www.vocal.com/video/rgb-and-hsvhsihsl-color-space-conversion/
+  @override
   RGB toRGB() {
     var red = 0.0;
     var green = 0.0;

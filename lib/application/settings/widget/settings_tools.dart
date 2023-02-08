@@ -19,9 +19,9 @@ class ToolSettingsState extends State<ToolSettings> {
         GCWTextDivider(
           text: i18n(context, 'settings_mayacalendar_title'),
         ),
-        GCWDropDown(
+        GCWDropDown<String>(
           value: Prefs.get(PREFERENCE_MAYACALENDAR_CORRELATION),
-          onChanged: (value) {
+          onChanged: (String value) {
             setState(() {
               Prefs.setString(PREFERENCE_MAYACALENDAR_CORRELATION, value);
             });

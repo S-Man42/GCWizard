@@ -19,7 +19,7 @@ class _GCWUnitPrefixDropDownState extends State<_GCWUnitPrefixDropDown> {
   Widget build(BuildContext context) {
     _currentPrefix = widget.value;
 
-    return GCWDropDown(
+    return GCWDropDown<UnitPrefix>(
         value: _currentPrefix,
         items: unitPrefixes.map((prefix) {
           return GCWDropDownMenuItem(
@@ -27,7 +27,7 @@ class _GCWUnitPrefixDropDownState extends State<_GCWUnitPrefixDropDown> {
             child: i18n(context, prefix.key) + ' (${prefix.symbol})',
           );
         }).toList(),
-        onChanged: (value) {
+        onChanged: (UnitPrefix value) {
           setState(() {
             _currentPrefix = value;
             widget.onChanged(_currentPrefix);

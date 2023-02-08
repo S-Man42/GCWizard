@@ -6,6 +6,7 @@ import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/spinners/spinner_constants.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_double_textfield.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:intl/intl.dart';
 
 class GCWDoubleSpinner extends StatefulWidget {
@@ -129,11 +130,10 @@ class GCWDoubleSpinnerState extends State<GCWDoubleSpinner> {
         max: widget.max,
         numberDecimalDigits: widget.numberDecimalDigits,
         controller: _controller,
-        onChanged: (ret) {
+        onChanged: (DoubleText ret) {
           setState(() {
             _externalChange = false;
-
-            _currentValue = ret['value'] is double ? ret['value'] as double : _currentValue;
+            _currentValue = ret.value;
 
             _setCurrentValueAndEmitOnChange();
           });

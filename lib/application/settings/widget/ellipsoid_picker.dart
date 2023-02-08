@@ -14,13 +14,13 @@ class _EllipsoidPickerState extends State<_EllipsoidPicker> {
   static const _keyFlattening = 'flattening';
   static const _keyMinorAxis = 'minor_axis';
 
-  late TextEditingController _firstUserValueController;
-  late TextEditingController _secondUserValueController;
-  late Map<String, dynamic> _firstUserValue;
-  late Map<String, dynamic> _secondUserValue;
+  late TextEditingController _firstCustomValueController;
+  late TextEditingController _secondCustomValueController;
+  late DoubleText _firstCustomValue;
+  late DoubleText _secondCustomValue;
 
   late GCWSwitchPosition _currentMode;
-  String _currentEllipsoidUser2ndValue = _keyMinorAxis;
+  String _currentEllipsoidCustom2ndValue = _keyMinorAxis;
   late Ellipsoid _currentStandardEllipsoid;
 
   Ellipsoid _currentEllipsoid = defaultEllipsoid();
@@ -31,30 +31,30 @@ class _EllipsoidPickerState extends State<_EllipsoidPicker> {
     _currentMode = _currentEllipsoid.type == EllipsoidType.STANDARD ? GCWSwitchPosition.left : GCWSwitchPosition.right;
 
     if (_currentEllipsoid.type == EllipsoidType.USER_DEFINED) {
-      _firstUserValue = {'text': _currentEllipsoid.a.toString(), 'value': _currentEllipsoid.a};
-      _secondUserValue = {'text': _currentEllipsoid.b.toString(), 'value': _currentEllipsoid.b};
+      _firstCustomValue = DoubleText(_currentEllipsoid.a.toString(), _currentEllipsoid.a);
+      _secondCustomValue = DoubleText(_currentEllipsoid.b.toString(), _currentEllipsoid.b);
       _currentStandardEllipsoid = getEllipsoidByName(ELLIPSOID_NAME_WGS84);
     } else {
-      _firstUserValue = defaultDoubleText;
-      _secondUserValue = defaultDoubleText;
+      _firstCustomValue = defaultDoubleText;
+      _secondCustomValue = defaultDoubleText;
       _currentStandardEllipsoid = _currentEllipsoid;
     }
 
-    _firstUserValueController = TextEditingController(text: _firstUserValue['text']);
-    _secondUserValueController = TextEditingController(text: _secondUserValue['text']);
+    _firstCustomValueController = TextEditingController(text: _firstCustomValue.text);
+    _secondCustomValueController = TextEditingController(text: _secondCustomValue.text);
   }
 
   @override
   void dispose() {
-    _firstUserValueController.dispose();
-    _secondUserValueController.dispose();
+    _firstCustomValueController.dispose();
+    _secondCustomValueController.dispose();
 
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final _secondUserValues = [
+    final _secondCustomValues = [
       {'key': _keyMinorAxis, 'name': i18n(context, 'coords_ellipsoid_minoraxis')},
       {'key': _keyInverseFlattening, 'name': i18n(context, 'coords_ellipsoid_inverseflattening')},
       {'key': _keyFlattening, 'name': i18n(context, 'coords_ellipsoid_flattening')},
@@ -73,7 +73,7 @@ class _EllipsoidPickerState extends State<_EllipsoidPicker> {
         },
       ),
       _currentMode == GCWSwitchPosition.left
-          ? GCWDropDown(
+          ? GCWDropDown<Ellipsoid>(
               value: _currentStandardEllipsoid,
               items: allEllipsoids.map((ellipsoid) {
                 return GCWDropDownMenuItem(
@@ -81,7 +81,7 @@ class _EllipsoidPickerState extends State<_EllipsoidPicker> {
                   child: i18n(context, ellipsoid.name!, ifTranslationNotExists: ellipsoid.name!),
                 );
               }).toList(),
-              onChanged: (newValue) {
+              onChanged: (Ellipsoid newValue) {
                 setState(() {
                   _currentStandardEllipsoid = newValue;
                   _setCurrentEllipsoidAndEmitOnChange(context);
@@ -95,11 +95,11 @@ class _EllipsoidPickerState extends State<_EllipsoidPicker> {
                     Expanded(child: GCWText(text: i18n(context, 'coords_ellipsoid_majoraxis')), flex: 2),
                     Expanded(
                         child: GCWDoubleTextField(
-                          controller: _firstUserValueController,
+                          controller: _firstCustomValueController,
                           min: 0.0,
                           onChanged: (ret) {
                             setState(() {
-                              _firstUserValue = ret;
+                              _firstCustomValue = ret;
                               _setCurrentEllipsoidAndEmitOnChange(context);
                             });
                           },
@@ -110,17 +110,17 @@ class _EllipsoidPickerState extends State<_EllipsoidPicker> {
                 Row(
                   children: <Widget>[
                     Expanded(
-                        child: GCWDropDown(
-                          value: _currentEllipsoidUser2ndValue,
-                          items: _secondUserValues.map((value) {
+                        child: GCWDropDown<String>(
+                          value: _currentEllipsoidCustom2ndValue,
+                          items: _secondCustomValues.map((value) {
                             return GCWDropDownMenuItem(
                               value: value['key'],
                               child: value['name'],
                             );
                           }).toList(),
-                          onChanged: (newValue) {
+                          onChanged: (String newValue) {
                             setState(() {
-                              _currentEllipsoidUser2ndValue = newValue;
+                              _currentEllipsoidCustom2ndValue = newValue;
                               _setCurrentEllipsoidAndEmitOnChange(context);
                             });
                           },
@@ -128,11 +128,11 @@ class _EllipsoidPickerState extends State<_EllipsoidPicker> {
                         flex: 2),
                     Expanded(
                         child: GCWDoubleTextField(
-                          controller: _secondUserValueController,
+                          controller: _secondCustomValueController,
                           min: 0.0,
                           onChanged: (ret) {
                             setState(() {
-                              _secondUserValue = ret;
+                              _secondCustomValue = ret;
                               _setCurrentEllipsoidAndEmitOnChange(context);
                             });
                           },
@@ -162,18 +162,18 @@ class _EllipsoidPickerState extends State<_EllipsoidPicker> {
 
   _setCurrentEllipsoidAndEmitOnChange(BuildContext context) {
     if (_currentMode == GCWSwitchPosition.left) {
-      _firstUserValueController.clear();
-      _secondUserValueController.clear();
-      _firstUserValue = defaultDoubleText;
-      _secondUserValue = defaultDoubleText;
-      _currentEllipsoidUser2ndValue = _keyMinorAxis;
+      _firstCustomValueController.clear();
+      _secondCustomValueController.clear();
+      _firstCustomValue = defaultDoubleText;
+      _secondCustomValue = defaultDoubleText;
+      _currentEllipsoidCustom2ndValue = _keyMinorAxis;
 
       _currentEllipsoid = _currentStandardEllipsoid;
     } else {
-      var a = max<double>(_firstUserValue['value'], 1.0);
-      var second = _secondUserValue['value'];
+      var a = max<double>(_firstCustomValue.value, 1.0);
+      var second = _secondCustomValue.value;
 
-      switch (_currentEllipsoidUser2ndValue) {
+      switch (_currentEllipsoidCustom2ndValue) {
         case _keyInverseFlattening:
           _currentEllipsoid = Ellipsoid(null, a, max<double>(second, 1.01), type: EllipsoidType.USER_DEFINED);
           break;

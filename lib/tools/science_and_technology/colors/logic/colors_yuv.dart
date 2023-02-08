@@ -5,10 +5,10 @@ import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors_rgb.d
 import 'package:gc_wizard/utils/math_utils.dart';
 
 //source: https://en.wikipedia.org/wiki/YUV#Conversion_to/from_RGB
-class YUV extends GCWColor {
-  double y; //luminance/luma;
-  double u; //chrominance: blue projection
-  double v; //chrominance: red projection
+class YUV extends GCWBaseColor {
+  late double y; //luminance/luma;
+  late double u; //chrominance: blue projection
+  late double v; //chrominance: red projection
 
   //values for standard ITU-R BT.601; //TODO: standard BT.709
   static final double U_MAX = 0.436;
@@ -24,6 +24,7 @@ class YUV extends GCWColor {
     this.v = min(V_MAX, max(-V_MAX, v));
   }
 
+  @override
   RGB toRGB() {
     double red = y + v * ((1.0 - _W_R) / V_MAX);
     double green = y - u * (_W_B * (1.0 - _W_B) / (U_MAX * _W_G)) - v * (_W_R * (1.0 - _W_R) / (V_MAX * _W_G));
@@ -51,16 +52,17 @@ class YUV extends GCWColor {
 }
 
 //source https://en.wikipedia.org/wiki/YCbCr#ITU-R_BT.601_conversion
-class YPbPr extends GCWColor {
-  double y; //luminance/luma;
-  double pb; //chrominance: blue projection
-  double pr; //chrominance: red projection
+class YPbPr extends GCWBaseColor {
+  late double y; //luminance/luma;
+  late double pb; //chrominance: blue projection
+  late double pr; //chrominance: red projection
 
   //values for standard ITU-R BT.601; //TODO: standard BT.709, BT.2020, SMPTE 240M, JPEG
   static final double _K_R = 0.299;
   static final double _K_B = 0.114;
   static final double _K_G = 1.0 - _K_R - _K_B;
 
+  @override
   YPbPr(double y, double p_b, double p_r) {
     this.y = min(1.0, max(0.0, y));
     this.pb = min(0.5, max(-0.5, p_b));
@@ -94,10 +96,10 @@ class YPbPr extends GCWColor {
 }
 
 //source https://en.wikipedia.org/wiki/YCbCr#ITU-R_BT.601_conversion
-class YCbCr extends GCWColor {
-  double y; //luminance/luma;
-  double cb; //chrominance: blue projection
-  double cr; //chrominance: red projection
+class YCbCr extends GCWBaseColor {
+  late double y; //luminance/luma;
+  late double cb; //chrominance: blue projection
+  late double cr; //chrominance: red projection
 
   YCbCr(double y, double p_b, double p_r) {
     this.y = min(235.0, max(16.0, y));
@@ -113,6 +115,7 @@ class YCbCr extends GCWColor {
     return YPbPr(y_pbpr, p_b, p_r);
   }
 
+  @override
   RGB toRGB() {
     return toYPbPr().toRGB();
   }
@@ -136,10 +139,10 @@ class YCbCr extends GCWColor {
 }
 
 //source: https://de.wikipedia.org/wiki/YIQ-Farbmodell
-class YIQ extends GCWColor {
-  double y; //luminance/luma;
-  double i; //cyan orange balance
-  double q; //magenta green balance
+class YIQ extends GCWBaseColor {
+  late double y; //luminance/luma;
+  late double i; //cyan orange balance
+  late double q; //magenta green balance
 
   static final double I_MAX = 0.5957;
   static final double Q_MAX = 0.5226;
@@ -158,6 +161,7 @@ class YIQ extends GCWColor {
     return YUV(yuv_y, u, v);
   }
 
+  @override
   RGB toRGB() {
     return toYUV().toRGB();
   }

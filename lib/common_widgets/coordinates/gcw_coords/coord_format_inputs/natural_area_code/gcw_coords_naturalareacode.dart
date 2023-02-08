@@ -1,18 +1,18 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _GCWCoordsNaturalAreaCode extends StatefulWidget {
-  final Function onChanged;
+  final void Function(NaturalAreaCode) onChanged;
   final BaseCoordinates coordinates;
 
-  const _GCWCoordsNaturalAreaCode({Key? key, this.onChanged, this.coordinates}) : super(key: key);
+  const _GCWCoordsNaturalAreaCode({Key? key, required this.onChanged, required this.coordinates}) : super(key: key);
 
   @override
   _GCWCoordsNaturalAreaCodeState createState() => _GCWCoordsNaturalAreaCodeState();
 }
 
 class _GCWCoordsNaturalAreaCodeState extends State<_GCWCoordsNaturalAreaCode> {
-  TextEditingController _controllerX;
-  TextEditingController _controllerY;
+  late TextEditingController _controllerX;
+  late TextEditingController _controllerY;
   var _currentX = '';
   var _currentY = '';
 

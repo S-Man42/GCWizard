@@ -23,6 +23,8 @@ import 'package:gc_wizard/tools/coords/format_converter/logic/utm.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coord_format_getter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
+import 'package:gc_wizard/utils/constants.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
@@ -60,8 +62,22 @@ part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_input
 part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/natural_area_code/gcw_coords_naturalareacode.dart';
 part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/natural_area_code/naturalareacode_textinputformatter.dart';
 
+class GCWCoordsValue{
+  GCWCoordsFormatValue format;
+  BaseCoordinates value;
+
+  GCWCoordsValue(this.format, this.value);
+}
+
+class GCWCoordsFormatValue{
+  final String format;
+  final String subtype;
+
+  GCWCoordsFormatValue(this.format, this.subtype);
+}
+
 class GCWCoords extends StatefulWidget {
-  final Function onChanged;
+  final void Function(GCWCoordsValue) onChanged;
   final Map<String, String> coordsFormat;
   final LatLng coordinates;
   final String title;

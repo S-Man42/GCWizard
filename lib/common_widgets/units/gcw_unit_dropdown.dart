@@ -27,11 +27,11 @@ class GCWUnitDropDownState extends State<GCWUnitDropDown> {
   Widget build(BuildContext context) {
     var _currentUnitList = widget.unitList ?? widget.unitCategory?.units ?? [];
 
-    return GCWDropDown(
+    return GCWDropDown<Unit>(
         value: widget.value,
-        onChanged: (newValue) {
+        onChanged: (Unit newValue) {
           setState(() {
-            _currentUnit = newValue is Unit ? newValue : null;
+            _currentUnit = newValue;
             if (_currentUnit is Unit) widget.onChanged(_currentUnit!);
           });
         },

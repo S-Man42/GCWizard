@@ -3,11 +3,11 @@ import 'dart:math';
 import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors_rgb.dart';
 
-class CMYK extends GCWColor {
-  double cyan;
-  double magenta;
-  double yellow;
-  double key; // black component
+class CMYK extends GCWBaseColor {
+  late double cyan;
+  late double magenta;
+  late double yellow;
+  late double key; // black component
 
   CMYK(double cyan, double magenta, double yellow, double key) {
     this.cyan = min(1.0, max(0.0, cyan));
@@ -17,6 +17,7 @@ class CMYK extends GCWColor {
   }
 
   //source: https://github.com/GNOME/gimp/blob/mainline/libgimpcolor/gimpcolorspace.c
+  @override
   RGB toRGB() {
     double c = 1.0;
     double m = 1.0;
@@ -67,10 +68,10 @@ class CMYK extends GCWColor {
   }
 }
 
-class CMY extends GCWColor {
-  double cyan;
-  double magenta;
-  double yellow;
+class CMY extends GCWBaseColor {
+  late double cyan;
+  late double magenta;
+  late double yellow;
 
   CMY(double cyan, double magenta, double yellow) {
     this.cyan = min(1.0, max(0.0, cyan));
@@ -78,6 +79,7 @@ class CMY extends GCWColor {
     this.yellow = min(1.0, max(0.0, yellow));
   }
 
+  @override
   RGB toRGB() {
     double red = (1.0 - cyan) * 255.0;
     double green = (1.0 - magenta) * 255.0;

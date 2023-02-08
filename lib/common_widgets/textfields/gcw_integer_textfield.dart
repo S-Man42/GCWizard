@@ -3,10 +3,12 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/text_input_formatters/gcw_integer_textinputformatter.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
+import 'package:gc_wizard/utils/data_type_utils/integer_type_utils.dart';
 
 class GCWIntegerTextField extends StatefulWidget {
   final TextEditingController? controller;
-  final void Function(Map<String, Object?>) onChanged;
+  final void Function(IntegerText) onChanged;
   final textInputFormatter;
   final String? hintText;
   final int? min;
@@ -42,15 +44,18 @@ class _GCWIntegerTextFieldState extends State<GCWIntegerTextField> {
   Widget build(BuildContext context) {
     return GCWTextField(
       hintText: widget.hintText,
-      onChanged: (text) {
+      onChanged: (String text) {
         setState(() {
-          var _value = ['', '-'].contains(text) ? max<int>(widget.min ?? 0, 0) : int.tryParse(text); //Mark nullable ?
+          if (!isInteger(text))
+            return;
 
-          if (widget.min != null && _value < widget.min!) _value = widget.min;
+          var _value = ['', '-'].contains(text) ? max<int>(widget.min ?? 0, 0) : int.parse(text);
 
-          if (widget.max != null && _value > widget.max!) _value = widget.max;
+          if (widget.min != null && _value < widget.min!) _value = widget.min!;
 
-          widget.onChanged(<String, Object?>{'text': text, 'value': _value});
+          if (widget.max != null && _value > widget.max!) _value = widget.max!;
+
+          widget.onChanged(IntegerText(text, _value));
         });
       },
       controller: widget.controller,

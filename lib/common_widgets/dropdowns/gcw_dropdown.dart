@@ -3,8 +3,8 @@ import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 
-class GCWDropDown extends StatefulWidget {
-  final void Function(Object?) onChanged;
+class GCWDropDown<T> extends StatefulWidget {
+  final void Function(T) onChanged;
   final List<GCWDropDownMenuItem> items;
   final value;
   final DropdownButtonBuilder? selectedItemBuilder;

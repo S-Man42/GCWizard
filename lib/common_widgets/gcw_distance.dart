@@ -6,6 +6,7 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_double_textfield.dart';
 import 'package:gc_wizard/common_widgets/units/gcw_unit_dropdown.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/length.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:prefs/prefs.dart';
 
 class GCWDistance extends StatefulWidget {
@@ -28,19 +29,19 @@ class GCWDistance extends StatefulWidget {
 class _GCWDistanceState extends State<GCWDistance> {
   var _controller;
 
-  Map<String, dynamic> _currentInput = {'text': '', 'value': 0.0};
+  var _currentInput = DoubleText('', 0.0);
   late Length _currentLengthUnit;
 
   @override
   void initState() {
     super.initState();
 
-    if (widget.value != null) _currentInput = {'text': widget.value!.toString(), 'value': widget.value!};
+    if (widget.value != null) _currentInput = DoubleText(widget.value!.toString(), widget.value!);
 
     if (widget.controller != null) {
       _controller = widget.controller;
     } else {
-      _controller = TextEditingController(text: _currentInput['text'] as String?);
+      _controller = TextEditingController(text: _currentInput.text);
     }
 
     _currentLengthUnit = (widget.unit ?? getUnitBySymbol(allLengths(), Prefs.get(PREFERENCE_DEFAULT_LENGTH_UNIT))) as Length;
@@ -63,7 +64,7 @@ class _GCWDistanceState extends State<GCWDistance> {
                   hintText: widget.hintText ?? i18n(context, 'common_distance_hint'),
                   min: widget.allowNegativeValues ? null : 0.0,
                   controller: _controller,
-                  onChanged: (ret) {
+                  onChanged: (DoubleText ret) {
                     setState(() {
                       _currentInput = ret;
                       _setCurrentValueAndEmitOnChange();
@@ -88,9 +89,9 @@ class _GCWDistanceState extends State<GCWDistance> {
   }
 
   _setCurrentValueAndEmitOnChange([setTextFieldText = false]) {
-    if (setTextFieldText) _controller.text = _currentInput['value'].toString();
+    if (setTextFieldText) _controller.text = _currentInput.value.toString();
 
-    double _currentValue = _currentInput['value'] as double;
+    double _currentValue = _currentInput.value;
     var _meters = _currentLengthUnit.toMeter(_currentValue);
     widget.onChanged(_meters);
   }

@@ -87,9 +87,9 @@ class _GCWCoordsDECState extends State<_GCWCoordsDEC> {
                     hintText: 'DD',
                     textInputFormatter: _DegreesLatTextInputFormatter(allowNegativeValues: false),
                     controller: _LatDegreesController,
-                    onChanged: (Map<String, Object> ret) {
+                    onChanged: (IntegerText ret) {
                       setState(() {
-                        _currentLatDegrees = ret['text'] as String;
+                        _currentLatDegrees = ret.text;
                         _setCurrentValueAndEmitOnChange();
 
                         if (_currentLatDegrees.length == 2)
@@ -111,7 +111,7 @@ class _GCWCoordsDECState extends State<_GCWCoordsDEC> {
                 focusNode: _latMilliDegreesFocusNode,
                 onChanged: (ret) {
                   setState(() {
-                    _currentLatMilliDegrees = ret['text'] as String;
+                    _currentLatMilliDegrees = ret.text;
                     _setCurrentValueAndEmitOnChange();
                   });
                 }),
@@ -143,9 +143,9 @@ class _GCWCoordsDECState extends State<_GCWCoordsDEC> {
                     hintText: 'DD',
                     textInputFormatter: _DegreesLonTextInputFormatter(allowNegativeValues: false),
                     controller: _LonDegreesController,
-                    onChanged: (ret) {
+                    onChanged: (IntegerText ret) {
                       setState(() {
-                        _currentLonDegrees = ret['text'] as String;
+                        _currentLonDegrees = ret.text;
                         _setCurrentValueAndEmitOnChange();
 
                         if (_currentLonDegrees.length == 3)
@@ -165,9 +165,9 @@ class _GCWCoordsDECState extends State<_GCWCoordsDEC> {
                 min: 0,
                 controller: _LonMilliDegreesController,
                 focusNode: _lonMilliDegreesFocusNode,
-                onChanged: (ret) {
+                onChanged: (IntegerText ret) {
                   setState(() {
-                    _currentLonMilliDegrees = ret['text'] as String;
+                    _currentLonMilliDegrees = ret.text;
                     _setCurrentValueAndEmitOnChange();
                   });
                 }),

@@ -4,6 +4,7 @@ import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/spinners/spinner_constants.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_integer_textfield.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 
 enum SpinnerOverflowType {
   SUPPRESS_OVERFLOW, // stop spinning at min and max
@@ -115,11 +116,11 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
         min: widget.overflow == SpinnerOverflowType.OVERFLOW_MAX ? null : widget.min,
         max: widget.overflow == SpinnerOverflowType.OVERFLOW_MIN ? null : widget.max,
         controller: _controller,
-        onChanged: (ret) {
+        onChanged: (IntegerText ret) {
           setState(() {
             _externalChange = false;
+            _currentValue = ret.value;
 
-            _currentValue = ret['value'] is int ? ret['value'] as int : _currentValue;
             _setCurrentValueAndEmitOnChange();
           });
         });
