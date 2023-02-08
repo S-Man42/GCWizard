@@ -19,14 +19,14 @@ enum PossibleExportMode { TEXTONLY, QRONLY, BOTH }
 
 class GCWTextExport extends StatefulWidget {
   final String text;
-  final void Function(TextExportMode) onModeChanged;
+  final void Function(TextExportMode)? onModeChanged;
   final PossibleExportMode possibileExportMode;
   final TextExportMode initMode;
 
   const GCWTextExport(
       {Key? key,
       required this.text,
-      required this.onModeChanged,
+      this.onModeChanged,
       this.possibileExportMode = PossibleExportMode.BOTH,
       this.initMode = TextExportMode.QR})
       : super(key: key);
@@ -85,7 +85,7 @@ class GCWTextExportState extends State<GCWTextExport> {
                     onChanged: (value) {
                       setState(() {
                         _currentMode = value == GCWSwitchPosition.left ? TextExportMode.QR : TextExportMode.TEXT;
-                        widget.onModeChanged(_currentMode);
+                        if (widget.onModeChanged != null) widget.onModeChanged!(_currentMode);
 
                         if (_currentMode == TextExportMode.QR) _buildQRCode();
                       });
