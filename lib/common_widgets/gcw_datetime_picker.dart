@@ -161,17 +161,17 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
 
     if (widget.config.contains(DateTimePickerConfig.DAY)) {
       if (widget.duration != null)
-        _currentDay = widget.duration.inDays;
+        _currentDay = widget.duration!.inDays;
       else
         _currentDay = date.day;
     }
 
     if (widget.config.contains(DateTimePickerConfig.TIME)) {
       if (widget.duration != null) {
-        _currentHour = widget.duration.inHours.remainder(24);
-        _currentMinute = widget.duration.inMinutes.remainder(60);
-        _currentSecond = widget.duration.inSeconds.remainder(60);
-        _currentMilliSecond = _durationMilliseconds(widget.duration);
+        _currentHour = widget.duration!.inHours.remainder(24);
+        _currentMinute = widget.duration!.inMinutes.remainder(60);
+        _currentSecond = widget.duration!.inSeconds.remainder(60);
+        _currentMilliSecond = _durationMilliseconds(widget.duration!);
       } else {
         _currentHour = date.hour;
         _currentMinute = date.minute;
@@ -200,27 +200,27 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
     if (widget.config.contains(DateTimePickerConfig.TIME)) {
       if (widget.duration != null) {
         // update with new values (paste, ..)
-        if (_currentSign != (widget.duration?.isNegative ? -1 : 1)) _currentSign = widget.duration?.isNegative ? -1 : 1;
-        if (_currentHour != widget.duration.inHours.abs()) _currentHour = widget.duration.inHours.abs().remainder(24);
-        if (_currentMinute != widget.duration.inMinutes.abs().remainder(60))
-          _currentMinute = widget.duration.inMinutes.abs().remainder(60);
-        if (_currentSecond != widget.duration.inSeconds.abs().remainder(60))
-          _currentSecond = widget.duration.inSeconds.abs().remainder(60);
-        if (_currentMilliSecond != _durationMilliseconds(widget.duration))
-          _currentMilliSecond = _durationMilliseconds(widget.duration);
+        if (_currentSign != (widget.duration!.isNegative ? -1 : 1)) _currentSign = widget.duration!.isNegative ? -1 : 1;
+        if (_currentHour != widget.duration!.inHours.abs()) _currentHour = widget.duration!.inHours.abs().remainder(24);
+        if (_currentMinute != widget.duration!.inMinutes.abs().remainder(60))
+          _currentMinute = widget.duration!.inMinutes.abs().remainder(60);
+        if (_currentSecond != widget.duration!.inSeconds.abs().remainder(60))
+          _currentSecond = widget.duration!.inSeconds.abs().remainder(60);
+        if (_currentMilliSecond != _durationMilliseconds(widget.duration!))
+          _currentMilliSecond = _durationMilliseconds(widget.duration!);
       } else if (widget.datetime != null) {
         // update with new values (paste, ..)
-        if (_currentHour != widget.datetime?.hour) _currentHour = widget.datetime.hour!;
-        if (_currentMinute == widget.datetime?.minute) _currentMinute = widget.datetime.minute;
-        if (_currentSecond == widget.datetime?.second) _currentSecond = widget.datetime.second;
-        if (_currentMilliSecond == widget.datetime?.millisecond) _currentMilliSecond = widget.datetime.millisecond!;
+        if (_currentHour != widget.datetime?.hour) _currentHour = widget.datetime!.hour;
+        if (_currentMinute == widget.datetime?.minute) _currentMinute = widget.datetime!.minute;
+        if (_currentSecond == widget.datetime?.second) _currentSecond = widget.datetime!.second;
+        if (_currentMilliSecond == widget.datetime?.millisecond) _currentMilliSecond = widget.datetime!.millisecond!;
       }
     } else if (widget.config.contains(DateTimePickerConfig.DATE)) {
       if (widget.datetime != null) {
         // update with new values (paste, ..)
-        if (_currentYear != widget.datetime?.year) _currentYear = widget.datetime.year;
-        if (_currentMonth != widget.datetime?.month) _currentMonth = widget.datetime.month;
-        if (_currentDay != widget.datetime?.day) _currentDay = widget.datetime.day!;
+        if (_currentYear != widget.datetime?.year) _currentYear = widget.datetime!.year;
+        if (_currentMonth != widget.datetime?.month) _currentMonth = widget.datetime!.month;
+        if (_currentDay != widget.datetime?.day) _currentDay = widget.datetime!.day;
       }
     }
 

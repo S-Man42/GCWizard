@@ -7,13 +7,13 @@ import 'package:gc_wizard/common_widgets/spinners/spinner_constants.dart';
 
 class GCWDropDownSpinner extends StatefulWidget {
   final Function onChanged;
-  final index;
+  final int index;
   final List<dynamic> items;
   final SpinnerLayout layout;
-  final String title;
+  final String? title;
 
   const GCWDropDownSpinner(
-      {Key? key, this.onChanged, this.title, this.index, this.items, this.layout: SpinnerLayout.HORIZONTAL})
+      {Key? key, required this.onChanged, this.title, required this.index, required this.items, this.layout = SpinnerLayout.HORIZONTAL})
       : super(key: key);
 
   @override
@@ -21,7 +21,7 @@ class GCWDropDownSpinner extends StatefulWidget {
 }
 
 class GCWDropDownSpinnerState extends State<GCWDropDownSpinner> {
-  int _currentIndex;
+  late int _currentIndex;
 
   _increaseValue() {
     setState(() {
@@ -37,7 +37,7 @@ class GCWDropDownSpinnerState extends State<GCWDropDownSpinner> {
 
   @override
   Widget build(BuildContext context) {
-    _currentIndex = widget.index ?? 0;
+    _currentIndex = widget.index;
 
     if (widget.layout == SpinnerLayout.HORIZONTAL) {
       return Row(
@@ -80,20 +80,20 @@ class GCWDropDownSpinnerState extends State<GCWDropDownSpinner> {
   }
 
   Widget _buildTitle() {
-    return widget.title == null ? Container() : Expanded(child: GCWText(text: widget.title + ':'), flex: 1);
+    return widget.title == null ? Container() : Expanded(child: GCWText(text: widget.title! + ':'), flex: 1);
   }
 
   _buildDropDown() {
     return Container(
       child: GCWDropDown(
-        value: (widget.index ?? _currentIndex) % widget.items.length,
+        value: widget.index % widget.items.length,
         onChanged: (newValue) {
           setState(() {
             _setValueAndEmitOnChange(newValue);
           });
         },
         items: (widget.items is List<GCWDropDownMenuItem>)
-            ? widget.items
+            ? widget.items as List<GCWDropDownMenuItem>
             : widget.items
                 .asMap()
                 .map((index, item) {
