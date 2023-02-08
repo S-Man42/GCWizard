@@ -52,7 +52,7 @@ class _GCWColumnedMultilineOutputState extends State<GCWColumnedMultilineOutput>
     var copyColumn = widget.copyColumn;
 
     int index = 0;
-    return widget.data.where((row) => row != null).map((rowData) {
+    return widget.data.map((rowData) {
       Widget output;
 
       var columns = rowData
