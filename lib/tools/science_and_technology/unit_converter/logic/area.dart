@@ -1,8 +1,8 @@
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
 
 class Area extends Unit {
-  late Function toSquareMeter;
-  late Function fromSquareMeter;
+  late double Function (double) toSquareMeter;
+  late double Function (double) fromSquareMeter;
 
   Area({
     required String name,

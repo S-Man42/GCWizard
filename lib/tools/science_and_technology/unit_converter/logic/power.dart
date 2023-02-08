@@ -1,8 +1,8 @@
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
 
 class Power extends Unit {
-  late Function toWatt;
-  late Function fromWatt;
+  late double Function (double) toWatt;
+  late double Function (double) fromWatt;
 
   Power({required String name, required String symbol, bool isReference: false, required double inWatt})
       : super(name, symbol, isReference, (e) => e * inWatt, (e) => e / inWatt) {

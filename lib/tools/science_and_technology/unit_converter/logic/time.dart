@@ -1,8 +1,8 @@
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
 
 class Time extends Unit {
-  late Function toSeconds;
-  late Function fromSeconds;
+  late double Function (double) toSeconds;
+  late double Function (double) fromSeconds;
 
   Time({required String name, required String symbol, bool isReference = false, required double inSeconds})
       : super(name, symbol, isReference, (e) => e * inSeconds, (e) => e / inSeconds) {

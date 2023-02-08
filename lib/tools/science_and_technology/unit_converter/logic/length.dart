@@ -3,8 +3,8 @@ import 'dart:math';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
 
 class Length extends Unit {
-  late Function toMeter;
-  late Function fromMeter;
+  late double Function (double) toMeter;
+  late double Function (double) fromMeter;
 
   Length({
     required String name,

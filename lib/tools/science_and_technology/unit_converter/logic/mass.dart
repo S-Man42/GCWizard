@@ -1,8 +1,8 @@
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
 
 class Mass extends Unit {
-  late Function toGram;
-  late Function fromGram;
+  late double Function (double) toGram;
+  late double Function (double) fromGram;
 
   Mass({
     required String name,

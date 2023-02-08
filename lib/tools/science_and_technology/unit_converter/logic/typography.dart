@@ -1,8 +1,8 @@
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
 
 class Typography extends Unit {
-  late Function toDTPPt;
-  late Function fromDTPPt;
+  late double Function (double) toDTPPt;
+  late double Function (double) fromDTPPt;
 
   Typography({
     required String name,

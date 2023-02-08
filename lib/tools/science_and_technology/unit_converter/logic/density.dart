@@ -1,8 +1,8 @@
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
 
 class Density extends Unit {
-  late Function toGramPerCubicMeter;
-  late Function fromGramPerCubicMeter;
+  late double Function (double) toGramPerCubicMeter;
+  late double Function (double) fromGramPerCubicMeter;
 
   Density({
     required String name,

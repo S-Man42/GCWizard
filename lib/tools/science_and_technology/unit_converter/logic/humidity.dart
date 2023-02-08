@@ -1,8 +1,8 @@
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
 
 class Humidity extends Unit {
-  late Function toDegree;
-  late Function fromDegree;
+  late double Function (double) toDegree;
+  late double Function (double) fromDegree;
 
   Humidity({required String name, required String symbol, bool isReference: false, required double inDegree})
       : super(name, symbol, isReference, (e) => e * inDegree, (e) => e / inDegree) {
