@@ -78,13 +78,16 @@ class _GCWColumnedMultilineOutputState extends State<GCWColumnedMultilineOutput>
           .values
           .toList();
 
+      String? copyText;
       if (copyColumn == null) copyColumn = rowData.length - 1;
-      var copyText = rowData[copyColumn!] is Widget ? '' : rowData[copyColumn!].toString();
-      if (isFirst && widget.hasHeader && widget.copyAll) {
-        copyText = '';
-        widget.data.where((row) => row != null).skip(1).forEach((dataRow) {
-          copyText += dataRow[copyColumn!].toString() + '\n';
-        });
+      if (copyColumn != null && copyColumn! >= 0) {
+        copyText = rowData[copyColumn!] is Widget ? null : rowData[copyColumn!].toString();
+        if (isFirst && widget.hasHeader && widget.copyAll) {
+          copyText = '';
+          widget.data.skip(1).forEach((dataRow) {
+            copyText = (copyText ?? '') + dataRow[copyColumn!].toString() + '\n';
+          });
+        }
       }
 
       var row = Container(
@@ -93,7 +96,7 @@ class _GCWColumnedMultilineOutputState extends State<GCWColumnedMultilineOutput>
             Expanded(
               child: Row(children: columns),
             ),
-            copyText.isEmpty
+            copyText == null || copyText!.isEmpty
                 ? Container(width: 21.0)
                 : Container(
                     child: (((isFirst && widget.hasHeader) & !widget.copyAll) || widget.suppressCopyButtons)
@@ -103,7 +106,7 @@ class _GCWColumnedMultilineOutputState extends State<GCWColumnedMultilineOutput>
                             iconSize: 14,
                             size: IconButtonSize.TINY,
                             onPressed: () {
-                              insertIntoGCWClipboard(context, copyText);
+                              insertIntoGCWClipboard(context, copyText!);
                             },
                   )     ,
             )

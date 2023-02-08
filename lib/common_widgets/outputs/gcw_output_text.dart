@@ -11,7 +11,7 @@ class GCWOutputText extends StatefulWidget {
   final bool isMonotype;
   final TextStyle? style;
   final bool suppressCopyButton;
-  final dynamic copyText;
+  final String? copyText;
 
   const GCWOutputText(
       {Key? key,
