@@ -7,12 +7,12 @@ import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:prefs/prefs.dart';
 
-insertIntoGCWClipboard(BuildContext context, String text, {useGlobalClipboard: true}) {
+void insertIntoGCWClipboard(BuildContext context, String text, {useGlobalClipboard: true}) {
   if (useGlobalClipboard) Clipboard.setData(ClipboardData(text: text));
 
   var gcwClipboard = Prefs.getStringList(PREFERENCE_CLIPBOARD_ITEMS);
 
-  var existingText = gcwClipboard.firstWhere((item) => jsonDecode(item)['text'] == text, orElse: () => null);
+  String? existingText = gcwClipboard.firstWhere((item) => jsonDecode(item)['text'] == text, orElse: () => null); //Mark
 
   if (existingText != null) {
     gcwClipboard.remove(existingText);

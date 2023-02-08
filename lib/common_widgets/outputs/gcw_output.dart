@@ -4,13 +4,13 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 
 class GCWOutput extends StatefulWidget {
   final dynamic child; // could be Widget or String
-  final String title;
+  final String? title;
   final bool suppressCopyButton;
   final copyText;
-  final Widget trailing;
+  final Widget? trailing;
 
   const GCWOutput(
-      {Key? key, @required this.child, this.title, this.suppressCopyButton: false, this.copyText, this.trailing})
+      {Key? key, required this.child, this.title, this.suppressCopyButton = false, this.copyText, this.trailing})
       : super(key: key);
 
   @override
@@ -21,8 +21,8 @@ class _GCWOutputState extends State<GCWOutput> {
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
-      widget.title != null && widget.title.length > 0
-          ? GCWTextDivider(text: widget.title, trailing: widget.trailing)
+      widget.title != null && widget.title!.length > 0
+          ? GCWTextDivider(text: widget.title!, trailing: widget.trailing)
           : Container(),
       widget.child is Widget
           ? widget.child
