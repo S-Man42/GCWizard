@@ -333,7 +333,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
     );
   }
 
-  _adjustToFullPicture() async {
+  GCWFile _adjustToFullPicture() async {
     await showDialog(
       context: context,
       barrierDismissible: false,

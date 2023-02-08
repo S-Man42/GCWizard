@@ -7,12 +7,12 @@ import 'package:gc_wizard/common_widgets/gcw_text.dart';
 
 class GCWColumnedMultilineOutput extends StatefulWidget {
   final List<List<dynamic>> data;
-  final List<int>? flexValues;
+  final List<int> flexValues;
   final int? copyColumn;
   final bool suppressCopyButtons;
   final bool hasHeader;
   final bool copyAll;
-  final List<Function>? tappables;
+  final List<void Function()>? tappables;
   final double fontSize;
   final List<Widget>? firstRows;
 
@@ -124,7 +124,7 @@ class _GCWColumnedMultilineOutputState extends State<GCWColumnedMultilineOutput>
       if (widget.tappables != null) {
         return InkWell(
           child: output,
-          onTap: widget.tappables[index++],
+          onTap: widget.tappables![index++],
         );
       } else {
         return output;

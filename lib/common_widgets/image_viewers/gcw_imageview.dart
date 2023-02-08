@@ -25,8 +25,8 @@ enum GCWImageViewOpenInTools { METADATA, HEXVIEW, COLORCORRECTIONS, HIDDENDATA, 
 
 class GCWImageViewData {
   final GCWFile file;
-  final String description;
-  final bool marked;
+  final String? description;
+  final bool? marked;
 
   const GCWImageViewData(this.file, {this.description, this.marked});
 }
@@ -34,17 +34,17 @@ class GCWImageViewData {
 class GCWImageView extends StatefulWidget {
   final GCWImageViewData imageData;
   final bool toolBarRight;
-  final String extension;
-  final String fileName;
-  final Set<GCWImageViewButtons> suppressedButtons;
-  final int maxHeightInPreview;
-  final Function onBeforeLoadBigImage;
-  final Set<GCWImageViewOpenInTools> suppressOpenInTool;
+  final String? extension;
+  final String? fileName;
+  final Set<GCWImageViewButtons>? suppressedButtons;
+  final int? maxHeightInPreview;
+  final Future<GCWFile> Function()? onBeforeLoadBigImage;
+  final Set<GCWImageViewOpenInTools>? suppressOpenInTool;
 
   const GCWImageView(
       {Key? key,
-      @required this.imageData,
-      this.toolBarRight: true,
+      required this.imageData,
+      this.toolBarRight = true,
       this.extension,
       this.fileName,
       this.suppressedButtons,
@@ -58,10 +58,10 @@ class GCWImageView extends StatefulWidget {
 }
 
 class _GCWImageViewState extends State<GCWImageView> {
-  MemoryImage _image;
-  MemoryImage _previewImage;
+  MemoryImage? _image;
+  MemoryImage? _previewImage;
 
-  PhotoViewScaleStateController _scaleStateController;
+  late PhotoViewScaleStateController _scaleStateController;
 
   @override
   void initState() {
@@ -76,8 +76,8 @@ class _GCWImageViewState extends State<GCWImageView> {
   }
 
   _resizeImage() {
-    img.Image image = img.decodeImage(widget.imageData.file.bytes);
-    if (image.height > widget.maxHeightInPreview) {
+    img.Image? image = img.decodeImage(widget.imageData.file.bytes);
+    if (image != null && widget.maxHeightInPreview != null && image.height > widget.maxHeightInPreview!) {
       img.Image resized = img.copyResize(image, height: widget.maxHeightInPreview);
 
       return MemoryImage(encodeTrimmedPng(resized));
@@ -89,7 +89,7 @@ class _GCWImageViewState extends State<GCWImageView> {
   @override
   Widget build(BuildContext context) {
     try {
-      if (widget.imageData != null) _image = MemoryImage(widget.imageData.file.bytes);
+      _image = MemoryImage(widget.imageData.file.bytes);
 
       if (widget.maxHeightInPreview == null)
         _previewImage = MemoryImage(widget.imageData.file.bytes);
@@ -150,7 +150,7 @@ class _GCWImageViewState extends State<GCWImageView> {
           Container(
               padding: EdgeInsets.only(top: 10),
               child: GCWText(
-                text: widget.imageData.description.trim(),
+                text: widget.imageData.description!.trim(),
                 align: Alignment.center,
               ))
       ],
@@ -158,12 +158,11 @@ class _GCWImageViewState extends State<GCWImageView> {
   }
 
   bool _hasToolButtons() {
-    return widget.suppressedButtons == null || !widget.suppressedButtons.contains(GCWImageViewButtons.ALL);
+    return widget.suppressedButtons == null || !widget.suppressedButtons!.contains(GCWImageViewButtons.ALL);
   }
 
   _createToolbar() {
     var iconSize = widget.toolBarRight ? IconButtonSize.NORMAL : IconButtonSize.SMALL;
-    var padding = widget.toolBarRight ? 2 * DOUBLE_DEFAULT_MARGIN : null;
 
     return [
       GCWIconButton(
@@ -171,7 +170,7 @@ class _GCWImageViewState extends State<GCWImageView> {
           size: iconSize,
           onPressed: () {
             if (widget.onBeforeLoadBigImage != null) {
-              widget.onBeforeLoadBigImage().then((imgData) {
+              widget.onBeforeLoadBigImage!().then((imgData) {
                 openInFullScreen(context, imgData.bytes);
               });
             } else {
@@ -184,20 +183,20 @@ class _GCWImageViewState extends State<GCWImageView> {
           onPressed: () {
             _scaleStateController.scaleState = PhotoViewScaleState.initial;
           }),
-      if (widget.suppressedButtons == null || widget.suppressedButtons.length == 1)
+      if (widget.suppressedButtons == null || widget.suppressedButtons!.length == 1)
         widget.toolBarRight
-            ? Container(height: widget.suppressedButtons != null && widget.suppressedButtons.length == 1 ? 108 : 60)
+            ? Container(height: widget.suppressedButtons != null && widget.suppressedButtons!.length == 1 ? 108 : 60)
             : Expanded(
                 child: Container(),
               ),
-      if (widget.suppressedButtons == null || !widget.suppressedButtons.contains(GCWImageViewButtons.SAVE))
+      if (widget.suppressedButtons == null || !widget.suppressedButtons!.contains(GCWImageViewButtons.SAVE))
         GCWIconButton(
             icon: Icons.save,
             size: iconSize,
             onPressed: () {
               var imgData;
               if (widget.onBeforeLoadBigImage != null) {
-                widget.onBeforeLoadBigImage().then((imgData) {
+                widget.onBeforeLoadBigImage!().then((imgData) {
                   _exportFile(context, imgData.bytes);
                 });
               } else {
@@ -205,18 +204,18 @@ class _GCWImageViewState extends State<GCWImageView> {
                 _exportFile(context, imgData);
               }
             }),
-      if (widget.suppressedButtons == null || !widget.suppressedButtons.contains(GCWImageViewButtons.VIEW_IN_TOOLS))
+      if (widget.suppressedButtons == null || !widget.suppressedButtons!.contains(GCWImageViewButtons.VIEW_IN_TOOLS))
         GCWPopupMenu(
             iconData: Icons.open_in_new,
             size: iconSize,
             menuItemBuilder: (context) => [
                   if (widget.suppressOpenInTool == null ||
-                      !widget.suppressOpenInTool.contains(GCWImageViewOpenInTools.METADATA))
+                      !widget.suppressOpenInTool!.contains(GCWImageViewOpenInTools.METADATA))
                     GCWPopupMenuItem(
                       child: iconedGCWPopupMenuItem(context, Icons.info_outline, 'exif_openinmetadata'),
                       action: (index) => setState(() {
                         if (widget.onBeforeLoadBigImage != null) {
-                          widget.onBeforeLoadBigImage().then((imgData) {
+                          widget.onBeforeLoadBigImage!().then((imgData) {
                             openInMetadataViewer(context, imgData);
                           });
                         } else {
@@ -225,12 +224,12 @@ class _GCWImageViewState extends State<GCWImageView> {
                       }),
                     ),
                   if (widget.suppressOpenInTool == null ||
-                      !widget.suppressOpenInTool.contains(GCWImageViewOpenInTools.HEXVIEW))
+                      !widget.suppressOpenInTool!.contains(GCWImageViewOpenInTools.HEXVIEW))
                     GCWPopupMenuItem(
                       child: iconedGCWPopupMenuItem(context, Icons.text_snippet_outlined, 'hexviewer_openinhexviewer'),
                       action: (index) => setState(() {
                         if (widget.onBeforeLoadBigImage != null) {
-                          widget.onBeforeLoadBigImage().then((imgData) {
+                          widget.onBeforeLoadBigImage!().then((imgData) {
                             openInHexViewer(context, imgData);
                           });
                         } else {
@@ -239,12 +238,12 @@ class _GCWImageViewState extends State<GCWImageView> {
                       }),
                     ),
                   if (widget.suppressOpenInTool == null ||
-                      !widget.suppressOpenInTool.contains(GCWImageViewOpenInTools.HIDDENDATA))
+                      !widget.suppressOpenInTool!.contains(GCWImageViewOpenInTools.HIDDENDATA))
                     GCWPopupMenuItem(
                       child: iconedGCWPopupMenuItem(context, Icons.search, 'hiddendata_openinhiddendata'),
                       action: (index) => setState(() {
                         if (widget.onBeforeLoadBigImage != null) {
-                          widget.onBeforeLoadBigImage().then((imgData) {
+                          widget.onBeforeLoadBigImage!().then((imgData) {
                             openInHiddenData(context, imgData);
                           });
                         } else {
@@ -253,13 +252,13 @@ class _GCWImageViewState extends State<GCWImageView> {
                       }),
                     ),
                   if (widget.suppressOpenInTool == null ||
-                      !widget.suppressOpenInTool.contains(GCWImageViewOpenInTools.COLORCORRECTIONS))
+                      !widget.suppressOpenInTool!.contains(GCWImageViewOpenInTools.COLORCORRECTIONS))
                     GCWPopupMenuItem(
                         child: iconedGCWPopupMenuItem(
                             context, Icons.brush, 'image_colorcorrections_openincolorcorrection'),
                         action: (index) => setState(() {
                               if (widget.onBeforeLoadBigImage != null) {
-                                widget.onBeforeLoadBigImage().then((imgData) {
+                                widget.onBeforeLoadBigImage!().then((imgData) {
                                   openInColorCorrections(context, imgData);
                                 });
                               } else {
@@ -267,12 +266,12 @@ class _GCWImageViewState extends State<GCWImageView> {
                               }
                             })),
                   if (widget.suppressOpenInTool == null ||
-                      !widget.suppressOpenInTool.contains(GCWImageViewOpenInTools.FLIPROTATE))
+                      !widget.suppressOpenInTool!.contains(GCWImageViewOpenInTools.FLIPROTATE))
                     GCWPopupMenuItem(
                         child: iconedGCWPopupMenuItem(context, Icons.brush, 'image_fliprotate_openinfliprotate'),
                         action: (index) => setState(() {
                               if (widget.onBeforeLoadBigImage != null) {
-                                widget.onBeforeLoadBigImage().then((imgData) {
+                                widget.onBeforeLoadBigImage!().then((imgData) {
                                   openInFlipRotate(context, imgData);
                                 });
                               } else {
@@ -285,7 +284,7 @@ class _GCWImageViewState extends State<GCWImageView> {
 
   _exportFile(BuildContext context, Uint8List data) async {
     String timestamp = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now());
-    String outputFilename = 'img_${timestamp}.png';
+    String outputFilename = 'img_$timestamp.png';
 
     var value = await saveByteDataToFile(context, data, outputFilename);
 
