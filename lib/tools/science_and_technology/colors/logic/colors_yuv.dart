@@ -1,10 +1,11 @@
 import 'dart:math';
 
+import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors_rgb.dart';
 import 'package:gc_wizard/utils/math_utils.dart';
 
 //source: https://en.wikipedia.org/wiki/YUV#Conversion_to/from_RGB
-class YUV {
+class YUV extends GCWColor {
   double y; //luminance/luma;
   double u; //chrominance: blue projection
   double v; //chrominance: red projection
@@ -50,7 +51,7 @@ class YUV {
 }
 
 //source https://en.wikipedia.org/wiki/YCbCr#ITU-R_BT.601_conversion
-class YPbPr {
+class YPbPr extends GCWColor {
   double y; //luminance/luma;
   double pb; //chrominance: blue projection
   double pr; //chrominance: red projection
@@ -93,7 +94,7 @@ class YPbPr {
 }
 
 //source https://en.wikipedia.org/wiki/YCbCr#ITU-R_BT.601_conversion
-class YCbCr {
+class YCbCr extends GCWColor {
   double y; //luminance/luma;
   double cb; //chrominance: blue projection
   double cr; //chrominance: red projection
@@ -135,7 +136,7 @@ class YCbCr {
 }
 
 //source: https://de.wikipedia.org/wiki/YIQ-Farbmodell
-class YIQ {
+class YIQ extends GCWColor {
   double y; //luminance/luma;
   double i; //cyan orange balance
   double q; //magenta green balance

@@ -1,31 +1,31 @@
 part of 'package:gc_wizard/common_widgets/color_pickers/gcw_colors.dart';
 
 class _GCWColorValuesPicker extends StatefulWidget {
-  final Function onChanged;
-  final dynamic color;
+  final void Function(Map<String, Object>) onChanged;
+  final GCWColor color;
   final String colorSpace;
 
-  const _GCWColorValuesPicker({Key? key, this.onChanged, this.colorSpace, this.color}) : super(key: key);
+  const _GCWColorValuesPicker({Key? key, required this.onChanged, required this.colorSpace, required this.color}) : super(key: key);
 
   @override
   _GCWColorValuesPickerState createState() => _GCWColorValuesPickerState();
 }
 
 class _GCWColorValuesPickerState extends State<_GCWColorValuesPicker> {
-  String _currentColorSpace;
-  dynamic _currentColor = defaultColor;
+  String _currentColorSpace = defaultColorSpace;
+  GCWColor _currentColor = defaultColor;
 
   @override
   Widget build(BuildContext context) {
-    _currentColorSpace = widget.colorSpace ?? defaultColorSpace;
-    _currentColor = widget.color ?? defaultColor;
+    _currentColorSpace = widget.colorSpace;
+    _currentColor = widget.color;
 
     List<Map<String, dynamic>> _colorWidgets = [
       {
         'colorSpace': getColorSpaceByKey(keyColorSpaceRGB),
         'widget': _GCWColorRGB(
-          color: _currentColorSpace == keyColorSpaceRGB ? _currentColor : null,
-          onChanged: (newValue) {
+          color: _currentColorSpace == keyColorSpaceRGB ? _currentColor as RGB : null,
+          onChanged: (RGB newValue) {
             setState(() {
               _currentColor = newValue;
               _setCurrentValueAndEmitOnChange();
@@ -36,8 +36,8 @@ class _GCWColorValuesPickerState extends State<_GCWColorValuesPicker> {
       {
         'colorSpace': getColorSpaceByKey(keyColorSpaceHex),
         'widget': _GCWColorHexCode(
-          color: _currentColorSpace == keyColorSpaceHex ? _currentColor : null,
-          onChanged: (newValue) {
+          color: _currentColorSpace == keyColorSpaceHex ? _currentColor as HexCode : null,
+          onChanged: (HexCode newValue) {
             setState(() {
               _currentColor = newValue;
               _setCurrentValueAndEmitOnChange();
@@ -48,8 +48,8 @@ class _GCWColorValuesPickerState extends State<_GCWColorValuesPicker> {
       {
         'colorSpace': getColorSpaceByKey(keyColorSpaceHSV),
         'widget': _ColorHSV(
-          color: _currentColorSpace == keyColorSpaceHSV ? _currentColor : null,
-          onChanged: (newValue) {
+          color: _currentColorSpace == keyColorSpaceHSV ? _currentColor as HSV : null,
+          onChanged: (HSV newValue) {
             setState(() {
               _currentColor = newValue;
               _setCurrentValueAndEmitOnChange();
@@ -60,8 +60,8 @@ class _GCWColorValuesPickerState extends State<_GCWColorValuesPicker> {
       {
         'colorSpace': getColorSpaceByKey(keyColorSpaceHSL),
         'widget': _GCWColorHSL(
-          color: _currentColorSpace == keyColorSpaceHSL ? _currentColor : null,
-          onChanged: (newValue) {
+          color: _currentColorSpace == keyColorSpaceHSL ? _currentColor as HSL : null,
+          onChanged: (HSL newValue) {
             setState(() {
               _currentColor = newValue;
               _setCurrentValueAndEmitOnChange();
@@ -72,8 +72,8 @@ class _GCWColorValuesPickerState extends State<_GCWColorValuesPicker> {
       {
         'colorSpace': getColorSpaceByKey(keyColorSpaceHSI),
         'widget': _GCWColorHSI(
-          color: _currentColorSpace == keyColorSpaceHSI ? _currentColor : null,
-          onChanged: (newValue) {
+          color: _currentColorSpace == keyColorSpaceHSI ? _currentColor as HSI : null,
+          onChanged: (HSI newValue) {
             setState(() {
               _currentColor = newValue;
               _setCurrentValueAndEmitOnChange();
@@ -84,8 +84,8 @@ class _GCWColorValuesPickerState extends State<_GCWColorValuesPicker> {
       {
         'colorSpace': getColorSpaceByKey(keyColorSpaceCMYK),
         'widget': _GCWColorCMYK(
-          color: _currentColorSpace == keyColorSpaceCMYK ? _currentColor : null,
-          onChanged: (newValue) {
+          color: _currentColorSpace == keyColorSpaceCMYK ? _currentColor as CMYK : null,
+          onChanged: (CMYK newValue) {
             setState(() {
               _currentColor = newValue;
               _setCurrentValueAndEmitOnChange();
@@ -96,8 +96,8 @@ class _GCWColorValuesPickerState extends State<_GCWColorValuesPicker> {
       {
         'colorSpace': getColorSpaceByKey(keyColorSpaceCMY),
         'widget': _GCWColorCMY(
-          color: _currentColorSpace == keyColorSpaceCMY ? _currentColor : null,
-          onChanged: (newValue) {
+          color: _currentColorSpace == keyColorSpaceCMY ? _currentColor as CMY : null,
+          onChanged: (CMY newValue) {
             setState(() {
               _currentColor = newValue;
               _setCurrentValueAndEmitOnChange();
@@ -108,8 +108,8 @@ class _GCWColorValuesPickerState extends State<_GCWColorValuesPicker> {
       {
         'colorSpace': getColorSpaceByKey(keyColorSpaceYUV),
         'widget': _GCWColorYUV(
-          color: _currentColorSpace == keyColorSpaceYUV ? _currentColor : null,
-          onChanged: (newValue) {
+          color: _currentColorSpace == keyColorSpaceYUV ? _currentColor as YUV : null,
+          onChanged: (YUV newValue) {
             setState(() {
               _currentColor = newValue;
               _setCurrentValueAndEmitOnChange();
@@ -120,8 +120,8 @@ class _GCWColorValuesPickerState extends State<_GCWColorValuesPicker> {
       {
         'colorSpace': getColorSpaceByKey(keyColorSpaceYPbPr),
         'widget': _GCWColorYPbPr(
-          color: _currentColorSpace == keyColorSpaceYPbPr ? _currentColor : null,
-          onChanged: (newValue) {
+          color: _currentColorSpace == keyColorSpaceYPbPr ? _currentColor as YPbPr : null,
+          onChanged: (YPbPr newValue) {
             setState(() {
               _currentColor = newValue;
               _setCurrentValueAndEmitOnChange();
@@ -132,8 +132,8 @@ class _GCWColorValuesPickerState extends State<_GCWColorValuesPicker> {
       {
         'colorSpace': getColorSpaceByKey(keyColorSpaceYCbCr),
         'widget': _GCWColorYCbCr(
-          color: _currentColorSpace == keyColorSpaceYCbCr ? _currentColor : null,
-          onChanged: (newValue) {
+          color: _currentColorSpace == keyColorSpaceYCbCr ? _currentColor as YCbCr : null,
+          onChanged: (YCbCr newValue) {
             setState(() {
               _currentColor = newValue;
               _setCurrentValueAndEmitOnChange();
@@ -144,8 +144,8 @@ class _GCWColorValuesPickerState extends State<_GCWColorValuesPicker> {
       {
         'colorSpace': getColorSpaceByKey(keyColorSpaceYIQ),
         'widget': _GCWColorYIQ(
-          color: _currentColorSpace == keyColorSpaceYIQ ? _currentColor : null,
-          onChanged: (newValue) {
+          color: _currentColorSpace == keyColorSpaceYIQ ? _currentColor as YIQ: null,
+          onChanged: (YIQ newValue) {
             setState(() {
               _currentColor = newValue;
               _setCurrentValueAndEmitOnChange();

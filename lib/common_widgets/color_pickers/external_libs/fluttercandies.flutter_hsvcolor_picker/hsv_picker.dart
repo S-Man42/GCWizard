@@ -7,19 +7,16 @@ class _SliderPicker extends StatefulWidget {
   final double max;
   final double value;
   final ValueChanged<double> onChanged;
-  final List<Color> colors;
-  final Widget child;
+  final List<Color>? colors;
 
   const _SliderPicker({
-    Key key,
+    Key? key,
     this.min = 0.0,
     this.max = 1.0,
-    @required this.value,
-    @required this.onChanged,
-    this.colors,
-    this.child,
-  })  : assert(value != null),
-        assert(value >= min && value <= max),
+    required this.value,
+    required this.onChanged,
+    this.colors
+  })  : assert(value >= min && value <= max),
         super(key: key);
 
   @override
@@ -35,8 +32,8 @@ class _SliderPickerState extends State<_SliderPicker> {
   void setRatio(double ratio) => super.widget.onChanged((ratio * (max - min) + min).clamp(min, max));
 
   void onPanUpdate(DragUpdateDetails details, BoxConstraints box) {
-    RenderBox renderBox = super.context.findRenderObject();
-    Offset offset = renderBox.globalToLocal(details.globalPosition);
+    RenderBox? renderBox = super.context.findRenderObject() as RenderBox?;
+    Offset offset = renderBox?.globalToLocal(details.globalPosition) ?? Offset.zero;
     double ratio = offset.dx / box.maxWidth;
     super.setState(() => this.setRatio(ratio));
   }
@@ -57,7 +54,7 @@ class _SliderPickerState extends State<_SliderPicker> {
                   new DecoratedBox(
                       decoration: BoxDecoration(
                           borderRadius: this.radius, border: new Border.all(color: Colors.grey, width: 1)),
-                      child: new ClipRRect(borderRadius: this.radius, child: super.widget.child))
+                      child: new ClipRRect(borderRadius: this.radius))
                   :
 
                   //Color
@@ -65,7 +62,7 @@ class _SliderPickerState extends State<_SliderPicker> {
                       decoration: BoxDecoration(
                           borderRadius: this.radius,
                           border: new Border.all(color: Colors.grey, width: 1),
-                          gradient: new LinearGradient(colors: super.widget.colors)))),
+                          gradient: new LinearGradient(colors: super.widget.colors!)))),
 
           //Thumb
           new LayoutId(
@@ -147,7 +144,7 @@ class _HSVPicker extends StatefulWidget {
   final HSVColor color;
   final ValueChanged<HSVColor> onChanged;
 
-  _HSVPicker({Key? key, @required this.color, @required this.onChanged})
+  _HSVPicker({Key? key, required this.color, required this.onChanged})
       : assert(color != null),
         super(key: key);
 
@@ -183,13 +180,13 @@ class _HSVPickerState extends State<_HSVPicker> {
     return new SizedBox(
         height: 34.0,
         child: new Row(children: <Widget>[
-          new Opacity(opacity: 0.5, child: new Text(title, style: Theme.of(context).textTheme.headline6)),
+          new Opacity(opacity: 0.5, child: new Text(title, style: Theme.of(context).textTheme.titleLarge)),
           new Expanded(
               child: new Align(
                   alignment: Alignment.centerRight,
                   child: new Text(
                     text,
-                    style: Theme.of(context).textTheme.headline5.copyWith(fontSize: 18),
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 18),
                   )))
         ]));
   }

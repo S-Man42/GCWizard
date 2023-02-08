@@ -1,10 +1,10 @@
 part of 'package:gc_wizard/common_widgets/color_pickers/gcw_colors.dart';
 
 class _GCWColorHexCode extends StatefulWidget {
-  final Function onChanged;
-  final HexCode color;
+  final void Function(HexCode) onChanged;
+  final HexCode? color;
 
-  const _GCWColorHexCode({Key? key, this.onChanged, this.color}) : super(key: key);
+  const _GCWColorHexCode({Key? key, required this.onChanged, this.color}) : super(key: key);
 
   @override
   _GCWColorHexCodeState createState() => _GCWColorHexCodeState();
@@ -22,7 +22,7 @@ class _GCWColorHexCodeState extends State<_GCWColorHexCode> {
     super.initState();
 
     if (widget.color != null) {
-      _currentHexCode = widget.color.hexCode;
+      _currentHexCode = widget.color!.hexCode;
     }
     _controller = TextEditingController(text: '#' + _currentHexCode);
   }
@@ -37,7 +37,7 @@ class _GCWColorHexCodeState extends State<_GCWColorHexCode> {
   @override
   Widget build(BuildContext context) {
     if (widget.color != null) {
-      _currentHexCode = widget.color.hexCode;
+      _currentHexCode = widget.color!.hexCode;
     }
 
     return Column(

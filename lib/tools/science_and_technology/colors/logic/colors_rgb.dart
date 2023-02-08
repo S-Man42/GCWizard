@@ -1,6 +1,8 @@
 import 'dart:math';
 
-class RGB {
+import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors.dart';
+
+class RGB extends GCWColor {
   double red;
   double green;
   double blue;
@@ -41,7 +43,7 @@ class RGB {
   }
 }
 
-class HexCode {
+class HexCode extends GCWColor {
   String hexCode;
 
   bool get isShortHex {

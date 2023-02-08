@@ -106,10 +106,10 @@ class GCWTextSelectionToolbar extends StatefulWidget {
   final Offset anchorBelow;
   final ClipboardStatusNotifier clipboardStatus;
   final TextSelectionDelegate delegate;
-  final VoidCallback handleCopy;
-  final VoidCallback handleCut;
-  // final VoidCallback handlePaste;
-  final VoidCallback handleSelectAll;
+  final Function handleCopy;
+  final Function handleCut;
+  // final Function handlePaste;
+  final Function handleSelectAll;
 
   /// Custom
   final Function handleGCWPasteButton;

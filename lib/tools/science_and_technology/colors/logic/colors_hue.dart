@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors_rgb.dart';
 import 'package:gc_wizard/utils/math_utils.dart';
 
@@ -119,7 +120,7 @@ _toRGB(double hue, double saturation, double thirdComponent, _HueType type) {
   return RGB(red, green, blue);
 }
 
-class HSV {
+class HSV extends GCWColor {
   double hue;
   double saturation;
   double value;
@@ -153,7 +154,7 @@ class HSV {
   }
 }
 
-class HSL {
+class HSL extends GCWColor {
   double hue;
   double saturation;
   double lightness;
@@ -179,7 +180,7 @@ class HSL {
   }
 }
 
-class HSI {
+class HSI extends GCWColor {
   double hue;
   double saturation;
   double intensity;

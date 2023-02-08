@@ -1,8 +1,9 @@
 import 'dart:math';
 
+import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors_rgb.dart';
 
-class CMYK {
+class CMYK extends GCWColor {
   double cyan;
   double magenta;
   double yellow;
@@ -66,7 +67,7 @@ class CMYK {
   }
 }
 
-class CMY {
+class CMY extends GCWColor {
   double cyan;
   double magenta;
   double yellow;

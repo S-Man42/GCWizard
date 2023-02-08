@@ -10,7 +10,7 @@ class GCWPopupMenu extends StatefulWidget {
   final IconData iconData;
   final Widget? customIcon;
   final double? rotateDegrees;
-  final IconButtonSize size;
+  final IconButtonSize? size;
   final Color? iconColor;
   final Color? backgroundColor;
   final bool isTextSelectionToolBarButton;
