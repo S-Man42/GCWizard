@@ -6,7 +6,7 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 
 class GCWIntegerTextField extends StatefulWidget {
   final TextEditingController? controller;
-  final Function onChanged;
+  final void Function(Map<String, dynamic>) onChanged;
   final textInputFormatter;
   final String? hintText;
   final int? min;
@@ -35,7 +35,7 @@ class _GCWIntegerTextFieldState extends State<GCWIntegerTextField> {
   void initState() {
     super.initState();
 
-    _integerInputFormatter = GCWIntegerTextInputFormatter(min: widget.min, max: widget.max);
+    _integerInputFormatter = GCWIntegerTextInputFormatter(min: widget.min ?? 0, max: widget.max);
   }
 
   @override
@@ -44,9 +44,9 @@ class _GCWIntegerTextFieldState extends State<GCWIntegerTextField> {
       hintText: widget.hintText,
       onChanged: (text) {
         setState(() {
-          var _value = ['', '-'].contains(text) ? max<int>(widget.min ?? 0, 0) : int.tryParse(text);
+          var _value = ['', '-'].contains(text) ? max<int>(widget.min ?? 0, 0) : int.tryParse(text); //Mark nullable ?
 
-          if (widget.min != null && _value! < widget.min!) _value = widget.min;
+          if (widget.min != null && _value < widget.min!) _value = widget.min;
 
           if (widget.max != null && _value > widget.max!) _value = widget.max;
 
@@ -55,7 +55,7 @@ class _GCWIntegerTextFieldState extends State<GCWIntegerTextField> {
       },
       controller: widget.controller,
       inputFormatters: [widget.textInputFormatter ?? _integerInputFormatter],
-      keyboardType: TextInputType.numberWithOptions(signed: widget.min == null || widget.min < 0, decimal: false),
+      keyboardType: TextInputType.numberWithOptions(signed: widget.min == null || widget.min! < 0, decimal: false),
       focusNode: widget.focusNode,
     );
   }

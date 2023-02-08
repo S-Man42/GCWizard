@@ -6,30 +6,30 @@ import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit_category.dart';
 
 class GCWUnitInput extends StatefulWidget {
-  final min;
-  final max;
-  final numberDecimalDigits;
+  final double? min;
+  final double? max;
+  final int? numberDecimalDigits;
   final double value;
-  final List<Unit> unitList;
-  final UnitCategory unitCategory;
-  final title;
-  final Unit initialUnit;
-  final suppressOverflow;
+  final List<Unit>? unitList;
+  final UnitCategory? unitCategory;
+  final String? title;
+  final Unit? initialUnit;
+  final bool suppressOverflow;
 
-  final Function onChanged;
+  final void Function(double) onChanged;
 
   GCWUnitInput(
       {Key? key,
       this.title,
       this.min,
       this.max,
-      this.numberDecimalDigits: 5,
-      this.value: 0.0,
+      this.numberDecimalDigits = 5,
+      this.value = 0.0,
       this.unitCategory,
       this.unitList,
       this.initialUnit,
-      this.onChanged,
-      this.suppressOverflow: false})
+      required this.onChanged,
+      this.suppressOverflow = false})
       : super(key: key);
 
   @override
@@ -37,15 +37,15 @@ class GCWUnitInput extends StatefulWidget {
 }
 
 class _GCWUnitInputState extends State<GCWUnitInput> {
-  var _currentUnit;
-  var _currentValue;
+  late Unit _currentUnit;
+  late double _currentValue;
 
   @override
   void initState() {
     super.initState();
 
     _currentValue = widget.value;
-    _currentUnit = widget.initialUnit ?? getReferenceUnit(widget.unitList ?? widget.unitCategory.units);
+    _currentUnit = widget.initialUnit ?? getReferenceUnit(widget.unitList ?? widget.unitCategory?.units ?? []);
   }
 
   @override
@@ -57,7 +57,7 @@ class _GCWUnitInputState extends State<GCWUnitInput> {
               title: widget.title,
               min: widget.min,
               max: widget.max,
-              numberDecimalDigits: widget.numberDecimalDigits,
+              numberDecimalDigits: widget.numberDecimalDigits ?? 2,
               value: _currentValue,
               suppressOverflow: widget.suppressOverflow,
               onChanged: (value) {
@@ -73,7 +73,7 @@ class _GCWUnitInputState extends State<GCWUnitInput> {
       Expanded(
           child: GCWUnitDropDown(
             value: _currentUnit,
-            unitList: widget.unitList ?? widget.unitCategory.units,
+            unitList: widget.unitList ?? widget.unitCategory?.units ?? [],
             onChanged: (value) {
               setState(() {
                 _currentUnit = value;

@@ -28,7 +28,7 @@ const _UNSUPPORTED_FILEPICKERPLUGIN_TYPES = [FileType.GPX, FileType.GCW];
 final SUPPORTED_IMAGE_TYPES = fileTypesByFileClass(FileClass.IMAGE);
 
 class GCWOpenFile extends StatefulWidget {
-  final void Function (GCWFile?) onLoaded;
+  final void Function(GCWFile?) onLoaded;
   final List<FileType> supportedFileTypes;
   final bool isDialog;
   final String? title;
@@ -295,7 +295,7 @@ showOpenFileDialog(BuildContext context, List<FileType> supportedFileTypes, Func
             supportedFileTypes: supportedFileTypes,
             isDialog: true,
             onLoaded: (_file) {
-              if (onLoaded != null) onLoaded(_file);
+              onLoaded(_file);
 
               Navigator.of(context).pop();
             },

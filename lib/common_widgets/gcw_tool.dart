@@ -92,23 +92,23 @@ class GCWTool extends StatefulWidget {
   final Widget tool;
   final String i18nPrefix;
   final List<ToolCategory> categories;
-  final autoScroll;
-  final suppressToolMargin;
-  final iconPath;
+  final bool autoScroll;
+  final bool suppressToolMargin;
+  final String? iconPath;
   final List<String> searchKeys;
   String indexedSearchStrings = '';
   final List<GCWToolActionButtonsEntry> buttonList;
   final bool suppressHelpButton;
   final String helpSearchString;
-  final isBeta;
+  final bool isBeta;
 
   var icon;
   var id = '';
 
-  var toolName;
-  var defaultLanguageToolName;
-  var description;
-  var example;
+  String? toolName; //Mark nullable ?
+  String? defaultLanguageToolName;
+  String? description;
+  String? example;
 
   GCWTool(
       {Key? key,
@@ -118,7 +118,7 @@ class GCWTool extends StatefulWidget {
       required this.i18nPrefix,
       this.categories = const [],
       this.autoScroll = true,
-      this.suppressToolMargin= false,
+      this.suppressToolMargin = false,
       this.iconPath,
       this.searchKeys = const [],
       this.buttonList = const [],
@@ -130,7 +130,7 @@ class GCWTool extends StatefulWidget {
 
     if (iconPath != null) {
       this.icon = GCWSymbolContainer(
-        symbol: Image.asset(iconPath, width: DEFAULT_LISTITEM_SIZE),
+        symbol: Image.asset(iconPath!, width: DEFAULT_LISTITEM_SIZE),
       );
     }
   }
@@ -144,8 +144,8 @@ class GCWTool extends StatefulWidget {
 }
 
 class _GCWToolState extends State<GCWTool> {
-  var _toolName;
-  var _defaultLanguageToolName;
+  late String _toolName;
+  late String _defaultLanguageToolName;
 
   @override
   void initState() {
@@ -157,10 +157,9 @@ class _GCWToolState extends State<GCWTool> {
   @override
   Widget build(BuildContext context) {
     // this is the case when Tool is not called by Registry but as subpage of another tool
-    if (_toolName == null) _toolName = widget.toolName ?? i18n(context, widget.i18nPrefix + '_title');
+    _toolName = widget.toolName ?? i18n(context, widget.i18nPrefix + '_title');
 
-    if (_defaultLanguageToolName == null)
-      _defaultLanguageToolName =
+    _defaultLanguageToolName =
           widget.defaultLanguageToolName ?? i18n(context, widget.i18nPrefix + '_title', useDefaultLanguage: true);
 
     return Scaffold(

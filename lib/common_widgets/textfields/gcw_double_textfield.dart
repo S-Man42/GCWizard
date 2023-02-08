@@ -3,18 +3,18 @@ import 'package:gc_wizard/common_widgets/text_input_formatters/gcw_double_textin
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 
 class GCWDoubleTextField extends StatefulWidget {
-  final TextEditingController controller;
-  final Function onChanged;
-  final textInputFormatter;
-  final hintText;
-  final min;
-  final max;
-  final FocusNode focusNode;
-  final numberDecimalDigits;
+  final TextEditingController? controller;
+  final void Function(Map<String, dynamic>) onChanged;
+  final GCWDoubleTextInputFormatter? textInputFormatter;
+  final String? hintText;
+  final double? min;
+  final double? max;
+  final FocusNode? focusNode;
+  final int? numberDecimalDigits;
 
   const GCWDoubleTextField(
       {Key? key,
-      this.onChanged,
+      required this.onChanged,
       this.controller,
       this.textInputFormatter,
       this.hintText,
@@ -46,7 +46,7 @@ class _GCWDoubleTextFieldState extends State<GCWDoubleTextField> {
       hintText: widget.hintText,
       onChanged: (text) {
         setState(() {
-          double _value;
+          double _value; //Mark nullable ?
 
           text = text.replaceFirst(',', '.');
 
@@ -56,9 +56,9 @@ class _GCWDoubleTextFieldState extends State<GCWDoubleTextField> {
             _value = double.tryParse(text);
           }
 
-          if (widget.min != null && _value < widget.min) _value = widget.min;
+          if (widget.min != null && _value < widget.min!) _value = widget.min!;
 
-          if (widget.max != null && _value > widget.max) _value = widget.max;
+          if (widget.max != null && _value > widget.max!) _value = widget.max!;
 
           widget.onChanged({'text': text, 'value': _value});
         });

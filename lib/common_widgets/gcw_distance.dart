@@ -9,7 +9,7 @@ import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit
 import 'package:prefs/prefs.dart';
 
 class GCWDistance extends StatefulWidget {
-  final Function onChanged;
+  final void Function(double) onChanged;
   final String? hintText;
   final double? value;
   final Length? unit;
@@ -17,8 +17,9 @@ class GCWDistance extends StatefulWidget {
   final controller;
 
   const GCWDistance(
-      {Key? key, required this.onChanged, this.hintText, this.value, this.unit, this.allowNegativeValues: false, this.controller})
-      : super(key: key);
+      {Key? key, required this.onChanged, this.hintText, this.value, this.unit,
+        this.allowNegativeValues = false, this.controller})
+        : super(key: key);
 
   @override
   _GCWDistanceState createState() => _GCWDistanceState();
@@ -27,14 +28,14 @@ class GCWDistance extends StatefulWidget {
 class _GCWDistanceState extends State<GCWDistance> {
   var _controller;
 
-  var _currentInput = {'text': '', 'value': 0.0};
+  Map<String, dynamic> _currentInput = {'text': '', 'value': 0.0};
   late Length _currentLengthUnit;
 
   @override
   void initState() {
     super.initState();
 
-    if (widget.value != null) _currentInput = {'text': widget.value.toString(), 'value': widget.value!};
+    if (widget.value != null) _currentInput = {'text': widget.value!.toString(), 'value': widget.value!};
 
     if (widget.controller != null) {
       _controller = widget.controller;
@@ -75,9 +76,9 @@ class _GCWDistanceState extends State<GCWDistance> {
           child: GCWUnitDropDown(
               unitList: allLengths(),
               value: _currentLengthUnit,
-              onChanged: (Length value) {
+              onChanged: (Unit? value) {
                 setState(() {
-                  _currentLengthUnit = value;
+                  _currentLengthUnit = (value is Length) ? value as Length : LENGTH_METER;
                   _setCurrentValueAndEmitOnChange();
                 });
               }),
