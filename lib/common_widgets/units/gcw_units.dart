@@ -12,17 +12,17 @@ part 'package:gc_wizard/common_widgets/units/gcw_unit_prefix_dropdown.dart';
 
 class GCWUnits extends StatefulWidget {
   final UnitCategory unitCategory;
-  final Function onChanged;
+  final void Function(Map<String, dynamic>) onChanged;
   final bool onlyShowUnitSymbols;
   final bool onlyShowPrefixSymbols;
-  final Map<String, dynamic> value;
+  final Map<String, dynamic>? value;
 
   GCWUnits(
       {Key? key,
-      this.unitCategory,
-      this.onChanged,
-      this.onlyShowUnitSymbols: false,
-      this.onlyShowPrefixSymbols: true,
+      required this.unitCategory,
+      required this.onChanged,
+      this.onlyShowUnitSymbols = false,
+      this.onlyShowPrefixSymbols = true,
       this.value})
       : super(key: key);
 
@@ -31,14 +31,14 @@ class GCWUnits extends StatefulWidget {
 }
 
 class _GCWUnitsState extends State<GCWUnits> {
-  UnitPrefix _currentPrefix;
-  Unit _currentUnit;
+  late UnitPrefix _currentPrefix;
+  late Unit _currentUnit;
 
   @override
   Widget build(BuildContext context) {
     if (widget.value != null) {
-      _currentPrefix = widget.value['prefix'];
-      _currentUnit = widget.value['unit'];
+      _currentPrefix = widget.value!['prefix'];
+      _currentUnit = widget.value!['unit'];
     } else {
       _currentPrefix = UNITPREFIX_NONE;
       _currentUnit = widget.unitCategory.defaultUnit;
