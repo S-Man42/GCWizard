@@ -1,11 +1,11 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _GCWCoordsLambert extends StatefulWidget {
-  final Function onChanged;
-  final BaseCoordinates coordinates;
-  final String subtype;
+  final void Function(Lambert) onChanged;
+  final BaseCoordinates? coordinates;
+  final CoordFormatKey subtype;
 
-  const _GCWCoordsLambert({Key? key, this.onChanged, this.coordinates, this.subtype: keyCoordsGaussKruegerGK1})
+  const _GCWCoordsLambert({Key? key, required this.onChanged, this.coordinates, this.subtype: defaultLambertType})
       : super(key: key);
 
   @override
@@ -13,22 +13,29 @@ class _GCWCoordsLambert extends StatefulWidget {
 }
 
 class _GCWCoordsLambertState extends State<_GCWCoordsLambert> {
-  TextEditingController _eastingController;
-  TextEditingController _northingController;
+  late TextEditingController _eastingController;
+  late TextEditingController _northingController;
 
-  var _currentEasting = {'text': '', 'value': 0.0};
-  var _currentNorthing = {'text': '', 'value': 0.0};
+  var _currentEasting = defaultDoubleText;
+  var _currentNorthing = defaultDoubleText;
 
-  var _currentSubtype = DefaultLambertType;
+  var _currentSubtype = defaultLambertType;
+
+  _setLambertSubType() {
+    if (isSubtypeOfCoordFormat(CoordFormatKey.LAMBERT, widget.subtype))
+      _currentSubtype = widget.subtype;
+    else
+      _currentSubtype = defaultLambertType;
+  }
 
   @override
   void initState() {
     super.initState();
 
-    _currentSubtype = getLambertType(widget.subtype);
+    _setLambertSubType();
 
-    _eastingController = TextEditingController(text: _currentEasting['text']);
-    _northingController = TextEditingController(text: _currentNorthing['text']);
+    _eastingController = TextEditingController(text: _currentEasting.text);
+    _northingController = TextEditingController(text: _currentNorthing.text);
   }
 
   @override
@@ -44,15 +51,16 @@ class _GCWCoordsLambertState extends State<_GCWCoordsLambert> {
     if (widget.coordinates != null) {
       var lambert = widget.coordinates is Lambert
           ? widget.coordinates as Lambert
-          : Lambert.fromLatLon(widget.coordinates.toLatLng(), _currentSubtype, defaultEllipsoid());
-      _currentEasting['value'] = lambert.easting;
-      _currentNorthing['value'] = lambert.northing;
-      _currentSubtype = lambert.type;
+          : Lambert.fromLatLon(widget.coordinates!.toLatLng(), _currentSubtype, defaultEllipsoid());
+      _currentEasting.value = lambert.easting;
+      _currentNorthing.value = lambert.northing;
+      _currentSubtype = lambert.subtype;
 
-      _eastingController.text = _currentEasting['value'].toString();
-      _northingController.text = _currentNorthing['value'].toString();
+      _eastingController.text = _currentEasting.value.toString();
+      _northingController.text = _currentNorthing.value.toString();
     } else if (_subtypeChanged()) {
-      _currentSubtype = getLambertType(widget.subtype);
+      _setLambertSubType();
+
       WidgetsBinding.instance.addPostFrameCallback((_) => _setCurrentValueAndEmitOnChange());
     }
 
@@ -79,11 +87,11 @@ class _GCWCoordsLambertState extends State<_GCWCoordsLambert> {
   }
 
   bool _subtypeChanged() {
-    return _currentSubtype != getLambertType(widget.subtype);
+    return _currentSubtype != widget.subtype;
   }
 
   _setCurrentValueAndEmitOnChange() {
-    var lambert = Lambert(_currentSubtype, _currentEasting['value'], _currentNorthing['value']);
+    var lambert = Lambert(_currentSubtype, _currentEasting.value, _currentNorthing.value);
     widget.onChanged(lambert);
   }
 }

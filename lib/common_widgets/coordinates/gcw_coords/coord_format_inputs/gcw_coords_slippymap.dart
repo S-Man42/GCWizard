@@ -1,24 +1,24 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _GCWCoordsSlippyMap extends StatefulWidget {
-  final Function onChanged;
+  final Function(SlippyMap) onChanged;
   final BaseCoordinates coordinates;
   final double zoom;
 
-  const _GCWCoordsSlippyMap({Key? key, this.onChanged, this.coordinates, this.zoom: DefaultSlippyZoom}) : super(key: key);
+  const _GCWCoordsSlippyMap({Key? key, required this.onChanged, required this.coordinates, this.zoom: defaultSlippyZoom}) : super(key: key);
 
   @override
   _GCWCoordsSlippyMapState createState() => _GCWCoordsSlippyMapState();
 }
 
 class _GCWCoordsSlippyMapState extends State<_GCWCoordsSlippyMap> {
-  TextEditingController _xController;
-  TextEditingController _yController;
+  late TextEditingController _xController;
+  late TextEditingController _yController;
 
-  var _currentX = {'text': '', 'value': 0.0};
-  var _currentY = {'text': '', 'value': 0.0};
+  var _currentX = defaultDoubleText;
+  var _currentY = defaultDoubleText;
 
-  var _currentZoom;
+  late double _currentZoom;
 
   @override
   void initState() {
@@ -26,8 +26,8 @@ class _GCWCoordsSlippyMapState extends State<_GCWCoordsSlippyMap> {
 
     _currentZoom = widget.zoom;
 
-    _xController = TextEditingController(text: _currentX['text']);
-    _yController = TextEditingController(text: _currentY['text']);
+    _xController = TextEditingController(text: _currentX.text);
+    _yController = TextEditingController(text: _currentY.text);
   }
 
   @override
@@ -44,11 +44,11 @@ class _GCWCoordsSlippyMapState extends State<_GCWCoordsSlippyMap> {
       var slippyMap = widget.coordinates is SlippyMap
           ? widget.coordinates as SlippyMap
           : SlippyMap.fromLatLon(widget.coordinates.toLatLng(), widget.zoom);
-      _currentX['value'] = slippyMap.x;
-      _currentY['value'] = slippyMap.y;
+      _currentX.value = slippyMap.x;
+      _currentY.value = slippyMap.y;
 
-      _xController.text = _currentX['value'].toString();
-      _yController.text = _currentY['value'].toString();
+      _xController.text = _currentX.value.toString();
+      _yController.text = _currentY.value.toString();
     } else if (_subtypeChanged()) {
       _currentZoom = widget.zoom;
       WidgetsBinding.instance.addPostFrameCallback((_) => _setCurrentValueAndEmitOnChange());
@@ -83,6 +83,6 @@ class _GCWCoordsSlippyMapState extends State<_GCWCoordsSlippyMap> {
   }
 
   _setCurrentValueAndEmitOnChange() {
-    widget.onChanged(SlippyMap(_currentX['value'], _currentY['value'], double.tryParse(_currentZoom)));
+    widget.onChanged(SlippyMap(_currentX.value, _currentY.value, _currentZoom));
   }
 }

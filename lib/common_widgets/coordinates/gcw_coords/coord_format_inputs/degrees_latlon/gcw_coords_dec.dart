@@ -45,6 +45,9 @@ class _GCWCoordsDECState extends State<_GCWCoordsDEC> {
     _LonDegreesController.dispose();
     _LonMilliDegreesController.dispose();
 
+    _latMilliDegreesFocusNode.dispose();
+    _lonMilliDegreesFocusNode.dispose();
+
     super.dispose();
   }
 

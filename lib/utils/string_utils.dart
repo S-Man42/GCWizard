@@ -3,9 +3,13 @@ import 'dart:math';
 import 'package:diacritic/diacritic.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 
-int extractIntegerFromText(String text) {
+int extractIntegerFromText(String text, {bool allowNegative = true}) {
   var digits = text.replaceAll(RegExp(r'[^\-0-9]'), '');
-  var signed = digits.startsWith('-');
+
+  bool signed = false;
+  if (allowNegative) {
+    signed = digits.startsWith('-');
+  }
   digits = digits.replaceAll('-', '');
 
   if (digits.length == 0) return 0;

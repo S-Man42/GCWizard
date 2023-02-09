@@ -25,6 +25,7 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/constants.dart';
+import 'package:gc_wizard/utils/string_utils.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
@@ -78,18 +79,18 @@ class GCWCoordsFormatValue{
 
 class GCWCoords extends StatefulWidget {
   final void Function(GCWCoordsValue) onChanged;
-  final Map<String, String> coordsFormat;
-  final LatLng coordinates;
-  final String title;
-  final bool notitle;
-  final bool restoreCoordinates;
+  final GCWCoordsFormatValue coordsFormat;
+  final LatLng? coordinates;
+  final String? title;
+  final bool? notitle;
+  final bool? restoreCoordinates;
 
   const GCWCoords(
       {Key? key,
       this.title,
       this.coordinates,
-      this.onChanged,
-      this.coordsFormat,
+      required this.onChanged,
+      required this.coordsFormat,
       this.notitle: false,
       this.restoreCoordinates: false})
       : super(key: key);
@@ -99,12 +100,10 @@ class GCWCoords extends StatefulWidget {
 }
 
 class GCWCoordsState extends State<GCWCoords> {
-  Map<String, String> _currentCoordsFormat;
-  BaseCoordinates _currentValue;
-
+  GCWCoordsValue _currentCoordsValue;
   BaseCoordinates _pastedCoords;
 
-  var _currentWidget;
+  Widget _currentWidget;
 
   var _location = Location();
   bool _isOnLocationAccess = false;
@@ -113,11 +112,8 @@ class GCWCoordsState extends State<GCWCoords> {
   void initState() {
     super.initState();
 
-    _currentCoordsFormat = widget.coordsFormat ?? defaultCoordFormat();
+    _currentCoordsValue = GCWCoordsValue(widget.coordsFormat, DEC.fromLatLon(widget.coordinates ?? defaultCoordinate));
     _setPastedCoordsFormat();
-    _currentValue = (widget.coordinates ?? defaultCoordinate) == null
-        ? null
-        : DEC.fromLatLon(widget.coordinates ?? defaultCoordinate);
     _pastedCoords = _currentValue;
   }
 
@@ -125,7 +121,7 @@ class GCWCoordsState extends State<GCWCoords> {
   Widget build(BuildContext context) {
     final List<Map<String, dynamic>> _coordsWidgets = [
       {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsDEC),
+        'coordFormat': getCoordinateFormatByKey(CoordFormatKey.DEC),
         'widget': _GCWCoordsDEC(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
@@ -136,7 +132,7 @@ class GCWCoordsState extends State<GCWCoords> {
         ),
       },
       {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsDMM),
+        'coordFormat': getCoordinateFormatByKey(CoordFormatKey.DMM),
         'widget': _GCWCoordsDMM(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
@@ -147,7 +143,7 @@ class GCWCoordsState extends State<GCWCoords> {
         ),
       },
       {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsDMS),
+        'coordFormat': getCoordinateFormatByKey(CoordFormatKey.DMS),
         'widget': _GCWCoordsDMS(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
@@ -158,7 +154,7 @@ class GCWCoordsState extends State<GCWCoords> {
         ),
       },
       {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsUTM),
+        'coordFormat': getCoordinateFormatByKey(CoordFormatKey.UTM),
         'widget': _GCWCoordsUTM(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
@@ -169,7 +165,7 @@ class GCWCoordsState extends State<GCWCoords> {
         ),
       },
       {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsMGRS),
+        'coordFormat': getCoordinateFormatByKey(CoordFormatKey.MGRS),
         'widget': _GCWCoordsMGRS(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
@@ -180,7 +176,7 @@ class GCWCoordsState extends State<GCWCoords> {
         ),
       },
       {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsXYZ),
+        'coordFormat': getCoordinateFormatByKey(CoordFormatKey.XYZ),
         'widget': _GCWCoordsXYZ(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
@@ -191,7 +187,7 @@ class GCWCoordsState extends State<GCWCoords> {
         ),
       },
       {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsSwissGrid),
+        'coordFormat': getCoordinateFormatByKey(CoordFormatKey.SWISS_GRID),
         'widget': _GCWCoordsSwissGrid(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
@@ -202,7 +198,7 @@ class GCWCoordsState extends State<GCWCoords> {
         ),
       },
       {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsSwissGridPlus),
+        'coordFormat': getCoordinateFormatByKey(CoordFormatKey.SWISS_GRID_PLUS),
         'widget': _GCWCoordsSwissGridPlus(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
@@ -213,7 +209,7 @@ class GCWCoordsState extends State<GCWCoords> {
         ),
       },
       {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsGaussKrueger),
+        'coordFormat': getCoordinateFormatByKey(CoordFormatKey.GAUSS_KRUEGER),
         'widget': _GCWCoordsGaussKrueger(
           coordinates: _pastedCoords,
           subtype: _currentCoordsFormat['subtype'],
@@ -225,7 +221,7 @@ class GCWCoordsState extends State<GCWCoords> {
         ),
       },
       {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsLambert),
+        'coordFormat': getCoordinateFormatByKey(CoordFormatKey.LAMBERT),
         'widget': _GCWCoordsLambert(
           coordinates: _pastedCoords,
           subtype: _currentCoordsFormat['subtype'],
@@ -237,7 +233,7 @@ class GCWCoordsState extends State<GCWCoords> {
         ),
       },
       {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsDutchGrid),
+        'coordFormat': getCoordinateFormatByKey(CoordFormatKey.DUTCH_GRID),
         'widget': _GCWCoordsDutchGrid(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
@@ -248,7 +244,7 @@ class GCWCoordsState extends State<GCWCoords> {
         ),
       },
       {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsMaidenhead),
+        'coordFormat': getCoordinateFormatByKey(CoordFormatKey.MAIDENHEAD),
         'widget': _GCWCoordsMaidenhead(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
@@ -259,7 +255,7 @@ class GCWCoordsState extends State<GCWCoords> {
         ),
       },
       {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsMercator),
+        'coordFormat': getCoordinateFormatByKey(CoordFormatKey.MERCATOR),
         'widget': _GCWCoordsMercator(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
@@ -270,7 +266,7 @@ class GCWCoordsState extends State<GCWCoords> {
         ),
       },
       {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsNaturalAreaCode),
+        'coordFormat': getCoordinateFormatByKey(CoordFormatKey.NATURAL_AREA_CODE),
         'widget': _GCWCoordsNaturalAreaCode(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
@@ -281,10 +277,10 @@ class GCWCoordsState extends State<GCWCoords> {
         ),
       },
       {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsSlippyMap),
+        'coordFormat': getCoordinateFormatByKey(CoordFormatKey.SLIPPY_MAP),
         'widget': _GCWCoordsSlippyMap(
           coordinates: _pastedCoords,
-          zoom: double.tryParse(_currentCoordsFormat['subtype'] ?? DefaultSlippyZoom.toString()),
+          zoom: double.tryParse(_currentCoordsFormat['subtype'] ?? defaultSlippyZoom.toString()),
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -293,7 +289,7 @@ class GCWCoordsState extends State<GCWCoords> {
         ),
       },
       {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsMakaney),
+        'coordFormat': getCoordinateFormatByKey(CoordFormatKey.MAKANEY),
         'widget': _GCWCoordsMakaney(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
@@ -304,7 +300,7 @@ class GCWCoordsState extends State<GCWCoords> {
         ),
       },
       {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsGeohash),
+        'coordFormat': getCoordinateFormatByKey(CoordFormatKey.GEOHASH),
         'widget': _GCWCoordsGeohash(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
@@ -315,7 +311,7 @@ class GCWCoordsState extends State<GCWCoords> {
         ),
       },
       {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsGeoHex),
+        'coordFormat': getCoordinateFormatByKey(CoordFormatKey.GEOHEX),
         'widget': _GCWCoordsGeoHex(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
@@ -326,7 +322,7 @@ class GCWCoordsState extends State<GCWCoords> {
         ),
       },
       {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsGeo3x3),
+        'coordFormat': getCoordinateFormatByKey(CoordFormatKey.GEO3X3),
         'widget': _GCWCoordsGeo3x3(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
@@ -337,7 +333,7 @@ class GCWCoordsState extends State<GCWCoords> {
         ),
       },
       {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsOpenLocationCode),
+        'coordFormat': getCoordinateFormatByKey(CoordFormatKey.OPEN_LOCATION_CODE),
         'widget': _GCWCoordsOpenLocationCode(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
@@ -348,7 +344,7 @@ class GCWCoordsState extends State<GCWCoords> {
         ),
       },
       {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsQuadtree),
+        'coordFormat': getCoordinateFormatByKey(CoordFormatKey.QUADTREE),
         'widget': _GCWCoordsQuadtree(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
@@ -359,7 +355,7 @@ class GCWCoordsState extends State<GCWCoords> {
         ),
       },
       {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsReverseWherigoWaldmeister),
+        'coordFormat': getCoordinateFormatByKey(CoordFormatKey.REVERSE_WIG_WALDMEISTER),
         'widget': _GCWCoordsReverseWherigoWaldmeister(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
@@ -370,7 +366,7 @@ class GCWCoordsState extends State<GCWCoords> {
         ),
       },
       {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsReverseWherigoDay1976),
+        'coordFormat': getCoordinateFormatByKey(CoordFormatKey.REVERSE_WIG_DAY1976),
         'widget': _GCWCoordsReverseWherigoDay1976(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
@@ -423,7 +419,7 @@ class GCWCoordsState extends State<GCWCoords> {
           if (_currentCoordsFormat != newValue) {
             if (widget.restoreCoordinates)
               _pastedCoords = _currentValue;
-            else if (subtypeChanged(_currentCoordsFormat, newValue))
+            else if (_subtypeChanged(_currentCoordsFormat, newValue))
               ;
             else
               _currentValue = DEC(defaultCoordinate.latitude, defaultCoordinate.longitude);
@@ -437,7 +433,7 @@ class GCWCoordsState extends State<GCWCoords> {
     );
   }
 
-  bool subtypeChanged(Map<String, String> currentValue, Map<String, String> newValue) {
+  bool _subtypeChanged(Map<String, String> currentValue, Map<String, String> newValue) {
     return currentValue["subtype"] != newValue["subtype"];
   }
 
@@ -481,40 +477,40 @@ class GCWCoordsState extends State<GCWCoords> {
 
   _setPastedCoordsFormat() {
     switch (_currentCoordsFormat['format']) {
-      case keyCoordsDEC:
-      case keyCoordsDMM:
-      case keyCoordsDMS:
-      case keyCoordsUTM:
-      case keyCoordsMGRS:
-      case keyCoordsXYZ:
-      case keyCoordsSwissGrid:
-      case keyCoordsSwissGridPlus:
+      case CoordFormatKey.DEC:
+      case CoordFormatKey.DMM:
+      case CoordFormatKey.DMS:
+      case CoordFormatKey.UTM:
+      case CoordFormatKey.MGRS:
+      case CoordFormatKey.XYZ:
+      case CoordFormatKey.SWISS_GRID:
+      case CoordFormatKey.SWISS_GRID_PLUS:
         break;
-      case keyCoordsGaussKrueger:
-        _currentCoordsFormat.addAll({'subtype': getGaussKruegerTypKey()});
+      case CoordFormatKey.GAUSS_KRUEGER:
+        _currentCoordsFormat.addAll({'subtype': getGaussKruegerTypKeyFromCode()});
         break;
-      case keyCoordsLambert:
+      case CoordFormatKey.LAMBERT:
         _currentCoordsFormat.addAll({'subtype': getLambertKey()});
         break;
-      case keyCoordsDutchGrid:
-      case keyCoordsMaidenhead:
-      case keyCoordsMercator:
-      case keyCoordsNaturalAreaCode:
+      case CoordFormatKey.DUTCH_GRID:
+      case CoordFormatKey.MAIDENHEAD:
+      case CoordFormatKey.MERCATOR:
+      case CoordFormatKey.NATURAL_AREA_CODE:
         break;
-      case keyCoordsSlippyMap:
-        _currentCoordsFormat.addAll({'subtype': DefaultSlippyZoom.toString()});
+      case CoordFormatKey.SLIPPY_MAP:
+        _currentCoordsFormat.addAll({'subtype': defaultSlippyZoom.toString()});
         break;
-      case keyCoordsGeohash:
-      case keyCoordsGeoHex:
-      case keyCoordsGeo3x3:
-      case keyCoordsOpenLocationCode:
-      case keyCoordsQuadtree:
-      case keyCoordsMakaney:
-      case keyCoordsReverseWherigoWaldmeister:
-      case keyCoordsReverseWherigoDay1976:
+      case CoordFormatKey.GEOHASH:
+      case CoordFormatKey.GEOHEX:
+      case CoordFormatKey.GEO3X3:
+      case CoordFormatKey.OPEN_LOCATION_CODE:
+      case CoordFormatKey.QUADTREE:
+      case CoordFormatKey.MAKANEY:
+      case CoordFormatKey.REVERSE_WIG_WALDMEISTER:
+      case CoordFormatKey.REVERSE_WIG_DAY1976:
         break;
       default:
-        _currentCoordsFormat = {'format': keyCoordsDMM};
+        _currentCoordsFormat = {'format': CoordFormatKey.DMM};
     }
   }
 

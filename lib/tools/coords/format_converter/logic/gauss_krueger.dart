@@ -1,12 +1,13 @@
 import 'dart:math';
 
+import 'package:gc_wizard/tools/coords/_common/logic/coord_format_getter.dart';
 import 'package:gc_wizard/tools/coords/ellipsoid_transform/logic/ellipsoid_transform.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:latlong2/latlong.dart';
 
-GaussKrueger latLonToGaussKrueger(LatLng coord, int gkno, Ellipsoid ells) {
+GaussKrueger latLonToGaussKrueger(LatLng coord, CoordFormatKey subtype, Ellipsoid ells) {
   int x = -1;
   switch (ells.name) {
     case ELLIPSOID_NAME_AIRY1830:
@@ -33,6 +34,8 @@ GaussKrueger latLonToGaussKrueger(LatLng coord, int gkno, Ellipsoid ells) {
   if (x >= 0) {
     newCoord = ellipsoidTransformLatLng(coord, x, false, false);
   }
+
+  var gkno = getCodeFromGaussKruegerSubType(subtype);
   newCoord = ellipsoidTransformLatLng(coord, gkno - 1, true, true);
 
   Ellipsoid ellsBessel = getEllipsoidByName(ELLIPSOID_NAME_BESSEL1841);
@@ -81,7 +84,7 @@ LatLng gaussKruegerToLatLon(GaussKrueger gaussKrueger, Ellipsoid ells) {
 
   var R = gaussKrueger.easting;
   var H = gaussKrueger.northing;
-  var gkno = gaussKrueger.code;
+  var gkno = gaussKrueger.subtype;
 
   double a = ellsBessel.a;
   double b = ellsBessel.b;
@@ -147,7 +150,7 @@ LatLng gaussKruegerToLatLon(GaussKrueger gaussKrueger, Ellipsoid ells) {
   return coord;
 }
 
-GaussKrueger parseGaussKrueger(String input, {int gaussKruegerCode: DefaultGaussKruegerType}) {
+GaussKrueger parseGaussKrueger(String input, {CoordFormatKey gaussKruegerCode: defaultGaussKruegerType}) {
   RegExp regExp = RegExp(r'^\s*([\-0-9\.]+)(\s*\,\s*|\s+)([\-0-9\.]+)\s*$');
   var matches = regExp.allMatches(input);
   var _eastingString = '';

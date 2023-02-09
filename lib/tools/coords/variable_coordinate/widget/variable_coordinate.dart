@@ -397,7 +397,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
     }
 
     _output = Column(children: [
-      _currentOutputFormat['format'] == keyCoordsDMM && hasLeftPaddedCoords
+      _currentOutputFormat['format'] == CoordFormatKey.DMM && hasLeftPaddedCoords
           ? GCWTwoOptionsSwitch(
               title: i18n(context, 'coords_variablecoordinate_decleftpad'),
               leftValue: i18n(context, 'coords_variablecoordinate_decleftpad_left'),
@@ -443,7 +443,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
 
         var coords = LatLng(locationData.latitude, locationData.longitude);
         var insertedCoord;
-        if (defaultCoordFormat()['format'] == keyCoordsDMM) {
+        if (defaultCoordFormat()['format'] == CoordFormatKey.DMM) {
           //Insert Geocaching Format with exact 3 digits
           insertedCoord = formatCoordOutput(coords, defaultCoordFormat(), defaultEllipsoid(), 3);
         } else {

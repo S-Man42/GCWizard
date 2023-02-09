@@ -1,17 +1,17 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _GCWCoordsOpenLocationCode extends StatefulWidget {
-  final Function onChanged;
+  final Function(OpenLocationCode) onChanged;
   final BaseCoordinates coordinates;
 
-  const _GCWCoordsOpenLocationCode({Key? key, this.onChanged, this.coordinates}) : super(key: key);
+  const _GCWCoordsOpenLocationCode({Key? key, required this.onChanged, required this.coordinates}) : super(key: key);
 
   @override
   _GCWCoordsOpenLocationCodeState createState() => _GCWCoordsOpenLocationCodeState();
 }
 
 class _GCWCoordsOpenLocationCodeState extends State<_GCWCoordsOpenLocationCode> {
-  TextEditingController _controller;
+  late TextEditingController _controller;
   var _currentCoord = '';
 
   var _maskInputFormatter = WrapperForMaskTextInputFormatter(

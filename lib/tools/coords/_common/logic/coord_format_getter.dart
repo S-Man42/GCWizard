@@ -8,52 +8,52 @@ import 'package:latlong2/latlong.dart';
 
 String formatCoordOutput(LatLng _coords, Map<String, String> _outputFormat, Ellipsoid ells, [int precision]) {
   switch (_outputFormat['format']) {
-    case keyCoordsDEC:
+    case CoordFormatKey.DEC:
       return DEC.fromLatLon(_coords).toString(precision);
-    case keyCoordsDMM:
+    case CoordFormatKey.DMM:
       return DMM.fromLatLon(_coords).toString(precision);
-    case keyCoordsDMS:
+    case CoordFormatKey.DMS:
       return DMS.fromLatLon(_coords).toString(precision);
-    case keyCoordsUTM:
+    case CoordFormatKey.UTM:
       return UTMREF.fromLatLon(_coords, ells).toString();
-    case keyCoordsMGRS:
+    case CoordFormatKey.MGRS:
       return MGRS.fromLatLon(_coords, ells).toString();
-    case keyCoordsXYZ:
+    case CoordFormatKey.XYZ:
       return XYZ.fromLatLon(_coords, ells).toString();
-    case keyCoordsSwissGrid:
+    case CoordFormatKey.SWISS_GRID:
       return SwissGrid.fromLatLon(_coords, ells).toString();
-    case keyCoordsSwissGridPlus:
+    case CoordFormatKey.SWISS_GRID_PLUS:
       return SwissGridPlus.fromLatLon(_coords, ells).toString();
-    case keyCoordsGaussKrueger:
-      return GaussKrueger.fromLatLon(_coords, getGkSubTypeCode(_outputFormat['subtype'], defaultValue: 0), ells)
+    case CoordFormatKey.GAUSS_KRUEGER:
+      return GaussKrueger.fromLatLon(_coords, getCodeFromGaussKruegerSubType(_outputFormat['subtype'], defaultValue: 0), ells)
           .toString();
-    case keyCoordsLambert:
+    case CoordFormatKey.LAMBERT:
       return Lambert.fromLatLon(_coords, getLambertType(_outputFormat['subtype'], defaultValue: null), ells).toString();
-    case keyCoordsDutchGrid:
+    case CoordFormatKey.DUTCH_GRID:
       return DutchGrid.fromLatLon(_coords).toString();
-    case keyCoordsMaidenhead:
+    case CoordFormatKey.MAIDENHEAD:
       return Maidenhead.fromLatLon(_coords).toString();
-    case keyCoordsMercator:
+    case CoordFormatKey.MERCATOR:
       return Mercator.fromLatLon(_coords, ells).toString();
-    case keyCoordsNaturalAreaCode:
+    case CoordFormatKey.NATURAL_AREA_CODE:
       return NaturalAreaCode.fromLatLon(_coords, precision: 8).toString();
-    case keyCoordsSlippyMap:
+    case CoordFormatKey.SLIPPY_MAP:
       return SlippyMap.fromLatLon(_coords, double.tryParse(_outputFormat['subtype'])).toString();
-    case keyCoordsGeohash:
+    case CoordFormatKey.GEOHASH:
       return Geohash.fromLatLon(_coords, 14).toString();
-    case keyCoordsGeoHex:
+    case CoordFormatKey.GEOHEX:
       return GeoHex.fromLatLon(_coords, 20).toString();
-    case keyCoordsGeo3x3:
+    case CoordFormatKey.GEO3X3:
       return Geo3x3.fromLatLon(_coords, 20).toString();
-    case keyCoordsOpenLocationCode:
+    case CoordFormatKey.OPEN_LOCATION_CODE:
       return OpenLocationCode.fromLatLon(_coords, codeLength: 14).toString();
-    case keyCoordsQuadtree:
+    case CoordFormatKey.QUADTREE:
       return Quadtree.fromLatLon(_coords, precision: 40).toString();
-    case keyCoordsMakaney:
+    case CoordFormatKey.MAKANEY:
       return Makaney.fromLatLon(_coords).toString();
-    case keyCoordsReverseWherigoWaldmeister:
+    case CoordFormatKey.REVERSE_WIG_WALDMEISTER:
       return ReverseWherigoWaldmeister.fromLatLon(_coords).toString();
-    case keyCoordsReverseWherigoDay1976:
+    case CoordFormatKey.REVERSE_WIG_DAY1976:
       return ReverseWherigoDay1976.fromLatLon(_coords).toString();
     default:
       return DEC.fromLatLon(_coords).toString();
@@ -72,100 +72,100 @@ double normalizeBearing(double bearing) {
   return modulo360(bearing);
 }
 
-LambertType getLambertType(String subtype, {defaultValue: DefaultLambertType}) {
+LambertType getLambertType(String subtype, {defaultValue: defaultLambertType}) {
   switch (subtype) {
-    case keyCoordsLambert93:
+    case CoordFormatKey.LAMBERT93:
       return LambertType.LAMBERT_93;
-    case keyCoordsLambert2008:
+    case CoordFormatKey.LAMBERT2008:
       return LambertType.LAMBERT_2008;
-    case keyCoordsLambertETRS89LCC:
+    case CoordFormatKey.ETRS89LCC:
       return LambertType.ETRS89_LCC;
-    case keyCoordsLambert72:
+    case CoordFormatKey.LAMBERT72:
       return LambertType.LAMBERT_72;
-    case keyCoordsLambert93CC42:
+    case CoordFormatKey.LAMBERT93_CC42:
       return LambertType.L93_CC42;
-    case keyCoordsLambert93CC43:
+    case CoordFormatKey.LAMBERT93_CC43:
       return LambertType.L93_CC43;
-    case keyCoordsLambert93CC44:
+    case CoordFormatKey.LAMBERT93_CC44:
       return LambertType.L93_CC44;
-    case keyCoordsLambert93CC45:
+    case CoordFormatKey.LAMBERT93_CC45:
       return LambertType.L93_CC45;
-    case keyCoordsLambert93CC46:
+    case CoordFormatKey.LAMBERT93_CC46:
       return LambertType.L93_CC46;
-    case keyCoordsLambert93CC47:
+    case CoordFormatKey.LAMBERT93_CC47:
       return LambertType.L93_CC47;
-    case keyCoordsLambert93CC48:
+    case CoordFormatKey.LAMBERT93_CC48:
       return LambertType.L93_CC48;
-    case keyCoordsLambert93CC49:
+    case CoordFormatKey.LAMBERT93_CC49:
       return LambertType.L93_CC49;
-    case keyCoordsLambert93CC50:
+    case CoordFormatKey.LAMBERT93_CC50:
       return LambertType.L93_CC50;
     default:
       return defaultValue;
   }
 }
 
-String getLambertKey({LambertType lambertType: DefaultLambertType}) {
+String getLambertKey({LambertType lambertType: defaultLambertType}) {
   switch (lambertType) {
     case LambertType.LAMBERT_93:
-      return keyCoordsLambert93;
+      return CoordFormatKey.LAMBERT93;
     case LambertType.LAMBERT_2008:
-      return keyCoordsLambert2008;
+      return CoordFormatKey.LAMBERT2008;
     case LambertType.ETRS89_LCC:
-      return keyCoordsLambertETRS89LCC;
+      return CoordFormatKey.ETRS89LCC;
     case LambertType.LAMBERT_72:
-      return keyCoordsLambert72;
+      return CoordFormatKey.LAMBERT72;
     case LambertType.L93_CC42:
-      return keyCoordsLambert93CC42;
+      return CoordFormatKey.LAMBERT93_CC42;
     case LambertType.L93_CC43:
-      return keyCoordsLambert93CC43;
+      return CoordFormatKey.LAMBERT93_CC43;
     case LambertType.L93_CC44:
-      return keyCoordsLambert93CC44;
+      return CoordFormatKey.LAMBERT93_CC44;
     case LambertType.L93_CC45:
-      return keyCoordsLambert93CC45;
+      return CoordFormatKey.LAMBERT93_CC45;
     case LambertType.L93_CC46:
-      return keyCoordsLambert93CC46;
+      return CoordFormatKey.LAMBERT93_CC46;
     case LambertType.L93_CC47:
-      return keyCoordsLambert93CC47;
+      return CoordFormatKey.LAMBERT93_CC47;
     case LambertType.L93_CC48:
-      return keyCoordsLambert93CC48;
+      return CoordFormatKey.LAMBERT93_CC48;
     case LambertType.L93_CC49:
-      return keyCoordsLambert93CC49;
+      return CoordFormatKey.LAMBERT93_CC49;
     case LambertType.L93_CC50:
-      return keyCoordsLambert93CC50;
+      return CoordFormatKey.LAMBERT93_CC50;
   }
 }
 
-int getGkSubTypeCode(String subtype, {defaultValue: DefaultGaussKruegerType}) {
+int getCodeFromGaussKruegerSubType(CoordFormatKey subtype) {
   switch (subtype) {
-    case keyCoordsGaussKruegerGK1:
+    case CoordFormatKey.GAUSS_KRUEGER_GK1:
       return 1;
-    case keyCoordsGaussKruegerGK2:
+    case CoordFormatKey.GAUSS_KRUEGER_GK2:
       return 2;
-    case keyCoordsGaussKruegerGK3:
+    case CoordFormatKey.GAUSS_KRUEGER_GK3:
       return 3;
-    case keyCoordsGaussKruegerGK4:
+    case CoordFormatKey.GAUSS_KRUEGER_GK4:
       return 4;
-    case keyCoordsGaussKruegerGK5:
+    case CoordFormatKey.GAUSS_KRUEGER_GK5:
       return 5;
     default:
-      return DefaultGaussKruegerType;
+      return 1;
   }
 }
 
-String getGaussKruegerTypKey({int subtype: DefaultGaussKruegerType}) {
-  switch (subtype) {
+CoordFormatKey getGaussKruegerTypKeyFromCode(int gaussKruegerCode) {
+  switch (gaussKruegerCode) {
     case 1:
-      return keyCoordsGaussKruegerGK1;
+      return CoordFormatKey.GAUSS_KRUEGER_GK1;
     case 2:
-      return keyCoordsGaussKruegerGK2;
+      return CoordFormatKey.GAUSS_KRUEGER_GK2;
     case 3:
-      return keyCoordsGaussKruegerGK3;
+      return CoordFormatKey.GAUSS_KRUEGER_GK3;
     case 4:
-      return keyCoordsGaussKruegerGK4;
+      return CoordFormatKey.GAUSS_KRUEGER_GK4;
     case 5:
-      return keyCoordsGaussKruegerGK5;
+      return CoordFormatKey.GAUSS_KRUEGER_GK5;
     default:
-      return getGaussKruegerTypKey();
+      return defaultGaussKruegerType;
   }
 }

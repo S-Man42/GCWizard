@@ -45,14 +45,14 @@ class GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
               _currentFormat = newValue;
 
               switch (_currentFormat) {
-                case keyCoordsGaussKrueger:
-                  _currentSubtype = getGaussKruegerTypKey();
+                case CoordFormatKey.GAUSS_KRUEGER:
+                  _currentSubtype = getGaussKruegerTypKeyFromCode();
                   break;
-                case keyCoordsLambert:
+                case CoordFormatKey.LAMBERT:
                   _currentSubtype = getLambertKey();
                   break;
-                case keyCoordsSlippyMap:
-                  _currentSubtype = DefaultSlippyZoom.toInt().toString();
+                case CoordFormatKey.SLIPPY_MAP:
+                  _currentSubtype = defaultSlippyZoom.toInt().toString();
                   break;
                 default:
                   _currentSubtype = null;
@@ -72,8 +72,8 @@ class GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
     var format = widget.format['format'] ?? _currentFormat;
 
     switch (format) {
-      case keyCoordsGaussKrueger:
-      case keyCoordsLambert:
+      case CoordFormatKey.GAUSS_KRUEGER:
+      case CoordFormatKey.LAMBERT:
         return GCWDropDown(
           value: _currentSubtype,
           items: getCoordinateFormatByKey(format).subtypes.map((subtype) {
@@ -89,12 +89,12 @@ class GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
             });
           },
         );
-      case keyCoordsSlippyMap:
+      case CoordFormatKey.SLIPPY_MAP:
         return GCWDoubleSpinner(
           min: 0.0,
           max: 30.0,
           title: i18n(context, 'coords_formatconverter_slippymap_zoom') + ' (Z)',
-          value: double.tryParse(_currentSubtype == null ? DefaultSlippyZoom : _currentSubtype),
+          value: double.tryParse(_currentSubtype == null ? defaultSlippyZoom : _currentSubtype),
           onChanged: (value) {
             setState(() {
               _currentSubtype = NumberFormat('0.00000').format(value);

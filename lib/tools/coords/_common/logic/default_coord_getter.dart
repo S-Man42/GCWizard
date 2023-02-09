@@ -5,9 +5,9 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:prefs/prefs.dart';
 
-const DefaultLambertType = LambertType.LAMBERT_93;
-const DefaultGaussKruegerType = 1;
-const DefaultSlippyZoom = 10.0;
+const defaultLambertType = CoordFormatKey.LAMBERT93;
+const defaultGaussKruegerType = CoordFormatKey.GAUSS_KRUEGER_GK1;
+const defaultSlippyZoom = 10.0;
 
 Map<String, String> defaultCoordFormat() {
   var format = Prefs.get(PREFERENCE_COORD_DEFAULT_FORMAT);
@@ -15,21 +15,21 @@ Map<String, String> defaultCoordFormat() {
 
   var subtypeChanged = false;
   switch (format) {
-    case keyCoordsGaussKrueger:
+    case CoordFormatKey.GAUSS_KRUEGER:
       if (![
-        keyCoordsGaussKruegerGK1,
-        keyCoordsGaussKruegerGK2,
-        keyCoordsGaussKruegerGK3,
-        keyCoordsGaussKruegerGK4,
-        keyCoordsGaussKruegerGK5
+        CoordFormatKey.GAUSS_KRUEGER_GK1,
+        CoordFormatKey.GAUSS_KRUEGER_GK2,
+        CoordFormatKey.GAUSS_KRUEGER_GK3,
+        CoordFormatKey.GAUSS_KRUEGER_GK4,
+        CoordFormatKey.GAUSS_KRUEGER_GK5
       ].contains(subtype)) {
-        subtype = getGaussKruegerTypKey();
+        subtype = getGaussKruegerTypKeyFromCode();
         subtypeChanged = true;
       }
       break;
-    case keyCoordsSlippyMap:
+    case CoordFormatKey.SLIPPY_MAP:
       if (int.tryParse(subtype) == null) {
-        subtype = DefaultSlippyZoom.toString();
+        subtype = defaultSlippyZoom.toString();
         subtypeChanged = true;
       }
       break;

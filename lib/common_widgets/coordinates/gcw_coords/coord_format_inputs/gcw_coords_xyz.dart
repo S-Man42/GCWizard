@@ -1,19 +1,19 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _GCWCoordsXYZ extends StatefulWidget {
-  final Function onChanged;
+  final Function(XYZ) onChanged;
   final BaseCoordinates coordinates;
 
-  const _GCWCoordsXYZ({Key? key, this.onChanged, this.coordinates}) : super(key: key);
+  const _GCWCoordsXYZ({Key? key, required this.onChanged, required this.coordinates}) : super(key: key);
 
   @override
   _GCWCoordsXYZState createState() => _GCWCoordsXYZState();
 }
 
 class _GCWCoordsXYZState extends State<_GCWCoordsXYZ> {
-  TextEditingController _ControllerX;
-  TextEditingController _ControllerY;
-  TextEditingController _ControllerZ;
+  late TextEditingController _ControllerX;
+  late TextEditingController _ControllerY;
+  late TextEditingController _ControllerZ;
 
   var _currentX = 0.0;
   var _currentY = 0.0;
@@ -88,6 +88,6 @@ class _GCWCoordsXYZState extends State<_GCWCoordsXYZ> {
   }
 
   _setCurrentValueAndEmitOnChange() {
-    // widget.onChanged(XYZ(_currentX, _currentY, _currentZ));
+    widget.onChanged(XYZ(_currentX, _currentY, _currentZ));
   }
 }

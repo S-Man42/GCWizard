@@ -46,7 +46,7 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
 
   var _currentRaDeg = RaDeg(0.0);
   var _currentRightAscension = RightAscension(0, 0, 0, 0.0);
-  var _currentDecryptFormat = keyCoordsDEC;
+  var _currentDecryptFormat = CoordFormatKey.DEC;
 
   var _currentDecSign = 1;
   String _currentDecDegrees = '0';
@@ -170,13 +170,13 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
   Widget _buildDecryptWidget() {
     var _decryptWidget;
     switch (_currentDecryptFormat) {
-      case keyCoordsDEC:
+      case CoordFormatKey.DEC:
         _decryptWidget = _buildDecPartRow();
         break;
-      case keyCoordsDMM:
+      case CoordFormatKey.DMM:
         _decryptWidget = _buildDmmPartRow();
         break;
-      case keyCoordsDMS:
+      case CoordFormatKey.DMS:
         _decryptWidget = _buildDmsPartRow();
         break;
     }
@@ -189,13 +189,13 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
             _currentDecryptFormat = newValue;
 
             switch (_currentDecryptFormat) {
-              case keyCoordsDEC:
+              case CoordFormatKey.DEC:
                 _setDecRightAscension();
                 break;
-              case keyCoordsDMM:
+              case CoordFormatKey.DMM:
                 _setDmmDegrees();
                 break;
-              case keyCoordsDMS:
+              case CoordFormatKey.DMS:
                 _setDmsRightAscension();
                 break;
             }
@@ -203,16 +203,16 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
         },
         items: [
           GCWDropDownMenuItem(
-            value: keyCoordsDEC,
-            child: getCoordinateFormatByKey(keyCoordsDEC).name,
+            value: CoordFormatKey.DEC,
+            child: getCoordinateFormatByKey(CoordFormatKey.DEC).name,
           ),
           GCWDropDownMenuItem(
-            value: keyCoordsDMM,
-            child: getCoordinateFormatByKey(keyCoordsDMM).name,
+            value: CoordFormatKey.DMM,
+            child: getCoordinateFormatByKey(CoordFormatKey.DMM).name,
           ),
           GCWDropDownMenuItem(
-            value: keyCoordsDMS,
-            child: getCoordinateFormatByKey(keyCoordsDMS).name,
+            value: CoordFormatKey.DMS,
+            child: getCoordinateFormatByKey(CoordFormatKey.DMS).name,
           ),
         ],
       ),
@@ -529,9 +529,9 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
       var dms = DMSLatitude.from(doubleToDMSPart(output.degrees)).format(6).replaceAll('N ', '').replaceAll('S ', '-');
 
       var rows = [
-        [getCoordinateFormatByKey(keyCoordsDEC).name, output.toString() + '°'],
-        [getCoordinateFormatByKey(keyCoordsDMM).name, dmm],
-        [getCoordinateFormatByKey(keyCoordsDMS).name, dms],
+        [getCoordinateFormatByKey(CoordFormatKey.DEC).name, output.toString() + '°'],
+        [getCoordinateFormatByKey(CoordFormatKey.DMM).name, dmm],
+        [getCoordinateFormatByKey(CoordFormatKey.DMS).name, dms],
       ];
       return GCWDefaultOutput(child: GCWColumnedMultilineOutput(data: rows));
     }

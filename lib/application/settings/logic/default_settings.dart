@@ -104,7 +104,7 @@ void initDefaultSettings(PreferencesInitMode mode, {String reinitSinglePreferenc
           Prefs.get(PREFERENCE_COORD_DEFAULT_FORMAT) == null ||
           Prefs.get(PREFERENCE_COORD_DEFAULT_FORMAT) == 'coords_deg' //old name for DMM until v1.1.0
       ) {
-    Prefs.setString(PREFERENCE_COORD_DEFAULT_FORMAT, keyCoordsDMM);
+    Prefs.setString(PREFERENCE_COORD_DEFAULT_FORMAT, CoordFormatKey.DMM);
   }
 
   if (reinitSinglePreference == PREFERENCE_COORD_DEFAULT_FORMAT_SUBTYPE ||

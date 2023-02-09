@@ -242,7 +242,27 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = extractIntegerFromText(elem['input']);
+        var _actual = extractIntegerFromText(elem['input'], allowNegative: true);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
+
+  group("StringUtils.extractIntegerFromText:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : '1 2', 'expectedOutput' : 12},
+      {'input' : 'a1', 'expectedOutput' : 1},
+      {'input' : '1a2', 'expectedOutput' : 12},
+
+      {'input' : ' - 1 2', 'expectedOutput' : 12},
+      {'input' : ' - 1 -2', 'expectedOutput' : 12},
+      {'input' : '-a1', 'expectedOutput' : 1},
+      {'input' : '1a-2', 'expectedOutput' : 12}
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}', () {
+        var _actual = extractIntegerFromText(elem['input'], allowNegative: false);
         expect(_actual, elem['expectedOutput']);
       });
     });

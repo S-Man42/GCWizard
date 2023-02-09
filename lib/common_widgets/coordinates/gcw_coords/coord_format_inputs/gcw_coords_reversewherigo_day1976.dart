@@ -1,21 +1,21 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _GCWCoordsReverseWherigoDay1976 extends StatefulWidget {
-  final Function onChanged;
+  final Function(ReverseWherigoDay1976) onChanged;
   final BaseCoordinates coordinates;
 
-  const _GCWCoordsReverseWherigoDay1976({Key? key, this.onChanged, this.coordinates}) : super(key: key);
+  const _GCWCoordsReverseWherigoDay1976({Key? key, required this.onChanged, required this.coordinates}) : super(key: key);
 
   @override
   _GCWCoordsReverseWherigoDay1976State createState() => _GCWCoordsReverseWherigoDay1976State();
 }
 
 class _GCWCoordsReverseWherigoDay1976State extends State<_GCWCoordsReverseWherigoDay1976> {
-  var _ControllerA;
-  var _ControllerB;
+  late TextEditingController _ControllerA;
+  late TextEditingController _ControllerB;
 
-  FocusNode _FocusNodeA;
-  FocusNode _FocusNodeB;
+  FocusNode _FocusNodeA = FocusNode();
+  FocusNode _FocusNodeB = FocusNode();
 
   var _currentA = "";
   var _currentB = "";
@@ -25,9 +25,6 @@ class _GCWCoordsReverseWherigoDay1976State extends State<_GCWCoordsReverseWherig
     super.initState();
     _ControllerA = TextEditingController(text: _currentA);
     _ControllerB = TextEditingController(text: _currentB);
-
-    _FocusNodeA = FocusNode();
-    _FocusNodeB = FocusNode();
   }
 
   @override
