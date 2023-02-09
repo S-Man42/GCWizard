@@ -14,7 +14,7 @@ import 'package:prefs/prefs.dart';
 class SymbolTableExamples extends StatefulWidget {
   final List<String> symbolKeys;
 
-  const SymbolTableExamples({Key? key, this.symbolKeys}) : super(key: key);
+  const SymbolTableExamples({Key? key, required this.symbolKeys}) : super(key: key);
 
   @override
   SymbolTableExamplesState createState() => SymbolTableExamplesState();
@@ -37,7 +37,7 @@ class SymbolTableExamplesState extends State<SymbolTableExamples> {
   }
 
   Future _initialize() async {
-    if (widget.symbolKeys == null || widget.symbolKeys.isEmpty) {
+    if (widget.symbolKeys.isEmpty) {
       return;
     }
 
@@ -96,14 +96,14 @@ class SymbolTableExamplesState extends State<SymbolTableExamples> {
   }
 
   _createSymbols(int countColumns) {
-    if (data == null || data.isEmpty) return Container();
+    if (data.isEmpty) return Container();
 
     var symbols = symbolKeys.map<Widget>((symbolKey) {
       var tableOutput = GCWSymbolTableTextToSymbols(
           text: _currentInput,
           ignoreUnknown: true,
           countColumns: countColumns,
-          data: data[symbolKey],
+          data: data[symbolKey]!,
           showExportButton: false,
           specialEncryption: false,
           fixed: true);
