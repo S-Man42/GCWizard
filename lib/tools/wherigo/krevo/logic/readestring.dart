@@ -28,7 +28,7 @@ String gsub_wig(String str) {
       if (plen < p) p = p - plen;
       c = rot_palette[p - 1];
     } else {
-      x = magic[c];
+      x = magic[c]!;
       if (x != null) c = x;
     }
     result = result + c;
@@ -64,7 +64,7 @@ String wwb_deobf(String str) {
       if (p < 1) p = p + plen;
       c = rot_palette[p - 1];
     } else {
-      x = magic[c];
+      x = magic[c]!;
       if (x != null) c = x;
     }
     d++;
