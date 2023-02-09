@@ -38,7 +38,13 @@ enum CoordFormatKey {DEC, DMM, DMS, UTM, MGRS, XYZ, SWISS_GRID, SWISS_GRID_PLUS,
   GAUSS_KRUEGER_GK1, GAUSS_KRUEGER_GK2, GAUSS_KRUEGER_GK3, GAUSS_KRUEGER_GK4, GAUSS_KRUEGER_GK5,
   //Lambert Subtypes
   LAMBERT93, LAMBERT2008, ETRS89LCC, LAMBERT72, LAMBERT93_CC42, LAMBERT93_CC43,
-  LAMBERT93_CC44, LAMBERT93_CC45, LAMBERT93_CC46, LAMBERT93_CC47, LAMBERT93_CC48, LAMBERT93_CC49, LAMBERT93_CC50}
+  LAMBERT93_CC44, LAMBERT93_CC45, LAMBERT93_CC46, LAMBERT93_CC47, LAMBERT93_CC48, LAMBERT93_CC49, LAMBERT93_CC50,
+  //SlippyMap Subtypes
+  SLIPPYMAP_0, SLIPPYMAP_1, SLIPPYMAP_2, SLIPPYMAP_3, SLIPPYMAP_4, SLIPPYMAP_5, SLIPPYMAP_6, SLIPPYMAP_7, SLIPPYMAP_8
+  , SLIPPYMAP_9, SLIPPYMAP_10, SLIPPYMAP_11, SLIPPYMAP_12, SLIPPYMAP_13, SLIPPYMAP_14, SLIPPYMAP_15, SLIPPYMAP_16, SLIPPYMAP_17
+  , SLIPPYMAP_18, SLIPPYMAP_19, SLIPPYMAP_20, SLIPPYMAP_21, SLIPPYMAP_22, SLIPPYMAP_23, SLIPPYMAP_24, SLIPPYMAP_25, SLIPPYMAP_26
+  , SLIPPYMAP_27, SLIPPYMAP_28, SLIPPYMAP_29, SLIPPYMAP_30
+}
 
 const keyCoordsALL = 'coords_all';
 
@@ -94,7 +100,39 @@ List<CoordinateFormat> allCoordFormats = [
   CoordinateFormat(CoordFormatKey.MERCATOR, 'coords_mercator', 'Mercator', 'Y: 5667450.4, X: -13626989.9'),
   CoordinateFormat(CoordFormatKey.NATURAL_AREA_CODE, 'coords_naturalareacode', 'Natural Area Code (NAC)', 'X: 4RZ000, Y: QJFMGZ'),
   CoordinateFormat(CoordFormatKey.OPEN_LOCATION_CODE, 'coords_openlocationcode', 'OpenLocationCode (OLC, PlusCode)', '84QV7HRP+CM3'),
-  CoordinateFormat(CoordFormatKey.SLIPPY_MAP, 'coords_slippymap', 'Slippy Map Tiles', 'Z: 15, X: 5241, Y: 11749'),
+  CoordinateFormat(CoordFormatKey.SLIPPY_MAP, 'coords_slippymap', 'Slippy Map Tiles', 'Z: 15, X: 5241, Y: 11749', subtypes: [
+    CoordinateFormat(CoordFormatKey.SLIPPYMAP_0, '', '0', ''),
+    CoordinateFormat(CoordFormatKey.SLIPPYMAP_1, '', '1', ''),
+    CoordinateFormat(CoordFormatKey.SLIPPYMAP_2, '', '2', ''),
+    CoordinateFormat(CoordFormatKey.SLIPPYMAP_3, '', '3', ''),
+    CoordinateFormat(CoordFormatKey.SLIPPYMAP_4, '', '4', ''),
+    CoordinateFormat(CoordFormatKey.SLIPPYMAP_5, '', '5', ''),
+    CoordinateFormat(CoordFormatKey.SLIPPYMAP_6, '', '6', ''),
+    CoordinateFormat(CoordFormatKey.SLIPPYMAP_7, '', '7', ''),
+    CoordinateFormat(CoordFormatKey.SLIPPYMAP_8, '', '8', ''),
+    CoordinateFormat(CoordFormatKey.SLIPPYMAP_9, '', '9', ''),
+    CoordinateFormat(CoordFormatKey.SLIPPYMAP_10, '', '10', ''),
+    CoordinateFormat(CoordFormatKey.SLIPPYMAP_11, '', '11', ''),
+    CoordinateFormat(CoordFormatKey.SLIPPYMAP_12, '', '12', ''),
+    CoordinateFormat(CoordFormatKey.SLIPPYMAP_13, '', '13', ''),
+    CoordinateFormat(CoordFormatKey.SLIPPYMAP_14, '', '14', ''),
+    CoordinateFormat(CoordFormatKey.SLIPPYMAP_15, '', '15', ''),
+    CoordinateFormat(CoordFormatKey.SLIPPYMAP_16, '', '16', ''),
+    CoordinateFormat(CoordFormatKey.SLIPPYMAP_17, '', '17', ''),
+    CoordinateFormat(CoordFormatKey.SLIPPYMAP_18, '', '18', ''),
+    CoordinateFormat(CoordFormatKey.SLIPPYMAP_19, '', '19', ''),
+    CoordinateFormat(CoordFormatKey.SLIPPYMAP_20, '', '20', ''),
+    CoordinateFormat(CoordFormatKey.SLIPPYMAP_21, '', '21', ''),
+    CoordinateFormat(CoordFormatKey.SLIPPYMAP_22, '', '22', ''),
+    CoordinateFormat(CoordFormatKey.SLIPPYMAP_23, '', '23', ''),
+    CoordinateFormat(CoordFormatKey.SLIPPYMAP_24, '', '24', ''),
+    CoordinateFormat(CoordFormatKey.SLIPPYMAP_25, '', '25', ''),
+    CoordinateFormat(CoordFormatKey.SLIPPYMAP_26, '', '26', ''),
+    CoordinateFormat(CoordFormatKey.SLIPPYMAP_27, '', '27', ''),
+    CoordinateFormat(CoordFormatKey.SLIPPYMAP_28, '', '28', ''),
+    CoordinateFormat(CoordFormatKey.SLIPPYMAP_29, '', '29', ''),
+    CoordinateFormat(CoordFormatKey.SLIPPYMAP_30, '', '30', ''),
+  ]),
   CoordinateFormat(CoordFormatKey.REVERSE_WIG_WALDMEISTER, 'coords_reversewhereigo_waldmeister' /* typo known. DO NOT change!*/, 'Reverse Wherigo (Waldmeister)', '042325, 436113, 935102'),
   CoordinateFormat(CoordFormatKey.REVERSE_WIG_DAY1976, 'coords_reversewhereigo_day1976', 'Reverse Wherigo (Day1976)', '3f8f1, z4ee4'),
   CoordinateFormat(CoordFormatKey.GEOHASH, 'coords_geohash', 'Geohash', 'c20cwkvr4'),
@@ -104,8 +142,23 @@ List<CoordinateFormat> allCoordFormats = [
   CoordinateFormat(CoordFormatKey.GEO3X3, 'coords_geo3x3', 'Geo3x3', 'W7392967941169'),
 ];
 
-CoordinateFormat? getCoordinateFormatByKey(CoordFormatKey key) {
-  return allCoordFormats.firstWhereOrNull((format) => format.key == key);
+CoordinateFormat getCoordinateFormatByKey(CoordFormatKey key) {
+  return allCoordFormats.firstWhere((format) => format.key == key);
+}
+
+CoordinateFormat? getCoordinateFormatByPersistenceKey(String key) {
+  return allCoordFormats.firstWhereOrNull((format) => format.persistenceKey == key);
+}
+
+CoordinateFormat? getCoordinateFormatSubtypeByPersistenceKey(String key) {
+  var subtypeFormats = allCoordFormats.where((format) => format.subtypes != null && format.subtypes!.isNotEmpty).toList();
+
+  return subtypeFormats
+      .fold(<CoordinateFormat>[], (List<CoordinateFormat> value, CoordinateFormat element) {
+          value.addAll(element.subtypes!);
+          return value;
+      })
+      .firstWhereOrNull((format) => format.persistenceKey == key);
 }
 
 bool isSubtypeOfCoordFormat(CoordFormatKey baseFormat, CoordFormatKey typeToCheck) {

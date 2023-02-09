@@ -10,7 +10,7 @@ class GCWTextDivider extends StatefulWidget {
   final bool? suppressBottomSpace;
 
   const GCWTextDivider(
-      {Key? key, this.text: '', this.trailing, this.style, this.suppressTopSpace, this.suppressBottomSpace})
+      {Key? key, required this.text, this.trailing, this.style, this.suppressTopSpace, this.suppressBottomSpace})
       : super(key: key);
 
   @override

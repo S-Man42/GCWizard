@@ -169,3 +169,37 @@ CoordFormatKey getGaussKruegerTypKeyFromCode(int gaussKruegerCode) {
       return defaultGaussKruegerType;
   }
 }
+
+const Map<int, CoordFormatKey> SLIPPY_MAP_ZOOM = {
+  0: CoordFormatKey.SLIPPYMAP_0,
+  1: CoordFormatKey.SLIPPYMAP_1,
+  2: CoordFormatKey.SLIPPYMAP_2,
+  3: CoordFormatKey.SLIPPYMAP_3,
+  4: CoordFormatKey.SLIPPYMAP_4,
+  5: CoordFormatKey.SLIPPYMAP_5,
+  6: CoordFormatKey.SLIPPYMAP_6,
+  7: CoordFormatKey.SLIPPYMAP_7,
+  8: CoordFormatKey.SLIPPYMAP_8,
+  9: CoordFormatKey.SLIPPYMAP_9,
+  10: CoordFormatKey.SLIPPYMAP_10,
+  11: CoordFormatKey.SLIPPYMAP_11,
+  12: CoordFormatKey.SLIPPYMAP_12,
+  13: CoordFormatKey.SLIPPYMAP_13,
+  14: CoordFormatKey.SLIPPYMAP_14,
+  15: CoordFormatKey.SLIPPYMAP_15,
+  16: CoordFormatKey.SLIPPYMAP_16,
+  17: CoordFormatKey.SLIPPYMAP_17,
+  18: CoordFormatKey.SLIPPYMAP_18,
+  19: CoordFormatKey.SLIPPYMAP_19,
+  20: CoordFormatKey.SLIPPYMAP_20,
+  21: CoordFormatKey.SLIPPYMAP_21,
+  22: CoordFormatKey.SLIPPYMAP_22,
+  23: CoordFormatKey.SLIPPYMAP_23,
+  24: CoordFormatKey.SLIPPYMAP_24,
+  25: CoordFormatKey.SLIPPYMAP_25,
+  26: CoordFormatKey.SLIPPYMAP_26,
+  27: CoordFormatKey.SLIPPYMAP_27,
+  28: CoordFormatKey.SLIPPYMAP_28,
+  29: CoordFormatKey.SLIPPYMAP_29,
+  30: CoordFormatKey.SLIPPYMAP_30,
+}

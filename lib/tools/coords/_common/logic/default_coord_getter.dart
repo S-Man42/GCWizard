@@ -1,4 +1,5 @@
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coords_return_types.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/lambert.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coord_format_getter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
@@ -7,39 +8,67 @@ import 'package:prefs/prefs.dart';
 
 const defaultLambertType = CoordFormatKey.LAMBERT93;
 const defaultGaussKruegerType = CoordFormatKey.GAUSS_KRUEGER_GK1;
-const defaultSlippyZoom = 10.0;
+const defaultSlippyMapType = CoordFormatKey.SLIPPYMAP_10;
 
-Map<String, String> defaultCoordFormat() {
-  var format = Prefs.get(PREFERENCE_COORD_DEFAULT_FORMAT);
-  var subtype = Prefs.get(PREFERENCE_COORD_DEFAULT_FORMAT_SUBTYPE);
-
-  var subtypeChanged = false;
+CoordFormatKey? _getDefaultSubtypeForFormat(CoordFormatKey format) {
   switch (format) {
     case CoordFormatKey.GAUSS_KRUEGER:
-      if (![
-        CoordFormatKey.GAUSS_KRUEGER_GK1,
-        CoordFormatKey.GAUSS_KRUEGER_GK2,
-        CoordFormatKey.GAUSS_KRUEGER_GK3,
-        CoordFormatKey.GAUSS_KRUEGER_GK4,
-        CoordFormatKey.GAUSS_KRUEGER_GK5
-      ].contains(subtype)) {
-        subtype = getGaussKruegerTypKeyFromCode();
-        subtypeChanged = true;
-      }
-      break;
+      return defaultGaussKruegerType;
+    case CoordFormatKey.LAMBERT:
+      return defaultLambertType;
     case CoordFormatKey.SLIPPY_MAP:
-      if (int.tryParse(subtype) == null) {
-        subtype = defaultSlippyZoom.toString();
-        subtypeChanged = true;
-      }
-      break;
+      return defaultSlippyMapType;
+    default: return null;
+  }
+}
+
+CoordsFormatValue defaultCoordFormat() {
+  var formatStr = Prefs.get(PREFERENCE_COORD_DEFAULT_FORMAT);
+
+  CoordFormatKey format;
+  if(formatStr == null)
+    format = CoordFormatKey.DMM;
+  else {
+    var _format = getCoordinateFormatByPersistenceKey(formatStr);
+    if (_format == null)
+      format = CoordFormatKey.DMM;
+    else
+      format = _format.key;
   }
 
-  if (subtypeChanged) {
-    Prefs.setString(PREFERENCE_COORD_DEFAULT_FORMAT_SUBTYPE, subtype);
+  return CoordsFormatValue(format, getDefaultSubtypesForFormat(format));
+}
+
+CoordFormatKey? getDefaultSubtypesForFormat(CoordFormatKey format) {
+  if (![CoordFormatKey.LAMBERT, CoordFormatKey.GAUSS_KRUEGER, CoordFormatKey.SLIPPY_MAP].contains(format))
+    return null;
+
+  CoordFormatKey subtype;
+
+  var subtypeStr = Prefs.get(PREFERENCE_COORD_DEFAULT_FORMAT_SUBTYPE);
+  if (subtypeStr == null) {
+
+    subtype = _getDefaultSubtypeForFormat(format)!;
+
+  } else {
+
+    var _subtype = getCoordinateFormatSubtypeByPersistenceKey(subtypeStr);
+    if (_subtype == null || !isSubtypeOfCoordFormat(format, _subtype.key)) {
+
+      subtype = _getDefaultSubtypeForFormat(format)!;
+
+    } else {
+
+      subtype = _subtype.key;
+
+    }
+
   }
 
-  return {'format': format, 'subtype': subtype};
+  var persistenceKeyForSubtype = getCoordinateFormatByKey(subtype).persistenceKey;
+  Prefs.setString(PREFERENCE_COORD_DEFAULT_FORMAT_SUBTYPE, persistenceKeyForSubtype);
+
+  return subtype;
 }
 
 int defaultHemiphereLatitude() {
