@@ -1,42 +1,33 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
-
 enum SymbolTableEncryptionMode { FIXED_SYMBOLSIZE, FIXED_CANVASWIDTH }
 
 class SymbolTableEncryptionSizes {
-  @required
   int countImages;
-  @required
   int countColumns;
-  int countRows;
-  @required
   double symbolWidth;
-  @required
   double symbolHeight;
-  double tileWidth;
-  double tileHeight;
   double canvasWidth;
   double canvasHeight;
   // 0 - 1, percent of symbolsize
-  double relativeBorderWidth;
+  double? relativeBorderWidth;
   SymbolTableEncryptionMode mode;
 
-  double absoluteBorderWidth;
-  double symbolAspectRatio;
+  late double absoluteBorderWidth;
+  late double symbolAspectRatio;
+  late int countRows;
+  late double tileWidth;
+  late double tileHeight;
 
-  SymbolTableEncryptionSizes(
-      {@required this.countImages,
-      @required this.countColumns,
-      this.countRows,
-      this.symbolWidth,
-      this.symbolHeight,
-      this.tileWidth,
-      this.tileHeight,
-      this.canvasWidth,
-      this.canvasHeight,
-      this.relativeBorderWidth,
-      @required this.mode}) {
+  SymbolTableEncryptionSizes({
+      required this.countImages,
+      required this.countColumns,
+      required this.symbolWidth,
+      required this.symbolHeight,
+      this.canvasWidth = 0,
+      this.canvasHeight = 0,
+      required this.relativeBorderWidth,
+      required this.mode}) {
     initialize();
   }
 
@@ -49,16 +40,14 @@ class SymbolTableEncryptionSizes {
   }
 
   _setCountRows() {
-    if (this.countColumns != null && this.countImages != null) {
-      countRows = (countImages / countColumns).floor();
-      if (countRows * countColumns < countImages) countRows++;
-    }
+    countRows = (countImages / countColumns).floor();
+    if (countRows * countColumns < countImages) countRows = countRows + 1;
   }
 
   _setBorderWidth() {
     if (relativeBorderWidth == null) relativeBorderWidth = 0.0;
 
-    relativeBorderWidth = max(-0.9, relativeBorderWidth);
+    relativeBorderWidth = max(-0.9, relativeBorderWidth!);
   }
 
   _setSymbolSizes() {
@@ -66,12 +55,12 @@ class SymbolTableEncryptionSizes {
 
     if (mode == SymbolTableEncryptionMode.FIXED_CANVASWIDTH) {
       tileWidth = canvasWidth / countColumns;
-      symbolWidth = tileWidth / (1 + relativeBorderWidth);
+      symbolWidth = tileWidth / (1 + relativeBorderWidth!);
       absoluteBorderWidth = tileWidth - symbolWidth;
       symbolHeight = symbolWidth / symbolAspectRatio;
       tileHeight = symbolHeight + absoluteBorderWidth;
     } else {
-      tileWidth = symbolWidth * (1 + relativeBorderWidth);
+      tileWidth = symbolWidth * (1 + relativeBorderWidth!);
       absoluteBorderWidth = tileWidth - symbolWidth;
       tileHeight = symbolHeight + absoluteBorderWidth;
     }

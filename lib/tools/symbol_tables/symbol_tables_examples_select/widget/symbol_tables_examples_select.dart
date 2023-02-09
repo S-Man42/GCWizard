@@ -18,7 +18,7 @@ const _LOGO_NAME = 'logo.png';
 const _ALERT_COUNT_SELECTIONS = 50;
 
 class SymbolTableExamplesSelect extends StatefulWidget {
-  const SymbolTableExamplesSelect({Key key}) : super(key: key);
+  const SymbolTableExamplesSelect({Key? key}) : super(key: key);
 
   @override
   SymbolTableExamplesSelectState createState() => SymbolTableExamplesSelectState();
@@ -43,10 +43,10 @@ class SymbolTableExamplesSelectState extends State<SymbolTableExamplesSelect> {
     var regex = RegExp(SYMBOLTABLES_ASSETPATH + r'(.*)/' + _LOGO_NAME);
 
     var matches = regex.allMatches(path);
-    return matches.first.group(1);
+    return matches.first.group(1) ?? '';
   }
 
-  Future _initializeImages() async {
+  Future<void> _initializeImages() async {
     //AssetManifest.json holds the information about all asset files
     final manifestContent = await DefaultAssetBundle.of(context).loadString('AssetManifest.json');
     final Map<String, dynamic> manifestMap = json.decode(manifestContent);
@@ -75,7 +75,7 @@ class SymbolTableExamplesSelectState extends State<SymbolTableExamplesSelect> {
 
   @override
   Widget build(BuildContext context) {
-    if (images == null || images.isEmpty) return Container();
+    if (images.isEmpty) return Container();
 
     final mediaQueryData = MediaQuery.of(context);
     var countColumns = mediaQueryData.orientation == Orientation.portrait

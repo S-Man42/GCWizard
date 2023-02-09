@@ -198,11 +198,11 @@ class SymbolTableData {
 
   SymbolTableData(this._context, this.symbolKey);
 
-  Map<String, dynamic> config;
-  List<Map<String, SymbolData>> images;
+  Map<String, dynamic> config = {};
+  List<Map<String, SymbolData>> images = [];
   int maxSymbolTextLength = 0;
 
-  var _translateables = [];
+  List<String> _translateables = [];
   var _sort;
 
   initialize({bool importEncryption = true}) async {
