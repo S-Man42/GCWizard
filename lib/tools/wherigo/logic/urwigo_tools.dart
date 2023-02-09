@@ -6,11 +6,11 @@ import 'package:gc_wizard/tools/wherigo/krevo/logic/ucommons.dart';
 
 enum HASH { ALPHABETICAL, NUMERIC }
 
-String findHashAlphabetical(int hashToFind, int len) {
+String? findHashAlphabetical(int hashToFind, int len) {
   return findHash(hashToFind, len);
 }
 
-String findHashNumeric(int hashToFind, int len) {
+String? findHashNumeric(int hashToFind, int len) {
   var max = pow(26, len);
   for (var i = 0; i < max; i++) {
     var s = urwigoConvBase(i, '0123456789', '01234567890').padLeft(len, '0');
@@ -23,7 +23,7 @@ String findHashNumeric(int hashToFind, int len) {
   return null;
 }
 
-String breakUrwigoHash(int input, HASH type) {
+String? breakUrwigoHash(int input, HASH type) {
   if (input == null) return '';
   if (input < 0 || input >= 65535) return '';
 
@@ -37,7 +37,7 @@ String breakUrwigoHash(int input, HASH type) {
   return null;
 }
 
-String deobfuscateUrwigoText(String text, String dtable) {
+String deobfuscateUrwigoText(String? text, String? dtable) {
   if (text == null || text.isEmpty) return '';
 
   if (dtable == null || dtable.isEmpty) return '';
@@ -48,7 +48,7 @@ String deobfuscateUrwigoText(String text, String dtable) {
     return readustring(text, dtable) ?? '';
 }
 
-String obfuscateUrwigoText(String text, String dtable) {
+String obfuscateUrwigoText(String? text, String? dtable) {
   if (text == null || text.isEmpty) return '';
 
   if (dtable == null || dtable.isEmpty) return '';
@@ -81,7 +81,7 @@ String obfuscateUrwigoText(String text, String dtable) {
     else
       result = result + '\\' + codeUnit.toString().padLeft(3, '0');
     else
-      result = result + searchReplace[codeUnit];
+      result = result + searchReplace[codeUnit]!;
   });
 
   return result;

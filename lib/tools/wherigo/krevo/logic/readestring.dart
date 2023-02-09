@@ -14,7 +14,7 @@ String gsub_wig(String str) {
     ["\x02"]: "R",
     ["\x03"]: ""
   };
-  String x;
+  String? x;
 
   str = str.replaceAll('\\001', '\x01').replaceAll('\\002', '\x02').replaceAll('\\003', '\x03');
   str = str.replaceAll('nbsp;', ' ').replaceAll('&lt;', '\x04').replaceAll('&gt;', '\x05').replaceAll('&amp;', '\x06');
@@ -28,7 +28,7 @@ String gsub_wig(String str) {
       if (plen < p) p = p - plen;
       c = rot_palette[p - 1];
     } else {
-      x = magic[c]!;
+      x = magic[c];
       if (x != null) c = x;
     }
     result = result + c;
@@ -48,7 +48,7 @@ String wwb_deobf(String str) {
     ["\\002"]: "R",
     ["\\003"]: ""
   };
-  String x = '';
+  String? x = '';
   int d = 0;
   int jump = 0;
 
@@ -64,7 +64,7 @@ String wwb_deobf(String str) {
       if (p < 1) p = p + plen;
       c = rot_palette[p - 1];
     } else {
-      x = magic[c]!;
+      x = magic[c];
       if (x != null) c = x;
     }
     d++;
