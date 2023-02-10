@@ -56,7 +56,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   double _similarityLevel = 90.0;
   double _similarityCompareLevel = 80.0;
   var _currentSimpleMode = GCWSwitchPosition.left;
-  List<GCWDropDownMenuItem>? _compareSymbolItems;
+  List<GCWDropDownMenuItem> _compareSymbolItems = [];
   var _gcwTextStyle = gcwTextStyle();
   var _descriptionTextStyle = gcwDescriptionTextStyle();
   SymbolReplacerSymbolTableViewData? _currentSymbolTableViewData;
@@ -84,14 +84,12 @@ class SymbolReplacerState extends State<SymbolReplacer> {
             return;
           }
 
-          if (_file != null) {
-            setState(() {
-              _platformFile = _file;
-              _symbolImage = null;
-              _currentMergeDistance = null;
-              _replaceSymbols(true);
-            });
-          }
+          setState(() {
+            _platformFile = _file;
+            _symbolImage = null;
+            _currentMergeDistance = null;
+            _replaceSymbols(true);
+          });
         },
       ),
       _buildSymbolTableDropDownRow(),
@@ -107,9 +105,9 @@ class SymbolReplacerState extends State<SymbolReplacer> {
       ),
       _currentSimpleMode == GCWSwitchPosition.left ? Container() : _buildAdvancedModeControl(context),
       Container(height: 10),
-      _symbolImage != null
+      _symbolImage?.getBorderImage() != null
           ? GCWImageView(
-              imageData: GCWImageViewData(local.GCWFile(bytes: _symbolImage!.getBorderImage())),
+              imageData: GCWImageViewData(local.GCWFile(bytes: _symbolImage!.getBorderImage()!)),
               suppressedButtons: {GCWImageViewButtons.SAVE},
               suppressOpenInTool: {GCWImageViewOpenInTools.HIDDENDATA},
             )
@@ -127,8 +125,8 @@ class SymbolReplacerState extends State<SymbolReplacer> {
 
   void _replaceSymbols(bool useAsyncExecuter) async {
     useAsyncExecuter =
-        ((useAsyncExecuter || (_symbolImage?.symbolGroups == null) || (_symbolImage.symbolGroups.isEmpty)) &&
-            ((_platformFile?.bytes?.length != null) && _platformFile.bytes.length! > 100000));
+        ((useAsyncExecuter || (_symbolImage?.symbolGroups == null) || (_symbolImage!.symbolGroups.isEmpty)) &&
+            ((_platformFile?.bytes.length != null) && _platformFile!.bytes.length > 100000));
 
     if (!useAsyncExecuter) {
       var _jobData = await _buildJobDataReplacer();
@@ -158,10 +156,12 @@ class SymbolReplacerState extends State<SymbolReplacer> {
 
   Future<GCWAsyncExecuterParameters> _buildJobDataReplacer() async {
     if ((_currentSymbolTableViewData is SymbolReplacerSymbolTableViewData) &&
-        (_currentSymbolTableViewData.data == null)) await _currentSymbolTableViewData.initialize(context);
+        (_currentSymbolTableViewData!.data == null)) await _currentSymbolTableViewData!.initialize(context);
+
+    if (_platformFile?.bytes == null) return Future.value(null);
 
     return GCWAsyncExecuterParameters(ReplaceSymbolsInput(
-        image: _platformFile.bytes,
+        image: _platformFile!.bytes,
         blackLevel: _blackLevel.toInt(),
         similarityLevel: _similarityLevel,
         symbolImage: _symbolImage,
@@ -233,7 +233,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
           iconColor: _symbolImage == null ? themeColors().inActive() : null,
           onPressed: () {
             if (_symbolImage != null) {
-              _currentMergeDistance = _symbolImage.prevMergeDistance(_currentMergeDistance);
+              _currentMergeDistance = _symbolImage!.prevMergeDistance(_currentMergeDistance);
               if (_currentMergeDistance != null) _replaceSymbols(false);
             }
           },
@@ -243,7 +243,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
           iconColor: _symbolImage == null ? themeColors().inActive() : null,
           onPressed: () {
             if (_symbolImage != null) {
-              _currentMergeDistance = _symbolImage.nextMergeDistance(_currentMergeDistance);
+              _currentMergeDistance = _symbolImage!.nextMergeDistance(_currentMergeDistance);
               _replaceSymbols(false);
             }
           },
@@ -257,7 +257,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     return Row(
       children: [
         Expanded(
-          child: GCWDropDown(
+          child: GCWDropDown<SymbolReplacerSymbolTableViewData?>(
             value: _currentSymbolTableViewData,
             onChanged: (value) {
               setState(() {
@@ -266,11 +266,11 @@ class SymbolReplacerState extends State<SymbolReplacer> {
               if (_symbolImage != null) {
                 if (_currentSymbolTableViewData?.data == null &&
                     _currentSymbolTableViewData is SymbolReplacerSymbolTableViewData) {
-                  (_currentSymbolTableViewData.initialize(context).then((value) {
-                    _symbolImage.compareSymbols = _currentSymbolTableViewData?.data?.images;
+                  (_currentSymbolTableViewData!.initialize(context).then((value) {
+                    _symbolImage!.compareSymbols = _currentSymbolTableViewData?.data?.images;
                   }));
                 } else
-                  _symbolImage.compareSymbols = _currentSymbolTableViewData?.data?.images;
+                  _symbolImage!.compareSymbols = _currentSymbolTableViewData?.data?.images;
               }
             },
             items: _compareSymbolItems,
@@ -295,7 +295,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
             iconColor: _symbolImage == null ? themeColors().inActive() : null,
             onPressed: () {
               if (_symbolImage != null) {
-                _symbolImage.resetGroupText();
+                _symbolImage!.resetGroupText();
 
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   _replaceSymbols(false);
@@ -317,7 +317,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     if (_symbolImage == null) return Container();
 
     return Column(children: <Widget>[
-      GCWDefaultOutput(child: _symbolImage.getTextOutput()),
+      GCWDefaultOutput(child: _symbolImage!.getTextOutput()),
     ]);
   }
 
@@ -331,7 +331,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
             style: gcwDialogTextStyle(),
             suppressTopSpace: true,
           ),
-          GCWDropDown(
+          GCWDropDown<SubstitutionBreakerAlphabet>(
             value: _currentAlphabet,
             alternativeColor: true,
             onChanged: (value) {
@@ -407,7 +407,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   }
 
   _initDropDownLists() {
-    if (_compareSymbolItems == null) {
+    if (_compareSymbolItems.isEmpty) {
       List<GCWTool> _toolList = registeredTools.where((element) {
         return [
           className(SymbolTable()),
@@ -424,7 +424,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
                 description: tool.description),
             child: _buildDropDownMenuItem(tool.icon, tool.toolName, null));
       }).toList();
-      _compareSymbolItems.insert(
+      _compareSymbolItems!.insert(
           0,
           GCWDropDownMenuItem(
               value: null,
@@ -432,9 +432,9 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     }
   }
 
-  _selectSymbolTableDataItem(String symbolKey, List<Map<String, SymbolData>> imageData) {
+  void _selectSymbolTableDataItem(String? symbolKey, Iterable<Map<String, SymbolData>>? imageData) {
     if ((widget.imageData != null) && (_compareSymbolItems != null) && (_currentSymbolTableViewData == null)) {
-      for (GCWDropDownMenuItem item in _compareSymbolItems)
+      for (GCWDropDownMenuItem item in _compareSymbolItems!)
         if ((item.value is SymbolReplacerSymbolTableViewData) &&
             ((item.value as SymbolReplacerSymbolTableViewData).symbolKey == symbolKey)) {
           var _data;
@@ -450,7 +450,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     }
   }
 
-  Widget _buildDropDownMenuItem(dynamic icon, String toolName, String description) {
+  Widget _buildDropDownMenuItem(dynamic icon, String? toolName, String? description) {
     return Row(children: [
       Container(
         child: (icon != null) ? icon : Container(width: 50),
@@ -461,28 +461,30 @@ class SymbolReplacerState extends State<SymbolReplacer> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-            Text(toolName, style: _gcwTextStyle),
-            (description != null) ? Text(description, style: _descriptionTextStyle) : Container(),
-          ]))
+                Text(toolName ?? '', style: _gcwTextStyle),
+                (description != null) ? Text(description, style: _descriptionTextStyle) : Container(),
+              ]))
     ]);
   }
 
-  Future<GCWAsyncExecuterParameters> _buildSubstitutionBreakerJobData() async {
-    if (_symbolImage == null) return null;
-    if (_symbolImage.symbolGroups == null) return null;
+  Future<GCWAsyncExecuterParameters?> _buildSubstitutionBreakerJobData() async {
+    if (_symbolImage == null) return Future.value(null);
+    if (_symbolImage!.symbolGroups == null) return Future.value(null);
 
     var quadgrams =
         await loadQuadgramsAssets(_currentAlphabet, context, _quadgrams, _isLoading);
-    if (_symbolImage.symbolGroups.length > quadgrams.alphabet.length) {
+    if (_symbolImage!.symbolGroups.length > quadgrams.alphabet.length) {
       showToast(i18n(context, 'symbol_replacer_automatic_groups'));
-      return null;
+      return Future.value(null);
     }
 
     var input = '';
-    _symbolImage.lines.forEach((line) {
+    _symbolImage!.lines.forEach((line) {
       line.symbols.forEach((symbol) {
-        var index = _symbolImage.symbolGroups.indexOf(symbol.symbolGroup);
-        if (index >= 0) input += symbol.symbolGroup == null ? '' : quadgrams.alphabet[index];
+        if (symbol.symbolGroup != null) {
+          var index = _symbolImage!.symbolGroups.indexOf(symbol.symbolGroup!);
+          if (index >= 0) input += quadgrams.alphabet[index];
+        }
       });
     });
     input = input.trim();
@@ -490,14 +492,14 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     return GCWAsyncExecuterParameters(SubstitutionBreakerJobData(input: input, quadgrams: quadgrams));
   }
 
-  _showSubstitutionBreakerOutput(SubstitutionBreakerResult output) {
-    if (output == null) return;
+  _showSubstitutionBreakerOutput(SubstitutionBreakerResult? output) {
+    if (output == null || _symbolImage == null) return;
 
     if (output.errorCode == SubstitutionBreakerErrorCode.OK) {
-      var len = min(_symbolImage.symbolGroups.length, output.alphabet.length);
+      var len = min(_symbolImage!.symbolGroups.length, output.alphabet.length);
       for (int i = 0; i < len; i++) {
         var index = output.key.indexOf(output.alphabet[i]);
-        if (index < output.alphabet.length) _symbolImage.symbolGroups[i].text = output.alphabet[index].toUpperCase();
+        if (index < output.alphabet.length) _symbolImage!.symbolGroups[i].text = output.alphabet[index].toUpperCase();
       }
     }
 
@@ -506,27 +508,26 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     });
   }
 
-  Future<GCWAsyncExecuterParameters> _buildJobDataSearchSymbolTable() async {
+  Future<GCWAsyncExecuterParameters?> _buildJobDataSearchSymbolTable() async {
     var list = <List<Map<String, SymbolReplacerSymbolData>>>[];
+    if (_symbolImage == null) return Future.value(null);
 
     list = await Future.wait(_compareSymbolItems.map((_symbolTableViewData) async {
-      SymbolReplacerSymbolTableViewData symbolTableViewData = _symbolTableViewData?.value;
-      if (symbolTableViewData != null) {
-        if (symbolTableViewData.data == null) await symbolTableViewData.initialize(context);
+      SymbolReplacerSymbolTableViewData symbolTableViewData = _symbolTableViewData.value;
+      if (symbolTableViewData.data == null) await symbolTableViewData.initialize(context);
 
-        return symbolTableViewData.data.images;
-      }
-    }).toList());
+      return symbolTableViewData.data?.images ?? [];
+    }));
 
     return GCWAsyncExecuterParameters(
-        Tuple2<SymbolReplacerImage, List<List<Map<String, SymbolReplacerSymbolData>>>>(_symbolImage, list));
+        Tuple2<SymbolReplacerImage, List<List<Map<String, SymbolReplacerSymbolData>>>>(_symbolImage!, list));
   }
 
   _showJobDataSearchSymbolTableOutput(List<Map<String, SymbolReplacerSymbolData>> output) {
     _selectSymbolDataItem1(output);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {
-        if (output != null && _symbolImage != null) _symbolImage.resetGroupText();
+        if (output != null && _symbolImage != null) _symbolImage!.resetGroupText();
         _replaceSymbols(false);
       });
     });

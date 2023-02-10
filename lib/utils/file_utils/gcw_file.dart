@@ -33,6 +33,6 @@ class GCWFile {
 
   @override
   String toString() {
-    return {'path: $path; name: $name; bytes: ${bytes?.length}; children: $children'}.toString();
+    return {'path: $path; name: $name; bytes: ${bytes.length}; children: $children'}.toString();
   }
 }
