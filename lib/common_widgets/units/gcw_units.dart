@@ -10,16 +10,16 @@ import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit
 
 part 'package:gc_wizard/common_widgets/units/gcw_unit_prefix_dropdown.dart';
 
-class GCWUnitsValue {
+class GCWUnitsValue<T extends Unit> {
   final UnitPrefix prefix;
-  final Unit value;
+  final T value;
 
   GCWUnitsValue(this.prefix, this.value);
 }
 
-class GCWUnits extends StatefulWidget {
-  final UnitCategory unitCategory;
-  final void Function(GCWUnitsValue) onChanged;
+class GCWUnits<T extends Unit> extends StatefulWidget {
+  final UnitCategory<T> unitCategory;
+  final void Function(GCWUnitsValue<T>) onChanged;
   final bool onlyShowUnitSymbols;
   final bool onlyShowPrefixSymbols;
   final GCWUnitsValue? value;
@@ -34,21 +34,21 @@ class GCWUnits extends StatefulWidget {
       : super(key: key);
 
   @override
-  _GCWUnitsState createState() => _GCWUnitsState();
+  _GCWUnitsState createState() => _GCWUnitsState<T>();
 }
 
-class _GCWUnitsState extends State<GCWUnits> {
+class _GCWUnitsState<T extends Unit> extends State<GCWUnits> {
   late UnitPrefix _currentPrefix;
-  late Unit _currentUnit;
+  late T _currentUnit;
 
   @override
   Widget build(BuildContext context) {
     if (widget.value != null) {
       _currentPrefix = widget.value!.prefix;
-      _currentUnit = widget.value!.value;
+      _currentUnit = widget.value!.value as T;
     } else {
       _currentPrefix = UNITPREFIX_NONE;
-      _currentUnit = widget.unitCategory.defaultUnit;
+      _currentUnit = widget.unitCategory.defaultUnit as T;
     }
 
     return Column(
@@ -73,11 +73,11 @@ class _GCWUnitsState extends State<GCWUnits> {
                     flex: 1)
                 : Container(),
             Expanded(
-                child: GCWUnitDropDown(
+                child: GCWUnitDropDown<T>(
                   value: _currentUnit,
-                  unitList: widget.unitCategory.units,
+                  unitList: widget.unitCategory.units as List<T>,
                   onlyShowSymbols: widget.onlyShowUnitSymbols,
-                  onChanged: (value) {
+                  onChanged: (T value) {
                     setState(() {
                       _currentUnit = value;
                       _emitOnChange();
@@ -92,6 +92,6 @@ class _GCWUnitsState extends State<GCWUnits> {
   }
 
   _emitOnChange() {
-    widget.onChanged(GCWUnitsValue(_currentPrefix, _currentUnit));
+    widget.onChanged(GCWUnitsValue<T>(_currentPrefix, _currentUnit));
   }
 }

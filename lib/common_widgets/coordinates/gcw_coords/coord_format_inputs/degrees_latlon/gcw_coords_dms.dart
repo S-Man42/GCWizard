@@ -81,17 +81,17 @@ class _GCWCoordsDMSState extends State<_GCWCoordsDMS> {
       var lat = dms.latitude.formatParts(10);
       var lon = dms.longitude.formatParts(10);
 
-      _currentLatDegrees = lat['degrees'];
-      _currentLatMinutes = lat['minutes'];
-      _currentLatSeconds = lat['seconds'].split('.')[0];
-      _currentLatMilliSeconds = lat['seconds'].split('.')[1];
-      _currentLatSign = widget.coordinates.isDefault() ? defaultHemiphereLatitude() : lat['sign']['value'];
+      _currentLatDegrees = lat.degrees;
+      _currentLatMinutes = lat.minutes;
+      _currentLatSeconds = lat.seconds.split('.')[0];
+      _currentLatMilliSeconds = lat.seconds.split('.')[1];
+      _currentLatSign = lat.sign.value;
 
-      _currentLonDegrees = lon['degrees'];
-      _currentLonMinutes = lon['minutes'];
-      _currentLonSeconds = lon['seconds'].split('.')[0];
-      _currentLonMilliSeconds = lon['seconds'].split('.')[1];
-      _currentLonSign = widget.coordinates.isDefault() ? defaultHemiphereLongitude() : lon['sign']['value'];
+      _currentLonDegrees = lon.degrees;
+      _currentLonMinutes = lon.minutes;
+      _currentLonSeconds = lon.seconds.split('.')[0];
+      _currentLonMilliSeconds = lon.seconds.split('.')[1];
+      _currentLonSign = lon.sign.value;
 
       _LatDegreesController.text = _currentLatDegrees;
       _LatMinutesController.text = _currentLatMinutes;

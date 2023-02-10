@@ -2,7 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/settings/logic/default_settings.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coords_return_types.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords_formatselector.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
@@ -26,13 +28,17 @@ class CoordinatesSettings extends StatefulWidget {
 }
 
 class CoordinatesSettingsState extends State<CoordinatesSettings> {
-  var _currentDefaultFormat = {
-    'format': Prefs.getString(PREFERENCE_COORD_DEFAULT_FORMAT),
-    'subtype': Prefs.getString(PREFERENCE_COORD_DEFAULT_FORMAT_SUBTYPE)
-  };
+  late CoordsFormatValue _currentDefaultFormat;
   var _currentDefaultHemisphereLatitude = Prefs.getString(PREFERENCE_COORD_DEFAULT_HEMISPHERE_LATITUDE);
   var _currentDefaultHemisphereLongitude = Prefs.getString(PREFERENCE_COORD_DEFAULT_HEMISPHERE_LONGITUDE);
   Ellipsoid _currentDefaultEllipsoid = defaultEllipsoid();
+
+  @override
+  void initState() {
+    super.initState();
+
+    _currentDefaultFormat = defaultCoordFormat();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,8 +52,16 @@ class CoordinatesSettingsState extends State<CoordinatesSettings> {
           onChanged: (newValue) {
             setState(() {
               _currentDefaultFormat = newValue;
-              Prefs.setString(PREFERENCE_COORD_DEFAULT_FORMAT, _currentDefaultFormat['format']);
-              Prefs.setString(PREFERENCE_COORD_DEFAULT_FORMAT_SUBTYPE, _currentDefaultFormat['subtype']);
+
+              var typePersistenceKey = getCoordinateFormatByKey(_currentDefaultFormat.type).persistenceKey;
+              Prefs.setString(PREFERENCE_COORD_DEFAULT_FORMAT, typePersistenceKey);
+
+              if (_currentDefaultFormat.subtype != null) {
+                var subTypePersistenceKey = getCoordinateFormatByKey(_currentDefaultFormat.subtype!).persistenceKey;
+                Prefs.setString(PREFERENCE_COORD_DEFAULT_FORMAT_SUBTYPE, subTypePersistenceKey);
+              } else {
+                initDefaultSettings(PreferencesInitMode.REINIT_SINGLE, reinitSinglePreference: PREFERENCE_COORD_DEFAULT_FORMAT_SUBTYPE);
+              }
             });
           },
         ),

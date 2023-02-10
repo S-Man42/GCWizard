@@ -21,6 +21,6 @@ double convert(double value, Unit from, Unit to) {
   return to.fromReference(from.toReference(value));
 }
 
-Unit getReferenceUnit(List<Unit> units) {
+T getReferenceUnit<T extends Unit>(List<T> units) {
   return units.firstWhere((unit) => unit.isReferenceUnit == true);
 }

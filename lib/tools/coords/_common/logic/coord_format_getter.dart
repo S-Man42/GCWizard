@@ -61,7 +61,7 @@ String formatCoordOutput(LatLng _coords, Map<String, String> _outputFormat, Elli
 }
 
 int coordinateSign(double value) {
-  return value == 0 ? 1 : value.sign.floor();
+  return value == 0 ? 1 : value.sign.toInt();
 }
 
 bool coordEquals(LatLng coords1, LatLng coords2, {tolerance: 1e-10}) {

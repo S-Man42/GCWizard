@@ -4,10 +4,10 @@ import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit_category.dart';
 
-class GCWUnitDropDown extends StatefulWidget {
-  final void Function(Unit) onChanged;
-  final Unit value;
-  final List<Unit>? unitList;
+class GCWUnitDropDown<T extends Unit> extends StatefulWidget {
+  final void Function(T) onChanged;
+  final T value;
+  final List<T>? unitList;
   final UnitCategory? unitCategory;
   final bool onlyShowSymbols;
 
@@ -17,19 +17,19 @@ class GCWUnitDropDown extends StatefulWidget {
       : super(key: key);
 
   @override
-  GCWUnitDropDownState createState() => GCWUnitDropDownState();
+  GCWUnitDropDownState createState() => GCWUnitDropDownState<T>();
 }
 
-class GCWUnitDropDownState extends State<GCWUnitDropDown> {
-  Unit? _currentUnit;
+class GCWUnitDropDownState<T extends Unit> extends State<GCWUnitDropDown> {
+  T? _currentUnit;
 
   @override
   Widget build(BuildContext context) {
-    var _currentUnitList = widget.unitList ?? widget.unitCategory?.units ?? [];
+    List<T> _currentUnitList = (widget.unitList ?? widget.unitCategory?.units ?? <T>[]) as List<T>;
 
-    return GCWDropDown<Unit>(
+    return GCWDropDown<T>(
         value: widget.value,
-        onChanged: (Unit newValue) {
+        onChanged: (T newValue) {
           setState(() {
             _currentUnit = newValue;
             if (_currentUnit is Unit) widget.onChanged(_currentUnit!);

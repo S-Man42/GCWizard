@@ -3,7 +3,7 @@ import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 
-class GCWDropDown<T> extends StatefulWidget {
+class GCWDropDown<T extends Object?> extends StatefulWidget {
   final void Function(T) onChanged;
   final List<GCWDropDownMenuItem> items;
   final value;
@@ -22,10 +22,10 @@ class GCWDropDown<T> extends StatefulWidget {
       : super(key: key);
 
   @override
-  _GCWDropDownState createState() => _GCWDropDownState();
+  _GCWDropDownState createState() => _GCWDropDownState<T>();
 }
 
-class _GCWDropDownState extends State<GCWDropDown> {
+class _GCWDropDownState<T extends Object?> extends State<GCWDropDown> {
   @override
   Widget build(BuildContext context) {
     ThemeColors colors = themeColors();
