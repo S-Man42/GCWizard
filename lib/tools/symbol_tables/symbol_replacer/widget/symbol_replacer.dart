@@ -154,7 +154,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     }
   }
 
-  Future<GCWAsyncExecuterParameters> _buildJobDataReplacer() async {
+  Future<GCWAsyncExecuterParameters?> _buildJobDataReplacer() async {
     if ((_currentSymbolTableViewData is SymbolReplacerSymbolTableViewData) &&
         (_currentSymbolTableViewData!.data == null)) await _currentSymbolTableViewData!.initialize(context);
 
@@ -264,11 +264,10 @@ class SymbolReplacerState extends State<SymbolReplacer> {
                 _currentSymbolTableViewData = value;
               });
               if (_symbolImage != null) {
-                if (_currentSymbolTableViewData?.data == null &&
-                    _currentSymbolTableViewData is SymbolReplacerSymbolTableViewData) {
-                  (_currentSymbolTableViewData!.initialize(context).then((value) {
-                    _symbolImage!.compareSymbols = _currentSymbolTableViewData?.data?.images;
-                  }));
+                if (_currentSymbolTableViewData?.data == null && _currentSymbolTableViewData != null) {
+                      _currentSymbolTableViewData!.initialize(context).then((_) {
+                        _symbolImage!.compareSymbols = _currentSymbolTableViewData?.data?.images;
+                      });
                 } else
                   _symbolImage!.compareSymbols = _currentSymbolTableViewData?.data?.images;
               }
@@ -469,7 +468,6 @@ class SymbolReplacerState extends State<SymbolReplacer> {
 
   Future<GCWAsyncExecuterParameters?> _buildSubstitutionBreakerJobData() async {
     if (_symbolImage == null) return Future.value(null);
-    if (_symbolImage!.symbolGroups == null) return Future.value(null);
 
     var quadgrams =
         await loadQuadgramsAssets(_currentAlphabet, context, _quadgrams, _isLoading);
@@ -534,32 +532,31 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   }
 
   _selectSymbolDataItem1(List<Map<String, SymbolReplacerSymbolData>> imageData) {
-    if ((imageData != null) && (_compareSymbolItems != null)) {
-      for (GCWDropDownMenuItem item in _compareSymbolItems) {
-        var found = true;
-        if (item.value is SymbolReplacerSymbolTableViewData) {
-          var images = (item.value as SymbolReplacerSymbolTableViewData)?.data?.images;
-          if (images?.length == imageData.length) {
-            for (var i = 0; i < imageData.length; i++) {
-              if (!ListEquality().equals(imageData[i]?.values?.first?.bytes, images[i]?.values?.first?.bytes)) {
-                found = false;
-                break;
-              }
-            }
-            if (found) {
-              _currentSymbolTableViewData = item.value;
+    for (GCWDropDownMenuItem item in _compareSymbolItems) {
+      var found = true;
+      if (item.value is SymbolReplacerSymbolTableViewData) {
+        var images = (item.value as SymbolReplacerSymbolTableViewData).data?.images;
+        if (images?.length == imageData.length) {
+          for (var i = 0; i < imageData.length; i++) {
+            if (!ListEquality().equals(imageData[i].values.first.bytes, images?[i].values.first.bytes)) {
+              found = false;
               break;
             }
+          }
+          if (found) {
+            _currentSymbolTableViewData = item.value;
+            break;
           }
         }
       }
     }
   }
 
-  _navigateToSubPage() {
+  void _navigateToSubPage() {
+    if (_symbolImage == null) return;
     var subPageTool = GCWTool(
         autoScroll: false,
-        tool: SymbolReplacerManualControl(symbolImage: _symbolImage),
+        tool: SymbolReplacerManualControl(symbolImage: _symbolImage!),
         i18nPrefix: 'symbol_replacer',
         searchKeys: ['symbol_replacer']);
 
