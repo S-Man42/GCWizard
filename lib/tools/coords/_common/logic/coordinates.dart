@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:gc_wizard/tools/coords/_common/logic/coord_format_getter.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/dec.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/dmm.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/dms.dart';
@@ -24,6 +25,7 @@ import 'package:gc_wizard/tools/coords/format_converter/logic/utm.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/xyz.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
+import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:intl/intl.dart';
@@ -782,12 +784,12 @@ class SlippyMap extends BaseCoordinates {
     return slippyMapToLatLon(this);
   }
 
-  static SlippyMap fromLatLon(LatLng coord, double zoom) {
-    return latLonToSlippyMap(coord, zoom);
+  static SlippyMap fromLatLon(LatLng coord, CoordFormatKey subtype) {
+    return latLonToSlippyMap(coord, switchMapKeyValue(SLIPPY_MAP_ZOOM)[subtype]!.toDouble());
   }
 
-  static SlippyMap parse(String input, {zoom: defaultSlippyZoom}) {
-    return parseSlippyMap(input, zoom: zoom);
+  static SlippyMap parse(String input, CoordFormatKey subtype) {
+    return parseSlippyMap(input, zoom: switchMapKeyValue(SLIPPY_MAP_ZOOM)[subtype]!.toDouble());
   }
 
   @override

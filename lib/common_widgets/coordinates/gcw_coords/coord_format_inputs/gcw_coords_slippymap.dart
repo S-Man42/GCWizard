@@ -43,7 +43,7 @@ class _GCWCoordsSlippyMapState extends State<_GCWCoordsSlippyMap> {
     if (widget.coordinates != null) {
       var slippyMap = widget.coordinates is SlippyMap
           ? widget.coordinates as SlippyMap
-          : SlippyMap.fromLatLon(widget.coordinates!.toLatLng(), widget.zoom);
+          : SlippyMap.fromLatLon(widget.coordinates!.toLatLng(), SLIPPY_MAP_ZOOM[widget.zoom] ?? defaultSlippyMapType);
       _currentX.value = slippyMap.x;
       _currentY.value = slippyMap.y;
 

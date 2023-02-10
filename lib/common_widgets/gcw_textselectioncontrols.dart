@@ -6,6 +6,8 @@ import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard.dart';
 
 typedef OffsetValue = void Function(int start, int end);
 
+// TODO Maybe remove for https://api.flutter.dev/flutter/material/SelectableText/contextMenuBuilder.html
+
 class GCWTextSelectionControls extends MaterialTextSelectionControls {
   // Padding between the toolbar and the anchor.
   static const double _kToolbarContentDistanceBelow = 20.0;

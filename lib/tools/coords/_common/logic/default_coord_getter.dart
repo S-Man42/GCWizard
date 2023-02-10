@@ -80,15 +80,31 @@ int defaultHemiphereLongitude() {
 }
 
 Ellipsoid defaultEllipsoid() {
-  String type = Prefs.get(PREFERENCE_COORD_DEFAULT_ELLIPSOID_TYPE);
+  var _WGS84Ells = getEllipsoidByName(ELLIPSOID_NAME_WGS84)!;
+
+  String type = Prefs.getString(PREFERENCE_COORD_DEFAULT_ELLIPSOID_TYPE);
+  if (type.isEmpty)
+    type = EllipsoidType.STANDARD.toString();
 
   if (type == EllipsoidType.STANDARD.toString()) {
-    return getEllipsoidByName(Prefs.get(PREFERENCE_COORD_DEFAULT_ELLIPSOID_NAME));
+    var ells = getEllipsoidByName(Prefs.get(PREFERENCE_COORD_DEFAULT_ELLIPSOID_NAME));
+    if (ells == null)
+      return _WGS84Ells;
+
+    return ells;
   }
 
-  if (type == EllipsoidType.USER_DEFINED.toString()) {
-    double a = Prefs.get(PREFERENCE_COORD_DEFAULT_ELLIPSOID_A);
-    double invf = Prefs.get(PREFERENCE_COORD_DEFAULT_ELLIPSOID_INVF);
+  else if (type == EllipsoidType.USER_DEFINED.toString()) {
+    double a = Prefs.getDouble(PREFERENCE_COORD_DEFAULT_ELLIPSOID_A);
+    if (a == 0)
+      a = _WGS84Ells.a;
+
+    double invf = Prefs.getDouble(PREFERENCE_COORD_DEFAULT_ELLIPSOID_INVF);
+    if (invf == 0)
+      invf = _WGS84Ells.invf;
+
     return Ellipsoid(null, a, invf, type: EllipsoidType.USER_DEFINED);
   }
+
+  throw Exception('No Ellipsoid type found.');
 }
