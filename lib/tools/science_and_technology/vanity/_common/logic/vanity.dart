@@ -1,7 +1,7 @@
 import 'package:gc_wizard/tools/science_and_technology/vanity/_common/logic/phone_models.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
-PhoneCaseMode _getModeFromState(String state) {
+PhoneCaseMode? _getModeFromState(String state) {
   switch (state.split('_')[0]) {
     case 'ABC':
       return PhoneCaseMode.UPPER_CASE;
@@ -13,6 +13,7 @@ PhoneCaseMode _getModeFromState(String state) {
       return PhoneCaseMode.NUMBERS;
     case 'char':
       return PhoneCaseMode.SPECIAL_CHARACTERS;
+    default: return null;
   }
 }
 
@@ -38,33 +39,36 @@ List<String> _sanitizeDecodeInput(String input) {
 }
 
 bool _isTransitionCharacter(Map<String, Map<String, String>> stateModel, String state, String character) {
-  return !('_?'.contains(character)) && stateModel[state][character] != null;
+  return !('_?'.contains(character)) && stateModel[state]?[character] != null;
 }
 
 Map<String, String> _getCharMap(Map<PhoneCaseMode, Map<String, String>> languageCharMap, PhoneCaseMode mode) {
   return languageCharMap[mode == PhoneCaseMode.CAMEL_CASE ? PhoneCaseMode.UPPER_CASE : mode];
 }
 
-String _getNewState(Map<String, Map<String, String>> stateModel, String state, String character) {
-  if ([' ', '\n', '¶'].contains(character)) return stateModel[state]['_'];
+String? _getNewState(Map<String, Map<String, String>> stateModel, String state, String character) {
+  if ([' ', '\n', '¶'].contains(character)) return stateModel[state]?['_'];
 
-  if (['.', '!', '?'].contains(character)) return stateModel[state]['?'];
+  if (['.', '!', '?'].contains(character)) return stateModel[state]?['?'];
 
-  return stateModel[state]['x'];
+  return stateModel[state]?['x'];
 }
 
-Map<String, dynamic> decodeVanityMultitap(String input, PhoneModel model, PhoneInputLanguage inputLanguage) {
+Map<String, dynamic>? decodeVanityMultitap(String? input, PhoneModel model, PhoneInputLanguage inputLanguage) {
   if (model == null || inputLanguage == null) return null;
 
-  var stateModel = model.defaultCaseStateModel;
+  Map<String, Map<String, String>>? stateModel = model.defaultCaseStateModel;
 
   if (model.specificCaseStateModels != null && model.specificCaseStateModels[inputLanguage] != null)
     stateModel = model.specificCaseStateModels[inputLanguage];
 
-  var currentState = stateModel[PHONE_STATEMODEL_START].values.first;
+  var currentState = stateModel?[PHONE_STATEMODEL_START]?.values.first;
+  if (currentState == null || stateModel == null) return null;
+
   var currentMode = _getModeFromState(currentState);
 
-  if (input == null || input.trim().isEmpty) return {'mode': currentMode, 'output': ''};
+  if (input == null || input.trim().isEmpty || currentMode == null)
+    return {'mode': currentMode, 'output': ''};
 
   var languageIndex = model.languages.indexWhere((langList) => langList.contains(inputLanguage));
   var languageCharmap = model.characterMap[languageIndex];
@@ -79,14 +83,14 @@ Map<String, dynamic> decodeVanityMultitap(String input, PhoneModel model, PhoneI
     var firstLetter = block[0];
 
     var characters = currentCharmap[firstLetter];
-    if (characters == null && !_isTransitionCharacter(stateModel, currentState, firstLetter)) continue;
+    if (characters == null && !_isTransitionCharacter(stateModel, currentState!, firstLetter)) continue;
 
     if (characters != null) {
       if (characters.length == 1 && block.length > 1) {
         output += characters;
-        currentState = _getNewState(stateModel, currentState, firstLetter);
+        currentState = _getNewState(stateModel, currentState!, firstLetter);
         currentMode = _getModeFromState(currentState);
-        currentCharmap = _getCharMap(languageCharmap, currentMode);
+        currentCharmap = _getCharMap(languageCharmap, currentMode!);
 
         inputBlocks[i] = inputBlocks[i].substring(1);
         i--;
@@ -95,16 +99,16 @@ Map<String, dynamic> decodeVanityMultitap(String input, PhoneModel model, PhoneI
 
       var outputCharacter = characters[(block.length - 1) % characters.length];
 
-      currentState = _getNewState(stateModel, currentState, outputCharacter);
+      currentState = _getNewState(stateModel, currentState!, outputCharacter);
       currentMode = _getModeFromState(currentState);
-      currentCharmap = _getCharMap(languageCharmap, currentMode);
+      currentCharmap = _getCharMap(languageCharmap, currentMode!);
 
       output += outputCharacter;
     } else {
       // Transition
-      currentState = stateModel[currentState][firstLetter];
-      currentMode = _getModeFromState(currentState);
-      currentCharmap = _getCharMap(languageCharmap, currentMode);
+      currentState = stateModel[currentState]?[firstLetter];
+      currentMode = _getModeFromState(currentState!);
+      currentCharmap = _getCharMap(languageCharmap, currentMode!);
 
       if (block.length > 1) {
         inputBlocks[i] = inputBlocks[i].substring(1);
@@ -121,7 +125,7 @@ _sanitizeEncodeInput(String input, Map<PhoneCaseMode, Map<String, String>> langu
   return input.split('').where((character) => availableCharacters.contains(character)).join();
 }
 
-Map<String, String> _findStateForCharacter(Map<String, Map<String, String>> stateModel, String currentState,
+Map<String, String>? _findStateForCharacter(Map<String, Map<String, String>> stateModel, String currentState,
     Map<PhoneCaseMode, Map<String, String>> languageCharMap, String character, int numberHops, String transitions) {
   if (numberHops > 3) return null;
 
@@ -130,7 +134,7 @@ Map<String, String> _findStateForCharacter(Map<String, Map<String, String>> stat
 
   if (availableCharactersForMode.contains(character)) return {'transitions': transitions, 'state': currentState};
 
-  String newState;
+  String? newState;
   Map<String, String> result;
 
   for (String transitionCharacter in ['0', '*', '#']) {

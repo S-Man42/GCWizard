@@ -16,19 +16,18 @@ class VanityWordsTextSearch extends StatefulWidget {
 }
 
 class VanityWordsTextSearchState extends State<VanityWordsTextSearch> {
-  TextEditingController _decodeController;
+  late TextEditingController _decodeController;
 
   var _currentDecodeInput = '';
   var _currentLanguage = NumeralWordsLanguage.DEU;
 
-  Map<NumeralWordsLanguage, String> _languageList;
+  Map<NumeralWordsLanguage, String> _languageList= {};
 
   @override
   void initState() {
     super.initState();
     _decodeController = TextEditingController(text: _currentDecodeInput);
 
-    _languageList = {};
     _languageList.addAll(VANITYWORDS_LANGUAGES);
   }
 
@@ -42,7 +41,7 @@ class VanityWordsTextSearchState extends State<VanityWordsTextSearch> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWDropDown(
+        GCWDropDown<NumeralWordsLanguage>(
           value: _currentLanguage,
           onChanged: (value) {
             setState(() {
@@ -75,7 +74,7 @@ class VanityWordsTextSearchState extends State<VanityWordsTextSearch> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    List<VanityWordsDecodeOutput> detailedOutput = new List<VanityWordsDecodeOutput>();
+    var detailedOutput = <VanityWordsDecodeOutput>[];
     detailedOutput = decodeVanityWords(removeAccents(_currentDecodeInput.toLowerCase()), _currentLanguage);
 
     String output = '';
@@ -110,7 +109,7 @@ class VanityWordsTextSearchState extends State<VanityWordsTextSearch> {
                 : detailedOutput[i].digit);
     }
 
-    List<List<String>> columnData = new List<List<String>>();
+    List<List<String>> columnData = <List<String>>[];
     var flexData;
 
     ambigous = 0;

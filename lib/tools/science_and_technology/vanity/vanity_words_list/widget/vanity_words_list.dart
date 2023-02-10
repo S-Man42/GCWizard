@@ -12,7 +12,7 @@ class VanityWordsList extends StatefulWidget {
 }
 
 class VanityWordsListState extends State<VanityWordsList> {
-  TextEditingController _decodeController;
+  late TextEditingController _decodeController;
 
   var _currentDecodeInput = '';
   var _currentLanguage = NumeralWordsLanguage.DEU;
@@ -33,7 +33,7 @@ class VanityWordsListState extends State<VanityWordsList> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWDropDown(
+        GCWDropDown<NumeralWordsLanguage>(
           value: _currentLanguage,
           onChanged: (value) {
             setState(() {
