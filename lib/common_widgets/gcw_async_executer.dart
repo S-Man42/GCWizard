@@ -17,7 +17,7 @@ class GCWAsyncExecuterParameters {
 class GCWAsyncExecuter extends StatefulWidget {
   final dynamic Function(GCWAsyncExecuterParameters) isolatedFunction;
   final Future<dynamic>? parameter;
-  final Function onReady;
+  final void Function(dynamic) onReady;
   final bool isOverlay;
 
   GCWAsyncExecuter({

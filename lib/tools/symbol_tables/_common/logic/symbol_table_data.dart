@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:archive/archive.dart';
@@ -178,17 +179,23 @@ class SymbolTableConstants {
 
 class SymbolData {
   final String path;
-  final List<int> bytes;
+  final Uint8List bytes;
   bool primarySelected = false;
   bool secondarySelected = false;
-  final String displayName;
-  ui.Image standardImage;
-  ui.Image specialEncryptionImage;
+  final String? displayName;
+  ui.Image? standardImage;
+  ui.Image? specialEncryptionImage;
 
-  SymbolData({this.path, this.bytes, this.displayName, this.standardImage, this.specialEncryptionImage});
+  SymbolData({
+    required this.path,
+    required this.bytes,
+    this.displayName,
+    this.standardImage,
+    this.specialEncryptionImage});
 
-  Size imageSize() {
-    return Size(standardImage.width.toDouble(), standardImage.height.toDouble());
+  Size? imageSize() {
+    if (standardImage == null) return null;
+    return Size(standardImage!.width.toDouble(), standardImage!.height.toDouble());
   }
 }
 
@@ -210,7 +217,7 @@ class SymbolTableData {
     await _initializeImages(importEncryption);
   }
 
-  Size imageSize() {
+  Size? imageSize() {
     return images.first.values.first.imageSize();
   }
 
@@ -319,7 +326,7 @@ class SymbolTableData {
     // Decode the Zip file
     final Archive archive = ZipDecoder().decodeBuffer(input);
 
-    Archive encryptionArchive;
+    Archive? encryptionArchive;
     if (importEncryption) {
       var encryptionBytes;
       var encryptionImageArchivePaths = imageArchivePaths.where((path) => path.contains('_encryption')).toList();
@@ -358,7 +365,7 @@ class SymbolTableData {
     images.sort(_sort);
   }
 
-  _initializeImage(List<int> bytes) async {
+  _initializeImage(Uint8List bytes) async {
     return decodeImageFromList(bytes);
   }
 

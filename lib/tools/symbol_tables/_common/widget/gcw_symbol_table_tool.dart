@@ -8,9 +8,9 @@ class GCWSymbolTableTool extends GCWTool {
   final List<String> symbolSearchStrings;
 
   GCWSymbolTableTool({
-    Key key,
-    this.symbolKey,
-    this.symbolSearchStrings,
+    Key? key,
+    required this.symbolKey,
+    required this.symbolSearchStrings,
   }) : super(
             key: key,
             tool: SymbolTable(symbolKey: symbolKey),

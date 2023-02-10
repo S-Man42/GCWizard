@@ -5,8 +5,8 @@ import 'package:gc_wizard/common_widgets/gcw_text.dart';
 
 class GCWSlider extends StatefulWidget {
   final String title;
-  final void Function(double?) onChanged;
-  final void Function(double?)? onChangeEnd;
+  final void Function(double) onChanged;
+  final void Function(double)? onChangeEnd;
   final double value;
   final double min;
   final double max;
@@ -28,7 +28,7 @@ class GCWSlider extends StatefulWidget {
 }
 
 class _GCWSliderState extends State<GCWSlider> {
-  double? _currentValue;
+  late double _currentValue;
 
   late double _initialValue;
 

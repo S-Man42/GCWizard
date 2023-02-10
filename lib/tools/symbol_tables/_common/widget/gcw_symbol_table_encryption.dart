@@ -18,19 +18,19 @@ class GCWSymbolTableEncryption extends StatefulWidget {
   final MediaQueryData mediaQueryData;
   final SymbolTableData data;
   final String symbolKey;
-  final Function onChanged;
-  final Function onBeforeEncrypt;
+  final void Function() onChanged;
+  final String Function(String)? onBeforeEncrypt;
   final bool alwaysIgnoreUnknown;
 
   const GCWSymbolTableEncryption(
       {Key? key,
-      this.data,
-      this.countColumns,
-      this.mediaQueryData,
-      this.symbolKey,
-      this.onChanged,
-      this.onBeforeEncrypt,
-      this.alwaysIgnoreUnknown})
+      required this.data,
+      required this.countColumns,
+      required this.mediaQueryData,
+      required this.symbolKey,
+      required this.onChanged,
+      required this.onBeforeEncrypt,
+      this.alwaysIgnoreUnknown = false})
       : super(key: key);
 
   @override
@@ -39,7 +39,7 @@ class GCWSymbolTableEncryption extends StatefulWidget {
 
 class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
   var _currentEncryptionInput = '';
-  var _encryptionInputController;
+  late TextEditingController _encryptionInputController;
 
   var _alphabetMap = <String, int>{};
 
@@ -47,7 +47,7 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
   var _currentSpecialEncryption = GCWSwitchPosition.left;
   var _currentBorderWidth = 0.1;
 
-  SymbolTableData _data;
+  late SymbolTableData _data;
 
   @override
   void initState() {
@@ -92,7 +92,7 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
               _currentEncryptionInput = text;
 
               if (widget.onBeforeEncrypt != null) {
-                _currentEncryptionInput = widget.onBeforeEncrypt(_currentEncryptionInput);
+                _currentEncryptionInput = widget.onBeforeEncrypt!(_currentEncryptionInput);
               }
             });
           },
@@ -117,7 +117,7 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
               )
             ],
           ),
-        if ((widget.alwaysIgnoreUnknown == null || widget.alwaysIgnoreUnknown == false) &&
+        if ((widget.alwaysIgnoreUnknown == false) &&
             (!_hasSpecialEncryption() || _currentSpecialEncryption == GCWSwitchPosition.right))
           Row(
             children: <Widget>[

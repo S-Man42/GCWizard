@@ -238,7 +238,7 @@ class SymbolReplacerImage {
   /// <summary>
   /// add Symbol to SymbolGroup
   /// </summary>
-  addToGroup(Symbol symbol, SymbolGroup symbolGroup) {
+  void addToGroup(Symbol symbol, SymbolGroup symbolGroup) {
     if (symbol == null) return;
     if (symbol.symbolGroup != null) {
       symbol.symbolGroup?.symbols?.remove(symbol);
@@ -252,7 +252,7 @@ class SymbolReplacerImage {
   /// <summary>
   /// remove Symbol from SymbolGroup (create new SymbolGroup)
   /// </summary>
-  removeFromGroup(Symbol symbol) {
+  void removeFromGroup(Symbol symbol) {
     if (symbol == null) return;
     if (symbol.symbolGroup != null) symbol.symbolGroup?.symbols?.remove(symbol);
     var symbolGroup = SymbolGroup();
@@ -261,7 +261,7 @@ class SymbolReplacerImage {
     _addSymbolToGroup(symbol, symbolGroup);
   }
 
-  _addSymbolToGroup(Symbol symbol, SymbolGroup symbolGroup) {
+  void _addSymbolToGroup(Symbol symbol, SymbolGroup symbolGroup) {
     symbolGroup.symbols.add(symbol);
     if ((symbol?.symbolGroup?.symbols != null) && (symbol?.symbolGroup?.symbols.isEmpty))
       symbolGroups.remove(symbol.symbolGroup);
@@ -271,7 +271,7 @@ class SymbolReplacerImage {
   /// <summary>
   /// SymbolGroup for these symbols together
   /// </summary>
-  buildSymbolGroup(List<Symbol> symbols) {
+  void buildSymbolGroup(List<Symbol> symbols) {
     if ((symbols == null) || symbols.isEmpty) return;
 
     removeFromGroup(symbols.first);
@@ -281,7 +281,7 @@ class SymbolReplacerImage {
   /// <summary>
   /// merge SymbolGroups with same compareSymbol
   /// </summary>
-  mergeSymbolGroups() {
+  void mergeSymbolGroups() {
     if ((symbolGroups == null) || symbolGroups.isEmpty) return;
 
     for (var i= 0; i< symbolGroups.length; i++) {
@@ -302,7 +302,7 @@ class SymbolReplacerImage {
   /// <summary>
   /// reset all SymbolGroup text
   /// </summary>
-  resetGroupText() {
+  void resetGroupText() {
     symbolGroups.forEach((group) {
       group.text = null;
       group.compareSymbol = null;
@@ -356,30 +356,30 @@ class SymbolReplacerImage {
   double _useCompareSymbols(SymbolReplacerImage compareSymbolImage) {
     var percentSum = 0.0;
 
-    if (compareSymbolImage?.symbols == null) return percentSum;
-
     // build hash for compare
     for (int i = 0; i < compareSymbolImage.symbols.length; i++)
       compareSymbolImage.symbols[i].hash = ImageHashing.AverageHash(compareSymbolImage.symbols[i].bmp);
 
     // found the best compare symbols
     for (int i = 0; i < symbolGroups.length; i++) {
-      if ((symbolGroups[i].text == null) || (symbolGroups[i].text.isEmpty)) {
+      if ((symbolGroups[i].text == null) || (symbolGroups[i].text!.isEmpty)) {
         double maxPercent = 0.0;
-        Symbol maxPercentSymbol;
+        Symbol? maxPercentSymbol;
 
         Symbol symbol1 = symbolGroups[i].symbols.first;
 
         for (int x = 0; x < compareSymbolImage.symbols.length; x++) {
-          var similarity = ImageHashing.Similarity(symbol1.hash, compareSymbolImage.symbols[x].hash);
-          if (similarity > maxPercent) {
-            maxPercent = similarity;
-            maxPercentSymbol = compareSymbolImage.symbols[x];
+          if (symbol1.hash != null && compareSymbolImage.symbols[x].hash != null) {
+            var similarity = ImageHashing.Similarity(symbol1.hash!, compareSymbolImage.symbols[x].hash!);
+            if (similarity > maxPercent) {
+              maxPercent = similarity;
+              maxPercentSymbol = compareSymbolImage.symbols[x];
+            }
           }
         }
         if (maxPercent >= _similarityCompareLevel && (maxPercentSymbol?.symbolGroup != null)) {
-          symbolGroups[i].text = maxPercentSymbol.symbolGroup.text;
-          symbolGroups[i].compareSymbol = maxPercentSymbol.symbolGroup.compareSymbol;
+          symbolGroups[i].text = maxPercentSymbol?.symbolGroup?.text;
+          symbolGroups[i].compareSymbol = maxPercentSymbol?.symbolGroup?.compareSymbol;
         }
         percentSum += maxPercent;
       }
@@ -390,10 +390,11 @@ class SymbolReplacerImage {
   /// <summary>
   /// creates an image with frames around the symbols
   /// </summary>
-  Image.Image _mergeBorderData() {
-    var bmp = Image.Image(_bmp.width, _bmp.height);
+  Image.Image? _mergeBorderData() {
+    if (_bmp == null) return null;
+    var bmp = Image.Image(_bmp!.width, _bmp!.height);
 
-    Image.drawImage(bmp, _bmp);
+    Image.drawImage(bmp, _bmp!);
 
     symbols.forEach((symbol) {
       var rect = Rectangle<int>(
@@ -415,13 +416,14 @@ class SymbolReplacerImage {
   /// </summary>
   _splitToLines() {
     var emptyLineIndex = <int>[];
+    if (_bmp == null) return;
 
     /// <summary>
     /// search empty lines
     /// </summary>
-    for (int y = 0; y < _bmp.height; y++) if (_emptyRow(_bmp, 0, _bmp.width - 1, y, _blackLevel)) emptyLineIndex.add(y);
+    for (int y = 0; y < _bmp!.height; y++) if (_emptyRow(_bmp!, 0, _bmp!.width - 1, y, _blackLevel)) emptyLineIndex.add(y);
 
-    if (emptyLineIndex.isEmpty) emptyLineIndex.add(_bmp.width - 1);
+    if (emptyLineIndex.isEmpty) emptyLineIndex.add(_bmp!.width - 1);
 
     // split lines
     if (emptyLineIndex.isNotEmpty) {
@@ -433,8 +435,8 @@ class SymbolReplacerImage {
       }
 
       // last line
-      if ((emptyLineIndex.last != _bmp.height - 1) & (emptyLineIndex.last != 0))
-        _cutLine(emptyLineIndex.last + 1, _bmp.height - 1);
+      if ((emptyLineIndex.last != _bmp!.height - 1) & (emptyLineIndex.last != 0))
+        _cutLine(emptyLineIndex.last + 1, _bmp!.height - 1);
     }
   }
 
@@ -442,11 +444,12 @@ class SymbolReplacerImage {
   /// Cut line and add to sourceLines
   /// </summary>
   _cutLine(int startIndex, int endIndex) {
-    var rect = Rectangle<double>(0, startIndex.toDouble(), _bmp.width.toDouble(), (endIndex - startIndex).toDouble());
+    if (_bmp == null) return;
+    var rect = Rectangle<double>(0, startIndex.toDouble(), _bmp!.width.toDouble(), (endIndex - startIndex).toDouble());
 
     if (rect.height > 0)
       _sourceLines.add(_SymbolRow(
-          rect, Image.copyCrop(_bmp, rect.left.toInt(), rect.top.toInt(), rect.width.toInt(), rect.height.toInt())));
+          rect, Image.copyCrop(_bmp!, rect.left.toInt(), rect.top.toInt(), rect.width.toInt(), rect.height.toInt())));
   }
 
   /// <summary>
@@ -462,7 +465,7 @@ class SymbolReplacerImage {
       Symbol symbol1 = symbols[i];
 
       for (int x = 0; x < i; x++) {
-        var similarity = ImageHashing.Similarity(symbol1.hash, symbols[x].hash);
+        var similarity = ImageHashing.Similarity(symbol1.hash!, symbols[x].hash!);
         if (similarity > maxPercent) {
           maxPercent = similarity;
           maxPercentSymbolIndex = x;
@@ -508,7 +511,7 @@ class SymbolReplacerImage {
   /// <summary>
   /// Average of all symbol widths
   /// </summary>
-  static int _referenceWidth(List<Symbol> symbols) {
+  static int? _referenceWidth(List<Symbol> symbols) {
     int width = 0;
     if (symbols == null) return null;
 
@@ -522,8 +525,8 @@ class SymbolReplacerImage {
   /// <summary>
   /// closest distance leading to symbol merging
   /// </summary>
-  double nextMergeDistance(double actMergeDistance) {
-    double next;
+  double? nextMergeDistance(double actMergeDistance) {
+    double? next;
     actMergeDistance = actMergeDistance ?? _mergeDistance;
     if (actMergeDistance != null) {
       var nextl = _mergeDistanceSteps.where((value) => value > actMergeDistance);
@@ -551,8 +554,8 @@ class SymbolReplacerImage {
   /// <summary>
   /// previous spacing that caused symbols to be merged
   /// </summary>
-  double prevMergeDistance(double actMergeDistance) {
-    double prev;
+  double? prevMergeDistance(double actMergeDistance) {
+    double? prev;
     actMergeDistance = actMergeDistance ?? _mergeDistance;
     if (actMergeDistance != null) {
       var prevl = _mergeDistanceSteps.where((value) => value < actMergeDistance);
@@ -564,11 +567,11 @@ class SymbolReplacerImage {
   /// <summary>
   /// calc init merge distance
   /// </summary>
-  double _mergeSymbolsDefault(int mergeDistance) {
+  double? _mergeSymbolsDefault(int mergeDistance) {
     // calc possible steps
     if (_mergeDistanceSteps == null) _mergeDistanceSteps = _calcMergeDistances();
 
-    double minLineDistance;
+    double? minLineDistance;
 
     for (var i = 0; i < lines.length - 1; i++) {
       var dist = lines[i + 1].size.top - lines[i].size.bottom;
@@ -582,7 +585,9 @@ class SymbolReplacerImage {
     if (referenceWidth != null) _mergeDistance = referenceWidth * mergeDistance / 100.0;
     // and line distance
     if (minLineDistance != null && minLineDistance > 0)
-      _mergeDistance = (_mergeDistance == 0.0) ? referenceWidth : min(_mergeDistance, (minLineDistance - 1) / 2);
+      _mergeDistance = (_mergeDistance == 0.0 && referenceWidth != null)
+          ? referenceWidth.toDouble()
+          : min(_mergeDistance, (minLineDistance - 1) / 2);
 
     if (_mergeDistance != null && _mergeDistance > 0) return prevMergeDistance(_mergeDistance);
 
@@ -615,13 +620,13 @@ class SymbolReplacerImage {
     if (maxDistance == null) return;
 
     var rectList = <Rectangle<double>>[];
-    var symbolList = <Symbol>[];
+    var symbolList = <Symbol?>[];
     var changed = false;
 
     symbolList.addAll(symbols);
     // build rectangles with oversize
     symbolList.forEach((symbol) {
-      rectList.add(symbol._borderRectangleWithOffset(maxDistance));
+      if (symbol != null) rectList.add(symbol._borderRectangleWithOffset(maxDistance));
     });
 
     do {
@@ -631,11 +636,11 @@ class SymbolReplacerImage {
           if (symbolList[x] != null && symbolList[y] != null) {
             // overlaps rectangles ?
             if (rectList[x].intersects(rectList[y])) {
-              var line = _searchSymbolRow(symbolList[y]);
+              var line = _searchSymbolRow(symbolList[y]!);
               if (line != null) {
                 // merge symbols
-                mergeSymbol(symbolList[x], symbolList[y], line);
-                rectList[x] = symbolList[x]._borderRectangleWithOffset(maxDistance);
+                mergeSymbol(symbolList[x]!, symbolList[y]!, line);
+                rectList[x] = symbolList[x]!._borderRectangleWithOffset(maxDistance);
                 symbolList[y] = null;
                 changed = true;
               }
@@ -649,14 +654,14 @@ class SymbolReplacerImage {
   /// <summary>
   /// Find the row that the symbol is associated with
   /// </summary>
-  _SymbolRow _searchSymbolRow(Symbol symbol) {
+  _SymbolRow? _searchSymbolRow(Symbol symbol) {
     for (_SymbolRow line in lines) if (line.symbols.contains(symbol)) return line;
   }
 
   /// <summary>
   /// Find the SymbolGroup that the symbol is associated with
   /// </summary>
-  SymbolGroup _searchSymbolGroup(Symbol symbol) {
+  SymbolGroup? _searchSymbolGroup(Symbol symbol) {
     for (SymbolGroup group in symbolGroups) if (group.symbols.contains(symbol)) return group;
   }
 
@@ -666,14 +671,15 @@ class SymbolReplacerImage {
   mergeSymbol(Symbol symbol1, Symbol symbol2, _SymbolRow line) {
     var box = symbol1._borderRectangle().boundingBox(symbol2._borderRectangle());
 
+    if (_bmp == null) return null;
     symbol1.refPoint = Offset(box.left, box.top);
-    symbol1.bmp = Image.copyCrop(_bmp, box.left.toInt(), box.top.toInt(), box.width.toInt(), box.height.toInt());
+    symbol1.bmp = Image.copyCrop(_bmp!, box.left.toInt(), box.top.toInt(), box.width.toInt(), box.height.toInt());
 
     var group = _searchSymbolGroup(symbol2);
     if (group != null) group.symbols.remove(symbol2);
 
-    symbols?.remove(symbol2);
-    line?.symbols?.remove(symbol2);
+    symbols.remove(symbol2);
+    line.symbols.remove(symbol2);
   }
 
   _cloneSourceLines() {
@@ -688,8 +694,8 @@ class SymbolReplacerImage {
 }
 
 class _SymbolRow {
-  Rectangle<double> size;
-  Image.Image bmp;
+  late Rectangle<double> size;
+  late Image.Image bmp;
   var symbols = <Symbol>[];
 
   _SymbolRow(Rectangle<double> size, Image.Image bmp) {
@@ -811,12 +817,12 @@ class _SymbolRow {
 }
 
 class Symbol {
-  Offset refPoint;
-  Image.Image bmp;
-  int hash;
-  _SymbolRow row;
-  SymbolGroup symbolGroup;
-  Uint8List _outputImageBytes;
+  late Offset refPoint;
+  late Image.Image bmp;
+  late _SymbolRow row;
+  int? hash;
+  SymbolGroup? symbolGroup;
+  Uint8List? _outputImageBytes;
 
   Symbol(Offset refPoint, Image.Image bmp, _SymbolRow row) {
     this.refPoint = refPoint;
@@ -864,10 +870,10 @@ class Symbol {
   }
 
   Uint8List getImage() {
-    if (_outputImageBytes != null) return _outputImageBytes;
+    if (_outputImageBytes != null) return _outputImageBytes!;
 
     _outputImageBytes = encodeTrimmedPng(bmp);
-    return _outputImageBytes;
+    return _outputImageBytes!;
   }
 }
 
@@ -876,14 +882,14 @@ class SymbolGroup {
   String? text;
   bool viewGroupImage = false;
   var symbols = <Symbol>[];
-  SymbolReplacerSymbolData compareSymbol;
+  SymbolReplacerSymbolData? compareSymbol;
 
   Uint8List? getImage() {
     if (symbols.isNotEmpty) return symbols.first.getImage();
     return null;
   }
 
-  SymbolReplacerSymbolData getCompareSymbol() {
+  SymbolReplacerSymbolData? getCompareSymbol() {
     return compareSymbol;
   }
 }
@@ -916,7 +922,7 @@ List<Map<String, SymbolReplacerSymbolData>>? searchSymbolTable(
   imageTmp._similarityLevel = 0;
   imageTmp._gap = image._gap;
 
-  if (sendAsyncPort != null) sendAsyncPort.send({'progress': 0.0});
+  sendAsyncPort?.send({'progress': 0.0});
 
   compareSymbols.forEach((symbolTable) {
     imageTmp.resetGroupText();
@@ -928,9 +934,7 @@ List<Map<String, SymbolReplacerSymbolData>>? searchSymbolTable(
     }
 
     progress++;
-    if (sendAsyncPort != null) {
-      sendAsyncPort.send({'progress': progress / compareSymbols.length});
-    }
+    sendAsyncPort?.send({'progress': progress / compareSymbols.length});
   });
   return maxPercentSymbolTable;
 }

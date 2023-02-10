@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:gc_wizard/tools/symbol_tables/_common/logic/symbol_table_data.dart';
 
@@ -37,8 +39,8 @@ class _SymbolReplacerSymbolTableData {
 }
 
 class SymbolReplacerSymbolData {
-  List<int> bytes;
-  String displayName;
+  Uint8List? bytes;
+  String? displayName;
 
   SymbolReplacerSymbolData(SymbolData data) {
     this.bytes = data.bytes;

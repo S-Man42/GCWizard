@@ -90,12 +90,14 @@ class ColorTokkiSymbolTableEncryption extends SymbolTableEncryption {
         ..rotate(degreesToRadian(angle))
         ..translate(-symbolSize / 2, -symbolSize / 2);
 
-      paintImage(
-          canvas: canvas,
-          fit: BoxFit.contain,
-          rect: Rect.fromCenter(center: Offset(symbolSize / 2, symbolSize / 2), width: symbolSize, height: symbolSize),
-          image: image);
-
+      if (image != null) {
+        paintImage(
+            canvas: canvas,
+            fit: BoxFit.contain,
+            rect: Rect.fromCenter(
+                center: Offset(symbolSize / 2, symbolSize / 2), width: symbolSize, height: symbolSize),
+            image: image);
+      }
       canvas.restore();
       canvas.restore();
       counter++;

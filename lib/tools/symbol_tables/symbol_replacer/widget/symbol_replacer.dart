@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -38,9 +39,9 @@ import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:tuple/tuple.dart';
 
 class SymbolReplacer extends StatefulWidget {
-  final local.GCWFile platformFile;
-  final String symbolKey;
-  final List<Map<String, SymbolData>> imageData;
+  final local.GCWFile? platformFile;
+  final String? symbolKey;
+  final Iterable<Map<String, SymbolData>>? imageData;
 
   const SymbolReplacer({Key? key, this.platformFile, this.symbolKey, this.imageData}) : super(key: key);
 
@@ -49,20 +50,20 @@ class SymbolReplacer extends StatefulWidget {
 }
 
 class SymbolReplacerState extends State<SymbolReplacer> {
-  SymbolReplacerImage _symbolImage;
-  local.GCWFile _platformFile;
+  SymbolReplacerImage? _symbolImage;
+  local.GCWFile? _platformFile;
   double _blackLevel = 50.0;
   double _similarityLevel = 90.0;
   double _similarityCompareLevel = 80.0;
   var _currentSimpleMode = GCWSwitchPosition.left;
-  List<GCWDropDownMenuItem> _compareSymbolItems;
+  List<GCWDropDownMenuItem>? _compareSymbolItems;
   var _gcwTextStyle = gcwTextStyle();
   var _descriptionTextStyle = gcwDescriptionTextStyle();
-  SymbolReplacerSymbolTableViewData _currentSymbolTableViewData;
+  SymbolReplacerSymbolTableViewData? _currentSymbolTableViewData;
   var _quadgrams = Map<SubstitutionBreakerAlphabet, Quadgrams>();
   SubstitutionBreakerAlphabet _currentAlphabet = SubstitutionBreakerAlphabet.GERMAN;
   var _isLoading = <bool>[false];
-  double _currentMergeDistance;
+  double? _currentMergeDistance;
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +71,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     _selectSymbolTableDataItem(widget.symbolKey, widget.imageData);
 
     if (widget.platformFile != null) {
-      _platformFile = widget.platformFile;
+      _platformFile = widget.platformFile!;
       _replaceSymbols(true);
     }
 
@@ -108,7 +109,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
       Container(height: 10),
       _symbolImage != null
           ? GCWImageView(
-              imageData: GCWImageViewData(local.GCWFile(bytes: _symbolImage.getBorderImage())),
+              imageData: GCWImageViewData(local.GCWFile(bytes: _symbolImage!.getBorderImage())),
               suppressedButtons: {GCWImageViewButtons.SAVE},
               suppressOpenInTool: {GCWImageViewOpenInTools.HIDDENDATA},
             )
@@ -124,10 +125,10 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     ]);
   }
 
-  _replaceSymbols(bool useAsyncExecuter) async {
+  void _replaceSymbols(bool useAsyncExecuter) async {
     useAsyncExecuter =
-        ((useAsyncExecuter || (_symbolImage?.symbolGroups == null) || (_symbolImage?.symbolGroups?.isEmpty)) &&
-            ((_platformFile?.bytes?.length != null) && _platformFile?.bytes?.length > 100000));
+        ((useAsyncExecuter || (_symbolImage?.symbolGroups == null) || (_symbolImage.symbolGroups.isEmpty)) &&
+            ((_platformFile?.bytes?.length != null) && _platformFile.bytes.length! > 100000));
 
     if (!useAsyncExecuter) {
       var _jobData = await _buildJobDataReplacer();
@@ -160,7 +161,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
         (_currentSymbolTableViewData.data == null)) await _currentSymbolTableViewData.initialize(context);
 
     return GCWAsyncExecuterParameters(ReplaceSymbolsInput(
-        image: _platformFile?.bytes,
+        image: _platformFile.bytes,
         blackLevel: _blackLevel.toInt(),
         similarityLevel: _similarityLevel,
         symbolImage: _symbolImage,
@@ -169,7 +170,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
         mergeDistance: _currentMergeDistance));
   }
 
-  _showOutput(SymbolReplacerImage output) {
+  _showOutput(SymbolReplacerImage? output) {
     _symbolImage = output;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -184,6 +185,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
           value: _similarityLevel,
           min: 80,
           max: 100,
+          onChanged: (value) => {},
           onChangeEnd: (value) {
             _similarityLevel = value;
             _replaceSymbols(false);
@@ -193,6 +195,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
           value: _blackLevel,
           min: 1,
           max: 100,
+          onChanged: (value) => {},
           onChangeEnd: (value) {
             _blackLevel = value;
             _replaceSymbols(true);

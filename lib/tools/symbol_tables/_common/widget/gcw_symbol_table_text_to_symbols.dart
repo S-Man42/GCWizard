@@ -87,7 +87,7 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
                     showExportedFileDialog(
                       context,
                       contentWidget: Container(
-                        child: Image.memory(value),
+                        //child: Image.memory(value), // ToDo NullSafety auskommentiert
                         margin: EdgeInsets.only(top: 25),
                         decoration: BoxDecoration(border: Border.all(color: themeColors().dialogText())),
                       ),
@@ -148,8 +148,8 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
       mode: SymbolTableEncryptionMode.FIXED_CANVASWIDTH,
       countImages: imageIndexes.length,
       countColumns: countColumns,
-      symbolWidth: _data.imageSize().width,
-      symbolHeight: _data.imageSize().height,
+      symbolWidth: _data.imageSize()?.width ?? 0,
+      symbolHeight: _data.imageSize()?.height ?? 0,
       relativeBorderWidth: widget.borderWidth,
       canvasWidth: MediaQuery.of(context).size.width * 0.95,
     ));
@@ -199,8 +199,8 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
 
     var sizes = _symbolTableEncryption().sizes(SymbolTableEncryptionSizes(
         mode: SymbolTableEncryptionMode.FIXED_SYMBOLSIZE,
-        symbolWidth: _data.imageSize().width,
-        symbolHeight: _data.imageSize().height,
+        symbolWidth: _data.imageSize()?.width ?? 0,
+        symbolHeight: _data.imageSize()?.height ?? 0,
         countImages: imageIndexes.length,
         countColumns: countColumns,
         relativeBorderWidth: widget.borderWidth));
@@ -213,7 +213,8 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
     final img = await canvasRecorder.endRecording().toImage(sizes.canvasWidth.floor(), sizes.canvasHeight.floor());
     final data = await img.toByteData(format: ui.ImageByteFormat.png);
 
-    return await saveByteDataToFile(context, trimNullBytes(data.buffer.asUint8List()),
+    if (data?.buffer == null) return false;
+    return await saveByteDataToFile(context, trimNullBytes(data!.buffer.asUint8List()),
         'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
   }
 }

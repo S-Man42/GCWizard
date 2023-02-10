@@ -121,6 +121,7 @@ class SymbolTableExamplesState extends State<SymbolTableExamples> {
                       NoAnimationMaterialPageRoute(
                           builder: (context) => GCWSymbolTableTool(
                                 symbolKey: symbolKey,
+                                symbolSearchStrings: [],
                               )));
                 },
               )),

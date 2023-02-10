@@ -11,11 +11,16 @@ class GCWSymbolTableDecryption extends StatefulWidget {
   final int countColumns;
   final MediaQueryData mediaQueryData;
   final SymbolTableData data;
-  final Function onChanged;
-  final Function onAfterDecrypt;
+  final void Function() onChanged;
+  final String Function(String)? onAfterDecrypt;
 
-  const GCWSymbolTableDecryption(
-      {Key? key, this.data, this.countColumns, this.mediaQueryData, this.onChanged, this.onAfterDecrypt})
+  const GCWSymbolTableDecryption({
+    Key? key,
+    required this.data,
+    required this.countColumns,
+    required this.mediaQueryData,
+    required this.onChanged,
+    required this.onAfterDecrypt})
       : super(key: key);
 
   @override
@@ -25,9 +30,9 @@ class GCWSymbolTableDecryption extends StatefulWidget {
 class GCWSymbolTableDecryptionState extends State<GCWSymbolTableDecryption> {
   String _decryptionOutput = '';
 
-  SymbolTableData _data;
+  late SymbolTableData _data;
 
-  ScrollController _scrollController;
+  late ScrollController _scrollController;
 
   @override
   void initState() {
@@ -106,13 +111,13 @@ class GCWSymbolTableDecryptionState extends State<GCWSymbolTableDecryption> {
                       physics: AlwaysScrollableScrollPhysics(),
                       controller: _scrollController,
                       child: widget.onAfterDecrypt != null
-                    ? Column(
-                        children: [
-                          GCWOutput(title: i18n(context, 'common_input'), child: _decryptionOutput),
-                          GCWDefaultOutput(child: widget.onAfterDecrypt(_decryptionOutput))
-                        ],
-                      )
-                    : GCWDefaultOutput(child: _decryptionOutput),
+                        ? Column(
+                            children: [
+                              GCWOutput(title: i18n(context, 'common_input'), child: _decryptionOutput),
+                              GCWDefaultOutput(child: widget.onAfterDecrypt!(_decryptionOutput))
+                            ],
+                          )
+                        : GCWDefaultOutput(child: _decryptionOutput),
               ))
             ],
           ),

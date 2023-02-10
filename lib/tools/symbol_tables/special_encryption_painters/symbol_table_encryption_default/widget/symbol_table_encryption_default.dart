@@ -34,12 +34,14 @@ class SymbolTableEncryption {
           if (imageIndexes[imageIndex] != null) {
             var image = data.images[imageIndexes[imageIndex]].values.first.standardImage;
 
-            paintImage(
-                canvas: canvas,
-                fit: BoxFit.contain,
-                rect: Rect.fromLTWH(j * _sizes.tileWidth + _sizes.absoluteBorderWidth / 2,
-                    i * _sizes.tileHeight + _sizes.absoluteBorderWidth / 2, _sizes.symbolWidth, _sizes.symbolHeight),
-                image: image);
+            if (image != null) {
+              paintImage(
+                  canvas: canvas,
+                  fit: BoxFit.contain,
+                  rect: Rect.fromLTWH(j * _sizes.tileWidth + _sizes.absoluteBorderWidth / 2,
+                      i * _sizes.tileHeight + _sizes.absoluteBorderWidth / 2, _sizes.symbolWidth, _sizes.symbolHeight),
+                  image: image);
+            }
           }
         }
       }

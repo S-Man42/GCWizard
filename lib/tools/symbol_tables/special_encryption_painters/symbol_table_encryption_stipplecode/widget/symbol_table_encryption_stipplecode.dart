@@ -78,11 +78,13 @@ class StippleSymbolTableEncryption extends SymbolTableEncryption {
               canvas.translate(-_sizes.symbolWidth / 2, -_sizes.symbolHeight / 2);
             }
 
-            paintImage(
-                canvas: canvas,
-                fit: BoxFit.contain,
-                rect: Rect.fromLTWH(reverse ? 0 : x, reverse ? 0 : y, _sizes.symbolWidth, _sizes.symbolHeight),
-                image: image);
+            if (image != null) {
+              paintImage(
+                  canvas: canvas,
+                  fit: BoxFit.contain,
+                  rect: Rect.fromLTWH(reverse ? 0 : x, reverse ? 0 : y, _sizes.symbolWidth, _sizes.symbolHeight),
+                  image: image);
+            }
 
             if (reverse) {
               canvas.restore();

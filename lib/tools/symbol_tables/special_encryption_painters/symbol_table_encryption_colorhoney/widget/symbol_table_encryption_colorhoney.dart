@@ -98,12 +98,13 @@ class ColorHoneySymbolTableEncryption extends SymbolTableEncryption {
         ..rotate(degreesToRadian(angle))
         ..translate(-height, -height);
 
-      paintImage(
-          canvas: canvas,
-          fit: BoxFit.contain,
-          rect: Rect.fromCenter(center: Offset(height, height), width: 2 * height, height: 2 * height),
-          image: image);
-
+      if (image != null) {
+        paintImage(
+            canvas: canvas,
+            fit: BoxFit.contain,
+            rect: Rect.fromCenter(center: Offset(height, height), width: 2 * height, height: 2 * height),
+            image: image);
+      }
       canvas.restore();
       canvas.restore();
 
