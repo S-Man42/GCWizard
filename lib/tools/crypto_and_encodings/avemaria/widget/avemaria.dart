@@ -12,8 +12,8 @@ class AveMaria extends StatefulWidget {
 }
 
 class AveMariaState extends State<AveMaria> {
-  var _decodeController;
-  var _encodeController;
+  TextEditingController _decodeController;
+  TextEditingController _encodeController;
 
   String _currentEncodeInput = '';
   String _currentDecodeInput = '';
