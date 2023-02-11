@@ -1,11 +1,8 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/utils/collection_utils.dart';
-import 'package:gc_wizard/utils/data_type_utils/double_type_utils.dart';
-import 'package:gc_wizard/utils/math_utils.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 
 void main() {
-  group("CommonUtils.insertCharacter:", () {
+  group("StringUtils.insertCharacter:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : null, 'index': 0, 'character' : 'A', 'expectedOutput' : null},
       {'input' : 'ABC', 'index': 0, 'character' : null, 'expectedOutput' : 'ABC'},
@@ -26,7 +23,7 @@ void main() {
     });
   });
 
-  group("CommonUtils.insertSpaceEveryNthCharacter:", () {
+  group("StringUtils.insertSpaceEveryNthCharacter:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : '', 'n': 0, 'expectedOutput' : ''},
       {'input' : 'ABC', 'n': null, 'expectedOutput' : 'ABC'},
@@ -44,7 +41,7 @@ void main() {
     });
   });
 
-  group("CommonUtils.insertEveryNthCharacter:", () {
+  group("StringUtils.insertEveryNthCharacter:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : 'ABCDEFGHIJ', 'n': 3, 'textToInsert': '', 'expectedOutput' : 'ABCDEFGHIJ'},
       {'input' : 'ABCDEFGHIJ', 'n': 3, 'textToInsert': '1', 'expectedOutput' : 'ABC1DEF1GHI1J'},
@@ -60,143 +57,7 @@ void main() {
     });
   });
 
-  group("CommonUtils.switchMapKeyValue:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
-      {'map' : null, 'expectedOutput': null},
-      {'map' : {}, 'expectedOutput': {}},
-      {'map' : <String, String>{}, 'expectedOutput': <String, String>{}},
-      {'map' : <int, int>{}, 'expectedOutput': <int, int>{}},
-      {'map' : <String, int>{}, 'expectedOutput': <int, String>{}},
-      {'map' : <int, String>{}, 'expectedOutput': <String, int>{}},
-
-      {'map' : {'A': 'B'}, 'expectedOutput': {'B': 'A'}},
-      {'map' : {'A': 'B', 'C': 'D'}, 'expectedOutput': {'B': 'A', 'D': 'C'}},
-      {'map' : {'A': 1}, 'expectedOutput': {1: 'A'}},
-      {'map' : {'A': 1, 'C': 2}, 'expectedOutput': {1: 'A', 2: 'C'}},
-      {'map' : {1: 'B'}, 'expectedOutput': {'B': 1}},
-      {'map' : {1: 'B', 2: 'D'}, 'expectedOutput': {'B': 1, 'D': 2}},
-
-      {'map' : {'A': null}, 'expectedOutput': {null: 'A'}},
-      {'map' : {'A': 'A'}, 'expectedOutput': {'A': 'A'}},
-      {'map' : {null: 'A'}, 'expectedOutput': {'A': null}},
-      {'map' : {null: null}, 'expectedOutput': {null: null}},
-      {'map' : {'A': 1, 'B': 1}, 'expectedOutput': {1: 'B'}},
-      {'map' : {'A': 1, 'B': 1}, 'keepFirstOccurence': true, 'expectedOutput': {1: 'A'}},
-      {'map' : {1: 'A', 1: 'B'}, 'expectedOutput': {'B': 1}}, //input map will be reduced to {1: 'B'}
-    ];
-
-    _inputsToExpected.forEach((elem) {
-      test('map: ${elem['map']}, keepFirstOccurence: ${elem['keepFirstOccurence']}', () {
-        var _actual;
-        if (elem['keepFirstOccurence'] == null)
-          _actual = switchMapKeyValue(elem['map']);
-        else
-          _actual = switchMapKeyValue(elem['map'], keepFirstOccurence: elem['keepFirstOccurence']);
-        expect(_actual, elem['expectedOutput']);
-      });
-    });
-  });
-
-  group("CommonUtils.textToBinaryList:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
-      {'text' : null, 'expectedOutput' : []},
-      {'text' : '', 'expectedOutput' : []},
-      {'text' : '234', 'expectedOutput' : []},
-      {'text' : 'ASD', 'expectedOutput' : []},
-
-      {'text' : '1', 'expectedOutput' : ['1']},
-      {'text' : '01', 'expectedOutput' : ['01']},
-      {'text' : '01 101', 'expectedOutput' : ['01', '101']},
-      {'text' : '01 101 0', 'expectedOutput' : ['01', '101', '0']},
-
-      {'text' : '1dasjk1123ssd12jd10ak', 'expectedOutput' : ['1', '11', '1', '10']},
-    ];
-
-    _inputsToExpected.forEach((elem) {
-      test('text: ${elem['text']}', () {
-        var _actual = textToBinaryList(elem['text']);
-        expect(_actual, elem['expectedOutput']);
-      });
-    });
-  });
-
-  group("CommonUtils.modulo:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
-      {'value' : 0, 'modulator': 1, 'expectedOutput' : 0},
-      {'value' : -1, 'modulator': 1, 'expectedOutput' : 0},
-      {'value' : -2, 'modulator': 1, 'expectedOutput' : 0},
-      {'value' : 1, 'modulator': 1, 'expectedOutput' : 0},
-      {'value' : 2, 'modulator': 1, 'expectedOutput' : 0},
-
-      {'value' : 0, 'modulator': 2, 'expectedOutput' : 0},
-      {'value' : -1, 'modulator': 2, 'expectedOutput' : 1},
-      {'value' : -2, 'modulator': 2, 'expectedOutput' : 0},
-      {'value' : 1, 'modulator': 2, 'expectedOutput' : 1},
-      {'value' : 2, 'modulator': 2, 'expectedOutput' : 0},
-
-      {'value' : 0.0, 'modulator': 1, 'expectedOutput' : 0.0},
-      {'value' : -1.0, 'modulator': 1, 'expectedOutput' : 0.0},
-      {'value' : -2.0, 'modulator': 1, 'expectedOutput' : 0.0},
-      {'value' : 1.0, 'modulator': 1, 'expectedOutput' : 0.0},
-      {'value' : 2.0, 'modulator': 1, 'expectedOutput' : 0.0},
-
-      {'value' : 0.0, 'modulator': 2, 'expectedOutput' : 0.0},
-      {'value' : -1.0, 'modulator': 2, 'expectedOutput' : 1.0},
-      {'value' : -2.0, 'modulator': 2, 'expectedOutput' : 0.0},
-      {'value' : 1.0, 'modulator': 2, 'expectedOutput' : 1.0},
-      {'value' : 2.0, 'modulator': 2, 'expectedOutput' : 0.0},
-
-      {'value' : 0, 'modulator': 1.0, 'expectedOutput' : 0.0},
-      {'value' : -1, 'modulator': 1.0, 'expectedOutput' : 0.0},
-      {'value' : -2, 'modulator': 1.0, 'expectedOutput' : 0.0},
-      {'value' : 1, 'modulator': 1.0, 'expectedOutput' : 0.0},
-      {'value' : 2, 'modulator': 1.0, 'expectedOutput' : 0.0},
-
-      {'value' : 0, 'modulator': 2.0, 'expectedOutput' : 0.0},
-      {'value' : -1, 'modulator': 2.0, 'expectedOutput' : 1.0},
-      {'value' : -2, 'modulator': 2.0, 'expectedOutput' : 0.0},
-      {'value' : 1, 'modulator': 2.0, 'expectedOutput' : 1.0},
-      {'value' : 2, 'modulator': 2.0, 'expectedOutput' : 0.0},
-
-      {'value' : 0, 'modulator': 2.5, 'expectedOutput' : 0.0},
-      {'value' : -1, 'modulator': 2.5, 'expectedOutput' : 1.5},
-      {'value' : -2, 'modulator': 2.5, 'expectedOutput' : 0.5},
-      {'value' : 1, 'modulator': 2.5, 'expectedOutput' : 1.0},
-      {'value' : 2, 'modulator': 2.5, 'expectedOutput' : 2.0},
-      {'value' : 2.5, 'modulator': 2.5, 'expectedOutput' : 0.0},
-      {'value' : 2.6, 'modulator': 2.5, 'expectedOutput' : 0.10000000000000009},
-    ];
-
-    _inputsToExpected.forEach((elem) {
-      test('value: ${elem['value']}, modulator:  ${elem['modulator']}', () {
-        var _actual = modulo(elem['value'], elem['modulator']);
-        expect(_actual, elem['expectedOutput']);
-      });
-    });
-  });
-
-  group("CommonUtils.doubleEquals:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
-      {'a' : null, 'b': null, 'tolerance': 1e-10, 'expectedOutput' : true},
-      {'a' : null, 'b': 1.0, 'tolerance': 1e-10, 'expectedOutput' : false},
-      {'a' : 1.0, 'b': null, 'tolerance': 1e-10, 'expectedOutput' : false},
-
-      {'a' : 1.0, 'b': 1.0, 'tolerance': 1e-10, 'expectedOutput' : true},
-      {'a' : 1.123, 'b': 1.123, 'tolerance': 1e-10, 'expectedOutput' : true},
-      {'a' : 52.1231554889286231, 'b': 52.1231554889286231, 'tolerance': 1e-10, 'expectedOutput' : true},
-      {'a' : 52.123, 'b': 52.132, 'tolerance': 1e-2, 'expectedOutput' : true},
-      {'a' : 52.123, 'b': 52.133, 'tolerance': 1e-2, 'expectedOutput' : false},
-    ];
-
-    _inputsToExpected.forEach((elem) {
-      test('a: ${elem['a']}, b: ${elem['b']}, tolerance: ${elem['tolerance']}', () {
-        var _actual = doubleEquals(elem['a'], elem['b'], tolerance: elem['tolerance']);
-        expect(_actual, elem['expectedOutput']);
-      });
-    });
-  });
-
-  group("CommonUtils.isUpperCase:", () {
+  group("StringUtils.isUpperCase:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'letter' : null, 'expectedOutput' : false},
       {'letter' : '', 'expectedOutput' : false},
@@ -219,7 +80,7 @@ void main() {
     });
   });
 
-  group("CommonUtils.removeDuplicateCharacters:", () {
+  group("StringUtils.removeDuplicateCharacters:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : ''},
@@ -240,7 +101,7 @@ void main() {
     });
   });
 
-  group("CommonUtils.hasDuplicateCharacters:", () {
+  group("StringUtils.hasDuplicateCharacters:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : false},
       {'input' : '', 'expectedOutput' : false},
@@ -264,7 +125,7 @@ void main() {
     });
   });
 
-  group("CommonUtils.countCharacters:", () {
+  group("StringUtils.countCharacters:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : null, 'characters': null, 'expectedOutput' : 0},
       {'input' : '', 'characters': 'a', 'expectedOutput' : 0},
@@ -288,7 +149,7 @@ void main() {
     });
   });
 
-  group("CommonUtils.allSameCharacters:", () {
+  group("StringUtils.allSameCharacters:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : null},
@@ -311,7 +172,7 @@ void main() {
     });
   });
 
-  group("CommonUtils.isOnlyLetters:", () {
+  group("StringUtils.isOnlyLetters:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : false},
       {'input' : '', 'expectedOutput' : false},
@@ -335,7 +196,7 @@ void main() {
     });
   });
 
-  group("CommonUtils.isOnlyNumerals:", () {
+  group("StringUtils.isOnlyNumerals:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : false},
       {'input' : '', 'expectedOutput' : false},
@@ -357,42 +218,7 @@ void main() {
     });
   });
 
-  group("CommonUtils.round:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
-      {'input' : null, 'precision': 0, 'expectedOutput' : null},
-      {'input' : 0.0, 'precision': 0, 'expectedOutput' : 0},
-
-      {'input' : 0.1, 'precision': 0, 'expectedOutput' : 0},
-      {'input' : 0.9, 'precision': 0, 'expectedOutput' : 1},
-      {'input' : -0.1, 'precision': 0, 'expectedOutput' : 0},
-      {'input' : -0.9, 'precision': 0, 'expectedOutput' : -1},
-
-      {'input' : 0.1, 'precision': 1, 'expectedOutput' : 0.1},
-      {'input' : 0.9, 'precision': 1, 'expectedOutput' : 0.9},
-      {'input' : -0.1, 'precision': 1, 'expectedOutput' : -0.1},
-      {'input' : -0.9, 'precision': 1, 'expectedOutput' : -0.9},
-
-      {'input' : 0.11, 'precision': 1, 'expectedOutput' : 0.1},
-      {'input' : 0.19, 'precision': 1, 'expectedOutput' : 0.2},
-      {'input' : 0.91, 'precision': 1, 'expectedOutput' : 0.9},
-      {'input' : 0.99, 'precision': 1, 'expectedOutput' : 1.0},
-      {'input' : -0.11, 'precision': 1, 'expectedOutput' : -0.1},
-      {'input' : -0.19, 'precision': 1, 'expectedOutput' : -0.2},
-      {'input' : -0.91, 'precision': 1, 'expectedOutput' : -0.9},
-      {'input' : -0.99, 'precision': 1, 'expectedOutput' : -1.0},
-
-      {'input' : 1.257, 'precision': 2, 'expectedOutput' : 1.26},
-    ];
-
-    _inputsToExpected.forEach((elem) {
-      test('input: ${elem['input']}, precision: ${elem['precision']}', () {
-        var _actual = round(elem['input'], precision: elem['precision']);
-        expect(_actual, elem['expectedOutput']);
-      });
-    });
-  });
-
-  group("CommonUtils.extractIntegerFromText:", () {
+  group("StringUtils.extractIntegerFromText:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : null},
@@ -415,27 +241,7 @@ void main() {
     });
   });
 
-  group("CommonUtils.separateDecimalPlaces:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : null},
-
-      {'input' : 0.0, 'expectedOutput' : 0},
-      {'input' : 1.2, 'expectedOutput' : 2},
-      {'input' : .2, 'expectedOutput' : 2},
-      {'input' : 1.0, 'expectedOutput' : 0},
-      {'input' : 123.4, 'expectedOutput' : 4},
-      {'input' : 12.345, 'expectedOutput' : 345},
-    ];
-
-    _inputsToExpected.forEach((elem) {
-      test('input: ${elem['input']}', () {
-        var _actual = fractionPartAsInteger(elem['input']);
-        expect(_actual, elem['expectedOutput']);
-      });
-    });
-  });
-
-  group("CommonUtils.normalizeCharacters", () {
+  group("StringUtils.normalizeCharacters", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : ''},
@@ -456,7 +262,7 @@ void main() {
     });
   });
 
-  group("CommonUtils.removeControlCharacters", () {
+  group("StringUtils.removeControlCharacters", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : ''},
