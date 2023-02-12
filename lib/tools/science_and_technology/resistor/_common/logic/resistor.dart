@@ -273,7 +273,7 @@ ResistorValue _getFiveOrSixBandResistorValue(int numberBands, List<ResistorBandC
   return ResistorValue(value, tolerance, temperatureCoefficient: temperaturCoefficient);
 }
 
-Map<ResistorBandColor, double> getResistorBandValues(
+Map<ResistorBandColor, double>? getResistorBandValues(
     int numberBands, ResistorBandType type, List<ResistorBandColor> colors) {
   if (colors == null) return null;
 
@@ -285,17 +285,17 @@ Map<ResistorBandColor, double> getResistorBandValues(
           case 2:
           case 3:
           case 4:
-            return _RESISTOR_VALUES_THREE_AND_FOUR_BANDS[color][type];
+            return _RESISTOR_VALUES_THREE_AND_FOUR_BANDS[color]![type]!;
           case 5:
           case 6:
-            return _RESISTOR_VALUES_FIVE_AND_SIX_BANDS[color][type];
+            return _RESISTOR_VALUES_FIVE_AND_SIX_BANDS[color]![type]!;
           default:
             return null;
         }
       });
 }
 
-ResistorValue getResistorValue(List<ResistorBandColor> colors) {
+ResistorValue? getResistorValue(List<ResistorBandColor> colors) {
   if (colors == null) return null;
 
   switch (colors.length) {

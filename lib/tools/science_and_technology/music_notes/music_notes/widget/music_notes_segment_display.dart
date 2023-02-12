@@ -52,10 +52,10 @@ const _NOTES_RELATIVE_DISPLAY_HEIGHT = 445;
 class _NotesSegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
   final bool readOnly;
-  final Function onChanged;
+  final void Function(Map<String, bool>)? onChanged;
   final bool tapeStyle;
 
-  _NotesSegmentDisplay({Key? key, this.segments, this.readOnly: false, this.onChanged, this.tapeStyle: false})
+  _NotesSegmentDisplay({Key? key, required this.segments, this.readOnly = false, this.onChanged, this.tapeStyle = false})
       : super(
             key: key,
             initialSegments: _INITIAL_SEGMENTS,
@@ -95,7 +95,7 @@ class _NotesSegmentDisplay extends NSegmentDisplay {
               var counter = 0;
               paint.color = Colors.grey;
               lines.forEach((key) {
-                if (key == '' || currentSegments[key])
+                if (key == '' || currentSegments[key]!)
                   pathL.addPath(
                       _createLine(
                           key != '', size, Offset(0, counter * LINE_DISTANCE + LINE_OFFSET_Y), LINE_OFFSET_X, readOnly),
@@ -103,13 +103,13 @@ class _NotesSegmentDisplay extends NSegmentDisplay {
                 counter++;
               });
               var xOffset = readOnly ? 0.0 : -size.width / _getSymbolWidth(readOnly) * 100.0;
-              if (currentSegments[trebleClef])
+              if (currentSegments[trebleClef]!)
                 pathL.addPath(_createTrebleClef(size, Offset(xOffset, 7 * LINE_DISTANCE + LINE_OFFSET_Y), readOnly),
                     Offset(0, 0));
-              else if (currentSegments[altClef])
+              else if (currentSegments[altClef]!)
                 pathL.addPath(
                     _createAltClef(size, Offset(xOffset, 7 * LINE_DISTANCE + LINE_OFFSET_Y), readOnly), Offset(0, 0));
-              else if (currentSegments[bassClef])
+              else if (currentSegments[bassClef]!)
                 pathL.addPath(
                     _createBassClef(size, Offset(xOffset, 7 * LINE_DISTANCE + LINE_OFFSET_Y), readOnly), Offset(0, 0));
 
@@ -178,7 +178,7 @@ class _NotesSegmentDisplay extends NSegmentDisplay {
 
   static _drawNote(String note, Path path, Size size, GCWTouchCanvas canvas, Paint paint, bool readOnly,
       Map<String, bool> currentSegments, Function setSegmentState, Color colorOn, Color colorOff) {
-    var active = currentSegments[note];
+    var active = currentSegments[note]!;
     paint.color = active ? colorOn : colorOff;
     if (active || !readOnly) {
       canvas.touchCanvas.drawPath(path, paint);
@@ -221,36 +221,36 @@ class _NotesSegmentDisplay extends NSegmentDisplay {
 
   static _drawHash(String label, Path path, Size size, GCWTouchCanvas canvas, Paint paint, bool readOnly,
       Map<String, bool> currentSegments, Function setSegmentState, Color colorOn, Color colorOff) {
-    var active = currentSegments[label];
+    var active = currentSegments[label]!;
     paint.color = active ? colorOn : colorOff;
     if (active || !readOnly) {
       canvas.touchCanvas.drawPath(path, paint);
       path.addRect(path.getBounds().inflate(size.width / _getSymbolWidth(readOnly) * 10));
       paint.color = Colors.transparent;
       canvas.touchCanvas.drawPath(path, paint, onTapDown: (tapDetail) {
-        setSegmentState(label, !currentSegments[label]);
-        if (currentSegments[label]) setSegmentState(bLabel, false);
+        setSegmentState(label, !currentSegments[label]!);
+        if (currentSegments[label]!) setSegmentState(bLabel, false);
       });
     }
   }
 
   static _drawB(String label, Path path, Size size, GCWTouchCanvas canvas, Paint paint, bool readOnly,
       Map<String, bool> currentSegments, Function setSegmentState, Color colorOn, Color colorOff) {
-    var active = currentSegments[label];
+    var active = currentSegments[label]!;
     paint.color = active ? colorOn : colorOff;
     if (active || !readOnly) {
       canvas.touchCanvas.drawPath(path, paint);
       path.addRect(path.getBounds().inflate(size.width / _getSymbolWidth(readOnly) * 10));
       paint.color = Colors.transparent;
       canvas.touchCanvas.drawPath(path, paint, onTapDown: (tapDetail) {
-        setSegmentState(label, !currentSegments[label]);
-        if (currentSegments[label]) setSegmentState(hashLabel, false);
+        setSegmentState(label, !currentSegments[label]!);
+        if (currentSegments[label]!) setSegmentState(hashLabel, false);
       });
     }
   }
 
   static _setNotesState(String tappedNote, Map<String, bool> currentSegments, Function setSegmentState) {
-    var newState = !currentSegments[tappedNote];
+    var newState = !currentSegments[tappedNote]!;
     if (newState) {
       for (var i = 1; i <= 5; i++) {
         setSegmentState(i.toString(), false);

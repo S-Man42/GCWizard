@@ -44,7 +44,7 @@ class ResistorEIA96State extends State<ResistorEIA96> {
               },
             )),
             Expanded(
-                child: GCWDropDown(
+                child: GCWDropDown<String>(
               value: _currentMultiplicator,
               items: {
                 'Y': _buildSuperscriptedRichText('Y = 10', '-2', ' = 0.01'),

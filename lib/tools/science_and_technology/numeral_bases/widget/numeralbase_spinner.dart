@@ -4,17 +4,17 @@ import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_dropdown_spinner.dart';
 
 class NumeralBaseSpinner extends StatefulWidget {
-  final Function onChanged;
+  final void Function(int) onChanged;
   final value;
 
-  const NumeralBaseSpinner({Key? key, this.onChanged, this.value: 10}) : super(key: key);
+  const NumeralBaseSpinner({Key? key, required this.onChanged, this.value = 10}) : super(key: key);
 
   @override
   _NumeralBaseSpinnerState createState() => _NumeralBaseSpinnerState();
 }
 
 class _NumeralBaseSpinnerState extends State<NumeralBaseSpinner> {
-  int _currentValue;
+  int? _currentValue;
 
   final list2To62 = List.generate(61, (i) => i + 2);
 
@@ -62,7 +62,7 @@ class _NumeralBaseSpinnerState extends State<NumeralBaseSpinner> {
       }
     }).toList();
 
-    return GCWDropDownSpinner(
+    return GCWDropDownSpinner<int>(
       index: _currentValue ?? list.indexOf(widget.value),
       items: items.map((item) => Text(item, style: gcwTextStyle())).toList(),
       onChanged: (value) {
