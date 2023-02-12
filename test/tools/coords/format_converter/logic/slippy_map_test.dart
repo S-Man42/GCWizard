@@ -6,12 +6,12 @@ void main() {
   group("Parser.slippy_map.parseLatLon:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'text': '', 'expectedOutput': null},
-      {'text': '584.813499 363.434344', 'expectedOutput': {'format': keyCoordsSlippyMap, 'coordinate': LatLng(46.211017406, 025.5984957422)}},
-      {'text': 'X: 584.813499 Y: 363.434344', 'expectedOutput': {'format': keyCoordsSlippyMap, 'coordinate': LatLng(46.211017406, 025.5984957422)}},
-      {'text': 'X:584.813499 Y:363.434344', 'expectedOutput': {'format': keyCoordsSlippyMap, 'coordinate': LatLng(46.211017406, 025.5984957422)}},
-      {'text': 'X:584.813499 Y:363.434344', 'expectedOutput': {'format': keyCoordsSlippyMap, 'coordinate': LatLng(46.211017406, 025.5984957422)}},
-      {'text': 'X584.813499Y363.434344', 'expectedOutput': {'format': keyCoordsSlippyMap, 'coordinate': LatLng(46.211017406, 025.5984957422)}},
-      {'text': 'x584.813499y363.434344', 'expectedOutput': {'format': keyCoordsSlippyMap, 'coordinate': LatLng(46.211017406, 025.5984957422)}},
+      {'text': '584.813499 363.434344', 'expectedOutput': {'format': CoordFormatKey.SLIPPY_MAP, 'coordinate': LatLng(46.211017406, 025.5984957422)}},
+      {'text': 'X: 584.813499 Y: 363.434344', 'expectedOutput': {'format': CoordFormatKey.SLIPPY_MAP, 'coordinate': LatLng(46.211017406, 025.5984957422)}},
+      {'text': 'X:584.813499 Y:363.434344', 'expectedOutput': {'format': CoordFormatKey.SLIPPY_MAP, 'coordinate': LatLng(46.211017406, 025.5984957422)}},
+      {'text': 'X:584.813499 Y:363.434344', 'expectedOutput': {'format': CoordFormatKey.SLIPPY_MAP, 'coordinate': LatLng(46.211017406, 025.5984957422)}},
+      {'text': 'X584.813499Y363.434344', 'expectedOutput': {'format': CoordFormatKey.SLIPPY_MAP, 'coordinate': LatLng(46.211017406, 025.5984957422)}},
+      {'text': 'x584.813499y363.434344', 'expectedOutput': {'format': CoordFormatKey.SLIPPY_MAP, 'coordinate': LatLng(46.211017406, 025.5984957422)}},
     ];
 
     _inputsToExpected.forEach((elem) {

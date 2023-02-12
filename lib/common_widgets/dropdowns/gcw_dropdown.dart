@@ -3,29 +3,29 @@ import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 
-class GCWDropDown extends StatefulWidget {
-  final Function onChanged;
+class GCWDropDown<T extends Object?> extends StatefulWidget {
+  final void Function(T) onChanged;
   final List<GCWDropDownMenuItem> items;
   final value;
-  final DropdownButtonBuilder selectedItemBuilder;
-  final String title;
+  final DropdownButtonBuilder? selectedItemBuilder;
+  final String? title;
   final bool alternativeColor;
 
   const GCWDropDown(
-      {Key key,
+      {Key? key,
       this.value,
-      this.items,
-      this.onChanged,
+      required this.items,
+      required this.onChanged,
       this.selectedItemBuilder,
       this.title,
-      this.alternativeColor: false})
+      this.alternativeColor = false})
       : super(key: key);
 
   @override
-  _GCWDropDownState createState() => _GCWDropDownState();
+  _GCWDropDownState createState() => _GCWDropDownState<T>();
 }
 
-class _GCWDropDownState extends State<GCWDropDown> {
+class _GCWDropDownState<T extends Object?> extends State<GCWDropDown> {
   @override
   Widget build(BuildContext context) {
     ThemeColors colors = themeColors();
@@ -35,10 +35,10 @@ class _GCWDropDownState extends State<GCWDropDown> {
 
     return Row(
       children: [
-        if (widget.title != null && widget.title.length > 0)
+        if (widget.title != null && widget.title!.length > 0)
           Expanded(
               child: GCWText(
-                text: widget.title + ':',
+                text: widget.title! + ':',
               ),
               flex: 1),
         Expanded(
@@ -126,7 +126,7 @@ class GCWDropDownMenuItem {
   final dynamic value;
   final dynamic child;
   final dynamic subtitle;
-  final TextStyle style;
+  final TextStyle? style;
 
-  const GCWDropDownMenuItem({this.value, this.child, this.subtitle, this.style});
+  const GCWDropDownMenuItem({required this.value, required this.child, this.subtitle, this.style});
 }

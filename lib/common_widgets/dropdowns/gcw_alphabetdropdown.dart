@@ -5,19 +5,19 @@ import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 
 class GCWAlphabetDropDown extends StatefulWidget {
-  final Function onChanged;
-  final Function onCustomAlphabetChanged;
-  final Map<dynamic, String> items;
-  final customModeKey;
-  final value;
-  final textFieldController;
-  final textFieldHintText;
+  final void Function(Object?) onChanged;
+  final void Function(String)? onCustomAlphabetChanged;
+  final Map<Object, String> items;
+  final dynamic customModeKey;
+  final dynamic value;
+  final TextEditingController? textFieldController;
+  final String? textFieldHintText;
 
   const GCWAlphabetDropDown({
-    Key key,
+    Key? key,
     this.value,
-    this.items,
-    this.onChanged,
+    required this.items,
+    required this.onChanged,
     this.onCustomAlphabetChanged,
     this.customModeKey,
     this.textFieldController,
@@ -29,7 +29,7 @@ class GCWAlphabetDropDown extends StatefulWidget {
 }
 
 class _GCWAlphabetDropDownState extends State<GCWAlphabetDropDown> {
-  dynamic _currentMode;
+  Object? _currentMode;
 
   @override
   Widget build(BuildContext context) {

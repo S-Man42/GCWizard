@@ -333,7 +333,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
     );
   }
 
-  _adjustToFullPicture() async {
+  GCWFile _adjustToFullPicture() async {
     await showDialog(
       context: context,
       barrierDismissible: false,
@@ -405,7 +405,7 @@ Future<img.Image> _adjustColorAsync(dynamic jobData) async {
 
   var output = _doAdjustColor(jobData.parameters);
 
-  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return Future.value(output);
 }

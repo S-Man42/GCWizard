@@ -4,13 +4,13 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 
 class GCWIntegerListTextField extends StatefulWidget {
-  final TextEditingController controller;
-  final Function onChanged;
-  final hintText;
+  final TextEditingController? controller;
+  final void Function(Map<String, Object?>) onChanged;
+  final String? hintText;
 
   const GCWIntegerListTextField({
-    Key key,
-    this.onChanged,
+    Key? key,
+    required this.onChanged,
     this.controller,
     this.hintText,
   }) : super(key: key);

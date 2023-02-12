@@ -312,17 +312,37 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
   },
 };
 
-FileType fileTypeByFilename(String fileName) {
+FileType? fileTypeByFilename(String fileName) {
   fileName = fileName.split('.').last;
-  return _FILE_TYPES.keys.firstWhere((type) => _FILE_TYPES[type]['extensions'].contains(fileName), orElse: () => null);
+  if (fileName.isEmpty)
+    return null;
+
+  return _FILE_TYPES.keys.firstWhereOrNull((type) {
+    return _FILE_TYPES[type]!['extensions'].contains(fileName);
+  });
+}
+
+_checkFileType(FileType type) {
+  if (_FILE_TYPES[type] == null)
+    throw Exception('No file type extension');
 }
 
 String fileExtension(FileType type) {
-  return _FILE_TYPES[type]['extensions'].first;
+  _checkFileType(type);
+  if (_FILE_TYPES[type]!['extensions'] == null || _FILE_TYPES[type]!['extensions'].contains(null))
+    throw Exception('No file type extension');
+
+  return _FILE_TYPES[type]!['extensions'].first;
 }
 
 List<String> fileExtensions(List<FileType> types) {
-  return types.map((type) => _FILE_TYPES[type]['extensions']).expand((extensions) => extensions).toList();
+  return types.map((type) {
+    _checkFileType(type);
+    if (_FILE_TYPES[type]!['extensions'] == null || _FILE_TYPES[type]!['extensions'].contains(null))
+      throw Exception('No file type extension');
+
+    return _FILE_TYPES[type]!['extensions'] as List<String>;
+  }).expand((List<String> extensions) => extensions).toList();
 }
 
 List<String> fileExtensionsByFileClass(FileClass _fileClass) {
@@ -334,27 +354,51 @@ List<FileType> fileTypesByFileClass(FileClass _fileClass) {
 }
 
 FileClass fileClass(FileType type) {
-  return _FILE_TYPES[type]['file_class'];
+  _checkFileType(type);
+  if (_FILE_TYPES[type]!['file_class'] == null)
+    throw Exception('No file_class for this file type defined');
+
+  return _FILE_TYPES[type]!['file_class'];
 }
 
 List<List<int>> magicBytes(FileType type) {
-  return _FILE_TYPES[type]['magic_bytes'];
+  _checkFileType(type);
+  if (_FILE_TYPES[type]!['magic_bytes'] == null)
+    throw Exception('No magic_bytes for this file type defined');
+
+  return _FILE_TYPES[type]!['magic_bytes'];
 }
 
 List<int> magicBytesDetail(FileType type) {
-  return _FILE_TYPES[type]['magic_bytes_detail'];
+  _checkFileType(type);
+  if (_FILE_TYPES[type]!['magic_bytes_detail'] == null)
+    throw Exception('No magic_bytes_detail for this file type defined');
+
+  return _FILE_TYPES[type]!['magic_bytes_detail'];
 }
 
 int magicBytesOffset(FileType type) {
-  return _FILE_TYPES[type]['magic_bytes_offset'];
+  _checkFileType(type);
+  if (_FILE_TYPES[type]!['magic_bytes_offset'] == null)
+    throw Exception('No magic_bytes_offset for this file type defined');
+
+  return _FILE_TYPES[type]!['magic_bytes_offset'];
 }
 
 List<String> mimeTypes(FileType type) {
-  return _FILE_TYPES[type]['mime_types'];
+  _checkFileType(type);
+  if (_FILE_TYPES[type]!['mime_types'] == null)
+    throw Exception('No mime_types for this file type defined');
+
+  return _FILE_TYPES[type]!['mime_types'];
 }
 
 String uniformTypeIdentifier(FileType type) {
-  return _FILE_TYPES[type]['uniform_type_identifier'];
+  _checkFileType(type);
+  if (_FILE_TYPES[type]!['uniform_type_identifier'] == null)
+    throw Exception('No uniform_type_identifier for this file type defined');
+
+  return _FILE_TYPES[type]!['uniform_type_identifier'];
 }
 
 Future<Uint8List> readByteDataFromFile(String fileName) async {
@@ -370,7 +414,7 @@ Future<String> readStringFromFile(String fileName) async {
 bool isImage(Uint8List blobBytes) {
   try {
     FileType fileType = getFileType(blobBytes);
-    return _FILE_TYPES[fileType]['file_class'] == FileClass.IMAGE;
+    return fileClass(fileType) == FileClass.IMAGE;
   } catch (e) {
     return false;
   }
@@ -405,15 +449,15 @@ FileType getFileType(Uint8List blobBytes, {FileType defaultType = FileType.TXT})
 }
 
 String getFileExtension(String fileName) {
-  return fileName == null ? null : extension(fileName);
+  return extension(fileName);
 }
 
 String getFileBaseNameWithoutExtension(String fileName) {
-  return fileName == null ? null : basenameWithoutExtension(fileName);
+  return basenameWithoutExtension(fileName);
 }
 
 String getFileBaseNameWithExtension(String fileName) {
-  return fileName == null ? null : basename(fileName);
+  return basename(fileName);
 }
 
 String changeExtension(String fileName, String extension) {
@@ -424,20 +468,16 @@ String normalizePath(String path) {
   return normalize(path);
 }
 
-Future<File> createTmpFile(String extension, Uint8List bytes) async {
-  try {
-    String tmpDir = (await getTemporaryDirectory()).path;
-    var random = Random();
-    String randomFileName = String.fromCharCodes(List.generate(20, (index) => random.nextInt(26) + 97));
-    var filePath = '$tmpDir/$randomFileName.$extension';
+Future<File> _createTmpFile(String extension, Uint8List bytes) async {
+  String tmpDir = (await getTemporaryDirectory()).path;
+  var random = Random();
+  String randomFileName = String.fromCharCodes(List.generate(20, (index) => random.nextInt(26) + 97));
+  var filePath = '$tmpDir/$randomFileName.$extension';
 
-    return File(filePath).writeAsBytes(bytes);
-  } on Exception {
-    return null;
-  }
+  return File(filePath).writeAsBytes(bytes);
 }
 
-Future<bool> createDirectory(String directory) async {
+Future<bool> _createDirectory(String directory) async {
   try {
     await Directory(directory).create(recursive: true);
     return true;
@@ -446,7 +486,7 @@ Future<bool> createDirectory(String directory) async {
   }
 }
 
-Future<bool> deleteDirectory(String directory) async {
+Future<bool> _deleteDirectory(String directory) async {
   try {
     await Directory(directory).delete(recursive: true);
     return true;
@@ -455,7 +495,7 @@ Future<bool> deleteDirectory(String directory) async {
   }
 }
 
-Future<bool> deleteFile(String path) async {
+Future<bool> _deleteFile(String path) async {
   try {
     File(path).delete();
     return true;
@@ -496,8 +536,8 @@ Future<Uint8List> createZipFile(String fileName, String extension, List<Uint8Lis
     await File(encoder.zipPath).delete();
 
     return bytes;
-  } on Exception {
-    return null;
+  } catch (e) {
+    throw Exception('ZIP file not created');
   }
 }
 
@@ -514,11 +554,11 @@ List<GCWFile> _archiveToPlatformFileList(Archive archive) {
         return GCWFile(name: file.name, bytes: content);
       })
       .where((file) => file != null)
-      .toList();
+      .toList() as List<GCWFile>;
 }
 
 Future<List<GCWFile>> extractArchive(GCWFile file) async {
-  if (fileClass(file.fileType) != FileClass.ARCHIVE) return null;
+  if (fileClass(file.fileType) != FileClass.ARCHIVE) return [];
 
   try {
     InputStream input = InputStream(file.bytes.buffer.asByteData());
@@ -529,53 +569,46 @@ Future<List<GCWFile>> extractArchive(GCWFile file) async {
         return _archiveToPlatformFileList(TarDecoder().decodeBuffer(input));
       case FileType.BZIP2:
         var output = BZip2Decoder().decodeBuffer(input);
-        var fileName = file?.name ?? 'xxx';
+        var fileName = file.name ?? 'xxx';
         fileName = changeExtension(fileName, '');
         if (extension(fileName) != '.tar') fileName += '.tar';
-        return {GCWFile(name: fileName, bytes: output)}.toList();
+        return {GCWFile(name: fileName, bytes: Uint8List.fromList(output))}.toList();
       case FileType.GZIP:
         var output = OutputStream();
         GZipDecoder().decodeStream(input, output);
-        return {GCWFile(name: changeExtension(file?.name ?? 'xxx', '.gzip'), bytes: output?.getBytes())}.toList();
+        return {GCWFile(name: changeExtension(file.name ?? 'xxx', '.gzip'), bytes: Uint8List.fromList(output.getBytes()))}.toList();
       case FileType.RAR:
-        return await extractRarArchive(file);
-        break;
+        return await _extractRarArchive(file);
       default:
-        return null;
+        return [];
     }
   } catch (e) {
-    return null;
+    return [];
   }
 }
 
-Future<List<GCWFile>> extractRarArchive(GCWFile file, {String password}) async {
+Future<List<GCWFile>> _extractRarArchive(GCWFile file, {String? password}) async {
   var fileList = <GCWFile>[];
-  var tmpFile = await createTmpFile('rar', file.bytes);
+  var tmpFile = await _createTmpFile('rar', file.bytes);
   var directory = changeExtension(tmpFile.path, '');
 
   try {
-    await createDirectory(directory);
-    var result = await UnrarFile.extract_rar(tmpFile.path, directory + '/', password: password);
+    await _createDirectory(directory);
+    await UnrarFile.extract_rar(tmpFile.path, directory + '/', password: password);
 
-    await Directory(directory).listSync(recursive: true).whereType<File>().map((entity) async {
+    Directory(directory).listSync(recursive: true).whereType<File>().map((entity) async {
       fileList.add(
           GCWFile(name: getFileBaseNameWithExtension(entity.path), bytes: await readByteDataFromFile(entity.path)));
     }).toList();
   } catch (e) {}
 
-  deleteFile(tmpFile.path);
-  deleteDirectory(directory);
+  _deleteFile(tmpFile.path);
+  _deleteDirectory(directory);
 
   return fileList;
 }
 
-List<GCWFile> extractRarArchive1(GCWFile file) {
-  extractRarArchive(file).then((value) {
-    return value;
-  });
-}
-
 Uint8List encodeTrimmedPng(img.Image image) {
   var out = img.encodePng(image);
-  return trimNullBytes(out);
+  return trimNullBytes(Uint8List.fromList(out));
 }

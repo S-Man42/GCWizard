@@ -12,23 +12,23 @@ class ReplaceSymbolsInput {
   final int blackLevel;
   final double similarityLevel;
   final int gap;
-  final SymbolReplacerImage symbolImage;
-  final List<Map<String, SymbolReplacerSymbolData>> compareSymbols;
+  final SymbolReplacerImage? symbolImage;
+  final List<Map<String, SymbolReplacerSymbolData>>? compareSymbols;
   final double similarityCompareLevel;
-  final double mergeDistance;
+  final double? mergeDistance;
 
-  ReplaceSymbolsInput(
-      {this.image,
-      this.blackLevel: 50,
-      this.similarityLevel: 90.0,
-      this.gap: 1,
+  ReplaceSymbolsInput({
+      required this.image,
+      this.blackLevel = 50,
+      this.similarityLevel = 90.0,
+      this.gap = 1,
       this.symbolImage,
       this.compareSymbols,
-      this.similarityCompareLevel: 80.0,
+      this.similarityCompareLevel = 80.0,
       this.mergeDistance});
 }
 
-Future<SymbolReplacerImage> replaceSymbolsAsync(dynamic jobData) async {
+Future<SymbolReplacerImage?> replaceSymbolsAsync(dynamic jobData) async {
   if (jobData == null) return null;
 
   var output = await replaceSymbols(
@@ -39,17 +39,17 @@ Future<SymbolReplacerImage> replaceSymbolsAsync(dynamic jobData) async {
       similarityCompareLevel: jobData.parameters.similarityCompareLevel,
       mergeDistance: jobData.parameters.mergeDistance);
 
-  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }
 
-Future<SymbolReplacerImage> replaceSymbols(Uint8List image, int blackLevel, double similarityLevel,
+Future<SymbolReplacerImage?> replaceSymbols(Uint8List image, int blackLevel, double similarityLevel,
     {int gap = 1,
-    SymbolReplacerImage symbolImage,
-    List<Map<String, SymbolReplacerSymbolData>> compareSymbols,
-    double similarityCompareLevel,
-    double mergeDistance}) async {
+    SymbolReplacerImage? symbolImage,
+    List<Map<String, SymbolReplacerSymbolData>>? compareSymbols,
+    double? similarityCompareLevel,
+    double? mergeDistance}) async {
   if ((image == null) && (symbolImage == null)) return null;
   if (symbolImage == null) symbolImage = SymbolReplacerImage(image);
 
@@ -67,7 +67,7 @@ class SymbolReplacerImage {
   Uint8List _image;
 
   /// converted  source image
-  Image.Image _bmp;
+  Image.Image? _bmp;
 
   /// source image with symbol borders
   Uint8List _outputImageBytes;
@@ -79,7 +79,7 @@ class SymbolReplacerImage {
   List<Map<String, SymbolReplacerSymbolData>> _usedCompareSymbols;
 
   /// image with groups from  cropped _usedCompareSymbols
-  SymbolReplacerImage _usedCompareSymbolsImage;
+  SymbolReplacerImage? _usedCompareSymbolsImage;
   double _similarityCompareLevel;
 
   /// detected lines from _image (after symbol merge)
@@ -158,10 +158,10 @@ class SymbolReplacerImage {
   /// </summary>
   splitAndGroupSymbols(int blackLevel, double similarityLevel,
       {int gap = 1,
-      List<Map<String, SymbolReplacerSymbolData>> compareSymbols,
-      double similarityCompareLevel = 80,
+      List<Map<String, SymbolReplacerSymbolData>>? compareSymbols,
+      double? similarityCompareLevel = 80,
       bool groupSymbols = true,
-      double mergeDistance}) {
+      double? mergeDistance}) {
     if (_image == null) return;
     if (_bmp == null) _bmp = Image.decodeImage(_image);
     if (_bmp == null) return;
@@ -873,12 +873,12 @@ class Symbol {
 
 class SymbolGroup {
   // group text
-  String text;
+  String? text;
   bool viewGroupImage = false;
   var symbols = <Symbol>[];
   SymbolReplacerSymbolData compareSymbol;
 
-  Uint8List getImage() {
+  Uint8List? getImage() {
     if (symbols.isNotEmpty) return symbols.first.getImage();
     return null;
   }
@@ -888,26 +888,26 @@ class SymbolGroup {
   }
 }
 
-Future<List<Map<String, SymbolReplacerSymbolData>>> searchSymbolTableAsync(dynamic jobData) async {
+Future<List<Map<String, SymbolReplacerSymbolData>>?> searchSymbolTableAsync(dynamic jobData) async {
   if (jobData == null) return null;
 
   var output =
       await searchSymbolTable(jobData.parameters.item1, jobData.parameters.item2, sendAsyncPort: jobData.sendAsyncPort);
 
-  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }
 
-List<Map<String, SymbolReplacerSymbolData>> searchSymbolTable(
-    SymbolReplacerImage image, List<List<Map<String, SymbolReplacerSymbolData>>> compareSymbols,
-    {SendPort sendAsyncPort}) {
+List<Map<String, SymbolReplacerSymbolData>>? searchSymbolTable(
+    SymbolReplacerImage? image, List<List<Map<String, SymbolReplacerSymbolData>>>? compareSymbols,
+    {SendPort? sendAsyncPort}) {
   if (image == null) return null;
   if (compareSymbols == null) return null;
   var progress = 0;
 
   double maxPercentSum = 0.0;
-  List<Map<String, SymbolReplacerSymbolData>> maxPercentSymbolTable;
+  List<Map<String, SymbolReplacerSymbolData>>? maxPercentSymbolTable;
   var imageTmp = SymbolReplacerImage(image._image);
   imageTmp.symbols = image.symbols;
   imageTmp.symbolGroups = image.symbolGroups;

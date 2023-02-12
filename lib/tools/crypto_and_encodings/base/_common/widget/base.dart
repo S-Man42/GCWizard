@@ -8,7 +8,7 @@ abstract class AbstractBase extends StatefulWidget {
   final Function encode;
   final Function decode;
 
-  AbstractBase({Key key, this.encode, this.decode}) : super(key: key);
+  AbstractBase({Key? key, this.encode, this.decode}) : super(key: key);
 
   @override
   AbstractBaseState createState() => AbstractBaseState();

@@ -13,7 +13,7 @@ const MDT_ESOTERIC_LANGUAGES_DEADFISH_OPTION_XKCD = 'deadfish_mode_right';
 
 class MultiDecoderToolEsotericLanguageDeadfish extends AbstractMultiDecoderTool {
   MultiDecoderToolEsotericLanguageDeadfish(
-      {Key key, int id, String name, Map<String, dynamic> options, BuildContext context})
+      {Key? key, int id, String name, Map<String, dynamic> options, BuildContext context})
       : super(
             key: key,
             id: id,

@@ -19,7 +19,7 @@ import 'package:prefs/prefs.dart';
 class SymbolReplacerManualControl extends StatefulWidget {
   final SymbolReplacerImage symbolImage;
 
-  const SymbolReplacerManualControl({Key key, this.symbolImage}) : super(key: key);
+  const SymbolReplacerManualControl({Key? key, this.symbolImage}) : super(key: key);
 
   @override
   SymbolReplacerManualControlState createState() => SymbolReplacerManualControlState();

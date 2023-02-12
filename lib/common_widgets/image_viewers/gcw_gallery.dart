@@ -7,9 +7,9 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class GCWGallery extends StatefulWidget {
   final List<GCWImageViewData> imageData;
-  final Function onDoubleTap;
+  final void Function(int)? onDoubleTap;
 
-  const GCWGallery({Key key, @required this.imageData, this.onDoubleTap}) : super(key: key);
+  const GCWGallery({Key? key, required this.imageData, this.onDoubleTap}) : super(key: key);
 
   @override
   _GCWGalleryState createState() => _GCWGalleryState();
@@ -19,7 +19,7 @@ class _GCWGalleryState extends State<GCWGallery> {
   int _currentImageIndex = 0;
   List<Image> _validImages = [];
 
-  ItemScrollController _scrollController;
+  late ItemScrollController _scrollController;
 
   @override
   void initState() {
@@ -32,7 +32,7 @@ class _GCWGalleryState extends State<GCWGallery> {
     _validImages = [];
 
     widget.imageData.asMap().forEach((index, element) {
-      MemoryImage _img;
+      MemoryImage? _img;
       try {
         if (widget.imageData[index] != null) _img = MemoryImage(widget.imageData[index].file.bytes);
 
@@ -56,7 +56,7 @@ class _GCWGalleryState extends State<GCWGallery> {
               size: IconButtonSize.SMALL,
               onPressed: () {
                 setState(() {
-                  _currentImageIndex = modulo(_currentImageIndex - 1, _validImages.length);
+                  _currentImageIndex = modulo(_currentImageIndex - 1, _validImages.length).toInt();
                   _scrollController.jumpTo(index: _currentImageIndex, alignment: 0.4);
                 });
               },
@@ -79,7 +79,7 @@ class _GCWGalleryState extends State<GCWGallery> {
                 size: IconButtonSize.SMALL,
                 onPressed: () {
                   setState(() {
-                    _currentImageIndex = modulo(_currentImageIndex + 1, _validImages.length);
+                    _currentImageIndex = modulo(_currentImageIndex + 1, _validImages.length).toInt();
                     _scrollController.jumpTo(index: _currentImageIndex, alignment: 0.5);
                   });
                 },
@@ -101,7 +101,7 @@ class _GCWGalleryState extends State<GCWGallery> {
                     });
                   },
                   onDoubleTap: () {
-                    widget.onDoubleTap(index);
+                    if (widget.onDoubleTap != null) widget.onDoubleTap!(index);
                   },
                 )),
       )

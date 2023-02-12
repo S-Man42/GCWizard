@@ -1,17 +1,17 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _GCWCoordsQuadtree extends StatefulWidget {
-  final Function onChanged;
+  final Function(Quadtree) onChanged;
   final BaseCoordinates coordinates;
 
-  const _GCWCoordsQuadtree({Key key, this.onChanged, this.coordinates}) : super(key: key);
+  const _GCWCoordsQuadtree({Key? key, required this.onChanged, required this.coordinates}) : super(key: key);
 
   @override
   _GCWCoordsQuadtreeState createState() => _GCWCoordsQuadtreeState();
 }
 
 class _GCWCoordsQuadtreeState extends State<_GCWCoordsQuadtree> {
-  TextEditingController _controller;
+  late TextEditingController _controller;
   var _currentCoord = '';
 
   var _maskInputFormatter = WrapperForMaskTextInputFormatter(mask: '#' * 100, filter: {"#": RegExp(r'[0123]')});

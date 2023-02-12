@@ -31,7 +31,7 @@ Future<LatLng> intersectBearingsAsync(dynamic jobData) async {
   var output = intersectBearings(jobData.parameters.coord1, jobData.parameters.az13, jobData.parameters.coord2,
       jobData.parameters.az23, jobData.parameters.ells, jobData.parameters.crossbearing);
 
-  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }
@@ -130,7 +130,7 @@ Future<LatLng> intersectFourPointsAsync(dynamic jobData) async {
   var output = intersectFourPoints(jobData.parameters.coord11, jobData.parameters.coord12, jobData.parameters.coord21,
       jobData.parameters.coord22, jobData.parameters.ells);
 
-  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }

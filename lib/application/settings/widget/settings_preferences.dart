@@ -24,25 +24,25 @@ class SettingsPreferences extends StatefulWidget {
 }
 
 class SettingsPreferencesState extends State<SettingsPreferences> {
-  List<String> keys;
-  String editKey;
-  dynamic editedValue;
+  late List<String> _keys;
+  String? _editKey;
+  dynamic _editedValue;
 
-  List<String> expandedValues = [];
+  List<String> _expandedValues = [];
 
-  List<TextEditingController> controllers = [];
+  List<TextEditingController> _controllers = [];
 
   @override
   void initState() {
     super.initState();
-    keys = List<String>.from(Prefs.getKeys());
-    keys.sort();
+    _keys = List<String>.from(Prefs.getKeys());
+    _keys.sort();
   }
 
   @override
   void dispose() {
-    for (var i = 0; i < controllers.length; i++) {
-      controllers[i].dispose();
+    for (var i = 0; i < _controllers.length; i++) {
+      _controllers[i].dispose();
     }
 
     super.dispose();
@@ -64,7 +64,7 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
       ),
     ];
 
-    children.addAll(keys.map((String key) {
+    children.addAll(_keys.map((String key) {
       return _buildPreferencesView(key);
     }).toList());
 
@@ -77,7 +77,7 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
     var prefValue = Prefs.get(key).toString();
 
     return Container(
-        color: keys.indexOf(key) % 2 == 0 ? themeColors().outputListOddRows() : null,
+        color: _keys.indexOf(key) % 2 == 0 ? themeColors().outputListOddRows() : null,
         child: Column(
           children: [
             Container(
@@ -94,7 +94,7 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   _buildEditSaveButton(key),
-                  if (editKey != null && editKey == key)
+                  if (_editKey != null && _editKey == key)
                     Row(
                       children: [
                         _buildEmptyButton(key),
@@ -110,12 +110,12 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
                 ],
               ),
             ),
-            editKey != null && editKey == key
+            _editKey != null && _editKey == key
                 ? _buildEditView(key)
                 : Column(
                     children: [
                       GCWText(
-                        text: !expandedValues.contains(key) && prefValue.length > _PREF_VALUE_MAX_LENGTH
+                        text: !_expandedValues.contains(key) && prefValue.length > _PREF_VALUE_MAX_LENGTH
                             ? prefValue.substring(0, _PREF_VALUE_MAX_LENGTH) + '...'
                             : prefValue,
                         style: gcwMonotypeTextStyle().copyWith(fontSize: defaultFontSize() - 3),
@@ -126,13 +126,13 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 GCWIconButton(
-                                  icon: expandedValues.contains(key) ? Icons.arrow_drop_up : Icons.more_horiz,
+                                  icon: _expandedValues.contains(key) ? Icons.arrow_drop_up : Icons.more_horiz,
                                   size: IconButtonSize.SMALL,
                                   onPressed: () {
                                     setState(() {
-                                      expandedValues.contains(key)
-                                          ? expandedValues.remove(key)
-                                          : expandedValues.add(key);
+                                      _expandedValues.contains(key)
+                                          ? _expandedValues.remove(key)
+                                          : _expandedValues.add(key);
                                     });
                                   },
                                 )
@@ -150,14 +150,14 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
 
   _buildEditSaveButton(String key) {
     return GCWIconButton(
-      icon: editKey != null && editKey == key ? (_prefValueHasChanged(key) ? Icons.save : Icons.close) : Icons.edit,
+      icon: _editKey != null && _editKey == key ? (_prefValueHasChanged(key) ? Icons.save : Icons.close) : Icons.edit,
       onPressed: () {
         setState(() {
-          if (editKey == key) {
+          if (_editKey == key) {
             _doOnSave(key);
           } else {
-            editKey = key;
-            editedValue = null;
+            _editKey = key;
+            _editedValue = null;
           }
         });
       },
@@ -167,8 +167,8 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
   _doOnSave(String key) {
     if (!_prefValueHasChanged(key)) {
       setState(() {
-        editKey = null;
-        editedValue = null;
+        _editKey = null;
+        _editedValue = null;
       });
 
       return;
@@ -176,30 +176,30 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
 
     showGCWAlertDialog(context, i18n(context, 'settings_preferences_warning_save_title'),
         i18n(context, 'settings_preferences_warning_save_text'), () {
-      setUntypedPref(key, editedValue);
+      setUntypedPref(key, _editedValue);
 
       setState(() {
-        editKey = null;
-        editedValue = null;
+        _editKey = null;
+        _editedValue = null;
       });
     });
   }
 
   _prefValueHasChanged(String key) {
-    if (editedValue == null) return false;
+    if (_editedValue == null) return false;
 
     switch (getPrefType(key)) {
       case PrefType.STRING:
       case PrefType.INT:
       case PrefType.DOUBLE:
       case PrefType.BOOL:
-        return editedValue != Prefs.get(key);
+        return _editedValue != Prefs.get(key);
       case PrefType.STRINGLIST:
         var list = Prefs.get(key);
-        if (editedValue.length != list.length) return true;
+        if (_editedValue.length != list.length) return true;
 
         for (var i = 0; i < list.length; i++) {
-          if (editedValue[i].toString() != list[i].toString()) {
+          if (_editedValue[i].toString() != list[i].toString()) {
             return true;
           }
         }
@@ -217,11 +217,11 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
             onPressed: () {
               setState(() {
                 if (getPrefType(key) == PrefType.STRING) {
-                  editedValue = '';
-                  controllers.first.text = '';
+                  _editedValue = '';
+                  _controllers.first.text = '';
                 } else {
-                  editedValue = [];
-                  controllers = [];
+                  _editedValue = [];
+                  _controllers = [];
                 }
               });
             });
@@ -236,7 +236,7 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
       iconColor: _prefValueHasChanged(key) ? null : themeColors().inActive(),
       onPressed: () {
         setState(() {
-          editedValue = null;
+          _editedValue = null;
         });
       },
     );
@@ -251,8 +251,8 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
           initDefaultSettings(PreferencesInitMode.REINIT_SINGLE, reinitSinglePreference: key);
 
           setState(() {
-            editKey = null;
-            editedValue = null;
+            _editKey = null;
+            _editedValue = null;
           });
         });
       },
@@ -263,7 +263,7 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
     return GCWIconButton(
       icon: Icons.copy,
       onPressed: () {
-        insertIntoGCWClipboard(context, editedValue != null ? editedValue.toString() : Prefs.get(key).toString());
+        insertIntoGCWClipboard(context, _editedValue != null ? _editedValue.toString() : Prefs.get(key).toString());
       },
     );
   }
@@ -271,48 +271,48 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
   _buildEditView(String key) {
     switch (getPrefType(key)) {
       case PrefType.STRING:
-        if (editedValue == null) {
-          controllers = [TextEditingController(text: editedValue ?? Prefs.getString(key))];
+        if (_editedValue == null) {
+          _controllers = [TextEditingController(text: _editedValue ?? Prefs.getString(key))];
         }
         return GCWTextField(
-          controller: controllers.first,
+          controller: _controllers.first,
           onChanged: (text) {
             setState(() {
-              editedValue = text;
+              _editedValue = text;
             });
           },
         );
       case PrefType.INT:
         return GCWIntegerSpinner(
-          value: editedValue ?? Prefs.getInt(key),
+          value: _editedValue ?? Prefs.getInt(key),
           onChanged: (value) {
             setState(() {
-              editedValue = value;
+              _editedValue = value;
             });
           },
         );
       case PrefType.DOUBLE:
         return GCWDoubleSpinner(
-          value: editedValue ?? Prefs.getDouble(key),
+          value: _editedValue ?? Prefs.getDouble(key),
           onChanged: (value) {
             setState(() {
-              editedValue = value;
+              _editedValue = value;
             });
           },
         );
       case PrefType.BOOL:
         return GCWOnOffSwitch(
-          value: editedValue ?? Prefs.getBool(key),
+          value: _editedValue ?? Prefs.getBool(key),
           onChanged: (value) {
             setState(() {
-              editedValue = value;
+              _editedValue = value;
             });
           },
         );
       case PrefType.STRINGLIST:
-        if (editedValue == null) {
-          editedValue = List<String>.from(Prefs.get(key)).map((e) => e.toString()).toList();
-          controllers = [];
+        if (_editedValue == null) {
+          _editedValue = List<String>.from(Prefs.get(key)).map((e) => e.toString()).toList();
+          _controllers = [];
         }
 
         var children = <Widget>[
@@ -325,8 +325,8 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
                 icon: Icons.add,
                 onPressed: () {
                   setState(() {
-                    editedValue.add('');
-                    controllers = [];
+                    _editedValue.add('');
+                    _controllers = [];
                   });
                 },
               )
@@ -334,17 +334,17 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
           )
         ];
 
-        if (editedValue.isEmpty) {
+        if (_editedValue.isEmpty) {
           return Column(
             children: children,
           );
         }
 
-        for (var i = 0; i < editedValue.length; i++) {
-          controllers.add(TextEditingController(text: editedValue[i].toString()));
+        for (var i = 0; i < _editedValue.length; i++) {
+          _controllers.add(TextEditingController(text: _editedValue[i].toString()));
         }
 
-        children.addAll(editedValue
+        children.addAll(_editedValue
             .asMap()
             .map<int, Widget>((index, item) {
               return MapEntry<int, Widget>(
@@ -353,10 +353,10 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
                     children: [
                       Expanded(
                         child: GCWTextField(
-                          controller: controllers[index],
+                          controller: _controllers[index],
                           onChanged: (value) {
                             setState(() {
-                              editedValue[index] = value;
+                              _editedValue[index] = value;
                             });
                           },
                         ),
@@ -366,8 +366,8 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
                         icon: Icons.remove,
                         onPressed: () {
                           setState(() {
-                            editedValue.removeAt(index);
-                            controllers = [];
+                            _editedValue.removeAt(index);
+                            _controllers = [];
                           });
                         },
                       )

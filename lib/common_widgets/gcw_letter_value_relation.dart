@@ -5,24 +5,24 @@ import 'package:gc_wizard/common_widgets/spinners/gcw_abc_spinner.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 
 class GCWLetterValueRelation extends StatefulWidget {
-  final Function onChanged;
+  final void Function(int) onChanged;
   final int minValue;
   final int startValue;
 
-  const GCWLetterValueRelation({Key key, this.onChanged, this.minValue: 1, this.startValue: 1}) : super(key: key);
+  const GCWLetterValueRelation({Key? key, required this.onChanged, this.minValue = 1, this.startValue = 1}) : super(key: key);
 
   @override
   GCWLetterValueRelationState createState() => GCWLetterValueRelationState();
 }
 
 class GCWLetterValueRelationState extends State<GCWLetterValueRelation> {
-  int _currentKey;
+  late int _currentKey;
   int _currentLetterValue = 1;
 
   @override
   void initState() {
     super.initState();
-    _currentKey = widget.startValue ?? 1;
+    _currentKey = widget.startValue;
   }
 
   @override

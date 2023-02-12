@@ -5,11 +5,14 @@ import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/text_input_formatters/gcw_bearing_textinputformatter.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_double_textfield.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
+import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/math_utils.dart';
+import 'package:collection/collection.dart';
 
 final _NO_COMPASS_DIRECTION = '-';
 
-final List<Map<String, dynamic>> COMPASS_ROSE = [
+final List<Map<String, dynamic>> _COMPASS_ROSE = [
   {'symbol': _NO_COMPASS_DIRECTION, 'name': _NO_COMPASS_DIRECTION, 'value': double.nan, 'level': -1},
   {'symbol': 'common_compassrose_n_symbol', 'name': 'common_compassrose_n_name', 'value': 0.0, 'level': 0},
   {'symbol': 'common_compassrose_nbe_symbol', 'name': 'common_compassrose_nbe_name', 'value': 11.25, 'level': 3},
@@ -46,25 +49,25 @@ final List<Map<String, dynamic>> COMPASS_ROSE = [
 ];
 
 class GCWBearing extends StatefulWidget {
-  final Function onChanged;
-  final String hintText;
+  final void Function(DoubleText) onChanged;
+  final String? hintText;
 
-  const GCWBearing({Key key, this.onChanged, this.hintText}) : super(key: key);
+  const GCWBearing({Key? key, required this.onChanged, this.hintText}) : super(key: key);
 
   @override
   _GCWBearingState createState() => _GCWBearingState();
 }
 
 class _GCWBearingState extends State<GCWBearing> {
-  TextEditingController _bearingController;
-  var _currentBearing = {'text': '', 'value': 0.0};
+  late TextEditingController _bearingController;
+  var _currentBearing = defaultDoubleText;
 
   var _currentCompassValue;
 
   @override
   void initState() {
     super.initState();
-    _bearingController = TextEditingController(text: _currentBearing['text']);
+    _bearingController = TextEditingController(text: _currentBearing.text);
   }
 
   @override
@@ -77,7 +80,7 @@ class _GCWBearingState extends State<GCWBearing> {
   Widget build(BuildContext context) {
     if (_currentCompassValue == null) {
       _currentCompassValue =
-          COMPASS_ROSE.firstWhere((direction) => direction['symbol'] == 'common_compassrose_n_symbol')['symbol'];
+          _COMPASS_ROSE.firstWhere((direction) => direction['symbol'] == 'common_compassrose_n_symbol')['symbol'];
     }
 
     return Row(children: <Widget>[
@@ -87,15 +90,13 @@ class _GCWBearingState extends State<GCWBearing> {
           hintText: widget.hintText ?? i18n(context, 'common_bearing_hint'),
           controller: _bearingController,
           textInputFormatter: GCWBearingTextInputFormatter(),
-          onChanged: (ret) {
+          onChanged: (DoubleText ret) {
             setState(() {
-              _currentBearing['value'] = ret['value'];
-              _currentBearing['text'] = ret['text'];
+              _currentBearing = ret;
 
-              var normalizedBearing = modulo(_currentBearing['value'], 360.0);
+              var normalizedBearing = modulo360(_currentBearing.value);
 
-              var compassValue =
-                  COMPASS_ROSE.firstWhere((direction) => direction['value'] == normalizedBearing, orElse: () => null);
+              var compassValue = _COMPASS_ROSE.firstWhereOrNull((direction) => direction['value'] == normalizedBearing);
               if (compassValue != null)
                 _currentCompassValue = compassValue['symbol'];
               else
@@ -114,7 +115,7 @@ class _GCWBearingState extends State<GCWBearing> {
         flex: 5,
         child: GCWDropDown(
           value: _currentCompassValue,
-          items: COMPASS_ROSE.map((direction) {
+          items: _COMPASS_ROSE.map((direction) {
             if (direction['symbol'] == _NO_COMPASS_DIRECTION) {
               return GCWDropDownMenuItem(value: _NO_COMPASS_DIRECTION, child: _NO_COMPASS_DIRECTION);
             }
@@ -140,9 +141,9 @@ class _GCWBearingState extends State<GCWBearing> {
               _currentCompassValue = value;
               if (value == _NO_COMPASS_DIRECTION) return;
 
-              var compassValue = COMPASS_ROSE.firstWhere((direction) => direction['symbol'] == value)['value'];
+              var compassValue = _COMPASS_ROSE.firstWhere((direction) => direction['symbol'] == value)['value'];
 
-              _currentBearing = {'text': compassValue.toString(), 'value': compassValue};
+              _currentBearing = DoubleText(compassValue.toString(), compassValue);
               _bearingController.text = compassValue.toString();
 
               widget.onChanged(_currentBearing);

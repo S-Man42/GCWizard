@@ -6,18 +6,18 @@ import 'package:gc_wizard/utils/math_utils.dart';
 enum IconButtonSize { NORMAL, SMALL, TINY }
 
 class GCWIconButton extends StatelessWidget {
-  final Function onPressed;
-  final IconData icon;
-  final Widget customIcon;
-  IconButtonSize size;
-  final double iconSize;
-  final Color iconColor;
-  final Color backgroundColor;
-  final double rotateDegrees;
+  final void Function() onPressed;
+  final IconData? icon;
+  final Widget? customIcon;
+  IconButtonSize? size;
+  final double? iconSize;
+  final Color? iconColor;
+  final Color? backgroundColor;
+  final double? rotateDegrees;
 
   GCWIconButton(
-      {Key key,
-      this.onPressed,
+      {Key? key,
+      required this.onPressed,
       this.icon,
       this.customIcon,
       this.size,
@@ -25,13 +25,16 @@ class GCWIconButton extends StatelessWidget {
       this.iconColor,
       this.backgroundColor,
       this.rotateDegrees})
-      : super(key: key);
+      : super(key: key) {
+    if (icon == null && customIcon == null)
+      throw Exception('No icon defined');
+  }
 
   @override
   Widget build(BuildContext context) {
-    var containerWidth;
-    var buttonHeight;
-    var iconSize;
+    var _containerWidth;
+    var _buttonHeight;
+    var _iconSize;
 
     // moved to here instead of default value in constructur because
     // some tools explicitly hand over a NULL value
@@ -39,25 +42,27 @@ class GCWIconButton extends StatelessWidget {
 
     switch (this.size) {
       case IconButtonSize.NORMAL:
-        containerWidth = 40.0;
-        buttonHeight = 38.0;
-        iconSize = this.iconSize ?? null;
+        _containerWidth = 40.0;
+        _buttonHeight = 38.0;
+        _iconSize = this.iconSize ?? null;
         break;
       case IconButtonSize.SMALL:
-        containerWidth = 32.0;
-        buttonHeight = 28.0;
-        iconSize = this.iconSize ?? 20.0;
+        _containerWidth = 32.0;
+        _buttonHeight = 28.0;
+        _iconSize = this.iconSize ?? 20.0;
         break;
       case IconButtonSize.TINY:
-        containerWidth = 21.0;
-        buttonHeight = 18.0;
-        iconSize = this.iconSize ?? 17.0;
+        _containerWidth = 21.0;
+        _buttonHeight = 18.0;
+        _iconSize = this.iconSize ?? 17.0;
         break;
+      default:
+        throw Exception('Icon size is NULL');
     }
 
     return Container(
-      width: containerWidth,
-      height: buttonHeight,
+      width: _containerWidth,
+      height: _buttonHeight,
       child: TextButton(
         style: TextButton.styleFrom(
             padding: EdgeInsets.zero,
@@ -66,7 +71,7 @@ class GCWIconButton extends StatelessWidget {
                 borderRadius: BorderRadius.circular(ROUNDED_BORDER_RADIUS)),
             backgroundColor: backgroundColor),
         child: Transform.rotate(
-          child: this.customIcon ?? Icon(this.icon, size: iconSize, color: this.iconColor ?? themeColors().mainFont()),
+          child: this.customIcon ?? Icon(this.icon, size: _iconSize, color: this.iconColor ?? themeColors().mainFont()),
           angle: degreesToRadian(this.rotateDegrees ?? 0.0),
         ),
         onPressed: this.onPressed,

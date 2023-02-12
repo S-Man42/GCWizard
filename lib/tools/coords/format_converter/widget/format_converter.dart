@@ -23,7 +23,7 @@ class FormatConverterState extends State<FormatConverter> {
 
   var _currentCoordsFormat = defaultCoordFormat();
 
-  Map<String, String> _currentOutputFormat = {'format': keyCoordsDEC};
+  Map<String, String> _currentOutputFormat = {'format': CoordFormatKey.DEC};
   List<String> _currentOutput = [];
   Widget _currentAllOutput = GCWDefaultOutput();
 
@@ -101,21 +101,21 @@ class FormatConverterState extends State<FormatConverter> {
         outputFormat.addAll({'format': coordFormat.key});
 
         switch (coordFormat.key) {
-          case keyCoordsLambert:
+          case CoordFormatKey.LAMBERT:
             outputFormat.addAll({'subtype': getLambertKey()});
             name = i18n(context, coordFormat.name);
             name +=
                 '\n' + i18n(context, coordFormat.subtypes.firstWhere((element) => element.key == getLambertKey()).name);
             break;
-          case keyCoordsGaussKrueger:
-            outputFormat.addAll({'subtype': getGaussKruegerTypKey()});
+          case CoordFormatKey.GAUSS_KRUEGER:
+            outputFormat.addAll({'subtype': getGaussKruegerTypKeyFromCode()});
             name = i18n(context, coordFormat.name);
             name += '\n' +
                 i18n(
-                    context, coordFormat.subtypes.firstWhere((element) => element.key == getGaussKruegerTypKey()).name);
+                    context, coordFormat.subtypes.firstWhere((element) => element.key == getGaussKruegerTypKeyFromCode()).name);
             break;
-          case keyCoordsSlippyMap:
-            outputFormat.addAll({'subtype': DefaultSlippyZoom.toString()});
+          case CoordFormatKey.SLIPPY_MAP:
+            outputFormat.addAll({'subtype': defaultSlippyZoom.toString()});
             break;
         }
 
@@ -128,7 +128,7 @@ class FormatConverterState extends State<FormatConverter> {
 }
 
 class _GCWCoordsFormatSelectorAll extends GCWCoordsFormatSelector {
-  const _GCWCoordsFormatSelectorAll({Key key, onChanged, format})
+  const _GCWCoordsFormatSelectorAll({Key? key, onChanged, format})
       : super(key: key, onChanged: onChanged, format: format);
 
   @override

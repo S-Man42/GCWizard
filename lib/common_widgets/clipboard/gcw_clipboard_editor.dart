@@ -12,21 +12,18 @@ import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
-import 'package:gc_wizard/tools/formula_solver/persistence/model.dart';
 import 'package:prefs/prefs.dart';
 
 class GCWClipboardEditor extends StatefulWidget {
-  final FormulaGroup group;
-
-  const GCWClipboardEditor({Key key, this.group}) : super(key: key);
+  const GCWClipboardEditor({Key? key}) : super(key: key);
 
   @override
   GCWClipboardEditorState createState() => GCWClipboardEditorState();
 }
 
 class GCWClipboardEditorState extends State<GCWClipboardEditor> {
-  TextEditingController _editController;
-  int _currentEditId;
+  late TextEditingController _editController;
+  int? _currentEditId;
   String _currentEditText = '';
 
   @override

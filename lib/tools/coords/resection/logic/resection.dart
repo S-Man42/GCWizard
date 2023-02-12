@@ -104,7 +104,7 @@ Future<List<LatLng>> resectionAsync(dynamic jobData) async {
   var output = resection(jobData.parameters.coord1, jobData.parameters.angle12, jobData.parameters.coord2,
       jobData.parameters.angle23, jobData.parameters.coord3, jobData.parameters.ells);
 
-  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }

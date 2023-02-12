@@ -16,7 +16,7 @@ Future<Uint8List> decodeImagesAsync(dynamic jobData) async {
   var output = await _decodeImages(
       jobData.parameters.item1, jobData.parameters.item2, jobData.parameters.item3, jobData.parameters.item4);
 
-  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }
@@ -64,13 +64,13 @@ Future<Tuple2<int, int>> offsetAutoCalcAsync(dynamic jobData) async {
       jobData.parameters.item1, jobData.parameters.item2, jobData.parameters.item3, jobData.parameters.item4,
       sendAsyncPort: jobData.sendAsyncPort);
 
-  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }
 
 Future<Tuple2<int, int>> _offsetAutoCalc(Uint8List image1, Uint8List image2, int offsetX, int offsetY,
-    {SendPort sendAsyncPort}) {
+    {SendPort? sendAsyncPort}) {
   if (image1 == null || image2 == null) return null;
 
   var _image1 = Image.decodeImage(image1);
@@ -88,7 +88,7 @@ Future<Tuple2<int, int>> _offsetAutoCalc(Uint8List image1, Uint8List image2, int
   int _countCombinations = max(((maxX - minX + 1) * (maxY - minY + 1)).toInt(), 1);
   int _progressStep = max(_countCombinations ~/ 100, 1); // 100 steps
 
-  if (sendAsyncPort != null) sendAsyncPort.send({'progress': 0.0});
+  sendAsyncPort?.send({'progress': 0.0});
 
   for (var y = minY; y <= maxY; y++) {
     var solutionsRow = <int>[];
@@ -97,7 +97,7 @@ Future<Tuple2<int, int>> _offsetAutoCalc(Uint8List image1, Uint8List image2, int
 
       progress++;
       if (sendAsyncPort != null && (progress % _progressStep == 0)) {
-        sendAsyncPort.send({'progress': progress / _countCombinations});
+        sendAsyncPort?.send({'progress': progress / _countCombinations});
       }
     }
     solutionsAll.add(_highPassFilter(0.2, solutionsRow));
@@ -153,7 +153,7 @@ Future<Tuple2<Uint8List, Uint8List>> encodeImagesAsync(dynamic jobData) async {
   var output = await _encodeImage(jobData.parameters.item1, jobData.parameters.item2, jobData.parameters.item3,
       jobData.parameters.item4, jobData.parameters.item5);
 
-  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }

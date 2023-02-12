@@ -239,9 +239,9 @@ class Geodesic {
   static final double _tolb_ = _tol0_ * _tol2_;
   static final double _xthresh_ = 1000 * _tol2_;
 
-  double a, f, f1, e2, ep2, b, c2;
-  double _n, _etol2;
-  List<double> _A3x, _C3x, _C4x;
+  late double a, f, f1, e2, ep2, b, c2;
+  late double _n, _etol2;
+  late List<double> _A3x, _C3x, _C4x;
 
   /*
    * Constructor for a ellipsoid with
@@ -405,18 +405,18 @@ class Geodesic {
     return _inverse(lat1, lon1, lat2, lon2, _GeodesicMask.STANDARD);
   }
 
-  _InverseData _inverseInt(double lat1, double lon1, double lat2, double lon2, int outmask) {
+  _InverseData _inverseInt(double? lat1, double lon1, double? lat2, double lon2, int outmask) {
     _InverseData result = _InverseData();
     _Pair p = _Pair();
     GeodesicData r = result._g;
     // Compute longitude difference (AngDiff does this carefully).  Result is
     // in [-180, 180] but -180 is only for west-going geodesics.  180 is for
     // east-going and meridional geodesics.
-    r.lat1 = lat1 = _GeoMath.LatFix(lat1);
-    r.lat2 = lat2 = _GeoMath.LatFix(lat2);
+    r.lat1 = lat1 = _GeoMath.LatFix(lat1!);
+    r.lat2 = lat2 = _GeoMath.LatFix(lat2!);
     // If really close to the equator, treat as on equator.
-    lat1 = _GeoMath.AngRound(lat1);
-    lat2 = _GeoMath.AngRound(lat2);
+    lat1 = _GeoMath.AngRound(lat1!);
+    lat2 = _GeoMath.AngRound(lat2!);
     double lon12, lon12s;
     _GeoMath.AngDiff(p, lon1, lon2);
     lon12 = p.first;
@@ -465,7 +465,7 @@ class Geodesic {
     // check, e.g., on verifying quadrants in atan2.  In addition, this
     // enforces some symmetries in the results returned.
 
-    double sbet1, cbet1, sbet2, cbet2, s12x, m12x;
+    late double sbet1, cbet1, sbet2, cbet2, s12x, m12x;
 
     _GeoMath.sincosd(p, lat1);
     sbet1 = f1 * p.first;
@@ -502,7 +502,7 @@ class Geodesic {
 
     double dn1 = sqrt(1 + ep2 * _GeoMath.sq(sbet1)), dn2 = sqrt(1 + ep2 * _GeoMath.sq(sbet2));
 
-    double a12, sig12, _calp1, _salp1, calp2, salp2;
+    late double a12, sig12, _calp1, _salp1, calp2, salp2;
     // index zero elements of these arrays are unused
     List<double> C1a = List<double>.generate(nC1_ + 1, (index) => 0.0);
     List<double> C2a = List<double>.generate(nC2_ + 1, (index) => 0.0);
@@ -557,7 +557,7 @@ class Geodesic {
         meridian = false;
     }
 
-    double omg12, somg12 = 2, comg12;
+    late double omg12, somg12 = 2, comg12;
     if (!meridian &&
         sbet1 == 0 && // and sbet2 == 0
         // Mimic the way Lambda12 works with _calp1 = 0
@@ -605,7 +605,7 @@ class Geodesic {
         // value of alp1 is then further from the solution) or if the new
         // estimate of alp1 lies outside (0,pi); in this case, the new starting
         // guess is taken to be (alp1a + alp1b) / 2.
-        double ssig1, csig1, ssig2, csig2, eps, domg12;
+        late double ssig1, csig1, ssig2, csig2, eps, domg12;
         int numit = 0;
         // Bracketing range
         double _salp1a = tiny_, _calp1a = 1, _salp1b = tiny_, _calp1b = -1;
@@ -1511,8 +1511,8 @@ class Geodesic {
 }
 
 class _InverseData {
-  GeodesicData _g;
-  double _salp1, _calp1, _salp2, _calp2;
+  late GeodesicData _g;
+  late double _salp1, _calp1, _salp2, _calp2;
 
   _InverseData() {
     _g = GeodesicData();
@@ -1520,15 +1520,15 @@ class _InverseData {
 }
 
 class _LengthsV {
-  double _s12b, _m12b, _m0, _M12, _M21;
+  late double _s12b, _m12b, _m0, _M12, _M21;
 }
 
 class _Lambda12V {
-  double lam12, salp2, calp2, sig12, ssig1, csig1, ssig2, csig2, eps, domg12, dlam12;
+  late double lam12, salp2, calp2, sig12, ssig1, csig1, ssig2, csig2, eps, domg12, dlam12;
 }
 
 class _InverseStartV {
-  double _sig12,
+  late double _sig12,
       _salp1,
       _calp1,
       // Only updated if return val >= 0

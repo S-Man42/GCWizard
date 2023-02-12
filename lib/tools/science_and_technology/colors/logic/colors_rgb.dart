@@ -1,14 +1,21 @@
 import 'dart:math';
 
-class RGB {
-  double red;
-  double green;
-  double blue;
+import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors.dart';
+
+class RGB extends GCWBaseColor {
+  late double red;
+  late double green;
+  late double blue;
 
   RGB(double red, double green, double blue) {
     this.red = min(255.0, max(0.0, red));
     this.green = min(255.0, max(0.0, green));
     this.blue = min(255.0, max(0.0, blue));
+  }
+
+  @override
+  RGB toRGB() {
+    return this;
   }
 
   double _percentage(double value) {
@@ -41,8 +48,8 @@ class RGB {
   }
 }
 
-class HexCode {
-  String hexCode;
+class HexCode extends GCWBaseColor {
+  late String hexCode;
 
   bool get isShortHex {
     return hexCode[0] == hexCode[1] && hexCode[2] == hexCode[3] && hexCode[4] == hexCode[5];
@@ -68,6 +75,7 @@ class HexCode {
     this.hexCode = hexCode;
   }
 
+  @override
   RGB toRGB() {
     var r = int.parse(hexCode.substring(0, 2), radix: 16).toDouble();
     var g = int.parse(hexCode.substring(2, 4), radix: 16).toDouble();

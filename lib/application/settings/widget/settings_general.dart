@@ -53,11 +53,11 @@ class GeneralSettingsState extends State<GeneralSettings> {
                         );
                       } else {
                         // data loaded:
-                        final currentLocale = snapshot.data;
+                        final Locale? currentLocale = snapshot.data;
 
-                        return GCWStatefulDropDown(
+                        return GCWStatefulDropDown<String>(
                             items: SUPPORTED_LOCALES.entries.map((locale) {
-                              String languageName = locale.value['name_native'];
+                              String languageName = locale.value['name_native'] as String;
 
                               var subtitle;
                               if (locale.value['percent_translated'] as int < 90) {
@@ -68,10 +68,10 @@ class GeneralSettingsState extends State<GeneralSettings> {
                               return GCWDropDownMenuItem(
                                   value: locale.key.languageCode, child: languageName, subtitle: subtitle);
                             }).toList(),
-                            value: isLocaleSupported(currentLocale)
+                            value: currentLocale != null && isLocaleSupported(currentLocale)
                                 ? currentLocale.languageCode
                                 : DEFAULT_LOCALE.languageCode,
-                            onChanged: (newValue) {
+                            onChanged: (String newValue) {
                               appLanguage.changeLanguage(newValue);
                             });
                       }
@@ -96,9 +96,10 @@ class GeneralSettingsState extends State<GeneralSettings> {
             child: GCWUnitDropDown(
                 unitList: allLengths(),
                 value: getUnitBySymbol(allLengths(), Prefs.get(PREFERENCE_DEFAULT_LENGTH_UNIT)),
-                onChanged: (Length value) {
+                onChanged: (Unit value) {
                   setState(() {
-                    Prefs.setString(PREFERENCE_DEFAULT_LENGTH_UNIT, value.symbol);
+                    if (value is Length)
+                      Prefs.setString(PREFERENCE_DEFAULT_LENGTH_UNIT, value.symbol);
                   });
                 }),
           ),
@@ -186,7 +187,7 @@ class GeneralSettingsState extends State<GeneralSettings> {
           },
         ),
         Prefs.getBool(PREFERENCE_TABS_USE_DEFAULT_TAB)
-            ? GCWDropDown(
+            ? GCWDropDown<int>(
                 value: Prefs.get(PREFERENCE_TABS_DEFAULT_TAB),
                 items: [
                   {
@@ -219,7 +220,7 @@ class GeneralSettingsState extends State<GeneralSettings> {
                     child: item['text'],
                   );
                 }).toList(),
-                onChanged: (value) {
+                onChanged: (int value) {
                   setState(() {
                     Prefs.setInt(PREFERENCE_TABS_DEFAULT_TAB, value);
                   });

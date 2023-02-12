@@ -32,10 +32,10 @@ final UNITCATEGORY_TYPOGRAPHY =
 final UNITCATEGORY_VELOCITY = UnitCategory('unitconverter_category_velocity', velocities, VELOCITY_MS, false);
 final UNITCATEGORY_VOLUME = UnitCategory('unitconverter_category_volume', volumes, VOLUME_CUBICMETER, false);
 
-class UnitCategory {
+class UnitCategory<T extends Unit> {
   String key;
-  List<Unit> units;
-  Unit defaultUnit;
+  List<T> units;
+  T defaultUnit;
   bool usesPrefixes;
 
   UnitCategory(this.key, this.units, this.defaultUnit, this.usesPrefixes);

@@ -116,7 +116,7 @@ void _addChildren(GCWFile data, List<GCWFile> children) {
 }
 
 void _addFiles(List<GCWFile> list, List<GCWFile> files) {
-  if (files != null && files.length > 0) if (list != null) list.addAll(files);
+  if (files.length > 0) list.addAll(files);
 }
 
 /// search on any position (>0) magic bytes

@@ -22,7 +22,7 @@ class _PredatorSegmentDisplay extends NSegmentDisplay {
   final bool readOnly;
   final Function onChanged;
 
-  _PredatorSegmentDisplay({Key key, this.segments, this.readOnly: false, this.onChanged})
+  _PredatorSegmentDisplay({Key? key, this.segments, this.readOnly: false, this.onChanged})
       : super(
             key: key,
             initialSegments: _INITIAL_SEGMENTS,

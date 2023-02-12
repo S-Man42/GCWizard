@@ -9,14 +9,14 @@ import 'package:photo_view/photo_view.dart';
 class GCWImageViewFullScreen extends StatefulWidget {
   final Uint8List imageData;
 
-  const GCWImageViewFullScreen({Key key, @required this.imageData}) : super(key: key);
+  const GCWImageViewFullScreen({Key? key, required this.imageData}) : super(key: key);
 
   @override
   GCWImageViewFullScreenState createState() => GCWImageViewFullScreenState();
 }
 
 class GCWImageViewFullScreenState extends State<GCWImageViewFullScreen> {
-  ImageProvider image;
+  late ImageProvider image;
 
   @override
   void initState() {
@@ -43,5 +43,6 @@ openInFullScreen(BuildContext context, Uint8List imgData) {
                 toolName: i18n(context, 'imageview_fullscreen_title'),
                 defaultLanguageToolName: i18n(context, 'imageview_fullscreen_title', useDefaultLanguage: true),
                 suppressHelpButton: true,
+                i18nPrefix: '',
               )));
 }

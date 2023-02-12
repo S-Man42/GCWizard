@@ -7,11 +7,11 @@ import 'package:gc_wizard/tools/science_and_technology/date_and_time/calendar/lo
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/calendar/logic/calendar_constants.dart';
 
 class GCWDatePicker extends StatefulWidget {
-  final Function onChanged;
+  final void Function (DateTime) onChanged;
   final date;
   final CalendarSystem type;
 
-  const GCWDatePicker({Key key, this.onChanged, this.date, this.type: CalendarSystem.GREGORIANCALENDAR})
+  const GCWDatePicker({Key? key, required this.onChanged, required this.date, this.type = CalendarSystem.GREGORIANCALENDAR})
       : super(key: key);
 
   @override
@@ -110,7 +110,7 @@ class GCWDatePickerState extends State<GCWDatePicker> {
       return GCWDropDownSpinner(
         index: _currentMonth ?? (widget.date != null ? widget.date.month - 1 : null) ?? 0,
         layout: SpinnerLayout.VERTICAL,
-        items: MONTH_NAMES[type].entries.map((entry) {
+        items: MONTH_NAMES[type]!.entries.map((entry) {
           return GCWDropDownMenuItem(value: entry.key - 1, child: entry.value);
         }).toList(),
         onChanged: (value) {
@@ -123,7 +123,7 @@ class GCWDatePickerState extends State<GCWDatePicker> {
           });
         },
       );
-    if (type == CalendarSystem.JULIANCALENDAR || type == CalendarSystem.GREGORIANCALENDAR)
+    else if (type == CalendarSystem.JULIANCALENDAR || type == CalendarSystem.GREGORIANCALENDAR)
       return GCWIntegerSpinner(
         focusNode: _monthFocusNode,
         layout: SpinnerLayout.VERTICAL,
@@ -141,6 +141,8 @@ class GCWDatePickerState extends State<GCWDatePicker> {
           });
         },
       );
+    else
+      return Container();
   }
 
   _setCurrentNamedCalendarValueAndEmitOnChange() {

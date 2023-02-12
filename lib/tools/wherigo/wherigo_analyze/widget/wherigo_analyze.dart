@@ -2134,7 +2134,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     var value = await saveByteDataToFile(
         context, data, name + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
 
-    if (value != null) showExportedFileDialog(context, fileType: fileType);
+    if (value) showExportedFileDialog(context, fileType: fileType);
   }
 
   Future<bool> _exportCoordinates(

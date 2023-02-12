@@ -103,13 +103,13 @@ List<BaseCoordinates> parseCoordinates(String text, {wholeString = false}) {
 //wholeString == true: The whole text must be a valid coord - for var coords
 Map<String, dynamic> parseStandardFormats(String text, {wholeString = false}) {
   LatLng coord = DMS.parse(text, wholeString: wholeString)?.toLatLng();
-  if (coord != null) return {'format': keyCoordsDMS, 'coordinate': coord};
+  if (coord != null) return {'format': CoordFormatKey.DMS, 'coordinate': coord};
 
   coord = DMM.parse(text, wholeString: wholeString)?.toLatLng();
-  if (coord != null) return {'format': keyCoordsDMM, 'coordinate': coord};
+  if (coord != null) return {'format': CoordFormatKey.DMM, 'coordinate': coord};
 
   coord = DEC.parse(text, wholeString: wholeString)?.toLatLng();
-  if (coord != null) return {'format': keyCoordsDEC, 'coordinate': coord};
+  if (coord != null) return {'format': CoordFormatKey.DEC, 'coordinate': coord};
 
   return null;
 }

@@ -5,15 +5,16 @@ import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_switch.dart';
 
 class GCWOnOffSwitch extends StatefulWidget {
-  final Function onChanged;
-  final String title;
-  final value;
+  final void Function(bool) onChanged;
+  final String? title;
+  final bool? value;
   final bool notitle;
   final List<int> flexValues;
   static const _flexValues = [1, 1, 1];
 
   const GCWOnOffSwitch(
-      {Key key, @required this.value, this.onChanged, this.title, this.notitle: false, this.flexValues: _flexValues})
+      {Key? key, required this.value, required this.onChanged, this.title,
+        this.notitle = false, this.flexValues = _flexValues})
       : super(key: key);
 
   @override

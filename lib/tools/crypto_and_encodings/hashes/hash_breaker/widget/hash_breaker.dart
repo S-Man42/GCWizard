@@ -18,7 +18,7 @@ final _ALERT_COMBINATIONS = 100000;
 class HashBreaker extends StatefulWidget {
   final Function hashFunction;
 
-  const HashBreaker({Key key, this.hashFunction}) : super(key: key);
+  const HashBreaker({Key? key, this.hashFunction}) : super(key: key);
 
   @override
   _HashBreakerState createState() => _HashBreakerState();

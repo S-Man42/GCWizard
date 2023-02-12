@@ -28,7 +28,7 @@ Future<List<Map<String, dynamic>>> centerPointThreePointsAsync(dynamic jobData) 
   var output = centerPointThreePoints(
       jobData.parameters.coord1, jobData.parameters.coord2, jobData.parameters.coord3, jobData.parameters.ells);
 
-  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }

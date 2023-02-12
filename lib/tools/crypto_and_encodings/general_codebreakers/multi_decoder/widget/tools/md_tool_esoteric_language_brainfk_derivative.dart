@@ -15,7 +15,7 @@ const MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE_OPTION_BRAINFK = 'brainfk_title';
 
 class MultiDecoderToolEsotericLanguageBrainfkDerivate extends AbstractMultiDecoderTool {
   MultiDecoderToolEsotericLanguageBrainfkDerivate(
-      {Key key, int id, String name, Map<String, dynamic> options, BuildContext context})
+      {Key? key, int id, String name, Map<String, dynamic> options, BuildContext context})
       : super(
             key: key,
             id: id,
@@ -53,7 +53,7 @@ class MultiDecoderToolEsotericLanguageBrainfkDerivate extends AbstractMultiDecod
                     .map((language) {
                   return GCWDropDownMenuItem(
                     value: language,
-                    child: i18n(context, language) ?? language,
+                    child: i18n(context, language, ifTranslationNotExists: language),
                   );
                 }).toList(),
               )

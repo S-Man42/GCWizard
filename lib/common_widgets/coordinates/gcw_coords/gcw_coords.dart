@@ -6,6 +6,7 @@ import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords_formatselector.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords_paste_button.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coords_return_types.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_sign_dropdown.dart';
@@ -23,9 +24,13 @@ import 'package:gc_wizard/tools/coords/format_converter/logic/utm.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coord_format_getter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
+import 'package:gc_wizard/utils/constants.dart';
+import 'package:gc_wizard/utils/string_utils.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
+import 'package:collection/collection.dart';
 
 part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/degrees_latlon/degrees_lat_textinputformatter.dart';
 part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/degrees_latlon/degrees_lon_textinputformatter.dart';
@@ -60,35 +65,41 @@ part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_input
 part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/natural_area_code/gcw_coords_naturalareacode.dart';
 part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/natural_area_code/naturalareacode_textinputformatter.dart';
 
+class _GCWCoordWidget{
+  final CoordinateFormat coordinateFormat;
+  final Widget widget;
+  
+  _GCWCoordWidget(this.coordinateFormat, this.widget);
+}
+
 class GCWCoords extends StatefulWidget {
-  final Function onChanged;
-  final Map<String, String> coordsFormat;
-  final LatLng coordinates;
-  final String title;
-  final bool notitle;
-  final bool restoreCoordinates;
+  final void Function(BaseCoordinates) onChanged;
+  final CoordsFormatValue coordsFormat;
+  final LatLng? coordinates;
+  final String? title;
+  final bool? notitle;
+  final bool? restoreCoordinates;
 
   const GCWCoords(
-      {Key key,
+      {Key? key,
       this.title,
       this.coordinates,
-      this.onChanged,
-      this.coordsFormat,
-      this.notitle: false,
-      this.restoreCoordinates: false})
+      required this.onChanged,
+      required this.coordsFormat,
+      this.notitle = false,
+      this.restoreCoordinates = false})
       : super(key: key);
 
   @override
   GCWCoordsState createState() => GCWCoordsState();
 }
 
-class GCWCoordsState extends State<GCWCoords> {
-  Map<String, String> _currentCoordsFormat;
-  BaseCoordinates _currentValue;
+class GCWCoordsState extends State<GCWCoords> {  
+  late BaseCoordinates _currentCoords;
+  late CoordsFormatValue _currentCoordFormat;
+  late BaseCoordinates _pastedCoords;
 
-  BaseCoordinates _pastedCoords;
-
-  var _currentWidget;
+  Widget? _currentWidget;
 
   var _location = Location();
   bool _isOnLocationAccess = false;
@@ -97,20 +108,18 @@ class GCWCoordsState extends State<GCWCoords> {
   void initState() {
     super.initState();
 
-    _currentCoordsFormat = widget.coordsFormat ?? defaultCoordFormat();
+    _currentCoordFormat = widget.coordsFormat;
+    _currentCoords = DEC.fromLatLon(widget.coordinates ?? defaultCoordinate);
     _setPastedCoordsFormat();
-    _currentValue = (widget.coordinates ?? defaultCoordinate) == null
-        ? null
-        : DEC.fromLatLon(widget.coordinates ?? defaultCoordinate);
-    _pastedCoords = _currentValue;
+    _pastedCoords = _currentCoords;
   }
-
+  
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, dynamic>> _coordsWidgets = [
-      {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsDEC),
-        'widget': _GCWCoordsDEC(
+    final List<_GCWCoordWidget> _coordsWidgets = [
+      _GCWCoordWidget(
+        getCoordinateFormatByKey(CoordFormatKey.DEC),
+        _GCWCoordsDEC(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
             setState(() {
@@ -118,10 +127,10 @@ class GCWCoordsState extends State<GCWCoords> {
             });
           },
         ),
-      },
-      {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsDMM),
-        'widget': _GCWCoordsDMM(
+      ),
+      _GCWCoordWidget(
+        getCoordinateFormatByKey(CoordFormatKey.DMM),
+        _GCWCoordsDMM(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
             setState(() {
@@ -129,10 +138,10 @@ class GCWCoordsState extends State<GCWCoords> {
             });
           },
         ),
-      },
-      {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsDMS),
-        'widget': _GCWCoordsDMS(
+    ),
+    _GCWCoordWidget(
+        getCoordinateFormatByKey(CoordFormatKey.DMS),
+        _GCWCoordsDMS(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
             setState(() {
@@ -140,10 +149,10 @@ class GCWCoordsState extends State<GCWCoords> {
             });
           },
         ),
-      },
-      {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsUTM),
-        'widget': _GCWCoordsUTM(
+    ),
+    _GCWCoordWidget(
+        getCoordinateFormatByKey(CoordFormatKey.UTM),
+        _GCWCoordsUTM(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
             setState(() {
@@ -151,10 +160,10 @@ class GCWCoordsState extends State<GCWCoords> {
             });
           },
         ),
-      },
-      {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsMGRS),
-        'widget': GCWCoordsMGRS(
+    ),
+    _GCWCoordWidget(
+        getCoordinateFormatByKey(CoordFormatKey.MGRS),
+        _GCWCoordsMGRS(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
             setState(() {
@@ -162,10 +171,10 @@ class GCWCoordsState extends State<GCWCoords> {
             });
           },
         ),
-      },
-      {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsXYZ),
-        'widget': _GCWCoordsXYZ(
+    ),
+    _GCWCoordWidget(
+        getCoordinateFormatByKey(CoordFormatKey.XYZ),
+        _GCWCoordsXYZ(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
             setState(() {
@@ -173,10 +182,10 @@ class GCWCoordsState extends State<GCWCoords> {
             });
           },
         ),
-      },
-      {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsSwissGrid),
-        'widget': _GCWCoordsSwissGrid(
+    ),
+    _GCWCoordWidget(
+        getCoordinateFormatByKey(CoordFormatKey.SWISS_GRID),
+        _GCWCoordsSwissGrid(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
             setState(() {
@@ -184,10 +193,10 @@ class GCWCoordsState extends State<GCWCoords> {
             });
           },
         ),
-      },
-      {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsSwissGridPlus),
-        'widget': _GCWCoordsSwissGridPlus(
+    ),
+    _GCWCoordWidget(
+        getCoordinateFormatByKey(CoordFormatKey.SWISS_GRID_PLUS),
+        _GCWCoordsSwissGridPlus(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
             setState(() {
@@ -195,45 +204,34 @@ class GCWCoordsState extends State<GCWCoords> {
             });
           },
         ),
-      },
-      {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsGaussKrueger),
-        'widget': _GCWCoordsGaussKrueger(
+    ),
+    _GCWCoordWidget(
+        getCoordinateFormatByKey(CoordFormatKey.GAUSS_KRUEGER),
+        _GCWCoordsGaussKrueger(
           coordinates: _pastedCoords,
-          subtype: _currentCoordsFormat['subtype'],
+          subtype: _currentCoordFormat.subtype ?? defaultGaussKruegerType,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
             });
           },
         ),
-      },
-      {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsLambert),
-        'widget': _GCWCoordsLambert(
+    ),
+    _GCWCoordWidget(
+        getCoordinateFormatByKey(CoordFormatKey.LAMBERT),
+        _GCWCoordsLambert(
           coordinates: _pastedCoords,
-          subtype: _currentCoordsFormat['subtype'],
+          subtype: _currentCoordFormat.subtype ?? defaultLambertType,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
             });
           },
         ),
-      },
-      {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsDutchGrid),
-        'widget': _GCWCoordsDutchGrid(
-          coordinates: _pastedCoords,
-          onChanged: (newValue) {
-            setState(() {
-              _setCurrentValueAndEmitOnChange(newValue);
-            });
-          },
-        ),
-      },
-      {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsMaidenhead),
-        'widget': _GCWCoordsMaidenhead(
+    ),
+    _GCWCoordWidget(
+        getCoordinateFormatByKey(CoordFormatKey.DUTCH_GRID),
+        _GCWCoordsDutchGrid(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
             setState(() {
@@ -241,10 +239,10 @@ class GCWCoordsState extends State<GCWCoords> {
             });
           },
         ),
-      },
-      {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsMercator),
-        'widget': _GCWCoordsMercator(
+    ),
+    _GCWCoordWidget(
+        getCoordinateFormatByKey(CoordFormatKey.MAIDENHEAD),
+        _GCWCoordsMaidenhead(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
             setState(() {
@@ -252,10 +250,10 @@ class GCWCoordsState extends State<GCWCoords> {
             });
           },
         ),
-      },
-      {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsNaturalAreaCode),
-        'widget': _GCWCoordsNaturalAreaCode(
+    ),
+    _GCWCoordWidget(
+        getCoordinateFormatByKey(CoordFormatKey.MERCATOR),
+        _GCWCoordsMercator(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
             setState(() {
@@ -263,22 +261,10 @@ class GCWCoordsState extends State<GCWCoords> {
             });
           },
         ),
-      },
-      {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsSlippyMap),
-        'widget': _GCWCoordsSlippyMap(
-          coordinates: _pastedCoords,
-          zoom: double.tryParse(_currentCoordsFormat['subtype'] ?? DefaultSlippyZoom.toString()),
-          onChanged: (newValue) {
-            setState(() {
-              _setCurrentValueAndEmitOnChange(newValue);
-            });
-          },
-        ),
-      },
-      {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsMakaney),
-        'widget': _GCWCoordsMakaney(
+    ),
+    _GCWCoordWidget(
+        getCoordinateFormatByKey(CoordFormatKey.NATURAL_AREA_CODE),
+        _GCWCoordsNaturalAreaCode(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
             setState(() {
@@ -286,10 +272,22 @@ class GCWCoordsState extends State<GCWCoords> {
             });
           },
         ),
-      },
-      {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsGeohash),
-        'widget': _GCWCoordsGeohash(
+    ),
+    _GCWCoordWidget(
+        getCoordinateFormatByKey(CoordFormatKey.SLIPPY_MAP),
+        _GCWCoordsSlippyMap(
+          coordinates: _pastedCoords,
+          zoom: (_currentCoords as SlippyMap).zoom,
+          onChanged: (newValue) {
+            setState(() {
+              _setCurrentValueAndEmitOnChange(newValue);
+            });
+          },
+        ),
+    ),
+    _GCWCoordWidget(
+        getCoordinateFormatByKey(CoordFormatKey.MAKANEY),
+        _GCWCoordsMakaney(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
             setState(() {
@@ -297,10 +295,10 @@ class GCWCoordsState extends State<GCWCoords> {
             });
           },
         ),
-      },
-      {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsGeoHex),
-        'widget': _GCWCoordsGeoHex(
+    ),
+    _GCWCoordWidget(
+        getCoordinateFormatByKey(CoordFormatKey.GEOHASH),
+        _GCWCoordsGeohash(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
             setState(() {
@@ -308,10 +306,10 @@ class GCWCoordsState extends State<GCWCoords> {
             });
           },
         ),
-      },
-      {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsGeo3x3),
-        'widget': _GCWCoordsGeo3x3(
+    ),
+    _GCWCoordWidget(
+        getCoordinateFormatByKey(CoordFormatKey.GEOHEX),
+        _GCWCoordsGeoHex(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
             setState(() {
@@ -319,10 +317,10 @@ class GCWCoordsState extends State<GCWCoords> {
             });
           },
         ),
-      },
-      {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsOpenLocationCode),
-        'widget': _GCWCoordsOpenLocationCode(
+    ),
+    _GCWCoordWidget(
+        getCoordinateFormatByKey(CoordFormatKey.GEO3X3),
+        _GCWCoordsGeo3x3(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
             setState(() {
@@ -330,10 +328,10 @@ class GCWCoordsState extends State<GCWCoords> {
             });
           },
         ),
-      },
-      {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsQuadtree),
-        'widget': _GCWCoordsQuadtree(
+    ),
+    _GCWCoordWidget(
+        getCoordinateFormatByKey(CoordFormatKey.OPEN_LOCATION_CODE),
+        _GCWCoordsOpenLocationCode(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
             setState(() {
@@ -341,10 +339,10 @@ class GCWCoordsState extends State<GCWCoords> {
             });
           },
         ),
-      },
-      {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsReverseWherigoWaldmeister),
-        'widget': _GCWCoordsReverseWherigoWaldmeister(
+    ),
+    _GCWCoordWidget(
+        getCoordinateFormatByKey(CoordFormatKey.QUADTREE),
+        _GCWCoordsQuadtree(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
             setState(() {
@@ -352,10 +350,10 @@ class GCWCoordsState extends State<GCWCoords> {
             });
           },
         ),
-      },
-      {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsReverseWherigoDay1976),
-        'widget': _GCWCoordsReverseWherigoDay1976(
+    ),
+    _GCWCoordWidget(
+        getCoordinateFormatByKey(CoordFormatKey.REVERSE_WIG_WALDMEISTER),
+        _GCWCoordsReverseWherigoWaldmeister(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
             setState(() {
@@ -363,13 +361,25 @@ class GCWCoordsState extends State<GCWCoords> {
             });
           },
         ),
-      },
+    ),
+    _GCWCoordWidget(
+        getCoordinateFormatByKey(CoordFormatKey.REVERSE_WIG_DAY1976),
+        _GCWCoordsReverseWherigoDay1976(
+          coordinates: _pastedCoords,
+          onChanged: (newValue) {
+            setState(() {
+              _setCurrentValueAndEmitOnChange(newValue);
+            });
+          },
+        ),
+      ),
     ];
 
+    // TODO Mike: Please check if this is really nullable. If so, all coordinate specific _GCWCoords* widgets need to have nullable coordinates fields which yields even more nullable stuff...
     _pastedCoords = null;
 
     Column _widget;
-    if (widget.notitle) {
+    if (widget.notitle != null && widget.notitle! && widget.title != null && widget.title!.isNotEmpty) {
       _widget = Column(
         children: <Widget>[
           Row(
@@ -385,44 +395,43 @@ class GCWCoordsState extends State<GCWCoords> {
     } else {
       _widget = Column(
         children: <Widget>[
-          GCWTextDivider(text: widget.title, bottom: 0.0, trailing: _buildTrailingButtons(IconButtonSize.SMALL)),
+          GCWTextDivider(text: widget.title!, trailing: _buildTrailingButtons(IconButtonSize.SMALL)),
           _buildInputFormatSelector()
         ],
       );
     }
 
-    _currentWidget =
-        _coordsWidgets.firstWhere((entry) => entry['coordFormat'].key == _currentCoordsFormat['format'])['widget'];
+    var rawWidget = _coordsWidgets.firstWhereOrNull((_GCWCoordWidget entry) => entry.coordinateFormat.key == _currentCoordFormat.type);
+    if (rawWidget == null) {
+      _currentWidget = _coordsWidgets.first.widget;
+    } else {
+      _currentWidget = rawWidget.widget;
+    }
 
-    _widget.children.add(_currentWidget);
+    _widget.children.add(_currentWidget!);
 
     return _widget;
   }
 
   _buildInputFormatSelector() {
     return GCWCoordsFormatSelector(
-      format: _currentCoordsFormat,
-      onChanged: (newValue) {
+      format: _currentCoordFormat,
+      onChanged: (CoordsFormatValue newFormat) {
         setState(() {
-          if (_currentCoordsFormat != newValue) {
-            if (widget.restoreCoordinates)
-              _pastedCoords = _currentValue;
-            else if (subtypeChanged(_currentCoordsFormat, newValue))
-              ;
-            else
-              _currentValue = DEC(defaultCoordinate.latitude, defaultCoordinate.longitude);
+          // TODO Mike Please check, Change Coords Format and Subtypes
+          if (_currentCoordFormat != newFormat) {
+            if (widget.restoreCoordinates != null && widget.restoreCoordinates!)
+              _pastedCoords = _currentCoords;
+            else if (_currentCoordFormat.subtype == newFormat.subtype)
+              _currentCoords = BaseCoordinates();
 
-            _currentCoordsFormat = newValue;
+            _currentCoordFormat = newFormat;
             _setCurrentValueAndEmitOnChange();
           }
           FocusScope.of(context).requestFocus(FocusNode()); //Release focus from previous edited field
         });
       },
     );
-  }
-
-  bool subtypeChanged(Map<String, String> currentValue, Map<String, String> newValue) {
-    return currentValue["subtype"] != newValue["subtype"];
   }
 
   _buildTrailingButtons(IconButtonSize size) {
@@ -443,62 +452,64 @@ class GCWCoordsState extends State<GCWCoords> {
     );
   }
 
-  _setCurrentValueAndEmitOnChange([BaseCoordinates newValue]) {
-    widget.onChanged({'coordsFormat': _currentCoordsFormat, 'value': (newValue ?? _currentValue)?.toLatLng()});
+  _setCurrentValueAndEmitOnChange([BaseCoordinates? newValue]) {
+    if (newValue != null)
+      _currentCoords = newValue;
+
+    widget.onChanged(_currentCoords);
   }
 
   _setCoords(List<BaseCoordinates> pastedCoords) {
-    if (pastedCoords == null || pastedCoords.length == 0) return;
+    if (pastedCoords.isEmpty) return;
 
-    if (pastedCoords.any((coords) => coords.key == _currentCoordsFormat['format'].toString())) {
-      _pastedCoords = pastedCoords.where((coords) => coords.key == _currentCoordsFormat['format'].toString()).first;
-    } else {
-      _pastedCoords = pastedCoords.elementAt(0);
-      _currentCoordsFormat = {'format': pastedCoords.elementAt(0).key};
+    var _coordsForCurrentFormat = pastedCoords.firstWhereOrNull((BaseCoordinates coords) => coords.key == _currentCoordFormat.type);
+    if (_coordsForCurrentFormat == null) {
+      _coordsForCurrentFormat = pastedCoords.first;
+      _currentCoordFormat.type = pastedCoords.first.key;
     }
 
     _setPastedCoordsFormat();
-    _currentValue = _pastedCoords;
+    _currentCoords = _coordsForCurrentFormat;
 
     _setCurrentValueAndEmitOnChange();
   }
 
   _setPastedCoordsFormat() {
-    switch (_currentCoordsFormat['format']) {
-      case keyCoordsDEC:
-      case keyCoordsDMM:
-      case keyCoordsDMS:
-      case keyCoordsUTM:
-      case keyCoordsMGRS:
-      case keyCoordsXYZ:
-      case keyCoordsSwissGrid:
-      case keyCoordsSwissGridPlus:
+    switch (_currentCoordFormat.type) {
+      case CoordFormatKey.DEC:
+      case CoordFormatKey.DMM:
+      case CoordFormatKey.DMS:
+      case CoordFormatKey.UTM:
+      case CoordFormatKey.MGRS:
+      case CoordFormatKey.XYZ:
+      case CoordFormatKey.SWISS_GRID:
+      case CoordFormatKey.SWISS_GRID_PLUS:
         break;
-      case keyCoordsGaussKrueger:
-        _currentCoordsFormat.addAll({'subtype': getGaussKruegerTypKey()});
+      case CoordFormatKey.GAUSS_KRUEGER:
+        _currentCoordFormat.subtype = defaultGaussKruegerType;
         break;
-      case keyCoordsLambert:
-        _currentCoordsFormat.addAll({'subtype': getLambertKey()});
+      case CoordFormatKey.LAMBERT:
+        _currentCoordFormat.subtype = defaultLambertType;
         break;
-      case keyCoordsDutchGrid:
-      case keyCoordsMaidenhead:
-      case keyCoordsMercator:
-      case keyCoordsNaturalAreaCode:
+      case CoordFormatKey.DUTCH_GRID:
+      case CoordFormatKey.MAIDENHEAD:
+      case CoordFormatKey.MERCATOR:
+      case CoordFormatKey.NATURAL_AREA_CODE:
         break;
-      case keyCoordsSlippyMap:
-        _currentCoordsFormat.addAll({'subtype': DefaultSlippyZoom.toString()});
+      case CoordFormatKey.SLIPPY_MAP:
+        _currentCoordFormat.subtype = defaultSlippyMapType;
         break;
-      case keyCoordsGeohash:
-      case keyCoordsGeoHex:
-      case keyCoordsGeo3x3:
-      case keyCoordsOpenLocationCode:
-      case keyCoordsQuadtree:
-      case keyCoordsMakaney:
-      case keyCoordsReverseWherigoWaldmeister:
-      case keyCoordsReverseWherigoDay1976:
+      case CoordFormatKey.GEOHASH:
+      case CoordFormatKey.GEOHEX:
+      case CoordFormatKey.GEO3X3:
+      case CoordFormatKey.OPEN_LOCATION_CODE:
+      case CoordFormatKey.QUADTREE:
+      case CoordFormatKey.MAKANEY:
+      case CoordFormatKey.REVERSE_WIG_WALDMEISTER:
+      case CoordFormatKey.REVERSE_WIG_DAY1976:
         break;
       default:
-        _currentCoordsFormat = {'format': keyCoordsDMM};
+        _currentCoordFormat = defaultCoordFormat();
     }
   }
 
@@ -509,8 +520,8 @@ class GCWCoordsState extends State<GCWCoords> {
       _isOnLocationAccess = true;
     });
 
-    checkLocationPermission(_location).then((value) {
-      if (value == null || value == false) {
+    checkLocationPermission(_location).then((bool value) {
+      if (value == false) {
         setState(() {
           _isOnLocationAccess = false;
         });
@@ -519,13 +530,14 @@ class GCWCoordsState extends State<GCWCoords> {
         return;
       }
 
-      _location.getLocation().then((locationData) {
-        if (locationData.accuracy > 20)
+      _location.getLocation().then((LocationData locationData) {
+        if (locationData.accuracy == null || locationData.accuracy! > 20) {
           showToast(i18n(context, 'coords_common_location_lowaccuracy',
               parameters: [NumberFormat('0.0').format(locationData.accuracy)]));
+        }
 
-        _pastedCoords = DEC(locationData.latitude, locationData.longitude);
-        _currentValue = _pastedCoords;
+        _pastedCoords = BaseCoordinates(locationData.latitude, locationData.longitude);
+        _currentCoords = _pastedCoords;
         _setPastedCoordsFormat();
 
         _isOnLocationAccess = false;

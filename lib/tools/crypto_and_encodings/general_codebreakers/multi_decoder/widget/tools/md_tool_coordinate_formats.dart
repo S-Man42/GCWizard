@@ -12,7 +12,7 @@ const MDT_INTERNALNAMES_COORDINATEFORMATS = 'multidecoder_tool_coordinateformats
 const MDT_COORDINATEFORMATS_OPTION_FORMAT = 'multidecoder_tool_coordinateformats_option_format';
 
 class MultiDecoderToolCoordinateFormats extends AbstractMultiDecoderTool {
-  MultiDecoderToolCoordinateFormats({Key key, int id, String name, Map<String, dynamic> options, BuildContext context})
+  MultiDecoderToolCoordinateFormats({Key? key, int id, String name, Map<String, dynamic> options, BuildContext context})
       : super(
             key: key,
             id: id,
@@ -23,73 +23,73 @@ class MultiDecoderToolCoordinateFormats extends AbstractMultiDecoderTool {
               LatLng coords;
               try {
                 switch (options[MDT_COORDINATEFORMATS_OPTION_FORMAT]) {
-                  case keyCoordsDEC:
+                  case CoordFormatKey.DEC:
                     coords = DEC.parse(input, wholeString: true)?.toLatLng();
                     break;
-                  case keyCoordsDMM:
+                  case CoordFormatKey.DMM:
                     coords = DMM.parse(input, wholeString: true)?.toLatLng();
                     break;
-                  case keyCoordsDMS:
+                  case CoordFormatKey.DMS:
                     coords = DMS.parse(input, wholeString: true)?.toLatLng();
                     break;
-                  case keyCoordsUTM:
+                  case CoordFormatKey.UTM:
                     coords = UTMREF.parse(input)?.toLatLng(ells: defaultEllipsoid());
                     break;
-                  case keyCoordsMGRS:
+                  case CoordFormatKey.MGRS:
                     coords = MGRS.parse(input)?.toLatLng(ells: defaultEllipsoid());
                     break;
-                  case keyCoordsXYZ:
+                  case CoordFormatKey.XYZ:
                     coords = XYZ.parse(input)?.toLatLng(ells: defaultEllipsoid());
                     break;
-                  case keyCoordsSwissGrid:
+                  case CoordFormatKey.SWISS_GRID:
                     coords = SwissGrid.parse(input)?.toLatLng(ells: defaultEllipsoid());
                     break;
-                  case keyCoordsSwissGridPlus:
+                  case CoordFormatKey.SWISS_GRID_PLUS:
                     coords = SwissGridPlus.parse(input)?.toLatLng(ells: defaultEllipsoid());
                     break;
-                  case keyCoordsGaussKrueger:
+                  case CoordFormatKey.GAUSS_KRUEGER:
                     coords = GaussKrueger.parse(input)?.toLatLng(ells: defaultEllipsoid());
                     break;
-                  case keyCoordsLambert:
+                  case CoordFormatKey.LAMBERT:
                     coords = Lambert.parse(input)?.toLatLng(ells: defaultEllipsoid());
                     break;
-                  case keyCoordsDutchGrid:
+                  case CoordFormatKey.DUTCH_GRID:
                     coords = DutchGrid.parse(input)?.toLatLng();
                     break;
-                  case keyCoordsMaidenhead:
+                  case CoordFormatKey.MAIDENHEAD:
                     coords = Maidenhead.parse(input)?.toLatLng();
                     break;
-                  case keyCoordsMercator:
+                  case CoordFormatKey.MERCATOR:
                     coords = Mercator.parse(input)?.toLatLng(ells: defaultEllipsoid());
                     break;
-                  case keyCoordsNaturalAreaCode:
+                  case CoordFormatKey.NATURAL_AREA_CODE:
                     coords = NaturalAreaCode.parse(input)?.toLatLng();
                     break;
-                  case keyCoordsGeohash:
+                  case CoordFormatKey.GEOHASH:
                     coords = Geohash.parse(input)?.toLatLng();
                     break;
-                  case keyCoordsGeoHex:
+                  case CoordFormatKey.GEOHEX:
                     coords = GeoHex.parse(input)?.toLatLng();
                     break;
-                  case keyCoordsGeo3x3:
+                  case CoordFormatKey.GEO3X3:
                     coords = Geo3x3.parse(input)?.toLatLng();
                     break;
-                  case keyCoordsOpenLocationCode:
+                  case CoordFormatKey.OPEN_LOCATION_CODE:
                     coords = OpenLocationCode.parse(input)?.toLatLng();
                     break;
-                  case keyCoordsQuadtree:
+                  case CoordFormatKey.QUADTREE:
                     coords = Quadtree.parse(input)?.toLatLng();
                     break;
-                  case keyCoordsReverseWherigoWaldmeister:
+                  case CoordFormatKey.REVERSE_WIG_WALDMEISTER:
                     coords = ReverseWherigoWaldmeister.parse(input)?.toLatLng();
                     break;
-                  case keyCoordsReverseWherigoDay1976:
+                  case CoordFormatKey.REVERSE_WIG_DAY1976:
                     coords = ReverseWherigoDay1976.parse(input)?.toLatLng();
                     break;
-                  case keyCoordsSlippyMap:
+                  case CoordFormatKey.SLIPPY_MAP:
                     coords = SlippyMap.parse(input)?.toLatLng();
                     break;
-                  case keyCoordsMakaney:
+                  case CoordFormatKey.MAKANEY:
                     coords = Makaney.parse(input)?.toLatLng();
                     break;
                 }
@@ -106,10 +106,10 @@ class MultiDecoderToolCoordinateFormats extends AbstractMultiDecoderTool {
                 onChanged: (newValue) {
                   options[MDT_COORDINATEFORMATS_OPTION_FORMAT] = newValue;
                 },
-                items: allCoordFormats.where((format) => format.key != keyCoordsSlippyMap).map((format) {
+                items: allCoordFormats.where((format) => format.key != CoordFormatKey.SLIPPY_MAP).map((format) {
                   return GCWDropDownMenuItem(
                     value: format.key,
-                    child: i18n(context, format.name) ?? format.name,
+                    child: i18n(context, format.name, ifTranslationNotExists: format.name),
                   );
                 }).toList(),
               ),

@@ -1,17 +1,17 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _GCWCoordsGeohash extends StatefulWidget {
-  final Function onChanged;
+  final void Function(Geohash) onChanged;
   final BaseCoordinates coordinates;
 
-  const _GCWCoordsGeohash({Key key, this.onChanged, this.coordinates}) : super(key: key);
+  const _GCWCoordsGeohash({Key? key, required this.onChanged, required this.coordinates}) : super(key: key);
 
   @override
   _GCWCoordsGeohashState createState() => _GCWCoordsGeohashState();
 }
 
 class _GCWCoordsGeohashState extends State<_GCWCoordsGeohash> {
-  TextEditingController _controller;
+  late TextEditingController _controller;
   var _currentCoord = '';
 
   @override

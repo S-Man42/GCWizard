@@ -2,7 +2,7 @@ import 'package:gc_wizard/tools/wherigo/krevo/logic/readestring.dart';
 
 enum EARWIGO_DEOBFUSCATION { WWB_DEOBF, GSUB_WIG, URWIGO }
 
-String deobfuscateEarwigoText(String text, EARWIGO_DEOBFUSCATION tool) {
+String? deobfuscateEarwigoText(String text, EARWIGO_DEOBFUSCATION tool) {
   if (text == null || text.isEmpty) return '';
 
   switch (tool) {
@@ -13,7 +13,7 @@ String deobfuscateEarwigoText(String text, EARWIGO_DEOBFUSCATION tool) {
   }
 }
 
-String obfuscateEarwigoText(String text, EARWIGO_DEOBFUSCATION tool) {
+String? obfuscateEarwigoText(String text, EARWIGO_DEOBFUSCATION tool) {
   switch (tool) {
     case EARWIGO_DEOBFUSCATION.GSUB_WIG:
       return gsub_wig_obfuscation(text);
@@ -42,7 +42,6 @@ String gsub_wig_obfuscation(String text) {
     }
     result = result + c;
   }
-  ;
 
   return result;
 }
@@ -69,7 +68,7 @@ String wwb_deobf_obfuscation(String str) {
       .replaceAll(String.fromCharCode(5), '>')
       .replaceAll(String.fromCharCode(6), '&');
 
-  String x = '';
+  String? x = '';
   int d = 0;
 
   for (int i = 0; i < str.length; i++) {

@@ -3,21 +3,21 @@ import 'dart:math';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
 
 class Length extends Unit {
-  Function toMeter;
-  Function fromMeter;
+  late double Function (double) toMeter;
+  late double Function (double) fromMeter;
 
   Length({
-    String name,
-    String symbol,
-    bool isReference: false,
-    double inMeters: 1.0,
+    required String name,
+    required String symbol,
+    bool isReference = false,
+    required double inMeters,
   }) : super(name, symbol, isReference, (e) => e * inMeters, (e) => e / inMeters) {
     toMeter = this.toReference;
     fromMeter = this.fromReference;
   }
 }
 
-final LENGTH_METER = Length(name: 'common_unit_length_m_name', symbol: 'm', isReference: true);
+final LENGTH_METER = Length(name: 'common_unit_length_m_name', symbol: 'm', inMeters: 1.0, isReference: true);
 
 final LENGTH_STATUTEMILE = Length(name: 'common_unit_length_mi_name', symbol: 'mi', inMeters: 1609.344);
 
@@ -108,8 +108,8 @@ final List<Unit> baseLengths = [
 final LENGTH_KM = Length(name: 'common_unit_length_km_name', symbol: 'km', inMeters: 1000.0);
 final LENGTH_CM = Length(name: 'common_unit_length_cm_name', symbol: 'cm', inMeters: 0.01);
 
-List<Unit> allLengths() {
-  var lengths = List<Unit>.from(baseLengths);
+List<Length> allLengths() {
+  var lengths = List<Length>.from(baseLengths);
   var indexM = baseLengths.indexOf(LENGTH_METER);
   lengths.insert(indexM + 1, LENGTH_KM);
   lengths.insert(indexM + 2, LENGTH_CM);

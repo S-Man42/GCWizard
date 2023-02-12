@@ -31,7 +31,7 @@ class _OhlsenSegmentDisplay extends NSegmentDisplay {
   final Function onChanged;
   final bool tapeStyle;
 
-  _OhlsenSegmentDisplay({Key key, this.segments, this.readOnly: false, this.onChanged, this.tapeStyle: false})
+  _OhlsenSegmentDisplay({Key? key, this.segments, this.readOnly: false, this.onChanged, this.tapeStyle: false})
       : super(
             key: key,
             initialSegments: _INITIAL_SEGMENTS,

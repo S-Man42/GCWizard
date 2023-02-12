@@ -30,7 +30,7 @@ import 'package:tuple/tuple.dart';
 class AnimatedImageMorseCode extends StatefulWidget {
   final local.GCWFile platformFile;
 
-  const AnimatedImageMorseCode({Key key, this.platformFile}) : super(key: key);
+  const AnimatedImageMorseCode({Key? key, this.platformFile}) : super(key: key);
 
   @override
   AnimatedImageMorseCodeState createState() => AnimatedImageMorseCodeState();
@@ -422,7 +422,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
       var value = await saveByteDataToFile(context, bytes,
           'anim_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
 
-      if (value != null) showExportedFileDialog(context, fileType: fileType);
+      if (value) showExportedFileDialog(context, fileType: fileType);
     });
   }
 
@@ -431,6 +431,6 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
     var value = await saveByteDataToFile(context, data,
         'anim_export_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
 
-    if (value != null) showExportedFileDialog(context, fileType: fileType);
+    if (value) showExportedFileDialog(context, fileType: fileType);
   }
 }

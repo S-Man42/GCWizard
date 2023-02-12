@@ -51,7 +51,7 @@ class ZodiacState extends State<Zodiac> {
             },
           ),
         if (_currentMode == GCWSwitchPosition.right)
-          GCWDropDown(
+          GCWDropDown<String>(
             value: _currentAttribute,
             items: ZODIACSIGNS_ATTRIBUTES.map((attribute) {
               return GCWDropDownMenuItem(value: attribute, child: i18n(context, attribute));
@@ -69,7 +69,7 @@ class ZodiacState extends State<Zodiac> {
     );
   }
 
-  _createDateOutput(Map<String, int> dateValues) {
+  String _createDateOutput(Map<String, int> dateValues) {
     var startDate = new DateTime(0, dateValues['start_month'], dateValues['start_day']);
     var endDate = new DateTime(0, dateValues['end_month'], dateValues['end_day']);
 

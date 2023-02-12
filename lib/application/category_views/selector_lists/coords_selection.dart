@@ -8,7 +8,7 @@ class CoordsSelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
     final List<GCWTool> _toolList = registeredTools
-        .where((element) => element.categories != null && element.categories.contains(ToolCategory.COORDINATES))
+        .where((element) => element.categories.contains(ToolCategory.COORDINATES))
         .toList();
 
     return Container(child: GCWToolList(toolList: _toolList));

@@ -1,31 +1,31 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _GCWCoordsDMS extends StatefulWidget {
-  final Function onChanged;
+  final void Function(DMS) onChanged;
   final BaseCoordinates coordinates;
 
-  const _GCWCoordsDMS({Key key, this.onChanged, this.coordinates}) : super(key: key);
+  const _GCWCoordsDMS({Key? key, required this.onChanged, required this.coordinates}) : super(key: key);
 
   @override
   _GCWCoordsDMSState createState() => _GCWCoordsDMSState();
 }
 
 class _GCWCoordsDMSState extends State<_GCWCoordsDMS> {
-  TextEditingController _LatDegreesController;
-  TextEditingController _LatMinutesController;
-  TextEditingController _LatSecondsController;
-  TextEditingController _LatMilliSecondsController;
-  TextEditingController _LonDegreesController;
-  TextEditingController _LonMinutesController;
-  TextEditingController _LonSecondsController;
-  TextEditingController _LonMilliSecondsController;
+  late TextEditingController _LatDegreesController;
+  late TextEditingController _LatMinutesController;
+  late TextEditingController _LatSecondsController;
+  late TextEditingController _LatMilliSecondsController;
+  late TextEditingController _LonDegreesController;
+  late TextEditingController _LonMinutesController;
+  late TextEditingController _LonSecondsController;
+  late TextEditingController _LonMilliSecondsController;
 
-  FocusNode _latMinutesFocusNode;
-  FocusNode _latSecondsFocusNode;
-  FocusNode _latMilliSecondsFocusNode;
-  FocusNode _lonMinutesFocusNode;
-  FocusNode _lonSecondsFocusNode;
-  FocusNode _lonMilliSecondsFocusNode;
+  FocusNode _latMinutesFocusNode = FocusNode();
+  FocusNode _latSecondsFocusNode = FocusNode();
+  FocusNode _latMilliSecondsFocusNode = FocusNode();
+  FocusNode _lonMinutesFocusNode = FocusNode();
+  FocusNode _lonSecondsFocusNode = FocusNode();
+  FocusNode _lonMilliSecondsFocusNode = FocusNode();
 
   int _currentLatSign = defaultHemiphereLatitude();
   int _currentLonSign = defaultHemiphereLongitude();
@@ -51,13 +51,6 @@ class _GCWCoordsDMSState extends State<_GCWCoordsDMS> {
     _LonMinutesController = TextEditingController(text: _currentLonMinutes);
     _LonSecondsController = TextEditingController(text: _currentLonSeconds);
     _LonMilliSecondsController = TextEditingController(text: _currentLonMilliSeconds);
-
-    _latMinutesFocusNode = FocusNode();
-    _latSecondsFocusNode = FocusNode();
-    _latMilliSecondsFocusNode = FocusNode();
-    _lonMinutesFocusNode = FocusNode();
-    _lonSecondsFocusNode = FocusNode();
-    _lonMilliSecondsFocusNode = FocusNode();
   }
 
   @override
@@ -88,17 +81,17 @@ class _GCWCoordsDMSState extends State<_GCWCoordsDMS> {
       var lat = dms.latitude.formatParts(10);
       var lon = dms.longitude.formatParts(10);
 
-      _currentLatDegrees = lat['degrees'];
-      _currentLatMinutes = lat['minutes'];
-      _currentLatSeconds = lat['seconds'].split('.')[0];
-      _currentLatMilliSeconds = lat['seconds'].split('.')[1];
-      _currentLatSign = widget.coordinates.isDefault() ? defaultHemiphereLatitude() : lat['sign']['value'];
+      _currentLatDegrees = lat.degrees;
+      _currentLatMinutes = lat.minutes;
+      _currentLatSeconds = lat.seconds.split('.')[0];
+      _currentLatMilliSeconds = lat.seconds.split('.')[1];
+      _currentLatSign = lat.sign.value;
 
-      _currentLonDegrees = lon['degrees'];
-      _currentLonMinutes = lon['minutes'];
-      _currentLonSeconds = lon['seconds'].split('.')[0];
-      _currentLonMilliSeconds = lon['seconds'].split('.')[1];
-      _currentLonSign = widget.coordinates.isDefault() ? defaultHemiphereLongitude() : lon['sign']['value'];
+      _currentLonDegrees = lon.degrees;
+      _currentLonMinutes = lon.minutes;
+      _currentLonSeconds = lon.seconds.split('.')[0];
+      _currentLonMilliSeconds = lon.seconds.split('.')[1];
+      _currentLonSign = lon.sign.value;
 
       _LatDegreesController.text = _currentLatDegrees;
       _LatMinutesController.text = _currentLatMinutes;
@@ -133,9 +126,9 @@ class _GCWCoordsDMSState extends State<_GCWCoordsDMS> {
                     hintText: 'DD',
                     textInputFormatter: _DegreesLatTextInputFormatter(),
                     controller: _LatDegreesController,
-                    onChanged: (ret) {
+                    onChanged: (IntegerText ret) {
                       setState(() {
-                        _currentLatDegrees = ret['text'];
+                        _currentLatDegrees = ret.text;
                         _setCurrentValueAndEmitOnChange();
 
                         if (_currentLatDegrees.length == 2) FocusScope.of(context).requestFocus(_latMinutesFocusNode);
@@ -154,9 +147,9 @@ class _GCWCoordsDMSState extends State<_GCWCoordsDMS> {
                 textInputFormatter: GCWMinutesSecondsTextInputFormatter(),
                 controller: _LatMinutesController,
                 focusNode: _latMinutesFocusNode,
-                onChanged: (ret) {
+                onChanged: (IntegerText ret) {
                   setState(() {
-                    _currentLatMinutes = ret['text'];
+                    _currentLatMinutes = ret.text;
                     _setCurrentValueAndEmitOnChange();
 
                     if (_currentLatMinutes.length == 2) FocusScope.of(context).requestFocus(_latSecondsFocusNode);
@@ -174,9 +167,9 @@ class _GCWCoordsDMSState extends State<_GCWCoordsDMS> {
                 textInputFormatter: GCWMinutesSecondsTextInputFormatter(),
                 controller: _LatSecondsController,
                 focusNode: _latSecondsFocusNode,
-                onChanged: (ret) {
+                onChanged: (IntegerText ret) {
                   setState(() {
-                    _currentLatSeconds = ret['text'];
+                    _currentLatSeconds = ret.text;
                     _setCurrentValueAndEmitOnChange();
 
                     if (_currentLatSeconds.length == 2) FocusScope.of(context).requestFocus(_latMilliSecondsFocusNode);
@@ -194,9 +187,9 @@ class _GCWCoordsDMSState extends State<_GCWCoordsDMS> {
                 min: 0,
                 controller: _LatMilliSecondsController,
                 focusNode: _latMilliSecondsFocusNode,
-                onChanged: (ret) {
+                onChanged: (IntegerText ret) {
                   setState(() {
-                    _currentLatMilliSeconds = ret['text'];
+                    _currentLatMilliSeconds = ret.text;
                     _setCurrentValueAndEmitOnChange();
                   });
                 }),
@@ -228,9 +221,9 @@ class _GCWCoordsDMSState extends State<_GCWCoordsDMS> {
                     hintText: 'DD',
                     textInputFormatter: _DegreesLonTextInputFormatter(),
                     controller: _LonDegreesController,
-                    onChanged: (ret) {
+                    onChanged: (IntegerText ret) {
                       setState(() {
-                        _currentLonDegrees = ret['text'];
+                        _currentLonDegrees = ret.text;
                         _setCurrentValueAndEmitOnChange();
 
                         if (_currentLonDegrees.length == 3) FocusScope.of(context).requestFocus(_lonMinutesFocusNode);
@@ -249,9 +242,9 @@ class _GCWCoordsDMSState extends State<_GCWCoordsDMS> {
                 textInputFormatter: GCWMinutesSecondsTextInputFormatter(),
                 controller: _LonMinutesController,
                 focusNode: _lonMinutesFocusNode,
-                onChanged: (ret) {
+                onChanged: (IntegerText ret) {
                   setState(() {
-                    _currentLonMinutes = ret['text'];
+                    _currentLonMinutes = ret.text;
                     _setCurrentValueAndEmitOnChange();
 
                     if (_currentLonMinutes.length == 2) FocusScope.of(context).requestFocus(_lonSecondsFocusNode);
@@ -269,9 +262,9 @@ class _GCWCoordsDMSState extends State<_GCWCoordsDMS> {
                 textInputFormatter: GCWMinutesSecondsTextInputFormatter(),
                 controller: _LonSecondsController,
                 focusNode: _lonSecondsFocusNode,
-                onChanged: (ret) {
+                onChanged: (IntegerText ret) {
                   setState(() {
-                    _currentLonSeconds = ret['text'];
+                    _currentLonSeconds = ret.text;
                     _setCurrentValueAndEmitOnChange();
 
                     if (_currentLonSeconds.length == 2) {
@@ -291,9 +284,9 @@ class _GCWCoordsDMSState extends State<_GCWCoordsDMS> {
                 min: 0,
                 controller: _LonMilliSecondsController,
                 focusNode: _lonMilliSecondsFocusNode,
-                onChanged: (ret) {
+                onChanged: (IntegerText ret) {
                   setState(() {
-                    _currentLonMilliSeconds = ret['text'];
+                    _currentLonMilliSeconds = ret.text;
                     _setCurrentValueAndEmitOnChange();
                   });
                 }),

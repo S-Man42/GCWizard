@@ -28,19 +28,19 @@ class GCWSymbolTableTextToSymbols extends StatefulWidget {
   final SymbolTableData data;
   final bool showExportButton;
   final bool fixed;
-  final double borderWidth;
+  final double? borderWidth;
   final bool specialEncryption;
 
   const GCWSymbolTableTextToSymbols(
-      {Key key,
-      this.text,
-      this.ignoreUnknown,
-      this.data,
-      this.countColumns,
-      this.showExportButton: true,
+      {Key? key,
+      required this.text,
+      required this.ignoreUnknown,
+      required this.data,
+      required this.countColumns,
+      this.showExportButton = true,
       this.borderWidth,
-      this.specialEncryption,
-      this.fixed: false})
+      required this.specialEncryption,
+      this.fixed = false})
       : super(key: key);
 
   @override
@@ -52,7 +52,7 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
 
   var _encryptionHasImages = false;
 
-  SymbolTableData _data;
+  late SymbolTableData _data;
 
   @override
   void initState() {
@@ -80,7 +80,7 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
                 text: i18n(context, 'common_exportfile_saveoutput'),
                 onPressed: () {
                   _exportEncryption(widget.countColumns, _data.isCaseSensitive()).then((value) {
-                    if (value == null) {
+                    if (value == false) {
                       return;
                     }
 
@@ -188,7 +188,7 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
     }
   }
 
-  Future<Uint8List> _exportEncryption(int countColumns, isCaseSensitive) async {
+  Future<bool> _exportEncryption(int countColumns, isCaseSensitive) async {
     var imageIndexes = _getImageIndexes(isCaseSensitive);
 
     var countRows = (imageIndexes.length / countColumns).floor();
@@ -205,7 +205,8 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
         countColumns: countColumns,
         relativeBorderWidth: widget.borderWidth));
 
-    var paintData = SymbolTablePaintData(canvas: canvas, sizes: sizes, data: _data, imageIndexes: imageIndexes);
+    var paintData = SymbolTablePaintData(sizes: sizes, data: _data, imageIndexes: imageIndexes);
+    paintData.canvas = canvas;
 
     canvas = _symbolTableEncryption().paint(paintData);
 

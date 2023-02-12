@@ -8,28 +8,28 @@ import 'package:gc_wizard/utils/math_utils.dart';
 class GCWPopupMenu extends StatefulWidget {
   final List<GCWPopupMenuItem> Function(BuildContext context) menuItemBuilder;
   final IconData iconData;
-  final Widget customIcon;
-  final double rotateDegrees;
-  final IconButtonSize size;
-  final Color iconColor;
-  final Color backgroundColor;
+  final Widget? customIcon;
+  final double? rotateDegrees;
+  final IconButtonSize? size;
+  final Color? iconColor;
+  final Color? backgroundColor;
   final bool isTextSelectionToolBarButton;
-  final EdgeInsets textSelectionToolBarButtonPadding;
-  final String textSelectionToolBarButtonLabel;
+  final EdgeInsets? textSelectionToolBarButtonPadding;
+  final String? textSelectionToolBarButtonLabel;
 
-  final Function onBeforePressed;
+  final Function? onBeforePressed;
 
   const GCWPopupMenu({
-    Key key,
-    this.menuItemBuilder,
-    this.iconData,
+    Key? key,
+    required this.menuItemBuilder,
+    required this.iconData,
     this.customIcon,
     this.rotateDegrees,
-    this.size: IconButtonSize.NORMAL,
+    this.size = IconButtonSize.NORMAL,
     this.iconColor,
     this.backgroundColor,
     this.onBeforePressed,
-    this.isTextSelectionToolBarButton: false,
+    this.isTextSelectionToolBarButton = false,
     this.textSelectionToolBarButtonPadding,
     this.textSelectionToolBarButtonLabel,
   }) : super(key: key);
@@ -39,10 +39,10 @@ class GCWPopupMenu extends StatefulWidget {
 }
 
 class GCWPopupMenuState extends State<GCWPopupMenu> {
-  List<PopupMenuEntry<dynamic>> _menuItems;
+  late List<PopupMenuEntry<dynamic>> _menuItems;
   var _menuAction;
 
-  RelativeRect _menuPosition;
+  late RelativeRect _menuPosition;
 
   _afterLayout() {
     //copied from the native PopupMenu code
@@ -61,9 +61,9 @@ class GCWPopupMenuState extends State<GCWPopupMenu> {
   Widget build(BuildContext context) {
     if (widget.isTextSelectionToolBarButton) {
       return TextSelectionToolbarTextButton(
-        padding: widget.textSelectionToolBarButtonPadding,
+        padding: widget.textSelectionToolBarButtonPadding!,
         onPressed: _onPressed,
-        child: Text(widget.textSelectionToolBarButtonLabel),
+        child: Text(widget.textSelectionToolBarButtonLabel!),
       );
     }
 
@@ -78,11 +78,13 @@ class GCWPopupMenuState extends State<GCWPopupMenu> {
   }
 
   _onPressed() {
-    if (widget.onBeforePressed != null) widget.onBeforePressed();
+    if (widget.onBeforePressed != null) widget.onBeforePressed!();
 
     var items = widget.menuItemBuilder(context).asMap().map((index, GCWPopupMenuItem item) {
       return MapEntry<PopupMenuEntry<dynamic>, Function>(
-          item.isDivider ? PopupMenuDivider() : PopupMenuItem(child: item.child, value: index), item.action);
+          item.isDivider
+              ? PopupMenuDivider() as PopupMenuEntry<dynamic>
+              : PopupMenuItem(child: item.child, value: index), item.action);
     });
 
     _afterLayout();
@@ -112,14 +114,14 @@ class GCWPopupMenuState extends State<GCWPopupMenu> {
 class GCWPopupMenuItem {
   final Widget child;
   final Function action;
-  final Function onLongPress;
+  final void Function()? onLongPress;
   final bool isDivider;
 
-  GCWPopupMenuItem({this.child, this.action, this.onLongPress, this.isDivider: false});
+  GCWPopupMenuItem({required this.child, required this.action, this.onLongPress, this.isDivider = false});
 }
 
 iconedGCWPopupMenuItem(BuildContext context, IconData icon, String title,
-    {double rotateDegrees: 0.0, Function onLongPress}) {
+    {double rotateDegrees = 0.0, Function? onLongPress}) {
   var color = themeColors().dialogText();
 
   return Row(
@@ -132,9 +134,9 @@ iconedGCWPopupMenuItem(BuildContext context, IconData icon, String title,
           ),
           padding: EdgeInsets.only(right: 10),
         ),
-        onLongPress: onLongPress,
+        onLongPress: () => onLongPress,
       ),
-      Text(i18n(context, title) ?? title, style: TextStyle(color: color))
+      Text(i18n(context, title, ifTranslationNotExists: title), style: TextStyle(color: color))
     ],
   );
 }

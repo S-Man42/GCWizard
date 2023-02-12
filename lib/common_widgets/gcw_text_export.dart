@@ -19,13 +19,13 @@ enum PossibleExportMode { TEXTONLY, QRONLY, BOTH }
 
 class GCWTextExport extends StatefulWidget {
   final String text;
-  final Function onModeChanged;
+  final void Function(TextExportMode)? onModeChanged;
   final PossibleExportMode possibileExportMode;
   final TextExportMode initMode;
 
   const GCWTextExport(
-      {Key key,
-      this.text,
+      {Key? key,
+      required this.text,
       this.onModeChanged,
       this.possibileExportMode = PossibleExportMode.BOTH,
       this.initMode = TextExportMode.QR})
@@ -38,16 +38,16 @@ class GCWTextExport extends StatefulWidget {
 class GCWTextExportState extends State<GCWTextExport> {
   var _currentMode = TextExportMode.QR;
 
-  TextEditingController _textExportController;
+  late TextEditingController _textExportController;
   var _currentExportText;
 
-  Uint8List _qrImageData;
+  Uint8List? _qrImageData;
 
   @override
   void initState() {
     super.initState();
 
-    _currentExportText = widget.text ?? '';
+    _currentExportText = widget.text;
     _currentMode = widget.initMode;
     _textExportController = TextEditingController(text: _currentExportText);
   }
@@ -85,7 +85,7 @@ class GCWTextExportState extends State<GCWTextExport> {
                     onChanged: (value) {
                       setState(() {
                         _currentMode = value == GCWSwitchPosition.left ? TextExportMode.QR : TextExportMode.TEXT;
-                        if (widget.onModeChanged != null) widget.onModeChanged(_currentMode);
+                        if (widget.onModeChanged != null) widget.onModeChanged!(_currentMode);
 
                         if (_currentMode == TextExportMode.QR) _buildQRCode();
                       });
@@ -93,7 +93,7 @@ class GCWTextExportState extends State<GCWTextExport> {
                   )
                 : Container(),
             _currentMode == TextExportMode.QR
-                ? (_qrImageData == null ? Container() : Image.memory(_qrImageData))
+                ? (_qrImageData == null ? Container() : Image.memory(_qrImageData!))
                 : Column(
                     children: <Widget>[
                       GCWTextField(
@@ -120,32 +120,29 @@ class GCWTextExportState extends State<GCWTextExport> {
   }
 }
 
-exportFile(String text, TextExportMode mode, BuildContext context) {
-  _exportEncryption(context, text, mode).then((value) {
-    if (value == null) {
-      return;
-    }
+exportFile(String text, TextExportMode mode, BuildContext context) async {
+  if (mode == TextExportMode.TEXT) {
+    saveStringToFile(context, text, 'txt_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.txt').then((value) {
+      if (value == false) return;
 
-    showExportedFileDialog(
-      context,
-      contentWidget: mode == TextExportMode.QR
-          ? Container(
-              child: value == null ? null : Image.memory(value),
+      showExportedFileDialog(context);
+    });
+  } else {
+    input2Image(generateBarCode(text)).then((_imgData) {
+      saveByteDataToFile(
+          context, _imgData, 'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png').then((value) {
+        if (value == false)
+          return;
+
+        showExportedFileDialog(
+            context,
+            contentWidget: Container(
+              child: Image.memory(_imgData),
               margin: EdgeInsets.only(top: 25),
               decoration: BoxDecoration(border: Border.all(color: themeColors().dialogText())),
             )
-          : null,
-    );
-  });
-}
-
-Future<dynamic> _exportEncryption(BuildContext context, String text, TextExportMode mode) async {
-  if (mode == TextExportMode.TEXT) {
-    return saveStringToFile(context, text, 'txt_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.txt');
-  } else {
-    final data = await input2Image(generateBarCode(text));
-
-    return await saveByteDataToFile(
-        context, data, 'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
+        );
+      });
+    });
   }
 }

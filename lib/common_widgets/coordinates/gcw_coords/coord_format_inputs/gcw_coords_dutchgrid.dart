@@ -1,27 +1,27 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _GCWCoordsDutchGrid extends StatefulWidget {
-  final Function onChanged;
+  final void Function(DutchGrid) onChanged;
   final BaseCoordinates coordinates;
 
-  const _GCWCoordsDutchGrid({Key key, this.onChanged, this.coordinates}) : super(key: key);
+  const _GCWCoordsDutchGrid({Key? key, required this.onChanged, required this.coordinates}) : super(key: key);
 
   @override
   _GCWCoordsDutchGridState createState() => _GCWCoordsDutchGridState();
 }
 
 class _GCWCoordsDutchGridState extends State<_GCWCoordsDutchGrid> {
-  TextEditingController _xController;
-  TextEditingController _yController;
+  late TextEditingController _xController;
+  late TextEditingController _yController;
 
-  var _currentX = {'text': '', 'value': 0.0};
-  var _currentY = {'text': '', 'value': 0.0};
+  var _currentX = defaultDoubleText;
+  var _currentY = defaultDoubleText;
 
   @override
   void initState() {
     super.initState();
-    _xController = TextEditingController(text: _currentX['text']);
-    _yController = TextEditingController(text: _currentY['text']);
+    _xController = TextEditingController(text: _currentX.text);
+    _yController = TextEditingController(text: _currentY.text);
   }
 
   @override
@@ -37,11 +37,11 @@ class _GCWCoordsDutchGridState extends State<_GCWCoordsDutchGrid> {
       var dutchGrid = widget.coordinates is DutchGrid
           ? widget.coordinates as DutchGrid
           : DutchGrid.fromLatLon(widget.coordinates.toLatLng());
-      _currentX['value'] = dutchGrid.x;
-      _currentY['value'] = dutchGrid.y;
+      _currentX.value = dutchGrid.x;
+      _currentY.value = dutchGrid.y;
 
-      _xController.text = _currentX['value'].toString();
-      _yController.text = _currentY['value'].toString();
+      _xController.text = _currentX.value.toString();
+      _yController.text = _currentY.value.toString();
     }
 
     return Column(children: <Widget>[
@@ -67,6 +67,6 @@ class _GCWCoordsDutchGridState extends State<_GCWCoordsDutchGrid> {
   }
 
   _setCurrentValueAndEmitOnChange() {
-    widget.onChanged(DutchGrid(_currentX['value'], _currentY['value']));
+    widget.onChanged(DutchGrid(_currentX.value, _currentY.value));
   }
 }

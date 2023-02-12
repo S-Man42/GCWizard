@@ -28,7 +28,7 @@ class SegmentDisplayOutput extends StatefulWidget {
   final double horizontalSymbolPadding;
 
   const SegmentDisplayOutput(
-      {Key key,
+      {Key? key,
       this.upsideDownButton: false,
       this.segmentFunction,
       this.segments,

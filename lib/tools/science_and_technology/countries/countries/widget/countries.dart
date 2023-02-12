@@ -9,7 +9,7 @@ import 'package:gc_wizard/tools/science_and_technology/countries/logic/countries
 class Countries extends StatefulWidget {
   final List<String> fields;
 
-  Countries({Key key, this.fields}) : super(key: key);
+  Countries({Key? key, this.fields}) : super(key: key);
 
   @override
   CountriesState createState() => CountriesState();

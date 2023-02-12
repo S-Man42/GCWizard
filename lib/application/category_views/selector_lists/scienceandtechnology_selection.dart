@@ -9,7 +9,7 @@ class ScienceAndTechnologySelection extends GCWSelection {
   Widget build(BuildContext context) {
     final List<GCWTool> _toolList = registeredTools
         .where(
-            (element) => element.categories != null && element.categories.contains(ToolCategory.SCIENCE_AND_TECHNOLOGY))
+            (element) => element.categories.contains(ToolCategory.SCIENCE_AND_TECHNOLOGY))
         .toList();
     _toolList.sort((a, b) => sortToolList(a, b));
 

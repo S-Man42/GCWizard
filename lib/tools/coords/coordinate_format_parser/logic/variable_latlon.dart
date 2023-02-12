@@ -20,7 +20,7 @@ Map<String, LatLng> _parseCoordText(String text) {
 
   var out = <String, LatLng>{'coordinate': parsedCoord.elementAt(0).toLatLng()};
 
-  if (parsedCoord.elementAt(0).key == keyCoordsDMM) {
+  if (parsedCoord.elementAt(0).key == CoordFormatKey.DMM) {
     out.putIfAbsent('leftPadCoordinate', () => DMM.parse(text, leftPadMilliMinutes: true)?.toLatLng());
   }
 
@@ -53,7 +53,7 @@ Future<Map<String, dynamic>> parseVariableLatLonAsync(dynamic jobData) async {
   var output = parseVariableLatLon(jobData.parameters.coordinate, jobData.parameters.substitutions,
       projectionData: jobData.parameters.projectionData);
 
-  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
+  jobData?.sendAsyncPort?.send(output);
 
   return output;
 }

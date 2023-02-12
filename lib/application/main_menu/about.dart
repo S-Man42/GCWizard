@@ -10,7 +10,7 @@ import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-final ABOUT_MAINTAINER = 'Mark \'S-Man42\' Lorenz';
+final _ABOUT_MAINTAINER = 'Mark \'S-Man42\' Lorenz';
 
 class About extends StatefulWidget {
   @override
@@ -18,9 +18,7 @@ class About extends StatefulWidget {
 }
 
 class AboutState extends State<About> {
-  var packageInfo = PackageInfo();
-
-  var boldTextStyle = gcwTextStyle().copyWith(fontWeight: FontWeight.bold);
+  late PackageInfo _packageInfo;
 
   @override
   void initState() {
@@ -31,7 +29,7 @@ class AboutState extends State<About> {
   Future<void> _initPackageInfo() async {
     final PackageInfo info = await PackageInfo.fromPlatform();
     setState(() {
-      packageInfo = info;
+      _packageInfo = info;
     });
   }
 
@@ -63,13 +61,13 @@ class AboutState extends State<About> {
         Container(
             child: Row(children: <Widget>[
               Expanded(child: GCWText(text: i18n(context, 'about_version')), flex: 2),
-              Expanded(child: GCWText(text: '${packageInfo.version} (Build: ${packageInfo.buildNumber})'), flex: 3)
+              Expanded(child: GCWText(text: '${_packageInfo.version} (Build: ${_packageInfo.buildNumber})'), flex: 3)
             ]),
             padding: EdgeInsets.only(top: 15)),
         Container(
             child: Row(children: <Widget>[
               Expanded(child: GCWText(text: i18n(context, 'about_maintainer')), flex: 2),
-              Expanded(child: GCWText(text: ABOUT_MAINTAINER), flex: 3)
+              Expanded(child: GCWText(text: _ABOUT_MAINTAINER), flex: 3)
             ]),
             padding: EdgeInsets.only(top: 15, bottom: 10)),
         GCWDivider(),
@@ -113,7 +111,7 @@ class AboutState extends State<About> {
               RichText(
                 textAlign: TextAlign.center,
                 text: TextSpan(children: [
-                  TextSpan(text: i18n(context, 'about_team') + '\n', style: boldTextStyle),
+                  TextSpan(text: i18n(context, 'about_team') + '\n', style: gcwBoldTextStyle()),
                   TextSpan(
                       text: [
                             'Andy \'Puma66\' (Special Support)',
@@ -127,14 +125,14 @@ class AboutState extends State<About> {
               RichText(
                 textAlign: TextAlign.center,
                 text: TextSpan(children: [
-                  TextSpan(text: i18n(context, 'about_specialthanks') + '\n', style: boldTextStyle),
+                  TextSpan(text: i18n(context, 'about_specialthanks') + '\n', style: gcwBoldTextStyle()),
                   TextSpan(text: 'Daniel \'Eisbehr\' K. (Maintainer GCC)' + '\n')
                 ], style: gcwTextStyle()),
               ),
               RichText(
                 textAlign: TextAlign.center,
                 text: TextSpan(children: [
-                  TextSpan(text: i18n(context, 'about_contributors') + '\n', style: boldTextStyle),
+                  TextSpan(text: i18n(context, 'about_contributors') + '\n', style: gcwBoldTextStyle()),
                   TextSpan(
                       text: [
                             '\'\xc4ggsb\xe4rde\' (Symbol Tables)',
@@ -159,7 +157,7 @@ class AboutState extends State<About> {
               RichText(
                 textAlign: TextAlign.center,
                 text: TextSpan(children: [
-                  TextSpan(text: i18n(context, 'about_translators') + '\n', style: boldTextStyle),
+                  TextSpan(text: i18n(context, 'about_translators') + '\n', style: gcwBoldTextStyle()),
                   TextSpan(
                       text: [
                             '\'alantheandroid\' (IT)',
@@ -199,7 +197,7 @@ class AboutState extends State<About> {
               RichText(
                 textAlign: TextAlign.center,
                 text: TextSpan(children: [
-                  TextSpan(text: i18n(context, 'about_testers') + '\n', style: boldTextStyle),
+                  TextSpan(text: i18n(context, 'about_testers') + '\n', style: gcwBoldTextStyle()),
                   TextSpan(
                       text: [
                     '\'4-Everus\'',

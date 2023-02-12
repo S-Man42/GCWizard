@@ -8,22 +8,22 @@ import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/gcw_toolbar.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_multiple_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/map_view/widget/gcw_mapview.dart';
 
 class GCWCoordsOutput extends StatefulWidget {
-  final List<dynamic> outputs;
-  final List<dynamic> copyTexts;
+  final List<BaseCoordinates> outputs;
+  final List<String>? copyTexts;
   List<GCWMapPoint> points;
-  List<GCWMapPolyline> polylines;
-  final bool mapButtonTop;
-  final String title;
+  List<GCWMapPolyline>? polylines;
+  final bool? mapButtonTop;
+  final String? title;
 
   GCWCoordsOutput(
-      {Key key, this.outputs, this.copyTexts, this.points, this.polylines, this.mapButtonTop: false, this.title})
+      {Key? key, required this.outputs, this.copyTexts, required this.points, this.polylines, this.mapButtonTop = false, this.title})
       : super(key: key) {
-    if (points == null) this.points = [];
-    if (polylines == null) this.polylines = [];
+    if (polylines == null) polylines = [];
   }
 
   @override
@@ -42,7 +42,7 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
                 child: GCWOutput(
                   child: output,
                   copyText:
-                      widget.copyTexts != null && widget.copyTexts.length > index ? widget.copyTexts[index] : null,
+                      widget.copyTexts != null && widget.copyTexts!.length > index ? widget.copyTexts![index] : null,
                 ),
                 padding: EdgeInsets.only(bottom: 15),
               ));
@@ -53,9 +53,9 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
       children: children,
     );
 
-    var _isNoOutput = widget.outputs == null || widget.outputs.length == 0 || widget.points.length == 0;
+    var _hasOutput = widget.outputs.isNotEmpty && widget.points.isNotEmpty;
     var _button = Visibility(
-        visible: !_isNoOutput,
+        visible: _hasOutput,
         child: GCWToolBar(
           children: [
             GCWButton(
@@ -73,7 +73,7 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
           ],
         ));
 
-    var _children = widget.mapButtonTop ? [_button, _outputText] : [_outputText, _button];
+    var _children = widget.mapButtonTop! ? [_button, _outputText] : [_outputText, _button];
 
     return GCWMultipleOutput(
         title: widget.title,
@@ -81,9 +81,10 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
         trailing: GCWIconButton(
           icon: Icons.save,
           size: IconButtonSize.SMALL,
-          iconColor: _isNoOutput ? themeColors().inActive() : null,
+          iconColor: _hasOutput ? null : themeColors().inActive(),
           onPressed: () {
-            _isNoOutput ? null : _exportCoordinates(context, widget.points, widget.polylines);
+            if (_hasOutput)
+              _exportCoordinates(context, widget.points, widget.polylines!);
           },
         ));
   }
@@ -101,7 +102,7 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
             builder: (context) => GCWTool(
                 tool: GCWMapView(
                   points: List<GCWMapPoint>.from(widget.points),
-                  polylines: List<GCWMapPolyline>.from(widget.polylines),
+                  polylines: List<GCWMapPolyline>.from(widget.polylines!),
                   isEditable: freeMap,
                 ),
                 i18nPrefix: freeMap ? 'coords_openmap' : 'coords_map_view',
@@ -109,7 +110,7 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
                 suppressToolMargin: true)));
   }
 
-  Future<bool> _exportCoordinates(
+  Future<void> _exportCoordinates(
       BuildContext context, List<GCWMapPoint> points, List<GCWMapPolyline> polylines) async {
     showCoordinatesExportDialog(context, points, polylines);
   }

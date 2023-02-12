@@ -83,7 +83,7 @@ _exportFile(BuildContext context, Uint8List data) async {
   var value =
   await saveByteDataToFile(context, data, 'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
 
-  if (value != null) showExportedFileDialog(context, fileType: FileType.PNG, contentWidget: Image.memory(data));
+  if (value) showExportedFileDialog(context, fileType: FileType.PNG, contentWidget: Image.memory(data));
 }
 
 Widget _buildSegmentDisplayOutput(int countColumns, List<dynamic> displays,

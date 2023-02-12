@@ -9,7 +9,7 @@ const MDT_INTERNALNAMES_KEYBOARDNUMBERS = 'multidecoder_tool_keyboardnumbers_tit
 const MDT_KEYBOARDNUMBERS_OPTION_TYPE = 'multidecoder_tool_keyboardnumbers_type';
 
 class MultiDecoderToolKeyboardNumbers extends AbstractMultiDecoderTool {
-  MultiDecoderToolKeyboardNumbers({Key key, int id, String name, Map<String, dynamic> options, BuildContext context})
+  MultiDecoderToolKeyboardNumbers({Key? key, int id, String name, Map<String, dynamic> options, BuildContext context})
       : super(
             key: key,
             id: id,

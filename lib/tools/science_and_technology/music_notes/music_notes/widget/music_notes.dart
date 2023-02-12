@@ -231,11 +231,11 @@ class MusicNotesState extends State<MusicNotes> {
     return input.map((note) {
       switch (codeBook) {
         case NotesCodebook.ALT:
-          return i18n(context, 'symboltables_notes_names_altoclef_' + note) ?? UNKNOWN_ELEMENT;
+          return i18n(context, 'symboltables_notes_names_altoclef_' + note, ifTranslationNotExists: UNKNOWN_ELEMENT);
         case NotesCodebook.BASS:
-          return i18n(context, 'symboltables_notes_names_bassclef_' + note) ?? UNKNOWN_ELEMENT;
+          return i18n(context, 'symboltables_notes_names_bassclef_' + note, ifTranslationNotExists: UNKNOWN_ELEMENT);
         case NotesCodebook.TREBLE:
-          return i18n(context, 'symboltables_notes_names_trebleclef_' + note) ?? UNKNOWN_ELEMENT;
+          return i18n(context, 'symboltables_notes_names_trebleclef_' + note, ifTranslationNotExists: UNKNOWN_ELEMENT);
       }
     }).join(' ');
   }

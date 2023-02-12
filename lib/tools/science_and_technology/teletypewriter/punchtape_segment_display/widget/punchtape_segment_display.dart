@@ -22,7 +22,7 @@ class PUNCHTAPESegmentDisplay extends NSegmentDisplay {
   final Function onChanged;
   final TeletypewriterCodebook codeBook;
 
-  PUNCHTAPESegmentDisplay(this.codeBook, {Key key, this.segments, this.readOnly: false, this.onChanged})
+  PUNCHTAPESegmentDisplay(this.codeBook, {Key? key, this.segments, this.readOnly: false, this.onChanged})
       : super(
             key: key,
             initialSegments: _INITIAL_SEGMENTS,

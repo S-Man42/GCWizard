@@ -7,14 +7,14 @@ import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 
-Map<String, String> _COMMON_SEARCHSTRINGS;
-Map<String, String> _EN_SEARCHSTRINGS;
-Map<String, String> _LOCALE_SEARCHSTRINGS;
+Map<String, String> _COMMON_SEARCHSTRINGS = {};
+Map<String, String> _EN_SEARCHSTRINGS = {};
+Map<String, String> _LOCALE_SEARCHSTRINGS = {};
 
 final ALLOWED_SEARCH_CHARACTERS = RegExp(r'[^a-z0-9α-ω¥, ]');
 
 Future loadSearchStrings(String languageCode) async {
-  if (_COMMON_SEARCHSTRINGS == null) {
+  if (_COMMON_SEARCHSTRINGS.isEmpty) {
     _COMMON_SEARCHSTRINGS = await _getSearchStringsForLocale('common');
     _EN_SEARCHSTRINGS = await _getSearchStringsForLocale('en');
   }
@@ -37,7 +37,7 @@ Future<Map<String, String>> _getSearchStringsForLocale(String locale) async {
 
   if (file == null) file = '{}';
 
-  Map<String, dynamic> _rawStrings = json.decode(file);
+  Map<String, Object> _rawStrings = json.decode(file);
   Map<String, String> _strings = _rawStrings.map((key, value) {
     return MapEntry(key, value.toString());
   });
@@ -47,11 +47,11 @@ Future<Map<String, String>> _getSearchStringsForLocale(String locale) async {
 
 // Build indexed strings for each tool : concatenated lower case no accent
 void createIndexedSearchStrings() {
-  if (registeredTools == null) return;
+  if (registeredTools.isEmpty) return;
 
   for (GCWTool tool in registeredTools) {
     List<String> searchStrings = [];
-    if (tool.searchKeys == null || tool.searchKeys.where((element) => element != null && element.isNotEmpty).isEmpty)
+    if (tool.searchKeys.where((element) => element.isNotEmpty).isEmpty)
       continue;
 
     for (String searchKey in tool.searchKeys) {
@@ -66,11 +66,11 @@ void createIndexedSearchStrings() {
 
     var _toolName;
     if (tool.toolName != null) {
-      _toolName = removeAccents(tool.toolName).toLowerCase().replaceAll(RegExp(r'\s+'), '');
+      _toolName = removeAccents(tool.toolName!).toLowerCase().replaceAll(RegExp(r'\s+'), '');
     }
     var _indexedSearchStrings =
         removeAccents(searchStrings.join(' ').toLowerCase()).replaceAll(ALLOWED_SEARCH_CHARACTERS, '');
-    if (_indexedSearchStrings == null || _indexedSearchStrings.length == 0) {
+    if (_indexedSearchStrings.length == 0) {
       if (_toolName != null) tool.indexedSearchStrings = _toolName;
       continue;
     }

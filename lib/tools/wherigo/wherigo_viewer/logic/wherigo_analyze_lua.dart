@@ -18,7 +18,7 @@ bool isInvalidLUASourcecode(String header) {
   return (!header.replaceAll('(', ' ').replaceAll(')', '').startsWith('require "Wherigo"'));
 }
 
-Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonline, {SendPort sendAsyncPort}) async {
+Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonline, {SendPort? sendAsyncPort}) async {
   var out = Map<String, dynamic>();
 
   String _httpCode = '';
@@ -309,7 +309,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
     lines[i] = lines[i].trim();
 
     if (sendAsyncPort != null && (i % progressStep == 0)) {
-      sendAsyncPort.send({'progress': i / lines.length / 2});
+      sendAsyncPort?.send({'progress': i / lines.length / 2});
     }
 
     // ----------------------------------------------------------------------------------------------------------------
@@ -439,7 +439,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
           }
 
           if (sendAsyncPort != null && (i % progressStep == 0)) {
-            sendAsyncPort.send({'progress': i / lines.length / 2});
+            sendAsyncPort?.send({'progress': i / lines.length / 2});
           }
         } while (sectionMedia && (i < lines.length - 1));
 
@@ -580,7 +580,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
           }
 
           if (sendAsyncPort != null && (i % progressStep == 0)) {
-            sendAsyncPort.send({'progress': i / lines.length / 2});
+            sendAsyncPort?.send({'progress': i / lines.length / 2});
           }
         } while (sectionZone);
         i--;
@@ -707,7 +707,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
           }
 
           if (sendAsyncPort != null && (i % progressStep == 0)) {
-            sendAsyncPort.send({'progress': i / lines.length / 2});
+            sendAsyncPort?.send({'progress': i / lines.length / 2});
           }
         } while (sectionCharacter);
 
@@ -818,7 +818,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
           }
 
           if (sendAsyncPort != null && (i % progressStep == 0)) {
-            sendAsyncPort.send({'progress': i / lines.length / 2});
+            sendAsyncPort?.send({'progress': i / lines.length / 2});
           }
         } while (sectionItem);
 
@@ -902,7 +902,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
             sectionTask = false;
 
           if (sendAsyncPort != null && (i % progressStep == 0)) {
-            sendAsyncPort.send({'progress': i / lines.length / 2});
+            sendAsyncPort?.send({'progress': i / lines.length / 2});
           }
         } while (sectionTask && (i < lines.length - 1));
 
@@ -1024,7 +1024,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
             sectionTimer = false;
 
           if (sendAsyncPort != null && (i % progressStep == 0)) {
-            sendAsyncPort.send({'progress': i / lines.length / 2});
+            sendAsyncPort?.send({'progress': i / lines.length / 2});
           }
         } while (sectionTimer && i < lines.length - 1);
 
@@ -1166,7 +1166,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
               RegExp(r'(:OnStart)').hasMatch(lines[i + 1].trim())) sectionInput = false;
 
           if (sendAsyncPort != null && (i % progressStep == 0)) {
-            sendAsyncPort.send({'progress': i / lines.length / 2});
+            sendAsyncPort?.send({'progress': i / lines.length / 2});
           }
         } while (sectionInput);
         i--;
@@ -1291,7 +1291,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
           }
 
           if (sendAsyncPort != null && (i % progressStep == 0)) {
-            sendAsyncPort.send({'progress': i / lines.length / 2});
+            sendAsyncPort?.send({'progress': i / lines.length / 2});
           }
         } while (sectionInput);
       } // end if identify input function

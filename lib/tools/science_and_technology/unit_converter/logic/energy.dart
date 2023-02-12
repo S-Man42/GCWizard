@@ -1,10 +1,10 @@
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
 
 class Energy extends Unit {
-  Function toJoule;
-  Function fromJoule;
+  late double Function (double) toJoule;
+  late double Function (double) fromJoule;
 
-  Energy({String name, String symbol, bool isReference: false, double inJoule})
+  Energy({required String name, required String symbol, bool isReference = false, required double inJoule})
       : super(name, symbol, isReference, (e) => e * inJoule, (e) => e / inJoule) {
     toJoule = this.toReference;
     fromJoule = this.fromReference;
@@ -14,6 +14,7 @@ class Energy extends Unit {
 final ENERGY_JOULE = Energy(
   name: 'common_unit_energy_j_name',
   symbol: 'J',
+  inJoule: 1.0,
   isReference: true,
 );
 

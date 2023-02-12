@@ -16,7 +16,7 @@ import 'package:gc_wizard/utils/file_utils/gcw_file.dart' as local;
 class Stegano extends StatefulWidget {
   final local.GCWFile file;
 
-  Stegano({Key key, this.file}) : super(key: key);
+  Stegano({Key? key, this.file}) : super(key: key);
 
   @override
   _SteganoState createState() => _SteganoState();

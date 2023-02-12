@@ -8,7 +8,7 @@ const MDT_INTERNALNAMES_PLAYFAIR = 'multidecoder_tool_playfair_title';
 const MDT_PLAYFAIR_OPTION_MODE = 'multidecoder_tool_playfair_option_mode';
 
 class MultiDecoderToolPlayfair extends AbstractMultiDecoderTool {
-  MultiDecoderToolPlayfair({Key key, int id, String name, Map<String, dynamic> options})
+  MultiDecoderToolPlayfair({Key? key, int id, String name, Map<String, dynamic> options})
       : super(
             key: key,
             id: id,

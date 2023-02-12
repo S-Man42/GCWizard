@@ -12,12 +12,12 @@ Future<Map<String, dynamic>> analyseImageMorseCodeAsync(dynamic jobData) async {
 
   var output = await analyseImageMorseCode(jobData.parameters, sendAsyncPort: jobData.sendAsyncPort);
 
-  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }
 
-Future<Map<String, dynamic>> analyseImageMorseCode(Uint8List bytes, {SendPort sendAsyncPort}) async {
+Future<Map<String, dynamic>> analyseImageMorseCode(Uint8List bytes, {SendPort? sendAsyncPort}) async {
   try {
     var out = animated_image.analyseImage(bytes, sendAsyncPort: sendAsyncPort, filterImages: (outMap, frames) {
       List<Uint8List> imageList = outMap["images"];
@@ -42,13 +42,13 @@ Future<Uint8List> createImageAsync(dynamic jobData) async {
       jobData.parameters.item1, jobData.parameters.item2, jobData.parameters.item3, jobData.parameters.item4,
       sendAsyncPort: jobData.sendAsyncPort);
 
-  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }
 
 Future<Uint8List> _createImage(Uint8List highImage, Uint8List lowImage, String input, int ditDuration,
-    {SendPort sendAsyncPort}) async {
+    {SendPort? sendAsyncPort}) async {
   input = encodeMorse(input);
   if (input == null || input == '') return null;
   if (highImage == null || lowImage == null) return null;

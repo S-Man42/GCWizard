@@ -8,28 +8,30 @@ import 'package:gc_wizard/application/search_strings.dart';
 import 'package:gc_wizard/application/category_views/all_tools_view.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
 
-class AppLocalizations {
-  final Locale locale;
+final String _TRANSLATION_ERROR = '<TRANSLATION_ERROR>';
 
-  AppLocalizations(this.locale);
+class AppLocalizations {
+  final Locale _locale;
+
+  Map<String, String> _localizedStrings = {};
+  Map<String, String> _defaultLocalizedStrings = {};
+
+  AppLocalizations(this._locale);
 
   // Helper method to keep the code in the widgets concise
   // Localizations are accessed using an InheritedWidget "of" syntax
-  static AppLocalizations of(BuildContext context) {
+  static AppLocalizations? _of(BuildContext context) {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
   // Static member to have a simple access to the delegate from the MaterialApp
   static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
 
-  Map<String, String> _localizedStrings;
-  Map<String, String> _defaultLocalizedStrings;
-
   Future<bool> load() async {
     _defaultLocalizedStrings = await loadLang(DEFAULT_LOCALE);
-    Map<String, String> _localStrings = await loadLang(locale.languageCode);
+    Map<String, String> _localStrings = await loadLang(_locale.languageCode);
 
-    // Remove new added keays with empty values (urls for manual)
+    // Remove new added keys with empty values (urls for manual)
     _localStrings..removeWhere((k, v) => v.isEmpty);
 
     _localizedStrings = {
@@ -41,7 +43,7 @@ class AppLocalizations {
     refreshRegistry();
     refreshToolLists();
 
-    await loadSearchStrings(locale.languageCode);
+    await loadSearchStrings(_locale.languageCode);
 
     return true;
   }
@@ -49,7 +51,7 @@ class AppLocalizations {
   Future<Map<String, String>> loadLang(langCode) async {
     // Load the language JSON file from the "lang" folder
     String jsonString = await rootBundle.loadString('assets/i18n/$langCode.json');
-    Map<String, dynamic> jsonMap = json.decode(jsonString);
+    Map<String, Object> jsonMap = json.decode(jsonString);
 
     Map<String, String> _strings = jsonMap.map((key, value) {
       return MapEntry(key, value.toString());
@@ -58,11 +60,11 @@ class AppLocalizations {
   }
 
   // This method will be called from every widget which needs a localized text
-  String translate(String key) {
+  String? _translate(String key) {
     return _localizedStrings[key];
   }
 
-  String translateDefault(String key) {
+  String? _translateDefault(String key) {
     return _defaultLocalizedStrings[key];
   }
 }
@@ -95,14 +97,19 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
  * %s2 -> parameter 2 (list index 1),
  * ...
  */
-String i18n(BuildContext context, String key, {List<dynamic> parameters: const [], bool useDefaultLanguage: false}) {
-  Map<String, String> map = {};
+String i18n(BuildContext context, String key, {List<dynamic> parameters: const [], bool useDefaultLanguage: false, String ifTranslationNotExists: ''}) {
+  Map<String, String> parametersMap = {};
   for (int i = parameters.length; i >= 1; i--) {
-    map.putIfAbsent('%s' + i.toString(), () => parameters[i - 1].toString());
+    parametersMap.putIfAbsent('%s' + i.toString(), () => parameters[i - 1].toString());
   }
 
-  var appLocalization = AppLocalizations.of(context);
-  var text = useDefaultLanguage ? appLocalization.translateDefault(key) : appLocalization.translate(key);
+  var appLocalization = AppLocalizations._of(context);
+  if (appLocalization == null)
+    return ifTranslationNotExists;
 
-  return map.isEmpty ? text : substitution(text, map);
+  var text = useDefaultLanguage ? appLocalization._translateDefault(key) : appLocalization._translate(key);
+  if (text == null)
+    return ifTranslationNotExists;
+
+  return parametersMap.isEmpty ? text : substitution(text, parametersMap);
 }

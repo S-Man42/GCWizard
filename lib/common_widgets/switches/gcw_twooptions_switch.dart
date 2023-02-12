@@ -8,23 +8,23 @@ import 'package:gc_wizard/common_widgets/switches/gcw_switch.dart';
 enum GCWSwitchPosition { left, right }
 
 class GCWTwoOptionsSwitch extends StatefulWidget {
-  final Function onChanged;
-  final String title;
-  final String leftValue;
-  final String rightValue;
-  final GCWSwitchPosition value;
+  final void Function(GCWSwitchPosition) onChanged;
+  final String? title;
+  final String? leftValue;
+  final String? rightValue;
+  final GCWSwitchPosition? value;
   final bool alternativeColor;
   final bool notitle;
 
   const GCWTwoOptionsSwitch(
-      {Key key,
-      this.onChanged,
+      {Key? key,
+      required this.onChanged,
       this.title,
       this.leftValue,
       this.rightValue,
-      @required this.value,
-      this.alternativeColor: false,
-      this.notitle: false})
+      required this.value,
+      this.alternativeColor = false,
+      this.notitle = false})
       : super(key: key);
 
   @override

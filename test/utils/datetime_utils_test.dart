@@ -22,7 +22,7 @@ void main() {
     ];
     _inputsToExpected.forEach((elem) {
       test('jd: ${elem['jd']}', () {
-        var _actual = JulianDateToGregorianCalendar(elem['jd']);
+        var _actual = julianDateToGregorianCalendar(elem['jd']);
         if (_actual == null)
           expect(_actual, elem['expectedOutput']);
         else {
@@ -55,7 +55,7 @@ void main() {
     ];
     _inputsToExpected.forEach((elem) {
       test('jd: ${elem['jd']}', () {
-        var _actual = JulianDateToJulianCalendar(elem['jd']);
+        var _actual = julianDateToJulianCalendar(elem['jd']);
         if (_actual == null)
           expect(_actual, elem['expectedOutput']);
         else {
@@ -88,7 +88,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('date: ${elem['date']}', () {
-        var _actual = GregorianCalendarToJulianDate(elem['date']);
+        var _actual = gregorianCalendarToJulianDate(elem['date']);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -116,7 +116,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('date: ${elem['date']}', () {
-        var _actual = JulianCalendarToJulianDate(elem['date']);
+        var _actual = julianCalendarToJulianDate(elem['date']);
         expect(_actual, elem['expectedOutput']);
       });
     });

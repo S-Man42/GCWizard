@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:gc_wizard/utils/constants.dart';
+import 'package:collection/collection.dart';
 
 const ELLIPSOID_NAME_WGS84 = 'WGS84';
 const ELLIPSOID_NAME_AIRY1830 = 'Airy 1830';
@@ -13,7 +14,7 @@ const ELLIPSOID_NAME_KRASOVSKY1940 = 'Krasovsky 1940';
 enum EllipsoidType { STANDARD, USER_DEFINED }
 
 class Ellipsoid {
-  String name;
+  String? name;
   double a;
   double invf;
   EllipsoidType type;
@@ -123,6 +124,6 @@ final List<Ellipsoid> allEllipsoids = [
   Ellipsoid('Xian 1980', 6378140.0, 298.257),
 ];
 
-Ellipsoid getEllipsoidByName(String name) {
-  return allEllipsoids.firstWhere((ells) => ells.name == name);
+Ellipsoid? getEllipsoidByName(String name) {
+  return allEllipsoids.firstWhereOrNull((ells) => ells.name == name);
 }

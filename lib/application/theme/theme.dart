@@ -49,6 +49,10 @@ TextStyle gcwDescriptionTextStyle() {
   );
 }
 
+TextStyle gcwBoldTextStyle() {
+  return gcwTextStyle().copyWith(fontWeight: FontWeight.bold);
+}
+
 TextStyle gcwDialogTextStyle() {
   return gcwTextStyle().copyWith(color: themeColors().dialogText());
 }

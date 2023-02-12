@@ -5,17 +5,17 @@ import 'package:gc_wizard/application/theme/theme_colors.dart';
 part 'package:gc_wizard/common_widgets/color_pickers/external_libs/fluttercandies.flutter_hsvcolor_picker/hsv_picker.dart';
 
 class GCWColorPicker extends StatefulWidget {
-  final Function onChanged;
+  final void Function(HSVColor) onChanged;
   final HSVColor hsvColor;
 
-  const GCWColorPicker({Key key, @required this.hsvColor, @required this.onChanged}) : super(key: key);
+  const GCWColorPicker({Key? key, required this.hsvColor, required this.onChanged}) : super(key: key);
 
   @override
   GCWColorPickerState createState() => GCWColorPickerState();
 }
 
 class GCWColorPickerState extends State<GCWColorPicker> {
-  HSVColor _currentColor;
+  late HSVColor _currentColor;
 
   @override
   Widget build(BuildContext context) {

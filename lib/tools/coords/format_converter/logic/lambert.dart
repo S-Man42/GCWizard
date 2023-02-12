@@ -41,7 +41,7 @@ class _LambertDefinition {
 
 //https://www.spatialreference.org/ref/epsg/<epsg number>/html/
 
-final Map<LambertType, _LambertDefinition> _LambertDefinitions = {
+final Map<CoordFormatKey, _LambertDefinition> _LambertDefinitions = {
   //EPSG 2154, LAMB93, RGF93, Reseau Geodesique Francais 1993
   LambertType.LAMBERT_93: _LambertDefinition(
       centralMeridian: 3.0,
@@ -151,8 +151,8 @@ final Map<LambertType, _LambertDefinition> _LambertDefinitions = {
 // https://sourceforge.net/p/geographiclib/discussion/1026621/thread/87c3cb91af/
 // https://sourceforge.net/p/geographiclib/code/ci/release/tree/examples/example-LambertConformalConic.cpp#l36
 
-Lambert latLonToLambert(LatLng latLon, LambertType type, Ellipsoid ellipsoid) {
-  var specificLambert = _LambertDefinitions[type];
+Lambert latLonToLambert(LatLng latLon, CoordFormatKey subtype, Ellipsoid ellipsoid) {
+  var specificLambert = _LambertDefinitions[subtype];
 
   LambertConformalConic lambertCC = _lambertConformalConic(specificLambert, ellipsoid);
   GeographicLibLambert transformation = _transformLambertFalseXY(specificLambert, lambertCC);
@@ -162,7 +162,7 @@ Lambert latLonToLambert(LatLng latLon, LambertType type, Ellipsoid ellipsoid) {
 
   GeographicLibLambert lambert = lambertCC.forward(specificLambert.centralMeridian, latLon.latitude, latLon.longitude);
 
-  return Lambert(type, lambert.x - x0, lambert.y - y0);
+  return Lambert(subtype, lambert.x - x0, lambert.y - y0);
 }
 
 LatLng lambertToLatLon(Lambert lambert, Ellipsoid ellipsoid) {
@@ -200,7 +200,7 @@ LambertConformalConic _lambertConformalConic(_LambertDefinition specificLambert,
   return lambertCC;
 }
 
-Lambert parseLambert(String input, {type: DefaultLambertType}) {
+Lambert parseLambert(String input, {type: defaultLambertType}) {
   RegExp regExp = RegExp(r'^\s*([\-0-9\.]+)(\s*\,\s*|\s+)([\-0-9\.]+)\s*$');
   var matches = regExp.allMatches(input);
   var _eastingString = '';

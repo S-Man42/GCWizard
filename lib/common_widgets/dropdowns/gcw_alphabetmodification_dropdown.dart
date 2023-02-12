@@ -5,13 +5,13 @@ import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/_common/logic/crypt_alphabet_modification.dart';
 
 class GCWAlphabetModificationDropDown extends StatefulWidget {
-  final Function onChanged;
-  final value;
-  final List<AlphabetModificationMode> allowedModifications;
+  final void Function(AlphabetModificationMode) onChanged;
+  final AlphabetModificationMode? value;
+  final List<AlphabetModificationMode>? allowedModifications;
   final bool suppressTitle;
 
   const GCWAlphabetModificationDropDown(
-      {Key key, this.onChanged, this.value, this.allowedModifications, this.suppressTitle: false})
+      {Key? key, required this.onChanged, required this.value, this.allowedModifications, this.suppressTitle = false})
       : super(key: key);
 
   @override
@@ -19,10 +19,10 @@ class GCWAlphabetModificationDropDown extends StatefulWidget {
 }
 
 class GCWAlphabetModificationDropDownState extends State<GCWAlphabetModificationDropDown> {
-  AlphabetModificationMode _currentValue;
-  List<Map<String, dynamic>> modifications;
+  AlphabetModificationMode? _currentValue;
+  late List<Map<String, Object>> modifications;
 
-  var allModifications = [
+  var allModifications = <Map<String, Object>>[
     {'mode': AlphabetModificationMode.J_TO_I, 'text': 'common_alphabetmodification_jtoi'},
     {'mode': AlphabetModificationMode.C_TO_K, 'text': 'common_alphabetmodification_ctok'},
     {'mode': AlphabetModificationMode.W_TO_VV, 'text': 'common_alphabetmodification_wtovv'},
@@ -38,7 +38,7 @@ class GCWAlphabetModificationDropDownState extends State<GCWAlphabetModification
     } else {
       modifications = [];
       allModifications.forEach((modification) {
-        if (widget.allowedModifications.contains(modification['mode'])) modifications.add(modification);
+        if (widget.allowedModifications!.contains(modification['mode'])) modifications.add(modification);
       });
     }
   }
@@ -54,14 +54,14 @@ class GCWAlphabetModificationDropDownState extends State<GCWAlphabetModification
               value: _currentValue ?? widget.value ?? AlphabetModificationMode.J_TO_I,
               onChanged: (newValue) {
                 setState(() {
-                  _currentValue = newValue;
-                  widget.onChanged(_currentValue);
+                  _currentValue = newValue is AlphabetModificationMode ? newValue as AlphabetModificationMode : _currentValue;
+                  widget.onChanged(_currentValue!);
                 });
               },
               items: modifications.map((entry) {
                 return GCWDropDownMenuItem(
                   value: entry['mode'],
-                  child: i18n(context, entry['text']),
+                  child: i18n(context, entry['text'] as String),
                 );
               }).toList(),
             ),

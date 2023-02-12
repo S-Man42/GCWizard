@@ -15,8 +15,7 @@ Future<Map<String, dynamic>> getCartridgeAsync(dynamic jobData) async {
       break;
   }
 
-  if (jobData.sendAsyncPort != null) {
-    jobData.sendAsyncPort.send(output);
-  }
+  jobData?.sendAsyncPort?.send(output);
+
   return output;
 }
