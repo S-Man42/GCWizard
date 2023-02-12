@@ -5,15 +5,15 @@ import 'package:gc_wizard/common_widgets/units/gcw_unit_dropdown.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit_category.dart';
 
-class GCWUnitInput extends StatefulWidget {
+class GCWUnitInput<T extends Unit> extends StatefulWidget {
   final double? min;
   final double? max;
   final int? numberDecimalDigits;
   final double value;
-  final List<Unit>? unitList;
-  final UnitCategory? unitCategory;
+  final List<T>? unitList;
+  final UnitCategory<T>? unitCategory;
   final String? title;
-  final Unit? initialUnit;
+  final T? initialUnit;
   final bool suppressOverflow;
 
   final void Function(double) onChanged;
@@ -33,19 +33,21 @@ class GCWUnitInput extends StatefulWidget {
       : super(key: key);
 
   @override
-  _GCWUnitInputState createState() => _GCWUnitInputState();
+  _GCWUnitInputState createState() => _GCWUnitInputState<T>();
 }
 
-class _GCWUnitInputState extends State<GCWUnitInput> {
-  late Unit _currentUnit;
+class _GCWUnitInputState<T extends Unit> extends State<GCWUnitInput> {
+  late T _currentUnit;
   late double _currentValue;
+  late List<T> _unitList;
 
   @override
   void initState() {
     super.initState();
 
     _currentValue = widget.value;
-    _currentUnit = widget.initialUnit ?? getReferenceUnit(widget.unitList ?? widget.unitCategory?.units ?? []);
+    _unitList = (widget.unitCategory?.units ?? <T>[]) as List<T>;
+    _currentUnit = (widget.initialUnit ?? getReferenceUnit<T>(_unitList)) as T;
   }
 
   @override
@@ -71,10 +73,10 @@ class _GCWUnitInputState extends State<GCWUnitInput> {
           ),
           flex: 3),
       Expanded(
-          child: GCWUnitDropDown(
+          child: GCWUnitDropDown<T>(
             value: _currentUnit,
-            unitList: widget.unitList ?? widget.unitCategory?.units ?? [],
-            onChanged: (value) {
+            unitList: _unitList,
+            onChanged: (T value) {
               setState(() {
                 _currentUnit = value;
                 _convertToReferenceAndEmitOnChange();

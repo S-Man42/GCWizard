@@ -102,8 +102,8 @@ class _GeodesicLine {
   static final int _nC3_ = Geodesic.nC3_;
   static final int _nC4_ = Geodesic.nC4_;
 
-  double _lat1, _lon1, _azi1;
-  double _a,
+  late double _lat1, _lon1, _azi1;
+  late double _a,
       _f,
       _b,
       _c2,
@@ -128,10 +128,10 @@ class _GeodesicLine {
       _B31,
       _A4,
       _B41;
-  double _a13, _s13;
+  late double _a13, _s13;
   // index zero elements of _C1a, _C1pa, _C2a, _C3a are unused
-  List<double> _C1a, _C1pa, _C2a, _C3a, _C4a; // all the elements of _C4a are used
-  int _caps;
+  late List<double> _C1a, _C1pa, _C2a, _C3a, _C4a; // all the elements of _C4a are used
+  late int _caps;
   /*
    * Constructor for a geodesic line staring at latitude <i>lat1</i>, longitude
    * <i>lon1</i>, and azimuth <i>azi1</i> (all in degrees) with a subset of the
@@ -203,7 +203,7 @@ class _GeodesicLine {
     _salp1 = salp1;
     _calp1 = calp1;
     double cbet1, sbet1;
-    _GeoMath.sincosd(p, _GeoMath.AngRound(_lat1));
+    _GeoMath.sincosd(p, _GeoMath.AngRound(_lat1!));
     sbet1 = _f1 * p.first;
     cbet1 = p.second;
     // Ensure cbet1 = +epsilon at poles

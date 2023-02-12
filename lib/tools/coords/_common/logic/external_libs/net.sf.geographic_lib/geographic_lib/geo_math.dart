@@ -237,7 +237,7 @@ class _GeoMath {
    *   return NaN.
    **********************************************************************/
   static double LatFix(double x) {
-    return x.abs() > 90 ? null : x;
+    return x.abs() > 90 ? double.nan : x;
   }
 
   /*

@@ -70,15 +70,15 @@ class _GCWCoordsDMMState extends State<_GCWCoordsDMM> {
       var lat = dmm.latitude.formatParts(10);
       var lon = dmm.longitude.formatParts(10);
 
-      _currentLatDegrees = lat['degrees'] as String;
-      _currentLatMinutes = (lat['minutes'] as String).split('.')[0];
-      _currentLatMilliMinutes = (lat['minutes'] as String).split('.')[1];
-      _currentLatSign = widget.coordinates.isDefault() ? defaultHemiphereLatitude() : (lat['sign'] as Map<String, Object>)!['value'] as int;
+      _currentLatDegrees = lat.degrees;
+      _currentLatMinutes = lat.minutes.split('.')[0];
+      _currentLatMilliMinutes = lat.minutes.split('.')[1];
+      _currentLatSign = lat.sign.value;
 
-      _currentLonDegrees = lon['degrees'];
-      _currentLonMinutes = lon['minutes'].split('.')[0];
-      _currentLonMilliMinutes = lon['minutes'].split('.')[1];
-      _currentLonSign = widget.coordinates.isDefault() ? defaultHemiphereLongitude() : lon['sign']['value'];
+      _currentLonDegrees = lon.degrees;
+      _currentLonMinutes = lon.minutes.split('.')[0];
+      _currentLonMilliMinutes = lon.minutes.split('.')[1];
+      _currentLonSign = lon.sign.value;
 
       _LatDegreesController.text = _currentLatDegrees;
       _LatMinutesController.text = _currentLatMinutes;

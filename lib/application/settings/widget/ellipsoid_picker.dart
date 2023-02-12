@@ -33,7 +33,7 @@ class _EllipsoidPickerState extends State<_EllipsoidPicker> {
     if (_currentEllipsoid.type == EllipsoidType.USER_DEFINED) {
       _firstCustomValue = DoubleText(_currentEllipsoid.a.toString(), _currentEllipsoid.a);
       _secondCustomValue = DoubleText(_currentEllipsoid.b.toString(), _currentEllipsoid.b);
-      _currentStandardEllipsoid = getEllipsoidByName(ELLIPSOID_NAME_WGS84);
+      _currentStandardEllipsoid = getEllipsoidByName(ELLIPSOID_NAME_WGS84)!;
     } else {
       _firstCustomValue = defaultDoubleText;
       _secondCustomValue = defaultDoubleText;

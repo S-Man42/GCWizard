@@ -13,18 +13,16 @@ import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:xml/xml.dart';
 
-Future<MapViewDAO> importCoordinatesFile(GCWFile file) async {
-  var type = fileTypeByFilename(file.name);
+Future<MapViewDAO?> importCoordinatesFile(GCWFile file) async {
+  var type = fileTypeByFilename(file.name!);
 
   switch (type) {
     case FileType.GPX:
       var xml = String.fromCharCodes(file.bytes);
       return parseCoordinatesFile(xml);
-      break;
     case FileType.KML:
       var xml = String.fromCharCodes(file.bytes);
       return parseCoordinatesFile(xml, kmlFormat: true);
-      break;
     case FileType.KMZ:
       InputStream input = InputStream(file.bytes.buffer.asByteData());
       // Decode the Zip file
@@ -36,12 +34,13 @@ Future<MapViewDAO> importCoordinatesFile(GCWFile file) async {
         return parseCoordinatesFile(xml, kmlFormat: true);
       }
       break;
+    default: break;
   }
 
   return null;
 }
 
-MapViewDAO parseCoordinatesFile(String xml, {bool kmlFormat = false}) {
+MapViewDAO? parseCoordinatesFile(String xml, {bool kmlFormat = false}) {
   MapViewDAO result;
   try {
     var xmlDoc = XmlDocument.parse(xml);
@@ -154,7 +153,7 @@ class _KmlReader {
 
         document.findAllElements('Placemark').forEach((xmlPlacemark) {
           var points = _readPoints(xmlPlacemark, parent);
-          if (points != null) lines.addAll(points);
+          lines.addAll(points);
         });
 
         _restorePoints(points, lines);
@@ -183,7 +182,7 @@ class _KmlReader {
           var linesTmp = _readPoints(boundery, styleParent);
           if (linesTmp != null) lines.addAll(linesTmp);
         });
-        if (lines.length == 0) return null;
+        if (lines.length == 0) return [];
 
         return lines;
       }
@@ -195,14 +194,14 @@ class _KmlReader {
           var linesTmp = _readPoints(child, styleParent);
           if (linesTmp != null) lines.addAll(linesTmp);
         });
-        if (lines.length == 0) return null;
+        if (lines.length == 0) return [];
 
         return lines;
       }
     }
-    if (group == null) return null;
+    if (group == null) return [];
     var coords = group.getElement('coordinates');
-    if (coords == null) return null;
+    if (coords == null) return [];
 
     var line = GCWMapPolyline(points: <GCWMapPoint>[]);
     var regExp = RegExp(r'(-?[\.0-9]+),(-?[\.0-9]+),?(-?[\.0-9]+)?');
@@ -224,13 +223,12 @@ class _KmlReader {
     });
 
     if (line.points.length > 0) lines.add(line);
-    if (lines.length == 0) return null;
+    if (lines.length == 0) return [];
 
     return lines;
   }
 
   GCWMapPoint _readPointStyleMap(GCWMapPoint point, String styleUrl, XmlElement styleParent) {
-    if (styleUrl == null) return point;
     if (styleUrl.startsWith('#')) styleUrl = styleUrl.replaceFirst('#', '');
 
     styleParent.findAllElements('StyleMap').forEach((xmlElement) {
@@ -238,6 +236,7 @@ class _KmlReader {
         var pair = xmlElement.getElement('Pair');
         if (pair != null) {
           var styleUrl = pair.getElement('styleUrl');
+          // TODO Mike: Formerly this compiled... however this was possible... The return only leaves the "forEach". Should it leave the entire method?
           if (styleUrl != null) return _readPointStyle(point, styleUrl.innerText, styleParent);
         }
       }
@@ -310,10 +309,10 @@ bool _completeCircle(GCWMapPolyline line, List<GCWMapPoint> points) {
   if (dist.abs() > distToller) return false;
 
   var crossPoint = intersectFourPoints(pt1, pt2, pt3, pt4, ells);
-  GCWMapPoint center;
+  late GCWMapPoint center;
   double minDist = double.maxFinite;
 
-  points.forEach((wpt) {
+  points.forEach((GCWMapPoint wpt) {
     var dist = distanceBearing(wpt.point, crossPoint, ells);
     if (dist.distance < minDist && !wpt.hasCircle()) {
       minDist = dist.distance;
@@ -324,9 +323,11 @@ bool _completeCircle(GCWMapPolyline line, List<GCWMapPoint> points) {
 
   var radius = length1.distance / 2;
   distToller = distToller / 2;
-  line.points.forEach((wpt) {
+  line.points.forEach((GCWMapPoint wpt) {
     dist = distanceBearing(wpt.point, center.point, ells).distance;
-    if ((dist - radius).abs() > distToller) return false;
+
+    // TODO Mike: Formerly here was 'return false' instead of 'return'. With 'return false' it's not compiling anymore. I am not sure if it should exit the "forEach" or the entire method.
+    if ((dist - radius).abs() > distToller) return;
   });
   center.circle = GCWMapCircle(centerPoint: center.point, radius: radius, color: line.color);
   center.circleColorSameAsPointColor = (center.color == center.circle.color);

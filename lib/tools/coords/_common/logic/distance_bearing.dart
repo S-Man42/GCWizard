@@ -27,23 +27,23 @@ class DistanceBearingData {
     this._bearingBToA = radianToDeg(bearingBToA);
   }
 
-  get distance {
+  double get distance {
     return _distance;
   }
 
-  get bearingAToB {
+  double get bearingAToB {
     return _bearingAToB;
   }
 
-  get bearingBToA {
+  double get bearingBToA {
     return _bearingBToA;
   }
 
-  get bearingAToBInRadian {
+  double get bearingAToBInRadian {
     return degToRadian(_bearingAToB);
   }
 
-  get bearingBToAInRadian {
+  double get bearingBToAInRadian {
     return degToRadian(_bearingBToA);
   }
 

@@ -108,8 +108,8 @@ final List<Unit> baseLengths = [
 final LENGTH_KM = Length(name: 'common_unit_length_km_name', symbol: 'km', inMeters: 1000.0);
 final LENGTH_CM = Length(name: 'common_unit_length_cm_name', symbol: 'cm', inMeters: 0.01);
 
-List<Unit> allLengths() {
-  var lengths = List<Unit>.from(baseLengths);
+List<Length> allLengths() {
+  var lengths = List<Length>.from(baseLengths);
   var indexM = baseLengths.indexOf(LENGTH_METER);
   lengths.insert(indexM + 1, LENGTH_KM);
   lengths.insert(indexM + 2, LENGTH_CM);

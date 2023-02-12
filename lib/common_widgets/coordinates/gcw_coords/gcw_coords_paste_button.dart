@@ -7,12 +7,10 @@ import 'package:gc_wizard/tools/coords/coordinate_format_parser/logic/latlon.dar
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 
 class GCWCoordsPasteButton extends StatefulWidget {
-  final Function onPasted;
+  final Function(List<BaseCoordinates>) onPasted;
   final IconButtonSize size;
-  final Widget customIcon;
-  final Color backgroundColor;
 
-  const GCWCoordsPasteButton({Key? key, this.onPasted, this.size, this.backgroundColor, this.customIcon})
+  const GCWCoordsPasteButton({Key? key, required this.onPasted, required this.size})
       : super(key: key);
 
   @override
@@ -24,21 +22,19 @@ class _GCWCoordsPasteButtonState extends State<GCWCoordsPasteButton> {
   Widget build(BuildContext context) {
     return GCWPasteButton(
       iconSize: widget.size,
-      customIcon: widget.customIcon,
-      backgroundColor: widget.backgroundColor,
       onSelected: _parseClipboardAndSetCoords,
     );
   }
 
   _parseClipboardAndSetCoords(text) {
-    var parsed = parseCoordinates(text);
+    List<BaseCoordinates> parsed = parseCoordinates(text);
 
-    if (parsed == null || parsed.length == 0) {
+    if (parsed.length == 0) {
       showToast(i18n(context, 'coords_common_clipboard_nocoordsfound'));
-      widget.onPasted(null);
+      widget.onPasted([]);
       return;
     } else if (parsed.length > 1) {
-      var recognizedformates = parsed.map((coords) {
+      var recognizedFormats = parsed.map((coords) {
         var text = '\r\n';
         var coordFormat = allCoordFormats.firstWhere((format) => format.key == coords.key);
         if (coordFormat.subtypes == null)
@@ -47,7 +43,7 @@ class _GCWCoordsPasteButtonState extends State<GCWCoordsPasteButton> {
           text += i18n(context, coordFormat.name);
         return text;
       }).join();
-      showToast(i18n(context, 'coords_common_clipboard_recognizedcoordformats') + ':' + recognizedformates);
+      showToast(i18n(context, 'coords_common_clipboard_recognizedcoordformats') + ':' + recognizedFormats);
     }
 
     widget.onPasted(parsed);
