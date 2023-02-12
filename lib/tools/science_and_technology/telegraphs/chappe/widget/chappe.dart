@@ -24,9 +24,9 @@ class ChappeTelegraph extends StatefulWidget {
 
 class ChappeTelegraphState extends State<ChappeTelegraph> {
   String _currentEncodeInput = '';
-  TextEditingController _encodeController;
+  late TextEditingController _encodeController;
 
-  TextEditingController _decodeInputController;
+  late TextEditingController _decodeInputController;
   String _currentDecodeInput = '';
 
   List<List<String>> _currentDisplays = [];
@@ -53,7 +53,7 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
-      GCWDropDown(
+      GCWDropDown<ChappeCodebook>(
         value: _currentLanguage,
         onChanged: (value) {
           setState(() {
@@ -63,8 +63,8 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
         items: CHAPPE_CODEBOOK.entries.map((mode) {
           return GCWDropDownMenuItem(
               value: mode.key,
-              child: i18n(context, mode.value['title']),
-              subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']) : null);
+              child: i18n(context, mode.value['title']!),
+              subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']!) : null);
         }).toList(),
       ),
       GCWTwoOptionsSwitch(
@@ -216,8 +216,8 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
         segments = decodeTextChappeTelegraph(_currentDecodeInput.toUpperCase(), _currentLanguage);
       } else {
         // decode visual mode
-        var output = _currentDisplays.map((character) {
-          if (character != null) return character.join();
+        var output = _currentDisplays.where((character) => character != null).map((character) {
+          return character.join();
         }).toList();
         segments = decodeVisualChappe(output, _currentLanguage);
       }

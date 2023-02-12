@@ -128,18 +128,18 @@ List<List<String>> encodePasley(String input) {
 
   for (int i = 0; i < inputs.length; i++) {
     if (letter) if (LETTER.contains(inputs[i])) {
-      result.add(PASLEY[inputs[i].toUpperCase()]);
+      result.add(PASLEY[inputs[i].toUpperCase()]!);
     } else {
-      result.add(PASLEY_MODIFIER['NUMBERFOLLOWS']);
-      result.add(PASLEY[inputs[i]]);
+      result.add(PASLEY_MODIFIER['NUMBERFOLLOWS']!);
+      result.add(PASLEY[inputs[i]]!);
       letter = false;
     }
     else if (LETTER.contains(inputs[i])) {
-      result.add(PASLEY_MODIFIER['LETTERFOLLOWS']);
-      result.add(PASLEY[inputs[i].toUpperCase()]);
+      result.add(PASLEY_MODIFIER['LETTERFOLLOWS']!);
+      result.add(PASLEY[inputs[i].toUpperCase()]!);
       letter = true;
     } else {
-      result.add(PASLEY[inputs[i]]);
+      result.add(PASLEY[inputs[i]]!);
     }
   }
   return result;
@@ -171,13 +171,13 @@ Map<String, dynamic> decodeVisualPasley(List<String> inputs) {
     if (CODEBOOK[input] == null) {
       char = char + UNKNOWN_ELEMENT;
     } else {
-      charH = CODEBOOK[input];
+      charH = CODEBOOK[input]!;
       if (charH == 'LETTERFOLLOWS')
         letter = true;
       else if (charH == 'NUMBERFOLLOWS')
         letter = false;
       else
-        char = char + _decode(charH, letter);
+        char = char + (_decode(charH, letter) ?? '');
     }
 
     return char;
@@ -192,7 +192,7 @@ List<String> _stringToSegment(String input) {
   return result;
 }
 
-String _decode(String code, bool letter) {
+String? _decode(String code, bool letter) {
   if (letter)
     return code;
   else
