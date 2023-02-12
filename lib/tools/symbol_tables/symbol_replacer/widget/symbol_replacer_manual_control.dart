@@ -73,6 +73,10 @@ class SymbolReplacerManualControlState extends State<SymbolReplacerManualControl
           _symbolMap[symbol] = _cloneSymbolData(_symbolData!, _displayText);
         }
       }
+      // else //ToDo Mike Nullsafety
+      //   _symbolMap.addAll({
+      //     symbol: {null: SymbolData(bytes: symbol.getImage(), displayName: symbol?.symbolGroup?.text ?? '')}
+      //   });
     });
 
     return Expanded(

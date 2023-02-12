@@ -79,6 +79,10 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
         if (_symbolData?.values.first.displayName != _displayText)
           _symbolMap[symbol] = _cloneSymbolData(_symbolData!, _displayText);
       }
+      // else //ToDo Mike Nullsafety
+      //   _symbolMap.addAll({
+      //     symbol: {null: SymbolData(bytes: symbol.getImage(), displayName: symbol?.symbolGroup?.text ?? '')}
+      //   });
     });
   }
 
