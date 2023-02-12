@@ -69,15 +69,17 @@ class ZodiacState extends State<Zodiac> {
     );
   }
 
-  String _createDateOutput(Map<String, int> dateValues) {
-    var startDate = DateTime(0, dateValues['start_month'], dateValues['start_day']);
-    var endDate = DateTime(0, dateValues['end_month'], dateValues['end_day']);
+  String _createDateOutput(Map<String, int>? dateValues) {
+    if (dateValues == null) return '';
+    var startDate = DateTime(0, dateValues['start_month'] as int, dateValues['start_day'] as int);
+    var endDate = DateTime(0, dateValues['end_month'] as int, dateValues['end_day'] as int);
 
     var dateFormat = DateFormat('MMMMd', Localizations.localeOf(context).toString());
     return dateFormat.format(startDate) + ' - ' + dateFormat.format(endDate);
   }
 
-  _createPlanetOutput(List<String> planets) {
+  String _createPlanetOutput(List<String>? planets) {
+    if (planets == null || planets.isEmpty) return '';
     var output = i18n(context, planets[0]);
     if (planets.length == 1) return output;
 
@@ -91,29 +93,31 @@ class ZodiacState extends State<Zodiac> {
     if (_currentMode == GCWSwitchPosition.left) {
       var zodiacSignKey = ZODIACSIGNS.keys.toList()[_currentZodiacSign];
       var zodiacSign = ZODIACSIGNS[zodiacSignKey];
+      if (zodiacSign == null) return Container();
 
       return GCWColumnedMultilineOutput(
           data: [
-                  [i18n(context, ZODIACSIGNS_ATTRIBUTE_DATE), _createDateOutput(zodiacSign[ZODIACSIGNS_ATTRIBUTE_DATE])],
-                  [i18n(context, ZODIACSIGNS_ATTRIBUTE_PLANET), _createPlanetOutput(zodiacSign[ZODIACSIGNS_ATTRIBUTE_PLANET])],
-                  [i18n(context, ZODIACSIGNS_ATTRIBUTE_ELEMENT), i18n(context, zodiacSign[ZODIACSIGNS_ATTRIBUTE_ELEMENT])],
+                  [i18n(context, ZODIACSIGNS_ATTRIBUTE_DATE), _createDateOutput(zodiacSign[ZODIACSIGNS_ATTRIBUTE_DATE] as Map<String, int>?)],
+                  [i18n(context, ZODIACSIGNS_ATTRIBUTE_PLANET), _createPlanetOutput(zodiacSign[ZODIACSIGNS_ATTRIBUTE_PLANET] as List<String>?)],
+                  [i18n(context, ZODIACSIGNS_ATTRIBUTE_ELEMENT), i18n(context, zodiacSign[ZODIACSIGNS_ATTRIBUTE_ELEMENT] as String)],
                   [i18n(context, ZODIACSIGNS_ATTRIBUTE_HOUSE), zodiacSign[ZODIACSIGNS_ATTRIBUTE_HOUSE]],
-                  [i18n(context, ZODIACSIGNS_ATTRIBUTE_QUALITY), i18n(context, zodiacSign[ZODIACSIGNS_ATTRIBUTE_QUALITY])],
-                  [i18n(context, ZODIACSIGNS_ATTRIBUTE_POLARITY), i18n(context, zodiacSign[ZODIACSIGNS_ATTRIBUTE_POLARITY])],
+                  [i18n(context, ZODIACSIGNS_ATTRIBUTE_QUALITY), i18n(context, zodiacSign[ZODIACSIGNS_ATTRIBUTE_QUALITY] as String)],
+                  [i18n(context, ZODIACSIGNS_ATTRIBUTE_POLARITY), i18n(context, zodiacSign[ZODIACSIGNS_ATTRIBUTE_POLARITY] as String)],
                 ],
           flexValues: [1, 2]
       );
     } else {
       return GCWColumnedMultilineOutput(
+        // ToDo Mark replace Map
           data: ZODIACSIGNS
                   .map((key, value) {
                     var output;
                     switch (_currentAttribute) {
                       case ZODIACSIGNS_ATTRIBUTE_DATE:
-                        output = _createDateOutput(value[_currentAttribute]);
+                        output = _createDateOutput(value[_currentAttribute] as Map<String, int>?);
                         break;
                       case ZODIACSIGNS_ATTRIBUTE_PLANET:
-                        output = _createPlanetOutput(value[_currentAttribute]);
+                        output = _createPlanetOutput(value[_currentAttribute] as List<String>?);
                         break;
                       case ZODIACSIGNS_ATTRIBUTE_HOUSE:
                         output = value[_currentAttribute];
@@ -121,7 +125,7 @@ class ZodiacState extends State<Zodiac> {
                       case ZODIACSIGNS_ATTRIBUTE_ELEMENT:
                       case ZODIACSIGNS_ATTRIBUTE_QUALITY:
                       case ZODIACSIGNS_ATTRIBUTE_POLARITY:
-                        output = i18n(context, value[_currentAttribute]);
+                        output = i18n(context, value[_currentAttribute] as String);
                         break;
                     }
 

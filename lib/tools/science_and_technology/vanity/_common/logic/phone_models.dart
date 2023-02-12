@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:gc_wizard/tools/science_and_technology/vanity/_common/workflows/_simple.dart';
 import 'package:gc_wizard/tools/science_and_technology/vanity/_common/workflows/motorola_cd930.dart';
 import 'package:gc_wizard/tools/science_and_technology/vanity/_common/workflows/motorola_razr_v3.dart';
@@ -50,12 +51,12 @@ const PHONE_STATEMODEL_START = '[*]';
 
 class PhoneModel {
   String name;
-  Map<String, Map<String, String>> defaultCaseStateModel;
-  Map<PhoneInputLanguage, Map<String, Map<String, String>>> specificCaseStateModels;
+  late Map<String, Map<String, String>> defaultCaseStateModel;
+  late Map<PhoneInputLanguage, Map<String, Map<String, String>>> specificCaseStateModels;
   List<Map<PhoneCaseMode, Map<String, String>>> characterMap;
   List<List<PhoneInputLanguage>> languages;
 
-  PhoneModel(this.name, String defaultCaseStateModelRaw, Map<PhoneInputLanguage, String> specificCaseStateModelsRaw,
+  PhoneModel(this.name, String defaultCaseStateModelRaw, Map<PhoneInputLanguage, String>? specificCaseStateModelsRaw,
       this.characterMap, this.languages) {
     this.defaultCaseStateModel = _initializeCaseStateModel(defaultCaseStateModelRaw);
     if (specificCaseStateModelsRaw != null && specificCaseStateModelsRaw.length > 0) {
@@ -102,10 +103,10 @@ Map<String, Map<String, String>> _initializeCaseStateModel(String rawStateModel)
     if (!_isStartState(line)) transitionCharacters = match.group(3);
 
     if (_isStartState(line)) {
-      stateModel[startState].putIfAbsent('', () => destinationState);
+      stateModel[startState]!.putIfAbsent('', () => destinationState);
     } else {
       transitionCharacters.split('').forEach((character) {
-        stateModel[startState].putIfAbsent(character, () => destinationState);
+        stateModel[startState]!.putIfAbsent(character, () => destinationState);
       });
     }
   });
@@ -136,8 +137,8 @@ const NAME_PHONEMODEL_SIEMENS_S55 = 'Siemens S55';
 const NAME_PHONEMODEL_SONYERICSSON_K700I = 'Sony Ericsson K700i';
 const NAME_PHONEMODEL_SONYERICSSON_T300 = 'Sony Ericsson T300';
 
-PhoneModel phoneModelByName(String name) {
-  return PHONE_MODELS.firstWhere((element) => element.name == name, orElse: () => null);
+PhoneModel? phoneModelByName(String name) {
+  return PHONE_MODELS.firstWhereOrNull((element) => element.name == name);
 }
 
 final PHONEMODEL_SIMPLE_SPACE_0 = PhoneModel(NAME_PHONEMODEL_SIMPLE_SPACE_0, PHONEMODEL_SIMPLE_STATES, null, [

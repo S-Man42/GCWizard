@@ -1,7 +1,8 @@
 import 'package:gc_wizard/tools/science_and_technology/vanity/_common/logic/phone_models.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
-PhoneCaseMode? _getModeFromState(String state) {
+PhoneCaseMode? _getModeFromState(String? state) {
+  if (state == null) return null;
   switch (state.split('_')[0]) {
     case 'ABC':
       return PhoneCaseMode.UPPER_CASE;
@@ -43,7 +44,7 @@ bool _isTransitionCharacter(Map<String, Map<String, String>> stateModel, String 
 }
 
 Map<String, String> _getCharMap(Map<PhoneCaseMode, Map<String, String>> languageCharMap, PhoneCaseMode mode) {
-  return languageCharMap[mode == PhoneCaseMode.CAMEL_CASE ? PhoneCaseMode.UPPER_CASE : mode];
+  return languageCharMap[mode == PhoneCaseMode.CAMEL_CASE ? PhoneCaseMode.UPPER_CASE : mode] ?? {};
 }
 
 String? _getNewState(Map<String, Map<String, String>> stateModel, String state, String character) {
@@ -130,15 +131,16 @@ Map<String, String>? _findStateForCharacter(Map<String, Map<String, String>> sta
   if (numberHops > 3) return null;
 
   var mode = _getModeFromState(currentState);
+  if (mode == null) return null;
   var availableCharactersForMode = _getCharMap(languageCharMap, mode).values.join();
 
   if (availableCharactersForMode.contains(character)) return {'transitions': transitions, 'state': currentState};
 
   String? newState;
-  Map<String, String> result;
+  Map<String, String>? result;
 
   for (String transitionCharacter in ['0', '*', '#']) {
-    newState = stateModel[currentState][transitionCharacter];
+    newState = stateModel[currentState]![transitionCharacter];
     if (newState != null) {
       result = _findStateForCharacter(
           stateModel, newState, languageCharMap, character, numberHops + 1, transitions + transitionCharacter);
@@ -154,24 +156,26 @@ String _getInputForCharacter(Map<String, String> charMap, String character) {
   return entry.key * (entry.value.indexOf(character) + 1);
 }
 
-Map<String, dynamic> encodeVanityMultitap(String input, PhoneModel model, PhoneInputLanguage inputLanguage) {
+// ToDo Mark replace Map
+Map<String, dynamic>? encodeVanityMultitap(String? input, PhoneModel? model, PhoneInputLanguage? inputLanguage) {
   if (model == null || inputLanguage == null) return null;
 
   var stateModel = model.defaultCaseStateModel;
 
   if (model.specificCaseStateModels != null && model.specificCaseStateModels[inputLanguage] != null)
-    stateModel = model.specificCaseStateModels[inputLanguage];
+    stateModel = model.specificCaseStateModels[inputLanguage]!;
 
-  var currentState = stateModel[PHONE_STATEMODEL_START].values.first;
+  var currentState = stateModel[PHONE_STATEMODEL_START]!.values.first;
   var currentMode = _getModeFromState(currentState);
 
-  if (input == null || input.isEmpty) return {'mode': currentMode, 'output': ''};
+  if (input == null || input.isEmpty ||
+      currentState == null || currentMode== null) return {'mode': currentMode, 'output': ''};
 
   var languageIndex = model.languages.indexWhere((langList) => langList.contains(inputLanguage));
   var languageCharmap = model.characterMap[languageIndex];
 
   input = _sanitizeEncodeInput(input, languageCharmap);
-  if (input.isEmpty) return {'mode': currentMode, 'output': ''};
+  if (input!.isEmpty) return {'mode': currentMode, 'output': ''};
 
   List<String> output = [];
   var currentCharmap;
@@ -183,15 +187,15 @@ Map<String, dynamic> encodeVanityMultitap(String input, PhoneModel model, PhoneI
       return;
     }
 
-    if (newState['transitions'].length > 0) output.add(newState['transitions']);
+    if (newState['transitions']!.length > 0) output.add(newState['transitions']!);
 
-    currentState = newState['state'];
+    currentState = newState['state']!;
     currentMode = _getModeFromState(currentState);
 
-    currentCharmap = _getCharMap(languageCharmap, currentMode);
+    currentCharmap = _getCharMap(languageCharmap, currentMode!);
 
     output.add(_getInputForCharacter(currentCharmap, character));
-    currentState = _getNewState(stateModel, currentState, character);
+    currentState = _getNewState(stateModel, currentState, character)!;
   });
 
   return {'mode': _getModeFromState(currentState), 'output': output.join(' ')};
@@ -200,7 +204,7 @@ Map<String, dynamic> encodeVanityMultitap(String input, PhoneModel model, PhoneI
 String encodeVanitySingletap(String input, PhoneModel model) {
   if (input == null || input.isEmpty) return '';
 
-  return encodeVanityMultitap(input, model, PhoneInputLanguage.UNSPECIFIED)['output']
+  return encodeVanityMultitap(input, model, PhoneInputLanguage.UNSPECIFIED)!['output']
       .split(' ')
       .map((group) => group == null || group.isEmpty ? '' : group[0])
       .join();

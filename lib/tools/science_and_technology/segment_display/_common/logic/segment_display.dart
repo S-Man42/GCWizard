@@ -563,7 +563,7 @@ List<List<String>> encodeSegment(String input, SegmentDisplayType segmentType) {
   return output;
 }
 
-Map<String, dynamic> decodeSegment(String input, SegmentDisplayType segmentType) {
+Map<String, dynamic> decodeSegment(String? input, SegmentDisplayType segmentType) {
   if (input == null || input == '') return {'displays': <List<String>>[], 'text': ''};
   var baseSegments;
 
@@ -581,7 +581,7 @@ Map<String, dynamic> decodeSegment(String input, SegmentDisplayType segmentType)
 
   input = input.toLowerCase();
   var displays = <List<String>>[];
-  List<String> currentDisplay;
+  List<String>? currentDisplay;
 
   for (int i = 0; i < input.length; i++) {
     var segment = input[i];
@@ -630,7 +630,7 @@ Map<String, dynamic> decodeSegment(String input, SegmentDisplayType segmentType)
   return {'displays': displays, 'text': out};
 }
 
-_characterFromSegmentList(SegmentDisplayType type, List<String> segments) {
+String? _characterFromSegmentList(SegmentDisplayType type, List<String> segments) {
   Map<List<String>, String> segmentToAZ;
 
   switch (type) {
@@ -643,6 +643,8 @@ _characterFromSegmentList(SegmentDisplayType type, List<String> segments) {
     case SegmentDisplayType.SIXTEEN:
       segmentToAZ = _Segment16ToAZ;
       break;
+    default:
+      return null;
   }
   return segmentToAZ.map((key, value) => MapEntry(key.join(), value.toString()))[segments.join()];
 }

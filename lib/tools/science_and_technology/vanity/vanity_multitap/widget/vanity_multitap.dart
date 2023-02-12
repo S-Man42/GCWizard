@@ -26,7 +26,7 @@ class VanityMultitapState extends State<VanityMultitap> {
   GCWSwitchPosition _currentSimpleMode = GCWSwitchPosition.left;
 
   PhoneModel _currentSimpleModel = PHONEMODEL_SIMPLE_SPACE_0;
-  PhoneModel _currentModel = phoneModelByName(NAME_PHONEMODEL_NOKIA_3210);
+  PhoneModel _currentModel = phoneModelByName(NAME_PHONEMODEL_NOKIA_3210)!;
   int _currentLanguageId = 0;
 
   @override

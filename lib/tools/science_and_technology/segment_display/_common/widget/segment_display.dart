@@ -19,7 +19,7 @@ import 'package:gc_wizard/utils/constants.dart';
 class SegmentDisplay extends StatefulWidget {
   final SegmentDisplayType type;
 
-  SegmentDisplay({Key? key, this.type}) : super(key: key);
+  SegmentDisplay({Key? key, required this.type}) : super(key: key);
 
   @override
   SegmentDisplayState createState() => SegmentDisplayState();
@@ -150,6 +150,8 @@ class SegmentDisplayState extends State<SegmentDisplay> {
           onChanged: onChanged,
         );
         break;
+      default:
+        return Container();
     }
 
     return Column(
@@ -224,7 +226,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
                 readOnly: true,
               );
             default:
-              return null;
+              return SevenSegmentDisplay(segments: {});
           }
         },
         segments: segments,

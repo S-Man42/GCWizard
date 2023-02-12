@@ -139,9 +139,9 @@ class SymbolReplacerState extends State<SymbolReplacer> {
         builder: (context) {
           return Center(
             child: Container(
-              child: GCWAsyncExecuter(
+              child: GCWAsyncExecuter<SymbolReplacerImage?>(
                 isolatedFunction: replaceSymbolsAsync,
-                parameter: _buildJobDataReplacer(),
+                parameter: _buildJobDataReplacer,
                 onReady: (data) => _showOutput(data),
                 isOverlay: true,
               ),
@@ -370,9 +370,9 @@ class SymbolReplacerState extends State<SymbolReplacer> {
       builder: (context) {
         return Center(
           child: Container(
-            child: GCWAsyncExecuter(
+            child: GCWAsyncExecuter<SubstitutionBreakerResult?>(
               isolatedFunction: break_cipherAsync,
-              parameter: _buildSubstitutionBreakerJobData(),
+              parameter: _buildSubstitutionBreakerJobData,
               onReady: (data) => _showSubstitutionBreakerOutput(data),
               isOverlay: true,
             ),
@@ -391,9 +391,9 @@ class SymbolReplacerState extends State<SymbolReplacer> {
       builder: (context) {
         return Center(
           child: Container(
-            child: GCWAsyncExecuter(
+            child: GCWAsyncExecuter<List<Map<String, SymbolReplacerSymbolData>>?>(
               isolatedFunction: searchSymbolTableAsync,
-              parameter: _buildJobDataSearchSymbolTable(),
+              parameter: _buildJobDataSearchSymbolTable,
               onReady: (data) => _showJobDataSearchSymbolTableOutput(data),
               isOverlay: true,
             ),
@@ -423,7 +423,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
                 description: tool.description),
             child: _buildDropDownMenuItem(tool.icon, tool.toolName, null));
       }).toList();
-      _compareSymbolItems!.insert(
+      _compareSymbolItems.insert(
           0,
           GCWDropDownMenuItem(
               value: null,
@@ -433,7 +433,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
 
   void _selectSymbolTableDataItem(String? symbolKey, Iterable<Map<String, SymbolData>>? imageData) {
     if ((widget.imageData != null) && (_compareSymbolItems != null) && (_currentSymbolTableViewData == null)) {
-      for (GCWDropDownMenuItem item in _compareSymbolItems!)
+      for (GCWDropDownMenuItem item in _compareSymbolItems)
         if ((item.value is SymbolReplacerSymbolTableViewData) &&
             ((item.value as SymbolReplacerSymbolTableViewData).symbolKey == symbolKey)) {
           var _data;
@@ -490,7 +490,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     return GCWAsyncExecuterParameters(SubstitutionBreakerJobData(input: input, quadgrams: quadgrams));
   }
 
-  _showSubstitutionBreakerOutput(SubstitutionBreakerResult? output) {
+  void _showSubstitutionBreakerOutput(SubstitutionBreakerResult? output) {
     if (output == null || _symbolImage == null) return;
 
     if (output.errorCode == SubstitutionBreakerErrorCode.OK) {
@@ -521,7 +521,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
         Tuple2<SymbolReplacerImage, List<List<Map<String, SymbolReplacerSymbolData>>>>(_symbolImage!, list));
   }
 
-  _showJobDataSearchSymbolTableOutput(List<Map<String, SymbolReplacerSymbolData>> output) {
+  void _showJobDataSearchSymbolTableOutput(List<Map<String, SymbolReplacerSymbolData>>? output) {
     _selectSymbolDataItem1(output);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {
@@ -531,7 +531,8 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     });
   }
 
-  _selectSymbolDataItem1(List<Map<String, SymbolReplacerSymbolData>> imageData) {
+  void _selectSymbolDataItem1(List<Map<String, SymbolReplacerSymbolData>>? imageData) {
+    if (imageData == null) return;
     for (GCWDropDownMenuItem item in _compareSymbolItems) {
       var found = true;
       if (item.value is SymbolReplacerSymbolTableViewData) {

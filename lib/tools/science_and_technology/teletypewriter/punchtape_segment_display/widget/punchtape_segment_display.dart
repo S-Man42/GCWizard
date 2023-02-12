@@ -19,10 +19,10 @@ const _INITIAL_SEGMENTS = <String, bool>{
 class PUNCHTAPESegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
   final bool readOnly;
-  final Function onChanged;
+  final void Function onChanged;
   final TeletypewriterCodebook codeBook;
 
-  PUNCHTAPESegmentDisplay(this.codeBook, {Key? key, this.segments, this.readOnly: false, this.onChanged})
+  PUNCHTAPESegmentDisplay(this.codeBook, {Key? key, this.segments, this.readOnly = false, this.onChanged})
       : super(
             key: key,
             initialSegments: _INITIAL_SEGMENTS,
@@ -32,8 +32,8 @@ class PUNCHTAPESegmentDisplay extends NSegmentDisplay {
             type: SegmentDisplayType.CUSTOM,
             customPaint: (GCWTouchCanvas canvas, Size size, Map<String, bool> currentSegments, Function setSegmentState,
                 Color segment_color_on, Color segment_color_off) {
-              int punchHoles = PUNCHTAPE_DEFINITION[codeBook]['punchHoles'];
-              int sprocketHole = PUNCHTAPE_DEFINITION[codeBook]['sprocketHole'];
+              int punchHoles = PUNCHTAPE_DEFINITION[codeBook]!['punchHoles']!;
+              int sprocketHole = PUNCHTAPE_DEFINITION[codeBook]!['sprocketHole']!;
 
               var paint = defaultSegmentPaint();
               var SEGMENTS_COLOR_ON = segment_color_on;
