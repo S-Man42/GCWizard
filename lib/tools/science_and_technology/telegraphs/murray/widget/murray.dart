@@ -23,7 +23,7 @@ class MurrayTelegraph extends StatefulWidget {
 
 class MurrayTelegraphState extends State<MurrayTelegraph> {
   String _currentEncodeInput = '';
-  TextEditingController _encodeController;
+  late TextEditingController _encodeController;
 
   List<List<String>> _currentDisplays = [];
   var _currentMode = GCWSwitchPosition.right;
@@ -46,7 +46,7 @@ class MurrayTelegraphState extends State<MurrayTelegraph> {
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
-      GCWDropDown(
+      GCWDropDown<MurrayCodebook>(
         value: _currentLanguage,
         onChanged: (value) {
           setState(() {
@@ -56,8 +56,8 @@ class MurrayTelegraphState extends State<MurrayTelegraph> {
         items: MURRAY_CODEBOOK.entries.map((mode) {
           return GCWDropDownMenuItem(
               value: mode.key,
-              child: i18n(context, mode.value['title']),
-              subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']) : null);
+              child: i18n(context, mode.value['title']!),
+              subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']!) : null);
         }).toList(),
       ),
       GCWTwoOptionsSwitch(
@@ -178,8 +178,8 @@ class MurrayTelegraphState extends State<MurrayTelegraph> {
       );
     } else {
       //decode
-      var output = _currentDisplays.map((character) {
-        if (character != null) return character.join();
+      var output = _currentDisplays.where((character) => character != null).map((character) {
+        return character.join();
       }).toList();
       var segments = decodeMurray(output, _currentLanguage);
       return Column(

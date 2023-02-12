@@ -275,10 +275,10 @@ List<List<String>> encodeOhlsenTelegraph(String input) {
   List<List<String>> encodedText = [];
   var CODEBOOK = switchMapKeyValue(CODEBOOK_OHLSEN);
 
-  if (CODEBOOK[input] != null) encodedText.add(_buildShutters(CODEBOOK[input]));
+  if (CODEBOOK[input] != null) encodedText.add(_buildShutters(CODEBOOK[input]!));
 
   input.split('').forEach((element) {
-    if (CODEBOOK[element] != null) encodedText.add(CODEBOOK[element].split(''));
+    if (CODEBOOK[element] != null) encodedText.add(CODEBOOK[element]!.split(''));
   });
   return encodedText;
 }
@@ -300,10 +300,7 @@ Map<String, dynamic> decodeVisualOhlsenTelegraph(List<String> inputs) {
     segment = _stringToSegment(element);
     displays.add(segment);
     codepoints.add(segmentToCode(segment));
-    if (CODEBOOK_OHLSEN[segmentToCode(segment)] != null)
-      text = text + CODEBOOK_OHLSEN[segmentToCode(segment)];
-    else
-      text = text + UNKNOWN_ELEMENT;
+    text = text + (CODEBOOK_OHLSEN[segmentToCode(segment)] ?? UNKNOWN_ELEMENT);
   });
 
   return {'displays': displays, 'text': text, 'codepoints': codepoints.join(' ')};
@@ -320,11 +317,8 @@ Map<String, dynamic> decodeTextOhlsenTelegraph(String inputs) {
   String text = '';
 
   inputs.split(' ').forEach((element) {
-    if (CODEBOOK_OHLSEN[element] != null) {
-      text = text + CODEBOOK_OHLSEN[element];
-    } else {
-      text = text + UNKNOWN_ELEMENT;
-    }
+    text = text + (CODEBOOK_OHLSEN[element] ?? UNKNOWN_ELEMENT);
+
     displays.add(_buildShutters(element));
   });
   return {'displays': displays, 'text': text};

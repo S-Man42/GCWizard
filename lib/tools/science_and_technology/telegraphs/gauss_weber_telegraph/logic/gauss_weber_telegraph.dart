@@ -336,7 +336,7 @@ String encodeGaussWeberTelegraph(String input, GaussWeberTelegraphMode mode) {
         if (DIGITS.contains(char)) {
           // letter mode and digit is coming
           letter = false;
-          result.add(map['NUMERAL']);
+          result.add(map['NUMERAL']!);
           var code = map[switchMapKeyValue(_WHEATSTONE_COOKE_LETTER_2_NUMERAL)[char]];
           if (code == null || code.isEmpty)
             result.add('');
@@ -365,12 +365,12 @@ String encodeGaussWeberTelegraph(String input, GaussWeberTelegraphMode mode) {
         } else {
           // digit mode and letter is coming
           letter = true;
-          result.add(map['LETTER']);
+          result.add(map['LETTER']!);
           var code = map[char];
           if (code == null || code.isEmpty)
             result.add('');
           else {
-            result.add(map[char]);
+            result.add(map[char]!);
           }
         }
       }

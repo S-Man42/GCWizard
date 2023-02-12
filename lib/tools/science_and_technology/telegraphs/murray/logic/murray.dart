@@ -319,7 +319,7 @@ List<List<String>> encodeMurray(String input, MurrayCodebook language) {
   List<List<String>> result = [];
 
   for (int i = 0; i < inputs.length; i++) {
-    if (CODEBOOK[inputs[i].toUpperCase()] != null) result.add(CODEBOOK[inputs[i].toUpperCase()]);
+    if (CODEBOOK[inputs[i].toUpperCase()] != null) result.add(CODEBOOK[inputs[i].toUpperCase()]!);
   }
   return result;
 }
@@ -373,7 +373,7 @@ Map<String, dynamic> decodeMurray(List<String> inputs, MurrayCodebook language) 
     if (CODEBOOK.map((key, value) => MapEntry(key.join(), value.toString()))[input.split('').join()] == null) {
       char = char + UNKNOWN_ELEMENT;
     } else {
-      charH = CODEBOOK.map((key, value) => MapEntry(key.join(), value.toString()))[input.split('').join()];
+      charH = CODEBOOK.map((key, value) => MapEntry(key.join(), value.toString()))[input.split('').join()] ?? '';
       char = char + charH;
     }
 

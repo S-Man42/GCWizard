@@ -320,8 +320,8 @@ class PrussiaTelegraphState extends State<PrussiaTelegraph> {
         segments = decodeTextPrussianTelegraph(_currentDecodeInput.toUpperCase());
       } else {
         // visual
-        var output = _currentDisplays.map((character) {
-          if (character != null) return character.join();
+        var output = _currentDisplays.where((character) => character != null).map((character) {
+          return character.join();
         }).toList();
         segments = decodeVisualPrussianTelegraph(output);
       }

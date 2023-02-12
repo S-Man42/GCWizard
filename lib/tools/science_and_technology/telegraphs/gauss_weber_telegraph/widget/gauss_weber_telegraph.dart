@@ -47,7 +47,7 @@ class GaussWeberTelegraphState extends State<GaussWeberTelegraph> {
     return Column(
       children: <Widget>[
         if (widget.mode == GaussWeberTelegraphMode.WHEATSTONE_COOKE_5)
-          GCWDropDown(
+          GCWDropDown<GaussWeberTelegraphMode>(
             value: _currentNeedleNumber,
             onChanged: (value) {
               setState(() {
@@ -57,8 +57,8 @@ class GaussWeberTelegraphState extends State<GaussWeberTelegraph> {
             items: WHEATSTONECOOKENEEDLENUMBER.entries.map((mode) {
               return GCWDropDownMenuItem(
                   value: mode.key,
-                  child: i18n(context, mode.value['title']),
-                  subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']) : null);
+                  child: i18n(context, mode.value['title']!),
+                  subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']!) : null);
             }).toList(),
           ),
         _currentMode == GCWSwitchPosition.left

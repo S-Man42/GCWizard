@@ -104,20 +104,20 @@ List<List<String>> encodeSemaphore(String input) {
     if (LETTER.contains(inputs[i]) && !letter_follows) {
       letter_follows = true;
       number_follows = false;
-      result.add(CODEBOOK_SEMAPHORE['symboltables_semaphore_letters_following']);
+      result.add(CODEBOOK_SEMAPHORE['symboltables_semaphore_letters_following']!);
     }
     if (NUMBER.contains(inputs[i]) && !number_follows) {
       number_follows = true;
       letter_follows = false;
-      result.add(CODEBOOK_SEMAPHORE['symboltables_semaphore_numerals_following']);
+      result.add(CODEBOOK_SEMAPHORE['symboltables_semaphore_numerals_following']!);
     }
-    if (CODEBOOK_SEMAPHORE[inputs[i]] != null) result.add(CODEBOOK_SEMAPHORE[inputs[i]]);
+    if (CODEBOOK_SEMAPHORE[inputs[i]] != null) result.add(CODEBOOK_SEMAPHORE[inputs[i]]!);
   }
   return result;
 }
 
-Map<String, dynamic> decodeSemaphore(List<String> inputs) {
-  if (inputs == null || inputs.length == 0) return {'displays': <List<String>>[], 'chars': []};
+Map<String, dynamic> decodeSemaphore(List<String>? inputs) {
+  if (inputs == null || inputs.isEmpty) return {'displays': <List<String>>[], 'chars': []};
 
   var displays = <List<String>>[];
   var segment = <String>[];
@@ -134,12 +134,12 @@ Map<String, dynamic> decodeSemaphore(List<String> inputs) {
   List<String> text = inputs.where((input) => input != null).map((input) {
     var char = '';
     var charH = '';
-    var symbol = '';
+    String symbol = '';
 
     if (CODEBOOK.map((key, value) => MapEntry(key.join(), value.toString()))[input.split('').join()] == null) {
       char = char + UNKNOWN_ELEMENT;
     } else {
-      symbol = CODEBOOK.map((key, value) => MapEntry(key.join(), value.toString()))[input.split('').join()];
+      symbol = CODEBOOK.map((key, value) => MapEntry(key.join(), value.toString()))[input.split('').join()] ?? '';
       if (symbol == 'symboltables_semaphore_letters_following' ||
           symbol == 'symboltables_semaphore_numerals_following' ||
           symbol == 'symboltables_semaphore_cancel' ||
@@ -167,11 +167,11 @@ Map<String, dynamic> decodeSemaphore(List<String> inputs) {
         if (letter_follows) if (LETTER.contains(symbol))
           charH = symbol;
         else
-          charH = LETTER2DIGIT[symbol];
+          charH = LETTER2DIGIT[symbol]!;
         else if (NUMBER.contains(symbol))
           charH = symbol;
         else
-          charH = DIGIT2LETTER[symbol];
+          charH = DIGIT2LETTER[symbol]!;
 
         if (charH != null) char = char + charH;
       }

@@ -57,7 +57,7 @@ class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
-      GCWDropDown(
+      GCWDropDown<EdelcrantzCodebook>(
         value: _currentLanguage,
         onChanged: (value) {
           setState(() {
@@ -67,8 +67,8 @@ class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
         items: MURRAY_CODEBOOK.entries.map((mode) {
           return GCWDropDownMenuItem(
               value: mode.key,
-              child: i18n(context, mode.value['title']),
-              subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']) : null);
+              child: i18n(context, mode.value['title']!),
+              subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']!) : null);
         }).toList(),
       ),
       GCWTwoOptionsSwitch(
@@ -359,8 +359,8 @@ class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
             _currentDecodeInput.toLowerCase(), _currentLanguage, (_currentTime == GCWSwitchPosition.left));
       } else {
         // visual
-        var output = _currentDisplays.map((character) {
-          if (character != null) return character.join();
+        var output = _currentDisplays.where((character) => character != null).map((character) {
+          return character.join();
         }).toList();
         segments = decodeVisualEdelcrantzTelegraph(output, _currentLanguage, (_currentTime == GCWSwitchPosition.left));
       }

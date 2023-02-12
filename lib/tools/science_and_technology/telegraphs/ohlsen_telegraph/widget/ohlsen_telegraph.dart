@@ -218,8 +218,8 @@ class OhlsenTelegraphState extends State<OhlsenTelegraph> {
         segments = decodeTextOhlsenTelegraph(_currentDecodeInput.toLowerCase());
       } else {
         // visual
-        var output = _currentDisplays.map((character) {
-          if (character != null) return character.join();
+        var output = _currentDisplays.where((character) => character != null).map((character) {
+          return character.join();
         }).toList();
         segments = decodeVisualOhlsenTelegraph(output);
       }
