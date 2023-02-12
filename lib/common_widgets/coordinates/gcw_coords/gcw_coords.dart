@@ -376,7 +376,7 @@ class GCWCoordsState extends State<GCWCoords> {
     ];
 
     // TODO Mike: Please check if this is really nullable. If so, all coordinate specific _GCWCoords* widgets need to have nullable coordinates fields which yields even more nullable stuff...
-    _pastedCoords = null;
+    // _pastedCoords = null;
 
     Column _widget;
     if (widget.notitle != null && widget.notitle! && widget.title != null && widget.title!.isNotEmpty) {
