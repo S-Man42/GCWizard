@@ -13,7 +13,7 @@ class CountriesFlagsState extends State<CountriesFlags> {
   var _ASSET_PATH = 'assets/symbol_tables/country_flags/country_flags.zip';
   var _KEY_PREFIX = 'common_country_';
 
-  List<Map<String, SymbolData>> _images;
+  List<Map<String, SymbolData>>? _images;
   String _currentImageKey;
 
   @override
@@ -51,7 +51,7 @@ class CountriesFlagsState extends State<CountriesFlags> {
 
     return Column(
       children: [
-        GCWDropDown(
+        GCWDropDown<String>(
           value: _currentImageKey,
           items: _images.map((image) {
             return GCWDropDownMenuItem(value: image.keys.first, child: image.keys.first);

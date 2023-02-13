@@ -46,7 +46,7 @@ class CountriesState extends State<Countries> {
             },
           ),
         if (widget.fields.length > 1)
-          GCWDropDown(
+          GCWDropDown<int>(
             title: i18n(context, 'common_sortby'),
             value: _currentSort,
             onChanged: (value) {
@@ -72,14 +72,16 @@ class CountriesState extends State<Countries> {
     var field = _currentSort == 0 ? widget.fields[0] : widget.fields[_currentSort - 1];
     var flexValues = List<int>.generate(widget.fields.length, (index) => 1);
 
+    COUNTRIES.entries.first.value.runtimeType
+
     var data = COUNTRIES.values.where((e) => e[field] != null && e[field].length > 0).map((e) {
       if (_currentSort == 0) {
-        var dataList = [i18n(context, e['name'])];
+        var dataList = [i18n(context, e.name)];
         dataList.addAll(widget.fields.map((field) => e[field]));
 
         return dataList;
       } else {
-        var dataList = [e[field], i18n(context, e['name'])];
+        var dataList = [e[field], i18n(context, e.name)];
         dataList.addAll(widget.fields.where((f) => f != field).map((f) => e[f]));
 
         return dataList;

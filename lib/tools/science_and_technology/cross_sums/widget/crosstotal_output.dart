@@ -13,7 +13,11 @@ class CrosstotalOutput extends StatefulWidget {
   final CROSSTOTAL_INPUT_TYPE inputType;
 
   const CrosstotalOutput(
-      {this.text, this.values, Key key, this.suppressSums: false, this.inputType: CROSSTOTAL_INPUT_TYPE.LETTERS})
+      { Key? key,
+        required this.text,
+        required this.values,
+        this.suppressSums = false,
+        this.inputType = CROSSTOTAL_INPUT_TYPE.LETTERS})
       : super(key: key);
 
   @override
