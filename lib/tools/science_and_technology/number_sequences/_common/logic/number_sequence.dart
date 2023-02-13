@@ -92,7 +92,7 @@ BigInt _getMersenneFermat(int n) {
 }
 
 BigInt _getFermat(int n) {
-  return Two.pow(pow(2, n)) + One;
+  return Two.pow(pow(2, n) as int) + One;
 }
 
 BigInt _getMersenne(int n) {
@@ -128,14 +128,14 @@ BigInt _getfactorial(int n) {
     return One;
 }
 
-BigInt _getBinomialCoefficient(int n, k) {
+BigInt _getBinomialCoefficient(int n, int k) {
   if (n == k)
     return Zero;
   else
     return _getfactorial(n) ~/ _getfactorial(k) ~/ _getfactorial(n - k);
 }
 
-Function _getNumberSequenceFunction(NumberSequencesMode mode) {
+Function? _getNumberSequenceFunction(NumberSequencesMode mode) {
   switch (mode) {
     case NumberSequencesMode.FERMAT:
       return _getFermat;
@@ -156,15 +156,15 @@ Function _getNumberSequenceFunction(NumberSequencesMode mode) {
   }
 }
 
-BigInt getNumberAt(NumberSequencesMode sequence, int n) {
+BigInt getNumberAt(NumberSequencesMode sequence, int? n) {
   if (n == null)
     return Zero;
   else
     return getNumbersInRange(sequence, n, n)[0];
 }
 
-List getNumbersInRange(NumberSequencesMode sequence, int start, stop) {
-  if (start == null || stop == null || start == '' || stop == '') return [-1];
+List getNumbersInRange(NumberSequencesMode sequence, int? start, int? stop) {
+  if (start == null || stop == null) return [-1];
 
   List numberList = <dynamic>[];
   List<String> sequenceList = <String>[];
@@ -266,7 +266,7 @@ List getNumbersInRange(NumberSequencesMode sequence, int start, stop) {
       index = index + One;
     }
   } else if (sequence == NumberSequencesMode.FACTORIAL) {
-    BigInt number;
+    var number = BigInt.zero;
     int index = 0;
     while (index < stop + 1) {
       if (index == 0)
@@ -277,11 +277,11 @@ List getNumbersInRange(NumberSequencesMode sequence, int start, stop) {
         number = number * BigInt.from(index);
       }
       if (index >= start) numberList.add(number);
-      index = index + 1;
+      index++;
     }
   } else if (sequence == NumberSequencesMode.BELL) {
     List<BigInt> bellList = <BigInt>[];
-    BigInt number;
+    var number = BigInt.zero;
     int index = 0;
     while (index <= stop) {
       if (index == 0)
@@ -336,8 +336,8 @@ List getNumbersInRange(NumberSequencesMode sequence, int start, stop) {
   return numberList;
 }
 
-int checkNumber(NumberSequencesMode sequence, BigInt checkNumber, int maxIndex) {
-  if (checkNumber == null || checkNumber == '')
+int checkNumber(NumberSequencesMode sequence, BigInt? checkNumber, int maxIndex) {
+  if (checkNumber == null)
     return -1;
   else if (getFirstPositionOfSequence(sequence, checkNumber.toString(), maxIndex).positionSequence == -1)
     return -1;
@@ -347,7 +347,7 @@ int checkNumber(NumberSequencesMode sequence, BigInt checkNumber, int maxIndex) 
     return -1;
 }
 
-PositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode sequence, String check, int maxIndex) {
+PositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode sequence, String? check, int maxIndex) {
   if (check == null || check == '') {
     return PositionOfSequenceOutput('-1', 0, 0);
   }
@@ -572,7 +572,7 @@ PositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode sequence
   return PositionOfSequenceOutput('-1', 0, 0);
 }
 
-List getNumbersWithNDigits(NumberSequencesMode sequence, int digits) {
+List getNumbersWithNDigits(NumberSequencesMode sequence, int? digits) {
   if (digits == null) return [];
 
   BigInt number;

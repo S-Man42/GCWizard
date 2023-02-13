@@ -27,7 +27,7 @@ class PeriodicTableDataViewState extends State<PeriodicTableDataView> {
   var _newCategory = true;
   var _currentCategory = PeriodicTableCategory.ELEMENT_NAME;
   var _currentValueCategoryValue;
-  var _currentValueCategoryListItems = [];
+  List<GCWDropDownMenuItem> _currentValueCategoryListItems = [];
   var _currentSortingOrder = GCWSwitchPosition.left;
 
   var _categories = <PeriodicTableCategory, String>{};
@@ -109,14 +109,14 @@ class PeriodicTableDataViewState extends State<PeriodicTableDataView> {
         .where((element) => element.mainGroup != null)
         .map((element) => element.mainGroup)
         .toSet()
-        .toList();
+        .toList().cast();
     _mainGroups.sort();
 
     _subGroups = allPeriodicTableElements
         .where((element) => element.subGroup != null)
         .map((element) => element.subGroup)
         .toSet()
-        .toList();
+        .toList().cast();
     _subGroups.sort();
 
     _periods = allPeriodicTableElements.map((element) => element.period).toSet().toList();
@@ -350,7 +350,7 @@ class PeriodicTableDataViewState extends State<PeriodicTableDataView> {
     return sortableList
         .asMap()
         .map((index, element) {
-          var relevantValue;
+          Object relevantValue;
 
           switch (_currentCategory) {
             case PeriodicTableCategory.MASS:
@@ -375,6 +375,7 @@ class PeriodicTableDataViewState extends State<PeriodicTableDataView> {
               relevantValue = element.mostCommonIsotop;
               break;
             default:
+              relevantValue = '';
               break;
           }
 
@@ -390,7 +391,7 @@ class PeriodicTableDataViewState extends State<PeriodicTableDataView> {
         .toList();
   }
 
-  _temperatures(double tempInCelsius) {
+  String _temperatures(double tempInCelsius) {
     var format = NumberFormat('0.0');
 
     var kelvin = TEMPERATURE_CELSIUS.toKelvin(tempInCelsius);

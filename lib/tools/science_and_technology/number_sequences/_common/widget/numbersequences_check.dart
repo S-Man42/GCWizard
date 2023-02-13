@@ -8,7 +8,7 @@ import 'package:gc_wizard/tools/science_and_technology/number_sequences/_common/
 class NumberSequenceCheckNumber extends StatefulWidget {
   final NumberSequencesMode mode;
   final int maxIndex;
-  const NumberSequenceCheckNumber({Key? key, this.mode, this.maxIndex}) : super(key: key);
+  const NumberSequenceCheckNumber({Key? key, required this.mode, required this.maxIndex}) : super(key: key);
 
   @override
   NumberSequenceCheckNumberState createState() => NumberSequenceCheckNumberState();
@@ -16,7 +16,7 @@ class NumberSequenceCheckNumber extends StatefulWidget {
 
 class NumberSequenceCheckNumberState extends State<NumberSequenceCheckNumber> {
   String _currentInputN = '0';
-  TextEditingController currentInputController;
+  late TextEditingController currentInputController;
 
   @override
   void initState() {

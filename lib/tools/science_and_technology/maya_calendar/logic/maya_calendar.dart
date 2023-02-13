@@ -21,7 +21,7 @@ final THOMPSON = 'Thompson';
 final SMILEY = 'Smiley';
 final WEITZEL = 'Weitzel';
 
-final Map _CORRELATION_NUMBER = {
+final Map<String, int> _CORRELATION_NUMBER = {
   THOMPSON: THOMPSON_CORRELATION,
   SMILEY: SMILEY_CORRELATION,
   WEITZEL: WEITZEL_CORRELATION,
@@ -105,7 +105,7 @@ const _alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxy
 
 List<int> mayaCalendarSystem = [1, 20, 360, 7200, 144000, 2880000, 57600000, 1152000000, 23040000000];
 
-Map<String, dynamic> encodeMayaCalendar(int input) {
+Map<String, Object> encodeMayaCalendar(int input) {
   if (input == null)
     return {
       'displays': <List<String>>[],
@@ -214,7 +214,7 @@ String MayaLongCountToTzolkin(List<int> longCount) {
 
   dayCount = dayCount + 159;
   dayCount = 1 + dayCount % 260;
-  return (1 + (dayCount - 1) % 13).toString() + ' ' + _maya_tzolkin[1 + (dayCount - 1) % 20];
+  return (1 + (dayCount - 1) % 13).toString() + ' ' + (_maya_tzolkin[1 + (dayCount - 1) % 20] ?? '');
 }
 
 String MayaLongCountToHaab(List<int> longCount) {
@@ -223,7 +223,7 @@ String MayaLongCountToHaab(List<int> longCount) {
 
   dayCount = dayCount + 347;
   dayCount = 1 + dayCount % 365;
-  return (1 + (dayCount - 1) % 20).toString() + ' ' + _maya_haab[1 + (dayCount - 1) ~/ 20];
+  return (1 + (dayCount - 1) % 20).toString() + ' ' + (_maya_haab[1 + (dayCount - 1) ~/ 20] ?? '');
 }
 
 String MayaLongCount(List<int> longCount) {
@@ -252,19 +252,19 @@ DateTime MayaDayCountToGregorianCalendar(int mayaDayCount) {
 }
 
 int MayaDayCountToJulianDate(int mayaDayCount) {
-  if (Prefs.getString(PREFERENCE_MAYACALENDAR_CORRELATION) == null ||
-      Prefs.getString(PREFERENCE_MAYACALENDAR_CORRELATION) == '')
-    return (mayaDayCount + _CORRELATION_NUMBER[THOMPSON]);
+  var correlation = Prefs.getString(PREFERENCE_MAYACALENDAR_CORRELATION);
+  if (correlation == '')
+    return (mayaDayCount + _CORRELATION_NUMBER[THOMPSON]!);
   else
-    return (mayaDayCount + _CORRELATION_NUMBER[Prefs.getString(PREFERENCE_MAYACALENDAR_CORRELATION)]);
+    return (mayaDayCount + (_CORRELATION_NUMBER[correlation] ?? 0));
 }
 
 int JulianDateToMayaDayCount(double jd) {
-  if (Prefs.getString(PREFERENCE_MAYACALENDAR_CORRELATION) == null ||
-      Prefs.getString(PREFERENCE_MAYACALENDAR_CORRELATION) == '')
-    jd = jd - _CORRELATION_NUMBER[THOMPSON];
+  var correlation = Prefs.getString(PREFERENCE_MAYACALENDAR_CORRELATION);
+  if (correlation == '')
+    jd = (jd - _CORRELATION_NUMBER[THOMPSON]!);
   else
-    jd = jd - _CORRELATION_NUMBER[Prefs.getString(PREFERENCE_MAYACALENDAR_CORRELATION)];
+    jd = (jd - (_CORRELATION_NUMBER[correlation] ?? 0));
   return jd.round();
 }
 
@@ -281,17 +281,17 @@ List<int> JulianDateToMayaLongCount(double jd) {
   return MayaLongCount;
 }
 
-List<int> MayaDayCountToMayaLongCount(int MayaDayCount) {
+List<int?> MayaDayCountToMayaLongCount(int MayaDayCount) {
   String longCount = convertDecToMayaCalendar(MayaDayCount.toString());
-  List<int> result = [];
+  List<int?> result = [];
   for (int i = longCount.length; i > 0; i--) result.add(_toNumber(longCount[i - 1]));
   for (int i = longCount.length; i < 9; i++) result.add(0);
 
   return result.reversed.toList();
 }
 
-int _toNumber(String digit) {
-  Map<String, int> NUMBER = {
+int? _toNumber(String digit) {
+  final Map<String, int> NUMBER = {
     '0': 0,
     '1': 1,
     '2': 2,

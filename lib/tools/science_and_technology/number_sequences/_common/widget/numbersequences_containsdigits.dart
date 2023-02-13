@@ -9,7 +9,7 @@ import 'package:gc_wizard/tools/science_and_technology/number_sequences/_common/
 class NumberSequenceContainsDigits extends StatefulWidget {
   final NumberSequencesMode mode;
   final int maxIndex;
-  const NumberSequenceContainsDigits({Key? key, this.mode, this.maxIndex}) : super(key: key);
+  const NumberSequenceContainsDigits({Key? key, required this.mode, required this.maxIndex}) : super(key: key);
 
   @override
   NumberSequenceContainsDigitsState createState() => NumberSequenceContainsDigitsState();
@@ -18,19 +18,7 @@ class NumberSequenceContainsDigits extends StatefulWidget {
 class NumberSequenceContainsDigitsState extends State<NumberSequenceContainsDigits> {
   int currentInputN = 0;
 
-  Widget _currentOutput;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _currentOutput = GCWDefaultOutput();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
+  Widget _currentOutput = GCWDefaultOutput();
 
   @override
   Widget build(BuildContext context) {
