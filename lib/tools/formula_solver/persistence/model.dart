@@ -1,25 +1,25 @@
 List<FormulaGroup> formulaGroups = [];
 
 class FormulaGroup {
-  int id;
+  int? id;
   String name;
   List<Formula> formulas = [];
   List<FormulaValue> values = [];
 
   FormulaGroup(this.name);
 
-  Map<String, dynamic> toMap() => {
+  Map<String, Object?> toMap() => {
         'id': id,
         'name': name,
         'formulas': formulas.map((formula) => formula.toMap()).toList(),
         'values': values.map((value) => value.toMap()).toList(),
       };
 
-  FormulaGroup.fromJson(Map<String, dynamic> json)
-      : name = json['name'],
-        id = json['id'],
-        formulas = List<Formula>.from(json['formulas'].map((formula) => Formula.fromJson(formula))),
-        values = List<FormulaValue>.from(json['values'].map((value) => FormulaValue.fromJson(value)));
+  FormulaGroup.fromJson(Map<String, Object?> json)
+      : name = json['name'] as String? ?? '', // TODO Proper default types if key is not in map
+        id = json['id'] as int?,
+        formulas = json['formulas'] == null ? <Formula>[] : List<Formula>.from((json['formulas'] as List).map((formula) => Formula.fromJson(formula))),
+        values = json['values'] == null ? <FormulaValue>[] : List<FormulaValue>.from((json['values'] as List).map((value) => FormulaValue.fromJson(value)));
 
   @override
   String toString() {
@@ -28,27 +28,27 @@ class FormulaGroup {
 }
 
 class Formula {
-  int id;
+  int? id;
   String formula;
-  String name;
+  String? name;
 
   Formula(this.formula);
 
-  Map<String, dynamic> toMap() {
+  Map<String, Object?> toMap() {
     var map = {
       'id': id,
       'formula': formula,
     };
 
-    if (name != null && name.isNotEmpty) map.putIfAbsent('name', () => name);
+    if (name != null && name!.isNotEmpty) map.putIfAbsent('name', () => name);
 
     return map;
   }
 
-  Formula.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        formula = json['formula'],
-        name = json['name'];
+  Formula.fromJson(Map<String, Object?> json)
+      : id = json['id'] as int?,
+        formula = json['formula'] as String? ?? '', // TODO Proper default types if key is not in map
+        name = json['name'] as String? ?? '';
 
   static Formula fromFormula(Formula formula) {
     var newFormula = Formula(formula.formula);
@@ -68,7 +68,7 @@ enum FormulaValueType { FIXED, INTERPOLATED, TEXT }
 const _FORMULAVALUETYPE_INTERPOLATE = 'interpolate';
 const _FORMULAVALUETYPE_TEXT = 'text';
 
-FormulaValueType _readType(String jsonType) {
+FormulaValueType _readType(String? jsonType) {
   switch (jsonType) {
     case _FORMULAVALUETYPE_INTERPOLATE:
       return FormulaValueType.INTERPOLATED;
@@ -80,20 +80,20 @@ FormulaValueType _readType(String jsonType) {
 }
 
 class FormulaValue {
-  int id;
+  int? id;
   String key;
   String value;
-  FormulaValueType type;
+  FormulaValueType? type;
 
   FormulaValue(this.key, this.value, {this.type});
 
-  FormulaValue.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        key = json['key'],
-        value = json['value'],
-        type = _readType(json['type']);
+  FormulaValue.fromJson(Map<String, Object?> json)
+      : id = json['id'] as int?,
+        key = json['key'] as String? ?? '',  // TODO Proper default types if key is not in map
+        value = json['value'] as String? ?? '',
+        type = _readType(json['type'] as String?);
 
-  Map<String, dynamic> toMap() {
+  Map<String, Object?> toMap() {
     var map = {
       'id': id,
       'key': key,

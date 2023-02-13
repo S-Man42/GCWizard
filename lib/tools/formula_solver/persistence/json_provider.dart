@@ -7,7 +7,7 @@ import 'package:prefs/prefs.dart';
 
 void refreshFormulas() {
   var formulas = Prefs.getStringList(PREFERENCE_FORMULASOLVER_FORMULAS);
-  if (formulas == null || formulas.length == 0) return;
+  if (formulas.length == 0) return;
 
   formulaGroups = formulas.where((group) => group.length > 0).map((group) {
     return FormulaGroup.fromJson(jsonDecode(group));
