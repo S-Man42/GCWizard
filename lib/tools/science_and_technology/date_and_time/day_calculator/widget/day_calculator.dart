@@ -13,8 +13,8 @@ class DayCalculator extends StatefulWidget {
 }
 
 class DayCalculatorState extends State<DayCalculator> {
-  DateTime _currentStartDate;
-  DateTime _currentEndDate;
+  late DateTime _currentStartDate;
+  late DateTime _currentEndDate;
 
   var _currentCountStart = true;
   var _currentCountEnd = true;

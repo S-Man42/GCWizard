@@ -20,7 +20,7 @@ class Calendar extends StatefulWidget {
 class CalendarState extends State<Calendar> {
   CalendarSystem _currentCalendarSystem = CalendarSystem.JULIANDATE;
   double _currentJulianDate = 0.0;
-  DateTime _currentDate;
+  late DateTime _currentDate;
 
   @override
   void initState() {
@@ -39,7 +39,7 @@ class CalendarState extends State<Calendar> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWDropDown(
+        GCWDropDown<CalendarSystem>(
           value: _currentCalendarSystem,
           onChanged: (value) {
             setState(() {
