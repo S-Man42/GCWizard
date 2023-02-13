@@ -117,7 +117,7 @@ Map<String, Object> encodeMayaCalendar(int input) {
   vigesimal = convertDecToMayaCalendar(input.toString());
   return {
     'displays': vigesimal.split('').map((digit) {
-      return _numbersToSegments[int.tryParse(convertBase(digit, 20, 10))];
+      return _numbersToSegments[int.tryParse(convertBase(digit, 20, 10) ?? '')];
     }).toList(),
     'numbers': _longCountToList(input),
     'vigesimal': vigesimal

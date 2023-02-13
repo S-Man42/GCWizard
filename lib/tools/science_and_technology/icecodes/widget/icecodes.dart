@@ -61,7 +61,7 @@ class IceCodesState extends State<IceCodes> {
           }).toList(),
         ),
         if (_currentIceCodeSystem == IceCodeSystem.BALTIC)
-          GCWDropDown(
+          GCWDropDown<IceCodeSubSystem>(
             value: _currentIceCodeSubSystemBaltic,
             onChanged: (value) {
               setState(() {
@@ -114,10 +114,12 @@ class IceCodesState extends State<IceCodes> {
   }
 
   Widget _buildOutput() {
-    var iceCode = ICECODES[_currentIceCodeSystem];
+    var iceCodeSubSystem = ICECODES[_currentIceCodeSystem]?[_currentIceCodeSubSystem];
+    if (iceCodeSubSystem == null) return GCWDefaultOutput();
+
     return GCWDefaultOutput(
       child: GCWColumnedMultilineOutput(
-        data: iceCode[_currentIceCodeSubSystem].entries.map((entry) {
+        data: iceCodeSubSystem.entries.map((entry) {
                 return [entry.key, i18n(context, entry.value)];
               }).toList(),
         flexValues: [1, 5]

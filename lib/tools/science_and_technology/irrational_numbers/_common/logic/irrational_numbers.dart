@@ -46,7 +46,7 @@ class IrrationalNumberCalculator {
 
     var out = <IrrationalNumberDecimalOccurence>[];
     RegExp(_input).allMatches(irrationalNumber.decimalPart).map((RegExpMatch match) {
-      out.add(IrrationalNumberDecimalOccurence(value: match.group(0), start: match.start + 1, end: match.end));
+      out.add(IrrationalNumberDecimalOccurence(value: match.group(0)!, start: match.start + 1, end: match.end));
     }).toList();
 
     return out;
@@ -58,5 +58,5 @@ class IrrationalNumberDecimalOccurence {
   final int start;
   final int end;
 
-  const IrrationalNumberDecimalOccurence({this.value, this.start, this.end});
+  const IrrationalNumberDecimalOccurence({required this.value, required this.start, required this.end});
 }
