@@ -69,7 +69,7 @@ class _BabylonNumbersSegmentDisplay extends NSegmentDisplay {
                 {'segment': 'd', 'startX': 90.0, 'startY': 0.0},
                 {'segment': 'e', 'startX': 90.0, 'startY': 40.0}
               ].forEach((element) {
-                paint.color = currentSegments[element['segment']]
+                paint.color = segmentActive(currentSegments, element['segment'])
                     ? SEGMENTS_COLOR_ON
                     : SEGMENTS_COLOR_OFF; // 10
                 var path = Path();
@@ -97,7 +97,7 @@ class _BabylonNumbersSegmentDisplay extends NSegmentDisplay {
                 canvas.touchCanvas.drawPath(path, paint,
                     onTapDown: (tapDetail) {
                   setSegmentState(
-                      element['segment'], !currentSegments[element['segment']]);
+                      element['segment'], !segmentActive(currentSegments, element['segment']));
                 });
               });
 
@@ -112,7 +112,7 @@ class _BabylonNumbersSegmentDisplay extends NSegmentDisplay {
                 {'segment': 'm', 'startX': 140.0, 'startY': 70.0},
                 {'segment': 'n', 'startX': 170.0, 'startY': 70.0}
               ].forEach((element) {
-                paint.color = currentSegments[element['segment']]
+                paint.color = segmentActive(currentSegments, element['segment'])
                     ? SEGMENTS_COLOR_ON
                     : SEGMENTS_COLOR_OFF; // 10
                 var path = Path();
@@ -145,7 +145,7 @@ class _BabylonNumbersSegmentDisplay extends NSegmentDisplay {
                 canvas.touchCanvas.drawPath(path, paint,
                     onTapDown: (tapDetail) {
                   setSegmentState(
-                      element['segment'], !currentSegments[element['segment']]);
+                      element['segment'], !segmentActive(currentSegments, element['segment']));
                 });
               });
             });

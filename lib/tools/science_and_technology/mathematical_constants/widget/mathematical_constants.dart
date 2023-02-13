@@ -23,7 +23,7 @@ class MathematicalConstants extends StatefulWidget {
 
 class MathematicalConstantsState extends State<MathematicalConstants> {
   var _currentConstant;
-  Map<String, Map<String, dynamic>> _constants;
+  late Map<String, Map<String, Object>> _constants;
 
   List<String> _orderedConstantKeys = [];
 

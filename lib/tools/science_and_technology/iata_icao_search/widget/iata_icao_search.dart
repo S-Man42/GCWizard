@@ -143,12 +143,11 @@ class IATAICAOSearchState extends State<IATAICAOSearch> {
       if (_currentInputCode == null || _currentInputCode == "") return Container();
 
       List<int> flexValues = List<int>.generate(4, (index) => 1);
-      var output;
 
       if (_currentCode == GCWSwitchPosition.left) {
         // search for IATA
         var data = IATA_ICAO_CODES.values
-            .where((e) => (e['IATA'] != null && e['IATA'].startsWith(_currentInputCode.toUpperCase())))
+            .where((e) => (e['IATA'] != null && e['IATA']!.startsWith(_currentInputCode.toUpperCase())))
             .map((e) {
           var dataList = [e['IATA']];
           dataList.addAll(['IATA', 'ICAO', 'name', 'Location_served'].where((f) => (f != 'IATA')).map((f) => e[f]));

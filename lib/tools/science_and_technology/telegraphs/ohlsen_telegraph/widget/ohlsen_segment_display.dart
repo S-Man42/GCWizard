@@ -101,13 +101,13 @@ class _OhlsenSegmentDisplay extends NSegmentDisplay {
               });
 
               shutters.forEach((key, value) {
-                paint.color = currentSegments[shutterSegments[key]]! ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
+                paint.color = segmentActive(currentSegments, shutterSegments[key]!) ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
                 canvas.touchCanvas.drawRect(
                     Offset(size.width / _OHLSEN_RELATIVE_DISPLAY_WIDTH * value[0],
                             size.height / _OHLSEN_RELATIVE_DISPLAY_HEIGHT * value[1]) &
                         Size(value[2] * 3, value[3] * 2),
                     paint, onTapDown: (tapDetail) {
-                  setSegmentState(shutterSegments[key], !currentSegments[shutterSegments[key]]!);
+                  setSegmentState(shutterSegments[key], !segmentActive(currentSegments, shutterSegments[key]!));
                   if (key == '1') {
                     setSegmentState(shutterSegments['2'], false);
                     setSegmentState(shutterSegments['3'], false);

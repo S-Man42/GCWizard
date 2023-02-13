@@ -57,7 +57,7 @@ class BrailleSegmentDisplay extends NSegmentDisplay {
               };
 
               circles.forEach((key, value) {
-                paint.color = currentSegments[key]
+                paint.color = segmentActive(currentSegments, key)
                     ? SEGMENTS_COLOR_ON
                     : SEGMENTS_COLOR_OFF;
 
@@ -73,7 +73,7 @@ class BrailleSegmentDisplay extends NSegmentDisplay {
                             value[1]),
                     pointSize,
                     paint, onTapDown: (tapDetail) {
-                  setSegmentState(key, !currentSegments[key]);
+                  setSegmentState(key, !segmentActive(currentSegments, key));
                 });
 
                 if (size.height < 50) return;

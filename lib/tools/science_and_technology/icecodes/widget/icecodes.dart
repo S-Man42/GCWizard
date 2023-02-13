@@ -31,7 +31,7 @@ class IceCodesState extends State<IceCodes> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWDropDown(
+        GCWDropDown<IceCodeSystem>(
           value: _currentIceCodeSystem,
           onChanged: (value) {
             setState(() {
@@ -77,7 +77,7 @@ class IceCodesState extends State<IceCodes> {
             }).toList(),
           ),
         if (_currentIceCodeSystem == IceCodeSystem.EU)
-          GCWDropDown(
+          GCWDropDown<IceCodeSubSystem>(
             value: _currentIceCodeSubSystemEU,
             onChanged: (value) {
               setState(() {
@@ -93,7 +93,7 @@ class IceCodesState extends State<IceCodes> {
             }).toList(),
           ),
         if (_currentIceCodeSystem == IceCodeSystem.WMO)
-          GCWDropDown(
+          GCWDropDown<IceCodeSubSystem>(
             value: _currentIceCodeSubSystemWMO,
             onChanged: (value) {
               setState(() {

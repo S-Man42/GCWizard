@@ -1,9 +1,11 @@
+import 'package:collection/collection.dart';
+
 enum NucleobaseSequenceType { NORMAL, START, STOP }
 
 class AminoAcid {
-  final String name;
-  final String symbolShort;
-  final String symbolLong;
+  final String? name;
+  final String? symbolShort;
+  final String? symbolLong;
   final List<String> nucleobaseSequences;
   final NucleobaseSequenceType type;
 
@@ -38,21 +40,18 @@ List<AminoAcid> aminoAcids = [
   AminoAcid('dna_aminoacid_glycine', 'G', 'Gly', ['GGU', 'GGG', 'GGA', 'GGC'], NucleobaseSequenceType.NORMAL),
 ];
 
-AminoAcid aminoAcidBySymbolShort(String symbolShort) {
-  return aminoAcids.firstWhere(
-      (element) => element.symbolShort != null && element.symbolShort.toUpperCase() == symbolShort.toUpperCase(),
-      orElse: () => null);
+AminoAcid? aminoAcidBySymbolShort(String symbolShort) {
+  return aminoAcids.firstWhereOrNull(
+      (element) => element.symbolShort != null && element.symbolShort!.toUpperCase() == symbolShort.toUpperCase());
 }
 
-AminoAcid aminoAcidBySymbolLong(String symbolLong) {
-  return aminoAcids.firstWhere(
-      (element) => element.symbolLong != null && element.symbolLong.toUpperCase() == symbolLong.toUpperCase(),
-      orElse: () => null);
+AminoAcid? aminoAcidBySymbolLong(String symbolLong) {
+  return aminoAcids.firstWhereOrNull(
+      (element) => element.symbolLong != null && element.symbolLong!.toUpperCase() == symbolLong.toUpperCase());
 }
 
-AminoAcid aminoAcidByNucleobaseSequence(String sequence) {
-  return aminoAcids.firstWhere((element) => element.nucleobaseSequences.contains(sequence.toUpperCase()),
-      orElse: () => null);
+AminoAcid? aminoAcidByNucleobaseSequence(String sequence) {
+  return aminoAcids.firstWhereOrNull((element) => element.nucleobaseSequences.contains(sequence.toUpperCase()));
 }
 
 String encodeRNANucleobaseSequence(String input) {

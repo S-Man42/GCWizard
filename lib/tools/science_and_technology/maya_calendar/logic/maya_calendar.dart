@@ -142,7 +142,7 @@ List<int> _longCountToList(int numberDec) {
   return result;
 }
 
-Map<String, dynamic> decodeMayaCalendar(List<String> inputs) {
+Map<String, Object?> decodeMayaCalendar(List<String?>? inputs) {
   if (inputs == null || inputs.length == 0)
     return {
       'displays': <List<String>>[],
@@ -158,7 +158,7 @@ Map<String, dynamic> decodeMayaCalendar(List<String> inputs) {
   List<int> numbers = inputs.where((input) => input != null).map((input) {
     var number = 0;
     var display = <String>[];
-    input.toLowerCase().split('').forEach((segment) {
+    input!.toLowerCase().split('').forEach((segment) {
       if (oneCharacters.contains(segment)) {
         number += 1;
         display.add(segment);
@@ -183,12 +183,12 @@ Map<String, dynamic> decodeMayaCalendar(List<String> inputs) {
     else
       total = (int.parse(total) + numbers[i] * mayaCalendarSystem[numbers.length - i - 1]).toString();
   }
-  if (invalid) total = "-1";
+  if (invalid) total = '-1';
 
   return {'displays': displays, 'numbers': numbers, 'vigesimal': int.tryParse(total)};
 }
 
-String convertDecToMayaCalendar(String input) {
+String convertDecToMayaCalendar(String? input) {
   if (input == null || input == '') return '';
 
   int numberDec = int.parse(input);

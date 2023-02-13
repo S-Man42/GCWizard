@@ -648,3 +648,7 @@ String? _characterFromSegmentList(SegmentDisplayType type, List<String> segments
   }
   return segmentToAZ.map((key, value) => MapEntry(key.join(), value.toString()))[segments.join()];
 }
+
+bool segmentActive(Map<String, bool> segments, String segment) {
+  return segments[segment] ?? false;
+}

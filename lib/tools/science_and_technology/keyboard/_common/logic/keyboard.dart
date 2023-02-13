@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 
 // Add keyboard layouts
@@ -1729,12 +1730,12 @@ List<KeyboardData> allKeyboards = [
   KeyboardData(KeyboardType.FRA_BEPO, 'keyboard_mode_fra_bepo', 'BÉPOÈ!'),
 ];
 
-KeyboardData getKeyboardByType(KeyboardType type) {
-  return allKeyboards.firstWhere((element) => element.type == type, orElse: () => null);
+KeyboardData? getKeyboardByType(KeyboardType type) {
+  return allKeyboards.firstWhereOrNull((element) => element.type == type);
 }
 
-KeyboardType getKeyboardTypeByName(String name) {
-  return allKeyboards.firstWhere((element) => element.name == name, orElse: () => null).type;
+KeyboardType? getKeyboardTypeByName(String name) {
+  return allKeyboards.firstWhereOrNull((element) => element.name == name)?.type;
 }
 
 Map buildConvertingMap(KeyboardType type, ConvertDirection direction) {
