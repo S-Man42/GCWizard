@@ -38,7 +38,7 @@ String decodeDTMF(String chiffre) {
   var _chiffreList = chiffre.split(RegExp(r'[^0-9]'));
 
   var _chiffreListClean = _chiffreList
-      .map((chiffre) => int.tryParse(chiffre))
+      .map((chiffre) => int.tryParse(chiffre)!)
       .where((chiffre) => chiffre != null && dtmfFrequencies.contains(chiffre))
       .toList();
 
