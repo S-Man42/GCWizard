@@ -23,15 +23,18 @@ class MathematicalConstants extends StatefulWidget {
 
 class MathematicalConstantsState extends State<MathematicalConstants> {
   var _currentConstant;
-  Map<String, Map<String, dynamic>> _constants;
+  late Map<String, MathematicalConstant> _constants;
 
   List<String> _orderedConstantKeys = [];
 
   @override
+  void initState() {
+    super.initState();
+    _constants = _buildConstants(context);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    if (_constants == null) {
-      _buildConstants(context);
-    }
 
     return Column(
       children: <Widget>[
@@ -51,32 +54,27 @@ class MathematicalConstantsState extends State<MathematicalConstants> {
     );
   }
 
-  void _buildConstants(BuildContext context) {
+  Map<String, MathematicalConstant> _buildConstants(BuildContext context) {
     _constants = {};
 
     MATHEMATICAL_CONSTANTS.entries.forEach((constant) {
       _constants.putIfAbsent(constant.key, () => constant.value);
 
-      if (constant.value['additional_names'] != null) {
-        List<String> names = constant.value['additional_names'];
+      if (constant.value.additional_names != null) {
+        List<String> names = constant.value.additional_names!;
 
         names.forEach((name) {
-          var mapKey = name;
-
-          var symbol = constant.value['symbol'];
-          var value = constant.value['value'];
-          var tool = constant.value['tool'];
-          var additionalNames = List<String>.from(constant.value['additional_names']);
+          var additionalNames = List<String>.from(constant.value.additional_names!);
           additionalNames.add(constant.key);
           additionalNames.remove(name);
 
-          var mapValue = {'value': value, 'additional_names': additionalNames};
+          var mapValue = MathematicalConstant(
+              value: constant.value.value,
+              symbol: constant.value.symbol,
+              additional_names: additionalNames,
+              tool: constant.value.tool);
 
-          if (symbol != null) mapValue.putIfAbsent('symbol', () => symbol);
-
-          if (tool != null) mapValue.putIfAbsent('tool', () => tool);
-
-          _constants.putIfAbsent(mapKey, () => mapValue);
+          _constants.putIfAbsent(name, () => mapValue);
         });
       }
     });
@@ -89,42 +87,42 @@ class MathematicalConstantsState extends State<MathematicalConstants> {
     }
 
     _currentConstant = _orderedConstantKeys.first;
+    return _constants;
   }
 
   Widget _buildOutput() {
-    Map<String, dynamic> constantData = _constants[_currentConstant];
+    var constantData = _constants[_currentConstant];
+    if (constantData == null) return Container();
 
-    List<String> names;
-    if (constantData['additional_names'] != null) {
-      print(constantData['additional_names']);
-
-      names = constantData['additional_names'].map<String>((name) => i18n(context, name)).toList();
+    List<String>? names;
+    if (constantData.additional_names != null) {
+      names = constantData.additional_names!.map<String>((name) => i18n(context, name)).toList();
     }
 
-    var data = [
-      constantData['symbol'] != null
-          ? [
-              i18n(context, 'physical_constants_symbol'),
-              buildSubOrSuperscriptedRichTextIfNecessary(constantData['symbol'])
-            ]
-          : null,
-      [i18n(context, 'physical_constants_value'), constantData['value']],
-      names != null ? [i18n(context, 'mathematical_constants_additionalnames'), names.join('\n')] : null
-    ];
+    List<List<Object?>> data = [];
+      if (constantData.symbol != null)
+        data.add([
+                  i18n(context, 'physical_constants_symbol'),
+                  buildSubOrSuperscriptedRichTextIfNecessary(constantData.symbol!)
+                ]);
+      data.add([i18n(context, 'physical_constants_value'), constantData.value]);
+      if (names != null)
+        data.add([i18n(context, 'mathematical_constants_additionalnames'), names.join('\n')]);
+
 
     var dataView = GCWColumnedMultilineOutput(
         data: data,
         flexValues: [1, 2]
     );
 
-    var toolLink = _buildToolLink(constantData['tool']);
+    var toolLink = _buildToolLink(constantData.tool);
 
     return Column(
       children: [dataView, toolLink],
     );
   }
 
-  Widget _buildToolLink(String toolReference) {
+  Widget _buildToolLink(String? toolReference) {
     if (toolReference == null) return Container();
 
     Widget widget;

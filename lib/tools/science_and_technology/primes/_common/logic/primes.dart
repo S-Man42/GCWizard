@@ -30,7 +30,7 @@ BigInt _findPrimeFactor(BigInt n) {
   return fac;
 }
 
-List<BigInt> integerFactorization(int x) {
+List<BigInt> integerFactorization(int? x) {
   if (x == null || x <= 1) return [BigInt.one];
 
   BigInt n = BigInt.from(x), fac;
@@ -55,20 +55,20 @@ List<BigInt> integerFactorization(int x) {
   return out;
 }
 
-int getNthPrime(int n) {
+int getNthPrime(int? n) {
   if (n == null || n <= 0 || n > 78499) return -1; //TODO: Exception
 
   return primes[n - 1];
 }
 
-int getPrimeIndex(int n) {
+int getPrimeIndex(int? n) {
   if (n == null) return -1; //TODO: Exception
 
   var output = binarySearch(primes, n);
   return (output < 0) ? -1 : output + 1;
 }
 
-List<int> getNearestPrime(int n) {
+List<int>? getNearestPrime(int? n) {
   if (n == null || n > 1000000) return null; //TODO: Exception('Too big');
 
   if (n <= 2) return [2];
@@ -93,22 +93,22 @@ List<int> getNearestPrime(int n) {
   return [max(valueBefore, valueAfter)];
 }
 
-int getNextPrime(int n) {
+int? getNextPrime(int? n) {
   if (n == null || n > 1000000) return null;
 
   if (isPrime(BigInt.from(n))) n++;
 
-  while (!isPrime(BigInt.from(n))) n++;
+  while (!isPrime(BigInt.from(n!))) n++;
 
   return n;
 }
 
-int getPreviousPrime(int n) {
+int? getPreviousPrime(int? n) {
   if (n == null || n <= 2) return null;
 
   if (isPrime(BigInt.from(n))) n--;
 
-  while (!isPrime(BigInt.from(n))) n--;
+  while (!isPrime(BigInt.from(n!))) n--;
 
   return n;
 }

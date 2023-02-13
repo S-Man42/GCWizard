@@ -88,7 +88,7 @@ class GCWDateTimePicker extends StatefulWidget {
   final Set<DateTimePickerConfig> config;
   final Duration timezoneOffset;
   final int minDays;
-  final int maxDays;
+  final int? maxDays;
   final int maxHours;
   final double maxSeconds;
 
@@ -290,7 +290,7 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
           controller: widget.dayController,
           value: _currentDay,
           min: widget.minDays,
-          max: widget.maxDays,
+          max: widget.maxDays ?? 9007199254740992,
           onChanged: (value) {
             setState(() {
               _currentDay = value;

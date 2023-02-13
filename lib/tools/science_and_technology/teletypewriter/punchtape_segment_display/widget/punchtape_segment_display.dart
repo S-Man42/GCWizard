@@ -73,13 +73,13 @@ class PUNCHTAPESegmentDisplay extends NSegmentDisplay {
               });
 
               circles.forEach((key, value) {
-                paint.color = currentSegments[key]! ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
+                paint.color = segmentActive(currentSegments, key) ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
                 canvas.touchCanvas.drawCircle(
                     Offset(size.width / _PUNCHTAPE_RELATIVE_DISPLAY_WIDTH * value[0],
                         size.height / _PUNCHTAPE_RELATIVE_DISPLAY_HEIGHT * value[1]),
                     pointSize,
                     paint, onTapDown: (tapDetail) {
-                  setSegmentState(key, !currentSegments[key]!);
+                  setSegmentState(key, !segmentActive(currentSegments, key));
                 });
 
                 if (size.height < 50) return;

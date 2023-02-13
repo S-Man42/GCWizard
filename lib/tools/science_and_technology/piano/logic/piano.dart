@@ -2,7 +2,7 @@
 // https://en.wikipedia.org/wiki/Piano_key_frequencies
 // https://fr.wikipedia.org/wiki/Fr%C3%A9quences_des_touches_du_piano
 
-Map<int, Map<String, dynamic>> PIANO_KEYS = {
+Map<int, Map<String, String>> PIANO_KEYS = {
   89: {
     "number": "89 (-8)",
     "color": "common_color_white",

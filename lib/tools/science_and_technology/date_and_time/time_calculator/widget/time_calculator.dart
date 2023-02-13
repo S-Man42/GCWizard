@@ -21,13 +21,13 @@ class TimeCalculator extends StatefulWidget {
 
 class TimeCalculatorState extends State<TimeCalculator> {
   var _currentMode = GCWSwitchPosition.left;
-  Duration _currentStartTime;
-  Duration _currentEndTime;
+  late Duration _currentStartTime;
+  late Duration _currentEndTime;
 
-  TextEditingController _startDaysController;
-  TextEditingController _startHoursController;
-  TextEditingController _startMinutesController;
-  TextEditingController _startSecondsController;
+  late TextEditingController _startDaysController;
+  late TextEditingController _startHoursController;
+  late TextEditingController _startMinutesController;
+  late TextEditingController _startSecondsController;
 
   @override
   void initState() {

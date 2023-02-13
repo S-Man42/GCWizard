@@ -75,13 +75,13 @@ class _EdelcrantzSegmentDisplay extends NSegmentDisplay {
               });
 
               shutters.forEach((key, value) {
-                paint.color = currentSegments[shutterSegments[key]]! ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
+                paint.color = segmentActive(currentSegments, shutterSegments[key]!) ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
                 canvas.touchCanvas.drawRect(
                     Offset(size.width / _EDELCRANTZ_RELATIVE_DISPLAY_WIDTH * value[0],
                             size.height / _EDELCRANTZ_RELATIVE_DISPLAY_HEIGHT * value[1]) &
                         Size(pointSize * 3, pointSize * 2),
                     paint, onTapDown: (tapDetail) {
-                  setSegmentState(shutterSegments[key], !currentSegments[shutterSegments[key]]!);
+                  setSegmentState(shutterSegments[key], !segmentActive(currentSegments, shutterSegments[key]!));
                 });
 
                 if (size.height < 50) return;

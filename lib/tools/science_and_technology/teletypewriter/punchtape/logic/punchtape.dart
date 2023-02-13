@@ -3,8 +3,9 @@ import 'package:gc_wizard/tools/science_and_technology/teletypewriter/_common/lo
 
 List<String> decenary2segments(String decenary, bool order12345, TeletypewriterCodebook language) {
   // 0 ... 31 => 00000 ... 11111
-  String binary = convertBase(decenary, 10, 2).padLeft(BINARY_LENGTH[language]!, '0');
+  String? binary = convertBase(decenary, 10, 2)?.padLeft(BINARY_LENGTH[language]!, '0');
   List<String> result = [];
+  if (binary == null) return result;
   if (!order12345) {
     binary = binary.split('').reversed.join('');
   }
@@ -133,7 +134,7 @@ String segments2binary(List<String> segments2convert, TeletypewriterCodebook lan
   return result;
 }
 
-String segments2decenary(List<String> segments, bool order54321, TeletypewriterCodebook language) {
+String? segments2decenary(List<String> segments, bool order54321, TeletypewriterCodebook language) {
   // [1,2,3,4,5] => 0 ... 31
   String result = '';
 
@@ -214,7 +215,7 @@ List<List<String>> encodePunchtape(String input, TeletypewriterCodebook language
   return result;
 }
 
-Map<String, Object> decodeTextPunchtape(String inputs, TeletypewriterCodebook language, bool order12345) {
+Map<String, Object> decodeTextPunchtape(String? inputs, TeletypewriterCodebook language, bool order12345) {
   if (inputs == null || inputs.length == 0)
     return {
       'displays': <List<String>>[],
@@ -225,8 +226,8 @@ Map<String, Object> decodeTextPunchtape(String inputs, TeletypewriterCodebook la
   List<int> intList = List<int>.filled(1, 0);
 
   inputs.split(' ').forEach((element) {
-    if (int.tryParse(convertBase(element, 2, 10)) != null) {
-      intList[0] = int.parse(convertBase(element, 2, 10));
+    if (int.tryParse(convertBase(element, 2, 10) ?? '') != null) {
+      intList[0] = int.parse(convertBase(element, 2, 10)!);
       text.add(decodeTeletypewriter(intList, language));
     }
     if (!order12345) element = element.split('').reversed.join('');
@@ -253,7 +254,8 @@ Map<String, Object> decodeVisualPunchtape(List<String?> inputs, TeletypewriterCo
   // convert list of displays to list of decimal using String segments2decenary(List<String> segments)
   List<int> intList = [];
   displays.forEach((element) {
-    intList.add(int.parse(segments2decenary(element, order12345, language)));
+    var value = int.parse(segments2decenary(element, order12345, language) ?? '');
+    if (value != null) intList.add(value);
   });
 
   // convert list of decimal to character using String decodeCCITT(List<int> values, TeletypewriterCodebook language)

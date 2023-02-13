@@ -20,12 +20,10 @@ class DayOfTheYear extends StatefulWidget {
 
 class DayOfTheYearState extends State<DayOfTheYear> {
   var _currentMode = GCWSwitchPosition.right;
-  DateTime _currentEncodeDate;
-  DateTime _currentDecodeDate;
+  late DateTime _currentEncodeDate;
+  late DateTime _currentDecodeDate;
 
-  TextEditingController yearController;
-  TextEditingController dayController;
-  var _dayFocusNode;
+  late FocusNode _dayFocusNode;
   var _currentYear = 0;
   var _currentDayOfTheYear = 1;
 
@@ -85,7 +83,6 @@ class DayOfTheYearState extends State<DayOfTheYear> {
     widgets.addAll({
       GCWIntegerSpinner(
         layout: SpinnerLayout.VERTICAL,
-        controller: yearController,
         value: _currentYear,
         min: -5000,
         max: 5000,
@@ -105,7 +102,6 @@ class DayOfTheYearState extends State<DayOfTheYear> {
       GCWIntegerSpinner(
         focusNode: _dayFocusNode,
         layout: SpinnerLayout.VERTICAL,
-        controller: dayController,
         value: _currentDayOfTheYear,
         min: 0,
         max: 9999,
@@ -128,7 +124,7 @@ class DayOfTheYearState extends State<DayOfTheYear> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    DayOfTheYearOutput outputData;
+    DayOfTheYearOutput? outputData;
     if (_currentMode == GCWSwitchPosition.right)
       outputData = calculateDayInfos(_currentYear, _currentDayOfTheYear);
     else
@@ -152,7 +148,7 @@ class DayOfTheYearState extends State<DayOfTheYear> {
 
     children.add(GCWOutput(
       title: i18n(context, 'dates_weekday'),
-      child: i18n(context, WEEKDAY[outputData.weekday]),
+      child: i18n(context, WEEKDAY[outputData.weekday]!),
     ));
 
     children.add(GCWOutput(

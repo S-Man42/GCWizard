@@ -19,13 +19,13 @@ class Projectiles extends StatefulWidget {
 class ProjectilesState extends State<Projectiles> {
   UnitCategory _currentMode = UNITCATEGORY_ENERGY;
 
-  Map<String, dynamic> _currentOutputUnit = {'unit': UNITCATEGORY_ENERGY.defaultUnit, 'prefix': UNITPREFIX_NONE};
+  var _currentOutputUnit = GCWUnitsValue(UNITCATEGORY_ENERGY.defaultUnit, UNITPREFIX_NONE);
 
   double _currentInputMass = 0.0;
   double _currentInputVelocity = 0.0;
   double _currentInputEnergy = 0.0;
 
-  Map<UnitCategory, String> _calculateProjectilesModeItems;
+  late Map<UnitCategory, String> _calculateProjectilesModeItems;
 
   @override
   void initState() {
@@ -42,21 +42,19 @@ class ProjectilesState extends State<Projectiles> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWDropDown(
+        GCWDropDown<UnitCategory>(
           value: _currentMode,
           onChanged: (value) {
             setState(() {
               _currentMode = value;
 
               if (_currentMode == UNITCATEGORY_ENERGY) {
-                _currentOutputUnit = {'unit': UNITCATEGORY_ENERGY.defaultUnit};
+                _currentOutputUnit = GCWUnitsValue(UNITCATEGORY_ENERGY.defaultUnit, UNITPREFIX_NONE);
               } else if (_currentMode == UNITCATEGORY_MASS) {
-                _currentOutputUnit = {'unit': UNITCATEGORY_MASS.defaultUnit};
+                _currentOutputUnit = GCWUnitsValue(UNITCATEGORY_MASS.defaultUnit, UNITPREFIX_NONE);
               } else if (_currentMode == UNITCATEGORY_VELOCITY) {
-                _currentOutputUnit = {'unit': UNITCATEGORY_VELOCITY.defaultUnit};
+                _currentOutputUnit = GCWUnitsValue(UNITCATEGORY_VELOCITY.defaultUnit, UNITPREFIX_NONE);
               }
-
-              _currentOutputUnit.putIfAbsent('prefix', () => UNITPREFIX_NONE);
             });
           },
           items: _calculateProjectilesModeItems.entries.map((mode) {
@@ -104,7 +102,7 @@ class ProjectilesState extends State<Projectiles> {
           value: _currentOutputUnit,
           unitCategory: _currentMode,
           onlyShowPrefixSymbols: false,
-          onChanged: (value) {
+          onChanged: (GCWUnitsValue value) {
             setState(() {
               _currentOutputUnit = value;
             });
@@ -115,8 +113,8 @@ class ProjectilesState extends State<Projectiles> {
     );
   }
 
-  _calculateOutput() {
-    double outputValue;
+  String _calculateOutput() {
+    double? outputValue;
 
     if (_currentMode == UNITCATEGORY_ENERGY) {
       outputValue = calculateEnergy(_currentInputMass, _currentInputVelocity);
@@ -128,10 +126,10 @@ class ProjectilesState extends State<Projectiles> {
 
     if (outputValue == null) return '';
 
-    outputValue = _currentOutputUnit['unit'].fromReference(outputValue) / _currentOutputUnit['prefix'].value;
+    outputValue = _currentOutputUnit.value.fromReference(outputValue) / _currentOutputUnit.prefix.value;
     return NumberFormat('0.0' + '#' * 6).format(outputValue) +
         ' ' +
-        (_currentOutputUnit['prefix'].symbol ?? '') +
-        _currentOutputUnit['unit'].symbol;
+        (_currentOutputUnit.prefix.symbol ?? '') +
+        _currentOutputUnit.value.symbol;
   }
 }
