@@ -2549,7 +2549,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
        if (_expertMode) [i18n(context, 'wherigo_header_device'), _WherigoCartridgeGWC.RecommendedDevice],
        if (_expertMode) [i18n(context, 'wherigo_header_deviceversion'), _WherigoCartridgeLUA.TargetDeviceVersion],
         if (_expertMode)  [i18n(context, 'wherigo_header_logging'), i18n(context, 'common_' + _WherigoCartridgeLUA.UseLogging)]
-
+          
       ];
 
       if (_expertMode)

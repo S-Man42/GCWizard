@@ -7,7 +7,7 @@ import 'package:gc_wizard/common_widgets/gcw_text.dart';
 
 class GCWColumnedMultilineOutput extends StatefulWidget {
   //TODO: Is input data type correctly defined? Is there a better way than List<List<...>>? Own return type?
-  final List<List<Object?>?> data;
+  final List<List<Object?>> data;
   final List<int> flexValues;
   final int? copyColumn;
   final bool suppressCopyButtons;
@@ -46,16 +46,17 @@ class _GCWColumnedMultilineOutputState extends State<GCWColumnedMultilineOutput>
     );
   }
 
+
   List<Widget> _columnedMultiLineOutputRows() {
     var odd = true;
     var isFirst = true;
     var copyColumn = widget.copyColumn;
 
     int index = 0;
-    return widget.data.where((rowData) => rowData != null).map((rowData) {
+    return widget.data.map((rowData) {
       Widget output;
 
-      var columns = rowData!
+      var columns = rowData
           .asMap()
           .map((index, column) {
             var textStyle = gcwTextStyle(fontSize: widget.fontSize);
