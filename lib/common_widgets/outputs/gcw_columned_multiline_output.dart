@@ -6,7 +6,8 @@ import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 
 class GCWColumnedMultilineOutput extends StatefulWidget {
-  final List<List<Object?>> data;
+  //TODO: Is input data type correctly defined? Is there a better way than List<List<...>>? Own return type?
+  final List<List<Object>?> data;
   final List<int> flexValues;
   final int? copyColumn;
   final bool suppressCopyButtons;
@@ -52,10 +53,10 @@ class _GCWColumnedMultilineOutputState extends State<GCWColumnedMultilineOutput>
     var copyColumn = widget.copyColumn;
 
     int index = 0;
-    return widget.data.map((rowData) {
+    return widget.data.where((rowData) => rowData != null).map((rowData) {
       Widget output;
 
-      var columns = rowData
+      var columns = rowData!
           .asMap()
           .map((index, column) {
             var textStyle = gcwTextStyle(fontSize: widget.fontSize);
@@ -85,6 +86,8 @@ class _GCWColumnedMultilineOutputState extends State<GCWColumnedMultilineOutput>
         if (isFirst && widget.hasHeader && widget.copyAll) {
           copyText = '';
           widget.data.skip(1).forEach((dataRow) {
+            if (dataRow == null)
+              return;
             copyText = (copyText ?? '') + dataRow[copyColumn!].toString() + '\n';
           });
         }

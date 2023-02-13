@@ -208,7 +208,7 @@ Future<Map<String, dynamic>> getCartridgeGWC(Uint8List byteListGWC, bool offline
   double _Altitude = 0.0;
   int _Splashscreen = 0;
   int _SplashscreenIcon = 0;
-  int _DateOfCreation;
+  late int _DateOfCreation;
   String _TypeOfCartridge = '';
   String _Player = '';
   int _PlayerID = 0;
@@ -343,7 +343,7 @@ Future<Map<String, dynamic>> getCartridgeGWC(Uint8List byteListGWC, bool offline
         _ResultsGWC.add('wherigo_error_runtime');
         _ResultsGWC.add('wherigo_error_runtime_exception');
         _ResultsGWC.add('wherigo_error_gwc_header');
-        _ResultsGWC.add(exception);
+        _ResultsGWC.add(exception.toString());
       }
 
       try {
@@ -361,7 +361,7 @@ Future<Map<String, dynamic>> getCartridgeGWC(Uint8List byteListGWC, bool offline
         _ResultsGWC.add('wherigo_error_runtime');
         _ResultsGWC.add('wherigo_error_runtime_exception');
         _ResultsGWC.add('wherigo_error_gwc_luabytecode');
-        _ResultsGWC.add(exception);
+        _ResultsGWC.add(exception.toString());
       }
 
       try {

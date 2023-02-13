@@ -16,7 +16,7 @@ class GCWAsyncExecuterParameters {
 
 class GCWAsyncExecuter<T extends Object?> extends StatefulWidget {
   final Future<T> Function(GCWAsyncExecuterParameters) isolatedFunction;
-  final Future<GCWAsyncExecuterParameters?> Function()? parameter;
+  final Future<GCWAsyncExecuterParameters?> Function() parameter;
   final void Function(T) onReady;
   final bool isOverlay;
 
@@ -53,13 +53,13 @@ class _GCWAsyncExecuterState extends State<GCWAsyncExecuter> {
   Widget build(BuildContext context) {
     if (widget.parameter == null) return Container();
     Stream<double> progress() async* {
-      var parameter = await widget.parameter!();
+      var parameter = await widget.parameter();
       if (!_cancel && parameter != null) {
         if (kIsWeb) {
           _result = await widget.isolatedFunction(parameter);
           return;
         } else {
-          _receivePort = await _makeIsolate(widget.isolatedFunction, parameter!);
+          _receivePort = await _makeIsolate(widget.isolatedFunction, parameter);
         }
         if (_cancel) _cancelProcess();
 

@@ -29,7 +29,7 @@ final SUPPORTED_IMAGE_TYPES = fileTypesByFileClass(FileClass.IMAGE);
 
 class GCWOpenFile extends StatefulWidget {
   final void Function(GCWFile?) onLoaded;
-  final List<FileType> supportedFileTypes;
+  final List<FileType>? supportedFileTypes;
   final bool isDialog;
   final String? title;
   final GCWFile? file;
@@ -38,7 +38,7 @@ class GCWOpenFile extends StatefulWidget {
   const GCWOpenFile(
       {Key? key,
       required this.onLoaded,
-      required this.supportedFileTypes,
+      this.supportedFileTypes,
       this.title,
       this.isDialog = false,
       this.file,
@@ -105,7 +105,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
                 child: Container(
                   child: GCWAsyncExecuter(
                     isolatedFunction: _downloadFileAsync,
-                    parameter: _buildJobDataDownload(),
+                    parameter: _buildJobDataDownload,
                     onReady: (data) => _saveDownload(data),
                     isOverlay: true,
                   ),
@@ -240,13 +240,13 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
   }
 
   bool _validateContentType(String contentType) {
-    for (FileType fileType in widget.supportedFileTypes)
+    for (FileType fileType in widget.supportedFileTypes ?? [])
       if (mimeTypes(fileType).contains(contentType)) return true;
 
     var _fileName = _currentUrl?.split('?').first;
     var _urlFileType = _fileName == null ? null : fileTypeByFilename(_fileName);
 
-    if (_urlFileType != null && widget.supportedFileTypes.contains(_urlFileType)) {
+    if (_urlFileType != null && (widget.supportedFileTypes ?? []).contains(_urlFileType)) {
       return true;
     }
 
@@ -361,12 +361,12 @@ Future<dynamic> _downloadFileAsync(dynamic jobData) async {
 /// Returns null if nothing was selected.
 ///
 /// * [allowedFileTypes] specifies a list of file extensions that will be displayed for selection, if empty - files with any extension are displayed. Example: `['jpg', 'jpeg']`
-Future<GCWFile?> _openFileExplorer({required List<FileType> allowedFileTypes}) async {
+Future<GCWFile?> _openFileExplorer({List<FileType>? allowedFileTypes}) async {
   try {
     if (_hasUnsupportedTypes(allowedFileTypes)) allowedFileTypes = [];
 
     var files = (await filePicker.FilePicker.platform.pickFiles(
-        type: allowedFileTypes.isEmpty ? filePicker.FileType.any : filePicker.FileType.custom,
+        type: allowedFileTypes!.isEmpty ? filePicker.FileType.any : filePicker.FileType.custom,
         allowMultiple: false,
         allowedExtensions:
         allowedFileTypes.isEmpty ? null : allowedFileTypes.map((type) => fileExtension(type)).toList()))
@@ -396,7 +396,7 @@ List<filePicker.PlatformFile> _filterFiles(List<filePicker.PlatformFile> files, 
   return files.where((element) => allowedExtensions.contains(element.extension)).toList();
 }
 
-bool _hasUnsupportedTypes(List<FileType> allowedExtensions) {
+bool _hasUnsupportedTypes(List<FileType>? allowedExtensions) {
   if (allowedExtensions == null) return false;
   if (kIsWeb) return false;
 

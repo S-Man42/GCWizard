@@ -24,8 +24,7 @@ String? findHashNumeric(int hashToFind, int len) {
 }
 
 String? breakUrwigoHash(int input, HASH type) {
-  if (input == null) return '';
-  if (input < 0 || input >= 65535) return '';
+  if (input < 0 || input >= 65535) return null;
 
   var out;
 
