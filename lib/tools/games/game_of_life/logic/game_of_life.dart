@@ -3,7 +3,7 @@ class GameOfLifeRules {
   final Set<int> births;
   final bool isInverse;
 
-  const GameOfLifeRules({this.survivals, this.births, this.isInverse: false});
+  const GameOfLifeRules({this.survivals = const {}, this.births = const {}, this.isInverse: false});
 
   GameOfLifeRules inverseRules() {
     var inverseSurvivals = <int>{};
