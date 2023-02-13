@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 
 final Map<String, List<int>> DigitToDTMF = {
@@ -37,7 +38,7 @@ String decodeDTMF(String chiffre) {
   var _chiffreList = chiffre.split(RegExp(r'[^0-9]'));
 
   var _chiffreListClean = _chiffreList
-      .map((chiffre) => int.tryParse(chiffre))
+      .map((chiffre) => int.tryParse(chiffre)!)
       .where((chiffre) => chiffre != null && dtmfFrequencies.contains(chiffre))
       .toList();
 
@@ -51,9 +52,9 @@ String decodeDTMF(String chiffre) {
   }
 
   return _dtmfCodes.map((frequencies) {
-    var character = DTMFToDigit.entries.firstWhere((entry) {
+    var character = DTMFToDigit.entries.firstWhereOrNull((entry) {
       return entry.key.join() == frequencies.join();
-    }, orElse: () => null);
+    });
 
     if (character == null) return '';
 

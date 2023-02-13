@@ -11,7 +11,7 @@ class Weekday extends StatefulWidget {
 }
 
 class WeekdayState extends State<Weekday> {
-  DateTime _currentDate;
+  late DateTime _currentDate;
 
   @override
   void initState() {
@@ -41,7 +41,7 @@ class WeekdayState extends State<Weekday> {
 
   Widget _buildOutput(BuildContext context) {
     var weekday = _currentDate.weekday;
-    var output = i18n(context, WEEKDAY[weekday]);
+    var output = i18n(context, WEEKDAY[weekday] ?? '');
 
     return GCWDefaultOutput(child: output);
   }

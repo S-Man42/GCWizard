@@ -52,7 +52,7 @@ class KeyboardLayoutState extends State<KeyboardLayout> {
                 child: Column(
                   children: <Widget>[
                     GCWTextDivider(text: i18n(context, 'keyboard_from')),
-                    GCWDropDown(
+                    GCWDropDown<KeyboardType>(
                       value: _currentKeyboardFrom,
                       onChanged: (value) {
                         setState(() {
@@ -74,7 +74,7 @@ class KeyboardLayoutState extends State<KeyboardLayout> {
                 child: Column(
                   children: <Widget>[
                     GCWTextDivider(text: i18n(context, 'keyboard_to')),
-                    GCWDropDown(
+                    GCWDropDown<KeyboardType>(
                       value: _currentKeyboardTo,
                       onChanged: (value) {
                         setState(() {

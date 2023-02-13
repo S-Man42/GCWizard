@@ -11,7 +11,7 @@ import 'package:gc_wizard/tools/science_and_technology/number_sequences/_common/
 class NumberSequenceRange extends StatefulWidget {
   final NumberSequencesMode mode;
   final int maxIndex;
-  const NumberSequenceRange({Key? key, this.mode, this.maxIndex}) : super(key: key);
+  const NumberSequenceRange({Key? key, required this.mode, required this.maxIndex}) : super(key: key);
 
   @override
   NumberSequenceRangeState createState() => NumberSequenceRangeState();
@@ -21,14 +21,13 @@ class NumberSequenceRangeState extends State<NumberSequenceRange> {
   int _currentInputStop = 0;
   int _currentInputStart = 0;
 
-  Widget _currentOutput;
-  TextEditingController _stopController;
+  Widget _currentOutput = GCWDefaultOutput();
+  late TextEditingController _stopController;
 
   @override
   void initState() {
     super.initState();
 
-    _currentOutput = GCWDefaultOutput();
     _stopController = TextEditingController(text: _currentInputStop.toString());
   }
 

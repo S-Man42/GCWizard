@@ -52,7 +52,7 @@ class BrailleEuroSegmentDisplay extends NSegmentDisplay {
               };
 
               circles.forEach((key, value) {
-                paint.color = currentSegments[key] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
+                paint.color = segmentActive(currentSegments, key) ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
 
                 var pointSize = size.height / _EUROBRAILLE_RELATIVE_DISPLAY_HEIGHT * _EUROBRAILLE_RADIUS;
 
@@ -61,7 +61,7 @@ class BrailleEuroSegmentDisplay extends NSegmentDisplay {
                         size.height / _EUROBRAILLE_RELATIVE_DISPLAY_HEIGHT * value[1]),
                     size.height / _EUROBRAILLE_RELATIVE_DISPLAY_HEIGHT * _EUROBRAILLE_RADIUS,
                     paint, onTapDown: (tapDetail) {
-                  setSegmentState(key, !currentSegments[key]);
+                  setSegmentState(key, !segmentActive(currentSegments, key));
                 });
 
                 if (size.height < 50) return;

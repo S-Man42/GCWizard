@@ -1993,7 +1993,7 @@ String encodeTeletypewriter_ZC1(String input) {
 }
 
 String decodeTeletypewriter(
-  List<int> values,
+  List<int>? values,
   TeletypewriterCodebook language,
 ) {
   if (values == null || values.length == 0) return '';
@@ -2004,9 +2004,9 @@ String decodeTeletypewriter(
   if (language == TeletypewriterCodebook.BAUDOT_54123)
     values = values.map((decimal) {
       return int.parse(convertBase(
-          convertBase(decimal.toString(), 10, 2).padLeft(BINARY_LENGTH[language]!, '0').split('').reversed.join(''),
+          convertBase(decimal.toString(), 10, 2)?.padLeft(BINARY_LENGTH[language]!, '0').split('').reversed.join('') ?? '',
           2,
-          10));
+          10) ?? '');
     }).toList();
 
   switch (language) {
@@ -2074,10 +2074,8 @@ String decodeTeletypewriter(
       });
 
       return out;
-      break;
     case TeletypewriterCodebook.CCITT_IA5:
       return decodeTeletypewriter_IA5(values);
-      break;
     case TeletypewriterCodebook.ZC1:
       return decodeTeletypewriter_ZC1(values);
   }

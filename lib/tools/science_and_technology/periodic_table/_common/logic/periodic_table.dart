@@ -1,3 +1,5 @@
+import 'package:collection/collection.dart';
+
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/datetime_utils.dart';
 
@@ -67,7 +69,7 @@ class PeriodicTableElement {
   final double electronegativity;
   final double meltingPoint;
   final double boilingPoint;
-  IUPACGroupName iupacGroupName;
+  IUPACGroupName? iupacGroupName;
   final bool isRadioactive;
   final bool isSynthetic;
   final int period;
@@ -76,9 +78,9 @@ class PeriodicTableElement {
   final int mostCommonIsotop;
   final double halfLife; //German: Halbwertszeit
   final List<String> comments;
-  int mainGroup;
-  int subGroup;
-  StateOfMatter stateOfMatter;
+  int? mainGroup;
+  int? subGroup;
+  late StateOfMatter stateOfMatter;
 
   PeriodicTableElement(
       this.name,
@@ -563,20 +565,20 @@ String atomicNumbersToText(List<int> atomicNumbers) {
 
   return atomicNumbers.map((atomicNumber) {
     var element =
-        allPeriodicTableElements.firstWhere((element) => element.atomicNumber == atomicNumber, orElse: () => null);
+        allPeriodicTableElements.firstWhereOrNull((element) => element.atomicNumber == atomicNumber);
     return element != null ? element.chemicalSymbol : UNKNOWN_ELEMENT;
   }).join();
 }
 
-List<int> textToAtomicNumbers(String input) {
+List<int?> textToAtomicNumbers(String input) {
   if (input == null || input.isEmpty) return <int>[];
   input = input.replaceAll(RegExp(r'[^A-Za-z]'), '');
   if (input.isEmpty) return <int>[];
 
   var chemSymbol = RegExp(r'[A-Z][a-z]*');
   return chemSymbol.allMatches(input).map((symbol) {
-    var element =
-        allPeriodicTableElements.firstWhere((element) => element.chemicalSymbol == symbol.group(0), orElse: () => null);
+    PeriodicTableElement? element =
+        allPeriodicTableElements.firstWhereOrNull((element) => element.chemicalSymbol == symbol.group(0));
     if (element == null) return null;
 
     return element.atomicNumber;

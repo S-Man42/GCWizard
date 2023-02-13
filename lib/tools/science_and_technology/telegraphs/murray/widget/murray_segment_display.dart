@@ -48,13 +48,13 @@ class _MurraySegmentDisplay extends NSegmentDisplay {
               });
 
               shutters.forEach((key, value) {
-                paint.color = currentSegments[key]! ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
+                paint.color = segmentActive(currentSegments, key) ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
                 canvas.touchCanvas.drawRect(
                     Offset(size.width / _MURRAY_RELATIVE_DISPLAY_WIDTH * value[0],
                             size.height / _MURRAY_RELATIVE_DISPLAY_HEIGHT * value[1]) &
                         Size(pointSize * 3, pointSize * 2),
                     paint, onTapDown: (tapDetail) {
-                  setSegmentState(key, !currentSegments[key]!);
+                  setSegmentState(key, !segmentActive(currentSegments, key));
                 });
 
                 if (size.height < 50) return;

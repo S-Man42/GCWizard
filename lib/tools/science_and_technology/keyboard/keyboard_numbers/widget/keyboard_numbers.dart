@@ -13,8 +13,8 @@ class KeyboardNumbers extends StatefulWidget {
 }
 
 class KeyboardNumbersState extends State<KeyboardNumbers> {
-  TextEditingController _encodeController;
-  TextEditingController _decodeController;
+  late TextEditingController _encodeController;
+  late TextEditingController _decodeController;
 
   var _currentEncodeInput = '';
   var _currentDecodeInput = '';

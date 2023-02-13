@@ -244,9 +244,9 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
   }
 
   String _decimalToBinary(String decimal, TeletypewriterCodebook language) {
-    List<String> result = [];
+    List<String?> result = [];
     decimal.split(' ').forEach((decimalNumber) {
-      result.add(convertBase(decimalNumber, 10, 2).padLeft(BINARY_LENGTH[language]!, '0'));
+      result.add(convertBase(decimalNumber, 10, 2)?.padLeft(BINARY_LENGTH[language]!, '0'));
     });
     return result.join(' ');
   }
@@ -261,7 +261,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
               ? false
               : (_currentOrderMode == GCWSwitchPosition.left));
       List<String> binaryList = [];
-      List<String> decimalList = [];
+      List<String?> decimalList = [];
       segments.forEach((segment) {
         binaryList.add(segments2binary(
             segment,
@@ -273,8 +273,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
             segments2binary(
                 segment,
                 _currentCode,
-                (_currentCode == TeletypewriterCodebook.BAUDOT_54123 ||
-                        _currentCode == TeletypewriterCodebook.CCITT_IA5)
+                (_currentCode == TeletypewriterCodebook.BAUDOT_54123 || _currentCode == TeletypewriterCodebook.CCITT_IA5)
                     ? false
                     : (_currentOrderMode == GCWSwitchPosition.left)),
             2,
@@ -345,7 +344,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
 }
 
 String _mirrorListOfBinaryToDecimal(List<String> binaryList) {
-  List<String> result = [];
+  List<String?> result = [];
   binaryList.forEach((element) {
     result.add(convertBase(element.split('').reversed.join(''), 2, 10));
   });

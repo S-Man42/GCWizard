@@ -55,7 +55,7 @@ class AtomicNumbersToTextState extends State<AtomicNumbersToText> {
             : GCWIntegerListTextField(
                 onChanged: (result) {
                   setState(() {
-                    _currentDecryptInput = result['values'];
+                    _currentDecryptInput = result.value;
                   });
                 },
               ),

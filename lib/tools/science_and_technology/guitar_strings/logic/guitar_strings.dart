@@ -85,12 +85,10 @@ final GUITAR_STRING_NOTES = <Tuple2<GuitarStringName, int>, String>{
   Tuple2(GuitarStringName.E2, 12): 'symboltables_notes_names_trebleclef_10',
 };
 
-List<Tuple2<GuitarStringName, int>> textToGuitarTabs(String input) {
-  if (input == null) return [];
+List<Tuple2<GuitarStringName, int>?> textToGuitarTabs(String? input) {
+  if (input == null || input.isEmpty) return [];
 
   input = input.toLowerCase().replaceAll(RegExp(r'[^abcdefgh]'), '');
-
-  if (input.isEmpty) return [];
 
   var rand = Random();
   int i;

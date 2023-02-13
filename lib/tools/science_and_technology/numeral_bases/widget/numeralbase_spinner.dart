@@ -20,7 +20,7 @@ class _NumeralBaseSpinnerState extends State<NumeralBaseSpinner> {
 
   @override
   Widget build(BuildContext context) {
-    var list = [];
+    var list = <int>[];
     list.addAll(list2To62);
     list.addAll(list2To62.map((i) => -i));
     list.sort((a, b) {
@@ -62,13 +62,14 @@ class _NumeralBaseSpinnerState extends State<NumeralBaseSpinner> {
       }
     }).toList();
 
-    return GCWDropDownSpinner<int>(
+    return GCWDropDownSpinner(
       index: _currentValue ?? list.indexOf(widget.value),
       items: items.map((item) => Text(item, style: gcwTextStyle())).toList(),
       onChanged: (value) {
         setState(() {
           _currentValue = value;
-          widget.onChanged(list[_currentValue]);
+          if (_currentValue != null)
+            widget.onChanged(list[_currentValue!]);
         });
       },
     );

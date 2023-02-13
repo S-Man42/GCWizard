@@ -36,7 +36,7 @@ class PianoState extends State<Piano> {
     var field = _currentSort == 0 ? fields[0] : fields[_currentSort - 1];
     return Column(
       children: <Widget>[
-        GCWDropDown(
+        GCWDropDown<int>(
           title: i18n(context, 'piano_sort'),
           value: _currentSort,
           onChanged: (value) {
@@ -68,12 +68,8 @@ class PianoState extends State<Piano> {
               )
             : GCWDropDownSpinner(
                 index: _currentIndex,
-                items: PIANO_KEYS.values.where((e) => e[field] != null && e[field].length > 0).map((e) {
-                  if (_currentSort == 0) {
-                    return e['number'];
-                  } else {
-                    return e[field];
-                  }
+                items: PIANO_KEYS.values.where((e) => e[field] != null && e[field]!.length > 0).map((e) {
+                  return (_currentSort == 0) ? e['number']! : e[field]!;
                 }).toList(),
                 onChanged: (value) {
                   setState(() {
@@ -91,7 +87,7 @@ class PianoState extends State<Piano> {
   Widget _buildOutput() {
     if (_isColorSort) {
       var chosenColor = _currentColor == GCWSwitchPosition.left ? 'white' : 'black';
-      var data = PIANO_KEYS.entries.where((element) => element.value['color'].endsWith(chosenColor)).map((element) {
+      var data = PIANO_KEYS.entries.where((element) => element.value['color']!.endsWith(chosenColor)).map((element) {
         return [element.value['number'], element.value['frequency']];
       }).toList();
 
@@ -107,14 +103,14 @@ class PianoState extends State<Piano> {
 
       return GCWColumnedMultilineOutput(
           data: [
-                  [i18n(context, 'piano_number'), PIANO_KEYS[keyNumber]['number']],
-                  [i18n(context, 'piano_color'), i18n(context, PIANO_KEYS[keyNumber]['color'])],
-                  [i18n(context, 'piano_frequency'), PIANO_KEYS[keyNumber]['frequency']],
-                  [i18n(context, 'piano_helmholtz'), PIANO_KEYS[keyNumber]['helmholtz']],
-                  [i18n(context, 'piano_scientific'), PIANO_KEYS[keyNumber]['scientific']],
-                  [i18n(context, 'piano_german'), PIANO_KEYS[keyNumber]['german']],
-                  [i18n(context, 'piano_midi'), PIANO_KEYS[keyNumber]['midi']],
-                  [i18n(context, 'piano_latin'), PIANO_KEYS[keyNumber]['latin']],
+                  [i18n(context, 'piano_number'), PIANO_KEYS[keyNumber]!['number']],
+                  [i18n(context, 'piano_color'), i18n(context, PIANO_KEYS[keyNumber]!['color']!)],
+                  [i18n(context, 'piano_frequency'), PIANO_KEYS[keyNumber]!['frequency']],
+                  [i18n(context, 'piano_helmholtz'), PIANO_KEYS[keyNumber]!['helmholtz']],
+                  [i18n(context, 'piano_scientific'), PIANO_KEYS[keyNumber]!['scientific']],
+                  [i18n(context, 'piano_german'), PIANO_KEYS[keyNumber]!['german']],
+                  [i18n(context, 'piano_midi'), PIANO_KEYS[keyNumber]!['midi']],
+                  [i18n(context, 'piano_latin'), PIANO_KEYS[keyNumber]!['latin']],
                 ],
           flexValues: [1, 2]
       );

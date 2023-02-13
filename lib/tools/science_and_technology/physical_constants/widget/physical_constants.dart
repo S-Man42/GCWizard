@@ -15,13 +15,11 @@ class PhysicalConstants extends StatefulWidget {
 class PhysicalConstantsState extends State<PhysicalConstants> {
   var _currentConstant = PHYSICAL_CONSTANTS.entries.first.key;
 
-  List<String> _constants;
+  List<String> _constants = [];
 
   @override
   Widget build(BuildContext context) {
-    if (_constants == null) {
-      _constants = [];
-
+    if (_constants.isEmpty) {
       List<String> _temp = PHYSICAL_CONSTANTS.keys.map((constant) => i18n(context, constant)).toList();
       _temp.sort();
 
@@ -34,7 +32,7 @@ class PhysicalConstantsState extends State<PhysicalConstants> {
 
     return Column(
       children: <Widget>[
-        GCWDropDown(
+        GCWDropDown<String>(
           value: _currentConstant,
           onChanged: (value) {
             setState(() {
@@ -51,17 +49,18 @@ class PhysicalConstantsState extends State<PhysicalConstants> {
   }
 
   Widget _buildOutput() {
-    Map<String, dynamic> constantData = PHYSICAL_CONSTANTS[_currentConstant];
+    Map<String, Object>? constantData = PHYSICAL_CONSTANTS[_currentConstant];
+    if (constantData== null) return Container();
 
     var data = [
       constantData['symbol'] != null
           ? [
               i18n(context, 'physical_constants_symbol'),
-              buildSubOrSuperscriptedRichTextIfNecessary(constantData['symbol'])
+              buildSubOrSuperscriptedRichTextIfNecessary(constantData['symbol'] as String)
             ]
           : null,
       constantData['value'] != null
-          ? [i18n(context, 'physical_constants_value'), constantData['value'], _buildExponent(constantData['exponent'])]
+          ? [i18n(context, 'physical_constants_value'), constantData['value'], _buildExponent(constantData['exponent'] as String)]
           : null,
       constantData['standard_uncertainty'] != null
           ? [
@@ -71,19 +70,19 @@ class PhysicalConstantsState extends State<PhysicalConstants> {
             ]
           : null,
       constantData['unit'] != null
-          ? [i18n(context, 'physical_constants_unit'), buildSubOrSuperscriptedRichTextIfNecessary(constantData['unit'])]
+          ? [i18n(context, 'physical_constants_unit'), buildSubOrSuperscriptedRichTextIfNecessary(constantData['unit'] as String)]
           : null
     ];
 
     return GCWColumnedMultilineOutput(
-      data: data,
+      data: data as List<List<Object?>>,
       flexValues: [2, 3, 2],
       copyColumn: 1,
     );
   }
 
   Widget _buildExponent(exponent) {
-    if (exponent == null) return null;
+    if (exponent == null) return Container();
 
     return RichText(
         text: TextSpan(

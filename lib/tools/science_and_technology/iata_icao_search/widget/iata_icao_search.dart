@@ -115,13 +115,10 @@ class IATAICAOSearchState extends State<IATAICAOSearch> {
       List<int> flexValues = List<int>.generate(4, (index) => 1);
 
       data = IATA_ICAO_CODES.values
-          .where((e) => e['name'] != null && e['name'].toLowerCase().contains(_currentInputName.toLowerCase()))
+          .where((e) =>  e.name.toLowerCase().contains(_currentInputName.toLowerCase()))
           .map((e) {
-        var dataList = [e['name']];
-        dataList.addAll(['IATA', 'ICAO', 'Location_served'].map((field) => e[field]));
-
-        return dataList;
-      }).toList();
+            return [e.name, e.iata, e.icoa, e.location_served];
+          }).toList();
 
       flexValues = [2, 1, 1, 2];
       data.sort((a, b) => a[0].compareTo(b[0]));
@@ -143,17 +140,14 @@ class IATAICAOSearchState extends State<IATAICAOSearch> {
       if (_currentInputCode == null || _currentInputCode == "") return Container();
 
       List<int> flexValues = List<int>.generate(4, (index) => 1);
-      var output;
 
       if (_currentCode == GCWSwitchPosition.left) {
         // search for IATA
         var data = IATA_ICAO_CODES.values
-            .where((e) => (e['IATA'] != null && e['IATA'].startsWith(_currentInputCode.toUpperCase())))
+            .where((e) => (e.iata != null && e.iata.startsWith(_currentInputCode.toUpperCase())))
             .map((e) {
-          var dataList = [e['IATA']];
-          dataList.addAll(['IATA', 'ICAO', 'name', 'Location_served'].where((f) => (f != 'IATA')).map((f) => e[f]));
-          return dataList;
-        }).toList();
+              return [e.iata, e.icoa, e.name, e.location_served];
+            }).toList();
         flexValues = [1, 1, 2, 2];
 
         data.sort((a, b) {
@@ -178,11 +172,9 @@ class IATAICAOSearchState extends State<IATAICAOSearch> {
         );
       } else {
         var data = IATA_ICAO_CODES.values
-            .where((e) => (e['ICAO'] != null && e['ICAO'].startsWith(_currentInputCode.toUpperCase())))
+            .where((e) => (e.icoa.startsWith(_currentInputCode.toUpperCase())))
             .map((e) {
-          var dataList = [e['ICAO']];
-          dataList.addAll(['ICAO', 'IATA', 'name', 'Location_served'].where((f) => (f != 'ICAO')).map((f) => e[f]));
-          return dataList;
+          return [e.icoa, e.iata, e.name,  e.location_served];
         }).toList();
         flexValues = [1, 1, 2, 2];
 
