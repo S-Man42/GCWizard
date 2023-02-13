@@ -552,7 +552,7 @@ class FormulaParser {
 class FormulaSolverResult {
   final FormulaState state;
   String result;
-  final Map<String, String> variables;
+  final Map<String, String>? variables;
 
   FormulaSolverResult(this.state, this.result, {this.variables});
 
