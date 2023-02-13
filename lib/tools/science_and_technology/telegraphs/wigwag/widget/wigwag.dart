@@ -29,7 +29,7 @@ class WigWagSemaphoreTelegraphState extends State<WigWagSemaphoreTelegraph> {
     super.initState();
 
     _encodeController = TextEditingController(text: _currentEncodeInput);
-    _decodeController = TextEditingController(text: _currentDecodeInput['text']);
+    _decodeController = TextEditingController(text: _currentDecodeInput.text);
   }
 
   @override
@@ -44,7 +44,7 @@ class WigWagSemaphoreTelegraphState extends State<WigWagSemaphoreTelegraph> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWDropDown(
+        GCWDropDown<WigWagCodebook>(
           value: _currentLanguage,
           onChanged: (value) {
             setState(() {
@@ -54,8 +54,8 @@ class WigWagSemaphoreTelegraphState extends State<WigWagSemaphoreTelegraph> {
           items: CCITT_CODEBOOK.entries.map((mode) {
             return GCWDropDownMenuItem(
                 value: mode.key,
-                child: i18n(context, mode.value['title']),
-                subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']) : null);
+                child: i18n(context, mode.value['title']!),
+                subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']!) : null);
           }).toList(),
         ),
         _currentMode == GCWSwitchPosition.left
@@ -92,7 +92,7 @@ class WigWagSemaphoreTelegraphState extends State<WigWagSemaphoreTelegraph> {
     if (_currentMode == GCWSwitchPosition.left) {
       return encodeWigWag(_currentEncodeInput.toUpperCase(), _currentLanguage);
     } else {
-      return decodeWigWag(List<int>.from(_currentDecodeInput['values']), _currentLanguage);
+      return decodeWigWag(_currentDecodeInput.value, _currentLanguage);
     }
   }
 }

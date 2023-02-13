@@ -8,11 +8,11 @@ import 'package:prefs/prefs.dart';
 
 class SymbolTable extends StatefulWidget {
   final String symbolKey;
-  final Function onDecrypt;
-  final Function onEncrypt;
+  final String Function(String)? onDecrypt;
+  final String Function(String)? onEncrypt;
   final bool alwaysIgnoreUnknown;
 
-  const SymbolTable({Key? key, this.symbolKey, this.onDecrypt, this.onEncrypt, this.alwaysIgnoreUnknown})
+  const SymbolTable({Key? key, this.symbolKey = '', this.onDecrypt, this.onEncrypt, this.alwaysIgnoreUnknown = false})
       : super(key: key);
 
   @override
@@ -21,7 +21,7 @@ class SymbolTable extends StatefulWidget {
 
 class SymbolTableState extends State<SymbolTable> {
   var _currentMode = GCWSwitchPosition.right;
-  SymbolTableData _data;
+  late SymbolTableData _data;
 
   @override
   void initState() {

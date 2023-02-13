@@ -3,20 +3,20 @@ import 'package:gc_wizard/application/theme/theme_colors.dart';
 
 class GCWSymbolContainer extends StatefulWidget {
   final Image symbol;
-  final Color backgroundColor;
-  final Color borderColor;
-  final double borderWidth;
+  final Color? backgroundColor;
+  final Color? borderColor;
+  final double? borderWidth;
   final bool showBackground;
   final bool showBorder;
 
   const GCWSymbolContainer(
       {Key? key,
-      @required this.symbol,
+      required this.symbol,
       this.backgroundColor,
       this.borderColor,
       this.borderWidth,
-      this.showBackground: true,
-      this.showBorder: true})
+      this.showBackground = true,
+      this.showBorder = true})
       : super(key: key);
 
   @override

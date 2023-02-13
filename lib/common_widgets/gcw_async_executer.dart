@@ -14,16 +14,16 @@ class GCWAsyncExecuterParameters {
   GCWAsyncExecuterParameters(this.parameters);
 }
 
-class GCWAsyncExecuter extends StatefulWidget {
-  final dynamic Function(GCWAsyncExecuterParameters) isolatedFunction;
-  final Future<dynamic>? parameter;
-  final Function onReady;
+class GCWAsyncExecuter<T extends Object?> extends StatefulWidget {
+  final Future<T> Function(GCWAsyncExecuterParameters) isolatedFunction;
+  final Future<GCWAsyncExecuterParameters?> Function() parameter;
+  final void Function(T) onReady;
   final bool isOverlay;
 
   GCWAsyncExecuter({
     Key? key,
     required this.isolatedFunction,
-    this.parameter,
+    required this.parameter,
     required this.onReady,
     this.isOverlay = true,
   }) : super(key: key);
@@ -53,7 +53,7 @@ class _GCWAsyncExecuterState extends State<GCWAsyncExecuter> {
   Widget build(BuildContext context) {
     if (widget.parameter == null) return Container();
     Stream<double> progress() async* {
-      dynamic parameter = await widget.parameter;
+      var parameter = await widget.parameter();
       if (!_cancel && parameter != null) {
         if (kIsWeb) {
           _result = await widget.isolatedFunction(parameter);

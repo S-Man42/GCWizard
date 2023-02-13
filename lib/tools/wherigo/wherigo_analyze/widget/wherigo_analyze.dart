@@ -53,8 +53,8 @@ class WherigoAnalyze extends StatefulWidget {
 }
 
 class WherigoAnalyzeState extends State<WherigoAnalyze> {
-  Uint8List _GWCbytes;
-  Uint8List _LUAbytes;
+  Uint8List _GWCbytes = Uint8List(0);
+  Uint8List _LUAbytes = Uint8List(0);
 
   bool _expertMode = false;
   List<GCWDropDownMenuItem> _displayCartridgeDataList = [];
@@ -85,13 +85,14 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       NameToObject: {},
       ResultsLUA: []);
 
-  Map<String, dynamic> _outData;
+  //TODO Thomas: Please create specific return type
+  Map<String, dynamic> _outData = {};
 
   var _displayedCartridgeData = WHERIGO.NULL;
 
-  List<Widget> _GWCFileStructure;
+  List<Widget> _GWCFileStructure = [];
 
-  var _outputHeader = [[]];
+  List<List<Object>?> _outputHeader = [];
 
   bool _currentDeObfuscate = false;
   bool _currentSyntaxHighlighting = false;
@@ -114,7 +115,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   int _answerIndex = 1;
   int _identifierIndex = 1;
 
-  Map<String, ObjectData> NameToObject;
+  Map<String, ObjectData> NameToObject = {};
 
   @override
   void initState() {
@@ -386,9 +387,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                     },
                   ),
                   Expanded(
-                    child: GCWDropDown(
+                    child: GCWDropDown<WHERIGO>(
                       value: _displayedCartridgeData,
-                      onChanged: (value) {
+                      onChanged: (WHERIGO value) {
                         setState(() {
                           _displayedCartridgeData = value;
                           _mediaFileIndex = 1;
@@ -516,7 +517,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             ]),
           ),
             GCWColumnedMultilineOutput(
-                data: (_outputHeader.join('') == '[]') ? [[]] : _outputHeader
+                data: (_outputHeader.join('') == '[]') ? [<Object>[]] : _outputHeader
             )
         ]);
         break;
@@ -900,13 +901,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               ),
             ],
           ),
-          if (_WherigoCartridgeLUA.Characters[_characterIndex - 1].CharacterMediaName != '' &&
-              _WherigoCartridgeGWC.MediaFilesContents.length > 1)
-            GCWImageView(
-              imageData: GCWImageViewData(
-                  _getFileFrom(_WherigoCartridgeLUA.Characters[_characterIndex - 1].CharacterMediaName)),
-              suppressedButtons: {GCWImageViewButtons.ALL},
-            ),
+          _buildImageView(_WherigoCartridgeLUA.Characters[_characterIndex - 1].CharacterMediaName != '' &&
+              _WherigoCartridgeGWC.MediaFilesContents.length > 1, _WherigoCartridgeLUA.Characters[_characterIndex - 1].CharacterMediaName),
             GCWColumnedMultilineOutput(
               data: _outputCharacter(_WherigoCartridgeLUA.Characters[_characterIndex - 1]),
               flexValues: [1, 3]
@@ -987,12 +983,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               ),
             ],
           ),
-          if ((_WherigoCartridgeLUA.Zones[_zoneIndex - 1].ZoneMediaName != '') &&
-              _WherigoCartridgeGWC.MediaFilesContents.length > 1)
-            GCWImageView(
-              imageData: GCWImageViewData(_getFileFrom(_WherigoCartridgeLUA.Zones[_zoneIndex - 1].ZoneMediaName)),
-              suppressedButtons: {GCWImageViewButtons.ALL},
-            ),
+          _buildImageView((_WherigoCartridgeLUA.Zones[_zoneIndex - 1].ZoneMediaName != '') &&
+              _WherigoCartridgeGWC.MediaFilesContents.length > 1, _WherigoCartridgeLUA.Zones[_zoneIndex - 1].ZoneMediaName),
             GCWColumnedMultilineOutput(
               data: _outputZone(_WherigoCartridgeLUA.Zones[_zoneIndex - 1]),
               flexValues: [1, 3]
@@ -1047,12 +1039,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           ),
 
           // Widget for Answer-Details
-          if (_WherigoCartridgeLUA.Inputs[_inputIndex - 1].InputMedia != '' &&
-              _WherigoCartridgeGWC.MediaFilesContents.length > 1)
-            GCWImageView(
-              imageData: GCWImageViewData(_getFileFrom(_WherigoCartridgeLUA.Inputs[_inputIndex - 1].InputMedia)),
-              suppressedButtons: {GCWImageViewButtons.ALL},
-            ),
+          _buildImageView(_WherigoCartridgeLUA.Inputs[_inputIndex - 1].InputMedia != '' &&
+              _WherigoCartridgeGWC.MediaFilesContents.length > 1, _WherigoCartridgeLUA.Inputs[_inputIndex - 1].InputMedia),
             GCWColumnedMultilineOutput(
               data: _outputInput(_WherigoCartridgeLUA.Inputs[_inputIndex - 1]),
               flexValues: [1, 3]
@@ -1170,12 +1158,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               ),
             ],
           ),
-          if (_WherigoCartridgeLUA.Tasks[_taskIndex - 1].TaskMedia != '' &&
-              _WherigoCartridgeGWC.MediaFilesContents.length > 1)
-            GCWImageView(
-              imageData: GCWImageViewData(_getFileFrom(_WherigoCartridgeLUA.Tasks[_taskIndex - 1].TaskMedia)),
-              suppressedButtons: {GCWImageViewButtons.ALL},
-            ),
+          _buildImageView(_WherigoCartridgeLUA.Tasks[_taskIndex - 1].TaskMedia != '' &&
+              _WherigoCartridgeGWC.MediaFilesContents.length > 1, _WherigoCartridgeLUA.Tasks[_taskIndex - 1].TaskMedia),
             GCWColumnedMultilineOutput(
               data: _outputTask(_WherigoCartridgeLUA.Tasks[_taskIndex - 1]),
               flexValues: [1, 3]
@@ -1314,12 +1298,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               ),
             ],
           ),
-          if (_WherigoCartridgeLUA.Items[_itemIndex - 1].ItemMedia != '' &&
-              _WherigoCartridgeGWC.MediaFilesContents.length > 1)
-            GCWImageView(
-              imageData: GCWImageViewData(_getFileFrom(_WherigoCartridgeLUA.Items[_itemIndex - 1].ItemMedia)),
-              suppressedButtons: {GCWImageViewButtons.ALL},
-            ),
+          _buildImageView(_WherigoCartridgeLUA.Items[_itemIndex - 1].ItemMedia != '' &&
+              _WherigoCartridgeGWC.MediaFilesContents.length > 1, _WherigoCartridgeLUA.Items[_itemIndex - 1].ItemMedia),
             GCWColumnedMultilineOutput(
               data: _outputItem(_WherigoCartridgeLUA.Items[_itemIndex - 1]),
               flexValues: [1, 3]
@@ -1428,8 +1408,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     }
   }
 
-  List<List<dynamic>> _outputZone(ZoneData data) {
-    List<List<dynamic>> result = [
+  //TODO Thomas: Please change into more handle return type if possible. At least change dynamic into Object?
+  List<List<Object>?> _outputZone(ZoneData data) {
+    List<List<Object>?> result = [
       _expertMode ? [i18n(context, 'wherigo_output_luaname'), data.ZoneLUAName] : null,
       _expertMode ? [i18n(context, 'wherigo_output_id'), data.ZoneID] : null,
       [i18n(context, 'wherigo_output_name'), data.ZoneName],
@@ -1441,7 +1422,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               data.ZoneMediaName +
                   (data.ZoneMediaName != ''
                       ? (NameToObject[data.ZoneMediaName] != null
-                          ? ' ⬌ ' + NameToObject[data.ZoneMediaName].ObjectName
+                          ? ' ⬌ ' + NameToObject[data.ZoneMediaName]!.ObjectName
                           : '')
                       : '')
             ]
@@ -1452,7 +1433,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               data.ZoneIconName +
                   (data.ZoneIconName != ''
                       ? (NameToObject[data.ZoneIconName] != null
-                          ? ' ⬌ ' + NameToObject[data.ZoneIconName].ObjectName
+                          ? ' ⬌ ' + NameToObject[data.ZoneIconName]!.ObjectName
                           : '')
                       : '')
             ]
@@ -1469,7 +1450,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           ? [
               i18n(context, 'wherigo_output_originalpoint'),
               formatCoordOutput(LatLng(data.ZoneOriginalPoint.Latitude, data.ZoneOriginalPoint.Longitude),
-                  {'format': Prefs.get(PREFERENCE_COORD_DEFAULT_FORMAT)}, defaultEllipsoid())
+                  defaultCoordFormat(), defaultEllipsoid())
             ]
           : ['', ''],
       [i18n(context, 'wherigo_output_zonepoints'), ''],
@@ -1478,15 +1459,14 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       //result.add(['', point.Latitude + ',\n' + point.Longitude]);
       result.add([
         '',
-        formatCoordOutput(LatLng(point.Latitude, point.Longitude),
-            {'format': Prefs.get(PREFERENCE_COORD_DEFAULT_FORMAT)}, defaultEllipsoid())
+        formatCoordOutput(LatLng(point.Latitude, point.Longitude), defaultCoordFormat(), defaultEllipsoid())
       ]);
     });
     return result;
   }
 
-  List<List<dynamic>> _outputItem(ItemData data) {
-    List<List<dynamic>> result = [
+  List<List<Object>?> _outputItem(ItemData data) {
+    List<List<Object>?> result = [
       _expertMode ? [i18n(context, 'wherigo_output_luaname'), data.ItemLUAName] : null,
       _expertMode ? [i18n(context, 'wherigo_output_id'), data.ItemID] : null,
       [i18n(context, 'wherigo_output_name'), data.ItemName],
@@ -1497,7 +1477,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               i18n(context, 'wherigo_output_medianame'),
               data.ItemMedia +
                   (data.ItemMedia != ''
-                      ? (NameToObject[data.ItemMedia] != null ? ' ⬌ ' + NameToObject[data.ItemMedia].ObjectName : '')
+                      ? (NameToObject[data.ItemMedia] != null ? ' ⬌ ' + NameToObject[data.ItemMedia]!.ObjectName : '')
                       : '')
             ]
           : null,
@@ -1506,7 +1486,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               i18n(context, 'wherigo_output_iconname'),
               data.ItemIcon +
                   (data.ItemIcon != ''
-                      ? (NameToObject[data.ItemIcon] != null ? ' ⬌ ' + NameToObject[data.ItemIcon].ObjectName : '')
+                      ? (NameToObject[data.ItemIcon] != null ? ' ⬌ ' + NameToObject[data.ItemIcon]!.ObjectName : '')
                       : '')
             ]
           : null,
@@ -1515,7 +1495,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       result.add([
         i18n(context, 'wherigo_output_location'),
         formatCoordOutput(LatLng(data.ItemZonepoint.Latitude, data.ItemZonepoint.Longitude),
-            {'format': Prefs.get(PREFERENCE_COORD_DEFAULT_FORMAT)}, defaultEllipsoid())
+            defaultCoordFormat(), defaultEllipsoid())
       ]);
     else
       result.add([i18n(context, 'wherigo_output_location'), data.ItemLocation]);
@@ -1524,7 +1504,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       i18n(context, 'wherigo_output_container'),
       data.ItemContainer +
           (data.ItemContainer != ''
-              ? (NameToObject[data.ItemContainer] != null ? ' ⬌ ' + NameToObject[data.ItemContainer].ObjectName : '')
+              ? (NameToObject[data.ItemContainer] != null ? ' ⬌ ' + NameToObject[data.ItemContainer]!.ObjectName : '')
               : '')
     ]);
     _expertMode ? result.add([i18n(context, 'wherigo_output_locked'), data.ItemLocked]) : null;
@@ -1532,7 +1512,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     return result;
   }
 
-  List<List<dynamic>> _outputTask(TaskData data) {
+  List<List<Object>?> _outputTask(TaskData data) {
     return [
       _expertMode ? [i18n(context, 'wherigo_output_luaname'), data.TaskLUAName] : null,
       _expertMode ? [i18n(context, 'wherigo_output_id'), data.TaskID] : null,
@@ -1544,7 +1524,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               i18n(context, 'wherigo_output_medianame'),
               data.TaskMedia +
                   (data.TaskMedia != ''
-                      ? (NameToObject[data.TaskMedia] != null ? ' ⬌ ' + NameToObject[data.TaskMedia].ObjectName : '')
+                      ? (NameToObject[data.TaskMedia] != null ? ' ⬌ ' + NameToObject[data.TaskMedia]!.ObjectName : '')
                       : '')
             ]
           : null,
@@ -1553,7 +1533,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               i18n(context, 'wherigo_output_iconname'),
               data.TaskIcon +
                   (data.TaskIcon != ''
-                      ? (NameToObject[data.TaskIcon] != null ? ' ⬌ ' + NameToObject[data.TaskIcon].ObjectName : '')
+                      ? (NameToObject[data.TaskIcon] != null ? ' ⬌ ' + NameToObject[data.TaskIcon]!.ObjectName : '')
                       : '')
             ]
           : null,
@@ -1563,7 +1543,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     ];
   }
 
-  List<List<dynamic>> _outputTimer(TimerData data) {
+  List<List<Object>?> _outputTimer(TimerData data) {
     return [
       _expertMode ? [i18n(context, 'wherigo_output_luaname'), data.TimerLUAName] : null,
       _expertMode ? [i18n(context, 'wherigo_output_id'), data.TimerID] : null,
@@ -1578,8 +1558,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     ];
   }
 
-  List<List<dynamic>> _outputCharacter(CharacterData data) {
-    List<List<dynamic>> result = [
+  List<List<Object>?> _outputCharacter(CharacterData data) {
+    List<List<Object>?> result = [
       _expertMode ? [i18n(context, 'wherigo_output_luaname'), data.CharacterLUAName] : null,
       _expertMode ? [i18n(context, 'wherigo_output_id'), data.CharacterID] : null,
       [i18n(context, 'wherigo_output_name'), data.CharacterName],
@@ -1590,7 +1570,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               data.CharacterMediaName +
                   (data.CharacterMediaName != ''
                       ? (NameToObject[data.CharacterMediaName] != null
-                          ? ' ⬌ ' + NameToObject[data.CharacterMediaName].ObjectName
+                          ? ' ⬌ ' + NameToObject[data.CharacterMediaName]!.ObjectName
                           : '')
                       : '')
             ]
@@ -1601,7 +1581,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               data.CharacterIconName +
                   (data.CharacterIconName != ''
                       ? (NameToObject[data.CharacterIconName] != null
-                          ? ' ⬌ ' + NameToObject[data.CharacterIconName].ObjectName
+                          ? ' ⬌ ' + NameToObject[data.CharacterIconName]!.ObjectName
                           : '')
                       : '')
             ]
@@ -1611,7 +1591,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       result.add([
         i18n(context, 'wherigo_output_location'),
         formatCoordOutput(LatLng(data.CharacterZonepoint.Latitude, data.CharacterZonepoint.Longitude),
-            {'format': Prefs.get(PREFERENCE_COORD_DEFAULT_FORMAT)}, defaultEllipsoid())
+            defaultCoordFormat(), defaultEllipsoid())
       ]);
     else
       result.add([i18n(context, 'wherigo_output_location'), data.CharacterLocation]);
@@ -1621,7 +1601,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             i18n(context, 'wherigo_output_container'),
             data.CharacterContainer +
                 (NameToObject[data.CharacterContainer] != null
-                    ? ' ⬌ ' + NameToObject[data.CharacterContainer].ObjectName
+                    ? ' ⬌ ' + NameToObject[data.CharacterContainer]!.ObjectName
                     : '')
           ])
         : null;
@@ -1636,7 +1616,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     return result;
   }
 
-  List<List<dynamic>> _outputInput(InputData data) {
+  List<List<Object>?> _outputInput(InputData data) {
     return [
       _expertMode ? [i18n(context, 'wherigo_output_luaname'), data.InputLUAName] : null,
       _expertMode ? [i18n(context, 'wherigo_output_id'), data.InputID] : null,
@@ -1647,7 +1627,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               i18n(context, 'wherigo_output_medianame'),
               data.InputMedia +
                   (data.InputMedia != ''
-                      ? (NameToObject[data.InputMedia] != null ? ' ⬌ ' + NameToObject[data.InputMedia].ObjectName : '')
+                      ? (NameToObject[data.InputMedia] != null ? ' ⬌ ' + NameToObject[data.InputMedia]!.ObjectName : '')
                       : '')
             ]
           : null,
@@ -1673,9 +1653,12 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           ));
           break;
         case ACTIONMESSAGETYPE.IMAGE:
+          var file = _getFileFrom(element.ActionMessageContent);
+          if (file == null) break;
+
           resultWidget.add(Container(
             child: GCWImageView(
-              imageData: GCWImageViewData(_getFileFrom(element.ActionMessageContent)),
+              imageData: GCWImageViewData(file),
               suppressedButtons: {GCWImageViewButtons.ALL},
             ),
           ));
@@ -1695,10 +1678,15 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         case ACTIONMESSAGETYPE.COMMAND:
           if (element.ActionMessageContent.startsWith('Wherigo.PlayAudio')) {
             String LUAName = element.ActionMessageContent.replaceAll('Wherigo.PlayAudio(', '').replaceAll(')', '');
+            if (
+              NameToObject[LUAName] == null ||
+              NameToObject[LUAName]!.ObjectIndex >= _WherigoCartridgeGWC.MediaFilesContents.length
+            )
+              break;
             resultWidget.add(GCWSoundPlayer(
               file: GCWFile(
-                  bytes: _WherigoCartridgeGWC.MediaFilesContents[NameToObject[LUAName].ObjectIndex].MediaFileBytes,
-                  name: NameToObject[LUAName].ObjectMedia),
+                  bytes: _WherigoCartridgeGWC.MediaFilesContents[NameToObject[LUAName]!.ObjectIndex].MediaFileBytes,
+                  name: NameToObject[LUAName]!.ObjectMedia),
             ));
           } else
             resultWidget.add(GCWOutput(
@@ -1711,15 +1699,15 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     return resultWidget;
   }
 
-  List<List<dynamic>> _outputIdentifier(VariableData data) {
+  List<List<Object>?> _outputIdentifier(VariableData data) {
     return [
       [i18n(context, 'wherigo_output_luaname'), data.VariableLUAName],
       [i18n(context, 'wherigo_output_text'), data.VariableName],
     ];
   }
 
-  List<List<dynamic>> _outputIdentifierDetails(VariableData data) {
-    List<List<dynamic>> result = [];
+  List<List<Object>?> _outputIdentifierDetails(VariableData data) {
+    List<List<Object>?> result = [];
 
     if (NameToObject[data.VariableName] == null)
       result = [
@@ -1729,11 +1717,11 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       result = [
         [
           i18n(context, 'wherigo_output_identifier_detail_title'),
-          NameToObject[data.VariableName].ObjectType.toString().split('.')[1]
+          NameToObject[data.VariableName]!.ObjectType.toString().split('.')[1]
         ]
       ];
 
-      switch (NameToObject[data.VariableName].ObjectType) {
+      switch (NameToObject[data.VariableName]!.ObjectType) {
         case OBJECT_TYPE.CHARACTER:
           for (int i = 0; i < _WherigoCartridgeLUA.Characters.length; i++) {
             if (_WherigoCartridgeLUA.Characters[i].CharacterLUAName == data.VariableName) {
@@ -1819,8 +1807,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     return result;
   }
 
-  List<List<dynamic>> _outputAnswer(InputData input, AnswerData data) {
-    List<List<dynamic>> result;
+  List<List<Object>?> _outputAnswer(InputData input, AnswerData data) {
+    List<List<Object>?> result;
 
     List<String> answers = data.AnswerAnswer.split('\x01');
     var hash = answers[0].trim();
@@ -1830,19 +1818,19 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     if (input.InputType == 'MultipleChoice') {
       result = [
         answers.length > 1
-            ? [i18n(context, 'wherigo_output_hash'), hash, null]
+            ? [i18n(context, 'wherigo_output_hash'), hash, '']
             : [i18n(context, 'wherigo_output_answer'), hash],
       ];
       if (hash != '0') {
         for (int i = 0; i < input.InputChoices.length; i++) {
           if (RSHash(input.InputChoices[i].toLowerCase()).toString() == hash)
-            result.add([i18n(context, 'wherigo_output_answerdecrypted'), input.InputChoices[i], null]);
+            result.add([i18n(context, 'wherigo_output_answerdecrypted'), input.InputChoices[i], '']);
         }
       }
     } else {
       result = [
         answers.length > 1
-            ? [i18n(context, 'wherigo_output_hash'), hash, null]
+            ? [i18n(context, 'wherigo_output_hash'), hash, '']
             : [i18n(context, 'wherigo_output_answer'), hash],
         answerAlphabetical != null
             ? [i18n(context, 'wherigo_output_answerdecrypted'), i18n(context, 'common_letters'), answerAlphabetical]
@@ -1872,9 +1860,12 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             ));
             break;
           case ACTIONMESSAGETYPE.IMAGE:
+            var file = _getFileFrom(element.ActionMessageContent);
+            if (file == null) break;
+
             resultWidget.add(Container(
               child: GCWImageView(
-                imageData: GCWImageViewData(_getFileFrom(element.ActionMessageContent)),
+                imageData: GCWImageViewData(file),
                 suppressedButtons: {GCWImageViewButtons.ALL},
               ),
             ));
@@ -1896,6 +1887,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           case ACTIONMESSAGETYPE.COMMAND:
             if (element.ActionMessageContent.startsWith('Wherigo.PlayAudio')) {
               String LUAName = element.ActionMessageContent.replaceAll('Wherigo.PlayAudio(', '').replaceAll(')', '');
+              if (NameToObject[LUAName] == null || NameToObject[LUAName]!.ObjectIndex >= _WherigoCartridgeGWC.MediaFilesContents.length)
+                break;
+
               if (_WherigoCartridgeGWC.MediaFilesContents.length > 0)
                 resultWidget.add(GCWFilesOutput(
                   suppressHiddenDataMessage: true,
@@ -1904,8 +1898,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                     GCWFile(
                         //bytes: _WherigoCartridge.MediaFilesContents[_mediaFileIndex].MediaFileBytes,
                         bytes:
-                            _WherigoCartridgeGWC.MediaFilesContents[NameToObject[LUAName].ObjectIndex].MediaFileBytes,
-                        name: NameToObject[LUAName].ObjectMedia),
+                            _WherigoCartridgeGWC.MediaFilesContents[NameToObject[LUAName]!.ObjectIndex].MediaFileBytes,
+                        name: NameToObject[LUAName]!.ObjectMedia),
                   ],
                 ));
             } else
@@ -1928,7 +1922,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     List<Widget> result = [];
 
     // Signature
-    List<List<dynamic>> content = [
+    List<List<Object>?> content = [
       [
         i18n(context, 'wherigo_bytecode_offset'),
         i18n(context, 'wherigo_bytecode_bytes'),
@@ -2121,11 +2115,11 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   String _getCreationDate(int duration) {
     // Date of creation   ; Seconds since 2004-02-10 01:00:00
-    if (duration == null) return formatDate(DateTime(2004, 2, 1, 1, 0, 0, 0));
-    return formatDate((DateTime(2004, 2, 1, 1, 0, 0, 0).add(Duration(seconds: duration))));
+    if (duration == null) return _formatDate(DateTime(2004, 2, 1, 1, 0, 0, 0));
+    return _formatDate((DateTime(2004, 2, 1, 1, 0, 0, 0).add(Duration(seconds: duration))));
   }
 
-  String formatDate(DateTime datetime) {
+  String _formatDate(DateTime? datetime) {
     String loc = Localizations.localeOf(context).toString();
     return (datetime == null) ? '' : DateFormat.yMd(loc).add_jms().format(datetime);
   }
@@ -2134,10 +2128,10 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     var value = await saveByteDataToFile(
         context, data, name + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
 
-    if (value) showExportedFileDialog(context, fileType: fileType);
+    if (value) showExportedFileDialog(context);
   }
 
-  Future<bool> _exportCoordinates(
+  Future<void> _exportCoordinates(
       BuildContext context, List<GCWMapPoint> points, List<GCWMapPolyline> polylines) async {
     showCoordinatesExportDialog(context, points, polylines);
   }
@@ -2158,17 +2152,22 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 suppressToolMargin: true)));
   }
 
+  // TODO Thomas: Only temporary for getting stuff compiled: Please ask Mike for proper GCWAsync Handling. He knows about it.
+  var _temporaryONLYForRefactoring_DataTypeForAsync;
+
   _analyseCartridgeFileAsync(String dataType) async {
+    _temporaryONLYForRefactoring_DataTypeForAsync = dataType;
+
     await showDialog(
       context: context,
       barrierDismissible: false,
       builder: (context) {
         return Center(
           child: Container(
-            child: GCWAsyncExecuter(
+            child: GCWAsyncExecuter<Map<String, dynamic>>(
               isolatedFunction: getCartridgeAsync,
-              parameter: _buildGWCJobData(dataType),
-              onReady: (data) => _showCartridgeOutput(data, dataType),
+              parameter: _buildGWCJobData,
+              onReady: (data) => _showCartridgeOutput(data),
               isOverlay: true,
             ),
             height: 220,
@@ -2179,18 +2178,22 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     );
   }
 
-  Future<GCWAsyncExecuterParameters> _buildGWCJobData(String dataType) async {
-    switch (dataType) {
+
+  // TODO Thomas: Please ask Mike for proper GCWAsync Handling. He knows about it.
+  Future<GCWAsyncExecuterParameters> _buildGWCJobData() async {
+    switch (_temporaryONLYForRefactoring_DataTypeForAsync) {
       case DATA_TYPE_GWC:
-        return GCWAsyncExecuterParameters({'byteListGWC': _GWCbytes, 'offline': _getLUAOnline, 'dataType': dataType});
-        break;
+        //TODO Thomas please replace Map with own return class.
+        return GCWAsyncExecuterParameters({'byteListGWC': _GWCbytes, 'offline': _getLUAOnline, 'dataType': _temporaryONLYForRefactoring_DataTypeForAsync});
       case DATA_TYPE_LUA:
-        return GCWAsyncExecuterParameters({'byteListLUA': _LUAbytes, 'offline': _getLUAOnline, 'dataType': dataType});
-        break;
+        return GCWAsyncExecuterParameters({'byteListLUA': _LUAbytes, 'offline': _getLUAOnline, 'dataType': _temporaryONLYForRefactoring_DataTypeForAsync});
+      default:
+        throw Exception('Invalid WIG data type');
     }
   }
 
-  _showCartridgeOutput(Map<String, dynamic> output, String dataType) {
+  //TODO Thomas please replace parameter Map with own parameter class.
+  _showCartridgeOutput(Map<String, dynamic> output) {
     _outData = output;
     String toastMessage = '';
     int toastDuration = 3;
@@ -2198,13 +2201,13 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     if (_outData == null) {
       toastMessage = i18n(context, 'common_loadfile_exception_notloaded');
     } else {
-      switch (dataType) {
+      switch (_temporaryONLYForRefactoring_DataTypeForAsync) {
         case DATA_TYPE_GWC: // GWC File should be loaded
           _WherigoCartridgeGWC = _outData['WherigoCartridgeGWC'];
 
           switch (_WherigoCartridgeGWC.ResultStatus) {
             case ANALYSE_RESULT_STATUS.OK:
-              toastMessage = i18n(context, 'wherigo_data_loaded') + ': ' + dataType;
+              toastMessage = i18n(context, 'wherigo_data_loaded') + ': ' + _temporaryONLYForRefactoring_DataTypeForAsync;
               break;
 
             case ANALYSE_RESULT_STATUS.ERROR_GWC:
@@ -2248,7 +2251,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
           switch (_WherigoCartridgeLUA.ResultStatus) {
             case ANALYSE_RESULT_STATUS.OK:
-              toastMessage = i18n(context, 'wherigo_data_loaded') + ': ' + dataType;
+              toastMessage = i18n(context, 'wherigo_data_loaded') + ': ' + _temporaryONLYForRefactoring_DataTypeForAsync;
               toastDuration = 5;
               _nohttpError = false;
 
@@ -2288,7 +2291,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                   ' ' +
                   _WherigoCartridgeLUA.httpCode +
                   '\n\n' +
-                  i18n(context, HTTP_STATUS[_WherigoCartridgeLUA.httpCode]) +
+                  (HTTP_STATUS[_WherigoCartridgeLUA.httpCode] != null ? i18n(context, HTTP_STATUS[_WherigoCartridgeLUA.httpCode]!) : '') +
                   '\n';
 
               if (_WherigoCartridgeLUA.httpMessage.startsWith('wherigo'))
@@ -2330,7 +2333,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                   i18n(context, 'wherigo_error_runtime'),
                   i18n(context, 'wherigo_error_decompile_gwc'),
                   i18n(context, 'wherigo_http_code') + ' ' + _WherigoCartridgeLUA.httpCode + '\n',
-                  i18n(context, HTTP_STATUS[_WherigoCartridgeLUA.httpCode]),
+                  (HTTP_STATUS[_WherigoCartridgeLUA.httpCode] != null ? i18n(context, HTTP_STATUS[_WherigoCartridgeLUA.httpCode]!) : ''),
                   _WherigoCartridgeLUA.httpMessage.startsWith('wherigo')
                       ? i18n(context, _WherigoCartridgeLUA.httpMessage)
                       : _WherigoCartridgeLUA.httpMessage,
@@ -2358,9 +2361,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     });
   }
 
-  GCWFile _getFileFrom(String resourceName) {
-    Uint8List filedata;
-    String filename;
+  GCWFile? _getFileFrom(String resourceName) {
+    Uint8List? filedata;
+    String? filename;
     int fileindex = 0;
     try {
       if (_WherigoCartridgeGWC.MediaFilesContents.length > 1) {
@@ -2371,7 +2374,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           }
           fileindex++;
         });
-        return GCWFile(bytes: filedata, name: filename);
+        if (filedata != null)
+          return GCWFile(bytes: filedata!, name: filename);
       } else
         return null;
     } catch (exception) {
@@ -2399,10 +2403,13 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   String resolveLUAName(String chiffre) {
     String resolve(List<String> chiffreList, String joinPattern) {
+      if (NameToObject[chiffreList[0]] == null)
+        return '';
+
       List<String> result = [];
-      result.add(NameToObject[chiffreList[0]].ObjectType.toString().split('.')[1] +
+      result.add(NameToObject[chiffreList[0]]!.ObjectType.toString().split('.')[1] +
           ' ' +
-          NameToObject[chiffreList[0]].ObjectName);
+          NameToObject[chiffreList[0]]!.ObjectName);
       for (int i = 1; i < chiffreList.length; i++) result.add(chiffreList[i]);
       return result.join(joinPattern);
     }
@@ -2424,17 +2431,18 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   _buildItemPointsForMapExport() {
-    if (_WherigoCartridgeLUA.Items != null)
-      // Clear data
-      _ItemPoints.clear();
+    _ItemPoints.clear();
 
     // Build data
     _WherigoCartridgeLUA.Items.forEach((item) {
       if (item.ItemZonepoint.Latitude != 0.0 && item.ItemZonepoint.Longitude != 0.0) {
+        if (NameToObject[item.ItemLUAName] == null)
+          return;
+
         _ItemPoints.add(// add location of item
             GCWMapPoint(
-                uuid: 'Point ' + NameToObject[item.ItemLUAName].ObjectName,
-                markerText: NameToObject[item.ItemLUAName].ObjectName,
+                uuid: 'Point ' + NameToObject[item.ItemLUAName]!.ObjectName,
+                markerText: NameToObject[item.ItemLUAName]!.ObjectName,
                 point: LatLng(item.ItemZonepoint.Latitude, item.ItemZonepoint.Longitude),
                 color: Colors.black));
       }
@@ -2449,10 +2457,13 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     // Build data
     _WherigoCartridgeLUA.Characters.forEach((character) {
       if (character.CharacterLocation == 'ZonePoint') {
+        if (NameToObject[character.CharacterLUAName] == null)
+          return;
+
         _CharacterPoints.add(// add location of character
             GCWMapPoint(
-                uuid: 'Point ' + NameToObject[character.CharacterLUAName].ObjectName,
-                markerText: NameToObject[character.CharacterLUAName].ObjectName,
+                uuid: 'Point ' + NameToObject[character.CharacterLUAName]!.ObjectName,
+                markerText: NameToObject[character.CharacterLUAName]!.ObjectName,
                 point: LatLng(character.CharacterZonepoint.Latitude, character.CharacterZonepoint.Longitude),
                 color: Colors.black));
       }
@@ -2467,10 +2478,12 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
       // Build data
       _WherigoCartridgeLUA.Zones.forEach((zone) {
+        if (NameToObject[zone.ZoneLUAName] == null) return;
+
         _ZonePoints.add(// add originalpoint of zone
             GCWMapPoint(
-                uuid: 'Original Point ' + NameToObject[zone.ZoneLUAName].ObjectName,
-                markerText: NameToObject[zone.ZoneLUAName].ObjectName,
+                uuid: 'Original Point ' + NameToObject[zone.ZoneLUAName]!.ObjectName,
+                markerText: NameToObject[zone.ZoneLUAName]!.ObjectName,
                 point: LatLng(zone.ZoneOriginalPoint.Latitude, zone.ZoneOriginalPoint.Longitude),
                 color: Colors.black87));
 
@@ -2492,15 +2505,15 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     }
   }
 
-  _buildHeader() {
-    if (_WherigoCartridgeGWC != null && _WherigoCartridgeLUA != null) {
+  void _buildHeader() {
+
       _outputHeader = [
         _expertMode ? [i18n(context, 'wherigo_header_signature'), _WherigoCartridgeGWC.Signature] : null,
         [i18n(context, 'wherigo_header_numberofmediafiles'), (_WherigoCartridgeGWC.NumberOfObjects - 1).toString()],
         [
           i18n(context, 'wherigo_output_location'),
           formatCoordOutput(LatLng(_WherigoCartridgeGWC.Latitude, _WherigoCartridgeGWC.Longitude),
-              {'format': Prefs.get(PREFERENCE_COORD_DEFAULT_FORMAT)}, defaultEllipsoid())
+              defaultCoordFormat(), defaultEllipsoid())
         ],
         [i18n(context, 'wherigo_header_altitude'), _WherigoCartridgeGWC.Altitude.toString()],
         [i18n(context, 'wherigo_header_typeofcartridge'), _WherigoCartridgeGWC.TypeOfCartridge],
@@ -2539,12 +2552,12 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           _getCreationDate(_WherigoCartridgeGWC.DateOfCreation)
         ],
         _expertMode
-            ? [i18n(context, 'wherigo_header_creationdate') + ' (LUA)', formatDate(_WherigoCartridgeLUA.CreateDate)]
+            ? [i18n(context, 'wherigo_header_creationdate') + ' (LUA)', _formatDate(_WherigoCartridgeLUA.CreateDate)]
             : null,
-        _expertMode ? [i18n(context, 'wherigo_header_publish'), formatDate(_WherigoCartridgeLUA.PublishDate)] : null,
-        _expertMode ? [i18n(context, 'wherigo_header_update'), formatDate(_WherigoCartridgeLUA.UpdateDate)] : null,
+        _expertMode ? [i18n(context, 'wherigo_header_publish'), _formatDate(_WherigoCartridgeLUA.PublishDate)] : null,
+        _expertMode ? [i18n(context, 'wherigo_header_update'), _formatDate(_WherigoCartridgeLUA.UpdateDate)] : null,
         _expertMode
-            ? [i18n(context, 'wherigo_header_lastplayed'), formatDate(_WherigoCartridgeLUA.LastPlayedDate)]
+            ? [i18n(context, 'wherigo_header_lastplayed'), _formatDate(_WherigoCartridgeLUA.LastPlayedDate)]
             : null,
         [i18n(context, 'wherigo_header_author'), _WherigoCartridgeGWC.Author],
         _expertMode ? [i18n(context, 'wherigo_header_company'), _WherigoCartridgeGWC.Company] : null,
@@ -2577,7 +2590,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       _expertMode
           ? _outputHeader.add([i18n(context, 'wherigo_header_version'), _WherigoCartridgeLUA.BuilderVersion])
           : null;
-    }
+
   }
 
   String _normalizeLUA(String LUAFile, bool deObfuscate) {
@@ -2611,7 +2624,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       });
 
       RegExp(r'deObfuscate\(".*?"\)').allMatches(LUAFile).forEach((obfuscatedText) {
-        LUAFile = LUAFile.replaceAll(obfuscatedText.group(0), _deObfuscate(obfuscatedText.group(0)));
+        var group = obfuscatedText.group(0);
+        if (group == null) return;
+        LUAFile = LUAFile.replaceAll(group, _deObfuscate(group));
       });
     }
     return LUAFile;
@@ -2673,12 +2688,29 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   List<GCWDropDownMenuItem> _setDisplayCartridgeDataList() {
-    return SplayTreeMap.from(switchMapKeyValue(WHERIGO_DATA[_expertMode][_fileLoadedState])
+    var loadedState = WHERIGO_DATA[_expertMode]?[_fileLoadedState];
+    if (loadedState == null) return <GCWDropDownMenuItem>[];
+
+    return SplayTreeMap.from(switchMapKeyValue(loadedState)
         .map((key, value) => MapEntry(i18n(context, key), value))).entries.map((mode) {
       return GCWDropDownMenuItem(
         value: mode.value,
         child: mode.key,
       );
     }).toList();
+  }
+
+  _buildImageView(bool condition, String fileSource) {
+    if (!condition) return Container();
+
+    var file = _getFileFrom(fileSource);
+
+    if (file == null) return Container();
+
+
+    return GCWImageView(
+      imageData: GCWImageViewData(file),
+      suppressedButtons: {GCWImageViewButtons.ALL},
+    );
   }
 }

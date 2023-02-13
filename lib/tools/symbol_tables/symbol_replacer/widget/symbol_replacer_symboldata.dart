@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:gc_wizard/tools/symbol_tables/_common/logic/symbol_table_data.dart';
 
@@ -6,23 +8,27 @@ class SymbolReplacerSymbolTableViewData {
   final icon;
   final toolName;
   final description;
-  _SymbolReplacerSymbolTableData data;
-  SymbolTableData originalData;
+  _SymbolReplacerSymbolTableData? data;
 
-  SymbolReplacerSymbolTableViewData({this.symbolKey, this.icon, this.toolName, this.description, this.data});
+  SymbolReplacerSymbolTableViewData({
+    required this.symbolKey,
+    required this.icon,
+    required this.toolName,
+    required this.description,
+    this.data});
 
-  Future<_SymbolReplacerSymbolTableData> initialize(BuildContext context) async {
+  Future<_SymbolReplacerSymbolTableData?> initialize(BuildContext context) async {
     var originalData = SymbolTableData(context, symbolKey);
     await originalData.initialize(importEncryption: false);
 
     data = _SymbolReplacerSymbolTableData(originalData);
-    return data;
+    return Future.value(data);
   }
 }
 
 class _SymbolReplacerSymbolTableData {
-  String symbolKey;
-  List<Map<String, SymbolReplacerSymbolData>> images;
+  String? symbolKey;
+  late List<Map<String, SymbolReplacerSymbolData>> images;
 
   _SymbolReplacerSymbolTableData(SymbolTableData data) {
     this.images = data.images.map((Map<String, SymbolData> elem) {
@@ -37,8 +43,8 @@ class _SymbolReplacerSymbolTableData {
 }
 
 class SymbolReplacerSymbolData {
-  List<int> bytes;
-  String displayName;
+  Uint8List? bytes;
+  String? displayName;
 
   SymbolReplacerSymbolData(SymbolData data) {
     this.bytes = data.bytes;

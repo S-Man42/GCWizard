@@ -15,7 +15,7 @@ class RecyclingState extends State<Recycling> {
       return <dynamic>[
         entry.key.replaceAll(RegExp(r'[^0-9]'), ''),
         entry.value['short'],
-        i18n(context, entry.value['name'])
+        i18n(context, entry.value['name']!)
       ];
     }).toList();
 

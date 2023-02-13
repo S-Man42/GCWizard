@@ -25,7 +25,7 @@ WidgetSpan subscriptedTextForRichText(String text, {TextStyle? textStyle}) {
    sub- or superscripted TextSpans will be created,
    otherwise the input will be returned as String
 */
-buildSubOrSuperscriptedRichTextIfNecessary(String input) {
+Object buildSubOrSuperscriptedRichTextIfNecessary(String input) {
   var supSubRegExp = RegExp(r'(\^(.+?)\^|_(.+?)_)');
 
   if (supSubRegExp.hasMatch(input)) {

@@ -22,7 +22,7 @@ class TeletypewriterPunchTape extends StatefulWidget {
 
 class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
   String _currentEncodeInput = '';
-  TextEditingController _encodeController;
+  late TextEditingController _encodeController;
 
   var _decodeInputController;
   var _currentDecodeInput = '';
@@ -53,7 +53,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
-      GCWDropDown(
+      GCWDropDown<TeletypewriterCodebook>(
         value: _currentCode,
         onChanged: (value) {
           setState(() {
@@ -63,8 +63,8 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
         items: ALL_CODES_CODEBOOK.entries.map((mode) {
           return GCWDropDownMenuItem(
               value: mode.key,
-              child: i18n(context, mode.value['title']),
-              subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']) : null);
+              child: i18n(context, mode.value['title']!),
+              subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']!) : null);
         }).toList(),
       ),
       if (!(_currentCode == TeletypewriterCodebook.BAUDOT_54123 || _currentCode == TeletypewriterCodebook.CCITT_IA5))
@@ -160,8 +160,8 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
     Map<String, bool> currentDisplay;
 
     var displays = _currentDisplays;
-    if (displays != null && displays.length > 0)
-      currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [], key: (e) => e, value: (e) => true);
+    if (displays.length > 0)
+      currentDisplay = Map<String, bool>.fromIterable(displays.last, key: (e) => e, value: (e) => true);
     else
       currentDisplay = {};
 
@@ -244,9 +244,9 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
   }
 
   String _decimalToBinary(String decimal, TeletypewriterCodebook language) {
-    List<String> result = [];
+    List<String?> result = [];
     decimal.split(' ').forEach((decimalNumber) {
-      result.add(convertBase(decimalNumber, 10, 2).padLeft(BINARY_LENGTH[language], '0'));
+      result.add(convertBase(decimalNumber, 10, 2)?.padLeft(BINARY_LENGTH[language]!, '0'));
     });
     return result.join(' ');
   }
@@ -261,7 +261,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
               ? false
               : (_currentOrderMode == GCWSwitchPosition.left));
       List<String> binaryList = [];
-      List<String> decimalList = [];
+      List<String?> decimalList = [];
       segments.forEach((segment) {
         binaryList.add(segments2binary(
             segment,
@@ -273,8 +273,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
             segments2binary(
                 segment,
                 _currentCode,
-                (_currentCode == TeletypewriterCodebook.BAUDOT_54123 ||
-                        _currentCode == TeletypewriterCodebook.CCITT_IA5)
+                (_currentCode == TeletypewriterCodebook.BAUDOT_54123 || _currentCode == TeletypewriterCodebook.CCITT_IA5)
                     ? false
                     : (_currentOrderMode == GCWSwitchPosition.left)),
             2,
@@ -325,7 +324,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
       } else {
         // decode visual mode
         var output = _currentDisplays.map((character) {
-          if (character != null) return character.join('');
+          return character.join('');
         }).toList();
         segments = decodeVisualPunchtape(
             output,
@@ -345,7 +344,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
 }
 
 String _mirrorListOfBinaryToDecimal(List<String> binaryList) {
-  List<String> result = [];
+  List<String?> result = [];
   binaryList.forEach((element) {
     result.add(convertBase(element.split('').reversed.join(''), 2, 10));
   });

@@ -19,23 +19,23 @@ class GCWSymbolTableSymbolMatrix extends StatefulWidget {
   final MediaQueryData mediaQueryData;
   final Iterable<Map<String, SymbolData>> imageData;
   final bool selectable;
-  final Function onChanged;
-  final Function onSymbolTapped;
+  final void Function() onChanged;
+  final void Function(String, SymbolData) onSymbolTapped;
   final bool overlayOn;
   final String symbolKey;
   final bool fixed;
 
   const GCWSymbolTableSymbolMatrix(
       {Key? key,
-      this.imageData,
-      this.countColumns,
-      this.mediaQueryData,
-      this.onChanged,
-      this.selectable: false,
-      this.onSymbolTapped,
-      this.fixed: false,
-      this.overlayOn: true,
-      this.symbolKey})
+      required this.imageData,
+      required this.countColumns,
+      required this.mediaQueryData,
+      required this.onChanged,
+      this.selectable = false,
+      required this.onSymbolTapped,
+      this.fixed = false,
+      this.overlayOn = true,
+      this.symbolKey = ''})
       : super(key: key);
 
   @override
@@ -43,8 +43,8 @@ class GCWSymbolTableSymbolMatrix extends StatefulWidget {
 }
 
 class GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> {
-  var _currentShowOverlayedSymbols = true;
-  Iterable<Map<String, SymbolData>> _imageData;
+  var _currentShowOverlayedSymbols;
+  late Iterable<Map<String, SymbolData>> _imageData;
 
   @override
   void initState() {
@@ -189,7 +189,7 @@ class GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> 
     );
   }
 
-  openInSymbolReplacer(BuildContext context, String symbolKey, List<Map<String, SymbolData>> imageData) {
+  openInSymbolReplacer(BuildContext context, String symbolKey, Iterable<Map<String, SymbolData>> imageData) {
     Navigator.push(
         context,
         NoAnimationMaterialPageRoute(

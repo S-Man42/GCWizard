@@ -22,19 +22,19 @@ class SegmentDisplayOutput extends StatefulWidget {
   final NSegmentDisplay Function(Map<String, bool>, bool) segmentFunction;
   final List<List<String>> segments;
   final bool readOnly;
-  final Widget trailing;
+  final Widget? trailing;
   final bool showZoomButtons;
-  final double verticalSymbolPadding;
-  final double horizontalSymbolPadding;
+  final double? verticalSymbolPadding;
+  final double? horizontalSymbolPadding;
 
   const SegmentDisplayOutput(
       {Key? key,
       this.upsideDownButton: false,
-      this.segmentFunction,
-      this.segments,
-      this.readOnly,
+      required this.segmentFunction,
+      required this.segments,
+      required this.readOnly,
       this.trailing,
-      this.showZoomButtons: true,
+      this.showZoomButtons = true,
       this.verticalSymbolPadding,
       this.horizontalSymbolPadding})
       : super(key: key);
@@ -45,7 +45,7 @@ class SegmentDisplayOutput extends StatefulWidget {
 
 class _SegmentDisplayOutputState extends State<SegmentDisplayOutput> {
   var _currentUpsideDown = false;
-  List<NSegmentDisplay> _displays;
+  List<NSegmentDisplay> _displays = [];
 
   @override
   void initState() {
@@ -90,7 +90,7 @@ class _SegmentDisplayOutputState extends State<SegmentDisplayOutput> {
                       .then((image) {
                     if (image != null)
                       image.toByteData(format: ui.ImageByteFormat.png).then((data) {
-                        _exportFile(context, data.buffer.asUint8List());
+                        _exportFile(context, data?.buffer.asUint8List());
                       });
                   });
                 },

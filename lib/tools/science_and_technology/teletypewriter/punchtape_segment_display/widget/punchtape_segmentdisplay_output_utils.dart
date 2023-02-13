@@ -1,10 +1,11 @@
 part of 'package:gc_wizard/tools/science_and_technology/teletypewriter/punchtape_segment_display/widget/punchtape_segmentdisplay_output.dart';
 
-_exportFile(BuildContext context, Uint8List data) async {
+void _exportFile(BuildContext context, Uint8List? data) async {
+  if (data == null) return;
   var value =
   await saveByteDataToFile(context, data, 'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
 
-  if (value != null) showExportedFileDialog(context, fileType: FileType.PNG, contentWidget: Image.memory(data));
+  if (value != null) showExportedFileDialog(context, contentWidget: Image.memory(data));
 }
 
 Widget _buildPunchtapeSegmentDisplayOutput(List<dynamic> displays) {
@@ -49,8 +50,6 @@ Future<ui.Image> _buildPunchtapeSegmentDisplayImage(List<NSegmentDisplay> displa
   var rowHeight = 0.0;
   var images = <ui.Image>[];
   var offset = ui.Offset(0, bounds);
-
-  if (displays == null) return null;
 
   // create images
   for (var i = 0; i < displays.length; i++) {

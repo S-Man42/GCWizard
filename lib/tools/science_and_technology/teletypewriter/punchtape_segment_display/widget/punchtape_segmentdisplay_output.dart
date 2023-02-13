@@ -21,17 +21,17 @@ class PunchtapeSegmentDisplayOutput extends StatefulWidget {
   final NSegmentDisplay Function(Map<String, bool>, bool, TeletypewriterCodebook) segmentFunction;
   final List<List<String>> segments;
   final bool readOnly;
-  final Widget trailing;
+  final Widget? trailing;
   final TeletypewriterCodebook codeBook;
 
   const PunchtapeSegmentDisplayOutput(
       {Key? key,
-      this.upsideDownButton: false,
-      this.segmentFunction,
-      this.segments,
-      this.readOnly,
+      this.upsideDownButton = false,
+      required this.segmentFunction,
+      required this.segments,
+      required this.readOnly,
       this.trailing,
-      this.codeBook})
+      required this.codeBook})
       : super(key: key);
 
   @override
@@ -40,7 +40,7 @@ class PunchtapeSegmentDisplayOutput extends StatefulWidget {
 
 class _PunchtapeSegmentDisplayOutputState extends State<PunchtapeSegmentDisplayOutput> {
   var _currentUpsideDown = false;
-  List<NSegmentDisplay> _displays;
+  late List<NSegmentDisplay> _displays;
 
   @override
   void initState() {
@@ -79,7 +79,7 @@ class _PunchtapeSegmentDisplayOutputState extends State<PunchtapeSegmentDisplayO
                   await _buildPunchtapeSegmentDisplayImage(_displays, _currentUpsideDown).then((image) {
                     if (image != null)
                       image.toByteData(format: ui.ImageByteFormat.png).then((data) {
-                        _exportFile(context, data.buffer.asUint8List());
+                        _exportFile(context, data?.buffer.asUint8List());
                       });
                   });
                 },

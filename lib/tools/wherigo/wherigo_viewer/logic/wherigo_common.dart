@@ -45,13 +45,19 @@ String getTextData(String analyseLine, String obfuscator, String dtable) {
   if (RegExp(r'(gsub_wig)').hasMatch(result)) {
     // deobfuscate/replace all Matches gsub_wig\("[\w\s@]+"\)
     RegExp(r'gsub_wig\("[\w\s@\-.~]+"\)').allMatches(result).forEach((element) {
-      result = result.replaceAll(element.group(0),
-          deobfuscateUrwigoText(element.group(0).replaceAll('gsub_wig("', '').replaceAll('")', ''), dtable));
+      var group = element.group(0);
+      if (group == null) return;
+
+      result = result.replaceAll(group,
+          deobfuscateUrwigoText(group.replaceAll('gsub_wig("', '').replaceAll('")', ''), dtable));
     });
     result = result.replaceAll('..', '').replaceAll('<BR>\\n', '').replaceAll('"', '');
     RegExp(r'ucode_wig\([\d]+\)').allMatches(result).forEach((element) {
-      result = result.replaceAll(element.group(0),
-          String.fromCharCode(int.parse(element.group(0).replaceAll('ucode_wig(', '').replaceAll(')', ''))));
+      var group = element.group(0);
+      if (group == null) return;
+
+      result = result.replaceAll(group,
+          String.fromCharCode(int.parse(group.replaceAll('ucode_wig(', '').replaceAll(')', ''))));
     });
     result = result.replaceAll('gsub_wig()', '');
   } else if (result.startsWith(RegExp(r'(\()+' + obfuscator))) {

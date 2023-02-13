@@ -175,7 +175,7 @@ decryptDecabit(String input, Map<String, String> replaceCharacters, bool numeric
     var character;
 
     if (numericMode) {
-      if (DecabitToAZInt[chunk] != null) character = DecabitToAZInt[chunk] + ' ';
+      if (DecabitToAZInt[chunk] != null) character = DecabitToAZInt[chunk]! + ' ';
     } else {
       if (DecabitToAZStr[chunk] != null) character = DecabitToAZStr[chunk];
     }

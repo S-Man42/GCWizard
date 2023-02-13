@@ -61,18 +61,18 @@ class UnitConverter extends StatefulWidget {
 
 class UnitConverterState extends State<UnitConverter> {
   var _currentValue = 1.0;
-  Map<String, dynamic> _currentFromUnit;
-  Map<String, dynamic> _currentToUnit;
+  late GCWUnitsValue _currentFromUnit;
+  late GCWUnitsValue _currentToUnit;
 
-  var _currentCategory;
+  late Map<String, dynamic> _currentCategory;
 
   @override
   void initState() {
     super.initState();
 
     _currentCategory = _categories.firstWhere((category) => category['category'].key == UNITCATEGORY_LENGTH.key);
-    _currentFromUnit = {'unit': _currentCategory['default_from_unit'], 'prefix': UNITPREFIX_NONE};
-    _currentToUnit = {'unit': _currentCategory['default_to_unit'], 'prefix': UNITPREFIX_NONE};
+    _currentFromUnit = GCWUnitsValue(_currentCategory['default_from_unit'] as Unit, UNITPREFIX_NONE);
+    _currentToUnit = GCWUnitsValue(_currentCategory['default_to_unit'] as Unit, UNITPREFIX_NONE);
   }
 
   @override
@@ -94,18 +94,18 @@ class UnitConverterState extends State<UnitConverter> {
         GCWTextDivider(
           text: i18n(context, 'unitconverter_unit'),
         ),
-        GCWDropDown(
+        GCWDropDown<Map<String, Object>>(
           value: _currentCategory,
           items: _categories.map((category) {
             return GCWDropDownMenuItem(value: category, child: i18n(context, category['category'].key));
           }).toList(),
-          onChanged: (value) {
+          onChanged: (Map<String, dynamic> value) {
             setState(() {
               if (value['category'].key != _currentCategory['category'].key) {
                 _currentCategory = value;
 
-                _currentFromUnit = {'unit': _currentCategory['default_from_unit'], 'prefix': UNITPREFIX_NONE};
-                _currentToUnit = {'unit': _currentCategory['default_to_unit'], 'prefix': UNITPREFIX_NONE};
+                _currentFromUnit = GCWUnitsValue(_currentCategory['default_from_unit'] as Unit, UNITPREFIX_NONE);
+                _currentToUnit = GCWUnitsValue(_currentCategory['default_to_unit'] as Unit, UNITPREFIX_NONE);
               }
             });
           },
@@ -116,8 +116,8 @@ class UnitConverterState extends State<UnitConverter> {
             Expanded(
                 child: GCWUnits(
                   value: _currentFromUnit,
-                  unitCategory: _currentCategory['category'],
-                  onChanged: (value) {
+                  unitCategory: _currentCategory['category'] as UnitCategory,
+                  onChanged: (GCWUnitsValue value) {
                     setState(() {
                       _currentFromUnit = value;
                     });
@@ -132,8 +132,8 @@ class UnitConverterState extends State<UnitConverter> {
             Expanded(
                 child: GCWUnits(
                   value: _currentToUnit,
-                  unitCategory: _currentCategory['category'],
-                  onChanged: (value) {
+                  unitCategory: _currentCategory['category'] as UnitCategory,
+                  onChanged: (GCWUnitsValue value) {
                     setState(() {
                       _currentToUnit = value;
                     });
@@ -147,11 +147,11 @@ class UnitConverterState extends State<UnitConverter> {
     );
   }
 
-  _buildOutput() {
-    var fromPrefix = _currentFromUnit['prefix'].value;
-    var fromUnit = _currentFromUnit['unit'];
-    var toPrefix = _currentToUnit['prefix'].value;
-    var toUnit = _currentToUnit['unit'];
+  String _buildOutput() {
+    var fromPrefix = _currentFromUnit.prefix.value;
+    var fromUnit = _currentFromUnit.value;
+    var toPrefix = _currentToUnit.prefix.value;
+    var toUnit = _currentToUnit.value;
 
     return NumberFormat('0.' + '#' * 8).format(convert(_currentValue * fromPrefix, fromUnit, toUnit) / toPrefix);
   }

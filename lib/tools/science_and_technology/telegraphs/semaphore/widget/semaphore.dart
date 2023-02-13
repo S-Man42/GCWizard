@@ -22,7 +22,7 @@ class SemaphoreTelegraph extends StatefulWidget {
 
 class SemaphoreTelegraphState extends State<SemaphoreTelegraph> {
   String _currentEncodeInput = '';
-  TextEditingController _encodeController;
+  late TextEditingController _encodeController;
 
   List<List<String>> _currentDisplays = [];
   var _currentMode = GCWSwitchPosition.right;
@@ -161,8 +161,8 @@ class SemaphoreTelegraphState extends State<SemaphoreTelegraph> {
       );
     } else {
       //decode
-      var output = _currentDisplays.map((character) {
-        if (character != null) return character.join();
+      var output = _currentDisplays.where((character) => character != null).map((character) {
+        return character.join();
       }).toList();
       var segments = decodeSemaphore(output);
       return Column(

@@ -278,7 +278,7 @@ Map<String, dynamic> decodeVisualChappe(List<String> inputs, ChappeCodebook lang
     if (CODEBOOK.map((key, value) => MapEntry(key.join(), value.toString()))[input.split('').join()] == null) {
       char = char + UNKNOWN_ELEMENT;
     } else {
-      charH = CODEBOOK.map((key, value) => MapEntry(key.join(), value.toString()))[input.split('').join()];
+      charH = CODEBOOK.map((key, value) => MapEntry(key.join(), value.toString()))[input.split('').join()] ?? '';
       char = char + charH;
     }
 
@@ -328,12 +328,9 @@ Map<String, dynamic> decodeTextChappeTelegraph(String inputs, ChappeCodebook lan
   }
 
   inputs.split(' ').forEach((element) {
-    if (CODEBOOK[element] != null) {
-      text = text + element;
-    } else {
-      text = text + UNKNOWN_ELEMENT;
-    }
-    displays.add(CODEBOOK[element]);
+    text = text + ((CODEBOOK[element] != null) ? element : UNKNOWN_ELEMENT);
+
+    displays.add(CODEBOOK[element]!);
   });
   return {'displays': displays, 'text': text};
 }

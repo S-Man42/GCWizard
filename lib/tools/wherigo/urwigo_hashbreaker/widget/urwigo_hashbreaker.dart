@@ -16,8 +16,8 @@ class UrwigoHashBreaker extends StatefulWidget {
 
 class UrwigoHashBreakerState extends State<UrwigoHashBreaker> {
   var _currentInput = 0;
-  String? _currentOutputNumeric = '29735'; // Value for initial Hash == 0;
-  String? _currentOutputAlphabetical = 'bgqv'; // Value for initial Hash == 0;
+  String _currentOutputNumeric = '29735'; // Value for initial Hash == 0;
+  String _currentOutputAlphabetical = 'bgqv'; // Value for initial Hash == 0;
 
   var _inputController;
 
@@ -69,8 +69,8 @@ class UrwigoHashBreakerState extends State<UrwigoHashBreaker> {
                     text: i18n(context, 'common_submit_button_text'),
                     onPressed: () {
                       setState(() {
-                        _currentOutputAlphabetical = breakUrwigoHash(_currentInput, HASH.ALPHABETICAL);
-                        _currentOutputNumeric = breakUrwigoHash(_currentInput, HASH.NUMERIC);
+                        _currentOutputAlphabetical = breakUrwigoHash(_currentInput, HASH.ALPHABETICAL) ?? '';
+                        _currentOutputNumeric = breakUrwigoHash(_currentInput, HASH.NUMERIC) ?? '';
                       });
                     },
                   ),

@@ -297,8 +297,8 @@ List<List<String>> encodeNotes(String input, NotesCodebook notes, Map<String, St
   // sorted by length (longest first)
   var entries = translationMap.entries.toList();
   entries.sort((MapEntry<String, String> a, MapEntry<String, String> b) {
-    if (b.value.length != a.value.length)
-      return b.value.length.compareTo(a.value.length);
+    if (b.value!.length != a.value!.length)
+      return b.value!.length.compareTo(a.value!.length);
     else {
       var aKey = int.parse(a.key.split('_')[0]);
       var bKey = int.parse(b.key.split('_')[0]);
@@ -321,7 +321,7 @@ List<List<String>> encodeNotes(String input, NotesCodebook notes, Map<String, St
 
   List<String> inputs = input.split(RegExp(r'\s'));
 
-  for (int i = 0; i < inputs.length; i++) result.add(CODEBOOK[inputs[i]]);
+  for (int i = 0; i < inputs.length; i++) result.add(CODEBOOK[inputs[i]]!);
 
   return result;
 }
@@ -374,7 +374,7 @@ Map<String, dynamic> decodeNotes(List<String> inputs, NotesCodebook notes) {
     if (CODEBOOK.map((key, value) => MapEntry(key.join(), value.toString()))[input.split('').join()] == null)
       char = char + UNKNOWN_ELEMENT;
     else {
-      charH = CODEBOOK.map((key, value) => MapEntry(key.join(), value.toString()))[input.split('').join()];
+      charH = CODEBOOK.map((key, value) => MapEntry(key.join(), value.toString()))[input.split('').join()] ?? '';
       char = char + charH;
     }
 

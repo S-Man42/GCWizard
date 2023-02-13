@@ -27,7 +27,7 @@ class VanitySingletapState extends State<VanitySingletap> {
             });
           },
         ),
-        GCWDropDown(
+        GCWDropDown<PhoneModel>(
             value: _currentModel,
             onChanged: (newValue) {
               setState(() {

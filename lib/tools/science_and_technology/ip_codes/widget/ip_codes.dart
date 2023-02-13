@@ -18,7 +18,7 @@ class IPCodesState extends State<IPCodes> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWDropDown(
+        GCWDropDown<String>(
           value: _currentIPClass,
           items: IP_CODES.keys.map((clazz) {
             return GCWDropDownMenuItem(
@@ -53,7 +53,7 @@ class IPCodesState extends State<IPCodes> {
                       child: GCWText(text: i18n(context, 'ipcodes_${_currentIPClass}_description')),
                       padding: EdgeInsets.only(bottom: 10),
                     )],
-        data: IP_CODES[_currentIPClass].map((key) {
+        data: IP_CODES[_currentIPClass]!.map((key) {
                 return [key, _ipTexts(key)];
               }).toList(),
         flexValues: [1, 4]

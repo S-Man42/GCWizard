@@ -1,3 +1,4 @@
+import 'package:gc_wizard/common_widgets/gcw_async_executer.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/logic/substitution_breaker_enums.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/logic/substitution_breaker_result.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/logic/substitution_logic_aggregator.dart';
@@ -9,12 +10,13 @@ class SubstitutionBreakerJobData {
   SubstitutionBreakerJobData({this.input = '', this.quadgrams});
 }
 
-Future<SubstitutionBreakerResult> break_cipherAsync(dynamic jobData) async {
+Future<SubstitutionBreakerResult> break_cipherAsync(GCWAsyncExecuterParameters? jobData) async {
+  if (jobData == null) return Future.value(null);
   if (jobData.parameters == null) return SubstitutionBreakerResult(errorCode: SubstitutionBreakerErrorCode.OK);
 
   var output = _break_cipher(jobData.parameters.input, jobData.parameters.quadgrams);
 
-  jobData.sendAsyncPort?.send(output);
+  jobData.sendAsyncPort.send(output);
 
   return output;
 }

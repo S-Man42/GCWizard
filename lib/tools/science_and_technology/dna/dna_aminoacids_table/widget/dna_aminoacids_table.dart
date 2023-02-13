@@ -25,7 +25,7 @@ class DNAAminoAcidsTableState extends State<DNAAminoAcidsTable> {
             name = '';
         }
       } else {
-        name = i18n(context, acid.name);
+        name = i18n(context, acid.name!);
       }
 
       if (acid.symbolShort == 'M') name += '\n${i18n(context, 'dna_start')}';

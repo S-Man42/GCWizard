@@ -17,8 +17,8 @@ class DTMF extends StatefulWidget {
 }
 
 class DTMFState extends State<DTMF> {
-  TextEditingController _encodeController;
-  TextEditingController _decodeController;
+  late TextEditingController _encodeController;
+  late TextEditingController _decodeController;
 
   var _currentEncodeInput = '';
   var _currentDecodeInput = '';
@@ -73,7 +73,7 @@ class DTMFState extends State<DTMF> {
                 children: [
                   Expanded(
                       child: Container(
-                    child: GCWDropDown(
+                    child: GCWDropDown<int>(
                       value: _currentDecryptLowFrequency,
                       items: DTMF_FREQUENCIES_LOW.map((frequency) {
                         return GCWDropDownMenuItem(
@@ -91,7 +91,7 @@ class DTMFState extends State<DTMF> {
                   )),
                   Expanded(
                       child: Container(
-                    child: GCWDropDown(
+                    child: GCWDropDown<int>(
                       value: _currentDecryptHighFrequency,
                       items: DTMF_FREQUENCIES_HIGH.map((frequency) {
                         return GCWDropDownMenuItem(

@@ -49,7 +49,7 @@ List<List<String>> encodePopham(String input) {
   List<List<String>> result = [];
 
   for (int i = 0; i < inputs.length; i++) {
-    result.add(POPHAM[inputs[i]]);
+    result.add(POPHAM[inputs[i]]!);
   }
   return result;
 }
@@ -75,7 +75,7 @@ Map<String, dynamic> decodeVisualPopham(List<String> inputs) {
     if (CODEBOOK[input] == null) {
       char = char + UNKNOWN_ELEMENT;
     } else {
-      char = char + CODEBOOK[input];
+      char = char + CODEBOOK[input]!;
     }
 
     return char;

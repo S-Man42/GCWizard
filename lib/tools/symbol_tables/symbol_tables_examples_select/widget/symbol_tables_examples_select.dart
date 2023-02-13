@@ -62,12 +62,15 @@ class SymbolTableExamplesSelectState extends State<SymbolTableExamplesSelect> {
 
       images.add({
         key: SymbolData(
-            path: imagePath, bytes: data.buffer.asUint8List(), displayName: i18n(context, 'symboltables_${key}_title'))
+            path: imagePath,
+            bytes: data.buffer.asUint8List(),
+            displayName: i18n(context, 'symboltables_${key}_title'))
       });
     }
 
     images.sort((a, b) {
-      return a.values.first.displayName.compareTo(b.values.first.displayName);
+      if (a.values.first.displayName == null || b.values.first.displayName == null) return 0;
+      return a.values.first.displayName!.compareTo(b.values.first.displayName!);
     });
 
     setState(() {});

@@ -23,9 +23,9 @@ class PophamTelegraph extends StatefulWidget {
 
 class PophamTelegraphState extends State<PophamTelegraph> {
   String _currentEncodeInput = '';
-  TextEditingController _encodeController;
+  late TextEditingController _encodeController;
 
-  TextEditingController _decodeInputController;
+  late TextEditingController _decodeInputController;
   String _currentDecodeInput = '';
 
   List<List<String>> _currentDisplays = [];
@@ -170,8 +170,8 @@ class PophamTelegraphState extends State<PophamTelegraph> {
       //decode
       var segments;
       // decode visual mode
-      var output = _currentDisplays.map((character) {
-        if (character != null) return character.join();
+      var output = _currentDisplays.where((character) => character != null).map((character) {
+        return character.join();
       }).toList();
       segments = decodeVisualPopham(output);
 

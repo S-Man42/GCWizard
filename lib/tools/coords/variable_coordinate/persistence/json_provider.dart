@@ -8,7 +8,7 @@ import 'package:prefs/prefs.dart';
 
 void refreshFormulas() {
   var formulasList = Prefs.getStringList(PREFERENCE_COORD_VARIABLECOORDINATE_FORMULAS);
-  if (formulasList == null || formulasList.length == 0) return;
+  if (formulasList.length == 0) return;
 
   formulas = formulasList.where((formula) => formula.length > 0).map((formula) {
     return Formula.fromJson(jsonDecode(formula));

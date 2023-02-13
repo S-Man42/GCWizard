@@ -1,6 +1,7 @@
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/gcw_touchcanvas.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/widget/segmentdisplay_painter.dart';
 import 'package:touchable/touchable.dart';
@@ -12,20 +13,20 @@ class NSegmentDisplay extends StatefulWidget {
 
   final Map<String, bool> segments;
   final bool readOnly;
-  final Function onChanged;
+  final void Function(Map<String, bool>)? onChanged;
 
-  final Function customPaint;
-  NSegmentDisplayState nSegmentDisplayState;
+  final void Function(GCWTouchCanvas, Size, Map<String, bool>, void Function(String, bool), Color, Color)? customPaint;
+  late NSegmentDisplayState nSegmentDisplayState;
 
   NSegmentDisplay(
       {Key? key,
-      this.initialSegments,
-      this.type,
-      this.segments,
-      this.readOnly: false,
-      this.onChanged,
+      required this.initialSegments,
+      required this.type,
+      required this.segments,
+      this.readOnly = false,
+      required this.onChanged,
       this.customPaint,
-      this.aspectRatio: SEGMENTS_RELATIVE_DISPLAY_WIDTH / SEGMENTS_RELATIVE_DISPLAY_HEIGHT})
+      this.aspectRatio = SEGMENTS_RELATIVE_DISPLAY_WIDTH / SEGMENTS_RELATIVE_DISPLAY_HEIGHT})
       : super(key: key);
 
   @override
@@ -37,7 +38,7 @@ class NSegmentDisplay extends StatefulWidget {
 }
 
 class NSegmentDisplayState extends State<NSegmentDisplay> {
-  Map<String, bool> _segments;
+  late Map<String, bool> _segments;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +48,7 @@ class NSegmentDisplayState extends State<NSegmentDisplay> {
       _segments = Map.from(widget.segments);
 
       widget.initialSegments.keys.forEach((segmentID) {
-        _segments.putIfAbsent(segmentID, () => widget.initialSegments[segmentID]);
+        _segments.putIfAbsent(segmentID, () => widget.initialSegments[segmentID]!);
       });
     } else {
       _segments = Map.from(widget.initialSegments);
@@ -67,7 +68,7 @@ class NSegmentDisplayState extends State<NSegmentDisplay> {
 
                         setState(() {
                           _segments[key] = value;
-                          widget.onChanged(_segments);
+                          if (widget.onChanged != null) widget.onChanged!(_segments);
                         });
                       }, customPaint: widget.customPaint));
                     })))
@@ -80,7 +81,7 @@ class NSegmentDisplayState extends State<NSegmentDisplay> {
       _segments = Map.from(widget.segments);
 
       widget.initialSegments.keys.forEach((segmentID) {
-        _segments.putIfAbsent(segmentID, () => widget.initialSegments[segmentID]);
+        _segments.putIfAbsent(segmentID, () => widget.initialSegments[segmentID]!);
       });
     } else {
       _segments = Map.from(widget.initialSegments);
@@ -89,6 +90,8 @@ class NSegmentDisplayState extends State<NSegmentDisplay> {
     final recorder = ui.PictureRecorder();
     Canvas canvas = Canvas(recorder);
     final size = context.size;
+    if (size == null) return Future.value(null);
+
     final painter = SegmentDisplayPainter(context, widget.type, _segments, (key, value) {},
         customPaint: widget.customPaint, segment_color_on: Colors.black, segment_color_off: Colors.white);
 

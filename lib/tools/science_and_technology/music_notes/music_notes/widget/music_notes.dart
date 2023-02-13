@@ -28,7 +28,7 @@ class MusicNotes extends StatefulWidget {
 
 class MusicNotesState extends State<MusicNotes> {
   String _currentEncodeInput = '';
-  TextEditingController _encodeController;
+  late TextEditingController _encodeController;
   var _gcwTextStyle = gcwTextStyle();
   var _currentCode = NotesCodebook.TREBLE;
 
@@ -51,7 +51,7 @@ class MusicNotesState extends State<MusicNotes> {
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
-      GCWDropDown(
+      GCWDropDown<NotesCodebook>(
         value: _currentCode,
         onChanged: (value) {
           setState(() {
@@ -63,17 +63,15 @@ class MusicNotesState extends State<MusicNotes> {
             case NotesCodebook.ALT:
               var tool = registeredTools.firstWhere((tool) => tool.i18nPrefix.contains('altoclef'));
               return GCWDropDownMenuItem(
-                  value: NotesCodebook.ALT, child: _buildDropDownMenuItem(tool.icon, tool.toolName, null));
+                  value: NotesCodebook.ALT, child: _buildDropDownMenuItem(tool.icon, tool.toolName!, null));
             case NotesCodebook.TREBLE:
               var tool = registeredTools.firstWhere((tool) => tool.i18nPrefix.contains('trebleclef'));
               return GCWDropDownMenuItem(
-                  value: NotesCodebook.TREBLE, child: _buildDropDownMenuItem(tool.icon, tool.toolName, null));
+                  value: NotesCodebook.TREBLE, child: _buildDropDownMenuItem(tool.icon, tool.toolName!, null));
             case NotesCodebook.BASS:
               var tool = registeredTools.firstWhere((tool) => tool.i18nPrefix.contains('bassclef'));
               return GCWDropDownMenuItem(
-                  value: NotesCodebook.BASS, child: _buildDropDownMenuItem(tool.icon, tool.toolName, null));
-            default:
-              return null;
+                  value: NotesCodebook.BASS, child: _buildDropDownMenuItem(tool.icon, tool.toolName!, null));
           }
         }).toList(),
       ),
@@ -213,8 +211,8 @@ class MusicNotesState extends State<MusicNotes> {
       );
     } else {
       //decode
-      var output = _currentDisplays.map((character) {
-        if (character != null) return character.join();
+      var output = _currentDisplays.where((character) => character != null).map((character) {
+        return character.join();
       }).toList();
       var segments = decodeNotes(output, _currentCode);
 
@@ -257,14 +255,14 @@ class MusicNotesState extends State<MusicNotes> {
           translation = i18n(context, 'symboltables_notes_names_trebleclef_' + note);
           break;
         default:
-          translation = null;
+          translation = '';
       }
       if (translation != null && translation != '') translationMap.addAll({note: translation});
     });
     return translationMap;
   }
 
-  Widget _buildDropDownMenuItem(dynamic icon, String toolName, String description) {
+  Widget _buildDropDownMenuItem(dynamic icon, String toolName, String? description) {
     return Row(children: [
       Container(
         child: (icon != null) ? icon : Container(width: 50),

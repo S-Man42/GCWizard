@@ -35,7 +35,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
       var response = await request.send();
 
       _httpCode = response.statusCode.toString();
-      _httpMessage = response.reasonPhrase;
+      _httpMessage = response.reasonPhrase ?? '';
       if (response.statusCode == 200) {
         var responseData = await http.Response.fromStream(response);
         _LUAFile = responseData.body;
@@ -55,7 +55,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
               Variables: [],
               NameToObject: {},
               ResultStatus: ANALYSE_RESULT_STATUS.ERROR_HTTP,
-              ResultsLUA: ['wherigo_http_code_http', HTTP_STATUS[_httpCode]],
+              ResultsLUA: ['wherigo_http_code_http', HTTP_STATUS[_httpCode] ?? ''], // TODO Thomas What if status 401 or whatever returns? Please use httpStatus from dart:io instead
               httpCode: _httpCode,
               httpMessage: _httpMessage)
         });
@@ -169,10 +169,10 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
   String _CountryID = '';
   String _StateID = '';
   String _UseLogging = '';
-  DateTime _CreateDate;
-  DateTime _PublishDate;
-  DateTime _UpdateDate;
-  DateTime _LastPlayedDate;
+  DateTime? _CreateDate; // TODO Thomas Please check if Dates can be null (== means, only if really logically not given!).
+  DateTime? _PublishDate;
+  DateTime? _UpdateDate;
+  DateTime? _LastPlayedDate;
   List<ZonePoint> points = [];
   String visible = '';
   String media = '';
@@ -181,7 +181,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
   String distanceRange = '';
   String showObjects = '';
   String proximityRange = '';
-  ZonePoint originalPoint;
+  ZonePoint originalPoint = ZonePoint(0.0, 0.0, 0.0);
   String distanceRangeUOM = '';
   String proximityRangeUOM = '';
   String outOfRange = '';
@@ -207,7 +207,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
   List<String> answerList = [];
   String answerHash = '';
   ActionMessageElementData action;
-  Map<String, List<AnswerData>> Answers = {};
+  Map<String, List<AnswerData>> Answers = {}; // TODO Thomas As all of such constructions, please use explicit class types for values which make it better to check for Nullability
   String _obfuscatorFunction = '';
 
   // get cartridge details
@@ -234,16 +234,22 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
     _obfuscatorTable = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@.-~';
     _obfuscatorFound = true;
     RegExp(r'WWB_deobf\(".*?"\)').allMatches(_LUAFile).forEach((obfuscatedText) {
-      _LUAFile = _LUAFile.replaceAll(obfuscatedText.group(0),
-          '"' + deObfuscateText(obfuscatedText.group(0), _obfuscatorFunction, _obfuscatorTable) + '"');
+      var group = obfuscatedText.group(0);
+      if (group == null) return;
+
+      _LUAFile = _LUAFile.replaceAll(group,
+          '"' + deObfuscateText(group, _obfuscatorFunction, _obfuscatorTable) + '"');
     });
   } else if (RegExp(r'(gsub_wig)').hasMatch(_LUAFile)) {
     _obfuscatorFunction = 'gsub_wig';
     _obfuscatorTable = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@.-~';
     _obfuscatorFound = true;
     RegExp(r'gsub_wig\(".*?"\)').allMatches(_LUAFile).forEach((obfuscatedText) {
-      _LUAFile = _LUAFile.replaceAll(obfuscatedText.group(0),
-          '"' + deObfuscateText(obfuscatedText.group(0), _obfuscatorFunction, _obfuscatorTable) + '"');
+      var group = obfuscatedText.group(0);
+      if (group == null) return;
+
+      _LUAFile = _LUAFile.replaceAll(group,
+          '"' + deObfuscateText(group, _obfuscatorFunction, _obfuscatorTable) + '"');
     });
   }
 
@@ -269,15 +275,21 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
         // deObfuscate all texts
         _LUAFile = _LUAFile.replaceAll('([[', '(').replaceAll(']])', ')');
         RegExp(r'' + _obfuscatorFunction + '\\(".*?"\\)').allMatches(_LUAFile).forEach((obfuscatedText) {
-          _LUAFile = _LUAFile.replaceAll(obfuscatedText.group(0),
-              '"' + deObfuscateText(obfuscatedText.group(0), _obfuscatorFunction, _obfuscatorTable) + '"');
+          var group = obfuscatedText.group(0);
+          if (group == null) return;
+
+          _LUAFile = _LUAFile.replaceAll(group,
+              '"' + deObfuscateText(group, _obfuscatorFunction, _obfuscatorTable) + '"');
         });
 
         RegExp(r'' + _obfuscatorFunction + '\\((.|\\s)*?\\)').allMatches(_LUAFile).forEach((obfuscatedText) {
+          var group = obfuscatedText.group(0);
+          if (group == null) return;
+
           _LUAFile = _LUAFile.replaceAll(
-              obfuscatedText.group(0),
+              group,
               '"' +
-                  deObfuscateText(obfuscatedText.group(0).replaceAll(_obfuscatorFunction + '(', '').replaceAll(')', ''),
+                  deObfuscateText(group.replaceAll(_obfuscatorFunction + '(', '').replaceAll(')', ''),
                       _obfuscatorFunction, _obfuscatorTable) +
                   '"');
         });
@@ -597,7 +609,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
           distanceRange,
           showObjects,
           proximityRange,
-          originalPoint,
+          originalPoint,  // TODO Thomas: Can this be null? It was not initializes originally, which I did. However, I am not sure, if it is logically correct
           distanceRangeUOM,
           proximityRangeUOM,
           outOfRange,
@@ -1233,12 +1245,15 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
           else if (_OnGetInputSectionEnd(lines[i])) {
             if (insideInputFunction) {
               answerList.forEach((answer) {
-                if (answer != 'NIL')
-                  Answers[inputObject].add(AnswerData(
+                if (answer != 'NIL') {
+                  if (Answers[inputObject] == null) return; // TODO Thomas Maybe not necessary if concrete return value is used
+
+                  Answers[inputObject]!.add(AnswerData(
                     answer,
                     answerHash,
                     answerActions,
                   ));
+                }
               });
               answerActions = [];
               answerList = _getAnswers(i, lines[i], lines[i - 1], _obfuscatorFunction, _obfuscatorTable, _Variables);
@@ -1248,8 +1263,10 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
               insideInputFunction = false;
               answerActions.forEach((element) {});
               answerList.forEach((answer) {
+                if (Answers[inputObject] == null) return;
+
                 if (answer != 'NIL')
-                  Answers[inputObject].add(AnswerData(
+                  Answers[inputObject]!.add(AnswerData(
                     answer,
                     answerHash,
                     answerActions,
@@ -1278,8 +1295,9 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
           } // end buttons
 
           else {
-            action = _handleAnswerLine(lines[i].trimLeft(), _obfuscatorTable, _obfuscatorFunction);
-            if (action != null) {
+            var tempAction = _handleAnswerLine(lines[i].trimLeft(), _obfuscatorTable, _obfuscatorFunction);
+            if (tempAction != null) { // TODO Thomas tempAction necessary because of nullable method but non-nullable consumer 'action'
+              action = tempAction;
               answerActions.add(action);
               answerActions.forEach((element) {});
             }
@@ -1541,7 +1559,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
         inputObject.InputType,
         inputObject.InputText,
         inputObject.InputChoices,
-        Answers[inputObject.InputLUAName.trim()]));
+        Answers[inputObject.InputLUAName.trim()] ?? [])); // TODO Thomas I can not check if logically correct to send empty list as exception. However this can be removed when using explicit values
   });
   _Inputs = resultInputs;
 
@@ -1724,6 +1742,8 @@ List<String> _getAnswers(
     }
     return [line];
   }
+
+  throw Exception('No Answers found'); // TODO Thomas: Please check if empty list instead is logically meaningful; I chose Exception because I believe this line should never be reached.
 }
 
 bool _OnGetInputSectionEnd(String line) {
@@ -1751,7 +1771,7 @@ bool _OnGetInputFunctionEnd(String line1, String line2) {
       (line2.trimLeft().startsWith('function') || line2.trimLeft().startsWith('return')));
 }
 
-ActionMessageElementData _handleAnswerLine(String line, String dtable, String obfuscator) {
+ActionMessageElementData? _handleAnswerLine(String line, String dtable, String obfuscator) {
   line = line.trim();
   if (line.startsWith('Wherigo.PlayAudio')) {
     return ActionMessageElementData(ACTIONMESSAGETYPE.COMMAND, line.trim());
@@ -1766,7 +1786,7 @@ ActionMessageElementData _handleAnswerLine(String line, String dtable, String ob
       line.startsWith('if action') ||
       line.startsWith('{') ||
       line.startsWith('}'))
-    return null;
+    return null; // TODO Thomas: Nullable here ok? This makes the method nullable and so potentially all consumers
   else if (line.startsWith('Text = ')) {
     return ActionMessageElementData(ACTIONMESSAGETYPE.TEXT, getTextData(line, obfuscator, dtable));
   } else if (line.startsWith('Media = ')) {
@@ -1817,7 +1837,7 @@ String _getVariable(String line) {
   return line;
 }
 
-DateTime _normalizeDate(String dateString) {
+DateTime? _normalizeDate(String dateString) {
   if (dateString == null || dateString == '' || dateString == '1/1/0001 12:00:00 AM') return null;
 
   List<String> dateTime = dateString.split(' ');

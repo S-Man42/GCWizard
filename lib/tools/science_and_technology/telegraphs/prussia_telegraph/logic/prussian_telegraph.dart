@@ -2347,9 +2347,8 @@ final CODEBOOK_PRUSSIA = {
 List<List<String>> encodePrussianTelegraph(String input) {
   if (input == null || input == '') return <List<String>>[];
 
-  return input.split('').map((letter) {
-    if (switchMapKeyValue(CODEBOOK_PRUSSIA)[letter] != null)
-      return switchMapKeyValue(CODEBOOK_PRUSSIA)[letter].split('');
+  return input.split('').where((letter) => switchMapKeyValue(CODEBOOK_PRUSSIA)[letter] != null).map((letter) {
+    return switchMapKeyValue(CODEBOOK_PRUSSIA)[letter]!.split('');
   }).toList();
 }
 
@@ -2370,7 +2369,7 @@ Map<String, dynamic> decodeVisualPrussianTelegraph(List<String> inputs) {
     displays.add(segment);
     code = segmentToCode(segment);
     if (CODEBOOK_PRUSSIA[code] != null)
-      text = text + CODEBOOK_PRUSSIA[code];
+      text = text + CODEBOOK_PRUSSIA[code]!;
     else
       text = text + UNKNOWN_ELEMENT;
   });
@@ -2404,10 +2403,10 @@ Map<String, dynamic> decodeTextPrussianTelegraph(String inputs) {
               element.endsWith('4.1') ||
               element.endsWith('4.2') ||
               element.endsWith('4.3'))) {
-        text = text + CODEBOOK_PRUSSIA['00' + element.substring(2)].replaceAll('##', element.substring(0, 2));
+        text = text + CODEBOOK_PRUSSIA['00' + element.substring(2)]!.replaceAll('##', element.substring(0, 2));
       }
     } else if (CODEBOOK_PRUSSIA[element] != null) {
-      decodedElement = CODEBOOK_PRUSSIA[element];
+      decodedElement = CODEBOOK_PRUSSIA[element]!;
       if (decodedElement.contains('##')) {
         decodedElement = _replaceNumber(decodedElement, element);
       }

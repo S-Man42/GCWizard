@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:collection/collection.dart';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
@@ -54,7 +55,7 @@ class PeriodicTableState extends State<PeriodicTable> {
     }
   }
 
-  Widget _buildElement(PeriodicTableElement element) {
+  Widget _buildElement(PeriodicTableElement? element) {
     return element == null
         ? Container(width: _cellWidth)
         : InkWell(
@@ -152,7 +153,7 @@ class PeriodicTableState extends State<PeriodicTable> {
     return null;
   }
 
-  _buildOutput() {
+  List<Widget> _buildOutput() {
     var periods = <Widget>[];
 
     for (int period = 0; period <= 7; period++) {
@@ -172,7 +173,7 @@ class PeriodicTableState extends State<PeriodicTable> {
           continue;
         }
 
-        PeriodicTableElement element = _getElementAtPSECoordinate(iupacGroup, period);
+        PeriodicTableElement? element = _getElementAtPSECoordinate(iupacGroup, period);
         periodRow.add(_buildElement(element));
       }
       periods.add(Row(
@@ -225,7 +226,7 @@ class PeriodicTableState extends State<PeriodicTable> {
     return periods;
   }
 
-  _getColor(StateOfMatter stateOfMatter, bool isRadioactive) {
+  Color _getColor(StateOfMatter stateOfMatter, bool isRadioactive) {
     var color = HSVColor.fromColor(_getColorByStateOfMatter(stateOfMatter));
     var saturation = color.saturation;
     color = color.withSaturation(saturation * (isRadioactive ? 1.8 : 1.0));
@@ -233,11 +234,11 @@ class PeriodicTableState extends State<PeriodicTable> {
     return color.toColor();
   }
 
-  _legendWidth(period) {
+  int _legendWidth(period) {
     return _LEGEND_WIDTH * (period == 2 ? 2 : 1);
   }
 
-  _getLegendElement(int iupacGroup, int period) {
+  Widget _getLegendElement(int iupacGroup, int period) {
     var color1;
     var text1;
     var color2;
@@ -260,7 +261,7 @@ class PeriodicTableState extends State<PeriodicTable> {
       text1 = i18n(context, 'periodictable_attribute_isradioactive_true');
     }
 
-    if (color1 == null && color2 == null) return null;
+    if (color1 == null && color2 == null) return Container();
 
     return Column(
       children: [
@@ -281,8 +282,8 @@ class PeriodicTableState extends State<PeriodicTable> {
     );
   }
 
-  _getElementAtPSECoordinate(int iupacGroup, int period) {
+  PeriodicTableElement? _getElementAtPSECoordinate(int iupacGroup, int period) {
     return allPeriodicTableElements
-        .firstWhere((element) => element.iupacGroup == iupacGroup && element.period == period, orElse: () => null);
+        .firstWhereOrNull((element) => element.iupacGroup == iupacGroup && element.period == period);
   }
 }

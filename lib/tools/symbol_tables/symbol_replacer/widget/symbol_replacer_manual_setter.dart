@@ -1,26 +1,16 @@
-import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
-import 'package:gc_wizard/application/settings/logic/preferences.dart';
-import 'package:gc_wizard/application/theme/theme.dart';
-import 'package:gc_wizard/application/theme/theme_colors.dart';
-import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
-import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
-import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
-import 'package:gc_wizard/common_widgets/gcw_toolbar.dart';
-import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
-import 'package:gc_wizard/tools/symbol_tables/_common/logic/symbol_table_data.dart';
-import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/logic/symbol_replacer.dart';
-import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_replacer_symboldata.dart';
-import 'package:gc_wizard/tools/symbol_tables/_common/widget/gcw_symbol_container.dart';
-import 'package:gc_wizard/tools/symbol_tables/_common/widget/gcw_symbol_table_symbol_matrix.dart';
-import 'package:prefs/prefs.dart';
+
+part of 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_replacer_manual_control.dart';
+
 
 class SymbolReplacerManualSetter extends StatefulWidget {
   final SymbolReplacerImage symbolImage;
   final List<Symbol> viewSymbols;
 
-  const SymbolReplacerManualSetter({Key? key, this.symbolImage, this.viewSymbols}) : super(key: key);
+  const SymbolReplacerManualSetter({
+    Key? key,
+    required this.symbolImage,
+    required this.viewSymbols})
+      : super(key: key);
 
   @override
   SymbolReplacerManualSetterState createState() => SymbolReplacerManualSetterState();
@@ -28,13 +18,13 @@ class SymbolReplacerManualSetter extends StatefulWidget {
 
 class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> {
   var _symbolMap = Map<Symbol, Map<String, SymbolData>>();
-  List<GCWDropDownMenuItem> _symbolDataItems;
+  List<GCWDropDownMenuItem>? _symbolDataItems;
   var _gcwTextStyle = gcwTextStyle();
   var _currentMode = GCWSwitchPosition.left;
-  Map<String, SymbolReplacerSymbolData> _currentSymbolData;
+  Map<String, SymbolReplacerSymbolData>? _currentSymbolData;
   var _init = true;
 
-  TextEditingController _editValueController;
+  late TextEditingController _editValueController;
 
   @override
   void initState() {
@@ -58,47 +48,45 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
 
     if (_init) {
       _fillSymbolDataItems(widget.symbolImage.compareSymbols);
-      _currentSymbolData = widget.symbolImage?.compareSymbols?.first;
+      _currentSymbolData = widget.symbolImage.compareSymbols?.first;
       _fillSymbolMap(widget.symbolImage, widget.viewSymbols);
 
       // select all
       _symbolMap.values.forEach((image) {
         image.values.first.primarySelected = true;
       });
-      if ((_symbolMap.values != null) && _symbolMap.values.isNotEmpty)
+      if (_symbolMap.values.isNotEmpty)
         _selectSymbol(_symbolMap.values.first.values.first);
 
-      if ((widget.symbolImage?.compareSymbols == null) ||
-          ((widget.viewSymbols == null) ||
-              (widget.viewSymbols.isEmpty) ||
-              widget.viewSymbols?.first?.symbolGroup?.compareSymbol == null)) _currentMode = GCWSwitchPosition.right;
+      if ((widget.symbolImage.compareSymbols == null) ||
+          (widget.viewSymbols.isEmpty ||
+              widget.viewSymbols.first.symbolGroup?.compareSymbol == null)) _currentMode = GCWSwitchPosition.right;
 
       _init = false;
     }
 
     return Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-      widget.symbolImage != null ? _buildEditRow() : Container(),
+      _buildEditRow(),
       _buildMatrix(widget.symbolImage, widget.viewSymbols, countColumns, mediaQueryData),
     ]);
   }
 
-  _fillSymbolMap(SymbolReplacerImage symbolImage, List<Symbol> viewSymbols) {
-    if ((symbolImage?.symbols == null) || (viewSymbols == null)) return;
-
+  void _fillSymbolMap(SymbolReplacerImage symbolImage, List<Symbol> viewSymbols) {
     symbolImage.symbols.where((sym) => viewSymbols.contains(sym)).forEach((symbol) {
       if (_symbolMap.containsKey(symbol)) {
         var _symbolData = _symbolMap[symbol];
-        var _displayText = symbol?.symbolGroup?.text ?? '';
-        if (_symbolData?.values?.first?.displayName != _displayText)
-          _symbolMap[symbol] = _cloneSymbolData(_symbolData, _displayText);
-      } else
-        _symbolMap.addAll({
-          symbol: {null: SymbolData(bytes: symbol.getImage(), displayName: symbol?.symbolGroup?.text ?? '')}
-        });
+        var _displayText = symbol.symbolGroup?.text ?? '';
+        if (_symbolData?.values.first.displayName != _displayText)
+          _symbolMap[symbol] = _cloneSymbolData(_symbolData!, _displayText);
+      }
+      // else //ToDo Mike Nullsafety
+      //   _symbolMap.addAll({
+      //     symbol: {null: SymbolData(bytes: symbol.getImage(), displayName: symbol?.symbolGroup?.text ?? '')}
+      //   });
     });
   }
 
-  _fillSymbolDataItems(List<Map<String, SymbolReplacerSymbolData>> compareSymbols) {
+  void _fillSymbolDataItems(List<Map<String, SymbolReplacerSymbolData>>? compareSymbols) {
     _symbolDataItems = (compareSymbols == null)
         ? <GCWDropDownMenuItem>[].toList()
         : compareSymbols.map((symbolData) {
@@ -108,7 +96,6 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
 
   Widget _buildMatrix(
       SymbolReplacerImage symbolImage, List<Symbol> viewSymbols, int countColumns, MediaQueryData mediaQueryData) {
-    if ((symbolImage?.symbols == null) || (viewSymbols == null)) return Container();
 
     _fillSymbolMap(symbolImage, viewSymbols);
 
@@ -129,41 +116,28 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
     ));
   }
 
-  _selectSymbol(SymbolData symbolData) {
+  void _selectSymbol(SymbolData symbolData) {
     _selectSymbolDataItem(symbolData);
-    _editValueController.text = symbolData.displayName;
+    _editValueController.text = symbolData.displayName ?? '';
   }
 
-  Map<String, SymbolData> _cloneSymbolData(Map<String, SymbolData> image, String text) {
-    var symbolData = SymbolData(bytes: image.values.first.bytes, displayName: text ?? '');
-    symbolData.primarySelected = image.values.first.primarySelected;
-    symbolData.secondarySelected = image.values.first.secondarySelected;
-    return {null: symbolData};
-  }
-
-  Symbol _getSymbol(SymbolData imageData) {
-    return _symbolMap.entries.firstWhere((entry) => entry.value.values.first == imageData, orElse: () => null)?.key;
-  }
-
-  _setSelectedSymbolsText(String text, {SymbolReplacerSymbolData symbolData}) {
-    if (_symbolMap != null) {
-      var selectedSymbols = <Symbol>[];
-      _symbolMap.forEach((symbol, image) {
-        var symbolData = image.values.first;
-        if (symbolData.primarySelected || symbolData.secondarySelected) selectedSymbols.add(symbol);
-      });
-      widget.symbolImage.buildSymbolGroup(selectedSymbols);
-      if ((selectedSymbols != null) && selectedSymbols.isNotEmpty && (selectedSymbols?.first?.symbolGroup != null)) {
-        selectedSymbols.first.symbolGroup.text = text;
-        selectedSymbols.first.symbolGroup.compareSymbol = symbolData;
-      }
+  void _setSelectedSymbolsText(String? text, {SymbolReplacerSymbolData? symbolData}) {
+     var selectedSymbols = <Symbol>[];
+    _symbolMap.forEach((symbol, image) {
+      var symbolData = image.values.first;
+      if (symbolData.primarySelected || symbolData.secondarySelected) selectedSymbols.add(symbol);
+    });
+    widget.symbolImage.buildSymbolGroup(selectedSymbols);
+    if (selectedSymbols.isNotEmpty && (selectedSymbols.first.symbolGroup != null)) {
+      selectedSymbols.first.symbolGroup!.text = text;
+      selectedSymbols.first.symbolGroup!.compareSymbol = symbolData;
     }
   }
 
   Widget _buildEditRow() {
     return Column(
       children: <Widget>[
-        (widget.symbolImage?.compareSymbols == null)
+        (widget.symbolImage.compareSymbols == null)
             ? Container()
             : GCWTwoOptionsSwitch(
                 leftValue: i18n(context, 'symbol_replacer_from_symboltable'),
@@ -190,14 +164,14 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
                   controller: _editValueController,
                   autofocus: true,
                 )
-              : GCWDropDown(
+              : GCWDropDown<Map<String, SymbolReplacerSymbolData>?>(
                   value: _currentSymbolData,
                   onChanged: (value) {
                     setState(() {
                       _currentSymbolData = value;
                     });
                   },
-                  items: _symbolDataItems),
+                  items: _symbolDataItems ?? []),
           GCWIconButton(
             icon: Icons.alt_route,
             iconColor: _symbolMap.values.any((symbol) => symbol.values.first.primarySelected)
@@ -207,7 +181,7 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
               setState(() {
                 if (_currentMode == GCWSwitchPosition.left)
                   _setSelectedSymbolsText(_currentSymbolData?.keys?.first,
-                      symbolData: _currentSymbolData?.values?.first);
+                      symbolData: _currentSymbolData?.values.first);
                 else
                   _setSelectedSymbolsText(_editValueController.text);
               });
@@ -249,9 +223,9 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
   }
 
   _selectSymbolDataItem(SymbolData symbolData) {
-    var compareSymbol = _getSymbol(symbolData)?.symbolGroup?.compareSymbol;
-    if ((widget.symbolImage?.compareSymbols != null) && (compareSymbol != null)) {
-      for (GCWDropDownMenuItem item in _symbolDataItems)
+    var compareSymbol = _getSymbol(_symbolMap, symbolData)?.symbolGroup?.compareSymbol;
+    if ((widget.symbolImage.compareSymbols != null) && (compareSymbol != null) && (_symbolDataItems != null)) {
+      for (GCWDropDownMenuItem item in _symbolDataItems!)
         if ((item.value is Map<String, SymbolReplacerSymbolData>) &&
             ((item.value as Map<String, SymbolReplacerSymbolData>).values.first == compareSymbol)) {
           _currentSymbolData = item.value;
@@ -276,9 +250,18 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                (displayText == null) ? Container() : Text(displayText, style: _gcwTextStyle),
-              ]))
+                  children: [Text(displayText, style: _gcwTextStyle)]
+              ))
         ]));
   }
+}
+
+Map<String, SymbolData> _cloneSymbolData(Map<String, SymbolData> image, String text) {
+  var symbolData = SymbolData(bytes: image.values.first.bytes, displayName: text, path: '');
+  symbolData.primarySelected = image.values.first.primarySelected;
+  symbolData.secondarySelected = image.values.first.secondarySelected;
+  return {'': symbolData};
+}
+Symbol? _getSymbol(Map<Symbol, Map<String, SymbolData>> _symbolMap, SymbolData imageData) {
+  return _symbolMap.entries.firstWhere((entry) => entry.value.values.first == imageData).key;
 }

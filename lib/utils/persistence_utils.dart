@@ -1,4 +1,4 @@
-int newID(List<int> existingIDs) {
+int newID(List<int?> existingIDs) {
   if (existingIDs.length == 0) return 1;
 
   existingIDs.sort();

@@ -8,16 +8,16 @@ class FormulaPainter {
   static final _allCharacters = allCharacters();
   Map<String, String> _values;
   var _variables = <String>[];
-  var _functions = <String>[];
-  var _constants = <String>[];
+  late var _functions = <String>[];
+  late var _constants = <String>[];
   int _formulaId;
-  bool _operatorBevor;
+  bool _operatorBefore;
   String _parentFunctionName;
   String formula;
 
-  String _operatorsRegEx;
-  String _functionsRegEx;
-  String _constantsRegEx;
+  late String _operatorsRegEx;
+  late String _functionsRegEx;
+  late String _constantsRegEx;
   String _variablesRegEx;
 
   FormulaPainter() {
@@ -30,20 +30,15 @@ class FormulaPainter {
   }
 
   String paintFormula(String formula, Map<String, String> values, int formulaIndex, bool coloredFormulas) {
-    if (formula == null) return null;
-
     var result = _buildResultString('t', formula.length);
     if (!coloredFormulas) return result;
 
     var subResult = '';
     this._formulaId = formulaIndex;
 
-    if (values != null) {
-      _variables = values.keys.map((variable) {
-        return ((variable == null) || (variable.length == 0)) ? null : variable;
-      }).toList();
-    } else
-      _variables.clear();
+    _variables = values.keys.map((String variable) {
+      return variable.isEmpty ? null : variable;  // TODO Mike returning NULL here yields problems: To lines later in _toUpperCaseAndSort a NULL value would yield a NullPointerException.
+    }).toList();
 
     _values = values;
     _variables = _toUpperCaseAndSort(_variables);
@@ -66,12 +61,12 @@ class FormulaPainter {
         var emptyLiteral = literal.trim().isEmpty;
         result = _coloredContent(result, _parserResult, emptyLiteral);
 
-        _operatorBevor = true;
+        _operatorBefore = true;
         subResult = _paintSubFormula(literal, 0);
         result = _replaceRange(result, _calcOffset(_parserResult, count: 2), null, subResult);
       });
     } else {
-      _operatorBevor = true;
+      _operatorBefore = true;
       result = _paintSubFormula(formula, 0);
     }
 
@@ -83,13 +78,13 @@ class FormulaPainter {
     for (var i = 0; i < bracketMatches.length; i++) {
       if (i == 0) {
         offset = 0;
-        _operatorBevor = true;
+        _operatorBefore = true;
         var subResult = _paintSubFormula(formula.substring(offset, bracketMatches.elementAt(i).start), 0,
             onlyFormulaReference: true);
         result = _replaceRange(result, 0, null, subResult);
       } else {
         offset = bracketMatches.elementAt(i - 1).end;
-        _operatorBevor = true;
+        _operatorBefore = true;
         var subResult = _paintSubFormula(formula.substring(offset, bracketMatches.elementAt(i).start), 0,
             onlyFormulaReference: true);
         result = _replaceRange(result, offset, null, subResult);
@@ -97,7 +92,7 @@ class FormulaPainter {
 
       if (i == bracketMatches.length - 1) {
         offset = bracketMatches.elementAt(i).end;
-        _operatorBevor = true;
+        _operatorBefore = true;
         var subResult = _paintSubFormula(formula.substring(offset), 0, onlyFormulaReference: true);
         result = _replaceRange(result, offset, null, subResult);
       }
@@ -126,7 +121,7 @@ class FormulaPainter {
       if (offset == 0) {
         _parserResult = _isFunction(formula);
         if (_parserResult != null) {
-          var hasError = _parserResult[2].trim().isEmpty || !_operatorBevor;
+          var hasError = _parserResult[2].trim().isEmpty || !_operatorBefore;
           result = _coloredFunction(result, _parserResult, hasError);
           // literal
           offset = _calcOffset(_parserResult, count: 2);
@@ -146,12 +141,12 @@ class FormulaPainter {
           offset = _calcOffset(_parserResult, count: 1);
           var literal = formula.substring(offset, _calcOffset(_parserResult, count: 2));
           var emptyLiteral = literal.trim().isEmpty;
-          var hasError = emptyLiteral || !_operatorBevor;
+          var hasError = emptyLiteral || !_operatorBefore;
 
           result = _coloredLiteral(result, _parserResult, hasError);
           // literal
           if (!emptyLiteral) {
-            _operatorBevor = true;
+            _operatorBefore = true;
             subResult = _paintSubFormula(literal, literalOffset + offset);
             if (hasError) subResult = subResult.toUpperCase();
             result = _replaceRange(result, offset, null, subResult);
@@ -242,7 +237,7 @@ class FormulaPainter {
         if (_parserResult != null) {
           result = _coloredSpaces(result, _parserResult);
           offset = _calcOffset(_parserResult);
-          isOperator = _operatorBevor;
+          isOperator = _operatorBefore;
         }
       }
 
@@ -254,12 +249,12 @@ class FormulaPainter {
         if (formula[0] == ',') subResult = 'B';
         result = _replaceRange(result, offset, subResult.length, subResult);
         offset = subResult.length;
-        isOperator = _operatorBevor;
+        isOperator = _operatorBefore;
       }
 
       // analyse rest recursive
       if (offset < formula.length) {
-        _operatorBevor = isOperator;
+        _operatorBefore = isOperator;
         subResult = formula.substring(offset);
         subResult = _paintSubFormula(subResult, literalOffset + offset, onlyFormulaReference: onlyFormulaReference);
         result = _replaceRange(result, offset, null, subResult);
@@ -380,7 +375,7 @@ class FormulaPainter {
       } else if (arguments[i] == ',')
         result.add(_wordFunction(functionName) ? 'g' : 'b');
       else {
-        _operatorBevor = true;
+        _operatorBefore = true;
         var subresult = _paintSubFormula(arguments[i], 0);
         if (_wordFunction(functionName) && _emptyValues()) subresult = subresult.replaceAll('R', 'g');
         result.add(subresult);
@@ -565,7 +560,7 @@ class FormulaPainter {
   }
 
   String _coloredNumber(String result, List<String> parts, bool hasError) {
-    hasError |= !_operatorBevor;
+    hasError |= !_operatorBefore;
     return _replaceRange(result, 0, parts[0].length, hasError ? 'G' : 'g');
   }
 

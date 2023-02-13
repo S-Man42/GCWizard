@@ -37,7 +37,7 @@ enum ANALYSE_RESULT_STATUS { OK, ERROR_GWC, ERROR_LUA, ERROR_HTTP, NONE }
 
 enum OBJECT_TYPE { MEDIA, CARTRIDGE, ZONE, CHARACTER, ITEM, TASK, VARIABLES, TIMER, INPUT, MESSAGES }
 
-OBJECT_TYPE currentObjectSection;
+OBJECT_TYPE currentObjectSection = OBJECT_TYPE.MESSAGES; // TODO Thomas: Needed an init value to keep this null-safe. Please check if this one makes sense.
 
 const MEDIATYPE_UNK = 0;
 const MEDIATYPE_BMP = 1;
@@ -366,8 +366,8 @@ class WherigoCartridgeGWC {
   WherigoCartridgeGWC({
     this.Signature = '',
     this.NumberOfObjects = 0,
-    this.MediaFilesHeaders,
-    this.MediaFilesContents,
+    this.MediaFilesHeaders = const[],
+    this.MediaFilesContents = const[],
     this.HeaderLength = 0,
     this.Splashscreen = 0,
     this.SplashscreenIcon = 0,
@@ -389,7 +389,7 @@ class WherigoCartridgeGWC {
     this.LengthOfCompletionCode = 0,
     this.CompletionCode = '',
     this.ResultStatus = ANALYSE_RESULT_STATUS.NONE,
-    this.ResultsGWC,
+    this.ResultsGWC = const[],
   });
 }
 
@@ -418,10 +418,10 @@ class WherigoCartridgeLUA {
   final String StateID;
   final String CountryID;
   final String UseLogging;
-  final DateTime CreateDate;
-  final DateTime PublishDate;
-  final DateTime UpdateDate;
-  final DateTime LastPlayedDate;
+  final DateTime? CreateDate; // TODO Thomas: Made date nullable because sometimes you explicitly returned null. Please check if you could make it null-safe
+  final DateTime? PublishDate;
+  final DateTime? UpdateDate;
+  final DateTime? LastPlayedDate;
   final String httpCode;
   final String httpMessage;
 
@@ -431,19 +431,19 @@ class WherigoCartridgeLUA {
       this.CartridgeGUID = '',
       this.ObfuscatorTable = '',
       this.ObfuscatorFunction = '',
-      this.Characters,
-      this.Items,
-      this.Tasks,
-      this.Inputs,
-      this.Zones,
-      this.Timers,
-      this.Media,
-      this.Messages,
-      this.Answers,
-      this.Variables,
-      this.NameToObject,
+      this.Characters = const[],
+      this.Items = const[], // TODO Thomas: Gave the lists init values to keep it null-safe. Please check if it makes sense from logic point of view
+      this.Tasks = const[],
+      this.Inputs = const[],
+      this.Zones = const[],
+      this.Timers = const[],
+      this.Media = const[],
+      this.Messages = const[],
+      this.Answers = const[],
+      this.Variables = const[],
+      this.NameToObject = const {},
       this.ResultStatus = ANALYSE_RESULT_STATUS.NONE,
-      this.ResultsLUA,
+      this.ResultsLUA = const[],
       this.Builder = BUILDER.UNKNOWN,
       this.BuilderVersion = '',
       this.TargetDeviceVersion = '',
@@ -540,6 +540,7 @@ Map<WHERIGO, String> WHERIGO_DATA_LUA_USER = {
   WHERIGO.MESSAGES: 'wherigo_data_message_list',
 };
 
+// TODO Thomas Use HttpStatus from dart:io instead of Strings
 final Map<String, String> HTTP_STATUS = {
   '200': 'wherigo_http_code_200',
   '400': 'wherigo_http_code_400',

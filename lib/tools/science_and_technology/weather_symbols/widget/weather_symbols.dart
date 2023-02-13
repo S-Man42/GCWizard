@@ -40,7 +40,7 @@ class WeatherSymbolsState extends State<WeatherSymbols> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWDropDown(
+        GCWDropDown<String>(
           value: _currentWeatherSymbolClazz,
           onChanged: (value) {
             setState(() {
@@ -61,9 +61,9 @@ class WeatherSymbolsState extends State<WeatherSymbols> {
   }
 
   _buildOutput() {
-    if (_data == null || _data.isEmpty) return null;
+    if (_data.isEmpty) return null;
 
-    SymbolTableData data = _data[_currentWeatherSymbolClazz];
+    SymbolTableData data = _data[_currentWeatherSymbolClazz]!;
     return GCWColumnedMultilineOutput(
         data: data.images.map((Map<String, SymbolData> image) {
                 return [

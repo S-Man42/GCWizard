@@ -26,7 +26,7 @@ class VanityMultitapState extends State<VanityMultitap> {
   GCWSwitchPosition _currentSimpleMode = GCWSwitchPosition.left;
 
   PhoneModel _currentSimpleModel = PHONEMODEL_SIMPLE_SPACE_0;
-  PhoneModel _currentModel = phoneModelByName(NAME_PHONEMODEL_NOKIA_3210);
+  PhoneModel _currentModel = phoneModelByName(NAME_PHONEMODEL_NOKIA_3210)!;
   int _currentLanguageId = 0;
 
   @override
@@ -84,7 +84,7 @@ class VanityMultitapState extends State<VanityMultitap> {
         if (_currentSimpleMode == GCWSwitchPosition.left)
           Column(
             children: [
-              GCWDropDown(
+              GCWDropDown<PhoneModel>(
                   value: _currentSimpleModel,
                   onChanged: (newValue) {
                     setState(() {
@@ -112,7 +112,7 @@ class VanityMultitapState extends State<VanityMultitap> {
                     ),
                   ),
                   Expanded(
-                      child: GCWDropDown(
+                      child: GCWDropDown<PhoneModel>(
                           value: _currentModel,
                           onChanged: (newValue) {
                             setState(() {
@@ -136,7 +136,7 @@ class VanityMultitapState extends State<VanityMultitap> {
                     )),
                     Expanded(
                         child: _currentModel.languages.length > 1
-                            ? GCWDropDown(
+                            ? GCWDropDown<int>(
                                 value: _currentLanguageId,
                                 onChanged: (newValue) {
                                   setState(() {
@@ -173,7 +173,7 @@ class VanityMultitapState extends State<VanityMultitap> {
     var keys = '0123456789#*'.split('').toList();
     var key;
     for (key in keys) {
-      if (charMap[key] != null && charMap[key].contains(' ')) break;
+      if (charMap![key] != null && charMap[key]!.contains(' ')) break;
     }
 
     return i18n(context, 'vanity_multitap_spaceat') + key;
@@ -184,9 +184,9 @@ class VanityMultitapState extends State<VanityMultitap> {
     if (charMap == null) charMap = _currentModel.characterMap[index][PhoneCaseMode.UPPER_CASE];
 
     return [
-      '2: ' + charMap['2'],
-      '4: ' + charMap['4'],
-      '7: ' + charMap['7'],
+      '2: ' + charMap!['2']!,
+      '4: ' + charMap!['4']!,
+      '7: ' + charMap!['7']!,
     ].join(', ');
   }
 

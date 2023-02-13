@@ -11,10 +11,10 @@ import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit
 part 'package:gc_wizard/common_widgets/units/gcw_unit_prefix_dropdown.dart';
 
 class GCWUnitsValue<T extends Unit> {
-  final UnitPrefix prefix;
   final T value;
+  final UnitPrefix prefix;
 
-  GCWUnitsValue(this.prefix, this.value);
+  GCWUnitsValue(this.value, this.prefix);
 }
 
 class GCWUnits<T extends Unit> extends StatefulWidget {
@@ -92,6 +92,6 @@ class _GCWUnitsState<T extends Unit> extends State<GCWUnits> {
   }
 
   _emitOnChange() {
-    widget.onChanged(GCWUnitsValue<T>(_currentPrefix, _currentUnit));
+    widget.onChanged(GCWUnitsValue<T>(_currentUnit, _currentPrefix));
   }
 }

@@ -9,10 +9,10 @@ const _MURRAY_RADIUS = 10.0;
 class _MurraySegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
   final bool readOnly;
-  final Function onChanged;
+  final void Function(Map<String, bool>)? onChanged;
   final bool tapeStyle;
 
-  _MurraySegmentDisplay({Key? key, this.segments, this.readOnly: false, this.onChanged, this.tapeStyle: false})
+  _MurraySegmentDisplay({Key? key, required this.segments, this.readOnly = false, this.onChanged, this.tapeStyle = false})
       : super(
             key: key,
             initialSegments: _INITIAL_SEGMENTS,
@@ -48,13 +48,13 @@ class _MurraySegmentDisplay extends NSegmentDisplay {
               });
 
               shutters.forEach((key, value) {
-                paint.color = currentSegments[key] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
+                paint.color = segmentActive(currentSegments, key) ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
                 canvas.touchCanvas.drawRect(
                     Offset(size.width / _MURRAY_RELATIVE_DISPLAY_WIDTH * value[0],
                             size.height / _MURRAY_RELATIVE_DISPLAY_HEIGHT * value[1]) &
                         Size(pointSize * 3, pointSize * 2),
                     paint, onTapDown: (tapDetail) {
-                  setSegmentState(key, !currentSegments[key]);
+                  setSegmentState(key, !segmentActive(currentSegments, key));
                 });
 
                 if (size.height < 50) return;
