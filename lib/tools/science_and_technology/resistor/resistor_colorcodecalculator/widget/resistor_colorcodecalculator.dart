@@ -211,7 +211,7 @@ class ResistorColorCodeCalculatorState extends State<ResistorColorCodeCalculator
 
     ResistorValue resistorValue;
 
-    List<ResistorBandColor> colors;
+    List<ResistorBandColor> colors = [];
     switch (_currentNumberBands) {
       case 3:
         colors = [
@@ -250,11 +250,11 @@ class ResistorColorCodeCalculatorState extends State<ResistorColorCodeCalculator
     }
 
     resistorValue = getResistorValue(colors);
-    if (resistorValue.value != null) {
+    if (resistorValue.value != null && resistorValue.tolerance != null) {
       outputs = [
         [
           i18n(context, 'resistor_value'),
-          formatResistorValue(resistorValue.value) + ' ' + formatResistorTolerance(resistorValue.tolerance)
+          formatResistorValue(resistorValue.value!) + ' ' + formatResistorTolerance(resistorValue.tolerance!)
         ],
         [
           i18n(context, 'resistor_value_range'),
@@ -263,9 +263,9 @@ class ResistorColorCodeCalculatorState extends State<ResistorColorCodeCalculator
         resistorValue.temperatureCoefficient != null
             ? [
                 i18n(context, 'resistor_temperaturecoefficient'),
-                formatResistorTemperatureCoefficient(resistorValue.temperatureCoefficient, gcwTextStyle())
+                formatResistorTemperatureCoefficient(resistorValue.temperatureCoefficient!, gcwTextStyle())
               ]
-            : null
+            : []
       ];
     }
 

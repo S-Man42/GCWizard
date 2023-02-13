@@ -1,6 +1,6 @@
 // https://physics.nist.gov/cuu/Constants/index.html
 
-const Map<String, Map<String, dynamic>> PHYSICAL_CONSTANTS = {
+const Map<String, Map<String, Object>> PHYSICAL_CONSTANTS = {
   'physical_constants_atomic_mass': {
     'symbol': 'm_u_',
     'value': '1.660 539 066 60',

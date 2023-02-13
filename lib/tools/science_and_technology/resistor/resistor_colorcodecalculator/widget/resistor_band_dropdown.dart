@@ -35,8 +35,8 @@ class _ResistorBandDropDownState extends State<_ResistorBandDropDown> {
     ResistorBandColor.WHITE: _ResistorColorAttributes('common_color_white', Color(0xffffffff), Colors.black),
   };
 
-  var _colors;
-  Map<ResistorBandColor, double> _colorValues;
+  List<ResistorBandColor> _colors = [];
+  Map<ResistorBandColor, double> _colorValues = {};
 
   var _currentValue = ResistorBandColor.BROWN;
 
@@ -89,7 +89,7 @@ class _ResistorBandDropDownState extends State<_ResistorBandDropDown> {
   }
 
   Widget _formatValue(value, TextStyle textStyle) {
-    dynamic formatted;
+    Object formatted;
 
     switch (widget.type) {
       case ResistorBandType.FIRST:
@@ -112,7 +112,8 @@ class _ResistorBandDropDownState extends State<_ResistorBandDropDown> {
       return Text(formatted, style: textStyle);
     } else if (formatted is RichText) {
       return formatted;
-    }
+    } else
+      return Container();
   }
 }
 
