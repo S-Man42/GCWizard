@@ -37,7 +37,7 @@ class DayCalculatorState extends State<DayCalculator> {
           datetime: _currentStartDate,
           onChanged: (value) {
             setState(() {
-              _currentStartDate = value['datetime'];
+              _currentStartDate = value.datetime;
             });
           },
         ),
@@ -47,7 +47,7 @@ class DayCalculatorState extends State<DayCalculator> {
           datetime: _currentEndDate,
           onChanged: (value) {
             setState(() {
-              _currentEndDate = value['datetime'];
+              _currentEndDate = value.datetime;
             });
           },
         ),

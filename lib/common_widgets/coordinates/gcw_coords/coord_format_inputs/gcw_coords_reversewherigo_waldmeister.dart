@@ -1,7 +1,7 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _GCWCoordsReverseWherigoWaldmeister extends StatefulWidget {
-  final Function(ReverseWherigoWaldmeister) onChanged;
+  final void Function(ReverseWherigoWaldmeister) onChanged;
   final BaseCoordinates coordinates;
 
   const _GCWCoordsReverseWherigoWaldmeister({Key? key, required this.onChanged, required this.coordinates}) : super(key: key);

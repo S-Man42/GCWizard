@@ -1,7 +1,7 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _GCWCoordsMercator extends StatefulWidget {
-  final Function(Mercator) onChanged;
+  final void Function(Mercator) onChanged;
   final BaseCoordinates coordinates;
 
   const _GCWCoordsMercator({Key? key, required this.onChanged, required this.coordinates}) : super(key: key);

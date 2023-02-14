@@ -55,7 +55,7 @@ class WetBulbTemperatureState extends State<WetBulbTemperature> {
           },
         ),
         GCWTextDivider(text: i18n(context, 'common_outputunit')),
-        GCWUnitDropDown(
+        GCWUnitDropDown<Unit>(
           value: _currentOutputUnit,
           onlyShowSymbols: false,
           unitList: temperatures,
@@ -93,8 +93,11 @@ class WetBulbTemperatureState extends State<WetBulbTemperature> {
             Container(
                 width: 50,
                 child: GCWIconButton(
-                    icon: Icons.wb_sunny, iconColor: _colorWBT(WBT_C), backgroundColor: Color(0xFF4d4d4d)),
-                padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN)),
+                    icon: Icons.wb_sunny, iconColor: _colorWBT(WBT_C), backgroundColor: Color(0xFF4d4d4d),
+                    onPressed: () {  },
+                ),
+                padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
+            ),
             Expanded(
               child: GCWOutput(
                 child: i18n(context, hintWBT),
@@ -107,12 +110,13 @@ class WetBulbTemperatureState extends State<WetBulbTemperature> {
   }
 
   String _calculateHintWBT(double WBT) {
-    if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.PURPLE]) if (WBT >
-        WBT_HEAT_STRESS[
-            WBT_HEATSTRESS_CONDITION.BLUE]) if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.LIGHT_BLUE]) if (WBT >
-        WBT_HEAT_STRESS[
-            WBT_HEATSTRESS_CONDITION.GREEN]) if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.ORANGE]) if (WBT >
-        WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.RED]) if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.RED])
+    if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.PURPLE]!)
+      if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.BLUE]!)
+        if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.LIGHT_BLUE]!)
+          if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.GREEN]!)
+            if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.ORANGE]!)
+              if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.RED]!)
+                if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.RED]!)
       return 'wet_bulb_temperature_index_wbt_dark_red';
     else
       return 'wet_bulb_temperature_index_wbt_red';
@@ -131,13 +135,14 @@ class WetBulbTemperatureState extends State<WetBulbTemperature> {
   }
 
   Color _colorWBT(double WBT) {
-    if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.PURPLE]) if (WBT >
-        WBT_HEAT_STRESS[
-            WBT_HEATSTRESS_CONDITION.BLUE]) if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.LIGHT_BLUE]) if (WBT >
-        WBT_HEAT_STRESS[
-            WBT_HEATSTRESS_CONDITION.GREEN]) if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.ORANGE]) if (WBT >
-        WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.RED]) if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.DARK_RED])
-      return Colors.red[900];
+    if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.PURPLE]!)
+      if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.BLUE]!)
+        if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.LIGHT_BLUE]!)
+          if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.GREEN]!)
+            if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.ORANGE]!)
+              if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.RED]!)
+                if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.DARK_RED]!)
+      return Colors.red[900]!;
     else
       return Colors.red;
     else
@@ -145,7 +150,7 @@ class WetBulbTemperatureState extends State<WetBulbTemperature> {
     else
       return Colors.green;
     else
-      return Colors.lightBlue[200];
+      return Colors.lightBlue[200]!;
     else
       return Colors.blue;
     else

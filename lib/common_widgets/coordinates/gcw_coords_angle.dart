@@ -7,7 +7,7 @@ import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
 class GCWAngle extends StatefulWidget {
-  final Function(DoubleText) onChanged;
+  final void Function(DoubleText) onChanged;
   final String? hintText;
 
   const GCWAngle({Key? key, required this.onChanged, this.hintText}) : super(key: key);

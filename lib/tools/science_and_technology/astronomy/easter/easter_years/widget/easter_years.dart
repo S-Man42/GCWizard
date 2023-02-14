@@ -38,39 +38,39 @@ class EasterYearsState extends State<EasterYears> {
           children: [
             Expanded(
                 child: Container(
-              child: GCWDropDown(
-                value: _currentMonth,
-                items: [
-                  GCWDropDownMenuItem(
-                    value: 3,
-                    child: i18n(context, 'common_month_march'),
-                  ),
-                  GCWDropDownMenuItem(
-                    value: 4,
-                    child: i18n(context, 'common_month_april'),
-                  )
-                ],
-                onChanged: (value) {
-                  if (_currentMonth != value) {
-                    setState(() {
-                      _currentMonth = value;
+                  child: GCWDropDown<int>(
+                    value: _currentMonth,
+                    onChanged: (value) {
+                      if (_currentMonth != value) {
+                        setState(() {
+                          _currentMonth = value;
 
-                      if (_currentMonth == 3) {
-                        _currentDayList = _listDaysForMarch;
-                        if (_currentDay < 22) _currentDay = 22;
-                      } else {
-                        _currentDayList = _listDaysForApril;
-                        if (_currentDay > 25) _currentDay = 25;
+                          if (_currentMonth == 3) {
+                            _currentDayList = _listDaysForMarch;
+                            if (_currentDay < 22) _currentDay = 22;
+                          } else {
+                            _currentDayList = _listDaysForApril;
+                            if (_currentDay > 25) _currentDay = 25;
+                          }
+                        });
                       }
-                    });
-                  }
-                },
-              ),
-              padding: EdgeInsets.only(right: DEFAULT_MARGIN),
+                    },
+                    items: [
+                      GCWDropDownMenuItem(
+                        value: 3,
+                        child: i18n(context, 'common_month_march'),
+                      ),
+                      GCWDropDownMenuItem(
+                        value: 4,
+                        child: i18n(context, 'common_month_april'),
+                      )
+                    ],
+                  ),
+                padding: EdgeInsets.only(right: DEFAULT_MARGIN),
             )),
             Expanded(
               child: Container(
-                child: GCWDropDown(
+                child: GCWDropDown<int>(
                   value: _currentDay,
                   items: _currentDayList.map((day) {
                     return GCWDropDownMenuItem(

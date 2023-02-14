@@ -79,24 +79,25 @@ class HeatIndexState extends State<HeatIndex> {
       unit = TEMPERATURE_FAHRENHEIT.symbol;
     }
 
-    String hintT;
+    String? hintT;
     if ((_isMetric && _currentTemperature < 27) || (!_isMetric && _currentTemperature < 80)) {
       hintT = i18n(context, 'heatindex_hint_temperature', parameters: ['${_isMetric ? 27 : 80} $unit']);
     }
 
-    String hintH;
+    String? hintH;
     if (_currentHumidity < 40) hintH = i18n(context, 'heatindex_hint_humidity');
 
     var hint = [hintT, hintH].where((element) => element != null && element.length > 0).join('\n');
 
-    String hintM;
+    String? hintM;
     if (output > 54)
       hintM = 'heatindex_index_54';
     else if (output > 40)
       hintM = 'heatindex_index_40';
     else if (output > 32)
       hintM = 'heatindex_index_32';
-    else if (output > 27) hintM = 'heatindex_index_27';
+    else if (output > 27)
+      hintM = 'heatindex_index_27';
 
     var outputs = [
       GCWOutput(

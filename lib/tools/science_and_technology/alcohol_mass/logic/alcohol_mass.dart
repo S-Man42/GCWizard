@@ -51,7 +51,7 @@ Map<String, double> bloodAlcoholInPermilleWidmark(
   };
 }
 
-double bloodAlcoholInPermilleWidmarkSeidl(
+double? bloodAlcoholInPermilleWidmarkSeidl(
     BloodAlcoholGender gender, double alcoholMassInG, double massOfPersonInKG, double bodyHeightInCM) {
   if (alcoholMassInG <= 0.0 || massOfPersonInKG <= 0.0 || bodyHeightInCM <= 0.0) return 0.0;
 
@@ -70,7 +70,7 @@ double bloodAlcoholInPermilleWidmarkSeidl(
   return _bloodAlcoholInPermille(waterRatio, alcoholMassInG, massOfPersonInKG);
 }
 
-double bloodAlcoholInPermilleWidmarkUlrich(
+double? bloodAlcoholInPermilleWidmarkUlrich(
     BloodAlcoholGender gender, double alcoholMassInG, double massOfPersonInKG, double bodyHeightInCM) {
   if (alcoholMassInG <= 0.0 || massOfPersonInKG <= 0.0 || bodyHeightInCM <= 0.0) return 0.0;
 
@@ -97,7 +97,7 @@ double _bloodAlcoholInPermilleWidmarkWatson(
   return _bloodAlcoholInPermille(waterRatio, alcoholMassInG, massOfPersonInKG);
 }
 
-double bloodAlcoholInPermilleWidmarkWatson(
+double? bloodAlcoholInPermilleWidmarkWatson(
     BloodAlcoholGender gender, double alcoholMassInG, double massOfPersonInKG, double bodyHeightInCM, int age) {
   if (alcoholMassInG <= 0.0 || massOfPersonInKG <= 0.0 || bodyHeightInCM <= 0.0 || age <= 0) return 0.0;
 
@@ -117,7 +117,7 @@ double bloodAlcoholInPermilleWidmarkWatson(
   return _bloodAlcoholInPermilleWidmarkWatson(volumeWaterInBodyInL, alcoholMassInG, massOfPersonInKG);
 }
 
-double bloodAlcoholInPermilleWidmarkWatsonEicker(
+double? bloodAlcoholInPermilleWidmarkWatsonEicker(
     BloodAlcoholGender gender, double alcoholMassInG, double massOfPersonInKG, double bodyHeightInCM, int age) {
   if (alcoholMassInG <= 0.0 || massOfPersonInKG <= 0.0 || bodyHeightInCM <= 0.0 || age <= 0) return 0.0;
 

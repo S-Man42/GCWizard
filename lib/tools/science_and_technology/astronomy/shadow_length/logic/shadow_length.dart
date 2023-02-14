@@ -5,6 +5,7 @@ import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/coords/waypoint_projection/logic/projection.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/_common/logic/julian_date.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/sun_position/logic/sun_position.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/math_utils.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -20,10 +21,9 @@ ShadowLength shadowLength(
   double objectHeight,
   LatLng coords,
   Ellipsoid ells,
-  DateTime datetime,
-  Duration timezone,
+  DateTimeTimezone datetime,
 ) {
-  var julianDate = JulianDate(datetime, timezone);
+  var julianDate = JulianDate(datetime);
   var sunPosition = SunPosition(coords, julianDate, ells);
   var shadowLen =
       objectHeight * cos(degreesToRadian(sunPosition.altitude)) / sin(degreesToRadian(sunPosition.altitude));

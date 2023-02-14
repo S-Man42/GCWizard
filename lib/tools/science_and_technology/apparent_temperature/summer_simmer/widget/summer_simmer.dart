@@ -82,17 +82,17 @@ class SummerSimmerIndexState extends State<SummerSimmerIndex> {
       unit = TEMPERATURE_FAHRENHEIT.symbol;
     }
 
-    String hintT;
+    String? hintT;
     if ((_isMetric && _currentTemperature < 18) || (!_isMetric && _currentTemperature < 64)) {
       hintT = i18n(context, 'heatindex_hint_temperature', parameters: ['${_isMetric ? 18 : 64} $unit']);
     }
 
-    String hintH;
+    String? hintH;
     if (_currentHumidity < 40) hintH = i18n(context, 'heatindex_hint_humidity');
 
     var hint = [hintT, hintH].where((element) => element != null && element.length > 0).join('\n');
 
-    String hintM;
+    String? hintM;
     if (output > 51.7)
       hintM = 'summersimmerindex_index_51.7';
     else if (output > 44.4)
@@ -105,7 +105,8 @@ class SummerSimmerIndexState extends State<SummerSimmerIndex> {
       hintM = 'summersimmerindex_index_28.3';
     else if (output > 25.0)
       hintM = 'summersimmerindex_index_25.0';
-    else if (output > 21.3) hintM = 'summersimmerindex_index_21.3';
+    else if (output > 21.3)
+      hintM = 'summersimmerindex_index_21.3';
 
     var outputs = [
       GCWOutput(
