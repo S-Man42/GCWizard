@@ -36,7 +36,7 @@ class AlcoholMassState extends State<AlcoholMass> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        GCWDropDown(
+        GCWDropDown<String>(
           value: _currentMode,
           items: _MODES.map((mode) {
             return GCWDropDownMenuItem(value: mode, child: i18n(context, mode));
@@ -96,7 +96,7 @@ class AlcoholMassState extends State<AlcoholMass> {
           ),
         if (_currentMode != _ALCOHOL_MASS_BY_VOLUME) GCWTextDivider(text: i18n(context, 'common_outputunit')),
         _currentMode == _ALCOHOL_MASS
-            ? GCWUnitDropDown(
+            ? GCWUnitDropDown<Mass>(
                 value: _currentOutputMass,
                 unitList: allMasses(),
                 onlyShowSymbols: false,
@@ -108,7 +108,7 @@ class AlcoholMassState extends State<AlcoholMass> {
               )
             : Container(),
         _currentMode == _VOLUME
-            ? GCWUnitDropDown(
+            ? GCWUnitDropDown<Volume>(
                 value: _currentOutputVolume,
                 unitCategory: UNITCATEGORY_VOLUME,
                 onlyShowSymbols: false,

@@ -7,7 +7,7 @@ import 'package:gc_wizard/tools/coords/coordinate_format_parser/logic/latlon.dar
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 
 class GCWCoordsPasteButton extends StatefulWidget {
-  final Function(List<BaseCoordinates>) onPasted;
+  final void Function(List<BaseCoordinates>) onPasted;
   final IconButtonSize size;
 
   const GCWCoordsPasteButton({Key? key, required this.onPasted, required this.size})

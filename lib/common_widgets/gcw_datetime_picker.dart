@@ -7,6 +7,7 @@ import 'package:gc_wizard/common_widgets/spinners/gcw_double_spinner.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_dropdown_spinner.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/spinners/spinner_constants.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/data_type_utils/double_type_utils.dart';
 
 enum DateTimePickerConfig {
@@ -82,14 +83,14 @@ final TIMEZONES = [
 ];
 
 class GCWDateTimePicker extends StatefulWidget {
-  final void Function(Map<String, dynamic>) onChanged;
+  final void Function(DateTimeDuration) onChanged;
   final DateTime? datetime;
   final Duration? duration;
   final Set<DateTimePickerConfig> config;
   final Duration timezoneOffset;
   final int minDays;
   final int? maxDays;
-  final int maxHours;
+  final int? maxHours;
   final double maxSeconds;
 
   final TextEditingController? yearController;
@@ -213,7 +214,7 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
         if (_currentHour != widget.datetime?.hour) _currentHour = widget.datetime!.hour;
         if (_currentMinute == widget.datetime?.minute) _currentMinute = widget.datetime!.minute;
         if (_currentSecond == widget.datetime?.second) _currentSecond = widget.datetime!.second;
-        if (_currentMilliSecond == widget.datetime?.millisecond) _currentMilliSecond = widget.datetime!.millisecond!;
+        if (_currentMilliSecond == widget.datetime?.millisecond) _currentMilliSecond = widget.datetime!.millisecond;
       }
     } else if (widget.config.contains(DateTimePickerConfig.DATE)) {
       if (widget.datetime != null) {
@@ -485,7 +486,7 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
     return 1;
   }
 
-  _setCurrentValueAndEmitOnChange() {
+  void _setCurrentValueAndEmitOnChange() {
     var duration = Duration(
         days: (widget.config.contains(DateTimePickerConfig.DATE) || widget.config.contains(DateTimePickerConfig.DAY))
             ? _currentDay
@@ -496,12 +497,11 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
         milliseconds: _currentMilliSecond);
     duration *= _currentSign;
 
-    var output = {
-      'datetime': DateTime(
+    var output = DateTimeDuration(
+      dateTime: DateTime(
           _currentYear, _currentMonth, _currentDay, _currentHour, _currentMinute, _currentSecond, _currentMilliSecond),
-      'timezone': Duration(minutes: _currentTimezoneOffset),
-      'duration': duration,
-    };
+      timezone: Duration(minutes: _currentTimezoneOffset),
+      duration: duration);
 
     widget.onChanged(output);
   }

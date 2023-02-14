@@ -12,18 +12,16 @@ class PantoneColor {
   });
 }
 
-class PantoneColorExt {
-  String colorcode;
-  String name;
+class PantoneColorExt extends PantoneColor {
   String? suffix;
   String? prefix;
 
   PantoneColorExt({
-    required this.colorcode,
-    required this.name,
+    required colorcode,
+    required name,
     this.suffix,
     this.prefix,
-  });
+  }) :super(colorcode: colorcode, name: name);
 }
 
 Map<String, PantoneColorExt> PANTONE_COLOR_CODES_WITH_NAMES = {
