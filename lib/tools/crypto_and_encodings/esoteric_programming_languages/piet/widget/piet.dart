@@ -17,9 +17,9 @@ import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/image_utils/image_utils.dart';
 
 class Piet extends StatefulWidget {
-  final GCWFile file;
+  final GCWFile? file;
 
-  const Piet({required this.file});
+  const Piet({this.file});
 
   @override
   PietState createState() => PietState();
@@ -40,7 +40,7 @@ class PietState extends State<Piet> {
     super.initState();
 
     _inputGeneratorController = TextEditingController(text: _currentGeneratorInput);
-    if (widget.file != null && widget.file.bytes != null) {
+    if (widget.file?.bytes != null) {
       _originalData = widget.file;
     }
   }

@@ -9,42 +9,42 @@ import 'package:latlong2/latlong.dart';
 import 'package:uuid/uuid.dart';
 
 class GCWMapPoint {
-  String uuid;
+  String? uuid;
   LatLng point;
-  String markerText;
+  String? markerText;
   Color color;
-  Map<String, String> coordinateFormat;
+  Map<String, String>? coordinateFormat;
   bool isEditable;
-  GCWMapCircle circle;
+  GCWMapCircle? circle;
   bool circleColorSameAsPointColor;
   bool isVisible;
 
   GCWMapPoint(
       {this.uuid,
-      @required this.point,
+      required this.point,
       this.markerText,
-      this.color: COLOR_MAP_POINT,
+      this.color = COLOR_MAP_POINT,
       this.coordinateFormat,
       this.isEditable: false,
       this.circle,
-      this.circleColorSameAsPointColor: false,
-      this.isVisible: true}) {
-    if (uuid == null || uuid.length == 0) uuid = Uuid().v4();
+      this.circleColorSameAsPointColor = false,
+      this.isVisible = true}) {
+    if (uuid == null || uuid!.length == 0) uuid = Uuid().v4();
     if (coordinateFormat == null) coordinateFormat = defaultCoordFormat();
     update();
   }
 
   hasCircle() {
-    return circle != null && circle.radius != null && circle.radius > 0.0;
+    return circle != null && circle!.radius != null && circle!.radius > 0.0;
   }
 
   update() {
     if (circle != null) {
-      circle.centerPoint = point;
+      circle!.centerPoint = point;
 
-      if (circleColorSameAsPointColor) circle.color = color;
+      if (circleColorSameAsPointColor) circle!.color = color;
 
-      circle._update();
+      circle!._update();
     }
   }
 }

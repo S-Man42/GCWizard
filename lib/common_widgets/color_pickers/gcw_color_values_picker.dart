@@ -167,8 +167,7 @@ class _GCWColorValuesPickerState extends State<_GCWColorValuesPicker> {
           value: _currentColorsValue.colorSpace,
           onChanged: (ColorSpaceKey newValue) {
             setState(() {
-              _currentColorsValue.color = convertColorSpace(_currentColorsValue.color, _currentColorsValue.colorSpace, newValue);
-              _currentColorsValue.colorSpace = newValue;
+              _currentColorsValue = GCWColorValue(newValue, convertColorSpace(_currentColorsValue, newValue));
 
               _setCurrentValueAndEmitOnChange();
             });

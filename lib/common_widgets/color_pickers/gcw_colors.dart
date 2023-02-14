@@ -44,11 +44,11 @@ class GCWColorsState extends State<GCWColors> {
 
     _currentColorsValue = widget.colorsValue;
 
-    _setColorPickerColor(_currentColorsValue.color);
+    _setColorPickerColor(_currentColorsValue);
   }
 
-  _setColorPickerColor(dynamic color) {
-    var rgb = convertColorSpace(color, _currentColorsValue.colorSpace, ColorSpaceKey.RGB) as RGB;
+  _setColorPickerColor(GCWColorValue color) {
+    var rgb = convertColorSpace(color, ColorSpaceKey.RGB) as RGB;
     var sysColor = Color.fromARGB(255, rgb.red.round(), rgb.green.round(), rgb.blue.round());
     _currentColorPickerColor = HSVColor.fromColor(sysColor);
   }
@@ -64,8 +64,8 @@ class GCWColorsState extends State<GCWColors> {
               setState(() {
                 _currentColorPickerColor = color;
 
-                HSV hsv = HSV(color.hue, color.saturation, color.value);
-                var newColor = convertColorSpace(hsv, ColorSpaceKey.HSV, _currentColorsValue.colorSpace);
+                var hsv = GCWColorValue(ColorSpaceKey.HSV, HSV(color.hue, color.saturation, color.value));
+                var newColor = convertColorSpace(hsv, _currentColorsValue.colorSpace);
                 _currentColorsValue = GCWColorValue(_currentColorsValue.colorSpace, newColor);
 
                 _setCurrentValueAndEmitOnChange();
@@ -79,7 +79,7 @@ class GCWColorsState extends State<GCWColors> {
           onChanged: (GCWColorValue result) {
             setState(() {
               _currentColorsValue = result;
-              HSV colorPickerColor = convertColorSpace(_currentColorsValue.color, _currentColorsValue.colorSpace, ColorSpaceKey.HSV) as HSV;
+              var colorPickerColor = convertColorSpace(_currentColorsValue, ColorSpaceKey.HSV) as HSV;
               _currentColorPickerColor =
                   HSVColor.fromAHSV(1.0, colorPickerColor.hue, colorPickerColor.saturation, colorPickerColor.value);
 
