@@ -30,7 +30,7 @@ class RALColorCodesState extends State<RALColorCodes> {
 
   var _currentMode = GCWSwitchPosition.left;
 
-  var _currentInput = GCWColorValue(ColorSpaceKey.RGB, (RGB(50, 175, 187)));
+  var _currentInput = GCWColorValue(ColorSpaceKey.RGB, RGB(50, 175, 187));
 
   @override
   void initState() {
@@ -103,7 +103,7 @@ class RALColorCodesState extends State<RALColorCodes> {
           color: Color.fromRGBO(rgb.red.round(), rgb.green.round(), rgb.blue.round(), 1.0),
         ),
       ),
-      ral.value..ralcode,
+      ral.key,
       i18n(context, ral.value.name) + '\n' + ral.value.colorcode
     ];
   }
