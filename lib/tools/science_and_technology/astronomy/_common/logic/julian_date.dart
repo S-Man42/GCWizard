@@ -3,10 +3,10 @@ import 'dart:math';
 import 'package:gc_wizard/utils/datetime_utils.dart';
 
 class JulianDate {
-  double julianDateUTCNoon;
-  double julianDate;
-  double deltaT;
-  double terrestrialDynamicalTime;
+  late double julianDateUTCNoon;
+  late double julianDate;
+  late double deltaT;
+  late double terrestrialDynamicalTime;
 
   JulianDate(DateTime datetime, Duration timezone) {
     julianDateUTCNoon = gregorianCalendarToJulianDate(datetime);

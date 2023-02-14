@@ -15,10 +15,10 @@ class EasterYearsState extends State<EasterYears> {
   int _currentMonth = 3;
   int _currentDay = 22;
 
-  var _listDaysForMarch = <int>[22, 23, 24, 25, 26, 27, 28, 29, 30, 31];
-  var _listDaysForApril = List<int>.generate(25, (index) => index + 1);
+  final _listDaysForMarch = <int>[22, 23, 24, 25, 26, 27, 28, 29, 30, 31];
+  final _listDaysForApril = List<int>.generate(25, (index) => index + 1);
 
-  List<int> _currentDayList;
+  late List<int> _currentDayList;
 
   @override
   void initState() {

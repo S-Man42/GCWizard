@@ -20,10 +20,10 @@ class BeaufortState extends State<Beaufort> {
   var _currentMode = GCWSwitchPosition.left;
 
   var _currentVelocity = 0.0;
-  logic.Velocity _currentVelocityUnit = UNITCATEGORY_VELOCITY.defaultUnit;
+  logic.Velocity _currentVelocityUnit = UNITCATEGORY_VELOCITY.defaultUnit as logic.Velocity;
 
   var _currentBeaufortInput = 0;
-  logic.Velocity _currentOutputUnit = UNITCATEGORY_VELOCITY.defaultUnit;
+  logic.Velocity _currentOutputUnit = UNITCATEGORY_VELOCITY.defaultUnit as logic.Velocity;
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +61,8 @@ class BeaufortState extends State<Beaufort> {
                     },
                   ),
                   GCWTextDivider(text: i18n(context, 'common_outputunit')),
-                  GCWUnitDropDown(
+                  GCWUnitDropDown<logic.Velocity>(
+                    value: _currentOutputUnit,
                     unitCategory: UNITCATEGORY_VELOCITY,
                     onChanged: (value) {
                       setState(() {
@@ -76,7 +77,7 @@ class BeaufortState extends State<Beaufort> {
     );
   }
 
-  _buildOutput() {
+  String? _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       return meterPerSecondToBeaufort(_currentVelocity).toString();
     } else {
@@ -84,6 +85,7 @@ class BeaufortState extends State<Beaufort> {
       if (_currentOutputUnit == logic.VELOCITY_MS) format = NumberFormat('0.0');
 
       var range = beaufortToMeterPerSecond(_currentBeaufortInput);
+      if (range == null || range.length < 2) return null;
       var lower = _currentOutputUnit.fromMS(range[0]);
 
       var out = format.format(lower);
