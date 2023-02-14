@@ -24,26 +24,29 @@ class RALColorCodes extends StatefulWidget {
 
 class RALColorCodesState extends State<RALColorCodes> {
   var _currentValue;
-  List<Map<String, String>> _colors;
+  Map<String, RalColor>> _colors;
 
   var _currentMode = GCWSwitchPosition.left;
 
-  dynamic _currentInputColor = RGB(50, 175, 187);
+  GCWColorValue _currentInputColor = RGB(50, 175, 187);
   String _currentColorSpace = keyColorSpaceRGB;
 
   @override
   void initState() {
     super.initState();
 
-    _colors = RAL_COLOR_CODES
-        .map((key, value) {
-          var val = Map<String, String>.from(value);
-          val.putIfAbsent('key', () => key);
-
-          return MapEntry(key, val);
-        })
-        .values
-        .toList();
+    // _colors = Map.fromEntries(RAL_COLOR_CODES.entries.toList()
+    //     .sort((a, b)=> a.key.compareTo(b.key)));
+    //
+    // _colors = RAL_COLOR_CODES
+    //     .map((key, value) {
+    //       var val = Map<String, String>.from(value);
+    //       val.putIfAbsent('key', () => key);
+    //
+    //       return MapEntry(key, val);
+    //     })
+    //     .values
+    //     .toList();
 
     _colors.sort((a, b) => a['key'].compareTo(b['key']));
     _currentValue = _colors[0];
@@ -82,7 +85,7 @@ class RALColorCodesState extends State<RALColorCodes> {
             : Column(
                 children: [
                   GCWColors(
-                    color: _currentInputColor,
+                    colorsValue: _currentInputColor,
                     colorSpace: _currentColorSpace,
                     onChanged: (value) {
                       setState(() {
