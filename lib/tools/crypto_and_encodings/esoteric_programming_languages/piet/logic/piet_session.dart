@@ -9,7 +9,7 @@ class PietResult {
   final bool error;
   final String errorText;
   final bool finished;
-  final _PietSession state;
+  final _PietSession? state;
 
   PietResult(
       {this.output = '',
@@ -37,8 +37,8 @@ Future<PietResult> interpretPiet(List<List<int>> data, String? input,
 
     return PietResult(
         output: pietSession._output, input_expected: _input_required, input_number_expected: _input_required_number);
-  } catch (err) {
-    if (err.message == _inputRequired) {
+  } catch(err) {
+    if (err.toString() == _inputRequired) {
       return PietResult(
           output: pietSession._output,
           input_expected: _input_required,
@@ -50,7 +50,7 @@ Future<PietResult> interpretPiet(List<List<int>> data, String? input,
           input_expected: _input_required,
           input_number_expected: _input_required_number,
           error: true,
-          errorText: err.message ?? err.toString(),
+          errorText: err.toString() ?? err.toString(),
           state: pietSession);
   }
 }
