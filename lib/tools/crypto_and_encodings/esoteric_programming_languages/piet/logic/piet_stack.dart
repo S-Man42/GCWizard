@@ -4,33 +4,34 @@ class _PietStack {
   List<int> _stack = <int>[];
   int get length => _stack.length;
 
-  void push(int value) {
+  void push(int? value) {
+    if (value == null) return;
     _stack.add(value);
   }
 
-  int pop() {
+  int? pop() {
     return tryPop().item2;
   }
 
   int add() {
-    _applyTernary((int s1, int s2) => s1 + s2);
+    return _applyTernary((int s1, int s2) => s1 + s2);
   }
 
   int subtract() {
-    _applyTernary((int s1, int s2) => s2 - s1);
+    return _applyTernary((int s1, int s2) => s2 - s1);
   }
 
   int multiply() {
-    _applyTernary((int s1, int s2) => s1 * s2);
+    return _applyTernary((int s1, int s2) => s1 * s2);
   }
 
   int divide() {
-    _applyTernaryIf((int s1, int s2) => s2 ~/ s1, (_, int s2) => s2 != 0);
+    return _applyTernaryIf((int s1, int s2) => s2 ~/ s1, (_, int s2) => s2 != 0) ? 1 : 0;
   }
 
   int mod() {
     // per the spec take the second value mod the first
-    _applyTernaryIf((int s1, int s2) => m(s2, s1), (int s1, _) => s1 != 0);
+    return _applyTernaryIf((int s1, int s2) => m(s2, s1), (int s1, _) => s1 != 0) ? 1 : 0;
   }
 
   /// <summary>
@@ -48,9 +49,11 @@ class _PietStack {
   int not() {
     var ret = tryPop();
     var result = ret.item2;
-    if (!ret.item1) return null;
+    if (!ret.item1) return 0; //null;
 
-    push(result == 0 ? 1 : 0);
+    result = result == 0 ? 1 : 0;
+    push(result);
+    return result;
   }
 
   int greater() {
@@ -60,7 +63,7 @@ class _PietStack {
   void duplicate() {
     var ret = tryPop();
     var result = ret.item2;
-    if (!ret.item1) return;
+    if (!ret.item1 || (result == null)) return;
     push(result);
     push(result);
   }
@@ -68,13 +71,14 @@ class _PietStack {
   int _applyTernary(Function operatorFunc) {
     var ret = tryPop2();
     var stackResults = ret.item2;
-    if (!ret.item1) return null;
+    if (!ret.item1) return 0; //null
 
     var top = stackResults.item1;
     var second = stackResults.item2;
 
     var result = operatorFunc(top, second);
     push(result);
+    return result;
   }
 
   bool _applyTernaryIf(Function operatorFunc, Function conditionalFunc) {
@@ -89,6 +93,7 @@ class _PietStack {
 
     var result = operatorFunc(top, second);
     push(result);
+    return true;
   }
 
   void roll() {
@@ -99,6 +104,7 @@ class _PietStack {
     var numberOfRolls = stackResults.item1;
     var depthOfRoll = stackResults.item2;
 
+    if (numberOfRolls == null || depthOfRoll == null) return;
     int absNumberOfRolls = numberOfRolls.abs();
 
     if (numberOfRolls > 0)
@@ -107,19 +113,19 @@ class _PietStack {
       RotateLeft(depthOfRoll, absNumberOfRolls);
   }
 
-  Tuple2<bool, int> tryPop() {
-    if (_stack.length < 1) return Tuple2<bool, int>(false, null);
+  Tuple2<bool, int?> tryPop() {
+    if (_stack.length < 1) return Tuple2<bool, int?>(false, null); //null
 
     var result = _stack.last;
     _stack.removeLast();
 
-    return Tuple2<bool, int>(true, result);
+    return Tuple2<bool, int?>(true, result);
   }
 
-  Tuple2<bool, Tuple2<int, int>> tryPop2() {
-    if (_stack.length < 2) return Tuple2<bool, Tuple2<int, int>>(false, Tuple2<int, int>(0, 0));
+  Tuple2<bool, Tuple2<int?, int?>> tryPop2() {
+    if (_stack.length < 2) return Tuple2<bool, Tuple2<int?, int?>>(false, Tuple2<int, int>(0, 0));
 
-    return Tuple2<bool, Tuple2<int, int>>(true, Tuple2<int, int>(pop(), pop()));
+    return Tuple2<bool, Tuple2<int?, int?>>(true, Tuple2<int?, int?>(pop(), pop()));
   }
 
   bool RotateRight(int depth, int iterations) {

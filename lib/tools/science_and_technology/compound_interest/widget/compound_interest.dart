@@ -38,7 +38,7 @@ class CompoundInterestState extends State<CompoundInterest> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWDropDown(
+        GCWDropDown<String>(
           value: _currentMode,
           items: _MODES.map((mode) {
             return GCWDropDownMenuItem(
@@ -110,7 +110,7 @@ class CompoundInterestState extends State<CompoundInterest> {
           },
         ),
         _currentCompoundInterest
-            ? GCWDropDown(
+            ? GCWDropDown<COMPOUND_FREQUENCY>(
                 value: _currentCompoundFrequency,
                 title: i18n(context, 'compoundinterest_compoundfrequency'),
                 items: COMPOUND_FREQUENCY.values.map((freq) {

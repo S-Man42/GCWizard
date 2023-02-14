@@ -26,8 +26,8 @@ var _input_required_number = false;
 final _inputRequired = "input required";
 final _maxOutputLength = 1000;
 
-Future<PietResult> interpretPiet(List<List<int>> data, String input,
-    {int timeOut = 15000, bool multipleInputs = false, _PietSession continueState}) async {
+Future<PietResult> interpretPiet(List<List<int>> data, String? input,
+    {int timeOut = 15000, bool multipleInputs = false, _PietSession? continueState}) async {
   var pietSession = continueState ?? _PietSession(data, timeOut: timeOut, multipleInputs: multipleInputs);
   if (input != null && !input.endsWith('\n')) input += '\n';
   pietSession.input = input;
@@ -56,21 +56,21 @@ Future<PietResult> interpretPiet(List<List<int>> data, String input,
 }
 
 class _PietSession {
-  _PietBlock _currentBlock;
-  Map<_PietOps, Function> _actionMap;
+  late _PietBlock _currentBlock;
+  late Map<_PietOps, Function> _actionMap;
 
-  List<List<int>> data;
+  late List<List<int>> data;
 
-  _PietStack _stack;
-  _PietBlockOpResolver _opsResolver;
-  _PietBlockerBuilder _builder;
-  _PietNavigator _navigator;
+  late _PietStack _stack;
+  late _PietBlockOpResolver _opsResolver;
+  late _PietBlockerBuilder _builder;
+  late _PietNavigator _navigator;
 
-  String input;
+  String? input;
   var _output = '';
 
-  var _timeOut;
-  var _multipleInputs;
+  int _timeOut = 15000;
+  bool _multipleInputs = false;
 
   _PietSession(List<List<int>> image, {int timeOut = 15000, bool multipleInputs = false}) {
     data = image;
@@ -93,7 +93,7 @@ class _PietSession {
   bool get running => _running;
 
   void _step() {
-    Point result;
+    Point<int> result;
     var ret = _navigator.tryNavigate(_currentBlock);
     if (!ret.item1) _running = false;
     result = ret.item2;
@@ -101,7 +101,7 @@ class _PietSession {
     var newBlock = _builder._getBlockAt(result.x, result.y);
     var opCode = _opsResolver.resolve(_currentBlock, newBlock);
 
-    if (_actionMap.containsKey(opCode)) _actionMap[opCode]();
+    if (_actionMap.containsKey(opCode)) _actionMap[opCode]!();
 
     _currentBlock = newBlock;
   }
@@ -124,29 +124,29 @@ class _PietSession {
     if (_output.length > _maxOutputLength) throw Exception('common_programming_error_maxiterations');
   }
 
-  int readInt() {
+  int? readInt() {
     if (_inputNeeded(true)) throw Exception(_inputRequired);
 
-    if (input.isEmpty) return null;
-    var match = RegExp(r'^[0-9]+').firstMatch(input);
+    if (input == null || input!.isEmpty) return null;
+    var match = RegExp(r'^[0-9]+').firstMatch(input!);
     String _input;
     if (match == null) {
       _input = '';
-      input = input.substring(1);
+      input = input!.substring(1);
     } else {
-      _input = match.group(0);
-      input = input.substring(_input.length);
+      _input = match.group(0)!;
+      input = input!.substring(_input.length);
     }
     _input_required = false;
     return int.tryParse(_input);
   }
 
-  String readChar() {
+  String? readChar() {
     if (_inputNeeded(false)) throw Exception(_inputRequired);
 
-    if (input.isEmpty) return null;
-    var _input = input[0];
-    input = input.substring(1);
+    if (input == null || input!.isEmpty) return null;
+    var _input = input![0];
+    input = input!.substring(1);
     _input_required = false;
     return _input;
   }
@@ -154,6 +154,6 @@ class _PietSession {
   bool _inputNeeded(bool numberInput) {
     _input_required = true;
     _input_required_number = numberInput;
-    return input == null || (input.isEmpty && _multipleInputs);
+    return (input == null || input!.isEmpty && _multipleInputs);
   }
 }

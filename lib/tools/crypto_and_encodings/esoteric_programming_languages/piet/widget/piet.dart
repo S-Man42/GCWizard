@@ -19,21 +19,21 @@ import 'package:gc_wizard/utils/ui_dependent_utils/image_utils/image_utils.dart'
 class Piet extends StatefulWidget {
   final GCWFile file;
 
-  const Piet({this.file});
+  const Piet({required this.file});
 
   @override
   PietState createState() => PietState();
 }
 
 class PietState extends State<Piet> {
-  GCWFile _originalData;
-  String _currentInterpreterInput;
-  String _currentGeneratorInput;
-  PietResult _currentInterpreterOutput;
-  Uint8List _currentGeneratorOutput;
+  late GCWFile _originalData;
+  String? _currentInterpreterInput;
+  String? _currentGeneratorInput;
+  PietResult? _currentInterpreterOutput;
+  Uint8List? _currentGeneratorOutput;
   var _isStarted = false;
   var _currentMode = GCWSwitchPosition.left;
-  TextEditingController _inputGeneratorController;
+  late TextEditingController _inputGeneratorController;
 
   @override
   void initState() {
@@ -79,7 +79,7 @@ class PietState extends State<Piet> {
       children: <Widget>[
         GCWOpenFile(
           supportedFileTypes: SUPPORTED_IMAGE_TYPES,
-          onLoaded: (GCWFile value) {
+          onLoaded: (GCWFile? value) {
             if (value == null || !_validateData(value.bytes)) {
               showToast(i18n(context, 'common_loadfile_exception_notloaded'));
               return;

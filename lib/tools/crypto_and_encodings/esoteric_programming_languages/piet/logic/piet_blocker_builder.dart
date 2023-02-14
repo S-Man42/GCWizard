@@ -36,11 +36,11 @@ class _PietBlockerBuilder {
   // we if want to support custom colors and operations going forward
   // we'll need to allow extensions to add to this collection
 
-  List<List<int>> _data;
-  _PietBlock _block;
+  List<List<int>> _data = [];
+  late _PietBlock _block;
   var _blockCache = Map<Point<int>, _PietBlock>();
-  int _width;
-  int _height;
+  int _width = 0;
+  int _height = 0;
 
   _PietBlockerBuilder(List<List<int>> data) {
     _data = data;
@@ -54,7 +54,7 @@ class _PietBlockerBuilder {
 
   _PietBlock _buildPietBlock(int x, int y) {
     var point = Point<int>(x, y);
-    if (_blockCache.containsKey(point)) return _blockCache[point];
+    if (_blockCache.containsKey(point)) return _blockCache[point]!;
     int targetColor = _data[x][y];
     var knownColor = _knownColors.contains(targetColor);
 

@@ -7,9 +7,9 @@ import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/tools/science_and_technology/countries/logic/countries.dart';
 
 class Countries extends StatefulWidget {
-  final List<String> fields;
+  final List<CountryProperties> fields;
 
-  Countries({Key? key, this.fields}) : super(key: key);
+  Countries({Key? key, required this.fields}) : super(key: key);
 
   @override
   CountriesState createState() => CountriesState();
@@ -18,13 +18,12 @@ class Countries extends StatefulWidget {
 class CountriesState extends State<Countries> {
   var _currentSwitchSort = GCWSwitchPosition.left;
   var _currentSort = 0;
-  List<String> _currentSortList;
+  List<String> _currentSortList = ['common_countries'];
 
   @override
   void initState() {
     super.initState();
 
-    _currentSortList = ['common_countries'];
     _currentSortList.addAll(widget.fields.map((e) => 'countries_${e}_sort'));
   }
 
@@ -72,17 +71,15 @@ class CountriesState extends State<Countries> {
     var field = _currentSort == 0 ? widget.fields[0] : widget.fields[_currentSort - 1];
     var flexValues = List<int>.generate(widget.fields.length, (index) => 1);
 
-    COUNTRIES.entries.first.value.runtimeType
-
-    var data = COUNTRIES.values.where((e) => e[field] != null && e[field].length > 0).map((e) {
+    var data = COUNTRIES.values.map((e) {
       if (_currentSort == 0) {
         var dataList = [i18n(context, e.name)];
-        dataList.addAll(widget.fields.map((field) => e[field]));
+        dataList.addAll(widget.fields.map((field) => e.getProperty(field)));
 
         return dataList;
       } else {
-        var dataList = [e[field], i18n(context, e.name)];
-        dataList.addAll(widget.fields.where((f) => f != field).map((f) => e[f]));
+        var dataList = [e.getProperty(field), i18n(context, e.name)];
+        dataList.addAll(widget.fields.where((f) => f != field).map((f) => e.getProperty(f)));
 
         return dataList;
       }

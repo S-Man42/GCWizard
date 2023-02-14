@@ -20,7 +20,7 @@ _permutation(List<String> characters, endIndex, List<String> out) {
   }
 }
 
-List<String> generatePermutations(String input, {bool avoidDuplicates}) {
+List<String> generatePermutations(String input, {bool avoidDuplicates = false}) {
   if (input == null || input == '') return [];
 
   var characters = input.split('');

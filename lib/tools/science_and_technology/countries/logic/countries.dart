@@ -1,4 +1,15 @@
-class Countries {
+enum CountryProperties {
+  name,
+  callingcode,
+  vehiclecode,
+  iso3166_1_2,
+  iso3166_1_3,
+  iso3166_1_n,
+  iso3166_2,
+  ioccode
+}
+
+class Country {
   String name;
   String callingcode;
   String vehiclecode;
@@ -8,7 +19,7 @@ class Countries {
   String iso3166_2;
   String ioccode;
 
-  Countries({
+  Country({
     required this.name,
     required this.callingcode,
     required this.vehiclecode,
@@ -18,10 +29,31 @@ class Countries {
     required this.iso3166_2,
     required this.ioccode
   });
+
+  String getProperty(CountryProperties property) {
+    switch (property) {
+      case CountryProperties.name:
+        return name;
+      case CountryProperties.callingcode:
+        return callingcode;
+      case CountryProperties.vehiclecode:
+        return vehiclecode;
+      case CountryProperties.iso3166_1_2:
+        return iso3166_1_2;
+      case CountryProperties.iso3166_1_3:
+        return iso3166_1_3;
+      case CountryProperties.iso3166_1_n:
+        return iso3166_1_n;
+      case CountryProperties.iso3166_2:
+        return iso3166_2;
+      case CountryProperties.ioccode:
+        return ioccode;
+    }
+  }
 }
 
-final Map<String, Countries> COUNTRIES = {
-  "Andorra": Countries(
+final Map<String, Country> COUNTRIES = {
+  "Andorra": Country(
     name: "common_country_Andorra",
     callingcode: "+376",
     vehiclecode: "AND",
@@ -31,7 +63,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "AD",
     ioccode: "AND",
   ),
-  "UnitedArabEmirates": Countries(
+  "UnitedArabEmirates": Country(
     name: "common_country_UnitedArabEmirates",
     callingcode: "+971",
     vehiclecode: "UAE",
@@ -41,7 +73,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "AE",
     ioccode: "UAE",
   ),
-  "Afghanistan": Countries(
+  "Afghanistan": Country(
     name: "common_country_Afghanistan",
     callingcode: "+93",
     vehiclecode: "AFG",
@@ -51,7 +83,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "AF",
     ioccode: "AFG",
   ),
-  "AntiguaandBarbuda": Countries(
+  "AntiguaandBarbuda": Country(
     name: "common_country_AntiguaandBarbuda",
     callingcode: "+1",
     vehiclecode: "AG",
@@ -61,7 +93,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "AG",
     ioccode: "ANT",
   ),
-  "Anguilla": Countries(
+  "Anguilla": Country(
     name: "common_country_Anguilla",
     callingcode: "+1",
     vehiclecode: "AXA",
@@ -71,7 +103,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "AI",
     ioccode: "",
   ),
-  "Albania": Countries(
+  "Albania": Country(
     name: "common_country_Albania",
     callingcode: "+355",
     vehiclecode: "AL",
@@ -81,7 +113,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "AL",
     ioccode: "ALB",
   ),
-  "Armenia": Countries(
+  "Armenia": Country(
     name: "common_country_Armenia",
     callingcode: "+374",
     vehiclecode: "AM",
@@ -91,7 +123,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "AM",
     ioccode: "ARM",
   ),
-  "NetherlandsAntilles": Countries(
+  "NetherlandsAntilles": Country(
     name: "common_country_NetherlandsAntilles",
     callingcode: "+599",
     vehiclecode: "NA",
@@ -101,7 +133,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "",
     ioccode: "",
   ),
-  "Angola": Countries(
+  "Angola": Country(
     name: "common_country_Angola",
     callingcode: "+244",
     vehiclecode: "ANG",
@@ -111,7 +143,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "AO",
     ioccode: "ANG",
   ),
-  "Antarctica": Countries(
+  "Antarctica": Country(
     name: "common_country_Antarctica",
     callingcode: "",
     vehiclecode: "",
@@ -121,7 +153,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "AQ",
     ioccode: "",
   ),
-  "BritishAntarcticTerritory": Countries(
+  "BritishAntarcticTerritory": Country(
     name: "common_country_BritishAntarcticTerritory",
     callingcode: "",
     vehiclecode: "",
@@ -131,7 +163,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "AQ",
     ioccode: "",
   ),
-  "RossDependency": Countries(
+  "RossDependency": Country(
     name: "common_country_RossDependency",
     callingcode: "+64 2409",
     vehiclecode: "",
@@ -141,7 +173,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "AQ",
     ioccode: "",
   ),
-  "Argentina": Countries(
+  "Argentina": Country(
     name: "common_country_Argentina",
     callingcode: "+54",
     vehiclecode: "RA",
@@ -151,7 +183,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "AR",
     ioccode: "ARG",
   ),
-  "AmericanSamoa": Countries(
+  "AmericanSamoa": Country(
     name: "common_country_AmericanSamoa",
     callingcode: "+1",
     vehiclecode: "USA",
@@ -161,7 +193,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "AS",
     ioccode: "ASA",
   ),
-  "Austria": Countries(
+  "Austria": Country(
     name: "common_country_Austria",
     callingcode: "+43",
     vehiclecode: "A",
@@ -171,7 +203,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "AT",
     ioccode: "AUT",
   ),
-  "Australia": Countries(
+  "Australia": Country(
     name: "common_country_Australia",
     callingcode: "+61",
     vehiclecode: "AUS",
@@ -181,7 +213,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "AU",
     ioccode: "AUS",
   ),
-  "Aruba": Countries(
+  "Aruba": Country(
     name: "common_country_Aruba",
     callingcode: "+297",
     vehiclecode: "ARU",
@@ -191,7 +223,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "AW",
     ioccode: "ARU",
   ),
-  "ÅlandIslands": Countries(
+  "ÅlandIslands": Country(
     name: "common_country_AlandIslands",
     callingcode: "+358 18",
     vehiclecode: "AX",
@@ -201,7 +233,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "AX",
     ioccode: "",
   ),
-  "Azerbaijan": Countries(
+  "Azerbaijan": Country(
     name: "common_country_Azerbaijan",
     callingcode: "+994",
     vehiclecode: "AZ",
@@ -211,7 +243,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "AZ",
     ioccode: "AZE",
   ),
-  "BosniaandHerzegovina": Countries(
+  "BosniaandHerzegovina": Country(
     name: "common_country_BosniaandHerzegovina",
     callingcode: "+387",
     vehiclecode: "BIH",
@@ -221,7 +253,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "BA",
     ioccode: "BIH",
   ),
-  "Barbados": Countries(
+  "Barbados": Country(
     name: "common_country_Barbados",
     callingcode: "+1",
     vehiclecode: "BDS",
@@ -231,7 +263,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "BB",
     ioccode: "BAR",
   ),
-  "Bangladesh": Countries(
+  "Bangladesh": Country(
     name: "common_country_Bangladesh",
     callingcode: "+880",
     vehiclecode: "BD",
@@ -241,7 +273,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "BD",
     ioccode: "BAN",
   ),
-  "Belgium": Countries(
+  "Belgium": Country(
     name: "common_country_Belgium",
     callingcode: "+32",
     vehiclecode: "B",
@@ -251,7 +283,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "BE",
     ioccode: "BEL",
   ),
-  "BurkinaFaso": Countries(
+  "BurkinaFaso": Country(
     name: "common_country_BurkinaFaso",
     callingcode: "+226",
     vehiclecode: "BF",
@@ -261,7 +293,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "BF",
     ioccode: "BUR",
   ),
-  "Bulgaria": Countries(
+  "Bulgaria": Country(
     name: "common_country_Bulgaria",
     callingcode: "+359",
     vehiclecode: "BG",
@@ -271,7 +303,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "BG",
     ioccode: "BUL",
   ),
-  "Bahrain": Countries(
+  "Bahrain": Country(
     name: "common_country_Bahrain",
     callingcode: "+973",
     vehiclecode: "BRN",
@@ -281,7 +313,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "BH",
     ioccode: "BRN",
   ),
-  "Burundi": Countries(
+  "Burundi": Country(
     name: "common_country_Burundi",
     callingcode: "+257",
     vehiclecode: "RU",
@@ -291,7 +323,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "BI",
     ioccode: "BDI",
   ),
-  "Benin": Countries(
+  "Benin": Country(
     name: "common_country_Benin",
     callingcode: "+229",
     vehiclecode: "BJ",
@@ -301,7 +333,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "BJ",
     ioccode: "BEN",
   ),
-  "SaintBarthélemy": Countries(
+  "SaintBarthélemy": Country(
     name: "common_country_SaintBarthelemy",
     callingcode: "",
     vehiclecode: "",
@@ -311,7 +343,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "BL",
     ioccode: "",
   ),
-  "Bermuda": Countries(
+  "Bermuda": Country(
     name: "common_country_Bermuda",
     callingcode: "+1",
     vehiclecode: "USA",
@@ -321,7 +353,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "BM",
     ioccode: "BER",
   ),
-  "Brunei": Countries(
+  "Brunei": Country(
     name: "common_country_Brunei",
     callingcode: "+673",
     vehiclecode: "BRU",
@@ -331,7 +363,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "BN",
     ioccode: "BRU",
   ),
-  "Bolivia": Countries(
+  "Bolivia": Country(
     name: "common_country_Bolivia",
     callingcode: "+591",
     vehiclecode: "BOL",
@@ -341,7 +373,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "BO",
     ioccode: "BOL",
   ),
-  "Bonaire": Countries(
+  "Bonaire": Country(
     name: "common_country_Bonaire",
     callingcode: "+599",
     vehiclecode: "NL",
@@ -351,7 +383,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "BQ",
     ioccode: "",
   ),
-  "Saba": Countries(
+  "Saba": Country(
     name: "common_country_Saba",
     callingcode: "+5994",
     vehiclecode: "NL",
@@ -361,7 +393,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "BQ",
     ioccode: "",
   ),
-  "SintEustatius": Countries(
+  "SintEustatius": Country(
     name: "common_country_SintEustatius",
     callingcode: "+599",
     vehiclecode: "NL",
@@ -371,7 +403,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "BQ",
     ioccode: "",
   ),
-  "Brazil": Countries(
+  "Brazil": Country(
     name: "common_country_Brazil",
     callingcode: "+55",
     vehiclecode: "BR",
@@ -381,7 +413,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "BR",
     ioccode: "BRA",
   ),
-  "Bahamas": Countries(
+  "Bahamas": Country(
     name: "common_country_Bahamas",
     callingcode: "+1",
     vehiclecode: "BS",
@@ -391,7 +423,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "BS",
     ioccode: "BAH",
   ),
-  "Bhutan": Countries(
+  "Bhutan": Country(
     name: "common_country_Bhutan",
     callingcode: "+975",
     vehiclecode: "BHT",
@@ -401,7 +433,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "BT",
     ioccode: "BHU",
   ),
-  "BouvetIsland": Countries(
+  "BouvetIsland": Country(
     name: "common_country_BouvetIsland",
     callingcode: "",
     vehiclecode: "",
@@ -411,7 +443,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "BV",
     ioccode: ""
   ),
-  "Botswana": Countries(
+  "Botswana": Country(
     name: "common_country_Botswana",
     callingcode: "+267",
     vehiclecode: "RB",
@@ -421,7 +453,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "BW",
     ioccode: "BOT",
   ),
-  "Belarus": Countries(
+  "Belarus": Country(
     name: "common_country_Belarus",
     callingcode: "+375",
     vehiclecode: "BY",
@@ -431,7 +463,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "BY",
     ioccode: "BLR",
   ),
-  "Belize": Countries(
+  "Belize": Country(
     name: "common_country_Belize",
     callingcode: "+501",
     vehiclecode: "BZ",
@@ -441,7 +473,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "BZ",
     ioccode: "BIZ",
   ),
-  "Canada": Countries(
+  "Canada": Country(
     name: "common_country_Canada",
     callingcode: "+1",
     vehiclecode: "CDN",
@@ -451,7 +483,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "CA",
     ioccode: "CAN",
   ),
-  "CocosIslands": Countries(
+  "CocosIslands": Country(
     name: "common_country_CocosIslands",
     callingcode: "+61",
     vehiclecode: "",
@@ -461,7 +493,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "CC",
     ioccode: "",
   ),
-  "DemocraticRepublicoftheCongo/Kinshasa": Countries(
+  "DemocraticRepublicoftheCongo/Kinshasa": Country(
     name: "common_country_DemocraticRepublicoftheCongo",
     callingcode: "+243",
     vehiclecode: "CGO",
@@ -471,7 +503,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "CD",
     ioccode: "COD",
   ),
-  "RepublicoftheCongo/Brazzaville": Countries(
+  "RepublicoftheCongo/Brazzaville": Country(
     name: "common_country_RepublicoftheCongo",
     callingcode: "+242",
     vehiclecode: "RCB",
@@ -481,7 +513,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "CG",
     ioccode: "CGO",
   ),
-  "CentralAfricanRepublic": Countries(
+  "CentralAfricanRepublic": Country(
     name: "common_country_CentralAfricanRepublic",
     callingcode: "+236",
     vehiclecode: "RCA",
@@ -491,7 +523,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "CF",
     ioccode: "CAF",
   ),
-  "Switzerland": Countries(
+  "Switzerland": Country(
     name: "common_country_Switzerland",
     callingcode: "+41",
     vehiclecode: "CH",
@@ -501,7 +533,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "CH",
     ioccode: "SUI",
   ),
-  "IvoryCoast(Côted'Ivoire)": Countries(
+  "IvoryCoast(Côted'Ivoire)": Country(
     name: "common_country_CotedIvoire",
     callingcode: "+225",
     vehiclecode: "CI",
@@ -511,7 +543,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "CI",
     ioccode: "CIV",
   ),
-  "CookIslands": Countries(
+  "CookIslands": Country(
     name: "common_country_CookIslands",
     callingcode: "+682",
     vehiclecode: "",
@@ -521,7 +553,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "CK",
     ioccode: "COK",
   ),
-  "Chile": Countries(
+  "Chile": Country(
     name: "common_country_Chile",
     callingcode: "+56",
     vehiclecode: "RCH",
@@ -531,7 +563,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "CL",
     ioccode: "CHI",
   ),
-  "Cameroon": Countries(
+  "Cameroon": Country(
     name: "common_country_Cameroon",
     callingcode: "+237",
     vehiclecode: "CAM",
@@ -541,7 +573,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "CM",
     ioccode: "CMR",
   ),
-  "China": Countries(
+  "China": Country(
     name: "common_country_PeoplesRepublicofChina",
     callingcode: "+86",
     vehiclecode: "CHN",
@@ -551,7 +583,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "CN",
     ioccode: "CHN",
   ),
-  "Colombia": Countries(
+  "Colombia": Country(
     name: "common_country_Colombia",
     callingcode: "+57",
     vehiclecode: "CO",
@@ -561,7 +593,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "CO",
     ioccode: "COL",
   ),
-  "CostaRica": Countries(
+  "CostaRica": Country(
     name: "common_country_CostaRica",
     callingcode: "+506",
     vehiclecode: "CR",
@@ -571,7 +603,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "CR",
     ioccode: "CRC",
   ),
-  "Cuba": Countries(
+  "Cuba": Country(
     name: "common_country_Cuba",
     callingcode: "+53",
     vehiclecode: "C",
@@ -581,7 +613,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "CU",
     ioccode: "CUB",
   ),
-  "CapeVerde": Countries(
+  "CapeVerde": Country(
     name: "common_country_CapeVerde",
     callingcode: "+238",
     vehiclecode: "CV",
@@ -591,7 +623,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "CV",
     ioccode: "CPV",
   ),
-  "Curaçao": Countries(
+  "Curaçao": Country(
     name: "common_country_Curacao",
     callingcode: "+599",
     vehiclecode: "NA",
@@ -601,7 +633,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "CW",
     ioccode: "",
   ),
-  "ChristmasIsland": Countries(
+  "ChristmasIsland": Country(
     name: "common_country_ChristmasIsland",
     callingcode: "+61",
     vehiclecode: "",
@@ -611,7 +643,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "CX",
     ioccode: "",
   ),
-  "Cyprus": Countries(
+  "Cyprus": Country(
     name: "common_country_Cyprus",
     callingcode: "+357",
     vehiclecode: "CY",
@@ -621,7 +653,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "CY",
     ioccode: "CYP",
   ),
-  "CzechRepublic": Countries(
+  "CzechRepublic": Country(
     name: "common_country_CzechRepublic",
     callingcode: "+420",
     vehiclecode: "CZ",
@@ -631,7 +663,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "CZ",
     ioccode: "CZE",
   ),
-  "Germany": Countries(
+  "Germany": Country(
     name: "common_country_Germany",
     callingcode: "+49",
     vehiclecode: "D",
@@ -641,7 +673,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "DE",
     ioccode: "GER",
   ),
-  "Djibouti": Countries(
+  "Djibouti": Country(
     name: "common_country_Djibouti",
     callingcode: "+253",
     vehiclecode: "DJI",
@@ -651,7 +683,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "DJ",
     ioccode: "DJI",
   ),
-  "Denmark": Countries(
+  "Denmark": Country(
     name: "common_country_Denmark",
     callingcode: "+45",
     vehiclecode: "DK",
@@ -661,7 +693,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "DK",
     ioccode: "DEN",
   ),
-  "Dominica": Countries(
+  "Dominica": Country(
     name: "common_country_Dominica",
     callingcode: "+1",
     vehiclecode: "WD",
@@ -671,7 +703,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "DM",
     ioccode: "DMA",
   ),
-  "DominicanRepublic": Countries(
+  "DominicanRepublic": Country(
     name: "common_country_DominicanRepublic",
     callingcode: "+1",
     vehiclecode: "DOM",
@@ -681,7 +713,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "DO",
     ioccode: "DOM",
   ),
-  "Algeria": Countries(
+  "Algeria": Country(
     name: "common_country_Algeria",
     callingcode: "+213",
     vehiclecode: "DZ",
@@ -691,7 +723,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "DZ",
     ioccode: "ALG",
   ),
-  "Ecuador": Countries(
+  "Ecuador": Country(
     name: "common_country_Ecuador",
     callingcode: "+593",
     vehiclecode: "EC",
@@ -701,7 +733,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "EC",
     ioccode: "ECU",
   ),
-  "Estonia": Countries(
+  "Estonia": Country(
     name: "common_country_Estonia",
     callingcode: "+372",
     vehiclecode: "EST",
@@ -711,7 +743,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "EE",
     ioccode: "EST",
   ),
-  "Egypt": Countries(
+  "Egypt": Country(
     name: "common_country_Egypt",
     callingcode: "+20",
     vehiclecode: "ET",
@@ -721,7 +753,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "EG",
     ioccode: "EGY",
   ),
-  "SahrawiArabDemocraticRepublic": Countries(
+  "SahrawiArabDemocraticRepublic": Country(
     name: "common_country_SahrawiArabDemocraticRepublic",
     callingcode: "+212",
     vehiclecode: "SH",
@@ -731,7 +763,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "EH",
     ioccode: "",
   ),
-  "Eritrea": Countries(
+  "Eritrea": Country(
     name: "common_country_Eritrea",
     callingcode: "+291",
     vehiclecode: "ER",
@@ -741,7 +773,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "ER",
     ioccode: "ERI",
   ),
-  "Spain": Countries(
+  "Spain": Country(
     name: "common_country_Spain",
     callingcode: "+34",
     vehiclecode: "E",
@@ -751,7 +783,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "ES",
     ioccode: "ESP",
   ),
-  "Ethiopia": Countries(
+  "Ethiopia": Country(
     name: "common_country_Ethiopia",
     callingcode: "+251",
     vehiclecode: "ETH",
@@ -761,7 +793,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "ET",
     ioccode: "ETH",
   ),
-  "Finland": Countries(
+  "Finland": Country(
     name: "common_country_Finland",
     callingcode: "+358",
     vehiclecode: "FIN",
@@ -771,7 +803,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "FI",
     ioccode: "FIN",
   ),
-  "Fiji": Countries(
+  "Fiji": Country(
     name: "common_country_Fiji",
     callingcode: "+679",
     vehiclecode: "FJI",
@@ -781,7 +813,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "FJ",
     ioccode: "FIJ",
   ),
-  "FalklandIslands": Countries(
+  "FalklandIslands": Country(
     name: "common_country_FalklandIslands",
     callingcode: "+500",
     vehiclecode: "",
@@ -791,7 +823,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "FK",
     ioccode: "",
   ),
-  "Micronesia": Countries(
+  "Micronesia": Country(
     name: "common_country_Micronesia",
     callingcode: "+691",
     vehiclecode: "FSM",
@@ -801,7 +833,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "FM",
     ioccode: "FSM",
   ),
-  "FaroeIslands": Countries(
+  "FaroeIslands": Country(
     name: "common_country_FaroeIslands",
     callingcode: "+298",
     vehiclecode: "FO",
@@ -811,7 +843,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "FO",
     ioccode: "",
   ),
-  "France": Countries(
+  "France": Country(
     name: "common_country_France",
     callingcode: "+33",
     vehiclecode: "F",
@@ -821,7 +853,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "FR",
     ioccode: "FRA",
   ),
-  "Gabon": Countries(
+  "Gabon": Country(
     name: "common_country_Gabon",
     callingcode: "+241",
     vehiclecode: "G",
@@ -831,7 +863,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "GA",
     ioccode: "GAB",
   ),
-  "GreatBritain": Countries(
+  "GreatBritain": Country(
     name: "common_country_UnitedKingdom",
     callingcode: "+44",
     vehiclecode: "GB",
@@ -841,7 +873,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "GB",
     ioccode: "GBR",
   ),
-  "Grenada": Countries(
+  "Grenada": Country(
     name: "common_country_Grenada",
     callingcode: "+1",
     vehiclecode: "WG",
@@ -851,7 +883,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "GD",
     ioccode: "GRN",
   ),
-  "Georgia": Countries(
+  "Georgia": Country(
     name: "common_country_Georgia",
     callingcode: "+995",
     vehiclecode: "GE",
@@ -861,7 +893,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "GE",
     ioccode: "GEO",
   ),
-  "FrenchGuiana": Countries(
+  "FrenchGuiana": Country(
     name: "common_country_FrenchGuiana",
     callingcode: "+594",
     vehiclecode: "",
@@ -871,7 +903,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "GF",
     ioccode: "",
   ),
-  "Alderney": Countries(
+  "Alderney": Country(
     name: "common_country_Alderney",
     callingcode: "+44 1481",
     vehiclecode: "GBA",
@@ -881,7 +913,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "GG",
     ioccode: "",
   ),
-  "BailiwickofGuernsey": Countries(
+  "BailiwickofGuernsey": Country(
     name: "common_country_Guernsey",
     callingcode: "+44 1481",
     vehiclecode: "GBG",
@@ -891,7 +923,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "GG",
     ioccode: "",
   ),
-  "Ghana": Countries(
+  "Ghana": Country(
     name: "common_country_Ghana",
     callingcode: "+233",
     vehiclecode: "GH",
@@ -901,7 +933,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "GH",
     ioccode: "GHA",
   ),
-  "Gibraltar": Countries(
+  "Gibraltar": Country(
     name: "common_country_Gibraltar",
     callingcode: "+350",
     vehiclecode: "GBZ",
@@ -911,7 +943,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "GI",
     ioccode: "",
   ),
-  "Greenland": Countries(
+  "Greenland": Country(
     name: "common_country_Greenland",
     callingcode: "+299",
     vehiclecode: "KN",
@@ -921,7 +953,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "GL",
     ioccode: "",
   ),
-  "Gambia": Countries(
+  "Gambia": Country(
     name: "common_country_Gambia",
     callingcode: "+220",
     vehiclecode: "WAG",
@@ -931,7 +963,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "GM",
     ioccode: "GAM",
   ),
-  "Guinea": Countries(
+  "Guinea": Country(
     name: "common_country_Guinea",
     callingcode: "+224",
     vehiclecode: "RG",
@@ -941,7 +973,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "GN",
     ioccode: "GUI",
   ),
-  "Guadeloupe": Countries(
+  "Guadeloupe": Country(
     name: "common_country_Guadeloupe",
     callingcode: "+590",
     vehiclecode: "",
@@ -951,7 +983,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "GP",
     ioccode: "",
   ),
-  "EquatorialGuinea": Countries(
+  "EquatorialGuinea": Country(
     name: "common_country_EquatorialGuinea",
     callingcode: "+240",
     vehiclecode: "GQ",
@@ -961,7 +993,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "GQ",
     ioccode: "GEQ",
   ),
-  "Greece": Countries(
+  "Greece": Country(
     name: "common_country_Greece",
     callingcode: "+30",
     vehiclecode: "GR",
@@ -971,7 +1003,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "GR",
     ioccode: "GRE",
   ),
-  "SouthGeorgiaandtheSouthSandwichIslands": Countries(
+  "SouthGeorgiaandtheSouthSandwichIslands": Country(
     name: "common_country_SouthGeorgiaandtheSouthSandwichIslands",
     callingcode: "",
     vehiclecode: "",
@@ -981,7 +1013,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "GS",
     ioccode: "",
   ),
-  "Guatemala": Countries(
+  "Guatemala": Country(
     name: "common_country_Guatemala",
     callingcode: "+502",
     vehiclecode: "GCA",
@@ -991,7 +1023,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "GT",
     ioccode: "GUA",
   ),
-  "Guam": Countries(
+  "Guam": Country(
     name: "common_country_Guam",
     callingcode: "+1",
     vehiclecode: "USA",
@@ -1001,7 +1033,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "GU",
     ioccode: "GUM",
   ),
-  "Guinea-Bissau": Countries(
+  "Guinea-Bissau": Country(
     name: "common_country_GuineaBissau",
     callingcode: "+245",
     vehiclecode: "GUB",
@@ -1011,7 +1043,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "GW",
     ioccode: "GBS",
   ),
-  "Guyana": Countries(
+  "Guyana": Country(
     name: "common_country_Guyana",
     callingcode: "+592",
     vehiclecode: "GUY",
@@ -1021,7 +1053,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "GY",
     ioccode: "GUY",
   ),
-  "HongKong": Countries(
+  "HongKong": Country(
     name: "common_country_HongKong",
     callingcode: "+852",
     vehiclecode: "HK",
@@ -1031,7 +1063,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "HK",
     ioccode: "HKG",
   ),
-  "HeardIslandandMcDonaldIslands": Countries(
+  "HeardIslandandMcDonaldIslands": Country(
     name: "common_country_HeardIslandandMcDonaldIslands",
     callingcode: "",
     vehiclecode: "",
@@ -1041,7 +1073,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "HM",
     ioccode: ""
   ),
-  "Honduras": Countries(
+  "Honduras": Country(
     name: "common_country_Honduras",
     callingcode: "+504",
     vehiclecode: "HN",
@@ -1051,7 +1083,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "HN",
     ioccode: "HON",
   ),
-  "Croatia": Countries(
+  "Croatia": Country(
     name: "common_country_Croatia",
     callingcode: "+385",
     vehiclecode: "HR",
@@ -1061,7 +1093,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "HR",
     ioccode: "CRO",
   ),
-  "Haiti": Countries(
+  "Haiti": Country(
     name: "common_country_Haiti",
     callingcode: "+509",
     vehiclecode: "RH",
@@ -1071,7 +1103,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "HT",
     ioccode: "HAI",
   ),
-  "Hungary": Countries(
+  "Hungary": Country(
     name: "common_country_Hungary",
     callingcode: "+36",
     vehiclecode: "HU",
@@ -1081,7 +1113,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "HU",
     ioccode: "HUN",
   ),
-  "CanaryIslands": Countries(
+  "CanaryIslands": Country(
     name: "common_country_CanaryIslands",
     callingcode: "",
     vehiclecode: "",
@@ -1091,7 +1123,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "ES-CN",
     ioccode: "",
   ),
-  "Indonesia": Countries(
+  "Indonesia": Country(
     name: "common_country_Indonesia",
     callingcode: "+62",
     vehiclecode: "RI",
@@ -1101,7 +1133,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "ID",
     ioccode: "INA",
   ),
-  "Ireland": Countries(
+  "Ireland": Country(
     name: "common_country_Ireland",
     callingcode: "+353",
     vehiclecode: "IRL",
@@ -1111,7 +1143,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "IE",
     ioccode: "IRL",
   ),
-  "Israel": Countries(
+  "Israel": Country(
     name: "common_country_Israel",
     callingcode: "+972",
     vehiclecode: "IL",
@@ -1121,7 +1153,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "IL",
     ioccode: "ISR",
   ),
-  "IsleofMan": Countries(
+  "IsleofMan": Country(
     name: "common_country_IsleofMan",
     callingcode: "+44",
     vehiclecode: "GBM",
@@ -1131,7 +1163,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "IM",
     ioccode: "",
   ),
-  "India": Countries(
+  "India": Country(
     name: "common_country_India",
     callingcode: "+91",
     vehiclecode: "IND",
@@ -1141,7 +1173,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "IN",
     ioccode: "IND",
   ),
-  "BritishIndianOceanTerrirory": Countries(
+  "BritishIndianOceanTerrirory": Country(
     name: "common_country_BritishIndianOceanTerritory",
     callingcode: "",
     vehiclecode: "",
@@ -1151,7 +1183,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "IO",
     ioccode: "",
   ),
-  "Iraq": Countries(
+  "Iraq": Country(
     name: "common_country_Iraq",
     callingcode: "+964",
     vehiclecode: "IRQ",
@@ -1161,7 +1193,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "IQ",
     ioccode: "IRQ",
   ),
-  "Iran": Countries(
+  "Iran": Country(
     name: "common_country_Iran",
     callingcode: "+98",
     vehiclecode: "IR",
@@ -1171,7 +1203,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "IR",
     ioccode: "IRI",
   ),
-  "Iceland": Countries(
+  "Iceland": Country(
     name: "common_country_Iceland",
     callingcode: "+354",
     vehiclecode: "IS",
@@ -1181,7 +1213,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "IS",
     ioccode: "ISL",
   ),
-  "Italy": Countries(
+  "Italy": Country(
     name: "common_country_Italy",
     callingcode: "+39",
     vehiclecode: "I",
@@ -1191,7 +1223,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "IT",
     ioccode: "ITA",
   ),
-  "Jersey": Countries(
+  "Jersey": Country(
     name: "common_country_Jersey",
     callingcode: "+44 1534",
     vehiclecode: "GBJ",
@@ -1201,7 +1233,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "JE",
     ioccode: "",
   ),
-  "Jamaica": Countries(
+  "Jamaica": Country(
     name: "common_country_Jamaica",
     callingcode: "+1",
     vehiclecode: "JA",
@@ -1211,7 +1243,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "JM",
     ioccode: "JAM",
   ),
-  "Jordan": Countries(
+  "Jordan": Country(
     name: "common_country_Jordan",
     callingcode: "+962",
     vehiclecode: "JOR",
@@ -1221,7 +1253,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "JO",
     ioccode: "JOR",
   ),
-  "Japan": Countries(
+  "Japan": Country(
     name: "common_country_Japan",
     callingcode: "+81",
     vehiclecode: "J",
@@ -1231,7 +1263,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "JP",
     ioccode: "JPN",
   ),
-  "Kenya": Countries(
+  "Kenya": Country(
     name: "common_country_Kenya",
     callingcode: "+254",
     vehiclecode: "EAK",
@@ -1241,7 +1273,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "KE",
     ioccode: "KEN",
   ),
-  "Kyrgyzstan": Countries(
+  "Kyrgyzstan": Country(
     name: "common_country_Kyrgyzstan",
     callingcode: "+996",
     vehiclecode: "KG",
@@ -1251,7 +1283,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "KG",
     ioccode: "KGZ",
   ),
-  "Cambodia": Countries(
+  "Cambodia": Country(
     name: "common_country_Cambodia",
     callingcode: "+855",
     vehiclecode: "K",
@@ -1261,7 +1293,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "KH",
     ioccode: "CAM",
   ),
-  "Kiribati(GilbertIslands)": Countries(
+  "Kiribati(GilbertIslands)": Country(
     name: "common_country_Kiribati",
     callingcode: "+686",
     vehiclecode: "KIR",
@@ -1271,7 +1303,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "KI",
     ioccode: "KIR",
   ),
-  "Comoros": Countries(
+  "Comoros": Country(
     name: "common_country_Comoros",
     callingcode: "+269",
     vehiclecode: "COM",
@@ -1281,7 +1313,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "KM",
     ioccode: "COM",
   ),
-  "SaintKitts": Countries(
+  "SaintKitts": Country(
     name: "common_country_SaintKittsandNevis",
     callingcode: "+1",
     vehiclecode: "KAN",
@@ -1291,7 +1323,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "KN",
     ioccode: "SKN",
   ),
-  "NorthKorea(DemocraticPeople'sRepublicofKorea)": Countries(
+  "NorthKorea(DemocraticPeople'sRepublicofKorea)": Country(
     name: "common_country_NorthKorea",
     callingcode: "+850",
     vehiclecode: "KP",
@@ -1301,7 +1333,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "KP",
     ioccode: "PRK",
   ),
-  "SouthKorea(RepublicofKorea)": Countries(
+  "SouthKorea(RepublicofKorea)": Country(
     name: "common_country_SouthKorea",
     callingcode: "+82",
     vehiclecode: "ROK",
@@ -1311,7 +1343,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "KR",
     ioccode: "KOR",
   ),
-  "Kuwait": Countries(
+  "Kuwait": Country(
     name: "common_country_Kuwait",
     callingcode: "+965",
     vehiclecode: "KWT",
@@ -1321,7 +1353,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "KW",
     ioccode: "KUW",
   ),
-  "CaymanIslands": Countries(
+  "CaymanIslands": Country(
     name: "common_country_CaymanIslands",
     callingcode: "+1",
     vehiclecode: "USA",
@@ -1331,7 +1363,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "KY",
     ioccode: "CAY",
   ),
-  "Kazakhstan": Countries(
+  "Kazakhstan": Country(
     name: "common_country_Kazakhstan",
     callingcode: "+7",
     vehiclecode: "KZ",
@@ -1341,7 +1373,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "KZ",
     ioccode: "KAZ",
   ),
-  "Laos": Countries(
+  "Laos": Country(
     name: "common_country_Laos",
     callingcode: "+856",
     vehiclecode: "LAO",
@@ -1351,7 +1383,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "LA",
     ioccode: "LAO",
   ),
-  "Lebanon": Countries(
+  "Lebanon": Country(
     name: "common_country_Lebanon",
     callingcode: "+961",
     vehiclecode: "RL",
@@ -1361,7 +1393,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "LB",
     ioccode: "LBN",
   ),
-  "SaintLucia": Countries(
+  "SaintLucia": Country(
     name: "common_country_SaintLucia",
     callingcode: "+1",
     vehiclecode: "WL",
@@ -1371,7 +1403,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "LC",
     ioccode: "LCA",
   ),
-  "Liechtenstein": Countries(
+  "Liechtenstein": Country(
     name: "common_country_Liechtenstein",
     callingcode: "+423",
     vehiclecode: "FL",
@@ -1381,7 +1413,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "LI",
     ioccode: "LIE",
   ),
-  "SriLanka": Countries(
+  "SriLanka": Country(
     name: "common_country_SriLanka",
     callingcode: "+94",
     vehiclecode: "CL",
@@ -1391,7 +1423,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "LK",
     ioccode: "SRI",
   ),
-  "Liberia": Countries(
+  "Liberia": Country(
     name: "common_country_Liberia",
     callingcode: "+231",
     vehiclecode: "LB",
@@ -1401,7 +1433,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "LR",
     ioccode: "LBR",
   ),
-  "Lesotho": Countries(
+  "Lesotho": Country(
     name: "common_country_Lesotho",
     callingcode: "+266",
     vehiclecode: "LS",
@@ -1411,7 +1443,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "LS",
     ioccode: "LES",
   ),
-  "Lithuania": Countries(
+  "Lithuania": Country(
     name: "common_country_Lithuania",
     callingcode: "+370",
     vehiclecode: "LT",
@@ -1421,7 +1453,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "LT",
     ioccode: "LTU",
   ),
-  "Luxembourg": Countries(
+  "Luxembourg": Country(
     name: "common_country_Luxembourg",
     callingcode: "+352",
     vehiclecode: "L",
@@ -1431,7 +1463,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "LU",
     ioccode: "LUX",
   ),
-  "Latvia": Countries(
+  "Latvia": Country(
     name: "common_country_Latvia",
     callingcode: "+371",
     vehiclecode: "LV",
@@ -1441,7 +1473,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "LV",
     ioccode: "LAT",
   ),
-  "Libya": Countries(
+  "Libya": Country(
     name: "common_country_Libya",
     callingcode: "+218",
     vehiclecode: "LAR",
@@ -1451,7 +1483,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "LY",
     ioccode: "LBA",
   ),
-  "Morocco": Countries(
+  "Morocco": Country(
     name: "common_country_Morocco",
     callingcode: "+212",
     vehiclecode: "MA",
@@ -1461,7 +1493,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "MA",
     ioccode: "MAR",
   ),
-  "Monaco": Countries(
+  "Monaco": Country(
     name: "common_country_Monaco",
     callingcode: "+377",
     vehiclecode: "MC",
@@ -1471,7 +1503,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "MC",
     ioccode: "MON",
   ),
-  "Moldova": Countries(
+  "Moldova": Country(
     name: "common_country_Moldova",
     callingcode: "+373",
     vehiclecode: "MD",
@@ -1481,7 +1513,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "MD",
     ioccode: "MDA",
   ),
-  "Montenegro": Countries(
+  "Montenegro": Country(
     name: "common_country_Montenegro",
     callingcode: "+382",
     vehiclecode: "MNE",
@@ -1491,7 +1523,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "ME",
     ioccode: "MNE",
   ),
-  "CollectivityofSaintMartin": Countries(
+  "CollectivityofSaintMartin": Country(
     name: "common_country_CollectivityofSaintMartin",
     callingcode: "+590",
     vehiclecode: "",
@@ -1501,7 +1533,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "MF",
     ioccode: ""
   ),
-  "Madagascar": Countries(
+  "Madagascar": Country(
     name: "common_country_Madagascar",
     callingcode: "+261",
     vehiclecode: "RM",
@@ -1511,7 +1543,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "MG",
     ioccode: "MAD",
   ),
-  "MarshallIslands": Countries(
+  "MarshallIslands": Country(
     name: "common_country_MarshallIslands",
     callingcode: "+692",
     vehiclecode: "MH",
@@ -1521,7 +1553,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "MH",
     ioccode: "MHL",
   ),
-  "NorthMacedonia": Countries(
+  "NorthMacedonia": Country(
     name: "common_country_NorthMacedonia",
     callingcode: "+389",
     vehiclecode: "NMK",
@@ -1531,7 +1563,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "MK",
     ioccode: "MKD",
   ),
-  "Mali": Countries(
+  "Mali": Country(
     name: "common_country_Mali",
     callingcode: "+223",
     vehiclecode: "RMM",
@@ -1541,7 +1573,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "ML",
     ioccode: "MLI",
   ),
-  "Myanmar": Countries(
+  "Myanmar": Country(
     name: "common_country_Myanmar",
     callingcode: "+95",
     vehiclecode: "MYA",
@@ -1551,7 +1583,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "MM",
     ioccode: "MYA",
   ),
-  "Mongolia": Countries(
+  "Mongolia": Country(
     name: "common_country_Mongolia",
     callingcode: "+976",
     vehiclecode: "MNG",
@@ -1561,7 +1593,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "MN",
     ioccode: "MGL",
   ),
-  "Macau": Countries(
+  "Macau": Country(
     name: "common_country_Macau",
     callingcode: "+853",
     vehiclecode: "",
@@ -1571,7 +1603,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "MO",
     ioccode: "",
   ),
-  "NorthernMarianaIslands": Countries(
+  "NorthernMarianaIslands": Country(
     name: "common_country_NorthernMarianaIslands",
     callingcode: "+1 670",
     vehiclecode: "USA",
@@ -1581,7 +1613,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "MP",
     ioccode: "",
   ),
-  "Martinique": Countries(
+  "Martinique": Country(
     name: "common_country_Martinique",
     callingcode: "+596",
     vehiclecode: "",
@@ -1591,7 +1623,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "MQ",
     ioccode: "",
   ),
-  "Mauritania": Countries(
+  "Mauritania": Country(
     name: "common_country_Mauritania",
     callingcode: "+222",
     vehiclecode: "RIM",
@@ -1601,7 +1633,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "MR",
     ioccode: "MTN",
   ),
-  "Montserrat": Countries(
+  "Montserrat": Country(
     name: "common_country_Montserrat",
     callingcode: "+1",
     vehiclecode: "USA",
@@ -1611,7 +1643,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "MS",
     ioccode: "",
   ),
-  "Malta": Countries(
+  "Malta": Country(
     name: "common_country_Malta",
     callingcode: "+356",
     vehiclecode: "M",
@@ -1621,7 +1653,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "MT",
     ioccode: "MLT",
   ),
-  "Mauritius": Countries(
+  "Mauritius": Country(
     name: "common_country_Mauritius",
     callingcode: "+230",
     vehiclecode: "MS",
@@ -1631,7 +1663,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "MU",
     ioccode: "MRI",
   ),
-  "Maldives": Countries(
+  "Maldives": Country(
     name: "common_country_Maldives",
     callingcode: "+960",
     vehiclecode: "MV",
@@ -1641,7 +1673,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "MV",
     ioccode: "MDV",
   ),
-  "Malawi": Countries(
+  "Malawi": Country(
     name: "common_country_Malawi",
     callingcode: "+265",
     vehiclecode: "MW",
@@ -1651,7 +1683,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "MW",
     ioccode: "MAW",
   ),
-  "Mexico": Countries(
+  "Mexico": Country(
     name: "common_country_Mexico",
     callingcode: "+52",
     vehiclecode: "MEX",
@@ -1661,7 +1693,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "MX",
     ioccode: "MEX",
   ),
-  "Malaysia": Countries(
+  "Malaysia": Country(
     name: "common_country_Malaysia",
     callingcode: "+60",
     vehiclecode: "MAL",
@@ -1671,7 +1703,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "MY",
     ioccode: "MAS",
   ),
-  "Mozambique": Countries(
+  "Mozambique": Country(
     name: "common_country_Mozambique",
     callingcode: "+258",
     vehiclecode: "MOC",
@@ -1681,7 +1713,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "MZ",
     ioccode: "MOZ",
   ),
-  "Namibia": Countries(
+  "Namibia": Country(
     name: "common_country_Namibia",
     callingcode: "+264",
     vehiclecode: "NAM",
@@ -1691,7 +1723,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "NA",
     ioccode: "NAM",
   ),
-  "NewCaledonia": Countries(
+  "NewCaledonia": Country(
     name: "common_country_NewCaledonia",
     callingcode: "+687",
     vehiclecode: "NCL",
@@ -1701,7 +1733,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "NC",
     ioccode: "",
   ),
-  "Niger": Countries(
+  "Niger": Country(
     name: "common_country_Niger",
     callingcode: "+227",
     vehiclecode: "RN",
@@ -1711,7 +1743,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "NE",
     ioccode: "NIG",
   ),
-  "NorfolkIsland": Countries(
+  "NorfolkIsland": Country(
     name: "common_country_NorfolkIsland",
     callingcode: "+6723",
     vehiclecode: "",
@@ -1721,7 +1753,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "NF",
     ioccode: "",
   ),
-  "Nigeria": Countries(
+  "Nigeria": Country(
     name: "common_country_Nigeria",
     callingcode: "+234",
     vehiclecode: "NGR",
@@ -1731,7 +1763,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "NG",
     ioccode: "NGR",
   ),
-  "Nicaragua": Countries(
+  "Nicaragua": Country(
     name: "common_country_Nicaragua",
     callingcode: "+505",
     vehiclecode: "NIC",
@@ -1741,7 +1773,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "NI",
     ioccode: "NCA",
   ),
-  "NorthernIreland": Countries(
+  "NorthernIreland": Country(
     name: "common_country_NorthernIreland",
     callingcode: "+44",
     vehiclecode: "NI",
@@ -1751,7 +1783,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "GB",
     ioccode: "",
   ),
-  "Netherlands": Countries(
+  "Netherlands": Country(
     name: "common_country_Netherlands",
     callingcode: "+31",
     vehiclecode: "NL",
@@ -1761,7 +1793,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "NL",
     ioccode: "NED",
   ),
-  "Norway": Countries(
+  "Norway": Country(
     name: "common_country_Norway",
     callingcode: "+47",
     vehiclecode: "N",
@@ -1771,7 +1803,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "NO",
     ioccode: "NOR",
   ),
-  "Nepal": Countries(
+  "Nepal": Country(
     name: "common_country_Nepal",
     callingcode: "+977",
     vehiclecode: "NEP",
@@ -1781,7 +1813,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "NP",
     ioccode: "NEP",
   ),
-  "Nauru": Countries(
+  "Nauru": Country(
     name: "common_country_Nauru",
     callingcode: "+674",
     vehiclecode: "NAU",
@@ -1791,7 +1823,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "NR",
     ioccode: "NRU",
   ),
-  "Niue": Countries(
+  "Niue": Country(
     name: "common_country_Niue",
     callingcode: "+683",
     vehiclecode: "NZ",
@@ -1801,7 +1833,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "NU",
     ioccode: "",
   ),
-  "NewZealand": Countries(
+  "NewZealand": Country(
     name: "common_country_NewZealand",
     callingcode: "+64",
     vehiclecode: "NZ",
@@ -1811,7 +1843,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "NZ",
     ioccode: "NZL",
   ),
-  "Oman": Countries(
+  "Oman": Country(
     name: "common_country_Oman",
     callingcode: "+968",
     vehiclecode: "OM",
@@ -1821,7 +1853,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "OM",
     ioccode: "OMA",
   ),
-  "Panama": Countries(
+  "Panama": Country(
     name: "common_country_Panama",
     callingcode: "+507",
     vehiclecode: "PA",
@@ -1831,7 +1863,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "PA",
     ioccode: "PAN",
   ),
-  "Peru": Countries(
+  "Peru": Country(
     name: "common_country_Peru",
     callingcode: "+51",
     vehiclecode: "PE",
@@ -1841,7 +1873,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "PE",
     ioccode: "PER",
   ),
-  "FrenchPolynesia": Countries(
+  "FrenchPolynesia": Country(
     name: "common_country_FrenchPolynesia",
     callingcode: "+689",
     vehiclecode: "",
@@ -1851,7 +1883,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "PF",
     ioccode: "",
   ),
-  "PapuaNewGuinea": Countries(
+  "PapuaNewGuinea": Country(
     name: "common_country_PapuaNewGuinea",
     callingcode: "+675",
     vehiclecode: "PNG",
@@ -1861,7 +1893,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "PG",
     ioccode: "PNG",
   ),
-  "Philippines": Countries(
+  "Philippines": Country(
     name: "common_country_Philippines",
     callingcode: "+63",
     vehiclecode: "RP",
@@ -1871,7 +1903,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "PH",
     ioccode: "PHI",
   ),
-  "Pakistan": Countries(
+  "Pakistan": Country(
     name: "common_country_Pakistan",
     callingcode: "+92",
     vehiclecode: "PK",
@@ -1881,7 +1913,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "PK",
     ioccode: "PAK",
   ),
-  "Poland": Countries(
+  "Poland": Country(
     name: "common_country_Poland",
     callingcode: "+48",
     vehiclecode: "PL",
@@ -1891,7 +1923,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "PL",
     ioccode: "POL",
   ),
-  "Saint-PierreandMiquelon": Countries(
+  "Saint-PierreandMiquelon": Country(
     name: "common_country_SaintPierreandMiquelon",
     callingcode: "+508",
     vehiclecode: "",
@@ -1901,7 +1933,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "PM",
     ioccode: "",
   ),
-  "PitcairnIslands": Countries(
+  "PitcairnIslands": Country(
     name: "common_country_PitcairnIslands",
     callingcode: "+649",
     vehiclecode: "PN",
@@ -1911,7 +1943,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "PN",
     ioccode: "",
   ),
-  "PuertoRico": Countries(
+  "PuertoRico": Country(
     name: "common_country_PuertoRico",
     callingcode: "+1",
     vehiclecode: "PRI",
@@ -1921,7 +1953,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "PR",
     ioccode: "PUR",
   ),
-  "PalestinianAutonomousTerritories": Countries(
+  "PalestinianAutonomousTerritories": Country(
     name: "common_country_Palestine",
     callingcode: "+970",
     vehiclecode: "WB",
@@ -1931,7 +1963,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "PS",
     ioccode: "PLE",
   ),
-  "Portugal": Countries(
+  "Portugal": Country(
     name: "common_country_Portugal",
     callingcode: "+351",
     vehiclecode: "P",
@@ -1941,7 +1973,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "PT",
     ioccode: "POR",
   ),
-  "Azores": Countries(
+  "Azores": Country(
     name: "common_country_Azores",
     callingcode: "+351 292",
     vehiclecode: "P",
@@ -1951,7 +1983,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "PT",
     ioccode: "",
   ),
-  "Madeira": Countries(
+  "Madeira": Country(
     name: "common_country_Madeira",
     callingcode: "+351 291",
     vehiclecode: "",
@@ -1961,7 +1993,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "PT",
     ioccode: "",
   ),
-  "Palau": Countries(
+  "Palau": Country(
     name: "common_country_Palau",
     callingcode: "+680",
     vehiclecode: "PAL",
@@ -1971,7 +2003,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "PW",
     ioccode: "PLW",
   ),
-  "Paraguay": Countries(
+  "Paraguay": Country(
     name: "common_country_Paraguay",
     callingcode: "+595",
     vehiclecode: "PY",
@@ -1981,7 +2013,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "PY",
     ioccode: "PAR",
   ),
-  "Qatar": Countries(
+  "Qatar": Country(
     name: "common_country_Qatar",
     callingcode: "+974",
     vehiclecode: "Q",
@@ -1991,7 +2023,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "QA",
     ioccode: "QAT",
   ),
-  "Réunion": Countries(
+  "Réunion": Country(
     name: "common_country_Reunion",
     callingcode: "+262",
     vehiclecode: "",
@@ -2001,7 +2033,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "RE",
     ioccode: ""
   ),
-  "Romania": Countries(
+  "Romania": Country(
     name: "common_country_Romania",
     callingcode: "+40",
     vehiclecode: "RO",
@@ -2011,7 +2043,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "RO",
     ioccode: "ROU",
   ),
-  "Serbia": Countries(
+  "Serbia": Country(
     name: "common_country_Serbia",
     callingcode: "+381",
     vehiclecode: "SRB",
@@ -2021,7 +2053,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "RS",
     ioccode: "SRB",
   ),
-  "Russia": Countries(
+  "Russia": Country(
     name: "common_country_Russia",
     callingcode: "+7",
     vehiclecode: "RUS",
@@ -2031,7 +2063,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "RU",
     ioccode: "RUS",
   ),
-  "Rwanda": Countries(
+  "Rwanda": Country(
     name: "common_country_Rwanda",
     callingcode: "+250",
     vehiclecode: "RWA",
@@ -2041,7 +2073,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "RW",
     ioccode: "RWA",
   ),
-  "SaudiArabia": Countries(
+  "SaudiArabia": Country(
     name: "common_country_SaudiArabia",
     callingcode: "+966",
     vehiclecode: "KSA",
@@ -2051,7 +2083,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "SA",
     ioccode: "KSA",
   ),
-  "SolomonIslands": Countries(
+  "SolomonIslands": Country(
     name: "common_country_SolomonIslands",
     callingcode: "+677",
     vehiclecode: "SOL",
@@ -2061,7 +2093,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "SB",
     ioccode: "SOL",
   ),
-  "Seychelles": Countries(
+  "Seychelles": Country(
     name: "common_country_Seychelles",
     callingcode: "+248",
     vehiclecode: "SY",
@@ -2071,7 +2103,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "SC",
     ioccode: "SEY",
   ),
-  "Sudan": Countries(
+  "Sudan": Country(
     name: "common_country_Sudan",
     callingcode: "+249",
     vehiclecode: "SUD",
@@ -2081,7 +2113,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "SD",
     ioccode: "SUD",
   ),
-  "Sweden": Countries(
+  "Sweden": Country(
     name: "common_country_Sweden",
     callingcode: "+46",
     vehiclecode: "S",
@@ -2091,7 +2123,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "SE",
     ioccode: "SWE",
   ),
-  "Singapore": Countries(
+  "Singapore": Country(
     name: "common_country_Singapore",
     callingcode: "+65",
     vehiclecode: "SGP",
@@ -2101,7 +2133,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "SG",
     ioccode: "SGP",
   ),
-  "TristandaCunha": Countries(
+  "TristandaCunha": Country(
     name: "common_country_TristandaCunha",
     callingcode: "+290",
     vehiclecode: "",
@@ -2111,7 +2143,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "SH",
     ioccode: "",
   ),
-  "Ascension": Countries(
+  "Ascension": Country(
     name: "common_country_AscensionIsland",
     callingcode: "+247",
     vehiclecode: "",
@@ -2121,7 +2153,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "SH",
     ioccode: "",
   ),
-  "St.Helena": Countries(
+  "St.Helena": Country(
     name: "common_country_SaintHelena",
     callingcode: "+290",
     vehiclecode: "",
@@ -2131,7 +2163,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "SH",
     ioccode: "",
   ),
-  "Slovenia": Countries(
+  "Slovenia": Country(
     name: "common_country_Slovenia",
     callingcode: "+386",
     vehiclecode: "SLO",
@@ -2141,7 +2173,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "SI",
     ioccode: "SLO",
   ),
-  "SvalbardandJanMayen": Countries(
+  "SvalbardandJanMayen": Country(
     name: "common_country_SvalbardandJanMayen",
     callingcode: "",
     vehiclecode: "",
@@ -2151,7 +2183,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "SJ",
     ioccode: ""
   ),
-  "Slovakia": Countries(
+  "Slovakia": Country(
     name: "common_country_Slovakia",
     callingcode: "+421",
     vehiclecode: "SK",
@@ -2161,7 +2193,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "SK",
     ioccode: "SVK",
   ),
-  "SierraLeone": Countries(
+  "SierraLeone": Country(
     name: "common_country_SierraLeone",
     callingcode: "+232",
     vehiclecode: "WAL",
@@ -2171,7 +2203,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "SL",
     ioccode: "SLE",
   ),
-  "SanMarino": Countries(
+  "SanMarino": Country(
     name: "common_country_SanMarino",
     callingcode: "+378",
     vehiclecode: "RSM",
@@ -2181,7 +2213,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "SM",
     ioccode: "SMR",
   ),
-  "Senegal": Countries(
+  "Senegal": Country(
     name: "common_country_Senegal",
     callingcode: "+221",
     vehiclecode: "SN",
@@ -2191,7 +2223,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "SN",
     ioccode: "SEN",
   ),
-  "Somalia": Countries(
+  "Somalia": Country(
     name: "common_country_Somalia",
     callingcode: "+252",
     vehiclecode: "SO",
@@ -2201,7 +2233,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "SO",
     ioccode: "SOM",
   ),
-  "Somaliland": Countries(
+  "Somaliland": Country(
     name: "common_country_Somaliland",
     callingcode: "+252",
     vehiclecode: "SO",
@@ -2211,7 +2243,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "SO",
     ioccode: "",
   ),
-  "Suriname": Countries(
+  "Suriname": Country(
     name: "common_country_Suriname",
     callingcode: "+597",
     vehiclecode: "SME",
@@ -2221,7 +2253,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "SR",
     ioccode: "SUR",
   ),
-  "SouthSudan": Countries(
+  "SouthSudan": Country(
     name: "common_country_SouthSudan",
     callingcode: "+249",
     vehiclecode: "SSD",
@@ -2231,7 +2263,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "SS",
     ioccode: "SSD",
   ),
-  "SãoToméandPríncipe": Countries(
+  "SãoToméandPríncipe": Country(
     name: "common_country_SaoTomeandPrincipe",
     callingcode: "+239",
     vehiclecode: "STP",
@@ -2241,7 +2273,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "ST",
     ioccode: "STP",
   ),
-  "ElSalvador": Countries(
+  "ElSalvador": Country(
     name: "common_country_ElSalvador",
     callingcode: "+503",
     vehiclecode: "ES",
@@ -2251,7 +2283,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "SV",
     ioccode: "ESA",
   ),
-  "SintMaarten": Countries(
+  "SintMaarten": Country(
     name: "common_country_SintMaarten",
     callingcode: "+1",
     vehiclecode: "",
@@ -2261,7 +2293,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "SX",
     ioccode: "",
   ),
-  "Syria": Countries(
+  "Syria": Country(
     name: "common_country_Syria",
     callingcode: "+963",
     vehiclecode: "SYR",
@@ -2271,7 +2303,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "SY",
     ioccode: "SYR",
   ),
-  "Eswatini": Countries(
+  "Eswatini": Country(
     name: "common_country_Eswatini",
     callingcode: "+268",
     vehiclecode: "SD",
@@ -2281,7 +2313,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "SZ",
     ioccode: "SWZ",
   ),
-  "TurksandCaicosIslands": Countries(
+  "TurksandCaicosIslands": Country(
     name: "common_country_TurksandCaicosIslands",
     callingcode: "+1",
     vehiclecode: "",
@@ -2291,7 +2323,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "TC",
     ioccode: "",
   ),
-  "Chad": Countries(
+  "Chad": Country(
     name: "common_country_Chad",
     callingcode: "+235",
     vehiclecode: "TD",
@@ -2301,7 +2333,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "TD",
     ioccode: "CHA",
   ),
-  "FrenchSouthernandAntarcticLands": Countries(
+  "FrenchSouthernandAntarcticLands": Country(
     name: "common_country_FrenchSouthernandAntarcticLands",
     callingcode: "",
     vehiclecode: "",
@@ -2311,7 +2343,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "TF",
     ioccode: "",
   ),
-  "Togo": Countries(
+  "Togo": Country(
     name: "common_country_Togo",
     callingcode: "+228",
     vehiclecode: "RT",
@@ -2321,7 +2353,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "TG",
     ioccode: "TOG",
   ),
-  "Thailand": Countries(
+  "Thailand": Country(
     name: "common_country_Thailand",
     callingcode: "+66",
     vehiclecode: "T",
@@ -2331,7 +2363,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "TH",
     ioccode: "THA",
   ),
-  "Tajikistan": Countries(
+  "Tajikistan": Country(
     name: "common_country_Tajikistan",
     callingcode: "+992",
     vehiclecode: "TJ",
@@ -2341,7 +2373,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "TJ",
     ioccode: "TJK",
   ),
-  "Tokelau": Countries(
+  "Tokelau": Country(
     name: "common_country_Tokelau",
     callingcode: "+690",
     vehiclecode: "",
@@ -2351,7 +2383,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "TK",
     ioccode: "",
   ),
-  "EastTimor": Countries(
+  "EastTimor": Country(
     name: "common_country_EastTimor",
     callingcode: "+670",
     vehiclecode: "TL",
@@ -2361,7 +2393,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "TL",
     ioccode: "TLS",
   ),
-  "Turkmenistan": Countries(
+  "Turkmenistan": Country(
     name: "common_country_Turkmenistan",
     callingcode: "+993",
     vehiclecode: "TM",
@@ -2371,7 +2403,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "TM",
     ioccode: "TKM",
   ),
-  "Tunisia": Countries(
+  "Tunisia": Country(
     name: "common_country_Tunisia",
     callingcode: "+216",
     vehiclecode: "TN",
@@ -2381,7 +2413,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "TN",
     ioccode: "TUN",
   ),
-  "Tonga": Countries(
+  "Tonga": Country(
     name: "common_country_Tonga",
     callingcode: "+676",
     vehiclecode: "TON",
@@ -2391,7 +2423,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "TO",
     ioccode: "TGA",
   ),
-  "Turkey": Countries(
+  "Turkey": Country(
     name: "common_country_Turkey",
     callingcode: "+90",
     vehiclecode: "TR",
@@ -2401,7 +2433,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "TR",
     ioccode: "TUR",
   ),
-  "TrinidadandTobago": Countries(
+  "TrinidadandTobago": Country(
     name: "common_country_TrinidadandTobago",
     callingcode: "+1",
     vehiclecode: "TT",
@@ -2411,7 +2443,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "TT",
     ioccode: "TTO",
   ),
-  "Tuvalu(ElliceIslands)": Countries(
+  "Tuvalu(ElliceIslands)": Country(
     name: "common_country_Tuvalu",
     callingcode: "+688",
     vehiclecode: "TUV",
@@ -2421,7 +2453,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "TV",
     ioccode: "TUV",
   ),
-  "Taiwan": Countries(
+  "Taiwan": Country(
     name: "common_country_Taiwan",
     callingcode: "+886",
     vehiclecode: "RC",
@@ -2431,7 +2463,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "TW",
     ioccode: "TPE",
   ),
-  "Tanzania": Countries(
+  "Tanzania": Country(
     name: "common_country_Tanzania",
     callingcode: "+255",
     vehiclecode: "AET",
@@ -2441,7 +2473,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "TZ",
     ioccode: "TAN",
   ),
-  "Ukraine": Countries(
+  "Ukraine": Country(
     name: "common_country_Ukraine",
     callingcode: "+380",
     vehiclecode: "UA",
@@ -2451,7 +2483,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "UA",
     ioccode: "UKR",
   ),
-  "Uganda": Countries(
+  "Uganda": Country(
     name: "common_country_Uganda",
     callingcode: "+256",
     vehiclecode: "EAU",
@@ -2461,7 +2493,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "UG",
     ioccode: "UGA",
   ),
-  "JohnstonAtoll": Countries(
+  "JohnstonAtoll": Country(
     name: "common_country_JohnstonAtoll",
     callingcode: "",
     vehiclecode: "",
@@ -2471,7 +2503,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "UM",
     ioccode: "",
   ),
-  "UnitedStatesMinorOutlyingIslands": Countries(
+  "UnitedStatesMinorOutlyingIslands": Country(
     name: "common_country_UnitedStatesMinorOutlyingIslands",
     callingcode: "",
     vehiclecode: "USA",
@@ -2481,7 +2513,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "UM",
     ioccode: ""
   ),
-  "USA": Countries(
+  "USA": Country(
     name: "common_country_USA",
     callingcode: "+1",
     vehiclecode: "USA",
@@ -2491,7 +2523,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "US",
     ioccode: "USA",
   ),
-  "Hawaii": Countries(
+  "Hawaii": Country(
     name: "common_country_Hawaii",
     callingcode: "+1",
     vehiclecode: "USA",
@@ -2501,7 +2533,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "US",
     ioccode: "",
   ),
-  "Uruguay": Countries(
+  "Uruguay": Country(
     name: "common_country_Uruguay",
     callingcode: "+598",
     vehiclecode: "ROU",
@@ -2511,7 +2543,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "UY",
     ioccode: "URU",
   ),
-  "Uzbekistan": Countries(
+  "Uzbekistan": Country(
     name: "common_country_Uzbekistan",
     callingcode: "+998",
     vehiclecode: "UZ",
@@ -2521,7 +2553,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "UZ",
     ioccode: "UZB",
   ),
-  "VaticanCity": Countries(
+  "VaticanCity": Country(
     name: "common_country_VaticanCity",
     callingcode: "+379",
     vehiclecode: "V",
@@ -2531,7 +2563,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "VA",
     ioccode: "",
   ),
-  "St.VincentandtheGrenadines": Countries(
+  "St.VincentandtheGrenadines": Country(
     name: "common_country_SaintVincentandtheGrenadines",
     callingcode: "+1",
     vehiclecode: "WV",
@@ -2541,7 +2573,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "VC",
     ioccode: "VIN",
   ),
-  "Venezuela": Countries(
+  "Venezuela": Country(
     name: "common_country_Venezuela",
     callingcode: "+58",
     vehiclecode: "YV",
@@ -2551,7 +2583,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "VE",
     ioccode: "VEN",
   ),
-  "BritishVirginIslands": Countries(
+  "BritishVirginIslands": Country(
     name: "common_country_BritishVirginIslands",
     callingcode: "+1",
     vehiclecode: "VG",
@@ -2561,7 +2593,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "VG",
     ioccode: "IVB",
   ),
-  "VirginIslands(USA)": Countries(
+  "VirginIslands(USA)": Country(
     name: "common_country_UnitedStatesVirginIslands",
     callingcode: "",
     vehiclecode: "",
@@ -2571,7 +2603,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "VI",
     ioccode: "",
   ),
-  "Vietnam": Countries(
+  "Vietnam": Country(
     name: "common_country_Vietnam",
     callingcode: "+84",
     vehiclecode: "VN",
@@ -2581,7 +2613,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "VN",
     ioccode: "VIE",
   ),
-  "Vanuatu": Countries(
+  "Vanuatu": Country(
     name: "common_country_Vanuatu",
     callingcode: "+678",
     vehiclecode: "VAN",
@@ -2591,7 +2623,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "VU",
     ioccode: "VAN",
   ),
-  "WallisandFutuna": Countries(
+  "WallisandFutuna": Country(
     name: "common_country_WallisandFutuna",
     callingcode: "+681",
     vehiclecode: "F",
@@ -2601,7 +2633,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "WF",
     ioccode: "",
   ),
-  "Samoa": Countries(
+  "Samoa": Country(
     name: "common_country_Samoa",
     callingcode: "+685",
     vehiclecode: "WS",
@@ -2611,7 +2643,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "WS",
     ioccode: "SAM",
   ),
-  "Kosovo": Countries(
+  "Kosovo": Country(
     name: "common_country_Kosovo",
     callingcode: "+383",
     vehiclecode: "RKS",
@@ -2621,7 +2653,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "",
     ioccode: "KOS",
   ),
-  "Yemen": Countries(
+  "Yemen": Country(
     name: "common_country_Yemen",
     callingcode: "+967",
     vehiclecode: "YEM",
@@ -2631,7 +2663,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "YE",
     ioccode: "YEM",
   ),
-  "Mayotte": Countries(
+  "Mayotte": Country(
     name: "common_country_Mayotte",
     callingcode: "+262",
     vehiclecode: "",
@@ -2641,7 +2673,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "YT",
     ioccode: ""
   ),
-  "SouthAfrica": Countries(
+  "SouthAfrica": Country(
     name: "common_country_SouthAfrica",
     callingcode: "+27",
     vehiclecode: "ZA",
@@ -2651,7 +2683,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "ZA",
     ioccode: "RSA",
   ),
-  "Zambia": Countries(
+  "Zambia": Country(
     name: "common_country_Zambia",
     callingcode: "+260",
     vehiclecode: "Z",
@@ -2661,7 +2693,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "ZM",
     ioccode: "ZAM",
   ),
-  "Zimbabwe": Countries(
+  "Zimbabwe": Country(
     name: "common_country_Zimbabwe",
     callingcode: "+263",
     vehiclecode: "ZW",
@@ -2671,7 +2703,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "ZW",
     ioccode: "ZIM",
   ),
-  "Abkhazia": Countries(
+  "Abkhazia": Country(
     name: "common_country_RepublicofAbkhazia",
     callingcode: "+7",
     vehiclecode: "ABH",
@@ -2681,7 +2713,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "",
     ioccode: "",
   ),
-  "Ceuta": Countries(
+  "Ceuta": Country(
     name: "common_country_Ceuta",
     callingcode: "",
     vehiclecode: "",
@@ -2691,7 +2723,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "ES-CE",
     ioccode: "",
   ),
-  "ChathamIslands": Countries(
+  "ChathamIslands": Country(
     name: "common_country_ChathamIslands",
     callingcode: "+64 03",
     vehiclecode: "",
@@ -2701,7 +2733,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "NZ-CIT",
     ioccode: "",
   ),
-  "EasterIsland": Countries(
+  "EasterIsland": Country(
     name: "common_country_EasterIsland",
     callingcode: "+56",
     vehiclecode: "",
@@ -2711,7 +2743,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "",
     ioccode: "",
   ),
-  "JuanFernándezIslands": Countries(
+  "JuanFernándezIslands": Country(
     name: "common_country_JuanFernandezIslands",
     callingcode: "",
     vehiclecode: "",
@@ -2721,7 +2753,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "",
     ioccode: "",
   ),
-  "Melilla": Countries(
+  "Melilla": Country(
     name: "common_country_Melilla",
     callingcode: "",
     vehiclecode: "",
@@ -2731,7 +2763,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "ES-ML",
     ioccode: "",
   ),
-  "RepublicofArtsakh": Countries(
+  "RepublicofArtsakh": Country(
     name: "common_country_Artsakh",
     callingcode: "+374 47",
     vehiclecode: "",
@@ -2741,7 +2773,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "",
     ioccode: "",
   ),
-  "SouthOssetia": Countries(
+  "SouthOssetia": Country(
     name: "common_country_SouthOssetia",
     callingcode: "+7",
     vehiclecode: "",
@@ -2751,7 +2783,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "",
     ioccode: "",
   ),
-  "Tibet": Countries(
+  "Tibet": Country(
     name: "common_country_Tibet",
     callingcode: "",
     vehiclecode: "TIBET",
@@ -2761,7 +2793,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "",
     ioccode: "",
   ),
-  "Transnistria": Countries(
+  "Transnistria": Country(
     name: "common_country_Transnistria",
     callingcode: "+373",
     vehiclecode: "PMR",
@@ -2771,7 +2803,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "",
     ioccode: "",
   ),
-  "TurkishRepublicofNorthernCyprus": Countries(
+  "TurkishRepublicofNorthernCyprus": Country(
     name: "common_country_TurkishRepublicofNorthernCyprus",
     callingcode: "+90",
     vehiclecode: "",
@@ -2781,7 +2813,7 @@ final Map<String, Countries> COUNTRIES = {
     iso3166_2: "",
     ioccode: "",
   ),
-  "WakeIsland": Countries(
+  "WakeIsland": Country(
     name: "common_country_WakeIsland",
     callingcode: "",
     vehiclecode: "",
