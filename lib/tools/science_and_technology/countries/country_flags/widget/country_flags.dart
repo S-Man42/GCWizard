@@ -13,8 +13,8 @@ class CountriesFlagsState extends State<CountriesFlags> {
   var _ASSET_PATH = 'assets/symbol_tables/country_flags/country_flags.zip';
   var _KEY_PREFIX = 'common_country_';
 
-  List<Map<String, SymbolData>>? _images;
-  String _currentImageKey;
+  List<Map<String, SymbolData>> _images = [];
+  String _currentImageKey = '';
 
   @override
   void initState() {
