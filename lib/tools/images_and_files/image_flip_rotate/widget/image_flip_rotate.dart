@@ -17,7 +17,7 @@ import 'package:gc_wizard/utils/math_utils.dart';
 import 'package:image/image.dart' as img;
 
 class ImageFlipRotate extends StatefulWidget {
-  final GCWFile file;
+  final GCWFile? file;
 
   const ImageFlipRotate({this.file});
 
@@ -26,9 +26,9 @@ class ImageFlipRotate extends StatefulWidget {
 }
 
 class ImageFlipRotateState extends State<ImageFlipRotate> {
-  GCWFile _originalData;
+  GCWFile? _originalData;
 
-  img.Image _currentImage;
+  img.Image? _currentImage;
 
   var _currentFlipHorizontally = false;
   var _currentFlipVertically = false;
@@ -38,9 +38,9 @@ class ImageFlipRotateState extends State<ImageFlipRotate> {
   void initState() {
     super.initState();
 
-    if (widget.file != null && widget.file.bytes != null) {
+    if (widget.file?.bytes != null) {
       _originalData = widget.file;
-      _currentImage = img.decodeImage(_originalData.bytes);
+      _currentImage = img.decodeImage(_originalData!.bytes);
     }
   }
 
@@ -62,7 +62,7 @@ class ImageFlipRotateState extends State<ImageFlipRotate> {
       children: <Widget>[
         GCWOpenFile(
           supportedFileTypes: SUPPORTED_IMAGE_TYPES,
-          onLoaded: (GCWFile value) {
+          onLoaded: (GCWFile? value) {
             if (value == null || !_validateData(value.bytes)) {
               showToast(i18n(context, 'common_loadfile_exception_notloaded'));
               return;
@@ -70,7 +70,7 @@ class ImageFlipRotateState extends State<ImageFlipRotate> {
 
             setState(() {
               _originalData = value;
-              _currentImage = img.decodeImage(_originalData.bytes);
+              _currentImage = _originalData?.bytes == null ? null : img.decodeImage(_originalData!.bytes);
               _resetInputs();
             });
           },
@@ -78,7 +78,7 @@ class ImageFlipRotateState extends State<ImageFlipRotate> {
 
         if (_currentImage != null)
           GCWImageView(
-            imageData: _originalData == null ? null : GCWImageViewData(GCWFile(bytes: _imageBytes())),
+            imageData: _originalData == null ? null : GCWImageViewData(GCWFile(bytes: _imageBytes(_currentImage) ?? Uint8List(0))),
             suppressOpenInTool: {GCWImageViewOpenInTools.FLIPROTATE},
           ),
         if (_currentImage != null)
@@ -113,7 +113,7 @@ class ImageFlipRotateState extends State<ImageFlipRotate> {
                   icon: Icons.rotate_left,
                   onPressed: () {
                     setState(() {
-                      _currentRotate = modulo360(_currentRotate - 90);
+                      _currentRotate = modulo360(_currentRotate - 90).toInt();
                     });
                   },
                 ),
@@ -121,7 +121,7 @@ class ImageFlipRotateState extends State<ImageFlipRotate> {
                   icon: Icons.rotate_right,
                   onPressed: () {
                     setState(() {
-                      _currentRotate = modulo360(_currentRotate + 90);
+                      _currentRotate = modulo360(_currentRotate + 90).toInt();
                     });
                   },
                 ),
@@ -139,31 +139,34 @@ class ImageFlipRotateState extends State<ImageFlipRotate> {
     );
   }
 
-  img.Image _flipRotate(img.Image image) {
+  img.Image? _flipRotate(img.Image? image) {
+    if(image == null) return null;
     return _doFlipRotate(_FlipRotateInput(
-      image: _currentImage,
+      image: image,
       flipHorizontally: _currentFlipHorizontally,
       flipVertically: _currentFlipVertically,
       rotate: _currentRotate.toDouble(),
     ));
   }
 
-  Uint8List _imageBytes() {
-    return encodeTrimmedPng(_flipRotate(_currentImage));
+  Uint8List? _imageBytes(img.Image? image) {
+    var _image = _flipRotate(image);
+    return _image == null ? null : encodeTrimmedPng(_image);
   }
 }
 
 class _FlipRotateInput {
-  final img.Image image;
+  final img.Image? image;
   final bool flipHorizontally;
   final bool flipVertically;
   final double rotate;
 
-  _FlipRotateInput({this.image, this.flipHorizontally: false, this.flipVertically: false, this.rotate: 0.0});
+  _FlipRotateInput({this.image, this.flipHorizontally = false, this.flipVertically = false, this.rotate = 0.0});
 }
 
-img.Image _doFlipRotate(_FlipRotateInput input) {
-  img.Image image = img.Image.from(input.image);
+img.Image? _doFlipRotate(_FlipRotateInput input) {
+  if (input.image == null) return null;
+  img.Image image = img.Image.from(input.image!);
   if (input.flipHorizontally) image = img.flipHorizontal(image);
   if (input.flipVertically) image = img.flipVertical(image);
 
