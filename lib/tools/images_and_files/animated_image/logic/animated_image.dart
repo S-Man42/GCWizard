@@ -5,7 +5,15 @@ import 'dart:typed_data';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:image/image.dart' as Image;
 
-Future<Map<String, dynamic>> analyseImageAsync(dynamic jobData) async {
+class AnimatedImageOutput {
+  var imageList;
+  var durations;
+  var linkList;
+
+  AnimatedImageOutput(this.imageList, this.durations, this.linkList) {}
+}
+
+Future<AnimatedImageOutput?> analyseImageAsync(dynamic jobData) async {
   if (jobData == null) return null;
 
   var output = await analyseImage(jobData.parameters, sendAsyncPort: jobData.sendAsyncPort);
@@ -15,7 +23,8 @@ Future<Map<String, dynamic>> analyseImageAsync(dynamic jobData) async {
   return output;
 }
 
-Future<Map<String, Object>?> analyseImage(Uint8List bytes, {Function filterImages, SendPort? sendAsyncPort}) async {
+Future<AnimatedImageOutput?> analyseImage(Uint8List bytes,
+    {void Function(AnimatedImageOutput, List<Image.Image>) filterImages, SendPort? sendAsyncPort}) async {
   try {
     var progress = 0;
     final decoder = Image.findDecoderForData(bytes);
