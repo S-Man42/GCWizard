@@ -60,12 +60,18 @@ class GCWTextExportState extends State<GCWTextExport> {
   }
 
   _buildQRCode() {
-    input2Image(generateBarCode(_currentExportText)).then((qr_code) {
+    var qrCode = generateBarCode(_currentExportText);
+    if (qrCode == null) {
+      _qrImageData = null;
+      return;
+    }
+    input2Image(qrCode).then((qr_code) {
       setState(() {
         _qrImageData = qr_code;
       });
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +126,7 @@ class GCWTextExportState extends State<GCWTextExport> {
   }
 }
 
-exportFile(String text, TextExportMode mode, BuildContext context) async {
+void exportFile(String text, TextExportMode mode, BuildContext context) async {
   if (mode == TextExportMode.TEXT) {
     saveStringToFile(context, text, 'txt_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.txt').then((value) {
       if (value == false) return;
@@ -128,7 +134,9 @@ exportFile(String text, TextExportMode mode, BuildContext context) async {
       showExportedFileDialog(context);
     });
   } else {
-    input2Image(generateBarCode(text)).then((_imgData) {
+    var qrCode = generateBarCode(text);
+    if (qrCode == null) return;
+    input2Image(qrCode).then((_imgData) {
       saveByteDataToFile(
           context, _imgData, 'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png').then((value) {
         if (value == false)

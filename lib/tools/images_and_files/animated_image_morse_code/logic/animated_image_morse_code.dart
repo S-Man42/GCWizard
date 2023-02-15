@@ -2,17 +2,18 @@ import 'dart:isolate';
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:gc_wizard/common_widgets/gcw_async_executer.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/morse/logic/morse.dart';
 import 'package:gc_wizard/tools/images_and_files/animated_image/logic/animated_image.dart' as animated_image;
 import 'package:image/image.dart' as Image;
 import 'package:tuple/tuple.dart';
 
-Future<Map<String, dynamic>> analyseImageMorseCodeAsync(dynamic jobData) async {
-  if (jobData == null) return null;
+Future<Map<String, dynamic>?> analyseImageMorseCodeAsync(GCWAsyncExecuterParameters? jobData) async {
+  if (jobData == null) return Future.value(null);
 
   var output = await analyseImageMorseCode(jobData.parameters, sendAsyncPort: jobData.sendAsyncPort);
 
-  jobData.sendAsyncPort?.send(output);
+  jobData.sendAsyncPort.send(output);
 
   return output;
 }
@@ -31,28 +32,29 @@ Future<Map<String, dynamic>> analyseImageMorseCode(Uint8List bytes, {SendPort? s
 
     return out; // Future.value(out);
   } on Exception {
-    return null;
+    return Future.value(null);
   }
 }
 
-Future<Uint8List> createImageAsync(dynamic jobData) async {
-  if (jobData == null) return null;
+Future<Uint8List?> createImageAsync(GCWAsyncExecuterParameters? jobData) async {
+  if (jobData == null) return Future.value(null);
 
   var output = await _createImage(
       jobData.parameters.item1, jobData.parameters.item2, jobData.parameters.item3, jobData.parameters.item4,
       sendAsyncPort: jobData.sendAsyncPort);
 
-  jobData.sendAsyncPort?.send(output);
+  jobData.sendAsyncPort.send(output);
 
   return output;
 }
 
-Future<Uint8List> _createImage(Uint8List highImage, Uint8List lowImage, String input, int ditDuration,
+Future<Uint8List?> _createImage(Uint8List? highImage, Uint8List? lowImage, String? input, int ditDuration,
     {SendPort? sendAsyncPort}) async {
+  if (input == null || input == '') return Future.value(null);
   input = encodeMorse(input);
-  if (input == null || input == '') return null;
-  if (highImage == null || lowImage == null) return null;
-  if (ditDuration <= 0) return null;
+  if (input == null || input == '') return Future.value(null);
+  if (highImage == null || lowImage == null) return Future.value(null);
+  if (ditDuration <= 0) return Future.value(null);
 
   try {
     var _highImage = Image.decodeImage(highImage);

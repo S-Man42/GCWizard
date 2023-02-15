@@ -18,14 +18,15 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/tools/images_and_files/animated_image/logic/animated_image.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
-import 'package:gc_wizard/utils/file_utils/gcw_file.dart' as local;
+import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
+import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
 import 'package:intl/intl.dart';
 
 class AnimatedImage extends StatefulWidget {
-  final local.GCWFile platformFile;
+  final GCWFile? file;
 
-  const AnimatedImage({Key? key, this.platformFile}) : super(key: key);
+  const AnimatedImage({Key? key, this.file}) : super(key: key);
 
   @override
   AnimatedImageState createState() => AnimatedImageState();
@@ -33,29 +34,29 @@ class AnimatedImage extends StatefulWidget {
 
 class AnimatedImageState extends State<AnimatedImage> {
   Map<String, dynamic> _outData;
-  local.GCWFile _platformFile;
+  GCWFile _file;
   bool _play = false;
   static var allowedExtensions = [FileType.GIF, FileType.PNG, FileType.WEBP];
 
   @override
   Widget build(BuildContext context) {
-    if (widget.platformFile != null) {
-      _platformFile = widget.platformFile;
+    if (widget.file != null) {
+      _file = widget.file;
       _analysePlatformFileAsync();
     }
 
     return Column(children: <Widget>[
       GCWOpenFile(
         supportedFileTypes: AnimatedImageState.allowedExtensions,
-        onLoaded: (_file) {
-          if (_file == null) {
+        onLoaded: (GCWFile? value) {
+          if (value == null) {
             showToast(i18n(context, 'common_loadfile_exception_notloaded'));
             return;
           }
 
-          if (_file != null) {
+          if (value != null) {
             setState(() {
-              _platformFile = _file;
+              _file = value;
               _analysePlatformFileAsync();
             });
           }
@@ -89,7 +90,7 @@ class AnimatedImageState extends State<AnimatedImage> {
               size: IconButtonSize.SMALL,
               iconColor: _outData == null ? themeColors().inActive() : null,
               onPressed: () {
-                _outData == null ? null : _exportFiles(context, _platformFile.name, _outData["images"]);
+                _outData == null ? null : _exportFiles(context, _file.name, _outData["images"]);
               },
             )
           ]))
@@ -115,7 +116,7 @@ class AnimatedImageState extends State<AnimatedImage> {
 
     return Column(children: <Widget>[
       _play
-          ? Image.memory(_platformFile.bytes)
+          ? Image.memory(_file.bytes)
           : GCWGallery(imageData: _convertImageData(_outData["images"], _outData["durations"])),
       _buildDurationOutput(durations)
     ]);
@@ -175,7 +176,7 @@ class AnimatedImageState extends State<AnimatedImage> {
   }
 
   Future<GCWAsyncExecuterParameters> _buildJobData() async {
-    return GCWAsyncExecuterParameters(_platformFile.bytes);
+    return GCWAsyncExecuterParameters(_file.bytes);
   }
 
   _showOutput(Map<String, dynamic> output) {
@@ -214,7 +215,7 @@ openInAnimatedImage(BuildContext context, local.GCWFile file) {
       context,
       NoAnimationMaterialPageRoute(
           builder: (context) => GCWTool(
-              tool: AnimatedImage(platformFile: file),
+              tool: AnimatedImage(file: file),
               toolName: i18n(context, 'animated_image_title'),
               i18nPrefix: '')));
 }

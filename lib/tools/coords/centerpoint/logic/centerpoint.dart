@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:gc_wizard/common_widgets/gcw_async_executer.dart';
 import 'package:gc_wizard/tools/coords/distance_and_bearing/logic/distance_and_bearing.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/coords/segment_line/logic/segment_line.dart';
@@ -22,13 +23,13 @@ Map<String, dynamic> centerPointTwoPoints(LatLng coord1, LatLng coord2, Ellipsoi
   return {'centerPoint': segments['points'].first, 'distance': segments['segmentDistance']};
 }
 
-Future<List<Map<String, dynamic>>> centerPointThreePointsAsync(dynamic jobData) async {
-  if (jobData == null) return null;
+Future<List<Map<String, dynamic>>?> centerPointThreePointsAsync(GCWAsyncExecuterParameters? jobData) async {
+  if (jobData == null) return Future.value(null);
 
   var output = centerPointThreePoints(
       jobData.parameters.coord1, jobData.parameters.coord2, jobData.parameters.coord3, jobData.parameters.ells);
 
-  jobData.sendAsyncPort?.send(output);
+  jobData.sendAsyncPort.send(output);
 
   return output;
 }

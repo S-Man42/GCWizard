@@ -38,7 +38,7 @@ class GCWImageView extends StatefulWidget {
   final String? fileName;
   final Set<GCWImageViewButtons>? suppressedButtons;
   final int? maxHeightInPreview;
-  final Future<GCWFile> Function()? onBeforeLoadBigImage;
+  final Future<GCWFile?> Function()? onBeforeLoadBigImage;
   final Set<GCWImageViewOpenInTools>? suppressOpenInTool;
 
   const GCWImageView(
@@ -175,7 +175,7 @@ class _GCWImageViewState extends State<GCWImageView> {
             if (widget.imageData?.file.bytes != null) {
               if (widget.onBeforeLoadBigImage != null) {
                 widget.onBeforeLoadBigImage!().then((imgData) {
-                  openInFullScreen(context, imgData.bytes);
+                  if (imgData != null) openInFullScreen(context, imgData.bytes);
                 });
               } else {
                 openInFullScreen(context, widget.imageData!.file.bytes);
@@ -202,7 +202,7 @@ class _GCWImageViewState extends State<GCWImageView> {
               Uint8List? imgData;
               if (widget.onBeforeLoadBigImage != null) {
                 widget.onBeforeLoadBigImage!().then((imgData) {
-                  _exportFile(context, imgData.bytes);
+                  if (imgData != null) _exportFile(context, imgData.bytes);
                 });
               } else {
                 imgData = widget.imageData?.file.bytes;
@@ -221,7 +221,7 @@ class _GCWImageViewState extends State<GCWImageView> {
                       action: (index) => setState(() {
                         if (widget.onBeforeLoadBigImage != null) {
                           widget.onBeforeLoadBigImage!().then((imgData) {
-                            openInMetadataViewer(context, imgData);
+                            if (imgData != null) openInMetadataViewer(context, imgData);
                           });
                         } else if (widget.imageData?.file != null)
                           openInMetadataViewer(context, widget.imageData!.file);
@@ -234,7 +234,7 @@ class _GCWImageViewState extends State<GCWImageView> {
                       action: (index) => setState(() {
                         if (widget.onBeforeLoadBigImage != null) {
                           widget.onBeforeLoadBigImage!().then((imgData) {
-                            openInHexViewer(context, imgData);
+                            if (imgData != null) openInHexViewer(context, imgData);
                           });
                         } else if (widget.imageData?.file != null)
                           openInHexViewer(context, widget.imageData!.file);
@@ -247,7 +247,7 @@ class _GCWImageViewState extends State<GCWImageView> {
                       action: (index) => setState(() {
                         if (widget.onBeforeLoadBigImage != null) {
                           widget.onBeforeLoadBigImage!().then((imgData) {
-                            openInHiddenData(context, imgData);
+                            if (imgData != null) openInHiddenData(context, imgData);
                           });
                         } else if (widget.imageData?.file != null)
                           openInHiddenData(context, widget.imageData!.file);
@@ -261,7 +261,7 @@ class _GCWImageViewState extends State<GCWImageView> {
                         action: (index) => setState(() {
                               if (widget.onBeforeLoadBigImage != null) {
                                 widget.onBeforeLoadBigImage!().then((imgData) {
-                                  openInColorCorrections(context, imgData);
+                                  if (imgData != null) openInColorCorrections(context, imgData);
                                 });
                               } else if (widget.imageData?.file != null)
                                 openInColorCorrections(context, widget.imageData!.file);
@@ -273,7 +273,7 @@ class _GCWImageViewState extends State<GCWImageView> {
                         action: (index) => setState(() {
                               if (widget.onBeforeLoadBigImage != null) {
                                 widget.onBeforeLoadBigImage!().then((imgData) {
-                                  openInFlipRotate(context, imgData);
+                                  if (imgData != null) openInFlipRotate(context, imgData);
                                 });
                               } else if (widget.imageData?.file != null)
                                 openInFlipRotate(context, widget.imageData!.file);

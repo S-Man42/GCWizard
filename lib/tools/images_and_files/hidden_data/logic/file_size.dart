@@ -1,7 +1,8 @@
 part of 'package:gc_wizard/tools/images_and_files/hidden_data/logic/hidden_data.dart';
 
 /// calculate the file size
-int _fileSize(Uint8List bytes) {
+int? _fileSize(Uint8List? bytes) {
+  if (bytes == null) return null;
   FileType detectedFileType = getFileType(bytes);
 
   switch (detectedFileType) {
@@ -40,7 +41,7 @@ List<FileType> _fileSizeCalculationAviable() {
   ];
 }
 
-int _jpgImageSize(Uint8List data) {
+int? _jpgImageSize(Uint8List? data) {
   var sum = 0;
   if (data == null) return null;
   if (getFileType(data) != FileType.JPEG) return null;
@@ -81,7 +82,7 @@ int __jpgSosSegmentLength(Uint8List data, int offset) {
   return 0;
 }
 
-int _pngImageSize(Uint8List data) {
+int? _pngImageSize(Uint8List? data) {
   var startIndex = 0;
   var endIndex = 0;
   if (data == null) return null;
@@ -115,7 +116,7 @@ int _pngImageSize(Uint8List data) {
   return endIndex;
 }
 
-int _gifImageSize(Uint8List data) {
+int? _gifImageSize(Uint8List? data) {
   if (data == null) return null;
   if (getFileType(data) != FileType.GIF) return null;
 
@@ -183,7 +184,7 @@ int __gifColorMap(Uint8List data, int offset, int countOffset) {
   return offset;
 }
 
-int _zipFileSize(Uint8List data) {
+int? _zipFileSize(Uint8List? data) {
   if (data == null) return null;
   if (getFileType(data) != '.zip') return null;
 
@@ -236,7 +237,7 @@ int _zipFileSize(Uint8List data) {
   return offset;
 }
 
-int _bmpImageSize(Uint8List data) {
+int? _bmpImageSize(Uint8List? data) {
   if (data == null) return null;
   if (getFileType(data) != FileType.BMP) return null;
 
@@ -245,7 +246,7 @@ int _bmpImageSize(Uint8List data) {
   return data.buffer.asByteData(offset + 2).getInt32(0, Endian.little);
 }
 
-int _rarFileSize(Uint8List data) {
+int? _rarFileSize(Uint8List? data) {
   if (data == null) return null;
   if (getFileType(data) != FileType.RAR) return null;
 
@@ -349,7 +350,7 @@ Tuple2<int, int> __rarVint(Uint8List data, int offset) {
   return Tuple2<int, int>(value, index);
 }
 
-int _mp3FileSize(Uint8List data) {
+int? _mp3FileSize(Uint8List? data) {
   if (data == null) return null;
   if (getFileType(data) != FileType.MP3) return null;
 
@@ -436,17 +437,17 @@ int __mp3Vint(Uint8List data, int offset) {
   return value;
 }
 
-int _tarFileSize(Uint8List data) {
+int? _tarFileSize(Uint8List? data) {
   if (data == null) return null;
   if (getFileType(data) != FileType.TAR) return null;
 
   const int headerSize = 512;
   const int blockSize = 512;
   var magicByteOffset = magicBytesOffset(FileType.TAR) ?? 0;
-  var offset = 0;
+  int? offset = 0;
   var fileNames = <String>[];
 
-  while (offset + headerSize < data.length) {
+  while (offset! + headerSize < data.length) {
     // ustar
     if ((data[offset + magicByteOffset] == 0x75) &
     (data[offset + magicByteOffset + 1] == 0x73) &

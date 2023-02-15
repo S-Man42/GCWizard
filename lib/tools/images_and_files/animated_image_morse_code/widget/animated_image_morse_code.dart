@@ -22,15 +22,15 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/images_and_files/animated_image/widget/animated_image.dart';
 import 'package:gc_wizard/tools/images_and_files/animated_image_morse_code/logic/animated_image_morse_code.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
-import 'package:gc_wizard/utils/file_utils/gcw_file.dart' as local;
+import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
 import 'package:intl/intl.dart';
 import 'package:tuple/tuple.dart';
 
 class AnimatedImageMorseCode extends StatefulWidget {
-  final local.GCWFile platformFile;
+  final GCWFile file;
 
-  const AnimatedImageMorseCode({Key? key, this.platformFile}) : super(key: key);
+  const AnimatedImageMorseCode({Key? key, this.file}) : super(key: key);
 
   @override
   AnimatedImageMorseCodeState createState() => AnimatedImageMorseCodeState();
@@ -40,7 +40,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
   Map<String, dynamic> _outData;
   var _marked = <bool>[];
   Map<String, dynamic> _outText;
-  local.GCWFile _platformFile;
+  GCWFile _file;
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
   bool _play = false;
   bool _filtered = true;
@@ -71,8 +71,8 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.platformFile != null) {
-      _platformFile = widget.platformFile;
+    if (widget.file != null) {
+      _file = widget.file;
       _analysePlatformFileAsync();
     }
 
@@ -93,15 +93,15 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
     return Column(children: <Widget>[
       GCWOpenFile(
         supportedFileTypes: AnimatedImageState.allowedExtensions,
-        onLoaded: (_file) {
-          if (_file == null) {
+        onLoaded: (GCWFile? value) {
+          if (value == null) {
             showToast(i18n(context, 'common_loadfile_exception_notloaded'));
             return;
           }
 
-          if (_file != null) {
+          if (value != null) {
             setState(() {
-              _platformFile = _file;
+              _file = value;
               _analysePlatformFileAsync();
             });
           }
@@ -145,7 +145,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
               size: IconButtonSize.SMALL,
               iconColor: _outData == null ? themeColors().inActive() : null,
               onPressed: () {
-                _outData == null ? null : _exportFiles(context, _platformFile.name, _outData["images"]);
+                _outData == null ? null : _exportFiles(context, _file.name, _outData["images"]);
               },
             )
           ]))
@@ -157,7 +157,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
 
     return Column(children: <Widget>[
       _play
-          ? Image.memory(_platformFile.bytes)
+          ? Image.memory(_file.bytes)
           : _filtered
               ? GCWGallery(
                   imageData:
@@ -205,10 +205,10 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
           child: Column(children: [
             GCWOpenFile(
               supportedFileTypes: AnimatedImageState.allowedExtensions,
-              onLoaded: (_file) {
-                if (_file != null)
+              onLoaded: (GCWFile? value) {
+                if (value != null)
                   setState(() {
-                    _highImage = _file.bytes;
+                    _highImage = value.bytes;
                   });
               },
             ),
@@ -218,10 +218,10 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
           child: Column(children: [
             GCWOpenFile(
               supportedFileTypes: AnimatedImageState.allowedExtensions,
-              onLoaded: (_file) {
-                if (_file != null)
+              onLoaded: (GCWFile? value) {
+                if (value != null)
                   setState(() {
-                    _lowImage = _file.bytes;
+                    _lowImage = value.bytes;
                   });
               },
             ),
@@ -364,9 +364,9 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
       builder: (context) {
         return Center(
           child: Container(
-            child: GCWAsyncExecuter(
+            child: GCWAsyncExecuter<Map<String, dynamic>?>(
               isolatedFunction: analyseImageMorseCodeAsync,
-              parameter: _buildJobDataDecode(),
+              parameter: _buildJobDataDecode,
               onReady: (data) => _saveOutputDecode(data),
               isOverlay: true,
             ),
@@ -379,7 +379,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
   }
 
   Future<GCWAsyncExecuterParameters> _buildJobDataDecode() async {
-    return GCWAsyncExecuterParameters(_platformFile.bytes);
+    return GCWAsyncExecuterParameters(_file.bytes);
   }
 
   Future<GCWAsyncExecuterParameters> _buildJobDataEncode() async {
@@ -387,7 +387,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
         Tuple4<Uint8List, Uint8List, String, int>(_highImage, _lowImage, _currentInput, _currentDotDuration));
   }
 
-  _saveOutputDecode(Map<String, dynamic> output) {
+  _saveOutputDecode(Map<String, dynamic>? output) {
     _outData = output;
     _marked = null;
 

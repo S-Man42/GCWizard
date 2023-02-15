@@ -19,7 +19,7 @@ Future<String?> scanBytes(Uint8List? bytes) async {
 }
 
 /// Generating Bar Code
-DrawableImageData? generateBarCode(String code, {int moduleSize = 5, int border = 10}) {
+DrawableImageData? generateBarCode(String? code, {int moduleSize = 5, int border = 10}) {
   if (code == null || code == "") return null;
 
   var qrCode = qr.QrCode.fromData(
@@ -29,10 +29,12 @@ DrawableImageData? generateBarCode(String code, {int moduleSize = 5, int border 
   moduleSize = max(1, moduleSize);
   var _colorMap = {'0': COLOR_QR_BACKGROUND.value, '1': colorMap.values.elementAt(1)};
 
-  return DrawableImageData(_createQrCode(qrCode), _colorMap, bounds: border, pointSize: moduleSize.toDouble());
+  var qrImage = _createQrCode(qrCode);
+  if (qrImage == null) return null;
+  return DrawableImageData(qrImage, _colorMap, bounds: border, pointSize: moduleSize.toDouble());
 }
 
-List<String> _createQrCode(qr.QrCode qrCode) {
+List<String>? _createQrCode(qr.QrCode qrCode) {
   if (qrCode == null) return null;
 
     var qrImage = qr.QrImage(qrCode);

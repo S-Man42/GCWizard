@@ -18,17 +18,17 @@ import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 
 class HexViewer extends StatefulWidget {
-  final GCWFile platformFile;
+  final GCWFile? file;
 
-  const HexViewer({Key? key, this.platformFile}) : super(key: key);
+  const HexViewer({Key? key, this.file}) : super(key: key);
 
   @override
   HexViewerState createState() => HexViewerState();
 }
 
 class HexViewerState extends State<HexViewer> {
-  ScrollController _scrollControllerHex;
-  ScrollController _scrollControllerASCII;
+  late ScrollController _scrollControllerHex;
+  late ScrollController _scrollControllerASCII;
 
   String _hexData;
   double _hexDataLines;
@@ -66,22 +66,22 @@ class HexViewerState extends State<HexViewer> {
 
   @override
   Widget build(BuildContext context) {
-    if (_hexData == null && widget.platformFile != null) {
-      _setData(widget.platformFile.bytes);
+    if (_hexData == null && widget.file != null) {
+      _setData(widget.file.bytes);
     }
 
     return Column(
       children: <Widget>[
         GCWOpenFile(
-          onLoaded: (_file) {
+          onLoaded: (GCWFile? value) {
             _currentLines = 0;
-            if (_file == null) {
+            if (value == null) {
               showToast(i18n(context, 'common_loadfile_exception_notloaded'));
               return;
             }
 
-            if (_file != null) {
-              _setData(_file.bytes);
+            if (value != null) {
+              _setData(value.bytes);
 
               setState(() {});
             }
@@ -256,5 +256,5 @@ openInHexViewer(BuildContext context, GCWFile file) {
       context,
       NoAnimationMaterialPageRoute(
           builder: (context) => GCWTool(
-              tool: HexViewer(platformFile: file), toolName: i18n(context, 'hexviewer_title'), i18nPrefix: '')));
+              tool: HexViewer(file: file), toolName: i18n(context, 'hexviewer_title'), i18nPrefix: '')));
 }
