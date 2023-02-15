@@ -17,8 +17,11 @@ class MultiDecoderToolEsotericLanguageKarolRobot extends AbstractMultiDecoderToo
             onDecode: (String input, String key) {
               try {
                 var output = KarolRobotOutputDecode(input);
-                if ((output != null) && (output != "####\n#####\n#####\n#####"))
-                  return input2Image(binary2Image(output));
+                if ((output != null) && (output != "####\n#####\n#####\n#####")) {
+                  var image = binary2Image(output);
+                  if (image == null) return null;
+                  return input2Image(image);
+                }
               } catch (e) {}
               return null;
             },

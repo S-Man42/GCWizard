@@ -28,14 +28,14 @@ class WASD extends StatefulWidget {
 }
 
 class WASDState extends State<WASD> {
-  TextEditingController _encodeController;
-  TextEditingController _decodeController;
-  TextEditingController _upController;
-  TextEditingController _downController;
-  TextEditingController _leftController;
-  TextEditingController _rightController;
+  late TextEditingController _encodeController;
+  late TextEditingController _decodeController;
+  late TextEditingController _upController;
+  late TextEditingController _downController;
+  late TextEditingController _leftController;
+  late TextEditingController _rightController;
 
-  TextEditingController _currentCustomKeyController;
+  late TextEditingController _currentCustomKeyController;
 
   var _currentEncodeInput = '';
   var _currentDecodeInput = '';
@@ -50,8 +50,8 @@ class WASDState extends State<WASD> {
 
   var _maskInputFormatter = WrapperForMaskTextInputFormatter(mask: '#', filter: {"#": RegExp(r'.')});
 
-  Uint8List _outDecodeData;
-  Uint8List _outEncodeData;
+  Uint8List? _outDecodeData;
+  Uint8List? _outEncodeData;
 
   @override
   void initState() {
@@ -309,7 +309,7 @@ class WASDState extends State<WASD> {
                 size: IconButtonSize.SMALL,
                 iconColor: _outDecodeData == null ? themeColors().inActive() : null,
                 onPressed: () {
-                  _outDecodeData == null ? null : _exportFile(context, _outDecodeData);
+                  _outDecodeData == null ? null : _exportFile(context, _outDecodeData!);
                 },
               ))
         else
@@ -320,7 +320,7 @@ class WASDState extends State<WASD> {
                 size: IconButtonSize.SMALL,
                 iconColor: _outEncodeData == null ? themeColors().inActive() : null,
                 onPressed: () {
-                  _outEncodeData == null ? null : _exportFile(context, _outEncodeData);
+                  _outEncodeData == null ? null : _exportFile(context, _outEncodeData!);
                 },
               )),
         if (_currentMode == GCWSwitchPosition.left ||
@@ -334,7 +334,9 @@ class WASDState extends State<WASD> {
     var out = decodeWASDGraphic(_currentDecodeInput, [_currentUp, _currentLeft, _currentDown, _currentRight]);
 
     _outDecodeData = null;
-    input2Image(binary2image(out, false, false)).then((value) {
+    var input = binary2image(out, false, false);
+    if (input == null) return;
+    input2Image(input).then((value) {
       setState(() {
         _outDecodeData = value;
       });
@@ -342,10 +344,10 @@ class WASDState extends State<WASD> {
   }
 
   Widget _buildGraphicDecodeOutput() {
-    if (_outDecodeData == null) return null;
+    if (_outDecodeData == null) return Container();
 
     return Column(children: <Widget>[
-      Image.memory(_outDecodeData),
+      Image.memory(_outDecodeData!),
     ]);
   }
 
@@ -355,7 +357,9 @@ class WASDState extends State<WASD> {
         [_currentUp, _currentLeft, _currentDown, _currentRight]);
 
     _outEncodeData = null;
-    input2Image(binary2image(out, false, false)).then((value) {
+    var input = binary2image(out, false, false);
+    if (input == null) return;
+    input2Image(input).then((value) {
       setState(() {
         _outEncodeData = value;
       });
@@ -363,10 +367,10 @@ class WASDState extends State<WASD> {
   }
 
   Widget _buildGraphicEncodeOutput() {
-    if (_outEncodeData == null) return null;
+    if (_outEncodeData == null) return Container();
 
     return Column(children: <Widget>[
-      Image.memory(_outEncodeData),
+      Image.memory(_outEncodeData!),
     ]);
   }
 
@@ -374,7 +378,7 @@ class WASDState extends State<WASD> {
     var value =
         await saveByteDataToFile(context, data, 'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
 
-    if (value) showExportedFileDialog(context, fileType: FileType.PNG, contentWidget: Image.memory(data));
+    if (value) showExportedFileDialog(context, contentWidget: Image.memory(data));
   }
 
   _buildOutput() {

@@ -155,7 +155,7 @@ class MultiDecoderState extends State<MultiDecoder> {
 
   _calculateOutput() {
     var results = mdtTools.map((tool) {
-      var result;
+      Object? result;
 
       try {
         if (!tool.optionalKey &&

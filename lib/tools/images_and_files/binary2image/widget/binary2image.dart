@@ -68,10 +68,12 @@ class Binary2ImageState extends State<Binary2Image> {
     );
   }
 
-  _createOutput() {
+  void _createOutput() {
     _outData = null;
     _codeData = null;
-    input2Image(binary2image(_currentInput, _squareFormat, _invers)).then((value) {
+    var image = binary2image(_currentInput, _squareFormat, _invers);
+    if (image == null) return;
+    input2Image(image).then((value) {
       setState(() {
         _outData = value;
         scanBytes(_outData).then((value) {

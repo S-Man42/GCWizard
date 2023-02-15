@@ -60,11 +60,9 @@ class GCWTextExportState extends State<GCWTextExport> {
   }
 
   _buildQRCode() {
+    _qrImageData = null;
     var qrCode = generateBarCode(_currentExportText);
-    if (qrCode == null) {
-      _qrImageData = null;
-      return;
-    }
+    if (qrCode == null) return;
     input2Image(qrCode).then((qr_code) {
       setState(() {
         _qrImageData = qr_code;
