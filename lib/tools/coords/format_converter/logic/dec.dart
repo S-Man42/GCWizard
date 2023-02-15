@@ -67,7 +67,7 @@ DEC normalizeDEC(DEC coord) {
   return DEC(normalizedLat, normalizedLon);
 }
 
-DEC parseDEC(String input, {wholeString = false}) {
+DEC? parseDEC(String? input, {bool wholeString = false}) {
   input = prepareInput(input, wholeString: wholeString);
   if (input == null) return null;
 
@@ -101,7 +101,7 @@ DEC parseDEC(String input, {wholeString = false}) {
   return null;
 }
 
-DEC _parseDECTrailingSigns(String text) {
+DEC? _parseDECTrailingSigns(String text) {
   RegExp regex = RegExp(PATTERN_DEC_TRAILINGSIGN + regexEnd, caseSensitive: false);
   if (regex.hasMatch(text)) {
     var matches = regex.firstMatch(text);

@@ -22,14 +22,14 @@ import 'package:gc_wizard/tools/images_and_files/exif_reader/logic/exif_reader.d
 import 'package:gc_wizard/tools/images_and_files/hidden_data/logic/hidden_data.dart';
 import 'package:gc_wizard/tools/images_and_files/hidden_data/widget/hidden_data.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
-import 'package:gc_wizard/utils/file_utils/gcw_file.dart' as local;
+import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:image/image.dart' as Image;
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:prefs/prefs.dart';
 
 class ExifReader extends StatefulWidget {
-  final local.GCWFile file;
+  final GCWFile? file;
 
   ExifReader({Key? key, this.file}) : super(key: key);
 
@@ -39,10 +39,10 @@ class ExifReader extends StatefulWidget {
 
 class _ExifReaderState extends State<ExifReader> {
   Map<String, List<List<dynamic>>> tableTags;
-  local.GCWFile file;
-  LatLng point;
-  GCWImageViewData thumbnail;
-  Image.Image image;
+  GCWFile? file;
+  LatLng? point;
+  GCWImageViewData? thumbnail;
+  Image.Image? image;
 
   var _fileLoaded = false;
 
@@ -79,12 +79,12 @@ class _ExifReaderState extends State<ExifReader> {
     );
   }
 
-  Future<void> _readFile(local.GCWFile _file) async {
+  Future<void> _readFile(GCWFile? _file) async {
     Image.Image _image;
 
     if (_file != null) _image = await _completeImageMetadata(_file);
 
-    if (_file == null || _image == null) {
+    if (_file == null) {
       showToast(i18n(context, 'common_loadfile_exception_notloaded'));
       _fileLoaded = false;
       return;

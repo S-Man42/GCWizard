@@ -17,8 +17,8 @@ const String _GPS_LAT_REF = 'GPS GPSLatitudeRef';
 const String _GPS_LNG_REF = 'GPS GPSLongitudeRef';
 const String _RDF_LOCATION = 'Rdf Location';
 
-Future<Map<String, IfdTag>> parseExif(local.GCWFile file) async {
-  Map<String, IfdTag> data;
+Future<Map<String, IfdTag>?> parseExif(local.GCWFile file) async {
+  Map<String, IfdTag>? data;
 
   try {
     data = await readExifFromBytes(file.bytes,
@@ -32,22 +32,26 @@ Future<Map<String, IfdTag>> parseExif(local.GCWFile file) async {
 
   if (data == null || data.isEmpty) {
     // print("No EXIF information found\n");
-    return null;
+    return Future.value(null);
   }
-  return data;
+  return Future.value(data);
 }
 
-GCWImageViewData completeThumbnail(Map<String, IfdTag> data) {
+GCWImageViewData? completeThumbnail(Map<String, IfdTag> data) {
   if (data.containsKey(_JPEG_THUMBNAIL)) {
     // print('File has JPEG thumbnail');
-    var _jpgBytes = data[_JPEG_THUMBNAIL].values;
+    var _jpgBytes = data[_JPEG_THUMBNAIL]!.values;
     data.remove(_JPEG_THUMBNAIL);
-    return GCWImageViewData(local.GCWFile(bytes: _jpgBytes.toList()));
+    var bytes = _jpgBytes.toList();
+    if (!(bytes is Uint8List)) return null;
+    return GCWImageViewData(local.GCWFile(bytes: bytes));
   } else if (data.containsKey(_TIFF_THUMBNAIL)) {
     // print('File has TIFF thumbnail');
-    var _tiffBytes = data[_TIFF_THUMBNAIL].values;
+    var _tiffBytes = data[_TIFF_THUMBNAIL]!.values;
     data.remove(_TIFF_THUMBNAIL);
-    return GCWImageViewData(local.GCWFile(bytes: _tiffBytes.toList()));
+    var bytes = _tiffBytes.toList();
+    if (!(bytes is Uint8List)) return null;
+    return GCWImageViewData(local.GCWFile(bytes: bytes));
   }
   return null;
 }
@@ -56,21 +60,26 @@ GCWImageViewData completeThumbnail(Map<String, IfdTag> data) {
 ///  GPS Latitude         : 37.885000 deg (37.000000 deg, 53.100000 min, 0.000000 sec N)
 //   GPS Longitude        : -122.622500 deg (122.000000 deg, 37.350000 min, 0.000000 sec W)
 ///
-LatLng completeGPSData(Map<String, IfdTag> data) {
+LatLng? completeGPSData(Map<String, IfdTag> data) {
   try {
     if (data.containsKey(_GPS_LAT) &&
         data.containsKey(_GPS_LNG) &&
         data.containsKey(_GPS_LAT_REF) &&
         data.containsKey(_GPS_LNG_REF)) {
-      IfdTag latRef = data[_GPS_LAT_REF];
-      IfdTag lat = data[_GPS_LAT];
-      double _lat = _getCoordDecFromIfdTag(lat, latRef.printable, true);
-      if (_lat.isNaN) return null;
 
-      IfdTag lngRef = data[_GPS_LNG_REF];
-      IfdTag lng = data[_GPS_LNG];
-      double _lng = _getCoordDecFromIfdTag(lng, lngRef.printable, false);
-      if (_lng.isNaN) return null;
+      IfdTag? latRef = data[_GPS_LAT_REF];
+      IfdTag? lat = data[_GPS_LAT];
+      double? _lat;
+      if (lat != null && latRef != null)
+        _lat = _getCoordDecFromIfdTag(lat, latRef.printable, true);
+      if (_lat == null || _lat.isNaN) return null;
+
+      IfdTag? lngRef = data[_GPS_LNG_REF];
+      IfdTag? lng = data[_GPS_LNG];
+      double? _lng;
+      if (lng != null && lngRef != null)
+        double _lng = _getCoordDecFromIfdTag(lng, lngRef.printable, false);
+      if (_lng == null || _lng.isNaN) return null;
 
       if (_lat == 0 && _lng == 0) return null;
 

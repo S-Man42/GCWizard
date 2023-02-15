@@ -3,14 +3,14 @@ import 'dart:typed_data';
 
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
 
-Uint8List hexstring2file(String input) {
+Uint8List? hexstring2file(String input) {
   if (_isBinary(input))
     return _binaryString2bytes(input);
   else
     return _hexString2bytes(input);
 }
 
-String file2hexstring(Uint8List input) {
+String? file2hexstring(Uint8List? input) {
   if (input == null) return null;
   var sb = StringBuffer();
 
@@ -21,7 +21,7 @@ String file2hexstring(Uint8List input) {
   return sb.toString().toUpperCase();
 }
 
-Uint8List _hexString2bytes(String input) {
+Uint8List? _hexString2bytes(String? input) {
   if (input == null || input == "") return null;
 
   var data = <int>[];
@@ -33,21 +33,24 @@ Uint8List _hexString2bytes(String input) {
   for (var i = 0; i < hex.length; i = i + 2) {
     var valueString = hex.substring(i, min(i + 2, hex.length - 1));
     if (valueString.length > 0) {
-      int value = int.tryParse(convertBase(valueString, 16, 10));
-      data.add(value);
+      var converted = convertBase(valueString, 16, 10);
+      if (converted != null) {
+        int? value = int.tryParse(converted);
+        if (value != null) data.add(value);
+      }
     }
   }
 
   return Uint8List.fromList(data);
 }
 
-bool _isBinary(String input) {
+bool _isBinary(String? input) {
   if (input == null) return false;
   String binary = input.replaceAll(RegExp("[01\\s]"), "");
   return binary.length == 0;
 }
 
-Uint8List _binaryString2bytes(String input) {
+Uint8List? _binaryString2bytes(String? input) {
   if (input == null || input == "") return null;
 
   var data = <int>[];
@@ -58,8 +61,11 @@ Uint8List _binaryString2bytes(String input) {
   for (var i = 0; i < binary.length; i = i + 8) {
     var valueString = binary.substring(i, min(i + 8, binary.length - 1));
     if (valueString.length > 0) {
-      int value = int.tryParse(convertBase(valueString, 2, 10));
-      data.add(value);
+      var converted = convertBase(valueString, 2, 10);
+      if (converted != null) {
+        int? value = int.tryParse(converted);
+        if (value != null) data.add(value);
+      }
     }
   }
 

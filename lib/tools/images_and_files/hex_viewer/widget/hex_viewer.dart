@@ -30,9 +30,9 @@ class HexViewerState extends State<HexViewer> {
   late ScrollController _scrollControllerHex;
   late ScrollController _scrollControllerASCII;
 
-  String _hexData;
-  double _hexDataLines;
-  Uint8List _bytes;
+  String? _hexData;
+  double? _hexDataLines;
+  Uint8List? _bytes;
 
   final _MAX_LINES = 100;
   final _CHARS_PER_LINE = 16 * 2;
@@ -58,16 +58,16 @@ class HexViewerState extends State<HexViewer> {
     super.dispose();
   }
 
-  _setData(Uint8List bytes) {
+  void _setData(Uint8List bytes) {
     _bytes = bytes;
     _hexData = file2hexstring(bytes);
-    _hexDataLines = _hexData.length / _CHARS_PER_LINE;
+    _hexDataLines = (_hexData?.length ?? 0) / _CHARS_PER_LINE;
   }
 
   @override
   Widget build(BuildContext context) {
     if (_hexData == null && widget.file != null) {
-      _setData(widget.file.bytes);
+      _setData(widget.file!.bytes);
     }
 
     return Column(
@@ -102,7 +102,7 @@ class HexViewerState extends State<HexViewer> {
                   icon: Icons.copy,
                   size: IconButtonSize.SMALL,
                   onPressed: () {
-                    insertIntoGCWClipboard(context, _hexData);
+                    if (_hexData != null) insertIntoGCWClipboard(context, _hexData!);
                   },
                 ),
               ],
@@ -116,12 +116,12 @@ class HexViewerState extends State<HexViewer> {
     _scrollControllerHex.jumpTo(0.0);
   }
 
-  _buildOutput() {
-    if (_hexData == null) return null;
+  Widget _buildOutput() {
+    if (_hexData == null || _hexDataLines == null) return Container();
 
     var hexStrStart = _currentLines * _CHARS_PER_LINE;
     var hexStrEnd = hexStrStart + _CHARS_PER_LINE * _MAX_LINES;
-    var hexDataStr = _hexData.substring(hexStrStart, min(hexStrEnd, _hexData.length));
+    var hexDataStr = _hexData!.substring(hexStrStart, min(hexStrEnd, _hexData!.length));
     var hexText = insertEveryNthCharacter(hexDataStr, _CHARS_PER_LINE, '\n');
     var hexTextList = hexText.split('\n').map((line) => insertSpaceEveryNthCharacter(line, 2) + ' ').toList();
     hexText = hexTextList.join('\n');
@@ -131,6 +131,7 @@ class HexViewerState extends State<HexViewer> {
         if (hexValue == null || hexValue.isEmpty) return '';
 
         var charCode = int.tryParse(hexValue, radix: 16);
+        if (charCode == null) return '';
         if (charCode < 32) return '.';
 
         return String.fromCharCode(charCode);
@@ -139,7 +140,7 @@ class HexViewerState extends State<HexViewer> {
 
     return Column(
       children: [
-        if (_hexData.length > _MAX_LINES)
+        if (_hexData!.length > _MAX_LINES)
           Container(
             child: Row(
               children: [
@@ -149,7 +150,7 @@ class HexViewerState extends State<HexViewer> {
                     setState(() {
                       _currentLines -= _MAX_LINES;
                       if (_currentLines < 0) {
-                        _currentLines = (_hexDataLines.floor() ~/ _MAX_LINES) * _MAX_LINES;
+                        _currentLines = (_hexDataLines!.floor() ~/ _MAX_LINES) * _MAX_LINES;
                       }
 
                       _resetScrollViews();
@@ -159,7 +160,8 @@ class HexViewerState extends State<HexViewer> {
                 Expanded(
                   child: GCWText(
                     text:
-                        '${i18n(context, 'hexviewer_lines')}: ${_currentLines + 1} - ${min(_currentLines + _MAX_LINES, _hexDataLines.ceil())} / ${_hexDataLines.ceil()}',
+                        '${i18n(context, 'hexviewer_lines')}: '
+                            '${_currentLines + 1} - ${min(_currentLines + _MAX_LINES, _hexDataLines!.ceil())} / ${_hexDataLines!.ceil()}',
                     align: Alignment.center,
                   ),
                 ),
@@ -168,7 +170,7 @@ class HexViewerState extends State<HexViewer> {
                   onPressed: () {
                     setState(() {
                       _currentLines += _MAX_LINES;
-                      if (_currentLines > _hexDataLines) {
+                      if (_hexDataLines != null && _currentLines > _hexDataLines!) {
                         _currentLines = 0;
                       }
 
