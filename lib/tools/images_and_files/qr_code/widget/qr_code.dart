@@ -145,6 +145,7 @@ class QrCodeState extends State<QrCode> {
         }
         lastCurrentInputLength = _currentInput == null ? 0 : _currentInput.length;
 
+        _outDataEncrypt = null;
         var qrCode = generateBarCode(currentInput, moduleSize: _currentModulSize, border: 2 * _currentModulSize);
         if (qrCode == null) return;
         input2Image(qrCode)

@@ -32,8 +32,8 @@ class KarolRobotState extends State<KarolRobot> {
   var _currentDecode = '';
   var _currentEncode = '';
 
-  Uint8List _outEncodeData;
-  Uint8List _outDecodeData;
+  Uint8List? _outEncodeData;
+  Uint8List? _outDecodeData;
 
   String _output = '';
 
@@ -160,7 +160,9 @@ class KarolRobotState extends State<KarolRobot> {
 
   _createDecodeOutput(String output) {
     _outDecodeData = null;
-    input2Image(binary2Image(output)).then((value) {
+    var image = binary2Image(output);
+    if (image == null) return;
+    input2Image(image).then((value) {
       setState(() {
         _outDecodeData = value;
       });

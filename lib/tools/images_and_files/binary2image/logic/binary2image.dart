@@ -33,7 +33,7 @@ Map<String, int> colorMap = {
   '#': 0xFFE0E0E0, //Colors.grey.shade300
 };
 
-DrawableImageData binary2image(String input, bool squareFormat, bool invers) {
+DrawableImageData? binary2image(String input, bool squareFormat, bool invers) {
   var filter = _buildFilter(input);
   if (filter.length < 2) return null;
 
@@ -101,8 +101,8 @@ String _filterInput(String input, String filter) {
   return input.replaceAll(RegExp('[^$filter]'), '');
 }
 
-DrawableImageData binary2Image(String input) {
-  if (input == '' || input == null) return null;
+DrawableImageData? binary2Image(String input) {
+  if (input == null || input.isEmpty) return null;
 
   var lines = input.split('\n');
 

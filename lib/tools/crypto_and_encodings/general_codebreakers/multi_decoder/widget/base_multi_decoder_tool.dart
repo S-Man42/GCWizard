@@ -4,20 +4,20 @@ abstract class AbstractMultiDecoderTool {
   final int id;
   String name;
   final String internalToolName;
-  final Function onDecode;
+  final Object? Function(String, String) onDecode;
   final MultiDecoderToolConfiguration configurationWidget;
   final bool requiresKey;
   final bool optionalKey;
-  Map<String, dynamic> options = {};
+  Map<String, Object>? options = {};
 
   AbstractMultiDecoderTool(
       {Key? key,
-      this.id,
-      this.name,
-      this.internalToolName,
-      this.onDecode,
-      this.requiresKey: false,
-      this.optionalKey: false,
-      this.configurationWidget,
+      required this.id,
+      required this.name,
+      required this.internalToolName,
+      required this.onDecode,
+      this.requiresKey = false,
+      this.optionalKey = false,
+      required this.configurationWidget,
       this.options});
 }
