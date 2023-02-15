@@ -355,14 +355,14 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
       },
     );
 
-    if (_convertedOutputImage == null) return Future.value(null);
+    if (_convertedOutputImage == null) return null;
     return GCWFile(bytes: _convertedOutputImage!);
   }
 
   Future<GCWAsyncExecuterParameters?> _buildJobDataAdjustColor() async {
-    if (_originalData?.bytes == null) return Future.value(null);
+    if (_originalData?.bytes == null) return null;
     var image = img.decodeImage(_originalData!.bytes);
-    if (image == null) return Future.value(null);
+    if (image == null) return null;
     return GCWAsyncExecuterParameters(_AdjustColorInput(
         image: image,
         invert: _currentInvert,
@@ -408,7 +408,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
 }
 
 Future<img.Image?> _adjustColorAsync(GCWAsyncExecuterParameters? jobData) async {
-  if (jobData == null) return Future.value(null);
+  if (jobData == null) return null;
 
   var output = _doAdjustColor(jobData.parameters);
 

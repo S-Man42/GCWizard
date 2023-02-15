@@ -14,14 +14,14 @@ enum ErrorCode { OK, INPUT_FORMAT, KEY_FORMAT, MISSING_KEY, IV_FORMAT }
 
 class RabbitOutput {
   final String output;
-  final String keyHexFormat;
-  final String ivHexFormat;
+  final String? keyHexFormat;
+  final String? ivHexFormat;
   final ErrorCode errorCode;
 
   RabbitOutput(this.output, this.keyHexFormat, this.ivHexFormat, this.errorCode);
 }
 
-RabbitOutput cryptRabbit(String input, InputFormat inputFormat, String key, InputFormat keyFormat,
+RabbitOutput cryptRabbit(String? input, InputFormat inputFormat, String key, InputFormat keyFormat,
     String initializationVector, InputFormat ivFormat, OutputFormat outputFormat) {
   if (input == null || input == '') return RabbitOutput('', null, null, ErrorCode.OK);
 

@@ -47,7 +47,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = raRightAscension2Degree(RightAscension.parse(elem['input']));
+        var _actual = raRightAscension2Degree(RightAscension.parse(elem['input'])!);
         if (_actual == null)
           expect(_actual, elem['expectedOutput']);
         else

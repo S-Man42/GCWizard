@@ -10,12 +10,12 @@ import 'package:r_scan/r_scan.dart' as scan;
 
 /// Parse to code string with Uint8list
 Future<String?> scanBytes(Uint8List? bytes) async {
-  if (bytes == null) return Future.value(null);
+  if (bytes == null) return null;
   try {
     var codes = await scan.RScan.scanImageMemory(bytes);
     if (codes != null) return Future.value(codes.message);
   } catch (e) {}
-  return Future.value(null);
+  return null;
 }
 
 /// Generating Bar Code

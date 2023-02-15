@@ -32,7 +32,7 @@ Future<Map<String, IfdTag>?> parseExif(local.GCWFile file) async {
 
   if (data == null || data.isEmpty) {
     // print("No EXIF information found\n");
-    return Future.value(null);
+    return null;
   }
   return Future.value(data);
 }
@@ -43,14 +43,14 @@ GCWImageViewData? completeThumbnail(Map<String, IfdTag> data) {
     var _jpgBytes = data[_JPEG_THUMBNAIL]!.values;
     data.remove(_JPEG_THUMBNAIL);
     var bytes = _jpgBytes.toList();
-    if (!(bytes is Uint8List)) return null;
+    if (bytes is! Uint8List) return null;
     return GCWImageViewData(local.GCWFile(bytes: bytes));
   } else if (data.containsKey(_TIFF_THUMBNAIL)) {
     // print('File has TIFF thumbnail');
     var _tiffBytes = data[_TIFF_THUMBNAIL]!.values;
     data.remove(_TIFF_THUMBNAIL);
     var bytes = _tiffBytes.toList();
-    if (!(bytes is Uint8List)) return null;
+    if (bytes is! Uint8List) return null;
     return GCWImageViewData(local.GCWFile(bytes: bytes));
   }
   return null;
@@ -96,14 +96,16 @@ LatLng? completeGPSData(Map<String, IfdTag> data) {
 ///
 ///  Use location from XMP section
 ///
-LatLng completeGPSDataFromXmp(Map<String, dynamic> xmpTags) {
-  LatLng point;
+LatLng? completeGPSDataFromXmp(Map<String, dynamic> xmpTags) {
+  LatLng? point;
   try {
     if (xmpTags.containsKey(_RDF_LOCATION)) {
       String latlng = xmpTags[_RDF_LOCATION];
       var pt = parseStandardFormats(latlng, wholeString: true);
       if (pt != null) {
-        point = pt['coordinate'];
+        var value = pt['coordinate'];
+        if (value is LatLng)
+        point = value as LatLng;
       }
     }
   } catch (error) {
@@ -129,8 +131,8 @@ double _getRatioValue(Ratio _ratio) {
   return _ratio.numerator / _ratio.denominator;
 }
 
-Map<String, dynamic> buildXmpTags(local.GCWFile platformFile, Map<String, List<List<dynamic>>> tableTags) {
-  Map<String, dynamic> xmpTags;
+Map<String, dynamic>? buildXmpTags(local.GCWFile platformFile, Map<String, List<List<dynamic>>> tableTags) {
+  Map<String, dynamic>? xmpTags;
   try {
     Uint8List data = platformFile.bytes;
     xmpTags = XMP.extract(data);
@@ -148,8 +150,8 @@ Map<String, dynamic> buildXmpTags(local.GCWFile platformFile, Map<String, List<L
   return xmpTags;
 }
 
-Map<String, List<List<dynamic>>> buildTablesExif(Map<String, IfdTag> ifdTags) {
-  var map = <String, List<List>>{};
+Map<String, List<List<Object>>> buildTablesExif(Map<String, IfdTag> ifdTags) {
+  var map = <String, List<List<Object>>>{};
 
   ifdTags.forEach((key, ifdTag) {
     List<String> groupedKey = _parseKey(key);
@@ -185,12 +187,11 @@ String _formatExifValue(IfdTag tag) {
       return tag.printable;
     case 'Byte':
       try {
-        List<int> byteList = tag.values.toList();
-        return String.fromCharCodes(byteList);
+        var byteList = tag.values.toList();
+        return (byteList is List<int>) ? String.fromCharCodes(byteList) : tag.printable;
       } catch (e) {
         return tag.printable;
       }
-      break;
     case 'Ratio':
       return tag.values.toString();
     case 'Signed Ratio':

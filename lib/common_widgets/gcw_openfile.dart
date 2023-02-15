@@ -318,7 +318,7 @@ Future<dynamic> _downloadFileAsync(dynamic jobData) async {
   var client = http.Client();
   await client.send(request).timeout(Duration(seconds: 10), onTimeout: () {
     sendAsyncPort?.send(null);
-    return Future.value(null); //http.Response('Error', 500);
+    return null; //http.Response('Error', 500);
   }).then((http.StreamedResponse response) async {
     if (response.statusCode != 200) {
       sendAsyncPort?.send('common_loadfile_exception_responsestatus');
@@ -387,7 +387,7 @@ Future<GCWFile?> _openFileExplorer({List<FileType>? allowedFileTypes}) async {
 }
 
 Future<Uint8List> _getFileData(filePicker.PlatformFile file) async {
-  return kIsWeb ? Future.value(file.bytes) : (file.path == null) ? Future.value(null) : readByteDataFromFile(file.path!);
+  return kIsWeb ? Future.value(file.bytes) : (file.path == null) ? null : readByteDataFromFile(file.path!);
 }
 
 List<filePicker.PlatformFile> _filterFiles(List<filePicker.PlatformFile> files, List<FileType> allowedFileTypes) {

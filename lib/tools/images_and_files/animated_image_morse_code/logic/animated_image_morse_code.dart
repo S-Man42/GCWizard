@@ -8,8 +8,8 @@ import 'package:gc_wizard/tools/images_and_files/animated_image/logic/animated_i
 import 'package:image/image.dart' as Image;
 import 'package:tuple/tuple.dart';
 
-Future<Map<String, dynamic>?> analyseImageMorseCodeAsync(GCWAsyncExecuterParameters? jobData) async {
-  if (jobData == null) return Future.value(null);
+Future<Map<String, Object>?> analyseImageMorseCodeAsync(GCWAsyncExecuterParameters? jobData) async {
+  if (jobData == null) return null;
 
   var output = await analyseImageMorseCode(jobData.parameters, sendAsyncPort: jobData.sendAsyncPort);
 
@@ -18,7 +18,7 @@ Future<Map<String, dynamic>?> analyseImageMorseCodeAsync(GCWAsyncExecuterParamet
   return output;
 }
 
-Future<Map<String, dynamic>> analyseImageMorseCode(Uint8List bytes, {SendPort? sendAsyncPort}) async {
+Future<Map<String, Object>?> analyseImageMorseCode(Uint8List bytes, {SendPort? sendAsyncPort}) async {
   try {
     var out = animated_image.analyseImage(bytes, sendAsyncPort: sendAsyncPort, filterImages: (outMap, frames) {
       List<Uint8List> imageList = outMap["images"];
@@ -30,14 +30,14 @@ Future<Map<String, dynamic>> analyseImageMorseCode(Uint8List bytes, {SendPort? s
       outMap.addAll({"imagesFiltered": filteredList});
     });
 
-    return out; // Future.value(out);
+    return Future.value(out);
   } on Exception {
-    return Future.value(null);
+    return null;
   }
 }
 
 Future<Uint8List?> createImageAsync(GCWAsyncExecuterParameters? jobData) async {
-  if (jobData == null) return Future.value(null);
+  if (jobData == null) return null;
 
   var output = await _createImage(
       jobData.parameters.item1, jobData.parameters.item2, jobData.parameters.item3, jobData.parameters.item4,
@@ -50,16 +50,17 @@ Future<Uint8List?> createImageAsync(GCWAsyncExecuterParameters? jobData) async {
 
 Future<Uint8List?> _createImage(Uint8List? highImage, Uint8List? lowImage, String? input, int ditDuration,
     {SendPort? sendAsyncPort}) async {
-  if (input == null || input == '') return Future.value(null);
-  input = encodeMorse(input);
-  if (input == null || input == '') return Future.value(null);
-  if (highImage == null || lowImage == null) return Future.value(null);
-  if (ditDuration <= 0) return Future.value(null);
+  if (input == null || input == '') return null;
+  if (highImage == null || lowImage == null) return null;
+  if (ditDuration <= 0) return null;
 
+  input = encodeMorse(input);
+  
   try {
     var _highImage = Image.decodeImage(highImage);
     var _lowImage = Image.decodeImage(lowImage);
     var animation = Image.Animation();
+    if (_highImage == null || _lowImage == null) return null;
 
     input = input.replaceAll(String.fromCharCode(8195), ' ');
     input = input.replaceAll('| ', '|');
@@ -108,7 +109,8 @@ Future<Uint8List?> _createImage(Uint8List? highImage, Uint8List? lowImage, Strin
       }
     }
 
-    return Image.encodeGifAnimation(animation);
+    var list = Image.encodeGifAnimation(animation);
+    return Future.value((list == null) ? null : Uint8List.fromList(list));
   } on Exception {
     return null;
   }
@@ -134,11 +136,11 @@ List<List<int>> _filterImages(List<List<int>> filteredList, int imageIndex, List
   return filteredList;
 }
 
-Map<String, dynamic> decodeMorseCode(List<int> durations, List<bool> onSignal) {
+Map<String, Object>? decodeMorseCode(List<int> durations, List<bool> onSignal) {
   var timeList = _buildTimeList(durations, onSignal);
   var signalTimes = foundSignalTimes(timeList);
 
-  if (signalTimes == null) return null;
+  if (signalTimes == null || timeList == null) return null;
 
   var out = '';
   timeList.forEach((element) {
@@ -149,14 +151,11 @@ Map<String, dynamic> decodeMorseCode(List<int> durations, List<bool> onSignal) {
     else if (element.item2 > signalTimes.item2) //3
       out += " ";
   });
-
-  var output = Map<String, dynamic>();
-  output.addAll({"morse": out, "text": decodeMorse(out)});
-
-  return output;
+  
+  return {"morse": out, "text": decodeMorse(out)};
 }
 
-List<Tuple2<bool, int>> _buildTimeList(List<int> durations, List<bool> onSignal) {
+List<Tuple2<bool, int>>? _buildTimeList(List<int>? durations, List<bool>? onSignal) {
   var timeList = <Tuple2<bool, int>>[];
   var i = 0;
 
@@ -175,7 +174,7 @@ List<Tuple2<bool, int>> _buildTimeList(List<int> durations, List<bool> onSignal)
   return timeList;
 }
 
-Tuple3<int, int, int> foundSignalTimes(List<Tuple2<bool, int>> timeList) {
+Tuple3<int, int, int>? foundSignalTimes(List<Tuple2<bool, int>>? timeList) {
   if (timeList == null || timeList.length == 0) return null;
 
   const toler = 1.2;

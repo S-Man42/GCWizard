@@ -15,7 +15,7 @@ Future<Map<String, dynamic>> analyseImageAsync(dynamic jobData) async {
   return output;
 }
 
-Future<Map<String, dynamic>> analyseImage(Uint8List bytes, {Function filterImages, SendPort? sendAsyncPort}) async {
+Future<Map<String, Object>?> analyseImage(Uint8List bytes, {Function filterImages, SendPort? sendAsyncPort}) async {
   try {
     var progress = 0;
     final decoder = Image.findDecoderForData(bytes);

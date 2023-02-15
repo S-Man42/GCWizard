@@ -12,7 +12,7 @@ int whiteColor = Colors.white.value;
 int blackColor = Colors.black.value;
 
 Future<Uint8List?> decodeImagesAsync(GCWAsyncExecuterParameters? jobData) async {
-  if (jobData == null) return Future.value(null);
+  if (jobData == null) return null;
 
   var output = await _decodeImages(
       jobData.parameters.item1, jobData.parameters.item2, jobData.parameters.item3, jobData.parameters.item4);
@@ -23,12 +23,12 @@ Future<Uint8List?> decodeImagesAsync(GCWAsyncExecuterParameters? jobData) async 
 }
 
 Future<Uint8List?> _decodeImages(Uint8List? image1, Uint8List? image2, int offsetX, int offsetY) {
-  if (image1 == null || image2 == null) return Future.value(null);
+  if (image1 == null || image2 == null) return null;
 
   var _image1 = Image.decodeImage(image1);
   var _image2 = Image.decodeImage(image2);
 
-  if (_image1 == null || _image2 == null) return Future.value(null);
+  if (_image1 == null || _image2 == null) return null;
 
   var image = Image.Image(
       max(_image1.width, _image2.width) + offsetX.abs(), max(_image1.height, _image2.height) + offsetY.abs());
@@ -59,7 +59,7 @@ Image.Image _pasteImage(Image.Image targetImage, Image.Image image, int offsetX,
 }
 
 Future<Tuple2<int, int>?> offsetAutoCalcAsync(dynamic jobData) async {
-  if (jobData == null) return Future.value(null);
+  if (jobData == null) return null;
 
   var output = await _offsetAutoCalc(
       jobData.parameters.item1, jobData.parameters.item2, jobData.parameters.item3, jobData.parameters.item4,
@@ -72,12 +72,12 @@ Future<Tuple2<int, int>?> offsetAutoCalcAsync(dynamic jobData) async {
 
 Future<Tuple2<int, int>?> _offsetAutoCalc(Uint8List? image1, Uint8List? image2, int? offsetX, int? offsetY,
     {SendPort? sendAsyncPort}) {
-  if (image1 == null || image2 == null) return Future.value(null);
+  if (image1 == null || image2 == null) return null;
 
   var _image1 = Image.decodeImage(image1);
   var _image2 = Image.decodeImage(image2);
 
-  if (_image1 == null || _image2 == null) return Future.value(null);
+  if (_image1 == null || _image2 == null) return null;
 
   var minX = (offsetX == null) ? -_image2.width + 2 : offsetX;
   var maxX = (offsetX == null) ? _image1.width + _image2.width - 2 : offsetX;
@@ -149,7 +149,7 @@ Uint8List? cleanImage(Uint8List? image1, Uint8List? image2, int offsetX, int off
 }
 
 Future<Tuple2<Uint8List, Uint8List?>?> encodeImagesAsync(GCWAsyncExecuterParameters? jobData) async {
-  if (jobData == null) return Future.value(null);
+  if (jobData == null) return null;
 
   var output = await _encodeImage(jobData.parameters.item1, jobData.parameters.item2, jobData.parameters.item3,
       jobData.parameters.item4, jobData.parameters.item5);
@@ -161,16 +161,16 @@ Future<Tuple2<Uint8List, Uint8List?>?> encodeImagesAsync(GCWAsyncExecuterParamet
 
 Future<Tuple2<Uint8List, Uint8List?>?> _encodeImage(
     Uint8List? image, Uint8List? keyImage, int offsetX, int offsetY, int scale) {
-  if (image == null) return Future.value(null);
+  if (image == null) return null;
 
   var _image = Image.decodeImage(image);
-  if (_image == null) return Future.value(null);
+  if (_image == null) return null;
 
   var hasKeyImage = keyImage != null;
   var _keyImage;
   if (hasKeyImage) {
     _keyImage = Image.decodeImage(keyImage!);
-    if (_keyImage == null) return Future.value(null);
+    if (_keyImage == null) return null;
 
     scale = (min<double>(_keyImage.width / 2 / _image.width, _keyImage.height / 2 / _image.height) * 100).toInt();
   }
