@@ -1129,6 +1129,8 @@ Overall, this tool can be useful for a quick check, but it’s limited and unrel
 
 ### Enabling Tomcat Performance Monitoring with JavaMelody
 
+http://192.168.178.86:7323/GCW_Unluac/monitoring
+
 If you’re using Maven, simply add the [javamelody-core](https://search.maven.org/#search|ga|1|a%3A"javamelody-core") dependency to the pom.xml:
 
 ```
@@ -1144,6 +1146,35 @@ In this way, you can enable monitoring of your web application.
 After deploying the application on Tomcat, you can access the monitoring screens at the /monitoring URL.
 
 JavaMelody contains useful graphs for displaying information related to various performance measures, as well as a way to find the values of the Tomcat JMX beans.
+
+
+
+#### Unterstützen von JavaMelody unter Tomcat 10.x
+
+##### Problem
+
+Tomcat 10.x throws java.lang.NoClassDefFoundError on javax.servlet.*
+
+##### Lösung
+
+Since Tomcat 10.0.4 there is a workaround that allows deployment of Servlet 4.0 applications on Tomcat 10.
+
+You just need to modify your context description in `conf\Catalina\localhost\VirtualStore.xml` and add:
+
+```xml
+<Context>
+    ...
+    <Loader jakartaConverter="TOMCAT" />
+</Context>
+```
+
+##### Quelle 
+
+https://stackoverflow.com/questions/66711660/tomcat-10-x-throws-java-lang-noclassdeffounderror-on-javax-servlet#comment121450945_66805452
+
+`<Loader jakartaConverter="TOMCAT" />` in "tomcat/conf/context.xml"
+
+
 
 
 
