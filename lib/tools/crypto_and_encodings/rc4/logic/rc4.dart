@@ -16,21 +16,21 @@ class RC4Output {
 }
 
 RC4Output cryptRC4(
-    String input, InputFormat inputFormat, String key, InputFormat keyFormat, OutputFormat outputFormat) {
-  if (input == null || input == '') return RC4Output('', ErrorCode.OK);
+    String? input, InputFormat inputFormat, String? key, InputFormat keyFormat, OutputFormat outputFormat) {
+  if (input == null || input.isEmpty) return RC4Output('', ErrorCode.OK);
 
   var inputList = convertInputToIntList(input, inputFormat);
-  if (inputList == null || inputList.length == 0) return RC4Output('', ErrorCode.INPUT_FORMAT);
+  if (inputList == null || inputList.isEmpty) return RC4Output('', ErrorCode.INPUT_FORMAT);
 
-  if (key == null || key == '') return RC4Output('', ErrorCode.MISSING_KEY);
+  if (key == null || key.isEmpty) return RC4Output('', ErrorCode.MISSING_KEY);
 
   var keyList = convertInputToIntList(key, keyFormat);
-  if (keyList == null || keyList.length == 0) return RC4Output('', ErrorCode.KEY_FORMAT);
+  if (keyList == null || keyList.isEmpty) return RC4Output('', ErrorCode.KEY_FORMAT);
 
   var outList = _rc4(inputList, keyList);
   var out = formatOutput(outList, outputFormat);
 
-  return RC4Output(out, ErrorCode.OK);
+  return RC4Output(out ?? '', ErrorCode.OK);
 }
 
 List<int> _rc4(List<int> input, List<int> key) {
@@ -66,32 +66,23 @@ List<int> _rc4(List<int> input, List<int> key) {
   return out;
 }
 
-List<int> convertInputToIntList(String input, InputFormat format) {
-  var out = <int>[];
-
-  if (input == null || input == '') return null;
+List<int>? convertInputToIntList(String? input, InputFormat format) {
+  if (input == null || input.isEmpty) return null;
 
   switch (format) {
     case InputFormat.AUTO:
       return convertInputToIntList(input, _autoType(input));
-      break;
     case InputFormat.TEXT:
       return input.codeUnits;
-      break;
     case InputFormat.HEX:
-      out = _convertToIntList(input, 16);
-      break;
+      return _convertToIntList(input, 16);
     case InputFormat.BINARY:
-      out = _convertToIntList(input, 2);
-      break;
+      return _convertToIntList(input, 2);
     case InputFormat.ASCIIVALUES:
-      out = _convertToIntList(input, 10);
-      break;
+      return _convertToIntList(input, 10);
     default:
-      break;
+      return <int>[];
   }
-
-  return out;
 }
 
 InputFormat _autoType(String input) {
@@ -105,7 +96,7 @@ InputFormat _autoType(String input) {
   bool ok = true;
   if (ascii.length == 0) {
     input.split(" ").forEach((text) {
-      if (int.tryParse(text) > 255) {
+      if ((int.tryParse(text) ?? 0) > 255) {
         ok = false;
         return;
       }
@@ -118,42 +109,39 @@ InputFormat _autoType(String input) {
 }
 
 List<int> _convertToIntList(String input, int base) {
-  var out = <int>[];
+  List<int>? out = [];
 
   if (input.contains(' ')) {
     input.split(' ').forEach((text) {
-      if (out != null) out = _addToIntList(text, base, out);
+      if (out != null) out = _addToIntList(text, base, out!);
     });
   } else {
     out = _addToIntList(input, base, out);
   }
-
   // invalid input ??
-  if (out == null) return <int>[];
-
-  return out;
+  return out ?? <int>[];
 }
 
-List<int> _addToIntList(String input, int base, List<int> list) {
+List<int>? _addToIntList(String input, int base, List<int> list) {
   if (input == '') return list;
   var valueString = convertBase(input, base, 10);
-  if ((valueString == null) || (valueString == ''))
-    // invalid input
-    return null;
 
-  list.add(int.tryParse(valueString));
+  var value = int.tryParse(valueString ?? '');
+  // invalid input
+  if (value == null) return null;
+  list.add(value);
 
   return list;
 }
 
-String formatOutput(List<int> outList, OutputFormat outputFormat) {
+String? formatOutput(List<int>? outList, OutputFormat outputFormat) {
   if (outList == null) return null;
   var out = '';
 
   outList.forEach((item) {
     switch (outputFormat) {
       case OutputFormat.TEXT:
-        item = item % pow(2, 16);
+        item = (item % pow(2, 16)).toInt();
         if (item < 33 || (item > 126 && item < 161))
           out += ".";
         else
@@ -162,12 +150,12 @@ String formatOutput(List<int> outList, OutputFormat outputFormat) {
       case OutputFormat.HEX:
         if (out != '') out += ' ';
 
-        out += convertBase(item.toString(), 10, 16).padLeft(2, '0');
+        out += (convertBase(item.toString(), 10, 16) ?? '').padLeft(2, '0');
         break;
       case OutputFormat.BINARY:
         if (out != '') out += ' ';
 
-        out += convertBase(item.toString(), 10, 2).padLeft(8, '0');
+        out += (convertBase(item.toString(), 10, 2) ?? '').padLeft(8, '0');
         break;
       case OutputFormat.ASCIIVALUES:
         if (out != '') out += ' ';
