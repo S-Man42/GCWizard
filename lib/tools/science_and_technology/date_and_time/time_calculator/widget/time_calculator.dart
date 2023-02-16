@@ -57,7 +57,7 @@ class TimeCalculatorState extends State<TimeCalculator> {
           duration: _currentStartTime,
           onChanged: (value) {
             setState(() {
-              _currentStartTime = value['duration'];
+              _currentStartTime = value.duration;
             });
           },
         ),
@@ -80,7 +80,7 @@ class TimeCalculatorState extends State<TimeCalculator> {
           duration: _currentEndTime,
           onChanged: (value) {
             setState(() {
-              _currentEndTime = value['duration'];
+              _currentEndTime = value.duration;
             });
           },
         ),

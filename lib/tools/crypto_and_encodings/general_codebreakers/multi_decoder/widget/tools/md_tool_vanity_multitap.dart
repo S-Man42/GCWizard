@@ -23,7 +23,12 @@ class MultiDecoderToolVanityMultitap extends AbstractMultiDecoderTool {
     }
   }
 
-  MultiDecoderToolVanityMultitap({Key? key, int id, String name, Map<String, dynamic> options, BuildContext context})
+  MultiDecoderToolVanityMultitap({
+    Key? key,
+    required int id,
+    required String name,
+    required Map<String, Object> options,
+    required BuildContext context})
       : super(
             key: key,
             id: id,
@@ -32,7 +37,7 @@ class MultiDecoderToolVanityMultitap extends AbstractMultiDecoderTool {
             onDecode: (String input, String key) {
               var model;
 
-              var modelName = _ensureBackwardsCompatibility(options[MDT_VANITYMULTITAP_OPTION_PHONEMODEL]);
+              var modelName = _ensureBackwardsCompatibility(stringTypeCheck(options[MDT_VANITYMULTITAP_OPTION_PHONEMODEL], ''));
 
               switch (modelName) {
                 case NAME_PHONEMODEL_SIMPLE_SPACE_0:
@@ -53,8 +58,8 @@ class MultiDecoderToolVanityMultitap extends AbstractMultiDecoderTool {
             },
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
-              MDT_VANITYMULTITAP_OPTION_PHONEMODEL: GCWStatefulDropDown(
-                  value: _ensureBackwardsCompatibility(options[MDT_VANITYMULTITAP_OPTION_PHONEMODEL]),
+              MDT_VANITYMULTITAP_OPTION_PHONEMODEL: GCWStatefulDropDown<String>(
+                  value: _ensureBackwardsCompatibility(stringTypeCheck(options[MDT_VANITYMULTITAP_OPTION_PHONEMODEL], '')),
                   onChanged: (newValue) {
                     options[MDT_VANITYMULTITAP_OPTION_PHONEMODEL] = newValue;
                   },

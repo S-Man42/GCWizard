@@ -15,10 +15,10 @@ class EasterYearsState extends State<EasterYears> {
   int _currentMonth = 3;
   int _currentDay = 22;
 
-  var _listDaysForMarch = <int>[22, 23, 24, 25, 26, 27, 28, 29, 30, 31];
-  var _listDaysForApril = List<int>.generate(25, (index) => index + 1);
+  final _listDaysForMarch = <int>[22, 23, 24, 25, 26, 27, 28, 29, 30, 31];
+  final _listDaysForApril = List<int>.generate(25, (index) => index + 1);
 
-  List<int> _currentDayList;
+  late List<int> _currentDayList;
 
   @override
   void initState() {
@@ -38,39 +38,39 @@ class EasterYearsState extends State<EasterYears> {
           children: [
             Expanded(
                 child: Container(
-              child: GCWDropDown(
-                value: _currentMonth,
-                items: [
-                  GCWDropDownMenuItem(
-                    value: 3,
-                    child: i18n(context, 'common_month_march'),
-                  ),
-                  GCWDropDownMenuItem(
-                    value: 4,
-                    child: i18n(context, 'common_month_april'),
-                  )
-                ],
-                onChanged: (value) {
-                  if (_currentMonth != value) {
-                    setState(() {
-                      _currentMonth = value;
+                  child: GCWDropDown<int>(
+                    value: _currentMonth,
+                    onChanged: (value) {
+                      if (_currentMonth != value) {
+                        setState(() {
+                          _currentMonth = value;
 
-                      if (_currentMonth == 3) {
-                        _currentDayList = _listDaysForMarch;
-                        if (_currentDay < 22) _currentDay = 22;
-                      } else {
-                        _currentDayList = _listDaysForApril;
-                        if (_currentDay > 25) _currentDay = 25;
+                          if (_currentMonth == 3) {
+                            _currentDayList = _listDaysForMarch;
+                            if (_currentDay < 22) _currentDay = 22;
+                          } else {
+                            _currentDayList = _listDaysForApril;
+                            if (_currentDay > 25) _currentDay = 25;
+                          }
+                        });
                       }
-                    });
-                  }
-                },
-              ),
-              padding: EdgeInsets.only(right: DEFAULT_MARGIN),
+                    },
+                    items: [
+                      GCWDropDownMenuItem(
+                        value: 3,
+                        child: i18n(context, 'common_month_march'),
+                      ),
+                      GCWDropDownMenuItem(
+                        value: 4,
+                        child: i18n(context, 'common_month_april'),
+                      )
+                    ],
+                  ),
+                padding: EdgeInsets.only(right: DEFAULT_MARGIN),
             )),
             Expanded(
               child: Container(
-                child: GCWDropDown(
+                child: GCWDropDown<int>(
                   value: _currentDay,
                   items: _currentDayList.map((day) {
                     return GCWDropDownMenuItem(

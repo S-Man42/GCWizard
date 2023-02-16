@@ -84,8 +84,8 @@ final List<Unit> baseMasses = [
 
 final MASS_KILOGRAM = Mass(name: 'common_unit_mass_kg_name', symbol: 'kg', inGram: 1000.0);
 
-List<Unit> allMasses() {
-  var masses = List<Unit>.from(baseMasses);
+List<Mass> allMasses() {
+  var masses = List<Mass>.from(baseMasses);
   var indexKG = baseMasses.indexOf(MASS_GRAM);
   masses.insert(indexKG + 1, MASS_KILOGRAM);
 

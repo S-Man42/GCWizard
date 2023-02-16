@@ -12,7 +12,7 @@ import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors_yuv.d
 import 'package:intl/intl.dart';
 
 class ColorTool extends StatefulWidget {
-  final RGB color;
+  final RGB? color;
 
   const ColorTool({Key? key, this.color}) : super(key: key);
 
@@ -21,9 +21,8 @@ class ColorTool extends StatefulWidget {
 }
 
 class ColorToolState extends State<ColorTool> {
-  dynamic _currentColor = defaultColor;
-  String _currentColorSpace = keyColorSpaceRGB;
-  String _currentOutputColorSpace = ColorSpaceKey.HEXCODE;
+  late GCWColorValue _currentColor;
+  var _currentOutputColorSpace = ColorSpaceKey.HEXCODE;
 
   final NumberFormat _numberFormat = NumberFormat('0.' + '#' * COLOR_DOUBLE_PRECISION);
 
@@ -31,7 +30,7 @@ class ColorToolState extends State<ColorTool> {
   void initState() {
     super.initState();
 
-    _currentColor = widget.color ?? defaultColor;
+    _currentColor = GCWColorValue(ColorSpaceKey.RGB, widget.color ?? defaultColor);
   }
 
   @override
@@ -39,17 +38,15 @@ class ColorToolState extends State<ColorTool> {
     return Column(
       children: <Widget>[
         GCWColors(
-          color: _currentColor,
-          colorSpace: _currentColorSpace,
+          colorsValue: _currentColor,
           onChanged: (value) {
             setState(() {
-              _currentColorSpace = value['colorSpace'];
-              _currentColor = value['color'];
+              _currentColor = value;
             });
           },
         ),
         GCWTextDivider(text: i18n(context, 'colors_outputcolorspace')),
-        GCWDropDown(
+        GCWDropDown<ColorSpaceKey>(
           value: _currentOutputColorSpace,
           items: allColorSpaces.map((colorSpace) {
             return GCWDropDownMenuItem(value: colorSpace.key, child: i18n(context, colorSpace.name));
@@ -69,8 +66,8 @@ class ColorToolState extends State<ColorTool> {
     var colorSpaceOutputs;
 
     switch (_currentOutputColorSpace) {
-      case keyColorSpaceRGB:
-        RGB rgb = convertColorSpace(_currentColor, _currentColorSpace, keyColorSpaceRGB);
+      case ColorSpaceKey.RGB:
+        var rgb = convertColorSpace(_currentColor, ColorSpaceKey.RGB) as RGB;
         colorSpaceOutputs = [
           [i18n(context, 'colors_colorspace_rgb_red'), _numberFormat.format(rgb.red)],
           [i18n(context, 'colors_colorspace_rgb_green'), _numberFormat.format(rgb.green)],
@@ -78,14 +75,14 @@ class ColorToolState extends State<ColorTool> {
         ];
         break;
       case ColorSpaceKey.HEXCODE:
-        HexCode hex = convertColorSpace(_currentColor, _currentColorSpace, ColorSpaceKey.HEXCODE);
+        var hex = convertColorSpace(_currentColor, ColorSpaceKey.HEXCODE) as HexCode;
         colorSpaceOutputs = [
           [i18n(context, 'colors_colorspace_hex_hexcode'), hex.toString()],
           [i18n(context, 'colors_colorspace_hex_shorthexcode'), (hex.isShortHex ? hex.shortHexCode : '-')]
         ];
         break;
       case ColorSpaceKey.HSV:
-        HSV hsv = convertColorSpace(_currentColor, _currentColorSpace, ColorSpaceKey.HSV);
+        var hsv = convertColorSpace(_currentColor, ColorSpaceKey.HSV) as HSV;
         colorSpaceOutputs = [
           [i18n(context, 'colors_colorspace_hsv_hue'), _numberFormat.format(hsv.hue)],
           [i18n(context, 'colors_colorspace_hsv_saturation'), _numberFormat.format(hsv.saturation * 100.0)],
@@ -93,7 +90,7 @@ class ColorToolState extends State<ColorTool> {
         ];
         break;
       case ColorSpaceKey.HSL:
-        HSL hsl = convertColorSpace(_currentColor, _currentColorSpace, ColorSpaceKey.HSL);
+        var hsl = convertColorSpace(_currentColor, ColorSpaceKey.HSL) as HSL;
         colorSpaceOutputs = [
           [i18n(context, 'colors_colorspace_hsl_hue'), _numberFormat.format(hsl.hue)],
           [i18n(context, 'colors_colorspace_hsl_saturation'), _numberFormat.format(hsl.saturation * 100.0)],
@@ -101,7 +98,7 @@ class ColorToolState extends State<ColorTool> {
         ];
         break;
       case ColorSpaceKey.HSI:
-        HSI hsi = convertColorSpace(_currentColor, _currentColorSpace, ColorSpaceKey.HSI);
+        var hsi = convertColorSpace(_currentColor, ColorSpaceKey.HSI) as HSI;
         colorSpaceOutputs = [
           [i18n(context, 'colors_colorspace_hsi_hue'), _numberFormat.format(hsi.hue)],
           [i18n(context, 'colors_colorspace_hsi_saturation'), _numberFormat.format(hsi.saturation * 100.0)],
@@ -109,7 +106,7 @@ class ColorToolState extends State<ColorTool> {
         ];
         break;
       case ColorSpaceKey.CMYK:
-        CMYK cmyk = convertColorSpace(_currentColor, _currentColorSpace, ColorSpaceKey.CMYK);
+        var cmyk = convertColorSpace(_currentColor, ColorSpaceKey.CMYK) as CMYK;
         colorSpaceOutputs = [
           [i18n(context, 'colors_colorspace_cmyk_cyan'), _numberFormat.format(cmyk.cyan * 100.0)],
           [i18n(context, 'colors_colorspace_cmyk_magenta'), _numberFormat.format(cmyk.magenta * 100.0)],
@@ -118,7 +115,7 @@ class ColorToolState extends State<ColorTool> {
         ];
         break;
       case ColorSpaceKey.CMY:
-        CMY cmy = convertColorSpace(_currentColor, _currentColorSpace, ColorSpaceKey.CMY);
+        var cmy = convertColorSpace(_currentColor, ColorSpaceKey.CMY) as CMY;
         colorSpaceOutputs = [
           [i18n(context, 'colors_colorspace_cmy_cyan'), _numberFormat.format(cmy.cyan * 100.0)],
           [i18n(context, 'colors_colorspace_cmy_magenta'), _numberFormat.format(cmy.magenta * 100.0)],
@@ -126,7 +123,7 @@ class ColorToolState extends State<ColorTool> {
         ];
         break;
       case ColorSpaceKey.YUV:
-        YUV yuv = convertColorSpace(_currentColor, _currentColorSpace, ColorSpaceKey.YUV);
+        var yuv = convertColorSpace(_currentColor, ColorSpaceKey.YUV) as YUV;
         colorSpaceOutputs = [
           [i18n(context, 'colors_colorspace_yuv_y'), _numberFormat.format(yuv.y * 100.0)],
           [i18n(context, 'colors_colorspace_yuv_u'), _numberFormat.format(yuv.u * 100.0)],
@@ -134,7 +131,7 @@ class ColorToolState extends State<ColorTool> {
         ];
         break;
       case ColorSpaceKey.YPBPR:
-        YPbPr yPbPr = convertColorSpace(_currentColor, _currentColorSpace, ColorSpaceKey.YPBPR);
+        var yPbPr = convertColorSpace(_currentColor, ColorSpaceKey.YPBPR) as YPbPr;
         colorSpaceOutputs = [
           [i18n(context, 'colors_colorspace_ypbpr_y'), _numberFormat.format(yPbPr.y * 100.0)],
           [i18n(context, 'colors_colorspace_ypbpr_pb'), _numberFormat.format(yPbPr.pb * 100.0)],
@@ -142,7 +139,7 @@ class ColorToolState extends State<ColorTool> {
         ];
         break;
       case ColorSpaceKey.YCBCR:
-        YCbCr yCbCr = convertColorSpace(_currentColor, _currentColorSpace, ColorSpaceKey.YCBCR);
+        var yCbCr = convertColorSpace(_currentColor, ColorSpaceKey.YCBCR) as YCbCr;
         colorSpaceOutputs = [
           [i18n(context, 'colors_colorspace_ycbcr_y'), _numberFormat.format(yCbCr.y)],
           [i18n(context, 'colors_colorspace_ycbcr_cb'), _numberFormat.format(yCbCr.cb)],
@@ -150,7 +147,7 @@ class ColorToolState extends State<ColorTool> {
         ];
         break;
       case ColorSpaceKey.YIQ:
-        YIQ yiq = convertColorSpace(_currentColor, _currentColorSpace, ColorSpaceKey.YIQ);
+        var yiq = convertColorSpace(_currentColor, ColorSpaceKey.YIQ) as YIQ;
         colorSpaceOutputs = [
           [i18n(context, 'colors_colorspace_yiq_y'), _numberFormat.format(yiq.y * 100.0)],
           [i18n(context, 'colors_colorspace_yiq_i'), _numberFormat.format(yiq.i * 100.0)],

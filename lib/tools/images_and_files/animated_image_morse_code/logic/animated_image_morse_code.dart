@@ -2,62 +2,81 @@ import 'dart:isolate';
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:gc_wizard/common_widgets/gcw_async_executer.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/morse/logic/morse.dart';
 import 'package:gc_wizard/tools/images_and_files/animated_image/logic/animated_image.dart' as animated_image;
+import 'package:gc_wizard/tools/images_and_files/animated_image/logic/animated_image.dart';
 import 'package:image/image.dart' as Image;
 import 'package:tuple/tuple.dart';
 
-Future<Map<String, dynamic>> analyseImageMorseCodeAsync(dynamic jobData) async {
+class AnimatedImageMorseOutput extends AnimatedImageOutput {
+  List<List<int>> imagesFiltered;
+
+  AnimatedImageMorseOutput(animatedImageOutput, this.imagesFiltered)
+  : super (animatedImageOutput.images, animatedImageOutput.durations, animatedImageOutput.linkList);
+}
+
+class MorseCodeOutput {
+  String? morseCode;
+  String? text;
+
+  MorseCodeOutput(this.morseCode, this.text);
+}
+
+Future<AnimatedImageMorseOutput?> analyseImageMorseCodeAsync(GCWAsyncExecuterParameters? jobData) async {
   if (jobData == null) return null;
 
   var output = await analyseImageMorseCode(jobData.parameters, sendAsyncPort: jobData.sendAsyncPort);
 
-  jobData.sendAsyncPort?.send(output);
+  jobData.sendAsyncPort.send(output);
 
   return output;
 }
 
-Future<Map<String, dynamic>> analyseImageMorseCode(Uint8List bytes, {SendPort? sendAsyncPort}) async {
+Future<AnimatedImageMorseOutput?> analyseImageMorseCode(Uint8List bytes, {SendPort? sendAsyncPort}) async {
   try {
-    var out = animated_image.analyseImage(bytes, sendAsyncPort: sendAsyncPort, filterImages: (outMap, frames) {
-      List<Uint8List> imageList = outMap["images"];
-      var filteredList = <List<int>>[];
+    var out = await animated_image.analyseImage(bytes, sendAsyncPort: sendAsyncPort, withFramesOutput: true);
+      if (out == null || out.frames == null) return null;
 
-      for (var i = 0; i < imageList.length; i++) filteredList = _filterImages(filteredList, i, imageList);
+    List<Uint8List> imageList = out.images;
+    var filteredList = <List<int>>[];
 
-      filteredList = _searchHighSignalImage(frames, filteredList);
-      outMap.addAll({"imagesFiltered": filteredList});
-    });
+    for (var i = 0; i < imageList.length; i++) filteredList = _filterImages(filteredList, i, imageList);
 
-    return out; // Future.value(out);
+    filteredList = _searchHighSignalImage(out.frames!, filteredList);
+    var outMorse = AnimatedImageMorseOutput(out, filteredList);
+
+    return Future.value(outMorse);
   } on Exception {
     return null;
   }
 }
 
-Future<Uint8List> createImageAsync(dynamic jobData) async {
+Future<Uint8List?> createImageAsync(GCWAsyncExecuterParameters? jobData) async {
   if (jobData == null) return null;
 
   var output = await _createImage(
       jobData.parameters.item1, jobData.parameters.item2, jobData.parameters.item3, jobData.parameters.item4,
       sendAsyncPort: jobData.sendAsyncPort);
 
-  jobData.sendAsyncPort?.send(output);
+  jobData.sendAsyncPort.send(output);
 
   return output;
 }
 
-Future<Uint8List> _createImage(Uint8List highImage, Uint8List lowImage, String input, int ditDuration,
+Future<Uint8List?> _createImage(Uint8List? highImage, Uint8List? lowImage, String? input, int ditDuration,
     {SendPort? sendAsyncPort}) async {
-  input = encodeMorse(input);
   if (input == null || input == '') return null;
   if (highImage == null || lowImage == null) return null;
   if (ditDuration <= 0) return null;
 
+  input = encodeMorse(input);
+  
   try {
     var _highImage = Image.decodeImage(highImage);
     var _lowImage = Image.decodeImage(lowImage);
     var animation = Image.Animation();
+    if (_highImage == null || _lowImage == null) return null;
 
     input = input.replaceAll(String.fromCharCode(8195), ' ');
     input = input.replaceAll('| ', '|');
@@ -106,7 +125,8 @@ Future<Uint8List> _createImage(Uint8List highImage, Uint8List lowImage, String i
       }
     }
 
-    return Image.encodeGifAnimation(animation);
+    var list = Image.encodeGifAnimation(animation);
+    return Future.value((list == null) ? null : Uint8List.fromList(list));
   } on Exception {
     return null;
   }
@@ -132,11 +152,11 @@ List<List<int>> _filterImages(List<List<int>> filteredList, int imageIndex, List
   return filteredList;
 }
 
-Map<String, dynamic> decodeMorseCode(List<int> durations, List<bool> onSignal) {
+MorseCodeOutput? decodeMorseCode(List<int> durations, List<bool> onSignal) {
   var timeList = _buildTimeList(durations, onSignal);
   var signalTimes = foundSignalTimes(timeList);
 
-  if (signalTimes == null) return null;
+  if (signalTimes == null || timeList == null) return null;
 
   var out = '';
   timeList.forEach((element) {
@@ -147,14 +167,11 @@ Map<String, dynamic> decodeMorseCode(List<int> durations, List<bool> onSignal) {
     else if (element.item2 > signalTimes.item2) //3
       out += " ";
   });
-
-  var output = Map<String, dynamic>();
-  output.addAll({"morse": out, "text": decodeMorse(out)});
-
-  return output;
+  
+  return MorseCodeOutput(out, decodeMorse(out));
 }
 
-List<Tuple2<bool, int>> _buildTimeList(List<int> durations, List<bool> onSignal) {
+List<Tuple2<bool, int>>? _buildTimeList(List<int>? durations, List<bool>? onSignal) {
   var timeList = <Tuple2<bool, int>>[];
   var i = 0;
 
@@ -173,7 +190,7 @@ List<Tuple2<bool, int>> _buildTimeList(List<int> durations, List<bool> onSignal)
   return timeList;
 }
 
-Tuple3<int, int, int> foundSignalTimes(List<Tuple2<bool, int>> timeList) {
+Tuple3<int, int, int>? foundSignalTimes(List<Tuple2<bool, int>>? timeList) {
   if (timeList == null || timeList.length == 0) return null;
 
   const toler = 1.2;

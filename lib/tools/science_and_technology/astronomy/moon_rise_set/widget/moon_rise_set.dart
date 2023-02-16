@@ -8,6 +8,7 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/_common/logic/julian_date.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/moon_rise_set/logic/moon_rise_set.dart' as logic;
+import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/datetime_utils.dart';
 
 class MoonRiseSet extends StatefulWidget {
@@ -16,7 +17,7 @@ class MoonRiseSet extends StatefulWidget {
 }
 
 class MoonRiseSetState extends State<MoonRiseSet> {
-  var _currentDateTime = {'datetime': DateTime.now(), 'timezone': DateTime.now().timeZoneOffset};
+  var _currentDateTime = DateTimeTimezone(datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
   var _currentCoords = defaultCoordinate;
   var _currentCoordsFormat = defaultCoordFormat();
 
@@ -53,8 +54,8 @@ class MoonRiseSetState extends State<MoonRiseSet> {
   Widget _buildOutput() {
     var moonRise = logic.MoonRiseSet(
         _currentCoords,
-        JulianDate(_currentDateTime['datetime'], _currentDateTime['timezone']),
-        _currentDateTime['timezone'],
+        JulianDate(_currentDateTime),
+        _currentDateTime.timezone,
         defaultEllipsoid());
 
     var outputs = [

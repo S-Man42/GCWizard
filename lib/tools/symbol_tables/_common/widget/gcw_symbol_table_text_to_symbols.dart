@@ -18,8 +18,10 @@ import 'package:gc_wizard/tools/symbol_tables/special_encryption_painters/symbol
 import 'package:gc_wizard/tools/symbol_tables/special_encryption_painters/symbol_table_encryption_stipplecode/widget/symbol_table_encryption_stipplecode.dart';
 import 'package:gc_wizard/tools/symbol_tables/special_encryption_painters/symbol_table_encryption_tenctonese/widget/symbol_table_encryption_tenctonese.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
+import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
 import 'package:intl/intl.dart';
+import 'package:tuple/tuple.dart';
 
 class GCWSymbolTableTextToSymbols extends StatefulWidget {
   final String text;
@@ -80,18 +82,10 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
                 text: i18n(context, 'common_exportfile_saveoutput'),
                 onPressed: () {
                   _exportEncryption(widget.countColumns, _data.isCaseSensitive()).then((value) {
-                    if (value == false) {
-                      return;
-                    }
+                    if (value.item1 == false) return;
 
-                    showExportedFileDialog(
-                      context,
-                      contentWidget: Container(
-                        //child: Image.memory(value), // ToDo NullSafety auskommentiert
-                        margin: EdgeInsets.only(top: 25),
-                        decoration: BoxDecoration(border: Border.all(color: themeColors().dialogText())),
-                      ),
-                    );
+                    var content = value.item2 != null ? imageContent(context, value.item2!) : null;
+                    showExportedFileDialog(context, contentWidget: content);
                   });
                 },
               )
@@ -188,7 +182,7 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
     }
   }
 
-  Future<bool> _exportEncryption(int countColumns, isCaseSensitive) async {
+  Future<Tuple2<bool, Uint8List?>> _exportEncryption(int countColumns, isCaseSensitive) async {
     var imageIndexes = _getImageIndexes(isCaseSensitive);
 
     var countRows = (imageIndexes.length / countColumns).floor();
@@ -213,8 +207,10 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
     final img = await canvasRecorder.endRecording().toImage(sizes.canvasWidth.floor(), sizes.canvasHeight.floor());
     final data = await img.toByteData(format: ui.ImageByteFormat.png);
 
-    if (data?.buffer == null) return false;
-    return await saveByteDataToFile(context, trimNullBytes(data!.buffer.asUint8List()),
-        'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
+    var bytes = data?.buffer.asUint8List();
+    if (bytes == null) return Tuple2<bool, Uint8List?>(false, null);
+    bytes = trimNullBytes(bytes);
+    return Tuple2<bool, Uint8List?>(await saveByteDataToFile(context, bytes,
+        buildFileNameWithDate('img_', FileType.PNG)), bytes);
   }
 }

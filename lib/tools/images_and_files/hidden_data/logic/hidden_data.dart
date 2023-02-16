@@ -14,11 +14,11 @@ part 'package:gc_wizard/tools/images_and_files/hidden_data/logic/file_size.dart'
 
 const HIDDEN_FILE_IDENTIFIER = '<<!!!HIDDEN_FILE!!!>>';
 
-Future<List<GCWFile>> hiddenData(GCWFile data) async {
+Future<List<GCWFile>> hiddenData(GCWFile? data) async {
   if (data == null) return [];
 
   data.children = null;
-  return Future.value((await _hiddenData(data, 0))?.item1);
+  return Future.value((await _hiddenData(data, 0)).item1);
 }
 
 Future<Tuple2<List<GCWFile>, int>> _hiddenData(GCWFile data, int fileIndexCounter) async {
@@ -33,14 +33,14 @@ Future<Tuple2<List<GCWFile>, int>> _hiddenData(GCWFile data, int fileIndexCounte
     _addFiles(childrenList, children);
   }
   // first add all children blocks
-  _addFiles(childrenList, result?.item1);
+  _addFiles(childrenList, result.item1);
 
   // check for empty children (backup)
   childrenList.removeWhere((element) => element == null);
   _addChildren(data, childrenList);
 
   // recursive search in the children
-  await Future.forEach(childrenList, (data) async {
+  await Future.forEach(childrenList, (GCWFile data) async {
     result = await _hiddenData(data, result.item2);
   });
 
@@ -51,10 +51,11 @@ Future<Tuple2<List<GCWFile>, int>> _hiddenData(GCWFile data, int fileIndexCounte
     result = await _searchMagicBytesHeader(dataClone, result.item2);
     _addChildren(data, dataClone.children);
 
-    if (dataClone.children != null && dataClone.children.length > 0) {
+    if (dataClone.children != null && dataClone.children!.length > 0) {
       // check for hidden archives (other types are checked)
-      await Future.forEach(dataClone.children, (data) async {
-        if (data.fileClass == FileClass.ARCHIVE) result = await _hiddenData(data, result.item2);
+      await Future.forEach(dataClone.children!, (GCWFile data) async {
+        if (data.fileClass == FileClass.ARCHIVE)
+          result = await _hiddenData(data, result.item2);
       });
     }
   }
@@ -66,12 +67,12 @@ Future<Tuple2<List<GCWFile>, int>> _hiddenData(GCWFile data, int fileIndexCounte
 /// default is that the first block is not returned (only attachments) (ignored with onlyParent)
 /// with checking whether it is a valid block
 Future<Tuple2<List<GCWFile>, int>> _splitFile(GCWFile data, int fileIndexCounter, {bool onlyParent: false}) async {
-  var bytes = data.bytes;
+  Uint8List? bytes = data.bytes;
   var resultList = <GCWFile>[];
   var parent = !onlyParent;
 
   while (bytes != null && bytes.length > 0) {
-    int fileSize = _fileSize(bytes);
+    int? fileSize = _fileSize(bytes);
 
     Uint8List resultBytes;
     if ((fileSize != null) && (fileSize > 0) && (bytes.length > fileSize)) {
@@ -101,21 +102,22 @@ Future<Tuple2<List<GCWFile>, int>> _splitFile(GCWFile data, int fileIndexCounter
 /// search on any position magic bytes
 Future<Tuple2<List<GCWFile>, int>> _searchMagicBytesHeader(GCWFile data, int fileIndexCounter) async {
   var result = await _searchMagicBytes(data, _fileSizeCalculationAviable(), fileIndexCounter);
-  _addChildren(data, result?.item1);
+  _addChildren(data, result.item1);
 
-  return Future.value(Tuple2<List<GCWFile>, int>([data], result?.item2 ?? fileIndexCounter));
+  return Future.value(Tuple2<List<GCWFile>, int>([data], result.item2 ?? fileIndexCounter));
 }
 
-void _addChildren(GCWFile data, List<GCWFile> children) {
+void _addChildren(GCWFile data, List<GCWFile>? children) {
   if (children != null && children.length > 0) {
     if (data.children != null)
-      data.children.addAll(children);
+      data.children!.addAll(children);
     else
       data.children = children;
   }
 }
 
-void _addFiles(List<GCWFile> list, List<GCWFile> files) {
+void _addFiles(List<GCWFile> list, List<GCWFile>? files) {
+  if (files == null) return;
   if (files.length > 0) list.addAll(files);
 }
 
@@ -123,13 +125,11 @@ void _addFiles(List<GCWFile> list, List<GCWFile> files) {
 Future<Tuple2<List<GCWFile>, int>> _searchMagicBytes(
     GCWFile data, List<FileType> fileTypeList, int fileIndexCounter) async {
   var resultList = <GCWFile>[];
+  var bytes = data.bytes;
 
-  await Future.forEach(fileTypeList, (fileType) async {
+  await Future.forEach(fileTypeList, (FileType fileType) async {
     var magicBytesList = magicBytes(fileType);
-    await Future.forEach(magicBytesList, (magicBytes) async {
-      var bytes = data.bytes;
-      if (bytes == null) return Tuple2<List<GCWFile>, int>(resultList, fileIndexCounter);
-
+    await Future.forEach(magicBytesList, (List<int> magicBytes) async {
       for (int i = 1; i < bytes.length; i++) {
         if (bytes[i] == magicBytes[0] && ((i + magicBytes.length) <= bytes.length)) {
           var validMagicBytes = true;
@@ -149,9 +149,9 @@ Future<Tuple2<List<GCWFile>, int>> _searchMagicBytes(
                   await _splitFile(GCWFile(bytes: data.bytes.sublist(bytesOffset)), fileIndexCounter, onlyParent: true);
               if (bytesOffset == 14964) bytesOffset = bytesOffset;
               // append file as result, if it is a valid file
-              _addFiles(resultList, result?.item1);
+              _addFiles(resultList, result.item1);
 
-              fileIndexCounter = result?.item2 ?? fileIndexCounter;
+              fileIndexCounter = result.item2 ?? fileIndexCounter;
             }
           }
         }
@@ -166,14 +166,14 @@ Future<Tuple2<List<GCWFile>, int>> _searchMagicBytes(
 Future<bool> _checkFileValid(GCWFile data) async {
   var result = true;
   try {
-    var _fileClass = data?.fileClass;
+    var _fileClass = data.fileClass;
     if (_fileClass == FileClass.IMAGE)
       result = Image.decodeImage(data.bytes) != null;
     else if (_fileClass == FileClass.SOUND) {
       var advancedPlayer = Audio.AudioPlayer();
       await advancedPlayer.setSourceBytes(data.bytes);
       var duration = await advancedPlayer.getDuration();
-      result = duration.inMilliseconds > 0;
+      result = duration == null ? false : duration.inMilliseconds > 0;
     }
   } catch (e) {
     result = false;
@@ -182,7 +182,7 @@ Future<bool> _checkFileValid(GCWFile data) async {
   return Future.value(result);
 }
 
-Uint8List mergeFiles(List<dynamic> data) {
+Uint8List? mergeFiles(List<Object>? data) {
   if (data == null) return null;
   var result = <int>[];
 

@@ -5,6 +5,7 @@ import 'dart:isolate';
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:gc_wizard/common_widgets/gcw_async_executer.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/tools/images_and_files/_common/logic/rgb_pixel.dart';
 import 'package:gc_wizard/utils/math_utils.dart';
@@ -18,34 +19,38 @@ enum MagicEyeErrorCode { OK, IMAGE_TOO_SMALL }
 const int _MIN_DISPLACEMENT_ALLOWED = 10;
 const _MAX_TESTED_LINES_COUNT = 50;
 const int _channelCount = 4;
-double _fieldDepth;
-int _separation;
-int _lineWidth;
-int _rows;
-int _depthWidth;
-int _depthScale;
-int _midpoint;
-int _textureWidth;
-int _textureHeight;
-Uint32List _pixels;
-Uint8List _texturePixels;
-Uint8List _depthBytes;
+late double _fieldDepth;
+late int _separation;
+late int _lineWidth;
+late int _rows;
+late int _depthWidth;
+late int _depthScale;
+late int _midpoint;
+late int _textureWidth;
+late int _textureHeight;
+late Uint32List _pixels;
+late Uint8List _texturePixels;
+late Uint8List _depthBytes;
 
-Future<Tuple3<Image.Image, Uint8List, int>> decodeImageAsync(dynamic jobData) async {
+Future<Tuple3<Image.Image, Uint8List, int>?> decodeImageAsync(GCWAsyncExecuterParameters? jobData) async {
   if (jobData == null) return null;
 
-  Uint8List image = jobData.parameters.item1;
-  Image.Image imageData = jobData.parameters.item2;
-  int displacement = jobData.parameters.item3;
+  Uint8List? image = jobData.parameters.item1;
+  Image.Image? imageData = jobData.parameters.item2;
+  int? displacement = jobData.parameters.item3;
   
   return decodeImage(image, imageData, displacement, sendAsyncPort: jobData.sendAsyncPort);
 }
 
-Future<Tuple3<Image.Image, Uint8List, int>> decodeImage(Uint8List image, Image.Image imageData, int displacement,
-   {SendPort sendAsyncPort}) async {
+Future<Tuple3<Image.Image, Uint8List, int>?> decodeImage(
+    Uint8List? image,
+    Image.Image? imageData,
+    int? displacement,
+   {SendPort? sendAsyncPort}) async {
 
   if (image == null) return null;
   if (imageData == null) imageData = Image.decodeImage(image);
+  if (imageData == null) return null;
   if (displacement == null) displacement = _magicEyeSolver(imageData);
 
   var outputImage = _createResultImage(imageData, displacement);
@@ -58,8 +63,6 @@ Future<Tuple3<Image.Image, Uint8List, int>> decodeImage(Uint8List image, Image.I
 
 /// calculate the displacement
 int _magicEyeSolver(Image.Image image) {
-  if (image == null) return null;
-
   var testedLines = _computeTestedLines(image);
   int maxDisplacementAllowed = image.width ~/ 3;
 
@@ -89,8 +92,6 @@ int _magicEyeSolver(Image.Image image) {
 }
 
 List<int> _computeTestedLines(Image.Image image) {
-  if (image == null) return null;
-
   var lines = <int>[];
   var delta = (image.height < _MAX_TESTED_LINES_COUNT) ? 1 : (image.height / _MAX_TESTED_LINES_COUNT);
 
@@ -122,8 +123,6 @@ int _computeBestDisplacement(List<double> differences) {
 }
 
 Uint8List _createResultImage(Image.Image image, int displacement) {
-  if (image == null || displacement == null) return null;
-
   var bitmap = Image.Image(image.width, image.height);
 
   for (int y = 0; y < bitmap.height; y++)
@@ -144,12 +143,12 @@ Uint8List _createResultImage(Image.Image image, int displacement) {
   return encodeTrimmedPng(bitmap);
 }
 
-Future<Tuple2<Uint8List, MagicEyeErrorCode>> generateImageAsync(dynamic jobData) async {
+Future<Tuple2<Uint8List?, MagicEyeErrorCode>?> generateImageAsync(GCWAsyncExecuterParameters? jobData) async {
   if (jobData == null) return null;
 
-  Uint8List hiddenImage = jobData.parameters.item1;
-  Uint8List textureImage = jobData.parameters.item2;
-  TextureType textureType = jobData.parameters.item3;
+  Uint8List? hiddenImage = jobData.parameters.item1;
+  Uint8List? textureImage = jobData.parameters.item2;
+  TextureType? textureType = jobData.parameters.item3;
 
   var outputData = _generateImage(hiddenImage, textureImage, textureType);
 
@@ -158,26 +157,27 @@ Future<Tuple2<Uint8List, MagicEyeErrorCode>> generateImageAsync(dynamic jobData)
   return Future.value(outputData);
 }
 
-Tuple2<Uint8List, MagicEyeErrorCode> _generateImage(
-    Uint8List hiddenDataImage, Uint8List textureImage, TextureType textureType,
+Tuple2<Uint8List?, MagicEyeErrorCode>? _generateImage(
+    Uint8List? hiddenDataImage, Uint8List? textureImage, TextureType? textureType,
     {SendPort? sendAsyncPort}) {
   var bInterpolateDepthmap = true;
   var oversample = 2;
-  Image.Image texture;
+  Image.Image? texture;
 
   _fieldDepth = 0.33333;
   _separation = 128;
 
-  if ((hiddenDataImage == null) | ((textureType == TextureType.BITMAP) && (textureImage == null))) return null;
+  if ((hiddenDataImage == null) || ((textureType == TextureType.BITMAP) && (textureImage == null))) return null;
 
   var depthmap = Image.decodeImage(hiddenDataImage);
+  if (depthmap == null) return null;
   var resolutionX = depthmap.width;
   var resolutionY = depthmap.height;
 
   if (resolutionX < 3 * _separation)
-    return Tuple2<Uint8List, MagicEyeErrorCode>(null, MagicEyeErrorCode.IMAGE_TOO_SMALL);
+    return Tuple2<Uint8List?, MagicEyeErrorCode>(null, MagicEyeErrorCode.IMAGE_TOO_SMALL);
 
-  if ((textureType == TextureType.BITMAP) || ((textureType == null) && (textureImage != null)))
+  if (((textureType == TextureType.BITMAP) || (textureType == null)) && (textureImage != null))
     texture = Image.decodeImage(textureImage);
   else if (textureType == TextureType.GREYDOTS)
     texture = _generateGrayDotsTexture(_separation, resolutionY);
@@ -254,14 +254,14 @@ Tuple2<Uint8List, MagicEyeErrorCode> _generateImage(
   return Tuple2<Uint8List, MagicEyeErrorCode>(encodeTrimmedPng(bmStereogram), MagicEyeErrorCode.OK);
 }
 
-List<int> centreOut;
+late List<int> centreOut;
 
 void _initHoroptic() {
   // Create an array of offsets which alternate pixels from the center out to the edges
   centreOut = List<int>.filled(_lineWidth, 0);
   int offset = _midpoint;
   int flip = -1;
-  for (int i = 0; i < _lineWidth; i++) {
+  for (int i = 0; i < centreOut.length; i++) {
     centreOut[i] = offset;
     offset += ((i + 1) * flip);
     flip = -flip;

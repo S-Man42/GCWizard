@@ -79,10 +79,9 @@ Future<ui.Image> buildSegmentDisplayImage(int countColumns, List<NSegmentDisplay
 
 void _exportFile(BuildContext context, Uint8List? data) async {
   if (data == null) return;
-  var value =
-  await saveByteDataToFile(context, data, 'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
+  var value = await saveByteDataToFile(context, data, buildFileNameWithDate('img_', FileType.PNG));
 
-  if (value) showExportedFileDialog(context, contentWidget: Image.memory(data));
+  if (value) showExportedFileDialog(context, contentWidget: imageContent(context, data));
 }
 
 Widget _buildSegmentDisplayOutput(int countColumns, List<dynamic> displays,

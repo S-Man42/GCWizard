@@ -14,14 +14,14 @@ enum ErrorCode { OK, INPUT_FORMAT, KEY_FORMAT, MISSING_KEY, IV_FORMAT }
 
 class RabbitOutput {
   final String output;
-  final String keyHexFormat;
-  final String ivHexFormat;
+  final String? keyHexFormat;
+  final String? ivHexFormat;
   final ErrorCode errorCode;
 
   RabbitOutput(this.output, this.keyHexFormat, this.ivHexFormat, this.errorCode);
 }
 
-RabbitOutput cryptRabbit(String input, InputFormat inputFormat, String key, InputFormat keyFormat,
+RabbitOutput cryptRabbit(String? input, InputFormat inputFormat, String key, InputFormat keyFormat,
     String initializationVector, InputFormat ivFormat, OutputFormat outputFormat) {
   if (input == null || input == '') return RabbitOutput('', null, null, ErrorCode.OK);
 
@@ -37,7 +37,7 @@ RabbitOutput cryptRabbit(String input, InputFormat inputFormat, String key, Inpu
   var keyData = _generateData(keyList, 16);
   if (keyData == null || keyData.length == 0) return RabbitOutput('', null, null, ErrorCode.KEY_FORMAT);
 
-  Uint8List ivData;
+  Uint8List? ivData;
   if (initializationVector != null && initializationVector.length > 0) {
     var ivList = rc4.convertInputToIntList(initializationVector, _convertInputFormatEnum(ivFormat));
     if (ivList == null || ivList.length == 0) return RabbitOutput('', null, null, ErrorCode.IV_FORMAT);
@@ -56,7 +56,7 @@ RabbitOutput cryptRabbit(String input, InputFormat inputFormat, String key, Inpu
       rc4.formatOutput(keyData, rc4.OutputFormat.HEX), rc4.formatOutput(ivData, rc4.OutputFormat.HEX), ErrorCode.OK);
 }
 
-Uint8List _generateData(List<int> data, int length) {
+Uint8List? _generateData(List<int>? data, int length) {
   if (data == null || length == 0) return null;
 
   var list = Uint8List(length);
@@ -96,10 +96,10 @@ rc4.OutputFormat _convertOutputFormatEnum(OutputFormat outputFormat) {
 
 class Rabbit {
   _context _master = new _context();
-  _context _working; // this is created on class construction/initialization
+  _context? _working; // this is created on class construction/initialization
   bool initialized = false;
 
-  Rabbit(Uint8List key, Uint8List iv) {
+  Rabbit(Uint8List? key, Uint8List iv) {
     if (key != null && key.length != 16)
       // If Key is not NULL, then Key MUST be 16 bytes in length!
       return;
@@ -119,7 +119,7 @@ class Rabbit {
     return _ivSetup(iv);
   }
 
-  Uint8List cryptData(Uint8List msg) {
+  Uint8List? cryptData(Uint8List? msg) {
     if (msg == null) return null;
     var keyStream = keyStreamBytes(msg.length);
     if (keyStream == null) return null;
@@ -131,8 +131,8 @@ class Rabbit {
     return output;
   }
 
-  Uint8List keyStreamBytes(int length) {
-    if (!initialized)
+  Uint8List? keyStreamBytes(int? length) {
+    if (!initialized || _working == null)
       // Cannot get KeyStream if object not initialized! Call Initialize(x[,x]) first!
       return null;
     if (length == null || length < 1)
@@ -145,15 +145,15 @@ class Rabbit {
     int outputPointer = 0;
 
     /* Generate full blocks and fill output (partial block at the end as needed) */
-    while (length > 0) {
+    while (length! > 0) {
       /* Iterate the system */
-      _nextState(_working);
+      _nextState(_working!);
 
       /* Generate 16 bytes of pseudo-random data */
-      buffer[0] = (_working.state[0] ^ (_working.state[5] >> 16) ^ _uint32(_working.state[3] << 16));
-      buffer[1] = (_working.state[2] ^ (_working.state[7] >> 16) ^ _uint32(_working.state[5] << 16));
-      buffer[2] = (_working.state[4] ^ (_working.state[1] >> 16) ^ _uint32(_working.state[7] << 16));
-      buffer[3] = (_working.state[6] ^ (_working.state[3] >> 16) ^ _uint32(_working.state[1] << 16));
+      buffer[0] = (_working!.state[0] ^ (_working!.state[5] >> 16) ^ _uint32(_working!.state[3] << 16));
+      buffer[1] = (_working!.state[2] ^ (_working!.state[7] >> 16) ^ _uint32(_working!.state[5] << 16));
+      buffer[2] = (_working!.state[4] ^ (_working!.state[1] >> 16) ^ _uint32(_working!.state[7] << 16));
+      buffer[3] = (_working!.state[6] ^ (_working!.state[3] >> 16) ^ _uint32(_working!.state[1] << 16));
       output.setRange(outputPointer, outputPointer + min(16, length), _fromUInt32ToBytes(buffer)); //Uint32 to Bytes
 
       /* Increment output and Decrement length */
@@ -234,7 +234,7 @@ class Rabbit {
   }
 
   /* Key setup */
-  void _keySetup(Uint8List key) {
+  void _keySetup(Uint8List? key) {
     /* Temporary variables */
     var k = Uint32List.fromList([0, 0, 0, 0]);
     int i;
@@ -278,9 +278,8 @@ class Rabbit {
   }
 
   /* IV setup */
-  bool _ivSetup(Uint8List iv) {
+  bool _ivSetup(Uint8List? iv) {
     if (iv == null) return false;
-    ;
 
     /* Temporary variables */
     var ii = Uint32List.fromList([0, 0, 0, 0]);
@@ -296,26 +295,26 @@ class Rabbit {
     _working = _master.clone(false); // don't include counters, they are set below
 
     /* Modify counter values */
-    _working.counters[0] = _master.counters[0] ^ ii[0];
-    _working.counters[1] = _master.counters[1] ^ ii[1];
-    _working.counters[2] = _master.counters[2] ^ ii[2];
-    _working.counters[3] = _master.counters[3] ^ ii[3];
-    _working.counters[4] = _master.counters[4] ^ ii[0];
-    _working.counters[5] = _master.counters[5] ^ ii[1];
-    _working.counters[6] = _master.counters[6] ^ ii[2];
-    _working.counters[7] = _master.counters[7] ^ ii[3];
+    _working!.counters[0] = _master.counters[0] ^ ii[0];
+    _working!.counters[1] = _master.counters[1] ^ ii[1];
+    _working!.counters[2] = _master.counters[2] ^ ii[2];
+    _working!.counters[3] = _master.counters[3] ^ ii[3];
+    _working!.counters[4] = _master.counters[4] ^ ii[0];
+    _working!.counters[5] = _master.counters[5] ^ ii[1];
+    _working!.counters[6] = _master.counters[6] ^ ii[2];
+    _working!.counters[7] = _master.counters[7] ^ ii[3];
 
     /* Iterate the system four times */
-    for (i = 0; i < 4; i++) _nextState(_working);
+    for (i = 0; i < 4; i++) _nextState(_working!);
 
     return true;
   }
 }
 
 class _context {
-  int carry;
-  Uint32List counters;
-  Uint32List state;
+  late int carry;
+  late Uint32List counters;
+  late Uint32List state;
 
   _context() {
     carry = 0;

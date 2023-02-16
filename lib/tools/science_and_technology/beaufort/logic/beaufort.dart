@@ -1,6 +1,6 @@
 import 'dart:math';
 
-int meterPerSecondToBeaufort(double velocity) {
+int? meterPerSecondToBeaufort(double? velocity) {
   if (velocity == null || velocity < 0) return null;
 
   if (velocity > 60.0) return 17;
@@ -9,7 +9,7 @@ int meterPerSecondToBeaufort(double velocity) {
   return pow(vRounded / 0.836, 2.0 / 3.0).round();
 }
 
-List<double> beaufortToMeterPerSecond(int beaufort) {
+List<double>? beaufortToMeterPerSecond(int? beaufort) {
   if (beaufort == null || beaufort < 0) return null;
 
   if (beaufort > 16) {
@@ -23,7 +23,7 @@ List<double> beaufortToMeterPerSecond(int beaufort) {
     var mPerS = i / 10.0;
     var b = meterPerSecondToBeaufort(mPerS);
 
-    if (b < beaufort) continue;
+    if (b== null || b < beaufort) continue;
 
     if (b == beaufort) {
       if (lowerV == null) lowerV = mPerS;

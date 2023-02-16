@@ -1,3 +1,4 @@
+import 'package:gc_wizard/common_widgets/color_pickers/gcw_colors.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors_cmyk.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors_hue.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors_rgb.dart';
@@ -39,14 +40,14 @@ ColorSpace getColorSpaceByKey(ColorSpaceKey key) {
   return allColorSpaces.firstWhere((colorSpace) => colorSpace.key == key);
 }
 
-GCWBaseColor convertColorSpace(GCWBaseColor color, ColorSpaceKey oldColorSpace, ColorSpaceKey newColorSpace) {
-  if (newColorSpace == oldColorSpace) {
-    return color;
+GCWBaseColor convertColorSpace(GCWColorValue color, ColorSpaceKey newColorSpace) {
+  if (newColorSpace == color.colorSpace) {
+    return color.color;
   }
 
   var rgb = color as RGB;
-  if (oldColorSpace != ColorSpaceKey.RGB) {
-    rgb = color.toRGB();
+  if (color.colorSpace != ColorSpaceKey.RGB) {
+    rgb = color.color.toRGB();
   }
 
   switch (newColorSpace) {

@@ -32,13 +32,13 @@ class GCWImageViewData {
 }
 
 class GCWImageView extends StatefulWidget {
-  final GCWImageViewData imageData;
+  final GCWImageViewData? imageData;
   final bool toolBarRight;
   final String? extension;
   final String? fileName;
   final Set<GCWImageViewButtons>? suppressedButtons;
   final int? maxHeightInPreview;
-  final Future<GCWFile> Function()? onBeforeLoadBigImage;
+  final Future<GCWFile?> Function()? onBeforeLoadBigImage;
   final Set<GCWImageViewOpenInTools>? suppressOpenInTool;
 
   const GCWImageView(
@@ -75,26 +75,29 @@ class _GCWImageViewState extends State<GCWImageView> {
     super.dispose();
   }
 
-  _resizeImage() {
-    img.Image? image = img.decodeImage(widget.imageData.file.bytes);
+  MemoryImage? _resizeImage() {
+    if (widget.imageData?.file.bytes == null) return null;
+    img.Image? image = img.decodeImage(widget.imageData!.file.bytes);
     if (image != null && widget.maxHeightInPreview != null && image.height > widget.maxHeightInPreview!) {
       img.Image resized = img.copyResize(image, height: widget.maxHeightInPreview);
 
       return MemoryImage(encodeTrimmedPng(resized));
     } else {
-      return MemoryImage(widget.imageData.file.bytes);
+      return MemoryImage(widget.imageData!.file.bytes);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     try {
-      _image = MemoryImage(widget.imageData.file.bytes);
+      if (widget.imageData?.file.bytes != null) {
+        _image = MemoryImage(widget.imageData!.file.bytes);
 
-      if (widget.maxHeightInPreview == null)
-        _previewImage = MemoryImage(widget.imageData.file.bytes);
-      else {
-        _previewImage = _resizeImage();
+        if (widget.maxHeightInPreview == null)
+          _previewImage = MemoryImage(widget.imageData!.file.bytes);
+        else {
+          _previewImage = _resizeImage();
+        }
       }
     } catch (e) {
       _image = null;
@@ -146,11 +149,11 @@ class _GCWImageViewState extends State<GCWImageView> {
             ),
           ),
         ),
-        if ((widget.imageData.description ?? '').trim().length > 0)
+        if ((widget.imageData?.description ?? '').trim().length > 0)
           Container(
               padding: EdgeInsets.only(top: 10),
               child: GCWText(
-                text: widget.imageData.description!.trim(),
+                text: (widget.imageData?.description ?? '').trim(),
                 align: Alignment.center,
               ))
       ],
@@ -169,12 +172,14 @@ class _GCWImageViewState extends State<GCWImageView> {
           icon: Icons.zoom_out_map,
           size: iconSize,
           onPressed: () {
-            if (widget.onBeforeLoadBigImage != null) {
-              widget.onBeforeLoadBigImage!().then((imgData) {
-                openInFullScreen(context, imgData.bytes);
-              });
-            } else {
-              openInFullScreen(context, widget.imageData.file.bytes);
+            if (widget.imageData?.file.bytes != null) {
+              if (widget.onBeforeLoadBigImage != null) {
+                widget.onBeforeLoadBigImage!().then((imgData) {
+                  if (imgData != null) openInFullScreen(context, imgData.bytes);
+                });
+              } else {
+                openInFullScreen(context, widget.imageData!.file.bytes);
+              }
             }
           }),
       GCWIconButton(
@@ -194,14 +199,14 @@ class _GCWImageViewState extends State<GCWImageView> {
             icon: Icons.save,
             size: iconSize,
             onPressed: () {
-              var imgData;
+              Uint8List? imgData;
               if (widget.onBeforeLoadBigImage != null) {
                 widget.onBeforeLoadBigImage!().then((imgData) {
-                  _exportFile(context, imgData.bytes);
+                  if (imgData != null) _exportFile(context, imgData.bytes);
                 });
               } else {
-                imgData = widget.imageData.file.bytes;
-                _exportFile(context, imgData);
+                imgData = widget.imageData?.file.bytes;
+                if (imgData != null) _exportFile(context, imgData);
               }
             }),
       if (widget.suppressedButtons == null || !widget.suppressedButtons!.contains(GCWImageViewButtons.VIEW_IN_TOOLS))
@@ -216,11 +221,10 @@ class _GCWImageViewState extends State<GCWImageView> {
                       action: (index) => setState(() {
                         if (widget.onBeforeLoadBigImage != null) {
                           widget.onBeforeLoadBigImage!().then((imgData) {
-                            openInMetadataViewer(context, imgData);
+                            if (imgData != null) openInMetadataViewer(context, imgData);
                           });
-                        } else {
-                          openInMetadataViewer(context, widget.imageData.file);
-                        }
+                        } else if (widget.imageData?.file != null)
+                          openInMetadataViewer(context, widget.imageData!.file);
                       }),
                     ),
                   if (widget.suppressOpenInTool == null ||
@@ -230,11 +234,10 @@ class _GCWImageViewState extends State<GCWImageView> {
                       action: (index) => setState(() {
                         if (widget.onBeforeLoadBigImage != null) {
                           widget.onBeforeLoadBigImage!().then((imgData) {
-                            openInHexViewer(context, imgData);
+                            if (imgData != null) openInHexViewer(context, imgData);
                           });
-                        } else {
-                          openInHexViewer(context, widget.imageData.file);
-                        }
+                        } else if (widget.imageData?.file != null)
+                          openInHexViewer(context, widget.imageData!.file);
                       }),
                     ),
                   if (widget.suppressOpenInTool == null ||
@@ -244,11 +247,10 @@ class _GCWImageViewState extends State<GCWImageView> {
                       action: (index) => setState(() {
                         if (widget.onBeforeLoadBigImage != null) {
                           widget.onBeforeLoadBigImage!().then((imgData) {
-                            openInHiddenData(context, imgData);
+                            if (imgData != null) openInHiddenData(context, imgData);
                           });
-                        } else {
-                          openInHiddenData(context, widget.imageData.file);
-                        }
+                        } else if (widget.imageData?.file != null)
+                          openInHiddenData(context, widget.imageData!.file);
                       }),
                     ),
                   if (widget.suppressOpenInTool == null ||
@@ -259,11 +261,10 @@ class _GCWImageViewState extends State<GCWImageView> {
                         action: (index) => setState(() {
                               if (widget.onBeforeLoadBigImage != null) {
                                 widget.onBeforeLoadBigImage!().then((imgData) {
-                                  openInColorCorrections(context, imgData);
+                                  if (imgData != null) openInColorCorrections(context, imgData);
                                 });
-                              } else {
-                                openInColorCorrections(context, widget.imageData.file);
-                              }
+                              } else if (widget.imageData?.file != null)
+                                openInColorCorrections(context, widget.imageData!.file);
                             })),
                   if (widget.suppressOpenInTool == null ||
                       !widget.suppressOpenInTool!.contains(GCWImageViewOpenInTools.FLIPROTATE))
@@ -272,22 +273,18 @@ class _GCWImageViewState extends State<GCWImageView> {
                         action: (index) => setState(() {
                               if (widget.onBeforeLoadBigImage != null) {
                                 widget.onBeforeLoadBigImage!().then((imgData) {
-                                  openInFlipRotate(context, imgData);
+                                  if (imgData != null) openInFlipRotate(context, imgData);
                                 });
-                              } else {
-                                openInFlipRotate(context, widget.imageData.file);
-                              }
+                              } else if (widget.imageData?.file != null)
+                                openInFlipRotate(context, widget.imageData!.file);
                             })),
                 ])
     ];
   }
 
   _exportFile(BuildContext context, Uint8List data) async {
-    String timestamp = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now());
-    String outputFilename = 'img_$timestamp.png';
+    var value = await saveByteDataToFile(context, data, buildFileNameWithDate('img_', FileType.PNG));
 
-    var value = await saveByteDataToFile(context, data, outputFilename);
-
-    if (value) showExportedFileDialog(context);
+    if (value) showExportedFileDialog(context, contentWidget: imageContent(context, data));
   }
 }

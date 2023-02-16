@@ -3,7 +3,6 @@ import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gc_wizard/tools/images_and_files/hidden_data/logic/hidden_data.dart';
-import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:path/path.dart' as path;
 
@@ -18,7 +17,7 @@ String _fileDescription(GCWFile file) {
   var output = '';
 
   if (file == null) return '';
-  output += (file.name != null ? file.name : '') + ', ';
+  output += (file.name != null ? file.name : '')! + ', ';
   var fileType = file.fileType;
   output += (fileType != null ? fileType.name : '') + ', ';
   output += (file.bytes != null ? file.bytes.length.toString() : '0') + ' bytes, ';
@@ -26,7 +25,7 @@ String _fileDescription(GCWFile file) {
   return output;
 }
 
-String _fileStructureToString(List<GCWFile> structure, {int offset = 0}) {
+String? _fileStructureToString(List<GCWFile>? structure, {int offset = 0}) {
   var output = '';
 
   if (structure == null) return null;
@@ -36,7 +35,7 @@ String _fileStructureToString(List<GCWFile> structure, {int offset = 0}) {
     if (description != null)
       output += ''.padRight(offset, ' ') + description;
     if (file.children != null)
-      output += '\n' + _fileStructureToString(file.children, offset: offset + 4);
+      output += '\n' + (_fileStructureToString(file.children, offset: offset + 4) ?? '');
   });
 
   return output;

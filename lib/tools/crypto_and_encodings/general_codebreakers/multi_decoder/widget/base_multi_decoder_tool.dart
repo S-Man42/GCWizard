@@ -4,20 +4,44 @@ abstract class AbstractMultiDecoderTool {
   final int id;
   String name;
   final String internalToolName;
-  final Function onDecode;
-  final MultiDecoderToolConfiguration configurationWidget;
+  final Object? Function(String, String) onDecode;
+  final MultiDecoderToolConfiguration? configurationWidget;
   final bool requiresKey;
   final bool optionalKey;
-  Map<String, dynamic> options = {};
+  late final Map<String, Object>? options;
 
   AbstractMultiDecoderTool(
       {Key? key,
-      this.id,
-      this.name,
-      this.internalToolName,
-      this.onDecode,
-      this.requiresKey: false,
-      this.optionalKey: false,
+      required this.id,
+      required this.name,
+      required this.internalToolName,
+      required this.onDecode,
+      this.requiresKey = false,
+      this.optionalKey = false,
       this.configurationWidget,
-      this.options});
+        required this.options}) {
+    if (options == null) options = {};
+  }
+}
+class MultiDecoderToolDummy extends AbstractMultiDecoderTool {
+  MultiDecoderToolDummy()
+      : super(
+      key: null,
+      id: -1,
+      name: '',
+      internalToolName: '',
+      onDecode: (String input, String key) {},
+      options: null);
+}
+
+int intTypeCheck(Object? value, int defaultValue) {
+  return (value is int) ? value as int : defaultValue;
+}
+
+String stringTypeCheck(Object? value, String defaultValue) {
+  return (value is String) ? value as String : defaultValue;
+}
+
+String? stringNullableTypeCheck(Object? value, String? defaultValue) {
+  return (value is String?) ? value as String? : defaultValue;
 }

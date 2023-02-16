@@ -71,7 +71,7 @@ class DayOfTheYearState extends State<DayOfTheYear> {
         datetime: _currentDecodeDate,
         onChanged: (value) {
           setState(() {
-            _currentDecodeDate = value['datetime'];
+            _currentDecodeDate = value.datetime;
           });
         },
       ),

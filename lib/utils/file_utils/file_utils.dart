@@ -7,6 +7,7 @@ import 'package:collection/collection.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:image/image.dart' as img;
+import 'package:intl/intl.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:unrar_file/unrar_file.dart';
@@ -466,6 +467,10 @@ String changeExtension(String fileName, String extension) {
 
 String normalizePath(String path) {
   return normalize(path);
+}
+
+String buildFileNameWithDate(String name, FileType type) {
+  return name + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(type);
 }
 
 Future<File> _createTmpFile(String extension, Uint8List bytes) async {

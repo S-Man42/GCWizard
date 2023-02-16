@@ -101,8 +101,8 @@ List<BaseCoordinates> parseCoordinates(String text, {wholeString = false}) {
 
 //wholeString == false: The first match at the text begin is taken - for copy
 //wholeString == true: The whole text must be a valid coord - for var coords
-Map<String, dynamic> parseStandardFormats(String text, {wholeString = false}) {
-  LatLng coord = DMS.parse(text, wholeString: wholeString)?.toLatLng();
+Map<String, Object>? parseStandardFormats(String text, {wholeString = false}) {
+  LatLng? coord = DMS.parse(text, wholeString: wholeString)?.toLatLng();
   if (coord != null) return {'format': CoordFormatKey.DMS, 'coordinate': coord};
 
   coord = DMM.parse(text, wholeString: wholeString)?.toLatLng();

@@ -9,18 +9,25 @@ const MDT_INTERNALNAMES_KEYBOARDNUMBERS = 'multidecoder_tool_keyboardnumbers_tit
 const MDT_KEYBOARDNUMBERS_OPTION_TYPE = 'multidecoder_tool_keyboardnumbers_type';
 
 class MultiDecoderToolKeyboardNumbers extends AbstractMultiDecoderTool {
-  MultiDecoderToolKeyboardNumbers({Key? key, int id, String name, Map<String, dynamic> options, BuildContext context})
+  MultiDecoderToolKeyboardNumbers({
+    Key? key,
+    required int id,
+    required String name,
+    required Map<String, Object> options,
+    required BuildContext context})
       : super(
             key: key,
             id: id,
             name: name,
             internalToolName: MDT_INTERNALNAMES_KEYBOARDNUMBERS,
             onDecode: (String input, String key) {
-              return keyboardNumbersByName[options[MDT_KEYBOARDNUMBERS_OPTION_TYPE]](input).trim();
+              return keyboardNumbersByName[
+                stringTypeCheck(options[MDT_KEYBOARDNUMBERS_OPTION_TYPE], 'keyboard_mode_qwertz_ristome_dvorak')
+                    ]!(input).trim();
             },
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
-              MDT_KEYBOARDNUMBERS_OPTION_TYPE: GCWStatefulDropDown(
+              MDT_KEYBOARDNUMBERS_OPTION_TYPE: GCWStatefulDropDown<String>(
                 value: options[MDT_KEYBOARDNUMBERS_OPTION_TYPE],
                 onChanged: (newValue) {
                   options[MDT_KEYBOARDNUMBERS_OPTION_TYPE] = newValue;

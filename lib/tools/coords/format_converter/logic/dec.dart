@@ -11,7 +11,7 @@ DEC latLonToDEC(LatLng coord) {
   return DEC(coord.latitude, coord.longitude);
 }
 
-int sign(String match) {
+int sign(String? match) {
   if (match == null) return 1;
 
   if (match[0].contains(RegExp(r'[SW-]', caseSensitive: false))) {
@@ -21,7 +21,7 @@ int sign(String match) {
   return 1;
 }
 
-String prepareInput(String text, {wholeString = false}) {
+String? prepareInput(String? text, {bool wholeString = false}) {
   if (text == null) return null;
 
   if (wholeString) {
@@ -67,7 +67,7 @@ DEC normalizeDEC(DEC coord) {
   return DEC(normalizedLat, normalizedLon);
 }
 
-DEC parseDEC(String input, {wholeString = false}) {
+DEC? parseDEC(String? input, {bool wholeString = false}) {
   input = prepareInput(input, wholeString: wholeString);
   if (input == null) return null;
 
@@ -101,7 +101,7 @@ DEC parseDEC(String input, {wholeString = false}) {
   return null;
 }
 
-DEC _parseDECTrailingSigns(String text) {
+DEC? _parseDECTrailingSigns(String text) {
   RegExp regex = RegExp(PATTERN_DEC_TRAILINGSIGN + regexEnd, caseSensitive: false);
   if (regex.hasMatch(text)) {
     var matches = regex.firstMatch(text);

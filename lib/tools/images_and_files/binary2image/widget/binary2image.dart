@@ -23,8 +23,8 @@ class Binary2Image extends StatefulWidget {
 
 class Binary2ImageState extends State<Binary2Image> {
   var _currentInput = '';
-  Uint8List _outData;
-  String _codeData;
+  Uint8List? _outData;
+  String? _codeData;
   var _squareFormat = false;
   var _invers = false;
 
@@ -61,17 +61,19 @@ class Binary2ImageState extends State<Binary2Image> {
               size: IconButtonSize.SMALL,
               iconColor: _outData == null ? themeColors().inActive() : null,
               onPressed: () {
-                _outData == null ? null : _exportFile(context, _outData);
+                _outData == null ? null : _exportFile(context, _outData!);
               },
             ))
       ],
     );
   }
 
-  _createOutput() {
+  void _createOutput() {
     _outData = null;
     _codeData = null;
-    input2Image(binary2image(_currentInput, _squareFormat, _invers)).then((value) {
+    var image = binary2image(_currentInput, _squareFormat, _invers);
+    if (image == null) return;
+    input2Image(image).then((value) {
       setState(() {
         _outData = value;
         scanBytes(_outData).then((value) {
@@ -84,18 +86,17 @@ class Binary2ImageState extends State<Binary2Image> {
   }
 
   Widget _buildOutput() {
-    if (_outData == null) return null;
+    if (_outData == null) return Container();
 
     return Column(children: <Widget>[
-      Image.memory(_outData),
+      Image.memory(_outData!),
       _codeData != null ? GCWOutput(title: i18n(context, 'binary2image_code_data'), child: _codeData) : Container(),
     ]);
   }
 
   _exportFile(BuildContext context, Uint8List data) async {
-    var value =
-        await saveByteDataToFile(context, data, 'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
+    var value = await saveByteDataToFile(context, data, buildFileNameWithDate('img_', FileType.PNG));
 
-    if (value) showExportedFileDialog(context, fileType: FileType.PNG);
+    if (value) showExportedFileDialog(context, contentWidget: imageContent(context, data));
   }
 }

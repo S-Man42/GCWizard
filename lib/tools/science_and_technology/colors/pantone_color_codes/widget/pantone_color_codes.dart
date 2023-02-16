@@ -23,30 +23,33 @@ class PantoneColorCodes extends StatefulWidget {
 }
 
 class PantoneColorCodesState extends State<PantoneColorCodes> {
-  var _currentValue;
-  List<Map<String, String>> _colors;
+  late PantoneColor _currentValue;
+  List<PantoneColor> _colors = [];
 
   var _currentMode = GCWSwitchPosition.left;
 
-  dynamic _currentInputColor = defaultColor;
-  String _currentColorSpace = keyColorSpaceRGB;
+  var _currentColor = GCWColorValue(ColorSpaceKey.RGB, defaultColor);
+
+  @override
+  void initState() {
+    super.initState();
+
+    _colors = PANTONE_COLOR_CODES_WITH_NAMES.values.map((color) {
+      var name = i18n(context, color.name);
+      if (color.prefix != null) name = i18n(context, color.prefix!) + ' ' + name;
+      if (color.suffix != null) name = name + ' ' + color.suffix!;
+      return PantoneColor(name: name, colorcode: color.colorcode);
+    }).toList();
+
+    _colors.sort((a, b) => a.name.compareTo(b.name));
+
+    _colors.addAll(PANTONE_COLOR_CODES_ONLY_NUMBERS.values.toList());
+
+    _currentValue = _colors[0];
+  }
 
   @override
   Widget build(BuildContext context) {
-    if (_colors == null) {
-      _colors = PANTONE_COLOR_CODES_WITH_NAMES.values.map((color) {
-        var name = i18n(context, color['name']);
-        if (color['prefix'] != null) name = i18n(context, color['prefix']) + ' ' + name;
-        if (color['suffix'] != null) name = name + ' ' + color['suffix'];
-        return {'name': name, 'colorcode': color['colorcode']};
-      }).toList();
-
-      _colors.sort((a, b) => a['name'].compareTo(b['name']));
-
-      _colors.addAll(PANTONE_COLOR_CODES_ONLY_NUMBERS.values.toList());
-
-      _currentValue = _colors[0];
-    }
 
     return Column(
       children: <Widget>[
@@ -63,7 +66,7 @@ class PantoneColorCodesState extends State<PantoneColorCodes> {
         _currentMode == GCWSwitchPosition.left
             ? Column(
                 children: [
-                  GCWDropDown(
+                  GCWDropDown<PantoneColor>(
                       value: _currentValue,
                       onChanged: (newValue) {
                         setState(() {
@@ -71,7 +74,7 @@ class PantoneColorCodesState extends State<PantoneColorCodes> {
                         });
                       },
                       items: _colors.map((color) {
-                        return GCWDropDownMenuItem(value: color, child: color['name']);
+                        return GCWDropDownMenuItem(value: color, child: color.name);
                       }).toList()),
                   GCWDefaultOutput(child: _buildPantoneToColorOutput())
                 ],
@@ -79,12 +82,10 @@ class PantoneColorCodesState extends State<PantoneColorCodes> {
             : Column(
                 children: [
                   GCWColors(
-                    color: _currentInputColor,
-                    colorSpace: _currentColorSpace,
+                    colorsValue: _currentColor,
                     onChanged: (value) {
                       setState(() {
-                        _currentColorSpace = value['colorSpace'];
-                        _currentInputColor = value['color'];
+                        _currentColor = value;
                       });
                     },
                   ),
@@ -95,8 +96,8 @@ class PantoneColorCodesState extends State<PantoneColorCodes> {
     );
   }
 
-  List<dynamic> _buildPantoneColorOutput(Map<String, String> pantone) {
-    var rgb = HexCode(pantone['colorcode']).toRGB();
+  List<Object> _buildPantoneColorOutput(PantoneColor pantone) {
+    var rgb = HexCode(pantone.colorcode).toRGB();
 
     return [
       Container(
@@ -109,14 +110,14 @@ class PantoneColorCodesState extends State<PantoneColorCodes> {
           color: Color.fromRGBO(rgb.red.round(), rgb.green.round(), rgb.blue.round(), 1.0),
         ),
       ),
-      pantone['colorcode'],
-      pantone['name']
+      pantone.colorcode,
+      pantone.name
     ];
   }
 
   Widget _buildColorToPantoneOutput() {
-    RGB rgb = convertColorSpace(_currentInputColor, _currentColorSpace, keyColorSpaceRGB);
-    List<Map<String, String>> similarPantones = findSimilarPantoneColors(rgb, _colors);
+    var rgb = convertColorSpace(_currentColor, ColorSpaceKey.RGB);
+    var similarPantones = findSimilarPantoneColors(rgb, _colors);
 
     if (similarPantones == null || similarPantones.isEmpty) {
       return GCWDefaultOutput(
@@ -137,15 +138,15 @@ class PantoneColorCodesState extends State<PantoneColorCodes> {
   }
 
   Widget _buildPantoneToColorOutput() {
-    var rgbColor = HexCode(_currentValue['colorcode']).toRGB();
+    var rgbColor = HexCode(_currentValue.colorcode).toRGB();
 
-    var name = _currentValue['name'];
-    if (name == null || name.isEmpty) name = 'common_unknown';
+    var name = _currentValue.name;
+    if (name.isEmpty) name = 'common_unknown';
 
     List<Widget> children = [GCWColumnedMultilineOutput(
                               data : [
                                       ['Name', i18n(context, name)],
-                                      ['Hex Color Code', _currentValue['colorcode']],
+                                      ['Hex Color Code', _currentValue.colorcode],
                                       ['RGB', rgbColor.toRBGString()],
                                       ['CMYK', CMYK.fromRGB(rgbColor).toCMYKString()],
                                     ]

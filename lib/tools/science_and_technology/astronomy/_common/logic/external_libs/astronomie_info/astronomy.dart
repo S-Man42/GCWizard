@@ -321,7 +321,7 @@ Coor sunPosition(double TDT, double earthRadius, [double geolat = 0, double lmst
  * @param useObs
  * @return data and coordinates for the Moon
  */
-Coor moonPosition(Coor sunCoor, double TDT, [Coor observer, double lmst = 0, bool useObs = false]) {
+Coor moonPosition(Coor sunCoor, double TDT, [Coor? observer, double lmst = 0, bool useObs = false]) {
   if (observer == null) observer = Coor();
 
   double D = TDT - 2447891.5;
@@ -713,37 +713,37 @@ RiseSet moonRise(double JD, double deltaT, double lon, double lat, double zone, 
  * set of variables for sun calculations
  */
 class Coor {
-  double lon;
-  double lat;
+  late double lon;
+  late double lat;
 
-  double ra;
-  double dec;
-  double raGeocentric;
-  double decGeocentric;
+  late double ra;
+  late double dec;
+  late double raGeocentric;
+  late double decGeocentric;
 
-  double az;
-  double alt;
+  late double az;
+  late double alt;
 
-  double x;
-  double y;
-  double z;
+  late double x;
+  late double y;
+  late double z;
 
-  double radius;
-  double diameter;
-  double distance;
-  double distanceTopocentric;
-  double decTopocentric;
-  double raTopocentric;
+  late double radius;
+  late double diameter;
+  late double distance;
+  late double distanceTopocentric;
+  late double decTopocentric;
+  late double raTopocentric;
 
-  double anomalyMean;
-  double parallax;
-  double orbitLon;
+  late double anomalyMean;
+  late double parallax;
+  late double orbitLon;
 
-  double moonAge;
-  double phase;
+  late double moonAge;
+  late double phase;
 
-  MoonPhase moonPhase;
-  AstrologicalSign sign;
+  late MoonPhase moonPhase;
+  late AstrologicalSign sign;
 
   Coor();
 }
@@ -752,18 +752,18 @@ class Coor {
  * set of variables for sunrise calculations
  */
 class RiseSet {
-  double transit;
-  double rise;
-  double set;
+  late double transit;
+  late double rise;
+  late double set;
 
-  double civilTwilightMorning;
-  double civilTwilightEvening;
+  late double civilTwilightMorning;
+  late double civilTwilightEvening;
 
-  double nauticalTwilightMorning;
-  double nauticalTwilightEvening;
+  late double nauticalTwilightMorning;
+  late double nauticalTwilightEvening;
 
-  double astronomicalTwilightMorning;
-  double astronomicalTwilightEvening;
+  late double astronomicalTwilightMorning;
+  late double astronomicalTwilightEvening;
 
   RiseSet();
 }
@@ -772,14 +772,14 @@ class RiseSet {
  * time calculations
  */
 class Time {
-  int hh;
-  int mm;
-  int ss;
+  late int hh;
+  late int mm;
+  late int ss;
 
-  String hhmmString;
-  String hhmmStringdec;
-  String hhmmssString;
-  String hhmmssStringdec;
+  late String hhmmString;
+  late String hhmmStringdec;
+  late String hhmmssString;
+  late String hhmmssStringdec;
 
   Time(double hhi) {
     double mD = _frac(hhi) * 60;

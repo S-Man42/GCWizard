@@ -103,7 +103,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
             builder: (context) {
               return Center(
                 child: Container(
-                  child: GCWAsyncExecuter(
+                  child: GCWAsyncExecuter<Object?>(
                     isolatedFunction: _downloadFileAsync,
                     parameter: _buildJobDataDownload,
                     onReady: (data) => _saveDownload(data),
@@ -177,7 +177,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
     }
   }
 
-  _saveDownload(dynamic data) {
+  _saveDownload(Object? data) {
     _loadedFile = null;
     if (data is Uint8List && _currentUrl != null) {
       _loadedFile =
@@ -305,7 +305,7 @@ showOpenFileDialog(BuildContext context, List<FileType> supportedFileTypes, Func
       []);
 }
 
-Future<dynamic> _downloadFileAsync(dynamic jobData) async {
+Future<Object?> _downloadFileAsync(GCWAsyncExecuterParameters? jobData) async {
   int _total = 0;
   int _received = 0;
   List<int> _bytes = [];
@@ -333,7 +333,7 @@ Future<dynamic> _downloadFileAsync(dynamic jobData) async {
       if (_total != 0 &&
           sendAsyncPort != null &&
           (_received % progressStep > (_received + value.length) % progressStep)) {
-        sendAsyncPort?.send({'progress': (_received + value.length) / _total});
+        sendAsyncPort.send({'progress': (_received + value.length) / _total});
       }
       _received += value.length;
     },
@@ -350,7 +350,7 @@ Future<dynamic> _downloadFileAsync(dynamic jobData) async {
     );
   });
 
-  if (outString != null) return outString;
+  if (outString != null) return outString!;
 
   await result;
   return result;
@@ -378,6 +378,7 @@ Future<GCWFile?> _openFileExplorer({List<FileType>? allowedFileTypes}) async {
 
     var bytes = await _getFileData(files.first);
     var path = kIsWeb ? null : files.first.path;
+    if (bytes == null) return null;
 
     return GCWFile(path: path, name: files.first.name, bytes: bytes);
   } on PlatformException catch (e) {
@@ -386,8 +387,8 @@ Future<GCWFile?> _openFileExplorer({List<FileType>? allowedFileTypes}) async {
   return null;
 }
 
-Future<Uint8List> _getFileData(filePicker.PlatformFile file) async {
-  return kIsWeb ? Future.value(file.bytes) : (file.path == null) ? Future.value(null) : readByteDataFromFile(file.path!);
+Future<Uint8List?> _getFileData(filePicker.PlatformFile file) async {
+  return kIsWeb ? Future.value(file.bytes) : (file.path == null) ? null : readByteDataFromFile(file.path!);
 }
 
 List<filePicker.PlatformFile> _filterFiles(List<filePicker.PlatformFile> files, List<FileType> allowedFileTypes) {

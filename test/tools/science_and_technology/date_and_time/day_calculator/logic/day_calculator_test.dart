@@ -55,7 +55,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('start: ${elem['start']}, end: ${elem['end']}, countStart: ${elem['countStart']}, countEnd: ${elem['countEnd']}', () {
-        DayCalculatorOutput _actual = calculateDayDifferences(elem['start'], elem['end'], countStart: elem['countStart'], countEnd: elem['countEnd']);
+        var _actual = calculateDayDifferences(elem['start'], elem['end'], countStart: elem['countStart'], countEnd: elem['countEnd']);
         if (_actual == null)
           expect(_actual, elem['expectedOutput']);
         else {

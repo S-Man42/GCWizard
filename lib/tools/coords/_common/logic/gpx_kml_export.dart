@@ -11,7 +11,7 @@ Future<bool> exportCoordinates(BuildContext context, List<GCWMapPoint> points, L
   String extension;
 
   var defaultName = points.first.markerText;
-  if (defaultName.isEmpty) {
+  if (defaultName == null || defaultName.isEmpty) {
     defaultName = 'GC Wizard Export ' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now());
   }
 
@@ -66,7 +66,7 @@ class _GpxWriter {
         i++;
       });
 
-      var circles = points.where((point) => point.hasCircle()).map((point) => point.circle).toList();
+      var circles = points.where((point) => point.hasCircle()).map((point) => point.circle!).toList();
       circles.forEach((circle) {
         _writeLines(builder, name, 'circle', circle.shape);
       });
@@ -207,7 +207,7 @@ class _KmlWriter {
         }
 
 
-        var circles = points.where((point) => point.hasCircle()).map((point) => point.circle).toList();
+        var circles = points.where((point) => point.hasCircle()).map((point) => point.circle!).toList();
 
         for (i = 0; i < circles.length; i++) {
           for (var x = 0; x <= i; x++) {
@@ -334,8 +334,8 @@ class _KmlWriter {
     builder.element('Placemark', nest: () {
       if (!waypoint) {
         _writeElement(builder, 'name', _checkName(cacheName));
-      } else if ((wpt.markerText != null) && wpt.markerText.isNotEmpty) {
-        _writeElement(builder, 'name', _checkName(wpt.markerText));
+      } else if ((wpt.markerText != null) && wpt.markerText!.isNotEmpty) {
+        _writeElement(builder, 'name', _checkName(wpt.markerText!));
       }
       _writeElement(builder, 'altitudeMode', 'relativeToGround');
       _writeElement(builder, 'styleUrl', styleId);

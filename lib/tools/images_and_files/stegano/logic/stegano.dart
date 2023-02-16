@@ -15,7 +15,7 @@ part 'package:gc_wizard/tools/images_and_files/stegano/logic/stegano_pad_key.dar
 
 const int MAX_LENGTH = 5000;
 
-Future<Uint8List> encodeStegano(local.GCWFile file, String message, String key, String filename) async {
+Future<Uint8List> encodeStegano(local.GCWFile file, String message, String key, String? filename) async {
   Uint8List data = file.bytes;
   // the key is use to encrypt your message with AES256 algorithm
   _SteganoEncodeRequest request = _SteganoEncodeRequest(data, message, key: key, filename: filename);

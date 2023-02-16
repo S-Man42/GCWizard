@@ -17,6 +17,7 @@ import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/shadow_length/logic/shadow_length.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/length.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:intl/intl.dart';
 import 'package:prefs/prefs.dart';
 
@@ -26,14 +27,14 @@ class ShadowLength extends StatefulWidget {
 }
 
 class ShadowLengthState extends State<ShadowLength> {
-  var _currentDateTime = {'datetime': DateTime.now(), 'timezone': DateTime.now().timeZoneOffset};
+  var _currentDateTime = DateTimeTimezone(datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
   var _currentCoords = defaultCoordinate;
   var _currentCoordsFormat = defaultCoordFormat();
   var _currentHeight = 0.0;
 
-  Length _currentInputLength = getUnitBySymbol(allLengths(), Prefs.get(PREFERENCE_DEFAULT_LENGTH_UNIT));
-  Length _currentOutputLength = getUnitBySymbol(allLengths(), Prefs.get(PREFERENCE_DEFAULT_LENGTH_UNIT));
-  var _currentCoordsOutputFormat = defaultCoordFormat();
+  Length _currentInputLength = getUnitBySymbol(allLengths(), Prefs.get(PREFERENCE_DEFAULT_LENGTH_UNIT)) as Length;
+  var _currentOutput = GCWCoordsOutputFormatDistanceValue(
+      defaultCoordFormat(), getUnitBySymbol(allLengths(), Prefs.get(PREFERENCE_DEFAULT_LENGTH_UNIT)) as Length)
 
   @override
   Widget build(BuildContext context) {
@@ -73,11 +74,10 @@ class ShadowLengthState extends State<ShadowLength> {
           },
         ),
         GCWCoordsOutputFormatDistance(
-          coordFormat: _currentCoordsOutputFormat,
+          coordFormat: _currentOutput.format,
           onChanged: (value) {
             setState(() {
-              _currentCoordsOutputFormat = value['coordFormat'];
-              _currentOutputLength = value['unit'];
+              _currentOutput = _currentOutput;
             });
           },
         ),
@@ -88,7 +88,7 @@ class ShadowLengthState extends State<ShadowLength> {
 
   Widget _buildOutput() {
     var shadowLen = shadowLength(
-        _currentHeight, _currentCoords, defaultEllipsoid(), _currentDateTime['datetime'], _currentDateTime['timezone']);
+        _currentHeight, _currentCoords, defaultEllipsoid(), _currentDateTime);
 
     var lengthOutput = '';
     var _currentLength = shadowLen.length;
@@ -98,8 +98,8 @@ class ShadowLengthState extends State<ShadowLength> {
     if (_currentLength < 0)
       lengthOutput = i18n(context, 'shadowlength_no_shadow');
     else {
-      _currentFormattedLength = _currentOutputLength.fromMeter(_currentLength);
-      lengthOutput = format.format(_currentFormattedLength) + ' ' + _currentOutputLength.symbol;
+      _currentFormattedLength = _currentOutput.lengthUnit.fromMeter(_currentLength);
+      lengthOutput = format.format(_currentFormattedLength) + ' ' + _currentOutput.lengthUnit.symbol;
     }
 
     var outputShadow = GCWOutput(

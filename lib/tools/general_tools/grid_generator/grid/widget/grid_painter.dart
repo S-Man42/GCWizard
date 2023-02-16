@@ -21,7 +21,7 @@ final _GRID_COLORS = {
   _GridPaintColor.GREEN: {'color': Colors.green, 'fontColor': Colors.black},
 };
 
-class _GridPainter extends StatefulWidget {
+class _GridPainter extends StatefulWidget {//ToDo Mark
   final _GridType type;
   final int countRows;
   final int countColumns;
@@ -34,37 +34,33 @@ class _GridPainter extends StatefulWidget {
   _GridBoxEnumerationStartDirection boxEnumerationStartDirection;
 
   _GridPainter({
-    Key key,
+    Key? key,
     this.type: _GridType.BOXES,
-    this.countRows: 10,
-    this.countColumns: 10,
-    this.tapColor: _GridPaintColor.BLACK,
-    this.boxEnumeration,
-    this.columnEnumeration,
-    this.rowEnumeration,
-    this.boxEnumerationStart,
-    this.boxEnumerationStartDirection,
-    this.boxEnumerationBehaviour,
-  }) : super(key: key) {
-    if (boxEnumerationStart == null) boxEnumerationStart = _GridEnumerationStart.TOP_LEFT;
-    if (boxEnumerationStartDirection == null) boxEnumerationStartDirection = _GridBoxEnumerationStartDirection.RIGHT;
-    if (boxEnumerationBehaviour == null) boxEnumerationBehaviour = _GridBoxEnumerationBehaviour.ALIGNED;
-  }
+    this.countRows = 10,
+    this.countColumns = 10,
+    this.tapColor = _GridPaintColor.BLACK,
+    required this.boxEnumeration,
+    required this.columnEnumeration,
+    required this.rowEnumeration,
+    this.boxEnumerationStart = _GridEnumerationStart.TOP_LEFT,
+    this.boxEnumerationStartDirection = _GridBoxEnumerationStartDirection.RIGHT,
+    this.boxEnumerationBehaviour = _GridBoxEnumerationBehaviour.ALIGNED,
+  }) : super(key: key);
 
   @override
   _GridPainterState createState() => _GridPainterState();
 }
 
 class _GridPainterState extends State<_GridPainter> {
-  Map<int, Map<int, _GridPaintColor>> gridState;
-  List<String> _boxEnumeration;
-  List<String> _originalBoxEnumeration;
+  Map<int, Map<int, _GridPaintColor>>? gridState;
+  List<String>? _boxEnumeration;
+  List<String>? _originalBoxEnumeration;
 
-  List<String> _fillBoxEnumeration() {
-    if (widget.boxEnumeration == null || widget.boxEnumeration.isEmpty) return null;
+  List<String>? _fillBoxEnumeration() {
+    if (widget.boxEnumeration.isEmpty) return null;
 
-    List<List<String>> helper = List.generate(widget.countRows, (_) => List.generate(widget.countColumns, (_) => null));
-    var boxEnumeration;
+    List<List<String?>> helper = List.filled(widget.countRows, List.filled(widget.countColumns, null));
+    List<String> boxEnumeration;
     if (widget.boxEnumeration.length > widget.countColumns * widget.countRows)
       boxEnumeration = widget.boxEnumeration.sublist(0, widget.countRows * widget.countColumns);
     else
@@ -117,7 +113,6 @@ class _GridPainterState extends State<_GridPainter> {
                   j--;
                   currentDirection = _GridBoxEnumerationStartDirection.LEFT;
                 }
-
                 break;
             }
           }
@@ -154,7 +149,6 @@ class _GridPainterState extends State<_GridPainter> {
                   j--;
                   currentDirection = _GridBoxEnumerationStartDirection.LEFT;
                 }
-
                 break;
             }
           }
@@ -347,7 +341,7 @@ class _CustomGridPainter extends CustomPainter {
     this.onTapped,
   );
 
-  String _getEnumeration(List<String> enumeration, int index) {
+  String? _getEnumeration(List<String>? enumeration, int index) {
     if (enumeration == null) return null;
     if (index >= enumeration.length) return null;
 

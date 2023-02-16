@@ -11,8 +11,8 @@ class DNAAminoAcidsTable extends StatefulWidget {
 class DNAAminoAcidsTableState extends State<DNAAminoAcidsTable> {
   @override
   Widget build(BuildContext context) {
-    var acids = aminoAcids.map((acid) {
-      var name;
+    List<List<Object>> acids = aminoAcids.map((acid) {
+      String name;
       if (acid.name == null) {
         switch (acid.type) {
           case NucleobaseSequenceType.START:
@@ -35,13 +35,13 @@ class DNAAminoAcidsTableState extends State<DNAAminoAcidsTable> {
 
       return [
         name,
-        acid.symbolLong == null ? '-' : acid.symbolLong,
-        acid.symbolShort == null ? '-' : acid.symbolShort,
+        acid.symbolLong ?? '-',
+        acid.symbolShort ?? '-',
         sequences.join(', ')
       ];
     }).toList();
 
-    acids.sort((a, b) => a[0].compareTo(b[0]));
+    acids.sort((a, b) => (a[0] as String).compareTo((b[0] as String)));
 
     return GCWColumnedMultilineOutput(
         data: acids,

@@ -41,7 +41,7 @@ Future<MapViewDAO?> importCoordinatesFile(GCWFile file) async {
 }
 
 MapViewDAO? parseCoordinatesFile(String xml, {bool kmlFormat = false}) {
-  MapViewDAO result;
+  MapViewDAO? result;
   try {
     var xmlDoc = XmlDocument.parse(xml);
     if (kmlFormat)
@@ -61,7 +61,7 @@ MapViewDAO? parseCoordinatesFile(String xml, {bool kmlFormat = false}) {
           if (result.polylines != null) {
             result.polylines.forEach((polyline) {
               for (var i = 0; i < polyline.pointUUIDs.length; i++)
-                if (polyline.pointUUIDs[i] == result.points[y].uuid)
+                if (polyline.pointUUIDs[i] == result!.points[y].uuid)
                   polyline.pointUUIDs[i] = result.points[x].uuid;
                 else if (polyline.pointUUIDs[i] == result.points[x].uuid) result.points[x].color = '#000000';
             });
@@ -87,7 +87,7 @@ MapViewDAO? parseCoordinatesFile(String xml, {bool kmlFormat = false}) {
 
 /// Convert GPX-XML into points
 class _GpxReader {
-  MapViewDAO _parse(XmlDocument xmlDocument) {
+  MapViewDAO? _parse(XmlDocument xmlDocument) {
     var parent = xmlDocument.getElement('gpx');
     if (parent != null) {
       var points = <GCWMapPoint>[];
@@ -100,7 +100,7 @@ class _GpxReader {
       parent.findAllElements('trk').forEach((xmlTrk) {
         xmlTrk.findElements('trkseg').forEach((xmlTrkseg) {
           var line = _readLine(xmlTrkseg);
-          if (line?.points != null && line.points.length > 0) {
+          if (line.points != null && line.points.length > 0) {
             lines.add(line);
             points.addAll(line.points);
           }
@@ -113,13 +113,13 @@ class _GpxReader {
     return null;
   }
 
-  GCWMapPoint _readPoint(XmlElement xmlElement) {
+  GCWMapPoint? _readPoint(XmlElement xmlElement) {
     var lat = xmlElement.getAttribute('lat');
     var lon = xmlElement.getAttribute('lon');
     if (lat != null && lon != null) {
-      var wpt = GCWMapPoint(point: LatLng(double.tryParse(lat), double.tryParse(lon)), isEditable: true);
+      var wpt = GCWMapPoint(point: LatLng(double.tryParse(lat) ?? 0, double.tryParse(lon) ?? 0), isEditable: true);
       wpt.markerText = xmlElement.getElement('name')?.innerText;
-      if (wpt.markerText == null || wpt.markerText.length == 0)
+      if (wpt.markerText == null || wpt.markerText!.length == 0)
         wpt.markerText = xmlElement.getElement('desc')?.innerText;
       return wpt;
     }
@@ -133,7 +133,7 @@ class _GpxReader {
       var lat = trkpt.getAttribute('lat');
       var lon = trkpt.getAttribute('lon');
       if (lat != null && lon != null) {
-        line.points.add(GCWMapPoint(point: LatLng(double.tryParse(lat), double.tryParse(lon)), isEditable: true));
+        line.points.add(GCWMapPoint(point: LatLng(double.tryParse(lat) ?? 0, double.tryParse(lon) ?? 0), isEditable: true));
       }
     });
     return line;
@@ -142,7 +142,7 @@ class _GpxReader {
 
 /// Convert KML-XML into points
 class _KmlReader {
-  MapViewDAO _parse(XmlDocument xmlDocument) {
+  MapViewDAO? _parse(XmlDocument xmlDocument) {
     var parent = xmlDocument.getElement('kml');
 
     if (parent != null) {
@@ -191,7 +191,7 @@ class _KmlReader {
       group = xmlElement.getElement('MultiGeometry');
       if (group != null) {
         group.children.forEach((child) {
-          var linesTmp = _readPoints(child, styleParent);
+          var linesTmp = _readPoints(child as XmlElement, styleParent);
           if (linesTmp != null) lines.addAll(linesTmp);
         });
         if (lines.length == 0) return [];
@@ -210,9 +210,9 @@ class _KmlReader {
       var lat = coordinates.group(2);
       var lon = coordinates.group(1);
       if (lat != null && lon != null) {
-        var wpt = GCWMapPoint(point: LatLng(double.tryParse(lat), double.tryParse(lon)));
+        var wpt = GCWMapPoint(point: LatLng(double.tryParse(lat) ?? 0, double.tryParse(lon) ?? 0));
         wpt.markerText = xmlElement.getElement('name')?.innerText;
-        if (wpt.markerText == null || wpt.markerText.length == 0)
+        if (wpt.markerText == null || wpt.markerText!.length == 0)
           wpt.markerText = xmlElement.getElement('description')?.innerText;
 
         if (line.points.length == 0)
@@ -228,24 +228,25 @@ class _KmlReader {
     return lines;
   }
 
-  GCWMapPoint _readPointStyleMap(GCWMapPoint point, String styleUrl, XmlElement styleParent) {
+  GCWMapPoint _readPointStyleMap(GCWMapPoint point, String? styleUrl, XmlElement styleParent) {
+    if (styleUrl == null) return point;
     if (styleUrl.startsWith('#')) styleUrl = styleUrl.replaceFirst('#', '');
 
-    styleParent.findAllElements('StyleMap').forEach((xmlElement) {
+    for (XmlElement xmlElement in styleParent.findAllElements('StyleMap')) {
       if (xmlElement.getAttribute('id') == styleUrl) {
         var pair = xmlElement.getElement('Pair');
         if (pair != null) {
           var styleUrl = pair.getElement('styleUrl');
-          // TODO Mike: Formerly this compiled... however this was possible... The return only leaves the "forEach". Should it leave the entire method?
           if (styleUrl != null) return _readPointStyle(point, styleUrl.innerText, styleParent);
         }
       }
-    });
+    };
 
     return point;
   }
 
-  GCWMapPoint _readPointStyle(GCWMapPoint point, String styleUrl, XmlElement styleParent) {
+  GCWMapPoint _readPointStyle(GCWMapPoint point, String? styleUrl, XmlElement styleParent) {
+    if (styleUrl == null) return point;
     if (styleUrl.startsWith('#')) styleUrl = styleUrl.replaceFirst('#', '');
 
     styleParent.findAllElements('Style').forEach((xmlElement) {
@@ -323,14 +324,12 @@ bool _completeCircle(GCWMapPolyline line, List<GCWMapPoint> points) {
 
   var radius = length1.distance / 2;
   distToller = distToller / 2;
-  line.points.forEach((GCWMapPoint wpt) {
+  for (GCWMapPoint wpt in line.points) {
     dist = distanceBearing(wpt.point, center.point, ells).distance;
-
-    // TODO Mike: Formerly here was 'return false' instead of 'return'. With 'return false' it's not compiling anymore. I am not sure if it should exit the "forEach" or the entire method.
-    if ((dist - radius).abs() > distToller) return;
-  });
+    if ((dist - radius).abs() > distToller) return false;
+  };
   center.circle = GCWMapCircle(centerPoint: center.point, radius: radius, color: line.color);
-  center.circleColorSameAsPointColor = (center.color == center.circle.color);
+  center.circleColorSameAsPointColor = (center.color == center.circle?.color);
   return true;
 }
 

@@ -14,8 +14,12 @@ const MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE_OPTION_MODE = 'common_language';
 const MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE_OPTION_BRAINFK = 'brainfk_title';
 
 class MultiDecoderToolEsotericLanguageBrainfkDerivate extends AbstractMultiDecoderTool {
-  MultiDecoderToolEsotericLanguageBrainfkDerivate(
-      {Key? key, int id, String name, Map<String, dynamic> options, BuildContext context})
+  MultiDecoderToolEsotericLanguageBrainfkDerivate({
+    Key? key,
+    required int id,
+    required String name,
+    required Map<String, Object> options,
+    required BuildContext context})
       : super(
             key: key,
             id: id,
@@ -32,7 +36,7 @@ class MultiDecoderToolEsotericLanguageBrainfkDerivate extends AbstractMultiDecod
                 }
               } else {
                 var bfDerivatives = switchMapKeyValue(
-                    BRAINFK_DERIVATIVES)[options[MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE_OPTION_MODE]];
+                    BRAINFK_DERIVATIVES)[stringTypeCheck(options[MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE_OPTION_MODE], '')];
                 if (bfDerivatives == null) return null;
 
                 try {
@@ -44,8 +48,8 @@ class MultiDecoderToolEsotericLanguageBrainfkDerivate extends AbstractMultiDecod
             },
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
-              MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE_OPTION_MODE: GCWStatefulDropDown(
-                value: options[MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE_OPTION_MODE],
+              MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE_OPTION_MODE: GCWStatefulDropDown<String>(
+                value: stringTypeCheck(options[MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE_OPTION_MODE], ''),
                 onChanged: (newValue) {
                   options[MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE_OPTION_MODE] = newValue;
                 },

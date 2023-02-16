@@ -9,13 +9,14 @@ int _encodeOnePixel(int pixel, int msg) {
   return encoded;
 }
 
-Uint8List _encodeSteganoMessageIntoImage(_SteganoEncodeRequest req) {
-  Image origin = decodeImage(req.imageData);
+Uint8List? _encodeSteganoMessageIntoImage(_SteganoEncodeRequest req) {
+  Image? origin = decodeImage(req.imageData);
+  if (origin == null) return null;
   Uint8List img = origin.getBytes();
   String msg = req.message;
-  String token = req.key;
+  String? token = req.key;
   if (req.canEncrypt()) {
-    crypto.Key key = crypto.Key.fromUtf8(_steganoPadKey(token));
+    crypto.Key key = crypto.Key.fromUtf8(_steganoPadKey(token!));
     crypto.IV iv = crypto.IV.fromLength(16);
     crypto.Encrypter encrypter = crypto.Encrypter(crypto.AES(key));
     crypto.Encrypted encrypted = encrypter.encrypt(msg, iv: iv);
@@ -53,6 +54,5 @@ Uint8List _encodeSteganoMessageIntoImage(_SteganoEncodeRequest req) {
 }
 
 Future<Uint8List> _encodeSteganoMessageIntoImageAsync(_SteganoEncodeRequest req) async {
-  final Uint8List res = await compute(_encodeSteganoMessageIntoImage, req);
-  return res;
+  return compute(_encodeSteganoMessageIntoImage as ComputeCallback<_SteganoEncodeRequest, Uint8List>, req);
 }

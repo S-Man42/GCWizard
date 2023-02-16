@@ -20,7 +20,7 @@ class Bowling extends StatefulWidget {
 }
 
 class BowlingState extends State<Bowling> {
-  List<BowlingFrame> _currentBowlingScore;
+  late List<BowlingFrame> _currentBowlingScore;
   List<int> _currentFrameTotals = [10];
   int _currentFrame = 0;
   int _currentThrow1 = 0;
@@ -194,8 +194,8 @@ class BowlingState extends State<Bowling> {
     _currentFrameTotals = bowlingCalcFrameTotals(_currentBowlingScore);
   }
 
-  List<List<dynamic>> _buildBowlingScoreTable() {
-    List<List<dynamic>> result = [];
+  List<List<Object?>> _buildBowlingScoreTable() {
+    List<List<Object?>> result = [];
     result.add([
       i18n(context, 'bowling_frame'),
       '1',

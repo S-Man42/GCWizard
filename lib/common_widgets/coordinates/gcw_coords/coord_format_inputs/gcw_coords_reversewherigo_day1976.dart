@@ -1,7 +1,7 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _GCWCoordsReverseWherigoDay1976 extends StatefulWidget {
-  final Function(ReverseWherigoDay1976) onChanged;
+  final void Function(ReverseWherigoDay1976) onChanged;
   final BaseCoordinates coordinates;
 
   const _GCWCoordsReverseWherigoDay1976({Key? key, required this.onChanged, required this.coordinates}) : super(key: key);

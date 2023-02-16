@@ -4,13 +4,13 @@ class Rotator {
   static const defaultAlphabetAlpha = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   static const defaultAlphabetDigits = '0123456789';
 
-  String alphabet;
+  late String alphabet;
 
-  Rotator({String alphabet = defaultAlphabetAlpha}) {
+  Rotator({String? alphabet = defaultAlphabetAlpha}) {
     this.alphabet = alphabet == null ? '' : alphabet;
   }
 
-  String rotate(String input, int key, {bool removeUnknownCharacters = false, ignoreCase = true}) {
+  String rotate(String? input, int? key, {bool removeUnknownCharacters = false, bool ignoreCase = true}) {
     if (input == null) input = '';
 
     if (key == null) key = 0;

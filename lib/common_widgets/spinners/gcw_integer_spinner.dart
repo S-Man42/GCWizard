@@ -17,8 +17,8 @@ class GCWIntegerSpinner extends StatefulWidget {
   final void Function(int) onChanged;
   final String? title;
   final int value;
-  final int min;
-  final int max;
+  final int? min;
+  final int? max;
   final int? leftPadZeros;
   final TextEditingController? controller;
   final SpinnerLayout layout;
@@ -30,8 +30,8 @@ class GCWIntegerSpinner extends StatefulWidget {
       required this.onChanged,
       this.title,
       required this.value,
-      this.min = -9007199254740991,
-      this.max = 9007199254740992,
+      this.min,
+      this.max,
       this.leftPadZeros,
       this.controller,
       this.layout= SpinnerLayout.HORIZONTAL,
@@ -50,10 +50,15 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
   var _currentValue = 0;
 
   var _externalChange = true;
+  late int min;
+  late int max;
 
   @override
   void initState() {
     super.initState();
+
+    min = widget.min ?? -9007199254740991;
+    max = widget.max ?? 9007199254740992;
 
     if (widget.controller != null) {
       _controller = widget.controller!;
@@ -82,11 +87,11 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
 
   _decreaseValue() {
     setState(() {
-      if (_currentValue > widget.min || widget.overflow == SpinnerOverflowType.OVERFLOW_MAX) {
+      if (_currentValue > min || widget.overflow == SpinnerOverflowType.OVERFLOW_MAX) {
         _currentValue--;
       } else if ([SpinnerOverflowType.ALLOW_OVERFLOW, SpinnerOverflowType.OVERFLOW_MIN].contains(widget.overflow) &&
-          _currentValue == widget.min) {
-        _currentValue = widget.max;
+          _currentValue == min) {
+        _currentValue = max;
       }
 
       _setCurrentValueAndEmitOnChange(setTextFieldText: true);
@@ -95,11 +100,11 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
 
   _increaseValue() {
     setState(() {
-      if (_currentValue < widget.max || widget.overflow == SpinnerOverflowType.OVERFLOW_MIN) {
+      if (_currentValue < max || widget.overflow == SpinnerOverflowType.OVERFLOW_MIN) {
         _currentValue++;
       } else if ([SpinnerOverflowType.ALLOW_OVERFLOW, SpinnerOverflowType.OVERFLOW_MAX].contains(widget.overflow) &&
-          _currentValue == widget.max) {
-        _currentValue = widget.min;
+          _currentValue == max) {
+        _currentValue = min;
       }
 
       _setCurrentValueAndEmitOnChange(setTextFieldText: true);
@@ -113,8 +118,8 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
   Widget _buildTextField() {
     return GCWIntegerTextField(
         focusNode: widget.focusNode,
-        min: widget.overflow == SpinnerOverflowType.OVERFLOW_MAX ? null : widget.min,
-        max: widget.overflow == SpinnerOverflowType.OVERFLOW_MIN ? null : widget.max,
+        min: widget.overflow == SpinnerOverflowType.OVERFLOW_MAX ? null : min,
+        max: widget.overflow == SpinnerOverflowType.OVERFLOW_MIN ? null : max,
         controller: _controller,
         onChanged: (IntegerText ret) {
           setState(() {

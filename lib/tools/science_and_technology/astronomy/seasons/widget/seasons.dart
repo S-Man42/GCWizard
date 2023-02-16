@@ -47,19 +47,19 @@ class SeasonsState extends State<Seasons> {
     var outputs = [
       [
         i18n(context, 'astronomy_seasons_spring'),
-        dateFormat.format(season['spring']) + ' ' + timeFormat.format(season['spring']) + ' GMT'
+        dateFormat.format(season.spring) + ' ' + timeFormat.format(season.spring) + ' GMT'
       ],
       [
         i18n(context, 'astronomy_seasons_summer'),
-        dateFormat.format(season['summer']) + ' ' + timeFormat.format(season['summer']) + ' GMT'
+        dateFormat.format(season.summer) + ' ' + timeFormat.format(season.summer) + ' GMT'
       ],
       [
         i18n(context, 'astronomy_seasons_autumn'),
-        dateFormat.format(season['autumn']) + ' ' + timeFormat.format(season['autumn']) + ' GMT'
+        dateFormat.format(season.autumn) + ' ' + timeFormat.format(season.autumn) + ' GMT'
       ],
       [
         i18n(context, 'astronomy_seasons_winter'),
-        dateFormat.format(season['winter']) + ' ' + timeFormat.format(season['winter']) + ' GMT'
+        dateFormat.format(season.winter) + ' ' + timeFormat.format(season.winter) + ' GMT'
       ],
       [
         i18n(context, 'astronomy_seasons_perihelion'),

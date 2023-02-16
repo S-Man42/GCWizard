@@ -23,7 +23,7 @@ void main() {
   group("Colors.findNearestRGBs:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'fromRGB' : RGB(40, 116, 81), 'toRGBs': PANTONE_COLOR_CODES_ONLY_NUMBERS.values.map((e) {
-        return HexCode(e['colorcode']).toRGB();
+        return HexCode(e.colorcode).toRGB();
       }).toList(), 'expectedOutput' : ['#28724F', '#228848', '#285C4D', '#286140', '#205C40', '#43695B']},
     ];
 
