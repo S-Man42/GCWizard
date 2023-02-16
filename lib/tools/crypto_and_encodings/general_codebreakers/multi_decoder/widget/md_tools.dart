@@ -46,7 +46,7 @@ final List<String> _mdtToolsRegistry = [
   MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_WHITESPACE,
 ];
 
-final _initialOptions = <String, Map<String, dynamic>>{
+final _initialOptions = <String, Map<String, Object>>{
   MDT_INTERNALNAMES_ALPHABETVALUES: {
     MDT_ALPHABETVALUES_OPTION_ALPHABET: 'alphabet_name_az'
   },
@@ -85,8 +85,8 @@ final _initialOptions = <String, Map<String, dynamic>>{
   },
   MDT_INTERNALNAMES_KEYBOARDLAYOUT: {
     MDT_KEYBOARDLAYOUT_OPTION_FROM:
-        getKeyboardByType(KeyboardType.QWERTY_US_INT).name,
-    MDT_KEYBOARDLAYOUT_OPTION_TO: getKeyboardByType(KeyboardType.QWERTZ_T1).name
+        getKeyboardByType(KeyboardType.QWERTY_US_INT)?.name ?? '',
+    MDT_KEYBOARDLAYOUT_OPTION_TO: getKeyboardByType(KeyboardType.QWERTZ_T1)?.name ?? ''
   },
   MDT_INTERNALNAMES_KEYBOARDNUMBERS: {
     MDT_KEYBOARDNUMBERS_OPTION_TYPE: 'keyboard_mode_qwertz_ristome_dvorak'
@@ -111,7 +111,7 @@ final _initialOptions = <String, Map<String, dynamic>>{
   },
   MDT_INTERNALNAMES_VIGENERE: {MDT_VIGENERE_OPTION_KEY: 1},
   MDT_INTERNALNAMES_WASD: {
-    MDT_WASD_OPTION_SET: KEYBOARD_CONTROLS[WASD_TYPE.NWSE]
+    MDT_WASD_OPTION_SET: KEYBOARD_CONTROLS[WASD_TYPE.NWSE]!
   },
 };
 
@@ -130,11 +130,8 @@ AbstractMultiDecoderTool _multiDecoderToolToGCWMultiDecoderTool(
     BuildContext context, MultiDecoderToolEntity mdtTool) {
   AbstractMultiDecoderTool gcwTool;
 
-  var options =
-      _initialOptions[mdtTool.internalToolName] ?? <String, dynamic>{};
-  if (mdtTool.options != null && mdtTool.options.length > 0)
-    options =
-        _multiDecoderToolOptionToGCWMultiDecoderToolOptions(mdtTool.options);
+  var options = _initialOptions[mdtTool.internalToolName] ?? <String, dynamic>{};
+  if (mdtTool.options.length > 0) options = _multiDecoderToolOptionToGCWMultiDecoderToolOptions(mdtTool.options);
 
   switch (mdtTool.internalToolName) {
     case MDT_INTERNALNAMES_ALPHABETVALUES:
@@ -359,6 +356,9 @@ AbstractMultiDecoderTool _multiDecoderToolToGCWMultiDecoderTool(
           name: mdtTool.name,
           options: options,
           context: context);
+      break;
+    default:
+      gcwTool = MultiDecoderToolDummy();
       break;
   }
 

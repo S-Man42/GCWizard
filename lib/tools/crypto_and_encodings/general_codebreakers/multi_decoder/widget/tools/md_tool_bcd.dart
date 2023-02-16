@@ -28,7 +28,12 @@ final Map<String, BCDType> _BCD_TYPES = {
 };
 
 class MultiDecoderToolBCD extends AbstractMultiDecoderTool {
-  MultiDecoderToolBCD({Key? key, int id, String name, Map<String, dynamic> options, BuildContext context})
+  MultiDecoderToolBCD({
+    Key? key,
+    required int id,
+    required String name,
+    required Map<String, dynamic> options,
+    required BuildContext context})
       : super(
             key: key,
             id: id,

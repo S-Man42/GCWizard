@@ -23,7 +23,12 @@ class MultiDecoderToolVanityMultitap extends AbstractMultiDecoderTool {
     }
   }
 
-  MultiDecoderToolVanityMultitap({Key? key, int id, String name, Map<String, dynamic> options, BuildContext context})
+  MultiDecoderToolVanityMultitap({
+    Key? key,
+    required int id,
+    required String name,
+    required Map<String, dynamic> options,
+    required BuildContext context})
       : super(
             key: key,
             id: id,

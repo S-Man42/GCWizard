@@ -11,7 +11,12 @@ const MDT_INTERNALNAMES_WASD = 'multidecoder_tool_wasd_title';
 const MDT_WASD_OPTION_SET = 'wasd_control_set';
 
 class MultiDecoderToolWasd extends AbstractMultiDecoderTool {
-  MultiDecoderToolWasd({Key? key, int id, String name, Map<String, dynamic> options, BuildContext context})
+  MultiDecoderToolWasd({
+    Key? key,
+    required int id,
+    required String name,
+    required Map<String, dynamic> options,
+    required BuildContext context})
       : super(
             key: key,
             id: id,

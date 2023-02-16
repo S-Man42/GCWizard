@@ -11,7 +11,12 @@ const MDT_INTERNALNAMES_ALPHABETVALUES = 'multidecoder_tool_alphabetvalues_title
 const MDT_ALPHABETVALUES_OPTION_ALPHABET = 'multidecoder_tool_alphabetvalues_option_alphabet';
 
 class MultiDecoderToolAlphabetValues extends AbstractMultiDecoderTool {
-  MultiDecoderToolAlphabetValues({Key? key, int id, String name, Map<String, dynamic> options, BuildContext context})
+  MultiDecoderToolAlphabetValues({
+    Key? key,
+    required int id,
+    required String name,
+    required Map<String, dynamic> options,
+    required BuildContext context})
       : super(
             key: key,
             id: id,

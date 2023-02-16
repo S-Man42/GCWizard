@@ -5,12 +5,12 @@ MultiDecoderToolEntity findMultiDecoderToolById(int id) {
 }
 
 class MultiDecoderToolEntity {
-  int id;
+  late int id;
   String name;
   String internalToolName;
   List<MultiDecoderToolOption> options;
 
-  MultiDecoderToolEntity(this.name, this.internalToolName, {this.options: const []});
+  MultiDecoderToolEntity(this.name, this.internalToolName, {this.options = const []});
 
   Map<String, dynamic> toMap() => {
         'id': id,
@@ -34,7 +34,7 @@ class MultiDecoderToolEntity {
 
 class MultiDecoderToolOption {
   String name;
-  dynamic value;
+  Object value;
 
   MultiDecoderToolOption(this.name, this.value);
 

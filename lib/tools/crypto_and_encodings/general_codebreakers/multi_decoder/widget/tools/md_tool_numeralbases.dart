@@ -7,7 +7,11 @@ const MDT_INTERNALNAMES_NUMERALBASES = 'multidecoder_tool_numeralbases_title';
 const MDT_NUMERALBASES_OPTION_FROM = 'multidecoder_tool_numeralbases_option_from';
 
 class MultiDecoderToolNumeralBases extends AbstractMultiDecoderTool {
-  MultiDecoderToolNumeralBases({Key? key, int id, String name, Map<String, dynamic> options})
+  MultiDecoderToolNumeralBases({
+    Key? key,
+    required int id,
+    required String name,
+    required Map<String, dynamic> options})
       : super(
             key: key,
             id: id,

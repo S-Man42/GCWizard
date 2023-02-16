@@ -15,8 +15,12 @@ const MDT_ESOTERIC_LANGUAGES_CHEF_OPTION_ENGLISH = 'common_language_english';
 const MDT_ESOTERIC_LANGUAGES_CHEF_OPTION_GERMAN = 'common_language_german';
 
 class MultiDecoderToolEsotericLanguageChef extends AbstractMultiDecoderTool {
-  MultiDecoderToolEsotericLanguageChef(
-      {Key? key, int id, String name, Map<String, dynamic> options, BuildContext context})
+  MultiDecoderToolEsotericLanguageChef({
+    Key? key,
+    required int id,
+    required String name,
+    required Map<String, dynamic> options,
+    required BuildContext context})
       : super(
             key: key,
             id: id,

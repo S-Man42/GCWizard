@@ -11,8 +11,12 @@ const MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BEATNIK = 'beatnik_title';
 const MDT_ESOTERIC_LANGUAGE_BEATNIK_OPTION_MODE = 'beatnik_hint_scrabble';
 
 class MultiDecoderToolEsotericLanguageBeatnik extends AbstractMultiDecoderTool {
-  MultiDecoderToolEsotericLanguageBeatnik(
-      {Key? key, int id, String name, Map<String, dynamic> options, BuildContext context})
+  MultiDecoderToolEsotericLanguageBeatnik({
+    Key? key,
+    required int id,
+    required String name,
+    required Map<String, dynamic> options,
+    required BuildContext context})
       : super(
             key: key,
             id: id,

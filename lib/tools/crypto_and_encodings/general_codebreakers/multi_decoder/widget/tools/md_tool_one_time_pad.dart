@@ -7,7 +7,11 @@ const MDT_INTERNALNAMES_ONETIMEPAD = 'multidecoder_tool_onetimepad_title';
 const MDT_ONETIMEPAD_OPTION_KEY = 'onetimepad_keyoffset';
 
 class MultiDecoderToolOneTimePad extends AbstractMultiDecoderTool {
-  MultiDecoderToolOneTimePad({Key? key, int id, String name, Map<String, dynamic> options})
+  MultiDecoderToolOneTimePad({
+    Key? key,
+    required int id,
+    required String name,
+    required Map<String, dynamic> options})
       : super(
             key: key,
             id: id,

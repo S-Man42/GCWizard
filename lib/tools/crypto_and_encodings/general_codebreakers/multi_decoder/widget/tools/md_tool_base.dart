@@ -9,7 +9,12 @@ const MDT_INTERNALNAMES_BASE = 'multidecoder_tool_base_title';
 const MDT_BASE_OPTION_BASEFUNCTION = 'multidecoder_tool_base_option_basefunction';
 
 class MultiDecoderToolBase extends AbstractMultiDecoderTool {
-  MultiDecoderToolBase({Key? key, int id, String name, Map<String, dynamic> options, BuildContext context})
+  MultiDecoderToolBase({
+    Key? key,
+    required int id,
+    required String name,
+    required Map<String, dynamic> options,
+    required BuildContext context})
       : super(
             key: key,
             id: id,

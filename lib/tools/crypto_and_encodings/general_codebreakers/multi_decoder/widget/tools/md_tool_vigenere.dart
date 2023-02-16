@@ -7,7 +7,11 @@ const MDT_INTERNALNAMES_VIGENERE = 'multidecoder_tool_vigenere_title';
 const MDT_VIGENERE_OPTION_KEY = 'onetimepad_keyoffset';
 
 class MultiDecoderToolVigenere extends AbstractMultiDecoderTool {
-  MultiDecoderToolVigenere({Key? key, int id, String name, Map<String, dynamic> options})
+  MultiDecoderToolVigenere({
+    Key? key,
+    required int id,
+    required String name,
+    required Map<String, dynamic> options})
       : super(
             key: key,
             id: id,
