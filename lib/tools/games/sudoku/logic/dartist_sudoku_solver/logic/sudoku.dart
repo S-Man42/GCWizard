@@ -10,7 +10,7 @@
     Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
     Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
  */
-
+//ToDo Mark
 int _MAX_SOLUTIONS = 1000;
 int _FOUND_SOLUTIONS = 0;
 
@@ -37,8 +37,8 @@ final Map _peers = _squares
     .fold({}, (map, kv) => map..putIfAbsent(kv[0], () => kv[1]));
 
 /// Parse a Grid
-Map _parse_grid(List<List<int>> grid) {
-  var values = _squares.map((s) => [s, _digits]).fold({}, (map, kv) => map..putIfAbsent(kv[0], () => kv[1]));
+Map? _parse_grid(List<List<int>> grid) {
+  Map? values = _squares.map((s) => [s, _digits]).fold({}, (map, kv) => map..putIfAbsent(kv[0], () => kv[1]));
   var gridValues = _grid_values(grid);
 
   for (var s in gridValues.keys) {
@@ -61,14 +61,14 @@ Map _grid_values(List<List<int>> grid) {
 }
 
 /// Constraint Propagation
-Map _assign(Map values, String s, String d) {
+Map? _assign(Map values, String s, String d) {
   var other_values = values[s].replaceAll(d, '');
 
   if (_all(other_values.split('').map((d2) => _eliminate(values, s, d2)))) return values;
   return null;
 }
 
-Map _eliminate(Map values, String s, String d) {
+Map? _eliminate(Map values, String s, String d) {
   if (!values[s].contains(d)) return values;
   values[s] = values[s].replaceAll(d, '');
   if (values[s].length == 0)
@@ -88,7 +88,7 @@ Map _eliminate(Map values, String s, String d) {
 }
 
 /// Search
-List<List<List<int>>> solve(List<List<int>> grid, {int maxSolutions}) {
+List<List<List<int?>>>? solve(List<List<int>> grid, {int? maxSolutions}) {
   if (maxSolutions != null && maxSolutions > 0) _MAX_SOLUTIONS = maxSolutions;
 
   _FOUND_SOLUTIONS = 0;
@@ -96,12 +96,12 @@ List<List<List<int>>> solve(List<List<int>> grid, {int maxSolutions}) {
   var results = _searchAll(_parse_grid(grid));
   if (results == null || results.isEmpty) return null;
 
-  List<List<List<int>>> outputs = [];
+  List<List<List<int?>>> outputs = [];
 
   for (Map result in results) {
-    List<List<int>> output = [];
+    List<List<int?>> output = [];
     for (int i = 0; i < 9; i++) {
-      var column = <int>[];
+      var column = <int?>[];
       for (int j = 0; j < 9; j++) {
         column.add(int.tryParse(result[_rows[i] + _cols[j]]));
       }
@@ -113,7 +113,7 @@ List<List<List<int>>> solve(List<List<int>> grid, {int maxSolutions}) {
   return outputs;
 }
 
-List<Map> _searchAll(Map values) {
+List<Map>? _searchAll(Map? values) {
   if (values == null || _FOUND_SOLUTIONS >= _MAX_SOLUTIONS) return null;
 
   if (_squares.every((s) => values[s].length == 1)) {

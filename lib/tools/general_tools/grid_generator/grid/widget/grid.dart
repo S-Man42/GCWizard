@@ -15,7 +15,7 @@ import 'package:touchable/touchable.dart';
 
 part 'package:gc_wizard/tools/general_tools/grid_generator/grid/widget/grid_painter.dart';
 
-class _GridConfiguration {
+class _GridConfiguration { //ToDo Mark
   _GridType type;
   int width;
   int height;

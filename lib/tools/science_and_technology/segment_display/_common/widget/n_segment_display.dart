@@ -77,20 +77,16 @@ class NSegmentDisplayState extends State<NSegmentDisplay> {
   }
 
   Future<ui.Image> get renderedImage async {
-    if (widget.segments != null) {
-      _segments = Map.from(widget.segments);
+     _segments = Map.from(widget.segments);
 
-      widget.initialSegments.keys.forEach((segmentID) {
-        _segments.putIfAbsent(segmentID, () => widget.initialSegments[segmentID]!);
-      });
-    } else {
-      _segments = Map.from(widget.initialSegments);
-    }
+    widget.initialSegments.keys.forEach((segmentID) {
+      _segments.putIfAbsent(segmentID, () => widget.initialSegments[segmentID]!);
+    });
 
     final recorder = ui.PictureRecorder();
     Canvas canvas = Canvas(recorder);
     final size = context.size;
-    if (size == null) return null;
+    if (size == null) return Future.value(null);
 
     final painter = SegmentDisplayPainter(context, widget.type, _segments, (key, value) {},
         customPaint: widget.customPaint, segment_color_on: Colors.black, segment_color_off: Colors.white);
