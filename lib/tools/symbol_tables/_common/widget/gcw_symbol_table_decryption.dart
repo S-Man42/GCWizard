@@ -12,7 +12,7 @@ class GCWSymbolTableDecryption extends StatefulWidget {
   final MediaQueryData mediaQueryData;
   final SymbolTableData data;
   final void Function() onChanged;
-  final String Function(String)? onAfterDecrypt;
+  final String? Function(String?)? onAfterDecrypt;
 
   const GCWSymbolTableDecryption({
     Key? key,
