@@ -283,11 +283,8 @@ class _GCWImageViewState extends State<GCWImageView> {
   }
 
   _exportFile(BuildContext context, Uint8List data) async {
-    String timestamp = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now());
-    String outputFilename = 'img_$timestamp.png';
+    var value = await saveByteDataToFile(context, data, buildFileNameWithDate('img_', FileType.PNG));
 
-    var value = await saveByteDataToFile(context, data, outputFilename);
-
-    if (value) showExportedFileDialog(context);
+    if (value) showExportedFileDialog(context, contentWidget: imageContent(context, data));
   }
 }

@@ -201,16 +201,14 @@ class AnimatedImageState extends State<AnimatedImage> {
 
   _exportFiles(BuildContext context, String fileName, List<Uint8List> data) async {
     createZipFile(fileName, '.' + fileExtension(FileType.PNG), data).then((bytes) async {
-      var fileType = FileType.ZIP;
-      var value = await saveByteDataToFile(context, bytes,
-          'anim_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
+      var value = await saveByteDataToFile(context, bytes, buildFileNameWithDate('anim_', FileType.ZIP));
 
-      if (value) showExportedFileDialog(context, fileType: fileType);
+      if (value) showExportedFileDialog(context);
     });
   }
 }
 
-openInAnimatedImage(BuildContext context, local.GCWFile file) {
+openInAnimatedImage(BuildContext context, GCWFile file) {
   Navigator.push(
       context,
       NoAnimationMaterialPageRoute(

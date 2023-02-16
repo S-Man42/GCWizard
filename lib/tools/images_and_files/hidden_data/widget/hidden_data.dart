@@ -212,7 +212,8 @@ class HiddenDataState extends State<HiddenData> {
     if (ext.length <= 1 || ext.last.length >= 5) fileName = fileName + '.' + fileExtension(file.fileType);
 
     var value = await saveByteDataToFile(context, file.bytes, fileName);
-    if (value) showExportedFileDialog(context);
+    var content = fileClass(file.fileType) == FileClass.IMAGE ? imageContent(context, file.bytes) : null;
+    if (value) showExportedFileDialog(context, contentWidget: content) ;
   }
 }
 
