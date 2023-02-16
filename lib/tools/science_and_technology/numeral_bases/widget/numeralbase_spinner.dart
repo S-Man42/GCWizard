@@ -5,7 +5,7 @@ import 'package:gc_wizard/common_widgets/spinners/gcw_dropdown_spinner.dart';
 
 class NumeralBaseSpinner extends StatefulWidget {
   final void Function(int) onChanged;
-  final value;
+  final int value;
 
   const NumeralBaseSpinner({Key? key, required this.onChanged, this.value = 10}) : super(key: key);
 

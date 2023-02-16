@@ -209,7 +209,7 @@ bool _checkNormalize(List<String> instructions) {
   return result;
 }
 
-BeatnikOutput interpretBeatnik(var ScrabbleVersion, String sourcecode, input) {
+BeatnikOutput interpretBeatnik(var ScrabbleVersion, String? sourcecode, String input) {
   if (sourcecode == null || sourcecode == '')
     return BeatnikOutput([''], [''], [''], [''], [DebugOutput('', '', '', '')]);
 

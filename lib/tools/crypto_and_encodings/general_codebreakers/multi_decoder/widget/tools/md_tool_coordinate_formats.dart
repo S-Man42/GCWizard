@@ -12,7 +12,12 @@ const MDT_INTERNALNAMES_COORDINATEFORMATS = 'multidecoder_tool_coordinateformats
 const MDT_COORDINATEFORMATS_OPTION_FORMAT = 'multidecoder_tool_coordinateformats_option_format';
 
 class MultiDecoderToolCoordinateFormats extends AbstractMultiDecoderTool {
-  MultiDecoderToolCoordinateFormats({Key? key, int id, String name, Map<String, dynamic> options, BuildContext context})
+  MultiDecoderToolCoordinateFormats({
+    Key? key,
+    required int id,
+    required String name,
+    required Map<String, Object> options,
+    required BuildContext context})
       : super(
             key: key,
             id: id,
@@ -20,7 +25,7 @@ class MultiDecoderToolCoordinateFormats extends AbstractMultiDecoderTool {
             internalToolName: MDT_INTERNALNAMES_COORDINATEFORMATS,
             onDecode: (String input, String key) {
               input = input.replaceAll(RegExp(r'\s+'), ' ').toUpperCase();
-              LatLng coords;
+              LatLng? coords;
               try {
                 switch (options[MDT_COORDINATEFORMATS_OPTION_FORMAT]) {
                   case CoordFormatKey.DEC:
@@ -101,7 +106,7 @@ class MultiDecoderToolCoordinateFormats extends AbstractMultiDecoderTool {
             },
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
-              MDT_COORDINATEFORMATS_OPTION_FORMAT: GCWStatefulDropDown(
+              MDT_COORDINATEFORMATS_OPTION_FORMAT: GCWStatefulDropDown<CoordFormatKey>(
                 value: options[MDT_COORDINATEFORMATS_OPTION_FORMAT],
                 onChanged: (newValue) {
                   options[MDT_COORDINATEFORMATS_OPTION_FORMAT] = newValue;

@@ -9,8 +9,11 @@ const MDT_INTERNALNAMES_POLYBIOS = 'multidecoder_tool_polybios_title';
 const MDT_POLYBIOS_OPTION_MODE = 'multidecoder_tool_polybios_option_mode';
 
 class MultiDecoderToolPolybios extends AbstractMultiDecoderTool {
-  MultiDecoderToolPolybios(
-      {Key? key, int id, String name, Map<String, dynamic> options})
+  MultiDecoderToolPolybios({
+    Key? key,
+    required int id,
+    required String name,
+    required Map<String, Object> options})
       : super(
             key: key,
             id: id,
@@ -20,7 +23,7 @@ class MultiDecoderToolPolybios extends AbstractMultiDecoderTool {
               var polybiosOutput = decryptPolybios(input, key,
                   mode: PolybiosMode.AZ09,
                   modificationMode:
-                      _parseStringToEnum(options[MDT_POLYBIOS_OPTION_MODE]));
+                      _parseStringToEnum(stringNullableTypeCheck(options[MDT_POLYBIOS_OPTION_MODE], null)));
               return polybiosOutput == null ? null : polybiosOutput.output;
             },
             requiresKey: true,
@@ -28,7 +31,7 @@ class MultiDecoderToolPolybios extends AbstractMultiDecoderTool {
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
               MDT_POLYBIOS_OPTION_MODE: GCWAlphabetModificationDropDown(
                 suppressTitle: true,
-                value: _parseStringToEnum(options[MDT_POLYBIOS_OPTION_MODE]),
+                value: _parseStringToEnum(stringNullableTypeCheck(options[MDT_POLYBIOS_OPTION_MODE], null)),
                 onChanged: (newValue) {
                   options[MDT_POLYBIOS_OPTION_MODE] =
                       alphabetModeName(newValue);
@@ -37,7 +40,7 @@ class MultiDecoderToolPolybios extends AbstractMultiDecoderTool {
             }));
 }
 
-AlphabetModificationMode _parseStringToEnum(String item) {
+AlphabetModificationMode _parseStringToEnum(String? item) {
   return AlphabetModificationMode.values
       .firstWhere((e) => alphabetModeName(e) == item);
 }

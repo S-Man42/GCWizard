@@ -15,8 +15,12 @@ const MDT_ESOTERIC_LANGUAGES_CHEF_OPTION_ENGLISH = 'common_language_english';
 const MDT_ESOTERIC_LANGUAGES_CHEF_OPTION_GERMAN = 'common_language_german';
 
 class MultiDecoderToolEsotericLanguageChef extends AbstractMultiDecoderTool {
-  MultiDecoderToolEsotericLanguageChef(
-      {Key? key, int id, String name, Map<String, dynamic> options, BuildContext context})
+  MultiDecoderToolEsotericLanguageChef({
+    Key? key,
+    required int id,
+    required String name,
+    required Map<String, Object> options,
+    required BuildContext context})
       : super(
             key: key,
             id: id,
@@ -27,13 +31,14 @@ class MultiDecoderToolEsotericLanguageChef extends AbstractMultiDecoderTool {
               try {
                 if (chef.isValid(input))
                   return chefWidget.ChefState().buildOutputText(chef.interpretChef(
-                      options[MDT_ESOTERIC_LANGUAGE_CHEF_OPTION_MODE], input.toLowerCase().replaceAll('  ', ' '), key));
+                      stringTypeCheck(options[MDT_ESOTERIC_LANGUAGE_CHEF_OPTION_MODE], MDT_ESOTERIC_LANGUAGES_CHEF_OPTION_ENGLISH),
+                          input.toLowerCase().replaceAll('  ', ' '), key));
               } catch (e) {}
               return null;
             },
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
-              MDT_ESOTERIC_LANGUAGE_CHEF_OPTION_MODE: GCWStatefulDropDown(
+              MDT_ESOTERIC_LANGUAGE_CHEF_OPTION_MODE: GCWStatefulDropDown<String>(
                 value: options[MDT_ESOTERIC_LANGUAGE_CHEF_OPTION_MODE],
                 onChanged: (newValue) {
                   options[MDT_ESOTERIC_LANGUAGE_CHEF_OPTION_MODE] = newValue;
