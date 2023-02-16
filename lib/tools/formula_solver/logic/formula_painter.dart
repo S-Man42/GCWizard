@@ -6,7 +6,7 @@ class FormulaPainter {
   static final _bracket = {'[': ']', '(': ')', '{': '}'};
   static final numberRegEx = r'(\s*(\d+.\d*|\d*\.\d|\d+)\s*)';
   static final _allCharacters = allCharacters();
-  Map<String, String> _values ={};
+  Map<String, String> _values = {};
   var _variables = <String>[];
   var _functions = <String>[];
   var _constants = <String>[];
@@ -38,12 +38,9 @@ class FormulaPainter {
     var subResult = '';
     this._formulaId = formulaIndex;
 
-    if (values != null) {
-      _variables = values.keys.map((variable) {
-        return ((variable == null) || (variable.length == 0)) ? '' : variable;
-      }).toList();
-    } else
-      _variables.clear();
+    _variables = values.keys.map((variable) {
+      return ((variable.isEmpty)) ? '' : variable;
+    }).toList();
 
     _values = values;
     _variables = _toUpperCaseAndSort(_variables);
@@ -352,7 +349,7 @@ class FormulaPainter {
         maxCommaCount = 1;
         break;
       case 'NRT':
-        maxCommaCount == minCommaCount;
+        maxCommaCount = minCommaCount;
         break;
       case 'MIN':
       case 'MAX':
@@ -362,7 +359,7 @@ class FormulaPainter {
       case 'BWW':
       case 'AV':
       case 'LEN':
-        maxCommaCount == minCommaCount;
+        maxCommaCount = minCommaCount;
         break;
       default:
         maxCommaCount = minCommaCount;
@@ -501,7 +498,7 @@ class FormulaPainter {
   }
 
   String? _variableValue(String variable) {
-    if ((_values == null) || !_values.containsKey(variable)) return null;
+    if (!_values.containsKey(variable)) return null;
     return _values[variable];
   }
 
@@ -513,7 +510,7 @@ class FormulaPainter {
   }
 
   bool _emptyValues() {
-    return (_values == null) || (_values.isEmpty);
+    return (_values.isEmpty);
   }
 
   List<String>? _isInvalidVariable(String formula) {
@@ -673,7 +670,7 @@ class FormulaPainter {
 
   String _combineGroups(List<String> list) {
     return list.map((e) {
-      return e == null ? '' : e;
+      return e;
     }).join();
   }
 
