@@ -26,7 +26,9 @@ class SudokuBoard {
  List<List<int>> solveableBoard() {
    return board.map((column) {
      return column
-         .map((row) => row != null && row['type'] == SudokuFillType.USER_FILLED ? row['value'] as int : 0)
+         .map((row) => row != null && row['type'] == SudokuFillType.USER_FILLED
+            ? (row['value'] is int) ? row['value'] as int : 0
+            : 0)
          .toList();
    }).toList();
  }
