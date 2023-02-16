@@ -19,14 +19,15 @@ class MultiDecoderToolPlayfair extends AbstractMultiDecoderTool {
             name: name,
             internalToolName: MDT_INTERNALNAMES_PLAYFAIR,
             onDecode: (String input, String key) {
-              return decryptPlayfair(input, key, mode: _parseStringToEnum(options[MDT_PLAYFAIR_OPTION_MODE]));
+              return decryptPlayfair(input, key, mode: _parseStringToEnum(options[MDT_PLAYFAIR_OPTION_MODE] as String?));
             },
             requiresKey: true,
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
               MDT_PLAYFAIR_OPTION_MODE: GCWAlphabetModificationDropDown(
                 suppressTitle: true,
-                value: _parseStringToEnum(options[MDT_PLAYFAIR_OPTION_MODE]),
+                value: _parseStringToEnum(stringNullableTypeCheck(options[MDT_PLAYFAIR_OPTION_MODE],
+                    alphabetModeName(AlphabetModificationMode.J_TO_I))),
                 allowedModifications: [
                   AlphabetModificationMode.J_TO_I,
                   AlphabetModificationMode.W_TO_VV,
@@ -39,12 +40,12 @@ class MultiDecoderToolPlayfair extends AbstractMultiDecoderTool {
             }));
 }
 
-AlphabetModificationMode _parseStringToEnum(String item) {
+AlphabetModificationMode _parseStringToEnum(String? item) {
   return AlphabetModificationMode.values.firstWhere((e) => alphabetModeName(e) == item);
 }
 
-String? alphabetModeName(AlphabetModificationMode? item) {
-  if (item == null) return null;
+String alphabetModeName(AlphabetModificationMode? item) {
+  if (item == null) return '';
   return item
       .toString()
       .replaceAll('AlphabetModificationMode.', '')

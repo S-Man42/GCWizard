@@ -21,7 +21,9 @@ class MultiDecoderToolKeyboardNumbers extends AbstractMultiDecoderTool {
             name: name,
             internalToolName: MDT_INTERNALNAMES_KEYBOARDNUMBERS,
             onDecode: (String input, String key) {
-              return keyboardNumbersByName[options[MDT_KEYBOARDNUMBERS_OPTION_TYPE]](input).trim();
+              return keyboardNumbersByName[
+                stringTypeCheck(options[MDT_KEYBOARDNUMBERS_OPTION_TYPE], 'keyboard_mode_qwertz_ristome_dvorak')
+                    ]!(input).trim();
             },
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {

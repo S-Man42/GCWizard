@@ -40,12 +40,12 @@ class MultiDecoderToolBCD extends AbstractMultiDecoderTool {
             name: name,
             internalToolName: MDT_INTERNALNAMES_BCD,
             onDecode: (String input, String key) {
-              return decodeBCD(input, _BCD_TYPES[options[MDT_BCD_OPTION_BCDFUNCTION]]);
+              return decodeBCD(input, _BCD_TYPES[stringTypeCheck(options[MDT_BCD_OPTION_BCDFUNCTION], 'bcd_original')]);
             },
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
               MDT_BCD_OPTION_BCDFUNCTION: GCWStatefulDropDown<String>(
-                value: options[MDT_BCD_OPTION_BCDFUNCTION],
+                value: stringTypeCheck(options[MDT_BCD_OPTION_BCDFUNCTION], 'bcd_original'),
                 onChanged: (newValue) {
                   options[MDT_BCD_OPTION_BCDFUNCTION] = newValue;
                 },

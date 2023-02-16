@@ -32,7 +32,7 @@ class MultiDecoderToolRomanNumbers extends AbstractMultiDecoderTool {
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
               MDT_ROMANNUMBERS_OPTION_MODE: GCWStatefulDropDown<String>(
-                value: options[MDT_ROMANNUMBERS_OPTION_MODE],
+                value: stringTypeCheck(options[MDT_ROMANNUMBERS_OPTION_MODE], MDT_ROMANNUMBERS_OPTION_MODE_SUBTRACTION),
                 onChanged: (newValue) {
                   options[MDT_ROMANNUMBERS_OPTION_MODE] = newValue;
                 },

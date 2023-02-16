@@ -5,7 +5,7 @@ import 'package:gc_wizard/common_widgets/spinners/gcw_dropdown_spinner.dart';
 import 'package:gc_wizard/common_widgets/spinners/spinner_constants.dart';
 
 class GCWABCSpinner extends StatefulWidget {
-  final Function onChanged;
+  final void Function(int) onChanged;
   final SpinnerLayout layout;
   final int value;
   final bool suppressLetterValues;

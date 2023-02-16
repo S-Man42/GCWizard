@@ -31,7 +31,8 @@ class MultiDecoderToolEsotericLanguageChef extends AbstractMultiDecoderTool {
               try {
                 if (chef.isValid(input))
                   return chefWidget.ChefState().buildOutputText(chef.interpretChef(
-                      options[MDT_ESOTERIC_LANGUAGE_CHEF_OPTION_MODE], input.toLowerCase().replaceAll('  ', ' '), key));
+                      stringTypeCheck(options[MDT_ESOTERIC_LANGUAGE_CHEF_OPTION_MODE], MDT_ESOTERIC_LANGUAGES_CHEF_OPTION_ENGLISH),
+                          input.toLowerCase().replaceAll('  ', ' '), key));
               } catch (e) {}
               return null;
             },

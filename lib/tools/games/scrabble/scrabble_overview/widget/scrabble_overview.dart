@@ -17,7 +17,7 @@ class ScrabbleOverviewState extends State<ScrabbleOverview> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWDropDown(
+        GCWDropDown<String>(
           value: _currentScrabbleVersion,
           onChanged: (value) {
             setState(() {
@@ -38,17 +38,19 @@ class ScrabbleOverviewState extends State<ScrabbleOverview> {
   }
 
   Widget _calculateOutput() {
-    var data = <List<dynamic>>[
+    var data = <List<Object>>[
       [
         i18n(context, 'common_letter'),
         i18n(context, 'common_value'),
         i18n(context, 'scrabble_mode_frequency'),
       ]
     ];
-    data.addAll(scrabbleSets[_currentScrabbleVersion].letters.entries.map((entry) {
-      return [entry.key.replaceAll(' ', String.fromCharCode(9251)), entry.value.value, entry.value.frequency];
-    }).toList());
-
+    var set = scrabbleSets[_currentScrabbleVersion];
+    if (set != null) {
+      data.addAll(set.letters.entries.map((entry) {
+        return [entry.key.replaceAll(' ', String.fromCharCode(9251)), entry.value.value, entry.value.frequency];
+      }).toList());
+    }
     return GCWColumnedMultilineOutput(
         data: data,
         hasHeader: true,
