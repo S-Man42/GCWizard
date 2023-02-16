@@ -6,11 +6,12 @@ import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:image/image.dart' as Image;
 
 class AnimatedImageOutput {
-  var imageList;
-  var durations;
-  var linkList;
+  List<Uint8List> images;
+  List<int> durations;
+  List<int> linkList;
+  List<Image.Image>? frames;
 
-  AnimatedImageOutput(this.imageList, this.durations, this.linkList) {}
+  AnimatedImageOutput(this.images, this.durations, this.linkList,{this.frames});
 }
 
 Future<AnimatedImageOutput?> analyseImageAsync(dynamic jobData) async {
@@ -24,16 +25,14 @@ Future<AnimatedImageOutput?> analyseImageAsync(dynamic jobData) async {
 }
 
 Future<AnimatedImageOutput?> analyseImage(Uint8List bytes,
-    {void Function(AnimatedImageOutput, List<Image.Image>) filterImages, SendPort? sendAsyncPort}) async {
+    {bool withFramesOutput = false, SendPort? sendAsyncPort}) async {
   try {
     var progress = 0;
     final decoder = Image.findDecoderForData(bytes);
 
     if (decoder == null) return null;
 
-    var out = Map<String, dynamic>();
     var animation = decoder.decodeAnimation(bytes);
-    int progressStep = max(animation.length ~/ 100, 1); // 100 steps
 
     var imageList = <Uint8List>[];
     var durations = <int>[];
@@ -41,7 +40,9 @@ Future<AnimatedImageOutput?> analyseImage(Uint8List bytes,
     FileType extension = getFileType(bytes);
 
     if (animation != null) {
-      animation?.frames.forEach((image) {
+      int progressStep = max(animation.length ~/ 100, 1); // 100 steps
+
+      animation.frames.forEach((image) {
         durations.add(image.duration);
       });
 
@@ -56,7 +57,7 @@ Future<AnimatedImageOutput?> analyseImage(Uint8List bytes,
               imageList.add(encodeTrimmedPng(animation.frames[i]));
               break;
             default:
-              imageList.add(Image.encodeGif(animation.frames[i]));
+              imageList.add(Uint8List.fromList(Image.encodeGif(animation.frames[i])));
               break;
           }
           linkList.add(i);
@@ -67,16 +68,14 @@ Future<AnimatedImageOutput?> analyseImage(Uint8List bytes,
 
         progress++;
         if (sendAsyncPort != null && (progress % progressStep == 0)) {
-          sendAsyncPort?.send({'progress': progress / animation.length});
+          sendAsyncPort.send({'progress': progress / animation.length});
         }
       }
     }
 
-    out.addAll({"images": imageList});
-    out.addAll({"durations": durations});
-    out.addAll({"linkList": linkList});
+    var out = AnimatedImageOutput(imageList, durations, linkList);
 
-    if (filterImages != null) filterImages(out, animation.frames);
+    if (animation != null && withFramesOutput) out.frames = animation.frames;
 
     return out;
   } on Exception {

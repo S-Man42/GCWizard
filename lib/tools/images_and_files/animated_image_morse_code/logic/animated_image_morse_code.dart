@@ -5,10 +5,18 @@ import 'dart:typed_data';
 import 'package:gc_wizard/common_widgets/gcw_async_executer.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/morse/logic/morse.dart';
 import 'package:gc_wizard/tools/images_and_files/animated_image/logic/animated_image.dart' as animated_image;
+import 'package:gc_wizard/tools/images_and_files/animated_image/logic/animated_image.dart';
 import 'package:image/image.dart' as Image;
 import 'package:tuple/tuple.dart';
 
-Future<Map<String, Object>?> analyseImageMorseCodeAsync(GCWAsyncExecuterParameters? jobData) async {
+class AnimatedImageMorseOutput extends AnimatedImageOutput {
+  var imagesFiltered;
+
+  AnimatedImageMorseOutput(animatedImageOutput, this.imagesFiltered)
+  : super (animatedImageOutput.images, animatedImageOutput.durations, animatedImageOutput.linkList);
+}
+
+Future<AnimatedImageMorseOutput?> analyseImageMorseCodeAsync(GCWAsyncExecuterParameters? jobData) async {
   if (jobData == null) return null;
 
   var output = await analyseImageMorseCode(jobData.parameters, sendAsyncPort: jobData.sendAsyncPort);
@@ -18,19 +26,20 @@ Future<Map<String, Object>?> analyseImageMorseCodeAsync(GCWAsyncExecuterParamete
   return output;
 }
 
-Future<Map<String, Object>?> analyseImageMorseCode(Uint8List bytes, {SendPort? sendAsyncPort}) async {
+Future<AnimatedImageMorseOutput?> analyseImageMorseCode(Uint8List bytes, {SendPort? sendAsyncPort}) async {
   try {
-    var out = animated_image.analyseImage(bytes, sendAsyncPort: sendAsyncPort, filterImages: (outMap, frames) {
-      List<Uint8List> imageList = outMap["images"];
-      var filteredList = <List<int>>[];
+    var out = await animated_image.analyseImage(bytes, sendAsyncPort: sendAsyncPort, withFramesOutput: true);
+      if (out == null || out.frames == null) return null;
 
-      for (var i = 0; i < imageList.length; i++) filteredList = _filterImages(filteredList, i, imageList);
+    List<Uint8List> imageList = out.images;
+    var filteredList = <List<int>>[];
 
-      filteredList = _searchHighSignalImage(frames, filteredList);
-      outMap.addAll({"imagesFiltered": filteredList});
-    });
+    for (var i = 0; i < imageList.length; i++) filteredList = _filterImages(filteredList, i, imageList);
 
-    return Future.value(out);
+    filteredList = _searchHighSignalImage(out.frames!, filteredList);
+    var outMorse = AnimatedImageMorseOutput(out, filteredList);
+
+    return Future.value(outMorse);
   } on Exception {
     return null;
   }
