@@ -222,7 +222,7 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, model: ${elem['model']}, language: ${elem['language']}', () {
         var _actual = decodeVanityMultitap(elem['input'], elem['model'], elem['language']);
-        expect(_actual['output'], elem['expectedOutput']);
+        expect(_actual!['output'], elem['expectedOutput']);
       });
     });
   });

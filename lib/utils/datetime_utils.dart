@@ -86,14 +86,14 @@ DateTime _JDToCal(double jd, _CalendarType type) {
   return DateTime(year, month, day.truncate());
 }
 
-String replaceMonthNameWithCustomString(DateTime date, String datePattern, String locale, String customMonth) {
+String replaceMonthNameWithCustomString(DateTime date, String datePattern, String locale, String? customMonth) {
   var dateStr = DateFormat(datePattern, locale).format(date);
   if (!datePattern.contains('MMMM'))
     return dateStr;
 
   var monthName = DateFormat('MMMM', locale).format(date);
 
-  return dateStr.replaceFirst(monthName, customMonth);
+  return dateStr.replaceFirst(monthName, customMonth ?? '');
 }
 
 String formatDaysToNearestUnit(double days) {

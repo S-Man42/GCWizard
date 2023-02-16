@@ -507,7 +507,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
 
                 if (widget.formulaValueList != null)
                   _currentEditedFormulaValueTypeInput =
-                      widget.formulaValueList!.firstWhere((element) => element.id == _currentEditId).type;
+                      widget.formulaValueList!.firstWhere((element) => element.id == _currentEditId)?.type ?? FormulaValueType.FIXED;
               });
             },
           );

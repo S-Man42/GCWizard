@@ -1,7 +1,7 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _GCWCoordsSlippyMap extends StatefulWidget {
-  final Function(SlippyMap) onChanged;
+  final void Function(SlippyMap) onChanged;
   final BaseCoordinates? coordinates;
   final double zoom;
 

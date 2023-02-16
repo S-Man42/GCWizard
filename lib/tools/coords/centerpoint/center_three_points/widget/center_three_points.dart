@@ -97,9 +97,9 @@ class CenterThreePointsState extends State<CenterThreePoints> {
         builder: (context) {
           return Center(
             child: Container(
-              child: GCWAsyncExecuter(
+              child: GCWAsyncExecuter<List<Map<String, dynamic>>?>(
                 isolatedFunction: centerPointThreePointsAsync,
-                parameter: _buildJobData(),
+                parameter: _buildJobData,
                 onReady: (data) => _showOutput(data),
                 isOverlay: true,
               ),
@@ -117,7 +117,7 @@ class CenterThreePointsState extends State<CenterThreePoints> {
         coord1: _currentCoords1, coord2: _currentCoords2, coord3: _currentCoords3, ells: defaultEllipsoid()));
   }
 
-  _showOutput(List<Map<String, dynamic>> output) {
+  _showOutput(List<Map<String, dynamic>>? output) {
     if (output == null) {
       _currentOutput = [];
 

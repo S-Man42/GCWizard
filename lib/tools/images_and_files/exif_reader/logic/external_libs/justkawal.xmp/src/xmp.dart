@@ -26,11 +26,11 @@ class XMP {
   /// print(result.toString());
   ///
   ///```
-  static Map<String, dynamic> extract(Uint8List source, {bool raw = false}) {
+  static Map<String, Object> extract(Uint8List? source, {bool raw = false}) {
     if (source is! Uint8List) {
       throw Exception('Not a Uint8List');
     } else {
-      var result = <String, dynamic>{};
+      var result = <String, Object>{};
       var buffer = latin1.decode(source, allowInvalid: false);
       int offsetBegin = buffer.indexOf(_markerBegin);
       if (offsetBegin != -1) {
@@ -48,7 +48,7 @@ class XMP {
           // First rdf:Description
           var rdf_Description = xml.descendants.where((node) => node is XmlElement).toList();
           rdf_Description.forEach((element) {
-            _addAttribute(result, element, raw);
+            _addAttribute(result, element as XmlElement, raw);
           });
 
           // Other selected known tags
@@ -82,15 +82,15 @@ class XMP {
     var headerName;
 
     if (!raw) {
-      var temporaryElement = element;
-      var temporaryName = temporaryElement.name.toString().toLowerCase();
+      XmlElement? temporaryElement = element;
+      String? temporaryName = temporaryElement.name.toString().toLowerCase();
 
       while (!_envelopeTags.every((element) => element != temporaryName)) {
-        temporaryElement = temporaryElement.parentElement;
+        temporaryElement = temporaryElement?.parentElement;
         if (temporaryElement == null) {
           break;
         }
-        temporaryName = temporaryElement?.name?.toString()?.toLowerCase();
+        temporaryName = temporaryElement.name.toString().toLowerCase();
       }
       headerName = (temporaryElement?.name ?? element.name).toString();
       if (headerName == 'null') {
@@ -111,12 +111,12 @@ class XMP {
 
     element.children.toList().forEach((child) {
       if (child is! XmlText) {
-        _addAttribute(result, child, raw);
+        _addAttribute(result, child as XmlElement, raw);
       }
     });
   }
 
-  static String camelToNormal(String text) {
+  static String camelToNormal(String? text) {
     if (text == null || text.isEmpty) {
       return '';
     }
@@ -133,7 +133,7 @@ class XMP {
       return replace;
     }
 
-    return text.nameCase();
+    return text!.nameCase();
   }
 
   static void _addAttributeList(String key, String text, Map<String, dynamic> result) {

@@ -92,7 +92,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   List<Widget> _GWCFileStructure = [];
 
-  List<List<Object>?> _outputHeader = [];
+  List<List<Object?>> _outputHeader = [];
 
   bool _currentDeObfuscate = false;
   bool _currentSyntaxHighlighting = false;
@@ -1409,15 +1409,15 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   //TODO Thomas: Please change into more handle return type if possible. At least change dynamic into Object?
-  List<List<Object>?> _outputZone(ZoneData data) {
-    List<List<Object>?> result = [
-      _expertMode ? [i18n(context, 'wherigo_output_luaname'), data.ZoneLUAName] : null,
-      _expertMode ? [i18n(context, 'wherigo_output_id'), data.ZoneID] : null,
+  List<List<Object?>> _outputZone(ZoneData data) {
+    List<List<Object?>> result = [
+     if (_expertMode) [i18n(context, 'wherigo_output_luaname'), data.ZoneLUAName],
+     if (_expertMode) [i18n(context, 'wherigo_output_id'), data.ZoneID],
       [i18n(context, 'wherigo_output_name'), data.ZoneName],
       [i18n(context, 'wherigo_output_description'), data.ZoneDescription],
-      _expertMode ? [i18n(context, 'wherigo_output_visible'), i18n(context, 'common_' + data.ZoneVisible)] : null,
-      _expertMode
-          ? [
+     if (_expertMode) [i18n(context, 'wherigo_output_visible'), i18n(context, 'common_' + data.ZoneVisible)],
+     if (_expertMode)
+           [
               i18n(context, 'wherigo_output_medianame'),
               data.ZoneMediaName +
                   (data.ZoneMediaName != ''
@@ -1426,9 +1426,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                           : '')
                       : '')
             ]
-          : null,
-      _expertMode
-          ? [
+          ,
+    if (_expertMode)
+           [
               i18n(context, 'wherigo_output_iconname'),
               data.ZoneIconName +
                   (data.ZoneIconName != ''
@@ -1436,23 +1436,20 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                           ? ' ⬌ ' + NameToObject[data.ZoneIconName]!.ObjectName
                           : '')
                       : '')
-            ]
-          : null,
-      _expertMode ? [i18n(context, 'wherigo_output_active'), i18n(context, 'common_' + data.ZoneActive)] : null,
-      _expertMode ? [i18n(context, 'wherigo_output_showobjects'), data.ZoneShowObjects] : null,
-      _expertMode ? [i18n(context, 'wherigo_output_distancerange'), data.ZoneDistanceRange] : null,
-      _expertMode ? [i18n(context, 'wherigo_output_distancerangeuom'), data.ZoneDistanceRangeUOM] : null,
-      _expertMode ? [i18n(context, 'wherigo_output_proximityrange'), data.ZoneProximityRange] : null,
-      _expertMode ? [i18n(context, 'wherigo_output_proximityrangeuom'), data.ZoneProximityRangeUOM] : null,
-      _expertMode ? [i18n(context, 'wherigo_output_outofrange'), data.ZoneOutOfRange] : null,
-      _expertMode ? [i18n(context, 'wherigo_output_inrange'), data.ZoneInRange] : null,
-      data.ZoneOriginalPoint != null
-          ? [
+            ],
+     if (_expertMode) [i18n(context, 'wherigo_output_active'), i18n(context, 'common_' + data.ZoneActive)],
+     if (_expertMode) [i18n(context, 'wherigo_output_showobjects'), data.ZoneShowObjects],
+     if (_expertMode) [i18n(context, 'wherigo_output_distancerange'), data.ZoneDistanceRange],
+     if (_expertMode) [i18n(context, 'wherigo_output_distancerangeuom'), data.ZoneDistanceRangeUOM],
+     if (_expertMode) [i18n(context, 'wherigo_output_proximityrange'), data.ZoneProximityRange],
+     if (_expertMode) [i18n(context, 'wherigo_output_proximityrangeuom'), data.ZoneProximityRangeUOM],
+     if (_expertMode) [i18n(context, 'wherigo_output_outofrange'), data.ZoneOutOfRange],
+     if (_expertMode) [i18n(context, 'wherigo_output_inrange'), data.ZoneInRange],
+           [
               i18n(context, 'wherigo_output_originalpoint'),
               formatCoordOutput(LatLng(data.ZoneOriginalPoint.Latitude, data.ZoneOriginalPoint.Longitude),
                   defaultCoordFormat(), defaultEllipsoid())
-            ]
-          : ['', ''],
+            ],
       [i18n(context, 'wherigo_output_zonepoints'), ''],
     ];
     data.ZonePoints.forEach((point) {
@@ -1465,31 +1462,29 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     return result;
   }
 
-  List<List<Object>?> _outputItem(ItemData data) {
-    List<List<Object>?> result = [
-      _expertMode ? [i18n(context, 'wherigo_output_luaname'), data.ItemLUAName] : null,
-      _expertMode ? [i18n(context, 'wherigo_output_id'), data.ItemID] : null,
+  List<List<Object?>> _outputItem(ItemData data) {
+    List<List<Object?>> result = [
+     if (_expertMode) [i18n(context, 'wherigo_output_luaname'), data.ItemLUAName],
+     if (_expertMode) [i18n(context, 'wherigo_output_id'), data.ItemID],
       [i18n(context, 'wherigo_output_name'), data.ItemName],
       [i18n(context, 'wherigo_output_description'), data.ItemDescription],
-      _expertMode ? [i18n(context, 'wherigo_output_visible'), data.ItemVisible] : null,
-      _expertMode
-          ? [
+     if (_expertMode) [i18n(context, 'wherigo_output_visible'), data.ItemVisible],
+     if (_expertMode)  [
               i18n(context, 'wherigo_output_medianame'),
               data.ItemMedia +
                   (data.ItemMedia != ''
                       ? (NameToObject[data.ItemMedia] != null ? ' ⬌ ' + NameToObject[data.ItemMedia]!.ObjectName : '')
                       : '')
-            ]
-          : null,
-      _expertMode
-          ? [
+            ],
+    if (_expertMode)
+   [
               i18n(context, 'wherigo_output_iconname'),
               data.ItemIcon +
                   (data.ItemIcon != ''
                       ? (NameToObject[data.ItemIcon] != null ? ' ⬌ ' + NameToObject[data.ItemIcon]!.ObjectName : '')
                       : '')
             ]
-          : null,
+
     ];
     if (data.ItemLocation == 'ZonePoint')
       result.add([
@@ -1512,41 +1507,40 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     return result;
   }
 
-  List<List<Object>?> _outputTask(TaskData data) {
+  List<List<Object?>> _outputTask(TaskData data) {
     return [
-      _expertMode ? [i18n(context, 'wherigo_output_luaname'), data.TaskLUAName] : null,
-      _expertMode ? [i18n(context, 'wherigo_output_id'), data.TaskID] : null,
+     if (_expertMode) [i18n(context, 'wherigo_output_luaname'), data.TaskLUAName],
+     if (_expertMode) [i18n(context, 'wherigo_output_id'), data.TaskID],
       [i18n(context, 'wherigo_output_name'), data.TaskName],
       [i18n(context, 'wherigo_output_description'), data.TaskDescription],
-      _expertMode ? [i18n(context, 'wherigo_output_visible'), i18n(context, 'common_' + data.TaskVisible)] : null,
-      _expertMode
-          ? [
+     if (_expertMode) [i18n(context, 'wherigo_output_visible'), i18n(context, 'common_' + data.TaskVisible)],
+    if (_expertMode)
+     [
               i18n(context, 'wherigo_output_medianame'),
               data.TaskMedia +
                   (data.TaskMedia != ''
                       ? (NameToObject[data.TaskMedia] != null ? ' ⬌ ' + NameToObject[data.TaskMedia]!.ObjectName : '')
                       : '')
             ]
-          : null,
-      _expertMode
-          ? [
+          ,
+      if (_expertMode)  [
               i18n(context, 'wherigo_output_iconname'),
               data.TaskIcon +
                   (data.TaskIcon != ''
                       ? (NameToObject[data.TaskIcon] != null ? ' ⬌ ' + NameToObject[data.TaskIcon]!.ObjectName : '')
                       : '')
             ]
-          : null,
-      _expertMode ? [i18n(context, 'wherigo_output_active'), i18n(context, 'common_' + data.TaskActive)] : null,
-      _expertMode ? [i18n(context, 'wherigo_output_complete'), i18n(context, 'common_' + data.TaskComplete)] : null,
-      _expertMode ? [i18n(context, 'wherigo_output_correctstate'), data.TaskCorrectstate] : null
+          ,
+     if (_expertMode) [i18n(context, 'wherigo_output_active'), i18n(context, 'common_' + data.TaskActive)],
+     if (_expertMode) [i18n(context, 'wherigo_output_complete'), i18n(context, 'common_' + data.TaskComplete)],
+      if (_expertMode)  [i18n(context, 'wherigo_output_correctstate'), data.TaskCorrectstate]
     ];
   }
 
-  List<List<Object>?> _outputTimer(TimerData data) {
+  List<List<Object?>> _outputTimer(TimerData data) {
     return [
-      _expertMode ? [i18n(context, 'wherigo_output_luaname'), data.TimerLUAName] : null,
-      _expertMode ? [i18n(context, 'wherigo_output_id'), data.TimerID] : null,
+     if (_expertMode) [i18n(context, 'wherigo_output_luaname'), data.TimerLUAName],
+     if (_expertMode) [i18n(context, 'wherigo_output_id'), data.TimerID],
       [i18n(context, 'wherigo_output_name'), data.TimerName],
       [i18n(context, 'wherigo_output_description'), data.TimerDescription],
       [
@@ -1554,18 +1548,18 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         data.TimerDuration + ' ' + i18n(context, 'dates_daycalculator_seconds')
       ],
       [i18n(context, 'wherigo_output_type'), i18n(context, 'wherigo_output_timer_' + data.TimerType + ' s')],
-      _expertMode ? [i18n(context, 'wherigo_output_visible'), i18n(context, 'common_' + data.TimerVisible)] : null,
+     if (_expertMode) [i18n(context, 'wherigo_output_visible'), i18n(context, 'common_' + data.TimerVisible)],
     ];
   }
 
-  List<List<Object>?> _outputCharacter(CharacterData data) {
-    List<List<Object>?> result = [
-      _expertMode ? [i18n(context, 'wherigo_output_luaname'), data.CharacterLUAName] : null,
-      _expertMode ? [i18n(context, 'wherigo_output_id'), data.CharacterID] : null,
+  List<List<Object?>> _outputCharacter(CharacterData data) {
+    List<List<Object?>> result = [
+     if (_expertMode) [i18n(context, 'wherigo_output_luaname'), data.CharacterLUAName],
+     if (_expertMode) [i18n(context, 'wherigo_output_id'), data.CharacterID],
       [i18n(context, 'wherigo_output_name'), data.CharacterName],
       [i18n(context, 'wherigo_output_description'), data.CharacterDescription],
-      _expertMode
-          ? [
+    if (_expertMode)
+     [
               i18n(context, 'wherigo_output_medianame'),
               data.CharacterMediaName +
                   (data.CharacterMediaName != ''
@@ -1574,9 +1568,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                           : '')
                       : '')
             ]
-          : null,
-      _expertMode
-          ? [
+          ,
+      if (_expertMode) [
               i18n(context, 'wherigo_output_iconname'),
               data.CharacterIconName +
                   (data.CharacterIconName != ''
@@ -1585,7 +1578,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                           : '')
                       : '')
             ]
-          : null,
+          ,
     ];
     if (data.CharacterLocation == 'ZonePoint')
       result.add([
@@ -1616,26 +1609,25 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     return result;
   }
 
-  List<List<Object>?> _outputInput(InputData data) {
+  List<List<Object?>> _outputInput(InputData data) {
     return [
-      _expertMode ? [i18n(context, 'wherigo_output_luaname'), data.InputLUAName] : null,
-      _expertMode ? [i18n(context, 'wherigo_output_id'), data.InputID] : null,
+     if (_expertMode) [i18n(context, 'wherigo_output_luaname'), data.InputLUAName],
+     if (_expertMode) [i18n(context, 'wherigo_output_id'), data.InputID],
       [i18n(context, 'wherigo_output_name'), data.InputName],
       [i18n(context, 'wherigo_output_description'), data.InputDescription],
-      _expertMode
-          ? [
+      if (_expertMode)  [
               i18n(context, 'wherigo_output_medianame'),
               data.InputMedia +
                   (data.InputMedia != ''
                       ? (NameToObject[data.InputMedia] != null ? ' ⬌ ' + NameToObject[data.InputMedia]!.ObjectName : '')
                       : '')
             ]
-          : null,
+          ,
       [i18n(context, 'wherigo_output_text'), data.InputText],
       [i18n(context, 'wherigo_output_type'), data.InputType],
-      _expertMode ? [i18n(context, 'wherigo_output_variableid'), data.InputVariableID] : null,
+     if (_expertMode) [i18n(context, 'wherigo_output_variableid'), data.InputVariableID],
       [i18n(context, 'wherigo_output_choices'), data.InputChoices.join('\n')],
-      _expertMode ? [i18n(context, 'wherigo_output_visible'), i18n(context, 'common_' + data.InputVisible)] : null,
+     if (_expertMode) [i18n(context, 'wherigo_output_visible'), i18n(context, 'common_' + data.InputVisible)],
     ];
   }
 
@@ -1699,15 +1691,15 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     return resultWidget;
   }
 
-  List<List<Object>?> _outputIdentifier(VariableData data) {
+  List<List<Object?>> _outputIdentifier(VariableData data) {
     return [
       [i18n(context, 'wherigo_output_luaname'), data.VariableLUAName],
       [i18n(context, 'wherigo_output_text'), data.VariableName],
     ];
   }
 
-  List<List<Object>?> _outputIdentifierDetails(VariableData data) {
-    List<List<Object>?> result = [];
+  List<List<Object?>> _outputIdentifierDetails(VariableData data) {
+    List<List<Object?>> result = [];
 
     if (NameToObject[data.VariableName] == null)
       result = [
@@ -1807,8 +1799,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     return result;
   }
 
-  List<List<Object>?> _outputAnswer(InputData input, AnswerData data) {
-    List<List<Object>?> result;
+  List<List<Object?>> _outputAnswer(InputData input, AnswerData data) {
+    List<List<Object?>> result;
 
     List<String> answers = data.AnswerAnswer.split('\x01');
     var hash = answers[0].trim();
@@ -1832,12 +1824,10 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         answers.length > 1
             ? [i18n(context, 'wherigo_output_hash'), hash, '']
             : [i18n(context, 'wherigo_output_answer'), hash],
-        answerAlphabetical != null
-            ? [i18n(context, 'wherigo_output_answerdecrypted'), i18n(context, 'common_letters'), answerAlphabetical]
-            : null,
-        answerNumeric != null
-            ? [i18n(context, 'wherigo_output_answerdecrypted'), i18n(context, 'common_numbers'), answerNumeric]
-            : null,
+        if (answerAlphabetical != null)
+            [i18n(context, 'wherigo_output_answerdecrypted'), i18n(context, 'common_letters'), answerAlphabetical],
+        if (answerNumeric != null)
+            [i18n(context, 'wherigo_output_answerdecrypted'), i18n(context, 'common_numbers'), answerNumeric],
       ];
     }
 
@@ -1922,7 +1912,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     List<Widget> result = [];
 
     // Signature
-    List<List<Object>?> content = [
+    List<List<Object?>> content = [
       [
         i18n(context, 'wherigo_bytecode_offset'),
         i18n(context, 'wherigo_bytecode_bytes'),
@@ -2125,10 +2115,10 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   _exportFile(BuildContext context, Uint8List data, String name, FileType fileType) async {
-    var value = await saveByteDataToFile(
-        context, data, name + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
+    var value = await saveByteDataToFile(context, data, buildFileNameWithDate(name, fileType));
 
-    if (value) showExportedFileDialog(context);
+    var content = fileClass(fileType) == FileClass.IMAGE ? imageContent(context, data) : null;
+    if (value) showExportedFileDialog(context, contentWidget: content);
   }
 
   Future<void> _exportCoordinates(
@@ -2508,7 +2498,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   void _buildHeader() {
 
       _outputHeader = [
-        _expertMode ? [i18n(context, 'wherigo_header_signature'), _WherigoCartridgeGWC.Signature] : null,
+       if (_expertMode) [i18n(context, 'wherigo_header_signature'), _WherigoCartridgeGWC.Signature],
         [i18n(context, 'wherigo_header_numberofmediafiles'), (_WherigoCartridgeGWC.NumberOfObjects - 1).toString()],
         [
           i18n(context, 'wherigo_output_location'),
@@ -2517,55 +2507,49 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         ],
         [i18n(context, 'wherigo_header_altitude'), _WherigoCartridgeGWC.Altitude.toString()],
         [i18n(context, 'wherigo_header_typeofcartridge'), _WherigoCartridgeGWC.TypeOfCartridge],
-        _expertMode ? [i18n(context, 'wherigo_header_splashicon'), _WherigoCartridgeGWC.SplashscreenIcon] : null,
-        _expertMode ? [i18n(context, 'wherigo_header_splashscreen'), _WherigoCartridgeGWC.Splashscreen] : null,
+       if (_expertMode) [i18n(context, 'wherigo_header_splashicon'), _WherigoCartridgeGWC.SplashscreenIcon],
+       if (_expertMode) [i18n(context, 'wherigo_header_splashscreen'), _WherigoCartridgeGWC.Splashscreen],
         [i18n(context, 'wherigo_header_player'), _WherigoCartridgeGWC.Player],
-        _expertMode ? [i18n(context, 'wherigo_header_playerid'), _WherigoCartridgeGWC.PlayerID.toString()] : null,
+       if (_expertMode) [i18n(context, 'wherigo_header_playerid'), _WherigoCartridgeGWC.PlayerID.toString()],
         [i18n(context, 'wherigo_header_completion'), (_WherigoCartridgeGWC.CompletionCode.length > 15) ? _WherigoCartridgeGWC.CompletionCode.substring(0,15) : _WherigoCartridgeGWC.CompletionCode],
-        _expertMode
-            ? [i18n(context, 'wherigo_header_lengthcompletion'), _WherigoCartridgeGWC.LengthOfCompletionCode.toString()]
-            : null,
-        _expertMode
-            ? [i18n(context, 'wherigo_header_completion_full'), _WherigoCartridgeGWC.CompletionCode]
-            : null,
+        if (_expertMode)  [i18n(context, 'wherigo_header_lengthcompletion'), _WherigoCartridgeGWC.LengthOfCompletionCode.toString()]
+            ,
+        if (_expertMode) [i18n(context, 'wherigo_header_completion_full'), _WherigoCartridgeGWC.CompletionCode]
+            ,
         [
           i18n(context, 'wherigo_header_cartridgename'),
           _WherigoCartridgeGWC.CartridgeLUAName == ''
               ? _WherigoCartridgeLUA.CartridgeLUAName
               : _WherigoCartridgeGWC.CartridgeLUAName
         ],
-        _expertMode
-            ? [
+        if (_expertMode)  [
                 i18n(context, 'wherigo_header_cartridgeguid'),
                 _WherigoCartridgeGWC.CartridgeGUID == ''
                     ? _WherigoCartridgeLUA.CartridgeGUID
                     : _WherigoCartridgeGWC.CartridgeGUID
               ]
-            : null,
+            ,
         [i18n(context, 'wherigo_header_cartridgedescription'), _WherigoCartridgeGWC.CartridgeDescription],
         [i18n(context, 'wherigo_header_startinglocation'), _WherigoCartridgeGWC.StartingLocationDescription],
-        _expertMode ? [i18n(context, 'wherigo_header_state'), _WherigoCartridgeLUA.StateID] : null,
-        _expertMode ? [i18n(context, 'wherigo_header_country'), _WherigoCartridgeLUA.CountryID] : null,
-        _expertMode ? [i18n(context, 'wherigo_header_version'), _WherigoCartridgeGWC.Version] : null,
+       if (_expertMode) [i18n(context, 'wherigo_header_state'), _WherigoCartridgeLUA.StateID],
+       if (_expertMode) [i18n(context, 'wherigo_header_country'), _WherigoCartridgeLUA.CountryID],
+       if (_expertMode) [i18n(context, 'wherigo_header_version'), _WherigoCartridgeGWC.Version],
         [
           i18n(context, 'wherigo_header_creationdate') + ' (GWC)',
           _getCreationDate(_WherigoCartridgeGWC.DateOfCreation)
         ],
-        _expertMode
-            ? [i18n(context, 'wherigo_header_creationdate') + ' (LUA)', _formatDate(_WherigoCartridgeLUA.CreateDate)]
-            : null,
-        _expertMode ? [i18n(context, 'wherigo_header_publish'), _formatDate(_WherigoCartridgeLUA.PublishDate)] : null,
-        _expertMode ? [i18n(context, 'wherigo_header_update'), _formatDate(_WherigoCartridgeLUA.UpdateDate)] : null,
-        _expertMode
-            ? [i18n(context, 'wherigo_header_lastplayed'), _formatDate(_WherigoCartridgeLUA.LastPlayedDate)]
-            : null,
+        if (_expertMode)  [i18n(context, 'wherigo_header_creationdate') + ' (LUA)', _formatDate(_WherigoCartridgeLUA.CreateDate)]
+            ,
+       if (_expertMode) [i18n(context, 'wherigo_header_publish'), _formatDate(_WherigoCartridgeLUA.PublishDate)],
+       if (_expertMode) [i18n(context, 'wherigo_header_update'), _formatDate(_WherigoCartridgeLUA.UpdateDate)],
+        if (_expertMode)  [i18n(context, 'wherigo_header_lastplayed'), _formatDate(_WherigoCartridgeLUA.LastPlayedDate)]
+            ,
         [i18n(context, 'wherigo_header_author'), _WherigoCartridgeGWC.Author],
-        _expertMode ? [i18n(context, 'wherigo_header_company'), _WherigoCartridgeGWC.Company] : null,
-        _expertMode ? [i18n(context, 'wherigo_header_device'), _WherigoCartridgeGWC.RecommendedDevice] : null,
-        _expertMode ? [i18n(context, 'wherigo_header_deviceversion'), _WherigoCartridgeLUA.TargetDeviceVersion] : null,
-        _expertMode
-            ? [i18n(context, 'wherigo_header_logging'), i18n(context, 'common_' + _WherigoCartridgeLUA.UseLogging)]
-            : null
+       if (_expertMode) [i18n(context, 'wherigo_header_company'), _WherigoCartridgeGWC.Company],
+       if (_expertMode) [i18n(context, 'wherigo_header_device'), _WherigoCartridgeGWC.RecommendedDevice],
+       if (_expertMode) [i18n(context, 'wherigo_header_deviceversion'), _WherigoCartridgeLUA.TargetDeviceVersion],
+        if (_expertMode)  [i18n(context, 'wherigo_header_logging'), i18n(context, 'common_' + _WherigoCartridgeLUA.UseLogging)]
+          
       ];
 
       if (_expertMode)

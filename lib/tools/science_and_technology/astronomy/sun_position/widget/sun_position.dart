@@ -9,6 +9,7 @@ import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/_common/logic/julian_date.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/sun_position/logic/sun_position.dart' as logic;
 import 'package:gc_wizard/tools/science_and_technology/astronomy/_common/widget/astronomy_i18n.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/datetime_utils.dart';
 import 'package:intl/intl.dart';
 
@@ -18,7 +19,7 @@ class SunPosition extends StatefulWidget {
 }
 
 class SunPositionState extends State<SunPosition> {
-  var _currentDateTime = {'datetime': DateTime.now(), 'timezone': DateTime.now().timeZoneOffset};
+  var _currentDateTime = DateTimeTimezone(datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
   var _currentCoords = defaultCoordinate;
   var _currentCoordsFormat = defaultCoordFormat();
 
@@ -55,7 +56,7 @@ class SunPositionState extends State<SunPosition> {
   Widget _buildOutput() {
     var format = NumberFormat('0.000');
 
-    var julianDate = JulianDate(_currentDateTime['datetime'], _currentDateTime['timezone']);
+    var julianDate = JulianDate(_currentDateTime);
 
     var sunPosition = logic.SunPosition(_currentCoords, julianDate, defaultEllipsoid());
 
@@ -73,7 +74,7 @@ class SunPositionState extends State<SunPosition> {
       [i18n(context, 'astronomy_position_distancetoobserver'), format.format(sunPosition.distanceToObserver) + ' km'],
       [
         i18n(context, 'astronomy_position_astrologicalsign'),
-        i18n(context, getAstrologicalSign(sunPosition.astrologicalSign))
+        i18n(context, getAstrologicalSign(sunPosition.astrologicalSign) ?? '')
       ],
     ];
 

@@ -29,20 +29,20 @@ class RightAscensionToDegree extends StatefulWidget {
 }
 
 class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
-  FocusNode _hoursFocusNode;
-  FocusNode _minutesFocusNode;
-  FocusNode _secondsFocusNode;
-  FocusNode _mSecondsFocusNode;
+  late FocusNode _hoursFocusNode;
+  late FocusNode _minutesFocusNode;
+  late FocusNode _secondsFocusNode;
+  late FocusNode _mSecondsFocusNode;
 
-  FocusNode _decMilliDegreesFocusNode;
+  late FocusNode _decMilliDegreesFocusNode;
 
-  TextEditingController _hoursController;
-  TextEditingController _minutesController;
-  TextEditingController _secondsController;
-  TextEditingController _mSecondsController;
+  late TextEditingController _hoursController;
+  late TextEditingController _minutesController;
+  late TextEditingController _secondsController;
+  late TextEditingController _mSecondsController;
 
-  TextEditingController _decDegreesController;
-  TextEditingController _decMilliDegreesController;
+  late TextEditingController _decDegreesController;
+  late TextEditingController _decMilliDegreesController;
 
   var _currentRaDeg = RaDeg(0.0);
   var _currentRightAscension = RightAscension(0, 0, 0, 0.0);
@@ -52,28 +52,28 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
   String _currentDecDegrees = '0';
   String _currentDecMilliDegrees = '0';
 
-  TextEditingController _DmmDegreesController;
-  TextEditingController _DmmMinutesController;
-  TextEditingController _DmmMilliMinutesController;
+  late TextEditingController _DmmDegreesController;
+  late TextEditingController _DmmMinutesController;
+  late TextEditingController _DmmMilliMinutesController;
   int _currentDmmSign = 1;
   String _currentDmmDegrees = '0';
   String _currentDmmMinutes = '0';
   String _currentDmmMilliMinutes = '0';
-  FocusNode _dmmMinutesFocusNode;
-  FocusNode _dmmMilliMinutesFocusNode;
+  late FocusNode _dmmMinutesFocusNode;
+  late FocusNode _dmmMilliMinutesFocusNode;
 
-  TextEditingController _DmsDegreesController;
-  TextEditingController _DmsMinutesController;
-  TextEditingController _DmsSecondsController;
-  TextEditingController _DmsMilliSecondsController;
+  late TextEditingController _DmsDegreesController;
+  late TextEditingController _DmsMinutesController;
+  late TextEditingController _DmsSecondsController;
+  late TextEditingController _DmsMilliSecondsController;
   int _currentDmsSign = 1;
   String _currentDmsDegrees = '0';
   String _currentDmsMinutes = '0';
   String _currentDmsSeconds = '0';
   String _currentDmsMilliSeconds = '0';
-  FocusNode _dmsMinutesFocusNode;
-  FocusNode _dmsSecondsFocusNode;
-  FocusNode _dmsMilliSecondsFocusNode;
+  late FocusNode _dmsMinutesFocusNode;
+  late FocusNode _dmsSecondsFocusNode;
+  late FocusNode _dmsMilliSecondsFocusNode;
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
@@ -105,34 +105,34 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
 
   @override
   void dispose() {
-    _hoursController?.dispose();
-    _minutesController?.dispose();
-    _secondsController?.dispose();
-    _mSecondsController?.dispose();
+    _hoursController.dispose();
+    _minutesController.dispose();
+    _secondsController.dispose();
+    _mSecondsController.dispose();
 
-    _decDegreesController?.dispose();
-    _decMilliDegreesController?.dispose();
+    _decDegreesController.dispose();
+    _decMilliDegreesController.dispose();
 
-    _hoursFocusNode?.dispose();
-    _minutesFocusNode?.dispose();
-    _secondsFocusNode?.dispose();
-    _mSecondsFocusNode?.dispose();
+    _hoursFocusNode.dispose();
+    _minutesFocusNode.dispose();
+    _secondsFocusNode.dispose();
+    _mSecondsFocusNode.dispose();
 
-    _decMilliDegreesFocusNode?.dispose();
+    _decMilliDegreesFocusNode.dispose();
 
-    _DmmDegreesController?.dispose();
-    _DmmMinutesController?.dispose();
-    _DmmMilliMinutesController?.dispose();
-    _dmmMinutesFocusNode?.dispose();
-    _dmmMilliMinutesFocusNode?.dispose();
+    _DmmDegreesController.dispose();
+    _DmmMinutesController.dispose();
+    _DmmMilliMinutesController.dispose();
+    _dmmMinutesFocusNode.dispose();
+    _dmmMilliMinutesFocusNode.dispose();
 
-    _DmsDegreesController?.dispose();
-    _DmsMinutesController?.dispose();
-    _DmsSecondsController?.dispose();
-    _DmsMilliSecondsController?.dispose();
-    _dmsMinutesFocusNode?.dispose();
-    _dmsSecondsFocusNode?.dispose();
-    _dmsMilliSecondsFocusNode?.dispose();
+    _DmsDegreesController.dispose();
+    _DmsMinutesController.dispose();
+    _DmsSecondsController.dispose();
+    _DmsMilliSecondsController.dispose();
+    _dmsMinutesFocusNode.dispose();
+    _dmsSecondsFocusNode.dispose();
+    _dmsMilliSecondsFocusNode.dispose();
 
     super.dispose();
   }
@@ -152,14 +152,16 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
         _currentMode == GCWSwitchPosition.left
             ? Container()
             : GCWTextDivider(
+                text: '',
                 trailing: GCWPasteButton(
-                iconSize: IconButtonSize.SMALL,
-                onSelected: (text) {
-                  setState(() {
-                    _parseRAPaste(text);
-                  });
-                },
-              )),
+                    iconSize: IconButtonSize.SMALL,
+                    onSelected: (text) {
+                      setState(() {
+                        _parseRAPaste(text);
+                      });
+                    },
+                  ),
+              ),
         _currentMode == GCWSwitchPosition.left ? _buildDecryptWidget() : _buildHmsWidget(),
         Container(height: 10),
         _buildOutput()
@@ -182,7 +184,7 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
     }
 
     return Column(children: [
-      GCWDropDown(
+      GCWDropDown<CoordFormatKey>(
         value: _currentDecryptFormat,
         onChanged: (newValue) {
           setState(() {
@@ -251,7 +253,7 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
         duration: _currentRightAscension.toDuration(),
         onChanged: (value) {
           setState(() {
-            _currentRightAscension = RightAscension.fromDuration(value['duration']);
+            _currentRightAscension = RightAscension.fromDuration(value.duration)!;
           });
         },
       ),
@@ -283,7 +285,7 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
                     controller: _DmmDegreesController,
                     onChanged: (ret) {
                       setState(() {
-                        _currentDmmDegrees = ret['text'];
+                        _currentDmmDegrees = ret.text;
                         _setDmmDegrees();
                       });
                     }),
@@ -302,7 +304,7 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
                 focusNode: _dmmMinutesFocusNode,
                 onChanged: (ret) {
                   setState(() {
-                    _currentDmmMinutes = ret['text'];
+                    _currentDmmMinutes = ret.text;
                     _setDmmDegrees();
 
                     if (_currentDmmMinutes.length == 2) FocusScope.of(context).requestFocus(_dmmMilliMinutesFocusNode);
@@ -322,7 +324,7 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
                 focusNode: _dmmMilliMinutesFocusNode,
                 onChanged: (ret) {
                   setState(() {
-                    _currentDmmMilliMinutes = ret['text'];
+                    _currentDmmMilliMinutes = ret.text;
                     _setDmmDegrees();
                   });
                 }),
@@ -361,7 +363,7 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
                     controller: _DmsDegreesController,
                     onChanged: (ret) {
                       setState(() {
-                        _currentDmsDegrees = ret['text'];
+                        _currentDmsDegrees = ret.text;
                         _setDmsRightAscension();
                       });
                     }),
@@ -380,7 +382,7 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
                 focusNode: _dmsMinutesFocusNode,
                 onChanged: (ret) {
                   setState(() {
-                    _currentDmsMinutes = ret['text'];
+                    _currentDmsMinutes = ret.text;
                     _setDmsRightAscension();
 
                     if (_currentDmsMinutes.length == 2) FocusScope.of(context).requestFocus(_dmsSecondsFocusNode);
@@ -400,7 +402,7 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
                 focusNode: _dmsSecondsFocusNode,
                 onChanged: (ret) {
                   setState(() {
-                    _currentDmsSeconds = ret['text'];
+                    _currentDmsSeconds = ret.text;
                     _setDmsRightAscension();
 
                     if (_currentDmsSeconds.length == 2) FocusScope.of(context).requestFocus(_dmsMilliSecondsFocusNode);
@@ -420,7 +422,7 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
                 focusNode: _dmsMilliSecondsFocusNode,
                 onChanged: (ret) {
                   setState(() {
-                    _currentDmsMilliSeconds = ret['text'];
+                    _currentDmsMilliSeconds = ret.text;
                     _setDmsRightAscension();
                   });
                 }),
@@ -483,7 +485,7 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
                     controller: _decDegreesController,
                     onChanged: (ret) {
                       setState(() {
-                        _currentDecDegrees = ret['text'];
+                        _currentDecDegrees = ret.text;
                         _setDecRightAscension();
                       });
                     }),
@@ -502,7 +504,7 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
                 focusNode: _decMilliDegreesFocusNode,
                 onChanged: (ret) {
                   setState(() {
-                    _currentDecMilliDegrees = ret['text'];
+                    _currentDecMilliDegrees = ret.text;
                     _setDecRightAscension();
                   });
                 }),
@@ -523,10 +525,10 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
           title: i18n(context, 'common_output') + ': ' + i18n(context, 'astronomy_position_rightascension'),
           child: raDegree2RightAscension(_currentRaDeg).toString());
     } else {
-      RaDeg output = raRightAscension2Degree(_currentRightAscension);
-      var dmm = DMMLatitude.from(doubleToDMMPart(output.degrees)).format(6).replaceAll('N ', '').replaceAll('S ', '-');
+      RaDeg output = raRightAscension2Degree(_currentRightAscension)!;
+      var dmm = DMMLatitude.from(doubleToDMMPart(output.degrees!)).format(6).replaceAll('N ', '').replaceAll('S ', '-');
 
-      var dms = DMSLatitude.from(doubleToDMSPart(output.degrees)).format(6).replaceAll('N ', '').replaceAll('S ', '-');
+      var dms = DMSLatitude.from(doubleToDMSPart(output.degrees!)).format(6).replaceAll('N ', '').replaceAll('S ', '-');
 
       var rows = [
         [getCoordinateFormatByKey(CoordFormatKey.DEC).name, output.toString() + '°'],
@@ -546,10 +548,10 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
 
     _currentRightAscension = rightAscension;
     setState(() {
-      _hoursController.text = _currentRightAscension?.hours?.abs().toString();
-      _minutesController.text = _currentRightAscension?.minutes?.toString();
-      _secondsController.text = _currentRightAscension?.seconds?.truncate().toString();
-      _mSecondsController.text = _currentRightAscension?.milliseconds?.toString();
+      _hoursController.text = _currentRightAscension.hours.abs().toString();
+      _minutesController.text = _currentRightAscension.minutes.toString();
+      _secondsController.text = _currentRightAscension.seconds.truncate().toString();
+      _mSecondsController.text = _currentRightAscension.milliseconds.toString();
     });
   }
 }

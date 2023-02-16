@@ -1,7 +1,7 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _GCWCoordsSwissGridPlus extends StatefulWidget {
-  final Function(SwissGridPlus) onChanged;
+  final void Function(SwissGridPlus) onChanged;
   final BaseCoordinates coordinates;
 
   const _GCWCoordsSwissGridPlus({Key? key, required this.onChanged, required this.coordinates}) : super(key: key);

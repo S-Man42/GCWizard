@@ -158,7 +158,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     if ((_currentSymbolTableViewData is SymbolReplacerSymbolTableViewData) &&
         (_currentSymbolTableViewData!.data == null)) await _currentSymbolTableViewData!.initialize(context);
 
-    if (_platformFile?.bytes == null) return Future.value(null);
+    if (_platformFile?.bytes == null) return null;
 
     return GCWAsyncExecuterParameters(ReplaceSymbolsInput(
         image: _platformFile!.bytes,
@@ -467,13 +467,13 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   }
 
   Future<GCWAsyncExecuterParameters?> _buildSubstitutionBreakerJobData() async {
-    if (_symbolImage == null) return Future.value(null);
+    if (_symbolImage == null) return null;
 
     var quadgrams =
         await loadQuadgramsAssets(_currentAlphabet, context, _quadgrams, _isLoading);
     if (_symbolImage!.symbolGroups.length > quadgrams.alphabet.length) {
       showToast(i18n(context, 'symbol_replacer_automatic_groups'));
-      return Future.value(null);
+      return null;
     }
 
     var input = '';
@@ -508,7 +508,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
 
   Future<GCWAsyncExecuterParameters?> _buildJobDataSearchSymbolTable() async {
     var list = <List<Map<String, SymbolReplacerSymbolData>>>[];
-    if (_symbolImage == null) return Future.value(null);
+    if (_symbolImage == null) return null;
 
     list = await Future.wait(_compareSymbolItems.map((_symbolTableViewData) async {
       SymbolReplacerSymbolTableViewData symbolTableViewData = _symbolTableViewData.value;

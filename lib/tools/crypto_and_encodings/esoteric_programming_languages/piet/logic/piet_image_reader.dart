@@ -4,8 +4,9 @@ import 'dart:typed_data';
 import 'package:image/image.dart' as img;
 
 class PietImageReader {
-  List<List<int>> readImage(Uint8List image) {
+  List<List<int>>? readImage(Uint8List image) {
     var _image = img.decodeImage(image);
+    if (_image == null) return null;
     return _readImage(_image);
   }
 

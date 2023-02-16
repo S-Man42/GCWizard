@@ -71,9 +71,9 @@ _toRGB(double hue, double saturation, double thirdComponent, _HueType type) {
 
   double x = c * (1.0 - ((hue / 60.0) % 2.0 - 1.0).abs());
 
-  double red;
-  double green;
-  double blue;
+  double red = 0;
+  double green = 0;
+  double blue = 0;
 
   if (hue < 60.0) {
     red = c;

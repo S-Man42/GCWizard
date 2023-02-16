@@ -45,7 +45,7 @@ DMM normalize(DMM coord) {
   return _DECToDMM(_DMMToDEC(coord));
 }
 
-DMM parseDMM(String input, {leftPadMilliMinutes: false, wholeString: false}) {
+DMM? parseDMM(String input, {leftPadMilliMinutes = false, wholeString = false}) {
   input = prepareInput(input, wholeString: wholeString);
   if (input == null) return null;
 

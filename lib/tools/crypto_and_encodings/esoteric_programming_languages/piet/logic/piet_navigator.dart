@@ -11,13 +11,13 @@ class _PietNavigator {
   var _codelChooser = _CodelChoice.Left;
   _CodelChoice get codelChooser => _codelChooser;
 
-  List<List<int>> _data;
+  List<List<int>> _data = [];
 
   final int white = _knownColors[18];
   final int black = _knownColors[19];
 
-  int _width;
-  int _height;
+  int _width = 0;
+  int _height = 0;
 
   _PietNavigator(List<List<int>> data) {
     _data = data;
@@ -25,8 +25,8 @@ class _PietNavigator {
     _height = _data[0].length;
   }
 
-  Point _currentPoint = Point<int>(0, 0);
-  Point get currentPoint => _currentPoint;
+  var _currentPoint = Point<int>(0, 0);
+  Point<int> get currentPoint => _currentPoint;
 
   Tuple2<bool, Point<int>> tryNavigate(_PietBlock block) {
     Point<int> result;
@@ -35,7 +35,7 @@ class _PietNavigator {
     bool moveStraight = block.color == white || !block.knownColor;
 
     while (failureCount < 8) {
-      Point exitPoint = Point<int>(0, 0);
+      var exitPoint = Point<int>(0, 0);
 
       if (moveStraight)
         exitPoint = currentPoint;
@@ -83,7 +83,7 @@ class _PietNavigator {
         exitPoint = prevStep;
       }
 
-      Point nextStep;
+      Point<int> nextStep;
       if (direction == _Direction.East)
         nextStep = Point<int>(exitPoint.x + 1, exitPoint.y);
       else if (direction == _Direction.South)
@@ -120,7 +120,7 @@ class _PietNavigator {
     return Tuple2<bool, Point<int>>(false, result);
   }
 
-  bool _stillInBlock(Point exitPoint, _PietBlock block) {
+  bool _stillInBlock(Point<int> exitPoint, _PietBlock block) {
     return exitPoint.x >= 0 &&
         exitPoint.y >= 0 &&
         exitPoint.x < _width &&

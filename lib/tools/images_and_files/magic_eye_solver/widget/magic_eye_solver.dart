@@ -25,13 +25,13 @@ class MagicEyeSolver extends StatefulWidget {
 class MagicEyeSolverState extends State<MagicEyeSolver> {
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
-  GCWFile _decodeImage;
-  Image.Image _decodeImageData;
-  Uint8List _decodeOutData;
-  int _displacement;
-  GCWFile _encodeHiddenDataImage;
-  GCWFile _encodeTextureImage;
-  Uint8List _encodeOutData;
+  GCWFile? _decodeImage;
+  Image.Image? _decodeImageData;
+  Uint8List? _decodeOutData;
+  int? _displacement;
+  GCWFile? _encodeHiddenDataImage;
+  GCWFile? _encodeTextureImage;
+  Uint8List? _encodeOutData;
   TextureType _currentEncodeTextureType = TextureType.BITMAP;
 
   @override
@@ -73,7 +73,7 @@ class MagicEyeSolverState extends State<MagicEyeSolver> {
       Container(height: 25),
       GCWIntegerSpinner(
         title: i18n(context, 'magic_eye_offset'),
-        value: _displacement,
+        value: _displacement ?? 0,
         onChanged: (value) {
           setState(() {
             _displacement = value;
@@ -90,11 +90,11 @@ class MagicEyeSolverState extends State<MagicEyeSolver> {
   }
 
   Widget _buildOutputDecode() {
-    if (_decodeOutData == null) return null;
+    if (_decodeOutData == null) return Container();
 
     return Column(children: <Widget>[
       GCWImageView(
-        imageData: GCWImageViewData(GCWFile(bytes: _decodeOutData)),
+        imageData: GCWImageViewData(GCWFile(bytes: _decodeOutData!)),
         toolBarRight: false,
         fileName: 'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()),
       ),
@@ -103,13 +103,13 @@ class MagicEyeSolverState extends State<MagicEyeSolver> {
 
   GCWAsyncExecuterParameters _buildJobDataDecode() {
     return GCWAsyncExecuterParameters(
-        Tuple3<Uint8List, Image.Image, int>(_decodeImage?.bytes, _decodeImageData, _displacement));
+        Tuple3<Uint8List?, Image.Image?, int?>(_decodeImage?.bytes, _decodeImageData, _displacement));
   }
 
-  void _saveOutputDecode(Tuple3<Image.Image, Uint8List, int> output) {
-    _decodeImageData = output.item1;
-    _decodeOutData = output.item2;
-    _displacement = output.item3;
+  void _saveOutputDecode(Tuple3<Image.Image, Uint8List, int>? output) {
+    _decodeImageData = output?.item1;
+    _decodeOutData = output?.item2;
+    _displacement = output?.item3;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {});
@@ -142,7 +142,7 @@ class MagicEyeSolverState extends State<MagicEyeSolver> {
   Widget _buildEncodeTextureSelection() {
     return Column(children: [
       GCWTextDivider(text: i18n(context, 'magic_eye_texture_image')),
-      GCWDropDown(
+      GCWDropDown<TextureType>(
           value: _currentEncodeTextureType,
           onChanged: (value) {
             setState(() {
@@ -182,11 +182,11 @@ class MagicEyeSolverState extends State<MagicEyeSolver> {
   }
 
   Widget _buildOutputEncode() {
-    if (_encodeOutData == null) return null;
+    if (_encodeOutData == null) return Container();
 
     return Column(children: <Widget>[
       GCWImageView(
-        imageData: GCWImageViewData(GCWFile(bytes: _encodeOutData)),
+        imageData: GCWImageViewData(GCWFile(bytes: _encodeOutData!)),
         toolBarRight: false,
         fileName: 'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()),
       ),
@@ -194,11 +194,11 @@ class MagicEyeSolverState extends State<MagicEyeSolver> {
   }
 
   Future<GCWAsyncExecuterParameters> _buildJobDataEncode() async {
-    return GCWAsyncExecuterParameters(Tuple3<Uint8List, Uint8List, TextureType>(
+    return GCWAsyncExecuterParameters(Tuple3<Uint8List?, Uint8List?, TextureType?>(
         _encodeHiddenDataImage?.bytes, _encodeTextureImage?.bytes, _currentEncodeTextureType));
   }
 
-  void _saveOutputEncode(Tuple2<Uint8List, MagicEyeErrorCode> output) {
+  void _saveOutputEncode(Tuple2<Uint8List?, MagicEyeErrorCode>? output) {
     if (output == null) {
       _encodeOutData = null;
       return;
@@ -222,9 +222,9 @@ class MagicEyeSolverState extends State<MagicEyeSolver> {
       builder: (context) {
         return Center(
           child: Container(
-            child: GCWAsyncExecuter(
+            child: GCWAsyncExecuter<Tuple2<Uint8List?, MagicEyeErrorCode>?>(
               isolatedFunction: generateImageAsync,
-              parameter: _buildJobDataEncode(),
+              parameter: _buildJobDataEncode,
               onReady: (data) => _saveOutputEncode(data),
               isOverlay: true,
             ),

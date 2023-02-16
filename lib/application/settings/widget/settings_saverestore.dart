@@ -98,11 +98,8 @@ class SaveRestoreSettingsState extends State<SaveRestoreSettings> {
   }
 
   _exportSettings(BuildContext context, Uint8List data) async {
-    String timestamp = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now());
-    String outputFilename = 'settings_${timestamp}.gcw';
+    var value = await saveByteDataToFile(context, data, buildFileNameWithDate('settings_', FileType.GCW));
 
-    await saveByteDataToFile(context, data, outputFilename);
-
-    showToast(i18n(context, 'settings_saverestore_save_success'));
+    if (value) showToast(i18n(context, 'settings_saverestore_save_success'));
   }
 }

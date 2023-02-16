@@ -8,7 +8,7 @@ const _minBlockSize = 5;
 
 final int _white = _knownColors.elementAt(18);
 final int _black = _knownColors.elementAt(19);
-_colorStack _currentColor;
+late _colorStack _currentColor;
 
 enum Alignment {
   topLeft,
@@ -38,7 +38,7 @@ DrawableImageData generatePiet(String input) {
   var direction = Alignment.topRight;
   var nextDirection = Alignment.topRight;
   var pixelIndex = 0;
-  int firstPixelColor;
+  int? firstPixelColor;
 
   result.forEach((mapEntry) {
     var block = mapEntry.value;
@@ -49,7 +49,7 @@ DrawableImageData generatePiet(String input) {
 
     if (firstPixelColor != null) {
       pixelIndex = _searchFirstPixelIndex(block, direction);
-      if (pixelIndex != null && pixelIndex >= 0) block[pixelIndex] = firstPixelColor;
+      if (pixelIndex != null && pixelIndex >= 0) block[pixelIndex] = firstPixelColor!;
     } else if (mapEntry != result.first) block = _removeLastPixel(block);
 
     nextDirection = _getNextBlockDirection(row, column, arrangment);
@@ -91,14 +91,16 @@ DrawableImageData _convertToImage(List<List<int>> resultLines) {
   var mapList = switchMapKeyValue(alphabet_AZ);
 
   for (var i = 0; i < _knownColors.length; i++) {
-    colorMap.addAll({mapList[i + 1]: (_knownColors.elementAt(i) | 0xFF000000)});
-    colorMapSwitched.addAll({_knownColors.elementAt(i): mapList[i + 1]});
+    if (mapList[i + 1] != null) {
+      colorMap.addAll({mapList[i + 1]!: (_knownColors.elementAt(i) | 0xFF000000)});
+      colorMapSwitched.addAll({_knownColors.elementAt(i): mapList[i + 1]!});
+    }
   }
 
   resultLines.forEach((line) {
     var row = '';
     line.forEach((color) {
-      row += colorMapSwitched[color];
+      row += colorMapSwitched[color] ?? '';
     });
     lines.add(row);
   });
@@ -131,7 +133,10 @@ Alignment _getNextBlockDirection(int row, int column, List<List<int>> outputArra
     return Alignment.bottomRight;
   else if ((column - 1 >= 0) && (outputArrangement[row][column - 1] == index))
     return Alignment.bottomLeft;
-  else if ((row - 1 >= 0) && (outputArrangement[row - 1][column] == index)) return Alignment.topLeft;
+  else if ((row - 1 >= 0) && (outputArrangement[row - 1][column] == index))
+    return Alignment.topLeft;
+  else
+    return Alignment.topRight;
 }
 
 List<List<int>> _calcOutputArrangement(int blockCount) {
@@ -226,7 +231,8 @@ int _searchLastWhitePixelIndex(List<int> block, Alignment alignment) {
       } else if ((block[index] != _white) && (block[index1] != _white)) return -1;
     }
     return _calcIndex(_blockHeight - 1, 0, _blockWidth);
-  }
+  } else
+    return 0;
 }
 
 int _searchFirstPixelIndex(List<int> block, Alignment alignment) {
@@ -238,7 +244,8 @@ int _searchFirstPixelIndex(List<int> block, Alignment alignment) {
     return _calcIndex(0, _blockWidth - 1, _blockWidth);
   } else if (alignment == Alignment.topLeft) {
     return _calcIndex(_blockHeight - 1, 0, _blockWidth);
-  }
+  } else
+    return 0;
 }
 
 List<int> _removeLastPixel(List<int> block) {

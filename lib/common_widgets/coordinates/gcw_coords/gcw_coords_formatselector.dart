@@ -9,7 +9,7 @@ import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 
 class GCWCoordsFormatSelector extends StatefulWidget {
-  final Function(CoordsFormatValue) onChanged;
+  final void Function(CoordsFormatValue) onChanged;
   final CoordsFormatValue format;
 
   const GCWCoordsFormatSelector({Key? key, required this.onChanged, required this.format}) : super(key: key);

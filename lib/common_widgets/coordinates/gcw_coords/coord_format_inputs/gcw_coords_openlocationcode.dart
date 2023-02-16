@@ -1,7 +1,7 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _GCWCoordsOpenLocationCode extends StatefulWidget {
-  final Function(OpenLocationCode) onChanged;
+  final void Function(OpenLocationCode) onChanged;
   final BaseCoordinates coordinates;
 
   const _GCWCoordsOpenLocationCode({Key? key, required this.onChanged, required this.coordinates}) : super(key: key);

@@ -9,6 +9,7 @@ import 'package:gc_wizard/common_widgets/dialogs/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/images_and_files/qr_code/logic/qr_code.dart';
+import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/image_utils/image_utils.dart';
 import 'package:intl/intl.dart';
@@ -60,12 +61,16 @@ class GCWTextExportState extends State<GCWTextExport> {
   }
 
   _buildQRCode() {
-    input2Image(generateBarCode(_currentExportText)).then((qr_code) {
+    _qrImageData = null;
+    var qrCode = generateBarCode(_currentExportText);
+    if (qrCode == null) return;
+    input2Image(qrCode).then((qr_code) {
       setState(() {
         _qrImageData = qr_code;
       });
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -120,29 +125,20 @@ class GCWTextExportState extends State<GCWTextExport> {
   }
 }
 
-exportFile(String text, TextExportMode mode, BuildContext context) async {
+void exportFile(String text, TextExportMode mode, BuildContext context) async {
   if (mode == TextExportMode.TEXT) {
-    saveStringToFile(context, text, 'txt_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.txt').then((value) {
+    saveStringToFile(context, text, buildFileNameWithDate('txt_', FileType.TXT)).then((value) {
       if (value == false) return;
 
       showExportedFileDialog(context);
     });
   } else {
-    input2Image(generateBarCode(text)).then((_imgData) {
-      saveByteDataToFile(
-          context, _imgData, 'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png').then((value) {
-        if (value == false)
-          return;
+    var qrCode = generateBarCode(text);
+    if (qrCode == null) return;
+    input2Image(qrCode).then((data) async {
+      var value = await saveByteDataToFile(context, data, buildFileNameWithDate('img_', FileType.PNG));
 
-        showExportedFileDialog(
-            context,
-            contentWidget: Container(
-              child: Image.memory(_imgData),
-              margin: EdgeInsets.only(top: 25),
-              decoration: BoxDecoration(border: Border.all(color: themeColors().dialogText())),
-            )
-        );
-      });
+      if (value) showExportedFileDialog(context, contentWidget: imageContent(context, data));
     });
   }
 }

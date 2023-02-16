@@ -21,18 +21,18 @@ class GameOfLife extends StatefulWidget {
 const _KEY_CUSTOM_RULES = 'gameoflife_custom';
 
 class GameOfLifeState extends State<GameOfLife> {
-  List<List<List<bool>>> _boards;
-  List<List<bool>> _currentBoard;
+  late List<List<List<bool>>> _boards;
+  List<List<bool>> _currentBoard = [];
   var _currentStep = 0;
 
   var _currentSize = 12;
   var _currentWrapWorld = false;
   var _currentRules = 'gameoflife_conway';
-  Map<String, GameOfLifeRules> _allRules;
+  late Map<String, GameOfLifeRules?> _allRules;
   var _currentCustomSurvive = '';
-  TextEditingController _currentCustomSurviveController;
+  late TextEditingController _currentCustomSurviveController;
   var _currentCustomBirth = '';
-  TextEditingController _currentCustomBirthController;
+  late TextEditingController _currentCustomBirthController;
   var _currentCustomInverse = false;
 
   var _maskInputFormatter = WrapperForMaskTextInputFormatter(mask: '*********', filter: {"*": RegExp(r'[012345678]')});
@@ -47,6 +47,7 @@ class GameOfLifeState extends State<GameOfLife> {
     _generateBoard();
 
     _allRules = DEFAULT_GAME_OF_LIFE_RULES;
+    _allRules.removeWhere((key, value) => value == null);
     _allRules.putIfAbsent(_KEY_CUSTOM_RULES, () => null);
   }
 
@@ -62,7 +63,7 @@ class GameOfLifeState extends State<GameOfLife> {
     var _newBoard =
         List<List<bool>>.generate(_currentSize, (index) => List<bool>.generate(_currentSize, (index) => false));
 
-    if (_currentBoard != null) {
+    if (_currentBoard.isEmpty) {
       var limit = min(_currentSize, _currentBoard.length);
 
       for (int i = 0; i < limit; i++) {
@@ -79,7 +80,7 @@ class GameOfLifeState extends State<GameOfLife> {
     _currentStep = 0;
   }
 
-  _reset({List<List<bool>> board}) {
+  _reset({List<List<bool>>? board}) {
     _boards = <List<List<bool>>>[];
     _boards.add(board ?? List.from(_currentBoard));
 
@@ -102,7 +103,7 @@ class GameOfLifeState extends State<GameOfLife> {
             });
           },
         ),
-        GCWDropDown(
+        GCWDropDown<String>(
           title: i18n(context, 'gameoflife_rules'),
           value: _currentRules,
           items: _allRules.keys.map((rules) {
@@ -112,14 +113,14 @@ class GameOfLifeState extends State<GameOfLife> {
                 value: rules,
                 child: i18n(context, rules),
                 subtitle:
-                    '${i18n(context, 'gameoflife_survive')}: ${_getSurvive(_allRules[rules])} / ${i18n(context, 'gameoflife_birth')}: ${_getBirth(_allRules[rules])}');
+                    '${i18n(context, 'gameoflife_survive')}: ${_getSurvive(_allRules[rules]!)} / ${i18n(context, 'gameoflife_birth')}: ${_getBirth(_allRules[rules]!)}');
           }).toList(),
-          onChanged: (value) {
+          onChanged: (String value) {
             setState(() {
               _currentRules = value;
               if (_currentRules == _KEY_CUSTOM_RULES) {
                 _currentWrapWorld = _currentCustomInverse;
-              } else if (_allRules[_currentRules].isInverse) {
+              } else if (_allRules[_currentRules]!.isInverse) {
                 _currentWrapWorld = true;
               }
               _reset();
@@ -237,13 +238,13 @@ class GameOfLifeState extends State<GameOfLife> {
         GCWButton(
           text: _currentRules == _KEY_CUSTOM_RULES
               ? (_currentCustomInverse ? i18n(context, 'gameoflife_fillall') : i18n(context, 'gameoflife_clearall'))
-              : (_allRules[_currentRules].isInverse
+              : (_allRules[_currentRules]!.isInverse
                   ? i18n(context, 'gameoflife_fillall')
                   : i18n(context, 'gameoflife_clearall')),
           onPressed: () {
             setState(() {
               var isInverse = (_currentRules == _KEY_CUSTOM_RULES && _currentCustomInverse) ||
-                  (_currentRules != _KEY_CUSTOM_RULES && _allRules[_currentRules].isInverse);
+                  (_currentRules != _KEY_CUSTOM_RULES && _allRules[_currentRules]!.isInverse);
               _currentBoard = List<List<bool>>.generate(
                   _currentSize, (index) => List<bool>.generate(_currentSize, (index) => isInverse));
 
@@ -312,7 +313,7 @@ class GameOfLifeState extends State<GameOfLife> {
 
   Set<int> _toSet(String input) {
     input = input.replaceAll(RegExp(r'[^0-8]'), '');
-    return input.split('').map((e) => int.tryParse(e)).toSet();
+    return input.split('').map((e) => int.parse(e)).toSet();
   }
 
   _calculateStep() {

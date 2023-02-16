@@ -19,7 +19,7 @@ class ScrabbleState extends State<Scrabble> {
   var _controller;
 
   var _currentInput = '';
-  var _currentValues = [];
+  var _currentValues = <int>[];
   var _currentScrabbleVersion = scrabbleID_EN;
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
   bool _currentCrosstotalMode = true;
@@ -51,7 +51,7 @@ class ScrabbleState extends State<Scrabble> {
             });
           },
         ),
-        GCWDropDown(
+        GCWDropDown<String>(
           value: _currentScrabbleVersion,
           onChanged: (value) {
             setState(() {

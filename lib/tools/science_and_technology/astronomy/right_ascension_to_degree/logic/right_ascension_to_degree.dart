@@ -8,19 +8,19 @@ import 'package:gc_wizard/utils/datetime_utils.dart';
 import 'package:intl/intl.dart';
 
 /// degree to Right ascension
-RightAscension raDegree2RightAscension(RaDeg ra) {
+RightAscension? raDegree2RightAscension(RaDeg? ra) {
   if ((ra == null) || (ra.degrees == null)) return null;
-  var deg = ra.degrees.abs();
+  var deg = ra.degrees!.abs();
 
   var hour = (deg / 15.0).floor();
   var min = (((deg / 15.0) - hour) * 60).floor();
   var sec = ((((deg / 15.0) - hour) * 60) - min) * 60;
 
-  return RightAscension(_sign(ra.degrees), hour, min, sec);
+  return RightAscension(_sign(ra.degrees!), hour, min, sec);
 }
 
 /// Right ascension hms to degree
-RaDeg raRightAscension2Degree(RightAscension equatorial) {
+RaDeg? raRightAscension2Degree(RightAscension equatorial) {
   if (equatorial == null) return null;
 
   var h = equatorial.hours;
@@ -41,9 +41,9 @@ int _sign(double num) {
 /// equatorial coordinate system
 class RightAscension {
   int sign = 1;
-  int hours;
-  int minutes;
-  double seconds;
+  late int hours;
+  late int minutes;
+  late double seconds;
 
   RightAscension(int sign, int hours, int min, double sec) {
     this.sign = sign;
@@ -56,7 +56,7 @@ class RightAscension {
     return ((this.seconds - this.seconds.truncate()) * 1000).round();
   }
 
-  static RightAscension fromDuration(Duration duration) {
+  static RightAscension? fromDuration(Duration? duration) {
     if (duration == null) return null;
     var _hours = duration.inHours;
     var _minutes = duration.inMinutes.abs().remainder(60);
@@ -76,20 +76,21 @@ class RightAscension {
     return duration;
   }
 
-  static RightAscension parse(String input) {
+  static RightAscension? parse(String? input) {
     var regex = new RegExp(r"([+|-]?)([\d]*):([\d]*):([\d]*)(\.\d*)*");
     if (input == null) return null;
 
     var matches = regex.allMatches(input);
 
     if (matches.length > 0) {
+      var match =matches.first;
       return new RightAscension(
           (matches.first.group(1) == "-") ? -1 : 1,
-          int.parse(matches.first.group(2)),
-          int.parse(matches.first.group(3)),
-          ((matches.first.group(5) == null) || matches.first.group(5).isEmpty)
-              ? double.parse(matches.first.group(4))
-              : double.parse(matches.first.group(4) + matches.first.group(5)));
+          int.parse(match.group(2) ?? ''),
+          int.parse(match.group(3) ?? ''),
+          ((match.group(5) == null) || match.group(5)!.isEmpty)
+              ? double.parse(match.group(4) ?? '')
+              : double.parse((match.group(4) ?? '') + match.group(5)!));
     } else
       return null;
   }
@@ -103,20 +104,20 @@ class RightAscension {
 }
 
 class RaDeg {
-  double degrees;
+  late double? degrees;
 
-  RaDeg(double degrees) {
+  RaDeg(double? degrees) {
     this.degrees = degrees;
   }
 
-  static RaDeg fromDMM(int sign, int degrees, double minutes) {
+  static RaDeg fromDMM(int? sign, int? degrees, double? minutes) {
     if (sign == null) sign = 1;
     if (degrees == null) degrees = 0;
     if (minutes == null) minutes = 0.0;
     return RaDeg(sign * (degrees.abs() + minutes / 60.0));
   }
 
-  static RaDeg fromDMS(int sign, int degrees, int minutes, double seconds) {
+  static RaDeg fromDMS(int? sign, int? degrees, int? minutes, double? seconds) {
     if (sign == null) sign = 1;
     if (degrees == null) degrees = 0;
     if (minutes == null) minutes = 0;
@@ -124,13 +125,13 @@ class RaDeg {
     return RaDeg(sign * (degrees.abs() + minutes / 60.0 + seconds / 60.0 / 60.0));
   }
 
-  static RaDeg fromDEC(int sign, double degrees) {
+  static RaDeg fromDEC(int? sign, double? degrees) {
     if (sign == null) sign = 1;
     if (degrees == null) degrees = 0.0;
     return RaDeg(sign * degrees);
   }
 
-  static RaDeg parse(String input, {wholeString = false}) {
+  static RaDeg? parse(String? input, {bool wholeString = false}) {
     input = dec.prepareInput(input, wholeString: wholeString);
     if (input == null) return null;
 
@@ -138,6 +139,7 @@ class RaDeg {
 
     if (regex.hasMatch(input)) {
       var matches = regex.firstMatch(input);
+      if (matches == null) return null;
 
       var sign = dec.sign(matches.group(1));
       var degree = 0.0;

@@ -10,7 +10,12 @@ const MDT_KEYBOARDLAYOUT_OPTION_FROM = 'keyboard_from';
 const MDT_KEYBOARDLAYOUT_OPTION_TO = 'keyboard_to';
 
 class MultiDecoderToolKeyboardLayout extends AbstractMultiDecoderTool {
-  MultiDecoderToolKeyboardLayout({Key? key, int id, String name, Map<String, dynamic> options, BuildContext context})
+  MultiDecoderToolKeyboardLayout({
+    Key? key,
+    required int id,
+    required String name,
+    required Map<String, Object> options,
+    required BuildContext context})
       : super(
             key: key,
             id: id,
@@ -18,12 +23,13 @@ class MultiDecoderToolKeyboardLayout extends AbstractMultiDecoderTool {
             internalToolName: MDT_INTERNALNAMES_KEYBOARDLAYOUT,
             onDecode: (String input, String key) {
               if (input == null) return null;
-              return encodeKeyboard(input, getKeyboardTypeByName(options[MDT_KEYBOARDLAYOUT_OPTION_FROM]),
-                  getKeyboardTypeByName(options[MDT_KEYBOARDLAYOUT_OPTION_TO]));
+              return encodeKeyboard(input,
+                  getKeyboardTypeByName(StringTypeCheck(options[MDT_KEYBOARDLAYOUT_OPTION_FROM], ''),
+                  getKeyboardTypeByName(StringTypeCheck(options[MDT_KEYBOARDLAYOUT_OPTION_TO]), ''));
             },
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
-              MDT_KEYBOARDLAYOUT_OPTION_FROM: GCWStatefulDropDown(
+              MDT_KEYBOARDLAYOUT_OPTION_FROM: GCWStatefulDropDown<String>(
                 value: options[MDT_KEYBOARDLAYOUT_OPTION_FROM],
                 onChanged: (newValue) {
                   options[MDT_KEYBOARDLAYOUT_OPTION_FROM] = newValue;
@@ -33,7 +39,7 @@ class MultiDecoderToolKeyboardLayout extends AbstractMultiDecoderTool {
                       value: keyboard.name, child: i18n(context, keyboard.name), subtitle: keyboard.example);
                 }).toList(),
               ),
-              MDT_KEYBOARDLAYOUT_OPTION_TO: GCWStatefulDropDown(
+              MDT_KEYBOARDLAYOUT_OPTION_TO: GCWStatefulDropDown<String>(
                 value: options[MDT_KEYBOARDLAYOUT_OPTION_TO],
                 onChanged: (newValue) {
                   options[MDT_KEYBOARDLAYOUT_OPTION_TO] = newValue;

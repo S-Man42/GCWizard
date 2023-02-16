@@ -22,11 +22,11 @@ enum _PietOps {
 }
 
 class _BaseOperations {
-  _PietStack _stack;
-  Function _getExitedBlock;
-  Function _toggleDirectionPointer;
-  Function _toggleCodelChooser;
-  _PietSession _session;
+  late _PietStack _stack;
+  late Function _getExitedBlock;
+  late Function _toggleDirectionPointer;
+  late Function _toggleCodelChooser;
+  late _PietSession _session;
 
   _BaseOperations(_PietStack stack, _PietSession session, Function getExitedBlock, Function toggleDirectionPointer,
       Function toggleCodelChooser) {
@@ -50,7 +50,7 @@ class _BaseOperations {
   /// <summary>
   /// Pops the top value off the stack and discards it
   /// </summary>
-  int pop() {
+  int? pop() {
     return _stack.pop();
   }
 
@@ -71,7 +71,7 @@ class _BaseOperations {
   }
 
   int mod() {
-    _stack.mod();
+    return _stack.mod();
   }
 
   int not() {

@@ -13,8 +13,8 @@ class DayCalculator extends StatefulWidget {
 }
 
 class DayCalculatorState extends State<DayCalculator> {
-  DateTime _currentStartDate;
-  DateTime _currentEndDate;
+  late DateTime _currentStartDate;
+  late DateTime _currentEndDate;
 
   var _currentCountStart = true;
   var _currentCountEnd = true;
@@ -37,7 +37,7 @@ class DayCalculatorState extends State<DayCalculator> {
           datetime: _currentStartDate,
           onChanged: (value) {
             setState(() {
-              _currentStartDate = value['datetime'];
+              _currentStartDate = value.datetime;
             });
           },
         ),
@@ -47,7 +47,7 @@ class DayCalculatorState extends State<DayCalculator> {
           datetime: _currentEndDate,
           onChanged: (value) {
             setState(() {
-              _currentEndDate = value['datetime'];
+              _currentEndDate = value.datetime;
             });
           },
         ),

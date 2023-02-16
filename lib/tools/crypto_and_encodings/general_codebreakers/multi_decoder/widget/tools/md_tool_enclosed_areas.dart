@@ -11,7 +11,12 @@ const MDT_ENCLOSEDAREAS_OPTION_WITH4 = 'enclosedareas_with4';
 const MDT_ENCLOSEDAREAS_OPTION_WITHOUT4 = 'enclosedareas_without4';
 
 class MultiDecoderToolEnclosedAreas extends AbstractMultiDecoderTool {
-  MultiDecoderToolEnclosedAreas({Key? key, int id, String name, Map<String, dynamic> options, BuildContext context})
+  MultiDecoderToolEnclosedAreas({
+    Key? key,
+    required int id,
+    required String name,
+    required Map<String, Object> options,
+    required BuildContext context})
       : super(
             key: key,
             id: id,
@@ -23,8 +28,8 @@ class MultiDecoderToolEnclosedAreas extends AbstractMultiDecoderTool {
             },
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
-              MDT_ENCLOSEDAREAS_OPTION_MODE: GCWStatefulDropDown(
-                value: options[MDT_ENCLOSEDAREAS_OPTION_MODE],
+              MDT_ENCLOSEDAREAS_OPTION_MODE: GCWStatefulDropDown<String>(
+                value: stringTypeCheck(options[MDT_ENCLOSEDAREAS_OPTION_MODE], MDT_ENCLOSEDAREAS_OPTION_WITH4),
                 onChanged: (newValue) {
                   options[MDT_ENCLOSEDAREAS_OPTION_MODE] = newValue;
                 },

@@ -87,12 +87,12 @@ class HumidexState extends State<Humidex> {
       unit = TEMPERATURE_FAHRENHEIT.symbol;
     }
 
-    String hintT;
+    String? hintT;
     if ((_isMetric && _currentTemperature < 27) || (!_isMetric && _currentTemperature < 80)) {
       hintT = i18n(context, 'heatindex_hint_temperature', parameters: ['${_isMetric ? 27 : 80} $unit']);
     }
 
-    String hintH;
+    String? hintH;
     if (_isHumidity) {
       if (_currentDewPoint < 40) hintH = i18n(context, 'heatindex_hint_humidity');
     } else
@@ -107,7 +107,8 @@ class HumidexState extends State<Humidex> {
       hintM = 'humidex_index_40';
     else if (output > 29)
       hintM = 'humidex_index_30';
-    else if (output > 19) hintM = 'humidex_index_20';
+    else if (output > 19)
+      hintM = 'humidex_index_20';
 
     var outputs = [
       GCWOutput(

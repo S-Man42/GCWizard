@@ -9,7 +9,12 @@ const MDT_INTERNALNAMES_BASE = 'multidecoder_tool_base_title';
 const MDT_BASE_OPTION_BASEFUNCTION = 'multidecoder_tool_base_option_basefunction';
 
 class MultiDecoderToolBase extends AbstractMultiDecoderTool {
-  MultiDecoderToolBase({Key? key, int id, String name, Map<String, dynamic> options, BuildContext context})
+  MultiDecoderToolBase({
+    Key? key,
+    required int id,
+    required String name,
+    required Map<String, Object> options,
+    required BuildContext context})
       : super(
             key: key,
             id: id,
@@ -20,7 +25,7 @@ class MultiDecoderToolBase extends AbstractMultiDecoderTool {
             },
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
-              MDT_BASE_OPTION_BASEFUNCTION: GCWStatefulDropDown(
+              MDT_BASE_OPTION_BASEFUNCTION: GCWStatefulDropDown<String>(
                 value: options[MDT_BASE_OPTION_BASEFUNCTION],
                 onChanged: (newValue) {
                   options[MDT_BASE_OPTION_BASEFUNCTION] = newValue;

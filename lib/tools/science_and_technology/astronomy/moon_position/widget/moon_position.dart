@@ -9,6 +9,7 @@ import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/_common/logic/julian_date.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/moon_position/logic/moon_position.dart' as logic;
 import 'package:gc_wizard/tools/science_and_technology/astronomy/_common/widget/astronomy_i18n.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/datetime_utils.dart';
 import 'package:intl/intl.dart';
 
@@ -18,7 +19,7 @@ class MoonPosition extends StatefulWidget {
 }
 
 class MoonPositionState extends State<MoonPosition> {
-  var _currentDateTime = {'datetime': DateTime.now(), 'timezone': DateTime.now().timeZoneOffset};
+  var _currentDateTime = DateTimeTimezone(datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
   var _currentCoords = defaultCoordinate;
   var _currentCoordsFormat = defaultCoordFormat();
 
@@ -55,7 +56,7 @@ class MoonPositionState extends State<MoonPosition> {
   Widget _buildOutput() {
     var format = NumberFormat('0.000');
 
-    var julianDate = JulianDate(_currentDateTime['datetime'], _currentDateTime['timezone']);
+    var julianDate = JulianDate(_currentDateTime);
 
     var moonPosition = logic.MoonPosition(_currentCoords, julianDate, defaultEllipsoid());
 
@@ -76,11 +77,11 @@ class MoonPositionState extends State<MoonPosition> {
       [i18n(context, 'astronomy_position_illumination'), format.format(moonPosition.illumination) + '%'],
       [
         i18n(context, 'astronomy_position_moonphase'),
-        i18n(context, getMoonPhase(moonPosition.phaseName)) + ' (${moonPosition.phaseNumber})'
+        i18n(context, getMoonPhase(moonPosition.phaseName) ?? '') + ' (${moonPosition.phaseNumber})'
       ],
       [
         i18n(context, 'astronomy_position_astrologicalsign'),
-        i18n(context, getAstrologicalSign(moonPosition.astrologicalSign))
+        i18n(context, getAstrologicalSign(moonPosition.astrologicalSign) ?? '')
       ],
     ];
 

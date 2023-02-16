@@ -30,7 +30,7 @@ class WeekdayState extends State<Weekday> {
           datetime: _currentDate,
           onChanged: (value) {
             setState(() {
-              _currentDate = value['datetime'];
+              _currentDate = value.datetime;
             });
           },
         ),

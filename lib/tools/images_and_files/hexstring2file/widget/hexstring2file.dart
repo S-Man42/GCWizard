@@ -19,7 +19,7 @@ import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
 import 'package:intl/intl.dart';
 
 class HexString2File extends StatefulWidget {
-  const HexString2File({Key key}) : super(key: key);
+  const HexString2File({Key? key}) : super(key: key);
 
   @override
   HexString2FileState createState() => HexString2FileState();
@@ -27,7 +27,7 @@ class HexString2File extends StatefulWidget {
 
 class HexString2FileState extends State<HexString2File> {
   var _currentInput = '';
-  Uint8List _outData;
+  Uint8List? _outData;
 
   @override
   Widget build(BuildContext context) {
@@ -47,27 +47,27 @@ class HexString2FileState extends State<HexString2File> {
               size: IconButtonSize.SMALL,
               iconColor: _outData == null ? themeColors().inActive() : null,
               onPressed: () {
-                _outData == null ? null : _exportFile(context, _outData);
+                _outData == null ? null : _exportFile(context, _outData!);
               },
             ))
       ],
     );
   }
 
-  _buildOutput() {
+  Widget _buildOutput() {
     _outData = hexstring2file(_currentInput);
 
-    if (_outData == null) return null;
+    if (_outData == null) return Container();
 
-    return hexDataOutput(context, <Uint8List>[_outData]);
+    return hexDataOutput(context, <Uint8List>[_outData!]);
   }
 
   _exportFile(BuildContext context, Uint8List data) async {
     var fileType = getFileType(data);
-    var value = await saveByteDataToFile(
-        context, data, "hex_" + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
+    var value = await saveByteDataToFile(context, data, buildFileNameWithDate('hex_', fileType));
 
-    if (value) showExportedFileDialog(context, fileType: fileType);
+    var content = fileClass(fileType) == FileClass.IMAGE ? imageContent(context, data) : null;
+    if (value) showExportedFileDialog(context, contentWidget: content);
   }
 }
 

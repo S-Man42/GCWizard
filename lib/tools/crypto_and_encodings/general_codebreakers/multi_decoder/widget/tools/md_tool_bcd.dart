@@ -28,19 +28,24 @@ final Map<String, BCDType> _BCD_TYPES = {
 };
 
 class MultiDecoderToolBCD extends AbstractMultiDecoderTool {
-  MultiDecoderToolBCD({Key? key, int id, String name, Map<String, dynamic> options, BuildContext context})
+  MultiDecoderToolBCD({
+    Key? key,
+    required int id,
+    required String name,
+    required Map<String, Object> options,
+    required BuildContext context})
       : super(
             key: key,
             id: id,
             name: name,
             internalToolName: MDT_INTERNALNAMES_BCD,
             onDecode: (String input, String key) {
-              return decodeBCD(input, _BCD_TYPES[options[MDT_BCD_OPTION_BCDFUNCTION]]);
+              return decodeBCD(input, _BCD_TYPES[stringTypeCheck(options[MDT_BCD_OPTION_BCDFUNCTION], 'bcd_original')]);
             },
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
-              MDT_BCD_OPTION_BCDFUNCTION: GCWStatefulDropDown(
-                value: options[MDT_BCD_OPTION_BCDFUNCTION],
+              MDT_BCD_OPTION_BCDFUNCTION: GCWStatefulDropDown<String>(
+                value: stringTypeCheck(options[MDT_BCD_OPTION_BCDFUNCTION], 'bcd_original'),
                 onChanged: (newValue) {
                   options[MDT_BCD_OPTION_BCDFUNCTION] = newValue;
                 },

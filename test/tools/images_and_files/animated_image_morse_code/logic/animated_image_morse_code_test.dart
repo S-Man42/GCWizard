@@ -108,9 +108,9 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () async {
         var _outData = await analyseImageMorseCode(_getFileData(elem['input']));
-        List<int> durations = _outData["durations"];
-        List<Uint8List> images = _outData["images"];
-        List<List<int>> imagesFiltered = _outData["imagesFiltered"];
+        List<int> durations = _outData!.durations;
+        List<Uint8List> images = _outData.images;
+        List<List<int>> imagesFiltered = _outData.imagesFiltered;
 
         var _marked =  List.filled(images.length, false);
 
@@ -129,8 +129,8 @@ void main() {
 
 
         var _actual = decodeMorseCode(durations, _marked);
-        expect(_actual['morse'], elem['expectedOutputMorse']);
-        expect(_actual['text'], elem['expectedOutputText']);
+        expect(_actual!.morseCode, elem['expectedOutputMorse']);
+        expect(_actual.text, elem['expectedOutputText']);
       });
     });
   });

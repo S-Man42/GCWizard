@@ -55,7 +55,7 @@ class HexCode extends GCWBaseColor {
     return hexCode[0] == hexCode[1] && hexCode[2] == hexCode[3] && hexCode[4] == hexCode[5];
   }
 
-  String get shortHexCode {
+  String? get shortHexCode {
     if (isShortHex) return '#' + hexCode[0] + hexCode[2] + hexCode[4];
 
     return null;
@@ -100,18 +100,19 @@ double _rgbDistance(RGB a, RGB b) {
   return sqrt(pow(a.red - b.red, 2) + pow(a.green - b.green, 2) + pow(a.blue - b.blue, 2));
 }
 
-List<RGB> findNearestRGBs(RGB fromRGB, List<RGB> toRGBs, {int distance: 32}) {
+List<RGB> findNearestRGBs(GCWBaseColor fromRGB, List<RGB> toRGBs, {int distance: 32}) {
   var out = <RGB>[];
+  var _fromRGB = fromRGB.toRGB();
 
   toRGBs.forEach((toRGB) {
-    var actualDistance = _rgbDistance(fromRGB, toRGB);
+    var actualDistance = _rgbDistance(_fromRGB, toRGB);
 
     if (actualDistance <= distance) out.add(toRGB);
   });
 
   out.sort((a, b) {
-    var aDistance = _rgbDistance(a, fromRGB);
-    var bDistance = _rgbDistance(b, fromRGB);
+    var aDistance = _rgbDistance(a, _fromRGB);
+    var bDistance = _rgbDistance(b, _fromRGB);
 
     return aDistance.compareTo(bDistance);
   });

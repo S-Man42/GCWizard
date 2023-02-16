@@ -73,11 +73,11 @@ class BloodAlcoholContentState extends State<BloodAlcoholContent> {
           ],
         ),
         GCWTextDivider(text: i18n(context, 'bloodalcoholcontent_person')),
-        GCWDropDown(
+        GCWDropDown<BloodAlcoholGender>(
           title: i18n(context, 'bloodalcoholcontent_person_gender'),
           value: _currentGender,
           items: BloodAlcoholGender.values.map((mode) {
-            return GCWDropDownMenuItem(value: mode, child: i18n(context, _GENDERS[mode]));
+            return GCWDropDownMenuItem(value: mode, child: i18n(context, _GENDERS[mode] ?? ''));
           }).toList(),
           onChanged: (value) {
             setState(() {

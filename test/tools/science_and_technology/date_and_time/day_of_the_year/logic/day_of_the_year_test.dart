@@ -24,7 +24,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('year: ${elem['year']}, day: ${elem['day']}', () {
-        DayOfTheYearOutput _actual = calculateDayInfos(elem['year'], elem['day']);
+        var _actual = calculateDayInfos(elem['year'], elem['day']);
         if (_actual == null)
           expect(_actual, elem['expectedOutput']);
         else {
