@@ -21,13 +21,13 @@ class MultiDecoderToolNumeralBases extends AbstractMultiDecoderTool {
               return input
                   .split(RegExp(r'\s+'))
                   .where((element) => element.length > 0)
-                  .map((element) => convertBase(element, options[MDT_NUMERALBASES_OPTION_FROM], 10))
+                  .map((element) => convertBase(element, intTypeCheck(options[MDT_NUMERALBASES_OPTION_FROM], 10), 10))
                   .join(' ');
             },
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
               MDT_NUMERALBASES_OPTION_FROM: NumeralBaseSpinner(
-                value: options[MDT_NUMERALBASES_OPTION_FROM],
+                value: intTypeCheck(options[MDT_NUMERALBASES_OPTION_FROM], 10),
                 onChanged: (value) {
                   options[MDT_NUMERALBASES_OPTION_FROM] = value;
                 },

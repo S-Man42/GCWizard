@@ -29,7 +29,7 @@ class MultiDecoderToolEnclosedAreas extends AbstractMultiDecoderTool {
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
               MDT_ENCLOSEDAREAS_OPTION_MODE: GCWStatefulDropDown<String>(
-                value: options[MDT_ENCLOSEDAREAS_OPTION_MODE],
+                value: stringTypeCheck(options[MDT_ENCLOSEDAREAS_OPTION_MODE], MDT_ENCLOSEDAREAS_OPTION_WITH4),
                 onChanged: (newValue) {
                   options[MDT_ENCLOSEDAREAS_OPTION_MODE] = newValue;
                 },

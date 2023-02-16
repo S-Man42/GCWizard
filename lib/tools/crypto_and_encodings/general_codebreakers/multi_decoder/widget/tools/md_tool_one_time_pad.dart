@@ -18,13 +18,13 @@ class MultiDecoderToolOneTimePad extends AbstractMultiDecoderTool {
             name: name,
             internalToolName: MDT_INTERNALNAMES_ONETIMEPAD,
             onDecode: (String input, String key) {
-              return decryptOneTimePad(input, key, keyOffset: options[MDT_ONETIMEPAD_OPTION_KEY] - 1);
+              return decryptOneTimePad(input, key, keyOffset: intTypeCheck(options[MDT_ONETIMEPAD_OPTION_KEY], 1) - 1);
             },
             requiresKey: true,
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
               MDT_ONETIMEPAD_OPTION_KEY: GCWIntegerSpinner(
-                  value: options[MDT_ONETIMEPAD_OPTION_KEY],
+                  value: intTypeCheck(options[MDT_ONETIMEPAD_OPTION_KEY], 1),
                   onChanged: (value) {
                     options[MDT_ONETIMEPAD_OPTION_KEY] = value;
                   }),

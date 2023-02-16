@@ -36,7 +36,7 @@ class MultiDecoderToolEsotericLanguageBrainfkDerivate extends AbstractMultiDecod
                 }
               } else {
                 var bfDerivatives = switchMapKeyValue(
-                    BRAINFK_DERIVATIVES)[options[MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE_OPTION_MODE]];
+                    BRAINFK_DERIVATIVES)[stringTypeCheck(options[MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE_OPTION_MODE], '')];
                 if (bfDerivatives == null) return null;
 
                 try {
@@ -49,7 +49,7 @@ class MultiDecoderToolEsotericLanguageBrainfkDerivate extends AbstractMultiDecod
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
               MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE_OPTION_MODE: GCWStatefulDropDown<String>(
-                value: options[MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE_OPTION_MODE],
+                value: stringTypeCheck(options[MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE_OPTION_MODE], ''),
                 onChanged: (newValue) {
                   options[MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE_OPTION_MODE] = newValue;
                 },

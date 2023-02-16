@@ -33,3 +33,15 @@ class MultiDecoderToolDummy extends AbstractMultiDecoderTool {
       onDecode: (String input, String key) {},
       options: null);
 }
+
+int intTypeCheck(Object? value, int defaultValue) {
+  return (value is int) ? value as int : defaultValue;
+}
+
+String stringTypeCheck(Object? value, String defaultValue) {
+  return (value is String) ? value as String : defaultValue;
+}
+
+String? stringNullableTypeCheck(Object? value, String? defaultValue) {
+  return (value is String?) ? value as String? : defaultValue;
+}

@@ -2,19 +2,20 @@ import 'package:gc_wizard/tools/games/scrabble/logic/scrabble_sets.dart';
 
 enum _SCRABBLE_MODE { FREQUENCY, LETTER_VALUE }
 
-List<int> _textToValues(String text, String scrabbleVersion, _SCRABBLE_MODE mode) {
+List<int> _textToValues(String? text, String scrabbleVersion, _SCRABBLE_MODE mode) {
   if (text == null || text.isEmpty) return [];
 
   List<int> output = [];
-  ScrabbleSet set = scrabbleSets[scrabbleVersion];
+  ScrabbleSet? set = scrabbleSets[scrabbleVersion];
+  if (set == null) return [];
 
-  while (text.length > 0) {
+  while (text!.length > 0) {
     //Some Scrabble Versions include triple letters (e.g. Klingon has "tlh" or German (Gender) has "*IN")
     //Some Scrabble Versions include double letters (e.g. Spanish has "LL" or "RR" tiles)
 
     var tileLength = 3;
     while (tileLength > 0) {
-      if (text.length >= tileLength) {
+      if (text!.length >= tileLength) {
         var tile = text.substring(0, tileLength);
         if (set.existLetter(tile) || tileLength == 1) {
           if (set.existLetter(tile)) {
