@@ -15,7 +15,7 @@ class MultiDecoderToolRomanNumbers extends AbstractMultiDecoderTool {
     Key? key,
     required int id,
     required String name,
-    required Map<String, dynamic> options,
+    required Map<String, Object> options,
     required BuildContext context})
       : super(
             key: key,
@@ -31,13 +31,13 @@ class MultiDecoderToolRomanNumbers extends AbstractMultiDecoderTool {
             },
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
-              MDT_ROMANNUMBERS_OPTION_MODE: GCWStatefulDropDown(
+              MDT_ROMANNUMBERS_OPTION_MODE: GCWStatefulDropDown<String>(
                 value: options[MDT_ROMANNUMBERS_OPTION_MODE],
                 onChanged: (newValue) {
                   options[MDT_ROMANNUMBERS_OPTION_MODE] = newValue;
                 },
                 items: RomanNumberType.values.map((type) {
-                  var key;
+                  String key;
                   switch (type) {
                     case RomanNumberType.USE_SUBTRACTION_RULE:
                       key = MDT_ROMANNUMBERS_OPTION_MODE_SUBTRACTION;

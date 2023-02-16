@@ -12,7 +12,7 @@ class MultiDecoderToolPlayfair extends AbstractMultiDecoderTool {
     Key? key,
     required int id,
     required String name,
-    required Map<String, dynamic> options})
+    required Map<String, Object> options})
       : super(
             key: key,
             id: id,
@@ -43,7 +43,7 @@ AlphabetModificationMode _parseStringToEnum(String item) {
   return AlphabetModificationMode.values.firstWhere((e) => alphabetModeName(e) == item);
 }
 
-String alphabetModeName(AlphabetModificationMode item) {
+String? alphabetModeName(AlphabetModificationMode? item) {
   if (item == null) return null;
   return item
       .toString()

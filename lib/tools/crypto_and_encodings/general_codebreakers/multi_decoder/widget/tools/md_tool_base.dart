@@ -13,7 +13,7 @@ class MultiDecoderToolBase extends AbstractMultiDecoderTool {
     Key? key,
     required int id,
     required String name,
-    required Map<String, dynamic> options,
+    required Map<String, Object> options,
     required BuildContext context})
       : super(
             key: key,
@@ -25,7 +25,7 @@ class MultiDecoderToolBase extends AbstractMultiDecoderTool {
             },
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
-              MDT_BASE_OPTION_BASEFUNCTION: GCWStatefulDropDown(
+              MDT_BASE_OPTION_BASEFUNCTION: GCWStatefulDropDown<String>(
                 value: options[MDT_BASE_OPTION_BASEFUNCTION],
                 onChanged: (newValue) {
                   options[MDT_BASE_OPTION_BASEFUNCTION] = newValue;

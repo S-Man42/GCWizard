@@ -15,7 +15,7 @@ class MultiDecoderToolAlphabetValues extends AbstractMultiDecoderTool {
     Key? key,
     required int id,
     required String name,
-    required Map<String, dynamic> options,
+    required Map<String, Object> options,
     required BuildContext context})
       : super(
             key: key,
@@ -28,12 +28,12 @@ class MultiDecoderToolAlphabetValues extends AbstractMultiDecoderTool {
                   .alphabet;
 
               return logic.AlphabetValues(alphabet: alphabet)
-                  .valuesToText(input.split(RegExp(r'[^0-9]')).map((value) => int.tryParse(value)).toList())
+                  .valuesToText(input.split(RegExp(r'[^0-9]')).map((value) => int.tryParse(value) ?? 0).toList())
                   .replaceAll(UNKNOWN_ELEMENT, '');
             },
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
-              MDT_ALPHABETVALUES_OPTION_ALPHABET: GCWStatefulDropDown(
+              MDT_ALPHABETVALUES_OPTION_ALPHABET: GCWStatefulDropDown<String>(
                 value: options[MDT_ALPHABETVALUES_OPTION_ALPHABET],
                 items: ALL_ALPHABETS.map((alphabet) {
                   return GCWDropDownMenuItem(

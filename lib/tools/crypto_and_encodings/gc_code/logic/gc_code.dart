@@ -32,7 +32,7 @@ int gcCodeToID(String gcCode) {
   }
 }
 
-String idToGCCode(int id) {
+String idToGCCode(int? id) {
   if (id == null || id < 0) return '';
 
   if (id < 65536) return 'GC' + convertBase('$id', 10, 16);

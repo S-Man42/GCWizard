@@ -9,7 +9,7 @@ class MultiDecoderToolEsotericLanguageCow extends AbstractMultiDecoderTool {
     Key? key,
     required int id,
     required String name,
-    required Map<String, dynamic> options})
+    required Map<String, Object> options})
       : super(
             key: key,
             id: id,
@@ -19,7 +19,7 @@ class MultiDecoderToolEsotericLanguageCow extends AbstractMultiDecoderTool {
             onDecode: (String input, String key) {
               try {
                 CowOutput output = interpretCow(input, STDIN: key);
-                if (output.error == '') return output.output?.isEmpty ? null : output.output;
+                if (output.error == '') return output.output.isEmpty ? null : output.output;
               } catch (e) {}
               return null;
             },

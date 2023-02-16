@@ -130,7 +130,7 @@ AbstractMultiDecoderTool _multiDecoderToolToGCWMultiDecoderTool(
     BuildContext context, MultiDecoderToolEntity mdtTool) {
   AbstractMultiDecoderTool gcwTool;
 
-  var options = _initialOptions[mdtTool.internalToolName] ?? <String, dynamic>{};
+  var options = _initialOptions[mdtTool.internalToolName] ?? <String, Object>{};
   if (mdtTool.options.length > 0) options = _multiDecoderToolOptionToGCWMultiDecoderToolOptions(mdtTool.options);
 
   switch (mdtTool.internalToolName) {

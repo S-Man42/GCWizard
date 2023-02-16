@@ -9,7 +9,7 @@ class MultiDecoderToolEsotericLanguageMalbolge extends AbstractMultiDecoderTool 
     Key? key,
     required int id,
     required String name,
-    required Map<String, dynamic> options})
+    required Map<String, Object> options})
       : super(
             key: key,
             id: id,
@@ -28,7 +28,7 @@ class MultiDecoderToolEsotericLanguageMalbolge extends AbstractMultiDecoderTool 
                   }
 
                   output = output.trim();
-                  return output?.isEmpty ? null : output;
+                  return output.isEmpty ? null : output;
                 }
               } catch (e) {}
               return null;

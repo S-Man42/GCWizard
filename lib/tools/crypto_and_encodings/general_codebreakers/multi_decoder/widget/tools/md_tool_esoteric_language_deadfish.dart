@@ -16,7 +16,7 @@ class MultiDecoderToolEsotericLanguageDeadfish extends AbstractMultiDecoderTool 
     Key? key,
     required int id,
     required String name,
-    required Map<String, dynamic> options,
+    required Map<String, Object> options,
     required BuildContext context})
       : super(
             key: key,
@@ -37,13 +37,13 @@ class MultiDecoderToolEsotericLanguageDeadfish extends AbstractMultiDecoderTool 
                       .replaceAll('c', 'o');
 
                 var output = decodeDeadfish(decodeable);
-                return output?.trim().isEmpty ? null : output;
+                return output.trim().isEmpty ? null : output;
               } catch (e) {}
               return null;
             },
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
-              MDT_ESOTERIC_LANGUAGE_DEADFISH_OPTION_MODE: GCWStatefulDropDown(
+              MDT_ESOTERIC_LANGUAGE_DEADFISH_OPTION_MODE: GCWStatefulDropDown<String>(
                 value: options[MDT_ESOTERIC_LANGUAGE_DEADFISH_OPTION_MODE],
                 onChanged: (newValue) {
                   options[MDT_ESOTERIC_LANGUAGE_DEADFISH_OPTION_MODE] = newValue;

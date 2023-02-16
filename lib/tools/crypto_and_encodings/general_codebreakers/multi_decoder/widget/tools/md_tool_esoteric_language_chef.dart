@@ -19,7 +19,7 @@ class MultiDecoderToolEsotericLanguageChef extends AbstractMultiDecoderTool {
     Key? key,
     required int id,
     required String name,
-    required Map<String, dynamic> options,
+    required Map<String, Object> options,
     required BuildContext context})
       : super(
             key: key,
@@ -37,7 +37,7 @@ class MultiDecoderToolEsotericLanguageChef extends AbstractMultiDecoderTool {
             },
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
-              MDT_ESOTERIC_LANGUAGE_CHEF_OPTION_MODE: GCWStatefulDropDown(
+              MDT_ESOTERIC_LANGUAGE_CHEF_OPTION_MODE: GCWStatefulDropDown<String>(
                 value: options[MDT_ESOTERIC_LANGUAGE_CHEF_OPTION_MODE],
                 onChanged: (newValue) {
                   options[MDT_ESOTERIC_LANGUAGE_CHEF_OPTION_MODE] = newValue;

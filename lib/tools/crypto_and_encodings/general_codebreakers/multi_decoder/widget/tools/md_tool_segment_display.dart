@@ -13,7 +13,7 @@ class MultiDecoderToolSegmentDisplay extends AbstractMultiDecoderTool {
     Key? key,
     required int id,
     required String name,
-    required Map<String, dynamic> options})
+    required Map<String, Object> options})
       : super(
             key: key,
             id: id,
@@ -36,7 +36,7 @@ class MultiDecoderToolSegmentDisplay extends AbstractMultiDecoderTool {
             },
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
-              MDT_SEGMENTDISPLAY_OPTION_NUMBERSEGMENTS: GCWStatefulDropDown(
+              MDT_SEGMENTDISPLAY_OPTION_NUMBERSEGMENTS: GCWStatefulDropDown<String>(
                 value: options[MDT_SEGMENTDISPLAY_OPTION_NUMBERSEGMENTS],
                 onChanged: (newValue) {
                   options[MDT_SEGMENTDISPLAY_OPTION_NUMBERSEGMENTS] = newValue;

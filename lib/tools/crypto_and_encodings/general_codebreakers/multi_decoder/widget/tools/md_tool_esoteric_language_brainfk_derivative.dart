@@ -18,7 +18,7 @@ class MultiDecoderToolEsotericLanguageBrainfkDerivate extends AbstractMultiDecod
     Key? key,
     required int id,
     required String name,
-    required Map<String, dynamic> options,
+    required Map<String, Object> options,
     required BuildContext context})
       : super(
             key: key,
@@ -48,7 +48,7 @@ class MultiDecoderToolEsotericLanguageBrainfkDerivate extends AbstractMultiDecod
             },
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
-              MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE_OPTION_MODE: GCWStatefulDropDown(
+              MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE_OPTION_MODE: GCWStatefulDropDown<String>(
                 value: options[MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE_OPTION_MODE],
                 onChanged: (newValue) {
                   options[MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE_OPTION_MODE] = newValue;

@@ -15,7 +15,7 @@ class MultiDecoderToolWasd extends AbstractMultiDecoderTool {
     Key? key,
     required int id,
     required String name,
-    required Map<String, dynamic> options,
+    required Map<String, Object> options,
     required BuildContext context})
       : super(
             key: key,
@@ -29,7 +29,7 @@ class MultiDecoderToolWasd extends AbstractMultiDecoderTool {
             },
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
-              MDT_WASD_OPTION_SET: GCWStatefulDropDown(
+              MDT_WASD_OPTION_SET: GCWStatefulDropDown<WASD_TYPE>(
                 value: switchMapKeyValue(KEYBOARD_CONTROLS)[options[MDT_WASD_OPTION_SET]],
                 onChanged: (newValue) {
                   options[MDT_WASD_OPTION_SET] = KEYBOARD_CONTROLS[newValue];

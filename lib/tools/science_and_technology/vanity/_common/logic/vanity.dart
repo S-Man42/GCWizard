@@ -54,7 +54,7 @@ String? _getNewState(Map<String, Map<String, String>> stateModel, String state, 
 
   return stateModel[state]?['x'];
 }
-
+//ToDo Nullsafety remove Map
 Map<String, dynamic>? decodeVanityMultitap(String? input, PhoneModel model, PhoneInputLanguage inputLanguage) {
   if (model == null || inputLanguage == null) return null;
 

@@ -14,7 +14,7 @@ class MultiDecoderToolBacon extends AbstractMultiDecoderTool {
     Key? key,
     required int id,
     required String name,
-    required Map<String, dynamic> options})
+    required Map<String, Object> options})
       : super(
             key: key,
             id: id,
@@ -25,7 +25,7 @@ class MultiDecoderToolBacon extends AbstractMultiDecoderTool {
             },
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
-              MDT_BACON_OPTION_MODE: GCWStatefulDropDown(
+              MDT_BACON_OPTION_MODE: GCWStatefulDropDown<String>(
                 value: options[MDT_BACON_OPTION_MODE],
                 onChanged: (newValue) {
                   options[MDT_BACON_OPTION_MODE] = newValue;

@@ -13,7 +13,7 @@ class MultiDecoderToolKeyboardNumbers extends AbstractMultiDecoderTool {
     Key? key,
     required int id,
     required String name,
-    required Map<String, dynamic> options,
+    required Map<String, Object> options,
     required BuildContext context})
       : super(
             key: key,
@@ -25,7 +25,7 @@ class MultiDecoderToolKeyboardNumbers extends AbstractMultiDecoderTool {
             },
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
-              MDT_KEYBOARDNUMBERS_OPTION_TYPE: GCWStatefulDropDown(
+              MDT_KEYBOARDNUMBERS_OPTION_TYPE: GCWStatefulDropDown<String>(
                 value: options[MDT_KEYBOARDNUMBERS_OPTION_TYPE],
                 onChanged: (newValue) {
                   options[MDT_KEYBOARDNUMBERS_OPTION_TYPE] = newValue;

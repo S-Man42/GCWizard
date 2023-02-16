@@ -8,14 +8,14 @@ class MultiDecoderToolASCII extends AbstractMultiDecoderTool {
     Key? key,
     required int id,
     required String name,
-    required Map<String, dynamic> options})
+    required Map<String, Object> options})
       : super(
             key: key,
             id: id,
             name: name,
             internalToolName: MDT_INTERNALNAMES_ASCII,
             onDecode: (String input, String key) {
-              return String.fromCharCodes(input.split(RegExp(r'[^0-9]')).map((value) => int.tryParse(value)).toList());
+              return String.fromCharCodes(input.split(RegExp(r'[^0-9]')).map((value) => int.tryParse(value) ?? 0).toList());
             },
             options: options);
 }

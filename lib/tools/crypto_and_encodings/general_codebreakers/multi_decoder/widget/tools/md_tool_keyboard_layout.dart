@@ -14,7 +14,7 @@ class MultiDecoderToolKeyboardLayout extends AbstractMultiDecoderTool {
     Key? key,
     required int id,
     required String name,
-    required Map<String, dynamic> options,
+    required Map<String, Object> options,
     required BuildContext context})
       : super(
             key: key,
@@ -28,7 +28,7 @@ class MultiDecoderToolKeyboardLayout extends AbstractMultiDecoderTool {
             },
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
-              MDT_KEYBOARDLAYOUT_OPTION_FROM: GCWStatefulDropDown(
+              MDT_KEYBOARDLAYOUT_OPTION_FROM: GCWStatefulDropDown<String>(
                 value: options[MDT_KEYBOARDLAYOUT_OPTION_FROM],
                 onChanged: (newValue) {
                   options[MDT_KEYBOARDLAYOUT_OPTION_FROM] = newValue;

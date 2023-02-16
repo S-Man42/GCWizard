@@ -27,7 +27,7 @@ class MultiDecoderToolVanityMultitap extends AbstractMultiDecoderTool {
     Key? key,
     required int id,
     required String name,
-    required Map<String, dynamic> options,
+    required Map<String, Object> options,
     required BuildContext context})
       : super(
             key: key,
@@ -58,7 +58,7 @@ class MultiDecoderToolVanityMultitap extends AbstractMultiDecoderTool {
             },
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
-              MDT_VANITYMULTITAP_OPTION_PHONEMODEL: GCWStatefulDropDown(
+              MDT_VANITYMULTITAP_OPTION_PHONEMODEL: GCWStatefulDropDown<String>(
                   value: _ensureBackwardsCompatibility(options[MDT_VANITYMULTITAP_OPTION_PHONEMODEL]),
                   onChanged: (newValue) {
                     options[MDT_VANITYMULTITAP_OPTION_PHONEMODEL] = newValue;

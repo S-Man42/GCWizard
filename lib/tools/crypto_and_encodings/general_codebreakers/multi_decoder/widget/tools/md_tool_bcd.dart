@@ -32,7 +32,7 @@ class MultiDecoderToolBCD extends AbstractMultiDecoderTool {
     Key? key,
     required int id,
     required String name,
-    required Map<String, dynamic> options,
+    required Map<String, Object> options,
     required BuildContext context})
       : super(
             key: key,
@@ -44,7 +44,7 @@ class MultiDecoderToolBCD extends AbstractMultiDecoderTool {
             },
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
-              MDT_BCD_OPTION_BCDFUNCTION: GCWStatefulDropDown(
+              MDT_BCD_OPTION_BCDFUNCTION: GCWStatefulDropDown<String>(
                 value: options[MDT_BCD_OPTION_BCDFUNCTION],
                 onChanged: (newValue) {
                   options[MDT_BCD_OPTION_BCDFUNCTION] = newValue;
