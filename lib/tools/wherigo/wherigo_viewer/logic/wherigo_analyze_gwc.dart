@@ -87,10 +87,7 @@
 // DOUBLE = double-precision floating point number (8 bytes)
 // ASCIIZ = zero-terminated string ("hello world!", 0x00)
 
-import 'dart:isolate';
-import 'dart:typed_data';
-
-import 'package:gc_wizard/tools/wherigo/wherigo_viewer/logic/wherigo_dataobjects.dart';
+part of 'package:gc_wizard/tools/wherigo/wherigo_viewer/logic/wherigo_analyze.dart';
 
 StringOffset readString(Uint8List byteList, int offset) {
   // zero-terminated string - 0x00

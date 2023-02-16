@@ -1,5 +1,4 @@
-import 'package:gc_wizard/tools/wherigo/logic/earwigo_tools.dart';
-import 'package:gc_wizard/tools/wherigo/logic/urwigo_tools.dart';
+part of 'package:gc_wizard/tools/wherigo/wherigo_viewer/logic/wherigo_analyze.dart';
 
 String getLUAName(String line) {
   String result = '';

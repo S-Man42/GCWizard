@@ -36,9 +36,6 @@ import 'package:gc_wizard/tools/images_and_files/hex_viewer/widget/hex_viewer.da
 import 'package:gc_wizard/tools/wherigo/krevo/logic/ucommons.dart';
 import 'package:gc_wizard/tools/wherigo/logic/urwigo_tools.dart';
 import 'package:gc_wizard/tools/wherigo/wherigo_viewer/logic/wherigo_analyze.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_viewer/logic/wherigo_analyze_gwc.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_viewer/logic/wherigo_analyze_lua.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_viewer/logic/wherigo_dataobjects.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';

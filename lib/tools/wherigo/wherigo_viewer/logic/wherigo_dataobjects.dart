@@ -1,7 +1,4 @@
-import 'dart:typed_data';
-
-import 'package:flutter/material.dart';
-import 'package:gc_wizard/utils/collection_utils.dart';
+part of 'package:gc_wizard/tools/wherigo/wherigo_viewer/logic/wherigo_analyze.dart';
 
 enum WHERIGO {
   NULL,
