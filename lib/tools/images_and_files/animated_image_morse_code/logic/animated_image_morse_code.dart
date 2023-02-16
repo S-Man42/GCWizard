@@ -10,10 +10,17 @@ import 'package:image/image.dart' as Image;
 import 'package:tuple/tuple.dart';
 
 class AnimatedImageMorseOutput extends AnimatedImageOutput {
-  var imagesFiltered;
+  List<List<int>> imagesFiltered;
 
   AnimatedImageMorseOutput(animatedImageOutput, this.imagesFiltered)
   : super (animatedImageOutput.images, animatedImageOutput.durations, animatedImageOutput.linkList);
+}
+
+class MorseCodeOutput {
+  String? morseCode;
+  String? text;
+
+  MorseCodeOutput(this.morseCode, this.text);
 }
 
 Future<AnimatedImageMorseOutput?> analyseImageMorseCodeAsync(GCWAsyncExecuterParameters? jobData) async {
@@ -145,7 +152,7 @@ List<List<int>> _filterImages(List<List<int>> filteredList, int imageIndex, List
   return filteredList;
 }
 
-Map<String, Object>? decodeMorseCode(List<int> durations, List<bool> onSignal) {
+MorseCodeOutput? decodeMorseCode(List<int> durations, List<bool> onSignal) {
   var timeList = _buildTimeList(durations, onSignal);
   var signalTimes = foundSignalTimes(timeList);
 
@@ -161,7 +168,7 @@ Map<String, Object>? decodeMorseCode(List<int> durations, List<bool> onSignal) {
       out += " ";
   });
   
-  return {"morse": out, "text": decodeMorse(out)};
+  return MorseCodeOutput(out, decodeMorse(out));
 }
 
 List<Tuple2<bool, int>>? _buildTimeList(List<int>? durations, List<bool>? onSignal) {

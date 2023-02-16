@@ -11,7 +11,7 @@ class AnimatedImageOutput {
   List<int> linkList;
   List<Image.Image>? frames;
 
-  AnimatedImageOutput(this.images, this.durations, this.linkList,{this.frames});
+  AnimatedImageOutput(this.images, this.durations, this.linkList, {this.frames});
 }
 
 Future<AnimatedImageOutput?> analyseImageAsync(dynamic jobData) async {

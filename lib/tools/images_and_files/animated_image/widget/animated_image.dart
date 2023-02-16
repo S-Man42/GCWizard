@@ -33,8 +33,8 @@ class AnimatedImage extends StatefulWidget {
 }
 
 class AnimatedImageState extends State<AnimatedImage> {
-  Map<String, dynamic> _outData;
-  GCWFile _file;
+  AnimatedImageOutput? _outData;
+  GCWFile? _file;
   bool _play = false;
   static var allowedExtensions = [FileType.GIF, FileType.PNG, FileType.WEBP];
 
@@ -90,23 +90,23 @@ class AnimatedImageState extends State<AnimatedImage> {
               size: IconButtonSize.SMALL,
               iconColor: _outData == null ? themeColors().inActive() : null,
               onPressed: () {
-                _outData == null ? null : _exportFiles(context, _file.name, _outData["images"]);
+                if (_outData != null && _file?.name != null) _exportFiles(context, _file!.name!, _outData!.images);
               },
             )
           ]))
     ]);
   }
 
-  _buildOutput() {
-    if (_outData == null) return null;
+  Widget _buildOutput() {
+    if (_outData == null) return Container();
 
-    var durations = <List<dynamic>>[];
-    if (_outData["durations"] != null && _outData["durations"]?.length > 1) {
+    var durations = <List<Object>>[];
+    if (_outData!.durations.length > 1) {
       var counter = 0;
       durations.addAll([
         [i18n(context, 'animated_image_table_index'), i18n(context, 'animated_image_table_duration')]
       ]);
-      _outData["durations"].forEach((value) {
+      _outData!.durations.forEach((value) {
         counter++;
         durations.addAll([
           [counter, value]
@@ -116,8 +116,8 @@ class AnimatedImageState extends State<AnimatedImage> {
 
     return Column(children: <Widget>[
       _play
-          ? Image.memory(_file.bytes)
-          : GCWGallery(imageData: _convertImageData(_outData["images"], _outData["durations"])),
+          ? (_file?.bytes == null) ? Container() : Image.memory(_file!.bytes)
+          : GCWGallery(imageData: _convertImageData(_outData!.images, _outData!.durations)),
       _buildDurationOutput(durations)
     ]);
   }
@@ -141,15 +141,13 @@ class AnimatedImageState extends State<AnimatedImage> {
   List<GCWImageViewData> _convertImageData(List<Uint8List> images, List<int> durations) {
     var list = <GCWImageViewData>[];
 
-    if (images != null) {
-      var imageCount = images.length;
-      for (var i = 0; i < images.length; i++) {
-        String description = (i + 1).toString() + '/$imageCount';
-        if ((durations != null) && (i < durations.length)) {
-          description += ': ' + durations[i].toString() + ' ms';
-        }
-        list.add(GCWImageViewData(local.GCWFile(bytes: images[i]), description: description));
+    var imageCount = images.length;
+    for (var i = 0; i < images.length; i++) {
+      String description = (i + 1).toString() + '/$imageCount';
+      if (i < durations.length) {
+        description += ': ' + durations[i].toString() + ' ms';
       }
+      list.add(GCWImageViewData(GCWFile(bytes: images[i]), description: description));
     }
     return list;
   }
@@ -161,9 +159,9 @@ class AnimatedImageState extends State<AnimatedImage> {
       builder: (context) {
         return Center(
           child: Container(
-            child: GCWAsyncExecuter(
+            child: GCWAsyncExecuter<AnimatedImageOutput?>(
               isolatedFunction: analyseImageAsync,
-              parameter: _buildJobData(),
+              parameter: _buildJobData,
               onReady: (data) => _showOutput(data),
               isOverlay: true,
             ),
@@ -175,17 +173,18 @@ class AnimatedImageState extends State<AnimatedImage> {
     );
   }
 
-  Future<GCWAsyncExecuterParameters> _buildJobData() async {
-    return GCWAsyncExecuterParameters(_file.bytes);
+  Future<GCWAsyncExecuterParameters?> _buildJobData() async {
+    if (_file == null) return null;
+    return GCWAsyncExecuterParameters(_file!.bytes);
   }
 
-  _showOutput(Map<String, dynamic> output) {
+  _showOutput(AnimatedImageOutput? output) {
     _outData = output;
 
     // restore image references (problem with sendPort, lose references)
     if (_outData != null) {
-      List<Uint8List> images = _outData["images"];
-      List<int> linkList = _outData["linkList"];
+      var images = _outData!.images;
+      var linkList = _outData!.linkList;
       for (int i = 0; i < images.length; i++) {
         images[i] = images[linkList[i]];
       }
