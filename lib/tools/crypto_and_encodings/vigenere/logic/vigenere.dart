@@ -1,7 +1,7 @@
 import 'package:gc_wizard/tools/crypto_and_encodings/rotation/logic/rotator.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 
-Map<String, String> _getKey(String key, int aValue) {
+Map<String, String>? _getKey(String? key, int aValue) {
   if (key == null || key.length == 0) return null;
 
   var keyLetters = key.toUpperCase().replaceAll(RegExp(r'[^A-Z]'), '');
@@ -13,8 +13,8 @@ Map<String, String> _getKey(String key, int aValue) {
     var number = int.tryParse(keyNumber);
     if (number == null) return '';
 
-    while (number <= 0) number += 26;
-    while (number > 26) number -= 26;
+    while (number! <= 0) number += 26;
+    while (number! > 26) number -= 26;
     var letter = alphabet_AZIndexes[number];
     return letter ?? '';
   }).join();
@@ -26,8 +26,8 @@ Map<String, String> _getKey(String key, int aValue) {
   return null;
 }
 
-String encryptVigenere(String input, String key, bool autoKey, {int aValue = 0, ignoreNonLetters: true}) {
-  if (input == null || input.length == 0) return '';
+String encryptVigenere(String? input, String key, bool autoKey, {int aValue = 0, ignoreNonLetters: true}) {
+  if (input == null || input.isEmpty) return '';
 
   var checkedKey = _getKey(key, aValue);
   if (checkedKey == null) return input;
@@ -66,8 +66,8 @@ String encryptVigenere(String input, String key, bool autoKey, {int aValue = 0, 
   return output;
 }
 
-String decryptVigenere(String input, String key, bool autoKey, {int aValue: 0, bool ignoreNonLetters: true}) {
-  if (input == null || input.length == 0) return '';
+String decryptVigenere(String? input, String key, bool autoKey, {int aValue: 0, bool ignoreNonLetters: true}) {
+  if (input == null || input.isEmpty) return '';
 
   var checkedKey = _getKey(key, aValue);
   if (checkedKey == null) return input;

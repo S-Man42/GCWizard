@@ -13,8 +13,8 @@ class Vigenere extends StatefulWidget {
 }
 
 class VigenereState extends State<Vigenere> {
-  var _inputController;
-  var _keyController;
+  late TextEditingController _inputController;
+  late TextEditingController _keyController;
 
   String _currentInput = '';
   String _currentKey = '';
@@ -60,6 +60,7 @@ class VigenereState extends State<Vigenere> {
         ),
         GCWIntegerSpinner(
           title: 'A',
+          value: _currentAValue,
           onChanged: (value) {
             setState(() {
               _currentAValue = value;

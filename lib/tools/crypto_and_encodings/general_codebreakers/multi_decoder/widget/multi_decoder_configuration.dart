@@ -6,15 +6,15 @@ class _MultiDecoderConfiguration extends StatefulWidget {
 }
 
 class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> {
-  TextEditingController _editingToolNameController;
+  late TextEditingController _editingToolNameController;
 
-  int _currentChosenTool;
+  int? _currentChosenTool;
   String _editingToolName = '';
 
-  int _currentEditId;
+  int? _currentEditId;
 
-  List<String> _sortedToolRegistry;
-  List<AbstractMultiDecoderTool> mdtTools;
+  List<String> _sortedToolRegistry = [];
+  List<AbstractMultiDecoderTool> mdtTools = [];
 
   @override
   void initState() {
@@ -22,6 +22,17 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
     _editingToolNameController = TextEditingController(text: _editingToolName);
 
     refreshMultiDecoderTools();
+
+    _refreshMDTTools();
+
+    if (_sortedToolRegistry.isEmpty) {
+      _sortedToolRegistry = List.from(_mdtToolsRegistry);
+      _sortedToolRegistry.sort((a, b) {
+        return i18n(context, a).compareTo(i18n(context, b));
+      });
+
+      _currentChosenTool = _sortedToolRegistry.indexOf(MDT_INTERNALNAMES_ROTATION);
+    }
   }
 
   @override
@@ -31,7 +42,7 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
     super.dispose();
   }
 
-  _nameExists(name) {
+  bool _nameExists(name) {
     return mdtTools.indexWhere((tool) => tool.name == name) >= 0;
   }
 
@@ -47,8 +58,8 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
     return name;
   }
 
-  _addNewTool() {
-    var chosenInternalName = _sortedToolRegistry[_currentChosenTool];
+  void _addNewTool() {
+    var chosenInternalName =  _currentChosenTool != null ? _sortedToolRegistry[_currentChosenTool!] : '';
     var name = _createName(chosenInternalName);
 
     var nameOccurrences = mdtTools.where((tool) => tool.name == name).length;
@@ -71,7 +82,7 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
     mdtTools.insert(0, _multiDecoderToolToGCWMultiDecoderTool(context, tool));
   }
 
-  _updateTool(AbstractMultiDecoderTool tool) {
+  void _updateTool(AbstractMultiDecoderTool tool) {
     var multiDecoderTool = model.findMultiDecoderToolById(tool.id);
     multiDecoderTool.name = tool.name;
     multiDecoderTool.options = tool.options.entries.map((option) {
@@ -81,24 +92,24 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
     updateMultiDecoderTool(multiDecoderTool);
   }
 
-  _deleteTool(int id) {
+  void _deleteTool(int id) {
     deleteMultiDecoderTool(id);
     mdtTools.removeWhere((tool) => tool.id == id);
   }
 
-  _clearTools() {
+  void _clearTools() {
     clearMultiDecoderTools();
     mdtTools.clear();
   }
 
-  _refreshMDTTools() {
+  void _refreshMDTTools() {
     mdtTools = model.multiDecoderTools.map((mdtTool) {
       return _multiDecoderToolToGCWMultiDecoderTool(context, mdtTool);
     }).toList();
     mdtTools.removeWhere((mdtTool) => mdtTool == null);
   }
 
-  _moveUp(int id) {
+  void _moveUp(int id) {
     var oldIndex = moveMultiDecoderToolUp(id);
     if (oldIndex > 0) {
       var mdtTool = mdtTools.removeAt(oldIndex);
@@ -106,7 +117,7 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
     }
   }
 
-  _moveDown(int id) {
+  void _moveDown(int id) {
     var oldIndex = moveMultiDecoderToolDown(id);
     if (oldIndex < mdtTools.length - 1) {
       var mdtTool = mdtTools.removeAt(oldIndex);
@@ -116,16 +127,6 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
 
   @override
   Widget build(BuildContext context) {
-    _refreshMDTTools();
-
-    if (_sortedToolRegistry == null) {
-      _sortedToolRegistry = List.from(_mdtToolsRegistry);
-      _sortedToolRegistry.sort((a, b) {
-        return i18n(context, a).compareTo(i18n(context, b));
-      });
-
-      _currentChosenTool = _sortedToolRegistry.indexOf(MDT_INTERNALNAMES_ROTATION);
-    }
 
     return Column(
       children: <Widget>[
@@ -146,7 +147,7 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
         Row(children: [
           Expanded(
             child: Container(
-                child: GCWDropDown(
+                child: GCWDropDown<int>(
                   value: _currentChosenTool,
                   onChanged: (value) {
                     setState(() {
@@ -172,13 +173,13 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
           GCWIconButton(
             icon: Icons.add,
             iconColor: _currentEditId == null ? null : themeColors().inActive(),
-            onPressed: _currentEditId == null
-                ? () {
-                    setState(() {
-                      _addNewTool();
-                    });
-                  }
-                : null,
+            onPressed: () {
+                if (_currentEditId != null) {
+                  setState(() {
+                    _addNewTool();
+                  });
+                }
+              }
           ),
         ]),
         GCWTextDivider(
@@ -220,10 +221,11 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
                         Container(
                           child: GCWText(
                             text: tool.options.entries.map((entry) {
-                              var value = entry.value;
+                              var value = entry.value.toString();
 
                               if (tool.internalToolName == MDT_INTERNALNAMES_COORDINATEFORMATS) {
-                                value = getCoordinateFormatByKey(entry.value).name;
+                                if (CoordFormatKey.values.contains(value))
+                                  value = getCoordinateFormatByKey(value as CoordFormatKey).name;
                               } else if ([MDT_INTERNALNAMES_BASE, MDT_INTERNALNAMES_BCD]
                                   .contains(tool.internalToolName)) {
                                 value += '_title';

@@ -17,10 +17,10 @@ class TomTom extends StatefulWidget {
 }
 
 class TomTomState extends State<TomTom> {
-  var _inputEncryptController;
-  var _inputDecryptController;
-  var _aController;
-  var _bController;
+  late TextEditingController _inputEncryptController;
+  late TextEditingController _inputDecryptController;
+  late TextEditingController _aController;
+  late TextEditingController _bController;
 
   var _currentInputEncrypt = '';
   var _currentInputDecrypt = '';

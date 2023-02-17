@@ -126,8 +126,7 @@ String encodeWASD(String? input, List<String> controlSet) {
     if (WASD_ENCODE[element] == null)
       result.add('');
     else
-      result.add(WASD_ENCODE[element]![rnd.nextInt((WASD_ENCODE[element] ?? '').length)].toString());
-    result.add(WASD_ENCODE[element][rnd.nextInt(WASD_ENCODE[element].length)].toString());
+      result.add(WASD_ENCODE[element]![rnd.nextInt(WASD_ENCODE[element]!.length)].toString());
   });
 
   return substitution(result.join(' '), {

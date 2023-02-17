@@ -7,10 +7,10 @@ class MultiDecoder extends StatefulWidget {
 
 class MultiDecoderState extends State<MultiDecoder> {
   var _controller;
-  List<AbstractMultiDecoderTool> mdtTools;
+  List<AbstractMultiDecoderTool> mdtTools = [];
 
   String _currentInput = '';
-  Widget _currentOutput;
+  Widget _currentOutput = Container();
 
   var _firstBuild = true;
   var _currentExpanded = false;
@@ -58,9 +58,9 @@ class MultiDecoderState extends State<MultiDecoder> {
                       controller: _controller,
                       onChanged: (text) {
                         _currentInput = text;
-                        if (_currentInput == null || _currentInput.length == 0) {
+                        if (_currentInput.length == 0) {
                           setState(() {
-                            _currentOutput = null;
+                            _currentOutput = Container();
                           });
                         }
                       },
@@ -76,7 +76,7 @@ class MultiDecoderState extends State<MultiDecoder> {
                                 GCWTool(tool: _MultiDecoderConfiguration(), i18nPrefix: 'multidecoder_configuration')))
                     .whenComplete(() {
                   setState(() {
-                    _currentOutput = null;
+                    _currentOutput = Container();
                   });
                 });
               },
@@ -126,12 +126,13 @@ class MultiDecoderState extends State<MultiDecoder> {
     );
   }
 
-  _toolTitle(AbstractMultiDecoderTool tool) {
-    var optionValues = tool.options.values.map((value) {
-      String result = value;
+  String _toolTitle(AbstractMultiDecoderTool tool) {
+    var optionValues = tool.options.values.map((Object value) {
+      String result = value.toString();
 
       if (tool.internalToolName == MDT_INTERNALNAMES_COORDINATEFORMATS) {
-        result = getCoordinateFormatByKey(value).name;
+        if (CoordFormatKey.values.contains(value))
+          result = getCoordinateFormatByKey(value as CoordFormatKey).name;
       }
       if ([MDT_INTERNALNAMES_BASE, MDT_INTERNALNAMES_BCD].contains(tool.internalToolName)) {
         result += '_title';
@@ -141,7 +142,7 @@ class MultiDecoderState extends State<MultiDecoder> {
     }).join(', ');
 
     var result = tool.name;
-    if (optionValues != null && optionValues.length > 0) result += ' ($optionValues)';
+    if (optionValues.length > 0) result += ' ($optionValues)';
 
     return result;
   }
