@@ -107,7 +107,7 @@ buildMainMenu(BuildContext context) {
   ));
 }
 
-_buildSettingsItem(BuildContext context) {
+void _buildSettingsItem(BuildContext context) {
   final settingsItems = [
     {
       'tool': registeredTools.firstWhere((tool) => className(tool.tool) == className(GeneralSettings())),
@@ -158,6 +158,6 @@ ListTile _buildMenuItem(BuildContext context, item) {
       });
 }
 
-_menuItemStyle() {
+TextStyle _menuItemStyle() {
   return TextStyle(color: themeColors().mainFont(), fontSize: defaultFontSize(), fontWeight: FontWeight.normal);
 }

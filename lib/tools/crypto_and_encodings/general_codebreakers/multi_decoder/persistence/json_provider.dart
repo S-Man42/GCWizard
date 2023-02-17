@@ -14,7 +14,7 @@ void refreshMultiDecoderTools() {
   }).toList();
 }
 
-_saveData() {
+void _saveData() {
   var jsonData = multiDecoderTools.map((tool) => jsonEncode(tool.toMap())).toList();
   Prefs.setStringList(PREFERENCE_MULTIDECODER_TOOLS, jsonData);
 }

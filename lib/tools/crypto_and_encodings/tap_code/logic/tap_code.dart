@@ -5,7 +5,7 @@ import 'package:gc_wizard/utils/string_utils.dart';
 
 const TAPCODE_KEY = '12345';
 
-_generateAlphabet(mode) {
+String _generateAlphabet(mode) {
   return applyAlphabetModification(alphabet_AZString, mode);
 }
 

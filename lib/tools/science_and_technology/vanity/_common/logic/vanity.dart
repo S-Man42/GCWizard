@@ -121,7 +121,7 @@ Map<String, dynamic>? decodeVanityMultitap(String? input, PhoneModel model, Phon
   return {'mode': currentMode, 'output': output};
 }
 
-_sanitizeEncodeInput(String input, Map<PhoneCaseMode, Map<String, String>> languageCharMap) {
+String _sanitizeEncodeInput(String input, Map<PhoneCaseMode, Map<String, String>> languageCharMap) {
   var availableCharacters = languageCharMap.values.map((keyMap) => keyMap.values.join()).join();
   return input.split('').where((character) => availableCharacters.contains(character)).join();
 }

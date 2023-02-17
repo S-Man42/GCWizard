@@ -1,4 +1,4 @@
-_sanitizePassword(String password, int key) {
+String _sanitizePassword(String? password, int key) {
   if (password == null) password = '';
 
   password = password.toUpperCase().replaceAll(RegExp('[^A-Z]'), 'Z');
@@ -10,7 +10,7 @@ _sanitizePassword(String password, int key) {
   return password;
 }
 
-_applyPasswordToMatrix(List<List<String>> matrix, String password) {
+List<List<String>> _applyPasswordToMatrix(List<List<String>> matrix, String password) {
   var orderedPassword = password.split('').asMap().entries.toList();
   orderedPassword.sort((a, b) => a.value.compareTo(b.value));
 

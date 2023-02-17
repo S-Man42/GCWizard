@@ -4,15 +4,15 @@ import 'package:gc_wizard/utils/string_utils.dart';
 
 final _QUSubstitutions = {'qu': 'qq', 'Qu': 'Qq', 'qU': 'qQ', 'QU': 'QQ'};
 
-_encodeQU(input) {
+String _encodeQU(input) {
   return substitution(input, _QUSubstitutions);
 }
 
-_decodeQQ(input) {
+String _decodeQQ(input) {
   return substitution(input, switchMapKeyValue(_QUSubstitutions));
 }
 
-encryptPigLatin(String input) {
+String encryptPigLatin(String? input) {
   if (input == null || input.isEmpty) return '';
 
   input = _encodeQU(removeAccents(input));
@@ -25,7 +25,7 @@ encryptPigLatin(String input) {
   }));
 }
 
-decryptPigLatin(String input) {
+String decryptPigLatin(String? input) {
   if (input == null || input.isEmpty) return '';
 
   return input.replaceAllMapped(RegExp(r'\b(\w+)-(\w*)ay', caseSensitive: false), (match) {
