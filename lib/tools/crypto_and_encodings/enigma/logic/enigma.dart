@@ -201,11 +201,11 @@ _rotorConfigurations(EnigmaKey key) {
 }
 
 Map<String, dynamic> calculateEnigma(String input, EnigmaKey key) {
-  if (input == null || _standardRotorConfigurations(key).length == 0)
+  if (input == null || _standardRotorConfigurations(key).isEmpty)
     return {'text': '', 'rotorSettingAfter': _rotorConfigurations(key)};
 
   input = _normalizeInput(input);
-  if (input.length == 0) return {'text': '', 'rotorSettingAfter': _rotorConfigurations(key)};
+  if (input.isEmpty) return {'text': '', 'rotorSettingAfter': _rotorConfigurations(key)};
 
   var output = '';
 
@@ -263,7 +263,7 @@ List<Map<String, dynamic>> calculateEnigmaWithMessageKey(String input, EnigmaKey
   var firstResult = calculateEnigma(input, key);
   var firstCalculation = firstResult['text'];
 
-  if (firstCalculation.length == 0) return [firstResult];
+  if (firstCalculation.isEmpty) return [firstResult];
 
   List<Map<String, dynamic>> output = [firstResult];
 

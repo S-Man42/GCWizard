@@ -2270,7 +2270,7 @@ List<String> _sanitizeDecodeInput(List<String> input, BrailleLanguage language) 
 }
 
 Map<String, dynamic> decodeBraille(List<String> input, BrailleLanguage language, bool letters) {
-  if (input == null || input.length == 0)
+  if (input == null || input.isEmpty)
     return {
       'displays': <List<String>>[],
       'chars': [0]

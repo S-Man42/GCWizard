@@ -327,7 +327,7 @@ List<List<String>> encodeNotes(String input, NotesCodebook notes, Map<String, St
 }
 
 Map<String, dynamic> decodeNotes(List<String> inputs, NotesCodebook notes) {
-  if (inputs == null || inputs.length == 0)
+  if (inputs == null || inputs.isEmpty)
     return {
       'displays': <List<String>>[],
       'chars': ['']

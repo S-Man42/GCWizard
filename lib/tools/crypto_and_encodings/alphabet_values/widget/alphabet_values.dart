@@ -138,7 +138,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
   }
 
   _addNewLetter(String letter, String value, BuildContext context, {adjust: false}) {
-    if (letter == null || letter.length == 0 || value == null) return;
+    if (letter == null || letter.isEmpty || value == null) return;
 
     value = value
         .split(',')
@@ -146,7 +146,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
         .map((character) => character.toUpperCase())
         .join(',');
 
-    if (value.length == 0) return;
+    if (value.isEmpty) return;
 
     letter = letter.toUpperCase();
     if (_currentCustomizedAlphabet.containsKey(letter)) {
@@ -304,7 +304,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
     if (alphabet.type == AlphabetType.CUSTOM) description = '[' + i18n(context, 'alphabetvalues_custom') + '] ';
 
     description += '${entries.length} ${i18n(context, 'alphabetvalues_letters')}';
-    if (entries.length == 0) return description;
+    if (entries.isEmpty) return description;
 
     description += ': ';
     description += entries.first.key + ' ' + String.fromCharCode(8594) + ' ' + entries.first.value;
@@ -470,7 +470,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
             text: i18n(context, 'alphabetvalues_edit_mode_customize_savealphabet_save'),
             onPressed: () {
               var name = _currentCustomAlphabetName;
-              if (name == null || name.length == 0)
+              if (name == null || name.isEmpty)
                 name = i18n(context, 'alphabetvalues_edit_mode_customize_savealphabet_customname');
 
               var entries = _currentCustomizedAlphabet.entries.toList();

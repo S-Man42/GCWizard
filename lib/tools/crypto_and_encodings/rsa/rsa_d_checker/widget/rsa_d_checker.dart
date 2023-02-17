@@ -58,11 +58,11 @@ class RSADCheckerState extends State<RSADChecker> {
 
   _calculateOutput() {
     if (_currentD == null ||
-        _currentD.length == 0 ||
+        _currentD.isEmpty ||
         _currentP == null ||
-        _currentP.length == 0 ||
+        _currentP.isEmpty ||
         _currentQ == null ||
-        _currentQ.length == 0) {
+        _currentQ.isEmpty) {
       _output = null;
     }
 

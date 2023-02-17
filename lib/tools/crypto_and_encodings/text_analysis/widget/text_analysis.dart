@@ -169,7 +169,7 @@ class TextAnalysisState extends State<TextAnalysis> {
   }
 
   int _groupCount(Map<String, int> map) {
-    return map.length == 0 ? 0 : map.values.reduce((value, element) => value + element);
+    return map.isEmpty ? 0 : map.values.reduce((value, element) => value + element);
   }
 
   List<List<Object>>? _buildGroup(Map<String, int> map, int totalCount) {

@@ -425,7 +425,7 @@ class _MainViewState extends State<MainView> {
   List<GCWTool> _getSearchedList() {
     var _sanitizedSearchText = removeAccents(_searchText.toLowerCase()).replaceAll(ALLOWED_SEARCH_CHARACTERS, '');
 
-    if (_sanitizedSearchText.length == 0) return <GCWTool>[];
+    if (_sanitizedSearchText.isEmpty) return <GCWTool>[];
 
     Set<String> _queryTexts = _sanitizedSearchText.split(REGEXP_SPLIT_STRINGLIST).toSet();
 

@@ -68,7 +68,7 @@ List<List<String>> createTranspositionMatrix(String input, TranspositionMatrixFi
 }
 
 String encryptTransposition(String input, {int countRows, int countColumns, int countLettersPerCell: 1}) {
-  if (input == null || input.length == 0) return '';
+  if (input == null || input.isEmpty) return '';
 
   var matrix = createTranspositionMatrix(input, TranspositionMatrixFillMode.encryption,
       countColumns: countColumns, countRows: countRows, countLettersPerCell: countLettersPerCell);
@@ -81,7 +81,7 @@ String encryptTransposition(String input, {int countRows, int countColumns, int 
 }
 
 String decryptTransposition(String input, {int countRows, int countColumns, int countLettersPerCell: 1}) {
-  if (input == null || input.length == 0) return '';
+  if (input == null || input.isEmpty) return '';
 
   var matrix = createTranspositionMatrix(input, TranspositionMatrixFillMode.decryption,
       countColumns: countColumns, countRows: countRows, countLettersPerCell: countLettersPerCell);

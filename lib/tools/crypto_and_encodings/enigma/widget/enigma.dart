@@ -186,7 +186,7 @@ class EnigmaState extends State<Enigma> {
 
     if (_currentEntryRotorMode) _allRotors.add(_currentEntryRotor);
 
-    if (_allRotors.length == 0) return Container();
+    if (_allRotors.isEmpty) return Container();
 
     if (_currentRotorInformation >= _allRotors.length)
       _currentRotorInformation = 0;

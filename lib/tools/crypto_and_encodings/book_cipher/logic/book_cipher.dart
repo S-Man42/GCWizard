@@ -46,8 +46,8 @@ String decodeSearchWord(
     bool azOn = true,
     bool numbersOn = true,
     bool onlyFirstWordLetter = false}) {
-  if (input == null || input.length == 0) return "";
-  if (word == null || word.length == 0) return "";
+  if (input == null || input.isEmpty) return "";
+  if (word == null || word.isEmpty) return "";
 
   input = _filterInput(input,
       spacesOn: spacesOn,
@@ -99,8 +99,8 @@ String decodeFindWord(String input, String positions, searchFormat format,
     bool azOn = true,
     bool numbersOn = true,
     bool onlyFirstWordLetter = false}) {
-  if (input == null || input.length == 0) return "";
-  if (positions == null || positions.length == 0) return "";
+  if (input == null || input.isEmpty) return "";
+  if (positions == null || positions.isEmpty) return "";
 
   List<int> positionList = <int>[];
   List<String> out = <String>[];
@@ -214,8 +214,8 @@ String encodeText(String input, String text, encodeOutFormat format,
     bool azOn = true,
     bool numbersOn = true,
     bool onlyFirstWordLetter = false}) {
-  if (input == null || input.length == 0) return "";
-  if (text == null || text.length == 0) return "";
+  if (input == null || input.isEmpty) return "";
+  if (text == null || text.isEmpty) return "";
 
   input = _filterInput(input,
       spacesOn: spacesOn,

@@ -27,7 +27,7 @@ List<List<String>> encodeShadoksNumbers(int input) {
 }
 
 Map<String, dynamic> decodeShadoksNumbers(List<String> inputs) {
-  if (inputs == null || inputs.length == 0)
+  if (inputs == null || inputs.isEmpty)
     return {
       'displays': [
         ['a']

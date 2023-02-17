@@ -174,7 +174,7 @@ class TomTomState extends State<TomTom> {
   }
 
   _buildOutput() {
-    if (_currentA.length == 0 || _currentB.length == 0) return '';
+    if (_currentA.isEmpty || _currentB.isEmpty) return '';
 
     var key = {'/': _currentA, '\\': _currentB};
 

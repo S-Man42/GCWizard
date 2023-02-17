@@ -152,7 +152,7 @@ bool _checkDoubleKey(Map<String, List<int>> table) {
 int _charToNumber(String character, Map<String, List<int>> table) {
   if (table.containsKey(character)) {
     var list = table[character];
-    if (list.length == 0) return -1;
+    if (list.isEmpty) return -1;
     var rnd = new Random();
     var index = rnd.nextInt(list.length);
 

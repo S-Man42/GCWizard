@@ -109,7 +109,7 @@ String _encodeTapir(String input) {
 
 String _addOneTimePad(String input, String keyOneTimePad) {
   keyOneTimePad = keyOneTimePad.replaceAll(RegExp(r'[^0-9]'), '');
-  if (keyOneTimePad.length == 0) return input;
+  if (keyOneTimePad.isEmpty) return input;
 
   var out = '';
   for (int i = 0; i < input.length; i++) {

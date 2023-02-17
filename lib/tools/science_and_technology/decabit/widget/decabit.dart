@@ -146,7 +146,7 @@ class DecabitState extends State<Decabit> {
   }
 
   _buildOutput() {
-    if (_currentInput.length == 0 || _currentA.length == 0 || _currentB.length == 0) return '';
+    if (_currentInput.isEmpty || _currentA.isEmpty || _currentB.isEmpty) return '';
 
     var key = {'+': _currentA, '-': _currentB};
     return _currentMode == GCWSwitchPosition.left

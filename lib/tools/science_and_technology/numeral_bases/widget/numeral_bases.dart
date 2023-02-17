@@ -84,7 +84,7 @@ class NumeralBasesState extends State<NumeralBases> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    if (_currentInput == null || _currentInput.length == 0) {
+    if (_currentInput == null || _currentInput.isEmpty) {
       return GCWDefaultOutput();
     }
 
@@ -97,7 +97,7 @@ class NumeralBasesState extends State<NumeralBases> {
 
         //TODO: React on exceptions
         var testValidInput = convertBase(value, _currentFromKey, 2);
-        if (testValidInput == null || testValidInput.length == 0) {
+        if (testValidInput == null || testValidInput.isEmpty) {
           return i18n(context, 'common_notdefined');
         }
 
