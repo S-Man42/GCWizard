@@ -20,7 +20,7 @@ class TextAnalysis extends StatefulWidget {
 }
 
 class TextAnalysisState extends State<TextAnalysis> {
-  TextEditingController _inputController;
+  late TextEditingController _inputController;
   String _currentInput = '';
 
   var _currentOptions = false;
@@ -129,7 +129,7 @@ class TextAnalysisState extends State<TextAnalysis> {
                 ],
               )
             : Container(),
-        GCWDropDown(
+        GCWDropDown<_SORT_TYPES>(
           value: _currentSort,
           title: i18n(context, 'common_sortby'),
           onChanged: (value) {
@@ -159,7 +159,7 @@ class TextAnalysisState extends State<TextAnalysis> {
     );
   }
 
-  _buildControlCharName(String key) {
+  String _buildControlCharName(String key) {
     var map = Map<String, ControlCharacter>.from(WHITESPACE_CHARACTERS);
     map.addAll(CONTROL_CHARACTERS);
 
@@ -168,11 +168,11 @@ class TextAnalysisState extends State<TextAnalysis> {
     return char.abbreviation + '   ' + char.symbols.first + '\n' + i18n(context, char.name) + '\n' + char.unicode;
   }
 
-  _groupCount(Map<String, int> map) {
-    return map.length == 0 ? 0 : map.values.reduce((value, element) => value + element);
+  int _groupCount(Map<String, int> map) {
+    return map.isEmpty ? 0 : map.values.reduce((value, element) => value + element);
   }
 
-  _buildGroup(Map<String, int> map, int totalCount) {
+  List<List<Object>>? _buildGroup(Map<String, int> map, int totalCount) {
     var numFormat = NumberFormat('0.00');
 
     var groupCount = _groupCount(map);
@@ -232,7 +232,7 @@ class TextAnalysisState extends State<TextAnalysis> {
     return {'common': groupCommon, 'detailed': groupDetailed, 'isControlCharGroup': hasControlChars};
   }
 
-  _buildGroupWidget(Map<String, dynamic> group, {String title}) {
+  Widget _buildGroupWidget(Map<String, Object>? group, {String? title}) {
     if (group == null) return Container();
 
     var flexValues =
@@ -274,7 +274,7 @@ class TextAnalysisState extends State<TextAnalysis> {
     );
   }
 
-  _totalCount(TextAnalysisCharacterCounts analysis) {
+  int _totalCount(TextAnalysisCharacterCounts analysis) {
     var total = 0;
 
     if (_currentUseLetters) total += _groupCount(analysis.letters);
@@ -306,11 +306,11 @@ class TextAnalysisState extends State<TextAnalysis> {
     return chars;
   }
 
-  _totalDistinctCount(Set<String> validChars) {
+  int _totalDistinctCount(Set<String> validChars) {
     return validChars.length;
   }
 
-  _wordCount(Set<String> validChars) {
+  int _wordCount(Set<String> validChars) {
     var text = '';
     _currentInput.split('').forEach((char) {
       if (validChars.contains(char)) text += char;
@@ -319,7 +319,7 @@ class TextAnalysisState extends State<TextAnalysis> {
     return countWords(text);
   }
 
-  _buildOutput() {
+  Widget _buildOutput() {
     if (!(_currentUseLetters ||
         _currentUseNumbers ||
         _currentUseSpecialChars ||

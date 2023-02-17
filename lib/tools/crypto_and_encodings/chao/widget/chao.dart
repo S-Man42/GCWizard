@@ -15,9 +15,9 @@ class Chao extends StatefulWidget {
 }
 
 class ChaoState extends State<Chao> {
-  var _inputController;
-  var _alphabetControllerPlain;
-  var _alphabetControllerChiffre;
+  late TextEditingController _inputController;
+  late TextEditingController _alphabetControllerPlain;
+  late TextEditingController _alphabetControllerChiffre;
 
   var _currentMode = GCWSwitchPosition.right;
 

@@ -277,7 +277,7 @@ class _KmlReader {
   }
 }
 
-_restoreCircles(List<GCWMapPoint> points, List<GCWMapPolyline> lines) {
+void _restoreCircles(List<GCWMapPoint> points, List<GCWMapPolyline> lines) {
   for (int i = lines.length - 1; i >= 0; i--) {
     if (_isClosedLine(lines[i]) && _completeCircle(lines[i], points)) {
       lines[i].points.forEach((point) {

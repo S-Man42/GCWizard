@@ -21,7 +21,7 @@ class MultiDecoderToolBase extends AbstractMultiDecoderTool {
             name: name,
             internalToolName: MDT_INTERNALNAMES_BASE,
             onDecode: (String input, String key) {
-              return BASE_FUNCTIONS[options[MDT_BASE_OPTION_BASEFUNCTION]](input);
+              return BASE_FUNCTIONS[stringTypeCheck(options[MDT_BASE_OPTION_BASEFUNCTION], '')]?(input);
             },
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {

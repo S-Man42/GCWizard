@@ -7,14 +7,14 @@ import 'package:prefs/prefs.dart';
 
 void refreshMultiDecoderTools() {
   var tools = Prefs.getStringList(PREFERENCE_MULTIDECODER_TOOLS);
-  if (tools == null || tools.length == 0) return;
+  if (tools == null || tools.isEmpty) return;
 
-  multiDecoderTools = tools.where((tool) => tool.length > 0).map((tool) {
+  multiDecoderTools = tools.where((tool) => tool.isNotEmpty).map((tool) {
     return MultiDecoderToolEntity.fromJson(jsonDecode(tool));
   }).toList();
 }
 
-_saveData() {
+void _saveData() {
   var jsonData = multiDecoderTools.map((tool) => jsonEncode(tool.toMap())).toList();
   Prefs.setStringList(PREFERENCE_MULTIDECODER_TOOLS, jsonData);
 }

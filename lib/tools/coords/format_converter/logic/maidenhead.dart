@@ -4,7 +4,7 @@ import 'package:latlong2/latlong.dart';
 
 LatLng maidenheadToLatLon(Maidenhead maidenhead) {
   var _maidenhead = maidenhead.text;
-  if (_maidenhead == null || _maidenhead == '') return null;
+  if (_maidenhead == null || _maidenhead.isEmpty) return null;
   _maidenhead = _maidenhead.toUpperCase();
 
   int res = 1;
@@ -49,7 +49,7 @@ LatLng maidenheadToLatLon(Maidenhead maidenhead) {
 Maidenhead parseMaidenhead(String input) {
   if (input == null) return null;
   input = input.trim();
-  if (input == '') return null;
+  if (input.isEmpty) return null;
 
   var _maidenhead = Maidenhead(input);
   return maidenheadToLatLon(_maidenhead) == null ? null : _maidenhead;

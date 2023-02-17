@@ -13,8 +13,8 @@ class Gray extends StatefulWidget {
 }
 
 class GrayState extends State<Gray> {
-  var _inputDecimalController;
-  var _inputBinaryController;
+  late TextEditingController _inputDecimalController;
+  late TextEditingController _inputBinaryController;
 
   String _currentDecimalInput = '';
   String _currentBinaryInput = '';

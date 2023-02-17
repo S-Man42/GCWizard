@@ -16,8 +16,8 @@ class Beghilos extends StatefulWidget {
 }
 
 class BeghilosState extends State<Beghilos> {
-  var _inputControllerDecode;
-  var _inputControllerEncode;
+  late TextEditingController _inputControllerDecode;
+  late TextEditingController _inputControllerEncode;
 
   var _currentInputEncode = defaultIntegerListText;
   var _currentInputDecode = '';

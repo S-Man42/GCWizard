@@ -16,10 +16,10 @@ class Abaddon extends StatefulWidget {
 }
 
 class AbaddonState extends State<Abaddon> {
-  var _inputController;
-  var _aController;
-  var _bController;
-  var _cController;
+  late TextEditingController _inputController;
+  late TextEditingController _aController;
+  late TextEditingController _bController;
+  late TextEditingController _cController;
 
   var _currentInput = '';
   var _currentA = '¥';
@@ -159,7 +159,7 @@ class AbaddonState extends State<Abaddon> {
   }
 
   _buildOutput() {
-    if (_currentInput.length == 0 || _currentA.length == 0 || _currentB.length == 0 || _currentC.length == 0) return '';
+    if (_currentInput.isEmpty || _currentA.isEmpty || _currentB.isEmpty || _currentC.isEmpty) return '';
 
     var key = {YEN: _currentA, MY: _currentB, THORN: _currentC};
     return _currentMode == GCWSwitchPosition.left

@@ -109,7 +109,7 @@ String _encodeTapir(String input) {
 
 String _addOneTimePad(String input, String keyOneTimePad) {
   keyOneTimePad = keyOneTimePad.replaceAll(RegExp(r'[^0-9]'), '');
-  if (keyOneTimePad.length == 0) return input;
+  if (keyOneTimePad.isEmpty) return input;
 
   var out = '';
   for (int i = 0; i < input.length; i++) {
@@ -118,8 +118,8 @@ String _addOneTimePad(String input, String keyOneTimePad) {
       continue;
     }
 
-    int a = int.tryParse(input[i]);
-    int b = int.tryParse(keyOneTimePad[i]);
+    int a = int.tryParse(input[i]) ?? 0;
+    int b = int.tryParse(keyOneTimePad[i]) ?? 0;
 
     out += ((a + b) % 10).toString();
   }
@@ -127,24 +127,24 @@ String _addOneTimePad(String input, String keyOneTimePad) {
   return out;
 }
 
-String encryptTapir(String input, String keyOneTimePad) {
-  if (input == null || input.length == 0) return '';
+String encryptTapir(String? input, String? keyOneTimePad) {
+  if (input == null || input.isEmpty) return '';
 
   var output = _encodeTapir(input);
 
-  if (keyOneTimePad != null && keyOneTimePad.length > 0) {
+  if (keyOneTimePad != null && keyOneTimePad.isNotEmpty) {
     output = _addOneTimePad(output, keyOneTimePad);
   }
 
   return insertSpaceEveryNthCharacter(output, 5);
 }
 
-String _checkCode(String code, bool isLetterMode) {
+String? _checkCode(String code, bool isLetterMode) {
   return isLetterMode ? TapirToAZ[code] : TapirToNumbers[code];
 }
 
-String _decodeTapir(String input) {
-  if (input == null || input.length == 0) return '';
+String _decodeTapir(String? input) {
+  if (input == null || input.isEmpty) return '';
 
   var isLetterMode = true;
   String out = '';
@@ -185,7 +185,7 @@ String _decodeTapir(String input) {
 
 String _subtractOneTimePad(String input, String keyOneTimePad) {
   keyOneTimePad = keyOneTimePad.replaceAll(RegExp(r'[^0-9]'), '');
-  if (keyOneTimePad.length == 0) return input;
+  if (keyOneTimePad.isEmpty) return input;
 
   var out = '';
   for (int i = 0; i < input.length; i++) {
@@ -194,8 +194,8 @@ String _subtractOneTimePad(String input, String keyOneTimePad) {
       continue;
     }
 
-    int a = int.tryParse(input[i]);
-    int b = int.tryParse(keyOneTimePad[i]);
+    int a = int.tryParse(input[i]) ?? 0;
+    int b = int.tryParse(keyOneTimePad[i]) ?? 0;
 
     out += ((a - b) % 10).toString();
   }
@@ -203,15 +203,14 @@ String _subtractOneTimePad(String input, String keyOneTimePad) {
   return out;
 }
 
-String decryptTapir(String input, String keyOneTimePad) {
+String decryptTapir(String? input, String? keyOneTimePad) {
   if (input == null) return '';
 
   input = input.replaceAll(RegExp(r'[^0-9]'), '');
-  if (input.length == 0) return '';
+  if (input.isEmpty) return '';
 
-  if (keyOneTimePad != null && keyOneTimePad.length > 0) {
+  if (keyOneTimePad != null && keyOneTimePad.length > 0)
     input = _subtractOneTimePad(input, keyOneTimePad);
-  }
 
   return _decodeTapir(input);
 }

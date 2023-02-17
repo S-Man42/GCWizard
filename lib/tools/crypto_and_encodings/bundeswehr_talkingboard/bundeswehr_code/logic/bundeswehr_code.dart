@@ -18,7 +18,7 @@ BundeswehrTalkingBoardCodingOutput encodeBundeswehr(
     return BundeswehrTalkingBoardCodingOutput(
         ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CUSTOM_NUMERAL_TABLE, Details: '');
 
-  if (plainText == null || plainText == '')
+  if (plainText == null || plainText.isEmpty)
     return BundeswehrTalkingBoardCodingOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_CODE_RESPONSE_OK, Details: '');
 
   plainText = plainText.toUpperCase();
@@ -43,7 +43,7 @@ BundeswehrTalkingBoardCodingOutput decodeBundeswehr(
 
   String result = '';
 
-  if (cypherText == null || cypherText == '')
+  if (cypherText == null || cypherText.isEmpty)
     return BundeswehrTalkingBoardCodingOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_CODE_RESPONSE_OK, Details: result);
 
   cypherText = cypherText.toUpperCase();

@@ -8,7 +8,7 @@ class ControlCharacter {
   final String unicode;
   final String name;
   final String abbreviation;
-  final String escapeCode;
+  final String? escapeCode;
   final List<String> symbols;
 
   ControlCharacter(this.asciiValue, this.unicode, this.name, this.abbreviation, this.escapeCode, this.symbols);
@@ -66,10 +66,15 @@ class TextAnalysisCharacterCounts {
   Map<String, int> whiteSpaces;
   Map<String, int> controlChars;
 
-  TextAnalysisCharacterCounts([this.letters, this.numbers, this.specialChars, this.whiteSpaces, this.controlChars]);
+  TextAnalysisCharacterCounts({
+    required this.letters,
+    required this.numbers,
+    required this.specialChars,
+    required this.whiteSpaces,
+    required this.controlChars});
 }
 
-int countWords(String text) {
+int countWords(String? text) {
   if (text == null || text.isEmpty) return 0;
 
   return removeDiacritics(text)
@@ -155,7 +160,7 @@ Map<String, int> _analyzeSpecialChars(String text) {
   return specialChars;
 }
 
-TextAnalysisCharacterCounts analyzeText(String text, {bool caseSensitive: true}) {
+TextAnalysisCharacterCounts? analyzeText(String? text, {bool caseSensitive = true}) {
   if (text == null) return null;
 
   var out = TextAnalysisCharacterCounts();

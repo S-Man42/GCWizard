@@ -1,4 +1,4 @@
-_sanitizePassword(String password, int key) {
+String _sanitizePassword(String? password, int key) {
   if (password == null) password = '';
 
   password = password.toUpperCase().replaceAll(RegExp('[^A-Z]'), 'Z');
@@ -10,7 +10,7 @@ _sanitizePassword(String password, int key) {
   return password;
 }
 
-_applyPasswordToMatrix(List<List<String>> matrix, String password) {
+List<List<String>> _applyPasswordToMatrix(List<List<String>> matrix, String password) {
   var orderedPassword = password.split('').asMap().entries.toList();
   orderedPassword.sort((a, b) => a.value.compareTo(b.value));
 
@@ -53,7 +53,7 @@ List<List<String>> _fillMatrix(String input, int key) {
 }
 
 String encryptRailFence(String input, int key, {int offset, String password}) {
-  if (input == null || input.length == 0) return '';
+  if (input == null || input.isEmpty) return '';
 
   if (key < 2) return input;
 
@@ -77,7 +77,7 @@ String encryptRailFence(String input, int key, {int offset, String password}) {
 }
 
 String decryptRailFence(String input, int key, {int offset, String password}) {
-  if (input == null || input.length == 0) return '';
+  if (input == null || input.isEmpty) return '';
 
   if (key < 2) return input;
 

@@ -82,7 +82,7 @@ class RightAscension {
 
     var matches = regex.allMatches(input);
 
-    if (matches.length > 0) {
+    if (matches.isNotEmpty) {
       var match =matches.first;
       return new RightAscension(
           (matches.first.group(1) == "-") ? -1 : 1,

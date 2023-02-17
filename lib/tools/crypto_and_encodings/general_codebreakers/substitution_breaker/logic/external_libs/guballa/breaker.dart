@@ -50,7 +50,7 @@ int _alphabet_len = 0;
 List<int> _quadgrams;
 
 /// Init the instance
-_initBreaker(Quadgrams languageQuadgrams) {
+void _initBreaker(Quadgrams languageQuadgrams) {
   _alphabet = languageQuadgrams.alphabet;
   _alphabet_len = _alphabet.length;
   _quadgrams = languageQuadgrams.quadgrams();

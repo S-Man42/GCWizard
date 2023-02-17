@@ -50,7 +50,7 @@ class RSAPhiCalculatorState extends State<RSAPhiCalculator> {
   }
 
   _calculateOutput(BuildContext context) {
-    if (_currentP == null || _currentP.length == 0 || _currentQ == null || _currentQ.length == 0) {
+    if (_currentP == null || _currentP.isEmpty || _currentQ == null || _currentQ.isEmpty) {
       _output = null;
     }
 

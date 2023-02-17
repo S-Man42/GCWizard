@@ -291,7 +291,7 @@ class _GCWToolState extends State<GCWTool> {
   }
 }
 
-_setToolCount(String i18nPrefix) {
+void _setToolCount(String i18nPrefix) {
   var toolCountsRaw = Prefs.get(PREFERENCE_TOOL_COUNT);
   if (toolCountsRaw == null) toolCountsRaw = '{}';
 

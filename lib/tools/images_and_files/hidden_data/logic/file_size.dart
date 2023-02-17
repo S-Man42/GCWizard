@@ -466,7 +466,7 @@ int? _tarFileSize(Uint8List? data) {
 
       var fileSizeString =
       convertBase(utf8.decode(trimNullBytes(Uint8List.fromList(data.skip(offset + 124).take(12).toList()))), 8, 10);
-      if ((fileSizeString == null) || (fileSizeString == '')) return null;
+      if ((fileSizeString == null) || (fileSizeString.isEmpty)) return null;
       var fileSize = int.parse(fileSizeString);
       var usedSize = (fileSize / blockSize.toDouble()).ceil() * blockSize + headerSize;
       if ((fileSize < 0) || ((offset + usedSize) > data.length)) return null;

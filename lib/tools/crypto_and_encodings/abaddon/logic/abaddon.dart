@@ -37,7 +37,7 @@ final AZToAbaddon = {
 };
 
 encryptAbaddon(String input, Map<String, String> replaceCharacters) {
-  if (input == null || input.length == 0) return '';
+  if (input == null || input.isEmpty) return '';
 
   var abaddon = normalizeUmlauts(input)
       .toUpperCase()
@@ -52,7 +52,7 @@ encryptAbaddon(String input, Map<String, String> replaceCharacters) {
 }
 
 decryptAbaddon(String input, Map<String, String> replaceCharacters) {
-  if (input == null || input.length == 0) return '';
+  if (input == null || input.isEmpty) return '';
 
   if (replaceCharacters != null) input = substitution(input, switchMapKeyValue(replaceCharacters));
 

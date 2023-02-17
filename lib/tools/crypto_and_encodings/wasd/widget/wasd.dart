@@ -163,16 +163,16 @@ class WASDState extends State<WASD> {
         GCWTextDivider(
           text: i18n(context, 'wasd_control_set'),
         ),
-        GCWDropDown(
+        GCWDropDown<WASD_TYPE>(
           value: _currentKeyboardControls,
           onChanged: (value) {
             setState(() {
               _currentKeyboardControls = value;
-              if (value != WASD_TYPE.CUSTOM) {
-                _currentUp = KEYBOARD_CONTROLS[value][0];
-                _currentLeft = KEYBOARD_CONTROLS[value][1];
-                _currentDown = KEYBOARD_CONTROLS[value][2];
-                _currentRight = KEYBOARD_CONTROLS[value][3];
+              if (value != WASD_TYPE.CUSTOM && KEYBOARD_CONTROLS[value]!.length >= 4) {
+                _currentUp = KEYBOARD_CONTROLS[value]![0];
+                _currentLeft = KEYBOARD_CONTROLS[value]![1];
+                _currentDown = KEYBOARD_CONTROLS[value]![2];
+                _currentRight = KEYBOARD_CONTROLS[value]![3];
 
                 _upController.text = _currentUp;
                 _leftController.text = _currentLeft;

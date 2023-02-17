@@ -12,9 +12,9 @@ class UrwigoTextDeobfuscation extends StatefulWidget {
 }
 
 class UrwigoTextDeobfuscationState extends State<UrwigoTextDeobfuscation> {
-  var _inputController;
-  var _inputObfuscateController;
-  var _dtableController;
+  late TextEditingController _inputController;
+  late TextEditingController _inputObfuscateController;
+  late TextEditingController _dtableController;
 
   var _currentInput = '';
   var _currentDTable = '';

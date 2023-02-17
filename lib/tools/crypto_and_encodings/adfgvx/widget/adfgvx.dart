@@ -14,10 +14,10 @@ class ADFGVX extends StatefulWidget {
 }
 
 class ADFGVXState extends State<ADFGVX> {
-  var _inputController;
-  var _substitutionKeyController;
-  var _transpositionKeyController;
-  var _alphabetController;
+  late TextEditingController _inputController;
+  late TextEditingController _substitutionKeyController;
+  late TextEditingController _transpositionKeyController;
+  late TextEditingController _alphabetController;
 
   String _currentInput = '';
   String _currentSubstitutionKey = '';

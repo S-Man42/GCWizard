@@ -32,7 +32,7 @@ class AlphabetValues {
   List<int> textToValues(String text, {bool keepNumbers: false}) {
     var output = <int>[];
 
-    if (text == null || text.length == 0) return output;
+    if (text == null || text.isEmpty) return output;
 
     text = _toUpperCase(text);
 
@@ -50,7 +50,7 @@ class AlphabetValues {
 
     var maxKeyLength = entries.first.key.length;
 
-    while (text.length > 0) {
+    while (text.isNotEmpty) {
       String value;
       int i = 0;
       for (i = min(maxKeyLength, text.length); i >= 1; i--) {

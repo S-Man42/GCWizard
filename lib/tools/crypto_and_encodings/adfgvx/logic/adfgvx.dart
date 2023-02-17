@@ -16,7 +16,7 @@ String encryptADFGVX(String input, String substitutionKey, String transpositionK
 
 String _encrypt(String input, String substitutionKey, String transpositionKey, _ADFGVXMode mode,
     PolybiosMode polybiosMode, String alphabet) {
-  if (input == null || input == '') return '';
+  if (input == null || input.isEmpty) return '';
 
   if (substitutionKey == null) substitutionKey = '';
 
@@ -30,7 +30,7 @@ String _encrypt(String input, String substitutionKey, String transpositionKey, _
   if (polybiosOutput == null) return null;
 
   var polybiosEncoded = polybiosOutput.output.replaceAll(' ', '');
-  if (transpositionKey == null || transpositionKey == '') return insertSpaceEveryNthCharacter(polybiosEncoded, 5);
+  if (transpositionKey == null || transpositionKey.isEmpty) return insertSpaceEveryNthCharacter(polybiosEncoded, 5);
 
   transpositionKey = transpositionKey.toUpperCase();
 
@@ -67,12 +67,12 @@ String decryptADFGVX(String input, String substitutionKey, String transpositionK
 
 String _decrypt(String input, String substitutionKey, String transpositionKey, _ADFGVXMode mode,
     PolybiosMode polybiosMode, String alphabet) {
-  if (input == null || input == '') return '';
+  if (input == null || input.isEmpty) return '';
 
   input = input.toUpperCase().replaceAll(' ', '');
 
   var transposed;
-  if (transpositionKey != null && transpositionKey != '') {
+  if (transpositionKey != null && transpositionKey.isNotEmpty) {
     transpositionKey = transpositionKey.toUpperCase();
 
     var transpositionKeySorted = transpositionKey.split('');

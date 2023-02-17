@@ -73,7 +73,7 @@ List<List<String>> encodeBabylonNumbers(int input) {
 }
 
 Map<String, dynamic> decodeBabylonNumbers(List<String> inputs) {
-  if (inputs == null || inputs.length == 0)
+  if (inputs == null || inputs.isEmpty)
     return {
       'displays': <List<String>>[],
       'numbers': [0],

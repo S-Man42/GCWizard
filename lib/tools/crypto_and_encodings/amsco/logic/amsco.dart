@@ -11,7 +11,7 @@ class AmscoOutput {
 enum ErrorCode { OK, Key }
 
 bool _validKey(String key) {
-  if (key == null || key == '') return false;
+  if (key == null || key.isEmpty) return false;
 
   if (int.tryParse(key) == null) return false;
 
@@ -74,7 +74,7 @@ Map<String, List<String>> _createAmscoGrid(String input, String key, bool oneCha
 }
 
 AmscoOutput encryptAmsco(String input, String key, bool oneCharStart) {
-  if (input == null || key == null || input == '' || key == '') return AmscoOutput('', '', ErrorCode.OK);
+  if (input == null || key == null || input.isEmpty || key.isEmpty) return AmscoOutput('', '', ErrorCode.OK);
 
   key = _cleanKey(key);
   if (!_validKey(key)) return AmscoOutput('', '', ErrorCode.Key);
@@ -94,7 +94,7 @@ AmscoOutput encryptAmsco(String input, String key, bool oneCharStart) {
 }
 
 AmscoOutput decryptAmsco(String input, String key, bool oneCharStart) {
-  if (input == null || key == null || input == '' || key == '') return AmscoOutput('', '', ErrorCode.OK);
+  if (input == null || key == null || input.isEmpty || key.isEmpty) return AmscoOutput('', '', ErrorCode.OK);
 
   key = _cleanKey(key);
   if (!_validKey(key)) return AmscoOutput('', '', ErrorCode.Key);

@@ -17,8 +17,8 @@ class GaussWeberTelegraph extends StatefulWidget {
 }
 
 class GaussWeberTelegraphState extends State<GaussWeberTelegraph> {
-  var _decodeController;
-  var _encodeController;
+  late TextEditingController _decodeController;
+  late TextEditingController _encodeController;
 
   String _currentDecodeInput = '';
   String _currentEncodeInput = '';

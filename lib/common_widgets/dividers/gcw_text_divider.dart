@@ -30,7 +30,7 @@ class _GCWTextDividerState extends State<GCWTextDivider> {
         child: Row(children: <Widget>[
           ConstrainedBox(
             constraints: BoxConstraints(maxWidth: screenWidth - minDividerWidth),
-            child: Text(widget.text != '' ? '${widget.text}:' : '', style: widget.style ?? gcwTextStyle()),
+            child: Text(widget.text.isNotEmpty ? '${widget.text}:' : '', style: widget.style ?? gcwTextStyle()),
           ),
           Expanded(child: GCWDivider(color: widget.style?.color ?? gcwTextStyle().color)),
           widget.trailing ?? Container()

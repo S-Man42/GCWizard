@@ -12,9 +12,9 @@ class Hohoho extends StatefulWidget {
 }
 
 class HohohoState extends State<Hohoho> {
-  var _textEncodeController;
-  var _textDecodeController;
-  var _inputController;
+  late TextEditingController _textEncodeController;
+  late TextEditingController _textDecodeController;
+  late TextEditingController _inputController;
 
   var _currentEncodeText = '';
   var _currentDecodeText = '';
@@ -90,7 +90,7 @@ class HohohoState extends State<Hohoho> {
     if (_currentMode == GCWSwitchPosition.left) {
       try {
         HohohoOutput output = interpretHohoho(_currentDecodeText, STDIN: _currentInput);
-        if (output.error == '')
+        if (output.error.isEmpty)
           return output.output;
         else
           return output.output + '\n' + i18n(context, output.error);

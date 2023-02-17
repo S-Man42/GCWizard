@@ -91,7 +91,7 @@ class _GCWDropDownState<T extends Object?> extends State<GCWDropDown> {
 
 //Note: No GCWText, since GCWText contains SelectableText which suppress clicks,
 // and therefore generate non-selectable dropdown items (09/2020)
-_buildMenuItemChild(GCWDropDownMenuItem item) {
+Widget _buildMenuItemChild(GCWDropDownMenuItem item) {
   if (item.subtitle == null || item.subtitle.length == 0) {
     return item.child is Widget
         ? item.child

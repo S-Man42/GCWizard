@@ -546,7 +546,7 @@ List<List<String>> encodeSegment(String input, SegmentDisplayType segmentType) {
 
   for (String character in inputCharacters) {
     if (['.', ','].contains(character)) {
-      if (output.length == 0 || output.last.contains('dp')) {
+      if (output.isEmpty || output.last.contains('dp')) {
         output.add(['dp']);
       } else {
         var prevCharacter = List<String>.from(output.removeLast());

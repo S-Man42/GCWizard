@@ -285,7 +285,7 @@ String generateChef(
 
   output.writeln(title + '.');
   output.writeln('');
-  if (remark != '') output.writeln(remark + '\n');
+  if (remark.isNotEmpty) output.writeln(remark + '\n');
   output.writeln(_getText(_CHEF_textId.Ingredients, '', language));
   output.writeln(ingredientList.join('\n'));
   output.writeln('');
@@ -308,13 +308,13 @@ String generateChef(
       output.writeln(value[i]);
     }
   });
-  if (auxiliaryRecipes.length > 0) {}
+  if (auxiliaryRecipes.isNotEmpty) {}
   return output.toString().replaceAll('  ', ' ');
 }
 
 bool isValid(String input) {
   bool flag = true;
-  if (input == null || input == '') return true;
+  if (input == null || input.isEmpty) return true;
   List<String> numbers = input.split(' ');
   numbers.forEach((element) {
     if (int.tryParse(element) == null) {
@@ -325,7 +325,7 @@ bool isValid(String input) {
 }
 
 List<String> interpretChef(String language, recipe, input) {
-  if (recipe == null || recipe == '') return <String>[];
+  if (recipe == null || recipe.isEmpty) return <String>[];
 
   return _decodeChef(language, normalizeUmlauts(recipe.toLowerCase().replaceAll(RegExp(r' +'), ' ')), input);
 }
@@ -383,7 +383,7 @@ class _Chef {
   bool liquefyMissing;
 
   _Chef(String readRecipe, language) {
-    if (readRecipe == '' || readRecipe == null) return;
+    if (readRecipe.isEmpty || readRecipe == null) return;
 
     this.meal = <String>[];
     valid = true;
@@ -404,7 +404,7 @@ class _Chef {
 
     // remove blank lines at start and trim lines
     List<String> recipe = readRecipe.split('\n');
-    while (recipe[0] == '') {
+    while (recipe[0].isEmpty) {
       for (int i = 1; i < recipe.length; i++) {
         recipe[i - 1] = recipe[i].trim();
       }
@@ -450,7 +450,7 @@ class _Chef {
         auxRecipe = true;
       }
 
-      if ((recipe[i] == '' || recipe[i] == '\n') && ingredientSection) {
+      if ((recipe[i].isEmpty || recipe[i] == '\n') && ingredientSection) {
         if (recipe[i + 1].startsWith('method') ||
             recipe[i + 1].startsWith('zubereitung') ||
             recipe[i + 1].startsWith("cooking time") ||
@@ -496,7 +496,7 @@ class _Chef {
           recipe[i].startsWith("method") ||
           recipe[i].startsWith("zubereitung") ||
           recipe[i].startsWith("serves") ||
-          recipe[i].startsWith("portionen")) if (s0 != '') recipe[i] = '\n' + recipe[i];
+          recipe[i].startsWith("portionen")) if (s0.isNotEmpty) recipe[i] = '\n' + recipe[i];
       s0 = recipe[i];
     }
     readRecipe = recipe.join('\n');

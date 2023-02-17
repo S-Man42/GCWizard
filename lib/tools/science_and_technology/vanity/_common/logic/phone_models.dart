@@ -59,7 +59,7 @@ class PhoneModel {
   PhoneModel(this.name, String defaultCaseStateModelRaw, Map<PhoneInputLanguage, String>? specificCaseStateModelsRaw,
       this.characterMap, this.languages) {
     this.defaultCaseStateModel = _initializeCaseStateModel(defaultCaseStateModelRaw);
-    if (specificCaseStateModelsRaw != null && specificCaseStateModelsRaw.length > 0) {
+    if (specificCaseStateModelsRaw != null && specificCaseStateModelsRaw.isNotEmpty) {
       this.specificCaseStateModels = specificCaseStateModelsRaw.map((key, value) {
         return MapEntry(key, _initializeCaseStateModel(value));
       });

@@ -94,7 +94,7 @@ class RSAState extends State<RSA> {
           return BigInt.from(char.codeUnits.first);
         }).toList();
 
-        if (_currentInput.replaceAll(RegExp(r'\s+'), '').replaceAll(RegExp(r'[0-9]'), '').length == 0) {
+        if (_currentInput.replaceAll(RegExp(r'\s+'), '').replaceAll(RegExp(r'[0-9]'), '').isEmpty) {
           var inputAsInt = _currentInput
               .split(RegExp(r'\s+'))
               .where((chunk) => chunk != null)

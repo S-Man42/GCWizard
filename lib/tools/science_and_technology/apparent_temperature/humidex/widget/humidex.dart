@@ -98,7 +98,7 @@ class HumidexState extends State<Humidex> {
     } else
       hintH = '';
 
-    var hint = [hintT, hintH].where((element) => element != null && element.length > 0).join('\n');
+    var hint = [hintT, hintH].where((element) => element != null && element.isNotEmpty).join('\n');
 
     String hintM = '';
     if (output > 45)
@@ -117,9 +117,9 @@ class HumidexState extends State<Humidex> {
       )
     ];
 
-    if (hint != null && hint.length > 0) outputs.add(GCWOutput(title: i18n(context, 'heatindex_hint'), child: hint));
+    if (hint != null && hint.isNotEmpty) outputs.add(GCWOutput(title: i18n(context, 'heatindex_hint'), child: hint));
 
-    if (hintM != null && hintM.length > 0)
+    if (hintM != null && hintM.isNotEmpty)
       outputs.add(GCWOutput(
         title: i18n(context, 'humidex_meaning'),
         child: i18n(context, hintM),

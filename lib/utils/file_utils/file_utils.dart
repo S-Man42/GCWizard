@@ -323,7 +323,7 @@ FileType? fileTypeByFilename(String fileName) {
   });
 }
 
-_checkFileType(FileType type) {
+void _checkFileType(FileType type) {
   if (_FILE_TYPES[type] == null)
     throw Exception('No file type extension');
 }

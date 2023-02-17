@@ -25,7 +25,7 @@ class CistercianNumbers extends StatefulWidget {
 class CistercianNumbersState extends State<CistercianNumbers> {
   final _DEFAULT_SEGMENT = ['k'];
 
-  var _inputEncodeController;
+  late TextEditingController _inputEncodeController;
   var _currentEncodeInput = '';
   List<List<String>> _currentDisplays;
   var _currentMode = GCWSwitchPosition.right; //encrypt decrypt
@@ -79,7 +79,7 @@ class CistercianNumbersState extends State<CistercianNumbers> {
     Map<String, bool> currentDisplay;
 
     var displays = _currentDisplays; //<List<String>>[];
-    if (displays != null && displays.length > 0)
+    if (displays != null && displays.isNotEmpty)
       currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [],
           key: (e) => e, value: (e) => true);
     else
@@ -95,7 +95,7 @@ class CistercianNumbersState extends State<CistercianNumbers> {
 
         newSegments.sort();
 
-        if (_currentDisplays.length == 0) _currentDisplays.add([]);
+        if (_currentDisplays.isEmpty) _currentDisplays.add([]);
 
         _currentDisplays[_currentDisplays.length - 1] = newSegments;
       });
@@ -131,7 +131,7 @@ class CistercianNumbersState extends State<CistercianNumbers> {
             icon: Icons.backspace,
             onPressed: () {
               setState(() {
-                if (_currentDisplays.length > 0) _currentDisplays.removeLast();
+                if (_currentDisplays.isNotEmpty) _currentDisplays.removeLast();
               });
             },
           ),

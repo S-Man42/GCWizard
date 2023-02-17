@@ -13,7 +13,7 @@ List<int> textToIntList(String text, {bool allowNegativeValues: false}) {
 }
 
 List<String> textToBinaryList(String text) {
-  if (text.length == 0) return [];
+  if (text.isEmpty) return [];
 
   final regex = RegExp(r'[01]+');
 
@@ -62,8 +62,8 @@ Uint8List trimNullBytes(Uint8List bytes) {
 
   var tempList = List<int>.from(bytes);
 
-  while (tempList.length > 0 && tempList.last == 0) tempList.removeLast();
-  while (tempList.length > 0 && tempList.first == 0) tempList.removeAt(0);
+  while (tempList.isNotEmpty && tempList.last == 0) tempList.removeLast();
+  while (tempList.isNotEmpty && tempList.first == 0) tempList.removeAt(0);
 
   return Uint8List.fromList(tempList);
 }

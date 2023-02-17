@@ -14,8 +14,8 @@ class Skytale extends StatefulWidget {
 }
 
 class SkytaleState extends State<Skytale> {
-  var _inputController;
-  TextEditingController _columnController;
+  late TextEditingController _inputController;
+  late TextEditingController _columnController;
 
   String _currentInput = '';
   int _currentPerimeter = 2;

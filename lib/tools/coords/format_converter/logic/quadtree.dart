@@ -54,7 +54,7 @@ LatLng quadtreeToLatLon(Quadtree quadtree) {
 }
 
 Quadtree parseQuadtree(String input) {
-  if (input == null || input == '') return null;
+  if (input == null || input.isEmpty) return null;
 
   if (input.length != input.replaceAll(RegExp(r'[^0123]'), '').length) return null;
 

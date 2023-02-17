@@ -115,9 +115,9 @@ final _initialOptions = <String, Map<String, Object>>{
   },
 };
 
-_multiDecoderToolOptionToGCWMultiDecoderToolOptions(
+List<String, Object> _multiDecoderToolOptionToGCWMultiDecoderToolOptions(
     List<MultiDecoderToolOption> mdtOptions) {
-  var gcwOptions = <String, dynamic>{};
+  var gcwOptions = <String, Object>{};
 
   mdtOptions.forEach((option) {
     gcwOptions.putIfAbsent(option.name, () => option.value);
@@ -131,7 +131,7 @@ AbstractMultiDecoderTool _multiDecoderToolToGCWMultiDecoderTool(
   AbstractMultiDecoderTool gcwTool;
 
   var options = _initialOptions[mdtTool.internalToolName] ?? <String, Object>{};
-  if (mdtTool.options.length > 0) options = _multiDecoderToolOptionToGCWMultiDecoderToolOptions(mdtTool.options);
+  if (mdtTool.options.isNotEmpty) options = _multiDecoderToolOptionToGCWMultiDecoderToolOptions(mdtTool.options);
 
   switch (mdtTool.internalToolName) {
     case MDT_INTERNALNAMES_ALPHABETVALUES:
@@ -365,7 +365,7 @@ AbstractMultiDecoderTool _multiDecoderToolToGCWMultiDecoderTool(
   return gcwTool;
 }
 
-_initializeMultiToolDecoder(BuildContext context) {
+void _initializeMultiToolDecoder(BuildContext context) {
   var newTools = [
     MultiDecoderToolEntity(
         i18n(context, MDT_INTERNALNAMES_ROT5), MDT_INTERNALNAMES_ROT5),

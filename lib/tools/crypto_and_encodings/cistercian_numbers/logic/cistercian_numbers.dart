@@ -67,7 +67,7 @@ final Map<String, List<String>> _AZToSegmentCistercian = {
 };
 
 List<List<String>> encodeCistercian(String input) {
-  if (input == null || input == '') return [];
+  if (input == null || input.isEmpty) return [];
 
   List<String> inputCharacters = input.split(RegExp(r'[^1234567890]')).toList();
   var output = <List<String>>[];
@@ -100,7 +100,7 @@ List<List<String>> encodeCistercian(String input) {
 }
 
 Map<String, dynamic> decodeCistercian(String input) {
-  if (input == null || input == '') return {'displays': <List<String>>[], 'text': ''};
+  if (input == null || input.isEmpty) return {'displays': <List<String>>[], 'text': ''};
 
   var baseSegments = _baseSegmentsCistercianSegment;
 
@@ -324,7 +324,7 @@ Map<String, dynamic> decodeCistercian(String input) {
         tokens[i] = tokens[i].replaceAll('a', '');
       }
 
-      if (tokens[i] == '') unknownToken = false;
+      if (tokens[i].isEmpty) unknownToken = false;
     }
 
     if (unknownToken)

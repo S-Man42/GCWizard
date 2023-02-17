@@ -70,7 +70,7 @@ HomophoneOutput encryptHomophoneWithGeneratedKey(String input, Alphabet alphabet
 }
 
 HomophoneOutput _encryptHomophone(String input, Map<String, List<int>> keyMap) {
-  if (input == null || input == '') return HomophoneOutput('', '', HomophoneErrorCode.OK);
+  if (input == null || input.isEmpty) return HomophoneOutput('', '', HomophoneErrorCode.OK);
 
   var error = HomophoneErrorCode.OK;
   if (_checkDoubleKey(keyMap)) {
@@ -117,7 +117,7 @@ HomophoneOutput decryptHomophoneWithGeneratedKey(String input, Alphabet alphabet
 }
 
 HomophoneOutput _decryptHomophone(String input, Map<String, List<int>> keyMap) {
-  if (input == null || input == '') return HomophoneOutput('', '', HomophoneErrorCode.OK);
+  if (input == null || input.isEmpty) return HomophoneOutput('', '', HomophoneErrorCode.OK);
 
   var error = HomophoneErrorCode.OK;
   if (_checkDoubleKey(keyMap)) {
@@ -152,7 +152,7 @@ bool _checkDoubleKey(Map<String, List<int>> table) {
 int _charToNumber(String character, Map<String, List<int>> table) {
   if (table.containsKey(character)) {
     var list = table[character];
-    if (list.length == 0) return -1;
+    if (list.isEmpty) return -1;
     var rnd = new Random();
     var index = rnd.nextInt(list.length);
 

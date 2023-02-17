@@ -361,7 +361,7 @@ RGBPixel _getTexturePixel(int x, int y) {
   return RGBPixel.getPixel(_texturePixels, tp * _channelCount); // (RGBA)
 }
 
-_setStereoPixel(int x, int y, RGBPixel pixel) {
+void _setStereoPixel(int x, int y, RGBPixel pixel) {
   int sp = ((y * _lineWidth) + x);
   _pixels[sp] = _rgbPixelColor(pixel);
 }

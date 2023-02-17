@@ -60,8 +60,8 @@ class GCWKeyValueEditor extends StatefulWidget {
   final bool varcoords;
   final String? dividerText;
   final bool editAllowed;
-  final Function? onUpdateEntry;
-  final Function? onRemoveEntry;
+  final void Function(Object, String, String, FormulaValueType)? onUpdateEntry;
+  final void Function(Object, BuildContext)? onRemoveEntry;
 
   const GCWKeyValueEditor({
     Key? key,
@@ -108,7 +108,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
   var _currentEditedKey = '';
   var _currentEditedValue = '';
   var _currentEditedFormulaValueTypeInput = FormulaValueType.FIXED;
-  var _currentEditId;
+  Object? _currentEditId;
 
   late FocusNode _focusNodeEditValue;
 
@@ -472,8 +472,8 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
             icon: Icons.check,
             onPressed: () {
               if (widget.onUpdateEntry != null) {
-                if (widget.formulaValueList == null) {
-                  widget.onUpdateEntry!(_currentEditId, _currentEditedKey, _currentEditedValue);
+                if (widget.formulaValueList == null && _currentEditId != null) {
+                  widget.onUpdateEntry!(_currentEditId!, _currentEditedKey, _currentEditedValue, _currentEditedFormulaValueTypeInput);
                 } else {
                   if (_currentEditedFormulaValueTypeInput == FormulaValueType.INTERPOLATED) {
                     if (!VARIABLESTRING.hasMatch(_currentEditedValue.toLowerCase())) {
@@ -481,8 +481,8 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
                       return;
                     }
                   }
-                  widget.onUpdateEntry!(
-                      _currentEditId, _currentEditedKey, _currentEditedValue, _currentEditedFormulaValueTypeInput);
+                  if (_currentEditId != null) widget.onUpdateEntry!(
+                      _currentEditId!, _currentEditedKey, _currentEditedValue, _currentEditedFormulaValueTypeInput);
                 }
               }
 
@@ -507,27 +507,27 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
 
                 if (widget.formulaValueList != null)
                   _currentEditedFormulaValueTypeInput =
-                      widget.formulaValueList!.firstWhere((element) => element.id == _currentEditId)?.type ?? FormulaValueType.FIXED;
+                      widget.formulaValueList!.firstWhere((element) => element.id == _currentEditId).type ?? FormulaValueType.FIXED;
               });
             },
           );
   }
 
-  _getEntryId(dynamic entry) {
+  Object _getEntryId(dynamic entry) {
     if (widget.formulaValueList != null)
       return entry.id;
     else
       return entry.key;
   }
 
-  _getEntryKey(dynamic entry) {
+  String _getEntryKey(dynamic entry) {
     if (widget.keyKeyValueMap != null)
       return entry.value.keys.first;
     else
       return entry.key;
   }
 
-  _getEntryValue(dynamic entry) {
+  String _getEntryValue(dynamic entry) {
     if (widget.keyKeyValueMap != null)
       return entry.value.values.first;
     else

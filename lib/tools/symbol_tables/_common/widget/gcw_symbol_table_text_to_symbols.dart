@@ -24,7 +24,7 @@ import 'package:intl/intl.dart';
 import 'package:tuple/tuple.dart';
 
 class GCWSymbolTableTextToSymbols extends StatefulWidget {
-  final String text;
+  final String? text;
   final bool ignoreUnknown;
   final int countColumns;
   final SymbolTableData data;
@@ -97,8 +97,9 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
   List<int> _getImageIndexes(bool isCaseSensitive) {
     var _text = widget.text;
     var imageIndexes = <int>[];
+    if (_text == null) return imageIndexes;
 
-    while (_text.length > 0) {
+    while (_text!.length > 0) {
       var imageIndex;
       int i;
       String chunk;

@@ -71,7 +71,7 @@ Map? _assign(Map values, String s, String d) {
 Map? _eliminate(Map values, String s, String d) {
   if (!values[s].contains(d)) return values;
   values[s] = values[s].replaceAll(d, '');
-  if (values[s].length == 0)
+  if (values[s].isEmpty)
     return null;
   else if (values[s].length == 1) {
     var d2 = values[s];
@@ -80,7 +80,7 @@ Map? _eliminate(Map values, String s, String d) {
 
   for (List<String> u in _units[s]) {
     var dplaces = u.where((s) => values[s].contains(d));
-    if (dplaces.length == 0)
+    if (dplaces.isEmpty)
       return null;
     else if (dplaces.length == 1) if (_assign(values, dplaces.elementAt(0), d) == null) return null;
   }

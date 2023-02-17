@@ -13,8 +13,8 @@ class TapCode extends StatefulWidget {
 }
 
 class TapCodeState extends State<TapCode> {
-  var _encryptionController;
-  var _decryptionController;
+  late TextEditingController _encryptionController;
+  late TextEditingController _decryptionController;
 
   var _currentEncryptionInput = '';
   var _currentDecryptionInput = '';

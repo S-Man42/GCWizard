@@ -27,20 +27,20 @@ Map<String, LatLng> _parseCoordText(String text) {
   return out;
 }
 
-_sanitizeVariableDoubleText(String text) {
+String _sanitizeVariableDoubleText(String text) {
   if (text == null) return null;
 
   return text.replaceAll(',', '.').replaceAll(RegExp(r'\s+'), '');
 }
 
-_addBrackets(String formula) {
+String _addBrackets(String formula) {
   RegExp regExp = RegExp(r'\[.+?\]');
   if (regExp.hasMatch(formula)) return formula;
 
   return '[$formula]';
 }
 
-_removeBrackets(String formula) {
+String _removeBrackets(String formula) {
   RegExp regExp = RegExp(r'\[.+?\]');
   if (!regExp.hasMatch(formula)) return formula;
 

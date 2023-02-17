@@ -87,7 +87,7 @@ class HeatIndexState extends State<HeatIndex> {
     String? hintH;
     if (_currentHumidity < 40) hintH = i18n(context, 'heatindex_hint_humidity');
 
-    var hint = [hintT, hintH].where((element) => element != null && element.length > 0).join('\n');
+    var hint = [hintT, hintH].where((element) => element != null && element.isNotEmpty).join('\n');
 
     String? hintM;
     if (output > 54)
@@ -106,9 +106,9 @@ class HeatIndexState extends State<HeatIndex> {
       )
     ];
 
-    if (hint != null && hint.length > 0) outputs.add(GCWOutput(title: i18n(context, 'heatindex_hint'), child: hint));
+    if (hint != null && hint.isNotEmpty) outputs.add(GCWOutput(title: i18n(context, 'heatindex_hint'), child: hint));
 
-    if (hintM != null && hintM.length > 0)
+    if (hintM != null && hintM.isNotEmpty)
       outputs.add(GCWOutput(title: i18n(context, 'heatindex_meaning'), child: i18n(context, hintM)));
 
     return GCWMultipleOutput(

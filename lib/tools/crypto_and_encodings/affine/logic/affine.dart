@@ -39,7 +39,7 @@ String encodeAffine(String input, int keyA, int keyB) {
   int affinePlain = 0;
   String affineCipher = '';
 
-  if (input == null || input == '') return '';
+  if (input == null || input.isEmpty) return '';
 
   return input.toUpperCase().split('').map((character) {
     if (character == ' ') return ' ';
@@ -55,7 +55,7 @@ String encodeAffine(String input, int keyA, int keyB) {
 }
 
 String decodeAffine(String input, int keyA, int keyB) {
-  if (input == null || input == '') return '';
+  if (input == null || input.isEmpty) return '';
 
   int affineCipher = 0;
   String affinePlain = '';

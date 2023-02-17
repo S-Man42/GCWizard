@@ -123,7 +123,7 @@ List<int> _convertToIntList(String input, int base) {
 }
 
 List<int>? _addToIntList(String input, int base, List<int> list) {
-  if (input == '') return list;
+  if (input.isEmpty) return list;
   var valueString = convertBase(input, base, 10);
 
   var value = int.tryParse(valueString ?? '');
@@ -148,17 +148,17 @@ String? formatOutput(List<int>? outList, OutputFormat outputFormat) {
           out += String.fromCharCode(item);
         break;
       case OutputFormat.HEX:
-        if (out != '') out += ' ';
+        if (out.isNotEmpty) out += ' ';
 
         out += (convertBase(item.toString(), 10, 16) ?? '').padLeft(2, '0');
         break;
       case OutputFormat.BINARY:
-        if (out != '') out += ' ';
+        if (out.isNotEmpty) out += ' ';
 
         out += (convertBase(item.toString(), 10, 2) ?? '').padLeft(8, '0');
         break;
       case OutputFormat.ASCIIVALUES:
-        if (out != '') out += ' ';
+        if (out.isNotEmpty) out += ' ';
 
         out += item.toString();
         break;

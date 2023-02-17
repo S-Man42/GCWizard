@@ -111,7 +111,7 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
         language: _currentLanguage,
         decodeModeWholeWords: (_currentDecodeMode == GCWSwitchPosition.left));
     for (int i = 0; i < detailedOutput.length; i++) {
-      if (detailedOutput[i].number != '') if (detailedOutput[i].number.startsWith('numeralwords_'))
+      if (detailedOutput[i].number.isNotEmpty) if (detailedOutput[i].number.startsWith('numeralwords_'))
         output.add(i18n(context, detailedOutput[i].number));
       else
         output.add(detailedOutput[i].number);
@@ -147,7 +147,7 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
         GCWOutputText(
           text: output.join(' '),
         ),
-        output.length == 0
+        output.isEmpty
             ? Container()
             : GCWExpandableTextDivider(
                 text: i18n(context, 'numeralwords_syntax_highlight'),
@@ -157,7 +157,7 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
                   controller: _codeControllerHighlighted,
                   patternMap: _numeralWordsHiglightMap(),
                 )),
-        output.length == 0
+        output.isEmpty
             ? Container()
             : GCWExpandableTextDivider(
                 text: i18n(context, 'common_outputdetail'),

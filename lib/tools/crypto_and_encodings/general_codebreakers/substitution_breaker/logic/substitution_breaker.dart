@@ -22,7 +22,7 @@ Future<SubstitutionBreakerResult> break_cipherAsync(GCWAsyncExecuterParameters? 
 }
 
 SubstitutionBreakerResult _break_cipher(String input, Quadgrams quadgrams) {
-  if (input == null || input == '' || quadgrams == null)
+  if (input == null || input.isEmpty || quadgrams == null)
     return SubstitutionBreakerResult(errorCode: SubstitutionBreakerErrorCode.OK);
 
   return _convertBreakerResult(break_cipher(quadgrams, input));
