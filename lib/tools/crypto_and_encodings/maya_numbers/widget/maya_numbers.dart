@@ -104,7 +104,7 @@ class MayaNumbersState extends State<MayaNumbers> {
             icon: Icons.backspace,
             onPressed: () {
               setState(() {
-                if (_currentDisplays.length > 0) _currentDisplays.removeLast();
+                if (_currentDisplays.isNotEmpty) _currentDisplays.removeLast();
               });
             },
           ),

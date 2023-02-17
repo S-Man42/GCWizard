@@ -120,7 +120,7 @@ class RC4State extends State<RC4> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    if (_currentInput == null || _currentInput.length == 0) {
+    if (_currentInput == null || _currentInput.isEmpty) {
       return GCWDefaultOutput();
     }
 

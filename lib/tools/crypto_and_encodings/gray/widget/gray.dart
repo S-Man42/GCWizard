@@ -106,7 +106,7 @@ class GrayState extends State<Gray> {
 
     var outputChildren = <Widget>[];
 
-    if (_currentOutput.decimalOutput != null && _currentOutput.decimalOutput.length > 0)
+    if (_currentOutput.decimalOutput != null && _currentOutput.decimalOutput.isNotEmpty)
       outputChildren.add(
         GCWOutput(
           title: i18n(context, 'gray_mode_decimal'),
@@ -114,7 +114,7 @@ class GrayState extends State<Gray> {
         ),
       );
 
-    if (_currentOutput.binaryOutput != null && _currentOutput.binaryOutput.length > 0)
+    if (_currentOutput.binaryOutput != null && _currentOutput.binaryOutput.isNotEmpty)
       outputChildren.add(
         GCWOutput(
           title: i18n(context, 'gray_mode_binary'),

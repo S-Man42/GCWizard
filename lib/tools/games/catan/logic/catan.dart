@@ -58,7 +58,7 @@ List<int> encodeCatan(String input, CatanMode mode) {
   input = input.toUpperCase();
 
   var values = <int>[];
-  while (input.length > 0) {
+  while (input.isNotEmpty) {
     var value;
 
     if (mode == CatanMode.EXPANSION && input.startsWith('Z')) {

@@ -145,7 +145,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
   }
 
   _addNewFormula() async {
-    if (_currentNewFormula.length > 0) {
+    if (_currentNewFormula.isNotEmpty) {
       var newFormula = Formula(_currentNewFormula);
       insertFormula(newFormula, widget.group);
 
@@ -253,7 +253,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
           Map<int, Map<String, dynamic>> _foundFormulaCoordinates = {};
           calculated.results.asMap().forEach((idx, result) {
             var _foundFormulaCoordinate = parseStandardFormats(result.result, wholeString: true);
-            if (_foundFormulaCoordinate != null && _foundFormulaCoordinate.length > 0) {
+            if (_foundFormulaCoordinate != null && _foundFormulaCoordinate.isNotEmpty) {
               _foundFormulaCoordinates.putIfAbsent(
                   idx + 1,
                   () => {
@@ -487,7 +487,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
         .values
         .toList();
 
-    if (rows.length > 0) {
+    if (rows.isNotEmpty) {
       rows.insert(
           0,
           GCWTextDivider(
@@ -539,7 +539,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                                       setState(() {});
                                     },
                                   )),
-                          if (_foundCoordinates.length > 0)
+                          if (_foundCoordinates.isNotEmpty)
                             GCWPopupMenuItem(
                                 child: iconedGCWPopupMenuItem(
                                   context,

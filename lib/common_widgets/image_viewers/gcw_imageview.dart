@@ -149,7 +149,7 @@ class _GCWImageViewState extends State<GCWImageView> {
             ),
           ),
         ),
-        if ((widget.imageData?.description ?? '').trim().length > 0)
+        if ((widget.imageData?.description ?? '').trim().isNotEmpty)
           Container(
               padding: EdgeInsets.only(top: 10),
               child: GCWText(

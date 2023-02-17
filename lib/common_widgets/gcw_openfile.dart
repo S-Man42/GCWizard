@@ -374,7 +374,7 @@ Future<GCWFile?> _openFileExplorer({List<FileType>? allowedFileTypes}) async {
 
     if (allowedFileTypes.isEmpty && files != null) files = _filterFiles(files, allowedFileTypes);
 
-    if (files == null || files.length == 0) return null;
+    if (files == null || files.isEmpty) return null;
 
     var bytes = await _getFileData(files.first);
     var path = kIsWeb ? null : files.first.path;

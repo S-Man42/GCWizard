@@ -91,7 +91,7 @@ class GCWMapViewState extends State<GCWMapView> {
   Length defaultLengthUnit;
 
   LatLngBounds _getBounds() {
-    if (widget.points == null || widget.points.length == 0) return _DEFAULT_BOUNDS;
+    if (widget.points == null || widget.points.isEmpty) return _DEFAULT_BOUNDS;
 
     var _bounds = LatLngBounds();
     widget.points.forEach((point) => _bounds.extend(point.point));
@@ -138,7 +138,7 @@ class GCWMapViewState extends State<GCWMapView> {
         setState(() {
           var newPosition = LatLng(currentLocation.latitude, currentLocation.longitude);
 
-          if (_currentPosition == null && (_manuallyToggledPosition || widget.points.length == 0)) {
+          if (_currentPosition == null && (_manuallyToggledPosition || widget.points.isEmpty)) {
             _mapController.move(newPosition, _mapController.zoom);
           }
           _manuallyToggledPosition = false;
@@ -714,7 +714,7 @@ class GCWMapViewState extends State<GCWMapView> {
   }
 
   _buildPopupCoordinateDescription(GCWMapPoint point) {
-    if (point.markerText == null || point.markerText.length == 0) return null;
+    if (point.markerText == null || point.markerText.isEmpty) return null;
 
     var text;
     if (point.markerText.length > 50)
@@ -732,7 +732,7 @@ class GCWMapViewState extends State<GCWMapView> {
     var containerHeightMultiplier = 7;
     if (gcwMarker.mapPoint.hasCircle()) containerHeightMultiplier += 3;
     if (gcwMarker.mapPoint.isEditable) containerHeightMultiplier += 2;
-    if (gcwMarker.coordinateDescription != null && gcwMarker.coordinateDescription.length > 0)
+    if (gcwMarker.coordinateDescription != null && gcwMarker.coordinateDescription.isNotEmpty)
       containerHeightMultiplier += 2;
 
     return Container(
@@ -858,7 +858,7 @@ class GCWMapViewState extends State<GCWMapView> {
 
   List<BaseCoordinates> _parseCoords(text) {
     var parsed = parseCoordinates(text);
-    if (parsed == null || parsed.length == 0) {
+    if (parsed == null || parsed.isEmpty) {
       showToast(i18n(context, 'coords_common_clipboard_nocoordsfound'));
       return null;
     }

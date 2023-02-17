@@ -172,7 +172,7 @@ class MultiDecoderState extends State<MultiDecoder> {
         return FutureBuilder(
             future: result,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (snapshot.hasData && snapshot.data is String && ((snapshot.data as String).length != 0)) {
+              if (snapshot.hasData && snapshot.data is String && ((snapshot.data as String).isNotEmpty)) {
                 return GCWOutput(title: _toolTitle(tool), child: snapshot.data);
               } else
                 return Container();

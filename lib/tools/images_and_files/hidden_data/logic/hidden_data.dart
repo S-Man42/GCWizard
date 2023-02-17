@@ -51,7 +51,7 @@ Future<Tuple2<List<GCWFile>, int>> _hiddenData(GCWFile data, int fileIndexCounte
     result = await _searchMagicBytesHeader(dataClone, result.item2);
     _addChildren(data, dataClone.children);
 
-    if (dataClone.children != null && dataClone.children!.length > 0) {
+    if (dataClone.children != null && dataClone.children!.isNotEmpty) {
       // check for hidden archives (other types are checked)
       await Future.forEach(dataClone.children!, (GCWFile data) async {
         if (data.fileClass == FileClass.ARCHIVE)
@@ -71,7 +71,7 @@ Future<Tuple2<List<GCWFile>, int>> _splitFile(GCWFile data, int fileIndexCounter
   var resultList = <GCWFile>[];
   var parent = !onlyParent;
 
-  while (bytes != null && bytes.length > 0) {
+  while (bytes != null && bytes.isNotEmpty) {
     int? fileSize = _fileSize(bytes);
 
     Uint8List resultBytes;
@@ -83,7 +83,7 @@ Future<Tuple2<List<GCWFile>, int>> _splitFile(GCWFile data, int fileIndexCounter
       bytes = null;
     }
 
-    if (resultBytes.length > 0 && !parent) {
+    if (resultBytes.isNotEmpty && !parent) {
       fileIndexCounter++;
       var fileName = HIDDEN_FILE_IDENTIFIER + '_$fileIndexCounter';
       var file = GCWFile(name: fileName, bytes: resultBytes);
@@ -108,7 +108,7 @@ Future<Tuple2<List<GCWFile>, int>> _searchMagicBytesHeader(GCWFile data, int fil
 }
 
 void _addChildren(GCWFile data, List<GCWFile>? children) {
-  if (children != null && children.length > 0) {
+  if (children != null && children.isNotEmpty) {
     if (data.children != null)
       data.children!.addAll(children);
     else
@@ -118,7 +118,7 @@ void _addChildren(GCWFile data, List<GCWFile>? children) {
 
 void _addFiles(List<GCWFile> list, List<GCWFile>? files) {
   if (files == null) return;
-  if (files.length > 0) list.addAll(files);
+  if (files.isNotEmpty) list.addAll(files);
 }
 
 /// search on any position (>0) magic bytes

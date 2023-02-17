@@ -1354,7 +1354,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
                 line = line.substring(0, line.indexOf(',')).replaceAll('"', '');
               else
                 line = line.substring(0, line.indexOf('}')).replaceAll('"', '');
-              if (line.length != 0) singleMessageDialog.add(ActionMessageElementData(ACTIONMESSAGETYPE.TEXT, line));
+              if (line.isNotEmpty) singleMessageDialog.add(ActionMessageElementData(ACTIONMESSAGETYPE.TEXT, line));
             }
             line = lines[i];
             if (line.contains('Media = ')) {
@@ -1432,7 +1432,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
                   line = line.substring(0, line.indexOf(',')).replaceAll('"', '');
                 else
                   line = line.substring(0, line.indexOf('}')).replaceAll('"', '');
-                if (line.length != 0) singleMessageDialog.add(ActionMessageElementData(ACTIONMESSAGETYPE.TEXT, line));
+                if (line.isNotEmpty) singleMessageDialog.add(ActionMessageElementData(ACTIONMESSAGETYPE.TEXT, line));
               }
               line = lines[i];
               if (line.contains('Media = ')) {
@@ -1495,7 +1495,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
                   line = line.substring(0, line.indexOf(',')).replaceAll('"', '');
                 else
                   line = line.substring(0, line.indexOf('}')).replaceAll('"', '');
-                if (line.length != 0) singleMessageDialog.add(ActionMessageElementData(ACTIONMESSAGETYPE.TEXT, line));
+                if (line.isNotEmpty) singleMessageDialog.add(ActionMessageElementData(ACTIONMESSAGETYPE.TEXT, line));
               }
               line = lines[i];
               if (line.contains('Media = ')) {
@@ -1737,7 +1737,7 @@ List<String> _getAnswers(
         i = variables.length;
       }
     }
-    if (line.length == 0) {
+    if (line.isEmpty) {
       return ['NIL'];
     }
     return [line];

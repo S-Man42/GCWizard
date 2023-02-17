@@ -40,7 +40,7 @@ class FormulaPainter {
 
     if (values != null) {
       _variables = values.keys.map((variable) {
-        return ((variable == null) || (variable.length == 0)) ? '' : variable;
+        return ((variable == null) || (variable.isEmpty)) ? '' : variable;
       }).toList();
     } else
       _variables.clear();
@@ -666,7 +666,7 @@ class FormulaPainter {
         }
       }
     }
-    if ((formula.length - startIndex > 0) || (arguments.length == 0)) arguments.add(formula.substring(startIndex));
+    if ((formula.length - startIndex > 0) || (arguments.isEmpty)) arguments.add(formula.substring(startIndex));
 
     return arguments;
   }

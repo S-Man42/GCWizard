@@ -13,7 +13,7 @@ Map<String, dynamic> segmentBearings(
   }
   angles.sort();
 
-  if (angles.length == 0) angles.add(0.0);
+  if (angles.isEmpty) angles.add(0.0);
   if (angles.length == 1) angles.add(angles.first + 360.0);
 
   var segmentAngle = (angles.last - angles.first) / countSegments;

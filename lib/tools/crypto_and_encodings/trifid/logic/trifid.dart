@@ -220,5 +220,5 @@ bool incompleteCustomAlphabet(String alphabet) {
     alphabet = result;
     result = '';
   }
-  return (alphabet.length != 0);
+  return (alphabet.isNotEmpty);
 }

@@ -29,7 +29,7 @@ class _GCWCoordsPasteButtonState extends State<GCWCoordsPasteButton> {
   _parseClipboardAndSetCoords(text) {
     List<BaseCoordinates> parsed = parseCoordinates(text);
 
-    if (parsed.length == 0) {
+    if (parsed.isEmpty) {
       showToast(i18n(context, 'coords_common_clipboard_nocoordsfound'));
       widget.onPasted([]);
       return;

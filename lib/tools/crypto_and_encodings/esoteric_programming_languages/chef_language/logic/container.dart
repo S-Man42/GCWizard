@@ -18,7 +18,7 @@ class _Container {
   }
 
   _Component pop() {
-    if (_contents.length != 0) {
+    if (_contents.isNotEmpty) {
       var c = _contents.removeAt(_contents.length - 1);
       return c;
     }

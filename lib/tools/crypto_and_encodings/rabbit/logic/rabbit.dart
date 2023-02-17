@@ -38,7 +38,7 @@ RabbitOutput cryptRabbit(String? input, InputFormat inputFormat, String key, Inp
   if (keyData == null || keyData.isEmpty) return RabbitOutput('', null, null, ErrorCode.KEY_FORMAT);
 
   Uint8List? ivData;
-  if (initializationVector != null && initializationVector.length > 0) {
+  if (initializationVector != null && initializationVector.isNotEmpty) {
     var ivList = rc4.convertInputToIntList(initializationVector, _convertInputFormatEnum(ivFormat));
     if (ivList == null || ivList.isEmpty) return RabbitOutput('', null, null, ErrorCode.IV_FORMAT);
     ivData = _generateData(ivList, 8);

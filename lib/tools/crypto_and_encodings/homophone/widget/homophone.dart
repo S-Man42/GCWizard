@@ -79,7 +79,7 @@ class HomophoneState extends State<Homophone> {
   }
 
   _addEntry(String currentFromInput, String currentToInput, BuildContext context) {
-    if (currentFromInput.length > 0)
+    if (currentFromInput.isNotEmpty)
       _currentSubstitutions.putIfAbsent(currentFromInput.toUpperCase(), () => currentToInput);
 
     _newKeyController.text = _maxLetter();

@@ -583,7 +583,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
       if (key != null && value != null) list.add(MapEntry(key, value));
     });
 
-    return list.length == 0 ? null : list;
+    return list.isEmpty ? null : list;
   }
 
   List<MapEntry>? _parseClipboardText(String? text) {
@@ -598,6 +598,6 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
       if (match != null) list.add(MapEntry(match.group(2), match.group(6)));
     });
 
-    return list.length == 0 ? null : list;
+    return list.isEmpty ? null : list;
   }
 }

@@ -121,7 +121,7 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
   }
 
   _addNewGroup() {
-    if (_currentNewName.length > 0) {
+    if (_currentNewName.isNotEmpty) {
       var group = FormulaGroup(_currentNewName);
       insertGroup(group);
 
@@ -270,7 +270,7 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
       return output;
     }).toList();
 
-    if (rows.length > 0) {
+    if (rows.isNotEmpty) {
       rows.insert(0, GCWTextDivider(text: i18n(context, 'formulasolver_groups_currentgroups')));
     }
 

@@ -99,7 +99,7 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
     var imageIndexes = <int>[];
     if (_text == null) return imageIndexes;
 
-    while (_text!.length > 0) {
+    while (_text!.isNotEmpty) {
       var imageIndex;
       int i;
       String chunk;
@@ -136,7 +136,7 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
     var isCaseSensitive = _data.isCaseSensitive();
 
     var imageIndexes = _getImageIndexes(isCaseSensitive);
-    _encryptionHasImages = imageIndexes.length > 0;
+    _encryptionHasImages = imageIndexes.isNotEmpty;
     if (!_encryptionHasImages) return Container();
 
     var sizes = _symbolTableEncryption().sizes(SymbolTableEncryptionSizes(

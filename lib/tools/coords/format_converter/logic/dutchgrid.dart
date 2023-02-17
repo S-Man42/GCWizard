@@ -21,22 +21,22 @@ DutchGrid parseDutchGrid(String input) {
   var _xString = '';
   var _yString = '';
 
-  if (matches.length > 0) {
+  if (matches.isNotEmpty) {
     var match = matches.elementAt(0);
     _xString = match.group(1);
     _yString = match.group(3);
   }
-  if (matches.length == 0) {
+  if (matches.isEmpty) {
     regExp = RegExp(r'^\s*(X|x)\:?\s*([\-0-9\.]+)(\s*\,?\s*)(Y|y)\:?\s*([\-0-9\.]+)\s*$');
     matches = regExp.allMatches(input);
-    if (matches.length > 0) {
+    if (matches.isNotEmpty) {
       var match = matches.elementAt(0);
       _xString = match.group(2);
       _yString = match.group(5);
     }
   }
 
-  if (matches.length == 0) return null;
+  if (matches.isEmpty) return null;
 
   var x = double.tryParse(_xString);
   if (x == null) return null;

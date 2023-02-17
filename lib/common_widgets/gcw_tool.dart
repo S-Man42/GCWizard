@@ -238,7 +238,7 @@ class _GCWToolState extends State<GCWTool> {
         url = i18n(context, 'common_error_url'); // https://blog.gcwizard.net/manual/uncategorized/404/
       else
         url = button.url;
-      if (button.url.length != 0)
+      if (button.url.isNotEmpty)
         buttonList.add(IconButton(
           icon: Icon(button.icon),
           onPressed: () {

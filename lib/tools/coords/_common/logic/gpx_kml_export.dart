@@ -305,7 +305,7 @@ class _KmlWriter {
           _writeLines(builder, circles[i].shape, '#' + circleStyle);
         }
 
-        if (polylines.length > 0) {
+        if (polylines.isNotEmpty) {
           for (i = 0; i < polylines.length; i++) {
             var polylineStyle = styleMap['polyline' + i.toString()];
             if (polylineStyle == null)

@@ -118,7 +118,7 @@ class ChaoState extends State<Chao> {
   }
 
   _buildOutput() {
-    if (_currentInput == null || _currentInput.length == 0) return GCWDefaultOutput();
+    if (_currentInput == null || _currentInput.isEmpty) return GCWDefaultOutput();
 
     var alphabetChiffre = '';
     var alphabetPlain = '';

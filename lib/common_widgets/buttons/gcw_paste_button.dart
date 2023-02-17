@@ -67,7 +67,7 @@ class GCWPasteButtonState extends State<GCWPasteButton> {
         action: (index) {
           try {
             Clipboard.getData('text/plain').then((ClipboardData? data) {
-              if (data == null || data.text == null || data.text!.length == 0) {
+              if (data == null || data.text == null || data.text!.isEmpty) {
                 showToast(i18n(context, 'common_clipboard_notextdatafound'));
                 return;
               }

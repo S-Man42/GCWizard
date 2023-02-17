@@ -115,7 +115,7 @@ class BeatnikStack {
   }
 
   int pop() {
-    if (_stack.length != 0) {
+    if (_stack.isNotEmpty) {
       var c = _stack.removeAt(_stack.length - 1);
       return c;
     }
