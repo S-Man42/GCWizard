@@ -87,7 +87,7 @@ class PredatorState extends State<Predator> {
 
         newSegments.sort();
 
-        if (_currentDisplays.length == 0) _currentDisplays.add([]);
+        if (_currentDisplays.isEmpty) _currentDisplays.add([]);
 
         _currentDisplays[_currentDisplays.length - 1] = newSegments;
       });

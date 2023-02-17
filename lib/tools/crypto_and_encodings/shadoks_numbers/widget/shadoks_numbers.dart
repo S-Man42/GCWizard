@@ -78,7 +78,7 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
         newSegments.sort();
         if (newSegments.length > 1) newSegments.remove('a');
 
-        if (_currentDisplays.length == 0) _currentDisplays.add([]);
+        if (_currentDisplays.isEmpty) _currentDisplays.add([]);
 
         _currentDisplays[_currentDisplays.length - 1] = newSegments;
       });

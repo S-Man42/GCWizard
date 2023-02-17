@@ -161,7 +161,7 @@ class RabbitState extends State<Rabbit> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    if (_currentInput == null || _currentInput.length == 0) {
+    if (_currentInput == null || _currentInput.isEmpty) {
       return GCWDefaultOutput();
     }
 

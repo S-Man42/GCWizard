@@ -122,7 +122,7 @@ class KennyState extends State<Kenny> {
   }
 
   _buildOutput() {
-    if (_currentInput.length == 0 || _currentM.length == 0 || _currentP.length == 0 || _currentF.length == 0) return '';
+    if (_currentInput.isEmpty || _currentM.isEmpty || _currentP.isEmpty || _currentF.isEmpty) return '';
 
     var key = [_currentM, _currentP, _currentF];
     return _currentMode == GCWSwitchPosition.left

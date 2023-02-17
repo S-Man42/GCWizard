@@ -1,7 +1,7 @@
 import 'dart:collection';
 
 String substitution(String? input, Map<String, String> substitutions, {bool caseSensitive: true}) {
-  if (input == null || input.length == 0) return '';
+  if (input == null || input.isEmpty) return '';
 
   if (!caseSensitive) {
     input = input.toUpperCase();
@@ -14,7 +14,7 @@ String substitution(String? input, Map<String, String> substitutions, {bool case
   //Copy map to keep the original one
   var substCopy = {};
   substitutions.entries.forEach((entry) {
-    if (entry.key.length == 0) return;
+    if (entry.key.isEmpty) return;
 
     if (caseSensitive) {
       substCopy.putIfAbsent(entry.key, () => entry.value);

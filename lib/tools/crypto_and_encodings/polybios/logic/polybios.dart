@@ -184,7 +184,7 @@ PolybiosOutput decryptPolybios(String input, String key,
 
   if (input.length % 2 != 0) input = input.substring(0, input.length - 1);
 
-  if (input.length == 0) return null; //TODO: Exception
+  if (input.isEmpty) return null; //TODO: Exception
 
   var grid = createPolybiosGrid(alphabet, dim);
 

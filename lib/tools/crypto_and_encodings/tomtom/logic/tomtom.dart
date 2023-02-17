@@ -32,7 +32,7 @@ const AZToTomTom = {
 };
 
 encryptTomTom(String input, Map<String, String> replaceCharacters) {
-  if (input == null || input.length == 0) return '';
+  if (input == null || input.isEmpty) return '';
 
   var tomtom = normalizeUmlauts(input)
       .toUpperCase()
@@ -47,7 +47,7 @@ encryptTomTom(String input, Map<String, String> replaceCharacters) {
 }
 
 decryptTomTom(String input, Map<String, String> replaceCharacters) {
-  if (input == null || input.length == 0) return '';
+  if (input == null || input.isEmpty) return '';
 
   if (replaceCharacters != null) input = substitution(input, switchMapKeyValue(replaceCharacters));
 

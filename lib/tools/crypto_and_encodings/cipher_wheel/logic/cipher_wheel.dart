@@ -5,7 +5,7 @@ List<int> encryptCipherWheel(String input, int key) {
 
   input = input.toUpperCase().replaceAll(RegExp(r'[^A-Z]'), '');
 
-  if (input.length == 0) return <int>[];
+  if (input.isEmpty) return <int>[];
 
   return input.split('').map((character) {
     var value = alphabet_AZ[character];
@@ -17,7 +17,7 @@ List<int> encryptCipherWheel(String input, int key) {
 }
 
 String decryptCipherWheel(List<int> input, int key) {
-  if (input == null || input.length == 0) return '';
+  if (input == null || input.isEmpty) return '';
 
   return input.map((value) {
     value -= key - 1;

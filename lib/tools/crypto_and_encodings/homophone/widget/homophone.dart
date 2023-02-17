@@ -222,7 +222,7 @@ class HomophoneState extends State<Homophone> {
   }
 
   _buildOutput() {
-    if (_currentInput == null || _currentInput.length == 0) return GCWDefaultOutput(child: '');
+    if (_currentInput == null || _currentInput.isEmpty) return GCWDefaultOutput(child: '');
     int _currentMultiplier = getMultipliers()[_currentMultiplierIndex];
 
     HomophoneOutput _currentOutput;

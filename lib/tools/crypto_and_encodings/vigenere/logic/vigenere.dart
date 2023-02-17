@@ -2,7 +2,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/rotation/logic/rotator.dart
 import 'package:gc_wizard/utils/alphabets.dart';
 
 Map<String, String>? _getKey(String? key, int aValue) {
-  if (key == null || key.length == 0) return null;
+  if (key == null || key.isEmpty) return null;
 
   var keyLetters = key.toUpperCase().replaceAll(RegExp(r'[^A-Z]'), '');
   if (keyLetters.isNotEmpty) {

@@ -93,7 +93,7 @@ class _ShadoksNumbersSegmentDisplay extends NSegmentDisplay {
                 path.close();
                 canvas.touchCanvas.drawPath(path, paint, onTapDown: (tapDetail) {
                   setSegmentState(element[8], !segmentActive(currentSegments, element[8]));
-                  setSegmentState('a', ['b', 'c', 'd'].where((elem) => segmentActive(currentSegments, elem]).toList().length == 0);
+                  setSegmentState('a', ['b', 'c', 'd'].where((elem) => segmentActive(currentSegments, elem]).toList().isEmpty);
                 });
               });
             });

@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/polybios/logic/polybios.dar
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 
-Map<String, List<int>> _createKeyGrid(String key, AlphabetModificationMode mode) {
+Map<String, List<int>> _createKeyGrid(String? key, AlphabetModificationMode mode) {
   if (key == null) key = '';
 
   key = key.toUpperCase().replaceAll(RegExp(r'[^A-Z]'), '');
