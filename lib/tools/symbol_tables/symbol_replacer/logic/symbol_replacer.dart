@@ -731,7 +731,7 @@ class _SymbolRow {
       if (emptyColumn) emptyColumnIndex.add(x);
     }
 
-    if (emptyColumnIndex.length > 0) {
+    if (emptyColumnIndex.isNotEmpty) {
       emptyColumnIndex = _removeGapColumns(emptyColumnIndex, gap);
 
       if (emptyColumnIndex.first != 0) _cutSymbol(0, emptyColumnIndex.first - 1, blackLevel);

@@ -57,7 +57,7 @@ class FormulaSolverFormulaValuesState extends State<FormulaSolverFormulaValues> 
   }
 
   _addEntry(String currentFromInput, String currentToInput, FormulaValueType type, BuildContext context) {
-    if (currentFromInput.length > 0) {
+    if (currentFromInput.isNotEmpty) {
       var newValue = FormulaValue(currentFromInput, currentToInput, type: type);
       insertFormulaValue(newValue, widget.group);
 

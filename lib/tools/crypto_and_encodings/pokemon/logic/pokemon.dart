@@ -118,7 +118,7 @@ String _decode(String input) {
 
   if (cypher.length == 1) return UNKNOWN_ELEMENT;
 
-  while (cypher.length > 0 && iteration > 0) {
+  while (cypher.isNotEmpty && iteration > 0) {
     iteration--;
     int j = 0;
     while (j < _DECODE_POKEMON.length) {
@@ -131,7 +131,7 @@ String _decode(String input) {
       j++;
     }
   }
-  if (result.isEmpty || cypher.length > 0) result = UNKNOWN_ELEMENT;
+  if (result.isEmpty || cypher.isNotEmpty) result = UNKNOWN_ELEMENT;
 
   return result;
 }

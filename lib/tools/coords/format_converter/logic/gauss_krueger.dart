@@ -156,22 +156,22 @@ GaussKrueger parseGaussKrueger(String input, {CoordFormatKey gaussKruegerCode: d
   var _eastingString = '';
   var _northingString = '';
 
-  if (matches.length > 0) {
+  if (matches.isNotEmpty) {
     var match = matches.elementAt(0);
     _eastingString = match.group(1);
     _northingString = match.group(3);
   }
-  if (matches.length == 0) {
+  if (matches.isEmpty) {
     regExp = RegExp(r'^\s*(R|r|X|x)\:?\s*([\-0-9\.]+)(\s*\,?\s*)(H|h|Y|y)\:?\s*([\-0-9\.]+)\s*$');
     matches = regExp.allMatches(input);
-    if (matches.length > 0) {
+    if (matches.isNotEmpty) {
       var match = matches.elementAt(0);
       _eastingString = match.group(2);
       _northingString = match.group(5);
     }
   }
 
-  if (matches.length == 0) return null;
+  if (matches.isEmpty) return null;
 
   var _easting = double.tryParse(_eastingString);
   if (_easting == null) return null;

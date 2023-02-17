@@ -417,7 +417,7 @@ _wordClass _filterWord(int index, List<_wordClass> wordList, bool onlyFirstWordL
 }
 
 _wordClass _onlyFirstWordLetter(_wordClass wordClass) {
-  if (wordClass?.Text?.length > 0)
+  if (wordClass?.Text?.isNotEmpty)
     return new _wordClass(wordClass.SectionIndex, wordClass.RowIndex, wordClass.RowIndex, wordClass?.Text[0]);
   return new _wordClass(-1, -1, -1, "");
 }
@@ -503,7 +503,7 @@ Tuple3<List<_wordClass>, List<_wordClass>, List<_wordClass>> _wordList(String in
       rowList.add(new _wordClass(sectionIndex, rowIndex, wordIndex, row));
 
       row.split(RegExp(r"[\s]|[\.]|[,]|[!]|[\?]|[\\]")).forEach((word) {
-        if (word.length > 0) {
+        if (word.isNotEmpty) {
           wordIndex += 1;
           wordList.add(new _wordClass(sectionIndex, rowIndex, wordIndex, word));
         }

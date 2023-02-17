@@ -87,14 +87,14 @@ List<int>? convertInputToIntList(String? input, InputFormat format) {
 
 InputFormat _autoType(String input) {
   String bin = input.replaceAll(RegExp("[ 01]"), "");
-  if (bin.length == 0) return InputFormat.BINARY;
+  if (bin.isEmpty) return InputFormat.BINARY;
 
   String hex = input.toUpperCase().replaceAll(RegExp("[0-9A-F]"), "").replaceAll(" ", "");
-  if (hex.length == 0) return InputFormat.HEX;
+  if (hex.isEmpty) return InputFormat.HEX;
 
   String ascii = input.replaceAll(RegExp("[ 0-9]"), "");
   bool ok = true;
-  if (ascii.length == 0) {
+  if (ascii.isEmpty) {
     input.split(" ").forEach((text) {
       if ((int.tryParse(text) ?? 0) > 255) {
         ok = false;

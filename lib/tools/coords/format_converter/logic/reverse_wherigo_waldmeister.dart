@@ -210,7 +210,7 @@ ReverseWherigoWaldmeister latLonToReverseWIGWaldmeister(LatLng coord) {
 ReverseWherigoWaldmeister parseReverseWherigoWaldmeister(String input) {
   RegExp regExp = RegExp(r'^\s*([0-9]+)(\s*,\s*|\s+)([0-9]+)(\s*,\s*|\s+)([0-9]+)\s*$');
   var matches = regExp.allMatches(input);
-  if (matches.length == 0) return null;
+  if (matches.isEmpty) return null;
 
   var match = matches.elementAt(0);
 

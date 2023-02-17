@@ -209,7 +209,7 @@ String decryptTapir(String? input, String? keyOneTimePad) {
   input = input.replaceAll(RegExp(r'[^0-9]'), '');
   if (input.isEmpty) return '';
 
-  if (keyOneTimePad != null && keyOneTimePad.length > 0)
+  if (keyOneTimePad != null && keyOneTimePad.isNotEmpty)
     input = _subtractOneTimePad(input, keyOneTimePad);
 
   return _decodeTapir(input);

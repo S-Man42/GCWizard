@@ -602,10 +602,10 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       case WHERIGO.MEDIAFILES:
         if ((_WherigoCartridgeLUA.Media == [] ||
                 _WherigoCartridgeLUA.Media == null ||
-                _WherigoCartridgeLUA.Media.length == 0) &&
+                _WherigoCartridgeLUA.Media.isEmpty) &&
             (_WherigoCartridgeGWC.MediaFilesContents == [] ||
                 _WherigoCartridgeGWC.MediaFilesContents == null ||
-                _WherigoCartridgeGWC.MediaFilesContents.length == 0))
+                _WherigoCartridgeGWC.MediaFilesContents.isEmpty))
           return GCWDefaultOutput(
             child: i18n(context, 'wherigo_data_nodata'),
             suppressCopyButton: true,
@@ -616,7 +616,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
         if (_WherigoCartridgeGWC.MediaFilesContents == [] ||
             _WherigoCartridgeGWC.MediaFilesContents == null ||
-            _WherigoCartridgeGWC.MediaFilesContents.length == 0) {
+            _WherigoCartridgeGWC.MediaFilesContents.isEmpty) {
           return Column(children: <Widget>[
             GCWDefaultOutput(),
             Row(
@@ -663,7 +663,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               ' : ' +
               MEDIATYPE[_WherigoCartridgeGWC.MediaFilesContents[_mediaFileIndex].MediaFileType];
         }
-        if (_WherigoCartridgeLUA.Media.length > 0) {
+        if (_WherigoCartridgeLUA.Media.isNotEmpty) {
           filename = _WherigoCartridgeLUA.Media[_mediaFileIndex - 1].MediaFilename;
           _outputMedia = [
             _expertMode
@@ -823,14 +823,14 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       case WHERIGO.CHARACTER:
         if (_WherigoCartridgeLUA.Characters == [] ||
             _WherigoCartridgeLUA.Characters == null ||
-            _WherigoCartridgeLUA.Characters.length == 0)
+            _WherigoCartridgeLUA.Characters.isEmpty)
           return GCWDefaultOutput(
             child: i18n(context, 'wherigo_data_nodata'),
             suppressCopyButton: true,
           );
 
         return Column(children: <Widget>[
-          (_CharacterPoints.length != 0)
+          (_CharacterPoints.isNotEmpty)
               ? GCWDefaultOutput(
                   trailing: Row(children: <Widget>[
                     GCWIconButton(
@@ -913,7 +913,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       case WHERIGO.ZONES:
         if (_WherigoCartridgeLUA.Zones == [] ||
             _WherigoCartridgeLUA.Zones == null ||
-            _WherigoCartridgeLUA.Zones.length == 0)
+            _WherigoCartridgeLUA.Zones.isEmpty)
           return GCWDefaultOutput(
             child: i18n(context, 'wherigo_data_nodata'),
             suppressCopyButton: true,
@@ -995,7 +995,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       case WHERIGO.INPUTS:
         if (_WherigoCartridgeLUA.Inputs == [] ||
             _WherigoCartridgeLUA.Inputs == null ||
-            _WherigoCartridgeLUA.Inputs.length == 0)
+            _WherigoCartridgeLUA.Inputs.isEmpty)
           return GCWDefaultOutput(
             child: i18n(context, 'wherigo_data_nodata'),
             suppressCopyButton: true,
@@ -1082,7 +1082,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 )
               : Container(),
           (_WherigoCartridgeLUA.Inputs[_inputIndex - 1].InputAnswers != null &&
-                  _WherigoCartridgeLUA.Inputs[_inputIndex - 1].InputAnswers.length > 0)
+                  _WherigoCartridgeLUA.Inputs[_inputIndex - 1].InputAnswers.isNotEmpty)
               ? Column(
                   children: <Widget>[
                     GCWColumnedMultilineOutput(
@@ -1118,7 +1118,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       case WHERIGO.TASKS:
         if (_WherigoCartridgeLUA.Tasks == [] ||
             _WherigoCartridgeLUA.Tasks == null ||
-            _WherigoCartridgeLUA.Tasks.length == 0)
+            _WherigoCartridgeLUA.Tasks.isEmpty)
           return GCWDefaultOutput(
             child: i18n(context, 'wherigo_data_nodata'),
             suppressCopyButton: true,
@@ -1170,7 +1170,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       case WHERIGO.TIMERS:
         if (_WherigoCartridgeLUA.Timers == [] ||
             _WherigoCartridgeLUA.Timers == null ||
-            _WherigoCartridgeLUA.Timers.length == 0)
+            _WherigoCartridgeLUA.Timers.isEmpty)
           return GCWDefaultOutput(
             child: i18n(context, 'wherigo_data_nodata'),
             suppressCopyButton: true,
@@ -1220,14 +1220,14 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       case WHERIGO.ITEMS:
         if (_WherigoCartridgeLUA.Items == [] ||
             _WherigoCartridgeLUA.Items == null ||
-            _WherigoCartridgeLUA.Items.length == 0)
+            _WherigoCartridgeLUA.Items.isEmpty)
           return GCWDefaultOutput(
             child: i18n(context, 'wherigo_data_nodata'),
             suppressCopyButton: true,
           );
 
         return Column(children: <Widget>[
-          (_ItemPoints.length != 0)
+          (_ItemPoints.isNotEmpty)
               ? GCWDefaultOutput(
                   trailing: Row(children: <Widget>[
                     GCWIconButton(
@@ -1310,7 +1310,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       case WHERIGO.MESSAGES:
         if (_WherigoCartridgeLUA.Messages == [] ||
             _WherigoCartridgeLUA.Messages == null ||
-            _WherigoCartridgeLUA.Messages.length == 0)
+            _WherigoCartridgeLUA.Messages.isEmpty)
           return GCWDefaultOutput(
             child: i18n(context, 'wherigo_data_nodata'),
             suppressCopyButton: true,
@@ -1357,7 +1357,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       case WHERIGO.IDENTIFIER:
         if (_WherigoCartridgeLUA.Variables == [] ||
             _WherigoCartridgeLUA.Variables == null ||
-            _WherigoCartridgeLUA.Variables.length == 0)
+            _WherigoCartridgeLUA.Variables.isEmpty)
           return GCWDefaultOutput(
             child: i18n(context, 'wherigo_data_nodata'),
             suppressCopyButton: true,
@@ -1837,7 +1837,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   List<Widget> _outputAnswerActionsWidgets(AnswerData data) {
     List<Widget> resultWidget = [];
 
-    if (data.AnswerActions.length > 0) {
+    if (data.AnswerActions.isNotEmpty) {
       data.AnswerActions.forEach((element) {
         switch (element.ActionMessageType) {
           case ACTIONMESSAGETYPE.TEXT:
@@ -1880,7 +1880,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               if (NameToObject[LUAName] == null || NameToObject[LUAName]!.ObjectIndex >= _WherigoCartridgeGWC.MediaFilesContents.length)
                 break;
 
-              if (_WherigoCartridgeGWC.MediaFilesContents.length > 0)
+              if (_WherigoCartridgeGWC.MediaFilesContents.isNotEmpty)
                 resultWidget.add(GCWFilesOutput(
                   suppressHiddenDataMessage: true,
                   suppressedButtons: {GCWImageViewButtons.SAVE},

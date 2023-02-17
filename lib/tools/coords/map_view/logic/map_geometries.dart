@@ -29,7 +29,7 @@ class GCWMapPoint {
       this.circle,
       this.circleColorSameAsPointColor = false,
       this.isVisible = true}) {
-    if (uuid == null || uuid!.length == 0) uuid = Uuid().v4();
+    if (uuid == null || uuid!.isEmpty) uuid = Uuid().v4();
     if (coordinateFormat == null) coordinateFormat = defaultCoordFormat();
     update();
   }
@@ -109,14 +109,14 @@ class GCWMapPolyline {
     @required this.points,
     this.color: COLOR_MAP_POLYLINE,
   }) {
-    if (uuid == null || uuid.length == 0) uuid = Uuid().v4();
+    if (uuid == null || uuid.isEmpty) uuid = Uuid().v4();
     update();
   }
 
   void update() {
     lines = [];
 
-    if (points == null || points.length == 0) {
+    if (points == null || points.isEmpty) {
       return;
     }
 

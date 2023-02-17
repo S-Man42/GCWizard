@@ -69,7 +69,7 @@ class MapViewPersistenceAdapter {
   _initializeMapView() {
     refreshMapViews();
 
-    if (mapViews.length == 0) {
+    if (mapViews.isEmpty) {
       insertMapViewDAO(MapViewDAO([], []));
     }
     _mapViewDAO = mapViews.last;
@@ -80,14 +80,14 @@ class MapViewPersistenceAdapter {
     if (_mapViewDAO.points == null) _mapViewDAO.points = <MapPointDAO>[];
     if (mapWidget.points == null) mapWidget.points = <GCWMapPoint>[];
 
-    if (mapWidget.points.length > 0) {
+    if (mapWidget.points.isNotEmpty) {
       _mapViewDAO.points.addAll(mapWidget.points
           .where((point) => !_mapViewDAO.points.map((pointDAO) => pointDAO.uuid).toList().contains(point.uuid))
           .map((point) => gcwMapPointToMapPointDAO(point))
           .toList());
     }
 
-    if (_mapViewDAO.points.length > 0) {
+    if (_mapViewDAO.points.isNotEmpty) {
       mapWidget.points.addAll(_mapViewDAO.points
           .where((pointDAO) => !mapWidget.points.map((point) => point.uuid).toList().contains(pointDAO.uuid))
           .map((pointDAO) => _mapPointDAOToGCWMapPoint(pointDAO))
@@ -97,7 +97,7 @@ class MapViewPersistenceAdapter {
     if (_mapViewDAO.polylines == null) _mapViewDAO.polylines = <MapPolylineDAO>[];
     if (mapWidget.polylines == null) mapWidget.polylines = <GCWMapPolyline>[];
 
-    if (mapWidget.polylines.length > 0) {
+    if (mapWidget.polylines.isNotEmpty) {
       _mapViewDAO.polylines.addAll(mapWidget.polylines
           .where((polyline) =>
               !_mapViewDAO.polylines.map((polylineDAO) => polylineDAO.uuid).toList().contains(polyline.uuid))
@@ -105,7 +105,7 @@ class MapViewPersistenceAdapter {
           .toList());
     }
 
-    if (_mapViewDAO.polylines.length > 0) {
+    if (_mapViewDAO.polylines.isNotEmpty) {
       mapWidget.polylines.addAll(_mapViewDAO.polylines
           .where((polylineDAO) =>
               !mapWidget.polylines.map((polyline) => polyline.uuid).toList().contains(polylineDAO.uuid))
@@ -328,13 +328,13 @@ class MapViewPersistenceAdapter {
   }
 
   _addMapViewDAO(MapViewDAO viewData) {
-    if (viewData.points.length > 0) {
+    if (viewData.points.isNotEmpty) {
       _mapViewDAO.points.addAll(viewData.points
           .where((pointDAO) => !_mapViewDAO.points.map((point) => point.uuid).toList().contains(pointDAO.uuid))
           .toList());
     }
 
-    if (viewData.polylines.length > 0) {
+    if (viewData.polylines.isNotEmpty) {
       _mapViewDAO.polylines.addAll(viewData.polylines
           .where((polyline) =>
               !_mapViewDAO.polylines.map((polylineDAO) => polylineDAO.uuid).toList().contains(polyline.uuid))

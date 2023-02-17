@@ -352,7 +352,7 @@ class _MainViewState extends State<MainView> {
     if (_mainToolList.isEmpty) _initStaticToolList();
     Favorites.initialize();
 
-    var toolList = (_isSearching && _searchText.length > 0) ? _getSearchedList() : null;
+    var toolList = (_isSearching && _searchText.isNotEmpty) ? _getSearchedList() : null;
     return DefaultTabController(
       length: 3,
       initialIndex: Prefs.getBool(PREFERENCE_TABS_USE_DEFAULT_TAB)

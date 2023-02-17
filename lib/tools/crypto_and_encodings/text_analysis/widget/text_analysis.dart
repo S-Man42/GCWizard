@@ -159,11 +159,12 @@ class TextAnalysisState extends State<TextAnalysis> {
     );
   }
 
-  String _buildControlCharName(String key) {
+  String? _buildControlCharName(String key) {
     var map = Map<String, ControlCharacter>.from(WHITESPACE_CHARACTERS);
     map.addAll(CONTROL_CHARACTERS);
 
     var char = map[key];
+    if (char == null) return null;
 
     return char.abbreviation + '   ' + char.symbols.first + '\n' + i18n(context, char.name) + '\n' + char.unicode;
   }
@@ -172,7 +173,7 @@ class TextAnalysisState extends State<TextAnalysis> {
     return map.isEmpty ? 0 : map.values.reduce((value, element) => value + element);
   }
 
-  List<List<Object>>? _buildGroup(Map<String, int> map, int totalCount) {
+  TextGroup? _buildGroup(Map<String, int> map, int totalCount) {
     var numFormat = NumberFormat('0.00');
 
     var groupCount = _groupCount(map);
@@ -229,14 +230,14 @@ class TextAnalysisState extends State<TextAnalysis> {
       ]);
     }
 
-    return {'common': groupCommon, 'detailed': groupDetailed, 'isControlCharGroup': hasControlChars};
+    return TextGroup(groupCommon, groupDetailed, hasControlChars);
   }
 
-  Widget _buildGroupWidget(Map<String, Object>? group, {String? title}) {
+  Widget _buildGroupWidget(TextGroup? group, {String? title}) {
     if (group == null) return Container();
 
     var flexValues =
-        _currentSort == _SORT_TYPES.COUNT_OVERALL ? [2, 1, 1] : [group['isControlCharGroup'] ? 2 : 1, 1, 1, 1];
+        _currentSort == _SORT_TYPES.COUNT_OVERALL ? [2, 1, 1] : [group.isControlCharGroup ? 2 : 1, 1, 1, 1];
 
     var child = Column(
       children: [
@@ -244,7 +245,7 @@ class TextAnalysisState extends State<TextAnalysis> {
             ? Column(
                 children: [
                     GCWColumnedMultilineOutput(
-                        data: group['common'],
+                        data: group.common,
                             copyColumn: 1
                     ),
                   Container(
@@ -254,7 +255,7 @@ class TextAnalysisState extends State<TextAnalysis> {
               )
             : Container(),
             GCWColumnedMultilineOutput(
-                data: group['detailed'],
+                data: group.detailed,
                 hasHeader: true,
                 flexValues: flexValues,
                 copyColumn: 1
@@ -269,7 +270,7 @@ class TextAnalysisState extends State<TextAnalysis> {
         ),
         _currentSort == _SORT_TYPES.COUNT_OVERALL
             ? child
-            : GCWExpandableTextDivider(text: i18n(context, 'common_group') + ': ' + i18n(context, title), child: child)
+            : GCWExpandableTextDivider(text: i18n(context, 'common_group') + ': ' + i18n(context, title ?? ''), child: child)
       ],
     );
   }
@@ -398,4 +399,12 @@ class TextAnalysisState extends State<TextAnalysis> {
       ],
     );
   }
+}
+
+class TextGroup {
+  List<List<Object>> common;
+  List<List<Object?>> detailed;
+  bool isControlCharGroup;
+
+  TextGroup(this.common, this.detailed, this.isControlCharGroup);
 }

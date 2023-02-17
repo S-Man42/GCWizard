@@ -52,27 +52,27 @@ void main() {
       {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' :
         TextAnalysisCharacterCounts(
-          SplayTreeMap<String, int>(),
-          SplayTreeMap<String, int>(),
-          SplayTreeMap<String, int>(),
-          SplayTreeMap<String, int>(),
-          SplayTreeMap<String, int>()
+          letters: SplayTreeMap<String, int>(),
+          numbers: SplayTreeMap<String, int>(),
+          specialChars: SplayTreeMap<String, int>(),
+          whiteSpaces: SplayTreeMap<String, int>(),
+          controlChars: SplayTreeMap<String, int>()
       )},
       {'input' : 'ABC 123 ABC123', 'expectedOutput' :
         TextAnalysisCharacterCounts(
-          SplayTreeMap<String, int>.from(<String, int>{'A': 2, 'B': 2, 'C': 2}),
-          SplayTreeMap<String, int>.from(<String, int>{'1': 2, '2': 2, '3': 2}),
-          SplayTreeMap<String, int>(),
-          SplayTreeMap<String, int>.from(<String, int>{' ': 2}),
-          SplayTreeMap<String, int>()
+          letters: SplayTreeMap<String, int>.from(<String, int>{'A': 2, 'B': 2, 'C': 2}),
+          numbers: SplayTreeMap<String, int>.from(<String, int>{'1': 2, '2': 2, '3': 2}),
+          specialChars: SplayTreeMap<String, int>(),
+          whiteSpaces: SplayTreeMap<String, int>.from(<String, int>{' ': 2}),
+          controlChars: SplayTreeMap<String, int>()
       )},
       {'input' : 'dAS.KL\u0013 2u 3)=FOS\u000BDI "!)=EU "ER-DJS\u0001(Q§)"E\$OPQWDJ KLSAÖj =§")\$U E\u0013"§=\u0085\u000B', 'expectedOutput' :
       TextAnalysisCharacterCounts(
-          SplayTreeMap<String, int>.from(<String, int>{'A': 2, 'D': 3, 'E': 4, 'F': 1, 'I': 1, 'J': 2, 'K': 2, 'L': 2, 'O': 2, 'P': 1, 'Q': 2, 'R': 1, 'S': 4, 'U': 2, 'W': 1, 'd': 1, 'j': 1, 'u': 1, 'Ö': 1}),
-          SplayTreeMap<String, int>.from(<String, int>{'2': 1, '3': 1}),
-          SplayTreeMap<String, int>.from(<String, int>{'!': 1, '"': 5, '\$': 2, '(': 1, ')': 4, '-': 1, '.': 1, '=': 4, '§': 3}),
-          SplayTreeMap<String, int>.from(<String, int>{'\u000B': 2, ' ': 7, '\u0085': 1}),
-          SplayTreeMap<String, int>.from(<String, int>{'\u0001': 1, '\u0013': 2})
+          letters: SplayTreeMap<String, int>.from(<String, int>{'A': 2, 'D': 3, 'E': 4, 'F': 1, 'I': 1, 'J': 2, 'K': 2, 'L': 2, 'O': 2, 'P': 1, 'Q': 2, 'R': 1, 'S': 4, 'U': 2, 'W': 1, 'd': 1, 'j': 1, 'u': 1, 'Ö': 1}),
+          numbers: SplayTreeMap<String, int>.from(<String, int>{'2': 1, '3': 1}),
+          specialChars: SplayTreeMap<String, int>.from(<String, int>{'!': 1, '"': 5, '\$': 2, '(': 1, ')': 4, '-': 1, '.': 1, '=': 4, '§': 3}),
+          whiteSpaces: SplayTreeMap<String, int>.from(<String, int>{'\u000B': 2, ' ': 7, '\u0085': 1}),
+          controlChars:SplayTreeMap<String, int>.from(<String, int>{'\u0001': 1, '\u0013': 2})
       )},
     ];
 
@@ -88,11 +88,11 @@ void main() {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : 'ABC-def d123D', 'expectedOutput' :
         TextAnalysisCharacterCounts(
-          SplayTreeMap<String, int>.from(<String, int>{'A': 1, 'B': 1, 'C': 1, 'D': 3, 'E': 1, 'F': 1}),
-          SplayTreeMap<String, int>.from(<String, int>{'1': 1, '2': 1, '3': 1}),
-          SplayTreeMap<String, int>.from(<String, int>{'-': 1}),
-          SplayTreeMap<String, int>.from(<String, int>{' ': 1}),
-          SplayTreeMap<String, int>()
+          letters: SplayTreeMap<String, int>.from(<String, int>{'A': 1, 'B': 1, 'C': 1, 'D': 3, 'E': 1, 'F': 1}),
+          numbers: SplayTreeMap<String, int>.from(<String, int>{'1': 1, '2': 1, '3': 1}),
+          specialChars: SplayTreeMap<String, int>.from(<String, int>{'-': 1}),
+          whiteSpaces: SplayTreeMap<String, int>.from(<String, int>{' ': 1}),
+          controlChars: SplayTreeMap<String, int>()
       )},
     ];
 

@@ -17,7 +17,7 @@ class RSADCheckerState extends State<RSADChecker> {
   String _currentQ = '';
 
   var _integerInputFormatter = GCWIntegerTextInputFormatter(min: 0);
-  Widget _output;
+  Widget? _output;
 
   @override
   Widget build(BuildContext context) {
@@ -71,11 +71,11 @@ class RSADCheckerState extends State<RSADChecker> {
       var p = BigInt.tryParse(_currentP);
       var q = BigInt.tryParse(_currentQ);
 
-      var validD = validateD(e, p, q);
+      var validD = validateD(e as BigInt, p as BigInt, q as BigInt);
       _output = GCWDefaultOutput(
           child: validD ? i18n(context, 'rsa_d.checker_valid') : i18n(context, 'rsa_d.checker_notvalid'));
     } catch (exception) {
-      _output = GCWDefaultOutput(child: i18n(context, exception.message));
+      _output = GCWDefaultOutput(child: i18n(context, exception.toString()));
     }
   }
 }

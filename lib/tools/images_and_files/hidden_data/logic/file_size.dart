@@ -312,7 +312,7 @@ int? _rarFileSize(Uint8List? data) {
 
         var nameArray = data.sublist(offset, offset + nameLength.item1);
         var name = utf8.decode(nameArray);
-        if ((name != null) & (name.length > 0)) fileNames.add(name);
+        if ((name != null) & (name.isNotEmpty)) fileNames.add(name);
         offset += nameLength.item1; //Name
 
         break;

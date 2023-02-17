@@ -267,7 +267,7 @@ class FormulaParser {
     // --> evaluate each interpolated result
     //if no interpolation: simply evaluate the formula directly
     List<Map<String, dynamic>> expandedFormulas;
-    if (expandValues && interpolatedValues.length > 0) {
+    if (expandValues && interpolatedValues.isNotEmpty) {
       var count = VariableStringExpander(substitutedFormula, interpolatedValues).run(onlyPrecheck: true).first['count'];
       if (count == null) {
         return {'state': FormulaState.STATE_SINGLE_ERROR, 'result': substitutedFormula}; // TODO Mark use classes instead of maps
@@ -372,7 +372,7 @@ class FormulaParser {
       var key = element.key.trim();
       var value = element.value;
 
-      if (value == null || value.length == 0) {
+      if (value == null || value.isEmpty) {
         if (element.type == FormulaValueType.TEXT) {
           value = '';
         } else {
@@ -416,7 +416,7 @@ class FormulaParser {
     var matches = regExp.allMatches(formula);
 
     // if formula has no [ ], then match the whole string
-    if (matches.length == 0) {
+    if (matches.isEmpty) {
       matches = RegExp(r'^.*$', multiLine: true).allMatches(formula);
     }
 

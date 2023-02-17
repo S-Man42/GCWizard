@@ -17,7 +17,7 @@ class RSANCalculatorState extends State<RSANCalculator> {
   String _currentQ = '';
 
   var _integerInputFormatter = GCWIntegerTextInputFormatter(min: 0);
-  Widget _output;
+  Widget? _output;
 
   @override
   Widget build(BuildContext context) {
@@ -58,9 +58,9 @@ class RSANCalculatorState extends State<RSANCalculator> {
       var p = BigInt.tryParse(_currentP);
       var q = BigInt.tryParse(_currentQ);
 
-      _output = GCWDefaultOutput(child: N(p, q).toString());
+      _output = GCWDefaultOutput(child: N(p as BigInt, q as BigInt).toString());
     } catch (exception) {
-      showToast(i18n(context, exception.message));
+      showToast(i18n(context, exception.toString()));
       _output = null;
     }
   }

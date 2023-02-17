@@ -92,22 +92,22 @@ NaturalAreaCode parseNaturalAreaCode(String input) {
   var xString = '';
   var yString = '';
 
-  if (matches.length > 0) {
+  if (matches.isNotEmpty) {
     var match = matches.elementAt(0);
     xString = match.group(1);
     yString = match.group(3);
   }
-  if (matches.length == 0) {
+  if (matches.isEmpty) {
     regExp = RegExp(r'^\s*(X|x)\:?\s*([0-9A-Z]+)(\s*,\s*|\s+)(Y|y)\:?\s*([0-9A-Z]+)\s*$');
     matches = regExp.allMatches(input);
-    if (matches.length > 0) {
+    if (matches.isNotEmpty) {
       var match = matches.elementAt(0);
       xString = match.group(2);
       yString = match.group(5);
     }
   }
 
-  if (matches.length == 0) return null;
+  if (matches.isEmpty) return null;
 
   return NaturalAreaCode(xString, yString);
 }

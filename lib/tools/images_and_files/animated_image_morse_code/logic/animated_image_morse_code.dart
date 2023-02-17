@@ -177,7 +177,7 @@ List<Tuple2<bool, int>>? _buildTimeList(List<int>? durations, List<bool>? onSign
 
   if (durations == null || onSignal == null || durations.length != onSignal.length) return null;
 
-  if (durations.length == 0) return timeList;
+  if (durations.isEmpty) return timeList;
 
   timeList.add(Tuple2<bool, int>(onSignal[i], durations[i]));
   for (i = 1; i < durations.length; i++) {
@@ -191,7 +191,7 @@ List<Tuple2<bool, int>>? _buildTimeList(List<int>? durations, List<bool>? onSign
 }
 
 Tuple3<int, int, int>? foundSignalTimes(List<Tuple2<bool, int>>? timeList) {
-  if (timeList == null || timeList.length == 0) return null;
+  if (timeList == null || timeList.isEmpty) return null;
 
   const toler = 1.2;
   var onl = <int>[];
@@ -206,9 +206,9 @@ Tuple3<int, int, int>? foundSignalTimes(List<Tuple2<bool, int>>? timeList) {
   onl.sort();
   offl.sort();
 
-  var t1 = onl.length > 0 ? onl[0] : 99999999;
-  var t2 = offl.length > 0 ? offl[0] : 99999999;
-  var t3 = offl.length > 0 ? offl[0] : 99999999;
+  var t1 = onl.isNotEmpty ? onl[0] : 99999999;
+  var t2 = offl.isNotEmpty ? offl[0] : 99999999;
+  var t3 = offl.isNotEmpty ? offl[0] : 99999999;
   var calct2 = true;
 
   for (int i = 1; i < onl.length; i++) {

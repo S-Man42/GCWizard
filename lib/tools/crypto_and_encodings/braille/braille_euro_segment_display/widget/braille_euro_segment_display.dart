@@ -23,7 +23,7 @@ const _EUROBRAILLE_RADIUS = 12;
 class BrailleEuroSegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
   final bool readOnly;
-  final Function onChanged;
+  final void Function(Map<String, bool>)? onChanged;
   final bool tapeStyle;
 
   BrailleEuroSegmentDisplay({Key? key, this.segments, this.readOnly: false, this.onChanged, this.tapeStyle: false})

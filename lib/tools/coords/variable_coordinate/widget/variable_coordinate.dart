@@ -102,7 +102,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
   }
 
   _addEntry(String currentFromInput, String currentToInput, formula_base.FormulaValueType type, BuildContext context) {
-    if (currentFromInput.length > 0) {
+    if (currentFromInput.isNotEmpty) {
       insertFormulaValue(
           formula_base.FormulaValue(currentFromInput, currentToInput, type: formula_base.FormulaValueType.INTERPOLATED),
           widget.formula);
@@ -128,9 +128,9 @@ class VariableCoordinateState extends State<VariableCoordinate> {
 
   _disposeEntry(String currentFromInput, String currentToInput, BuildContext context) {
     if (currentFromInput != null &&
-        currentFromInput.length > 0 &&
+        currentFromInput.isNotEmpty &&
         currentToInput != null &&
-        currentToInput.length > 0) {
+        currentToInput.isNotEmpty) {
       _addEntry(currentFromInput, currentToInput, formula_base.FormulaValueType.INTERPOLATED, context);
     }
   }
@@ -329,9 +329,9 @@ class VariableCoordinateState extends State<VariableCoordinate> {
     });
 
     if (_currentFromInput != null &&
-        _currentFromInput.length > 0 &&
+        _currentFromInput.isNotEmpty &&
         _currentToInput != null &&
-        _currentToInput.length > 0) {
+        _currentToInput.isNotEmpty) {
       _substitutions.putIfAbsent(_currentFromInput, () => _currentToInput);
     }
 
@@ -344,8 +344,8 @@ class VariableCoordinateState extends State<VariableCoordinate> {
     Map<String, dynamic> projectionData;
     if (_currentProjectionMode) {
       projectionData = {
-        'bearing': _currentProjectionMode == false || _currentBearingInput.length == 0 ? '0' : _currentBearingInput,
-        'distance': _currentProjectionMode == false || _currentDistanceInput.length == 0 ? '0' : _currentDistanceInput,
+        'bearing': _currentProjectionMode == false || _currentBearingInput.isEmpty ? '0' : _currentBearingInput,
+        'distance': _currentProjectionMode == false || _currentDistanceInput.isEmpty ? '0' : _currentDistanceInput,
         'reverseBearing': _currentReverseBearing,
         'lengthUnit': _currentLengthUnit,
         'ellipsoid': defaultEllipsoid()
@@ -371,7 +371,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
     var normalCoords = coords['coordinates'];
     var leftPaddedCoords = coords['leftPadCoordinates'];
 
-    var hasLeftPaddedCoords = leftPaddedCoords.length > 0;
+    var hasLeftPaddedCoords = leftPaddedCoords.isNotEmpty;
 
     _currentOutput =
         List.from((_currentCoordMode == GCWSwitchPosition.left ? normalCoords : leftPaddedCoords).map((coord) {
@@ -392,7 +392,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
           coordinateFormat: _currentOutputFormat);
     }));
 
-    if (_currentOutput.length == 0) {
+    if (_currentOutput.isEmpty) {
       _currentOutput = [i18n(context, 'coords_variablecoordinate_nooutputs')];
     }
 

@@ -70,7 +70,7 @@ void createIndexedSearchStrings() {
     }
     var _indexedSearchStrings =
         removeAccents(searchStrings.join(' ').toLowerCase()).replaceAll(ALLOWED_SEARCH_CHARACTERS, '');
-    if (_indexedSearchStrings.length == 0) {
+    if (_indexedSearchStrings.isEmpty) {
       if (_toolName != null) tool.indexedSearchStrings = _toolName;
       continue;
     }

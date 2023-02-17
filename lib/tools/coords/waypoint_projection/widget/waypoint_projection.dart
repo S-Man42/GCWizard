@@ -98,7 +98,7 @@ class WaypointProjectionState extends State<WaypointProjection> {
     if (_currentReverse) {
       _currentValues =
           reverseProjection(_currentCoords, _currentBearing['value'], _currentDistance, defaultEllipsoid());
-      if (_currentValues == null || _currentValues.length == 0) {
+      if (_currentValues == null || _currentValues.isEmpty) {
         _currentOutput = [i18n(context, 'coords_waypointprojection_reverse_nocoordinatefound')];
         return;
       }

@@ -42,7 +42,7 @@ class _GCWOutputTextState extends State<GCWOutputText> {
                 selectionControls: GCWTextSelectionControls(),
               )),
         ),
-        widget.text != null && widget.text!.length > 0 && !widget.suppressCopyButton
+        widget.text != null && widget.text!.isNotEmpty && !widget.suppressCopyButton
             ? GCWIconButton(
                 iconColor: widget.style != null ? widget.style!.color : themeColors().mainFont(),
                 size: IconButtonSize.SMALL,
