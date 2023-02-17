@@ -172,7 +172,7 @@ class TextAnalysisState extends State<TextAnalysis> {
     return map.length == 0 ? 0 : map.values.reduce((value, element) => value + element);
   }
 
-  List<List<Object>> _buildGroup(Map<String, int> map, int totalCount) {
+  List<List<Object>>? _buildGroup(Map<String, int> map, int totalCount) {
     var numFormat = NumberFormat('0.00');
 
     var groupCount = _groupCount(map);
@@ -306,7 +306,7 @@ class TextAnalysisState extends State<TextAnalysis> {
     return chars;
   }
 
-  _totalDistinctCount(Set<String> validChars) {
+  int _totalDistinctCount(Set<String> validChars) {
     return validChars.length;
   }
 
@@ -319,7 +319,7 @@ class TextAnalysisState extends State<TextAnalysis> {
     return countWords(text);
   }
 
-  _buildOutput() {
+  Widget _buildOutput() {
     if (!(_currentUseLetters ||
         _currentUseNumbers ||
         _currentUseSpecialChars ||

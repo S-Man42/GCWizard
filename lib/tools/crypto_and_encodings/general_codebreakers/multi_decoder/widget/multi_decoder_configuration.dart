@@ -245,7 +245,7 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
                   ? GCWIconButton(
                       icon: Icons.check,
                       onPressed: () {
-                        if (_editingToolName.length > 0) {
+                        if (_editingToolName.isNotEmpty) {
                           tool.name = _editingToolName;
                         }
                         _updateTool(tool);

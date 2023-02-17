@@ -4,7 +4,7 @@ enum TranspositionMatrixFillMode { encryption, decryption }
 
 List<List<String>> createTranspositionMatrix(String input, TranspositionMatrixFillMode fillMode,
     {int countRows, int countColumns, int countLettersPerCell: 1}) {
-  if (input == null || input == '') return null;
+  if (input == null || input.isEmpty) return null;
 
   if (countRows == null && countColumns == null) return null;
 

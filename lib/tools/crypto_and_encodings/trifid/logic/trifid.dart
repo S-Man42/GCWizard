@@ -62,7 +62,7 @@ TrifidOutput encryptTrifid(String? input, int blockSize, {PolybiosMode mode: Pol
 }
 
 TrifidOutput decryptTrifid(String input, int blockSize, {PolybiosMode mode: PolybiosMode.AZ09, String alphabet}) {
-  if (input == null || input == '') return TrifidOutput('', '');
+  if (input == null || input.isEmpty) return TrifidOutput('', '');
 
   input = input.toUpperCase();
   alphabet = alphabet.toUpperCase();

@@ -20,7 +20,7 @@ class MultiDecoderToolNumeralBases extends AbstractMultiDecoderTool {
             onDecode: (String input, String key) {
               return input
                   .split(RegExp(r'\s+'))
-                  .where((element) => element.length > 0)
+                  .where((element) => element.isNotEmpty)
                   .map((element) => convertBase(element, intTypeCheck(options[MDT_NUMERALBASES_OPTION_FROM], 10), 10))
                   .join(' ');
             },

@@ -5,7 +5,7 @@ Map<String, String>? _getKey(String? key, int aValue) {
   if (key == null || key.length == 0) return null;
 
   var keyLetters = key.toUpperCase().replaceAll(RegExp(r'[^A-Z]'), '');
-  if (keyLetters.length > 0) {
+  if (keyLetters.isNotEmpty) {
     return {'type': 'letters', 'key': keyLetters};
   }
 
@@ -19,7 +19,7 @@ Map<String, String>? _getKey(String? key, int aValue) {
     return letter ?? '';
   }).join();
 
-  if (keyNumbers.length > 0) {
+  if (keyNumbers.isNotEmpty) {
     return {'type': 'numbers', 'key': keyNumbers};
   }
 

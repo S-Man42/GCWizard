@@ -406,7 +406,7 @@ class FormulaParser {
 
     formula = formula.trim();
 
-    if (formula == '') {
+    if (formula.isEmpty) {
       return _simpleErrorOutput(formula);
     }
 

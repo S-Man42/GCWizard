@@ -114,11 +114,11 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
             icon: Icons.backspace,
             onPressed: () {
               setState(() {
-                if (_currentDisplays.length > 0) {
+                if (_currentDisplays.isNotEmpty) {
                   _currentDisplays.removeLast();
                 }
 
-                if (_currentDisplays.length > 0) {
+                if (_currentDisplays.isNotEmpty) {
                   _currentDisplay = {};
                   _currentDisplays.last.forEach((element) => _currentDisplay.putIfAbsent(element, () => true));
                   _currentDisplay.putIfAbsent('a', () => false);

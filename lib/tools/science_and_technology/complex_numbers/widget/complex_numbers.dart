@@ -130,7 +130,7 @@ class ComplexNumbersState extends State<ComplexNumbers> {
 
     return GCWDefaultOutput(
         child: GCWColumnedMultilineOutput(
-            data: coordinates.entries.where((entry) => entry.key != '').map((entry) {
+            data: coordinates.entries.where((entry) => entry.key.isNotEmpty).map((entry) {
                     return [i18n(context, entry.key), entry.value];
                   }).toList(),
             flexValues: [1, 1]

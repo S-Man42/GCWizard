@@ -23,14 +23,14 @@ class RabbitOutput {
 
 RabbitOutput cryptRabbit(String? input, InputFormat inputFormat, String key, InputFormat keyFormat,
     String initializationVector, InputFormat ivFormat, OutputFormat outputFormat) {
-  if (input == null || input == '') return RabbitOutput('', null, null, ErrorCode.OK);
+  if (input == null || input.isEmpty) return RabbitOutput('', null, null, ErrorCode.OK);
 
   var inputList = rc4.convertInputToIntList(input, _convertInputFormatEnum(inputFormat));
   if (inputList == null || inputList.length == 0) return RabbitOutput('', null, null, ErrorCode.INPUT_FORMAT);
   var inputData = _generateData(inputList, inputList.length);
   if (inputData == null || inputData.length == 0) return RabbitOutput('', null, null, ErrorCode.INPUT_FORMAT);
 
-  if (key == null || key == '') return RabbitOutput('', null, null, ErrorCode.MISSING_KEY);
+  if (key == null || key.isEmpty) return RabbitOutput('', null, null, ErrorCode.MISSING_KEY);
 
   var keyList = rc4.convertInputToIntList(key, _convertInputFormatEnum(keyFormat));
   if (keyList == null || keyList.length == 0) return RabbitOutput('', null, null, ErrorCode.KEY_FORMAT);

@@ -473,18 +473,18 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       case WHERIGO.OBFUSCATORTABLE:
         return Column(
           children: <Widget>[
-            if (_WherigoCartridgeLUA.ObfuscatorTable == '')
+            if (_WherigoCartridgeLUA.ObfuscatorTable.isEmpty)
               GCWOutput(
                 child: i18n(context, 'wherigo_data_nodata'),
                 suppressCopyButton: true,
               ),
-            if (_WherigoCartridgeLUA.ObfuscatorTable != '')
+            if (_WherigoCartridgeLUA.ObfuscatorTable.isNotEmpty)
               GCWOutput(
                 title: i18n(context, 'wherigo_header_obfuscatorfunction'),
                 child: _WherigoCartridgeLUA.ObfuscatorFunction,
                 suppressCopyButton: (_WherigoCartridgeLUA.ObfuscatorFunction == 'NO_OBFUSCATOR'),
               ),
-            if (_WherigoCartridgeLUA.ObfuscatorTable != '')
+            if (_WherigoCartridgeLUA.ObfuscatorTable.isNotEmpty)
               GCWOutput(
                 title: 'dTable',
                 child: GCWOutputText(
@@ -901,7 +901,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               ),
             ],
           ),
-          _buildImageView(_WherigoCartridgeLUA.Characters[_characterIndex - 1].CharacterMediaName != '' &&
+          _buildImageView(_WherigoCartridgeLUA.Characters[_characterIndex - 1].CharacterMediaName.isNotEmpty &&
               _WherigoCartridgeGWC.MediaFilesContents.length > 1, _WherigoCartridgeLUA.Characters[_characterIndex - 1].CharacterMediaName),
             GCWColumnedMultilineOutput(
               data: _outputCharacter(_WherigoCartridgeLUA.Characters[_characterIndex - 1]),
@@ -983,7 +983,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               ),
             ],
           ),
-          _buildImageView((_WherigoCartridgeLUA.Zones[_zoneIndex - 1].ZoneMediaName != '') &&
+          _buildImageView((_WherigoCartridgeLUA.Zones[_zoneIndex - 1].ZoneMediaName.isNotEmpty) &&
               _WherigoCartridgeGWC.MediaFilesContents.length > 1, _WherigoCartridgeLUA.Zones[_zoneIndex - 1].ZoneMediaName),
             GCWColumnedMultilineOutput(
               data: _outputZone(_WherigoCartridgeLUA.Zones[_zoneIndex - 1]),
@@ -1039,7 +1039,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           ),
 
           // Widget for Answer-Details
-          _buildImageView(_WherigoCartridgeLUA.Inputs[_inputIndex - 1].InputMedia != '' &&
+          _buildImageView(_WherigoCartridgeLUA.Inputs[_inputIndex - 1].InputMedia.isNotEmpty &&
               _WherigoCartridgeGWC.MediaFilesContents.length > 1, _WherigoCartridgeLUA.Inputs[_inputIndex - 1].InputMedia),
             GCWColumnedMultilineOutput(
               data: _outputInput(_WherigoCartridgeLUA.Inputs[_inputIndex - 1]),
@@ -1158,7 +1158,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               ),
             ],
           ),
-          _buildImageView(_WherigoCartridgeLUA.Tasks[_taskIndex - 1].TaskMedia != '' &&
+          _buildImageView(_WherigoCartridgeLUA.Tasks[_taskIndex - 1].TaskMedia.isNotEmpty &&
               _WherigoCartridgeGWC.MediaFilesContents.length > 1, _WherigoCartridgeLUA.Tasks[_taskIndex - 1].TaskMedia),
             GCWColumnedMultilineOutput(
               data: _outputTask(_WherigoCartridgeLUA.Tasks[_taskIndex - 1]),
@@ -1298,7 +1298,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               ),
             ],
           ),
-          _buildImageView(_WherigoCartridgeLUA.Items[_itemIndex - 1].ItemMedia != '' &&
+          _buildImageView(_WherigoCartridgeLUA.Items[_itemIndex - 1].ItemMedia.isNotEmpty &&
               _WherigoCartridgeGWC.MediaFilesContents.length > 1, _WherigoCartridgeLUA.Items[_itemIndex - 1].ItemMedia),
             GCWColumnedMultilineOutput(
               data: _outputItem(_WherigoCartridgeLUA.Items[_itemIndex - 1]),
@@ -1420,7 +1420,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
            [
               i18n(context, 'wherigo_output_medianame'),
               data.ZoneMediaName +
-                  (data.ZoneMediaName != ''
+                  (data.ZoneMediaName.isNotEmpty
                       ? (NameToObject[data.ZoneMediaName] != null
                           ? ' ⬌ ' + NameToObject[data.ZoneMediaName]!.ObjectName
                           : '')
@@ -1431,7 +1431,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
            [
               i18n(context, 'wherigo_output_iconname'),
               data.ZoneIconName +
-                  (data.ZoneIconName != ''
+                  (data.ZoneIconName.isNotEmpty
                       ? (NameToObject[data.ZoneIconName] != null
                           ? ' ⬌ ' + NameToObject[data.ZoneIconName]!.ObjectName
                           : '')
@@ -1472,7 +1472,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
      if (_expertMode)  [
               i18n(context, 'wherigo_output_medianame'),
               data.ItemMedia +
-                  (data.ItemMedia != ''
+                  (data.ItemMedia.isNotEmpty
                       ? (NameToObject[data.ItemMedia] != null ? ' ⬌ ' + NameToObject[data.ItemMedia]!.ObjectName : '')
                       : '')
             ],
@@ -1480,7 +1480,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
    [
               i18n(context, 'wherigo_output_iconname'),
               data.ItemIcon +
-                  (data.ItemIcon != ''
+                  (data.ItemIcon.isNotEmpty
                       ? (NameToObject[data.ItemIcon] != null ? ' ⬌ ' + NameToObject[data.ItemIcon]!.ObjectName : '')
                       : '')
             ]
@@ -1498,7 +1498,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     result.add([
       i18n(context, 'wherigo_output_container'),
       data.ItemContainer +
-          (data.ItemContainer != ''
+          (data.ItemContainer.isNotEmpty
               ? (NameToObject[data.ItemContainer] != null ? ' ⬌ ' + NameToObject[data.ItemContainer]!.ObjectName : '')
               : '')
     ]);
@@ -1518,7 +1518,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
      [
               i18n(context, 'wherigo_output_medianame'),
               data.TaskMedia +
-                  (data.TaskMedia != ''
+                  (data.TaskMedia.isNotEmpty
                       ? (NameToObject[data.TaskMedia] != null ? ' ⬌ ' + NameToObject[data.TaskMedia]!.ObjectName : '')
                       : '')
             ]
@@ -1526,7 +1526,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       if (_expertMode)  [
               i18n(context, 'wherigo_output_iconname'),
               data.TaskIcon +
-                  (data.TaskIcon != ''
+                  (data.TaskIcon.isNotEmpty
                       ? (NameToObject[data.TaskIcon] != null ? ' ⬌ ' + NameToObject[data.TaskIcon]!.ObjectName : '')
                       : '')
             ]
@@ -1562,7 +1562,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
      [
               i18n(context, 'wherigo_output_medianame'),
               data.CharacterMediaName +
-                  (data.CharacterMediaName != ''
+                  (data.CharacterMediaName.isNotEmpty
                       ? (NameToObject[data.CharacterMediaName] != null
                           ? ' ⬌ ' + NameToObject[data.CharacterMediaName]!.ObjectName
                           : '')
@@ -1572,7 +1572,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       if (_expertMode) [
               i18n(context, 'wherigo_output_iconname'),
               data.CharacterIconName +
-                  (data.CharacterIconName != ''
+                  (data.CharacterIconName.isNotEmpty
                       ? (NameToObject[data.CharacterIconName] != null
                           ? ' ⬌ ' + NameToObject[data.CharacterIconName]!.ObjectName
                           : '')
@@ -1618,7 +1618,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       if (_expertMode)  [
               i18n(context, 'wherigo_output_medianame'),
               data.InputMedia +
-                  (data.InputMedia != ''
+                  (data.InputMedia.isNotEmpty
                       ? (NameToObject[data.InputMedia] != null ? ' ⬌ ' + NameToObject[data.InputMedia]!.ObjectName : '')
                       : '')
             ]
@@ -2212,9 +2212,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
           // check if GWC and LUA are from the same cartridge
           if ((_WherigoCartridgeGWC.CartridgeGUID != _WherigoCartridgeLUA.CartridgeGUID &&
-                  _WherigoCartridgeLUA.CartridgeGUID != '') &&
+                  _WherigoCartridgeLUA.CartridgeGUID.isNotEmpty) &&
               (_WherigoCartridgeGWC.CartridgeLUAName != _WherigoCartridgeLUA.CartridgeLUAName &&
-                  _WherigoCartridgeLUA.CartridgeLUAName != '')) {
+                  _WherigoCartridgeLUA.CartridgeLUAName.isNotEmpty)) {
             // files belong to different cartridges
             _WherigoCartridgeLUA = _resetLUA('wherigo_error_diff_gwc_lua_1');
             _fileLoadedState = FILE_LOAD_STATE.GWC;
@@ -2247,9 +2247,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
               // check if GWC and LUA are from the same cartridge
               if ((_WherigoCartridgeGWC.CartridgeGUID != _WherigoCartridgeLUA.CartridgeGUID &&
-                      _WherigoCartridgeLUA.CartridgeGUID != '') &&
+                      _WherigoCartridgeLUA.CartridgeGUID.isNotEmpty) &&
                   (_WherigoCartridgeGWC.CartridgeLUAName != _WherigoCartridgeLUA.CartridgeLUAName &&
-                      _WherigoCartridgeLUA.CartridgeLUAName != '')) {
+                      _WherigoCartridgeLUA.CartridgeLUAName.isNotEmpty)) {
                 // files belong to different cartridges
                 _WherigoCartridgeLUA = _resetLUA('wherigo_error_diff_gwc_lua_1');
                 _fileLoadedState = FILE_LOAD_STATE.GWC;
@@ -2518,13 +2518,13 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             ,
         [
           i18n(context, 'wherigo_header_cartridgename'),
-          _WherigoCartridgeGWC.CartridgeLUAName == ''
+          _WherigoCartridgeGWC.CartridgeLUAName.isEmpty
               ? _WherigoCartridgeLUA.CartridgeLUAName
               : _WherigoCartridgeGWC.CartridgeLUAName
         ],
         if (_expertMode)  [
                 i18n(context, 'wherigo_header_cartridgeguid'),
-                _WherigoCartridgeGWC.CartridgeGUID == ''
+                _WherigoCartridgeGWC.CartridgeGUID.isEmpty
                     ? _WherigoCartridgeLUA.CartridgeGUID
                     : _WherigoCartridgeGWC.CartridgeGUID
               ]

@@ -115,7 +115,7 @@ class _Kitchen {
       switch (m.type) {
         case _CHEF_Method.Take:
         case _CHEF_Method.Nehmen:
-          if ((input.join('') != '') && (ingredientIndex <= input.length - 1)) {
+          if ((input.join('').isNotEmpty) && (ingredientIndex <= input.length - 1)) {
             ingredients[m.ingredient].setAmount(int.parse(input[ingredientIndex]));
             ingredientIndex++;
           } else {
@@ -338,7 +338,7 @@ class _Kitchen {
 
         case _CHEF_Method.SetAside:
         case _CHEF_Method.BeiseiteStellen:
-          if (loops.length == 0) {
+          if (loops.isEmpty) {
             valid = false;
             error.addAll([
               _CHEF_Messages[language]['common_programming_error_runtime'],
@@ -429,7 +429,7 @@ class _Kitchen {
       if (recipe.getServes() > 0 && !deepfrozen) {
         _serve(recipe.getServes());
       }
-      if (mixingbowls.length > 0) {
+      if (mixingbowls.isNotEmpty) {
         return mixingbowls[0];
       } // end of auxiliary recipe
       //return null;  // end of mainrecipe

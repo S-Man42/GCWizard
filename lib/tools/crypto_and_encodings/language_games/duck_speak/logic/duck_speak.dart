@@ -22,7 +22,7 @@ final halfByteToDuck = {
 final duckToHalfByte = switchMapKeyValue(halfByteToDuck);
 
 String encodeDuckSpeak(text) {
-  if (text == null || text == '') return '';
+  if (text == null || text.isEmpty) return '';
 
   var out = [];
   text.codeUnits.forEach((ascii) {
@@ -34,7 +34,7 @@ String encodeDuckSpeak(text) {
 }
 
 String decodeDuckSpeak(text) {
-  if (text == null || text == '') return '';
+  if (text == null || text.isEmpty) return '';
 
   var decimal = [];
   text.split(RegExp(r'\s+')).forEach((nak) {

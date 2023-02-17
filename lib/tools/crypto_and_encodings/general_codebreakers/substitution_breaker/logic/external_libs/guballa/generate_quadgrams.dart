@@ -153,7 +153,7 @@ double _calc_fitness(Iterable<int> iterator) {
 ///          greater than 100 indicate (nonsense) text with too much frequently used
 ///          quadgrams (e.g., ``tionioningatheling``).
 double calc_fitness(String txt, {String alphabet = DEFAULT_ALPHABET, List<int> quadgrams = null}) {
-  if (txt == null || txt == '') return null;
+  if (txt == null || txt.isEmpty) return null;
 
   if (alphabet != null) _alphabet = alphabet;
   if (_alphabet == null) _alphabet = DEFAULT_ALPHABET;

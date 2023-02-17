@@ -99,7 +99,7 @@ VigenereBreakerResult _generateFile(File bigrams_fh, String className, String al
   var replacementListString = "null";
   var first = true;
 
-  if (replacementList != null && replacementList.length > 0) {
+  if (replacementList != null && replacementList.isNotEmpty) {
     var sb = new StringBuffer();
     sb.write("{");
     replacementList.forEach((key, value) {
@@ -127,7 +127,7 @@ VigenereBreakerResult _generateFile(File bigrams_fh, String className, String al
 
   bigrams_fh.writeAsStringSync(sb.toString());
 
-  if (bigrams == null || bigrams.length == 0)
+  if (bigrams == null || bigrams.isEmpty)
     return VigenereBreakerResult(alphabet: alphabet, errorCode: VigenereBreakerErrorCode.WRONG_GENERATE_TEXT);
   else
     return VigenereBreakerResult(alphabet: alphabet, errorCode: VigenereBreakerErrorCode.OK);
@@ -185,7 +185,7 @@ Map<String, int> _fillSourceList(File source_fh) {
 
 Map<String, int> _replaceBigramEntrys(
     Map<String, int> bigramsSource, String alphabet, Map<String, String> replacementList) {
-  if (replacementList == null || replacementList.length == 0) return bigramsSource;
+  if (replacementList == null || replacementList.isEmpty) return bigramsSource;
 
   for (var i = bigramsSource.length - 1; i >= 0; i--) {
     if (replacementList.keys.contains(bigramsSource.keys.elementAt(i)[0]) ||

@@ -66,7 +66,7 @@ Future<Uint8List?> createImageAsync(GCWAsyncExecuterParameters? jobData) async {
 
 Future<Uint8List?> _createImage(Uint8List? highImage, Uint8List? lowImage, String? input, int ditDuration,
     {SendPort? sendAsyncPort}) async {
-  if (input == null || input == '') return null;
+  if (input == null || input.isEmpty) return null;
   if (highImage == null || lowImage == null) return null;
   if (ditDuration <= 0) return null;
 

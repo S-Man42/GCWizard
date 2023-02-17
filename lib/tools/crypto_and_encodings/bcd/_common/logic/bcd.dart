@@ -239,7 +239,7 @@ enum BCDType {
 }
 
 String encodeBCD(String input, BCDType type) {
-  if (input == null || input == '') return '';
+  if (input == null || input.isEmpty) return '';
 
   var bcdMap;
   switch (type) {

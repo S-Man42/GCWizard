@@ -228,7 +228,7 @@ enum _KAROL_DIRECTION { SOUTH, NORTH, EAST, WEST }
 String KarolRobotOutputEncode(String output, KAREL_LANGUAGES language) {
   String program = '';
   int lineLength = 0;
-  if (output == '' || output == null) return '';
+  if (output.isEmpty || output == null) return '';
 
   output.trim().toUpperCase().split('\n').forEach((line) {
     line.split('').forEach((char) {
@@ -295,7 +295,7 @@ String KarolRobotOutputEncode(String output, KAREL_LANGUAGES language) {
 }
 
 String KarolRobotOutputDecode(String program) {
-  if (program == '' || program == null) return '';
+  if (program.isEmpty || program == null) return '';
 
   int x = 1;
   int y = 1;

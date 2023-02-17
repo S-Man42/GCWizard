@@ -77,13 +77,13 @@ Map<String, int> _createAlpabetMap(bool with4, bool onlyNumbers) {
 }
 
 String decodeEnclosedAreas(String input, {bool with4, onlyNumbers: false}) {
-  if (input == null || input == '') return '';
+  if (input == null || input.isEmpty) return '';
 
   var alphabetMap = _createAlpabetMap(with4, onlyNumbers);
 
   return input
       .split(RegExp(onlyNumbers ? r'[^0-9]+' : r'\s+'))
-      .where((block) => block != null && block.length > 0)
+      .where((block) => block != null && block.isNotEmpty)
       .map((block) => _decodeEnclosedAreaBlock(block, alphabetMap))
       .join(' ');
 }

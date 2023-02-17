@@ -82,7 +82,7 @@ class WhitespaceState {
 Future<WhitespaceResult> interpreterWhitespace(String code, String inp,
     {int timeOut = 30000, WhitespaceState continueState}) async {
   try {
-    if (code == null || code.length == 0) return WhitespaceResult();
+    if (code == null || code.isEmpty) return WhitespaceResult();
 
     _timeOut = max(timeOut, 100);
 
@@ -277,7 +277,7 @@ class _Interpreter {
       _pos = 0;
       _loading = false;
       run();
-    } else if ((_return_positions.length > 0) && (_pos != 9999999)) {
+    } else if ((_return_positions.isNotEmpty) && (_pos != 9999999)) {
       if (!_loading) throw new Exception('common_programming_error_invalid_program');
     } else if (_pos == _code_length) {
       if (!_loading) throw new Exception('RuntimeError: Unclean termination');
@@ -438,7 +438,7 @@ class _IO {
   void _input_char() {
     _input_required = true;
     _input_required_number = false;
-    if (_input.length == 0) throw new Exception(_inputRequired);
+    if (_input.isEmpty) throw new Exception(_inputRequired);
     var a = _input_pop(1);
     var b = _stack_pop();
 
@@ -449,7 +449,7 @@ class _IO {
   void _input_num() {
     _input_required = true;
     _input_required_number = true;
-    if (_input.length == 0) throw new Exception(_inputRequired);
+    if (_input.isEmpty) throw new Exception(_inputRequired);
 
     var b = _stack_pop();
     var index = _input.indexOf('\n');
@@ -463,7 +463,7 @@ class _IO {
   }
 
   String _input_pop(int length) {
-    if (_input.length == 0) return '';
+    if (_input.isEmpty) return '';
     var item = _input.sublist(0, min(length, _input.length)).join();
     _input = _input.sublist(min(length, _input.length));
     //var item = _input[0];
@@ -587,7 +587,7 @@ class _FlowControl {
   }
 
   void _exit_subroutine() {
-    if (_return_positions.length > 0) {
+    if (_return_positions.isNotEmpty) {
       _pos = _return_positions_pop();
     } else {
       if (!_loading) throw new Exception('common_programming_error_invalid_opcode');
@@ -742,7 +742,7 @@ void _stack_append(int item) {
 }
 
 int _stack_pop() {
-  if (_stack.length == 0) return null;
+  if (_stack.isEmpty) return null;
   var item = _stack.first;
   _stack.removeAt(0);
   _dbgOutput('stack pop', item.toString());

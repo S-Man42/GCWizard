@@ -103,7 +103,7 @@ class BefungeState extends State<Befunge> {
     if (_currentMode == GCWSwitchPosition.left) {
       BefungeOutput output = interpretBefunge(_currentInterpret, input: _currentInput);
       String outputText = '';
-      if (output.Error == '')
+      if (output.Error.isEmpty)
         outputText = output.Output;
       else
         outputText = output.Output + '\n' + i18n(context, output.Error);

@@ -178,7 +178,7 @@ class GCWMapViewState extends State<GCWMapView> {
       });
     }
 
-    var tileLayerOptions = _currentLayer == _LayerType.MAPBOX_SATELLITE && _mapBoxToken != null && _mapBoxToken != ''
+    var tileLayerOptions = _currentLayer == _LayerType.MAPBOX_SATELLITE && _mapBoxToken != null && _mapBoxToken.isNotEmpty
         ? TileLayerOptions(
             urlTemplate: 'https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}@2x.jpg90?access_token={accessToken}',
             additionalOptions: {'accessToken': _mapBoxToken},
@@ -671,7 +671,7 @@ class GCWMapViewState extends State<GCWMapView> {
                 ? _LayerType.MAPBOX_SATELLITE
                 : _LayerType.OPENSTREETMAP_MAPNIK;
 
-            if (_currentLayer == _LayerType.MAPBOX_SATELLITE && (_mapBoxToken == null || _mapBoxToken == '')) {
+            if (_currentLayer == _LayerType.MAPBOX_SATELLITE && (_mapBoxToken == null || _mapBoxToken.isEmpty)) {
               _loadToken('mapbox').then((token) {
                 setState(() {
                   _mapBoxToken = token;

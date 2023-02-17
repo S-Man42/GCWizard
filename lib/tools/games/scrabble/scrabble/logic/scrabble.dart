@@ -9,7 +9,7 @@ List<int> _textToValues(String? text, String scrabbleVersion, _SCRABBLE_MODE mod
   ScrabbleSet? set = scrabbleSets[scrabbleVersion];
   if (set == null) return [];
 
-  while (text!.length > 0) {
+  while (text!.isNotEmpty) {
     //Some Scrabble Versions include triple letters (e.g. Klingon has "tlh" or German (Gender) has "*IN")
     //Some Scrabble Versions include double letters (e.g. Spanish has "LL" or "RR" tiles)
 

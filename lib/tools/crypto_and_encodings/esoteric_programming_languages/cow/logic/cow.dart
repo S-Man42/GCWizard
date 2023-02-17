@@ -99,7 +99,7 @@ int inputPointer = 0;
 String STDOUT = '';
 
 CowOutput interpretCow(String code, {String STDIN}) {
-  if (code == null || code.length == 0) return CowOutput('', '', []);
+  if (code == null || code.isEmpty) return CowOutput('', '', []);
 
   code = code.replaceAll(RegExp(r'\s'), '');
   List<int> opcodesArray = <int>[];

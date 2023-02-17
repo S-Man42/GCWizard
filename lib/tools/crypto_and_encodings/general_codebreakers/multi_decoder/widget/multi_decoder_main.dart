@@ -39,7 +39,7 @@ class MultiDecoderState extends State<MultiDecoder> {
 
   @override
   Widget build(BuildContext context) {
-    if (_firstBuild && model.multiDecoderTools.length == 0) {
+    if (_firstBuild && model.multiDecoderTools.isEmpty) {
       _initializeMultiToolDecoder(context);
       _firstBuild = false;
     }
@@ -58,7 +58,7 @@ class MultiDecoderState extends State<MultiDecoder> {
                       controller: _controller,
                       onChanged: (text) {
                         _currentInput = text;
-                        if (_currentInput.length == 0) {
+                        if (_currentInput.isEmpty) {
                           setState(() {
                             _currentOutput = Container();
                           });
@@ -142,7 +142,7 @@ class MultiDecoderState extends State<MultiDecoder> {
     }).join(', ');
 
     var result = tool.name;
-    if (optionValues.length > 0) result += ' ($optionValues)';
+    if (optionValues.isNotEmpty) result += ' ($optionValues)';
 
     return result;
   }
@@ -181,7 +181,7 @@ class MultiDecoderState extends State<MultiDecoder> {
         return FutureBuilder(
             future: result,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (snapshot.hasData && snapshot.data is Uint8List && ((snapshot.data as Uint8List).length > 0)) {
+              if (snapshot.hasData && snapshot.data is Uint8List && ((snapshot.data as Uint8List).isNotEmpty)) {
                 return GCWOutput(
                     title: _toolTitle(tool),
                     child: GCWImageView(

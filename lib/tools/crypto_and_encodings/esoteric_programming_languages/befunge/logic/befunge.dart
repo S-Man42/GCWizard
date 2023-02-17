@@ -65,7 +65,7 @@ class Stack {
   }
 
   bool isEmpty() {
-    return (content.length == 0);
+    return (content.isEmpty);
   }
 
   String toString() {
@@ -119,7 +119,7 @@ bool _isDigit(String char) {
 }
 
 BefungeOutput interpretBefunge(String program, {String input}) {
-  if (program == '' || program == null)
+  if (program.isEmpty || program == null)
     return BefungeOutput(
         Output: '', Error: '', BefungeStack: _BefungeStack, PC: _PC, Command: _Command, Mnemonic: _Mnemonic);
 
@@ -263,7 +263,7 @@ BefungeOutput interpretBefunge(String program, {String input}) {
               a = stack.pop();
               b = stack.pop();
               if (a == 0) {
-                if (STDIN.length == 0) {
+                if (STDIN.isEmpty) {
                   _BefungeStack.add(stack.toString());
                   return BefungeOutput(
                       Output: STDOUT.join(''),
@@ -376,7 +376,7 @@ BefungeOutput interpretBefunge(String program, {String input}) {
               break;
 
             case '&': // input decimal
-              if (STDIN.length == 0 || STDIN.join('') == '') {
+              if (STDIN.isEmpty || STDIN.join('').isEmpty) {
                 _BefungeStack.add(stack.toString());
                 return BefungeOutput(
                     Output: STDOUT.join(''),
@@ -404,7 +404,7 @@ BefungeOutput interpretBefunge(String program, {String input}) {
               break;
 
             case '~': // input char
-              if (STDIN.length == 0 || STDIN.join('') == '') {
+              if (STDIN.isEmpty || STDIN.join('').isEmpty) {
                 _BefungeStack.add(stack.toString());
                 return BefungeOutput(
                     Output: STDOUT.join(''),
@@ -554,7 +554,7 @@ bool _correctBefungeProgramLength(String program) {
 }
 
 String generateBefunge(String OutputText) {
-  if (OutputText == '' || OutputText == null) return '';
+  if (OutputText.isEmpty || OutputText == null) return '';
 
   String code = '';
 

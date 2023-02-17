@@ -97,7 +97,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
 
   FILE_LOAD_STATE checksToDo = FILE_LOAD_STATE.NULL;
 
-  if ((byteListLUA != [] || byteListLUA != null || _LUAFile != '')) checksToDo = FILE_LOAD_STATE.LUA;
+  if ((byteListLUA != [] || byteListLUA != null || _LUAFile.isNotEmpty)) checksToDo = FILE_LOAD_STATE.LUA;
 
   if (checksToDo == FILE_LOAD_STATE.NULL) {
     _ResultsLUA.add('wherigo_error_empty_lua');
@@ -1706,7 +1706,7 @@ List<String> _getAnswers(
     return results;
   } else if (line.trim().startsWith('if Wherigo.NoCaseEquals(') ||
       line.trim().startsWith('elseif Wherigo.NoCaseEquals(')) {
-    if (_answerVariable == '') _answerVariable = _getVariable(lineBefore);
+    if (_answerVariable.isEmpty) _answerVariable = _getVariable(lineBefore);
     line = line
         .trim()
         .replaceAll('if ', '')
@@ -1838,7 +1838,7 @@ String _getVariable(String line) {
 }
 
 DateTime? _normalizeDate(String dateString) {
-  if (dateString == null || dateString == '' || dateString == '1/1/0001 12:00:00 AM') return null;
+  if (dateString == null || dateString.isEmpty || dateString == '1/1/0001 12:00:00 AM') return null;
 
   List<String> dateTime = dateString.split(' ');
   List<String> date = dateTime[0].split('/');

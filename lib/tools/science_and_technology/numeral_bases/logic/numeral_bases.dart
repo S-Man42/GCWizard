@@ -185,7 +185,7 @@ BigInt? _intBaseToDec(String num, int base, String alphabet) {
   BigInt i = BigInt.zero;
   int j = 0;
 
-  while (num.length > 0) {
+  while (num.isNotEmpty) {
     i += BigInt.from(alphabet.indexOf(num[num.length - 1])) * BigInt.from(base).pow(j);
     j++;
     num = num.substring(0, num.length - 1);
@@ -250,7 +250,7 @@ double? _doubleBaseToDec(String num, int base, String alphabet) {
   double i = 0;
   int j = -1;
 
-  while (num.length > 0) {
+  while (num.isNotEmpty) {
     i += alphabet.indexOf(num[0]) * pow(base, j);
     j--;
 

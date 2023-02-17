@@ -98,7 +98,7 @@ class _NotesSegmentDisplay extends NSegmentDisplay {
                 if (key == '' || segmentActive(currentSegments, key))
                   pathL.addPath(
                       _createLine(
-                          key != '', size, Offset(0, counter * LINE_DISTANCE + LINE_OFFSET_Y), LINE_OFFSET_X, readOnly),
+                          key.isNotEmpty, size, Offset(0, counter * LINE_DISTANCE + LINE_OFFSET_Y), LINE_OFFSET_X, readOnly),
                       Offset(0, 0));
                 counter++;
               });

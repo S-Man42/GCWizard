@@ -131,7 +131,7 @@ AbstractMultiDecoderTool _multiDecoderToolToGCWMultiDecoderTool(
   AbstractMultiDecoderTool gcwTool;
 
   var options = _initialOptions[mdtTool.internalToolName] ?? <String, Object>{};
-  if (mdtTool.options.length > 0) options = _multiDecoderToolOptionToGCWMultiDecoderToolOptions(mdtTool.options);
+  if (mdtTool.options.isNotEmpty) options = _multiDecoderToolOptionToGCWMultiDecoderToolOptions(mdtTool.options);
 
   switch (mdtTool.internalToolName) {
     case MDT_INTERNALNAMES_ALPHABETVALUES:

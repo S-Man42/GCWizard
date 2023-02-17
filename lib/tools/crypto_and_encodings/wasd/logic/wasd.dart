@@ -115,7 +115,7 @@ final Map<String, List<String>> WASD_ENCODE = {
 final Map<List<String>, String> WASD_DECODE = switchMapKeyValue(WASD_ENCODE);
 
 String encodeWASD(String? input, List<String> controlSet) {
-  if (input == '' || input == null) return '';
+  if (input == null || input.isEmpty) return '';
 
   controlSet = _normalizeControlSet(controlSet);
 
@@ -151,7 +151,7 @@ String _normalizeDecodingInput(String input, List<String> controlSet) {
 }
 
 String decodeWASD(String? input, List<String> controlSet) {
-  if (input == '' || input == null) return '';
+  if (input == null || input.isEmpty) return '';
 
   controlSet = _normalizeControlSet(controlSet);
 
@@ -160,7 +160,7 @@ String decodeWASD(String? input, List<String> controlSet) {
   String result = '';
 
   _normalizeDecodingInput(input, controlSet).split(' ').forEach((element) {
-    if (element != '') {
+    if (element.isNotEmpty) {
       WASD_DECODE.forEach((key, value) {
         if (key.contains(element)) {
           found = true;
@@ -192,7 +192,7 @@ _normalizeControlSet(List<String> controlSet) {
 }
 
 String decodeWASDGraphic(String input, List<String> controlSet) {
-  if (input == '' || input == null) return '';
+  if (input == null || input.isEmpty) return '';
 
   controlSet = _normalizeControlSet(controlSet);
 

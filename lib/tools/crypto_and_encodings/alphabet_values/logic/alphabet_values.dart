@@ -50,7 +50,7 @@ class AlphabetValues {
 
     var maxKeyLength = entries.first.key.length;
 
-    while (text.length > 0) {
+    while (text.isNotEmpty) {
       String value;
       int i = 0;
       for (i = min(maxKeyLength, text.length); i >= 1; i--) {

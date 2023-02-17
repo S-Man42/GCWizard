@@ -79,7 +79,7 @@ class CistercianNumbersState extends State<CistercianNumbers> {
     Map<String, bool> currentDisplay;
 
     var displays = _currentDisplays; //<List<String>>[];
-    if (displays != null && displays.length > 0)
+    if (displays != null && displays.isNotEmpty)
       currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [],
           key: (e) => e, value: (e) => true);
     else
@@ -131,7 +131,7 @@ class CistercianNumbersState extends State<CistercianNumbers> {
             icon: Icons.backspace,
             onPressed: () {
               setState(() {
-                if (_currentDisplays.length > 0) _currentDisplays.removeLast();
+                if (_currentDisplays.isNotEmpty) _currentDisplays.removeLast();
               });
             },
           ),

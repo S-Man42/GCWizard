@@ -13,7 +13,7 @@ class PolybiosOutput {
 }
 
 String _sanitizeAlphabet(String alphabet) {
-  if (alphabet == null || alphabet == '') return '';
+  if (alphabet == null || alphabet.isEmpty) return '';
 
   alphabet += alphabet_AZ.keys.join();
   alphabet += alphabet_09.keys.join();

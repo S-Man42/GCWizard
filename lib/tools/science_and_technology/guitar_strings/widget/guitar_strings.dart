@@ -142,7 +142,7 @@ class GuitarStringsState extends State<GuitarStrings> {
             icon: Icons.backspace,
             onPressed: () {
               setState(() {
-                if (_currentTones.length > 0) _currentTones.removeLast();
+                if (_currentTones.isNotEmpty) _currentTones.removeLast();
               });
             },
           ),
@@ -212,7 +212,7 @@ class GuitarStringsState extends State<GuitarStrings> {
               style: gcwMonotypeTextStyle(),
               maxLines: 6,
             )),
-            outputText != null && outputText.length > 0
+            outputText != null && outputText.isNotEmpty
                 ? GCWIconButton(
                     size: IconButtonSize.SMALL,
                     icon: Icons.content_copy,

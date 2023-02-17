@@ -234,7 +234,7 @@ String encodeText(String input, String text, encodeOutFormat format,
 
   if (onlyFirstWordLetter)
     wordList.forEach((element) {
-      if (element.Text.length > 0) element.Text = element.Text[0];
+      if (element.Text.isNotEmpty) element.Text = element.Text[0];
     });
 
   text.split('').forEach((letter) {

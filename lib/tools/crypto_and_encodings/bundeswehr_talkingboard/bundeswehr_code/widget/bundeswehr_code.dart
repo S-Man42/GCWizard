@@ -81,7 +81,7 @@ class BundeswehrTalkingBoardObfuscationState extends State<BundeswehrTalkingBoar
                 hintText: 'AB EF HG IJ MA ...',
                 onChanged: (text) {
                   setState(() {
-                    _currentDecode = (text == null || text == '') ? '' : _cryptedTextMaskFormatter.getMaskedText();
+                    _currentDecode = (text == null || text.isEmpty) ? '' : _cryptedTextMaskFormatter.getMaskedText();
                   });
                 },
               )
@@ -131,7 +131,7 @@ class BundeswehrTalkingBoardObfuscationState extends State<BundeswehrTalkingBoar
                         onChanged: (text) {
                           setState(() {
                             _currentNumeralCodeXaxisCustom =
-                                (text == null || text == '') ? '' : _numeralCodeyXAxisCodeMaskFormatter.getMaskedText();
+                                (text == null || text.isEmpty) ? '' : _numeralCodeyXAxisCodeMaskFormatter.getMaskedText();
                           });
                         },
                       ),
@@ -142,7 +142,7 @@ class BundeswehrTalkingBoardObfuscationState extends State<BundeswehrTalkingBoar
                         onChanged: (text) {
                           setState(() {
                             _currentNumeralCodeYaxisCustom =
-                                (text == null || text == '') ? '' : _numeralCodeYAxisCodeMaskFormatter.getMaskedText();
+                                (text == null || text.isEmpty) ? '' : _numeralCodeYAxisCodeMaskFormatter.getMaskedText();
                           });
                         },
                       ),
@@ -186,7 +186,7 @@ class BundeswehrTalkingBoardObfuscationState extends State<BundeswehrTalkingBoar
     List<String> _numeralCode = [];
     Map<String, List<String>> _tableEncoding = {};
     if (custom) {
-      if (xAxis == null || xAxis == '' || yAxis == null || yAxis == '') {
+      if (xAxis == null || xAxis.isEmpty || yAxis == null || yAxis.isEmpty) {
         _numeralCodeString = BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CUSTOM_NUMERAL_TABLE;
         return;
       }
@@ -243,7 +243,7 @@ class BundeswehrTalkingBoardObfuscationState extends State<BundeswehrTalkingBoar
       var random = new Random();
       int rnd = 0;
       String description = '';
-      while (alphabet.length > 0) {
+      while (alphabet.isNotEmpty) {
         rnd = random.nextInt(alphabet.length);
         description = description + alphabet[rnd];
         alphabet.removeAt(rnd);

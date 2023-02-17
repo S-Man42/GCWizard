@@ -70,7 +70,7 @@ HomophoneOutput encryptHomophoneWithGeneratedKey(String input, Alphabet alphabet
 }
 
 HomophoneOutput _encryptHomophone(String input, Map<String, List<int>> keyMap) {
-  if (input == null || input == '') return HomophoneOutput('', '', HomophoneErrorCode.OK);
+  if (input == null || input.isEmpty) return HomophoneOutput('', '', HomophoneErrorCode.OK);
 
   var error = HomophoneErrorCode.OK;
   if (_checkDoubleKey(keyMap)) {
@@ -117,7 +117,7 @@ HomophoneOutput decryptHomophoneWithGeneratedKey(String input, Alphabet alphabet
 }
 
 HomophoneOutput _decryptHomophone(String input, Map<String, List<int>> keyMap) {
-  if (input == null || input == '') return HomophoneOutput('', '', HomophoneErrorCode.OK);
+  if (input == null || input.isEmpty) return HomophoneOutput('', '', HomophoneErrorCode.OK);
 
   var error = HomophoneErrorCode.OK;
   if (_checkDoubleKey(keyMap)) {

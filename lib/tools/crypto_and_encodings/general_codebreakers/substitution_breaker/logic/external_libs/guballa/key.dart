@@ -46,7 +46,7 @@ class BreakerKey {
   /// return: the alphabet in normalized form (i.e., in lower cases)
   ///      null -> alphabet is invalid
   static String check_alphabet(String alphabet) {
-    if ((alphabet == null) || (alphabet == '')) return null;
+    if ((alphabet == null) || (alphabet.isEmpty)) return null;
     alphabet = alphabet.toLowerCase();
     if (alphabet.length != _set(alphabet).length)
       // alphabet characters must be unique
@@ -60,7 +60,7 @@ class BreakerKey {
   /// return: the validated key in normalized form (i.e., in lower cases)
   ///      null -> key is invalid
   static String check_key(String key, String alphabet) {
-    if ((key == null) || (key == '')) return null;
+    if ((key == null) || (key.isEmpty)) return null;
     key = key.toLowerCase();
     if (key.length != _set(key).length)
       // key characters must be unique

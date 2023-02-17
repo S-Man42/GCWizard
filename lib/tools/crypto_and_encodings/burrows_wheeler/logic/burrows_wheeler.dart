@@ -6,7 +6,7 @@ class BWTOutput {
 }
 
 BWTOutput encryptBurrowsWheeler(String plain, indexChar) {
-  if (plain == '' || plain == null) return BWTOutput('', '');
+  if (plain == null || plain.isEmpty) return BWTOutput('', '');
 
   int len = plain.length;
   List<String> matrix = <String>[];
@@ -36,7 +36,7 @@ BWTOutput encryptBurrowsWheeler(String plain, indexChar) {
 }
 
 BWTOutput decryptBurrowsWheeler(String chiffre, indexChar) {
-  if (chiffre == '' || chiffre == null) return BWTOutput('', '');
+  if (chiffre == null || chiffre.isEmpty) return BWTOutput('', '');
 
   int len = chiffre.length;
   int index = 0;

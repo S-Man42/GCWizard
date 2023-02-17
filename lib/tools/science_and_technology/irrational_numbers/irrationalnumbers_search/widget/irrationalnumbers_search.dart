@@ -77,7 +77,7 @@ class IrrationalNumbersSearchState extends State<IrrationalNumbersSearch> {
 
     _totalCurrentSolutions = _solutions.length;
 
-    if (_solutions.length == 0) return '';
+    if (_solutions.isEmpty) return '';
 
     var selector = (_totalCurrentSolutions != null && _totalCurrentSolutions > 1)
         ? Container(

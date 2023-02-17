@@ -78,7 +78,7 @@ class CowState extends State<Cow> {
     if (_currentMode == GCWSwitchPosition.left) {
       try {
         CowOutput output = interpretCow(_currentText, STDIN: _currentInput);
-        if (output.error == '')
+        if (output.error.isEmpty)
           return output.output;
         else
           return output.output + '\n' + i18n(context, output.error);

@@ -106,7 +106,7 @@ class AmscoState extends State<Amsco> {
           break;
       }
       return GCWDefaultOutput();
-    } else if (_currentOutput.output == '') {
+    } else if (_currentOutput.output.isEmpty) {
       return GCWDefaultOutput();
     }
 
