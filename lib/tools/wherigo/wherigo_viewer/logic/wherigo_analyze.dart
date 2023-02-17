@@ -16,8 +16,8 @@ part 'package:gc_wizard/tools/wherigo/wherigo_viewer/logic/wherigo_analyze_lua.d
 part 'package:gc_wizard/tools/wherigo/wherigo_viewer/logic/wherigo_dataobjects.dart';
 part 'package:gc_wizard/tools/wherigo/wherigo_viewer/logic/wherigo_common.dart';
 
-Future<Map<String, dynamic>> getCartridgeAsync(dynamic jobData) async {
-  var output;
+Future<WherigoCartridge> getCartridgeAsync(dynamic jobData) async {
+  WherigoCartridge output = WherigoCartridge();
   switch (jobData.parameters['dataType']) {
     case DATA_TYPE_GWC:
       output = await getCartridgeGWC(jobData.parameters["byteListGWC"], jobData.parameters["offline"],

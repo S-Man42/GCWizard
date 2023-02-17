@@ -9,8 +9,7 @@ bool isInvalidLUASourcecode(String header) {
   return (!header.replaceAll('(', ' ').replaceAll(')', '').startsWith('require "Wherigo"'));
 }
 
-Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonline, {SendPort? sendAsyncPort}) async {
-  var out = Map<String, dynamic>();
+Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonline, {SendPort? sendAsyncPort}) async {
 
   String _httpCode = '';
   String _httpMessage = '';
@@ -31,8 +30,36 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
         var responseData = await http.Response.fromStream(response);
         _LUAFile = responseData.body;
       } else {
-        out.addAll({
-          'WherigoCartridgeLUA': WherigoCartridgeLUA(
+        return WherigoCartridge(
+            cartridgeGWC: emptyWherigoCartridgeGWC,
+            cartridgeLUA: WherigoCartridgeLUA(
+                LUAFile: _LUAFile,
+                Characters: [],
+                Items: [],
+                Tasks: [],
+                Inputs: [],
+                Zones: [],
+                Timers: [],
+                Media: [],
+                Messages: [],
+                Answers: [],
+                Variables: [],
+                NameToObject: {},
+                ResultStatus: ANALYSE_RESULT_STATUS.ERROR_HTTP,
+                ResultsLUA: [
+                  'wherigo_http_code_http',
+                  HTTP_STATUS[_httpCode] ?? ''
+                ], // TODO Thomas What if status 401 or whatever returns? Please use httpStatus from dart:io instead
+                httpCode: _httpCode,
+                httpMessage: _httpMessage));
+      }
+    } catch (exception) {
+      //SocketException: Connection timed out (OS Error: Connection timed out, errno = 110), address = 192.168.178.93, port = 57582
+      _httpCode = '503';
+      _httpMessage = exception.toString();
+      return WherigoCartridge(
+          cartridgeGWC: emptyWherigoCartridgeGWC,
+          cartridgeLUA: WherigoCartridgeLUA(
               LUAFile: _LUAFile,
               Characters: [],
               Items: [],
@@ -46,36 +73,9 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
               Variables: [],
               NameToObject: {},
               ResultStatus: ANALYSE_RESULT_STATUS.ERROR_HTTP,
-              ResultsLUA: ['wherigo_http_code_http', HTTP_STATUS[_httpCode] ?? ''], // TODO Thomas What if status 401 or whatever returns? Please use httpStatus from dart:io instead
+              ResultsLUA: ['wherigo_code_http_503', _httpMessage],
               httpCode: _httpCode,
-              httpMessage: _httpMessage)
-        });
-        return out;
-      }
-    } catch (exception) {
-      //SocketException: Connection timed out (OS Error: Connection timed out, errno = 110), address = 192.168.178.93, port = 57582
-      _httpCode = '503';
-      _httpMessage = exception.toString();
-      out.addAll({
-        'WherigoCartridgeLUA': WherigoCartridgeLUA(
-            LUAFile: _LUAFile,
-            Characters: [],
-            Items: [],
-            Tasks: [],
-            Inputs: [],
-            Zones: [],
-            Timers: [],
-            Media: [],
-            Messages: [],
-            Answers: [],
-            Variables: [],
-            NameToObject: {},
-            ResultStatus: ANALYSE_RESULT_STATUS.ERROR_HTTP,
-            ResultsLUA: ['wherigo_code_http_503', _httpMessage],
-            httpCode: _httpCode,
-            httpMessage: _httpMessage)
-      });
-      return out;
+              httpMessage: _httpMessage));
     } // end catch exception
   } // end if not offline
   else
@@ -92,26 +92,25 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
 
   if (checksToDo == FILE_LOAD_STATE.NULL) {
     _ResultsLUA.add('wherigo_error_empty_lua');
-    out.addAll({
-      'WherigoCartridgeLUA': WherigoCartridgeLUA(
-          LUAFile: '',
-          Characters: [],
-          Items: [],
-          Tasks: [],
-          Inputs: [],
-          Zones: [],
-          Timers: [],
-          Media: [],
-          Messages: [],
-          Answers: [],
-          Variables: [],
-          NameToObject: {},
-          ResultStatus: ANALYSE_RESULT_STATUS.ERROR_LUA,
-          ResultsLUA: _ResultsLUA,
-          httpCode: '',
-          httpMessage: '')
-    });
-    return out;
+    return WherigoCartridge(
+        cartridgeGWC: emptyWherigoCartridgeGWC,
+        cartridgeLUA: WherigoCartridgeLUA(
+            LUAFile: '',
+            Characters: [],
+            Items: [],
+            Tasks: [],
+            Inputs: [],
+            Zones: [],
+            Timers: [],
+            Media: [],
+            Messages: [],
+            Answers: [],
+            Variables: [],
+            NameToObject: {},
+            ResultStatus: ANALYSE_RESULT_STATUS.ERROR_LUA,
+            ResultsLUA: _ResultsLUA,
+            httpCode: '',
+            httpMessage: ''));
   }
 
   String _LUACartridgeName = '';
@@ -160,7 +159,8 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
   String _CountryID = '';
   String _StateID = '';
   String _UseLogging = '';
-  DateTime? _CreateDate; // TODO Thomas Please check if Dates can be null (== means, only if really logically not given!).
+  DateTime?
+      _CreateDate; // TODO Thomas Please check if Dates can be null (== means, only if really logically not given!).
   DateTime? _PublishDate;
   DateTime? _UpdateDate;
   DateTime? _LastPlayedDate;
@@ -198,7 +198,8 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
   List<String> answerList = [];
   String answerHash = '';
   ActionMessageElementData action;
-  Map<String, List<AnswerData>> Answers = {}; // TODO Thomas As all of such constructions, please use explicit class types for values which make it better to check for Nullability
+  Map<String, List<AnswerData>> Answers =
+      {}; // TODO Thomas As all of such constructions, please use explicit class types for values which make it better to check for Nullability
   String _obfuscatorFunction = '';
 
   // get cartridge details
@@ -228,8 +229,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
       var group = obfuscatedText.group(0);
       if (group == null) return;
 
-      _LUAFile = _LUAFile.replaceAll(group,
-          '"' + deObfuscateText(group, _obfuscatorFunction, _obfuscatorTable) + '"');
+      _LUAFile = _LUAFile.replaceAll(group, '"' + deObfuscateText(group, _obfuscatorFunction, _obfuscatorTable) + '"');
     });
   } else if (RegExp(r'(gsub_wig)').hasMatch(_LUAFile)) {
     _obfuscatorFunction = 'gsub_wig';
@@ -239,8 +239,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
       var group = obfuscatedText.group(0);
       if (group == null) return;
 
-      _LUAFile = _LUAFile.replaceAll(group,
-          '"' + deObfuscateText(group, _obfuscatorFunction, _obfuscatorTable) + '"');
+      _LUAFile = _LUAFile.replaceAll(group, '"' + deObfuscateText(group, _obfuscatorFunction, _obfuscatorTable) + '"');
     });
   }
 
@@ -269,8 +268,8 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
           var group = obfuscatedText.group(0);
           if (group == null) return;
 
-          _LUAFile = _LUAFile.replaceAll(group,
-              '"' + deObfuscateText(group, _obfuscatorFunction, _obfuscatorTable) + '"');
+          _LUAFile =
+              _LUAFile.replaceAll(group, '"' + deObfuscateText(group, _obfuscatorFunction, _obfuscatorTable) + '"');
         });
 
         RegExp(r'' + _obfuscatorFunction + '\\((.|\\s)*?\\)').allMatches(_LUAFile).forEach((obfuscatedText) {
@@ -600,7 +599,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
           distanceRange,
           showObjects,
           proximityRange,
-          originalPoint,  // TODO Thomas: Can this be null? It was not initializes originally, which I did. However, I am not sure, if it is logically correct
+          originalPoint, // TODO Thomas: Can this be null? It was not initializes originally, which I did. However, I am not sure, if it is logically correct
           distanceRangeUOM,
           proximityRangeUOM,
           outOfRange,
@@ -1237,7 +1236,8 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
             if (insideInputFunction) {
               answerList.forEach((answer) {
                 if (answer != 'NIL') {
-                  if (Answers[inputObject] == null) return; // TODO Thomas Maybe not necessary if concrete return value is used
+                  if (Answers[inputObject] == null)
+                    return; // TODO Thomas Maybe not necessary if concrete return value is used
 
                   Answers[inputObject]!.add(AnswerData(
                     answer,
@@ -1287,7 +1287,8 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
 
           else {
             var tempAction = _handleAnswerLine(lines[i].trimLeft(), _obfuscatorTable, _obfuscatorFunction);
-            if (tempAction != null) { // TODO Thomas tempAction necessary because of nullable method but non-nullable consumer 'action'
+            if (tempAction != null) {
+              // TODO Thomas tempAction necessary because of nullable method but non-nullable consumer 'action'
               action = tempAction;
               answerActions.add(action);
               answerActions.forEach((element) {});
@@ -1304,7 +1305,6 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
           }
         } while (sectionInput);
       } // end if identify input function
-
     } catch (exception) {
       _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
       _ResultsLUA.addAll(addExceptionErrorMessage(i, 'wherigo_error_lua_answers', exception));
@@ -1550,49 +1550,48 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
         inputObject.InputType,
         inputObject.InputText,
         inputObject.InputChoices,
-        Answers[inputObject.InputLUAName.trim()] ?? [])); // TODO Thomas I can not check if logically correct to send empty list as exception. However this can be removed when using explicit values
+        Answers[inputObject.InputLUAName.trim()] ??
+            [])); // TODO Thomas I can not check if logically correct to send empty list as exception. However this can be removed when using explicit values
   });
   _Inputs = resultInputs;
 
   // ------------------------------------------------------------------------------------------------------------------
   // return Cartridge
   //
-  out.addAll({
-    'WherigoCartridgeLUA': WherigoCartridgeLUA(
-      LUAFile: _LUAFile,
-      CartridgeLUAName: _LUACartridgeName,
-      CartridgeGUID: _LUACartridgeGUID,
-      ObfuscatorTable: _obfuscatorTable,
-      ObfuscatorFunction: _obfuscatorFunction,
-      Characters: _Characters,
-      Items: _Items,
-      Tasks: _Tasks,
-      Inputs: _Inputs,
-      Zones: _Zones,
-      Timers: _Timers,
-      Media: _Media,
-      Messages: _Messages,
-      Answers: _Answers,
-      Variables: _Variables,
-      NameToObject: _NameToObject,
-      ResultStatus: _Status,
-      ResultsLUA: _ResultsLUA,
-      Builder: _builder,
-      BuilderVersion: _BuilderVersion,
-      TargetDeviceVersion: _TargetDeviceVersion,
-      StateID: _StateID,
-      CountryID: _CountryID,
-      UseLogging: _UseLogging,
-      CreateDate: _CreateDate,
-      PublishDate: _PublishDate,
-      UpdateDate: _UpdateDate,
-      LastPlayedDate: _LastPlayedDate,
-      httpCode: _httpCode,
-      httpMessage: _httpMessage,
-    )
-  });
-
-  return out;
+  return WherigoCartridge(
+      cartridgeGWC: emptyWherigoCartridgeGWC,
+      cartridgeLUA: WherigoCartridgeLUA(
+        LUAFile: _LUAFile,
+        CartridgeLUAName: _LUACartridgeName,
+        CartridgeGUID: _LUACartridgeGUID,
+        ObfuscatorTable: _obfuscatorTable,
+        ObfuscatorFunction: _obfuscatorFunction,
+        Characters: _Characters,
+        Items: _Items,
+        Tasks: _Tasks,
+        Inputs: _Inputs,
+        Zones: _Zones,
+        Timers: _Timers,
+        Media: _Media,
+        Messages: _Messages,
+        Answers: _Answers,
+        Variables: _Variables,
+        NameToObject: _NameToObject,
+        ResultStatus: _Status,
+        ResultsLUA: _ResultsLUA,
+        Builder: _builder,
+        BuilderVersion: _BuilderVersion,
+        TargetDeviceVersion: _TargetDeviceVersion,
+        StateID: _StateID,
+        CountryID: _CountryID,
+        UseLogging: _UseLogging,
+        CreateDate: _CreateDate,
+        PublishDate: _PublishDate,
+        UpdateDate: _UpdateDate,
+        LastPlayedDate: _LastPlayedDate,
+        httpCode: _httpCode,
+        httpMessage: _httpMessage,
+      ));
 }
 
 String _normalizeLUAmultiLineText(String LUA) {
@@ -1734,7 +1733,8 @@ List<String> _getAnswers(
     return [line];
   }
 
-  throw Exception('No Answers found'); // TODO Thomas: Please check if empty list instead is logically meaningful; I chose Exception because I believe this line should never be reached.
+  throw Exception(
+      'No Answers found'); // TODO Thomas: Please check if empty list instead is logically meaningful; I chose Exception because I believe this line should never be reached.
 }
 
 bool _OnGetInputSectionEnd(String line) {

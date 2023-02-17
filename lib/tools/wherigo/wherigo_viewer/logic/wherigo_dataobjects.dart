@@ -26,6 +26,8 @@ const DATA_TYPE_GWC = 'GWC-Cartridge';
 const EXPERT_MODE = true;
 const USER_MODE = false;
 
+final NULLDATE = DateTime(0, 1, 1, 0, 0, 0, 0, 0);
+
 enum FILE_LOAD_STATE { NULL, GWC, LUA, FULL }
 
 enum BUILDER { EARWIGO, URWIGO, GROUNDSPEAK, WHERIGOKIT, UNKNOWN }
@@ -360,7 +362,7 @@ class WherigoCartridgeGWC {
   final ANALYSE_RESULT_STATUS ResultStatus;
   final List<String> ResultsGWC;
 
-  WherigoCartridgeGWC({
+  const WherigoCartridgeGWC({
     this.Signature = '',
     this.NumberOfObjects = 0,
     this.MediaFilesHeaders = const[],
@@ -422,7 +424,7 @@ class WherigoCartridgeLUA {
   final String httpCode;
   final String httpMessage;
 
-  WherigoCartridgeLUA(
+  const WherigoCartridgeLUA(
       {this.LUAFile = '',
       this.CartridgeLUAName = '',
       this.CartridgeGUID = '',
@@ -430,6 +432,7 @@ class WherigoCartridgeLUA {
       this.ObfuscatorFunction = '',
       this.Characters = const[],
       this.Items = const[], // TODO Thomas: Gave the lists init values to keep it null-safe. Please check if it makes sense from logic point of view
+                            // from a logic point of view initial values do not make any sense
       this.Tasks = const[],
       this.Inputs = const[],
       this.Zones = const[],
@@ -454,6 +457,160 @@ class WherigoCartridgeLUA {
       this.httpCode = '',
       this.httpMessage = ''});
 }
+
+class WherigoCartridge {
+  final WherigoCartridgeGWC cartridgeGWC;
+  final WherigoCartridgeLUA cartridgeLUA;
+
+  WherigoCartridge({
+    this.cartridgeGWC = emptyWherigoCartridgeGWC,
+    this.cartridgeLUA = emptyWherigoCartridgeLUA
+  });
+}
+
+const emptyWherigoCartridgeGWC= WherigoCartridgeGWC(
+  Signature: '',
+  NumberOfObjects: 0,
+  MediaFilesHeaders: [],
+  MediaFilesContents: [],
+  HeaderLength: 0,
+  Splashscreen: 0,
+  SplashscreenIcon: 0,
+  Latitude: 0.0,
+  Longitude: 0.0,
+  Altitude: 0.0,
+  DateOfCreation: 0,
+  TypeOfCartridge: '',
+  Player: '',
+  PlayerID: 0,
+  CartridgeLUAName: '',
+  CartridgeGUID: '',
+  CartridgeDescription: '',
+  StartingLocationDescription: '',
+  Version: '',
+  Author: '',
+  Company: '',
+  RecommendedDevice: '',
+  LengthOfCompletionCode: 0,
+  CompletionCode: '',
+  ResultStatus: ANALYSE_RESULT_STATUS.NONE,
+  ResultsGWC: [],
+);
+
+class ConstantDateTime implements DateTime {
+  // https://pub.dev/packages/constant_datetime
+  // MIT (LICENSE)
+  // https://github.com/maxime-aubry/constant_datetime
+  final String jsonDateTime;
+
+  const ConstantDateTime(this.jsonDateTime);
+
+  @override
+  DateTime add(Duration duration) => throw UnimplementedError();
+
+  @override
+  int compareTo(DateTime other) => throw UnimplementedError();
+
+  @override
+  int get day => throw UnimplementedError();
+
+  @override
+  Duration difference(DateTime other) => throw UnimplementedError();
+
+  @override
+  int get hour => throw UnimplementedError();
+
+  @override
+  bool isAfter(DateTime other) => throw UnimplementedError();
+
+  @override
+  bool isAtSameMomentAs(DateTime other) => throw UnimplementedError();
+
+  @override
+  bool isBefore(DateTime other) => throw UnimplementedError();
+
+  @override
+  bool get isUtc => throw UnimplementedError();
+
+  @override
+  int get microsecond => throw UnimplementedError();
+
+  @override
+  int get microsecondsSinceEpoch => throw UnimplementedError();
+
+  @override
+  int get millisecond => throw UnimplementedError();
+
+  @override
+  int get millisecondsSinceEpoch => throw UnimplementedError();
+
+  @override
+  int get minute => throw UnimplementedError();
+
+  @override
+  int get month => throw UnimplementedError();
+
+  @override
+  int get second => throw UnimplementedError();
+
+  @override
+  DateTime subtract(Duration duration) => throw UnimplementedError();
+
+  @override
+  String get timeZoneName => throw UnimplementedError();
+
+  @override
+  Duration get timeZoneOffset => throw UnimplementedError();
+
+  @override
+  String toIso8601String() => throw UnimplementedError();
+
+  @override
+  DateTime toLocal() => throw UnimplementedError();
+
+  @override
+  DateTime toUtc() => throw UnimplementedError();
+
+  @override
+  int get weekday => throw UnimplementedError();
+
+  @override
+  int get year => throw UnimplementedError();
+}
+
+const DateTime nullDate = ConstantDateTime('0-01-01 00:00:00.000');
+
+const emptyWherigoCartridgeLUA = WherigoCartridgeLUA(
+    LUAFile: '',
+    CartridgeLUAName: '',
+    CartridgeGUID: '',
+    ObfuscatorTable: '',
+    ObfuscatorFunction: '',
+    Characters: [],
+    Items: [],
+    Tasks: [],
+    Inputs: [],
+    Zones: [],
+    Timers: [],
+    Media: [],
+    Messages: [],
+    Answers: [],
+    Variables: [],
+    NameToObject: {},
+    ResultStatus: ANALYSE_RESULT_STATUS.NONE,
+    ResultsLUA: [],
+    Builder: BUILDER.UNKNOWN,
+    BuilderVersion: '',
+    TargetDeviceVersion: '',
+    CountryID: '',
+    StateID: '',
+    UseLogging: '',
+    CreateDate: nullDate,
+    PublishDate: nullDate,
+    UpdateDate: nullDate,
+    LastPlayedDate: nullDate,
+    httpCode: '',
+    httpMessage: '');
 
 Map<bool, Map<FILE_LOAD_STATE, Map<WHERIGO, String>>> WHERIGO_DATA = {
   EXPERT_MODE: {

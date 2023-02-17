@@ -177,8 +177,7 @@ bool isInvalidCartridge(Uint8List byteList) {
   }
 }
 
-Future<Map<String, dynamic>> getCartridgeGWC(Uint8List byteListGWC, bool offline, {SendPort? sendAsyncPort}) async {
-  var out = Map<String, dynamic>();
+Future<WherigoCartridge> getCartridgeGWC(Uint8List byteListGWC, bool offline, {SendPort? sendAsyncPort}) async {
   List<String> _ResultsGWC = [];
   ANALYSE_RESULT_STATUS _Status = ANALYSE_RESULT_STATUS.OK;
 
@@ -189,8 +188,8 @@ Future<Map<String, dynamic>> getCartridgeGWC(Uint8List byteListGWC, bool offline
   if (checksToDo == FILE_LOAD_STATE.NULL) {
     _ResultsGWC.add('wherigo_error_runtime');
     _ResultsGWC.add('wherigo_error_empty_gwc');
-    out.addAll({'WherigoCartridgeGWC': WherigoCartridgeGWC()});
-    return out;
+
+    return WherigoCartridge(cartridgeGWC: emptyWherigoCartridgeGWC, cartridgeLUA: emptyWherigoCartridgeLUA);
   }
 
   String _Signature = '';
@@ -334,7 +333,6 @@ Future<Map<String, dynamic>> getCartridgeGWC(Uint8List byteListGWC, bool offline
         _offset = _ASCIIZ.offset;
 
         // sendAsyncPort?.send({'progress': 5});
-
       } catch (exception) {
         _Status = ANALYSE_RESULT_STATUS.ERROR_GWC;
         _ResultsGWC.add('wherigo_error_runtime');
@@ -396,35 +394,34 @@ Future<Map<String, dynamic>> getCartridgeGWC(Uint8List byteListGWC, bool offline
       } // catxh exception
     }
   } // if checks to do GWC
-  out.addAll({
-    'WherigoCartridgeGWC': WherigoCartridgeGWC(
-      Signature: _Signature,
-      NumberOfObjects: _NumberOfObjects,
-      MediaFilesHeaders: _MediaFilesHeaders,
-      MediaFilesContents: _MediaFilesContents,
-      HeaderLength: _HeaderLength,
-      Latitude: _Latitude,
-      Longitude: _Longitude,
-      Altitude: _Altitude,
-      Splashscreen: _Splashscreen,
-      SplashscreenIcon: _SplashscreenIcon,
-      DateOfCreation: _DateOfCreation,
-      TypeOfCartridge: _TypeOfCartridge,
-      Player: _Player,
-      PlayerID: _PlayerID,
-      CartridgeLUAName: _CartridgeLUAName,
-      CartridgeGUID: _CartridgeGUID,
-      CartridgeDescription: _CartridgeDescription,
-      StartingLocationDescription: _StartingLocationDescription,
-      Version: _Version,
-      Author: _Author,
-      Company: _Company,
-      RecommendedDevice: _RecommendedDevice,
-      LengthOfCompletionCode: _LengthOfCompletionCode,
-      CompletionCode: _CompletionCode,
-      ResultStatus: _Status,
-      ResultsGWC: _ResultsGWC,
-    )
-  });
-  return out;
+  return WherigoCartridge(
+      cartridgeGWC: WherigoCartridgeGWC(
+        Signature: _Signature,
+        NumberOfObjects: _NumberOfObjects,
+        MediaFilesHeaders: _MediaFilesHeaders,
+        MediaFilesContents: _MediaFilesContents,
+        HeaderLength: _HeaderLength,
+        Latitude: _Latitude,
+        Longitude: _Longitude,
+        Altitude: _Altitude,
+        Splashscreen: _Splashscreen,
+        SplashscreenIcon: _SplashscreenIcon,
+        DateOfCreation: _DateOfCreation,
+        TypeOfCartridge: _TypeOfCartridge,
+        Player: _Player,
+        PlayerID: _PlayerID,
+        CartridgeLUAName: _CartridgeLUAName,
+        CartridgeGUID: _CartridgeGUID,
+        CartridgeDescription: _CartridgeDescription,
+        StartingLocationDescription: _StartingLocationDescription,
+        Version: _Version,
+        Author: _Author,
+        Company: _Company,
+        RecommendedDevice: _RecommendedDevice,
+        LengthOfCompletionCode: _LengthOfCompletionCode,
+        CompletionCode: _CompletionCode,
+        ResultStatus: _Status,
+        ResultsGWC: _ResultsGWC,
+      ),
+      cartridgeLUA: emptyWherigoCartridgeLUA);
 }

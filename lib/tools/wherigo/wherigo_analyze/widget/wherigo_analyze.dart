@@ -82,8 +82,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       NameToObject: {},
       ResultsLUA: []);
 
-  //TODO Thomas: Please create specific return type
-  Map<String, dynamic> _outData = {};
+  WherigoCartridge _outData = WherigoCartridge();
 
   var _displayedCartridgeData = WHERIGO.NULL;
 
@@ -2151,7 +2150,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       builder: (context) {
         return Center(
           child: Container(
-            child: GCWAsyncExecuter<Map<String, dynamic>>(
+            child: GCWAsyncExecuter<WherigoCartridge>(
               isolatedFunction: getCartridgeAsync,
               parameter: _buildGWCJobData,
               onReady: (data) => _showCartridgeOutput(data),
@@ -2180,7 +2179,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   //TODO Thomas please replace parameter Map with own parameter class.
-  _showCartridgeOutput(Map<String, dynamic> output) {
+  _showCartridgeOutput(WherigoCartridge output) {
     _outData = output;
     String toastMessage = '';
     int toastDuration = 3;
@@ -2190,7 +2189,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     } else {
       switch (_temporaryONLYForRefactoring_DataTypeForAsync) {
         case DATA_TYPE_GWC: // GWC File should be loaded
-          _WherigoCartridgeGWC = _outData['WherigoCartridgeGWC'];
+          _WherigoCartridgeGWC = _outData.cartridgeGWC;
 
           switch (_WherigoCartridgeGWC.ResultStatus) {
             case ANALYSE_RESULT_STATUS.OK:
@@ -2229,7 +2228,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           break;
 
         case DATA_TYPE_LUA: // GWC File should be loaded
-          _WherigoCartridgeLUA = _outData['WherigoCartridgeLUA'];
+          _WherigoCartridgeLUA = _outData.cartridgeLUA;
 
           if (_WherigoCartridgeLUA != null)
             NameToObject = _WherigoCartridgeLUA.NameToObject;
