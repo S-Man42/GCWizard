@@ -20,9 +20,9 @@ const _PREDATOR_RELATIVE_DISPLAY_HEIGHT = 300; //100;
 class _PredatorSegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
   final bool readOnly;
-  final Function onChanged;
+  final void Function(Map<String, bool>)? onChanged;
 
-  _PredatorSegmentDisplay({Key? key, this.segments, this.readOnly: false, this.onChanged})
+  _PredatorSegmentDisplay({Key? key, required this.segments, this.readOnly = false, this.onChanged})
       : super(
             key: key,
             initialSegments: _INITIAL_SEGMENTS,

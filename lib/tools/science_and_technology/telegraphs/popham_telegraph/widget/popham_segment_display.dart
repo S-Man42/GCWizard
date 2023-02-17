@@ -22,9 +22,8 @@ class _PophamTelegraphSegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
   final bool readOnly;
   final void Function(Map<String, bool>)? onChanged;
-  final bool tapeStyle;
 
-  _PophamTelegraphSegmentDisplay({Key? key, required this.segments, this.readOnly = false, this.onChanged, this.tapeStyle = false})
+  _PophamTelegraphSegmentDisplay({Key? key, required this.segments, this.readOnly = false, this.onChanged})
       : super(
             key: key,
             initialSegments: _INITIAL_SEGMENTS,

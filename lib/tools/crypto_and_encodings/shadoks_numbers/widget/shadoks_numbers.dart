@@ -150,12 +150,12 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
   String _segmentsToShadoks(List<List<String>> segments) {
     String result = '';
     segments.forEach((element) {
-      result = result + _segmentToWord[element.join('')];
+      result = result + (_segmentToWord[element.join('')] ?? '');
     });
     return result;
   }
 
-  Widget _SanatizedShadoksNumbersSegmentDisplay({Map<String, bool> segments, bool readOnly}) {
+  NSegmentDisplay _SanatizedShadoksNumbersSegmentDisplay({required Map<String, bool> segments, required bool readOnly}) {
     segments.putIfAbsent('a', () => false);
     return _ShadoksNumbersSegmentDisplay(segments: segments, readOnly: true);
   }
@@ -185,8 +185,8 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
       );
     } else {
       //decode
-      var output = _currentDisplays.map((character) {
-        if (character != null) return character.join();
+      var output = _currentDisplays.where((character) => character != null).map((character) {
+        return character.join();
       }).toList();
 
       var segments = decodeShadoksNumbers(output);
@@ -197,11 +197,11 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
               segmentFunction: (displayedSegments, readOnly) {
                 return _SanatizedShadoksNumbersSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
               },
-              segments: segments['displays'],
+              segments: segments.displays,
               readOnly: true),
-          GCWOutput(title: i18n(context, 'shadoksnumbers_single_numbers'), child: segments['numbers'].join(' ')),
-          GCWOutput(title: i18n(context, 'shadoksnumbers_quaternary'), child: segments['quaternary']),
-          GCWOutput(title: i18n(context, 'shadoksnumbers_shadoks'), child: segments['shadoks'])
+          GCWOutput(title: i18n(context, 'shadoksnumbers_single_numbers'), child: segments.numbers.join(' ')),
+          GCWOutput(title: i18n(context, 'shadoksnumbers_quaternary'), child: segments.quaternary),
+          GCWOutput(title: i18n(context, 'shadoksnumbers_shadoks'), child: segments.shadoks)
         ],
       );
     }
