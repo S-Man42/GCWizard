@@ -200,8 +200,9 @@ class VariableStringExpander {
     }
   }
 
-  List<Map<String, dynamic>> run({onlyPrecheck: false}) {
-    if (_input == null || _input?.isEmpty) return [];
+  // ToDo Nullsafe remove Map format
+  List<Map<String, Object?>> run({onlyPrecheck = false}) {
+    if (_input == null || _input!.isEmpty) return [];
 
     if (_substitutions == null || _substitutions!.isEmpty) {
       return [
@@ -254,10 +255,11 @@ class VariableStringExpander {
 }
 
 int preCheckCombinations(Map<String, String> substitutions) {
-  if (substitutions == null || substitutions.isEmpty) return 0;
+  if (substitutions.isEmpty) return 0;
 
   var expander = VariableStringExpander('DUMMY', substitutions, onAfterExpandedText: (e) => false);
   var count = expander.run(onlyPrecheck: true);
 
-  return count[0]['count'];
+  var value = count[0]['count'];
+  return value is int ? value : 0;
 }

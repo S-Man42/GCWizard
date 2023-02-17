@@ -17,8 +17,8 @@ class Amsco extends StatefulWidget {
 }
 
 class AmscoState extends State<Amsco> {
-  var _inputController;
-  var _keyController;
+  late TextEditingController _inputController;
+  late TextEditingController _keyController;
 
   String _currentInput = '';
   String _currentKey = '';

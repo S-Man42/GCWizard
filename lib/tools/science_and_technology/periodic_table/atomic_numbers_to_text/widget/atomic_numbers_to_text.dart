@@ -15,7 +15,7 @@ class AtomicNumbersToText extends StatefulWidget {
 }
 
 class AtomicNumbersToTextState extends State<AtomicNumbersToText> {
-  var _encryptController;
+  late TextEditingController _encryptController;
 
   String _currentEncryptInput = '';
   List<int> _currentDecryptInput = [];

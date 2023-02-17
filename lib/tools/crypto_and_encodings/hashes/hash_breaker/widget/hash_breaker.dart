@@ -25,8 +25,8 @@ class HashBreaker extends StatefulWidget {
 }
 
 class _HashBreakerState extends State<HashBreaker> {
-  var _inputController;
-  var _maskController;
+  late TextEditingController _inputController;
+  late TextEditingController _maskController;
 
   var _currentInput = '';
   var _currentMask = '';

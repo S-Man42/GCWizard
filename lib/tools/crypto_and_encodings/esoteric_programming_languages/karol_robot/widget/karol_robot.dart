@@ -26,8 +26,8 @@ class KarolRobot extends StatefulWidget {
 }
 
 class KarolRobotState extends State<KarolRobot> {
-  var _decodeController;
-  var _encodeController;
+  late TextEditingController _decodeController;
+  late TextEditingController _encodeController;
 
   var _currentDecode = '';
   var _currentEncode = '';

@@ -16,10 +16,10 @@ class Abaddon extends StatefulWidget {
 }
 
 class AbaddonState extends State<Abaddon> {
-  var _inputController;
-  var _aController;
-  var _bController;
-  var _cController;
+  late TextEditingController _inputController;
+  late TextEditingController _aController;
+  late TextEditingController _bController;
+  late TextEditingController _cController;
 
   var _currentInput = '';
   var _currentA = '¥';

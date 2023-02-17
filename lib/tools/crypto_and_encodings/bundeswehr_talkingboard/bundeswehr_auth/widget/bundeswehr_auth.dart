@@ -21,10 +21,10 @@ class BundeswehrTalkingBoardAuthentification extends StatefulWidget {
 }
 
 class BundeswehrTalkingBoardAuthentificationState extends State<BundeswehrTalkingBoardAuthentification> {
-  var _inputAuthController;
-  var _callSignController;
-  var _letterControllerAuth;
-  var _letterControllerCallSign;
+  late TextEditingController _inputAuthController;
+  late TextEditingController _callSignController;
+  late TextEditingController _letterControllerAuth;
+  late TextEditingController _letterControllerCallSign;
   var _authTableCustom;
   var _numeralCodeCustomXaxis;
   var _numeralCodeCustomYaxis;

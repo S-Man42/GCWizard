@@ -15,7 +15,7 @@ abstract class AbstractBase extends StatefulWidget {
 }
 
 class AbstractBaseState extends State<AbstractBase> {
-  var _inputController;
+  late TextEditingController _inputController;
 
   String _currentInput = '';
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;

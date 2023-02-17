@@ -24,7 +24,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
   String _currentEncodeInput = '';
   late TextEditingController _encodeController;
 
-  var _decodeInputController;
+  late TextEditingController _decodeInputController;
   var _currentDecodeInput = '';
 
   List<List<String>> _currentDisplays = [];

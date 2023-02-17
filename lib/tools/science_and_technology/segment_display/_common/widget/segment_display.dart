@@ -26,8 +26,8 @@ class SegmentDisplay extends StatefulWidget {
 }
 
 class SegmentDisplayState extends State<SegmentDisplay> {
-  var _inputEncodeController;
-  var _inputDecodeController;
+  late TextEditingController _inputEncodeController;
+  late TextEditingController _inputDecodeController;
   var _currentEncodeInput = '';
   var _currentDecodeInput = '';
   var _currentDisplays = <List<String>>[];

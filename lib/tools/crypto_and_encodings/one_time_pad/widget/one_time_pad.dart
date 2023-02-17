@@ -27,8 +27,8 @@ class OneTimePadState extends State<OneTimePad> {
   // (entered value in one input will be used for the other one)
   var _mask = '#' * 10000;
   var _filter = {"#": RegExp(r'[A-Za-z]')};
-  var _inputMaskInputFormatter;
-  var _keyMaskInputFormatter;
+  late WrapperForMaskTextInputFormatter _inputMaskInputFormatter;
+  late WrapperForMaskTextInputFormatter _keyMaskInputFormatter;
 
   @override
   void initState() {

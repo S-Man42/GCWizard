@@ -13,8 +13,8 @@ class IATAICAOSearch extends StatefulWidget {
 }
 
 class IATAICAOSearchState extends State<IATAICAOSearch> {
-  var _inputControllerCode;
-  var _inputControllerName;
+  late TextEditingController _inputControllerCode;
+  late TextEditingController _inputControllerName;
 
   String _currentInputCode = '';
   String _currentInputName = '';

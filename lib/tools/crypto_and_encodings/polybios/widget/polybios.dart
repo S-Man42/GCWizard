@@ -18,9 +18,9 @@ class Polybios extends StatefulWidget {
 }
 
 class PolybiosState extends State<Polybios> {
-  var _inputController;
-  var _keyController;
-  var _alphabetController;
+  late TextEditingController _inputController;
+  late TextEditingController _keyController;
+  late TextEditingController _alphabetController;
 
   String _currentInput = '';
   String _currentKey = '12345';

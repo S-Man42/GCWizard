@@ -12,9 +12,9 @@ class Hohoho extends StatefulWidget {
 }
 
 class HohohoState extends State<Hohoho> {
-  var _textEncodeController;
-  var _textDecodeController;
-  var _inputController;
+  late TextEditingController _textEncodeController;
+  late TextEditingController _textDecodeController;
+  late TextEditingController _inputController;
 
   var _currentEncodeText = '';
   var _currentDecodeText = '';

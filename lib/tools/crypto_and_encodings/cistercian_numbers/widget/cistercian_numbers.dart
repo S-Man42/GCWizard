@@ -25,7 +25,7 @@ class CistercianNumbers extends StatefulWidget {
 class CistercianNumbersState extends State<CistercianNumbers> {
   final _DEFAULT_SEGMENT = ['k'];
 
-  var _inputEncodeController;
+  late TextEditingController _inputEncodeController;
   var _currentEncodeInput = '';
   List<List<String>> _currentDisplays;
   var _currentMode = GCWSwitchPosition.right; //encrypt decrypt

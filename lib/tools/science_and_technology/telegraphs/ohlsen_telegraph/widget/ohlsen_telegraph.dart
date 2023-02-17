@@ -25,7 +25,7 @@ class OhlsenTelegraph extends StatefulWidget {
 
 class OhlsenTelegraphState extends State<OhlsenTelegraph> {
   var _currentEncodeInput = '';
-  var _dncodeInputController;
+  late TextEditingController _dncodeInputController;
 
   var _decodeInputController;
   var _currentDecodeInput = '';

@@ -12,8 +12,8 @@ class Cow extends StatefulWidget {
 }
 
 class CowState extends State<Cow> {
-  var _textController;
-  var _inputController;
+  late TextEditingController _textController;
+  late TextEditingController _inputController;
 
   var _currentText = '';
   var _currentInput = '';

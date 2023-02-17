@@ -25,9 +25,9 @@ class PrussiaTelegraph extends StatefulWidget {
 
 class PrussiaTelegraphState extends State<PrussiaTelegraph> {
   var _currentEncodeInput = '';
-  var _encodeInputController;
+  late TextEditingController _encodeInputController;
 
-  var _decodeInputController;
+  late TextEditingController _decodeInputController;
   var _currentDecodeInput = '';
 
   List<List<String>> _currentDisplays = [];

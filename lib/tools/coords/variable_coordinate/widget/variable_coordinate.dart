@@ -52,9 +52,9 @@ class VariableCoordinateState extends State<VariableCoordinate> {
   bool _currentProjectionMode = false;
   var _currentOutputFormat = defaultCoordFormat();
 
-  var _inputController;
-  var _bearingController;
-  var _distanceController;
+  late TextEditingController _inputController;
+  late TextEditingController _bearingController;
+  late TextEditingController _distanceController;
 
   var _currentInput = '';
   var _currentBearingInput = '';

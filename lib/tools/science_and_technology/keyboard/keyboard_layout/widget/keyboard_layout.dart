@@ -14,7 +14,7 @@ class KeyboardLayout extends StatefulWidget {
 }
 
 class KeyboardLayoutState extends State<KeyboardLayout> {
-  var _inputController;
+  late TextEditingController _inputController;
 
   String _currentInput = '';
 
