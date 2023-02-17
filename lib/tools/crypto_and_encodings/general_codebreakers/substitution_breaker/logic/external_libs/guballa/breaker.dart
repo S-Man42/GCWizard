@@ -6,6 +6,7 @@ enum BreakerErrorCode {
   CONSOLIDATE_PARAMETER,
   TEXT_TOO_SHORT,
   ALPHABET_TOO_LONG,
+  ALPHABET_TOO_SHORT,
   WRONG_GENERATE_TEXT
 }
 
@@ -45,14 +46,14 @@ class BreakerResult {
 }
 
 const DEFAULT_ALPHABET = "abcdefghijklmnopqrstuvwxyz";
-String _alphabet;
+String? _alphabet;
 int _alphabet_len = 0;
-List<int> _quadgrams;
+List<int>? _quadgrams;
 
 /// Init the instance
 void _initBreaker(Quadgrams languageQuadgrams) {
   _alphabet = languageQuadgrams.alphabet;
-  _alphabet_len = _alphabet.length;
+  _alphabet_len = _alphabet?.length ?? 0;
   _quadgrams = languageQuadgrams.quadgrams();
 }
 
@@ -60,7 +61,7 @@ void _initBreaker(Quadgrams languageQuadgrams) {
 /// :param str txt: the text string to process
 /// :param str alphabet: the alphabet to apply with this text string
 /// :return: an iterator which iterates over all characters of the text string which are present in the alphabet.
-Iterable<int> iterateText(String text, String alphabet, {ignoreNonLetters: true}) sync* {
+Iterable<int> iterateText(String text, String alphabet, {ignoreNonLetters = true}) sync* {
   var trans = alphabet.toLowerCase();
   int index = -1;
 
@@ -111,7 +112,7 @@ Tuple2<int, int> _hill_climbing(List<int> key, List<int> cipher_bin, List<List<i
 
         for (var char = 3; char < plaintext.length; char++) {
           quad_idx = ((quad_idx & 0x7FFF) << 5) + plaintext[char];
-          tmp_fitness += _quadgrams[quad_idx];
+          tmp_fitness += _quadgrams![quad_idx];
         }
         if (tmp_fitness > max_fitness) {
           max_fitness = tmp_fitness;
@@ -146,11 +147,14 @@ BreakerResult break_cipher(Quadgrams quadgrams, String ciphertext, {int maxRound
   if ((consolidate < 1) || (consolidate > 30))
     // consolidate parameter out of valid range 1..30"
     return BreakerResult(errorCode: BreakerErrorCode.CONSOLIDATE_PARAMETER);
+  if ((_alphabet == null) || (_alphabet!.isEmpty))
+    // consolidate parameter out of valid range 1..30"
+    return BreakerResult(errorCode: BreakerErrorCode.ALPHABET_TOO_SHORT);
 
   var start_time = DateTime.now();
   var nbr_keys = 0;
   var cipher_bin = <int>[];
-  iterateText(ciphertext, _alphabet).forEach((char) {
+  iterateText(ciphertext, _alphabet!).forEach((char) {
     cipher_bin.add(char);
   });
 
@@ -159,7 +163,7 @@ BreakerResult break_cipher(Quadgrams quadgrams, String ciphertext, {int maxRound
     return BreakerResult(errorCode: BreakerErrorCode.TEXT_TOO_SHORT);
 
   var char_positions = <List<int>>[];
-  for (int idx = 0; idx < _alphabet.length; idx++) {
+  for (int idx = 0; idx < _alphabet!.length; idx++) {
     var posList = <int>[];
     var i = 0;
     cipher_bin.forEach((x) {
@@ -175,7 +179,7 @@ BreakerResult break_cipher(Quadgrams quadgrams, String ciphertext, {int maxRound
   var key = <int>[];
   var best_key = <int>[];
 
-  for (int idx = 0; idx < _alphabet.length; idx++) {
+  for (int idx = 0; idx < _alphabet!.length; idx++) {
     key.add(idx);
     best_key.add(idx);
   }
@@ -196,15 +200,15 @@ BreakerResult break_cipher(Quadgrams quadgrams, String ciphertext, {int maxRound
       if (local_maximum_hit == consolidate) break;
     }
   }
-  var key_str = best_key.map((x) => _alphabet[x]).join();
-  var _key = BreakerKey(key_str, alphabet: _alphabet);
+  var key_str = best_key.map((x) => _alphabet![x]).join();
+  var _key = BreakerKey(key_str, alphabet: _alphabet!);
   var seconds = (DateTime.now().difference(start_time)).inMilliseconds / 1000;
 
   return BreakerResult(
       ciphertext: ciphertext,
-      plaintext: _key.decode(ciphertext),
+      plaintext: _key.decode(ciphertext) ?? '',
       key: key_str,
-      alphabet: _alphabet,
+      alphabet: _alphabet!,
       fitness: local_maximum / ((cipher_bin.length) - 3) / 10,
       nbr_keys: nbr_keys,
       nbr_rounds: round_cntr,

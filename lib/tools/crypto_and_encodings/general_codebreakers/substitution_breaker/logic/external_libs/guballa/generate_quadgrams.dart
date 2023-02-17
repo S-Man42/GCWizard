@@ -10,15 +10,19 @@ part of 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/subst
 Future<BreakerResult> generateQuadgrams(
     File corpus_fh, File quadgram_fh, File asset_fh, String className, String assetName, String alphabet) async {
   _alphabet = BreakerKey.check_alphabet(alphabet);
-  if (_alphabet.length > Quadgrams.maxAlphabetLength) {
+  if (_alphabet == null || _alphabet!.isEmpty) {
     // Alphabet must have less or equal than 32 characters
-    return BreakerResult(alphabet: _alphabet, errorCode: BreakerErrorCode.ALPHABET_TOO_LONG);
+    return BreakerResult(alphabet: _alphabet ?? '', errorCode: BreakerErrorCode.ALPHABET_TOO_SHORT);
+  }
+  if (_alphabet!.length > Quadgrams.maxAlphabetLength) {
+    // Alphabet must have less or equal than 32 characters
+    return BreakerResult(alphabet: _alphabet ?? '', errorCode: BreakerErrorCode.ALPHABET_TOO_LONG);
   }
 
-  var iterator = _file_iterator(corpus_fh, _alphabet);
+  var iterator = _file_iterator(corpus_fh, _alphabet!);
   var quadgram_val = 0;
   var quadgrams =
-      List.filled(pow(Quadgrams.maxAlphabetLength, 3) * Quadgrams.maxAlphabetLength, 0.0); //_alphabet.length
+      List.filled((pow(Quadgrams.maxAlphabetLength, 3) * Quadgrams.maxAlphabetLength).toInt(), 0.0); //_alphabet.length
   quadgrams.fillRange(0, quadgrams.length, 0);
 
   var idx = 0;
@@ -108,7 +112,7 @@ Future<BreakerResult> generateQuadgrams(
 ///          Lower values indicate more random text, while values significantly
 ///          greater than 100 indicate (nonsense) text with too much frequently used
 ///          quadgrams (e.g., ``tionioningatheling``).
-double _calc_fitness(Iterable<int> iterator) {
+double? _calc_fitness(Iterable<int> iterator) {
   var quadgrams = _quadgrams;
   var fitness = 0;
   var nbr_quadgrams = 0;
@@ -126,7 +130,7 @@ double _calc_fitness(Iterable<int> iterator) {
           break;
         default:
           quadgram_val = ((quadgram_val & 0x7FFF) << 5) + numerical_char;
-          fitness += quadgrams[quadgram_val];
+          fitness += quadgrams![quadgram_val];
           nbr_quadgrams += 1;
       }
       idx += 1;
@@ -152,7 +156,7 @@ double _calc_fitness(Iterable<int> iterator) {
 ///          Lower values indicate more random text, while values significantly
 ///          greater than 100 indicate (nonsense) text with too much frequently used
 ///          quadgrams (e.g., ``tionioningatheling``).
-double calc_fitness(String txt, {String alphabet = DEFAULT_ALPHABET, List<int> quadgrams = null}) {
+double? calc_fitness(String txt, {String alphabet = DEFAULT_ALPHABET, List<int>? quadgrams = null}) {
   if (txt == null || txt.isEmpty) return null;
 
   if (alphabet != null) _alphabet = alphabet;
@@ -160,7 +164,7 @@ double calc_fitness(String txt, {String alphabet = DEFAULT_ALPHABET, List<int> q
 
   if (quadgrams != null) _quadgrams = quadgrams;
 
-  return _calc_fitness(iterateText(txt, _alphabet));
+  return _calc_fitness(iterateText(txt, _alphabet!));
 }
 
 /// Implements an iterator for a given file based text file
@@ -189,11 +193,11 @@ Iterable<int> _file_iterator(File file_fh, String alphabet) sync* {
 ///          Lower values indicate more random text, while values significantly
 ///          greater than 100 indicate (nonsense) text with too much frequently used
 ///          quadgrams (e.g., ``tionioningatheling``).
-double calc_fitness_file(File cleartext_fh, {String alphabet = DEFAULT_ALPHABET, List<int> quadgrams = null}) {
+double? calc_fitness_file(File cleartext_fh, {String alphabet = DEFAULT_ALPHABET, List<int>? quadgrams = null}) {
   if (alphabet != null) _alphabet = alphabet;
   if (_alphabet == null) _alphabet = DEFAULT_ALPHABET;
 
   if (quadgrams != null) _quadgrams = quadgrams;
 
-  return _calc_fitness(_file_iterator(cleartext_fh, _alphabet));
+  return _calc_fitness(_file_iterator(cleartext_fh, _alphabet!));
 }

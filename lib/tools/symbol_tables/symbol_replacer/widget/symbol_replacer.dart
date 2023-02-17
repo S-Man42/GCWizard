@@ -471,6 +471,8 @@ class SymbolReplacerState extends State<SymbolReplacer> {
 
     var quadgrams =
         await loadQuadgramsAssets(_currentAlphabet, context, _quadgrams, _isLoading);
+    if (quadgrams == null) return null;
+
     if (_symbolImage!.symbolGroups.length > quadgrams.alphabet.length) {
       showToast(i18n(context, 'symbol_replacer_automatic_groups'));
       return null;
