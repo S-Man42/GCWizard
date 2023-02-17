@@ -21,7 +21,7 @@ clearMapViewDAO(MapViewDAO view) {
   _saveData();
 }
 
-_saveData() {
+void _saveData() {
   var jsonData = mapViews.map((view) => jsonEncode(view.toMap())).toList();
 
   Prefs.setStringList(PREFERENCE_MAPVIEW_MAPVIEWS, jsonData);

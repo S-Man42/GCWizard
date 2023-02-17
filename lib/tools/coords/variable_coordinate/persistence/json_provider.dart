@@ -15,7 +15,7 @@ void refreshFormulas() {
   }).toList();
 }
 
-_saveData() {
+void _saveData() {
   var jsonData = formulas.map((formula) => jsonEncode(formula.toMap())).toList();
 
   Prefs.setStringList(PREFERENCE_COORD_VARIABLECOORDINATE_FORMULAS, jsonData);

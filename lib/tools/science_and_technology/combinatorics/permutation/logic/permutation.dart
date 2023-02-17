@@ -1,12 +1,12 @@
 final int PERMUTATION_MAX_LENGTH = 7;
 
-_swap(characters, a, b) {
+void _swap(characters, a, b) {
   var help = characters[a];
   characters[a] = characters[b];
   characters[b] = help;
 }
 
-_permutation(List<String> characters, endIndex, List<String> out) {
+void _permutation(List<String> characters, endIndex, List<String> out) {
   if (endIndex == 0) {
     out.add(characters.join());
     return;

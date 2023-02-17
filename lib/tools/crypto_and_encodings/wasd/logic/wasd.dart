@@ -177,7 +177,7 @@ String decodeWASD(String? input, List<String> controlSet) {
   return resultDecode.join('');
 }
 
-_normalizeControlSet(List<String> controlSet) {
+List<String> _normalizeControlSet(List<String> controlSet) {
   var normalized = List<String?>.from(controlSet);
   while (normalized.length < 4) {
     normalized.add(null);

@@ -14,7 +14,7 @@ void refreshFormulas() {
   }).toList();
 }
 
-_saveData() {
+void _saveData() {
   var jsonData = formulaGroups.map((group) => jsonEncode(group.toMap())).toList();
 
   Prefs.setStringList(PREFERENCE_FORMULASOLVER_FORMULAS, jsonData);
