@@ -36,7 +36,7 @@ List<String> _sanitizeDecodeInput(String input) {
     prevCharacter = character;
   });
 
-  return sanitizedInput.split(' ').where((element) => element != null && element.length > 0).toList();
+  return sanitizedInput.split(' ').where((element) => element != null && element.isNotEmpty).toList();
 }
 
 bool _isTransitionCharacter(Map<String, Map<String, String>> stateModel, String state, String character) {
@@ -187,7 +187,7 @@ Map<String, dynamic>? encodeVanityMultitap(String? input, PhoneModel? model, Pho
       return;
     }
 
-    if (newState['transitions']!.length > 0) output.add(newState['transitions']!);
+    if (newState['transitions']!.isNotEmpty) output.add(newState['transitions']!);
 
     currentState = newState['state']!;
     currentMode = _getModeFromState(currentState);

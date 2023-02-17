@@ -86,7 +86,7 @@ class VariableStringExpander {
 
     group = group.replaceAll(RegExp(r'[^\d,\-#]'), '');
 
-    if (group.length == 0) return [];
+    if (group.isEmpty) return [];
 
     var ranges = group.split(',');
     ranges.forEach((range) {
@@ -201,9 +201,9 @@ class VariableStringExpander {
   }
 
   List<Map<String, dynamic>> run({onlyPrecheck: false}) {
-    if (_input == null || _input?.length == 0) return [];
+    if (_input == null || _input?.isEmpty) return [];
 
-    if (_substitutions == null || _substitutions!.length == 0) {
+    if (_substitutions == null || _substitutions!.isEmpty) {
       return [
         {'text': _input, 'variables': {}}
       ];
@@ -220,7 +220,7 @@ class VariableStringExpander {
       _substitutionKeys.add(substitution.key.toUpperCase());
       var group = _expandVariableGroup(substitution.value);
 
-      if (group.length > 0) {
+      if (group.isNotEmpty) {
         _expandedVariableGroups.add(group);
 
         _countVariableValues.add(group.length);

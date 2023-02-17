@@ -12,7 +12,7 @@ int extractIntegerFromText(String text, {bool allowNegative = true}) {
   }
   digits = digits.replaceAll('-', '');
 
-  if (digits.length == 0) return 0;
+  if (digits.isEmpty) return 0;
 
   return int.parse(digits) * (signed ? -1 : 1);
 }
@@ -86,7 +86,7 @@ String insertEveryNthCharacter(String input, int n, String textToInsert) {
 }
 
 bool isUpperCase(String letter) {
-  if (letter.length == 0) return false;
+  if (letter.isEmpty) return false;
   if (letter == 'ß') return false;
   if (letter == 'ẞ') return true; // Capital ß
 
@@ -109,19 +109,19 @@ bool allSameCharacters(String input) {
   if (input.isEmpty) return false;
 
   var firstCharacter = input[0];
-  return input.replaceAll(firstCharacter, '').length == 0;
+  return input.replaceAll(firstCharacter, '').isEmpty;
 }
 
 bool isOnlyLetters(String input) {
   if (input.isEmpty) return false;
 
-  return removeAccents(input).replaceAll(RegExp(r'[A-Za-z]'), '').length == 0;
+  return removeAccents(input).replaceAll(RegExp(r'[A-Za-z]'), '').isEmpty;
 }
 
 bool isOnlyNumerals(String input) {
   if (input.isEmpty) return false;
 
-  return input.replaceAll(RegExp(r'[0-9]'), '').length == 0;
+  return input.replaceAll(RegExp(r'[0-9]'), '').isEmpty;
 }
 
 String removeControlCharacters(String input) {

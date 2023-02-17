@@ -32,9 +32,9 @@ Map<String, dynamic> breakHash(
     String input, String searchMask, Map<String, String> substitutions, Function hashFunction,
     {SendPort? sendAsyncPort}) {
   if (input == null ||
-      input.length == 0 ||
+      input.isEmpty ||
       searchMask == null ||
-      searchMask.length == 0 ||
+      searchMask.isEmpty ||
       substitutions == null ||
       hashFunction == null) return null;
 
@@ -51,7 +51,7 @@ Map<String, dynamic> breakHash(
 
   var results = expander.run();
 
-  if (results == null || results.length == 0) return {'state': 'not_found'};
+  if (results == null || results.isEmpty) return {'state': 'not_found'};
 
   return {'state': 'ok', 'text': results[0]['text']};
 }

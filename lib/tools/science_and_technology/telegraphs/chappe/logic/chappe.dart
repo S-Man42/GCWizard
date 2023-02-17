@@ -240,7 +240,7 @@ List<List<String>> encodeChappe(String input, ChappeCodebook language) {
 }
 
 Map<String, dynamic> decodeVisualChappe(List<String> inputs, ChappeCodebook language) {
-  if (inputs == null || inputs.length == 0)
+  if (inputs == null || inputs.isEmpty)
     return {
       'displays': <List<String>>[],
       'chars': [0]
@@ -301,7 +301,7 @@ List<String> _stringToSegment(String input) {
 }
 
 Map<String, dynamic> decodeTextChappeTelegraph(String inputs, ChappeCodebook language) {
-  if (inputs == null || inputs.length == 0)
+  if (inputs == null || inputs.isEmpty)
     return {
       'displays': <List<String>>[],
       'text': '',

@@ -41,7 +41,7 @@ int? decodeRomanNumbers(String? input, {var type = RomanNumberType.USE_SUBTRACTI
   if (input == null) return null;
 
   input = input.toUpperCase().replaceAll(RegExp(r'[^MDCLXVI]'), '');
-  if (input.length == 0) return null;
+  if (input.isEmpty) return null;
 
   var roman = input;
   if (type == RomanNumberType.USE_SUBTRACTION_RULE)

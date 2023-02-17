@@ -55,7 +55,7 @@ List<List<String>> encodePopham(String input) {
 }
 
 Map<String, dynamic> decodeVisualPopham(List<String> inputs) {
-  if (inputs == null || inputs.length == 0) return {'displays': <List<String>>[], 'chars': ''};
+  if (inputs == null || inputs.isEmpty) return {'displays': <List<String>>[], 'chars': ''};
 
   var displays = <List<String>>[];
   var segment = <String>[];

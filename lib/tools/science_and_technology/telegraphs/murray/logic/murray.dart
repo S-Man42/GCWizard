@@ -325,7 +325,7 @@ List<List<String>> encodeMurray(String input, MurrayCodebook language) {
 }
 
 Map<String, dynamic> decodeMurray(List<String> inputs, MurrayCodebook language) {
-  if (inputs == null || inputs.length == 0)
+  if (inputs == null || inputs.isEmpty)
     return {
       'displays': <List<String>>[],
       'chars': [0]

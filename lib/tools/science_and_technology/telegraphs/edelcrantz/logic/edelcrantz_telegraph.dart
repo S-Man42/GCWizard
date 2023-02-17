@@ -1804,7 +1804,7 @@ List<List<String>> encodeEdelcrantzTelegraph(String input, EdelcrantzCodebook la
 }
 
 Map<String, dynamic> decodeVisualEdelcrantzTelegraph(List<String> inputs, EdelcrantzCodebook language, bool daytime) {
-  if (inputs == null || inputs.length == 0)
+  if (inputs == null || inputs.isEmpty)
     return {
       'displays': <List<String>>[],
       'text': '',
@@ -1842,7 +1842,7 @@ Map<String, dynamic> decodeVisualEdelcrantzTelegraph(List<String> inputs, Edelcr
 }
 
 Map<String, dynamic> decodeTextEdelcrantzTelegraph(String inputs, EdelcrantzCodebook language, bool daytime) {
-  if (inputs == null || inputs.length == 0)
+  if (inputs == null || inputs.isEmpty)
     return {
       'displays': <List<String>>[],
       'text': '',

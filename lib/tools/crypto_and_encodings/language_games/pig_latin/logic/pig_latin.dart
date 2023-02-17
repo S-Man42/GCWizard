@@ -13,7 +13,7 @@ _decodeQQ(input) {
 }
 
 encryptPigLatin(String input) {
-  if (input == null || input.length == 0) return '';
+  if (input == null || input.isEmpty) return '';
 
   input = _encodeQU(removeAccents(input));
 
@@ -26,7 +26,7 @@ encryptPigLatin(String input) {
 }
 
 decryptPigLatin(String input) {
-  if (input == null || input.length == 0) return '';
+  if (input == null || input.isEmpty) return '';
 
   return input.replaceAllMapped(RegExp(r'\b(\w+)-(\w*)ay', caseSensitive: false), (match) {
     var output = match[2] + match[1];
