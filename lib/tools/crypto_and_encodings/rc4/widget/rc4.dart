@@ -50,7 +50,7 @@ class RC4State extends State<RC4> {
         Row(children: <Widget>[
           Expanded(child: GCWText(text: i18n(context, 'rc4_format') + ':'), flex: 1),
           Expanded(
-              child: GCWDropDown(
+              child: GCWDropDown<InputFormat>(
                 value: _currentInputFormat,
                 onChanged: (value) {
                   setState(() {
@@ -78,7 +78,7 @@ class RC4State extends State<RC4> {
         Row(children: <Widget>[
           Expanded(child: GCWText(text: i18n(context, 'rc4_format') + ':'), flex: 1),
           Expanded(
-              child: GCWDropDown(
+              child: GCWDropDown<InputFormat>(
                 value: _currentKeyFormat,
                 onChanged: (value) {
                   setState(() {
@@ -98,7 +98,7 @@ class RC4State extends State<RC4> {
         Row(children: <Widget>[
           Expanded(child: GCWText(text: i18n(context, 'rc4_format') + ':'), flex: 1),
           Expanded(
-              child: GCWDropDown(
+              child: GCWDropDown<OutputFormat>(
                 value: _currentOutputFormat,
                 onChanged: (value) {
                   setState(() {
@@ -120,7 +120,7 @@ class RC4State extends State<RC4> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    if (_currentInput == null || _currentInput.isEmpty) {
+    if (_currentInput.isEmpty) {
       return GCWDefaultOutput();
     }
 

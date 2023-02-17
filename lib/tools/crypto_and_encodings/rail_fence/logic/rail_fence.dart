@@ -52,7 +52,7 @@ List<List<String>> _fillMatrix(String input, int key) {
   return matrix;
 }
 
-String encryptRailFence(String input, int key, {int offset, String password}) {
+String encryptRailFence(String? input, int key, {int? offset, String? password}) {
   if (input == null || input.isEmpty) return '';
 
   if (key < 2) return input;
@@ -76,7 +76,7 @@ String encryptRailFence(String input, int key, {int offset, String password}) {
   return out.replaceAll('\x00', '');
 }
 
-String decryptRailFence(String input, int key, {int offset, String password}) {
+String decryptRailFence(String? input, int key, {int? offset, String? password}) {
   if (input == null || input.isEmpty) return '';
 
   if (key < 2) return input;
