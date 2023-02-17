@@ -19,16 +19,16 @@ class Brainfk extends StatefulWidget {
 }
 
 class BrainfkState extends State<Brainfk> {
-  var _textController;
-  var _inputController;
-  var _inputController_shiftRight;
-  var _inputController_shiftLeft;
-  var _inputController_increaseValue;
-  var _inputController_decreaseValue;
-  var _inputController_output;
-  var _inputController_input;
-  var _inputController_startLoop;
-  var _inputController_endLoop;
+  late TextEditingController _textController;
+  late TextEditingController _inputController;
+  late TextEditingController _inputController_shiftRight;
+  late TextEditingController _inputController_shiftLeft;
+  late TextEditingController _inputController_increaseValue;
+  late TextEditingController _inputController_decreaseValue;
+  late TextEditingController _inputController_output;
+  late TextEditingController _inputController_input;
+  late TextEditingController _inputController_startLoop;
+  late TextEditingController _inputController_endLoop;
 
   var _currentDerivate = BRAINFKDERIVATIVE_OOK;
 

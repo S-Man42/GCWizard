@@ -20,8 +20,8 @@ class Bifid extends StatefulWidget {
 }
 
 class BifidState extends State<Bifid> {
-  var _inputController;
-  var _alphabetController;
+  late TextEditingController _inputController;
+  late TextEditingController _alphabetController;
 
   var _currentMode = GCWSwitchPosition.right;
 

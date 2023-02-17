@@ -18,9 +18,9 @@ class Befunge extends StatefulWidget {
 }
 
 class BefungeState extends State<Befunge> {
-  var _befungeGenerateController;
-  var _befungeInterpretController;
-  var _inputController;
+  late TextEditingController _befungeGenerateController;
+  late TextEditingController _befungeInterpretController;
+  late TextEditingController _inputController;
 
   var _currentGenerate = '';
   var _currentInterpret = '';
