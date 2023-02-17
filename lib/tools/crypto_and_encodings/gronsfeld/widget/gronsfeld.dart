@@ -14,8 +14,8 @@ class Gronsfeld extends StatefulWidget {
 }
 
 class GronsfeldState extends State<Gronsfeld> {
-  var _inputController;
-  var _keyController;
+  late TextEditingController _inputController;
+  late TextEditingController _keyController;
 
   String _currentInput = '';
   String _currentKey = '';

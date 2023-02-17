@@ -13,10 +13,10 @@ class Kenny extends StatefulWidget {
 }
 
 class KennyState extends State<Kenny> {
-  var _inputController;
-  var _mController;
-  var _pController;
-  var _fController;
+  late TextEditingController _inputController;
+  late TextEditingController _mController;
+  late TextEditingController _pController;
+  late TextEditingController _fController;
 
   var _currentInput = '';
   var _currentCaseSensitive = true;

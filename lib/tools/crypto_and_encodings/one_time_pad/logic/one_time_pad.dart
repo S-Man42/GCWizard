@@ -27,7 +27,7 @@ String encryptOneTimePad(String? input, String? key, {int keyOffset = 0}) {
   return output;
 }
 
-String decryptOneTimePad(String input, String key, {int keyOffset}) {
+String decryptOneTimePad(String? input, String? key, {int keyOffset = 0}) {
   if (input == null) return '';
 
   if (key == null) return input;
@@ -38,8 +38,6 @@ String decryptOneTimePad(String input, String key, {int keyOffset}) {
   if (input.isEmpty) return '';
 
   if (key.isEmpty) return input;
-
-  if (keyOffset == null) keyOffset = 0;
 
   var output = '';
   for (int i = 0; i < input.length; ++i) {

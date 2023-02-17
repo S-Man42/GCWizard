@@ -23,8 +23,8 @@ class Enigma extends StatefulWidget {
 }
 
 class EnigmaState extends State<Enigma> {
-  var _inputController;
-  var _plugboardController;
+  late TextEditingController _inputController;
+  late TextEditingController _plugboardController;
 
   String _currentInput = '';
   String _currentPlugboard = '';
