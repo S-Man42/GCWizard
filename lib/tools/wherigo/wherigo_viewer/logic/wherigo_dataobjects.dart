@@ -26,8 +26,6 @@ const DATA_TYPE_GWC = 'GWC-Cartridge';
 const EXPERT_MODE = true;
 const USER_MODE = false;
 
-final NULLDATE = DateTime(0, 1, 1, 0, 0, 0, 0, 0);
-
 enum FILE_LOAD_STATE { NULL, GWC, LUA, FULL }
 
 enum BUILDER { EARWIGO, URWIGO, GROUNDSPEAK, WHERIGOKIT, UNKNOWN }
@@ -417,10 +415,10 @@ class WherigoCartridgeLUA {
   final String StateID;
   final String CountryID;
   final String UseLogging;
-  final DateTime? CreateDate; // TODO Thomas: Made date nullable because sometimes you explicitly returned null. Please check if you could make it null-safe
-  final DateTime? PublishDate;
-  final DateTime? UpdateDate;
-  final DateTime? LastPlayedDate;
+  final DateTime CreateDate; // TODO Thomas: Made date nullable because sometimes you explicitly returned null. Please check if you could make it null-safe
+  final DateTime PublishDate;
+  final DateTime UpdateDate;
+  final DateTime LastPlayedDate;
   final String httpCode;
   final String httpMessage;
 
@@ -450,10 +448,10 @@ class WherigoCartridgeLUA {
       this.CountryID = '',
       this.StateID = '',
       this.UseLogging = '',
-      this.CreateDate,
-      this.PublishDate,
-      this.UpdateDate,
-      this.LastPlayedDate,
+      this.CreateDate = nullDate,
+      this.PublishDate = nullDate,
+      this.UpdateDate = nullDate,
+      this.LastPlayedDate = nullDate,
       this.httpCode = '',
       this.httpMessage = ''});
 }

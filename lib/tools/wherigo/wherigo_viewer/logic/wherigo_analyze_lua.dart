@@ -159,11 +159,11 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
   String _CountryID = '';
   String _StateID = '';
   String _UseLogging = '';
-  DateTime?
-      _CreateDate; // TODO Thomas Please check if Dates can be null (== means, only if really logically not given!).
-  DateTime? _PublishDate;
-  DateTime? _UpdateDate;
-  DateTime? _LastPlayedDate;
+  // TODO Thomas Please check if Dates can be null (== means, only if really logically not given!).
+  DateTime _CreateDate = nullDate;
+  DateTime _PublishDate  = nullDate;
+  DateTime _UpdateDate = nullDate;
+  DateTime _LastPlayedDate = nullDate;
   List<ZonePoint> points = [];
   String visible = '';
   String media = '';
@@ -1828,8 +1828,8 @@ String _getVariable(String line) {
   return line;
 }
 
-DateTime? _normalizeDate(String dateString) {
-  if (dateString == null || dateString == '' || dateString == '1/1/0001 12:00:00 AM') return null;
+DateTime _normalizeDate(String dateString) {
+  if (dateString == null || dateString == '' || dateString == '1/1/0001 12:00:00 AM') return nullDate;
 
   List<String> dateTime = dateString.split(' ');
   List<String> date = dateTime[0].split('/');
