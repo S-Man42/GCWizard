@@ -388,7 +388,7 @@ class _Chef {
     this.meal = <String>[];
     valid = true;
     error = <String>[];
-    recipes = new Map<String, _Recipe>();
+    recipes = Map<String, _Recipe>();
     liquefyMissing = true;
     int progress = 0;
     _Recipe r;
