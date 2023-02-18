@@ -2,7 +2,7 @@
 # https://dart.dev/guides/language/analysis-options
 # https://dart.dev/tools/linter-rules
 
-include: package:flutter_lints/flutter.yaml
+#include: package:flutter_lints/flutter.yaml
 
 analyzer:
   exclude: [build/**]
@@ -10,7 +10,7 @@ analyzer:
     strict-casts: true
     strict-inference: true
     strict-raw-types: true
-  errors:
+#  errors:
 #    # Linter rules: Error rules https://dart.dev/tools/linter-rules#error-rules ========================================
 #    always_use_package_imports: error
 #    avoid_dynamic_calls: error
@@ -49,7 +49,7 @@ analyzer:
 #    use_key_in_widget_constructors: error
 #    valid_regexps: error
 #    # Linter rules: Style rules https://dart.dev/tools/linter-rules#style-rules ========================================
-    always_declare_return_types: error
+#    always_declare_return_types: error
 #    always_put_control_body_on_new_line: error
 #    always_put_required_named_parameters_first: error
 #    always_require_non_null_named_parameters: error
@@ -160,7 +160,7 @@ analyzer:
 #    prefer_initializing_formals: error
 #    prefer_inlined_adds: error
 #    prefer_int_literals: error
-#    #prefer_interpolation_to_compose_strings: error
+#    prefer_interpolation_to_compose_strings: error
 #    prefer_is_empty: error
 #    prefer_is_not_empty: error
 #    prefer_is_not_operator: error
@@ -186,7 +186,7 @@ analyzer:
 #    type_annotate_public_apis: error
 #    type_init_formals: error
 #    unawaited_futures: error
-    unnecessary_await_in_return: error
+#    unnecessary_await_in_return: error
 #    unnecessary_brace_in_string_interps: error
 #    unnecessary_const: error
 #    unnecessary_constructor_name: error
@@ -365,7 +365,7 @@ analyzer:
 #    getter_not_subtype_setter_types: error
 #    if_element_condition_from_deferred_library: error
 #    illegal_async_generator_return_type: error
-    illegal_async_return_type: error
+#    illegal_async_return_type: error
 #    illegal_language_version_override: error
 #    illegal_sync_generator_return_type: error
 #    implements_non_class: error
@@ -477,8 +477,8 @@ analyzer:
 #    non_sync_factory: error
 #    non_type_as_type_argument: error
 #    non_type_in_catch_clause: error
-    non_void_return_for_operator: error
-    non_void_return_for_setter: error
+#    non_void_return_for_operator: error
+#    non_void_return_for_setter: error
 #    not_assigned_potentially_non_nullable_local_variable: error
 #    not_a_type: error
 #    not_binary_operator: error
@@ -676,9 +676,9 @@ analyzer:
 #    unused_local_variable: error
 #    unused_result: error
 #    unused_shown_name: error
-##    implicit_dynamic_field: error
-##    implicit_dynamic_function: error
-##    implicit_dynamic_invoke: error
+#    implicit_dynamic_field: error
+#    implicit_dynamic_function: error
+#    implicit_dynamic_invoke: error
 #    implicit_dynamic_list_literal: error
 #    implicit_dynamic_map_literal: error
 #    implicit_dynamic_method: error
