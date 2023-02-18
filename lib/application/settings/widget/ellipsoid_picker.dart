@@ -1,7 +1,7 @@
 part of 'package:gc_wizard/application/settings/widget/settings_coordinates.dart';
 
 class _EllipsoidPicker extends StatefulWidget {
-  final Function onChanged;
+  final void Function(Ellipsoid) onChanged;
 
   const _EllipsoidPicker({Key? key, required this.onChanged}) : super(key: key);
 
@@ -160,7 +160,7 @@ class _EllipsoidPickerState extends State<_EllipsoidPicker> {
     );
   }
 
-  _setCurrentEllipsoidAndEmitOnChange(BuildContext context) {
+  void _setCurrentEllipsoidAndEmitOnChange(BuildContext context) {
     if (_currentMode == GCWSwitchPosition.left) {
       _firstCustomValueController.clear();
       _secondCustomValueController.clear();

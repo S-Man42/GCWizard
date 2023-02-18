@@ -4,39 +4,40 @@ enum PrefType { STRING, STRINGLIST, INT, DOUBLE, BOOL }
 
 PrefType getPrefType(String key) {
   try {
-    String x = Prefs.get(key);
+    String x = Prefs.getString(key);
     return PrefType.STRING;
   } catch (e) {}
 
   try {
-    List<String> x = Prefs.get(key);
+    List<String> x = Prefs.getStringList(key);
     return PrefType.STRINGLIST;
   } catch (e) {}
 
-  try {
-    List<Object> x = Prefs.get(key);
-    return PrefType.STRINGLIST;
-  } catch (e) {}
+  //TODO: Necessary? Where does this come from?
+  // try {
+  //   List<Object> x = Prefs.get(key);
+  //   return PrefType.STRINGLIST;
+  // } catch (e) {}
 
   try {
-    int x = Prefs.get(key);
+    int x = Prefs.getInt(key);
     return PrefType.INT;
   } catch (e) {}
 
   try {
-    double x = Prefs.get(key);
+    double x = Prefs.getDouble(key);
     return PrefType.DOUBLE;
   } catch (e) {}
 
   try {
-    bool x = Prefs.get(key);
+    bool x = Prefs.getBool(key);
     return PrefType.BOOL;
   } catch (e) {}
 
   throw Exception('Unexpected Preference Type');
 }
 
-setUntypedPref(String key, dynamic value) {
+void setUntypedPref(String key, Object value) {
   switch (getPrefType(key)) {
     case PrefType.STRING:
       Prefs.setString(key, value.toString());
