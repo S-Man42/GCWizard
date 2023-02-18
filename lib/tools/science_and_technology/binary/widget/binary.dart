@@ -69,7 +69,7 @@ class BinaryState extends State<Binary> {
     );
   }
 
-  _buildOutput() {
+  String _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       return _currentDecimalValue.split(' ').map((value) => convertBase(value, 10, 2)).join(' ');
     } else {

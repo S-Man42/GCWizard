@@ -14,7 +14,7 @@ import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 
-buildMainMenu(BuildContext context) {
+Widget buildMainMenu(BuildContext context) {
   var header = SizedBox(
     height: 120.0,
     child: DrawerHeader(
@@ -107,7 +107,7 @@ buildMainMenu(BuildContext context) {
   ));
 }
 
-void _buildSettingsItem(BuildContext context) {
+Widget _buildSettingsItem(BuildContext context) {
   final settingsItems = [
     {
       'tool': registeredTools.firstWhere((tool) => className(tool.tool) == className(GeneralSettings())),

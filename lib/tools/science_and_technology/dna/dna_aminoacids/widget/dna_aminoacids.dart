@@ -40,7 +40,7 @@ class DNAAminoAcidsState extends State<DNAAminoAcids> {
     );
   }
 
-  _buildOutput() {
+  Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       return GCWDefaultOutput(child: encodeRNASymbolLong(_currentInput));
     } else {

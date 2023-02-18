@@ -131,7 +131,7 @@ class BurrowsWheelerState extends State<BurrowsWheeler> {
     ]);
   }
 
-  _buildOutput() {
+  Widget _buildOutput() {
     BWTOutput currentOutput;
 
     if (currentMode == GCWSwitchPosition.left) {

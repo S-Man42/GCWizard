@@ -98,7 +98,7 @@ class BrailleDotNumbersState extends State<BrailleDotNumbers> {
     );
   }
 
-  _buildOutput() {
+  Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       if (_currentEncodeInput == null || _currentEncodeInput.isEmpty)
         return GCWDefaultOutput();

@@ -374,13 +374,13 @@ class WASDState extends State<WASD> {
     ]);
   }
 
-  _exportFile(BuildContext context, Uint8List data) async {
+  void _exportFile(BuildContext context, Uint8List data) async {
     var value = await saveByteDataToFile(context, data, buildFileNameWithDate('img_', FileType.PNG));
 
     if (value) showExportedFileDialog(context, contentWidget: imageContent(context, data));
   }
 
-  _buildOutput() {
+  String _buildOutput() {
     if (_currentMode == GCWSwitchPosition.right) {
       return decodeWASD(_currentDecodeInput, [_currentUp, _currentLeft, _currentDown, _currentRight]);
     } else {

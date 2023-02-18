@@ -12,7 +12,7 @@ class MultiDecoderToolEntity {
 
   MultiDecoderToolEntity(this.name, this.internalToolName, {this.options = const []});
 
-  Map<String, dynamic> toMap() => {
+  Map<String, Object> toMap() => {
         'id': id,
         'name': name,
         'decoderFunctionName': internalToolName,
@@ -34,11 +34,11 @@ class MultiDecoderToolEntity {
 
 class MultiDecoderToolOption {
   String name;
-  Object value;
+  Object? value;
 
   MultiDecoderToolOption(this.name, this.value);
 
-  Map<String, dynamic> toMap() => {'name': name, 'value': value};
+  Map<String, Object?> toMap() => {'name': name, 'value': value};
 
   MultiDecoderToolOption.fromJson(Map<String, dynamic> json)
       : name = json['name'],

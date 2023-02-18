@@ -16,6 +16,7 @@ import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/text_input_formatters/wrapper_for_masktextinputformatter.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/homophone/logic/homophone.dart';
+import 'package:gc_wizard/tools/formula_solver/persistence/model.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 
@@ -29,9 +30,9 @@ class Homophone extends StatefulWidget {
 class HomophoneState extends State<Homophone> {
   var _currentMode = GCWSwitchPosition.right;
 
-  var _currentRotationController;
-  TextEditingController _newKeyController;
-  WrapperForMaskTextInputFormatter _keyMaskInputFormatter;
+  late TextEditingController _currentRotationController;
+  late TextEditingController _newKeyController;
+  late WrapperForMaskTextInputFormatter _keyMaskInputFormatter;
   String _currentInput = '';
   Alphabet _currentAlphabet = alphabetGerman1;
   _KeyType _currentKeyType = _KeyType.GENERATED;
@@ -78,7 +79,7 @@ class HomophoneState extends State<Homophone> {
     return '';
   }
 
-  _addEntry(String currentFromInput, String currentToInput, BuildContext context) {
+  _addEntry(String currentFromInput, String currentToInput, FormulaValueType type, BuildContext context) {
     if (currentFromInput.isNotEmpty)
       _currentSubstitutions.putIfAbsent(currentFromInput.toUpperCase(), () => currentToInput);
 
@@ -87,12 +88,12 @@ class HomophoneState extends State<Homophone> {
     setState(() {});
   }
 
-  _updateEntry(dynamic id, String key, String value) {
+  _updateEntry(Object id, String key, String value, FormulaValueType type) {
     _currentSubstitutions[id] = value;
     setState(() {});
   }
 
-  _removeEntry(dynamic id, BuildContext context) {
+  _removeEntry(Object id, BuildContext context) {
     _currentSubstitutions.remove(id);
     setState(() {});
   }
@@ -127,7 +128,7 @@ class HomophoneState extends State<Homophone> {
         Row(children: <Widget>[
           Expanded(child: GCWText(text: i18n(context, 'homophone_keytype') + ':'), flex: 1),
           Expanded(
-              child: GCWDropDown(
+              child: GCWDropDown<_KeyType>(
                 value: _currentKeyType,
                 onChanged: (value) {
                   setState(() {
@@ -149,6 +150,7 @@ class HomophoneState extends State<Homophone> {
                 Expanded(
                     child: GCWIntegerSpinner(
                       controller: _currentRotationController,
+                      value: _currentRotation,
                       min: 0,
                       max: 999999,
                       onChanged: (value) {
@@ -190,7 +192,7 @@ class HomophoneState extends State<Homophone> {
         Row(children: <Widget>[
           Expanded(child: GCWText(text: i18n(context, 'common_alphabet') + ':'), flex: 1),
           Expanded(
-              child: GCWDropDown(
+              child: GCWDropDown<Alphabet>(
                 value: _currentAlphabet,
                 onChanged: (value) {
                   setState(() {
@@ -221,8 +223,8 @@ class HomophoneState extends State<Homophone> {
     );
   }
 
-  _buildOutput() {
-    if (_currentInput == null || _currentInput.isEmpty) return GCWDefaultOutput(child: '');
+  Widget _buildOutput() {
+    if (_currentInput.isEmpty) return GCWDefaultOutput(child: '');
     int _currentMultiplier = getMultipliers()[_currentMultiplierIndex];
 
     HomophoneOutput _currentOutput;

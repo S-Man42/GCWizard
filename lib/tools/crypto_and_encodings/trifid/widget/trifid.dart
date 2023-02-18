@@ -115,7 +115,7 @@ class TrifidState extends State<Trifid> {
     );
   }
 
-  _buildOutput() {
+  Widget _buildOutput() {
     String output = '';
     if (_currentInput.isEmpty) return GCWDefaultOutput(child: '');
 

@@ -86,7 +86,7 @@ class TapirState extends State<Tapir> {
     );
   }
 
-  _buildOutput() {
+  String _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       return encryptTapir(_currentInput, _currentOneTimePad);
     } else {

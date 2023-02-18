@@ -50,7 +50,7 @@ class SunRiseSetState extends State<SunRiseSet> {
     );
   }
 
-  _buildOutput() {
+  Widget _buildOutput() {
     var sunRise = logic.SunRiseSet(
         _currentCoords.toLatLng(),
         JulianDate(_currentDateTime),

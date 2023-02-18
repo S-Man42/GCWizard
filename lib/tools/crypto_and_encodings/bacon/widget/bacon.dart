@@ -78,7 +78,7 @@ class BaconState extends State<Bacon> {
     );
   }
 
-  _buildOutput() {
+  Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       _output = encodeBacon(_currentInput, _inversMode, _binaryMode == GCWSwitchPosition.right);
     } else {

@@ -125,7 +125,7 @@ class BifidState extends State<Bifid> {
     );
   }
 
-  _buildOutput() {
+  Widget _buildOutput() {
     var key;
     if (_currentMatrixMode == GCWSwitchPosition.left) {
       key = "12345";

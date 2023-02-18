@@ -50,7 +50,7 @@ class MayaNumbersState extends State<MayaNumbers> {
     ]);
   }
 
-  _buildVisualDecryption() {
+  Widget _buildVisualDecryption() {
     Map<String, bool> currentDisplay;
 
     var displays = _currentDisplays;
@@ -141,14 +141,14 @@ class MayaNumbersState extends State<MayaNumbers> {
       );
     } else {
       //decode
-      var output = _currentDisplays.map((character) {
-        if (character != null) return character.join();
+      var output = _currentDisplays.where((character) => character != null).map((character) {
+        return character.join();
       }).toList();
       var segments = decodeMayaNumbers(output);
       return Column(
         children: <Widget>[
-          _buildDigitalOutput(segments['displays']),
-          GCWOutput(title: i18n(context, 'mayanumbers_single_numbers'), child: segments['numbers'].join(' ')),
+          _buildDigitalOutput(segments['displays'] as List<List<String>>),
+          GCWOutput(title: i18n(context, 'mayanumbers_single_numbers'), child: (segments['numbers'] as List<int>).join(' ')),
           GCWOutput(title: i18n(context, 'mayanumbers_vigesimal'), child: segments['vigesimal'])
         ],
       );

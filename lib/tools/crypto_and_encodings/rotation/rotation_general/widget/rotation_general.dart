@@ -56,7 +56,7 @@ class RotationGeneralState extends State<RotationGeneral> {
     );
   }
 
-  _buildOutput() {
+  Widget _buildOutput() {
     if (_currentInput.isEmpty) return GCWDefaultOutput();
 
     var reverseKey = modulo(26 - _currentKey, 26).toInt();

@@ -36,7 +36,7 @@ final AZToAbaddon = {
   ' ': '$YEN$MY$MY'
 };
 
-encryptAbaddon(String input, Map<String, String> replaceCharacters) {
+String encryptAbaddon(String? input, Map<String, String>? replaceCharacters) {
   if (input == null || input.isEmpty) return '';
 
   var abaddon = normalizeUmlauts(input)
@@ -51,7 +51,7 @@ encryptAbaddon(String input, Map<String, String> replaceCharacters) {
   return abaddon;
 }
 
-decryptAbaddon(String input, Map<String, String> replaceCharacters) {
+String decryptAbaddon(String? input, Map<String, String>? replaceCharacters) {
   if (input == null || input.isEmpty) return '';
 
   if (replaceCharacters != null) input = substitution(input, switchMapKeyValue(replaceCharacters));

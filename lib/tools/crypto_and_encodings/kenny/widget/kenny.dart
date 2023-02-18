@@ -121,7 +121,7 @@ class KennyState extends State<Kenny> {
     );
   }
 
-  _buildOutput() {
+  String _buildOutput() {
     if (_currentInput.isEmpty || _currentM.isEmpty || _currentP.isEmpty || _currentF.isEmpty) return '';
 
     var key = [_currentM, _currentP, _currentF];

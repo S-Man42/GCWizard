@@ -169,11 +169,11 @@ class TomTomState extends State<TomTom> {
     ]);
   }
 
-  _addCharacter(String input) {
+  void _addCharacter(String input) {
     _currentInputDecrypt = textControllerInsertText(input, _currentInputDecrypt, _inputDecryptController);
   }
 
-  _buildOutput() {
+  String _buildOutput() {
     if (_currentA.isEmpty || _currentB.isEmpty) return '';
 
     var key = {'/': _currentA, '\\': _currentB};

@@ -65,7 +65,7 @@ class GCCodeState extends State<GCCode> {
     );
   }
 
-  _buildOutput(BuildContext context) {
+  String _buildOutput(BuildContext context) {
     var output = '';
 
     if (_currentMode == GCWSwitchPosition.right) {

@@ -68,7 +68,7 @@ class PredatorState extends State<Predator> {
     ]);
   }
 
-  _buildVisualDecryption() {
+  Widget _buildVisualDecryption() {
     Map<String, bool> currentDisplay;
 
     var displays = _currentDisplays;
