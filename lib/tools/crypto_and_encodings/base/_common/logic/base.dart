@@ -14,7 +14,7 @@ final Map<String, Function> BASE_FUNCTIONS = {
 };
 
 String decodeBase16(String input) {
-  if (input == null || input == '') return '';
+  if (input == null || input.isEmpty) return '';
 
   return List.generate(input.length, (i) => i % 2 == 0 ? input.substring(i, i + 2) : null)
       .where((b) => b != null && RegExp(r'[0-9A-Fa-f]{2}').hasMatch(b))
@@ -24,19 +24,19 @@ String decodeBase16(String input) {
 }
 
 String encodeBase16(String input) {
-  if (input == null || input == '') return '';
+  if (input == null || input.isEmpty) return '';
 
   return input.codeUnits.map((codeUnit) => codeUnit.toRadixString(16).padLeft(2, '0')).join();
 }
 
 String encodeBase32(String input) {
-  if (input == null || input == '') return '';
+  if (input == null || input.isEmpty) return '';
 
   return base32.encodeString(input);
 }
 
 String decodeBase32(String input) {
-  if (input == null || input == '') return '';
+  if (input == null || input.isEmpty) return '';
 
   var out = '';
 
@@ -45,7 +45,7 @@ String decodeBase32(String input) {
     try {
       out = base32.decodeAsString(input + '=' * i);
 
-      if (out.length > 0) break;
+      if (out.isNotEmpty) break;
     } on FormatException {}
   }
 
@@ -53,13 +53,13 @@ String decodeBase32(String input) {
 }
 
 String encodeBase64(String input) {
-  if (input == null || input == '') return '';
+  if (input == null || input.isEmpty) return '';
 
   return base64.encode(utf8.encode(input));
 }
 
 String decodeBase64(String input) {
-  if (input == null || input == '') return '';
+  if (input == null || input.isEmpty) return '';
 
   var out = '';
 
@@ -68,7 +68,7 @@ String decodeBase64(String input) {
     try {
       out = utf8.decode(base64.decode(input + '=' * i));
 
-      if (out.length > 0) break;
+      if (out.isNotEmpty) break;
     } on FormatException {}
   }
 
@@ -76,7 +76,7 @@ String decodeBase64(String input) {
 }
 
 String encodeBase85(String input) {
-  if (input == null || input == '') return '';
+  if (input == null || input.isEmpty) return '';
 
   var encoded = encodeASCII85(utf8.encode(input));
 
@@ -86,7 +86,7 @@ String encodeBase85(String input) {
 }
 
 String decodeBase85(String input) {
-  if (input == null || input == '') return '';
+  if (input == null || input.isEmpty) return '';
 
   if (input.startsWith('<~')) input = input.substring(2);
 
@@ -98,13 +98,13 @@ String decodeBase85(String input) {
 
 String decode(String input, Function function) {
   var output = '';
-  if (input.length == 0) return output;
+  if (input.isEmpty) return output;
 
-  while (input.length > 0) {
+  while (input.isNotEmpty) {
     try {
       output = function(input);
 
-      if (output.length == 0 && input.length > 0) throw FormatException();
+      if (output.isEmpty && input.isNotEmpty) throw FormatException();
 
       break;
     } on FormatException {
@@ -122,7 +122,7 @@ String decode(String input, Function function) {
 // https://www.darklaunch.com/base58-encode-and-decode-using-php-with-example-base58-encode-base58-decode.html
 //
 String encodeBase58(String input) {
-  if (input == null || input == '' || int.tryParse(input) == null) return '';
+  if (input == null || input.isEmpty || int.tryParse(input) == null) return '';
 
   int num = int.parse(input);
   String alphabet = '123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ';
@@ -204,7 +204,7 @@ final List<String> BASE58_ALPHABET = [
 ];
 
 String decodeBase58(String input) {
-  if (input == null || input == '') return '';
+  if (input == null || input.isEmpty) return '';
 
   String alphabet = '123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ';
   String num = '';
@@ -328,7 +328,7 @@ List<String> _b91_enctab = [
 ];
 
 String encodeBase91(String d) {
-  if (d == null || d == '') return '';
+  if (d == null || d.isEmpty) return '';
 
   int l = d.length;
   String o = '';
@@ -360,7 +360,7 @@ String encodeBase91(String d) {
 }
 
 String decodeBase91(String d) {
-  if (d == null || d == '') return '';
+  if (d == null || d.isEmpty) return '';
 
   Map<int, int> b91_dectab = {};
 
@@ -424,7 +424,7 @@ int _kShortened = 7; // 0b111
 int _STOP_BYTE = 128; // (byte) 0b1000_0000
 
 String encodeBase122(String rawData) {
-  if (rawData == null || rawData == '') return '';
+  if (rawData == null || rawData.isEmpty) return '';
 
   int curIndex = 0;
   int curBit = 0;
@@ -501,7 +501,7 @@ String encodeBase122(String rawData) {
 }
 
 String decodeBase122(String base122Data) {
-  if (base122Data == null || base122Data == '') return '';
+  if (base122Data == null || base122Data.isEmpty) return '';
 
   List<int> outputStream = [];
   int curByte = 0;

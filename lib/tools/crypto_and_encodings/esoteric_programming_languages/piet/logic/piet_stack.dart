@@ -142,9 +142,9 @@ class _PietStack {
         stack2.push(pop());
     }
 
-    while (stack1.length > 0) push(stack1.pop());
+    while (stack1.isNotEmpty) push(stack1.pop());
 
-    while (stack2.length > 0) push(stack2.pop());
+    while (stack2.isNotEmpty) push(stack2.pop());
 
     return true;
   }
@@ -163,9 +163,9 @@ class _PietStack {
         stack2.push(pop());
     }
 
-    while (stack2.length > 0) push(stack2.pop());
+    while (stack2.isNotEmpty) push(stack2.pop());
 
-    while (stack1.length > 0) push(stack1.pop());
+    while (stack1.isNotEmpty) push(stack1.pop());
 
     return true;
   }

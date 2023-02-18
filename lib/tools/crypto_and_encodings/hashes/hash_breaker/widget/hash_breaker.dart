@@ -25,8 +25,8 @@ class HashBreaker extends StatefulWidget {
 }
 
 class _HashBreakerState extends State<HashBreaker> {
-  var _inputController;
-  var _maskController;
+  late TextEditingController _inputController;
+  late TextEditingController _maskController;
 
   var _currentInput = '';
   var _currentMask = '';
@@ -56,7 +56,7 @@ class _HashBreakerState extends State<HashBreaker> {
   }
 
   _addEntry(String currentFromInput, String currentToInput, BuildContext context) {
-    if (currentFromInput.length > 0)
+    if (currentFromInput.isNotEmpty)
       _currentSubstitutions.putIfAbsent(++_currentIdCount, () => {currentFromInput: currentToInput});
   }
 
@@ -180,9 +180,9 @@ class _HashBreakerState extends State<HashBreaker> {
     });
 
     if (_currentFromInput != null &&
-        _currentFromInput.length > 0 &&
+        _currentFromInput.isNotEmpty &&
         _currentToInput != null &&
-        _currentToInput.length > 0) {
+        _currentToInput.isNotEmpty) {
       _substitutions.putIfAbsent(_currentFromInput, () => _currentToInput);
     }
 

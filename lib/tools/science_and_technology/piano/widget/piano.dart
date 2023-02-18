@@ -68,7 +68,7 @@ class PianoState extends State<Piano> {
               )
             : GCWDropDownSpinner(
                 index: _currentIndex,
-                items: PIANO_KEYS.values.where((e) => e[field] != null && e[field]!.length > 0).map((e) {
+                items: PIANO_KEYS.values.where((e) => e[field] != null && e[field]!.isNotEmpty).map((e) {
                   return (_currentSort == 0) ? e['number']! : e[field]!;
                 }).toList(),
                 onChanged: (value) {

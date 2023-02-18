@@ -143,7 +143,7 @@ List<int> _longCountToList(int numberDec) {
 }
 
 Map<String, Object?> decodeMayaCalendar(List<String?>? inputs) {
-  if (inputs == null || inputs.length == 0)
+  if (inputs == null || inputs.isEmpty)
     return {
       'displays': <List<String>>[],
       'numbers': [0],

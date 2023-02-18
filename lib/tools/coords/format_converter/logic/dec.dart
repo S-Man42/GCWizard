@@ -29,7 +29,7 @@ String? prepareInput(String? text, {bool wholeString = false}) {
     regexEnd = wholeString ? '\$' : '';
   }
 
-  if (text.length == 0) return null;
+  if (text.isEmpty) return null;
 
   return text;
 }

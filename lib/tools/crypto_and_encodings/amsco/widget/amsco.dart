@@ -17,8 +17,8 @@ class Amsco extends StatefulWidget {
 }
 
 class AmscoState extends State<Amsco> {
-  var _inputController;
-  var _keyController;
+  late TextEditingController _inputController;
+  late TextEditingController _keyController;
 
   String _currentInput = '';
   String _currentKey = '';
@@ -106,7 +106,7 @@ class AmscoState extends State<Amsco> {
           break;
       }
       return GCWDefaultOutput();
-    } else if (_currentOutput.output == '') {
+    } else if (_currentOutput.output.isEmpty) {
       return GCWDefaultOutput();
     }
 

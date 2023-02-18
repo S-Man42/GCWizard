@@ -30,8 +30,8 @@ const SAFED_RECURSIVE_FORMULA_MARKER = '\x02';
 const _PHI = 1.6180339887498948482045868343656381177;
 
 class FormulaParser {
-  ContextModel _context;
-  Parser parser;
+  ContextModel _context = ContextModel();
+  Parser parser = Parser();
 
   bool unlimitedExpanded = false;
   Map<String, String> safedFormulasMap = {};
@@ -128,16 +128,13 @@ class FormulaParser {
     '*': '×•',
   };
 
-  FormulaParser({unlimitedExpanded: false}) {
+  FormulaParser({unlimitedExpanded = false}) {
     this.unlimitedExpanded = unlimitedExpanded;
-
-    _context = ContextModel();
 
     CONSTANTS.entries.forEach((constant) {
       _context.bindVariableName(constant.key, Number(constant.value));
     });
 
-    parser = Parser();
     _CUSTOM_FUNCTIONS.forEach((name, handler) {
       parser.addFunction(name, handler);
     });
@@ -267,8 +264,8 @@ class FormulaParser {
     // --> evaluate each interpolated result
     //if no interpolation: simply evaluate the formula directly
     List<Map<String, dynamic>> expandedFormulas;
-    if (expandValues && interpolatedValues.length > 0) {
-      var count = VariableStringExpander(substitutedFormula, interpolatedValues).run(onlyPrecheck: true).first['count'];
+    if (expandValues && interpolatedValues.isNotEmpty) {
+      var count = VariableStringExpander(substitutedFormula, interpolatedValues).run(onlyPrecheck: true).first['count'] as int?;
       if (count == null) {
         return {'state': FormulaState.STATE_SINGLE_ERROR, 'result': substitutedFormula}; // TODO Mark use classes instead of maps
       } else if (!unlimitedExpanded && count > _MAX_EXPANDED) {
@@ -372,7 +369,7 @@ class FormulaParser {
       var key = element.key.trim();
       var value = element.value;
 
-      if (value == null || value.length == 0) {
+      if (value == null || value.isEmpty) {
         if (element.type == FormulaValueType.TEXT) {
           value = '';
         } else {
@@ -406,7 +403,7 @@ class FormulaParser {
 
     formula = formula.trim();
 
-    if (formula == '') {
+    if (formula.isEmpty) {
       return _simpleErrorOutput(formula);
     }
 
@@ -416,7 +413,7 @@ class FormulaParser {
     var matches = regExp.allMatches(formula);
 
     // if formula has no [ ], then match the whole string
-    if (matches.length == 0) {
+    if (matches.isEmpty) {
       matches = RegExp(r'^.*$', multiLine: true).allMatches(formula);
     }
 

@@ -43,6 +43,6 @@ openInFullScreen(BuildContext context, Uint8List imgData) {
                 toolName: i18n(context, 'imageview_fullscreen_title'),
                 defaultLanguageToolName: i18n(context, 'imageview_fullscreen_title', useDefaultLanguage: true),
                 suppressHelpButton: true,
-                i18nPrefix: '',
+                id: '',
               )));
 }

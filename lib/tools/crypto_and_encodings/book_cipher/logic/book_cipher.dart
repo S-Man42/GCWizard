@@ -46,8 +46,8 @@ String decodeSearchWord(
     bool azOn = true,
     bool numbersOn = true,
     bool onlyFirstWordLetter = false}) {
-  if (input == null || input.length == 0) return "";
-  if (word == null || word.length == 0) return "";
+  if (input == null || input.isEmpty) return "";
+  if (word == null || word.isEmpty) return "";
 
   input = _filterInput(input,
       spacesOn: spacesOn,
@@ -99,8 +99,8 @@ String decodeFindWord(String input, String positions, searchFormat format,
     bool azOn = true,
     bool numbersOn = true,
     bool onlyFirstWordLetter = false}) {
-  if (input == null || input.length == 0) return "";
-  if (positions == null || positions.length == 0) return "";
+  if (input == null || input.isEmpty) return "";
+  if (positions == null || positions.isEmpty) return "";
 
   List<int> positionList = <int>[];
   List<String> out = <String>[];
@@ -214,8 +214,8 @@ String encodeText(String input, String text, encodeOutFormat format,
     bool azOn = true,
     bool numbersOn = true,
     bool onlyFirstWordLetter = false}) {
-  if (input == null || input.length == 0) return "";
-  if (text == null || text.length == 0) return "";
+  if (input == null || input.isEmpty) return "";
+  if (text == null || text.isEmpty) return "";
 
   input = _filterInput(input,
       spacesOn: spacesOn,
@@ -234,7 +234,7 @@ String encodeText(String input, String text, encodeOutFormat format,
 
   if (onlyFirstWordLetter)
     wordList.forEach((element) {
-      if (element.Text.length > 0) element.Text = element.Text[0];
+      if (element.Text.isNotEmpty) element.Text = element.Text[0];
     });
 
   text.split('').forEach((letter) {
@@ -417,7 +417,7 @@ _wordClass _filterWord(int index, List<_wordClass> wordList, bool onlyFirstWordL
 }
 
 _wordClass _onlyFirstWordLetter(_wordClass wordClass) {
-  if (wordClass?.Text?.length > 0)
+  if (wordClass?.Text?.isNotEmpty)
     return new _wordClass(wordClass.SectionIndex, wordClass.RowIndex, wordClass.RowIndex, wordClass?.Text[0]);
   return new _wordClass(-1, -1, -1, "");
 }
@@ -503,7 +503,7 @@ Tuple3<List<_wordClass>, List<_wordClass>, List<_wordClass>> _wordList(String in
       rowList.add(new _wordClass(sectionIndex, rowIndex, wordIndex, row));
 
       row.split(RegExp(r"[\s]|[\.]|[,]|[!]|[\?]|[\\]")).forEach((word) {
-        if (word.length > 0) {
+        if (word.isNotEmpty) {
           wordIndex += 1;
           wordList.add(new _wordClass(sectionIndex, rowIndex, wordIndex, word));
         }

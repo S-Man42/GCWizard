@@ -1,6 +1,15 @@
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 
+class ShadocksOutput {
+  List<List<String>> displays;
+  List<int> numbers;
+  BigInt quaternary;
+  String shadoks;
+
+  ShadocksOutput(this.displays, this.numbers, this.quaternary, this.shadoks);
+}
+
 final Map<int, List<String>> _numbersToSegments = {
   0: ['a'],
   1: ['b'],
@@ -15,27 +24,18 @@ final Map<String, String> _numberToWord = {
   '3': 'MEU',
 };
 
-final _wordToNumber = switchMapKeyValue(_numberToWord);
-
-List<List<String>> encodeShadoksNumbers(int input) {
+List<List<String>> encodeShadoksNumbers(int? input) {
   if (input == null) return [];
 
-  var quaternary = convertBase(input.toString(), 10, 4);
+  var quaternary = convertBase(input.toString(), 10, 4) ?? '';
   return quaternary.split('').map((digit) {
-    return _numbersToSegments[int.tryParse(convertBase(digit, 4, 10))];
+    return _numbersToSegments[int.tryParse(convertBase(digit, 4, 10) ?? '0') ?? 0]!;
   }).toList();
 }
 
-Map<String, dynamic> decodeShadoksNumbers(List<String> inputs) {
-  if (inputs == null || inputs.length == 0)
-    return {
-      'displays': [
-        ['a']
-      ],
-      'numbers': [0],
-      'quaternary': BigInt.zero,
-      'shadoks': _numberToWord['0']
-    };
+ShadocksOutput decodeShadoksNumbers(List<String>? inputs) {
+  if (inputs == null || inputs.isEmpty)
+    return ShadocksOutput([['a']],[0],BigInt.zero,_numberToWord['0']!);
 
   var displays = <List<String>>[];
 
@@ -53,9 +53,9 @@ Map<String, dynamic> decodeShadoksNumbers(List<String> inputs) {
     return number;
   }).toList();
 
-  var total = convertBase(numbers.map((number) => convertBase(number.toString(), 10, 4)).join(), 4, 10);
+  var total = convertBase(numbers.map((number) => convertBase(number.toString(), 10, 4)).join(), 4, 10) ?? '0';
 
-  return {'displays': displays, 'numbers': numbers, 'quaternary': BigInt.tryParse(total), 'shadoks': _shadoks(numbers)};
+  return ShadocksOutput(displays,numbers,BigInt.tryParse(total) ?? BigInt.zero, _shadoks(numbers));
 }
 
 String _shadoks(List<int> numbers) {

@@ -14,8 +14,8 @@ class WigWagSemaphoreTelegraph extends StatefulWidget {
 }
 
 class WigWagSemaphoreTelegraphState extends State<WigWagSemaphoreTelegraph> {
-  var _encodeController;
-  var _decodeController;
+  late TextEditingController _encodeController;
+  late TextEditingController _decodeController;
 
   var _currentEncodeInput = '';
   var _currentDecodeInput = defaultIntegerListText;

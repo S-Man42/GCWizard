@@ -242,16 +242,13 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             _widgetOpenGWCFile(context),
 
             // Show Button if GWC File loaded and not httpError
-            if (_fileLoadedState == WHERIGO_FILE_LOAD_STATE.GWC && _nohttpError)
-              _widgetShowDecompileButton(context),
+            if (_fileLoadedState == WHERIGO_FILE_LOAD_STATE.GWC && _nohttpError) _widgetShowDecompileButton(context),
 
             // Show OpenFileDialog if GWC File loaded an get LUA offline
-            if (_fileLoadedState != WHERIGO_FILE_LOAD_STATE.NULL && !_getLUAOnline)
-              _widgetOpenLUAFile(context),
+            if (_fileLoadedState != WHERIGO_FILE_LOAD_STATE.NULL && !_getLUAOnline) _widgetOpenLUAFile(context),
 
             // show dropdown if files are loaded
-            if (_fileLoadedState != WHERIGO_FILE_LOAD_STATE.NULL)
-              _widgetShowDropDown(context),
+            if (_fileLoadedState != WHERIGO_FILE_LOAD_STATE.NULL) _widgetShowDropDown(context),
             _buildOutput(context)
           ],
         ));
@@ -259,134 +256,131 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   Widget _widgetShowDropDown(BuildContext context) {
     return Row(
-              children: <Widget>[
-                GCWIconButton(
-                  customIcon: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Icon(wherigoExpertMode ? Icons.psychology : Icons.psychology_outlined,
-                          color: themeColors().mainFont()),
-                      wherigoExpertMode
-                          ? Container()
-                          : Stack(
-                              alignment: Alignment.center,
-                              children: [Icon(Icons.block, size: 35.0, color: themeColors().mainFont())],
-                            ),
-                    ],
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      wherigoExpertMode = !wherigoExpertMode;
-                      Prefs.setBool(PREFERENCE_WHERIGOANALYZER_EXPERTMODE, wherigoExpertMode);
-                      _displayCartridgeDataList = _setDisplayCartridgeDataList();
-                      showToast(wherigoExpertMode
-                          ? i18n(context, 'wherigo_mode_expert')
-                          : i18n(context, 'wherigo_mode_user'));
-                      if (!wherigoExpertMode && (_displayedCartridgeData == WHERIGO_OBJECT.LUABYTECODE) ||
-                          _displayedCartridgeData == WHERIGO_OBJECT.GWCFILE ||
-                          _displayedCartridgeData == WHERIGO_OBJECT.OBFUSCATORTABLE ||
-                          _displayedCartridgeData == WHERIGO_OBJECT.LUAFILE ||
-                          _displayedCartridgeData == WHERIGO_OBJECT.TASKS ||
-                          _displayedCartridgeData == WHERIGO_OBJECT.TIMERS ||
-                          _displayedCartridgeData == WHERIGO_OBJECT.IDENTIFIER ||
-                          _displayedCartridgeData == WHERIGO_OBJECT.RESULTS_GWC ||
-                          _displayedCartridgeData == WHERIGO_OBJECT.RESULTS_LUA)
-                        _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
-                    });
-                  },
-                ),
-                Expanded(
-                  child: GCWDropDown<WHERIGO_OBJECT>(
-                    value: _displayedCartridgeData,
-                    onChanged: (WHERIGO_OBJECT value) {
-                      setState(() {
-                        _displayedCartridgeData = value;
-                        _resetIndices();
-                      });
-                    },
-                    items: _displayCartridgeDataList,
-                  ),
-                ),
-              ],
-            );
+      children: <Widget>[
+        GCWIconButton(
+          customIcon: Stack(
+            alignment: Alignment.center,
+            children: [
+              Icon(wherigoExpertMode ? Icons.psychology : Icons.psychology_outlined, color: themeColors().mainFont()),
+              wherigoExpertMode
+                  ? Container()
+                  : Stack(
+                      alignment: Alignment.center,
+                      children: [Icon(Icons.block, size: 35.0, color: themeColors().mainFont())],
+                    ),
+            ],
+          ),
+          onPressed: () {
+            setState(() {
+              wherigoExpertMode = !wherigoExpertMode;
+              Prefs.setBool(PREFERENCE_WHERIGOANALYZER_EXPERTMODE, wherigoExpertMode);
+              _displayCartridgeDataList = _setDisplayCartridgeDataList();
+              showToast(wherigoExpertMode ? i18n(context, 'wherigo_mode_expert') : i18n(context, 'wherigo_mode_user'));
+              if (!wherigoExpertMode && (_displayedCartridgeData == WHERIGO_OBJECT.LUABYTECODE) ||
+                  _displayedCartridgeData == WHERIGO_OBJECT.GWCFILE ||
+                  _displayedCartridgeData == WHERIGO_OBJECT.OBFUSCATORTABLE ||
+                  _displayedCartridgeData == WHERIGO_OBJECT.LUAFILE ||
+                  _displayedCartridgeData == WHERIGO_OBJECT.TASKS ||
+                  _displayedCartridgeData == WHERIGO_OBJECT.TIMERS ||
+                  _displayedCartridgeData == WHERIGO_OBJECT.IDENTIFIER ||
+                  _displayedCartridgeData == WHERIGO_OBJECT.RESULTS_GWC ||
+                  _displayedCartridgeData == WHERIGO_OBJECT.RESULTS_LUA)
+                _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
+            });
+          },
+        ),
+        Expanded(
+          child: GCWDropDown<WHERIGO_OBJECT>(
+            value: _displayedCartridgeData,
+            onChanged: (WHERIGO_OBJECT value) {
+              setState(() {
+                _displayedCartridgeData = value;
+                _resetIndices();
+              });
+            },
+            items: _displayCartridgeDataList,
+          ),
+        ),
+      ],
+    );
   }
 
   Widget _widgetShowDecompileButton(BuildContext context) {
     return Row(
-              children: [
-                Expanded(
-                    child: GCWButton(
-                  text: i18n(context, 'wherigo_decompile_button'),
-                  onPressed: () {
-                    _askForOnlineDecompiling();
-                  },
-                ))
-              ],
-            );
+      children: [
+        Expanded(
+            child: GCWButton(
+          text: i18n(context, 'wherigo_decompile_button'),
+          onPressed: () {
+            _askForOnlineDecompiling();
+          },
+        ))
+      ],
+    );
   }
 
   Widget _widgetOpenLUAFile(BuildContext context) {
     return GCWOpenFile(
-              title: i18n(context, 'wherigo_open_lua'),
-              onLoaded: (_LUAfile) {
-                if (_LUAfile == null) {
-                  showToast(i18n(context, 'common_loadfile_exception_notloaded'));
-                  return;
-                }
+      title: i18n(context, 'wherigo_open_lua'),
+      onLoaded: (_LUAfile) {
+        if (_LUAfile == null) {
+          showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+          return;
+        }
 
-                if (isInvalidLUASourcecode(String.fromCharCodes(_LUAfile.bytes.sublist(0, 18)))) {
-                  showToast(i18n(context, 'common_loadfile_exception_wrongtype_lua'));
-                  return;
-                }
+        if (isInvalidLUASourcecode(String.fromCharCodes(_LUAfile.bytes.sublist(0, 18)))) {
+          showToast(i18n(context, 'common_loadfile_exception_wrongtype_lua'));
+          return;
+        }
 
-                if (_LUAfile != null) {
-                  _setLUAData(_LUAfile.bytes);
+        if (_LUAfile != null) {
+          _setLUAData(_LUAfile.bytes);
 
-                  _resetIndices();
+          _resetIndices();
 
-                  _analyseCartridgeFileAsync(WHERIGO_DATA_TYPE_LUA);
+          _analyseCartridgeFileAsync(WHERIGO_DATA_TYPE_LUA);
 
-                  setState(() {
-                    _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
-                    _displayCartridgeDataList = _setDisplayCartridgeDataList();
-                  });
-                }
-              },
-            );
+          setState(() {
+            _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
+            _displayCartridgeDataList = _setDisplayCartridgeDataList();
+          });
+        }
+      },
+    );
   }
 
   Widget _widgetOpenGWCFile(BuildContext context) {
     return GCWOpenFile(
-            title: i18n(context, 'wherigo_open_gwc'),
-            onLoaded: (_GWCfile) {
-              if (_GWCfile == null) {
-                showToast(i18n(context, 'common_loadfile_exception_notloaded'));
-                return;
-              }
+      title: i18n(context, 'wherigo_open_gwc'),
+      onLoaded: (_GWCfile) {
+        if (_GWCfile == null) {
+          showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+          return;
+        }
 
-              if (isInvalidCartridge(_GWCfile.bytes)) {
-                showToast(i18n(context, 'common_loadfile_exception_wrongtype_gwc'));
-                return;
-              }
+        if (isInvalidCartridge(_GWCfile.bytes)) {
+          showToast(i18n(context, 'common_loadfile_exception_wrongtype_gwc'));
+          return;
+        }
 
-              if (_GWCfile != null) {
-                _setGWCData(_GWCfile.bytes);
+        if (_GWCfile != null) {
+          _setGWCData(_GWCfile.bytes);
 
-                _resetIndices();
+          _resetIndices();
 
-                _getLUAOnline = true;
-                _nohttpError = true;
-                _WherigoShowLUASourcecodeDialog = true;
+          _getLUAOnline = true;
+          _nohttpError = true;
+          _WherigoShowLUASourcecodeDialog = true;
 
-                _analyseCartridgeFileAsync(WHERIGO_DATA_TYPE_GWC);
+          _analyseCartridgeFileAsync(WHERIGO_DATA_TYPE_GWC);
 
-                setState(() {
-                  _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
-                  _displayCartridgeDataList = _setDisplayCartridgeDataList();
-                });
-              }
-            },
-          );
+          setState(() {
+            _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
+            _displayCartridgeDataList = _setDisplayCartridgeDataList();
+          });
+        }
+      },
+    );
   }
 
   void _resetIndices() {
@@ -1434,7 +1428,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                   isEditable: false, // false: open in Map
                   // true:  open in FreeMap
                 ),
-                i18nPrefix: 'coords_map_view',
+                id: 'coords_map_view',
                 autoScroll: false,
                 suppressToolMargin: true)));
   }

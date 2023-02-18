@@ -10,10 +10,10 @@ class StraddlingCheckerboardOutput {
 }
 
 StraddlingCheckerboardOutput encryptStraddlingCheckerboard(
-    String input, key, alphabetWord, columnOrder, bool matrix4x10,
-    {PolybiosMode mode: PolybiosMode.AZ09, String alphabet}) {
-  if (input == null || input == '') return StraddlingCheckerboardOutput('', '');
-  if (key == null || key == '') return StraddlingCheckerboardOutput('', '');
+    String? input, String? key, alphabetWord, columnOrder, bool matrix4x10,
+    {PolybiosMode mode: PolybiosMode.AZ09, required String alphabet}) {
+  if (input == null || input.isEmpty) return StraddlingCheckerboardOutput('', '');
+  if (key == null || key.isEmpty) return StraddlingCheckerboardOutput('', '');
 
   input = input.toUpperCase().replaceAll(' ', '.');
   key = _fillKey(key.toUpperCase(), matrix4x10);
@@ -40,14 +40,14 @@ StraddlingCheckerboardOutput encryptStraddlingCheckerboard(
         if (EncodeMatrix[input[i]] == null)
           result.add('');
         else
-          result.add(EncodeMatrix[input[i]]);
+          result.add(EncodeMatrix[input[i]] ?? '');
       } else {
         if (int.tryParse(input[i]) != null)
-          result.addAll([EncodeMatrix['/'], input[i]]);
+          result.addAll([EncodeMatrix['/'] ?? '', input[i]]);
         else if (EncodeMatrix[input[i]] == null)
           result.add('');
         else
-          result.add(EncodeMatrix[input[i]]);
+          result.add(EncodeMatrix[input[i]] ?? '');
       }
     return StraddlingCheckerboardOutput(result.join(''), _buildGrid(DecodeMatrix, columnOrder, matrix4x10));
   } catch (e) {
@@ -56,10 +56,10 @@ StraddlingCheckerboardOutput encryptStraddlingCheckerboard(
 }
 
 StraddlingCheckerboardOutput decryptStraddlingCheckerboard(
-    String input, key, alphabetWord, columnOrder, bool matrix4x10,
-    {PolybiosMode mode: PolybiosMode.AZ09, String alphabet}) {
-  if (input == null || input == '') return StraddlingCheckerboardOutput('', '');
-  if (key == null || key == '') return StraddlingCheckerboardOutput('', '');
+    String? input, String? key, alphabetWord, columnOrder, bool matrix4x10,
+    {PolybiosMode mode: PolybiosMode.AZ09, required String alphabet}) {
+  if (input == null || input.isEmpty) return StraddlingCheckerboardOutput('', '');
+  if (key == null || key.isEmpty) return StraddlingCheckerboardOutput('', '');
 
   key = _fillKey(key.toUpperCase(), matrix4x10);
   alphabetWord = alphabetWord.toUpperCase();
@@ -82,10 +82,10 @@ StraddlingCheckerboardOutput decryptStraddlingCheckerboard(
         if (DecodeMatrix[input[i]] == null)
           result.add('');
         else if (DecodeMatrix[input[i]] == ' ') {
-          result.add(DecodeMatrix[input[i] + input[i + 1]]);
+          result.add(DecodeMatrix[input[i] + input[i + 1]] ?? '');
           i++;
         } else
-          result.add(DecodeMatrix[input[i]]);
+          result.add(DecodeMatrix[input[i]] ?? '');
       } else {
         if (DecodeMatrix[input[i]] == null)
           result.add('');
@@ -94,10 +94,10 @@ StraddlingCheckerboardOutput decryptStraddlingCheckerboard(
             result.add(input[i + 2]);
             i++;
           } else
-            result.add(DecodeMatrix[input[i] + input[i + 1]]);
+            result.add(DecodeMatrix[input[i] + input[i + 1]] ?? '');
           i++;
         } else
-          result.add(DecodeMatrix[input[i]]);
+          result.add(DecodeMatrix[input[i]] ?? '');
       }
     }
     return StraddlingCheckerboardOutput(
@@ -123,7 +123,7 @@ bool _invalidKey(String key, bool matrix4x10) {
 }
 
 bool _invalidColumnOrder(String columnOrder) {
-  if (columnOrder == '') return false;
+  if (columnOrder.isEmpty) return false;
 
   if (columnOrder.length != 10) return true;
 
@@ -134,7 +134,7 @@ bool _invalidColumnOrder(String columnOrder) {
 }
 
 Map<String, String> _buildDecodeMatrix(String key, String columnOrder, bool matrix4x10, String alphabetWord,
-    {PolybiosMode mode: PolybiosMode.AZ09, String alphabet}) {
+    {PolybiosMode mode = PolybiosMode.AZ09, required String alphabet}) {
   Map<String, String> result = Map<String, String>();
   List<String> usedAlphabet = <String>[];
   String line1 = '';
@@ -142,7 +142,7 @@ Map<String, String> _buildDecodeMatrix(String key, String columnOrder, bool matr
   String line3 = '';
   String wholeAlphabet = '';
 
-  if (columnOrder == '') columnOrder = '0123456789';
+  if (columnOrder.isEmpty) columnOrder = '0123456789';
 
   wholeAlphabet = key + alphabetWord;
   switch (mode) {
@@ -188,11 +188,11 @@ Map<String, String> _buildDecodeMatrix(String key, String columnOrder, bool matr
 
   // Build matrix - first row with single numbers
   for (int i = 0; i < 10; i++) {
-    if (wholeAlphabet[i] == ' ' && line1 == '')
+    if (wholeAlphabet[i] == ' ' && line1.isEmpty)
       line1 = columnOrder[i];
-    else if (wholeAlphabet[i] == ' ' && line2 == '')
+    else if (wholeAlphabet[i] == ' ' && line2.isEmpty)
       line2 = columnOrder[i];
-    else if (wholeAlphabet[i] == ' ' && line3 == '') line3 = columnOrder[i];
+    else if (wholeAlphabet[i] == ' ' && line3.isEmpty) line3 = columnOrder[i];
 
     result[columnOrder[i]] = wholeAlphabet[i];
     usedAlphabet.add(wholeAlphabet[i]);
@@ -225,38 +225,38 @@ String _buildGrid(Map<String, String> grid, String columnOrder, bool matrix4x10)
   String line2 = '';
   String line3 = '';
 
-  if (columnOrder == '') columnOrder = '0123456789';
+  if (columnOrder.isEmpty) columnOrder = '0123456789';
 
   result = result + '  | ' + columnOrder.split('').join(' ') + '\n';
   result = result + '-----------------------' + '\n';
 
   result = result + '  |';
   for (int i = 0; i < 10; i++) {
-    result = result + ' ' + grid[columnOrder[i]];
-    if (grid[columnOrder[i]] == ' ' && line1 == '')
+    result = result + ' ' + (grid[columnOrder[i]] ?? '');
+    if (grid[columnOrder[i]] == ' ' && line1.isEmpty)
       line1 = columnOrder[i];
-    else if (grid[columnOrder[i]] == ' ' && line2 == '')
+    else if (grid[columnOrder[i]] == ' ' && line2.isEmpty)
       line2 = columnOrder[i];
-    else if (grid[columnOrder[i]] == ' ' && line3 == '') line3 = columnOrder[i];
+    else if (grid[columnOrder[i]] == ' ' && line3.isEmpty) line3 = columnOrder[i];
   }
   result = result + '\n';
 
   result = result + line1 + ' |';
   for (int i = 0; i < 10; i++) {
-    result = result + ' ' + grid[line1 + columnOrder[i]];
+    result = result + ' ' + (grid[line1 + columnOrder[i]] ?? '');
   }
   result = result + '\n';
 
   result = result + line2 + ' |';
   for (int i = 0; i < 10; i++) {
-    result = result + ' ' + grid[line2 + columnOrder[i]];
+    result = result + ' ' + (grid[line2 + columnOrder[i]] ?? '');
   }
 
   if (matrix4x10) {
     result = result + '\n';
     result = result + line3 + ' |';
     for (int i = 0; i < 10; i++) {
-      result = result + ' ' + grid[line3 + columnOrder[i]];
+      result = result + ' ' + (grid[line3 + columnOrder[i]] ?? '');
     }
   }
   return result;

@@ -26,8 +26,8 @@ class SegmentDisplay extends StatefulWidget {
 }
 
 class SegmentDisplayState extends State<SegmentDisplay> {
-  var _inputEncodeController;
-  var _inputDecodeController;
+  late TextEditingController _inputEncodeController;
+  late TextEditingController _inputDecodeController;
   var _currentEncodeInput = '';
   var _currentDecodeInput = '';
   var _currentDisplays = <List<String>>[];
@@ -105,7 +105,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
     NSegmentDisplay displayWidget;
 
     var displays = _currentDisplays;
-    if (displays != null && displays.length > 0)
+    if (displays != null && displays.isNotEmpty)
       currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [], key: (e) => e, value: (e) => true);
     else
       currentDisplay = {};
@@ -125,7 +125,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
         newSegments.sort();
         if (containsDot) newSegments.add('dp');
 
-        if (_currentDisplays.length == 0) _currentDisplays.add([]);
+        if (_currentDisplays.isEmpty) _currentDisplays.add([]);
 
         _currentDisplays[_currentDisplays.length - 1] = newSegments;
       });
@@ -180,7 +180,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
             icon: Icons.backspace,
             onPressed: () {
               setState(() {
-                if (_currentDisplays.length > 0) _currentDisplays.removeLast();
+                if (_currentDisplays.isNotEmpty) _currentDisplays.removeLast();
               });
             },
           ),

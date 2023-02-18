@@ -2,16 +2,16 @@ part of 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/subst
 
 class Quadgrams extends _Quadgrams {
   static const int maxAlphabetLength = 32;
-  Map<int, List<int>> quadgramsCompressed;
-  String assetLocation;
-  List<int> _quadgrams;
+  Map<int, List<int>>? quadgramsCompressed;
+  late String assetLocation;
+  List<int>? _quadgrams;
 
-  List<int> quadgrams() {
+  List<int>? quadgrams() {
     if (_quadgrams != null) return _quadgrams;
 
     if (quadgramsCompressed == null) return null;
 
-    _quadgrams = decompressQuadgrams(quadgramsCompressed, pow(Quadgrams.maxAlphabetLength, 3) * alphabet.length);
+    _quadgrams = decompressQuadgrams(quadgramsCompressed!, (pow(Quadgrams.maxAlphabetLength, 3) * alphabet.length).toInt());
     quadgramsCompressed = null;
     return _quadgrams;
   }
@@ -27,11 +27,11 @@ class Quadgrams extends _Quadgrams {
       if (blockStart >= 0) {
         // if five 0 => new list
         if (((i + zeroCount < quadgrams.length) &&
-            (quadgrams[i + 1] == 0) | (quadgrams[i + 1] == null) &&
-            (quadgrams[i + 2] == 0) | (quadgrams[i + 2] == null) &&
-            (quadgrams[i + 3] == 0) | (quadgrams[i + 3] == null) &&
-            (quadgrams[i + 4] == 0) | (quadgrams[i + 4] == null) &&
-            (quadgrams[i + 5] == 0) | (quadgrams[i + 5] == null)) ||
+            (quadgrams[i + 1] == 0) |
+            (quadgrams[i + 2] == 0) |
+            (quadgrams[i + 3] == 0) |
+            (quadgrams[i + 4] == 0) |
+            (quadgrams[i + 5] == 0)) ||
             (i + zeroCount >= quadgrams.length)) {
           var quadgramList = <int>[];
           quadgramList.addAll(quadgrams.getRange(
@@ -45,9 +45,9 @@ class Quadgrams extends _Quadgrams {
     return map;
   }
 
-  static List<int> decompressQuadgrams(Map<int, List<int>> quadgramsCompressed, int size) {
+  static List<int>? decompressQuadgrams(Map<int, List<int>> quadgramsCompressed, int size) {
     if (quadgramsCompressed == null) return null;
-    var list = List<int>(size);
+    var list = List<int>.filled(size, 0);
 
     list.fillRange(0, list.length, 0);
 
@@ -112,7 +112,7 @@ class Quadgrams extends _Quadgrams {
         first = false;
       else
         sb.write(',');
-      if (val == null) val = 0;
+
       out = val.round().toString();
       sb.write(out);
       idx += out.length + 1;

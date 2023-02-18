@@ -776,7 +776,7 @@ String decodeNavajo(String cipherText, bool useOnlyAlphabet) {
   NAVAJO_DECODE_ALPHABET['BSEH-DO-GLIZ'] = 'Z';
 
   List<String> result = <String>[];
-  if (cipherText == null || cipherText == '') return '';
+  if (cipherText == null || cipherText.isEmpty) return '';
   cipherText = cipherText.toUpperCase().replaceAll(RegExp(r'\s{3,}'), '  ');
   cipherText.split('  ').forEach((element) {
     element.split(' ').forEach((element) {
@@ -796,7 +796,7 @@ String decodeNavajo(String cipherText, bool useOnlyAlphabet) {
 
 String encodeNavajo(String plainText, bool useOnlyAlphabet) {
   List<String> result = <String>[];
-  if (plainText == null || plainText == '') return '';
+  if (plainText == null || plainText.isEmpty) return '';
 
   shrinkText(plainText.toUpperCase()).split(' ').forEach((element) {
     if (useOnlyAlphabet)

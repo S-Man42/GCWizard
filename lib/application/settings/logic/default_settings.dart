@@ -61,13 +61,17 @@ void initDefaultSettings(PreferencesInitMode mode, {String reinitSinglePreferenc
   } else {
     clipboardData.removeWhere((item) {
       try {
-        var createdMS = int.tryParse(jsonDecode(item)['created']);
+        var decoded = jsonDecode(item)['created'];
+        if (decoded == null || !(decoded is String))
+          return true;
+
+        var createdMS = int.tryParse(decoded);
         if (createdMS == null)
           return true;
 
         var created = DateTime.fromMillisecondsSinceEpoch(createdMS);
         return created
-            .isBefore(DateTime.now().subtract(Duration(days: Prefs.get(PREFERENCE_CLIPBOARD_KEEP_ENTRIES_IN_DAYS))));
+            .isBefore(DateTime.now().subtract(Duration(days: Prefs.getInt(PREFERENCE_CLIPBOARD_KEEP_ENTRIES_IN_DAYS))));
       } catch (e) {
         return true;
       }
@@ -255,7 +259,11 @@ void initDefaultSettings(PreferencesInitMode mode, {String reinitSinglePreferenc
   if (reinitSinglePreference == PREFERENCE_THEME_FONT_SIZE ||
       _reinitAll ||
       Prefs.get(PREFERENCE_THEME_FONT_SIZE) == null) {
-    Prefs.setDouble(PREFERENCE_THEME_FONT_SIZE, Prefs.get('font_size') ?? 16.0); //font_size == pre version 1.2.0
+    var loadedFontSize = Prefs.getDouble('font_size'); //backward compatibility: font_size == pre version 1.2.0
+    if (loadedFontSize == 0.0)
+      loadedFontSize = 16.0;
+
+    Prefs.setDouble(PREFERENCE_THEME_FONT_SIZE, loadedFontSize);
   }
 
   if (reinitSinglePreference == PREFERENCE_TOOL_COUNT || _reinitAll || Prefs.get(PREFERENCE_TOOL_COUNT) == null) {

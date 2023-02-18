@@ -104,7 +104,7 @@ class NumeralWordsConverterState extends State<NumeralWordsConverter> {
     if (_currentMode == GCWSwitchPosition.right) {
       // decode
       output = decodeNumeralWordToNumber(_currentLanguage, removeAccents(_currentDecodeInput).toLowerCase());
-      if (output.error != '')
+      if (output.error.isNotEmpty)
         return GCWDefaultOutput(
           child: i18n(context, output.error),
         );
@@ -115,7 +115,7 @@ class NumeralWordsConverterState extends State<NumeralWordsConverter> {
 
     return GCWDefaultOutput(
         child: Column(children: <Widget>[
-      if (output.title != '')
+      if (output.title.isNotEmpty)
         Column(
           children: <Widget>[
             GCWTextDivider(text: i18n(context, output.title)),
@@ -126,7 +126,7 @@ class NumeralWordsConverterState extends State<NumeralWordsConverter> {
         ),
       if (_currentMode == GCWSwitchPosition.right) // decode
         GCWOutputText(
-          text: _currentDecodeInput.length == 0 ? '' : output.number.toString(),
+          text: _currentDecodeInput.isEmpty ? '' : output.number.toString(),
         )
       else
         GCWOutputText(

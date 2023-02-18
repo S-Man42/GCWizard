@@ -1971,7 +1971,7 @@ String encodeTeletypewriter(String? input, TeletypewriterCodebook language) {
 }
 
 String encodeTeletypewriter_IA5(String input) {
-  if (input == null || input.length == 0) return '';
+  if (input == null || input.isEmpty) return '';
 
   List<int> out = [];
   input.split('').forEach((character) {
@@ -1982,7 +1982,7 @@ String encodeTeletypewriter_IA5(String input) {
 }
 
 String encodeTeletypewriter_ZC1(String input) {
-  if (input == null || input.length == 0) return '';
+  if (input == null || input.isEmpty) return '';
 
   List<int> out = [];
   input.split('').forEach((character) {
@@ -1996,7 +1996,7 @@ String decodeTeletypewriter(
   List<int>? values,
   TeletypewriterCodebook language,
 ) {
-  if (values == null || values.length == 0) return '';
+  if (values == null || values.isEmpty) return '';
 
   String out = '';
   var isLetterMode = true;
@@ -2022,7 +2022,7 @@ String decodeTeletypewriter(
     case TeletypewriterCodebook.CCITT_ITA1_UK:
       values.forEach((value) {
         if (value == _NUMBERS_FOLLOW[language]) {
-          if (out.length > 0) out += ' ';
+          if (out.isNotEmpty) out += ' ';
           isLetterMode = false;
           return;
         }

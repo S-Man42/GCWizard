@@ -160,7 +160,7 @@ class VigenereBreakerState extends State<VigenereBreaker> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    if (_currentInput == null || _currentInput.length == 0) return GCWDefaultOutput();
+    if (_currentInput == null || _currentInput.isEmpty) return GCWDefaultOutput();
 
     if (_currentOutput == null) return GCWDefaultOutput();
 
@@ -190,7 +190,7 @@ class VigenereBreakerState extends State<VigenereBreaker> {
       setState(() {});
     });
 
-    if (_currentInput == null || _currentInput.length == 0) return null;
+    if (_currentInput == null || _currentInput.isEmpty) return null;
 
     return GCWAsyncExecuterParameters(VigenereBreakerJobData(
         input: _currentInput,

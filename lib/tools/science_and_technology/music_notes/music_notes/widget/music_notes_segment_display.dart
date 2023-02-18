@@ -53,9 +53,8 @@ class _NotesSegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
   final bool readOnly;
   final void Function(Map<String, bool>)? onChanged;
-  final bool tapeStyle;
 
-  _NotesSegmentDisplay({Key? key, required this.segments, this.readOnly = false, this.onChanged, this.tapeStyle = false})
+  _NotesSegmentDisplay({Key? key, required this.segments, this.readOnly = false, this.onChanged})
       : super(
             key: key,
             initialSegments: _INITIAL_SEGMENTS,
@@ -98,7 +97,7 @@ class _NotesSegmentDisplay extends NSegmentDisplay {
                 if (key == '' || segmentActive(currentSegments, key))
                   pathL.addPath(
                       _createLine(
-                          key != '', size, Offset(0, counter * LINE_DISTANCE + LINE_OFFSET_Y), LINE_OFFSET_X, readOnly),
+                          key.isNotEmpty, size, Offset(0, counter * LINE_DISTANCE + LINE_OFFSET_Y), LINE_OFFSET_X, readOnly),
                       Offset(0, 0));
                 counter++;
               });

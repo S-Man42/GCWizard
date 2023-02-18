@@ -86,7 +86,7 @@ progressCounter() {
 VigenereBreakerResult break_cipher(String input, VigenereBreakerType vigenereBreakerType,
     VigenereBreakerAlphabet alphabet, int keyLengthMin, int keyLengthMax, bool ignoreNonLetters,
     {Function counterFunction}) {
-  if (input == null || input == '') return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.OK);
+  if (input == null || input.isEmpty) return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.OK);
 
   if (((keyLengthMin < 3) || (keyLengthMin > 1000)) || ((keyLengthMax < 3) || (keyLengthMax > 1000)))
     // key length not in the valid range 3..1000
@@ -144,7 +144,7 @@ VigenereBreakerResult break_cipher(String input, VigenereBreakerType vigenereBre
 }
 
 VigenereBreakerResult _bestSolution(List<VigenereBreakerResult> keyList) {
-  if (keyList == null || keyList.length == 0) return null;
+  if (keyList == null || keyList.isEmpty) return null;
 
   keyList = _highPassFilter(2, keyList);
   var bestFitness = keyList[0];

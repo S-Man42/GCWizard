@@ -216,7 +216,7 @@ List<List<String>> encodePunchtape(String input, TeletypewriterCodebook language
 }
 
 Map<String, Object> decodeTextPunchtape(String? inputs, TeletypewriterCodebook language, bool order12345) {
-  if (inputs == null || inputs.length == 0)
+  if (inputs == null || inputs.isEmpty)
     return {
       'displays': <List<String>>[],
       'text': '',
@@ -238,7 +238,7 @@ Map<String, Object> decodeTextPunchtape(String? inputs, TeletypewriterCodebook l
 }
 
 Map<String, Object> decodeVisualPunchtape(List<String?> inputs, TeletypewriterCodebook language, bool order12345) {
-  if (inputs.length == 0) return {'displays': <List<String>>[], 'text': ''};
+  if (inputs.isEmpty) return {'displays': <List<String>>[], 'text': ''};
 
   var displays = <List<String>>[];
 

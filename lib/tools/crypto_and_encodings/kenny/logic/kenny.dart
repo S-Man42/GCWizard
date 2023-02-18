@@ -16,7 +16,7 @@ import 'package:gc_wizard/utils/string_utils.dart';
  */
 
 encryptKenny(String input, List<String> replaceCharacters, bool caseSensitive) {
-  if (input == null || input.length == 0) return '';
+  if (input == null || input.isEmpty) return '';
 
   if (replaceCharacters == null || replaceCharacters.length < 3) return '';
 
@@ -69,7 +69,7 @@ encryptKenny(String input, List<String> replaceCharacters, bool caseSensitive) {
  * TODO: Find more readable algorithm
  */
 decryptKenny(String input, List<String> replaceCharacters, bool caseSensitive) {
-  if (input == null || input.length == 0) return '';
+  if (input == null || input.isEmpty) return '';
 
   if (replaceCharacters == null || replaceCharacters.length < 3) return '';
 
@@ -98,11 +98,11 @@ decryptKenny(String input, List<String> replaceCharacters, bool caseSensitive) {
   // if you find a non-writeable character (== a key character), add it to chunk
   // if not, simply add the current chunk to output
   // if chunk length is 3 (found triple) -> convert it into a letter using the numerals system approach
-  while (_input.length > 0) {
+  while (_input.isNotEmpty) {
     var chunk = '';
     chunkStart += chunkOffset;
     chunkOffset = 0;
-    while (chunk.length < 3 && _input.length > 0) {
+    while (chunk.length < 3 && _input.isNotEmpty) {
       var character = _input[0];
       // add valid character to chunk
       if (replaceToCharacters.contains(character)) {

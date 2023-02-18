@@ -137,7 +137,7 @@ final DecabitToAZInt = AZToDecabit.map((k, v) => MapEntry(v, k.toString()));
 final DecabitToAZStr = AZToDecabit.map((k, v) => MapEntry(v, String.fromCharCode(k)));
 
 encryptDecabit(String input, Map<String, String> replaceCharacters, bool numericMode) {
-  if (input == null || input.length == 0) return '';
+  if (input == null || input.isEmpty) return '';
 
   var decabit;
 
@@ -162,7 +162,7 @@ encryptDecabit(String input, Map<String, String> replaceCharacters, bool numeric
 }
 
 decryptDecabit(String input, Map<String, String> replaceCharacters, bool numericMode) {
-  if (input == null || input.length == 0) return '';
+  if (input == null || input.isEmpty) return '';
 
   if (replaceCharacters != null) input = substitution(input, switchMapKeyValue(replaceCharacters));
 

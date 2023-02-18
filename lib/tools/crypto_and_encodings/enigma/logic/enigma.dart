@@ -164,18 +164,18 @@ class EnigmaKey {
   }
 }
 
-_normalizeInput(String input) {
+String _normalizeInput(String input) {
   input = normalizeUmlauts(input).toUpperCase();
   input = input.replaceAll(RegExp(r'[^A-Z]'), '');
   return input;
 }
 
-_rotorConfigCausesTurnover(EnigmaRotorConfiguration configuration) {
+bool _rotorConfigCausesTurnover(EnigmaRotorConfiguration configuration) {
   var letter = alphabet_AZIndexes[configuration.setting + 1];
   return configuration.rotor.turnovers.contains(letter);
 }
 
-_stepping(List<EnigmaRotorConfiguration> configurations) {
+void _stepping(List<EnigmaRotorConfiguration> configurations) {
   int i = 0;
   bool selfTurnover = false;
   bool turnoverThroughPrevious;
@@ -192,20 +192,20 @@ _stepping(List<EnigmaRotorConfiguration> configurations) {
   } while (i < configurations.length);
 }
 
-_standardRotorConfigurations(EnigmaKey key) {
+List<EnigmaRotorConfiguration> _standardRotorConfigurations(EnigmaKey key) {
   return key.rotorConfigurations.where((position) => position.rotor.type == EnigmaRotorType.STANDARD).toList();
 }
 
-_rotorConfigurations(EnigmaKey key) {
+List<int> _rotorConfigurations(EnigmaKey key) {
   return key.rotorConfigurations.map((configuration) => configuration.setting).toList();
 }
 
-Map<String, dynamic> calculateEnigma(String input, EnigmaKey key) {
-  if (input == null || _standardRotorConfigurations(key).length == 0)
+Map<String, dynamic> calculateEnigma(String? input, EnigmaKey key) {
+  if (input == null || _standardRotorConfigurations(key).isEmpty)
     return {'text': '', 'rotorSettingAfter': _rotorConfigurations(key)};
 
   input = _normalizeInput(input);
-  if (input.length == 0) return {'text': '', 'rotorSettingAfter': _rotorConfigurations(key)};
+  if (input.isEmpty) return {'text': '', 'rotorSettingAfter': _rotorConfigurations(key)};
 
   var output = '';
 
@@ -263,7 +263,7 @@ List<Map<String, dynamic>> calculateEnigmaWithMessageKey(String input, EnigmaKey
   var firstResult = calculateEnigma(input, key);
   var firstCalculation = firstResult['text'];
 
-  if (firstCalculation.length == 0) return [firstResult];
+  if (firstCalculation.isEmpty) return [firstResult];
 
   List<Map<String, dynamic>> output = [firstResult];
 

@@ -20,7 +20,7 @@ String encryptMexicanArmyCipherWheel(String input, List<int> keys) {
 
   input = input.toUpperCase().replaceAll(RegExp(r'[^A-Z]'), '');
 
-  if (input.length == 0) return '';
+  if (input.isEmpty) return '';
 
   return input.split('').map((character) {
     var value = alphabet_AZ[character];
@@ -41,12 +41,12 @@ String encryptMexicanArmyCipherWheel(String input, List<int> keys) {
 }
 
 String decryptMexicanArmyCipherWheel(String input, List<int> keys) {
-  if (input == null || input.length == 0) return '';
+  if (input == null || input.isEmpty) return '';
 
   input = input.replaceAll(RegExp(r'[^0-9]'), '');
   if (input.length % 2 == 1) input = input.substring(0, input.length - 1);
 
-  if (input.length == 0) return '';
+  if (input.isEmpty) return '';
 
   int i = 0;
   var output = '';

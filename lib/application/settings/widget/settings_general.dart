@@ -95,7 +95,7 @@ class GeneralSettingsState extends State<GeneralSettings> {
           Expanded(
             child: GCWUnitDropDown(
                 unitList: allLengths(),
-                value: getUnitBySymbol(allLengths(), Prefs.get(PREFERENCE_DEFAULT_LENGTH_UNIT)),
+                value: getUnitBySymbol(allLengths(), Prefs.getString(PREFERENCE_DEFAULT_LENGTH_UNIT)),
                 onChanged: (Unit value) {
                   setState(() {
                     if (value is Length)
@@ -263,7 +263,7 @@ class GeneralSettingsState extends State<GeneralSettings> {
               () {
                 Navigator.of(context)
                     .push(NoAnimationMaterialPageRoute(
-                        builder: (context) => GCWTool(tool: SettingsPreferences(), i18nPrefix: 'settings_preferences')))
+                        builder: (context) => GCWTool(tool: SettingsPreferences(), id: 'settings_preferences')))
                     .whenComplete(() {
                   setState(() {
                     AppBuilder.of(context).rebuild();

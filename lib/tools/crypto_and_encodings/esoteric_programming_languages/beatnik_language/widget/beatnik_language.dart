@@ -19,9 +19,9 @@ class Beatnik extends StatefulWidget {
 }
 
 class BeatnikState extends State<Beatnik> {
-  var _programmController;
-  var _inputController;
-  var _outputController;
+  late TextEditingController _programmController;
+  late TextEditingController _inputController;
+  late TextEditingController _outputController;
 
   var _currentProgram = '';
   var _currentInput = '';

@@ -21,8 +21,8 @@ class Teletypewriter extends StatefulWidget {
 }
 
 class TeletypewriterState extends State<Teletypewriter> {
-  var _encodeController;
-  var _decodeController;
+  late TextEditingController _encodeController;
+  late TextEditingController _decodeController;
 
   var _currentEncodeInput = '';
   var _currentDecodeInput = defaultIntegerListText;

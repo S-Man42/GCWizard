@@ -288,7 +288,7 @@ class SymbolTableData {
     } else if (config[SymbolTableConstants.CONFIG_TRANSLATE] != null &&
         config[SymbolTableConstants.CONFIG_TRANSLATE].contains(imageKey)) {
       var translationPrefix = config[SymbolTableConstants.CONFIG_TRANSLATION_PREFIX];
-      if (translationPrefix != null && translationPrefix.length > 0) {
+      if (translationPrefix != null && translationPrefix.isNotEmpty) {
         key = i18n(_context, translationPrefix + imageKey);
       } else {
         key = i18n(_context, 'symboltables_' + symbolKey + '_' + imageKey);

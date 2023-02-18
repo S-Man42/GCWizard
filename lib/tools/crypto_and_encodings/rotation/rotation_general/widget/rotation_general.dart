@@ -44,6 +44,7 @@ class RotationGeneralState extends State<RotationGeneral> {
         ),
         GCWIntegerSpinner(
           title: i18n(context, 'common_key'),
+          value: _currentKey,
           onChanged: (value) {
             setState(() {
               _currentKey = value;
@@ -56,9 +57,9 @@ class RotationGeneralState extends State<RotationGeneral> {
   }
 
   _buildOutput() {
-    if (_currentInput == null || _currentInput.isEmpty) return GCWDefaultOutput();
+    if (_currentInput.isEmpty) return GCWDefaultOutput();
 
-    var reverseKey = modulo(26 - _currentKey, 26);
+    var reverseKey = modulo(26 - _currentKey, 26).toInt();
 
     return Column(
       children: [

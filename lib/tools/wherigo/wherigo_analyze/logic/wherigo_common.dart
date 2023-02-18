@@ -108,7 +108,7 @@ String _getDetails(String line, String obfuscator, String dtable) {
 
     i = 0;
     section = true;
-    if (line.length != 0) {
+    if (line.isNotEmpty) {
       do {
         // get something else in between
         if (line.substring(i).startsWith(obfuscator))
@@ -120,7 +120,7 @@ String _getDetails(String line, String obfuscator, String dtable) {
       result = result + line.substring(0, i).replaceAll(')', '');
       line = line.substring(i);
     }
-  } while (line.length != 0);
+  } while (line.isNotEmpty);
 
   return normalizeWIGText(result);
 }

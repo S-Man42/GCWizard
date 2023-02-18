@@ -21,7 +21,7 @@ class _GCWOutputState extends State<GCWOutput> {
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
-      widget.title != null && widget.title!.length > 0
+      widget.title != null && widget.title!.isNotEmpty
           ? GCWTextDivider(text: widget.title!, trailing: widget.trailing)
           : Container(),
       widget.child is Widget

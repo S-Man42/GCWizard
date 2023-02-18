@@ -14,7 +14,7 @@ class GCWSymbolTableTool extends GCWTool {
   }) : super(
             key: key,
             tool: SymbolTable(symbolKey: symbolKey),
-            i18nPrefix: 'symboltables_' + symbolKey,
+            id: 'symboltables_' + symbolKey,
             autoScroll: false,
             iconPath: SYMBOLTABLES_ASSETPATH + symbolKey + '/logo.png',
             helpSearchString: 'symboltables_selection_title',

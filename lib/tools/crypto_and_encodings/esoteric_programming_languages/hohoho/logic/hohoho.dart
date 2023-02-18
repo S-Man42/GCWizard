@@ -30,14 +30,14 @@ class HohohoOutput {
 }
 
 HohohoOutput interpretHohoho(String plainText, {String STDIN}) {
-  if (plainText == '' || plainText == null) return HohohoOutput('', '');
+  if (plainText.isEmpty || plainText == null) return HohohoOutput('', '');
 
   plainText = plainText.trim();
   String result = plainText.replaceAll('!', '').replaceAll(' ', '');
   String test = plainText.replaceAll('Ho', '').replaceAll('ho', '').replaceAll('!', '').replaceAll(' ', '');
   String error = '';
   // test if correct syntax
-  if (test != '' || result.length % 6 != 0) error = HOHOHO_ERROR_INVALID_PROGRAM;
+  if (test.isNotEmpty || result.length % 6 != 0) error = HOHOHO_ERROR_INVALID_PROGRAM;
 
   // convert to hohoho
   test = '';
@@ -61,7 +61,7 @@ HohohoOutput interpretHohoho(String plainText, {String STDIN}) {
 }
 
 String generateHohoho(String OutputText) {
-  if (OutputText == '' || OutputText == null) return '';
+  if (OutputText.isEmpty || OutputText == null) return '';
 
   // generate Brainfck
   String code = generateBrainfk(OutputText);

@@ -30,14 +30,18 @@ Future _loadLocaleSearchStrings(String languageCode) async {
 }
 
 Future<Map<String, String>> _getSearchStringsForLocale(String locale) async {
-  var file;
+  String file;
   try {
     file = await rootBundle.loadString('assets/searchstrings/$locale.json');
-  } catch (e) {}
+  } catch (e) {
+    file = '{}';
+  }
 
-  if (file == null) file = '{}';
+  var decoded = json.decode(file);
+  if (decoded == null || !(decoded is Map<String, Object?>))
+    decoded = <String, Object?>{};
 
-  Map<String, Object> _rawStrings = json.decode(file);
+  Map<String, Object?> _rawStrings = decoded;
   Map<String, String> _strings = _rawStrings.map((key, value) {
     return MapEntry(key, value.toString());
   });
@@ -64,13 +68,13 @@ void createIndexedSearchStrings() {
       if (localeStrings != null && localeStrings.isNotEmpty) searchStrings.add(localeStrings);
     }
 
-    var _toolName;
+    String? _toolName;
     if (tool.toolName != null) {
       _toolName = removeAccents(tool.toolName!).toLowerCase().replaceAll(RegExp(r'\s+'), '');
     }
     var _indexedSearchStrings =
         removeAccents(searchStrings.join(' ').toLowerCase()).replaceAll(ALLOWED_SEARCH_CHARACTERS, '');
-    if (_indexedSearchStrings.length == 0) {
+    if (_indexedSearchStrings.isEmpty) {
       if (_toolName != null) tool.indexedSearchStrings = _toolName;
       continue;
     }

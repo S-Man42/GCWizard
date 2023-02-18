@@ -12,7 +12,7 @@ class GCWSymbolTableDecryption extends StatefulWidget {
   final MediaQueryData mediaQueryData;
   final SymbolTableData data;
   final void Function() onChanged;
-  final String Function(String)? onAfterDecrypt;
+  final String? Function(String?)? onAfterDecrypt;
 
   const GCWSymbolTableDecryption({
     Key? key,
@@ -90,7 +90,7 @@ class GCWSymbolTableDecryptionState extends State<GCWSymbolTableDecryption> {
                   icon: Icons.backspace,
                   onPressed: () {
                     setState(() {
-                      if (_decryptionOutput.length > 0)
+                      if (_decryptionOutput.isNotEmpty)
                         _decryptionOutput = _decryptionOutput.substring(0, _decryptionOutput.length - 1);
                       _scrollToBottom();
                     });

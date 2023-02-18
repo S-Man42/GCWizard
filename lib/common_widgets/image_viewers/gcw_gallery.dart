@@ -44,7 +44,7 @@ class _GCWGalleryState extends State<GCWGallery> {
 
     if (_currentImageIndex >= _validImages.length) _currentImageIndex = 0;
 
-    if (_validImages.length == 0) return Container();
+    if (_validImages.isEmpty) return Container();
 
     return Column(children: <Widget>[
       Stack(

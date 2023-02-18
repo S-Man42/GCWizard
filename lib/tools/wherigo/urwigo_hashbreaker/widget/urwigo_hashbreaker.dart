@@ -19,7 +19,7 @@ class UrwigoHashBreakerState extends State<UrwigoHashBreaker> {
   String _currentOutputNumeric = '29735'; // Value for initial Hash == 0;
   String _currentOutputAlphabetical = 'bgqv'; // Value for initial Hash == 0;
 
-  var _inputController;
+  late TextEditingController _inputController;
 
   String _currentTextInput = '';
 

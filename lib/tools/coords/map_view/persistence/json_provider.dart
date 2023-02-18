@@ -7,9 +7,9 @@ import 'package:prefs/prefs.dart';
 
 void refreshMapViews() {
   var rawMapViews = Prefs.getStringList(PREFERENCE_MAPVIEW_MAPVIEWS);
-  if (rawMapViews == null || rawMapViews.length == 0) return;
+  if (rawMapViews == null || rawMapViews.isEmpty) return;
 
-  mapViews = rawMapViews.where((view) => view.length > 0).map((view) {
+  mapViews = rawMapViews.where((view) => view.isNotEmpty).map((view) {
     return MapViewDAO.fromJson(jsonDecode(view));
   }).toList();
 }
@@ -21,7 +21,7 @@ clearMapViewDAO(MapViewDAO view) {
   _saveData();
 }
 
-_saveData() {
+void _saveData() {
   var jsonData = mapViews.map((view) => jsonEncode(view.toMap())).toList();
 
   Prefs.setStringList(PREFERENCE_MAPVIEW_MAPVIEWS, jsonData);

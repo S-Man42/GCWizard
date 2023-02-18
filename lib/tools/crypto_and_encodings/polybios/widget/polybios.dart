@@ -18,9 +18,9 @@ class Polybios extends StatefulWidget {
 }
 
 class PolybiosState extends State<Polybios> {
-  var _inputController;
-  var _keyController;
-  var _alphabetController;
+  late TextEditingController _inputController;
+  late TextEditingController _keyController;
+  late TextEditingController _alphabetController;
 
   String _currentInput = '';
   String _currentKey = '12345';
@@ -119,7 +119,7 @@ class PolybiosState extends State<Polybios> {
 
   Widget _buildOutput(BuildContext context) {
     if (_currentInput == null ||
-        _currentInput.length == 0 ||
+        _currentInput.isEmpty ||
         _currentKey == null ||
         ![5, 6].contains(_currentKey.length)) {
       return GCWDefaultOutput(); // TODO: Exception
@@ -134,7 +134,7 @@ class PolybiosState extends State<Polybios> {
           mode: _currentPolybiosMode, modificationMode: _currentModificationMode, fillAlphabet: _currentAlphabet);
     }
 
-    if (_currentOutput == null || _currentOutput.output.length == 0) {
+    if (_currentOutput == null || _currentOutput.output.isEmpty) {
       return GCWDefaultOutput(); // TODO: Exception
     }
 

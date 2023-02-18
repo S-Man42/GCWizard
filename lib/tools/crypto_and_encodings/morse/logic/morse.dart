@@ -25,7 +25,7 @@ final AZToMorse = {
 final MorseToAZ = switchMapKeyValue(AZToMorse);
 
 String encodeMorse(String? input) {
-  if (input == null || input == '') return '';
+  if (input == null || input.isEmpty) return '';
 
   return input.toUpperCase().split('').map((character) {
     if (character == ' ') return '|';
@@ -36,7 +36,7 @@ String encodeMorse(String? input) {
 }
 
 String decodeMorse(String? input) {
-  if (input == null || input == '') return '';
+  if (input == null || input.isEmpty) return '';
 
   return input.split(RegExp(r'[^\.\-/\|]')).map((morse) {
     if (morse == '|' || morse == '/') return ' ';

@@ -9,13 +9,13 @@ final _NO_VALID_GC_CODE = 'gccode_novalidgcode';
 int gcCodeToID(String gcCode) {
   if (gcCode == null) return null;
   gcCode = gcCode.trim();
-  if (gcCode.length == 0) return null;
+  if (gcCode.isEmpty) return null;
 
   gcCode = gcCode.toUpperCase();
 
   if (gcCode.startsWith('GC')) gcCode = gcCode.substring(2);
 
-  if (gcCode.length == 0) return null;
+  if (gcCode.isEmpty) return null;
 
   if (gcCode.length <= 3 || (gcCode.length == 4 && gcCode.startsWith(RegExp('[0-9A-F]')))) {
     //hex

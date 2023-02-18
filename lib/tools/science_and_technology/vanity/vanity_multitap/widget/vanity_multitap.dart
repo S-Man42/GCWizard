@@ -16,8 +16,8 @@ class VanityMultitap extends StatefulWidget {
 }
 
 class VanityMultitapState extends State<VanityMultitap> {
-  var _encodeController;
-  var _decodeController;
+  late TextEditingController _encodeController;
+  late TextEditingController _decodeController;
 
   var _currentDecodeInput = '';
   var _currentEncodeInput = '';

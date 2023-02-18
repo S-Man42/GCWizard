@@ -119,7 +119,7 @@ abstract class IntervalCalculator {
 
     //when no result found, try with overlapped intervals
     // -> extremely slow for whatever purposes, but useful for edge cases
-    if (results.length == 0 && _overlap == false) {
+    if (results.isEmpty && _overlap == false) {
       _overlap = true;
       return check();
     }

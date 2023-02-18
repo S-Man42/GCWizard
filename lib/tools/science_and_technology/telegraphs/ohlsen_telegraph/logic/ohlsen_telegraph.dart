@@ -284,7 +284,7 @@ List<List<String>> encodeOhlsenTelegraph(String input) {
 }
 
 Map<String, dynamic> decodeVisualOhlsenTelegraph(List<String> inputs) {
-  if (inputs == null || inputs.length == 0)
+  if (inputs == null || inputs.isEmpty)
     return {
       'displays': <List<String>>[],
       'text': '',
@@ -307,7 +307,7 @@ Map<String, dynamic> decodeVisualOhlsenTelegraph(List<String> inputs) {
 }
 
 Map<String, dynamic> decodeTextOhlsenTelegraph(String inputs) {
-  if (inputs == null || inputs.length == 0)
+  if (inputs == null || inputs.isEmpty)
     return {
       'displays': <List<String>>[],
       'text': '',

@@ -46,6 +46,6 @@ showCoordinatesExportDialog(BuildContext context, List<GCWMapPoint> points, List
   ]);
 }
 
-_showExportedFileDialog(BuildContext context, FileType type) {
+void _showExportedFileDialog(BuildContext context, FileType type) {
   showExportedFileDialog(context);
 }

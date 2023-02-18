@@ -74,7 +74,7 @@ class _PunchtapeSegmentDisplayOutputState extends State<PunchtapeSegmentDisplayO
               child: GCWIconButton(
                 size: IconButtonSize.SMALL,
                 icon: Icons.save,
-                iconColor: (widget.segments == null) || (widget.segments.length == 0) ? themeColors().inActive() : null,
+                iconColor: (widget.segments == null) || (widget.segments.isEmpty) ? themeColors().inActive() : null,
                 onPressed: () async {
                   await _buildPunchtapeSegmentDisplayImage(_displays, _currentUpsideDown).then((image) {
                     if (image != null)

@@ -2353,7 +2353,7 @@ List<List<String>> encodePrussianTelegraph(String input) {
 }
 
 Map<String, dynamic> decodeVisualPrussianTelegraph(List<String> inputs) {
-  if (inputs == null || inputs.length == 0)
+  if (inputs == null || inputs.isEmpty)
     return {
       'displays': <List<String>>[],
       'text': '',
@@ -2377,7 +2377,7 @@ Map<String, dynamic> decodeVisualPrussianTelegraph(List<String> inputs) {
 }
 
 Map<String, dynamic> decodeTextPrussianTelegraph(String inputs) {
-  if (inputs == null || inputs.length == 0)
+  if (inputs == null || inputs.isEmpty)
     return {
       'displays': <List<String>>[],
       'text': '',
@@ -2629,7 +2629,7 @@ List<String> _buildShutters(String input) {
   String segments = input;
   String level = 'A1';
 
-  while (segments.length > 0) {
+  while (segments.isNotEmpty) {
     if (level == 'A2' && segments[0] != '.') level = 'B1';
     if (segments[0] == '.' && level == 'A2') {
       if (segments.length > 1) segments = segments.substring(1);

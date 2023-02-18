@@ -2416,7 +2416,7 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
     {String input, NumeralWordsLanguage language, bool decodeModeWholeWords}) {
   RegExp expr;
   List<NumeralWordsDecodeOutput> output = new List<NumeralWordsDecodeOutput>();
-  if (input == null || input == '') {
+  if (input == null || input.isEmpty) {
     output.add(NumeralWordsDecodeOutput('', '', 'numeralwords_language_empty'));
     return output;
   }
@@ -2771,7 +2771,7 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
 }
 
 OutputConvertToNumber decodeNumeralWordToNumber(NumeralWordsLanguage _currentLanguage, String currentDecodeInput) {
-  if (currentDecodeInput == '' || currentDecodeInput == null) return OutputConvertToNumber(0, '', '', '');
+  if (currentDecodeInput.isEmpty || currentDecodeInput == null) return OutputConvertToNumber(0, '', '', '');
 
   if (_currentLanguage == NumeralWordsLanguage.ROU) {
     if (_isROU(currentDecodeInput))
@@ -2816,7 +2816,7 @@ OutputConvertToNumber decodeNumeralWordToNumber(NumeralWordsLanguage _currentLan
 }
 
 OutputConvertToNumeralWord encodeNumberToNumeralWord(NumeralWordsLanguage _currentLanguage, int currentNumber) {
-  if (currentNumber == '' || currentNumber == null) return OutputConvertToNumeralWord('', '', '', '');
+  if (currentNumber.isEmpty || currentNumber == null) return OutputConvertToNumeralWord('', '', '', '');
 
   switch (_currentLanguage) {
     case NumeralWordsLanguage.NAVI:
@@ -2842,7 +2842,7 @@ String _complexMultipleKlingon(String kliNumber) {
 }
 
 String _decodeKlingon(String element) {
-  if (element == '') return '';
+  if (element.isEmpty) return '';
   if (element[0] == '€' && element[element.length - 1] == '€')
     return _decodeMultipleKlingon(element.substring(1, element.length - 1));
   if (element == 'chan') return 'numeralwords_e';
@@ -2881,7 +2881,7 @@ String _decodeMinion(String element) {
 
 String _decodeMultipleKlingon(String kliNumber) {
   kliNumber = kliNumber.trim();
-  if (kliNumber == '') return '';
+  if (kliNumber.isEmpty) return '';
   int number = 0;
   kliNumber.split('€').forEach((element) {
     if (int.tryParse(_decodeKlingon(element)) != null) number = number + int.parse(_decodeKlingon(element));
@@ -3551,7 +3551,7 @@ bool _isKlingon(String element) {
 
 bool _isMinion(String element) {
   if (element != '')
-    return (element.replaceAll('hana', '').replaceAll('dul', '').replaceAll('sae', '') == '');
+    return (element.replaceAll('hana', '').replaceAll('dul', '').replaceAll('sae', '').isEmpty);
   else
     return false;
 }
@@ -3611,7 +3611,7 @@ bool _isNavi(String element) {
       .replaceAll('za', '')
       .replaceAll('ki', '');
 
-  return (element == '');
+  return (element.isEmpty);
 }
 
 bool _isNumeral(String input) {
@@ -3651,12 +3651,12 @@ NumeralWordsOutput _isNumeralWord(String input, NumeralWordsLanguage language, v
         // numeral word contains 1000
         var decode = input.split(pattern);
         if (decode.length == 2) {
-          if (decode[0] == null || decode[0] == '')
+          if (decode[0] == null || decode[0].isEmpty)
             resultBefore = NumeralWordsOutput(true, '1', _languageList[language]);
           else
             resultBefore = _isNumeralWordBelow1000(decode[0], language, decodingTable);
 
-          if (decode[1] == null || decode[1] == '')
+          if (decode[1] == null || decode[1].isEmpty)
             resultAfter = NumeralWordsOutput(true, '0', _languageList[language]);
           else
             resultAfter = _isNumeralWordBelow1000(decode[1], language, decodingTable);
@@ -3815,12 +3815,12 @@ NumeralWordsOutput _isNumeralWordBelow1000(String input, NumeralWordsLanguage la
         } else
           decode = input.split(pattern);
         if (decode.length == 2) {
-          if (decode[0] == null || decode[0] == '')
+          if (decode[0] == null || decode[0].isEmpty)
             resultBefore = NumeralWordsOutput(true, '1', _languageList[language]);
           else
             resultBefore = _isNumeralWordBelow100(decode[0], language, decodingTable);
 
-          if (decode[1] == null || decode[1] == '')
+          if (decode[1] == null || decode[1].isEmpty)
             resultAfter = NumeralWordsOutput(true, '0', _languageList[language]);
           else
             resultAfter = _isNumeralWordBelow100(decode[1], language, decodingTable);
@@ -3902,7 +3902,7 @@ bool _isROU(String element) {
         .replaceAll('sai', '')
         .replaceAll('mii', '');
 
-    return (element == '');
+    return (element.isEmpty);
   }
   return false;
 }

@@ -15,9 +15,9 @@ class Chao extends StatefulWidget {
 }
 
 class ChaoState extends State<Chao> {
-  var _inputController;
-  var _alphabetControllerPlain;
-  var _alphabetControllerChiffre;
+  late TextEditingController _inputController;
+  late TextEditingController _alphabetControllerPlain;
+  late TextEditingController _alphabetControllerChiffre;
 
   var _currentMode = GCWSwitchPosition.right;
 
@@ -118,7 +118,7 @@ class ChaoState extends State<Chao> {
   }
 
   _buildOutput() {
-    if (_currentInput == null || _currentInput.length == 0) return GCWDefaultOutput();
+    if (_currentInput == null || _currentInput.isEmpty) return GCWDefaultOutput();
 
     var alphabetChiffre = '';
     var alphabetPlain = '';

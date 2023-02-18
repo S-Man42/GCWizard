@@ -1,11 +1,9 @@
-part of 'package:gc_wizard/tools/formula_solver/widget/formula_solver_formulas.dart';
+part of 'package:gc_wizard/tools/formula_solver/widget/formula_solver_formulagroups.dart';
 
-List<String> _newFormulas;
+List<String> _newFormulas = [];
 
-_showFormulaReplaceDialog(BuildContext context, List<Formula> formulas,
-    {Widget contentWidget, int dialogHeight, Function onOkPressed}) {
+void _showFormulaReplaceDialog(BuildContext context, List<Formula> formulas, {required Function onOkPressed}) {
   var _output = formulas.map((formula) => Formula.fromFormula(formula)).toList();
-  // var _output = formulas.map((formula) => Formula.fromJson(formula.toMap())).toList();
 
   showGCWDialog(
       context,
@@ -30,7 +28,7 @@ _showFormulaReplaceDialog(BuildContext context, List<Formula> formulas,
 class _FormulaReplace extends StatefulWidget {
   final List<Formula> formulas;
 
-  const _FormulaReplace({Key? key, this.formulas}) : super(key: key);
+  const _FormulaReplace({Key? key, required this.formulas}) : super(key: key);
 
   @override
   _FormulaReplaceState createState() => _FormulaReplaceState();
@@ -62,7 +60,7 @@ class _FormulaReplaceState extends State<_FormulaReplace> {
                 ' ${widget.formulas[_currentFormulaIndex].id}',
             style: textStyle,
             suppressTopSpace: true,
-            trailing: widget.formulas == null || widget.formulas.length <= 1
+            trailing: widget.formulas.length <= 1
                 ? Container()
                 : Row(
                     children: [
@@ -72,7 +70,7 @@ class _FormulaReplaceState extends State<_FormulaReplace> {
                         iconColor: gcwDialogTextStyle().color,
                         onPressed: () {
                           setState(() {
-                            _currentFormulaIndex = modulo(_currentFormulaIndex - 1, widget.formulas.length);
+                            _currentFormulaIndex = modulo(_currentFormulaIndex - 1, widget.formulas.length) as int;
                           });
                         },
                       ),
@@ -82,7 +80,7 @@ class _FormulaReplaceState extends State<_FormulaReplace> {
                         iconColor: gcwDialogTextStyle().color,
                         onPressed: () {
                           setState(() {
-                            _currentFormulaIndex = modulo(_currentFormulaIndex + 1, widget.formulas.length);
+                            _currentFormulaIndex = modulo(_currentFormulaIndex + 1, widget.formulas.length) as int;
                           });
                         },
                       )
@@ -100,7 +98,9 @@ class _FormulaReplaceState extends State<_FormulaReplace> {
           value: _currentValueBracket,
           title: i18n(context, 'formulasolver_formulas_outerbrackets') + ' ( ) ➔ [ ]',
           textStyle: textStyle,
-          onChanged: (value) {
+          onChanged: (bool? value) {
+            if (value == null) return;
+
             setState(() {
               _currentValueBracket = value;
               _buildNewFormulas();
@@ -116,6 +116,8 @@ class _FormulaReplaceState extends State<_FormulaReplace> {
           title: i18n(context, 'formulasolver_formulas_outerbrackets') + ' { } ➔ [ ]',
           textStyle: textStyle,
           onChanged: (value) {
+            if (value == null) return;
+
             setState(() {
               _currentValueBraces = value;
               _buildNewFormulas();
@@ -131,6 +133,8 @@ class _FormulaReplaceState extends State<_FormulaReplace> {
           title: 'x ➔ *',
           textStyle: textStyle,
           onChanged: (value) {
+            if (value == null) return;
+
             setState(() {
               _currentValueMultiply = value;
               _buildNewFormulas();
@@ -174,8 +178,8 @@ class _FormulaReplaceState extends State<_FormulaReplace> {
   List<String> _replaceBrackets(List<String> formulas, String openBracket, String closeBracket) {
     formulas = formulas.map((formula) {
       int ignoreBracket = 0;
-      if (formula == null || formula.isEmpty) {
-        return null;
+      if (formula.isEmpty) {
+        return formula;
       }
 
       return formula.split('').map((e) {

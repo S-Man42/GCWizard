@@ -29,7 +29,7 @@ class Rotator {
       var index = alphabet.indexOf(char);
 
       if (index >= 0) {
-        var newIndex = (index + key) % alphabetLength;
+        var newIndex = (index + key!) % alphabetLength;
         return alphabet[newIndex];
       }
 

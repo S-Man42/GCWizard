@@ -20,8 +20,8 @@ class Bifid extends StatefulWidget {
 }
 
 class BifidState extends State<Bifid> {
-  var _inputController;
-  var _alphabetController;
+  late TextEditingController _inputController;
+  late TextEditingController _alphabetController;
 
   var _currentMode = GCWSwitchPosition.right;
 
@@ -133,7 +133,7 @@ class BifidState extends State<Bifid> {
       key = "123456";
     }
 
-    if (_currentInput == null || _currentInput.length == 0) return GCWDefaultOutput(child: '');
+    if (_currentInput == null || _currentInput.isEmpty) return GCWDefaultOutput(child: '');
 
     var _currentOutput = BifidOutput('', '', '');
     if (_currentMode == GCWSwitchPosition.left) {

@@ -25,7 +25,7 @@ class IrrationalNumbersSearchState extends State<IrrationalNumbersSearch> {
 
   var _totalCurrentSolutions = 0;
   var _currentSolution = 0;
-  var _controller;
+  late TextEditingController _controller;
 
   String? _errorMessage;
 
@@ -77,7 +77,7 @@ class IrrationalNumbersSearchState extends State<IrrationalNumbersSearch> {
 
     _totalCurrentSolutions = _solutions.length;
 
-    if (_solutions.length == 0) return '';
+    if (_solutions.isEmpty) return '';
 
     var selector = (_totalCurrentSolutions != null && _totalCurrentSolutions > 1)
         ? Container(

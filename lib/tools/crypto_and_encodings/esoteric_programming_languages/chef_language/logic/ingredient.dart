@@ -71,7 +71,7 @@ class _Ingredient {
         .replaceAll('prisen', '')
         .replaceAll('prise', '')
         .trim();
-    if (_name == '') {
+    if (_name.isEmpty) {
       _name = 'INVALID';
     }
   }

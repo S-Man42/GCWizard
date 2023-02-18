@@ -151,22 +151,22 @@ SwissGrid parseSwissGrid(String input) {
   var _eastingString = '';
   var _northingString = '';
 
-  if (matches.length > 0) {
+  if (matches.isNotEmpty) {
     var match = matches.elementAt(0);
     _eastingString = match.group(1);
     _northingString = match.group(3);
   }
-  if (matches.length == 0) {
+  if (matches.isEmpty) {
     regExp = RegExp(r'^\s*(Y|y)\:?\s*([\-0-9\.]+)(\s*\,?\s*)(X|x)\:?\s*([\-0-9\.]+)\s*$');
     matches = regExp.allMatches(input);
-    if (matches.length > 0) {
+    if (matches.isNotEmpty) {
       var match = matches.elementAt(0);
       _eastingString = match.group(2);
       _northingString = match.group(5);
     }
   }
 
-  if (matches.length == 0) return null;
+  if (matches.isEmpty) return null;
 
   var _easting = double.tryParse(_eastingString);
   if (_easting == null) return null;

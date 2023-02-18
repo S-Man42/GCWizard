@@ -84,20 +84,20 @@ class NumeralBasesState extends State<NumeralBases> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    if (_currentInput == null || _currentInput.length == 0) {
+    if (_currentInput == null || _currentInput.isEmpty) {
       return GCWDefaultOutput();
     }
 
     var calculateableToBases = _currentToMode == GCWSwitchPosition.left ? _COMMON_BASES : [_currentToKey];
     List<String> values = calculateableToBases.map((toBase) {
-      return _currentInput.split(RegExp(r'[\.\,\-\;\s]+')).where((element) => element.length > 0).map((value) {
+      return _currentInput.split(RegExp(r'[\.\,\-\;\s]+')).where((element) => element.isNotEmpty).map((value) {
         if (value.startsWith('-') && _currentFromKey < 0) {
           return i18n(context, 'common_notdefined');
         }
 
         //TODO: React on exceptions
         var testValidInput = convertBase(value, _currentFromKey, 2);
-        if (testValidInput == null || testValidInput.length == 0) {
+        if (testValidInput == null || testValidInput.isEmpty) {
           return i18n(context, 'common_notdefined');
         }
 

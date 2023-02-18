@@ -7,14 +7,14 @@ import 'package:prefs/prefs.dart';
 
 void refreshFormulas() {
   var formulas = Prefs.getStringList(PREFERENCE_FORMULASOLVER_FORMULAS);
-  if (formulas.length == 0) return;
+  if (formulas.isEmpty) return;
 
-  formulaGroups = formulas.where((group) => group.length > 0).map((group) {
+  formulaGroups = formulas.where((group) => group.isNotEmpty).map((group) {
     return FormulaGroup.fromJson(jsonDecode(group));
   }).toList();
 }
 
-_saveData() {
+void _saveData() {
   var jsonData = formulaGroups.map((group) => jsonEncode(group.toMap())).toList();
 
   Prefs.setStringList(PREFERENCE_FORMULASOLVER_FORMULAS, jsonData);
@@ -35,7 +35,10 @@ void updateFormulaGroups() {
   _saveData();
 }
 
-void deleteGroup(int groupId) {
+void deleteGroup(int? groupId) {
+  if (groupId == null)
+    throw Exception('Formula group id not found');
+
   formulaGroups.removeWhere((group) => group.id == groupId);
 
   _saveData();
@@ -62,6 +65,9 @@ int insertFormula(Formula formula, FormulaGroup group) {
 
 void updateFormula(Formula formula, FormulaGroup group) {
   group.formulas = group.formulas.map((groupFormula) {
+    if (formula.id == null || groupFormula.id == null)
+      throw Exception('Formula id not found');
+
     if (groupFormula.id == formula.id) return formula;
 
     return groupFormula;
@@ -84,6 +90,9 @@ int insertFormulaValue(FormulaValue formulaValue, FormulaGroup group) {
 
 void updateFormulaValue(FormulaValue formulaValue, FormulaGroup group) {
   group.values = group.values.map((value) {
+    if (value.id == null || formulaValue.id == null)
+      throw Exception('Formula value id not found');
+
     if (value.id == formulaValue.id) return formulaValue;
 
     return value;
@@ -93,7 +102,13 @@ void updateFormulaValue(FormulaValue formulaValue, FormulaGroup group) {
   _saveData();
 }
 
-void deleteFormula(int formulaId, FormulaGroup group) {
+void deleteFormula(int? formulaId, FormulaGroup group) {
+  if (formulaId == null)
+    throw Exception('Formula id not found');
+
+  if (group.id == null)
+    throw Exception('Formula group id not found');
+
   group.formulas.removeWhere((formula) => formula.id == formulaId);
 
   _updateFormulaGroup(group);

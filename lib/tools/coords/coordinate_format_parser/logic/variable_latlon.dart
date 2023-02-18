@@ -16,7 +16,7 @@ class ParseVariableLatLonJobData {
 
 Map<String, LatLng> _parseCoordText(String text) {
   var parsedCoord = parseCoordinates(text, wholeString: true);
-  if (parsedCoord == null || parsedCoord.length == 0) return null;
+  if (parsedCoord == null || parsedCoord.isEmpty) return null;
 
   var out = <String, LatLng>{'coordinate': parsedCoord.elementAt(0).toLatLng()};
 
@@ -27,20 +27,20 @@ Map<String, LatLng> _parseCoordText(String text) {
   return out;
 }
 
-_sanitizeVariableDoubleText(String text) {
+String _sanitizeVariableDoubleText(String text) {
   if (text == null) return null;
 
   return text.replaceAll(',', '.').replaceAll(RegExp(r'\s+'), '');
 }
 
-_addBrackets(String formula) {
+String _addBrackets(String formula) {
   RegExp regExp = RegExp(r'\[.+?\]');
   if (regExp.hasMatch(formula)) return formula;
 
   return '[$formula]';
 }
 
-_removeBrackets(String formula) {
+String _removeBrackets(String formula) {
   RegExp regExp = RegExp(r'\[.+?\]');
   if (!regExp.hasMatch(formula)) return formula;
 
@@ -67,9 +67,9 @@ Map<String, dynamic> parseVariableLatLon(String coordinate, Map<String, String> 
   var withProjection = false;
   if (projectionData != null) {
     if (projectionData['bearing'] != null &&
-        projectionData['bearing'].length > 0 &&
+        projectionData['bearing'].isNotEmpty &&
         projectionData['distance'] != null &&
-        projectionData['distance'].length > 0) {
+        projectionData['distance'].isNotEmpty) {
       withProjection = true;
 
       textToExpand = _addBrackets(coordinate);
@@ -105,7 +105,7 @@ Map<String, dynamic> parseVariableLatLon(String coordinate, Map<String, String> 
         if (projectionData['reverseBearing'] != null && projectionData['reverseBearing']) {
           var revProjected = reverseProjection(entry.value, parsedBearing,
               projectionData['lengthUnit'].toMeter(parsedDistance), projectionData['ellipsoid']);
-          if (revProjected == null || revProjected.length == 0) return;
+          if (revProjected == null || revProjected.isEmpty) return;
 
           var projected = revProjected.map((projection) {
             return {'variables': expandedText.variables, 'coordinate': projection};

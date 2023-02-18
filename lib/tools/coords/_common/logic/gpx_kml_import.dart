@@ -100,7 +100,7 @@ class _GpxReader {
       parent.findAllElements('trk').forEach((xmlTrk) {
         xmlTrk.findElements('trkseg').forEach((xmlTrkseg) {
           var line = _readLine(xmlTrkseg);
-          if (line.points != null && line.points.length > 0) {
+          if (line.points != null && line.points.isNotEmpty) {
             lines.add(line);
             points.addAll(line.points);
           }
@@ -119,7 +119,7 @@ class _GpxReader {
     if (lat != null && lon != null) {
       var wpt = GCWMapPoint(point: LatLng(double.tryParse(lat) ?? 0, double.tryParse(lon) ?? 0), isEditable: true);
       wpt.markerText = xmlElement.getElement('name')?.innerText;
-      if (wpt.markerText == null || wpt.markerText!.length == 0)
+      if (wpt.markerText == null || wpt.markerText!.isEmpty)
         wpt.markerText = xmlElement.getElement('desc')?.innerText;
       return wpt;
     }
@@ -182,7 +182,7 @@ class _KmlReader {
           var linesTmp = _readPoints(boundery, styleParent);
           if (linesTmp != null) lines.addAll(linesTmp);
         });
-        if (lines.length == 0) return [];
+        if (lines.isEmpty) return [];
 
         return lines;
       }
@@ -194,7 +194,7 @@ class _KmlReader {
           var linesTmp = _readPoints(child as XmlElement, styleParent);
           if (linesTmp != null) lines.addAll(linesTmp);
         });
-        if (lines.length == 0) return [];
+        if (lines.isEmpty) return [];
 
         return lines;
       }
@@ -212,18 +212,18 @@ class _KmlReader {
       if (lat != null && lon != null) {
         var wpt = GCWMapPoint(point: LatLng(double.tryParse(lat) ?? 0, double.tryParse(lon) ?? 0));
         wpt.markerText = xmlElement.getElement('name')?.innerText;
-        if (wpt.markerText == null || wpt.markerText!.length == 0)
+        if (wpt.markerText == null || wpt.markerText!.isEmpty)
           wpt.markerText = xmlElement.getElement('description')?.innerText;
 
-        if (line.points.length == 0)
+        if (line.points.isEmpty)
           wpt = _readPointStyleMap(wpt, xmlElement.getElement('styleUrl')?.innerText, styleParent);
 
         line.points.add(wpt);
       }
     });
 
-    if (line.points.length > 0) lines.add(line);
-    if (lines.length == 0) return [];
+    if (line.points.isNotEmpty) lines.add(line);
+    if (lines.isEmpty) return [];
 
     return lines;
   }
@@ -252,7 +252,7 @@ class _KmlReader {
     styleParent.findAllElements('Style').forEach((xmlElement) {
       if (xmlElement.getAttribute('id') == styleUrl) {
         var color = xmlElement.findAllElements('color');
-        if (color != null && color.length > 0) point.color = _ColorCode(color.first.innerText);
+        if (color != null && color.isNotEmpty) point.color = _ColorCode(color.first.innerText);
       }
     });
 
@@ -277,7 +277,7 @@ class _KmlReader {
   }
 }
 
-_restoreCircles(List<GCWMapPoint> points, List<GCWMapPolyline> lines) {
+void _restoreCircles(List<GCWMapPoint> points, List<GCWMapPolyline> lines) {
   for (int i = lines.length - 1; i >= 0; i--) {
     if (_isClosedLine(lines[i]) && _completeCircle(lines[i], points)) {
       lines[i].points.forEach((point) {

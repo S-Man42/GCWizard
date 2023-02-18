@@ -79,7 +79,7 @@ class HomophoneState extends State<Homophone> {
   }
 
   _addEntry(String currentFromInput, String currentToInput, BuildContext context) {
-    if (currentFromInput.length > 0)
+    if (currentFromInput.isNotEmpty)
       _currentSubstitutions.putIfAbsent(currentFromInput.toUpperCase(), () => currentToInput);
 
     _newKeyController.text = _maxLetter();
@@ -222,7 +222,7 @@ class HomophoneState extends State<Homophone> {
   }
 
   _buildOutput() {
-    if (_currentInput == null || _currentInput.length == 0) return GCWDefaultOutput(child: '');
+    if (_currentInput == null || _currentInput.isEmpty) return GCWDefaultOutput(child: '');
     int _currentMultiplier = getMultipliers()[_currentMultiplierIndex];
 
     HomophoneOutput _currentOutput;

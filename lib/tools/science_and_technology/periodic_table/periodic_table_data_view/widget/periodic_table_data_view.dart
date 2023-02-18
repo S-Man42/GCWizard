@@ -529,7 +529,7 @@ class PeriodicTableDataViewState extends State<PeriodicTableDataView> {
         tappables: tappables
     )];
 
-    if (comments != null && comments.length > 0) {
+    if (comments != null && comments.isNotEmpty) {
       rows.addAll(
           [GCWTextDivider(text: i18n(context, 'periodictable_attribute_comments')), GCWOutputText(text: comments)]);
     }
@@ -540,6 +540,6 @@ class PeriodicTableDataViewState extends State<PeriodicTableDataView> {
   _showElement(int atomicNumber) {
     Navigator.of(context).push(NoAnimationMaterialPageRoute(
         builder: (context) =>
-            GCWTool(tool: PeriodicTableDataView(atomicNumber: atomicNumber), i18nPrefix: 'periodictable_dataview')));
+            GCWTool(tool: PeriodicTableDataView(atomicNumber: atomicNumber), id: 'periodictable_dataview')));
   }
 }

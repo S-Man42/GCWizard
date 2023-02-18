@@ -1,6 +1,6 @@
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
 
-String decodeZamonian(String input) {
+String? decodeZamonian(String? input) {
   if (input == null) return null;
 
   return input
@@ -14,7 +14,7 @@ String decodeZamonian(String input) {
       .join(' ');
 }
 
-String encodeZamonian(String input) {
+String? encodeZamonian(String? input) {
   if (input == null) return null;
 
   return input

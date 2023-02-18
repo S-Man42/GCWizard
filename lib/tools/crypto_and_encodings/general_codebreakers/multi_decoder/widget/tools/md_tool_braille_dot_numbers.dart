@@ -21,7 +21,7 @@ class MultiDecoderToolBrailleDotNumbers extends AbstractMultiDecoderTool {
               if (out is String) {
                 var out1 = out.replaceAll('<?>', '');
                 out1 = out.replaceAll(' ', '');
-                if (out1 == null || out1.length == 0) return null;
+                if (out1 == null || out1.isEmpty) return null;
               }
               return out;
             },

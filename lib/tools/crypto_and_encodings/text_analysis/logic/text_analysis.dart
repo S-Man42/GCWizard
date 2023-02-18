@@ -8,7 +8,7 @@ class ControlCharacter {
   final String unicode;
   final String name;
   final String abbreviation;
-  final String escapeCode;
+  final String? escapeCode;
   final List<String> symbols;
 
   ControlCharacter(this.asciiValue, this.unicode, this.name, this.abbreviation, this.escapeCode, this.symbols);
@@ -66,10 +66,15 @@ class TextAnalysisCharacterCounts {
   Map<String, int> whiteSpaces;
   Map<String, int> controlChars;
 
-  TextAnalysisCharacterCounts([this.letters, this.numbers, this.specialChars, this.whiteSpaces, this.controlChars]);
+  TextAnalysisCharacterCounts({
+    required this.letters,
+    required this.numbers,
+    required this.specialChars,
+    required this.whiteSpaces,
+    required this.controlChars});
 }
 
-int countWords(String text) {
+int countWords(String? text) {
   if (text == null || text.isEmpty) return 0;
 
   return removeDiacritics(text)
@@ -81,11 +86,9 @@ int countWords(String text) {
 
 Map<String, int> _addOrIncreaseCount(Map<String, int> map, String character) {
   if (map.containsKey(character)) {
-    map[character]++;
-  } else {
-    map.putIfAbsent(character, () => 1);
-  }
-
+    map.update(character, (int) => map[character]! + 1);
+  } else
+    map[character] = 1;
   return map;
 }
 
@@ -124,7 +127,7 @@ Map<String, int> _analyzeWhitespaces(String text) {
   return whiteSpaces;
 }
 
-Map<String, int> _analyzeControlChars(String text, {bool includingWhitespaceCharacter: true}) {
+Map<String, int> _analyzeControlChars(String text, {bool includingWhitespaceCharacter = true}) {
   var controls = Map<String, int>();
 
   var characters = Map.from(CONTROL_CHARACTERS);
@@ -155,16 +158,13 @@ Map<String, int> _analyzeSpecialChars(String text) {
   return specialChars;
 }
 
-TextAnalysisCharacterCounts analyzeText(String text, {bool caseSensitive: true}) {
-  if (text == null) return null;
+TextAnalysisCharacterCounts analyzeText(String text, {bool caseSensitive = true}) {
 
-  var out = TextAnalysisCharacterCounts();
-
-  out.letters = _analyzeLetters(text, caseSensitive);
-  out.numbers = _analyzeNumbers(text);
-  out.specialChars = _analyzeSpecialChars(text);
-  out.whiteSpaces = _analyzeWhitespaces(text);
-  out.controlChars = _analyzeControlChars(text, includingWhitespaceCharacter: false);
-
-  return out;
+  return TextAnalysisCharacterCounts(
+    letters: _analyzeLetters(text, caseSensitive),
+    numbers: _analyzeNumbers(text),
+    specialChars: _analyzeSpecialChars(text),
+    whiteSpaces: _analyzeWhitespaces(text),
+    controlChars: _analyzeControlChars(text, includingWhitespaceCharacter: false)
+  );
 }

@@ -63,7 +63,8 @@ class ScrabbleSet {
   }
 }
 
-final scrabbleSets = {
+// TODO Better as class type?
+final Map<String, ScrabbleSet> scrabbleSets = {
   scrabbleID_EN: ScrabbleSet(scrabbleID_EN, 'common_language_english', {
     ' ': _LetterAttribute(0, 2),
     'A': _LetterAttribute(1, 9),

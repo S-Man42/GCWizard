@@ -145,7 +145,7 @@ MGRS parseMGRS(String input) {
   var _eastingString = '';
   var _northingString = '';
 
-  if (matches.length > 0) {
+  if (matches.isNotEmpty) {
     var match = matches.elementAt(0);
     _lonZoneString = match.group(1);
     _latZone = match.group(2);
@@ -153,10 +153,10 @@ MGRS parseMGRS(String input) {
     _eastingString = match.group(4);
     _northingString = match.group(5);
   }
-  if (matches.length == 0) {
+  if (matches.isEmpty) {
     regExp = RegExp(r'^\s*(\d+)\s?([A-Z])\s?([A-Z]{2})\s?([0-9]{10})\s*$');
     matches = regExp.allMatches(input);
-    if (matches.length > 0) {
+    if (matches.isNotEmpty) {
       var match = matches.elementAt(0);
       _lonZoneString = match.group(1);
       _latZone = match.group(2);
@@ -166,7 +166,7 @@ MGRS parseMGRS(String input) {
     }
   }
 
-  if (matches.length == 0) return null;
+  if (matches.isEmpty) return null;
 
   var _lonZone = int.tryParse(_lonZoneString);
   if (_lonZone == null) return null;

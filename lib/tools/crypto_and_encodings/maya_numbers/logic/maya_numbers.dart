@@ -33,7 +33,7 @@ List<List<String>> encodeMayaNumbers(int input) {
 }
 
 Map<String, dynamic> decodeMayaNumbers(List<String> inputs) {
-  if (inputs == null || inputs.length == 0)
+  if (inputs == null || inputs.isEmpty)
     return {
       'displays': <List<String>>[],
       'numbers': [0],

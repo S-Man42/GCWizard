@@ -115,7 +115,7 @@ class BeatnikStack {
   }
 
   int pop() {
-    if (_stack.length != 0) {
+    if (_stack.isNotEmpty) {
       var c = _stack.removeAt(_stack.length - 1);
       return c;
     }
@@ -210,7 +210,7 @@ bool _checkNormalize(List<String> instructions) {
 }
 
 BeatnikOutput interpretBeatnik(var ScrabbleVersion, String? sourcecode, String input) {
-  if (sourcecode == null || sourcecode == '')
+  if (sourcecode == null || sourcecode.isEmpty)
     return BeatnikOutput([''], [''], [''], [''], [DebugOutput('', '', '', '')]);
 
   var _currentValues = [];

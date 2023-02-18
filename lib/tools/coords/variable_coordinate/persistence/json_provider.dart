@@ -8,14 +8,14 @@ import 'package:prefs/prefs.dart';
 
 void refreshFormulas() {
   var formulasList = Prefs.getStringList(PREFERENCE_COORD_VARIABLECOORDINATE_FORMULAS);
-  if (formulasList.length == 0) return;
+  if (formulasList.isEmpty) return;
 
-  formulas = formulasList.where((formula) => formula.length > 0).map((formula) {
+  formulas = formulasList.where((formula) => formula.isNotEmpty).map((formula) {
     return Formula.fromJson(jsonDecode(formula));
   }).toList();
 }
 
-_saveData() {
+void _saveData() {
   var jsonData = formulas.map((formula) => jsonEncode(formula.toMap())).toList();
 
   Prefs.setStringList(PREFERENCE_COORD_VARIABLECOORDINATE_FORMULAS, jsonData);

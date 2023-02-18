@@ -61,15 +61,15 @@ class MusicNotesState extends State<MusicNotes> {
         items: NotesCodebook.values.map((codeBook) {
           switch (codeBook) {
             case NotesCodebook.ALT:
-              var tool = registeredTools.firstWhere((tool) => tool.i18nPrefix.contains('altoclef'));
+              var tool = registeredTools.firstWhere((tool) => tool.id.contains('altoclef'));
               return GCWDropDownMenuItem(
                   value: NotesCodebook.ALT, child: _buildDropDownMenuItem(tool.icon, tool.toolName!, null));
             case NotesCodebook.TREBLE:
-              var tool = registeredTools.firstWhere((tool) => tool.i18nPrefix.contains('trebleclef'));
+              var tool = registeredTools.firstWhere((tool) => tool.id.contains('trebleclef'));
               return GCWDropDownMenuItem(
                   value: NotesCodebook.TREBLE, child: _buildDropDownMenuItem(tool.icon, tool.toolName!, null));
             case NotesCodebook.BASS:
-              var tool = registeredTools.firstWhere((tool) => tool.i18nPrefix.contains('bassclef'));
+              var tool = registeredTools.firstWhere((tool) => tool.id.contains('bassclef'));
               return GCWDropDownMenuItem(
                   value: NotesCodebook.BASS, child: _buildDropDownMenuItem(tool.icon, tool.toolName!, null));
           }
@@ -105,7 +105,7 @@ class MusicNotesState extends State<MusicNotes> {
     Map<String, bool> currentDisplay;
 
     var displays = _currentDisplays;
-    if (displays != null && displays.length > 0) {
+    if (displays != null && displays.isNotEmpty) {
       currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [], key: (e) => e, value: (e) => true);
       currentDisplay.remove(altClef);
       currentDisplay.remove(bassClef);
@@ -135,7 +135,7 @@ class MusicNotesState extends State<MusicNotes> {
 
         newSegments.sort();
 
-        if (_currentDisplays.length == 0) _currentDisplays.add([]);
+        if (_currentDisplays.isEmpty) _currentDisplays.add([]);
 
         _currentDisplays[_currentDisplays.length - 1] = newSegments;
       });
@@ -171,7 +171,7 @@ class MusicNotesState extends State<MusicNotes> {
             icon: Icons.backspace,
             onPressed: () {
               setState(() {
-                if (_currentDisplays.length > 0) _currentDisplays.removeLast();
+                if (_currentDisplays.isNotEmpty) _currentDisplays.removeLast();
               });
             },
           ),
@@ -257,7 +257,7 @@ class MusicNotesState extends State<MusicNotes> {
         default:
           translation = '';
       }
-      if (translation != null && translation != '') translationMap.addAll({note: translation});
+      if (translation != null && translation.isNotEmpty) translationMap.addAll({note: translation});
     });
     return translationMap;
   }

@@ -155,17 +155,17 @@ UTMREF parseUTM(String input) {
   var _eastingString = '';
   var _northingString = '';
 
-  if (matches.length > 0) {
+  if (matches.isNotEmpty) {
     var match = matches.elementAt(0);
     _lonZoneString = match.group(1);
     _latZone = match.group(2);
     _eastingString = match.group(3);
     _northingString = match.group(4);
   }
-  if (matches.length == 0) {
+  if (matches.isEmpty) {
     regExp = RegExp(r'^\s*(\d+)\s?([' + latZones + r'])\s*m?\s*([E|W])\s*([0-9\.]+)\s*m?\s*([N|S])\s?([0-9\.]+)\s*$');
     matches = regExp.allMatches(input);
-    if (matches.length > 0) {
+    if (matches.isNotEmpty) {
       var match = matches.elementAt(0);
       _lonZoneString = match.group(1);
       _latZone = match.group(2);
@@ -173,10 +173,10 @@ UTMREF parseUTM(String input) {
       _northingString = match.group(6);
     }
   }
-  if (matches.length == 0) {
+  if (matches.isEmpty) {
     regExp = RegExp(r'^\s*(\d+)\s?([' + latZones + r'])\s*([0-9\.]+)\s*m?\s*([E|W])\s*([0-9\.]+)\s*m?\s*([N|S])\s*$');
     matches = regExp.allMatches(input);
-    if (matches.length > 0) {
+    if (matches.isNotEmpty) {
       var match = matches.elementAt(0);
       _lonZoneString = match.group(1);
       _latZone = match.group(2);
@@ -184,10 +184,10 @@ UTMREF parseUTM(String input) {
       _northingString = match.group(5);
     }
   }
-  if (matches.length == 0) {
+  if (matches.isEmpty) {
     regExp = RegExp(r'^\s*(\d+)\s?([' + latZones + r'])\s?([0-9]{13})\s*$');
     matches = regExp.allMatches(input);
-    if (matches.length > 0) {
+    if (matches.isNotEmpty) {
       var match = matches.elementAt(0);
       _lonZoneString = match.group(1);
       _latZone = match.group(2);
@@ -195,10 +195,10 @@ UTMREF parseUTM(String input) {
       _northingString = match.group(3).substring(6);
     }
   }
-  if (matches.length == 0) {
+  if (matches.isEmpty) {
     regExp = RegExp(r'^\s*(\d+)\s?([' + latZones + r'])\s?([0-9]{10})\s*$');
     matches = regExp.allMatches(input);
-    if (matches.length > 0) {
+    if (matches.isNotEmpty) {
       var match = matches.elementAt(0);
       _lonZoneString = match.group(1);
       _latZone = match.group(2);
@@ -207,7 +207,7 @@ UTMREF parseUTM(String input) {
     }
   }
 
-  if (matches.length == 0) return null;
+  if (matches.isEmpty) return null;
 
   var _lonZone = int.tryParse(_lonZoneString);
   if (_lonZone == null) return null;

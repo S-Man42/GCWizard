@@ -13,8 +13,8 @@ class Tapir extends StatefulWidget {
 }
 
 class TapirState extends State<Tapir> {
-  var _inputController;
-  var _otpController;
+  late TextEditingController _inputController;
+  late TextEditingController _otpController;
 
   var _currentInput = '';
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;

@@ -18,7 +18,7 @@ class RSADCalculatorState extends State<RSADCalculator> {
   String _currentQ = '';
 
   var _integerInputFormatter = GCWIntegerTextInputFormatter(min: 0);
-  Widget _output;
+  Widget? _output;
 
   @override
   Widget build(BuildContext context) {
@@ -65,11 +65,11 @@ class RSADCalculatorState extends State<RSADCalculator> {
 
   _calculateOutput() {
     if (_currentE == null ||
-        _currentE.length == 0 ||
+        _currentE.isEmpty ||
         _currentP == null ||
-        _currentP.length == 0 ||
+        _currentP.isEmpty ||
         _currentQ == null ||
-        _currentQ.length == 0) {
+        _currentQ.isEmpty) {
       _output = null;
     }
 
@@ -80,7 +80,7 @@ class RSADCalculatorState extends State<RSADCalculator> {
 
       _output = GCWDefaultOutput(child: calculateD(e, p, q).toString());
     } catch (exception) {
-      showToast(i18n(context, exception.message));
+      showToast(i18n(context, exception.toString()));
       _output = null;
     }
   }

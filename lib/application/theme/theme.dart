@@ -15,7 +15,7 @@ final DEFAULT_DESCRIPTION_MARGIN = 10.0;
 
 final DEFAULT_LISTITEM_SIZE = 42.0;
 
-dynamic fontSizeSmall() {
+double fontSizeSmall() {
   return defaultFontSize() - 4;
 }
 
@@ -124,17 +124,17 @@ int _shadeValue(int value, double factor) => max(0, min(value - (value * factor)
 Color _shadeColor(Color color, double factor) => Color.fromRGBO(
     _shadeValue(color.red, factor), _shadeValue(color.green, factor), _shadeValue(color.blue, factor), 1);
 
-defaultFontSize() {
-  var fontSize = Prefs.get(PREFERENCE_THEME_FONT_SIZE);
+double defaultFontSize() {
+  var fontSize = Prefs.getDouble(PREFERENCE_THEME_FONT_SIZE);
 
   if (fontSize < FONT_SIZE_MIN) {
     Prefs.setDouble(PREFERENCE_THEME_FONT_SIZE, FONT_SIZE_MIN.toDouble());
-    return FONT_SIZE_MIN;
+    return FONT_SIZE_MIN.toDouble();
   }
 
   if (fontSize > FONT_SIZE_MAX) {
     Prefs.setDouble(PREFERENCE_THEME_FONT_SIZE, FONT_SIZE_MAX.toDouble());
-    return FONT_SIZE_MAX;
+    return FONT_SIZE_MAX.toDouble();
   }
 
   return fontSize;

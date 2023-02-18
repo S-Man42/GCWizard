@@ -45,17 +45,17 @@ XYZ parseXYZ(String input) {
   var yString = '';
   var zString = '';
 
-  if (matches.length > 0) {
+  if (matches.isNotEmpty) {
     var match = matches.elementAt(0);
     xString = match.group(1);
     yString = match.group(3);
     zString = match.group(5);
   }
-  if (matches.length == 0) {
+  if (matches.isEmpty) {
     regExp =
         RegExp(r'^\s*(X|x)\:?\s*([\-0-9\.]+)(\s*\,?\s*)(Y|y)\:?\s*([\-0-9\.]+)(\s*\,?\s*)(Z|z)\:?\s*([\-0-9\.]+)\s*$');
     matches = regExp.allMatches(input);
-    if (matches.length > 0) {
+    if (matches.isNotEmpty) {
       var match = matches.elementAt(0);
       xString = match.group(2);
       yString = match.group(5);
@@ -63,7 +63,7 @@ XYZ parseXYZ(String input) {
     }
   }
 
-  if (matches.length == 0) return null;
+  if (matches.isEmpty) return null;
 
   var x = double.tryParse(xString);
   var y = double.tryParse(yString);

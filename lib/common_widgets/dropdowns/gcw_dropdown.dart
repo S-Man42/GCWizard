@@ -35,7 +35,7 @@ class _GCWDropDownState<T extends Object?> extends State<GCWDropDown> {
 
     return Row(
       children: [
-        if (widget.title != null && widget.title!.length > 0)
+        if (widget.title != null && widget.title!.isNotEmpty)
           Expanded(
               child: GCWText(
                 text: widget.title! + ':',
@@ -91,8 +91,8 @@ class _GCWDropDownState<T extends Object?> extends State<GCWDropDown> {
 
 //Note: No GCWText, since GCWText contains SelectableText which suppress clicks,
 // and therefore generate non-selectable dropdown items (09/2020)
-_buildMenuItemChild(GCWDropDownMenuItem item) {
-  if (item.subtitle == null || item.subtitle.length == 0) {
+Widget _buildMenuItemChild(GCWDropDownMenuItem item) {
+  if (item.subtitle == null || item.subtitle.isEmpty) {
     return item.child is Widget
         ? item.child
         : Text(

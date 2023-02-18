@@ -222,5 +222,5 @@ openInHiddenData(BuildContext context, GCWFile file) {
       context,
       NoAnimationMaterialPageRoute(
           builder: (context) => GCWTool(
-              tool: HiddenData(file: file), toolName: i18n(context, 'hiddendata_title'), i18nPrefix: '')));
+              tool: HiddenData(file: file), toolName: i18n(context, 'hiddendata_title'), id: '')));
 }

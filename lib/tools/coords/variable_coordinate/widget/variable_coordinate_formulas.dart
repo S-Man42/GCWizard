@@ -79,7 +79,7 @@ class VariableCoordinateFormulasState extends State<VariableCoordinateFormulas> 
   }
 
   _addNewFormula() {
-    if (_currentNewName.length > 0) {
+    if (_currentNewName.isNotEmpty) {
       var formula = Formula(_currentNewName);
       insertFormula(formula);
 
@@ -184,7 +184,7 @@ class VariableCoordinateFormulasState extends State<VariableCoordinateFormulas> 
       return output;
     }).toList();
 
-    if (rows.length > 0) {
+    if (rows.isNotEmpty) {
       rows.insert(0, GCWTextDivider(text: i18n(context, 'coords_variablecoordinate_currentformulas')));
     }
 

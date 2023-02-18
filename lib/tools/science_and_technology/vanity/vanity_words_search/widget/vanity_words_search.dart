@@ -80,7 +80,7 @@ class VanityWordsTextSearchState extends State<VanityWordsTextSearch> {
     String output = '';
     int ambigous = 0;
     for (int i = 0; i < detailedOutput.length; i++) {
-      if (detailedOutput[i].number != '') if (ambigous > 0 || detailedOutput[i].ambigous) {
+      if (detailedOutput[i].number.isNotEmpty) if (ambigous > 0 || detailedOutput[i].ambigous) {
         if (ambigous == 0) {
           output = output +
               ' (' +
@@ -133,7 +133,7 @@ class VanityWordsTextSearchState extends State<VanityWordsTextSearch> {
         GCWOutputText(
           text: output,
         ),
-        output.length == 0
+        output.isEmpty
             ? Container()
             : GCWOutput(
                 title: i18n(context, 'common_outputdetail'),

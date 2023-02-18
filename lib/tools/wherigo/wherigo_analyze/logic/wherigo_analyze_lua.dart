@@ -1695,7 +1695,7 @@ List<String> _getAnswers(
     return results;
   } else if (line.trim().startsWith('if Wherigo.NoCaseEquals(') ||
       line.trim().startsWith('elseif Wherigo.NoCaseEquals(')) {
-    if (_answerVariable == '') _answerVariable = _getVariable(lineBefore);
+    if (_answerVariable.isEmpty) _answerVariable = _getVariable(lineBefore);
     line = line
         .trim()
         .replaceAll('if ', '')
@@ -1726,7 +1726,7 @@ List<String> _getAnswers(
         i = variables.length;
       }
     }
-    if (line.length == 0) {
+    if (line.isEmpty) {
       return ['NIL'];
     }
     return [line];

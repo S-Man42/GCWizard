@@ -25,7 +25,7 @@ class OhlsenTelegraph extends StatefulWidget {
 
 class OhlsenTelegraphState extends State<OhlsenTelegraph> {
   var _currentEncodeInput = '';
-  var _dncodeInputController;
+  late TextEditingController _dncodeInputController;
 
   var _decodeInputController;
   var _currentDecodeInput = '';
@@ -106,7 +106,7 @@ class OhlsenTelegraphState extends State<OhlsenTelegraph> {
     Map<String, bool> currentDisplay;
 
     var displays = _currentDisplays;
-    if (displays != null && displays.length > 0)
+    if (displays != null && displays.isNotEmpty)
       currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [], key: (e) => e, value: (e) => true);
     else
       currentDisplay = {};
@@ -121,7 +121,7 @@ class OhlsenTelegraphState extends State<OhlsenTelegraph> {
 
         newSegments.sort();
 
-        if (_currentDisplays.length == 0) _currentDisplays.add([]);
+        if (_currentDisplays.isEmpty) _currentDisplays.add([]);
 
         _currentDisplays[_currentDisplays.length - 1] = newSegments;
       });
@@ -156,7 +156,7 @@ class OhlsenTelegraphState extends State<OhlsenTelegraph> {
             icon: Icons.backspace,
             onPressed: () {
               setState(() {
-                if (_currentDisplays.length > 0) _currentDisplays.removeLast();
+                if (_currentDisplays.isNotEmpty) _currentDisplays.removeLast();
               });
             },
           ),
