@@ -93,14 +93,14 @@ List<Map<String, String>> _DECODE_POKEMON = [
   {'ge': 'x'},
 ];
 
-String encodePokemon(String plainText) {
+String encodePokemon(String? plainText) {
   if (plainText == null || plainText.isEmpty) return '';
   String result = '';
-  for (int i = 0; i < plainText.length; i++) result = result + _POKEMON[plainText[i].toLowerCase()];
+  for (int i = 0; i < plainText.length; i++) result = result + (_POKEMON[plainText[i].toLowerCase()] ?? '');
   return result.toUpperCase();
 }
 
-String decodePokemon(String chiffreText) {
+String decodePokemon(String? chiffreText) {
   if (chiffreText == null || chiffreText.isEmpty) return '';
 
   List<String> result = [];

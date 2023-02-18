@@ -287,7 +287,7 @@ final Map<String, List<String>> CODEBOOK_GEOCACHINGTOOLBOX_3 = {
 List<List<String>> encodeMurray(String input, MurrayCodebook language) {
   if (input == null) return [];
 
-  Map<String, List<String>> CODEBOOK = new Map<String, List<String>>();
+  Map<String, List<String>> CODEBOOK = Map<String, List<String>>();
   switch (language) {
     case MurrayCodebook.GEOCACHING:
       CODEBOOK = CODEBOOK_GEOCACHING;
@@ -333,7 +333,7 @@ Map<String, dynamic> decodeMurray(List<String> inputs, MurrayCodebook language) 
 
   var displays = <List<String>>[];
 
-  Map<List<String>, String> CODEBOOK = new Map<List<String>, String>();
+  Map<List<String>, String> CODEBOOK = Map<List<String>, String>();
   switch (language) {
     case MurrayCodebook.GEOCACHING:
       CODEBOOK = switchMapKeyValue(CODEBOOK_GEOCACHING);

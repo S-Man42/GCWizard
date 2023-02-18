@@ -55,7 +55,7 @@ BWTOutput decryptBurrowsWheeler(String chiffre, indexChar) {
     index = int.parse(indexChar) - 1;
     input = chiffre;
   }
-  Map<int, List<String>> tabelle = new Map<int, List<String>>();
+  Map<int, List<String>> tabelle = Map<int, List<String>>();
 
   for (int i = 0; i < len; i++) {
     tabelle[i] = ([i.toString(), input[i]]);

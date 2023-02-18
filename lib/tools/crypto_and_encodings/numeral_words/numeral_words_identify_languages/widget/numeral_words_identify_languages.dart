@@ -15,7 +15,7 @@ class NumeralWordsIdentifyLanguages extends StatefulWidget {
 }
 
 class NumeralWordsIdentifyLanguagesState extends State<NumeralWordsIdentifyLanguages> {
-  TextEditingController _decodeController;
+  late TextEditingController _decodeController;
 
   var _currentDecodeInput = '';
   GCWSwitchPosition _currentDecodeMode = GCWSwitchPosition.left;

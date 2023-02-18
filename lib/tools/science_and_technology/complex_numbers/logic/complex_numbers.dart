@@ -9,7 +9,7 @@ Map<String, String> CartesianToPolar(String currentA, String currentB) {
   currentA = currentA.replaceAll(',', '.');
   currentB = currentB.replaceAll(',', '.');
 
-  Map<String, String> result = new Map<String, String>();
+  Map<String, String> result = Map<String, String>();
   double a = 0.0;
   double b = 0.0;
 
@@ -49,7 +49,7 @@ Map<String, String> PolarToCartesian(String currentRadius, currentAngle) {
   currentRadius = currentRadius.replaceAll(',', '.');
   currentAngle = currentAngle.replaceAll(',', '.');
 
-  Map<String, String> result = new Map<String, String>();
+  Map<String, String> result = Map<String, String>();
   double a = 0.0;
   double r = 0.0;
 

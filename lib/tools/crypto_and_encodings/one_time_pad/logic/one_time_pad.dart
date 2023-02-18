@@ -20,7 +20,7 @@ String encryptOneTimePad(String? input, String? key, {int keyOffset = 0}) {
       continue;
     }
 
-    var rotateValue = alphabet_AZ[key[i]] + keyOffset;
+    var rotateValue = (alphabet_AZ[key[i]] ?? 0) + keyOffset;
     output += Rotator().rotate(characterToRotate, rotateValue);
   }
 
@@ -48,7 +48,7 @@ String decryptOneTimePad(String? input, String? key, {int keyOffset = 0}) {
       continue;
     }
 
-    var rotateValue = -1 * (alphabet_AZ[key[i]] + keyOffset);
+    var rotateValue = -1 * ((alphabet_AZ[key[i]] ?? 0) + keyOffset);
     output += Rotator().rotate(characterToRotate, rotateValue);
   }
 
