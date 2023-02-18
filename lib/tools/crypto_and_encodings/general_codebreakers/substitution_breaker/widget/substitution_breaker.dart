@@ -152,7 +152,7 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
     return GCWAsyncExecuterParameters(SubstitutionBreakerJobData(input: _currentInput, quadgrams: quadgram));
   }
 
-  _showOutput(SubstitutionBreakerResult? output) {
+  void _showOutput(SubstitutionBreakerResult? output) {
     if (output == null) {
       _currentOutput = null;
       WidgetsBinding.instance.addPostFrameCallback((_) {

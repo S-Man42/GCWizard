@@ -152,7 +152,7 @@ class AnimatedImageState extends State<AnimatedImage> {
     return list;
   }
 
-  _analysePlatformFileAsync() async {
+  void _analysePlatformFileAsync() async {
     await showDialog(
       context: context,
       barrierDismissible: false,
@@ -178,7 +178,7 @@ class AnimatedImageState extends State<AnimatedImage> {
     return GCWAsyncExecuterParameters(_file!.bytes);
   }
 
-  _showOutput(AnimatedImageOutput? output) {
+  void _showOutput(AnimatedImageOutput? output) {
     _outData = output;
 
     // restore image references (problem with sendPort, lose references)
@@ -198,7 +198,7 @@ class AnimatedImageState extends State<AnimatedImage> {
     });
   }
 
-  _exportFiles(BuildContext context, String fileName, List<Uint8List> data) async {
+  void _exportFiles(BuildContext context, String fileName, List<Uint8List> data) async {
     createZipFile(fileName, '.' + fileExtension(FileType.PNG), data).then((bytes) async {
       var value = await saveByteDataToFile(context, bytes, buildFileNameWithDate('anim_', FileType.ZIP));
 

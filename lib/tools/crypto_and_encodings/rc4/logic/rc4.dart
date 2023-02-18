@@ -134,8 +134,7 @@ List<int>? _addToIntList(String input, int base, List<int> list) {
   return list;
 }
 
-String? formatOutput(List<int>? outList, OutputFormat outputFormat) {
-  if (outList == null) return null;
+String formatOutput(List<int> outList, OutputFormat outputFormat) {
   var out = '';
 
   outList.forEach((item) {

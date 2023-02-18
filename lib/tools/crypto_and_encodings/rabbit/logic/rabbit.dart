@@ -47,12 +47,13 @@ RabbitOutput cryptRabbit(String? input, InputFormat inputFormat, String key, Inp
     // for same result like http://kryptografie.de/kryptografie/chiffre/rabbit.htm
     ivData = _generateData([0], 8);
 
+  if (ivData == null || ivData.isEmpty) return RabbitOutput('', null, null, ErrorCode.IV_FORMAT);
   var rabbit = Rabbit(keyData, ivData);
   if (!rabbit.initialized) return RabbitOutput('', null, null, ErrorCode.KEY_FORMAT);
 
   var output = rabbit.cryptData(inputData);
-
-  return RabbitOutput(rc4.formatOutput(output, _convertOutputFormatEnum(outputFormat)),
+  var outputString = output != null ? rc4.formatOutput(output, _convertOutputFormatEnum(outputFormat)) : '';
+  return RabbitOutput(outputString,
       rc4.formatOutput(keyData, rc4.OutputFormat.HEX), rc4.formatOutput(ivData, rc4.OutputFormat.HEX), ErrorCode.OK);
 }
 

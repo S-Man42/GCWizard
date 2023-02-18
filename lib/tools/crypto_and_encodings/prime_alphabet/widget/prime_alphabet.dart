@@ -18,8 +18,8 @@ final _MAX_PRIME_INDEX = 26 * 10;
 final _PRIMES_LIST = primes.sublist(0, _MAX_PRIME_INDEX);
 
 class PrimeAlphabetState extends State<PrimeAlphabet> {
-  TextEditingController _encryptInputController;
-  TextEditingController _decryptInputController;
+  late TextEditingController _encryptInputController;
+  late TextEditingController _decryptInputController;
   var _currentEncryptInput = '';
   var _currentDecryptInput = '';
 
@@ -106,7 +106,7 @@ class PrimeAlphabetState extends State<PrimeAlphabet> {
     }).toList();
   }
 
-  _buildOutput() {
+  String _buildOutput() {
     if (_currentMode == GCWSwitchPosition.right) {
       return decryptPrimeAlphabet(
           RegExp(r'[0-9]+').allMatches(_currentDecryptInput).map((number) => int.tryParse(number.group(0))).toList(),

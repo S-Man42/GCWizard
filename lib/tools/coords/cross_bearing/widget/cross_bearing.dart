@@ -173,7 +173,7 @@ class CrossBearingState extends State<CrossBearing> {
         crossbearing: true));
   }
 
-  _showOutput(LatLng output) {
+  void _showOutput(LatLng output) {
     _currentIntersection = output;
 
     _currentMapPoints = [

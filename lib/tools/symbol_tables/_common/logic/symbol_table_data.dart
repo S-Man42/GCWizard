@@ -230,7 +230,7 @@ class SymbolTableData {
     return SYMBOLTABLES_ASSETPATH + symbolKey + '/';
   }
 
-  _loadConfig() async {
+  void _loadConfig() async {
     var file;
     try {
       file = await DefaultAssetBundle.of(_context).loadString(_pathKey() + SymbolTableConstants.CONFIG_FILENAME);
@@ -307,7 +307,7 @@ class SymbolTableData {
     return key;
   }
 
-  _initializeImages(bool importEncryption) async {
+  void _initializeImages(bool importEncryption) async {
     //AssetManifest.json holds the information about all asset files
     final manifestContent = await DefaultAssetBundle.of(_context).loadString('AssetManifest.json');
     final Map<String, dynamic> manifestMap = json.decode(manifestContent);
@@ -365,7 +365,7 @@ class SymbolTableData {
     images.sort(_sort);
   }
 
-  _initializeImage(Uint8List bytes) async {
+  Future<ui.Image> _initializeImage(Uint8List bytes) async {
     return decodeImageFromList(bytes);
   }
 

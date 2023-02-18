@@ -190,7 +190,7 @@ class PietState extends State<Piet> {
     });
   }
 
-  _showDialogBox(BuildContext context, String text) {
+  void _showDialogBox(BuildContext context, String text) {
     _isStarted = false;
     showGCWDialog(
         context,

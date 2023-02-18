@@ -125,7 +125,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     _codeControllerHighlightedLUA = TextEditingController(text: _LUA_SourceCode);
   }
 
-  _askFoSyntaxHighlighting() {
+  void _askFoSyntaxHighlighting() {
     showGCWDialog(
         context,
         i18n(context, 'wherigo_syntaxhighlighting_title'),
@@ -156,7 +156,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         cancelButton: false);
   }
 
-  _askForOnlineDecompiling() {
+  void _askForOnlineDecompiling() {
     if (_WherigoShowLUASourcecodeDialog) {
       showGCWDialog(
           context,
@@ -207,7 +207,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     super.dispose();
   }
 
-  _setGWCData(Uint8List bytes) {
+  void _setGWCData(Uint8List bytes) {
     _GWCbytes = bytes;
     _GWCFileStructure = _outputByteCodeStructure(_GWCbytes);
 
@@ -216,7 +216,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     else if (_fileLoadedState == FILE_LOAD_STATE.LUA) _fileLoadedState = FILE_LOAD_STATE.FULL;
   }
 
-  _setLUAData(Uint8List bytes) {
+  void _setLUAData(Uint8List bytes) {
     _LUAbytes = bytes;
     if (_fileLoadedState == FILE_LOAD_STATE.NULL)
       _fileLoadedState = FILE_LOAD_STATE.LUA;
@@ -2114,7 +2114,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     return (datetime == null) ? '' : DateFormat.yMd(loc).add_jms().format(datetime);
   }
 
-  _exportFile(BuildContext context, Uint8List data, String name, FileType fileType) async {
+  void _exportFile(BuildContext context, Uint8List data, String name, FileType fileType) async {
     var value = await saveByteDataToFile(context, data, buildFileNameWithDate(name, fileType));
 
     var content = fileClass(fileType) == FileClass.IMAGE ? imageContent(context, data) : null;
@@ -2126,7 +2126,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     showCoordinatesExportDialog(context, points, polylines);
   }
 
-  _openInMap(List<GCWMapPoint> points, List<GCWMapPolyline> polylines) {
+  void _openInMap(List<GCWMapPoint> points, List<GCWMapPolyline> polylines) {
     Navigator.push(
         context,
         MaterialPageRoute(
@@ -2145,7 +2145,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   // TODO Thomas: Only temporary for getting stuff compiled: Please ask Mike for proper GCWAsync Handling. He knows about it.
   var _temporaryONLYForRefactoring_DataTypeForAsync;
 
-  _analyseCartridgeFileAsync(String dataType) async {
+  void _analyseCartridgeFileAsync(String dataType) async {
     _temporaryONLYForRefactoring_DataTypeForAsync = dataType;
 
     await showDialog(
@@ -2183,7 +2183,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   //TODO Thomas please replace parameter Map with own parameter class.
-  _showCartridgeOutput(Map<String, dynamic> output) {
+  void _showCartridgeOutput(Map<String, dynamic> output) {
     _outData = output;
     String toastMessage = '';
     int toastDuration = 3;
@@ -2420,7 +2420,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       return chiffre;
   }
 
-  _buildItemPointsForMapExport() {
+  void _buildItemPointsForMapExport() {
     _ItemPoints.clear();
 
     // Build data
@@ -2439,7 +2439,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     });
   }
 
-  _buildCharacterPointsForMapExport() {
+  void _buildCharacterPointsForMapExport() {
     if (_WherigoCartridgeLUA.Characters != null)
       // Clear data
       _CharacterPoints.clear();
@@ -2460,7 +2460,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     });
   }
 
-  _buildZonesForMapExport() {
+  void _buildZonesForMapExport() {
     if (_WherigoCartridgeLUA.Zones != null) {
       // Clear data
       _ZonePoints.clear();
@@ -2684,7 +2684,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     }).toList();
   }
 
-  _buildImageView(bool condition, String fileSource) {
+  void _buildImageView(bool condition, String fileSource) {
     if (!condition) return Container();
 
     var file = _getFileFrom(fileSource);

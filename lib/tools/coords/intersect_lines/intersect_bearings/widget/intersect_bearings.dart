@@ -165,7 +165,7 @@ class IntersectBearingsState extends State<IntersectBearings> {
         crossbearing: false));
   }
 
-  _showOutput(LatLng output) {
+  void _showOutput(LatLng output) {
     _currentIntersection = output;
 
     _currentMapPoints = [

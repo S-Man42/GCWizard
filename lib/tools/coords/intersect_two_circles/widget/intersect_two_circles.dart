@@ -120,7 +120,7 @@ class IntersectTwoCirclesState extends State<IntersectTwoCircles> {
         ells: defaultEllipsoid()));
   }
 
-  _showOutput(List<LatLng> output) {
+  void _showOutput(List<LatLng> output) {
     if (output == null) {
       _currentIntersections = [];
 

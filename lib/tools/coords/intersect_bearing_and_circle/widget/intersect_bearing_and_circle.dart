@@ -94,7 +94,7 @@ class IntersectBearingAndCircleState extends State<IntersectGeodeticAndCircle> {
     );
   }
 
-  _getEndPoint() {
+  GCWMapPoint _getEndPoint() {
     var mapPoint = GCWMapPoint(
         point: projection(
             _currentCoordsStart,
@@ -142,7 +142,7 @@ class IntersectBearingAndCircleState extends State<IntersectGeodeticAndCircle> {
         ells: defaultEllipsoid()));
   }
 
-  _showOutput(List<LatLng> output) {
+  void _showOutput(List<LatLng> output) {
     if (output == null) {
       _currentIntersections = [];
 
