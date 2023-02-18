@@ -2520,7 +2520,7 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
     expr = RegExp(r'(redodo|remimi|refafa|resolsol|relala|resisi|mimido|mimire|mimifa) farere');
     if (expr.hasMatch(helpText)) {
       helpText1 = helpText.replaceAllMapped(expr, (Match m) {
-        return (m.group(0) != ' ') ?  m.group(0)!.replaceAll(' ', '') : m.group(0)!;
+        return (m.group(0) != ' ') ?  m.group(0)!.replaceAll(' ', '') : '';
       });
     } else
       helpText1 = helpText;
@@ -2530,7 +2530,7 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
         r'(fafare|fafami|fafasol|fafala|fafasi|fadodo) (mimisol|mimila|mimisi|midodo|mirere|mifafa|misolsol|milala|misisi|fafado|redodo|remimi|refafa|resolsol|relala|resisi|mimido|mimire|mimifa)');
     if (expr.hasMatch(helpText1)) {
       helpText = helpText1.replaceAllMapped(expr, (Match m) {
-        return (m.group(0) != ' ') ?  m.group(0)!.replaceAll(' ', '') : m.group(0)!;
+        return (m.group(0) != ' ') ?  m.group(0)!.replaceAll(' ', '') : '';
       });
     } else
       helpText = helpText1;
@@ -2538,7 +2538,7 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
     expr = RegExp(r'mimisol (redodo|remimi|refafa|resolsol|relala|resisi|mimido|mimire|mimifa)');
     if (expr.hasMatch(helpText)) {
       helpText1 = helpText.replaceAllMapped(expr, (Match m) {
-        return (m.group(0) != ' ') ?  m.group(0)!.replaceAll(' ', '') : m.group(0)!;
+        return (m.group(0) != ' ') ?  m.group(0)!.replaceAll(' ', '') : '';
       });
     } else
       helpText1 = helpText;
@@ -2548,7 +2548,7 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
         r'(redodo|remimi|refafa|resolsol|relala|resisi|mimido|mimire|mimifa)farere (fafare|fafami|fafasol|fafala|fafasi|fadodo|mimisol|mimila|mimisi|midodo|mirere|mifafa|misolsol|milala|misisi|fafado|redodo|remimi|refafa|resolsol|relala|resisi|mimido|mimire|mimifa)');
     if (expr.hasMatch(helpText1)) {
       helpText = helpText1.replaceAllMapped(expr, (Match m) {
-        return (m.group(0) != ' ') ?  m.group(0)!.replaceAll(' ', '') : m.group(0)!;
+        return (m.group(0) != ' ') ?  m.group(0)!.replaceAll(' ', '') : '';
       });
     } else
       helpText = helpText1;
@@ -2558,7 +2558,7 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
         r'famimi (farere|fafare|fafami|fafasol|fafala|fafasi|fadodo|mimisol|mimila|mimisi|midodo|mirere|mifafa|misolsol|milala|misisi|fafado|redodo|remimi|refafa|resolsol|relala|resisi|mimido|mimire|mimifa)');
     if (expr.hasMatch(helpText)) {
       helpText1 = helpText.replaceAllMapped(expr, (Match m) {
-        return (m.group(0) != ' ') ?  m.group(0)!.replaceAll(' ', '') : m.group(0)!;
+        return (m.group(0) != ' ') ?  m.group(0)!.replaceAll(' ', '') : '';
       });
     } else
       helpText1 = helpText;
@@ -2568,7 +2568,7 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
         r'(farere|fafare|fafami|fafasol|fafala|fafasi|fadodo|mimisol|mimila|mimisi|midodo|mirere|mifafa|misolsol|milala|misisi|fafado|redodo|remimi|refafa|resolsol|relala|resisi|mimido|mimire|mimifa) famimi');
     if (expr.hasMatch(helpText1)) {
       helpText = helpText1.replaceAllMapped(expr, (Match m) {
-        return (m.group(0) != ' ') ?  m.group(0)!.replaceAll(' ', '') : m.group(0)!;
+        return (m.group(0) != ' ') ?  m.group(0)!.replaceAll(' ', '') : '';
       });
     } else
       helpText = helpText1;

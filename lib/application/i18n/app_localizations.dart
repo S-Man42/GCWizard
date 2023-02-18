@@ -45,7 +45,7 @@ class AppLocalizations {
 
     await loadSearchStrings(_locale.languageCode);
 
-    return true;
+    return Future.value(true);
   }
 
   Future<Map<String, String>> loadLang(langCode) async {
@@ -97,7 +97,7 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
  * %s2 -> parameter 2 (list index 1),
  * ...
  */
-String i18n(BuildContext context, String key, {List<dynamic> parameters: const [], bool useDefaultLanguage: false, String ifTranslationNotExists: ''}) {
+String i18n(BuildContext context, String key, {List<dynamic> parameters: const [], bool useDefaultLanguage = false, String ifTranslationNotExists = ''}) {
   Map<String, String> parametersMap = {};
   for (int i = parameters.length; i >= 1; i--) {
     parametersMap.putIfAbsent('%s' + i.toString(), () => parameters[i - 1].toString());

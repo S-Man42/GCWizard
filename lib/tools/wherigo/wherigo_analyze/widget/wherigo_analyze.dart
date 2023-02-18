@@ -2143,7 +2143,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   // TODO Thomas: Only temporary for getting stuff compiled: Please ask Mike for proper GCWAsync Handling. He knows about it.
-  var _temporaryONLYForRefactoring_DataTypeForAsync;
+  late String _temporaryONLYForRefactoring_DataTypeForAsync;
 
   void _analyseCartridgeFileAsync(String dataType) async {
     _temporaryONLYForRefactoring_DataTypeForAsync = dataType;
@@ -2154,7 +2154,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       builder: (context) {
         return Center(
           child: Container(
-            child: GCWAsyncExecuter<Map<String, dynamic>>(
+            child: GCWAsyncExecuter<Map<String, Object>>(
               isolatedFunction: getCartridgeAsync,
               parameter: _buildGWCJobData,
               onReady: (data) => _showCartridgeOutput(data),
@@ -2170,7 +2170,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
 
   // TODO Thomas: Please ask Mike for proper GCWAsync Handling. He knows about it.
-  Future<GCWAsyncExecuterParameters> _buildGWCJobData() async {
+  Future<GCWAsyncExecuterParameters?> _buildGWCJobData() async {
     switch (_temporaryONLYForRefactoring_DataTypeForAsync) {
       case DATA_TYPE_GWC:
         //TODO Thomas please replace Map with own return class.
