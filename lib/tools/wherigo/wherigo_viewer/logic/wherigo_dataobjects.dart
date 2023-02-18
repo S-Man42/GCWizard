@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/wherigo/wherigo_viewer/logic/wherigo_analyze.dart';
 
-enum WHERIGO {
+enum WHERIGO_OBJECT {
   NULL,
   GWCFILE,
   HEADER,
@@ -20,96 +20,96 @@ enum WHERIGO {
   RESULTS_LUA
 }
 
-const DATA_TYPE_LUA = 'LUA-Sourcecode';
-const DATA_TYPE_GWC = 'GWC-Cartridge';
+const WHERIGO_DATA_TYPE_LUA = 'LUA-Sourcecode';
+const WHERIGO_DATA_TYPE_GWC = 'GWC-Cartridge';
 
-const EXPERT_MODE = true;
-const USER_MODE = false;
+const WHERIGO_EXPERT_MODE = true;
+const WHERIGO_USER_MODE = false;
 
-enum FILE_LOAD_STATE { NULL, GWC, LUA, FULL }
+enum WHERIGO_FILE_LOAD_STATE { NULL, GWC, LUA, FULL }
 
-enum BUILDER { EARWIGO, URWIGO, GROUNDSPEAK, WHERIGOKIT, UNKNOWN }
+enum WHERIGO_BUILDER { EARWIGO, URWIGO, GROUNDSPEAK, WHERIGOKIT, UNKNOWN }
 
-enum ANALYSE_RESULT_STATUS { OK, ERROR_GWC, ERROR_LUA, ERROR_HTTP, NONE }
+enum WHERIGO_ANALYSE_RESULT_STATUS { OK, ERROR_GWC, ERROR_LUA, ERROR_HTTP, NONE }
 
-enum OBJECT_TYPE { MEDIA, CARTRIDGE, ZONE, CHARACTER, ITEM, TASK, VARIABLES, TIMER, INPUT, MESSAGES }
+enum WHERIGO_OBJECT_TYPE {NONE, MEDIA, CARTRIDGE, ZONE, CHARACTER, ITEM, TASK, VARIABLES, TIMER, INPUT, MESSAGES }
 
-OBJECT_TYPE currentObjectSection = OBJECT_TYPE.MESSAGES; // TODO Thomas: Needed an init value to keep this null-safe. Please check if this one makes sense.
+WHERIGO_OBJECT_TYPE currentObjectSection = WHERIGO_OBJECT_TYPE.NONE;
 
-const MEDIATYPE_UNK = 0;
-const MEDIATYPE_BMP = 1;
-const MEDIATYPE_PNG = 2;
-const MEDIATYPE_JPG = 3;
-const MEDIATYPE_GIF = 4;
-const MEDIATYPE_WAV = 17;
-const MEDIATYPE_MP3 = 18;
-const MEDIATYPE_FDL = 19;
-const MEDIATYPE_SND = 20;
-const MEDIATYPE_OGG = 21;
-const MEDIATYPE_SWF = 33;
-const MEDIATYPE_TXT = 49;
+const WHERIGO_MEDIATYPE_UNK = 0;
+const WHERIGO_MEDIATYPE_BMP = 1;
+const WHERIGO_MEDIATYPE_PNG = 2;
+const WHERIGO_MEDIATYPE_JPG = 3;
+const WHERIGO_MEDIATYPE_GIF = 4;
+const WHERIGO_MEDIATYPE_WAV = 17;
+const WHERIGO_MEDIATYPE_MP3 = 18;
+const WHERIGO_MEDIATYPE_FDL = 19;
+const WHERIGO_MEDIATYPE_SND = 20;
+const WHERIGO_MEDIATYPE_OGG = 21;
+const WHERIGO_MEDIATYPE_SWF = 33;
+const WHERIGO_MEDIATYPE_TXT = 49;
 
-Map MEDIATYPE = {
-  MEDIATYPE_UNK: '<?>',
-  MEDIATYPE_BMP: 'bmp',
-  MEDIATYPE_PNG: 'png',
-  MEDIATYPE_JPG: 'jpg',
-  MEDIATYPE_GIF: 'gif',
-  MEDIATYPE_WAV: 'wav',
-  MEDIATYPE_MP3: 'mp3',
-  MEDIATYPE_FDL: 'fdl',
-  MEDIATYPE_SND: 'snd',
-  MEDIATYPE_OGG: 'ogg',
-  MEDIATYPE_SWF: 'swf',
-  MEDIATYPE_TXT: 'txt'
+Map WHERIGO_MEDIATYPE = {
+  WHERIGO_MEDIATYPE_UNK: '<?>',
+  WHERIGO_MEDIATYPE_BMP: 'bmp',
+  WHERIGO_MEDIATYPE_PNG: 'png',
+  WHERIGO_MEDIATYPE_JPG: 'jpg',
+  WHERIGO_MEDIATYPE_GIF: 'gif',
+  WHERIGO_MEDIATYPE_WAV: 'wav',
+  WHERIGO_MEDIATYPE_MP3: 'mp3',
+  WHERIGO_MEDIATYPE_FDL: 'fdl',
+  WHERIGO_MEDIATYPE_SND: 'snd',
+  WHERIGO_MEDIATYPE_OGG: 'ogg',
+  WHERIGO_MEDIATYPE_SWF: 'swf',
+  WHERIGO_MEDIATYPE_TXT: 'txt'
 };
 
-Map MEDIACLASS = {
-  MEDIATYPE_UNK: 'n/a',
-  MEDIATYPE_BMP: 'Image',
-  MEDIATYPE_PNG: 'Image',
-  MEDIATYPE_JPG: 'Image',
-  MEDIATYPE_GIF: 'Image',
-  MEDIATYPE_WAV: 'Sound',
-  MEDIATYPE_MP3: 'Sound',
-  MEDIATYPE_FDL: 'Sound',
-  MEDIATYPE_SND: 'Sound',
-  MEDIATYPE_OGG: 'Sound',
-  MEDIATYPE_SWF: 'Video',
-  MEDIATYPE_TXT: 'Text'
+Map WHERIGO_MEDIACLASS = {
+  WHERIGO_MEDIATYPE_UNK: 'n/a',
+  WHERIGO_MEDIATYPE_BMP: 'Image',
+  WHERIGO_MEDIATYPE_PNG: 'Image',
+  WHERIGO_MEDIATYPE_JPG: 'Image',
+  WHERIGO_MEDIATYPE_GIF: 'Image',
+  WHERIGO_MEDIATYPE_WAV: 'Sound',
+  WHERIGO_MEDIATYPE_MP3: 'Sound',
+  WHERIGO_MEDIATYPE_FDL: 'Sound',
+  WHERIGO_MEDIATYPE_SND: 'Sound',
+  WHERIGO_MEDIATYPE_OGG: 'Sound',
+  WHERIGO_MEDIATYPE_SWF: 'Video',
+  WHERIGO_MEDIATYPE_TXT: 'Text'
 };
 
-class StringOffset {
+class WherigoStringOffset {
   final String ASCIIZ;
   final int offset;
 
-  StringOffset(this.ASCIIZ, this.offset);
+  WherigoStringOffset(this.ASCIIZ, this.offset);
 }
 
-class MediaFileHeader {
+class WherigoMediaFileHeader {
   final int MediaFileID;
   final int MediaFileAddress;
 
-  MediaFileHeader(this.MediaFileID, this.MediaFileAddress);
+  WherigoMediaFileHeader(this.MediaFileID, this.MediaFileAddress);
 }
 
-class MediaFileContent {
+class WherigoMediaFileContent {
   final int MediaFileID;
   final int MediaFileType;
   final Uint8List MediaFileBytes;
   final int MediaFileLength;
 
-  MediaFileContent(this.MediaFileID, this.MediaFileType, this.MediaFileBytes, this.MediaFileLength);
+  WherigoMediaFileContent(this.MediaFileID, this.MediaFileType, this.MediaFileBytes, this.MediaFileLength);
 }
 
-class ObjectData {
+class WherigoObjectData {
   final String ObjectID;
   final int ObjectIndex;
   final String ObjectName;
   final String ObjectMedia;
-  final OBJECT_TYPE ObjectType;
+  final WHERIGO_OBJECT_TYPE ObjectType;
 
-  ObjectData(
+  WherigoObjectData(
     this.ObjectID,
     this.ObjectIndex,
     this.ObjectName,
@@ -118,27 +118,27 @@ class ObjectData {
   );
 }
 
-enum ACTIONMESSAGETYPE { TEXT, IMAGE, BUTTON, COMMAND, CASE }
+enum WHERIGO_ACTIONMESSAGETYPE { TEXT, IMAGE, BUTTON, COMMAND, CASE }
 
-Map<ACTIONMESSAGETYPE, String> ACTIONMESSAGETYPE_TEXT = {
-  ACTIONMESSAGETYPE.TEXT: 'txt',
-  ACTIONMESSAGETYPE.IMAGE: 'img',
-  ACTIONMESSAGETYPE.BUTTON: 'btn',
-  ACTIONMESSAGETYPE.COMMAND: 'cmd',
-  ACTIONMESSAGETYPE.CASE: 'cse',
+Map<WHERIGO_ACTIONMESSAGETYPE, String> WHERIGO_ACTIONMESSAGETYPE_TEXT = {
+  WHERIGO_ACTIONMESSAGETYPE.TEXT: 'txt',
+  WHERIGO_ACTIONMESSAGETYPE.IMAGE: 'img',
+  WHERIGO_ACTIONMESSAGETYPE.BUTTON: 'btn',
+  WHERIGO_ACTIONMESSAGETYPE.COMMAND: 'cmd',
+  WHERIGO_ACTIONMESSAGETYPE.CASE: 'cse',
 };
 
-Map TEXT_ACTIONMESSAGETYPE = switchMapKeyValue(ACTIONMESSAGETYPE_TEXT);
+Map WHERIGO_TEXT_ACTIONMESSAGETYPE = switchMapKeyValue(WHERIGO_ACTIONMESSAGETYPE_TEXT);
 
-class ZonePoint {
+class WherigoZonePoint {
   final double Latitude;
   final double Longitude;
   final double Altitude;
 
-  ZonePoint(this.Latitude, this.Longitude, this.Altitude);
+  WherigoZonePoint(this.Latitude, this.Longitude, this.Altitude);
 }
 
-class ZoneData {
+class WherigoZoneData {
   final String ZoneLUAName;
   final String ZoneID;
   final String ZoneName;
@@ -150,14 +150,14 @@ class ZoneData {
   final String ZoneDistanceRange;
   final String ZoneShowObjects;
   final String ZoneProximityRange;
-  final ZonePoint ZoneOriginalPoint;
+  final WherigoZonePoint ZoneOriginalPoint;
   final String ZoneDistanceRangeUOM;
   final String ZoneProximityRangeUOM;
   final String ZoneOutOfRange;
   final String ZoneInRange;
-  final List<ZonePoint> ZonePoints;
+  final List<WherigoZonePoint> ZonePoints;
 
-  ZoneData(
+  WherigoZoneData(
       this.ZoneLUAName,
       this.ZoneID,
       this.ZoneName,
@@ -177,7 +177,7 @@ class ZoneData {
       this.ZonePoints);
 }
 
-class CharacterData {
+class WherigoCharacterData {
   final String CharacterLUAName;
   final String CharacterID;
   final String CharacterName;
@@ -186,12 +186,12 @@ class CharacterData {
   final String CharacterMediaName;
   final String CharacterIconName;
   final String CharacterLocation;
-  final ZonePoint CharacterZonepoint;
+  final WherigoZonePoint CharacterZonepoint;
   final String CharacterContainer;
   final String CharacterGender;
   final String CharacterType;
 
-  CharacterData(
+  WherigoCharacterData(
       this.CharacterLUAName,
       this.CharacterID,
       this.CharacterName,
@@ -206,7 +206,7 @@ class CharacterData {
       this.CharacterType);
 }
 
-class InputData {
+class WherigoInputData {
   final String InputLUAName;
   final String InputID;
   final String InputVariableID;
@@ -218,9 +218,9 @@ class InputData {
   final String InputType;
   final String InputText;
   final List<String> InputChoices;
-  final List<AnswerData> InputAnswers;
+  final List<WherigoAnswerData> InputAnswers;
 
-  InputData(
+  WherigoInputData(
       this.InputLUAName,
       this.InputID,
       this.InputVariableID,
@@ -235,37 +235,37 @@ class InputData {
       this.InputAnswers);
 }
 
-class AnswerData {
+class WherigoAnswerData {
   final String AnswerAnswer;
   final String AnswerHash;
-  final List<ActionMessageElementData> AnswerActions;
+  final List<WherigoActionMessageElementData> AnswerActions;
 
-  AnswerData(
+  WherigoAnswerData(
     this.AnswerAnswer,
     this.AnswerHash,
     this.AnswerActions,
   );
 }
 
-class MessageData {
-  final List<List<ActionMessageElementData>> MessageElement;
+class WherigoMessageData {
+  final List<List<WherigoActionMessageElementData>> MessageElement;
 
-  MessageData(
+  WherigoMessageData(
     this.MessageElement,
   );
 }
 
-class ActionMessageElementData {
-  final ACTIONMESSAGETYPE ActionMessageType;
+class WherigoActionMessageElementData {
+  final WHERIGO_ACTIONMESSAGETYPE ActionMessageType;
   final String ActionMessageContent;
 
-  ActionMessageElementData(
+  WherigoActionMessageElementData(
     this.ActionMessageType,
     this.ActionMessageContent,
   );
 }
 
-class TaskData {
+class WherigoTaskData {
   final String TaskLUAName;
   final String TaskID;
   final String TaskName;
@@ -277,11 +277,11 @@ class TaskData {
   final String TaskComplete;
   final String TaskCorrectstate;
 
-  TaskData(this.TaskLUAName, this.TaskID, this.TaskName, this.TaskDescription, this.TaskVisible, this.TaskMedia,
+  WherigoTaskData(this.TaskLUAName, this.TaskID, this.TaskName, this.TaskDescription, this.TaskVisible, this.TaskMedia,
       this.TaskIcon, this.TaskActive, this.TaskComplete, this.TaskCorrectstate);
 }
 
-class MediaData {
+class WherigoMediaData {
   final String MediaLUAName;
   final String MediaID;
   final String MediaName;
@@ -290,18 +290,18 @@ class MediaData {
   final String MediaType;
   final String MediaFilename;
 
-  MediaData(this.MediaLUAName, this.MediaID, this.MediaName, this.MediaDescription, this.MediaAltText, this.MediaType,
+  WherigoMediaData(this.MediaLUAName, this.MediaID, this.MediaName, this.MediaDescription, this.MediaAltText, this.MediaType,
       this.MediaFilename);
 }
 
-class VariableData {
+class WherigoVariableData {
   final String VariableLUAName;
   final String VariableName;
 
-  VariableData(this.VariableLUAName, this.VariableName);
+  WherigoVariableData(this.VariableLUAName, this.VariableName);
 }
 
-class ItemData {
+class WherigoItemData {
   final String ItemLUAName;
   final String ItemID;
   final String ItemName;
@@ -310,16 +310,16 @@ class ItemData {
   final String ItemMedia;
   final String ItemIcon;
   final String ItemLocation;
-  final ZonePoint ItemZonepoint;
+  final WherigoZonePoint ItemZonepoint;
   final String ItemContainer;
   final String ItemLocked;
   final String ItemOpened;
 
-  ItemData(this.ItemLUAName, this.ItemID, this.ItemName, this.ItemDescription, this.ItemVisible, this.ItemMedia,
+  WherigoItemData(this.ItemLUAName, this.ItemID, this.ItemName, this.ItemDescription, this.ItemVisible, this.ItemMedia,
       this.ItemIcon, this.ItemLocation, this.ItemZonepoint, this.ItemContainer, this.ItemLocked, this.ItemOpened);
 }
 
-class TimerData {
+class WherigoTimerData {
   final String TimerLUAName;
   final String TimerID;
   final String TimerName;
@@ -328,15 +328,15 @@ class TimerData {
   final String TimerDuration;
   final String TimerType;
 
-  TimerData(this.TimerLUAName, this.TimerID, this.TimerName, this.TimerDescription, this.TimerVisible,
+  WherigoTimerData(this.TimerLUAName, this.TimerID, this.TimerName, this.TimerDescription, this.TimerVisible,
       this.TimerDuration, this.TimerType);
 }
 
 class WherigoCartridgeGWC {
   final String Signature;
   final int NumberOfObjects;
-  final List<MediaFileHeader> MediaFilesHeaders;
-  final List<MediaFileContent> MediaFilesContents;
+  final List<WherigoMediaFileHeader> MediaFilesHeaders;
+  final List<WherigoMediaFileContent> MediaFilesContents;
   final int HeaderLength;
   final int Splashscreen;
   final int SplashscreenIcon;
@@ -357,7 +357,7 @@ class WherigoCartridgeGWC {
   final String RecommendedDevice;
   final int LengthOfCompletionCode;
   final String CompletionCode;
-  final ANALYSE_RESULT_STATUS ResultStatus;
+  final WHERIGO_ANALYSE_RESULT_STATUS ResultStatus;
   final List<String> ResultsGWC;
 
   const WherigoCartridgeGWC({
@@ -385,7 +385,7 @@ class WherigoCartridgeGWC {
     this.RecommendedDevice = '',
     this.LengthOfCompletionCode = 0,
     this.CompletionCode = '',
-    this.ResultStatus = ANALYSE_RESULT_STATUS.NONE,
+    this.ResultStatus = WHERIGO_ANALYSE_RESULT_STATUS.NONE,
     this.ResultsGWC = const[],
   });
 }
@@ -396,26 +396,26 @@ class WherigoCartridgeLUA {
   final String CartridgeGUID;
   final String ObfuscatorTable;
   final String ObfuscatorFunction;
-  final List<CharacterData> Characters;
-  final List<ItemData> Items;
-  final List<TaskData> Tasks;
-  final List<InputData> Inputs;
-  final List<ZoneData> Zones;
-  final List<TimerData> Timers;
-  final List<MediaData> Media;
-  final List<List<ActionMessageElementData>> Messages;
-  final List<AnswerData> Answers;
-  final List<VariableData> Variables;
-  final Map<String, ObjectData> NameToObject;
-  final ANALYSE_RESULT_STATUS ResultStatus;
+  final List<WherigoCharacterData> Characters;
+  final List<WherigoItemData> Items;
+  final List<WherigoTaskData> Tasks;
+  final List<WherigoInputData> Inputs;
+  final List<WherigoZoneData> Zones;
+  final List<WherigoTimerData> Timers;
+  final List<WherigoMediaData> Media;
+  final List<List<WherigoActionMessageElementData>> Messages;
+  final List<WherigoAnswerData> Answers;
+  final List<WherigoVariableData> Variables;
+  final Map<String, WherigoObjectData> NameToObject;
+  final WHERIGO_ANALYSE_RESULT_STATUS ResultStatus;
   final List<String> ResultsLUA;
-  final BUILDER Builder;
+  final WHERIGO_BUILDER Builder;
   final String BuilderVersion;
   final String TargetDeviceVersion;
   final String StateID;
   final String CountryID;
   final String UseLogging;
-  final DateTime CreateDate; // TODO Thomas: Made date nullable because sometimes you explicitly returned null. Please check if you could make it null-safe
+  final DateTime CreateDate;
   final DateTime PublishDate;
   final DateTime UpdateDate;
   final DateTime LastPlayedDate;
@@ -440,18 +440,18 @@ class WherigoCartridgeLUA {
       this.Answers = const[],
       this.Variables = const[],
       this.NameToObject = const {},
-      this.ResultStatus = ANALYSE_RESULT_STATUS.NONE,
+      this.ResultStatus = WHERIGO_ANALYSE_RESULT_STATUS.NONE,
       this.ResultsLUA = const[],
-      this.Builder = BUILDER.UNKNOWN,
+      this.Builder = WHERIGO_BUILDER.UNKNOWN,
       this.BuilderVersion = '',
       this.TargetDeviceVersion = '',
       this.CountryID = '',
       this.StateID = '',
       this.UseLogging = '',
-      this.CreateDate = nullDate,
-      this.PublishDate = nullDate,
-      this.UpdateDate = nullDate,
-      this.LastPlayedDate = nullDate,
+      this.CreateDate = WHERIGO_NULLDATE,
+      this.PublishDate = WHERIGO_NULLDATE,
+      this.UpdateDate = WHERIGO_NULLDATE,
+      this.LastPlayedDate = WHERIGO_NULLDATE,
       this.httpCode = '',
       this.httpMessage = ''});
 }
@@ -461,12 +461,12 @@ class WherigoCartridge {
   final WherigoCartridgeLUA cartridgeLUA;
 
   WherigoCartridge({
-    this.cartridgeGWC = emptyWherigoCartridgeGWC,
-    this.cartridgeLUA = emptyWherigoCartridgeLUA
+    this.cartridgeGWC = WHERIGO_EMPTYCARTRIDGE_GWC,
+    this.cartridgeLUA = WHERIGO_EMPTYCARTRIDGE_LUA
   });
 }
 
-const emptyWherigoCartridgeGWC= WherigoCartridgeGWC(
+const WHERIGO_EMPTYCARTRIDGE_GWC= WherigoCartridgeGWC(
   Signature: '',
   NumberOfObjects: 0,
   MediaFilesHeaders: [],
@@ -491,7 +491,7 @@ const emptyWherigoCartridgeGWC= WherigoCartridgeGWC(
   RecommendedDevice: '',
   LengthOfCompletionCode: 0,
   CompletionCode: '',
-  ResultStatus: ANALYSE_RESULT_STATUS.NONE,
+  ResultStatus: WHERIGO_ANALYSE_RESULT_STATUS.NONE,
   ResultsGWC: [],
 );
 
@@ -576,9 +576,9 @@ class ConstantDateTime implements DateTime {
   int get year => throw UnimplementedError();
 }
 
-const DateTime nullDate = ConstantDateTime('0-01-01 00:00:00.000');
+const DateTime WHERIGO_NULLDATE = ConstantDateTime('0-01-01 00:00:00.000');
 
-const emptyWherigoCartridgeLUA = WherigoCartridgeLUA(
+const WHERIGO_EMPTYCARTRIDGE_LUA = WherigoCartridgeLUA(
     LUAFile: '',
     CartridgeLUAName: '',
     CartridgeGUID: '',
@@ -595,105 +595,105 @@ const emptyWherigoCartridgeLUA = WherigoCartridgeLUA(
     Answers: [],
     Variables: [],
     NameToObject: {},
-    ResultStatus: ANALYSE_RESULT_STATUS.NONE,
+    ResultStatus: WHERIGO_ANALYSE_RESULT_STATUS.NONE,
     ResultsLUA: [],
-    Builder: BUILDER.UNKNOWN,
+    Builder: WHERIGO_BUILDER.UNKNOWN,
     BuilderVersion: '',
     TargetDeviceVersion: '',
     CountryID: '',
     StateID: '',
     UseLogging: '',
-    CreateDate: nullDate,
-    PublishDate: nullDate,
-    UpdateDate: nullDate,
-    LastPlayedDate: nullDate,
+    CreateDate: WHERIGO_NULLDATE,
+    PublishDate: WHERIGO_NULLDATE,
+    UpdateDate: WHERIGO_NULLDATE,
+    LastPlayedDate: WHERIGO_NULLDATE,
     httpCode: '',
     httpMessage: '');
 
-Map<bool, Map<FILE_LOAD_STATE, Map<WHERIGO, String>>> WHERIGO_DATA = {
-  EXPERT_MODE: {
-    FILE_LOAD_STATE.NULL: {},
-    FILE_LOAD_STATE.GWC: WHERIGO_DATA_GWC_EXPERT,
-    FILE_LOAD_STATE.LUA: WHERIGO_DATA_LUA_EXPERT,
-    FILE_LOAD_STATE.FULL: WHERIGO_DATA_FULL_EXPERT,
+Map<bool, Map<WHERIGO_FILE_LOAD_STATE, Map<WHERIGO_OBJECT, String>>> WHERIGO_DATA = {
+  WHERIGO_EXPERT_MODE: {
+    WHERIGO_FILE_LOAD_STATE.NULL: {},
+    WHERIGO_FILE_LOAD_STATE.GWC: WHERIGO_DATA_GWC_EXPERT,
+    WHERIGO_FILE_LOAD_STATE.LUA: WHERIGO_DATA_LUA_EXPERT,
+    WHERIGO_FILE_LOAD_STATE.FULL: WHERIGO_DATA_FULL_EXPERT,
   },
-  USER_MODE: {
-    FILE_LOAD_STATE.NULL: {},
-    FILE_LOAD_STATE.GWC: WHERIGO_DATA_GWC_USER,
-    FILE_LOAD_STATE.LUA: WHERIGO_DATA_LUA_USER,
-    FILE_LOAD_STATE.FULL: WHERIGO_DATA_FULL_USER,
+  WHERIGO_USER_MODE: {
+    WHERIGO_FILE_LOAD_STATE.NULL: {},
+    WHERIGO_FILE_LOAD_STATE.GWC: WHERIGO_DATA_GWC_USER,
+    WHERIGO_FILE_LOAD_STATE.LUA: WHERIGO_DATA_LUA_USER,
+    WHERIGO_FILE_LOAD_STATE.FULL: WHERIGO_DATA_FULL_USER,
   }
 };
 
-Map<WHERIGO, String> WHERIGO_DATA_FULL_EXPERT = {
-  WHERIGO.HEADER: 'wherigo_data_header',
-  WHERIGO.LUABYTECODE: 'wherigo_data_luabytecode',
-  WHERIGO.MEDIAFILES: 'wherigo_data_mediafiles',
-  WHERIGO.GWCFILE: 'wherigo_data_gwc',
-  WHERIGO.OBFUSCATORTABLE: 'wherigo_data_obfuscatortable',
-  WHERIGO.LUAFILE: 'wherigo_data_lua',
-  WHERIGO.ITEMS: 'wherigo_data_item_list',
-  WHERIGO.CHARACTER: 'wherigo_data_character_list',
-  WHERIGO.ZONES: 'wherigo_data_zone_list',
-  WHERIGO.INPUTS: 'wherigo_data_input_list',
-  WHERIGO.TASKS: 'wherigo_data_task_list',
-  WHERIGO.TIMERS: 'wherigo_data_timer_list',
-  WHERIGO.MESSAGES: 'wherigo_data_message_list',
-  WHERIGO.IDENTIFIER: 'wherigo_data_identifier_list',
-  WHERIGO.RESULTS_GWC: 'wherigo_data_results_gwc',
-  WHERIGO.RESULTS_LUA: 'wherigo_data_results_lua',
+Map<WHERIGO_OBJECT, String> WHERIGO_DATA_FULL_EXPERT = {
+  WHERIGO_OBJECT.HEADER: 'wherigo_data_header',
+  WHERIGO_OBJECT.LUABYTECODE: 'wherigo_data_luabytecode',
+  WHERIGO_OBJECT.MEDIAFILES: 'wherigo_data_mediafiles',
+  WHERIGO_OBJECT.GWCFILE: 'wherigo_data_gwc',
+  WHERIGO_OBJECT.OBFUSCATORTABLE: 'wherigo_data_obfuscatortable',
+  WHERIGO_OBJECT.LUAFILE: 'wherigo_data_lua',
+  WHERIGO_OBJECT.ITEMS: 'wherigo_data_item_list',
+  WHERIGO_OBJECT.CHARACTER: 'wherigo_data_character_list',
+  WHERIGO_OBJECT.ZONES: 'wherigo_data_zone_list',
+  WHERIGO_OBJECT.INPUTS: 'wherigo_data_input_list',
+  WHERIGO_OBJECT.TASKS: 'wherigo_data_task_list',
+  WHERIGO_OBJECT.TIMERS: 'wherigo_data_timer_list',
+  WHERIGO_OBJECT.MESSAGES: 'wherigo_data_message_list',
+  WHERIGO_OBJECT.IDENTIFIER: 'wherigo_data_identifier_list',
+  WHERIGO_OBJECT.RESULTS_GWC: 'wherigo_data_results_gwc',
+  WHERIGO_OBJECT.RESULTS_LUA: 'wherigo_data_results_lua',
 };
 
-Map<WHERIGO, String> WHERIGO_DATA_GWC_EXPERT = {
-  WHERIGO.HEADER: 'wherigo_data_header',
-  WHERIGO.LUABYTECODE: 'wherigo_data_luabytecode',
-  WHERIGO.MEDIAFILES: 'wherigo_data_mediafiles',
-  WHERIGO.GWCFILE: 'wherigo_data_gwc',
-  WHERIGO.RESULTS_GWC: 'wherigo_data_results_gwc',
+Map<WHERIGO_OBJECT, String> WHERIGO_DATA_GWC_EXPERT = {
+  WHERIGO_OBJECT.HEADER: 'wherigo_data_header',
+  WHERIGO_OBJECT.LUABYTECODE: 'wherigo_data_luabytecode',
+  WHERIGO_OBJECT.MEDIAFILES: 'wherigo_data_mediafiles',
+  WHERIGO_OBJECT.GWCFILE: 'wherigo_data_gwc',
+  WHERIGO_OBJECT.RESULTS_GWC: 'wherigo_data_results_gwc',
 };
 
-Map<WHERIGO, String> WHERIGO_DATA_LUA_EXPERT = {
-  WHERIGO.OBFUSCATORTABLE: 'wherigo_data_obfuscatortable',
-  WHERIGO.LUAFILE: 'wherigo_data_lua',
-  WHERIGO.MEDIAFILES: 'wherigo_data_mediafiles',
-  WHERIGO.ITEMS: 'wherigo_data_item_list',
-  WHERIGO.CHARACTER: 'wherigo_data_character_list',
-  WHERIGO.ZONES: 'wherigo_data_zone_list',
-  WHERIGO.INPUTS: 'wherigo_data_input_list',
-  WHERIGO.TASKS: 'wherigo_data_task_list',
-  WHERIGO.TIMERS: 'wherigo_data_timer_list',
-  WHERIGO.MESSAGES: 'wherigo_data_message_list',
-  WHERIGO.IDENTIFIER: 'wherigo_data_identifier_list',
-  WHERIGO.RESULTS_LUA: 'wherigo_data_results_lua',
+Map<WHERIGO_OBJECT, String> WHERIGO_DATA_LUA_EXPERT = {
+  WHERIGO_OBJECT.OBFUSCATORTABLE: 'wherigo_data_obfuscatortable',
+  WHERIGO_OBJECT.LUAFILE: 'wherigo_data_lua',
+  WHERIGO_OBJECT.MEDIAFILES: 'wherigo_data_mediafiles',
+  WHERIGO_OBJECT.ITEMS: 'wherigo_data_item_list',
+  WHERIGO_OBJECT.CHARACTER: 'wherigo_data_character_list',
+  WHERIGO_OBJECT.ZONES: 'wherigo_data_zone_list',
+  WHERIGO_OBJECT.INPUTS: 'wherigo_data_input_list',
+  WHERIGO_OBJECT.TASKS: 'wherigo_data_task_list',
+  WHERIGO_OBJECT.TIMERS: 'wherigo_data_timer_list',
+  WHERIGO_OBJECT.MESSAGES: 'wherigo_data_message_list',
+  WHERIGO_OBJECT.IDENTIFIER: 'wherigo_data_identifier_list',
+  WHERIGO_OBJECT.RESULTS_LUA: 'wherigo_data_results_lua',
 };
 
-Map<WHERIGO, String> WHERIGO_DATA_FULL_USER = {
-  WHERIGO.HEADER: 'wherigo_data_header',
-  WHERIGO.MEDIAFILES: 'wherigo_data_mediafiles',
-  WHERIGO.RESULTS_GWC: 'wherigo_data_results_gwc',
-  WHERIGO.ITEMS: 'wherigo_data_item_list',
-  WHERIGO.CHARACTER: 'wherigo_data_character_list',
-  WHERIGO.ZONES: 'wherigo_data_zone_list',
-  WHERIGO.INPUTS: 'wherigo_data_input_list',
-  WHERIGO.MESSAGES: 'wherigo_data_message_list',
+Map<WHERIGO_OBJECT, String> WHERIGO_DATA_FULL_USER = {
+  WHERIGO_OBJECT.HEADER: 'wherigo_data_header',
+  WHERIGO_OBJECT.MEDIAFILES: 'wherigo_data_mediafiles',
+  WHERIGO_OBJECT.RESULTS_GWC: 'wherigo_data_results_gwc',
+  WHERIGO_OBJECT.ITEMS: 'wherigo_data_item_list',
+  WHERIGO_OBJECT.CHARACTER: 'wherigo_data_character_list',
+  WHERIGO_OBJECT.ZONES: 'wherigo_data_zone_list',
+  WHERIGO_OBJECT.INPUTS: 'wherigo_data_input_list',
+  WHERIGO_OBJECT.MESSAGES: 'wherigo_data_message_list',
 };
 
-Map<WHERIGO, String> WHERIGO_DATA_GWC_USER = {
-  WHERIGO.HEADER: 'wherigo_data_header',
-  WHERIGO.MEDIAFILES: 'wherigo_data_mediafiles',
+Map<WHERIGO_OBJECT, String> WHERIGO_DATA_GWC_USER = {
+  WHERIGO_OBJECT.HEADER: 'wherigo_data_header',
+  WHERIGO_OBJECT.MEDIAFILES: 'wherigo_data_mediafiles',
 };
 
-Map<WHERIGO, String> WHERIGO_DATA_LUA_USER = {
-  WHERIGO.MEDIAFILES: 'wherigo_data_mediafiles',
-  WHERIGO.ITEMS: 'wherigo_data_item_list',
-  WHERIGO.CHARACTER: 'wherigo_data_character_list',
-  WHERIGO.ZONES: 'wherigo_data_zone_list',
-  WHERIGO.INPUTS: 'wherigo_data_input_list',
-  WHERIGO.MESSAGES: 'wherigo_data_message_list',
+Map<WHERIGO_OBJECT, String> WHERIGO_DATA_LUA_USER = {
+  WHERIGO_OBJECT.MEDIAFILES: 'wherigo_data_mediafiles',
+  WHERIGO_OBJECT.ITEMS: 'wherigo_data_item_list',
+  WHERIGO_OBJECT.CHARACTER: 'wherigo_data_character_list',
+  WHERIGO_OBJECT.ZONES: 'wherigo_data_zone_list',
+  WHERIGO_OBJECT.INPUTS: 'wherigo_data_input_list',
+  WHERIGO_OBJECT.MESSAGES: 'wherigo_data_message_list',
 };
 
 // TODO Thomas Use HttpStatus from dart:io instead of Strings
-final Map<String, String> HTTP_STATUS = {
+final Map<String, String> WHERIGO_HTTP_STATUS = {
   '200': 'wherigo_http_code_200',
   '400': 'wherigo_http_code_400',
   '404': 'wherigo_http_code_404',

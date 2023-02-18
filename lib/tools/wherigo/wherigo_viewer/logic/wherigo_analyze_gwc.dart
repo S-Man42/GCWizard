@@ -89,14 +89,14 @@
 
 part of 'package:gc_wizard/tools/wherigo/wherigo_viewer/logic/wherigo_analyze.dart';
 
-StringOffset readString(Uint8List byteList, int offset) {
+WherigoStringOffset readString(Uint8List byteList, int offset) {
   // zero-terminated string - 0x00
   String result = '';
   while (byteList[offset] != 0) {
     result = result + String.fromCharCode(byteList[offset]);
     offset++;
   }
-  return StringOffset(result, offset + 1);
+  return WherigoStringOffset(result, offset + 1);
 }
 
 double readDouble(Uint8List byteList, int offset) {
@@ -179,23 +179,23 @@ bool isInvalidCartridge(Uint8List byteList) {
 
 Future<WherigoCartridge> getCartridgeGWC(Uint8List byteListGWC, bool offline, {SendPort? sendAsyncPort}) async {
   List<String> _ResultsGWC = [];
-  ANALYSE_RESULT_STATUS _Status = ANALYSE_RESULT_STATUS.OK;
+  WHERIGO_ANALYSE_RESULT_STATUS _Status = WHERIGO_ANALYSE_RESULT_STATUS.OK;
 
-  FILE_LOAD_STATE checksToDo = FILE_LOAD_STATE.NULL;
+  WHERIGO_FILE_LOAD_STATE checksToDo = WHERIGO_FILE_LOAD_STATE.NULL;
 
-  if ((byteListGWC != [] || byteListGWC != null)) checksToDo = FILE_LOAD_STATE.GWC;
+  if ((byteListGWC != [] || byteListGWC != null)) checksToDo = WHERIGO_FILE_LOAD_STATE.GWC;
 
-  if (checksToDo == FILE_LOAD_STATE.NULL) {
+  if (checksToDo == WHERIGO_FILE_LOAD_STATE.NULL) {
     _ResultsGWC.add('wherigo_error_runtime');
     _ResultsGWC.add('wherigo_error_empty_gwc');
 
-    return WherigoCartridge(cartridgeGWC: emptyWherigoCartridgeGWC, cartridgeLUA: emptyWherigoCartridgeLUA);
+    return WherigoCartridge(cartridgeGWC: WHERIGO_EMPTYCARTRIDGE_GWC, cartridgeLUA: WHERIGO_EMPTYCARTRIDGE_LUA);
   }
 
   String _Signature = '';
   int _NumberOfObjects = 0;
-  List<MediaFileHeader> _MediaFilesHeaders = [];
-  List<MediaFileContent> _MediaFilesContents = [];
+  List<WherigoMediaFileHeader> _MediaFilesHeaders = [];
+  List<WherigoMediaFileContent> _MediaFilesContents = [];
   int _MediaFileID = 0;
   int _Address = 0;
   int _HeaderLength = 0;
@@ -222,16 +222,16 @@ Future<WherigoCartridge> getCartridgeGWC(Uint8List byteListGWC, bool offline, {S
   int _Unknown3 = 0;
 
   int _offset = 0;
-  StringOffset _ASCIIZ;
+  WherigoStringOffset _ASCIIZ;
   int _MediaFileLength = 0;
   int _ValidMediaFile = 0;
   int _MediaFileType = 0;
 
-  if (checksToDo == FILE_LOAD_STATE.GWC) {
+  if (checksToDo == WHERIGO_FILE_LOAD_STATE.GWC) {
     if (isInvalidCartridge(byteListGWC)) {
       _ResultsGWC.add('wherigo_error_runtime');
       _ResultsGWC.add('wherigo_error_invalid_gwc');
-      _Status = ANALYSE_RESULT_STATUS.ERROR_GWC;
+      _Status = WHERIGO_ANALYSE_RESULT_STATUS.ERROR_GWC;
     } else {
       // analyse GWC-File
       try {
@@ -249,7 +249,7 @@ Future<WherigoCartridge> getCartridgeGWC(Uint8List byteListGWC, bool offline, {S
           _offset = _offset + LENGTH_USHORT;
           _Address = readInt(byteListGWC, _offset);
           _offset = _offset + LENGTH_INT;
-          _MediaFilesHeaders.add(MediaFileHeader(_MediaFileID, _Address));
+          _MediaFilesHeaders.add(WherigoMediaFileHeader(_MediaFileID, _Address));
         }
 
         START_HEADER = START_OBJCETADRESS + _NumberOfObjects * 6;
@@ -334,7 +334,7 @@ Future<WherigoCartridge> getCartridgeGWC(Uint8List byteListGWC, bool offline, {S
 
         // sendAsyncPort?.send({'progress': 5});
       } catch (exception) {
-        _Status = ANALYSE_RESULT_STATUS.ERROR_GWC;
+        _Status = WHERIGO_ANALYSE_RESULT_STATUS.ERROR_GWC;
         _ResultsGWC.add('wherigo_error_runtime');
         _ResultsGWC.add('wherigo_error_runtime_exception');
         _ResultsGWC.add('wherigo_error_gwc_header');
@@ -346,13 +346,13 @@ Future<WherigoCartridge> getCartridgeGWC(Uint8List byteListGWC, bool offline, {S
         // read LUA Byte-Code Object(this.ObjectID, this.Address, this.Type, this.Bytes);
         _MediaFileLength = readInt(byteListGWC, _offset);
         _offset = _offset + LENGTH_INT;
-        _MediaFilesContents.add(MediaFileContent(
+        _MediaFilesContents.add(WherigoMediaFileContent(
             0, 0, Uint8List.sublistView(byteListGWC, _offset, _offset + _MediaFileLength), _MediaFileLength));
         _offset = _offset + _MediaFileLength;
 
         //sendAsyncPort?.send({'progress': 7});
       } catch (exception) {
-        _Status = ANALYSE_RESULT_STATUS.ERROR_GWC;
+        _Status = WHERIGO_ANALYSE_RESULT_STATUS.ERROR_GWC;
         _ResultsGWC.add('wherigo_error_runtime');
         _ResultsGWC.add('wherigo_error_runtime_exception');
         _ResultsGWC.add('wherigo_error_gwc_luabytecode');
@@ -375,16 +375,16 @@ Future<WherigoCartridge> getCartridgeGWC(Uint8List byteListGWC, bool offline, {S
 
             // read bytes
             _offset = _offset + LENGTH_INT;
-            _MediaFilesContents.add(MediaFileContent(_MediaFilesHeaders[i].MediaFileID, _MediaFileType,
+            _MediaFilesContents.add(WherigoMediaFileContent(_MediaFilesHeaders[i].MediaFileID, _MediaFileType,
                 Uint8List.sublistView(byteListGWC, _offset, _offset + _MediaFileLength), _MediaFileLength));
           } else {
             // despite the medioObject exists in the LUA Sourcecode, the file is not part of the cartridge
             _MediaFilesContents.add(
-                MediaFileContent(_MediaFilesHeaders[i].MediaFileID, MEDIATYPE_UNK, Uint8List.fromList([]), 0));
+                WherigoMediaFileContent(_MediaFilesHeaders[i].MediaFileID, WHERIGO_MEDIATYPE_UNK, Uint8List.fromList([]), 0));
           }
         }
       } catch (exception) {
-        _Status = ANALYSE_RESULT_STATUS.ERROR_GWC;
+        _Status = WHERIGO_ANALYSE_RESULT_STATUS.ERROR_GWC;
         _ResultsGWC.add('wherigo_error_runtime');
         _ResultsGWC.add('wherigo_error_runtime_exception');
         _ResultsGWC.add('wherigo_error_invalid_gwc');
@@ -423,5 +423,5 @@ Future<WherigoCartridge> getCartridgeGWC(Uint8List byteListGWC, bool offline, {S
         ResultStatus: _Status,
         ResultsGWC: _ResultsGWC,
       ),
-      cartridgeLUA: emptyWherigoCartridgeLUA);
+      cartridgeLUA: WHERIGO_EMPTYCARTRIDGE_LUA);
 }

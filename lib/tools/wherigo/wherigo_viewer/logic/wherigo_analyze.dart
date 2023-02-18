@@ -19,11 +19,11 @@ part 'package:gc_wizard/tools/wherigo/wherigo_viewer/logic/wherigo_common.dart';
 Future<WherigoCartridge> getCartridgeAsync(dynamic jobData) async {
   WherigoCartridge output = WherigoCartridge();
   switch (jobData.parameters['dataType']) {
-    case DATA_TYPE_GWC:
+    case WHERIGO_DATA_TYPE_GWC:
       output = await getCartridgeGWC(jobData.parameters["byteListGWC"], jobData.parameters["offline"],
           sendAsyncPort: jobData.sendAsyncPort);
       break;
-    case DATA_TYPE_LUA:
+    case WHERIGO_DATA_TYPE_LUA:
       output = await getCartridgeLUA(jobData.parameters["byteListLUA"], jobData.parameters["offline"],
           sendAsyncPort: jobData.sendAsyncPort);
       break;
