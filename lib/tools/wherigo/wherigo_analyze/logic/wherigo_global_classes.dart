@@ -375,4 +375,16 @@ class WherigoCartridge {
   });
 }
 
+class WherigoJobData {
+  final Uint8List jobDataBytes;
+  final bool jobDataMode;
+  final WHERIGO_CARTRIDGE_DATA_TYPE jobDataType;
+
+  WherigoJobData({
+    required this.jobDataBytes,
+    required this.jobDataMode,
+    required this.jobDataType,
+  });
+}
+
 

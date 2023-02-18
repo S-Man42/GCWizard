@@ -89,7 +89,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   bool _nohttpError = true;
 
   var _codeControllerHighlightedLUA;
-  var _LUA_SourceCode = '';
+  String _LUA_SourceCode = '';
 
   int _mediaFileIndex = 1;
   int _zoneIndex = 1;
@@ -163,7 +163,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                     _getLUAOnline = true;
                     // do decompiling and analyzing
                     _setLUAData(WherigoCartridgeGWCData.MediaFilesContents[0].MediaFileBytes);
-                    _analyseCartridgeFileAsync(WHERIGO_DATA_TYPE_LUA);
+                    _analyseCartridgeFileAsync(WHERIGO_CARTRIDGE_DATA_TYPE.LUA);
 
                     _fileLoadedState = WHERIGO_FILE_LOAD_STATE.FULL;
 
@@ -183,7 +183,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       _WherigoShowLUASourcecodeDialog = false;
     } else {
       _setLUAData(WherigoCartridgeGWCData.MediaFilesContents[0].MediaFileBytes);
-      _analyseCartridgeFileAsync(WHERIGO_DATA_TYPE_LUA);
+      _analyseCartridgeFileAsync(WHERIGO_CARTRIDGE_DATA_TYPE.LUA);
     }
   }
 
@@ -338,7 +338,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
           _resetIndices();
 
-          _analyseCartridgeFileAsync(WHERIGO_DATA_TYPE_LUA);
+          _analyseCartridgeFileAsync(WHERIGO_CARTRIDGE_DATA_TYPE.LUA);
 
           setState(() {
             _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
@@ -372,7 +372,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           _nohttpError = true;
           _WherigoShowLUASourcecodeDialog = true;
 
-          _analyseCartridgeFileAsync(WHERIGO_DATA_TYPE_GWC);
+          _analyseCartridgeFileAsync(WHERIGO_CARTRIDGE_DATA_TYPE.GWC);
 
           setState(() {
             _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
@@ -1434,10 +1434,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   // TODO Thomas: Only temporary for getting stuff compiled: Please ask Mike for proper GCWAsync Handling. He knows about it.
-  var _temporaryONLYForRefactoring_DataTypeForAsync;
 
-  _analyseCartridgeFileAsync(String dataType) async {
-    _temporaryONLYForRefactoring_DataTypeForAsync = dataType;
+  _analyseCartridgeFileAsync(WHERIGO_CARTRIDGE_DATA_TYPE dataType) async {
 
     await showDialog(
       context: context,
@@ -1447,7 +1445,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           child: Container(
             child: GCWAsyncExecuter<WherigoCartridge>(
               isolatedFunction: getCartridgeAsync,
-              parameter: _buildGWCJobData,
+              parameter: _buildGWCJobData(dataType),
               onReady: (data) => _showCartridgeOutput(data),
               isOverlay: true,
             ),
@@ -1460,21 +1458,23 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   // TODO Thomas: Please ask Mike for proper GCWAsync Handling. He knows about it.
-  Future<GCWAsyncExecuterParameters> _buildGWCJobData() async {
-    switch (_temporaryONLYForRefactoring_DataTypeForAsync) {
-      case WHERIGO_DATA_TYPE_GWC:
+  Future<GCWAsyncExecuterParameters> _buildGWCJobData(WHERIGO_CARTRIDGE_DATA_TYPE dataType) async {
+    switch (dataType) {
+      case WHERIGO_CARTRIDGE_DATA_TYPE.GWC:
         //TODO Thomas please replace Map with own return class.
-        return GCWAsyncExecuterParameters({
-          'byteListGWC': _GWCbytes,
-          'offline': _getLUAOnline,
-          'dataType': _temporaryONLYForRefactoring_DataTypeForAsync
-        });
-      case WHERIGO_DATA_TYPE_LUA:
-        return GCWAsyncExecuterParameters({
-          'byteListLUA': _LUAbytes,
-          'offline': _getLUAOnline,
-          'dataType': _temporaryONLYForRefactoring_DataTypeForAsync
-        });
+        return GCWAsyncExecuterParameters(
+            WherigoJobData(
+                jobDataBytes: _GWCbytes,
+                jobDataMode: _getLUAOnline,
+                jobDataType: WHERIGO_CARTRIDGE_DATA_TYPE.GWC
+            ));
+      case WHERIGO_CARTRIDGE_DATA_TYPE.LUA:
+        return GCWAsyncExecuterParameters(
+            WherigoJobData(
+                jobDataBytes: _LUAbytes,
+                jobDataMode: _getLUAOnline,
+                jobDataType: WHERIGO_CARTRIDGE_DATA_TYPE.LUA
+            ));
       default:
         throw Exception('Invalid WIG data type');
     }
@@ -1489,13 +1489,13 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       toastMessage = i18n(context, 'common_loadfile_exception_notloaded');
     } else {
       switch (_temporaryONLYForRefactoring_DataTypeForAsync) {
-        case WHERIGO_DATA_TYPE_GWC: // GWC File should be loaded
+        case WHERIGO_CARTRIDGE_DATA_TYPE.GWC: // GWC File should be loaded
           WherigoCartridgeGWCData = _outData.cartridgeGWC;
 
           switch (WherigoCartridgeGWCData.ResultStatus) {
             case WHERIGO_ANALYSE_RESULT_STATUS.OK:
               toastMessage =
-                  i18n(context, 'wherigo_data_loaded') + ': ' + _temporaryONLYForRefactoring_DataTypeForAsync;
+                  i18n(context, 'wherigo_data_loaded') + ': ' + _temporaryONLYForRefactoring_DataTypeForAsync.toString();
               break;
 
             case WHERIGO_ANALYSE_RESULT_STATUS.ERROR_GWC:
@@ -1529,7 +1529,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           }
           break;
 
-        case WHERIGO_DATA_TYPE_LUA: // GWC File should be loaded
+        case WHERIGO_CARTRIDGE_DATA_TYPE.LUA: // GWC File should be loaded
           WherigoCartridgeLUAData = _outData.cartridgeLUA;
 
           if (WherigoCartridgeLUAData != null)
@@ -1540,7 +1540,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           switch (WherigoCartridgeLUAData.ResultStatus) {
             case WHERIGO_ANALYSE_RESULT_STATUS.OK:
               toastMessage =
-                  i18n(context, 'wherigo_data_loaded') + ': ' + _temporaryONLYForRefactoring_DataTypeForAsync;
+                  i18n(context, 'wherigo_data_loaded') + ': ' + _temporaryONLYForRefactoring_DataTypeForAsync.toString();
               toastDuration = 5;
               _nohttpError = false;
 

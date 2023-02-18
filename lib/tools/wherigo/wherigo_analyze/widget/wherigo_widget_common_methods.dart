@@ -69,7 +69,7 @@ String resolveLUAName(String chiffre) {
     return chiffre;
 }
 
-buildImageView(BuildContext context, bool condition, String fileSource) {
+Widget buildImageView(BuildContext context, bool condition, String fileSource) {
   if (!condition) return Container();
 
   var file = getFileFrom(context, fileSource);

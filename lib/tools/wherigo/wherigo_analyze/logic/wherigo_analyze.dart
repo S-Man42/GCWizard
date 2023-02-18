@@ -19,15 +19,19 @@ part 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_global_class
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_global_const.dart';
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_global_enums.dart';
 
-Future<WherigoCartridge> getCartridgeAsync(dynamic jobData) async {
+Future<WherigoCartridge> getCartridgeAsync(WherigoJobData jobData) async {
   WherigoCartridge output = WherigoCartridge();
-  switch (jobData.parameters['dataType']) {
-    case WHERIGO_DATA_TYPE_GWC:
-      output = await getCartridgeGWC(jobData.parameters["byteListGWC"], jobData.parameters["offline"],
+  switch (jobData.jobDataType) {
+    case WHERIGO_CARTRIDGE_DATA_TYPE.GWC:
+      output = await getCartridgeGWC(
+          jobData.jobDataBytes,
+          jobData.jobDataMode,
           sendAsyncPort: jobData.sendAsyncPort);
       break;
-    case WHERIGO_DATA_TYPE_LUA:
-      output = await getCartridgeLUA(jobData.parameters["byteListLUA"], jobData.parameters["offline"],
+    case WHERIGO_CARTRIDGE_DATA_TYPE.LUA:
+      output = await getCartridgeLUA(
+          jobData.jobDataBytes,
+          jobData.jobDataMode,
           sendAsyncPort: jobData.sendAsyncPort);
       break;
   }
