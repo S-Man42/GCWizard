@@ -22,7 +22,7 @@ class IntegerListText {
 class DateTimeDuration extends DateTimeTimezone{
   Duration duration;
 
-  DateTimeDuration({required dateTime, required timezone, required this.duration})
+  DateTimeDuration({required DateTime dateTime, required Duration timezone, required this.duration})
       : super(datetime: dateTime, timezone: timezone);
 }
 

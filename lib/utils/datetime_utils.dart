@@ -120,7 +120,7 @@ DateTime hoursToHHmmss(double hours) {
   return DateTime(0, 1, 1, h, min, sec, milliSec);
 }
 
-String formatHoursToHHmmss(double hours, {milliseconds: true, limitHours: true}) {
+String formatHoursToHHmmss(double hours, {bool milliseconds = true, bool limitHours = true}) {
   var time = hoursToHHmmss(hours);
 
   var h = time.hour;
@@ -147,7 +147,7 @@ String formatHoursToHHmmss(double hours, {milliseconds: true, limitHours: true})
   return '$hourStr:$minutesStr:$secondsStr';
 }
 
-String formatDurationToHHmmss(Duration duration, {days: true, milliseconds: true, limitHours: true}) {
+String formatDurationToHHmmss(Duration duration, {bool days = true, bool milliseconds = true, bool limitHours = true}) {
   var sign = duration.isNegative ? '-' : '';
   var _duration = duration.abs();
   var hours = days ? _duration.inHours.remainder(24) : _duration.inHours;

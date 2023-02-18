@@ -572,7 +572,7 @@ List<GCWFile> _archiveToPlatformFileList(Archive archive) {
       .map((ArchiveFile file) {
         if (!file.isFile) return null;
 
-        Uint8List content;
+        Uint8List content = Uint8List(0);
         try {
           content = file.content as Uint8List;
         } catch (e) {}

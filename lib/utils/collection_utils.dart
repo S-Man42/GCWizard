@@ -24,7 +24,7 @@ String intListToString(List<int> list, {String delimiter: ''}) {
   return list.map((elem) => elem == null ? UNKNOWN_ELEMENT : elem).join(delimiter).trim();
 }
 
-Map<U, T> switchMapKeyValue<T, U>(Map<T, U> map, {keepFirstOccurence: false}) {
+Map<U, T> switchMapKeyValue<T, U>(Map<T, U> map, {bool keepFirstOccurence = false}) {
   var newMap = map;
   if (keepFirstOccurence) newMap = LinkedHashMap.fromEntries(map.entries.toList().reversed);
 

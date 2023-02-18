@@ -124,7 +124,7 @@ int _shadeValue(int value, double factor) => max(0, min(value - (value * factor)
 Color _shadeColor(Color color, double factor) => Color.fromRGBO(
     _shadeValue(color.red, factor), _shadeValue(color.green, factor), _shadeValue(color.blue, factor), 1);
 
-defaultFontSize() {
+int defaultFontSize() {
   var fontSize = Prefs.get(PREFERENCE_THEME_FONT_SIZE);
 
   if (fontSize < FONT_SIZE_MIN) {

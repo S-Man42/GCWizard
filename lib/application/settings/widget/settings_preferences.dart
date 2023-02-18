@@ -208,7 +208,7 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
     }
   }
 
-  _buildEmptyButton(String key) {
+  Widget _buildEmptyButton(String key) {
     switch (getPrefType(key)) {
       case PrefType.STRING:
       case PrefType.STRINGLIST:
@@ -230,7 +230,7 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
     return Container();
   }
 
-  _buildUndoButton(String key) {
+  Widget _buildUndoButton(String key) {
     return GCWIconButton(
       icon: Icons.refresh,
       iconColor: _prefValueHasChanged(key) ? null : themeColors().inActive(),
