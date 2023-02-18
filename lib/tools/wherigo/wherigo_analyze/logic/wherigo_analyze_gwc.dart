@@ -87,7 +87,7 @@
 // DOUBLE = double-precision floating point number (8 bytes)
 // ASCIIZ = zero-terminated string ("hello world!", 0x00)
 
-part of 'package:gc_wizard/tools/wherigo/wherigo_viewer/logic/wherigo_analyze.dart';
+part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze.dart';
 
 WherigoStringOffset readString(Uint8List byteList, int offset) {
   // zero-terminated string - 0x00

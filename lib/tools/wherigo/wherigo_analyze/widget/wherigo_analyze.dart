@@ -35,7 +35,7 @@ import 'package:gc_wizard/tools/coords/map_view/widget/gcw_mapview.dart';
 import 'package:gc_wizard/tools/images_and_files/hex_viewer/widget/hex_viewer.dart';
 import 'package:gc_wizard/tools/wherigo/krevo/logic/ucommons.dart';
 import 'package:gc_wizard/tools/wherigo/logic/urwigo_tools.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_viewer/logic/wherigo_analyze.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';

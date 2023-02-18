@@ -1,4 +1,4 @@
-part of 'package:gc_wizard/tools/wherigo/wherigo_viewer/logic/wherigo_analyze.dart';
+part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze.dart';
 
 enum WHERIGO_OBJECT {
   NULL,
