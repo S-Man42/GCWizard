@@ -21,7 +21,7 @@ class Predator extends StatefulWidget {
 
 class PredatorState extends State<Predator> {
   String _currentEncodeInput = '';
-  TextEditingController _encodeController;
+  late TextEditingController _encodeController;
 
   List<List<String>> _currentDisplays = [];
   var _currentMode = GCWSwitchPosition.right;
@@ -160,14 +160,14 @@ class PredatorState extends State<Predator> {
       );
     } else {
       //decode
-      var output = _currentDisplays.map((character) {
-        if (character != null) return character.join();
+      var output = _currentDisplays.where((character) => character != null).map((character) {
+        return character.join();
       }).toList();
       var segments = decodePredator(output);
       return Column(
         children: <Widget>[
-          _buildDigitalOutput(segments['displays']),
-          GCWDefaultOutput(child: segments['chars'].join('')),
+          _buildDigitalOutput(segments['displays'] as List<List<String>>),
+          GCWDefaultOutput(child: (segments['chars'] as List<String>).join('')),
         ],
       );
     }

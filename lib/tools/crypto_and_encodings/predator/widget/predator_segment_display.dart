@@ -56,7 +56,7 @@ class _PredatorSegmentDisplay extends NSegmentDisplay {
                   setSegmentState('a', !segmentActive(currentSegments, 'a'));
                 });
 
-              paint.color = segmentActive(currentSegments, 'b'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
+              paint.color = segmentActive(currentSegments, 'b') ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
               var pathB = Path();
               pathB.moveTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 70,
                   size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 0);
@@ -116,7 +116,7 @@ class _PredatorSegmentDisplay extends NSegmentDisplay {
                   setSegmentState('d', !segmentActive(currentSegments, 'd'));
                 });
 
-              paint.color = segmentActive(currentSegments, 'e'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
+              paint.color = segmentActive(currentSegments, 'e') ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
               var pathE = Path();
               pathE.moveTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 50,
                   size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 120);

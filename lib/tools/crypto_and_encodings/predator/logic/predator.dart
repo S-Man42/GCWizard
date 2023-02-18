@@ -66,18 +66,18 @@ final Map<String, List<String>> CODEBOOK_PREDATOR = {
   '9': ['b', 'e', 'f', 'g', 'h'],
 };
 
-List<List<String>> encodePredator(String input) {
+List<List<String>> encodePredator(String? input) {
   if (input == null) return [];
 
   List<String> inputs = input.split('');
   List<List<String>> result = [];
   for (int i = 0; i < inputs.length; i++) {
-    if (CODEBOOK_PREDATOR[inputs[i]] != null) result.add(CODEBOOK_PREDATOR[inputs[i]]);
+    if (CODEBOOK_PREDATOR[inputs[i]] != null) result.add(CODEBOOK_PREDATOR[inputs[i]]!);
   }
   return result;
 }
-
-Map<String, dynamic> decodePredator(List<String> inputs) {
+//ToDo NullSafety remove result map
+Map<String, Object> decodePredator(List<String>? inputs) {
   if (inputs == null || inputs.isEmpty) return {'displays': <List<String>>[], 'chars': []};
 
   var displays = <List<String>>[];
@@ -92,13 +92,12 @@ Map<String, dynamic> decodePredator(List<String> inputs) {
 
   List<String> text = inputs.where((input) => input != null).map((input) {
     var char = '';
-    var charH = '';
 
     if (CODEBOOK.map((key, value) => MapEntry(key.join(), value.toString()))[input.split('').join()] == null) {
       char = char + UNKNOWN_ELEMENT;
     } else {
-      charH = CODEBOOK.map((key, value) => MapEntry(key.join(), value.toString()))[input.split('').join()];
-      char = char + charH;
+      var charH = CODEBOOK.map((key, value) => MapEntry(key.join(), value.toString()))[input.split('').join()];
+      char = char + (charH ?? '');
     }
 
     return char;

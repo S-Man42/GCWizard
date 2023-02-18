@@ -7,7 +7,6 @@ import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/prime_alphabet/logic/prime_alphabet.dart';
 import 'package:gc_wizard/tools/science_and_technology/primes/_common/logic/primes_list.dart';
-import 'package:gc_wizard/utils/constants.dart';
 
 class PrimeAlphabet extends StatefulWidget {
   @override
@@ -109,14 +108,14 @@ class PrimeAlphabetState extends State<PrimeAlphabet> {
   String _buildOutput() {
     if (_currentMode == GCWSwitchPosition.right) {
       return decryptPrimeAlphabet(
-          RegExp(r'[0-9]+').allMatches(_currentDecryptInput).map((number) => int.tryParse(number.group(0))).toList(),
+          RegExp(r'[0-9]+').allMatches(_currentDecryptInput).map((number) => int.tryParse(number.group(0)!) ?? 0).toList(),
           firstRecognizedPrime: _PRIMES_LIST[_currentStartIndex]);
     } else {
       return encryptPrimeAlphabet(
         _currentEncryptInput,
         firstRecognizedPrime: _PRIMES_LIST[_currentStartIndex],
         lastRecognizedPrime: _PRIMES_LIST[_currentStartIndex + _currentEndIndex],
-      ).map((element) => element ?? UNKNOWN_ELEMENT).join(' ');
+      ).map((element) => element).join(' ');
     }
   }
 }

@@ -80,7 +80,7 @@ class BifidState extends State<Bifid> {
 
         GCWTextDivider(text: i18n(context, 'common_alphabet')),
 
-        GCWAlphabetDropDown(
+        GCWAlphabetDropDown<PolybiosMode>(
           value: _currentBifidMode,
           items: BifidModeItems,
           customModeKey: PolybiosMode.CUSTOM,

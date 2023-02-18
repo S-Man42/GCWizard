@@ -103,7 +103,7 @@ class ADFGVXState extends State<ADFGVX> {
           },
         ),
         GCWTextDivider(text: i18n(context, 'common_alphabet')),
-        GCWAlphabetDropDown(
+        GCWAlphabetDropDown<PolybiosMode>(
           value: _currentPolybiosMode,
           items: polybiosModeItems,
           customModeKey: PolybiosMode.CUSTOM,

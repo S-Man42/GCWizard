@@ -78,7 +78,7 @@ class ChaoState extends State<Chao> {
           },
         ),
         GCWTextDivider(text: i18n(context, 'chao_alphabet_cipher')),
-        GCWAlphabetDropDown(
+        GCWAlphabetDropDown<ChaoAlphabet>(
           value: _currentAlphabetTypeChiffre,
           items: ChaoChiffreAlphabetItems,
           customModeKey: ChaoAlphabet.CUSTOM,

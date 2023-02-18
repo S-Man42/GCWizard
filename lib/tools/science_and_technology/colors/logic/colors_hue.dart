@@ -7,8 +7,8 @@ import 'package:gc_wizard/utils/math_utils.dart';
 enum _HueType { HSV, HSL, HSI }
 
 //source: https://www.vocal.com/video/rgb-and-hsvhsihsl-color-space-conversion/
-
-Map<Sting, double> _fromRGB(RGB rgb, _HueType type) {
+//ToDo NullSafety remove Map result
+Map<String, double> _fromRGB(RGB rgb, _HueType type) {
   var red = rgb.redPercentage;
   var green = rgb.greenPercentage;
   var blue = rgb.bluePercentage;
@@ -146,7 +146,7 @@ class HSV extends GCWBaseColor {
 
   static HSV fromRGB(RGB rgb) {
     var values = _fromRGB(rgb, _HueType.HSV);
-    return HSV(values['hue'], values['saturation'], values['value']);
+    return HSV(values['hue']!, values['saturation']!, values['value']!);
   }
 
   @override
@@ -173,7 +173,7 @@ class HSL extends GCWBaseColor {
 
   static HSL fromRGB(RGB rgb) {
     var values = _fromRGB(rgb, _HueType.HSL);
-    return HSL(values['hue'], values['saturation'], values['lightness']);
+    return HSL(values['hue']!, values['saturation']!, values['lightness']!);
   }
 
   @override
@@ -220,7 +220,7 @@ class HSI extends GCWBaseColor {
 
   static HSI fromRGB(RGB rgb) {
     var values = _fromRGB(rgb, _HueType.HSI);
-    return HSI(values['hue'], values['saturation'], values['intensity']);
+    return HSI(values['hue']!, values['saturation']!, values['intensity']!);
   }
 
   @override

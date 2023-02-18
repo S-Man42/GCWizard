@@ -86,7 +86,7 @@ class PolybiosState extends State<Polybios> {
           },
         ),
         GCWTextDivider(text: i18n(context, 'common_alphabet')),
-        GCWAlphabetDropDown(
+        GCWAlphabetDropDown<PolybiosMode>(
           value: _currentPolybiosMode,
           items: polybiosModeItems,
           customModeKey: PolybiosMode.CUSTOM,

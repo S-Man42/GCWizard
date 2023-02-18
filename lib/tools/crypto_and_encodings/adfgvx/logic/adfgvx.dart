@@ -65,7 +65,7 @@ String decryptADFGVX(String input, String substitutionKey, String transpositionK
   return _decrypt(input, substitutionKey, transpositionKey, _ADFGVXMode.ADFGVX, polybiosMode, alphabet);
 }
 
-String _decrypt(String input, String substitutionKey, String transpositionKey, _ADFGVXMode mode,
+String? _decrypt(String? input, String substitutionKey, String transpositionKey, _ADFGVXMode mode,
     PolybiosMode polybiosMode, String alphabet) {
   if (input == null || input.isEmpty) return '';
 
