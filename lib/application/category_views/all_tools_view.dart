@@ -356,8 +356,8 @@ class _MainViewState extends State<MainView> {
     return DefaultTabController(
       length: 3,
       initialIndex: Prefs.getBool(PREFERENCE_TABS_USE_DEFAULT_TAB)
-          ? Prefs.get(PREFERENCE_TABS_DEFAULT_TAB)
-          : Prefs.get(PREFERENCE_TABS_LAST_VIEWED_TAB),
+          ? Prefs.getInt(PREFERENCE_TABS_DEFAULT_TAB)
+          : Prefs.getInt(PREFERENCE_TABS_LAST_VIEWED_TAB),
       child: Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
@@ -386,7 +386,7 @@ class _MainViewState extends State<MainView> {
     );
   }
 
-  _buildSearchActionButton() {
+  IconButton _buildSearchActionButton() {
     return IconButton(
       icon: Icon(_isSearching ? Icons.close : Icons.search),
       onPressed: () {
@@ -402,7 +402,7 @@ class _MainViewState extends State<MainView> {
     );
   }
 
-  _buildTitleAndSearchTextField() {
+  Widget _buildTitleAndSearchTextField() {
     return _isSearching
         ? GCWTextField(
             autofocus: true,
@@ -412,7 +412,7 @@ class _MainViewState extends State<MainView> {
         : Text(i18n(context, 'common_app_title'));
   }
 
-  _buildIcon() {
+  IconButton _buildIcon() {
     return IconButton(
         icon: Image.asset(
           'assets/logo/circle_border_128.png',

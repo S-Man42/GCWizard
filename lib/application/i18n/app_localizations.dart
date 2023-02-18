@@ -51,7 +51,10 @@ class AppLocalizations {
   Future<Map<String, String>> loadLang(langCode) async {
     // Load the language JSON file from the "lang" folder
     String jsonString = await rootBundle.loadString('assets/i18n/$langCode.json');
-    Map<String, Object> jsonMap = json.decode(jsonString);
+    var decoded = json.decode(jsonString);
+    if (!(decoded is Map<String, Object?>)) return <String, String>{};
+
+    Map<String, Object?> jsonMap = decoded;
 
     Map<String, String> _strings = jsonMap.map((key, value) {
       return MapEntry(key, value.toString());
