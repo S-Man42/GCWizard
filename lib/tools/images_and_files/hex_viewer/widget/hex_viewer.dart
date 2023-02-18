@@ -258,5 +258,5 @@ openInHexViewer(BuildContext context, GCWFile file) {
       context,
       NoAnimationMaterialPageRoute(
           builder: (context) => GCWTool(
-              tool: HexViewer(file: file), toolName: i18n(context, 'hexviewer_title'), i18nPrefix: '')));
+              tool: HexViewer(file: file), toolName: i18n(context, 'hexviewer_title'), id: '')));
 }

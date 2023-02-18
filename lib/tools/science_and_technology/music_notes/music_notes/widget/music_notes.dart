@@ -61,15 +61,15 @@ class MusicNotesState extends State<MusicNotes> {
         items: NotesCodebook.values.map((codeBook) {
           switch (codeBook) {
             case NotesCodebook.ALT:
-              var tool = registeredTools.firstWhere((tool) => tool.i18nPrefix.contains('altoclef'));
+              var tool = registeredTools.firstWhere((tool) => tool.id.contains('altoclef'));
               return GCWDropDownMenuItem(
                   value: NotesCodebook.ALT, child: _buildDropDownMenuItem(tool.icon, tool.toolName!, null));
             case NotesCodebook.TREBLE:
-              var tool = registeredTools.firstWhere((tool) => tool.i18nPrefix.contains('trebleclef'));
+              var tool = registeredTools.firstWhere((tool) => tool.id.contains('trebleclef'));
               return GCWDropDownMenuItem(
                   value: NotesCodebook.TREBLE, child: _buildDropDownMenuItem(tool.icon, tool.toolName!, null));
             case NotesCodebook.BASS:
-              var tool = registeredTools.firstWhere((tool) => tool.i18nPrefix.contains('bassclef'));
+              var tool = registeredTools.firstWhere((tool) => tool.id.contains('bassclef'));
               return GCWDropDownMenuItem(
                   value: NotesCodebook.BASS, child: _buildDropDownMenuItem(tool.icon, tool.toolName!, null));
           }

@@ -488,6 +488,6 @@ openInColorCorrections(BuildContext context, GCWFile file) {
           builder: (context) => GCWTool(
               tool: ImageColorCorrections(file: file),
               toolName: i18n(context, 'image_colorcorrections_title'),
-              i18nPrefix: '',
+              id: '',
               autoScroll: false)));
 }

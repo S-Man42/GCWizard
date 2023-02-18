@@ -131,7 +131,7 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
                     NoAnimationMaterialPageRoute(
                         builder: (context) => GCWTool(
                             tool: Substitution(input: _currentOutput!.ciphertext, substitutions: substitutions),
-                            i18nPrefix: 'substitution')));
+                            id: 'substitution')));
               },
             )
           ],

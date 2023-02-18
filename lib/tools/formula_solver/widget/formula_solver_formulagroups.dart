@@ -198,7 +198,7 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
           toolName: '${group.name} - ${i18n(context, 'formulasolver_formulas')}',
           helpSearchString: 'formulasolver_formulas',
           defaultLanguageToolName:
-              '${group.name} - ${i18n(context, 'formulasolver_formulas', useDefaultLanguage: true)}', i18nPrefix: '',);
+              '${group.name} - ${i18n(context, 'formulasolver_formulas', useDefaultLanguage: true)}', id: '',);
 
       Future _navigateToSubPage(context) async {
         Navigator.push(context, NoAnimationMaterialPageRoute(builder: (context) => formulaTool)).whenComplete(() {

@@ -90,7 +90,7 @@ class GCWToolActionButtonsEntry {
 
 class GCWTool extends StatefulWidget {
   final Widget tool;
-  final String i18nPrefix;
+  final String id;
   final List<ToolCategory> categories;
   final bool autoScroll;
   final bool suppressToolMargin;
@@ -115,7 +115,7 @@ class GCWTool extends StatefulWidget {
       required this.tool,
       this.toolName,
       this.defaultLanguageToolName,
-      required this.i18nPrefix,
+      required this.id,
       this.categories = const [],
       this.autoScroll = true,
       this.suppressToolMargin = false,
@@ -126,7 +126,7 @@ class GCWTool extends StatefulWidget {
       this.isBeta = false,
       this.suppressHelpButton = false})
       : super(key: key) {
-    this.longId = className(tool) + '_' + (i18nPrefix ?? '');
+    this.longId = className(tool) + '_' + (id ?? '');
 
     if (iconPath != null) {
       this.icon = GCWSymbolContainer(
@@ -157,10 +157,10 @@ class _GCWToolState extends State<GCWTool> {
   @override
   Widget build(BuildContext context) {
     // this is the case when tool is not called by Registry but as subpage of another tool
-    _toolName = widget.toolName ?? i18n(context, widget.i18nPrefix + '_title');
+    _toolName = widget.toolName ?? i18n(context, widget.id + '_title');
 
     _defaultLanguageToolName =
-          widget.defaultLanguageToolName ?? i18n(context, widget.i18nPrefix + '_title', useDefaultLanguage: true);
+          widget.defaultLanguageToolName ?? i18n(context, widget.id + '_title', useDefaultLanguage: true);
 
     return Scaffold(
         resizeToAvoidBottomInset: widget.autoScroll,
