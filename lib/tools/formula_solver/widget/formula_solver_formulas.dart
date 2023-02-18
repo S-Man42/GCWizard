@@ -1,52 +1,17 @@
-import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
-import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
-import 'package:gc_wizard/application/settings/logic/preferences.dart';
-import 'package:gc_wizard/application/theme/fixed_colors.dart';
-import 'package:gc_wizard/application/theme/theme.dart';
-import 'package:gc_wizard/application/theme/theme_colors.dart';
-import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
-import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
-import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard.dart';
-import 'package:gc_wizard/common_widgets/dialogs/gcw_delete_alertdialog.dart';
-import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
-import 'package:gc_wizard/common_widgets/dividers/gcw_divider.dart';
-import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
-import 'package:gc_wizard/common_widgets/gcw_checkbox.dart';
-import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
-import 'package:gc_wizard/common_widgets/gcw_popup_menu.dart';
-import 'package:gc_wizard/common_widgets/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/gcw_tool.dart';
-import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
-import 'package:gc_wizard/tools/coords/coordinate_format_parser/logic/latlon.dart';
-import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
-import 'package:gc_wizard/tools/coords/map_view/widget/gcw_mapview.dart';
-import 'package:gc_wizard/tools/coords/variable_coordinate/persistence/json_provider.dart' as var_coords_provider;
-import 'package:gc_wizard/tools/coords/variable_coordinate/persistence/model.dart' as var_coords_model;
-import 'package:gc_wizard/tools/coords/variable_coordinate/widget/variable_coordinate.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
-import 'package:gc_wizard/tools/formula_solver/logic/formula_painter.dart';
-import 'package:gc_wizard/tools/formula_solver/logic/formula_parser.dart';
-import 'package:gc_wizard/tools/formula_solver/persistence/json_provider.dart';
-import 'package:gc_wizard/tools/formula_solver/persistence/model.dart';
-import 'package:gc_wizard/tools/formula_solver/widget/formula_solver_values.dart';
-import 'package:gc_wizard/utils/math_utils.dart';
-import 'package:prefs/prefs.dart';
+part of 'package:gc_wizard/tools/formula_solver/widget/formula_solver_formulagroups.dart';
 
-part 'package:gc_wizard/tools/formula_solver/widget/formula_replace_dialog.dart';
-
-class FormulaSolverFormulas extends StatefulWidget {
+class _FormulaSolverFormulas extends StatefulWidget {
   final FormulaGroup group;
 
-  const FormulaSolverFormulas({Key? key, this.group}) : super(key: key);
+  const _FormulaSolverFormulas({Key? key, required this.group}) : super(key: key);
 
   @override
-  FormulaSolverFormulasState createState() => FormulaSolverFormulasState();
+  _FormulaSolverFormulasState createState() => _FormulaSolverFormulasState();
 }
 
 enum _FormulaSolverResultType { INTERPOLATED, FIXED }
 
-class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
+class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
   var formulaParser = FormulaParser();
   var formulaPainter = FormulaPainter();
 
@@ -56,12 +21,12 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
   var _currentNewFormula = '';
   var _currentEditedFormula = '';
   var _currentEditId;
-  var _currentEditedName = '';
+  String? _currentEditedName = '';
   var _currentEditNameId;
 
   Map<int, Map<int, Map<String, dynamic>>> _foundCoordinates = {};
 
-  ThemeColors _themeColors;
+  ThemeColors _themeColors = themeColors();
   var _editFocusNode;
 
   @override
@@ -92,11 +57,11 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
     _foundCoordinates = {};
 
     var formulaTool = GCWTool(
-        tool: FormulaSolverFormulaValues(group: widget.group),
+        tool: _FormulaSolverFormulaValues(group: widget.group),
         toolName: '${widget.group.name} - ${i18n(context, 'formulasolver_values')}',
         helpSearchString: 'formulasolver_values',
         defaultLanguageToolName:
-            '${widget.group.name} - ${i18n(context, 'formulasolver_values', useDefaultLanguage: true)}');
+            '${widget.group.name} - ${i18n(context, 'formulasolver_values', useDefaultLanguage: true)}', i18nPrefix: '',);
 
     Future _navigateToSubPage(context) async {
       Navigator.push(context, NoAnimationMaterialPageRoute(builder: (context) => formulaTool)).whenComplete(() {
@@ -159,7 +124,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
   }
 
   _removeFormula(Formula formula) {
-    deleteFormula(formula.id, widget.group);
+    deleteFormula(formula.id!, widget.group);
   }
 
   _createVariableCoordinateName() {
@@ -250,7 +215,8 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
 
           Widget output;
 
-          Map<int, Map<String, dynamic>> _foundFormulaCoordinates = {};
+          //TODO Type!
+          Map<int, Map<String, Object>> _foundFormulaCoordinates = {};
           calculated.results.asMap().forEach((idx, result) {
             var _foundFormulaCoordinate = parseStandardFormats(result.result, wholeString: true);
             if (_foundFormulaCoordinate != null && _foundFormulaCoordinate.isNotEmpty) {
@@ -266,7 +232,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
           if (_foundFormulaCoordinates.isNotEmpty)
             _foundCoordinates.putIfAbsent(index + 1, () => _foundFormulaCoordinates);
 
-          var hasName = formula.name != null && formula.name.isNotEmpty;
+          var hasName = formula.name != null && formula.name!.isNotEmpty;
 
           Widget row = Container(
             padding: EdgeInsets.only(top: DEFAULT_MARGIN),
@@ -317,7 +283,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                                     children: [
                                       Container(height: 2 * DOUBLE_DEFAULT_MARGIN),
                                       GCWTextDivider(
-                                        text: formula.name,
+                                        text: formula.name ?? '',
                                         suppressTopSpace: true,
                                       ),
                                     ],
@@ -569,7 +535,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
     return Column(children: rows);
   }
 
-  _buildFormulaOutput(int formulaIndex, FormulaSolverOutput output, Map<int, Map<String, dynamic>> coordinates) {
+  _buildFormulaOutput(int formulaIndex, FormulaSolverOutput output, Map<int, Map<String, Object>> coordinates) {
     switch (output.state) {
       case FormulaState.STATE_SINGLE_OK:
       case FormulaState.STATE_SINGLE_ERROR:
@@ -586,7 +552,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                 child: Column(
                     children: output.results
                         .asMap()
-                        .map((index, result) {
+                        .map((int index, FormulaSolverResult result) {
                           return MapEntry(
                               index,
                               Column(children: [
@@ -598,7 +564,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                                         GCWText(text: result.result),
                                         Container(height: DOUBLE_DEFAULT_MARGIN),
                                         GCWText(
-                                          text: result.variables
+                                          text: result.variables == null ? '' : result.variables!
                                               .map((key, value) {
                                                 return MapEntry(key, '$key: $value');
                                               })
@@ -624,8 +590,10 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                                                       'formulasolver_formulas_showonmap',
                                                     ),
                                                     action: (idx) {
+                                                      if (index + 1 >= coordinates.length) return;
+
                                                       _showFormulaResultOnMap(
-                                                          [_createMapPoint(coordinates[index + 1])]);
+                                                          [_createMapPoint(coordinates[index + 1]!)]);
                                                     })
                                             ]),
                                   ],

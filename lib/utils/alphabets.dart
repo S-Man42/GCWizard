@@ -3,7 +3,7 @@ import 'package:gc_wizard/utils/collection_utils.dart';
 const alphabet_09 = {'0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9};
 final alphabet_09Indexes = switchMapKeyValue(alphabet_09);
 
-const alphabet_AZ = {
+const Map<String, int> alphabet_AZ = {
   'A': 1,
   'B': 2,
   'C': 3,
@@ -31,8 +31,8 @@ const alphabet_AZ = {
   'Y': 25,
   'Z': 26,
 };
-final alphabet_AZIndexes = switchMapKeyValue(alphabet_AZ);
-final alphabet_AZString = alphabet_AZ.keys.join();
+final Map<int, String> alphabet_AZIndexes = switchMapKeyValue(alphabet_AZ);
+final String alphabet_AZString = alphabet_AZ.keys.join();
 
 const SUPERSCRIPT_CHARACTERS = {
   '0': '\u2070',

@@ -103,7 +103,7 @@ class GCWTool extends StatefulWidget {
   final bool isBeta;
 
   var icon;
-  var id = '';
+  var longId = '';
 
   String? toolName;
   String? defaultLanguageToolName;
@@ -126,7 +126,7 @@ class GCWTool extends StatefulWidget {
       this.isBeta = false,
       this.suppressHelpButton = false})
       : super(key: key) {
-    this.id = className(tool) + '_' + (i18nPrefix ?? '');
+    this.longId = className(tool) + '_' + (i18nPrefix ?? '');
 
     if (iconPath != null) {
       this.icon = GCWSymbolContainer(
@@ -136,7 +136,7 @@ class GCWTool extends StatefulWidget {
   }
 
   bool get isFavorite {
-    return Favorites.isFavorite(id);
+    return Favorites.isFavorite(longId);
   }
 
   @override
@@ -149,7 +149,7 @@ class _GCWToolState extends State<GCWTool> {
 
   @override
   void initState() {
-    _setToolCount(widget.id);
+    _setToolCount(widget.longId);
 
     super.initState();
   }
@@ -328,8 +328,8 @@ int sortToolList(GCWTool a, GCWTool b) {
 
   Map<String, int> toolCounts = Map<String, int>.from(jsonDecode(Prefs.get(PREFERENCE_TOOL_COUNT)));
 
-  var toolCountA = toolCounts[a.id];
-  var toolCountB = toolCounts[b.id];
+  var toolCountA = toolCounts[a.longId];
+  var toolCountB = toolCounts[b.longId];
 
   if (toolCountA == null && toolCountB == null) {
     return _sortToolListAlphabetically(a, b);

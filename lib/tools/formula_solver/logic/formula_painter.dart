@@ -29,9 +29,7 @@ class FormulaPainter {
     _constantsRegEx = _constants.map((constant) => constant).join('|');
   }
 
-  String? paintFormula(String? formula, Map<String, String> values, int formulaIndex, bool coloredFormulas) {
-    if (formula == null) return null;
-
+  String paintFormula(String formula, Map<String, String> values, int formulaIndex, bool coloredFormulas) {
     var result = _buildResultString('t', formula.length);
     if (!coloredFormulas) return result;
 
@@ -58,7 +56,7 @@ class FormulaPainter {
       result = _paintOutsideFormulaReferences(formula, result, matches);
 
       matches.forEach((match) {
-        var _parserResult = [formula!.substring(0, match.start), match.group(1), match.group(2), match.group(3)];
+        var _parserResult = [formula.substring(0, match.start), match.group(1), match.group(2), match.group(3)];
         var literal = _parserResult[2];
         var emptyLiteral = (literal ?? '').trim().isEmpty;
         result = _coloredContent(result, _parserResult, emptyLiteral);
