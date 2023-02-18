@@ -159,11 +159,10 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
   String _CountryID = '';
   String _StateID = '';
   String _UseLogging = '';
-  // TODO Thomas Please check if Dates can be null (== means, only if really logically not given!).
-  DateTime _CreateDate = WHERIGO_NULLDATE;
-  DateTime _PublishDate  = WHERIGO_NULLDATE;
-  DateTime _UpdateDate = WHERIGO_NULLDATE;
-  DateTime _LastPlayedDate = WHERIGO_NULLDATE;
+  String _CreateDate = WHERIGO_NULLDATE;
+  String _PublishDate  = WHERIGO_NULLDATE;
+  String _UpdateDate = WHERIGO_NULLDATE;
+  String _LastPlayedDate = WHERIGO_NULLDATE;
   List<WherigoZonePoint> points = [];
   String visible = '';
   String media = '';
@@ -1828,7 +1827,7 @@ String _getVariable(String line) {
   return line;
 }
 
-DateTime _normalizeDate(String dateString) {
+String _normalizeDate(String dateString) {
   if (dateString == null || dateString == '' || dateString == '1/1/0001 12:00:00 AM') return WHERIGO_NULLDATE;
 
   List<String> dateTime = dateString.split(' ');
@@ -1841,5 +1840,5 @@ DateTime _normalizeDate(String dateString) {
       int.parse(date[1]),
       (dateTime.length == 3 && dateTime[2] == 'PM') ? int.parse(time[0]) + 12 : int.parse(time[0]),
       int.parse(time[1]),
-      int.parse(time[2]));
+      int.parse(time[2])).toString();
 }

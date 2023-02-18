@@ -13,8 +13,11 @@ import 'package:gc_wizard/tools/wherigo/logic/urwigo_tools.dart';
 
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze_gwc.dart';
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze_lua.dart';
-part 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_dataobjects.dart';
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_common.dart';
+part 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_global_variables.dart';
+part 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_global_classes.dart';
+part 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_global_const.dart';
+part 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_global_enums.dart';
 
 Future<WherigoCartridge> getCartridgeAsync(dynamic jobData) async {
   WherigoCartridge output = WherigoCartridge();
