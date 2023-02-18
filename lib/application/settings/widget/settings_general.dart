@@ -263,7 +263,7 @@ class GeneralSettingsState extends State<GeneralSettings> {
               () {
                 Navigator.of(context)
                     .push(NoAnimationMaterialPageRoute(
-                        builder: (context) => GCWTool(tool: SettingsPreferences(), i18nPrefix: 'settings_preferences')))
+                        builder: (context) => GCWTool(tool: SettingsPreferences(), id: 'settings_preferences')))
                     .whenComplete(() {
                   setState(() {
                     AppBuilder.of(context).rebuild();

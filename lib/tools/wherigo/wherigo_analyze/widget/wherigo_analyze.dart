@@ -2137,7 +2137,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                   isEditable: false, // false: open in Map
                   // true:  open in FreeMap
                 ),
-                i18nPrefix: 'coords_map_view',
+                id: 'coords_map_view',
                 autoScroll: false,
                 suppressToolMargin: true)));
   }

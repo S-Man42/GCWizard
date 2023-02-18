@@ -183,5 +183,5 @@ openInFlipRotate(BuildContext context, GCWFile file) {
       context,
       NoAnimationMaterialPageRoute(
           builder: (context) => GCWTool(
-              tool: ImageFlipRotate(file: file), toolName: i18n(context, 'image_fliprotate_title'), i18nPrefix: '')));
+              tool: ImageFlipRotate(file: file), toolName: i18n(context, 'image_fliprotate_title'), id: '')));
 }

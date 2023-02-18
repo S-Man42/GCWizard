@@ -37,8 +37,6 @@ class GCWCheckBox extends StatefulWidget {
 }
 
 class GCWCheckBoxState extends State<GCWCheckBox> {
-  var _currentValue = false;
-
   @override
   Widget build(BuildContext context) {
     return Row(

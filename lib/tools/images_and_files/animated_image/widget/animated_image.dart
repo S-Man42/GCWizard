@@ -214,5 +214,5 @@ openInAnimatedImage(BuildContext context, GCWFile file) {
           builder: (context) => GCWTool(
               tool: AnimatedImage(file: file),
               toolName: i18n(context, 'animated_image_title'),
-              i18nPrefix: '')));
+              id: '')));
 }

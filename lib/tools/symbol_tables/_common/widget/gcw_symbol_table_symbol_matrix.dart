@@ -196,6 +196,6 @@ class GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> 
             builder: (context) => GCWTool(
                 tool: SymbolReplacer(imageData: imageData, symbolKey: symbolKey),
                 toolName: i18n(context, 'symbol_replacer_title'),
-                i18nPrefix: '')));
+                id: '')));
   }
 }

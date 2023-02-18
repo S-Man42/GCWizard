@@ -332,5 +332,5 @@ openInMetadataViewer(BuildContext context, GCWFile file) {
       context,
       NoAnimationMaterialPageRoute(
           builder: (context) =>
-              GCWTool(tool: ExifReader(file: file), toolName: i18n(context, 'exif_title'), i18nPrefix: '')));
+              GCWTool(tool: ExifReader(file: file), toolName: i18n(context, 'exif_title'), id: '')));
 }

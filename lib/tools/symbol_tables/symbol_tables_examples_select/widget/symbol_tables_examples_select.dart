@@ -171,7 +171,7 @@ class SymbolTableExamplesSelectState extends State<SymbolTableExamplesSelect> {
                     symbolKeys: selectedSymbolTables,
                   ),
                   autoScroll: false,
-                  i18nPrefix: 'symboltablesexamples',
+                  id: 'symboltablesexamples',
                 )));
   }
 }

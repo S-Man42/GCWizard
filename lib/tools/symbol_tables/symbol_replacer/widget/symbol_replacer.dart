@@ -560,7 +560,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     var subPageTool = GCWTool(
         autoScroll: false,
         tool: SymbolReplacerManualControl(symbolImage: _symbolImage!),
-        i18nPrefix: 'symbol_replacer',
+        id: 'symbol_replacer',
         searchKeys: ['symbol_replacer']);
 
     Navigator.push(context, NoAnimationMaterialPageRoute(builder: (context) => subPageTool)).whenComplete(() {

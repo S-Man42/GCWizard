@@ -53,7 +53,7 @@ class ScrabbleState extends State<Scrabble> {
         ),
         GCWDropDown<String>(
           value: _currentScrabbleVersion,
-          onChanged: (value) {
+          onChanged: (String value) {
             setState(() {
               _currentScrabbleVersion = value;
               _calculateOutput();

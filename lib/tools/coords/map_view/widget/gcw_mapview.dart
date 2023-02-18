@@ -382,7 +382,7 @@ class GCWMapViewState extends State<GCWMapView> {
                     NoAnimationMaterialPageRoute(
                         builder: (context) => GCWTool(
                             tool: MapPolylineEditor(polyline: child.parent),
-                            i18nPrefix: 'coords_openmap_lineeditor'))).whenComplete(() {
+                            id: 'coords_openmap_lineeditor'))).whenComplete(() {
                   setState(() {
                     Navigator.pop(context);
                     if (child is GCWMapLine) {
@@ -397,7 +397,7 @@ class GCWMapViewState extends State<GCWMapView> {
                     NoAnimationMaterialPageRoute(
                         builder: (context) => GCWTool(
                             tool: MapPointEditor(mapPoint: mapPoint, lengthUnit: defaultLengthUnit),
-                            i18nPrefix: 'coords_openmap_lineeditor'))).whenComplete(() {
+                            id: 'coords_openmap_lineeditor'))).whenComplete(() {
                   setState(() {
                     _persistanceAdapter.updateMapPoint(mapPoint);
                     _mapController.move(mapPoint.point, _mapController.zoom);
@@ -806,7 +806,7 @@ class GCWMapViewState extends State<GCWMapView> {
                               NoAnimationMaterialPageRoute(
                                   builder: (context) => GCWTool(
                                       tool: MapPointEditor(mapPoint: gcwMarker.mapPoint, lengthUnit: defaultLengthUnit),
-                                      i18nPrefix: 'coords_openmap_pointeditor'))).whenComplete(() {
+                                      id: 'coords_openmap_pointeditor'))).whenComplete(() {
                             setState(() {
                               _persistanceAdapter.updateMapPoint(gcwMarker.mapPoint);
                               _mapController.move(gcwMarker.mapPoint.point, _mapController.zoom);

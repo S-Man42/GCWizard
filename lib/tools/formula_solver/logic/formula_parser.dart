@@ -30,8 +30,8 @@ const SAFED_RECURSIVE_FORMULA_MARKER = '\x02';
 const _PHI = 1.6180339887498948482045868343656381177;
 
 class FormulaParser {
-  ContextModel _context;
-  Parser parser;
+  ContextModel _context = ContextModel();
+  Parser parser = Parser();
 
   bool unlimitedExpanded = false;
   Map<String, String> safedFormulasMap = {};
@@ -128,16 +128,13 @@ class FormulaParser {
     '*': '×•',
   };
 
-  FormulaParser({unlimitedExpanded: false}) {
+  FormulaParser({unlimitedExpanded = false}) {
     this.unlimitedExpanded = unlimitedExpanded;
-
-    _context = ContextModel();
 
     CONSTANTS.entries.forEach((constant) {
       _context.bindVariableName(constant.key, Number(constant.value));
     });
 
-    parser = Parser();
     _CUSTOM_FUNCTIONS.forEach((name, handler) {
       parser.addFunction(name, handler);
     });
@@ -268,7 +265,7 @@ class FormulaParser {
     //if no interpolation: simply evaluate the formula directly
     List<Map<String, dynamic>> expandedFormulas;
     if (expandValues && interpolatedValues.isNotEmpty) {
-      var count = VariableStringExpander(substitutedFormula, interpolatedValues).run(onlyPrecheck: true).first['count'];
+      var count = VariableStringExpander(substitutedFormula, interpolatedValues).run(onlyPrecheck: true).first['count'] as int?;
       if (count == null) {
         return {'state': FormulaState.STATE_SINGLE_ERROR, 'result': substitutedFormula}; // TODO Mark use classes instead of maps
       } else if (!unlimitedExpanded && count > _MAX_EXPANDED) {
