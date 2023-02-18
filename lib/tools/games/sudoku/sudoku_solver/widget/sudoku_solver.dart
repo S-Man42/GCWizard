@@ -21,8 +21,8 @@ class SudokuSolver extends StatefulWidget {
 }
 
 class SudokuSolverState extends State<SudokuSolver> {
-  late SudokuBoard _currentBoard;
-  List<SudokuSolution>? _currentSolutions;
+  late List<List<_SudokuBoardValue?>> _currentBoard;
+  List<List<List<int>>>? _currentSolutions;
   int _currentSolution = 0;
 
   final int _MAX_SOLUTIONS = 1000;
@@ -31,7 +31,8 @@ class SudokuSolverState extends State<SudokuSolver> {
   void initState() {
     super.initState();
 
-    _currentBoard = SudokuBoard();
+    _currentBoard = List<List<_SudokuBoardValue?>>.generate(
+        9, (index) => List<_SudokuBoardValue?>.generate(9, (index) => null));
   }
 
   @override
@@ -96,7 +97,14 @@ class SudokuSolverState extends State<SudokuSolver> {
                   text: i18n(context, 'sudokusolver_solve'),
                   onPressed: () {
                     setState(() {
-                      _currentSolutions = solveSudoku(_currentBoard.solveableBoard(), _MAX_SOLUTIONS);
+                      List<List<int>> solveableBoard = _currentBoard.map((column) {
+                        return column
+                            .map((row) =>
+                                row != null && row.type == _SudokuFillType.USER_FILLED ? row.value : 0)
+                            .toList();
+                      }).toList();
+
+                      _currentSolutions = solveSudoku(solveableBoard, _MAX_SOLUTIONS);
                       if (_currentSolutions == null) {
                         showToast(i18n(context, 'sudokusolver_error'));
                       } else {
@@ -117,8 +125,8 @@ class SudokuSolverState extends State<SudokuSolver> {
                   setState(() {
                     for (int i = 0; i < 9; i++) {
                       for (int j = 0; j < 9; j++) {
-                        if (_currentBoard.getFillType(i, j) == SudokuFillType.CALCULATED)
-                          _currentBoard.setValue(i, j, null);
+                        if (_currentBoard[i][j] != null && _currentBoard[i][j]!.type == _SudokuFillType.CALCULATED)
+                          _currentBoard[i][j] = null;
                       }
                     }
                     _currentSolutions = null;
@@ -137,7 +145,8 @@ class SudokuSolverState extends State<SudokuSolver> {
                     i18n(context, 'sudokusolver_clearall_board'),
                         () {
                         setState(() {
-                          _currentBoard = SudokuBoard();
+                          _currentBoard = List<List<_SudokuBoardValue?>>.generate(
+                              9, (index) => List<_SudokuBoardValue?>.generate(9, (index) => null));
 
                           _currentSolutions = null;
                         });
@@ -153,12 +162,15 @@ class SudokuSolverState extends State<SudokuSolver> {
     );
   }
 
-  void _showSolution() {
-    if (_currentSolutions == null || _currentSolution >= _currentSolutions!.length) return;
-    for (int i = 0; i < 9; i++)
+  _showSolution() {
+    if (_currentSolutions == null) return;
+
+    for (int i = 0; i < 9; i++) {
       for (int j = 0; j < 9; j++) {
-        if (_currentBoard.getFillType(i, j) == SudokuFillType.USER_FILLED) continue;
-        _currentBoard.setValue(i, j, _currentSolutions![_currentSolution].getValue(i, j), type: SudokuFillType.CALCULATED);
+        if (_currentBoard[i][j] != null && _currentBoard[i][j]!.type == _SudokuFillType.USER_FILLED) continue;
+
+        _currentBoard[i][j] = _SudokuBoardValue(_currentSolutions![_currentSolution][i][j], _SudokuFillType.CALCULATED);
       }
     }
+  }
 }

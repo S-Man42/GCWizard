@@ -10,7 +10,7 @@
     Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
     Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
  */
-//ToDo Mark
+
 int _MAX_SOLUTIONS = 1000;
 int _FOUND_SOLUTIONS = 0;
 
@@ -26,19 +26,21 @@ final List<List<String>> _unitlist = _cols.split('').map((c) => _cross(_rows, c)
   ..addAll(['ABC', 'DEF', 'GHI'].expand((rs) => ['123', '456', '789'].map((cs) => _cross(rs, cs))));
 
 final Map<String, List<List<String>>> _units = _squares
-    .map((s) => [s, _unitlist.where((u) => u.contains(s)).toList()])
-    .fold({}, (map, kv) => map..putIfAbsent(kv[0], () => kv[1]));
+    .map((String s) => <Object>[s, _unitlist.where((List<String> u) => u.contains(s)).toList()])
+    .fold({}, (map, kv) => map..putIfAbsent(kv[0] as String, () => kv[1] as List<List<String>>));
 
 final Map _peers = _squares
     .map((s) => [
           s,
-          _units[s].expand((u) => u).toSet()..removeAll([s])
+          _units[s]!.expand((u) => u).toSet()..removeAll([s])
         ])
     .fold({}, (map, kv) => map..putIfAbsent(kv[0], () => kv[1]));
 
 /// Parse a Grid
-Map? _parse_grid(List<List<int>> grid) {
-  Map? values = _squares.map((s) => [s, _digits]).fold({}, (map, kv) => map..putIfAbsent(kv[0], () => kv[1]));
+Map<String, String>? _parse_grid(List<List<int>> grid) {
+  Map<String, String> values = _squares
+      .map<List<String>>((String s) => <String>[s, _digits])
+      .fold(<String, String>{}, (Map<String, String> map, List<String> kv) => map..putIfAbsent(kv[0], () => kv[1]));
   var gridValues = _grid_values(grid);
 
   for (var s in gridValues.keys) {
@@ -61,26 +63,26 @@ Map _grid_values(List<List<int>> grid) {
 }
 
 /// Constraint Propagation
-Map? _assign(Map values, String s, String d) {
-  var other_values = values[s].replaceAll(d, '');
+Map<String, String>? _assign(Map<String, String> values, String s, String d) {
+  var other_values = values[s]!.replaceAll(d, '');
 
   if (_all(other_values.split('').map((d2) => _eliminate(values, s, d2)))) return values;
   return null;
 }
 
-Map? _eliminate(Map values, String s, String d) {
-  if (!values[s].contains(d)) return values;
-  values[s] = values[s].replaceAll(d, '');
-  if (values[s].isEmpty)
+Map<String, String>? _eliminate(Map<String, String> values, String s, String d) {
+  if (!values[s]!.contains(d)) return values;
+  values[s] = values[s]!.replaceAll(d, '');
+  if (values[s]!.length == 0)
     return null;
-  else if (values[s].length == 1) {
-    var d2 = values[s];
+  else if (values[s]!.length == 1) {
+    var d2 = values[s]!;
     if (!_all(_peers[s].map((s2) => _eliminate(values, s2, d2)))) return null;
   }
 
-  for (List<String> u in _units[s]) {
-    var dplaces = u.where((s) => values[s].contains(d));
-    if (dplaces.isEmpty)
+  for (List<String> u in _units[s]!) {
+    var dplaces = u.where((s) => values[s]!.contains(d));
+    if (dplaces.length == 0)
       return null;
     else if (dplaces.length == 1) if (_assign(values, dplaces.elementAt(0), d) == null) return null;
   }
@@ -88,7 +90,7 @@ Map? _eliminate(Map values, String s, String d) {
 }
 
 /// Search
-List<List<List<int?>>>? solve(List<List<int>> grid, {int? maxSolutions}) {
+List<List<List<int>>>? solve(List<List<int>> grid, {int? maxSolutions}) {
   if (maxSolutions != null && maxSolutions > 0) _MAX_SOLUTIONS = maxSolutions;
 
   _FOUND_SOLUTIONS = 0;
@@ -96,14 +98,14 @@ List<List<List<int?>>>? solve(List<List<int>> grid, {int? maxSolutions}) {
   var results = _searchAll(_parse_grid(grid));
   if (results == null || results.isEmpty) return null;
 
-  List<List<List<int?>>> outputs = [];
+  List<List<List<int>>> outputs = [];
 
-  for (Map result in results) {
-    List<List<int?>> output = [];
+  for (Map<String, String> result in results) {
+    List<List<int>> output = [];
     for (int i = 0; i < 9; i++) {
-      var column = <int?>[];
+      var column = <int>[];
       for (int j = 0; j < 9; j++) {
-        column.add(int.tryParse(result[_rows[i] + _cols[j]]));
+        column.add(int.parse(result[_rows[i] + _cols[j]]!));
       }
       output.add(column);
     }
@@ -113,20 +115,20 @@ List<List<List<int?>>>? solve(List<List<int>> grid, {int? maxSolutions}) {
   return outputs;
 }
 
-List<Map>? _searchAll(Map? values) {
+List<Map<String, String>>? _searchAll(Map<String, String>? values) {
   if (values == null || _FOUND_SOLUTIONS >= _MAX_SOLUTIONS) return null;
 
-  if (_squares.every((s) => values[s].length == 1)) {
+  if (_squares.every((String s) => values[s]!.length == 1)) {
     _FOUND_SOLUTIONS++;
-    return <Map>[values];
+    return <Map<String, String>>[values];
   }
 
-  var s2 = _order(_squares.where((s) => values[s].length > 1).toList(), on: (s) => values[s].length).first;
+  var s2 = _order(_squares.where((String s) => values[s]!.length > 1).toList(), on: (String s) => values[s]!.length).first;
 
-  var output = <Map>[];
+  var output = <Map<String, String>>[];
 
-  values[s2].split('').forEach((d) {
-    var result = _searchAll(_assign(Map.from(values), s2, d));
+  values[s2]!.split('').forEach((d) {
+    var result = _searchAll(_assign(Map<String, String>.from(values), s2, d));
     if (result == null) return;
 
     output.addAll(result.where((element) => element != null));
@@ -137,7 +139,7 @@ List<Map>? _searchAll(Map? values) {
 
 _wrap(value, fn(x)) => fn(value);
 
-_order(List seq, {Comparator by, List<Comparator> byAll, on(x), List<Function> onAll}) => by != null
+List<String> _order(List<String> seq, {Comparator? by, List<Comparator>? byAll, required int on(String x), List<Function>? onAll}) => by != null
     ? (seq..sort(by))
     : byAll != null
         ? (seq..sort((a, b) => byAll.firstWhere((compare) => compare(a, b) != 0, orElse: () => (x, y) => 0)(a, b)))

@@ -128,7 +128,7 @@ class FormulaParser {
     '*': '×•',
   };
 
-  FormulaParser({unlimitedExpanded: false}) {
+  FormulaParser({unlimitedExpanded = false}) {
     this.unlimitedExpanded = unlimitedExpanded;
 
     _context = ContextModel();
