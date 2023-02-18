@@ -38,7 +38,7 @@ public class UnluacServlet extends HttpServlet {
 	private static final String SCRIPTTEMPLATE = "java -jar %s %s > %s";
 	
 	private final String os = System.getProperty("os.name").toLowerCase();
-    private final boolean isWindows = os.contains("windows");
+	private final boolean isWindows = os.contains("windows");
 		
 	private final transient Logger logger = Logger.getLogger("GCW_UnluacServlet");
 	
