@@ -88,7 +88,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   bool _getLUAOnline = true;
   bool _nohttpError = true;
 
-  var _codeControllerHighlightedLUA;
+  late TextEditingController _codeControllerHighlightedLUA;
   String _LUA_SourceCode = '';
 
   int _mediaFileIndex = 1;
@@ -614,65 +614,38 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         suppressCopyButton: true,
       );
 
-    var _outputMedia;
-    String filename = '';
-
     if (WherigoCartridgeGWCData.MediaFilesContents == [] ||
         WherigoCartridgeGWCData.MediaFilesContents == null ||
         WherigoCartridgeGWCData.MediaFilesContents.length == 0) {
-      return Column(children: <Widget>[
-        GCWDefaultOutput(),
-        Row(
-          children: <Widget>[
-            GCWIconButton(
-              icon: Icons.arrow_back_ios,
-              onPressed: () {
-                setState(() {
-                  _mediaIndex--;
-                  if (_mediaIndex < 1) _mediaIndex = WherigoCartridgeLUAData.Media.length;
-                });
-              },
-            ),
-            Expanded(
-              child: GCWText(
-                align: Alignment.center,
-                text: i18n(context, 'wherigo_data_media') +
-                    ' ' +
-                    _mediaIndex.toString() +
-                    ' / ' +
-                    (WherigoCartridgeLUAData.Media.length).toString(),
-              ),
-            ),
-            GCWIconButton(
-              icon: Icons.arrow_forward_ios,
-              onPressed: () {
-                setState(() {
-                  _mediaIndex++;
-                  if (_mediaIndex > WherigoCartridgeLUAData.Media.length) _mediaIndex = 1;
-                });
-              },
-            ),
-          ],
-        ),
-        GCWColumnedMultilineOutput(
-            data: _outputMedia(WherigoCartridgeLUAData.Media[_mediaIndex - 1]), flexValues: [1, 3])
-      ]);
+      return GCWDefaultOutput(
+        child: i18n(context, 'wherigo_data_nodata'),
+        suppressCopyButton: true,
+      );
     }
 
+    List<List<String>> _outputMedia = [];
+    String filename = '';
+
     if (_mediaFileIndex < WherigoCartridgeGWCData.MediaFilesContents.length) {
-      filename = WHERIGO_MEDIACLASS[WherigoCartridgeGWCData.MediaFilesContents[_mediaFileIndex].MediaFileType] +
+      filename = WHERIGO_MEDIACLASS[WherigoCartridgeGWCData.MediaFilesContents[_mediaFileIndex].MediaFileType].toString() +
           ' : ' +
-          WHERIGO_MEDIATYPE[WherigoCartridgeGWCData.MediaFilesContents[_mediaFileIndex].MediaFileType];
+          WHERIGO_MEDIATYPE[WherigoCartridgeGWCData.MediaFilesContents[_mediaFileIndex].MediaFileType].toString();
     }
     if (WherigoCartridgeLUAData.Media.length > 0) {
       filename = WherigoCartridgeLUAData.Media[_mediaFileIndex - 1].MediaFilename;
+      if (wherigoExpertMode)
+        _outputMedia = [
+          [i18n(context, 'wherigo_media_id'), WherigoCartridgeLUAData.Media[_mediaFileIndex - 1].MediaID],
+          [i18n(context, 'wherigo_media_luaname'), WherigoCartridgeLUAData.Media[_mediaFileIndex - 1].MediaLUAName],
+          [i18n(context, 'wherigo_media_name'), WherigoCartridgeLUAData.Media[_mediaFileIndex - 1].MediaName],
+          [
+            i18n(context, 'wherigo_media_description'),
+            WherigoCartridgeLUAData.Media[_mediaFileIndex - 1].MediaDescription
+          ],
+          [i18n(context, 'wherigo_media_alttext'), WherigoCartridgeLUAData.Media[_mediaFileIndex - 1].MediaAltText],
+        ];
+      else
       _outputMedia = [
-        wherigoExpertMode
-            ? [i18n(context, 'wherigo_media_id'), WherigoCartridgeLUAData.Media[_mediaFileIndex - 1].MediaID]
-            : null,
-        wherigoExpertMode
-            ? [i18n(context, 'wherigo_media_luaname'), WherigoCartridgeLUAData.Media[_mediaFileIndex - 1].MediaLUAName]
-            : null,
         [i18n(context, 'wherigo_media_name'), WherigoCartridgeLUAData.Media[_mediaFileIndex - 1].MediaName],
         [
           i18n(context, 'wherigo_media_description'),
@@ -744,7 +717,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                     '\n' +
                     i18n(context, 'wherigo_error_invalid_mediafile_2') +
                     '\n'),
-        if (_outputMedia != null) GCWColumnedMultilineOutput(data: _outputMedia, flexValues: [1, 3])
+        GCWColumnedMultilineOutput(data: _outputMedia, flexValues: [1, 3])
       ],
     );
   }
@@ -1446,7 +1419,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             child: GCWAsyncExecuter<WherigoCartridge>(
               isolatedFunction: getCartridgeAsync,
               parameter: _buildGWCJobData(dataType),
-              onReady: (data) => _showCartridgeOutput(data),
+              onReady: (data) => _showCartridgeOutput(dataType, data),
               isOverlay: true,
             ),
             height: 220,
@@ -1480,7 +1453,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     }
   }
 
-  _showCartridgeOutput(WherigoCartridge output) {
+  _showCartridgeOutput(WHERIGO_CARTRIDGE_DATA_TYPE dataType, WherigoCartridge output) {
     _outData = output;
     String toastMessage = '';
     int toastDuration = 3;
@@ -1488,14 +1461,14 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     if (_outData == null) {
       toastMessage = i18n(context, 'common_loadfile_exception_notloaded');
     } else {
-      switch (_temporaryONLYForRefactoring_DataTypeForAsync) {
+      switch (dataType) {
         case WHERIGO_CARTRIDGE_DATA_TYPE.GWC: // GWC File should be loaded
           WherigoCartridgeGWCData = _outData.cartridgeGWC;
 
           switch (WherigoCartridgeGWCData.ResultStatus) {
             case WHERIGO_ANALYSE_RESULT_STATUS.OK:
               toastMessage =
-                  i18n(context, 'wherigo_data_loaded') + ': ' + _temporaryONLYForRefactoring_DataTypeForAsync.toString();
+                  i18n(context, 'wherigo_data_loaded') + ': ' + dataType.toString();
               break;
 
             case WHERIGO_ANALYSE_RESULT_STATUS.ERROR_GWC:
@@ -1540,7 +1513,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           switch (WherigoCartridgeLUAData.ResultStatus) {
             case WHERIGO_ANALYSE_RESULT_STATUS.OK:
               toastMessage =
-                  i18n(context, 'wherigo_data_loaded') + ': ' + _temporaryONLYForRefactoring_DataTypeForAsync.toString();
+                  i18n(context, 'wherigo_data_loaded') + ': ' + dataType.toString();
               toastDuration = 5;
               _nohttpError = false;
 
