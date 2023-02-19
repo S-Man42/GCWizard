@@ -66,7 +66,7 @@ class GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
     );
   }
 
-  _buildSubtype() {
+  Widget _buildSubtype() {
     var format = widget.format.type;
 
     if (_currentSubtype == null) {
@@ -111,7 +111,7 @@ class GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
     }
   }
 
-  _emitOnChange() {
+  void _emitOnChange() {
     var output = CoordsFormatValue(_currentFormat, _currentSubtype);
     widget.onChanged(output);
   }

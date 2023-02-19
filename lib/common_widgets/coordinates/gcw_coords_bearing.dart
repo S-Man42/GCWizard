@@ -76,7 +76,7 @@ class _GCWBearingState extends State<GCWBearing> {
   late TextEditingController _bearingController;
   var _currentBearing = defaultDoubleText;
 
-  var _currentCompassValue;
+  String? _currentCompassValue;
 
   @override
   void initState() {
@@ -126,14 +126,14 @@ class _GCWBearingState extends State<GCWBearing> {
       ),
       Expanded(
         flex: 5,
-        child: GCWDropDown(
+        child: GCWDropDown<String>(
           value: _currentCompassValue,
           items: _COMPASS_ROSE.map((direction) {
             if (direction.symbol == _NO_COMPASS_DIRECTION) {
               return GCWDropDownMenuItem(value: _NO_COMPASS_DIRECTION, child: _NO_COMPASS_DIRECTION);
             }
 
-            var fontweight;
+            FontWeight fontweight = FontWeight.normal;
             var level = direction.level;
             if (level == 0)
               fontweight = FontWeight.w900;
@@ -149,7 +149,7 @@ class _GCWBearingState extends State<GCWBearing> {
                 subtitle: i18n(context, direction.name) + ' (${direction.value}°)',
                 style: gcwTextStyle().copyWith(fontSize: defaultFontSize() + 10 - 4 * level, fontWeight: fontweight));
           }).toList(),
-          onChanged: (value) {
+          onChanged: (String value) {
             setState(() {
               _currentCompassValue = value;
               if (value == _NO_COMPASS_DIRECTION) return;

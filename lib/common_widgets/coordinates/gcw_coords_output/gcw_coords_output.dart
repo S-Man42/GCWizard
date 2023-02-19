@@ -89,7 +89,7 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
         ));
   }
 
-  _openInMap({freeMap: false}) {
+  void _openInMap({bool freeMap = false}) {
     if (freeMap) {
       widget.points.forEach((point) {
         point.isEditable = true;
@@ -98,7 +98,7 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
 
     Navigator.push(
         context,
-        MaterialPageRoute(
+        MaterialPageRoute<GCWTool>(
             builder: (context) => GCWTool(
                 tool: GCWMapView(
                   points: List<GCWMapPoint>.from(widget.points),
