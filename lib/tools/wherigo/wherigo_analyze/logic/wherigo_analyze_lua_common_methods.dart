@@ -258,7 +258,7 @@ WherigoCartridgeLUA faultyWherigoCartridgeLUA(
                       String _LUAFile,
                       WHERIGO_ANALYSE_RESULT_STATUS resultStatus,
                       List<String> _http_code_http,
-                      String _httpCode,
+                      int _httpCode,
                       String _httpMessage) {
   return WherigoCartridgeLUA(
   LUAFile: _LUAFile,

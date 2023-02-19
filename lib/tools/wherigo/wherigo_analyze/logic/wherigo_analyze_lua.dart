@@ -99,7 +99,7 @@ WherigoActionMessageElementData action = WherigoActionMessageElementData(WHERIGO
 Map<String, List<WherigoAnswerData>> Answers = {};
 String obfuscatorFunction = 'NO_OBFUSCATOR';
 bool obfuscatorFound = false;
-String httpCode = '';
+int httpCode = 0;
 String httpMessage = '';
 String LUAFile = '';
 List<String> LUAAnalyzeResults = [];
@@ -114,7 +114,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
       await getDecompiledLUAFileFromServer(byteListLUA);
     } catch (exception) {
       //SocketException: Connection timed out (OS Error: Connection timed out, errno = 110), address = 192.168.178.93, port = 57582
-      httpCode = '503';
+      httpCode = 503;
       httpMessage = exception.toString();
     } // end catch exception
     if (httpCode != WHERIGO_HTTP_CODE_OK) {
@@ -143,7 +143,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
     return WherigoCartridge(
         cartridgeGWC: WHERIGO_EMPTYCARTRIDGE_GWC,
         cartridgeLUA:
-            faultyWherigoCartridgeLUA('', WHERIGO_ANALYSE_RESULT_STATUS.ERROR_LUA, LUAAnalyzeResults, '', ''));
+            faultyWherigoCartridgeLUA('', WHERIGO_ANALYSE_RESULT_STATUS.ERROR_LUA, LUAAnalyzeResults, 0, ''));
   }
 
   checkAndGetWherigoBuilder();
@@ -965,9 +965,9 @@ Future<void> getDecompiledLUAFileFromServer(Uint8List byteListLUA) async {
         await http.MultipartFile.fromBytes('file', byteListLUA, contentType: MediaType('application', 'octet-stream')));
   var response = await request.send();
 
-  httpCode = response.statusCode.toString();
+  httpCode = response.statusCode;
   httpMessage = response.reasonPhrase ?? '';
-  if (response.statusCode == 200) {
+  if (httpCode == 200) {
     var responseData = await http.Response.fromStream(response);
     LUAFile = responseData.body;
   }
