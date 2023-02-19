@@ -127,7 +127,7 @@ class _GCWBearingState extends State<GCWBearing> {
       Expanded(
         flex: 5,
         child: GCWDropDown<String>(
-          value: _currentCompassValue,
+          value: _currentCompassValue!,
           items: _COMPASS_ROSE.map((direction) {
             if (direction.symbol == _NO_COMPASS_DIRECTION) {
               return GCWDropDownMenuItem(value: _NO_COMPASS_DIRECTION, child: _NO_COMPASS_DIRECTION);

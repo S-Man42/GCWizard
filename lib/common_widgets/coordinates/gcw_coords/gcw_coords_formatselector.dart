@@ -79,7 +79,7 @@ class GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
       case CoordFormatKey.GAUSS_KRUEGER:
       case CoordFormatKey.LAMBERT:
         return GCWDropDown<CoordFormatKey>(
-          value: _currentSubtype,
+          value: _currentSubtype!,
           items: getCoordinateFormatByKey(format).subtypes!.map((subtype) {
             return GCWDropDownMenuItem(
               value: subtype.key,

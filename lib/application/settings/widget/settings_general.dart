@@ -188,7 +188,7 @@ class GeneralSettingsState extends State<GeneralSettings> {
         ),
         Prefs.getBool(PREFERENCE_TABS_USE_DEFAULT_TAB)
             ? GCWDropDown<int>(
-                value: Prefs.get(PREFERENCE_TABS_DEFAULT_TAB),
+                value: Prefs.getInt(PREFERENCE_TABS_DEFAULT_TAB),
                 items: [
                   {
                     'index': 0,
