@@ -59,7 +59,7 @@ class GeneralSettingsState extends State<GeneralSettings> {
                             items: SUPPORTED_LOCALES.entries.map((locale) {
                               String languageName = locale.value['name_native'] as String;
 
-                              var subtitle;
+                              String? subtitle;
                               if (locale.value['percent_translated'] as int < 90) {
                                 subtitle = i18n(context, 'settings_general_i18n_language_partlytranslated',
                                     parameters: [locale.value['percent_translated']]);
@@ -189,35 +189,30 @@ class GeneralSettingsState extends State<GeneralSettings> {
         Prefs.getBool(PREFERENCE_TABS_USE_DEFAULT_TAB)
             ? GCWDropDown<int>(
                 value: Prefs.getInt(PREFERENCE_TABS_DEFAULT_TAB),
-                items: [
+                items:
                   {
-                    'index': 0,
-                    'text': Row(children: [
+                    0: Row(children: [
                       Icon(Icons.category, color: themeColors().mainFont()),
                       Container(width: 10),
                       Text(i18n(context, 'common_tabs_categories'))
-                    ])
-                  },
-                  {
-                    'index': 1,
-                    'text': Row(children: [
+                    ]),
+
+                    1: Row(children: [
                       Icon(Icons.list, color: themeColors().mainFont()),
                       Container(width: 10),
                       Text(i18n(context, 'common_tabs_all'))
-                    ])
-                  },
-                  {
-                    'index': 2,
-                    'text': Row(children: [
+                    ]),
+
+                    2: Row(children: [
                       Icon(Icons.star, color: themeColors().mainFont()),
                       Container(width: 10),
                       Text(i18n(context, 'common_tabs_favorites'))
                     ])
                   }
-                ].map((item) {
+                .entries.map((MapEntry<int, Row> item) {
                   return GCWDropDownMenuItem(
-                    value: item['index'],
-                    child: item['text'],
+                    value: item.key,
+                    child: item.value,
                   );
                 }).toList(),
                 onChanged: (int value) {
@@ -262,7 +257,7 @@ class GeneralSettingsState extends State<GeneralSettings> {
               i18n(context, 'settings_preferences_warning_text'),
               () {
                 Navigator.of(context)
-                    .push(NoAnimationMaterialPageRoute(
+                    .push(NoAnimationMaterialPageRoute<GCWTool>(
                         builder: (context) => GCWTool(tool: SettingsPreferences(), id: 'settings_preferences')))
                     .whenComplete(() {
                   setState(() {
