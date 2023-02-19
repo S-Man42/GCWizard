@@ -151,8 +151,7 @@ void main() {
 
   group("StringUtils.allSameCharacters:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : null},
-      {'input' : '', 'expectedOutput' : null},
+      {'input' : '', 'expectedOutput' : false},
 
       {'input' : 'a', 'expectedOutput' : true},
       {'input' : 'aaa', 'expectedOutput' : true},
@@ -220,22 +219,30 @@ void main() {
 
   group("StringUtils.extractIntegerFromText:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : null},
-      {'input' : '', 'expectedOutput' : null},
+      {'input' : '', 'expectedOutput' : 0},
 
-      {'input' : 'a', 'expectedOutput' : null},
+      {'input' : 'a', 'expectedOutput' : 0},
       {'input' : '12', 'expectedOutput' : 12},
-      {'input' : '123,4', 'expectedOutput' : 1234},
       {'input' : '123,4', 'expectedOutput' : 1234},
 
       {'input' : '1 2', 'expectedOutput' : 12},
       {'input' : 'a1', 'expectedOutput' : 1},
-      {'input' : '1a2', 'expectedOutput' : 12}
+      {'input' : '1a2', 'expectedOutput' : 12},
+
+      {'input' : '-a', 'expectedOutput' : 0},
+      {'input' : '-12', 'expectedOutput' : -12},
+      {'input' : '-123,4', 'expectedOutput' : -1234},
+      {'input' : '-12-3,4', 'expectedOutput' : -1234},
+
+      {'input' : ' - 1 2', 'expectedOutput' : -12},
+      {'input' : ' - 1 -2', 'expectedOutput' : -12},
+      {'input' : '-a1', 'expectedOutput' : -1},
+      {'input' : '1a-2', 'expectedOutput' : 12}
     ];
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = extractIntegerFromText(elem['input']);
+        var _actual = extractIntegerFromText(elem['input'], allowNegative: true);
         expect(_actual, elem['expectedOutput']);
       });
     });

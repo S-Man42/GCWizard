@@ -28,7 +28,7 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () async {
         var _actual = await decodeImage(_getFileData(elem['input']), null, null);
-        expect(_actual.item3, elem['expectedOutput']);
+        expect(_actual?.item3, elem['expectedOutput']);
       });
     });
   });
