@@ -144,6 +144,16 @@ class WherigoInputData {
       this.InputAnswers);
 }
 
+class WherigoAnswer {
+  final String InputFunction;
+  final List<WherigoAnswerData> InputAnswers;
+
+  WherigoAnswer(
+    this.InputFunction,
+    this.InputAnswers,
+  );
+}
+
 class WherigoAnswerData {
   final String AnswerAnswer;
   final String AnswerHash;
@@ -199,8 +209,8 @@ class WherigoMediaData {
   final String MediaType;
   final String MediaFilename;
 
-  WherigoMediaData(this.MediaLUAName, this.MediaID, this.MediaName, this.MediaDescription, this.MediaAltText, this.MediaType,
-      this.MediaFilename);
+  WherigoMediaData(this.MediaLUAName, this.MediaID, this.MediaName, this.MediaDescription, this.MediaAltText,
+      this.MediaType, this.MediaFilename);
 }
 
 class WherigoVariableData {
@@ -272,8 +282,8 @@ class WherigoCartridgeGWC {
   const WherigoCartridgeGWC({
     this.Signature = '',
     this.NumberOfObjects = 0,
-    this.MediaFilesHeaders = const[],
-    this.MediaFilesContents = const[],
+    this.MediaFilesHeaders = const [],
+    this.MediaFilesContents = const [],
     this.HeaderLength = 0,
     this.Splashscreen = 0,
     this.SplashscreenIcon = 0,
@@ -295,7 +305,7 @@ class WherigoCartridgeGWC {
     this.LengthOfCompletionCode = 0,
     this.CompletionCode = '',
     this.ResultStatus = WHERIGO_ANALYSE_RESULT_STATUS.NONE,
-    this.ResultsGWC = const[],
+    this.ResultsGWC = const [],
   });
 }
 
@@ -337,20 +347,21 @@ class WherigoCartridgeLUA {
       this.CartridgeGUID = '',
       this.ObfuscatorTable = '',
       this.ObfuscatorFunction = '',
-      this.Characters = const[],
-      this.Items = const[], // TODO Thomas: Gave the lists init values to keep it null-safe. Please check if it makes sense from logic point of view
-                            // from a logic point of view initial values do not make any sense
-      this.Tasks = const[],
-      this.Inputs = const[],
-      this.Zones = const[],
-      this.Timers = const[],
-      this.Media = const[],
-      this.Messages = const[],
-      this.Answers = const[],
-      this.Variables = const[],
+      this.Characters = const [],
+      this.Items =
+          const [], // TODO Thomas: Gave the lists init values to keep it null-safe. Please check if it makes sense from logic point of view
+      // from a logic point of view initial values do not make any sense
+      this.Tasks = const [],
+      this.Inputs = const [],
+      this.Zones = const [],
+      this.Timers = const [],
+      this.Media = const [],
+      this.Messages = const [],
+      this.Answers = const [],
+      this.Variables = const [],
       this.NameToObject = const {},
       this.ResultStatus = WHERIGO_ANALYSE_RESULT_STATUS.NONE,
-      this.ResultsLUA = const[],
+      this.ResultsLUA = const [],
       this.Builder = WHERIGO_BUILDER.UNKNOWN,
       this.BuilderVersion = '',
       this.TargetDeviceVersion = '',
@@ -369,10 +380,7 @@ class WherigoCartridge {
   final WherigoCartridgeGWC cartridgeGWC;
   final WherigoCartridgeLUA cartridgeLUA;
 
-  WherigoCartridge({
-    this.cartridgeGWC = WHERIGO_EMPTYCARTRIDGE_GWC,
-    this.cartridgeLUA = WHERIGO_EMPTYCARTRIDGE_LUA
-  });
+  WherigoCartridge({this.cartridgeGWC = WHERIGO_EMPTYCARTRIDGE_GWC, this.cartridgeLUA = WHERIGO_EMPTYCARTRIDGE_LUA});
 }
 
 class WherigoJobData {
@@ -386,5 +394,3 @@ class WherigoJobData {
     required this.jobDataType,
   });
 }
-
-

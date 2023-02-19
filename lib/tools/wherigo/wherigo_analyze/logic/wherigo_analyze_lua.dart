@@ -1,13 +1,104 @@
-// Code snippet for accessing REST API
-// https://medium.com/nerd-for-tech/multipartrequest-in-http-for-sending-images-videos-via-post-request-in-flutter-e689a46471ab
-
 part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze.dart';
 
-String _answerVariable = '';
+String answerVariable = '';
+String LUACartridgeName = '';
+String CartridgeLUAName = '';
+String LUACartridgeGUID = '';
+String obfuscatorTable = '';
+List<WherigoCharacterData> cartridgeCharacters = [];
+List<WherigoItemData> cartridgeItems = [];
+List<WherigoTaskData> cartridgeTasks = [];
+List<WherigoInputData> cartridgeInputs = [];
+List<WherigoZoneData> cartridgeZones = [];
+List<WherigoTimerData> cartridgeTimers = [];
+List<WherigoMediaData> cartridgeMedia = [];
+List<List<WherigoActionMessageElementData>> cartridgeMessages = [];
+List<WherigoAnswerData> cartridgeAnswers = [];
+List<WherigoVariableData> cartridgeVariables = [];
+Map<String, WherigoObjectData> cartridgeNameToObject = {};
 
-bool isInvalidLUASourcecode(String header) {
-  return (!header.replaceAll('(', ' ').replaceAll(')', '').startsWith('require "Wherigo"'));
-}
+bool sectionMedia = true;
+bool sectionInner = true;
+bool sectionZone = true;
+bool sectionDescription = true;
+bool sectionCharacter = true;
+bool sectionItem = true;
+bool sectionTask = true;
+bool sectionTimer = true;
+bool sectionMessages = true;
+bool sectionInput = true;
+bool sectionChoices = true;
+bool sectionText = true;
+bool sectionAnalysed = false;
+bool insideInputFunction = false;
+bool sectionVariables = true;
+bool beyondHeader = false;
+
+String LUAname = '';
+String id = '';
+String name = '';
+String description = '';
+String type = '';
+String medianame = '';
+String alttext = '';
+WHERIGO_BUILDER _builder = WHERIGO_BUILDER.UNKNOWN;
+String BuilderVersion = '';
+String TargetDeviceVersion = '';
+String CountryID = '';
+String StateID = '';
+String UseLogging = '';
+String CreateDate = WHERIGO_NULLDATE;
+String PublishDate  = WHERIGO_NULLDATE;
+String UpdateDate = WHERIGO_NULLDATE;
+String LastPlayedDate = WHERIGO_NULLDATE;
+List<WherigoZonePoint> points = [];
+String visible = '';
+String media = '';
+String icon = '';
+String active = '';
+String distanceRange = '';
+String showObjects = '';
+String proximityRange = '';
+WherigoZonePoint originalPoint = WherigoZonePoint(0.0, 0.0, 0.0);
+String distanceRangeUOM = '';
+String proximityRangeUOM = '';
+String outOfRange = '';
+String inRange = '';
+String location = '';
+WherigoZonePoint zonePoint = WherigoZonePoint(0.0, 0.0, 0.0);
+String gender = '';
+String container = '';
+String locked = '';
+String opened = '';
+String complete = '';
+String correctstate = '';
+List<String> declaration = [];
+String duration = '';
+List<WherigoActionMessageElementData> singleMessageDialog = [];
+String variableID = '';
+String inputType = '';
+String text = '';
+List<String> listChoices = [];
+String inputObject = '';
+List<WherigoInputData> resultInputs = [];
+List<WherigoActionMessageElementData> answerActions = [];
+List<String> answerList = [];
+String answerHash = '';
+WherigoActionMessageElementData action = WherigoActionMessageElementData(WHERIGO_ACTIONMESSAGETYPE.NONE, '');
+// TODO Thomas As all of such constructions, please use explicit class types for values which make it better to check for Nullability
+// class WherigoAnswer {
+//   final String InputFunction;
+//   final List<WherigoAnswerData> InputAnswers;
+//
+//   WherigoAnswer(
+//     this.InputFunction,
+//     this.InputAnswers,
+//   );
+// }
+// List<WherigoAnswer> Answer = [];
+Map<String, List<WherigoAnswerData>> Answers = {};
+String _obfuscatorFunction = '';
+
 
 Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonline, {SendPort? sendAsyncPort}) async {
 
@@ -16,6 +107,8 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
   String _LUAFile = '';
 
   if (getLUAonline) {
+    // Code snippet for accessing REST API
+    // https://medium.com/nerd-for-tech/multipartrequest-in-http-for-sending-images-videos-via-post-request-in-flutter-e689a46471ab
     String address = 'http://sdklmfoqdd5qrtha.myfritz.net:7323/GCW_Unluac/';
     try {
       var uri = Uri.parse(address);
@@ -32,26 +125,16 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
       } else {
         return WherigoCartridge(
             cartridgeGWC: WHERIGO_EMPTYCARTRIDGE_GWC,
-            cartridgeLUA: WherigoCartridgeLUA(
-                LUAFile: _LUAFile,
-                Characters: [],
-                Items: [],
-                Tasks: [],
-                Inputs: [],
-                Zones: [],
-                Timers: [],
-                Media: [],
-                Messages: [],
-                Answers: [],
-                Variables: [],
-                NameToObject: {},
-                ResultStatus: WHERIGO_ANALYSE_RESULT_STATUS.ERROR_HTTP,
-                ResultsLUA: [
-                  'wherigo_http_code_http',
-                  WHERIGO_HTTP_STATUS[_httpCode] ?? ''
-                ], // TODO Thomas What if status 401 or whatever returns? Please use httpStatus from dart:io instead
-                httpCode: _httpCode,
-                httpMessage: _httpMessage));
+            cartridgeLUA: faultyWherigoCartridgeLUA(
+                _LUAFile,
+                WHERIGO_ANALYSE_RESULT_STATUS.ERROR_HTTP,
+                // TODO Thomas What if status 401 or whatever returns? Please use httpStatus from dart:io instead
+                // this does not happen because the raspi server servlet does only provide theese error codes
+                ['wherigo_http_code_http', WHERIGO_HTTP_STATUS[_httpCode] ?? ''],
+                _httpCode,
+                _httpMessage
+            ),
+        );
       }
     } catch (exception) {
       //SocketException: Connection timed out (OS Error: Connection timed out, errno = 110), address = 192.168.178.93, port = 57582
@@ -59,29 +142,18 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
       _httpMessage = exception.toString();
       return WherigoCartridge(
           cartridgeGWC: WHERIGO_EMPTYCARTRIDGE_GWC,
-          cartridgeLUA: WherigoCartridgeLUA(
-              LUAFile: _LUAFile,
-              Characters: [],
-              Items: [],
-              Tasks: [],
-              Inputs: [],
-              Zones: [],
-              Timers: [],
-              Media: [],
-              Messages: [],
-              Answers: [],
-              Variables: [],
-              NameToObject: {},
-              ResultStatus: WHERIGO_ANALYSE_RESULT_STATUS.ERROR_HTTP,
-              ResultsLUA: ['wherigo_code_http_503', _httpMessage],
-              httpCode: _httpCode,
-              httpMessage: _httpMessage));
+          cartridgeLUA: faultyWherigoCartridgeLUA(
+              _LUAFile,
+              WHERIGO_ANALYSE_RESULT_STATUS.ERROR_HTTP,
+              ['wherigo_code_http_503', _httpMessage],
+              _httpCode,
+              _httpMessage));
     } // end catch exception
   } // end if not offline
   else
     _LUAFile = String.fromCharCodes(byteListLUA);
 
-  _LUAFile = _normalizeLUAmultiLineText(_LUAFile);
+  _LUAFile = normalizeLUAmultiLineText(_LUAFile);
 
   List<String> _ResultsLUA = [];
   WHERIGO_ANALYSE_RESULT_STATUS _Status = WHERIGO_ANALYSE_RESULT_STATUS.OK;
@@ -94,112 +166,15 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
     _ResultsLUA.add('wherigo_error_empty_lua');
     return WherigoCartridge(
         cartridgeGWC: WHERIGO_EMPTYCARTRIDGE_GWC,
-        cartridgeLUA: WherigoCartridgeLUA(
-            LUAFile: '',
-            Characters: [],
-            Items: [],
-            Tasks: [],
-            Inputs: [],
-            Zones: [],
-            Timers: [],
-            Media: [],
-            Messages: [],
-            Answers: [],
-            Variables: [],
-            NameToObject: {},
-            ResultStatus: WHERIGO_ANALYSE_RESULT_STATUS.ERROR_LUA,
-            ResultsLUA: _ResultsLUA,
-            httpCode: '',
-            httpMessage: ''));
+        cartridgeLUA: faultyWherigoCartridgeLUA(
+            '',
+            WHERIGO_ANALYSE_RESULT_STATUS.ERROR_LUA,
+            _ResultsLUA,
+            '',
+            ''));
   }
 
-  String _LUACartridgeName = '';
-  String _CartridgeLUAName = '';
-  String _LUACartridgeGUID = '';
-  String _obfuscatorTable = '';
-  List<WherigoCharacterData> _Characters = [];
-  List<WherigoItemData> _Items = [];
-  List<WherigoTaskData> _Tasks = [];
-  List<WherigoInputData> _Inputs = [];
-  List<WherigoZoneData> _Zones = [];
-  List<WherigoTimerData> _Timers = [];
-  List<WherigoMediaData> _Media = [];
-  List<List<WherigoActionMessageElementData>> _Messages = [];
-  List<WherigoAnswerData> _Answers = [];
-  List<WherigoVariableData> _Variables = [];
-  Map<String, WherigoObjectData> _NameToObject = {};
 
-  bool sectionMedia = true;
-  bool sectionInner = true;
-  bool sectionZone = true;
-  bool sectionDescription = true;
-  bool sectionCharacter = true;
-  bool sectionItem = true;
-  bool sectionTask = true;
-  bool sectionTimer = true;
-  bool sectionMessages = true;
-  bool sectionInput = true;
-  bool sectionChoices = true;
-  bool sectionText = true;
-  bool sectionAnalysed = false;
-  bool insideInputFunction = false;
-  bool sectionVariables = true;
-  bool beyondHeader = false;
-
-  String LUAname = '';
-  String id = '';
-  String name = '';
-  String description = '';
-  String type = '';
-  String medianame = '';
-  String alttext = '';
-  WHERIGO_BUILDER _builder = WHERIGO_BUILDER.UNKNOWN;
-  String _BuilderVersion = '';
-  String _TargetDeviceVersion = '';
-  String _CountryID = '';
-  String _StateID = '';
-  String _UseLogging = '';
-  String _CreateDate = WHERIGO_NULLDATE;
-  String _PublishDate  = WHERIGO_NULLDATE;
-  String _UpdateDate = WHERIGO_NULLDATE;
-  String _LastPlayedDate = WHERIGO_NULLDATE;
-  List<WherigoZonePoint> points = [];
-  String visible = '';
-  String media = '';
-  String icon = '';
-  String active = '';
-  String distanceRange = '';
-  String showObjects = '';
-  String proximityRange = '';
-  WherigoZonePoint originalPoint = WherigoZonePoint(0.0, 0.0, 0.0);
-  String distanceRangeUOM = '';
-  String proximityRangeUOM = '';
-  String outOfRange = '';
-  String inRange = '';
-  String location = '';
-  WherigoZonePoint zonePoint = WherigoZonePoint(0.0, 0.0, 0.0);
-  String gender = '';
-  String container = '';
-  String locked = '';
-  String opened = '';
-  String complete = '';
-  String correctstate = '';
-  List<String> declaration = [];
-  String duration = '';
-  List<WherigoActionMessageElementData> singleMessageDialog = [];
-  String variableID = '';
-  String inputType = '';
-  String text = '';
-  List<String> listChoices = [];
-  String inputObject = '';
-  List<WherigoInputData> resultInputs = [];
-  List<WherigoActionMessageElementData> answerActions = [];
-  List<String> answerList = [];
-  String answerHash = '';
-  WherigoActionMessageElementData action;
-  Map<String, List<WherigoAnswerData>> Answers =
-      {}; // TODO Thomas As all of such constructions, please use explicit class types for values which make it better to check for Nullability
-  String _obfuscatorFunction = '';
 
   // get cartridge details
 
@@ -222,23 +197,23 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
 
   if (RegExp(r'(WWB_deobf)').hasMatch(_LUAFile)) {
     _obfuscatorFunction = 'WWB_deobf';
-    _obfuscatorTable = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@.-~';
+    obfuscatorTable = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@.-~';
     _obfuscatorFound = true;
     RegExp(r'WWB_deobf\(".*?"\)').allMatches(_LUAFile).forEach((obfuscatedText) {
       var group = obfuscatedText.group(0);
       if (group == null) return;
 
-      _LUAFile = _LUAFile.replaceAll(group, '"' + deObfuscateText(group, _obfuscatorFunction, _obfuscatorTable) + '"');
+      _LUAFile = _LUAFile.replaceAll(group, '"' + deObfuscateText(group, _obfuscatorFunction, obfuscatorTable) + '"');
     });
   } else if (RegExp(r'(gsub_wig)').hasMatch(_LUAFile)) {
     _obfuscatorFunction = 'gsub_wig';
-    _obfuscatorTable = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@.-~';
+    obfuscatorTable = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@.-~';
     _obfuscatorFound = true;
     RegExp(r'gsub_wig\(".*?"\)').allMatches(_LUAFile).forEach((obfuscatedText) {
       var group = obfuscatedText.group(0);
       if (group == null) return;
 
-      _LUAFile = _LUAFile.replaceAll(group, '"' + deObfuscateText(group, _obfuscatorFunction, _obfuscatorTable) + '"');
+      _LUAFile = _LUAFile.replaceAll(group, '"' + deObfuscateText(group, _obfuscatorFunction, obfuscatorTable) + '"');
     });
   }
 
@@ -258,8 +233,8 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
         }
         _obfuscatorFound = true;
 
-        _obfuscatorTable = lines[i].trim().substring(0, lines[i].length - 1);
-        _obfuscatorTable = _obfuscatorTable.trimLeft().replaceAll('local dtable = "', '');
+        obfuscatorTable = lines[i].trim().substring(0, lines[i].length - 1);
+        obfuscatorTable = obfuscatorTable.trimLeft().replaceAll('local dtable = "', '');
 
         // deObfuscate all texts
         _LUAFile = _LUAFile.replaceAll('([[', '(').replaceAll(']])', ')');
@@ -268,7 +243,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           if (group == null) return;
 
           _LUAFile =
-              _LUAFile.replaceAll(group, '"' + deObfuscateText(group, _obfuscatorFunction, _obfuscatorTable) + '"');
+              _LUAFile.replaceAll(group, '"' + deObfuscateText(group, _obfuscatorFunction, obfuscatorTable) + '"');
         });
 
         RegExp(r'' + _obfuscatorFunction + '\\((.|\\s)*?\\)').allMatches(_LUAFile).forEach((obfuscatedText) {
@@ -279,7 +254,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
               group,
               '"' +
                   deObfuscateText(group.replaceAll(_obfuscatorFunction + '(', '').replaceAll(')', ''),
-                      _obfuscatorFunction, _obfuscatorTable) +
+                      _obfuscatorFunction, obfuscatorTable) +
                   '"');
         });
         i = lines.length;
@@ -317,51 +292,51 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
     // search and get Name of Cartridge and Cartridge Meta Data
     //
     if (RegExp(r'(Wherigo.ZCartridge)').hasMatch(lines[i])) {
-      _CartridgeLUAName =
+      CartridgeLUAName =
           lines[i].replaceAll('=', '').replaceAll(' ', '').replaceAll('Wherigo.ZCartridge()', '').trim();
       beyondHeader = true;
     }
 
-    if (lines[i].replaceAll(_CartridgeLUAName, '').trim().startsWith('.Name')) {
-      _LUACartridgeName = lines[i].replaceAll(_CartridgeLUAName + '.Name = ', '').replaceAll('"', '').trim();
+    if (lines[i].replaceAll(CartridgeLUAName, '').trim().startsWith('.Name')) {
+      LUACartridgeName = lines[i].replaceAll(CartridgeLUAName + '.Name = ', '').replaceAll('"', '').trim();
     }
 
-    if (lines[i].replaceAll(_CartridgeLUAName, '').trim().startsWith('.Id')) {
-      _LUACartridgeGUID = lines[i].replaceAll(_CartridgeLUAName + '.Id = ', '').replaceAll('"', '').trim();
+    if (lines[i].replaceAll(CartridgeLUAName, '').trim().startsWith('.Id')) {
+      LUACartridgeGUID = lines[i].replaceAll(CartridgeLUAName + '.Id = ', '').replaceAll('"', '').trim();
     }
 
-    if (lines[i].replaceAll(_CartridgeLUAName, '').trim().startsWith('.BuilderVersion'))
-      _BuilderVersion = lines[i].replaceAll(_CartridgeLUAName + '.BuilderVersion = ', '').replaceAll('"', '').trim();
+    if (lines[i].replaceAll(CartridgeLUAName, '').trim().startsWith('.BuilderVersion'))
+      BuilderVersion = lines[i].replaceAll(CartridgeLUAName + '.BuilderVersion = ', '').replaceAll('"', '').trim();
 
-    if (lines[i].replaceAll(_CartridgeLUAName, '').trim().startsWith('.TargetDeviceVersion'))
-      _TargetDeviceVersion =
-          lines[i].replaceAll(_CartridgeLUAName + '.TargetDeviceVersion = ', '').replaceAll('"', '').trim();
+    if (lines[i].replaceAll(CartridgeLUAName, '').trim().startsWith('.TargetDeviceVersion'))
+      TargetDeviceVersion =
+          lines[i].replaceAll(CartridgeLUAName + '.TargetDeviceVersion = ', '').replaceAll('"', '').trim();
 
-    if (lines[i].replaceAll(_CartridgeLUAName, '').trim().startsWith('.CountryId'))
-      _CountryID = lines[i].replaceAll(_CartridgeLUAName + '.CountryId = ', '').replaceAll('"', '').trim();
+    if (lines[i].replaceAll(CartridgeLUAName, '').trim().startsWith('.CountryId'))
+      CountryID = lines[i].replaceAll(CartridgeLUAName + '.CountryId = ', '').replaceAll('"', '').trim();
 
-    if (lines[i].replaceAll(_CartridgeLUAName, '').trim().startsWith('.StateId'))
-      _StateID = lines[i].replaceAll(_CartridgeLUAName + '.StateId = ', '').replaceAll('"', '').trim();
+    if (lines[i].replaceAll(CartridgeLUAName, '').trim().startsWith('.StateId'))
+      StateID = lines[i].replaceAll(CartridgeLUAName + '.StateId = ', '').replaceAll('"', '').trim();
 
-    if (lines[i].replaceAll(_CartridgeLUAName, '').trim().startsWith('.UseLogging'))
-      _UseLogging =
-          lines[i].replaceAll(_CartridgeLUAName + '.UseLogging = ', '').replaceAll('"', '').trim().toLowerCase();
+    if (lines[i].replaceAll(CartridgeLUAName, '').trim().startsWith('.UseLogging'))
+      UseLogging =
+          lines[i].replaceAll(CartridgeLUAName + '.UseLogging = ', '').replaceAll('"', '').trim().toLowerCase();
 
-    if (lines[i].replaceAll(_CartridgeLUAName, '').trim().startsWith('.CreateDate'))
-      _CreateDate =
-          _normalizeDate(lines[i].replaceAll(_CartridgeLUAName + '.CreateDate = ', '').replaceAll('"', '').trim());
+    if (lines[i].replaceAll(CartridgeLUAName, '').trim().startsWith('.CreateDate'))
+      CreateDate =
+          normalizeDate(lines[i].replaceAll(CartridgeLUAName + '.CreateDate = ', '').replaceAll('"', '').trim());
 
-    if (lines[i].replaceAll(_CartridgeLUAName, '').trim().startsWith('.PublishDate'))
-      _PublishDate =
-          _normalizeDate(lines[i].replaceAll(_CartridgeLUAName + '.PublishDate = ', '').replaceAll('"', '').trim());
+    if (lines[i].replaceAll(CartridgeLUAName, '').trim().startsWith('.PublishDate'))
+      PublishDate =
+          normalizeDate(lines[i].replaceAll(CartridgeLUAName + '.PublishDate = ', '').replaceAll('"', '').trim());
 
-    if (lines[i].replaceAll(_CartridgeLUAName, '').trim().startsWith('.UpdateDate'))
-      _UpdateDate =
-          _normalizeDate(lines[i].replaceAll(_CartridgeLUAName + '.UpdateDate = ', '').replaceAll('"', '').trim());
+    if (lines[i].replaceAll(CartridgeLUAName, '').trim().startsWith('.UpdateDate'))
+      UpdateDate =
+          normalizeDate(lines[i].replaceAll(CartridgeLUAName + '.UpdateDate = ', '').replaceAll('"', '').trim());
 
-    if (lines[i].replaceAll(_CartridgeLUAName, '').trim().startsWith('.LastPlayedDate'))
-      _LastPlayedDate =
-          _normalizeDate(lines[i].replaceAll(_CartridgeLUAName + '.LastPlayedDate = ', '').replaceAll('"', '').trim());
+    if (lines[i].replaceAll(CartridgeLUAName, '').trim().startsWith('.LastPlayedDate'))
+      LastPlayedDate =
+          normalizeDate(lines[i].replaceAll(CartridgeLUAName + '.LastPlayedDate = ', '').replaceAll('"', '').trim());
 
     // ----------------------------------------------------------------------------------------------------------------
     // search and get Media Object
@@ -386,12 +361,12 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           i++;
           lines[i] = lines[i].trim();
           if (lines[i].trim().replaceAll(LUAname + '.', '').startsWith('Id')) {
-            id = getLineData(lines[i], LUAname, 'Id', _obfuscatorFunction, _obfuscatorTable);
+            id = getLineData(lines[i], LUAname, 'Id', _obfuscatorFunction, obfuscatorTable);
           } else if (lines[i].trim().replaceAll(LUAname + '.', '').startsWith('Name')) {
-            name = getLineData(lines[i], LUAname, 'Name', _obfuscatorFunction, _obfuscatorTable);
+            name = getLineData(lines[i], LUAname, 'Name', _obfuscatorFunction, obfuscatorTable);
           } else if (lines[i].trim().replaceAll(LUAname + '.', '').startsWith('Description')) {
             if (lines[i + 1].trim().replaceAll(LUAname + '.', '').startsWith('AltText')) {
-              description = getLineData(lines[i], LUAname, 'Description', _obfuscatorFunction, _obfuscatorTable);
+              description = getLineData(lines[i], LUAname, 'Description', _obfuscatorFunction, obfuscatorTable);
             } else {
               sectionInner = true;
               description = lines[i].trim().replaceAll(LUAname + '.', '');
@@ -408,7 +383,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
             }
             if (description.startsWith('WWB_multi')) description = removeWWB(description);
           } else if (lines[i].trim().replaceAll(LUAname + '.', '').startsWith('AltText')) {
-            alttext = getLineData(lines[i], LUAname, 'AltText', _obfuscatorFunction, _obfuscatorTable);
+            alttext = getLineData(lines[i], LUAname, 'AltText', _obfuscatorFunction, obfuscatorTable);
           } else if (lines[i].trim().replaceAll(LUAname + '.', '').startsWith('Resources')) {
             i++;
             lines[i] = lines[i].trim();
@@ -444,7 +419,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           }
         } while (sectionMedia && (i < lines.length - 1));
 
-        _Media.add(WherigoMediaData(
+        cartridgeMedia.add(WherigoMediaData(
           LUAname,
           id,
           name,
@@ -453,7 +428,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           type,
           medianame,
         ));
-        _NameToObject[LUAname] = WherigoObjectData(id, index, name, medianame, WHERIGO_OBJECT_TYPE.MEDIA);
+        cartridgeNameToObject[LUAname] = WherigoObjectData(id, index, name, medianame, WHERIGO_OBJECT_TYPE.MEDIA);
       } // end if line hasmatch zmedia
     } catch (exception) {
       _Status = WHERIGO_ANALYSE_RESULT_STATUS.ERROR_LUA;
@@ -493,10 +468,10 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           i++;
           lines[i] = lines[i].trim();
           if (lines[i].startsWith(LUAname + '.Id'))
-            id = getLineData(lines[i], LUAname, 'Id', _obfuscatorFunction, _obfuscatorTable);
+            id = getLineData(lines[i], LUAname, 'Id', _obfuscatorFunction, obfuscatorTable);
 
           if (lines[i].startsWith(LUAname + '.Name')) {
-            name = getLineData(lines[i], LUAname, 'Name', _obfuscatorFunction, _obfuscatorTable);
+            name = getLineData(lines[i], LUAname, 'Name', _obfuscatorFunction, obfuscatorTable);
           }
 
           if (lines[i].startsWith(LUAname + '.Description')) {
@@ -510,41 +485,41 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
             } while (sectionDescription);
             description = description.replaceAll('[[', '').replaceAll(']]', '').replaceAll('<BR>', '\n');
             description =
-                getLineData(description, LUAname, 'Description', _obfuscatorFunction, _obfuscatorTable).trim();
+                getLineData(description, LUAname, 'Description', _obfuscatorFunction, obfuscatorTable).trim();
             if (description.startsWith('WWB_multi')) description = removeWWB(description);
           }
 
           if (lines[i].startsWith(LUAname + '.Visible'))
-            visible = getLineData(lines[i], LUAname, 'Visible', _obfuscatorFunction, _obfuscatorTable);
+            visible = getLineData(lines[i], LUAname, 'Visible', _obfuscatorFunction, obfuscatorTable);
 
           if (lines[i].startsWith(LUAname + '.Media'))
-            media = getLineData(lines[i], LUAname, 'Media', _obfuscatorFunction, _obfuscatorTable);
+            media = getLineData(lines[i], LUAname, 'Media', _obfuscatorFunction, obfuscatorTable);
 
           if (lines[i].startsWith(LUAname + '.Icon'))
-            icon = getLineData(lines[i], LUAname, 'Icon', _obfuscatorFunction, _obfuscatorTable);
+            icon = getLineData(lines[i], LUAname, 'Icon', _obfuscatorFunction, obfuscatorTable);
 
           if (lines[i].startsWith(LUAname + '.Active'))
-            active = getLineData(lines[i], LUAname, 'Active', _obfuscatorFunction, _obfuscatorTable);
+            active = getLineData(lines[i], LUAname, 'Active', _obfuscatorFunction, obfuscatorTable);
 
           if (lines[i].startsWith(LUAname + '.DistanceRangeUOM ='))
             distanceRangeUOM =
-                getLineData(lines[i], LUAname, 'DistanceRangeUOM', _obfuscatorFunction, _obfuscatorTable);
+                getLineData(lines[i], LUAname, 'DistanceRangeUOM', _obfuscatorFunction, obfuscatorTable);
 
           if (lines[i].startsWith(LUAname + '.ProximityRangeUOM ='))
             proximityRangeUOM =
-                getLineData(lines[i], LUAname, 'ProximityRangeUOM', _obfuscatorFunction, _obfuscatorTable);
+                getLineData(lines[i], LUAname, 'ProximityRangeUOM', _obfuscatorFunction, obfuscatorTable);
 
           if (lines[i].startsWith(LUAname + '.DistanceRange ='))
-            distanceRange = getLineData(lines[i], LUAname, 'DistanceRange', _obfuscatorFunction, _obfuscatorTable);
+            distanceRange = getLineData(lines[i], LUAname, 'DistanceRange', _obfuscatorFunction, obfuscatorTable);
 
           if (lines[i].startsWith(LUAname + '.ShowObjects'))
-            showObjects = getLineData(lines[i], LUAname, 'ShowObjects', _obfuscatorFunction, _obfuscatorTable);
+            showObjects = getLineData(lines[i], LUAname, 'ShowObjects', _obfuscatorFunction, obfuscatorTable);
 
           if (lines[i].startsWith(LUAname + '.ProximityRange ='))
-            proximityRange = getLineData(lines[i], LUAname, 'ProximityRange', _obfuscatorFunction, _obfuscatorTable);
+            proximityRange = getLineData(lines[i], LUAname, 'ProximityRange', _obfuscatorFunction, obfuscatorTable);
 
           if (lines[i].startsWith(LUAname + '.OriginalPoint')) {
-            String point = getLineData(lines[i], LUAname, 'OriginalPoint', _obfuscatorFunction, _obfuscatorTable);
+            String point = getLineData(lines[i], LUAname, 'OriginalPoint', _obfuscatorFunction, obfuscatorTable);
             List<String> pointdata =
                 point.replaceAll('ZonePoint(', '').replaceAll(')', '').replaceAll(' ', '').split(',');
             originalPoint =
@@ -552,17 +527,17 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           }
 
           if (lines[i].startsWith(LUAname + '.OutOfRangeName'))
-            outOfRange = getLineData(lines[i], LUAname, 'OutOfRangeName', _obfuscatorFunction, _obfuscatorTable);
+            outOfRange = getLineData(lines[i], LUAname, 'OutOfRangeName', _obfuscatorFunction, obfuscatorTable);
 
           if (lines[i].startsWith(LUAname + '.InRangeName'))
-            inRange = getLineData(lines[i], LUAname, 'InRangeName', _obfuscatorFunction, _obfuscatorTable);
+            inRange = getLineData(lines[i], LUAname, 'InRangeName', _obfuscatorFunction, obfuscatorTable);
 
           if (lines[i].startsWith(LUAname + '.Points = ')) {
             i++;
             lines[i] = lines[i].trim();
             do {
               while (lines[i].trimLeft().startsWith('ZonePoint')) {
-                points.add(_getPoint(lines[i]));
+                points.add(getPoint(lines[i]));
                 i++;
                 lines[i] = lines[i].trim();
               }
@@ -586,7 +561,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
         } while (sectionZone);
         i--;
 
-        _Zones.add(WherigoZoneData(
+        cartridgeZones.add(WherigoZoneData(
           LUAname,
           id,
           name,
@@ -605,7 +580,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           inRange,
           points,
         ));
-        _NameToObject[LUAname] = WherigoObjectData(id, 0, name, media, WHERIGO_OBJECT_TYPE.ZONE);
+        cartridgeNameToObject[LUAname] = WherigoObjectData(id, 0, name, media, WHERIGO_OBJECT_TYPE.ZONE);
       }
     } catch (exception) {
       _Status = WHERIGO_ANALYSE_RESULT_STATUS.ERROR_LUA;
@@ -644,11 +619,11 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           }
 
           if (lines[i].trim().startsWith(LUAname + '.Id')) {
-            id = getLineData(lines[i], LUAname, 'Id', _obfuscatorFunction, _obfuscatorTable);
+            id = getLineData(lines[i], LUAname, 'Id', _obfuscatorFunction, obfuscatorTable);
           }
 
           if (lines[i].trim().startsWith(LUAname + '.Name')) {
-            name = getLineData(lines[i], LUAname, 'Name', _obfuscatorFunction, _obfuscatorTable);
+            name = getLineData(lines[i], LUAname, 'Name', _obfuscatorFunction, obfuscatorTable);
           }
 
           if (lines[i].trim().startsWith(LUAname + '.Description')) {
@@ -663,17 +638,17 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
               lines[i] = lines[i].trim();
             } while (sectionDescription);
             description = description.replaceAll('[[', '').replaceAll(']]', '').replaceAll('<BR>', '\n');
-            description = getLineData(description, LUAname, 'Description', _obfuscatorFunction, _obfuscatorTable);
+            description = getLineData(description, LUAname, 'Description', _obfuscatorFunction, obfuscatorTable);
           }
 
           if (lines[i].startsWith(LUAname + '.Visible'))
-            visible = getLineData(lines[i], LUAname, 'Visible', _obfuscatorFunction, _obfuscatorTable);
+            visible = getLineData(lines[i], LUAname, 'Visible', _obfuscatorFunction, obfuscatorTable);
 
           if (lines[i].startsWith(LUAname + '.Media'))
-            media = getLineData(lines[i], LUAname, 'Media', _obfuscatorFunction, _obfuscatorTable).trim();
+            media = getLineData(lines[i], LUAname, 'Media', _obfuscatorFunction, obfuscatorTable).trim();
 
           if (lines[i].startsWith(LUAname + '.Icon'))
-            icon = getLineData(lines[i], LUAname, 'Icon', _obfuscatorFunction, _obfuscatorTable);
+            icon = getLineData(lines[i], LUAname, 'Icon', _obfuscatorFunction, obfuscatorTable);
 
           if (lines[i].trim().startsWith(LUAname + '.ObjectLocation')) {
             location =
@@ -686,16 +661,16 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
                   double.parse(location.split(',')[2]));
               location = 'ZonePoint';
             } else
-              location = getLineData(lines[i], LUAname, 'ObjectLocation', _obfuscatorFunction, _obfuscatorTable);
+              location = getLineData(lines[i], LUAname, 'ObjectLocation', _obfuscatorFunction, obfuscatorTable);
           }
 
           if (lines[i].startsWith(LUAname + '.Gender')) {
             gender =
-                getLineData(lines[i], LUAname, 'Gender', _obfuscatorFunction, _obfuscatorTable).toLowerCase().trim();
+                getLineData(lines[i], LUAname, 'Gender', _obfuscatorFunction, obfuscatorTable).toLowerCase().trim();
           }
 
           if (lines[i].startsWith(LUAname + '.Type'))
-            type = getLineData(lines[i], LUAname, 'Type', _obfuscatorFunction, _obfuscatorTable);
+            type = getLineData(lines[i], LUAname, 'Type', _obfuscatorFunction, obfuscatorTable);
 
           if (RegExp(r'( Wherigo.ZItem\()').hasMatch(lines[i]) ||
               RegExp(r'( Wherigo.ZTask\()').hasMatch(lines[i]) ||
@@ -712,9 +687,9 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           }
         } while (sectionCharacter);
 
-        _Characters.add(WherigoCharacterData(
+        cartridgeCharacters.add(WherigoCharacterData(
             LUAname, id, name, description, visible, media, icon, location, zonePoint, container, gender, type));
-        _NameToObject[LUAname] = WherigoObjectData(id, 0, name, media, WHERIGO_OBJECT_TYPE.CHARACTER);
+        cartridgeNameToObject[LUAname] = WherigoObjectData(id, 0, name, media, WHERIGO_OBJECT_TYPE.CHARACTER);
         i--;
       } // end if
     } catch (exception) {
@@ -756,11 +731,11 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           }
 
           if (lines[i].trim().startsWith(LUAname + '.Id')) {
-            id = getLineData(lines[i], LUAname, 'Id', _obfuscatorFunction, _obfuscatorTable);
+            id = getLineData(lines[i], LUAname, 'Id', _obfuscatorFunction, obfuscatorTable);
           }
 
           if (lines[i].trim().startsWith(LUAname + '.Name')) {
-            name = getLineData(lines[i], LUAname, 'Name', _obfuscatorFunction, _obfuscatorTable);
+            name = getLineData(lines[i], LUAname, 'Name', _obfuscatorFunction, obfuscatorTable);
           }
 
           if (lines[i].trim().startsWith(LUAname + '.Description')) {
@@ -776,23 +751,23 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
             } while (sectionDescription);
             description = description.replaceAll('[[', '').replaceAll(']]', '').replaceAll('<BR>', '\n');
             description =
-                getLineData(description, LUAname, 'Description', _obfuscatorFunction, _obfuscatorTable).trim();
+                getLineData(description, LUAname, 'Description', _obfuscatorFunction, obfuscatorTable).trim();
           }
 
           if (lines[i].trim().startsWith(LUAname + '.Visible'))
-            visible = getLineData(lines[i], LUAname, 'Visible', _obfuscatorFunction, _obfuscatorTable);
+            visible = getLineData(lines[i], LUAname, 'Visible', _obfuscatorFunction, obfuscatorTable);
 
           if (lines[i].trim().startsWith(LUAname + '.Media'))
-            media = getLineData(lines[i], LUAname, 'Media', _obfuscatorFunction, _obfuscatorTable).trim();
+            media = getLineData(lines[i], LUAname, 'Media', _obfuscatorFunction, obfuscatorTable).trim();
 
           if (lines[i].trim().startsWith(LUAname + '.Icon'))
-            icon = getLineData(lines[i], LUAname, 'Icon', _obfuscatorFunction, _obfuscatorTable);
+            icon = getLineData(lines[i], LUAname, 'Icon', _obfuscatorFunction, obfuscatorTable);
 
           if (lines[i].trim().startsWith(LUAname + '.Locked'))
-            locked = getLineData(lines[i], LUAname, 'Locked', _obfuscatorFunction, _obfuscatorTable);
+            locked = getLineData(lines[i], LUAname, 'Locked', _obfuscatorFunction, obfuscatorTable);
 
           if (lines[i].trim().startsWith(LUAname + '.Opened')) {
-            opened = getLineData(lines[i], LUAname, 'Opened', _obfuscatorFunction, _obfuscatorTable);
+            opened = getLineData(lines[i], LUAname, 'Opened', _obfuscatorFunction, obfuscatorTable);
           }
 
           if (lines[i].trim().startsWith(LUAname + '.ObjectLocation')) {
@@ -806,7 +781,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
                   double.parse(location.split(',')[2]));
               location = 'ZonePoint';
             } else
-              location = getLineData(lines[i], LUAname, 'ObjectLocation', _obfuscatorFunction, _obfuscatorTable);
+              location = getLineData(lines[i], LUAname, 'ObjectLocation', _obfuscatorFunction, obfuscatorTable);
           }
           if (RegExp(r'( Wherigo.ZItem\()').hasMatch(lines[i]) ||
               RegExp(r'( Wherigo.ZTask\()').hasMatch(lines[i]) ||
@@ -823,10 +798,10 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           }
         } while (sectionItem);
 
-        _Items.add(WherigoItemData(
+        cartridgeItems.add(WherigoItemData(
             LUAname, id, name, description, visible, media, icon, location, zonePoint, container, locked, opened));
 
-        _NameToObject[LUAname] = WherigoObjectData(id, 0, name, media, WHERIGO_OBJECT_TYPE.ITEM);
+        cartridgeNameToObject[LUAname] = WherigoObjectData(id, 0, name, media, WHERIGO_OBJECT_TYPE.ITEM);
         i--;
       } // end if
     } catch (exception) {
@@ -861,10 +836,10 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           lines[i] = lines[i].trim();
 
           if (lines[i].startsWith(LUAname + '.Id'))
-            id = getLineData(lines[i], LUAname, 'Id', _obfuscatorFunction, _obfuscatorTable);
+            id = getLineData(lines[i], LUAname, 'Id', _obfuscatorFunction, obfuscatorTable);
 
           if (lines[i].startsWith(LUAname + '.Name'))
-            name = getLineData(lines[i], LUAname, 'Name', _obfuscatorFunction, _obfuscatorTable);
+            name = getLineData(lines[i], LUAname, 'Name', _obfuscatorFunction, obfuscatorTable);
 
           if (lines[i].startsWith(LUAname + '.Description')) {
             description = '';
@@ -878,26 +853,26 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
               lines[i] = lines[i].trim();
             } while (sectionDescription);
             description = description.replaceAll('[[', '').replaceAll(']]', '').replaceAll('<BR>', '\n');
-            description = getLineData(description, LUAname, 'Description', _obfuscatorFunction, _obfuscatorTable);
+            description = getLineData(description, LUAname, 'Description', _obfuscatorFunction, obfuscatorTable);
           }
 
           if (lines[i].startsWith(LUAname + '.Visible'))
-            visible = getLineData(lines[i], LUAname, 'Visible', _obfuscatorFunction, _obfuscatorTable);
+            visible = getLineData(lines[i], LUAname, 'Visible', _obfuscatorFunction, obfuscatorTable);
 
           if (lines[i].startsWith(LUAname + '.Media'))
-            media = getLineData(lines[i], LUAname, 'Media', _obfuscatorFunction, _obfuscatorTable).trim();
+            media = getLineData(lines[i], LUAname, 'Media', _obfuscatorFunction, obfuscatorTable).trim();
 
           if (lines[i].startsWith(LUAname + '.Icon'))
-            icon = getLineData(lines[i], LUAname, 'Icon', _obfuscatorFunction, _obfuscatorTable);
+            icon = getLineData(lines[i], LUAname, 'Icon', _obfuscatorFunction, obfuscatorTable);
 
           if (lines[i].startsWith(LUAname + '.Active'))
-            active = getLineData(lines[i], LUAname, 'Active', _obfuscatorFunction, _obfuscatorTable);
+            active = getLineData(lines[i], LUAname, 'Active', _obfuscatorFunction, obfuscatorTable);
 
           if (lines[i].startsWith(LUAname + '.CorrectState'))
-            correctstate = getLineData(lines[i], LUAname, 'CorrectState', _obfuscatorFunction, _obfuscatorTable);
+            correctstate = getLineData(lines[i], LUAname, 'CorrectState', _obfuscatorFunction, obfuscatorTable);
 
           if (lines[i].startsWith(LUAname + '.Complete'))
-            complete = getLineData(lines[i], LUAname, 'Complete', _obfuscatorFunction, _obfuscatorTable);
+            complete = getLineData(lines[i], LUAname, 'Complete', _obfuscatorFunction, obfuscatorTable);
 
           if (RegExp(r'( Wherigo.ZTask)').hasMatch(lines[i]) || RegExp(r'(.ZVariables =)').hasMatch(lines[i]))
             sectionTask = false;
@@ -909,8 +884,8 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
 
         i--;
 
-        _Tasks.add(WherigoTaskData(LUAname, id, name, description, visible, media, icon, active, complete, correctstate));
-        _NameToObject[LUAname] = WherigoObjectData(id, 0, name, media, WHERIGO_OBJECT_TYPE.TASK);
+        cartridgeTasks.add(WherigoTaskData(LUAname, id, name, description, visible, media, icon, active, complete, correctstate));
+        cartridgeNameToObject[LUAname] = WherigoObjectData(id, 0, name, media, WHERIGO_OBJECT_TYPE.TASK);
       } // end if task
     } catch (exception) {
       _Status = WHERIGO_ANALYSE_RESULT_STATUS.ERROR_LUA;
@@ -927,19 +902,19 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
         currentObjectSection = WHERIGO_OBJECT_TYPE.VARIABLES;
         if (lines[i + 1].trim().startsWith('buildervar')) {
           declaration = lines[i]
-              .replaceAll(_CartridgeLUAName + '.ZVariables', '')
+              .replaceAll(CartridgeLUAName + '.ZVariables', '')
               .replaceAll('{', '')
               .replaceAll('}', '')
               .split('=');
           if (declaration[1].startsWith(_obfuscatorFunction)) {
             // content is obfuscated
-            _Variables.add(WherigoVariableData(
+            cartridgeVariables.add(WherigoVariableData(
                 declaration[1].trim(),
                 deobfuscateUrwigoText(
                     declaration[2].replaceAll(_obfuscatorFunction, '').replaceAll('("', '').replaceAll('")', ''),
-                    _obfuscatorTable)));
+                    obfuscatorTable)));
           } else
-            _Variables.add(// content not obfuscated
+            cartridgeVariables.add(// content not obfuscated
                 WherigoVariableData(declaration[1].trim(), declaration[2].replaceAll('"', '')));
         }
         i++;
@@ -949,16 +924,16 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           if (declaration.length == 2) {
             if (declaration[1].startsWith(_obfuscatorFunction)) {
               // content is obfuscated
-              _Variables.add(WherigoVariableData(
+              cartridgeVariables.add(WherigoVariableData(
                   declaration[0].trim(),
                   deobfuscateUrwigoText(
                       declaration[1].replaceAll(_obfuscatorFunction, '').replaceAll('("', '').replaceAll('")', ''),
-                      _obfuscatorTable)));
+                      obfuscatorTable)));
             } else
-              _Variables.add(// content not obfuscated
+              cartridgeVariables.add(// content not obfuscated
                   WherigoVariableData(declaration[0].trim(), declaration[1].replaceAll('"', '')));
           } else // only one element
-            _Variables.add(WherigoVariableData(declaration[0].trim(), ''));
+            cartridgeVariables.add(WherigoVariableData(declaration[0].trim(), ''));
 
           i++;
           lines[i] = lines[i].trim();
@@ -992,10 +967,10 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           lines[i] = lines[i].trim();
 
           if (lines[i].trim().startsWith(LUAname + '.Id'))
-            id = getLineData(lines[i], LUAname, 'Id', _obfuscatorFunction, _obfuscatorTable);
+            id = getLineData(lines[i], LUAname, 'Id', _obfuscatorFunction, obfuscatorTable);
 
           if (lines[i].trim().startsWith(LUAname + '.Name'))
-            name = getLineData(lines[i], LUAname, 'Name', _obfuscatorFunction, _obfuscatorTable);
+            name = getLineData(lines[i], LUAname, 'Name', _obfuscatorFunction, obfuscatorTable);
 
           if (lines[i].trim().startsWith(LUAname + '.Description')) {
             description = '';
@@ -1007,19 +982,19 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
               lines[i] = lines[i].trim();
               if (i > lines.length - 1 || lines[i].trim().startsWith(LUAname + '.Visible')) sectionDescription = false;
             } while (sectionDescription);
-            description = getLineData(description, LUAname, 'Description', _obfuscatorFunction, _obfuscatorTable);
+            description = getLineData(description, LUAname, 'Description', _obfuscatorFunction, obfuscatorTable);
           }
 
           if (lines[i].trim().startsWith(LUAname + '.Duration'))
-            duration = getLineData(lines[i], LUAname, 'Duration', _obfuscatorFunction, _obfuscatorTable).trim();
+            duration = getLineData(lines[i], LUAname, 'Duration', _obfuscatorFunction, obfuscatorTable).trim();
 
           if (lines[i].trim().startsWith(LUAname + '.Type')) {
-            type = getLineData(lines[i], LUAname, 'Type', _obfuscatorFunction, _obfuscatorTable).trim().toLowerCase();
+            type = getLineData(lines[i], LUAname, 'Type', _obfuscatorFunction, obfuscatorTable).trim().toLowerCase();
           }
 
           if (lines[i].trim().startsWith(LUAname + '.Visible'))
             visible =
-                getLineData(lines[i], LUAname, 'Visible', _obfuscatorFunction, _obfuscatorTable).trim().toLowerCase();
+                getLineData(lines[i], LUAname, 'Visible', _obfuscatorFunction, obfuscatorTable).trim().toLowerCase();
 
           if (RegExp(r'( Wherigo.ZTimer\()').hasMatch(lines[i]) || RegExp(r'( Wherigo.ZInput\()').hasMatch(lines[i]))
             sectionTimer = false;
@@ -1029,7 +1004,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           }
         } while (sectionTimer && i < lines.length - 1);
 
-        _Timers.add(WherigoTimerData(
+        cartridgeTimers.add(WherigoTimerData(
           LUAname,
           id,
           name,
@@ -1039,7 +1014,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           type,
         ));
 
-        _NameToObject[LUAname] = WherigoObjectData(id, 0, name, '', WHERIGO_OBJECT_TYPE.TIMER);
+        cartridgeNameToObject[LUAname] = WherigoObjectData(id, 0, name, '', WHERIGO_OBJECT_TYPE.TIMER);
         i--;
       }
     } catch (exception) {
@@ -1073,11 +1048,11 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           lines[i] = lines[i].trim();
 
           if (lines[i].trim().startsWith(LUAname + '.Id')) {
-            id = getLineData(lines[i], LUAname, 'Id', _obfuscatorFunction, _obfuscatorTable);
+            id = getLineData(lines[i], LUAname, 'Id', _obfuscatorFunction, obfuscatorTable);
           }
 
           if (lines[i].trim().startsWith(LUAname + '.Name')) {
-            name = getLineData(lines[i], LUAname, 'Name', _obfuscatorFunction, _obfuscatorTable);
+            name = getLineData(lines[i], LUAname, 'Name', _obfuscatorFunction, obfuscatorTable);
           }
 
           if (lines[i].trim().startsWith(LUAname + '.Description')) {
@@ -1090,27 +1065,27 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
               lines[i] = lines[i].trim();
               if (i > lines.length - 1 || lines[i].startsWith(LUAname + '.Visible')) sectionDescription = false;
             } while (sectionDescription);
-            description = getLineData(description, LUAname, 'Description', _obfuscatorFunction, _obfuscatorTable);
+            description = getLineData(description, LUAname, 'Description', _obfuscatorFunction, obfuscatorTable);
           }
 
           if (lines[i].trim().startsWith(LUAname + '.Media')) {
-            media = getLineData(lines[i], LUAname, 'Media', _obfuscatorFunction, _obfuscatorTable);
+            media = getLineData(lines[i], LUAname, 'Media', _obfuscatorFunction, obfuscatorTable);
           }
 
           if (lines[i].trim().startsWith(LUAname + '.Visible')) {
-            visible = getLineData(lines[i], LUAname, 'Visible', _obfuscatorFunction, _obfuscatorTable);
+            visible = getLineData(lines[i], LUAname, 'Visible', _obfuscatorFunction, obfuscatorTable);
           }
 
           if (lines[i].trim().startsWith(LUAname + '.Icon')) {
-            icon = getLineData(lines[i], LUAname, 'Icon', _obfuscatorFunction, _obfuscatorTable);
+            icon = getLineData(lines[i], LUAname, 'Icon', _obfuscatorFunction, obfuscatorTable);
           }
 
           if (lines[i].trim().startsWith(LUAname + '.InputType')) {
-            inputType = getLineData(lines[i], LUAname, 'InputType', _obfuscatorFunction, _obfuscatorTable);
+            inputType = getLineData(lines[i], LUAname, 'InputType', _obfuscatorFunction, obfuscatorTable);
           }
 
           if (lines[i].trim().startsWith(LUAname + '.InputVariableId')) {
-            variableID = getLineData(lines[i], LUAname, 'InputVariableId', _obfuscatorFunction, _obfuscatorTable);
+            variableID = getLineData(lines[i], LUAname, 'InputVariableId', _obfuscatorFunction, obfuscatorTable);
           }
 
           if (lines[i].startsWith(LUAname + '.Text')) {
@@ -1121,7 +1096,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
                 lines[i + 1].trim().startsWith('function') ||
                 RegExp(r'(:OnProximity)').hasMatch(lines[i + 1].trim())) {
               // single Line
-              text = getLineData(lines[i], LUAname, 'Text', _obfuscatorFunction, _obfuscatorTable);
+              text = getLineData(lines[i], LUAname, 'Text', _obfuscatorFunction, obfuscatorTable);
             } else {
               // multi Lines of Text
               text = '';
@@ -1144,7 +1119,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
             listChoices = [];
             if (lines[i + 1].trim().startsWith(LUAname + '.InputType') ||
                 lines[i + 1].trim().startsWith(LUAname + '.Text')) {
-              listChoices.addAll(getChoicesSingleLine(lines[i], LUAname, _obfuscatorFunction, _obfuscatorTable));
+              listChoices.addAll(getChoicesSingleLine(lines[i], LUAname, _obfuscatorFunction, obfuscatorTable));
             } else {
               i++;
               lines[i] = lines[i].trim();
@@ -1172,7 +1147,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
         } while (sectionInput);
         i--;
 
-        _Inputs.add(WherigoInputData(
+        cartridgeInputs.add(WherigoInputData(
           LUAname,
           id,
           variableID,
@@ -1186,7 +1161,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           listChoices,
           [],
         ));
-        _NameToObject[LUAname] = WherigoObjectData(id, 0, name, media, WHERIGO_OBJECT_TYPE.INPUT);
+        cartridgeNameToObject[LUAname] = WherigoObjectData(id, 0, name, media, WHERIGO_OBJECT_TYPE.INPUT);
       } // end if lines[i] hasMatch Wherigo.ZInput - Input-Object
     } catch (exception) {
       _Status = WHERIGO_ANALYSE_RESULT_STATUS.ERROR_LUA;
@@ -1202,7 +1177,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
         insideInputFunction = true;
         inputObject = '';
         answerActions = [];
-        _answerVariable = '';
+        answerVariable = '';
 
         // getting name of function
         inputObject = lines[i].replaceAll('function ', '').replaceAll(':OnGetInput(input)', '').trim();
@@ -1214,13 +1189,13 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           lines[i] = lines[i].trim();
 
           if (lines[i].trim().endsWith('= tonumber(input)')) {
-            _answerVariable = lines[i].trim().replaceAll(' = tonumber(input)', '');
+            answerVariable = lines[i].trim().replaceAll(' = tonumber(input)', '');
           } else if (lines[i].trim().endsWith(' = input')) {
-            _answerVariable = lines[i].trim().replaceAll(' = input', '');
+            answerVariable = lines[i].trim().replaceAll(' = input', '');
           } else if (lines[i].trimLeft() == 'if input == nil then') {
             i++;
             lines[i] = lines[i].trim();
-            _answerVariable = 'input';
+            answerVariable = 'input';
             // suppress this
             //answer = 'NIL';
             sectionAnalysed = false;
@@ -1231,7 +1206,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
             } while (!sectionAnalysed); // end of section
           } // end of NIL
 
-          else if (_OnGetInputSectionEnd(lines[i])) {
+          else if (OnGetInputSectionEnd(lines[i])) {
             if (insideInputFunction) {
               answerList.forEach((answer) {
                 if (answer != 'NIL') {
@@ -1246,9 +1221,9 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
                 }
               });
               answerActions = [];
-              answerList = _getAnswers(i, lines[i], lines[i - 1], _obfuscatorFunction, _obfuscatorTable, _Variables);
+              answerList = getAnswers(i, lines[i], lines[i - 1], _obfuscatorFunction, obfuscatorTable, cartridgeVariables);
             }
-          } else if ((i + 1 < lines.length - 1) && _OnGetInputFunctionEnd(lines[i], lines[i + 1].trim())) {
+          } else if ((i + 1 < lines.length - 1) && OnGetInputFunctionEnd(lines[i], lines[i + 1].trim())) {
             if (insideInputFunction) {
               insideInputFunction = false;
               answerActions.forEach((element) {});
@@ -1264,7 +1239,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
               });
               answerActions = [];
               answerList = [];
-              _answerVariable = '';
+              answerVariable = '';
             }
           } else if (lines[i].trimLeft().startsWith('Buttons')) {
             do {
@@ -1276,7 +1251,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
                       WHERIGO_ACTIONMESSAGETYPE.BUTTON,
                       deobfuscateUrwigoText(
                           lines[i].trim().replaceAll(_obfuscatorFunction + '("', '').replaceAll('")', ''),
-                          _obfuscatorTable)));
+                          obfuscatorTable)));
                 else
                   answerActions.add(WherigoActionMessageElementData(WHERIGO_ACTIONMESSAGETYPE.BUTTON,
                       lines[i].trim().replaceAll(_obfuscatorFunction + '("', '').replaceAll('")', '')));
@@ -1285,7 +1260,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           } // end buttons
 
           else {
-            var tempAction = _handleAnswerLine(lines[i].trimLeft(), _obfuscatorTable, _obfuscatorFunction);
+            var tempAction = handleAnswerLine(lines[i].trimLeft(), obfuscatorTable, _obfuscatorFunction);
             if (tempAction != null) {
               // TODO Thomas tempAction necessary because of nullable method but non-nullable consumer 'action'
               action = tempAction;
@@ -1366,7 +1341,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
             do {
               if (lines[i].trimLeft().startsWith('Text')) {
                 singleMessageDialog.add(WherigoActionMessageElementData(
-                    WHERIGO_ACTIONMESSAGETYPE.TEXT, getTextData(lines[i], _obfuscatorFunction, _obfuscatorTable)));
+                    WHERIGO_ACTIONMESSAGETYPE.TEXT, getTextData(lines[i], _obfuscatorFunction, obfuscatorTable)));
               } else if (lines[i].trimLeft().startsWith('Media')) {
                 singleMessageDialog.add(WherigoActionMessageElementData(WHERIGO_ACTIONMESSAGETYPE.IMAGE,
                     lines[i].trimLeft().replaceAll('Media = ', '').replaceAll('"', '').replaceAll(',', '')));
@@ -1378,7 +1353,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
                       getTextData(
                           lines[i].trim().replaceAll('Buttons = {', '').replaceAll('},', '').replaceAll('}', ''),
                           _obfuscatorFunction,
-                          _obfuscatorTable)));
+                          obfuscatorTable)));
                 } else {
                   // multi line
                   i++;
@@ -1386,7 +1361,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
                   List<String> buttonText = [];
                   do {
                     buttonText
-                        .add(getTextData(lines[i].replaceAll('),', ')').trim(), _obfuscatorFunction, _obfuscatorTable));
+                        .add(getTextData(lines[i].replaceAll('),', ')').trim(), _obfuscatorFunction, obfuscatorTable));
                     i++;
                     lines[i] = lines[i].trim();
                   } while (!lines[i].trimLeft().startsWith('}'));
@@ -1401,7 +1376,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
                 sectionMessages = false;
             } while (sectionMessages);
           }
-          _Messages.add(singleMessageDialog);
+          cartridgeMessages.add(singleMessageDialog);
         } else if (lines[i].trimLeft().startsWith('_Urwigo.Dialog(') ||
             lines[i].trimLeft().startsWith('Wherigo.Dialog(')) {
           sectionMessages = true;
@@ -1441,7 +1416,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
                 lines[i].trimLeft().startsWith('Text = ' + _obfuscatorFunction + '(') ||
                 lines[i].trimLeft().startsWith('Text = (' + _obfuscatorFunction + '(')) {
               singleMessageDialog.add(WherigoActionMessageElementData(
-                  WHERIGO_ACTIONMESSAGETYPE.TEXT, getTextData(lines[i], _obfuscatorFunction, _obfuscatorTable)));
+                  WHERIGO_ACTIONMESSAGETYPE.TEXT, getTextData(lines[i], _obfuscatorFunction, obfuscatorTable)));
             } else if (lines[i].trimLeft().startsWith('Media')) {
               singleMessageDialog.add(
                   WherigoActionMessageElementData(WHERIGO_ACTIONMESSAGETYPE.IMAGE, lines[i].trimLeft().replaceAll('Media = ', '')));
@@ -1450,7 +1425,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
               lines[i] = lines[i].trim();
               do {
                 singleMessageDialog.add(WherigoActionMessageElementData(WHERIGO_ACTIONMESSAGETYPE.BUTTON,
-                    getTextData('Text = ' + lines[i].trim(), _obfuscatorFunction, _obfuscatorTable)));
+                    getTextData('Text = ' + lines[i].trim(), _obfuscatorFunction, obfuscatorTable)));
                 i++;
                 lines[i] = lines[i].trim();
               } while (lines[i].trimLeft() != '}');
@@ -1464,7 +1439,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
             i++;
             lines[i] = lines[i].trim();
           } while (sectionMessages && (i < lines.length));
-          _Messages.add(singleMessageDialog);
+          cartridgeMessages.add(singleMessageDialog);
         } else if (lines[i].trimLeft().startsWith('_Urwigo.OldDialog(')) {
           i++;
           lines[i] = lines[i].trim();
@@ -1504,7 +1479,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
               sectionMessages = false;
             } else if (lines[i].trimLeft().startsWith('Text = ')) {
               singleMessageDialog.add(WherigoActionMessageElementData(
-                  WHERIGO_ACTIONMESSAGETYPE.TEXT, getTextData(lines[i], _obfuscatorFunction, _obfuscatorTable)));
+                  WHERIGO_ACTIONMESSAGETYPE.TEXT, getTextData(lines[i], _obfuscatorFunction, obfuscatorTable)));
             } else if (lines[i].trimLeft().startsWith('Media')) {
               singleMessageDialog.add(
                   WherigoActionMessageElementData(WHERIGO_ACTIONMESSAGETYPE.IMAGE, lines[i].trimLeft().replaceAll('Media = ', '')));
@@ -1513,7 +1488,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
               lines[i] = lines[i].trim();
               do {
                 singleMessageDialog.add(WherigoActionMessageElementData(WHERIGO_ACTIONMESSAGETYPE.BUTTON,
-                    getTextData('Text = ' + lines[i].trim(), _obfuscatorFunction, _obfuscatorTable)));
+                    getTextData('Text = ' + lines[i].trim(), _obfuscatorFunction, obfuscatorTable)));
                 i++;
                 lines[i] = lines[i].trim();
               } while (lines[i].trimLeft() != '}');
@@ -1524,7 +1499,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
             i++;
             lines[i] = lines[i].trim();
           } while (sectionMessages);
-          _Messages.add(singleMessageDialog);
+          cartridgeMessages.add(singleMessageDialog);
         }
       }
     } catch (exception) {
@@ -1536,7 +1511,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
   // ------------------------------------------------------------------------------------------------------------------
   // Save Answers to Input Objects
   //
-  _Inputs.forEach((inputObject) {
+  cartridgeInputs.forEach((inputObject) {
     resultInputs.add(WherigoInputData(
         inputObject.InputLUAName.trim(),
         inputObject.InputID,
@@ -1552,7 +1527,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
         Answers[inputObject.InputLUAName.trim()] ??
             [])); // TODO Thomas I can not check if logically correct to send empty list as exception. However this can be removed when using explicit values
   });
-  _Inputs = resultInputs;
+  cartridgeInputs = resultInputs;
 
   // ------------------------------------------------------------------------------------------------------------------
   // return Cartridge
@@ -1561,284 +1536,35 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
       cartridgeGWC: WHERIGO_EMPTYCARTRIDGE_GWC,
       cartridgeLUA: WherigoCartridgeLUA(
         LUAFile: _LUAFile,
-        CartridgeLUAName: _LUACartridgeName,
-        CartridgeGUID: _LUACartridgeGUID,
-        ObfuscatorTable: _obfuscatorTable,
+        CartridgeLUAName: LUACartridgeName,
+        CartridgeGUID: LUACartridgeGUID,
+        ObfuscatorTable: obfuscatorTable,
         ObfuscatorFunction: _obfuscatorFunction,
-        Characters: _Characters,
-        Items: _Items,
-        Tasks: _Tasks,
-        Inputs: _Inputs,
-        Zones: _Zones,
-        Timers: _Timers,
-        Media: _Media,
-        Messages: _Messages,
-        Answers: _Answers,
-        Variables: _Variables,
-        NameToObject: _NameToObject,
+        Characters: cartridgeCharacters,
+        Items: cartridgeItems,
+        Tasks: cartridgeTasks,
+        Inputs: cartridgeInputs,
+        Zones: cartridgeZones,
+        Timers: cartridgeTimers,
+        Media: cartridgeMedia,
+        Messages: cartridgeMessages,
+        Answers: cartridgeAnswers,
+        Variables: cartridgeVariables,
+        NameToObject: cartridgeNameToObject,
         ResultStatus: _Status,
         ResultsLUA: _ResultsLUA,
         Builder: _builder,
-        BuilderVersion: _BuilderVersion,
-        TargetDeviceVersion: _TargetDeviceVersion,
-        StateID: _StateID,
-        CountryID: _CountryID,
-        UseLogging: _UseLogging,
-        CreateDate: _CreateDate,
-        PublishDate: _PublishDate,
-        UpdateDate: _UpdateDate,
-        LastPlayedDate: _LastPlayedDate,
+        BuilderVersion: BuilderVersion,
+        TargetDeviceVersion: TargetDeviceVersion,
+        StateID: StateID,
+        CountryID: CountryID,
+        UseLogging: UseLogging,
+        CreateDate: CreateDate,
+        PublishDate: PublishDate,
+        UpdateDate: UpdateDate,
+        LastPlayedDate: LastPlayedDate,
         httpCode: _httpCode,
         httpMessage: _httpMessage,
       ));
 }
 
-String _normalizeLUAmultiLineText(String LUA) {
-  return LUA
-      .replaceAll('[[\n', '[[')
-      .replaceAll('<BR>\n', '<BR>')
-      .replaceAll('&gt;', '>')
-      .replaceAll('&lt;', '<')
-      .replaceAll('&nbsp;', ' ')
-      .replaceAll('&amp;', '&')
-      .replaceAll('\\195\\164', 'ä')
-      .replaceAll('\\195\\182', 'ö')
-      .replaceAll('\\195\\188', 'ü')
-      .replaceAll('\\195\\132', 'Ä')
-      .replaceAll('\\195\\156', 'Ü')
-      .replaceAll('\\195\\159', 'ß')
-      .replaceAll('\\194\\176', '°')
-      .replaceAll('\\194\\160', '')
-      .replaceAll('\n\n', '\n');
-}
-
-WherigoZonePoint _getPoint(String line) {
-  List<String> data = line
-      .trimLeft()
-      .replaceAll('ZonePoint(', '')
-      .replaceAll('),', '')
-      .replaceAll(')', '')
-      .replaceAll(' ', '')
-      .split(',');
-  return WherigoZonePoint(double.parse(data[0]), double.parse(data[1]), double.parse(data[2]));
-}
-
-List<String> _getAnswers(
-    int i, String line, String lineBefore, String obfuscator, String dtable, List<WherigoVariableData> variables) {
-  if (line.trim().startsWith('if input == ') ||
-      line.trim().startsWith('if input >= ') ||
-      line.trim().startsWith('if input <= ') ||
-      line.trim().startsWith('elseif input == ') ||
-      line.trim().startsWith('elseif input >= ') ||
-      line.trim().startsWith('elseif input <= ') ||
-      line.trim().startsWith('if ' + _answerVariable + ' == ') ||
-      line.trim().startsWith('elseif ' + _answerVariable + ' == ')) {
-    if (line.contains('<=') && line.contains('>=')) {
-      return [
-        line
-            .trimLeft()
-            .replaceAll('if', '')
-            .replaceAll('else', '')
-            .replaceAll('==', '')
-            .replaceAll('then', '')
-            .replaceAll(' ', '')
-            .replaceAll('and', ' and ')
-            .replaceAll('or', ' or ')
-      ];
-    }
-    return line
-        .trimLeft()
-        .replaceAll('if', '')
-        .replaceAll('else', '')
-        .replaceAll('input', '')
-        .replaceAll('==', '')
-        .replaceAll('then', '')
-        .replaceAll(_answerVariable, '')
-        .replaceAll(' ', '')
-        .replaceAll('and', ' and ')
-        .split(RegExp(r'(or)'));
-  } else if (RegExp(r'(_Urwigo.Hash)').hasMatch(line)) {
-    List<String> results = [];
-    int hashvalue = 0;
-    line = line.split('and')[0];
-    line = line
-        .trim()
-        .replaceAll('if ', '')
-        .replaceAll('elseif ', '')
-        .replaceAll('_Urwigo.Hash', '')
-        .replaceAll('input', '')
-        .replaceAll('=', '')
-        .replaceAll('string.lower', '')
-        .replaceAll('string.upper', '')
-        .replaceAll('(', '')
-        .replaceAll(')', '')
-        .replaceAll('then', '')
-        .replaceAll('else', '')
-        .replaceAll('true', '')
-        .replaceAll('and', '')
-        .replaceAll('Contains', '')
-        .replaceAll('Player', '')
-        .replaceAll(':', '')
-        .replaceAll(' ', '')
-        .replaceAll(RegExp(r'[^or0-9]'), '+')
-        .replaceAll('o+', '+')
-        .replaceAll('+r', '+')
-        .replaceAll('+', '');
-    line.split('or').forEach((element) {
-      hashvalue = int.parse(element.replaceAll('\D+', ''));
-      results.add(hashvalue.toString() +
-          '\x01' +
-          breakUrwigoHash(hashvalue, HASH.ALPHABETICAL).toString() +
-          '\x01' +
-          breakUrwigoHash(hashvalue, HASH.NUMERIC).toString());
-    });
-    return results;
-  } else if (line.trim().startsWith('if Wherigo.NoCaseEquals(') ||
-      line.trim().startsWith('elseif Wherigo.NoCaseEquals(')) {
-    if (_answerVariable.isEmpty) _answerVariable = _getVariable(lineBefore);
-    line = line
-        .trim()
-        .replaceAll('if ', '')
-        .replaceAll('elseif ', '')
-        .replaceAll('Wherigo.NoCaseEquals', '')
-        .replaceAll(_answerVariable, '')
-        .replaceAll('(', '')
-        .replaceAll(')', '')
-        .replaceAll('"', '')
-        .replaceAll(',', '')
-        .replaceAll('then', '')
-        .replaceAll('tostring', '')
-        .replaceAll('else', '')
-        .replaceAll('input', '')
-        .replaceAll('Answer,', '')
-        .trim();
-    if (RegExp(r'(' + obfuscator + ')').hasMatch(line)) {
-      line = deobfuscateUrwigoText(line.replaceAll(obfuscator, '').replaceAll('("', '').replaceAll('")', ''), dtable);
-    }
-    line = line.split(' or ').map((element) {
-      return element.trim();
-    }).join('\n');
-    line = removeWWB(line);
-    // check if variable then provide information
-    for (int i = 0; i < variables.length; i++) {
-      if (line == variables[i].VariableLUAName) {
-        line = variables[i].VariableName + '\x01' + line;
-        i = variables.length;
-      }
-    }
-    if (line.isEmpty) {
-      return ['NIL'];
-    }
-    return [line];
-  }
-
-  throw Exception(
-      'No Answers found'); // TODO Thomas: Please check if empty list instead is logically meaningful; I chose Exception because I believe this line should never be reached.
-}
-
-bool _OnGetInputSectionEnd(String line) {
-  if (line.trim().startsWith('if input == ') ||
-      line.trim().startsWith('if input >= ') ||
-      line.trim().startsWith('if input <= ') ||
-      line.trim().startsWith('elseif input == ') ||
-      line.trim().startsWith('elseif input >= ') ||
-      line.trim().startsWith('elseif input <= ') ||
-      line.trim().startsWith('if _Urwigo.Hash(') ||
-      line.trim().startsWith('if (_Urwigo.Hash(') ||
-      line.trim().startsWith('elseif _Urwigo.Hash(') ||
-      line.trim().startsWith('elseif (_Urwigo.Hash(') ||
-      line.trim().startsWith('if Wherigo.NoCaseEquals(') ||
-      line.trim().startsWith('elseif Wherigo.NoCaseEquals(') ||
-      line.trim().startsWith('if ' + _answerVariable + ' == ') ||
-      line.trim().startsWith('elseif ' + _answerVariable + ' == '))
-    return true;
-  else
-    return false;
-}
-
-bool _OnGetInputFunctionEnd(String line1, String line2) {
-  return (line1.trimLeft().startsWith('end') &&
-      (line2.trimLeft().startsWith('function') || line2.trimLeft().startsWith('return')));
-}
-
-WherigoActionMessageElementData? _handleAnswerLine(String line, String dtable, String obfuscator) {
-  line = line.trim();
-  if (line.startsWith('Wherigo.PlayAudio')) {
-    return WherigoActionMessageElementData(WHERIGO_ACTIONMESSAGETYPE.COMMAND, line.trim());
-  } else if (line.startsWith('Wherigo.GetInput'))
-    return WherigoActionMessageElementData(WHERIGO_ACTIONMESSAGETYPE.COMMAND, line.trim());
-  else if (line.startsWith('_Urwigo') ||
-      line.startsWith('Callback') ||
-      line.startsWith('Wherigo') ||
-      line.startsWith('Buttons') ||
-      line.startsWith('end') ||
-      line == ']]' ||
-      line.startsWith('if action') ||
-      line.startsWith('{') ||
-      line.startsWith('}'))
-    return null; // TODO Thomas: Nullable here ok? This makes the method nullable and so potentially all consumers
-  else if (line.startsWith('Text = ')) {
-    return WherigoActionMessageElementData(WHERIGO_ACTIONMESSAGETYPE.TEXT, getTextData(line, obfuscator, dtable));
-  } else if (line.startsWith('Media = ')) {
-    return WherigoActionMessageElementData(
-        WHERIGO_ACTIONMESSAGETYPE.IMAGE, line.trim().replaceAll('Media = ', '').replaceAll(',', ''));
-  } else if (line.startsWith('Buttons = ')) {
-    if (line.endsWith('}') || line.endsWith('},')) {
-      // single line
-      return WherigoActionMessageElementData(
-          WHERIGO_ACTIONMESSAGETYPE.BUTTON,
-          getTextData(
-              line.trim().replaceAll('Buttons = {', '').replaceAll('},', '').replaceAll('}', ''), obfuscator, dtable));
-    }
-  } else if (line.startsWith('if ') || line.startsWith('elseif ') || line.startsWith('else'))
-    return WherigoActionMessageElementData(WHERIGO_ACTIONMESSAGETYPE.CASE, line.trim());
-  else {
-    String actionLine = '';
-    if (RegExp(r'(' + obfuscator + ')').hasMatch(line)) {
-      List<String> actions = line.trim().split('=');
-      if (actions.length == 2) {
-        actionLine = actions[0].trim() +
-            ' = ' +
-            deobfuscateUrwigoText(
-                (actions[1].indexOf('")') > 0)
-                    ? actions[1]
-                        .substring(0, actions[1].indexOf('")'))
-                        .replaceAll(obfuscator, '')
-                        .replaceAll('("', '')
-                        .replaceAll('")', '')
-                        .trim()
-                    : actions[1].replaceAll(obfuscator, '').replaceAll('("', '').replaceAll('")', '').trim(),
-                dtable);
-      } else {
-        actionLine = deobfuscateUrwigoText(
-            actions[0].replaceAll(obfuscator, '').replaceAll('("', '').replaceAll('")', '').trim(), dtable);
-      }
-    } else
-      actionLine = line.trimLeft();
-    actionLine = actionLine.replaceAll('<BR>', '\n').replaceAll(']],', '');
-    return WherigoActionMessageElementData(WHERIGO_ACTIONMESSAGETYPE.COMMAND, actionLine);
-  }
-}
-
-String _getVariable(String line) {
-  if (line.trim().endsWith('= input')) line = line.trim().replaceAll(' = input', '').replaceAll(' ', '');
-  if (line.trim().endsWith('~= nil then'))
-    line = line.trim().replaceAll('if', '').replaceAll(' ~= nil then', '').replaceAll(' ', '');
-  return line;
-}
-
-String _normalizeDate(String dateString) {
-  if (dateString == null || dateString == '' || dateString == '1/1/0001 12:00:00 AM') return WHERIGO_NULLDATE;
-
-  List<String> dateTime = dateString.split(' ');
-  List<String> date = dateTime[0].split('/');
-  List<String> time = dateTime[1].split(':');
-
-  return DateTime(
-      int.parse(date[2]),
-      int.parse(date[0]),
-      int.parse(date[1]),
-      (dateTime.length == 3 && dateTime[2] == 'PM') ? int.parse(time[0]) + 12 : int.parse(time[0]),
-      int.parse(time[1]),
-      int.parse(time[2])).toString();
-}
