@@ -351,7 +351,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
     return rows == null ? Container() : Column(children: rows);
   }
 
-  Widget _buildRow(dynamic entry, bool odd) {
+  Widget _buildRow(Object entry, bool odd) {
     Widget output;
 
     var row = Container(
@@ -369,7 +369,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
                       });
                     },
                   )
-                : GCWText(text: _getEntryKey(entry)),
+                : GCWText(text: (_getEntryKey(entry) ?? '').toString()),
             margin: EdgeInsets.only(left: 10),
           ),
           flex: 1,
@@ -391,7 +391,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
                         });
                       },
                     )
-                  : GCWText(text: _getEntryValue(entry)),
+                  : GCWText(text: (_getEntryValue(entry) ?? '').toString()),
               margin: EdgeInsets.only(left: 10),
             ),
             flex: 3),
@@ -464,7 +464,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
     }
   }
 
-  Widget _editButton(dynamic entry) {
+  Widget _editButton(Object entry) {
     if (!widget.editAllowed) return Container();
 
     return _currentEditId == _getEntryId(entry)
@@ -513,26 +513,37 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
           );
   }
 
-  //TODO Mike replace dynamic
-  Object _getEntryId(dynamic entry) {
-    if (widget.formulaValueList != null)
-      return entry.id;
+  Object? _getEntryId(Object entry) {
+    if (entry is FormulaValue)
+      return (entry).id;
+    else if (entry is MapEntry<String, String>)
+      return (entry).key;
+    else if (entry is MapEntry<int, Map<String, String>>)
+      return (entry).key;
     else
-      return entry.key;
+      return null;
   }
 
-  String _getEntryKey(dynamic entry) {
-    if (widget.keyKeyValueMap != null)
-      return entry.value.keys.first;
+  Object? _getEntryKey(Object entry) {
+    if (entry is FormulaValue)
+      return (entry).key;
+    else if (entry is MapEntry<String, String>)
+      return (entry).key;
+    else if (entry is MapEntry<int, Map<String, String>>)
+      return (entry).value.keys.first;
     else
-      return entry.key;
+      return null;
   }
 
-  String _getEntryValue(dynamic entry) {
-    if (widget.keyKeyValueMap != null)
-      return entry.value.values.first;
+  Object? _getEntryValue(Object entry) {
+    if (entry is FormulaValue)
+      return (entry).value;
+    else if (entry is MapEntry<String, String>)
+      return (entry).value;
+    else if (entry is MapEntry<int, Map<String, String>>)
+      return (entry).value.values.first;
     else
-      return entry.value;
+      return null;
   }
 
   String? _toJson() {

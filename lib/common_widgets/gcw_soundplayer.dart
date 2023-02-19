@@ -34,8 +34,8 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
   late File _audioFile;
   var _loadedFileBytes;
 
-  var _currentPositionInMS;
-  var _totalDurationInMS;
+  int? _currentPositionInMS;
+  int? _totalDurationInMS;
 
   var _isLoaded = false;
 
@@ -68,7 +68,7 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
         if (_totalDurationInMS == null || _totalDurationInMS == 0.0) {
           _currentSliderPosition = 0.0;
         } else {
-          _currentSliderPosition = min(1.0, _currentPositionInMS / _totalDurationInMS);
+          _currentSliderPosition = min(1.0, _currentPositionInMS! / _totalDurationInMS!);
         }
       });
     });
@@ -164,9 +164,9 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
 
   PlayerState playerState = PlayerState.stopped;
 
-  get isPlaying => playerState == PlayerState.playing;
-  get isPaused => playerState == PlayerState.paused;
-  get isStopped => playerState == PlayerState.stopped;
+  bool get isPlaying => playerState == PlayerState.playing;
+  bool get isPaused => playerState == PlayerState.paused;
+  bool get isStopped => playerState == PlayerState.stopped;
 
   void onComplete() {
     setState(() {
@@ -175,18 +175,18 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
     });
   }
 
-  _audioPlayerPause() async {
+  void _audioPlayerPause() async {
     await advancedPlayer.pause();
     setState(() => playerState = PlayerState.paused);
   }
 
-  _audioPlayerPlay({bool seek = false}) async {
+  void _audioPlayerPlay({bool seek = false}) async {
     if (kIsWeb) {
       // do nothing - web does not support local filö or byte array
     } else {
       if (playerState == PlayerState.paused) {
-        if (seek && _totalDurationInMS != null && _totalDurationInMS > 0) {
-          var newPosition = (_totalDurationInMS * _currentSliderPosition).floor();
+        if (seek && _totalDurationInMS != null && _totalDurationInMS! > 0) {
+          var newPosition = (_totalDurationInMS! * _currentSliderPosition).floor();
           await advancedPlayer.seek(Duration(milliseconds: newPosition));
         }
 
@@ -204,7 +204,7 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
     setState(() {
       playerState = PlayerState.stopped;
       _currentSliderPosition = 0.0;
-      _currentPositionInMS = 0.0;
+      _currentPositionInMS = 0;
     });
   }
 
@@ -216,10 +216,10 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
     return new File(filePath).writeAsBytes(buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
   }
 
-  _durationText() {
+  String _durationText() {
     var total = '--:--';
-    if (_totalDurationInMS != null && _totalDurationInMS >= 0) {
-      var totalInS = (_totalDurationInMS / 1000).floor();
+    if (_totalDurationInMS != null && _totalDurationInMS! >= 0) {
+      var totalInS = (_totalDurationInMS! / 1000).floor();
 
       var min = (totalInS / 60).floor();
       var sec = (totalInS % 60).floor();
@@ -227,8 +227,8 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
     }
 
     var position = '--:--';
-    if (_currentPositionInMS != null && _currentPositionInMS >= 0) {
-      var positionInS = (_currentPositionInMS / 1000).floor();
+    if (_currentPositionInMS != null && _currentPositionInMS! >= 0) {
+      var positionInS = (_currentPositionInMS! / 1000).floor();
 
       var min = (positionInS / 60).floor();
       var sec = (positionInS % 60).floor();

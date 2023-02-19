@@ -102,7 +102,7 @@ class GCWTool extends StatefulWidget {
   final String helpSearchString;
   final bool isBeta;
 
-  var icon;
+  GCWSymbolContainer? icon;
   var longId = '';
 
   String? toolName;
@@ -295,7 +295,7 @@ void _setToolCount(String i18nPrefix) {
   var toolCountsRaw = Prefs.get(PREFERENCE_TOOL_COUNT);
   if (toolCountsRaw == null) toolCountsRaw = '{}';
 
-  Map<String, int> toolCounts = Map<String, int>.from(jsonDecode(toolCountsRaw));
+  var toolCounts = _toolCounts();
   var currentToolCount = toolCounts[i18nPrefix];
 
   if (currentToolCount == null) currentToolCount = 0;
@@ -326,7 +326,7 @@ int sortToolList(GCWTool a, GCWTool b) {
   if (!Prefs.getBool(PREFERENCE_TOOL_COUNT_SORT))
     return _sortToolListAlphabetically(a, b);
 
-  Map<String, int> toolCounts = Map<String, int>.from(jsonDecode(Prefs.get(PREFERENCE_TOOL_COUNT)));
+  var toolCounts = _toolCounts();
 
   var toolCountA = toolCounts[a.longId];
   var toolCountB = toolCounts[b.longId];
@@ -353,3 +353,11 @@ int sortToolList(GCWTool a, GCWTool b) {
 
   return 0;
 }
+
+Map<String, int> _toolCounts() {
+  var json = Prefs.getString(PREFERENCE_TOOL_COUNT);
+  if (json.isEmpty) return {};
+  var list = jsonDecode(json);
+  return list is Map<String, int> ? list :{};
+}
+

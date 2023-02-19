@@ -33,7 +33,7 @@ class GCWOpenFile extends StatefulWidget {
   final bool isDialog;
   final String? title;
   final GCWFile? file;
-  final suppressHeader;
+  final bool suppressHeader;
 
   const GCWOpenFile(
       {Key? key,
@@ -50,7 +50,7 @@ class GCWOpenFile extends StatefulWidget {
 }
 
 class _GCWOpenFileState extends State<GCWOpenFile> {
-  var _urlController;
+  late TextEditingController _urlController;
   String? _currentUrl;
   Uri? _currentUri;
 
@@ -73,7 +73,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
     super.dispose();
   }
 
-  _buildOpenFromDevice() {
+  GCWButton _buildOpenFromDevice() {
     return GCWButton(
       text: i18n(context, 'common_loadfile_open'),
       onPressed: () {
@@ -139,7 +139,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
     return GCWAsyncExecuterParameters(_currentUri);
   }
 
-  _buildOpenFromURL() {
+  Widget _buildOpenFromURL() {
     var urlTextField = GCWTextField(
         controller: _urlController,
         filled: widget.isDialog,
@@ -285,7 +285,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
   }
 }
 
-showOpenFileDialog(BuildContext context, List<FileType> supportedFileTypes, Function onLoaded) {
+void showOpenFileDialog(BuildContext context, List<FileType> supportedFileTypes, Function onLoaded) {
   showGCWDialog(
       context,
       i18n(context, 'common_loadfile_showopen'),
@@ -311,9 +311,10 @@ Future<Object?> _downloadFileAsync(GCWAsyncExecuterParameters? jobData) async {
   List<int> _bytes = [];
   Future<Uint8List>? result;
   SendPort? sendAsyncPort = jobData?.sendAsyncPort;
-  Uri uri = jobData?.parameters;
+  Uri? uri = jobData?.parameters is Uri ? jobData!.parameters as Uri : null;
   String? outString;
 
+  if (uri == null) return null;
   var request = http.Request("GET", uri);
   var client = http.Client();
   await client.send(request).timeout(Duration(seconds: 10), onTimeout: () {
