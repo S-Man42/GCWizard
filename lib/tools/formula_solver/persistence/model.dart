@@ -1,3 +1,5 @@
+import 'package:gc_wizard/utils/json_utils.dart';
+
 List<FormulaGroup> formulaGroups = [];
 
 class FormulaGroup {
@@ -16,8 +18,8 @@ class FormulaGroup {
       };
 
   FormulaGroup.fromJson(Map<String, Object?> json)
-      : name = json['name'] as String? ?? '', // TODO Proper default types if key is not in map
-        id = json['id'] as int?,
+      : name = jsonString(json['name']) ?? '', // TODO Proper default types if key is not in map
+        id = jsonInt(json['id']),
         formulas = json['formulas'] == null ? <Formula>[] : List<Formula>.from((json['formulas'] as List).map((formula) => Formula.fromJson(formula))),
         values = json['values'] == null ? <FormulaValue>[] : List<FormulaValue>.from((json['values'] as List).map((value) => FormulaValue.fromJson(value)));
 
@@ -46,9 +48,9 @@ class Formula {
   }
 
   Formula.fromJson(Map<String, Object?> json)
-      : id = json['id'] as int?,
-        formula = json['formula'] as String? ?? '', // TODO Proper default types if key is not in map
-        name = json['name'] as String? ?? '';
+      : id = jsonInt(json['id']),
+        formula = jsonString(json['formula']) ?? '', // TODO Proper default types if key is not in map
+        name = jsonString(json['name']) ?? '';
 
   static Formula fromFormula(Formula formula) {
     var newFormula = Formula(formula.formula);
@@ -86,11 +88,11 @@ class FormulaValue {
   FormulaValueType? type;
 
   FormulaValue(this.key, this.value, {this.type});
-
+  
   FormulaValue.fromJson(Map<String, Object?> json)
-      : id = json['id'] as int?,
-        key = json['key'] as String? ?? '',  // TODO Proper default types if key is not in map
-        value = json['value'] as String? ?? '',
+      : id = jsonInt(json['id']),
+        key = jsonString(json['key']) ?? '',  // TODO Proper default types if key is not in map
+        value = jsonString(json['value']) ?? '',
         type = _readType(json['type'] as String?);
 
   Map<String, Object?> toMap() {
