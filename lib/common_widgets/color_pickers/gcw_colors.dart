@@ -10,6 +10,7 @@ import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors_cmyk.
 import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors_hue.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors_rgb.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors_yuv.dart';
+import 'package:collection/collection.dart';
 
 part 'package:gc_wizard/common_widgets/color_pickers/color_spaces/gcw_color_cmy.dart';
 part 'package:gc_wizard/common_widgets/color_pickers/color_spaces/gcw_color_cmyk.dart';

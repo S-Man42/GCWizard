@@ -24,10 +24,10 @@ class _GCWColorValuesPickerState extends State<_GCWColorValuesPicker> {
   Widget build(BuildContext context) {
     _currentColorsValue = GCWColorValue(widget.colorsValue.colorSpace, widget.colorsValue.color);
 
-    List<Map<String, dynamic>> _colorWidgets = [
+    final Map<ColorSpaceKey, Widget> _colorWidgets =
       {
-        'colorSpace': getColorSpaceByKey(ColorSpaceKey.RGB),
-        'widget': _GCWColorRGB(
+        ColorSpaceKey.RGB:
+        _GCWColorRGB(
           color: _currentColorsValue.colorSpace == ColorSpaceKey.RGB ? _currentColorsValue.color as RGB : null,
           onChanged: (RGB newValue) {
             setState(() {
@@ -36,10 +36,9 @@ class _GCWColorValuesPickerState extends State<_GCWColorValuesPicker> {
             });
           },
         ),
-      },
-      {
-        'colorSpace': getColorSpaceByKey(ColorSpaceKey.HEXCODE),
-        'widget': _GCWColorHexCode(
+        
+        ColorSpaceKey.HEXCODE:
+        _GCWColorHexCode(
           color: _currentColorsValue.colorSpace == ColorSpaceKey.HEXCODE ? _currentColorsValue.color as HexCode : null,
           onChanged: (HexCode newValue) {
             setState(() {
@@ -48,10 +47,9 @@ class _GCWColorValuesPickerState extends State<_GCWColorValuesPicker> {
             });
           },
         ),
-      },
-      {
-        'colorSpace': getColorSpaceByKey(ColorSpaceKey.HSV),
-        'widget': _ColorHSV(
+      
+        ColorSpaceKey.HSV:
+        _ColorHSV(
           color: _currentColorsValue.colorSpace == ColorSpaceKey.HSV ? _currentColorsValue.color as HSV : null,
           onChanged: (HSV newValue) {
             setState(() {
@@ -60,10 +58,9 @@ class _GCWColorValuesPickerState extends State<_GCWColorValuesPicker> {
             });
           },
         ),
-      },
-      {
-        'colorSpace': getColorSpaceByKey(ColorSpaceKey.HSL),
-        'widget': _GCWColorHSL(
+      
+        ColorSpaceKey.HSL:
+        _GCWColorHSL(
           color: _currentColorsValue.colorSpace == ColorSpaceKey.HSL ? _currentColorsValue.color as HSL : null,
           onChanged: (HSL newValue) {
             setState(() {
@@ -72,10 +69,9 @@ class _GCWColorValuesPickerState extends State<_GCWColorValuesPicker> {
             });
           },
         ),
-      },
-      {
-        'colorSpace': getColorSpaceByKey(ColorSpaceKey.HSI),
-        'widget': _GCWColorHSI(
+     
+        ColorSpaceKey.HSI:
+        _GCWColorHSI(
           color: _currentColorsValue.colorSpace == ColorSpaceKey.HSI ? _currentColorsValue.color as HSI : null,
           onChanged: (HSI newValue) {
             setState(() {
@@ -84,10 +80,9 @@ class _GCWColorValuesPickerState extends State<_GCWColorValuesPicker> {
             });
           },
         ),
-      },
-      {
-        'colorSpace': getColorSpaceByKey(ColorSpaceKey.CMYK),
-        'widget': _GCWColorCMYK(
+     
+        ColorSpaceKey.CMYK:
+        _GCWColorCMYK(
           color: _currentColorsValue.colorSpace == ColorSpaceKey.CMYK ? _currentColorsValue.color as CMYK : null,
           onChanged: (CMYK newValue) {
             setState(() {
@@ -96,10 +91,9 @@ class _GCWColorValuesPickerState extends State<_GCWColorValuesPicker> {
             });
           },
         ),
-      },
-      {
-        'colorSpace': getColorSpaceByKey(ColorSpaceKey.CMY),
-        'widget': _GCWColorCMY(
+     
+        ColorSpaceKey.CMY:
+        _GCWColorCMY(
           color: _currentColorsValue.colorSpace == ColorSpaceKey.CMY ? _currentColorsValue.color as CMY : null,
           onChanged: (CMY newValue) {
             setState(() {
@@ -108,10 +102,9 @@ class _GCWColorValuesPickerState extends State<_GCWColorValuesPicker> {
             });
           },
         ),
-      },
-      {
-        'colorSpace': getColorSpaceByKey(ColorSpaceKey.YUV),
-        'widget': _GCWColorYUV(
+      
+        ColorSpaceKey.YUV:
+        _GCWColorYUV(
           color: _currentColorsValue.colorSpace == ColorSpaceKey.YUV ? _currentColorsValue.color as YUV : null,
           onChanged: (YUV newValue) {
             setState(() {
@@ -120,10 +113,9 @@ class _GCWColorValuesPickerState extends State<_GCWColorValuesPicker> {
             });
           },
         ),
-      },
-      {
-        'colorSpace': getColorSpaceByKey(ColorSpaceKey.YPBPR),
-        'widget': _GCWColorYPbPr(
+     
+        ColorSpaceKey.YPBPR:
+        _GCWColorYPbPr(
           color: _currentColorsValue.colorSpace == ColorSpaceKey.YPBPR ? _currentColorsValue.color as YPbPr : null,
           onChanged: (YPbPr newValue) {
             setState(() {
@@ -132,10 +124,9 @@ class _GCWColorValuesPickerState extends State<_GCWColorValuesPicker> {
             });
           },
         ),
-      },
-      {
-        'colorSpace': getColorSpaceByKey(ColorSpaceKey.YCBCR),
-        'widget': _GCWColorYCbCr(
+     
+        ColorSpaceKey.YCBCR:
+        _GCWColorYCbCr(
           color: _currentColorsValue.colorSpace == ColorSpaceKey.YCBCR ? _currentColorsValue.color as YCbCr : null,
           onChanged: (YCbCr newValue) {
             setState(() {
@@ -144,10 +135,9 @@ class _GCWColorValuesPickerState extends State<_GCWColorValuesPicker> {
             });
           },
         ),
-      },
-      {
-        'colorSpace': getColorSpaceByKey(ColorSpaceKey.YIQ),
-        'widget': _GCWColorYIQ(
+    
+        ColorSpaceKey.YIQ:
+        _GCWColorYIQ(
           color: _currentColorsValue.colorSpace == ColorSpaceKey.YIQ ? _currentColorsValue.color as YIQ: null,
           onChanged: (YIQ newValue) {
             setState(() {
@@ -156,10 +146,7 @@ class _GCWColorValuesPickerState extends State<_GCWColorValuesPicker> {
             });
           },
         ),
-      },
-    ];
-
-    List<ColorSpace> _onlyColorSpaces = _colorWidgets.map((entry) => entry['colorSpace'] as ColorSpace).toList();
+      };
 
     Column _widget = Column(
       children: <Widget>[
@@ -172,24 +159,23 @@ class _GCWColorValuesPickerState extends State<_GCWColorValuesPicker> {
               _setCurrentValueAndEmitOnChange();
             });
           },
-          items: _onlyColorSpaces.map((colorSpace) {
+          items: _colorWidgets.keys.map((ColorSpaceKey colorSpace) {
             return GCWDropDownMenuItem(
-              value: colorSpace.key,
-              child: i18n(context, colorSpace.name),
+              value: colorSpace,
+              child: i18n(context, getColorSpaceByKey(colorSpace).name),
             );
           }).toList(),
         ),
       ],
     );
 
-    var _currentWidget = _colorWidgets.firstWhere((entry) => entry['colorSpace'].key == _currentColorsValue.colorSpace)['widget'];
-
+    Widget _currentWidget = _colorWidgets[_currentColorsValue.colorSpace] ?? _colorWidgets[ColorSpaceKey.RGB]!;
     _widget.children.add(_currentWidget);
 
     return _widget;
   }
 
-  _setCurrentValueAndEmitOnChange() {
+  void _setCurrentValueAndEmitOnChange() {
     widget.onChanged(_currentColorsValue);
   }
 }
