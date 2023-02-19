@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:gc_wizard/application/registry.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/utils/constants.dart';
+import 'package:gc_wizard/utils/json_utils.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 
 Map<String, String> _COMMON_SEARCHSTRINGS = {};
@@ -38,10 +39,7 @@ Future<Map<String, String>> _getSearchStringsForLocale(String locale) async {
   }
 
   var decoded = json.decode(file);
-  if (decoded == null || !(decoded is Map<String, Object?>))
-    decoded = <String, Object?>{};
-
-  Map<String, Object?> _rawStrings = decoded;
+  Map<String, Object?> _rawStrings = asJsonMap(decoded);
   Map<String, String> _strings = _rawStrings.map((key, value) {
     return MapEntry(key, value.toString());
   });

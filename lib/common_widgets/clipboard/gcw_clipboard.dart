@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/utils/json_utils.dart';
 import 'package:prefs/prefs.dart';
 import 'package:collection/collection.dart';
 
@@ -16,7 +17,7 @@ class ClipboardItem {
 
   static ClipboardItem? fromJson(String jsonString) {
     var decoded = jsonDecode(jsonString);
-    if (decoded == null || !(decoded is Map<String, Object?>))
+    if (decoded == null || !(isJsonMap(decoded)))
       return null;
 
     var created = decoded['created'];

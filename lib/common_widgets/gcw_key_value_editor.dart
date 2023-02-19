@@ -15,7 +15,7 @@ import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/formula_solver/persistence/model.dart';
-import 'package:gc_wizard/utils/json_utils.dart';
+import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 import 'package:gc_wizard/utils/math_utils.dart';
 import 'package:gc_wizard/utils/variable_string_expander.dart';
 
@@ -591,8 +591,8 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
 
     json.forEach((jsonEntry) {
       var json = jsonDecode(jsonEntry);
-      key = jsonString(json['key']);
-      value = jsonString(json['value']);
+      key = toStringOrNull(json['key']);
+      value = toStringOrNull(json['value']);
       if (key != null && value != null) list.add(MapEntry(key, value));
     });
 

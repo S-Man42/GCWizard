@@ -1,4 +1,4 @@
-import 'package:gc_wizard/utils/json_utils.dart';
+import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 
 List<FormulaGroup> formulaGroups = [];
 
@@ -18,8 +18,8 @@ class FormulaGroup {
       };
 
   FormulaGroup.fromJson(Map<String, Object?> json)
-      : name = jsonString(json['name']) ?? '', // TODO Proper default types if key is not in map
-        id = jsonInt(json['id']),
+      : name = toStringOrNull(json['name']) ?? '', // TODO Proper default types if key is not in map
+        id = toIntOrNull(json['id']),
         formulas = json['formulas'] == null ? <Formula>[] : List<Formula>.from((json['formulas'] as List).map((formula) => Formula.fromJson(formula))),
         values = json['values'] == null ? <FormulaValue>[] : List<FormulaValue>.from((json['values'] as List).map((value) => FormulaValue.fromJson(value)));
 
@@ -48,9 +48,9 @@ class Formula {
   }
 
   Formula.fromJson(Map<String, Object?> json)
-      : id = jsonInt(json['id']),
-        formula = jsonString(json['formula']) ?? '', // TODO Proper default types if key is not in map
-        name = jsonString(json['name']) ?? '';
+      : id = toIntOrNull(json['id']),
+        formula = toStringOrNull(json['formula']) ?? '', // TODO Proper default types if key is not in map
+        name = toStringOrNull(json['name']) ?? '';
 
   static Formula fromFormula(Formula formula) {
     var newFormula = Formula(formula.formula);
@@ -90,9 +90,9 @@ class FormulaValue {
   FormulaValue(this.key, this.value, {this.type});
   
   FormulaValue.fromJson(Map<String, Object?> json)
-      : id = jsonInt(json['id']),
-        key = jsonString(json['key']) ?? '',  // TODO Proper default types if key is not in map
-        value = jsonString(json['value']) ?? '',
+      : id = toIntOrNull(json['id']),
+        key = toStringOrNull(json['key']) ?? '',  // TODO Proper default types if key is not in map
+        value = toStringOrNull(json['value']) ?? '',
         type = _readType(json['type'] as String?);
 
   Map<String, Object?> toMap() {

@@ -7,6 +7,7 @@ import 'package:gc_wizard/application/registry.dart';
 import 'package:gc_wizard/application/search_strings.dart';
 import 'package:gc_wizard/application/category_views/all_tools_view.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
+import 'package:gc_wizard/utils/json_utils.dart';
 
 final String _TRANSLATION_ERROR = '<TRANSLATION_ERROR>';
 
@@ -52,9 +53,9 @@ class AppLocalizations {
     // Load the language JSON file from the "lang" folder
     String jsonString = await rootBundle.loadString('assets/i18n/$langCode.json');
     var decoded = json.decode(jsonString);
-    if (!(decoded is Map<String, Object?>)) return <String, String>{};
+    if (!(isJsonMap(decoded))) return <String, String>{};
 
-    Map<String, Object?> jsonMap = decoded;
+    Map<String, Object?> jsonMap = decoded as Map<String, Object?>;
 
     Map<String, String> _strings = jsonMap.map((key, value) {
       return MapEntry(key, value.toString());

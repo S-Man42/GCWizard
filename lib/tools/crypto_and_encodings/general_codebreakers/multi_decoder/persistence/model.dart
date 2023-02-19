@@ -1,4 +1,4 @@
-import 'package:gc_wizard/utils/json_utils.dart';
+import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 
 List<MultiDecoderToolEntity> multiDecoderTools = [];
 
@@ -22,9 +22,9 @@ class MultiDecoderToolEntity {
       };
 
   MultiDecoderToolEntity.fromJson(Map<String, dynamic> json)
-      : id = jsonInt(json['id']),
-        name = jsonString(json['name']),
-        internalToolName = jsonString(json['decoderFunctionName']),
+      : id = toIntOrNull(json['id']),
+        name = toStringOrNull(json['name']),
+        internalToolName = toStringOrNull(json['decoderFunctionName']),
         options =
             List<MultiDecoderToolOption>.from(json['options'].map((option) => MultiDecoderToolOption.fromJson(option)));
 
@@ -43,7 +43,7 @@ class MultiDecoderToolOption {
   Map<String, Object?> toMap() => {'name': name, 'value': value};
 
   MultiDecoderToolOption.fromJson(Map<String, dynamic> json)
-      : name = jsonString(json['name']),
+      : name = toStringOrNull(json['name']),
         value = json['value'];
 
   @override

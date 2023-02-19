@@ -1,4 +1,4 @@
-import 'package:gc_wizard/utils/json_utils.dart';
+import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 
 List<MapViewDAO> mapViews = [];
 
@@ -18,8 +18,8 @@ class MapViewDAO {
       };
 
   MapViewDAO.fromJson(Map<String, dynamic> json)
-      : name = jsonString(json['name']),
-        id = jsonInt(json['id']),
+      : name = toStringOrNull(json['name']),
+        id = toIntOrNull(json['id']),
         points = List<MapPointDAO>.from(json['points'].map((point) => MapPointDAO.fromJson(point))),
         polylines = List<MapPolylineDAO>.from(json['polylines'].map((polyline) => MapPolylineDAO.fromJson(polyline)));
 
@@ -58,16 +58,16 @@ class MapPointDAO {
       };
 
   MapPointDAO.fromJson(Map<String, dynamic> json)
-      : uuid = jsonString(json['uuid']),
-        name = jsonString(json['name']),
-        latitude = jsonDouble(json['latitude']),
-        longitude = jsonDouble(json['longitude']),
-        coordinateFormat = jsonString(json['coordinateFormat']),
-        isVisible = jsonBool(json['isVisible']) ?? true,
-        color = jsonString(json['color']),
-        radius = jsonDouble(json['radius']),
-        circleColorSameAsColor = jsonBool(json['circleColorSameAsColor']),
-        circleColor = jsonString(json['circleColor']);
+      : uuid = toStringOrNull(json['uuid']),
+        name = toStringOrNull(json['name']),
+        latitude = toDoubleOrNull(json['latitude']),
+        longitude = toDoubleOrNull(json['longitude']),
+        coordinateFormat = toStringOrNull(json['coordinateFormat']),
+        isVisible = toBoolOrNull(json['isVisible']) ?? true,
+        color = toStringOrNull(json['color']),
+        radius = toDoubleOrNull(json['radius']),
+        circleColorSameAsColor = toBoolOrNull(json['circleColorSameAsColor']),
+        circleColor = toStringOrNull(json['circleColor']);
 
   @override
   String toString() {
@@ -85,9 +85,9 @@ class MapPolylineDAO {
   Map<String, dynamic> toMap() => {'uuid': uuid, 'pointUUIDs': pointUUIDs, 'color': color};
 
   MapPolylineDAO.fromJson(Map<String, dynamic> json)
-      : uuid = jsonString(json['uuid']),
-        pointUUIDs = List<String>.from(jsonStringList(json['pointUUIDs'])),
-        color = jsonString(json['color']);
+      : uuid = toStringOrNull(json['uuid']),
+        pointUUIDs = List<String>.from(toStringListOrNull(json['pointUUIDs'])),
+        color = toStringOrNull(json['color']);
 
   @override
   String toString() {

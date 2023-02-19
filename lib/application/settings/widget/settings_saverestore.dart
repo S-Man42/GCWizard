@@ -17,6 +17,7 @@ import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
+import 'package:gc_wizard/utils/json_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 
@@ -64,11 +65,7 @@ class SaveRestoreSettingsState extends State<SaveRestoreSettings> {
                   try {
                     var jsonString = String.fromCharCodes(file.bytes);
                     var decoded = jsonDecode(jsonString);
-                    Map<String, Object?> prefsMap;
-                    if (decoded == null || !(decoded is Map<String, Object?>))
-                      prefsMap = {};
-                    else
-                      prefsMap = decoded;
+                    Map<String, Object?> prefsMap = asJsonMap(decoded);
 
                     initDefaultSettings(PreferencesInitMode.REINIT_ALL);
                     prefsMap.entries.forEach((entry) {
