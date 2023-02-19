@@ -8,7 +8,33 @@ import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:prefs/prefs.dart';
 import 'package:collection/collection.dart';
 
-void insertIntoGCWClipboard(BuildContext context, String text, {useGlobalClipboard: true}) {
+class ClipboardItem {
+  String text;
+  DateTime datetime;
+
+  ClipboardItem(this.text, this.datetime);
+
+  static ClipboardItem? fromJson(String jsonString) {
+    var decoded = jsonDecode(jsonString);
+    if (decoded == null || !(decoded is Map<String, Object?>))
+      return null;
+
+    var created = decoded['created'];
+    if (created == null || !(created is String))
+      created = '0';
+
+    int createdValue = int.tryParse(created) ?? 0;
+    DateTime datetime = DateTime.fromMillisecondsSinceEpoch(createdValue);
+
+    var text = decoded['text'];
+    if (text == null || !(text is String))
+      text = '';
+
+    return ClipboardItem(text, datetime);
+  }
+}
+
+void insertIntoGCWClipboard(BuildContext context, String text, {bool useGlobalClipboard = true}) {
   if (useGlobalClipboard) Clipboard.setData(ClipboardData(text: text));
 
   var gcwClipboard = Prefs.getStringList(PREFERENCE_CLIPBOARD_ITEMS);
@@ -23,7 +49,7 @@ void insertIntoGCWClipboard(BuildContext context, String text, {useGlobalClipboa
             {'text': jsonDecode(existingText)['text'], 'created': DateTime.now().millisecondsSinceEpoch.toString()}));
   } else {
     gcwClipboard.insert(0, jsonEncode({'text': text, 'created': DateTime.now().millisecondsSinceEpoch.toString()}));
-    while (gcwClipboard.length > Prefs.get(PREFERENCE_CLIPBOARD_MAX_ITEMS)) gcwClipboard.removeLast();
+    while (gcwClipboard.length > Prefs.getInt(PREFERENCE_CLIPBOARD_MAX_ITEMS)) gcwClipboard.removeLast();
   }
 
   Prefs.setStringList(PREFERENCE_CLIPBOARD_ITEMS, gcwClipboard);
