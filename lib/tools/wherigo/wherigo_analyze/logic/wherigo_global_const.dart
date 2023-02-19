@@ -202,6 +202,7 @@ const Map<WHERIGO_OBJECT, String> WHERIGO_DATA_LUA_USER = {
 };
 
 // TODO Thomas Use HttpStatus from dart:io instead of Strings
+// not necessary because the servlet only provide theses codes
 const Map<String, String> WHERIGO_HTTP_STATUS = {
   '200': 'wherigo_http_code_200',
   '400': 'wherigo_http_code_400',
@@ -210,6 +211,8 @@ const Map<String, String> WHERIGO_HTTP_STATUS = {
   '500': 'wherigo_http_code_500',
   '503': 'wherigo_http_code_503',
 };
+
+const String WHERIGO_HTTP_CODE_OK = '200';
 
 const Map<String, TextStyle> WHERIGO_SYNTAX_HIGHLIGHT_STRINGMAP = {
   // fontWeight: FontWeight.bold
