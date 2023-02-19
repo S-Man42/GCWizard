@@ -193,6 +193,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
     //
     try {
       if (RegExp(r'(Wherigo.ZMedia\()').hasMatch(lines[i])) {
+        beyondHeader = true;
         currentObjectSection = WHERIGO_OBJECT_TYPE.MEDIA;
         analyzeLines = [];
         sectionMedia = true;
@@ -223,128 +224,24 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
     }
 
     // ----------------------------------------------------------------------------------------------------------------
-    // get Zone Object
+    // search get Zone Object
     //
     try {
       if (RegExp(r'( Wherigo.Zone\()').hasMatch(lines[i])) {
         beyondHeader = true;
-
         currentObjectSection = WHERIGO_OBJECT_TYPE.ZONE;
-        points = [];
-        LUAname = '';
-        id = '';
-        name = '';
-        description = '';
-        visible = '';
-        media = '';
-        icon = '';
-        active = '';
-        distanceRange = '';
-        showObjects = '';
-        proximityRange = '';
-        originalPoint;
-        distanceRangeUOM = '';
-        proximityRangeUOM = '';
-        outOfRange = '';
-        inRange = '';
-
-        LUAname = getLUAName(lines[i]);
-
+        analyzeLines = [];
         sectionZone = true;
+        LUAname = getLUAName(lines[i]);
         do {
           i++;
-          lines[i] = lines[i].trim();
-          if (lines[i].startsWith(LUAname + '.Id'))
-            id = getLineData(lines[i], LUAname, 'Id', obfuscatorFunction, obfuscatorTable);
-
-          if (lines[i].startsWith(LUAname + '.Name')) {
-            name = getLineData(lines[i], LUAname, 'Name', obfuscatorFunction, obfuscatorTable);
-          }
-
-          if (lines[i].startsWith(LUAname + '.Description')) {
-            description = '';
-            sectionDescription = true;
-            do {
-              description = description + lines[i];
-              i++;
-              lines[i] = lines[i].trim();
-              if (i > lines.length - 1 || lines[i].startsWith(LUAname + '.Visible')) sectionDescription = false;
-            } while (sectionDescription);
-            description = description.replaceAll('[[', '').replaceAll(']]', '').replaceAll('<BR>', '\n');
-            description = getLineData(description, LUAname, 'Description', obfuscatorFunction, obfuscatorTable).trim();
-            if (description.startsWith('WWB_multi')) description = removeWWB(description);
-          }
-
-          if (lines[i].startsWith(LUAname + '.Visible'))
-            visible = getLineData(lines[i], LUAname, 'Visible', obfuscatorFunction, obfuscatorTable);
-
-          if (lines[i].startsWith(LUAname + '.Media'))
-            media = getLineData(lines[i], LUAname, 'Media', obfuscatorFunction, obfuscatorTable);
-
-          if (lines[i].startsWith(LUAname + '.Icon'))
-            icon = getLineData(lines[i], LUAname, 'Icon', obfuscatorFunction, obfuscatorTable);
-
-          if (lines[i].startsWith(LUAname + '.Active'))
-            active = getLineData(lines[i], LUAname, 'Active', obfuscatorFunction, obfuscatorTable);
-
-          if (lines[i].startsWith(LUAname + '.DistanceRangeUOM ='))
-            distanceRangeUOM = getLineData(lines[i], LUAname, 'DistanceRangeUOM', obfuscatorFunction, obfuscatorTable);
-
-          if (lines[i].startsWith(LUAname + '.ProximityRangeUOM ='))
-            proximityRangeUOM =
-                getLineData(lines[i], LUAname, 'ProximityRangeUOM', obfuscatorFunction, obfuscatorTable);
-
-          if (lines[i].startsWith(LUAname + '.DistanceRange ='))
-            distanceRange = getLineData(lines[i], LUAname, 'DistanceRange', obfuscatorFunction, obfuscatorTable);
-
-          if (lines[i].startsWith(LUAname + '.ShowObjects'))
-            showObjects = getLineData(lines[i], LUAname, 'ShowObjects', obfuscatorFunction, obfuscatorTable);
-
-          if (lines[i].startsWith(LUAname + '.ProximityRange ='))
-            proximityRange = getLineData(lines[i], LUAname, 'ProximityRange', obfuscatorFunction, obfuscatorTable);
-
-          if (lines[i].startsWith(LUAname + '.OriginalPoint')) {
-            String point = getLineData(lines[i], LUAname, 'OriginalPoint', obfuscatorFunction, obfuscatorTable);
-            List<String> pointdata =
-                point.replaceAll('ZonePoint(', '').replaceAll(')', '').replaceAll(' ', '').split(',');
-            originalPoint =
-                WherigoZonePoint(double.parse(pointdata[0]), double.parse(pointdata[1]), double.parse(pointdata[2]));
-          }
-
-          if (lines[i].startsWith(LUAname + '.OutOfRangeName'))
-            outOfRange = getLineData(lines[i], LUAname, 'OutOfRangeName', obfuscatorFunction, obfuscatorTable);
-
-          if (lines[i].startsWith(LUAname + '.InRangeName'))
-            inRange = getLineData(lines[i], LUAname, 'InRangeName', obfuscatorFunction, obfuscatorTable);
-
-          if (lines[i].startsWith(LUAname + '.Points = ')) {
-            i++;
-            lines[i] = lines[i].trim();
-            do {
-              while (lines[i].trimLeft().startsWith('ZonePoint')) {
-                points.add(getPoint(lines[i]));
-                i++;
-                lines[i] = lines[i].trim();
-              }
-            } while (lines[i].trimLeft().startsWith('ZonePoint'));
-          }
-
-          if (RegExp(r'( Wherigo.ZCharacter\()').hasMatch(lines[i]) ||
-              RegExp(r'( Wherigo.ZItem\()').hasMatch(lines[i]) ||
-              RegExp(r'( Wherigo.ZTask\()').hasMatch(lines[i]) ||
-              RegExp(r'(.ZVariables =)').hasMatch(lines[i]) ||
-              RegExp(r'( Wherigo.ZTimer\()').hasMatch(lines[i]) ||
-              RegExp(r'( Wherigo.ZInput\()').hasMatch(lines[i]) ||
-              RegExp(r'(function)').hasMatch(lines[i]) ||
-              RegExp(r'( Wherigo.Zone\()').hasMatch(lines[i])) {
-            sectionZone = false;
-          }
-
+          analyzeLines.add(lines[i]);
           if (sendAsyncPort != null && (i % progressStep == 0)) {
             sendAsyncPort?.send({'progress': i / lines.length / 2});
           }
-        } while (sectionZone);
-        i--;
+        } while (insideSectionZone(lines[i]) && (i < lines.length - 1));
+
+        analyzeAndExtractZoneSectionData(analyzeLines);
 
         cartridgeZones.add(WherigoZoneData(
           LUAname,
@@ -358,7 +255,9 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           distanceRange,
           showObjects,
           proximityRange,
-          originalPoint, // TODO Thomas: Can this be null? It was not initializes originally, which I did. However, I am not sure, if it is logically correct
+          // TODO Thomas: Can this be null? It was not initializes originally, which I did. However, I am not sure, if it is logically correct
+          // logically ervery zone has an original point
+          originalPoint,
           distanceRangeUOM,
           proximityRangeUOM,
           outOfRange,
