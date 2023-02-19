@@ -255,8 +255,6 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           distanceRange,
           showObjects,
           proximityRange,
-          // TODO Thomas: Can this be null? It was not initializes originally, which I did. However, I am not sure, if it is logically correct
-          // logically ervery zone has an original point
           originalPoint,
           distanceRangeUOM,
           proximityRangeUOM,
@@ -277,103 +275,24 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
     try {
       if (RegExp(r'( Wherigo.ZCharacter\()').hasMatch(lines[i])) {
         beyondHeader = true;
-
         currentObjectSection = WHERIGO_OBJECT_TYPE.CHARACTER;
-        LUAname = '';
-        id = '';
-        name = '';
-        description = '';
-        visible = '';
-        media = '';
-        icon = '';
-        location = '';
-        gender = '';
-        type = '';
-
         LUAname = getLUAName(lines[i]);
         container = getContainer(lines[i]);
-
         sectionCharacter = true;
-
+        analyzeLines = [];
         do {
           i++;
-          lines[i] = lines[i].trim();
-          if (lines[i].trim().startsWith(LUAname + '.Container =')) {
-            container = getContainer(lines[i]);
-          }
-
-          if (lines[i].trim().startsWith(LUAname + '.Id')) {
-            id = getLineData(lines[i], LUAname, 'Id', obfuscatorFunction, obfuscatorTable);
-          }
-
-          if (lines[i].trim().startsWith(LUAname + '.Name')) {
-            name = getLineData(lines[i], LUAname, 'Name', obfuscatorFunction, obfuscatorTable);
-          }
-
-          if (lines[i].trim().startsWith(LUAname + '.Description')) {
-            description = '';
-            sectionDescription = true;
-            do {
-              description = description + lines[i];
-              if (i > lines.length - 2 || lines[i + 1].trim().startsWith(LUAname + '.Visible')) {
-                sectionDescription = false;
-              }
-              i++;
-              lines[i] = lines[i].trim();
-            } while (sectionDescription);
-            description = description.replaceAll('[[', '').replaceAll(']]', '').replaceAll('<BR>', '\n');
-            description = getLineData(description, LUAname, 'Description', obfuscatorFunction, obfuscatorTable);
-          }
-
-          if (lines[i].startsWith(LUAname + '.Visible'))
-            visible = getLineData(lines[i], LUAname, 'Visible', obfuscatorFunction, obfuscatorTable);
-
-          if (lines[i].startsWith(LUAname + '.Media'))
-            media = getLineData(lines[i], LUAname, 'Media', obfuscatorFunction, obfuscatorTable).trim();
-
-          if (lines[i].startsWith(LUAname + '.Icon'))
-            icon = getLineData(lines[i], LUAname, 'Icon', obfuscatorFunction, obfuscatorTable);
-
-          if (lines[i].trim().startsWith(LUAname + '.ObjectLocation')) {
-            location =
-                lines[i].trim().replaceAll(LUAname + '.ObjectLocation', '').replaceAll(' ', '').replaceAll('=', '');
-            if (location.endsWith('INVALID_ZONEPOINT'))
-              location = '';
-            else if (location.startsWith('ZonePoint')) {
-              location = location.replaceAll('ZonePoint(', '').replaceAll(')', '').replaceAll(' ', '');
-              zonePoint = WherigoZonePoint(double.parse(location.split(',')[0]), double.parse(location.split(',')[1]),
-                  double.parse(location.split(',')[2]));
-              location = 'ZonePoint';
-            } else
-              location = getLineData(lines[i], LUAname, 'ObjectLocation', obfuscatorFunction, obfuscatorTable);
-          }
-
-          if (lines[i].startsWith(LUAname + '.Gender')) {
-            gender = getLineData(lines[i], LUAname, 'Gender', obfuscatorFunction, obfuscatorTable).toLowerCase().trim();
-          }
-
-          if (lines[i].startsWith(LUAname + '.Type'))
-            type = getLineData(lines[i], LUAname, 'Type', obfuscatorFunction, obfuscatorTable);
-
-          if (RegExp(r'( Wherigo.ZItem\()').hasMatch(lines[i]) ||
-              RegExp(r'( Wherigo.ZTask\()').hasMatch(lines[i]) ||
-              RegExp(r'( Wherigo.ZInput\()').hasMatch(lines[i]) ||
-              RegExp(r'( Wherigo.ZTimer\()').hasMatch(lines[i]) ||
-              RegExp(r'(.ZVariables =)').hasMatch(lines[i]) ||
-              RegExp(r'( Wherigo.ZCharacter\()').hasMatch(lines[i]) ||
-              RegExp(r'(function)').hasMatch(lines[i])) {
-            sectionCharacter = false;
-          }
-
+          analyzeLines.add(lines[i]);
           if (sendAsyncPort != null && (i % progressStep == 0)) {
             sendAsyncPort?.send({'progress': i / lines.length / 2});
           }
-        } while (sectionCharacter);
+        } while (insideSectionCharacter(lines[i]) && (i < lines.length - 1));
+
+        analyzeAndExtractCharacterSectionData(analyzeLines);
 
         cartridgeCharacters.add(WherigoCharacterData(
             LUAname, id, name, description, visible, media, icon, location, zonePoint, container, gender, type));
         cartridgeNameToObject[LUAname] = WherigoObjectData(id, 0, name, media, WHERIGO_OBJECT_TYPE.CHARACTER);
-        i--;
       } // end if
     } catch (exception) {
       LUAAnalyzeStatus = WHERIGO_ANALYSE_RESULT_STATUS.ERROR_LUA;
