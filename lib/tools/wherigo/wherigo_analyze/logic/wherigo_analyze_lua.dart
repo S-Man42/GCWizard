@@ -123,9 +123,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
         cartridgeLUA: faultyWherigoCartridgeLUA(
             LUAFile,
             WHERIGO_ANALYSE_RESULT_STATUS.ERROR_HTTP,
-            // TODO Thomas What if status 401 or whatever returns? Please use httpStatus from dart:io instead
-            // this does not happen because the raspi server servlet does only provide theese error codes
-            ['wherigo_http_code_http', WHERIGO_HTTP_STATUS[httpCode] ?? ''],
+            ['wherigo_http_code', WHERIGO_HTTP_STATUS[httpCode] ?? ''],
             httpCode,
             httpMessage),
       );
