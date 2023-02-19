@@ -1,41 +1,41 @@
 
-double jsonDouble(dynamic value) {
+double? jsonDouble(Object? value) {
   if (value is double)
     return value;
   else if (value is int)
-    return (value as int).toDouble();
+    return (value).toDouble();
 
   return null;
 }
 
-int jsonInt(dynamic value) {
+int? jsonInt(Object? value) {
   if (value is int)
     return value;
   else if (value is double)
     // .0 check
-    if ((value as double) == (value as double).toInt())
-      return (value as double).toInt();
+    if (value == (value).toInt())
+      return (value).toInt();
 
   return null;
 }
 
-bool jsonBool(dynamic value) {
+bool? jsonBool(Object? value) {
   if (value is bool)
     return value;
 
   return null;
 }
 
-String jsonString(dynamic value) {
+String? jsonString(Object? value) {
   return (value == null) ? null : value.toString();
 }
 
-List<String> jsonStringList(List<dynamic> list) {
+List<String>? jsonStringList(List<Object?>? list) {
   if (list == null) return null;
 
   var stringList =<String>[];
-  for (var i = 0; i < list.length; i++)
-    stringList.add(jsonString(list[i]));
+  for (var i = 0; i < list.length; i++) {
+    stringList.add(jsonString(list[i]) ?? '');
 
   return stringList;
 }
