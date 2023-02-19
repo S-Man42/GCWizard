@@ -66,7 +66,7 @@ class GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
     );
   }
 
-  _buildSubtype() {
+  Widget _buildSubtype() {
     var format = widget.format.type;
 
     if (_currentSubtype == null) {
@@ -79,7 +79,7 @@ class GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
       case CoordFormatKey.GAUSS_KRUEGER:
       case CoordFormatKey.LAMBERT:
         return GCWDropDown<CoordFormatKey>(
-          value: _currentSubtype,
+          value: _currentSubtype!,
           items: getCoordinateFormatByKey(format).subtypes!.map((subtype) {
             return GCWDropDownMenuItem(
               value: subtype.key,
@@ -111,7 +111,7 @@ class GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
     }
   }
 
-  _emitOnChange() {
+  void _emitOnChange() {
     var output = CoordsFormatValue(_currentFormat, _currentSubtype);
     widget.onChanged(output);
   }

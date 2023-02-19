@@ -13,7 +13,7 @@ class _GCWColorHexCode extends StatefulWidget {
 class _GCWColorHexCodeState extends State<_GCWColorHexCode> {
   String _currentHexCode = '#F0F0F0';
 
-  var _controller;
+  late TextEditingController _controller;
 
   var _maskInputFormatter = WrapperForMaskTextInputFormatter(mask: '#......', filter: {".": RegExp(r'[A-Fa-f0-9]')});
 

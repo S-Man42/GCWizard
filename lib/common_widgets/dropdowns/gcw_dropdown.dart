@@ -6,14 +6,14 @@ import 'package:gc_wizard/common_widgets/gcw_text.dart';
 class GCWDropDown<T extends Object?> extends StatefulWidget {
   final void Function(T) onChanged;
   final List<GCWDropDownMenuItem> items;
-  final value;
+  final T value;
   final DropdownButtonBuilder? selectedItemBuilder;
   final String? title;
   final bool alternativeColor;
 
   const GCWDropDown(
       {Key? key,
-      this.value,
+      required this.value,
       required this.items,
       required this.onChanged,
       this.selectedItemBuilder,
@@ -64,7 +64,7 @@ class _GCWDropDownState<T extends Object?> extends State<GCWDropDown> {
                   value: widget.value ?? widget.items[0].value,
                   items: widget.items.map((item) {
                     return DropdownMenuItem(
-                        value: item.value, child: item.child is Widget ? item.child : _buildMenuItemChild(item));
+                        value: item.value, child: item.child is Widget ? item.child as Widget : _buildMenuItemChild(item));
                   }).toList(),
                   onChanged: widget.onChanged,
                   style: textStyle,
@@ -73,7 +73,7 @@ class _GCWDropDownState<T extends Object?> extends State<GCWDropDown> {
                         return widget.items.map((item) {
                           return Align(
                             child: item.child is Widget
-                                ? item.child
+                                ? item.child as Widget
                                 : Text(
                                     item.child.toString(),
                                     style: textStyle,
@@ -92,9 +92,9 @@ class _GCWDropDownState<T extends Object?> extends State<GCWDropDown> {
 //Note: No GCWText, since GCWText contains SelectableText which suppress clicks,
 // and therefore generate non-selectable dropdown items (09/2020)
 Widget _buildMenuItemChild(GCWDropDownMenuItem item) {
-  if (item.subtitle == null || item.subtitle.isEmpty) {
+  if (item.subtitle == null || item.subtitle!.isEmpty) {
     return item.child is Widget
-        ? item.child
+        ? item.child as Widget
         : Text(
             item.child.toString(),
             style: item.style ?? gcwTextStyle(),
@@ -123,9 +123,9 @@ Widget _buildMenuItemChild(GCWDropDownMenuItem item) {
 }
 
 class GCWDropDownMenuItem {
-  final dynamic value;
-  final dynamic child;
-  final dynamic subtitle;
+  final Object value;
+  final Object child;
+  final String? subtitle;
   final TextStyle? style;
 
   const GCWDropDownMenuItem({required this.value, required this.child, this.subtitle, this.style});

@@ -413,12 +413,12 @@ class GCWCoordsState extends State<GCWCoords> {
     return _widget;
   }
 
-  _buildInputFormatSelector() {
+  GCWCoordsFormatSelector _buildInputFormatSelector() {
     return GCWCoordsFormatSelector(
       format: _currentCoordFormat,
       onChanged: (CoordsFormatValue newFormat) {
         setState(() {
-          // TODO Mike Please check, Change Coords Format and Subtypes
+          // TODO Mike Please check against previous code. The change made here is not quite simple and clear if logic still does the same here for changing Coords Format and Subtypes
           if (_currentCoordFormat != newFormat) {
             if (widget.restoreCoordinates != null && widget.restoreCoordinates!)
               _pastedCoords = _currentCoords;
@@ -428,13 +428,13 @@ class GCWCoordsState extends State<GCWCoords> {
             _currentCoordFormat = newFormat;
             _setCurrentValueAndEmitOnChange();
           }
-          FocusScope.of(context).requestFocus(FocusNode()); //Release focus from previous edited field
+          FocusScope.of(context).requestFocus(FocusNode()); //Release focus from previously edited field
         });
       },
     );
   }
 
-  _buildTrailingButtons(IconButtonSize size) {
+  Row _buildTrailingButtons(IconButtonSize size) {
     return Row(
       children: [
         Container(
@@ -452,14 +452,14 @@ class GCWCoordsState extends State<GCWCoords> {
     );
   }
 
-  _setCurrentValueAndEmitOnChange([BaseCoordinates? newValue]) {
+  void _setCurrentValueAndEmitOnChange([BaseCoordinates? newValue]) {
     if (newValue != null)
       _currentCoords = newValue;
 
     widget.onChanged(_currentCoords);
   }
 
-  _setCoords(List<BaseCoordinates> pastedCoords) {
+  void _setCoords(List<BaseCoordinates> pastedCoords) {
     if (pastedCoords.isEmpty) return;
 
     var _coordsForCurrentFormat = pastedCoords.firstWhereOrNull((BaseCoordinates coords) => coords.key == _currentCoordFormat.type);
@@ -474,7 +474,7 @@ class GCWCoordsState extends State<GCWCoords> {
     _setCurrentValueAndEmitOnChange();
   }
 
-  _setPastedCoordsFormat() {
+  void _setPastedCoordsFormat() {
     switch (_currentCoordFormat.type) {
       case CoordFormatKey.DEC:
       case CoordFormatKey.DMM:
@@ -513,7 +513,7 @@ class GCWCoordsState extends State<GCWCoords> {
     }
   }
 
-  _setUserLocationCoords() {
+  void _setUserLocationCoords() {
     if (_isOnLocationAccess) return;
 
     setState(() {

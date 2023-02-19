@@ -20,7 +20,7 @@ class ToolSettingsState extends State<ToolSettings> {
           text: i18n(context, 'settings_mayacalendar_title'),
         ),
         GCWDropDown<String>(
-          value: Prefs.get(PREFERENCE_MAYACALENDAR_CORRELATION),
+          value: Prefs.getString(PREFERENCE_MAYACALENDAR_CORRELATION),
           onChanged: (String value) {
             setState(() {
               Prefs.setString(PREFERENCE_MAYACALENDAR_CORRELATION, value);

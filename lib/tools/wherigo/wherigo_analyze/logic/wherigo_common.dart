@@ -1,5 +1,4 @@
-import 'package:gc_wizard/tools/wherigo/logic/earwigo_tools.dart';
-import 'package:gc_wizard/tools/wherigo/logic/urwigo_tools.dart';
+part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze.dart';
 
 String getLUAName(String line) {
   String result = '';
@@ -48,16 +47,16 @@ String getTextData(String analyseLine, String obfuscator, String dtable) {
       var group = element.group(0);
       if (group == null) return;
 
-      result = result.replaceAll(group,
-          deobfuscateUrwigoText(group.replaceAll('gsub_wig("', '').replaceAll('")', ''), dtable));
+      result = result.replaceAll(
+          group, deobfuscateUrwigoText(group.replaceAll('gsub_wig("', '').replaceAll('")', ''), dtable));
     });
     result = result.replaceAll('..', '').replaceAll('<BR>\\n', '').replaceAll('"', '');
     RegExp(r'ucode_wig\([\d]+\)').allMatches(result).forEach((element) {
       var group = element.group(0);
       if (group == null) return;
 
-      result = result.replaceAll(group,
-          String.fromCharCode(int.parse(group.replaceAll('ucode_wig(', '').replaceAll(')', ''))));
+      result = result.replaceAll(
+          group, String.fromCharCode(int.parse(group.replaceAll('ucode_wig(', '').replaceAll(')', ''))));
     });
     result = result.replaceAll('gsub_wig()', '');
   } else if (result.startsWith(RegExp(r'(\()+' + obfuscator))) {
@@ -220,3 +219,4 @@ List<String> addExceptionErrorMessage(int lineNumber, String section, var except
     '',
   ];
 }
+
