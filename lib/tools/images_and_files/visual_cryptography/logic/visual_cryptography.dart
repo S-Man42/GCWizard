@@ -12,7 +12,7 @@ int whiteColor = Colors.white.value;
 int blackColor = Colors.black.value;
 
 Future<Uint8List?> decodeImagesAsync(GCWAsyncExecuterParameters? jobData) async {
-  if (jobData == null) return null;
+  if (jobData?.parameters == null) return null;
 
   var output = await _decodeImages(
       jobData.parameters.item1, jobData.parameters.item2, jobData.parameters.item3, jobData.parameters.item4);
@@ -149,10 +149,10 @@ Uint8List? cleanImage(Uint8List? image1, Uint8List? image2, int offsetX, int off
 }
 
 Future<Tuple2<Uint8List, Uint8List?>?> encodeImagesAsync(GCWAsyncExecuterParameters? jobData) async {
-  if (jobData == null) return null;
+  if (jobData?.parameters is! Tuple5<Uint8List, Uint8List?, int, int, int>) return null;
 
-  var output = await _encodeImage(jobData.parameters.item1, jobData.parameters.item2, jobData.parameters.item3,
-      jobData.parameters.item4, jobData.parameters.item5);
+  var data = jobData!.parameters as Tuple5<Uint8List, Uint8List?, int, int, int>;
+  var output = await _encodeImage(data.item1, data.item2, data.item3, data.item4, data.item5);
 
   jobData.sendAsyncPort.send(output);
 

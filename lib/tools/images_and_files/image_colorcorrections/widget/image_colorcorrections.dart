@@ -408,9 +408,9 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
 }
 
 Future<img.Image?> _adjustColorAsync(GCWAsyncExecuterParameters? jobData) async {
-  if (jobData == null) return null;
+  if (jobData?.parameters is! _AdjustColorInput) return null;
 
-  var output = _doAdjustColor(jobData.parameters);
+  var output = _doAdjustColor(jobData!.parameters as _AdjustColorInput);
 
   jobData.sendAsyncPort.send(output);
 
