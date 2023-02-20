@@ -21,7 +21,7 @@ class SymbolTableExamples extends StatefulWidget {
 }
 
 class SymbolTableExamplesState extends State<SymbolTableExamples> {
-  var _controller;
+  late TextEditingController _controller;
   String _currentInput = 'ABC123';
 
   var symbolKeys = <String>[];
@@ -36,7 +36,7 @@ class SymbolTableExamplesState extends State<SymbolTableExamples> {
     _initialize();
   }
 
-  Future _initialize() async {
+  Future<void> _initialize() async {
     if (widget.symbolKeys.isEmpty) {
       return;
     }
@@ -95,7 +95,7 @@ class SymbolTableExamplesState extends State<SymbolTableExamples> {
     );
   }
 
-  _createSymbols(int countColumns) {
+  Widget _createSymbols(int countColumns) {
     if (data.isEmpty) return Container();
 
     var symbols = symbolKeys.map<Widget>((symbolKey) {
@@ -118,7 +118,7 @@ class SymbolTableExamplesState extends State<SymbolTableExamples> {
                 onPressed: () {
                   Navigator.push(
                       context,
-                      NoAnimationMaterialPageRoute(
+                      NoAnimationMaterialPageRoute<GCWSymbolTableTool>(
                           builder: (context) => GCWSymbolTableTool(
                                 symbolKey: symbolKey,
                                 symbolSearchStrings: [],

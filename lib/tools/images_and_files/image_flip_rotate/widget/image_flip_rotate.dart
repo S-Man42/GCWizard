@@ -178,10 +178,10 @@ img.Image? _doFlipRotate(_FlipRotateInput input) {
   return image;
 }
 
-openInFlipRotate(BuildContext context, GCWFile file) {
+void openInFlipRotate(BuildContext context, GCWFile file) {
   Navigator.push(
       context,
-      NoAnimationMaterialPageRoute(
-          builder: (context) => GCWTool(
-              tool: ImageFlipRotate(file: file), toolName: i18n(context, 'image_fliprotate_title'), id: '')));
+      NoAnimationMaterialPageRoute<GCWTool>(
+          builder: (BuildContext context) => GCWTool(
+              tool: ImageFlipRotate(file: file), toolName: i18n(context, 'image_fliprotate_title'), id: 'image_fliprotate')));
 }

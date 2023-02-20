@@ -537,8 +537,8 @@ class PeriodicTableDataViewState extends State<PeriodicTableDataView> {
     return Column(children: rows);
   }
 
-  _showElement(int atomicNumber) {
-    Navigator.of(context).push(NoAnimationMaterialPageRoute(
+  void _showElement(int atomicNumber) {
+    Navigator.of(context).push(NoAnimationMaterialPageRoute<GCWTool>(
         builder: (context) =>
             GCWTool(tool: PeriodicTableDataView(atomicNumber: atomicNumber), id: 'periodictable_dataview')));
   }

@@ -16,7 +16,6 @@ import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/formula_solver/persistence/model.dart';
 import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
-import 'package:gc_wizard/utils/json_utils.dart';
 import 'package:gc_wizard/utils/math_utils.dart';
 import 'package:gc_wizard/utils/variable_string_expander.dart';
 
@@ -39,14 +38,6 @@ import 'package:gc_wizard/utils/variable_string_expander.dart';
     - Possibility to override simple key/value widget
     - Possibility to override simple copy/paste function
 */
-
-/* TODO: Entire Widget is painful
-   - Because of the many special cases, like the direct case for formulas, etc.
-   - You can only work with Object? which makes it less typesafe.
-
-   --> Refactor completely, maybe as GCWKeyValueEditor<T>, whereas T is the specific type?
-
- */
 
 class GCWKeyValueEditor extends StatefulWidget {
   final void Function(String, String, BuildContext)? onNewEntryChanged;
@@ -438,9 +429,8 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
                             ),
                             padding: EdgeInsets.only(left: DEFAULT_MARGIN))
                         : Transform.rotate(
-                            // TODO Mike Check that entry is really of type FormulaValue and type is really not NULL
-                            child: Icon(_formulaValueTypeIcon((entry as FormulaValue).type!), color: themeColors().mainFont()),
-                            angle: degreesToRadian(entry.type == FormulaValueType.TEXT ? 0.0 : 90.0),
+                            child: Icon(_formulaValueTypeIcon(_getEntryType(entry)), color: themeColors().mainFont()),
+                            angle: degreesToRadian(_getEntryType(entry) == FormulaValueType.TEXT ? 0.0 : 90.0),
                           )))
             : Container(),
         _editButton(entry),
@@ -448,11 +438,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
           icon: Icons.remove,
           onPressed: () {
             setState(() {
-              var entryId = _getEntryId(entry);
-              if (entryId == null)
-                return;
-
-              if (widget.onRemoveEntry != null) widget.onRemoveEntry!(entryId, context);
+              if (widget.onRemoveEntry != null) widget.onRemoveEntry!(_getEntryId(entry) ?? 0, context);
             });
           },
         )
@@ -476,7 +462,16 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
         return Icons.expand;
       case FormulaValueType.FIXED:
         return Icons.vertical_align_center_outlined;
+      default:
+        return Icons.vertical_align_center_outlined;
     }
+  }
+
+  FormulaValueType _getEntryType(Object entry) {
+    if (entry is FormulaValue) {
+      return entry.type ?? FormulaValueType.FIXED;
+    }
+    return FormulaValueType.FIXED;
   }
 
   Widget _editButton(Object entry) {
@@ -514,15 +509,11 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
               setState(() {
                 FocusScope.of(context).requestFocus(_focusNodeEditValue);
 
-                var entryId = _getEntryId(entry);
-                if (entryId == null || !(entryId is String))
-                  return;
-
-                _currentEditId = entryId;   // TODO Mike: In the next line, entryId needs to be a String, so this Id must be a String... But is this correct? A String Id?
-                _editKeyController.text = entryId;
-                _editValueController.text = entryId;
-                _currentEditedKey = entryId;
-                _currentEditedValue = entryId;
+                _currentEditId = _getEntryId(entry);
+                _editKeyController.text = _getEntryKey(entry)?.toString() ?? '';
+                _editValueController.text = _getEntryValue(entry)?.toString() ?? '';
+                _currentEditedKey = _getEntryKey(entry)?.toString() ?? '';
+                _currentEditedValue = _getEntryValue(entry)?.toString() ?? '';
 
                 if (widget.formulaValueList != null)
                   _currentEditedFormulaValueTypeInput =
@@ -587,42 +578,40 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
   }
 
   void _pasteClipboard(String text) {
-    Object? json = jsonDecode(text);
-    List<MapEntry<String, String>>? list;
-    if (isJsonArray(json))
-      list = _fromJson(json as List<Object?>);
+    var json = jsonDecode(text);
+    List<MapEntry>? list;
+    if (json is List<dynamic>)
+      list = _fromJson(json);
     else
       list = _parseClipboardText(text);
 
     if (list != null) {
       list.forEach((mapEntry) {
-        _addEntry(mapEntry.key, mapEntry.value, clearInput: false);
+        _addEntry(toStringOrNull(mapEntry.key) ?? '', toStringOrNull(mapEntry.value) ?? '', clearInput: false);
       });
       setState(() {});
     }
   }
 
-  List<MapEntry<String, String>>? _fromJson(List<Object?> json) {
-    var list = <MapEntry<String, String>>[];
+  List<MapEntry>? _fromJson(List<dynamic> json) {
+    var list = <MapEntry>[];
     String? key;
     String? value;
 
-    json.forEach((Object? jsonEntry) {
-      if (jsonEntry == null || !(jsonEntry is String))
-        return;
-
-      var json = jsonDecode(jsonEntry);
-      key = toStringOrNull(json['key']);
-      value = toStringOrNull(json['value']);
-
-      if (key != null && value != null) list.add(MapEntry(key!, value!));
+    json.forEach((jsonEntry) {
+      if (jsonEntry is String) {
+        var json = jsonDecode(jsonEntry);
+        key = toStringOrNull(json['key']);
+        value = toStringOrNull(json['value']);
+        if (key != null && value != null) list.add(MapEntry(key, value));
+      }
     });
 
     return list.isEmpty ? null : list;
   }
 
-  List<MapEntry<String, String>>? _parseClipboardText(String? text) {
-    var list = <MapEntry<String, String>>[];
+  List<MapEntry>? _parseClipboardText(String? text) {
+    var list = <MapEntry>[];
     if (text == null) return null;
 
     List<String> lines = new LineSplitter().convert(text);
@@ -630,8 +619,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
     lines.forEach((line) {
       var regExp = RegExp(r"^([\s]*)([\S])([\s]*)([=]?)([\s]*)([\s*\S+]+)([\s]*)");
       var match = regExp.firstMatch(line);
-      if (match != null && match.group(2) != null && match.group(6) != null)
-        list.add(MapEntry(match.group(2)!, match.group(6)!));
+      if (match != null) list.add(MapEntry(match.group(2), match.group(6)));
     });
 
     return list.isEmpty ? null : list;

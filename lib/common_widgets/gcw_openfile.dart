@@ -37,12 +37,12 @@ class GCWOpenFile extends StatefulWidget {
 
   const GCWOpenFile(
       {Key? key,
-      required this.onLoaded,
-      this.supportedFileTypes,
-      this.title,
-      this.isDialog = false,
-      this.file,
-      this.suppressHeader = false})
+        required this.onLoaded,
+        this.supportedFileTypes,
+        this.title,
+        this.isDialog = false,
+        this.file,
+        this.suppressHeader = false})
       : super(key: key);
 
   @override
@@ -146,7 +146,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
         hintText: i18n(context, 'common_loadfile_openfrom_url_address'),
         hintColor: widget.isDialog ? Color.fromRGBO(150, 150, 150, 1.0) : themeColors().textFieldHintText(),
         onChanged: (String value) {
-          if (value == null || value.trim().isEmpty) {
+          if (value.trim().isEmpty) {
             _currentUrl = null;
             return;
           }
@@ -177,7 +177,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
     }
   }
 
-  _saveDownload(Object? data) {
+  void _saveDownload(Object? data) {
     _loadedFile = null;
     if (data is Uint8List && _currentUrl != null) {
       _loadedFile =
@@ -217,15 +217,15 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
         widget.isDialog || widget.suppressHeader
             ? content
             : GCWExpandableTextDivider(
-                text:
-                    i18n(context, 'common_loadfile_showopen') + (widget.title != null ? ' (' + widget.title! + ')' : ''),
-                expanded: _currentExpanded,
-                onChanged: (value) {
-                  setState(() {
-                    _currentExpanded = value;
-                  });
-                },
-                child: content),
+            text:
+            i18n(context, 'common_loadfile_showopen') + (widget.title != null ? ' (' + widget.title! + ')' : ''),
+            expanded: _currentExpanded,
+            onChanged: (value) {
+              setState(() {
+                _currentExpanded = value;
+              });
+            },
+            child: content),
         if (_currentExpanded && _loadedFile != null)
           GCWText(
             text: i18n(context, 'common_loadfile_currentlyloaded') + ': ' + (_loadedFile?.name ?? ''),
@@ -338,16 +338,16 @@ Future<Object?> _downloadFileAsync(GCWAsyncExecuterParameters? jobData) async {
       }
       _received += value.length;
     },
-      onDone: () {
-        if (_bytes.isEmpty) {
-          outString = 'common_loadfile_exception_nofile';
-          sendAsyncPort?.send(outString);
-        } else {
-          var uint8List = Uint8List.fromList(_bytes);
-          sendAsyncPort?.send(uint8List);
-          result = Future.value(uint8List);
+        onDone: () {
+          if (_bytes.isEmpty) {
+            outString = 'common_loadfile_exception_nofile';
+            sendAsyncPort?.send(outString);
+          } else {
+            var uint8List = Uint8List.fromList(_bytes);
+            sendAsyncPort?.send(uint8List);
+            result = Future.value(uint8List);
+          }
         }
-      }
     );
   });
 
@@ -407,4 +407,3 @@ bool _hasUnsupportedTypes(List<FileType>? allowedExtensions) {
 
   return false;
 }
-

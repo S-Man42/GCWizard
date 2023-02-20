@@ -87,7 +87,7 @@ class _GCWUnitInputState<T extends Unit> extends State<GCWUnitInput> {
     ]);
   }
 
-  _convertToReferenceAndEmitOnChange() {
+  void _convertToReferenceAndEmitOnChange() {
     var referenceValue = _currentUnit.toReference(_currentValue);
     widget.onChanged(referenceValue);
   }

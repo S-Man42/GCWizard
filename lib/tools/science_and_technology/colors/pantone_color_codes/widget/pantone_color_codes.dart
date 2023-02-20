@@ -171,8 +171,8 @@ class PantoneColorCodesState extends State<PantoneColorCodes> {
     return Column(children: children);
   }
 
-  _showElement(RGB color) {
-    Navigator.of(context).push(NoAnimationMaterialPageRoute(
+  void _showElement(RGB color) {
+    Navigator.of(context).push(NoAnimationMaterialPageRoute<GCWTool>(
         builder: (context) => GCWTool(tool: ColorTool(color: color), id: 'colors')));
   }
 }

@@ -309,7 +309,7 @@ class _MainViewState extends State<MainView> {
                 onPressed: () {
                   Navigator.push(
                       context,
-                      NoAnimationMaterialPageRoute(
+                      NoAnimationMaterialPageRoute<GCWTool>(
                           builder: (context) =>
                               registeredTools.firstWhere((tool) => className(tool.tool) == className(Changelog()))));
                 }),

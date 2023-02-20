@@ -42,7 +42,7 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
 
       var actionButton = _buildActionButton(file);
 
-      String? text;
+      String text = '';
       if (file.fileClass == FileClass.TEXT) {
         text = String.fromCharCodes(file.bytes ?? []);
         if (text.length > 100) text = text.substring(0, 100) + '...';
@@ -73,7 +73,7 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
           Row(
             children: [
               Container(
-                  child: actionButton,
+                  child: actionButton == null ? Container() : actionButton,
                   width: 42,
                   padding: EdgeInsets.only(right: 10)),
               Expanded(
@@ -94,7 +94,7 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
                                       .copyWith(fontWeight: FontWeight.bold, color: themeColors().dialogText())),
                             ),
                             GCWText(
-                                text: '${file.bytes.length} Bytes',
+                                text: file.bytes == null ? '??? Bytes' : '${file.bytes.length} Bytes',
                                 style: gcwTextStyle()
                                     .copyWith(color: themeColors().dialogText(), fontSize: defaultFontSize() - 2))
                           ],
@@ -114,7 +114,7 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
                 ),
                 margin: EdgeInsets.only(left: 42)),
           if (file.fileClass == FileClass.TEXT)
-            Container(child: GCWText(style: gcwMonotypeTextStyle(), text: text!), margin: EdgeInsets.only(left: 42)),
+            Container(child: GCWText(style: gcwMonotypeTextStyle(), text: text), margin: EdgeInsets.only(left: 42)),
           if (file.fileClass == FileClass.SOUND)
             Container(child: GCWSoundPlayer(file: file), margin: EdgeInsets.only(left: 42)),
           if (hasChildren)
@@ -149,6 +149,10 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
       GCWPopupMenuItem(
         child: iconedGCWPopupMenuItem(context, Icons.text_snippet_outlined, 'hexviewer_openinhexviewer'),
         action: (index) => setState(() {
+          if (file.bytes == null) {
+            showToast(i18n(context, 'hiddendata_datanotreadable'));
+            return;
+          }
           openInHexViewer(context, file);
         }),
       ),
@@ -156,6 +160,10 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
         GCWPopupMenuItem(
           child: iconedGCWPopupMenuItem(context, Icons.text_snippet_outlined, 'textviewer_openintextviewer'),
           action: (index) => setState(() {
+            if (file.bytes == null) {
+              showToast(i18n(context, 'hiddendata_datanotreadable'));
+              return;
+            }
             openInTextViewer(context, String.fromCharCodes(file.bytes));
           }),
         ),
@@ -168,7 +176,12 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
     );
   }
 
-  void _exportFile(BuildContext context, GCWFile file) async {
+  _exportFile(BuildContext context, GCWFile file) async {
+    if (file.bytes == null) {
+      showToast(i18n(context, 'hiddendata_datanotreadable'));
+      return;
+    }
+
     var fileName = file.name == null ? '' : file.name!.replaceFirst(HIDDEN_FILE_IDENTIFIER, 'hidden_file');
     var ext = fileName.split('.');
 
