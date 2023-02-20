@@ -5,7 +5,7 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 class GCWDefaultOutput extends StatefulWidget {
   final Object? child;
   final bool suppressCopyButton;
-  final copyText;
+  final String? copyText;
   final Widget? trailing;
 
   const GCWDefaultOutput({Key? key, this.child, this.suppressCopyButton = false, this.copyText, this.trailing})

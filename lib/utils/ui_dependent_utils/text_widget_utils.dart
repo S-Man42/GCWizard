@@ -35,7 +35,7 @@ Object buildSubOrSuperscriptedRichTextIfNecessary(String input) {
     supSubRegExp.allMatches(input).forEach((element) {
       textSpans.add(TextSpan(text: input.substring(lastEnd, element.start)));
 
-      var widgetSpan;
+      WidgetSpan widgetSpan;
       if (element.group(1)!.startsWith('_')) {
         widgetSpan = subscriptedTextForRichText(element.group(1)!.replaceAll('_', ''));
       } else {

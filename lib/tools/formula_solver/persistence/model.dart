@@ -1,8 +1,11 @@
+import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
+import 'package:gc_wizard/utils/json_utils.dart';
+
 List<FormulaGroup> formulaGroups = [];
 
 class FormulaGroup {
   int? id;
-  String name;
+  late String name;
   List<Formula> formulas = [];
   List<FormulaValue> values = [];
 
@@ -15,11 +18,33 @@ class FormulaGroup {
         'values': values.map((value) => value.toMap()).toList(),
       };
 
-  FormulaGroup.fromJson(Map<String, Object?> json)
-      : name = json['name'] as String? ?? '', // TODO Proper default types if key is not in map
-        id = json['id'] as int?,
-        formulas = json['formulas'] == null ? <Formula>[] : List<Formula>.from((json['formulas'] as List).map((formula) => Formula.fromJson(formula))),
-        values = json['values'] == null ? <FormulaValue>[] : List<FormulaValue>.from((json['values'] as List).map((value) => FormulaValue.fromJson(value)));
+  FormulaGroup.fromJson(Map<String, Object?> json) {
+    this.name = toStringOrNull(json['name']) ?? ''; // TODO Proper default types if key is not in map
+    this.id = toIntOrNull(json['id']);
+
+    var formulasRaw = toObjectWithNullableContentListOrNull(json['formulas']);
+    this.formulas = <Formula>[];
+    if (formulasRaw != null) {
+      formulasRaw.forEach((Object? element) {
+        var formula = asJsonMapOrNull(element);
+        if (formula == null) return;
+
+        this.formulas.add(Formula.fromJson(formula));
+      });
+    }
+
+    var valuesRaw = toObjectWithNullableContentListOrNull(json['values']);
+    this.values = <FormulaValue>[];
+    if (valuesRaw != null) {
+      valuesRaw.forEach((Object? element) {
+        var value = asJsonMapOrNull(element);
+        if (value == null) return;
+
+        this.values.add(FormulaValue.fromJson(value));
+      });
+    }
+  }
+
 
   @override
   String toString() {
@@ -46,9 +71,9 @@ class Formula {
   }
 
   Formula.fromJson(Map<String, Object?> json)
-      : id = json['id'] as int?,
-        formula = json['formula'] as String? ?? '', // TODO Proper default types if key is not in map
-        name = json['name'] as String? ?? '';
+      : id = toIntOrNull(json['id']),
+        formula = toStringOrNull(json['formula']) ?? '', // TODO Proper default types if key is not in map
+        name = toStringOrNull(json['name']) ?? '';
 
   static Formula fromFormula(Formula formula) {
     var newFormula = Formula(formula.formula);
@@ -86,11 +111,11 @@ class FormulaValue {
   FormulaValueType? type;
 
   FormulaValue(this.key, this.value, {this.type});
-
+  
   FormulaValue.fromJson(Map<String, Object?> json)
-      : id = json['id'] as int?,
-        key = json['key'] as String? ?? '',  // TODO Proper default types if key is not in map
-        value = json['value'] as String? ?? '',
+      : id = toIntOrNull(json['id']),
+        key = toStringOrNull(json['key']) ?? '',  // TODO Proper default types if key is not in map
+        value = toStringOrNull(json['value']) ?? '',
         type = _readType(json['type'] as String?);
 
   Map<String, Object?> toMap() {
@@ -100,7 +125,7 @@ class FormulaValue {
       'value': value,
     };
 
-    var mapType;
+    String? mapType;
     switch (type) {
       case FormulaValueType.INTERPOLATED:
         mapType = _FORMULAVALUETYPE_INTERPOLATE;

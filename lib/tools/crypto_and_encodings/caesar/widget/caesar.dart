@@ -65,7 +65,7 @@ class CaesarState extends State<Caesar> {
     );
   }
 
-  _buildOutput() {
+  Widget _buildOutput() {
     var _key = _currentMode == GCWSwitchPosition.right ? -_currentKey : _currentKey;
     var _output = Rotator().rotate(_currentInput, _key);
 

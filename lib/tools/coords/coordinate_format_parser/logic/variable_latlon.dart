@@ -59,10 +59,10 @@ Future<Map<String, dynamic>> parseVariableLatLonAsync(dynamic jobData) async {
 }
 
 Map<String, dynamic> parseVariableLatLon(String coordinate, Map<String, String> substitutions,
-    {Map<String, dynamic> projectionData = const {}}) {
+    {Map<String, dynamic>? projectionData = const {}}) {
   if (substitutions == null) substitutions = {};
 
-  var textToExpand;
+  String textToExpand = coordinate;
 
   var withProjection = false;
   if (projectionData != null) {
@@ -76,8 +76,6 @@ Map<String, dynamic> parseVariableLatLon(String coordinate, Map<String, String> 
       textToExpand += String.fromCharCode(1) + _addBrackets(projectionData['bearing']);
       textToExpand += String.fromCharCode(1) + _addBrackets(projectionData['distance']);
     }
-  } else {
-    textToExpand = coordinate;
   }
 
   var calculated = FormulaParser(unlimitedExpanded: true).parse(textToExpand,

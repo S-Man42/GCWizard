@@ -46,19 +46,20 @@ String decodeDuckSpeak(text) {
   }
   var out = '';
   binary.forEach((binaryVal) {
-    var ascii = int.tryParse(convertBase(binaryVal, 2, 10));
-    out += (String.fromCharCode(ascii));
+    var ascii = int.tryParse(convertBase(binaryVal, 2, 10) ?? '');
+    if (ascii != null)
+      out += (String.fromCharCode(ascii));
   });
   return out.replaceAll(RegExp(r'[\x00-\x0F]'), '');
 }
 
-String encodeDuckSpeakNumbers(List<int> numbers) {
+String encodeDuckSpeakNumbers(List<int>? numbers) {
   if (numbers == null) return '';
 
   return numbers.map((number) => halfByteToDuck[number.toString()]).join(' ');
 }
 
-List<int> decodeDuckSpeakNumbers(String text) {
+List<int> decodeDuckSpeakNumbers(String? text) {
   if (text == null) return [];
 
   return text
@@ -66,9 +67,9 @@ List<int> decodeDuckSpeakNumbers(String text) {
       .map((code) {
         var number = duckToHalfByte[code];
         if (number == null) return null;
-
         return int.tryParse(number);
       })
       .where((number) => number != null)
+      .cast<int>()
       .toList();
 }

@@ -327,7 +327,7 @@ class BookCipherState extends State<BookCipher> {
     );
   }
 
-  _buildOutput() {
+  String _buildOutput() {
     if (_currentSearchMode == GCWSwitchPosition.left) {
       return encodeText(_currentInput, _currentText, _currentEncodeOutFormat,
           spacesOn: _spacesOn,

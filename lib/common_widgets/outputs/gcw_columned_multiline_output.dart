@@ -62,7 +62,7 @@ class _GCWColumnedMultilineOutputState extends State<GCWColumnedMultilineOutput>
             var textStyle = gcwTextStyle(fontSize: widget.fontSize);
             if (isFirst && widget.hasHeader) textStyle = textStyle.copyWith(fontWeight: FontWeight.bold);
 
-            var child;
+            Widget child;
 
             if (column is Widget) {
               child = column;
@@ -86,8 +86,6 @@ class _GCWColumnedMultilineOutputState extends State<GCWColumnedMultilineOutput>
         if (isFirst && widget.hasHeader && widget.copyAll) {
           copyText = '';
           widget.data.skip(1).forEach((dataRow) {
-            if (dataRow == null)
-              return;
             copyText = (copyText ?? '') + dataRow[copyColumn!].toString() + '\n';
           });
         }

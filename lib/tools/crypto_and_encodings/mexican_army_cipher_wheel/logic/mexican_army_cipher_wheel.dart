@@ -12,10 +12,12 @@ int _getMaxValue(int wheelNo) {
       return 78;
     case 3:
       return 104;
+    default:
+      return 0;
   }
 }
 
-String encryptMexicanArmyCipherWheel(String input, List<int> keys) {
+String encryptMexicanArmyCipherWheel(String? input, List<int> keys) {
   if (input == null) return '';
 
   input = input.toUpperCase().replaceAll(RegExp(r'[^A-Z]'), '');
@@ -23,7 +25,7 @@ String encryptMexicanArmyCipherWheel(String input, List<int> keys) {
   if (input.isEmpty) return '';
 
   return input.split('').map((character) {
-    var value = alphabet_AZ[character];
+    var value = alphabet_AZ[character] ?? 0;
     var tmpValue = value;
 
     var randomWheel;
@@ -51,7 +53,7 @@ String decryptMexicanArmyCipherWheel(String input, List<int> keys) {
   int i = 0;
   var output = '';
   while (i < input.length) {
-    var number = int.tryParse(input.substring(i, i + 2));
+    var number = int.tryParse(input.substring(i, i + 2))!;
     if (number == 0) number = 100;
 
     if (number <= 26) {
@@ -67,7 +69,7 @@ String decryptMexicanArmyCipherWheel(String input, List<int> keys) {
     while (number > 26) number -= 26;
     while (number < 1) number += 26;
 
-    output += alphabet_AZIndexes[number];
+    output += alphabet_AZIndexes[number] ?? '';
     i += 2;
   }
 

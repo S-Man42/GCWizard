@@ -75,7 +75,7 @@ class PokemonState extends State<Pokemon> {
     );
   }
 
-  _buildOutput() {
+  String _buildOutput() {
     return _currentMode == GCWSwitchPosition.left ? encodePokemon(_currentEncode) : decodePokemon(_currentDecode);
   }
 }

@@ -40,7 +40,7 @@ class FoxState extends State<Fox> {
     );
   }
 
-  _buildOutput() {
+  String _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       return encodeFox(_currentInput);
     } else {

@@ -20,14 +20,14 @@ class GCWAlphabetModificationDropDown extends StatefulWidget {
 
 class GCWAlphabetModificationDropDownState extends State<GCWAlphabetModificationDropDown> {
   AlphabetModificationMode? _currentValue;
-  late List<Map<String, Object>> modifications;
+  late Map<AlphabetModificationMode, String> modifications;
 
-  var allModifications = <Map<String, Object>>[
-    {'mode': AlphabetModificationMode.J_TO_I, 'text': 'common_alphabetmodification_jtoi'},
-    {'mode': AlphabetModificationMode.C_TO_K, 'text': 'common_alphabetmodification_ctok'},
-    {'mode': AlphabetModificationMode.W_TO_VV, 'text': 'common_alphabetmodification_wtovv'},
-    {'mode': AlphabetModificationMode.REMOVE_Q, 'text': 'common_alphabetmodification_removeq'},
-  ];
+  final allModifications = <AlphabetModificationMode, String> {
+    AlphabetModificationMode.J_TO_I: 'common_alphabetmodification_jtoi',
+    AlphabetModificationMode.C_TO_K: 'common_alphabetmodification_ctok',
+    AlphabetModificationMode.W_TO_VV: 'common_alphabetmodification_wtovv',
+    AlphabetModificationMode.REMOVE_Q: 'common_alphabetmodification_removeq',
+  };
 
   @override
   void initState() {
@@ -36,9 +36,10 @@ class GCWAlphabetModificationDropDownState extends State<GCWAlphabetModification
     if (widget.allowedModifications == null) {
       modifications = allModifications;
     } else {
-      modifications = [];
-      allModifications.forEach((modification) {
-        if (widget.allowedModifications!.contains(modification['mode'])) modifications.add(modification);
+      modifications = {};
+      allModifications.entries.forEach((MapEntry<AlphabetModificationMode, String> modification) {
+        if (widget.allowedModifications!.contains(modification.key))
+          modifications.putIfAbsent(modification.key, () => modification.value);
       });
     }
   }
@@ -50,18 +51,18 @@ class GCWAlphabetModificationDropDownState extends State<GCWAlphabetModification
         if (!widget.suppressTitle)
           Expanded(child: GCWText(text: i18n(context, 'common_alphabetmodification_title') + ':'), flex: 1),
         Expanded(
-            child: GCWDropDown(
+            child: GCWDropDown<AlphabetModificationMode>(
               value: _currentValue ?? widget.value ?? AlphabetModificationMode.J_TO_I,
-              onChanged: (newValue) {
+              onChanged: (AlphabetModificationMode newValue) {
                 setState(() {
-                  _currentValue = newValue is AlphabetModificationMode ? newValue as AlphabetModificationMode : _currentValue;
+                  _currentValue = newValue;
                   widget.onChanged(_currentValue!);
                 });
               },
-              items: modifications.map((entry) {
+              items: modifications.entries.map((entry) {
                 return GCWDropDownMenuItem(
-                  value: entry['mode'],
-                  child: i18n(context, entry['text'] as String),
+                  value: entry.key,
+                  child: i18n(context, entry.value),
                 );
               }).toList(),
             ),

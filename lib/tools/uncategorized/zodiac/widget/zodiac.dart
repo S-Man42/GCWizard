@@ -84,7 +84,7 @@ class ZodiacState extends State<Zodiac> {
     if (planets.length == 1) return output;
 
     output += '\n\n' + i18n(context, 'zodiac_attribute_planet_additional') + ':\n';
-    output += List.from(planets.sublist(1)).map((e) => i18n(context, e)).join('\n');
+    output += List<String>.from(planets.sublist(1)).map((e) => i18n(context, e)).join('\n');
 
     return output;
   }

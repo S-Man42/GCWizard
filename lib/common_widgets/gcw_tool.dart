@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ui';
 
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +11,7 @@ import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/gcw_selection.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
 import 'package:gc_wizard/tools/symbol_tables/_common/widget/gcw_symbol_container.dart';
+import 'package:gc_wizard/utils/json_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 
@@ -85,7 +85,7 @@ class GCWToolActionButtonsEntry {
   final void Function()? onPressed;
 
   GCWToolActionButtonsEntry({required this.showDialog, required this.url, required this.title,
-      required this.text, required this.icon, this.onPressed});
+    required this.text, required this.icon, this.onPressed});
 }
 
 class GCWTool extends StatefulWidget {
@@ -102,7 +102,7 @@ class GCWTool extends StatefulWidget {
   final String helpSearchString;
   final bool isBeta;
 
-  var icon;
+  GCWSymbolContainer? icon;
   var longId = '';
 
   String? toolName;
@@ -112,19 +112,19 @@ class GCWTool extends StatefulWidget {
 
   GCWTool(
       {Key? key,
-      required this.tool,
-      this.toolName,
-      this.defaultLanguageToolName,
-      required this.id,
-      this.categories = const [],
-      this.autoScroll = true,
-      this.suppressToolMargin = false,
-      this.iconPath,
-      this.searchKeys = const [],
-      this.buttonList = const [],
-      this.helpSearchString = '',
-      this.isBeta = false,
-      this.suppressHelpButton = false})
+        required this.tool,
+        this.toolName,
+        this.defaultLanguageToolName,
+        required this.id,
+        this.categories = const [],
+        this.autoScroll = true,
+        this.suppressToolMargin = false,
+        this.iconPath,
+        this.searchKeys = const [],
+        this.buttonList = const [],
+        this.helpSearchString = '',
+        this.isBeta = false,
+        this.suppressHelpButton = false})
       : super(key: key) {
     this.longId = className(tool) + '_' + (id ?? '');
 
@@ -160,7 +160,7 @@ class _GCWToolState extends State<GCWTool> {
     _toolName = widget.toolName ?? i18n(context, widget.id + '_title');
 
     _defaultLanguageToolName =
-          widget.defaultLanguageToolName ?? i18n(context, widget.id + '_title', useDefaultLanguage: true);
+        widget.defaultLanguageToolName ?? i18n(context, widget.id + '_title', useDefaultLanguage: true);
 
     return Scaffold(
         resizeToAvoidBottomInset: widget.autoScroll,
@@ -252,7 +252,7 @@ class _GCWToolState extends State<GCWTool> {
                 context,
                 i18n(context, button.title),
                 i18n(context, button.text),
-                () {
+                    () {
                   launchUrl(Uri.parse(i18n(context, url, ifTranslationNotExists: url)));
                 },
               );
@@ -284,9 +284,9 @@ class _GCWToolState extends State<GCWTool> {
     }
 
     return SingleChildScrollView(
-        physics: AlwaysScrollableScrollPhysics(),
-        primary: true,
-        child: tool,
+      physics: AlwaysScrollableScrollPhysics(),
+      primary: true,
+      child: tool,
     );
   }
 }
@@ -295,7 +295,7 @@ void _setToolCount(String i18nPrefix) {
   var toolCountsRaw = Prefs.get(PREFERENCE_TOOL_COUNT);
   if (toolCountsRaw == null) toolCountsRaw = '{}';
 
-  Map<String, int> toolCounts = Map<String, int>.from(jsonDecode(toolCountsRaw));
+  var toolCounts = _toolCounts();
   var currentToolCount = toolCounts[i18nPrefix];
 
   if (currentToolCount == null) currentToolCount = 0;
@@ -326,7 +326,7 @@ int sortToolList(GCWTool a, GCWTool b) {
   if (!Prefs.getBool(PREFERENCE_TOOL_COUNT_SORT))
     return _sortToolListAlphabetically(a, b);
 
-  Map<String, int> toolCounts = Map<String, int>.from(jsonDecode(Prefs.get(PREFERENCE_TOOL_COUNT)));
+  var toolCounts = _toolCounts();
 
   var toolCountA = toolCounts[a.longId];
   var toolCountB = toolCounts[b.longId];
@@ -352,4 +352,14 @@ int sortToolList(GCWTool a, GCWTool b) {
   }
 
   return 0;
+}
+
+Map<String, int> _toolCounts() {
+  var jsonString = Prefs.getString(PREFERENCE_TOOL_COUNT);
+
+  var decoded = jsonDecode(jsonString);
+  if (decoded == null || !(isJsonMap(decoded)))
+    return {};
+
+  return decoded is Map<String, int> ? decoded :{}; //ToDo Mark correct ??
 }

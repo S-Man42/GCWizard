@@ -54,11 +54,11 @@ class _EllipsoidPickerState extends State<_EllipsoidPicker> {
 
   @override
   Widget build(BuildContext context) {
-    final _secondCustomValues = [
-      {'key': _keyMinorAxis, 'name': i18n(context, 'coords_ellipsoid_minoraxis')},
-      {'key': _keyInverseFlattening, 'name': i18n(context, 'coords_ellipsoid_inverseflattening')},
-      {'key': _keyFlattening, 'name': i18n(context, 'coords_ellipsoid_flattening')},
-    ];
+    final _secondCustomValues = {
+       _keyMinorAxis: i18n(context, 'coords_ellipsoid_minoraxis'),
+      _keyInverseFlattening: i18n(context, 'coords_ellipsoid_inverseflattening'),
+      _keyFlattening: i18n(context, 'coords_ellipsoid_flattening'),
+    };
 
     return Column(children: <Widget>[
       GCWTwoOptionsSwitch(
@@ -112,10 +112,10 @@ class _EllipsoidPickerState extends State<_EllipsoidPicker> {
                     Expanded(
                         child: GCWDropDown<String>(
                           value: _currentEllipsoidCustom2ndValue,
-                          items: _secondCustomValues.map((value) {
+                          items: _secondCustomValues.entries.map((MapEntry<String, String> value) {
                             return GCWDropDownMenuItem(
-                              value: value['key'],
-                              child: value['name'],
+                              value: value.key,
+                              child: value.value,
                             );
                           }).toList(),
                           onChanged: (String newValue) {

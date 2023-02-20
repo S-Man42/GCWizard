@@ -23,16 +23,16 @@ final Map<int, List<String>> _numbersToSegments = {
   19: ['a', 'b', 'c', 'd', 'e', 'f', 'g'],
 };
 
-List<List<String>> encodeMayaNumbers(int input) {
+List<List<String>> encodeMayaNumbers(int? input) {
   if (input == null) return <List<String>>[];
 
-  var vigesimal = convertBase(input.toString(), 10, 20);
+  var vigesimal = convertBase(input.toString(), 10, 20) ?? '';
   return vigesimal.split('').map((digit) {
-    return _numbersToSegments[int.tryParse(convertBase(digit, 20, 10))];
+    return _numbersToSegments[int.tryParse(convertBase(digit, 20, 10) ?? '')] ?? [];
   }).toList();
 }
-
-Map<String, dynamic> decodeMayaNumbers(List<String> inputs) {
+//ToDo NullSafety remove result map
+Map<String, Object> decodeMayaNumbers(List<String>? inputs) {
   if (inputs == null || inputs.isEmpty)
     return {
       'displays': <List<String>>[],
@@ -67,7 +67,7 @@ Map<String, dynamic> decodeMayaNumbers(List<String> inputs) {
     return number;
   }).toList();
 
-  var total = convertBase(numbers.map((number) => convertBase(number.toString(), 10, 20)).join(), 20, 10);
+  var total = convertBase(numbers.map((number) => convertBase(number.toString(), 10, 20)).join(), 20, 10) ?? '';
 
-  return {'displays': displays, 'numbers': numbers, 'vigesimal': BigInt.tryParse(total)};
+  return {'displays': displays, 'numbers': numbers, 'vigesimal': BigInt.tryParse(total) ?? BigInt.zero};
 }

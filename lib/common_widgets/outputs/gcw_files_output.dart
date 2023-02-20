@@ -35,24 +35,24 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
     return Column(children: <Widget>[_buildFileTree(widget.files, [])]);
   }
 
-  Widget _buildFileTree(List<GCWFile> files, List<String> parents, {level = 0}) {
+  Widget _buildFileTree(List<GCWFile> files, List<String> parents, {int level = 0}) {
     var isFirst = true;
     var children = files.map((GCWFile file) {
       var hasChildren = file.children != null && file.children!.isNotEmpty;
 
       var actionButton = _buildActionButton(file);
 
-      var text;
+      String text = '';
       if (file.fileClass == FileClass.TEXT) {
         text = String.fromCharCodes(file.bytes ?? []);
-        if (text != null && text.length > 100) text = text.substring(0, 100) + '...';
+        if (text.length > 100) text = text.substring(0, 100) + '...';
       }
 
       var fileName = file.name;
       if (fileName != null) {
         if (fileName.startsWith(HIDDEN_FILE_IDENTIFIER)) {
           var index = fileName.split('_').last;
-          var prefix;
+          String prefix;
           if (index == '0') {
             prefix = i18n(context, 'hiddendata_source');
           } else {
@@ -138,7 +138,7 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
     );
   }
 
-  _buildActionButton(GCWFile file) {
+  GCWPopupMenu _buildActionButton(GCWFile file) {
     var actions = <GCWPopupMenuItem>[
       GCWPopupMenuItem(
         child: iconedGCWPopupMenuItem(context, Icons.save, 'hiddendata_savefile'),

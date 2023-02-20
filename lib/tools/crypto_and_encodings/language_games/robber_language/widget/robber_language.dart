@@ -35,9 +35,7 @@ class RobberLanguageState extends State<RobberLanguage> {
     );
   }
 
-  _buildOutput() {
-    if (_currentInput == null) return '';
-
+  String _buildOutput() {
     var out = _currentMode == GCWSwitchPosition.left
         ? encryptRobberLanguage(_currentInput)
         : decryptRobberLanguage(_currentInput);

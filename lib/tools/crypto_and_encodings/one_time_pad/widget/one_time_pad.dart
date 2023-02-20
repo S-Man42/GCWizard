@@ -13,8 +13,8 @@ class OneTimePad extends StatefulWidget {
 }
 
 class OneTimePadState extends State<OneTimePad> {
-  TextEditingController _inputController;
-  TextEditingController _keyController;
+  late TextEditingController _inputController;
+  late TextEditingController _keyController;
 
   String _currentInput = '';
   String _currentKey = '';

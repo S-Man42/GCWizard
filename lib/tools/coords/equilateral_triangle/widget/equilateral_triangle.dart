@@ -103,7 +103,7 @@ class EquilateralTriangleState extends State<EquilateralTriangle> {
         EquilateralTriangleJobData(coord1: _currentCoords1, coord2: _currentCoords2, ells: defaultEllipsoid()));
   }
 
-  _showOutput(List<LatLng> output) {
+  void _showOutput(List<LatLng> output) {
     if (output == null) {
       _currentOutput = [];
 

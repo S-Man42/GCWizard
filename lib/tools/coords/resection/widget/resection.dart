@@ -148,7 +148,7 @@ class ResectionState extends State<Resection> {
         ells: _ells));
   }
 
-  _showOutput(List<LatLng> output) {
+  void _showOutput(List<LatLng> output) {
     if (output == null) {
       _currentOutput = [];
 

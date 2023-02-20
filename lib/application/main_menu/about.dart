@@ -7,6 +7,7 @@ import 'package:gc_wizard/application/registry.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
+import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
@@ -99,7 +100,7 @@ class AboutState extends State<About> {
             padding: EdgeInsets.only(top: 15, bottom: 10),
           ),
           onTap: () {
-            Navigator.of(context).push(NoAnimationMaterialPageRoute(
+            Navigator.of(context).push(NoAnimationMaterialPageRoute<GCWTool>(
                 builder: (context) =>
                     registeredTools.firstWhere((tool) => className(tool.tool) == className(Licenses()))));
           },

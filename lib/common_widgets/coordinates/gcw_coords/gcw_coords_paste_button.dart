@@ -26,7 +26,7 @@ class _GCWCoordsPasteButtonState extends State<GCWCoordsPasteButton> {
     );
   }
 
-  _parseClipboardAndSetCoords(text) {
+  void _parseClipboardAndSetCoords(String text) {
     List<BaseCoordinates> parsed = parseCoordinates(text);
 
     if (parsed.isEmpty) {

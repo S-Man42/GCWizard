@@ -35,9 +35,7 @@ class PigLatinState extends State<PigLatin> {
     );
   }
 
-  _buildOutput() {
-    if (_currentInput == null) return '';
-
+  String _buildOutput() {
     var out = _currentMode == GCWSwitchPosition.left ? encryptPigLatin(_currentInput) : decryptPigLatin(_currentInput);
 
     return out;

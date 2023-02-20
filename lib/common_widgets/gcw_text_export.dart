@@ -40,7 +40,7 @@ class GCWTextExportState extends State<GCWTextExport> {
   var _currentMode = TextExportMode.QR;
 
   late TextEditingController _textExportController;
-  var _currentExportText;
+  String? _currentExportText;
 
   Uint8List? _qrImageData;
 
@@ -115,7 +115,7 @@ class GCWTextExportState extends State<GCWTextExport> {
                       GCWButton(
                         text: i18n(context, 'common_copy'),
                         onPressed: () {
-                          insertIntoGCWClipboard(context, _currentExportText);
+                          if (_currentExportText!= null) insertIntoGCWClipboard(context, _currentExportText!);
                         },
                       )
                     ],

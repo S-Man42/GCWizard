@@ -15,7 +15,7 @@ import 'package:gc_wizard/utils/constants.dart';
 import 'package:prefs/prefs.dart';
 
 class GCWToolList extends StatefulWidget {
-  final toolList;
+  final List<GCWTool> toolList;
 
   const GCWToolList({Key? key, required this.toolList}) : super(key: key);
 
@@ -49,8 +49,8 @@ class _GCWToolListState extends State<GCWToolList> {
   }
 
   Widget _buildRow(BuildContext context, GCWTool tool) {
-    Future _navigateToSubPage(context) async {
-      Navigator.push(context, NoAnimationMaterialPageRoute(builder: (context) => tool));
+    Future _navigateToSubPage(BuildContext context) async {
+      Navigator.push(context, NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => tool));
     }
 
     return ListTile(
@@ -107,8 +107,8 @@ class _GCWToolListState extends State<GCWToolList> {
     );
   }
 
-  _buildSubtitle(BuildContext context, GCWTool tool) {
-    var descriptionText;
+  Widget _buildSubtitle(BuildContext context, GCWTool tool) {
+    IgnorePointer? descriptionText;
     if (Prefs.getBool(PREFERENCE_TOOLLIST_SHOW_DESCRIPTIONS) &&
         tool.description != null &&
         tool.description!.isNotEmpty) {
@@ -119,12 +119,12 @@ class _GCWToolListState extends State<GCWToolList> {
       ));
     }
 
-    var exampleText;
+    IgnorePointer? exampleText;
     if (Prefs.getBool(PREFERENCE_TOOLLIST_SHOW_EXAMPLES) && tool.example != null && tool.example!.isNotEmpty) {
       exampleText = IgnorePointer(child: GCWText(text: tool.example!, style: gcwDescriptionTextStyle()));
     }
 
-    var content;
+    Widget content = Container();
     if (exampleText != null && descriptionText != null) {
       content = Column(
         children: [
@@ -143,6 +143,6 @@ class _GCWToolListState extends State<GCWToolList> {
             child: content,
             padding: EdgeInsets.only(left: 10.0),
           )
-        : null;
+        : Container();
   }
 }

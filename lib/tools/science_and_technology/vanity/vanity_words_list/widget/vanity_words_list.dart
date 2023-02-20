@@ -53,7 +53,7 @@ class VanityWordsListState extends State<VanityWordsList> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    Map<String, String> vanityWordsOverview = new Map<String, String>();
+    Map<String, String> vanityWordsOverview = Map<String, String>();
     vanityWordsOverview = VanWords[_currentLanguage];
     if (_currentLanguage == NumeralWordsLanguage.DEU) NUMERAL_WORDS[_currentLanguage]['fünf'] = '5';
 

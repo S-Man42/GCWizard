@@ -49,7 +49,7 @@ class GCWTextSelectionControls extends MaterialTextSelectionControls {
 
       /// Custom code
       handleGCWPasteButton: canPaste(delegate) && handlePaste != null
-          ? (text, start, end) {
+          ? (String text, int start, int end) {
               // From original handlePaste code
               final TextEditingValue value = delegate.textEditingValue;
               if (start == null) start = 0;

@@ -38,10 +38,10 @@ class GCWTextField extends StatefulWidget {
     this.focusNode,
     this.autofocus,
     this.icon,
-    this.filled: false,
+    this.filled = false,
     this.maxLength,
     this.maxLines,
-    this.title: '',
+    this.title = '',
     this.fontSize,
     this.style,
   }) : super(key: key);

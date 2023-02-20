@@ -185,7 +185,7 @@ Map<String, String> _buildEncodeMatrix(String alphabet) {
   int x = 0;
   int y = 0;
   int z = 0;
-  Map<String, String> result = new Map<String, String>();
+  Map<String, String> result = Map<String, String>();
   for (int i = 0; i < alphabet.length; i++) {
     j = i % 9;
     z = (i ~/ 9) + 1;

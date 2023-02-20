@@ -2,7 +2,7 @@ part of 'package:gc_wizard/tools/formula_solver/widget/formula_solver_formulagro
 
 List<String> _newFormulas = [];
 
-void _showFormulaReplaceDialog(BuildContext context, List<Formula> formulas, {required Function onOkPressed}) {
+void _showFormulaReplaceDialog(BuildContext context, List<Formula> formulas, {required void Function(List<Formula>) onOkPressed}) {
   var _output = formulas.map((formula) => Formula.fromFormula(formula)).toList();
 
   showGCWDialog(
@@ -13,13 +13,11 @@ void _showFormulaReplaceDialog(BuildContext context, List<Formula> formulas, {re
         GCWDialogButton(
             text: i18n(context, 'common_ok'),
             onPressed: () {
-              if (onOkPressed != null) {
-                for (int i = 0; i < formulas.length; i++) {
-                  _output[i].formula = _newFormulas[i];
-                }
-
-                onOkPressed(_output);
+              for (int i = 0; i < formulas.length; i++) {
+                _output[i].formula = _newFormulas[i];
               }
+
+              onOkPressed(_output);
             })
       ],
       cancelButton: true);

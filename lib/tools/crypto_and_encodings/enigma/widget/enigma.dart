@@ -167,7 +167,7 @@ class EnigmaState extends State<Enigma> {
     );
   }
 
-  _rotorType(EnigmaRotorType type) {
+  String _rotorType(EnigmaRotorType type) {
     switch (type) {
       case EnigmaRotorType.ENTRY_ROTOR:
         return i18n(context, 'enigma_rotortype_entryrotor');

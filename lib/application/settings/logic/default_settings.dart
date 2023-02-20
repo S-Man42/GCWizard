@@ -16,7 +16,7 @@ import 'package:prefs/prefs.dart';
 
 enum PreferencesInitMode { STARTUP, REINIT_ALL, REINIT_SINGLE }
 
-void initDefaultSettings(PreferencesInitMode mode, {String reinitSinglePreference: ''}) {
+void initDefaultSettings(PreferencesInitMode mode, {String reinitSinglePreference = ''}) {
   if (mode == PreferencesInitMode.REINIT_SINGLE) {
     if (reinitSinglePreference.isEmpty) return;
   }
@@ -56,7 +56,7 @@ void initDefaultSettings(PreferencesInitMode mode, {String reinitSinglePreferenc
   }
 
   var clipboardData = Prefs.getStringList(PREFERENCE_CLIPBOARD_ITEMS);
-  if (reinitSinglePreference == PREFERENCE_CLIPBOARD_ITEMS || _reinitAll || clipboardData == null) {
+  if (reinitSinglePreference == PREFERENCE_CLIPBOARD_ITEMS || _reinitAll) {
     Prefs.setStringList(PREFERENCE_CLIPBOARD_ITEMS, []);
   } else {
     clipboardData.removeWhere((item) {
@@ -144,8 +144,7 @@ void initDefaultSettings(PreferencesInitMode mode, {String reinitSinglePreferenc
   var _favorites = Prefs.getStringList(PREFERENCE_FAVORITES);
   if (reinitSinglePreference == PREFERENCE_FAVORITES ||
       _reinitAll ||
-      _favorites == null ||
-      _favorites.where((element) => element != null && element.isNotEmpty).isEmpty) {
+      _favorites.where((element) => element.isNotEmpty).isEmpty) {
     Prefs.setStringList(PREFERENCE_FAVORITES, [
       'AlphabetValues_alphabetvalues',
       'Morse_morse',

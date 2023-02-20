@@ -52,11 +52,11 @@ class HoudiniState extends State<Houdini> {
     );
   }
 
-  _houdiniMode() {
+  HoudiniMode _houdiniMode() {
     return _currentCryptMode == GCWSwitchPosition.left ? HoudiniMode.NUMBERS : HoudiniMode.LETTERS;
   }
 
-  _buildOutput() {
+  Widget _buildOutput() {
     var outputs;
     if (_currentMode == GCWSwitchPosition.left) {
       outputs = encodeHoudini(_currentInput, _houdiniMode());

@@ -52,7 +52,7 @@ class DNANucleicAcidSequenceState extends State<DNANucleicAcidSequence> {
     );
   }
 
-  _buildOutput() {
+  Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       var output;
 

@@ -121,7 +121,7 @@ class ComplexNumbersState extends State<ComplexNumbers> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    Map<String, String> coordinates = new Map<String, String>();
+    Map<String, String> coordinates = Map<String, String>();
     if (_currentMode == GCWSwitchPosition.right) {
       coordinates = CartesianToPolar(_currentA, _currentB);
     } else {

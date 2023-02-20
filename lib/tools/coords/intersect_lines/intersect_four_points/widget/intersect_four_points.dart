@@ -138,7 +138,7 @@ class IntersectFourPointsState extends State<IntersectFourPoints> {
         ells: defaultEllipsoid()));
   }
 
-  _showOutput(LatLng output) {
+  void _showOutput(LatLng output) {
     _currentIntersection = output;
 
     _currentMapPoints = [

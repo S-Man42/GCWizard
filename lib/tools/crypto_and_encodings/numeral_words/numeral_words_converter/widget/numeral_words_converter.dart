@@ -19,7 +19,7 @@ class NumeralWordsConverter extends StatefulWidget {
 }
 
 class NumeralWordsConverterState extends State<NumeralWordsConverter> {
-  TextEditingController _decodeController;
+  late TextEditingController _decodeController;
 
   var _currentDecodeInput = '';
 
@@ -27,7 +27,7 @@ class NumeralWordsConverterState extends State<NumeralWordsConverter> {
 
   int _currentNumber = 0;
 
-  SplayTreeMap<String, NumeralWordsLanguage> _LANGUAGES;
+  SplayTreeMap<String, NumeralWordsLanguage>? _LANGUAGES;
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
@@ -52,14 +52,14 @@ class NumeralWordsConverterState extends State<NumeralWordsConverter> {
 
     return Column(
       children: <Widget>[
-        GCWDropDown(
+        GCWDropDown<NumeralWordsLanguage>(
           value: _currentLanguage,
           onChanged: (value) {
             setState(() {
               _currentLanguage = value;
             });
           },
-          items: _LANGUAGES.entries.map((mode) {
+          items: _LANGUAGES!.entries.map((mode) {
             return GCWDropDownMenuItem(
               value: mode.value,
               child: mode.key,
@@ -85,8 +85,8 @@ class NumeralWordsConverterState extends State<NumeralWordsConverter> {
           )
         else // encode
           GCWIntegerSpinner(
-            min: MIN_MAX_NUMBER[_currentLanguage][0],
-            max: MIN_MAX_NUMBER[_currentLanguage][1],
+            min: MIN_MAX_NUMBER[_currentLanguage]?[0],
+            max: MIN_MAX_NUMBER[_currentLanguage]?[1],
             value: _currentNumber,
             onChanged: (value) {
               setState(() {

@@ -126,7 +126,7 @@ class IntersectionState extends State<Intersection> {
         ells: defaultEllipsoid()));
   }
 
-  _showOutput(List<LatLng> output) {
+  void _showOutput(List<LatLng> output) {
     if (output == null) {
       _currentOutput = [];
 

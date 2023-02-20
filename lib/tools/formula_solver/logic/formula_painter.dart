@@ -331,8 +331,8 @@ class FormulaPainter {
 
     var result = <String>[];
     var arguments = _separateArguments(formula);
-    var maxCommaCount;
-    var minCommaCount = 0;
+    int? maxCommaCount;
+    int minCommaCount = 0;
     switch (functionName) {
       case 'LOG':
         minCommaCount = 1;
@@ -433,7 +433,7 @@ class FormulaPainter {
   }
 
   List<String>? _isLiteral(String formula) {
-    RegExp regex = RegExp(r'^([\(\{])');
+    RegExp regex = RegExp(r'^([({])');
     var match = regex.firstMatch(formula);
 
     if (match == null) return null;
@@ -461,7 +461,7 @@ class FormulaPainter {
 
   List<String>? _isConstant(String formula) {
     //extract all non-ascii chars, like Pi or Phi
-    var specialChars = _constantsRegEx.replaceAll(RegExp(r'[A-Za-z0-9\|_]'), '');
+    var specialChars = _constantsRegEx.replaceAll(RegExp(r'[A-Za-z0-9|_]'), '');
     //add special chars to allowed character (next to \w == ASCII chars)
     var wordChars = r'[\w' + specialChars + r']';
     // \b does not allow non-ASCII chars
@@ -563,7 +563,7 @@ class FormulaPainter {
     return _replaceRange(result, 0, parts[0].length, hasError ? 'G' : 'g');
   }
 
-  List<String>? _isOperator(String formula, var offset) {
+  List<String>? _isOperator(String formula, int offset) {
     var regex = RegExp(r'^([' + _operatorsRegEx + r'])(\s*)(\-)*(\s*)([^' + _operatorsRegEx + '])');
     var match = regex.firstMatch(formula);
 

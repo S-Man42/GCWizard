@@ -154,11 +154,11 @@ class AbaddonState extends State<Abaddon> {
     ]);
   }
 
-  _addCharacter(String input) {
+  void _addCharacter(String input) {
     _currentInput = textControllerInsertText(input, _currentInput, _inputController);
   }
 
-  _buildOutput() {
+  String _buildOutput() {
     if (_currentInput.isEmpty || _currentA.isEmpty || _currentB.isEmpty || _currentC.isEmpty) return '';
 
     var key = {YEN: _currentA, MY: _currentB, THORN: _currentC};

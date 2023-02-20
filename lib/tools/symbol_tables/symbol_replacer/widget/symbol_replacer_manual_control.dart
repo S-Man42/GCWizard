@@ -55,8 +55,8 @@ class SymbolReplacerManualControlState extends State<SymbolReplacerManualControl
   Widget build(BuildContext context) {
     final mediaQueryData = MediaQuery.of(context);
     var countColumns = mediaQueryData.orientation == Orientation.portrait
-        ? Prefs.get(PREFERENCE_SYMBOLTABLES_COUNTCOLUMNS_PORTRAIT)
-        : Prefs.get(PREFERENCE_SYMBOLTABLES_COUNTCOLUMNS_LANDSCAPE);
+        ? Prefs.getInt(PREFERENCE_SYMBOLTABLES_COUNTCOLUMNS_PORTRAIT)
+        : Prefs.getInt(PREFERENCE_SYMBOLTABLES_COUNTCOLUMNS_LANDSCAPE);
 
     return Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
       _buildEditRow(),
@@ -241,7 +241,7 @@ class SymbolReplacerManualControlState extends State<SymbolReplacerManualControl
         id: 'symbol_replacer',
         searchKeys: ['symbol_replacer']);
 
-    Navigator.push(context, NoAnimationMaterialPageRoute(builder: (context) => subPageTool)).whenComplete(() {
+    Navigator.push(context, NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => subPageTool)).whenComplete(() {
       setState(() {
         var _addActivTmp = _addActiv;
         var _removeActivTmp = _removeActiv;

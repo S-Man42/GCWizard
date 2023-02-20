@@ -4,8 +4,8 @@ import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 
-class GCWAlphabetDropDown extends StatefulWidget {
-  final void Function(Object?) onChanged;
+class GCWAlphabetDropDown<T extends Object?> extends StatefulWidget {
+  final void Function(T) onChanged;
   final void Function(String)? onCustomAlphabetChanged;
   final Map<Object, String> items;
   final dynamic customModeKey;

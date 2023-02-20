@@ -8,7 +8,7 @@ import 'package:gc_wizard/tools/science_and_technology/date_and_time/calendar/lo
 
 class GCWDatePicker extends StatefulWidget {
   final void Function (DateTime) onChanged;
-  final date;
+  final DateTime date;
   final CalendarSystem type;
 
   const GCWDatePicker({Key? key, required this.onChanged, required this.date, this.type = CalendarSystem.GREGORIANCALENDAR})
@@ -19,24 +19,21 @@ class GCWDatePicker extends StatefulWidget {
 }
 
 class GCWDatePickerState extends State<GCWDatePicker> {
-  var _currentYear;
-  var _currentMonth;
-  var _currentDay;
+  late int _currentYear;
+  late int _currentMonth;
+  late int _currentDay;
 
-  var _monthFocusNode;
-  var _dayFocusNode;
+  var _monthFocusNode = FocusNode();
+  var _dayFocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
 
-    DateTime date = widget.date ?? DateTime.now();
+    DateTime date = widget.date;
     _currentYear = date.year;
     _currentMonth = date.month;
     _currentDay = date.day;
-
-    _monthFocusNode = FocusNode();
-    _dayFocusNode = FocusNode();
   }
 
   @override
@@ -82,7 +79,7 @@ class GCWDatePickerState extends State<GCWDatePicker> {
     );
   }
 
-  Widget _buildDaySpinner(var type) {
+  Widget _buildDaySpinner(CalendarSystem type) {
     int maxDays = 31;
     if (type == CalendarSystem.POTRZEBIECALENDAR) maxDays = 10;
 
@@ -101,14 +98,14 @@ class GCWDatePickerState extends State<GCWDatePicker> {
     );
   }
 
-  Widget _buildMonthSpinner(var type) {
+  Widget _buildMonthSpinner(CalendarSystem type) {
     if (type == CalendarSystem.ISLAMICCALENDAR ||
         type == CalendarSystem.PERSIANYAZDEGARDCALENDAR ||
         type == CalendarSystem.HEBREWCALENDAR ||
         type == CalendarSystem.POTRZEBIECALENDAR ||
         type == CalendarSystem.COPTICCALENDAR)
       return GCWDropDownSpinner(
-        index: _currentMonth ?? (widget.date != null ? widget.date.month - 1 : null) ?? 0,
+        index: _currentMonth,
         layout: SpinnerLayout.VERTICAL,
         items: MONTH_NAMES[type]!.entries.map((entry) {
           return GCWDropDownMenuItem(value: entry.key - 1, child: entry.value);
@@ -145,11 +142,11 @@ class GCWDatePickerState extends State<GCWDatePicker> {
       return Container();
   }
 
-  _setCurrentNamedCalendarValueAndEmitOnChange() {
+  void _setCurrentNamedCalendarValueAndEmitOnChange() {
     widget.onChanged(DateTime(_currentYear, _currentMonth + 1, _currentDay));
   }
 
-  _setCurrentValueAndEmitOnChange() {
+  void _setCurrentValueAndEmitOnChange() {
     widget.onChanged(DateTime(_currentYear, _currentMonth, _currentDay));
   }
 }

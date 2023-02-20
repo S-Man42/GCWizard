@@ -45,7 +45,7 @@ SolitaireOutput? _solitaireBase(String? input, String? key, bool encrypt) {
   }
 
   var deck = createDeck();
-  var tuple = createKeyStream(input, key, deck, alphabet);
+  var tuple = createKeyStream(input, key!, deck, alphabet);
   var keyStream = tuple.item1;
   deck = tuple.item2;
   String output;
@@ -60,14 +60,14 @@ SolitaireOutput? _solitaireBase(String? input, String? key, bool encrypt) {
 
 String _createEncryptOutput(String input, String keyStream, Map<String, int> alphabet) {
   var output = '';
-  for (int i = 0; i < input.length; i++) output += _chr(alphabet[input[i]] + alphabet[keyStream[i]], alphabet);
+  for (int i = 0; i < input.length; i++) output += _chr(alphabet[input[i]]! + alphabet[keyStream[i]]!, alphabet) ?? '';
 
   return output;
 }
 
 String _createDecryptOutput(String input, String keyStream, Map<String, int> alphabet) {
   var output = "";
-  for (int i = 0; i < input.length; i++) output += _chr(alphabet[input[i]] - alphabet[keyStream[i]], alphabet);
+  for (int i = 0; i < input.length; i++) output += _chr(alphabet[input[i]]! - alphabet[keyStream[i]]!, alphabet) ?? '';
 
   return output;
 }
@@ -80,7 +80,7 @@ List<int> createDeck() {
   return deck;
 }
 
-Tuple2<String, List<int>> createKeyStream(String input, String? key, List<int> deck, Map<String, int> alphabet) {
+Tuple2<String, List<int>> createKeyStream(String input, String key, List<int> deck, Map<String, int> alphabet) {
   var streamLetters = '';
   int issueCard;
 
@@ -89,7 +89,7 @@ Tuple2<String, List<int>> createKeyStream(String input, String? key, List<int> d
     for (int i = 0; i < key.length; i++) {
       deck = _cycleDeck(deck);
       // Step 4 (position -> value from key letter)
-      deck = _takeOff(deck, alphabet[key[i]]);
+      deck = _takeOff(deck, alphabet[key[i]]!);
     }
   }
 

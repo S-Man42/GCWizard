@@ -201,7 +201,7 @@ class VigenereBreakerState extends State<VigenereBreaker> {
         keyLengthMax: _maxKeyLength));
   }
 
-  _showOutput(VigenereBreakerResult output) {
+  void _showOutput(VigenereBreakerResult output) {
     if (output == null) {
       _currentOutput = null;
       WidgetsBinding.instance.addPostFrameCallback((_) {

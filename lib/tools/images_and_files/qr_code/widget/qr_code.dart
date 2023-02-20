@@ -127,12 +127,12 @@ class QrCodeState extends State<QrCode> {
     );
   }
 
-  _buildOutput() {
+  Object? _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       if (_outDataEncrypt == null) return null;
       return Image.memory(_outDataEncrypt!);
     } else
-      return _outDataDecrypt;
+      return _outDataDecrypt!;
   }
 
   void _updateOutput() {

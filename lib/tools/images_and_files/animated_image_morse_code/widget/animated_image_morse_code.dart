@@ -303,7 +303,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
     return Column(children: <Widget>[Image.memory(_encodeOutputImage!)]);
   }
 
-  _initMarkedList(List<Uint8List> images, List<List<int>> imagesFiltered) {
+  void _initMarkedList(List<Uint8List> images, List<List<int>> imagesFiltered) {
     if (_marked == null || _marked!.length != images.length) {
       _marked = List.filled(images.length, false);
 
@@ -361,7 +361,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
     return list;
   }
 
-  _analysePlatformFileAsync() async {
+  void _analysePlatformFileAsync() async {
     await showDialog(
       context: context,
       barrierDismissible: false,
@@ -393,7 +393,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
         Tuple4<Uint8List, Uint8List, String, int>(_highImage!, _lowImage!, _currentInput, _currentDotDuration));
   }
 
-  _saveOutputDecode(AnimatedImageMorseOutput? output) {
+  void _saveOutputDecode(AnimatedImageMorseOutput? output) {
     _outData = output;
     _marked = null;
 
@@ -414,7 +414,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
     });
   }
 
-  _saveOutputEncode(Uint8List? output) {
+  void _saveOutputEncode(Uint8List? output) {
     _encodeOutputImage = output;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -422,7 +422,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
     });
   }
 
-  _exportFiles(BuildContext context, String fileName, List<Uint8List> data) async {
+  void _exportFiles(BuildContext context, String fileName, List<Uint8List> data) async {
     createZipFile(fileName, '.' + fileExtension(FileType.PNG), data).then((bytes) async {
       var value = await saveByteDataToFile(context, bytes, buildFileNameWithDate('anim_', FileType.ZIP));
 
@@ -430,7 +430,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
     });
   }
 
-  _exportFile(BuildContext context, Uint8List data) async {
+  void _exportFile(BuildContext context, Uint8List data) async {
     var fileType = getFileType(data);
     var value = await saveByteDataToFile(context, data, buildFileNameWithDate('anim_export_', fileType));
 

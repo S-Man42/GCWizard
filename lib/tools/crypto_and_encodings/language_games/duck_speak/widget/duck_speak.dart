@@ -48,9 +48,7 @@ class DuckSpeakState extends State<DuckSpeak> {
     );
   }
 
-  _buildOutput() {
-    if (_currentInput == null) return '';
-
+  String _buildOutput() {
     if (_currentDuckSpeakMode == GCWSwitchPosition.left) {
       return _currentMode == GCWSwitchPosition.left ? encodeDuckSpeak(_currentInput) : decodeDuckSpeak(_currentInput);
     } else {
@@ -60,6 +58,7 @@ class DuckSpeakState extends State<DuckSpeak> {
             .split('')
             .map((number) => int.tryParse(number))
             .where((number) => number != null)
+            .cast<int>()
             .toList();
         return encodeDuckSpeakNumbers(numbers);
       } else {

@@ -55,21 +55,21 @@ class _HashBreakerState extends State<HashBreaker> {
     super.dispose();
   }
 
-  _addEntry(String currentFromInput, String currentToInput, BuildContext context) {
+  void _addEntry(String currentFromInput, String currentToInput, BuildContext context) {
     if (currentFromInput.isNotEmpty)
       _currentSubstitutions.putIfAbsent(++_currentIdCount, () => {currentFromInput: currentToInput});
   }
 
-  _updateEntry(dynamic id, String key, String value) {
+  void _updateEntry(dynamic id, String key, String value) {
     _currentSubstitutions[id] = {key: value};
   }
 
-  _updateNewEntry(String currentFromInput, String currentToInput, BuildContext context) {
+  void _updateNewEntry(String currentFromInput, String currentToInput, BuildContext context) {
     _currentFromInput = currentFromInput;
     _currentToInput = currentToInput;
   }
 
-  _removeEntry(dynamic id, BuildContext context) {
+  void _removeEntry(dynamic id, BuildContext context) {
     _currentSubstitutions.remove(id);
   }
 
@@ -131,7 +131,7 @@ class _HashBreakerState extends State<HashBreaker> {
         onRemoveEntry: _removeEntry);
   }
 
-  _onDoCalculation() async {
+  void _onDoCalculation() async {
     await showDialog(
       context: context,
       barrierDismissible: false,
@@ -204,7 +204,7 @@ class _HashBreakerState extends State<HashBreaker> {
         hashFunction: _currentHashFunction));
   }
 
-  _showOutput(Map<String, dynamic> output) {
+  void _showOutput(Map<String, dynamic> output) {
     if (output == null || output['state'] == null || output['state'] == 'not_found') {
       _currentOutput = i18n(context, 'hashes_hashbreaker_solutionnotfound');
     } else

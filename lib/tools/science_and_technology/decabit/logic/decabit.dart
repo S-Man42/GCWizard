@@ -136,10 +136,10 @@ final AZToDecabitStr = AZToDecabit.map((k, v) => MapEntry(String.fromCharCode(k)
 final DecabitToAZInt = AZToDecabit.map((k, v) => MapEntry(v, k.toString()));
 final DecabitToAZStr = AZToDecabit.map((k, v) => MapEntry(v, String.fromCharCode(k)));
 
-encryptDecabit(String input, Map<String, String> replaceCharacters, bool numericMode) {
+String encryptDecabit(String? input, Map<String, String> replaceCharacters, bool numericMode) {
   if (input == null || input.isEmpty) return '';
 
-  var decabit;
+  String decabit;
 
   if (numericMode) {
     decabit = normalizeUmlauts(input)
@@ -161,7 +161,7 @@ encryptDecabit(String input, Map<String, String> replaceCharacters, bool numeric
   return decabit;
 }
 
-decryptDecabit(String input, Map<String, String> replaceCharacters, bool numericMode) {
+String decryptDecabit(String? input, Map<String, String>? replaceCharacters, bool numericMode) {
   if (input == null || input.isEmpty) return '';
 
   if (replaceCharacters != null) input = substitution(input, switchMapKeyValue(replaceCharacters));

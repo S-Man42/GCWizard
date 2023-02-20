@@ -7,6 +7,7 @@ import 'package:gc_wizard/common_widgets/gcw_async_executer.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_replacer_symboldata.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:image/image.dart' as Image;
+import 'package:tuple/tuple.dart';
 
 class ReplaceSymbolsInput {
   final Uint8List image;
@@ -29,18 +30,19 @@ class ReplaceSymbolsInput {
       this.mergeDistance});
 }
 
-Future<SymbolReplacerImage?> replaceSymbolsAsync(dynamic jobData) async {
-  if (jobData == null) return null;
+Future<SymbolReplacerImage?> replaceSymbolsAsync(GCWAsyncExecuterParameters? jobData) async {
+  if (jobData?.parameters is! ReplaceSymbolsInput) return null;
 
+  var data = jobData!.parameters as ReplaceSymbolsInput;
   var output = await replaceSymbols(
-      jobData.parameters.image, jobData.parameters.blackLevel, jobData.parameters.similarityLevel,
-      gap: jobData.parameters.gap,
-      symbolImage: jobData.parameters.symbolImage,
-      compareSymbols: jobData.parameters.compareSymbols,
-      similarityCompareLevel: jobData.parameters.similarityCompareLevel,
-      mergeDistance: jobData.parameters.mergeDistance);
+      data.image, data.blackLevel, data.similarityLevel,
+      gap: data.gap,
+      symbolImage: data.symbolImage,
+      compareSymbols: data.compareSymbols,
+      similarityCompareLevel: data.similarityCompareLevel,
+      mergeDistance: data.mergeDistance);
 
-  jobData.sendAsyncPort?.send(output);
+  jobData.sendAsyncPort.send(output);
 
   return output;
 }
@@ -893,10 +895,10 @@ class SymbolGroup {
 }
 
 Future<List<Map<String, SymbolReplacerSymbolData>>?> searchSymbolTableAsync(GCWAsyncExecuterParameters? jobData) async {
-  if (jobData == null) return null;
+  if (jobData?.parameters is! Tuple2<SymbolReplacerImage, List<List<Map<String, SymbolReplacerSymbolData>>>>) return null;
 
-  var output =
-      await searchSymbolTable(jobData.parameters.item1, jobData.parameters.item2, sendAsyncPort: jobData.sendAsyncPort);
+  var data = jobData!.parameters as Tuple2<SymbolReplacerImage, List<List<Map<String, SymbolReplacerSymbolData>>>>;
+  var output = await searchSymbolTable(data.item1, data.item2, sendAsyncPort: jobData.sendAsyncPort);
 
   jobData.sendAsyncPort.send(output);
 

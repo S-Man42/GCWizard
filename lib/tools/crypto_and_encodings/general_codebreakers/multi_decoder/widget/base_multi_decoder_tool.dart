@@ -19,10 +19,9 @@ abstract class AbstractMultiDecoderTool {
       this.requiresKey = false,
       this.optionalKey = false,
       this.configurationWidget,
-        required this.options}) {
-    if (options == null) options = {};
-  }
+        required this.options});
 }
+
 class MultiDecoderToolDummy extends AbstractMultiDecoderTool {
   MultiDecoderToolDummy()
       : super(
@@ -35,13 +34,13 @@ class MultiDecoderToolDummy extends AbstractMultiDecoderTool {
 }
 
 int intTypeCheck(Object? value, int defaultValue) {
-  return (value is int) ? value as int : defaultValue;
+  return toIntOrNull(value) ?? defaultValue;
 }
 
 String stringTypeCheck(Object? value, String defaultValue) {
-  return (value is String) ? value : defaultValue;
+  return toStringOrNull(value) ?? defaultValue;
 }
 
 String? stringNullableTypeCheck(Object? value, String? defaultValue) {
-  return (value is String?) ? value : defaultValue;
+  return (isString(String) || value == null) ? value as String?: defaultValue;
 }

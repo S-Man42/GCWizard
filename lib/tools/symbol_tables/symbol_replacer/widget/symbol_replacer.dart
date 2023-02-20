@@ -170,7 +170,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
         mergeDistance: _currentMergeDistance));
   }
 
-  _showOutput(SymbolReplacerImage? output) {
+  void _showOutput(SymbolReplacerImage? output) {
     _symbolImage = output;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -320,7 +320,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     ]);
   }
 
-  _showAutoSearchDialog() {
+  void _showAutoSearchDialog() {
     showGCWDialog(
         context,
         '',
@@ -363,7 +363,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
         []);
   }
 
-  _startSubstitutionBreaker() async {
+  void _startSubstitutionBreaker() async {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -384,7 +384,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     );
   }
 
-  _startJobDataSearchSymbolTable() {
+  void _startJobDataSearchSymbolTable() {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -405,7 +405,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     );
   }
 
-  _initDropDownLists() {
+  void _initDropDownLists() {
     if (_compareSymbolItems.isEmpty) {
       List<GCWTool> _toolList = registeredTools.where((element) {
         return [
@@ -563,7 +563,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
         id: 'symbol_replacer',
         searchKeys: ['symbol_replacer']);
 
-    Navigator.push(context, NoAnimationMaterialPageRoute(builder: (context) => subPageTool)).whenComplete(() {
+    Navigator.push(context, NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => subPageTool)).whenComplete(() {
       setState(() {});
     });
   }

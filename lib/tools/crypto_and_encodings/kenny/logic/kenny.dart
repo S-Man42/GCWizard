@@ -15,7 +15,7 @@ import 'package:gc_wizard/utils/string_utils.dart';
  * These values can be converted into their alphabet values (adding +1, naturally).
  */
 
-encryptKenny(String input, List<String> replaceCharacters, bool caseSensitive) {
+String encryptKenny(String? input, List<String> replaceCharacters, bool caseSensitive) {
   if (input == null || input.isEmpty) return '';
 
   if (replaceCharacters == null || replaceCharacters.length < 3) return '';
@@ -68,7 +68,7 @@ encryptKenny(String input, List<String> replaceCharacters, bool caseSensitive) {
  * For this single - and, to be honest, absolutely rare case - the function grows that nasty size. So:
  * TODO: Find more readable algorithm
  */
-decryptKenny(String input, List<String> replaceCharacters, bool caseSensitive) {
+String decryptKenny(String? input, List<String>? replaceCharacters, bool caseSensitive) {
   if (input == null || input.isEmpty) return '';
 
   if (replaceCharacters == null || replaceCharacters.length < 3) return '';
@@ -108,7 +108,7 @@ decryptKenny(String input, List<String> replaceCharacters, bool caseSensitive) {
       if (replaceToCharacters.contains(character)) {
         chunk += character;
         // add length of the key
-        chunkOffset += substitutionsSwitched[character].length;
+        chunkOffset += (substitutionsSwitched[character] ?? '').length;
       } else {
         // if not valid
         // restore the chunk to the original text
@@ -126,9 +126,9 @@ decryptKenny(String input, List<String> replaceCharacters, bool caseSensitive) {
 
     // when chunk length reaches 3, convert it.
     if (chunk.length == 3) {
-      var index = int.tryParse(convertBase(substitution(chunk, integerSubstitutions), 3, 10));
+      var index = int.tryParse(convertBase(substitution(chunk, integerSubstitutions), 3, 10) ?? '') ?? 0;
       if (index < 26) {
-        var outputChar = alphabet_AZIndexes[index + 1];
+        var outputChar = alphabet_AZIndexes[index + 1] ?? '';
         if (caseSensitive) {
           // first character in the original lower case ?
           if (!isUpperCase(input[chunkStart]))
@@ -159,9 +159,9 @@ String _restoreChunks(String chunk, String input, int position, Map<String, Stri
     // key character ?
     if (substitutionsSwitched.containsKey(chunk[i])) {
       // restore original text
-      output += input.substring(position, position + substitutionsSwitched[chunk[i]].length);
+      output += input.substring(position, position + (substitutionsSwitched[chunk[i]] ?? '').length);
       // note the position in the original text
-      position += substitutionsSwitched[chunk[i]].length;
+      position += (substitutionsSwitched[chunk[i]] ?? '').length;
     } else
       output += chunk[i];
     // note the position in the original text

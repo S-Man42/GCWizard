@@ -11,7 +11,7 @@ Map<String, String> solveQuadraticEquation(String currentA, String currentB, Str
   currentB = currentB.replaceAll(',', '.');
   currentC = currentC.replaceAll(',', '.');
 
-  Map<String, String> result = new Map<String, String>();
+  Map<String, String> result = Map<String, String>();
   double a = 0.0;
   double b = 0.0;
   double c = 0.0;

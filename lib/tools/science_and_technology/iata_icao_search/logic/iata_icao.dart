@@ -19,7 +19,8 @@ final Map<String, IataIcaoCodes> IATA_ICAO_CODES = {
     name: "Army Heliport Ansbach",
     iata: "",
     icoa: "ETEB",
-    location_served: "Ansbach, Bavaria, Germany"),
+    location_served: "Ansbach, Bavaria, Germany"
+  ),
   "ETIC": IataIcaoCodes(
     name: "Army Air Field Grafenwöhr",
     iata: "",

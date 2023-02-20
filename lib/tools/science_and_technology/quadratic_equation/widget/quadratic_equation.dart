@@ -92,7 +92,7 @@ class QuadraticEquationState extends State<QuadraticEquation> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    Map<String, String> result = new Map<String, String>();
+    Map<String, String> result = Map<String, String>();
     result = solveQuadraticEquation(_currentA, _currentB, _currentC);
     if (result[''] == null)
       return GCWDefaultOutput(

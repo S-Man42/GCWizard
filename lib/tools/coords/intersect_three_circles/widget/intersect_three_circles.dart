@@ -150,7 +150,7 @@ class IntersectThreeCirclesState extends State<IntersectThreeCircles> {
         ells: defaultEllipsoid()));
   }
 
-  _showOutput(List<Intersect> output) {
+  void _showOutput(List<Intersect> output) {
     if (output == null) {
       _currentIntersections = [];
 

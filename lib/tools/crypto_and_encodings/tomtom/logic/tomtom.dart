@@ -31,7 +31,7 @@ const AZToTomTom = {
   'Z': '/\\/\\'
 };
 
-encryptTomTom(String input, Map<String, String> replaceCharacters) {
+String encryptTomTom(String? input, Map<String, String>? replaceCharacters) {
   if (input == null || input.isEmpty) return '';
 
   var tomtom = normalizeUmlauts(input)
@@ -46,7 +46,7 @@ encryptTomTom(String input, Map<String, String> replaceCharacters) {
   return tomtom;
 }
 
-decryptTomTom(String input, Map<String, String> replaceCharacters) {
+String decryptTomTom(String? input, Map<String, String>? replaceCharacters) {
   if (input == null || input.isEmpty) return '';
 
   if (replaceCharacters != null) input = substitution(input, switchMapKeyValue(replaceCharacters));

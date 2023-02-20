@@ -18,8 +18,8 @@ class Morse extends StatefulWidget {
 }
 
 class MorseState extends State<Morse> {
-  TextEditingController _encodeController;
-  TextEditingController _decodeController;
+  late TextEditingController _encodeController;
+  late TextEditingController _decodeController;
 
   var _currentEncodeInput = '';
   var _currentDecodeInput = '';
@@ -160,7 +160,7 @@ class MorseState extends State<Morse> {
     if (_currentMode == GCWSwitchPosition.left) {
       output = encodeMorse(_currentEncodeInput);
       textStyle =
-          TextStyle(fontSize: textStyle.fontSize + 15, fontFamily: textStyle.fontFamily, fontWeight: FontWeight.bold);
+          TextStyle(fontSize: textStyle.fontSize! + 15, fontFamily: textStyle.fontFamily, fontWeight: FontWeight.bold);
     } else
       output = decodeMorse(_currentDecodeInput);
 
