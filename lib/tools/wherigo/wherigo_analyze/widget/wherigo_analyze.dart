@@ -723,7 +723,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   Widget _buildWidgetToDisplayLUAFileData(BuildContext context) {
-    _LUA_SourceCode = _normalizeLUA(WherigoCartridgeLUAData.LUAFile, _currentDeObfuscate);
+    _LUA_SourceCode = _normalizeLUA(WherigoCartridgeLUAData.LUAFile, _currentDeObfuscate); // TODO Thomas: _normalizeLUA is nullable, the variable not. Please check for null and handle exception case
     _codeControllerHighlightedLUA.text = _LUA_SourceCode;
     return Column(
       children: <Widget>[
@@ -1846,10 +1846,11 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     var loadedState = WHERIGO_DATA[wherigoExpertMode]?[_fileLoadedState];
     if (loadedState == null) return <GCWDropDownMenuItem>[];
 
-    return SplayTreeMap.from(switchMapKeyValue(loadedState)
-        .map((String key, WHERIGO_OBJECT value) => MapEntry<String, WHERIGO_OBJECT>(i18n(context, key), value)))
-        .entries
-        .map((mode) {
+    return SplayTreeMap<String, WHERIGO_OBJECT>.from(switchMapKeyValue(loadedState)
+        .map((String key, WHERIGO_OBJECT value) => MapEntry<String, WHERIGO_OBJECT>(i18n(context, key), value))
+    )
+      .entries
+      .map((mode) {
       return GCWDropDownMenuItem(
         value: mode.value,
         child: mode.key,

@@ -49,7 +49,7 @@ class _GCWToolListState extends State<GCWToolList> {
   }
 
   Widget _buildRow(BuildContext context, GCWTool tool) {
-    Future _navigateToSubPage(BuildContext context) async {
+    Future<void> _navigateToSubPage(BuildContext context) async {
       Navigator.push(context, NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => tool));
     }
 
