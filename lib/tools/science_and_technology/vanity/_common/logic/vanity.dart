@@ -55,7 +55,7 @@ String? _getNewState(Map<String, Map<String, String>> stateModel, String state, 
   return stateModel[state]?['x'];
 }
 //ToDo Nullsafety remove Map
-Map<String, dynamic>? decodeVanityMultitap(String? input, PhoneModel model, PhoneInputLanguage inputLanguage) {
+Map<String, dynamic>? decodeVanityMultitap(String? input, PhoneModel? model, PhoneInputLanguage? inputLanguage) {
   if (model == null || inputLanguage == null) return null;
 
   Map<String, Map<String, String>>? stateModel = model.defaultCaseStateModel;
@@ -201,7 +201,7 @@ Map<String, dynamic>? encodeVanityMultitap(String? input, PhoneModel? model, Pho
   return {'mode': _getModeFromState(currentState), 'output': output.join(' ')};
 }
 
-String encodeVanitySingletap(String input, PhoneModel model) {
+String encodeVanitySingletap(String? input, PhoneModel model) {
   if (input == null || input.isEmpty) return '';
 
   return encodeVanityMultitap(input, model, PhoneInputLanguage.UNSPECIFIED)!['output']

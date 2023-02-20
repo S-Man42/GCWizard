@@ -25,7 +25,7 @@ class WeatherSymbolsState extends State<WeatherSymbols> {
     _initialize();
   }
 
-  Future _initialize() async {
+  Future<void> _initialize() async {
     for (String clazz in _WEATHERSYMBOL_CLASSES) {
       var symbolTableData = SymbolTableData(context, 'weather_$clazz');
       await symbolTableData.initialize();
@@ -60,8 +60,8 @@ class WeatherSymbolsState extends State<WeatherSymbols> {
     );
   }
 
-  _buildOutput() {
-    if (_data.isEmpty) return null;
+  Widget _buildOutput() {
+    if (_data.isEmpty) return Container();
 
     SymbolTableData data = _data[_currentWeatherSymbolClazz]!;
     return GCWColumnedMultilineOutput(

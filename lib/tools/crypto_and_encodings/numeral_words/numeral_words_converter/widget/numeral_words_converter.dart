@@ -100,7 +100,8 @@ class NumeralWordsConverterState extends State<NumeralWordsConverter> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    var output;
+    OutputConvertBase output;
+
     if (_currentMode == GCWSwitchPosition.right) {
       // decode
       output = decodeNumeralWordToNumber(_currentLanguage, removeAccents(_currentDecodeInput).toLowerCase());
@@ -126,11 +127,11 @@ class NumeralWordsConverterState extends State<NumeralWordsConverter> {
         ),
       if (_currentMode == GCWSwitchPosition.right) // decode
         GCWOutputText(
-          text: _currentDecodeInput.isEmpty ? '' : output.number.toString(),
+          text: _currentDecodeInput.isEmpty ? '' : (output as OutputConvertToNumber).number.toString(),
         )
       else
         GCWOutputText(
-          text: output.numeralWord,
+          text: (output as OutputConvertToNumeralWord).numeralWord,
         ),
     ]));
   }

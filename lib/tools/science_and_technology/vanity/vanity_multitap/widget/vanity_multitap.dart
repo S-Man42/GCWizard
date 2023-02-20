@@ -166,7 +166,7 @@ class VanityMultitapState extends State<VanityMultitap> {
     );
   }
 
-  _buildSpaceDescription(PhoneModel model) {
+  String _buildSpaceDescription(PhoneModel model) {
     var charMap = model.characterMap[0][PhoneCaseMode.LOWER_CASE];
     if (charMap == null) charMap = model.characterMap[0][PhoneCaseMode.UPPER_CASE];
 
@@ -179,18 +179,18 @@ class VanityMultitapState extends State<VanityMultitap> {
     return i18n(context, 'vanity_multitap_spaceat') + key;
   }
 
-  _buildLanguageExamples(int index) {
+  String _buildLanguageExamples(int index) {
     var charMap = _currentModel.characterMap[index][PhoneCaseMode.LOWER_CASE];
     if (charMap == null) charMap = _currentModel.characterMap[index][PhoneCaseMode.UPPER_CASE];
 
     return [
       '2: ' + charMap!['2']!,
-      '4: ' + charMap!['4']!,
-      '7: ' + charMap!['7']!,
+      '4: ' + charMap['4']!,
+      '7: ' + charMap['7']!,
     ].join(', ');
   }
 
-  _getLanguageString(List<PhoneInputLanguage> languages) {
+  String _getLanguageString(List<PhoneInputLanguage> languages) {
     return languages.map((language) {
       switch (language) {
         case PhoneInputLanguage.EXTENDED:
@@ -236,7 +236,7 @@ class VanityMultitapState extends State<VanityMultitap> {
     }).join(' ');
   }
 
-  _buildOutput() {
+  Widget _buildOutput() {
     var output;
 
     if (_currentSimpleMode == GCWSwitchPosition.left) {

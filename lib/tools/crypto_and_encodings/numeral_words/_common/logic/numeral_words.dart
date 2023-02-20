@@ -96,23 +96,26 @@ class NumeralWordsOutput {
 
   NumeralWordsOutput(this.state, this.output, this.language);
 }
-
-class OutputConvertToNumber {
-  final int number;
+class OutputConvertBase {
   final String numbersystem;
   final String title;
   final String error;
 
-  OutputConvertToNumber(this.number, this.numbersystem, this.title, this.error);
+  OutputConvertBase(this.numbersystem, this.title, this.error);
 }
 
-class OutputConvertToNumeralWord {
-  final String numeralWord;
-  final String numbersystem;
-  final String title;
-  final String error;
+class OutputConvertToNumber extends OutputConvertBase {
+  final int number;
 
-  OutputConvertToNumeralWord(this.numeralWord, this.numbersystem, this.title, this.error);
+  OutputConvertToNumber(this.number, String numbersystem, String title, String error)
+      : super(numbersystem, title, error);
+}
+
+class OutputConvertToNumeralWord extends OutputConvertBase {
+  final String numeralWord;
+
+  OutputConvertToNumeralWord(this.numeralWord, String numbersystem, String title, String error)
+      : super(numbersystem, title, error);
 }
 
 final Map<String, String> AMHWordToNum = {
@@ -2229,14 +2232,16 @@ final Map<Locale, NumeralWordsLanguage> SUPPORTED_LANGUAGES_LOCALES = {
 };
 
 Map<NumeralWordsLanguage, String>? _languageList;
-Map<NumeralWordsLanguage, List<int>> MIN_MAX_NUMBER = {
+
+final Map<NumeralWordsLanguage, List<int>> MIN_MAX_NUMBER = {
   NumeralWordsLanguage.KLI: [(pow(-2, 53)).toInt(), (pow(2, 53) - 1).toInt()],
   NumeralWordsLanguage.MIN: [1, 100],
   NumeralWordsLanguage.NAVI: [0, 32767],
   NumeralWordsLanguage.SHA: [0, (pow(2, 53) - 1).toInt()],
   NumeralWordsLanguage.ROU: [0, 999999],
 };
-Map<NumeralWordsLanguage, String> NUMERALWORDS_LANGUAGES = {
+
+final Map<NumeralWordsLanguage, String> NUMERALWORDS_LANGUAGES = {
   NumeralWordsLanguage.GRC: 'common_language_greek',
   NumeralWordsLanguage.GRCOLD: 'numeralwords_language_grc_old',
   NumeralWordsLanguage.GRCOLDLAT: 'numeralwords_language_grc_old_lat',
@@ -2301,14 +2306,16 @@ Map<NumeralWordsLanguage, String> NUMERALWORDS_LANGUAGES = {
   NumeralWordsLanguage.THAIRTGS: 'common_language_thai_rtgs',
   NumeralWordsLanguage.ROU: 'common_language_romanian',
 };
-Map<NumeralWordsLanguage, String> NUMERALWORDS_LANGUAGES_CONVERTER = {
+
+final Map<NumeralWordsLanguage, String> NUMERALWORDS_LANGUAGES_CONVERTER = {
   NumeralWordsLanguage.KLI: 'numeralwords_language_kli',
   NumeralWordsLanguage.MIN: 'numeralwords_language_min',
   NumeralWordsLanguage.NAVI: 'numeralwords_language_navi',
   NumeralWordsLanguage.SHA: 'numeralwords_language_sha',
   NumeralWordsLanguage.ROU: 'common_language_romanian',
 };
-Map NUMERAL_WORDS = {
+
+final Map<NumeralWordsLanguage, Map<String, String>> NUMERAL_WORDS = {
   NumeralWordsLanguage.AMH: AMHWordToNum,
   NumeralWordsLanguage.BAS: BASWordToNum,
   NumeralWordsLanguage.BRE: BREWordToNum,
@@ -2373,7 +2380,8 @@ Map NUMERAL_WORDS = {
   NumeralWordsLanguage.VIECHUNOM: VIECHUNOMWordToNum,
   NumeralWordsLanguage.VOL: VOLWordToNum,
 };
-Map<NumeralWordsLanguage, List<String>> NUMERAL_WORDS_ACCENTS = {
+
+final Map<NumeralWordsLanguage, List<String>> NUMERAL_WORDS_ACCENTS = {
   NumeralWordsLanguage.DEU: [
     'dreißig',
     'zwölf',
@@ -2426,7 +2434,7 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
   _languageList!.addAll(NUMERALWORDS_LANGUAGES);
 
   bool _alreadyFound = false;
-  var decodeText;
+  List<String> decodeText;
 
   if (decodeModeWholeWords) {
     // search only whole words
@@ -2625,7 +2633,7 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
     } else {
       // search only in one language
       var sValue = Map<String, String>();
-      NUMERAL_WORDS[language].forEach((key, value) {
+      NUMERAL_WORDS[language]!.forEach((key, value) {
         sValue[removeAccents(key.toLowerCase())] = value;
       });
       searchLanguages[language] = sValue;
@@ -2682,9 +2690,9 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
       }
     }); //for each element to decode
     return output;
-  } else // entire parts - search parts of words: weight => eight => 8
-  {
-    decodeText = input
+  } else  { // entire parts - search parts of words: weight => eight => 8
+
+    decodeText = input //ToDo Thomas ????
         .replaceAll(RegExp(r'[\s]'), '')
         .replaceAll('^', '')
         .replaceAll('°', '')
@@ -2759,7 +2767,7 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
         });
       } else {
         // search for specific language
-        NUMERAL_WORDS[language].forEach((key, value) {
+        NUMERAL_WORDS[language]!.forEach((key, value) {
           if (checkWord.startsWith(removeAccents(key))) {
             _alreadyFound = true;
             output.add(NumeralWordsDecodeOutput(value, removeAccents(key), NUMERALWORDS_LANGUAGES[language] ?? ''));
@@ -3617,7 +3625,7 @@ bool _isNumeral(String input) {
   return (int.tryParse(input) != null);
 }
 
-NumeralWordsOutput _isNumeralWord(String input, NumeralWordsLanguage language, var decodingTable) {
+NumeralWordsOutput _isNumeralWord(String input, NumeralWordsLanguage language, Map<String, String> decodingTable) {
   bool state = false;
   String output = '';
   String pattern = '';

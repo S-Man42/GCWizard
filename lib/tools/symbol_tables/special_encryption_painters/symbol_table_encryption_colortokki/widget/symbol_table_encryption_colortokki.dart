@@ -43,16 +43,14 @@ class ColorTokkiSymbolTableEncryption extends SymbolTableEncryption {
 
     var counter = 0;
     for (var index = 0; index < imageIndexes.length; index++) {
-      if (imageIndexes[index] == null) continue;
-
       var image = data.images[imageIndexes[index]].values.first.specialEncryptionImage;
 
       var i = (counter / 4).floor() % countColumns;
       var j = ((counter / 4).floor() / countColumns).floor();
 
-      var tileOffsetX;
-      var tileOffsetY;
-      var angle;
+      double tileOffsetX = 0;
+      double tileOffsetY = 0;
+      double angle = 0;
 
       switch (counter % 4) {
         case 3:
