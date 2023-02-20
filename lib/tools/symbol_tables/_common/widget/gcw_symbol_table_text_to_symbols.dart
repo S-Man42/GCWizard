@@ -100,7 +100,7 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
     if (_text == null) return imageIndexes;
 
     while (_text!.isNotEmpty) {
-      var imageIndex;
+      int? imageIndex;
       int i;
       String chunk;
       for (i = min(_data.maxSymbolTextLength, _text.length); i > 0; i--) {
@@ -119,7 +119,7 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
         }
       }
 
-      if ((widget.ignoreUnknown && imageIndex != null) || !widget.ignoreUnknown) imageIndexes.add(imageIndex);
+      if ((widget.ignoreUnknown && imageIndex != null) || !widget.ignoreUnknown) imageIndexes.add(imageIndex!);
 
       if (imageIndex == null)
         _text = _text.substring(1, _text.length);
@@ -130,7 +130,7 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
     return imageIndexes;
   }
 
-  Widget _buildEncryptionOutput(countColumns) {
+  Widget _buildEncryptionOutput(int countColumns) {
     if (_data == null) return Container();
 
     var isCaseSensitive = _data.isCaseSensitive();
@@ -183,7 +183,7 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
     }
   }
 
-  Future<Tuple2<bool, Uint8List?>> _exportEncryption(int countColumns, isCaseSensitive) async {
+  Future<Tuple2<bool, Uint8List?>> _exportEncryption(int countColumns, bool isCaseSensitive) async {
     var imageIndexes = _getImageIndexes(isCaseSensitive);
 
     var countRows = (imageIndexes.length / countColumns).floor();

@@ -14,7 +14,7 @@ class CenterPointJobData {
   final LatLng coord3;
   final Ellipsoid ells;
 
-  CenterPointJobData({this.coord1, this.coord2, this.coord3, this.ells});
+  CenterPointJobData({required this.coord1, required this.coord2, required this.coord3, required this.ells});
 }
 
 Map<String, dynamic> centerPointTwoPoints(LatLng coord1, LatLng coord2, Ellipsoid ells) {
@@ -24,10 +24,10 @@ Map<String, dynamic> centerPointTwoPoints(LatLng coord1, LatLng coord2, Ellipsoi
 }
 
 Future<List<Map<String, dynamic>>?> centerPointThreePointsAsync(GCWAsyncExecuterParameters? jobData) async {
-  if (jobData == null) return null;
+  if (jobData is! CenterPointJobData) return null;
 
-  var output = centerPointThreePoints(
-      jobData.parameters.coord1, jobData.parameters.coord2, jobData.parameters.coord3, jobData.parameters.ells);
+  var data = jobData!.parameters as CenterPointJobData;
+  var output = centerPointThreePoints(data.coord1, data.coord2, data.coord3, data.ells);
 
   jobData.sendAsyncPort.send(output);
 

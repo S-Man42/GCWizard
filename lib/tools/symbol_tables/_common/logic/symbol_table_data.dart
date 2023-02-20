@@ -205,14 +205,14 @@ class SymbolTableData {
 
   SymbolTableData(this._context, this.symbolKey);
 
-  Map<String, dynamic> config = {};
+  Map<String, Object> config = {};
   List<Map<String, SymbolData>> images = [];
   int maxSymbolTextLength = 0;
 
   List<String> _translateables = [];
-  var _sort;
+  int Function(Map<String, SymbolData>, Map<String, SymbolData>)? _sort;
 
-  initialize({bool importEncryption = true}) async {
+  Future<void> initialize({bool importEncryption = true}) async {
     await _loadConfig();
     await _initializeImages(importEncryption);
   }
@@ -231,7 +231,7 @@ class SymbolTableData {
   }
 
   Future<void> _loadConfig() async {
-    var file;
+    String? file;
     try {
       file = await DefaultAssetBundle.of(_context).loadString(_pathKey() + SymbolTableConstants.CONFIG_FILENAME);
     } catch (e) {}
@@ -287,9 +287,9 @@ class SymbolTableData {
       key = config[SymbolTableConstants.CONFIG_SPECIALMAPPINGS][imageKey];
     } else if (config[SymbolTableConstants.CONFIG_TRANSLATE] != null &&
         config[SymbolTableConstants.CONFIG_TRANSLATE].contains(imageKey)) {
-      var translationPrefix = config[SymbolTableConstants.CONFIG_TRANSLATION_PREFIX];
+      String? translationPrefix = config[SymbolTableConstants.CONFIG_TRANSLATION_PREFIX];
       if (translationPrefix != null && translationPrefix.isNotEmpty) {
-        key = i18n(_context, translationPrefix + imageKey);
+        key = i18n(_context, translationPrefix! + imageKey);
       } else {
         key = i18n(_context, 'symboltables_' + symbolKey + '_' + imageKey);
       }
@@ -328,7 +328,7 @@ class SymbolTableData {
 
     Archive? encryptionArchive;
     if (importEncryption) {
-      var encryptionBytes;
+      ByteData encryptionBytes;
       var encryptionImageArchivePaths = imageArchivePaths.where((path) => path.contains('_encryption')).toList();
       if (encryptionImageArchivePaths.isNotEmpty) {
         encryptionBytes = await DefaultAssetBundle.of(_context).load(encryptionImageArchivePaths.first);

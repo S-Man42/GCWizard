@@ -26,7 +26,7 @@ String? findHashNumeric(int hashToFind, int len) {
 String? breakUrwigoHash(int input, HASH type) {
   if (input < 0 || input >= 65535) return null;
 
-  var out;
+  String? out;
 
   for (int i = 1; i <= 5; i++) {
     type == HASH.ALPHABETICAL ? out = findHashAlphabetical(input, i) : out = findHashNumeric(input, i);

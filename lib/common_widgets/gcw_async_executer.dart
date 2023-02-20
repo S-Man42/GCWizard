@@ -9,7 +9,7 @@ Isolate? _isolate;
 
 class GCWAsyncExecuterParameters {
   late SendPort sendAsyncPort;
-  final dynamic parameters;
+  final Object? parameters;
 
   GCWAsyncExecuterParameters(this.parameters);
 }
