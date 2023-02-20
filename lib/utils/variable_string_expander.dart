@@ -45,7 +45,7 @@ enum VariableStringExpanderBreakCondition { RUN_ALL, BREAK_ON_FIRST_FOUND }
 class VariableStringExpander {
   String? _input;
   Map<String, String>? _substitutions;
-  Function? onAfterExpandedText;
+  String Function(String)? onAfterExpandedText;
   SendPort? sendAsyncPort;
 
   VariableStringExpanderBreakCondition breakCondition;
@@ -55,9 +55,7 @@ class VariableStringExpander {
       {this.onAfterExpandedText,
       this.breakCondition = VariableStringExpanderBreakCondition.RUN_ALL,
       this.orderAndUnique = true,
-      this.sendAsyncPort}) {
-    if (this.onAfterExpandedText == null) this.onAfterExpandedText = (e) => e;
-  }
+      this.sendAsyncPort});
 
   List<List<String>> _expandedVariableGroups = [];
   List<String> _substitutionKeys = [];
@@ -77,10 +75,10 @@ class VariableStringExpander {
 
   // Expands a "compressed" variable group like "5-10" to "5,6,7,8,9,10"
   List<String> _expandVariableGroup(String group) {
-    var output;
+    List<String> output;
 
     if (orderAndUnique)
-      output = SplayTreeSet<String>();
+      output = SplayTreeSet<String>() as List<String>; //ToDo NullSafety cast working ??
     else
       output = <String>[];
 
@@ -168,7 +166,7 @@ class VariableStringExpander {
     do {
       _substitute();
 
-      _result = onAfterExpandedText!(_result);
+      _result = onAfterExpandedText == null ? _result : onAfterExpandedText!(_result);
 
       if (_uniqueResults.contains(_result)) continue;
 
@@ -201,7 +199,7 @@ class VariableStringExpander {
   }
 
   // ToDo Nullsafe remove Map format
-  List<Map<String, Object?>> run({onlyPrecheck = false}) {
+  List<Map<String, Object?>> run({bool onlyPrecheck = false}) {
     if (_input == null || _input!.isEmpty) return [];
 
     if (_substitutions == null || _substitutions!.isEmpty) {
@@ -257,7 +255,7 @@ class VariableStringExpander {
 int preCheckCombinations(Map<String, String> substitutions) {
   if (substitutions.isEmpty) return 0;
 
-  var expander = VariableStringExpander('DUMMY', substitutions, onAfterExpandedText: (e) => false);
+  var expander = VariableStringExpander('DUMMY', substitutions);
   var count = expander.run(onlyPrecheck: true);
 
   var value = count[0]['count'];
