@@ -3,6 +3,7 @@ import 'dart:isolate';
 import 'dart:async';
 import 'dart:math';
 
+import 'package:gc_wizard/common_widgets/gcw_async_executer.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:flutter/material.dart';
@@ -31,24 +32,30 @@ part 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze_lua_
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze_lua_zones.dart';
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze_lua_obfuscation.dart';
 
-Future<WherigoCartridge> getCartridgeAsync(WherigoJobData jobData) async {
-  WherigoCartridge output = WherigoCartridge();
-  switch (jobData.jobDataType) {
-    case WHERIGO_CARTRIDGE_DATA_TYPE.GWC:
-      output = await getCartridgeGWC(
-          jobData.jobDataBytes,
-          jobData.jobDataMode,
-          sendAsyncPort: jobData.sendAsyncPort);
-      break;
-    case WHERIGO_CARTRIDGE_DATA_TYPE.LUA:
-      output = await getCartridgeLUA(
-          jobData.jobDataBytes,
-          jobData.jobDataMode,
-          sendAsyncPort: jobData.sendAsyncPort);
-      break;
-  }
+Future<WherigoCartridge?> getGcwCartridgeAsync(GCWAsyncExecuterParameters? jobData) async {
+  if (jobData == null) return Future.value(null);
 
-  jobData?.sendAsyncPort?.send(output);
+  var gcw = jobData as WherigoJobData;
+  var output = await getCartridgeGWC(
+      gcw.jobDataBytes,
+      gcw.jobDataMode,
+      sendAsyncPort: jobData.sendAsyncPort);
+
+  jobData.sendAsyncPort.send(output);
+
+  return output;
+}
+
+Future<WherigoCartridge?> getLuaCartridgeAsync(GCWAsyncExecuterParameters? jobData) async {
+  if (jobData == null) return Future.value(null);
+
+  var lua = jobData as WherigoJobData;
+  var output = await getCartridgeLUA(
+      lua.jobDataBytes,
+      lua.jobDataMode,
+      sendAsyncPort: jobData.sendAsyncPort);
+
+  jobData.sendAsyncPort.send(output);
 
   return output;
 }

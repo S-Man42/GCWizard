@@ -76,7 +76,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   List<GCWMapPoint> _ItemPoints = [];
   List<GCWMapPoint> _CharacterPoints = [];
 
-  WherigoCartridge _outData = WherigoCartridge();
+  WherigoCartridge? _outData = WherigoCartridge();
 
   var _displayedCartridgeData = WHERIGO_OBJECT.NULL;
 
@@ -1378,7 +1378,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     ]);
   }
 
-  _exportFile(BuildContext context, Uint8List data, String name, FileType fileType) async {
+  void _exportFile(BuildContext context, Uint8List data, String name, FileType fileType) async {
     var value = await saveByteDataToFile(context, data, buildFileNameWithDate(name, fileType));
 
     var content = fileClass(fileType) == FileClass.IMAGE ? imageContent(context, data) : null;
@@ -1390,7 +1390,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     showCoordinatesExportDialog(context, points, polylines);
   }
 
-  _openInMap(List<GCWMapPoint> points, List<GCWMapPolyline> polylines) {
+  void _openInMap(List<GCWMapPoint> points, List<GCWMapPolyline> polylines) {
     Navigator.push(
         context,
         MaterialPageRoute(
@@ -1408,18 +1408,50 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   // TODO Thomas: Only temporary for getting stuff compiled: Please ask Mike for proper GCWAsync Handling. He knows about it.
 
-  _analyseCartridgeFileAsync(WHERIGO_CARTRIDGE_DATA_TYPE dataType) async {
+  void _analyseCartridgeFileAsync(WHERIGO_CARTRIDGE_DATA_TYPE dataType) async {
 
+    switch (dataType) {
+      case WHERIGO_CARTRIDGE_DATA_TYPE.GWC:
+        _analyseGwcCartridgeFileAsync();
+        break;
+      case WHERIGO_CARTRIDGE_DATA_TYPE.LUA:
+        _analyseLuaCartridgeFileAsync();
+        break;
+    }
+  }
+
+  void _analyseGwcCartridgeFileAsync() async {
     await showDialog(
       context: context,
       barrierDismissible: false,
       builder: (context) {
         return Center(
           child: Container(
-            child: GCWAsyncExecuter<WherigoCartridge>(
-              isolatedFunction: getCartridgeAsync,
-              parameter: _buildGWCJobData(dataType),
-              onReady: (data) => _showCartridgeOutput(dataType, data),
+            child: GCWAsyncExecuter<WherigoCartridge?>(
+              isolatedFunction: getGcwCartridgeAsync,
+              parameter: _buildGwcJobData,
+              onReady: (data) => _showGcwCartridgeOutput(data),
+              isOverlay: true,
+            ),
+            height: 220,
+            width: 150,
+          ),
+        );
+      },
+    );
+  }
+
+  void _analyseLuaCartridgeFileAsync() async {
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return Center(
+          child: Container(
+            child: GCWAsyncExecuter<WherigoCartridge?>(
+              isolatedFunction: getLuaCartridgeAsync,
+              parameter: _buildGwcJobData,
+              onReady: (data) => _showLuaCartridgeOutput(data),
               isOverlay: true,
             ),
             height: 220,
@@ -1431,195 +1463,209 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   // TODO Thomas: Please ask Mike for proper GCWAsync Handling. He knows about it.
-  Future<GCWAsyncExecuterParameters> _buildGWCJobData(WHERIGO_CARTRIDGE_DATA_TYPE dataType) async {
-    switch (dataType) {
-      case WHERIGO_CARTRIDGE_DATA_TYPE.GWC:
-        //TODO Thomas please replace Map with own return class.
-        return GCWAsyncExecuterParameters(
-            WherigoJobData(
-                jobDataBytes: _GWCbytes,
-                jobDataMode: _getLUAOnline,
-                jobDataType: WHERIGO_CARTRIDGE_DATA_TYPE.GWC
-            ));
-      case WHERIGO_CARTRIDGE_DATA_TYPE.LUA:
-        return GCWAsyncExecuterParameters(
-            WherigoJobData(
-                jobDataBytes: _LUAbytes,
-                jobDataMode: _getLUAOnline,
-                jobDataType: WHERIGO_CARTRIDGE_DATA_TYPE.LUA
-            ));
-      default:
-        throw Exception('Invalid WIG data type');
-    }
+  Future<GCWAsyncExecuterParameters?> _buildGwcJobData() async {
+    return GCWAsyncExecuterParameters(
+        WherigoJobData(
+            jobDataBytes: _GWCbytes,
+            jobDataMode: _getLUAOnline,
+            jobDataType: WHERIGO_CARTRIDGE_DATA_TYPE.GWC
+        ));
   }
 
-  _showCartridgeOutput(WHERIGO_CARTRIDGE_DATA_TYPE dataType, WherigoCartridge output) {
+  Future<GCWAsyncExecuterParameters?> _buildLuaJobData() async {
+    return GCWAsyncExecuterParameters(
+        WherigoJobData(
+            jobDataBytes: _LUAbytes,
+            jobDataMode: _getLUAOnline,
+            jobDataType: WHERIGO_CARTRIDGE_DATA_TYPE.LUA
+        ));
+  }
+
+  void _showGcwCartridgeOutput(WherigoCartridge? output) {
     _outData = output;
     String toastMessage = '';
     int toastDuration = 3;
 
     if (_outData == null) {
       toastMessage = i18n(context, 'common_loadfile_exception_notloaded');
+      return;
     } else {
-      switch (dataType) {
-        case WHERIGO_CARTRIDGE_DATA_TYPE.GWC: // GWC File should be loaded
-          WherigoCartridgeGWCData = _outData.cartridgeGWC;
+      WherigoCartridgeLUAData = _outData!.cartridgeLUA;
 
-          switch (WherigoCartridgeGWCData.ResultStatus) {
-            case WHERIGO_ANALYSE_RESULT_STATUS.OK:
-              toastMessage =
-                  i18n(context, 'wherigo_data_loaded') + ': ' + dataType.toString();
-              break;
+      if (WherigoCartridgeLUAData != null) {
+        NameToObject = WherigoCartridgeLUAData!.NameToObject;
 
-            case WHERIGO_ANALYSE_RESULT_STATUS.ERROR_GWC:
-              toastMessage = i18n(context, 'wherigo_error_runtime') +
-                  '\n' +
-                  i18n(context, 'wherigo_error_runtime_gwc') +
-                  '\n\n' +
-                  i18n(context, 'wherigo_error_hint_1');
-              toastDuration = 20;
-              break;
-          }
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          setState(() {});
+        });
+
+        return;
+      } else
+        NameToObject = {};
+
+      switch (WherigoCartridgeLUAData!.ResultStatus) {
+        case WHERIGO_ANALYSE_RESULT_STATUS.OK:
+          toastMessage =
+              i18n(context, 'wherigo_data_loaded') + ': ' + WHERIGO_CARTRIDGE_DATA_TYPE.GWC.toString();
+          toastDuration = 5;
+          _nohttpError = false;
 
           // check if GWC and LUA are from the same cartridge
-          if ((WherigoCartridgeGWCData.CartridgeGUID != WherigoCartridgeLUAData.CartridgeGUID &&
-                  WherigoCartridgeLUAData.CartridgeGUID != '') &&
-              (WherigoCartridgeGWCData.CartridgeLUAName != WherigoCartridgeLUAData.CartridgeLUAName &&
-                  WherigoCartridgeLUAData.CartridgeLUAName != '')) {
+          if ((WherigoCartridgeGWCData.CartridgeGUID != WherigoCartridgeLUAData!.CartridgeGUID &&
+                  WherigoCartridgeLUAData!.CartridgeGUID != '') &&
+              (WherigoCartridgeGWCData.CartridgeLUAName != WherigoCartridgeLUAData!.CartridgeLUAName &&
+                  WherigoCartridgeLUAData!.CartridgeLUAName != '')) {
             // files belong to different cartridges
             WherigoCartridgeLUAData = _resetLUA('wherigo_error_diff_gwc_lua_1');
             _fileLoadedState = WHERIGO_FILE_LOAD_STATE.GWC;
             _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
-            _getLUAOnline = true;
-            _nohttpError = true;
-            _WherigoShowLUASourcecodeDialog = true;
-            showToast(
-                i18n(context, 'wherigo_error_diff_gwc_lua_1') + '\n' + i18n(context, 'wherigo_error_diff_gwc_lua_2'),
-                duration: 30);
+            toastMessage = i18n(context, 'wherigo_error_diff_gwc_lua_1') +
+                '\n' +
+                i18n(context, 'wherigo_error_diff_gwc_lua_2');
+            toastDuration = 30;
           } else {
-            _fileLoadedState = WHERIGO_FILE_LOAD_STATE.GWC;
+            _fileLoadedState = WHERIGO_FILE_LOAD_STATE.FULL;
             _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
           }
           break;
 
-        case WHERIGO_CARTRIDGE_DATA_TYPE.LUA: // GWC File should be loaded
-          WherigoCartridgeLUAData = _outData.cartridgeLUA;
+        case WHERIGO_ANALYSE_RESULT_STATUS.ERROR_LUA:
+          toastMessage = i18n(context, 'wherigo_error_runtime') +
+              '\n' +
+              i18n(context, 'wherigo_error_runtime_lua') +
+              '\n\n' +
+              i18n(context, 'wherigo_error_hint_1');
+          toastDuration = 20;
+          break;
 
-          if (WherigoCartridgeLUAData != null)
-            NameToObject = WherigoCartridgeLUAData.NameToObject;
+        case WHERIGO_ANALYSE_RESULT_STATUS.ERROR_HTTP:
+          _fileLoadedState = WHERIGO_FILE_LOAD_STATE.GWC;
+          _nohttpError = false;
+          _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
+          toastMessage = i18n(context, 'wherigo_http_code') +
+              ' ' +
+              WherigoCartridgeLUAData!.httpCode +
+              '\n\n' +
+              (WHERIGO_HTTP_STATUS[WherigoCartridgeLUAData!.httpCode] != null
+                  ? i18n(context, WHERIGO_HTTP_STATUS[WherigoCartridgeLUAData!.httpCode]!)
+                  : '') +
+              '\n';
+
+          if (WherigoCartridgeLUAData!.httpMessage.startsWith('wherigo'))
+            toastMessage = toastMessage + i18n(context, WherigoCartridgeLUAData!.httpMessage);
           else
-            NameToObject = {};
-
-          switch (WherigoCartridgeLUAData.ResultStatus) {
-            case WHERIGO_ANALYSE_RESULT_STATUS.OK:
-              toastMessage =
-                  i18n(context, 'wherigo_data_loaded') + ': ' + dataType.toString();
-              toastDuration = 5;
-              _nohttpError = false;
-
-              // check if GWC and LUA are from the same cartridge
-              if ((WherigoCartridgeGWCData.CartridgeGUID != WherigoCartridgeLUAData.CartridgeGUID &&
-                      WherigoCartridgeLUAData.CartridgeGUID != '') &&
-                  (WherigoCartridgeGWCData.CartridgeLUAName != WherigoCartridgeLUAData.CartridgeLUAName &&
-                      WherigoCartridgeLUAData.CartridgeLUAName != '')) {
-                // files belong to different cartridges
-                WherigoCartridgeLUAData = _resetLUA('wherigo_error_diff_gwc_lua_1');
-                _fileLoadedState = WHERIGO_FILE_LOAD_STATE.GWC;
-                _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
-                toastMessage = i18n(context, 'wherigo_error_diff_gwc_lua_1') +
-                    '\n' +
-                    i18n(context, 'wherigo_error_diff_gwc_lua_2');
-                toastDuration = 30;
-              } else {
-                _fileLoadedState = WHERIGO_FILE_LOAD_STATE.FULL;
-                _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
-              }
-              break;
-
-            case WHERIGO_ANALYSE_RESULT_STATUS.ERROR_LUA:
-              toastMessage = i18n(context, 'wherigo_error_runtime') +
-                  '\n' +
-                  i18n(context, 'wherigo_error_runtime_lua') +
-                  '\n\n' +
-                  i18n(context, 'wherigo_error_hint_1');
-              toastDuration = 20;
-              break;
-
-            case WHERIGO_ANALYSE_RESULT_STATUS.ERROR_HTTP:
-              _fileLoadedState = WHERIGO_FILE_LOAD_STATE.GWC;
-              _nohttpError = false;
-              _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
-              toastMessage = i18n(context, 'wherigo_http_code') +
-                  ' ' +
-                  WherigoCartridgeLUAData.httpCode +
-                  '\n\n' +
-                  (WHERIGO_HTTP_STATUS[WherigoCartridgeLUAData.httpCode] != null
-                      ? i18n(context, WHERIGO_HTTP_STATUS[WherigoCartridgeLUAData.httpCode]!)
-                      : '') +
-                  '\n';
-
-              if (WherigoCartridgeLUAData.httpMessage.startsWith('wherigo'))
-                toastMessage = toastMessage + i18n(context, WherigoCartridgeLUAData.httpMessage);
-              else
-                toastMessage = toastMessage + WherigoCartridgeLUAData.httpMessage;
-              _getLUAOnline = false;
-              WherigoCartridgeLUAData = WherigoCartridgeLUA(
-                LUAFile: '',
-                CartridgeLUAName: '',
-                CartridgeGUID: '',
-                ObfuscatorTable: '',
-                ObfuscatorFunction: '',
-                Characters: [],
-                Items: [],
-                Tasks: [],
-                Inputs: [],
-                Zones: [],
-                Timers: [],
-                Media: [],
-                Messages: [],
-                Answers: [],
-                Variables: [],
-                NameToObject: {},
-                Builder: WHERIGO_BUILDER.UNKNOWN,
-                BuilderVersion: '',
-                TargetDeviceVersion: '',
-                CountryID: '',
-                StateID: '',
-                UseLogging: '',
-                CreateDate: WHERIGO_NULLDATE,
-                PublishDate: WHERIGO_NULLDATE,
-                UpdateDate: WHERIGO_NULLDATE,
-                LastPlayedDate: WHERIGO_NULLDATE,
-                httpCode: WherigoCartridgeLUAData.httpCode,
-                httpMessage: WherigoCartridgeLUAData.httpMessage,
-                ResultStatus: WHERIGO_ANALYSE_RESULT_STATUS.ERROR_HTTP,
-                ResultsLUA: [
-                  i18n(context, 'wherigo_error_runtime'),
-                  i18n(context, 'wherigo_error_decompile_gwc'),
-                  i18n(context, 'wherigo_http_code') + ' ' + WherigoCartridgeLUAData.httpCode + '\n',
-                  (WHERIGO_HTTP_STATUS[WherigoCartridgeLUAData.httpCode] != null
-                      ? i18n(context, WHERIGO_HTTP_STATUS[WherigoCartridgeLUAData.httpCode]!)
-                      : ''),
-                  WherigoCartridgeLUAData.httpMessage.startsWith('wherigo')
-                      ? i18n(context, WherigoCartridgeLUAData.httpMessage)
-                      : WherigoCartridgeLUAData.httpMessage,
-                  '',
-                  i18n(context, 'wherigo_error_hint_2'),
-                ],
-              );
-              toastDuration = 30;
-
-              break;
-          }
+            toastMessage = toastMessage + WherigoCartridgeLUAData!.httpMessage;
+          _getLUAOnline = false;
+          WherigoCartridgeLUAData = WherigoCartridgeLUA(
+            LUAFile: '',
+            CartridgeLUAName: '',
+            CartridgeGUID: '',
+            ObfuscatorTable: '',
+            ObfuscatorFunction: '',
+            Characters: [],
+            Items: [],
+            Tasks: [],
+            Inputs: [],
+            Zones: [],
+            Timers: [],
+            Media: [],
+            Messages: [],
+            Answers: [],
+            Variables: [],
+            NameToObject: {},
+            Builder: WHERIGO_BUILDER.UNKNOWN,
+            BuilderVersion: '',
+            TargetDeviceVersion: '',
+            CountryID: '',
+            StateID: '',
+            UseLogging: '',
+            CreateDate: WHERIGO_NULLDATE,
+            PublishDate: WHERIGO_NULLDATE,
+            UpdateDate: WHERIGO_NULLDATE,
+            LastPlayedDate: WHERIGO_NULLDATE,
+            httpCode: WherigoCartridgeLUAData!.httpCode,
+            httpMessage: WherigoCartridgeLUAData!.httpMessage,
+            ResultStatus: WHERIGO_ANALYSE_RESULT_STATUS.ERROR_HTTP,
+            ResultsLUA: [
+              i18n(context, 'wherigo_error_runtime'),
+              i18n(context, 'wherigo_error_decompile_gwc'),
+              i18n(context, 'wherigo_http_code') + ' ' + WherigoCartridgeLUAData!.httpCode + '\n',
+              (WHERIGO_HTTP_STATUS[WherigoCartridgeLUAData!.httpCode] != null
+                  ? i18n(context, WHERIGO_HTTP_STATUS[WherigoCartridgeLUAData!.httpCode]!)
+                  : ''),
+              WherigoCartridgeLUAData!.httpMessage.startsWith('wherigo')
+                  ? i18n(context, WherigoCartridgeLUAData!.httpMessage)
+                  : WherigoCartridgeLUAData!.httpMessage,
+              '',
+              i18n(context, 'wherigo_error_hint_2'),
+            ],
+          );
+          toastDuration = 30;
 
           break;
-      } // end switch DATA_TYPE
+      }
+
       showToast(toastMessage, duration: toastDuration);
 
-      _buildZonesForMapExport();
-      _buildItemPointsForMapExport();
-      _buildCharacterPointsForMapExport();
-      buildHeader(context);
+      _updateOutput();
+    } // outData != null
+  }
+
+  void _showLuaCartridgeOutput(WherigoCartridge? output) {
+    _outData = output;
+    String toastMessage = '';
+    int toastDuration = 3;
+
+    if (_outData == null) {
+      toastMessage = i18n(context, 'common_loadfile_exception_notloaded');
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {});
+      });
+
+      return;
+    } else {
+      WherigoCartridgeGWCData = _outData!.cartridgeGWC;
+
+      switch (WherigoCartridgeGWCData.ResultStatus) {
+        case WHERIGO_ANALYSE_RESULT_STATUS.OK:
+          toastMessage =
+              i18n(context, 'wherigo_data_loaded') + ': ' + WHERIGO_CARTRIDGE_DATA_TYPE.LUA.toString();
+          break;
+
+        case WHERIGO_ANALYSE_RESULT_STATUS.ERROR_GWC:
+          toastMessage = i18n(context, 'wherigo_error_runtime') +
+              '\n' +
+              i18n(context, 'wherigo_error_runtime_gwc') +
+              '\n\n' +
+              i18n(context, 'wherigo_error_hint_1');
+          toastDuration = 20;
+          break;
+      }
+
+      // check if GWC and LUA are from the same cartridge
+      if ((WherigoCartridgeGWCData.CartridgeGUID != WherigoCartridgeLUAData!.CartridgeGUID &&
+          WherigoCartridgeLUAData!.CartridgeGUID != '') &&
+          (WherigoCartridgeGWCData.CartridgeLUAName != WherigoCartridgeLUAData!.CartridgeLUAName &&
+              WherigoCartridgeLUAData!.CartridgeLUAName != '')) {
+        // files belong to different cartridges
+        WherigoCartridgeLUAData = _resetLUA('wherigo_error_diff_gwc_lua_1');
+        _fileLoadedState = WHERIGO_FILE_LOAD_STATE.GWC;
+        _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
+        _getLUAOnline = true;
+        _nohttpError = true;
+        _WherigoShowLUASourcecodeDialog = true;
+        showToast(
+            i18n(context, 'wherigo_error_diff_gwc_lua_1') + '\n' + i18n(context, 'wherigo_error_diff_gwc_lua_2'),
+            duration: 30);
+      } else {
+        _fileLoadedState = WHERIGO_FILE_LOAD_STATE.GWC;
+        _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
+      }
+
+      showToast(toastMessage, duration: toastDuration);
+
+      _updateOutput();
     } // outData != null
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -1627,11 +1673,23 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     });
   }
 
-  _buildItemPointsForMapExport() {
+  void _updateOutput() {
+    _buildZonesForMapExport();
+    _buildItemPointsForMapExport();
+    _buildCharacterPointsForMapExport();
+    buildHeader(context);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {});
+    });
+  }
+
+  void _buildItemPointsForMapExport() {
     _ItemPoints.clear();
+    if (WherigoCartridgeLUAData == null) return;
 
     // Build data
-    WherigoCartridgeLUAData.Items.forEach((item) {
+    WherigoCartridgeLUAData!.Items.forEach((item) {
       if (item.ItemZonepoint.Latitude != 0.0 && item.ItemZonepoint.Longitude != 0.0) {
         if (NameToObject[item.ItemLUAName] == null) return;
 
@@ -1645,13 +1703,15 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     });
   }
 
-  _buildCharacterPointsForMapExport() {
-    if (WherigoCartridgeLUAData.Characters != null)
+  void _buildCharacterPointsForMapExport() {
+    if (WherigoCartridgeLUAData == null) return;
+
+    if (WherigoCartridgeLUAData!.Characters != null)
       // Clear data
       _CharacterPoints.clear();
 
     // Build data
-    WherigoCartridgeLUAData.Characters.forEach((character) {
+    WherigoCartridgeLUAData!.Characters.forEach((character) {
       if (character.CharacterLocation == 'ZonePoint') {
         if (NameToObject[character.CharacterLUAName] == null) return;
 
@@ -1665,14 +1725,16 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     });
   }
 
-  _buildZonesForMapExport() {
-    if (WherigoCartridgeLUAData.Zones != null) {
+  void _buildZonesForMapExport() {
+    if (WherigoCartridgeLUAData == null) return;
+
+    if (WherigoCartridgeLUAData!.Zones != null) {
       // Clear data
       _ZonePoints.clear();
       _ZonePolylines.clear();
 
       // Build data
-      WherigoCartridgeLUAData.Zones.forEach((zone) {
+      WherigoCartridgeLUAData!.Zones.forEach((zone) {
         if (NameToObject[zone.ZoneLUAName] == null) return;
 
         _ZonePoints.add(// add originalpoint of zone
@@ -1700,30 +1762,32 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     }
   }
 
-  String _normalizeLUA(String LUAFile, bool deObfuscate) {
+  String? _normalizeLUA(String LUAFile, bool deObfuscate) {
+    if (WherigoCartridgeLUAData == null) return null;
+
     if (deObfuscate) {
-      LUAFile = LUAFile.replaceAll(WherigoCartridgeLUAData.ObfuscatorFunction, 'deObfuscate');
-      LUAFile = LUAFile.replaceAll(WherigoCartridgeLUAData.CartridgeLUAName,
-          'objCartridge_' + WherigoCartridgeLUAData.CartridgeLUAName.replaceAll(' ', ''));
-      WherigoCartridgeLUAData.Characters.forEach((element) {
+      LUAFile = LUAFile.replaceAll(WherigoCartridgeLUAData!.ObfuscatorFunction, 'deObfuscate');
+      LUAFile = LUAFile.replaceAll(WherigoCartridgeLUAData!.CartridgeLUAName,
+          'objCartridge_' + WherigoCartridgeLUAData!.CartridgeLUAName.replaceAll(' ', ''));
+      WherigoCartridgeLUAData!.Characters.forEach((element) {
         LUAFile = LUAFile.replaceAll(element.CharacterLUAName, 'objCharacter_' + element.CharacterName);
       });
-      WherigoCartridgeLUAData.Items.forEach((element) {
+      WherigoCartridgeLUAData!.Items.forEach((element) {
         LUAFile = LUAFile.replaceAll(element.ItemLUAName, 'objItem_' + element.ItemName);
       });
-      WherigoCartridgeLUAData.Tasks.forEach((element) {
+      WherigoCartridgeLUAData!.Tasks.forEach((element) {
         LUAFile = LUAFile.replaceAll(element.TaskLUAName, 'objTask_' + element.TaskName);
       });
-      WherigoCartridgeLUAData.Inputs.forEach((element) {
+      WherigoCartridgeLUAData!.Inputs.forEach((element) {
         LUAFile = LUAFile.replaceAll(element.InputLUAName, 'objInput_' + element.InputName);
       });
-      WherigoCartridgeLUAData.Zones.forEach((element) {
+      WherigoCartridgeLUAData!.Zones.forEach((element) {
         LUAFile = LUAFile.replaceAll(element.ZoneLUAName, 'objZone_' + element.ZoneName);
       });
-      WherigoCartridgeLUAData.Timers.forEach((element) {
+      WherigoCartridgeLUAData!.Timers.forEach((element) {
         LUAFile = LUAFile.replaceAll(element.TimerLUAName, 'objTimer_' + element.TimerName);
       });
-      WherigoCartridgeLUAData.Media.forEach((element) {
+      WherigoCartridgeLUAData!.Media.forEach((element) {
         LUAFile = LUAFile.replaceAll(element.MediaLUAName, 'objMedia_' + element.MediaName);
       });
       NameToObject.forEach((key, value) {
@@ -1741,7 +1805,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   String _deObfuscate(String obfuscatedText) {
     obfuscatedText = obfuscatedText.replaceAll('deObfuscate("', '').replaceAll('")', '');
-    return '"' + deobfuscateUrwigoText(obfuscatedText, WherigoCartridgeLUAData.ObfuscatorTable) + '"';
+    return '"' + deobfuscateUrwigoText(obfuscatedText, WherigoCartridgeLUAData?.ObfuscatorTable) + '"';
   }
 
   List<GCWMapPoint> _currentZonePoints(String text, WherigoZonePoint point) {

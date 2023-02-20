@@ -8,7 +8,7 @@ WherigoCartridgeGWC WherigoCartridgeGWCData = WherigoCartridgeGWC(
     MediaFilesHeaders: [],
     MediaFilesContents: [], ResultsGWC: []);
 
-WherigoCartridgeLUA WherigoCartridgeLUAData = WherigoCartridgeLUA(
+WherigoCartridgeLUA? WherigoCartridgeLUAData = WherigoCartridgeLUA(
     Characters: [],
     Items: [],
     Tasks: [],
