@@ -21,17 +21,12 @@ class ClipboardItem {
     if (decoded == null || !(isJsonMap(decoded)))
       return null;
 
-    var created = decoded['created'];
-    if (!isString(created))
-      created = '0';
+    var created = toStringOrNull(decoded['created']) ?? '0';
 
     int createdValue = int.tryParse(created) ?? 0;
     DateTime datetime = DateTime.fromMillisecondsSinceEpoch(createdValue);
 
-    var text = decoded['text'];
-    if (!isString(text))
-      text = '';
-
+    var text = toStringOrNull(decoded['text']) ?? '';
     return ClipboardItem(text, datetime);
   }
 }
