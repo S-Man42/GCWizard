@@ -32,8 +32,8 @@ part 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze_lua_
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze_lua_zones.dart';
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze_lua_obfuscation.dart';
 
-Future<WherigoCartridge?> getGcwCartridgeAsync(GCWAsyncExecuterParameters? jobData) async {
-  if (jobData == null) return Future.value(null);
+Future<WherigoCartridge> getGcwCartridgeAsync(GCWAsyncExecuterParameters? jobData) async {
+  if (jobData == null) return Future.value(WherigoCartridge());
 
   var gcw = jobData as WherigoJobData;
   var output = await getCartridgeGWC(
@@ -46,8 +46,8 @@ Future<WherigoCartridge?> getGcwCartridgeAsync(GCWAsyncExecuterParameters? jobDa
   return output;
 }
 
-Future<WherigoCartridge?> getLuaCartridgeAsync(GCWAsyncExecuterParameters? jobData) async {
-  if (jobData == null) return Future.value(null);
+Future<WherigoCartridge> getLuaCartridgeAsync(GCWAsyncExecuterParameters? jobData) async {
+  if (jobData == null) return Future.value(WherigoCartridge());
 
   var lua = jobData as WherigoJobData;
   var output = await getCartridgeLUA(
