@@ -23,16 +23,16 @@ class GCWDoubleSpinner extends StatefulWidget {
 
   GCWDoubleSpinner(
       {Key? key,
-      required this.onChanged,
-      this.title,
-      required this.value,
-      this.min,
-      this.max,
-      this.numberDecimalDigits = 2,
-      this.controller,
-      this.layout = SpinnerLayout.HORIZONTAL,
-      this.focusNode,
-      this.suppressOverflow = false})
+        required this.onChanged,
+        this.title,
+        required this.value,
+        this.min,
+        this.max,
+        this.numberDecimalDigits = 2,
+        this.controller,
+        this.layout = SpinnerLayout.HORIZONTAL,
+        this.focusNode,
+        this.suppressOverflow = false})
       : super(key: key);
 
   @override

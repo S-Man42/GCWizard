@@ -112,7 +112,7 @@ class Alphabet {
   final AlphabetType type;
   final Map<String, String> alphabet;
 
-  const Alphabet({required this.key, required this.alphabet, this.name, this.type: AlphabetType.CUSTOM});
+  const Alphabet({required this.key, required this.alphabet, this.name, this.type = AlphabetType.CUSTOM});
 }
 
 final Alphabet alphabetAZ = Alphabet(

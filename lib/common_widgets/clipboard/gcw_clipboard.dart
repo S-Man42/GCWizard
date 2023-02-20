@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 import 'package:gc_wizard/utils/json_utils.dart';
 import 'package:prefs/prefs.dart';
 import 'package:collection/collection.dart';
@@ -21,14 +22,14 @@ class ClipboardItem {
       return null;
 
     var created = decoded['created'];
-    if (created == null || !(created is String))
+    if (!isString(created))
       created = '0';
 
     int createdValue = int.tryParse(created) ?? 0;
     DateTime datetime = DateTime.fromMillisecondsSinceEpoch(createdValue);
 
     var text = decoded['text'];
-    if (text == null || !(text is String))
+    if (!isString(text))
       text = '';
 
     return ClipboardItem(text, datetime);

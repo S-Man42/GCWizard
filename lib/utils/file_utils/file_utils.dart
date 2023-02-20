@@ -386,7 +386,7 @@ FileClass fileClass(FileType type) {
 List<List<int>> magicBytes(FileType type) {
   _checkFileType(type);
   if (_FILE_TYPES[type]!.magic_bytes == null)
-    throw Exception('No magic_bytes for this file type defined');
+    throw Exception('No magic_bytes for this file type defined');//ToDo Mark NullSafety critcal magic_bytes is option (e.c gcw)
 
   return _FILE_TYPES[type]!.magic_bytes!;
 }
@@ -394,7 +394,7 @@ List<List<int>> magicBytes(FileType type) {
 List<int> magicBytesDetail(FileType type) {
   _checkFileType(type);
   if (_FILE_TYPES[type]!.magic_bytes_detail == null)
-    throw Exception('No magic_bytes_detail for this file type defined');
+    throw Exception('No magic_bytes_detail for this file type defined');//ToDo Mark NullSafety critcal magic_bytes_detail is option (e.c gcw)
 
   return _FILE_TYPES[type]!.magic_bytes_detail!;
 }
@@ -402,7 +402,7 @@ List<int> magicBytesDetail(FileType type) {
 int magicBytesOffset(FileType type) {
   _checkFileType(type);
   if (_FILE_TYPES[type]!.magic_bytes_offset == null)
-    throw Exception('No magic_bytes_offset for this file type defined');
+    throw Exception('No magic_bytes_offset for this file type defined');//ToDo Mark NullSafety critcal magic_bytes_offset is option (e.c gcw)
 
   return _FILE_TYPES[type]!.magic_bytes_offset!;
 }

@@ -152,7 +152,7 @@ class AnimatedImageState extends State<AnimatedImage> {
     return list;
   }
 
-  void _analysePlatformFileAsync() async {
+  _analysePlatformFileAsync() async {
     await showDialog(
       context: context,
       barrierDismissible: false,
@@ -207,12 +207,12 @@ class AnimatedImageState extends State<AnimatedImage> {
   }
 }
 
-openInAnimatedImage(BuildContext context, GCWFile file) {
+void openInAnimatedImage(BuildContext context, GCWFile file) {
   Navigator.push(
       context,
-      NoAnimationMaterialPageRoute(
+      NoAnimationMaterialPageRoute<GCWTool>(
           builder: (context) => GCWTool(
               tool: AnimatedImage(file: file),
               toolName: i18n(context, 'animated_image_title'),
-              id: '')));
+              id: 'animated_image')));
 }

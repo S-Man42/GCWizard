@@ -408,9 +408,9 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
 }
 
 Future<img.Image?> _adjustColorAsync(GCWAsyncExecuterParameters? jobData) async {
-  if (jobData == null) return null;
+  if (jobData?.parameters is! _AdjustColorInput) return null;
 
-  var output = _doAdjustColor(jobData.parameters);
+  var output = _doAdjustColor(jobData!.parameters as _AdjustColorInput);
 
   jobData.sendAsyncPort.send(output);
 
@@ -481,13 +481,13 @@ img.Image _doAdjustColor(_AdjustColorInput input) {
   return image;
 }
 
-openInColorCorrections(BuildContext context, GCWFile file) {
+void openInColorCorrections(BuildContext context, GCWFile file) {
   Navigator.push(
       context,
-      NoAnimationMaterialPageRoute(
-          builder: (context) => GCWTool(
+      NoAnimationMaterialPageRoute<GCWTool>(
+          builder: (BuildContext context) => GCWTool(
               tool: ImageColorCorrections(file: file),
               toolName: i18n(context, 'image_colorcorrections_title'),
-              id: '',
+              id: 'image_colorcorrections',
               autoScroll: false)));
 }

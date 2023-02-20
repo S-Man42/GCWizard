@@ -24,9 +24,10 @@ class MorseCodeOutput {
 }
 
 Future<AnimatedImageMorseOutput?> analyseImageMorseCodeAsync(GCWAsyncExecuterParameters? jobData) async {
-  if (jobData == null) return null;
+  if (jobData?.parameters is! Uint8List) return null;
 
-  var output = await analyseImageMorseCode(jobData.parameters, sendAsyncPort: jobData.sendAsyncPort);
+  var data = jobData?.parameters as Uint8List;
+  var output = await analyseImageMorseCode(data, sendAsyncPort: jobData!.sendAsyncPort);
 
   jobData.sendAsyncPort.send(output);
 
@@ -53,11 +54,10 @@ Future<AnimatedImageMorseOutput?> analyseImageMorseCode(Uint8List bytes, {SendPo
 }
 
 Future<Uint8List?> createImageAsync(GCWAsyncExecuterParameters? jobData) async {
-  if (jobData == null) return null;
+  if (jobData?.parameters is! Tuple4<Uint8List, Uint8List, String, int>) return null;
 
-  var output = await _createImage(
-      jobData.parameters.item1, jobData.parameters.item2, jobData.parameters.item3, jobData.parameters.item4,
-      sendAsyncPort: jobData.sendAsyncPort);
+  var data = jobData!.parameters as Tuple4<Uint8List, Uint8List, String, int>;
+  var output = await _createImage(data.item1, data.item2, data.item3, data.item4, sendAsyncPort: jobData.sendAsyncPort);
 
   jobData.sendAsyncPort.send(output);
 

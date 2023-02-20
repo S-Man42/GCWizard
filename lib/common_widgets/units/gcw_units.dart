@@ -91,7 +91,7 @@ class _GCWUnitsState<T extends Unit> extends State<GCWUnits> {
     );
   }
 
-  _emitOnChange() {
+  void _emitOnChange() {
     widget.onChanged(GCWUnitsValue<T>(_currentUnit, _currentPrefix));
   }
 }

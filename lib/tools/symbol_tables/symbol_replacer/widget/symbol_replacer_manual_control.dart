@@ -241,7 +241,7 @@ class SymbolReplacerManualControlState extends State<SymbolReplacerManualControl
         id: 'symbol_replacer',
         searchKeys: ['symbol_replacer']);
 
-    Navigator.push(context, NoAnimationMaterialPageRoute(builder: (context) => subPageTool)).whenComplete(() {
+    Navigator.push(context, NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => subPageTool)).whenComplete(() {
       setState(() {
         var _addActivTmp = _addActiv;
         var _removeActivTmp = _removeActiv;

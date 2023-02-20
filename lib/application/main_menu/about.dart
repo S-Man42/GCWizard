@@ -99,7 +99,7 @@ class AboutState extends State<About> {
             padding: EdgeInsets.only(top: 15, bottom: 10),
           ),
           onTap: () {
-            Navigator.of(context).push(NoAnimationMaterialPageRoute(
+            Navigator.of(context).push(NoAnimationMaterialPageRoute<GCWTool>(
                 builder: (context) =>
                     registeredTools.firstWhere((tool) => className(tool.tool) == className(Licenses()))));
           },

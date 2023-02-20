@@ -147,7 +147,7 @@ class _ExifReaderState extends State<ExifReader> {
   /// Add Thumbnail section
   ///
   void _decorateThumbnail(List<Widget> widgets) {
-    if (thumbnail?.file.bytes != null && thumbnail!.file.bytes.isNotEmpty) {
+    if (thumbnail?.file.bytes != null && thumbnail!.file.bytes.length > 0) {
       widgets.add(GCWOutput(
         title: i18n(context, 'exif_section_thumbnail'),
         child: GCWImageView(imageData: thumbnail),
@@ -327,10 +327,10 @@ class _ExifReaderState extends State<ExifReader> {
   }
 }
 
-openInMetadataViewer(BuildContext context, GCWFile file) {
+void openInMetadataViewer(BuildContext context, GCWFile file) {
   Navigator.push(
       context,
-      NoAnimationMaterialPageRoute(
+      NoAnimationMaterialPageRoute<GCWTool>(
           builder: (context) =>
-              GCWTool(tool: ExifReader(file: file), toolName: i18n(context, 'exif_title'), id: '')));
+              GCWTool(tool: ExifReader(file: file), toolName: i18n(context, 'exif_title'), id: 'exif')));
 }

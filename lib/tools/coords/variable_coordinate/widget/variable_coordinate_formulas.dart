@@ -78,8 +78,8 @@ class VariableCoordinateFormulasState extends State<VariableCoordinateFormulas> 
     );
   }
 
-  _addNewFormula() {
-    if (_currentNewName.isNotEmpty) {
+  void _addNewFormula() {
+    if (_currentNewName.length > 0) {
       var formula = Formula(_currentNewName);
       insertFormula(formula);
 
@@ -88,15 +88,15 @@ class VariableCoordinateFormulasState extends State<VariableCoordinateFormulas> 
     }
   }
 
-  _updateFormula() {
+  void _updateFormula() {
     updateFormulas();
   }
 
-  _removeFormula(Formula formula) {
+  void _removeFormula(Formula formula) {
     deleteFormula(formula.id);
   }
 
-  _buildFormulaList(BuildContext context) {
+  Column _buildFormulaList(BuildContext context) {
     var odd = true;
     var rows = formulas.map((formula) {
       var formulaTool = GCWTool(
@@ -104,10 +104,11 @@ class VariableCoordinateFormulasState extends State<VariableCoordinateFormulas> 
           toolName: '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title')}',
           helpSearchString: 'coords_variablecoordinate_title',
           defaultLanguageToolName:
-              '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title', useDefaultLanguage: true)}');
+              '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title', useDefaultLanguage: true)}',
+          id: 'coords_variablecoordinate');
 
-      Future _navigateToSubPage(context) async {
-        Navigator.push(context, NoAnimationMaterialPageRoute(builder: (context) => formulaTool)).whenComplete(() {
+      Future _navigateToSubPage(BuildContext context) async {
+        Navigator.push(context, NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => formulaTool)).whenComplete(() {
           setState(() {});
         });
       }
@@ -184,7 +185,7 @@ class VariableCoordinateFormulasState extends State<VariableCoordinateFormulas> 
       return output;
     }).toList();
 
-    if (rows.isNotEmpty) {
+    if (rows.length > 0) {
       rows.insert(0, GCWTextDivider(text: i18n(context, 'coords_variablecoordinate_currentformulas')));
     }
 

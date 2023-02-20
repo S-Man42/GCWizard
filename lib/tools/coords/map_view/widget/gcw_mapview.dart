@@ -91,7 +91,7 @@ class GCWMapViewState extends State<GCWMapView> {
   Length defaultLengthUnit;
 
   LatLngBounds _getBounds() {
-    if (widget.points == null || widget.points.isEmpty) return _DEFAULT_BOUNDS;
+    if (widget.points == null || widget.points.length == 0) return _DEFAULT_BOUNDS;
 
     var _bounds = LatLngBounds();
     widget.points.forEach((point) => _bounds.extend(point.point));
@@ -120,7 +120,7 @@ class GCWMapViewState extends State<GCWMapView> {
     super.dispose();
   }
 
-  void _cancelLocationSubscription() {
+  _cancelLocationSubscription() {
     if (_locationSubscription != null) {
       _locationSubscription.cancel();
       _locationSubscription = null;
@@ -128,7 +128,7 @@ class GCWMapViewState extends State<GCWMapView> {
     }
   }
 
-  void _toggleLocationListening() {
+  _toggleLocationListening() {
     if (_currentLocationPermissionGranted == false) return;
 
     if (_locationSubscription == null) {
@@ -138,7 +138,7 @@ class GCWMapViewState extends State<GCWMapView> {
         setState(() {
           var newPosition = LatLng(currentLocation.latitude, currentLocation.longitude);
 
-          if (_currentPosition == null && (_manuallyToggledPosition || widget.points.isEmpty)) {
+          if (_currentPosition == null && (_manuallyToggledPosition || widget.points.length == 0)) {
             _mapController.move(newPosition, _mapController.zoom);
           }
           _manuallyToggledPosition = false;
@@ -161,11 +161,11 @@ class GCWMapViewState extends State<GCWMapView> {
     });
   }
 
-  String _formatLengthOutput(double length) {
+  _formatLengthOutput(double length) {
     return NumberFormat('0.00').format(defaultLengthUnit.fromMeter(length)) + ' ' + defaultLengthUnit.symbol;
   }
 
-  String _formatBearingOutput(double bearing) {
+  _formatBearingOutput(double bearing) {
     return NumberFormat('0.00').format(bearing) + ' °';
   }
 
@@ -379,7 +379,7 @@ class GCWMapViewState extends State<GCWMapView> {
               if (child is GCWMapLine) {
                 Navigator.push(
                     context,
-                    NoAnimationMaterialPageRoute(
+                    NoAnimationMaterialPageRoute<GCWTool>(
                         builder: (context) => GCWTool(
                             tool: MapPolylineEditor(polyline: child.parent),
                             id: 'coords_openmap_lineeditor'))).whenComplete(() {
@@ -394,7 +394,7 @@ class GCWMapViewState extends State<GCWMapView> {
                 var mapPoint = widget.points.firstWhere((element) => element.circle == child);
                 Navigator.push(
                     context,
-                    NoAnimationMaterialPageRoute(
+                    NoAnimationMaterialPageRoute<GCWTool>(
                         builder: (context) => GCWTool(
                             tool: MapPointEditor(mapPoint: mapPoint, lengthUnit: defaultLengthUnit),
                             id: 'coords_openmap_lineeditor'))).whenComplete(() {
@@ -462,7 +462,7 @@ class GCWMapViewState extends State<GCWMapView> {
         closeOnOutsideTouch: true);
   }
 
-  Widget _buildMarkers() {
+  List<Marker> _buildMarkers() {
     var points = List<GCWMapPoint>.from(widget.points.where((point) => point.isVisible));
 
     // Add User Position
@@ -503,7 +503,7 @@ class GCWMapViewState extends State<GCWMapView> {
     }).toList();
   }
 
-  Widget _createDragableIcon(GCWMapPoint point, Widget icon) {
+  _createDragableIcon(GCWMapPoint point, Widget icon) {
     return GestureDetector(
       onPanUpdate: (details) {
         _popupLayerController.hidePopup();
@@ -523,7 +523,7 @@ class GCWMapViewState extends State<GCWMapView> {
     );
   }
 
-  Widget _createIconButtonIcons(IconData iconData, {IconData stacked, Color color}) {
+  _createIconButtonIcons(IconData iconData, {IconData stacked, Color color}) {
     var icon = Stack(
       alignment: Alignment.center,
       children: [
@@ -565,7 +565,7 @@ class GCWMapViewState extends State<GCWMapView> {
     );
   }
 
-  List<GCWIconButton> _buildEditButtons() {
+  _buildEditButtons() {
     var buttons = [
       GCWIconButton(
         backgroundColor: COLOR_MAP_ICONBUTTONS,
@@ -661,7 +661,7 @@ class GCWMapViewState extends State<GCWMapView> {
     return buttons;
   }
 
-  List<GCWIconButton> _buildLayerButtons() {
+  _buildLayerButtons() {
     var buttons = [
       GCWIconButton(
           backgroundColor: COLOR_MAP_ICONBUTTONS,
@@ -706,15 +706,15 @@ class GCWMapViewState extends State<GCWMapView> {
     }
   }
 
-  String _buildPopupCoordinateText(GCWMapPoint point) {
+  _buildPopupCoordinateText(GCWMapPoint point) {
     var coordinateFormat = defaultCoordFormat();
     if (point.coordinateFormat != null) coordinateFormat = point.coordinateFormat;
 
     return formatCoordOutput(point.point, coordinateFormat, getEllipsoidByName(ELLIPSOID_NAME_WGS84));
   }
 
-  String _buildPopupCoordinateDescription(GCWMapPoint point) {
-    if (point.markerText == null || point.markerText.isEmpty) return null;
+  _buildPopupCoordinateDescription(GCWMapPoint point) {
+    if (point.markerText == null || point.markerText.length == 0) return null;
 
     var text;
     if (point.markerText.length > 50)
@@ -725,14 +725,14 @@ class GCWMapViewState extends State<GCWMapView> {
     return text;
   }
 
-  Widget _buildPopup(Marker marker) {
+  Container _buildPopup(Marker marker) {
     ThemeColors colors = themeColors();
     _GCWMarker gcwMarker = marker as _GCWMarker;
 
     var containerHeightMultiplier = 7;
     if (gcwMarker.mapPoint.hasCircle()) containerHeightMultiplier += 3;
     if (gcwMarker.mapPoint.isEditable) containerHeightMultiplier += 2;
-    if (gcwMarker.coordinateDescription != null && gcwMarker.coordinateDescription.isNotEmpty)
+    if (gcwMarker.coordinateDescription != null && gcwMarker.coordinateDescription.length > 0)
       containerHeightMultiplier += 2;
 
     return Container(
@@ -803,7 +803,7 @@ class GCWMapViewState extends State<GCWMapView> {
                         onPressed: () {
                           Navigator.push(
                               context,
-                              NoAnimationMaterialPageRoute(
+                              NoAnimationMaterialPageRoute<GCWTool>(
                                   builder: (context) => GCWTool(
                                       tool: MapPointEditor(mapPoint: gcwMarker.mapPoint, lengthUnit: defaultLengthUnit),
                                       id: 'coords_openmap_pointeditor'))).whenComplete(() {
@@ -856,9 +856,9 @@ class GCWMapViewState extends State<GCWMapView> {
     return _polylines;
   }
 
-  List<BaseCoordinates>? _parseCoords(text) {
+  List<BaseCoordinates> _parseCoords(text) {
     var parsed = parseCoordinates(text);
-    if (parsed == null || parsed.isEmpty) {
+    if (parsed == null || parsed.length == 0) {
       showToast(i18n(context, 'coords_common_clipboard_nocoordsfound'));
       return null;
     }
