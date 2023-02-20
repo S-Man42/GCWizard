@@ -23,7 +23,7 @@ WherigoMediaData analyzeAndExtractMediaSectionData(List<String> lines) {
   String alttext = '';
   String type = '';
   String medianame = '';
-  
+
   for (int i = 0; i < lines.length; i++) {
     if (lines[i].trim().replaceAll(LUAname + '.', '').startsWith('Id')) {
       id = getLineData(lines[i], LUAname, 'Id', obfuscatorFunction, obfuscatorTable);
