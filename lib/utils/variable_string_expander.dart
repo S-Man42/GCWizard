@@ -7,6 +7,14 @@ final RegExp VARIABLESTRING =
 
 enum VariableStringExpanderBreakCondition { RUN_ALL, BREAK_ON_FIRST_FOUND }
 
+class VariableStringExpanderValue {
+  final String? text;
+  final Map<String, String>? variables;
+  final int? count;
+
+  VariableStringExpanderValue({this.text, this.variables, this.count});
+}
+
 /*
   - Takes a string which contains an arbitrary number of variables, e.g. "A B C"
   - Requires for every variable one or many possible values like {'A': '1-3', 'B': '5,6', 'C': '4-6#2'}
@@ -66,7 +74,7 @@ class VariableStringExpander {
   int _countVariableGroups = -1;
   String _variableGroup = '';
 
-  List<Map<String, dynamic>> _results = [];
+  List<VariableStringExpanderValue> _results = [];
   List<String> _uniqueResults = [];
 
   List<int> _variableValueIndexes = [];
@@ -175,7 +183,7 @@ class VariableStringExpander {
 
       if (_result == null || _uniqueResults.contains(_result)) continue;
 
-      _results.add({'text': _result, 'variables': _getCurrentVariables()});
+      _results.add(VariableStringExpanderValue(text: _result, variables: _getCurrentVariables()));
 
       if (breakCondition == VariableStringExpanderBreakCondition.BREAK_ON_FIRST_FOUND) break;
 
@@ -203,13 +211,12 @@ class VariableStringExpander {
     }
   }
 
-  // ToDo Nullsafe remove Map format
-  List<Map<String, Object?>> run({bool onlyPrecheck = false}) {
+  List<VariableStringExpanderValue> run({bool onlyPrecheck = false}) {
     if (_input == null || _input!.isEmpty) return [];
 
     if (_substitutions == null || _substitutions!.isEmpty) {
       return [
-        {'text': _input, 'variables': {}}
+        VariableStringExpanderValue(text: _input!)
       ];
     }
 
@@ -217,7 +224,7 @@ class VariableStringExpander {
     for (MapEntry<String, String> substitution in _substitutions!.entries) {
       if (!VARIABLESTRING.hasMatch(substitution.value)) {
         return [
-          {'text': _input, 'variables': {}}
+          VariableStringExpanderValue(text: _input!)
         ];
       }
 
@@ -237,7 +244,7 @@ class VariableStringExpander {
     _countCombinations = _countVariableValues.fold(1, (previousValue, element) => previousValue * element);
     if (onlyPrecheck) {
       return [
-        {'count': _countCombinations}
+        VariableStringExpanderValue(count: _countCombinations)
       ];
     }
 
@@ -261,8 +268,8 @@ int preCheckCombinations(Map<String, String> substitutions) {
   if (substitutions.isEmpty) return 0;
 
   var expander = VariableStringExpander('DUMMY', substitutions, onAfterExpandedText: (e) => null);
-  var count = expander.run(onlyPrecheck: true);
+  var result = expander.run(onlyPrecheck: true);
+  if (result.length == 0 || result.first.count == null) return 0;
 
-  var value = count[0]['count'];
-  return value is int ? value : 0;
+  return result.first.count!;
 }

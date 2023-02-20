@@ -125,7 +125,7 @@ class FormulaValue {
       'value': value,
     };
 
-    var mapType;
+    String? mapType;
     switch (type) {
       case FormulaValueType.INTERPOLATED:
         mapType = _FORMULAVALUETYPE_INTERPOLATE;

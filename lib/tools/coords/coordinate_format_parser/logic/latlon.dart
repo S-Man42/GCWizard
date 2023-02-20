@@ -101,15 +101,15 @@ List<BaseCoordinates> parseCoordinates(String text, {wholeString = false}) {
 
 //wholeString == false: The first match at the text begin is taken - for copy
 //wholeString == true: The whole text must be a valid coord - for var coords
-Map<String, Object>? parseStandardFormats(String text, {wholeString = false}) {
-  LatLng? coord = DMS.parse(text, wholeString: wholeString)?.toLatLng();
-  if (coord != null) return {'format': CoordFormatKey.DMS, 'coordinate': coord};
+BaseCoordinates? parseStandardFormats(String text, {bool wholeString = false}) {
+  LatLng? coord = DMS.parse(text, wholeString: wholeString).toLatLng();
+  if (coord != null) return DMS.fromLatLon(coord);
 
-  coord = DMM.parse(text, wholeString: wholeString)?.toLatLng();
-  if (coord != null) return {'format': CoordFormatKey.DMM, 'coordinate': coord};
+  coord = DMM.parse(text, wholeString: wholeString).toLatLng();
+  if (coord != null) return DMM.fromLatLon(coord);
 
-  coord = DEC.parse(text, wholeString: wholeString)?.toLatLng();
-  if (coord != null) return {'format': CoordFormatKey.DEC, 'coordinate': coord};
+  coord = DEC.parse(text, wholeString: wholeString).toLatLng();
+  if (coord != null) return DEC.fromLatLon(coord);
 
   return null;
 }

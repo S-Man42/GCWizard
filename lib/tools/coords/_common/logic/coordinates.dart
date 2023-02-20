@@ -221,7 +221,6 @@ class BaseCoordinates {
       _longitude = defaultCoordinate.longitude;
   }
 
-  @override
   LatLng toLatLng() {
     return LatLng(_latitude, _longitude);
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/theme/fixed_colors.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coords_return_types.dart';
 import 'package:gc_wizard/tools/coords/distance_and_bearing/logic/distance_and_bearing.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
@@ -13,7 +14,7 @@ class GCWMapPoint {
   LatLng point;
   String? markerText;
   Color color;
-  Map<String, String>? coordinateFormat;
+  CoordsFormatValue? coordinateFormat;
   bool isEditable;
   GCWMapCircle? circle;
   bool circleColorSameAsPointColor;
