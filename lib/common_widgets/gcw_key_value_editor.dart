@@ -449,9 +449,6 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
               onPressed: () {
                 setState(() {
                   var entryId = _getEntryId(entry);
-                  if (entryId == null)
-                    return;
-
                   if (widget.onRemoveEntry != null) widget.onRemoveEntry!(entryId, context);
                 });
               },
@@ -514,15 +511,11 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
         setState(() {
           FocusScope.of(context).requestFocus(_focusNodeEditValue);
 
-          var entryId = _getEntryId(entry);
-          if (entryId == null || !(entryId is String))
-            return;
-
-          _currentEditId = entryId;   // TODO Mike: In the next line, entryId needs to be a String, so this Id must be a String... But is this correct? A String Id?
-          _editKeyController.text = entryId;
-          _editValueController.text = entryId;
-          _currentEditedKey = entryId;
-          _currentEditedValue = entryId;
+          _currentEditId = _getEntryId(entry);
+          _editKeyController.text = _getEntryKey(entry);
+          _editValueController.text = _getEntryValue(entry);
+          _currentEditedKey = _getEntryKey(entry);
+          _currentEditedValue = _getEntryValue(entry);
 
           if (widget.formulaValueList != null)
             _currentEditedFormulaValueTypeInput =
@@ -532,37 +525,37 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
     );
   }
 
-  Object? _getEntryId(Object entry) {
-    if (entry is FormulaValue)
-      return (entry).id;
+  Object _getEntryId(Object entry) {
+    if (entry is FormulaValue && entry.id != null) // TODO Technical Dept: ID could be null
+      return entry.id!;
     else if (entry is MapEntry<String, String>)
-      return (entry).key;
+      return entry.key;
     else if (entry is MapEntry<int, Map<String, String>>)
-      return (entry).key;
-    else
-      return null;
+      return entry.key;
+
+    throw Exception('Wrong entry id type');
   }
 
-  Object? _getEntryKey(Object entry) {
+  String _getEntryKey(Object entry) {
     if (entry is FormulaValue)
-      return (entry).key;
+      return entry.key;
     else if (entry is MapEntry<String, String>)
-      return (entry).key;
+      return entry.key;
     else if (entry is MapEntry<int, Map<String, String>>)
-      return (entry).value.keys.first;
-    else
-      return null;
+      return entry.value.keys.first;
+
+    throw Exception('Wrong entry key type');
   }
 
-  Object? _getEntryValue(Object entry) {
+  String _getEntryValue(Object entry) {
     if (entry is FormulaValue)
       return (entry).value;
     else if (entry is MapEntry<String, String>)
       return (entry).value;
     else if (entry is MapEntry<int, Map<String, String>>)
       return (entry).value.values.first;
-    else
-      return null;
+
+    throw Exception('Wrong entry value type');
   }
 
   String? _toJson() {
