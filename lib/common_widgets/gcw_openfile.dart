@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:isolate';
 import 'dart:math';
-import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart' as filePicker;
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -78,8 +77,8 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
       text: i18n(context, 'common_loadfile_open'),
       onPressed: () {
         _currentExpanded = true;
-        _openFileExplorer(allowedFileTypes: widget.supportedFileTypes)?.then((GCWFile? file) {
-          if (file != null && file.bytes != null) {
+        _openFileExplorer(allowedFileTypes: widget.supportedFileTypes).then((GCWFile? file) {
+          if (file != null) {
             setState(() {
               _loadedFile = file;
               _currentExpanded = false;
@@ -240,8 +239,10 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
   }
 
   bool _validateContentType(String contentType) {
-    for (FileType fileType in widget.supportedFileTypes ?? [])
-      if (mimeTypes(fileType).contains(contentType)) return true;
+    for (FileType fileType in widget.supportedFileTypes ?? []) {
+      var mimeTypeList = mimeTypes(fileType);
+      if (mimeTypeList != null && mimeTypeList.contains(contentType)) return true;
+    }
 
     var _fileName = _currentUrl?.split('?').first;
     var _urlFileType = _fileName == null ? null : fileTypeByFilename(_fileName);

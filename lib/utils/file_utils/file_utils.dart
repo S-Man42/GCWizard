@@ -49,12 +49,12 @@ enum FileType {
 enum FileClass { IMAGE, ARCHIVE, SOUND, DATA, TEXT, BINARY }
 
 class FileTypeInfo {
-  late List<String> extensions;
+  List<String> extensions;
   List<List<int>>? magic_bytes;
   List<int>? magic_bytes_detail;
   int? magic_bytes_offset;
   List<String>? mime_types;
-  FileClass? file_class;
+  FileClass file_class;
   String? uniform_type_identifier;
   
   FileTypeInfo({
@@ -63,7 +63,7 @@ class FileTypeInfo {
     this.magic_bytes_detail,
     this.magic_bytes_offset,
     this.mime_types,
-    this.file_class,
+    required this.file_class,
     this.uniform_type_identifier
   });
 }
@@ -71,7 +71,8 @@ class FileTypeInfo {
 final Map<FileType, FileTypeInfo> _FILE_TYPES = {
   // GCWizard's own suffix. e.g. for settings
   FileType.GCW: FileTypeInfo(
-      extensions: ['gcw']
+    extensions: ['gcw'],
+    file_class: FileClass.DATA,
   ),
 
   // https://en.wikipedia.org/wiki/List_of_file_signatures
@@ -351,7 +352,7 @@ void _checkFileType(FileType type) {
 
 String fileExtension(FileType type) {
   _checkFileType(type);
-  if (_FILE_TYPES[type]!.extensions == null || _FILE_TYPES[type]!.extensions.contains(null))
+  if (_FILE_TYPES[type]!.extensions.contains(null))
     throw Exception('No file type extension');
 
   return _FILE_TYPES[type]!.extensions.first;
@@ -360,10 +361,10 @@ String fileExtension(FileType type) {
 List<String> fileExtensions(List<FileType> types) {
   return types.map((type) {
     _checkFileType(type);
-    if (_FILE_TYPES[type]!.extensions == null || _FILE_TYPES[type]!.extensions.contains(null))
+    if (_FILE_TYPES[type]!.extensions.contains(null))
       throw Exception('No file type extension');
 
-    return _FILE_TYPES[type]!.extensions as List<String>;
+    return _FILE_TYPES[type]!.extensions;
   }).expand((List<String> extensions) => extensions).toList();
 }
 
@@ -377,50 +378,32 @@ List<FileType> fileTypesByFileClass(FileClass _fileClass) {
 
 FileClass fileClass(FileType type) {
   _checkFileType(type);
-  if (_FILE_TYPES[type]!.file_class == null)
-    throw Exception('No file_class for this file type defined');
-
-  return _FILE_TYPES[type]!.file_class!;
+  return _FILE_TYPES[type]!.file_class;
 }
 
-List<List<int>> magicBytes(FileType type) {
+List<List<int>>? magicBytes(FileType type) {
   _checkFileType(type);
-  if (_FILE_TYPES[type]!.magic_bytes == null)
-    throw Exception('No magic_bytes for this file type defined');//ToDo Mark NullSafety critcal magic_bytes is option (e.c gcw)
-
   return _FILE_TYPES[type]!.magic_bytes!;
 }
 
-List<int> magicBytesDetail(FileType type) {
+List<int>? magicBytesDetail(FileType type) {
   _checkFileType(type);
-  if (_FILE_TYPES[type]!.magic_bytes_detail == null)
-    throw Exception('No magic_bytes_detail for this file type defined');//ToDo Mark NullSafety critcal magic_bytes_detail is option (e.c gcw)
-
-  return _FILE_TYPES[type]!.magic_bytes_detail!;
+  return _FILE_TYPES[type]!.magic_bytes_detail;
 }
 
-int magicBytesOffset(FileType type) {
+int? magicBytesOffset(FileType type) {
   _checkFileType(type);
-  if (_FILE_TYPES[type]!.magic_bytes_offset == null)
-    throw Exception('No magic_bytes_offset for this file type defined');//ToDo Mark NullSafety critcal magic_bytes_offset is option (e.c gcw)
-
-  return _FILE_TYPES[type]!.magic_bytes_offset!;
+   return _FILE_TYPES[type]!.magic_bytes_offset;
 }
 
-List<String> mimeTypes(FileType type) {
+List<String>? mimeTypes(FileType type) {
   _checkFileType(type);
-  if (_FILE_TYPES[type]!.mime_types == null)
-    throw Exception('No mime_types for this file type defined');
-
-  return _FILE_TYPES[type]!.mime_types!;
+  return _FILE_TYPES[type]!.mime_types;
 }
 
-String uniformTypeIdentifier(FileType type) {
+String? uniformTypeIdentifier(FileType type) {
   _checkFileType(type);
-  if (_FILE_TYPES[type]!.uniform_type_identifier == null)
-    throw Exception('No uniform_type_identifier for this file type defined');
-
-  return _FILE_TYPES[type]!.uniform_type_identifier!;
+  return _FILE_TYPES[type]!.uniform_type_identifier;
 }
 
 Future<Uint8List> readByteDataFromFile(String fileName) async {
@@ -450,14 +433,13 @@ FileType getFileType(Uint8List blobBytes, {FileType defaultType = FileType.TXT})
     if (_magicBytes == null) continue;
 
     for (var bytes in _magicBytes) {
-      if (blobBytes != null &&
-          (blobBytes.length >= (bytes.length + offset)) &&
-          ListEquality().equals(blobBytes.sublist(offset, offset + bytes.length), bytes)) {
+      if (blobBytes.length >= (bytes.length + offset) &&
+          ListEquality<int>().equals(blobBytes.sublist(offset, offset + bytes.length), bytes)) {
         // test if RIFF then test for details
-        if (ListEquality().equals(bytes, RIFF)) {
+        if (ListEquality<int>().equals(bytes, RIFF)) {
           for (var fileTypeContainer in _FILE_TYPES.keys) {
             var _magicBytesDetails = magicBytesDetail(fileTypeContainer);
-            if (ListEquality().equals(blobBytes.sublist(8, 12), _magicBytesDetails)) {
+            if (ListEquality<int>().equals(blobBytes.sublist(8, 12), _magicBytesDetails)) {
               return fileTypeContainer;
             }
           }
