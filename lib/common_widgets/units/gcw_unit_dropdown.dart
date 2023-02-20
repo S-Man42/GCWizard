@@ -28,7 +28,7 @@ class GCWUnitDropDownState<T extends Unit> extends State<GCWUnitDropDown> {
     List<T> _currentUnitList = (widget.unitList ?? widget.unitCategory?.units ?? <T>[]) as List<T>;
 
     return GCWDropDown<T>(
-        value: widget.value,
+        value: widget.value as T,
         onChanged: (T newValue) {
           setState(() {
             _currentUnit = newValue;

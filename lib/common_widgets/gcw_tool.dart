@@ -12,6 +12,7 @@ import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/gcw_selection.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
 import 'package:gc_wizard/tools/symbol_tables/_common/widget/gcw_symbol_container.dart';
+import 'package:gc_wizard/utils/json_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 
@@ -356,8 +357,6 @@ int sortToolList(GCWTool a, GCWTool b) {
 
 Map<String, int> _toolCounts() {
   var json = Prefs.getString(PREFERENCE_TOOL_COUNT);
-  if (json.isEmpty) return {};
-  var list = jsonDecode(json);
-  return list is Map<String, int> ? list :{};
+  return jsonMap_String_Int(jsonDecode(json)) ?? {};;
 }
 

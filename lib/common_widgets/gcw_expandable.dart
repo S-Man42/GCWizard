@@ -8,8 +8,8 @@ class GCWExpandableTextDivider extends StatefulWidget {
   final bool expanded;
   final Widget? child;
   final void Function(bool)? onChanged ;
-  final suppressBottomSpace;
-  final suppressTopSpace;
+  final bool? suppressBottomSpace;
+  final bool suppressTopSpace;
 
   const GCWExpandableTextDivider(
       {Key? key,
@@ -29,7 +29,7 @@ class GCWExpandableTextDivider extends StatefulWidget {
 class _GCWExpandableTextDividerState extends State<GCWExpandableTextDivider> {
   bool? _currentExpanded;
 
-  _toggleExpand() {
+  void _toggleExpand() {
     setState(() {
       _currentExpanded = !_currentExpanded!;
 

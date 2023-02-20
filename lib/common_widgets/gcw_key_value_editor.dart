@@ -282,7 +282,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
     if (clearInput) _onNewEntryChanged(true);
   }
 
-  _onNewEntryChanged(bool resetInput) {
+  void _onNewEntryChanged(bool resetInput) {
     if (resetInput) {
       if (widget.keyController == null) {
         _keyController.clear();
@@ -429,8 +429,8 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
                             ),
                             padding: EdgeInsets.only(left: DEFAULT_MARGIN))
                         : Transform.rotate(
-                            child: Icon(_formulaValueTypeIcon(entry.type), color: themeColors().mainFont()),
-                            angle: degreesToRadian(entry.type == FormulaValueType.TEXT ? 0.0 : 90.0),
+                            child: Icon(_formulaValueTypeIcon(_getEntryType(entry)), color: themeColors().mainFont()),
+                            angle: degreesToRadian(_getEntryType(entry) == FormulaValueType.TEXT ? 0.0 : 90.0),
                           )))
             : Container(),
         _editButton(entry),
@@ -438,7 +438,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
           icon: Icons.remove,
           onPressed: () {
             setState(() {
-              if (widget.onRemoveEntry != null) widget.onRemoveEntry!(_getEntryId(entry), context);
+              if (widget.onRemoveEntry != null) widget.onRemoveEntry!(_getEntryId(entry) ?? 0, context);
             });
           },
         )
@@ -462,7 +462,16 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
         return Icons.expand;
       case FormulaValueType.FIXED:
         return Icons.vertical_align_center_outlined;
+      default:
+        return Icons.vertical_align_center_outlined;
     }
+  }
+
+  FormulaValueType _getEntryType(Object entry) {
+    if (entry is FormulaValue) {
+      return entry.type ?? FormulaValueType.FIXED;
+    }
+    return FormulaValueType.FIXED;
   }
 
   Widget _editButton(Object entry) {
@@ -501,10 +510,10 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
                 FocusScope.of(context).requestFocus(_focusNodeEditValue);
 
                 _currentEditId = _getEntryId(entry);
-                _editKeyController.text = _getEntryKey(entry);
-                _editValueController.text = _getEntryValue(entry);
-                _currentEditedKey = _getEntryKey(entry);
-                _currentEditedValue = _getEntryValue(entry);
+                _editKeyController.text = _getEntryKey(entry)?.toString() ?? '';
+                _editValueController.text = _getEntryValue(entry)?.toString() ?? '';
+                _currentEditedKey = _getEntryKey(entry)?.toString() ?? '';
+                _currentEditedValue = _getEntryValue(entry)?.toString() ?? '';
 
                 if (widget.formulaValueList != null)
                   _currentEditedFormulaValueTypeInput =
@@ -578,7 +587,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
 
     if (list != null) {
       list.forEach((mapEntry) {
-        _addEntry(mapEntry.key, mapEntry.value, clearInput: false);
+        _addEntry(jsonString(mapEntry.key) ?? '', jsonString(mapEntry.value) ?? '', clearInput: false);
       });
       setState(() {});
     }

@@ -14,8 +14,8 @@ class GCWDistance extends StatefulWidget {
   final String? hintText;
   final double? value;
   final Length? unit;
-  final allowNegativeValues;
-  final controller;
+  final bool allowNegativeValues;
+  final TextEditingController? controller;
 
   const GCWDistance(
       {Key? key, required this.onChanged, this.hintText, this.value, this.unit,
@@ -27,7 +27,7 @@ class GCWDistance extends StatefulWidget {
 }
 
 class _GCWDistanceState extends State<GCWDistance> {
-  var _controller;
+  late TextEditingController _controller;
 
   var _currentInput = DoubleText('', 0.0);
   late Length _currentLengthUnit;
@@ -39,12 +39,12 @@ class _GCWDistanceState extends State<GCWDistance> {
     if (widget.value != null) _currentInput = DoubleText(widget.value!.toString(), widget.value!);
 
     if (widget.controller != null) {
-      _controller = widget.controller;
+      _controller = widget.controller!;
     } else {
       _controller = TextEditingController(text: _currentInput.text);
     }
 
-    _currentLengthUnit = (widget.unit ?? getUnitBySymbol(allLengths(), Prefs.get(PREFERENCE_DEFAULT_LENGTH_UNIT))) as Length;
+    _currentLengthUnit = (widget.unit ?? getUnitBySymbol(allLengths(), Prefs.getString(PREFERENCE_DEFAULT_LENGTH_UNIT))) as Length;
   }
 
   @override
@@ -88,7 +88,7 @@ class _GCWDistanceState extends State<GCWDistance> {
     );
   }
 
-  _setCurrentValueAndEmitOnChange([setTextFieldText = false]) {
+  void _setCurrentValueAndEmitOnChange([bool setTextFieldText = false]) {
     if (setTextFieldText) _controller.text = _currentInput.value.toString();
 
     double _currentValue = _currentInput.value;

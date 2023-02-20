@@ -8,7 +8,7 @@ import 'package:gc_wizard/tools/science_and_technology/date_and_time/calendar/lo
 
 class GCWDatePicker extends StatefulWidget {
   final void Function (DateTime) onChanged;
-  final date;
+  final DateTime date;
   final CalendarSystem type;
 
   const GCWDatePicker({Key? key, required this.onChanged, required this.date, this.type = CalendarSystem.GREGORIANCALENDAR})
@@ -19,12 +19,12 @@ class GCWDatePicker extends StatefulWidget {
 }
 
 class GCWDatePickerState extends State<GCWDatePicker> {
-  var _currentYear;
-  var _currentMonth;
-  var _currentDay;
+  late int _currentYear;
+  late int _currentMonth;
+  late int _currentDay;
 
-  var _monthFocusNode;
-  var _dayFocusNode;
+  late FocusNode _monthFocusNode;
+  late FocusNode _dayFocusNode;
 
   @override
   void initState() {

@@ -86,7 +86,7 @@ class GCWDoubleTextInputFormatter extends TextInputFormatter {
     return true;
   }
 
-  double _truncateDigits(double value, numberDigits) {
+  double _truncateDigits(double value, int numberDigits) {
     return double.parse(value.toStringAsFixed(numberDigits));
   }
 }
