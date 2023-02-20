@@ -599,10 +599,12 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
     String? value;
 
     json.forEach((jsonEntry) {
-      var json = jsonDecode(jsonEntry);
-      key = toStringOrNull(json['key']);
-      value = toStringOrNull(json['value']);
-      if (key != null && value != null) list.add(MapEntry(key, value));
+      if (jsonEntry is String) {
+        var json = jsonDecode(jsonEntry);
+        key = toStringOrNull(json['key']);
+        value = toStringOrNull(json['value']);
+        if (key != null && value != null) list.add(MapEntry(key, value));
+      }
     });
 
     return list.isEmpty ? null : list;
