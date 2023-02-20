@@ -3,7 +3,7 @@ import 'dart:typed_data';
 
 import 'package:gc_wizard/utils/constants.dart';
 
-List<int> textToIntList(String text, {bool allowNegativeValues: false}) {
+List<int> textToIntList(String text, {bool allowNegativeValues = false}) {
   var regex = allowNegativeValues ? RegExp(r'[^\-0-9]') : RegExp(r'[^0-9]');
 
   var list = text.split(regex);
@@ -20,7 +20,7 @@ List<String> textToBinaryList(String text) {
   return regex.allMatches(text).map((value) => text.substring(value.start, value.end)).toList();
 }
 
-String intListToString(List<int> list, {String delimiter: ''}) {
+String intListToString(List<int> list, {String delimiter = ''}) {
   return list.map((elem) => elem == null ? UNKNOWN_ELEMENT : elem).join(delimiter).trim();
 }
 
