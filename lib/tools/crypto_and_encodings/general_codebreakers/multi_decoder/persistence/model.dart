@@ -1,4 +1,5 @@
 import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
+import 'package:gc_wizard/utils/json_utils.dart';
 
 List<MultiDecoderToolEntity> multiDecoderTools = [];
 
@@ -7,26 +8,36 @@ MultiDecoderToolEntity findMultiDecoderToolById(int id) {
 }
 
 class MultiDecoderToolEntity {
-  late int id;
-  String name;
-  String internalToolName;
-  List<MultiDecoderToolOption> options;
+  int? id;
+  late String name;
+  late String internalToolName;
+  late List<MultiDecoderToolOption> options;
 
   MultiDecoderToolEntity(this.name, this.internalToolName, {this.options = const []});
 
-  Map<String, Object> toMap() => {
+  Map<String, Object?> toMap() => {
         'id': id,
         'name': name,
         'decoderFunctionName': internalToolName,
         'options': options.map((option) => option.toMap()).toList()
       };
 
-  MultiDecoderToolEntity.fromJson(Map<String, dynamic> json)
-      : id = toIntOrNull(json['id']),
-        name = toStringOrNull(json['name']),
-        internalToolName = toStringOrNull(json['decoderFunctionName']),
-        options =
-            List<MultiDecoderToolOption>.from(json['options'].map((option) => MultiDecoderToolOption.fromJson(option)));
+  MultiDecoderToolEntity.fromJson(Map<String, Object?> json) {
+    this.id = toIntOrNull(json['id']);
+    this.name = toStringOrNull(json['name']) ?? '';  // TODO Proper default types if key is not in map
+    this.internalToolName = toStringOrNull(json['decoderFunctionName']) ?? '';  // TODO Proper default types if key is not in map
+
+    var optionsRaw = toObjectWithNullableContentListOrNull(json['options']);
+    this.options = <MultiDecoderToolOption>[];
+    if (optionsRaw != null) {
+      optionsRaw.forEach((Object? element) {
+        var option = asJsonMapOrNull(element);
+        if (option == null) return;
+
+        this.options.add(MultiDecoderToolOption.fromJson(option));
+      });
+    }
+  }
 
   @override
   String toString() {
@@ -42,8 +53,8 @@ class MultiDecoderToolOption {
 
   Map<String, Object?> toMap() => {'name': name, 'value': value};
 
-  MultiDecoderToolOption.fromJson(Map<String, dynamic> json)
-      : name = toStringOrNull(json['name']),
+  MultiDecoderToolOption.fromJson(Map<String, Object?> json)
+      : name = toStringOrNull(json['name']) ?? '',  // TODO Proper default types if key is not in map
         value = json['value'];
 
   @override

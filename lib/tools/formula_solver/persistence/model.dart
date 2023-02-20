@@ -1,10 +1,11 @@
 import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
+import 'package:gc_wizard/utils/json_utils.dart';
 
 List<FormulaGroup> formulaGroups = [];
 
 class FormulaGroup {
   int? id;
-  String name;
+  late String name;
   List<Formula> formulas = [];
   List<FormulaValue> values = [];
 
@@ -17,11 +18,33 @@ class FormulaGroup {
         'values': values.map((value) => value.toMap()).toList(),
       };
 
-  FormulaGroup.fromJson(Map<String, Object?> json)
-      : name = toStringOrNull(json['name']) ?? '', // TODO Proper default types if key is not in map
-        id = toIntOrNull(json['id']),
-        formulas = json['formulas'] == null ? <Formula>[] : List<Formula>.from((json['formulas'] as List).map((formula) => Formula.fromJson(formula))),
-        values = json['values'] == null ? <FormulaValue>[] : List<FormulaValue>.from((json['values'] as List).map((value) => FormulaValue.fromJson(value)));
+  FormulaGroup.fromJson(Map<String, Object?> json) {
+    this.name = toStringOrNull(json['name']) ?? ''; // TODO Proper default types if key is not in map
+    this.id = toIntOrNull(json['id']);
+
+    var formulasRaw = toObjectWithNullableContentListOrNull(json['formulas']);
+    this.formulas = <Formula>[];
+    if (formulasRaw != null) {
+      formulasRaw.forEach((Object? element) {
+        var formula = asJsonMapOrNull(element);
+        if (formula == null) return;
+
+        this.formulas.add(Formula.fromJson(formula));
+      });
+    }
+
+    var valuesRaw = toObjectWithNullableContentListOrNull(json['values']);
+    this.values = <FormulaValue>[];
+    if (valuesRaw != null) {
+      valuesRaw.forEach((Object? element) {
+        var value = asJsonMapOrNull(element);
+        if (value == null) return;
+
+        this.values.add(FormulaValue.fromJson(value));
+      });
+    }
+  }
+
 
   @override
   String toString() {

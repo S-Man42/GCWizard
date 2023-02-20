@@ -16,7 +16,6 @@ import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
 import 'package:image/image.dart' as img;
-import 'package:intl/intl.dart';
 import 'package:photo_view/photo_view.dart';
 
 enum GCWImageViewButtons { ALL, SAVE, VIEW_IN_TOOLS }

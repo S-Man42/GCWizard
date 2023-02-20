@@ -1,10 +1,11 @@
 import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
+import 'package:gc_wizard/utils/json_utils.dart';
 
 List<MapViewDAO> mapViews = [];
 
 class MapViewDAO {
-  int id;
-  String name;
+  int? id;
+  String? name;
   List<MapPointDAO> points = [];
   List<MapPolylineDAO> polylines = [];
 
@@ -17,11 +18,32 @@ class MapViewDAO {
         'polylines': polylines.map((polyline) => polyline.toMap()).toList(),
       };
 
-  MapViewDAO.fromJson(Map<String, dynamic> json)
-      : name = toStringOrNull(json['name']),
-        id = toIntOrNull(json['id']),
-        points = List<MapPointDAO>.from(json['points'].map((point) => MapPointDAO.fromJson(point))),
-        polylines = List<MapPolylineDAO>.from(json['polylines'].map((polyline) => MapPolylineDAO.fromJson(polyline)));
+  MapViewDAO.fromJson(Map<String, Object?> json) {
+    this.name = toStringOrNull(json['name']);
+    this.id = toIntOrNull(json['id']);
+
+    var pointsRaw = toObjectWithNullableContentListOrNull(json['points']);
+    if (pointsRaw != null) {
+      this.points = <MapPointDAO>[];
+      pointsRaw.forEach((element) {
+        var point = asJsonMapOrNull(element);
+        if (point == null) return;
+
+        this.points.add(MapPointDAO.fromJson(point));
+      });
+    }
+
+    var polylinesRaw = toObjectWithNullableContentListOrNull(json['polylines']);
+    if (polylinesRaw != null) {
+      this.polylines = <MapPolylineDAO>[];
+      polylinesRaw.forEach((element) {
+        var polyline = asJsonMapOrNull(element);
+        if (polyline == null) return;
+
+        this.polylines.add(MapPolylineDAO.fromJson(polyline));
+      });
+    }
+  }
 
   @override
   String toString() {
@@ -37,9 +59,9 @@ class MapPointDAO {
   String coordinateFormat;
   bool isVisible;
   String color;
-  double radius;
+  double? radius;
   bool circleColorSameAsColor;
-  String circleColor;
+  String? circleColor;
 
   MapPointDAO(this.uuid, this.name, this.latitude, this.longitude, this.coordinateFormat, this.isVisible, this.color,
       this.radius, this.circleColorSameAsColor, this.circleColor);
@@ -57,7 +79,7 @@ class MapPointDAO {
         'circleColor': circleColor,
       };
 
-  MapPointDAO.fromJson(Map<String, dynamic> json)
+  MapPointDAO.fromJson(Map<String, Object?> json)
       : uuid = toStringOrNull(json['uuid']),
         name = toStringOrNull(json['name']),
         latitude = toDoubleOrNull(json['latitude']),

@@ -21,6 +21,13 @@ bool isJsonMap(Object? decodedJson) {
   return decodedJson is Map<String, Object?>;
 }
 
+Map<String, Object?>? asJsonMapOrNull(Object? decoded) {
+  if (decoded == null || !(isJsonMap(decoded)))
+    return null;
+
+  return decoded as Map<String, Object?>;
+}
+
 Map<String, Object?> asJsonMap(Object? decoded) {
   if (decoded == null || !(isJsonMap(decoded)))
     return <String, Object?>{};
