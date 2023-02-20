@@ -180,7 +180,7 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
             onPressed: () {
               setState(() {
                 if (_currentMode == GCWSwitchPosition.left)
-                  _setSelectedSymbolsText(_currentSymbolData?.keys?.first,
+                  _setSelectedSymbolsText(_currentSymbolData?.keys.first,
                       symbolData: _currentSymbolData?.values.first);
                 else
                   _setSelectedSymbolsText(_editValueController.text);
@@ -222,13 +222,13 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
     ]);
   }
 
-  _selectSymbolDataItem(SymbolData symbolData) {
+  void _selectSymbolDataItem(SymbolData symbolData) {
     var compareSymbol = _getSymbol(_symbolMap, symbolData)?.symbolGroup?.compareSymbol;
     if ((widget.symbolImage.compareSymbols != null) && (compareSymbol != null) && (_symbolDataItems != null)) {
       for (GCWDropDownMenuItem item in _symbolDataItems!)
         if ((item.value is Map<String, SymbolReplacerSymbolData>) &&
             ((item.value as Map<String, SymbolReplacerSymbolData>).values.first == compareSymbol)) {
-          _currentSymbolData = item.value;
+          _currentSymbolData = item.value as Map<String, SymbolReplacerSymbolData>?;
           break;
         }
     }

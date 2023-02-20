@@ -299,7 +299,7 @@ final VanityToLAT = {
   '66836': 'NOVEM',
 };
 
-Map VanWords = {
+Map<NumeralWordsLanguage, Map<String, String>> VanWords = {
   NumeralWordsLanguage.DEU: VanityToDEU,
   NumeralWordsLanguage.ENG: VanityToENG,
   NumeralWordsLanguage.FRA: VanityToFRA,
@@ -337,7 +337,7 @@ Map<NumeralWordsLanguage, String> VANITYWORDS_LANGUAGES = {
   NumeralWordsLanguage.LAT: 'common_language_latin'
 };
 
-List<VanityWordsDecodeOutput> decodeVanityWords(String text, NumeralWordsLanguage language) {
+List<VanityWordsDecodeOutput> decodeVanityWords(String? text, NumeralWordsLanguage language) {
   List<VanityWordsDecodeOutput> output = <VanityWordsDecodeOutput>[];
   if (text == null || text == '') {
     output.add(VanityWordsDecodeOutput('', '', '', false));
@@ -345,8 +345,8 @@ List<VanityWordsDecodeOutput> decodeVanityWords(String text, NumeralWordsLanguag
   }
 
   // build map to identify numeral words
-  Map decodingTable = new Map();
-  VanWords[language].forEach((key, value) {
+  var decodingTable = new Map<String, String>();
+  VanWords[language]!.forEach((key, value) {
     //decodingTable[key] = removeAccents(value);
     decodingTable[key] = (value);
   });
@@ -360,13 +360,13 @@ List<VanityWordsDecodeOutput> decodeVanityWords(String text, NumeralWordsLanguag
   String hWord = '';
   text = text.replaceAll('\n', ' ');
   //text = text.replaceAll('\n', '').replaceAll('0', '').replaceAll('1', '').replaceAll(' ', '');
-  while (text.isNotEmpty) {
+  while (text!.isNotEmpty) {
     found = false;
     ambigous = false;
     hDigits = '';
     hWord = '';
     decodingTable.forEach((digits, word) {
-      if (text.startsWith(digits)) {
+      if (text!.startsWith(digits)) {
         if (!found) {
           hDigits = digits;
           hWord = word;
@@ -375,16 +375,16 @@ List<VanityWordsDecodeOutput> decodeVanityWords(String text, NumeralWordsLanguag
           // already found
           ambigous = true;
           output.add(
-              VanityWordsDecodeOutput(hDigits, hWord, NUMERAL_WORDS[language][hWord.toString().toLowerCase()], true));
+              VanityWordsDecodeOutput(hDigits, hWord, NUMERAL_WORDS[language]![hWord.toLowerCase()]!, true));
           output
-              .add(VanityWordsDecodeOutput(digits, word, NUMERAL_WORDS[language][word.toString().toLowerCase()], true));
+              .add(VanityWordsDecodeOutput(digits, word, NUMERAL_WORDS[language]![word.toLowerCase()]!, true));
         }
       }
     }); // end decodingTable.forEach
 
     if (found && !ambigous) {
       output
-          .add(VanityWordsDecodeOutput(hDigits, hWord, NUMERAL_WORDS[language][hWord.toString().toLowerCase()], false));
+          .add(VanityWordsDecodeOutput(hDigits, hWord, NUMERAL_WORDS[language]![hWord.toLowerCase()]!, false));
       if (hDigits.isNotEmpty) {
         text = text.substring(hDigits.length);
       }

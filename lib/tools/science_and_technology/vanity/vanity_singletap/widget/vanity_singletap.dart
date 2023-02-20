@@ -47,7 +47,7 @@ class VanitySingletapState extends State<VanitySingletap> {
     );
   }
 
-  _buildOutput() {
+  String _buildOutput() {
     return encodeVanitySingletap(_currentInput.toUpperCase(), _currentModel);
   }
 }

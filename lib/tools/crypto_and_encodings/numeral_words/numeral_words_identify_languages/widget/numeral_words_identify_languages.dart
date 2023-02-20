@@ -77,7 +77,6 @@ class NumeralWordsIdentifyLanguagesState extends State<NumeralWordsIdentifyLangu
     }
 
     List<List<String>> columnData = [];
-    var flexData;
     String columnDataRowNumber;
     String columnDataRowNumWord;
     String columnDataRowLanguage;
@@ -102,7 +101,6 @@ class NumeralWordsIdentifyLanguagesState extends State<NumeralWordsIdentifyLangu
       i = j - 1;
       columnData.add([columnDataRowNumber, columnDataRowNumWord, columnDataRowLanguage]);
     }
-    flexData = [1, 3, 1];
 
     return Column(
       children: <Widget>[
@@ -117,7 +115,7 @@ class NumeralWordsIdentifyLanguagesState extends State<NumeralWordsIdentifyLangu
                 expanded: false,
                 child: GCWColumnedMultilineOutput(
                     data: columnData,
-                    flexValues: flexData,
+                    flexValues: [1, 3, 1],
                     copyColumn: 1
                 )
             ),

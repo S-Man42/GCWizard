@@ -12,6 +12,7 @@ import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/tools/symbol_tables/_common/logic/symbol_table_data.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_tables_examples_select/widget/symbol_tables_examples.dart';
 import 'package:gc_wizard/tools/symbol_tables/_common/widget/gcw_symbol_table_symbol_matrix.dart';
+import 'package:gc_wizard/utils/json_utils.dart';
 import 'package:prefs/prefs.dart';
 
 const _LOGO_NAME = 'logo.png';
@@ -49,10 +50,11 @@ class SymbolTableExamplesSelectState extends State<SymbolTableExamplesSelect> {
   Future<void> _initializeImages() async {
     //AssetManifest.json holds the information about all asset files
     final manifestContent = await DefaultAssetBundle.of(context).loadString('AssetManifest.json');
-    final Map<String, dynamic> manifestMap = json.decode(manifestContent);
+    final manifestMap = asJsonMapOrNull(json.decode(manifestContent));
 
-    final imagePaths =
-        manifestMap.keys.where((String key) => key.contains(_pathKey()) && key.contains(_LOGO_NAME)).toList();
+    final imagePaths = manifestMap == null
+      ? <String>[]
+      : manifestMap.keys.where((String key) => key.contains(_pathKey()) && key.contains(_LOGO_NAME)).toList();
 
     if (imagePaths.isEmpty) return;
 

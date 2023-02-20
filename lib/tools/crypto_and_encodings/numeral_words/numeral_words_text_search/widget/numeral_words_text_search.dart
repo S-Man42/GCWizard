@@ -27,7 +27,7 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
 
   var _currentDecodeInput = '';
   GCWSwitchPosition _currentDecodeMode = GCWSwitchPosition.left;
-  var _currentLanguage;
+  late NumeralWordsLanguage _currentLanguage;
   bool _setDefaultLanguage = false;
 
   Map<String, NumeralWordsLanguage>? _languageList;
@@ -118,7 +118,7 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
     }
 
     List<List<String>> columnData = [];
-    var flexData;
+
     String columnDataRowNumber;
     String columnDataRowNumWord;
 
@@ -133,7 +133,6 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
         columnDataRowNumWord = detailedOutput[i].numWord;
       columnData.add([columnDataRowNumber, columnDataRowNumWord]);
     }
-    flexData = [1, 2];
 
     if (_currentDecodeMode == GCWSwitchPosition.left) {
       _codeControllerHighlighted.text = _currentDecodeInput.toLowerCase();
@@ -165,7 +164,7 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
                 expanded: true,
                 child: GCWColumnedMultilineOutput(
                     data: columnData,
-                    flexValues: flexData,
+                    flexValues: [1, 2],
                     copyColumn: 1
                 )
               ),
@@ -177,7 +176,7 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
     Map<String, TextStyle> result = {};
     if (NUMERAL_WORDS_ACCENTS[_currentLanguage] != null) {
       NUMERAL_WORDS_ACCENTS[_currentLanguage]!.forEach((element) {
-        if ((int.tryParse(NUMERAL_WORDS[_currentLanguage][removeAccents(element)]) ?? 0) < 10) {
+        if ((int.tryParse(NUMERAL_WORDS[_currentLanguage]![removeAccents(element)] ?? '') ?? 0) < 10) {
           result[r'' + element + ''] = TextStyle(color: Colors.red);
           result[r'' + removeAccents(element) + ''] = TextStyle(color: Colors.red);
         } else {
@@ -187,7 +186,7 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
       });
     }
 
-    NUMERAL_WORDS[_currentLanguage].forEach((key, value) {
+    NUMERAL_WORDS[_currentLanguage]!.forEach((key, value) {
       if (int.tryParse(value) == null) if (value.startsWith('numeral'))
         result[r'' + key + ''] = TextStyle(color: Colors.blue);
       else

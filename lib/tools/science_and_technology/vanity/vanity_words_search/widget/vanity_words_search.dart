@@ -110,7 +110,6 @@ class VanityWordsTextSearchState extends State<VanityWordsTextSearch> {
     }
 
     List<List<String>> columnData = <List<String>>[];
-    var flexData;
 
     ambigous = 0;
     for (int i = 0; i < detailedOutput.length; i++) {
@@ -126,7 +125,6 @@ class VanityWordsTextSearchState extends State<VanityWordsTextSearch> {
         ]);
       }
     }
-    flexData = [2, 2, 1];
 
     return Column(
       children: <Widget>[
@@ -139,7 +137,7 @@ class VanityWordsTextSearchState extends State<VanityWordsTextSearch> {
                 title: i18n(context, 'common_outputdetail'),
                 child: GCWColumnedMultilineOutput(
                     data: columnData,
-                    flexValues: flexData,
+                    flexValues: [2, 2, 1],
                     copyColumn: 1),
               ),
       ],
