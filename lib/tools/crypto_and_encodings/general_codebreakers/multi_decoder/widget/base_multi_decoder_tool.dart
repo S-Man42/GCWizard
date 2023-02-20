@@ -34,13 +34,13 @@ class MultiDecoderToolDummy extends AbstractMultiDecoderTool {
 }
 
 int intTypeCheck(Object? value, int defaultValue) {
-  return jsonInt(value) ?? defaultValue;
+  return toIntOrNull(value) ?? defaultValue;
 }
 
 String stringTypeCheck(Object? value, String defaultValue) {
-  return jsonString(value) ?? defaultValue;
+  return toStringOrNull(value) ?? defaultValue;
 }
 
 String? stringNullableTypeCheck(Object? value, String? defaultValue) {
-  return (value is String?) ? value : defaultValue;
+  return (isString(String) || value == null) ? value as String?: defaultValue;
 }

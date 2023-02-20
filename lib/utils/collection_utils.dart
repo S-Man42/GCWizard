@@ -20,7 +20,7 @@ List<String> textToBinaryList(String text) {
   return regex.allMatches(text).map((value) => text.substring(value.start, value.end)).toList();
 }
 
-String intListToString(List<int> list, {String delimiter = ''}) {
+String intListToString(List<int?> list, {String delimiter = ''}) {
   return list.map((elem) => elem == null ? UNKNOWN_ELEMENT : elem).join(delimiter).trim();
 }
 

@@ -587,7 +587,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
 
     if (list != null) {
       list.forEach((mapEntry) {
-        _addEntry(jsonString(mapEntry.key) ?? '', jsonString(mapEntry.value) ?? '', clearInput: false);
+        _addEntry(toStringOrNull(mapEntry.key) ?? '', toStringOrNull(mapEntry.value) ?? '', clearInput: false);
       });
       setState(() {});
     }

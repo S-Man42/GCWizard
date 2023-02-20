@@ -70,6 +70,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/wasd/logic/wasd.dart';
 import 'package:gc_wizard/tools/games/scrabble/logic/scrabble_sets.dart';
 import 'package:gc_wizard/tools/science_and_technology/keyboard/_common/logic/keyboard.dart';
 import 'package:gc_wizard/tools/science_and_technology/vanity/_common/logic/phone_models.dart';
+import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:gc_wizard/utils/json_utils.dart';
 
