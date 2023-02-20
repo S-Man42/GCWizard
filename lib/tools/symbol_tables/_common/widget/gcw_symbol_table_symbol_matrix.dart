@@ -189,13 +189,13 @@ class GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> 
     );
   }
 
-  openInSymbolReplacer(BuildContext context, String symbolKey, Iterable<Map<String, SymbolData>> imageData) {
+  void openInSymbolReplacer(BuildContext context, String symbolKey, Iterable<Map<String, SymbolData>> imageData) {
     Navigator.push(
         context,
-        NoAnimationMaterialPageRoute(
+        NoAnimationMaterialPageRoute<GCWTool>(
             builder: (context) => GCWTool(
                 tool: SymbolReplacer(imageData: imageData, symbolKey: symbolKey),
                 toolName: i18n(context, 'symbol_replacer_title'),
-                id: '')));
+                id: 'symbol_replacer')));
   }
 }

@@ -87,7 +87,7 @@ Drawer buildMainMenu(BuildContext context) {
               )),
           onTap: () {
             Navigator.pop(context); //close Drawer
-            Navigator.of(context).push(NoAnimationMaterialPageRoute(
+            Navigator.of(context).push(NoAnimationMaterialPageRoute<GCWTool>(
                 builder: (context) =>
                     registeredTools.firstWhere((tool) => className(tool.tool) == className(CallForContribution()))));
           })

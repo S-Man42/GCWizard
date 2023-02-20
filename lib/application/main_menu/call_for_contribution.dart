@@ -74,7 +74,7 @@ class CallForContributionState extends State<CallForContribution> {
             text: i18n(context, 'callforcontribution_24'),
             recognizer: new TapGestureRecognizer()
               ..onTap = () {
-                Navigator.of(context).push(NoAnimationMaterialPageRoute(
+                Navigator.of(context).push(NoAnimationMaterialPageRoute<GCWTool>(
                     builder: (context) =>
                         registeredTools.firstWhere((tool) => className(tool.tool) == className(About()))));
               },

@@ -172,7 +172,7 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
     }
   }
 
-  _setCurrentValueAndEmitOnChange({bool setTextFieldText= false}) {
+  void _setCurrentValueAndEmitOnChange({bool setTextFieldText= false}) {
     if (setTextFieldText) {
       var text = _currentValue.toString();
 

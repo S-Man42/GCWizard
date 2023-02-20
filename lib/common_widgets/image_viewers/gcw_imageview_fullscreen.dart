@@ -31,10 +31,10 @@ class GCWImageViewFullScreenState extends State<GCWImageViewFullScreen> {
   }
 }
 
-openInFullScreen(BuildContext context, Uint8List imgData) {
+void openInFullScreen(BuildContext context, Uint8List imgData) {
   Navigator.push(
       context,
-      NoAnimationMaterialPageRoute(
+      NoAnimationMaterialPageRoute<GCWTool>(
           builder: (context) => GCWTool(
                 tool: GCWImageViewFullScreen(
                   imageData: imgData,

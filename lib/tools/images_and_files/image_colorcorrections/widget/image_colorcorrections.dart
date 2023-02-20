@@ -481,13 +481,13 @@ img.Image _doAdjustColor(_AdjustColorInput input) {
   return image;
 }
 
-openInColorCorrections(BuildContext context, GCWFile file) {
+void openInColorCorrections(BuildContext context, GCWFile file) {
   Navigator.push(
       context,
-      NoAnimationMaterialPageRoute(
-          builder: (context) => GCWTool(
+      NoAnimationMaterialPageRoute<GCWTool>(
+          builder: (BuildContext context) => GCWTool(
               tool: ImageColorCorrections(file: file),
               toolName: i18n(context, 'image_colorcorrections_title'),
-              id: '',
+              id: 'image_colorcorrections',
               autoScroll: false)));
 }

@@ -200,7 +200,7 @@ class HiddenDataState extends State<HiddenData> {
         });
   }
 
-  _exportFile(BuildContext context, GCWFile? file) async {
+  void _exportFile(BuildContext context, GCWFile? file) async {
     if (file?.bytes == null) {
       showToast(i18n(context, 'hiddendata_datanotreadable'));
       return;
@@ -217,10 +217,10 @@ class HiddenDataState extends State<HiddenData> {
   }
 }
 
-openInHiddenData(BuildContext context, GCWFile file) {
+void openInHiddenData(BuildContext context, GCWFile file) {
   Navigator.push(
       context,
-      NoAnimationMaterialPageRoute(
+      NoAnimationMaterialPageRoute<GCWTool>(
           builder: (context) => GCWTool(
-              tool: HiddenData(file: file), toolName: i18n(context, 'hiddendata_title'), id: '')));
+              tool: HiddenData(file: file), toolName: i18n(context, 'hiddendata_title'), id: 'hiddendata')));
 }

@@ -86,8 +86,6 @@ class _GCWColumnedMultilineOutputState extends State<GCWColumnedMultilineOutput>
         if (isFirst && widget.hasHeader && widget.copyAll) {
           copyText = '';
           widget.data.skip(1).forEach((dataRow) {
-            if (dataRow == null)
-              return;
             copyText = (copyText ?? '') + dataRow[copyColumn!].toString() + '\n';
           });
         }
