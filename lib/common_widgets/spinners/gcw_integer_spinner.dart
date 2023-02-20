@@ -85,7 +85,7 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
     return _buildSpinner();
   }
 
-  _decreaseValue() {
+  void _decreaseValue() {
     setState(() {
       if (_currentValue > min || widget.overflow == SpinnerOverflowType.OVERFLOW_MAX) {
         _currentValue--;
@@ -98,7 +98,7 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
     });
   }
 
-  _increaseValue() {
+  void _increaseValue() {
     setState(() {
       if (_currentValue < max || widget.overflow == SpinnerOverflowType.OVERFLOW_MIN) {
         _currentValue++;

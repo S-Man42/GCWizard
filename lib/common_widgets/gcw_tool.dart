@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ui';
 
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
@@ -86,12 +85,12 @@ class GCWToolActionButtonsEntry {
   final void Function()? onPressed;
 
   GCWToolActionButtonsEntry({required this.showDialog, required this.url, required this.title,
-      required this.text, required this.icon, this.onPressed});
+    required this.text, required this.icon, this.onPressed});
 }
 
 class GCWTool extends StatefulWidget {
   final Widget tool;
-  final String i18nPrefix;
+  final String id;
   final List<ToolCategory> categories;
   final bool autoScroll;
   final bool suppressToolMargin;
@@ -103,8 +102,8 @@ class GCWTool extends StatefulWidget {
   final String helpSearchString;
   final bool isBeta;
 
-  var icon;
-  var id = '';
+  GCWSymbolContainer? icon;
+  var longId = '';
 
   String? toolName;
   String? defaultLanguageToolName;
@@ -113,21 +112,21 @@ class GCWTool extends StatefulWidget {
 
   GCWTool(
       {Key? key,
-      required this.tool,
-      this.toolName,
-      this.defaultLanguageToolName,
-      required this.i18nPrefix,
-      this.categories = const [],
-      this.autoScroll = true,
-      this.suppressToolMargin = false,
-      this.iconPath,
-      this.searchKeys = const [],
-      this.buttonList = const [],
-      this.helpSearchString = '',
-      this.isBeta = false,
-      this.suppressHelpButton = false})
+        required this.tool,
+        this.toolName,
+        this.defaultLanguageToolName,
+        required this.id,
+        this.categories = const [],
+        this.autoScroll = true,
+        this.suppressToolMargin = false,
+        this.iconPath,
+        this.searchKeys = const [],
+        this.buttonList = const [],
+        this.helpSearchString = '',
+        this.isBeta = false,
+        this.suppressHelpButton = false})
       : super(key: key) {
-    this.id = className(tool) + '_' + (i18nPrefix ?? '');
+    this.longId = className(tool) + '_' + (id ?? '');
 
     if (iconPath != null) {
       this.icon = GCWSymbolContainer(
@@ -137,7 +136,7 @@ class GCWTool extends StatefulWidget {
   }
 
   bool get isFavorite {
-    return Favorites.isFavorite(id);
+    return Favorites.isFavorite(longId);
   }
 
   @override
@@ -150,7 +149,7 @@ class _GCWToolState extends State<GCWTool> {
 
   @override
   void initState() {
-    _setToolCount(widget.id);
+    _setToolCount(widget.longId);
 
     super.initState();
   }
@@ -158,10 +157,10 @@ class _GCWToolState extends State<GCWTool> {
   @override
   Widget build(BuildContext context) {
     // this is the case when tool is not called by Registry but as subpage of another tool
-    _toolName = widget.toolName ?? i18n(context, widget.i18nPrefix + '_title');
+    _toolName = widget.toolName ?? i18n(context, widget.id + '_title');
 
     _defaultLanguageToolName =
-          widget.defaultLanguageToolName ?? i18n(context, widget.i18nPrefix + '_title', useDefaultLanguage: true);
+        widget.defaultLanguageToolName ?? i18n(context, widget.id + '_title', useDefaultLanguage: true);
 
     return Scaffold(
         resizeToAvoidBottomInset: widget.autoScroll,
@@ -239,7 +238,7 @@ class _GCWToolState extends State<GCWTool> {
         url = i18n(context, 'common_error_url'); // https://blog.gcwizard.net/manual/uncategorized/404/
       else
         url = button.url;
-      if (button.url.length != 0)
+      if (button.url.isNotEmpty)
         buttonList.add(IconButton(
           icon: Icon(button.icon),
           onPressed: () {
@@ -253,7 +252,7 @@ class _GCWToolState extends State<GCWTool> {
                 context,
                 i18n(context, button.title),
                 i18n(context, button.text),
-                () {
+                    () {
                   launchUrl(Uri.parse(i18n(context, url, ifTranslationNotExists: url)));
                 },
               );
@@ -285,14 +284,17 @@ class _GCWToolState extends State<GCWTool> {
     }
 
     return SingleChildScrollView(
-        physics: AlwaysScrollableScrollPhysics(),
-        primary: true,
-        child: tool,
+      physics: AlwaysScrollableScrollPhysics(),
+      primary: true,
+      child: tool,
     );
   }
 }
 
 void _setToolCount(String i18nPrefix) {
+  var toolCountsRaw = Prefs.get(PREFERENCE_TOOL_COUNT);
+  if (toolCountsRaw == null) toolCountsRaw = '{}';
+
   var toolCounts = _toolCounts();
   var currentToolCount = toolCounts[i18nPrefix];
 
@@ -326,8 +328,8 @@ int sortToolList(GCWTool a, GCWTool b) {
 
   var toolCounts = _toolCounts();
 
-  var toolCountA = toolCounts[a.id];
-  var toolCountB = toolCounts[b.id];
+  var toolCountA = toolCounts[a.longId];
+  var toolCountB = toolCounts[b.longId];
 
   if (toolCountA == null && toolCountB == null) {
     return _sortToolListAlphabetically(a, b);
