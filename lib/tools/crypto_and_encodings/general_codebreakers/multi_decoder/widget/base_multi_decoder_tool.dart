@@ -33,14 +33,6 @@ class MultiDecoderToolDummy extends AbstractMultiDecoderTool {
       options: {});
 }
 
-int intTypeCheck(Object? value, int defaultValue) {
-  return toIntOrNull(value) ?? defaultValue;
-}
-
-String stringTypeCheck(Object? value, String defaultValue) {
-  return toStringOrNull(value) ?? defaultValue;
-}
-
 String? stringNullableTypeCheck(Object? value, String? defaultValue) {
-  return (isString(String) || value == null) ? value as String?: defaultValue;
+  return (isString(String) || value == null) ? value as String? : defaultValue;
 }

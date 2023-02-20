@@ -44,7 +44,7 @@ class MultiDecoderToolEsotericLanguageDeadfish extends AbstractMultiDecoderTool 
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
               MDT_ESOTERIC_LANGUAGE_DEADFISH_OPTION_MODE: GCWStatefulDropDown<String>(
-                value: stringTypeCheck(options[MDT_ESOTERIC_LANGUAGE_DEADFISH_OPTION_MODE], MDT_ESOTERIC_LANGUAGES_DEADFISH_OPTION_IDSO),
+                value: toStringOrDefault(options[MDT_ESOTERIC_LANGUAGE_DEADFISH_OPTION_MODE], MDT_ESOTERIC_LANGUAGES_DEADFISH_OPTION_IDSO),
                 onChanged: (newValue) {
                   options[MDT_ESOTERIC_LANGUAGE_DEADFISH_OPTION_MODE] = newValue;
                 },

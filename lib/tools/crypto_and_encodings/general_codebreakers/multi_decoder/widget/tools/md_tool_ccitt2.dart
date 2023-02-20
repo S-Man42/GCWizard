@@ -38,7 +38,7 @@ class MultiDecoderToolCcitt2 extends AbstractMultiDecoderTool {
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
               MDT_CCITT2_OPTION_MODE: GCWStatefulDropDown<String>(
-                value: stringTypeCheck(options[MDT_CCITT2_OPTION_MODE],MDT_CCITT2_OPTION_MODE_DENARY),
+                value: toStringOrDefault(options[MDT_CCITT2_OPTION_MODE],MDT_CCITT2_OPTION_MODE_DENARY),
                 onChanged: (newValue) {
                   options[MDT_CCITT2_OPTION_MODE] = newValue;
                 },

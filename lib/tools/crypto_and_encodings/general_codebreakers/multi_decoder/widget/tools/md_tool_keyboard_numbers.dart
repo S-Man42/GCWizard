@@ -22,7 +22,7 @@ class MultiDecoderToolKeyboardNumbers extends AbstractMultiDecoderTool {
             internalToolName: MDT_INTERNALNAMES_KEYBOARDNUMBERS,
             onDecode: (String input, String key) {
               return keyboardNumbersByName[
-                stringTypeCheck(options[MDT_KEYBOARDNUMBERS_OPTION_TYPE], 'keyboard_mode_qwertz_ristome_dvorak')
+                toStringOrDefault(options[MDT_KEYBOARDNUMBERS_OPTION_TYPE], 'keyboard_mode_qwertz_ristome_dvorak')
                     ]!(input).trim();
             },
             options: options,
