@@ -11,6 +11,7 @@ import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/gcw_selection.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
 import 'package:gc_wizard/tools/symbol_tables/_common/widget/gcw_symbol_container.dart';
+import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 import 'package:gc_wizard/utils/json_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
@@ -88,6 +89,7 @@ class GCWToolActionButtonsEntry {
     required this.text, required this.icon, this.onPressed});
 }
 
+//ignore: must_be_immutable
 class GCWTool extends StatefulWidget {
   final Widget tool;
   final String id;
@@ -96,7 +98,6 @@ class GCWTool extends StatefulWidget {
   final bool suppressToolMargin;
   final String? iconPath;
   final List<String> searchKeys;
-  String indexedSearchStrings = '';
   final List<GCWToolActionButtonsEntry> buttonList;
   final bool suppressHelpButton;
   final String helpSearchString;
@@ -109,6 +110,7 @@ class GCWTool extends StatefulWidget {
   String? defaultLanguageToolName;
   String? description;
   String? example;
+  String indexedSearchStrings = '';
 
   GCWTool(
       {Key? key,
@@ -291,17 +293,17 @@ class _GCWToolState extends State<GCWTool> {
   }
 }
 
-void _setToolCount(String i18nPrefix) {
+void _setToolCount(String id) {
   var toolCountsRaw = Prefs.get(PREFERENCE_TOOL_COUNT);
   if (toolCountsRaw == null) toolCountsRaw = '{}';
 
   var toolCounts = _toolCounts();
-  var currentToolCount = toolCounts[i18nPrefix];
+  var currentToolCount = toolCounts[id];
 
   if (currentToolCount == null) currentToolCount = 0;
 
   currentToolCount++;
-  toolCounts[i18nPrefix] = currentToolCount;
+  toolCounts[id] = currentToolCount;
 
   Prefs.setString(PREFERENCE_TOOL_COUNT, jsonEncode(toolCounts));
 }
@@ -356,10 +358,6 @@ int sortToolList(GCWTool a, GCWTool b) {
 
 Map<String, int> _toolCounts() {
   var jsonString = Prefs.getString(PREFERENCE_TOOL_COUNT);
-
-  var decoded = jsonDecode(jsonString);
-  if (decoded == null || !(isJsonMap(decoded)))
-    return {};
-
-  return decoded is Map<String, int> ? decoded :{}; //ToDo Mark correct ??
+  var decoded = asJsonMap(jsonDecode(jsonString));
+  return decoded.map((key, value) => MapEntry<String, int>(key, toIntOrNull(value) ?? 0));
 }

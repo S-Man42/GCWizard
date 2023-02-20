@@ -88,6 +88,9 @@ class VariableStringExpander {
     dynamic output; // Explicit dynamic type is intended here!
 
     if (orderAndUnique)
+      //TODO: For philosophy: Maybe not use SplayTreeSet here;
+      // Pro: output can be defined as List<String>;
+      // Contra: You need to check for existing elements on both .add() calls and sort manually afterwards if flag is set
       output = SplayTreeSet<String>();
     else
       output = <String>[];
