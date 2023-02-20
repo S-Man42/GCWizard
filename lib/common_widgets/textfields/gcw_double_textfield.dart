@@ -31,7 +31,7 @@ class GCWDoubleTextField extends StatefulWidget {
 }
 
 class _GCWDoubleTextFieldState extends State<GCWDoubleTextField> {
-  var _doubleInputFormatter;
+  late GCWDoubleTextInputFormatter _doubleInputFormatter;
 
   @override
   void initState() {

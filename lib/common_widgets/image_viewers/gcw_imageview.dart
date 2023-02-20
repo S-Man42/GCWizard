@@ -128,7 +128,7 @@ class _GCWImageViewState extends State<GCWImageView> {
     ]);
   }
 
-  _createPhotoView() {
+  Column _createPhotoView() {
     return Column(
       children: [
         Container(
@@ -163,7 +163,7 @@ class _GCWImageViewState extends State<GCWImageView> {
     return widget.suppressedButtons == null || !widget.suppressedButtons!.contains(GCWImageViewButtons.ALL);
   }
 
-  _createToolbar() {
+  List<Widget> _createToolbar() {
     var iconSize = widget.toolBarRight ? IconButtonSize.NORMAL : IconButtonSize.SMALL;
 
     return [
@@ -281,7 +281,7 @@ class _GCWImageViewState extends State<GCWImageView> {
     ];
   }
 
-  _exportFile(BuildContext context, Uint8List data) async {
+  void _exportFile(BuildContext context, Uint8List data) async {
     var value = await saveByteDataToFile(context, data, buildFileNameWithDate('img_', FileType.PNG));
 
     if (value) showExportedFileDialog(context, contentWidget: imageContent(context, data));

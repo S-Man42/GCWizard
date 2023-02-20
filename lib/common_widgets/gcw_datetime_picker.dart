@@ -135,7 +135,7 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
   var _currentSecond = 0;
   var _currentMilliSecond = 0;
   var _currentTimezoneOffset = 0;
-  var _currentTimezoneOffsetIndex;
+  var _currentTimezoneOffsetIndex = 0;
 
   late FocusNode _monthFocusNode;
   late FocusNode _dayFocusNode;
@@ -428,15 +428,15 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
     );
   }
 
-  _indexToTimezoneOffset(int index) {
+  int _indexToTimezoneOffset(int index) {
     return TIMEZONES[index].offset;
   }
 
-  _timezoneOffsetToIndex(int offset) {
+  int _timezoneOffsetToIndex(int offset) {
     return TIMEZONES.indexWhere((timezone) => timezone.offset == offset);
   }
 
-  _buildTimeZonesDropdown() {
+  Row _buildTimeZonesDropdown() {
     return Row(
       children: [
         Expanded(child: GCWText(text: 'Timezone'), flex: 1),
@@ -466,7 +466,7 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
     );
   }
 
-  _buildTimeZoneItemText(TimeZone timeZone) {
+  String _buildTimeZoneItemText(TimeZone timeZone) {
     var tzMinutes = timeZone.offset;
     var sign = tzMinutes < 0 ? -1 : 1;
 

@@ -62,7 +62,7 @@ class _GCWColumnedMultilineOutputState extends State<GCWColumnedMultilineOutput>
             var textStyle = gcwTextStyle(fontSize: widget.fontSize);
             if (isFirst && widget.hasHeader) textStyle = textStyle.copyWith(fontWeight: FontWeight.bold);
 
-            var child;
+            Widget child;
 
             if (column is Widget) {
               child = column;

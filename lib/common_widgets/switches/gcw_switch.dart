@@ -23,16 +23,13 @@ class GCWSwitch extends StatefulWidget {
 }
 
 class _GCWSwitchState extends State<GCWSwitch> {
-  var _currentValue;
-
   @override
   Widget build(BuildContext context) {
     return Switch(
-        value: widget.value ?? _currentValue,
-        onChanged: (value) {
+        value: widget.value,
+        onChanged: (bool value) {
           setState(() {
-            _currentValue = value;
-            widget.onChanged(_currentValue);
+            widget.onChanged(value);
           });
         },
         activeColor: widget.activeThumbColor,
