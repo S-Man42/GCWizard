@@ -15,7 +15,15 @@ bool insideSectionMedia(String currentLine) {
   return true;
 }
 
-void analyzeAndExtractMediaSectionData(List<String> lines) {
+WherigoMediaData analyzeAndExtractMediaSectionData(List<String> lines) {
+  String LUAname = '';
+  String id = '';
+  String name = '';
+  String description = '';
+  String alttext = '';
+  String type = '';
+  String medianame = '';
+  
   for (int i = 0; i < lines.length; i++) {
     if (lines[i].trim().replaceAll(LUAname + '.', '').startsWith('Id')) {
       id = getLineData(lines[i], LUAname, 'Id', obfuscatorFunction, obfuscatorTable);
@@ -59,4 +67,14 @@ void analyzeAndExtractMediaSectionData(List<String> lines) {
       } while (sectionInner);
     }
   }
+
+  return WherigoMediaData(
+    LUAname,
+    id,
+    name,
+    description,
+    alttext,
+    type,
+    medianame,
+  );
 }

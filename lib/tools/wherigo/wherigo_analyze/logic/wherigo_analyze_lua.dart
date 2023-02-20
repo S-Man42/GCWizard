@@ -202,20 +202,11 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           if (sendAsyncPort != null && (i % progressStep == 0)) {
             sendAsyncPort?.send({'progress': i / lines.length / 2});
           }
-        } while (insideSectionMedia(lines[i]) && (i < lines.length - 1));
+        } while (insideSectionMedia(lines[i + 1]) && (i < lines.length - 1));
 
-        analyzeAndExtractMediaSectionData(analyzeLines);
-        cartridgeMedia.add(WherigoMediaData(
-          LUAname,
-          id,
-          name,
-          description,
-          alttext,
-          type,
-          medianame,
-        ));
+        cartridgeMedia.add(analyzeAndExtractMediaSectionData(analyzeLines));
         cartridgeNameToObject[LUAname] = WherigoObjectData(id, index, name, medianame, WHERIGO_OBJECT_TYPE.MEDIA);
-        i--;
+
       } // end if line hasmatch zmedia
     } catch (exception) {
       LUAAnalyzeStatus = WHERIGO_ANALYSE_RESULT_STATUS.ERROR_LUA;

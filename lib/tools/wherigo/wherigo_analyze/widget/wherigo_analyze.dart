@@ -1544,7 +1544,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
           toastMessage = i18n(context, 'wherigo_http_code') +
               ' ' +
-              WherigoCartridgeLUAData.httpCode +
+              WherigoCartridgeLUAData.httpCode.toString() +
               '\n\n' +
               (WHERIGO_HTTP_STATUS[WherigoCartridgeLUAData.httpCode] != null
                   ? i18n(context, WHERIGO_HTTP_STATUS[WherigoCartridgeLUAData!.httpCode]!)
@@ -1589,7 +1589,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             ResultsLUA: [
               i18n(context, 'wherigo_error_runtime'),
               i18n(context, 'wherigo_error_decompile_gwc'),
-              i18n(context, 'wherigo_http_code') + ' ' + WherigoCartridgeLUAData.httpCode + '\n',
+              i18n(context, 'wherigo_http_code') + ' ' + WherigoCartridgeLUAData.httpCode.toString() + '\n',
               (WHERIGO_HTTP_STATUS[WherigoCartridgeLUAData.httpCode] != null
                   ? i18n(context, WHERIGO_HTTP_STATUS[WherigoCartridgeLUAData.httpCode]!)
                   : ''),
