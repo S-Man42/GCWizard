@@ -178,7 +178,7 @@ class PophamTelegraphState extends State<PophamTelegraph> {
       return Column(
         children: <Widget>[
           GCWOutput(title: i18n(context, 'telegraph_text'), child: segments['chars']),
-          _buildDigitalOutput(segments['displays']),
+          _buildDigitalOutput(segments.displays),
         ],
       );
     }

@@ -12,7 +12,7 @@ import 'package:gc_wizard/utils/constants.dart';
 
 class Teletypewriter extends StatefulWidget {
   final TeletypewriterCodebook defaultCodebook;
-  final Map<TeletypewriterCodebook, Map<String, String>>? codebook;
+  final Map<TeletypewriterCodebook, CodebookConfig>? codebook;
 
   Teletypewriter({Key? key, required this.defaultCodebook, required this.codebook}) : super(key: key);
 
@@ -66,8 +66,8 @@ class TeletypewriterState extends State<Teletypewriter> {
             items: widget.codebook!.entries.map((mode) {
               return GCWDropDownMenuItem(
                   value: mode.key,
-                  child: i18n(context, mode.value['title']!),
-                  subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']!) : null);
+                  child: i18n(context, mode.value.title),
+                  subtitle: mode.value.subtitle != null ? i18n(context, mode.value.subtitle) : null);
             }).toList(),
           ),
         _currentMode == GCWSwitchPosition.left

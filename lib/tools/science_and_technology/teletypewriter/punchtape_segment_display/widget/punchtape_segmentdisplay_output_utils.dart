@@ -7,12 +7,12 @@ void _exportFile(BuildContext context, Uint8List? data) async {
   if (value) showExportedFileDialog(context, contentWidget: imageContent(context, data));
 }
 
-Widget _buildPunchtapeSegmentDisplayOutput(List<dynamic> displays) {
+Widget _buildPunchtapeSegmentDisplayOutput(List<Widget> displays) {
   var rows = <Widget>[];
 
   for (var displayIndex = 0; displayIndex < displays.length; displayIndex++) {
     var columns = <Widget>[];
-    var widget;
+    Widget widget;
     var display = displays[displayIndex];
 
     widget = Container(

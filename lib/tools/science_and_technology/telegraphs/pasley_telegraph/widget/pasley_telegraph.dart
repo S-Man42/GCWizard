@@ -177,8 +177,8 @@ class PasleyTelegraphState extends State<PasleyTelegraph> {
 
       return Column(
         children: <Widget>[
-          GCWOutput(title: i18n(context, 'telegraph_text'), child: segments['chars']),
-          _buildDigitalOutput(segments['displays']),
+          GCWOutput(title: i18n(context, 'telegraph_text'), child: segments.text),
+          _buildDigitalOutput(segments.displays),
         ],
       );
     }

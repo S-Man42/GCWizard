@@ -1,3 +1,4 @@
+import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
@@ -239,12 +240,9 @@ List<List<String>> encodeChappe(String input, ChappeCodebook language) {
   return result;
 }
 
-Map<String, dynamic> decodeVisualChappe(List<String> inputs, ChappeCodebook language) {
+Segment decodeVisualChappe(List<String> inputs, ChappeCodebook language) {
   if (inputs == null || inputs.isEmpty)
-    return {
-      'displays': <List<String>>[],
-      'chars': [0]
-    };
+    return Segment(displays: <List<String>>[], text: [0]);
 
   var displays = <List<String>>[];
   var segment = <String>[];

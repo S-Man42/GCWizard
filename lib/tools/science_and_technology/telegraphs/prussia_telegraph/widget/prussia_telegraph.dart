@@ -327,8 +327,8 @@ class PrussiaTelegraphState extends State<PrussiaTelegraph> {
       }
       return Column(
         children: <Widget>[
-          GCWOutput(title: i18n(context, 'telegraph_text'), child: _segmentsToText(segments['text'])),
-          _buildDigitalOutput(segments['displays']),
+          GCWOutput(title: i18n(context, 'telegraph_text'), child: _segmentsToText(segments.text)),
+          _buildDigitalOutput(segments.displays),
         ],
       );
     }
