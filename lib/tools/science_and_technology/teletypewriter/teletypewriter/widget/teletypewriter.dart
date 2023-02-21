@@ -30,7 +30,7 @@ class TeletypewriterState extends State<Teletypewriter> {
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
   GCWSwitchPosition _currentRadix = GCWSwitchPosition.left;
 
-  var _currentCode;
+  late TeletypewriterCodebook _currentCode;
 
   @override
   void initState() {

@@ -171,7 +171,7 @@ class VanityMultitapState extends State<VanityMultitap> {
     if (charMap == null) charMap = model.characterMap[0][PhoneCaseMode.UPPER_CASE];
 
     var keys = '0123456789#*'.split('').toList();
-    var key;
+    String key = '';
     for (key in keys) {
       if (charMap![key] != null && charMap[key]!.contains(' ')) break;
     }
@@ -275,7 +275,7 @@ class VanityMultitapState extends State<VanityMultitap> {
     }
   }
 
-  _getModeString(PhoneCaseMode mode) {
+  String _getModeString(PhoneCaseMode mode) {
     switch (mode) {
       case PhoneCaseMode.UPPER_CASE:
         return 'ABC';
@@ -287,6 +287,8 @@ class VanityMultitapState extends State<VanityMultitap> {
         return '123';
       case PhoneCaseMode.SPECIAL_CHARACTERS:
         return i18n(context, 'vanity_multitap_specialchars');
+      default:
+        return '';
     }
   }
 }
