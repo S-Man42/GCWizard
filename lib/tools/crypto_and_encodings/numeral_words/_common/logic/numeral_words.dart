@@ -2692,7 +2692,7 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
     return output;
   } else  { // entire parts - search parts of words: weight => eight => 8
 
-    decodeText = input //ToDo Thomas ????
+    input = input
         .replaceAll(RegExp(r'[\s]'), '')
         .replaceAll('^', '')
         .replaceAll('°', '')
@@ -2731,8 +2731,8 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
         .replaceAll('µ', '')
         .replaceAll('@', '')
         .replaceAll('€', '');
-    for (int i = 0; i < decodeText.length; i++) {
-      String checkWord = decodeText.substring(i);
+    for (int i = 0; i < input.length; i++) {
+      String checkWord = input.substring(i);
       if (language == NumeralWordsLanguage.ALL) {
         _alreadyFound = false;
         int oldValueInt = 0;
