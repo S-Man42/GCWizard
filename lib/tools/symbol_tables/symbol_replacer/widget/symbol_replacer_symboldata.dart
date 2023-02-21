@@ -2,13 +2,14 @@ import 'dart:typed_data';
 
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:gc_wizard/tools/symbol_tables/_common/logic/symbol_table_data.dart';
+import 'package:gc_wizard/tools/symbol_tables/_common/widget/gcw_symbol_container.dart';
 
 class SymbolReplacerSymbolTableViewData {
   final String symbolKey;
-  final icon;
-  final toolName;
-  final description;
-  _SymbolReplacerSymbolTableData? data;
+  final GCWSymbolContainer? icon;
+  final String? toolName;
+  final String? description;
+  SymbolReplacerSymbolTableData? data;
 
   SymbolReplacerSymbolTableViewData({
     required this.symbolKey,
@@ -17,20 +18,20 @@ class SymbolReplacerSymbolTableViewData {
     required this.description,
     this.data});
 
-  Future<_SymbolReplacerSymbolTableData?> initialize(BuildContext context) async {
+  Future<SymbolReplacerSymbolTableData?> initialize(BuildContext context) async {
     var originalData = SymbolTableData(context, symbolKey);
     await originalData.initialize(importEncryption: false);
 
-    data = _SymbolReplacerSymbolTableData(originalData);
+    data = SymbolReplacerSymbolTableData(originalData);
     return Future.value(data);
   }
 }
 
-class _SymbolReplacerSymbolTableData {
+class SymbolReplacerSymbolTableData {
   String? symbolKey;
   late List<Map<String, SymbolReplacerSymbolData>> images;
 
-  _SymbolReplacerSymbolTableData(SymbolTableData data) {
+  SymbolReplacerSymbolTableData(SymbolTableData data) {
     this.images = data.images.map((Map<String, SymbolData> elem) {
       Map<String, SymbolReplacerSymbolData> _tempMap = {};
       elem.forEach((String key, SymbolData value) {

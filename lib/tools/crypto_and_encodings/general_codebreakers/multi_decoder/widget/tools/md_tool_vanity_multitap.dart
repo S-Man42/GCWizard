@@ -37,7 +37,7 @@ class MultiDecoderToolVanityMultitap extends AbstractMultiDecoderTool {
             onDecode: (String input, String key) {
               var model;
 
-              var modelName = _ensureBackwardsCompatibility(stringTypeCheck(options[MDT_VANITYMULTITAP_OPTION_PHONEMODEL], ''));
+              var modelName = _ensureBackwardsCompatibility(toStringOrDefault(options[MDT_VANITYMULTITAP_OPTION_PHONEMODEL], ''));
 
               switch (modelName) {
                 case NAME_PHONEMODEL_SIMPLE_SPACE_0:
@@ -59,7 +59,7 @@ class MultiDecoderToolVanityMultitap extends AbstractMultiDecoderTool {
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
               MDT_VANITYMULTITAP_OPTION_PHONEMODEL: GCWStatefulDropDown<String>(
-                  value: _ensureBackwardsCompatibility(stringTypeCheck(options[MDT_VANITYMULTITAP_OPTION_PHONEMODEL], '')),
+                  value: _ensureBackwardsCompatibility(toStringOrDefault(options[MDT_VANITYMULTITAP_OPTION_PHONEMODEL], '')),
                   onChanged: (newValue) {
                     options[MDT_VANITYMULTITAP_OPTION_PHONEMODEL] = newValue;
                   },

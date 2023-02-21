@@ -98,3 +98,19 @@ List<Object?>? toObjectWithNullableContentListOrNull(Object? value) {
 
   return objectList;
 }
+
+int toIntOrDefault(Object? value, int defaultValue) {
+  return toIntOrNull(value) ?? defaultValue;
+}
+
+double toDoubleOrDefault(Object? value, double defaultValue) {
+  return toDoubleOrNull(value) ?? defaultValue;
+}
+
+String toStringOrDefault(Object? value, String defaultValue) {
+  return toStringOrNull(value) ?? defaultValue;
+}
+
+bool toBoolOrDefault(Object? value, bool defaultValue) {
+  return toBoolOrNull(value) ?? defaultValue;
+}

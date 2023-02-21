@@ -72,8 +72,8 @@ class NumeralWordsListsState extends State<NumeralWordsLists> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    Map<String, String> numeralWordsOverview = Map<String, String>();
-    numeralWordsOverview = NUMERAL_WORDS[_currentLanguage];
+    var numeralWordsOverview = Map<String, String>();
+    numeralWordsOverview = NUMERAL_WORDS[_currentLanguage] ?? {};
     var wordList = numeralWordsOverview.entries.map((entry) {
       return (int.tryParse(entry.value) != null) ? [entry.value, entry.key] : [];
     });
