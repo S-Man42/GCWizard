@@ -42,7 +42,7 @@ class IrrationalNumbersNthDecimalState extends State<IrrationalNumbersNthDecimal
     );
   }
 
-  _calculateOutput() {
+  String _calculateOutput() {
     if (_currentValue < 1) return '';
 
     try {
