@@ -529,6 +529,32 @@ class Segments {
   final List<List<String>> displays;
 
   Segments({required this.displays});
+
+  void addEmptyElement() {
+    displays.add([]);
+  }
+
+  void removeLastSegment() {
+    if (displays.isNotEmpty) displays.removeLast();
+  }
+
+  void replaceLastSegment(List<String> newSegments, {String? trailingSegment}) {
+    newSegments.sort();
+    if (trailingSegment != null) newSegments.add(trailingSegment);
+
+    if (displays.isEmpty) displays.add([]);
+    displays[displays.length - 1] = newSegments;
+  }
+
+  List<String> buildOutput() {
+    return displays.where((character) => character != null).map((character) {
+      return character.join();
+    }).toList();
+  }
+
+  static Segments Empty() {
+    return Segments(displays: []);
+  }
 }
 
 class SegmentsText extends Segments {
