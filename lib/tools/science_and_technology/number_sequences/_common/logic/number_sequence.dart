@@ -135,7 +135,7 @@ BigInt _getBinomialCoefficient(int n, int k) {
     return _getfactorial(n) ~/ _getfactorial(k) ~/ _getfactorial(n - k);
 }
 
-Function? _getNumberSequenceFunction(NumberSequencesMode mode) {
+BigInt Function(int)? _getNumberSequenceFunction(NumberSequencesMode mode) {
   switch (mode) {
     case NumberSequencesMode.FERMAT:
       return _getFermat;
@@ -163,10 +163,10 @@ BigInt getNumberAt(NumberSequencesMode sequence, int? n) {
     return getNumbersInRange(sequence, n, n)[0];
 }
 
-List getNumbersInRange(NumberSequencesMode sequence, int? start, int? stop) {
-  if (start == null || stop == null) return [-1];
+List<BigInt> getNumbersInRange(NumberSequencesMode sequence, int? start, int? stop) {
+  if (start == null || stop == null) return [BigInt.from(-1)];
 
-  List numberList = <dynamic>[];
+  List<BigInt> numberList = [];
   List<String> sequenceList = <String>[];
 
   var numberSequenceFunction = _getNumberSequenceFunction(sequence);

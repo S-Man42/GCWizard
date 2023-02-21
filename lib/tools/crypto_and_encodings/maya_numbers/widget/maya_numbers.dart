@@ -104,7 +104,7 @@ class MayaNumbersState extends State<MayaNumbers> {
             icon: Icons.clear,
             onPressed: () {
               setState(() {
-                _currentDisplays = Segments.Empty()
+                _currentDisplays = Segments.Empty();
               });
             },
           )
@@ -113,7 +113,7 @@ class MayaNumbersState extends State<MayaNumbers> {
     );
   }
 
-  Widget _buildDigitalOutput(List<List<String>> segments) {
+  Widget _buildDigitalOutput(Segments segments) {
     return SegmentDisplayOutput(
         segmentFunction: (displayedSegments, readOnly) {
           return MayaNumbersSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
@@ -133,15 +133,13 @@ class MayaNumbersState extends State<MayaNumbers> {
       );
     } else {
       //decode
-      var output = _currentDisplays.map((character) {
-        return character.join();
-      }).toList();
+      var output = _currentDisplays.buildOutput();
       var segments = decodeMayaNumbers(output);
       return Column(
         children: <Widget>[
-          _buildDigitalOutput(segments['displays'] as List<List<String>>),
-          GCWOutput(title: i18n(context, 'mayanumbers_single_numbers'), child: (segments['numbers'] as List<int>).join(' ')),
-          GCWOutput(title: i18n(context, 'mayanumbers_vigesimal'), child: segments['vigesimal'])
+          _buildDigitalOutput(segments),
+          GCWOutput(title: i18n(context, 'mayanumbers_single_numbers'), child: (segments.numbers).join(' ')),
+          GCWOutput(title: i18n(context, 'mayanumbers_vigesimal'), child: segments.vigesimal)
         ],
       );
     }
