@@ -32,8 +32,8 @@ class PUNCHTAPESegmentDisplay extends NSegmentDisplay {
             type: SegmentDisplayType.CUSTOM,
             customPaint: (GCWTouchCanvas canvas, Size size, Map<String, bool> currentSegments, Function setSegmentState,
                 Color segment_color_on, Color segment_color_off) {
-              int punchHoles = PUNCHTAPE_DEFINITION[codeBook]!['punchHoles']!;
-              int sprocketHole = PUNCHTAPE_DEFINITION[codeBook]!['sprocketHole']!;
+              int punchHoles = PUNCHTAPE_DEFINITION[codeBook]!.punchHoles;
+              int sprocketHole = PUNCHTAPE_DEFINITION[codeBook]!.sprocketHole;
 
               var paint = defaultSegmentPaint();
               var SEGMENTS_COLOR_ON = segment_color_on;

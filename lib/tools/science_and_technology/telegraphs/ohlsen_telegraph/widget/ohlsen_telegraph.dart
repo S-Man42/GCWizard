@@ -227,8 +227,8 @@ class OhlsenTelegraphState extends State<OhlsenTelegraph> {
         children: <Widget>[
           if (_currentDecodeMode == GCWSwitchPosition.right)
             GCWOutput(title: i18n(context, 'telegraph_codepoints'), child: segments['codepoints']),
-          GCWOutput(title: i18n(context, 'telegraph_text'), child: segments['text']),
-          _buildDigitalOutput(segments['displays']),
+          GCWOutput(title: i18n(context, 'telegraph_text'), child: segments.text),
+          _buildDigitalOutput(segments.displays),
         ],
       );
     }

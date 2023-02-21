@@ -2,6 +2,7 @@
 // https://trepo.tuni.fi/bitstream/handle/10024/102557/1513599679.pdf?sequence=1&isAllowed=y
 // https://en.wikipedia.org/wiki/Telegraph_code#Edelcrantz_code
 
+import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
@@ -1803,12 +1804,9 @@ List<List<String>> encodeEdelcrantzTelegraph(String input, EdelcrantzCodebook la
   return encodedText;
 }
 
-Map<String, dynamic> decodeVisualEdelcrantzTelegraph(List<String> inputs, EdelcrantzCodebook language, bool daytime) {
+Segment decodeVisualEdelcrantzTelegraph(List<String>? inputs, EdelcrantzCodebook language, bool daytime) {
   if (inputs == null || inputs.isEmpty)
-    return {
-      'displays': <List<String>>[],
-      'text': '',
-    };
+    return Segment(displays: <List<String>>[], text: '');
 
   var displays = <List<String>>[];
   var segment = <String>[];

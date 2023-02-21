@@ -1,4 +1,5 @@
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/_common/logic/teletypewriter.dart';
 
 List<String> decenary2segments(String decenary, bool order12345, TeletypewriterCodebook language) {
@@ -215,12 +216,10 @@ List<List<String>> encodePunchtape(String input, TeletypewriterCodebook language
   return result;
 }
 
-Map<String, Object> decodeTextPunchtape(String? inputs, TeletypewriterCodebook language, bool order12345) {
+Segment decodeTextPunchtape(String? inputs, TeletypewriterCodebook language, bool order12345) {
   if (inputs == null || inputs.isEmpty)
-    return {
-      'displays': <List<String>>[],
-      'text': '',
-    };
+    return Segment(displays: <List<String>>[], text: '');
+
   var displays = <List<String>>[];
   List<String> text = [];
   List<int> intList = List<int>.filled(1, 0);
@@ -234,11 +233,11 @@ Map<String, Object> decodeTextPunchtape(String? inputs, TeletypewriterCodebook l
 
     displays.add(binary2segments(element, language));
   });
-  return {'displays': displays, 'text': text.join('')};
+  return Segment(displays: displays, text: text.join(''));
 }
 
-Map<String, Object> decodeVisualPunchtape(List<String?> inputs, TeletypewriterCodebook language, bool order12345) {
-  if (inputs.isEmpty) return {'displays': <List<String>>[], 'text': ''};
+Segment decodeVisualPunchtape(List<String?> inputs, TeletypewriterCodebook language, bool order12345) {
+  if (inputs.isEmpty) return Segment(displays: <List<String>>[], text: '');
 
   var displays = <List<String>>[];
 
@@ -259,5 +258,5 @@ Map<String, Object> decodeVisualPunchtape(List<String?> inputs, TeletypewriterCo
   });
 
   // convert list of decimal to character using String decodeCCITT(List<int> values, TeletypewriterCodebook language)
-  return {'displays': displays, 'text': decodeTeletypewriter(intList, language)};
+  return Segment(displays: displays, text: decodeTeletypewriter(intList, language));
 }

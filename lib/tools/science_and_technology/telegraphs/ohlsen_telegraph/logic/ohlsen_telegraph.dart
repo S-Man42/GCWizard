@@ -269,7 +269,7 @@ final CODEBOOK_OHLSEN = {
   '259': '',
 };
 
-List<List<String>> encodeOhlsenTelegraph(String input) {
+List<List<String>> encodeOhlsenTelegraph(String? input) {
   if (input == null || input == '') return <List<String>>[];
 
   List<List<String>> encodedText = [];
@@ -285,9 +285,7 @@ List<List<String>> encodeOhlsenTelegraph(String input) {
 
 Map<String, dynamic> decodeVisualOhlsenTelegraph(List<String> inputs) {
   if (inputs == null || inputs.isEmpty)
-    return {
-      'displays': <List<String>>[],
-      'text': '',
+    return Segment(displays: <List<String>>[], text: '',
       'codepoints': '',
     };
 
@@ -303,7 +301,7 @@ Map<String, dynamic> decodeVisualOhlsenTelegraph(List<String> inputs) {
     text = text + (CODEBOOK_OHLSEN[segmentToCode(segment)] ?? UNKNOWN_ELEMENT);
   });
 
-  return {'displays': displays, 'text': text, 'codepoints': codepoints.join(' ')};
+  return Segment(displays: displays, text: text, 'codepoints': codepoints.join(' ')};
 }
 
 Map<String, dynamic> decodeTextOhlsenTelegraph(String inputs) {

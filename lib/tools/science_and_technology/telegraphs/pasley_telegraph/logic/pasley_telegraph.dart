@@ -1,5 +1,6 @@
 //Fred B. Wrixon, Geheimsprachen, Könemann-Verlag, ISBN 978-3-8331-2562-1, S. 450
 
+import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
 final Map<String, List<String>> PASLEY = {
@@ -145,8 +146,8 @@ List<List<String>> encodePasley(String input) {
   return result;
 }
 
-Map<String, dynamic> decodeVisualPasley(List<String> inputs) {
-  if (inputs == null || inputs.isEmpty) return {'displays': <List<String>>[], 'chars': ''};
+Segment decodeVisualPasley(List<String> inputs) {
+  if (inputs.isEmpty) return Segment(displays: <List<String>>[], text: '');
 
   var displays = <List<String>>[];
   var segment = <String>[];
@@ -182,7 +183,7 @@ Map<String, dynamic> decodeVisualPasley(List<String> inputs) {
 
     return char;
   }).toList();
-  return {'displays': displays, 'chars': text.join('')};
+  return Segment(displays: displays, text: text.join(''));
 }
 
 List<String> _stringToSegment(String input) {

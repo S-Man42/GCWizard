@@ -2,6 +2,7 @@
 // https://trepo.tuni.fi/bitstream/handle/10024/102557/1513599679.pdf?sequence=1&isAllowed=y
 // https://en.wikipedia.org/wiki/Telegraph_code#Edelcrantz_code
 
+import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
@@ -2352,12 +2353,8 @@ List<List<String>> encodePrussianTelegraph(String input) {
   }).toList();
 }
 
-Map<String, dynamic> decodeVisualPrussianTelegraph(List<String> inputs) {
-  if (inputs == null || inputs.isEmpty)
-    return {
-      'displays': <List<String>>[],
-      'text': '',
-    };
+Segment decodeVisualPrussianTelegraph(List<String> inputs) {
+  if (inputs.isEmpty) Segment(displays: <List<String>>[], text: '');
 
   var displays = <List<String>>[];
   var segment = <String>[];
@@ -2373,15 +2370,11 @@ Map<String, dynamic> decodeVisualPrussianTelegraph(List<String> inputs) {
     else
       text = text + UNKNOWN_ELEMENT;
   });
-  return {'displays': displays, 'text': text};
+  return Segment(displays: displays, text: text);
 }
 
-Map<String, dynamic> decodeTextPrussianTelegraph(String inputs) {
-  if (inputs == null || inputs.isEmpty)
-    return {
-      'displays': <List<String>>[],
-      'text': '',
-    };
+Segment decodeTextPrussianTelegraph(String inputs) {
+  if (inputs.isEmpty) Segment(displays: <List<String>>[], text: '');
 
   var displays = <List<String>>[];
   String text = '';

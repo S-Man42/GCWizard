@@ -63,8 +63,8 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
         items: ALL_CODES_CODEBOOK.entries.map((mode) {
           return GCWDropDownMenuItem(
               value: mode.key,
-              child: i18n(context, mode.value['title']!),
-              subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']!) : null);
+              child: i18n(context, mode.value.title),
+              subtitle: mode.value.subtitle != null ? i18n(context, mode.value.subtitle) : null);
         }).toList(),
       ),
       if (!(_currentCode == TeletypewriterCodebook.BAUDOT_54123 || _currentCode == TeletypewriterCodebook.CCITT_IA5))
@@ -156,7 +156,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
     ]);
   }
 
-  _buildVisualDecryption() {
+  Widget _buildVisualDecryption() {
     Map<String, bool> currentDisplay;
 
     var displays = _currentDisplays;
