@@ -1,3 +1,4 @@
+import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 // https://www.pharmabraille.com/wp-content/uploads/2014/11/World-Braille-Usage-Third-Edition-1.pdf
@@ -1365,7 +1366,7 @@ List<List<String>> encodeBraille(String input, BrailleLanguage language) {
   }
 }
 
-Map<String, dynamic> _decodeBrailleBASIC(List<String> inputs, bool letters) {
+SegmentChars _decodeBrailleBASIC(List<String> inputs, bool letters) {
   var displays = <List<String>>[];
 
   var antoineMap = Map<String, List<String>>.from(_charsToSegmentsLettersAntoine);
@@ -1405,7 +1406,7 @@ Map<String, dynamic> _decodeBrailleBASIC(List<String> inputs, bool letters) {
     return char;
   }).toList();
 
-  return {'displays': displays, 'chars': text};
+  return SegmentChars(displays: displays, chars: text);
 }
 
 Map<String, dynamic> _decodeBrailleSIMPLE(List<String> inputs) {
@@ -2269,12 +2270,8 @@ List<String> _sanitizeDecodeInput(List<String> input, BrailleLanguage language) 
   }).toList();
 }
 
-Map<String, dynamic> decodeBraille(List<String> input, BrailleLanguage language, bool letters) {
-  if (input == null || input.isEmpty)
-    return {
-      'displays': <List<String>>[],
-      'chars': [0]
-    };
+SegmentChar decodeBraille(List<String>? input, BrailleLanguage language, bool letters) {
+  if (input == null || input.isEmpty) return SegmentChar(displays: <List<String>>[], Char: [0]);
 
   input = _sanitizeDecodeInput(input, language);
 

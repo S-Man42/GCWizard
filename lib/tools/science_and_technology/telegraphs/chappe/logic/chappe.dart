@@ -240,9 +240,9 @@ List<List<String>> encodeChappe(String input, ChappeCodebook language) {
   return result;
 }
 
-Segment decodeVisualChappe(List<String> inputs, ChappeCodebook language) {
+Segments decodeVisualChappe(List<String> inputs, ChappeCodebook language) {
   if (inputs == null || inputs.isEmpty)
-    return Segment(displays: <List<String>>[], text: [0]);
+    return Segments(displays: <List<String>>[], text: [0]);
 
   var displays = <List<String>>[];
   var segment = <String>[];

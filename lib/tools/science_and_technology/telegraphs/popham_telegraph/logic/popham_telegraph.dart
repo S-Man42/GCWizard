@@ -55,8 +55,8 @@ List<List<String>> encodePopham(String input) {
   return result;
 }
 
-Segment decodeVisualPopham(List<String> inputs) {
-  if (inputs.isEmpty) return Segment(displays: <List<String>>[], text: '');
+Segments decodeVisualPopham(List<String> inputs) {
+  if (inputs.isEmpty) return Segments(displays: <List<String>>[], text: '');
 
   var displays = <List<String>>[];
   var segment = <String>[];
@@ -81,7 +81,7 @@ Segment decodeVisualPopham(List<String> inputs) {
 
     return char;
   }).toList();
-  return Segment(displays: displays, text: text.join(''));
+  return Segments(displays: displays, text: text.join(''));
 }
 
 List<String> _stringToSegment(String input) {

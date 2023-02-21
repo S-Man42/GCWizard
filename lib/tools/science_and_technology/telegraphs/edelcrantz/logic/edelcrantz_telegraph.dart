@@ -1804,9 +1804,8 @@ List<List<String>> encodeEdelcrantzTelegraph(String input, EdelcrantzCodebook la
   return encodedText;
 }
 
-Segment decodeVisualEdelcrantzTelegraph(List<String>? inputs, EdelcrantzCodebook language, bool daytime) {
-  if (inputs == null || inputs.isEmpty)
-    return Segment(displays: <List<String>>[], text: '');
+SegmentText decodeVisualEdelcrantzTelegraph(List<String>? inputs, EdelcrantzCodebook language, bool daytime) {
+  if (inputs == null || inputs.isEmpty) return SegmentText(displays: <List<String>>[], text: '');
 
   var displays = <List<String>>[];
   var segment = <String>[];
@@ -1836,7 +1835,7 @@ Segment decodeVisualEdelcrantzTelegraph(List<String>? inputs, EdelcrantzCodebook
       text = text + UNKNOWN_ELEMENT;
   });
 
-  return {'displays': displays, 'text': text};
+  return SegmentText(displays: displays, text: text);
 }
 
 Map<String, dynamic> decodeTextEdelcrantzTelegraph(String inputs, EdelcrantzCodebook language, bool daytime) {

@@ -9,6 +9,7 @@ import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/widget/n_segment_display.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
@@ -20,7 +21,7 @@ part 'package:gc_wizard/tools/science_and_technology/segment_display/_common/wid
 class SegmentDisplayOutput extends StatefulWidget {
   final bool upsideDownButton;
   final NSegmentDisplay Function(Map<String, bool>, bool) segmentFunction;
-  final List<List<String>> segments;
+  final Segments segments;
   final bool readOnly;
   final Widget? trailing;
   final bool showZoomButtons;

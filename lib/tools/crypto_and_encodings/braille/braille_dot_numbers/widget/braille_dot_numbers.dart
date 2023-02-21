@@ -9,6 +9,7 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/braille/braille_euro_segment_display/widget/braille_euro_segment_display.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/braille/logic/braille.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/braille/widget/braille_segment_display.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/widget/segmentdisplay_output.dart';
 
 class BrailleDotNumbers extends StatefulWidget {
@@ -17,8 +18,8 @@ class BrailleDotNumbers extends StatefulWidget {
 }
 
 class BrailleDotNumbersState extends State<BrailleDotNumbers> {
-  TextEditingController _encodeController;
-  TextEditingController _decodeController;
+  late TextEditingController _encodeController;
+  late TextEditingController _decodeController;
 
   String _currentEncodeInput = '';
   String _currentDecodeInput = '';
@@ -134,9 +135,9 @@ class BrailleDotNumbersState extends State<BrailleDotNumbers> {
       }
       return Column(
         children: <Widget>[
-          _buildDigitalOutput(segments['displays']),
+          _buildDigitalOutput(segments.displays),
           if (_currentLanguage != BrailleLanguage.BASIC)
-            GCWDefaultOutput(child: segments['chars'].join()),
+            GCWDefaultOutput(child: segments.chars.join()),
           if (_currentLanguage == BrailleLanguage.SIMPLE)
             Column(
               children: [
@@ -159,7 +160,7 @@ class BrailleDotNumbersState extends State<BrailleDotNumbers> {
     }
   }
 
-  Widget _buildDigitalOutput(List<List<String>> segments) {
+  Widget _buildDigitalOutput(Segments segments) {
     return SegmentDisplayOutput(
         segmentFunction: (displayedSegments, readOnly) {
           if (_currentLanguage == BrailleLanguage.EUR)

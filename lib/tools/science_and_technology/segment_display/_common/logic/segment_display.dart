@@ -525,11 +525,24 @@ final Map<List<String>, String> _Segment16ToAZ = {
   ['m']: '.', //acc. to Kenwood Car Hifi Display
 };
 
-class Segment {
+class Segments {
   final List<List<String>> displays;
+
+  Segments({required this.displays});
+}
+
+class SegmentText extends Segments {
   final String text;
 
-  Segment({required this.displays, required this.text});
+  SegmentText({required List<List<String>> displays, required this.text})
+    : super(displays: displays);
+}
+
+class SegmentChars extends Segments {
+  final List<int> chars;
+
+  SegmentChars({required List<List<String>> displays, required this.chars})
+      : super(displays: displays);
 }
 
 List<List<String>> encodeSegment(String? input, SegmentDisplayType segmentType) {
@@ -569,8 +582,8 @@ List<List<String>> encodeSegment(String? input, SegmentDisplayType segmentType) 
   return output;
 }
 
-Segment decodeSegment(String? input, SegmentDisplayType segmentType) {
-  if (input == null || input == '') return Segment(displays: <List<String>>[], text: '');
+Segments decodeSegment(String? input, SegmentDisplayType segmentType) {
+  if (input == null || input == '') return Segments(displays: <List<String>>[], text: '');
   List<String> baseSegments = [];
 
   switch (segmentType) {
@@ -633,7 +646,7 @@ Segment decodeSegment(String? input, SegmentDisplayType segmentType) {
     return character + (containsDot ? '.' : '');
   }).join();
 
-  return Segment(displays: displays, text: out);
+  return Segments(displays: displays, text: out);
 }
 
 String? _characterFromSegmentList(SegmentDisplayType type, List<String> segments) {

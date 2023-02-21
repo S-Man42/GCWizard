@@ -2353,8 +2353,8 @@ List<List<String>> encodePrussianTelegraph(String input) {
   }).toList();
 }
 
-Segment decodeVisualPrussianTelegraph(List<String> inputs) {
-  if (inputs.isEmpty) Segment(displays: <List<String>>[], text: '');
+Segments decodeVisualPrussianTelegraph(List<String> inputs) {
+  if (inputs.isEmpty) Segments(displays: <List<String>>[], text: '');
 
   var displays = <List<String>>[];
   var segment = <String>[];
@@ -2370,11 +2370,11 @@ Segment decodeVisualPrussianTelegraph(List<String> inputs) {
     else
       text = text + UNKNOWN_ELEMENT;
   });
-  return Segment(displays: displays, text: text);
+  return Segments(displays: displays, text: text);
 }
 
-Segment decodeTextPrussianTelegraph(String inputs) {
-  if (inputs.isEmpty) Segment(displays: <List<String>>[], text: '');
+Segments decodeTextPrussianTelegraph(String inputs) {
+  if (inputs.isEmpty) Segments(displays: <List<String>>[], text: '');
 
   var displays = <List<String>>[];
   String text = '';
