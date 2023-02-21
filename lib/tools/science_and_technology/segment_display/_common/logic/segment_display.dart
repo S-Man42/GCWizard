@@ -531,22 +531,36 @@ class Segments {
   Segments({required this.displays});
 }
 
-class SegmentText extends Segments {
+class SegmentsText extends Segments {
   final String text;
 
-  SegmentText({required List<List<String>> displays, required this.text})
+  SegmentsText({required List<List<String>> displays, required this.text})
     : super(displays: displays);
 }
 
-class SegmentChars extends Segments {
+class SegmentsIntChars extends Segments {
   final List<int> chars;
 
-  SegmentChars({required List<List<String>> displays, required this.chars})
+  SegmentsIntChars({required List<List<String>> displays, required this.chars})
       : super(displays: displays);
 }
 
+class SegmentsChars extends Segments {
+  final List<String> chars;
+
+  SegmentsChars({required List<List<String>> displays, required this.chars})
+      : super(displays: displays);
+}
+
+class SegmentsCodpoints extends SegmentsText {
+  final String codepoints;
+
+  SegmentsCodpoints({required List<List<String>> displays, required String text, required this.codepoints})
+      : super(displays: displays, text: text);
+}
+
 List<List<String>> encodeSegment(String? input, SegmentDisplayType segmentType) {
-  if (input == null || input == '') return <List<String>>[];
+  if (input == null || input.isEmpty) return <List<String>>[];
 
   Map<String, List<String>> AZToSegment = {};
   switch (segmentType) {
@@ -582,8 +596,8 @@ List<List<String>> encodeSegment(String? input, SegmentDisplayType segmentType) 
   return output;
 }
 
-Segments decodeSegment(String? input, SegmentDisplayType segmentType) {
-  if (input == null || input == '') return Segments(displays: <List<String>>[], text: '');
+SegmentsText decodeSegment(String? input, SegmentDisplayType segmentType) {
+  if (input == null || input.isEmpty) return SegmentsText(displays: [], text: '');
   List<String> baseSegments = [];
 
   switch (segmentType) {
@@ -646,7 +660,7 @@ Segments decodeSegment(String? input, SegmentDisplayType segmentType) {
     return character + (containsDot ? '.' : '');
   }).join();
 
-  return Segments(displays: displays, text: out);
+  return SegmentsText(displays: displays, text: out);
 }
 
 String? _characterFromSegmentList(SegmentDisplayType type, List<String> segments) {

@@ -339,7 +339,7 @@ Map<NumeralWordsLanguage, String> VANITYWORDS_LANGUAGES = {
 
 List<VanityWordsDecodeOutput> decodeVanityWords(String? text, NumeralWordsLanguage language) {
   List<VanityWordsDecodeOutput> output = <VanityWordsDecodeOutput>[];
-  if (text == null || text == '') {
+  if (text == null || text.isEmpty) {
     output.add(VanityWordsDecodeOutput('', '', '', false));
     return output;
   }

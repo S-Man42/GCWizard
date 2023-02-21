@@ -1,3 +1,5 @@
+import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
+import 'package:gc_wizard/tools/science_and_technology/teletypewriter/_common/logic/teletypewriter.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
@@ -20,39 +22,39 @@ enum MurrayCodebook {
   MYGEOTOOLS
 }
 
-Map<MurrayCodebook, Map<String, String>> MURRAY_CODEBOOK = {
-  MurrayCodebook.ROYALNAVY: {
-    'title': 'telegraph_murray_royalnavy_title',
-    'subtitle': 'telegraph_murray_royalnavy_description'
-  },
-  MurrayCodebook.GEOCACHING: {
-    'title': 'telegraph_murray_geocaching_title',
-    'subtitle': 'telegraph_murray_geocaching_description'
-  },
-  MurrayCodebook.FISCHER: {
-    'title': 'telegraph_murray_fischer_title',
-    'subtitle': 'telegraph_murray_fischer_description'
-  },
-  MurrayCodebook.ROUCOUX: {
-    'title': 'telegraph_murray_roucoux_title',
-    'subtitle': 'telegraph_murray_roucoux_description'
-  },
-  MurrayCodebook.GEOCACHINGTOOLBOX_1: {
-    'title': 'telegraph_murray_geocachingtoolbox_1_title',
-    'subtitle': 'telegraph_murray_geocachingtoolbox_1_description'
-  },
-  MurrayCodebook.GEOCACHINGTOOLBOX_2: {
-    'title': 'telegraph_murray_geocachingtoolbox_2_title',
-    'subtitle': 'telegraph_murray_geocachingtoolbox_2_description'
-  },
-  MurrayCodebook.GEOCACHINGTOOLBOX_3: {
-    'title': 'telegraph_murray_geocachingtoolbox_3_title',
-    'subtitle': 'telegraph_murray_geocachingtoolbox_3_description'
-  },
-  MurrayCodebook.MYGEOTOOLS: {
-    'title': 'telegraph_murray_mygeotools_title',
-    'subtitle': 'telegraph_murray_mygeotools_description'
-  },
+Map<MurrayCodebook, CodebookConfig> MURRAY_CODEBOOK = {
+  MurrayCodebook.ROYALNAVY: CodebookConfig(
+    title: 'telegraph_murray_royalnavy_title',
+    subtitle: 'telegraph_murray_royalnavy_description'
+  ),
+  MurrayCodebook.GEOCACHING: CodebookConfig(
+    title: 'telegraph_murray_geocaching_title',
+    subtitle: 'telegraph_murray_geocaching_description'
+  ),
+  MurrayCodebook.FISCHER: CodebookConfig(
+    title: 'telegraph_murray_fischer_title',
+    subtitle: 'telegraph_murray_fischer_description'
+  ),
+  MurrayCodebook.ROUCOUX: CodebookConfig(
+    title: 'telegraph_murray_roucoux_title',
+    subtitle: 'telegraph_murray_roucoux_description'
+  ),
+  MurrayCodebook.GEOCACHINGTOOLBOX_1: CodebookConfig(
+    title: 'telegraph_murray_geocachingtoolbox_1_title',
+    subtitle: 'telegraph_murray_geocachingtoolbox_1_description'
+  ),
+  MurrayCodebook.GEOCACHINGTOOLBOX_2: CodebookConfig(
+    title: 'telegraph_murray_geocachingtoolbox_2_title',
+    subtitle: 'telegraph_murray_geocachingtoolbox_2_description'
+  ),
+  MurrayCodebook.GEOCACHINGTOOLBOX_3: CodebookConfig(
+    title: 'telegraph_murray_geocachingtoolbox_3_title',
+    subtitle: 'telegraph_murray_geocachingtoolbox_3_description'
+  ),
+  MurrayCodebook.MYGEOTOOLS: CodebookConfig(
+    title: 'telegraph_murray_mygeotools_title',
+    subtitle: 'telegraph_murray_mygeotools_description'
+  ),
 };
 
 final Map<String, List<String>> CODEBOOK_ROYALNAVY = {
@@ -284,8 +286,8 @@ final Map<String, List<String>> CODEBOOK_GEOCACHINGTOOLBOX_3 = {
   'WEST': ['1', '2', '4', '5'],
 };
 
-List<List<String>> encodeMurray(String input, MurrayCodebook language) {
-  if (input == null) return [];
+Segments encodeMurray(String? input, MurrayCodebook language) {
+  if (input == null) return Segments(displays: []);
 
   Map<String, List<String>> CODEBOOK = Map<String, List<String>>();
   switch (language) {
@@ -321,15 +323,11 @@ List<List<String>> encodeMurray(String input, MurrayCodebook language) {
   for (int i = 0; i < inputs.length; i++) {
     if (CODEBOOK[inputs[i].toUpperCase()] != null) result.add(CODEBOOK[inputs[i].toUpperCase()]!);
   }
-  return result;
+  return Segments(displays: result);
 }
 
-Map<String, dynamic> decodeMurray(List<String> inputs, MurrayCodebook language) {
-  if (inputs == null || inputs.isEmpty)
-    return {
-      'displays': <List<String>>[],
-      'chars': [0]
-    };
+SegmentsChars decodeMurray(List<String>? inputs, MurrayCodebook language) {
+  if (inputs == null || inputs.isEmpty) return  SegmentsChars(displays: <List<String>>[], chars: []);
 
   var displays = <List<String>>[];
 
@@ -382,5 +380,5 @@ Map<String, dynamic> decodeMurray(List<String> inputs, MurrayCodebook language) 
     return char;
   }).toList();
 
-  return {'displays': displays, 'chars': text};
+  return SegmentsChars(displays: displays, chars: text);
 }

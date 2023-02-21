@@ -28,7 +28,7 @@ class PophamTelegraphState extends State<PophamTelegraph> {
   late TextEditingController _decodeInputController;
   String _currentDecodeInput = '';
 
-  List<List<String>> _currentDisplays = [];
+  Segments _currentDisplays = Segments(displays: []);
   var _currentMode = GCWSwitchPosition.right;
 
   @override
@@ -76,12 +76,12 @@ class PophamTelegraphState extends State<PophamTelegraph> {
     ]);
   }
 
-  _buildVisualDecryption() {
+  Widget _buildVisualDecryption() {
     Map<String, bool> currentDisplay;
 
     var displays = _currentDisplays;
-    if (displays != null && displays.isNotEmpty)
-      currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [], key: (e) => e.toString(), value: (e) => true);
+    if (displays.displays != null && displays.displays.isNotEmpty)
+      currentDisplay = Map<String, bool>.fromIterable(displays.displays.last ?? [], key: (e) => e.toString(), value: (e) => true);
     else
       currentDisplay = {};
 
@@ -95,9 +95,9 @@ class PophamTelegraphState extends State<PophamTelegraph> {
 
         newSegments.sort();
 
-        if (_currentDisplays.isEmpty) _currentDisplays.add([]);
+        if (_currentDisplays.displays.isEmpty) _currentDisplays.displays.add([]);
 
-        _currentDisplays[_currentDisplays.length - 1] = newSegments;
+        _currentDisplays.displays[_currentDisplays.displays.length - 1] = newSegments;
       });
     };
 
@@ -123,7 +123,7 @@ class PophamTelegraphState extends State<PophamTelegraph> {
             icon: Icons.space_bar,
             onPressed: () {
               setState(() {
-                _currentDisplays.add([]);
+                _currentDisplays.displays.add([]);
               });
             },
           ),
@@ -131,7 +131,7 @@ class PophamTelegraphState extends State<PophamTelegraph> {
             icon: Icons.backspace,
             onPressed: () {
               setState(() {
-                if (_currentDisplays.isNotEmpty) _currentDisplays.removeLast();
+                if (_currentDisplays.displays.isNotEmpty) _currentDisplays.displays.removeLast();
               });
             },
           ),
@@ -139,7 +139,7 @@ class PophamTelegraphState extends State<PophamTelegraph> {
             icon: Icons.clear,
             onPressed: () {
               setState(() {
-                _currentDisplays = [];
+                _currentDisplays = Segments(displays: []);
               });
             },
           )
@@ -148,7 +148,7 @@ class PophamTelegraphState extends State<PophamTelegraph> {
     );
   }
 
-  Widget _buildDigitalOutput(List<List<String>> segments) {
+  Widget _buildDigitalOutput(Segments segments) {
     return SegmentDisplayOutput(
         segmentFunction: (displayedSegments, readOnly) {
           return _PophamTelegraphSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
@@ -160,7 +160,7 @@ class PophamTelegraphState extends State<PophamTelegraph> {
   Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       //encode
-      List<List<String>> segments = encodePopham(_currentEncodeInput);
+      var segments = encodePopham(_currentEncodeInput);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments),
@@ -168,17 +168,17 @@ class PophamTelegraphState extends State<PophamTelegraph> {
       );
     } else {
       //decode
-      var segments;
+      SegmentsText segments;
       // decode visual mode
-      var output = _currentDisplays.where((character) => character != null).map((character) {
+      var output = _currentDisplays.displays.where((character) => character != null).map((character) {
         return character.join();
       }).toList();
       segments = decodeVisualPopham(output);
 
       return Column(
         children: <Widget>[
-          GCWOutput(title: i18n(context, 'telegraph_text'), child: segments['chars']),
-          _buildDigitalOutput(segments.displays),
+          GCWOutput(title: i18n(context, 'telegraph_text'), child: segments.text),
+          _buildDigitalOutput(segments),
         ],
       );
     }

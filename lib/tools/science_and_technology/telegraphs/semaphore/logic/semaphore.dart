@@ -1,3 +1,4 @@
+import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
@@ -93,8 +94,8 @@ final LETTER = {
   'Z'
 };
 
-List<List<String>> encodeSemaphore(String input) {
-  if (input == null) return [];
+Segments encodeSemaphore(String? input) {
+  if (input == null) return Segments(displays: <List<String>>[]);
 
   List<String> inputs = input.toUpperCase().split('');
   List<List<String>> result = [];
@@ -113,11 +114,11 @@ List<List<String>> encodeSemaphore(String input) {
     }
     if (CODEBOOK_SEMAPHORE[inputs[i]] != null) result.add(CODEBOOK_SEMAPHORE[inputs[i]]!);
   }
-  return result;
+  return Segments(displays: result);
 }
 
-Map<String, dynamic> decodeSemaphore(List<String>? inputs) {
-  if (inputs == null || inputs.isEmpty) return {'displays': <List<String>>[], 'chars': []};
+SegmentsChars decodeSemaphore(List<String>? inputs) {
+  if (inputs == null || inputs.isEmpty) return SegmentsChars(displays: <List<String>>[], chars: []);
 
   var displays = <List<String>>[];
   var segment = <String>[];
@@ -180,7 +181,7 @@ Map<String, dynamic> decodeSemaphore(List<String>? inputs) {
     return char;
   }).toList();
 
-  return {'displays': displays, 'chars': text};
+  return SegmentsChars(displays: displays, chars: text);
 }
 
 List<String> _stringToSegment(String input) {

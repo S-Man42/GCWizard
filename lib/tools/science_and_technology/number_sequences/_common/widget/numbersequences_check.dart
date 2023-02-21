@@ -41,7 +41,7 @@ class NumberSequenceCheckNumberState extends State<NumberSequenceCheckNumber> {
           ],
           onChanged: (text) {
             setState(() {
-              if (text == null || text == '')
+              if (text == null || text.isEmpty)
                 _currentInputN = '0';
               else
                 _currentInputN = text;
@@ -53,10 +53,10 @@ class NumberSequenceCheckNumberState extends State<NumberSequenceCheckNumber> {
     );
   }
 
-  _buildOutput() {
+  Widget _buildOutput() {
     var checked = checkNumber(widget.mode, BigInt.parse(_currentInputN), widget.maxIndex);
 
-    var output;
+    String output;
     if (checked >= 0) {
       output = i18n(context, 'numbersequence_check_isinsequence', parameters: [checked]);
     } else {

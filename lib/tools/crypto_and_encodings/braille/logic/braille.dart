@@ -1,4 +1,5 @@
 import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
+import 'package:gc_wizard/tools/science_and_technology/teletypewriter/_common/logic/teletypewriter.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 // https://www.pharmabraille.com/wp-content/uploads/2014/11/World-Braille-Usage-Third-Edition-1.pdf
@@ -36,12 +37,12 @@ import 'package:gc_wizard/utils/constants.dart';
 
 enum BrailleLanguage { BASIC, SIMPLE, STD, DEU, ENG, FRA, EUR }
 
-Map<BrailleLanguage, Map<String, String>> BRAILLE_LANGUAGES = {
-  BrailleLanguage.SIMPLE: {'title': 'braille_language_simple', 'subtitle': 'braille_language_simple_description'},
-  BrailleLanguage.DEU: {'title': 'common_language_german', 'subtitle': 'braille_language_german_description'},
-  BrailleLanguage.ENG: {'title': 'common_language_english', 'subtitle': 'braille_language_english_description'},
-  BrailleLanguage.FRA: {'title': 'common_language_french', 'subtitle': 'braille_language_french_description'},
-  BrailleLanguage.EUR: {'title': 'braille_language_euro'},
+Map<BrailleLanguage, CodebookConfig> BRAILLE_LANGUAGES = {
+  BrailleLanguage.SIMPLE: CodebookConfig(title: 'braille_language_simple', subtitle: 'braille_language_simple_description'),
+  BrailleLanguage.DEU: CodebookConfig(title: 'common_language_german', subtitle: 'braille_language_german_description'),
+  BrailleLanguage.ENG: CodebookConfig(title: 'common_language_english', subtitle: 'braille_language_english_description'),
+  BrailleLanguage.FRA: CodebookConfig(title: 'common_language_french', subtitle: 'braille_language_french_description'),
+  BrailleLanguage.EUR: CodebookConfig(title: 'braille_language_euro', subtitle: ''),
 };
 
 final Map<BrailleLanguage, Map<String, List<String>>> _CharsToSegmentsLetters = {
@@ -1366,7 +1367,7 @@ List<List<String>> encodeBraille(String input, BrailleLanguage language) {
   }
 }
 
-SegmentChars _decodeBrailleBASIC(List<String> inputs, bool letters) {
+SegmentsIntChars _decodeBrailleBASIC(List<String> inputs, bool letters) {
   var displays = <List<String>>[];
 
   var antoineMap = Map<String, List<String>>.from(_charsToSegmentsLettersAntoine);
@@ -1406,7 +1407,7 @@ SegmentChars _decodeBrailleBASIC(List<String> inputs, bool letters) {
     return char;
   }).toList();
 
-  return SegmentChars(displays: displays, chars: text);
+  return SegmentsIntChars(displays: displays, chars: text);
 }
 
 Map<String, dynamic> _decodeBrailleSIMPLE(List<String> inputs) {

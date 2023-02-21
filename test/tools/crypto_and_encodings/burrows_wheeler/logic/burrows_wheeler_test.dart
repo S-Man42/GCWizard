@@ -62,7 +62,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       BWTOutput _actual;
-      if (elem['index'] == '' || elem['index'] == null)
+      if (elem['index'].isEmpty || elem['index'] == null)
         _actual = BWTOutput('burrowswheeler_error_no_index', '');
       else if (elem['input'].contains(elem['index']))
         _actual = BWTOutput('burrowswheeler_error_char_index', '');

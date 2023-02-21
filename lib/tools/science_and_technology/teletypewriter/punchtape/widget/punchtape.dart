@@ -10,6 +10,7 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/_common/logic/teletypewriter.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/punchtape/logic/punchtape.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/punchtape_segment_display/widget/punchtape_segment_display.dart';
@@ -229,7 +230,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
     );
   }
 
-  Widget _buildDigitalOutput(List<List<String>> segments) {
+  Widget _buildDigitalOutput(Segments segments) {
     return PunchtapeSegmentDisplayOutput(
         segmentFunction: (displayedSegments, readOnly, codeBook) {
           return PUNCHTAPESegmentDisplay(
@@ -254,7 +255,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
   Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       //encode
-      List<List<String>> segments = encodePunchtape(
+      var segments = encodePunchtape(
           _currentEncodeInput,
           _currentCode,
           (_currentCode == TeletypewriterCodebook.BAUDOT_54123 || _currentCode == TeletypewriterCodebook.CCITT_IA5)
@@ -262,7 +263,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
               : (_currentOrderMode == GCWSwitchPosition.left));
       List<String> binaryList = [];
       List<String?> decimalList = [];
-      segments.forEach((segment) {
+      segments.displays.forEach((segment) {
         binaryList.add(segments2binary(
             segment,
             _currentCode,
@@ -301,7 +302,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
       );
     } else {
       //decode
-      var segments;
+      SegmentsText segments;
       if (_currentDecodeMode == GCWSwitchPosition.left) {
         // decode text mode
         if (_currentDecodeTextMode == GCWSwitchPosition.left) {
@@ -335,8 +336,8 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
       }
       return Column(
         children: <Widget>[
-          _buildDigitalOutput(segments['displays']),
-          GCWDefaultOutput(child: segments['text']),
+          _buildDigitalOutput(segments),
+          GCWDefaultOutput(child: segments.text),
         ],
       );
     }

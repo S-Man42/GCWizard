@@ -76,12 +76,12 @@ class PasleyTelegraphState extends State<PasleyTelegraph> {
     ]);
   }
 
-  _buildVisualDecryption() {
+  Widget _buildVisualDecryption() {
     Map<String, bool> currentDisplay;
 
     var displays = _currentDisplays;
     if (displays != null && displays.isNotEmpty)
-      currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [], key: (e) => e, value: (e) => true);
+      currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [], key: (e) => e.toString(), value: (e) => true);
     else
       currentDisplay = {};
 
@@ -148,7 +148,7 @@ class PasleyTelegraphState extends State<PasleyTelegraph> {
     );
   }
 
-  Widget _buildDigitalOutput(List<List<String>> segments) {
+  Widget _buildDigitalOutput(Segments segments) {
     return SegmentDisplayOutput(
         segmentFunction: (displayedSegments, readOnly) {
           return _PasleyTelegraphSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
@@ -160,7 +160,7 @@ class PasleyTelegraphState extends State<PasleyTelegraph> {
   Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       //encode
-      List<List<String>> segments = encodePasley(_currentEncodeInput);
+      Segments segments = encodePasley(_currentEncodeInput);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments),
@@ -168,7 +168,7 @@ class PasleyTelegraphState extends State<PasleyTelegraph> {
       );
     } else {
       //decode
-      var segments;
+      SegmentsText segments;
       // decode visual mode
       var output = _currentDisplays.where((character) => character != null).map((character) {
         return character.join();
@@ -178,7 +178,7 @@ class PasleyTelegraphState extends State<PasleyTelegraph> {
       return Column(
         children: <Widget>[
           GCWOutput(title: i18n(context, 'telegraph_text'), child: segments.text),
-          _buildDigitalOutput(segments.displays),
+          _buildDigitalOutput(segments),
         ],
       );
     }

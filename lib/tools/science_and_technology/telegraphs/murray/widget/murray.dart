@@ -25,7 +25,7 @@ class MurrayTelegraphState extends State<MurrayTelegraph> {
   String _currentEncodeInput = '';
   late TextEditingController _encodeController;
 
-  List<List<String>> _currentDisplays = [];
+  Segments _currentDisplays = Segments(displays: []);
   var _currentMode = GCWSwitchPosition.right;
 
   var _currentLanguage = MurrayCodebook.ROYALNAVY;
@@ -56,8 +56,8 @@ class MurrayTelegraphState extends State<MurrayTelegraph> {
         items: MURRAY_CODEBOOK.entries.map((mode) {
           return GCWDropDownMenuItem(
               value: mode.key,
-              child: i18n(context, mode.value['title']!),
-              subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']!) : null);
+              child: i18n(context, mode.value.title),
+              subtitle: mode.value.subtitle != null ? i18n(context, mode.value.subtitle) : null);
         }).toList(),
       ),
       GCWTwoOptionsSwitch(
@@ -86,12 +86,12 @@ class MurrayTelegraphState extends State<MurrayTelegraph> {
     ]);
   }
 
-  _buildVisualDecryption() {
+  Widget _buildVisualDecryption() {
     Map<String, bool> currentDisplay;
 
     var displays = _currentDisplays;
-    if (displays != null && displays.isNotEmpty)
-      currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [], key: (e) => e.toString(), value: (e) => true);
+    if (displays.displays.isNotEmpty)
+      currentDisplay = Map<String, bool>.fromIterable(displays.displays.last ?? [], key: (e) => e.toString(), value: (e) => true);
     else
       currentDisplay = {};
 
@@ -105,9 +105,9 @@ class MurrayTelegraphState extends State<MurrayTelegraph> {
 
         newSegments.sort();
 
-        if (_currentDisplays.isEmpty) _currentDisplays.add([]);
+        if (_currentDisplays.displays.isEmpty) _currentDisplays.displays.add([]);
 
-        _currentDisplays[_currentDisplays.length - 1] = newSegments;
+        _currentDisplays.displays[_currentDisplays.displays.length - 1] = newSegments;
       });
     };
 
@@ -133,7 +133,7 @@ class MurrayTelegraphState extends State<MurrayTelegraph> {
             icon: Icons.space_bar,
             onPressed: () {
               setState(() {
-                _currentDisplays.add([]);
+                _currentDisplays.displays.add([]);
               });
             },
           ),
@@ -141,7 +141,7 @@ class MurrayTelegraphState extends State<MurrayTelegraph> {
             icon: Icons.backspace,
             onPressed: () {
               setState(() {
-                if (_currentDisplays.isNotEmpty) _currentDisplays.removeLast();
+                if (_currentDisplays.displays.isNotEmpty) _currentDisplays.displays.removeLast();
               });
             },
           ),
@@ -149,7 +149,7 @@ class MurrayTelegraphState extends State<MurrayTelegraph> {
             icon: Icons.clear,
             onPressed: () {
               setState(() {
-                _currentDisplays = [];
+                _currentDisplays = Segments(displays: []);
               });
             },
           )
@@ -158,7 +158,7 @@ class MurrayTelegraphState extends State<MurrayTelegraph> {
     );
   }
 
-  Widget _buildDigitalOutput(List<List<String>> segments) {
+  Widget _buildDigitalOutput(Segments segments) {
     return SegmentDisplayOutput(
         segmentFunction: (displayedSegments, readOnly) {
           return _MurraySegmentDisplay(segments: displayedSegments, readOnly: readOnly);
@@ -170,7 +170,7 @@ class MurrayTelegraphState extends State<MurrayTelegraph> {
   Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       //encode
-      List<List<String>> segments = encodeMurray(_currentEncodeInput, _currentLanguage);
+      var segments = encodeMurray(_currentEncodeInput, _currentLanguage);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments),
@@ -178,14 +178,14 @@ class MurrayTelegraphState extends State<MurrayTelegraph> {
       );
     } else {
       //decode
-      var output = _currentDisplays.where((character) => character != null).map((character) {
+      var output = _currentDisplays.displays.where((character) => character != null).map((character) {
         return character.join();
       }).toList();
       var segments = decodeMurray(output, _currentLanguage);
       return Column(
         children: <Widget>[
-          _buildDigitalOutput(segments['displays']),
-          GCWDefaultOutput(child: segments['chars'].join()),
+          _buildDigitalOutput(segments),
+          GCWDefaultOutput(child: segments.chars.join()),
         ],
       );
     }

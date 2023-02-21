@@ -173,9 +173,9 @@ class PrussiaTelegraphState extends State<PrussiaTelegraph> {
     );
   }
 
-  List<List<String>> _buildShutters(List<List<String>> segments) {
+  Segments _buildShutters(Segments segments) {
     List<List<String>> result = [];
-    segments.forEach((element) {
+    segments.displays.forEach((element) {
       if (element != null) if (int.tryParse(element.join('')) != null) {
         List<String> resultElement = [];
         switch (element[0]) {
@@ -272,12 +272,12 @@ class PrussiaTelegraphState extends State<PrussiaTelegraph> {
       } else
         result.add(element);
     });
-    return result;
+    return Segments(displays: result);
   }
 
-  String _buildCodelets(List<List<String>> segments) {
+  String _buildCodelets(Segments segments) {
     List<String> result = [];
-    segments.forEach((codelet) {
+    segments.displays.forEach((codelet) {
       if (codelet != null) result.add(codelet.join(''));
     });
     return result.join(' ');
@@ -287,7 +287,7 @@ class PrussiaTelegraphState extends State<PrussiaTelegraph> {
     return text;
   }
 
-  Widget _buildDigitalOutput(List<List<String>> segments) {
+  Widget _buildDigitalOutput(Segments segments) {
     segments = _buildShutters(segments);
     return SegmentDisplayOutput(
         segmentFunction: (displayedSegments, readOnly) {
@@ -314,7 +314,7 @@ class PrussiaTelegraphState extends State<PrussiaTelegraph> {
       );
     } else {
       //decode
-      var segments;
+      SegmentsText segments;
       if (_currentDecodeMode == GCWSwitchPosition.left) {
         // text
         segments = decodeTextPrussianTelegraph(_currentDecodeInput.toUpperCase());
@@ -328,7 +328,7 @@ class PrussiaTelegraphState extends State<PrussiaTelegraph> {
       return Column(
         children: <Widget>[
           GCWOutput(title: i18n(context, 'telegraph_text'), child: _segmentsToText(segments.text)),
-          _buildDigitalOutput(segments.displays),
+          _buildDigitalOutput(segments),
         ],
       );
     }

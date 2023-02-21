@@ -204,8 +204,8 @@ String? segments2decenary(List<String> segments, bool order54321, Teletypewriter
   return convertBase(result, 2, 10);
 }
 
-List<List<String>> encodePunchtape(String input, TeletypewriterCodebook language, bool order12345) {
-  if (input == null) return [];
+Segments encodePunchtape(String? input, TeletypewriterCodebook language, bool order12345) {
+  if (input == null) return Segments(displays: []);
 
   List<List<String>> result = [];
   List<String> code = [];
@@ -213,12 +213,11 @@ List<List<String>> encodePunchtape(String input, TeletypewriterCodebook language
   code.forEach((element) {
     if (int.tryParse(element) != null) result.add(decenary2segments(element, order12345, language));
   });
-  return result;
+  return Segments(displays: result);
 }
 
-Segments decodeTextPunchtape(String? inputs, TeletypewriterCodebook language, bool order12345) {
-  if (inputs == null || inputs.isEmpty)
-    return Segments(displays: <List<String>>[], text: '');
+SegmentsText decodeTextPunchtape(String? inputs, TeletypewriterCodebook language, bool order12345) {
+  if (inputs == null || inputs.isEmpty) return SegmentsText(displays: [], text: '');
 
   var displays = <List<String>>[];
   List<String> text = [];
@@ -233,11 +232,11 @@ Segments decodeTextPunchtape(String? inputs, TeletypewriterCodebook language, bo
 
     displays.add(binary2segments(element, language));
   });
-  return Segments(displays: displays, text: text.join(''));
+  return SegmentsText(displays: displays, text: text.join(''));
 }
 
-Segments decodeVisualPunchtape(List<String?> inputs, TeletypewriterCodebook language, bool order12345) {
-  if (inputs.isEmpty) return Segments(displays: <List<String>>[], text: '');
+SegmentsText decodeVisualPunchtape(List<String?> inputs, TeletypewriterCodebook language, bool order12345) {
+  if (inputs.isEmpty) return SegmentsText(displays: [], text: '');
 
   var displays = <List<String>>[];
 
@@ -258,5 +257,5 @@ Segments decodeVisualPunchtape(List<String?> inputs, TeletypewriterCodebook lang
   });
 
   // convert list of decimal to character using String decodeCCITT(List<int> values, TeletypewriterCodebook language)
-  return Segments(displays: displays, text: decodeTeletypewriter(intList, language));
+  return SegmentsText(displays: displays, text: decodeTeletypewriter(intList, language));
 }

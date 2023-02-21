@@ -119,8 +119,8 @@ final List<String> DIGIT = [
   '0',
 ];
 
-List<List<String>> encodePasley(String input) {
-  if (input == null || input == '') return [];
+Segments encodePasley(String? input) {
+  if (input == null || input.isEmpty) return Segments(displays: []);
 
   bool letter = true;
 
@@ -143,11 +143,11 @@ List<List<String>> encodePasley(String input) {
       result.add(PASLEY[inputs[i]]!);
     }
   }
-  return result;
+  return Segments(displays: result);
 }
 
-Segments decodeVisualPasley(List<String> inputs) {
-  if (inputs.isEmpty) return Segments(displays: <List<String>>[], text: '');
+SegmentsText decodeVisualPasley(List<String> inputs) {
+  if (inputs.isEmpty) return SegmentsText(displays: [], text: '');
 
   var displays = <List<String>>[];
   var segment = <String>[];
@@ -183,7 +183,7 @@ Segments decodeVisualPasley(List<String> inputs) {
 
     return char;
   }).toList();
-  return Segments(displays: displays, text: text.join(''));
+  return SegmentsText(displays: displays, text: text.join(''));
 }
 
 List<String> _stringToSegment(String input) {

@@ -833,7 +833,7 @@ void _dbgOutput(String command, String label) {
 }
 
 String _WhitespaceOutputString(String input) {
-  if ((input == null) || (input == '')) return '';
+  if ((input == null) || (input.isEmpty)) return '';
   var sb = new StringBuffer();
   var i = 0;
   const push_num = "  ";

@@ -348,7 +348,7 @@ int checkNumber(NumberSequencesMode sequence, BigInt? checkNumber, int maxIndex)
 }
 
 PositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode sequence, String? check, int maxIndex) {
-  if (check == null || check == '') {
+  if (check == null || check.isEmpty) {
     return PositionOfSequenceOutput('-1', 0, 0);
   }
 

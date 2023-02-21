@@ -69,7 +69,7 @@ class SemaphoreTelegraphState extends State<SemaphoreTelegraph> {
     ]);
   }
 
-  _buildVisualDecryption() {
+  Widget _buildVisualDecryption() {
     Map<String, bool> currentDisplay;
 
     var displays = _currentDisplays;
@@ -141,7 +141,7 @@ class SemaphoreTelegraphState extends State<SemaphoreTelegraph> {
     );
   }
 
-  Widget _buildDigitalOutput(List<List<String>> segments) {
+  Widget _buildDigitalOutput(Segments segments) {
     return SegmentDisplayOutput(
         segmentFunction: (displayedSegments, readOnly) {
           return _SemaphoreSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
@@ -153,7 +153,7 @@ class SemaphoreTelegraphState extends State<SemaphoreTelegraph> {
   Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       //encode
-      List<List<String>> segments = encodeSemaphore(_currentEncodeInput);
+      var segments = encodeSemaphore(_currentEncodeInput);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments),
@@ -167,8 +167,8 @@ class SemaphoreTelegraphState extends State<SemaphoreTelegraph> {
       var segments = decodeSemaphore(output);
       return Column(
         children: <Widget>[
-          _buildDigitalOutput(segments['displays']),
-          GCWDefaultOutput(child: _normalize(segments['chars'].join(''))),
+          _buildDigitalOutput(segments),
+          GCWDefaultOutput(child: _normalize(segments.chars.join(''))),
         ],
       );
     }

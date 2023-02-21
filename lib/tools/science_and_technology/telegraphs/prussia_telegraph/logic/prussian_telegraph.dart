@@ -2345,23 +2345,24 @@ final CODEBOOK_PRUSSIA = {
   '999': '',
 };
 
-List<List<String>> encodePrussianTelegraph(String input) {
-  if (input == null || input == '') return <List<String>>[];
+Segments encodePrussianTelegraph(String? input) {
+  if (input == null || input.isEmpty) return Segments(displays: []);
 
-  return input.split('').where((letter) => switchMapKeyValue(CODEBOOK_PRUSSIA)[letter] != null).map((letter) {
+  var result = input.split('').where((letter) => switchMapKeyValue(CODEBOOK_PRUSSIA)[letter] != null).map((letter) {
     return switchMapKeyValue(CODEBOOK_PRUSSIA)[letter]!.split('');
   }).toList();
+  return Segments(displays: result);
 }
 
-Segments decodeVisualPrussianTelegraph(List<String> inputs) {
-  if (inputs.isEmpty) Segments(displays: <List<String>>[], text: '');
+SegmentsText decodeVisualPrussianTelegraph(List<String>? inputs) {
+  if (inputs == null || inputs.isEmpty) SegmentsText(displays: [], text: '');
 
   var displays = <List<String>>[];
   var segment = <String>[];
   String text = '';
   String code = '';
 
-  inputs.forEach((element) {
+  inputs!.forEach((element) {
     segment = _stringToSegment(element);
     displays.add(segment);
     code = segmentToCode(segment);
@@ -2370,11 +2371,11 @@ Segments decodeVisualPrussianTelegraph(List<String> inputs) {
     else
       text = text + UNKNOWN_ELEMENT;
   });
-  return Segments(displays: displays, text: text);
+  return SegmentsText(displays: displays, text: text);
 }
 
-Segments decodeTextPrussianTelegraph(String inputs) {
-  if (inputs.isEmpty) Segments(displays: <List<String>>[], text: '');
+SegmentsText decodeTextPrussianTelegraph(String inputs) {
+  if (inputs.isEmpty) SegmentsText(displays: [], text: '');
 
   var displays = <List<String>>[];
   String text = '';
@@ -2409,7 +2410,7 @@ Segments decodeTextPrussianTelegraph(String inputs) {
     }
     displays.add(_buildShutters(element));
   });
-  return {'displays': displays, 'text': text};
+  return SegmentsText(displays: displays, text: text);
 }
 
 String _replaceNumber(String plainText, code) {

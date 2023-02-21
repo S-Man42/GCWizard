@@ -29,7 +29,7 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
   late TextEditingController _decodeInputController;
   String _currentDecodeInput = '';
 
-  List<List<String>> _currentDisplays = [];
+  Segments _currentDisplays = Segments(displays: []);
   var _currentMode = GCWSwitchPosition.right;
   var _currentDecodeMode = GCWSwitchPosition.right; // text - visual
 
@@ -63,8 +63,8 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
         items: CHAPPE_CODEBOOK.entries.map((mode) {
           return GCWDropDownMenuItem(
               value: mode.key,
-              child: i18n(context, mode.value['title']!),
-              subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']!) : null);
+              child: i18n(context, mode.value.title),
+              subtitle: mode.value.subtitle != null ? i18n(context, mode.value.subtitle) : null);
         }).toList(),
       ),
       GCWTwoOptionsSwitch(
@@ -118,7 +118,7 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
     ]);
   }
 
-  _buildVisualDecryption() {
+  Widget _buildVisualDecryption() {
     Map<String, bool> currentDisplay;
 
     var displays = _currentDisplays;

@@ -43,20 +43,20 @@ final Map<String, List<String>> POPHAM = {
   'Z': ['4', 'f'],
 };
 
-List<List<String>> encodePopham(String input) {
-  if (input == null || input == '') return [];
+Segments encodePopham(String? input) {
+  if (input == null || input.isEmpty) Segments(displays: []);
 
-  List<String> inputs = input.toUpperCase().split('');
+  List<String> inputs = input!.toUpperCase().split('');
   List<List<String>> result = [];
 
   for (int i = 0; i < inputs.length; i++) {
     result.add(POPHAM[inputs[i]]!);
   }
-  return result;
+  return Segments(displays: result);
 }
 
-Segments decodeVisualPopham(List<String> inputs) {
-  if (inputs.isEmpty) return Segments(displays: <List<String>>[], text: '');
+SegmentsText decodeVisualPopham(List<String> inputs) {
+  if (inputs.isEmpty) return SegmentsText(displays: [], text: '');
 
   var displays = <List<String>>[];
   var segment = <String>[];
@@ -81,7 +81,7 @@ Segments decodeVisualPopham(List<String> inputs) {
 
     return char;
   }).toList();
-  return Segments(displays: displays, text: text.join(''));
+  return SegmentsText(displays: displays, text: text.join(''));
 }
 
 List<String> _stringToSegment(String input) {

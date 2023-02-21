@@ -94,7 +94,7 @@ class _NotesSegmentDisplay extends NSegmentDisplay {
               var counter = 0;
               paint.color = Colors.grey;
               lines.forEach((key) {
-                if (key == '' || segmentActive(currentSegments, key))
+                if (key.isEmpty || segmentActive(currentSegments, key))
                   pathL.addPath(
                       _createLine(
                           key.isNotEmpty, size, Offset(0, counter * LINE_DISTANCE + LINE_OFFSET_Y), LINE_OFFSET_X, readOnly),

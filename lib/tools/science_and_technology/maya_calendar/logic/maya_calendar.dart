@@ -189,7 +189,7 @@ Map<String, Object?> decodeMayaCalendar(List<String?>? inputs) {
 }
 
 String convertDecToMayaCalendar(String? input) {
-  if (input == null || input == '') return '';
+  if (input == null || input.isEmpty) return '';
 
   int numberDec = int.parse(input);
   if (numberDec == 0) return '0';
@@ -253,7 +253,7 @@ DateTime MayaDayCountToGregorianCalendar(int mayaDayCount) {
 
 int MayaDayCountToJulianDate(int mayaDayCount) {
   var correlation = Prefs.getString(PREFERENCE_MAYACALENDAR_CORRELATION);
-  if (correlation == '')
+  if (correlation.isEmpty)
     return (mayaDayCount + _CORRELATION_NUMBER[THOMPSON]!);
   else
     return (mayaDayCount + (_CORRELATION_NUMBER[correlation] ?? 0));
@@ -261,7 +261,7 @@ int MayaDayCountToJulianDate(int mayaDayCount) {
 
 int JulianDateToMayaDayCount(double jd) {
   var correlation = Prefs.getString(PREFERENCE_MAYACALENDAR_CORRELATION);
-  if (correlation == '')
+  if (correlation.isEmpty)
     jd = (jd - _CORRELATION_NUMBER[THOMPSON]!);
   else
     jd = (jd - (_CORRELATION_NUMBER[correlation] ?? 0));

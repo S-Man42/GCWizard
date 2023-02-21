@@ -3,7 +3,7 @@ import 'dart:math';
 final int COMBINATION_MAX_LENGTH = 12;
 
 List<String> generateCombinations(String input, {bool avoidDuplicates = false}) {
-  if (input == null || input == '') return [];
+  if (input == null || input.isEmpty) return [];
 
   var out = <String>[];
 

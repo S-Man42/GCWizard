@@ -1791,7 +1791,7 @@ String encodeKeyboard(String input, KeyboardType keyboardFrom, KeyboardType keyb
   Map mapSourceToNormal;
   Map mapNormalToTarget;
 
-  if (input == null || input == '') return '';
+  if (input == null || input.isEmpty) return '';
 
   mapSourceToNormal = buildConvertingMap(keyboardFrom, ConvertDirection.toNormal);
   mapNormalToTarget = buildConvertingMap(keyboardTo, ConvertDirection.fromNormal);

@@ -26,9 +26,9 @@ class EdelcrantzTelegraph extends StatefulWidget {
 
 class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
   var _currentEncodeInput = '';
-  var _encodeInputController;
+  late TextEditingController _encodeInputController;
 
-  var _decodeInputController;
+  late TextEditingController _decodeInputController;
   var _currentDecodeInput = '';
 
   var _currentLanguage = EdelcrantzCodebook.YEAR_1795;
@@ -67,8 +67,8 @@ class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
         items: MURRAY_CODEBOOK.entries.map((mode) {
           return GCWDropDownMenuItem(
               value: mode.key,
-              child: i18n(context, mode.value['title']!),
-              subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']!) : null);
+              child: i18n(context, mode.value.title),
+              subtitle: mode.value.subtitle != null ? i18n(context, mode.value.subtitle) : null);
         }).toList(),
       ),
       GCWTwoOptionsSwitch(
@@ -201,9 +201,9 @@ class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
     );
   }
 
-  List<List<String>> _buildShutters(List<List<String>> segments) {
+  Segments _buildShutters(Segments segments) {
     List<List<String>> result = [];
-    segments.forEach((element) {
+    segments.displays.forEach((element) {
       if (element != null) if (int.tryParse(element.join('')) != null) {
         List<String> resultElement = [];
         switch (element[0]) {
@@ -282,12 +282,12 @@ class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
       } else
         result.add(element);
     });
-    return result;
+    return Segments(displays: result);
   }
 
-  String _buildCodelets(List<List<String>> segments) {
+  String _buildCodelets(Segments segments) {
     List<String> result = [];
-    segments.forEach((codelet) {
+    segments.displays.forEach((codelet) {
       if (codelet != null) result.add(codelet.join(''));
     });
     return result.join(' ');
@@ -324,7 +324,7 @@ class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
         .replaceAll('telegraph_edelcrantz_a_museum_latter', i18n(context, 'telegraph_edelcrantz_a_museum_latter'));
   }
 
-  Widget _buildDigitalOutput(List<List<String>> segments) {
+  Widget _buildDigitalOutput(Segments segments) {
     segments = _buildShutters(segments);
     return SegmentDisplayOutput(
         segmentFunction: (displayedSegments, readOnly) {
@@ -337,7 +337,7 @@ class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
   Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       //encode
-      List<List<String>> segments = encodeEdelcrantzTelegraph(
+      var segments = encodeEdelcrantzTelegraph(
           _currentEncodeInput.toLowerCase(), _currentLanguage, (_currentTime == GCWSwitchPosition.left));
       return Column(
         children: <Widget>[
@@ -352,7 +352,7 @@ class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
       );
     } else {
       //decode
-      var segments;
+      SegmentsText segments;
       if (_currentDecodeMode == GCWSwitchPosition.left) {
         // text
         segments = decodeTextEdelcrantzTelegraph(
@@ -366,8 +366,8 @@ class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
       }
       return Column(
         children: <Widget>[
-          GCWOutput(title: i18n(context, 'telegraph_text'), child: _segmentsToText(segments['text'])),
-          _buildDigitalOutput(segments['displays']),
+          GCWOutput(title: i18n(context, 'telegraph_text'), child: _segmentsToText(segments.text)),
+          _buildDigitalOutput(segments),
         ],
       );
     }
