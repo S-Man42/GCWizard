@@ -45,7 +45,7 @@ class BrailleState extends State<Braille> {
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
-      GCWDropDown(
+      GCWDropDown<BrailleLanguage>(
         value: _currentLanguage,
         onChanged: (value) {
           setState(() {
@@ -150,7 +150,7 @@ class BrailleState extends State<Braille> {
             icon: Icons.clear,
             onPressed: () {
               setState(() {
-                _currentDisplays = Segments.Empty()
+                _currentDisplays = Segments.Empty();
               });
             },
           )
@@ -176,21 +176,19 @@ class BrailleState extends State<Braille> {
   Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       //encode
-      List<List<String>> segments =
-          encodeBraille(_currentEncodeInput, _currentLanguage);
+      var segments = encodeBraille(_currentEncodeInput, _currentLanguage);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments),
           GCWOutput(
               title: i18n(context, 'braille_output_numbers'),
-              child: segments.map((segment) => segment.join()).join(' '))
+              child: segments.buildOutput()
+          )
         ],
       );
     } else {
       //decode
-      var output = _currentDisplays.map((character) {
-        if (character != null) return character.join();
-      }).toList();
+      var output = _currentDisplays.buildOutput();
       var segments = decodeBraille(output, _currentLanguage, false);
       var segmentsBasicDigits =
           decodeBraille(output, BrailleLanguage.BASIC, false);
@@ -198,28 +196,28 @@ class BrailleState extends State<Braille> {
           decodeBraille(output, BrailleLanguage.BASIC, true);
       return Column(
         children: <Widget>[
-          _buildDigitalOutput(segments['displays']),
+          _buildDigitalOutput(segments),
           if (_currentLanguage == BrailleLanguage.SIMPLE)
             Column(
               children: [
                 GCWDefaultOutput(
-                    child: _normalizeChars(segments['chars'].join())),
-                if (segmentsBasicLetters['chars'].join().toUpperCase() !=
-                    segments['chars'].join())
+                    child: _normalizeChars(segments.chars.join())),
+                if (segmentsBasicLetters.chars.join().toUpperCase() !=
+                    segments.chars.join())
                   GCWOutput(
                     title: i18n(context, 'brailledotnumbers_basic_letters'),
-                    child: segmentsBasicLetters['chars'].join().toUpperCase(),
+                    child: segmentsBasicLetters.chars.join().toUpperCase(),
                   ),
-                if (segmentsBasicDigits['chars'].join().toUpperCase() !=
-                    segments['chars'].join())
+                if (segmentsBasicDigits.chars.join().toUpperCase() !=
+                    segments.chars.join())
                   GCWOutput(
                     title: i18n(context, 'brailledotnumbers_basic_digits'),
-                    child: segmentsBasicDigits['chars'].join().toUpperCase(),
+                    child: segmentsBasicDigits.chars.join().toUpperCase(),
                   ),
               ],
             )
           else
-            GCWDefaultOutput(child: segments['chars'].join()),
+            GCWDefaultOutput(child: segments.chars.join()),
         ],
       );
     }

@@ -83,7 +83,7 @@ class _SegmentDisplayOutputState extends State<SegmentDisplayOutput> {
               child: GCWIconButton(
                 size: IconButtonSize.SMALL,
                 icon: Icons.save,
-                iconColor: (widget.segments == null) || (widget.segments.isEmpty) ? themeColors().inActive() : null,
+                iconColor: (widget.segments.displays.isEmpty) ? themeColors().inActive() : null,
                 onPressed: () async {
                   await buildSegmentDisplayImage(countColumns, _displays, _currentUpsideDown,
                           horizontalPadding: widget.horizontalSymbolPadding,
@@ -131,10 +131,10 @@ class _SegmentDisplayOutputState extends State<SegmentDisplayOutput> {
     ]);
   }
 
-  Widget _buildDigitalOutput(int countColumns, List<List<String>> segments) {
-    var list = _currentUpsideDown ? segments.reversed : segments;
+  Widget _buildDigitalOutput(int countColumns, Segments segments) {
+    var segmentsList = _currentUpsideDown ? Segments(displays: segments.displays.reversed.toList()) : segments;
 
-    _displays = list.where((character) => character != null).map((character) {
+    _displays = segmentsList.displays.map((character) {
       var displayedSegments = Map<String, bool>.fromIterable(character, key: (e) => e.toString(), value: (e) => true);
       return widget.segmentFunction(displayedSegments, widget.readOnly);
     }).toList();

@@ -130,7 +130,7 @@ class PredatorState extends State<Predator> {
     );
   }
 
-  Widget _buildDigitalOutput(List<List<String>> segments) {
+  Widget _buildDigitalOutput(Segments segments) {
     return SegmentDisplayOutput(
         segmentFunction: (displayedSegments, readOnly) {
           return _PredatorSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
@@ -142,7 +142,7 @@ class PredatorState extends State<Predator> {
   Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       //encode
-      List<List<String>> segments = encodePredator(_currentEncodeInput);
+      var segments = encodePredator(_currentEncodeInput);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments),
@@ -154,8 +154,8 @@ class PredatorState extends State<Predator> {
       var segments = decodePredator(output);
       return Column(
         children: <Widget>[
-          _buildDigitalOutput(segments['displays'] as List<List<String>>),
-          GCWDefaultOutput(child: (segments['chars'] as List<String>).join('')),
+          _buildDigitalOutput(segments),
+          GCWDefaultOutput(child: (segments.chars.join('')),
         ],
       );
     }

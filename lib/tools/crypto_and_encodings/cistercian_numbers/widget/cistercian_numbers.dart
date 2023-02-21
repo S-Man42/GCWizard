@@ -35,7 +35,7 @@ class CistercianNumbersState extends State<CistercianNumbers> {
     super.initState();
 
     _inputEncodeController = TextEditingController(text: _currentEncodeInput);
-    _currentDisplays = [_DEFAULT_SEGMENT];
+    _currentDisplays = Segments(displays: [_DEFAULT_SEGMENT]);
   }
 
   @override
@@ -112,7 +112,7 @@ class CistercianNumbersState extends State<CistercianNumbers> {
             icon: Icons.space_bar,
             onPressed: () {
               setState(() {
-                _currentDisplays.add(_DEFAULT_SEGMENT);
+                _currentDisplays.displays.add(_DEFAULT_SEGMENT);
               });
             },
           ),

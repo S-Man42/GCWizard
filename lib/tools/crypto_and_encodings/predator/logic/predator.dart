@@ -1,3 +1,4 @@
+import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
@@ -66,19 +67,19 @@ final Map<String, List<String>> CODEBOOK_PREDATOR = {
   '9': ['b', 'e', 'f', 'g', 'h'],
 };
 
-List<List<String>> encodePredator(String? input) {
-  if (input == null) return [];
+Segments encodePredator(String? input) {
+  if (input == null) return Segments.Empty();
 
   List<String> inputs = input.split('');
   List<List<String>> result = [];
   for (int i = 0; i < inputs.length; i++) {
     if (CODEBOOK_PREDATOR[inputs[i]] != null) result.add(CODEBOOK_PREDATOR[inputs[i]]!);
   }
-  return result;
+  return Segments(displays: result);
 }
-//ToDo NullSafety remove result map
-Map<String, Object> decodePredator(List<String>? inputs) {
-  if (inputs == null || inputs.isEmpty) return {'displays': <List<String>>[], 'chars': []};
+
+SegmentsChars decodePredator(List<String>? inputs) {
+  if (inputs == null || inputs.isEmpty) return SegmentsChars(displays: [], chars: []);
 
   var displays = <List<String>>[];
   var segment = <String>[];
@@ -103,7 +104,7 @@ Map<String, Object> decodePredator(List<String>? inputs) {
     return char;
   }).toList();
 
-  return {'displays': displays, 'chars': text};
+  return SegmentsChars(displays: displays, chars: text);
 }
 
 List<String> _stringToSegment(String input) {

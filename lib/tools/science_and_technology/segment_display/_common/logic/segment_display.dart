@@ -547,7 +547,7 @@ class Segments {
   }
 
   List<String> buildOutput() {
-    return displays.where((character) => character != null).map((character) {
+    return displays.map((character) {
       return character.join();
     }).toList();
   }
@@ -564,13 +564,6 @@ class SegmentsText extends Segments {
     : super(displays: displays);
 }
 
-class SegmentsIntChars extends Segments {
-  final List<int> chars;
-
-  SegmentsIntChars({required List<List<String>> displays, required this.chars})
-      : super(displays: displays);
-}
-
 class SegmentsChars extends Segments {
   final List<String> chars;
 
@@ -585,8 +578,8 @@ class SegmentsCodpoints extends SegmentsText {
       : super(displays: displays, text: text);
 }
 
-List<List<String>> encodeSegment(String? input, SegmentDisplayType segmentType) {
-  if (input == null || input.isEmpty) return <List<String>>[];
+Segments encodeSegment(String? input, SegmentDisplayType segmentType) {
+  if (input == null || input.isEmpty) return Segments.Empty();
 
   Map<String, List<String>> AZToSegment = {};
   switch (segmentType) {
@@ -619,7 +612,7 @@ List<List<String>> encodeSegment(String? input, SegmentDisplayType segmentType) 
     }
   }
 
-  return output;
+  return Segments(displays: output);
 }
 
 SegmentsText decodeSegment(String? input, SegmentDisplayType segmentType) {

@@ -178,7 +178,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
             icon: Icons.clear,
             onPressed: () {
               setState(() {
-                _currentDisplays = Segments.Empty()
+                _currentDisplays = Segments.Empty();
               });
             },
           )
@@ -186,7 +186,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
         GCWTextDivider(text: i18n(context, 'segmentdisplay_encodemode_visualsegments_input')),
         GCWText(
             text: decodeSegment(
-                _currentDisplays.map((character) {
+                _currentDisplays.displays.map((character) {
                   if (character == null) return UNKNOWN_ELEMENT;
 
                   return character.join();
@@ -196,7 +196,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
     );
   }
 
-  Widget _buildDigitalOutput(List<List<String>> segments) {
+  Widget _buildDigitalOutput(Segments segments) {
     return SegmentDisplayOutput(
         segmentFunction: (displayedSegments, readOnly) {
           switch (widget.type) {
@@ -225,13 +225,13 @@ class SegmentDisplayState extends State<SegmentDisplay> {
 
   Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
-      List<List<String>> segments;
+      Segments segments;
       if (_currentEncryptMode == GCWSwitchPosition.left)
         segments = encodeSegment(_currentEncodeInput, widget.type);
       else
         segments = _currentDisplays;
 
-      var output = segments.map((character) {
+      var output = segments.displays.map((character) {
         if (character == null) return UNKNOWN_ELEMENT;
 
         return character.join();
@@ -244,7 +244,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
       var segments = decodeSegment(_currentDecodeInput, widget.type);
 
       return Column(
-        children: <Widget>[_buildDigitalOutput(segments.displays), GCWDefaultOutput(child: segments.text)],
+        children: <Widget>[_buildDigitalOutput(segments), GCWDefaultOutput(child: segments.text)],
       );
     }
   }

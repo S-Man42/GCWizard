@@ -1084,7 +1084,7 @@ bool _isLetter(String s) {
   return (_isCapital(s) || _isSmallLetter(s));
 }
 
-List<List<String>> _encodeBrailleSIMPLE(String input) {
+Segments _encodeBrailleSIMPLE(String input) {
   List<String> inputs = input.split('');
   List<List<String>> result = [];
 
@@ -1106,10 +1106,10 @@ List<List<String>> _encodeBrailleSIMPLE(String input) {
     }
     if (_charsToSegments[inputs[i].toLowerCase()] != null) result.add(_charsToSegments[inputs[i].toLowerCase()]);
   }
-  return result;
+  return Segments(displays: result);
 }
 
-List<List<String>> _encodeBrailleDEU(String input) {
+Segments _encodeBrailleDEU(String input) {
   bool stateNumberFollows = false;
   bool stateCapitals = false;
 
@@ -1175,10 +1175,10 @@ List<List<String>> _encodeBrailleDEU(String input) {
       } else if (_charsToSegments[inputs[i]] != null) result.add(_charsToSegments[inputs[i]]);
     }
   }
-  return result;
+  return Segments(displays: result);
 }
 
-List<List<String>> _encodeBrailleENG(String input) {
+Segments _encodeBrailleENG(String input) {
   bool stateNumberFollows = false;
   bool stateCapitals = false;
 
@@ -1295,10 +1295,10 @@ List<List<String>> _encodeBrailleENG(String input) {
       } else if (_charsToSegments[inputs[i]] != null) result.add(_charsToSegments[inputs[i]]);
     }
   }
-  return result;
+  return Segments(displays: result);
 }
 
-List<List<String>> _encodeBrailleFRA(String input) {
+Segments _encodeBrailleFRA(String input) {
   bool stateNumberFollows = false;
   bool stateCapitals = false;
 
@@ -1332,42 +1332,39 @@ List<List<String>> _encodeBrailleFRA(String input) {
       if (_charsToSegments[inputs[i]] != null) result.add(_charsToSegments[inputs[i]]);
     }
   }
-  return result;
+  return Segments(displays: result);
 }
 
-List<List<String>> _encodeBrailleEUR(String input) {
+Segments _encodeBrailleEUR(String input) {
   List<String> inputs = input.split('');
   List<List<String>> result = [];
 
   for (int i = 0; i < inputs.length; i++) {
     result.add(_charsToSegmentsEUR[inputs[i]]);
   }
-  return result;
+  return Segments(displays: result);
 }
 
-List<List<String>> encodeBraille(String input, BrailleLanguage language) {
-  if (input == null) return [];
+Segments encodeBraille(String? input, BrailleLanguage language) {
+  if (input == null) return Segments.Empty();
 
   switch (language) {
     case BrailleLanguage.SIMPLE:
       return _encodeBrailleSIMPLE(input);
-      break;
     case BrailleLanguage.DEU:
       return _encodeBrailleDEU(input);
-      break;
     case BrailleLanguage.ENG:
       return _encodeBrailleENG(input);
-      break;
     case BrailleLanguage.FRA:
       return _encodeBrailleFRA(input);
-      break;
     case BrailleLanguage.EUR:
       return _encodeBrailleEUR(input);
-      break;
+    default:
+      return Segments.Empty();
   }
 }
 
-SegmentsIntChars _decodeBrailleBASIC(List<String> inputs, bool letters) {
+SegmentsChars _decodeBrailleBASIC(List<String> inputs, bool letters) {
   var displays = <List<String>>[];
 
   var antoineMap = Map<String, List<String>>.from(_charsToSegmentsLettersAntoine);
@@ -1407,10 +1404,10 @@ SegmentsIntChars _decodeBrailleBASIC(List<String> inputs, bool letters) {
     return char;
   }).toList();
 
-  return SegmentsIntChars(displays: displays, chars: text);
+  return SegmentsChars(displays: displays, chars: text);
 }
 
-Map<String, dynamic> _decodeBrailleSIMPLE(List<String> inputs) {
+SegmentsChars _decodeBrailleSIMPLE(List<String> inputs) {
   var displays = <List<String>>[];
 
   Map<List<String>, String> _segmentsToCharsSIMPLEBraille = Map<List<String>, String>();
@@ -1480,10 +1477,10 @@ Map<String, dynamic> _decodeBrailleSIMPLE(List<String> inputs) {
 
     return char;
   }).toList();
-  return {'displays': displays, 'chars': text};
+  return SegmentsChars(displays: displays, chars: text);
 }
 
-Map<String, dynamic> _decodeBrailleDEU(List<String> inputs) {
+SegmentsChars _decodeBrailleDEU(List<String> inputs) {
   var displays = <List<String>>[];
 
   bool numberFollows = false;
@@ -1717,10 +1714,10 @@ Map<String, dynamic> _decodeBrailleDEU(List<String> inputs) {
     }
   }
 
-  return {'displays': displays, 'chars': text};
+  return SegmentsChars(displays: displays, chars: text);
 }
 
-Map<String, dynamic> _decodeBrailleENG(List<String> inputs) {
+SegmentsChars _decodeBrailleENG(List<String> inputs) {
 // TO DO
   var displays = <List<String>>[];
 
@@ -1993,10 +1990,10 @@ Map<String, dynamic> _decodeBrailleENG(List<String> inputs) {
       }
     }
   }
-  return {'displays': displays, 'chars': text};
+  return SegmentsChars(displays: displays, chars: text);
 }
 
-Map<String, dynamic> _decodeBrailleFRA(List<String> inputs) {
+SegmentsChars _decodeBrailleFRA(List<String> inputs) {
 // TO DO
   var displays = <List<String>>[];
 
@@ -2230,10 +2227,10 @@ Map<String, dynamic> _decodeBrailleFRA(List<String> inputs) {
       }
     }
   }
-  return {'displays': displays, 'chars': text};
+  return SegmentsChars(displays: displays, chars: text);
 }
 
-Map<String, dynamic> _decodeBrailleEUR(List<String> inputs) {
+SegmentsChars _decodeBrailleEUR(List<String> inputs) {
   var displays = <List<String>>[];
 
   List<String> text = inputs.where((input) => input != null).map((input) {
@@ -2258,7 +2255,7 @@ Map<String, dynamic> _decodeBrailleEUR(List<String> inputs) {
     return char;
   }).toList();
 
-  return {'displays': displays, 'chars': text};
+  return SegmentsChars(displays: displays, chars: text);
 }
 
 List<String> _sanitizeDecodeInput(List<String> input, BrailleLanguage language) {
@@ -2271,29 +2268,25 @@ List<String> _sanitizeDecodeInput(List<String> input, BrailleLanguage language) 
   }).toList();
 }
 
-SegmentChar decodeBraille(List<String>? input, BrailleLanguage language, bool letters) {
-  if (input == null || input.isEmpty) return SegmentChar(displays: <List<String>>[], Char: [0]);
+SegmentsChars decodeBraille(List<String>? input, BrailleLanguage language, bool letters) {
+  if (input == null || input.isEmpty) return SegmentsChars(displays: [], chars: []);
 
   input = _sanitizeDecodeInput(input, language);
 
   switch (language) {
     case BrailleLanguage.BASIC:
       return _decodeBrailleBASIC(input, letters);
-      break;
     case BrailleLanguage.SIMPLE:
       return _decodeBrailleSIMPLE(input);
-      break;
     case BrailleLanguage.DEU:
       return _decodeBrailleDEU(input);
-      break;
     case BrailleLanguage.ENG:
       return _decodeBrailleENG(input);
-      break;
     case BrailleLanguage.FRA:
       return _decodeBrailleFRA(input);
-      break;
     case BrailleLanguage.EUR:
       return _decodeBrailleEUR(input);
-      break;
+    default:
+      return SegmentsChars(displays: [], chars: []);
   }
 }
