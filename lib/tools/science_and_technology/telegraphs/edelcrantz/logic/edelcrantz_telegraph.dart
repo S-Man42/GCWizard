@@ -1780,7 +1780,7 @@ String _nightTime(String code) {
 }
 
 Segments encodeEdelcrantzTelegraph(String? input, EdelcrantzCodebook language, bool daytime) {
-  if (input == null || input.isEmpty) return Segments(displays: []);
+  if (input == null || input.isEmpty) return Segments.Empty();
 
   List<List<String>> encodedText = [];
   Map<String, String> CODEBOOK;

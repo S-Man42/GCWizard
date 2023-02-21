@@ -25,7 +25,7 @@ class MurrayTelegraphState extends State<MurrayTelegraph> {
   String _currentEncodeInput = '';
   late TextEditingController _encodeController;
 
-  Segments _currentDisplays = Segments(displays: []);
+  var _currentDisplays = Segments.Empty();
   var _currentMode = GCWSwitchPosition.right;
 
   var _currentLanguage = MurrayCodebook.ROYALNAVY;
@@ -87,13 +87,7 @@ class MurrayTelegraphState extends State<MurrayTelegraph> {
   }
 
   Widget _buildVisualDecryption() {
-    Map<String, bool> currentDisplay;
-
-    var displays = _currentDisplays;
-    if (displays.displays.isNotEmpty)
-      currentDisplay = Map<String, bool>.fromIterable(displays.displays.last ?? [], key: (e) => e.toString(), value: (e) => true);
-    else
-      currentDisplay = {};
+    var currentDisplay = buildSegmentMap(_currentDisplays);
 
     var onChanged = (Map<String, bool> d) {
       setState(() {
@@ -103,11 +97,7 @@ class MurrayTelegraphState extends State<MurrayTelegraph> {
           newSegments.add(key);
         });
 
-        newSegments.sort();
-
-        if (_currentDisplays.displays.isEmpty) _currentDisplays.displays.add([]);
-
-        _currentDisplays.displays[_currentDisplays.displays.length - 1] = newSegments;
+        _currentDisplays.replaceLastSegment(newSegments);
       });
     };
 
@@ -133,7 +123,7 @@ class MurrayTelegraphState extends State<MurrayTelegraph> {
             icon: Icons.space_bar,
             onPressed: () {
               setState(() {
-                _currentDisplays.displays.add([]);
+                _currentDisplays.addEmptyElement();
               });
             },
           ),
@@ -141,7 +131,7 @@ class MurrayTelegraphState extends State<MurrayTelegraph> {
             icon: Icons.backspace,
             onPressed: () {
               setState(() {
-                if (_currentDisplays.displays.isNotEmpty) _currentDisplays.displays.removeLast();
+                _currentDisplays.removeLastSegment();
               });
             },
           ),
@@ -149,7 +139,7 @@ class MurrayTelegraphState extends State<MurrayTelegraph> {
             icon: Icons.clear,
             onPressed: () {
               setState(() {
-                _currentDisplays = Segments(displays: []);
+                _currentDisplays = Segments.Empty();
               });
             },
           )
@@ -178,9 +168,7 @@ class MurrayTelegraphState extends State<MurrayTelegraph> {
       );
     } else {
       //decode
-      var output = _currentDisplays.displays.where((character) => character != null).map((character) {
-        return character.join();
-      }).toList();
+      var output = _currentDisplays.buildOutput();
       var segments = decodeMurray(output, _currentLanguage);
       return Column(
         children: <Widget>[

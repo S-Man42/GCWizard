@@ -205,7 +205,7 @@ String? segments2decenary(List<String> segments, bool order54321, Teletypewriter
 }
 
 Segments encodePunchtape(String? input, TeletypewriterCodebook language, bool order12345) {
-  if (input == null) return Segments(displays: []);
+  if (input == null) return Segments.Empty();
 
   List<List<String>> result = [];
   List<String> code = [];

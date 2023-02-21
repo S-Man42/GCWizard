@@ -8,6 +8,8 @@ import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/maya_numbers/logic/maya_numbers.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/maya_numbers/widget/maya_numbers_segment_display.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/widget/n_segment_display.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/widget/segmentdisplay_output.dart';
 
 class MayaNumbers extends StatefulWidget {
@@ -18,7 +20,7 @@ class MayaNumbers extends StatefulWidget {
 class MayaNumbersState extends State<MayaNumbers> {
   var _currentEncodeInput = 0;
 
-  List<List<String>> _currentDisplays = [];
+  var _currentDisplays = Segments.Empty();
   var _currentMode = GCWSwitchPosition.right;
 
   @override
@@ -51,13 +53,7 @@ class MayaNumbersState extends State<MayaNumbers> {
   }
 
   Widget _buildVisualDecryption() {
-    Map<String, bool> currentDisplay;
-
-    var displays = _currentDisplays;
-    if (displays.isNotEmpty)
-      currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [], key: (e) => e.toString(), value: (e) => true);
-    else
-      currentDisplay = {};
+    var currentDisplay = buildSegmentMap(_currentDisplays);
 
     var onChanged = (Map<String, bool> d) {
       setState(() {
@@ -67,11 +63,7 @@ class MayaNumbersState extends State<MayaNumbers> {
           newSegments.add(key);
         });
 
-        newSegments.sort();
-
-        if (_currentDisplays.isEmpty) _currentDisplays.add([]);
-
-        _currentDisplays[_currentDisplays.length - 1] = newSegments;
+        _currentDisplays.replaceLastSegment(newSegments);
       });
     };
 
@@ -96,7 +88,7 @@ class MayaNumbersState extends State<MayaNumbers> {
             icon: Icons.space_bar,
             onPressed: () {
               setState(() {
-                _currentDisplays.add([]);
+                _currentDisplays.addEmptyElement();
               });
             },
           ),
@@ -104,7 +96,7 @@ class MayaNumbersState extends State<MayaNumbers> {
             icon: Icons.backspace,
             onPressed: () {
               setState(() {
-                if (_currentDisplays.isNotEmpty) _currentDisplays.removeLast();
+                _currentDisplays.removeLastSegment();
               });
             },
           ),
@@ -112,7 +104,7 @@ class MayaNumbersState extends State<MayaNumbers> {
             icon: Icons.clear,
             onPressed: () {
               setState(() {
-                _currentDisplays = [];
+                _currentDisplays = Segments.Empty()
               });
             },
           )

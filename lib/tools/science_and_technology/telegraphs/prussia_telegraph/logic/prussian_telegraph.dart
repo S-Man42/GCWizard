@@ -2346,7 +2346,7 @@ final CODEBOOK_PRUSSIA = {
 };
 
 Segments encodePrussianTelegraph(String? input) {
-  if (input == null || input.isEmpty) return Segments(displays: []);
+  if (input == null || input.isEmpty) return Segments.Empty();
 
   var result = input.split('').where((letter) => switchMapKeyValue(CODEBOOK_PRUSSIA)[letter] != null).map((letter) {
     return switchMapKeyValue(CODEBOOK_PRUSSIA)[letter]!.split('');

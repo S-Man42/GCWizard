@@ -23,7 +23,7 @@ class BabylonNumbers extends StatefulWidget {
 class BabylonNumbersState extends State<BabylonNumbers> {
   var _currentEncodeInput = 0;
 
-  List<List<String>> _currentDisplays = [];
+  var _currentDisplays = Segments.Empty();
   var _currentMode = GCWSwitchPosition.right;
 
   @override
@@ -57,15 +57,8 @@ class BabylonNumbersState extends State<BabylonNumbers> {
     ]);
   }
 
-  _buildVisualDecryption() {
-    Map<String, bool> currentDisplay;
-
-    var displays = _currentDisplays;
-    if (displays != null && displays.isNotEmpty)
-      currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [],
-          key: (e) => e.toString(), value: (e) => true);
-    else
-      currentDisplay = {};
+  Widget _buildVisualDecryption() {
+    var currentDisplay = buildSegmentMap(_currentDisplays);
 
     var onChanged = (Map<String, bool> d) {
       setState(() {
@@ -75,11 +68,7 @@ class BabylonNumbersState extends State<BabylonNumbers> {
           newSegments.add(key);
         });
 
-        newSegments.sort();
-
-        if (_currentDisplays.isEmpty) _currentDisplays.add([]);
-
-        _currentDisplays[_currentDisplays.length - 1] = newSegments;
+        _currentDisplays.replaceLastSegment(newSegments);
       });
     };
 
@@ -105,7 +94,7 @@ class BabylonNumbersState extends State<BabylonNumbers> {
             icon: Icons.space_bar,
             onPressed: () {
               setState(() {
-                _currentDisplays.add([]);
+                _currentDisplays.addEmptyElement();
               });
             },
           ),
@@ -113,7 +102,7 @@ class BabylonNumbersState extends State<BabylonNumbers> {
             icon: Icons.backspace,
             onPressed: () {
               setState(() {
-                if (_currentDisplays.isNotEmpty) _currentDisplays.removeLast();
+                _currentDisplays.removeLastSegment();
               });
             },
           ),
@@ -121,7 +110,7 @@ class BabylonNumbersState extends State<BabylonNumbers> {
             icon: Icons.clear,
             onPressed: () {
               setState(() {
-                _currentDisplays = [];
+                _currentDisplays = Segments.Empty()
               });
             },
           )

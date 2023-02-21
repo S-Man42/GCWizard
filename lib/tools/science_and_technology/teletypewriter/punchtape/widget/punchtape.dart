@@ -11,6 +11,7 @@ import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/widget/n_segment_display.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/_common/logic/teletypewriter.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/punchtape/logic/punchtape.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/punchtape_segment_display/widget/punchtape_segment_display.dart';
@@ -28,7 +29,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
   late TextEditingController _decodeInputController;
   var _currentDecodeInput = '';
 
-  List<List<String>> _currentDisplays = [];
+  var _currentDisplays = Segments.Empty();
   var _currentMode = GCWSwitchPosition.right; // encrypt - decrypt
   var _currentOrderMode = GCWSwitchPosition.right; // 54321 - 12345
   var _currentDecodeMode = GCWSwitchPosition.right; // text - visual
@@ -158,13 +159,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
   }
 
   Widget _buildVisualDecryption() {
-    Map<String, bool> currentDisplay;
-
-    var displays = _currentDisplays;
-    if (displays.isNotEmpty)
-      currentDisplay = Map<String, bool>.fromIterable(displays.last, key: (e) => e.toString(), value: (e) => true);
-    else
-      currentDisplay = {};
+    var currentDisplay = buildSegmentMap(_currentDisplays);
 
     var onChanged = (Map<String, bool> d) {
       setState(() {
@@ -174,11 +169,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
           newSegments.add(key);
         });
 
-        newSegments.sort();
-
-        if (_currentDisplays.isEmpty) _currentDisplays.add([]);
-
-        _currentDisplays[_currentDisplays.length - 1] = newSegments;
+        _currentDisplays.replaceLastSegment(newSegments);
       });
     };
 
@@ -205,7 +196,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
             icon: Icons.space_bar,
             onPressed: () {
               setState(() {
-                _currentDisplays.add([]);
+                _currentDisplays.addEmptyElement();
               });
             },
           ),
@@ -213,7 +204,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
             icon: Icons.backspace,
             onPressed: () {
               setState(() {
-                if (_currentDisplays.isNotEmpty) _currentDisplays.removeLast();
+                _currentDisplays.removeLastSegment();
               });
             },
           ),
@@ -221,7 +212,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
             icon: Icons.clear,
             onPressed: () {
               setState(() {
-                _currentDisplays = [];
+                _currentDisplays = Segments.Empty();
               });
             },
           )
@@ -324,7 +315,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
         }
       } else {
         // decode visual mode
-        var output = _currentDisplays.map((character) {
+        var output = _currentDisplays.displays.map((character) {
           return character.join('');
         }).toList();
         segments = decodeVisualPunchtape(

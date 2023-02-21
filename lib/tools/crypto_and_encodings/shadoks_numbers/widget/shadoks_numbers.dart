@@ -30,7 +30,7 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
 
   var _currentEncodeInput = 0;
 
-  List<List<String>> _currentDisplays = [];
+  var _currentDisplays = Segments.Empty();
   var _currentMode = GCWSwitchPosition.right;
 
   Map<String, bool> _currentDisplay = {};
@@ -78,7 +78,7 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
         newSegments.sort();
         if (newSegments.length > 1) newSegments.remove('a');
 
-        if (_currentDisplays.isEmpty) _currentDisplays.add([]);
+        if (_currentDisplays.isEmpty) _currentDisplays.addEmptyElement();
 
         _currentDisplays[_currentDisplays.length - 1] = newSegments;
       });
@@ -185,9 +185,7 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
       );
     } else {
       //decode
-      var output = _currentDisplays.where((character) => character != null).map((character) {
-        return character.join();
-      }).toList();
+      var output = _currentDisplays.buildOutput();
 
       var segments = decodeShadoksNumbers(output);
 

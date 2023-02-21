@@ -287,7 +287,7 @@ final Map<String, List<String>> CODEBOOK_GEOCACHINGTOOLBOX_3 = {
 };
 
 Segments encodeMurray(String? input, MurrayCodebook language) {
-  if (input == null) return Segments(displays: []);
+  if (input == null) return Segments.Empty();
 
   Map<String, List<String>> CODEBOOK = Map<String, List<String>>();
   switch (language) {

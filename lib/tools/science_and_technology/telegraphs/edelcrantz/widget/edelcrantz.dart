@@ -33,7 +33,7 @@ class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
 
   var _currentLanguage = EdelcrantzCodebook.YEAR_1795;
 
-  List<List<String>> _currentDisplays = [];
+  var _currentDisplays = Segments.Empty();
   var _currentMode = GCWSwitchPosition.right; //decode
   var _currentTime = GCWSwitchPosition.left; // daytime
   var _currentDecodeMode = GCWSwitchPosition.right; // text - visual
@@ -131,13 +131,7 @@ class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
   }
 
   Widget _buildVisualDecryption() {
-    Map<String, bool> currentDisplay;
-
-    var displays = _currentDisplays;
-    if (displays != null && displays.isNotEmpty)
-      currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [], key: (e) => e.toString(), value: (e) => true);
-    else
-      currentDisplay = {};
+    var currentDisplay = buildSegmentMap(_currentDisplays);
 
     var onChanged = (Map<String, bool> d) {
       setState(() {
@@ -147,11 +141,7 @@ class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
           newSegments.add(key);
         });
 
-        newSegments.sort();
-
-        if (_currentDisplays.isEmpty) _currentDisplays.add([]);
-
-        _currentDisplays[_currentDisplays.length - 1] = newSegments;
+        _currentDisplays.replaceLastSegment(newSegments);
       });
     };
 
@@ -176,7 +166,7 @@ class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
             icon: Icons.space_bar,
             onPressed: () {
               setState(() {
-                _currentDisplays.add([]);
+                _currentDisplays.addEmptyElement();
               });
             },
           ),
@@ -184,7 +174,7 @@ class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
             icon: Icons.backspace,
             onPressed: () {
               setState(() {
-                if (_currentDisplays.isNotEmpty) _currentDisplays.removeLast();
+                _currentDisplays.removeLastSegment();
               });
             },
           ),
@@ -192,7 +182,7 @@ class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
             icon: Icons.clear,
             onPressed: () {
               setState(() {
-                _currentDisplays = [];
+                _currentDisplays = Segments.Empty();
               });
             },
           )
@@ -359,9 +349,7 @@ class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
             _currentDecodeInput.toLowerCase(), _currentLanguage, (_currentTime == GCWSwitchPosition.left));
       } else {
         // visual
-        var output = _currentDisplays.where((character) => character != null).map((character) {
-          return character.join();
-        }).toList();
+        var output = _currentDisplays.buildOutput();
         segments = decodeVisualEdelcrantzTelegraph(output, _currentLanguage, (_currentTime == GCWSwitchPosition.left));
       }
       return Column(

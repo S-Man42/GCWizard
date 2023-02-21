@@ -29,7 +29,7 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
   late TextEditingController _decodeInputController;
   String _currentDecodeInput = '';
 
-  Segments _currentDisplays = Segments(displays: []);
+  Segments _currentDisplays = Segments.Empty();
   var _currentMode = GCWSwitchPosition.right;
   var _currentDecodeMode = GCWSwitchPosition.right; // text - visual
 
@@ -119,13 +119,7 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
   }
 
   Widget _buildVisualDecryption() {
-    Map<String, bool> currentDisplay;
-
-    var displays = _currentDisplays;
-    if (displays != null && displays.isNotEmpty)
-      currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [], key: (e) => e.toString(), value: (e) => true);
-    else
-      currentDisplay = {};
+    var currentDisplay = buildSegmentMap(_currentDisplays);
 
     var onChanged = (Map<String, bool> d) {
       setState(() {
@@ -135,11 +129,7 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
           newSegments.add(key);
         });
 
-        newSegments.sort();
-
-        if (_currentDisplays.isEmpty) _currentDisplays.add([]);
-
-        _currentDisplays[_currentDisplays.length - 1] = newSegments;
+        _currentDisplays.replaceLastSegment(newSegments);
       });
     };
 
@@ -165,7 +155,7 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
             icon: Icons.space_bar,
             onPressed: () {
               setState(() {
-                _currentDisplays.add([]);
+                _currentDisplays.addEmptyElement();
               });
             },
           ),
@@ -173,7 +163,7 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
             icon: Icons.backspace,
             onPressed: () {
               setState(() {
-                if (_currentDisplays.isNotEmpty) _currentDisplays.removeLast();
+                _currentDisplays.removeLastSegment();
               });
             },
           ),
@@ -181,7 +171,7 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
             icon: Icons.clear,
             onPressed: () {
               setState(() {
-                _currentDisplays = [];
+                _currentDisplays = Segments.Empty();
               });
             },
           )
@@ -190,7 +180,7 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
     );
   }
 
-  Widget _buildDigitalOutput(List<List<String>> segments) {
+  Widget _buildDigitalOutput(Segments segments) {
     return SegmentDisplayOutput(
         segmentFunction: (displayedSegments, readOnly) {
           return _ChappeTelegraphSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
@@ -202,7 +192,7 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
   Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       //encode
-      List<List<String>> segments = encodeChappe(_currentEncodeInput, _currentLanguage);
+      var segments = encodeChappe(_currentEncodeInput, _currentLanguage);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments),
@@ -210,21 +200,19 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
       );
     } else {
       //decode
-      var segments;
+      SegmentsText segments;
       if (_currentDecodeMode == GCWSwitchPosition.left) {
         // decode text mode
         segments = decodeTextChappeTelegraph(_currentDecodeInput.toUpperCase(), _currentLanguage);
       } else {
         // decode visual mode
-        var output = _currentDisplays.where((character) => character != null).map((character) {
-          return character.join();
-        }).toList();
+        var output = _currentDisplays.buildOutput();
         segments = decodeVisualChappe(output, _currentLanguage);
       }
       return Column(
         children: <Widget>[
-          GCWOutput(title: i18n(context, 'telegraph_text'), child: segments['chars']),
-          _buildDigitalOutput(segments['displays']),
+          GCWOutput(title: i18n(context, 'telegraph_text'), child: segments.text),
+          _buildDigitalOutput(segments),
         ],
       );
     }

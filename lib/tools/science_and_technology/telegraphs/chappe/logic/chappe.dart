@@ -207,8 +207,8 @@ final Map<String, List<String>> CODEBOOK_KULIBIN = {
   '&': ['20', '60', '6l'],
 };
 
-List<List<String>> encodeChappe(String? input, ChappeCodebook language) {
-  if (input == null) return [];
+Segments encodeChappe(String? input, ChappeCodebook language) {
+  if (input == null) return Segments.Empty();;
 
   List<String> inputs = [];
   if (language == ChappeCodebook.CODEPOINTS)
@@ -235,10 +235,10 @@ List<List<String>> encodeChappe(String? input, ChappeCodebook language) {
 
   for (int i = 0; i < inputs.length; i++) {
     if (CODEBOOK[inputs[i].toUpperCase()] != null) {
-      result.add(CODEBOOK[inputs[i].toUpperCase()]);
+      result.add(CODEBOOK[inputs[i].toUpperCase()]!);
     }
   }
-  return result;
+  return Segments(displays: result);
 }
 
 SegmentsText decodeVisualChappe(List<String>? inputs, ChappeCodebook language) {
@@ -270,7 +270,7 @@ SegmentsText decodeVisualChappe(List<String>? inputs, ChappeCodebook language) {
     displays.add(segment);
   });
 
-  List<String> text = inputs.where((input) => input != null).map((input) {
+  List<String> text = inputs.map((input) {
     var char = '';
     var charH = '';
 
@@ -299,12 +299,8 @@ List<String> _stringToSegment(String input) {
     return [];
 }
 
-Map<String, dynamic> decodeTextChappeTelegraph(String inputs, ChappeCodebook language) {
-  if (inputs == null || inputs.isEmpty)
-    return {
-      'displays': <List<String>>[],
-      'text': '',
-    };
+SegmentsText decodeTextChappeTelegraph(String? inputs, ChappeCodebook language) {
+  if (inputs == null || inputs.isEmpty) return SegmentsText(displays: [], text: '');
 
   var displays = <List<String>>[];
   String text = '';
@@ -331,5 +327,5 @@ Map<String, dynamic> decodeTextChappeTelegraph(String inputs, ChappeCodebook lan
 
     displays.add(CODEBOOK[element]!);
   });
-  return {'displays': displays, 'text': text};
+  return SegmentsText(displays: displays, text: text);
 }

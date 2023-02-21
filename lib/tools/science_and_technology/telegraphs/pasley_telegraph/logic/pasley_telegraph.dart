@@ -120,7 +120,7 @@ final List<String> DIGIT = [
 ];
 
 Segments encodePasley(String? input) {
-  if (input == null || input.isEmpty) return Segments(displays: []);
+  if (input == null || input.isEmpty) return Segments.Empty();
 
   bool letter = true;
 

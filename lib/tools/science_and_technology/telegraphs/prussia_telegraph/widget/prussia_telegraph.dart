@@ -30,7 +30,7 @@ class PrussiaTelegraphState extends State<PrussiaTelegraph> {
   late TextEditingController _decodeInputController;
   var _currentDecodeInput = '';
 
-  List<List<String>> _currentDisplays = [];
+  var _currentDisplays = Segments.Empty();
   var _currentMode = GCWSwitchPosition.right;
   var _currentDecodeMode = GCWSwitchPosition.right; // text - visual
 
@@ -103,13 +103,7 @@ class PrussiaTelegraphState extends State<PrussiaTelegraph> {
   }
 
   Widget _buildVisualDecryption() {
-    Map<String, bool> currentDisplay;
-
-    var displays = _currentDisplays;
-    if (displays != null && displays.isNotEmpty)
-      currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [], key: (e) => e.toString(), value: (e) => true);
-    else
-      currentDisplay = {};
+    var currentDisplay = buildSegmentMap(_currentDisplays);
 
     var onChanged = (Map<String, bool> d) {
       setState(() {
@@ -119,11 +113,7 @@ class PrussiaTelegraphState extends State<PrussiaTelegraph> {
           newSegments.add(key);
         });
 
-        newSegments.sort();
-
-        if (_currentDisplays.isEmpty) _currentDisplays.add([]);
-
-        _currentDisplays[_currentDisplays.length - 1] = newSegments;
+        _currentDisplays.replaceLastSegment(newSegments);
       });
     };
 
@@ -148,7 +138,7 @@ class PrussiaTelegraphState extends State<PrussiaTelegraph> {
             icon: Icons.space_bar,
             onPressed: () {
               setState(() {
-                _currentDisplays.add([]);
+                _currentDisplays.addEmptyElement();
               });
             },
           ),
@@ -156,7 +146,7 @@ class PrussiaTelegraphState extends State<PrussiaTelegraph> {
             icon: Icons.backspace,
             onPressed: () {
               setState(() {
-                if (_currentDisplays.isNotEmpty) _currentDisplays.removeLast();
+                _currentDisplays.removeLastSegment();
               });
             },
           ),
@@ -164,7 +154,7 @@ class PrussiaTelegraphState extends State<PrussiaTelegraph> {
             icon: Icons.clear,
             onPressed: () {
               setState(() {
-                _currentDisplays = [];
+                _currentDisplays = Segments.Empty();
               });
             },
           )
@@ -320,9 +310,7 @@ class PrussiaTelegraphState extends State<PrussiaTelegraph> {
         segments = decodeTextPrussianTelegraph(_currentDecodeInput.toUpperCase());
       } else {
         // visual
-        var output = _currentDisplays.where((character) => character != null).map((character) {
-          return character.join();
-        }).toList();
+        var output = _currentDisplays.buildOutput();
         segments = decodeVisualPrussianTelegraph(output);
       }
       return Column(

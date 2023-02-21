@@ -271,7 +271,7 @@ final CODEBOOK_OHLSEN = {
 };
 
 Segments encodeOhlsenTelegraph(String? input) {
-  if (input == null || input.isEmpty) return Segments(displays: []);
+  if (input == null || input.isEmpty) return Segments.Empty();
 
   List<List<String>> encodedText = [];
   var CODEBOOK = switchMapKeyValue(CODEBOOK_OHLSEN);

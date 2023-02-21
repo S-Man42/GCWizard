@@ -32,7 +32,7 @@ class MusicNotesState extends State<MusicNotes> {
   var _gcwTextStyle = gcwTextStyle();
   var _currentCode = NotesCodebook.TREBLE;
 
-  List<List<String>> _currentDisplays = [];
+  var _currentDisplays = Segments.Empty();
   var _currentMode = GCWSwitchPosition.right;
 
   @override
@@ -105,8 +105,8 @@ class MusicNotesState extends State<MusicNotes> {
     Map<String, bool> currentDisplay;
 
     var displays = _currentDisplays;
-    if (displays != null && displays.isNotEmpty) {
-      currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [], key: (e) => e.toString(), value: (e) => true);
+    if (displays != null && displays.displays.isNotEmpty) {
+      currentDisplay = Map<String, bool>.fromIterable(displays.displays.last ?? [], key: (e) => e.toString(), value: (e) => true);
       currentDisplay.remove(altClef);
       currentDisplay.remove(bassClef);
       currentDisplay.remove(trebleClef);
@@ -133,11 +133,7 @@ class MusicNotesState extends State<MusicNotes> {
           newSegments.add(key);
         });
 
-        newSegments.sort();
-
-        if (_currentDisplays.isEmpty) _currentDisplays.add([]);
-
-        _currentDisplays[_currentDisplays.length - 1] = newSegments;
+        _currentDisplays.replaceLastSegment(newSegments);
       });
     };
 
@@ -163,7 +159,7 @@ class MusicNotesState extends State<MusicNotes> {
             icon: Icons.space_bar,
             onPressed: () {
               setState(() {
-                _currentDisplays.add([]);
+                _currentDisplays.addEmptyElement();
               });
             },
           ),
@@ -171,7 +167,7 @@ class MusicNotesState extends State<MusicNotes> {
             icon: Icons.backspace,
             onPressed: () {
               setState(() {
-                if (_currentDisplays.isNotEmpty) _currentDisplays.removeLast();
+                _currentDisplays.removeLastSegment();
               });
             },
           ),
@@ -179,7 +175,7 @@ class MusicNotesState extends State<MusicNotes> {
             icon: Icons.clear,
             onPressed: () {
               setState(() {
-                _currentDisplays = [];
+                _currentDisplays = Segments.Empty()
               });
             },
           )
@@ -211,9 +207,7 @@ class MusicNotesState extends State<MusicNotes> {
       );
     } else {
       //decode
-      var output = _currentDisplays.where((character) => character != null).map((character) {
-        return character.join();
-      }).toList();
+      var output = _currentDisplays.buildOutput();
       var segments = decodeNotes(output, _currentCode);
 
       return Column(

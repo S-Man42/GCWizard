@@ -28,7 +28,7 @@ class PophamTelegraphState extends State<PophamTelegraph> {
   late TextEditingController _decodeInputController;
   String _currentDecodeInput = '';
 
-  Segments _currentDisplays = Segments(displays: []);
+  Segments _currentDisplays = Segments.Empty();
   var _currentMode = GCWSwitchPosition.right;
 
   @override
@@ -77,13 +77,7 @@ class PophamTelegraphState extends State<PophamTelegraph> {
   }
 
   Widget _buildVisualDecryption() {
-    Map<String, bool> currentDisplay;
-
-    var displays = _currentDisplays;
-    if (displays.displays != null && displays.displays.isNotEmpty)
-      currentDisplay = Map<String, bool>.fromIterable(displays.displays.last ?? [], key: (e) => e.toString(), value: (e) => true);
-    else
-      currentDisplay = {};
+    var currentDisplay = buildSegmentMap(_currentDisplays);
 
     var onChanged = (Map<String, bool> d) {
       setState(() {
@@ -93,11 +87,7 @@ class PophamTelegraphState extends State<PophamTelegraph> {
           newSegments.add(key);
         });
 
-        newSegments.sort();
-
-        if (_currentDisplays.displays.isEmpty) _currentDisplays.displays.add([]);
-
-        _currentDisplays.displays[_currentDisplays.displays.length - 1] = newSegments;
+        _currentDisplays.replaceLastSegment(newSegments);
       });
     };
 
@@ -123,7 +113,7 @@ class PophamTelegraphState extends State<PophamTelegraph> {
             icon: Icons.space_bar,
             onPressed: () {
               setState(() {
-                _currentDisplays.displays.add([]);
+                _currentDisplays.addEmptyElement();
               });
             },
           ),
@@ -131,7 +121,7 @@ class PophamTelegraphState extends State<PophamTelegraph> {
             icon: Icons.backspace,
             onPressed: () {
               setState(() {
-                if (_currentDisplays.displays.isNotEmpty) _currentDisplays.displays.removeLast();
+                _currentDisplays.removeLastSegment();
               });
             },
           ),
@@ -139,7 +129,7 @@ class PophamTelegraphState extends State<PophamTelegraph> {
             icon: Icons.clear,
             onPressed: () {
               setState(() {
-                _currentDisplays = Segments(displays: []);
+                _currentDisplays = Segments.Empty();
               });
             },
           )
@@ -170,9 +160,7 @@ class PophamTelegraphState extends State<PophamTelegraph> {
       //decode
       SegmentsText segments;
       // decode visual mode
-      var output = _currentDisplays.displays.where((character) => character != null).map((character) {
-        return character.join();
-      }).toList();
+      var output = _currentDisplays.buildOutput();
       segments = decodeVisualPopham(output);
 
       return Column(

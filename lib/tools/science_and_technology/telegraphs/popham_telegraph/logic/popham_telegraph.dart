@@ -44,7 +44,7 @@ final Map<String, List<String>> POPHAM = {
 };
 
 Segments encodePopham(String? input) {
-  if (input == null || input.isEmpty) Segments(displays: []);
+  if (input == null || input.isEmpty) Segments.Empty();
 
   List<String> inputs = input!.toUpperCase().split('');
   List<List<String>> result = [];

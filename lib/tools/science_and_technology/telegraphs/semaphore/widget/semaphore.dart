@@ -24,7 +24,7 @@ class SemaphoreTelegraphState extends State<SemaphoreTelegraph> {
   String _currentEncodeInput = '';
   late TextEditingController _encodeController;
 
-  List<List<String>> _currentDisplays = [];
+  var _currentDisplays = Segments.Empty();
   var _currentMode = GCWSwitchPosition.right;
 
   @override
@@ -70,13 +70,7 @@ class SemaphoreTelegraphState extends State<SemaphoreTelegraph> {
   }
 
   Widget _buildVisualDecryption() {
-    Map<String, bool> currentDisplay;
-
-    var displays = _currentDisplays;
-    if (displays != null && displays.isNotEmpty)
-      currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [], key: (e) => e.toString(), value: (e) => true);
-    else
-      currentDisplay = {};
+    var currentDisplay = buildSegmentMap(_currentDisplays);
 
     var onChanged = (Map<String, bool> d) {
       setState(() {
@@ -86,11 +80,7 @@ class SemaphoreTelegraphState extends State<SemaphoreTelegraph> {
           newSegments.add(key);
         });
 
-        newSegments.sort();
-
-        if (_currentDisplays.isEmpty) _currentDisplays.add([]);
-
-        _currentDisplays[_currentDisplays.length - 1] = newSegments;
+        _currentDisplays.replaceLastSegment(newSegments);
       });
     };
 
@@ -116,7 +106,7 @@ class SemaphoreTelegraphState extends State<SemaphoreTelegraph> {
             icon: Icons.space_bar,
             onPressed: () {
               setState(() {
-                _currentDisplays.add([]);
+                _currentDisplays.addEmptyElement();
               });
             },
           ),
@@ -124,7 +114,7 @@ class SemaphoreTelegraphState extends State<SemaphoreTelegraph> {
             icon: Icons.backspace,
             onPressed: () {
               setState(() {
-                if (_currentDisplays.isNotEmpty) _currentDisplays.removeLast();
+                _currentDisplays.removeLastSegment();
               });
             },
           ),
@@ -132,7 +122,7 @@ class SemaphoreTelegraphState extends State<SemaphoreTelegraph> {
             icon: Icons.clear,
             onPressed: () {
               setState(() {
-                _currentDisplays = [];
+                _currentDisplays = Segments.Empty();
               });
             },
           )
@@ -161,9 +151,7 @@ class SemaphoreTelegraphState extends State<SemaphoreTelegraph> {
       );
     } else {
       //decode
-      var output = _currentDisplays.where((character) => character != null).map((character) {
-        return character.join();
-      }).toList();
+      var output = _currentDisplays.buildOutput();
       var segments = decodeSemaphore(output);
       return Column(
         children: <Widget>[

@@ -27,7 +27,7 @@ class CistercianNumbersState extends State<CistercianNumbers> {
 
   late TextEditingController _inputEncodeController;
   var _currentEncodeInput = '';
-  List<List<String>> _currentDisplays;
+  var _currentDisplays = Segments.Empty();
   var _currentMode = GCWSwitchPosition.right; //encrypt decrypt
 
   @override
@@ -75,15 +75,8 @@ class CistercianNumbersState extends State<CistercianNumbers> {
     ]);
   }
 
-  _buildVisualDecryption() {
-    Map<String, bool> currentDisplay;
-
-    var displays = _currentDisplays; //<List<String>>[];
-    if (displays != null && displays.isNotEmpty)
-      currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [],
-          key: (e) => e.toString(), value: (e) => true);
-    else
-      currentDisplay = {};
+  Widget _buildVisualDecryption() {
+    var currentDisplay = buildSegmentMap(_currentDisplays);
 
     var onChanged = (Map<String, bool> d) {
       setState(() {
@@ -93,11 +86,7 @@ class CistercianNumbersState extends State<CistercianNumbers> {
           newSegments.add(key);
         });
 
-        newSegments.sort();
-
-        if (_currentDisplays.isEmpty) _currentDisplays.add([]);
-
-        _currentDisplays[_currentDisplays.length - 1] = newSegments;
+        _currentDisplays.replaceLastSegment(newSegments);
       });
     };
 
@@ -131,7 +120,7 @@ class CistercianNumbersState extends State<CistercianNumbers> {
             icon: Icons.backspace,
             onPressed: () {
               setState(() {
-                if (_currentDisplays.isNotEmpty) _currentDisplays.removeLast();
+                _currentDisplays.removeLastSegment();
               });
             },
           ),

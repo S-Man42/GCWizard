@@ -28,7 +28,7 @@ class PasleyTelegraphState extends State<PasleyTelegraph> {
   late TextEditingController _decodeInputController;
   String _currentDecodeInput = '';
 
-  List<List<String>> _currentDisplays = [];
+  var _currentDisplays = Segments.Empty();
   var _currentMode = GCWSwitchPosition.right;
 
   @override
@@ -77,13 +77,7 @@ class PasleyTelegraphState extends State<PasleyTelegraph> {
   }
 
   Widget _buildVisualDecryption() {
-    Map<String, bool> currentDisplay;
-
-    var displays = _currentDisplays;
-    if (displays != null && displays.isNotEmpty)
-      currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [], key: (e) => e.toString(), value: (e) => true);
-    else
-      currentDisplay = {};
+    var currentDisplay = buildSegmentMap(_currentDisplays);
 
     var onChanged = (Map<String, bool> d) {
       setState(() {
@@ -93,11 +87,7 @@ class PasleyTelegraphState extends State<PasleyTelegraph> {
           newSegments.add(key);
         });
 
-        newSegments.sort();
-
-        if (_currentDisplays.isEmpty) _currentDisplays.add([]);
-
-        _currentDisplays[_currentDisplays.length - 1] = newSegments;
+        _currentDisplays.replaceLastSegment(newSegments);
       });
     };
 
@@ -123,7 +113,7 @@ class PasleyTelegraphState extends State<PasleyTelegraph> {
             icon: Icons.space_bar,
             onPressed: () {
               setState(() {
-                _currentDisplays.add([]);
+                _currentDisplays.addEmptyElement();
               });
             },
           ),
@@ -131,7 +121,7 @@ class PasleyTelegraphState extends State<PasleyTelegraph> {
             icon: Icons.backspace,
             onPressed: () {
               setState(() {
-                if (_currentDisplays.isNotEmpty) _currentDisplays.removeLast();
+                _currentDisplays.removeLastSegment();
               });
             },
           ),
@@ -139,7 +129,7 @@ class PasleyTelegraphState extends State<PasleyTelegraph> {
             icon: Icons.clear,
             onPressed: () {
               setState(() {
-                _currentDisplays = [];
+                _currentDisplays = Segments.Empty();
               });
             },
           )
@@ -170,9 +160,7 @@ class PasleyTelegraphState extends State<PasleyTelegraph> {
       //decode
       SegmentsText segments;
       // decode visual mode
-      var output = _currentDisplays.where((character) => character != null).map((character) {
-        return character.join();
-      }).toList();
+      var output = _currentDisplays.buildOutput();
       segments = decodeVisualPasley(output);
 
       return Column(

@@ -30,7 +30,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
   late TextEditingController _inputDecodeController;
   var _currentEncodeInput = '';
   var _currentDecodeInput = '';
-  var _currentDisplays = <List<String>>[];
+  var _currentDisplays = Segments.Empty();
   var _currentMode = GCWSwitchPosition.right;
   var _currentEncryptMode = GCWSwitchPosition.left;
 
@@ -101,14 +101,8 @@ class SegmentDisplayState extends State<SegmentDisplay> {
   }
 
   Widget _buildVisualEncryption() {
-    Map<String, bool> currentDisplay;
     NSegmentDisplay displayWidget;
-
-    var displays = _currentDisplays;
-    if (displays != null && displays.isNotEmpty)
-      currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [], key: (e) => e.toString(), value: (e) => true);
-    else
-      currentDisplay = {};
+    var currentDisplay = buildSegmentMap(_currentDisplays);
 
     var onChanged = (Map<String, bool> d) {
       setState(() {
@@ -122,12 +116,8 @@ class SegmentDisplayState extends State<SegmentDisplay> {
         //sort with dot to end
         var containsDot = newSegments.contains('dp');
         newSegments.remove('dp');
-        newSegments.sort();
-        if (containsDot) newSegments.add('dp');
 
-        if (_currentDisplays.isEmpty) _currentDisplays.add([]);
-
-        _currentDisplays[_currentDisplays.length - 1] = newSegments;
+        _currentDisplays.replaceLastSegment(newSegments, trailingSegment: containsDot ? 'dp' : null);
       });
     };
 
@@ -172,7 +162,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
             icon: Icons.space_bar,
             onPressed: () {
               setState(() {
-                _currentDisplays.add([]);
+                _currentDisplays.addEmptyElement();
               });
             },
           ),
@@ -180,7 +170,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
             icon: Icons.backspace,
             onPressed: () {
               setState(() {
-                if (_currentDisplays.isNotEmpty) _currentDisplays.removeLast();
+                _currentDisplays.removeLastSegment();
               });
             },
           ),
@@ -188,7 +178,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
             icon: Icons.clear,
             onPressed: () {
               setState(() {
-                _currentDisplays = [];
+                _currentDisplays = Segments.Empty()
               });
             },
           )
