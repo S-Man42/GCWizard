@@ -34,7 +34,7 @@ String encryptKenny(String? input, List<String> replaceCharacters, bool caseSens
       output += letter;
       return;
     }
-    var value = convertBase((alphabet_AZ[letter.toUpperCase()] - 1).toString(), 10, 3).padLeft(3, '0');
+    var value = convertBase((alphabet_AZ[letter.toUpperCase()]! - 1).toString(), 10, 3)!.padLeft(3, '0');
     value = substitution(value, substitutions);
     if (caseSensitive) {
       if (isUpperCase(letter))

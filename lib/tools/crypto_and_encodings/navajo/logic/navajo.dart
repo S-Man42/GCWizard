@@ -4,7 +4,7 @@
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
-final Map NAVAJO_ENCODE_ALPHABET = {
+final Map<String, String> NAVAJO_ENCODE_ALPHABET = {
   // although the dictionary has several encodings, these are used by kryptografie.de
   // dcode.fr uses all letters randomly for encoding
   'A': 'WOL-LA-CHEE',
@@ -35,7 +35,7 @@ final Map NAVAJO_ENCODE_ALPHABET = {
   'Z': 'BESH-DO-TLIZ',
 };
 
-final Map NAVAJO_ENCODE_DICTIONARY = {
+final Map<String, String> NAVAJO_ENCODE_DICTIONARY = {
   'CORPS': 'DIN-NEH-IH',
   'DIVISION': 'ASHIH-HI',
   'REGIMENT': 'TABAHA',
@@ -652,9 +652,9 @@ final Map NAVAJO_ENCODE_DICTIONARY = {
   'ZONE': 'BIH-NA-HAS-DZOH',
 };
 
-Map NAVAJO_DECODE_DICTIONARY = switchMapKeyValue(NAVAJO_ENCODE_DICTIONARY);
+Map<String, String> NAVAJO_DECODE_DICTIONARY = switchMapKeyValue(NAVAJO_ENCODE_DICTIONARY);
 
-Map NAVAJO_DECODE_ALPHABET = switchMapKeyValue(NAVAJO_ENCODE_ALPHABET);
+Map<String, String> NAVAJO_DECODE_ALPHABET = switchMapKeyValue(NAVAJO_ENCODE_ALPHABET);
 
 String shrinkText(String input) {
   return input
@@ -785,9 +785,9 @@ String decodeNavajo(String cipherText, bool useOnlyAlphabet) {
       else if (NAVAJO_DECODE_DICTIONARY[element] == null)
         result.add(UNKNOWN_ELEMENT);
       else
-        result.add(enfoldText(NAVAJO_DECODE_DICTIONARY[element]));
+        result.add(enfoldText(NAVAJO_DECODE_DICTIONARY[element]!));
       else
-        result.add(NAVAJO_DECODE_ALPHABET[element]);
+        result.add(NAVAJO_DECODE_ALPHABET[element]!); // ToDo Thomas double else ??
     });
     result.add(' ');
   });
@@ -804,7 +804,7 @@ String encodeNavajo(String plainText, bool useOnlyAlphabet) {
     else if (NAVAJO_ENCODE_DICTIONARY[element] == null)
       result.add(encodeLetterWise(element));
     else
-      result.add(NAVAJO_ENCODE_DICTIONARY[element]);
+      result.add(NAVAJO_ENCODE_DICTIONARY[element]!);
     result.add('');
   });
   return result.join(' ').trim();
@@ -816,7 +816,7 @@ String encodeLetterWise(String plainText) {
     if (NAVAJO_ENCODE_ALPHABET[element] == null)
       result.add(element);
     else
-      result.add(NAVAJO_ENCODE_ALPHABET[element]);
+      result.add(NAVAJO_ENCODE_ALPHABET[element]!);
   });
   return result.join(' ');
 }

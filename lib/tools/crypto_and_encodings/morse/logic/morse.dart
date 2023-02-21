@@ -1,6 +1,6 @@
 import 'package:gc_wizard/utils/collection_utils.dart';
 
-final AZToMorse = {
+final Map<String, String> AZToMorse = {
   'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.', 'G': '--.', 'H': '....', 'I': '..',
   'J': '.---', 'K': '-.-', 'L': '.-..', 'M': '--',
   'N': '-.', 'O': '---', 'P': '.--.', 'Q': '--.-', 'R': '.-.', 'S': '...', 'T': '-', 'U': '..-', 'V': '...-',

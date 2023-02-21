@@ -1,5 +1,6 @@
 import 'dart:isolate';
 
+import 'package:gc_wizard/common_widgets/gcw_async_executer.dart';
 import 'package:gc_wizard/utils/variable_string_expander.dart';
 
 class HashBreakerJobData {
@@ -11,25 +12,26 @@ class HashBreakerJobData {
   HashBreakerJobData({
     this.input = '',
     this.searchMask = '',
-    this.substitutions,
-    this.hashFunction,
+    required this.substitutions,
+    required this.hashFunction,
   });
 }
 
-Future<Map<String, dynamic>> breakHashAsync(dynamic jobData) async {
-  if (jobData == null) return null;
+Future<Map<String, Object>?> breakHashAsync(GCWAsyncExecuterParameters? jobData) async {
+  if (jobData?.parameters is! HashBreakerJobData) return null;
 
-  var output = breakHash(jobData.parameters.input, jobData.parameters.searchMask, jobData.parameters.substitutions,
-      jobData.parameters.hashFunction,
+  var data = jobData!.parameters as HashBreakerJobData;
+  var output = breakHash(data.input, data.searchMask, data.substitutions,
+      data.hashFunction,
       sendAsyncPort: jobData.sendAsyncPort);
 
-  jobData.sendAsyncPort?.send(output);
+  jobData.sendAsyncPort.send(output);
 
   return output;
 }
 
-Map<String, dynamic> breakHash(
-    String input, String searchMask, Map<String, String> substitutions, Function hashFunction,
+Map<String, Object>? breakHash(
+    String? input, String? searchMask, Map<String, String>? substitutions, Function? hashFunction,
     {SendPort? sendAsyncPort}) {
   if (input == null ||
       input.isEmpty ||

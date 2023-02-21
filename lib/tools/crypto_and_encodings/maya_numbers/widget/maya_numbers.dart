@@ -54,8 +54,8 @@ class MayaNumbersState extends State<MayaNumbers> {
     Map<String, bool> currentDisplay;
 
     var displays = _currentDisplays;
-    if (displays != null && displays.isNotEmpty)
-      currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [], key: (e) => e, value: (e) => true);
+    if (displays.isNotEmpty)
+      currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [], key: (e) => e as String, value: (e) => true);
     else
       currentDisplay = {};
 
@@ -141,7 +141,7 @@ class MayaNumbersState extends State<MayaNumbers> {
       );
     } else {
       //decode
-      var output = _currentDisplays.where((character) => character != null).map((character) {
+      var output = _currentDisplays.map((character) {
         return character.join();
       }).toList();
       var segments = decodeMayaNumbers(output);
