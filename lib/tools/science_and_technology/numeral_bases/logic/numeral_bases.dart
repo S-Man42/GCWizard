@@ -20,7 +20,7 @@ String _sanitizeInput(String input, int startBase, String alphabet) {
 }
 
 String? convertBase(String? input, int startBase, int destinationBase, {String? alphabet}) {
-  if (input == null || input == '') return '';
+  if (input == null || input.isEmpty) return '';
 
   var usedAlphabet = alphabet ?? _alphabet;
 

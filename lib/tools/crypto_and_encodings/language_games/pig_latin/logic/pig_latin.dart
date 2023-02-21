@@ -4,11 +4,11 @@ import 'package:gc_wizard/utils/string_utils.dart';
 
 final _QUSubstitutions = {'qu': 'qq', 'Qu': 'Qq', 'qU': 'qQ', 'QU': 'QQ'};
 
-String _encodeQU(input) {
+String _encodeQU(String input) {
   return substitution(input, _QUSubstitutions);
 }
 
-String _decodeQQ(input) {
+String _decodeQQ(String input) {
   return substitution(input, switchMapKeyValue(_QUSubstitutions));
 }
 

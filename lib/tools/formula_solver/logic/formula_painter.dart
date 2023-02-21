@@ -661,7 +661,7 @@ class FormulaPainter {
         }
       }
     }
-    if ((formula.length - startIndex > 0) || (arguments.length == 0)) arguments.add(formula.substring(startIndex));
+    if ((formula.length - startIndex > 0) || (arguments.isEmpty)) arguments.add(formula.substring(startIndex));
 
     return arguments;
   }

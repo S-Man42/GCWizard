@@ -4,7 +4,7 @@ import 'package:touchable/touchable.dart';
 
 class GameOfLifeBoard extends StatefulWidget {
   final int size;
-  final Function(List<List<bool>>) onChanged;
+  final void Function(List<List<bool>>) onChanged;
   final List<List<bool>> state;
 
   GameOfLifeBoard({Key? key, required this.size, required this.onChanged, required this.state}) : super(key: key);
@@ -42,7 +42,7 @@ class GameOfLifePainter extends CustomPainter {
   final int size;
   final List<List<bool>> state;
   final BuildContext context;
-  final Function(int, int, bool) onSetCell;
+  final void Function(int, int, bool) onSetCell;
 
   GameOfLifePainter(this.context, this.size, this.state, this.onSetCell);
 

@@ -2,6 +2,7 @@ import 'dart:isolate';
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:gc_wizard/common_widgets/gcw_async_executer.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:image/image.dart' as Image;
 
@@ -14,10 +15,11 @@ class AnimatedImageOutput {
   AnimatedImageOutput(this.images, this.durations, this.linkList, {this.frames});
 }
 
-Future<AnimatedImageOutput?> analyseImageAsync(dynamic jobData) async {
-  if (jobData == null) return null;
+Future<AnimatedImageOutput?> analyseImageAsync(GCWAsyncExecuterParameters? jobData) async {
+  if (jobData?.parameters is! Uint8List) return null;
 
-  var output = await analyseImage(jobData.parameters, sendAsyncPort: jobData.sendAsyncPort);
+  var data = jobData!.parameters as Uint8List;
+  var output = await analyseImage(data, sendAsyncPort: jobData.sendAsyncPort);
 
   jobData.sendAsyncPort?.send(output);
 
@@ -98,7 +100,7 @@ List<Image.Image> _linkSameImages(List<Image.Image> images) {
   return images;
 }
 
-bool compareImages(Uint8List image1, Uint8List image2, {toler = 0}) {
+bool compareImages(Uint8List image1, Uint8List image2, {int toler = 0}) {
   if (image1.length != image2.length) return false;
 
   for (int i = 0; i < image1.length; i++) if ((image1[i] - image2[i]).abs() > toler) return false;

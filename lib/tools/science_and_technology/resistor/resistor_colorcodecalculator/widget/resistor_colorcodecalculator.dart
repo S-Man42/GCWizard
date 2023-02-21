@@ -30,16 +30,16 @@ class ResistorColorCodeCalculatorState extends State<ResistorColorCodeCalculator
   var _currentNumberBands = 3;
   var _changed = false;
 
-  var _resistorBandDropDown_fourBands_first;
-  var _resistorBandDropDown_fourBands_second;
-  var _resistorBandDropDown_fourBands_multiplier;
-  var _resistorBandDropDown_fourBands_tolerance;
-  var _resistorBandDropDown_sixBands_first;
-  var _resistorBandDropDown_sixBands_second;
-  var _resistorBandDropDown_sixBands_third;
-  var _resistorBandDropDown_sixBands_multiplier;
-  var _resistorBandDropDown_sixBands_tolerance;
-  var _resistorBandDropDown_sixBands_temperatureCoefficient;
+  late _ResistorBandDropDown _resistorBandDropDown_fourBands_first;
+  late _ResistorBandDropDown _resistorBandDropDown_fourBands_second;
+  late _ResistorBandDropDown _resistorBandDropDown_fourBands_multiplier;
+  late _ResistorBandDropDown _resistorBandDropDown_fourBands_tolerance;
+  late _ResistorBandDropDown _resistorBandDropDown_sixBands_first;
+  late _ResistorBandDropDown _resistorBandDropDown_sixBands_second;
+  late _ResistorBandDropDown _resistorBandDropDown_sixBands_third;
+  late _ResistorBandDropDown _resistorBandDropDown_sixBands_multiplier;
+  late _ResistorBandDropDown _resistorBandDropDown_sixBands_tolerance;
+  late _ResistorBandDropDown _resistorBandDropDown_sixBands_temperatureCoefficient;
 
   ResistorBandColor _currentResistorColor_fourBands_first = defaultResistorBandColor;
   ResistorBandColor _currentResistorColor_fourBands_second = defaultResistorBandColor;
@@ -94,7 +94,7 @@ class ResistorColorCodeCalculatorState extends State<ResistorColorCodeCalculator
     );
   }
 
-  _buildResistors() {
+  void _buildResistors() {
     _resistorBandDropDown_fourBands_first = _ResistorBandDropDown(
       color: _currentResistorColor_fourBands_first,
       type: ResistorBandType.FIRST,

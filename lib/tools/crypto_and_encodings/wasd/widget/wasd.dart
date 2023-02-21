@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
@@ -20,7 +18,6 @@ import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/image_utils/image_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/text_widget_utils.dart';
-import 'package:intl/intl.dart';
 
 class WASD extends StatefulWidget {
   @override
@@ -76,7 +73,7 @@ class WASDState extends State<WASD> {
     super.dispose();
   }
 
-  _buildCustomInput(WASD_DIRECTION key) {
+  Widget _buildCustomInput(WASD_DIRECTION key) {
     var title_key = 'wasd_custom_';
 
     switch (key) {
@@ -97,7 +94,7 @@ class WASDState extends State<WASD> {
         title_key += 'right';
         break;
       default:
-        return;
+        return Container();
     }
 
     var title = i18n(context, title_key);
@@ -136,7 +133,7 @@ class WASDState extends State<WASD> {
     );
   }
 
-  _buildButton(String text) {
+  Widget _buildButton(String text) {
     return Container(
       height: 55,
       width: 40,
@@ -149,7 +146,7 @@ class WASDState extends State<WASD> {
     );
   }
 
-  _updateDrawing() {
+  void _updateDrawing() {
     if (_currentMode == GCWSwitchPosition.left) {
       _createGraphicOutputEncodeData();
     } else {
@@ -157,7 +154,7 @@ class WASDState extends State<WASD> {
     }
   }
 
-  _buildControlSet() {
+  Widget _buildControlSet() {
     return Column(
       children: [
         GCWTextDivider(
@@ -249,7 +246,7 @@ class WASDState extends State<WASD> {
     );
   }
 
-  _addInput(String char) {
+  void _addInput(String char) {
     setState(() {
       _currentDecodeInput = textControllerInsertText(char, _currentDecodeInput, _decodeController);
       _updateDrawing();
@@ -330,7 +327,7 @@ class WASDState extends State<WASD> {
     );
   }
 
-  _createGraphicOutputDecodeData() {
+  void _createGraphicOutputDecodeData() {
     var out = decodeWASDGraphic(_currentDecodeInput, [_currentUp, _currentLeft, _currentDown, _currentRight]);
 
     _outDecodeData = null;
@@ -351,7 +348,7 @@ class WASDState extends State<WASD> {
     ]);
   }
 
-  _createGraphicOutputEncodeData() {
+  void _createGraphicOutputEncodeData() {
     var out = decodeWASDGraphic(
         encodeWASD(_currentEncodeInput, [_currentUp, _currentLeft, _currentDown, _currentRight]),
         [_currentUp, _currentLeft, _currentDown, _currentRight]);

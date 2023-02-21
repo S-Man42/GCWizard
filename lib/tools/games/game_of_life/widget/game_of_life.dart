@@ -59,7 +59,7 @@ class GameOfLifeState extends State<GameOfLife> {
     super.dispose();
   }
 
-  _generateBoard() {
+  void _generateBoard() {
     var _newBoard =
         List<List<bool>>.generate(_currentSize, (index) => List<bool>.generate(_currentSize, (index) => false));
 
@@ -80,7 +80,7 @@ class GameOfLifeState extends State<GameOfLife> {
     _currentStep = 0;
   }
 
-  _reset({List<List<bool>>? board}) {
+  void _reset({List<List<bool>>? board}) {
     _boards = <List<List<bool>>>[];
     _boards.add(board ?? List.from(_currentBoard));
 
@@ -256,13 +256,13 @@ class GameOfLifeState extends State<GameOfLife> {
     );
   }
 
-  _forward() {
+  void _forward() {
     _currentStep++;
 
     _calculateStep();
   }
 
-  _backwards() {
+  void _backwards() {
     if (_currentStep > 0) _currentStep--;
 
     _calculateStep();
@@ -300,7 +300,7 @@ class GameOfLifeState extends State<GameOfLife> {
     return out;
   }
 
-  _countCells() {
+  int _countCells() {
     var counter = 0;
     for (int i = 0; i < _currentSize; i++) {
       for (int j = 0; j < _currentSize; j++) {
@@ -316,20 +316,20 @@ class GameOfLifeState extends State<GameOfLife> {
     return input.split('').map((e) => int.parse(e)).toSet();
   }
 
-  _calculateStep() {
+  void _calculateStep() {
     if (_currentStep < _boards.length) {
       _currentBoard = List.from(_boards[_currentStep]);
       return;
     }
 
-    var rules;
+    GameOfLifeRules rules;
     if (_currentRules == _KEY_CUSTOM_RULES) {
       rules = GameOfLifeRules(
           survivals: _toSet(_currentCustomSurvive),
           births: _toSet(_currentCustomBirth),
           isInverse: _currentCustomInverse);
     } else {
-      rules = _allRules[_currentRules];
+      rules = _allRules[_currentRules] ?? GameOfLifeRules();
     }
 
     _boards.add(calculateGameOfLifeStep(_currentBoard, rules, isWrapWorld: _currentWrapWorld));

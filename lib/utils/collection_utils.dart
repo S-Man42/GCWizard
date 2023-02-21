@@ -7,7 +7,7 @@ List<int> textToIntList(String text, {bool allowNegativeValues = false}) {
   var regex = allowNegativeValues ? RegExp(r'[^\-0-9]') : RegExp(r'[^0-9]');
 
   var list = text.split(regex);
-  list.removeWhere((value) => value == '');
+  list.removeWhere((value) => value.isEmpty);
 
   return list.map((value) => value == '-' ? 0 : int.parse(value)).toList();
 }

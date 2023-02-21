@@ -147,7 +147,7 @@ class _ExifReaderState extends State<ExifReader> {
   /// Add Thumbnail section
   ///
   void _decorateThumbnail(List<Widget> widgets) {
-    if (thumbnail?.file.bytes != null && thumbnail!.file.bytes.length > 0) {
+    if (thumbnail?.file.bytes != null && thumbnail!.file.bytes.isNotEmpty) {
       widgets.add(GCWOutput(
         title: i18n(context, 'exif_section_thumbnail'),
         child: GCWImageView(imageData: thumbnail),

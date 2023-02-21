@@ -11,7 +11,7 @@ List<int> _textToValues(String text, String scrabbleVersion, _SCRABBLE_MODE mode
 
   ScrabbleSet set = _set;
 
-  while (text.length > 0) {
+  while (text.isNotEmpty) {
     //Some Scrabble Versions include triple letters (e.g. Klingon has "tlh" or German (Gender) has "*IN")
     //Some Scrabble Versions include double letters (e.g. Spanish has "LL" or "RR" tiles)
 

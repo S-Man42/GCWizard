@@ -50,7 +50,7 @@ class KamasutraState extends State<Kamasutra> {
     );
   }
 
-  _calculateOutput() {
+  String _calculateOutput() {
     var alphabet = _currentAlphabetMode == GCWSwitchPosition.left ? alphabet_AZString : _currentAlphabet;
     return encryptKamasutra(_currentInput, alphabet);
   }

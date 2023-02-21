@@ -84,11 +84,11 @@ class _ResistorBandDropDownState extends State<_ResistorBandDropDown> {
     );
   }
 
-  _setCurrentValueAndEmitOnChange() {
+  void _setCurrentValueAndEmitOnChange() {
     widget.onChanged(_currentValue);
   }
 
-  Widget _formatValue(value, TextStyle textStyle) {
+  Widget _formatValue(double value, TextStyle textStyle) {
     Object formatted;
 
     switch (widget.type) {

@@ -8,6 +8,8 @@ import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/maya_numbers/widget/maya_numbers_segment_display.dart';
 import 'package:gc_wizard/tools/science_and_technology/maya_calendar/logic/maya_calendar.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/widget/n_segment_display.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/widget/segmentdisplay_output.dart';
 import 'package:intl/intl.dart';
 
@@ -21,7 +23,7 @@ class MayaCalendarState extends State<MayaCalendar> {
   var _currentLongCount = '';
   var _longCountController;
 
-  List<List<String>> _currentDisplays = [];
+  var _currentDisplays = Segments.Empty();
   var _currentMode = GCWSwitchPosition.right;
 
   @override
@@ -66,14 +68,8 @@ class MayaCalendarState extends State<MayaCalendar> {
     ]);
   }
 
-  _buildVisualDecryption() {
-    Map<String, bool> currentDisplay;
-
-    var displays = _currentDisplays;
-    if (displays != null && displays.isNotEmpty)
-      currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [], key: (e) => e, value: (e) => true);
-    else
-      currentDisplay = {};
+  Widget _buildVisualDecryption() {
+    var currentDisplay = buildSegmentMap(_currentDisplays);
 
     var onChanged = (Map<String, bool> d) {
       setState(() {
@@ -83,11 +79,7 @@ class MayaCalendarState extends State<MayaCalendar> {
           newSegments.add(key);
         });
 
-        newSegments.sort();
-
-        if (_currentDisplays.isEmpty) _currentDisplays.add([]);
-
-        _currentDisplays[_currentDisplays.length - 1] = newSegments;
+        _currentDisplays.replaceLastSegment(newSegments);
       });
     };
 
@@ -112,7 +104,7 @@ class MayaCalendarState extends State<MayaCalendar> {
             icon: Icons.space_bar,
             onPressed: () {
               setState(() {
-                _currentDisplays.add([]);
+                _currentDisplays.addEmptySegment();
               });
             },
           ),
@@ -120,7 +112,7 @@ class MayaCalendarState extends State<MayaCalendar> {
             icon: Icons.backspace,
             onPressed: () {
               setState(() {
-                if (_currentDisplays.isNotEmpty) _currentDisplays.removeLast();
+                _currentDisplays.removeLastSegment();
               });
             },
           ),
@@ -128,7 +120,7 @@ class MayaCalendarState extends State<MayaCalendar> {
             icon: Icons.clear,
             onPressed: () {
               setState(() {
-                _currentDisplays = [];
+                _currentDisplays = Segments.Empty();
               });
             },
           )
@@ -137,7 +129,7 @@ class MayaCalendarState extends State<MayaCalendar> {
     );
   }
 
-  Widget _buildDigitalOutput(List<List<String>> segments) {
+  Widget _buildDigitalOutput(Segments segments) {
     return SegmentDisplayOutput(
         segmentFunction: (displayedSegments, readOnly) {
           return MayaNumbersSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
@@ -153,23 +145,21 @@ class MayaCalendarState extends State<MayaCalendar> {
     if (_currentMode == GCWSwitchPosition.left) {
       //encode
       var segments = encodeMayaCalendar(_currentEncodeInput);
-      var numbers = segments['numbers'] as List<int>;
-      var displays = segments['displays'] as List<List<String>>;
-      var gregorian = MayaDayCountToGregorianCalendar(MayaLongCountToMayaDayCount(numbers));
-      var julian = MayaDayCountToJulianCalendar(MayaLongCountToMayaDayCount(numbers));
+      var gregorian = MayaDayCountToGregorianCalendar(MayaLongCountToMayaDayCount(segments.numbers));
+      var julian = MayaDayCountToJulianCalendar(MayaLongCountToMayaDayCount(segments.numbers));
 
-      outputDates[i18n(context, 'mayacalendar_system_longcount')] = MayaLongCount(numbers) +
+      outputDates[i18n(context, 'mayacalendar_system_longcount')] = MayaLongCount(segments.numbers) +
           '\n' +
-          MayaLongCountToTzolkin(numbers) +
+          MayaLongCountToTzolkin(segments.numbers) +
           '   ' +
-          MayaLongCountToHaab(numbers);
-      outputDates[i18n(context, 'mayacalendar_juliandate')] = MayaDayCountToJulianDate(MayaLongCountToMayaDayCount(numbers));
+          MayaLongCountToHaab(segments.numbers);
+      outputDates[i18n(context, 'mayacalendar_juliandate')] = MayaDayCountToJulianDate(MayaLongCountToMayaDayCount(segments.numbers));
       outputDates[i18n(context, 'mayacalendar_gregoriancalendar')] = dateFormat.format(gregorian);
       outputDates[i18n(context, 'mayacalendar_juliancalendar')] = dateFormat.format(julian);
 
       return Column(
         children: <Widget>[
-          _buildDigitalOutput(displays),
+          _buildDigitalOutput(segments),
           GCWColumnedMultilineOutput(
             data: outputDates.entries.map((entry) {
                     return [entry.key, entry.value];
@@ -180,28 +170,23 @@ class MayaCalendarState extends State<MayaCalendar> {
       );
     } else {
       //decode
-      var output = _currentDisplays.map((character) {
-        if (character != null) return character.join();
-      }).toList();
+      var output = _currentDisplays.buildOutput();
       var segments = decodeMayaCalendar(output);
-      var numbers = segments['numbers'] as List<int>;
-      var displays = segments['displays'] as List<List<String>>;
-      var vigesimal = segments['vigesimal'] as int;
-      var gregorian = MayaDayCountToGregorianCalendar(vigesimal);
-      var julian = MayaDayCountToJulianCalendar(vigesimal);
+      var gregorian = MayaDayCountToGregorianCalendar(segments.vigesimal.toInt());
+      var julian = MayaDayCountToJulianCalendar(segments.vigesimal.toInt());
 
-      outputDates[i18n(context, 'mayacalendar_daycount')] = vigesimal;
-      outputDates[i18n(context, 'mayacalendar_system_longcount')] = MayaLongCount(numbers) +
+      outputDates[i18n(context, 'mayacalendar_daycount')] = segments.vigesimal;
+      outputDates[i18n(context, 'mayacalendar_system_longcount')] = MayaLongCount(segments.numbers) +
           '\n' +
-          MayaLongCountToTzolkin(numbers) +
+          MayaLongCountToTzolkin(segments.numbers) +
           '   ' +
-          MayaLongCountToHaab(numbers);
-      outputDates[i18n(context, 'mayacalendar_juliandate')] = MayaDayCountToJulianDate(vigesimal);
+          MayaLongCountToHaab(segments.numbers);
+      outputDates[i18n(context, 'mayacalendar_juliandate')] = MayaDayCountToJulianDate(segments.vigesimal.toInt());
       outputDates[i18n(context, 'mayacalendar_gregoriancalendar')] = dateFormat.format(gregorian);
       outputDates[i18n(context, 'mayacalendar_juliancalendar')] = dateFormat.format(julian);
       return Column(
         children: <Widget>[
-          _buildDigitalOutput(displays),
+          _buildDigitalOutput(segments),
           GCWColumnedMultilineOutput(
             data: outputDates.entries.map((entry) {
                     return [entry.key, entry.value];

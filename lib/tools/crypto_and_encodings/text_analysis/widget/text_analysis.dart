@@ -138,7 +138,7 @@ class TextAnalysisState extends State<TextAnalysis> {
             });
           },
           items: _SORT_TYPES.values.map((type) {
-            var childText;
+            String childText;
             switch (type) {
               case _SORT_TYPES.ALPHABETICAL:
                 childText = 'textanalysis_sort_alphabetical';
@@ -358,7 +358,7 @@ class TextAnalysisState extends State<TextAnalysis> {
   }
 
   Column _buildOverallGroupOutput(
-      TextAnalysisCharacterCounts analysis, GCWExpandableTextDivider commonOutput, totalCharacterCount) {
+      TextAnalysisCharacterCounts analysis, GCWExpandableTextDivider commonOutput, int totalCharacterCount) {
     var allCharacters = <String, int>{};
     if (_currentUseLetters) allCharacters.addAll(analysis.letters);
     if (_currentUseNumbers) allCharacters.addAll(analysis.numbers);
@@ -374,7 +374,7 @@ class TextAnalysisState extends State<TextAnalysis> {
   }
 
   Column _buildGroupsOutput(
-      TextAnalysisCharacterCounts analysis, totalCharacterCount, GCWExpandableTextDivider commonOutput) {
+      TextAnalysisCharacterCounts analysis, int totalCharacterCount, GCWExpandableTextDivider commonOutput) {
     var letterOutput = _currentUseLetters ? _buildGroup(analysis.letters, totalCharacterCount) : null;
     var numberOutput = _currentUseNumbers ? _buildGroup(analysis.numbers, totalCharacterCount) : null;
     var specialCharsOutput = _currentUseSpecialChars ? _buildGroup(analysis.specialChars, totalCharacterCount) : null;

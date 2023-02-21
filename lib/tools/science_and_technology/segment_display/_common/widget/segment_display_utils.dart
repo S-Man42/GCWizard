@@ -84,7 +84,7 @@ void _exportFile(BuildContext context, Uint8List? data) async {
   if (value) showExportedFileDialog(context, contentWidget: imageContent(context, data));
 }
 
-Widget _buildSegmentDisplayOutput(int countColumns, List<dynamic> displays,
+Widget _buildSegmentDisplayOutput(int countColumns, List<Widget> displays,
     {double? verticalPadding, double? horizontalPadding}) {
   var _verticalPadding = verticalPadding ?? 5.0;
   var _horizontalPadding = horizontalPadding ?? 5.0;
@@ -96,7 +96,7 @@ Widget _buildSegmentDisplayOutput(int countColumns, List<dynamic> displays,
     var columns = <Widget>[];
 
     for (var j = 0; j < countColumns; j++) {
-      var widget;
+      Widget widget;
       var displayIndex = i * countColumns + j;
 
       if (displayIndex < displays.length) {

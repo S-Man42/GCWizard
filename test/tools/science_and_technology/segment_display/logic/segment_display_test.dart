@@ -55,8 +55,8 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, segmentType: ${elem['segmentType']}', () {
-        var _actual = encodeSegment(elem['input'], elem['segmentType']);
-        expect(_actual, elem['expectedOutput']);
+        var _actual = encodeSegment(elem['input'] as String?, elem['segmentType'] as SegmentDisplayType);
+        expect(_actual.displays, elem['expectedOutput']);
       });
     });
   });
@@ -111,7 +111,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, segmentType: ${elem['segmentType']}', () {
-        var _actual = decodeSegment(elem['input'], elem['segmentType']);
+        var _actual = decodeSegment(elem['input'] as String?, elem['segmentType'] as SegmentDisplayType);
         expect(_actual, elem['expectedOutput']);
       });
     });

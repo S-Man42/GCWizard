@@ -8,6 +8,7 @@ import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/widget/n_segment_display.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/_common/logic/teletypewriter.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
@@ -19,7 +20,7 @@ part 'package:gc_wizard/tools/science_and_technology/teletypewriter/punchtape_se
 class PunchtapeSegmentDisplayOutput extends StatefulWidget {
   final bool upsideDownButton;
   final NSegmentDisplay Function(Map<String, bool>, bool, TeletypewriterCodebook) segmentFunction;
-  final List<List<String>> segments;
+  final Segments segments;
   final bool readOnly;
   final Widget? trailing;
   final TeletypewriterCodebook codeBook;
@@ -74,7 +75,7 @@ class _PunchtapeSegmentDisplayOutputState extends State<PunchtapeSegmentDisplayO
               child: GCWIconButton(
                 size: IconButtonSize.SMALL,
                 icon: Icons.save,
-                iconColor: (widget.segments == null) || (widget.segments.isEmpty) ? themeColors().inActive() : null,
+                iconColor: (widget.segments.displays.isEmpty) ? themeColors().inActive() : null,
                 onPressed: () async {
                   await _buildPunchtapeSegmentDisplayImage(_displays, _currentUpsideDown).then((image) {
                     if (image != null)
@@ -93,11 +94,11 @@ class _PunchtapeSegmentDisplayOutputState extends State<PunchtapeSegmentDisplayO
     ]);
   }
 
-  Widget _buildDigitalOutput(List<List<String>> segments) {
-    var list = _currentUpsideDown ? segments.reversed : segments;
+  Widget _buildDigitalOutput(Segments segments) {
+    var list = _currentUpsideDown ? segments.displays.reversed : segments.displays;
 
     _displays = list.where((character) => character != null).map((character) {
-      var displayedSegments = Map<String, bool>.fromIterable(character, key: (e) => e, value: (e) => true);
+      var displayedSegments = Map<String, bool>.fromIterable(character, key: (e) => e.toString(), value: (e) => true);
       return widget.segmentFunction(displayedSegments, widget.readOnly, widget.codeBook);
     }).toList();
 

@@ -10,7 +10,7 @@ class _SudokuBoardValue {
 }
 
 class _SudokuBoard extends StatefulWidget {
-  final Function onChanged;
+  final void Function(List<List<_SudokuBoardValue?>>) onChanged;
   final List<List<_SudokuBoardValue?>> board;
 
   _SudokuBoard({Key? key, required this.onChanged, required this.board}) : super(key: key);
@@ -51,7 +51,7 @@ class _SudokuBoardState extends State<_SudokuBoard> {
 }
 
 class SudokuBoardPainter extends CustomPainter {
-  final Function(int, int, int?) setBoxValue;
+  final void Function(int, int, int?) setBoxValue;
   final List<List<_SudokuBoardValue?>> board;
   final BuildContext context;
 
@@ -132,7 +132,7 @@ class SudokuBoardPainter extends CustomPainter {
     _touchCanvas.drawLine(Offset(0.0, size.width), Offset(size.height, size.width), paint);
   }
 
-  _removeCalculated(List<List<_SudokuBoardValue?>> board) {
+  void _removeCalculated(List<List<_SudokuBoardValue?>> board) {
     for (int i = 0; i < 9; i++) {
       for (int j = 0; j < 9; j++) {
         if (board[i][j] != null && board[i][j]!.type == _SudokuFillType.CALCULATED) board[i][j] = null;
@@ -140,7 +140,7 @@ class SudokuBoardPainter extends CustomPainter {
     }
   }
 
-  _showInputDialog(int x, y) {
+  void _showInputDialog(int x, int y) {
     var columns = <Widget>[];
 
     for (int i = 0; i < 3; i++) {

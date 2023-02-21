@@ -44,14 +44,14 @@ Map<String, String>? _parse_grid(List<List<int>> grid) {
   var gridValues = _grid_values(grid);
 
   for (var s in gridValues.keys) {
-    var d = gridValues[s];
+    var d = gridValues[s]!;
     if (_digits.contains(d) && _assign(values, s, d) == null) return null;
   }
 
   return values;
 }
 
-Map _grid_values(List<List<int>> grid) {
+Map<String, String> _grid_values(List<List<int>> grid) {
   Map<String, String> gridMap = {};
   for (int i = 0; i < 9; i++) {
     for (int j = 0; j < 9; j++) {
@@ -73,7 +73,7 @@ Map<String, String>? _assign(Map<String, String> values, String s, String d) {
 Map<String, String>? _eliminate(Map<String, String> values, String s, String d) {
   if (!values[s]!.contains(d)) return values;
   values[s] = values[s]!.replaceAll(d, '');
-  if (values[s]!.length == 0)
+  if (values[s]!.isEmpty)
     return null;
   else if (values[s]!.length == 1) {
     var d2 = values[s]!;
@@ -82,7 +82,7 @@ Map<String, String>? _eliminate(Map<String, String> values, String s, String d) 
 
   for (List<String> u in _units[s]!) {
     var dplaces = u.where((s) => values[s]!.contains(d));
-    if (dplaces.length == 0)
+    if (dplaces.isEmpty)
       return null;
     else if (dplaces.length == 1) if (_assign(values, dplaces.elementAt(0), d) == null) return null;
   }

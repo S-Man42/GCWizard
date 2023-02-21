@@ -12,7 +12,7 @@ class HomophoneOutput {
 
 enum HomophoneErrorCode { OK, TABLE, CUSTOM_KEY_COUNT, CUSTOM_KEY_DUPLICATE }
 
-HomophoneOutput encryptHomophoneWithKeyMap(String input, Map<String, List<int>> keyMap) {
+HomophoneOutput encryptHomophoneWithKeyMap(String input, Map<String, List<int>>? keyMap) {
   if (keyMap == null || keyMap.isEmpty) {
     return HomophoneOutput('', '', HomophoneErrorCode.CUSTOM_KEY_COUNT);
   }
@@ -27,20 +27,20 @@ Map<String, List<int>> _keyListToKeyMap(Map<String, int> letterFrequencies, List
   letterFrequencies.forEach((letter, frequency) {
     keyMap.addAll({letter: <int>[]});
     for (int f = 0; f < frequency; f++) {
-      keyMap[letter].add(keyList[keyIndex++]);
+      keyMap[letter]!.add(keyList[keyIndex++]);
     }
   });
 
   return keyMap;
 }
 
-HomophoneOutput encryptHomophoneWithKeyList(String input, Alphabet alphabet, List<int> keyList) {
+HomophoneOutput encryptHomophoneWithKeyList(String? input, Alphabet alphabet, List<int>? keyList) {
   if (keyList == null || keyList.length != 100) {
     return HomophoneOutput('', '', HomophoneErrorCode.CUSTOM_KEY_COUNT);
   }
 
   var letterFrequencies = getLetterFrequenciesFromAlphabet(alphabet);
-  if (letterFrequencies == null) return HomophoneOutput('', '', HomophoneErrorCode.TABLE);
+
   var keyMap = _keyListToKeyMap(letterFrequencies, keyList);
 
   return _encryptHomophone(input, keyMap);
@@ -54,7 +54,7 @@ Map<String, List<int>> _generateKeyMap(Map<String, int> letterFrequencies, int r
   letterFrequencies.forEach((letter, frequency) {
     keyMap.addAll({letter: <int>[]});
     for (int f = 0; f < frequency; f++) {
-      keyMap[letter].add(counter % 100);
+      keyMap[letter]!.add(counter % 100);
       counter += multiplier;
     }
   });
@@ -64,12 +64,11 @@ Map<String, List<int>> _generateKeyMap(Map<String, int> letterFrequencies, int r
 
 HomophoneOutput encryptHomophoneWithGeneratedKey(String input, Alphabet alphabet, int rotation, int multiplier) {
   var letterFrequencies = getLetterFrequenciesFromAlphabet(alphabet);
-  if (letterFrequencies == null) return HomophoneOutput('', '', HomophoneErrorCode.TABLE);
 
   return _encryptHomophone(input, _generateKeyMap(letterFrequencies, rotation, multiplier));
 }
 
-HomophoneOutput _encryptHomophone(String input, Map<String, List<int>> keyMap) {
+HomophoneOutput _encryptHomophone(String? input, Map<String, List<int>> keyMap) {
   if (input == null || input.isEmpty) return HomophoneOutput('', '', HomophoneErrorCode.OK);
 
   var error = HomophoneErrorCode.OK;
@@ -89,7 +88,7 @@ HomophoneOutput _encryptHomophone(String input, Map<String, List<int>> keyMap) {
   return HomophoneOutput(output, _keyMapToString(keyMap), error);
 }
 
-HomophoneOutput decryptHomophoneWithKeyMap(String input, Map<String, List<int>> keyMap) {
+HomophoneOutput decryptHomophoneWithKeyMap(String input, Map<String, List<int>>? keyMap) {
   if (keyMap == null || keyMap.isEmpty) {
     return HomophoneOutput('', '', HomophoneErrorCode.CUSTOM_KEY_COUNT);
   }
@@ -97,13 +96,13 @@ HomophoneOutput decryptHomophoneWithKeyMap(String input, Map<String, List<int>> 
   return _decryptHomophone(input, keyMap);
 }
 
-HomophoneOutput decryptHomophoneWithKeyList(String input, Alphabet alphabet, List<int> keyList) {
+HomophoneOutput decryptHomophoneWithKeyList(String input, Alphabet alphabet, List<int>? keyList) {
   if (keyList == null || keyList.length != 100) {
     return HomophoneOutput('', '', HomophoneErrorCode.CUSTOM_KEY_COUNT);
   }
 
   var letterFrequencies = getLetterFrequenciesFromAlphabet(alphabet);
-  if (letterFrequencies == null) return HomophoneOutput('', '', HomophoneErrorCode.TABLE);
+
   var keyMap = _keyListToKeyMap(letterFrequencies, keyList);
 
   return _decryptHomophone(input, keyMap);
@@ -111,12 +110,11 @@ HomophoneOutput decryptHomophoneWithKeyList(String input, Alphabet alphabet, Lis
 
 HomophoneOutput decryptHomophoneWithGeneratedKey(String input, Alphabet alphabet, int rotation, int multiplier) {
   var letterFrequencies = getLetterFrequenciesFromAlphabet(alphabet);
-  if (letterFrequencies == null) return HomophoneOutput('', '', HomophoneErrorCode.TABLE);
 
   return _decryptHomophone(input, _generateKeyMap(letterFrequencies, rotation, multiplier));
 }
 
-HomophoneOutput _decryptHomophone(String input, Map<String, List<int>> keyMap) {
+HomophoneOutput _decryptHomophone(String? input, Map<String, List<int>> keyMap) {
   if (input == null || input.isEmpty) return HomophoneOutput('', '', HomophoneErrorCode.OK);
 
   var error = HomophoneErrorCode.OK;
@@ -152,7 +150,7 @@ bool _checkDoubleKey(Map<String, List<int>> table) {
 int _charToNumber(String character, Map<String, List<int>> table) {
   if (table.containsKey(character)) {
     var list = table[character];
-    if (list.isEmpty) return -1;
+    if (list!.isEmpty) return -1;
     var rnd = new Random();
     var index = rnd.nextInt(list.length);
 
@@ -163,7 +161,7 @@ int _charToNumber(String character, Map<String, List<int>> table) {
 
 String _numberToChar(String numberString, Map<String, List<int>> keyMap) {
   var number = int.tryParse(numberString);
-  var output;
+  String output = '';
 
   if (number == null) return '';
 

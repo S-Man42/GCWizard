@@ -5,7 +5,7 @@ import 'dart:math';
 import 'package:intl/intl.dart';
 
 Map<String, String> CartesianToPolar(String currentA, String currentB) {
-  if (currentA == null || currentA == '' || currentB == null || currentB == '') return {'': ''};
+  if (currentA == null || currentA.isEmpty || currentB == null || currentB.isEmpty) return {'': ''};
   currentA = currentA.replaceAll(',', '.');
   currentB = currentB.replaceAll(',', '.');
 
@@ -45,7 +45,7 @@ Map<String, String> CartesianToPolar(String currentA, String currentB) {
 }
 
 Map<String, String> PolarToCartesian(String currentRadius, currentAngle) {
-  if (currentRadius == null || currentRadius == '' || currentAngle == null || currentAngle == '') return {'': ''};
+  if (currentRadius == null || currentRadius.isEmpty || currentAngle == null || currentAngle.isEmpty) return {'': ''};
   currentRadius = currentRadius.replaceAll(',', '.');
   currentAngle = currentAngle.replaceAll(',', '.');
 

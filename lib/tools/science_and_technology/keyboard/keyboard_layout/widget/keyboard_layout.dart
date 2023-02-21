@@ -98,7 +98,7 @@ class KeyboardLayoutState extends State<KeyboardLayout> {
     );
   }
 
-  _buildOutput() {
+  Widget _buildOutput() {
     return GCWDefaultOutput(
         child: GCWOutputText(
       text: encodeKeyboard(_currentInput, _currentKeyboardFrom, _currentKeyboardTo),

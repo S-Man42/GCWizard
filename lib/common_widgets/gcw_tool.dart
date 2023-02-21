@@ -236,7 +236,7 @@ class _GCWToolState extends State<GCWTool> {
     // add further buttons as defined in registry
     widget.buttonList.forEach((button) {
       String url = '';
-      if (button.url == '') // 404-Page asking for help
+      if (button.url.isEmpty) // 404-Page asking for help
         url = i18n(context, 'common_error_url'); // https://blog.gcwizard.net/manual/uncategorized/404/
       else
         url = button.url;

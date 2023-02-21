@@ -9,6 +9,7 @@ import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/widget/n_segment_display.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
@@ -20,7 +21,7 @@ part 'package:gc_wizard/tools/science_and_technology/segment_display/_common/wid
 class SegmentDisplayOutput extends StatefulWidget {
   final bool upsideDownButton;
   final NSegmentDisplay Function(Map<String, bool>, bool) segmentFunction;
-  final List<List<String>> segments;
+  final Segments segments;
   final bool readOnly;
   final Widget? trailing;
   final bool showZoomButtons;
@@ -82,7 +83,7 @@ class _SegmentDisplayOutputState extends State<SegmentDisplayOutput> {
               child: GCWIconButton(
                 size: IconButtonSize.SMALL,
                 icon: Icons.save,
-                iconColor: (widget.segments == null) || (widget.segments.isEmpty) ? themeColors().inActive() : null,
+                iconColor: (widget.segments.displays.isEmpty) ? themeColors().inActive() : null,
                 onPressed: () async {
                   await buildSegmentDisplayImage(countColumns, _displays, _currentUpsideDown,
                           horizontalPadding: widget.horizontalSymbolPadding,
@@ -130,11 +131,11 @@ class _SegmentDisplayOutputState extends State<SegmentDisplayOutput> {
     ]);
   }
 
-  Widget _buildDigitalOutput(int countColumns, List<List<String>> segments) {
-    var list = _currentUpsideDown ? segments.reversed : segments;
+  Widget _buildDigitalOutput(int countColumns, Segments segments) {
+    var segmentsList = _currentUpsideDown ? Segments(displays: segments.displays.reversed.toList()) : segments;
 
-    _displays = list.where((character) => character != null).map((character) {
-      var displayedSegments = Map<String, bool>.fromIterable(character, key: (e) => e, value: (e) => true);
+    _displays = segmentsList.displays.map((character) {
+      var displayedSegments = Map<String, bool>.fromIterable(character, key: (e) => e.toString(), value: (e) => true);
       return widget.segmentFunction(displayedSegments, widget.readOnly);
     }).toList();
 

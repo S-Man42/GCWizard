@@ -16,7 +16,7 @@ class Scrabble extends StatefulWidget {
 }
 
 class ScrabbleState extends State<Scrabble> {
-  var _controller;
+  late TextEditingController _controller;
 
   var _currentInput = '';
   var _currentValues = <int>[];
@@ -94,7 +94,7 @@ class ScrabbleState extends State<Scrabble> {
     );
   }
 
-  _calculateOutput() {
+  void _calculateOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       _currentValues = scrabbleTextToLetterValues(_currentInput, _currentScrabbleVersion);
     } else {

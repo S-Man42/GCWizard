@@ -54,8 +54,8 @@ class WigWagSemaphoreTelegraphState extends State<WigWagSemaphoreTelegraph> {
           items: CCITT_CODEBOOK.entries.map((mode) {
             return GCWDropDownMenuItem(
                 value: mode.key,
-                child: i18n(context, mode.value['title']!),
-                subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']!) : null);
+                child: i18n(context, mode.value.title),
+                subtitle: mode.value.subtitle != null ? i18n(context, mode.value.subtitle) : null);
           }).toList(),
         ),
         _currentMode == GCWSwitchPosition.left
@@ -88,7 +88,7 @@ class WigWagSemaphoreTelegraphState extends State<WigWagSemaphoreTelegraph> {
     );
   }
 
-  _calculateOutput() {
+  String _calculateOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       return encodeWigWag(_currentEncodeInput.toUpperCase(), _currentLanguage);
     } else {

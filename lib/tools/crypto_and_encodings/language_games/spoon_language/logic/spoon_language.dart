@@ -1,6 +1,6 @@
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
 
-String encryptSpoonLanguage(String input) {
+String encryptSpoonLanguage(String? input) {
   if (input == null || input.isEmpty) return '';
 
   return substitution(
@@ -24,7 +24,7 @@ String encryptSpoonLanguage(String input) {
       .toLowerCase();
 }
 
-String decryptSpoonLanguage(String input) {
+String decryptSpoonLanguage(String? input) {
   if (input == null || input.isEmpty) return '';
 
   var regex = RegExp(r'([aeiouäöü]|ei|ie|au|äu|eu)lew\1');

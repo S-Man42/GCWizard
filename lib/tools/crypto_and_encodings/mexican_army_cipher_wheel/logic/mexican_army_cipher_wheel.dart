@@ -28,7 +28,7 @@ String encryptMexicanArmyCipherWheel(String? input, List<int> keys) {
     var value = alphabet_AZ[character] ?? 0;
     var tmpValue = value;
 
-    var randomWheel;
+    int randomWheel;
     do {
       randomWheel = Random().nextInt(4);
       var maxValue = _getMaxValue(randomWheel);

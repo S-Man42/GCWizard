@@ -72,7 +72,7 @@ class KeyboardNumbersState extends State<KeyboardNumbers> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    var outputData;
+    List<List<String>> outputData;
     List<List<String>> output = <List<String>>[];
 
     if (_currentMode == GCWSwitchPosition.left) {

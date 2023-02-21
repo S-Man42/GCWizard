@@ -1,20 +1,21 @@
+import 'package:gc_wizard/tools/science_and_technology/teletypewriter/_common/logic/teletypewriter.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 
 enum WigWagCodebook { ORIGINAL, GENERALSERVICECODE1860, GENERALSERVICECODE1872 }
 
-Map<WigWagCodebook, Map<String, String>> CCITT_CODEBOOK = {
-  WigWagCodebook.ORIGINAL: {
-    'title': 'telegraph_wigwag_original_title',
-    'subtitle': 'telegraph_wigwag_original_description'
-  },
-  WigWagCodebook.GENERALSERVICECODE1860: {
-    'title': 'telegraph_wigwag_general_title',
-    'subtitle': 'telegraph_wigwag_general_description'
-  },
-  WigWagCodebook.GENERALSERVICECODE1872: {
-    'title': 'telegraph_wigwag_general_1872_title',
-    'subtitle': 'telegraph_wigwag_general_1872_description'
-  },
+Map<WigWagCodebook, CodebookConfig> CCITT_CODEBOOK = {
+  WigWagCodebook.ORIGINAL: CodebookConfig(
+    title: 'telegraph_wigwag_original_title',
+    subtitle: 'telegraph_wigwag_original_description'
+  ),
+  WigWagCodebook.GENERALSERVICECODE1860: CodebookConfig(
+    title: 'telegraph_wigwag_general_title',
+    subtitle: 'telegraph_wigwag_general_description'
+  ),
+  WigWagCodebook.GENERALSERVICECODE1872: CodebookConfig(
+    title: 'telegraph_wigwag_general_1872_title',
+    subtitle: 'telegraph_wigwag_general_1872_description'
+  ),
 };
 
 final Map<String, int> originalCode = {
@@ -174,9 +175,9 @@ final Map<String, int> generalCode1872 = {
 };
 
 String encodeWigWag(String plainText, WigWagCodebook language) {
-  if (plainText == '' || plainText == null) return '';
+  if (plainText == null || plainText.isEmpty) return '';
 
-  var codebook;
+  Map<String, int> codebook;
   switch (language) {
     case WigWagCodebook.ORIGINAL:
       codebook = originalCode;
@@ -224,10 +225,10 @@ String encodeWigWag(String plainText, WigWagCodebook language) {
   return output.join(' ');
 }
 
-String decodeWigWag(List<int> cypherText, WigWagCodebook language) {
-  if (cypherText == [] || cypherText == null) return '';
+String decodeWigWag(List<int>? cypherText, WigWagCodebook language) {
+  if (cypherText == null || cypherText.isEmpty) return '';
 
-  var codebook;
+  Map<int, String> codebook;
   switch (language) {
     case WigWagCodebook.ORIGINAL:
       codebook = switchMapKeyValue(originalCode);
@@ -242,7 +243,7 @@ String decodeWigWag(List<int> cypherText, WigWagCodebook language) {
 
   List<String> output = [];
   cypherText.forEach((element) {
-    if (codebook[element] != null) output.add(codebook[element]);
+    if (codebook[element] != null) output.add(codebook[element]!);
   });
   return output
       .join(' ')

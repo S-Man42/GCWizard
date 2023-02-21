@@ -57,8 +57,8 @@ class GaussWeberTelegraphState extends State<GaussWeberTelegraph> {
             items: WHEATSTONECOOKENEEDLENUMBER.entries.map((mode) {
               return GCWDropDownMenuItem(
                   value: mode.key,
-                  child: i18n(context, mode.value['title']!),
-                  subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']!) : null);
+                  child: i18n(context, mode.value.title),
+                  subtitle: mode.value.subtitle.isNotEmpty ? i18n(context, mode.value.subtitle) : null);
             }).toList(),
           ),
         _currentMode == GCWSwitchPosition.left
@@ -91,7 +91,7 @@ class GaussWeberTelegraphState extends State<GaussWeberTelegraph> {
     );
   }
 
-  _buildOutput() {
+  Widget _buildOutput() {
     if (widget.mode == GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL) {
       if (_currentMode == GCWSwitchPosition.left) {
         var outputOriginal =
@@ -116,7 +116,7 @@ class GaussWeberTelegraphState extends State<GaussWeberTelegraph> {
                 .replaceAll('telegraph_schillingcanstatt_finish', i18n(context, 'telegraph_schillingcanstatt_finish')));
       }
     } else {
-      var output;
+      String output;
       if (_currentMode == GCWSwitchPosition.left) {
         if (widget.mode == GaussWeberTelegraphMode.WHEATSTONE_COOKE_5)
           output = encodeGaussWeberTelegraph(_currentEncodeInput, _currentNeedleNumber);
