@@ -112,7 +112,7 @@ class CistercianNumbersState extends State<CistercianNumbers> {
             icon: Icons.space_bar,
             onPressed: () {
               setState(() {
-                _currentDisplays.displays.add(_DEFAULT_SEGMENT);
+                _currentDisplays.addSegment(_DEFAULT_SEGMENT);
               });
             },
           ),
@@ -128,7 +128,7 @@ class CistercianNumbersState extends State<CistercianNumbers> {
             icon: Icons.clear,
             onPressed: () {
               setState(() {
-                _currentDisplays = [_DEFAULT_SEGMENT];
+                _currentDisplays = Segments(displays:[_DEFAULT_SEGMENT]);
               });
             },
           )
@@ -137,7 +137,7 @@ class CistercianNumbersState extends State<CistercianNumbers> {
     );
   }
 
-  Widget _buildDigitalOutput(List<List<String>> segments) {
+  Widget _buildDigitalOutput(Segments segments) {
     return SegmentDisplayOutput(
         segmentFunction: (displayedSegments, readOnly) {
           return _CistercianNumbersSegmentDisplay(

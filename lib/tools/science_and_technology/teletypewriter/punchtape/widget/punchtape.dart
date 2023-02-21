@@ -196,7 +196,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
             icon: Icons.space_bar,
             onPressed: () {
               setState(() {
-                _currentDisplays.addEmptyElement();
+                _currentDisplays.addEmptySegment();
               });
             },
           ),

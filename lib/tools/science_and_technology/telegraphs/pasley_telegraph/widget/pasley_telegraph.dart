@@ -113,7 +113,7 @@ class PasleyTelegraphState extends State<PasleyTelegraph> {
             icon: Icons.space_bar,
             onPressed: () {
               setState(() {
-                _currentDisplays.addEmptyElement();
+                _currentDisplays.addEmptySegment();
               });
             },
           ),

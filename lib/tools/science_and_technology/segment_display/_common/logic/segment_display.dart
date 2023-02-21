@@ -530,17 +530,25 @@ class Segments {
 
   Segments({required this.displays});
 
-  void addEmptyElement() {
+  void addEmptySegment() {
     displays.add([]);
+  }
+
+  void addSegment(List<String>? segment) {
+    if (segment != null) displays.add(segment);
+  }
+
+  void addSegments(List<List<String>>? segments) {
+    if (segments != null) displays.addAll(segments);
   }
 
   void removeLastSegment() {
     if (displays.isNotEmpty) displays.removeLast();
   }
 
-  void replaceLastSegment(List<String> newSegments, {String? trailingSegment}) {
+  void replaceLastSegment(List<String> newSegments, {String? trailingDisplay}) {
     newSegments.sort();
-    if (trailingSegment != null) newSegments.add(trailingSegment);
+    if (trailingDisplay != null) newSegments.add(trailingDisplay);
 
     if (displays.isEmpty) displays.add([]);
     displays[displays.length - 1] = newSegments;

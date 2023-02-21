@@ -184,7 +184,7 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
               segmentFunction: (displayedSegments, readOnly) {
                 return _SanatizedShadoksNumbersSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
               },
-              segments: segments.displays,
+              segments: segments,
               readOnly: true),
           GCWOutput(title: i18n(context, 'shadoksnumbers_single_numbers'), child: segments.numbers.join(' ')),
           GCWOutput(title: i18n(context, 'shadoksnumbers_quaternary'), child: segments.quaternary),

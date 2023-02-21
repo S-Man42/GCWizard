@@ -123,7 +123,7 @@ class MurrayTelegraphState extends State<MurrayTelegraph> {
             icon: Icons.space_bar,
             onPressed: () {
               setState(() {
-                _currentDisplays.addEmptyElement();
+                _currentDisplays.addEmptySegment();
               });
             },
           ),

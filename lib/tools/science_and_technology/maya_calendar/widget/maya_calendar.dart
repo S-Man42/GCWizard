@@ -104,7 +104,7 @@ class MayaCalendarState extends State<MayaCalendar> {
             icon: Icons.space_bar,
             onPressed: () {
               setState(() {
-                _currentDisplays.addEmptyElement();
+                _currentDisplays.addEmptySegment();
               });
             },
           ),

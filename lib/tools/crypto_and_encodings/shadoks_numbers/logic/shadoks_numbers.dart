@@ -2,13 +2,13 @@ import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numer
 import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 
-class ShadocksOutput {
-  Segments displays;
+class ShadocksOutput extends Segments{
   List<int> numbers;
   BigInt quaternary;
   String shadoks;
 
-  ShadocksOutput(this.displays, this.numbers, this.quaternary, this.shadoks);
+  ShadocksOutput(List<List<String>> displays, this.numbers, this.quaternary, this.shadoks)
+    : super(displays : displays);
 }
 
 final Map<int, List<String>> _numbersToSegments = {
@@ -37,7 +37,7 @@ Segments encodeShadoksNumbers(int? input) {
 
 ShadocksOutput decodeShadoksNumbers(List<String>? inputs) {
   if (inputs == null || inputs.isEmpty)
-    return ShadocksOutput(Segments(displays: [['a']]), [0], BigInt.zero, _numberToWord['0']!);
+    return ShadocksOutput([['a']], [0], BigInt.zero, _numberToWord['0']!);
 
   var displays = <List<String>>[];
 
@@ -57,7 +57,7 @@ ShadocksOutput decodeShadoksNumbers(List<String>? inputs) {
 
   var total = convertBase(numbers.map((number) => convertBase(number.toString(), 10, 4)).join(), 4, 10) ?? '0';
 
-  return ShadocksOutput(Segments(displays: displays), numbers, BigInt.tryParse(total) ?? BigInt.zero, _shadoks(numbers));
+  return ShadocksOutput(displays, numbers, BigInt.tryParse(total) ?? BigInt.zero, _shadoks(numbers));
 }
 
 String _shadoks(List<int> numbers) {

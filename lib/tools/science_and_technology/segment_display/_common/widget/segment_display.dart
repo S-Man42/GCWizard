@@ -117,7 +117,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
         var containsDot = newSegments.contains('dp');
         newSegments.remove('dp');
 
-        _currentDisplays.replaceLastSegment(newSegments, trailingSegment: containsDot ? 'dp' : null);
+        _currentDisplays.replaceLastSegment(newSegments, trailingDisplay: containsDot ? 'dp' : null);
       });
     };
 
@@ -162,7 +162,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
             icon: Icons.space_bar,
             onPressed: () {
               setState(() {
-                _currentDisplays.addEmptyElement();
+                _currentDisplays.addEmptySegment();
               });
             },
           ),

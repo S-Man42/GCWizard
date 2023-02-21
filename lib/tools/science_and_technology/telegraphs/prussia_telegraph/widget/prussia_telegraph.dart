@@ -138,7 +138,7 @@ class PrussiaTelegraphState extends State<PrussiaTelegraph> {
             icon: Icons.space_bar,
             onPressed: () {
               setState(() {
-                _currentDisplays.addEmptyElement();
+                _currentDisplays.addEmptySegment();
               });
             },
           ),

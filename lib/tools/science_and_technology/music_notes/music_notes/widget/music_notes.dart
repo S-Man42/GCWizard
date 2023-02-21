@@ -17,6 +17,7 @@ import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/l
 import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/widget/n_segment_display.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/widget/segmentdisplay_output.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/widget/segmentdisplay_painter.dart';
+import 'package:gc_wizard/tools/symbol_tables/_common/widget/gcw_symbol_container.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
 part 'package:gc_wizard/tools/science_and_technology/music_notes/music_notes/widget/music_notes_segment_display.dart';
@@ -102,16 +103,10 @@ class MusicNotesState extends State<MusicNotes> {
   }
 
   Widget _buildVisualDecryption() {
-    Map<String, bool> currentDisplay;
-
-    var displays = _currentDisplays;
-    if (displays != null && displays.displays.isNotEmpty) {
-      currentDisplay = Map<String, bool>.fromIterable(displays.displays.last ?? [], key: (e) => e.toString(), value: (e) => true);
-      currentDisplay.remove(altClef);
-      currentDisplay.remove(bassClef);
-      currentDisplay.remove(trebleClef);
-    } else
-      currentDisplay = {};
+    var currentDisplay = buildSegmentMap(_currentDisplays);
+    currentDisplay.remove(altClef);
+    currentDisplay.remove(bassClef);
+    currentDisplay.remove(trebleClef);
 
     switch (_currentCode) {
       case NotesCodebook.ALT:
@@ -159,7 +154,7 @@ class MusicNotesState extends State<MusicNotes> {
             icon: Icons.space_bar,
             onPressed: () {
               setState(() {
-                _currentDisplays.addEmptyElement();
+                _currentDisplays.addEmptySegment();
               });
             },
           ),
@@ -175,7 +170,7 @@ class MusicNotesState extends State<MusicNotes> {
             icon: Icons.clear,
             onPressed: () {
               setState(() {
-                _currentDisplays = Segments.Empty()
+                _currentDisplays = Segments.Empty();
               });
             },
           )
@@ -184,7 +179,7 @@ class MusicNotesState extends State<MusicNotes> {
     );
   }
 
-  Widget _buildDigitalOutput(List<List<String>> segments) {
+  Widget _buildDigitalOutput(Segments segments) {
     return SegmentDisplayOutput(
         segmentFunction: (displayedSegments, readOnly) {
           displayedSegments = filterVisibleHelpLines(displayedSegments);
@@ -199,7 +194,7 @@ class MusicNotesState extends State<MusicNotes> {
   Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       //encode
-      List<List<String>> segments = encodeNotes(_currentEncodeInput, _currentCode, _buildTranslationMap(_currentCode));
+      var segments = encodeNotes(_currentEncodeInput, _currentCode, _buildTranslationMap(_currentCode));
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments),
@@ -212,8 +207,8 @@ class MusicNotesState extends State<MusicNotes> {
 
       return Column(
         children: <Widget>[
-          _buildDigitalOutput(segments['displays']),
-          GCWDefaultOutput(child: _normalize(segments['chars'], _currentCode)),
+          _buildDigitalOutput(segments),
+          GCWDefaultOutput(child: _normalize(segments.chars, _currentCode)),
         ],
       );
     }
@@ -251,12 +246,12 @@ class MusicNotesState extends State<MusicNotes> {
         default:
           translation = '';
       }
-      if (translation != null && translation.isNotEmpty) translationMap.addAll({note: translation});
+      if (translation.isNotEmpty) translationMap.addAll({note: translation});
     });
     return translationMap;
   }
 
-  Widget _buildDropDownMenuItem(dynamic icon, String toolName, String? description) {
+  Widget _buildDropDownMenuItem(GCWSymbolContainer? icon, String toolName, String? description) {
     return Row(children: [
       Container(
         child: (icon != null) ? icon : Container(width: 50),

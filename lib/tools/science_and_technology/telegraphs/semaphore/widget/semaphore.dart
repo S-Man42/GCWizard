@@ -106,7 +106,7 @@ class SemaphoreTelegraphState extends State<SemaphoreTelegraph> {
             icon: Icons.space_bar,
             onPressed: () {
               setState(() {
-                _currentDisplays.addEmptyElement();
+                _currentDisplays.addEmptySegment();
               });
             },
           ),

@@ -242,8 +242,7 @@ Segments encodeChappe(String? input, ChappeCodebook language) {
 }
 
 SegmentsText decodeVisualChappe(List<String>? inputs, ChappeCodebook language) {
-  if (inputs == null || inputs.isEmpty)
-    return SegmentsText(displays: [], text: '');
+  if (inputs == null || inputs.isEmpty) return SegmentsText(displays: [], text: '');
 
   var displays = <List<String>>[];
   var segment = <String>[];

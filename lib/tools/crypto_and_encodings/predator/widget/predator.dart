@@ -105,7 +105,7 @@ class PredatorState extends State<Predator> {
             icon: Icons.space_bar,
             onPressed: () {
               setState(() {
-                _currentDisplays.addEmptyElement();
+                _currentDisplays.addEmptySegment();
               });
             },
           ),
@@ -121,7 +121,7 @@ class PredatorState extends State<Predator> {
             icon: Icons.clear,
             onPressed: () {
               setState(() {
-                _currentDisplays = Segments.Empty()
+                _currentDisplays = Segments.Empty();
               });
             },
           )
@@ -155,7 +155,7 @@ class PredatorState extends State<Predator> {
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments),
-          GCWDefaultOutput(child: (segments.chars.join('')),
+          GCWDefaultOutput(child: segments.chars.join('')),
         ],
       );
     }
