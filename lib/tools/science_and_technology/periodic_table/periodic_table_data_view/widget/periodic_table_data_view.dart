@@ -31,9 +31,9 @@ class PeriodicTableDataViewState extends State<PeriodicTableDataView> {
   var _currentSortingOrder = GCWSwitchPosition.left;
 
   var _categories = <PeriodicTableCategory, String>{};
-  var _elementNames = {};
-  var _chemicalSymbols = {};
-  var _atomicNumbers = {};
+  Map<int, String> _elementNames = {};
+  Map<int, String> _chemicalSymbols = {};
+  Map<int, int> _atomicNumbers = {};
   late List<int> _iupacGroups;
   late List<int> _mainGroups;
   late List<int> _subGroups;
@@ -409,7 +409,7 @@ class PeriodicTableDataViewState extends State<PeriodicTableDataView> {
         TEMPERATURE_FAHRENHEIT.symbol;
   }
 
-  _buildElementOutputs() {
+  Map<String, List<List<Object>>> _buildElementOutputs() {
     PeriodicTableElement pte =
         allPeriodicTableElements.firstWhere((element) => element.atomicNumber == _currentValueCategoryValue);
 
@@ -472,24 +472,24 @@ class PeriodicTableDataViewState extends State<PeriodicTableDataView> {
         ],
         [i18n(context, 'periodictable_attribute_mostcommonisotop'), pte.mostCommonIsotop],
       ],
-      'comments': pte.comments ?? []
+      'comments': [pte.comments]
     };
   }
 
   Widget _buildOutput() {
-    var outputData = [[]];
+    List<List<Object>>? outputData;
     var flexValues = <int>[];
-    var comments;
-    var tappables;
+    String? comments;
+    List<void Function()>? tappables;
 
     switch (_currentCategory) {
       case PeriodicTableCategory.ELEMENT_NAME:
       case PeriodicTableCategory.ATOMIC_NUMBER:
       case PeriodicTableCategory.CHEMICAL_SYMBOL:
         var data = _buildElementOutputs();
-        outputData = data['data'];
-        comments = data['comments'].map((comment) {
-          return '- ' + i18n(context, comment);
+        outputData = data['data']!;
+        comments = data['comments']!.first.map((comment) {
+          return '- ' + i18n(context, comment as String? ?? '');
         }).join('\n');
         break;
       case PeriodicTableCategory.IUPAC_GROUP:
@@ -503,7 +503,7 @@ class PeriodicTableDataViewState extends State<PeriodicTableDataView> {
         outputData = _buildGroupOutputs();
         flexValues = [1, 1, 3, 1];
         tappables = outputData.map((data) {
-          return () => _showElement(data[1]);
+          return () => _showElement(data[1] as int);
         }).toList();
         break;
       case PeriodicTableCategory.MASS:
@@ -516,7 +516,7 @@ class PeriodicTableDataViewState extends State<PeriodicTableDataView> {
         outputData = _buildValueOutputs();
         flexValues = [1, 2, 3, 1, 1];
         tappables = outputData.map((data) {
-          return () => _showElement(data[4]);
+          return () => _showElement(data[4] as int);
         }).toList();
         break;
     }

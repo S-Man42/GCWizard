@@ -92,7 +92,7 @@ class BrailleState extends State<Braille> {
     var displays = _currentDisplays;
     if (displays != null && displays.isNotEmpty)
       currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [],
-          key: (e) => e, value: (e) => true);
+          key: (e) => e.toString(), value: (e) => true);
     else
       currentDisplay = {};
 

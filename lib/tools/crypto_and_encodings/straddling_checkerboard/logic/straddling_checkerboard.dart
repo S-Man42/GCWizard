@@ -10,8 +10,8 @@ class StraddlingCheckerboardOutput {
 }
 
 StraddlingCheckerboardOutput encryptStraddlingCheckerboard(
-    String? input, String? key, alphabetWord, columnOrder, bool matrix4x10,
-    {PolybiosMode mode: PolybiosMode.AZ09, required String alphabet}) {
+    String? input, String? key, String alphabetWord, String columnOrder, bool matrix4x10,
+    {PolybiosMode mode = PolybiosMode.AZ09, required String alphabet}) {
   if (input == null || input.isEmpty) return StraddlingCheckerboardOutput('', '');
   if (key == null || key.isEmpty) return StraddlingCheckerboardOutput('', '');
 
@@ -56,8 +56,8 @@ StraddlingCheckerboardOutput encryptStraddlingCheckerboard(
 }
 
 StraddlingCheckerboardOutput decryptStraddlingCheckerboard(
-    String? input, String? key, alphabetWord, columnOrder, bool matrix4x10,
-    {PolybiosMode mode: PolybiosMode.AZ09, required String alphabet}) {
+    String? input, String? key, String alphabetWord, String columnOrder, bool matrix4x10,
+    {PolybiosMode mode = PolybiosMode.AZ09, required String alphabet}) {
   if (input == null || input.isEmpty) return StraddlingCheckerboardOutput('', '');
   if (key == null || key.isEmpty) return StraddlingCheckerboardOutput('', '');
 

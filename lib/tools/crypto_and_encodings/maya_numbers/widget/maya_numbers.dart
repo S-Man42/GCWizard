@@ -55,7 +55,7 @@ class MayaNumbersState extends State<MayaNumbers> {
 
     var displays = _currentDisplays;
     if (displays.isNotEmpty)
-      currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [], key: (e) => e as String, value: (e) => true);
+      currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [], key: (e) => e.toString(), value: (e) => true);
     else
       currentDisplay = {};
 

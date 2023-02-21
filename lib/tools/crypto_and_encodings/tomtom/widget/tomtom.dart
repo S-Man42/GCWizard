@@ -116,7 +116,7 @@ class TomTomState extends State<TomTom> {
     );
   }
 
-  _buildButtonBar() {
+  Widget _buildButtonBar() {
     return GCWToolBar(children: [
       GCWButton(
         text: _currentA,

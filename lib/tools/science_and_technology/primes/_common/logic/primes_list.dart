@@ -1,6 +1,6 @@
 // split lists to avoid keeping all available primes in cache
 
-final primes = [
+final List<int> primes = [
   2,
   3,
   5,

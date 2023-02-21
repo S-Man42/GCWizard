@@ -64,7 +64,7 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
     ]);
   }
 
-  _buildVisualDecryption() {
+  Widget _buildVisualDecryption() {
     var onChanged = (Map<String, bool> d) {
       setState(() {
         _currentDisplay = d;

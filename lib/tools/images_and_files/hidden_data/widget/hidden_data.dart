@@ -190,13 +190,13 @@ class HiddenDataState extends State<HiddenData> {
 
     return FutureBuilder(
         future: _hiddenDataList,
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<List<GCWFile>> snapshot) {
           if (!_complete)
             return GCWOutputText(text: i18n(context, 'common_please_wait'), suppressCopyButton: true);
-          else if (snapshot.data == null || snapshot.data.isEmpty)
+          else if ((snapshot.data == null) || snapshot.data!.isEmpty)
             return GCWOutputText(text: i18n(context, 'hiddendata_nohiddendatafound'), suppressCopyButton: true);
           else
-            return GCWFilesOutput(files: snapshot.data);
+            return GCWFilesOutput(files: snapshot.data!);
         });
   }
 

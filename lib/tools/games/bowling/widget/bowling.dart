@@ -27,7 +27,7 @@ class BowlingState extends State<Bowling> {
   int _currentThrow2 = 0;
   int _currentThrow3 = 0;
 
-  var _cellWidth;
+  double _cellWidth = 0;
   BorderSide _border = BorderSide(width: 1.0, color: Colors.black87);
 
   @override
@@ -183,13 +183,13 @@ class BowlingState extends State<Bowling> {
     _currentFrameTotals = List<int>.generate(10, (i) => 0);
   }
 
-  _setThrowPointsForCurrentFrame() {
+  void _setThrowPointsForCurrentFrame() {
     _currentThrow1 = _currentBowlingScore[_currentFrame].one;
     _currentThrow2 = _currentBowlingScore[_currentFrame].two;
     _currentThrow3 = _currentBowlingScore[_currentFrame].three;
   }
 
-  _calculateAndSetScore() {
+  void _calculateAndSetScore() {
     _currentBowlingScore[_currentFrame] = BowlingFrame(one: _currentThrow1, two: _currentThrow2, three: _currentThrow3);
     _currentFrameTotals = bowlingCalcFrameTotals(_currentBowlingScore);
   }
@@ -219,7 +219,7 @@ class BowlingState extends State<Bowling> {
   }
 
   List<Widget> _buildBowlingScoreBoard() {
-    https: //www.sportcalculators.com/bowling-score-calculator
+    // https: //www.sportcalculators.com/bowling-score-calculator
     var score = <Widget>[];
     var scoreRow1 = <Widget>[];
     var scoreRow2 = <Widget>[];

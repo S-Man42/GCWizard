@@ -107,7 +107,7 @@ class PrussiaTelegraphState extends State<PrussiaTelegraph> {
 
     var displays = _currentDisplays;
     if (displays != null && displays.isNotEmpty)
-      currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [], key: (e) => e, value: (e) => true);
+      currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [], key: (e) => e.toString(), value: (e) => true);
     else
       currentDisplay = {};
 

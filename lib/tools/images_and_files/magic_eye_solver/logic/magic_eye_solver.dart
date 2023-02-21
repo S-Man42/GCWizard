@@ -186,7 +186,7 @@ Tuple2<Uint8List?, MagicEyeErrorCode>? _generateImage(
   else
     texture = _generateColoredDotsTexture(_separation, resolutionY);
 
-  if (hiddenDataImage == null || texture == null) return null;
+  if (texture == null) return null;
 
   _textureWidth = _separation;
   _textureHeight = (_separation * texture.height) ~/ texture.width;
@@ -242,7 +242,7 @@ Tuple2<Uint8List?, MagicEyeErrorCode>? _generateImage(
     _doLineHoroptic(y);
 
     if (sendAsyncPort != null && (generatedLines % _progressStep == 0))
-      sendAsyncPort?.send({'progress': y / _rows});
+      sendAsyncPort.send({'progress': y / _rows});
   }
 
   var bmStereogram = Image.Image.fromBytes(_lineWidth, _rows, _pixels.buffer.asUint8List(),

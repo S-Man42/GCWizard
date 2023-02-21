@@ -90,7 +90,7 @@ Map<String, Object> decodePredator(List<String>? inputs) {
     displays.add(segment);
   });
 
-  List<String> text = inputs.where((input) => input != null).map((input) {
+  List<String> text = inputs.map((input) {
     var char = '';
 
     if (CODEBOOK.map((key, value) => MapEntry(key.join(), value.toString()))[input.split('').join()] == null) {

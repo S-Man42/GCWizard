@@ -44,14 +44,14 @@ Map<String, String>? _parse_grid(List<List<int>> grid) {
   var gridValues = _grid_values(grid);
 
   for (var s in gridValues.keys) {
-    var d = gridValues[s];
+    var d = gridValues[s]!;
     if (_digits.contains(d) && _assign(values, s, d) == null) return null;
   }
 
   return values;
 }
 
-Map _grid_values(List<List<int>> grid) {
+Map<String, String> _grid_values(List<List<int>> grid) {
   Map<String, String> gridMap = {};
   for (int i = 0; i < 9; i++) {
     for (int j = 0; j < 9; j++) {

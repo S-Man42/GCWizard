@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/datetime_utils.dart';
+import 'package:tuple/tuple.dart';
 
 enum GroupType { MAIN_GROUP, SUB_GROUP }
 
@@ -99,10 +100,10 @@ class PeriodicTableElement {
       this.halfLife, //German: Halbwertszeit
       {this.comments: const []}) {
     var group = iupacGroupToMainSubGroup(iupacGroup);
-    if (group['type'] == GroupType.MAIN_GROUP)
-      this.mainGroup = group['value'];
+    if (group?.item1 == GroupType.MAIN_GROUP)
+      this.mainGroup = group?.item2;
     else
-      this.subGroup = group['value'];
+      this.subGroup = group?.item2;
 
     if (this.boilingPoint == -double.infinity && this.meltingPoint == -double.infinity) {
       this.stateOfMatter = StateOfMatter.UNKNOWN;
@@ -148,11 +149,11 @@ class PeriodicTableElement {
     }
   }
 
-  get formattedHalfLife {
+  String get formattedHalfLife {
     return formatDaysToNearestUnit(this.halfLife);
   }
 
-  get formattedDensity {
+  String get formattedDensity {
     return (this.density < 0.1) ? this.density.toStringAsExponential() : this.density.toString();
   }
 
@@ -162,9 +163,9 @@ class PeriodicTableElement {
   }
 }
 
-Map<String, dynamic> iupacGroupToMainSubGroup(int iupacGroup) {
-  var value;
-  var type;
+Tuple2<GroupType, int>? iupacGroupToMainSubGroup(int iupacGroup) {
+  int value;
+  GroupType type;
 
   if ([1, 2].contains(iupacGroup)) {
     type = GroupType.MAIN_GROUP;
@@ -181,9 +182,10 @@ Map<String, dynamic> iupacGroupToMainSubGroup(int iupacGroup) {
   } else if ([13, 14, 15, 16, 17, 18].contains(iupacGroup)) {
     type = GroupType.MAIN_GROUP;
     value = iupacGroup - 10;
-  }
+  } else
+    return null;
 
-  return {'type': type, 'value': value};
+  return Tuple2<GroupType, int>(type, value);
 }
 
 final List<PeriodicTableElement> allPeriodicTableElements = [
@@ -570,7 +572,7 @@ String atomicNumbersToText(List<int> atomicNumbers) {
   }).join();
 }
 
-List<int?> textToAtomicNumbers(String input) {
+List<int?> textToAtomicNumbers(String? input) {
   if (input == null || input.isEmpty) return <int>[];
   input = input.replaceAll(RegExp(r'[^A-Za-z]'), '');
   if (input.isEmpty) return <int>[];

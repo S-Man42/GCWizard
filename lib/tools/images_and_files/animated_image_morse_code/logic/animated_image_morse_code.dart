@@ -12,7 +12,7 @@ import 'package:tuple/tuple.dart';
 class AnimatedImageMorseOutput extends AnimatedImageOutput {
   List<List<int>> imagesFiltered;
 
-  AnimatedImageMorseOutput(animatedImageOutput, this.imagesFiltered)
+  AnimatedImageMorseOutput(AnimatedImageOutput animatedImageOutput, this.imagesFiltered)
   : super (animatedImageOutput.images, animatedImageOutput.durations, animatedImageOutput.linkList);
 }
 

@@ -33,7 +33,7 @@ _KeyOutput? _getKey(String? key, int aValue) {
   return null;
 }
 
-String encryptVigenere(String? input, String key, bool autoKey, {int aValue = 0, ignoreNonLetters: true}) {
+String encryptVigenere(String? input, String key, bool autoKey, {int aValue = 0, bool ignoreNonLetters = true}) {
   if (input == null || input.isEmpty) return '';
 
   var checkedKey = _getKey(key, aValue);
@@ -73,7 +73,7 @@ String encryptVigenere(String? input, String key, bool autoKey, {int aValue = 0,
   return output;
 }
 
-String decryptVigenere(String? input, String key, bool autoKey, {int aValue: 0, bool ignoreNonLetters: true}) {
+String decryptVigenere(String? input, String key, bool autoKey, {int aValue: 0, bool ignoreNonLetters = true}) {
   if (input == null || input.isEmpty) return '';
 
   var checkedKey = _getKey(key, aValue);

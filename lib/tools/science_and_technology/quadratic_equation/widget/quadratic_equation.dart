@@ -19,9 +19,9 @@ class QuadraticEquationState extends State<QuadraticEquation> {
   var _currentA = '0.0';
   var _currentB = '0.0';
   var _currentC = '0.0';
-  var _aController;
-  var _bController;
-  var _cController;
+  late TextEditingController _aController;
+  late TextEditingController _bController;
+  late TextEditingController _cController;
 
   @override
   void initState() {

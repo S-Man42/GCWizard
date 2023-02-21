@@ -12,7 +12,7 @@ class Rot123 extends StatefulWidget {
 }
 
 class Rot123State extends State<Rot123> {
-  var _controller;
+  late TextEditingController _controller;
 
   String _currentInput = '';
 

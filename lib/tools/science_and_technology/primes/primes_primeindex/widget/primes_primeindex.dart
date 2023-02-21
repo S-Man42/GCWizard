@@ -36,7 +36,7 @@ class PrimeIndexState extends State<PrimeIndex> {
     );
   }
 
-  _buildOutput() {
+  String _buildOutput() {
     var index = getPrimeIndex(_currentNumber);
     return index >= 1 ? index.toString() : i18n(context, 'primes_noprime');
   }

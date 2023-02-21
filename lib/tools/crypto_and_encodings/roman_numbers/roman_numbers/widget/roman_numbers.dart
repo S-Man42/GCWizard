@@ -14,7 +14,7 @@ class RomanNumbers extends StatefulWidget {
 }
 
 class RomanNumbersState extends State<RomanNumbers> {
-  var _decodeController;
+  late TextEditingController _decodeController;
 
   var _currentEncodeInput = 1;
   var _currentDecodeInput = '';

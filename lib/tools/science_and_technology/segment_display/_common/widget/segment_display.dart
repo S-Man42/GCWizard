@@ -106,7 +106,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
 
     var displays = _currentDisplays;
     if (displays != null && displays.isNotEmpty)
-      currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [], key: (e) => e, value: (e) => true);
+      currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [], key: (e) => e.toString(), value: (e) => true);
     else
       currentDisplay = {};
 
@@ -201,7 +201,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
 
                   return character.join();
                 }).join(' '),
-                widget.type)['text'])
+                widget.type).text)
       ],
     );
   }
@@ -254,7 +254,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
       var segments = decodeSegment(_currentDecodeInput, widget.type);
 
       return Column(
-        children: <Widget>[_buildDigitalOutput(segments['displays']), GCWDefaultOutput(child: segments['text'])],
+        children: <Widget>[_buildDigitalOutput(segments.displays), GCWDefaultOutput(child: segments.text)],
       );
     }
   }

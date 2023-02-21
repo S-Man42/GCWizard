@@ -191,7 +191,7 @@ List<String> _normalizeControlSet(List<String> controlSet) {
   return normalized.map((e) => (e ?? '').toUpperCase()).toList();
 }
 
-String decodeWASDGraphic(String input, List<String> controlSet) {
+String decodeWASDGraphic(String? input, List<String> controlSet) {
   if (input == null || input.isEmpty) return '';
 
   controlSet = _normalizeControlSet(controlSet);
@@ -366,7 +366,7 @@ String decodeWASDGraphic(String input, List<String> controlSet) {
   }); // forEach word
 
   // build bitmap
-  var binaryWorld =
+  List<List<String?>> binaryWorld =
       List.generate(maxSentenceX + 3, (y) => []..length = maxSentenceY - minSentenceY + 3, growable: false);
   sentence.forEach((key, value) {
     x = int.parse(key.split('|')[0]);
@@ -384,7 +384,7 @@ String decodeWASDGraphic(String input, List<String> controlSet) {
       if (binaryWorld[x][y] == null)
         outputLine = outputLine + '#';
       else
-        outputLine = outputLine + binaryWorld[x][y];
+        outputLine = outputLine + binaryWorld[x][y]!;
     }
     output.add(outputLine);
   }
