@@ -17,7 +17,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, input: ${elem['index']}, input: ${elem['character']}', () {
-        var _actual = insertCharacter(elem['input'], elem['index'], elem['character']);
+        var _actual = insertCharacter(elem['input'] as String, elem['index'] as int, elem['character'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -35,7 +35,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, n: ${elem['n']}', () {
-        var _actual = insertSpaceEveryNthCharacter(elem['input'], elem['n']);
+        var _actual = insertSpaceEveryNthCharacter(elem['input'] as String, elem['n'] as int);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -51,7 +51,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, n: ${elem['n']}, textToInsert: ${elem['textToInsert']}', () {
-        var _actual = insertEveryNthCharacter(elem['input'], elem['n'], elem['textToInsert']);
+        var _actual = insertEveryNthCharacter(elem['input'] as String, elem['n'] as int, elem['textToInsert'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -74,7 +74,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('letter: ${elem['letter']}', () {
-        var _actual = isUpperCase(elem['letter']);
+        var _actual = isUpperCase(elem['letter'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -95,7 +95,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = removeDuplicateCharacters(elem['input']);
+        var _actual = removeDuplicateCharacters(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -119,7 +119,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = hasDuplicateCharacters(elem['input']);
+        var _actual = hasDuplicateCharacters(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -143,7 +143,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, characters: ${elem['characters']}', () {
-        var _actual = countCharacters(elem['input'], elem['characters']);
+        var _actual = countCharacters(elem['input'] as String, elem['characters'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -166,7 +166,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = allSameCharacters(elem['input']);
+        var _actual = allSameCharacters(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -190,7 +190,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = isOnlyLetters(elem['input']);
+        var _actual = isOnlyLetters(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -212,7 +212,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = isOnlyNumerals(elem['input']);
+        var _actual = isOnlyNumerals(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -235,7 +235,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = extractIntegerFromText(elem['input']);
+        var _actual = extractIntegerFromText(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -256,7 +256,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = normalizeCharacters(elem['input']);
+        var _actual = normalizeCharacters(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -273,7 +273,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = removeControlCharacters(elem['input']);
+        var _actual = removeControlCharacters(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     });

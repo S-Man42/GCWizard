@@ -80,7 +80,12 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, substitutions: ${elem['substitutions']}', () {
-        var _actual = VariableStringExpander(elem['input'], elem['substitutions'], onAfterExpandedText: elem['onAfterExpandedText'], breakCondition: elem['breakCondition']).run();
+        var _actual = VariableStringExpander(
+            elem['input'] as String?,
+            elem['substitutions'] as Map<String, String>?,
+            onAfterExpandedText: elem['onAfterExpandedText'] as String? Function(String)?,
+            breakCondition: elem['breakCondition'] as VariableStringExpanderBreakCondition)
+            .run();
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -95,7 +100,12 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, substitutions: ${elem['substitutions']}', () {
-        var _actual = VariableStringExpander(elem['input'], elem['substitutions'], onAfterExpandedText: elem['onAfterExpandedText'], breakCondition: elem['breakCondition']).run();
+        var _actual = VariableStringExpander(
+            elem['input'] as String?,
+            elem['substitutions'] as Map<String, String>?,
+            onAfterExpandedText: elem['onAfterExpandedText'] as String? Function(String)?,
+            breakCondition: elem['breakCondition'] as VariableStringExpanderBreakCondition)
+            .run();
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -152,7 +162,12 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, substitutions: ${elem['substitutions']}', () {
-        var _actual = VariableStringExpander(elem['input'], elem['substitutions'], onAfterExpandedText: elem['onAfterExpandedText'], breakCondition: elem['breakCondition'], orderAndUnique: false).run();
+        var _actual = VariableStringExpander(
+            elem['input'] as String?,
+            elem['substitutions'] as Map<String, String>?,
+            onAfterExpandedText: elem['onAfterExpandedText'] as String? Function(String)?,
+            breakCondition: elem['breakCondition'] as VariableStringExpanderBreakCondition,
+            orderAndUnique: false).run();
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -167,7 +182,12 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, substitutions: ${elem['substitutions']}', () {
-        var _actual = VariableStringExpander(elem['input'], elem['substitutions'], onAfterExpandedText: elem['onAfterExpandedText'], breakCondition: elem['breakCondition']).run(onlyPrecheck: true);
+        var _actual = VariableStringExpander(
+            elem['input'] as String?,
+            elem['substitutions'] as Map<String, String>?,
+            onAfterExpandedText: elem['onAfterExpandedText'] as String? Function(String)?,
+            breakCondition: elem['breakCondition'] as VariableStringExpanderBreakCondition)
+            .run(onlyPrecheck: true);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -182,7 +202,12 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, substitutions: ${elem['substitutions']}', () {
-        var _actual = VariableStringExpander(elem['input'], elem['substitutions'], onAfterExpandedText: elem['onAfterExpandedText'], breakCondition: elem['breakCondition']).run(onlyPrecheck: true);
+        var _actual = VariableStringExpander(
+            elem['input'] as String?,
+            elem['substitutions'] as Map<String, String>?,
+            onAfterExpandedText: elem['onAfterExpandedText'] as String? Function(String)?,
+            breakCondition: elem['breakCondition'] as VariableStringExpanderBreakCondition)
+            .run(onlyPrecheck: true);
         expect(_actual, elem['expectedOutput']);
       });
     });

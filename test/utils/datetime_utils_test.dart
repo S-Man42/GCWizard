@@ -22,13 +22,13 @@ void main() {
     ];
     _inputsToExpected.forEach((elem) {
       test('jd: ${elem['jd']}', () {
-        var _actual = julianDateToGregorianCalendar(elem['jd']);
+        var _actual = julianDateToGregorianCalendar(elem['jd'] as double);
         if (_actual == null)
           expect(_actual, elem['expectedOutput']);
         else {
-          expect(_actual.day, elem['expectedOutput'].day);
-          expect(_actual.month, elem['expectedOutput'].month);
-          expect(_actual.year, elem['expectedOutput'].year);
+          expect(_actual.day, (elem['expectedOutput'] as DateTime).day);
+          expect(_actual.month, (elem['expectedOutput'] as DateTime).month);
+          expect(_actual.year, (elem['expectedOutput'] as DateTime).year);
         }
       });
     });
@@ -55,13 +55,13 @@ void main() {
     ];
     _inputsToExpected.forEach((elem) {
       test('jd: ${elem['jd']}', () {
-        var _actual = julianDateToJulianCalendar(elem['jd']);
+        var _actual = julianDateToJulianCalendar(elem['jd'] as double);
         if (_actual == null)
           expect(_actual, elem['expectedOutput']);
         else {
-          expect(_actual.day, elem['expectedOutput'].day);
-          expect(_actual.month, elem['expectedOutput'].month);
-          expect(_actual.year, elem['expectedOutput'].year);
+          expect(_actual.day, (elem['expectedOutput'] as DateTime).day);
+          expect(_actual.month, (elem['expectedOutput'] as DateTime).month);
+          expect(_actual.year, (elem['expectedOutput'] as DateTime).year);
         }
       });
     });
@@ -88,7 +88,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('date: ${elem['date']}', () {
-        var _actual = gregorianCalendarToJulianDate(elem['date']);
+        var _actual = gregorianCalendarToJulianDate(elem['date'] as DateTime);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -116,7 +116,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('date: ${elem['date']}', () {
-        var _actual = julianCalendarToJulianDate(elem['date']);
+        var _actual = julianCalendarToJulianDate(elem['date'] as DateTime);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -143,7 +143,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, days: ${elem['days']}, milliseconds: ${elem['milliseconds']}, limitHours: ${elem['limitHours']}', () {
-        var _actual = formatDurationToHHmmss(elem['input'], days: elem['days'], milliseconds: elem['milliseconds'], limitHours: elem['limitHours']);
+        var _actual = formatDurationToHHmmss(elem['input'] as Duration, days: elem['days'] as bool, milliseconds: elem['milliseconds'] as bool, limitHours: elem['limitHours'] as bool);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -165,7 +165,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, milliseconds: ${elem['milliseconds']}, limitHours: ${elem['limitHours']}', () {
-        var _actual = formatHoursToHHmmss(elem['input'], milliseconds: elem['milliseconds'], limitHours: elem['limitHours']);
+        var _actual = formatHoursToHHmmss(elem['input'] as double, milliseconds: elem['milliseconds'] as bool, limitHours: elem['limitHours'] as bool);
         expect(_actual, elem['expectedOutput']);
       });
     });

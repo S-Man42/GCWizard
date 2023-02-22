@@ -51,7 +51,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('value: ${elem['value']}, modulator:  ${elem['modulator']}', () {
-        var _actual = modulo(elem['value'], elem['modulator']);
+        var _actual = modulo(elem['value'] as num, elem['modulator'] as num);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -86,7 +86,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, precision: ${elem['precision']}', () {
-        var _actual = round(elem['input'], precision: elem['precision']);
+        var _actual = round(elem['input'] as double, precision: elem['precision'] as int);
         expect(_actual, elem['expectedOutput']);
       });
     });
