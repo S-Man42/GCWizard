@@ -26,7 +26,7 @@ class GCWMapPoint {
       this.markerText,
       this.color = COLOR_MAP_POINT,
       this.coordinateFormat,
-      this.isEditable: false,
+      this.isEditable = false,
       this.circle,
       this.circleColorSameAsPointColor = false,
       this.isVisible = true}) {
@@ -35,11 +35,11 @@ class GCWMapPoint {
     update();
   }
 
-  hasCircle() {
-    return circle != null && circle!.radius != null && circle!.radius > 0.0;
+  bool hasCircle() {
+    return circle != null && circle!.radius > 0.0;
   }
 
-  update() {
+  void update() {
     if (circle != null) {
       circle!.centerPoint = point;
 
@@ -53,22 +53,15 @@ class GCWMapPoint {
 class GCWMapLine {
   final GCWMapPolyline parent;
   final GCWMapPoint start;
-  final GCWMapPoint end;
+  final GCWMapPoint? end;
 
   double length = 0.0;
-  double bearingAB;
-  double bearingBA;
+  late double bearingAB;
+  late double bearingBA;
 
   List<LatLng> shape = [];
 
   GCWMapLine(this.parent, this.start, this.end) {
-    if (this.start == null && this.end == null) return;
-
-    if (this.start == null) {
-      shape.add(end.point);
-      return;
-    }
-
     if (this.end == null) {
       shape.add(start.point);
       return;
@@ -79,7 +72,7 @@ class GCWMapLine {
   }
 
   void _calculateGeodetic() {
-    DistanceBearingData _distBear = distanceBearing(start.point, end.point, defaultEllipsoid());
+    DistanceBearingData _distBear = distanceBearing(start.point, end!.point, defaultEllipsoid());
     length = _distBear.distance;
     bearingAB = _distBear.bearingAToB;
     bearingBA = _distBear.bearingBToA;
@@ -93,31 +86,31 @@ class GCWMapLine {
       shape.add(_nextPoint);
     }
 
-    shape.add(end.point);
+    shape.add(end!.point);
   }
 }
 
 class GCWMapPolyline {
-  String uuid;
-  List<GCWMapPoint> points = [];
+  String? uuid;
+  List<GCWMapPoint> points;
   Color color;
-  double get length => lines == null ? 0.0 : lines.fold(0.0, (previousValue, line) => previousValue + line.length);
+  double get length => lines.fold(0.0, (previousValue, line) => previousValue + line.length);
 
-  List<GCWMapLine> lines;
+  late List<GCWMapLine> lines;
 
   GCWMapPolyline({
     this.uuid,
-    @required this.points,
-    this.color: COLOR_MAP_POLYLINE,
+    required this.points,
+    this.color = COLOR_MAP_POLYLINE,
   }) {
-    if (uuid == null || uuid.isEmpty) uuid = Uuid().v4();
+    if (uuid == null || uuid!.isEmpty) uuid = Uuid().v4();
     update();
   }
 
   void update() {
     lines = [];
 
-    if (points == null || points.isEmpty) {
+    if (points.isEmpty) {
       return;
     }
 
@@ -137,35 +130,35 @@ class GCWMapCircle {
   double radius;
   Color color;
 
-  List<LatLng> shape;
+  late List<LatLng> shape;
 
-  GCWMapCircle({this.centerPoint, @required this.radius, this.color: COLOR_MAP_CIRCLE}) {
+  GCWMapCircle({required this.centerPoint, required this.radius, this.color = COLOR_MAP_CIRCLE}) {
     _update();
   }
 
   void _update() {
-    if (this.centerPoint == null) this.centerPoint = defaultCoordinate;
+    this.centerPoint = defaultCoordinate;
 
-    if (this.radius == null || this.radius <= 0.0) {
-      shape = null;
+    if (this.radius <= 0.0) {
+      shape = [];
       return;
     }
 
     var _degrees = 0.5;
 
-    double _prevLongitude;
+    double? _prevLongitude;
     bool shouldSort = false;
 
     shape = List.generate(((360.0 + _degrees) / _degrees).floor(), (index) => index * _degrees).map((e) {
       LatLng coord = projectionVincenty(this.centerPoint, e, this.radius, defaultEllipsoid());
 
       // if there is a huge longitude step around the world (nearly 360°)
-      // then one coordinate is place to the left side of the map, the next one to the right (or vice versa)
-      // this yields in a nasty line right over the whole map. In that case, there is no circle
+      // then one coordinate is placed to the left side of the map, the next one to the right (or vice versa)
+      // this yields a nasty line across the whole map. In that case, there is no circle
       // To avoid this the coordinate should be sorted. This works only in that case.
       // In normal cases, this would ruin your circle
       if (_prevLongitude != null) {
-        if ((_prevLongitude - coord.longitude).abs() > 350) shouldSort = true;
+        if ((_prevLongitude! - coord.longitude).abs() > 350) shouldSort = true;
       }
       _prevLongitude = coord.longitude;
 

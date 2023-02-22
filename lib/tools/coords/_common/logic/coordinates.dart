@@ -166,7 +166,7 @@ CoordinateFormat? getCoordinateFormatSubtypeByPersistenceKey(String key) {
 
 bool isSubtypeOfCoordFormat(CoordFormatKey baseFormat, CoordFormatKey typeToCheck) {
   var coordFormat = getCoordinateFormatByKey(baseFormat);
-  if (coordFormat == null || coordFormat.subtypes == null)
+  if (coordFormat.subtypes == null)
     return false;
 
   return coordFormat.subtypes!.map((CoordinateFormat _format) => _format.key).contains(typeToCheck);
@@ -248,7 +248,7 @@ class DEC extends BaseCoordinates {
     return latLonToDEC(coord);
   }
 
-  static DEC parse(String input, {wholeString = false}) {
+  static DEC? parse(String input, {bool wholeString = false}) {
     return parseDEC(input, wholeString: wholeString);
   }
 
@@ -314,7 +314,7 @@ class DMMPart {
 }
 
 class DMMLatitude extends DMMPart {
-  DMMLatitude(sign, degrees, minutes) : super(sign, degrees, minutes);
+  DMMLatitude(int sign, int degrees, double minutes) : super(sign, degrees, minutes);
 
   static DMMLatitude from(DMMPart dmmPart) {
     return DMMLatitude(dmmPart.sign, dmmPart.degrees, dmmPart.minutes);
@@ -330,7 +330,7 @@ class DMMLatitude extends DMMPart {
 }
 
 class DMMLongitude extends DMMPart {
-  DMMLongitude(sign, degrees, minutes) : super(sign, degrees, minutes);
+  DMMLongitude(int sign, int degrees, double minutes) : super(sign, degrees, minutes);
 
   static DMMLongitude from(DMMPart dmmPart) {
     return DMMLongitude(dmmPart.sign, dmmPart.degrees, dmmPart.minutes);
@@ -362,7 +362,7 @@ class DMM extends BaseCoordinates {
     return latLonToDMM(coord);
   }
 
-  static DMM parse(String text, {leftPadMilliMinutes: false, wholeString: false}) {
+  static DMM? parse(String text, {bool leftPadMilliMinutes = false, bool wholeString = false}) {
     return parseDMM(text, leftPadMilliMinutes: leftPadMilliMinutes, wholeString: wholeString);
   }
 
@@ -430,7 +430,7 @@ class DMSPart {
 }
 
 class DMSLatitude extends DMSPart {
-  DMSLatitude(sign, degrees, minutes, seconds) : super(sign, degrees, minutes, seconds);
+  DMSLatitude(int sign, int degrees, int minutes, double seconds) : super(sign, degrees, minutes, seconds);
 
   static DMSLatitude from(DMSPart dmsPart) {
     return DMSLatitude(dmsPart.sign, dmsPart.degrees, dmsPart.minutes, dmsPart.seconds);
@@ -446,7 +446,7 @@ class DMSLatitude extends DMSPart {
 }
 
 class DMSLongitude extends DMSPart {
-  DMSLongitude(sign, degrees, minutes, seconds) : super(sign, degrees, minutes, seconds);
+  DMSLongitude(int sign, int degrees, int minutes, double seconds) : super(sign, degrees, minutes, seconds);
 
   static DMSLongitude from(DMSPart dmsPart) {
     return DMSLongitude(dmsPart.sign, dmsPart.degrees, dmsPart.minutes, dmsPart.seconds);
@@ -479,7 +479,7 @@ class DMS extends BaseCoordinates {
     return latLonToDMS(coord);
   }
 
-  static DMS parse(String input, {wholeString = false}) {
+  static DMS parse(String input, {bool wholeString = false}) {
     return parseDMS(input, wholeString: wholeString);
   }
 
@@ -504,7 +504,7 @@ class UTMREF extends BaseCoordinates {
 
   UTMREF(this.zone, this.easting, this.northing);
 
-  get hemisphere {
+  HemisphereLatitude get hemisphere {
     return 'NPQRSTUVWXYZ'.contains(zone.latZone) ? HemisphereLatitude.North : HemisphereLatitude.South;
   }
 
@@ -600,7 +600,7 @@ class SwissGridPlus extends SwissGrid {
   @override
   CoordFormatKey get key => CoordFormatKey.SWISS_GRID_PLUS;
 
-  SwissGridPlus(easting, northing) : super(easting, northing);
+  SwissGridPlus(double easting, double northing) : super(easting, northing);
 
   @override
   LatLng toLatLng({Ellipsoid? ells}) {
@@ -668,7 +668,7 @@ class GaussKrueger extends BaseCoordinates {
     return latLonToGaussKrueger(coord, subtype, ells);
   }
 
-  static GaussKrueger parse(String input, {CoordFormatKey gaussKruegerCode: defaultGaussKruegerType}) {
+  static GaussKrueger parse(String input, {CoordFormatKey gaussKruegerCode = defaultGaussKruegerType}) {
     return parseGaussKrueger(input, gaussKruegerCode: gaussKruegerCode);
   }
 
@@ -701,7 +701,7 @@ class Lambert extends BaseCoordinates {
     return latLonToLambert(coord, subtype, ells);
   }
 
-  static Lambert parse(String input, {type: defaultLambertType}) {
+  static Lambert parse(String input, {CoordFormatKey type = defaultLambertType}) {
     return parseLambert(input, type: type);
   }
 
@@ -865,7 +865,7 @@ class XYZ extends BaseCoordinates {
     return xyzToLatLon(this, ells);
   }
 
-  static XYZ fromLatLon(LatLng coord, Ellipsoid ells, {double h: 0.0}) {
+  static XYZ fromLatLon(LatLng coord, Ellipsoid ells, {double h = 0.0}) {
     return latLonToXYZ(coord, ells, h: h);
   }
 

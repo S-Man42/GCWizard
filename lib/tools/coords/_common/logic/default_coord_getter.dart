@@ -1,7 +1,5 @@
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coords_return_types.dart';
-import 'package:gc_wizard/tools/coords/format_converter/logic/lambert.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coord_format_getter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:prefs/prefs.dart';
@@ -23,10 +21,10 @@ CoordFormatKey? _getDefaultSubtypeForFormat(CoordFormatKey format) {
 }
 
 CoordsFormatValue defaultCoordFormat() {
-  var formatStr = Prefs.get(PREFERENCE_COORD_DEFAULT_FORMAT);
+  var formatStr = Prefs.getString(PREFERENCE_COORD_DEFAULT_FORMAT);
 
   CoordFormatKey format;
-  if(formatStr == null)
+  if(formatStr.isEmpty)
     format = CoordFormatKey.DMM;
   else {
     var _format = getCoordinateFormatByPersistenceKey(formatStr);
@@ -45,11 +43,9 @@ CoordFormatKey? getDefaultSubtypesForFormat(CoordFormatKey format) {
 
   CoordFormatKey subtype;
 
-  var subtypeStr = Prefs.get(PREFERENCE_COORD_DEFAULT_FORMAT_SUBTYPE);
-  if (subtypeStr == null) {
-
+  var subtypeStr = Prefs.getString(PREFERENCE_COORD_DEFAULT_FORMAT_SUBTYPE);
+  if (subtypeStr.isEmpty) {
     subtype = _getDefaultSubtypeForFormat(format)!;
-
   } else {
 
     var _subtype = getCoordinateFormatSubtypeByPersistenceKey(subtypeStr);
@@ -87,7 +83,7 @@ Ellipsoid defaultEllipsoid() {
     type = EllipsoidType.STANDARD.toString();
 
   if (type == EllipsoidType.STANDARD.toString()) {
-    var ells = getEllipsoidByName(Prefs.get(PREFERENCE_COORD_DEFAULT_ELLIPSOID_NAME));
+    var ells = getEllipsoidByName(Prefs.getString(PREFERENCE_COORD_DEFAULT_ELLIPSOID_NAME));
     if (ells == null)
       return _WGS84Ells;
 

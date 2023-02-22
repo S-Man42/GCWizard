@@ -66,7 +66,7 @@ class _GpxWriter {
         i++;
       });
 
-      var circles = points.where((point) => point.hasCircle()).map((point) => point.circle!).toList();
+      var circles = points.where((GCWMapPoint point) => point.hasCircle()).map((point) => point.circle!).toList();
       circles.forEach((circle) {
         _writeLines(builder, name, 'circle', circle.shape);
       });
@@ -80,37 +80,37 @@ class _GpxWriter {
   }
 
   void _writePoint(XmlBuilder builder, bool waypoint, String cacheName, String stageName, GCWMapPoint wpt) {
-    if (wpt != null) {
-      builder.element('wpt', nest: () {
-        _writeAttribute(builder, 'lat', wpt.point.latitude);
-        _writeAttribute(builder, 'lon', wpt.point.longitude);
-        if (!waypoint) {
-          _writeElement(builder, 'name', cacheName);
-          _writeElement(builder, 'desc', wpt.markerText);
-          _writeElement(builder, 'urlname', cacheName);
-          _writeElement(builder, 'sym', 'Geocache');
-          _writeElement(builder, 'type', 'Geocache|User defined cache');
-          builder.element('groundspeak:cache', nest: () {
-            _writeElement(builder, 'groundspeak:name', cacheName);
-            _writeElement(builder, 'groundspeak:placed_by', 'You');
-            _writeElement(builder, 'groundspeak:type', 'User defined cache');
-            _writeElement(builder, 'groundspeak:container', 'Unknown');
-            builder.element('groundspeak:short_description', nest: () {
-              _writeAttribute(builder, 'html', 'False');
-            });
+    builder.element('wpt', nest: () {
+      _writeAttribute(builder, 'lat', wpt.point.latitude);
+      _writeAttribute(builder, 'lon', wpt.point.longitude);
+      if (!waypoint) {
+        _writeElement(builder, 'name', cacheName);
+        if (wpt.markerText != null)
+          _writeElement(builder, 'desc', wpt.markerText!);
+        _writeElement(builder, 'urlname', cacheName);
+        _writeElement(builder, 'sym', 'Geocache');
+        _writeElement(builder, 'type', 'Geocache|User defined cache');
+        builder.element('groundspeak:cache', nest: () {
+          _writeElement(builder, 'groundspeak:name', cacheName);
+          _writeElement(builder, 'groundspeak:placed_by', 'You');
+          _writeElement(builder, 'groundspeak:type', 'User defined cache');
+          _writeElement(builder, 'groundspeak:container', 'Unknown');
+          builder.element('groundspeak:short_description', nest: () {
+            _writeAttribute(builder, 'html', 'False');
           });
-        } else {
-          _writeElement(builder, 'name', wpt.markerText);
-          _writeElement(builder, 'cmt', '');
-          _writeElement(builder, 'desc', '');
-          _writeElement(builder, 'sym', 'Virtual Stage');
-          _writeElement(builder, 'type', 'Waypoint|Virtual Stage');
-          builder.element('gsak:wptExtension', nest: () {
-            _writeElement(builder, 'gsak:Parent', cacheName);
-          });
-        }
-      });
-    }
+        });
+      } else {
+        if (wpt.markerText != null)
+          _writeElement(builder, 'name', wpt.markerText!);
+        _writeElement(builder, 'cmt', '');
+        _writeElement(builder, 'desc', '');
+        _writeElement(builder, 'sym', 'Virtual Stage');
+        _writeElement(builder, 'type', 'Waypoint|Virtual Stage');
+        builder.element('gsak:wptExtension', nest: () {
+          _writeElement(builder, 'gsak:Parent', cacheName);
+        });
+      }
+    });
   }
 
   void _writeLines(XmlBuilder builder, String cacheName, String tagName, List<LatLng> shapes) {
@@ -130,16 +130,12 @@ class _GpxWriter {
 
   }
 
-  void _writeElement(XmlBuilder builder, String tagName, value) {
-    if (value != null) {
-      builder.element(tagName, nest: value);
-    }
+  void _writeElement(XmlBuilder builder, String tagName, Object value) {
+    builder.element(tagName, nest: value);
   }
 
-  void _writeAttribute(XmlBuilder builder, String tagName, value) {
-    if (value != null) {
-      builder.attribute(tagName, value);
-    }
+  void _writeAttribute(XmlBuilder builder, String tagName, Object value) {
+    builder.attribute(tagName, value);
   }
 }
 
@@ -324,7 +320,7 @@ class _KmlWriter {
   String _checkName(String label) {
     var count = elementNames.where((element) => label == element).length;
     elementNames.add(label);
-    if (count > 0 && (label != null)) return label + ' ($count)';
+    if (count > 0) return label + ' ($count)';
     return label;
   }
 
@@ -361,9 +357,7 @@ class _KmlWriter {
   }
 
   void _writeElement(XmlBuilder builder, String tagName, Object value) {
-    if (value != null) {
-      builder.element(tagName, nest: value);
-    }
+    builder.element(tagName, nest: value);
   }
 
   String _ColorCode(Color color) {
