@@ -54,12 +54,13 @@ class GronsfeldState extends State<Gronsfeld> {
           controller: _keyController,
           onChanged: (value) {
             setState(() {
-              _currentKey = value['text'];
+              _currentKey = value.text;
             });
           },
         ),
         GCWIntegerSpinner(
           title: 'A',
+          value: _currentAValue,
           onChanged: (value) {
             setState(() {
               _currentAValue = value;

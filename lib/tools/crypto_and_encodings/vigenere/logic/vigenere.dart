@@ -33,9 +33,10 @@ _KeyOutput? _getKey(String? key, int aValue) {
   return null;
 }
 
-String encryptVigenere(String? input, String key, bool autoKey, {int aValue = 0, bool ignoreNonLetters = true}) {
+String encryptVigenere(String? input, String? key, bool autoKey, {int aValue = 0, bool ignoreNonLetters = true}) {
   if (input == null || input.isEmpty) return '';
 
+  key = key ?? '';
   var checkedKey = _getKey(key, aValue);
   if (checkedKey == null) return input;
 
@@ -47,7 +48,7 @@ String encryptVigenere(String? input, String key, bool autoKey, {int aValue = 0,
   if (autoKey) {
     key += input.toUpperCase().replaceAll(RegExp(r'[^A-Z]'), '');
   } else {
-    while (key.length < input.length) {
+    while (key!.length < input.length) {
       key += key;
     }
   }
@@ -73,9 +74,10 @@ String encryptVigenere(String? input, String key, bool autoKey, {int aValue = 0,
   return output;
 }
 
-String decryptVigenere(String? input, String key, bool autoKey, {int aValue: 0, bool ignoreNonLetters = true}) {
+String decryptVigenere(String? input, String? key, bool autoKey, {int aValue: 0, bool ignoreNonLetters = true}) {
   if (input == null || input.isEmpty) return '';
 
+  key = key ?? '';
   var checkedKey = _getKey(key, aValue);
   if (checkedKey == null) return input;
 
@@ -88,7 +90,7 @@ String decryptVigenere(String? input, String key, bool autoKey, {int aValue: 0, 
   String output = '';
 
   if (!autoKey) {
-    while (key.length < input.length) {
+    while (key!.length < input.length) {
       key += key;
     }
   }

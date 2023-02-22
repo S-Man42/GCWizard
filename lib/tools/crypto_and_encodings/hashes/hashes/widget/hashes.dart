@@ -5,7 +5,7 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/hashes/logic/hashes.dart';
 
 class _DefaultHash extends StatefulWidget {
-  final String Function(String) hashFunction;
+  final Function hashFunction;
   final bool keyRequired;
 
   const _DefaultHash({Key? key, required this.hashFunction, this.keyRequired = false}) : super(key: key);

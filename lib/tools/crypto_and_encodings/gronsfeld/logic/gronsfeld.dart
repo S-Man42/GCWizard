@@ -2,7 +2,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/rotation/logic/rotator.dart
 import 'package:gc_wizard/tools/crypto_and_encodings/vigenere/logic/vigenere.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 
-String encryptGronsfeld(String input, String key, bool autoKey, {int aValue = 0}) {
+String encryptGronsfeld(String? input, String? key, bool autoKey, {int aValue = 0}) {
   if (input == null) return '';
 
   key = _digitsToAlpha(key);
@@ -10,7 +10,7 @@ String encryptGronsfeld(String input, String key, bool autoKey, {int aValue = 0}
   return encryptVigenere(input, key, autoKey, aValue: aValue);
 }
 
-String decryptGronsfeld(String? input, String? key, bool autoKey, {int aValue: 0}) {
+String decryptGronsfeld(String? input, String? key, bool autoKey, {int aValue = 0}) {
   if (input == null) return '';
 
   key = _digitsToAlpha(key);
@@ -18,7 +18,7 @@ String decryptGronsfeld(String? input, String? key, bool autoKey, {int aValue: 0
   return decryptVigenere(input, key, autoKey, aValue: aValue);
 }
 
-String? _digitsToAlpha(String? input, {int aValue = 0, bool removeNonDigits = true}) {
+String? _digitsToAlpha(String? input, {int? aValue = 0, bool? removeNonDigits = true}) {
   if (input == null) return input;
 
   if (aValue == null) aValue = 0;
@@ -30,7 +30,7 @@ String? _digitsToAlpha(String? input, {int aValue = 0, bool removeNonDigits = tr
   return input.split('').map((character) {
     var value = alphabet_09[character];
 
-    if (value == null) if (removeNonDigits)
+    if (value == null) if (removeNonDigits!)
       return '';
     else
       return character;

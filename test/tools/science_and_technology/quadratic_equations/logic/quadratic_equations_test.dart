@@ -30,10 +30,10 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('a: ${elem['a']}, b: ${elem['b']}, c: ${elem['c']}', () {
-        var _actual = solveQuadraticEquation(elem['a'], elem['b'], elem['c']);
+        var _actual = solveQuadraticEquation(elem['a'] as String?, elem['b'] as String?, elem['c'] as String?);
         var coordinate = _actual.values;
         for (int i = 0; i < coordinate.length; i++) {
-          expect(coordinate.elementAt(i), elem['expectedOutput'][i]);
+          expect(coordinate.elementAt(i), (elem['expectedOutput']as List<String>)[i]);
         }
       });
     });

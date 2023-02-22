@@ -25,14 +25,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('colors: ${elem['colors']}', () {
-        var _actual = getResistorValue(elem['colors']);
+        var _actual = getResistorValue(elem['colors'] as List<ResistorBandColor>);
 
         if (elem['expectedOutput'] == null) {
           expect(_actual, null);
         } else {
-          expect(_actual.value, elem['expectedOutput'].value);
-          expect(_actual.tolerance, elem['expectedOutput'].tolerance);
-          expect(_actual.temperatureCoefficient, elem['expectedOutput'].temperatureCoefficient);
+          expect(_actual.value, (elem['expectedOutput'] as ResistorValue).value);
+          expect(_actual.tolerance, (elem['expectedOutput'] as ResistorValue).tolerance);
+          expect(_actual.temperatureCoefficient, (elem['expectedOutput'] as ResistorValue).temperatureCoefficient);
         }
       });
     });
@@ -53,7 +53,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('code: ${elem['code']}, multiplicator: ${elem['multiplicator']}', () {
-        var _actual = eia96(elem['code'], multiplicator: elem['multiplicator']);
+        var _actual = eia96(elem['code'] as int?, multiplicator: elem['multiplicator'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     });

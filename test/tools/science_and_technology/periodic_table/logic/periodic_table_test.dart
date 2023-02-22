@@ -14,7 +14,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('atomicNumbers: ${elem['atomicNumbers']}', () {
-        var _actual = atomicNumbersToText(elem['atomicNumbers']);
+        var _actual = atomicNumbersToText(elem['atomicNumbers'] as List<int>);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -36,7 +36,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}', () {
-        var _actual = textToAtomicNumbers(elem['text']);
+        var _actual = textToAtomicNumbers(elem['text'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     });

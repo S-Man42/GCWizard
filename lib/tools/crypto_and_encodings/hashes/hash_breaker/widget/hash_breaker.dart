@@ -12,12 +12,13 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/hashes/hash_breaker/logic/hash_breaker.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/hashes/logic/hashes.dart';
 import 'package:gc_wizard/tools/formula_solver/persistence/model.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/variable_string_expander.dart';
 
 final _ALERT_COMBINATIONS = 100000;
 
 class HashBreaker extends StatefulWidget {
-  final Function hashFunction;
+  final Function? hashFunction;
 
   const HashBreaker({Key? key, this.hashFunction}) : super(key: key);
 
@@ -37,7 +38,7 @@ class _HashBreakerState extends State<HashBreaker> {
   var _currentIdCount = 0;
 
   var _currentOutput = '';
-  var _currentHashFunction = md5Digest;
+  Function _currentHashFunction = md5Digest;
   var _currentSubstitutions = <int, Map<String, String>>{};
 
   @override
@@ -56,7 +57,7 @@ class _HashBreakerState extends State<HashBreaker> {
     super.dispose();
   }
 
-  void _addEntry(String currentFromInput, String currentToInput, BuildContext context) {
+  void _addEntry(String currentFromInput, String currentToInput, FormulaValueType type, BuildContext context) {
     if (currentFromInput.isNotEmpty)
       _currentSubstitutions.putIfAbsent(++_currentIdCount, () => {currentFromInput: currentToInput});
   }
@@ -88,7 +89,7 @@ class _HashBreakerState extends State<HashBreaker> {
         GCWTextDivider(
           text: i18n(context, 'hashes_hashbreaker_searchconfiguration'),
         ),
-        GCWDropDown(
+        GCWDropDown<Function>(
           value: _currentHashFunction,
           onChanged: (newValue) {
             setState(() {
@@ -139,7 +140,7 @@ class _HashBreakerState extends State<HashBreaker> {
       builder: (context) {
         return Center(
           child: Container(
-            child: GCWAsyncExecuter<Map<String, Object>?>(
+            child: GCWAsyncExecuter<BoolText?>(
               isolatedFunction: breakHashAsync,
               parameter: _buildJobData,
               onReady: (data) => _showOutput(data),
@@ -205,11 +206,11 @@ class _HashBreakerState extends State<HashBreaker> {
         hashFunction: _currentHashFunction));
   }
 
-  void _showOutput(Map<String, dynamic>? output) {
-    if (output == null || output['state'] == null || output['state'] == 'not_found') {
+  void _showOutput(BoolText? output) {
+    if (output == null || !output.value) {
       _currentOutput = i18n(context, 'hashes_hashbreaker_solutionnotfound');
     } else
-      _currentOutput = output['text'];
+      _currentOutput = output.text;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {});

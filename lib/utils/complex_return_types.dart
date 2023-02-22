@@ -12,6 +12,13 @@ class IntegerText {
   IntegerText(this.text, this.value);
 }
 
+class BoolText {
+  String text;
+  bool value;
+
+  BoolText(this.text, this.value);
+}
+
 class IntegerListText {
   String text;
   List<int> value;

@@ -36,13 +36,16 @@ bool generate_quadgram() {
   _inputsToExpected.forEach((elem) async {
     var filePath =
         current + "/lib/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/logic/quadgrams/";
-    var fileIn = File(normalizePath(filePath + elem['input']));
-    var fileOut = File(normalizePath(filePath + elem['fileOut']));
+    var fileIn = File(normalizePath(filePath + (elem['input'] as String)));
+    var fileOut = File(normalizePath(filePath + (elem['fileOut'] as String)));
     filePath = current + "/assets/quadgrams/";
-    var fileAsset = File(normalizePath(filePath + elem['assetName']));
+    var fileAsset = File(normalizePath(filePath + (elem['assetName'] as String)));
 
     var _actual =
-        await generateQuadgrams(fileIn, fileOut, fileAsset, elem['className'], elem['assetName'], elem['alphabet']);
+        await generateQuadgrams(fileIn, fileOut, fileAsset,
+            elem['className'] as String,
+            elem['assetName'] as String,
+            elem['alphabet'] as String);
 
     result = result && (_actual.errorCode == BreakerErrorCode.OK);
   });

@@ -18,7 +18,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = getNthPrime(elem['input']);
+        var _actual = getNthPrime(elem['input'] as int?);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -46,7 +46,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = getPrimeIndex(elem['input']);
+        var _actual = getPrimeIndex(elem['input'] as int?);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -79,7 +79,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = getNearestPrime(elem['input']);
+        var _actual = getNearestPrime(elem['input'] as int?);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -111,7 +111,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = getNextPrime(elem['input']);
+        var _actual = getNextPrime(elem['input'] as int?);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -139,7 +139,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = getPreviousPrime(elem['input']);
+        var _actual = getPreviousPrime(elem['input'] as int?);
         expect(_actual, elem['expectedOutput']);
       });
     });

@@ -1,6 +1,7 @@
 import 'dart:isolate';
 
 import 'package:gc_wizard/common_widgets/gcw_async_executer.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/variable_string_expander.dart';
 
 class HashBreakerJobData {
@@ -17,7 +18,7 @@ class HashBreakerJobData {
   });
 }
 
-Future<Map<String, Object>?> breakHashAsync(GCWAsyncExecuterParameters? jobData) async {
+Future<BoolText?> breakHashAsync(GCWAsyncExecuterParameters? jobData) async {
   if (jobData?.parameters is! HashBreakerJobData) return null;
 
   var data = jobData!.parameters as HashBreakerJobData;
@@ -30,7 +31,7 @@ Future<Map<String, Object>?> breakHashAsync(GCWAsyncExecuterParameters? jobData)
   return output;
 }
 
-Map<String, Object>? breakHash(
+BoolText? breakHash(
     String? input, String? searchMask, Map<String, String>? substitutions, Function? hashFunction,
     {SendPort? sendAsyncPort}) {
   if (input == null ||
@@ -53,7 +54,7 @@ Map<String, Object>? breakHash(
 
   var results = expander.run();
 
-  if (results == null || results.isEmpty) return {'state': 'not_found'};
+  if (results.isEmpty) return BoolText('', false);
 
-  return {'state': 'ok', 'text': results[0]['text']};
+  return BoolText(results[0].text!, true);
 }
