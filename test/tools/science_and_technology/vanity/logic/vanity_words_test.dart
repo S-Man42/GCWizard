@@ -73,12 +73,13 @@ void main(){
 
     _inputsToExpected.forEach((elem) { // Mark test
       test('input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
-        var _actual = decodeVanityWords(removeAccents(elem['input'].toString().toLowerCase()), elem['language']);
-        var length = elem['expectedOutput'].length;
+        var _actual = decodeVanityWords(removeAccents(elem['input'].toString().toLowerCase()), elem['language'] as NumeralWordsLanguage);
+        var list = elem['expectedOutput'] as List<VanityWordsDecodeOutput>;
+        var length = list.length;
         for (int i = 0; i < length; i++) {
-          expect(_actual[i].number, elem['expectedOutput'][i].number);
-          expect(_actual[i].numWord, elem['expectedOutput'][i].numWord);
-          expect(_actual[i].digit, elem['expectedOutput'][i].digit);
+          expect(_actual[i].number, list[i].number);
+          expect(_actual[i].numWord, list[i].numWord);
+          expect(_actual[i].digit, list[i].digit);
         }
       });
     });

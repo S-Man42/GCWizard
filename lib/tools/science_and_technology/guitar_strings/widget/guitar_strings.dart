@@ -23,7 +23,7 @@ class GuitarStringsState extends State<GuitarStrings> {
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
   var _currentEncryptionText = '';
-  var _encryptionController;
+  late TextEditingController _encryptionController;
 
   int _currentString = 0;
   int _currentFret = 0;
@@ -59,7 +59,7 @@ class GuitarStringsState extends State<GuitarStrings> {
     );
   }
 
-  _buildEncryption() {
+  Widget _buildEncryption() {
     return Column(children: [
       GCWTextField(
         controller: _encryptionController,
@@ -73,7 +73,7 @@ class GuitarStringsState extends State<GuitarStrings> {
     ]);
   }
 
-  _buildEncryptionOutput() {
+  Widget _buildEncryptionOutput() {
     var _tabs = textToGuitarTabs(_currentEncryptionText);
     if (_tabs.isEmpty) return Container();
 
@@ -84,7 +84,7 @@ class GuitarStringsState extends State<GuitarStrings> {
     return i18n(context, 'symboltables_notes_names_trebleclef_14');
   }
 
-  _buildDecryption() {
+  Widget _buildDecryption() {
     var tabs = List<Tuple2<GuitarStringName, int>>.from(_currentTones);
     tabs.add(Tuple2(_stringNameFromIndex(_currentString), _currentFret));
 
@@ -166,7 +166,7 @@ class GuitarStringsState extends State<GuitarStrings> {
     );
   }
 
-  _stringNameFromIndex(int index) {
+  GuitarStringName _stringNameFromIndex(int index) {
     return GuitarStringName.values[_currentString];
   }
 

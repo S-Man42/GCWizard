@@ -17,7 +17,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('a: ${elem['a']}, b: ${elem['b']}, tolerance: ${elem['tolerance']}', () {
-        var _actual = doubleEquals(elem['a'], elem['b'], tolerance: elem['tolerance']);
+        var _actual = doubleEquals(elem['a'] as double, elem['b'] as double, tolerance: elem['tolerance'] as double);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -37,7 +37,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = fractionPartAsInteger(elem['input']);
+        var _actual = fractionPartAsInteger(elem['input'] as double);
         expect(_actual, elem['expectedOutput']);
       });
     });

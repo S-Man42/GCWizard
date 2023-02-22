@@ -55,8 +55,8 @@ String? _getNewState(Map<String, Map<String, String>> stateModel, String state, 
 
   return stateModel[state]?['x'];
 }
-//ToDo Nullsafety remove Map
-Map<String, dynamic>? decodeVanityMultitap(String? input, PhoneModel? model, PhoneInputLanguage? inputLanguage) {
+
+Tuple2<PhoneCaseMode?, String>? decodeVanityMultitap(String? input, PhoneModel? model, PhoneInputLanguage? inputLanguage) {
   if (model == null || inputLanguage == null) return null;
 
   Map<String, Map<String, String>>? stateModel = model.defaultCaseStateModel;
@@ -70,14 +70,14 @@ Map<String, dynamic>? decodeVanityMultitap(String? input, PhoneModel? model, Pho
   var currentMode = _getModeFromState(currentState);
 
   if (input == null || input.trim().isEmpty || currentMode == null)
-    return {'mode': currentMode, 'output': ''};
+    return Tuple2<PhoneCaseMode?, String>(currentMode, '');
 
   var languageIndex = model.languages.indexWhere((langList) => langList.contains(inputLanguage));
   var languageCharmap = model.characterMap[languageIndex];
   var currentCharmap = _getCharMap(languageCharmap, currentMode);
 
   List<String> inputBlocks = _sanitizeDecodeInput(input);
-  if (inputBlocks.isEmpty) return {'mode': currentMode, 'output': ''};
+  if (inputBlocks.isEmpty) return Tuple2<PhoneCaseMode?, String>(currentMode, '');
 
   var output = '';
   for (int i = 0; i < inputBlocks.length; i++) {
@@ -119,7 +119,7 @@ Map<String, dynamic>? decodeVanityMultitap(String? input, PhoneModel? model, Pho
     }
   }
 
-  return {'mode': currentMode, 'output': output};
+  return Tuple2<PhoneCaseMode?, String>(currentMode, output);
 }
 
 String _sanitizeEncodeInput(String input, Map<PhoneCaseMode, Map<String, String>> languageCharMap) {
@@ -183,9 +183,9 @@ Tuple2<PhoneCaseMode?, String>? encodeVanityMultitap(String? input, PhoneModel? 
       return;
     }
 
-    if (newState['transitions']!.isNotEmpty) output.add(newState['transitions']!);
+    if (newState.item1.isNotEmpty) output.add(newState.item1);
 
-    currentState = newState['state']!;
+    currentState = newState.item2;
     currentMode = _getModeFromState(currentState);
 
     var currentCharmap = _getCharMap(languageCharmap, currentMode!);

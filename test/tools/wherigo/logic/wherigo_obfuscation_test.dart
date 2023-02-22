@@ -18,7 +18,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = obfuscateEarwigoText(elem['input'], EARWIGO_DEOBFUSCATION.GSUB_WIG);
+        var _actual = obfuscateEarwigoText(elem['input'] as String?, EARWIGO_DEOBFUSCATION.GSUB_WIG);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -38,7 +38,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = obfuscateEarwigoText(elem['input'], EARWIGO_DEOBFUSCATION.WWB_DEOBF);
+        var _actual = obfuscateEarwigoText(elem['input'] as String?, EARWIGO_DEOBFUSCATION.WWB_DEOBF);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -62,7 +62,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']} dtable: ${elem['dtable']}', () {
-        var _actual = obfuscateUrwigoText(elem['input'], elem['dtable']);
+        var _actual = obfuscateUrwigoText(elem['input'] as String?, elem['dtable'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -87,7 +87,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']} dtable: ${elem['dtable']}', () {
-        var _actual = obfuscateUrwigoText(elem['input'], elem['dtable']);
+        var _actual = obfuscateUrwigoText(elem['input'] as String?, elem['dtable'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });

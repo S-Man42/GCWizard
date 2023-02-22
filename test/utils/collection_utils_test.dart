@@ -33,7 +33,7 @@ void main() {
         if (elem['keepFirstOccurence'] == null)
           _actual = switchMapKeyValue(elem['map']);
         else
-          _actual = switchMapKeyValue(elem['map'], keepFirstOccurence: elem['keepFirstOccurence']);
+          _actual = switchMapKeyValue(elem['map'], keepFirstOccurence: elem['keepFirstOccurence'] as bool);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -56,7 +56,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}', () {
-        var _actual = textToBinaryList(elem['text']);
+        var _actual = textToBinaryList(elem['text'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     });

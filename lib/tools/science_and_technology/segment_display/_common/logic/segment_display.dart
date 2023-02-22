@@ -594,6 +594,14 @@ class SegmentsVigesimal extends Segments {
       : super(displays: displays);
 }
 
+class SegmentsSexagesimal extends Segments {
+  final List<int> numbers;
+  final BigInt sexagesimal;
+
+  SegmentsSexagesimal({required List<List<String>> displays, required this.numbers, required this.sexagesimal})
+      : super(displays: displays);
+}
+
 
 
 Segments encodeSegment(String? input, SegmentDisplayType segmentType) {
