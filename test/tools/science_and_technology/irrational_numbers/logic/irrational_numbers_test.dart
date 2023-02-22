@@ -22,7 +22,7 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('index: ${elem['index']}', () {
         try {
-          var _actual = irCalculator.decimalAt(elem['index']);
+          var _actual = irCalculator.decimalAt(elem['index'] as int?);
           expect(_actual, elem['expectedOutput']);
         } on FormatException catch(e) {
           expect(e.message, elem['expectedOutput']);
@@ -65,7 +65,7 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('start: ${elem['start']}, length: ${elem['length']}', () {
         try {
-          var _actual = irCalculator.decimalRange(elem['start'], elem['length']);
+          var _actual = irCalculator.decimalRange(elem['start'] as int?, elem['length'] as int?);
           expect(_actual, elem['expectedOutput']);
         } on FormatException catch(e) {
           expect(e.message, elem['expectedOutput']);
@@ -90,7 +90,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('index: ${elem['index']}', () {
-        var _actual = irCalculator.decimalOccurences(elem['input']);
+        var _actual = irCalculator.decimalOccurences(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     });

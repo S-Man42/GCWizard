@@ -148,7 +148,7 @@ List<int> jewDayAndMonthInYear(int days, yearlength) {
   return resArr;
 }
 
-int daysInJewYear(int d, m, yearlength) {
+int daysInJewYear(int d, int m, int yearlength) {
   List<int> mschema = _jregyeardef;
   if (yearlength == 353) {
     mschema = _jregyeardef;
