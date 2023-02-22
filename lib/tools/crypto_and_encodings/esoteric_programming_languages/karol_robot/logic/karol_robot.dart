@@ -128,16 +128,16 @@ const _FINIR = 'finir';
 const _SON = 'son';
 const _ATTENDRE = 'attendre';
 
-Set _SET_TURNLEFT = {_LINKSDREHEN, _TURNLEFT, _TOURNERGAUCHE};
-Set _SET_TURNRIGHT = {_RECHTSDREHEN, _TURNRIGHT, _TOURNERDROIT};
-Set _SET_MOVE = {_SCHRITT, _MOVE, _ETAPE};
-Set _SET_PICKBRICK = {_AUFHEBEN, _PICKBRICK, _RAMASSER};
-Set _SET_PUTBRICK = {_HINLEGEN, _PUTBRICK, _ALLONGER};
-Set _SET_PICKBEEPER = {_MARKELOESCHEN, _PICKBEEPER, _MARQUESUPPRESION};
-Set _SET_PUTBEEPER = {_MARKESETZEN, _PUTBEEPER, _MARQUEETABLIE};
-Set _SET_HALT = {_BEENDEN, _TURNOFF, _FINIR};
-Set _SET_WAIT = {_WARTEN, _ATTENDRE};
-Set _SET_SOUND = {_TON, _SON};
+Set<String> _SET_TURNLEFT = {_LINKSDREHEN, _TURNLEFT, _TOURNERGAUCHE};
+Set<String> _SET_TURNRIGHT = {_RECHTSDREHEN, _TURNRIGHT, _TOURNERDROIT};
+Set<String> _SET_MOVE = {_SCHRITT, _MOVE, _ETAPE};
+Set<String> _SET_PICKBRICK = {_AUFHEBEN, _PICKBRICK, _RAMASSER};
+Set<String> _SET_PUTBRICK = {_HINLEGEN, _PUTBRICK, _ALLONGER};
+Set<String> _SET_PICKBEEPER = {_MARKELOESCHEN, _PICKBEEPER, _MARQUESUPPRESION};
+Set<String> _SET_PUTBEEPER = {_MARKESETZEN, _PUTBEEPER, _MARQUEETABLIE};
+Set<String> _SET_HALT = {_BEENDEN, _TURNOFF, _FINIR};
+Set<String> _SET_WAIT = {_WARTEN, _ATTENDRE};
+Set<String> _SET_SOUND = {_TON, _SON};
 
 final _KAROL_COLORS = {
   'weiß': '0',
@@ -225,14 +225,14 @@ final _KAROL_COLORS = {
 
 enum _KAROL_DIRECTION { SOUTH, NORTH, EAST, WEST }
 
-String KarolRobotOutputEncode(String output, KAREL_LANGUAGES language) {
+String KarolRobotOutputEncode(String? output, KAREL_LANGUAGES language) {
   String program = '';
   int lineLength = 0;
-  if (output.isEmpty || output == null) return '';
+  if (output == null || output.isEmpty) return '';
 
   output.trim().toUpperCase().split('\n').forEach((line) {
     line.split('').forEach((char) {
-      program = program + KAREL_ENCODING[char] + ' ';
+      program = program + (KAREL_ENCODING[char] ?? '') + ' ';
       if (char == '.')
         lineLength = lineLength + 3;
       else if (char == 'I' || char == '1' || char == '°')
@@ -270,10 +270,10 @@ String KarolRobotOutputEncode(String output, KAREL_LANGUAGES language) {
       RegExp expSchritt = RegExp(r'(move)(\(\d+\))?');
       if (expSchritt.hasMatch(program)) {
         program = program.replaceAllMapped(expSchritt, (Match m) {
-          List<String> MOVE_LIST = new List();
-          if (int.tryParse(m.group(0).replaceAll(_MOVE, '').replaceAll('(', '').replaceAll(')', '')) != null) {
+          var MOVE_LIST = <String>[];
+          if (int.tryParse(m.group(0)!.replaceAll(_MOVE, '').replaceAll('(', '').replaceAll(')', '')) != null) {
             for (int i = 0;
-                i < int.parse(m.group(0).replaceAll(_MOVE, '').replaceAll('(', '').replaceAll(')', ''));
+                i < int.parse(m.group(0)!.replaceAll(_MOVE, '').replaceAll('(', '').replaceAll(')', ''));
                 i++) MOVE_LIST.add('move');
             return MOVE_LIST.join(' ');
           } else {
@@ -305,7 +305,7 @@ String KarolRobotOutputDecode(String program) {
   Map<String, String> world = new Map();
   bool halt = false;
 
-  String color = '#';
+  String? color = '#';
   int count = 0;
   RegExp expSchritt = RegExp(r'(schritt|move|etape)(\(\d+\))?');
   RegExp expHinlegen = RegExp(r'(hinlegen|putbrick|allonger)(\(\d+\))?');
@@ -320,8 +320,8 @@ String KarolRobotOutputDecode(String program) {
       .forEach((element) {
     if (!halt) if (expSchritt.hasMatch(element)) {
       if (int.tryParse(expSchritt
-              .firstMatch(element)
-              .group(0)
+              .firstMatch(element)!
+              .group(0)!
               .replaceAll(_SCHRITT, '')
               .replaceAll(_MOVE, '')
               .replaceAll(_ETAPE, '')
@@ -331,8 +331,8 @@ String KarolRobotOutputDecode(String program) {
         count = 1;
       else
         count = int.parse(expSchritt
-            .firstMatch(element)
-            .group(0)
+            .firstMatch(element)!
+            .group(0)!
             .replaceAll(_SCHRITT, '')
             .replaceAll(_MOVE, '')
             .replaceAll(_ETAPE, '')
@@ -364,16 +364,16 @@ String KarolRobotOutputDecode(String program) {
       if (color == null) color = '8';
       switch (direction) {
         case _KAROL_DIRECTION.NORTH:
-          world[x.toString() + '|' + (y - 1).toString()] = color;
+          world[x.toString() + '|' + (y - 1).toString()] = color!;
           break;
         case _KAROL_DIRECTION.SOUTH:
-          world[x.toString() + '|' + (y + 1).toString()] = color;
+          world[x.toString() + '|' + (y + 1).toString()] = color!;
           break;
         case _KAROL_DIRECTION.EAST:
-          world[(x + 1).toString() + '|' + (y).toString()] = color;
+          world[(x + 1).toString() + '|' + (y).toString()] = color!;
           break;
         case _KAROL_DIRECTION.WEST:
-          world[(x - 1).toString() + '|' + (y).toString()] = color;
+          world[(x - 1).toString() + '|' + (y).toString()] = color!;
           break;
       }
     } else {
@@ -467,7 +467,7 @@ String KarolRobotOutputDecode(String program) {
 
   maxX = maxX + 2;
   maxY = maxY + 2;
-  var binaryWorld = List.generate(maxX, (y) => List(maxY), growable: false);
+  var binaryWorld = List<List<String>>.generate(maxX, (y) => List<String>.filled(maxY, ''), growable: false);
   world.forEach((key, value) {
     x = int.parse(key.split('|')[0]) - 1;
     y = int.parse(key.split('|')[1]) - 1;
@@ -475,7 +475,7 @@ String KarolRobotOutputDecode(String program) {
   });
 
   String outputLine = '##';
-  List<String> output = new List();
+  var output = <String>[];
   output.add(outputLine.padRight(maxX + 2, '#'));
   for (y = 0; y < maxY; y++) {
     outputLine = '##';

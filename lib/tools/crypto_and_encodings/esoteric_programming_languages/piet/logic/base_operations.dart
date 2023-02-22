@@ -23,13 +23,13 @@ enum _PietOps {
 
 class _BaseOperations {
   late _PietStack _stack;
-  late Function _getExitedBlock;
-  late Function _toggleDirectionPointer;
-  late Function _toggleCodelChooser;
+  late _PietBlock Function() _getExitedBlock;
+  late void Function(int) _toggleDirectionPointer;
+  late void Function(int) _toggleCodelChooser;
   late _PietSession _session;
 
-  _BaseOperations(_PietStack stack, _PietSession session, Function getExitedBlock, Function toggleDirectionPointer,
-      Function toggleCodelChooser) {
+  _BaseOperations(_PietStack stack, _PietSession session, _PietBlock Function() getExitedBlock, void Function(int) toggleDirectionPointer,
+      void Function(int) toggleCodelChooser) {
     _stack = stack;
     _session = session;
     _getExitedBlock = getExitedBlock;

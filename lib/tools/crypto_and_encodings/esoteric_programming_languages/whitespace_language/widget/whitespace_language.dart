@@ -16,11 +16,11 @@ class WhitespaceLanguage extends StatefulWidget {
 }
 
 class WhitespaceLanguageState extends State<WhitespaceLanguage> {
-  WhitespaceResult _currentOutput;
+  WhitespaceResult? _currentOutput;
 
   String _currentCode = '';
   String _currentInput = '';
-  WhitespaceState _continueState;
+  WhitespaceState? _continueState;
   var _isStarted = false;
 
   var _currentMode = GCWSwitchPosition.left;
@@ -66,21 +66,21 @@ class WhitespaceLanguageState extends State<WhitespaceLanguage> {
 
     return GCWMultipleOutput(
       children: [
-        _currentOutput.output +
-            (_currentOutput.error && (_currentOutput.errorText != null)
-                ? '\n' + (i18n(context, _currentOutput.errorText, ifTranslationNotExists: _currentOutput.errorText))
+        _currentOutput!.output +
+            (_currentOutput!.error && (_currentOutput!.errorText != null)
+                ? '\n' + (i18n(context, _currentOutput!.errorText, ifTranslationNotExists: _currentOutput!.errorText))
                 : ''),
         GCWOutput(
           title: i18n(context, 'whitespace_language_readable_code'),
           child: GCWOutputText(
-            text: _currentOutput.code,
+            text: _currentOutput!.code,
           ),
         ),
       ],
     );
   }
 
-  _calcOutput(BuildContext context) async {
+  void _calcOutput(BuildContext context) async {
     if (_currentCode == null || _currentCode.isEmpty || _isStarted) return;
 
     _isStarted = true;
@@ -111,7 +111,7 @@ class WhitespaceLanguageState extends State<WhitespaceLanguage> {
     }
   }
 
-  _showDialogBox(BuildContext context, String text) {
+  void _showDialogBox(BuildContext context, String text) {
     showGCWDialog(
         context,
         text,
@@ -136,7 +136,7 @@ class WhitespaceLanguageState extends State<WhitespaceLanguage> {
             text: i18n(context, 'common_ok'),
             onPressed: () {
               _isStarted = false;
-              if (_continueState != null) _continueState.inp = _currentInput + '\n';
+              if (_continueState != null) _continueState!.inp = _currentInput + '\n';
               _calcOutput(context);
             },
           )
