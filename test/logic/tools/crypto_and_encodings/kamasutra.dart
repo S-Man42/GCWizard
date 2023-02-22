@@ -3,7 +3,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/kamasutra.dart';
 
 void main() {
   group("Kamasutra.encryptKamasutra:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'alphabet': null, 'expectedOutput' : ''},
       {'input' : '', 'alphabet': null, 'expectedOutput' : ''},
       {'input' : null, 'alphabet': '', 'expectedOutput' : ''},

@@ -3,7 +3,7 @@ import 'package:gc_wizard/logic/tools/science_and_technology/beaufort.dart';
 
 void main() {
   group("Beaufort.meterPerSecondToBeaufort:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'velocity' : null, 'expectedOutput' : null},
       {'velocity' : -1.0, 'expectedOutput' : null},
       {'velocity' : 60.1, 'expectedOutput' : 17},
@@ -32,7 +32,7 @@ void main() {
   });
 
   group("Beaufort.beaufortToMeterPerSecond:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'beaufort' : null, 'expectedOutput' : null},
       {'beaufort' : -1, 'expectedOutput' : null},
       {'beaufort' : 20, 'expectedOutput' : [56.1, double.infinity]},

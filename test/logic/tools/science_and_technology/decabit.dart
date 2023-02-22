@@ -3,7 +3,7 @@ import 'package:gc_wizard/logic/tools/science_and_technology/decabit.dart';
 
 void main() {
   group("Decabit.encryptDecabit:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'numericMode' : false, 'expectedOutput' : ''},
       {'input' : '', 'numericMode' : false, 'expectedOutput' : ''},
       {'input' : '', 'replaceCharacters' : null, 'numericMode' : false, 'expectedOutput' : ''},
@@ -48,7 +48,7 @@ void main() {
   });
 
   group("Decabit.decryptDecabit:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'numericMode' : false, 'expectedOutput' : ''},
       {'input' : '', 'numericMode' : false, 'expectedOutput' : ''},
       {'input' : '', 'replaceCharacters' : null, 'numericMode' : false, 'expectedOutput' : ''},

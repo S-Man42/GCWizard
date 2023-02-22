@@ -3,7 +3,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/roman_numbers/chronog
 
 void main() {
   group("Chronogram.withoutJU:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : null},
 
@@ -24,7 +24,7 @@ void main() {
   });
 
   group("Chronogram.JUToIV:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : null},
 

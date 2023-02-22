@@ -5,7 +5,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/straddling_checkerboard/log
 void main() {
 
   group("encrypt", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       // empty Input
       {'input' : null, 'key': null, 'alphabetWord' : '', 'columnOrder' : '', 'matrix4x10' : false, 'mode': PolybiosMode.AZ09, 'alphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'expectedOutput' : ''},
       {'input' : '', 'key': '', 'alphabetWord' : '', 'columnOrder' : '', 'matrix4x10' : false, 'mode': PolybiosMode.AZ09, 'alphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'expectedOutput' : ''},
@@ -45,7 +45,7 @@ void main() {
   });
 
   group("decrypt", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'expectedOutput' : 'CACHE BEI N 52 345 678 O 13 09 451', 'key': 'gc wizard ', 'alphabetWord' : '', 'columnOrder' : '0246813579', 'matrix4x10' : false, 'mode': PolybiosMode.AZ09, 'alphabet': '', 'input' : '2324642974042897479799599297993994995979969979989749979919939799099997994995991'},
       {'expectedOutput' : 'CACHE BEI N 52 345 678 O 13 09 451', 'key': 'g c wizad ', 'alphabetWord' : '', 'columnOrder' : '0246813579', 'matrix4x10' : true, 'mode': PolybiosMode.AZ09, 'alphabet': '', 'input' : '4542622992022199279998929994969899919395992999909499699799969890'},
 

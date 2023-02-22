@@ -9,7 +9,7 @@ import 'package:intl/intl.dart';
 
 void main() {
   group("Projectiles.calculate:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'mode': UNITCATEGORY_ENERGY, 'prefix' : UNITPREFIX_NONE, 'outputUnit' : ENERGY_JOULE,'inputValue1' : 1.0, 'inputUnit1': MASS_KILOGRAM, 'inputValue2' : 1.0, 'inputUnit2': VELOCITY_MS, 'expectedOutput' : '0.5 J'},
       {'mode': UNITCATEGORY_ENERGY, 'prefix' : UNITPREFIX_KILO, 'outputUnit' : ENERGY_JOULE,'inputValue1' : 1.0, 'inputUnit1': MASS_KILOGRAM, 'inputValue2' : 1.0, 'inputUnit2': VELOCITY_MS, 'expectedOutput' : '0.0005 kJ'},
       {'mode': UNITCATEGORY_MASS, 'prefix' : UNITPREFIX_NONE, 'outputUnit' : MASS_GRAM,'inputValue1' : 0.5, 'inputUnit1': ENERGY_JOULE, 'inputValue2' : 1.0, 'inputUnit2': VELOCITY_MS, 'expectedOutput' : '1000.0 g'},

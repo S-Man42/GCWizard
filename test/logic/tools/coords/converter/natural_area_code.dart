@@ -5,7 +5,7 @@ import 'package:latlong/latlong.dart';
 
 void main() {
   group("Converter.naturalAreaCode.latlonToNaturalAreaCode:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'coord': LatLng(51.907002, 9.113159), 'expectedOutput': NaturalAreaCode('HQRGL6Z7', 'RMJ1H830')},
 
       {'coord': LatLng(0.0, 0.0), 'expectedOutput': NaturalAreaCode('H0000000', 'H0000000')},
@@ -25,7 +25,7 @@ void main() {
   });
 
   group("Converter.naturalAreaCode.naturalAreaCodeToLatLon:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'expectedOutput': LatLng(51.907002, 9.113159), 'nac': NaturalAreaCode('HQRGL6Z7', 'RMJ1H830')},
 
       {'expectedOutput': LatLng(0.0, 0.0), 'nac': NaturalAreaCode('H0000000', 'H0000000')},

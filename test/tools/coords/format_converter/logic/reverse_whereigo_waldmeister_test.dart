@@ -4,7 +4,7 @@ import 'package:latlong2/latlong.dart';
 
 void main() {
   group("Converter.reverseWherigoWaldmeister.latlonToWaldmeister:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'coord': LatLng(0.0, 0.0), 'expectedOutput': ['000100', '009000', '005000']},
       {'coord': LatLng(-87.08835, -179.80245), 'expectedOutput': ['580497', '850012', '847837']},
       {'coord': LatLng(11.01746, -178.2824), 'expectedOutput': ['711326', '807210', '749148']},
@@ -28,7 +28,7 @@ void main() {
   });
 
   group("Converter.reverseWherigooWaldmeister.waldmeisterToLatLon:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'expectedOutput': LatLng(0.0, 0.0), 'input': ['000100', '009000', '005000']},
       {'expectedOutput': LatLng(-87.08835, -179.80245), 'input': ['580497', '850012', '847837']},
       {'expectedOutput': LatLng(11.01746, -178.2824), 'input': ['711326', '807210', '749148']},
@@ -55,7 +55,7 @@ void main() {
   });
 
   group("Converter.reverse_wherigo_waldmeister.parseLatLon:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'text': '', 'expectedOutput': null},
       {'text': '104181 924569 248105', 'expectedOutput': {'format': CoordFormatKey.REVERSE_WIG_WALDMEISTER, 'coordinate': LatLng(46.21101, 025.59849)}},
       {'text': '104181\n924569\n248105', 'expectedOutput': {'format': CoordFormatKey.REVERSE_WIG_WALDMEISTER, 'coordinate': LatLng(46.21101, 025.59849)}},

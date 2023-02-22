@@ -3,7 +3,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/vanity.dart';
 
 void main() {
   group("Vanity.encryptVanitySingleNumbers:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
@@ -28,7 +28,7 @@ void main() {
   });
 
   group("Vanity.encodeVanityMultipleNumbers:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
@@ -53,7 +53,7 @@ void main() {
   });
 
   group("Vanity.decodeVanityMultipleNumbers:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 

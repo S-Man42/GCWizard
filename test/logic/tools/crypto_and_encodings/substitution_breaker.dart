@@ -31,7 +31,7 @@
 //   // Or: Do tests with a hand-written minimum word list
 //
 //   group("substitution_breaker.breaker:", () {
-//     List<Map<String, dynamic>> _inputsToExpected = [
+//     List<Map<String, Object?>> _inputsToExpected = [
 //       {'input' : null, 'alphabet' : BreakerAlphabet.English, 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
 //       {'input' : '', 'alphabet' : BreakerAlphabet.English, 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
 //
@@ -59,7 +59,7 @@
 //     var en = EnglishQuadgrams();
 //     var de = GermanQuadgrams();
 //
-//     List<Map<String, dynamic>> _inputsToExpected = [
+//     List<Map<String, Object?>> _inputsToExpected = [
 //
 //       {'input' : null, 'expectedOutput' : null},
 //       {'input' : '', 'expectedOutput' : null},

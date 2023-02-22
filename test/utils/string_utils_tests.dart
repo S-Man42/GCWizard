@@ -3,7 +3,7 @@ import 'package:gc_wizard/utils/string_utils.dart';
 
 void main() {
   group("StringUtils.insertCharacter:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'index': 0, 'character' : 'A', 'expectedOutput' : null},
       {'input' : 'ABC', 'index': 0, 'character' : null, 'expectedOutput' : 'ABC'},
 
@@ -24,7 +24,7 @@ void main() {
   });
 
   group("StringUtils.insertSpaceEveryNthCharacter:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : '', 'n': 0, 'expectedOutput' : ''},
       {'input' : 'ABC', 'n': null, 'expectedOutput' : 'ABC'},
       {'input' : 'ABC', 'n': 0, 'expectedOutput' : 'ABC'},
@@ -42,7 +42,7 @@ void main() {
   });
 
   group("StringUtils.insertEveryNthCharacter:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : 'ABCDEFGHIJ', 'n': 3, 'textToInsert': '', 'expectedOutput' : 'ABCDEFGHIJ'},
       {'input' : 'ABCDEFGHIJ', 'n': 3, 'textToInsert': '1', 'expectedOutput' : 'ABC1DEF1GHI1J'},
       {'input' : 'ABCDEFGHIJ', 'n': 3, 'textToInsert': '123', 'expectedOutput' : 'ABC123DEF123GHI123J'},
@@ -58,7 +58,7 @@ void main() {
   });
 
   group("StringUtils.isUpperCase:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'letter' : null, 'expectedOutput' : false},
       {'letter' : '', 'expectedOutput' : false},
 
@@ -81,7 +81,7 @@ void main() {
   });
 
   group("StringUtils.removeDuplicateCharacters:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : ''},
 
@@ -102,7 +102,7 @@ void main() {
   });
 
   group("StringUtils.hasDuplicateCharacters:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : false},
       {'input' : '', 'expectedOutput' : false},
 
@@ -126,7 +126,7 @@ void main() {
   });
 
   group("StringUtils.countCharacters:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'characters': null, 'expectedOutput' : 0},
       {'input' : '', 'characters': 'a', 'expectedOutput' : 0},
 
@@ -150,7 +150,7 @@ void main() {
   });
 
   group("StringUtils.allSameCharacters:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : null},
 
@@ -173,7 +173,7 @@ void main() {
   });
 
   group("StringUtils.isOnlyLetters:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : false},
       {'input' : '', 'expectedOutput' : false},
 
@@ -197,7 +197,7 @@ void main() {
   });
 
   group("StringUtils.isOnlyNumerals:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : false},
       {'input' : '', 'expectedOutput' : false},
 
@@ -219,7 +219,7 @@ void main() {
   });
 
   group("StringUtils.extractIntegerFromText:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : null},
 
@@ -242,7 +242,7 @@ void main() {
   });
 
   group("StringUtils.normalizeCharacters", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : ''},
 
@@ -263,7 +263,7 @@ void main() {
   });
 
   group("StringUtils.removeControlCharacters", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : ''},
 

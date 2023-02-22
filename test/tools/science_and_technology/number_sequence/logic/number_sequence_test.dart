@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/science_and_technology/number_sequences/_common/
 
 void main() {
   group("numbersequence.getNumberAt:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'sequence' : NumberSequencesMode.CATALAN,          'position' : 30, 'expectedOutput' : BigInt.from(3814986502092304)},
       {'sequence' : NumberSequencesMode.RECAMAN,          'position' : 30, 'expectedOutput' : BigInt.from(45)},
       {'sequence' : NumberSequencesMode.LUCAS,            'position' : 30, 'expectedOutput' : BigInt.from(1860498)},
@@ -28,7 +28,7 @@ void main() {
   });
 
   group("numbersequence.checkNumber:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'sequence' : NumberSequencesMode.CATALAN,          'maxIndex' : 100, 'expectedOutput' : 30, 'number' : BigInt.from(3814986502092304)},
       {'sequence' : NumberSequencesMode.RECAMAN,          'maxIndex' : 100, 'expectedOutput' : 30, 'number' : BigInt.from(45)},
       {'sequence' : NumberSequencesMode.LUCAS,            'maxIndex' : 100, 'expectedOutput' : 30, 'number' : BigInt.from(1860498)},
@@ -53,7 +53,7 @@ void main() {
   });
 
   group("numbersequence.getNumbersInRange:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'sequence' : NumberSequencesMode.CATALAN,          'start' : 10, 'stop' : 15, 'expectedOutput' : [16796, 58786, 208012, 742900, 2674440, 9694845]},
       {'sequence' : NumberSequencesMode.RECAMAN,          'start' : 10, 'stop' : 15, 'expectedOutput' : [11, 22, 10, 23, 9, 24]},
       {'sequence' : NumberSequencesMode.LUCAS,            'start' : 10, 'stop' : 15, 'expectedOutput' : [123, 199, 322, 521, 843, 1364]},
@@ -81,7 +81,7 @@ void main() {
   });
 
   group("numbersequence.getNumbersWithNDigits:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'sequence' : NumberSequencesMode.CATALAN,          'digits' : 4, 'expectedOutput' : [1430,4862]},
       {'sequence' : NumberSequencesMode.JACOBSTAHL,       'digits' : 4, 'expectedOutput' : [1365,2731,5461]},
       {'sequence' : NumberSequencesMode.JACOBSTHAL_LUCAS, 'digits' : 4, 'expectedOutput' : [1025,2047,4097,8191]},
@@ -112,7 +112,7 @@ void main() {
   });
 
   group("numbersequence.getFirstPositionOfSequence:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'sequence' : NumberSequencesMode.CATALAN,          'maxIndex' : 1000,  'number' : '27361', 'expectedOutput' : PositionOfSequenceOutput('7107690250413013761896628105173181658589772625392889208165477368352734802736195805963143770815133859332929972050727625767936724822523808745285247568658130484108957872094022098605943811100613700',
           327, 73)},
       {'sequence' : NumberSequencesMode.RECAMAN,          'maxIndex' : 90000, 'number' : '27361', 'expectedOutput' : PositionOfSequenceOutput('273610',

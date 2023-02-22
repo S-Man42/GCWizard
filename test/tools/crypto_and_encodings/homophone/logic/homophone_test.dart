@@ -7,7 +7,7 @@ import 'package:gc_wizard/utils/collection_utils.dart';
 
 void main() {
   group("Homophone.encryptGenerated:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
 
       {'input' : null, 'errorcode': HomophoneErrorCode.OK, 'alphabet': alphabetGerman1, 'rotation': 1, 'multiplier': 1, 'expectedOutput' : ''},
       {'input' : '', 'errorcode': HomophoneErrorCode.OK, 'alphabet': alphabetGerman1, 'rotation': 3, 'multiplier': 1, 'expectedOutput' : ''},
@@ -33,7 +33,7 @@ void main() {
 
   group("Homophone.encryptKeyList:", () {
     //alternative result because random number generator implemented
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : 'Test', 'errorcode': HomophoneErrorCode.OK, 'alphabet': alphabetGerman1,
         'keyList': '36 56 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 30 21 22 23 24 25 26 27 28 29 40 31 32 33 34 35 0 37 38 39 20 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 1 57 58 59 60 61 62 63 64 65 66 67 68 69 80 71 72 73 74 75 76 77 78 79 90 81 82 83 84 85 86 87 88 89 70 91 92 93 94 95 96 97 98 99',
         'expectedOutput': ['85 15 78 85', '85 15 90 85',  '85 40 78 85', '85 40 90 85', '85 21 90 85', '85 31 90 85', '85 21 78 85']},
@@ -61,7 +61,7 @@ void main() {
   });
 
   group("Homophone.encryptKeyMap:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : 'Test', 'errorcode': HomophoneErrorCode.OK, 'keyMap': {'E': [9], 'S': [80], 'T': [90]}, 'expectedOutput': '90 09 80 90'},
     ];
 
@@ -79,7 +79,7 @@ void main() {
   });
 
   group("Homophone.decryptGenerated:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'errorcode': HomophoneErrorCode.OK, 'alphabet': alphabetGerman1, 'rotation': 1, 'multiplier': 1, 'expectedOutput' : ''},
       {'input' : '', 'errorcode': HomophoneErrorCode.OK, 'alphabet': alphabetGerman1, 'rotation': 3, 'multiplier': 1, 'expectedOutput' : ''},
       {'input' : 'T', 'errorcode': HomophoneErrorCode.OK, 'alphabet': alphabetGerman1, 'rotation': 3, 'multiplier': 1, 'expectedOutput' : ''},
@@ -102,7 +102,7 @@ void main() {
   });
 
   group("Homophone.decryptKeyList:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'expectedOutput' : 'TEST', 'errorcode': HomophoneErrorCode.OK, 'alphabet': alphabetGerman1,
         'keyList': '36 56 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 30 21 22 23 24 25 26 27 28 29 40 31 32 33 34 35 0 37 38 39 20 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 1 57 58 59 60 61 62 63 64 65 66 67 68 69 80 71 72 73 74 75 76 77 78 79 90 81 82 83 84 85 86 87 88 89 70 91 92 93 94 95 96 97 98 99',
         'input': '70 27 81 89'},
@@ -132,7 +132,7 @@ void main() {
   });
 
   group("Homophone.decryptMap:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'expectedOutput' : 'TEST', 'errorcode': HomophoneErrorCode.OK,
         'keyMap': {'E': [9], 'S': [80], 'T': [90]}, 'input': '90 09 80 90'},
     ];

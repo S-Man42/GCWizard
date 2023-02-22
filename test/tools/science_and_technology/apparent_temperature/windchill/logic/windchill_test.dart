@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/wind
 
 void main() {
   group("Windchill.calculate:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'temperature' : null, 'windspeed' : null, 'isMetric' : true, 'expectedOutput' : null},
       {'temperature' : null, 'windspeed' : null, 'isMetric' : false, 'expectedOutput' : null},
       {'temperature' : -10.0, 'windspeed' : null, 'isMetric' : true, 'expectedOutput' : null},

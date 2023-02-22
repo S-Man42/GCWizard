@@ -3,7 +3,7 @@ import 'package:gc_wizard/logic/tools/science_and_technology/cross_sum.dart';
 
 void main() {
   group("CrossSum.crossSumRange:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'rangeStart' : null, 'rangeEnd' : null, 'crossSumToFind' : null, 'expectedOutput' : []},
 
       {'rangeStart' : 0, 'rangeEnd' : 100, 'crossSumToFind' : 15, 'expectedOutput' : [69, 78, 87, 96]},
@@ -21,7 +21,7 @@ void main() {
   });
 
   group("CrossSum.crossSumRangeIterated:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'rangeStart' : null, 'rangeEnd' : null, 'crossSumToFind' : null, 'type': CrossSumType.ITERATED, 'expectedOutput' : []},
 
       {'rangeStart' : 0, 'rangeEnd' : 100, 'crossSumToFind' : 1, 'type': CrossSumType.ITERATED, 'expectedOutput' : [1, 10, 19, 28, 37, 46, 55, 64, 73, 82, 91, 100]},

@@ -3,7 +3,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/enclosed_areas.dart';
 
 void main() {
   group("EnclosedAreas.with4:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
@@ -23,7 +23,7 @@ void main() {
   });
 
   group("EnclosedAreas.without4:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 

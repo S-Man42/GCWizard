@@ -4,7 +4,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/_common/logic/crypt_alphabe
 
 void main() {
   group("Playfair.encodePlayfair:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'key': null, 'mode': AlphabetModificationMode.J_TO_I, 'expectedOutput' : ''},
       {'input' : '', 'key': null, 'mode': AlphabetModificationMode.J_TO_I, 'expectedOutput' : ''},
       {'input' : null, 'key': '', 'mode': AlphabetModificationMode.J_TO_I, 'expectedOutput' : ''},
@@ -41,7 +41,7 @@ void main() {
   });
 
   group("Playfair.decodePlayfair:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'key': null, 'mode': AlphabetModificationMode.J_TO_I, 'expectedOutput' : ''},
       {'input' : '', 'key': null, 'mode': AlphabetModificationMode.J_TO_I, 'expectedOutput' : ''},
       {'input' : null, 'key': '', 'mode': AlphabetModificationMode.J_TO_I, 'expectedOutput' : ''},

@@ -3,7 +3,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/kenny.dart';
 
 void main() {
   group("KennysCode.encryptKenny:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : '', 'caseSensitive' : false},
       {'input' : '', 'expectedOutput' : '', 'caseSensitive' : false},
       {'input' : 'A', 'replaceCharacters': null, 'expectedOutput' : '', 'caseSensitive' : false},
@@ -46,7 +46,7 @@ void main() {
   });
 
   group("KennysCode.decryptKenny:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : '', 'caseSensitive' : true},
       {'input' : '', 'expectedOutput' : '', 'caseSensitive' : true},
       {'input' : 'A', 'replaceCharacters': null, 'expectedOutput' : '', 'caseSensitive' : true},

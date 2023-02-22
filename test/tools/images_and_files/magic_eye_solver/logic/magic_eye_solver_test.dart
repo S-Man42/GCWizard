@@ -15,7 +15,7 @@ Uint8List _getFileData(String name) {
 void main() {
 
   group("magic_eye_solver.decodeImageAsync:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : 'atomium.jpg', 'expectedOutput' : 70},
       {'input' : 'dino.png', 'expectedOutput' : 120},
       {'input' : 'dino2.png', 'expectedOutput' : 120},

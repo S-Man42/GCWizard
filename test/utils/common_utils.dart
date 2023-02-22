@@ -3,7 +3,7 @@ import 'package:gc_wizard/utils/common_utils.dart';
 
 void main() {
   group("CommonUtils.insertCharacter:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'index': 0, 'character' : 'A', 'expectedOutput' : null},
       {'input' : 'ABC', 'index': 0, 'character' : null, 'expectedOutput' : 'ABC'},
 
@@ -24,7 +24,7 @@ void main() {
   });
 
   group("CommonUtils.insertSpaceEveryNthCharacter:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : '', 'n': 0, 'expectedOutput' : ''},
       {'input' : 'ABC', 'n': null, 'expectedOutput' : 'ABC'},
       {'input' : 'ABC', 'n': 0, 'expectedOutput' : 'ABC'},
@@ -42,7 +42,7 @@ void main() {
   });
 
   group("CommonUtils.switchMapKeyValue:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'map' : null, 'expectedOutput': null},
       {'map' : {}, 'expectedOutput': {}},
       {'map' : <String, String>{}, 'expectedOutput': <String, String>{}},
@@ -79,7 +79,7 @@ void main() {
   });
 
   group("CommonUtils.digitsToAlpha:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'aValue': null, 'removeNonDigits' : null, 'expectedOutput' : null},
       {'input' : null, 'aValue': null, 'removeNonDigits' : true, 'expectedOutput' : null},
       {'input' : null, 'aValue': 0, 'removeNonDigits' : null, 'expectedOutput' : null},
@@ -151,7 +151,7 @@ void main() {
   });
 
   group("CommonUtils.textToBinaryList:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'text' : null, 'expectedOutput' : []},
       {'text' : '', 'expectedOutput' : []},
       {'text' : '234', 'expectedOutput' : []},
@@ -174,7 +174,7 @@ void main() {
   });
 
   group("CommonUtils.modulo:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'value' : 0, 'modulator': 1, 'expectedOutput' : 0},
       {'value' : -1, 'modulator': 1, 'expectedOutput' : 0},
       {'value' : -2, 'modulator': 1, 'expectedOutput' : 0},
@@ -229,7 +229,7 @@ void main() {
   });
 
   group("CommonUtils.doubleEquals:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'a' : null, 'b': null, 'tolerance': 1e-10, 'expectedOutput' : true},
       {'a' : null, 'b': 1.0, 'tolerance': 1e-10, 'expectedOutput' : false},
       {'a' : 1.0, 'b': null, 'tolerance': 1e-10, 'expectedOutput' : false},
@@ -250,7 +250,7 @@ void main() {
   });
 
   group("CommonUtils.isUpperCase:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'letter' : null, 'expectedOutput' : false},
       {'letter' : '', 'expectedOutput' : false},
 

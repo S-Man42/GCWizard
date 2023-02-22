@@ -4,7 +4,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/chao.dart';
 void main() {
 
   group("Chao.encryptChao:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : '', 'keyPlain' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'keyChiffre': 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'expectedOutput' : ''},
       {'input' : 'Hallo', 'keyPlain' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'keyChiffre': 'ZYXWVUTSRQPONMLKJIHGFEDCBA', 'expectedOutput' : 'SAQSR'},
       {'input' : 'WELLDONEISBETTERTHANWELLSAID', 'keyPlain' : 'PTLNBQDEOYSFAVZKGJRIHWXUMC', 'keyChiffre': 'HXUCZVAMDSLKPEFJRIGTWOBNYQ', 'expectedOutput' : 'OAHQHCNYNXTSZJRRHJBYHQKSOUJY'},
@@ -19,7 +19,7 @@ void main() {
   });
 
   group("Chao.decryptChao:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'expectedOutput' : '', 'keyPlain' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'keyChiffre': 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'input' : ''},
       {'expectedOutput' : 'HALLO', 'keyPlain' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'keyChiffre': 'ZYXWVUTSRQPONMLKJIHGFEDCBA', 'input' : 'SAQSR'},
       {'expectedOutput' : 'WELLDONEISBETTERTHANWELLSAID', 'keyPlain' : 'PTLNBQDEOYSFAVZKGJRIHWXUMC', 'keyChiffre': 'HXUCZVAMDSLKPEFJRIGTWOBNYQ', 'input' : 'OAHQHCNYNXTSZJRRHJBYHQKSOUJY'},

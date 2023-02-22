@@ -3,7 +3,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/rsa.dart';
 
 void main() {
   group("RSA.encryptRSA:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'e': null, 'p': null, 'q': null, 'expectedOutput' : ''},
       {'input' : '', 'e': null, 'p': null, 'q': null, 'expectedOutput' : ''},
       {'input' : 'A', 'e': null, 'p': null, 'q': null, 'expectedOutput' : ''},
@@ -23,7 +23,7 @@ void main() {
   });
 
   group("RSA.decryptRSA:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'd': null, 'p': null, 'q': null, 'expectedOutput' : ''},
       {'input' : '', 'd': null, 'p': null, 'q': null, 'expectedOutput' : ''},
       {'input' : 'A', 'd': null, 'p': null, 'q': null, 'expectedOutput' : ''},
@@ -43,7 +43,7 @@ void main() {
   });
 
   group("RSA.calculateD:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'e': null, 'p': null, 'q': null, 'expectedOutput' : null},
       {'e': BigInt.from(1721), 'p': BigInt.from(307), 'q': BigInt.from(859), 'expectedOutput' : BigInt.from(1373)},
       {'e': BigInt.from(17), 'p': BigInt.from(71), 'q': BigInt.from(83), 'expectedOutput' : BigInt.from(1013)},

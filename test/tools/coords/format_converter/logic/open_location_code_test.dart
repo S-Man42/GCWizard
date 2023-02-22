@@ -4,7 +4,7 @@ import 'package:latlong2/latlong.dart';
 
 void main() {
   group("Converter.open_location_code.parseLatLon:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'text': '', 'expectedOutput': null},
       {'text': 'AGR76H6X+C95QFH', 'expectedOutput': null},
       {'text': '1GR76H6X+C95QFH', 'expectedOutput': null},

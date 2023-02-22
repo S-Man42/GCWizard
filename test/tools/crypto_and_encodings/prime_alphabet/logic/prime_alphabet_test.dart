@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/prime_alphabet/logic/prime_
 
 void main() {
   group("PrimeAlphabet.decryptPrimeAlphabetWithoutOffset:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : <int>[], 'expectedOutput' : ''},
 
@@ -23,7 +23,7 @@ void main() {
   });
 
   group("PrimeAlphabet.decryptPrimeAlphabetWithOffset:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : [3,5,89,97,101], 'firstRecognizedPrime': 3, 'expectedOutput' : 'ABWXY'},
       {'input' : [3,5,89,97,101], 'firstRecognizedPrime': 4, 'expectedOutput' : '<?>AVWX'},
       {'input' : [3,5,89,97,101], 'firstRecognizedPrime': 5, 'expectedOutput' : '<?>AVWX'},
@@ -53,7 +53,7 @@ void main() {
   });
 
   group("PrimeAlphabet.encryptPrimeAlphabetWithoutOffset:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : <int>[]},
       {'input' : '', 'expectedOutput' : <int>[]},
 
@@ -69,7 +69,7 @@ void main() {
   });
 
   group("PrimeAlphabet.encryptPrimeAlphabetWithOffset:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : <int>[]},
       {'input' : '', 'expectedOutput' : <int>[]},
 
@@ -111,7 +111,7 @@ void main() {
   });
 
   group("PrimeAlphabet.encryptPrimeAlphabetHomophone:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : 'ABCDWXYZ',  'firstRecognizedPrime': 2,  'lastRecognizedPrime': 1097},
       {'input' : 'ABCDWXYZ',  'firstRecognizedPrime': 2,  'lastRecognizedPrime': 233},
       {'input' : 'ABCDWXYZ',  'firstRecognizedPrime': 401,  'lastRecognizedPrime': 1097},

@@ -3,7 +3,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere.dart';
 
 void main() {
   group("Vigenere.encrypt:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'key': null, 'autoKey': false, 'aValue': 0, 'expectedOutput' : ''},
       {'input' : null, 'key': 'ABC', 'autoKey': false, 'aValue': 0, 'expectedOutput' : ''},
       {'input' : 'ABC', 'key': null, 'autoKey': false, 'aValue': 0, 'expectedOutput' : 'ABC'},
@@ -54,7 +54,7 @@ void main() {
   });
 
   group("Vigenere.decrypt:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'key': null, 'autoKey': false, 'aValue': 0, 'expectedOutput' : ''},
       {'input' : null, 'key': 'ABC', 'autoKey': false, 'aValue': 0, 'expectedOutput' : ''},
       {'input' : 'ABC', 'key': null, 'autoKey': false, 'aValue': 0, 'expectedOutput' : 'ABC'},

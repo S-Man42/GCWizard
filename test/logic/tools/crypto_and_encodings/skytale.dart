@@ -3,7 +3,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/skytale.dart';
 
 void main() {
   group("Skytale.encryptSkytale:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'countRows' : 1, 'countLettersPerCell': 1, 'expectedOutput' : ''},
       {'input' : '', 'countRows' : 1, 'countLettersPerCell': 1, 'expectedOutput' : ''},
       {'input' : 'ABC', 'countRows' : 0, 'countLettersPerCell': 1, 'expectedOutput' : 'ABC'},
@@ -70,7 +70,7 @@ void main() {
   });
 
   group("Skytale.decryptSkytale:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'countRows' : 1, 'countLettersPerCell': 1, 'expectedOutput' : ''},
       {'input' : '', 'countRows' : 1, 'countLettersPerCell': 1, 'expectedOutput' : ''},
       {'input' : 'ABC', 'countRows' : 0, 'countLettersPerCell': 1, 'expectedOutput' : 'ABC'},

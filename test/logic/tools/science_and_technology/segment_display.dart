@@ -4,7 +4,7 @@ import 'package:gc_wizard/utils/constants.dart';
 
 void main() {
   group("SegmentDisplay.encodeSegment:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': []},
       {'input' : '', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': []},
 
@@ -62,7 +62,7 @@ void main() {
   });
 
   group("SegmentDisplay.decodeSegment:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': {'displays':[], 'text': ''}},
       {'input' : '', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': {'displays':[], 'text': ''}},
 

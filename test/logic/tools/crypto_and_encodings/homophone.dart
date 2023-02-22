@@ -6,7 +6,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
 
 void main() {
   group("Homophone.encrypt:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
 
       {'input' : null, 'errorcode': ErrorCode.OK, 'keyType': KeyType.GENERATED, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 1, 'multiplier': 1, 'ownKeys': '', 'expectedOutput' : ''},
       {'input' : '', 'errorcode': ErrorCode.OK, 'keyType': KeyType.GENERATED, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 3, 'multiplier': 1, 'ownKeys': '', 'expectedOutput' : ''},
@@ -41,7 +41,7 @@ void main() {
   });
 
   group("Homophone.decrypt:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'errorcode': ErrorCode.OK, 'keyType': KeyType.GENERATED, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 1, 'multiplier': 1, 'ownKeys': '', 'expectedOutput' : ''},
       {'input' : '', 'errorcode': ErrorCode.OK, 'keyType': KeyType.GENERATED, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 3, 'multiplier': 1, 'ownKeys': '', 'expectedOutput' : ''},
       {'input' : 'T', 'errorcode': ErrorCode.OK, 'keyType': KeyType.GENERATED, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 3, 'multiplier': 1, 'ownKeys': '', 'expectedOutput' : ''},

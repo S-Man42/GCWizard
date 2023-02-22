@@ -4,7 +4,7 @@ import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/temp
 
 void main() {
   group("humidex.calculate:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'temperature' : 0.0, 'humidity' : 0.0, 'temperatureUnit' : TEMPERATURE_CELSIUS, 'isHumidity' : true, 'expectedOutput' : '-5.556'},
       {'temperature' : 27.0, 'humidity' : 40.0, 'temperatureUnit' : TEMPERATURE_CELSIUS, 'isHumidity' : true, 'expectedOutput' : '29.364'},
       {'temperature' : 27.0, 'humidity' : 100.0, 'temperatureUnit' : TEMPERATURE_CELSIUS, 'isHumidity' : true, 'expectedOutput' : '41.243'},

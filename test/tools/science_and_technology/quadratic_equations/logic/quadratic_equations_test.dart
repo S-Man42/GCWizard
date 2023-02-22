@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/science_and_technology/quadratic_equation/logic/
 
 void main() {
   group("QuadratcEquation.SolveEquation:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'a' : null, 'b' : null, 'c' : null, 'expectedOutput' : ['']},
       {'a' : null, 'b' : '',   'c' : '',   'expectedOutput' : ['']},
       {'a' : null, 'b' : null, 'c' : null, 'expectedOutput' : ['']},

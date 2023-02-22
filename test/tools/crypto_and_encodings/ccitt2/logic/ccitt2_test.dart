@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/science_and_technology/teletypewriter/_common/lo
 
 void main() {
   group("CCITT2.encodeCCITT2:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
@@ -37,7 +37,7 @@ void main() {
   });
 
   group("CCITT2.decodeCCITT2:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : <int>[], 'expectedOutput' : ''},
 

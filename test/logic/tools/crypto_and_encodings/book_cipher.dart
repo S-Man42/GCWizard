@@ -22,7 +22,7 @@ void main() {
       "x y z\n";
 
   group("book_cipher.encodeText:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'text' : null, 'outFormat' : encodeOutFormat.RowWordLetter, 'expectedOutput' : ''},
       {'input' : null, 'text' : '', 'outFormat' : encodeOutFormat.RowWordLetter, 'expectedOutput' : ''},
       {'input' : null, 'text' : 'und', 'outFormat' : encodeOutFormat.RowWordLetter, 'expectedOutput' : ''},
@@ -46,7 +46,7 @@ void main() {
   });
 
   group("book_cipher.decodeSearchWord:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'word' : null, 'outFormat' : decodeOutFormat.RowWord, 'expectedOutput' : ''},
       {'input' : null, 'word' : '', 'outFormat' : decodeOutFormat.RowWord, 'expectedOutput' : ''},
       {'input' : null, 'word' : 'und', 'outFormat' : decodeOutFormat.RowWord, 'expectedOutput' : ''},
@@ -71,7 +71,7 @@ void main() {
   });
 
   group("book_cipher.decodeFindWord:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'positions' : null, 'searchFormat' : searchFormat.RowWord, 'expectedOutput' : ''},
       {'input' : null, 'positions' : '', 'searchFormat' : searchFormat.RowWord, 'expectedOutput' : ''},
       {'input' : null, 'positions' : 'und', 'searchFormat' : searchFormat.RowWord, 'expectedOutput' : ''},

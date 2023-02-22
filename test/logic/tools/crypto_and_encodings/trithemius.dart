@@ -3,7 +3,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/trithemius.dart';
 
 void main() {
   group("Trithemius.encrypt:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'aValue': null, 'expectedOutput' : ''},
       {'input' : null, 'aValue': 0, 'expectedOutput' : ''},
       {'input' : '', 'aValue': null, 'expectedOutput' : ''},
@@ -43,7 +43,7 @@ void main() {
   });
 
   group("Trithemius.decrypt:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'aValue': null, 'expectedOutput' : ''},
       {'input' : null, 'aValue': 0, 'expectedOutput' : ''},
       {'input' : '', 'aValue': null, 'expectedOutput' : ''},

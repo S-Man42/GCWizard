@@ -3,7 +3,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
 
 void main() {
   group("Substitution.substitution:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'substitution': null, 'caseSensitive': true, 'expectedOutput' : ''},
       {'input' : '', 'substitution': null, 'caseSensitive': true, 'expectedOutput' : ''},
       {'input' : null, 'substitution': Map<String, String>(), 'caseSensitive': true, 'expectedOutput' : ''},

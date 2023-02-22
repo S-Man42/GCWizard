@@ -41,9 +41,8 @@ import 'package:tuple/tuple.dart';
 class SymbolReplacer extends StatefulWidget {
   final local.GCWFile? platformFile;
   final String? symbolKey;
-  final Iterable<Map<String, SymbolReplacerSymbolData>>? imageData;
 
-  const SymbolReplacer({Key? key, this.platformFile, this.symbolKey, this.imageData}) : super(key: key);
+  const SymbolReplacer({Key? key, this.platformFile, this.symbolKey}) : super(key: key);
 
   @override
   SymbolReplacerState createState() => SymbolReplacerState();
@@ -66,6 +65,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   SubstitutionBreakerAlphabet _currentAlphabet = SubstitutionBreakerAlphabet.GERMAN;
   var _isLoading = <bool>[false];
   double? _currentMergeDistance;
+  var init = true;
 
   @override
   void initState() {
@@ -76,12 +76,15 @@ class SymbolReplacerState extends State<SymbolReplacer> {
 
   @override
   Widget build(BuildContext context) {
-    _initDropDownLists();
-    _selectSymbolTableDataItem(widget.symbolKey, widget.imageData);
+    if (init) {
+      _initDropDownLists();
+      _selectSymbolTableDataItem(widget.symbolKey);
+      init = false;
 
-    if (widget.platformFile != null) {
-      _platformFile = widget.platformFile!;
-      _replaceSymbols(true);
+      if (widget.platformFile != null) {
+        _platformFile = widget.platformFile!;
+        _replaceSymbols(true);
+      }
     }
 
     return Column(children: <Widget>[
@@ -173,7 +176,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
         blackLevel: _blackLevel.toInt(),
         similarityLevel: _similarityLevel,
         symbolImage: _symbolImage,
-        compareSymbols: _currentSymbolTableViewData?.data?.images,
+        compareSymbols: _currentSymbolTableViewData.data?.images,
         similarityCompareLevel: _similarityCompareLevel,
         mergeDistance: _currentMergeDistance));
   }
@@ -437,11 +440,12 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     }
   }
 
-  void _selectSymbolTableDataItem(String? symbolKey, Iterable<Map<String, SymbolReplacerSymbolData>>? imageData) {
-    if ((widget.imageData != null) && (symbolKey != null)) {
+  void _selectSymbolTableDataItem(String? symbolKey) {
+    if ((symbolKey != null)) {
       for (GCWDropDownMenuItem item in _compareSymbolItems)
         if ((item.value is SymbolReplacerSymbolTableViewData) &&
             ((item.value as SymbolReplacerSymbolTableViewData).symbolKey == symbolKey)) {
+
           SymbolReplacerSymbolTableData _data;
           var value = item.value as SymbolReplacerSymbolTableViewData;
           if (value.data == null)
@@ -449,7 +453,6 @@ class SymbolReplacerState extends State<SymbolReplacer> {
           else
             _data = value.data!;
 
-          _data.images = imageData?.toList() ?? [];
           _currentSymbolTableViewData = value;
           break;
         }

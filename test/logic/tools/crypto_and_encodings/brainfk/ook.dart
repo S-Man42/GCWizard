@@ -3,7 +3,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/brainfk/ook.dart';
 
 void main() {
   group("Ook.interpretOok:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'code' : null, 'expectedOutput' : ''},
       {'code' : '', 'expectedOutput' : ''},
 
@@ -54,7 +54,7 @@ void main() {
   });
 
   group("Ook.generateOok:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'text' : null, 'expectedOutput' : ''},
       {'text' : '', 'expectedOutput' : ''},
 

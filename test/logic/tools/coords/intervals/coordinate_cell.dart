@@ -11,7 +11,7 @@ void main() {
         ellipsoid: getEllipsoidByName(ELLIPSOID_NAME_WGS84)
     );
 
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       //Points within cell
       {'point': LatLng(0.0, 0.0), 'expectedOutput': [0, 360]},
       {'point': LatLng(2.0, 2.0), 'expectedOutput': [0, 360]},

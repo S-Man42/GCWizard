@@ -4,7 +4,7 @@ import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
 import 'package:latlong/latlong.dart';
 
 void main() {
-  final List<Map<String, dynamic>> _inputsToExpectedDEC = [
+  final List<Map<String, Object?>> _inputsToExpectedDEC = [
     {'text': '52.12312 N 20.12312 E', 'expectedOutput': {'format': keyCoordsDEC, 'coordinate': LatLng(52.12312, 20.12312)}},
     {'text': '52.12312 S 20.12312 W', 'expectedOutput': {'format': keyCoordsDEC, 'coordinate': LatLng(-52.12312, -20.12312)}},
     {'text': '00.12312 S 000.12312 W', 'expectedOutput': {'format': keyCoordsDEC, 'coordinate': LatLng(-0.12312, -0.12312)}},
@@ -57,7 +57,7 @@ void main() {
     {'text': '92 Westen 0\nA: 1', 'expectedOutput': {'format': keyCoordsDEC, 'coordinate': LatLng(88.0, 180.0)}},
   ];
 
-  final List<Map<String, dynamic>> _inputsToExpectedDMM = [
+  final List<Map<String, Object?>> _inputsToExpectedDMM = [
     {'text': '52° 12.312\' N 20° 12.312\' E', 'expectedOutput': {'format': keyCoordsDMM, 'coordinate': LatLng(52.2052, 20.2052)}},
     {'text': '52° 12.312\' S 20° 12.312\' W', 'expectedOutput': {'format': keyCoordsDMM, 'coordinate': LatLng(-52.2052, -20.2052)}},
     {'text': ' 52°12.312′N 122°12.312′W', 'expectedOutput': {'format': keyCoordsDMM, 'coordinate': LatLng(52.2052, -122.2052)}},
@@ -119,7 +119,7 @@ void main() {
     {'text': '12.312 N 20.123 E', 'expectedOutput': null},
   ];
 
-  final List<Map<String, dynamic>> _inputsToExpectedDMS = [
+  final List<Map<String, Object?>> _inputsToExpectedDMS = [
     {'text': '52° 12\' 30.15" N 20° 12\' 30.15" E', 'expectedOutput': {'format': keyCoordsDMS, 'coordinate': LatLng(52.208375, 20.208375)}},
     {'text': '52° 12\' 30.15" N, 20° 12\' 30.15" E', 'expectedOutput': {'format': keyCoordsDMS, 'coordinate': LatLng(52.208375, 20.208375)}},
     {'text': '52° 12\' 30.15" S 20° 12\' 30.15" W', 'expectedOutput': {'format': keyCoordsDMS, 'coordinate': LatLng(-52.208375, -20.208375)}},
@@ -174,7 +174,7 @@ void main() {
   ];
 
   group("Parser.latlon.parseDEC:", () {
-    List<Map<String, dynamic>> _inputsToExpected = _inputsToExpectedDEC;
+    List<Map<String, Object?>> _inputsToExpected = _inputsToExpectedDEC;
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}', () {
@@ -185,7 +185,7 @@ void main() {
   });
 
   group("Parser.latlon.parseDMM:", () {
-    List<Map<String, dynamic>> _inputsToExpected = _inputsToExpectedDMM;
+    List<Map<String, Object?>> _inputsToExpected = _inputsToExpectedDMM;
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}', () {
@@ -199,7 +199,7 @@ void main() {
   });
 
   group("Parser.latlon.parseDMS:", () {
-    List<Map<String, dynamic>> _inputsToExpected = _inputsToExpectedDMS;
+    List<Map<String, Object?>> _inputsToExpected = _inputsToExpectedDMS;
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}', () {
@@ -215,7 +215,7 @@ void main() {
   });
 
   group("Parser.latlon.parseLatLon:", () {
-    List<Map<String, dynamic>> _inputsToExpected = _inputsToExpectedDEC;
+    List<Map<String, Object?>> _inputsToExpected = _inputsToExpectedDEC;
     _inputsToExpected.addAll(_inputsToExpectedDMM);
     _inputsToExpected.addAll(_inputsToExpectedDMS);
 
@@ -232,7 +232,7 @@ void main() {
   });
 
   group("Parser.latlon.parseDMMWithLeftPadMilliminutes:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'text': '52 12\'N 20°12\'East', 'leftPadMilliMinutes': false, 'expectedOutput': {'format': keyCoordsDMM, 'coordinate': LatLng(52.2, 20.2)}},
       {'text': '52 12.3\'N 20°12.4\'East', 'leftPadMilliMinutes': false, 'expectedOutput': {'format': keyCoordsDMM, 'coordinate': LatLng(52.205, 20.206666666666)}},
       {'text': '52 12.31\'N 20°12.45\'East', 'leftPadMilliMinutes': false, 'expectedOutput': {'format': keyCoordsDMM, 'coordinate': LatLng(52.20516666666666, 20.2075)}},

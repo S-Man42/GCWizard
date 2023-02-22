@@ -3,7 +3,7 @@ import 'package:gc_wizard/utils/collection_utils.dart';
 
 void main() {
   group("CollectionUtils.switchMapKeyValue:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'map' : null, 'expectedOutput': null},
       {'map' : {}, 'expectedOutput': {}},
       {'map' : <String, String>{}, 'expectedOutput': <String, String>{}},
@@ -40,7 +40,7 @@ void main() {
   });
 
   group("CollectionUtils.textToBinaryList:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'text' : null, 'expectedOutput' : []},
       {'text' : '', 'expectedOutput' : []},
       {'text' : '234', 'expectedOutput' : []},

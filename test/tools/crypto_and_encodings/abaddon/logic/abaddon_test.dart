@@ -8,7 +8,7 @@ final _SPACE = YEN + MY + MY;
 
 void main() {
   group("AbaddonCode.encryptAbaddon:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
       {'input' : '', 'replaceCharacters': null, 'expectedOutput' : ''},
@@ -41,7 +41,7 @@ void main() {
   });
 
   group("AbaddonCode.decryptAbaddon:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
       {'input' : '', 'replaceCharacters': null, 'expectedOutput' : ''},

@@ -10,7 +10,7 @@ void main() {
       'Q': '1', 'R': '0', 'S': '200', 'T': '20', 'U': '12', 'V': '9', 'W': '4', 'X': '30', 'Y':'4', 'Z': '50'
     };
 
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'formula' : null, 'values': null, 'expectedOutput' : {'state': 'error', 'result': null}},
       {'formula' : null, 'values': <String, String>{}, 'expectedOutput' : {'state': 'error', 'result': null}},
       {'formula' : null, 'expectedOutput' : {'state': 'error', 'result': null}},
@@ -69,7 +69,7 @@ void main() {
 
   group("FormulaParser.parse - Functionnames contain variables:", () {
 
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'formula' : 'sin(i)', 'values': <String, String>{'i': '${pi/2}'}, 'expectedOutput' : {'state': 'ok', 'result': '1'}},
       {'formula' : 'SIN (i)', 'values': <String, String>{'i': '${pi/2}'}, 'expectedOutput' : {'state': 'ok', 'result': '1'}},
       {'formula' : 'sin  (I)', 'values': <String, String>{'i': '${pi/2}'}, 'expectedOutput' : {'state': 'ok', 'result': '1'}},

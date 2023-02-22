@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_langua
 
 void main() {
   group("Cow.interpretCow:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'code': null, 'expectedOutput': ''},
       {'code': '', 'expectedOutput': ''},
       {'code': 'ABC123;', 'expectedOutput': ''},

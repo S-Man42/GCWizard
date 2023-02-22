@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/solitaire/logic/solitaire.d
 
 void main() {
   group("Solitaire.encryptSolitaire:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'key': null, 'expectedOutput' : null, 'keyStream': null},
       {'input' : '', 'key': null, 'expectedOutput' : null, 'keyStream': null},
       {'input' : null, 'key': 'FOO', 'expectedOutput' : null, 'keyStream': null},
@@ -41,7 +41,7 @@ void main() {
   });
 
   group("Solitaire.decryptSolitaire:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'key': null, 'expectedOutput' : null, 'keyStream': null},
       {'input' : '', 'key': null, 'expectedOutput' : null, 'keyStream': null},
       {'input' : null, 'key': 'FOO', 'expectedOutput' : null, 'keyStream': null},

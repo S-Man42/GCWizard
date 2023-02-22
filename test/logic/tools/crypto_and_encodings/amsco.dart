@@ -3,7 +3,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/amsco.dart';
 
 void main() {
   group("Amsco.encodeAmsco:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input': null, 'key': '', 'oneCharStart': false, 'errorcode': ErrorCode.OK, 'expectedOutput': ''},
       {'input': '', 'key': '', 'oneCharStart': false, 'errorcode': ErrorCode.OK, 'expectedOutput': ''},
       {'input': null, 'key': null, 'oneCharStart': false, 'errorcode': ErrorCode.OK, 'expectedOutput': ''},
@@ -32,7 +32,7 @@ void main() {
 
 
   group("Amsco.decodeAmsco:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input': null, 'key': '', 'oneCharStart': false, 'errorcode': ErrorCode.OK, 'expectedOutput': ''},
       {'input': '', 'key': '', 'oneCharStart': false, 'errorcode': ErrorCode.OK, 'expectedOutput': ''},
       {'input': null, 'key': null, 'oneCharStart': false, 'errorcode': ErrorCode.OK, 'expectedOutput': ''},

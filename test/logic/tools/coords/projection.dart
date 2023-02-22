@@ -7,7 +7,7 @@ import 'utils.dart';
 
 void main() {
   group("Projection.reverseProjection:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'coord' : LatLng(-67.54191968624406, 178.01621612330604), 'expectedOutput': LatLng(-67.48849337725231, 177.43970441425847), 'bearing': 103.87456562228434, 'distance': 25325.028166351105},
       {'coord' : LatLng(67.52065020309101, 116.15017978871731), 'expectedOutput': LatLng(67.46333237570478, 114.91858552958274), 'bearing': 82.5065605601814, 'distance': 53020.22653140148},
       {'coord' : LatLng(75.96130646717049, 83.13727857890729), 'expectedOutput': LatLng(75.93570642257264, 85.6363578154352), 'bearing': 273.62677269316185, 'distance': 67813.25176684314},

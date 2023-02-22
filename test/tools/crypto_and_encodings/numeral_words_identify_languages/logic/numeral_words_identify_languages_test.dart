@@ -8,7 +8,7 @@ void main(){
   // bool decodeModeEntireParts = true => decodeMode = false
 
     group("NumeralWords.decodeNumeralwordsEntireWordsDEU:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
 
       {'input' : 'huit dwa seize six one two eins',
         'language' : NumeralWordsLanguage.ALL,
@@ -101,7 +101,7 @@ void main(){
   });
 
   group("NumeralWords.decodeNumeralwordsEntireWordsAsParts:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
        {'input' : 'huit cinq seize sis one two eins', 'language' : NumeralWordsLanguage.ALL, 'decodeMode' : false,
          'expectedOutput' : [
            NumeralWordsDecodeOutput('8', 'huit', 'common_language_french'),
@@ -161,7 +161,7 @@ void main(){
   });
 
   group("NumeralWords.decodeNumeralwordsWordParts:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : 'Susi wacht einsam während Vater und Mutter zweifelnd Sand sieben. Null Bock, denkt sich Jörg. Ich lasse fünfe grade sein und kegel lieber alle Neune!',
         'language' : NumeralWordsLanguage.ALL,
         'decodeMode' : false,
@@ -342,7 +342,7 @@ void main(){
   });
 
   group("NumeralWords.GC97P76:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {
         'input': 'hat nocht arat hai bir dau mann satu hamar',
         'language': NumeralWordsLanguage.ALL,
@@ -376,7 +376,7 @@ void main(){
   });
 
   group("NumeralWords.Klingon:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {// GC8J08H
         'input': "north         cha'maH-jav         cha' wa'vatlh 'ej loSmaH-Hut       chan         nineteen        pagh-wej-chorgh",
         'language': NumeralWordsLanguage.ALL,
@@ -493,7 +493,7 @@ void main(){
   });
 
   group("NumeralWords.unicode languages:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {
         'input': 'шестнадцать 十八 じゅうしち 이십 열다섯 百 единайсет สามสิบ',
         'language': NumeralWordsLanguage.ALL,

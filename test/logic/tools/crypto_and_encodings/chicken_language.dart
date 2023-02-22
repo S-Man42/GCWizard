@@ -3,7 +3,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/chicken_language.dart
 
 void main() {
   group('chicken_language.encryptChickenLanguage:', () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
 
       {'input' : 'Hallo Welt', 'expectedOutput' : 'hahadefallohodefo wehedefelt'},
@@ -37,7 +37,7 @@ void main() {
   });
 
   group('chicken_language.decryptChickenLanguage:', () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
 
       {'expectedOutput' : 'hallo welt', 'input' : 'hahadefallohodefo wehedefelt'},

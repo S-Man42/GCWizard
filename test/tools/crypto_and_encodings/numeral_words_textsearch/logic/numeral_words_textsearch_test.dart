@@ -4,7 +4,7 @@ import 'package:gc_wizard/utils/string_utils.dart';
 
 void main(){
   group("NumeralWords.decodeNumeralwordsEntireWordsDEU:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : '', 'language' : NumeralWordsLanguage.DEU, 'decodeMode' : true,
         'expectedOutput' : [NumeralWordsDecodeOutput('', '', 'numeralwords_language_empty')]},
       {'input' : 'fünfundzwanzig', 'language' : NumeralWordsLanguage.DEU, 'decodeMode' : true,
@@ -77,7 +77,7 @@ void main(){
   });
 
   group("NumeralWords.decodeNumeralwordsEntireWordsENG:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : 'one', 'language' : NumeralWordsLanguage.ENG, 'decodeMode' : true,
         'expectedOutput' : [NumeralWordsDecodeOutput('1', 'one', 'common_language_english')]},
       {'input' : 'ten', 'language' : NumeralWordsLanguage.ENG, 'decodeMode' : true,
@@ -175,7 +175,7 @@ void main(){
   });
 
   group("NumeralWords.decodeNumeralwordsEntireWordsAsParts:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : '', 'language' : NumeralWordsLanguage.DEU, 'decodeMode' : false, 'expectedOutput' : ''},
       {'input' : 'fünfundzwanzig', 'language' : NumeralWordsLanguage.DEU, 'decodeMode' : false,
         'expectedOutput' : [NumeralWordsDecodeOutput('5', 'fuenf', 'common_language_german'),
@@ -398,7 +398,7 @@ void main(){
   });
 
   group("NumeralWords.decodeNumeralwordsWordParts:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : 'Susi wacht einsam während Vater und Mutter zweifelnd Sand sieben. Null Bock, denkt sich Jörg. Ich lasse fünfe grade sein und kegel lieber alle Neune!', 'language' : NumeralWordsLanguage.DEU, 'decodeMode' : false,
         'expectedOutput' : [
           NumeralWordsDecodeOutput('8', 'acht', 'common_language_german'),
@@ -498,7 +498,7 @@ void main(){
   });
 
   group("NumeralWords.decodeNumeralwordsEntireWordsVOL:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : '', 'language' : NumeralWordsLanguage.VOL, 'decodeMode' : true,
         'expectedOutput' : [NumeralWordsDecodeOutput('', '', 'numeralwords_language_empty')]},
       {'input' : 'fünfundzwanzig', 'language' : NumeralWordsLanguage.VOL, 'decodeMode' : true,
@@ -542,7 +542,7 @@ void main(){
   });
 
   group("NumeralWords.decodeNumeralwordsEntireWordsEPO:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : '', 'language' : NumeralWordsLanguage.EPO, 'decodeMode' : true,
         'expectedOutput' : [NumeralWordsDecodeOutput('', '', 'numeralwords_language_empty')]},
       {'input' : 'fünfundzwanzig', 'language' : NumeralWordsLanguage.EPO, 'decodeMode' : true,
@@ -580,7 +580,7 @@ void main(){
   });
 
   group("NumeralWords.decodeNumeralwordsEntireWordsSOL:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : '', 'language' : NumeralWordsLanguage.SOL, 'decodeMode' : true,
         'expectedOutput' : [NumeralWordsDecodeOutput('', '', 'numeralwords_language_empty')]},
       {'input' : 'fünfundzwanzig', 'language' : NumeralWordsLanguage.SOL, 'decodeMode' : true,
@@ -625,7 +625,7 @@ void main(){
   });
 
   group("NumeralWords.decodeNumeralwordsEntireWordsLAT:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : '', 'language' : NumeralWordsLanguage.LAT, 'decodeMode' : true,
         'expectedOutput' : [NumeralWordsDecodeOutput('', '', 'numeralwords_language_empty')]},
       {'input' : 'fünfundzwanzig', 'language' : NumeralWordsLanguage.LAT, 'decodeMode' : true,
@@ -670,7 +670,7 @@ void main(){
 
 
   group("NumeralWords.Minions:", () {
-      List<Map<String, dynamic>> _inputsToExpected = [
+      List<Map<String, Object?>> _inputsToExpected = [
         {
           'input': 'hana dul sae saesae saedul dulsae hanadulsae hanahana duldul',
           'language': NumeralWordsLanguage.MIN,
@@ -704,7 +704,7 @@ void main(){
     });
 
   group("NumeralWords.Shadoks:", () {
-        List<Map<String, dynamic>> _inputsToExpected = [
+        List<Map<String, Object?>> _inputsToExpected = [
           {
             'input': 'ga bu zo meu meumeu zobugameu zozo gazo gaga',
             'language': NumeralWordsLanguage.SHA,
@@ -738,7 +738,7 @@ void main(){
       });
 
   group("NumeralWords.Klingon:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {// http://klingon.wiki/De/Zahlen
         'input': "vaghbIp loSvatlh wa'",
         'language': NumeralWordsLanguage.KLI,
@@ -793,7 +793,7 @@ void main(){
   });
 
   group("NumeralWords.Navi:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {// GC5MJ89
         'input': "nefä puvol° mrrvomun.mezam mevohin    skien volaw° kew.vozam mezam mune",
         'language': NumeralWordsLanguage.NAVI,
@@ -873,7 +873,7 @@ void main(){
   });
 
   group("NumeralWords.DEU:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {
         'input': 'nulleinszweidreivierfünfsechssiebenachtneunzehnneunachtsiebensechsfuenfvierdreizweieinsnull',
         'language': NumeralWordsLanguage.DEU,

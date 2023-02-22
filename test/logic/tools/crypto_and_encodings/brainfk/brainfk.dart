@@ -3,7 +3,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/brainfk/brainfk.dart'
 
 void main() {
   group("Brainfk.interpretBrainfk:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'code' : null, 'expectedOutput' : ''},
       {'code' : '', 'expectedOutput' : ''},
       {'code' : 'ABC123;', 'expectedOutput' : ''},

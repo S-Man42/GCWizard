@@ -3,7 +3,7 @@ import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart'
 
 void main() {
   group("NumeralBases.convert:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'startBase' : null, 'destinationBase' : null, 'expectedOutput' : ''},
 
       {'input' : '16', 'startBase' : 10, 'destinationBase' : 2, 'expectedOutput' : '10000'},
@@ -294,7 +294,7 @@ void main() {
   });
 
   group("NumeralBases.convertNegativeValuesOnNegativeBases:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : '-42', 'destinationBase' : 10, 'startBase' : -2, 'expectedOutput' : null},
       {'input' : '-42', 'destinationBase' : 10, 'startBase' : -3, 'expectedOutput' : null},
       {'input' : '-42', 'destinationBase' : 10, 'startBase' : -4, 'expectedOutput' : null},

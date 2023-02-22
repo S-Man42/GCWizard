@@ -4,7 +4,7 @@ import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/wet_
 void main() {
   group("wet_bulb_temperature.calculate.WBT:", () {
     // https://rechneronline.de/air/wet-bulb-temperature.php
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'temperature' : 20.0, 'humidity' : 0.0, 'expectedOutput' : '6.13'},
       {'temperature' : 38.0, 'humidity' : 0.0, 'expectedOutput' : '13.59'},
       {'temperature' : 42.0, 'humidity' : 0.0, 'expectedOutput' : '15.24'},

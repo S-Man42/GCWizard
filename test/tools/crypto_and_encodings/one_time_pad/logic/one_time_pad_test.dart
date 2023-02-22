@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/one_time_pad/logic/one_time
 
 void main() {
   group("OneTimePad.encrypt:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
       {'input' : 'ABC', 'key': null, 'expectedOutput' : 'ABC'},
@@ -39,7 +39,7 @@ void main() {
   });
 
   group("OneTimePad.decrypt:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
       {'input' : 'ABC', 'key': null, 'expectedOutput' : 'ABC'},

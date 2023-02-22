@@ -6,7 +6,7 @@ void main() {
   group("IrrationalNumberCalculator.decimalAt:", () {
     var irCalculator = IrrationalNumberCalculator(irrationalNumber: PI);
 
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'index' : null, 'expectedOutput' : ERROR_IRRATIONALNUMBERS_INDEXTOOSMALL},
       {'index' : -1, 'expectedOutput' : ERROR_IRRATIONALNUMBERS_INDEXTOOSMALL},
       {'index' : PI.decimalPart.length + 1, 'expectedOutput' : ERROR_IRRATIONALNUMBERS_INDEXTOOBIG},
@@ -34,7 +34,7 @@ void main() {
   group("IrrationalNumberCalculator.decimalRange:", () {
     var irCalculator = IrrationalNumberCalculator(irrationalNumber: PI);
 
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'start' : null, 'length': 1, 'expectedOutput' : ERROR_IRRATIONALNUMBERS_INDEXTOOSMALL},
       {'start' : -1, 'length': 1, 'expectedOutput' : ERROR_IRRATIONALNUMBERS_INDEXTOOSMALL},
       {'start' : 0, 'length': 1, 'expectedOutput' : ERROR_IRRATIONALNUMBERS_INDEXTOOSMALL},
@@ -77,7 +77,7 @@ void main() {
   group("IrrationalNumberCalculator.decimalOccurence:", () { // Mark test
     var irCalculator = IrrationalNumberCalculator(irrationalNumber: PI);
 
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : []},
       {'input' : '', 'expectedOutput' : []},
 

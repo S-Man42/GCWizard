@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/science_and_technology/periodic_table/_common/lo
 
 void main() {
   group("PeriodicTable.atomicNumbersToText:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'atomicNumbers' : null, 'expectedOutput' : ''},
       {'atomicNumbers' : <int>[], 'expectedOutput' : ''},
 
@@ -21,7 +21,7 @@ void main() {
   });
 
   group("PeriodicTable.textToAtomicNumbers:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'expectedOutput' : <int>[], 'text' : null},
       {'expectedOutput' : <int>[], 'text' : ''},
 

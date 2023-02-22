@@ -3,7 +3,7 @@ import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 
 void main() {
   group("Coordinate.normalizeDEC:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'coord' : DEC(10.0, 10.0), 'expectedOutput' : DEC(10.0, 10.0)},
       {'coord' : DEC(-10.0, -10.0), 'expectedOutput' : DEC(-10.0, -10.0)},
 

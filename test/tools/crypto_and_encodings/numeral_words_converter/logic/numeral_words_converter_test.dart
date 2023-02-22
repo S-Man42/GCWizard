@@ -5,7 +5,7 @@ import 'package:gc_wizard/utils/string_utils.dart';
 void main(){
 
   group("decode Navi:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       // empty input
       { 'input': null, 'language': NumeralWordsLanguage.NAVI,        'expectedOutput': OutputConvertToNumber(0, '', '', 'numeralwords_converter_error_navi')},
       { 'input': '', 'language': NumeralWordsLanguage.NAVI,        'expectedOutput': OutputConvertToNumber(0, '', '', '')},
@@ -44,7 +44,7 @@ void main(){
   });
 
   group("encode Navi:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       // zero input
       { 'input': null, 'language': NumeralWordsLanguage.NAVI,        'expectedOutput': OutputConvertToNumeralWord('', '', '', 'numeralwords_converter_error_navi')},
       { 'input': 0, 'language': NumeralWordsLanguage.NAVI,        'expectedOutput': OutputConvertToNumeralWord('kew', '', '', '')},

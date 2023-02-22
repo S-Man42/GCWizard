@@ -4,7 +4,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/gray.dart';
 void main() {
 
   group("Gray.encodeGray", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'mode': GrayMode.DECIMAL,'expectedOutput' : GrayOutput([], [])},
       {'input' : '', 'mode': GrayMode.DECIMAL,'expectedOutput' : GrayOutput([], [])},
 
@@ -41,7 +41,7 @@ void main() {
   });
 
   group("Gray.decodeGray:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'mode': GrayMode.DECIMAL,'expectedOutput' : GrayOutput([], [])},
       {'input' : '', 'mode': GrayMode.DECIMAL,'expectedOutput' : GrayOutput([], [])},
 

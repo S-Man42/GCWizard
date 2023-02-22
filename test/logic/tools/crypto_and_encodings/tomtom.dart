@@ -3,7 +3,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/tomtom.dart';
 
 void main() {
   group("TomTom.encryptTomTom:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
       {'input' : '', 'replaceCharacters': null, 'expectedOutput' : ''},
@@ -38,7 +38,7 @@ void main() {
   });
 
   group("TomTom.decryptTomTom:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
       {'input' : '', 'replaceCharacters': null, 'expectedOutput' : ''},

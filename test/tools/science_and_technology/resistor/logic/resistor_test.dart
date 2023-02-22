@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/science_and_technology/resistor/_common/logic/re
 
 void main() {
   group("Resistor.resistor:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'colors' : null, 'expectedOutput' : null},
       {'colors' : <ResistorBandColor>[], 'expectedOutput' : null},
       {'colors' : [ResistorBandColor.RED], 'expectedOutput' : null},
@@ -39,7 +39,7 @@ void main() {
   });
 
   group("Resistor.eia96:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'code' : null, 'expectedOutput' : 0.0},
 
       {'code' : 1, 'expectedOutput' : 100.0},

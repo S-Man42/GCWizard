@@ -4,7 +4,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/rotator.dart';
 void main() {
   group("Rotator.rotation:", () {
 
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'alphabet': 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'input' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'key' : 13, 'removeUnknownCharacters' : false, 'ignoreCase': true, 'expectedOutput' : 'NOPQRSTUVWXYZABCDEFGHIJKLM'},
       {'alphabet': 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'input' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'key' : 26, 'removeUnknownCharacters' : false, 'ignoreCase': true, 'expectedOutput' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'},
       {'alphabet': 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'input' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'key' : 39, 'removeUnknownCharacters' : false, 'ignoreCase': true, 'expectedOutput' : 'NOPQRSTUVWXYZABCDEFGHIJKLM'},
@@ -59,7 +59,7 @@ void main() {
 
   group("Rotator.rot13:", () {
 
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'expectedOutput' : 'NOPQRSTUVWXYZABCDEFGHIJKLM'},
       {'input' : 'abcdefghijklmnopqrstuvwxyz', 'expectedOutput' : 'nopqrstuvwxyzabcdefghijklm'},
       {'input' : 'XYZabc', 'expectedOutput' : 'KLMnop'},
@@ -81,7 +81,7 @@ void main() {
 
   group("Rotator.rot5:", () {
 
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : '0123456789', 'expectedOutput' : '5678901234'},
       {'input' : '789012', 'expectedOutput' : '234567'},
       {'input' : '234567', 'expectedOutput' : '789012'},
@@ -102,7 +102,7 @@ void main() {
 
   group("Rotator.rot18:", () {
 
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', 'expectedOutput' : 'NOPQRSTUVWXYZABCDEFGHIJKLM5678901234'},
       {'input' : '9876543210abcdefghijklmnopqrstuvwxyz', 'expectedOutput' : '4321098765nopqrstuvwxyzabcdefghijklm'},
       {'input' : 'ABCDEFGHIJKLMnopqrstuvwxyz', 'expectedOutput' : 'NOPQRSTUVWXYZabcdefghijklm'},
@@ -125,7 +125,7 @@ void main() {
 
   group("Rotator.rot47:", () {
 
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : '!"#\$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~', 'expectedOutput' : 'PQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~!"#\$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNO'},
       {'input' : '9876543210abcdefghijklmnopqrstuvwxyz', 'expectedOutput' : 'hgfedcba`_23456789:;<=>?@ABCDEFGHIJK'},
       {'input' : 'ABCDEFGHIJKLMnopqrstuvwxyz', 'expectedOutput' : 'pqrstuvwxyz{|?@ABCDEFGHIJK'},

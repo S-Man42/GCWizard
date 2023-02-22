@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/language_games/robber_langu
 
 void main() {
   group('robber_language.encryptRobberLanguage:', () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
 
       {'input' : 'Hallo Welt', 'expectedOutput' : 'hohalollolo woweloltot'},
@@ -21,7 +21,7 @@ void main() {
   });
 
   group('robber_language.decryptRobberLanguage:', () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
 
       {'expectedOutput' : 'hallo welt', 'input' : 'hohalollolo woweloltot'},

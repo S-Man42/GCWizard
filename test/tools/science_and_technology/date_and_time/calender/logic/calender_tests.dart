@@ -4,7 +4,7 @@ import 'package:gc_wizard/tools/science_and_technology/date_and_time/calendar/lo
 void main() {
 
   group("DateTimeUtils.JulianDateToModifiedJulianDateTo:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'jd' : 0.0, 'round':  true, 'expectedOutput' : -2400000.5},
       {'jd' : 2400000.5, 'round':  true, 'expectedOutput' : 0.0},
     ];
@@ -18,7 +18,7 @@ void main() {
   });
 
   group("DateTimeUtils.ModifedJulianDateToJulianDate:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'jd' : 0.0, 'round':  true, 'expectedOutput' : 2400000.5},
       {'jd' : -2400000.5, 'round':  true, 'expectedOutput' : 0.0},
     ];
@@ -32,7 +32,7 @@ void main() {
   });
 
   group("DayCalculator.www.aoi.uzh.ch.JulianDateToPersianYazdegardCal:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'jd' : 2459363.0, 'expectedOutput' : DateTime(1390, 11, 16)},
     ];
 
@@ -47,7 +47,7 @@ void main() {
   });
 
   group("DayCalculator.www.aoi.uzh.ch.JulianDateToHebrewCal:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'jd' : 2459363.0, 'expectedOutput' : DateTime(5781, 9, 17)},
     ];
 
@@ -62,7 +62,7 @@ void main() {
   });
 
   group("DayCalculator.www.aoi.uzh.ch.JulianDateToIslamicCal:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'jd' : 2459363.0, 'expectedOutput' : DateTime(1442, 10, 16)},
     ];
 
@@ -77,7 +77,7 @@ void main() {
   });
 
   group("DateTimeUtils.www.aoi.uzh.ch.JulianDateToCopticCal:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'jd' : 2459363.0, 'expectedOutput' : DateTime(1737, 9, 20)},
     ];
 

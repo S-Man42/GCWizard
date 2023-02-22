@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/science_and_technology/divisor/logic/divisor.dar
 
 void main() {
   group("divisor", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : []},
       {'input' : 0, 'expectedOutput' : [0]},
       {'input' : 1, 'expectedOutput' : [1]},

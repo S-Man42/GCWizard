@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/enclosed_areas/logic/enclos
 
 void main() {
   group("EnclosedAreas.with4:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : '._*&%><', 'expectedOutput' : '4'},
 
 
@@ -27,7 +27,7 @@ void main() {
   });
 
   group("EnclosedAreas.without4:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
@@ -47,7 +47,7 @@ void main() {
   });
 
   group("EnclosedAreas.onlyNumbers:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 

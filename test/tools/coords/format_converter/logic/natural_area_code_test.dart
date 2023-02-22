@@ -5,7 +5,7 @@ import 'package:latlong2/latlong.dart';
 void main() {
   // Mark test
   group("Converter.naturalAreaCode.latlonToNaturalAreaCode:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'coord': LatLng(51.907002, 9.113159), 'expectedOutput': NaturalAreaCode('HQRGL6Z7', 'RMJ1H830')},
 
       {'coord': LatLng(0.0, 0.0), 'expectedOutput': NaturalAreaCode('H0000000', 'H0000000')},
@@ -25,7 +25,7 @@ void main() {
   });
 
   group("Converter.naturalAreaCode.naturalAreaCodeToLatLon:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'expectedOutput': LatLng(51.907002, 9.113159), 'nac': NaturalAreaCode('HQRGL6Z7', 'RMJ1H830')},
 
       {'expectedOutput': LatLng(0.0, 0.0), 'nac': NaturalAreaCode('H0000000', 'H0000000')},
@@ -55,7 +55,7 @@ void main() {
   });
 
   group("Converter.natural_area_code.parseLatLon:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'text': '', 'expectedOutput': null},
       {'text': 'K3ZVLFSSQP1MKBNZ', 'expectedOutput': null},
       {'text': 'K3ZVLFSS QP1MKBNZ', 'expectedOutput': {'format': CoordFormatKey.NATURAL_AREA_CODE, 'coordinate': LatLng(46.2110174566, 025.598495717)}},

@@ -4,7 +4,7 @@ import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/temp
 
 void main() {
   group("SummerSimmer.calculate:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'temperature' : 0.0, 'humidity' : 0.0, 'temperatureUnit' : TEMPERATURE_CELSIUS, 'expectedOutput' : '1.580'},
       {'temperature' : 45.0, 'humidity' : 55.0, 'temperatureUnit' : TEMPERATURE_CELSIUS, 'expectedOutput' : '59.976'},
       {'temperature' : 56.0, 'humidity' : 30.0, 'temperatureUnit' : TEMPERATURE_FAHRENHEIT, 'expectedOutput' : '55.575'},

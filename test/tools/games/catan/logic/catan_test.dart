@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/games/catan/logic/catan.dart';
 
 void main() {
   group("Catan.encode:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'mode': CatanMode.BASE, 'expectedOutput' : []},
       {'input' : '', 'mode': CatanMode.BASE, 'expectedOutput' : []},
       {'input' : ' ', 'mode': CatanMode.BASE, 'expectedOutput' : []},

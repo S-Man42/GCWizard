@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/mexican_army_cipher_wheel/l
 
 void main() {
   group("MexicanArmyCipherWheel.encryptMexicanArmyCipherWheel:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'keys': <int>[], 'expectedOutput' : ''},
       {'input' : '', 'keys': <int>[], 'expectedOutput' : ''},
 
@@ -59,7 +59,7 @@ void main() {
   });
 
   group("MexicanArmyCipherWheel.decryptMexicanArmyCipherWheel:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'expectedOutput' : '', 'keys': <int>[], 'input' : ''},
       {'expectedOutput' : '', 'keys': <int>[], 'input' : null},
 

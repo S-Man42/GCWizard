@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/_common/logic/transposition
 
 void main() {
   group("Transposition.createTranspositionMatrix:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'fillMode': TranspositionMatrixFillMode.encryption, 'countRows' : 1, 'countLettersPerCell': 1, 'expectedOutput' : null},
       {'input' : null, 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 1, 'countLettersPerCell': 1, 'expectedOutput' : null},
       {'input' : null, 'fillMode': TranspositionMatrixFillMode.encryption, 'expectedOutput' : null},
@@ -158,7 +158,7 @@ void main() {
   });
 
   group("Transposition.encryptTransposition:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'countRows' : 1, 'countLettersPerCell': 1, 'expectedOutput' : ''},
       {'input' : '', 'countRows' : 1, 'countLettersPerCell': 1, 'expectedOutput' : ''},
       {'input' : 'ABC', 'countRows' : 0, 'countLettersPerCell': 1, 'expectedOutput' : 'ABC'},
@@ -223,7 +223,7 @@ void main() {
   });
 
   group("Transposition.decryptTransposition:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'countRows' : 1, 'countLettersPerCell': 1, 'expectedOutput' : ''},
       {'input' : '', 'countRows' : 1, 'countLettersPerCell': 1, 'expectedOutput' : ''},
       {'input' : 'ABC', 'countRows' : 0, 'countLettersPerCell': 1, 'expectedOutput' : 'ABC'},

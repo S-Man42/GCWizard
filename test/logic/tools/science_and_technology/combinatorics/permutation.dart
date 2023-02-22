@@ -3,7 +3,7 @@ import 'package:gc_wizard/logic/tools/science_and_technology/combinatorics/permu
 
 void main() {
   group("Combinatorics.Permutations.generatePermutations:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'avoidDuplicates': true, 'expectedOutput' : []},
       {'input' : null, 'avoidDuplicates': false, 'expectedOutput' : []},
       {'input' : '', 'avoidDuplicates': true, 'expectedOutput' : []},

@@ -167,7 +167,7 @@ DU BIST DIE BEUTE DES TOURISMUS'!
 
 DIE IRONIE IST UNSER VERLUST AN STARKER ETHIK - SO ZIEMLICH.''';
 
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'scrabbleSet' : scrabbleID_EN, 'sourcecode' : HelloWorld, 'input' : '', 'expectedOutput' : ['Hello, world!\n']},
       {'scrabbleSet' : scrabbleID_EN, 'sourcecode' : Rudimentary, 'input' : 'a', 'expectedOutput' : ['h']},
       {'scrabbleSet' : scrabbleID_EN, 'sourcecode' : Alphabet, 'input' : '', 'expectedOutput' : [' !"#\$%&'+"'"+'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~']},

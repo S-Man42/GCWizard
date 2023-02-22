@@ -16,7 +16,7 @@ void main() {
       ],
     );
 
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : 'AAAA', 'expectedOutput' : 'BFY'},
     ];
 
@@ -35,7 +35,7 @@ void main() {
 
   // test auto-decryption of message with message key; source: Enigma GeoCoin
   group("Enigma.calculateEnigmaWithMessageKey", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {
         'input' : 'SJDSFTTVWBZXPDUMYUCRNPLNOQDURZLAVGXOGURQIORHNRDKMAIKVUVCXBSHDELVXIIEHCRMJPQWJIANTPWNKDRGPBBEKPSPDCZBNTFKUWBY',
         'key' : EnigmaKey(

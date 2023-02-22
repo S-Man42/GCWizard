@@ -4,7 +4,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/base/_common/logic/base.dar
 void main() {
 
   group("Base58.encode:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
       {'input' : '3429289555', 'expectedOutput' : '6e31iZ'},
@@ -19,7 +19,7 @@ void main() {
   });
 
   group("Base58.decode:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
       {'input' : '6e31iZ', 'expectedOutput' : '3429289555'},
@@ -34,7 +34,7 @@ void main() {
   });
 
   group("Base91.encode:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
       {'input' : 'This is an encoded string', 'expectedOutput' : 'nX,<:WRT%yV%!5:maref3+1RrUb64^M'},
@@ -49,7 +49,7 @@ void main() {
   });
 
   group("Base91.decode:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
       {'input' : 'nX,<:WRT%yV%!5:maref3+1RrUb64^M', 'expectedOutput' : 'This is an encoded string'},
@@ -64,7 +64,7 @@ void main() {
   });
 
   group("Base122.encode:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
       {'input' : 'GC Wizard', 'expectedOutput' : '#Pd;%ta9ހ'},
@@ -80,7 +80,7 @@ void main() {
   });
 
   group("Base122.decode:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
       {'input' : '#Pd;%ta9ހ', 'expectedOutput' : 'GC Wizard'},

@@ -4,7 +4,7 @@ import 'package:latlong2/latlong.dart';
 
 void main() {
   group("Converter.reverseWherigoDay1976.latlonToDay1976:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'coord': LatLng(-37.8228, 145.06348333333),      'expectedOutput': ['jc3q3', 'u0220']},
       {'coord': LatLng(-1.4939666667, -48.4277333333),  'expectedOutput': ['7u509', 'p6666']},
       {'coord': LatLng(48.8575166667, 2.3514166667),    'expectedOutput': ['au8u9', 'mbbbb']},
@@ -23,7 +23,7 @@ void main() {
   });
 
   group("Converter.reverseWherigooDay1976.day1976ToLatLon:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'expectedOutput': LatLng(-37.8228, 145.06348333333),      'input': ['jc3q3', 'u0220']},
       {'expectedOutput': LatLng(-1.4939666667, -48.4277333333),  'input': ['7u509', 'p6666']},
       {'expectedOutput': LatLng(48.8575166667, 2.3514166667),    'input': ['au8u9', 'mbbbb']},
@@ -42,7 +42,7 @@ void main() {
   });
 
   group("Converter.reverse_wherigo_day1976.parseLatLon:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'text': '', 'expectedOutput': null},
       {'text': 'fc654 jm44m',  'expectedOutput': {'format': CoordFormatKey.REVERSE_WIG_DAY1976, 'coordinate': LatLng(12.8974833333, 77.6074166667)}},
       {'text': 'fc654\njm44m', 'expectedOutput': {'format': CoordFormatKey.REVERSE_WIG_DAY1976, 'coordinate': LatLng(12.8974833333, 77.6074166667)}},

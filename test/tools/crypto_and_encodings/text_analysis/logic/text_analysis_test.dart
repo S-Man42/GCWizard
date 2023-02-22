@@ -48,7 +48,7 @@ void main() {
   }
 
   group("TextAnalysis.analyseText:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' :
         TextAnalysisCharacterCounts(
@@ -85,7 +85,7 @@ void main() {
   });
 
   group("TextAnalysis.analyseTextNotCaseSensitive:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : 'ABC-def d123D', 'expectedOutput' :
         TextAnalysisCharacterCounts(
           letters: SplayTreeMap<String, int>.from(<String, int>{'A': 1, 'B': 1, 'C': 1, 'D': 3, 'E': 1, 'F': 1}),

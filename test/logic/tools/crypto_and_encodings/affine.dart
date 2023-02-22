@@ -4,7 +4,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/affine.dart';
 void main() {
   
   group("Affine.encodeAffine:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'keyA' : 1, 'keyB': 0, 'expectedOutput' : ''},
       {'input' : 'Hallo', 'keyA' : 11, 'keyB': 5, 'expectedOutput' : 'EFWWD'},
       {'input' : 'Nummer 123 kommt', 'keyA' : 17, 'keyB': 10, 'expectedOutput' : 'XMGGAN  YOGGV'},
@@ -19,7 +19,7 @@ void main() {
   });
 
   group("Affine.decodeAffine:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'keyA' : 1, 'keyB': 0, 'expectedOutput' : ''},
       {'input' : 'efWwd', 'keyA' : 11, 'keyB': 5, 'expectedOutput' : 'HALLO'},
       {'input' : 'XMGGAN YOGGV', 'keyA' : 17, 'keyB': 10, 'expectedOutput' : 'NUMMER KOMMT'},

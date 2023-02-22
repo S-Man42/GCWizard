@@ -4,7 +4,7 @@ import 'package:gc_wizard/tools/science_and_technology/vanity/_common/logic/vani
 
 void main() {
   group("Vanity.decodeVanityMultitap:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'model': phoneModelByName(NAME_PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'input' : null, 'expectedOutput' : {'mode': PhoneCaseMode.CAMEL_CASE, 'output': ''}},
       {'model': phoneModelByName(NAME_PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'input' : '', 'expectedOutput' : {'mode': PhoneCaseMode.CAMEL_CASE, 'output': ''}},
 
@@ -145,7 +145,7 @@ void main() {
   });
 
   group("Vanity.encodeVanityMultitap:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'model': phoneModelByName(NAME_PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'input' : null, 'expectedOutput' : {'mode': PhoneCaseMode.CAMEL_CASE, 'output': ''}},
       {'model': phoneModelByName(NAME_PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'input' : '', 'expectedOutput' : {'mode': PhoneCaseMode.CAMEL_CASE, 'output': ''}},
 
@@ -190,7 +190,7 @@ void main() {
   });
 
   group("Vanity.reverseEncodeVanityMultitap:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'model': PHONEMODEL_SIMPLE_SPACE_0, 'language': PhoneInputLanguage.UNSPECIFIED, 'expectedOutput' : ' ABC DEF0123 ', 'input' : '0 2 22 222 0 3 33 333 00 1 2222 3333 0'},
       {'model': PHONEMODEL_SIMPLE_SPACE_1, 'language': PhoneInputLanguage.UNSPECIFIED, 'expectedOutput' : ' ABC DEF0123 ', 'input' : '1 2 22 222 1 3 33 333 0 11 2222 3333 1'},
       {'model': PHONEMODEL_SIMPLE_SPACE_HASH, 'language': PhoneInputLanguage.UNSPECIFIED, 'expectedOutput' : ' ABC DEF0123 ', 'input' : '# 2 22 222 # 3 33 333 0 1 2222 3333 #'},

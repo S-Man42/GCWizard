@@ -3,7 +3,7 @@ import 'package:gc_wizard/utils/math_utils.dart';
 
 void main() {
   group("MathnUtils.modulo:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'value' : 0, 'modulator': 1, 'expectedOutput' : 0},
       {'value' : -1, 'modulator': 1, 'expectedOutput' : 0},
       {'value' : -2, 'modulator': 1, 'expectedOutput' : 0},
@@ -58,7 +58,7 @@ void main() {
   });
 
   group("MathUtils.round:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'precision': 0, 'expectedOutput' : null},
       {'input' : 0.0, 'precision': 0, 'expectedOutput' : 0},
 

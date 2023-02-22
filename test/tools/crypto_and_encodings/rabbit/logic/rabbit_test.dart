@@ -5,7 +5,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/rabbit/logic/rabbit.dart';
 
 void main() {
   group("rabbit.keyStreamBytes:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'key' : null, 'iv' : null, 'expectedOutput' : null},
       {'key' : Uint8List.fromList([]), 'iv' : null, 'expectedOutput' : null},
       {'key' : Uint8List.fromList([]), 'iv' : Uint8List.fromList([]), 'expectedOutput' : null},
@@ -52,7 +52,7 @@ void main() {
   });
 
   group("rabbit.cryptRabbit:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input': null, 'inputFormat': null, 'key': null, 'keyFormat': null, 'iv': null, 'ivFormat': null, 'outputFormat': null,
         'expectedOutput': RabbitOutput('', null, null, ErrorCode.OK)
       },

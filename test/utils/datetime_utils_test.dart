@@ -3,7 +3,7 @@ import 'package:gc_wizard/utils/datetime_utils.dart';
 
 void main() {
   group("Calender.JulianDateToGregorianCalendar:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'jd' : 0.0, 'expectedOutput' : DateTime(-4713, 11, 24, 12)},
       {'jd' : 0.0, 'expectedOutput' : DateTime(-4713, 11, 24)},
       {'jd' : 1507231.5, 'expectedOutput' : DateTime(-586, 7, 24)},  //30.7. -586
@@ -35,7 +35,7 @@ void main() {
   });
 
   group("Calender.JulianDateToJulianCalendar:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'jd' : 0.0, 'expectedOutput' : DateTime(-4712, 1, 1)},
       {'jd' : -38.5, 'expectedOutput' : DateTime(-4713, 11, 24)},
       {'jd' : 1507231.5, 'expectedOutput' : DateTime(-586, 7, 30)},  //30.7. -586
@@ -68,7 +68,7 @@ void main() {
   });
 
   group("Calender.GregorianCalendarToJulianDate:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'expectedOutput' : -0.5, 'date' : DateTime(-4713, 11, 24)},
       {'expectedOutput' : 1507231.5, 'date' : DateTime(-586, 7, 24)},  //30.7. -586
       {'expectedOutput' : 1721419.5, 'date' : DateTime(0, 12, 26)}, //28.12.0
@@ -95,7 +95,7 @@ void main() {
   });
 
   group("Calender.JulianCalendarToJulianDate:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'date' : DateTime(-4712,1,1), 'expectedOutput' : -0.5},
       {'date' : DateTime(-4713,11,24), 'expectedOutput' : -38.5},
       {'date' : DateTime(-668,5,30), 'expectedOutput' : 1477220.5},
@@ -123,7 +123,7 @@ void main() {
   });
 
   group("Calender.formatDurationToHHmmss:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : Duration(days: 1, hours: 10, seconds: 33, milliseconds: 100), 'days': true, 'milliseconds': true, 'limitHours': true, 'expectedOutput' : '1:10:00:33.000'},
       {'input' : Duration(days: 1, hours: 10, seconds: 33, milliseconds: 100), 'days': true, 'milliseconds': false, 'limitHours': true, 'expectedOutput' : '1:10:00:33'},
@@ -150,7 +150,7 @@ void main() {
   });
 
   group("Calender.formatHoursToHHmmss:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : 1.23456789, 'milliseconds': true, 'limitHours': true, 'expectedOutput' : '01:14:04.444'},
       {'input' : 1.23456789, 'milliseconds': false, 'limitHours': true, 'expectedOutput' : '01:14:04'},

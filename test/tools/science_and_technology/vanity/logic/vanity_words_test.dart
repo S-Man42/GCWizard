@@ -6,7 +6,7 @@ import 'package:gc_wizard/utils/string_utils.dart';
 void main(){
 
   group("VanityWords.decode:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       // empty input
       {'input' : null, 'language' : NumeralWordsLanguage.DEU,
         'expectedOutput' : [VanityWordsDecodeOutput('?', '', '', false)]},

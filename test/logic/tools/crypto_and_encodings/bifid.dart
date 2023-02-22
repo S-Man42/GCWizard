@@ -19,7 +19,7 @@ void main() {
 
 
   group("Bifid.encryptBifid:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       // empty Input
       {'input' : null, 'key': null, 'mode': PolybiosMode.AZ09, 'alphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'alphabetMode': AlphabetModificationMode.J_TO_I, 'expectedOutput' : 'bifid_error_no_encrypt_input'},
       {'input' : '', 'key': '', 'mode': PolybiosMode.AZ09, 'alphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'alphabetMode': AlphabetModificationMode.J_TO_I, 'expectedOutput' : 'bifid_error_wrong_griddimension'},
@@ -63,7 +63,7 @@ void main() {
   });
 
   group("Bifid.decryptBifid:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       // empty Input
       {'input' : null, 'key': null, 'mode': PolybiosMode.AZ09, 'alphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'alphabetMode': AlphabetModificationMode.J_TO_I, 'expectedOutput' : 'bifid_error_no_decrypt_input'},
       {'input' : '', 'key': '', 'mode': PolybiosMode.AZ09, 'alphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'alphabetMode': AlphabetModificationMode.J_TO_I, 'expectedOutput' : 'bifid_error_wrong_griddimension'},

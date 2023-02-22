@@ -3,7 +3,7 @@ import 'package:gc_wizard/logic/tools/science_and_technology/primes/primes.dart'
 
 void main() {
   group("Primes.getNthPrime:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : -1},
       {'input' : -1, 'expectedOutput' : -1},
       {'input' : 0, 'expectedOutput' : -1},
@@ -25,7 +25,7 @@ void main() {
   });
 
   group("Primes.getPrimeIndex:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : -1},
       {'input' : -1, 'expectedOutput' : -1},
       {'input' : 0, 'expectedOutput' : -1},
@@ -50,7 +50,7 @@ void main() {
   });
 
   group("Primes.getNearestPrime:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : -100, 'expectedOutput' : [2]},
       {'input' : -1, 'expectedOutput' : [2]},

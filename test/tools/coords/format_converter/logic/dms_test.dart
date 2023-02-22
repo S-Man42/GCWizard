@@ -2,7 +2,7 @@ import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:latlong2/latlong.dart';
 
-final List<Map<String, dynamic>> inputsToExpectedDMS = [
+final List<Map<String, Object?>> inputsToExpectedDMS = [
   {'text': '52° 12\' 30.15" N 20° 12\' 30.15" E', 'expectedOutput': {'format': CoordFormatKey.DMS, 'coordinate': LatLng(52.208375, 20.208375)}},
   {'text': '52° 12\' 30.15" N, 20° 12\' 30.15" E', 'expectedOutput': {'format': CoordFormatKey.DMS, 'coordinate': LatLng(52.208375, 20.208375)}},
   {'text': '52° 12\' 30.15" S 20° 12\' 30.15" W', 'expectedOutput': {'format': CoordFormatKey.DMS, 'coordinate': LatLng(-52.208375, -20.208375)}},
@@ -63,7 +63,7 @@ final List<Map<String, dynamic>> inputsToExpectedDMS = [
 void main() {
 
   group("Converter.dms.parseDMS:", () {
-    List<Map<String, dynamic>> _inputsToExpected = inputsToExpectedDMS;
+    List<Map<String, Object?>> _inputsToExpected = inputsToExpectedDMS;
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}', () {

@@ -5,7 +5,7 @@ void main() {
   String inputString = 'abcdefghijklmnopqrstuvwxyzäöüABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜ1234567890';
 
   group("Keyboard.null:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'from' : KeyboardType.Dvorak, 'to' : KeyboardType.QWERTZ_T1, 'expectedOutput' : ''},
       {'input' : '', 'from' : KeyboardType.Dvorak, 'to' : KeyboardType.QWERTZ_T1, 'expectedOutput' : ''},
     ];
@@ -19,7 +19,7 @@ void main() {
   });
 
   group("Keyboard.QWERTZ_T1:", () {
-	List<Map<String, dynamic>> _inputsToExpected = [
+	List<Map<String, Object?>> _inputsToExpected = [
       {'input' : inputString, 'from' : KeyboardType.QWERTZ_T1, 'to' : KeyboardType.QWERTZ_T1,     'expectedOutput' : inputString},
       {'input' : inputString, 'from' : KeyboardType.QWERTZ_T1, 'to' : KeyboardType.QWERTY_US_INT, 'expectedOutput' : 'abcdefghijklmnopqrstuvwxzy\';[ABCDEFGHIJKLMNOPQRSTUVWXZY":{1234567890'},
       {'input' : inputString, 'from' : KeyboardType.QWERTZ_T1, 'to' : KeyboardType.Dvorak,        'expectedOutput' : 'axje.uidchtnmbrl\'poygk,q;f-s/AXJE>UIDCHTNMBRL"POYGK<Q:F_S?`123456789'},
@@ -44,7 +44,7 @@ void main() {
   });
 
   group("Keyboard.QWERTY_US_INT:", () {
-	List<Map<String, dynamic>> _inputsToExpected = [
+	List<Map<String, Object?>> _inputsToExpected = [
       {'input' : inputString, 'from' : KeyboardType.QWERTY_US_INT, 'to' : KeyboardType.QWERTZ_T1,     'expectedOutput' : 'abcdefghijklmnopqrstuvwxzyABCDEFGHIJKLMNOPQRSTUVWXZY1234567890'},
       {'input' : inputString, 'from' : KeyboardType.QWERTY_US_INT, 'to' : KeyboardType.QWERTY_US_INT, 'expectedOutput' : 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'},
       {'input' : inputString, 'from' : KeyboardType.QWERTY_US_INT, 'to' : KeyboardType.Dvorak,        'expectedOutput' : 'axje.uidchtnmbrl\'poygk,qf;AXJE>UIDCHTNMBRL"POYGK<QF:`123456789'},
@@ -69,7 +69,7 @@ void main() {
   });
 
   group("Keyboard.Dvorak:", () {
-	List<Map<String, dynamic>> _inputsToExpected = [
+	List<Map<String, Object?>> _inputsToExpected = [
       {'input' : inputString, 'from' : KeyboardType.Dvorak, 'to' : KeyboardType.QWERTZ_T1,     'expectedOutput' : 'anihdzujgcvpmlsrxoökf.,bt-ANIHDZUJGCVPMLSRXOÖKF:;BT_234567890ß'},
       {'input' : inputString, 'from' : KeyboardType.Dvorak, 'to' : KeyboardType.QWERTY_US_INT, 'expectedOutput' : 'anihdyujgcvpmlsrxo;kf.,bt/ANIHDYUJGCVPMLSRXO:KF><BT?234567890-'},
       {'input' : inputString, 'from' : KeyboardType.Dvorak, 'to' : KeyboardType.Dvorak,        'expectedOutput' : 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'},
@@ -94,7 +94,7 @@ void main() {
   });
 
   group("Keyboard.Dvorak_II_DEU:", () {
-	List<Map<String, dynamic>> _inputsToExpected = [
+	List<Map<String, Object?>> _inputsToExpected = [
       {'input' : inputString, 'from' : KeyboardType.Dvorak_II_DEU, 'to' : KeyboardType.QWERTZ_T1,     'expectedOutput' : 'anijdzuhfcvämlsrxköog.,btp<yqANIJDZUHFCVÄMLSRXKÖOG:;BTP>YQ1234567890'},
       {'input' : inputString, 'from' : KeyboardType.Dvorak_II_DEU, 'to' : KeyboardType.QWERTY_US_INT, 'expectedOutput' : 'anijdyuhfcv\'mlsrxk;og.,btpzqANIJDYUHFCV"MLSRXK:OG><BTPZQ1234567890'},
       {'input' : inputString, 'from' : KeyboardType.Dvorak_II_DEU, 'to' : KeyboardType.Dvorak,        'expectedOutput' : 'abchefgdujk-mnopqtsrivwxyl;\'ABCHEFGDUJK_MNOPQTSRIVWXYL:"`123456789'},
@@ -119,7 +119,7 @@ void main() {
   });
 
   group("Keyboard.Dvorak_I_DEU1:", () {
-	List<Map<String, dynamic>> _inputsToExpected = [
+	List<Map<String, Object?>> _inputsToExpected = [
 	  {'input' : inputString, 'from' : KeyboardType.Dvorak_I_DEU1, 'to' : KeyboardType.QWERTZ_T1,       'expectedOutput' : 'abihdzujgxcpnlsrüoökf,mvt.q<yABIHDZUJGXCPNLSRÜOÖKF;MVT:Q>Y1234567890'},
       {'input' : inputString, 'from' : KeyboardType.Dvorak_I_DEU1, 'to' : KeyboardType.QWERTY_US_INT, 'expectedOutput' : 'abihdyujgxcpnlsr[o;kf,mvt.qzABIHDYUJGXCPNLSR{O:KF<MVT>QZ1234567890'},
       {'input' : inputString, 'from' : KeyboardType.Dvorak_I_DEU1, 'to' : KeyboardType.Dvorak,        'expectedOutput' : 'axcdefghiqjlbnop/rstuwmkyv\';AXCDEFGHIQJLBNOP?RSTUWMKYV":`123456789'},
@@ -144,7 +144,7 @@ void main() {
   });
 
   group("Keyboard.Dvorak_I_DEU2:", () {
-	List<Map<String, dynamic>> _inputsToExpected = [
+	List<Map<String, Object?>> _inputsToExpected = [
       {'input' : inputString, 'from' : KeyboardType.Dvorak_I_DEU2, 'to' : KeyboardType.QWERTZ_T1,     'expectedOutput' : 'abihdzujgxcpnlsr#oökf,mvt.eqwABIHDZUJGXCPNLSRÜOÖKF;MVT:EQW1234567890'},
       {'input' : inputString, 'from' : KeyboardType.Dvorak_I_DEU2, 'to' : KeyboardType.QWERTY_US_INT, 'expectedOutput' : 'abihdyujgxcpnlsro;kf,mvt.eqwABIHDYUJGXCPNLSR{O:KF<MVT>EQW1234567890'},
       {'input' : inputString, 'from' : KeyboardType.Dvorak_I_DEU2, 'to' : KeyboardType.Dvorak,        'expectedOutput' : 'axcdefghiqjlbnoprstuwmkyv.\',AXCDEFGHIQJLBNOP?RSTUWMKYV>"<`123456789'},
@@ -169,7 +169,7 @@ void main() {
   });
 
   group("Keyboard.Dvorak_I_DEU3:", () {
-	List<Map<String, dynamic>> _inputsToExpected = [
+	List<Map<String, Object?>> _inputsToExpected = [
       {'input' : inputString, 'from' : KeyboardType.Dvorak_I_DEU3, 'to' : KeyboardType.QWERTZ_T1,     'expectedOutput' : 'abihdzujgxcpnlsr#oökf,mvt.qweABIHDZUJGXCPNLSRÜOÖKF;MVT:QWE1234567890'},
       {'input' : inputString, 'from' : KeyboardType.Dvorak_I_DEU3, 'to' : KeyboardType.QWERTY_US_INT, 'expectedOutput' : 'abihdyujgxcpnlsro;kf,mvt.qweABIHDYUJGXCPNLSR{O:KF<MVT>QWE1234567890'},
       {'input' : inputString, 'from' : KeyboardType.Dvorak_I_DEU3, 'to' : KeyboardType.Dvorak,        'expectedOutput' : 'axcdefghiqjlbnoprstuwmkyv\',.AXCDEFGHIQJLBNOP?RSTUWMKYV"<>`123456789'},
@@ -194,7 +194,7 @@ void main() {
   });
 
   group("Keyboard.COLEMAK:", () {
-	List<Map<String, dynamic>> _inputsToExpected = [
+	List<Map<String, Object?>> _inputsToExpected = [
       {'input' : inputString, 'from' : KeyboardType.COLEMAK, 'to' : KeyboardType.QWERTZ_T1,     'expectedOutput' : 'abcgkethlznumjörqsdfivwxoyABCGKETHLZNUMJÖRQSDFIVWXOY1234567890'},
       {'input' : inputString, 'from' : KeyboardType.COLEMAK, 'to' : KeyboardType.QWERTY_US_INT, 'expectedOutput' : 'abcgkethlynumj;rqsdfivwxozABCGKETHLYNUMJ:RQSDFIVWXOZ1234567890'},
       {'input' : inputString, 'from' : KeyboardType.COLEMAK, 'to' : KeyboardType.Dvorak,        'expectedOutput' : 'axjit.ydnfbgmhsp\'oeuck,qr;AXJIT>YDNFBGMHSP"OEUCK<QR:`123456789'},
@@ -219,7 +219,7 @@ void main() {
   });
 
   group("Keyboard.NEO:", () {
-	List<Map<String, dynamic>> _inputsToExpected = [
+	List<Map<String, Object?>> _inputsToExpected = [
       {'input' : inputString, 'from' : KeyboardType.NEO, 'to' : KeyboardType.QWERTZ_T1,     'expectedOutput' : 'dnröfoius-zemjgvpkhlawtqäbcxyDNRÖFOIUS_ZEMJGVPKHLAWTQÄBCXY1234567890'},
       {'input' : inputString, 'from' : KeyboardType.NEO, 'to' : KeyboardType.QWERTY_US_INT, 'expectedOutput' : 'dnr;foius/yemjgvpkhlawtq\'bcxzDNR:FOIUS?YEMJGVPKHLAWTQ"BCXZ1234567890'},
       {'input' : inputString, 'from' : KeyboardType.NEO, 'to' : KeyboardType.Dvorak,        'expectedOutput' : 'ebpsurcgozf.mhikltdna,y\'-xjq;EBPSURCGOZF>MHIKLTDNA<Y"_XJQ:`123456789'},
@@ -244,7 +244,7 @@ void main() {
   });
 
   group("Keyboard.RISTOME:", () {
-	List<Map<String, dynamic>> _inputsToExpected = [
+	List<Map<String, Object?>> _inputsToExpected = [
       {'input' : inputString, 'from' : KeyboardType.RISTOME, 'to' : KeyboardType.QWERTZ_T1,     'expectedOutput' : 'dztijöckgpbsvfrwqeluhxoyäanümDZTIJÖCKGPBSVFRWQELUHXOYÄANÜM1234567890'},
       {'input' : inputString, 'from' : KeyboardType.RISTOME, 'to' : KeyboardType.QWERTY_US_INT, 'expectedOutput' : 'dytij;ckgpbsvfrwqeluhxoz\'an[mDYTIJ:CKGPBSVFRWQELUHXOZ"AN{M1234567890'},
       {'input' : inputString, 'from' : KeyboardType.RISTOME, 'to' : KeyboardType.Dvorak,        'expectedOutput' : 'efychsjtilxokup,\'.ngdqr;-ab/mEFYCHSJTILXOKUP<">NGDQR:_AB?M`123456789'},
@@ -269,7 +269,7 @@ void main() {
   });
 
   group("Keyboard.FRA_AZERTY:", () {
-	List<Map<String, dynamic>> _inputsToExpected = [
+	List<Map<String, Object?>> _inputsToExpected = [
       {'input' : inputString, 'from' : KeyboardType.FRA_AZERTY, 'to' : KeyboardType.QWERTZ_T1,     'expectedOutput' : 'qbcdefghijklönoparstuvyxzwQBCDEFGHIJKLÖNOPARSTUVYXZW!"§\$%&/()='},
       {'input' : inputString, 'from' : KeyboardType.FRA_AZERTY, 'to' : KeyboardType.QWERTY_US_INT, 'expectedOutput' : 'qbcdefghijkl;noparstuvzxywQBCDEFGHIJKL:NOPARSTUVZXYW!@#\$%^&*()'},
       {'input' : inputString, 'from' : KeyboardType.FRA_AZERTY, 'to' : KeyboardType.Dvorak,        'expectedOutput' : '\'xje.uidchtnsbrlapoygk;qf,"XJE>UIDCHTNSBRLAPOYGK:QF<~!@#\$%^&*('},
@@ -294,7 +294,7 @@ void main() {
   });
 
   group("Keyboard.FRA_BEPO:", () {
-	List<Map<String, dynamic>> _inputsToExpected = [
+	List<Map<String, Object?>> _inputsToExpected = [
       {'input' : inputString, 'from' : KeyboardType.FRA_BEPO, 'to' : KeyboardType.QWERTZ_T1,     'expectedOutput' : 'aqhif-,.dpnoäörelkjsuyvcüAQHIF_;:DPNOÄÖRELKJSUYVCÜ!"§\$%&/()='},
       {'input' : inputString, 'from' : KeyboardType.FRA_BEPO, 'to' : KeyboardType.QWERTY_US_INT, 'expectedOutput' : 'aqhif/,.dpno\';relkjsuzvc[AQHIF?<>DPNO":RELKJSUZVC{!@#\$%^&*()'},
       {'input' : inputString, 'from' : KeyboardType.FRA_BEPO, 'to' : KeyboardType.Dvorak,        'expectedOutput' : 'a\'dcuzwvelbr-sp.nthog;kj/A"DCUZWVELBR_SP>NTHOG:KJ?~!@#\$%^&*('},
@@ -319,7 +319,7 @@ void main() {
   });
 
   group("Keyboard.encodeKeyboardNumbers:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : '1234567890', 'expectedOutput' : [
         ['keyboard_mode_qwertz_ristome_dvorak', '!"§\$%&/()='],
         ['keyboard_mode_neo', '°§ℓ»«\$€„“”'],
@@ -341,7 +341,7 @@ void main() {
   });
 
   group("Keyboard.decodeKeyboardNumbers:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : '!"§\$%&/()=°§ℓ»«\$€„“”¹²³›‹₵¥‚‘’³♀♂⚥𝛘〈〉𝛐¬∨∧⊥∡∥→∞∝∅"«»()@+-/*', 'expectedOutput' : [
         ['keyboard_mode_qwertz_ristome_dvorak',
           '1234567890 3   4     23       3                   2  89   7 '],

@@ -4,7 +4,7 @@ import 'package:latlong/latlong.dart';
 
 void main() {
   group("Converter.maidenhead.latlonToMaidenhead:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'coord': LatLng(89.99999, 179.99999), 'expectedOutput': 'RR99XX99XX99RK01'},
       {'coord': LatLng(-89.99999, 179.99999), 'expectedOutput': 'RA90XA90XA90RN08'},
       {'coord': LatLng(89.99999, -179.99999), 'expectedOutput': 'AR09AX09AX09GK91'},
@@ -22,7 +22,7 @@ void main() {
   });
 
   group("Converter.maidenhead.maidenheadToLatLon:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'expectedOutput': LatLng(89.99999, 179.99999), 'coord': 'RR99XX99XX99RK01'},
       {'expectedOutput': LatLng(-89.99999, 179.99999), 'coord': 'RA90XA90XA90RN08'},
       {'expectedOutput': LatLng(89.99999, -179.99999), 'coord': 'AR09AX09AX09GK91'},

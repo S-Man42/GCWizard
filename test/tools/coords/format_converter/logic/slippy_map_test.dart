@@ -4,7 +4,7 @@ import 'package:latlong2/latlong.dart';
 
 void main() {
   group("Parser.slippy_map.parseLatLon:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'text': '', 'expectedOutput': null},
       {'text': '584.813499 363.434344', 'expectedOutput': {'format': CoordFormatKey.SLIPPY_MAP, 'coordinate': LatLng(46.211017406, 025.5984957422)}},
       {'text': 'X: 584.813499 Y: 363.434344', 'expectedOutput': {'format': CoordFormatKey.SLIPPY_MAP, 'coordinate': LatLng(46.211017406, 025.5984957422)}},

@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_langua
 
 void main() {
   group("Ook.interpretOok:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'code' : null, 'expectedOutput' : ''},
       {'code' : '', 'expectedOutput' : ''},
 
@@ -58,7 +58,7 @@ void main() {
   });
 
   group("Ook.generateOok:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'text' : null, 'expectedOutput' : ''},
       {'text' : '', 'expectedOutput' : ''},
 
@@ -75,7 +75,7 @@ void main() {
   });
 
   group("BrainfkDerivat.interpretDetailedFk:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'code' : "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
         "IF THE CELL UNDER THE MEMORY POINTER'S VALUE IS ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE ] COMMAND IN BRAINFUCK\n" +
         "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +

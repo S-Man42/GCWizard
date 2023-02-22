@@ -7,7 +7,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/burrows_wheeler/logic/burro
 void main() {
 
   group("bioinfo-lectures.encrypt", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : 'banana#', 'index': '0', 'expectedOutput' : BWTOutput('annb#aa','5')},
       {'input' : 'appellee#', 'index': '0', 'expectedOutput' : BWTOutput('e#elplepa','2')},
       {'input' : 'dogwood#', 'index': '0', 'expectedOutput' : BWTOutput('do#oodwg','3')},
@@ -23,7 +23,7 @@ void main() {
   });
 
   group("wikipedia.encrypt", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : '^ANANAS^', 'index': '0', 'expectedOutput' : BWTOutput('^NNAAA^S','7')},
       {'input' : '^ANANAS^', 'index': '#', 'expectedOutput' : BWTOutput('^NNAAA#^S','#')},
       {'input' : 'Wikipedia!', 'index': '0', 'expectedOutput' : BWTOutput('a!iepdWkii','2')},
@@ -40,7 +40,7 @@ void main() {
   });
 
   group("BurrowsWheeler.encrypt", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : '', 'index': '0', 'expectedOutput' : BWTOutput('','')},
 
       {'input' : 'helene', 'index': '0',    'expectedOutput' : BWTOutput('nhleee','4')},
@@ -76,7 +76,7 @@ void main() {
   });
 
   group("bioinfo-lectures.decrypt", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : 'annb#aa', 'index': '5',  'expectedOutput' : BWTOutput('banana#','5')},
       {'input' : 'e#elplepa', 'index': '2','expectedOutput' : BWTOutput('appellee#','2')},
       {'input' : 'do#oodwg', 'index': '3', 'expectedOutput' : BWTOutput('dogwood#','3')},
@@ -92,7 +92,7 @@ void main() {
   });
 
   group("wikipedia.decrypt", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : '^NNAAA^S', 'index': '7', 'expectedOutput' : BWTOutput('^ANANAS^','7')},
       {'input' : '^NNAAA#^S', 'index': '#', 'expectedOutput' : BWTOutput('^ANANAS^','#')},
       {'input' : 'a!iepdWkii', 'index': '2', 'expectedOutput' : BWTOutput('Wikipedia!','2')},
@@ -109,7 +109,7 @@ void main() {
   });
 
   group("BurrowsWheeler.decrypt", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : '', 'index': '0',  'compress': false, 'deu': true,
         'expectedOutput' : BWTOutput('','')},
 

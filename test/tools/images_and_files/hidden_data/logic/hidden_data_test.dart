@@ -43,7 +43,7 @@ String? _fileStructureToString(List<GCWFile>? structure, {int offset = 0}) {
 
 void main() {
   group("hidden_data.hiddenData:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
 
       {'input' : 'hidden1.zip', 'expectedOutput' :
           'hidden1.zip, ZIP, 164 bytes, \n'

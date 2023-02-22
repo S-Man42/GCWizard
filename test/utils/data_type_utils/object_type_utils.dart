@@ -3,7 +3,7 @@ import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 
 void main() {
   group("ObjectUtils.toDoubleOrNull:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : null},
 
@@ -25,7 +25,7 @@ void main() {
   });
 
   group("ObjectUtils.toIntOrNull:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : null},
 
@@ -48,7 +48,7 @@ void main() {
   });
 
   group("ObjectUtils.toBoolOrNull:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : null},
 
@@ -70,7 +70,7 @@ void main() {
   });
 
   group("ObjectUtils.toStringOrNull:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : ''},
 
@@ -91,7 +91,7 @@ void main() {
   });
 
   group("ObjectUtils.toStringListOrNull:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : <Object?>[], 'expectedOutput' : <String>[]},
       {'input' : <Object?>[null], 'expectedOutput' : <String>['']},
@@ -112,7 +112,7 @@ void main() {
   });
 
   group("ObjectUtils.toStringListWithNullableContentOrNull:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : <Object?>[], 'expectedOutput' : <String?>[]},
       {'input' : <Object?>[null], 'expectedOutput' : <String?>[null]},

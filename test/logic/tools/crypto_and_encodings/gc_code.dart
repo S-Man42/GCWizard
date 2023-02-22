@@ -3,7 +3,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/gc_code.dart';
 
 void main() {
   group("GCCode.gcCodeToID:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : null},
 
@@ -34,7 +34,7 @@ void main() {
   });
 
   group("GCCode.gcCodeToID.noValidGCCode:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : 'GCG'},
       {'input' : 'GCFFFG'},
       {'input' : 'GCILOSU'}
@@ -53,7 +53,7 @@ void main() {
   });
 
   group("GCCode.idToGCCode:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : -1, 'expectedOutput' : ''},
 

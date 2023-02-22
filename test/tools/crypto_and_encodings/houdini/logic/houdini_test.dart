@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/houdini/logic/houdini.dart'
 
 void main() {
   group("Houdini.decodeHoudini:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : null},
 
@@ -23,7 +23,7 @@ void main() {
   });
 
   group("Houdini.encodeHoudini:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : null},
 

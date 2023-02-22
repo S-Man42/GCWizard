@@ -4,7 +4,7 @@ import 'package:gc_wizard/utils/variable_string_expander.dart';
 void main() {
 
   group("VariableStringExpander.run:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input': 'N 51.[A][A+1] E [B][B^A].[4]23', 'substitutions': {'A': '1-3', 'B': '4-0#2,1', 'C': '12,34'}, 'onAfterExpandedText' : (e) => e, 'breakCondition' : VariableStringExpanderBreakCondition.RUN_ALL,
         'expectedOutput': [
           {'text': 'N 51.[1][1+1] E [0][0^1].[4]23', 'variables': {'A': '1', 'B': '0', 'C': '12'}},
@@ -87,7 +87,7 @@ void main() {
   });
 
   group("VariableStringExpander.runError:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input': 'A', 'substitutions': {'A': '1-Z', 'B': '4-0#2,1', 'C': '12,34'}, 'onAfterExpandedText' : (e) => e, 'breakCondition' : VariableStringExpanderBreakCondition.RUN_ALL,
         'expectedOutput': [{'text': 'A', 'variables': {}}]
       },
@@ -102,7 +102,7 @@ void main() {
   });
 
   group("VariableStringExpander.runUnorderedNotUnique:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input': 'AA', 'substitutions': {'A': '3-1'}, 'onAfterExpandedText' : (e) => e, 'breakCondition' : VariableStringExpanderBreakCondition.RUN_ALL,
         'expectedOutput': [
           {'text': '33', 'variables': {'A': '3'}},
@@ -159,7 +159,7 @@ void main() {
   });
 
   group("VariableStringExpander.runOnlyPrecheckWithSpaces:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input': 'N 51.[A][A+1] E [B][B^A].[4]23', 'substitutions': {'A': '1- 3', 'B': '4 -0#  2,  1', 'C': '12  ,34,  10'}, 'onAfterExpandedText' : (e) => e, 'breakCondition' : VariableStringExpanderBreakCondition.RUN_ALL,
         'expectedOutput': [{'count' : 36}]
       }
@@ -174,7 +174,7 @@ void main() {
   });
 
   group("VariableStringExpander.runOnlyPrecheck:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input': 'N 51.[A][A+1] E [B][B^A].[4]23', 'substitutions': {'A': '1-3', 'B': '4-0#2,1', 'C': '12,34'}, 'onAfterExpandedText' : (e) => e, 'breakCondition' : VariableStringExpanderBreakCondition.RUN_ALL,
         'expectedOutput': [{'count' : 24}]
       }
