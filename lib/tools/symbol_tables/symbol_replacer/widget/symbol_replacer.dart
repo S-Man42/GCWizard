@@ -41,7 +41,7 @@ import 'package:tuple/tuple.dart';
 class SymbolReplacer extends StatefulWidget {
   final local.GCWFile? platformFile;
   final String? symbolKey;
-  final Iterable<Map<String, SymbolData>>? imageData;
+  final Iterable<Map<String, SymbolReplacerSymbolData>>? imageData;
 
   const SymbolReplacer({Key? key, this.platformFile, this.symbolKey, this.imageData}) : super(key: key);
 
@@ -50,7 +50,8 @@ class SymbolReplacer extends StatefulWidget {
 }
 
 class SymbolReplacerState extends State<SymbolReplacer> {
-  static String no_symbol_table = 'no_symbol_table';
+  static String no_symbol_table_key = 'no_symbol_table';
+  final no_symbol_table = SymbolReplacerSymbolTableViewData(symbolKey: no_symbol_table_key, toolName: null, icon :null, description: null);
   SymbolReplacerImage? _symbolImage;
   local.GCWFile? _platformFile;
   double _blackLevel = 50.0;
@@ -60,11 +61,18 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   List<GCWDropDownMenuItem> _compareSymbolItems = [];
   var _gcwTextStyle = gcwTextStyle();
   var _descriptionTextStyle = gcwDescriptionTextStyle();
-  SymbolReplacerSymbolTableViewData? _currentSymbolTableViewData;
+  late SymbolReplacerSymbolTableViewData _currentSymbolTableViewData;
   var _quadgrams = Map<SubstitutionBreakerAlphabet, Quadgrams>();
   SubstitutionBreakerAlphabet _currentAlphabet = SubstitutionBreakerAlphabet.GERMAN;
   var _isLoading = <bool>[false];
   double? _currentMergeDistance;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _currentSymbolTableViewData = no_symbol_table;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -156,8 +164,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   }
 
   Future<GCWAsyncExecuterParameters?> _buildJobDataReplacer() async {
-    if ((_currentSymbolTableViewData is SymbolReplacerSymbolTableViewData) &&
-        (_currentSymbolTableViewData!.data == null)) await _currentSymbolTableViewData!.initialize(context);
+    if (_currentSymbolTableViewData.data == null) await _currentSymbolTableViewData.initialize(context);
 
     if (_platformFile?.bytes == null) return null;
 
@@ -265,12 +272,12 @@ class SymbolReplacerState extends State<SymbolReplacer> {
                 _currentSymbolTableViewData = value;
               });
               if (_symbolImage != null) {
-                if (_currentSymbolTableViewData?.data == null && _currentSymbolTableViewData != null) {
-                      _currentSymbolTableViewData!.initialize(context).then((_) {
-                        _symbolImage!.compareSymbols = _currentSymbolTableViewData?.data?.images;
+                if (_currentSymbolTableViewData.data == null && _currentSymbolTableViewData != no_symbol_table) {
+                      _currentSymbolTableViewData.initialize(context).then((_) {
+                        _symbolImage!.compareSymbols = _currentSymbolTableViewData.data?.images;
                       });
                 } else
-                  _symbolImage!.compareSymbols = _currentSymbolTableViewData?.data?.images;
+                  _symbolImage!.compareSymbols = _currentSymbolTableViewData.data?.images;
               }
             },
             items: _compareSymbolItems,
@@ -425,13 +432,13 @@ class SymbolReplacerState extends State<SymbolReplacer> {
       _compareSymbolItems.insert(
           0,
           GCWDropDownMenuItem(
-              value: SymbolReplacerSymbolTableViewData(symbolKey: no_symbol_table, toolName: null, icon :null, description: null),
+              value: _currentSymbolTableViewData,
               child: _buildDropDownMenuItem(null, i18n(context, 'symbol_replacer_no_symbol_table'), null)));
     }
   }
 
   void _selectSymbolTableDataItem(String? symbolKey, Iterable<Map<String, SymbolReplacerSymbolData>>? imageData) {
-    if ((widget.imageData != null) && (_currentSymbolTableViewData == null)) {
+    if ((widget.imageData != null) && (symbolKey != null)) {
       for (GCWDropDownMenuItem item in _compareSymbolItems)
         if ((item.value is SymbolReplacerSymbolTableViewData) &&
             ((item.value as SymbolReplacerSymbolTableViewData).symbolKey == symbolKey)) {
@@ -513,7 +520,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     if (_symbolImage == null) return null;
 
     list = await Future.wait(_compareSymbolItems.map((_symbolTableViewData) async {
-      SymbolReplacerSymbolTableViewData symbolTableViewData = _symbolTableViewData.value;
+      var symbolTableViewData = _symbolTableViewData.value as SymbolReplacerSymbolTableViewData;
       if (symbolTableViewData.data == null) await symbolTableViewData.initialize(context);
 
       return symbolTableViewData.data?.images ?? [];
@@ -541,13 +548,13 @@ class SymbolReplacerState extends State<SymbolReplacer> {
         var images = (item.value as SymbolReplacerSymbolTableViewData).data?.images;
         if (images?.length == imageData.length) {
           for (var i = 0; i < imageData.length; i++) {
-            if (!ListEquality().equals(imageData[i].values.first.bytes, images?[i].values.first.bytes)) {
+            if (!ListEquality<int>().equals(imageData[i].values.first.bytes, images?[i].values.first.bytes)) {
               found = false;
               break;
             }
           }
           if (found) {
-            _currentSymbolTableViewData = item.value;
+            _currentSymbolTableViewData = item.value as SymbolReplacerSymbolTableViewData;
             break;
           }
         }
