@@ -94,7 +94,7 @@ class ShadowLengthState extends State<ShadowLength> {
     var _currentLength = shadowLen.length;
 
     var format = NumberFormat('0.000');
-    var _currentFormattedLength;
+    double? _currentFormattedLength;
     if (_currentLength < 0)
       lengthOutput = i18n(context, 'shadowlength_no_shadow');
     else {

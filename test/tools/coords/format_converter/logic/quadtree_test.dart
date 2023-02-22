@@ -4,7 +4,7 @@ import 'package:latlong2/latlong.dart';
 
 void main() {
   group("Converter.quadtree.parseLatLon:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'text': '', 'expectedOutput': null},
       {'text': '1203203022132122220122000301310333201333', 'expectedOutput': {'format': CoordFormatKey.QUADTREE, 'coordinate': LatLng(46.2110174566, 025.598495717)}},
       {'text': '41203203022132122220122000301310333201333', 'expectedOutput': null},

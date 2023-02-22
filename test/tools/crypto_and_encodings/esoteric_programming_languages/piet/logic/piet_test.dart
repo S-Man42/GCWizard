@@ -15,7 +15,7 @@ Uint8List _getFileData(String name) {
 
 void main() {
   group("piet.interpretPiet:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
 
       {'input' : 'piet_nhello.gif', 'inputText' : '', 'expectedOutput' : 'hello world!\n'},
       {'input' : 'piet_hello_world.png', 'inputText' : null, 'expectedOutput' : 'Hello world!'},

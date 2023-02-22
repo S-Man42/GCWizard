@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/science_and_technology/date_and_time/day_of_the_
 
 void main() {
   group("DayOfTheYear.calculateDayInfos:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'year' : null, 'day': null, 'expectedOutput' : null},
 
       {'year' : 2022, 'day': 60, 'expectedOutput' : DayOfTheYearOutput(DateTime(2022, 3, 1), 60, 2, 3, 9, 10)},
@@ -40,7 +40,7 @@ void main() {
   });
 
   group("DayOfTheYear.isoWeekOfYear:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
 
       {'input' : DateTime(2020, 1, 1), 'expectedOutput' : 1},

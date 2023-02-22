@@ -110,7 +110,7 @@ class BabylonNumbersState extends State<BabylonNumbers> {
             icon: Icons.clear,
             onPressed: () {
               setState(() {
-                _currentDisplays = Segments.Empty()
+                _currentDisplays = Segments.Empty();
               });
             },
           )
@@ -119,7 +119,7 @@ class BabylonNumbersState extends State<BabylonNumbers> {
     );
   }
 
-  Widget _buildDigitalOutput(List<List<String>> segments) {
+  Widget _buildDigitalOutput(Segments segments) {
     return SegmentDisplayOutput(
         segmentFunction: (displayedSegments, readOnly) {
           return _BabylonNumbersSegmentDisplay(
@@ -140,19 +140,17 @@ class BabylonNumbersState extends State<BabylonNumbers> {
       );
     } else {
       //decode
-      var output = _currentDisplays.map((character) {
-        if (character != null) return character.join();
-      }).toList();
+      var output = _currentDisplays.buildOutput();
       var segments = decodeBabylonNumbers(output);
       return Column(
         children: <Widget>[
-          _buildDigitalOutput(segments['displays']),
+          _buildDigitalOutput(segments),
           GCWOutput(
               title: i18n(context, 'babylonnumbers_single_numbers'),
-              child: segments['numbers'].join(' ')),
+              child: segments.numbers.join(' ')),
           GCWOutput(
               title: i18n(context, 'babylonnumbers_sexagesimal'),
-              child: segments['sexagesimal'])
+              child: segments.sexagesimal)
         ],
       );
     }

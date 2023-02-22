@@ -5,7 +5,7 @@ import 'package:latlong2/latlong.dart';
 
 void main() {
   group("Parser.mgrs.parseLatLon:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'text': '', 'expectedOutput': null},
       {'text': 'ÖD31365480657013431886', 'expectedOutput': null},
       {'text': '35T LM 91892.8208 18448.7408', 'expectedOutput': {'format': CoordFormatKey.MGRS, 'coordinate': LatLng(46.04117356610081, 25.598809996225977)}},

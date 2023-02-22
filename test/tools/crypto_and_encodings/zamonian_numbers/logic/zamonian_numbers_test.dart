@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/zamonian_numbers/logic/zamo
 
 void main() {
   group("ZamonianNumbers.encode:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : ''},
 
@@ -21,7 +21,7 @@ void main() {
   });
 
   group("ZamonianNumbers.decode:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : ''},
 

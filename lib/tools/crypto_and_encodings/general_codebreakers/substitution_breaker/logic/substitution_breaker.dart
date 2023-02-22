@@ -11,10 +11,11 @@ class SubstitutionBreakerJobData {
 }
 
 Future<SubstitutionBreakerResult?> break_cipherAsync(GCWAsyncExecuterParameters? jobData) async {
-  if (jobData == null) return null;
-  if (jobData.parameters == null) return SubstitutionBreakerResult(errorCode: SubstitutionBreakerErrorCode.OK);
+  if (jobData?.parameters is! SubstitutionBreakerJobData)
+    return SubstitutionBreakerResult(errorCode: SubstitutionBreakerErrorCode.OK);
 
-  var output = _break_cipher(jobData.parameters.input, jobData.parameters.quadgrams);
+  var data = jobData!.parameters as SubstitutionBreakerJobData;
+  var output = _break_cipher(data.input, data.quadgrams);
 
   jobData.sendAsyncPort.send(output);
 

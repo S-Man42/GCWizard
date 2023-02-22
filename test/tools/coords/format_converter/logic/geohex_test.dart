@@ -4,7 +4,7 @@ import 'package:latlong2/latlong.dart';
 
 void main() {
   group("Converter.geohex.parseLatLon:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'text': '', 'expectedOutput': null},
       {'text': 'ÖD31365480657013431886', 'expectedOutput': null},
       {'text': 'QD31365480657013431886', 'expectedOutput': {'format': CoordFormatKey.GEOHEX, 'coordinate': LatLng(46.211024251, 025.5985061856)}},

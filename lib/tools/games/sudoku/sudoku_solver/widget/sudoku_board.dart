@@ -1,17 +1,8 @@
 part of 'package:gc_wizard/tools/games/sudoku/sudoku_solver/widget/sudoku_solver.dart';
 
-enum _SudokuFillType { USER_FILLED, CALCULATED }
-
-class _SudokuBoardValue {
-  _SudokuFillType type;
-  int value;
-
-  _SudokuBoardValue(this.value, this.type);
-}
-
 class _SudokuBoard extends StatefulWidget {
-  final void Function(List<List<_SudokuBoardValue?>>) onChanged;
-  final List<List<_SudokuBoardValue?>> board;
+  final void Function(SudokuBoard) onChanged;
+  final SudokuBoard board;
 
   _SudokuBoard({Key? key, required this.onChanged, required this.board}) : super(key: key);
 
@@ -31,18 +22,18 @@ class _SudokuBoardState extends State<_SudokuBoard> {
                   gesturesToOverride: [GestureType.onTapDown],
                   builder: (context) {
                     return CustomPaint(
-                        painter: SudokuBoardPainter(context, widget.board, (int x, int y, int? value) {
-                      setState(() {
-                        if (value == null) {
-                          widget.board[x][y] = null;
-                          widget.onChanged(widget.board);
-                          return;
-                        }
+                        painter: SudokuBoardPainter(context, widget.board, (x, y, value) {
+                          setState(() {
+                            if (value == null) {
+                              widget.board.setValue(x, y, null);
+                              widget.onChanged(widget.board);
+                              return;
+                            }
 
-                        widget.board[x][y] = _SudokuBoardValue(value, _SudokuFillType.USER_FILLED);
-                        widget.onChanged(widget.board);
-                      });
-                    }));
+                            widget.board.setValue(x, y, value);
+                            widget.onChanged(widget.board);
+                          });
+                        }));
                   },
                 )))
       ],
@@ -52,7 +43,7 @@ class _SudokuBoardState extends State<_SudokuBoard> {
 
 class SudokuBoardPainter extends CustomPainter {
   final void Function(int, int, int?) setBoxValue;
-  final List<List<_SudokuBoardValue?>> board;
+  final SudokuBoard board;
   final BuildContext context;
 
   SudokuBoardPainter(this.context, this.board, this.setBoxValue);
@@ -94,22 +85,22 @@ class SudokuBoardPainter extends CustomPainter {
 
             _touchCanvas.drawRect(Rect.fromLTWH(xInner, yInner, widthInner, heightInner), paint,
                 onTapDown: (tapDetail) {
-              _removeCalculated(board);
-              _showInputDialog(boardX, boardY);
-            });
+                  _removeCalculated(board);
+                  _showInputDialog(boardX, boardY);
+                });
 
             paint.color = colors.accent();
 
             _touchCanvas.drawLine(Offset(xInner, 0.0), Offset(xInner, size.width), paint);
             _touchCanvas.drawLine(Offset(0.0, yInner), Offset(size.height, yInner), paint);
 
-            if (board[boardX][boardY] != null) {
+            if (board.getValue(boardX, boardY) != null) {
               var textColor =
-                  board[boardX][boardY]!.type == _SudokuFillType.USER_FILLED ? colors.accent() : colors.mainFont();
+              board.getFillType(boardX, boardY) == SudokuFillType.USER_FILLED ? colors.accent() : colors.mainFont();
 
               TextSpan span = TextSpan(
                   style: gcwTextStyle().copyWith(color: textColor, fontSize: heightInner * 0.8),
-                  text: board[boardX][boardY]!.value.toString());
+                  text: board.getValue(boardX, boardY)?.toString());
               TextPainter textPainter = TextPainter(text: span, textDirection: TextDirection.ltr);
               textPainter.layout();
 
@@ -132,10 +123,10 @@ class SudokuBoardPainter extends CustomPainter {
     _touchCanvas.drawLine(Offset(0.0, size.width), Offset(size.height, size.width), paint);
   }
 
-  void _removeCalculated(List<List<_SudokuBoardValue?>> board) {
+  void _removeCalculated(SudokuBoard board) {
     for (int i = 0; i < 9; i++) {
       for (int j = 0; j < 9; j++) {
-        if (board[i][j] != null && board[i][j]!.type == _SudokuFillType.CALCULATED) board[i][j] = null;
+        if (board.getFillType(i, j) == SudokuFillType.CALCULATED) board.setValue(i, j, null);
       }
     }
   }

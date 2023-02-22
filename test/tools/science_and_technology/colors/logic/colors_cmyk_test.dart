@@ -4,7 +4,7 @@ import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors_rgb.d
 
 void main() {
   group("Colors.CMYK:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : RGB(123, 230, 12), 'expectedOutput' : CMYK(0.46521739130434775, 0.0, 0.9478260869565217, 0.0980392156862745)},
       {'input' : RGB(0, 0, 0), 'expectedOutput' : CMYK(0.0, 0.0, 0.0, 1.0)},
       {'input' : RGB(255, 255, 255), 'expectedOutput' : CMYK(0.0, 0.0, 0.0, 0.0)},
@@ -27,7 +27,7 @@ void main() {
   });
 
   group("Colors.CMY:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : RGB(123, 230, 12), 'expectedOutput' : CMY(0.5176470588235293, 0.0980392156862745, 0.9529411764705882)},
       {'input' : RGB(0, 0, 0), 'expectedOutput' : CMY(1.0, 1.0, 1.0)},
       {'input' : RGB(255, 255, 255), 'expectedOutput' : CMY(0.0, 0.0, 0.0)},

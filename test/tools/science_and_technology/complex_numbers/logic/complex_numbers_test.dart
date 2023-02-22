@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/science_and_technology/complex_numbers/logic/com
 
 void main() {
   group("ComplexNumbers.CartesianToPolar:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'a' : null, 'b' : null, 'expectedOutput' : ['']},
       {'a' : null, 'b' : '', 'expectedOutput' : ['']},
       {'a' : '', 'b' : null, 'expectedOutput' : ['']},
@@ -27,7 +27,7 @@ void main() {
   });
 
   group("ComplexNumbers.PolarToCartesian:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'r' : null, 'a' : null, 'expectedOutput' : ['']},
       {'r' : null, 'a' : '', 'expectedOutput' : ['']},
       {'r' : '', 'a' : null, 'expectedOutput' : ['']},

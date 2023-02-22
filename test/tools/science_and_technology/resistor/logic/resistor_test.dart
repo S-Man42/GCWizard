@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/science_and_technology/resistor/_common/logic/re
 
 void main() {
   group("Resistor.resistor:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'colors' : null, 'expectedOutput' : null},
       {'colors' : <ResistorBandColor>[], 'expectedOutput' : null},
       {'colors' : [ResistorBandColor.RED], 'expectedOutput' : null},
@@ -25,21 +25,21 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('colors: ${elem['colors']}', () {
-        var _actual = getResistorValue(elem['colors']);
+        var _actual = getResistorValue(elem['colors'] as List<ResistorBandColor>);
 
         if (elem['expectedOutput'] == null) {
           expect(_actual, null);
         } else {
-          expect(_actual.value, elem['expectedOutput'].value);
-          expect(_actual.tolerance, elem['expectedOutput'].tolerance);
-          expect(_actual.temperatureCoefficient, elem['expectedOutput'].temperatureCoefficient);
+          expect(_actual.value, (elem['expectedOutput'] as ResistorValue).value);
+          expect(_actual.tolerance, (elem['expectedOutput'] as ResistorValue).tolerance);
+          expect(_actual.temperatureCoefficient, (elem['expectedOutput'] as ResistorValue).temperatureCoefficient);
         }
       });
     });
   });
 
   group("Resistor.eia96:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'code' : null, 'expectedOutput' : 0.0},
 
       {'code' : 1, 'expectedOutput' : 100.0},
@@ -53,7 +53,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('code: ${elem['code']}, multiplicator: ${elem['multiplicator']}', () {
-        var _actual = eia96(elem['code'], multiplicator: elem['multiplicator']);
+        var _actual = eia96(elem['code'] as int?, multiplicator: elem['multiplicator'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     });

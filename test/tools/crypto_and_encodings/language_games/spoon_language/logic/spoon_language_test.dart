@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/language_games/spoon_langua
 
 void main() {
   group('spoon_language.encryptSpoonLanguage:', () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
 
       {'input' : 'Hallo Welt', 'expectedOutput' : 'halewallolewo welewelt'},
@@ -36,7 +36,7 @@ void main() {
   });
 
   group('spoon_language.decryptSpoonLanguage:', () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
 
       {'expectedOutput' : 'hallo welt', 'input' : 'halewallolewo welewelt'},

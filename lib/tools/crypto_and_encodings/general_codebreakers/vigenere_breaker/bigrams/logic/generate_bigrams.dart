@@ -7,7 +7,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitu
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:path/path.dart' as path;
 
-main() {
+void main() {
   generate_bigram();
 }
 
@@ -55,10 +55,13 @@ bool generate_bigram() {
   _inputsToExpected.forEach((elem) async {
     var filePath =
         path.current + "/lib/logic/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/bigrams/";
-    var fileIn = File(normalizePath(filePath + elem['input']));
-    var fileOut = File(normalizePath(filePath + elem['fileOut']));
+    var fileIn = File(normalizePath(filePath + (elem['input'] as String)));
+    var fileOut = File(normalizePath(filePath + (elem['fileOut'] as String)));
 
-    var _actual = await generateBigrams(fileIn, fileOut, elem['className'], elem['alphabet'], elem['replacementList']);
+    var _actual = await generateBigrams(fileIn, fileOut,
+        (elem['className'] as String),
+        (elem['alphabet'] as String),
+        (elem['replacementList'] as Map<String, String>));
 
     result = result && (_actual.errorCode == VigenereBreakerErrorCode.OK);
   });
@@ -178,13 +181,13 @@ Map<String, int> _fillSourceList(File source_fh) {
   RegExp regExp = new RegExp(r"(\S\S)(\s)([0-9]*)");
   Iterable<Match> matches = regExp.allMatches(text);
   for (Match match in matches) {
-    list.addAll({match.group(1).toLowerCase(): int.tryParse(match.group(3))});
+    list.addAll({match.group(1)!.toLowerCase(): int.tryParse(match.group(3)!) ?? 0});
   }
   return list;
 }
 
 Map<String, int> _replaceBigramEntrys(
-    Map<String, int> bigramsSource, String alphabet, Map<String, String> replacementList) {
+    Map<String, int> bigramsSource, String alphabet, Map<String, String>? replacementList) {
   if (replacementList == null || replacementList.isEmpty) return bigramsSource;
 
   for (var i = bigramsSource.length - 1; i >= 0; i--) {
@@ -195,7 +198,7 @@ Map<String, int> _replaceBigramEntrys(
       for (var x = 0; x < entry.length - 1; x++) {
         var key = entry[x] + entry[x + 1];
         if (bigramsSource.containsKey(key)) {
-          if (lastKey != key) bigramsSource[key] += bigramsSource.values.elementAt(i);
+          if (lastKey != key) bigramsSource[key] = bigramsSource[key]! + bigramsSource.values.elementAt(i);
           lastKey = key;
         } else
           print("Error generate bigram: " + entry + " ->" + key + ' (missing key)');
@@ -207,9 +210,10 @@ Map<String, int> _replaceBigramEntrys(
 }
 
 List<List<int>> _fillBigramArray(Map<String, int> bigramsSource, String alphabet) {
-  var bigrams = List<List<int>>(alphabet.length);
+  var bigrams = List<List<int>>.filled(alphabet.length, []);
 
-  for (var row = 0; row < bigrams.length; row++) bigrams[row] = List.filled(bigrams.length, 0);
+  for (var row = 0; row < bigrams.length; row++)
+    bigrams[row] = List.filled(bigrams.length, 0);
 
   bigramsSource.forEach((key, value) {
     var row = _charIndex(key[0], alphabet);
@@ -226,9 +230,9 @@ List<List<int>> _scaleBigramsX(List<List<int>> bigrams) {
   double quadgram_sum = 0;
   double quadgram_min = 10000000;
 
-  List<List<double>> _bigrams = List<List<double>>();
+  var _bigrams = <List<double>>[];
   for (var row = 0; row < bigrams.length; row++) {
-    _bigrams.add(List<double>(bigrams[row].length));
+    _bigrams.add(List<double>.filled(bigrams[row].length, 0));
     for (var column = 0; column < bigrams[row].length; column++) {
       _bigrams[row][column] = bigrams[row][column].toDouble();
     }

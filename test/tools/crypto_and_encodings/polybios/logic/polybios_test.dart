@@ -4,7 +4,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/_common/logic/crypt_alphabe
 
 void main() {
   group("Polybios.createPolybiosAlphabet:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'gridDimension' : null, 'firstLetters': null, 'mode': null, 'fillAlphabet': null, 'expectedOutput' : null},
       {'gridDimension' : 5, 'firstLetters': null, 'mode': PolybiosMode.AZ09, 'fillAlphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'expectedOutput' : 'ABCDEFGHIKLMNOPQRSTUVWXYZ'},
       {'gridDimension' : 5, 'firstLetters': '', 'mode': PolybiosMode.AZ09, 'fillAlphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'expectedOutput' : 'ABCDEFGHIKLMNOPQRSTUVWXYZ'},
@@ -32,7 +32,7 @@ void main() {
   });
 
   group("Polybios.encryptPolybios:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'key': null, 'mode': PolybiosMode.AZ09, 'fillAlphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'expectedOutput' : null},
       {'input' : '', 'key': '', 'mode': PolybiosMode.AZ09, 'fillAlphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'expectedOutput' : null},
       {'input' : 'ABC', 'key': '12345', 'mode': PolybiosMode.CUSTOM, 'fillAlphabet': null, 'expectedOutput' : '11 12 13'},
@@ -99,7 +99,7 @@ void main() {
   });
 
   group("Polybios.decryptPolybios:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'key': null, 'mode': PolybiosMode.AZ09, 'fillAlphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'expectedOutput' : null},
       {'input' : '', 'key': '', 'mode': PolybiosMode.AZ09, 'fillAlphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'expectedOutput' : null},
       {'input' : 'AB CD', 'key': '12345', 'mode': PolybiosMode.AZ09, 'fillAlphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'expectedOutput' : null},

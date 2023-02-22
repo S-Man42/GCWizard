@@ -54,7 +54,7 @@ class DNANucleicAcidSequenceState extends State<DNANucleicAcidSequence> {
 
   Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
-      var output;
+      String output;
 
       if (_currentDNAMode == GCWSwitchPosition.left) {
         output = encodeDNANucleobaseSequence(_currentInput);

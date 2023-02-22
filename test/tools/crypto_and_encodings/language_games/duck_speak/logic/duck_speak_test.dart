@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/language_games/duck_speak/l
 
 void main() {
   group("DuckSpeak.encodeDuckSpeak:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
@@ -22,7 +22,7 @@ void main() {
   });
 
   group("DuckSpeak.decodeDuckSpeak:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 

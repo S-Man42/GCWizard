@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/science_and_technology/cross_sums/logic/crosstot
 
 void main() {
   group("CrossSum.crossSumRange:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'rangeStart' : null, 'rangeEnd' : null, 'crossSumToFind' : null, 'expectedOutput' : []},
 
       {'rangeStart' : 0, 'rangeEnd' : 100, 'crossSumToFind' : 15, 'expectedOutput' : [69, 78, 87, 96]},
@@ -21,7 +21,7 @@ void main() {
   });
 
   group("CrossSum.crossSumRangeIterated:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'rangeStart' : null, 'rangeEnd' : null, 'crossSumToFind' : null, 'type': CrossSumType.ITERATED, 'expectedOutput' : []},
 
       {'rangeStart' : 0, 'rangeEnd' : 100, 'crossSumToFind' : 1, 'type': CrossSumType.ITERATED, 'expectedOutput' : [1, 10, 19, 28, 37, 46, 55, 64, 73, 82, 91, 100]},
@@ -39,7 +39,7 @@ void main() {
   });
 
   group("CrossSum.crossSumRangeFrequencies:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'rangeStart' : null, 'rangeEnd' : null, 'expectedOutput' : {}},
 
       {'rangeStart' : 0, 'rangeEnd' : 100,'expectedOutput' : {0:1, 1:3, 2:3, 3:4, 4:5, 5:6, 6:7, 7:8, 8:9, 9:10, 10:9,11:8, 12:7, 13: 6, 14:5, 15:4, 16:3, 17:2, 18:1}},

@@ -148,7 +148,7 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
           Expanded(
             child: Container(
                 child: GCWDropDown<int>(
-                  value: _currentChosenTool,
+                  value: _currentChosenTool ?? -1,
                   onChanged: (value) {
                     setState(() {
                       _currentChosenTool = value;
@@ -190,7 +190,7 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
     );
   }
 
-  _buildToollist() {
+  Widget _buildToollist() {
     var odd = true;
     var rows = mdtTools.map((tool) {
       var row = Row(

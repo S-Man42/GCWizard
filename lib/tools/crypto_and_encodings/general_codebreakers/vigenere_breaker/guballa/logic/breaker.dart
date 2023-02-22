@@ -6,14 +6,14 @@ class BreakerResult {
   double fitness;
 
   BreakerResult({
-    this.key,
+    required this.key,
     this.fitness = 0,
   });
 }
 
 BreakerResult break_vigenere(
     List<int> cipher_bin, int keyLength, List<List<int>> vigenereSquare, List<List<int>> bigrams, bool autoKey,
-    {Function counterFunction}) {
+    {required void Function() counterFunction}) {
   if (autoKey) return break_vigenereAutoKey(cipher_bin, keyLength, vigenereSquare, bigrams);
 
   var key = <int>[];
@@ -123,7 +123,7 @@ BreakerResult break_vigenereAutoKey(
 /// :param str txt: the text string to process
 /// :param str alphabet: the alphabet to apply with this text string
 /// :return: an iterator which iterates over all characters of the text string which are present in the alphabet.
-Iterable<int> iterateText(String text, String alphabet, {ignoreNonLetters: true}) sync* {
+Iterable<int> iterateText(String text, String alphabet, {bool ignoreNonLetters = true}) sync* {
   var trans = alphabet.toLowerCase();
   int index = -1;
 

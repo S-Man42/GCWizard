@@ -86,7 +86,7 @@ class CrossSumRangeFrequencyState extends State<CrossSumRangeFrequency> {
     );
   }
 
-  _calculateFrequencies() {
+  void _calculateFrequencies() {
     setState(() {
       switch (widget.type) {
         case CrossSumType.NORMAL:

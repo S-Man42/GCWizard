@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/science_and_technology/dna/logic/dna.dart';
 
 void main() {
   group("DNA.encodeRNANucleobaseSequence:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
@@ -20,7 +20,7 @@ void main() {
   });
 
   group("DNA.decodeRNANucleobaseSequence:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
@@ -38,7 +38,7 @@ void main() {
   });
 
   group("DNA.decodeRNANucleobaseSequenceWithStop:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'expectedOutput' : [NucleobaseSequenceType.STOP, NucleobaseSequenceType.NORMAL, NucleobaseSequenceType.START], 'input' : 'UAACACGUG'},
     ];
 
@@ -51,7 +51,7 @@ void main() {
   });
 
   group("DNA.encodeDNANucleobaseSequence:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
@@ -68,7 +68,7 @@ void main() {
   });
 
   group("DNA.decodeDNANucleobaseSequence:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
@@ -88,7 +88,7 @@ void main() {
   });
 
   group("DNA.encodeRNASymbolLong:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
@@ -105,7 +105,7 @@ void main() {
   });
 
   group("DNA.decodeRNASymbolLong:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 

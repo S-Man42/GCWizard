@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/science_and_technology/combinatorics/combination
 
 void main() {
   group("Combinatorics.Combinations.generateCombinations:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'avoidDuplicates': true, 'expectedOutput' : []},
       {'input' : null, 'avoidDuplicates': false, 'expectedOutput' : []},
       {'input' : '', 'avoidDuplicates': true, 'expectedOutput' : []},

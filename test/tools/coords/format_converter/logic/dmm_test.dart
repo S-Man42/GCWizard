@@ -2,7 +2,7 @@ import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:latlong2/latlong.dart';
 
-final List<Map<String, dynamic>> inputsToExpectedDMM = [
+final List<Map<String, Object?>> inputsToExpectedDMM = [
   {'text': '52° 12.312\' N 20° 12.312\' E', 'expectedOutput': {'format': CoordFormatKey.DMM, 'coordinate': LatLng(52.2052, 20.2052)}},
   {'text': '52° 12.312\' S 20° 12.312\' W', 'expectedOutput': {'format': CoordFormatKey.DMM, 'coordinate': LatLng(-52.2052, -20.2052)}},
   {'text': ' 52°12.312′N 122°12.312′W', 'expectedOutput': {'format': CoordFormatKey.DMM, 'coordinate': LatLng(52.2052, -122.2052)}},
@@ -68,7 +68,7 @@ final List<Map<String, dynamic>> inputsToExpectedDMM = [
 
 void main() {
   group("Converter.dmm.parseDMM:", () {
-    List<Map<String, dynamic>> _inputsToExpected = inputsToExpectedDMM;
+    List<Map<String, Object?>> _inputsToExpected = inputsToExpectedDMM;
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}', () {
@@ -82,7 +82,7 @@ void main() {
   });
 
   group("Converter.dmm.parseDMMWithLeftPadMilliminutes:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'text': '52 12\'N 20°12\'East', 'leftPadMilliMinutes': false, 'expectedOutput': {'format': CoordFormatKey.DMM, 'coordinate': LatLng(52.2, 20.2)}},
       {'text': '52 12.3\'N 20°12.4\'East', 'leftPadMilliMinutes': false, 'expectedOutput': {'format': CoordFormatKey.DMM, 'coordinate': LatLng(52.205, 20.206666666666)}},
       {'text': '52 12.31\'N 20°12.45\'East', 'leftPadMilliMinutes': false, 'expectedOutput': {'format': CoordFormatKey.DMM, 'coordinate': LatLng(52.20516666666666, 20.2075)}},

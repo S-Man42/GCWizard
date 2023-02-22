@@ -76,7 +76,7 @@ void main() {
 
 
   group("animated_image_morse_code.foundSignalTimes:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : signal1, 'expectedOutput' : Tuple3<int, int, int>(700, 700, 1250 )},
       {'input' : signal2, 'expectedOutput' : Tuple3<int, int, int>(700, 700, 1250 )},
       {'input' : signal3, 'expectedOutput' : Tuple3<int, int, int>(685, 685, 1260 )},
@@ -93,7 +93,7 @@ void main() {
   });
 
   group("animated_image_morse_code.analyseImageMorseCode:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : 'Der kleine Preuße.gif', ''
           'expectedOutputMorse' : ' | ..-. ..- . -. ..-. -.. .-. . .. -.. .-. . .. .- -.-. .... - -. . ..- -. -. ..- .-.. .-.. -. . ..- -. | -. ..- .-.. -. ..- .-.. .-.. .- -.-. .... - --.. .-- . .. -. . ..- -. ... . -.-. .... ... -. . .. | -. ...- .. . .-. ',
           'expectedOutputText' : ' FUENFDREIDREIACHTNEUNNULLNEUN NULNULLACHTZWEINEUNSECHSNEI NVIER'},

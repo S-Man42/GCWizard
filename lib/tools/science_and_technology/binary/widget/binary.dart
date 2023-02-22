@@ -14,8 +14,8 @@ class Binary extends StatefulWidget {
 class BinaryState extends State<Binary> {
   var _currentDecimalValue = '';
   var _currentBinaryValue = '';
-  var _binaryController;
-  var _decimalController;
+  late TextEditingController _binaryController;
+  late TextEditingController _decimalController;
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 

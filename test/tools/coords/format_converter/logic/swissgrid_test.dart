@@ -5,7 +5,7 @@ import 'package:latlong2/latlong.dart';
 
 void main() {
   group("Parser.swissgrid.parseLatLon:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'text': '', 'expectedOutput': null},
       {'text': '1989048.7411670878 278659.94052181806', 'expectedOutput': {'format': CoordFormatKey.SWISS_GRID, 'coordinate': LatLng(46.2110174566, 025.598495717)}},
       {'text': 'Y: 1989048.7411670878 X: 278659.94052181806', 'expectedOutput': {'format': CoordFormatKey.SWISS_GRID, 'coordinate': LatLng(46.2110174566, 025.598495717)}},
@@ -31,7 +31,7 @@ void main() {
   });
 
   group("Parser.swissgrid_plus.parseLatLon:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'text': '', 'expectedOutput': null},
       {'text': '3989048.741167088 1278659.9405218181', 'expectedOutput': {'format': CoordFormatKey.SWISS_GRID, 'coordinate': LatLng(46.2110174566, 025.598495717)}},
       {'text': 'Y: 3989048.741167088 X: 1278659.9405218181', 'expectedOutput': {'format': CoordFormatKey.SWISS_GRID, 'coordinate': LatLng(46.2110174566, 025.598495717)}},

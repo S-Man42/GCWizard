@@ -4,7 +4,7 @@ import 'package:gc_wizard/tools/images_and_files/exif_reader/logic/exif_reader.d
 
 void main() {
   group("exif.getCoordDecFromText:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       // ok tests
       {
         'values': [Ratio(49, 1), Ratio(10, 1), Ratio(42417, 1250)],

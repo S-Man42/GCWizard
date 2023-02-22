@@ -4,7 +4,7 @@ import 'package:latlong2/latlong.dart';
 
 void main() {
   group("Parser.geohash.parseLatLon:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'text': '', 'expectedOutput': null},
       {'text': 'ö84nys2q8rm9j3', 'expectedOutput': null},
       {'text': 'u84nys2q8rm9j3', 'expectedOutput': {'format': CoordFormatKey.GEOHEX, 'coordinate': LatLng(46.211024251, 025.5985061856)}},

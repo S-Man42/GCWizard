@@ -572,13 +572,13 @@ PositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode sequence
   return PositionOfSequenceOutput('-1', 0, 0);
 }
 
-List getNumbersWithNDigits(NumberSequencesMode sequence, int? digits) {
+List<BigInt> getNumbersWithNDigits(NumberSequencesMode sequence, int? digits) {
   if (digits == null) return [];
 
   BigInt number;
 
-  List numberList = <dynamic>[];
-  List<String> sequenceList = <String>[];
+  var numberList = <BigInt>[];
+  var sequenceList = <String>[];
 
   var numberSequenceFunction = _getNumberSequenceFunction(sequence);
   if (numberSequenceFunction != null) {
@@ -722,8 +722,15 @@ List getNumbersWithNDigits(NumberSequencesMode sequence, int? digits) {
       case NumberSequencesMode.HAPPY_NUMBERS:
         sequenceList.addAll(happy_numbers);
         break;
+      default:
+        return numberList;
     }
-    for (int i = 0; i < sequenceList.length; i++) if (sequenceList[i].length == digits) numberList.add(sequenceList[i]);
+    for (int i = 0; i < sequenceList.length; i++) {
+      if (sequenceList[i].length == digits) {
+        var value = BigInt.tryParse(sequenceList[i]);
+        if (value != null) numberList.add(value);
+      }
+    }
   }
 
   return numberList;

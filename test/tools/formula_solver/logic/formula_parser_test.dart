@@ -37,7 +37,7 @@ void main() {
       'Q': '1', 'R': '0', 'S': '200', 'T': '20', 'U': '12', 'V': '9', 'W': '4', 'X': '30', 'Y':'4', 'Z': '50'
     };
 
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'formula' : null, 'values': null, 'expectedOutput' : {'state': 'error', 'output': [{'result': null, 'state': 'error'}]}},
       {'formula' : null, 'values': <String, String>{}, 'expectedOutput' : {'state': 'error', 'output': [{'result': null, 'state': 'error'}]}},
       {'formula' : null, 'expectedOutput' : {'state': 'error', 'output': [{'result': null, 'state': 'error'}]}},
@@ -119,7 +119,7 @@ void main() {
 
   group("FormulaParser.parse - Functionnames contain variables:", () {
 
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'formula' : 'sin(i)', 'values': <String, String>{'i': '${pi/2}'}, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '1', 'state': 'ok'}]}},
       {'formula' : 'SIN (i)', 'values': <String, String>{'i': '${pi/2}'}, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '1', 'state': 'ok'}]}},
       {'formula' : 'sin  (I)', 'values': <String, String>{'i': '${pi/2}'}, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '1', 'state': 'ok'}]}},
@@ -177,7 +177,7 @@ void main() {
 
   group("FormulaParser.parse - Variables contain Functions:", () {
 
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'formula' : 'A', 'values': {'A': '1 + 2'}, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '3', 'state': 'ok'}]}},
       {'formula' : 'B', 'values': {'A': '1', 'B': 'A + 1'}, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '2', 'state': 'ok'}]}},
       {'formula' : 'B', 'values': {'B': 'A + 1', 'A': '1'}, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '2', 'state': 'ok'}]}},
@@ -231,7 +231,7 @@ void main() {
 
   group("FormulaParser.parse - String functions:", () {
 
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'formula' : 'bww(ABCD)', 'values': <FormulaValue>[], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '10', 'state': 'ok'}]}},
       {'formula' : 'bww(AB,CD)', 'values': <FormulaValue>[], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '10', 'state': 'ok'}]}},
       {'formula' : 'bww(123)', 'values': <FormulaValue>[], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '6', 'state': 'ok'}]}},
@@ -273,7 +273,7 @@ void main() {
 
   group("FormulaParser.parse - Expanded functions:", () {
 
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'formula' : 'A', 'values': [FormulaValue('A', '1', type: FormulaValueType.INTERPOLATED)], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '1', 'state': 'ok', 'variables': {'A': '1'}}]}},
       {'formula' : 'A', 'values': [FormulaValue('A', '1-3', type: FormulaValueType.INTERPOLATED)], 'expectedOutput' : {'state': 'expanded_ok', 'output': [
         {'result': '1', 'variables': {'A': '1'}, 'state': 'ok'},

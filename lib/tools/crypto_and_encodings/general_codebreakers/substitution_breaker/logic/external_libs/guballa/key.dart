@@ -98,7 +98,7 @@ class BreakerKey {
   /// Decodes ciphertext read from the given file handle
   /// :param ciphertext_fh: the file handle the ciphertext is read from.
   /// :param plaintext_fh: the file handle the resulting plaintext is written to.
-  decode_file(String ciphertext, File plaintext_fh) {
+  void decode_file(String ciphertext, File plaintext_fh) {
     ciphertext.split('\n').forEach((line) {
       plaintext_fh.writeAsString(this.decode(line) ?? '');
     });
@@ -107,7 +107,7 @@ class BreakerKey {
   /// Encodes plaintext read from the given file handle
   /// :param plaintext_fh: the file handle the plaintext is read from.
   /// :param ciphertext_fh: the file handle the resulting ciphertext is written to.
-  encode_file(String plaintext, File ciphertext_fh) {
+  void encode_file(String plaintext, File ciphertext_fh) {
     plaintext.split('\n').forEach((line) {
       ciphertext_fh.writeAsString(this.encode(line) ?? '');
     });

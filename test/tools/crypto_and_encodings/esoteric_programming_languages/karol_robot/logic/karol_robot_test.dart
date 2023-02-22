@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_langua
 
 void main() {
   group("KarolRobot.interpret:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'code' : null, 'expectedOutput' : ''},
       {'code' : '', 'expectedOutput' : ''},
 
@@ -222,7 +222,7 @@ void main() {
   });
 
   group("KarolRobot.generate:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'language' : KAREL_LANGUAGES.DEU, 'text' : null, 'expectedOutput' : ''},
       {'language' : KAREL_LANGUAGES.ENG, 'text' : null, 'expectedOutput' : ''},
       {'language' : KAREL_LANGUAGES.FRA, 'text' : null, 'expectedOutput' : ''},

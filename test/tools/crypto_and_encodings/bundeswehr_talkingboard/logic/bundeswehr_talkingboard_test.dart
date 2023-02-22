@@ -46,7 +46,7 @@ const GC7DF7R_plainText = 'N5122850E746328';
 
 void main() {
   group("bundeswehr.check_auth:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'currentCallSign' : null,
         'currentAuth' : null,
         'currentLetterAuth' : null,
@@ -163,7 +163,7 @@ void main() {
   });
 
   group("bundeswehr.create_auth:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'currentCallSign' : null,
         'currentLetterAuth' : null,
         'currentLetterCallSign' : null,
@@ -283,7 +283,7 @@ void main() {
   });
 
   group("bundeswehr.decode:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       { 'cypherText' : null,
         'tableNumeralCode' : null,
         'expectedOutput' : BundeswehrTalkingBoardCodingOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CUSTOM_NUMERAL_TABLE)},
@@ -319,7 +319,7 @@ void main() {
   });
 
   group("bundeswehr.encode:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       { 'cypherText' : null,
         'tableNumeralCode' : null,
         'expectedOutput' : BundeswehrTalkingBoardCodingOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CUSTOM_NUMERAL_TABLE)},

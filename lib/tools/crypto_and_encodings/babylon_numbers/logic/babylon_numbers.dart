@@ -1,4 +1,5 @@
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
 
 final Map<int, List<String>> _numbersToSegments = {
   0: [],
@@ -63,22 +64,19 @@ final Map<int, List<String>> _numbersToSegments = {
   59: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n'],
 };
 
-List<List<String>> encodeBabylonNumbers(int input) {
-  if (input == null) return <List<String>>[];
+Segments encodeBabylonNumbers(int? input) {
+  if (input == null) return Segments.Empty();
 
-  var sexagesimal = convertBase(input.toString(), 10, 60);
-  return sexagesimal.split('').map((digit) {
-    return _numbersToSegments[int.tryParse(convertBase(digit, 60, 10))];
+  var sexagesimal = convertBase(input.toString(), 10, 60) ?? '';
+  var result =  sexagesimal.split('').map((digit) {
+    return _numbersToSegments[int.tryParse(convertBase(digit, 60, 10) ?? '') ?? ''] ?? [];
   }).toList();
+
+  return Segments(displays: result);
 }
 
-Map<String, dynamic> decodeBabylonNumbers(List<String> inputs) {
-  if (inputs == null || inputs.isEmpty)
-    return {
-      'displays': <List<String>>[],
-      'numbers': [0],
-      'sexagesimal': BigInt.zero
-    };
+SegmentsSexagesimal decodeBabylonNumbers(List<String>? inputs) {
+  if (inputs == null || inputs.isEmpty) return SegmentsSexagesimal(displays: [], numbers: [0], sexagesimal: BigInt.zero);
 
   var oneCharacters = ['f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n'];
   var tenCharacters = [
@@ -113,7 +111,7 @@ Map<String, dynamic> decodeBabylonNumbers(List<String> inputs) {
     return number;
   }).toList();
 
-  var total = convertBase(numbers.map((number) => convertBase(number.toString(), 10, 60)).join(), 60, 10);
+  var total = convertBase(numbers.map((number) => convertBase(number.toString(), 10, 60)).join(), 60, 10) ?? '';
 
-  return {'displays': displays, 'numbers': numbers, 'sexagesimal': BigInt.tryParse(total)};
+  return SegmentsSexagesimal(displays: displays, numbers: numbers, sexagesimal: BigInt.tryParse(total) ?? BigInt.zero);
 }

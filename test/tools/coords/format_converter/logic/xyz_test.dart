@@ -5,7 +5,7 @@ import 'package:latlong2/latlong.dart';
 
 void main() {
   group("Parser.xyz.parseLatLon:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'text': '', 'expectedOutput': null},
       {'text': 'X: 3987428.547121 Y: 1910326.935629 Z: 4581509.856737', 'expectedOutput': {'format': CoordFormatKey.XYZ, 'coordinate': LatLng(46.01873890823172, 25.598495717002137)}},
       {'text': 'X: 3987428.547121\nY: 1910326.935629\nZ: 4581509.856737', 'expectedOutput': {'format': CoordFormatKey.XYZ, 'coordinate': LatLng(46.01873890823172, 25.598495717002137)}},

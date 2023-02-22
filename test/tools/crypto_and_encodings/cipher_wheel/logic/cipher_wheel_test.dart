@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/cipher_wheel/logic/cipher_w
 
 void main() {
   group("CipherWheel.encryptCipherWheel:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'key': 1, 'expectedOutput' : []},
       {'input' : '', 'key': 1, 'expectedOutput' : []},
 
@@ -22,7 +22,7 @@ void main() {
   });
 
   group("CipherWheel.decryptCipherWheel:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'expectedOutput' : '', 'key': 1, 'input' : null},
       {'expectedOutput' : '', 'key': 1, 'input' : <int>[]},
 

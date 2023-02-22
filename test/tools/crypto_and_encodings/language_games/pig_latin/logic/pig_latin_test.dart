@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/language_games/pig_latin/lo
 
 void main() {
   group("PigLatin.encrypt:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
@@ -30,7 +30,7 @@ void main() {
   });
 
   group("PigLatin.decrypt:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 

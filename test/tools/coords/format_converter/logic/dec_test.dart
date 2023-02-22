@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/coords/format_converter/logic/dec.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:latlong2/latlong.dart';
 
-final List<Map<String, dynamic>> inputsToExpectedDEC = [
+final List<Map<String, Object?>> inputsToExpectedDEC = [
   {'text': '52.12312 N 20.12312 E', 'expectedOutput': {'format': CoordFormatKey.DEC, 'coordinate': LatLng(52.12312, 20.12312)}},
   {'text': '52.12312 S 20.12312 W', 'expectedOutput': {'format': CoordFormatKey.DEC, 'coordinate': LatLng(-52.12312, -20.12312)}},
   {'text': '00.12312 S 000.12312 W', 'expectedOutput': {'format': CoordFormatKey.DEC, 'coordinate': LatLng(-0.12312, -0.12312)}},
@@ -60,7 +60,7 @@ final List<Map<String, dynamic>> inputsToExpectedDEC = [
 void main() {
 
   group("Converter.dec.parseDEC:", () {
-    List<Map<String, dynamic>> _inputsToExpected = inputsToExpectedDEC;
+    List<Map<String, Object?>> _inputsToExpected = inputsToExpectedDEC;
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}', () {
@@ -71,7 +71,7 @@ void main() {
   });
 
   group("Coordinate.normalizeDEC:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'coord' : DEC(10.0, 10.0), 'expectedOutput' : DEC(10.0, 10.0)},
       {'coord' : DEC(-10.0, -10.0), 'expectedOutput' : DEC(-10.0, -10.0)},
 

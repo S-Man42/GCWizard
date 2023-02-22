@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/roman_numbers/roman_numbers
 
 void main() {
   group("RomanNumbers.encodeRomanNumbers:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : -1, 'expectedOutput' : ''},
       {'input' : 0, 'expectedOutput' : ''},
@@ -78,7 +78,7 @@ void main() {
   });
 
   group("RomanNumbers.decodeRomanNumbers:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : null},
       {'input' : 'Ab', 'expectedOutput' : null},

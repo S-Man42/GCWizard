@@ -4,7 +4,7 @@ import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors_rgb.d
 
 void main() {
   group("Colors.HSV:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : RGB(123, 230, 12), 'expectedOutput' : HSV(89.44954128440368, 0.9478260869565218, 0.9019607843137255)},
       {'input' : RGB(0, 0, 0), 'expectedOutput' : HSV(0.0, 0.0, 0.0)},
       {'input' : RGB(255, 255, 255), 'expectedOutput' : HSV(0.0, 0.0, 1.0)},
@@ -26,7 +26,7 @@ void main() {
   });
 
   group("Colors.HSL:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : RGB(123, 230, 12), 'expectedOutput' : HSL(89.44954128440368, 0.9008264462809918, 0.4745098039215686)},
       {'input' : RGB(0, 0, 0), 'expectedOutput' : HSL(0.0, 0.0, 0.0)},
       {'input' : RGB(255, 255, 255), 'expectedOutput' : HSL(0.0, 0.0, 1.0)},
@@ -48,7 +48,7 @@ void main() {
   });
 
   group("Colors.HSI:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : RGB(123, 230, 12), 'expectedOutput' : HSI(89.44954128440368, 0.9013698630136986, 0.477124183006536)},
       {'input' : RGB(0, 0, 0), 'expectedOutput' : HSI(0.0, 0.0, 0.0)},
       {'input' : RGB(255, 255, 255), 'expectedOutput' : HSI(0.0, 0.0, 1.0)},

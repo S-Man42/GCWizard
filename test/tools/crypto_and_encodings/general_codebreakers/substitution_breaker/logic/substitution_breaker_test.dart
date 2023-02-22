@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substi
 
 void main() {
   group("substitution_breaker.check_alphabet:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : null},
 
@@ -20,7 +20,7 @@ void main() {
   });
 
   group("substitution_breaker.check_key:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'alphabet' : '', 'expectedOutput' : null},
       {'input' : '', 'alphabet' : '', 'expectedOutput' : null},
 
@@ -40,7 +40,7 @@ void main() {
   });
 
   group("substitution_breaker.keydecode:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
@@ -57,7 +57,7 @@ void main() {
   });
 
   group("substitution_breaker.keyencode:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
@@ -76,7 +76,7 @@ void main() {
   group("substitution_breaker.compressQuadgrams:", () {
     final List<int> quadgrams = [0,0,0,747,0,0,0,0,0,0,11,12,13,0,0,0,17];
 
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : quadgrams, 'errorCode' : BreakerErrorCode.OK, 'expectedOutput' : '{"3":[747],"10":[11,12,13,0,0,0,17]}'},
     ];
 
@@ -95,7 +95,7 @@ void main() {
     final Map<int, List<int>> quadgramsCpmpressed = {3:[747],10:[11,12,13,0,0,0,17]};
     final Map<int, List<int>> quadgramsCpmpressed1 = {3:[747],10:[11,12,13],16:[17]};
 
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : quadgramsCpmpressed, 'size' : 17, 'errorCode' : BreakerErrorCode.OK, 'expectedOutput' : quadgrams},
       {'input' : quadgramsCpmpressed1, 'size' : 17, 'errorCode' : BreakerErrorCode.OK, 'expectedOutput' : quadgrams},
     ];
@@ -142,7 +142,7 @@ void main() {
 //   // Or: Do tests with a hand-written minimum word list
 //
 //   group("substitution_breaker.breaker:", () {
-//     List<Map<String, dynamic>> _inputsToExpected = [
+//     List<Map<String, Object?>> _inputsToExpected = [
 //       {'input' : null, 'alphabet' : BreakerAlphabet.English, 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
 //       {'input' : '', 'alphabet' : BreakerAlphabet.English, 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
 //
@@ -167,7 +167,7 @@ void main() {
 //     var en = EnglishQuadgrams();
 //     var de = GermanQuadgrams();
 //
-//     List<Map<String, dynamic>> _inputsToExpected = [
+//     List<Map<String, Object?>> _inputsToExpected = [
 //
 //       {'input' : null, 'expectedOutput' : null},
 //       {'input' : '', 'expectedOutput' : null},

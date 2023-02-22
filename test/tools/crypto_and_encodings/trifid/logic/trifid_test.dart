@@ -7,7 +7,7 @@ void main() {
 
 
   group("Trifid.encryptTrifid:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       // empty Input
       {'input' : null, 'blockSize' : 2, 'mode': PolybiosMode.AZ09, 'alphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'expectedOutput' : ''},
       {'input' : '',   'blockSize' : 2, 'mode': PolybiosMode.AZ09, 'alphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'expectedOutput' : ''},
@@ -36,7 +36,7 @@ void main() {
   });
 
   group("Trifid.decryptTrifid:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       // empty Input
       {'input' : null, 'blockSize' : 2, 'mode': PolybiosMode.AZ09, 'alphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'expectedOutput' : ''},
       {'input' : '',   'blockSize' : 2, 'mode': PolybiosMode.AZ09, 'alphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'expectedOutput' : ''},

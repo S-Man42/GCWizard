@@ -31,7 +31,7 @@ void main() {
       "Schon strahlt der Plastikbaum voll Pracht.";
 
   group("book_cipher.encodeText:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'text' : null, 'outFormat' : encodeOutFormat.RowWordCharacter, 'expectedOutput' : '', 'spacesOn' : true, 'emptyLinesOn' : true, 'ignoreSymbols' : '.;+-:!?\'"‘&(){}[]/\\_', 'diacriticsOn' : true, 'azOn' : true, 'numbersOn' : true, 'onlyFirstWordLetter' : false},
       {'input' : null, 'text' : '', 'outFormat' : encodeOutFormat.RowWordCharacter, 'expectedOutput' : '', 'spacesOn' : true, 'emptyLinesOn' : true, 'ignoreSymbols' : '.;+-:!?\'"‘&(){}[]/\\_', 'diacriticsOn' : true, 'azOn' : true, 'numbersOn' : true, 'onlyFirstWordLetter' : false},
       {'input' : null, 'text' : 'und', 'outFormat' : encodeOutFormat.RowWordCharacter, 'expectedOutput' : '', 'spacesOn' : true, 'emptyLinesOn' : true, 'ignoreSymbols' : '.;+-:!?\'"‘&(){}[]/\\_', 'diacriticsOn' : true, 'azOn' : true, 'numbersOn' : true, 'onlyFirstWordLetter' : false},
@@ -70,7 +70,7 @@ void main() {
   });
 
   group("book_cipher.decodeSearchWord:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'word' : null, 'outFormat' : decodeOutFormat.RowWord, 'expectedOutput' : '', 'spacesOn' : true, 'emptyLinesOn' : true, 'ignoreSymbols' : '.;+-:!?\'"‘&(){}[]/\\_', 'diacriticsOn' : true, 'azOn' : true, 'numbersOn' : true, 'onlyFirstWordLetter' : false},
       {'input' : null, 'word' : '', 'outFormat' : decodeOutFormat.RowWord, 'expectedOutput' : '', 'spacesOn' : true, 'emptyLinesOn' : true, 'ignoreSymbols' : '.;+-:!?\'"‘&(){}[]/\\_', 'diacriticsOn' : true, 'azOn' : true, 'numbersOn' : true, 'onlyFirstWordLetter' : false},
       {'input' : null, 'word' : 'und', 'outFormat' : decodeOutFormat.RowWord, 'expectedOutput' : '', 'spacesOn' : true, 'emptyLinesOn' : true, 'ignoreSymbols' : '.;+-:!?\'"‘&(){}[]/\\_', 'diacriticsOn' : true, 'azOn' : true, 'numbersOn' : true, 'onlyFirstWordLetter' : false},
@@ -121,7 +121,7 @@ Stasi-Offziere in ihrer Arbeit unterstützen sollten. Von
 die Potsdamer Bezirksverwaltung. Ihm folgte bis 1990
 Helmut Schickart (1931–1993). ''';
 
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'positions' : null, 'searchFormat' : searchFormat.RowWord, 'expectedOutput' : '', 'spacesOn' : true, 'emptyLinesOn' : true, 'ignoreSymbols' : '.;+-:!?\'"‘&(){}[]/\\', 'diacriticsOn' : true, 'azOn' : true, 'numbersOn' : true, 'onlyFirstWordLetter' : false},
       {'input' : null, 'positions' : '', 'searchFormat' : searchFormat.RowWord, 'expectedOutput' : '', 'spacesOn' : true, 'emptyLinesOn' : true, 'ignoreSymbols' : '.;+-:!?\'"‘&(){}[]/\\', 'diacriticsOn' : true, 'azOn' : true, 'numbersOn' : true, 'onlyFirstWordLetter' : false},
       {'input' : null, 'positions' : 'und', 'searchFormat' : searchFormat.RowWord, 'expectedOutput' : '', 'spacesOn' : true, 'emptyLinesOn' : true, 'ignoreSymbols' : '.;+-:!?\'"‘&(){}[]/\\', 'diacriticsOn' : true, 'azOn' : true, 'numbersOn' : true, 'onlyFirstWordLetter' : false},

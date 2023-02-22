@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/science_and_technology/dtmf/logic/dtmf.dart';
 
 void main() {
   group("DTMF.encodeDTMF:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : '', 'expectedOutput' : ''},
       {'input' : 'A', 'expectedOutput' : '[697, 1633]'},
       {'input' : 's', 'expectedOutput' : ''},
@@ -20,7 +20,7 @@ void main() {
   });
 
   group("DTMF.decodeDTMF:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'expectedOutput' : '', 'input' : ''},
       {'expectedOutput' : 'A', 'input' : '[697, 1633]'},
       {'expectedOutput' : 'A', 'input' : '(697.1633)'},

@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/science_and_technology/date_and_time/day_calcula
 
 void main() {
   group("DayCalculator.calculateDayDifference:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'start' : null, 'end': null, 'countStart': true, 'countEnd': true, 'expectedOutput' : null},
 
       {'start' : DateTime(2020, 10, 16), 'end': DateTime(2020, 10, 16), 'countStart': true, 'countEnd': true, 'expectedOutput' : DayCalculatorOutput(1, 24, 1440, 86400)},

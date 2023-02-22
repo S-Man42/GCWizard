@@ -28,7 +28,7 @@ void main() {
 
 
 
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'ignoreNonLetters' : true, 'alphabet' : VigenereBreakerAlphabet.ENGLISH, 'keyLengthMin' : 3, 'keyLengthMax' : 30, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : '', 'expectedOutput' : ''},
       {'input' : '', 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'ignoreNonLetters' : true, 'alphabet' : VigenereBreakerAlphabet.ENGLISH, 'keyLengthMin' : 3, 'keyLengthMax' : 30, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : '', 'expectedOutput' : ''},
       {'input' : '', 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'ignoreNonLetters' : true, 'alphabet' : VigenereBreakerAlphabet.ENGLISH, 'keyLengthMin' : 3, 'keyLengthMax' : 2, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : '', 'expectedOutput' : ''},
@@ -61,7 +61,7 @@ void main() {
 
     var text13 = 'kurzerverschluesseltertext';
 
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'alphabet' : VigenereBreakerAlphabet.ENGLISH, 'keyLengthMin' : 3, 'keyLengthMax' : 30, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : '', 'expectedOutput' : null},
       {'input' : '', 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'alphabet' : VigenereBreakerAlphabet.ENGLISH, 'keyLengthMin' : 3, 'keyLengthMax' : 30, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : '', 'expectedOutput' : null},
       {'input' : '', 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'alphabet' : VigenereBreakerAlphabet.ENGLISH, 'keyLengthMin' : 3, 'keyLengthMax' : 2, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : '', 'expectedOutput' : null},

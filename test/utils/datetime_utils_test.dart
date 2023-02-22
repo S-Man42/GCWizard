@@ -3,7 +3,7 @@ import 'package:gc_wizard/utils/datetime_utils.dart';
 
 void main() {
   group("Calender.JulianDateToGregorianCalendar:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'jd' : 0.0, 'expectedOutput' : DateTime(-4713, 11, 24, 12)},
       {'jd' : 0.0, 'expectedOutput' : DateTime(-4713, 11, 24)},
       {'jd' : 1507231.5, 'expectedOutput' : DateTime(-586, 7, 24)},  //30.7. -586
@@ -22,20 +22,20 @@ void main() {
     ];
     _inputsToExpected.forEach((elem) {
       test('jd: ${elem['jd']}', () {
-        var _actual = julianDateToGregorianCalendar(elem['jd']);
+        var _actual = julianDateToGregorianCalendar(elem['jd'] as double);
         if (_actual == null)
           expect(_actual, elem['expectedOutput']);
         else {
-          expect(_actual.day, elem['expectedOutput'].day);
-          expect(_actual.month, elem['expectedOutput'].month);
-          expect(_actual.year, elem['expectedOutput'].year);
+          expect(_actual.day, (elem['expectedOutput'] as DateTime).day);
+          expect(_actual.month, (elem['expectedOutput'] as DateTime).month);
+          expect(_actual.year, (elem['expectedOutput'] as DateTime).year);
         }
       });
     });
   });
 
   group("Calender.JulianDateToJulianCalendar:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'jd' : 0.0, 'expectedOutput' : DateTime(-4712, 1, 1)},
       {'jd' : -38.5, 'expectedOutput' : DateTime(-4713, 11, 24)},
       {'jd' : 1507231.5, 'expectedOutput' : DateTime(-586, 7, 30)},  //30.7. -586
@@ -55,20 +55,20 @@ void main() {
     ];
     _inputsToExpected.forEach((elem) {
       test('jd: ${elem['jd']}', () {
-        var _actual = julianDateToJulianCalendar(elem['jd']);
+        var _actual = julianDateToJulianCalendar(elem['jd'] as double);
         if (_actual == null)
           expect(_actual, elem['expectedOutput']);
         else {
-          expect(_actual.day, elem['expectedOutput'].day);
-          expect(_actual.month, elem['expectedOutput'].month);
-          expect(_actual.year, elem['expectedOutput'].year);
+          expect(_actual.day, (elem['expectedOutput'] as DateTime).day);
+          expect(_actual.month, (elem['expectedOutput'] as DateTime).month);
+          expect(_actual.year, (elem['expectedOutput'] as DateTime).year);
         }
       });
     });
   });
 
   group("Calender.GregorianCalendarToJulianDate:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'expectedOutput' : -0.5, 'date' : DateTime(-4713, 11, 24)},
       {'expectedOutput' : 1507231.5, 'date' : DateTime(-586, 7, 24)},  //30.7. -586
       {'expectedOutput' : 1721419.5, 'date' : DateTime(0, 12, 26)}, //28.12.0
@@ -88,14 +88,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('date: ${elem['date']}', () {
-        var _actual = gregorianCalendarToJulianDate(elem['date']);
+        var _actual = gregorianCalendarToJulianDate(elem['date'] as DateTime);
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
   group("Calender.JulianCalendarToJulianDate:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'date' : DateTime(-4712,1,1), 'expectedOutput' : -0.5},
       {'date' : DateTime(-4713,11,24), 'expectedOutput' : -38.5},
       {'date' : DateTime(-668,5,30), 'expectedOutput' : 1477220.5},
@@ -116,14 +116,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('date: ${elem['date']}', () {
-        var _actual = julianCalendarToJulianDate(elem['date']);
+        var _actual = julianCalendarToJulianDate(elem['date'] as DateTime);
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
   group("Calender.formatDurationToHHmmss:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : Duration(days: 1, hours: 10, seconds: 33, milliseconds: 100), 'days': true, 'milliseconds': true, 'limitHours': true, 'expectedOutput' : '1:10:00:33.000'},
       {'input' : Duration(days: 1, hours: 10, seconds: 33, milliseconds: 100), 'days': true, 'milliseconds': false, 'limitHours': true, 'expectedOutput' : '1:10:00:33'},
@@ -143,14 +143,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, days: ${elem['days']}, milliseconds: ${elem['milliseconds']}, limitHours: ${elem['limitHours']}', () {
-        var _actual = formatDurationToHHmmss(elem['input'], days: elem['days'], milliseconds: elem['milliseconds'], limitHours: elem['limitHours']);
+        var _actual = formatDurationToHHmmss(elem['input'] as Duration, days: elem['days'] as bool, milliseconds: elem['milliseconds'] as bool, limitHours: elem['limitHours'] as bool);
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
   group("Calender.formatHoursToHHmmss:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : 1.23456789, 'milliseconds': true, 'limitHours': true, 'expectedOutput' : '01:14:04.444'},
       {'input' : 1.23456789, 'milliseconds': false, 'limitHours': true, 'expectedOutput' : '01:14:04'},
@@ -165,7 +165,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, milliseconds: ${elem['milliseconds']}, limitHours: ${elem['limitHours']}', () {
-        var _actual = formatHoursToHHmmss(elem['input'], milliseconds: elem['milliseconds'], limitHours: elem['limitHours']);
+        var _actual = formatHoursToHHmmss(elem['input'] as double, milliseconds: elem['milliseconds'] as bool, limitHours: elem['limitHours'] as bool);
         expect(_actual, elem['expectedOutput']);
       });
     });

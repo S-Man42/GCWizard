@@ -26,21 +26,18 @@ final List<List<String>> _unitlist = _cols.split('').map((c) => _cross(_rows, c)
   ..addAll(['ABC', 'DEF', 'GHI'].expand((rs) => ['123', '456', '789'].map((cs) => _cross(rs, cs))));
 
 final Map<String, List<List<String>>> _units = _squares
-    .map((String s) => <Object>[s, _unitlist.where((List<String> u) => u.contains(s)).toList()])
-    .fold({}, (map, kv) => map..putIfAbsent(kv[0] as String, () => kv[1] as List<List<String>>));
+    .map((s) => MapEntry<String, List<List<String>>>(s, _unitlist.where((u) => u.contains(s)).toList()))
+    .fold(<String, List<List<String>>>{}, (map, kv) => map..putIfAbsent(kv.key, () => kv.value));
 
-final Map _peers = _squares
-    .map((s) => [
-          s,
-          _units[s]!.expand((u) => u).toSet()..removeAll([s])
-        ])
-    .fold({}, (map, kv) => map..putIfAbsent(kv[0], () => kv[1]));
+final Map<String, Set<String>> _peers = _squares
+    .map((s) => MapEntry<String, Set<String>>(s, _units[s]!.expand((u) => u).toSet()..removeAll([s])))
+    .fold(<String, Set<String>>{}, (map, kv) => map..putIfAbsent(kv.key, () => kv.value));
 
 /// Parse a Grid
 Map<String, String>? _parse_grid(List<List<int>> grid) {
   Map<String, String> values = _squares
-      .map<List<String>>((String s) => <String>[s, _digits])
-      .fold(<String, String>{}, (Map<String, String> map, List<String> kv) => map..putIfAbsent(kv[0], () => kv[1]));
+      .map((String s) => <String>[s, _digits])
+      .fold(<String, String>{}, (map, kv) => map..putIfAbsent(kv[0], () => kv[1]));
   var gridValues = _grid_values(grid);
 
   for (var s in gridValues.keys) {
@@ -77,7 +74,7 @@ Map<String, String>? _eliminate(Map<String, String> values, String s, String d) 
     return null;
   else if (values[s]!.length == 1) {
     var d2 = values[s]!;
-    if (!_all(_peers[s].map((s2) => _eliminate(values, s2, d2)))) return null;
+    if (!_all(_peers[s]!.map((s2) => _eliminate(values, s2, d2)))) return null;
   }
 
   for (List<String> u in _units[s]!) {
@@ -153,3 +150,4 @@ List<String> _order(List<String> seq, {Comparator? by, List<Comparator>? byAll, 
                 : (seq..sort());
 
 bool _all(Iterable seq) => seq.every((e) => e != null);
+

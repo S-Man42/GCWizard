@@ -63,24 +63,24 @@ class SeasonsState extends State<Seasons> {
       ],
       [
         i18n(context, 'astronomy_seasons_perihelion'),
-        dateFormat.format(perihel['datetime']) +
+        dateFormat.format(perihel.datetime) +
             ' ' +
-            timeFormat.format(perihel['datetime']) +
+            timeFormat.format(perihel.datetime) +
             ' GMT\n' +
             i18n(context, 'astronomy_seasons_distance') +
             ' = ' +
-            NumberFormat('0.0000000').format(perihel['distance']) +
+            NumberFormat('0.0000000').format(perihel.value) +
             ' AU'
       ],
       [
         i18n(context, 'astronomy_seasons_aphelion'),
-        dateFormat.format(aphel['datetime']) +
+        dateFormat.format(aphel.datetime) +
             ' ' +
-            timeFormat.format(aphel['datetime']) +
+            timeFormat.format(aphel.datetime) +
             ' GMT\n' +
             i18n(context, 'astronomy_seasons_distance') +
             ' = ' +
-            NumberFormat('0.0000000').format(aphel['distance']) +
+            NumberFormat('0.0000000').format(aphel.value) +
             ' AU'
       ],
     ];

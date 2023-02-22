@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/pokemon/logic/pokemon.dart'
 
 void main() {
   group("Pokemon.encodePokemon:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
@@ -20,7 +20,7 @@ void main() {
   });
 
   group("Pokemon.decodePokemon:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 

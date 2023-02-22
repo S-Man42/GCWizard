@@ -5,7 +5,7 @@ import 'package:latlong2/latlong.dart';
 
 void main() {
   group("Converter.gauss_krueger.parseLatLon:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'text': '', 'expectedOutput': null},
       {'text': '9392110.611090261', 'expectedOutput': null},
       {'text': '9392110.611090261\n5120027.146589669', 'expectedOutput': {'format': CoordFormatKey.GAUSS_KRUEGER, 'coordinate': LatLng(46.211024251, 025.5985061856)}},

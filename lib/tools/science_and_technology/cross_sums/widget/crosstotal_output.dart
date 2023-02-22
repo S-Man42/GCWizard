@@ -9,7 +9,7 @@ enum CROSSTOTAL_INPUT_TYPE { LETTERS, NUMBERS }
 class CrosstotalOutput extends StatefulWidget {
   final List<int> values;
   final String text;
-  final suppressSums;
+  final bool suppressSums;
   final CROSSTOTAL_INPUT_TYPE inputType;
 
   const CrosstotalOutput(

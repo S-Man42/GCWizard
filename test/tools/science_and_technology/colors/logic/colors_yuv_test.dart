@@ -4,7 +4,7 @@ import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors_yuv.d
 
 void main() {
   group("Colors.YUV:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : RGB(123, 230, 12), 'expectedOutput' : YUV(0.6790392156862746, -0.3109971230027, -0.17255643198791645)},
       {'input' : RGB(0, 0, 0), 'expectedOutput' : YUV(0.0, 0.0, 0.0)},
       {'input' : RGB(255, 255, 255), 'expectedOutput' : YUV(1.0, 0.0, 0.0)},
@@ -27,7 +27,7 @@ void main() {
 
   //implicitely tests YPbPr because of the conversion RGB <-> YPbPr <-> YCbCr
   group("Colors.YCbCr:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : RGB(123, 230, 12), 'expectedOutput' : YCbCr(164.70958823529412, 48.11083078829725, 96.57508880870465)},
       {'input' : RGB(0, 0, 0), 'expectedOutput' : YCbCr(16.0, 128.0, 128.0)},
       {'input' : RGB(255, 255, 255), 'expectedOutput' : YCbCr(235.0, 128.0, 128.0)},
@@ -49,7 +49,7 @@ void main() {
   });
 
   group("Colors.YIQ:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : RGB(123, 230, 12), 'expectedOutput' : YIQ(0.6790392156862746, 0.02466317214669836, -0.35480510238160223)},
       {'input' : RGB(0, 0, 0), 'expectedOutput' : YIQ(0.0, 0.0, 0.0)},
       {'input' : RGB(255, 255, 255), 'expectedOutput' : YIQ(1.0, 0.0, 0.0)},
