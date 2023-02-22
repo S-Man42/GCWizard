@@ -86,7 +86,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = foundSignalTimes(elem['input']);
+        var _actual = foundSignalTimes(elem['input'] as List<Tuple2<bool, int>>);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -107,7 +107,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () async {
-        var _outData = await analyseImageMorseCode(_getFileData(elem['input']));
+        var _outData = await analyseImageMorseCode(_getFileData(elem['input'] as String));
         List<int> durations = _outData!.durations;
         List<Uint8List> images = _outData.images;
         List<List<int>> imagesFiltered = _outData.imagesFiltered;

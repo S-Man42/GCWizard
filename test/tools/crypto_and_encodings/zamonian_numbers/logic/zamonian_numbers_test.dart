@@ -14,7 +14,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeZamonian(elem['input']);
+        var _actual = encodeZamonian(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -32,7 +32,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeZamonian(elem['input']);
+        var _actual = decodeZamonian(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });
