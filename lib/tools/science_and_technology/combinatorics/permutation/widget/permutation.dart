@@ -42,8 +42,8 @@ class PermutationState extends State<Permutation> {
     );
   }
 
-  _buildOutput(BuildContext context) {
-    if (_currentInput == null || _currentInput.isEmpty) {
+  Widget _buildOutput(BuildContext context) {
+    if (_currentInput.isEmpty) {
       return GCWDefaultOutput();
     }
 

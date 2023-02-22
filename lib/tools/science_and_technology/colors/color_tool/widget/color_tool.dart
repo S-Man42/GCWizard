@@ -63,7 +63,7 @@ class ColorToolState extends State<ColorTool> {
   }
 
   Widget _buildOutput() {
-    var colorSpaceOutputs;
+    List<List<String>> colorSpaceOutputs;
 
     switch (_currentOutputColorSpace) {
       case ColorSpaceKey.RGB:
@@ -78,7 +78,7 @@ class ColorToolState extends State<ColorTool> {
         var hex = convertColorSpace(_currentColor, ColorSpaceKey.HEXCODE) as HexCode;
         colorSpaceOutputs = [
           [i18n(context, 'colors_colorspace_hex_hexcode'), hex.toString()],
-          [i18n(context, 'colors_colorspace_hex_shorthexcode'), (hex.isShortHex ? hex.shortHexCode : '-')]
+          [i18n(context, 'colors_colorspace_hex_shorthexcode'), (hex.isShortHex ? hex.shortHexCode.toString() : '-')]
         ];
         break;
       case ColorSpaceKey.HSV:

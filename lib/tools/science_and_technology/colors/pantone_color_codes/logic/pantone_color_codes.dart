@@ -17,8 +17,8 @@ class PantoneColorExt extends PantoneColor {
   String? prefix;
 
   PantoneColorExt({
-    required colorcode,
-    required name,
+    required String colorcode,
+    required String name,
     this.suffix,
     this.prefix,
   }) :super(colorcode: colorcode, name: name);

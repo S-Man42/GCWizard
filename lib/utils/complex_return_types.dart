@@ -39,3 +39,10 @@ class DateTimeTimezone {
 
   DateTimeTimezone({required this.datetime, required this.timezone});
 }
+
+class DateTimeDouble {
+  DateTime datetime;
+  double value;
+
+  DateTimeDouble({required this.datetime, required this.value});
+}
