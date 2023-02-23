@@ -48,7 +48,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () async {
-        var _actual = break_cipher(elem['input'], elem['VigenereBreakerType'], elem['alphabet'], elem['keyLengthMin'], elem['keyLengthMax'], elem['ignoreNonLetters']);
+        var _actual = break_cipher(elem['input'] as String?, elem['VigenereBreakerType'], elem['alphabet'], elem['keyLengthMin'], elem['keyLengthMax'], elem['ignoreNonLetters']);
         expect(_actual.plaintext, elem['expectedOutput']);
         expect(_actual.key, elem['key']);
         expect(_actual.errorCode, elem['errorCode']);
@@ -78,7 +78,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = calc_fitnessBigrams(elem['input'], getBigrams(elem['alphabet']));
+        var _actual = calc_fitnessBigrams(elem['input'] as String?, getBigrams(elem['alphabet']));
         expect(_actual, elem['expectedOutput']);
       });
     });

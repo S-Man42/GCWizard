@@ -32,7 +32,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, key: ${elem['key']}, keyOffset: ${elem['keyOffset']}', () {
-        var _actual = encryptOneTimePad(elem['input'], elem['key'], keyOffset: elem['keyOffset']);
+        var _actual = encryptOneTimePad(elem['input'] as String?, elem['key'], keyOffset: elem['keyOffset']);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -68,7 +68,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, key: ${elem['key']}, keyOffset: ${elem['keyOffset']}', () {
-        var _actual = decryptOneTimePad(elem['input'], elem['key'], keyOffset: elem['keyOffset']);
+        var _actual = decryptOneTimePad(elem['input'] as String?, elem['key'], keyOffset: elem['keyOffset']);
         expect(_actual, elem['expectedOutput']);
       });
     });

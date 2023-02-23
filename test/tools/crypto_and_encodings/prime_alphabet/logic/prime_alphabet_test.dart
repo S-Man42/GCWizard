@@ -46,7 +46,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, firstRecognizedPrime: ${elem['firstRecognizedPrime']}', () {
-        var _actual = decryptPrimeAlphabet(elem['input'], firstRecognizedPrime: elem['firstRecognizedPrime']);
+        var _actual = decryptPrimeAlphabet(elem['input'] as List<int>?, firstRecognizedPrime: elem['firstRecognizedPrime']);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -104,7 +104,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, firstRecognizedPrime: ${elem['firstRecognizedPrime']}, lastRecognizedPrime: ${elem['lastRecognizedPrime']}', () {
-        var _actual = encryptPrimeAlphabet(elem['input'], firstRecognizedPrime: elem['firstRecognizedPrime'], lastRecognizedPrime: elem['lastRecognizedPrime']);
+        var _actual = encryptPrimeAlphabet(elem['input'] as String?, firstRecognizedPrime: elem['firstRecognizedPrime'], lastRecognizedPrime: elem['lastRecognizedPrime']);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -120,7 +120,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, firstRecognizedPrime: ${elem['firstRecognizedPrime']}, lastRecognizedPrime: ${elem['lastRecognizedPrime']}', () {
-        var _actual = encryptPrimeAlphabet(elem['input'], firstRecognizedPrime: elem['firstRecognizedPrime'], lastRecognizedPrime: elem['lastRecognizedPrime']);
+        var _actual = encryptPrimeAlphabet(elem['input'] as String?, firstRecognizedPrime: elem['firstRecognizedPrime'], lastRecognizedPrime: elem['lastRecognizedPrime']);
         expect(decryptPrimeAlphabet(_actual, firstRecognizedPrime: elem['firstRecognizedPrime']), elem['input'] as String?);
       });
     });

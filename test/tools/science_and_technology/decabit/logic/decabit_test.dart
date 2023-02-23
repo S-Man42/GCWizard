@@ -41,7 +41,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, replaceCharacter: ${elem['replaceCharacters']}, numericMode: ${elem['numericMode']}', () {
-        var _actual = encryptDecabit(elem['input'], elem['replaceCharacters'], elem['numericMode']);
+        var _actual = encryptDecabit(elem['input'] as String?, elem['replaceCharacters'], elem['numericMode']);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -98,7 +98,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, replaceCharacter: ${elem['replaceCharacters']}, numericMode: ${elem['numericMode']}', () {
-        var _actual = decryptDecabit(elem['input'], elem['replaceCharacters'], elem['numericMode']);
+        var _actual = decryptDecabit(elem['input'] as String?, elem['replaceCharacters'], elem['numericMode']);
         expect(_actual, elem['expectedOutput']);
       });
     });

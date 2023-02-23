@@ -30,7 +30,7 @@ void main() {
       test('input: ${elem['input']}, substitution: ${elem['substitution']}, caseSensitive: ${elem['caseSensitive']}', () {
 
 
-        var _actual = substitution(elem['input'], elem['substitution'], caseSensitive: elem['caseSensitive']);
+        var _actual = substitution(elem['input'] as String?, elem['substitution'] as Map<String, String>, caseSensitive: elem['caseSensitive'] as bool);
         expect(_actual, elem['expectedOutput']);
       });
     });

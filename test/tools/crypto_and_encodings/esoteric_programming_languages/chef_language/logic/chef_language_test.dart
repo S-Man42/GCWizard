@@ -88,7 +88,7 @@ Serves 1.
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = generateChef(elem['language'], elem['title'], elem['remark'], elem['time'], elem['temperature'], elem['input'], elem['auxilary']);
+        var _actual = generateChef(elem['language'], elem['title'], elem['remark'], elem['time'], elem['temperature'], elem['input'] as String?, elem['auxilary']);
         expect(_actual, elem['expectedOutput']);
       });
     });

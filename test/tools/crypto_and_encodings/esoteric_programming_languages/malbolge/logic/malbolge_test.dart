@@ -41,7 +41,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = interpretMalbolge(elem['program'], elem['input'], false).output;
+        var _actual = interpretMalbolge(elem['program'], elem['input'] as String?, false).output;
         expect(_actual, elem['expectedOutput']);
       });
     });

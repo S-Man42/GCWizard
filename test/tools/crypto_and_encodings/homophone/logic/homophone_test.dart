@@ -124,7 +124,7 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']},alphabet: ${elem['alphabet']}, keyList: ${elem['keyList']}', () {
         var _actual;
-        _actual = decryptHomophoneWithKeyList(elem['input'], elem['alphabet'], textToIntList(elem['keyList']));
+        _actual = decryptHomophoneWithKeyList(elem['input'] as String?, elem['alphabet'], textToIntList(elem['keyList']));
         expect(_actual.errorCode, elem['errorcode']);
         expect(_actual.output, elem['expectedOutput']);
       });
@@ -140,7 +140,7 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, keyMap: ${elem['keyMap']}', () {
         var _actual;
-        _actual = decryptHomophoneWithKeyMap(elem['input'], elem['keyMap']);
+        _actual = decryptHomophoneWithKeyMap(elem['input'] as String?, elem['keyMap']);
         expect(_actual.errorCode, elem['errorcode']);
         expect(_actual.output, elem['expectedOutput']);
       });

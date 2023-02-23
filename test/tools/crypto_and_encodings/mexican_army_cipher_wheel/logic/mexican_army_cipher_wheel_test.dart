@@ -51,7 +51,7 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, keys: ${elem['keys']}', () {
         for (int i = 0; i < 1000; i++) {
-          var _actual = encryptMexicanArmyCipherWheel(elem['input'], elem['keys']);
+          var _actual = encryptMexicanArmyCipherWheel(elem['input'] as String?, elem['keys']);
           expect(elem['expectedOutput'].contains(_actual), true);
         }
       });
@@ -76,7 +76,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, keys: ${elem['keys']}', () {
-        var _actual = decryptMexicanArmyCipherWheel(elem['input'], elem['keys']);
+        var _actual = decryptMexicanArmyCipherWheel(elem['input'] as String?, elem['keys']);
         expect(_actual, elem['expectedOutput']);
       });
     });

@@ -71,7 +71,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, type: ${elem['type']}', () {
-        var _actual = encodeRomanNumbers(elem['input'], type: elem['type']);
+        var _actual = encodeRomanNumbers(elem['input'] as int?, type: elem['type']);
         expect(_actual, elem['expectedOutput']);
       });
     });
