@@ -128,7 +128,7 @@ Future<Tuple2<List<GCWFile>, int>> _searchMagicBytes(
   var bytes = data.bytes;
 
   await Future.forEach(fileTypeList, (FileType fileType) async {
-    var magicBytesList = magicBytes(fileType);
+    var magicBytesList = magicBytes(fileType) ?? [[]];
     await Future.forEach(magicBytesList, (List<int> magicBytes) async {
       for (int i = 1; i < bytes.length; i++) {
         if (bytes[i] == magicBytes[0] && ((i + magicBytes.length) <= bytes.length)) {
@@ -146,7 +146,7 @@ Future<Tuple2<List<GCWFile>, int>> _searchMagicBytes(
             if (bytesOffset >= 0) {
               // extract data and check for completeness (only first block)
               var result =
-                  await _splitFile(GCWFile(bytes: data.bytes.sublist(bytesOffset)), fileIndexCounter, onlyParent: true);
+              await _splitFile(GCWFile(bytes: data.bytes.sublist(bytesOffset)), fileIndexCounter, onlyParent: true);
               if (bytesOffset == 14964) bytesOffset = bytesOffset;
               // append file as result, if it is a valid file
               _addFiles(resultList, result.item1);

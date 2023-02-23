@@ -134,20 +134,11 @@ List<Map<String, String>>? _searchAll(Map<String, String>? values) {
   return output;
 }
 
-_wrap(value, fn(x)) => fn(value);
-
-List<String> _order(List<String> seq, {Comparator? by, List<Comparator>? byAll, required int on(String x), List<Function>? onAll}) => by != null
+List<String> _order(List<String> seq, {Comparator? by, List<Comparator>? byAll, required int on(String x)}) => by != null
     ? (seq..sort(by))
     : byAll != null
         ? (seq..sort((a, b) => byAll.firstWhere((compare) => compare(a, b) != 0, orElse: () => (x, y) => 0)(a, b)))
-        : on != null
-            ? (seq..sort((a, b) => on(a).compareTo(on(b))))
-            : onAll != null
-                ? (seq
-                  ..sort((a, b) => _wrap(
-                      onAll.firstWhere((_on) => _on(a).compareTo(_on(b)) != 0, orElse: () => (x) => 0),
-                      (_on) => _on(a).compareTo(_on(b)))))
-                : (seq..sort());
+        : (seq..sort((a, b) => on(a).compareTo(on(b))));
 
 bool _all(Iterable seq) => seq.every((e) => e != null);
 

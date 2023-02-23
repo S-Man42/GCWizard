@@ -9,8 +9,8 @@ import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_langua
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 
 class Brainfk extends StatefulWidget {
-  final Function interpret;
-  final Function generate;
+  final String Function(String?, {String? input})? interpret;
+  final String Function(String)? generate;
 
   const Brainfk({Key? key, this.interpret, this.generate}) : super(key: key);
 
@@ -34,14 +34,14 @@ class BrainfkState extends State<Brainfk> {
 
   var _currentText = '';
   var _currentInput = '';
-  var _currentInput_shiftRight;
-  var _currentInput_shiftLeft;
-  var _currentInput_increaseValue;
-  var _currentInput_decreaseValue;
-  var _currentInput_output;
-  var _currentInput_input;
-  var _currentInput_startLoop;
-  var _currentInput_endLoop;
+  var _currentInput_shiftRight = '';
+  var _currentInput_shiftLeft = '';
+  var _currentInput_increaseValue = '';
+  var _currentInput_decreaseValue = '';
+  var _currentInput_output = '';
+  var _currentInput_input = '';
+  var _currentInput_startLoop = '';
+  var _currentInput_endLoop = '';
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
   GCWSwitchPosition _currentOriginal = GCWSwitchPosition.left;
@@ -103,7 +103,7 @@ class BrainfkState extends State<Brainfk> {
         _currentOriginal == GCWSwitchPosition.left
             ? Container()
             : Column(children: <Widget>[
-                GCWDropDown(
+                GCWDropDown<BrainfkDerivatives>(
                   value: _currentDerivate,
                   onChanged: (value) {
                     setState(() {
@@ -221,13 +221,13 @@ class BrainfkState extends State<Brainfk> {
     );
   }
 
-  _calculateOutput() {
+  Object _calculateOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       if (_currentOriginal == GCWSwitchPosition.left)
         try {
           return widget.interpret == null
               ? interpretBrainfk(_currentText, input: _currentInput)
-              : widget.interpret(_currentText, input: _currentInput);
+              : widget.interpret!(_currentText, input: _currentInput);
         } on FormatException catch (e) {
           return printErrorMessage(context, e.message);
         }
@@ -252,7 +252,7 @@ class BrainfkState extends State<Brainfk> {
       }
     } else {
       if (_currentOriginal == GCWSwitchPosition.left)
-        return widget.generate == null ? generateBrainfk(_currentText) : widget.generate(_currentText);
+        return widget.generate == null ? generateBrainfk(_currentText) : widget.generate!(_currentText);
       else {
         if (_currentDerivate == BRAINFKDERIVATIVE_CUSTOM)
           try {

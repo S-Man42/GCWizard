@@ -5,7 +5,7 @@ final ERROR_BRAINFK_LOOPNOTOPENED = 'common_programming_error_loopnotopened';
 
 final MAX_MEMORY = 32768;
 
-String interpretBrainfk(String code, {String input}) {
+String interpretBrainfk(String? code, {String? input}) {
   if (code == null || code.isEmpty) return '';
 
   var instructions = code.split('');
