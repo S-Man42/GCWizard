@@ -162,7 +162,7 @@ class _ExifReaderState extends State<ExifReader> {
   void _decorateGps(List<Widget> widgets) {
     if (point == null) return;
 
-    var _currentCoordsFormat = defaultCoordFormat();
+    var _currentCoordsFormat = defaultCoordinateFormat;
     List<String> _currentOutput = [
       formatCoordOutput(point!, {'format': Prefs.get(PREFERENCE_COORD_DEFAULT_FORMAT)}, defaultEllipsoid()),
     ];

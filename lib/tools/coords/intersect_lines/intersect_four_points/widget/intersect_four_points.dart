@@ -26,14 +26,14 @@ class IntersectFourPointsState extends State<IntersectFourPoints> {
   var _currentCoords21 = defaultCoordinate;
   var _currentCoords22 = defaultCoordinate;
 
-  var _currentCoordsFormat11 = defaultCoordFormat();
-  var _currentCoordsFormat12 = defaultCoordFormat();
-  var _currentCoordsFormat21 = defaultCoordFormat();
-  var _currentCoordsFormat22 = defaultCoordFormat();
+  var _currentCoordsFormat11 = defaultCoordinateFormat;
+  var _currentCoordsFormat12 = defaultCoordinateFormat;
+  var _currentCoordsFormat21 = defaultCoordinateFormat;
+  var _currentCoordsFormat22 = defaultCoordinateFormat;
 
   var _currentMapPoints = <GCWMapPoint>[];
   var _currentMapPolylines = <GCWMapPolyline>[];
-  var _currentOutputFormat = defaultCoordFormat();
+  var _currentOutputFormat = defaultCoordinateFormat;
   List<String> _currentOutput = [];
 
   @override

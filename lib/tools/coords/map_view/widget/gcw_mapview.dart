@@ -55,14 +55,13 @@ final _DEFAULT_BOUNDS = LatLngBounds(LatLng(51.5, 12.9), LatLng(53.5, 13.9));
 final _POLYGON_STROKEWIDTH = 3.0;
 final _BUTTONGROUP_MARGIN = 30.0;
 
+//ignore: must_be_immutable
 class GCWMapView extends StatefulWidget {
   List<GCWMapPoint> points;
-  List<GCWMapPolyline> polylines;
-  String json;
+  List<GCWMapPolyline>? polylines;
   final bool isEditable;
 
-  GCWMapView({Key? key, this.points, this.polylines, this.json, this.isEditable: false}) : super(key: key) {
-    if (points == null) points = [];
+  GCWMapView({Key? key, required this.points, this.polylines, this.isEditable = false}) : super(key: key) {
     if (polylines == null) polylines = [];
   }
 
@@ -471,7 +470,7 @@ class GCWMapViewState extends State<GCWMapView> {
           point: _currentPosition,
           markerText: i18n(context, 'common_userposition'),
           color: COLOR_MAP_USERPOSITION,
-          coordinateFormat: defaultCoordFormat()));
+          coordinateFormat: defaultCoordinateFormat));
     }
 
     return points.map((_point) {
@@ -707,7 +706,7 @@ class GCWMapViewState extends State<GCWMapView> {
   }
 
   String _buildPopupCoordinateText(GCWMapPoint point) {
-    var coordinateFormat = defaultCoordFormat();
+    var coordinateFormat = defaultCoordinateFormat;
     if (point.coordinateFormat != null) coordinateFormat = point.coordinateFormat;
 
     return formatCoordOutput(point.point, coordinateFormat, getEllipsoidByName(ELLIPSOID_NAME_WGS84));

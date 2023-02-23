@@ -41,7 +41,7 @@ class _LambertDefinition {
 
 //https://www.spatialreference.org/ref/epsg/<epsg number>/html/
 
-final Map<CoordFormatKey, _LambertDefinition> _LambertDefinitions = {
+final Map<CoordinateFormatKey, _LambertDefinition> _LambertDefinitions = {
   //EPSG 2154, LAMB93, RGF93, Reseau Geodesique Francais 1993
   LambertType.LAMBERT_93: _LambertDefinition(
       centralMeridian: 3.0,
@@ -151,7 +151,7 @@ final Map<CoordFormatKey, _LambertDefinition> _LambertDefinitions = {
 // https://sourceforge.net/p/geographiclib/discussion/1026621/thread/87c3cb91af/
 // https://sourceforge.net/p/geographiclib/code/ci/release/tree/examples/example-LambertConformalConic.cpp#l36
 
-Lambert latLonToLambert(LatLng latLon, CoordFormatKey subtype, Ellipsoid ellipsoid) {
+Lambert latLonToLambert(LatLng latLon, CoordinateFormatKey subtype, Ellipsoid ellipsoid) {
   var specificLambert = _LambertDefinitions[subtype];
 
   LambertConformalConic lambertCC = _lambertConformalConic(specificLambert, ellipsoid);

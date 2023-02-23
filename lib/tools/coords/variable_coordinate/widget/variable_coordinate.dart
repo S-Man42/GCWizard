@@ -50,7 +50,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
 
   Length _currentLengthUnit = UNITCATEGORY_LENGTH.defaultUnit;
   bool _currentProjectionMode = false;
-  var _currentOutputFormat = defaultCoordFormat();
+  var _currentOutputFormat = defaultCoordinateFormat;
 
   late TextEditingController _inputController;
   late TextEditingController _bearingController;
@@ -397,7 +397,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
     }
 
     _output = Column(children: [
-      _currentOutputFormat['format'] == CoordFormatKey.DMM && hasLeftPaddedCoords
+      _currentOutputFormat['format'] == CoordinateFormatKey.DMM && hasLeftPaddedCoords
           ? GCWTwoOptionsSwitch(
               title: i18n(context, 'coords_variablecoordinate_decleftpad'),
               leftValue: i18n(context, 'coords_variablecoordinate_decleftpad_left'),
@@ -443,11 +443,11 @@ class VariableCoordinateState extends State<VariableCoordinate> {
 
         var coords = LatLng(locationData.latitude, locationData.longitude);
         var insertedCoord;
-        if (defaultCoordFormat()['format'] == CoordFormatKey.DMM) {
+        if (defaultCoordinateFormat['format'] == CoordinateFormatKey.DMM) {
           //Insert Geocaching Format with exact 3 digits
-          insertedCoord = formatCoordOutput(coords, defaultCoordFormat(), defaultEllipsoid(), 3);
+          insertedCoord = formatCoordOutput(coords, defaultCoordinateFormat, defaultEllipsoid(), 3);
         } else {
-          insertedCoord = formatCoordOutput(coords, defaultCoordFormat(), defaultEllipsoid());
+          insertedCoord = formatCoordOutput(coords, defaultCoordinateFormat, defaultEllipsoid());
         }
 
         _currentInput = insertedCoord.replaceAll('\n', ' ');

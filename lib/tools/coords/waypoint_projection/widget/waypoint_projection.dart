@@ -28,9 +28,9 @@ class WaypointProjectionState extends State<WaypointProjection> {
   var _currentValues = [defaultCoordinate];
   var _currentMapPoints = <GCWMapPoint>[];
   var _currentMapPolylines = <GCWMapPolyline>[];
-  var _currentCoordsFormat = defaultCoordFormat();
+  var _currentCoordsFormat = defaultCoordinateFormat;
 
-  var _currentOutputFormat = defaultCoordFormat();
+  var _currentOutputFormat = defaultCoordinateFormat;
   List<String> _currentOutput = <String>[];
 
   @override

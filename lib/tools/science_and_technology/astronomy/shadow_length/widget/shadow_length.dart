@@ -29,12 +29,12 @@ class ShadowLength extends StatefulWidget {
 class ShadowLengthState extends State<ShadowLength> {
   var _currentDateTime = DateTimeTimezone(datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
   var _currentCoords = defaultCoordinate;
-  var _currentCoordsFormat = defaultCoordFormat();
+  var _currentCoordsFormat = defaultCoordinateFormat;
   var _currentHeight = 0.0;
 
   Length _currentInputLength = getUnitBySymbol(allLengths(), Prefs.get(PREFERENCE_DEFAULT_LENGTH_UNIT)) as Length;
   var _currentOutput = GCWCoordsOutputFormatDistanceValue(
-      defaultCoordFormat(), getUnitBySymbol(allLengths(), Prefs.get(PREFERENCE_DEFAULT_LENGTH_UNIT)) as Length)
+      defaultCoordinateFormat, getUnitBySymbol(allLengths(), Prefs.get(PREFERENCE_DEFAULT_LENGTH_UNIT)) as Length)
 
   @override
   Widget build(BuildContext context) {

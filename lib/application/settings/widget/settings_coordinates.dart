@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/settings/logic/default_settings.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coords_return_types.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_metadata.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords_formatselector.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
@@ -18,6 +19,7 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:gc_wizard/utils/constants.dart';
+import 'package:gc_wizard/utils/coordinate_utils.dart';
 import 'package:prefs/prefs.dart';
 
 part 'package:gc_wizard/application/settings/widget/ellipsoid_picker.dart';
@@ -28,7 +30,7 @@ class CoordinatesSettings extends StatefulWidget {
 }
 
 class CoordinatesSettingsState extends State<CoordinatesSettings> {
-  late CoordsFormatValue _currentDefaultFormat;
+  late CoordinateFormat _currentDefaultFormat;
   var _currentDefaultHemisphereLatitude = Prefs.getString(PREFERENCE_COORD_DEFAULT_HEMISPHERE_LATITUDE);
   var _currentDefaultHemisphereLongitude = Prefs.getString(PREFERENCE_COORD_DEFAULT_HEMISPHERE_LONGITUDE);
   Ellipsoid _currentDefaultEllipsoid = defaultEllipsoid();
@@ -37,7 +39,7 @@ class CoordinatesSettingsState extends State<CoordinatesSettings> {
   void initState() {
     super.initState();
 
-    _currentDefaultFormat = defaultCoordFormat();
+    _currentDefaultFormat = defaultCoordinateFormat;
   }
 
   @override
@@ -53,14 +55,14 @@ class CoordinatesSettingsState extends State<CoordinatesSettings> {
             setState(() {
               _currentDefaultFormat = newValue;
 
-              var typePersistenceKey = getCoordinateFormatByKey(_currentDefaultFormat.type).persistenceKey;
+              var typePersistenceKey = persistenceKeyByCoordinateFormatKey(_currentDefaultFormat.type);
               Prefs.setString(PREFERENCE_COORD_DEFAULT_FORMAT, typePersistenceKey);
-
-              if (_currentDefaultFormat.subtype != null) {
-                var subTypePersistenceKey = getCoordinateFormatByKey(_currentDefaultFormat.subtype!).persistenceKey;
-                Prefs.setString(PREFERENCE_COORD_DEFAULT_FORMAT_SUBTYPE, subTypePersistenceKey);
-              } else {
+              
+              if (_currentDefaultFormat.subtype == null) {
                 initDefaultSettings(PreferencesInitMode.REINIT_SINGLE, reinitSinglePreference: PREFERENCE_COORD_DEFAULT_FORMAT_SUBTYPE);
+              } else {
+                var subtypePersistenceKey = persistenceKeyByCoordinateFormatKey(_currentDefaultFormat.subtype!);
+                Prefs.setString(PREFERENCE_COORD_DEFAULT_FORMAT_SUBTYPE, subtypePersistenceKey);
               }
             });
           },

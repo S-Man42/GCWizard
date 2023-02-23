@@ -25,20 +25,20 @@ class Resection extends StatefulWidget {
 class ResectionState extends State<Resection> {
   var _currentIntersections = [];
 
-  var _currentCoordsFormat1 = defaultCoordFormat();
+  var _currentCoordsFormat1 = defaultCoordinateFormat;
   var _currentCoords1 = defaultCoordinate;
 
   var _currentAngle12 = {'text': '', 'value': 0.0};
 
-  var _currentCoordsFormat2 = defaultCoordFormat();
+  var _currentCoordsFormat2 = defaultCoordinateFormat;
   var _currentCoords2 = defaultCoordinate;
 
   var _currentAngle23 = {'text': '', 'value': 0.0};
 
-  var _currentCoordsFormat3 = defaultCoordFormat();
+  var _currentCoordsFormat3 = defaultCoordinateFormat;
   var _currentCoords3 = defaultCoordinate;
 
-  var _currentOutputFormat = defaultCoordFormat();
+  var _currentOutputFormat = defaultCoordinateFormat;
   List<String> _currentOutput = [];
   var _currentMapPoints = <GCWMapPoint>[];
   List<GCWMapPolyline> _currentMapPolylines = [];

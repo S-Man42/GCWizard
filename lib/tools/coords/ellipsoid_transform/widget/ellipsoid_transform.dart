@@ -19,9 +19,9 @@ class EllipsoidTransform extends StatefulWidget {
 
 class EllipsoidTransformState extends State<EllipsoidTransform> {
   var _currentCoords = defaultCoordinate;
-  var _currentCoordsFormat = defaultCoordFormat();
+  var _currentCoordsFormat = defaultCoordinateFormat;
 
-  var _currentOutputFormat = defaultCoordFormat();
+  var _currentOutputFormat = defaultCoordinateFormat;
   List<String> _currentOutput = [];
 
   var _currentFromDate = transformableDates[0];

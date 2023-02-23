@@ -28,8 +28,8 @@ class DistanceBearingState extends State<DistanceBearing> {
   var _currentCoords1 = defaultCoordinate;
   var _currentCoords2 = defaultCoordinate;
 
-  var _currentCoordsFormat1 = defaultCoordFormat();
-  var _currentCoordsFormat2 = defaultCoordFormat();
+  var _currentCoordsFormat1 = defaultCoordinateFormat;
+  var _currentCoordsFormat2 = defaultCoordinateFormat;
 
   Length _currentOutputUnit = UNITCATEGORY_LENGTH.defaultUnit;
 

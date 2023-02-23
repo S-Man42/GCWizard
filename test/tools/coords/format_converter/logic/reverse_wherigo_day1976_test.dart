@@ -44,8 +44,8 @@ void main() {
   group("Converter.reverse_wherigo_day1976.parseLatLon:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'text': '', 'expectedOutput': null},
-      {'text': 'fc654 jm44m',  'expectedOutput': {'format': CoordFormatKey.REVERSE_WIG_DAY1976, 'coordinate': LatLng(12.8974833333, 77.6074166667)}},
-      {'text': 'fc654\njm44m', 'expectedOutput': {'format': CoordFormatKey.REVERSE_WIG_DAY1976, 'coordinate': LatLng(12.8974833333, 77.6074166667)}},
+      {'text': 'fc654 jm44m',  'expectedOutput': {'format': CoordinateFormatKey.REVERSE_WIG_DAY1976, 'coordinate': LatLng(12.8974833333, 77.6074166667)}},
+      {'text': 'fc654\njm44m', 'expectedOutput': {'format': CoordinateFormatKey.REVERSE_WIG_DAY1976, 'coordinate': LatLng(12.8974833333, 77.6074166667)}},
     ];
 
     _inputsToExpected.forEach((elem) {

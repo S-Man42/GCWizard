@@ -24,19 +24,19 @@ class IntersectThreeCircles extends StatefulWidget {
 class IntersectThreeCirclesState extends State<IntersectThreeCircles> {
   List<Intersect> _currentIntersections = [];
 
-  var _currentCoordsFormat1 = defaultCoordFormat();
+  var _currentCoordsFormat1 = defaultCoordinateFormat;
   var _currentCoords1 = defaultCoordinate;
   var _currentRadius1 = 0.0;
 
-  var _currentCoordsFormat2 = defaultCoordFormat();
+  var _currentCoordsFormat2 = defaultCoordinateFormat;
   var _currentCoords2 = defaultCoordinate;
   var _currentRadius2 = 0.0;
 
-  var _currentCoordsFormat3 = defaultCoordFormat();
+  var _currentCoordsFormat3 = defaultCoordinateFormat;
   var _currentCoords3 = defaultCoordinate;
   var _currentRadius3 = 0.0;
 
-  var _currentOutputFormat = defaultCoordFormat();
+  var _currentOutputFormat = defaultCoordinateFormat;
   Length _currentOutputUnit = UNITCATEGORY_LENGTH.defaultUnit;
   List<String> _currentOutput = [];
   List<String> _currentCopyableOutput = [];

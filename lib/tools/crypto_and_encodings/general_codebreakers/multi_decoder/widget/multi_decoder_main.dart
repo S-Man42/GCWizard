@@ -131,8 +131,8 @@ class MultiDecoderState extends State<MultiDecoder> {
       String result = value.toString();
 
       if (tool.internalToolName == MDT_INTERNALNAMES_COORDINATEFORMATS) {
-        if (CoordFormatKey.values.contains(value))
-          result = getCoordinateFormatByKey(value as CoordFormatKey).name;
+        if (CoordinateFormatKey.values.contains(value))
+          result = getCoordinateFormatByKey(value as CoordinateFormatKey).name;
       }
       if ([MDT_INTERNALNAMES_BASE, MDT_INTERNALNAMES_BCD].contains(tool.internalToolName)) {
         result += '_title';

@@ -141,7 +141,7 @@ class RaDeg {
       var matches = regex.firstMatch(input);
       if (matches == null) return null;
 
-      var sign = dec.sign(matches.group(1));
+      var sign = dec.latLngPartSign(matches.group(1));
       var degree = 0.0;
       if (matches.group(3) != null)
         degree = sign * double.parse('${matches.group(2)}.${matches.group(3)}');
