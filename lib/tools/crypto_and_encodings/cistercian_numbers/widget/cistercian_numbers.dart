@@ -158,14 +158,12 @@ class CistercianNumbersState extends State<CistercianNumbers> {
       );
     } else {
       //decode
-      var output = _currentDisplays.map((character) {
-        if (character != null) return character.join();
-      }).join(' ');
+      var output = _currentDisplays.buildOutput().join(' ');
       var segments = decodeCistercian(output);
       return Column(
         children: <Widget>[
-          _buildDigitalOutput(segments['displays']),
-          GCWDefaultOutput(child: segments['text'])
+          _buildDigitalOutput(segments),
+          GCWDefaultOutput(child: segments.text)
         ],
       );
     }

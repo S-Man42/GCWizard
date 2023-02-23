@@ -1,6 +1,6 @@
 final _NumbersMap = {'0': 1, '6': 1, '8': 2, '9': 1};
 
-final _LettersMap = {
+final Map<String, int> _LettersMap = {
   'A': 1, 'B': 2, 'D': 1, 'O': 1, 'P': 1, 'Q': 1, 'R': 1,
   String.fromCharCode(196): 1, //Ä
   String.fromCharCode(193): 1, //Á
@@ -53,7 +53,7 @@ final _LettersMap = {
   String.fromCharCode(367): 1, //ů
   String.fromCharCode(254): 1, //þ
 };
-final _SpecialCharsMap = {
+final Map<String, int> _SpecialCharsMap = {
   '%': 2,
   '&': 2,
   '#': 1,
@@ -76,14 +76,14 @@ Map<String, int> _createAlpabetMap(bool with4, bool onlyNumbers) {
   return alphabetMap;
 }
 
-String decodeEnclosedAreas(String input, {bool with4, onlyNumbers: false}) {
+String decodeEnclosedAreas(String? input, {bool with4 = false, bool onlyNumbers = false}) {
   if (input == null || input.isEmpty) return '';
 
   var alphabetMap = _createAlpabetMap(with4, onlyNumbers);
 
   return input
       .split(RegExp(onlyNumbers ? r'[^0-9]+' : r'\s+'))
-      .where((block) => block != null && block.isNotEmpty)
+      .where((block) => block.isNotEmpty)
       .map((block) => _decodeEnclosedAreaBlock(block, alphabetMap))
       .join(' ');
 }
@@ -92,7 +92,7 @@ int _decodeEnclosedAreaBlock(String input, Map<String, int> alphabetMap) {
   var output = 0;
 
   input.split('').forEach((character) {
-    if (alphabetMap.containsKey(character)) output += alphabetMap[character];
+    if (alphabetMap.containsKey(character)) output += alphabetMap[character]!;
   });
 
   return output;

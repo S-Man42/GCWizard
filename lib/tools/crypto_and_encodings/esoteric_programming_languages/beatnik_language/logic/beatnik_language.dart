@@ -127,8 +127,6 @@ class _BeatnikStack {
   void add() {
     var a = pop();
     var b = pop();
-    if (a == null || b == null)
-      throw FormatException('common_programming_error_invalid_opcode');
 
     push(a + b);
   }
@@ -136,8 +134,6 @@ class _BeatnikStack {
   void sub() {
     var a = pop();
     var b = pop();
-    if (a == null || b == null)
-      throw FormatException('common_programming_error_invalid_opcode');
 
     push(b - a);
   }
@@ -145,8 +141,6 @@ class _BeatnikStack {
   void swap() {
     var a = pop();
     var b = pop();
-    if (a == null || b == null)
-      throw FormatException('common_programming_error_invalid_opcode');
 
     push(a);
     push(b);
@@ -154,8 +148,6 @@ class _BeatnikStack {
 
   void double() {
     var a = pop();
-    if (a == null)
-      throw FormatException('common_programming_error_invalid_opcode');
 
     push(a);
     push(a);

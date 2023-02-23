@@ -13,7 +13,7 @@ class CipherWheel extends StatefulWidget {
 }
 
 class CipherWheelState extends State<CipherWheel> {
-  var _controller;
+  late TextEditingController _controller;
 
   String _currentInput = '';
   int _currentKey = 1;
@@ -68,12 +68,12 @@ class CipherWheelState extends State<CipherWheel> {
     );
   }
 
-  _calculateOutput() {
+  void _calculateOutput() {
     if (_currentMode == GCWSwitchPosition.right) {
       var input = _currentInput
           .split(RegExp('[^0-9]+'))
           .where((number) => number != null && number.isNotEmpty)
-          .map((number) => int.tryParse(number))
+          .map((number) => int.tryParse(number)!)
           .toList();
       _output = decryptCipherWheel(input, _currentKey);
     } else {

@@ -83,7 +83,7 @@ class BeatnikState extends State<Beatnik> {
                   GCWTextDivider(
                     text: i18n(context, 'beatnik_hint_scrabble'),
                   ),
-                  GCWDropDown(
+                  GCWDropDown<String>(
                     value: _currentScrabbleVersion,
                     onChanged: (value) {
                       setState(() {
