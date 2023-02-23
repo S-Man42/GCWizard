@@ -36,7 +36,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, key: ${elem['key']}, aValue: ${elem['aValue']}, autoKey: ${elem['autoKey']}', () {
-        var _actual = encryptTrithemius(elem['input'] as String, aValue: elem['aValue'] as int);
+        var _actual = encryptTrithemius(elem['input'] as String?, aValue: elem['aValue'] as int);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -76,7 +76,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, key: ${elem['key']}, aValue: ${elem['aValue']}, autoKey: ${elem['autoKey']}', () {
-        var _actual = decryptTrithemius(elem['input'], aValue: elem['aValue'] as Int,);
+        var _actual = decryptTrithemius(elem['input'] as String?, aValue: elem['aValue'] as int);
         expect(_actual, elem['expectedOutput']);
       });
     });

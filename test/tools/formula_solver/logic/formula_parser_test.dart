@@ -103,14 +103,14 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('formula: ${elem['formula']}, values: ${elem['values']}', () {
         if (elem['values'] == null) {
-          var _actual = FormulaParser().parse(elem['formula'], null);
+          var _actual = FormulaParser().parse(elem['formula'] as String, null);
           expect(_formulaSolverOutputToMap(_actual), elem['expectedOutput']);
         } else {
           var values = <FormulaValue>[];
           elem['values'].entries.forEach((value) {
             values.add(FormulaValue(value.key, value.value));
           });
-          var _actual = FormulaParser().parse(elem['formula'], values);
+          var _actual = FormulaParser().parse(elem['formula'] as String, values);
           expect(_formulaSolverOutputToMap(_actual), elem['expectedOutput']);
         }
       });
@@ -265,7 +265,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('formula: ${elem['formula']}, values: ${elem['values']}', () {
-        var _actual = FormulaParser().parse(elem['formula'], elem['values']);
+        var _actual = FormulaParser().parse(elem['formula'] as String, elem['values']);
         expect(_formulaSolverOutputToMap(_actual), elem['expectedOutput']);
       });
     });
