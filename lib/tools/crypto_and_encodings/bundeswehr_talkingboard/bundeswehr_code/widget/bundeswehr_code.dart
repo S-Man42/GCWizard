@@ -18,17 +18,17 @@ class BundeswehrTalkingBoardObfuscation extends StatefulWidget {
 }
 
 class BundeswehrTalkingBoardObfuscationState extends State<BundeswehrTalkingBoardObfuscation> {
-  var _encodeController;
-  var _decodeController;
-  var _numeralCodeCustomXaxis;
-  var _numeralCodeCustomYaxis;
+  late TextEditingController _encodeController;
+  late TextEditingController _decodeController;
+  late TextEditingController _numeralCodeCustomXaxis;
+  late TextEditingController _numeralCodeCustomYaxis;
 
   String _currentEncode = '';
   String _currentDecode = '';
   String _currentNumeralCodeXaxisCustom = '';
   String _currentNumeralCodeYaxisCustom = '';
 
-  BundeswehrTalkingBoardAuthentificationTable _tableNumeralCode;
+  BundeswehrTalkingBoardAuthentificationTable? _tableNumeralCode;
 
   String _numeralCodeString = '';
 
@@ -81,7 +81,7 @@ class BundeswehrTalkingBoardObfuscationState extends State<BundeswehrTalkingBoar
                 hintText: 'AB EF HG IJ MA ...',
                 onChanged: (text) {
                   setState(() {
-                    _currentDecode = (text == null || text.isEmpty) ? '' : _cryptedTextMaskFormatter.getMaskedText();
+                    _currentDecode = (text.isEmpty) ? '' : _cryptedTextMaskFormatter.getMaskedText();
                   });
                 },
               )
@@ -131,7 +131,7 @@ class BundeswehrTalkingBoardObfuscationState extends State<BundeswehrTalkingBoar
                         onChanged: (text) {
                           setState(() {
                             _currentNumeralCodeXaxisCustom =
-                                (text == null || text.isEmpty) ? '' : _numeralCodeyXAxisCodeMaskFormatter.getMaskedText();
+                                (text.isEmpty) ? '' : _numeralCodeyXAxisCodeMaskFormatter.getMaskedText();
                           });
                         },
                       ),
@@ -142,7 +142,7 @@ class BundeswehrTalkingBoardObfuscationState extends State<BundeswehrTalkingBoar
                         onChanged: (text) {
                           setState(() {
                             _currentNumeralCodeYaxisCustom =
-                                (text == null || text.isEmpty) ? '' : _numeralCodeYAxisCodeMaskFormatter.getMaskedText();
+                                (text.isEmpty) ? '' : _numeralCodeYAxisCodeMaskFormatter.getMaskedText();
                           });
                         },
                       ),
@@ -170,8 +170,11 @@ class BundeswehrTalkingBoardObfuscationState extends State<BundeswehrTalkingBoar
         );
       }
     }
+    if (_tableNumeralCode == null)
+      return GCWDefaultOutput();
+
     if (_currentMode == GCWSwitchPosition.right) // decrypt
-      output = decodeBundeswehr(_currentDecode, _tableNumeralCode);
+      output = decodeBundeswehr(_currentDecode, _tableNumeralCode!);
     else
       output = encodeBundeswehr(_currentEncode, _tableNumeralCode);
     return GCWDefaultOutput(
@@ -180,12 +183,12 @@ class BundeswehrTalkingBoardObfuscationState extends State<BundeswehrTalkingBoar
             : i18n(context, output.ResponseCode));
   }
 
-  void _buildNumeralCode(BuildContext context, {bool custom, String xAxis, String yAxis}) {
+  void _buildNumeralCode(BuildContext context, {bool? custom, String? xAxis, String? yAxis}) {
     List<String> _colTitle;
     List<String> _rowTitle;
     List<String> _numeralCode = [];
     Map<String, List<String>> _tableEncoding = {};
-    if (custom) {
+    if (custom ==  true) {
       if (xAxis == null || xAxis.isEmpty || yAxis == null || yAxis.isEmpty) {
         _numeralCodeString = BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CUSTOM_NUMERAL_TABLE;
         return;

@@ -12,7 +12,7 @@ class Caesar extends StatefulWidget {
 }
 
 class CaesarState extends State<Caesar> {
-  var _controller;
+  late TextEditingController _controller;
 
   String _currentInput = '';
   int _currentKey = 13;
