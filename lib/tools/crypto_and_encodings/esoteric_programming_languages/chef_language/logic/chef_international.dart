@@ -114,7 +114,7 @@ final RegExp _CHEF_MeasureDry = RegExp(r'^g(r)?$|^kg$|^pinch(es)?$|^prise(n)$');
 final RegExp _CHEF_MeasureLiquid = RegExp(r'^ml$|^l$|^dash(es)?$|^drop(s)?$|^spritzer$|^tropfen$');
 final RegExp _CHEF_MeasureElse = RegExp(r'^cup(s)?$|^tasse(n)?$|^teaspoon(s)?$|^tablespoon(s)?$|^teeloeffel$|^essloeffel$');
 
-final Map _CHEF_Messages = {
+final Map<String, Map<String, String>> _CHEF_Messages = {
   'DEU': {
     "chef_error_structure_recipe": "chef_error_structure_recipe",
     "chef_error_structure_subrecipe": "chef_error_structure_subrecipe",

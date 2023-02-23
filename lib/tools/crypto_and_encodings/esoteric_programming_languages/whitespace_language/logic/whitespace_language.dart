@@ -79,7 +79,7 @@ class WhitespaceState {
   }
 }
 
-Future<WhitespaceResult> interpreterWhitespace(String code, String inp,
+Future<WhitespaceResult> interpreterWhitespace(String? code, String inp,
     {int timeOut = 30000, WhitespaceState? continueState}) async {
   try {
     if (code == null || code.isEmpty) return WhitespaceResult();
@@ -98,8 +98,8 @@ Future<WhitespaceResult> interpreterWhitespace(String code, String inp,
     interpreter.run();
 
     return WhitespaceResult(output: _output, input_expected: _input_required, code: _clean(_code));
-  } catch (err) {
-    if (err.toString() == _inputRequired) {
+  } on FormatException catch(e) {
+    if (e.message == _inputRequired) {
       var state = WhitespaceState();
       state.storeState(-4); //2 commands back ('\t\n': 'IO' and '\t ': 'input_char' or '\t\t': 'input_num')
       return WhitespaceResult(
@@ -110,7 +110,7 @@ Future<WhitespaceResult> interpreterWhitespace(String code, String inp,
           code: _clean(_code),
           input_expected: _input_required,
           error: true,
-          errorText: err.toString());
+          errorText: e.toString());
   }
 }
 
@@ -231,7 +231,7 @@ class _Interpreter {
   /// Main loop of the program goes through each instruction.
   void run() {
     if (_code_length == 0) {
-      throw new Exception('common_programming_error_program_to_short');
+      throw FormatException('common_programming_error_program_to_short');
     }
 
     start_time = DateTime.now();
@@ -239,7 +239,7 @@ class _Interpreter {
 
     while (_pos + 1 <= _code_length) {
       if ((DateTime.now().difference(start_time)).inMilliseconds > _timeOut) {
-        throw new Exception('common_programming_error_maxiterations');
+        throw FormatException('common_programming_error_maxiterations');
       }
       var _instruction = '';
       var token = _code.substring(_pos, _pos + 1);
@@ -250,7 +250,7 @@ class _Interpreter {
       if (_IMP.containsKey(token)) {
         _instruction = _IMP[token]!;
       } else {
-        if (!_loading) throw new Exception('common_programming_error_invalid_opcode');
+        if (!_loading) throw FormatException('common_programming_error_invalid_opcode');
       }
 
       _pos += token.length;
@@ -278,9 +278,9 @@ class _Interpreter {
       _loading = false;
       run();
     } else if ((_return_positions.isNotEmpty) && (_pos != 9999999)) {
-      if (!_loading) throw new Exception('common_programming_error_invalid_program');
+      if (!_loading) throw FormatException('common_programming_error_invalid_program');
     } else if (_pos == _code_length) {
-      if (!_loading) throw new Exception('RuntimeError: Unclean termination');
+      if (!_loading) throw FormatException('RuntimeError: Unclean termination');
     }
   }
 }
@@ -359,9 +359,9 @@ class _Stack {
 
   void _duplicate_nth(int n) {
     if (n > _stack.length - 1) {
-      if (!_loading) Exception('common_programming_error_infinite_loop');
+      if (!_loading) FormatException('common_programming_error_infinite_loop');
     } else if (n < 0) {
-      if (!_loading) throw new Exception('ERROR: Invalid operation found');
+      if (!_loading) throw FormatException('ERROR: Invalid operation found');
     }
     var item = _stack[n]; //-n - 1
     _stack_append(item);
@@ -376,7 +376,7 @@ class _Stack {
       _stack_pop();
     }
     if (top == null)
-      throw new Exception('common_programming_error_invalid_opcode');
+      throw FormatException('common_programming_error_invalid_opcode');
     _stack_append(top);
   }
 
@@ -388,7 +388,7 @@ class _Stack {
     var a = _stack_pop();
     var b = _stack_pop();
     if (a == null || b == null)
-      throw new Exception('common_programming_error_invalid_opcode');
+      throw FormatException('common_programming_error_invalid_opcode');
 
     _stack_append(a);
     _stack_append(b);
@@ -431,7 +431,7 @@ class _IO {
   void _output_char() {
     var _char = _stack_pop();
     if (_char == null)
-      throw new Exception('common_programming_error_invalid_opcode');
+      throw FormatException('common_programming_error_invalid_opcode');
 
     var char = new String.fromCharCode(_char);
     _output += char;
@@ -447,11 +447,11 @@ class _IO {
   void _input_char() {
     _input_required = true;
     _input_required_number = false;
-    if (_input.isEmpty) throw new Exception(_inputRequired);
+    if (_input.isEmpty) throw FormatException(_inputRequired);
     var a = _input_pop(1);
     var b = _stack_pop();
     if (a == null || b == null)
-      throw new Exception('common_programming_error_invalid_opcode');
+      throw FormatException('common_programming_error_invalid_opcode');
 
     _heap.addAll({b: a.codeUnits[0]});
     _dbgOutput('input_char', a);
@@ -460,7 +460,7 @@ class _IO {
   void _input_num() {
     _input_required = true;
     _input_required_number = true;
-    if (_input.isEmpty) throw new Exception(_inputRequired);
+    if (_input.isEmpty) throw FormatException(_inputRequired);
 
     var b = _stack_pop();
     var index = _input.indexOf('\n');
@@ -470,7 +470,7 @@ class _IO {
     if (index >= 0) {
       var a = int.parse(_input_pop(index + 1));
       if (a == null || b == null)
-        throw new Exception('common_programming_error_invalid_opcode');
+        throw FormatException('common_programming_error_invalid_opcode');
 
       _heap.addAll({b: a});
     }
@@ -560,7 +560,7 @@ class _FlowControl {
         _dbgOutput(_command, _clean(label));
         var num = _stack_pop();
         if (num == null)
-          throw new Exception('common_programming_error_invalid_opcode');
+          throw FormatException('common_programming_error_invalid_opcode');
 
         if (num < 0) {
           _jump(label);
@@ -594,14 +594,14 @@ class _FlowControl {
 
   void _mark_label(String label) {
     if (_labels.containsKey(label)) {
-      if (!_loading) throw new Exception('common_programming_error_invalid_opcode');
+      if (!_loading) throw FormatException('common_programming_error_invalid_opcode');
     }
     _labels[label] = _pos + label.length;
   }
 
   void _jump(String label) {
     if (_labels[label] == null)
-      throw new Exception('common_programming_error_invalid_opcode');
+      throw FormatException('common_programming_error_invalid_opcode');
     _pos = _labels[label]!;
   }
 
@@ -609,14 +609,14 @@ class _FlowControl {
     if (_return_positions.isNotEmpty) {
       _pos = _return_positions_pop();
     } else {
-      if (!_loading) throw new Exception('common_programming_error_invalid_opcode');
+      if (!_loading) throw FormatException('common_programming_error_invalid_opcode');
     }
   }
 
   void _call_subroutine(String label) {
     _return_positions_append(_pos);
     if (_labels[label] == null)
-      throw new Exception('common_programming_error_invalid_opcode');
+      throw FormatException('common_programming_error_invalid_opcode');
     _pos = _labels[label]!;
   }
 
@@ -677,7 +677,7 @@ class _Arithmetic {
     var a = _stack_pop();
     var b = _stack_pop();
     if (a == null || b == null)
-      throw new Exception('common_programming_error_invalid_opcode');
+      throw FormatException('common_programming_error_invalid_opcode');
     var c = b + a;
     _stack_append(c);
   }
@@ -686,7 +686,7 @@ class _Arithmetic {
     var a = _stack_pop();
     var b = _stack_pop();
     if (a == null || b == null)
-      throw new Exception('common_programming_error_invalid_opcode');
+      throw FormatException('common_programming_error_invalid_opcode');
     var c = b - a;
     _stack_append(c);
   }
@@ -695,7 +695,7 @@ class _Arithmetic {
     var a = _stack_pop();
     var b = _stack_pop();
     if (a == null || b == null)
-      throw new Exception('common_programming_error_invalid_opcode');
+      throw FormatException('common_programming_error_invalid_opcode');
     var c = b * a;
     _stack_append(c);
   }
@@ -704,11 +704,11 @@ class _Arithmetic {
     var a = _stack_pop();
     var b = _stack_pop();
     if (a == 0) if (!_loading)
-      throw new Exception('common_programming_error_invalid_opcode');
+      throw FormatException('common_programming_error_invalid_opcode');
     else
       a = 999999999999;
     if (a == null || b == null)
-      throw new Exception('common_programming_error_invalid_opcode');
+      throw FormatException('common_programming_error_invalid_opcode');
     var c = (b / a).floor();
     _stack_append(c);
   }
@@ -717,11 +717,11 @@ class _Arithmetic {
     var a = _stack_pop();
     var b = _stack_pop();
     if (a == 0) if (!_loading)
-      throw new Exception('common_programming_error_invalid_opcode');
+      throw FormatException('common_programming_error_invalid_opcode');
     else
       a = 999999999999;
     if (a == null || b == null)
-      throw new Exception('common_programming_error_invalid_opcode');
+      throw FormatException('common_programming_error_invalid_opcode');
     var c = b % a;
     _stack_append(c);
   }
@@ -752,7 +752,7 @@ class _Heap {
     var a = _stack_pop();
     var b = _stack_pop();
     if (a == null || b == null)
-      throw new Exception('common_programming_error_invalid_opcode');
+      throw FormatException('common_programming_error_invalid_opcode');
 
     _heap[b] = a;
     _dbgOutput('heap store', _heap[b].toString());
@@ -797,7 +797,7 @@ void _get_command(Map<String, String> imp) {
     _command = imp[token]!;
     _pos += token.length;
   } else {
-    if (!_loading) throw new Exception('common_programming_error_invalid_opcode');
+    if (!_loading) throw FormatException('common_programming_error_invalid_opcode');
   }
 }
 
@@ -812,7 +812,7 @@ Tuple2<int, int> _num_parameter() {
   var index = _code.indexOf('\n', _pos);
   // Only including a terminal causes an error
   if (index == _pos) {
-    if (!_loading) Exception('common_programming_error_invalid_opcode');
+    if (!_loading) FormatException('common_programming_error_invalid_opcode');
   }
 
   var item = _whitespaceToInt(_code.substring(_pos, index));
