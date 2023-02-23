@@ -227,7 +227,7 @@ class BrainfkState extends State<Brainfk> {
         try {
           return widget.interpret == null
               ? interpretBrainfk(_currentText, input: _currentInput)
-              : widget.interpret!(_currentText, _currentInput);
+              : widget.interpret!(_currentText, input: _currentInput);
         } on FormatException catch (e) {
           return printErrorMessage(context, e.message);
         }
