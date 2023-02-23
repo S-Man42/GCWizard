@@ -607,7 +607,7 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
     return GCWMapPoint(
         point: coord.toLatLng(),
         markerText: i18n(context, 'formulasolver_formulas_showonmap_coordinatetext') + ' $name',
-        coordinateFormat: CoordsFormatValue(coord.key),
+        coordinateFormat: CoordinateFormat(coord.key),
         color: resultType == _FormulaSolverResultType.FIXED
             ? COLOR_MAP_POINT
             : COLOR_FORMULASOLVER_INTERPOLATED_MAP_POINT);

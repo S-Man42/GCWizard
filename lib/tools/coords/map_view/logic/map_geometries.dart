@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/theme/fixed_colors.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coords_return_types.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/distance_and_bearing/logic/distance_and_bearing.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/distance_bearing.dart';
 import 'package:gc_wizard/tools/coords/waypoint_projection/logic/projection.dart';
@@ -14,7 +13,7 @@ class GCWMapPoint {
   LatLng point;
   String? markerText;
   Color color;
-  CoordsFormatValue? coordinateFormat;
+  CoordinateFormat? coordinateFormat;
   bool isEditable;
   GCWMapCircle? circle;
   bool circleColorSameAsPointColor;
@@ -28,10 +27,10 @@ class GCWMapPoint {
       this.coordinateFormat,
       this.isEditable = false,
       this.circle,
-      this.circleColorSameAsPointColor = false,
+      this.circleColorSameAsPointColor = true,
       this.isVisible = true}) {
     if (uuid == null || uuid!.isEmpty) uuid = Uuid().v4();
-    if (coordinateFormat == null) coordinateFormat = defaultCoordFormat();
+    if (coordinateFormat == null) coordinateFormat = defaultCoordinateFormat;
     update();
   }
 
@@ -137,8 +136,6 @@ class GCWMapCircle {
   }
 
   void _update() {
-    this.centerPoint = defaultCoordinate;
-
     if (this.radius <= 0.0) {
       shape = [];
       return;

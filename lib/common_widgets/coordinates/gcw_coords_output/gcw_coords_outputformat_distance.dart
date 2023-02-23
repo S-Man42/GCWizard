@@ -4,20 +4,20 @@ import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords_formatselector.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/units/gcw_unit_dropdown.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coords_return_types.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/length.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit_category.dart';
 
 class GCWCoordsOutputFormatDistanceValue {
-  final CoordsFormatValue format;
+  final CoordinateFormat format;
   final Length lengthUnit;
 
   GCWCoordsOutputFormatDistanceValue(this.format, this.lengthUnit);
 }
 
 class GCWCoordsOutputFormatDistance extends StatefulWidget {
-  final CoordsFormatValue coordFormat;
+  final CoordinateFormat coordFormat;
   final void Function(GCWCoordsOutputFormatDistanceValue) onChanged;
 
   const GCWCoordsOutputFormatDistance({Key? key, required this.coordFormat, required this.onChanged}) : super(key: key);
@@ -27,7 +27,7 @@ class GCWCoordsOutputFormatDistance extends StatefulWidget {
 }
 
 class GCWCoordsOutputFormatDistanceState extends State<GCWCoordsOutputFormatDistance> {
-  var _currentCoordFormat = defaultCoordFormat();
+  var _currentCoordFormat = defaultCoordinateFormat;
   Length _currentLengthUnit = UNITCATEGORY_LENGTH.defaultUnit as Length;
 
   @override

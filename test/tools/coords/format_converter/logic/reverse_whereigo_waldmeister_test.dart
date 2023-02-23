@@ -57,8 +57,8 @@ void main() {
   group("Converter.reverse_wherigo_waldmeister.parseLatLon:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'text': '', 'expectedOutput': null},
-      {'text': '104181 924569 248105', 'expectedOutput': {'format': CoordFormatKey.REVERSE_WIG_WALDMEISTER, 'coordinate': LatLng(46.21101, 025.59849)}},
-      {'text': '104181\n924569\n248105', 'expectedOutput': {'format': CoordFormatKey.REVERSE_WIG_WALDMEISTER, 'coordinate': LatLng(46.21101, 025.59849)}},
+      {'text': '104181 924569 248105', 'expectedOutput': {'format': CoordinateFormatKey.REVERSE_WIG_WALDMEISTER, 'coordinate': LatLng(46.21101, 025.59849)}},
+      {'text': '104181\n924569\n248105', 'expectedOutput': {'format': CoordinateFormatKey.REVERSE_WIG_WALDMEISTER, 'coordinate': LatLng(46.21101, 025.59849)}},
     ];
 
     _inputsToExpected.forEach((elem) {

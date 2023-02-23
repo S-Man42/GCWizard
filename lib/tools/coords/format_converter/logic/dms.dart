@@ -59,7 +59,7 @@ DMS parseDMS(String input, {wholeString = false}) {
   if (regex.hasMatch(input)) {
     var matches = regex.firstMatch(input);
 
-    var latSign = sign(matches.group(1));
+    var latSign = latLngPartSign(matches.group(1));
     var latDegrees = int.tryParse(matches.group(2));
     var latMinutes = int.tryParse(matches.group(3));
     var latSeconds = 0.0;
@@ -70,7 +70,7 @@ DMS parseDMS(String input, {wholeString = false}) {
     }
     var lat = DMSLatitude(latSign, latDegrees, latMinutes, latSeconds);
 
-    var lonSign = sign(matches.group(6));
+    var lonSign = latLngPartSign(matches.group(6));
     var lonDegrees = int.tryParse(matches.group(7));
     var lonMinutes = int.tryParse(matches.group(8));
     var lonSeconds = 0.0;
@@ -92,7 +92,7 @@ DMS _parseDMSTrailingSigns(String text) {
   if (regex.hasMatch(text)) {
     var matches = regex.firstMatch(text);
 
-    var latSign = sign(matches.group(5));
+    var latSign = latLngPartSign(matches.group(5));
     var latDegrees = int.tryParse(matches.group(1));
     var latMinutes = int.tryParse(matches.group(2));
     var latSeconds = 0.0;
@@ -103,7 +103,7 @@ DMS _parseDMSTrailingSigns(String text) {
     }
     var lat = DMSLatitude(latSign, latDegrees, latMinutes, latSeconds);
 
-    var lonSign = sign(matches.group(10));
+    var lonSign = latLngPartSign(matches.group(10));
     var lonDegrees = int.tryParse(matches.group(6));
     var lonMinutes = int.tryParse(matches.group(7));
     var lonSeconds = 0.0;

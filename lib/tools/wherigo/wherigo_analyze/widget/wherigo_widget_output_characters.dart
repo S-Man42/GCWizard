@@ -11,7 +11,7 @@ List<List<String>> buildOutputListOfCharacterData(BuildContext context, WherigoC
     result.add([
       i18n(context, 'wherigo_output_location'),
       formatCoordOutput(LatLng(data.CharacterZonepoint.Latitude, data.CharacterZonepoint.Longitude),
-          defaultCoordFormat(), defaultEllipsoid())
+          defaultCoordinateFormat, defaultEllipsoid())
     ]);
   else
     result.add([i18n(context, 'wherigo_output_location'), data.CharacterLocation]);

@@ -21,9 +21,9 @@ class AntipodesState extends State<Antipodes> {
 
   var _currentValues = [defaultCoordinate];
   var _currentMapPoints = <GCWMapPoint>[];
-  var _currentCoordsFormat = defaultCoordFormat();
+  var _currentCoordsFormat = defaultCoordinateFormat;
 
-  var _currentOutputFormat = defaultCoordFormat();
+  var _currentOutputFormat = defaultCoordinateFormat;
   List<String> _currentOutput = <String>[];
 
   @override

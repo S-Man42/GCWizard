@@ -24,9 +24,9 @@ class CentroidCenterOfGravityState extends State<CentroidCenterOfGravity> {
 
   var _currentValues = [defaultCoordinate];
   var _currentMapPoints = <GCWMapPoint>[];
-  var _currentCoordsFormats = [defaultCoordFormat()];
+  var _currentCoordsFormats = [defaultCoordinateFormat];
 
-  var _currentOutputFormat = defaultCoordFormat();
+  var _currentOutputFormat = defaultCoordinateFormat;
   List<String> _currentOutput = <String>[];
 
   @override
@@ -63,7 +63,7 @@ class CentroidCenterOfGravityState extends State<CentroidCenterOfGravity> {
 
               while (value > _currentCountCoords) {
                 _currentCoords.add(defaultCoordinate);
-                _currentCoordsFormats.add(defaultCoordFormat());
+                _currentCoordsFormats.add(defaultCoordinateFormat);
                 _currentCountCoords++;
               }
             });

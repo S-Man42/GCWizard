@@ -56,7 +56,7 @@ DMM? parseDMM(String input, {leftPadMilliMinutes = false, wholeString = false}) 
   if (regex.hasMatch(input)) {
     var matches = regex.firstMatch(input);
 
-    var latSign = sign(matches.group(1));
+    var latSign = latLngPartSign(matches.group(1));
     var latDegrees = int.tryParse(matches.group(2));
     var latMinutes = 0.0;
     if (matches.group(4) != null) {
@@ -69,7 +69,7 @@ DMM? parseDMM(String input, {leftPadMilliMinutes = false, wholeString = false}) 
     }
     var lat = DMMLatitude(latSign, latDegrees, latMinutes);
 
-    var lonSign = sign(matches.group(5));
+    var lonSign = latLngPartSign(matches.group(5));
     var lonDegrees = int.tryParse(matches.group(6));
     var lonMinutes = 0.0;
     if (matches.group(8) != null) {
@@ -103,7 +103,7 @@ DMM _parseDMMTrailingSigns(String text, leftPadMilliMinutes) {
   if (regex.hasMatch(text)) {
     var matches = regex.firstMatch(text);
 
-    var latSign = sign(matches.group(4));
+    var latSign = latLngPartSign(matches.group(4));
     var latDegrees = int.tryParse(matches.group(1));
     var latMinutes = 0.0;
     if (matches.group(3) != null) {
@@ -116,7 +116,7 @@ DMM _parseDMMTrailingSigns(String text, leftPadMilliMinutes) {
     }
     var lat = DMMLatitude(latSign, latDegrees, latMinutes);
 
-    var lonSign = sign(matches.group(8));
+    var lonSign = latLngPartSign(matches.group(8));
     var lonDegrees = lonSign * int.tryParse(matches.group(5));
     var lonMinutes = 0.0;
     if (matches.group(7) != null) {

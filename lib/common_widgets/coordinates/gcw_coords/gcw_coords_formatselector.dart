@@ -3,14 +3,16 @@ import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coord_format_getter.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_metadata.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coords_return_types.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 
 class GCWCoordsFormatSelector extends StatefulWidget {
-  final void Function(CoordsFormatValue) onChanged;
-  final CoordsFormatValue format;
+  final void Function(CoordinateFormat) onChanged;
+  final CoordinateFormat format;
 
   const GCWCoordsFormatSelector({Key? key, required this.onChanged, required this.format}) : super(key: key);
 
@@ -18,7 +20,7 @@ class GCWCoordsFormatSelector extends StatefulWidget {
   GCWCoordsFormatSelectorState createState() => GCWCoordsFormatSelectorState();
 
   List<GCWDropDownMenuItem> getDropDownItems(BuildContext context) {
-    return allCoordFormats.map((entry) {
+    return allCoordinateFormatMetadata.map((entry) {
       return GCWDropDownMenuItem(
           value: entry.key, child: i18n(context, entry.name, ifTranslationNotExists: entry.name), subtitle: entry.example);
     }).toList();
@@ -26,8 +28,8 @@ class GCWCoordsFormatSelector extends StatefulWidget {
 }
 
 class GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
-    var _currentFormat = defaultCoordFormat().type;
-    var _currentSubtype = defaultCoordFormat().subtype;
+    var _currentFormat = defaultCoordinateFormat.type;
+    var _currentSubtype = defaultCoordinateFormat.subtype;
 
   @override
   Widget build(BuildContext context) {
@@ -36,20 +38,20 @@ class GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
 
     return Column(
       children: <Widget>[
-        GCWDropDown<CoordFormatKey>(
+        GCWDropDown<CoordinateFormatKey>(
           value: widget.format.type,
-          onChanged: (CoordFormatKey newValue) {
+          onChanged: (CoordinateFormatKey newValue) {
             setState(() {
               _currentFormat = newValue;
 
               switch (_currentFormat) {
-                case CoordFormatKey.GAUSS_KRUEGER:
+                case CoordinateFormatKey.GAUSS_KRUEGER:
                   _currentSubtype = defaultGaussKruegerType;
                   break;
-                case CoordFormatKey.LAMBERT:
+                case CoordinateFormatKey.LAMBERT:
                   _currentSubtype = defaultLambertType;
                   break;
-                case CoordFormatKey.SLIPPY_MAP:
+                case CoordinateFormatKey.SLIPPY_MAP:
                   _currentSubtype = defaultSlippyMapType;
                   break;
                 default:
@@ -70,17 +72,17 @@ class GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
     var format = widget.format.type;
 
     if (_currentSubtype == null) {
-      _currentSubtype = getDefaultSubtypesForFormat(format);
+      _currentSubtype = defaultCoordinateFormatSubtypeForFormat(format);
       if (_currentSubtype == null)
         return Container();
     }
 
     switch (format) {
-      case CoordFormatKey.GAUSS_KRUEGER:
-      case CoordFormatKey.LAMBERT:
-        return GCWDropDown<CoordFormatKey>(
+      case CoordinateFormatKey.GAUSS_KRUEGER:
+      case CoordinateFormatKey.LAMBERT:
+        return GCWDropDown<CoordinateFormatKey>(
           value: _currentSubtype!,
-          items: getCoordinateFormatByKey(format).subtypes!.map((subtype) {
+          items: coordinateFormatMetadataByKey(format).subtypes!.map((subtype) {
             return GCWDropDownMenuItem(
               value: subtype.key,
               child: i18n(context, subtype.name),
@@ -93,7 +95,7 @@ class GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
             });
           },
         );
-      case CoordFormatKey.SLIPPY_MAP:
+      case CoordinateFormatKey.SLIPPY_MAP:
         return GCWIntegerSpinner(
           min: 0,
           max: 30,
@@ -112,7 +114,7 @@ class GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
   }
 
   void _emitOnChange() {
-    var output = CoordsFormatValue(_currentFormat, _currentSubtype);
+    var output = CoordinateFormat(_currentFormat, _currentSubtype);
     widget.onChanged(output);
   }
 }

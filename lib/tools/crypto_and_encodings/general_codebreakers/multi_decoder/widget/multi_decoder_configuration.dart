@@ -224,8 +224,8 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
                               var value = entry.value.toString();
 
                               if (tool.internalToolName == MDT_INTERNALNAMES_COORDINATEFORMATS) {
-                                if (CoordFormatKey.values.contains(value))
-                                  value = getCoordinateFormatByKey(value as CoordFormatKey).name;
+                                if (CoordinateFormatKey.values.contains(value))
+                                  value = getCoordinateFormatByKey(value as CoordinateFormatKey).name;
                               } else if ([MDT_INTERNALNAMES_BASE, MDT_INTERNALNAMES_BCD]
                                   .contains(tool.internalToolName)) {
                                 value += '_title';

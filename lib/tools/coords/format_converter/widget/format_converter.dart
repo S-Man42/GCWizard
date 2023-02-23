@@ -21,9 +21,9 @@ class FormatConverter extends StatefulWidget {
 class FormatConverterState extends State<FormatConverter> {
   var _currentCoords = defaultCoordinate;
 
-  var _currentCoordsFormat = defaultCoordFormat();
+  var _currentCoordsFormat = defaultCoordinateFormat;
 
-  Map<String, String> _currentOutputFormat = {'format': CoordFormatKey.DEC};
+  Map<String, String> _currentOutputFormat = {'format': CoordinateFormatKey.DEC};
   List<String> _currentOutput = [];
   Widget _currentAllOutput = GCWDefaultOutput();
 
@@ -93,7 +93,7 @@ class FormatConverterState extends State<FormatConverter> {
     var children = <List<String>>[];
     var ellipsoid = defaultEllipsoid();
 
-    allCoordFormats.forEach((coordFormat) {
+    allCoordinateFormatMetadata.forEach((coordFormat) {
       try {
         // exception, when we have a type with a undefinied subtype
         var outputFormat = Map<String, String>();
@@ -101,20 +101,20 @@ class FormatConverterState extends State<FormatConverter> {
         outputFormat.addAll({'format': coordFormat.key});
 
         switch (coordFormat.key) {
-          case CoordFormatKey.LAMBERT:
+          case CoordinateFormatKey.LAMBERT:
             outputFormat.addAll({'subtype': getLambertKey()});
             name = i18n(context, coordFormat.name);
             name +=
                 '\n' + i18n(context, coordFormat.subtypes.firstWhere((element) => element.key == getLambertKey()).name);
             break;
-          case CoordFormatKey.GAUSS_KRUEGER:
+          case CoordinateFormatKey.GAUSS_KRUEGER:
             outputFormat.addAll({'subtype': getGaussKruegerTypKeyFromCode()});
             name = i18n(context, coordFormat.name);
             name += '\n' +
                 i18n(
                     context, coordFormat.subtypes.firstWhere((element) => element.key == getGaussKruegerTypKeyFromCode()).name);
             break;
-          case CoordFormatKey.SLIPPY_MAP:
+          case CoordinateFormatKey.SLIPPY_MAP:
             outputFormat.addAll({'subtype': defaultSlippyZoom.toString()});
             break;
         }

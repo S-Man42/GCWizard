@@ -58,10 +58,10 @@ void main() {
     List<Map<String, Object?>> _inputsToExpected = [
       {'text': '', 'expectedOutput': null},
       {'text': 'K3ZVLFSSQP1MKBNZ', 'expectedOutput': null},
-      {'text': 'K3ZVLFSS QP1MKBNZ', 'expectedOutput': {'format': CoordFormatKey.NATURAL_AREA_CODE, 'coordinate': LatLng(46.2110174566, 025.598495717)}},
-      {'text': 'X: K3ZVLFSS Y: QP1MKBNZ', 'expectedOutput': {'format': CoordFormatKey.NATURAL_AREA_CODE, 'coordinate': LatLng(46.2110174566, 025.598495717)}},
-      {'text': 'X:K3ZVLFSS Y:QP1MKBNZ', 'expectedOutput': {'format': CoordFormatKey.NATURAL_AREA_CODE, 'coordinate': LatLng(46.2110174566, 025.598495717)}},
-      {'text': 'X K3ZVLFSS Y QP1MKBNZ', 'expectedOutput': {'format': CoordFormatKey.NATURAL_AREA_CODE, 'coordinate': LatLng(46.2110174566, 025.598495717)}},
+      {'text': 'K3ZVLFSS QP1MKBNZ', 'expectedOutput': {'format': CoordinateFormatKey.NATURAL_AREA_CODE, 'coordinate': LatLng(46.2110174566, 025.598495717)}},
+      {'text': 'X: K3ZVLFSS Y: QP1MKBNZ', 'expectedOutput': {'format': CoordinateFormatKey.NATURAL_AREA_CODE, 'coordinate': LatLng(46.2110174566, 025.598495717)}},
+      {'text': 'X:K3ZVLFSS Y:QP1MKBNZ', 'expectedOutput': {'format': CoordinateFormatKey.NATURAL_AREA_CODE, 'coordinate': LatLng(46.2110174566, 025.598495717)}},
+      {'text': 'X K3ZVLFSS Y QP1MKBNZ', 'expectedOutput': {'format': CoordinateFormatKey.NATURAL_AREA_CODE, 'coordinate': LatLng(46.2110174566, 025.598495717)}},
     ];
 
     _inputsToExpected.forEach((elem) {

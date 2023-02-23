@@ -26,7 +26,7 @@ import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coords_return_types.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/coordinate_format_parser/logic/latlon.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/map_view/widget/gcw_mapview.dart';
