@@ -13,7 +13,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = buildGade(elem['input']);
+        var _actual = buildGade(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });

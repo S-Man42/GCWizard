@@ -14,7 +14,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, searchMask: ${elem['searchMask']}, substitutions: ${elem['substitutions']}', () {
-        var _actual = breakHash(elem['input'], elem['searchMask'], elem['substitutions'], elem['hashFunction']);
+        var _actual = breakHash(elem['input'] as String?, elem['searchMask'], elem['substitutions'], elem['hashFunction']);
         expect(_actual, elem['expectedOutput']);
       });
     });

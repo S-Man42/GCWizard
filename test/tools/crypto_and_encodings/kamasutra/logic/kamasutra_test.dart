@@ -36,7 +36,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, alphabet: ${elem['alphabet']}, ignoreCase : ${elem['ignoreCase']}', () {
-        var _actual = encryptKamasutra(elem['input'], elem['alphabet'], ignoreCase: elem['ignoreCase']);
+        var _actual = encryptKamasutra(elem['input'] as String?, elem['alphabet'], ignoreCase: elem['ignoreCase']);
         expect(_actual, elem['expectedOutput']);
       });
     });

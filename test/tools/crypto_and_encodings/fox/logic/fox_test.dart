@@ -14,7 +14,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeFox(elem['input']);
+        var _actual = encodeFox(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -35,7 +35,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeFox(elem['input']);
+        var _actual = decodeFox(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });

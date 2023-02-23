@@ -21,7 +21,7 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, alphabet: ${elem['alphabet']}, rotation: ${elem['rotation']}, multiplier: ${elem['multiplier']}', () {
         var _actual;
-        _actual = encryptHomophoneWithGeneratedKey(elem['input'], elem['alphabet'], elem['rotation'], elem['multiplier']);
+        _actual = encryptHomophoneWithGeneratedKey(elem['input'] as String?, elem['alphabet'], elem['rotation'], elem['multiplier']);
         Map<String, String> map ;
         map = replaceMap(elem['rotation'], elem['multiplier'], elem['alphabet']);
         var output = changeOutput(_actual.output, map);
@@ -49,7 +49,7 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, alphabet: ${elem['alphabet']}, keyList: ${elem['keyList']}', () {
         var _actual;
-        _actual = encryptHomophoneWithKeyList(elem['input'], elem['alphabet'], textToIntList(elem['keyList']));
+        _actual = encryptHomophoneWithKeyList(elem['input'] as String?, elem['alphabet'], textToIntList(elem['keyList']));
         Map<String, String> map ;
         map = replaceOwnMap(elem['keyList'], elem['alphabet']);
         var output = changeOutput(_actual.output, map);
@@ -68,7 +68,7 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, keyMap: ${elem['keyMap']}', () {
         var _actual;
-        _actual = encryptHomophoneWithKeyMap(elem['input'], elem['keyMap']);
+        _actual = encryptHomophoneWithKeyMap(elem['input'] as String?, elem['keyMap']);
         Map<String, String> map ;
         map = replaceMap(elem['rotation'], elem['multiplier'], elem['alphabet']);
         var output = changeOutput(_actual.output, map);
@@ -94,7 +94,7 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, alphabet: ${elem['alphabet']}, rotation: ${elem['rotation']}, multiplier: ${elem['multiplier']}', () {
         var _actual;
-        _actual = decryptHomophoneWithGeneratedKey(elem['input'], elem['alphabet'], elem['rotation'], elem['multiplier']);
+        _actual = decryptHomophoneWithGeneratedKey(elem['input'] as String?, elem['alphabet'], elem['rotation'], elem['multiplier']);
         expect(_actual.errorCode, elem['errorcode']);
         expect(_actual.output, elem['expectedOutput']);
       });

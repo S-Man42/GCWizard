@@ -16,7 +16,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, mode: ${elem['mode']}', () {
-        var _actual = decodeHoudini(elem['input'], elem['mode']);
+        var _actual = decodeHoudini(elem['input'] as String?, elem['mode']);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -37,7 +37,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, mode: ${elem['mode']}', () {
-        var _actual = encodeHoudini(elem['input'], elem['mode']);
+        var _actual = encodeHoudini(elem['input'] as String?, elem['mode']);
         expect(_actual, elem['expectedOutput']);
       });
     });

@@ -15,7 +15,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
         test('input: ${elem['input']}, index: ${elem['index']}', () {
-          BWTOutput _actual = encryptBurrowsWheeler(elem['input'], elem['index']);
+          BWTOutput _actual = encryptBurrowsWheeler(elem['input'] as String?, elem['index']);
           expect(_actual.text, elem['expectedOutput'].text);
           expect(_actual.index, elem['expectedOutput'].index);
         });
@@ -32,7 +32,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, index: ${elem['index']}', () {
-        BWTOutput _actual = encryptBurrowsWheeler(elem['input'], elem['index']);
+        BWTOutput _actual = encryptBurrowsWheeler(elem['input'] as String, elem['index']);
         expect(_actual.text, elem['expectedOutput'].text);
         expect(_actual.index, elem['expectedOutput'].index);
       });
@@ -68,7 +68,7 @@ void main() {
         _actual = BWTOutput('burrowswheeler_error_char_index', '');
       else
         test('input: ${elem['input']}, index: ${elem['index']}', () {
-        BWTOutput _actual = encryptBurrowsWheeler(elem['input'], elem['index']);
+        BWTOutput _actual = encryptBurrowsWheeler(elem['input'] as String, elem['index']);
           expect(_actual.text, elem['expectedOutput'].text);
           expect(_actual.index, elem['expectedOutput'].index);
       });
@@ -84,7 +84,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, index: ${elem['index']}', () {
-        BWTOutput _actual = decryptBurrowsWheeler(elem['input'], elem['index']);
+        BWTOutput _actual = decryptBurrowsWheeler(elem['input'] as String, elem['index']);
         expect(_actual.text, elem['expectedOutput'].text);
         expect(_actual.index, elem['expectedOutput'].index);
       });
@@ -101,7 +101,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, index: ${elem['index']}', () {
-        BWTOutput _actual = decryptBurrowsWheeler(elem['input'], elem['index']);
+        BWTOutput _actual = decryptBurrowsWheeler(elem['input'] as String, elem['index']);
         expect(_actual.text, elem['expectedOutput'].text);
         expect(_actual.index, elem['expectedOutput'].index);
       });
@@ -131,7 +131,7 @@ void main() {
         _actual = BWTOutput('burrowswheeler_error_no_index', '');
       else
         test('input: ${elem['input']}, index: ${elem['index']}', () {
-          _actual = decryptBurrowsWheeler(elem['input'], elem['index']);
+          _actual = decryptBurrowsWheeler(elem['input'] as String, elem['index']);
           expect(_actual.text, elem['expectedOutput'].text);
           expect(_actual.index, elem['expectedOutput'].index);
         });

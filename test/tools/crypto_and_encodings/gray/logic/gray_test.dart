@@ -33,7 +33,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, mode: ${elem['mode']}', () {
-        var _actual = encodeGray(elem['input'], mode: elem['mode']);
+        var _actual = encodeGray(elem['input'] as String?, mode: elem['mode']);
         expect(_actual.decimalOutput, elem['expectedOutput'].decimalOutput);
         expect(_actual.binaryOutput, elem['expectedOutput'].binaryOutput);
       });
@@ -66,7 +66,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, mode: ${elem['mode']}', () {
-        var _actual = decodeGray(elem['input'], mode: elem['mode']);
+        var _actual = decodeGray(elem['input'] as String?, mode: elem['mode']);
         expect(_actual.decimalOutput, elem['expectedOutput'].decimalOutput);
         expect(_actual.binaryOutput, elem['expectedOutput'].binaryOutput);
       });

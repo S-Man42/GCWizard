@@ -17,7 +17,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeBCD(elem['input'], BCDType.ORIGINAL);
+        var _actual = encodeBCD(elem['input'] as String?, BCDType.ORIGINAL);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -35,7 +35,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeBCD(elem['input'], BCDType.ORIGINAL);
+        var _actual = decodeBCD(elem['input'] as String?, BCDType.ORIGINAL);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -56,7 +56,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeBCD(elem['input'], BCDType.AIKEN);
+        var _actual = encodeBCD(elem['input'] as String?, BCDType.AIKEN);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -74,7 +74,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeBCD(elem['input'], BCDType.AIKEN);
+        var _actual = decodeBCD(elem['input'] as String?, BCDType.AIKEN);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -95,7 +95,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeBCD(elem['input'], BCDType.LIBAWCRAIG);
+        var _actual = encodeBCD(elem['input'] as String?, BCDType.LIBAWCRAIG);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -113,7 +113,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeBCD(elem['input'], BCDType.LIBAWCRAIG);
+        var _actual = decodeBCD(elem['input'] as String?, BCDType.LIBAWCRAIG);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -134,7 +134,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeBCD(elem['input'], BCDType.STIBITZ);
+        var _actual = encodeBCD(elem['input'] as String?, BCDType.STIBITZ);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -152,7 +152,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeBCD(elem['input'], BCDType.STIBITZ);
+        var _actual = decodeBCD(elem['input'] as String?, BCDType.STIBITZ);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -173,7 +173,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeBCD(elem['input'], BCDType.GRAY);
+        var _actual = encodeBCD(elem['input'] as String?, BCDType.GRAY);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -191,7 +191,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeBCD(elem['input'], BCDType.GRAY);
+        var _actual = decodeBCD(elem['input'] as String?, BCDType.GRAY);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -212,7 +212,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeBCD(elem['input'], BCDType.GLIXON);
+        var _actual = encodeBCD(elem['input'] as String?, BCDType.GLIXON);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -230,7 +230,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeBCD(elem['input'], BCDType.GLIXON);
+        var _actual = decodeBCD(elem['input'] as String?, BCDType.GLIXON);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -251,7 +251,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeBCD(elem['input'], BCDType.OBRIEN);
+        var _actual = encodeBCD(elem['input'] as String?, BCDType.OBRIEN);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -269,7 +269,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeBCD(elem['input'], BCDType.OBRIEN);
+        var _actual = decodeBCD(elem['input'] as String?, BCDType.OBRIEN);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -290,7 +290,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeBCD(elem['input'], BCDType.PETHERICK);
+        var _actual = encodeBCD(elem['input'] as String?, BCDType.PETHERICK);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -308,7 +308,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeBCD(elem['input'], BCDType.PETHERICK);
+        var _actual = decodeBCD(elem['input'] as String?, BCDType.PETHERICK);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -329,7 +329,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeBCD(elem['input'], BCDType.TOMPKINS);
+        var _actual = encodeBCD(elem['input'] as String?, BCDType.TOMPKINS);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -347,7 +347,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeBCD(elem['input'], BCDType.TOMPKINS);
+        var _actual = decodeBCD(elem['input'] as String?, BCDType.TOMPKINS);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -368,7 +368,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeBCD(elem['input'], BCDType.HAMMING);
+        var _actual = encodeBCD(elem['input'] as String?, BCDType.HAMMING);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -386,7 +386,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeBCD(elem['input'], BCDType.HAMMING);
+        var _actual = decodeBCD(elem['input'] as String?, BCDType.HAMMING);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -407,7 +407,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeBCD(elem['input'], BCDType.BIQUINARY);
+        var _actual = encodeBCD(elem['input'] as String?, BCDType.BIQUINARY);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -425,7 +425,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeBCD(elem['input'], BCDType.BIQUINARY);
+        var _actual = decodeBCD(elem['input'] as String?, BCDType.BIQUINARY);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -446,7 +446,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeBCD(elem['input'], BCDType.ONEOFTEN);
+        var _actual = encodeBCD(elem['input'] as String?, BCDType.ONEOFTEN);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -464,7 +464,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeBCD(elem['input'], BCDType.ONEOFTEN);
+        var _actual = decodeBCD(elem['input'] as String?, BCDType.ONEOFTEN);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -485,7 +485,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeBCD(elem['input'], BCDType.TWOOFFIVE);
+        var _actual = encodeBCD(elem['input'] as String?, BCDType.TWOOFFIVE);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -503,7 +503,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeBCD(elem['input'], BCDType.TWOOFFIVE);
+        var _actual = decodeBCD(elem['input'] as String?, BCDType.TWOOFFIVE);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -524,7 +524,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeBCD(elem['input'], BCDType.POSTNET);
+        var _actual = encodeBCD(elem['input'] as String?, BCDType.POSTNET);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -542,7 +542,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeBCD(elem['input'], BCDType.POSTNET);
+        var _actual = decodeBCD(elem['input'] as String?, BCDType.POSTNET);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -562,7 +562,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeBCD(elem['input'], BCDType.PLANET);
+        var _actual = encodeBCD(elem['input'] as String?, BCDType.PLANET);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -580,7 +580,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeBCD(elem['input'], BCDType.PLANET);
+        var _actual = decodeBCD(elem['input'] as String?, BCDType.PLANET);
         expect(_actual, elem['expectedOutput']);
       });
     });

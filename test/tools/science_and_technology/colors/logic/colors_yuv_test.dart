@@ -12,7 +12,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var yuv = YUV.fromRGB(elem['input']);
+        var yuv = YUV.fromRGB(elem['input'] as RGB);
         expect((yuv.y - elem['expectedOutput'].y).abs() < 1e-5, true);
         expect((yuv.u - elem['expectedOutput'].u).abs() < 1e-5, true);
         expect((yuv.v - elem['expectedOutput'].v).abs() < 1e-5, true);
@@ -35,7 +35,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var yCbCr = YCbCr.fromRGB(elem['input']);
+        var yCbCr = YCbCr.fromRGB(elem['input'] as RGB);
         expect((yCbCr.y - elem['expectedOutput'].y).abs() < 1e-5, true);
         expect((yCbCr.cb - elem['expectedOutput'].cb).abs() < 1e-5, true);
         expect((yCbCr.cr - elem['expectedOutput'].cr).abs() < 1e-5, true);
@@ -57,7 +57,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var yiq = YIQ.fromRGB(elem['input']);
+        var yiq = YIQ.fromRGB(elem['input'] as RGB);
         expect((yiq.y - elem['expectedOutput'].y).abs() < 1e-5, true);
         expect((yiq.i - elem['expectedOutput'].i).abs() < 1e-5, true);
         expect((yiq.q - elem['expectedOutput'].q).abs() < 1e-5, true);

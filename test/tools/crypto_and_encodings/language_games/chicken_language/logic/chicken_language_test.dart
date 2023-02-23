@@ -30,7 +30,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encryptChickenLanguage(elem['input']);
+        var _actual = encryptChickenLanguage(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -66,7 +66,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decryptChickenLanguage(elem['input']);
+        var _actual = decryptChickenLanguage(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });

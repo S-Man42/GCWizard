@@ -20,7 +20,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeEnclosedAreas(elem['input'], with4: true);
+        var _actual = decodeEnclosedAreas(elem['input'] as String?, with4: true);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -40,7 +40,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeEnclosedAreas(elem['input'], with4: false);
+        var _actual = decodeEnclosedAreas(elem['input'] as String?, with4: false);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -61,7 +61,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeEnclosedAreas(elem['input'], with4: true, onlyNumbers: true);
+        var _actual = decodeEnclosedAreas(elem['input'] as String?, with4: true, onlyNumbers: true);
         expect(_actual, elem['expectedOutput']);
       });
     });

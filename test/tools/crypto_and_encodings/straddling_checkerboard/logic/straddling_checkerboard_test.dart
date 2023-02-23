@@ -38,7 +38,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, key: ${elem['key']}, alphabetWord: ${elem['alphabetWord']}, columnOrder: ${elem['columnOrder']}, matrix4x10: ${elem['matrix4x10']}, mode: ${elem['mode']}, alphabet: ${elem['alphabet']}', () {
-        StraddlingCheckerboardOutput _actual = encryptStraddlingCheckerboard(elem['input'], elem['key'], elem['alphabetWord'], elem['columnOrder'], elem['matrix4x10'], mode: elem['mode'], alphabet: elem['alphabet']);
+        StraddlingCheckerboardOutput _actual = encryptStraddlingCheckerboard(elem['input'], elem['key'], elem['alphabetWord'], elem['columnOrder'], elem['matrix4x10'], mode: elem['mode'], alphabet: elem['alphabet'] as String);
         expect(_actual.output, elem['expectedOutput']);
       });
     });
@@ -72,7 +72,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, key: ${elem['key']}, alphabetWord: ${elem['alphabetWord']}, columnOrder: ${elem['columnOrder']}, matrix4x10: ${elem['matrix4x10']}, mode: ${elem['mode']}, alphabet: ${elem['alphabet']}', () {
-        StraddlingCheckerboardOutput _actual = decryptStraddlingCheckerboard(elem['input'], elem['key'], elem['alphabetWord'], elem['columnOrder'], elem['matrix4x10'], mode: elem['mode'], alphabet: elem['alphabet']);
+        StraddlingCheckerboardOutput _actual = decryptStraddlingCheckerboard(elem['input'], elem['key'], elem['alphabetWord'], elem['columnOrder'], elem['matrix4x10'], mode: elem['mode'], alphabet: elem['alphabet'] as String);
         expect(_actual.output, elem['expectedOutput']);
       });
     });

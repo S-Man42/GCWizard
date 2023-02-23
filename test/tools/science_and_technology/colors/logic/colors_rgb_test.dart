@@ -12,7 +12,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var hexCode = HexCode.fromRGB(elem['input']);
+        var hexCode = HexCode.fromRGB(elem['input'] as RGB);
         var _actual = hexCode.toString();
         expect(_actual, elem['expectedOutput']);
         expect(hexCode.toRGB().toString(), elem['input'].toString());

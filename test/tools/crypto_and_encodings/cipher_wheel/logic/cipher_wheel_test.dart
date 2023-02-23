@@ -15,7 +15,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encryptCipherWheel(elem['input'], elem['key']);
+        var _actual = encryptCipherWheel(elem['input'] as String, elem['key']);
         expect(_actual, elem['expectedOutput']);
       });
     });

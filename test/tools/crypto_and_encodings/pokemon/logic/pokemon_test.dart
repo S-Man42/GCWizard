@@ -13,7 +13,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encodePokemon(elem['input']);
+        var _actual = encodePokemon(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -35,7 +35,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}}', () {
-        var _actual = decodePokemon(elem['input']);
+        var _actual = decodePokemon(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });

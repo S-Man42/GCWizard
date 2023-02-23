@@ -28,7 +28,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = gcCodeToID(elem['input']);
+        var _actual = gcCodeToID(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -47,7 +47,7 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
         try {
-          gcCodeToID(elem['input']);
+          gcCodeToID(elem['input'] as String?);
           expect(false, true);
         } catch(e) {
           expect(true, true);
@@ -81,7 +81,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = idToGCCode(elem['input']);
+        var _actual = idToGCCode(elem['input'] as int?);
         expect(_actual, elem['expectedOutput']);
       });
     });

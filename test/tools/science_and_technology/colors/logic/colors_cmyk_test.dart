@@ -12,7 +12,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var cmyk = CMYK.fromRGB(elem['input']);
+        var cmyk = CMYK.fromRGB(elem['input'] as RGB);
         expect((cmyk.cyan - elem['expectedOutput'].cyan).abs() < 1e-5, true);
         expect((cmyk.magenta - elem['expectedOutput'].magenta).abs() < 1e-5, true);
         expect((cmyk.yellow - elem['expectedOutput'].yellow).abs() < 1e-5, true);
@@ -35,7 +35,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var cmy = CMY.fromRGB(elem['input']);
+        var cmy = CMY.fromRGB(elem['input'] as RGB);
         expect((cmy.cyan - elem['expectedOutput'].cyan).abs() < 1e-5, true);
         expect((cmy.magenta - elem['expectedOutput'].magenta).abs() < 1e-5, true);
         expect((cmy.yellow - elem['expectedOutput'].yellow).abs() < 1e-5, true);

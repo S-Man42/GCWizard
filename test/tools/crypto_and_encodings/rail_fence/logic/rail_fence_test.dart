@@ -18,14 +18,14 @@ void main() {
         var _actual;
         if (elem['offset'] == null) {
           if (elem['password'] == null)
-            _actual = encryptRailFence(elem['input'], elem['key']);
+            _actual = encryptRailFence(elem['input'] as String?, elem['key']);
           else
-            _actual = encryptRailFence(elem['input'], elem['key'], password: elem['password']);
+            _actual = encryptRailFence(elem['input'] as String?, elem['key'], password: elem['password']);
         } else {
           if (elem['password'] == null)
-            _actual = encryptRailFence(elem['input'], elem['key'], offset: elem['offset']);
+            _actual = encryptRailFence(elem['input'] as String?, elem['key'], offset: elem['offset']);
           else
-            _actual = encryptRailFence(elem['input'], elem['key'], offset: elem['offset'], password: elem['password']);
+            _actual = encryptRailFence(elem['input'] as String?, elem['key'], offset: elem['offset'], password: elem['password']);
         }
         expect(_actual, elem['expectedOutput']);
       });
@@ -48,14 +48,14 @@ void main() {
         var _actual;
         if (elem['offset'] == null) {
           if (elem['password'] == null)
-            _actual = decryptRailFence(elem['input'], elem['key']);
+            _actual = decryptRailFence(elem['input'] as String?, elem['key']);
           else
-            _actual = decryptRailFence(elem['input'], elem['key'], password: elem['password']);
+            _actual = decryptRailFence(elem['input'] as String?, elem['key'], password: elem['password']);
         } else {
           if (elem['password'] == null)
-            _actual = decryptRailFence(elem['input'], elem['key'], offset: elem['offset']);
+            _actual = decryptRailFence(elem['input'] as String?, elem['key'], offset: elem['offset']);
           else
-            _actual = decryptRailFence(elem['input'], elem['key'], offset: elem['offset'], password: elem['password']);
+            _actual = decryptRailFence(elem['input'] as String?, elem['key'], offset: elem['offset'], password: elem['password']);
         }
         expect(_actual, elem['expectedOutput']);
       });

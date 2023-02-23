@@ -71,7 +71,7 @@ void main(){
     _inputsToExpected.forEach((elem) {
       test(
           'input: ${elem['input']}, language: ${elem['language']}, ', () {
-        var _actual = encodeNumberToNumeralWord(elem['language'], elem['input']);
+        var _actual = encodeNumberToNumeralWord(elem['language'], elem['input'] as int?);
         if (_actual.error == 'numeralwords_converter_error_navi')
           expect(_actual.error, elem['expectedOutput'].error);
         else

@@ -16,7 +16,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = atbash(elem['input']);
+        var _actual = atbash(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });

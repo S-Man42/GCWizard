@@ -21,7 +21,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, keyOneTimePad: ${elem['keyOneTimePad']}', () {
-        var _actual = encryptTapir(elem['input'], elem['keyOneTimePad']);
+        var _actual = encryptTapir(elem['input'] as String?, elem['keyOneTimePad']);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -54,7 +54,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, keyOneTimePad: ${elem['keyOneTimePad']}', () {
-        var _actual = decryptTapir(elem['input'], elem['keyOneTimePad']);
+        var _actual = decryptTapir(elem['input'] as String?, elem['keyOneTimePad']);
         expect(_actual, elem['expectedOutput']);
       });
     });

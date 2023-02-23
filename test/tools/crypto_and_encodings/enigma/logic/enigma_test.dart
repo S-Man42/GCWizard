@@ -22,7 +22,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, key: $key', () {
-        var _actual = calculateEnigma(elem['input'], key)['rotorSettingAfter']
+        var _actual = calculateEnigma(elem['input'] as String?, key)['rotorSettingAfter']
             .sublist(1,4) //ignore ETW and UKW
             .map((setting) => alphabet_AZIndexes[setting + 1])
             .toList()
@@ -121,7 +121,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, key: ${elem['key']}', () {
-        var _actual = calculateEnigmaWithMessageKey(elem['input'], elem['key']);
+        var _actual = calculateEnigmaWithMessageKey(elem['input'] as String?, elem['key']);
         expect(_actual, elem['expectedOutput']);
       });
     });

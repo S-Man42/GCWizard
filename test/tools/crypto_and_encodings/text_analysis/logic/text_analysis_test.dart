@@ -78,7 +78,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = analyzeText(elem['input']);
+        var _actual = analyzeText(elem['input'] as String?);
         expect(equalsTextAnalysisResults(_actual, elem['expectedOutput']), true);
       });
     });

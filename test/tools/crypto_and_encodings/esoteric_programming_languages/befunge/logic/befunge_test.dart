@@ -340,7 +340,7 @@ v                                              >
 
     _inputsToExpected.forEach((elem) {
       test('code: ${elem['code']}, input: ${elem['input']}', () {
-        var _actual = interpretBefunge(elem['code'], input: elem['input']);
+        var _actual = interpretBefunge(elem['code'], input: elem['input'] as String?);
         expect(_actual.Output, elem['expectedOutput'].Output);
         expect(_actual.Error, elem['expectedOutput'].Error);
       });

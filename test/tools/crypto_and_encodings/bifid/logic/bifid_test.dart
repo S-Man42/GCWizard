@@ -56,7 +56,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, key: ${elem['key']}, mode: ${elem['mode']}, alphabet: ${elem['alphabet']}, alphabetMode: ${elem['alphabetMode']}', () {
-        BifidOutput _actual = encryptBifid(elem['input'], elem['key'], mode: elem['mode'], alphabet: elem['alphabet'], alphabetMode: elem['alphabetMode']);
+        BifidOutput _actual = encryptBifid(elem['input'] as String, elem['key'], mode: elem['mode'], alphabet: elem['alphabet'], alphabetMode: elem['alphabetMode']);
                     expect(_actual == null ? null : _actual.output, elem['expectedOutput']);
         });
     });
@@ -100,7 +100,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, key: ${elem['key']}, mode: ${elem['mode']}, alphabet: ${elem['alphabet']}, alphabetMode: ${elem['alphabetMode']}', () {
-        BifidOutput _actual = decryptBifid(elem['input'], elem['key'], mode: elem['mode'], alphabet: elem['alphabet'], alphabetMode: elem['alphabetMode']);
+        BifidOutput _actual = decryptBifid(elem['input'] as String?, elem['key'], mode: elem['mode'], alphabet: elem['alphabet'] as String?, alphabetMode: elem['alphabetMode']);
         expect(_actual == null ? null : _actual.output, elem['expectedOutput']);
       });
     });

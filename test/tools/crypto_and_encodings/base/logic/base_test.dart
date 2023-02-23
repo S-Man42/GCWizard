@@ -12,7 +12,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeBase58(elem['input']);
+        var _actual = encodeBase58(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -27,7 +27,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeBase58(elem['input']);
+        var _actual = decodeBase58(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -42,7 +42,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeBase91(elem['input']);
+        var _actual = encodeBase91(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -57,7 +57,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeBase91(elem['input']);
+        var _actual = decodeBase91(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -73,7 +73,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeBase122(elem['input']);
+        var _actual = encodeBase122(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -89,7 +89,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeBase122(elem['input']);
+        var _actual = decodeBase122(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });

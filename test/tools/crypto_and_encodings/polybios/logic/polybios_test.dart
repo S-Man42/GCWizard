@@ -89,9 +89,9 @@ void main() {
       test('input: ${elem['input']}, key: ${elem['key']}, mode: ${elem['mode']}, modMode: ${elem['modificationMode']}, fillAlphabet: ${elem['fillAlphabet']}', () {
         PolybiosOutput _actual;
         if (elem['modificationMode'] != null)
-          _actual = encryptPolybios(elem['input'], elem['key'], mode: elem['mode'], fillAlphabet: elem['fillAlphabet'], modificationMode: elem['modificationMode']);
+          _actual = encryptPolybios(elem['input'] as String?, elem['key'], mode: elem['mode'], fillAlphabet: elem['fillAlphabet'], modificationMode: elem['modificationMode']);
         else
-          _actual = encryptPolybios(elem['input'], elem['key'], mode: elem['mode'], fillAlphabet: elem['fillAlphabet']);
+          _actual = encryptPolybios(elem['input'] as String?, elem['key'], mode: elem['mode'], fillAlphabet: elem['fillAlphabet']);
 
         expect(_actual == null ? null : _actual.output, elem['expectedOutput']);
       });
@@ -157,9 +157,9 @@ void main() {
       test('input: ${elem['input']}, key: ${elem['key']}, mode: ${elem['mode']}, modMode: ${elem['modificationMode']}, alphabet: ${elem['fillAlphabet']}', () {
         PolybiosOutput _actual;
         if (elem['modificationMode'] != null)
-          _actual = decryptPolybios(elem['input'], elem['key'], mode: elem['mode'], fillAlphabet: elem['fillAlphabet'], modificationMode: elem['modificationMode']);
+          _actual = decryptPolybios(elem['input'] as String?, elem['key'], mode: elem['mode'], fillAlphabet: elem['fillAlphabet'], modificationMode: elem['modificationMode']);
         else
-          _actual = decryptPolybios(elem['input'], elem['key'], mode: elem['mode'], fillAlphabet: elem['fillAlphabet']);
+          _actual = decryptPolybios(elem['input'] as String?, elem['key'], mode: elem['mode'], fillAlphabet: elem['fillAlphabet']);
         expect(_actual == null ? null : _actual.output, elem['expectedOutput']);
       });
     });

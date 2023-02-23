@@ -13,7 +13,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = BreakerKey.check_alphabet(elem['input']);
+        var _actual = BreakerKey.check_alphabet(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -50,7 +50,7 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
         var key = BreakerKey('abcdefghijklmnopqrstuvwxyz');
-        var _actual = key.decode(elem['input']);
+        var _actual = key.decode(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -67,7 +67,7 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
         var key = BreakerKey('abcdefghijklmnopqrstuvwxyz');
-        var _actual = key.encode(elem['input']);
+        var _actual = key.encode(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -83,7 +83,7 @@ void main() {
     _inputsToExpected.forEach((elem) {
 
       test('input: ${elem['input']}', () async {
-        var _actual = Quadgrams.quadgramsMapToString(Quadgrams.compressQuadgrams(elem['input']));
+        var _actual = Quadgrams.quadgramsMapToString(Quadgrams.compressQuadgrams(elem['input'] as List<int?>));
         expect(_actual, elem['expectedOutput']);
       });
     });

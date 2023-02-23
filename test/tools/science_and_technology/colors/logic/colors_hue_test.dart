@@ -12,7 +12,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var hsv = HSV.fromRGB(elem['input']);
+        var hsv = HSV.fromRGB(elem['input'] as RGB);
         expect((hsv.hue - elem['expectedOutput'].hue).abs() < 1e-5, true);
         expect((hsv.saturation - elem['expectedOutput'].saturation).abs() < 1e-5, true);
         expect((hsv.value - elem['expectedOutput'].value).abs() < 1e-5, true);
@@ -34,7 +34,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var hsl = HSL.fromRGB(elem['input']);
+        var hsl = HSL.fromRGB(elem['input'] as RGB);
         expect((hsl.hue - elem['expectedOutput'].hue).abs() < 1e-5, true);
         expect((hsl.saturation - elem['expectedOutput'].saturation).abs() < 1e-5, true);
         expect((hsl.lightness - elem['expectedOutput'].lightness).abs() < 1e-5, true);
@@ -56,7 +56,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var hsi = HSI.fromRGB(elem['input']);
+        var hsi = HSI.fromRGB(elem['input'] as RGB);
         expect((hsi.hue - elem['expectedOutput'].hue).abs() < 1e-5, true);
         expect((hsi.saturation - elem['expectedOutput'].saturation).abs() < 1e-5, true);
         expect((hsi.intensity - elem['expectedOutput'].intensity).abs() < 1e-5, true);

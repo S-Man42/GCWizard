@@ -172,7 +172,7 @@ Serves 1.
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = interpretChef(elem['language'], elem['recipe'].toLowerCase(), elem['input']);
+        var _actual = interpretChef(elem['language'], elem['recipe'].toLowerCase(), elem['input'] as String?);
         var length = elem['expectedOutput'].length;
         for (int i = 0; i < length; i++) {
           expect(_actual[i], elem['expectedOutput'][i]);
@@ -472,7 +472,7 @@ Serves 1.''';
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = interpretChef(elem['language'], elem['recipe'].toLowerCase(), elem['input']);
+        var _actual = interpretChef(elem['language'], elem['recipe'].toLowerCase(), elem['input'] as String?);
         var length = elem['expectedOutput'].length;
         for (int i = 0; i < length; i++) {
           expect(_actual[i], elem['expectedOutput'][i]);
@@ -757,7 +757,7 @@ Serves.''';
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = interpretChef(elem['language'], elem['recipe'].toLowerCase(), elem['input']);
+        var _actual = interpretChef(elem['language'], elem['recipe'].toLowerCase(), elem['input'] as String?);
         var length = elem['expectedOutput'].length;
         for (int i = 0; i < length; i++) {
           expect(_actual[i], elem['expectedOutput'][i]);
@@ -1076,7 +1076,7 @@ Add cocoa powder into the mixing bowl.''';
 
       _inputsToExpected.forEach((elem) {
         test('input: ${elem['input']}', () {
-          var _actual = interpretChef(elem['language'], elem['recipe'].toLowerCase(), elem['input']);
+          var _actual = interpretChef(elem['language'], elem['recipe'].toLowerCase(), elem['input'] as String?);
           var length = elem['expectedOutput'].length;
           for (int i = 0; i < length; i++) {
             expect(_actual[i], elem['expectedOutput'][i]);
@@ -1360,7 +1360,7 @@ Portionen: 1.''';
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = interpretChef(elem['language'], elem['recipe'].toLowerCase(), elem['input']);
+        var _actual = interpretChef(elem['language'], elem['recipe'].toLowerCase(), elem['input'] as String?);
         var length = elem['expectedOutput'].length;
         for (int i = 0; i < length; i++) {
           expect(_actual[i], elem['expectedOutput'][i]);
@@ -1500,7 +1500,7 @@ Serves 1.''';
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = interpretChef(elem['language'], elem['recipe'].toLowerCase(), elem['input']);
+        var _actual = interpretChef(elem['language'], elem['recipe'].toLowerCase(), elem['input'] as String?);
         var length = elem['expectedOutput'].length;
         for (int i = 0; i < length; i++) {
           expect(_actual[i], elem['expectedOutput'][i]);
@@ -1641,7 +1641,7 @@ Serves 1.''';
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = interpretChef(elem['language'], elem['recipe'].toLowerCase(), elem['input']);
+        var _actual = interpretChef(elem['language'], elem['recipe'].toLowerCase(), elem['input'] as String?);
         var length = elem['expectedOutput'].length;
         for (int i = 0; i < length; i++) {
           expect(_actual[i], elem['expectedOutput'][i]);
@@ -1941,7 +1941,7 @@ Refrigerate for 1 hour.''';
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = interpretChef(elem['language'], elem['recipe'].toLowerCase(), elem['input']);
+        var _actual = interpretChef(elem['language'], elem['recipe'].toLowerCase(), elem['input'] as String?);
         var length = elem['expectedOutput'].length;
         for (int i = 0; i < length; i++) {
           expect(_actual[i], elem['expectedOutput'][i]);
@@ -2023,7 +2023,7 @@ Refrigerate for 1 hour.''';
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = interpretChef(elem['language'], elem['recipe'].toLowerCase(), elem['input']);
+        var _actual = interpretChef(elem['language'], elem['recipe'].toLowerCase(), elem['input'] as String?);
         var length = elem['expectedOutput'].length;
         for (int i = 0; i < length; i++) {
           expect(_actual[i], elem['expectedOutput'][i]);
@@ -2230,7 +2230,7 @@ Serves 1.''';
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = interpretChef(elem['language'], elem['recipe'].toLowerCase(), elem['input']);
+        var _actual = interpretChef(elem['language'], elem['recipe'].toLowerCase(), elem['input'] as String?);
         var length = elem['expectedOutput'].length;
         for (int i = 0; i < length; i++) {
           expect(_actual[i], elem['expectedOutput'][i]);
@@ -2728,7 +2728,7 @@ Serves 1.''';
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = interpretChef(elem['language'], elem['recipe'].toLowerCase(), elem['input']);
+        var _actual = interpretChef(elem['language'], elem['recipe'].toLowerCase(), elem['input'] as String?);
         var length = elem['expectedOutput'].length;
         for (int i = 0; i < length; i++) {
           expect(_actual[i], elem['expectedOutput'][i]);
@@ -2823,7 +2823,7 @@ Portionen: 1.''';
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = interpretChef(elem['language'], elem['recipe'].toLowerCase(), elem['input']);
+        var _actual = interpretChef(elem['language'], elem['recipe'].toLowerCase(), elem['input'] as String?);
         var length = elem['expectedOutput'].length;
         for (int i = 0; i < length; i++) {
           expect(_actual[i], elem['expectedOutput'][i]);
@@ -3075,7 +3075,7 @@ Portionen: 1.''';
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = interpretChef(elem['language'], elem['recipe'].toLowerCase(), elem['input']);
+        var _actual = interpretChef(elem['language'], elem['recipe'].toLowerCase(), elem['input'] as String?);
         var length = elem['expectedOutput'].length;
         for (int i = 0; i < length; i++) {
           expect(_actual[i], elem['expectedOutput'][i]);

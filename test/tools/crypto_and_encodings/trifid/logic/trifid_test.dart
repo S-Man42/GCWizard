@@ -29,7 +29,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, blockSize: ${elem['blockSize']}, mode: ${elem['mode']}, alphabet: ${elem['alphabet']}', () {
-        TrifidOutput _actual = encryptTrifid(elem['input'], elem['blockSize'], mode: elem['mode'], alphabet: elem['alphabet']);
+        TrifidOutput _actual = encryptTrifid(elem['input'] as String?, elem['blockSize'], mode: elem['mode'], alphabet: elem['alphabet'] as String);
         expect(_actual == null ? null : _actual.output, elem['expectedOutput']);
       });
     });
@@ -57,7 +57,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, blockSize: ${elem['blockSize']}, mode: ${elem['mode']}, alphabet: ${elem['alphabet']}', () {
-        TrifidOutput _actual = decryptTrifid(elem['input'], elem['blockSize'], mode: elem['mode'], alphabet: elem['alphabet']);
+        TrifidOutput _actual = decryptTrifid(elem['input'] as String?, elem['blockSize'], mode: elem['mode'], alphabet: elem['alphabet'] as String);
         expect(_actual == null ? null : _actual.output, elem['expectedOutput']);
       });
     });

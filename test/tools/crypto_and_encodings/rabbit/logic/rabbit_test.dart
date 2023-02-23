@@ -116,7 +116,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']} key: ${elem['key']} iv: ${elem['iv']} iv: ${elem['iv']} outputFormat: ${elem['outputFormat']}', () {
-        var _actual = cryptRabbit(elem['input'], elem['inputFormat'], elem['key'], elem['keyFormat'], elem['iv'], elem['ivFormat'], elem['outputFormat']);
+        var _actual = cryptRabbit(elem['input'] as String?, elem['inputFormat'], elem['key'], elem['keyFormat'], elem['iv'], elem['ivFormat'], elem['outputFormat']);
         expect(_actual?.output, elem['expectedOutput']?.output);
         expect(_actual?.keyHexFormat, elem['expectedOutput']?.keyHexFormat);
         expect(_actual?.ivHexFormat, elem['expectedOutput']?.ivHexFormat);
