@@ -115,9 +115,9 @@ final _initialOptions = <String, Map<String, Object>>{
   },
 };
 
-List<String, Object> _multiDecoderToolOptionToGCWMultiDecoderToolOptions(
+Map<String, Object?> _multiDecoderToolOptionToGCWMultiDecoderToolOptions(
     List<MultiDecoderToolOption> mdtOptions) {
-  var gcwOptions = <String, Object>{};
+  var gcwOptions = <String, Object?>{};
 
   mdtOptions.forEach((option) {
     gcwOptions.putIfAbsent(option.name, () => option.value);
@@ -130,7 +130,7 @@ AbstractMultiDecoderTool _multiDecoderToolToGCWMultiDecoderTool(
     BuildContext context, MultiDecoderToolEntity mdtTool) {
   AbstractMultiDecoderTool gcwTool;
 
-  var options = _initialOptions[mdtTool.internalToolName] ?? <String, Object>{};
+  var options = _initialOptions[mdtTool.internalToolName] ?? <String, Object?>{};
   if (mdtTool.options.isNotEmpty) options = _multiDecoderToolOptionToGCWMultiDecoderToolOptions(mdtTool.options);
 
   switch (mdtTool.internalToolName) {

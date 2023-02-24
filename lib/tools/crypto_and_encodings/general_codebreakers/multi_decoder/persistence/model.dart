@@ -8,7 +8,7 @@ MultiDecoderToolEntity findMultiDecoderToolById(int id) {
 }
 
 class MultiDecoderToolEntity {
-  int? id;
+  late int id;
   late String name;
   late String internalToolName;
   late List<MultiDecoderToolOption> options;
@@ -23,7 +23,7 @@ class MultiDecoderToolEntity {
       };
 
   MultiDecoderToolEntity.fromJson(Map<String, Object?> json) {
-    this.id = toIntOrNull(json['id']);
+    this.id = toIntOrNull(json['id']) ?? -1;
     this.name = toStringOrNull(json['name']) ?? '';  // TODO Proper default types if key is not in map
     this.internalToolName = toStringOrNull(json['decoderFunctionName']) ?? '';  // TODO Proper default types if key is not in map
 

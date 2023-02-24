@@ -66,7 +66,7 @@ String decodeAffine(String? input, int keyA, int keyB) {
     affineCipher = _AZToAffineDigit[character];
     if (affineCipher == null) return '';
 
-    affineCipher = _reverseKeyA[keyA] * (affineCipher! - keyB) % 26;
+    affineCipher = _reverseKeyA[keyA]! * (affineCipher! - keyB) % 26;
 
     affinePlain = _AffineDigitToAZ[affineCipher];
     return affinePlain != null ? affinePlain : '';

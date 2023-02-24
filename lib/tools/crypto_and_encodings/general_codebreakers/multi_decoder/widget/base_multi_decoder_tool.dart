@@ -8,7 +8,7 @@ abstract class AbstractMultiDecoderTool {
   final MultiDecoderToolConfiguration? configurationWidget;
   final bool requiresKey;
   final bool optionalKey;
-  late final Map<String, Object> options;
+  late final Map<String, Object?> options;
 
   AbstractMultiDecoderTool(
       {Key? key,

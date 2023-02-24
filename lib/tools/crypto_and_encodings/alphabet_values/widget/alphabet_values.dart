@@ -44,7 +44,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
 
   late String _currentAlphabetKey;
   late Map<String, String> _currentAlphabet;
-  Map<String, String> _currentCustomizedAlphabet;
+  Map<String, String>? _currentCustomizedAlphabet;
   var _currentIsEditingAlphabet = false;
   var _currentReverseAlphabet = GCWSwitchPosition.left;
   String _reverseSwitchTitleLeft = '';
@@ -53,7 +53,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
   var _currentCustomizeAlphabet = GCWSwitchPosition.left;
   var _currentCustomAlphabetName = '';
 
-  List<String> _storedAlphabets;
+  late List<String> _storedAlphabets;
 
   @override
   void initState() {
@@ -117,7 +117,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
   }
 
   String _setValueOffset(String value) {
-    return value.split(',').map((value) => int.tryParse(value) + _currentOffset).join(',');
+    return value.split(',').map((value) => (int.tryParse(value) ?? 0) + _currentOffset).join(',');
   }
 
   Map<String, String> _setOffset(Map<String, String> alphabet) {
@@ -152,16 +152,17 @@ class AlphabetValuesState extends State<AlphabetValues> {
         .join(',');
 
     if (value.isEmpty) return;
+    if (_currentCustomizedAlphabet == null) return;
 
     letter = letter.toUpperCase();
-    if (_currentCustomizedAlphabet.containsKey(letter)) {
+    if (_currentCustomizedAlphabet!.containsKey(letter)) {
       showGCWDialog(context, i18n(context, 'alphabetvalues_edit_mode_customize_addletter_replace_title'),
           Text(i18n(context, 'alphabetvalues_edit_mode_customize_addletter_replace_text', parameters: [letter])), [
         GCWDialogButton(
             text: i18n(context, 'alphabetvalues_edit_mode_customize_addletter_replace'),
             onPressed: () {
               setState(() {
-                _currentCustomizedAlphabet.addAll({letter: value});
+                _currentCustomizedAlphabet!.addAll({letter: value});
               });
             })
       ]);
@@ -169,25 +170,29 @@ class AlphabetValuesState extends State<AlphabetValues> {
       setState(() {
         if (adjust) {
           var insertedValue = int.tryParse(value);
-          _currentCustomizedAlphabet = _currentCustomizedAlphabet.map((currentKey, currentValue) {
-            var newValue = currentValue.split(',').map((value) {
-              var intValue = int.tryParse(value);
-              if (intValue >= insertedValue) intValue++;
+          if (insertedValue != null) {
+            _currentCustomizedAlphabet = _currentCustomizedAlphabet!.map((currentKey, currentValue) {
+              var newValue = currentValue.split(',').map((value) {
+                var intValue = int.tryParse(value);
+                if (intValue == null) return '';
+                if (intValue >= insertedValue) intValue++;
 
-              return intValue.toString();
-            }).join(',');
+                return intValue.toString();
+              }).join(',');
 
-            return MapEntry(currentKey, newValue);
-          });
+              return MapEntry(currentKey, newValue);
+            });
+          }
         }
-
-        _currentCustomizedAlphabet.putIfAbsent(letter, () => value);
+        _currentCustomizedAlphabet!.putIfAbsent(letter, () => value);
       });
     }
   }
 
   void _removeEntry(Object id, BuildContext context) {
-    var _valueToDelete = _currentCustomizedAlphabet[id];
+    if (_currentCustomizedAlphabet == null) return;
+    var _valueToDelete = _currentCustomizedAlphabet![id];
+    if (_valueToDelete == null) return;
     var _isList = _valueToDelete.contains(',');
 
     var buttons = [
@@ -195,7 +200,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
           text: i18n(context, 'alphabetvalues_edit_mode_customize_deleteletter_remove'),
           onPressed: () {
             setState(() {
-              _currentCustomizedAlphabet.remove(id);
+              _currentCustomizedAlphabet!.remove(id);
             });
           })
     ];
@@ -206,20 +211,22 @@ class AlphabetValuesState extends State<AlphabetValues> {
       buttons.add(GCWDialogButton(
         text: i18n(context, 'alphabetvalues_edit_mode_customize_deleteletter_removeandadjust'),
         onPressed: () {
-          _currentCustomizedAlphabet = _currentCustomizedAlphabet.map((currentKey, currentValue) {
-            var newValue = currentValue.split(',').map((value) {
-              var intValue = int.tryParse(value);
-              if (intValue > deleteValue) intValue--;
+          if (deleteValue != null) {
+            _currentCustomizedAlphabet = _currentCustomizedAlphabet!.map((currentKey, currentValue) {
+              var newValue = currentValue.split(',').map((value) {
+                var intValue = int.tryParse(value);
+                if (intValue == null) return '';
+                if (intValue > deleteValue) intValue--;
 
-              return intValue.toString();
-            }).join(',');
+                return intValue.toString();
+              }).join(',');
 
-            return MapEntry(currentKey, newValue);
-          });
-
-          setState(() {
-            _currentCustomizedAlphabet.remove(id);
-          });
+              return MapEntry(currentKey, newValue);
+            });
+            setState(() {
+              _currentCustomizedAlphabet!.remove(id);
+            });
+          }
         },
       ));
     }
@@ -259,7 +266,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
                     items: _alphabets.map((Alphabet alphabet) {
                       return GCWDropDownMenuItem(
                           value: alphabet.key,
-                          child: alphabet.type == AlphabetType.STANDARD ? i18n(context, alphabet.key) : alphabet.name,
+                          child: (alphabet.type == AlphabetType.STANDARD ? i18n(context, alphabet.key) : alphabet.name) ?? '',
                           subtitle: _generateItemDescription(alphabet));
                     }).toList(),
                     onChanged: (value) {
@@ -333,8 +340,8 @@ class AlphabetValuesState extends State<AlphabetValues> {
 
               if (_currentCustomizeAlphabet == GCWSwitchPosition.right) {
                 _currentCustomizedAlphabet = Map<String, String>.from(_currentAlphabet);
-                _currentCustomizedAlphabet = _setOffset(_currentCustomizedAlphabet);
-                _currentCustomizedAlphabet = _setReverse(_currentCustomizedAlphabet);
+                _currentCustomizedAlphabet = _setOffset(_currentCustomizedAlphabet!);
+                _currentCustomizedAlphabet = _setReverse(_currentCustomizedAlphabet!);
               } else {
                 _currentCustomizedAlphabet = null;
               }
@@ -475,14 +482,16 @@ class AlphabetValuesState extends State<AlphabetValues> {
             text: i18n(context, 'alphabetvalues_edit_mode_customize_savealphabet_save'),
             onPressed: () {
               var name = _currentCustomAlphabetName;
-              if (name == null || name.isEmpty)
+              if (name.isEmpty)
                 name = i18n(context, 'alphabetvalues_edit_mode_customize_savealphabet_customname');
 
-              var entries = _currentCustomizedAlphabet.entries.toList();
+              if (_currentCustomizedAlphabet == null) return;
+              var entries = _currentCustomizedAlphabet!.entries.toList();
               entries.sort((a, b) {
                 var intA = int.tryParse(a.value.split(',')[0]);
                 var intB = int.tryParse(b.value.split(',')[0]);
 
+                if (intA == null || intB == null) return 0;
                 return intA.compareTo(intB);
               });
               var orderedAlphabet = LinkedHashMap.fromEntries(entries);
@@ -505,7 +514,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
   Map<String, String> _getFinalAlphabet() {
     var alphabet = _currentAlphabet;
     if (_currentCustomizeAlphabet == GCWSwitchPosition.right) {
-      alphabet = _currentCustomizedAlphabet;
+      alphabet = _currentCustomizedAlphabet ?? {};
     } else {
       alphabet = _setOffset(alphabet);
       alphabet = _setReverse(alphabet);
