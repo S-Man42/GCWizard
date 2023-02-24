@@ -18,11 +18,11 @@ Map<String, int> _createSolitaireAlphabetMap() {
   return alphabet_AZ;
 }
 
-SolitaireOutput? encryptSolitaire(String input, String? key) {
+SolitaireOutput? encryptSolitaire(String? input, String? key) {
   return _solitaireBase(input, key, true);
 }
 
-SolitaireOutput? decryptSolitaire(String input, String? key) {
+SolitaireOutput? decryptSolitaire(String? input, String? key) {
   return _solitaireBase(input, key, false);
 }
 

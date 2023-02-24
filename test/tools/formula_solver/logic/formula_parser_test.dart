@@ -103,11 +103,11 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('formula: ${elem['formula']}, values: ${elem['values']}', () {
         if (elem['values'] == null) {
-          var _actual = FormulaParser().parse(elem['formula'] as String, null);
+          var _actual = FormulaParser().parse(elem['formula'] as String, []);
           expect(_formulaSolverOutputToMap(_actual), elem['expectedOutput']);
         } else {
           var values = <FormulaValue>[];
-          elem['values'].entries.forEach((value) {
+          (elem['values'] as Map<String, String>).entries.forEach((value) {
             values.add(FormulaValue(value.key, value.value));
           });
           var _actual = FormulaParser().parse(elem['formula'] as String, values);
@@ -166,10 +166,10 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('formula: ${elem['formula']}, values: ${elem['values']}', () {
         var values = <FormulaValue>[];
-        elem['values'].entries.forEach((value) {
+        (elem['values'] as Map<String, String>).entries.forEach((value) {
           values.add(FormulaValue(value.key, value.value));
         });
-        var _actual = FormulaParser().parse(elem['formula'], values);
+        var _actual = FormulaParser().parse(elem['formula'] as String, values);
         expect(_formulaSolverOutputToMap(_actual), elem['expectedOutput']);
       });
     });
@@ -217,13 +217,13 @@ void main() {
       test('formula: ${elem['formula']}, values: ${elem['values']}', () {
         var values = <FormulaValue>[];
         if (elem['values'] is List<FormulaValue>)
-          values = elem['values'];
+          values = elem['values'] as List<FormulaValue>;
         else {
-          elem['values'].entries.forEach((value) {
+          (elem['values'] as Map<String, String>).entries.forEach((value) {
             values.add(FormulaValue(value.key, value.value));
           });
         }
-        var _actual = FormulaParser().parse(elem['formula'], values);
+        var _actual = FormulaParser().parse(elem['formula'] as String, values);
         expect(_formulaSolverOutputToMap(_actual), elem['expectedOutput']);
       });
     });
@@ -265,7 +265,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('formula: ${elem['formula']}, values: ${elem['values']}', () {
-        var _actual = FormulaParser().parse(elem['formula'] as String, elem['values']);
+        var _actual = FormulaParser().parse(elem['formula'] as String, elem['values'] as List<FormulaValue>);
         expect(_formulaSolverOutputToMap(_actual), elem['expectedOutput']);
       });
     });
@@ -428,11 +428,11 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('formula: ${elem['formula']}, values: ${elem['values']}, expandValues: ${elem['expandValues']}', () {
-        var _actual;
+        FormulaSolverOutput _actual;
         if (elem['expandValues'] == null)
-          _actual = FormulaParser().parse(elem['formula'], elem['values']);
+          _actual = FormulaParser().parse(elem['formula'] as String, elem['values'] as List<FormulaValue>);
         else
-          _actual = FormulaParser().parse(elem['formula'], elem['values'], expandValues: elem['expandValues']);
+          _actual = FormulaParser().parse(elem['formula'] as String, elem['values'] as List<FormulaValue>, expandValues: elem['expandValues'] as bool);
         expect(_formulaSolverOutputToMap(_actual), elem['expectedOutput']);
       });
     });

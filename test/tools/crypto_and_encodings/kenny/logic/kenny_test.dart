@@ -39,7 +39,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encryptKenny(elem['input'] as String?, elem['replaceCharacters'], elem['caseSensitive']);
+        var _actual = encryptKenny(elem['input'] as String?, elem['replaceCharacters'] as List<String>, elem['caseSensitive'] as bool);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -154,7 +154,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decryptKenny(elem['input'] as String?, elem['replaceCharacters'], elem['caseSensitive']);
+        var _actual = decryptKenny(elem['input'] as String?, elem['replaceCharacters'] as List<String>, elem['caseSensitive'] as bool);
         expect(_actual, elem['expectedOutput']);
       });
     });

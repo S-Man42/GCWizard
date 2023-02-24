@@ -18,14 +18,14 @@ void main() {
         var _actual;
         if (elem['offset'] == null) {
           if (elem['password'] == null)
-            _actual = encryptRailFence(elem['input'] as String?, elem['key']);
+            _actual = encryptRailFence(elem['input'] as String?, elem['key'] as int);
           else
-            _actual = encryptRailFence(elem['input'] as String?, elem['key'], password: elem['password']);
+            _actual = encryptRailFence(elem['input'] as String?, elem['key'] as int, password: elem['password'] as String?);
         } else {
           if (elem['password'] == null)
-            _actual = encryptRailFence(elem['input'] as String?, elem['key'], offset: elem['offset']);
+            _actual = encryptRailFence(elem['input'] as String?, elem['key'] as int, offset: elem['offset'] as int);
           else
-            _actual = encryptRailFence(elem['input'] as String?, elem['key'], offset: elem['offset'], password: elem['password']);
+            _actual = encryptRailFence(elem['input'] as String?, elem['key'] as int, offset: elem['offset'] as int, password: elem['password'] as String?);
         }
         expect(_actual, elem['expectedOutput']);
       });
@@ -48,14 +48,14 @@ void main() {
         var _actual;
         if (elem['offset'] == null) {
           if (elem['password'] == null)
-            _actual = decryptRailFence(elem['input'] as String?, elem['key']);
+            _actual = decryptRailFence(elem['input'] as String?, elem['key'] as int);
           else
-            _actual = decryptRailFence(elem['input'] as String?, elem['key'], password: elem['password']);
+            _actual = decryptRailFence(elem['input'] as String?, elem['key'] as int, password: elem['password'] as String?);
         } else {
           if (elem['password'] == null)
-            _actual = decryptRailFence(elem['input'] as String?, elem['key'], offset: elem['offset']);
+            _actual = decryptRailFence(elem['input'] as String?, elem['key'] as int, offset: elem['offset'] as int);
           else
-            _actual = decryptRailFence(elem['input'] as String?, elem['key'], offset: elem['offset'], password: elem['password']);
+            _actual = decryptRailFence(elem['input'] as String?, elem['key'] as int, offset: elem['offset'] as int, password: elem['password'] as String?);
         }
         expect(_actual, elem['expectedOutput']);
       });

@@ -44,8 +44,8 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('key: ${elem['key']} iv: ${elem['iv']}', () {
-        var _actual = Rabbit(elem['key'], elem['iv'])
-            ?.keyStreamBytes(elem['expectedOutput']?.length);
+        var _actual = Rabbit(elem['key'] as Uint8List, elem['iv'] as Uint8List)
+            .keyStreamBytes((elem['expectedOutput'] as Uint8List).length);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -116,11 +116,11 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']} key: ${elem['key']} iv: ${elem['iv']} iv: ${elem['iv']} outputFormat: ${elem['outputFormat']}', () {
-        var _actual = cryptRabbit(elem['input'] as String?, elem['inputFormat'], elem['key'], elem['keyFormat'], elem['iv'], elem['ivFormat'], elem['outputFormat']);
-        expect(_actual?.output, elem['expectedOutput']?.output);
-        expect(_actual?.keyHexFormat, elem['expectedOutput']?.keyHexFormat);
-        expect(_actual?.ivHexFormat, elem['expectedOutput']?.ivHexFormat);
-        expect(_actual?.errorCode, elem['expectedOutput']?.errorCode);
+        var _actual = cryptRabbit(elem['input'] as String?, elem['inputFormat'] as InputFormat, elem['key'] as String?, elem['keyFormat'] as InputFormat, elem['iv'] as String?, elem['ivFormat'] as InputFormat, elem['outputFormat'] as OutputFormat);
+        expect(_actual.output, (elem['expectedOutput'] as RabbitOutput?)?.output);
+        expect(_actual.keyHexFormat, (elem['expectedOutput'] as RabbitOutput?)?.keyHexFormat);
+        expect(_actual.ivHexFormat, (elem['expectedOutput'] as RabbitOutput?)?.ivHexFormat);
+        expect(_actual.errorCode, (elem['expectedOutput'] as RabbitOutput?)?.errorCode);
       });
     });
   });

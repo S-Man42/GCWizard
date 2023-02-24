@@ -34,11 +34,11 @@ void main(){
     _inputsToExpected.forEach((elem) {
       test(
           'input: ${elem['input']}, language: ${elem['language']}, ', () {
-        var _actual = decodeNumeralWordToNumber(elem['language'], removeAccents(elem['input'].toString().toLowerCase()));
+        var _actual = decodeNumeralWordToNumber(elem['language'] as NumeralWordsLanguage, removeAccents(elem['input'].toString().toLowerCase()));
         if (_actual.error == 'numeralwords_converter_error_navi')
-          expect(_actual.error, elem['expectedOutput'].error);
+          expect(_actual.error, (elem['expectedOutput'] as OutputConvertToNumber).error);
         else
-          expect(_actual.number, elem['expectedOutput'].number);
+          expect(_actual.number, (elem['expectedOutput'] as OutputConvertToNumber).number);
       });
     });
   });
@@ -71,11 +71,11 @@ void main(){
     _inputsToExpected.forEach((elem) {
       test(
           'input: ${elem['input']}, language: ${elem['language']}, ', () {
-        var _actual = encodeNumberToNumeralWord(elem['language'], elem['input'] as int?);
+        var _actual = encodeNumberToNumeralWord(elem['language'] as NumeralWordsLanguage, elem['input'] as int?);
         if (_actual.error == 'numeralwords_converter_error_navi')
-          expect(_actual.error, elem['expectedOutput'].error);
+          expect(_actual.error, (elem['expectedOutput'] as OutputConvertToNumeralWord).error);
         else
-          expect(_actual.numeralWord, elem['expectedOutput'].numeralWord);
+          expect(_actual.numeralWord, (elem['expectedOutput'] as OutputConvertToNumeralWord).numeralWord);
       });
     });
   });

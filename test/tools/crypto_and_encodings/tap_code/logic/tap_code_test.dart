@@ -16,7 +16,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, mode: ${elem['mode']}', () {
-        var _actual = encryptTapCode(elem['input'] as String?, mode: elem['mode']);
+        var _actual = encryptTapCode(elem['input'] as String?, mode: elem['mode'] as AlphabetModificationMode);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -37,7 +37,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, mode: ${elem['mode']}', () {
-        var _actual = decryptTapCode(elem['input'] as String?, mode: elem['mode']);
+        var _actual = decryptTapCode(elem['input'] as String, mode: elem['mode'] as AlphabetModificationMode);
         expect(_actual, elem['expectedOutput']);
       });
     });

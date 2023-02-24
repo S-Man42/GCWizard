@@ -34,7 +34,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, key: ${elem['key']}, mode: ${elem['mode']}', () {
-        var _actual = encryptPlayfair(elem['input'] as String?, elem['key'], mode: elem['mode']);
+        var _actual = encryptPlayfair(elem['input'] as String?, elem['key'] as String?, mode: elem['mode'] as AlphabetModificationMode);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -68,7 +68,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, key: ${elem['key']}, mode: ${elem['mode']}', () {
-        var _actual = decryptPlayfair(elem['input'] as String?, elem['key'], mode: elem['mode']);
+        var _actual = decryptPlayfair(elem['input'] as String?, elem['key'] as String?, mode: elem['mode'] as AlphabetModificationMode);
         expect(_actual, elem['expectedOutput']);
       });
     });

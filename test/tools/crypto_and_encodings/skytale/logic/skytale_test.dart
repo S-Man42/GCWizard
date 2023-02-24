@@ -63,7 +63,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, countRows: ${elem['countRows']}, countColumns: ${elem['countColumns']}, countLettersPerCell: ${elem['countLettersPerCell']}', () {
-        var _actual = encryptSkytale(elem['input'] as String?, countRows: elem['countRows'], countColumns: elem['countColumns'], countLettersPerCell: elem['countLettersPerCell']);
+        var _actual = encryptSkytale(elem['input'] as String?, countRows: elem['countRows'] as int, countColumns: elem['countColumns'] as int, countLettersPerCell: elem['countLettersPerCell'] as int);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -129,7 +129,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, countRows: ${elem['countRows']}, countColumns: ${elem['countColumns']}, countLettersPerCell: ${elem['countLettersPerCell']}', () {
-        var _actual = decryptSkytale(elem['input'] as String?, countRows: elem['countRows'], countColumns: elem['countColumns'], countLettersPerCell: elem['countLettersPerCell']);
+        var _actual = decryptSkytale(elem['input'] as String?, countRows: elem['countRows'] as int, countColumns: elem['countColumns'] as int, countLettersPerCell: elem['countLettersPerCell'] as int);
         expect(_actual, elem['expectedOutput']);
       });
     });

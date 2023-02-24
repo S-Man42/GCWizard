@@ -78,8 +78,8 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = analyzeText(elem['input'] as String?);
-        expect(equalsTextAnalysisResults(_actual, elem['expectedOutput']), true);
+        var _actual = analyzeText(elem['input'] as String);
+        expect(equalsTextAnalysisResults(_actual, elem['expectedOutput'] as TextAnalysisCharacterCounts), true);
       });
     });
   });
@@ -98,8 +98,8 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = analyzeText(elem['input'] as String?, caseSensitive: false);
-        expect(equalsTextAnalysisResults(_actual, elem['expectedOutput']), true);
+        var _actual = analyzeText(elem['input'] as String, caseSensitive: false);
+        expect(equalsTextAnalysisResults(_actual, elem['expectedOutput'] as TextAnalysisCharacterCounts), true);
       });
     });
   });

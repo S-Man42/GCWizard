@@ -728,7 +728,7 @@ String enfoldText(String input) {
       .replaceAll('TRAFFICDIAGRAM', 'TRAFFIC DIAGRAM');
 }
 
-String decodeNavajo(String cipherText, bool useOnlyAlphabet) {
+String decodeNavajo(String? cipherText, bool useOnlyAlphabet) {
   NAVAJO_DECODE_ALPHABET['BE-LA-SANA'] = 'A';
   NAVAJO_DECODE_ALPHABET['TSE-NILL'] = 'A';
   NAVAJO_DECODE_ALPHABET['TSE-NIHL'] = 'A';
@@ -794,7 +794,7 @@ String decodeNavajo(String cipherText, bool useOnlyAlphabet) {
   return result.join('');
 }
 
-String encodeNavajo(String plainText, bool useOnlyAlphabet) {
+String encodeNavajo(String? plainText, bool useOnlyAlphabet) {
   List<String> result = <String>[];
   if (plainText == null || plainText.isEmpty) return '';
 
