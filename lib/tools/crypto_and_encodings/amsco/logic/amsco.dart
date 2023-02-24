@@ -10,7 +10,7 @@ class AmscoOutput {
 
 enum ErrorCode { OK, Key }
 
-bool _validKey(String key) {
+bool _validKey(String? key) {
   if (key == null || key.isEmpty) return false;
 
   if (int.tryParse(key) == null) return false;
@@ -49,10 +49,10 @@ Map<String, List<String>> _createAmscoGrid(String input, String key, bool oneCha
       if (i < input.length) {
         twoChar = (key.indexOf(_key) % 2) == (oneCharStart ? 1 : 0);
         if (key.length % 2 == 1) {
-          if (grid[_key].length % 2 == 1) twoChar = !twoChar;
+          if (grid[_key]!.length % 2 == 1) twoChar = !twoChar;
         }
 
-        grid[_key].add(input.substring(i, twoChar ? min(i + 2, input.length) : i + 1));
+        grid[_key]!.add(input.substring(i, twoChar ? min(i + 2, input.length) : i + 1));
         i += twoChar ? 2 : 1;
         twoChar = !twoChar;
       }
@@ -62,9 +62,9 @@ Map<String, List<String>> _createAmscoGrid(String input, String key, bool oneCha
   if (decrypt) {
     i = 0;
     for (int column = 1; column <= key.length; column++) {
-      for (int row = 0; row < grid[column.toString()].length; row++) {
-        var textLength = grid[column.toString()][row].length;
-        grid[column.toString()][row] = input.substring(i, i + textLength);
+      for (int row = 0; row < grid[column.toString()]!.length; row++) {
+        var textLength = grid[column.toString()]![row].length;
+        grid[column.toString()]![row] = input.substring(i, i + textLength);
         i += textLength;
       }
     }
@@ -73,7 +73,7 @@ Map<String, List<String>> _createAmscoGrid(String input, String key, bool oneCha
   return grid;
 }
 
-AmscoOutput encryptAmsco(String input, String key, bool oneCharStart) {
+AmscoOutput encryptAmsco(String? input, String? key, bool oneCharStart) {
   if (input == null || key == null || input.isEmpty || key.isEmpty) return AmscoOutput('', '', ErrorCode.OK);
 
   key = _cleanKey(key);
@@ -85,7 +85,7 @@ AmscoOutput encryptAmsco(String input, String key, bool oneCharStart) {
 
   sortedKeys.sort();
   sortedKeys.forEach((_key) {
-    grid[_key].forEach((text) {
+    grid[_key]!.forEach((text) {
       output += text;
     });
   });
@@ -93,7 +93,7 @@ AmscoOutput encryptAmsco(String input, String key, bool oneCharStart) {
   return AmscoOutput(output, _amscoGridToString(grid), ErrorCode.OK);
 }
 
-AmscoOutput decryptAmsco(String input, String key, bool oneCharStart) {
+AmscoOutput decryptAmsco(String? input, String? key, bool oneCharStart) {
   if (input == null || key == null || input.isEmpty || key.isEmpty) return AmscoOutput('', '', ErrorCode.OK);
 
   key = _cleanKey(key);
@@ -106,8 +106,8 @@ AmscoOutput decryptAmsco(String input, String key, bool oneCharStart) {
 
   while (!finish) {
     key.split('').forEach((_key) {
-      if (row >= grid[_key].length) finish = true;
-      if (!finish) output += grid[_key][row];
+      if (row >= grid[_key]!.length) finish = true;
+      if (!finish) output += grid[_key]![row];
     });
     row += 1;
   }
@@ -127,8 +127,8 @@ String _amscoGridToString(Map<String, List<String>> grid) {
 
   while (!finish) {
     grid.keys.forEach((_key) {
-      if (row >= grid[_key].length) finish = true;
-      if (!finish) output += grid[_key][row].padRight(2) + " ";
+      if (row >= grid[_key]!.length) finish = true;
+      if (!finish) output += grid[_key]![row].padRight(2) + " ";
     });
     output += '\n';
     row += 1;
