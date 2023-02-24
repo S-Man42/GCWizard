@@ -30,7 +30,7 @@ class MultiDecoderToolCcitt1 extends AbstractMultiDecoderTool {
                 var intValues = textToBinaryList(input).map((value) {
                   return int.tryParse(convertBase(value, 2, 10) ?? '') ?? null;
                 }).toList();
-                return decodeTeletypewriter(intValues.where((element) => element != null).cast<int>().toList(),
+                return decodeTeletypewriter(intValues.whereType<int>().toList(),
                     TeletypewriterCodebook.CCITT_ITA1_EU);
               } else
                 return decodeTeletypewriter(textToIntList(input), TeletypewriterCodebook.CCITT_ITA1_EU);

@@ -17,10 +17,10 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('a: ${elem['a']}, b: ${elem['b']}', () {
-        var _actual = CartesianToPolar(elem['a'], elem['b']);
+        var _actual = CartesianToPolar(elem['a'] as String?, elem['b'] as String?,);
         var coordinate = _actual.values;
         for (int i = 0; i < coordinate.length; i++) {
-          expect(coordinate.elementAt(i), elem['expectedOutput'][i]);
+          expect(coordinate.elementAt(i), (elem['expectedOutput'] as Map<String, String>)[i]);
         }
       });
     });
@@ -41,10 +41,10 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('r: ${elem['r']}, a: ${elem['a']}', () {
-        var _actual = PolarToCartesian(elem['r'], elem['a']);
+        var _actual = PolarToCartesian(elem['r'] as String?, elem['a'] as String?);
         var coordinate = _actual.values;
         for (int i = 0; i < coordinate.length; i++) {
-          expect(coordinate.elementAt(i), elem['expectedOutput'][i]);
+          expect(coordinate.elementAt(i), (elem['expectedOutput'] as Map<String, String>)[i]);
         }
       });
     });

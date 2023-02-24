@@ -13,14 +13,14 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
         var yuv = YUV.fromRGB(elem['input'] as RGB);
-        expect((yuv.y - elem['expectedOutput'].y).abs() < 1e-5, true);
-        expect((yuv.u - elem['expectedOutput'].u).abs() < 1e-5, true);
-        expect((yuv.v - elem['expectedOutput'].v).abs() < 1e-5, true);
+        expect((yuv.y - (elem['expectedOutput'] as YUV).y).abs() < 1e-5, true);
+        expect((yuv.u - (elem['expectedOutput'] as YUV).u).abs() < 1e-5, true);
+        expect((yuv.v - (elem['expectedOutput'] as YUV).v).abs() < 1e-5, true);
 
         var rgb = yuv.toRGB();
-        expect((rgb.red - elem['input'].red).abs() < 1e-5, true);
-        expect((rgb.green - elem['input'].green).abs() < 1e-5, true);
-        expect((rgb.blue - elem['input'].blue).abs() < 1e-5, true);
+        expect((rgb.red - (elem['input'] as RGB).red).abs() < 1e-5, true);
+        expect((rgb.green - (elem['input'] as RGB).green).abs() < 1e-5, true);
+        expect((rgb.blue - (elem['input'] as RGB).blue).abs() < 1e-5, true);
       });
     });
   });
@@ -36,14 +36,14 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
         var yCbCr = YCbCr.fromRGB(elem['input'] as RGB);
-        expect((yCbCr.y - elem['expectedOutput'].y).abs() < 1e-5, true);
-        expect((yCbCr.cb - elem['expectedOutput'].cb).abs() < 1e-5, true);
-        expect((yCbCr.cr - elem['expectedOutput'].cr).abs() < 1e-5, true);
+        expect((yCbCr.y - (elem['expectedOutput'] as YCbCr).y).abs() < 1e-5, true);
+        expect((yCbCr.cb - (elem['expectedOutput'] as YCbCr).cb).abs() < 1e-5, true);
+        expect((yCbCr.cr - (elem['expectedOutput'] as YCbCr).cr).abs() < 1e-5, true);
 
         var rgb = yCbCr.toRGB();
-        expect((rgb.red - elem['input'].red).abs() < 1e-5, true);
-        expect((rgb.green - elem['input'].green).abs() < 1e-5, true);
-        expect((rgb.blue - elem['input'].blue).abs() < 1e-5, true);
+        expect((rgb.red - (elem['input'] as RGB).red).abs() < 1e-5, true);
+        expect((rgb.green - (elem['input'] as RGB).green).abs() < 1e-5, true);
+        expect((rgb.blue - (elem['input'] as RGB).blue).abs() < 1e-5, true);
       });
     });
   });
@@ -58,14 +58,14 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
         var yiq = YIQ.fromRGB(elem['input'] as RGB);
-        expect((yiq.y - elem['expectedOutput'].y).abs() < 1e-5, true);
-        expect((yiq.i - elem['expectedOutput'].i).abs() < 1e-5, true);
-        expect((yiq.q - elem['expectedOutput'].q).abs() < 1e-5, true);
+        expect((yiq.y - (elem['expectedOutput'] as YIQ).y).abs() < 1e-5, true);
+        expect((yiq.i - (elem['expectedOutput'] as YIQ).i).abs() < 1e-5, true);
+        expect((yiq.q - (elem['expectedOutput'] as YIQ).q).abs() < 1e-5, true);
 
         var rgb = yiq.toRGB();
-        expect((rgb.red - elem['input'].red).abs() < 1e-5, true);
-        expect((rgb.green - elem['input'].green).abs() < 1e-5, true);
-        expect((rgb.blue - elem['input'].blue).abs() < 1e-5, true);
+        expect((rgb.red - (elem['input'] as RGB).red).abs() < 1e-5, true);
+        expect((rgb.green - (elem['input'] as RGB).green).abs() < 1e-5, true);
+        expect((rgb.blue - (elem['input'] as RGB).blue).abs() < 1e-5, true);
       });
     });
   });

@@ -13,7 +13,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeDTMF(elem['input'] as String?);
+        var _actual = encodeDTMF(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -38,7 +38,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeDTMF(elem['input'] as String?);
+        var _actual = decodeDTMF(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     });

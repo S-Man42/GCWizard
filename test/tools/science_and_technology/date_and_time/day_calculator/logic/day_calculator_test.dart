@@ -55,14 +55,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('start: ${elem['start']}, end: ${elem['end']}, countStart: ${elem['countStart']}, countEnd: ${elem['countEnd']}', () {
-        var _actual = calculateDayDifferences(elem['start'], elem['end'], countStart: elem['countStart'], countEnd: elem['countEnd']);
+        var _actual = calculateDayDifferences(elem['start'] as DateTime, elem['end'] as DateTime, countStart: elem['countStart'] as bool, countEnd: elem['countEnd'] as bool);
         if (_actual == null)
           expect(_actual, elem['expectedOutput']);
         else {
-          expect(_actual.days, elem['expectedOutput'].days);
-          expect(_actual.hours, elem['expectedOutput'].hours);
-          expect(_actual.minutes, elem['expectedOutput'].minutes);
-          expect(_actual.seconds, elem['expectedOutput'].seconds);
+          expect(_actual.days, (elem['expectedOutput'] as DayCalculatorOutput).days);
+          expect(_actual.hours, (elem['expectedOutput'] as DayCalculatorOutput).hours);
+          expect(_actual.minutes, (elem['expectedOutput'] as DayCalculatorOutput).minutes);
+          expect(_actual.seconds, (elem['expectedOutput'] as DayCalculatorOutput).seconds);
         }
       });
     });

@@ -15,7 +15,7 @@ import 'package:touchable/touchable.dart';
 
 part 'package:gc_wizard/tools/general_tools/grid_generator/grid/widget/grid_painter.dart';
 
-class _GridConfiguration { //ToDo Mark
+class _GridConfiguration {
   _GridType type;
   int width;
   int height;
@@ -207,9 +207,9 @@ class GridState extends State<Grid> {
                   setState(() {
                     _currentGridConfiguration = value;
 
-                    _currentConfigType = _GRID_CONFIGURATIONS[_currentGridConfiguration]?.type;
-                    _currentConfigColumns = _GRID_CONFIGURATIONS[_currentGridConfiguration]?.width;
-                    _currentConfigRows = _GRID_CONFIGURATIONS[_currentGridConfiguration]?.height;
+                    _currentConfigType = _GRID_CONFIGURATIONS[_currentGridConfiguration]?.type ?? _GridType.BOXES;
+                    _currentConfigColumns = _GRID_CONFIGURATIONS[_currentGridConfiguration]?.width ?? 10;
+                    _currentConfigRows = _GRID_CONFIGURATIONS[_currentGridConfiguration]?.height ?? 10;
                     _currentConfigBoxEnumeration = _GRID_CONFIGURATIONS[_currentGridConfiguration]?.enumeration ?? '';
                     _boxEnumerationController.text = _currentConfigBoxEnumeration ?? '';
                     _currentConfigColumnEnumeration = _GRID_CONFIGURATIONS[_currentGridConfiguration]?.columnEnumeration ?? '';
@@ -217,11 +217,11 @@ class GridState extends State<Grid> {
                     _currentConfigRowEnumeration = _GRID_CONFIGURATIONS[_currentGridConfiguration]?.rowEnumeration ?? '';
                     _rowEnumerationController.text = _currentConfigRowEnumeration ?? '';
                     _currentConfigBoxEnumerationStart =
-                        _GRID_CONFIGURATIONS[_currentGridConfiguration]?.enumerationStart;
+                        _GRID_CONFIGURATIONS[_currentGridConfiguration]?.enumerationStart ?? _GridEnumerationStart.TOP_LEFT;
                     _currentConfigBoxEnumerationStartDirection =
-                        _GRID_CONFIGURATIONS[_currentGridConfiguration]?.enumerationStartDirection;
+                        _GRID_CONFIGURATIONS[_currentGridConfiguration]?.enumerationStartDirection ?? _GridBoxEnumerationStartDirection.RIGHT;
                     _currentConfigBoxEnumerationBehaviour =
-                        _GRID_CONFIGURATIONS[_currentGridConfiguration]?.enumerationBehaviour;
+                        _GRID_CONFIGURATIONS[_currentGridConfiguration]?.enumerationBehaviour ?? _GridBoxEnumerationBehaviour.ALIGNED;
 
                     if (_currentGridConfiguration == _GRID_CUSTOM_KEY) _isConfiguration = true;
                   });
@@ -253,7 +253,7 @@ class GridState extends State<Grid> {
         GCWTextDivider(
           text: i18n(context, 'grid_configuration'),
         ),
-        GCWDropDown(
+        GCWDropDown<_GridType>(
           title: i18n(context, 'grid_type_title'),
           value: _currentConfigType,
           items: {
@@ -414,7 +414,7 @@ class GridState extends State<Grid> {
             });
           },
         ),
-        GCWDropDown(
+        GCWDropDown<_GridBoxEnumerationBehaviour>(
           title: i18n(context, 'grid_boxes_behaviour_title'),
           value: _currentConfigBoxEnumerationBehaviour,
           items: {
@@ -436,8 +436,8 @@ class GridState extends State<Grid> {
                     behaviour,
                     GCWDropDownMenuItem(
                         value: behaviour,
-                        child: i18n(context, name['title']),
-                        subtitle: i18n(context, name['description'])));
+                        child: i18n(context, name['title'] ?? ''),
+                        subtitle: i18n(context, name['description'] ?? '')));
               })
               .values
               .toList(),
@@ -475,17 +475,25 @@ class GridState extends State<Grid> {
     );
   }
 
-  List<String?> _getEnumeration(String? enumeration) {
+  List<String> _getEnumeration(String? enumeration) {
     if (enumeration == null || enumeration.isEmpty) return <String>[];
 
     if (enumeration.contains(RegExp(r'[\,\-]')) && VARIABLESTRING.hasMatch(enumeration)) {
       var expanded = VariableStringExpander('x', {'x': enumeration}, orderAndUnique: false)
           .run()
           .map((e) => e.text)
+          .whereType<String>()
           .toList();
 
-      expanded.sort((a, b) => int.tryParse(a).compareTo(int.tryParse(b)));
-      return expanded;
+      expanded.sort((a, b) {
+        var intA = int.tryParse(a);
+        var intB = int.tryParse(b);
+
+        if (intA == null || intB == null) return 0;
+        return intA.compareTo(intB);
+      });
+
+      return expanded.whereType<String>().toList();
     }
 
     if (enumeration.contains(RegExp(r'\s+'))) {

@@ -10,7 +10,7 @@ String? decodeZamonian(String? input) {
 
         return convertBase(block, 8, 10);
       })
-      .where((element) => element != null)
+      .whereType<String>()
       .join(' ');
 }
 
@@ -24,6 +24,6 @@ String? encodeZamonian(String? input) {
 
         return convertBase(block, 10, 8);
       })
-      .where((element) => element != null)
+      .whereType<String>()
       .join(' ');
 }

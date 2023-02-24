@@ -24,16 +24,16 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('year: ${elem['year']}, day: ${elem['day']}', () {
-        var _actual = calculateDayInfos(elem['year'], elem['day']);
+        var _actual = calculateDayInfos(elem['year'] as int?, elem['day'] as int?);
         if (_actual == null)
           expect(_actual, elem['expectedOutput']);
         else {
-          expect(_actual.date, elem['expectedOutput'].date);
-          expect(_actual.dayNumber, elem['expectedOutput'].dayNumber);
-          expect(_actual.weekday, elem['expectedOutput'].weekday);
-          expect(_actual.weekdayAlternate, elem['expectedOutput'].weekdayAlternate);
-          expect(_actual.weekNumberIso, elem['expectedOutput'].weekNumberIso);
-          expect(_actual.weekNumberAlternate, elem['expectedOutput'].weekNumberAlternate);
+          expect(_actual.date, (elem['expectedOutput'] as DayOfTheYearOutput).date);
+          expect(_actual.dayNumber, (elem['expectedOutput'] as DayOfTheYearOutput).dayNumber);
+          expect(_actual.weekday, (elem['expectedOutput'] as DayOfTheYearOutput).weekday);
+          expect(_actual.weekdayAlternate, (elem['expectedOutput'] as DayOfTheYearOutput).weekdayAlternate);
+          expect(_actual.weekNumberIso, (elem['expectedOutput'] as DayOfTheYearOutput).weekNumberIso);
+          expect(_actual.weekNumberAlternate, (elem['expectedOutput'] as DayOfTheYearOutput).weekNumberAlternate);
         }
       });
     });

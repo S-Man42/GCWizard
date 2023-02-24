@@ -1,4 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
+import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors_rgb.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/pantone_color_codes/logic/pantone_color_codes.dart';
 
@@ -29,7 +30,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('fromRGB: ${elem['fromRGB']}', () {
-        List<RGB> _actual = findNearestRGBs(elem['fromRGB'], elem['toRGBs']);
+        List<RGB> _actual = findNearestRGBs(elem['fromRGB'] as GCWBaseColor, elem['toRGBs'] as List<RGB>);
         print(_actual);
 
         expect(_actual.map((e) => HexCode.fromRGB(e).toString()).toList(), elem['expectedOutput']);
