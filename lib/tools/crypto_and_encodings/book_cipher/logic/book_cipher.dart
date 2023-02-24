@@ -36,7 +36,7 @@ String decodeSearchWord(
     String? input, String? word, decodeOutFormat format, String sectionLabel, String rowLabel, String wordLabel,
     {bool spacesOn = true,
     bool emptyLinesOn = true,
-    String ignoreSymbols,
+    String ignoreSymbols = '',
     bool diacriticsOn = true,
     bool azOn = true,
     bool numbersOn = true,
@@ -89,7 +89,7 @@ String decodeSearchWord(
 String decodeFindWord(String? input, String? positions, searchFormat format,
     {bool spacesOn = true,
     bool emptyLinesOn = true,
-    String ignoreSymbols,
+    String ignoreSymbols = '',
     bool diacriticsOn = true,
     bool azOn = true,
     bool numbersOn = true,
@@ -202,10 +202,10 @@ String decodeFindWord(String? input, String? positions, searchFormat format,
   }).join();
 }
 
-String encodeText(String input, String text, encodeOutFormat format,
+String encodeText(String? input, String? text, encodeOutFormat format,
     {bool spacesOn = true,
     bool emptyLinesOn = true,
-    String ignoreSymbols,
+    String ignoreSymbols = '',
     bool diacriticsOn = true,
     bool azOn = true,
     bool numbersOn = true,
@@ -226,7 +226,7 @@ String encodeText(String input, String text, encodeOutFormat format,
   var wordList = splittedResult.item1;
   var rowList = splittedResult.item2;
   var sectionList = splittedResult.item2;
-  var positionList = <Tuple2<_wordClass, int>>[];
+  var positionList = <Tuple2<_wordClass?, int>>[];
 
   if (onlyFirstWordLetter)
     wordList.forEach((element) {
@@ -413,8 +413,8 @@ _wordClass _filterWord(int index, List<_wordClass> wordList, bool onlyFirstWordL
 }
 
 _wordClass _onlyFirstWordLetter(_wordClass wordClass) {
-  if (wordClass?.text?.isNotEmpty)
-    return new _wordClass(wordClass.sectionIndex, wordClass.rowIndex, wordClass.rowIndex, wordClass?.text[0]);
+  if (wordClass.text.isNotEmpty)
+    return new _wordClass(wordClass.sectionIndex, wordClass.rowIndex, wordClass.rowIndex, wordClass.text[0]);
   return new _wordClass(-1, -1, -1, "");
 }
 
@@ -441,12 +441,12 @@ int _globalCharacterPosition(_wordClass word, int characterPosition, List<_wordC
   return text.length + characterPosition;
 }
 
-Tuple2<_wordClass, int> _selectRandomLetterPosition(String letter, List<_wordClass> wordList) {
+Tuple2<_wordClass?, int> _selectRandomLetterPosition(String letter, List<_wordClass> wordList) {
   var letterCount = 0;
   var letterCountTmp = 0;
   var letterWordList = <_wordClass>[];
   var letterPosition = 0;
-  var outWord;
+  _wordClass? outWord;
   var outLetterPosition = 0;
 
   var regexp = RegExp(letter, caseSensitive: false);
@@ -476,7 +476,7 @@ Tuple2<_wordClass, int> _selectRandomLetterPosition(String letter, List<_wordCla
       });
     }
   }
-  return Tuple2<_wordClass, int>(outWord, outLetterPosition);
+  return Tuple2<_wordClass?, int>(outWord, outLetterPosition);
 }
 
 Tuple3<List<_wordClass>, List<_wordClass>, List<_wordClass>> _wordList(String input) {
@@ -513,7 +513,7 @@ Tuple3<List<_wordClass>, List<_wordClass>, List<_wordClass>> _wordList(String in
 String _filterInput(String input,
     {bool spacesOn = true,
     bool emptyLinesOn = true,
-    String ignoreSymbols,
+    String ignoreSymbols = '',
     bool diacriticsOn = true,
     bool azOn = true,
     bool numbersOn = true}) {
@@ -522,7 +522,7 @@ String _filterInput(String input,
     input = input.replaceAll('\n\n', '\n');
     input = input.replaceAll('\r\n\r\n', '\r\n');
   }
-  if (ignoreSymbols != null) {
+  if (ignoreSymbols.isNotEmpty) {
     var filter = ignoreSymbols.split('').map((char) {
       return r'\' + char;
     }).join();
