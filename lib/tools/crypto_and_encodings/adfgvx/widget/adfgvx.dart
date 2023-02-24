@@ -125,8 +125,8 @@ class ADFGVXState extends State<ADFGVX> {
     );
   }
 
-  _calculateOutput() {
-    var output = '';
+  String _calculateOutput() {
+    String? output;
 
     if (_currentMode == GCWSwitchPosition.left) {
       if (_currentADFGVXMode == GCWSwitchPosition.left) {

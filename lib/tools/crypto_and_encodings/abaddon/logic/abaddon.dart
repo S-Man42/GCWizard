@@ -61,7 +61,7 @@ String decryptAbaddon(String? input, Map<String, String>? replaceCharacters) {
 
   return RegExp(r'[' + YEN + MY + THORN + ']{3,3}')
       .allMatches(input)
-      .map((pattern) => input.substring(pattern.start, pattern.end))
+      .map((pattern) => input!.substring(pattern.start, pattern.end))
       .where((pattern) => abaddonToAZ[pattern] != null)
       .map((pattern) => abaddonToAZ[pattern])
       .join();
