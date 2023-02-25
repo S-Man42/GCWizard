@@ -1,4 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/dec.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:latlong2/latlong.dart';
@@ -64,8 +65,8 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}', () {
-        var _actual = DEC.parse(elem['text'])?.toLatLng();
-        expect(_actual, elem['expectedOutput']['coordinate']);
+        var _actual = DEC.parse(elem['text'] as String)?.toLatLng();
+        expect(_actual, (elem['expectedOutput'] as Map<String, Object>)['coordinate']);
       });
     });
   });
@@ -112,9 +113,9 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('coord: ${elem['coord']}', () {
-        var _actual = normalizeDEC(elem['coord']);
-        expect((_actual.latitude - elem['expectedOutput'].latitude).abs() < 1e-10, true);
-        expect((_actual.longitude - elem['expectedOutput'].longitude).abs() < 1e-10, true);
+        var _actual = normalizeDEC(elem['coord'] as DEC);
+        expect((_actual.latitude - (elem['expectedOutput'] as DEC).latitude).abs() < 1e-10, true);
+        expect((_actual.longitude - (elem['expectedOutput'] as DEC).longitude) .abs() < 1e-10, true);
       });
     });
   });
