@@ -5,7 +5,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/hashes/logic/hashes.dart';
 
 void main() {
   group("HashBreaker.breakHash:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'searchMask': null, 'substitutions': null, 'hashFunction': null, 'expectedOutput' : null},
 
       {'input' : 'EAF498C0576778AB60648148D8A6FC66', 'searchMask': 'ABC', 'substitutions': {'A':'1-3', 'B': '2,4,10'}, 'hashFunction': md5Digest, 'expectedOutput' : {'state': 'ok', 'text': '210C'}},
@@ -14,20 +14,20 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, searchMask: ${elem['searchMask']}, substitutions: ${elem['substitutions']}', () {
-        var _actual = breakHash(elem['input'], elem['searchMask'], elem['substitutions'], elem['hashFunction']);
+        var _actual = breakHash(elem['input'] as String?, elem['searchMask'] as String?, elem['substitutions'] as Map<String, String>?, elem['hashFunction'] as Function?);
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
   group("HashBreaker.preCheck:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'substitutions': {'A':'100-300', 'B': '1000-3000'}, 'expectedOutput' : 402201},
     ];
 
     _inputsToExpected.forEach((elem) {
       test('substitutions: ${elem['substitutions']}', () {
-        var _actual = preCheckCombinations(elem['substitutions']);
+        var _actual = preCheckCombinations(elem['substitutions'] as Map<String, String>);
         expect(_actual, elem['expectedOutput']);
       });
     });

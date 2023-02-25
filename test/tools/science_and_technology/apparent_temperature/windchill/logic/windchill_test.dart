@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/wind
 
 void main() {
   group("Windchill.calculate:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'temperature' : null, 'windspeed' : null, 'isMetric' : true, 'expectedOutput' : null},
       {'temperature' : null, 'windspeed' : null, 'isMetric' : false, 'expectedOutput' : null},
       {'temperature' : -10.0, 'windspeed' : null, 'isMetric' : true, 'expectedOutput' : null},
@@ -22,10 +22,10 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('temperature: ${elem['temperature']}, windspeed: ${elem['windspeed']}, isMetric: ${elem['isMetric']}', () {
         var _actual;
-        if (elem['isMetric'])
-          _actual = calcWindchillMetric(elem['temperature'], elem['windspeed']);
+        if (elem['isMetric'] as bool)
+          _actual = calcWindchillMetric(elem['temperature'] as double?, elem['windspeed'] as double?);
         else
-          _actual = calcWindchillImperial(elem['temperature'], elem['windspeed']);
+          _actual = calcWindchillImperial(elem['temperature'] as double?, elem['windspeed'] as double?);
 
         expect(_actual, elem['expectedOutput']);
       });

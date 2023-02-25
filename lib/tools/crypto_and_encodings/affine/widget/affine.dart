@@ -15,8 +15,8 @@ class Affine extends StatefulWidget {
 }
 
 class AffineState extends State<Affine> {
-  TextEditingController _encodeController;
-  TextEditingController _decodeController;
+  late TextEditingController _encodeController;
+  late TextEditingController _decodeController;
 
   var _currentEncodeInput = '';
   var _currentDecodeInput = '';

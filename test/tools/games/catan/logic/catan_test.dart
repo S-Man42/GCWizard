@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/games/catan/logic/catan.dart';
 
 void main() {
   group("Catan.encode:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'mode': CatanMode.BASE, 'expectedOutput' : []},
       {'input' : '', 'mode': CatanMode.BASE, 'expectedOutput' : []},
       {'input' : ' ', 'mode': CatanMode.BASE, 'expectedOutput' : []},
@@ -45,7 +45,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, mode: ${elem['mode']}', () {
-        var _actual = encodeCatan(elem['input'], elem['mode']);
+        var _actual = encodeCatan(elem['input'] as String?, elem['mode'] as CatanMode);
         expect(_actual, elem['expectedOutput']);
       });
     });

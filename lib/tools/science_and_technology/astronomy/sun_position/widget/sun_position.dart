@@ -21,7 +21,7 @@ class SunPosition extends StatefulWidget {
 class SunPositionState extends State<SunPosition> {
   var _currentDateTime = DateTimeTimezone(datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
   var _currentCoords = defaultCoordinate;
-  var _currentCoordsFormat = defaultCoordFormat();
+  var _currentCoordsFormat = defaultCoordinateFormat;
 
   @override
   Widget build(BuildContext context) {

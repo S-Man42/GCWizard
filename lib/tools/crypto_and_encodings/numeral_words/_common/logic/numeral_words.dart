@@ -2692,7 +2692,7 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
     return output;
   } else  { // entire parts - search parts of words: weight => eight => 8
 
-    decodeText = input //ToDo Thomas ????
+    input = input
         .replaceAll(RegExp(r'[\s]'), '')
         .replaceAll('^', '')
         .replaceAll('°', '')
@@ -2731,8 +2731,8 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
         .replaceAll('µ', '')
         .replaceAll('@', '')
         .replaceAll('€', '');
-    for (int i = 0; i < decodeText.length; i++) {
-      String checkWord = decodeText.substring(i);
+    for (int i = 0; i < input.length; i++) {
+      String checkWord = input.substring(i);
       if (language == NumeralWordsLanguage.ALL) {
         _alreadyFound = false;
         int oldValueInt = 0;
@@ -3653,6 +3653,7 @@ NumeralWordsOutput _isNumeralWord(String input, NumeralWordsLanguage language, M
         case NumeralWordsLanguage.EPO:
           pattern = 'mil';
           break;
+        default:
       }
       if (input.contains(pattern)) {
         // numeral word contains 1000
@@ -3689,6 +3690,7 @@ NumeralWordsOutput _isNumeralWord(String input, NumeralWordsLanguage language, M
         }
       }
       break;
+    default:
   }
   return NumeralWordsOutput(state, output, _languageList?[language] ?? '');
 } // _isNumeralWord
@@ -3810,6 +3812,7 @@ NumeralWordsOutput _isNumeralWordBelow1000(String input, NumeralWordsLanguage la
         case NumeralWordsLanguage.SOL:
           pattern = 'farere';
           break;
+        default:
       }
       if (input.contains(pattern)) {
         // numeral word contains 100
@@ -3853,6 +3856,7 @@ NumeralWordsOutput _isNumeralWordBelow1000(String input, NumeralWordsLanguage la
         }
       }
       break;
+    default:
   }
   return NumeralWordsOutput(state, output, _languageList?[language]);
 }

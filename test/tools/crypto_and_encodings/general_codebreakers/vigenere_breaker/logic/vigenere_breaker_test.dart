@@ -26,9 +26,7 @@ void main() {
     var text24 = 'Rg oéotdijevf vvz qv lflykn puz iqjahskh à csiclygn ka wkedvhqlh fq féfsuuebhoeqkoavs gdx oisecoova oolu takgeifngn nu gouoqluchx zmr « icypds » qq cej « céncrfngo », ggpo cimhxu mmdirovo à kugxazr ch okvce. Apa féffgedm tpsosqm ejw ekvrtzwaéa c’lq rabht fuppmmaew épimcyh gp qéjlyvwvs, fuolzdnrqz qv rvjoupzd uhy rqrikhy ab prulqea ue uw xkujlkwna « wxéowqs », céméidrgimmt gku jhbvouvo raev xwtdui. Gj 2013, ltts gk zmtx ponhqnnj jg oéotdijaa, fqz ébé iévgnbnrzéku lznj 222 oapv uqz lvv feneéihtvo rikhy sma trsoqvzukdotaa cfqycyzés à ea kozvot.';
     var text25 = 'Le géocaching est un loisir qui consiste à utiliser la technique du géopositionnement par satellite pour rechercher ou dissimuler des « caches » ou des « géocaches », dans divers endroits à travers le monde. Une géocache typique est constituée d’un petit contenant étanche et résistant, comprenant un registre des visites et parfois un ou plusieurs « trésors », généralement des bibelots sans valeur. En 2013, plus de deux millions de géocaches, ont été répertoriées dans 222 pays sur les différents sites web communautaires consacrés à ce loisir.';
 
-
-
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'ignoreNonLetters' : true, 'alphabet' : VigenereBreakerAlphabet.ENGLISH, 'keyLengthMin' : 3, 'keyLengthMax' : 30, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : '', 'expectedOutput' : ''},
       {'input' : '', 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'ignoreNonLetters' : true, 'alphabet' : VigenereBreakerAlphabet.ENGLISH, 'keyLengthMin' : 3, 'keyLengthMax' : 30, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : '', 'expectedOutput' : ''},
       {'input' : '', 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'ignoreNonLetters' : true, 'alphabet' : VigenereBreakerAlphabet.ENGLISH, 'keyLengthMin' : 3, 'keyLengthMax' : 2, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : '', 'expectedOutput' : ''},
@@ -48,12 +46,13 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () async {
-        var _actual = break_cipher(elem['input'], elem['VigenereBreakerType'], elem['alphabet'], elem['keyLengthMin'], elem['keyLengthMax'], elem['ignoreNonLetters']);
+        var _actual = break_cipher(elem['input'] as String?, elem['VigenereBreakerType'] as VigenereBreakerType, elem['alphabet'] as VigenereBreakerAlphabet, elem['keyLengthMin'] as int, elem['keyLengthMax'] as int, elem['ignoreNonLetters'] as bool, counterFunction: () => {});
         expect(_actual.plaintext, elem['expectedOutput']);
         expect(_actual.key, elem['key']);
         expect(_actual.errorCode, elem['errorCode']);
       });
     });
+
   });
 
   group("vigenere_breaker.calc_fitness:", () {
@@ -61,7 +60,7 @@ void main() {
 
     var text13 = 'kurzerverschluesseltertext';
 
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'alphabet' : VigenereBreakerAlphabet.ENGLISH, 'keyLengthMin' : 3, 'keyLengthMax' : 30, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : '', 'expectedOutput' : null},
       {'input' : '', 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'alphabet' : VigenereBreakerAlphabet.ENGLISH, 'keyLengthMin' : 3, 'keyLengthMax' : 30, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : '', 'expectedOutput' : null},
       {'input' : '', 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'alphabet' : VigenereBreakerAlphabet.ENGLISH, 'keyLengthMin' : 3, 'keyLengthMax' : 2, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : '', 'expectedOutput' : null},
@@ -78,7 +77,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = calc_fitnessBigrams(elem['input'], getBigrams(elem['alphabet']));
+        var _actual = calc_fitnessBigrams(elem['input'] as String?, getBigrams(elem['alphabet'] as VigenereBreakerAlphabet));
         expect(_actual, elem['expectedOutput']);
       });
     });

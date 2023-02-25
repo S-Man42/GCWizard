@@ -13,7 +13,7 @@ List<List<String>> buildHeaderUserMode(BuildContext context) {
     [
       i18n(context, 'wherigo_output_location'),
       formatCoordOutput(LatLng(WherigoCartridgeGWCData.Latitude, WherigoCartridgeGWCData.Longitude),
-          defaultCoordFormat(), defaultEllipsoid())
+          defaultCoordinateFormat, defaultEllipsoid())
     ],
     [i18n(context, 'wherigo_header_altitude'), WherigoCartridgeGWCData.Altitude.toString()],
     [i18n(context, 'wherigo_header_typeofcartridge'), WherigoCartridgeGWCData.TypeOfCartridge],
@@ -26,7 +26,7 @@ List<List<String>> buildHeaderUserMode(BuildContext context) {
     ],
     [
       i18n(context, 'wherigo_header_cartridgename'),
-      WherigoCartridgeGWCData.CartridgeLUAName == ''
+      WherigoCartridgeGWCData.CartridgeLUAName.isEmpty
           ? WherigoCartridgeLUAData.CartridgeLUAName
           : WherigoCartridgeGWCData.CartridgeLUAName
     ],
@@ -47,7 +47,7 @@ List<List<String>> buildHeaderExpertMode(BuildContext context) {
     [
       i18n(context, 'wherigo_output_location'),
       formatCoordOutput(LatLng(WherigoCartridgeGWCData.Latitude, WherigoCartridgeGWCData.Longitude),
-          defaultCoordFormat(), defaultEllipsoid())
+          defaultCoordinateFormat, defaultEllipsoid())
     ],
     [i18n(context, 'wherigo_header_altitude'), WherigoCartridgeGWCData.Altitude.toString()],
     [i18n(context, 'wherigo_header_typeofcartridge'), WherigoCartridgeGWCData.TypeOfCartridge],
@@ -65,13 +65,13 @@ List<List<String>> buildHeaderExpertMode(BuildContext context) {
     [i18n(context, 'wherigo_header_completion_full'), WherigoCartridgeGWCData.CompletionCode],
     [
       i18n(context, 'wherigo_header_cartridgename'),
-      WherigoCartridgeGWCData.CartridgeLUAName == ''
+      WherigoCartridgeGWCData.CartridgeLUAName.isEmpty
           ? WherigoCartridgeLUAData.CartridgeLUAName
           : WherigoCartridgeGWCData.CartridgeLUAName
     ],
     [
       i18n(context, 'wherigo_header_cartridgeguid'),
-      WherigoCartridgeGWCData.CartridgeGUID == ''
+      WherigoCartridgeGWCData.CartridgeGUID.isEmpty
           ? WherigoCartridgeLUAData.CartridgeGUID
           : WherigoCartridgeGWCData.CartridgeGUID
     ],

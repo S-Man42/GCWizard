@@ -1,15 +1,15 @@
 part of 'package:gc_wizard/tools/crypto_and_encodings/enigma/widget/enigma.dart';
 
 class EnigmaRotorDropDown extends StatefulWidget {
-  final Function onChanged;
+  final void Function(Tuple2<int, EnigmaRotorConfiguration>) onChanged;
   final EnigmaRotorType type;
-  final position;
+  final int position;
 
   const EnigmaRotorDropDown(
       {Key? key,
-      this.position,
+      required this.position,
       this.type: EnigmaRotorType.STANDARD,
-      this.onChanged})
+      required this.onChanged})
       : super(key: key);
 
   @override
@@ -17,7 +17,7 @@ class EnigmaRotorDropDown extends StatefulWidget {
 }
 
 class EnigmaRotorDropDownState extends State<EnigmaRotorDropDown> {
-  var _currentRotor;
+  late String _currentRotor;
   var _currentOffset = 1;
   var _currentSetting = 1;
 
@@ -35,6 +35,8 @@ class EnigmaRotorDropDownState extends State<EnigmaRotorDropDown> {
       case EnigmaRotorType.REFLECTOR:
         _currentRotor = defaultRotorReflector;
         break;
+      default:
+        _currentRotor = '';
     }
   }
 
@@ -44,7 +46,7 @@ class EnigmaRotorDropDownState extends State<EnigmaRotorDropDown> {
       children: <Widget>[
         Expanded(
             child: Container(
-                child: GCWDropDown(
+                child: GCWDropDown<String>(
                   value: _currentRotor,
                   items: allEnigmaRotors
                       .where((rotor) => rotor.type == widget.type)
@@ -99,13 +101,13 @@ class EnigmaRotorDropDownState extends State<EnigmaRotorDropDown> {
     );
   }
 
-  _setCurrentValueAndEmitOnChange() {
-    widget.onChanged({
-      'position': widget.position,
-      'rotorConfiguration': EnigmaRotorConfiguration(
+  void _setCurrentValueAndEmitOnChange() {
+    widget.onChanged(Tuple2<int, EnigmaRotorConfiguration> (
+      widget.position,
+      EnigmaRotorConfiguration(
           getEnigmaRotorByName(_currentRotor),
           offset: _currentOffset,
           setting: _currentSetting)
-    });
+    ));
   }
 }

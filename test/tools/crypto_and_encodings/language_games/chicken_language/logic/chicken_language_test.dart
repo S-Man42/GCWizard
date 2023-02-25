@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/language_games/chicken_lang
 
 void main() {
   group('chicken_language.encryptChickenLanguage:', () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
 
       {'input' : 'Hallo Welt', 'expectedOutput' : 'hahadefallohodefo wehedefelt'},
@@ -30,14 +30,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encryptChickenLanguage(elem['input']);
+        var _actual = encryptChickenLanguage(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
   group('chicken_language.decryptChickenLanguage:', () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
 
       {'expectedOutput' : 'hallo welt', 'input' : 'hahadefallohodefo wehedefelt'},
@@ -66,7 +66,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decryptChickenLanguage(elem['input']);
+        var _actual = decryptChickenLanguage(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });

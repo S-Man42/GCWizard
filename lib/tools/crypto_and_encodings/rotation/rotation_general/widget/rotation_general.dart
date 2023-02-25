@@ -13,7 +13,7 @@ class RotationGeneral extends StatefulWidget {
 }
 
 class RotationGeneralState extends State<RotationGeneral> {
-  var _controller;
+  late TextEditingController _controller;
 
   String _currentInput = '';
   int _currentKey = 0;

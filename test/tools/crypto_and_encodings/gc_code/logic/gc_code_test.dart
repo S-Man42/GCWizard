@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/gc_code/logic/gc_code.dart'
 
 void main() {
   group("GCCode.gcCodeToID:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : null},
 
@@ -28,14 +28,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = gcCodeToID(elem['input']);
+        var _actual = gcCodeToID(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
   group("GCCode.gcCodeToID.noValidGCCode:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : 'GCG'},
       {'input' : 'GCFFFG'},
       {'input' : 'GCILOSU'},
@@ -47,7 +47,7 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
         try {
-          gcCodeToID(elem['input']);
+          gcCodeToID(elem['input'] as String?);
           expect(false, true);
         } catch(e) {
           expect(true, true);
@@ -57,7 +57,7 @@ void main() {
   });
 
   group("GCCode.idToGCCode:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : -1, 'expectedOutput' : ''},
 
@@ -81,7 +81,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = idToGCCode(elem['input']);
+        var _actual = idToGCCode(elem['input'] as int?);
         expect(_actual, elem['expectedOutput']);
       });
     });

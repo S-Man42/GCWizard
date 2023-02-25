@@ -4,7 +4,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/gray/logic/gray.dart';
 void main() {
 
   group("Gray.encodeGray", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'mode': GrayMode.DECIMAL,'expectedOutput' : GrayOutput([], [])},
       {'input' : '', 'mode': GrayMode.DECIMAL,'expectedOutput' : GrayOutput([], [])},
 
@@ -33,15 +33,15 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, mode: ${elem['mode']}', () {
-        var _actual = encodeGray(elem['input'], mode: elem['mode']);
-        expect(_actual.decimalOutput, elem['expectedOutput'].decimalOutput);
-        expect(_actual.binaryOutput, elem['expectedOutput'].binaryOutput);
+        var _actual = encodeGray(elem['input'] as String?, mode: elem['mode'] as GrayMode);
+        expect(_actual.decimalOutput, (elem['expectedOutput'] as GrayOutput).decimalOutput);
+        expect(_actual.binaryOutput, (elem['expectedOutput'] as GrayOutput).binaryOutput);
       });
     });
   });
 
   group("Gray.decodeGray:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'mode': GrayMode.DECIMAL,'expectedOutput' : GrayOutput([], [])},
       {'input' : '', 'mode': GrayMode.DECIMAL,'expectedOutput' : GrayOutput([], [])},
 
@@ -66,9 +66,9 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, mode: ${elem['mode']}', () {
-        var _actual = decodeGray(elem['input'], mode: elem['mode']);
-        expect(_actual.decimalOutput, elem['expectedOutput'].decimalOutput);
-        expect(_actual.binaryOutput, elem['expectedOutput'].binaryOutput);
+        var _actual = decodeGray(elem['input'] as String?, mode: elem['mode'] as GrayMode);
+        expect(_actual.decimalOutput, (elem['expectedOutput'] as GrayOutput).decimalOutput);
+        expect(_actual.binaryOutput, (elem['expectedOutput'] as GrayOutput).binaryOutput);
       });
     });
   }); // group

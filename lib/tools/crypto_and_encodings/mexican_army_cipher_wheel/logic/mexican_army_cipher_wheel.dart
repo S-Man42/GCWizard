@@ -28,7 +28,7 @@ String encryptMexicanArmyCipherWheel(String? input, List<int> keys) {
     var value = alphabet_AZ[character] ?? 0;
     var tmpValue = value;
 
-    var randomWheel;
+    int randomWheel;
     do {
       randomWheel = Random().nextInt(4);
       var maxValue = _getMaxValue(randomWheel);
@@ -42,7 +42,7 @@ String encryptMexicanArmyCipherWheel(String? input, List<int> keys) {
   }).join();
 }
 
-String decryptMexicanArmyCipherWheel(String input, List<int> keys) {
+String decryptMexicanArmyCipherWheel(String? input, List<int> keys) {
   if (input == null || input.isEmpty) return '';
 
   input = input.replaceAll(RegExp(r'[^0-9]'), '');

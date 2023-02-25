@@ -26,32 +26,29 @@ final List<List<String>> _unitlist = _cols.split('').map((c) => _cross(_rows, c)
   ..addAll(['ABC', 'DEF', 'GHI'].expand((rs) => ['123', '456', '789'].map((cs) => _cross(rs, cs))));
 
 final Map<String, List<List<String>>> _units = _squares
-    .map((String s) => <Object>[s, _unitlist.where((List<String> u) => u.contains(s)).toList()])
-    .fold({}, (map, kv) => map..putIfAbsent(kv[0] as String, () => kv[1] as List<List<String>>));
+    .map((s) => MapEntry<String, List<List<String>>>(s, _unitlist.where((u) => u.contains(s)).toList()))
+    .fold(<String, List<List<String>>>{}, (map, kv) => map..putIfAbsent(kv.key, () => kv.value));
 
-final Map _peers = _squares
-    .map((s) => [
-          s,
-          _units[s]!.expand((u) => u).toSet()..removeAll([s])
-        ])
-    .fold({}, (map, kv) => map..putIfAbsent(kv[0], () => kv[1]));
+final Map<String, Set<String>> _peers = _squares
+    .map((s) => MapEntry<String, Set<String>>(s, _units[s]!.expand((u) => u).toSet()..removeAll([s])))
+    .fold(<String, Set<String>>{}, (map, kv) => map..putIfAbsent(kv.key, () => kv.value));
 
 /// Parse a Grid
 Map<String, String>? _parse_grid(List<List<int>> grid) {
   Map<String, String> values = _squares
-      .map<List<String>>((String s) => <String>[s, _digits])
-      .fold(<String, String>{}, (Map<String, String> map, List<String> kv) => map..putIfAbsent(kv[0], () => kv[1]));
+      .map((String s) => <String>[s, _digits])
+      .fold(<String, String>{}, (map, kv) => map..putIfAbsent(kv[0], () => kv[1]));
   var gridValues = _grid_values(grid);
 
   for (var s in gridValues.keys) {
-    var d = gridValues[s];
+    var d = gridValues[s]!;
     if (_digits.contains(d) && _assign(values, s, d) == null) return null;
   }
 
   return values;
 }
 
-Map _grid_values(List<List<int>> grid) {
+Map<String, String> _grid_values(List<List<int>> grid) {
   Map<String, String> gridMap = {};
   for (int i = 0; i < 9; i++) {
     for (int j = 0; j < 9; j++) {
@@ -73,16 +70,16 @@ Map<String, String>? _assign(Map<String, String> values, String s, String d) {
 Map<String, String>? _eliminate(Map<String, String> values, String s, String d) {
   if (!values[s]!.contains(d)) return values;
   values[s] = values[s]!.replaceAll(d, '');
-  if (values[s]!.length == 0)
+  if (values[s]!.isEmpty)
     return null;
   else if (values[s]!.length == 1) {
     var d2 = values[s]!;
-    if (!_all(_peers[s].map((s2) => _eliminate(values, s2, d2)))) return null;
+    if (!_all(_peers[s]!.map((s2) => _eliminate(values, s2, d2)))) return null;
   }
 
   for (List<String> u in _units[s]!) {
     var dplaces = u.where((s) => values[s]!.contains(d));
-    if (dplaces.length == 0)
+    if (dplaces.isEmpty)
       return null;
     else if (dplaces.length == 1) if (_assign(values, dplaces.elementAt(0), d) == null) return null;
   }
@@ -137,19 +134,11 @@ List<Map<String, String>>? _searchAll(Map<String, String>? values) {
   return output;
 }
 
-_wrap(value, fn(x)) => fn(value);
-
-List<String> _order(List<String> seq, {Comparator? by, List<Comparator>? byAll, required int on(String x), List<Function>? onAll}) => by != null
+List<String> _order(List<String> seq, {Comparator? by, List<Comparator>? byAll, required int on(String x)}) => by != null
     ? (seq..sort(by))
     : byAll != null
         ? (seq..sort((a, b) => byAll.firstWhere((compare) => compare(a, b) != 0, orElse: () => (x, y) => 0)(a, b)))
-        : on != null
-            ? (seq..sort((a, b) => on(a).compareTo(on(b))))
-            : onAll != null
-                ? (seq
-                  ..sort((a, b) => _wrap(
-                      onAll.firstWhere((_on) => _on(a).compareTo(_on(b)) != 0, orElse: () => (x) => 0),
-                      (_on) => _on(a).compareTo(_on(b)))))
-                : (seq..sort());
+        : (seq..sort((a, b) => on(a).compareTo(on(b))));
 
 bool _all(Iterable seq) => seq.every((e) => e != null);
+

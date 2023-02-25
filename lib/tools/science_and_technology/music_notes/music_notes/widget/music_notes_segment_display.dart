@@ -94,7 +94,7 @@ class _NotesSegmentDisplay extends NSegmentDisplay {
               var counter = 0;
               paint.color = Colors.grey;
               lines.forEach((key) {
-                if (key == '' || segmentActive(currentSegments, key))
+                if (key.isEmpty || segmentActive(currentSegments, key))
                   pathL.addPath(
                       _createLine(
                           key.isNotEmpty, size, Offset(0, counter * LINE_DISTANCE + LINE_OFFSET_Y), LINE_OFFSET_X, readOnly),
@@ -171,11 +171,11 @@ class _NotesSegmentDisplay extends NSegmentDisplay {
               });
             });
 
-  static _getSymbolWidth(bool readOnly) {
+  static int _getSymbolWidth(bool readOnly) {
     return readOnly ? _NOTES_RELATIVE_DISPLAY_WIDTH_OUTPUT : _NOTES_RELATIVE_DISPLAY_WIDTH;
   }
 
-  static _drawNote(String note, Path path, Size size, GCWTouchCanvas canvas, Paint paint, bool readOnly,
+  static void _drawNote(String note, Path path, Size size, GCWTouchCanvas canvas, Paint paint, bool readOnly,
       Map<String, bool> currentSegments, Function setSegmentState, Color colorOn, Color colorOff) {
     var active = segmentActive(currentSegments, note);
     paint.color = active ? colorOn : colorOff;
@@ -218,7 +218,7 @@ class _NotesSegmentDisplay extends NSegmentDisplay {
     }
   }
 
-  static _drawHash(String label, Path path, Size size, GCWTouchCanvas canvas, Paint paint, bool readOnly,
+  static void _drawHash(String label, Path path, Size size, GCWTouchCanvas canvas, Paint paint, bool readOnly,
       Map<String, bool> currentSegments, Function setSegmentState, Color colorOn, Color colorOff) {
     var active = segmentActive(currentSegments, label);
     paint.color = active ? colorOn : colorOff;
@@ -233,7 +233,7 @@ class _NotesSegmentDisplay extends NSegmentDisplay {
     }
   }
 
-  static _drawB(String label, Path path, Size size, GCWTouchCanvas canvas, Paint paint, bool readOnly,
+  static void _drawB(String label, Path path, Size size, GCWTouchCanvas canvas, Paint paint, bool readOnly,
       Map<String, bool> currentSegments, Function setSegmentState, Color colorOn, Color colorOff) {
     var active = segmentActive(currentSegments, label);
     paint.color = active ? colorOn : colorOff;
@@ -248,7 +248,7 @@ class _NotesSegmentDisplay extends NSegmentDisplay {
     }
   }
 
-  static _setNotesState(String tappedNote, Map<String, bool> currentSegments, Function setSegmentState) {
+  static void _setNotesState(String tappedNote, Map<String, bool> currentSegments, Function setSegmentState) {
     var newState = !segmentActive(currentSegments, tappedNote);
     if (newState) {
       for (var i = 1; i <= 5; i++) {

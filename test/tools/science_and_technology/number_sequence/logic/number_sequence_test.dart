@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/science_and_technology/number_sequences/_common/
 
 void main() {
   group("numbersequence.getNumberAt:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'sequence' : NumberSequencesMode.CATALAN,          'position' : 30, 'expectedOutput' : BigInt.from(3814986502092304)},
       {'sequence' : NumberSequencesMode.RECAMAN,          'position' : 30, 'expectedOutput' : BigInt.from(45)},
       {'sequence' : NumberSequencesMode.LUCAS,            'position' : 30, 'expectedOutput' : BigInt.from(1860498)},
@@ -21,14 +21,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('sequence: ${elem['sequence']}, position: ${elem['position']}', () {
-        var _actual = getNumberAt(elem['sequence'], elem['position']);
+        var _actual = getNumberAt(elem['sequence'] as NumberSequencesMode, elem['position'] as int?);
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
   group("numbersequence.checkNumber:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'sequence' : NumberSequencesMode.CATALAN,          'maxIndex' : 100, 'expectedOutput' : 30, 'number' : BigInt.from(3814986502092304)},
       {'sequence' : NumberSequencesMode.RECAMAN,          'maxIndex' : 100, 'expectedOutput' : 30, 'number' : BigInt.from(45)},
       {'sequence' : NumberSequencesMode.LUCAS,            'maxIndex' : 100, 'expectedOutput' : 30, 'number' : BigInt.from(1860498)},
@@ -46,14 +46,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('sequence: ${elem['sequence']}, number: ${elem['number']}', () {
-        var _actual = checkNumber(elem['sequence'], elem['number'], elem['maxIndex']);
+        var _actual = checkNumber(elem['sequence'] as NumberSequencesMode, elem['number'] as BigInt?, elem['maxIndex'] as int);
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
   group("numbersequence.getNumbersInRange:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'sequence' : NumberSequencesMode.CATALAN,          'start' : 10, 'stop' : 15, 'expectedOutput' : [16796, 58786, 208012, 742900, 2674440, 9694845]},
       {'sequence' : NumberSequencesMode.RECAMAN,          'start' : 10, 'stop' : 15, 'expectedOutput' : [11, 22, 10, 23, 9, 24]},
       {'sequence' : NumberSequencesMode.LUCAS,            'start' : 10, 'stop' : 15, 'expectedOutput' : [123, 199, 322, 521, 843, 1364]},
@@ -71,17 +71,17 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('sequence: ${elem['sequence']}, start: ${elem['start']}, stop: ${elem['stop']}', () {
-        var _actual = getNumbersInRange(elem['sequence'], elem['start'], elem['stop']);
-        var length = elem['expectedOutput'].length;
+        var _actual = getNumbersInRange(elem['sequence'] as NumberSequencesMode, elem['start'] as int?, elem['stop'] as int?);
+        var length = (elem['expectedOutput'] as List<BigInt>).length;
         for (int i = 0; i < length; i++) {
-          expect(_actual[i], BigInt.from(elem['expectedOutput'][i]));
+          expect(_actual[i], BigInt.from((elem['expectedOutput'] as List<int>)[i]));
         }
       });
     });
   });
 
   group("numbersequence.getNumbersWithNDigits:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'sequence' : NumberSequencesMode.CATALAN,          'digits' : 4, 'expectedOutput' : [1430,4862]},
       {'sequence' : NumberSequencesMode.JACOBSTAHL,       'digits' : 4, 'expectedOutput' : [1365,2731,5461]},
       {'sequence' : NumberSequencesMode.JACOBSTHAL_LUCAS, 'digits' : 4, 'expectedOutput' : [1025,2047,4097,8191]},
@@ -99,20 +99,20 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('sequence: ${elem['sequence']}, digits: ${elem['digits']}', () {
-        var _actual = getNumbersWithNDigits(elem['sequence'], elem['digits']);
-        var length = elem['expectedOutput'].length;
+        var _actual = getNumbersWithNDigits(elem['sequence'] as NumberSequencesMode, elem['digits'] as int?);
+        var length = (elem['expectedOutput'] as List<Object>).length;
         for (int i = 0; i < length; i++) {
           if (_actual[i].runtimeType.toString() == 'String')
-            expect(BigInt.parse(_actual[i]), BigInt.from(elem['expectedOutput'][i]));
+            expect(BigInt.parse(_actual[i].toString()), BigInt.from((elem['expectedOutput'] as List<int>)[i]));
           else
-            expect(_actual[i], BigInt.from(elem['expectedOutput'][i]));
+            expect(_actual[i], BigInt.from((elem['expectedOutput'] as List<int>)[i]));
         }
       });
     });
   });
 
   group("numbersequence.getFirstPositionOfSequence:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'sequence' : NumberSequencesMode.CATALAN,          'maxIndex' : 1000,  'number' : '27361', 'expectedOutput' : PositionOfSequenceOutput('7107690250413013761896628105173181658589772625392889208165477368352734802736195805963143770815133859332929972050727625767936724822523808745285247568658130484108957872094022098605943811100613700',
           327, 73)},
       {'sequence' : NumberSequencesMode.RECAMAN,          'maxIndex' : 90000, 'number' : '27361', 'expectedOutput' : PositionOfSequenceOutput('273610',
@@ -143,10 +143,10 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('sequence: ${elem['sequence']}, number: ${elem['start']}', () {
-        PositionOfSequenceOutput _actual = getFirstPositionOfSequence(elem['sequence'], elem['number'], elem['maxIndex']);
-        expect(_actual.number, elem['expectedOutput'].number);
-        expect(_actual.positionSequence, elem['expectedOutput'].positionSequence);
-        expect(_actual.positionDigits, elem['expectedOutput'].positionDigits);
+        PositionOfSequenceOutput _actual = getFirstPositionOfSequence(elem['sequence'] as NumberSequencesMode, elem['number'] as String?, elem['maxIndex'] as int);
+        expect(_actual.number, (elem['expectedOutput'] as PositionOfSequenceOutput).number);
+        expect(_actual.positionSequence, (elem['expectedOutput'] as PositionOfSequenceOutput).positionSequence);
+        expect(_actual.positionDigits, (elem['expectedOutput'] as PositionOfSequenceOutput).positionDigits);
       });
     });
   });

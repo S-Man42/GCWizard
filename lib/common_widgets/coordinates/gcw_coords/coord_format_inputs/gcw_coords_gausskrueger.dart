@@ -3,7 +3,7 @@ part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart
 class _GCWCoordsGaussKrueger extends StatefulWidget {
   final void Function(GaussKrueger) onChanged;
   final BaseCoordinates? coordinates;
-  final CoordFormatKey subtype;
+  final CoordinateFormatKey subtype;
 
   const _GCWCoordsGaussKrueger({Key? key, required this.onChanged, this.coordinates, this.subtype = defaultGaussKruegerType})
       : super(key: key);
@@ -19,10 +19,10 @@ class _GCWCoordsGaussKruegerState extends State<_GCWCoordsGaussKrueger> {
   var _currentEasting = defaultDoubleText;
   var _currentNorthing = defaultDoubleText;
 
-  late CoordFormatKey _currentSubtype;
+  late CoordinateFormatKey _currentSubtype;
 
   _setGKSubtype() {
-    if (!isSubtypeOfCoordFormat(CoordFormatKey.GAUSS_KRUEGER, widget.subtype))
+    if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.GAUSS_KRUEGER, widget.subtype))
       _currentSubtype = defaultGaussKruegerType;
     else
       _currentSubtype = widget.subtype;

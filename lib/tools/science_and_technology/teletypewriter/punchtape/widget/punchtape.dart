@@ -10,6 +10,8 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/widget/n_segment_display.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/_common/logic/teletypewriter.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/punchtape/logic/punchtape.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/punchtape_segment_display/widget/punchtape_segment_display.dart';
@@ -27,7 +29,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
   late TextEditingController _decodeInputController;
   var _currentDecodeInput = '';
 
-  List<List<String>> _currentDisplays = [];
+  var _currentDisplays = Segments.Empty();
   var _currentMode = GCWSwitchPosition.right; // encrypt - decrypt
   var _currentOrderMode = GCWSwitchPosition.right; // 54321 - 12345
   var _currentDecodeMode = GCWSwitchPosition.right; // text - visual
@@ -63,8 +65,8 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
         items: ALL_CODES_CODEBOOK.entries.map((mode) {
           return GCWDropDownMenuItem(
               value: mode.key,
-              child: i18n(context, mode.value['title']!),
-              subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']!) : null);
+              child: i18n(context, mode.value.title),
+              subtitle: mode.value.subtitle != null ? i18n(context, mode.value.subtitle) : null);
         }).toList(),
       ),
       if (!(_currentCode == TeletypewriterCodebook.BAUDOT_54123 || _currentCode == TeletypewriterCodebook.CCITT_IA5))
@@ -156,14 +158,8 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
     ]);
   }
 
-  _buildVisualDecryption() {
-    Map<String, bool> currentDisplay;
-
-    var displays = _currentDisplays;
-    if (displays.isNotEmpty)
-      currentDisplay = Map<String, bool>.fromIterable(displays.last, key: (e) => e, value: (e) => true);
-    else
-      currentDisplay = {};
+  Widget _buildVisualDecryption() {
+    var currentDisplay = buildSegmentMap(_currentDisplays);
 
     var onChanged = (Map<String, bool> d) {
       setState(() {
@@ -173,11 +169,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
           newSegments.add(key);
         });
 
-        newSegments.sort();
-
-        if (_currentDisplays.isEmpty) _currentDisplays.add([]);
-
-        _currentDisplays[_currentDisplays.length - 1] = newSegments;
+        _currentDisplays.replaceLastSegment(newSegments);
       });
     };
 
@@ -204,7 +196,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
             icon: Icons.space_bar,
             onPressed: () {
               setState(() {
-                _currentDisplays.add([]);
+                _currentDisplays.addEmptySegment();
               });
             },
           ),
@@ -212,7 +204,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
             icon: Icons.backspace,
             onPressed: () {
               setState(() {
-                if (_currentDisplays.isNotEmpty) _currentDisplays.removeLast();
+                _currentDisplays.removeLastSegment();
               });
             },
           ),
@@ -220,7 +212,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
             icon: Icons.clear,
             onPressed: () {
               setState(() {
-                _currentDisplays = [];
+                _currentDisplays = Segments.Empty();
               });
             },
           )
@@ -229,7 +221,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
     );
   }
 
-  Widget _buildDigitalOutput(List<List<String>> segments) {
+  Widget _buildDigitalOutput(Segments segments) {
     return PunchtapeSegmentDisplayOutput(
         segmentFunction: (displayedSegments, readOnly, codeBook) {
           return PUNCHTAPESegmentDisplay(
@@ -254,7 +246,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
   Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       //encode
-      List<List<String>> segments = encodePunchtape(
+      var segments = encodePunchtape(
           _currentEncodeInput,
           _currentCode,
           (_currentCode == TeletypewriterCodebook.BAUDOT_54123 || _currentCode == TeletypewriterCodebook.CCITT_IA5)
@@ -262,7 +254,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
               : (_currentOrderMode == GCWSwitchPosition.left));
       List<String> binaryList = [];
       List<String?> decimalList = [];
-      segments.forEach((segment) {
+      segments.displays.forEach((segment) {
         binaryList.add(segments2binary(
             segment,
             _currentCode,
@@ -301,7 +293,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
       );
     } else {
       //decode
-      var segments;
+      SegmentsText segments;
       if (_currentDecodeMode == GCWSwitchPosition.left) {
         // decode text mode
         if (_currentDecodeTextMode == GCWSwitchPosition.left) {
@@ -323,7 +315,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
         }
       } else {
         // decode visual mode
-        var output = _currentDisplays.map((character) {
+        var output = _currentDisplays.displays.map((character) {
           return character.join('');
         }).toList();
         segments = decodeVisualPunchtape(
@@ -335,8 +327,8 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
       }
       return Column(
         children: <Widget>[
-          _buildDigitalOutput(segments['displays']),
-          GCWDefaultOutput(child: segments['text']),
+          _buildDigitalOutput(segments),
+          GCWDefaultOutput(child: segments.text),
         ],
       );
     }

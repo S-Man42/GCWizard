@@ -16,14 +16,14 @@ List<double>? beaufortToMeterPerSecond(int? beaufort) {
     return [56.1, double.infinity];
   }
 
-  var lowerV;
+  double? lowerV;
   var upperV = 0.0;
 
   for (int i = 0; i < 570; i++) {
     var mPerS = i / 10.0;
     var b = meterPerSecondToBeaufort(mPerS);
 
-    if (b== null || b < beaufort) continue;
+    if (b == null || b < beaufort) continue;
 
     if (b == beaufort) {
       if (lowerV == null) lowerV = mPerS;
@@ -33,5 +33,5 @@ List<double>? beaufortToMeterPerSecond(int? beaufort) {
     if (b > beaufort) break;
   }
 
-  return [lowerV, upperV];
+  return [lowerV ?? 0, upperV];
 }

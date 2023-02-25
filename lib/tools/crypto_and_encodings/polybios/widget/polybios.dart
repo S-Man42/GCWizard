@@ -125,7 +125,7 @@ class PolybiosState extends State<Polybios> {
       return GCWDefaultOutput(); // TODO: Exception
     }
 
-    var _currentOutput;
+    PolybiosOutput? _currentOutput;
     if (_currentMode == GCWSwitchPosition.left) {
       _currentOutput = encryptPolybios(_currentInput, _currentKey,
           mode: _currentPolybiosMode, modificationMode: _currentModificationMode, fillAlphabet: _currentAlphabet);

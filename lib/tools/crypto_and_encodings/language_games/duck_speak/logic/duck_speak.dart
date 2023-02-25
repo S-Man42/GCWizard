@@ -1,7 +1,7 @@
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 
-final halfByteToDuck = {
+final Map<String, String> halfByteToDuck = {
   '0': 'Nak',
   '1': 'Nanak',
   '2': 'Nananak',
@@ -19,12 +19,12 @@ final halfByteToDuck = {
   '14': 'nak.',
   '15': 'naknaknak',
 };
-final duckToHalfByte = switchMapKeyValue(halfByteToDuck);
+final Map<String, String> duckToHalfByte = switchMapKeyValue(halfByteToDuck);
 
-String encodeDuckSpeak(text) {
+String encodeDuckSpeak(String? text) {
   if (text == null || text.isEmpty) return '';
 
-  var out = [];
+  var out = <String>[];
   text.codeUnits.forEach((ascii) {
     var binary = ascii.toRadixString(2).padLeft(8, '0');
     out.add(halfByteToDuck[convertBase(binary.substring(0, 4), 2, 10)] ?? '');
@@ -33,14 +33,19 @@ String encodeDuckSpeak(text) {
   return out.join(' ');
 }
 
-String decodeDuckSpeak(text) {
+String decodeDuckSpeak(String? text) {
   if (text == null || text.isEmpty) return '';
 
-  var decimal = [];
+  var decimal = <int>[];
   text.split(RegExp(r'\s+')).forEach((nak) {
-    decimal.add(int.tryParse(duckToHalfByte[nak] ?? '0'));
+
+    var value = duckToHalfByte[nak];
+    if (value != null) {
+      var valueInt = int.tryParse(value);
+      if (valueInt != null) decimal.add(valueInt);
+    }
   });
-  var binary = [];
+  var binary = <String>[];
   for (var i = 0, j = decimal.length; i < j - j % 2; i = i + 2) {
     binary.add(decimal[i].toRadixString(2) + decimal[i + 1].toRadixString(2).padLeft(4, '0'));
   }

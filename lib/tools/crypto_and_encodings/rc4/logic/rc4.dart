@@ -36,7 +36,7 @@ RC4Output cryptRC4(
 List<int> _rc4(List<int> input, List<int> key) {
   var s = List<int>.filled(256, 0);
   var out = <int>[];
-  var i;
+  int i;
   for (i = 0; i <= 255; ++i) s[i] = i;
 
   int temp, randomValue;

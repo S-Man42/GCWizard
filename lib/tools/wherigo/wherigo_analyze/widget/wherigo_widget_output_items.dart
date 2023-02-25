@@ -11,7 +11,7 @@ List<List<String>> buildOutputListOfItemData(BuildContext context, WherigoItemDa
     result.add([
       i18n(context, 'wherigo_output_location'),
       formatCoordOutput(
-          LatLng(data.ItemZonepoint.Latitude, data.ItemZonepoint.Longitude), defaultCoordFormat(), defaultEllipsoid())
+          LatLng(data.ItemZonepoint.Latitude, data.ItemZonepoint.Longitude), defaultCoordinateFormat, defaultEllipsoid())
     ]);
   else
     result.add([i18n(context, 'wherigo_output_location'), data.ItemLocation]);

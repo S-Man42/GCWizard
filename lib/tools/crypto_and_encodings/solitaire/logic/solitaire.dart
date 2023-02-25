@@ -18,11 +18,11 @@ Map<String, int> _createSolitaireAlphabetMap() {
   return alphabet_AZ;
 }
 
-SolitaireOutput? encryptSolitaire(String input, String? key) {
+SolitaireOutput? encryptSolitaire(String? input, String? key) {
   return _solitaireBase(input, key, true);
 }
 
-SolitaireOutput? decryptSolitaire(String input, String? key) {
+SolitaireOutput? decryptSolitaire(String? input, String? key) {
   return _solitaireBase(input, key, false);
 }
 
@@ -80,7 +80,7 @@ List<int> createDeck() {
   return deck;
 }
 
-Tuple2<String, List<int>> createKeyStream(String input, String key, List<int> deck, Map<String, int> alphabet) {
+Tuple2<String, List<int>> createKeyStream(String input, String? key, List<int> deck, Map<String, int> alphabet) {
   var streamLetters = '';
   int issueCard;
 
@@ -118,7 +118,7 @@ String? _chr(int letter, Map<String, int> alphabet) {
   return letterString;
 }
 
-int _issueCard(String key, int index, List<int> deck) {
+int _issueCard(String? key, int index, List<int> deck) {
   int cardIndex = deck[0];
 
   if (cardIndex == _JOKER_B) cardIndex = _JOKER_A;
@@ -128,24 +128,24 @@ int _issueCard(String key, int index, List<int> deck) {
 List<int> _cycleDeck(List<int> deck) {
   // Step 1 (Joker A. Move it down one card)
   var deckSize = deck.length;
-  var offet = 1;
+  var offset = 1;
   var jokerAPos = deck.indexOf(_JOKER_A);
   // last card?
   if (jokerAPos == deckSize - 1)
     // under first card
-    offet += 1;
-  var newPos = (jokerAPos + offet) % (deckSize);
+    offset += 1;
+  var newPos = (jokerAPos + offset) % (deckSize);
   deck.remove(_JOKER_A);
   deck.insert(newPos, _JOKER_A);
 
   // Step 2 (Joker B. Move it down two cards)
-  offet = 2;
+  offset = 2;
   var jokerBPos = deck.indexOf(_JOKER_B);
   // last/ prelast card ?
   if (jokerBPos >= deckSize - 2)
     // under first/ second card
-    offet += 1;
-  newPos = (jokerBPos + offet) % (deckSize);
+    offset += 1;
+  newPos = (jokerBPos + offset) % (deckSize);
   deck.remove(_JOKER_B);
   deck.insert(newPos, _JOKER_B);
 

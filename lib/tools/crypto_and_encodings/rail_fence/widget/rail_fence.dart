@@ -84,7 +84,7 @@ class RailFenceState extends State<RailFence> {
     );
   }
 
-  _calculateOutput() {
+  String _calculateOutput() {
     return _currentMode == GCWSwitchPosition.left
         ? encryptRailFence(_currentInput, _currentKey, offset: _currentOffset, password: _currentPassword)
         : decryptRailFence(_currentInput, _currentKey, offset: _currentOffset, password: _currentPassword);

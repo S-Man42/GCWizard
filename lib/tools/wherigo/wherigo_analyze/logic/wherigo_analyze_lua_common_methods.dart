@@ -235,7 +235,7 @@ String getVariable(String line) {
 }
 
 String normalizeDate(String dateString) {
-  if (dateString == null || dateString == '' || dateString == '1/1/0001 12:00:00 AM') return WHERIGO_NULLDATE;
+  if (dateString == null || dateString.isEmpty || dateString == '1/1/0001 12:00:00 AM') return WHERIGO_NULLDATE;
 
   List<String> dateTime = dateString.split(' ');
   List<String> date = dateTime[0].split('/');

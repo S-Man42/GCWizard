@@ -107,7 +107,7 @@ String encryptPlayfair(String? input, String? key, {AlphabetModificationMode mod
   return out.trim();
 }
 
-String decryptPlayfair(String input, String key, {AlphabetModificationMode mode = AlphabetModificationMode.J_TO_I}) {
+String decryptPlayfair(String? input, String? key, {AlphabetModificationMode mode = AlphabetModificationMode.J_TO_I}) {
   var keyGrid = _createKeyGrid(key, mode);
   input = _sanitizeInput(input, mode);
 

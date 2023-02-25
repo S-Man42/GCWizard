@@ -84,7 +84,7 @@ class GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> 
               : GCWIconButton(
                   icon: Icons.app_registration,
                   onPressed: () {
-                    openInSymbolReplacer(context, widget.symbolKey, widget.imageData);
+                    openInSymbolReplacer(context, widget.symbolKey);
                   }),
           Container(width: 15),
           GCWSymbolTableZoomButtons(
@@ -189,12 +189,12 @@ class GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> 
     );
   }
 
-  void openInSymbolReplacer(BuildContext context, String symbolKey, Iterable<Map<String, SymbolData>> imageData) {
+  void openInSymbolReplacer(BuildContext context, String symbolKey) {
     Navigator.push(
         context,
         NoAnimationMaterialPageRoute<GCWTool>(
             builder: (context) => GCWTool(
-                tool: SymbolReplacer(imageData: imageData, symbolKey: symbolKey),
+                tool: SymbolReplacer(symbolKey: symbolKey),
                 toolName: i18n(context, 'symbol_replacer_title'),
                 id: 'symbol_replacer')));
   }

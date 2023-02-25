@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substi
 
 void main() {
   group("substitution_breaker.check_alphabet:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : null},
 
@@ -13,14 +13,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = BreakerKey.check_alphabet(elem['input']);
+        var _actual = BreakerKey.check_alphabet(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
   group("substitution_breaker.check_key:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'alphabet' : '', 'expectedOutput' : null},
       {'input' : '', 'alphabet' : '', 'expectedOutput' : null},
 
@@ -33,14 +33,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = BreakerKey.check_key(elem['input'], elem['alphabet']);
+        var _actual = BreakerKey.check_key(elem['input'] as String?, elem['alphabet'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
   group("substitution_breaker.keydecode:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
@@ -50,14 +50,14 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
         var key = BreakerKey('abcdefghijklmnopqrstuvwxyz');
-        var _actual = key.decode(elem['input']);
+        var _actual = key.decode(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
   group("substitution_breaker.keyencode:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
@@ -67,7 +67,7 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
         var key = BreakerKey('abcdefghijklmnopqrstuvwxyz');
-        var _actual = key.encode(elem['input']);
+        var _actual = key.encode(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -76,14 +76,14 @@ void main() {
   group("substitution_breaker.compressQuadgrams:", () {
     final List<int> quadgrams = [0,0,0,747,0,0,0,0,0,0,11,12,13,0,0,0,17];
 
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : quadgrams, 'errorCode' : BreakerErrorCode.OK, 'expectedOutput' : '{"3":[747],"10":[11,12,13,0,0,0,17]}'},
     ];
 
     _inputsToExpected.forEach((elem) {
 
       test('input: ${elem['input']}', () async {
-        var _actual = Quadgrams.quadgramsMapToString(Quadgrams.compressQuadgrams(elem['input']));
+        var _actual = Quadgrams.quadgramsMapToString(Quadgrams.compressQuadgrams(elem['input'] as List<int>));
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -95,14 +95,14 @@ void main() {
     final Map<int, List<int>> quadgramsCpmpressed = {3:[747],10:[11,12,13,0,0,0,17]};
     final Map<int, List<int>> quadgramsCpmpressed1 = {3:[747],10:[11,12,13],16:[17]};
 
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : quadgramsCpmpressed, 'size' : 17, 'errorCode' : BreakerErrorCode.OK, 'expectedOutput' : quadgrams},
       {'input' : quadgramsCpmpressed1, 'size' : 17, 'errorCode' : BreakerErrorCode.OK, 'expectedOutput' : quadgrams},
     ];
 
     _inputsToExpected.forEach((elem) async {
       test('input: ${elem['input']}', () async {
-        var _actual = Quadgrams.decompressQuadgrams(elem['input'], elem['size']);
+        var _actual = Quadgrams.decompressQuadgrams(elem['input'] as Map<int,List<int>>, elem['size'] as int);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -142,7 +142,7 @@ void main() {
 //   // Or: Do tests with a hand-written minimum word list
 //
 //   group("substitution_breaker.breaker:", () {
-//     List<Map<String, dynamic>> _inputsToExpected = [
+//     List<Map<String, Object?>> _inputsToExpected = [
 //       {'input' : null, 'alphabet' : BreakerAlphabet.English, 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
 //       {'input' : '', 'alphabet' : BreakerAlphabet.English, 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
 //
@@ -156,7 +156,7 @@ void main() {
 //       test('input: ${elem['input']}', () async {
 //
 //         var quad = await getQuadgram(elem['alphabet']);
-//         var _actual = break_cipher(elem['input'], quad);
+//         var _actual = break_cipher(elem['input'] as String?, quad);
 //         expect(_actual.plaintext, elem['expectedOutput']);
 //         expect(_actual.errorCode, elem['errorCode']);
 //       });
@@ -167,7 +167,7 @@ void main() {
 //     var en = EnglishQuadgrams();
 //     var de = GermanQuadgrams();
 //
-//     List<Map<String, dynamic>> _inputsToExpected = [
+//     List<Map<String, Object?>> _inputsToExpected = [
 //
 //       {'input' : null, 'expectedOutput' : null},
 //       {'input' : '', 'expectedOutput' : null},
@@ -181,7 +181,7 @@ void main() {
 //
 //     _inputsToExpected.forEach((elem) async {
 //       test('input: ${elem['input']}', () async {
-//         var _actual = calc_fitness(elem['input'], alphabet: elem['alphabet'], quadgrams: await en.quadgrams()); // elem['quadgrams']
+//         var _actual = calc_fitness(elem['input'] as String?, alphabet: elem['alphabet'], quadgrams: await en.quadgrams()); // elem['quadgrams']
 //         expect(_actual != null ? _actual.round() : _actual, elem['expectedOutput']);
 //       });
 //     });

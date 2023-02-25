@@ -108,7 +108,7 @@ class RALColorCodesState extends State<RALColorCodes> {
     ];
   }
 
-  _buildColorToRALOutput() {
+  Widget _buildColorToRALOutput() {
     var rgb = convertColorSpace(_currentInput, ColorSpaceKey.RGB);
     var similarRALs = findSimilarRALColors(rgb.toRGB());
 
@@ -130,7 +130,7 @@ class RALColorCodesState extends State<RALColorCodes> {
         );
   }
 
-  _buildRALToColorOutput() {
+  Widget _buildRALToColorOutput() {
     var rgbColor = HexCode(_currentValue.value.colorcode).toRGB();
 
     var name = _currentValue.value.name;

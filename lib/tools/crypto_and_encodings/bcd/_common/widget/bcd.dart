@@ -8,15 +8,15 @@ import 'package:gc_wizard/tools/crypto_and_encodings/bcd/_common/logic/bcd.dart'
 abstract class AbstractBCD extends StatefulWidget {
   final BCDType type;
 
-  AbstractBCD({Key? key, this.type}) : super(key: key);
+  AbstractBCD({Key? key, required this.type}) : super(key: key);
 
   @override
   AbstractBCDState createState() => AbstractBCDState();
 }
 
 class AbstractBCDState extends State<AbstractBCD> {
-  var _encodeController;
-  var _decodeController;
+  late TextEditingController _encodeController;
+  late TextEditingController _decodeController;
 
   var _encodeMaskFormatter = WrapperForMaskTextInputFormatter(mask: '#' * 10000, // allow 10000 characters input
       filter: {"#": RegExp(r'[0-9]')});

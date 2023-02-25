@@ -48,7 +48,7 @@ void main() {
   }
 
   group("TextAnalysis.analyseText:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' :
         TextAnalysisCharacterCounts(
@@ -78,14 +78,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = analyzeText(elem['input']);
-        expect(equalsTextAnalysisResults(_actual, elem['expectedOutput']), true);
+        var _actual = analyzeText(elem['input'] as String);
+        expect(equalsTextAnalysisResults(_actual, elem['expectedOutput'] as TextAnalysisCharacterCounts), true);
       });
     });
   });
 
   group("TextAnalysis.analyseTextNotCaseSensitive:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : 'ABC-def d123D', 'expectedOutput' :
         TextAnalysisCharacterCounts(
           letters: SplayTreeMap<String, int>.from(<String, int>{'A': 1, 'B': 1, 'C': 1, 'D': 3, 'E': 1, 'F': 1}),
@@ -98,8 +98,8 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = analyzeText(elem['input'], caseSensitive: false);
-        expect(equalsTextAnalysisResults(_actual, elem['expectedOutput']), true);
+        var _actual = analyzeText(elem['input'] as String, caseSensitive: false);
+        expect(equalsTextAnalysisResults(_actual, elem['expectedOutput'] as TextAnalysisCharacterCounts), true);
       });
     });
   });

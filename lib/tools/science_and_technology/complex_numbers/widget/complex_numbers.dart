@@ -20,10 +20,10 @@ class ComplexNumbersState extends State<ComplexNumbers> {
   var _currentB = '';
   var _currentRadius = '';
   var _currentAngle = '';
-  var _aController;
-  var _bController;
-  var _radiusController;
-  var _angleController;
+  late TextEditingController _aController;
+  late TextEditingController _bController;
+  late TextEditingController _radiusController;
+  late TextEditingController _angleController;
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 

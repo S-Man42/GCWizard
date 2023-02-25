@@ -147,7 +147,7 @@ class CompoundInterestState extends State<CompoundInterest> {
     }
   }
 
-  _buildOutput() {
+  String _buildOutput() {
     var number = 0.0;
     var frequency = compoundFrequency(_currentCompoundFrequency);
 
@@ -187,7 +187,7 @@ class CompoundInterestState extends State<CompoundInterest> {
       }
     }
 
-    var formatString;
+    String formatString;
     switch (_currentMode) {
       case _MODE_PRINCIPALSUM:
         formatString = '0.000';
@@ -201,6 +201,8 @@ class CompoundInterestState extends State<CompoundInterest> {
       case _MODE_TOTALYEARS:
         formatString = '0.000#####';
         break;
+      default:
+        formatString = '0.000';
     }
 
     return NumberFormat(formatString).format(number) + (_currentMode == _MODE_ANNUALRATE ? ' %' : '');

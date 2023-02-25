@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/science_and_technology/primes/_common/logic/prim
 
 void main() {
   group("Primes.getNthPrime:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : -1},
       {'input' : -1, 'expectedOutput' : -1},
       {'input' : 0, 'expectedOutput' : -1},
@@ -18,14 +18,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = getNthPrime(elem['input']);
+        var _actual = getNthPrime(elem['input'] as int?);
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
   group("Primes.getPrimeIndex:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : -1},
       {'input' : -1, 'expectedOutput' : -1},
       {'input' : 0, 'expectedOutput' : -1},
@@ -46,14 +46,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = getPrimeIndex(elem['input']);
+        var _actual = getPrimeIndex(elem['input'] as int?);
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
   group("Primes.getNearestPrime:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : -100, 'expectedOutput' : [2]},
       {'input' : -1, 'expectedOutput' : [2]},
@@ -79,14 +79,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = getNearestPrime(elem['input']);
+        var _actual = getNearestPrime(elem['input'] as int?);
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
   group("Primes.getNextPrime:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : 1000001, 'expectedOutput' : null},
 
@@ -111,14 +111,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = getNextPrime(elem['input']);
+        var _actual = getNextPrime(elem['input'] as int?);
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
   group("Primes.getPreviousPrime:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : -1, 'expectedOutput' : null},
       {'input' : 0, 'expectedOutput' : null},
@@ -139,7 +139,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = getPreviousPrime(elem['input']);
+        var _actual = getPreviousPrime(elem['input'] as int?);
         expect(_actual, elem['expectedOutput']);
       });
     });

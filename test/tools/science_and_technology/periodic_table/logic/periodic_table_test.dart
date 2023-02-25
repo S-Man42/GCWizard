@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/science_and_technology/periodic_table/_common/lo
 
 void main() {
   group("PeriodicTable.atomicNumbersToText:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'atomicNumbers' : null, 'expectedOutput' : ''},
       {'atomicNumbers' : <int>[], 'expectedOutput' : ''},
 
@@ -14,14 +14,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('atomicNumbers: ${elem['atomicNumbers']}', () {
-        var _actual = atomicNumbersToText(elem['atomicNumbers']);
+        var _actual = atomicNumbersToText(elem['atomicNumbers'] as List<int>);
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
   group("PeriodicTable.textToAtomicNumbers:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'expectedOutput' : <int>[], 'text' : null},
       {'expectedOutput' : <int>[], 'text' : ''},
 
@@ -36,7 +36,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}', () {
-        var _actual = textToAtomicNumbers(elem['text']);
+        var _actual = textToAtomicNumbers(elem['text'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     });

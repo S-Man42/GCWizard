@@ -15,7 +15,7 @@ class Gade extends StatefulWidget {
 }
 
 class GadeState extends State<Gade> {
-  var _GadeInputController;
+  late TextEditingController _GadeInputController;
   String _currentGadeInput = '';
 
   bool _currentParseLetters = true;

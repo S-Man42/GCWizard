@@ -30,9 +30,9 @@ class SegmentBearingsState extends State<SegmentBearings> {
   var _currentCoords1 = defaultCoordinate;
   var _currentCoords2 = defaultCoordinate;
 
-  var _currentCoordsFormatStart = defaultCoordFormat();
-  var _currentCoordsFormat1 = defaultCoordFormat();
-  var _currentCoordsFormat2 = defaultCoordFormat();
+  var _currentCoordsFormatStart = defaultCoordinateFormat;
+  var _currentCoordsFormat1 = defaultCoordinateFormat;
+  var _currentCoordsFormat2 = defaultCoordinateFormat;
 
   var _currentInput1Mode = GCWSwitchPosition.left;
   var _currentInput2Mode = GCWSwitchPosition.left;
@@ -45,7 +45,7 @@ class SegmentBearingsState extends State<SegmentBearings> {
   var _currentMapPoints = <GCWMapPoint>[];
   var _currentMapPolylines = <GCWMapPolyline>[];
 
-  var _currentOutputFormat = defaultCoordFormat();
+  var _currentOutputFormat = defaultCoordinateFormat;
 
   List<String> _currentOutputs = [];
   Widget _currentBearingOutput = Container();
@@ -187,7 +187,7 @@ class SegmentBearingsState extends State<SegmentBearings> {
     if (_currentInput1Mode == GCWSwitchPosition.left) {
       endPoint1 = projection(_currentCoordsStart, _currentBearing1, _currentDistance, ells);
       bearing1 = _currentBearing1;
-      format1 = defaultCoordFormat();
+      format1 = defaultCoordinateFormat;
     } else {
       endPoint1 = _currentCoords1;
       bearing1 = distanceBearing(_currentCoordsStart, _currentCoords1, ells).bearingAToB;
@@ -203,7 +203,7 @@ class SegmentBearingsState extends State<SegmentBearings> {
     if (_currentInput2Mode == GCWSwitchPosition.left) {
       endPoint2 = projection(_currentCoordsStart, _currentBearing2, _currentDistance, ells);
       bearing2 = _currentBearing2;
-      format2 = defaultCoordFormat();
+      format2 = defaultCoordinateFormat;
     } else {
       endPoint2 = _currentCoords2;
       bearing2 = distanceBearing(_currentCoordsStart, _currentCoords2, ells).bearingAToB;

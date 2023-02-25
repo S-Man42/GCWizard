@@ -21,13 +21,13 @@ class EquilateralTriangle extends StatefulWidget {
 class EquilateralTriangleState extends State<EquilateralTriangle> {
   var _currentIntersections = [];
 
-  var _currentCoordsFormat1 = defaultCoordFormat();
+  var _currentCoordsFormat1 = defaultCoordinateFormat;
   var _currentCoords1 = defaultCoordinate;
 
-  var _currentCoordsFormat2 = defaultCoordFormat();
+  var _currentCoordsFormat2 = defaultCoordinateFormat;
   var _currentCoords2 = defaultCoordinate;
 
-  var _currentOutputFormat = defaultCoordFormat();
+  var _currentOutputFormat = defaultCoordinateFormat;
   List<String> _currentOutput = [];
 
   var _currentMapPoints = <GCWMapPoint>[];

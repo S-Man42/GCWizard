@@ -76,7 +76,7 @@ void main() {
 
 
   group("animated_image_morse_code.foundSignalTimes:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : signal1, 'expectedOutput' : Tuple3<int, int, int>(700, 700, 1250 )},
       {'input' : signal2, 'expectedOutput' : Tuple3<int, int, int>(700, 700, 1250 )},
       {'input' : signal3, 'expectedOutput' : Tuple3<int, int, int>(685, 685, 1260 )},
@@ -86,14 +86,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = foundSignalTimes(elem['input']);
+        var _actual = foundSignalTimes(elem['input'] as List<Tuple2<bool, int>>);
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
   group("animated_image_morse_code.analyseImageMorseCode:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : 'Der kleine Preuße.gif', ''
           'expectedOutputMorse' : ' | ..-. ..- . -. ..-. -.. .-. . .. -.. .-. . .. .- -.-. .... - -. . ..- -. -. ..- .-.. .-.. -. . ..- -. | -. ..- .-.. -. ..- .-.. .-.. .- -.-. .... - --.. .-- . .. -. . ..- -. ... . -.-. .... ... -. . .. | -. ...- .. . .-. ',
           'expectedOutputText' : ' FUENFDREIDREIACHTNEUNNULLNEUN NULNULLACHTZWEINEUNSECHSNEI NVIER'},
@@ -107,7 +107,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () async {
-        var _outData = await analyseImageMorseCode(_getFileData(elem['input']));
+        var _outData = await analyseImageMorseCode(_getFileData(elem['input'] as String));
         List<int> durations = _outData!.durations;
         List<Uint8List> images = _outData.images;
         List<List<int>> imagesFiltered = _outData.imagesFiltered;

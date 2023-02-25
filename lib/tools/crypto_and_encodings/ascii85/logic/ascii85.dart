@@ -26,10 +26,8 @@ const BASE85_POW = [1, 85, 85 * 85, 85 * 85 * 85, 85 * 85 * 85 * 85];
  * The version that is likely most similar that is implemented here would be the Adobe version.
  * @see <a href="https://en.wikipedia.org/wiki/Ascii85">Ascii85</a>
  */
-String encodeASCII85(Uint8List payload) {
-  if (payload == null) {
-    return null;
-  }
+String? encodeASCII85(Uint8List? payload) {
+  if (payload == null) return null;
 
   var out = '';
   //We break the payload into int (4 bytes)
@@ -84,10 +82,8 @@ String _encodeChunk(int value) {
  * @param chars The input characters that are base85 encoded.
  * @return The binary data decoded from the input
  */
-Uint8List decodeASCII85(String chars) {
-  if (chars == null) {
-    return null;
-  }
+Uint8List? decodeASCII85(String? chars) {
+  if (chars == null) return null;
 
   Uint8List bytebuff = Uint8List(chars.length);
   int bufferIndex = 0;
@@ -130,7 +126,8 @@ Uint8List decodeASCII85(String chars) {
     int numPadded = chunk.length - chunkIndex;
     for (int j = chunkIndex; j < chunk.length; j++) chunk[j] = 'u'.codeUnitAt(0);
 
-    Uint8List paddedDecode = _decodeChunk(chunk);
+    var paddedDecode = _decodeChunk(chunk);
+    if (paddedDecode == null) return null;
     for (int i = 0; i < paddedDecode.length - numPadded; i++) {
       bytebuff[bufferIndex++] = paddedDecode[i];
     }
@@ -139,10 +136,8 @@ Uint8List decodeASCII85(String chars) {
   return bytebuff.sublist(0, bufferIndex);
 }
 
-Uint8List _decodeChunk(Uint8List chunk) {
-  if (chunk.length != 5) {
-    return null;
-  }
+Uint8List? _decodeChunk(Uint8List chunk) {
+  if (chunk.length != 5) return null;
 
   int value = 0;
   value += (chunk[0] - ASCII_SHIFT) * BASE85_POW[4];

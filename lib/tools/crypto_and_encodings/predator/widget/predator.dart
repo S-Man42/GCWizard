@@ -23,7 +23,7 @@ class PredatorState extends State<Predator> {
   String _currentEncodeInput = '';
   late TextEditingController _encodeController;
 
-  List<List<String>> _currentDisplays = [];
+  var _currentDisplays = Segments.Empty();
   var _currentMode = GCWSwitchPosition.right;
 
   @override
@@ -69,13 +69,7 @@ class PredatorState extends State<Predator> {
   }
 
   Widget _buildVisualDecryption() {
-    Map<String, bool> currentDisplay;
-
-    var displays = _currentDisplays;
-    if (displays != null && displays.isNotEmpty)
-      currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [], key: (e) => e, value: (e) => true);
-    else
-      currentDisplay = {};
+    var currentDisplay = buildSegmentMap(_currentDisplays);
 
     var onChanged = (Map<String, bool> d) {
       setState(() {
@@ -85,11 +79,7 @@ class PredatorState extends State<Predator> {
           newSegments.add(key);
         });
 
-        newSegments.sort();
-
-        if (_currentDisplays.isEmpty) _currentDisplays.add([]);
-
-        _currentDisplays[_currentDisplays.length - 1] = newSegments;
+        _currentDisplays.replaceLastSegment(newSegments);
       });
     };
 
@@ -115,7 +105,7 @@ class PredatorState extends State<Predator> {
             icon: Icons.space_bar,
             onPressed: () {
               setState(() {
-                _currentDisplays.add([]);
+                _currentDisplays.addEmptySegment();
               });
             },
           ),
@@ -123,7 +113,7 @@ class PredatorState extends State<Predator> {
             icon: Icons.backspace,
             onPressed: () {
               setState(() {
-                if (_currentDisplays.isNotEmpty) _currentDisplays.removeLast();
+                _currentDisplays.removeLastSegment();
               });
             },
           ),
@@ -131,7 +121,7 @@ class PredatorState extends State<Predator> {
             icon: Icons.clear,
             onPressed: () {
               setState(() {
-                _currentDisplays = [];
+                _currentDisplays = Segments.Empty();
               });
             },
           )
@@ -140,7 +130,7 @@ class PredatorState extends State<Predator> {
     );
   }
 
-  Widget _buildDigitalOutput(List<List<String>> segments) {
+  Widget _buildDigitalOutput(Segments segments) {
     return SegmentDisplayOutput(
         segmentFunction: (displayedSegments, readOnly) {
           return _PredatorSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
@@ -152,7 +142,7 @@ class PredatorState extends State<Predator> {
   Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       //encode
-      List<List<String>> segments = encodePredator(_currentEncodeInput);
+      var segments = encodePredator(_currentEncodeInput);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments),
@@ -160,14 +150,12 @@ class PredatorState extends State<Predator> {
       );
     } else {
       //decode
-      var output = _currentDisplays.where((character) => character != null).map((character) {
-        return character.join();
-      }).toList();
+      var output = _currentDisplays.buildOutput();
       var segments = decodePredator(output);
       return Column(
         children: <Widget>[
-          _buildDigitalOutput(segments['displays'] as List<List<String>>),
-          GCWDefaultOutput(child: (segments['chars'] as List<String>).join('')),
+          _buildDigitalOutput(segments),
+          GCWDefaultOutput(child: segments.chars.join('')),
         ],
       );
     }

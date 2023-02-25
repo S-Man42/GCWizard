@@ -12,7 +12,7 @@ String substitution(String? input, Map<String, String> substitutions, {bool case
   List<String> keys = [];
 
   //Copy map to keep the original one
-  var substCopy = {};
+  Map<String, String> substCopy = {};
   substitutions.entries.forEach((entry) {
     if (entry.key.isEmpty) return;
 
@@ -60,7 +60,7 @@ String substitution(String? input, Map<String, String> substitutions, {bool case
 
   var output = '';
   replacements.entries.forEach((entry) {
-    if (substCopy.containsKey(entry.value)) output += substCopy[entry.value];
+    if (substCopy.containsKey(entry.value)) output += substCopy[entry.value]!;
   });
 
   return output;

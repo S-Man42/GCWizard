@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/rc4/logic/rc4.dart';
 
 void main() {
   group("rc4.cryptRC4:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : '', 'format' : InputFormat.AUTO, 'key' : '', "keyFormat" : InputFormat.AUTO, 'expectedOutput' : '', 'outputFormat' : OutputFormat.TEXT, 'errorCode' : ErrorCode.OK},
       {'input' : '', 'format' : InputFormat.AUTO, 'key' : 'X', "keyFormat" : InputFormat.AUTO, 'expectedOutput' : '', 'outputFormat' : OutputFormat.TEXT, 'errorCode' : ErrorCode.OK},
 
@@ -40,7 +40,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = cryptRC4(elem['input'], elem['format'], elem['key'], elem['keyFormat'], elem['outputFormat']);
+        var _actual = cryptRC4(elem['input'] as String?, elem['format'] as InputFormat, elem['key'] as String?, elem['keyFormat'] as InputFormat, elem['outputFormat'] as OutputFormat);
         expect(_actual.output, elem['expectedOutput']);
         expect(_actual.errorCode, elem['errorCode']);
       });

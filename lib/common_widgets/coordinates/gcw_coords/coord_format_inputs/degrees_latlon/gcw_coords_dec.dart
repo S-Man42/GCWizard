@@ -1,5 +1,6 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
+//ignore: must_be_immutable
 class _GCWCoordsDEC extends StatefulWidget {
   final void Function(DEC) onChanged;
   BaseCoordinates coordinates;
@@ -56,11 +57,11 @@ class _GCWCoordsDECState extends State<_GCWCoordsDEC> {
     var dec = widget.coordinates is DEC ? widget.coordinates as DEC : DEC.fromLatLon(widget.coordinates.toLatLng());
     _currentLatDegrees = dec.latitude.abs().floor().toString();
     _currentLatMilliDegrees = dec.latitude.toString().split('.')[1];
-    _currentLatSign = coordinateSign(dec.latitude);
+    _currentLatSign = sign(dec.latitude);
 
     _currentLonDegrees = dec.longitude.abs().floor().toString();
     _currentLonMilliDegrees = dec.longitude.toString().split('.')[1];
-    _currentLonSign = coordinateSign(dec.longitude);
+    _currentLonSign = sign(dec.longitude);
 
     _LatDegreesController.text = _currentLatDegrees;
     _LatMilliDegreesController.text = _currentLatMilliDegrees;

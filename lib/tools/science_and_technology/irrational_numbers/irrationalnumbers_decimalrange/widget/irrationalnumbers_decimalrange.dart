@@ -61,7 +61,7 @@ class IrrationalNumbersDecimalRangeState extends State<IrrationalNumbersDecimalR
     );
   }
 
-  _calculateOutput() {
+  String _calculateOutput() {
     if (_currentStart < 1) return '';
 
     try {

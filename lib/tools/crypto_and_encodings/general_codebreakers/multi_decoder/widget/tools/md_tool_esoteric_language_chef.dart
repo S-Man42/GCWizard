@@ -7,6 +7,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_langua
 import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/widget/chef_language.dart'
     as chefWidget;
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/multi_decoder.dart';
+import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 
 const MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_CHEF = 'chef_title';
 const MDT_ESOTERIC_LANGUAGE_CHEF_OPTION_MODE = 'settings_general_i18n_language';
@@ -19,7 +20,7 @@ class MultiDecoderToolEsotericLanguageChef extends AbstractMultiDecoderTool {
     Key? key,
     required int id,
     required String name,
-    required Map<String, Object> options,
+    required Map<String, Object?> options,
     required BuildContext context})
       : super(
             key: key,

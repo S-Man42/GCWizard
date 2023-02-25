@@ -16,7 +16,7 @@ class NumeralBases extends StatefulWidget {
 }
 
 class NumeralBasesState extends State<NumeralBases> {
-  var _controller;
+  late TextEditingController _controller;
 
   String _currentInput = '';
   int _currentFromKey = 16;

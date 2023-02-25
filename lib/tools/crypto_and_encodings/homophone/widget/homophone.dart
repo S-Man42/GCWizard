@@ -79,7 +79,7 @@ class HomophoneState extends State<Homophone> {
     return '';
   }
 
-  _addEntry(String currentFromInput, String currentToInput, FormulaValueType type, BuildContext context) {
+  void _addEntry(String currentFromInput, String currentToInput, FormulaValueType type, BuildContext context) {
     if (currentFromInput.isNotEmpty)
       _currentSubstitutions.putIfAbsent(currentFromInput.toUpperCase(), () => currentToInput);
 
@@ -88,12 +88,12 @@ class HomophoneState extends State<Homophone> {
     setState(() {});
   }
 
-  _updateEntry(Object id, String key, String value, FormulaValueType type) {
-    _currentSubstitutions[id] = value;
+  void _updateEntry(Object id, String key, String value, FormulaValueType type) {
+    _currentSubstitutions[id as String] = value;
     setState(() {});
   }
 
-  _removeEntry(Object id, BuildContext context) {
+  void _removeEntry(Object id, BuildContext context) {
     _currentSubstitutions.remove(id);
     setState(() {});
   }
@@ -284,7 +284,7 @@ class HomophoneState extends State<Homophone> {
     );
   }
 
-  _generateItemDescription(Alphabet alphabet) {
+  String? _generateItemDescription(Alphabet alphabet) {
     if (alphabet == alphabetGreek1) return i18n(context, 'alphabet_name_greek1_description');
     if (alphabet == alphabetGreek2) return i18n(context, 'alphabet_name_greek2_description');
 

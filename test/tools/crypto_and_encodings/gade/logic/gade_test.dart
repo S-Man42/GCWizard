@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/gade/logic/gade.dart';
 
 void main() {
   group("Gade.buildGade:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : '', 'expectedOutput' : {'A':'0', 'B':'1', 'C':'2', 'D':'3', 'E':'4', 'F':'5', 'G':'6', 'H':'7', 'I':'8', 'J':'9'}},
       {'input' : 'd', 'expectedOutput' : {'A':'0', 'B':'1', 'C':'2', 'D':'3', 'E':'4', 'F':'5', 'G':'6', 'H':'7', 'I':'8', 'J':'9'}},
       {'input' : '1', 'expectedOutput' : {'A':'1', 'B':'0', 'C':'2', 'D':'3', 'E':'4', 'F':'5', 'G':'6', 'H':'7', 'I':'8', 'J':'9'}},
@@ -13,7 +13,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = buildGade(elem['input']);
+        var _actual = buildGade(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     });

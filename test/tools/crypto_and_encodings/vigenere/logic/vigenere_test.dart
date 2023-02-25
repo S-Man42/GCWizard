@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/vigenere/logic/vigenere.dar
 
 void main() {
   group("Vigenere.encrypt:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'key': null, 'autoKey': false, 'aValue': 0, 'expectedOutput' : ''},
       {'input' : null, 'key': 'ABC', 'autoKey': false, 'aValue': 0, 'expectedOutput' : ''},
       {'input' : 'ABC', 'key': null, 'autoKey': false, 'aValue': 0, 'expectedOutput' : 'ABC'},
@@ -46,15 +46,15 @@ void main() {
     ];
 
     _inputsToExpected.forEach((elem) {
-      test('input: ${elem['input']}, key: ${elem['key']}, aValue: ${elem['aValue']}, autoKey: ${elem['autoKey']}', () {
-        var _actual = encryptVigenere(elem['input'], elem['key'], elem['autoKey'], aValue: elem['aValue']);
+      test('input: ${elem['input']}, key: ${elem['key']}, aValue: ${elem['aValue'] as BigInt?}, autoKey: ${elem['autoKey']}', () {
+        var _actual = encryptVigenere(elem['input'] as String?, elem['key'] as String?, elem['autoKey'] as bool, aValue: elem['aValue'] as int);
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
   group("Vigenere.encryptIgnoreNonLetters:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {
         'input' : 'Wie ich sehe hast du das Rätsel gelöst. Du wirst jetzt sicherlich die Koordinaten lesen wollen, keine Sorge, dass wirst du. Aber zunächst ',
         'key': 'beteigeuze',
@@ -66,14 +66,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, key: ${elem['key']}, aValue: ${elem['aValue']}, autoKey: ${elem['autoKey']}', () {
-        var _actual = encryptVigenere(elem['input'], elem['key'], elem['autoKey'], aValue: elem['aValue'], ignoreNonLetters: false);
+        var _actual = encryptVigenere(elem['input'] as String?, elem['key'] as String?, elem['autoKey'] as bool, aValue: elem['aValue'] as int, ignoreNonLetters: false);
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
   group("Vigenere.encryptKeyNumbers:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : 'AbCDeF', 'key': '12 13', 'autoKey': false, 'aValue': 1, 'expectedOutput' : 'MoOQqS'},
       {'input' : 'AbCDeF', 'key': '12    13', 'autoKey': false, 'aValue': 13, 'expectedOutput' : 'MoOQqS'},
       {'input' : 'AbCDeF', 'key': '12 ,13', 'autoKey': true, 'aValue': 1, 'expectedOutput' : 'MoDFhJ'},
@@ -84,14 +84,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, key: ${elem['key']}, aValue: ${elem['aValue']}, autoKey: ${elem['autoKey']}', () {
-        var _actual = encryptVigenere(elem['input'], elem['key'], elem['autoKey'], aValue: elem['aValue'], ignoreNonLetters: false);
+        var _actual = encryptVigenere(elem['input'] as String?, elem['key'] as String?, elem['autoKey'] as bool, aValue: elem['aValue'] as int, ignoreNonLetters: false);
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
   group("Vigenere.decrypt:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'key': null, 'autoKey': false, 'aValue': 0, 'expectedOutput' : ''},
       {'input' : null, 'key': 'ABC', 'autoKey': false, 'aValue': 0, 'expectedOutput' : ''},
       {'input' : 'ABC', 'key': null, 'autoKey': false, 'aValue': 0, 'expectedOutput' : 'ABC'},
@@ -135,14 +135,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, key: ${elem['key']}, aValue: ${elem['aValue']}, autoKey: ${elem['autoKey']}', () {
-        var _actual = decryptVigenere(elem['input'], elem['key'], elem['autoKey'], aValue: elem['aValue']);
+        var _actual = decryptVigenere(elem['input'] as String?, elem['key'] as String?, elem['autoKey'] as bool, aValue: elem['aValue'] as int);
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
   group("Vigenere.decryptIgnoreNonLetters:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {
         'expectedOutput' : 'Wie ich sehe hast du das Rätsel gelöst. Du wirst jetzt sicherlich die Koordinaten lesen wollen, keine Sorge, dass wirst du. Aber zunächst ',
         'key': 'beteigeuze',
@@ -161,14 +161,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, key: ${elem['key']}, aValue: ${elem['aValue']}, autoKey: ${elem['autoKey']}', () {
-        var _actual = decryptVigenere(elem['input'], elem['key'], elem['autoKey'], aValue: elem['aValue'], ignoreNonLetters: false);
+        var _actual = decryptVigenere(elem['input'] as String?, elem['key'] as String?, elem['autoKey'] as bool, aValue: elem['aValue'] as int, ignoreNonLetters: false);
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
   group("Vigenere.decryptKeyNumbers:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'expectedOutput' : 'AbCDeF', 'key': '12 13', 'autoKey': false, 'aValue': 1, 'input' : 'MoOQqS'},
       {'expectedOutput' : 'AbCDeF', 'key': '12    13', 'autoKey': false, 'aValue': 13, 'input' : 'MoOQqS'},
       {'expectedOutput' : 'AbCDeF', 'key': '12 ,13', 'autoKey': true, 'aValue': 1, 'input' : 'MoDFhJ'},
@@ -179,7 +179,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, key: ${elem['key']}, aValue: ${elem['aValue']}, autoKey: ${elem['autoKey']}', () {
-        var _actual = decryptVigenere(elem['input'], elem['key'], elem['autoKey'], aValue: elem['aValue'], ignoreNonLetters: false);
+        var _actual = decryptVigenere(elem['input'] as String?, elem['key'] as String?, elem['autoKey'] as bool, aValue: elem['aValue'] as int, ignoreNonLetters: false);
         expect(_actual, elem['expectedOutput']);
       });
     });

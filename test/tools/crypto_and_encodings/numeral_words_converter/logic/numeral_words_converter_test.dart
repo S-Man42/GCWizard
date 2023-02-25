@@ -5,7 +5,7 @@ import 'package:gc_wizard/utils/string_utils.dart';
 void main(){
 
   group("decode Navi:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       // empty input
       { 'input': null, 'language': NumeralWordsLanguage.NAVI,        'expectedOutput': OutputConvertToNumber(0, '', '', 'numeralwords_converter_error_navi')},
       { 'input': '', 'language': NumeralWordsLanguage.NAVI,        'expectedOutput': OutputConvertToNumber(0, '', '', '')},
@@ -34,17 +34,17 @@ void main(){
     _inputsToExpected.forEach((elem) {
       test(
           'input: ${elem['input']}, language: ${elem['language']}, ', () {
-        var _actual = decodeNumeralWordToNumber(elem['language'], removeAccents(elem['input'].toString().toLowerCase()));
+        var _actual = decodeNumeralWordToNumber(elem['language'] as NumeralWordsLanguage, removeAccents(elem['input'].toString().toLowerCase()));
         if (_actual.error == 'numeralwords_converter_error_navi')
-          expect(_actual.error, elem['expectedOutput'].error);
+          expect(_actual.error, (elem['expectedOutput'] as OutputConvertToNumber).error);
         else
-          expect(_actual.number, elem['expectedOutput'].number);
+          expect(_actual.number, (elem['expectedOutput'] as OutputConvertToNumber).number);
       });
     });
   });
 
   group("encode Navi:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       // zero input
       { 'input': null, 'language': NumeralWordsLanguage.NAVI,        'expectedOutput': OutputConvertToNumeralWord('', '', '', 'numeralwords_converter_error_navi')},
       { 'input': 0, 'language': NumeralWordsLanguage.NAVI,        'expectedOutput': OutputConvertToNumeralWord('kew', '', '', '')},
@@ -71,11 +71,11 @@ void main(){
     _inputsToExpected.forEach((elem) {
       test(
           'input: ${elem['input']}, language: ${elem['language']}, ', () {
-        var _actual = encodeNumberToNumeralWord(elem['language'], elem['input']);
+        var _actual = encodeNumberToNumeralWord(elem['language'] as NumeralWordsLanguage, elem['input'] as int?);
         if (_actual.error == 'numeralwords_converter_error_navi')
-          expect(_actual.error, elem['expectedOutput'].error);
+          expect(_actual.error, (elem['expectedOutput'] as OutputConvertToNumeralWord).error);
         else
-          expect(_actual.numeralWord, elem['expectedOutput'].numeralWord);
+          expect(_actual.numeralWord, (elem['expectedOutput'] as OutputConvertToNumeralWord).numeralWord);
       });
     });
   });

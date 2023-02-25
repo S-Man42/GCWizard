@@ -49,7 +49,7 @@ class _GeoMath {
     return x < 0 ? -y : y;
   }
 
-  static pi() {
+  static double pi() {
     return atan2(0.0, -1.0);
   }
 

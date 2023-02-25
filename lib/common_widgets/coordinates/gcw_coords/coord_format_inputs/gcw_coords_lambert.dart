@@ -3,7 +3,7 @@ part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart
 class _GCWCoordsLambert extends StatefulWidget {
   final void Function(Lambert) onChanged;
   final BaseCoordinates? coordinates;
-  final CoordFormatKey subtype;
+  final CoordinateFormatKey subtype;
 
   const _GCWCoordsLambert({Key? key, required this.onChanged, this.coordinates, this.subtype: defaultLambertType})
       : super(key: key);
@@ -22,7 +22,7 @@ class _GCWCoordsLambertState extends State<_GCWCoordsLambert> {
   var _currentSubtype = defaultLambertType;
 
   _setLambertSubType() {
-    if (isSubtypeOfCoordFormat(CoordFormatKey.LAMBERT, widget.subtype))
+    if (isSubtypeOfCoordinateFormat(CoordinateFormatKey.LAMBERT, widget.subtype))
       _currentSubtype = widget.subtype;
     else
       _currentSubtype = defaultLambertType;

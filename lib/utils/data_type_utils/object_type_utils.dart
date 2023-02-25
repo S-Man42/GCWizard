@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 bool isDouble(Object? value) {
   if (value == null) return false;
 
@@ -20,6 +22,12 @@ bool isString(Object? value) {
   if (value == null) return false;
 
   return (value is String);
+}
+
+bool isUint8List(Object? value) {
+  if (value == null) return false;
+
+  return (value is Uint8List);
 }
 
 bool isObjectList(Object? value) {
@@ -59,6 +67,13 @@ bool? toBoolOrNull(Object? value) {
 String? toStringOrNull(Object? value) {
   if (isString(value))
     return value as String;
+
+  return null;
+}
+
+Uint8List? toUint8ListOrNull(Object? value) {
+  if (isUint8List(value))
+    return value as Uint8List;
 
   return null;
 }

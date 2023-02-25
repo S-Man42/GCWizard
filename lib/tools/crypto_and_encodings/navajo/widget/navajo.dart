@@ -12,8 +12,8 @@ class Navajo extends StatefulWidget {
 }
 
 class NavajoState extends State<Navajo> {
-  var _decodeController;
-  var _encodeController;
+  late TextEditingController _decodeController;
+  late TextEditingController _encodeController;
 
   String _currentEncodeInput = '';
   String _currentDecodeInput = '';
@@ -91,7 +91,7 @@ class NavajoState extends State<Navajo> {
     );
   }
 
-  _calculateOutput() {
+  void _calculateOutput() {
     if (_currentMode == GCWSwitchPosition.left)
       _output = encodeNavajo(_currentEncodeInput, (_currentSource == GCWSwitchPosition.right));
     else

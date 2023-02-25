@@ -30,7 +30,7 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
 
   var _currentEncodeInput = 0;
 
-  List<List<String>> _currentDisplays = [];
+  var _currentDisplays = Segments.Empty();
   var _currentMode = GCWSwitchPosition.right;
 
   Map<String, bool> _currentDisplay = {};
@@ -64,7 +64,7 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
     ]);
   }
 
-  _buildVisualDecryption() {
+  Widget _buildVisualDecryption() {
     var onChanged = (Map<String, bool> d) {
       setState(() {
         _currentDisplay = d;
@@ -74,13 +74,8 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
           if (!value) return;
           newSegments.add(key);
         });
-
-        newSegments.sort();
-        if (newSegments.length > 1) newSegments.remove('a');
-
-        if (_currentDisplays.isEmpty) _currentDisplays.add([]);
-
-        _currentDisplays[_currentDisplays.length - 1] = newSegments;
+        newSegments.remove('a');
+        _currentDisplays.replaceLastSegment(newSegments);
       });
     };
 
@@ -105,7 +100,7 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
             icon: Icons.space_bar,
             onPressed: () {
               setState(() {
-                _currentDisplays.add(['a']);
+                _currentDisplays.displays.add(['a']);
                 _currentDisplay = {'a': true};
               });
             },
@@ -114,18 +109,14 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
             icon: Icons.backspace,
             onPressed: () {
               setState(() {
-                if (_currentDisplays.isNotEmpty) {
-                  _currentDisplays.removeLast();
-                }
+                _currentDisplays.removeLastSegment();
 
-                if (_currentDisplays.isNotEmpty) {
+                if (_currentDisplays.displays.isNotEmpty) {
                   _currentDisplay = {};
-                  _currentDisplays.last.forEach((element) => _currentDisplay.putIfAbsent(element, () => true));
+                  _currentDisplays.displays.last.forEach((element) => _currentDisplay.putIfAbsent(element, () => true));
                   _currentDisplay.putIfAbsent('a', () => false);
                 } else {
-                  _currentDisplays = [
-                    ['a']
-                  ];
+                  _currentDisplays = Segments(displays: [['a']]);
                   _currentDisplay = {'a': true};
                 }
               });
@@ -135,9 +126,7 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
             icon: Icons.clear,
             onPressed: () {
               setState(() {
-                _currentDisplays = [
-                  ['a']
-                ];
+                _currentDisplays = Segments(displays: [['a']]);
                 _currentDisplay = {'a': true};
               });
             },
@@ -147,9 +136,9 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
     );
   }
 
-  String _segmentsToShadoks(List<List<String>> segments) {
+  String _segmentsToShadoks(Segments segments) {
     String result = '';
-    segments.forEach((element) {
+    segments.displays.forEach((element) {
       result = result + (_segmentToWord[element.join('')] ?? '');
     });
     return result;
@@ -185,9 +174,7 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
       );
     } else {
       //decode
-      var output = _currentDisplays.where((character) => character != null).map((character) {
-        return character.join();
-      }).toList();
+      var output = _currentDisplays.buildOutput();
 
       var segments = decodeShadoksNumbers(output);
 
@@ -197,7 +184,7 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
               segmentFunction: (displayedSegments, readOnly) {
                 return _SanatizedShadoksNumbersSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
               },
-              segments: segments.displays,
+              segments: segments,
               readOnly: true),
           GCWOutput(title: i18n(context, 'shadoksnumbers_single_numbers'), child: segments.numbers.join(' ')),
           GCWOutput(title: i18n(context, 'shadoksnumbers_quaternary'), child: segments.quaternary),

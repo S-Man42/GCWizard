@@ -117,7 +117,7 @@ class SubstitutionState extends State<Substitution> {
         onRemoveEntry: _removeEntry);
   }
 
-  _calculateOutput() {
+  void _calculateOutput() {
     var _substitutions = <String, String>{};
     _currentSubstitutions.entries.forEach((entry) {
       _substitutions.putIfAbsent(entry.value.keys.first, () => entry.value.values.first);

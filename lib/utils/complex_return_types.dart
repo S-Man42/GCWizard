@@ -12,6 +12,13 @@ class IntegerText {
   IntegerText(this.text, this.value);
 }
 
+class BoolText {
+  String text;
+  bool value;
+
+  BoolText(this.text, this.value);
+}
+
 class IntegerListText {
   String text;
   List<int> value;
@@ -31,4 +38,11 @@ class DateTimeTimezone {
   Duration timezone;
 
   DateTimeTimezone({required this.datetime, required this.timezone});
+}
+
+class DateTimeDouble {
+  DateTime datetime;
+  double value;
+
+  DateTimeDouble({required this.datetime, required this.value});
 }

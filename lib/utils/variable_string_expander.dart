@@ -272,7 +272,7 @@ int preCheckCombinations(Map<String, String> substitutions) {
 
   var expander = VariableStringExpander('DUMMY', substitutions, onAfterExpandedText: (e) => null);
   var result = expander.run(onlyPrecheck: true);
-  if (result.length == 0 || result.first.count == null) return 0;
+  if (result.isEmpty || result.first.count == null) return 0;
 
   return result.first.count!;
 }

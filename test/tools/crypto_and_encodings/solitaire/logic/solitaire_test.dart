@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/solitaire/logic/solitaire.d
 
 void main() {
   group("Solitaire.encryptSolitaire:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'key': null, 'expectedOutput' : null, 'keyStream': null},
       {'input' : '', 'key': null, 'expectedOutput' : null, 'keyStream': null},
       {'input' : null, 'key': 'FOO', 'expectedOutput' : null, 'keyStream': null},
@@ -26,7 +26,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, key: ${elem['key']}', () {
-        var _actual = encryptSolitaire(elem['input'], elem['key']);
+        var _actual = encryptSolitaire(elem['input'] as String?, elem['key'] as String?);
 
         if (_actual == null) {
           expect(null, elem['expectedOutput']);
@@ -41,7 +41,7 @@ void main() {
   });
 
   group("Solitaire.decryptSolitaire:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'key': null, 'expectedOutput' : null, 'keyStream': null},
       {'input' : '', 'key': null, 'expectedOutput' : null, 'keyStream': null},
       {'input' : null, 'key': 'FOO', 'expectedOutput' : null, 'keyStream': null},
@@ -62,7 +62,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, key: ${elem['key']}', () {
-        var _actual = decryptSolitaire(elem['input'], elem['key']);
+        var _actual = decryptSolitaire(elem['input'] as String?, elem['key'] as String?);
 
         if (_actual == null) {
           expect(null, elem['expectedOutput']);

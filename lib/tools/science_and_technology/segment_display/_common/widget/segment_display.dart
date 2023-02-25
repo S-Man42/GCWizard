@@ -30,7 +30,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
   late TextEditingController _inputDecodeController;
   var _currentEncodeInput = '';
   var _currentDecodeInput = '';
-  var _currentDisplays = <List<String>>[];
+  var _currentDisplays = Segments.Empty();
   var _currentMode = GCWSwitchPosition.right;
   var _currentEncryptMode = GCWSwitchPosition.left;
 
@@ -101,14 +101,8 @@ class SegmentDisplayState extends State<SegmentDisplay> {
   }
 
   Widget _buildVisualEncryption() {
-    Map<String, bool> currentDisplay;
     NSegmentDisplay displayWidget;
-
-    var displays = _currentDisplays;
-    if (displays != null && displays.isNotEmpty)
-      currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [], key: (e) => e, value: (e) => true);
-    else
-      currentDisplay = {};
+    var currentDisplay = buildSegmentMap(_currentDisplays);
 
     var onChanged = (Map<String, bool> d) {
       setState(() {
@@ -122,12 +116,8 @@ class SegmentDisplayState extends State<SegmentDisplay> {
         //sort with dot to end
         var containsDot = newSegments.contains('dp');
         newSegments.remove('dp');
-        newSegments.sort();
-        if (containsDot) newSegments.add('dp');
 
-        if (_currentDisplays.isEmpty) _currentDisplays.add([]);
-
-        _currentDisplays[_currentDisplays.length - 1] = newSegments;
+        _currentDisplays.replaceLastSegment(newSegments, trailingDisplay: containsDot ? 'dp' : null);
       });
     };
 
@@ -172,7 +162,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
             icon: Icons.space_bar,
             onPressed: () {
               setState(() {
-                _currentDisplays.add([]);
+                _currentDisplays.addEmptySegment();
               });
             },
           ),
@@ -180,7 +170,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
             icon: Icons.backspace,
             onPressed: () {
               setState(() {
-                if (_currentDisplays.isNotEmpty) _currentDisplays.removeLast();
+                _currentDisplays.removeLastSegment();
               });
             },
           ),
@@ -188,7 +178,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
             icon: Icons.clear,
             onPressed: () {
               setState(() {
-                _currentDisplays = [];
+                _currentDisplays = Segments.Empty();
               });
             },
           )
@@ -196,17 +186,17 @@ class SegmentDisplayState extends State<SegmentDisplay> {
         GCWTextDivider(text: i18n(context, 'segmentdisplay_encodemode_visualsegments_input')),
         GCWText(
             text: decodeSegment(
-                _currentDisplays.map((character) {
+                _currentDisplays.displays.map((character) {
                   if (character == null) return UNKNOWN_ELEMENT;
 
                   return character.join();
                 }).join(' '),
-                widget.type)['text'])
+                widget.type).text)
       ],
     );
   }
 
-  Widget _buildDigitalOutput(List<List<String>> segments) {
+  Widget _buildDigitalOutput(Segments segments) {
     return SegmentDisplayOutput(
         segmentFunction: (displayedSegments, readOnly) {
           switch (widget.type) {
@@ -235,13 +225,13 @@ class SegmentDisplayState extends State<SegmentDisplay> {
 
   Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
-      List<List<String>> segments;
+      Segments segments;
       if (_currentEncryptMode == GCWSwitchPosition.left)
         segments = encodeSegment(_currentEncodeInput, widget.type);
       else
         segments = _currentDisplays;
 
-      var output = segments.map((character) {
+      var output = segments.displays.map((character) {
         if (character == null) return UNKNOWN_ELEMENT;
 
         return character.join();
@@ -254,7 +244,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
       var segments = decodeSegment(_currentDecodeInput, widget.type);
 
       return Column(
-        children: <Widget>[_buildDigitalOutput(segments['displays']), GCWDefaultOutput(child: segments['text'])],
+        children: <Widget>[_buildDigitalOutput(segments), GCWDefaultOutput(child: segments.text)],
       );
     }
   }

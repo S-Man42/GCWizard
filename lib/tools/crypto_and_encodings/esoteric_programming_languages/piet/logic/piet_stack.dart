@@ -3,6 +3,7 @@ part of 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_langu
 class _PietStack {
   List<int> _stack = <int>[];
   int get length => _stack.length;
+  bool get isNotEmpty => length > 0;
 
   void push(int? value) {
     if (value == null) return;
@@ -68,31 +69,37 @@ class _PietStack {
     push(result);
   }
 
-  int _applyTernary(Function operatorFunc) {
+  int _applyTernary(int? Function(int, int) operatorFunc) {
     var ret = tryPop2();
     var stackResults = ret.item2;
     if (!ret.item1) return 0; //null
 
     var top = stackResults.item1;
     var second = stackResults.item2;
+    if (top == null || second == null) return 0; //null
 
     var result = operatorFunc(top, second);
     push(result);
+    if (result == null) return 0; //null
+
     return result;
   }
 
-  bool _applyTernaryIf(Function operatorFunc, Function conditionalFunc) {
+  bool _applyTernaryIf(int Function(int, int) operatorFunc, bool Function(int, int) conditionalFunc) {
     var ret = tryPop2();
     var stackResults = ret.item2;
     if (!ret.item1) return false;
 
     var top = stackResults.item1;
     var second = stackResults.item2;
+    if (top == null || second == null) return false; //null
 
     if (!conditionalFunc(top, second)) return false;
 
     var result = operatorFunc(top, second);
     push(result);
+    if (result == null) return false; //null
+
     return true;
   }
 

@@ -29,11 +29,11 @@ class CenterThreePointsState extends State<CenterThreePoints> {
   var _currentCoords2 = defaultCoordinate;
   var _currentCoords3 = defaultCoordinate;
 
-  var _currentCoordsFormat1 = defaultCoordFormat();
-  var _currentCoordsFormat2 = defaultCoordFormat();
-  var _currentCoordsFormat3 = defaultCoordFormat();
+  var _currentCoordsFormat1 = defaultCoordinateFormat;
+  var _currentCoordsFormat2 = defaultCoordinateFormat;
+  var _currentCoordsFormat3 = defaultCoordinateFormat;
 
-  var _currentOutputFormat = defaultCoordFormat();
+  var _currentOutputFormat = defaultCoordinateFormat;
   Length _currentOutputUnit = UNITCATEGORY_LENGTH.defaultUnit;
   List<String> _currentOutput = [];
 

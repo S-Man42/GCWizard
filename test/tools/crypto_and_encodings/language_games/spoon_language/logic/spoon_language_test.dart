@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/language_games/spoon_langua
 
 void main() {
   group('spoon_language.encryptSpoonLanguage:', () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
 
       {'input' : 'Hallo Welt', 'expectedOutput' : 'halewallolewo welewelt'},
@@ -29,14 +29,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encryptSpoonLanguage(elem['input']);
+        var _actual = encryptSpoonLanguage(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
   group('spoon_language.decryptSpoonLanguage:', () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
 
       {'expectedOutput' : 'hallo welt', 'input' : 'halewallolewo welewelt'},
@@ -62,7 +62,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decryptSpoonLanguage(elem['input']);
+        var _actual = decryptSpoonLanguage(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });

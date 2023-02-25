@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/mexican_army_cipher_wheel/l
 
 void main() {
   group("MexicanArmyCipherWheel.encryptMexicanArmyCipherWheel:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'keys': <int>[], 'expectedOutput' : ''},
       {'input' : '', 'keys': <int>[], 'expectedOutput' : ''},
 
@@ -51,15 +51,15 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, keys: ${elem['keys']}', () {
         for (int i = 0; i < 1000; i++) {
-          var _actual = encryptMexicanArmyCipherWheel(elem['input'], elem['keys']);
-          expect(elem['expectedOutput'].contains(_actual), true);
+          var _actual = encryptMexicanArmyCipherWheel(elem['input'] as String?, elem['keys'] as List<int>);
+          expect((elem['expectedOutput'] as String).contains(_actual), true);
         }
       });
     });
   });
 
   group("MexicanArmyCipherWheel.decryptMexicanArmyCipherWheel:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'expectedOutput' : '', 'keys': <int>[], 'input' : ''},
       {'expectedOutput' : '', 'keys': <int>[], 'input' : null},
 
@@ -76,7 +76,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, keys: ${elem['keys']}', () {
-        var _actual = decryptMexicanArmyCipherWheel(elem['input'], elem['keys']);
+        var _actual = decryptMexicanArmyCipherWheel(elem['input'] as String?, elem['keys'] as List<int>);
         expect(_actual, elem['expectedOutput']);
       });
     });

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/persistence/model.dart';
+import 'package:gc_wizard/utils/json_utils.dart';
 import 'package:gc_wizard/utils/persistence_utils.dart';
 import 'package:prefs/prefs.dart';
 
@@ -10,7 +11,7 @@ void refreshMultiDecoderTools() {
   if (tools.isEmpty) return;
 
   multiDecoderTools = tools.where((tool) => tool.isNotEmpty).map((tool) {
-    return MultiDecoderToolEntity.fromJson(jsonDecode(tool));
+    return MultiDecoderToolEntity.fromJson(asJsonMap(jsonDecode(tool)));
   }).toList();
 }
 

@@ -6,7 +6,7 @@ class MultiDecoder extends StatefulWidget {
 }
 
 class MultiDecoderState extends State<MultiDecoder> {
-  var _controller;
+  late TextEditingController _controller;
   List<AbstractMultiDecoderTool> mdtTools = [];
 
   String _currentInput = '';
@@ -30,7 +30,7 @@ class MultiDecoderState extends State<MultiDecoder> {
     super.dispose();
   }
 
-  _refreshMDTTools() {
+  void _refreshMDTTools() {
     mdtTools = model.multiDecoderTools.map((mdtTool) {
       return _multiDecoderToolToGCWMultiDecoderTool(context, mdtTool);
     }).toList();
@@ -131,8 +131,8 @@ class MultiDecoderState extends State<MultiDecoder> {
       String result = value.toString();
 
       if (tool.internalToolName == MDT_INTERNALNAMES_COORDINATEFORMATS) {
-        if (CoordFormatKey.values.contains(value))
-          result = getCoordinateFormatByKey(value as CoordFormatKey).name;
+        if (CoordinateFormatKey.values.contains(value))
+          result = getCoordinateFormatByKey(value as CoordinateFormatKey).name;
       }
       if ([MDT_INTERNALNAMES_BASE, MDT_INTERNALNAMES_BCD].contains(tool.internalToolName)) {
         result += '_title';
@@ -147,14 +147,14 @@ class MultiDecoderState extends State<MultiDecoder> {
     return result;
   }
 
-  _initOutput() {
+  void _initOutput() {
     _currentOutput = Column(
         children: mdtTools.map((tool) {
       return GCWTextDivider(text: _toolTitle(tool));
     }).toList());
   }
 
-  _calculateOutput() {
+  void _calculateOutput() {
     var results = mdtTools.map((tool) {
       Object? result;
 

@@ -148,7 +148,7 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
           Expanded(
             child: Container(
                 child: GCWDropDown<int>(
-                  value: _currentChosenTool,
+                  value: _currentChosenTool ?? -1,
                   onChanged: (value) {
                     setState(() {
                       _currentChosenTool = value;
@@ -190,7 +190,7 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
     );
   }
 
-  _buildToollist() {
+  Widget _buildToollist() {
     var odd = true;
     var rows = mdtTools.map((tool) {
       var row = Row(
@@ -224,8 +224,8 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
                               var value = entry.value.toString();
 
                               if (tool.internalToolName == MDT_INTERNALNAMES_COORDINATEFORMATS) {
-                                if (CoordFormatKey.values.contains(value))
-                                  value = getCoordinateFormatByKey(value as CoordFormatKey).name;
+                                if (CoordinateFormatKey.values.contains(value))
+                                  value = getCoordinateFormatByKey(value as CoordinateFormatKey).name;
                               } else if ([MDT_INTERNALNAMES_BASE, MDT_INTERNALNAMES_BCD]
                                   .contains(tool.internalToolName)) {
                                 value += '_title';

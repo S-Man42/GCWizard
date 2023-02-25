@@ -423,7 +423,7 @@ class VisualCryptographyState extends State<VisualCryptography> {
   //       });
   // }
 
-  // Future<GCWAsyncExecuterParameters> _buildJobDataOffsetAutoCalc(bool onlyX) async {
+  // Future<GCWAsyncExecuterParameters?> _buildJobDataOffsetAutoCalc(bool onlyX) async {
   //   return GCWAsyncExecuterParameters(Tuple4<Uint8List, Uint8List, int, int>(_decodeImage1?.bytes, _decodeImage2?.bytes, null, onlyX ? _decodeOffsetsX : null));
   // }
 

@@ -21,8 +21,8 @@ class RabbitOutput {
   RabbitOutput(this.output, this.keyHexFormat, this.ivHexFormat, this.errorCode);
 }
 
-RabbitOutput cryptRabbit(String? input, InputFormat inputFormat, String key, InputFormat keyFormat,
-    String initializationVector, InputFormat ivFormat, OutputFormat outputFormat) {
+RabbitOutput cryptRabbit(String? input, InputFormat inputFormat, String? key, InputFormat keyFormat,
+    String? initializationVector, InputFormat ivFormat, OutputFormat outputFormat) {
   if (input == null || input.isEmpty) return RabbitOutput('', null, null, ErrorCode.OK);
 
   var inputList = rc4.convertInputToIntList(input, _convertInputFormatEnum(inputFormat));
@@ -108,7 +108,7 @@ class Rabbit {
     initialized = _reSeedIV(iv);
   }
 
-  bool _reSeedIV(Uint8List iv) {
+  bool _reSeedIV(Uint8List? iv) {
     if (iv != null && iv.length != 8)
       // If IV is not NULL, then IV MUST be 8 bytes in length!
       return false;

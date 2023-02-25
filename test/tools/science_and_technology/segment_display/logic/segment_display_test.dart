@@ -4,7 +4,7 @@ import 'package:gc_wizard/utils/constants.dart';
 
 void main() {
   group("SegmentDisplay.encodeSegment:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': []},
       {'input' : '', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': []},
 
@@ -55,14 +55,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, segmentType: ${elem['segmentType']}', () {
-        var _actual = encodeSegment(elem['input'], elem['segmentType']);
-        expect(_actual, elem['expectedOutput']);
+        var _actual = encodeSegment(elem['input'] as String?, elem['segmentType'] as SegmentDisplayType);
+        expect(_actual.displays, elem['expectedOutput']);
       });
     });
   });
 
   group("SegmentDisplay.decodeSegment:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': {'displays':[], 'text': ''}},
       {'input' : '', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': {'displays':[], 'text': ''}},
 
@@ -111,7 +111,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, segmentType: ${elem['segmentType']}', () {
-        var _actual = decodeSegment(elem['input'], elem['segmentType']);
+        var _actual = decodeSegment(elem['input'] as String?, elem['segmentType'] as SegmentDisplayType);
         expect(_actual, elem['expectedOutput']);
       });
     });

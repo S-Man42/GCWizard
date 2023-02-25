@@ -70,7 +70,7 @@ class IrrationalNumbersSearchState extends State<IrrationalNumbersSearch> {
     );
   }
 
-  _calculateOutput() {
+  Object _calculateOutput() {
     if (_errorMessage != null) return i18n(context, _errorMessage!);
 
     if (_currentInput.isEmpty) return '';

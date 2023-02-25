@@ -17,10 +17,10 @@ class BurrowsWheeler extends StatefulWidget {
 }
 
 class BurrowsWheelerState extends State<BurrowsWheeler> {
-  var plainController;
-  var cipherController;
-  var indexNumberController;
-  var indexCharacterController;
+  late TextEditingController plainController;
+  late TextEditingController cipherController;
+  late TextEditingController indexNumberController;
+  late TextEditingController indexCharacterController;
 
   var currentMode = GCWSwitchPosition.right;
   var currentIndexType = GCWSwitchPosition.left;

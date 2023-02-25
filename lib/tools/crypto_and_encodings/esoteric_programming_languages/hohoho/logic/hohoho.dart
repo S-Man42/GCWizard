@@ -29,8 +29,8 @@ class HohohoOutput {
   HohohoOutput(this.output, this.error);
 }
 
-HohohoOutput interpretHohoho(String plainText, {String STDIN}) {
-  if (plainText.isEmpty || plainText == null) return HohohoOutput('', '');
+HohohoOutput interpretHohoho(String? plainText, {String? STDIN}) {
+  if (plainText == null || plainText.isEmpty) return HohohoOutput('', '');
 
   plainText = plainText.trim();
   String result = plainText.replaceAll('!', '').replaceAll(' ', '');
@@ -47,10 +47,10 @@ HohohoOutput interpretHohoho(String plainText, {String STDIN}) {
   }
 
   // convert to Brainfck
-  Map BRAINF_CK = switchMapKeyValue(_HOHOHO_SUBSTITUTIONS);
+  var BRAINF_CK = switchMapKeyValue(_HOHOHO_SUBSTITUTIONS);
   result = '';
   test.split(' ').forEach((element) {
-    if (BRAINF_CK[element] != null) result = result + BRAINF_CK[element];
+    if (BRAINF_CK[element] != null) result += (BRAINF_CK[element] ?? '');
   });
 
   // interpret
@@ -69,7 +69,7 @@ String generateHohoho(String OutputText) {
 
   // transfer to hohoho
   code.split('').forEach((element) {
-    result = result + _HOHOHO_SUBSTITUTIONS[element];
+    result += (_HOHOHO_SUBSTITUTIONS[element] ?? '');
   });
 
   // normalize

@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/science_and_technology/complex_numbers/logic/com
 
 void main() {
   group("ComplexNumbers.CartesianToPolar:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'a' : null, 'b' : null, 'expectedOutput' : ['']},
       {'a' : null, 'b' : '', 'expectedOutput' : ['']},
       {'a' : '', 'b' : null, 'expectedOutput' : ['']},
@@ -17,17 +17,17 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('a: ${elem['a']}, b: ${elem['b']}', () {
-        var _actual = CartesianToPolar(elem['a'], elem['b']);
+        var _actual = CartesianToPolar(elem['a'] as String?, elem['b'] as String?,);
         var coordinate = _actual.values;
         for (int i = 0; i < coordinate.length; i++) {
-          expect(coordinate.elementAt(i), elem['expectedOutput'][i]);
+          expect(coordinate.elementAt(i), (elem['expectedOutput'] as Map<String, String>)[i]);
         }
       });
     });
   });
 
   group("ComplexNumbers.PolarToCartesian:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'r' : null, 'a' : null, 'expectedOutput' : ['']},
       {'r' : null, 'a' : '', 'expectedOutput' : ['']},
       {'r' : '', 'a' : null, 'expectedOutput' : ['']},
@@ -41,10 +41,10 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('r: ${elem['r']}, a: ${elem['a']}', () {
-        var _actual = PolarToCartesian(elem['r'], elem['a']);
+        var _actual = PolarToCartesian(elem['r'] as String?, elem['a'] as String?);
         var coordinate = _actual.values;
         for (int i = 0; i < coordinate.length; i++) {
-          expect(coordinate.elementAt(i), elem['expectedOutput'][i]);
+          expect(coordinate.elementAt(i), (elem['expectedOutput'] as Map<String, String>)[i]);
         }
       });
     });

@@ -82,7 +82,7 @@ class TapCodeState extends State<TapCode> {
     );
   }
 
-  _calculateOutput() {
+  String _calculateOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       return encryptTapCode(_currentEncryptionInput, mode: _currentModificationMode);
     } else {

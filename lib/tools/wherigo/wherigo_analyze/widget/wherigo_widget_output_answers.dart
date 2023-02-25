@@ -38,7 +38,7 @@ List<List<String>> buildOutputListAnswers(BuildContext context, WherigoInputData
 List<Widget> _outputAnswerActionsWidgets(BuildContext context, WherigoAnswerData data) {
   List<Widget> resultWidget = [];
 
-  if (data.AnswerActions.length > 0) {
+  if (data.AnswerActions.isNotEmpty) {
     data.AnswerActions.forEach((element) {
       switch (element.ActionMessageType) {
         case WHERIGO_ACTIONMESSAGETYPE.TEXT:
@@ -85,7 +85,7 @@ List<Widget> _outputAnswerActionsWidgets(BuildContext context, WherigoAnswerData
             if (NameToObject[LUAName] == null || NameToObject[LUAName]!.ObjectIndex >= WherigoCartridgeGWCData.MediaFilesContents.length)
               break;
 
-            if (WherigoCartridgeGWCData.MediaFilesContents.length > 0)
+            if (WherigoCartridgeGWCData.MediaFilesContents.isNotEmpty)
               resultWidget.add(GCWFilesOutput(
                 suppressHiddenDataMessage: true,
                 suppressedButtons: {GCWImageViewButtons.SAVE},

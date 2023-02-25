@@ -49,28 +49,25 @@ class PhysicalConstantsState extends State<PhysicalConstants> {
   }
 
   Widget _buildOutput() {
-    Map<String, Object>? constantData = PHYSICAL_CONSTANTS[_currentConstant];
+    PhysicalConstant? constantData = PHYSICAL_CONSTANTS[_currentConstant];
     if (constantData== null) return Container();
 
     var data = [
-      constantData['symbol'] != null
-          ? [
-              i18n(context, 'physical_constants_symbol'),
-              buildSubOrSuperscriptedRichTextIfNecessary(constantData['symbol'] as String)
-            ]
-          : null,
-      constantData['value'] != null
-          ? [i18n(context, 'physical_constants_value'), constantData['value'], _buildExponent(constantData['exponent'] as String)]
-          : null,
-      constantData['standard_uncertainty'] != null
+      [
+        i18n(context, 'physical_constants_symbol'),
+        buildSubOrSuperscriptedRichTextIfNecessary(constantData.symbol)
+      ],
+      [i18n(context, 'physical_constants_value'), constantData.value, _buildExponent(constantData.exponent)],
+
+      constantData.standard_uncertainty != null
           ? [
               i18n(context, 'physical_constants_standard_uncertainty'),
-              constantData['standard_uncertainty'],
-              _buildExponent(constantData['exponent'])
+              constantData.standard_uncertainty,
+              _buildExponent(constantData.exponent)
             ]
           : null,
-      constantData['unit'] != null
-          ? [i18n(context, 'physical_constants_unit'), buildSubOrSuperscriptedRichTextIfNecessary(constantData['unit'] as String)]
+      constantData.unit != null
+          ? [i18n(context, 'physical_constants_unit'), buildSubOrSuperscriptedRichTextIfNecessary(constantData.unit!)]
           : null
     ];
 
@@ -81,7 +78,7 @@ class PhysicalConstantsState extends State<PhysicalConstants> {
     );
   }
 
-  Widget _buildExponent(exponent) {
+  Widget _buildExponent(int? exponent) {
     if (exponent == null) return Container();
 
     return RichText(

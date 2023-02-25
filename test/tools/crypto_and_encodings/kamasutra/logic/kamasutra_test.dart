@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/kamasutra/logic/kamasutra.d
 
 void main() {
   group("Kamasutra.encryptKamasutra:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'alphabet': null, 'expectedOutput' : ''},
       {'input' : '', 'alphabet': null, 'expectedOutput' : ''},
       {'input' : null, 'alphabet': '', 'expectedOutput' : ''},
@@ -36,7 +36,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, alphabet: ${elem['alphabet']}, ignoreCase : ${elem['ignoreCase']}', () {
-        var _actual = encryptKamasutra(elem['input'], elem['alphabet'], ignoreCase: elem['ignoreCase']);
+        var _actual = encryptKamasutra(elem['input'] as String?, elem['alphabet'] as String?, ignoreCase: elem['ignoreCase'] as bool);
         expect(_actual, elem['expectedOutput']);
       });
     });

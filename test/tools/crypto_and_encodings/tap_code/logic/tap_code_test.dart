@@ -4,7 +4,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/_common/logic/crypt_alphabe
 
 void main() {
   group("TapCode.encryptTapCode:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
@@ -16,14 +16,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, mode: ${elem['mode']}', () {
-        var _actual = encryptTapCode(elem['input'], mode: elem['mode']);
+        var _actual = encryptTapCode(elem['input'] as String?, mode: elem['mode'] as AlphabetModificationMode);
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
   group("TapCode.decryptTapCode:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
@@ -37,7 +37,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, mode: ${elem['mode']}', () {
-        var _actual = decryptTapCode(elem['input'], mode: elem['mode']);
+        var _actual = decryptTapCode(elem['input'] as String, mode: elem['mode'] as AlphabetModificationMode);
         expect(_actual, elem['expectedOutput']);
       });
     });

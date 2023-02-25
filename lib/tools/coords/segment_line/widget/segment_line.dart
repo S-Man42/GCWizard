@@ -30,8 +30,8 @@ class SegmentLineState extends State<SegmentLine> {
   var _currentCoords1 = defaultCoordinate;
   var _currentCoords2 = defaultCoordinate;
 
-  var _currentCoordsFormat1 = defaultCoordFormat();
-  var _currentCoordsFormat2 = defaultCoordFormat();
+  var _currentCoordsFormat1 = defaultCoordinateFormat;
+  var _currentCoordsFormat2 = defaultCoordinateFormat;
 
   var _currentSegmentCount = 2;
 
@@ -39,7 +39,7 @@ class SegmentLineState extends State<SegmentLine> {
   var _currentMapPolylines = <GCWMapPolyline>[];
 
   Length _currentOutputUnit = UNITCATEGORY_LENGTH.defaultUnit;
-  var _currentOutputFormat = defaultCoordFormat();
+  var _currentOutputFormat = defaultCoordinateFormat;
 
   List<String> _currentOutputs = [];
   Widget _currentDistanceOutput = Container();

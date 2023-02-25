@@ -4,7 +4,7 @@ class Humidity extends Unit {
   late double Function (double) toDegree;
   late double Function (double) fromDegree;
 
-  Humidity({required String name, required String symbol, bool isReference: false, required double inDegree})
+  Humidity({required String name, required String symbol, bool isReference = false, required double inDegree})
       : super(name, symbol, isReference, (e) => e * inDegree, (e) => e / inDegree) {
     toDegree = this.toReference;
     fromDegree = this.fromReference;

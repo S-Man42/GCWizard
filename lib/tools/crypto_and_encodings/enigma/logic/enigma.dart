@@ -1,5 +1,6 @@
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 
 enum EnigmaRotorType { STANDARD, ENTRY_ROTOR, REFLECTOR }
@@ -108,24 +109,24 @@ EnigmaRotor getEnigmaRotorByName(String name) {
 
 class EnigmaRotorConfiguration {
   EnigmaRotor rotor;
-  int offset;
-  int setting;
+  int offset = 0;
+  int setting = 0;
 
-  EnigmaRotorConfiguration(this.rotor, {var offset: 1, var setting: 1}) {
+  EnigmaRotorConfiguration(this.rotor, {Object offset = 1, Object setting = 1}) {
     if (offset is int) {
       this.offset = offset - 1;
     } else if (offset is String) {
-      this.offset = alphabet_AZ[offset.toUpperCase()] - 1;
+      this.offset = alphabet_AZ[offset.toUpperCase()]! - 1;
     }
 
     if (setting is int) {
       this.setting = setting - 1;
     } else if (setting is String) {
-      this.setting = alphabet_AZ[setting.toUpperCase()] - 1;
+      this.setting = alphabet_AZ[setting.toUpperCase()]! - 1;
     }
   }
 
-  get settingWithOffset {
+  int get settingWithOffset {
     return (setting - offset + 26) % 26;
   }
 
@@ -145,7 +146,7 @@ class EnigmaKey {
   List<EnigmaRotorConfiguration> rotorConfigurations;
   Map<String, String> plugboard = {};
 
-  _createPlugboard(Map<String, String> plugboard) {
+  void _createPlugboard(Map<String, String> plugboard) {
     plugboard.forEach((k, v) => this.plugboard.putIfAbsent(k.toUpperCase(), () => v.toUpperCase()));
 
     // When A->B in plugboard, B->A has to be in there as well
@@ -171,14 +172,14 @@ String _normalizeInput(String input) {
 }
 
 bool _rotorConfigCausesTurnover(EnigmaRotorConfiguration configuration) {
-  var letter = alphabet_AZIndexes[configuration.setting + 1];
+  var letter = alphabet_AZIndexes[configuration.setting + 1]!;
   return configuration.rotor.turnovers.contains(letter);
 }
 
 void _stepping(List<EnigmaRotorConfiguration> configurations) {
   int i = 0;
   bool selfTurnover = false;
-  bool turnoverThroughPrevious;
+  bool turnoverThroughPrevious = false;
   do {
     var currentConfig = configurations[i];
 
@@ -200,12 +201,12 @@ List<int> _rotorConfigurations(EnigmaKey key) {
   return key.rotorConfigurations.map((configuration) => configuration.setting).toList();
 }
 
-Map<String, dynamic> calculateEnigma(String? input, EnigmaKey key) {
+IntegerListText calculateEnigma(String? input, EnigmaKey key) {
   if (input == null || _standardRotorConfigurations(key).isEmpty)
-    return {'text': '', 'rotorSettingAfter': _rotorConfigurations(key)};
+    return IntegerListText('', _rotorConfigurations(key));
 
   input = _normalizeInput(input);
-  if (input.isEmpty) return {'text': '', 'rotorSettingAfter': _rotorConfigurations(key)};
+  if (input.isEmpty) return IntegerListText('', _rotorConfigurations(key));
 
   var output = '';
 
@@ -220,13 +221,13 @@ Map<String, dynamic> calculateEnigma(String? input, EnigmaKey key) {
     while (rotorNumber < key.rotorConfigurations.length) {
       var rotor = key.rotorConfigurations[rotorNumber];
       // rotor (alphabet) rotated by value of setting
-      var letterIndex = (alphabet_AZ[letter] - 1 + rotor.settingWithOffset) % 26;
+      var letterIndex = (alphabet_AZ[letter]! - 1 + rotor.settingWithOffset) % 26;
       // mapping alphabet to rotor alphabet
       letter = rotor.rotor.alphabet[letterIndex];
 
       // normalize output to natural alphabet for further rotors
-      letterIndex = (alphabet_AZ[letter] - 1 - rotor.settingWithOffset + 26) % 26;
-      letter = alphabet_AZIndexes[letterIndex + 1];
+      letterIndex = (alphabet_AZ[letter]! - 1 - rotor.settingWithOffset + 26) % 26;
+      letter = alphabet_AZIndexes[letterIndex + 1]!;
 
       rotorNumber++;
     }
@@ -238,11 +239,11 @@ Map<String, dynamic> calculateEnigma(String? input, EnigmaKey key) {
       while (rotorNumber >= 0) {
         var rotor = key.rotorConfigurations[rotorNumber];
 
-        var letterIndex = (alphabet_AZ[letter] - 1 + rotor.settingWithOffset) % 26;
-        letter = alphabet_AZIndexes[letterIndex + 1];
+        var letterIndex = (alphabet_AZ[letter]! - 1 + rotor.settingWithOffset) % 26;
+        letter = alphabet_AZIndexes[letterIndex + 1]!;
 
         letterIndex = rotor.rotor.alphabet.indexOf(letter);
-        letter = alphabet_AZIndexes[(letterIndex - rotor.settingWithOffset + 26) % 26 + 1];
+        letter = alphabet_AZIndexes[(letterIndex - rotor.settingWithOffset + 26) % 26 + 1]!;
 
         rotorNumber--;
       }
@@ -253,19 +254,19 @@ Map<String, dynamic> calculateEnigma(String? input, EnigmaKey key) {
     output += letter;
   });
 
-  return {'text': output, 'rotorSettingAfter': _rotorConfigurations(key)};
+  return IntegerListText(output, _rotorConfigurations(key));
 }
 
 // Sometimes the message has been encrypted twice. The first decryption showed a pattern: three letters, repeated once, e.g. ABCABC
 // at the beginning. This 3-letter pattern was used as rotor setting for the second decryption
 // PS: the 3 depends on the number of rotors; when there are four rotors, there will be 4-letter pattern
-List<Map<String, dynamic>> calculateEnigmaWithMessageKey(String input, EnigmaKey key) {
+List<IntegerListText> calculateEnigmaWithMessageKey(String input, EnigmaKey key) {
   var firstResult = calculateEnigma(input, key);
-  var firstCalculation = firstResult['text'];
+  String firstCalculation = firstResult.text;
 
   if (firstCalculation.isEmpty) return [firstResult];
 
-  List<Map<String, dynamic>> output = [firstResult];
+  List<IntegerListText> output = [firstResult];
 
   var standardRotorConfigurations = _standardRotorConfigurations(key);
   var numberRotors = standardRotorConfigurations.length;
@@ -276,7 +277,7 @@ List<Map<String, dynamic>> calculateEnigmaWithMessageKey(String input, EnigmaKey
     var pattern = firstCalculation
         .substring(0, numberRotors)
         .split('')
-        .map((letter) => alphabet_AZ[letter] - 1)
+        .map((letter) => alphabet_AZ[letter]! - 1)
         .toList() // map to alphabet index
         .reversed
         .toList(); // backwards because of the typically inverse order of the rotors

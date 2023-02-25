@@ -9,7 +9,6 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/morse/logic/morse.dart';
-import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/text_widget_utils.dart';
 
 class Morse extends StatefulWidget {
@@ -149,7 +148,7 @@ class MorseState extends State<Morse> {
     ]);
   }
 
-  _addCharacter(String input) {
+  void _addCharacter(String input) {
     _currentDecodeInput = textControllerInsertText(input, _currentDecodeInput, _decodeController);
   }
 

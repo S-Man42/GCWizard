@@ -9,7 +9,7 @@ class _DegreesLonTextInputFormatter extends TextInputFormatter {
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
     if (!allowNegativeValues && newValue.text == '-') return oldValue;
 
-    if (newValue.text == '' || newValue.text == '-') return newValue;
+    if (newValue.text.isEmpty || newValue.text == '-') return newValue;
 
     var _newInt = int.tryParse(newValue.text);
     if (_newInt == null) return oldValue;

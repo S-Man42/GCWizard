@@ -9,6 +9,7 @@
 
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
 import 'package:gc_wizard/utils/datetime_utils.dart';
 import 'package:prefs/prefs.dart';
 
@@ -105,23 +106,18 @@ const _alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxy
 
 List<int> mayaCalendarSystem = [1, 20, 360, 7200, 144000, 2880000, 57600000, 1152000000, 23040000000];
 
-Map<String, Object> encodeMayaCalendar(int input) {
-  if (input == null)
-    return {
-      'displays': <List<String>>[],
-      'numbers': [0],
-      'vigesimal': 0
-    };
+SegmentsVigesimal encodeMayaCalendar(int? input) {
+  if (input == null) return SegmentsVigesimal(displays: [], numbers: [0], vigesimal: BigInt.zero);
 
-  var vigesimal = '';
-  vigesimal = convertDecToMayaCalendar(input.toString());
-  return {
-    'displays': vigesimal.split('').map((digit) {
-      return _numbersToSegments[int.tryParse(convertBase(digit, 20, 10) ?? '')];
-    }).toList(),
-    'numbers': _longCountToList(input),
-    'vigesimal': vigesimal
-  };
+  var vigesimal = convertDecToMayaCalendar(input.toString());
+
+  var displays = <List<String>>[];
+  vigesimal.split('').map((digit) {
+    var list = _numbersToSegments[int.tryParse(convertBase(digit, 20, 10) ?? '')];
+    if (list != null) displays.add(list);
+  });
+
+  return SegmentsVigesimal(displays: displays, numbers: _longCountToList(input), vigesimal: BigInt.tryParse(vigesimal) ?? BigInt.zero);
 }
 
 List<int> _longCountToList(int numberDec) {
@@ -142,13 +138,8 @@ List<int> _longCountToList(int numberDec) {
   return result;
 }
 
-Map<String, Object?> decodeMayaCalendar(List<String?>? inputs) {
-  if (inputs == null || inputs.isEmpty)
-    return {
-      'displays': <List<String>>[],
-      'numbers': [0],
-      'vigesimal': 0
-    };
+SegmentsVigesimal decodeMayaCalendar(List<String?>? inputs) {
+  if (inputs == null || inputs.isEmpty) return SegmentsVigesimal(displays: [], numbers: [0], vigesimal: BigInt.zero);
 
   var oneCharacters = ['d', 'e', 'f', 'g'];
   var fiveCharacters = ['a', 'b', 'c'];
@@ -185,11 +176,11 @@ Map<String, Object?> decodeMayaCalendar(List<String?>? inputs) {
   }
   if (invalid) total = '-1';
 
-  return {'displays': displays, 'numbers': numbers, 'vigesimal': int.tryParse(total)};
+  return SegmentsVigesimal(displays: displays, numbers: numbers, vigesimal: BigInt.tryParse(total) ?? BigInt.zero);
 }
 
 String convertDecToMayaCalendar(String? input) {
-  if (input == null || input == '') return '';
+  if (input == null || input.isEmpty) return '';
 
   int numberDec = int.parse(input);
   if (numberDec == 0) return '0';
@@ -253,7 +244,7 @@ DateTime MayaDayCountToGregorianCalendar(int mayaDayCount) {
 
 int MayaDayCountToJulianDate(int mayaDayCount) {
   var correlation = Prefs.getString(PREFERENCE_MAYACALENDAR_CORRELATION);
-  if (correlation == '')
+  if (correlation.isEmpty)
     return (mayaDayCount + _CORRELATION_NUMBER[THOMPSON]!);
   else
     return (mayaDayCount + (_CORRELATION_NUMBER[correlation] ?? 0));
@@ -261,7 +252,7 @@ int MayaDayCountToJulianDate(int mayaDayCount) {
 
 int JulianDateToMayaDayCount(double jd) {
   var correlation = Prefs.getString(PREFERENCE_MAYACALENDAR_CORRELATION);
-  if (correlation == '')
+  if (correlation.isEmpty)
     jd = (jd - _CORRELATION_NUMBER[THOMPSON]!);
   else
     jd = (jd - (_CORRELATION_NUMBER[correlation] ?? 0));

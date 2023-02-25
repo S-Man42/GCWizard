@@ -1,7 +1,7 @@
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 
-final AZToTapir = {
+final Map<String, String> AZToTapir = {
   ' ': '83', '\n': '80', 'A': '0', 'E': '1', 'I': '2', 'N': '3', 'R': '4', 'B': '50', 'BE': '51', 'C': '52', 'CH': '53',
   'D': '54', 'DE': '55', 'F': '56',
   'G': '57', 'GE': '58', 'H': '59', 'J': '60', 'K': '61', 'L': '62', 'M': '63', 'O': '64', 'P': '67', 'Q': '68',
@@ -12,9 +12,9 @@ final AZToTapir = {
   String.fromCharCode(220): '99', // Ü
   String.fromCharCode(223): '65', // ß
 };
-final TapirToAZ = switchMapKeyValue(AZToTapir);
+final Map<String, String> TapirToAZ = switchMapKeyValue(AZToTapir);
 
-final NumbersToTapir = {
+final Map<String, String> NumbersToTapir = {
   ' ': '83',
   '\n': '80',
   '.': '89',
@@ -38,7 +38,7 @@ final NumbersToTapir = {
   '8': '88',
   '9': '99'
 };
-final TapirToNumbers = switchMapKeyValue(NumbersToTapir);
+final Map<String, String> TapirToNumbers = switchMapKeyValue(NumbersToTapir);
 
 final _NUMBERS_FOLLOW = '82';
 final _LETTERS_FOLLOW = '81';
@@ -55,7 +55,7 @@ String _encodeTapir(String input) {
   //encode
   int i = 0;
   while (i < input.length) {
-    var code;
+    String? code;
 
     if (isLetterMode && i + 1 < input.length) {
       code = AZToTapir[input.substring(i, i + 2)];
@@ -151,7 +151,7 @@ String _decodeTapir(String? input) {
 
   int i = 0;
   while (i < input.length) {
-    var character;
+    String? character;
 
     if (i + 1 < input.length) {
       var code = input.substring(i, i + 2);

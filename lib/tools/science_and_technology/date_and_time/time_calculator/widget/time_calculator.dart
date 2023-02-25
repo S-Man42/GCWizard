@@ -91,7 +91,7 @@ class TimeCalculatorState extends State<TimeCalculator> {
     );
   }
 
-  _buildOutput() {
+  Widget _buildOutput() {
     Duration finalTime;
     if (_currentMode == GCWSwitchPosition.left)
       finalTime = _currentStartTime + _currentEndTime;

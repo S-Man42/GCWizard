@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/houdini/logic/houdini.dart'
 
 void main() {
   group("Houdini.decodeHoudini:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : null},
 
@@ -16,14 +16,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, mode: ${elem['mode']}', () {
-        var _actual = decodeHoudini(elem['input'], elem['mode']);
+        var _actual = decodeHoudini(elem['input'] as String?, elem['mode'] as HoudiniMode);
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
   group("Houdini.encodeHoudini:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : null},
 
@@ -37,7 +37,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, mode: ${elem['mode']}', () {
-        var _actual = encodeHoudini(elem['input'], elem['mode']);
+        var _actual = encodeHoudini(elem['input'] as String?, elem['mode'] as HoudiniMode);
         expect(_actual, elem['expectedOutput']);
       });
     });

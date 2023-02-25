@@ -2,7 +2,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitu
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 
-const AZToDecabit = {
+const Map<int, String> AZToDecabit = {
   0: '--+-+++-+-',
   1: '+--+++--+-',
   2: '+--++-+-+-',
@@ -172,7 +172,7 @@ String decryptDecabit(String? input, Map<String, String>? replaceCharacters, boo
   int i = 0;
   while (i <= input.length - 10) {
     var chunk = input.substring(i, i + 10);
-    var character;
+    String? character;
 
     if (numericMode) {
       if (DecabitToAZInt[chunk] != null) character = DecabitToAZInt[chunk]! + ' ';

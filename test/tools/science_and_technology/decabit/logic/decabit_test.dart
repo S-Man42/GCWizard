@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/science_and_technology/decabit/logic/decabit.dar
 
 void main() {
   group("Decabit.encryptDecabit:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'numericMode' : false, 'expectedOutput' : ''},
       {'input' : '', 'numericMode' : false, 'expectedOutput' : ''},
       {'input' : '', 'replaceCharacters' : null, 'numericMode' : false, 'expectedOutput' : ''},
@@ -41,14 +41,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, replaceCharacter: ${elem['replaceCharacters']}, numericMode: ${elem['numericMode']}', () {
-        var _actual = encryptDecabit(elem['input'], elem['replaceCharacters'], elem['numericMode']);
+        var _actual = encryptDecabit(elem['input'] as String?, elem['replaceCharacters'] as Map<String, String>, elem['numericMode'] as bool);
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
   group("Decabit.decryptDecabit:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'numericMode' : false, 'expectedOutput' : ''},
       {'input' : '', 'numericMode' : false, 'expectedOutput' : ''},
       {'input' : '', 'replaceCharacters' : null, 'numericMode' : false, 'expectedOutput' : ''},
@@ -98,7 +98,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, replaceCharacter: ${elem['replaceCharacters']}, numericMode: ${elem['numericMode']}', () {
-        var _actual = decryptDecabit(elem['input'], elem['replaceCharacters'], elem['numericMode']);
+        var _actual = decryptDecabit(elem['input'] as String?, elem['replaceCharacters'] as Map<String, String>, elem['numericMode']as bool);
         expect(_actual, elem['expectedOutput']);
       });
     });

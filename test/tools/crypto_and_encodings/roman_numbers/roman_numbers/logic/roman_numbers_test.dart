@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/roman_numbers/roman_numbers
 
 void main() {
   group("RomanNumbers.encodeRomanNumbers:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : -1, 'expectedOutput' : ''},
       {'input' : 0, 'expectedOutput' : ''},
@@ -71,14 +71,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, type: ${elem['type']}', () {
-        var _actual = encodeRomanNumbers(elem['input'], type: elem['type']);
+        var _actual = encodeRomanNumbers(elem['input'] as int?, type: elem['type']);
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
   group("RomanNumbers.decodeRomanNumbers:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : null},
       {'input' : 'Ab', 'expectedOutput' : null},
@@ -213,7 +213,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, type: ${elem['type']}', () {
-        var _actual = decodeRomanNumbers(elem['input'], type: elem['type']);
+        var _actual = decodeRomanNumbers(elem['input'] as String?, type: elem['type']);
         expect(_actual, elem['expectedOutput']);
       });
     });

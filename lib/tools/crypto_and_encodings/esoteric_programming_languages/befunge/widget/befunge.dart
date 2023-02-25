@@ -27,7 +27,7 @@ class BefungeState extends State<Befunge> {
   var _currentInput = '';
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
-  var _codeGenerateController;
+  late TextEditingController _codeGenerateController;
   var _sourceCodeGenerated = '';
 
   @override

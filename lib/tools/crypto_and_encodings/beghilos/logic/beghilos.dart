@@ -16,17 +16,17 @@ final _AlphabetMap = {
 };
 final _AlphabetMapExtension = {'b': '8', 'e': '3', 'H': '4', 'i': '1', 'l': '7', 'o': '0', 's': '5', 'z': '2'};
 
-String decodeBeghilos(String input) {
+String decodeBeghilos(String? input) {
   var alphabetMap = Map<String, String>.from(_AlphabetMap);
   alphabetMap.addAll(_AlphabetMapExtension);
   return _translateBeghilos(input, alphabetMap);
 }
 
-String encodeBeghilos(String input) {
+String encodeBeghilos(String? input) {
   return _translateBeghilos(input, switchMapKeyValue(_AlphabetMap));
 }
 
-String _translateBeghilos(String input, Map<String, String> alphabetMap) {
+String _translateBeghilos(String? input, Map<String, String> alphabetMap) {
   if (input == null || input.isEmpty) return '';
 
   var output = input.split('').map((letter) {

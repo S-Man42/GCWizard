@@ -135,7 +135,7 @@ BigInt _getBinomialCoefficient(int n, int k) {
     return _getfactorial(n) ~/ _getfactorial(k) ~/ _getfactorial(n - k);
 }
 
-Function? _getNumberSequenceFunction(NumberSequencesMode mode) {
+BigInt Function(int)? _getNumberSequenceFunction(NumberSequencesMode mode) {
   switch (mode) {
     case NumberSequencesMode.FERMAT:
       return _getFermat;
@@ -163,10 +163,10 @@ BigInt getNumberAt(NumberSequencesMode sequence, int? n) {
     return getNumbersInRange(sequence, n, n)[0];
 }
 
-List getNumbersInRange(NumberSequencesMode sequence, int? start, int? stop) {
-  if (start == null || stop == null) return [-1];
+List<BigInt> getNumbersInRange(NumberSequencesMode sequence, int? start, int? stop) {
+  if (start == null || stop == null) return [BigInt.from(-1)];
 
-  List numberList = <dynamic>[];
+  List<BigInt> numberList = [];
   List<String> sequenceList = <String>[];
 
   var numberSequenceFunction = _getNumberSequenceFunction(sequence);
@@ -348,7 +348,7 @@ int checkNumber(NumberSequencesMode sequence, BigInt? checkNumber, int maxIndex)
 }
 
 PositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode sequence, String? check, int maxIndex) {
-  if (check == null || check == '') {
+  if (check == null || check.isEmpty) {
     return PositionOfSequenceOutput('-1', 0, 0);
   }
 
@@ -572,13 +572,13 @@ PositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode sequence
   return PositionOfSequenceOutput('-1', 0, 0);
 }
 
-List getNumbersWithNDigits(NumberSequencesMode sequence, int? digits) {
+List<BigInt> getNumbersWithNDigits(NumberSequencesMode sequence, int? digits) {
   if (digits == null) return [];
 
   BigInt number;
 
-  List numberList = <dynamic>[];
-  List<String> sequenceList = <String>[];
+  var numberList = <BigInt>[];
+  var sequenceList = <String>[];
 
   var numberSequenceFunction = _getNumberSequenceFunction(sequence);
   if (numberSequenceFunction != null) {
@@ -722,8 +722,15 @@ List getNumbersWithNDigits(NumberSequencesMode sequence, int? digits) {
       case NumberSequencesMode.HAPPY_NUMBERS:
         sequenceList.addAll(happy_numbers);
         break;
+      default:
+        return numberList;
     }
-    for (int i = 0; i < sequenceList.length; i++) if (sequenceList[i].length == digits) numberList.add(sequenceList[i]);
+    for (int i = 0; i < sequenceList.length; i++) {
+      if (sequenceList[i].length == digits) {
+        var value = BigInt.tryParse(sequenceList[i]);
+        if (value != null) numberList.add(value);
+      }
+    }
   }
 
   return numberList;

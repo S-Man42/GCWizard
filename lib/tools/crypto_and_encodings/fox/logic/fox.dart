@@ -31,7 +31,7 @@ Map<String, String> _MAP = {
   '39': ' '
 };
 
-String encodeFox(String input) {
+String encodeFox(String? input) {
   if (input == null || input.isEmpty) return '';
 
   var encodeMap = switchMapKeyValue(_MAP);
@@ -50,7 +50,7 @@ String encodeFox(String input) {
       .replaceAll(RegExp(r'\s+'), ' ');
 }
 
-String decodeFox(String input) {
+String decodeFox(String? input) {
   if (input == null || input.isEmpty) return '';
 
   input = input.replaceAll(RegExp(r'[^1-9]'), '');

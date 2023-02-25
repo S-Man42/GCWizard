@@ -8,10 +8,10 @@ void main() {
     CoordinateCell cell = CoordinateCell(
         latInterval: Interval(a: degToRadian(-10.0), b: degToRadian(10.0)),
         lonInterval: Interval(a: degToRadian(-10.0), b: degToRadian(10.0)),
-        ellipsoid: getEllipsoidByName(ELLIPSOID_NAME_WGS84)
+        ellipsoid: getEllipsoidByName(ELLIPSOID_NAME_WGS84)!
     );
 
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       //Points within cell
       {'point': LatLng(0.0, 0.0), 'expectedOutput': [0, 360]},
       {'point': LatLng(2.0, 2.0), 'expectedOutput': [0, 360]},
@@ -68,7 +68,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('point: ${elem['point']}', () {
-        var _actualDouble = cell.bearingTo(elem['point']);
+        var _actualDouble = cell.bearingTo(elem['point'] as LatLng);
         var _actual = [
           _actualDouble.a.floor(),
           _actualDouble.b.floor()
