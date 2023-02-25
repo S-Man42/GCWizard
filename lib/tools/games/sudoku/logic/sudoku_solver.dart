@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:gc_wizard/tools/games/sudoku/logic/dartist_sudoku_solver/logic/sudoku.dart';
 
 enum SudokuFillType { USER_FILLED, CALCULATED }
@@ -11,10 +13,20 @@ class SudokuBoardValue {
 
 class SudokuBoard {
   late List<List<SudokuBoardValue?>> board;
+  List<_SudokuSolution>? solutions;
 
-  SudokuBoard() {
-    board = List<List<SudokuBoardValue?>>.generate(
+  SudokuBoard({List<List<int>>? board}) {
+    this.board = List<List<SudokuBoardValue?>>.generate(
         9, (index) => List<SudokuBoardValue?>.generate(9, (index) => null));
+
+    if (board != null) {
+      for (int i = 0; i < min(board.length, this.board.length); i++ ) {
+        for (int j = 0; j < min(board[i].length, this.board[i].length); j++ ) {
+          if (board[i][j] > 0 && board[i][j] <= 9)
+            setValue(i, j, board[i][j]);
+        }
+      }
+    }
   }
 
   void setValue (int i, int j, int? value, {SudokuFillType type = SudokuFillType.USER_FILLED}) {
@@ -31,7 +43,14 @@ class SudokuBoard {
         : SudokuFillType.USER_FILLED;
   }
 
-  List<List<int>> solveableBoard() {
+  void solveSudoku(int maxSolutions) {
+    var solutions = solve(_solveableBoard(), maxSolutions: maxSolutions);
+    if (solutions == null) return null;
+
+    this.solutions = solutions.map((solution) => _SudokuSolution(solution)).toList();
+  }
+
+  List<List<int>> _solveableBoard() {
     return board.map((column) {
       return column
           .map((row) => row != null && row.type == SudokuFillType.USER_FILLED
@@ -42,20 +61,15 @@ class SudokuBoard {
   }
 }
 
-class SudokuSolution {
+class _SudokuSolution {
   List<List<int?>> _solution;
 
-  SudokuSolution(List<List<int?>> this._solution);
+  _SudokuSolution(List<List<int?>> this._solution);
 
   int? getValue (int i, int j) {
     return _solution[i][j];
   }
 }
 
-List<SudokuSolution>? solveSudoku(List<List<int>> grid, int maxSolutions) {
-  var solutions = solve(grid, maxSolutions: maxSolutions);
-  if (solutions == null) return null;
 
-  return solutions.map((solution) => SudokuSolution(solution)).toList();
-}
 
