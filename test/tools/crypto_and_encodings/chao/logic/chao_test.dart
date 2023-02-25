@@ -12,7 +12,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, keyPlain: ${elem['keyPlain']}, keyChiffre: ${elem['keyChiffre']}', () {
-        var _actual = encryptChao(elem['input'] as String?, elem['keyPlain'], elem['keyChiffre']);
+        var _actual = encryptChao(elem['input'] as String, elem['keyPlain'] as String, elem['keyChiffre'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -27,7 +27,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, keyPlain: ${elem['keyPlain']}, keyChiffre: ${elem['keyChiffre']}', () {
-        var _actual = decryptChao(elem['input'] as String?, elem['keyPlain'], elem['keyChiffre']);
+        var _actual = decryptChao(elem['input'] as String, elem['keyPlain'] as String, elem['keyChiffre'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     });

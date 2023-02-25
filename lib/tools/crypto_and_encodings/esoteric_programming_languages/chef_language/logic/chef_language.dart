@@ -56,7 +56,7 @@ List<String> _getAuxiliaryRecipe(String name, int value, List<String> ingredient
 }
 
 String generateChef(
-    String language, title, String remark, String time, String temperature, String outputToGenerate, bool auxiliary) {
+    String language,String title, String remark, String time, String temperature, String outputToGenerate, bool auxiliary) {
   int value = 0;
   int i = 0;
   var output = StringBuffer();

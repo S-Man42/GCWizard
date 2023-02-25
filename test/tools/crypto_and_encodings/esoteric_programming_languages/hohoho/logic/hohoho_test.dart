@@ -25,7 +25,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('code: ${elem['code']}, input: ${elem['input']}', () {
-        var _actual = interpretHohoho(elem['code'], STDIN: elem['input'] as String?).output;
+        var _actual = interpretHohoho(elem['code'] as String?, STDIN: elem['input'] as String?).output;
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -44,7 +44,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('OutputText: ${elem['OutputText']}}', () {
-        var _actual = generateHohoho(elem['OutputText']);
+        var _actual = generateHohoho(elem['OutputText'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     });

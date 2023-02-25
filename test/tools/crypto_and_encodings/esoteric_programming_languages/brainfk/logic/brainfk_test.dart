@@ -30,7 +30,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('code: ${elem['code']}, input: ${elem['input']}', () {
-        var _actual = interpretBrainfk(elem['code'], input: elem['input'] as String?);
+        var _actual = interpretBrainfk(elem['code'] as String?, input: elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });

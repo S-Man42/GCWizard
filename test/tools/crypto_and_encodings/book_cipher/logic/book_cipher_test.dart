@@ -55,14 +55,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeText(elem['input'] as String?, elem['text'], elem['outFormat'],
-            spacesOn: elem['spacesOn'],
-            emptyLinesOn: elem['emptyLinesOn'],
-            ignoreSymbols: elem['ignoreSymbols'],
-            diacriticsOn: elem['diacriticsOn'],
-            azOn: elem['azOn'],
-            numbersOn: elem['numbersOn'],
-            onlyFirstWordLetter: elem['onlyFirstWordLetter']
+        var _actual = encodeText(elem['input'] as String?, elem['text'] as String?, elem['outFormat'] as encodeOutFormat,
+            spacesOn: elem['spacesOn'] as bool,
+            emptyLinesOn: elem['emptyLinesOn'] as bool,
+            ignoreSymbols: elem['ignoreSymbols'] as String,
+            diacriticsOn: elem['diacriticsOn'] as bool,
+            azOn: elem['azOn'] as bool,
+            numbersOn: elem['numbersOn'] as bool,
+            onlyFirstWordLetter: elem['onlyFirstWordLetter'] as bool
         );
         expect(_actual, elem['expectedOutput']);
       });
@@ -88,14 +88,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeSearchWord(elem['input'] as String?, elem['word'], elem['outFormat'], "", "", "",
-            spacesOn: elem['spacesOn'],
-            emptyLinesOn: elem['emptyLinesOn'],
-            ignoreSymbols: elem['ignoreSymbols'],
-            diacriticsOn: elem['diacriticsOn'],
-            azOn: elem['azOn'],
-            numbersOn: elem['numbersOn'],
-            onlyFirstWordLetter: elem['onlyFirstWordLetter']
+        var _actual = decodeSearchWord(elem['input'] as String?, elem['word'] as String?, elem['outFormat'] as decodeOutFormat, "", "", "",
+            spacesOn: elem['spacesOn'] as bool,
+            emptyLinesOn: elem['emptyLinesOn'] as bool,
+            ignoreSymbols: elem['ignoreSymbols'] as String,
+            diacriticsOn: elem['diacriticsOn'] as bool,
+            azOn: elem['azOn'] as bool,
+            numbersOn: elem['numbersOn'] as bool,
+            onlyFirstWordLetter: elem['onlyFirstWordLetter'] as bool
         );
         expect(_actual, elem['expectedOutput']);
       });
@@ -181,14 +181,14 @@ Helmut Schickart (1931–1993). ''';
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeFindWord(elem['input'] as String?, elem['positions'], elem['searchFormat'],
-            spacesOn: elem['spacesOn'],
-            emptyLinesOn: elem['emptyLinesOn'],
-            ignoreSymbols: elem['ignoreSymbols'],
-            diacriticsOn: elem['diacriticsOn'],
-            azOn: elem['azOn'],
-            numbersOn: elem['numbersOn'],
-            onlyFirstWordLetter: elem['onlyFirstWordLetter']
+        var _actual = decodeFindWord(elem['input'] as String?, elem['positions'] as String?, elem['searchFormat'] as searchFormat,
+            spacesOn: elem['spacesOn'] as bool,
+            emptyLinesOn: elem['emptyLinesOn'] as bool,
+            ignoreSymbols: elem['ignoreSymbols'] as String,
+            diacriticsOn: elem['diacriticsOn'] as bool,
+            azOn: elem['azOn'] as bool,
+            numbersOn: elem['numbersOn'] as bool,
+            onlyFirstWordLetter: elem['onlyFirstWordLetter'] as bool
         );
         expect(_actual, elem['expectedOutput']);
       });

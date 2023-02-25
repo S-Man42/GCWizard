@@ -124,7 +124,7 @@ bool _isDigit(String char) {
   ].contains(char);
 }
 
-BefungeOutput interpretBefunge(String? program, {String input = ''}) {
+BefungeOutput interpretBefunge(String? program, {String? input = ''}) {
   if (program == null || program.isEmpty)
     return BefungeOutput(
         Output: '', Error: '', BefungeStack: _BefungeStack, PC: _PC, Command: _Command, Mnemonic: _Mnemonic);

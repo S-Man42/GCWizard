@@ -22,7 +22,7 @@ String decodeBeghilos(String? input) {
   return _translateBeghilos(input, alphabetMap);
 }
 
-String encodeBeghilos(String input) {
+String encodeBeghilos(String? input) {
   return _translateBeghilos(input, switchMapKeyValue(_AlphabetMap));
 }
 

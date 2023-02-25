@@ -4,12 +4,12 @@ import 'package:gc_wizard/utils/string_utils.dart';
 
 enum _ADFGVXMode { ADFGX, ADFGVX }
 
-String? encryptADFGX(String input, String? substitutionKey, String? transpositionKey,
+String? encryptADFGX(String? input, String? substitutionKey, String? transpositionKey,
     {PolybiosMode polybiosMode = PolybiosMode.ZA90, String? alphabet}) {
   return _encrypt(input, substitutionKey, transpositionKey, _ADFGVXMode.ADFGX, polybiosMode, alphabet);
 }
 
-String? encryptADFGVX(String input, String? substitutionKey, String? transpositionKey,
+String? encryptADFGVX(String? input, String? substitutionKey, String? transpositionKey,
     {PolybiosMode polybiosMode = PolybiosMode.ZA90, String? alphabet}) {
   return _encrypt(input, substitutionKey, transpositionKey, _ADFGVXMode.ADFGVX, polybiosMode, alphabet);
 }

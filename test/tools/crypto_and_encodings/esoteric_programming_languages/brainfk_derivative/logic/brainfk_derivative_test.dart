@@ -51,7 +51,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('code: ${elem['code']}, input: ${elem['input']}', () {
-        var _actual = BRAINFKDERIVATIVE_SHORTOOK.interpretBrainfkDerivatives(elem['code'], input: elem['input'] as String?);
+        var _actual = BRAINFKDERIVATIVE_SHORTOOK.interpretBrainfkDerivatives(elem['code'] as String?, input: elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -68,7 +68,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}', () {
-        var _actual = BRAINFKDERIVATIVE_OOK.generateBrainfkDerivative(elem['text']);
+        var _actual = BRAINFKDERIVATIVE_OOK.generateBrainfkDerivative(elem['text'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -142,7 +142,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('code: ${elem['code']}, input: ${elem['input']}', () {
-        var _actual = BRAINFKDERIVATIVE_DETAILEDFK.interpretBrainfkDerivatives(elem['code'], input: elem['input'] as String?);
+        var _actual = BRAINFKDERIVATIVE_DETAILEDFK.interpretBrainfkDerivatives(elem['code'] as String?, input: elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });

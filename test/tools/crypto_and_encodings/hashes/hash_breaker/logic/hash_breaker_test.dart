@@ -14,7 +14,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, searchMask: ${elem['searchMask']}, substitutions: ${elem['substitutions']}', () {
-        var _actual = breakHash(elem['input'] as String?, elem['searchMask'], elem['substitutions'], elem['hashFunction']);
+        var _actual = breakHash(elem['input'] as String?, elem['searchMask'] as String?, elem['substitutions'] as Map<String, String>?, elem['hashFunction'] as Function?);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -27,7 +27,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('substitutions: ${elem['substitutions']}', () {
-        var _actual = preCheckCombinations(elem['substitutions']);
+        var _actual = preCheckCombinations(elem['substitutions'] as Map<String, String>);
         expect(_actual, elem['expectedOutput']);
       });
     });

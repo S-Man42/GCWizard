@@ -34,7 +34,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, replaceCharacter: ${elem['replaceCharacters']}', () {
-        var _actual = encryptAbaddon(elem['input'] as String?, elem['replaceCharacters']);
+        var _actual = encryptAbaddon(elem['input'] as String?, elem['replaceCharacters'] as Map<String, String>?);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -77,7 +77,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, replaceCharacter: ${elem['replaceCharacters']}', () {
-        var _actual = decryptAbaddon(elem['input'] as String?, elem['replaceCharacters']);
+        var _actual = decryptAbaddon(elem['input'] as String?, elem['replaceCharacters'] as Map<String, String>?);
         expect(_actual, elem['expectedOutput']);
       });
     });

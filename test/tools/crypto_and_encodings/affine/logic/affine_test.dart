@@ -12,7 +12,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, keyA: ${elem['keyA']}, keyB: ${elem['keyB']}', () {
-        var _actual = encodeAffine(elem['input'] as String?, elem['keyA'], elem['keyB']);
+        var _actual = encodeAffine(elem['input'] as String?, elem['keyA'] as int, elem['keyB'] as int);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -27,7 +27,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, keyA: ${elem['keyA']}, keyB: ${elem['keyB']}', () {
-        var _actual = decodeAffine(elem['input'] as String?, elem['keyA'], elem['keyB']);
+        var _actual = decodeAffine(elem['input'] as String?, elem['keyA'] as int, elem['keyB'] as int);
         expect(_actual, elem['expectedOutput']);
       });
     });

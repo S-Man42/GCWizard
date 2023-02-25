@@ -23,7 +23,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encryptAmsco(elem['input'] as String?, elem['key'], elem['oneCharStart']);
+        var _actual = encryptAmsco(elem['input'] as String?, elem['key'] as String?, elem['oneCharStart'] as bool);
         expect(_actual.output, elem['expectedOutput']);
         expect(_actual.errorCode, elem['errorcode']);
       });
@@ -52,7 +52,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decryptAmsco(elem['input'] as String?, elem['key'], elem['oneCharStart']);
+        var _actual = decryptAmsco(elem['input'] as String?, elem['key'] as String?, elem['oneCharStart'] as bool);
         expect(_actual.output, elem['expectedOutput']);
         expect(_actual.errorCode, elem['errorcode']);
       });

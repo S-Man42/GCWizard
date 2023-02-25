@@ -14,7 +14,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, substitutionKey: ${elem['substitutionKey']}, transpositionKey: ${elem['transpositionKey']}, polybiosMode: ${elem['polybiosMode']}, alphabet: ${elem['alphabet']}', () {
-        var _actual = encryptADFGX(elem['input'] as String?, elem['substitutionKey'], elem['transpositionKey'], polybiosMode: elem['polybiosMode'], alphabet: elem['alphabet'] as String);
+        var _actual = encryptADFGX(elem['input'] as String?, elem['substitutionKey'] as String?, elem['transpositionKey'] as String?, polybiosMode: elem['polybiosMode'] as PolybiosMode, alphabet: elem['alphabet'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -27,7 +27,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, substitutionKey: ${elem['substitutionKey']}, transpositionKey: ${elem['transpositionKey']}, polybiosMode: ${elem['polybiosMode']}, alphabet: ${elem['alphabet']}', () {
-        var _actual = encryptADFGVX(elem['input'] as String?, elem['substitutionKey'], elem['transpositionKey'], polybiosMode: elem['polybiosMode'], alphabet: elem['alphabet'] as String);
+        var _actual = encryptADFGVX(elem['input'] as String?, elem['substitutionKey'] as String?, elem['transpositionKey'] as String?, polybiosMode: elem['polybiosMode'] as PolybiosMode, alphabet: elem['alphabet'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -44,7 +44,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, substitutionKey: ${elem['substitutionKey']}, transpositionKey: ${elem['transpositionKey']}, polybiosMode: ${elem['polybiosMode']}, alphabet: ${elem['alphabet']}', () {
-        var _actual = decryptADFGX(elem['input'] as String?, elem['substitutionKey'], elem['transpositionKey'], polybiosMode: elem['polybiosMode'], alphabet: elem['alphabet'] as String);
+        var _actual = decryptADFGX(elem['input'] as String?, elem['substitutionKey'] as String?, elem['transpositionKey'] as String?, polybiosMode: elem['polybiosMode'] as PolybiosMode, alphabet: elem['alphabet'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -57,7 +57,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, substitutionKey: ${elem['substitutionKey']}, transpositionKey: ${elem['transpositionKey']}, polybiosMode: ${elem['polybiosMode']}, alphabet: ${elem['alphabet']}', () {
-        var _actual = decryptADFGVX(elem['input'] as String?, elem['substitutionKey'], elem['transpositionKey'], polybiosMode: elem['polybiosMode'], alphabet: elem['alphabet'] as String);
+        var _actual = decryptADFGVX(elem['input'] as String?, elem['substitutionKey'] as String?, elem['transpositionKey'] as String?, polybiosMode: elem['polybiosMode'] as PolybiosMode, alphabet: elem['alphabet'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });

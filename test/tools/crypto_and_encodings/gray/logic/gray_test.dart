@@ -33,9 +33,9 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, mode: ${elem['mode']}', () {
-        var _actual = encodeGray(elem['input'] as String?, mode: elem['mode']);
-        expect(_actual.decimalOutput, elem['expectedOutput'].decimalOutput);
-        expect(_actual.binaryOutput, elem['expectedOutput'].binaryOutput);
+        var _actual = encodeGray(elem['input'] as String?, mode: elem['mode'] as GrayMode);
+        expect(_actual.decimalOutput, (elem['expectedOutput'] as GrayOutput).decimalOutput);
+        expect(_actual.binaryOutput, (elem['expectedOutput'] as GrayOutput).binaryOutput);
       });
     });
   });
@@ -66,9 +66,9 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, mode: ${elem['mode']}', () {
-        var _actual = decodeGray(elem['input'] as String?, mode: elem['mode']);
-        expect(_actual.decimalOutput, elem['expectedOutput'].decimalOutput);
-        expect(_actual.binaryOutput, elem['expectedOutput'].binaryOutput);
+        var _actual = decodeGray(elem['input'] as String?, mode: elem['mode'] as GrayMode);
+        expect(_actual.decimalOutput, (elem['expectedOutput'] as GrayOutput).decimalOutput);
+        expect(_actual.binaryOutput, (elem['expectedOutput'] as GrayOutput).binaryOutput);
       });
     });
   }); // group
