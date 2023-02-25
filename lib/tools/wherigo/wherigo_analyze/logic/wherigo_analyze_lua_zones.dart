@@ -14,7 +14,25 @@ bool _insideSectionZone(String currentLine) {
   return true;
 }
 
-void _analyzeAndExtractZoneSectionData(List<String> lines) {
+WherigoZoneData _analyzeAndExtractZoneSectionData(List<String> lines) {
+  String LUAname = '';
+  String id = '';
+  String name = '';
+  String description = '';
+  String visible = '';
+  String media = '';
+  String icon = '';
+  String active = '';
+  String distanceRange = '';
+  String showObjects = '';
+  String proximityRange = '';
+  WherigoZonePoint originalPoint = WherigoZonePoint(0.0, 0.0, 0.0);
+  String distanceRangeUOM = '';
+  String proximityRangeUOM = '';
+  String outOfRange = '';
+  String inRange = '';
+  List<WherigoZonePoint> points = [];
+
   for (int i = 0; i < lines.length; i++) {
     lines[i] = lines[i].trim();
     if (lines[i].startsWith(LUAname + '.Id'))
@@ -92,4 +110,23 @@ void _analyzeAndExtractZoneSectionData(List<String> lines) {
       } while (lines[i].trimLeft().startsWith('ZonePoint'));
     }
   }
+  return WherigoZoneData(
+    LUAname,
+    id,
+    name,
+    description,
+    visible,
+    media,
+    icon,
+    active,
+    distanceRange,
+    showObjects,
+    proximityRange,
+    originalPoint,
+    distanceRangeUOM,
+    proximityRangeUOM,
+    outOfRange,
+    inRange,
+    points,
+  );
 }

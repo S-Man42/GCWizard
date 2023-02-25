@@ -51,19 +51,10 @@ String CreateDate = WHERIGO_NULLDATE;
 String PublishDate = WHERIGO_NULLDATE;
 String UpdateDate = WHERIGO_NULLDATE;
 String LastPlayedDate = WHERIGO_NULLDATE;
-List<WherigoZonePoint> points = [];
 String visible = '';
 String media = '';
 String icon = '';
 String active = '';
-String distanceRange = '';
-String showObjects = '';
-String proximityRange = '';
-WherigoZonePoint originalPoint = WherigoZonePoint(0.0, 0.0, 0.0);
-String distanceRangeUOM = '';
-String proximityRangeUOM = '';
-String outOfRange = '';
-String inRange = '';
 String location = '';
 WherigoZonePoint zonePoint = WherigoZonePoint(0.0, 0.0, 0.0);
 String gender = '';
@@ -180,7 +171,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
     lines[i] = lines[i].trim();
 
     if (sendAsyncPort != null && (i % progressStep == 0)) {
-      sendAsyncPort?.send({'progress': i / lines.length / 2});
+      sendAsyncPort.send({'progress': i / lines.length / 2});
     }
 
     _checkAndGetCartridgeName(lines[i]);
@@ -200,7 +191,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           i++;
           analyzeLines.add(lines[i]);
           if (sendAsyncPort != null && (i % progressStep == 0)) {
-            sendAsyncPort?.send({'progress': i / lines.length / 2});
+            sendAsyncPort.send({'progress': i / lines.length / 2});
           }
         } while (_insideSectionMedia(lines[i + 1]) && (i < lines.length - 1));
 
@@ -227,33 +218,14 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           i++;
           analyzeLines.add(lines[i]);
           if (sendAsyncPort != null && (i % progressStep == 0)) {
-            sendAsyncPort?.send({'progress': i / lines.length / 2});
+            sendAsyncPort.send({'progress': i / lines.length / 2});
           }
-        } while (_insideSectionZone(lines[i]) && (i < lines.length - 1));
+        } while (_insideSectionZone(lines[i + 1]) && (i < lines.length - 1));
 
         _analyzeAndExtractZoneSectionData(analyzeLines);
 
-        cartridgeZones.add(WherigoZoneData(
-          LUAname,
-          id,
-          name,
-          description,
-          visible,
-          media,
-          icon,
-          active,
-          distanceRange,
-          showObjects,
-          proximityRange,
-          originalPoint,
-          distanceRangeUOM,
-          proximityRangeUOM,
-          outOfRange,
-          inRange,
-          points,
-        ));
+        cartridgeZones.add(_analyzeAndExtractZoneSectionData(analyzeLines));
         cartridgeNameToObject[LUAname] = WherigoObjectData(id, 0, name, media, WHERIGO_OBJECT_TYPE.ZONE);
-        i--;
       }
     } catch (exception) {
       LUAAnalyzeStatus = WHERIGO_ANALYSE_RESULT_STATUS.ERROR_LUA;
@@ -275,7 +247,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           i++;
           analyzeLines.add(lines[i]);
           if (sendAsyncPort != null && (i % progressStep == 0)) {
-            sendAsyncPort?.send({'progress': i / lines.length / 2});
+            sendAsyncPort.send({'progress': i / lines.length / 2});
           }
         } while (_insideSectionCharacter(lines[i]) && (i < lines.length - 1));
 
@@ -306,7 +278,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           i++;
           analyzeLines.add(lines[i]);
           if (sendAsyncPort != null && (i % progressStep == 0)) {
-            sendAsyncPort?.send({'progress': i / lines.length / 2});
+            sendAsyncPort.send({'progress': i / lines.length / 2});
           }
         } while (_insideSectionItem(lines[i]) && (i < lines.length - 1));
 
@@ -337,7 +309,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           i++;
           analyzeLines.add(lines[i]);
           if (sendAsyncPort != null && (i % progressStep == 0)) {
-            sendAsyncPort?.send({'progress': i / lines.length / 2});
+            sendAsyncPort.send({'progress': i / lines.length / 2});
           }
         } while (_insideSectionTask(lines[i]) && (i < lines.length - 1));
 
@@ -420,7 +392,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           i++;
           analyzeLines.add(lines[i]);
           if (sendAsyncPort != null && (i % progressStep == 0)) {
-            sendAsyncPort?.send({'progress': i / lines.length / 2});
+            sendAsyncPort.send({'progress': i / lines.length / 2});
           }
         } while (_insideSectionTimer(lines[i]) && (i < lines.length - 1));
 
@@ -457,7 +429,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           i++;
           analyzeLines.add(lines[i]);
           if (sendAsyncPort != null && (i % progressStep == 0)) {
-            sendAsyncPort?.send({'progress': i / lines.length / 2});
+            sendAsyncPort.send({'progress': i / lines.length / 2});
           }
         } while (_insideSectionInput(lines[i]) && (i < lines.length - 1));
 
@@ -593,7 +565,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           }
 
           if (sendAsyncPort != null && (i % progressStep == 0)) {
-            sendAsyncPort?.send({'progress': i / lines.length / 2});
+            sendAsyncPort.send({'progress': i / lines.length / 2});
           }
         } while (sectionInput);
       } // end if identify input function
