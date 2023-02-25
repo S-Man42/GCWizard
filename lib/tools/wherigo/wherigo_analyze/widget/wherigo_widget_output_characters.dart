@@ -1,11 +1,11 @@
 part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_analyze.dart';
 
-List<List<String>> buildOutputListOfCharacterData(BuildContext context, WherigoCharacterData data) {
+List<List<String>> _buildOutputListOfCharacterData(BuildContext context, WherigoCharacterData data) {
   List<List<String>> result = [];
   if (wherigoExpertMode)
-    result = buildOutputListCharacterDataExpertMode(context, data);
+    result = _buildOutputListCharacterDataExpertMode(context, data);
   else
-    result = buildOutputListCharacterDataUserMode(context, data);
+    result = _buildOutputListCharacterDataUserMode(context, data);
 
   if (data.CharacterLocation == 'ZonePoint')
     result.add([
@@ -19,7 +19,7 @@ List<List<String>> buildOutputListOfCharacterData(BuildContext context, WherigoC
   return result;
 }
 
-List<List<String>> buildOutputListCharacterDataExpertMode(BuildContext context, WherigoCharacterData data) {
+List<List<String>> _buildOutputListCharacterDataExpertMode(BuildContext context, WherigoCharacterData data) {
   return [
     [i18n(context, 'wherigo_output_luaname'), data.CharacterLUAName],
     [i18n(context, 'wherigo_output_id'), data.CharacterID],
@@ -56,7 +56,7 @@ List<List<String>> buildOutputListCharacterDataExpertMode(BuildContext context, 
   ];
 }
 
-List<List<String>> buildOutputListCharacterDataUserMode(BuildContext context, WherigoCharacterData data) {
+List<List<String>> _buildOutputListCharacterDataUserMode(BuildContext context, WherigoCharacterData data) {
   return [
     [i18n(context, 'wherigo_output_name'), data.CharacterName],
     [i18n(context, 'wherigo_output_description'), data.CharacterDescription],

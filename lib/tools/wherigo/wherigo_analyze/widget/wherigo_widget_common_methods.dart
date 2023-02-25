@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_analyze.dart';
 
-GCWFile? getFileFrom(BuildContext context, String resourceName) {
+GCWFile? _getFileFrom(BuildContext context, String resourceName) {
   Uint8List? filedata;
   String? filename;
   int fileindex = 0;
@@ -40,7 +40,7 @@ GCWFile? getFileFrom(BuildContext context, String resourceName) {
   }
 }
 
-String resolveLUAName(String chiffre) {
+String _resolveLUAName(String chiffre) {
   String resolve(List<String> chiffreList, String joinPattern) {
     if (NameToObject[chiffreList[0]] == null)
       return '';
@@ -69,10 +69,10 @@ String resolveLUAName(String chiffre) {
     return chiffre;
 }
 
-Widget buildImageView(BuildContext context, bool condition, String fileSource) {
+Widget _buildImageView(BuildContext context, bool condition, String fileSource) {
   if (!condition) return Container();
 
-  var file = getFileFrom(context, fileSource);
+  var file = _getFileFrom(context, fileSource);
 
   if (file == null) return Container();
 
@@ -84,7 +84,7 @@ Widget buildImageView(BuildContext context, bool condition, String fileSource) {
 }
 
 
-void getErrorMessagesFromLUAAnalyzation(List<String> _errorMsg, BuildContext context) {
+void _getErrorMessagesFromLUAAnalyzation(List<String> _errorMsg, BuildContext context) {
   if (WherigoCartridgeLUAData.ResultStatus == WHERIGO_ANALYSE_RESULT_STATUS.OK) {
     _errorMsg.add(i18n(context, 'wherigo_error_runtime_lua'));
     _errorMsg.add(i18n(context, 'wherigo_error_no_error'));
@@ -98,7 +98,7 @@ void getErrorMessagesFromLUAAnalyzation(List<String> _errorMsg, BuildContext con
   }
 }
 
-void getErrorMessagesFromGWCAnalyzation(List<dynamic> _errorMsg, BuildContext context) {
+void _getErrorMessagesFromGWCAnalyzation(List<dynamic> _errorMsg, BuildContext context) {
   if (WherigoCartridgeGWCData.ResultStatus == WHERIGO_ANALYSE_RESULT_STATUS.OK) {
     _errorMsg.add(i18n(context, 'wherigo_error_runtime_gwc'));
     _errorMsg.add(i18n(context, 'wherigo_error_no_error'));
@@ -114,13 +114,13 @@ void getErrorMessagesFromGWCAnalyzation(List<dynamic> _errorMsg, BuildContext co
 }
 
 
-String getCreationDate(BuildContext context, int duration) {
+String _getCreationDate(BuildContext context, int duration) {
   // Date of creation   ; Seconds since 2004-02-10 01:00:00
-  if (duration == null) return formatDate(context, DateTime(2004, 2, 1, 1, 0, 0, 0).toString());
-  return formatDate(context, DateTime(2004, 2, 1, 1, 0, 0, 0).add(Duration(seconds: duration)).toString());
+  if (duration == null) return _formatDate(context, DateTime(2004, 2, 1, 1, 0, 0, 0).toString());
+  return _formatDate(context, DateTime(2004, 2, 1, 1, 0, 0, 0).add(Duration(seconds: duration)).toString());
 }
 
-String formatDate(BuildContext context, String datetime) {
+String _formatDate(BuildContext context, String datetime) {
   String loc = Localizations.localeOf(context).toString();
   return (datetime == null) ? DateTime.parse(WHERIGO_NULLDATE).toString() : DateFormat.yMd(loc).add_jms().format(DateTime.parse(datetime)).toString();
 }

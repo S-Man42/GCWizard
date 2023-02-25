@@ -194,7 +194,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   void _setGWCData(Uint8List bytes) {
     _GWCbytes = bytes;
-    _GWCFileStructure = buildOutputListByteCodeStructure(context, _GWCbytes);
+    _GWCFileStructure = _buildOutputListByteCodeStructure(context, _GWCbytes);
 
     if (_fileLoadedState == WHERIGO_FILE_LOAD_STATE.NULL)
       _fileLoadedState = WHERIGO_FILE_LOAD_STATE.GWC;
@@ -404,9 +404,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     }
 
     List<String> errorMsg = [];
-    getErrorMessagesFromGWCAnalyzation(errorMsg, context);
+    _getErrorMessagesFromGWCAnalyzation(errorMsg, context);
     errorMsg.add('');
-    getErrorMessagesFromLUAAnalyzation(errorMsg, context);
+    _getErrorMessagesFromLUAAnalyzation(errorMsg, context);
 
     switch (_displayedCartridgeData) {
       case WHERIGO_OBJECT.NULL:
@@ -869,13 +869,13 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           ),
         ],
       ),
-      buildImageView(
+      _buildImageView(
           context,
           WherigoCartridgeLUAData.Characters[_characterIndex - 1].CharacterMediaName != '' &&
               WherigoCartridgeGWCData.MediaFilesContents.length > 1,
           WherigoCartridgeLUAData.Characters[_characterIndex - 1].CharacterMediaName),
       GCWColumnedMultilineOutput(
-          data: buildOutputListOfCharacterData(context, WherigoCartridgeLUAData.Characters[_characterIndex - 1]),
+          data: _buildOutputListOfCharacterData(context, WherigoCartridgeLUAData.Characters[_characterIndex - 1]),
           flexValues: [1, 3])
     ]);
   }
@@ -953,13 +953,13 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           ),
         ],
       ),
-      buildImageView(
+      _buildImageView(
           context,
           (WherigoCartridgeLUAData.Zones[_zoneIndex - 1].ZoneMediaName != '') &&
               WherigoCartridgeGWCData.MediaFilesContents.length > 1,
           WherigoCartridgeLUAData.Zones[_zoneIndex - 1].ZoneMediaName),
       GCWColumnedMultilineOutput(
-          data: buildOutputListOfZoneData(context, WherigoCartridgeLUAData.Zones[_zoneIndex - 1]), flexValues: [1, 3])
+          data: _buildOutputListOfZoneData(context, WherigoCartridgeLUAData.Zones[_zoneIndex - 1]), flexValues: [1, 3])
     ]);
   }
 
@@ -1010,13 +1010,13 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       ),
 
       // Widget for Answer-Details
-      buildImageView(
+      _buildImageView(
           context,
           WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputMedia != '' &&
               WherigoCartridgeGWCData.MediaFilesContents.length > 1,
           WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputMedia),
       GCWColumnedMultilineOutput(
-          data: buildOutputListOfInputData(context, WherigoCartridgeLUAData.Inputs[_inputIndex - 1]),
+          data: _buildOutputListOfInputData(context, WherigoCartridgeLUAData.Inputs[_inputIndex - 1]),
           flexValues: [1, 3]),
       (WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers != null)
           ? Row(
@@ -1059,7 +1059,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           ? Column(
               children: <Widget>[
                 GCWColumnedMultilineOutput(
-                    data: buildOutputListAnswers(context, WherigoCartridgeLUAData.Inputs[_inputIndex - 1],
+                    data: _buildOutputListAnswers(context, WherigoCartridgeLUAData.Inputs[_inputIndex - 1],
                         WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers[_answerIndex - 1]),
                     copyColumn: 1,
                     flexValues: [2, 3, 3]),
@@ -1130,13 +1130,13 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           ),
         ],
       ),
-      buildImageView(
+      _buildImageView(
           context,
           WherigoCartridgeLUAData.Tasks[_taskIndex - 1].TaskMedia != '' &&
               WherigoCartridgeGWCData.MediaFilesContents.length > 1,
           WherigoCartridgeLUAData.Tasks[_taskIndex - 1].TaskMedia),
       GCWColumnedMultilineOutput(
-          data: buildOutputListOfTaskData(context, WherigoCartridgeLUAData.Tasks[_taskIndex - 1]), flexValues: [1, 3])
+          data: _buildOutputListOfTaskData(context, WherigoCartridgeLUAData.Tasks[_taskIndex - 1]), flexValues: [1, 3])
     ]);
   }
 
@@ -1184,7 +1184,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         ],
       ),
       GCWColumnedMultilineOutput(
-          data: buildOutputListOfTimerData(context, WherigoCartridgeLUAData.Timers[_timerIndex - 1]),
+          data: _buildOutputListOfTimerData(context, WherigoCartridgeLUAData.Timers[_timerIndex - 1]),
           flexValues: [1, 3])
     ]);
   }
@@ -1270,13 +1270,13 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           ),
         ],
       ),
-      buildImageView(
+      _buildImageView(
           context,
           WherigoCartridgeLUAData.Items[_itemIndex - 1].ItemMedia != '' &&
               WherigoCartridgeGWCData.MediaFilesContents.length > 1,
           WherigoCartridgeLUAData.Items[_itemIndex - 1].ItemMedia),
       GCWColumnedMultilineOutput(
-          data: buildOutputListOfItemData(context, WherigoCartridgeLUAData.Items[_itemIndex - 1]), flexValues: [1, 3])
+          data: _buildOutputListOfItemData(context, WherigoCartridgeLUAData.Items[_itemIndex - 1]), flexValues: [1, 3])
     ]);
   }
 
@@ -1323,7 +1323,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           ),
         ],
       ),
-      Column(children: buildOutputListOfMessageData(context, WherigoCartridgeLUAData.Messages[_messageIndex - 1]))
+      Column(children: _buildOutputListOfMessageData(context, WherigoCartridgeLUAData.Messages[_messageIndex - 1]))
     ]);
   }
 
@@ -1367,12 +1367,12 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         ],
       ),
       GCWColumnedMultilineOutput(
-          data: buildOutputListOfVariables(context, WherigoCartridgeLUAData.Variables[_identifierIndex - 1])),
+          data: _buildOutputListOfVariables(context, WherigoCartridgeLUAData.Variables[_identifierIndex - 1])),
       GCWExpandableTextDivider(
         expanded: false,
         text: i18n(context, 'wherigo_output_identifier_details'),
         child: GCWColumnedMultilineOutput(
-            data: buildOutputListOfVariablesDetails(context, WherigoCartridgeLUAData.Variables[_identifierIndex - 1])),
+            data: _buildOutputListOfVariablesDetails(context, WherigoCartridgeLUAData.Variables[_identifierIndex - 1])),
       ),
     ]);
   }

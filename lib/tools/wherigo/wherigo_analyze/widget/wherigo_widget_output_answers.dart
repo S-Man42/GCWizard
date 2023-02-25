@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_analyze.dart';
 
-List<List<String>> buildOutputListAnswers(BuildContext context, WherigoInputData input, WherigoAnswerData data) {
+List<List<String>> _buildOutputListAnswers(BuildContext context, WherigoInputData input, WherigoAnswerData data) {
   List<List<String>> result;
 
   List<String> answers = data.AnswerAnswer.split('\x01');
@@ -52,7 +52,7 @@ List<Widget> _outputAnswerActionsWidgets(BuildContext context, WherigoAnswerData
           break;
 
         case WHERIGO_ACTIONMESSAGETYPE.IMAGE:
-          var file = getFileFrom(context, element.ActionMessageContent);
+          var file = _getFileFrom(context, element.ActionMessageContent);
           if (file == null) break;
 
           resultWidget.add(Container(
@@ -100,7 +100,7 @@ List<Widget> _outputAnswerActionsWidgets(BuildContext context, WherigoAnswerData
           } else
             wherigoExpertMode
                 ? resultWidget.add(GCWOutput(
-              child: '\n' + resolveLUAName(element.ActionMessageContent) + '\n',
+              child: '\n' + _resolveLUAName(element.ActionMessageContent) + '\n',
               suppressCopyButton: true,
             ))
                 : null;

@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_analyze.dart';
 
-List<Widget> buildOutputListOfMessageData(BuildContext context, List<WherigoActionMessageElementData> data) {
+List<Widget> _buildOutputListOfMessageData(BuildContext context, List<WherigoActionMessageElementData> data) {
   List<Widget> resultWidget = [];
   data.forEach((element) {
     switch (element.ActionMessageType) {
@@ -14,7 +14,7 @@ List<Widget> buildOutputListOfMessageData(BuildContext context, List<WherigoActi
         ));
         break;
       case WHERIGO_ACTIONMESSAGETYPE.IMAGE:
-        var file = getFileFrom(context, element.ActionMessageContent);
+        var file = _getFileFrom(context, element.ActionMessageContent);
         if (file == null) break;
 
         resultWidget.add(Container(
@@ -51,7 +51,7 @@ List<Widget> buildOutputListOfMessageData(BuildContext context, List<WherigoActi
           ));
         } else
           resultWidget.add(GCWOutput(
-            child: '\n' + resolveLUAName(element.ActionMessageContent) + '\n',
+            child: '\n' + _resolveLUAName(element.ActionMessageContent) + '\n',
             suppressCopyButton: true,
           ));
         break;
