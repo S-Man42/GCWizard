@@ -1,13 +1,13 @@
 part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze.dart';
 
-bool insideSectionTask(String currentLine) {
+bool _insideSectionTask(String currentLine) {
   if (RegExp(r'( Wherigo.ZTask)').hasMatch(currentLine) || RegExp(r'(.ZVariables =)').hasMatch(currentLine)) {
     return false;
   }
   return true;
 }
 
-void analyzeAndExtractTaskSectionData(List<String> lines) {
+void _analyzeAndExtractTaskSectionData(List<String> lines) {
   for (int i = 0; i < lines.length; i++) {
     lines[i] = lines[i].trim();
 

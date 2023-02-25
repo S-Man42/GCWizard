@@ -111,7 +111,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
     // Code snippet for accessing REST API
     // https://medium.com/nerd-for-tech/multipartrequest-in-http-for-sending-images-videos-via-post-request-in-flutter-e689a46471ab
     try {
-      await getDecompiledLUAFileFromServer(byteListLUA);
+      await _getDecompiledLUAFileFromServer(byteListLUA);
     } catch (exception) {
       //SocketException: Connection timed out (OS Error: Connection timed out, errno = 110), address = 192.168.178.93, port = 57582
       httpCode = 503;
@@ -120,7 +120,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
     if (httpCode != WHERIGO_HTTP_CODE_OK) {
       return WherigoCartridge(
         cartridgeGWC: WHERIGO_EMPTYCARTRIDGE_GWC,
-        cartridgeLUA: faultyWherigoCartridgeLUA(
+        cartridgeLUA: _faultyWherigoCartridgeLUA(
             LUAFile,
             WHERIGO_ANALYSE_RESULT_STATUS.ERROR_HTTP,
             ['wherigo_http_code', WHERIGO_HTTP_STATUS[httpCode] ?? ''],
@@ -132,7 +132,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
   else
     LUAFile = String.fromCharCodes(byteListLUA);
 
-  LUAFile = normalizeLUAmultiLineText(LUAFile);
+  LUAFile = _normalizeLUAmultiLineText(LUAFile);
 
   if ((byteListLUA != [] || byteListLUA != null || LUAFile != '')) LUAchecksToDo = WHERIGO_FILE_LOAD_STATE.LUA;
 
@@ -141,19 +141,19 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
     return WherigoCartridge(
         cartridgeGWC: WHERIGO_EMPTYCARTRIDGE_GWC,
         cartridgeLUA:
-            faultyWherigoCartridgeLUA('', WHERIGO_ANALYSE_RESULT_STATUS.ERROR_LUA, LUAAnalyzeResults, 0, ''));
+            _faultyWherigoCartridgeLUA('', WHERIGO_ANALYSE_RESULT_STATUS.ERROR_LUA, LUAAnalyzeResults, 0, ''));
   }
 
-  checkAndGetWherigoBuilder();
+  _checkAndGetWherigoBuilder();
 
-  checkAndGetObfuscatorWWBorGSUB();
+  _checkAndGetObfuscatorWWBorGSUB();
 
   List<String> lines = LUAFile.split('\n');
 
-  if (!obfuscatorFound) checkAndGetObfuscatorURWIGO(lines);
+  if (!obfuscatorFound) _checkAndGetObfuscatorURWIGO(lines);
 
   if (obfuscatorFound) {
-    deObfuscateAllTexts();
+    _deObfuscateAllTexts();
   }
 
   // ----------------------------------------------------------------------------------------------------------------
@@ -183,8 +183,8 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
       sendAsyncPort?.send({'progress': i / lines.length / 2});
     }
 
-    checkAndGetCartridgeName(lines[i]);
-    checkAndGetCartridgeMetaData(lines[i]);
+    _checkAndGetCartridgeName(lines[i]);
+    _checkAndGetCartridgeMetaData(lines[i]);
 
     // ----------------------------------------------------------------------------------------------------------------
     // search and get Media Object
@@ -202,9 +202,9 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           if (sendAsyncPort != null && (i % progressStep == 0)) {
             sendAsyncPort?.send({'progress': i / lines.length / 2});
           }
-        } while (insideSectionMedia(lines[i + 1]) && (i < lines.length - 1));
+        } while (_insideSectionMedia(lines[i + 1]) && (i < lines.length - 1));
 
-        cartridgeMedia.add(analyzeAndExtractMediaSectionData(analyzeLines));
+        cartridgeMedia.add(_analyzeAndExtractMediaSectionData(analyzeLines));
         cartridgeNameToObject[LUAname] = WherigoObjectData(id, index, name, medianame, WHERIGO_OBJECT_TYPE.MEDIA);
 
       } // end if line hasmatch zmedia
@@ -229,9 +229,9 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           if (sendAsyncPort != null && (i % progressStep == 0)) {
             sendAsyncPort?.send({'progress': i / lines.length / 2});
           }
-        } while (insideSectionZone(lines[i]) && (i < lines.length - 1));
+        } while (_insideSectionZone(lines[i]) && (i < lines.length - 1));
 
-        analyzeAndExtractZoneSectionData(analyzeLines);
+        _analyzeAndExtractZoneSectionData(analyzeLines);
 
         cartridgeZones.add(WherigoZoneData(
           LUAname,
@@ -277,9 +277,9 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           if (sendAsyncPort != null && (i % progressStep == 0)) {
             sendAsyncPort?.send({'progress': i / lines.length / 2});
           }
-        } while (insideSectionCharacter(lines[i]) && (i < lines.length - 1));
+        } while (_insideSectionCharacter(lines[i]) && (i < lines.length - 1));
 
-        analyzeAndExtractCharacterSectionData(analyzeLines);
+        _analyzeAndExtractCharacterSectionData(analyzeLines);
 
         cartridgeCharacters.add(WherigoCharacterData(
             LUAname, id, name, description, visible, media, icon, location, zonePoint, container, gender, type));
@@ -308,9 +308,9 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           if (sendAsyncPort != null && (i % progressStep == 0)) {
             sendAsyncPort?.send({'progress': i / lines.length / 2});
           }
-        } while (insideSectionItem(lines[i]) && (i < lines.length - 1));
+        } while (_insideSectionItem(lines[i]) && (i < lines.length - 1));
 
-        analyzeAndExtractItemSectionData(analyzeLines);
+        _analyzeAndExtractItemSectionData(analyzeLines);
 
         cartridgeItems.add(WherigoItemData(
             LUAname, id, name, description, visible, media, icon, location, zonePoint, container, locked, opened));
@@ -339,9 +339,9 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           if (sendAsyncPort != null && (i % progressStep == 0)) {
             sendAsyncPort?.send({'progress': i / lines.length / 2});
           }
-        } while (insideSectionTask(lines[i]) && (i < lines.length - 1));
+        } while (_insideSectionTask(lines[i]) && (i < lines.length - 1));
 
-        analyzeAndExtractTaskSectionData(analyzeLines);
+        _analyzeAndExtractTaskSectionData(analyzeLines);
 
         cartridgeTasks
             .add(WherigoTaskData(LUAname, id, name, description, visible, media, icon, active, complete, correctstate));
@@ -422,9 +422,9 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           if (sendAsyncPort != null && (i % progressStep == 0)) {
             sendAsyncPort?.send({'progress': i / lines.length / 2});
           }
-        } while (insideSectionTimer(lines[i]) && (i < lines.length - 1));
+        } while (_insideSectionTimer(lines[i]) && (i < lines.length - 1));
 
-        analyzeAndExtractTimerSectionData(analyzeLines);
+        _analyzeAndExtractTimerSectionData(analyzeLines);
 
         cartridgeTimers.add(WherigoTimerData(
           LUAname,
@@ -459,9 +459,9 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           if (sendAsyncPort != null && (i % progressStep == 0)) {
             sendAsyncPort?.send({'progress': i / lines.length / 2});
           }
-        } while (insideSectionInput(lines[i]) && (i < lines.length - 1));
+        } while (_insideSectionInput(lines[i]) && (i < lines.length - 1));
 
-        analyzeAndExtractInputSectionData(analyzeLines);
+        _analyzeAndExtractInputSectionData(analyzeLines);
 
         cartridgeInputs.add(WherigoInputData(
           LUAname,
@@ -523,7 +523,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
             } while (!sectionAnalysed); // end of section
           } // end of NIL
 
-          else if (OnGetInputSectionEnd(lines[i])) {
+          else if (_OnGetInputSectionEnd(lines[i])) {
             if (insideInputFunction) {
               answerList.forEach((answer) {
                 if (answer != 'NIL') {
@@ -541,7 +541,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
               answerList =
                   getAnswers(i, lines[i], lines[i - 1], obfuscatorFunction, obfuscatorTable, cartridgeVariables);
             }
-          } else if ((i + 1 < lines.length - 1) && OnGetInputFunctionEnd(lines[i], lines[i + 1].trim())) {
+          } else if ((i + 1 < lines.length - 1) && _OnGetInputFunctionEnd(lines[i], lines[i + 1].trim())) {
             if (insideInputFunction) {
               insideInputFunction = false;
               answerActions.forEach((element) {});
@@ -605,7 +605,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
 
   // ----------------------------------------------------------------------------------------------------------------
   // second parse
-  getAllMessagesAndDialogsFromLUA(progress, lines, sendAsyncPort, progressStep);
+  _getAllMessagesAndDialogsFromLUA(progress, lines, sendAsyncPort, progressStep);
 
   return WherigoCartridge(
       cartridgeGWC: WHERIGO_EMPTYCARTRIDGE_GWC,
@@ -643,7 +643,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
       ));
 }
 
-void checkAndGetCartridgeName(String currentLine) {
+void _checkAndGetCartridgeName(String currentLine) {
   if (RegExp(r'(Wherigo.ZCartridge)').hasMatch(currentLine)) {
     CartridgeLUAName =
         currentLine.replaceAll('=', '').replaceAll(' ', '').replaceAll('Wherigo.ZCartridge()', '').trim();
@@ -651,7 +651,7 @@ void checkAndGetCartridgeName(String currentLine) {
   }
 }
 
-void checkAndGetCartridgeMetaData(String currentLine) {
+void _checkAndGetCartridgeMetaData(String currentLine) {
   currentLine = currentLine.replaceAll(CartridgeLUAName, '').trim();
 
   if (currentLine.startsWith('.Name')) {
@@ -678,19 +678,19 @@ void checkAndGetCartridgeMetaData(String currentLine) {
     UseLogging = currentLine.replaceAll('.UseLogging = ', '').replaceAll('"', '').trim().toLowerCase();
 
   if (currentLine.startsWith('.CreateDate'))
-    CreateDate = normalizeDate(currentLine.replaceAll('.CreateDate = ', '').replaceAll('"', '').trim());
+    CreateDate = _normalizeDate(currentLine.replaceAll('.CreateDate = ', '').replaceAll('"', '').trim());
 
   if (currentLine.startsWith('.PublishDate'))
-    PublishDate = normalizeDate(currentLine.replaceAll('.PublishDate = ', '').replaceAll('"', '').trim());
+    PublishDate = _normalizeDate(currentLine.replaceAll('.PublishDate = ', '').replaceAll('"', '').trim());
 
   if (currentLine.startsWith('.UpdateDate'))
-    UpdateDate = normalizeDate(currentLine.replaceAll('.UpdateDate = ', '').replaceAll('"', '').trim());
+    UpdateDate = _normalizeDate(currentLine.replaceAll('.UpdateDate = ', '').replaceAll('"', '').trim());
 
   if (currentLine.startsWith('.LastPlayedDate'))
-    LastPlayedDate = normalizeDate(currentLine.replaceAll('.LastPlayedDate = ', '').replaceAll('"', '').trim());
+    LastPlayedDate = _normalizeDate(currentLine.replaceAll('.LastPlayedDate = ', '').replaceAll('"', '').trim());
 }
 
-void getAllMessagesAndDialogsFromLUA(int progress, List<String> lines, SendPort? sendAsyncPort, int progressStep) {
+void _getAllMessagesAndDialogsFromLUA(int progress, List<String> lines, SendPort? sendAsyncPort, int progressStep) {
   progress = lines.length;
   for (int i = 0; i < lines.length; i++) {
     progress++;
@@ -936,7 +936,7 @@ void getAllMessagesAndDialogsFromLUA(int progress, List<String> lines, SendPort?
   cartridgeInputs = resultInputs;
 }
 
-void checkAndGetWherigoBuilder() {
+void _checkAndGetWherigoBuilder() {
   if (RegExp(r'(_Urwigo)').hasMatch(LUAFile))
     _builder = WHERIGO_BUILDER.URWIGO;
   else if (RegExp(r'(WWB_deobf)').hasMatch(LUAFile)) {
@@ -946,7 +946,7 @@ void checkAndGetWherigoBuilder() {
   }
 }
 
-Future<void> getDecompiledLUAFileFromServer(Uint8List byteListLUA) async {
+Future<void> _getDecompiledLUAFileFromServer(Uint8List byteListLUA) async {
   String address = 'http://sdklmfoqdd5qrtha.myfritz.net:7323/GCW_Unluac/';
   var uri = Uri.parse(address);
   var request = http.MultipartRequest('POST', uri)

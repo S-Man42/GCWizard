@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze.dart';
 
-void deObfuscateAllTexts() {
+void _deObfuscateAllTexts() {
   LUAFile = LUAFile.replaceAll('([[', '(').replaceAll(']])', ')');
   RegExp(r'' + obfuscatorFunction + '\\(".*?"\\)').allMatches(LUAFile).forEach((obfuscatedText) {
     var group = obfuscatedText.group(0);
@@ -22,7 +22,7 @@ void deObfuscateAllTexts() {
   });
 }
 
-void checkAndGetObfuscatorURWIGO(List<String> lines) {
+void _checkAndGetObfuscatorURWIGO(List<String> lines) {
   for (int i = 0; i < lines.length; i++) {
     lines[i] = lines[i].trim();
 
@@ -44,7 +44,7 @@ void checkAndGetObfuscatorURWIGO(List<String> lines) {
   }
 }
 
-void checkAndGetObfuscatorWWBorGSUB() {
+void _checkAndGetObfuscatorWWBorGSUB() {
   if (RegExp(r'(WWB_deobf)').hasMatch(LUAFile)) {
     obfuscatorFunction = 'WWB_deobf';
     obfuscatorTable = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@.-~';

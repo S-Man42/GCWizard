@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze.dart';
 
-bool insideSectionZone(String currentLine) {
+bool _insideSectionZone(String currentLine) {
   if (RegExp(r'( Wherigo.ZCharacter\()').hasMatch(currentLine) ||
       RegExp(r'( Wherigo.ZItem\()').hasMatch(currentLine) ||
       RegExp(r'( Wherigo.ZTask\()').hasMatch(currentLine) ||
@@ -14,7 +14,7 @@ bool insideSectionZone(String currentLine) {
   return true;
 }
 
-void analyzeAndExtractZoneSectionData(List<String> lines) {
+void _analyzeAndExtractZoneSectionData(List<String> lines) {
   for (int i = 0; i < lines.length; i++) {
     lines[i] = lines[i].trim();
     if (lines[i].startsWith(LUAname + '.Id'))
@@ -85,7 +85,7 @@ void analyzeAndExtractZoneSectionData(List<String> lines) {
       lines[i] = lines[i].trim();
       do {
         while (lines[i].trimLeft().startsWith('ZonePoint')) {
-          points.add(getPoint(lines[i]));
+          points.add(_getPoint(lines[i]));
           i++;
           lines[i] = lines[i].trim();
         }

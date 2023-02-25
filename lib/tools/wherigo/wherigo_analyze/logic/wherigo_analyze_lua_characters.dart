@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze.dart';
 
-bool insideSectionCharacter(String currentLine) {
+bool _insideSectionCharacter(String currentLine) {
   if (RegExp(r'( Wherigo.ZItem\()').hasMatch(currentLine) ||
       RegExp(r'( Wherigo.ZTask\()').hasMatch(currentLine) ||
       RegExp(r'( Wherigo.ZInput\()').hasMatch(currentLine) ||
@@ -13,7 +13,7 @@ bool insideSectionCharacter(String currentLine) {
   return true;
 }
 
-void analyzeAndExtractCharacterSectionData(List<String> lines) {
+void _analyzeAndExtractCharacterSectionData(List<String> lines) {
   for (int i = 0; i < lines.length; i++) {
     lines[i] = lines[i].trim();
     if (lines[i].startsWith(LUAname + '.Container =')) {

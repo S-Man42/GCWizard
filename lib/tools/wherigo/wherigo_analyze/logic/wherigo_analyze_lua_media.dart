@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze.dart';
 
-bool insideSectionMedia(String currentLine) {
+bool _insideSectionMedia(String currentLine) {
   if (RegExp(r'(Wherigo.ZCharacter\()').hasMatch(currentLine) ||
       RegExp(r'(Wherigo.ZMedia\()').hasMatch(currentLine) ||
       RegExp(r'(Wherigo.ZItem\()').hasMatch(currentLine) ||
@@ -15,7 +15,7 @@ bool insideSectionMedia(String currentLine) {
   return true;
 }
 
-WherigoMediaData analyzeAndExtractMediaSectionData(List<String> lines) {
+WherigoMediaData _analyzeAndExtractMediaSectionData(List<String> lines) {
   String LUAname = '';
   String id = '';
   String name = '';

@@ -1,13 +1,13 @@
 part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze.dart';
 
-bool insideSectionTimer(String currentLine) {
+bool _insideSectionTimer(String currentLine) {
   if (RegExp(r'( Wherigo.ZTimer\()').hasMatch(currentLine) || RegExp(r'( Wherigo.ZInput\()').hasMatch(currentLine)) {
     return false;
   }
   return true;
 }
 
-void analyzeAndExtractTimerSectionData(List<String> lines) {
+void _analyzeAndExtractTimerSectionData(List<String> lines) {
   for (int i = 0; i < lines.length; i++) {
     lines[i] = lines[i].trim();
 

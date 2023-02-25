@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze.dart';
 
-String normalizeLUAmultiLineText(String LUA) {
+String _normalizeLUAmultiLineText(String LUA) {
   return LUA
       .replaceAll('[[\n', '[[')
       .replaceAll('<BR>\n', '<BR>')
@@ -19,7 +19,7 @@ String normalizeLUAmultiLineText(String LUA) {
       .replaceAll('\n\n', '\n');
 }
 
-WherigoZonePoint getPoint(String line) {
+WherigoZonePoint _getPoint(String line) {
   List<String> data = line
       .trimLeft()
       .replaceAll('ZonePoint(', '')
@@ -102,7 +102,7 @@ List<String> getAnswers(
     return results;
   } else if (line.trim().startsWith('if Wherigo.NoCaseEquals(') ||
       line.trim().startsWith('elseif Wherigo.NoCaseEquals(')) {
-    if (answerVariable.isEmpty) answerVariable = getVariable(lineBefore);
+    if (answerVariable.isEmpty) answerVariable = _getVariable(lineBefore);
     line = line
         .trim()
         .replaceAll('if ', '')
@@ -141,31 +141,6 @@ List<String> getAnswers(
 
   throw Exception(
       'No Answers found'); // TODO Thomas: Please check if empty list instead is logically meaningful; I chose Exception because I believe this line should never be reached.
-}
-
-bool OnGetInputSectionEnd(String line) {
-  if (line.trim().startsWith('if input == ') ||
-      line.trim().startsWith('if input >= ') ||
-      line.trim().startsWith('if input <= ') ||
-      line.trim().startsWith('elseif input == ') ||
-      line.trim().startsWith('elseif input >= ') ||
-      line.trim().startsWith('elseif input <= ') ||
-      line.trim().startsWith('if _Urwigo.Hash(') ||
-      line.trim().startsWith('if (_Urwigo.Hash(') ||
-      line.trim().startsWith('elseif _Urwigo.Hash(') ||
-      line.trim().startsWith('elseif (_Urwigo.Hash(') ||
-      line.trim().startsWith('if Wherigo.NoCaseEquals(') ||
-      line.trim().startsWith('elseif Wherigo.NoCaseEquals(') ||
-      line.trim().startsWith('if ' + answerVariable + ' == ') ||
-      line.trim().startsWith('elseif ' + answerVariable + ' == '))
-    return true;
-  else
-    return false;
-}
-
-bool OnGetInputFunctionEnd(String line1, String line2) {
-  return (line1.trimLeft().startsWith('end') &&
-      (line2.trimLeft().startsWith('function') || line2.trimLeft().startsWith('return')));
 }
 
 WherigoActionMessageElementData? handleAnswerLine(String line, String dtable, String obfuscator) {
@@ -227,14 +202,14 @@ WherigoActionMessageElementData? handleAnswerLine(String line, String dtable, St
   }
 }
 
-String getVariable(String line) {
+String _getVariable(String line) {
   if (line.trim().endsWith('= input')) line = line.trim().replaceAll(' = input', '').replaceAll(' ', '');
   if (line.trim().endsWith('~= nil then'))
     line = line.trim().replaceAll('if', '').replaceAll(' ~= nil then', '').replaceAll(' ', '');
   return line;
 }
 
-String normalizeDate(String dateString) {
+String _normalizeDate(String dateString) {
   if (dateString == null || dateString.isEmpty || dateString == '1/1/0001 12:00:00 AM') return WHERIGO_NULLDATE;
 
   List<String> dateTime = dateString.split(' ');
@@ -254,7 +229,7 @@ bool isInvalidLUASourcecode(String header) {
   return (!header.replaceAll('(', ' ').replaceAll(')', '').startsWith('require "Wherigo"'));
 }
 
-WherigoCartridgeLUA faultyWherigoCartridgeLUA(
+WherigoCartridgeLUA _faultyWherigoCartridgeLUA(
                       String _LUAFile,
                       WHERIGO_ANALYSE_RESULT_STATUS resultStatus,
                       List<String> _http_code_http,
