@@ -105,6 +105,7 @@ List<Widget> _outputAnswerActionsWidgets(BuildContext context, WherigoAnswerData
             ))
                 : null;
           break;
+        default: ;
       }
     });
   }

@@ -55,6 +55,7 @@ List<Widget> _buildOutputListOfMessageData(BuildContext context, List<WherigoAct
             suppressCopyButton: true,
           ));
         break;
+      default: ;
     }
   });
   return resultWidget;

@@ -111,6 +111,8 @@ List<List<String>> _buildHeaderExpertMode(BuildContext context) {
       case WHERIGO_BUILDER.GROUNDSPEAK:
         header.add([i18n(context, 'wherigo_header_builder'), 'Groundspeak']);
         break;
+
+      default: ;
     }
      header.add([i18n(context, 'wherigo_header_version'), WherigoCartridgeLUAData.BuilderVersion]);
   return header;
