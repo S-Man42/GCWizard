@@ -12,7 +12,22 @@ bool _insideSectionItem(String currentLine) {
   return true;
 }
 
-void _analyzeAndExtractItemSectionData(List<String> lines) {
+WherigoItemData _analyzeAndExtractItemSectionData(List<String> lines) {
+  String LUAname = '';
+  String id = '';
+  String name = '';
+  String description = '';
+  String visible = '';
+  String media = '';
+  String icon = '';
+  String location = '';
+  WherigoZonePoint zonePoint = WherigoZonePoint(0.0, 0.0, 0.0);
+  String container = '';
+  String locked = '';
+  String opened = '';
+
+  bool _sectionDescription = true;
+
   for (int i = 0; i < lines.length; i++) {
     lines[i] = lines[i].trim();
     if (lines[i].trim().startsWith(LUAname + 'Container =')) {
@@ -20,42 +35,42 @@ void _analyzeAndExtractItemSectionData(List<String> lines) {
     }
 
     if (lines[i].trim().startsWith(LUAname + '.Id')) {
-      id = getLineData(lines[i], LUAname, 'Id', obfuscatorFunction, obfuscatorTable);
+      id = getLineData(lines[i], LUAname, 'Id', _obfuscatorFunction, _obfuscatorTable);
     }
 
     if (lines[i].trim().startsWith(LUAname + '.Name')) {
-      name = getLineData(lines[i], LUAname, 'Name', obfuscatorFunction, obfuscatorTable);
+      name = getLineData(lines[i], LUAname, 'Name', _obfuscatorFunction, _obfuscatorTable);
     }
 
     if (lines[i].trim().startsWith(LUAname + '.Description')) {
       description = '';
-      sectionDescription = true;
+      _sectionDescription = true;
       do {
         description = description + lines[i];
         if (i > lines.length - 2 || lines[i + 1].trim().startsWith(LUAname + '.Visible')) {
-          sectionDescription = false;
+          _sectionDescription = false;
         }
         i++;
         lines[i] = lines[i].trim();
-      } while (sectionDescription);
+      } while (_sectionDescription);
       description = description.replaceAll('[[', '').replaceAll(']]', '').replaceAll('<BR>', '\n');
-      description = getLineData(description, LUAname, 'Description', obfuscatorFunction, obfuscatorTable).trim();
+      description = getLineData(description, LUAname, 'Description', _obfuscatorFunction, _obfuscatorTable).trim();
     }
 
     if (lines[i].trim().startsWith(LUAname + '.Visible'))
-      visible = getLineData(lines[i], LUAname, 'Visible', obfuscatorFunction, obfuscatorTable);
+      visible = getLineData(lines[i], LUAname, 'Visible', _obfuscatorFunction, _obfuscatorTable);
 
     if (lines[i].trim().startsWith(LUAname + '.Media'))
-      media = getLineData(lines[i], LUAname, 'Media', obfuscatorFunction, obfuscatorTable).trim();
+      media = getLineData(lines[i], LUAname, 'Media', _obfuscatorFunction, _obfuscatorTable).trim();
 
     if (lines[i].trim().startsWith(LUAname + '.Icon'))
-      icon = getLineData(lines[i], LUAname, 'Icon', obfuscatorFunction, obfuscatorTable);
+      icon = getLineData(lines[i], LUAname, 'Icon', _obfuscatorFunction, _obfuscatorTable);
 
     if (lines[i].trim().startsWith(LUAname + '.Locked'))
-      locked = getLineData(lines[i], LUAname, 'Locked', obfuscatorFunction, obfuscatorTable);
+      locked = getLineData(lines[i], LUAname, 'Locked', _obfuscatorFunction, _obfuscatorTable);
 
     if (lines[i].trim().startsWith(LUAname + '.Opened')) {
-      opened = getLineData(lines[i], LUAname, 'Opened', obfuscatorFunction, obfuscatorTable);
+      opened = getLineData(lines[i], LUAname, 'Opened', _obfuscatorFunction, _obfuscatorTable);
     }
 
     if (lines[i].trim().startsWith(LUAname + '.ObjectLocation')) {
@@ -69,7 +84,9 @@ void _analyzeAndExtractItemSectionData(List<String> lines) {
             double.parse(location.split(',')[2]));
         location = 'ZonePoint';
       } else
-        location = getLineData(lines[i], LUAname, 'ObjectLocation', obfuscatorFunction, obfuscatorTable);
+        location = getLineData(lines[i], LUAname, 'ObjectLocation', _obfuscatorFunction, _obfuscatorTable);
     }
   }
+  return WherigoItemData(
+      LUAname, id, name, description, visible, media, icon, location, zonePoint, container, locked, opened);
 }

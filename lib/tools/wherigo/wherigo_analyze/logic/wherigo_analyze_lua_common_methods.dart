@@ -38,8 +38,8 @@ List<String> getAnswers(
       line.trim().startsWith('elseif input == ') ||
       line.trim().startsWith('elseif input >= ') ||
       line.trim().startsWith('elseif input <= ') ||
-      line.trim().startsWith('if ' + answerVariable + ' == ') ||
-      line.trim().startsWith('elseif ' + answerVariable + ' == ')) {
+      line.trim().startsWith('if ' + _answerVariable + ' == ') ||
+      line.trim().startsWith('elseif ' + _answerVariable + ' == ')) {
     if (line.contains('<=') && line.contains('>=')) {
       return [
         line
@@ -60,7 +60,7 @@ List<String> getAnswers(
         .replaceAll('input', '')
         .replaceAll('==', '')
         .replaceAll('then', '')
-        .replaceAll(answerVariable, '')
+        .replaceAll(_answerVariable, '')
         .replaceAll(' ', '')
         .replaceAll('and', ' and ')
         .split(RegExp(r'(or)'));
@@ -102,13 +102,13 @@ List<String> getAnswers(
     return results;
   } else if (line.trim().startsWith('if Wherigo.NoCaseEquals(') ||
       line.trim().startsWith('elseif Wherigo.NoCaseEquals(')) {
-    if (answerVariable.isEmpty) answerVariable = _getVariable(lineBefore);
+    if (_answerVariable.isEmpty) _answerVariable = _getVariable(lineBefore);
     line = line
         .trim()
         .replaceAll('if ', '')
         .replaceAll('elseif ', '')
         .replaceAll('Wherigo.NoCaseEquals', '')
-        .replaceAll(answerVariable, '')
+        .replaceAll(_answerVariable, '')
         .replaceAll('(', '')
         .replaceAll(')', '')
         .replaceAll('"', '')
