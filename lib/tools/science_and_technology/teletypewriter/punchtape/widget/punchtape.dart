@@ -66,7 +66,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
           return GCWDropDownMenuItem(
               value: mode.key,
               child: i18n(context, mode.value.title),
-              subtitle: mode.value.subtitle != null ? i18n(context, mode.value.subtitle) : null);
+              subtitle: i18n(context, mode.value.subtitle));
         }).toList(),
       ),
       if (!(_currentCode == TeletypewriterCodebook.BAUDOT_54123 || _currentCode == TeletypewriterCodebook.CCITT_IA5))

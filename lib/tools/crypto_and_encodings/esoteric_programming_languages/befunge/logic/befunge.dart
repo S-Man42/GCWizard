@@ -56,7 +56,7 @@ class BefungeOutput {
 class Stack {
   List<BigInt> content;
 
-  push(BigInt element) {
+  void push(BigInt element) {
     content.add(element);
   }
 

@@ -61,7 +61,7 @@ HohohoOutput interpretHohoho(String? plainText, {String? STDIN}) {
 }
 
 String generateHohoho(String OutputText) {
-  if (OutputText.isEmpty || OutputText == null) return '';
+  if (OutputText.isEmpty) return '';
 
   // generate Brainfck
   String code = generateBrainfk(OutputText);

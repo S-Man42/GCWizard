@@ -469,7 +469,7 @@ final List<List<String>> _CHEF_itemListAuxiliaryENG = [
   ['sauce', 'dressing', 'topping', 'chips', 'relish']
 ];
 
-String _getText(_CHEF_textId id, String parameter, language) {
+String _getText(_CHEF_textId id, String parameter, String language) {
   var text = '';
   switch (id) {
     case _CHEF_textId.Put:
@@ -544,13 +544,11 @@ String _getText(_CHEF_textId id, String parameter, language) {
       else
         text = 'Serviere mit %1.';
       break;
-      break;
     case _CHEF_textId.Clean:
       if (language == 'ENG')
         text = 'Clean %1 mixing bowl.';
       else
         text = '%1 Schüssel abwaschen.';
-      break;
       break;
   }
 

@@ -26,7 +26,6 @@ class PophamTelegraphState extends State<PophamTelegraph> {
   late TextEditingController _encodeController;
 
   late TextEditingController _decodeInputController;
-  String _currentDecodeInput = '';
 
   Segments _currentDisplays = Segments.Empty();
   var _currentMode = GCWSwitchPosition.right;

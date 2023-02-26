@@ -378,7 +378,7 @@ final Map<String, String> CHIZhuyinWordToNum = {
   'ㄕˊㄙˋ': '14',
   'ㄕˊㄨˇ': '15',
   'ㄕˊㄌㄧㄡˋ': '16',
-  'ㄕˊㄧ': '17',
+  'ㄕˊㄑㄧ': '17',
   'ㄕˊㄅㄚ': '18',
   'ㄕˊjiǔ': '19',
   'ㄦˋㄕˊ': '20',
@@ -954,7 +954,6 @@ final Map<String, String> HANGULKORWordToNum = {
 };
 final Map<String, String> HANGULSINOKORWordToNum = {
   '영': '0',
-  '령': '0',
   '령': '0',
   '일': '1',
   '이': '2',
@@ -2197,7 +2196,7 @@ final Map<String, String> VOLWordToNum = {
   'vesued': 'numeralwords_w',
 };
 
-List ZOOMABLE_LANGUAGE = [
+List<NumeralWordsLanguage> ZOOMABLE_LANGUAGE = [
   NumeralWordsLanguage.JAPHIRAGANA,
   NumeralWordsLanguage.HANGULKOR,
   NumeralWordsLanguage.HANGULSINOKOR,
@@ -3657,14 +3656,14 @@ NumeralWordsOutput _isNumeralWord(String input, NumeralWordsLanguage language, M
       }
       if (input.contains(pattern)) {
         // numeral word contains 1000
-        var decode = input.split(pattern);
+        List<String> decode = input.split(pattern);
         if (decode.length == 2) {
-          if (decode[0] == null || decode[0].isEmpty)
+          if (decode[0].isEmpty)
             resultBefore = NumeralWordsOutput(true, '1', _languageList?[language] ?? '');
           else
             resultBefore = _isNumeralWordBelow1000(decode[0], language, decodingTable);
 
-          if (decode[1] == null || decode[1].isEmpty)
+          if (decode[1].isEmpty)
             resultAfter = NumeralWordsOutput(true, '0', _languageList?[language] ?? '');
           else
             resultAfter = _isNumeralWordBelow1000(decode[1], language, decodingTable);

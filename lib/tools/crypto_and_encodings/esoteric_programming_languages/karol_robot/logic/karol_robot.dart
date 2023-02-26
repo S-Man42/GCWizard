@@ -181,16 +181,16 @@ final _KAROL_COLORS = {
   'red': '8',
   'yellow': '9',
   'green': 'A',
-  'cyan': 'B',
+  //'cyan': 'B',
   'blue': 'C',
-  'magenta': 'D',
+  //'magenta': 'D',
   'darkred': 'E',
   'darkyellow': 'F',
   'darkgren': 'G',
   'darkcyan': 'H',
   'darkblue': 'I',
   'darkmagenta': 'J',
-  'orange': 'K',
+  //'orange': 'K',
   'darkorange': 'L',
   'lightorange': 'M',
   'brown': 'N',
@@ -207,16 +207,16 @@ final _KAROL_COLORS = {
   'rouge': '8',
   'jaune': '9',
   'vert': 'A',
-  'cyan': 'B',
+  //'cyan': 'B',
   'bleu': 'C',
-  'magenta': 'D',
+  //'magenta': 'D',
   'rougefonce': 'E',
   'jaunefonce': 'F',
   'vertfonce': 'G',
   'cyanfonce': 'H',
   'bleufonce': 'I',
   'magentafonce': 'J',
-  'orange': 'K',
+  //'orange': 'K',
   'orangeclair': 'L',
   'orangefonce': 'M',
   'brun': 'N',
@@ -259,7 +259,7 @@ String KarolRobotOutputEncode(String? output, KAREL_LANGUAGES language) {
   switch (language) {
     case KAREL_LANGUAGES.DEU:
       return program;
-      break;
+
     case KAREL_LANGUAGES.ENG:
       program = program
           .replaceAll(_SCHRITT, _MOVE)
@@ -282,7 +282,7 @@ String KarolRobotOutputEncode(String? output, KAREL_LANGUAGES language) {
         });
       }
       return program;
-      break;
+
     case KAREL_LANGUAGES.FRA:
       program = program
           .replaceAll(_SCHRITT, _ETAPE)
@@ -290,12 +290,11 @@ String KarolRobotOutputEncode(String? output, KAREL_LANGUAGES language) {
           .replaceAll(_RECHTSDREHEN, _TOURNERDROIT)
           .replaceAll(_MARKESETZEN, _MARQUEETABLIE);
       return program;
-      break;
   }
 }
 
 String KarolRobotOutputDecode(String program) {
-  if (program.isEmpty || program == null) return '';
+  if (program.isEmpty) return '';
 
   int x = 1;
   int y = 1;

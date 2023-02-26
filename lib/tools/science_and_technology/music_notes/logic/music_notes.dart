@@ -268,7 +268,7 @@ final Map<String, List<String>> CODEBOOK_MUSIC_NOTES_TREBLE = {
 };
 
 Segments encodeNotes(String input, NotesCodebook notes, Map<String, String> translationMap) {
-  if (input == null) return Segments.Empty();
+
   var mainEntrysStart = 0;
   var mainEntrysEnd = 99;
   List<List<String>> result = [];

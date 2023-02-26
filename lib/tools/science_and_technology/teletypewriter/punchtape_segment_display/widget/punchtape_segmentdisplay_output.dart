@@ -13,7 +13,6 @@ import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/w
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/_common/logic/teletypewriter.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
-import 'package:intl/intl.dart';
 
 part 'package:gc_wizard/tools/science_and_technology/teletypewriter/punchtape_segment_display/widget/punchtape_segmentdisplay_output_utils.dart';
 

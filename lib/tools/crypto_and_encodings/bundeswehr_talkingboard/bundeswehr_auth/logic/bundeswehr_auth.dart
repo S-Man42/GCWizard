@@ -130,10 +130,10 @@ BundeswehrTalkingBoardAuthentificationOutput buildAuthBundeswehr(
     BundeswehrTalkingBoardAuthentificationTable tableAuthentificationCode) {
   List<String> responseCodes = [];
 
-  if (currentCallSign == null || currentCallSign.isEmpty)
+  if (currentCallSign.isEmpty)
     responseCodes.add(BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CALLSIGN);
 
-  if (currentLetterCallSign == null || currentLetterCallSign.isEmpty)
+  if (currentLetterCallSign.isEmpty)
     responseCodes.add(BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CALLSIGN_LETTER);
 
   if (_tableIsInvalid(tableNumeralCode, BundeswehrTalkingBoardAuthentificationTableType.NUMERALCODE))
@@ -203,10 +203,10 @@ BundeswehrTalkingBoardAuthentificationOutput checkAuthBundeswehr(
 
   List<String> responseCodes = [];
 
-  if (currentCallSign == null || currentCallSign.isEmpty)
+  if (currentCallSign.isEmpty)
     responseCodes.add(BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CALLSIGN);
 
-  if (currentAuth == null || currentAuth.isEmpty)
+  if (currentAuth.isEmpty)
     responseCodes.add(BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_AUTHCODE);
 
   if (!BUNDESWEHR_TALKINGBOARD_AUTH_TABLE_X_AXIS.contains(currentLetterAuth))
@@ -222,7 +222,7 @@ BundeswehrTalkingBoardAuthentificationOutput checkAuthBundeswehr(
     return BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: responseCodes);
 
   currentAuth = _normalizeAuthCode(currentAuth);
-  if (currentAuth != null || currentAuth.isNotEmpty) {
+  if (currentAuth.isNotEmpty) {
     String details = 'Numeral Code:\n';
     List<String> authCode = currentAuth.split(' ');
     if (authCode.length != 3)

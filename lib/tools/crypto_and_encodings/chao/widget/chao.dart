@@ -118,7 +118,7 @@ class ChaoState extends State<Chao> {
   }
 
   Widget _buildOutput() {
-    if (_currentInput == null || _currentInput.isEmpty) return GCWDefaultOutput();
+    if (_currentInput.isEmpty) return GCWDefaultOutput();
 
     var alphabetChiffre = '';
     var alphabetPlain = '';

@@ -245,6 +245,7 @@ String decodeWASDGraphic(String? input, List<String> controlSet) {
             case WASD_DIRECTION.RIGHT:
               x++;
               break;
+            default: ;
           }
           for (int i = 0; i < _SEGMENT_LENGTH; i++) {
             y++;
@@ -271,6 +272,7 @@ String decodeWASDGraphic(String? input, List<String> controlSet) {
             case WASD_DIRECTION.RIGHT:
               x++;
               break;
+            default: ;
           }
           for (int i = 0; i < _SEGMENT_LENGTH; i++) {
             y--;
@@ -297,6 +299,7 @@ String decodeWASDGraphic(String? input, List<String> controlSet) {
             case WASD_DIRECTION.RIGHT:
               x++;
               break;
+            default: ;
           }
           for (int i = 0; i < _SEGMENT_LENGTH; i++) {
             x--;
@@ -323,6 +326,7 @@ String decodeWASDGraphic(String? input, List<String> controlSet) {
             case WASD_DIRECTION.RIGHT:
               x++;
               break;
+            default: ;
           }
           for (int i = 0; i < _SEGMENT_LENGTH; i++) {
             x++;

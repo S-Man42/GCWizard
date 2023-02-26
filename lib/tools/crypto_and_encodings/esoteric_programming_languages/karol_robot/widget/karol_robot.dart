@@ -18,7 +18,6 @@ import 'package:gc_wizard/tools/images_and_files/binary2image/logic/binary2image
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/image_utils/image_utils.dart';
-import 'package:intl/intl.dart';
 
 class KarolRobot extends StatefulWidget {
   @override
