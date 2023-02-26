@@ -6,18 +6,18 @@ import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 
 class BrainfkDerivatives {
-  Map<String, String> substitutions;
-  final String commandDelimiter;
+  late Map<String, String> substitutions;
+  final String? commandDelimiter;
 
-  BrainfkDerivatives(
-      {pointerShiftLeftInstruction,
-      pointerShiftRightInstruction,
-      decreaseValueInstruction,
-      increaseValueInstruction,
-      startLoopInstruction,
-      endLoopInstruction,
-      inputInstruction,
-      outputInstruction,
+  BrainfkDerivatives({
+      required String pointerShiftLeftInstruction,
+      required String pointerShiftRightInstruction,
+      required String decreaseValueInstruction,
+      required String increaseValueInstruction,
+      required String startLoopInstruction,
+      required String endLoopInstruction,
+      required String inputInstruction,
+      required String outputInstruction,
       this.commandDelimiter}) {
     substitutions = {
       pointerShiftRightInstruction: '>',
@@ -54,8 +54,8 @@ class BrainfkDerivatives {
     return code.toUpperCase().replaceAll(RegExp('[^$allChars]'), '').replaceAll(RegExp(r'\s'), '');
   }
 
-  String interpretBrainfkDerivatives(String code, {String input}) {
-    if (code == null || code.length == 0) return '';
+  String interpretBrainfkDerivatives(String? code, {String? input}) {
+    if (code == null || code.isEmpty) return '';
 
     var brainfk = '';
     code = _sanitizeCode(code);
@@ -65,7 +65,7 @@ class BrainfkDerivatives {
       _sanitizedSubstitutions.putIfAbsent(entry.key.toUpperCase().replaceAll(RegExp(r'\s'), ''), () => entry.value);
     }
 
-    while (code.length > 0) {
+    while (code!.isNotEmpty) {
       var chunk = '';
       var i = 0;
       while (_sanitizedSubstitutions[chunk] == null && i < code.length) {
@@ -74,7 +74,7 @@ class BrainfkDerivatives {
       }
 
       try {
-        brainfk += _sanitizedSubstitutions[chunk];
+        brainfk += _sanitizedSubstitutions[chunk] ?? '';
       } catch (e) {} //if there is no fitting substitution, ignore it.
 
       code = code.substring(min(i, code.length));
@@ -83,12 +83,12 @@ class BrainfkDerivatives {
     return interpretBrainfk(brainfk, input: input);
   }
 
-  String generateBrainfkDerivative(String text) {
-    if (text == null || text.length == 0) return '';
+  String generateBrainfkDerivative(String? text) {
+    if (text == null || text.isEmpty) return '';
 
     var brainfk = generateBrainfk(text);
-    if (commandDelimiter != null && commandDelimiter.isNotEmpty)
-      brainfk = insertEveryNthCharacter(brainfk, 1, commandDelimiter);
+    if (commandDelimiter != null && commandDelimiter!.isNotEmpty)
+      brainfk = insertEveryNthCharacter(brainfk, 1, commandDelimiter!);
 
     return substitution(brainfk, switchMapKeyValue(substitutions));
   }

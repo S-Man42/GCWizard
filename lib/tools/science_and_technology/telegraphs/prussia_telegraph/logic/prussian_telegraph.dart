@@ -2,6 +2,7 @@
 // https://trepo.tuni.fi/bitstream/handle/10024/102557/1513599679.pdf?sequence=1&isAllowed=y
 // https://en.wikipedia.org/wiki/Telegraph_code#Edelcrantz_code
 
+import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
@@ -2344,27 +2345,24 @@ final CODEBOOK_PRUSSIA = {
   '999': '',
 };
 
-List<List<String>> encodePrussianTelegraph(String input) {
-  if (input == null || input == '') return <List<String>>[];
+Segments encodePrussianTelegraph(String? input) {
+  if (input == null || input.isEmpty) return Segments.Empty();
 
-  return input.split('').where((letter) => switchMapKeyValue(CODEBOOK_PRUSSIA)[letter] != null).map((letter) {
+  var result = input.split('').where((letter) => switchMapKeyValue(CODEBOOK_PRUSSIA)[letter] != null).map((letter) {
     return switchMapKeyValue(CODEBOOK_PRUSSIA)[letter]!.split('');
   }).toList();
+  return Segments(displays: result);
 }
 
-Map<String, dynamic> decodeVisualPrussianTelegraph(List<String> inputs) {
-  if (inputs == null || inputs.length == 0)
-    return {
-      'displays': <List<String>>[],
-      'text': '',
-    };
+SegmentsText decodeVisualPrussianTelegraph(List<String>? inputs) {
+  if (inputs == null || inputs.isEmpty) SegmentsText(displays: [], text: '');
 
   var displays = <List<String>>[];
   var segment = <String>[];
   String text = '';
   String code = '';
 
-  inputs.forEach((element) {
+  inputs!.forEach((element) {
     segment = _stringToSegment(element);
     displays.add(segment);
     code = segmentToCode(segment);
@@ -2373,15 +2371,11 @@ Map<String, dynamic> decodeVisualPrussianTelegraph(List<String> inputs) {
     else
       text = text + UNKNOWN_ELEMENT;
   });
-  return {'displays': displays, 'text': text};
+  return SegmentsText(displays: displays, text: text);
 }
 
-Map<String, dynamic> decodeTextPrussianTelegraph(String inputs) {
-  if (inputs == null || inputs.length == 0)
-    return {
-      'displays': <List<String>>[],
-      'text': '',
-    };
+SegmentsText decodeTextPrussianTelegraph(String inputs) {
+  if (inputs.isEmpty) SegmentsText(displays: [], text: '');
 
   var displays = <List<String>>[];
   String text = '';
@@ -2416,7 +2410,7 @@ Map<String, dynamic> decodeTextPrussianTelegraph(String inputs) {
     }
     displays.add(_buildShutters(element));
   });
-  return {'displays': displays, 'text': text};
+  return SegmentsText(displays: displays, text: text);
 }
 
 String _replaceNumber(String plainText, code) {
@@ -2629,7 +2623,7 @@ List<String> _buildShutters(String input) {
   String segments = input;
   String level = 'A1';
 
-  while (segments.length > 0) {
+  while (segments.isNotEmpty) {
     if (level == 'A2' && segments[0] != '.') level = 'B1';
     if (segments[0] == '.' && level == 'A2') {
       if (segments.length > 1) segments = segments.substring(1);

@@ -12,7 +12,7 @@ class Rot123 extends StatefulWidget {
 }
 
 class Rot123State extends State<Rot123> {
-  var _controller;
+  late TextEditingController _controller;
 
   String _currentInput = '';
 
@@ -45,8 +45,8 @@ class Rot123State extends State<Rot123> {
     );
   }
 
-  _buildOutput() {
-    if (_currentInput == null || _currentInput.isEmpty) return GCWDefaultOutput();
+  Widget _buildOutput() {
+    if (_currentInput.isEmpty) return GCWDefaultOutput();
 
     return Column(
       children: [

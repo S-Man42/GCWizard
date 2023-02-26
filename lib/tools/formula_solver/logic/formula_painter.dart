@@ -29,9 +29,7 @@ class FormulaPainter {
     _constantsRegEx = _constants.map((constant) => constant).join('|');
   }
 
-  String? paintFormula(String? formula, Map<String, String> values, int formulaIndex, bool coloredFormulas) {
-    if (formula == null) return null;
-
+  String paintFormula(String formula, Map<String, String> values, int formulaIndex, bool coloredFormulas) {
     var result = _buildResultString('t', formula.length);
     if (!coloredFormulas) return result;
 
@@ -58,7 +56,7 @@ class FormulaPainter {
       result = _paintOutsideFormulaReferences(formula, result, matches);
 
       matches.forEach((match) {
-        var _parserResult = [formula!.substring(0, match.start), match.group(1), match.group(2), match.group(3)];
+        var _parserResult = [formula.substring(0, match.start), match.group(1), match.group(2), match.group(3)];
         var literal = _parserResult[2];
         var emptyLiteral = (literal ?? '').trim().isEmpty;
         result = _coloredContent(result, _parserResult, emptyLiteral);
@@ -333,8 +331,8 @@ class FormulaPainter {
 
     var result = <String>[];
     var arguments = _separateArguments(formula);
-    var maxCommaCount;
-    var minCommaCount = 0;
+    int? maxCommaCount;
+    int minCommaCount = 0;
     switch (functionName) {
       case 'LOG':
         minCommaCount = 1;
@@ -435,7 +433,7 @@ class FormulaPainter {
   }
 
   List<String>? _isLiteral(String formula) {
-    RegExp regex = RegExp(r'^([\(\{])');
+    RegExp regex = RegExp(r'^([({])');
     var match = regex.firstMatch(formula);
 
     if (match == null) return null;
@@ -463,7 +461,7 @@ class FormulaPainter {
 
   List<String>? _isConstant(String formula) {
     //extract all non-ascii chars, like Pi or Phi
-    var specialChars = _constantsRegEx.replaceAll(RegExp(r'[A-Za-z0-9\|_]'), '');
+    var specialChars = _constantsRegEx.replaceAll(RegExp(r'[A-Za-z0-9|_]'), '');
     //add special chars to allowed character (next to \w == ASCII chars)
     var wordChars = r'[\w' + specialChars + r']';
     // \b does not allow non-ASCII chars
@@ -565,7 +563,7 @@ class FormulaPainter {
     return _replaceRange(result, 0, parts[0].length, hasError ? 'G' : 'g');
   }
 
-  List<String>? _isOperator(String formula, var offset) {
+  List<String>? _isOperator(String formula, int offset) {
     var regex = RegExp(r'^([' + _operatorsRegEx + r'])(\s*)(\-)*(\s*)([^' + _operatorsRegEx + '])');
     var match = regex.firstMatch(formula);
 
@@ -663,7 +661,7 @@ class FormulaPainter {
         }
       }
     }
-    if ((formula.length - startIndex > 0) || (arguments.length == 0)) arguments.add(formula.substring(startIndex));
+    if ((formula.length - startIndex > 0) || (arguments.isEmpty)) arguments.add(formula.substring(startIndex));
 
     return arguments;
   }

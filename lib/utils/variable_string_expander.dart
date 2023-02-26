@@ -7,6 +7,14 @@ final RegExp VARIABLESTRING =
 
 enum VariableStringExpanderBreakCondition { RUN_ALL, BREAK_ON_FIRST_FOUND }
 
+class VariableStringExpanderValue {
+  final String? text;
+  final Map<String, String>? variables;
+  final int? count;
+
+  VariableStringExpanderValue({this.text, this.variables, this.count});
+}
+
 /*
   - Takes a string which contains an arbitrary number of variables, e.g. "A B C"
   - Requires for every variable one or many possible values like {'A': '1-3', 'B': '5,6', 'C': '4-6#2'}
@@ -45,7 +53,7 @@ enum VariableStringExpanderBreakCondition { RUN_ALL, BREAK_ON_FIRST_FOUND }
 class VariableStringExpander {
   String? _input;
   Map<String, String>? _substitutions;
-  Function? onAfterExpandedText;
+  String? Function(String)? onAfterExpandedText;
   SendPort? sendAsyncPort;
 
   VariableStringExpanderBreakCondition breakCondition;
@@ -66,7 +74,7 @@ class VariableStringExpander {
   int _countVariableGroups = -1;
   String _variableGroup = '';
 
-  List<Map<String, dynamic>> _results = [];
+  List<VariableStringExpanderValue> _results = [];
   List<String> _uniqueResults = [];
 
   List<int> _variableValueIndexes = [];
@@ -77,16 +85,19 @@ class VariableStringExpander {
 
   // Expands a "compressed" variable group like "5-10" to "5,6,7,8,9,10"
   List<String> _expandVariableGroup(String group) {
-    var output;
+    dynamic output; // Explicit dynamic type is intended here!
 
     if (orderAndUnique)
+      //TODO: For philosophy: Maybe not use SplayTreeSet here;
+      // Pro: output can be defined as List<String>;
+      // Contra: You need to check for existing elements on both .add() calls and sort manually afterwards if flag is set
       output = SplayTreeSet<String>();
     else
       output = <String>[];
 
     group = group.replaceAll(RegExp(r'[^\d,\-#]'), '');
 
-    if (group.length == 0) return [];
+    if (group.isEmpty) return [];
 
     var ranges = group.split(',');
     ranges.forEach((range) {
@@ -115,7 +126,7 @@ class VariableStringExpander {
       }
     });
 
-    return output.toList();
+    return output.toList() as List<String>;
   }
 
   // counting indexes like a normal numeral system:
@@ -149,7 +160,7 @@ class VariableStringExpander {
 
   int _variableGroupIndex = -1;
   int _variableValueIndex = -1;
-  String _result = '';
+  String? _result = '';
 
   Map<String, String> _getCurrentVariables() {
     Map<String, String> variables = {};
@@ -168,11 +179,14 @@ class VariableStringExpander {
     do {
       _substitute();
 
-      _result = onAfterExpandedText!(_result);
+      if (_result == null) continue;
+      if (onAfterExpandedText != null) {
+        _result = onAfterExpandedText!(_result!);
+      }
 
-      if (_uniqueResults.contains(_result)) continue;
+      if (_result == null || _uniqueResults.contains(_result)) continue;
 
-      _results.add({'text': _result, 'variables': _getCurrentVariables()});
+      _results.add(VariableStringExpanderValue(text: _result, variables: _getCurrentVariables()));
 
       if (breakCondition == VariableStringExpanderBreakCondition.BREAK_ON_FIRST_FOUND) break;
 
@@ -196,16 +210,16 @@ class VariableStringExpander {
             );
       }
 
-      _result = _result.replaceFirst(_variableGroups[_variableGroupIndex], _variableGroup);
+      _result = _result!.replaceFirst(_variableGroups[_variableGroupIndex], _variableGroup);
     }
   }
 
-  List<Map<String, dynamic>> run({onlyPrecheck: false}) {
-    if (_input == null || _input?.length == 0) return [];
+  List<VariableStringExpanderValue> run({bool onlyPrecheck = false}) {
+    if (_input == null || _input!.isEmpty) return [];
 
-    if (_substitutions == null || _substitutions!.length == 0) {
+    if (_substitutions == null || _substitutions!.isEmpty) {
       return [
-        {'text': _input, 'variables': {}}
+        VariableStringExpanderValue(text: _input!)
       ];
     }
 
@@ -213,14 +227,14 @@ class VariableStringExpander {
     for (MapEntry<String, String> substitution in _substitutions!.entries) {
       if (!VARIABLESTRING.hasMatch(substitution.value)) {
         return [
-          {'text': _input, 'variables': {}}
+          VariableStringExpanderValue(text: _input!)
         ];
       }
 
       _substitutionKeys.add(substitution.key.toUpperCase());
       var group = _expandVariableGroup(substitution.value);
 
-      if (group.length > 0) {
+      if (group.isNotEmpty) {
         _expandedVariableGroups.add(group);
 
         _countVariableValues.add(group.length);
@@ -233,7 +247,7 @@ class VariableStringExpander {
     _countCombinations = _countVariableValues.fold(1, (previousValue, element) => previousValue * element);
     if (onlyPrecheck) {
       return [
-        {'count': _countCombinations}
+        VariableStringExpanderValue(count: _countCombinations)
       ];
     }
 
@@ -254,10 +268,11 @@ class VariableStringExpander {
 }
 
 int preCheckCombinations(Map<String, String> substitutions) {
-  if (substitutions == null || substitutions.isEmpty) return 0;
+  if (substitutions.isEmpty) return 0;
 
-  var expander = VariableStringExpander('DUMMY', substitutions, onAfterExpandedText: (e) => false);
-  var count = expander.run(onlyPrecheck: true);
+  var expander = VariableStringExpander('DUMMY', substitutions, onAfterExpandedText: (e) => null);
+  var result = expander.run(onlyPrecheck: true);
+  if (result.isEmpty || result.first.count == null) return 0;
 
-  return count[0]['count'];
+  return result.first.count!;
 }

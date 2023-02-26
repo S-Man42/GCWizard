@@ -11,7 +11,7 @@ LatLng geo3x3ToLatLon(Geo3x3 geo3x3) {
 Geo3x3 parseGeo3x3(String input) {
   if (input == null) return null;
   input = input.trim();
-  if (input == '') return null;
+  if (input.isEmpty) return null;
 
   input = input.toUpperCase();
   if (RegExp(r'[EeWw][1-9]+').hasMatch(input)) {

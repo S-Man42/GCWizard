@@ -13,7 +13,7 @@ class MultiDecoderToolKeyboardNumbers extends AbstractMultiDecoderTool {
     Key? key,
     required int id,
     required String name,
-    required Map<String, Object> options,
+    required Map<String, Object?> options,
     required BuildContext context})
       : super(
             key: key,
@@ -22,7 +22,7 @@ class MultiDecoderToolKeyboardNumbers extends AbstractMultiDecoderTool {
             internalToolName: MDT_INTERNALNAMES_KEYBOARDNUMBERS,
             onDecode: (String input, String key) {
               return keyboardNumbersByName[
-                stringTypeCheck(options[MDT_KEYBOARDNUMBERS_OPTION_TYPE], 'keyboard_mode_qwertz_ristome_dvorak')
+                toStringOrDefault(options[MDT_KEYBOARDNUMBERS_OPTION_TYPE], 'keyboard_mode_qwertz_ristome_dvorak')
                     ]!(input).trim();
             },
             options: options,

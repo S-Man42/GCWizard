@@ -17,10 +17,10 @@ class TomTom extends StatefulWidget {
 }
 
 class TomTomState extends State<TomTom> {
-  var _inputEncryptController;
-  var _inputDecryptController;
-  var _aController;
-  var _bController;
+  late TextEditingController _inputEncryptController;
+  late TextEditingController _inputDecryptController;
+  late TextEditingController _aController;
+  late TextEditingController _bController;
 
   var _currentInputEncrypt = '';
   var _currentInputDecrypt = '';
@@ -116,7 +116,7 @@ class TomTomState extends State<TomTom> {
     );
   }
 
-  _buildButtonBar() {
+  Widget _buildButtonBar() {
     return GCWToolBar(children: [
       GCWButton(
         text: _currentA,
@@ -169,12 +169,12 @@ class TomTomState extends State<TomTom> {
     ]);
   }
 
-  _addCharacter(String input) {
+  void _addCharacter(String input) {
     _currentInputDecrypt = textControllerInsertText(input, _currentInputDecrypt, _inputDecryptController);
   }
 
-  _buildOutput() {
-    if (_currentA.length == 0 || _currentB.length == 0) return '';
+  String _buildOutput() {
+    if (_currentA.isEmpty || _currentB.isEmpty) return '';
 
     var key = {'/': _currentA, '\\': _currentB};
 

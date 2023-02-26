@@ -1,13 +1,15 @@
 import 'dart:math';
+import 'package:collection/collection.dart';
 
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
-class AlphabetValues {
-  Map<String, String> alphabet;
 
-  AlphabetValues({alphabet}) {
+class AlphabetValues {
+  late Map<String, String> alphabet;
+
+  AlphabetValues({Map<String, String>? alphabet}) {
     if (alphabet == null) alphabet = alphabetAZ.alphabet;
 
     this.alphabet = alphabet;
@@ -20,7 +22,7 @@ class AlphabetValues {
   To avoid behaviour differences between Dart and JavaScript, here is a toUpperCase() function
   which makes everything upperCase except ß
    */
-  _toUpperCase(String text) {
+  String _toUpperCase(String text) {
     return text.split('').map((character) {
       if (character != String.fromCharCode(223))
         return character.toUpperCase();
@@ -29,10 +31,10 @@ class AlphabetValues {
     }).join();
   }
 
-  List<int> textToValues(String text, {bool keepNumbers: false}) {
-    var output = <int>[];
+  List<int?> textToValues(String? text, {bool keepNumbers = false}) {
+    var output = <int?>[];
 
-    if (text == null || text.length == 0) return output;
+    if (text == null || text.isEmpty) return output;
 
     text = _toUpperCase(text);
 
@@ -50,11 +52,11 @@ class AlphabetValues {
 
     var maxKeyLength = entries.first.key.length;
 
-    while (text.length > 0) {
-      String value;
+    while (text!.isNotEmpty) {
+      String? value;
       int i = 0;
       for (i = min(maxKeyLength, text.length); i >= 1; i--) {
-        var entry = entries.firstWhere((entry) => entry.key == text.substring(0, i), orElse: () => null);
+        var entry = entries.firstWhereOrNull((entry) => entry.key == text!.substring(0, i));
         if (entry != null) {
           value = entry.value;
           break;

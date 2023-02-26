@@ -4,12 +4,12 @@ import 'dart:math';
 
 import 'package:intl/intl.dart';
 
-Map<String, String> CartesianToPolar(String currentA, String currentB) {
-  if (currentA == null || currentA == '' || currentB == null || currentB == '') return {'': ''};
+Map<String, String> CartesianToPolar(String? currentA, String? currentB) {
+  if (currentA == null || currentA.isEmpty || currentB == null || currentB.isEmpty) return {'': ''};
   currentA = currentA.replaceAll(',', '.');
   currentB = currentB.replaceAll(',', '.');
 
-  Map<String, String> result = new Map<String, String>();
+  Map<String, String> result = Map<String, String>();
   double a = 0.0;
   double b = 0.0;
 
@@ -44,12 +44,12 @@ Map<String, String> CartesianToPolar(String currentA, String currentB) {
   return result;
 }
 
-Map<String, String> PolarToCartesian(String currentRadius, currentAngle) {
-  if (currentRadius == null || currentRadius == '' || currentAngle == null || currentAngle == '') return {'': ''};
+Map<String, String> PolarToCartesian(String? currentRadius, String? currentAngle) {
+  if (currentRadius == null || currentRadius.isEmpty || currentAngle == null || currentAngle.isEmpty) return {'': ''};
   currentRadius = currentRadius.replaceAll(',', '.');
   currentAngle = currentAngle.replaceAll(',', '.');
 
-  Map<String, String> result = new Map<String, String>();
+  Map<String, String> result = Map<String, String>();
   double a = 0.0;
   double r = 0.0;
 

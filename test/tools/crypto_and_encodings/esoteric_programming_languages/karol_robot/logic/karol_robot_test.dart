@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_langua
 
 void main() {
   group("KarolRobot.interpret:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'code' : null, 'expectedOutput' : ''},
       {'code' : '', 'expectedOutput' : ''},
 
@@ -215,14 +215,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('code: ${elem['code']}', () {
-        var _actual = KarolRobotOutputDecode(elem['code']);
+        var _actual = KarolRobotOutputDecode(elem['code'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
   group("KarolRobot.generate:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'language' : KAREL_LANGUAGES.DEU, 'text' : null, 'expectedOutput' : ''},
       {'language' : KAREL_LANGUAGES.ENG, 'text' : null, 'expectedOutput' : ''},
       {'language' : KAREL_LANGUAGES.FRA, 'text' : null, 'expectedOutput' : ''},
@@ -237,7 +237,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}', () {
-        var _actual = KarolRobotOutputEncode(elem['text'], elem['language']);
+        var _actual = KarolRobotOutputEncode(elem['text'] as String?, elem['language'] as KAREL_LANGUAGES);
         expect(_actual, elem['expectedOutput']);
       });
     });

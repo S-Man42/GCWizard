@@ -28,7 +28,7 @@ class DebugOutput {
   DebugOutput(this.pc, this.command, this.stack, this.output);
 }
 
-BeatnikOutput generateBeatnik(var ScrabbleVersion, output) {
+BeatnikOutput generateBeatnik(var ScrabbleVersion, String output) {
   var random = Random();
   int number = 0;
   int h = 0;
@@ -98,14 +98,12 @@ BeatnikOutput generateBeatnik(var ScrabbleVersion, output) {
   return BeatnikOutput([assemblerProgramm.join(' ')], [''], assemblerProgramm, mnemonicProgramm, []);
 }
 
-class BeatnikStack {
-  List<int> _stack;
+class _BeatnikStack {
+  var _stack =<int>[];
 
-  BeatnikStack() {
-    _stack = <int>[];
-  }
+  _BeatnikStack();
 
-  void push(int c) {
+  void push(int? c) {
     if (c != null) _stack.add(c);
   }
 
@@ -115,10 +113,11 @@ class BeatnikStack {
   }
 
   int pop() {
-    if (_stack.length != 0) {
+    if (_stack.isNotEmpty) {
       var c = _stack.removeAt(_stack.length - 1);
       return c;
     }
+    throw FormatException('common_programming_error_invalid_opcode');
   }
 
   int size() {
@@ -126,26 +125,30 @@ class BeatnikStack {
   }
 
   void add() {
-    int a = pop();
-    int b = pop();
+    var a = pop();
+    var b = pop();
+
     push(a + b);
   }
 
   void sub() {
-    int a = pop();
-    int b = pop();
+    var a = pop();
+    var b = pop();
+
     push(b - a);
   }
 
   void swap() {
-    int a = pop();
-    int b = pop();
+    var a = pop();
+    var b = pop();
+
     push(a);
     push(b);
   }
 
   void double() {
-    int a = pop();
+    var a = pop();
+
     push(a);
     push(a);
   }
@@ -184,7 +187,7 @@ final mnemonicTable = {
 
 String _mnemonic(int command) {
   if (command >= 5 && command <= 17)
-    return mnemonicTable[command];
+    return mnemonicTable[command]!;
   else
     return ' ';
 }
@@ -209,11 +212,11 @@ bool _checkNormalize(List<String> instructions) {
   return result;
 }
 
-BeatnikOutput interpretBeatnik(var ScrabbleVersion, String? sourcecode, String input) {
-  if (sourcecode == null || sourcecode == '')
+BeatnikOutput interpretBeatnik(String ScrabbleVersion, String? sourcecode, String input) {
+  if (sourcecode == null || sourcecode.isEmpty)
     return BeatnikOutput([''], [''], [''], [''], [DebugOutput('', '', '', '')]);
 
-  var _currentValues = [];
+  var _currentValues = <int>[];
   int value = 0;
 
   List<int> assembler = <int>[];
@@ -239,7 +242,7 @@ BeatnikOutput interpretBeatnik(var ScrabbleVersion, String? sourcecode, String i
         value = value + _currentValues[j];
       }
     } else
-      value = int.parse(program[i]);
+      value = int.tryParse(program[i]) ?? 0;
     if (value > 0) {
       assembler.add(value);
       scrabbleProgram.add(_formatNumber(value) + ' ' + program[i]);
@@ -255,7 +258,7 @@ BeatnikOutput interpretBeatnik(var ScrabbleVersion, String? sourcecode, String i
   int pc = 0;
   int inputindex = 0;
   List<String> inputlist = input.split('');
-  BeatnikStack stack = new BeatnikStack();
+  _BeatnikStack stack = _BeatnikStack();
 
   try {
     for (int i = 0; i < assembler.length; i++) {

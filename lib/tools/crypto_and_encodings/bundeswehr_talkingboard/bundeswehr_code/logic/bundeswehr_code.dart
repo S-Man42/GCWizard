@@ -9,16 +9,16 @@ class BundeswehrTalkingBoardCodingOutput {
   final String ResponseCode;
   final String Details;
 
-  BundeswehrTalkingBoardCodingOutput({this.ResponseCode, this.Details});
+  BundeswehrTalkingBoardCodingOutput({required this.ResponseCode, required this.Details});
 }
 
 BundeswehrTalkingBoardCodingOutput encodeBundeswehr(
-    String plainText, BundeswehrTalkingBoardAuthentificationTable tableEncoding) {
-  if (tableEncoding == null || tableEncoding.Encoding.isEmpty)
+    String? plainText, BundeswehrTalkingBoardAuthentificationTable? tableEncoding) {
+  if (tableEncoding == null || tableEncoding.Encoding!.isEmpty)
     return BundeswehrTalkingBoardCodingOutput(
         ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CUSTOM_NUMERAL_TABLE, Details: '');
 
-  if (plainText == null || plainText == '')
+  if (plainText == null || plainText.isEmpty)
     return BundeswehrTalkingBoardCodingOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_CODE_RESPONSE_OK, Details: '');
 
   plainText = plainText.toUpperCase();
@@ -29,21 +29,21 @@ BundeswehrTalkingBoardCodingOutput encodeBundeswehr(
     if (random.nextInt(100) > 75) {
       result.add(_getObfuscatedTupel(tableEncoding));
     }
-    result.add(tableEncoding.Encoding[char][random.nextInt(tableEncoding.Encoding[char].length)]);
+    result.add(tableEncoding.Encoding![char]![random.nextInt(tableEncoding.Encoding![char]!.length)]);
   });
   return BundeswehrTalkingBoardCodingOutput(
       ResponseCode: BUNDESWEHR_TALKINGBOARD_CODE_RESPONSE_OK, Details: result.join(' '));
 }
 
 BundeswehrTalkingBoardCodingOutput decodeBundeswehr(
-    String cypherText, BundeswehrTalkingBoardAuthentificationTable tableNumeralCode) {
+    String? cypherText, BundeswehrTalkingBoardAuthentificationTable? tableNumeralCode) {
   if (tableNumeralCode == null || tableNumeralCode.Content.isEmpty)
     return BundeswehrTalkingBoardCodingOutput(
         ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CUSTOM_NUMERAL_TABLE, Details: '');
 
   String result = '';
 
-  if (cypherText == null || cypherText == '')
+  if (cypherText == null || cypherText.isEmpty)
     return BundeswehrTalkingBoardCodingOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_CODE_RESPONSE_OK, Details: result);
 
   cypherText = cypherText.toUpperCase();

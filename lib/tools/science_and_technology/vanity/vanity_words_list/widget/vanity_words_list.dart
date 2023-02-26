@@ -53,9 +53,10 @@ class VanityWordsListState extends State<VanityWordsList> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    Map<String, String> vanityWordsOverview = new Map<String, String>();
-    vanityWordsOverview = VanWords[_currentLanguage];
-    if (_currentLanguage == NumeralWordsLanguage.DEU) NUMERAL_WORDS[_currentLanguage]['fünf'] = '5';
+    var vanityWordsOverview = VanWords[_currentLanguage];
+    if (vanityWordsOverview == null) return Container();
+
+    if (_currentLanguage == NumeralWordsLanguage.DEU) NUMERAL_WORDS[_currentLanguage]?['fünf'] = '5';
 
     return GCWDefaultOutput(
         child: GCWColumnedMultilineOutput(
@@ -63,9 +64,9 @@ class VanityWordsListState extends State<VanityWordsList> {
                     return [
                       entry.key,
                       entry.value,
-                      NUMERAL_WORDS[_currentLanguage][(entry.value).toLowerCase()].toString().startsWith('numeralwords_')
-                          ? i18n(context, NUMERAL_WORDS[_currentLanguage][(entry.value).toLowerCase()]) + ' '
-                          : NUMERAL_WORDS[_currentLanguage][entry.value.toLowerCase()]
+                      (NUMERAL_WORDS[_currentLanguage]?[(entry.value).toLowerCase()] ?? '').startsWith('numeralwords_')
+                          ? i18n(context, NUMERAL_WORDS[_currentLanguage]?[(entry.value).toLowerCase()] ?? '')  + ' '
+                          : NUMERAL_WORDS[_currentLanguage]?[entry.value.toLowerCase()]
                     ];
                   }).toList(),
           flexValues: [2, 2, 1]

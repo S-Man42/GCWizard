@@ -31,7 +31,7 @@ void main() {
       "Schon strahlt der Plastikbaum voll Pracht.";
 
   group("book_cipher.encodeText:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'text' : null, 'outFormat' : encodeOutFormat.RowWordCharacter, 'expectedOutput' : '', 'spacesOn' : true, 'emptyLinesOn' : true, 'ignoreSymbols' : '.;+-:!?\'"‘&(){}[]/\\_', 'diacriticsOn' : true, 'azOn' : true, 'numbersOn' : true, 'onlyFirstWordLetter' : false},
       {'input' : null, 'text' : '', 'outFormat' : encodeOutFormat.RowWordCharacter, 'expectedOutput' : '', 'spacesOn' : true, 'emptyLinesOn' : true, 'ignoreSymbols' : '.;+-:!?\'"‘&(){}[]/\\_', 'diacriticsOn' : true, 'azOn' : true, 'numbersOn' : true, 'onlyFirstWordLetter' : false},
       {'input' : null, 'text' : 'und', 'outFormat' : encodeOutFormat.RowWordCharacter, 'expectedOutput' : '', 'spacesOn' : true, 'emptyLinesOn' : true, 'ignoreSymbols' : '.;+-:!?\'"‘&(){}[]/\\_', 'diacriticsOn' : true, 'azOn' : true, 'numbersOn' : true, 'onlyFirstWordLetter' : false},
@@ -55,14 +55,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeText(elem['input'], elem['text'], elem['outFormat'],
-            spacesOn: elem['spacesOn'],
-            emptyLinesOn: elem['emptyLinesOn'],
-            ignoreSymbols: elem['ignoreSymbols'],
-            diacriticsOn: elem['diacriticsOn'],
-            azOn: elem['azOn'],
-            numbersOn: elem['numbersOn'],
-            onlyFirstWordLetter: elem['onlyFirstWordLetter']
+        var _actual = encodeText(elem['input'] as String?, elem['text'] as String?, elem['outFormat'] as encodeOutFormat,
+            spacesOn: elem['spacesOn'] as bool,
+            emptyLinesOn: elem['emptyLinesOn'] as bool,
+            ignoreSymbols: elem['ignoreSymbols'] as String,
+            diacriticsOn: elem['diacriticsOn'] as bool,
+            azOn: elem['azOn'] as bool,
+            numbersOn: elem['numbersOn'] as bool,
+            onlyFirstWordLetter: elem['onlyFirstWordLetter'] as bool
         );
         expect(_actual, elem['expectedOutput']);
       });
@@ -70,7 +70,7 @@ void main() {
   });
 
   group("book_cipher.decodeSearchWord:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'word' : null, 'outFormat' : decodeOutFormat.RowWord, 'expectedOutput' : '', 'spacesOn' : true, 'emptyLinesOn' : true, 'ignoreSymbols' : '.;+-:!?\'"‘&(){}[]/\\_', 'diacriticsOn' : true, 'azOn' : true, 'numbersOn' : true, 'onlyFirstWordLetter' : false},
       {'input' : null, 'word' : '', 'outFormat' : decodeOutFormat.RowWord, 'expectedOutput' : '', 'spacesOn' : true, 'emptyLinesOn' : true, 'ignoreSymbols' : '.;+-:!?\'"‘&(){}[]/\\_', 'diacriticsOn' : true, 'azOn' : true, 'numbersOn' : true, 'onlyFirstWordLetter' : false},
       {'input' : null, 'word' : 'und', 'outFormat' : decodeOutFormat.RowWord, 'expectedOutput' : '', 'spacesOn' : true, 'emptyLinesOn' : true, 'ignoreSymbols' : '.;+-:!?\'"‘&(){}[]/\\_', 'diacriticsOn' : true, 'azOn' : true, 'numbersOn' : true, 'onlyFirstWordLetter' : false},
@@ -88,14 +88,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeSearchWord(elem['input'], elem['word'], elem['outFormat'], "", "", "",
-            spacesOn: elem['spacesOn'],
-            emptyLinesOn: elem['emptyLinesOn'],
-            ignoreSymbols: elem['ignoreSymbols'],
-            diacriticsOn: elem['diacriticsOn'],
-            azOn: elem['azOn'],
-            numbersOn: elem['numbersOn'],
-            onlyFirstWordLetter: elem['onlyFirstWordLetter']
+        var _actual = decodeSearchWord(elem['input'] as String?, elem['word'] as String?, elem['outFormat'] as decodeOutFormat, "", "", "",
+            spacesOn: elem['spacesOn'] as bool,
+            emptyLinesOn: elem['emptyLinesOn'] as bool,
+            ignoreSymbols: elem['ignoreSymbols'] as String,
+            diacriticsOn: elem['diacriticsOn'] as bool,
+            azOn: elem['azOn'] as bool,
+            numbersOn: elem['numbersOn'] as bool,
+            onlyFirstWordLetter: elem['onlyFirstWordLetter'] as bool
         );
         expect(_actual, elem['expectedOutput']);
       });
@@ -121,7 +121,7 @@ Stasi-Offziere in ihrer Arbeit unterstützen sollten. Von
 die Potsdamer Bezirksverwaltung. Ihm folgte bis 1990
 Helmut Schickart (1931–1993). ''';
 
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'positions' : null, 'searchFormat' : searchFormat.RowWord, 'expectedOutput' : '', 'spacesOn' : true, 'emptyLinesOn' : true, 'ignoreSymbols' : '.;+-:!?\'"‘&(){}[]/\\', 'diacriticsOn' : true, 'azOn' : true, 'numbersOn' : true, 'onlyFirstWordLetter' : false},
       {'input' : null, 'positions' : '', 'searchFormat' : searchFormat.RowWord, 'expectedOutput' : '', 'spacesOn' : true, 'emptyLinesOn' : true, 'ignoreSymbols' : '.;+-:!?\'"‘&(){}[]/\\', 'diacriticsOn' : true, 'azOn' : true, 'numbersOn' : true, 'onlyFirstWordLetter' : false},
       {'input' : null, 'positions' : 'und', 'searchFormat' : searchFormat.RowWord, 'expectedOutput' : '', 'spacesOn' : true, 'emptyLinesOn' : true, 'ignoreSymbols' : '.;+-:!?\'"‘&(){}[]/\\', 'diacriticsOn' : true, 'azOn' : true, 'numbersOn' : true, 'onlyFirstWordLetter' : false},
@@ -181,14 +181,14 @@ Helmut Schickart (1931–1993). ''';
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeFindWord(elem['input'], elem['positions'], elem['searchFormat'],
-            spacesOn: elem['spacesOn'],
-            emptyLinesOn: elem['emptyLinesOn'],
-            ignoreSymbols: elem['ignoreSymbols'],
-            diacriticsOn: elem['diacriticsOn'],
-            azOn: elem['azOn'],
-            numbersOn: elem['numbersOn'],
-            onlyFirstWordLetter: elem['onlyFirstWordLetter']
+        var _actual = decodeFindWord(elem['input'] as String?, elem['positions'] as String?, elem['searchFormat'] as searchFormat,
+            spacesOn: elem['spacesOn'] as bool,
+            emptyLinesOn: elem['emptyLinesOn'] as bool,
+            ignoreSymbols: elem['ignoreSymbols'] as String,
+            diacriticsOn: elem['diacriticsOn'] as bool,
+            azOn: elem['azOn'] as bool,
+            numbersOn: elem['numbersOn'] as bool,
+            onlyFirstWordLetter: elem['onlyFirstWordLetter'] as bool
         );
         expect(_actual, elem['expectedOutput']);
       });

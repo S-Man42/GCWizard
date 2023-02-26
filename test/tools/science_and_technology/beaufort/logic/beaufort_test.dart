@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/science_and_technology/beaufort/logic/beaufort.d
 
 void main() {
   group("Beaufort.meterPerSecondToBeaufort:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'velocity' : null, 'expectedOutput' : null},
       {'velocity' : -1.0, 'expectedOutput' : null},
       {'velocity' : 60.1, 'expectedOutput' : 17},
@@ -25,14 +25,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('velocity: ${elem['velocity']}', () {
-        var _actual = meterPerSecondToBeaufort(elem['velocity']);
+        var _actual = meterPerSecondToBeaufort(elem['velocity'] as double?);
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
   group("Beaufort.beaufortToMeterPerSecond:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'beaufort' : null, 'expectedOutput' : null},
       {'beaufort' : -1, 'expectedOutput' : null},
       {'beaufort' : 20, 'expectedOutput' : [56.1, double.infinity]},
@@ -49,7 +49,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('beaufort: ${elem['beaufort']}', () {
-        var _actual = beaufortToMeterPerSecond(elem['beaufort']);
+        var _actual = beaufortToMeterPerSecond(elem['beaufort'] as int?);
         expect(_actual, elem['expectedOutput']);
       });
     });

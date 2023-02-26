@@ -25,20 +25,20 @@ class Resection extends StatefulWidget {
 class ResectionState extends State<Resection> {
   var _currentIntersections = [];
 
-  var _currentCoordsFormat1 = defaultCoordFormat();
+  var _currentCoordsFormat1 = defaultCoordinateFormat;
   var _currentCoords1 = defaultCoordinate;
 
   var _currentAngle12 = {'text': '', 'value': 0.0};
 
-  var _currentCoordsFormat2 = defaultCoordFormat();
+  var _currentCoordsFormat2 = defaultCoordinateFormat;
   var _currentCoords2 = defaultCoordinate;
 
   var _currentAngle23 = {'text': '', 'value': 0.0};
 
-  var _currentCoordsFormat3 = defaultCoordFormat();
+  var _currentCoordsFormat3 = defaultCoordinateFormat;
   var _currentCoords3 = defaultCoordinate;
 
-  var _currentOutputFormat = defaultCoordFormat();
+  var _currentOutputFormat = defaultCoordinateFormat;
   List<String> _currentOutput = [];
   var _currentMapPoints = <GCWMapPoint>[];
   List<GCWMapPolyline> _currentMapPolylines = [];
@@ -148,7 +148,7 @@ class ResectionState extends State<Resection> {
         ells: _ells));
   }
 
-  _showOutput(List<LatLng> output) {
+  void _showOutput(List<LatLng> output) {
     if (output == null) {
       _currentOutput = [];
 
@@ -177,7 +177,7 @@ class ResectionState extends State<Resection> {
           coordinateFormat: _currentCoordsFormat3),
     ];
 
-    if (_currentIntersections.length == 0 || (_currentIntersections[0] == null && _currentIntersections[1] == null)) {
+    if (_currentIntersections.isEmpty || (_currentIntersections[0] == null && _currentIntersections[1] == null)) {
       _currentOutput = [i18n(context, "coords_intersect_nointersection")];
       WidgetsBinding.instance.addPostFrameCallback((_) {
         setState(() {});

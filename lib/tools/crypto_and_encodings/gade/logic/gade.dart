@@ -2,7 +2,7 @@
 
 Map<String, String> buildGade(String input) {
   var outputList = <String>[];
-  var gadeMap = new Map<String, String>();
+  var gadeMap = Map<String, String>();
 
   outputList = input.replaceAll(RegExp(r'[^0-9]'), '').split('');
   outputList.sort();

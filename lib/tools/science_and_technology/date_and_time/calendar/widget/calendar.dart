@@ -86,7 +86,7 @@ class CalendarState extends State<Calendar> {
 
   Widget _buildOutput() {
     double jd = 0.0;
-    Map output = new Map();
+    var output = new Map<String, Object?>();
     switch (_currentCalendarSystem) {
       case CalendarSystem.MODIFIEDJULIANDATE:
         jd = ModifedJulianDateToJulianDate(_currentJulianDate);
@@ -124,6 +124,8 @@ class CalendarState extends State<Calendar> {
         jd = PotrzebieCalendarToJulianDate(_currentDate);
         output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]!);
         break;
+      default:
+        return Container();
     }
 
     output['dates_calendar_system_juliandate'] = (jd + 0.5).floor();
@@ -198,7 +200,7 @@ class CalendarState extends State<Calendar> {
     return replaceMonthNameWithCustomString(hebrewDate, 'yMMMMd', locale, hebrewMonth);
   }
 
-  String? _DateOutputToString(context, DateTime date, CalendarSystem calendar) {
+  String? _DateOutputToString(BuildContext context, DateTime date, CalendarSystem calendar) {
     var locale = Localizations.localeOf(context).toString();
 
     switch (calendar) {

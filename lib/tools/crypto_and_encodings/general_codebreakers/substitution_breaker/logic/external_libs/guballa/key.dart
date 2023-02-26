@@ -20,10 +20,10 @@ class BreakerKey {
   This example was taken from Wikipedia <https://en.wikipedia.org/wiki/Substitution_cipher>
   */
 
-  String _alphabet;
-  String _key;
-  Map<String, String> _encode;
-  Map<String, String> _decode;
+  String? _alphabet;
+  String? _key;
+  Map<String, String>? _encode;
+  Map<String, String>? _decode;
 
   /// Uses a key and an alphabet for transcoding substitution ciphers.
   /// :param key: The key to use. Must have the same length than alphabet. (It is case insensitive.)
@@ -32,7 +32,7 @@ class BreakerKey {
   BreakerKey(String key, {String alphabet = DEFAULT_ALPHABET}) {
     this._alphabet = check_alphabet(alphabet);
     if (this._alphabet == null) return;
-    this._key = check_key(key, this._alphabet);
+    this._key = check_key(key, this._alphabet!);
     if (this._key == null) return;
 
     var camel_key = (key.toUpperCase() + key.toLowerCase()).split('').toList();
@@ -45,8 +45,8 @@ class BreakerKey {
   /// :param alphabet: the alphabet to check
   /// return: the alphabet in normalized form (i.e., in lower cases)
   ///      null -> alphabet is invalid
-  static String check_alphabet(String alphabet) {
-    if ((alphabet == null) || (alphabet == '')) return null;
+  static String? check_alphabet(String alphabet) {
+    if ((alphabet == null) || (alphabet.isEmpty)) return null;
     alphabet = alphabet.toLowerCase();
     if (alphabet.length != _set(alphabet).length)
       // alphabet characters must be unique
@@ -59,8 +59,8 @@ class BreakerKey {
   /// :param alphabet: the alphabet against which the key is validated
   /// return: the validated key in normalized form (i.e., in lower cases)
   ///      null -> key is invalid
-  static String check_key(String key, String alphabet) {
-    if ((key == null) || (key == '')) return null;
+  static String? check_key(String? key, String alphabet) {
+    if ((key == null) || (key.isEmpty)) return null;
     key = key.toLowerCase();
     if (key.length != _set(key).length)
       // key characters must be unique
@@ -82,32 +82,34 @@ class BreakerKey {
   /// Decodes a ciphertext with the given key into the plaintext
   /// param ciphertext: the ciphertext to decode with the given key
   /// :return: the resulting plaintext
-  String decode(String ciphertext) {
-    return substitution(ciphertext, this._decode);
+  String? decode(String ciphertext) {
+    if (this._decode == null) return null;
+    return substitution(ciphertext, this._decode!);
   }
 
   /// Encodes a plaintext with the given key into the ciphertext
   /// :param plaintext: the plaintext to encode with the given key
   /// :return: the resulting ciphertext
-  String encode(String plaintext) {
-    return substitution(plaintext, this._encode);
+  String? encode(String plaintext) {
+    if (this._encode == null) return null;
+    return substitution(plaintext, this._encode!);
   }
 
   /// Decodes ciphertext read from the given file handle
   /// :param ciphertext_fh: the file handle the ciphertext is read from.
   /// :param plaintext_fh: the file handle the resulting plaintext is written to.
-  decode_file(String ciphertext, File plaintext_fh) {
+  void decode_file(String ciphertext, File plaintext_fh) {
     ciphertext.split('\n').forEach((line) {
-      plaintext_fh.writeAsString(this.decode(line));
+      plaintext_fh.writeAsString(this.decode(line) ?? '');
     });
   }
 
   /// Encodes plaintext read from the given file handle
   /// :param plaintext_fh: the file handle the plaintext is read from.
   /// :param ciphertext_fh: the file handle the resulting ciphertext is written to.
-  encode_file(String plaintext, File ciphertext_fh) {
+  void encode_file(String plaintext, File ciphertext_fh) {
     plaintext.split('\n').forEach((line) {
-      ciphertext_fh.writeAsString(this.encode(line));
+      ciphertext_fh.writeAsString(this.encode(line) ?? '');
     });
   }
 

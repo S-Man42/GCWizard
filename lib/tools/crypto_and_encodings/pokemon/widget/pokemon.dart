@@ -11,8 +11,8 @@ class Pokemon extends StatefulWidget {
 }
 
 class PokemonState extends State<Pokemon> {
-  var _encodeController;
-  var _decodeController;
+  late TextEditingController _encodeController;
+  late TextEditingController _decodeController;
 
   String _currentEncode = '';
   String _currentDecode = '';
@@ -75,7 +75,7 @@ class PokemonState extends State<Pokemon> {
     );
   }
 
-  _buildOutput() {
+  String _buildOutput() {
     return _currentMode == GCWSwitchPosition.left ? encodePokemon(_currentEncode) : decodePokemon(_currentDecode);
   }
 }

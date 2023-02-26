@@ -52,14 +52,14 @@ final Map<String, int> _catanExpansionAZToNumbers = {
   "Zc": 6,
 };
 
-List<int> encodeCatan(String input, CatanMode mode) {
+List<int> encodeCatan(String? input, CatanMode mode) {
   if (input == null || input.isEmpty) return <int>[];
 
   input = input.toUpperCase();
 
   var values = <int>[];
-  while (input.length > 0) {
-    var value;
+  while (input!.isNotEmpty) {
+    int? value;
 
     if (mode == CatanMode.EXPANSION && input.startsWith('Z')) {
       if (input.length == 1) break;

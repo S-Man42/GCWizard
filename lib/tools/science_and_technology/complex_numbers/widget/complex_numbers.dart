@@ -20,10 +20,10 @@ class ComplexNumbersState extends State<ComplexNumbers> {
   var _currentB = '';
   var _currentRadius = '';
   var _currentAngle = '';
-  var _aController;
-  var _bController;
-  var _radiusController;
-  var _angleController;
+  late TextEditingController _aController;
+  late TextEditingController _bController;
+  late TextEditingController _radiusController;
+  late TextEditingController _angleController;
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
@@ -121,7 +121,7 @@ class ComplexNumbersState extends State<ComplexNumbers> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    Map<String, String> coordinates = new Map<String, String>();
+    Map<String, String> coordinates = Map<String, String>();
     if (_currentMode == GCWSwitchPosition.right) {
       coordinates = CartesianToPolar(_currentA, _currentB);
     } else {
@@ -130,7 +130,7 @@ class ComplexNumbersState extends State<ComplexNumbers> {
 
     return GCWDefaultOutput(
         child: GCWColumnedMultilineOutput(
-            data: coordinates.entries.where((entry) => entry.key != '').map((entry) {
+            data: coordinates.entries.where((entry) => entry.key.isNotEmpty).map((entry) {
                     return [i18n(context, entry.key), entry.value];
                   }).toList(),
             flexValues: [1, 1]

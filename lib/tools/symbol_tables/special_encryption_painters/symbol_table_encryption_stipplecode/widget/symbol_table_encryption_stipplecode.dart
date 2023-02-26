@@ -56,13 +56,13 @@ class StippleSymbolTableEncryption extends SymbolTableEncryption {
 
             var reverse = i % 2 == 1;
 
-            var x;
+            double x = 0;
             if (reverse) {
               x = _sizes.canvasWidth - (j + 1) * _sizes.symbolWidth;
               x += j * _sizes.symbolWidth * _OFFSET_HORIZONTAL;
             } else {
               x = j * _sizes.symbolWidth;
-              if (j > 0) x -= _sizes.symbolWidth * _OFFSET_HORIZONTAL * j;
+              if (j > 0) x -= (_sizes.symbolWidth * _OFFSET_HORIZONTAL * j).toInt();
             }
 
             var y = i * _sizes.symbolHeight;

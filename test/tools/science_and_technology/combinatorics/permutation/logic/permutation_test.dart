@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/science_and_technology/combinatorics/permutation
 
 void main() {
   group("Combinatorics.Permutations.generatePermutations:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'avoidDuplicates': true, 'expectedOutput' : []},
       {'input' : null, 'avoidDuplicates': false, 'expectedOutput' : []},
       {'input' : '', 'avoidDuplicates': true, 'expectedOutput' : []},
@@ -19,7 +19,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, avoidDuplicates: ${elem['avoidDuplicates']}', () {
-        var _actual = generatePermutations(elem['input'], avoidDuplicates: elem['avoidDuplicates']);
+        var _actual = generatePermutations(elem['input'] as String?, avoidDuplicates: elem['avoidDuplicates'] as bool);
         expect(_actual, elem['expectedOutput']);
       });
     });

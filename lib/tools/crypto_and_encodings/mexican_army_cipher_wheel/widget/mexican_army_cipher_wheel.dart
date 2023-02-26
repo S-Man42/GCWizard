@@ -17,8 +17,8 @@ class MexicanArmyCipherWheel extends StatefulWidget {
 }
 
 class MexicanArmyCipherWheelState extends State<MexicanArmyCipherWheel> {
-  var _controller;
-  var _key4Controller;
+  late TextEditingController _controller;
+  late TextEditingController _key4Controller;
 
   String _currentInput = '';
   int _currentKey1 = 1;
@@ -144,7 +144,7 @@ class MexicanArmyCipherWheelState extends State<MexicanArmyCipherWheel> {
     );
   }
 
-  _calculateOutput() {
+  void _calculateOutput() {
     var keys = [_currentKey1, _currentKey2, _currentKey3, _currentKey4 - _currentLetterValue4 + 1];
 
     if (_currentMode == GCWSwitchPosition.right) {

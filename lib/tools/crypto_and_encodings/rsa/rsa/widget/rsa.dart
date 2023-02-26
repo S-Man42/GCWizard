@@ -24,7 +24,7 @@ class RSAState extends State<RSA> {
 
   var _integerInputFormatter = GCWIntegerTextInputFormatter(min: 0);
   var _currentMode = GCWSwitchPosition.right;
-  Widget _output;
+  Widget? _output;
 
   @override
   Widget build(BuildContext context) {
@@ -94,21 +94,21 @@ class RSAState extends State<RSA> {
           return BigInt.from(char.codeUnits.first);
         }).toList();
 
-        if (_currentInput.replaceAll(RegExp(r'\s+'), '').replaceAll(RegExp(r'[0-9]'), '').length == 0) {
+        if (_currentInput.replaceAll(RegExp(r'\s+'), '').replaceAll(RegExp(r'[0-9]'), '').isEmpty) {
           var inputAsInt = _currentInput
               .split(RegExp(r'\s+'))
               .where((chunk) => chunk != null)
-              .map((chunk) => BigInt.tryParse(chunk))
+              .map((chunk) => BigInt.tryParse(chunk) ?? BigInt.zero)
               .toList();
 
           outputChildren.add(GCWOutput(
-            child: encryptRSA(inputAsInt, ed, p, q).join(' '),
+            child: (encryptRSA(inputAsInt, ed, p, q) ?? []).join(' '),
             title: i18n(context, 'common_output') + ' (${i18n(context, 'rsa_encryption_output_textasnumbers')})',
           ));
         }
 
         outputChildren.add(GCWOutput(
-          child: encryptRSA(inputAsText, ed, p, q).join(' '),
+          child: (encryptRSA(inputAsText, ed, p, q) ?? []).join(' '),
           title: i18n(context, 'common_output') + ' (${i18n(context, 'rsa_encryption_output_textasascii')})',
         ));
       } else {
@@ -116,24 +116,24 @@ class RSAState extends State<RSA> {
             .split(RegExp(r'\s+'))
             .map((number) {
               var n = number.replaceAll(RegExp('[^0-9]'), '');
-              return BigInt.tryParse(n);
+              return BigInt.tryParse(n) ?? BigInt.zero;
             })
             .where((number) => number != null)
             .toList();
 
         var outputNumbers = decryptRSA(inputNumbers, ed, p, q);
         outputChildren.add(GCWOutput(
-          child: outputNumbers.join(' '),
+          child: (outputNumbers ?? []).join(' '),
           title: i18n(context, 'common_output') + ' (${i18n(context, 'rsa_decryption_output_numbers')})',
         ));
 
         outputChildren.add(GCWOutput(
-          child: outputNumbers.map((number) => String.fromCharCode(number.toInt())).join(''),
+          child: (outputNumbers ?? []).map((number) => String.fromCharCode(number.toInt())).join(''),
           title: i18n(context, 'common_output') + ' (${i18n(context, 'rsa_decryption_output_numbersasascii')})',
         ));
       }
 
-      var d;
+      String? d;
       if (_currentMode == GCWSwitchPosition.left) {
         try {
           d = calculateD(ed, p, q).toString();
@@ -142,11 +142,12 @@ class RSAState extends State<RSA> {
         }
       }
 
-      var calculatedParameters = [
-        d != null ? [i18n(context, 'rsa_d'), d] : null,
-        [i18n(context, 'rsa_n'), N(p, q)],
-        [i18n(context, 'rsa_phi'), phi(p, q)]
-      ];
+      List<List<Object?>> calculatedParameters = [];
+      if (d != null) calculatedParameters.add([i18n(context, 'rsa_d'), d]);
+      calculatedParameters.addAll(
+          [[i18n(context, 'rsa_n'), N(p as BigInt, q as BigInt)],
+           [i18n(context, 'rsa_phi'), phi(p as BigInt, q as BigInt)]]
+      );
 
       outputChildren.add(
         GCWTextDivider(text: i18n(context, 'rsa_rsa_calculatedparameters')),
@@ -159,7 +160,7 @@ class RSAState extends State<RSA> {
       );
     } catch (exception) {
       _output = null;
-      showToast(i18n(context, exception.message));
+      showToast(i18n(context, exception.toString()));
     }
   }
 }

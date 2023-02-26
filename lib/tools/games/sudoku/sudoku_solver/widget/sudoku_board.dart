@@ -23,17 +23,17 @@ class _SudokuBoardState extends State<_SudokuBoard> {
                   builder: (context) {
                     return CustomPaint(
                         painter: SudokuBoardPainter(context, widget.board, (x, y, value) {
-                      setState(() {
-                        if (value == null) {
-                          widget.board.setValue(x, y, null);
-                          widget.onChanged(widget.board);
-                          return;
-                        }
+                          setState(() {
+                            if (value == null) {
+                              widget.board.setValue(x, y, null);
+                              widget.onChanged(widget.board);
+                              return;
+                            }
 
-                        widget.board.setValue(x, y, value);
-                        widget.onChanged(widget.board);
-                      });
-                    }));
+                            widget.board.setValue(x, y, value);
+                            widget.onChanged(widget.board);
+                          });
+                        }));
                   },
                 )))
       ],
@@ -85,9 +85,9 @@ class SudokuBoardPainter extends CustomPainter {
 
             _touchCanvas.drawRect(Rect.fromLTWH(xInner, yInner, widthInner, heightInner), paint,
                 onTapDown: (tapDetail) {
-              _removeCalculated(board);
-              _showInputDialog(boardX, boardY);
-            });
+                  _removeCalculated(board);
+                  _showInputDialog(boardX, boardY);
+                });
 
             paint.color = colors.accent();
 
@@ -96,7 +96,7 @@ class SudokuBoardPainter extends CustomPainter {
 
             if (board.getValue(boardX, boardY) != null) {
               var textColor =
-                  board.getFillType(boardX, boardY) == SudokuFillType.USER_FILLED ? colors.accent() : colors.mainFont();
+              board.getFillType(boardX, boardY) == SudokuFillType.USER_FILLED ? colors.accent() : colors.mainFont();
 
               TextSpan span = TextSpan(
                   style: gcwTextStyle().copyWith(color: textColor, fontSize: heightInner * 0.8),
@@ -123,7 +123,7 @@ class SudokuBoardPainter extends CustomPainter {
     _touchCanvas.drawLine(Offset(0.0, size.width), Offset(size.height, size.width), paint);
   }
 
-  _removeCalculated(SudokuBoard board) {
+  void _removeCalculated(SudokuBoard board) {
     for (int i = 0; i < 9; i++) {
       for (int j = 0; j < 9; j++) {
         if (board.getFillType(i, j) == SudokuFillType.CALCULATED) board.setValue(i, j, null);
@@ -131,7 +131,7 @@ class SudokuBoardPainter extends CustomPainter {
     }
   }
 
-  _showInputDialog(int x, y) {
+  void _showInputDialog(int x, int y) {
     var columns = <Widget>[];
 
     for (int i = 0; i < 3; i++) {

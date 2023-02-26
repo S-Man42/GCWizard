@@ -9,8 +9,8 @@ class TrifidOutput {
   TrifidOutput(this.output, this.grid);
 }
 
-TrifidOutput encryptTrifid(String input, int blockSize, {PolybiosMode mode: PolybiosMode.AZ09, String alphabet}) {
-  if (input == null || input == '') return TrifidOutput('', '');
+TrifidOutput encryptTrifid(String? input, int blockSize, {PolybiosMode mode = PolybiosMode.AZ09, required String alphabet}) {
+  if (input == null || input.isEmpty) return TrifidOutput('', '');
 
   Map<String, String> EncodeMatrix = Map<String, String>();
   Map<String, String> DecodeMatrix = Map<String, String>();
@@ -38,31 +38,31 @@ TrifidOutput encryptTrifid(String input, int blockSize, {PolybiosMode mode: Poly
   EncodeMatrix = _buildEncodeMatrix(alphabet);
   DecodeMatrix = switchMapKeyValue(EncodeMatrix);
   for (int i = 0; i < input.length; i++) {
-    line1.add(EncodeMatrix[input[i]][0]);
-    line2.add(EncodeMatrix[input[i]][1]);
-    line3.add(EncodeMatrix[input[i]][2]);
+    line1.add(EncodeMatrix[input[i]]?[0] ?? '');
+    line2.add(EncodeMatrix[input[i]]?[1] ?? '');
+    line3.add(EncodeMatrix[input[i]]?[2] ?? '');
   }
   input = '';
   for (int i = 0; i < line1.length ~/ blockSize; i++) {
-    input = input +
+    input = input! +
         line1.join('').substring(i * blockSize, i * blockSize + blockSize) +
         line2.join('').substring(i * blockSize, i * blockSize + blockSize) +
         line3.join('').substring(i * blockSize, i * blockSize + blockSize);
   }
-  input = input +
+  input = input! +
       line1.join('').substring(line1.length ~/ blockSize * blockSize) +
       line2.join('').substring(line1.length ~/ blockSize * blockSize) +
       line3.join('').substring(line1.length ~/ blockSize * blockSize);
 
   for (int i = 0; i < input.length ~/ 3; i++) {
-    result.add(DecodeMatrix[input.substring(i * 3, i * 3 + 3)]);
+    result.add(DecodeMatrix[input.substring(i * 3, i * 3 + 3)] ?? '');
   }
 
   return TrifidOutput(result.join(''), _MatrixToString(alphabet));
 }
 
-TrifidOutput decryptTrifid(String input, int blockSize, {PolybiosMode mode: PolybiosMode.AZ09, String alphabet}) {
-  if (input == null || input == '') return TrifidOutput('', '');
+TrifidOutput decryptTrifid(String? input, int blockSize, {PolybiosMode mode = PolybiosMode.AZ09, required String alphabet}) {
+  if (input == null || input.isEmpty) return TrifidOutput('', '');
 
   input = input.toUpperCase();
   alphabet = alphabet.toUpperCase();
@@ -91,7 +91,7 @@ TrifidOutput decryptTrifid(String input, int blockSize, {PolybiosMode mode: Poly
   EncodeMatrix = _buildEncodeMatrix(alphabet);
   DecodeMatrix = switchMapKeyValue(EncodeMatrix);
   for (int i = 0; i < input.length; i++) {
-    tupel = tupel + EncodeMatrix[input[i]];
+    tupel = tupel + (EncodeMatrix[input[i]] ?? '');
   }
   for (int i = 0; i < tupel.length ~/ blockSize ~/ 3; i++) {
     blockLine = tupel.substring(i * blockSize * 3, i * blockSize * 3 + blockSize * 3);
@@ -106,7 +106,7 @@ TrifidOutput decryptTrifid(String input, int blockSize, {PolybiosMode mode: Poly
   line3 = line3 + blockLine.substring(2 * blockLine.length ~/ 3);
 
   for (int i = 0; i < input.length; i++) {
-    result.add(DecodeMatrix[line1[i] + line2[i] + line3[i]]);
+    result.add(DecodeMatrix[line1[i] + line2[i] + line3[i]] ?? '');
   }
 
   return TrifidOutput(result.join(''), _MatrixToString(alphabet));
@@ -185,7 +185,7 @@ Map<String, String> _buildEncodeMatrix(String alphabet) {
   int x = 0;
   int y = 0;
   int z = 0;
-  Map<String, String> result = new Map<String, String>();
+  Map<String, String> result = Map<String, String>();
   for (int i = 0; i < alphabet.length; i++) {
     j = i % 9;
     z = (i ~/ 9) + 1;
@@ -220,5 +220,5 @@ bool incompleteCustomAlphabet(String alphabet) {
     alphabet = result;
     result = '';
   }
-  return (alphabet.length != 0);
+  return (alphabet.isNotEmpty);
 }

@@ -32,7 +32,7 @@ Uint8List? _hexString2bytes(String? input) {
 
   for (var i = 0; i < hex.length; i = i + 2) {
     var valueString = hex.substring(i, min(i + 2, hex.length - 1));
-    if (valueString.length > 0) {
+    if (valueString.isNotEmpty) {
       var converted = convertBase(valueString, 16, 10);
       if (converted != null) {
         int? value = int.tryParse(converted);
@@ -47,7 +47,7 @@ Uint8List? _hexString2bytes(String? input) {
 bool _isBinary(String? input) {
   if (input == null) return false;
   String binary = input.replaceAll(RegExp("[01\\s]"), "");
-  return binary.length == 0;
+  return binary.isEmpty;
 }
 
 Uint8List? _binaryString2bytes(String? input) {
@@ -60,7 +60,7 @@ Uint8List? _binaryString2bytes(String? input) {
 
   for (var i = 0; i < binary.length; i = i + 8) {
     var valueString = binary.substring(i, min(i + 8, binary.length - 1));
-    if (valueString.length > 0) {
+    if (valueString.isNotEmpty) {
       var converted = convertBase(valueString, 2, 10);
       if (converted != null) {
         int? value = int.tryParse(converted);

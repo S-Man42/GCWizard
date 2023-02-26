@@ -267,7 +267,7 @@ ResistorValue _getFiveOrSixBandResistorValue(int numberBands, List<ResistorBandC
 
   var tolerance = _getResistorValueByTypeAndColor(numberBands, ResistorBandType.TOLERANCE, colors[4]);
 
-  var temperaturCoefficient;
+  double? temperaturCoefficient;
   if (numberBands == 6) {
     temperaturCoefficient =
         _getResistorValueByTypeAndColor(numberBands, ResistorBandType.TEMPERATURE_COEFFICIENT, colors[5]);
@@ -277,11 +277,11 @@ ResistorValue _getFiveOrSixBandResistorValue(int numberBands, List<ResistorBandC
 }
 
 Map<ResistorBandColor, double> getResistorBandValues(
-    int numberBands, ResistorBandType type, List<ResistorBandColor> colors) {
+    int numberBands, ResistorBandType type, List<ResistorBandColor>? colors) {
   if (colors == null) return {};
 
   return Map.fromIterable(colors,
-      key: (color) => color,
+      key: (color) => color as ResistorBandColor,
       value: (color) {
         switch (numberBands) {
           case 1:
@@ -313,7 +313,7 @@ ResistorValue getResistorValue(List<ResistorBandColor> colors) {
   }
 }
 
-double eia96(int code, {String multiplicator: 'A'}) {
+double eia96(int? code, {String multiplicator = 'A'}) {
   if (code == null) return 0.0;
 
   var multiplicatorValue = 1.0;

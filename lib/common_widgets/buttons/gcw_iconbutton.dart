@@ -32,9 +32,9 @@ class GCWIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _containerWidth;
-    var _buttonHeight;
-    var _iconSize;
+    double _containerWidth;
+    double _buttonHeight;
+    double? _iconSize;
 
     // moved to here instead of default value in constructur because
     // some tools explicitly hand over a NULL value

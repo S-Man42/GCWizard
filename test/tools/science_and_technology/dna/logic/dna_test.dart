@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/science_and_technology/dna/logic/dna.dart';
 
 void main() {
   group("DNA.encodeRNANucleobaseSequence:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
@@ -13,14 +13,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeRNANucleobaseSequence(elem['input']);
+        var _actual = encodeRNANucleobaseSequence(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
   group("DNA.decodeRNANucleobaseSequence:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
@@ -31,27 +31,27 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeRNANucleobaseSequence(elem['input']).map((e) => e.symbolShort).join();
+        var _actual = decodeRNANucleobaseSequence(elem['input'] as String?).map((e) => e.symbolShort).join();
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
   group("DNA.decodeRNANucleobaseSequenceWithStop:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'expectedOutput' : [NucleobaseSequenceType.STOP, NucleobaseSequenceType.NORMAL, NucleobaseSequenceType.START], 'input' : 'UAACACGUG'},
     ];
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeRNANucleobaseSequence(elem['input']).map((e) => e.type).toList();
+        var _actual = decodeRNANucleobaseSequence(elem['input'] as String?).map((e) => e.type).toList();
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
   group("DNA.encodeDNANucleobaseSequence:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
@@ -61,14 +61,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeDNANucleobaseSequence(elem['input']);
+        var _actual = encodeDNANucleobaseSequence(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
   group("DNA.decodeDNANucleobaseSequence:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
@@ -81,14 +81,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeDNANucleobaseSequence(elem['input']).map((e) => e.symbolShort).join();
+        var _actual = decodeDNANucleobaseSequence(elem['input'] as String?).map((e) => e.symbolShort).join();
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
   group("DNA.encodeRNASymbolLong:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
@@ -98,14 +98,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeRNASymbolLong(elem['input']);
+        var _actual = encodeRNASymbolLong(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
   group("DNA.decodeRNASymbolLong:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
@@ -128,7 +128,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeRNASymbolLong(elem['input']);
+        var _actual = decodeRNASymbolLong(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });

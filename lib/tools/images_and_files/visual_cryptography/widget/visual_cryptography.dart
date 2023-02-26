@@ -365,7 +365,7 @@ class VisualCryptographyState extends State<VisualCryptography> {
         _decodeImage1.bytes, _decodeImage2.bytes, _decodeOffsetsX, _decodeOffsetsY));
   }
 
-  _saveOutputDecode(Uint8List? output) {
+  void _saveOutputDecode(Uint8List? output) {
     _outData = output;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -423,7 +423,7 @@ class VisualCryptographyState extends State<VisualCryptography> {
   //       });
   // }
 
-  // Future<GCWAsyncExecuterParameters> _buildJobDataOffsetAutoCalc(bool onlyX) async {
+  // Future<GCWAsyncExecuterParameters?> _buildJobDataOffsetAutoCalc(bool onlyX) async {
   //   return GCWAsyncExecuterParameters(Tuple4<Uint8List, Uint8List, int, int>(_decodeImage1?.bytes, _decodeImage2?.bytes, null, onlyX ? _decodeOffsetsX : null));
   // }
 
@@ -467,7 +467,7 @@ class VisualCryptographyState extends State<VisualCryptography> {
         _currentEncryptionWithKeyMode ? _encodeKeyImage.bytes : null, _encodeOffsetsX, _encodeOffsetsY, _encodeScale));
   }
 
-  _saveOutputEncode(Tuple2<Uint8List, Uint8List?>? output) {
+  void _saveOutputEncode(Tuple2<Uint8List, Uint8List?>? output) {
     _encodeOutputImages = output;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {

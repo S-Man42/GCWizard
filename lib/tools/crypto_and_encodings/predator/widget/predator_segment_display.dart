@@ -20,9 +20,9 @@ const _PREDATOR_RELATIVE_DISPLAY_HEIGHT = 300; //100;
 class _PredatorSegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
   final bool readOnly;
-  final Function onChanged;
+  final void Function(Map<String, bool>)? onChanged;
 
-  _PredatorSegmentDisplay({Key? key, this.segments, this.readOnly: false, this.onChanged})
+  _PredatorSegmentDisplay({Key? key, required this.segments, this.readOnly = false, this.onChanged})
       : super(
             key: key,
             initialSegments: _INITIAL_SEGMENTS,
@@ -56,7 +56,7 @@ class _PredatorSegmentDisplay extends NSegmentDisplay {
                   setSegmentState('a', !segmentActive(currentSegments, 'a'));
                 });
 
-              paint.color = segmentActive(currentSegments, 'b'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
+              paint.color = segmentActive(currentSegments, 'b') ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
               var pathB = Path();
               pathB.moveTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 70,
                   size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 0);
@@ -116,7 +116,7 @@ class _PredatorSegmentDisplay extends NSegmentDisplay {
                   setSegmentState('d', !segmentActive(currentSegments, 'd'));
                 });
 
-              paint.color = segmentActive(currentSegments, 'e'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
+              paint.color = segmentActive(currentSegments, 'e') ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
               var pathE = Path();
               pathE.moveTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 50,
                   size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 120);

@@ -36,7 +36,7 @@ RC4Output cryptRC4(
 List<int> _rc4(List<int> input, List<int> key) {
   var s = List<int>.filled(256, 0);
   var out = <int>[];
-  var i;
+  int i;
   for (i = 0; i <= 255; ++i) s[i] = i;
 
   int temp, randomValue;
@@ -87,14 +87,14 @@ List<int>? convertInputToIntList(String? input, InputFormat format) {
 
 InputFormat _autoType(String input) {
   String bin = input.replaceAll(RegExp("[ 01]"), "");
-  if (bin.length == 0) return InputFormat.BINARY;
+  if (bin.isEmpty) return InputFormat.BINARY;
 
   String hex = input.toUpperCase().replaceAll(RegExp("[0-9A-F]"), "").replaceAll(" ", "");
-  if (hex.length == 0) return InputFormat.HEX;
+  if (hex.isEmpty) return InputFormat.HEX;
 
   String ascii = input.replaceAll(RegExp("[ 0-9]"), "");
   bool ok = true;
-  if (ascii.length == 0) {
+  if (ascii.isEmpty) {
     input.split(" ").forEach((text) {
       if ((int.tryParse(text) ?? 0) > 255) {
         ok = false;
@@ -123,7 +123,7 @@ List<int> _convertToIntList(String input, int base) {
 }
 
 List<int>? _addToIntList(String input, int base, List<int> list) {
-  if (input == '') return list;
+  if (input.isEmpty) return list;
   var valueString = convertBase(input, base, 10);
 
   var value = int.tryParse(valueString ?? '');
@@ -134,8 +134,7 @@ List<int>? _addToIntList(String input, int base, List<int> list) {
   return list;
 }
 
-String? formatOutput(List<int>? outList, OutputFormat outputFormat) {
-  if (outList == null) return null;
+String formatOutput(List<int> outList, OutputFormat outputFormat) {
   var out = '';
 
   outList.forEach((item) {
@@ -148,17 +147,17 @@ String? formatOutput(List<int>? outList, OutputFormat outputFormat) {
           out += String.fromCharCode(item);
         break;
       case OutputFormat.HEX:
-        if (out != '') out += ' ';
+        if (out.isNotEmpty) out += ' ';
 
         out += (convertBase(item.toString(), 10, 16) ?? '').padLeft(2, '0');
         break;
       case OutputFormat.BINARY:
-        if (out != '') out += ' ';
+        if (out.isNotEmpty) out += ' ';
 
         out += (convertBase(item.toString(), 10, 2) ?? '').padLeft(8, '0');
         break;
       case OutputFormat.ASCIIVALUES:
-        if (out != '') out += ' ';
+        if (out.isNotEmpty) out += ' ';
 
         out += item.toString();
         break;

@@ -7,6 +7,8 @@ import 'package:archive/archive_io.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/symbol_tables/_common/logic/symbol_table_data_specialsorts.dart';
+import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
+import 'package:gc_wizard/utils/json_utils.dart';
 
 final SYMBOLTABLES_ASSETPATH = 'assets/symbol_tables/';
 
@@ -205,14 +207,14 @@ class SymbolTableData {
 
   SymbolTableData(this._context, this.symbolKey);
 
-  Map<String, dynamic> config = {};
+  Map<String, Object?> config = {};
   List<Map<String, SymbolData>> images = [];
   int maxSymbolTextLength = 0;
 
   List<String> _translateables = [];
-  var _sort;
+  int Function(Map<String, SymbolData>, Map<String, SymbolData>)? _sort;
 
-  initialize({bool importEncryption = true}) async {
+  Future<void> initialize({bool importEncryption = true}) async {
     await _loadConfig();
     await _initializeImages(importEncryption);
   }
@@ -230,15 +232,15 @@ class SymbolTableData {
     return SYMBOLTABLES_ASSETPATH + symbolKey + '/';
   }
 
-  _loadConfig() async {
-    var file;
+  Future<void> _loadConfig() async {
+    String? file;
     try {
       file = await DefaultAssetBundle.of(_context).loadString(_pathKey() + SymbolTableConstants.CONFIG_FILENAME);
     } catch (e) {}
 
     if (file == null) file = '{}';
 
-    config = json.decode(file);
+    config = asJsonMap(json.decode(file));
 
     if (config[SymbolTableConstants.CONFIG_IGNORE] == null)
       config.putIfAbsent(SymbolTableConstants.CONFIG_IGNORE, () => <String>[]);
@@ -247,7 +249,7 @@ class SymbolTableData {
       config.putIfAbsent(SymbolTableConstants.CONFIG_SPECIALMAPPINGS, () => Map<String, String>());
 
     SymbolTableConstants.CONFIG_SPECIAL_CHARS.entries.forEach((element) {
-      config[SymbolTableConstants.CONFIG_SPECIALMAPPINGS].putIfAbsent(element.key, () => element.value);
+      (config[SymbolTableConstants.CONFIG_SPECIALMAPPINGS] as Map<String, String>).putIfAbsent(element.key, () => element.value);
     });
 
     switch (symbolKey) {
@@ -283,12 +285,12 @@ class SymbolTableData {
 
     String key;
 
-    if (config[SymbolTableConstants.CONFIG_SPECIALMAPPINGS].containsKey(imageKey)) {
-      key = config[SymbolTableConstants.CONFIG_SPECIALMAPPINGS][imageKey];
-    } else if (config[SymbolTableConstants.CONFIG_TRANSLATE] != null &&
-        config[SymbolTableConstants.CONFIG_TRANSLATE].contains(imageKey)) {
-      var translationPrefix = config[SymbolTableConstants.CONFIG_TRANSLATION_PREFIX];
-      if (translationPrefix != null && translationPrefix.length > 0) {
+    if ((config[SymbolTableConstants.CONFIG_SPECIALMAPPINGS] as Map<String, String>).containsKey(imageKey)) {
+      key = (config[SymbolTableConstants.CONFIG_SPECIALMAPPINGS] as Map<String, String>)[imageKey]!;
+    } else if (((config[SymbolTableConstants.CONFIG_TRANSLATE] as List<String>?) != null) &&
+        ((config[SymbolTableConstants.CONFIG_TRANSLATE] as List<String>).contains(imageKey))) {
+      String? translationPrefix = (config[SymbolTableConstants.CONFIG_TRANSLATION_PREFIX] as String?);
+      if (translationPrefix != null && translationPrefix.isNotEmpty) {
         key = i18n(_context, translationPrefix + imageKey);
       } else {
         key = i18n(_context, 'symboltables_' + symbolKey + '_' + imageKey);
@@ -307,10 +309,10 @@ class SymbolTableData {
     return key;
   }
 
-  _initializeImages(bool importEncryption) async {
+  Future<void> _initializeImages(bool importEncryption) async {
     //AssetManifest.json holds the information about all asset files
     final manifestContent = await DefaultAssetBundle.of(_context).loadString('AssetManifest.json');
-    final Map<String, dynamic> manifestMap = json.decode(manifestContent);
+    final manifestMap = asJsonMap(json.decode(manifestContent));
 
     final imageArchivePaths = manifestMap.keys
         .where((String key) => key.contains(_pathKey()))
@@ -328,7 +330,7 @@ class SymbolTableData {
 
     Archive? encryptionArchive;
     if (importEncryption) {
-      var encryptionBytes;
+      ByteData encryptionBytes;
       var encryptionImageArchivePaths = imageArchivePaths.where((path) => path.contains('_encryption')).toList();
       if (encryptionImageArchivePaths.isNotEmpty) {
         encryptionBytes = await DefaultAssetBundle.of(_context).load(encryptionImageArchivePaths.first);
@@ -341,31 +343,38 @@ class SymbolTableData {
     for (ArchiveFile file in archive) {
       var key = _createKey(file.name);
 
-      if (config[SymbolTableConstants.CONFIG_IGNORE].contains(key)) continue;
+      if ((config[SymbolTableConstants.CONFIG_IGNORE] as List<String>? ?? []).contains(key)) continue;
 
       var imagePath = (file.isFile && SymbolTableConstants.IMAGE_SUFFIXES.hasMatch(file.name)) ? file.name : null;
       if (imagePath == null) continue;
 
-      var standardImage = await _initializeImage(file.content);
-      var specialEncryptionImage;
-      if (encryptionArchive != null && encryptionArchive.isNotEmpty) {
-        specialEncryptionImage = await _initializeImage(
-            encryptionArchive.firstWhere((encryptionFile) => encryptionFile.name == file.name).content);
-      }
+      var data = toUint8ListOrNull(file.content);
+      if (data != null) {
+        var standardImage = await _initializeImage(data);
+        ui.Image? specialEncryptionImage;
+        if (encryptionArchive != null && encryptionArchive.isNotEmpty) {
+          var specialFile = encryptionArchive.firstWhere((encryptionFile) => encryptionFile.name == file.name);
+          if (specialFile != null) {
+            var specialFileData = toUint8ListOrNull(specialFile.content);
+            if (specialFileData != null)
+              specialEncryptionImage = await _initializeImage(specialFileData);
+          }
+        }
 
-      images.add({
-        key: SymbolData(
-            path: imagePath,
-            bytes: file.content,
-            standardImage: standardImage,
-            specialEncryptionImage: specialEncryptionImage)
-      });
+        images.add({
+          key: SymbolData(
+              path: imagePath,
+              bytes: data,
+              standardImage: standardImage,
+              specialEncryptionImage: specialEncryptionImage)
+        });
+      }
     }
 
     images.sort(_sort);
   }
 
-  _initializeImage(Uint8List bytes) async {
+  Future<ui.Image> _initializeImage(Uint8List bytes) async {
     return decodeImageFromList(bytes);
   }
 

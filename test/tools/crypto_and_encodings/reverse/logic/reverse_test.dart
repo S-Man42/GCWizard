@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/reverse/logic/reverse.dart'
 
 void main() {
   group("Reverse.reverse:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
@@ -12,7 +12,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = reverse(elem['input']);
+        var _actual = reverse(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });

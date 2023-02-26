@@ -76,13 +76,13 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
     },
   };
 
-  _currentDataInit({int? previewSize}) {
+  img.Image? _currentDataInit({int? previewSize}) {
     var previewHeight = previewSize ?? Prefs.getInt(PREFERENCE_IMAGECOLORCORRECTIONS_MAXPREVIEWHEIGHT);
 
-    if(_originalData?.bytes == null) return;
+    if(_originalData?.bytes == null) return null;
     img.Image? image = img.decodeImage(_originalData!.bytes);
 
-    if(image == null) return;
+    if(image == null) return null;
     if (image.height > previewHeight) {
       img.Image resized = img.copyResize(image, height: previewHeight);
       return resized;
@@ -103,7 +103,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
     }
   }
 
-  _resetInputs() {
+  void _resetInputs() {
     setState(() {
       _currentSaturation = 0.0;
       _currentContrast = 0.0;
@@ -379,7 +379,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
         brightness: _currentBrightness));
   }
 
-  _saveOutputAdjustColor(img.Image? output) {
+  void _saveOutputAdjustColor(img.Image? output) {
     if (output != null) _convertedOutputImage = encodeTrimmedPng(output);
   }
 
@@ -408,9 +408,9 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
 }
 
 Future<img.Image?> _adjustColorAsync(GCWAsyncExecuterParameters? jobData) async {
-  if (jobData == null) return null;
+  if (jobData?.parameters is! _AdjustColorInput) return null;
 
-  var output = _doAdjustColor(jobData.parameters);
+  var output = _doAdjustColor(jobData!.parameters as _AdjustColorInput);
 
   jobData.sendAsyncPort.send(output);
 
@@ -434,18 +434,18 @@ class _AdjustColorInput {
 
   _AdjustColorInput(
       {required this.image,
-      this.invert: false,
-      this.grayscale: false,
-      this.edgeDetection: 0.0,
-      this.red: 0.0,
-      this.green: 0.0,
-      this.blue: 0.0,
-      this.saturation: 0.0,
-      this.contrast: 0.0,
-      this.gamma: 1.0,
-      this.exposure: 1.0,
-      this.hue: 0.0,
-      this.brightness: 0.0});
+      this.invert = false,
+      this.grayscale = false,
+      this.edgeDetection = 0.0,
+      this.red = 0.0,
+      this.green = 0.0,
+      this.blue = 0.0,
+      this.saturation = 0.0,
+      this.contrast = 0.0,
+      this.gamma = 1.0,
+      this.exposure = 1.0,
+      this.hue = 0.0,
+      this.brightness = 0.0});
 }
 
 img.Image _doAdjustColor(_AdjustColorInput input) {
@@ -481,13 +481,13 @@ img.Image _doAdjustColor(_AdjustColorInput input) {
   return image;
 }
 
-openInColorCorrections(BuildContext context, GCWFile file) {
+void openInColorCorrections(BuildContext context, GCWFile file) {
   Navigator.push(
       context,
-      NoAnimationMaterialPageRoute(
-          builder: (context) => GCWTool(
+      NoAnimationMaterialPageRoute<GCWTool>(
+          builder: (BuildContext context) => GCWTool(
               tool: ImageColorCorrections(file: file),
               toolName: i18n(context, 'image_colorcorrections_title'),
-              i18nPrefix: '',
+              id: 'image_colorcorrections',
               autoScroll: false)));
 }

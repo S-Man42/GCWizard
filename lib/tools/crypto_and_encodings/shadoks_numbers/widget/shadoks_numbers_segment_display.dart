@@ -23,10 +23,9 @@ double _relativeY(Size size, double y) {
 class _ShadoksNumbersSegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
   final bool readOnly;
-  final Function onChanged;
-  final bool tapeStyle;
+  final void Function(Map<String, bool>)? onChanged;
 
-  _ShadoksNumbersSegmentDisplay({Key? key, this.segments, this.readOnly: false, this.onChanged, this.tapeStyle: false})
+  _ShadoksNumbersSegmentDisplay({Key? key, required this.segments, this.readOnly = false, this.onChanged})
       : super(
             key: key,
             initialSegments: _INITIAL_SEGMENTS,
@@ -45,14 +44,14 @@ class _ShadoksNumbersSegmentDisplay extends NSegmentDisplay {
               paint.style = PaintingStyle.stroke;
               paint.strokeWidth = size.height > 100 ? 7.0 : 3.5;
 
-              [
-                [80.0, 20.0, 0.0, 60.0, 'b'],
-                [80.0, 80.0, -60.0, 0.0, 'c'],
-                [20.0, 80.0, 60.0, -60.0, 'd']
-              ].forEach((element) {
+              var map =  {
+                'b': [80.0, 20.0, 0.0, 60.0],
+                'c':[80.0, 80.0, -60.0, 0.0],
+                'd': [20.0, 80.0, 60.0, -60.0]
+              }.forEach((key, element) {
                 var path = Path();
 
-                paint.color = segmentActive(currentSegments, element[4]) ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
+                paint.color = segmentActive(currentSegments, key) ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
 
                 path.moveTo(_relativeX(size, element[0]), _relativeY(size, element[1]));
                 path.relativeLineTo(_relativeX(size, element[2]), _relativeY(size, element[3]));
@@ -80,11 +79,11 @@ class _ShadoksNumbersSegmentDisplay extends NSegmentDisplay {
                 setSegmentState('d', false);
               });
 
-              [
-                [75.0, 15.0, 0.0, 70.0, 10.0, 0.0, 0.0, -70.0, 'b'],
-                [85.0, 85.0, -70.0, 0.0, 0.0, -10.0, 70.0, 0.0, 'c'],
-                [79.0, 11.0, 9.0, 9.0, -69.0, 69.0, -9.0, -9.0, 'd']
-              ].forEach((element) {
+             map =  {
+              'b': [75.0, 15.0, 0.0, 70.0, 10.0, 0.0, 0.0, -70.0],
+              'c':[85.0, 85.0, -70.0, 0.0, 0.0, -10.0, 70.0, 0.0],
+              'd': [79.0, 11.0, 9.0, 9.0, -69.0, 69.0, -9.0, -9.0]
+              }.forEach((key, element) {
                 var path = Path();
                 path.moveTo(_relativeX(size, element[0]), _relativeY(size, element[1]));
                 path.relativeLineTo(_relativeX(size, element[2]), _relativeY(size, element[3]));
@@ -92,8 +91,8 @@ class _ShadoksNumbersSegmentDisplay extends NSegmentDisplay {
                 path.relativeLineTo(_relativeX(size, element[6]), _relativeY(size, element[7]));
                 path.close();
                 canvas.touchCanvas.drawPath(path, paint, onTapDown: (tapDetail) {
-                  setSegmentState(element[8], !segmentActive(currentSegments, element[8]));
-                  setSegmentState('a', ['b', 'c', 'd'].where((elem) => segmentActive(currentSegments, elem]).toList().length == 0);
+                  setSegmentState(key, !segmentActive(currentSegments, key));
+                  setSegmentState('a', ['b', 'c', 'd'].where((elem) => segmentActive(currentSegments, elem)).toList().isEmpty);
                 });
               });
             });

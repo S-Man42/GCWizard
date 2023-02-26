@@ -5,7 +5,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/rabbit/logic/rabbit.dart';
 
 void main() {
   group("rabbit.keyStreamBytes:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'key' : null, 'iv' : null, 'expectedOutput' : null},
       {'key' : Uint8List.fromList([]), 'iv' : null, 'expectedOutput' : null},
       {'key' : Uint8List.fromList([]), 'iv' : Uint8List.fromList([]), 'expectedOutput' : null},
@@ -44,15 +44,15 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('key: ${elem['key']} iv: ${elem['iv']}', () {
-        var _actual = Rabbit(elem['key'], elem['iv'])
-            ?.keyStreamBytes(elem['expectedOutput']?.length);
+        var _actual = Rabbit(elem['key'] as Uint8List, elem['iv'] as Uint8List)
+            .keyStreamBytes((elem['expectedOutput'] as Uint8List).length);
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
   group("rabbit.cryptRabbit:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input': null, 'inputFormat': null, 'key': null, 'keyFormat': null, 'iv': null, 'ivFormat': null, 'outputFormat': null,
         'expectedOutput': RabbitOutput('', null, null, ErrorCode.OK)
       },
@@ -116,11 +116,11 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']} key: ${elem['key']} iv: ${elem['iv']} iv: ${elem['iv']} outputFormat: ${elem['outputFormat']}', () {
-        var _actual = cryptRabbit(elem['input'], elem['inputFormat'], elem['key'], elem['keyFormat'], elem['iv'], elem['ivFormat'], elem['outputFormat']);
-        expect(_actual?.output, elem['expectedOutput']?.output);
-        expect(_actual?.keyHexFormat, elem['expectedOutput']?.keyHexFormat);
-        expect(_actual?.ivHexFormat, elem['expectedOutput']?.ivHexFormat);
-        expect(_actual?.errorCode, elem['expectedOutput']?.errorCode);
+        var _actual = cryptRabbit(elem['input'] as String?, elem['inputFormat'] as InputFormat, elem['key'] as String?, elem['keyFormat'] as InputFormat, elem['iv'] as String?, elem['ivFormat'] as InputFormat, elem['outputFormat'] as OutputFormat);
+        expect(_actual.output, (elem['expectedOutput'] as RabbitOutput?)?.output);
+        expect(_actual.keyHexFormat, (elem['expectedOutput'] as RabbitOutput?)?.keyHexFormat);
+        expect(_actual.ivHexFormat, (elem['expectedOutput'] as RabbitOutput?)?.ivHexFormat);
+        expect(_actual.errorCode, (elem['expectedOutput'] as RabbitOutput?)?.errorCode);
       });
     });
   });

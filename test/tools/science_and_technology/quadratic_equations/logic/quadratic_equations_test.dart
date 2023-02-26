@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/science_and_technology/quadratic_equation/logic/
 
 void main() {
   group("QuadratcEquation.SolveEquation:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'a' : null, 'b' : null, 'c' : null, 'expectedOutput' : ['']},
       {'a' : null, 'b' : '',   'c' : '',   'expectedOutput' : ['']},
       {'a' : null, 'b' : null, 'c' : null, 'expectedOutput' : ['']},
@@ -30,10 +30,10 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('a: ${elem['a']}, b: ${elem['b']}, c: ${elem['c']}', () {
-        var _actual = solveQuadraticEquation(elem['a'], elem['b'], elem['c']);
+        var _actual = solveQuadraticEquation(elem['a'] as String?, elem['b'] as String?, elem['c'] as String?);
         var coordinate = _actual.values;
         for (int i = 0; i < coordinate.length; i++) {
-          expect(coordinate.elementAt(i), elem['expectedOutput'][i]);
+          expect(coordinate.elementAt(i), (elem['expectedOutput']as List<String>)[i]);
         }
       });
     });

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ui';
 
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +11,8 @@ import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/gcw_selection.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
 import 'package:gc_wizard/tools/symbol_tables/_common/widget/gcw_symbol_container.dart';
+import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
+import 'package:gc_wizard/utils/json_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 
@@ -85,48 +86,49 @@ class GCWToolActionButtonsEntry {
   final void Function()? onPressed;
 
   GCWToolActionButtonsEntry({required this.showDialog, required this.url, required this.title,
-      required this.text, required this.icon, this.onPressed});
+    required this.text, required this.icon, this.onPressed});
 }
 
+//ignore: must_be_immutable
 class GCWTool extends StatefulWidget {
   final Widget tool;
-  final String i18nPrefix;
+  final String id;
   final List<ToolCategory> categories;
   final bool autoScroll;
   final bool suppressToolMargin;
   final String? iconPath;
   final List<String> searchKeys;
-  String indexedSearchStrings = '';
   final List<GCWToolActionButtonsEntry> buttonList;
   final bool suppressHelpButton;
   final String helpSearchString;
   final bool isBeta;
 
-  var icon;
-  var id = '';
+  GCWSymbolContainer? icon;
+  var longId = '';
 
   String? toolName;
   String? defaultLanguageToolName;
   String? description;
   String? example;
+  String indexedSearchStrings = '';
 
   GCWTool(
       {Key? key,
-      required this.tool,
-      this.toolName,
-      this.defaultLanguageToolName,
-      required this.i18nPrefix,
-      this.categories = const [],
-      this.autoScroll = true,
-      this.suppressToolMargin = false,
-      this.iconPath,
-      this.searchKeys = const [],
-      this.buttonList = const [],
-      this.helpSearchString = '',
-      this.isBeta = false,
-      this.suppressHelpButton = false})
+        required this.tool,
+        this.toolName,
+        this.defaultLanguageToolName,
+        required this.id,
+        this.categories = const [],
+        this.autoScroll = true,
+        this.suppressToolMargin = false,
+        this.iconPath,
+        this.searchKeys = const [],
+        this.buttonList = const [],
+        this.helpSearchString = '',
+        this.isBeta = false,
+        this.suppressHelpButton = false})
       : super(key: key) {
-    this.id = className(tool) + '_' + (i18nPrefix ?? '');
+    this.longId = className(tool) + '_' + (id ?? '');
 
     if (iconPath != null) {
       this.icon = GCWSymbolContainer(
@@ -136,7 +138,7 @@ class GCWTool extends StatefulWidget {
   }
 
   bool get isFavorite {
-    return Favorites.isFavorite(id);
+    return Favorites.isFavorite(longId);
   }
 
   @override
@@ -149,7 +151,7 @@ class _GCWToolState extends State<GCWTool> {
 
   @override
   void initState() {
-    _setToolCount(widget.id);
+    _setToolCount(widget.longId);
 
     super.initState();
   }
@@ -157,10 +159,10 @@ class _GCWToolState extends State<GCWTool> {
   @override
   Widget build(BuildContext context) {
     // this is the case when tool is not called by Registry but as subpage of another tool
-    _toolName = widget.toolName ?? i18n(context, widget.i18nPrefix + '_title');
+    _toolName = widget.toolName ?? i18n(context, widget.id + '_title');
 
     _defaultLanguageToolName =
-          widget.defaultLanguageToolName ?? i18n(context, widget.i18nPrefix + '_title', useDefaultLanguage: true);
+        widget.defaultLanguageToolName ?? i18n(context, widget.id + '_title', useDefaultLanguage: true);
 
     return Scaffold(
         resizeToAvoidBottomInset: widget.autoScroll,
@@ -234,11 +236,11 @@ class _GCWToolState extends State<GCWTool> {
     // add further buttons as defined in registry
     widget.buttonList.forEach((button) {
       String url = '';
-      if (button.url == '') // 404-Page asking for help
+      if (button.url.isEmpty) // 404-Page asking for help
         url = i18n(context, 'common_error_url'); // https://blog.gcwizard.net/manual/uncategorized/404/
       else
         url = button.url;
-      if (button.url.length != 0)
+      if (button.url.isNotEmpty)
         buttonList.add(IconButton(
           icon: Icon(button.icon),
           onPressed: () {
@@ -252,7 +254,7 @@ class _GCWToolState extends State<GCWTool> {
                 context,
                 i18n(context, button.title),
                 i18n(context, button.text),
-                () {
+                    () {
                   launchUrl(Uri.parse(i18n(context, url, ifTranslationNotExists: url)));
                 },
               );
@@ -284,24 +286,24 @@ class _GCWToolState extends State<GCWTool> {
     }
 
     return SingleChildScrollView(
-        physics: AlwaysScrollableScrollPhysics(),
-        primary: true,
-        child: tool,
+      physics: AlwaysScrollableScrollPhysics(),
+      primary: true,
+      child: tool,
     );
   }
 }
 
-_setToolCount(String i18nPrefix) {
+void _setToolCount(String id) {
   var toolCountsRaw = Prefs.get(PREFERENCE_TOOL_COUNT);
   if (toolCountsRaw == null) toolCountsRaw = '{}';
 
-  Map<String, int> toolCounts = Map<String, int>.from(jsonDecode(toolCountsRaw));
-  var currentToolCount = toolCounts[i18nPrefix];
+  var toolCounts = _toolCounts();
+  var currentToolCount = toolCounts[id];
 
   if (currentToolCount == null) currentToolCount = 0;
 
   currentToolCount++;
-  toolCounts[i18nPrefix] = currentToolCount;
+  toolCounts[id] = currentToolCount;
 
   Prefs.setString(PREFERENCE_TOOL_COUNT, jsonEncode(toolCounts));
 }
@@ -326,10 +328,10 @@ int sortToolList(GCWTool a, GCWTool b) {
   if (!Prefs.getBool(PREFERENCE_TOOL_COUNT_SORT))
     return _sortToolListAlphabetically(a, b);
 
-  Map<String, int> toolCounts = Map<String, int>.from(jsonDecode(Prefs.get(PREFERENCE_TOOL_COUNT)));
+  var toolCounts = _toolCounts();
 
-  var toolCountA = toolCounts[a.id];
-  var toolCountB = toolCounts[b.id];
+  var toolCountA = toolCounts[a.longId];
+  var toolCountB = toolCounts[b.longId];
 
   if (toolCountA == null && toolCountB == null) {
     return _sortToolListAlphabetically(a, b);
@@ -352,4 +354,10 @@ int sortToolList(GCWTool a, GCWTool b) {
   }
 
   return 0;
+}
+
+Map<String, int> _toolCounts() {
+  var jsonString = Prefs.getString(PREFERENCE_TOOL_COUNT);
+  var decoded = asJsonMap(jsonDecode(jsonString));
+  return decoded.map((key, value) => MapEntry<String, int>(key, toIntOrNull(value) ?? 0));
 }

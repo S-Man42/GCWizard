@@ -4,7 +4,7 @@ class Power extends Unit {
   late double Function (double) toWatt;
   late double Function (double) fromWatt;
 
-  Power({required String name, required String symbol, bool isReference: false, required double inWatt})
+  Power({required String name, required String symbol, bool isReference = false, required double inWatt})
       : super(name, symbol, isReference, (e) => e * inWatt, (e) => e / inWatt) {
     toWatt = this.toReference;
     fromWatt = this.fromReference;

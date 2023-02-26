@@ -8,8 +8,8 @@ import 'package:prefs/prefs.dart';
 
 class SymbolTable extends StatefulWidget {
   final String symbolKey;
-  final String Function(String)? onDecrypt;
-  final String Function(String)? onEncrypt;
+  final String? Function(String?)? onDecrypt;
+  final String? Function(String?)? onEncrypt;
   final bool alwaysIgnoreUnknown;
 
   const SymbolTable({Key? key, this.symbolKey = '', this.onDecrypt, this.onEncrypt, this.alwaysIgnoreUnknown = false})
@@ -42,8 +42,8 @@ class SymbolTableState extends State<SymbolTable> {
   Widget build(BuildContext context) {
     final mediaQueryData = MediaQuery.of(context);
     var countColumns = mediaQueryData.orientation == Orientation.portrait
-        ? Prefs.get(PREFERENCE_SYMBOLTABLES_COUNTCOLUMNS_PORTRAIT)
-        : Prefs.get(PREFERENCE_SYMBOLTABLES_COUNTCOLUMNS_LANDSCAPE);
+        ? Prefs.getInt(PREFERENCE_SYMBOLTABLES_COUNTCOLUMNS_PORTRAIT)
+        : Prefs.getInt(PREFERENCE_SYMBOLTABLES_COUNTCOLUMNS_LANDSCAPE);
 
     return Column(
       mainAxisSize: MainAxisSize.min,

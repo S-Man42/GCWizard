@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/trithemius/logic/trithemius
 
 void main() {
   group("Trithemius.encrypt:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'aValue': null, 'expectedOutput' : ''},
       {'input' : null, 'aValue': 0, 'expectedOutput' : ''},
       {'input' : '', 'aValue': null, 'expectedOutput' : ''},
@@ -36,14 +36,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, key: ${elem['key']}, aValue: ${elem['aValue']}, autoKey: ${elem['autoKey']}', () {
-        var _actual = encryptTrithemius(elem['input'], aValue: elem['aValue']);
+        var _actual = encryptTrithemius(elem['input'] as String, aValue: elem['aValue'] as int);
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
   group("Trithemius.decrypt:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'aValue': null, 'expectedOutput' : ''},
       {'input' : null, 'aValue': 0, 'expectedOutput' : ''},
       {'input' : '', 'aValue': null, 'expectedOutput' : ''},
@@ -76,7 +76,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, key: ${elem['key']}, aValue: ${elem['aValue']}, autoKey: ${elem['autoKey']}', () {
-        var _actual = decryptTrithemius(elem['input'], aValue: elem['aValue']);
+        var _actual = decryptTrithemius(elem['input'] as String, aValue: elem['aValue'] as int);
         expect(_actual, elem['expectedOutput']);
       });
     });

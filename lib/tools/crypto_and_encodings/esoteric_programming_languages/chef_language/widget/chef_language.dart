@@ -15,13 +15,13 @@ class Chef extends StatefulWidget {
 }
 
 class ChefState extends State<Chef> {
-  var _recipeController;
-  var _inputController;
-  var _titleController;
-  var _remarkController;
-  var _timeController;
-  var _temperatureController;
-  var _outputController;
+  late TextEditingController _recipeController;
+  late TextEditingController _inputController;
+  late TextEditingController _titleController;
+  late TextEditingController _remarkController;
+  late TextEditingController _timeController;
+  late TextEditingController _temperatureController;
+  late TextEditingController _outputController;
 
   var _currentRecipe = '';
   var _currentInput = '';
@@ -193,9 +193,9 @@ class ChefState extends State<Chef> {
     if (_currentLanguage == GCWSwitchPosition.left) language = 'DEU';
     if (_currentMode == GCWSwitchPosition.right) {
       // generate chef
-      if (_currentTitle == '') {
+      if (_currentTitle.isEmpty) {
         output = buildOutputText(['chef_error_structure_recipe', 'chef_error_structure_recipe_missing_title']);
-      } else if (_currentOutput == '')
+      } else if (_currentOutput.isEmpty)
         output = buildOutputText(['chef_error_structure_recipe', 'chef_error_structure_recipe_missing_output']);
       else
         output = generateChef(language, _currentTitle, _currentRemark, _currentTime, _currentTemperature,

@@ -3,7 +3,7 @@ class BowlingFrame {
   final int two;
   final int three;
 
-  BowlingFrame({this.one: 0, this.two: 0, this.three: 0});
+  BowlingFrame({this.one = 0, this.two = 0, this.three = 0});
 }
 
 List<int> bowlingCalcFrameTotals(List<BowlingFrame> bowlingScore) {

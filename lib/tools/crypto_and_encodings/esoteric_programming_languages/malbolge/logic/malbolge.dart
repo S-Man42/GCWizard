@@ -63,7 +63,7 @@ final o = [
   [8, 8, 7, 8, 8, 7, 5, 5, 4],
 ];
 
-int opr(int x, y) {
+int opr(int x, int y) {
   int i = 0;
   for (int j = 0; j < 5; j++) {
     i = i + o[(y ~/ p9[j]) % 9][(x ~/ p9[j]) % 9] * p9[j];
@@ -122,8 +122,8 @@ int index(String s, c) {
   return -1;
 }
 
-List<int> memory = new List<int>(59049); // program
-List<int> memory_runtime = new List<int>(59049); // memory at runtime: with encrypted commands
+var memory = List<int>.filled(59049, 0); // program
+var memory_runtime = List<int>.filled(59049, 0); // memory at runtime: with encrypted commands
 int last_A_val = 0; // last value of A register
 
 malbolgeOutput interpretMalbolge(String program, String STDIN, bool strict) {
@@ -192,7 +192,7 @@ malbolgeOutput interpretMalbolge(String program, String STDIN, bool strict) {
     }
     opcode = xlat1[(memory[c] - 33 + c) % 94];
     assembler.add(format(c) + '   ' + opcode);
-    mnemonic.add(opCodeList[opcode]);
+    mnemonic.add(opCodeList[opcode]!);
 
     switch (opcode) {
       case 'j': //    40     mov d, [d]

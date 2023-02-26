@@ -1,5 +1,7 @@
+import 'dart:isolate';
 import 'dart:math';
 
+import 'package:gc_wizard/common_widgets/gcw_async_executer.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/bigrams/logic/bigrams.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/guballa/logic/breaker.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/vigenere/logic/vigenere.dart';
@@ -15,6 +17,7 @@ enum VigenereBreakerErrorCode {
   CONSOLIDATE_PARAMETER,
   TEXT_TOO_SHORT,
   ALPHABET_TOO_LONG,
+  NO_ALPHABET,
   WRONG_GENERATE_TEXT
 }
 
@@ -28,9 +31,9 @@ class VigenereBreakerJobData {
 
   VigenereBreakerJobData(
       {this.input = '',
-      this.vigenereBreakerType,
+      required this.vigenereBreakerType,
       this.ignoreNonLetters = false,
-      this.alphabet,
+      required this.alphabet,
       this.keyLengthMin = 0,
       this.keyLengthMax = 0});
 }
@@ -56,49 +59,51 @@ const DEFAULT_ALPHABET = "abcdefghijklmnopqrstuvwxyz";
 var _progress = 0;
 var _countCombinations = 0;
 var _progressStep = 1;
-var _sendAsyncPort;
+SendPort? _sendAsyncPort;
 
-Future<VigenereBreakerResult> break_cipherAsync(dynamic jobData) async {
-  if (jobData.parameters == null) return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.OK);
+Future<VigenereBreakerResult> break_cipherAsync(GCWAsyncExecuterParameters? jobData) async {
+  if (jobData?.parameters is! VigenereBreakerJobData) return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.OK);
 
-  _sendAsyncPort = jobData.sendAsyncPort;
+  _sendAsyncPort = jobData?.sendAsyncPort;
 
+  var data = jobData!.parameters as VigenereBreakerJobData;
   var output = break_cipher(
-      jobData.parameters.input,
-      jobData.parameters.vigenereBreakerType,
-      jobData.parameters.alphabet,
-      jobData.parameters.keyLengthMin,
-      jobData.parameters.keyLengthMax,
-      jobData.parameters.ignoreNonLetters,
+      data.input,
+      data.vigenereBreakerType,
+      data.alphabet,
+      data.keyLengthMin,
+      data.keyLengthMax,
+      data.ignoreNonLetters,
       counterFunction: progressCounter);
 
-  jobData.sendAsyncPort?.send(output);
+  jobData.sendAsyncPort.send(output);
 
   return output;
 }
 
-progressCounter() {
+void progressCounter() {
   _progress++;
   if (_sendAsyncPort != null && (_progress % _progressStep == 0))
     _sendAsyncPort?.send({'progress': _progress / _countCombinations});
 }
 
-VigenereBreakerResult break_cipher(String input, VigenereBreakerType vigenereBreakerType,
+VigenereBreakerResult break_cipher(String? input, VigenereBreakerType vigenereBreakerType,
     VigenereBreakerAlphabet alphabet, int keyLengthMin, int keyLengthMax, bool ignoreNonLetters,
-    {Function counterFunction}) {
-  if (input == null || input == '') return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.OK);
+    {required void Function() counterFunction}) {
+  if (input == null || input.isEmpty) return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.OK);
 
   if (((keyLengthMin < 3) || (keyLengthMin > 1000)) || ((keyLengthMax < 3) || (keyLengthMax > 1000)))
     // key length not in the valid range 3..1000
     return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.KEY_LENGTH);
 
   var bigrams = getBigrams(alphabet);
+  if (Bigrams == null) return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.NO_ALPHABET);
 
   var vigenereSquare =
-      _createVigenereEncodeSquare(bigrams.alphabet.length, vigenereBreakerType == VigenereBreakerType.BEAUFORT);
+      _createVigenereEncodeSquare(bigrams!.alphabet.length, vigenereBreakerType == VigenereBreakerType.BEAUFORT);
   var cipher_bin = <int>[];
   var resultList = <VigenereBreakerResult>[];
-  VigenereBreakerResult best_result;
+  VigenereBreakerResult? best_result;
 
   iterateText(input, bigrams.alphabet, ignoreNonLetters: ignoreNonLetters).forEach((char) {
     cipher_bin.add(char);
@@ -116,7 +121,7 @@ VigenereBreakerResult break_cipher(String input, VigenereBreakerType vigenereBre
   _progress = 0;
   _countCombinations = 0;
   for (int keyLength = keyLengthMin; keyLength <= keyLengthMax; keyLength++)
-    _countCombinations += pow(bigrams.alphabet.length, 2) * keyLength;
+    _countCombinations += (pow(bigrams.alphabet.length, 2) * keyLength).toInt();
 
   _progressStep = max(_countCombinations ~/ 100, 1); // 100 steps
 
@@ -132,19 +137,19 @@ VigenereBreakerResult break_cipher(String input, VigenereBreakerType vigenereBre
 
     result.plaintext = decryptVigenere(input, result.key, vigenereBreakerType == VigenereBreakerType.AUTOKEYVIGENERE,
         ignoreNonLetters: ignoreNonLetters);
-    result.fitness = calc_fitnessBigrams(result.plaintext, bigrams);
+    result.fitness = calc_fitnessBigrams(result.plaintext, bigrams) ?? 0;
   }
   best_result = _bestSolution(resultList);
 
   return VigenereBreakerResult(
-      plaintext: best_result.plaintext,
-      key: best_result.key,
-      fitness: best_result.fitness,
+      plaintext: best_result?.plaintext ?? '',
+      key: best_result?.key ?? '',
+      fitness: best_result?.fitness ?? 0,
       errorCode: VigenereBreakerErrorCode.OK);
 }
 
-VigenereBreakerResult _bestSolution(List<VigenereBreakerResult> keyList) {
-  if (keyList == null || keyList.length == 0) return null;
+VigenereBreakerResult? _bestSolution(List<VigenereBreakerResult>? keyList) {
+  if (keyList == null || keyList.isEmpty) return null;
 
   keyList = _highPassFilter(2, keyList);
   var bestFitness = keyList[0];

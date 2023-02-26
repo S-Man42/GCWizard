@@ -43,7 +43,7 @@ String? _fileStructureToString(List<GCWFile>? structure, {int offset = 0}) {
 
 void main() {
   group("hidden_data.hiddenData:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
 
       {'input' : 'hidden1.zip', 'expectedOutput' :
           'hidden1.zip, ZIP, 164 bytes, \n'
@@ -124,7 +124,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () async {
-        var _actual = await hiddenData(GCWFile(name: elem['input'], bytes: _getFileData(elem['input'])));
+        var _actual = await hiddenData(GCWFile(name: elem['input'] as String, bytes: _getFileData(elem['input'] as String)));
         expect(_fileStructureToString(_actual), elem['expectedOutput']);
       });
     });

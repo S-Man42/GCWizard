@@ -98,8 +98,8 @@ bool isRegisterInitialized = false;
 int inputPointer = 0;
 String STDOUT = '';
 
-CowOutput interpretCow(String code, {String STDIN}) {
-  if (code == null || code.length == 0) return CowOutput('', '', []);
+CowOutput interpretCow(String? code, {String? STDIN}) {
+  if (code == null || code.isEmpty) return CowOutput('', '', []);
 
   code = code.replaceAll(RegExp(r'\s'), '');
   List<int> opcodesArray = <int>[];
@@ -107,7 +107,7 @@ CowOutput interpretCow(String code, {String STDIN}) {
 
   for (int i = 0; i < code.length ~/ 3; i++) {
     if (commandsMooToInteger[code.substring(i * 3, i * 3 + 3)] != null) {
-      opcodesArray.add(commandsMooToInteger[code.substring(i * 3, i * 3 + 3)]);
+      opcodesArray.add(commandsMooToInteger[code.substring(i * 3, i * 3 + 3)]!);
       numberOfInstructions++;
     }
   }
@@ -125,8 +125,8 @@ CowOutput interpretCow(String code, {String STDIN}) {
   int prog_pos = 0;
 
   while (prog_pos < numberOfInstructions && !halt) {
-    debug.add(mnemonicList[opcodesArray[prog_pos]]);
-    prog_pos = _execCommand(opcodesArray[prog_pos], opcodesArray, prog_pos, numberOfInstructions, STDIN);
+    debug.add(mnemonicList[opcodesArray[prog_pos]] ?? '');
+    prog_pos = _execCommand(opcodesArray[prog_pos], opcodesArray, prog_pos, numberOfInstructions, STDIN ?? '');
     iterations++;
     if (iterations > MAX_ITERATIONS) {
       error = ERROR_COW_MAXITERATIONS;
@@ -214,7 +214,7 @@ int _execCommand(
       // If current memory block has a 0 in it, read a single ASCII character from STDIN and store it in the current memory block.
       // If the current memory block is not 0, then print the ASCII character that corresponds to the value in the current memory block to STDOUT.
       if (memoryBlocksArray[currentBlockIndex] == 0) {
-        memoryBlocksArray[currentBlockIndex] = STDIN.codeUnitAt(inputPointer);
+        memoryBlocksArray[currentBlockIndex] = (STDIN ?? '').codeUnitAt(inputPointer);
         inputPointer++;
       } else {
         STDOUT = STDOUT + String.fromCharCode(memoryBlocksArray[currentBlockIndex] % 256);

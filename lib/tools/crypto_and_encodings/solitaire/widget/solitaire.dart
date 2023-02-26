@@ -54,16 +54,16 @@ class SolitaireState extends State<Solitaire> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    if (_currentInput == null || _currentInput.length == 0) return GCWDefaultOutput();
+    if (_currentInput.isEmpty) return GCWDefaultOutput();
 
-    var _currentOutput;
+    SolitaireOutput? _currentOutput;
     if (_currentMode == GCWSwitchPosition.left) {
       _currentOutput = encryptSolitaire(_currentInput, _currentKey);
     } else {
       _currentOutput = decryptSolitaire(_currentInput, _currentKey);
     }
 
-    if (_currentOutput == null || _currentOutput.output.length == 0) return GCWDefaultOutput();
+    if (_currentOutput == null || _currentOutput.output.isEmpty) return GCWDefaultOutput();
 
     return GCWMultipleOutput(
       children: [

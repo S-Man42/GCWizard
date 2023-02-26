@@ -1,5 +1,15 @@
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
+
+class ShadocksOutput extends Segments{
+  List<int> numbers;
+  BigInt quaternary;
+  String shadoks;
+
+  ShadocksOutput(List<List<String>> displays, this.numbers, this.quaternary, this.shadoks)
+    : super(displays : displays);
+}
 
 final Map<int, List<String>> _numbersToSegments = {
   0: ['a'],
@@ -15,31 +25,23 @@ final Map<String, String> _numberToWord = {
   '3': 'MEU',
 };
 
-final _wordToNumber = switchMapKeyValue(_numberToWord);
+Segments encodeShadoksNumbers(int? input) {
+  if (input == null) return Segments.Empty();
 
-List<List<String>> encodeShadoksNumbers(int input) {
-  if (input == null) return [];
-
-  var quaternary = convertBase(input.toString(), 10, 4);
-  return quaternary.split('').map((digit) {
-    return _numbersToSegments[int.tryParse(convertBase(digit, 4, 10))];
+  var quaternary = convertBase(input.toString(), 10, 4) ?? '';
+  var result = quaternary.split('').map((digit) {
+    return _numbersToSegments[int.tryParse(convertBase(digit, 4, 10) ?? '0') ?? 0]!;
   }).toList();
+  return Segments(displays: result);
 }
 
-Map<String, dynamic> decodeShadoksNumbers(List<String> inputs) {
-  if (inputs == null || inputs.length == 0)
-    return {
-      'displays': [
-        ['a']
-      ],
-      'numbers': [0],
-      'quaternary': BigInt.zero,
-      'shadoks': _numberToWord['0']
-    };
+ShadocksOutput decodeShadoksNumbers(List<String>? inputs) {
+  if (inputs == null || inputs.isEmpty)
+    return ShadocksOutput([['a']], [0], BigInt.zero, _numberToWord['0']!);
 
   var displays = <List<String>>[];
 
-  List<int> numbers = inputs.where((input) => input != null).map((input) {
+  List<int> numbers = inputs.map((input) {
     var number = 0;
 
     if (input == 'a') {
@@ -53,9 +55,9 @@ Map<String, dynamic> decodeShadoksNumbers(List<String> inputs) {
     return number;
   }).toList();
 
-  var total = convertBase(numbers.map((number) => convertBase(number.toString(), 10, 4)).join(), 4, 10);
+  var total = convertBase(numbers.map((number) => convertBase(number.toString(), 10, 4)).join(), 4, 10) ?? '0';
 
-  return {'displays': displays, 'numbers': numbers, 'quaternary': BigInt.tryParse(total), 'shadoks': _shadoks(numbers)};
+  return ShadocksOutput(displays, numbers, BigInt.tryParse(total) ?? BigInt.zero, _shadoks(numbers));
 }
 
 String _shadoks(List<int> numbers) {

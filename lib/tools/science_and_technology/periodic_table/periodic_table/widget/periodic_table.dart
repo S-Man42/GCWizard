@@ -20,8 +20,8 @@ class PeriodicTable extends StatefulWidget {
 }
 
 class PeriodicTableState extends State<PeriodicTable> {
-  var _cellWidth;
-  var _maxCellHeight;
+  late double _cellWidth;
+  late double _maxCellHeight;
   BorderSide _border = BorderSide(width: 1.0, color: Colors.black87);
 
   @override
@@ -92,15 +92,15 @@ class PeriodicTableState extends State<PeriodicTable> {
               width: _cellWidth,
             ),
             onTap: () {
-              Navigator.of(context).push(NoAnimationMaterialPageRoute(
+              Navigator.of(context).push(NoAnimationMaterialPageRoute<GCWTool>(
                   builder: (context) => GCWTool(
                       tool: PeriodicTableDataView(atomicNumber: element.atomicNumber),
-                      i18nPrefix: 'periodictable_dataview')));
+                      id: 'periodictable_dataview')));
             },
           );
   }
 
-  _buildGroupHeadlineElement(int iupacGroup) {
+  Widget _buildGroupHeadlineElement(int iupacGroup) {
     var group = iupacGroupToMainSubGroup(iupacGroup);
 
     return Container(
@@ -116,7 +116,7 @@ class PeriodicTableState extends State<PeriodicTable> {
           )),
           Expanded(
               child: AutoSizeText(
-            encodeRomanNumbers(group['value']),
+            encodeRomanNumbers(group?.item2),
             style: gcwTextStyle().copyWith(fontWeight: FontWeight.bold),
             minFontSize: AUTO_FONT_SIZE_MIN,
             maxLines: 1,
@@ -127,7 +127,7 @@ class PeriodicTableState extends State<PeriodicTable> {
     );
   }
 
-  _buildHeadlineElement(int period, int iupacGroup) {
+  Widget? _buildHeadlineElement(int period, int iupacGroup) {
     if (iupacGroup == 0 && period > 0) {
       return Container(
         width: _cellWidth,
@@ -234,15 +234,15 @@ class PeriodicTableState extends State<PeriodicTable> {
     return color.toColor();
   }
 
-  int _legendWidth(period) {
+  int _legendWidth(int period) {
     return _LEGEND_WIDTH * (period == 2 ? 2 : 1);
   }
 
-  Widget _getLegendElement(int iupacGroup, int period) {
-    var color1;
-    var text1;
-    var color2;
-    var text2;
+  Widget? _getLegendElement(int iupacGroup, int period) {
+    Color? color1;
+    String? text1;
+    Color? color2;
+    String? text2;
 
     if (iupacGroup == _LEGEND_START_IUPAC_GROUP && period == 0) {
       color2 = _getColor(StateOfMatter.SOLID, false);
@@ -261,19 +261,19 @@ class PeriodicTableState extends State<PeriodicTable> {
       text1 = i18n(context, 'periodictable_attribute_isradioactive_true');
     }
 
-    if (color1 == null && color2 == null) return Container();
+    if (color1 == null && color2 == null) return null;
+    var list =
+      [MapEntry<Color?, String?>(color1, text1),
+       MapEntry<Color?, String?>(color2, text2)];
 
     return Column(
-      children: [
-        [color1, text1],
-        [color2, text2]
-      ].map((e) {
+      children: list.map((e) {
         return Container(
             height: min<double>(defaultFontSize() * 2.5, _maxCellHeight) / 2.0,
-            color: e[0],
+            color: e.key,
             width: _cellWidth * _legendWidth(period),
             child: AutoSizeText(
-              e[1] ?? '',
+              e.value ?? '',
               style: gcwTextStyle().copyWith(color: Colors.black),
               minFontSize: AUTO_FONT_SIZE_MIN,
               maxLines: 1,

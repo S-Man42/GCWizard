@@ -24,7 +24,7 @@ import 'package:intl/intl.dart';
 import 'package:tuple/tuple.dart';
 
 class GCWSymbolTableTextToSymbols extends StatefulWidget {
-  final String text;
+  final String? text;
   final bool ignoreUnknown;
   final int countColumns;
   final SymbolTableData data;
@@ -97,9 +97,10 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
   List<int> _getImageIndexes(bool isCaseSensitive) {
     var _text = widget.text;
     var imageIndexes = <int>[];
+    if (_text == null) return imageIndexes;
 
-    while (_text.length > 0) {
-      var imageIndex;
+    while (_text!.isNotEmpty) {
+      int? imageIndex;
       int i;
       String chunk;
       for (i = min(_data.maxSymbolTextLength, _text.length); i > 0; i--) {
@@ -118,7 +119,7 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
         }
       }
 
-      if ((widget.ignoreUnknown && imageIndex != null) || !widget.ignoreUnknown) imageIndexes.add(imageIndex);
+      if ((widget.ignoreUnknown && imageIndex != null) || !widget.ignoreUnknown) imageIndexes.add(imageIndex!);
 
       if (imageIndex == null)
         _text = _text.substring(1, _text.length);
@@ -129,13 +130,13 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
     return imageIndexes;
   }
 
-  Widget _buildEncryptionOutput(countColumns) {
+  Widget _buildEncryptionOutput(int countColumns) {
     if (_data == null) return Container();
 
     var isCaseSensitive = _data.isCaseSensitive();
 
     var imageIndexes = _getImageIndexes(isCaseSensitive);
-    _encryptionHasImages = imageIndexes.length > 0;
+    _encryptionHasImages = imageIndexes.isNotEmpty;
     if (!_encryptionHasImages) return Container();
 
     var sizes = _symbolTableEncryption().sizes(SymbolTableEncryptionSizes(
@@ -182,7 +183,7 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
     }
   }
 
-  Future<Tuple2<bool, Uint8List?>> _exportEncryption(int countColumns, isCaseSensitive) async {
+  Future<Tuple2<bool, Uint8List?>> _exportEncryption(int countColumns, bool isCaseSensitive) async {
     var imageIndexes = _getImageIndexes(isCaseSensitive);
 
     var countRows = (imageIndexes.length / countColumns).floor();

@@ -15,7 +15,7 @@ class MultiDecoderToolEsotericLanguageBeatnik extends AbstractMultiDecoderTool {
     Key? key,
     required int id,
     required String name,
-    required Map<String, Object> options,
+    required Map<String, Object?> options,
     required BuildContext context})
       : super(
             key: key,
@@ -25,7 +25,7 @@ class MultiDecoderToolEsotericLanguageBeatnik extends AbstractMultiDecoderTool {
             optionalKey: true,
             onDecode: (String input, String key) {
               try {
-                var _output = interpretBeatnik(stringTypeCheck(options[MDT_ESOTERIC_LANGUAGE_BEATNIK_OPTION_MODE], ''), input, key);
+                var _output = interpretBeatnik(toStringOrDefault(options[MDT_ESOTERIC_LANGUAGE_BEATNIK_OPTION_MODE], ''), input, key);
                 return BeatnikState().buildOutputText(_output.output);
               } catch (e) {
                 return null;

@@ -43,7 +43,7 @@ class GCWSymbolTableSymbolMatrix extends StatefulWidget {
 }
 
 class GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> {
-  var _currentShowOverlayedSymbols;
+  late bool _currentShowOverlayedSymbols;
   late Iterable<Map<String, SymbolData>> _imageData;
 
   @override
@@ -84,7 +84,7 @@ class GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> 
               : GCWIconButton(
                   icon: Icons.app_registration,
                   onPressed: () {
-                    openInSymbolReplacer(context, widget.symbolKey, widget.imageData);
+                    openInSymbolReplacer(context, widget.symbolKey);
                   }),
           Container(width: 15),
           GCWSymbolTableZoomButtons(
@@ -101,11 +101,11 @@ class GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> 
     ]);
   }
 
-  _showSpaceSymbolInOverlay(text) {
+  String _showSpaceSymbolInOverlay(String text) {
     return text == ' ' ? String.fromCharCode(9251) : text;
   }
 
-  _buildDecryptionButtonMatrix(int countColumns, bool selectable, Function onSymbolTapped) {
+  Widget _buildDecryptionButtonMatrix(int countColumns, bool selectable, Function onSymbolTapped) {
     if (_imageData == null) return Container();
 
     var rows = <Widget>[];
@@ -119,7 +119,7 @@ class GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> 
       var columns = <Widget>[];
 
       for (var j = 0; j < countColumns; j++) {
-        var widget;
+        Widget widget;
         var imageIndex = i * countColumns + j;
 
         if (imageIndex < _imageData.length) {
@@ -189,13 +189,13 @@ class GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> 
     );
   }
 
-  openInSymbolReplacer(BuildContext context, String symbolKey, Iterable<Map<String, SymbolData>> imageData) {
+  void openInSymbolReplacer(BuildContext context, String symbolKey) {
     Navigator.push(
         context,
-        NoAnimationMaterialPageRoute(
+        NoAnimationMaterialPageRoute<GCWTool>(
             builder: (context) => GCWTool(
-                tool: SymbolReplacer(imageData: imageData, symbolKey: symbolKey),
+                tool: SymbolReplacer(symbolKey: symbolKey),
                 toolName: i18n(context, 'symbol_replacer_title'),
-                i18nPrefix: '')));
+                id: 'symbol_replacer')));
   }
 }

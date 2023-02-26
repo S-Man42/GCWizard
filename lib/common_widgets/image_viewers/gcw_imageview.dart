@@ -16,7 +16,6 @@ import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
 import 'package:image/image.dart' as img;
-import 'package:intl/intl.dart';
 import 'package:photo_view/photo_view.dart';
 
 enum GCWImageViewButtons { ALL, SAVE, VIEW_IN_TOOLS }
@@ -129,7 +128,7 @@ class _GCWImageViewState extends State<GCWImageView> {
     ]);
   }
 
-  _createPhotoView() {
+  Column _createPhotoView() {
     return Column(
       children: [
         Container(
@@ -149,7 +148,7 @@ class _GCWImageViewState extends State<GCWImageView> {
             ),
           ),
         ),
-        if ((widget.imageData?.description ?? '').trim().length > 0)
+        if ((widget.imageData?.description ?? '').trim().isNotEmpty)
           Container(
               padding: EdgeInsets.only(top: 10),
               child: GCWText(
@@ -164,7 +163,7 @@ class _GCWImageViewState extends State<GCWImageView> {
     return widget.suppressedButtons == null || !widget.suppressedButtons!.contains(GCWImageViewButtons.ALL);
   }
 
-  _createToolbar() {
+  List<Widget> _createToolbar() {
     var iconSize = widget.toolBarRight ? IconButtonSize.NORMAL : IconButtonSize.SMALL;
 
     return [
@@ -282,7 +281,7 @@ class _GCWImageViewState extends State<GCWImageView> {
     ];
   }
 
-  _exportFile(BuildContext context, Uint8List data) async {
+  void _exportFile(BuildContext context, Uint8List data) async {
     var value = await saveByteDataToFile(context, data, buildFileNameWithDate('img_', FileType.PNG));
 
     if (value) showExportedFileDialog(context, contentWidget: imageContent(context, data));

@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/atbash/logic/atbash.dart';
 
 void main() {
   group("Atbash.atbash:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
@@ -16,7 +16,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = atbash(elem['input']);
+        var _actual = atbash(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });

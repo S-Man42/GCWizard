@@ -190,17 +190,17 @@ class HiddenDataState extends State<HiddenData> {
 
     return FutureBuilder(
         future: _hiddenDataList,
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<List<GCWFile>> snapshot) {
           if (!_complete)
             return GCWOutputText(text: i18n(context, 'common_please_wait'), suppressCopyButton: true);
-          else if (snapshot.data == null || snapshot.data.isEmpty)
+          else if ((snapshot.data == null) || snapshot.data!.isEmpty)
             return GCWOutputText(text: i18n(context, 'hiddendata_nohiddendatafound'), suppressCopyButton: true);
           else
-            return GCWFilesOutput(files: snapshot.data);
+            return GCWFilesOutput(files: snapshot.data!);
         });
   }
 
-  _exportFile(BuildContext context, GCWFile? file) async {
+  void _exportFile(BuildContext context, GCWFile? file) async {
     if (file?.bytes == null) {
       showToast(i18n(context, 'hiddendata_datanotreadable'));
       return;
@@ -217,10 +217,10 @@ class HiddenDataState extends State<HiddenData> {
   }
 }
 
-openInHiddenData(BuildContext context, GCWFile file) {
+void openInHiddenData(BuildContext context, GCWFile file) {
   Navigator.push(
       context,
-      NoAnimationMaterialPageRoute(
+      NoAnimationMaterialPageRoute<GCWTool>(
           builder: (context) => GCWTool(
-              tool: HiddenData(file: file), toolName: i18n(context, 'hiddendata_title'), i18nPrefix: '')));
+              tool: HiddenData(file: file), toolName: i18n(context, 'hiddendata_title'), id: 'hiddendata')));
 }

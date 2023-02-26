@@ -17,8 +17,8 @@ import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
+import 'package:gc_wizard/utils/json_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
-import 'package:intl/intl.dart';
 import 'package:prefs/prefs.dart';
 
 class SaveRestoreSettings extends StatefulWidget {
@@ -64,15 +64,18 @@ class SaveRestoreSettingsState extends State<SaveRestoreSettings> {
                 showOpenFileDialog(context, [FileType.GCW], (GCWFile file) {
                   try {
                     var jsonString = String.fromCharCodes(file.bytes);
-                    Map<String, Object> prefsMap = jsonDecode(jsonString);
+                    var decoded = jsonDecode(jsonString);
+                    Map<String, Object?> prefsMap = asJsonMap(decoded);
 
                     initDefaultSettings(PreferencesInitMode.REINIT_ALL);
                     prefsMap.entries.forEach((entry) {
-                      setUntypedPref(entry.key, entry.value);
+                      if (entry.value == null) return;
+                      
+                      setUntypedPref(entry.key, entry.value!);
                     });
 
                     setState(() {
-                      setThemeColorsByName(Prefs.get(PREFERENCE_THEME_COLOR));
+                      setThemeColorsByName(Prefs.getString(PREFERENCE_THEME_COLOR));
                       AppBuilder.of(context).rebuild();
                     });
 

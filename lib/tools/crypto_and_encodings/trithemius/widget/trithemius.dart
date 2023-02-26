@@ -11,7 +11,7 @@ class Trithemius extends StatefulWidget {
 }
 
 class TrithemiusState extends State<Trithemius> {
-  var _inputController;
+  late TextEditingController _inputController;
 
   String _currentInput = '';
   int _currentAValue = 0;
@@ -43,6 +43,7 @@ class TrithemiusState extends State<Trithemius> {
         ),
         GCWIntegerSpinner(
           title: 'A',
+          value: _currentAValue,
           onChanged: (value) {
             setState(() {
               _currentAValue = value;

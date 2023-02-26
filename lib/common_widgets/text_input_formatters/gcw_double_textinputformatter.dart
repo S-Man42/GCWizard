@@ -64,7 +64,7 @@ class GCWDoubleTextInputFormatter extends TextInputFormatter {
 
   bool _checkBounds(String value) {
     var integerPart = value.split('.')[0];
-    var numberCurrentDecimals = value.contains('.') ? value.split('.')[1].length : 0;
+    int numberCurrentDecimals = value.contains('.') ? value.split('.')[1].length : 0;
 
     if (integerPart.startsWith('-')) {
       if (min == null) return true;
@@ -86,7 +86,7 @@ class GCWDoubleTextInputFormatter extends TextInputFormatter {
     return true;
   }
 
-  double _truncateDigits(double value, numberDigits) {
+  double _truncateDigits(double value, int numberDigits) {
     return double.parse(value.toStringAsFixed(numberDigits));
   }
 }

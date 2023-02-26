@@ -19,7 +19,7 @@ class GCWSymbolTableEncryption extends StatefulWidget {
   final SymbolTableData data;
   final String symbolKey;
   final void Function() onChanged;
-  final String Function(String)? onBeforeEncrypt;
+  final String? Function(String?)? onBeforeEncrypt;
   final bool alwaysIgnoreUnknown;
 
   const GCWSymbolTableEncryption(
@@ -38,7 +38,7 @@ class GCWSymbolTableEncryption extends StatefulWidget {
 }
 
 class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
-  var _currentEncryptionInput = '';
+  String? _currentEncryptionInput = '';
   late TextEditingController _encryptionInputController;
 
   var _alphabetMap = <String, int>{};
@@ -68,7 +68,7 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
     super.dispose();
   }
 
-  _hasSpecialEncryption() {
+  bool _hasSpecialEncryption() {
     switch (_data.symbolKey) {
       case 'color_honey':
       case 'color_tokki':

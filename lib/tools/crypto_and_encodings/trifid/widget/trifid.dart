@@ -19,8 +19,8 @@ class Trifid extends StatefulWidget {
 }
 
 class TrifidState extends State<Trifid> {
-  var _inputController;
-  var _alphabetController;
+  late TextEditingController _inputController;
+  late TextEditingController _alphabetController;
 
   var _currentMode = GCWSwitchPosition.right;
 
@@ -85,7 +85,7 @@ class TrifidState extends State<Trifid> {
           },
         ),
         GCWTextDivider(text: i18n(context, 'common_alphabet')),
-        GCWDropDown(
+        GCWDropDown<PolybiosMode>(
           value: _currentTrifidMode,
           onChanged: (value) {
             setState(() {
@@ -115,9 +115,9 @@ class TrifidState extends State<Trifid> {
     );
   }
 
-  _buildOutput() {
+  Widget _buildOutput() {
     String output = '';
-    if (_currentInput == null || _currentInput.length == 0) return GCWDefaultOutput(child: '');
+    if (_currentInput.isEmpty) return GCWDefaultOutput(child: '');
 
     var _currentOutput = TrifidOutput('', '');
     if (_currentMode == GCWSwitchPosition.left) {

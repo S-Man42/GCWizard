@@ -50,11 +50,11 @@ class VariableCoordinateState extends State<VariableCoordinate> {
 
   Length _currentLengthUnit = UNITCATEGORY_LENGTH.defaultUnit;
   bool _currentProjectionMode = false;
-  var _currentOutputFormat = defaultCoordFormat();
+  var _currentOutputFormat = defaultCoordinateFormat;
 
-  var _inputController;
-  var _bearingController;
-  var _distanceController;
+  late TextEditingController _inputController;
+  late TextEditingController _bearingController;
+  late TextEditingController _distanceController;
 
   var _currentInput = '';
   var _currentBearingInput = '';
@@ -102,7 +102,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
   }
 
   _addEntry(String currentFromInput, String currentToInput, formula_base.FormulaValueType type, BuildContext context) {
-    if (currentFromInput.length > 0) {
+    if (currentFromInput.isNotEmpty) {
       insertFormulaValue(
           formula_base.FormulaValue(currentFromInput, currentToInput, type: formula_base.FormulaValueType.INTERPOLATED),
           widget.formula);
@@ -128,9 +128,9 @@ class VariableCoordinateState extends State<VariableCoordinate> {
 
   _disposeEntry(String currentFromInput, String currentToInput, BuildContext context) {
     if (currentFromInput != null &&
-        currentFromInput.length > 0 &&
+        currentFromInput.isNotEmpty &&
         currentToInput != null &&
-        currentToInput.length > 0) {
+        currentToInput.isNotEmpty) {
       _addEntry(currentFromInput, currentToInput, formula_base.FormulaValueType.INTERPOLATED, context);
     }
   }
@@ -329,9 +329,9 @@ class VariableCoordinateState extends State<VariableCoordinate> {
     });
 
     if (_currentFromInput != null &&
-        _currentFromInput.length > 0 &&
+        _currentFromInput.isNotEmpty &&
         _currentToInput != null &&
-        _currentToInput.length > 0) {
+        _currentToInput.isNotEmpty) {
       _substitutions.putIfAbsent(_currentFromInput, () => _currentToInput);
     }
 
@@ -344,8 +344,8 @@ class VariableCoordinateState extends State<VariableCoordinate> {
     Map<String, dynamic> projectionData;
     if (_currentProjectionMode) {
       projectionData = {
-        'bearing': _currentProjectionMode == false || _currentBearingInput.length == 0 ? '0' : _currentBearingInput,
-        'distance': _currentProjectionMode == false || _currentDistanceInput.length == 0 ? '0' : _currentDistanceInput,
+        'bearing': _currentProjectionMode == false || _currentBearingInput.isEmpty ? '0' : _currentBearingInput,
+        'distance': _currentProjectionMode == false || _currentDistanceInput.isEmpty ? '0' : _currentDistanceInput,
         'reverseBearing': _currentReverseBearing,
         'lengthUnit': _currentLengthUnit,
         'ellipsoid': defaultEllipsoid()
@@ -371,7 +371,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
     var normalCoords = coords['coordinates'];
     var leftPaddedCoords = coords['leftPadCoordinates'];
 
-    var hasLeftPaddedCoords = leftPaddedCoords.length > 0;
+    var hasLeftPaddedCoords = leftPaddedCoords.isNotEmpty;
 
     _currentOutput =
         List.from((_currentCoordMode == GCWSwitchPosition.left ? normalCoords : leftPaddedCoords).map((coord) {
@@ -392,12 +392,12 @@ class VariableCoordinateState extends State<VariableCoordinate> {
           coordinateFormat: _currentOutputFormat);
     }));
 
-    if (_currentOutput.length == 0) {
+    if (_currentOutput.isEmpty) {
       _currentOutput = [i18n(context, 'coords_variablecoordinate_nooutputs')];
     }
 
     _output = Column(children: [
-      _currentOutputFormat['format'] == CoordFormatKey.DMM && hasLeftPaddedCoords
+      _currentOutputFormat['format'] == CoordinateFormatKey.DMM && hasLeftPaddedCoords
           ? GCWTwoOptionsSwitch(
               title: i18n(context, 'coords_variablecoordinate_decleftpad'),
               leftValue: i18n(context, 'coords_variablecoordinate_decleftpad_left'),
@@ -443,11 +443,11 @@ class VariableCoordinateState extends State<VariableCoordinate> {
 
         var coords = LatLng(locationData.latitude, locationData.longitude);
         var insertedCoord;
-        if (defaultCoordFormat()['format'] == CoordFormatKey.DMM) {
+        if (defaultCoordinateFormat['format'] == CoordinateFormatKey.DMM) {
           //Insert Geocaching Format with exact 3 digits
-          insertedCoord = formatCoordOutput(coords, defaultCoordFormat(), defaultEllipsoid(), 3);
+          insertedCoord = formatCoordOutput(coords, defaultCoordinateFormat, defaultEllipsoid(), 3);
         } else {
-          insertedCoord = formatCoordOutput(coords, defaultCoordFormat(), defaultEllipsoid());
+          insertedCoord = formatCoordOutput(coords, defaultCoordinateFormat, defaultEllipsoid());
         }
 
         _currentInput = insertedCoord.replaceAll('\n', ' ');

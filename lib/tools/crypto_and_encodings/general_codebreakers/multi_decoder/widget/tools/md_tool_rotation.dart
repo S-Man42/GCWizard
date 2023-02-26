@@ -11,19 +11,19 @@ class MultiDecoderToolRotation extends AbstractMultiDecoderTool {
     Key? key,
     required int id,
     required String name,
-    required Map<String, Object> options})
+    required Map<String, Object?> options})
       : super(
             key: key,
             id: id,
             name: name,
             internalToolName: MDT_INTERNALNAMES_ROTATION,
             onDecode: (String input, String key) {
-              return Rotator().rotate(input, intTypeCheck(options[MDT_ROTATION_OPTION_KEY], 1));
+              return Rotator().rotate(input, toIntOrDefault(options[MDT_ROTATION_OPTION_KEY], 1));
             },
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
               MDT_ROTATION_OPTION_KEY: GCWABCSpinner(
-                value: intTypeCheck(options[MDT_ROTATION_OPTION_KEY], 1),
+                value: toIntOrDefault(options[MDT_ROTATION_OPTION_KEY], 1),
                 onChanged: (value) {
                   options[MDT_ROTATION_OPTION_KEY] = value;
                 },

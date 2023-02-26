@@ -1,7 +1,7 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _DegreesLatTextInputFormatter extends TextInputFormatter {
-  final allowNegativeValues;
+  final bool allowNegativeValues;
 
   _DegreesLatTextInputFormatter({this.allowNegativeValues = false});
 

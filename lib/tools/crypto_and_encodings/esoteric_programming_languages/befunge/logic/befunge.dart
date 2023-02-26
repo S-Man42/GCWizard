@@ -44,7 +44,13 @@ class BefungeOutput {
   List<String> Command;
   List<String> Mnemonic;
 
-  BefungeOutput({this.Output, this.Error, this.BefungeStack, this.PC, this.Command, this.Mnemonic});
+  BefungeOutput({
+    required this.Output,
+    required this.Error,
+    required this.BefungeStack,
+    required this.PC,
+    required this.Command,
+    required this.Mnemonic});
 }
 
 class Stack {
@@ -65,7 +71,7 @@ class Stack {
   }
 
   bool isEmpty() {
-    return (content.length == 0);
+    return (content.isEmpty);
   }
 
   String toString() {
@@ -118,8 +124,8 @@ bool _isDigit(String char) {
   ].contains(char);
 }
 
-BefungeOutput interpretBefunge(String program, {String input}) {
-  if (program == '' || program == null)
+BefungeOutput interpretBefunge(String? program, {String? input = ''}) {
+  if (program == null || program.isEmpty)
     return BefungeOutput(
         Output: '', Error: '', BefungeStack: _BefungeStack, PC: _PC, Command: _Command, Mnemonic: _Mnemonic);
 
@@ -263,7 +269,7 @@ BefungeOutput interpretBefunge(String program, {String input}) {
               a = stack.pop();
               b = stack.pop();
               if (a == 0) {
-                if (STDIN.length == 0) {
+                if (STDIN.isEmpty) {
                   _BefungeStack.add(stack.toString());
                   return BefungeOutput(
                       Output: STDOUT.join(''),
@@ -376,7 +382,7 @@ BefungeOutput interpretBefunge(String program, {String input}) {
               break;
 
             case '&': // input decimal
-              if (STDIN.length == 0 || STDIN.join('') == '') {
+              if (STDIN.isEmpty || STDIN.join('').isEmpty) {
                 _BefungeStack.add(stack.toString());
                 return BefungeOutput(
                     Output: STDOUT.join(''),
@@ -404,7 +410,7 @@ BefungeOutput interpretBefunge(String program, {String input}) {
               break;
 
             case '~': // input char
-              if (STDIN.length == 0 || STDIN.join('') == '') {
+              if (STDIN.isEmpty || STDIN.join('').isEmpty) {
                 _BefungeStack.add(stack.toString());
                 return BefungeOutput(
                     Output: STDOUT.join(''),
@@ -513,11 +519,11 @@ bool _outOfBounds() {
   return (_y > SCREENHEIGHT || _x > SCREENWIDTH);
 }
 
-bool _outOfBoundsAccess({BigInt y, BigInt x}) {
+bool _outOfBoundsAccess({required BigInt y, required BigInt x}) {
   return (y > BigInt.from(SCREENHEIGHT) || y < BigInt.zero || x > BigInt.from(SCREENWIDTH) || x < BigInt.zero);
 }
 
-void _put({BigInt y, BigInt x, BigInt value}) {
+void _put({required BigInt y, required BigInt x, required BigInt value}) {
   _pg[y.toInt() * SCREENWIDTH + x.toInt()] = value;
 }
 
@@ -544,17 +550,17 @@ bool _correctBefungeProgramLength(String program) {
   if (program.length > MAX_LENGTH_PROGRAM)
     return false;
   else {
-    program.split('\n').forEach((line) {
+    for (String line  in program.split('\n')) {
       if (line.length > SCREENWIDTH) return false;
-    });
+    };
     i++;
   }
   if (i > SCREENHEIGHT) return false;
   return true;
 }
 
-String generateBefunge(String OutputText) {
-  if (OutputText == '' || OutputText == null) return '';
+String generateBefunge(String? OutputText) {
+  if (OutputText == null || OutputText.isEmpty) return '';
 
   String code = '';
 
@@ -562,7 +568,7 @@ String generateBefunge(String OutputText) {
 
   OutputText.split('').reversed.toList().forEach((char) {
     if (char.codeUnitAt(0) < 256 && _convertCharCode[char.codeUnitAt(0)] != null)
-      code = code + _convertCharCode[char.codeUnitAt(0)];
+      code = code + (_convertCharCode[char.codeUnitAt(0)] ?? '');
   });
 
   code = code + 'v';

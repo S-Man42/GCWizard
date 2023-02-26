@@ -14,7 +14,7 @@ String deobfuscateEarwigoText(String text, EARWIGO_DEOBFUSCATION tool) {
   }
 }
 
-String obfuscateEarwigoText(String text, EARWIGO_DEOBFUSCATION tool) {
+String obfuscateEarwigoText(String? text, EARWIGO_DEOBFUSCATION tool) {
   switch (tool) {
     case EARWIGO_DEOBFUSCATION.GSUB_WIG:
       return gsub_wig_obfuscation(text);
@@ -24,7 +24,7 @@ String obfuscateEarwigoText(String text, EARWIGO_DEOBFUSCATION tool) {
   }
 }
 
-String gsub_wig_obfuscation(String text) {
+String gsub_wig_obfuscation(String? text) {
   if (text == null || text.isEmpty) return '';
 
   String result = '';
@@ -48,7 +48,7 @@ String gsub_wig_obfuscation(String text) {
   return result;
 }
 
-String wwb_deobf_obfuscation(String str) {
+String wwb_deobf_obfuscation(String? str) {
   // actual  Qo, fwt! Rtq4 x82 üos6quv e2s67ko2qvqwN eyp o2wnpl457 -n1oq0 sq0p tvs6 n135 5tsq3 zvqw91H<\001\002>\n\003\003\003\003Xrut3 ctq o01n Rqts282äzqs -rooq4 p3 ss3r1 fuk4. 82t 5p3yo78nx evs tj2 SrzäwnpJ
   // expect  Qo, fwt! Rtq4 x82 üos6quv e2s67ko2qvqwN eyp o2wnpl457 -n1oq0 sq0p tvs6 n135 5tsq3 zvqw91H<\001\002>\n\003\003\003\003Xrut3 ctq o01n Rqts282äzqs -rooq4 p3 ss3r1 fuk4. 82t 5p3yo78nx evs tj2 SrzäwnpJ
   // plain   He, Sie! Hier ist überall Sperrbereich. Und angefasst werden darf hier erst recht nichts.

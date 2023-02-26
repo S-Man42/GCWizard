@@ -147,7 +147,7 @@ class _ExifReaderState extends State<ExifReader> {
   /// Add Thumbnail section
   ///
   void _decorateThumbnail(List<Widget> widgets) {
-    if (thumbnail?.file.bytes != null && thumbnail!.file.bytes.length > 0) {
+    if (thumbnail?.file.bytes != null && thumbnail!.file.bytes.isNotEmpty) {
       widgets.add(GCWOutput(
         title: i18n(context, 'exif_section_thumbnail'),
         child: GCWImageView(imageData: thumbnail),
@@ -162,7 +162,7 @@ class _ExifReaderState extends State<ExifReader> {
   void _decorateGps(List<Widget> widgets) {
     if (point == null) return;
 
-    var _currentCoordsFormat = defaultCoordFormat();
+    var _currentCoordsFormat = defaultCoordinateFormat;
     List<String> _currentOutput = [
       formatCoordOutput(point!, {'format': Prefs.get(PREFERENCE_COORD_DEFAULT_FORMAT)}, defaultEllipsoid()),
     ];
@@ -327,10 +327,10 @@ class _ExifReaderState extends State<ExifReader> {
   }
 }
 
-openInMetadataViewer(BuildContext context, GCWFile file) {
+void openInMetadataViewer(BuildContext context, GCWFile file) {
   Navigator.push(
       context,
-      NoAnimationMaterialPageRoute(
+      NoAnimationMaterialPageRoute<GCWTool>(
           builder: (context) =>
-              GCWTool(tool: ExifReader(file: file), toolName: i18n(context, 'exif_title'), i18nPrefix: '')));
+              GCWTool(tool: ExifReader(file: file), toolName: i18n(context, 'exif_title'), id: 'exif')));
 }

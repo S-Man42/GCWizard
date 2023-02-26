@@ -42,12 +42,12 @@ class CombinationState extends State<Combination> {
     );
   }
 
-  _buildOutput(BuildContext context) {
-    if (_currentInput == null || _currentInput.length == 0) {
+  Widget _buildOutput(BuildContext context) {
+    if (_currentInput.isEmpty) {
       return GCWDefaultOutput();
     }
 
-    List out = generateCombinations(_currentInput, avoidDuplicates: !_currentShowDuplicates);
+    var out = generateCombinations(_currentInput, avoidDuplicates: !_currentShowDuplicates);
 
     return GCWMultipleOutput(
       children: [

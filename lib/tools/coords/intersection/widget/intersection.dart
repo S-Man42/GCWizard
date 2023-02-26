@@ -25,15 +25,15 @@ class Intersection extends StatefulWidget {
 class IntersectionState extends State<Intersection> {
   var _currentIntersections = [];
 
-  var _currentCoordsFormat1 = defaultCoordFormat();
+  var _currentCoordsFormat1 = defaultCoordinateFormat;
   var _currentCoords1 = defaultCoordinate;
   var _currentAngle1 = {'text': '', 'value': 0.0};
 
-  var _currentCoordsFormat2 = defaultCoordFormat();
+  var _currentCoordsFormat2 = defaultCoordinateFormat;
   var _currentCoords2 = defaultCoordinate;
   var _currentAngle2 = {'text': '', 'value': 0.0};
 
-  var _currentOutputFormat = defaultCoordFormat();
+  var _currentOutputFormat = defaultCoordinateFormat;
   List<String> _currentOutput = [];
   var _currentMapPoints = <GCWMapPoint>[];
   List<GCWMapPolyline> _currentMapPolylines = [];
@@ -126,7 +126,7 @@ class IntersectionState extends State<Intersection> {
         ells: defaultEllipsoid()));
   }
 
-  _showOutput(List<LatLng> output) {
+  void _showOutput(List<LatLng> output) {
     if (output == null) {
       _currentOutput = [];
 

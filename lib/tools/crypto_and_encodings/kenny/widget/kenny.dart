@@ -13,10 +13,10 @@ class Kenny extends StatefulWidget {
 }
 
 class KennyState extends State<Kenny> {
-  var _inputController;
-  var _mController;
-  var _pController;
-  var _fController;
+  late TextEditingController _inputController;
+  late TextEditingController _mController;
+  late TextEditingController _pController;
+  late TextEditingController _fController;
 
   var _currentInput = '';
   var _currentCaseSensitive = true;
@@ -121,8 +121,8 @@ class KennyState extends State<Kenny> {
     );
   }
 
-  _buildOutput() {
-    if (_currentInput.length == 0 || _currentM.length == 0 || _currentP.length == 0 || _currentF.length == 0) return '';
+  String _buildOutput() {
+    if (_currentInput.isEmpty || _currentM.isEmpty || _currentP.isEmpty || _currentF.isEmpty) return '';
 
     var key = [_currentM, _currentP, _currentF];
     return _currentMode == GCWSwitchPosition.left

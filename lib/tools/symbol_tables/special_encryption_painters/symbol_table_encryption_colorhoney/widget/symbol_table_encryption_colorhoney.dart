@@ -59,9 +59,10 @@ class ColorHoneySymbolTableEncryption extends SymbolTableEncryption {
       var i = (counter / 4).floor() % countColumns;
       var j = ((counter / 4).floor() / countColumns).floor();
 
-      var tileOffsetX;
-      var tileOffsetY;
-      var angle;
+      double tileOffsetX = 0;
+      double tileOffsetY = 0;
+      double angle = 0;
+
       switch (counter % 4) {
         case 3:
           tileOffsetX = height * 2;

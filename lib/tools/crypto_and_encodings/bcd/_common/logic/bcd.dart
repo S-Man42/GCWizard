@@ -238,10 +238,10 @@ enum BCDType {
   BIQUINARY
 }
 
-String encodeBCD(String input, BCDType type) {
-  if (input == null || input == '') return '';
+String encodeBCD(String? input, BCDType type) {
+  if (input == null || input.isEmpty) return '';
 
-  var bcdMap;
+  Map<String, String> bcdMap;
   switch (type) {
     case BCDType.ORIGINAL:
       bcdMap = DigitToBCDOriginal;
@@ -300,10 +300,10 @@ String encodeBCD(String input, BCDType type) {
       .join(' ');
 }
 
-String decodeBCD(String input, BCDType type) {
-  if (input == null || input == '') return '';
+String decodeBCD(String? input, BCDType type) {
+  if (input == null || input.isEmpty) return '';
 
-  var bcdMap;
+  Map<String, String> bcdMap;
   switch (type) {
     case BCDType.ORIGINAL:
       bcdMap = _BCDOriginalToDigit;

@@ -18,21 +18,25 @@ class BundeswehrTalkingBoardAuthentificationTable {
   final List<String> xAxis;
   final List<String> yAxis;
   final List<String> Content;
-  final Map<String, List<String>> Encoding;
+  final Map<String, List<String>>? Encoding;
 
-  BundeswehrTalkingBoardAuthentificationTable({this.xAxis, this.yAxis, this.Content, this.Encoding});
+  BundeswehrTalkingBoardAuthentificationTable({
+      required this.xAxis,
+      required this.yAxis,
+      required this.Content,
+      this.Encoding});
 }
 
 class BundeswehrTalkingBoardAuthentificationOutput {
   final List<String> ResponseCode;
-  final List<String> Tupel1;
-  final List<String> Tupel2;
-  final List<String> Tupel3;
-  final String Number;
-  final String Details;
+  final List<String>? Tupel1;
+  final List<String>? Tupel2;
+  final List<String>? Tupel3;
+  final String? Number;
+  final String? Details;
 
-  BundeswehrTalkingBoardAuthentificationOutput(
-      {this.ResponseCode, this.Tupel1, this.Tupel2, this.Tupel3, this.Number, this.Details});
+  BundeswehrTalkingBoardAuthentificationOutput({
+      required this.ResponseCode, this.Tupel1, this.Tupel2, this.Tupel3, this.Number, this.Details});
 }
 
 const BUNDESWEHR_TALKINGBOARD_AUTH_TABLE_Y_AXIS = [
@@ -126,10 +130,10 @@ BundeswehrTalkingBoardAuthentificationOutput buildAuthBundeswehr(
     BundeswehrTalkingBoardAuthentificationTable tableAuthentificationCode) {
   List<String> responseCodes = [];
 
-  if (currentCallSign == null || currentCallSign == '')
+  if (currentCallSign == null || currentCallSign.isEmpty)
     responseCodes.add(BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CALLSIGN);
 
-  if (currentLetterCallSign == null || currentLetterCallSign == '')
+  if (currentLetterCallSign == null || currentLetterCallSign.isEmpty)
     responseCodes.add(BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CALLSIGN_LETTER);
 
   if (_tableIsInvalid(tableNumeralCode, BundeswehrTalkingBoardAuthentificationTableType.NUMERALCODE))
@@ -138,7 +142,7 @@ BundeswehrTalkingBoardAuthentificationOutput buildAuthBundeswehr(
   if (_tableIsInvalid(tableAuthentificationCode, BundeswehrTalkingBoardAuthentificationTableType.AUTHENTIFICATIONTABLE))
     responseCodes.add(BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CUSTOM_AUTH_TABLE);
 
-  if (responseCodes.length > 0)
+  if (responseCodes.isNotEmpty)
     return BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: responseCodes);
 
   if (currentCallSign.split('').contains(currentLetterCallSign)) {
@@ -199,10 +203,10 @@ BundeswehrTalkingBoardAuthentificationOutput checkAuthBundeswehr(
 
   List<String> responseCodes = [];
 
-  if (currentCallSign == null || currentCallSign == '')
+  if (currentCallSign == null || currentCallSign.isEmpty)
     responseCodes.add(BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CALLSIGN);
 
-  if (currentAuth == null || currentAuth == '')
+  if (currentAuth == null || currentAuth.isEmpty)
     responseCodes.add(BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_AUTHCODE);
 
   if (!BUNDESWEHR_TALKINGBOARD_AUTH_TABLE_X_AXIS.contains(currentLetterAuth))
@@ -214,11 +218,11 @@ BundeswehrTalkingBoardAuthentificationOutput checkAuthBundeswehr(
   if (_tableIsInvalid(tableAuthentificationCode, BundeswehrTalkingBoardAuthentificationTableType.AUTHENTIFICATIONTABLE))
     responseCodes.add(BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CUSTOM_AUTH_TABLE);
 
-  if (responseCodes.length > 0)
+  if (responseCodes.isNotEmpty)
     return BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: responseCodes);
 
   currentAuth = _normalizeAuthCode(currentAuth);
-  if (currentAuth != '' || currentAuth != null) {
+  if (currentAuth != null || currentAuth.isNotEmpty) {
     String details = 'Numeral Code:\n';
     List<String> authCode = currentAuth.split(' ');
     if (authCode.length != 3)
@@ -309,7 +313,7 @@ String _normalizeAuthCode(String currentAuth) {
     return '';
 }
 
-bool _tableIsInvalid(BundeswehrTalkingBoardAuthentificationTable table, BundeswehrTalkingBoardAuthentificationTableType type){
+bool _tableIsInvalid(BundeswehrTalkingBoardAuthentificationTable? table, BundeswehrTalkingBoardAuthentificationTableType type){
   if (table == null) {
     return true;
   }

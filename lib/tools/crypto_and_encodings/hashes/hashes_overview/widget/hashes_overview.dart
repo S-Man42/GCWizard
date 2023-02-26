@@ -46,7 +46,7 @@ class _HashOverviewState extends State<HashOverview> {
 
   Widget _buildOutput(BuildContext context) {
     var rows = <List<String>>[];
-    if (_currentKey == null || _currentKey == '') {
+    if (_currentKey.isEmpty) {
       HASH_FUNCTIONS.forEach((key, function) {
         rows.add([i18n(context, key + '_title'), function(_currentValue)]);
       });

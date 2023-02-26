@@ -1,6 +1,6 @@
 import 'package:gc_wizard/utils/collection_utils.dart';
 
-final AZToMorse = {
+final Map<String, String> AZToMorse = {
   'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.', 'G': '--.', 'H': '....', 'I': '..',
   'J': '.---', 'K': '-.-', 'L': '.-..', 'M': '--',
   'N': '-.', 'O': '---', 'P': '.--.', 'Q': '--.-', 'R': '.-.', 'S': '...', 'T': '-', 'U': '..-', 'V': '...-',
@@ -25,7 +25,7 @@ final AZToMorse = {
 final MorseToAZ = switchMapKeyValue(AZToMorse);
 
 String encodeMorse(String? input) {
-  if (input == null || input == '') return '';
+  if (input == null || input.isEmpty) return '';
 
   return input.toUpperCase().split('').map((character) {
     if (character == ' ') return '|';
@@ -36,7 +36,7 @@ String encodeMorse(String? input) {
 }
 
 String decodeMorse(String? input) {
-  if (input == null || input == '') return '';
+  if (input == null || input.isEmpty) return '';
 
   return input.split(RegExp(r'[^\.\-/\|]')).map((morse) {
     if (morse == '|' || morse == '/') return ' ';

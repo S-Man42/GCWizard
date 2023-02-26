@@ -1,5 +1,6 @@
 //Fred B. Wrixon, Geheimsprachen, Könemann-Verlag, ISBN 978-3-8331-2562-1, S. 450
 
+import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
 final Map<String, List<String>> POPHAM = {
@@ -42,20 +43,20 @@ final Map<String, List<String>> POPHAM = {
   'Z': ['4', 'f'],
 };
 
-List<List<String>> encodePopham(String input) {
-  if (input == null || input == '') return [];
+Segments encodePopham(String? input) {
+  if (input == null || input.isEmpty) Segments.Empty();
 
-  List<String> inputs = input.toUpperCase().split('');
+  List<String> inputs = input!.toUpperCase().split('');
   List<List<String>> result = [];
 
   for (int i = 0; i < inputs.length; i++) {
     result.add(POPHAM[inputs[i]]!);
   }
-  return result;
+  return Segments(displays: result);
 }
 
-Map<String, dynamic> decodeVisualPopham(List<String> inputs) {
-  if (inputs == null || inputs.length == 0) return {'displays': <List<String>>[], 'chars': ''};
+SegmentsText decodeVisualPopham(List<String> inputs) {
+  if (inputs.isEmpty) return SegmentsText(displays: [], text: '');
 
   var displays = <List<String>>[];
   var segment = <String>[];
@@ -80,7 +81,7 @@ Map<String, dynamic> decodeVisualPopham(List<String> inputs) {
 
     return char;
   }).toList();
-  return {'displays': displays, 'chars': text.join('')};
+  return SegmentsText(displays: displays, text: text.join(''));
 }
 
 List<String> _stringToSegment(String input) {

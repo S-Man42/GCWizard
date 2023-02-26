@@ -1,20 +1,20 @@
 import 'dart:collection';
 
 String substitution(String? input, Map<String, String> substitutions, {bool caseSensitive: true}) {
-  if (input == null || input.length == 0) return '';
+  if (input == null || input.isEmpty) return '';
 
   if (!caseSensitive) {
     input = input.toUpperCase();
   }
 
-  if (substitutions.keys.where((key) => key.length != 0).isEmpty) return input;
+  if (substitutions.keys.where((key) => key.isNotEmpty).isEmpty) return input;
 
   List<String> keys = [];
 
   //Copy map to keep the original one
-  var substCopy = {};
+  Map<String, String> substCopy = {};
   substitutions.entries.forEach((entry) {
-    if (entry.key.length == 0) return;
+    if (entry.key.isEmpty) return;
 
     if (caseSensitive) {
       substCopy.putIfAbsent(entry.key, () => entry.value);
@@ -60,7 +60,7 @@ String substitution(String? input, Map<String, String> substitutions, {bool case
 
   var output = '';
   replacements.entries.forEach((entry) {
-    if (substCopy.containsKey(entry.value)) output += substCopy[entry.value];
+    if (substCopy.containsKey(entry.value)) output += substCopy[entry.value]!;
   });
 
   return output;

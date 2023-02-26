@@ -21,38 +21,39 @@ class RabbitOutput {
   RabbitOutput(this.output, this.keyHexFormat, this.ivHexFormat, this.errorCode);
 }
 
-RabbitOutput cryptRabbit(String? input, InputFormat inputFormat, String key, InputFormat keyFormat,
-    String initializationVector, InputFormat ivFormat, OutputFormat outputFormat) {
-  if (input == null || input == '') return RabbitOutput('', null, null, ErrorCode.OK);
+RabbitOutput cryptRabbit(String? input, InputFormat inputFormat, String? key, InputFormat keyFormat,
+    String? initializationVector, InputFormat ivFormat, OutputFormat outputFormat) {
+  if (input == null || input.isEmpty) return RabbitOutput('', null, null, ErrorCode.OK);
 
   var inputList = rc4.convertInputToIntList(input, _convertInputFormatEnum(inputFormat));
-  if (inputList == null || inputList.length == 0) return RabbitOutput('', null, null, ErrorCode.INPUT_FORMAT);
+  if (inputList == null || inputList.isEmpty) return RabbitOutput('', null, null, ErrorCode.INPUT_FORMAT);
   var inputData = _generateData(inputList, inputList.length);
-  if (inputData == null || inputData.length == 0) return RabbitOutput('', null, null, ErrorCode.INPUT_FORMAT);
+  if (inputData == null || inputData.isEmpty) return RabbitOutput('', null, null, ErrorCode.INPUT_FORMAT);
 
-  if (key == null || key == '') return RabbitOutput('', null, null, ErrorCode.MISSING_KEY);
+  if (key == null || key.isEmpty) return RabbitOutput('', null, null, ErrorCode.MISSING_KEY);
 
   var keyList = rc4.convertInputToIntList(key, _convertInputFormatEnum(keyFormat));
-  if (keyList == null || keyList.length == 0) return RabbitOutput('', null, null, ErrorCode.KEY_FORMAT);
+  if (keyList == null || keyList.isEmpty) return RabbitOutput('', null, null, ErrorCode.KEY_FORMAT);
   var keyData = _generateData(keyList, 16);
-  if (keyData == null || keyData.length == 0) return RabbitOutput('', null, null, ErrorCode.KEY_FORMAT);
+  if (keyData == null || keyData.isEmpty) return RabbitOutput('', null, null, ErrorCode.KEY_FORMAT);
 
   Uint8List? ivData;
-  if (initializationVector != null && initializationVector.length > 0) {
+  if (initializationVector != null && initializationVector.isNotEmpty) {
     var ivList = rc4.convertInputToIntList(initializationVector, _convertInputFormatEnum(ivFormat));
-    if (ivList == null || ivList.length == 0) return RabbitOutput('', null, null, ErrorCode.IV_FORMAT);
+    if (ivList == null || ivList.isEmpty) return RabbitOutput('', null, null, ErrorCode.IV_FORMAT);
     ivData = _generateData(ivList, 8);
-    if (ivData == null || ivData.length == 0) return RabbitOutput('', null, null, ErrorCode.IV_FORMAT);
+    if (ivData == null || ivData.isEmpty) return RabbitOutput('', null, null, ErrorCode.IV_FORMAT);
   } else
     // for same result like http://kryptografie.de/kryptografie/chiffre/rabbit.htm
     ivData = _generateData([0], 8);
 
+  if (ivData == null || ivData.isEmpty) return RabbitOutput('', null, null, ErrorCode.IV_FORMAT);
   var rabbit = Rabbit(keyData, ivData);
   if (!rabbit.initialized) return RabbitOutput('', null, null, ErrorCode.KEY_FORMAT);
 
   var output = rabbit.cryptData(inputData);
-
-  return RabbitOutput(rc4.formatOutput(output, _convertOutputFormatEnum(outputFormat)),
+  var outputString = output != null ? rc4.formatOutput(output, _convertOutputFormatEnum(outputFormat)) : '';
+  return RabbitOutput(outputString,
       rc4.formatOutput(keyData, rc4.OutputFormat.HEX), rc4.formatOutput(ivData, rc4.OutputFormat.HEX), ErrorCode.OK);
 }
 
@@ -107,7 +108,7 @@ class Rabbit {
     initialized = _reSeedIV(iv);
   }
 
-  bool _reSeedIV(Uint8List iv) {
+  bool _reSeedIV(Uint8List? iv) {
     if (iv != null && iv.length != 8)
       // If IV is not NULL, then IV MUST be 8 bytes in length!
       return false;

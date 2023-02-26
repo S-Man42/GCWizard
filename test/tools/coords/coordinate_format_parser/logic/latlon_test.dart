@@ -8,7 +8,7 @@ import '../../format_converter/logic/dms_test.dart';
 void main() {
 
   group("Parser.latlon.parseLatLon:", () {
-    List<Map<String, dynamic>> _inputsToExpected = inputsToExpectedDEC;
+    List<Map<String, Object?>> _inputsToExpected = inputsToExpectedDEC;
     _inputsToExpected.addAll(inputsToExpectedDMM);
     _inputsToExpected.addAll(inputsToExpectedDMS);
 

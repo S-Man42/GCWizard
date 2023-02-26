@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
@@ -20,7 +18,6 @@ import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/image_utils/image_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/text_widget_utils.dart';
-import 'package:intl/intl.dart';
 
 class WASD extends StatefulWidget {
   @override
@@ -76,7 +73,7 @@ class WASDState extends State<WASD> {
     super.dispose();
   }
 
-  _buildCustomInput(WASD_DIRECTION key) {
+  Widget _buildCustomInput(WASD_DIRECTION key) {
     var title_key = 'wasd_custom_';
 
     switch (key) {
@@ -97,7 +94,7 @@ class WASDState extends State<WASD> {
         title_key += 'right';
         break;
       default:
-        return;
+        return Container();
     }
 
     var title = i18n(context, title_key);
@@ -136,7 +133,7 @@ class WASDState extends State<WASD> {
     );
   }
 
-  _buildButton(String text) {
+  Widget _buildButton(String text) {
     return Container(
       height: 55,
       width: 40,
@@ -149,7 +146,7 @@ class WASDState extends State<WASD> {
     );
   }
 
-  _updateDrawing() {
+  void _updateDrawing() {
     if (_currentMode == GCWSwitchPosition.left) {
       _createGraphicOutputEncodeData();
     } else {
@@ -157,22 +154,22 @@ class WASDState extends State<WASD> {
     }
   }
 
-  _buildControlSet() {
+  Widget _buildControlSet() {
     return Column(
       children: [
         GCWTextDivider(
           text: i18n(context, 'wasd_control_set'),
         ),
-        GCWDropDown(
+        GCWDropDown<WASD_TYPE>(
           value: _currentKeyboardControls,
           onChanged: (value) {
             setState(() {
               _currentKeyboardControls = value;
-              if (value != WASD_TYPE.CUSTOM) {
-                _currentUp = KEYBOARD_CONTROLS[value][0];
-                _currentLeft = KEYBOARD_CONTROLS[value][1];
-                _currentDown = KEYBOARD_CONTROLS[value][2];
-                _currentRight = KEYBOARD_CONTROLS[value][3];
+              if (value != WASD_TYPE.CUSTOM && KEYBOARD_CONTROLS[value]!.length >= 4) {
+                _currentUp = KEYBOARD_CONTROLS[value]![0];
+                _currentLeft = KEYBOARD_CONTROLS[value]![1];
+                _currentDown = KEYBOARD_CONTROLS[value]![2];
+                _currentRight = KEYBOARD_CONTROLS[value]![3];
 
                 _upController.text = _currentUp;
                 _leftController.text = _currentLeft;
@@ -249,7 +246,7 @@ class WASDState extends State<WASD> {
     );
   }
 
-  _addInput(String char) {
+  void _addInput(String char) {
     setState(() {
       _currentDecodeInput = textControllerInsertText(char, _currentDecodeInput, _decodeController);
       _updateDrawing();
@@ -330,7 +327,7 @@ class WASDState extends State<WASD> {
     );
   }
 
-  _createGraphicOutputDecodeData() {
+  void _createGraphicOutputDecodeData() {
     var out = decodeWASDGraphic(_currentDecodeInput, [_currentUp, _currentLeft, _currentDown, _currentRight]);
 
     _outDecodeData = null;
@@ -351,7 +348,7 @@ class WASDState extends State<WASD> {
     ]);
   }
 
-  _createGraphicOutputEncodeData() {
+  void _createGraphicOutputEncodeData() {
     var out = decodeWASDGraphic(
         encodeWASD(_currentEncodeInput, [_currentUp, _currentLeft, _currentDown, _currentRight]),
         [_currentUp, _currentLeft, _currentDown, _currentRight]);
@@ -374,13 +371,13 @@ class WASDState extends State<WASD> {
     ]);
   }
 
-  _exportFile(BuildContext context, Uint8List data) async {
+  void _exportFile(BuildContext context, Uint8List data) async {
     var value = await saveByteDataToFile(context, data, buildFileNameWithDate('img_', FileType.PNG));
 
     if (value) showExportedFileDialog(context, contentWidget: imageContent(context, data));
   }
 
-  _buildOutput() {
+  String _buildOutput() {
     if (_currentMode == GCWSwitchPosition.right) {
       return decodeWASD(_currentDecodeInput, [_currentUp, _currentLeft, _currentDown, _currentRight]);
     } else {

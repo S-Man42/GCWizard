@@ -18,16 +18,16 @@ class Befunge extends StatefulWidget {
 }
 
 class BefungeState extends State<Befunge> {
-  var _befungeGenerateController;
-  var _befungeInterpretController;
-  var _inputController;
+  late TextEditingController _befungeGenerateController;
+  late TextEditingController _befungeInterpretController;
+  late TextEditingController _inputController;
 
   var _currentGenerate = '';
   var _currentInterpret = '';
   var _currentInput = '';
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
-  var _codeGenerateController;
+  late TextEditingController _codeGenerateController;
   var _sourceCodeGenerated = '';
 
   @override
@@ -103,7 +103,7 @@ class BefungeState extends State<Befunge> {
     if (_currentMode == GCWSwitchPosition.left) {
       BefungeOutput output = interpretBefunge(_currentInterpret, input: _currentInput);
       String outputText = '';
-      if (output.Error == '')
+      if (output.Error.isEmpty)
         outputText = output.Output;
       else
         outputText = output.Output + '\n' + i18n(context, output.Error);

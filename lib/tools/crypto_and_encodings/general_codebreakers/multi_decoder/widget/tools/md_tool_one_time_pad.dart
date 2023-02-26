@@ -11,20 +11,20 @@ class MultiDecoderToolOneTimePad extends AbstractMultiDecoderTool {
     Key? key,
     required int id,
     required String name,
-    required Map<String, Object> options})
+    required Map<String, Object?> options})
       : super(
             key: key,
             id: id,
             name: name,
             internalToolName: MDT_INTERNALNAMES_ONETIMEPAD,
             onDecode: (String input, String key) {
-              return decryptOneTimePad(input, key, keyOffset: intTypeCheck(options[MDT_ONETIMEPAD_OPTION_KEY], 1) - 1);
+              return decryptOneTimePad(input, key, keyOffset: toIntOrDefault(options[MDT_ONETIMEPAD_OPTION_KEY], 1) - 1);
             },
             requiresKey: true,
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
               MDT_ONETIMEPAD_OPTION_KEY: GCWIntegerSpinner(
-                  value: intTypeCheck(options[MDT_ONETIMEPAD_OPTION_KEY], 1),
+                  value: toIntOrDefault(options[MDT_ONETIMEPAD_OPTION_KEY], 1),
                   onChanged: (value) {
                     options[MDT_ONETIMEPAD_OPTION_KEY] = value;
                   }),

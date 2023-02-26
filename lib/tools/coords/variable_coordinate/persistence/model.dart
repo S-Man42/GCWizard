@@ -1,3 +1,4 @@
+import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 import 'package:gc_wizard/tools/formula_solver/persistence/model.dart';
 
 List<Formula> formulas = [];
@@ -18,10 +19,10 @@ class ProjectionFormula {
       };
 
   ProjectionFormula.fromJson(Map<String, Object?> json)
-      : distance = json['distance'],
-        distanceUnit = json['distanceUnit'],
-        bearing = json['bearing'],
-        reverse = json['reverse'];
+      : distance = toStringOrNull(json['distance']),
+        distanceUnit = toStringOrNull(json['distanceUnit']),
+        bearing = toStringOrNull(json['bearing']),
+        reverse = toBoolOrNull(json['reverse']);
 
   @override
   String toString() {
@@ -47,13 +48,14 @@ class Formula {
       };
 
   Formula.fromJson(Map<String, Object?> json) {
-    var _name = json['name'];
+    var _name = toStringOrNull(json['name']);
     if (_name == null)
 
-    id = json['id'] as int?;
-    formula = json['formula'];
-    projection = ProjectionFormula.fromJson(json['projection']);
+    id = toIntOrNull(json['id']),
+    formula = toStringOrNull(json['formula']),
+    projection = ProjectionFormula.fromJson(json['projection']),
     values = List<FormulaValue>.from(json['values'].map((value) => FormulaValue.fromJson(value)));
+
   }
 
   @override

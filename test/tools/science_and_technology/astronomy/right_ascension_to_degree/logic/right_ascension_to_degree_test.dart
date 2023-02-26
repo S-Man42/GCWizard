@@ -4,7 +4,7 @@ import 'package:gc_wizard/tools/science_and_technology/astronomy/right_ascension
 void main() {
 
   group("right_ascension_to_degree.raDegree2RightAscension:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null.toString()},
       {'input' : 66.918277, 'expectedOutput' : '04:27:40.386'},
       {'input' : -66.918277, 'expectedOutput' : '-04:27:40.386'},
@@ -26,7 +26,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = raDegree2RightAscension(RaDeg(elem['input']));
+        var _actual = raDegree2RightAscension(RaDeg(elem['input'] as double?));
         expect(_actual.toString(), elem['expectedOutput']);
       });
     });
@@ -34,7 +34,7 @@ void main() {
 
 
   group("right_ascension_to_degree.raRightAscension2Degree:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '4:27:40.386', 'expectedOutput' : '66.918275'},
       {'input' : '-4:27:40.386', 'expectedOutput' : '-66.918275'},
@@ -47,7 +47,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = raRightAscension2Degree(RightAscension.parse(elem['input'])!);
+        var _actual = raRightAscension2Degree(RightAscension.parse(elem['input'] as String?)!);
         if (_actual == null)
           expect(_actual, elem['expectedOutput']);
         else
@@ -57,7 +57,7 @@ void main() {
   });
 
   group("raDeg.parse:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '66.918277', 'expectedOutput' : '66.918277'},
       {'input' : '-66.918277', 'expectedOutput' : '-66.918277'},
@@ -78,7 +78,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = RaDeg.parse(elem['input']);
+        var _actual = RaDeg.parse(elem['input'] as String?);
         if (_actual == null)
           expect(_actual, elem['expectedOutput']);
         else
@@ -88,7 +88,7 @@ void main() {
   });
 
   group("RightAscension.parse:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '4:27:40.386', 'expectedOutput' : '04:27:40.386'},
       {'input' : '-4:27:40.386', 'expectedOutput' : '-04:27:40.386'},
@@ -106,7 +106,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = RightAscension.parse(elem['input']);
+        var _actual = RightAscension.parse(elem['input'] as String?);
         if (_actual == null)
           expect(_actual, elem['expectedOutput']);
         else

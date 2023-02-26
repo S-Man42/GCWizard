@@ -3,28 +3,28 @@ import 'dart:typed_data';
 
 import 'package:gc_wizard/utils/constants.dart';
 
-List<int> textToIntList(String text, {bool allowNegativeValues: false}) {
+List<int> textToIntList(String text, {bool allowNegativeValues = false}) {
   var regex = allowNegativeValues ? RegExp(r'[^\-0-9]') : RegExp(r'[^0-9]');
 
   var list = text.split(regex);
-  list.removeWhere((value) => value == '');
+  list.removeWhere((value) => value.isEmpty);
 
   return list.map((value) => value == '-' ? 0 : int.parse(value)).toList();
 }
 
 List<String> textToBinaryList(String text) {
-  if (text.length == 0) return [];
+  if (text.isEmpty) return [];
 
   final regex = RegExp(r'[01]+');
 
   return regex.allMatches(text).map((value) => text.substring(value.start, value.end)).toList();
 }
 
-String intListToString(List<int> list, {String delimiter: ''}) {
+String intListToString(List<int?> list, {String delimiter = ''}) {
   return list.map((elem) => elem == null ? UNKNOWN_ELEMENT : elem).join(delimiter).trim();
 }
 
-Map<U, T> switchMapKeyValue<T, U>(Map<T, U> map, {keepFirstOccurence: false}) {
+Map<U, T> switchMapKeyValue<T, U>(Map<T, U> map, {bool keepFirstOccurence = false}) {
   var newMap = map;
   if (keepFirstOccurence) newMap = LinkedHashMap.fromEntries(map.entries.toList().reversed);
 
@@ -62,8 +62,8 @@ Uint8List trimNullBytes(Uint8List bytes) {
 
   var tempList = List<int>.from(bytes);
 
-  while (tempList.length > 0 && tempList.last == 0) tempList.removeLast();
-  while (tempList.length > 0 && tempList.first == 0) tempList.removeAt(0);
+  while (tempList.isNotEmpty && tempList.last == 0) tempList.removeLast();
+  while (tempList.isNotEmpty && tempList.first == 0) tempList.removeAt(0);
 
   return Uint8List.fromList(tempList);
 }

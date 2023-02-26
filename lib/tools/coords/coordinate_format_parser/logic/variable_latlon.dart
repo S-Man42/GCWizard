@@ -16,31 +16,31 @@ class ParseVariableLatLonJobData {
 
 Map<String, LatLng> _parseCoordText(String text) {
   var parsedCoord = parseCoordinates(text, wholeString: true);
-  if (parsedCoord == null || parsedCoord.length == 0) return null;
+  if (parsedCoord == null || parsedCoord.isEmpty) return null;
 
   var out = <String, LatLng>{'coordinate': parsedCoord.elementAt(0).toLatLng()};
 
-  if (parsedCoord.elementAt(0).key == CoordFormatKey.DMM) {
+  if (parsedCoord.elementAt(0).key == CoordinateFormatKey.DMM) {
     out.putIfAbsent('leftPadCoordinate', () => DMM.parse(text, leftPadMilliMinutes: true)?.toLatLng());
   }
 
   return out;
 }
 
-_sanitizeVariableDoubleText(String text) {
+String _sanitizeVariableDoubleText(String text) {
   if (text == null) return null;
 
   return text.replaceAll(',', '.').replaceAll(RegExp(r'\s+'), '');
 }
 
-_addBrackets(String formula) {
+String _addBrackets(String formula) {
   RegExp regExp = RegExp(r'\[.+?\]');
   if (regExp.hasMatch(formula)) return formula;
 
   return '[$formula]';
 }
 
-_removeBrackets(String formula) {
+String _removeBrackets(String formula) {
   RegExp regExp = RegExp(r'\[.+?\]');
   if (!regExp.hasMatch(formula)) return formula;
 
@@ -59,25 +59,23 @@ Future<Map<String, dynamic>> parseVariableLatLonAsync(dynamic jobData) async {
 }
 
 Map<String, dynamic> parseVariableLatLon(String coordinate, Map<String, String> substitutions,
-    {Map<String, dynamic> projectionData = const {}}) {
+    {Map<String, dynamic>? projectionData = const {}}) {
   if (substitutions == null) substitutions = {};
 
-  var textToExpand;
+  String textToExpand = coordinate;
 
   var withProjection = false;
   if (projectionData != null) {
     if (projectionData['bearing'] != null &&
-        projectionData['bearing'].length > 0 &&
+        projectionData['bearing'].isNotEmpty &&
         projectionData['distance'] != null &&
-        projectionData['distance'].length > 0) {
+        projectionData['distance'].isNotEmpty) {
       withProjection = true;
 
       textToExpand = _addBrackets(coordinate);
       textToExpand += String.fromCharCode(1) + _addBrackets(projectionData['bearing']);
       textToExpand += String.fromCharCode(1) + _addBrackets(projectionData['distance']);
     }
-  } else {
-    textToExpand = coordinate;
   }
 
   var calculated = FormulaParser(unlimitedExpanded: true).parse(textToExpand,
@@ -105,7 +103,7 @@ Map<String, dynamic> parseVariableLatLon(String coordinate, Map<String, String> 
         if (projectionData['reverseBearing'] != null && projectionData['reverseBearing']) {
           var revProjected = reverseProjection(entry.value, parsedBearing,
               projectionData['lengthUnit'].toMeter(parsedDistance), projectionData['ellipsoid']);
-          if (revProjected == null || revProjected.length == 0) return;
+          if (revProjected == null || revProjected.isEmpty) return;
 
           var projected = revProjected.map((projection) {
             return {'variables': expandedText.variables, 'coordinate': projection};

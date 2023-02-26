@@ -7,6 +7,7 @@ import 'package:gc_wizard/common_widgets/gcw_async_executer.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_replacer_symboldata.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:image/image.dart' as Image;
+import 'package:tuple/tuple.dart';
 
 class ReplaceSymbolsInput {
   final Uint8List image;
@@ -29,18 +30,19 @@ class ReplaceSymbolsInput {
       this.mergeDistance});
 }
 
-Future<SymbolReplacerImage?> replaceSymbolsAsync(dynamic jobData) async {
-  if (jobData == null) return null;
+Future<SymbolReplacerImage?> replaceSymbolsAsync(GCWAsyncExecuterParameters? jobData) async {
+  if (jobData?.parameters is! ReplaceSymbolsInput) return null;
 
+  var data = jobData!.parameters as ReplaceSymbolsInput;
   var output = await replaceSymbols(
-      jobData.parameters.image, jobData.parameters.blackLevel, jobData.parameters.similarityLevel,
-      gap: jobData.parameters.gap,
-      symbolImage: jobData.parameters.symbolImage,
-      compareSymbols: jobData.parameters.compareSymbols,
-      similarityCompareLevel: jobData.parameters.similarityCompareLevel,
-      mergeDistance: jobData.parameters.mergeDistance);
+      data.image, data.blackLevel, data.similarityLevel,
+      gap: data.gap,
+      symbolImage: data.symbolImage,
+      compareSymbols: data.compareSymbols,
+      similarityCompareLevel: data.similarityCompareLevel,
+      mergeDistance: data.mergeDistance);
 
-  jobData.sendAsyncPort?.send(output);
+  jobData.sendAsyncPort.send(output);
 
   return output;
 }
@@ -158,7 +160,7 @@ class SymbolReplacerImage {
   /// <summary>
   /// seperate symbols from image and create SymbolGroups
   /// </summary>
-  splitAndGroupSymbols(int blackLevel, double similarityLevel,
+  void splitAndGroupSymbols(int blackLevel, double similarityLevel,
       {int gap = 1,
       List<Map<String, SymbolReplacerSymbolData>>? compareSymbols,
       double? similarityCompareLevel = 80,
@@ -253,7 +255,7 @@ class SymbolReplacerImage {
   /// </summary>
   void removeFromGroup(Symbol symbol) {
     if (symbol == null) return;
-    if (symbol.symbolGroup != null) symbol.symbolGroup?.symbols?.remove(symbol);
+    if (symbol.symbolGroup != null) symbol.symbolGroup?.symbols.remove(symbol);
     var symbolGroup = SymbolGroup();
     symbolGroups.add(symbolGroup);
 
@@ -262,7 +264,7 @@ class SymbolReplacerImage {
 
   void _addSymbolToGroup(Symbol symbol, SymbolGroup symbolGroup) {
     symbolGroup.symbols.add(symbol);
-    if ((symbol?.symbolGroup?.symbols != null) && (symbol.symbolGroup!.symbols.isEmpty))
+    if ((symbol.symbolGroup?.symbols != null) && (symbol.symbolGroup!.symbols.isEmpty))
       symbolGroups.remove(symbol.symbolGroup);
     symbol.symbolGroup = symbolGroup;
   }
@@ -614,7 +616,7 @@ class SymbolReplacerImage {
   /// <summary>
   /// Verification and merging of all symbols
   /// </summary>
-  _mergeSymbols(double maxDistance) {
+  void _mergeSymbols(double maxDistance) {
     var rectList = <Rectangle<double>>[];
     var symbolList = <Symbol?>[];
     var changed = false;
@@ -666,7 +668,7 @@ class SymbolReplacerImage {
   /// <summary>
   /// Merge symbols
   /// </summary>
-  mergeSymbol(Symbol symbol1, Symbol symbol2, _SymbolRow? line) {
+  void mergeSymbol(Symbol symbol1, Symbol symbol2, _SymbolRow? line) {
     var box = symbol1._borderRectangle().boundingBox(symbol2._borderRectangle());
 
     if (_bmp == null) return null;
@@ -680,7 +682,7 @@ class SymbolReplacerImage {
     if (line!= null) line.symbols.remove(symbol2);
   }
 
-  _cloneSourceLines() {
+  void _cloneSourceLines() {
     lines.clear();
     symbols.clear();
     _sourceLines.forEach((line) {
@@ -714,7 +716,7 @@ class _SymbolRow {
   /// <summary>
   /// Break line into symbols
   /// </summary>
-  _splitLineToSymbols(int gap, int blackLevel) {
+  void _splitLineToSymbols(int gap, int blackLevel) {
     var emptyColumnIndex = <int>[];
 
     // detect empty columns
@@ -731,7 +733,7 @@ class _SymbolRow {
       if (emptyColumn) emptyColumnIndex.add(x);
     }
 
-    if (emptyColumnIndex.length > 0) {
+    if (emptyColumnIndex.isNotEmpty) {
       emptyColumnIndex = _removeGapColumns(emptyColumnIndex, gap);
 
       if (emptyColumnIndex.first != 0) _cutSymbol(0, emptyColumnIndex.first - 1, blackLevel);
@@ -893,10 +895,10 @@ class SymbolGroup {
 }
 
 Future<List<Map<String, SymbolReplacerSymbolData>>?> searchSymbolTableAsync(GCWAsyncExecuterParameters? jobData) async {
-  if (jobData == null) return null;
+  if (jobData?.parameters is! Tuple2<SymbolReplacerImage, List<List<Map<String, SymbolReplacerSymbolData>>>>) return null;
 
-  var output =
-      await searchSymbolTable(jobData.parameters.item1, jobData.parameters.item2, sendAsyncPort: jobData.sendAsyncPort);
+  var data = jobData!.parameters as Tuple2<SymbolReplacerImage, List<List<Map<String, SymbolReplacerSymbolData>>>>;
+  var output = await searchSymbolTable(data.item1, data.item2, sendAsyncPort: jobData.sendAsyncPort);
 
   jobData.sendAsyncPort.send(output);
 

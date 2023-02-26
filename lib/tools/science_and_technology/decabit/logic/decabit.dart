@@ -2,7 +2,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitu
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 
-const AZToDecabit = {
+const Map<int, String> AZToDecabit = {
   0: '--+-+++-+-',
   1: '+--+++--+-',
   2: '+--++-+-+-',
@@ -136,10 +136,10 @@ final AZToDecabitStr = AZToDecabit.map((k, v) => MapEntry(String.fromCharCode(k)
 final DecabitToAZInt = AZToDecabit.map((k, v) => MapEntry(v, k.toString()));
 final DecabitToAZStr = AZToDecabit.map((k, v) => MapEntry(v, String.fromCharCode(k)));
 
-encryptDecabit(String input, Map<String, String> replaceCharacters, bool numericMode) {
-  if (input == null || input.length == 0) return '';
+String encryptDecabit(String? input, Map<String, String> replaceCharacters, bool numericMode) {
+  if (input == null || input.isEmpty) return '';
 
-  var decabit;
+  String decabit;
 
   if (numericMode) {
     decabit = normalizeUmlauts(input)
@@ -161,8 +161,8 @@ encryptDecabit(String input, Map<String, String> replaceCharacters, bool numeric
   return decabit;
 }
 
-decryptDecabit(String input, Map<String, String> replaceCharacters, bool numericMode) {
-  if (input == null || input.length == 0) return '';
+String decryptDecabit(String? input, Map<String, String>? replaceCharacters, bool numericMode) {
+  if (input == null || input.isEmpty) return '';
 
   if (replaceCharacters != null) input = substitution(input, switchMapKeyValue(replaceCharacters));
 
@@ -172,7 +172,7 @@ decryptDecabit(String input, Map<String, String> replaceCharacters, bool numeric
   int i = 0;
   while (i <= input.length - 10) {
     var chunk = input.substring(i, i + 10);
-    var character;
+    String? character;
 
     if (numericMode) {
       if (DecabitToAZInt[chunk] != null) character = DecabitToAZInt[chunk]! + ' ';

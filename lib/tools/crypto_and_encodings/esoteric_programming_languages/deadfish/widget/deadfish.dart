@@ -49,7 +49,7 @@ class DeadfishState extends State<Deadfish> {
     );
   }
 
-  _buildOutput() {
+  String _buildOutput() {
     if (_currentInput == null) return '';
 
     if (_currentMode == GCWSwitchPosition.right) {

@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/enclosed_areas/logic/enclos
 
 void main() {
   group("EnclosedAreas.with4:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : '._*&%><', 'expectedOutput' : '4'},
 
 
@@ -20,14 +20,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeEnclosedAreas(elem['input'], with4: true);
+        var _actual = decodeEnclosedAreas(elem['input'] as String?, with4: true);
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
   group("EnclosedAreas.without4:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
@@ -40,14 +40,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeEnclosedAreas(elem['input'], with4: false);
+        var _actual = decodeEnclosedAreas(elem['input'] as String?, with4: false);
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
   group("EnclosedAreas.onlyNumbers:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
@@ -61,7 +61,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeEnclosedAreas(elem['input'], with4: true, onlyNumbers: true);
+        var _actual = decodeEnclosedAreas(elem['input'] as String?, with4: true, onlyNumbers: true);
         expect(_actual, elem['expectedOutput']);
       });
     });

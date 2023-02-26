@@ -41,7 +41,7 @@ class _LambertDefinition {
 
 //https://www.spatialreference.org/ref/epsg/<epsg number>/html/
 
-final Map<CoordFormatKey, _LambertDefinition> _LambertDefinitions = {
+final Map<CoordinateFormatKey, _LambertDefinition> _LambertDefinitions = {
   //EPSG 2154, LAMB93, RGF93, Reseau Geodesique Francais 1993
   LambertType.LAMBERT_93: _LambertDefinition(
       centralMeridian: 3.0,
@@ -151,7 +151,7 @@ final Map<CoordFormatKey, _LambertDefinition> _LambertDefinitions = {
 // https://sourceforge.net/p/geographiclib/discussion/1026621/thread/87c3cb91af/
 // https://sourceforge.net/p/geographiclib/code/ci/release/tree/examples/example-LambertConformalConic.cpp#l36
 
-Lambert latLonToLambert(LatLng latLon, CoordFormatKey subtype, Ellipsoid ellipsoid) {
+Lambert latLonToLambert(LatLng latLon, CoordinateFormatKey subtype, Ellipsoid ellipsoid) {
   var specificLambert = _LambertDefinitions[subtype];
 
   LambertConformalConic lambertCC = _lambertConformalConic(specificLambert, ellipsoid);
@@ -206,22 +206,22 @@ Lambert parseLambert(String input, {type: defaultLambertType}) {
   var _eastingString = '';
   var _northingString = '';
 
-  if (matches.length > 0) {
+  if (matches.isNotEmpty) {
     var match = matches.elementAt(0);
     _eastingString = match.group(1);
     _northingString = match.group(3);
   }
-  if (matches.length == 0) {
+  if (matches.isEmpty) {
     regExp = RegExp(r'^\s*(X|x)\:?\s*([\-0-9\.]+)(\s*\,?\s*)(Y|y)\:?\s*([\-0-9\.]+)\s*$');
     matches = regExp.allMatches(input);
-    if (matches.length > 0) {
+    if (matches.isNotEmpty) {
       var match = matches.elementAt(0);
       _eastingString = match.group(2);
       _northingString = match.group(5);
     }
   }
 
-  if (matches.length == 0) return null;
+  if (matches.isEmpty) return null;
 
   var _easting = double.tryParse(_eastingString);
   if (_easting == null) return null;

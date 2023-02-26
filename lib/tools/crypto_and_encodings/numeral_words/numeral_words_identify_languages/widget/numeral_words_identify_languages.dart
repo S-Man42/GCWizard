@@ -15,7 +15,7 @@ class NumeralWordsIdentifyLanguages extends StatefulWidget {
 }
 
 class NumeralWordsIdentifyLanguagesState extends State<NumeralWordsIdentifyLanguages> {
-  TextEditingController _decodeController;
+  late TextEditingController _decodeController;
 
   var _currentDecodeInput = '';
   GCWSwitchPosition _currentDecodeMode = GCWSwitchPosition.left;
@@ -70,14 +70,13 @@ class NumeralWordsIdentifyLanguagesState extends State<NumeralWordsIdentifyLangu
       decodeModeWholeWords: _currentDecodeMode == GCWSwitchPosition.left,
     );
     for (int i = 0; i < detailedOutput.length; i++) {
-      if (detailedOutput[i].number != '') if (detailedOutput[i].number.startsWith('numeralwords_'))
+      if (detailedOutput[i].number.isNotEmpty) if (detailedOutput[i].number.startsWith('numeralwords_'))
         output = output + ' ' + i18n(context, detailedOutput[i].number);
       else
         output = output + detailedOutput[i].number;
     }
 
     List<List<String>> columnData = [];
-    var flexData;
     String columnDataRowNumber;
     String columnDataRowNumWord;
     String columnDataRowLanguage;
@@ -93,7 +92,7 @@ class NumeralWordsIdentifyLanguagesState extends State<NumeralWordsIdentifyLangu
         columnDataRowNumWord = detailedOutput[i].numWord;
       columnDataRowLanguage = i18n(context, detailedOutput[i].language);
       int j = i + 1;
-      while (j < detailedOutput.length && detailedOutput[j].number == '') {
+      while (j < detailedOutput.length && detailedOutput[j].number.isEmpty) {
         columnDataRowNumber = columnDataRowNumber + '\n' + '';
         columnDataRowNumWord = columnDataRowNumWord + '\n' + detailedOutput[j].numWord;
         columnDataRowLanguage = columnDataRowLanguage + '\n' + i18n(context, detailedOutput[j].language);
@@ -102,14 +101,13 @@ class NumeralWordsIdentifyLanguagesState extends State<NumeralWordsIdentifyLangu
       i = j - 1;
       columnData.add([columnDataRowNumber, columnDataRowNumWord, columnDataRowLanguage]);
     }
-    flexData = [1, 3, 1];
 
     return Column(
       children: <Widget>[
         GCWOutputText(
           text: output,
         ),
-        output.length == 0
+        output.isEmpty
             ? Container()
             : GCWExpandableTextDivider(
                 text: i18n(context, 'common_outputdetail'),
@@ -117,7 +115,7 @@ class NumeralWordsIdentifyLanguagesState extends State<NumeralWordsIdentifyLangu
                 expanded: false,
                 child: GCWColumnedMultilineOutput(
                     data: columnData,
-                    flexValues: flexData,
+                    flexValues: [1, 3, 1],
                     copyColumn: 1
                 )
             ),

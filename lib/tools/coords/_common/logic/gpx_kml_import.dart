@@ -5,7 +5,7 @@ import 'package:gc_wizard/tools/coords/intersect_lines/logic/intersect_lines.dar
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/distance_bearing.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
-import 'package:gc_wizard/tools/coords/map_view/logic/mapview_persistence_adapter.dart';
+import 'package:gc_wizard/tools/coords/map_view/persistence/mapview_persistence_adapter.dart';
 import 'package:gc_wizard/tools/coords/map_view/persistence/model.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
@@ -30,8 +30,10 @@ Future<MapViewDAO?> importCoordinatesFile(GCWFile file) async {
       if (archive.files.isNotEmpty) {
         var file = archive.first;
         file.decompress();
-        var xml = String.fromCharCodes(file.content);
-        return parseCoordinatesFile(xml, kmlFormat: true);
+        if (file.content is Iterable<int>) {
+          var xml = String.fromCharCodes(file.content as Iterable<int>);
+          return parseCoordinatesFile(xml, kmlFormat: true);
+        }
       }
       break;
     default: break;
@@ -53,20 +55,21 @@ MapViewDAO? parseCoordinatesFile(String xml, {bool kmlFormat = false}) {
   }
 
   // merge points
-  if ((result != null) && (result.points != null)) {
+  if ((result != null)) {
     for (var x = 0; x < result.points.length; x++)
       for (var y = x + 1; y < result.points.length; y++)
         if ((result.points[x].latitude == result.points[y].latitude) &&
             (result.points[x].longitude == result.points[y].longitude)) {
-          if (result.polylines != null) {
-            result.polylines.forEach((polyline) {
-              for (var i = 0; i < polyline.pointUUIDs.length; i++)
-                if (polyline.pointUUIDs[i] == result!.points[y].uuid)
-                  polyline.pointUUIDs[i] = result.points[x].uuid;
-                else if (polyline.pointUUIDs[i] == result.points[x].uuid) result.points[x].color = '#000000';
-            });
-          }
-          result.points[x].name = result.points[x].name ?? result.points[y].name;
+
+          result.polylines.forEach((polyline) {
+            for (var i = 0; i < polyline.pointUUIDs.length; i++)
+              if (polyline.pointUUIDs[i] == result!.points[y].uuid)
+                polyline.pointUUIDs[i] = result.points[x].uuid;
+              else if (polyline.pointUUIDs[i] == result.points[x].uuid) result.points[x].color = '#000000';
+          });
+
+          result.points[x].name = result.points[x].name;
+          // TODO Mike: Why are you using a BITWISE OR here instead of normal OR? Please check if the NULL check can be removed here
           result.points[x].color = (result.points[x].color == null) | (result.points[x].color == '#000000')
               ? result.points[y].color
               : result.points[x].color;
@@ -100,7 +103,7 @@ class _GpxReader {
       parent.findAllElements('trk').forEach((xmlTrk) {
         xmlTrk.findElements('trkseg').forEach((xmlTrkseg) {
           var line = _readLine(xmlTrkseg);
-          if (line.points != null && line.points.length > 0) {
+          if (line.points.isNotEmpty) {
             lines.add(line);
             points.addAll(line.points);
           }
@@ -119,7 +122,7 @@ class _GpxReader {
     if (lat != null && lon != null) {
       var wpt = GCWMapPoint(point: LatLng(double.tryParse(lat) ?? 0, double.tryParse(lon) ?? 0), isEditable: true);
       wpt.markerText = xmlElement.getElement('name')?.innerText;
-      if (wpt.markerText == null || wpt.markerText!.length == 0)
+      if (wpt.markerText == null || wpt.markerText!.isEmpty)
         wpt.markerText = xmlElement.getElement('desc')?.innerText;
       return wpt;
     }
@@ -176,13 +179,13 @@ class _KmlReader {
       if (group != null) {
         group.findAllElements('outerBoundaryIs').forEach((boundery) {
           var linesTmp = _readPoints(boundery, styleParent);
-          if (linesTmp != null) lines.addAll(linesTmp);
+          lines.addAll(linesTmp);
         });
         group.findAllElements('innerBoundaryIs').forEach((boundery) {
           var linesTmp = _readPoints(boundery, styleParent);
-          if (linesTmp != null) lines.addAll(linesTmp);
+          lines.addAll(linesTmp);
         });
-        if (lines.length == 0) return [];
+        if (lines.isEmpty) return [];
 
         return lines;
       }
@@ -192,9 +195,9 @@ class _KmlReader {
       if (group != null) {
         group.children.forEach((child) {
           var linesTmp = _readPoints(child as XmlElement, styleParent);
-          if (linesTmp != null) lines.addAll(linesTmp);
+          lines.addAll(linesTmp);
         });
-        if (lines.length == 0) return [];
+        if (lines.isEmpty) return [];
 
         return lines;
       }
@@ -212,18 +215,18 @@ class _KmlReader {
       if (lat != null && lon != null) {
         var wpt = GCWMapPoint(point: LatLng(double.tryParse(lat) ?? 0, double.tryParse(lon) ?? 0));
         wpt.markerText = xmlElement.getElement('name')?.innerText;
-        if (wpt.markerText == null || wpt.markerText!.length == 0)
+        if (wpt.markerText == null || wpt.markerText!.isEmpty)
           wpt.markerText = xmlElement.getElement('description')?.innerText;
 
-        if (line.points.length == 0)
+        if (line.points.isEmpty)
           wpt = _readPointStyleMap(wpt, xmlElement.getElement('styleUrl')?.innerText, styleParent);
 
         line.points.add(wpt);
       }
     });
 
-    if (line.points.length > 0) lines.add(line);
-    if (lines.length == 0) return [];
+    if (line.points.isNotEmpty) lines.add(line);
+    if (lines.isEmpty) return [];
 
     return lines;
   }
@@ -252,14 +255,14 @@ class _KmlReader {
     styleParent.findAllElements('Style').forEach((xmlElement) {
       if (xmlElement.getAttribute('id') == styleUrl) {
         var color = xmlElement.findAllElements('color');
-        if (color != null && color.length > 0) point.color = _ColorCode(color.first.innerText);
+        if (color.isNotEmpty) point.color = _ColorCode(color.first.innerText);
       }
     });
 
     return point;
   }
 
-  _restorePoints(List<GCWMapPoint> points, List<GCWMapPolyline> lines) {
+  void _restorePoints(List<GCWMapPoint> points, List<GCWMapPolyline> lines) {
     for (int i = lines.length - 1; i >= 0; i--) {
       points.addAll(lines[i].points);
       if (lines[i].points.length == 1) {
@@ -277,7 +280,7 @@ class _KmlReader {
   }
 }
 
-_restoreCircles(List<GCWMapPoint> points, List<GCWMapPolyline> lines) {
+void _restoreCircles(List<GCWMapPoint> points, List<GCWMapPolyline> lines) {
   for (int i = lines.length - 1; i >= 0; i--) {
     if (_isClosedLine(lines[i]) && _completeCircle(lines[i], points)) {
       lines[i].points.forEach((point) {
@@ -336,16 +339,14 @@ bool _completeCircle(GCWMapPolyline line, List<GCWMapPoint> points) {
 MapViewDAO _convertToMapViewDAO(List<GCWMapPoint> points, List<GCWMapPolyline> lines) {
   var daoPoints = <MapPointDAO>[];
   var daoLines = <MapPolylineDAO>[];
-  if (points != null) {
-    points.forEach((point) {
-      daoPoints.add(MapViewPersistenceAdapter.gcwMapPointToMapPointDAO(point));
-    });
-  }
-  if (lines != null) {
-    lines.forEach((line) {
-      daoLines.add(MapViewPersistenceAdapter.gcwMapPolylineToMapPolylineDAO(line));
-    });
-  }
+
+  points.forEach((point) {
+    daoPoints.add(MapViewPersistenceAdapter.gcwMapPointToMapPointDAO(point));
+  });
+
+  lines.forEach((line) {
+    daoLines.add(MapViewPersistenceAdapter.gcwMapPolylineToMapPolylineDAO(line));
+  });
 
   return MapViewDAO(daoPoints, daoLines);
 }

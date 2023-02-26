@@ -18,7 +18,7 @@ class MultiDecoderToolCcitt2 extends AbstractMultiDecoderTool {
     Key? key,
     required int id,
     required String name,
-    required Map<String, Object> options,
+    required Map<String, Object?> options,
     required BuildContext context})
       : super(
             key: key,
@@ -30,7 +30,7 @@ class MultiDecoderToolCcitt2 extends AbstractMultiDecoderTool {
                 var intValues = textToBinaryList(input).map((value) {
                     return int.tryParse(convertBase(value, 2, 10) ?? '') ?? null;
                   }).toList();
-                return decodeTeletypewriter(intValues.where((element) => element != null).cast<int>().toList(),
+                return decodeTeletypewriter(intValues.whereType<int>().toList(),
                     TeletypewriterCodebook.CCITT_ITA2_1931);
               } else
                 return decodeTeletypewriter(textToIntList(input), TeletypewriterCodebook.CCITT_ITA2_1931);
@@ -38,7 +38,7 @@ class MultiDecoderToolCcitt2 extends AbstractMultiDecoderTool {
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
               MDT_CCITT2_OPTION_MODE: GCWStatefulDropDown<String>(
-                value: stringTypeCheck(options[MDT_CCITT2_OPTION_MODE],MDT_CCITT2_OPTION_MODE_DENARY),
+                value: toStringOrDefault(options[MDT_CCITT2_OPTION_MODE],MDT_CCITT2_OPTION_MODE_DENARY),
                 onChanged: (newValue) {
                   options[MDT_CCITT2_OPTION_MODE] = newValue;
                 },

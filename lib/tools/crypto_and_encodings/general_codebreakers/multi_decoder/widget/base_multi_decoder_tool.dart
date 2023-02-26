@@ -8,7 +8,7 @@ abstract class AbstractMultiDecoderTool {
   final MultiDecoderToolConfiguration? configurationWidget;
   final bool requiresKey;
   final bool optionalKey;
-  late final Map<String, Object>? options;
+  late final Map<String, Object?> options;
 
   AbstractMultiDecoderTool(
       {Key? key,
@@ -19,10 +19,9 @@ abstract class AbstractMultiDecoderTool {
       this.requiresKey = false,
       this.optionalKey = false,
       this.configurationWidget,
-        required this.options}) {
-    if (options == null) options = {};
-  }
+        required this.options});
 }
+
 class MultiDecoderToolDummy extends AbstractMultiDecoderTool {
   MultiDecoderToolDummy()
       : super(
@@ -31,17 +30,9 @@ class MultiDecoderToolDummy extends AbstractMultiDecoderTool {
       name: '',
       internalToolName: '',
       onDecode: (String input, String key) {},
-      options: null);
-}
-
-int intTypeCheck(Object? value, int defaultValue) {
-  return (value is int) ? value as int : defaultValue;
-}
-
-String stringTypeCheck(Object? value, String defaultValue) {
-  return (value is String) ? value as String : defaultValue;
+      options: {});
 }
 
 String? stringNullableTypeCheck(Object? value, String? defaultValue) {
-  return (value is String?) ? value as String? : defaultValue;
+  return (isString(String) || value == null) ? value as String? : defaultValue;
 }

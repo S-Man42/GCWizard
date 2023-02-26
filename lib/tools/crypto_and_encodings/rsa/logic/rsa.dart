@@ -28,8 +28,8 @@ BigInt _encryptInteger(BigInt value, BigInt e, BigInt N) {
   return value.modPow(e, N);
 }
 
-List<BigInt> encryptRSA(List<BigInt> input, BigInt e, BigInt p, BigInt q) {
-  if (input == null || input.length == 0) return null;
+List<BigInt>? encryptRSA(List<BigInt>? input, BigInt? e, BigInt? p, BigInt? q) {
+  if (input == null || input.isEmpty) return null;
 
   if (e == null || p == null || q == null) return null;
 
@@ -37,10 +37,10 @@ List<BigInt> encryptRSA(List<BigInt> input, BigInt e, BigInt p, BigInt q) {
 
   if (!validateE(e, p, q)) throw Exception('rsa_error_phi.e.not.coprime');
 
-  return input.where((number) => number != null).map((number) => _encryptInteger(number, e, _N)).toList();
+  return input.map((number) => _encryptInteger(number, e, _N)).toList();
 }
 
-BigInt calculateD(BigInt e, BigInt p, BigInt q) {
+BigInt? calculateD(BigInt? e, BigInt? p, BigInt? q) {
   if (e == null || p == null || q == null) return null;
 
   if (p > BigInt.from(10000) || p > BigInt.from(10000)) throw Exception('rsa_error_primes.too.large');
@@ -62,8 +62,8 @@ BigInt _decryptInteger(BigInt value, BigInt d, BigInt N) {
   return value.modPow(d, N);
 }
 
-List<BigInt> decryptRSA(List<BigInt> input, BigInt d, BigInt p, BigInt q) {
-  if (input == null || input.length == 0) return null;
+List<BigInt>? decryptRSA(List<BigInt> input, BigInt? d, BigInt? p, BigInt? q) {
+  if (input == null || input.isEmpty) return null;
 
   if (d == null || p == null || q == null) return null;
 

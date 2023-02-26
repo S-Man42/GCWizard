@@ -25,12 +25,12 @@ class OhlsenTelegraph extends StatefulWidget {
 
 class OhlsenTelegraphState extends State<OhlsenTelegraph> {
   var _currentEncodeInput = '';
-  var _dncodeInputController;
+  late TextEditingController _dncodeInputController;
 
-  var _decodeInputController;
+  late TextEditingController _decodeInputController;
   var _currentDecodeInput = '';
 
-  List<List<String>> _currentDisplays = [];
+  var _currentDisplays = Segments.Empty();
   var _currentMode = GCWSwitchPosition.right; //decode
   var _currentDecodeMode = GCWSwitchPosition.right; // text - visual
 
@@ -103,13 +103,7 @@ class OhlsenTelegraphState extends State<OhlsenTelegraph> {
   }
 
   Widget _buildVisualDecryption() {
-    Map<String, bool> currentDisplay;
-
-    var displays = _currentDisplays;
-    if (displays != null && displays.length > 0)
-      currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [], key: (e) => e, value: (e) => true);
-    else
-      currentDisplay = {};
+    var currentDisplay = buildSegmentMap(_currentDisplays);
 
     var onChanged = (Map<String, bool> d) {
       setState(() {
@@ -119,11 +113,7 @@ class OhlsenTelegraphState extends State<OhlsenTelegraph> {
           newSegments.add(key);
         });
 
-        newSegments.sort();
-
-        if (_currentDisplays.length == 0) _currentDisplays.add([]);
-
-        _currentDisplays[_currentDisplays.length - 1] = newSegments;
+        _currentDisplays.replaceLastSegment(newSegments);
       });
     };
 
@@ -148,7 +138,7 @@ class OhlsenTelegraphState extends State<OhlsenTelegraph> {
             icon: Icons.space_bar,
             onPressed: () {
               setState(() {
-                _currentDisplays.add([]);
+                _currentDisplays.addEmptySegment();
               });
             },
           ),
@@ -156,7 +146,7 @@ class OhlsenTelegraphState extends State<OhlsenTelegraph> {
             icon: Icons.backspace,
             onPressed: () {
               setState(() {
-                if (_currentDisplays.length > 0) _currentDisplays.removeLast();
+                _currentDisplays.removeLastSegment();
               });
             },
           ),
@@ -164,7 +154,7 @@ class OhlsenTelegraphState extends State<OhlsenTelegraph> {
             icon: Icons.clear,
             onPressed: () {
               setState(() {
-                _currentDisplays = [];
+                _currentDisplays = Segments.Empty();
               });
             },
           )
@@ -173,15 +163,15 @@ class OhlsenTelegraphState extends State<OhlsenTelegraph> {
     );
   }
 
-  String _buildCodelets(List<List<String>> segments) {
+  String _buildCodelets(Segments segments) {
     List<String> result = [];
-    segments.forEach((codelet) {
+    segments.displays.forEach((codelet) {
       if (codelet != null) result.add(codelet.join(''));
     });
     return result.join(' ');
   }
 
-  Widget _buildDigitalOutput(List<List<String>> segments) {
+  Widget _buildDigitalOutput(Segments segments) {
     return SegmentDisplayOutput(
         segmentFunction: (displayedSegments, readOnly) {
           return _OhlsenSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
@@ -193,9 +183,9 @@ class OhlsenTelegraphState extends State<OhlsenTelegraph> {
   Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       //encode
-      List<List<String>> segments = encodeOhlsenTelegraph(_currentEncodeInput.toLowerCase());
+      var segments = encodeOhlsenTelegraph(_currentEncodeInput.toLowerCase());
       List<String> code = [];
-      segments.forEach((element) {
+      segments.displays.forEach((element) {
         code.add(segmentToCode(element));
       });
       return Column(
@@ -212,23 +202,21 @@ class OhlsenTelegraphState extends State<OhlsenTelegraph> {
       );
     } else {
       //decode
-      var segments;
+      SegmentsCodpoints segments;
       if (_currentDecodeMode == GCWSwitchPosition.left) {
         // text
         segments = decodeTextOhlsenTelegraph(_currentDecodeInput.toLowerCase());
       } else {
         // visual
-        var output = _currentDisplays.where((character) => character != null).map((character) {
-          return character.join();
-        }).toList();
+        var output = _currentDisplays.buildOutput();
         segments = decodeVisualOhlsenTelegraph(output);
       }
       return Column(
         children: <Widget>[
           if (_currentDecodeMode == GCWSwitchPosition.right)
-            GCWOutput(title: i18n(context, 'telegraph_codepoints'), child: segments['codepoints']),
-          GCWOutput(title: i18n(context, 'telegraph_text'), child: segments['text']),
-          _buildDigitalOutput(segments['displays']),
+            GCWOutput(title: i18n(context, 'telegraph_codepoints'), child: segments.codepoints),
+          GCWOutput(title: i18n(context, 'telegraph_text'), child: segments.text),
+          _buildDigitalOutput(segments),
         ],
       );
     }

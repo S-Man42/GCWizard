@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_langua
 
 void main() {
   group("Befunge.interpretBefunge", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'code' : null, 'input' : null, 'expectedOutput' : BefungeOutput(Output: '', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
       {'code' : null, 'input' : '', 'expectedOutput' : BefungeOutput(Output: '', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
       {'code' : '', 'input' : '', 'expectedOutput' : BefungeOutput(Output: '', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
@@ -340,9 +340,9 @@ v                                              >
 
     _inputsToExpected.forEach((elem) {
       test('code: ${elem['code']}, input: ${elem['input']}', () {
-        var _actual = interpretBefunge(elem['code'], input: elem['input']);
-        expect(_actual.Output, elem['expectedOutput'].Output);
-        expect(_actual.Error, elem['expectedOutput'].Error);
+        var _actual = interpretBefunge(elem['code'] as String?, input: elem['input'] as String?);
+        expect(_actual.Output, (elem['expectedOutput']as BefungeOutput).Output);
+        expect(_actual.Error, (elem['expectedOutput']as BefungeOutput).Error);
       });
     });
   });

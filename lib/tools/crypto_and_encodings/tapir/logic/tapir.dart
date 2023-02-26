@@ -1,7 +1,7 @@
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 
-final AZToTapir = {
+final Map<String, String> AZToTapir = {
   ' ': '83', '\n': '80', 'A': '0', 'E': '1', 'I': '2', 'N': '3', 'R': '4', 'B': '50', 'BE': '51', 'C': '52', 'CH': '53',
   'D': '54', 'DE': '55', 'F': '56',
   'G': '57', 'GE': '58', 'H': '59', 'J': '60', 'K': '61', 'L': '62', 'M': '63', 'O': '64', 'P': '67', 'Q': '68',
@@ -12,9 +12,9 @@ final AZToTapir = {
   String.fromCharCode(220): '99', // Ü
   String.fromCharCode(223): '65', // ß
 };
-final TapirToAZ = switchMapKeyValue(AZToTapir);
+final Map<String, String> TapirToAZ = switchMapKeyValue(AZToTapir);
 
-final NumbersToTapir = {
+final Map<String, String> NumbersToTapir = {
   ' ': '83',
   '\n': '80',
   '.': '89',
@@ -38,7 +38,7 @@ final NumbersToTapir = {
   '8': '88',
   '9': '99'
 };
-final TapirToNumbers = switchMapKeyValue(NumbersToTapir);
+final Map<String, String> TapirToNumbers = switchMapKeyValue(NumbersToTapir);
 
 final _NUMBERS_FOLLOW = '82';
 final _LETTERS_FOLLOW = '81';
@@ -55,7 +55,7 @@ String _encodeTapir(String input) {
   //encode
   int i = 0;
   while (i < input.length) {
-    var code;
+    String? code;
 
     if (isLetterMode && i + 1 < input.length) {
       code = AZToTapir[input.substring(i, i + 2)];
@@ -109,7 +109,7 @@ String _encodeTapir(String input) {
 
 String _addOneTimePad(String input, String keyOneTimePad) {
   keyOneTimePad = keyOneTimePad.replaceAll(RegExp(r'[^0-9]'), '');
-  if (keyOneTimePad.length == 0) return input;
+  if (keyOneTimePad.isEmpty) return input;
 
   var out = '';
   for (int i = 0; i < input.length; i++) {
@@ -118,8 +118,8 @@ String _addOneTimePad(String input, String keyOneTimePad) {
       continue;
     }
 
-    int a = int.tryParse(input[i]);
-    int b = int.tryParse(keyOneTimePad[i]);
+    int a = int.tryParse(input[i]) ?? 0;
+    int b = int.tryParse(keyOneTimePad[i]) ?? 0;
 
     out += ((a + b) % 10).toString();
   }
@@ -127,31 +127,31 @@ String _addOneTimePad(String input, String keyOneTimePad) {
   return out;
 }
 
-String encryptTapir(String input, String keyOneTimePad) {
-  if (input == null || input.length == 0) return '';
+String encryptTapir(String? input, String? keyOneTimePad) {
+  if (input == null || input.isEmpty) return '';
 
   var output = _encodeTapir(input);
 
-  if (keyOneTimePad != null && keyOneTimePad.length > 0) {
+  if (keyOneTimePad != null && keyOneTimePad.isNotEmpty) {
     output = _addOneTimePad(output, keyOneTimePad);
   }
 
   return insertSpaceEveryNthCharacter(output, 5);
 }
 
-String _checkCode(String code, bool isLetterMode) {
+String? _checkCode(String code, bool isLetterMode) {
   return isLetterMode ? TapirToAZ[code] : TapirToNumbers[code];
 }
 
-String _decodeTapir(String input) {
-  if (input == null || input.length == 0) return '';
+String _decodeTapir(String? input) {
+  if (input == null || input.isEmpty) return '';
 
   var isLetterMode = true;
   String out = '';
 
   int i = 0;
   while (i < input.length) {
-    var character;
+    String? character;
 
     if (i + 1 < input.length) {
       var code = input.substring(i, i + 2);
@@ -185,7 +185,7 @@ String _decodeTapir(String input) {
 
 String _subtractOneTimePad(String input, String keyOneTimePad) {
   keyOneTimePad = keyOneTimePad.replaceAll(RegExp(r'[^0-9]'), '');
-  if (keyOneTimePad.length == 0) return input;
+  if (keyOneTimePad.isEmpty) return input;
 
   var out = '';
   for (int i = 0; i < input.length; i++) {
@@ -194,8 +194,8 @@ String _subtractOneTimePad(String input, String keyOneTimePad) {
       continue;
     }
 
-    int a = int.tryParse(input[i]);
-    int b = int.tryParse(keyOneTimePad[i]);
+    int a = int.tryParse(input[i]) ?? 0;
+    int b = int.tryParse(keyOneTimePad[i]) ?? 0;
 
     out += ((a - b) % 10).toString();
   }
@@ -203,15 +203,14 @@ String _subtractOneTimePad(String input, String keyOneTimePad) {
   return out;
 }
 
-String decryptTapir(String input, String keyOneTimePad) {
+String decryptTapir(String? input, String? keyOneTimePad) {
   if (input == null) return '';
 
   input = input.replaceAll(RegExp(r'[^0-9]'), '');
-  if (input.length == 0) return '';
+  if (input.isEmpty) return '';
 
-  if (keyOneTimePad != null && keyOneTimePad.length > 0) {
+  if (keyOneTimePad != null && keyOneTimePad.isNotEmpty)
     input = _subtractOneTimePad(input, keyOneTimePad);
-  }
 
   return _decodeTapir(input);
 }

@@ -309,7 +309,7 @@ class _MainViewState extends State<MainView> {
                 onPressed: () {
                   Navigator.push(
                       context,
-                      NoAnimationMaterialPageRoute(
+                      NoAnimationMaterialPageRoute<GCWTool>(
                           builder: (context) =>
                               registeredTools.firstWhere((tool) => className(tool.tool) == className(Changelog()))));
                 }),
@@ -352,12 +352,12 @@ class _MainViewState extends State<MainView> {
     if (_mainToolList.isEmpty) _initStaticToolList();
     Favorites.initialize();
 
-    var toolList = (_isSearching && _searchText.length > 0) ? _getSearchedList() : null;
+    var toolList = (_isSearching && _searchText.isNotEmpty) ? _getSearchedList() : null;
     return DefaultTabController(
       length: 3,
       initialIndex: Prefs.getBool(PREFERENCE_TABS_USE_DEFAULT_TAB)
-          ? Prefs.get(PREFERENCE_TABS_DEFAULT_TAB)
-          : Prefs.get(PREFERENCE_TABS_LAST_VIEWED_TAB),
+          ? Prefs.getInt(PREFERENCE_TABS_DEFAULT_TAB)
+          : Prefs.getInt(PREFERENCE_TABS_LAST_VIEWED_TAB),
       child: Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
@@ -386,7 +386,7 @@ class _MainViewState extends State<MainView> {
     );
   }
 
-  _buildSearchActionButton() {
+  IconButton _buildSearchActionButton() {
     return IconButton(
       icon: Icon(_isSearching ? Icons.close : Icons.search),
       onPressed: () {
@@ -402,7 +402,7 @@ class _MainViewState extends State<MainView> {
     );
   }
 
-  _buildTitleAndSearchTextField() {
+  Widget _buildTitleAndSearchTextField() {
     return _isSearching
         ? GCWTextField(
             autofocus: true,
@@ -412,7 +412,7 @@ class _MainViewState extends State<MainView> {
         : Text(i18n(context, 'common_app_title'));
   }
 
-  _buildIcon() {
+  IconButton _buildIcon() {
     return IconButton(
         icon: Image.asset(
           'assets/logo/circle_border_128.png',
@@ -425,7 +425,7 @@ class _MainViewState extends State<MainView> {
   List<GCWTool> _getSearchedList() {
     var _sanitizedSearchText = removeAccents(_searchText.toLowerCase()).replaceAll(ALLOWED_SEARCH_CHARACTERS, '');
 
-    if (_sanitizedSearchText.length == 0) return <GCWTool>[];
+    if (_sanitizedSearchText.isEmpty) return <GCWTool>[];
 
     Set<String> _queryTexts = _sanitizedSearchText.split(REGEXP_SPLIT_STRINGLIST).toSet();
 

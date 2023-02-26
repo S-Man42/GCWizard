@@ -13,8 +13,8 @@ class IATAICAOSearch extends StatefulWidget {
 }
 
 class IATAICAOSearchState extends State<IATAICAOSearch> {
-  var _inputControllerCode;
-  var _inputControllerName;
+  late TextEditingController _inputControllerCode;
+  late TextEditingController _inputControllerName;
 
   String _currentInputCode = '';
   String _currentInputName = '';
@@ -22,7 +22,7 @@ class IATAICAOSearchState extends State<IATAICAOSearch> {
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
   GCWSwitchPosition _currentCode = GCWSwitchPosition.left;
 
-  var _output;
+  Widget? _output;
 
   @override
   void initState() {
@@ -109,7 +109,7 @@ class IATAICAOSearchState extends State<IATAICAOSearch> {
   Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       // search for name
-      if (_currentInputName == null || _currentInputName == "") return Container();
+      if (_currentInputName == "") return Container();
 
       List<List<String>> data = [];
       List<int> flexValues = List<int>.generate(4, (index) => 1);
@@ -137,14 +137,14 @@ class IATAICAOSearchState extends State<IATAICAOSearch> {
       );
     } else {
       // search for code
-      if (_currentInputCode == null || _currentInputCode == "") return Container();
+      if (_currentInputCode == "") return Container();
 
       List<int> flexValues = List<int>.generate(4, (index) => 1);
 
       if (_currentCode == GCWSwitchPosition.left) {
         // search for IATA
         var data = IATA_ICAO_CODES.values
-            .where((e) => (e.iata != null && e.iata.startsWith(_currentInputCode.toUpperCase())))
+            .where((e) => (e.iata.startsWith(_currentInputCode.toUpperCase())))
             .map((e) {
               return [e.iata, e.icoa, e.name, e.location_served];
             }).toList();

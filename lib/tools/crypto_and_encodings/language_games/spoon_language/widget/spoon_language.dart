@@ -35,9 +35,7 @@ class SpoonLanguageState extends State<SpoonLanguage> {
     );
   }
 
-  _buildOutput() {
-    if (_currentInput == null) return '';
-
+  String _buildOutput() {
     var out = _currentMode == GCWSwitchPosition.left
         ? encryptSpoonLanguage(_currentInput)
         : decryptSpoonLanguage(_currentInput);

@@ -33,11 +33,12 @@ late Uint8List _texturePixels;
 late Uint8List _depthBytes;
 
 Future<Tuple3<Image.Image, Uint8List, int>?> decodeImageAsync(GCWAsyncExecuterParameters? jobData) async {
-  if (jobData == null) return null;
+  if (jobData?.parameters is! Tuple3<Uint8List?, Image.Image?, int?>) return null;
 
-  Uint8List? image = jobData.parameters.item1;
-  Image.Image? imageData = jobData.parameters.item2;
-  int? displacement = jobData.parameters.item3;
+  var data = jobData!.parameters as Tuple3<Uint8List?, Image.Image?, int?>;
+  Uint8List? image = data.item1;
+  Image.Image? imageData = data.item2;
+  int? displacement = data.item3;
   
   return decodeImage(image, imageData, displacement, sendAsyncPort: jobData.sendAsyncPort);
 }
@@ -144,15 +145,16 @@ Uint8List _createResultImage(Image.Image image, int displacement) {
 }
 
 Future<Tuple2<Uint8List?, MagicEyeErrorCode>?> generateImageAsync(GCWAsyncExecuterParameters? jobData) async {
-  if (jobData == null) return null;
+  if (jobData?.parameters is! Tuple3<Uint8List?, Uint8List?, TextureType?>) return null;
 
-  Uint8List? hiddenImage = jobData.parameters.item1;
-  Uint8List? textureImage = jobData.parameters.item2;
-  TextureType? textureType = jobData.parameters.item3;
+  var data = jobData!.parameters as Tuple3<Uint8List?, Uint8List?, TextureType?>;
+  Uint8List? hiddenImage = data.item1;
+  Uint8List? textureImage = data.item2;
+  TextureType? textureType = data.item3;
 
   var outputData = _generateImage(hiddenImage, textureImage, textureType);
 
-  jobData.sendAsyncPort?.send(outputData);
+  jobData.sendAsyncPort.send(outputData);
 
   return Future.value(outputData);
 }
@@ -184,7 +186,7 @@ Tuple2<Uint8List?, MagicEyeErrorCode>? _generateImage(
   else
     texture = _generateColoredDotsTexture(_separation, resolutionY);
 
-  if (hiddenDataImage == null || texture == null) return null;
+  if (texture == null) return null;
 
   _textureWidth = _separation;
   _textureHeight = (_separation * texture.height) ~/ texture.width;
@@ -240,7 +242,7 @@ Tuple2<Uint8List?, MagicEyeErrorCode>? _generateImage(
     _doLineHoroptic(y);
 
     if (sendAsyncPort != null && (generatedLines % _progressStep == 0))
-      sendAsyncPort?.send({'progress': y / _rows});
+      sendAsyncPort.send({'progress': y / _rows});
   }
 
   var bmStereogram = Image.Image.fromBytes(_lineWidth, _rows, _pixels.buffer.asUint8List(),
@@ -361,7 +363,7 @@ RGBPixel _getTexturePixel(int x, int y) {
   return RGBPixel.getPixel(_texturePixels, tp * _channelCount); // (RGBA)
 }
 
-_setStereoPixel(int x, int y, RGBPixel pixel) {
+void _setStereoPixel(int x, int y, RGBPixel pixel) {
   int sp = ((y * _lineWidth) + x);
   _pixels[sp] = _rgbPixelColor(pixel);
 }

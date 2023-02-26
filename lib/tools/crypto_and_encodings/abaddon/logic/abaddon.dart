@@ -36,8 +36,8 @@ final AZToAbaddon = {
   ' ': '$YEN$MY$MY'
 };
 
-encryptAbaddon(String input, Map<String, String> replaceCharacters) {
-  if (input == null || input.length == 0) return '';
+String encryptAbaddon(String? input, Map<String, String>? replaceCharacters) {
+  if (input == null || input.isEmpty) return '';
 
   var abaddon = normalizeUmlauts(input)
       .toUpperCase()
@@ -51,8 +51,8 @@ encryptAbaddon(String input, Map<String, String> replaceCharacters) {
   return abaddon;
 }
 
-decryptAbaddon(String input, Map<String, String> replaceCharacters) {
-  if (input == null || input.length == 0) return '';
+String decryptAbaddon(String? input, Map<String, String>? replaceCharacters) {
+  if (input == null || input.isEmpty) return '';
 
   if (replaceCharacters != null) input = substitution(input, switchMapKeyValue(replaceCharacters));
 
@@ -61,7 +61,7 @@ decryptAbaddon(String input, Map<String, String> replaceCharacters) {
 
   return RegExp(r'[' + YEN + MY + THORN + ']{3,3}')
       .allMatches(input)
-      .map((pattern) => input.substring(pattern.start, pattern.end))
+      .map((pattern) => input!.substring(pattern.start, pattern.end))
       .where((pattern) => abaddonToAZ[pattern] != null)
       .map((pattern) => abaddonToAZ[pattern])
       .join();

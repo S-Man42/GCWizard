@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 import 'package:tuple/tuple.dart';
@@ -17,19 +18,18 @@ Map<String, int> _createSolitaireAlphabetMap() {
   return alphabet_AZ;
 }
 
-SolitaireOutput encryptSolitaire(String input, String key) {
+SolitaireOutput? encryptSolitaire(String? input, String? key) {
   return _solitaireBase(input, key, true);
 }
 
-SolitaireOutput decryptSolitaire(String input, String key) {
+SolitaireOutput? decryptSolitaire(String? input, String? key) {
   return _solitaireBase(input, key, false);
 }
 
-SolitaireOutput _solitaireBase(String input, String key, bool encrypt) {
-  if (input == null || input.length == 0) return null;
+SolitaireOutput? _solitaireBase(String? input, String? key, bool encrypt) {
+  if (input == null || input.isEmpty) return null;
 
   var alphabet = _createSolitaireAlphabetMap();
-  if (alphabet == null) return null;
 
   input = input.toUpperCase().split('').map((character) => alphabet.containsKey(character) ? character : '').join();
 
@@ -45,7 +45,7 @@ SolitaireOutput _solitaireBase(String input, String key, bool encrypt) {
   }
 
   var deck = createDeck();
-  var tuple = createKeyStream(input, key, deck, alphabet);
+  var tuple = createKeyStream(input, key!, deck, alphabet);
   var keyStream = tuple.item1;
   deck = tuple.item2;
   String output;
@@ -60,14 +60,14 @@ SolitaireOutput _solitaireBase(String input, String key, bool encrypt) {
 
 String _createEncryptOutput(String input, String keyStream, Map<String, int> alphabet) {
   var output = '';
-  for (int i = 0; i < input.length; i++) output += _chr(alphabet[input[i]] + alphabet[keyStream[i]], alphabet);
+  for (int i = 0; i < input.length; i++) output += _chr(alphabet[input[i]]! + alphabet[keyStream[i]]!, alphabet) ?? '';
 
   return output;
 }
 
 String _createDecryptOutput(String input, String keyStream, Map<String, int> alphabet) {
   var output = "";
-  for (int i = 0; i < input.length; i++) output += _chr(alphabet[input[i]] - alphabet[keyStream[i]], alphabet);
+  for (int i = 0; i < input.length; i++) output += _chr(alphabet[input[i]]! - alphabet[keyStream[i]]!, alphabet) ?? '';
 
   return output;
 }
@@ -80,16 +80,16 @@ List<int> createDeck() {
   return deck;
 }
 
-Tuple2<String, List<int>> createKeyStream(String input, String key, List<int> deck, Map<String, int> alphabet) {
+Tuple2<String, List<int>> createKeyStream(String input, String? key, List<int> deck, Map<String, int> alphabet) {
   var streamLetters = '';
   int issueCard;
 
   // use key -> init deck
-  if (key != null && key != "") {
+  if (key != null && key.isNotEmpty) {
     for (int i = 0; i < key.length; i++) {
       deck = _cycleDeck(deck);
       // Step 4 (position -> value from key letter)
-      deck = _takeOff(deck, alphabet[key[i]]);
+      deck = _takeOff(deck, alphabet[key[i]]!);
     }
   }
 
@@ -102,23 +102,23 @@ Tuple2<String, List<int>> createKeyStream(String input, String key, List<int> de
       deck = _cycleDeck(deck);
       issueCard = _issueCard(key, i, deck);
     }
-    streamLetters += _chr(issueCard, alphabet);
+    streamLetters += _chr(issueCard, alphabet) ?? '';
   }
 
   return Tuple2<String, List<int>>(streamLetters, deck);
 }
 
-String _chr(int letter, Map<String, int> alphabet) {
+String? _chr(int letter, Map<String, int> alphabet) {
   letter = letter % alphabet.length;
 
   if (letter == 0) letter = alphabet.length;
 
-  var letterString = alphabet.keys.firstWhere((k) => alphabet[k] == letter, orElse: () => null);
+  var letterString = alphabet.keys.firstWhereOrNull((k) => alphabet[k] == letter);
 
   return letterString;
 }
 
-int _issueCard(String key, int index, List<int> deck) {
+int _issueCard(String? key, int index, List<int> deck) {
   int cardIndex = deck[0];
 
   if (cardIndex == _JOKER_B) cardIndex = _JOKER_A;
@@ -128,24 +128,24 @@ int _issueCard(String key, int index, List<int> deck) {
 List<int> _cycleDeck(List<int> deck) {
   // Step 1 (Joker A. Move it down one card)
   var deckSize = deck.length;
-  var offet = 1;
+  var offset = 1;
   var jokerAPos = deck.indexOf(_JOKER_A);
   // last card?
   if (jokerAPos == deckSize - 1)
     // under first card
-    offet += 1;
-  var newPos = (jokerAPos + offet) % (deckSize);
+    offset += 1;
+  var newPos = (jokerAPos + offset) % (deckSize);
   deck.remove(_JOKER_A);
   deck.insert(newPos, _JOKER_A);
 
   // Step 2 (Joker B. Move it down two cards)
-  offet = 2;
+  offset = 2;
   var jokerBPos = deck.indexOf(_JOKER_B);
   // last/ prelast card ?
   if (jokerBPos >= deckSize - 2)
     // under first/ second card
-    offet += 1;
-  newPos = (jokerBPos + offet) % (deckSize);
+    offset += 1;
+  newPos = (jokerBPos + offset) % (deckSize);
   deck.remove(_JOKER_B);
   deck.insert(newPos, _JOKER_B);
 

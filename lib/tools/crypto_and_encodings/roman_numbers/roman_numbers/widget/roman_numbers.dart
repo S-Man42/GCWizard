@@ -14,7 +14,7 @@ class RomanNumbers extends StatefulWidget {
 }
 
 class RomanNumbersState extends State<RomanNumbers> {
-  var _decodeController;
+  late TextEditingController _decodeController;
 
   var _currentEncodeInput = 1;
   var _currentDecodeInput = '';
@@ -72,19 +72,15 @@ class RomanNumbersState extends State<RomanNumbers> {
     );
   }
 
-  _buildOutput() {
-    List<dynamic> output;
+  Widget _buildOutput() {
+    List<String> output;
 
     if (_currentMode == GCWSwitchPosition.left) {
-      if (_currentEncodeInput == null) return GCWDefaultOutput();
-
       output = [
         encodeRomanNumbers(_currentEncodeInput, type: RomanNumberType.USE_SUBTRACTION_RULE) ?? '',
         encodeRomanNumbers(_currentEncodeInput, type: RomanNumberType.ONLY_ADDITION) ?? ''
       ];
     } else {
-      if (_currentDecodeInput == null || _currentDecodeInput.isEmpty) return GCWDefaultOutput();
-
       output = [
         _currentDecodeInput
             .split(RegExp(r'\s+'))

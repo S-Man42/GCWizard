@@ -12,10 +12,10 @@ int whiteColor = Colors.white.value;
 int blackColor = Colors.black.value;
 
 Future<Uint8List?> decodeImagesAsync(GCWAsyncExecuterParameters? jobData) async {
-  if (jobData == null) return null;
+  if (jobData?.parameters is! Tuple4<Uint8List, Uint8List, int, int>) return null;
 
-  var output = await _decodeImages(
-      jobData.parameters.item1, jobData.parameters.item2, jobData.parameters.item3, jobData.parameters.item4);
+  var data = jobData!.parameters as Tuple4<Uint8List, Uint8List, int, int>;
+  var output = await _decodeImages(data.item1, data.item2, data.item3, data.item4);
 
   jobData.sendAsyncPort.send(output);
 
@@ -58,11 +58,12 @@ Image.Image _pasteImage(Image.Image targetImage, Image.Image image, int offsetX,
   return targetImage;
 }
 
-Future<Tuple2<int, int>?> offsetAutoCalcAsync(dynamic jobData) async {
-  if (jobData == null) return null;
+Future<Tuple2<int, int>?> offsetAutoCalcAsync(GCWAsyncExecuterParameters? jobData) async {
+  if (jobData?.parameters is! Tuple4<Uint8List, Uint8List, int, int>) return null;
 
+  var data = jobData!.parameters as Tuple4<Uint8List, Uint8List, int, int>;
   var output = await _offsetAutoCalc(
-      jobData.parameters.item1, jobData.parameters.item2, jobData.parameters.item3, jobData.parameters.item4,
+      data.item1, data.item2, data.item3, data.item4,
       sendAsyncPort: jobData.sendAsyncPort);
 
   jobData.sendAsyncPort?.send(output);
@@ -149,10 +150,10 @@ Uint8List? cleanImage(Uint8List? image1, Uint8List? image2, int offsetX, int off
 }
 
 Future<Tuple2<Uint8List, Uint8List?>?> encodeImagesAsync(GCWAsyncExecuterParameters? jobData) async {
-  if (jobData == null) return null;
+  if (jobData?.parameters is! Tuple5<Uint8List, Uint8List?, int, int, int>) return null;
 
-  var output = await _encodeImage(jobData.parameters.item1, jobData.parameters.item2, jobData.parameters.item3,
-      jobData.parameters.item4, jobData.parameters.item5);
+  var data = jobData!.parameters as Tuple5<Uint8List, Uint8List?, int, int, int>;
+  var output = await _encodeImage(data.item1, data.item2, data.item3, data.item4, data.item5);
 
   jobData.sendAsyncPort.send(output);
 
@@ -167,7 +168,7 @@ Future<Tuple2<Uint8List, Uint8List?>?> _encodeImage(
   if (_image == null) return Future.value(null);
 
   var hasKeyImage = keyImage != null;
-  var _keyImage;
+  Image.Image? _keyImage;
   if (hasKeyImage) {
     _keyImage = Image.decodeImage(keyImage!);
     if (_keyImage == null) return Future.value(null);
@@ -178,7 +179,7 @@ Future<Tuple2<Uint8List, Uint8List?>?> _encodeImage(
   if (scale > 0 && scale != 100) _image = Image.copyResize(_image, height: _image.height * scale ~/ 100);
 
   if (hasKeyImage) {
-    var _dstImage = Image.Image(_keyImage.width ~/ 2, _keyImage.height ~/ 2);
+    var _dstImage = Image.Image(_keyImage!.width ~/ 2, _keyImage.height ~/ 2);
     _dstImage = Image.drawRect(_dstImage, 0, 0, _dstImage.width, _dstImage.height, Colors.white.value);
 
     var _dstXOffset = (_dstImage.width - _image.width) ~/ 2;

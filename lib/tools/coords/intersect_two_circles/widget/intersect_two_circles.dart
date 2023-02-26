@@ -22,15 +22,15 @@ class IntersectTwoCircles extends StatefulWidget {
 class IntersectTwoCirclesState extends State<IntersectTwoCircles> {
   var _currentIntersections = [];
 
-  var _currentCoordsFormat1 = defaultCoordFormat();
+  var _currentCoordsFormat1 = defaultCoordinateFormat;
   var _currentCoords1 = defaultCoordinate;
   var _currentRadius1 = 0.0;
 
-  var _currentCoordsFormat2 = defaultCoordFormat();
+  var _currentCoordsFormat2 = defaultCoordinateFormat;
   var _currentCoords2 = defaultCoordinate;
   var _currentRadius2 = 0.0;
 
-  var _currentOutputFormat = defaultCoordFormat();
+  var _currentOutputFormat = defaultCoordinateFormat;
   List<String> _currentOutput = [];
   var _currentMapPoints = <GCWMapPoint>[];
 
@@ -120,7 +120,7 @@ class IntersectTwoCirclesState extends State<IntersectTwoCircles> {
         ells: defaultEllipsoid()));
   }
 
-  _showOutput(List<LatLng> output) {
+  void _showOutput(List<LatLng> output) {
     if (output == null) {
       _currentIntersections = [];
 

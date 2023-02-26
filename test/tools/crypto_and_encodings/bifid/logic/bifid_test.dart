@@ -19,7 +19,7 @@ void main() {
 
 
   group("Bifid.encryptBifid:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       // empty Input
       {'input' : null, 'key': null, 'mode': PolybiosMode.AZ09, 'alphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'alphabetMode': AlphabetModificationMode.J_TO_I, 'expectedOutput' : 'bifid_error_no_encrypt_input'},
       {'input' : '', 'key': '', 'mode': PolybiosMode.AZ09, 'alphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'alphabetMode': AlphabetModificationMode.J_TO_I, 'expectedOutput' : 'bifid_error_wrong_griddimension'},
@@ -56,14 +56,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, key: ${elem['key']}, mode: ${elem['mode']}, alphabet: ${elem['alphabet']}, alphabetMode: ${elem['alphabetMode']}', () {
-        BifidOutput _actual = encryptBifid(elem['input'], elem['key'], mode: elem['mode'], alphabet: elem['alphabet'], alphabetMode: elem['alphabetMode']);
+        BifidOutput _actual = encryptBifid(elem['input'] as String?, elem['key'] as String?, mode: elem['mode'] as PolybiosMode, alphabet: elem['alphabet'] as String?, alphabetMode: elem['alphabetMode'] as AlphabetModificationMode);
                     expect(_actual == null ? null : _actual.output, elem['expectedOutput']);
         });
     });
   });
 
   group("Bifid.decryptBifid:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       // empty Input
       {'input' : null, 'key': null, 'mode': PolybiosMode.AZ09, 'alphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'alphabetMode': AlphabetModificationMode.J_TO_I, 'expectedOutput' : 'bifid_error_no_decrypt_input'},
       {'input' : '', 'key': '', 'mode': PolybiosMode.AZ09, 'alphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'alphabetMode': AlphabetModificationMode.J_TO_I, 'expectedOutput' : 'bifid_error_wrong_griddimension'},
@@ -100,7 +100,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, key: ${elem['key']}, mode: ${elem['mode']}, alphabet: ${elem['alphabet']}, alphabetMode: ${elem['alphabetMode']}', () {
-        BifidOutput _actual = decryptBifid(elem['input'], elem['key'], mode: elem['mode'], alphabet: elem['alphabet'], alphabetMode: elem['alphabetMode']);
+        BifidOutput _actual = decryptBifid(elem['input'] as String?, elem['key'] as String?, mode: elem['mode'] as PolybiosMode, alphabet: elem['alphabet'] as String?, alphabetMode: elem['alphabetMode'] as AlphabetModificationMode);
         expect(_actual == null ? null : _actual.output, elem['expectedOutput']);
       });
     });

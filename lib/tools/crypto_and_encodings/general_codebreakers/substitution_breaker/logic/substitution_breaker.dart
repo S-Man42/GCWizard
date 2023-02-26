@@ -5,24 +5,25 @@ import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substi
 
 class SubstitutionBreakerJobData {
   final String input;
-  final Quadgrams quadgrams;
+  final Quadgrams? quadgrams;
 
   SubstitutionBreakerJobData({this.input = '', this.quadgrams});
 }
 
-Future<SubstitutionBreakerResult> break_cipherAsync(GCWAsyncExecuterParameters? jobData) async {
-  if (jobData == null) return null;
-  if (jobData.parameters == null) return SubstitutionBreakerResult(errorCode: SubstitutionBreakerErrorCode.OK);
+Future<SubstitutionBreakerResult?> break_cipherAsync(GCWAsyncExecuterParameters? jobData) async {
+  if (jobData?.parameters is! SubstitutionBreakerJobData)
+    return SubstitutionBreakerResult(errorCode: SubstitutionBreakerErrorCode.OK);
 
-  var output = _break_cipher(jobData.parameters.input, jobData.parameters.quadgrams);
+  var data = jobData!.parameters as SubstitutionBreakerJobData;
+  var output = _break_cipher(data.input, data.quadgrams);
 
   jobData.sendAsyncPort.send(output);
 
   return output;
 }
 
-SubstitutionBreakerResult _break_cipher(String input, Quadgrams quadgrams) {
-  if (input == null || input == '' || quadgrams == null)
+SubstitutionBreakerResult _break_cipher(String? input, Quadgrams? quadgrams) {
+  if (input == null || input.isEmpty || quadgrams == null)
     return SubstitutionBreakerResult(errorCode: SubstitutionBreakerErrorCode.OK);
 
   return _convertBreakerResult(break_cipher(quadgrams, input));
@@ -49,6 +50,8 @@ SubstitutionBreakerResult _convertBreakerResult(BreakerResult breakerResult) {
     case BreakerErrorCode.WRONG_GENERATE_TEXT:
       errorCode = SubstitutionBreakerErrorCode.WRONG_GENERATE_TEXT;
       break;
+    default:
+      errorCode = SubstitutionBreakerErrorCode.OK;
   }
 
   return SubstitutionBreakerResult(
@@ -60,32 +63,24 @@ SubstitutionBreakerResult _convertBreakerResult(BreakerResult breakerResult) {
   );
 }
 
-Quadgrams getQuadgrams(SubstitutionBreakerAlphabet alphabet) {
+Quadgrams? getQuadgrams(SubstitutionBreakerAlphabet alphabet) {
   switch (alphabet) {
     case SubstitutionBreakerAlphabet.ENGLISH:
       return EnglishQuadgrams();
-      break;
     case SubstitutionBreakerAlphabet.GERMAN:
       return GermanQuadgrams();
-      break;
     case SubstitutionBreakerAlphabet.DUTCH:
       return DutchQuadgrams();
-      break;
     case SubstitutionBreakerAlphabet.SPANISH:
       return SpanishQuadgrams();
-      break;
     case SubstitutionBreakerAlphabet.POLISH:
       return PolishQuadgrams();
-      break;
     case SubstitutionBreakerAlphabet.GREEK:
       return GreekQuadgrams();
-      break;
     case SubstitutionBreakerAlphabet.FRENCH:
       return FrenchQuadgrams();
-      break;
     case SubstitutionBreakerAlphabet.RUSSIAN:
       return RussianQuadgrams();
-      break;
     default:
       return null;
   }

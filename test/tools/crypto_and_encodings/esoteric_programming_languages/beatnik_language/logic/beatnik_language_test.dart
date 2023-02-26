@@ -167,21 +167,21 @@ DU BIST DIE BEUTE DES TOURISMUS'!
 
 DIE IRONIE IST UNSER VERLUST AN STARKER ETHIK - SO ZIEMLICH.''';
 
-    List<Map<String, dynamic>> _inputsToExpected = [
-      {'scrabbleSet' : scrabbleID_EN, 'sourcecode' : HelloWorld, 'input' : '', 'expectedOutput' : ['Hello, world!\n']},
-      {'scrabbleSet' : scrabbleID_EN, 'sourcecode' : Rudimentary, 'input' : 'a', 'expectedOutput' : ['h']},
-      {'scrabbleSet' : scrabbleID_EN, 'sourcecode' : Alphabet, 'input' : '', 'expectedOutput' : [' !"#\$%&'+"'"+'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~']},
-      {'scrabbleSet' : scrabbleID_EN, 'sourcecode' : Cliffle, 'input' : '', 'expectedOutput' : ['common_programming_error_runtime','beatnik_error_runtime_stack','beatnik_error_runtime_add']},
-      {'scrabbleSet' : scrabbleID_EN, 'sourcecode' : CliffleCorrect, 'input' : '', 'expectedOutput' : ['\niH']},
-      {'scrabbleSet' : scrabbleID_D, 'sourcecode' : GC2M99K, 'input' : '', 'expectedOutput' : ['Cache bei:N51°15.176 E6° 32.373']},
+    List<Map<String, Object?>> _inputsToExpected = [
+      {'scrabbleSet' : scrabbleID_EN, 'sourcecode' : HelloWorld, 'input' : '', 'expectedOutput' : BeatnikOutput(['Hello, world!\n'], [], [], [], [])},
+      {'scrabbleSet' : scrabbleID_EN, 'sourcecode' : Rudimentary, 'input' : 'a', 'expectedOutput' : BeatnikOutput(['h'], [], [], [], [])},
+      {'scrabbleSet' : scrabbleID_EN, 'sourcecode' : Alphabet, 'input' : '', 'expectedOutput' : BeatnikOutput([' !"#\$%&'+"'"+'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~'], [], [], [], [])},
+      {'scrabbleSet' : scrabbleID_EN, 'sourcecode' : Cliffle, 'input' : '', 'expectedOutput' : BeatnikOutput(['common_programming_error_runtime','beatnik_error_runtime_stack','beatnik_error_runtime_add'], [], [], [], [])},
+      {'scrabbleSet' : scrabbleID_EN, 'sourcecode' : CliffleCorrect, 'input' : '', 'expectedOutput' : BeatnikOutput(['\niH'], [], [], [], [])},
+      {'scrabbleSet' : scrabbleID_D, 'sourcecode' : GC2M99K, 'input' : '', 'expectedOutput' : BeatnikOutput(['Cache bei:N51°15.176 E6° 32.373'], [], [], [], [])},
     ];
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = interpretBeatnik(elem['scrabbleSet'], elem['sourcecode'], elem['input']);
-        var length = elem['expectedOutput'].length;
+        var _actual = interpretBeatnik(elem['scrabbleSet'] as String, elem['sourcecode'] as String?, elem['input'] as String);
+        var length = (elem['expectedOutput'] as BeatnikOutput).output.length;
         for (int i = 0; i < length; i++) {
-          expect(_actual.output[i], elem['expectedOutput'][i]);
+          expect(_actual.output[i], (elem['expectedOutput'] as BeatnikOutput).output[i]);
         }
       });
     });

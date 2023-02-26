@@ -74,14 +74,14 @@ class ResistorEIA96State extends State<ResistorEIA96> {
     );
   }
 
-  _buildSuperscriptedRichText(String before, String superscript, String after) {
+  Widget _buildSuperscriptedRichText(String before, String superscript, String after) {
     return RichText(
         text: TextSpan(
             style: gcwTextStyle(),
             children: [TextSpan(text: before), superscriptedTextForRichText(superscript), TextSpan(text: after)]));
   }
 
-  _buildOutput() {
+  Widget _buildOutput() {
     var output = formatResistorValue(eia96(_currentCode, multiplicator: _currentMultiplicator));
 
     return GCWDefaultOutput(child: output, copyText: output.split(' ')[0]);

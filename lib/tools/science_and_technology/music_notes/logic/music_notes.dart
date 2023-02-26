@@ -1,3 +1,4 @@
+import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
@@ -266,8 +267,8 @@ final Map<String, List<String>> CODEBOOK_MUSIC_NOTES_TREBLE = {
   '24_k': [notePosition[4], hashLabel],
 };
 
-List<List<String>> encodeNotes(String input, NotesCodebook notes, Map<String, String> translationMap) {
-  if (input == null) return [];
+Segments encodeNotes(String input, NotesCodebook notes, Map<String, String> translationMap) {
+  if (input == null) return Segments.Empty();
   var mainEntrysStart = 0;
   var mainEntrysEnd = 99;
   List<List<String>> result = [];
@@ -297,8 +298,8 @@ List<List<String>> encodeNotes(String input, NotesCodebook notes, Map<String, St
   // sorted by length (longest first)
   var entries = translationMap.entries.toList();
   entries.sort((MapEntry<String, String> a, MapEntry<String, String> b) {
-    if (b.value!.length != a.value!.length)
-      return b.value!.length.compareTo(a.value!.length);
+    if (b.value.length != a.value.length)
+      return b.value.length.compareTo(a.value.length);
     else {
       var aKey = int.parse(a.key.split('_')[0]);
       var bKey = int.parse(b.key.split('_')[0]);
@@ -323,15 +324,11 @@ List<List<String>> encodeNotes(String input, NotesCodebook notes, Map<String, St
 
   for (int i = 0; i < inputs.length; i++) result.add(CODEBOOK[inputs[i]]!);
 
-  return result;
+  return Segments(displays: result);
 }
 
-Map<String, dynamic> decodeNotes(List<String> inputs, NotesCodebook notes) {
-  if (inputs == null || inputs.length == 0)
-    return {
-      'displays': <List<String>>[],
-      'chars': ['']
-    };
+SegmentsChars decodeNotes(List<String>? inputs, NotesCodebook notes) {
+  if (inputs == null || inputs.isEmpty) return SegmentsChars(displays: [], chars: []);
 
   var displays = <List<String>>[];
 
@@ -351,7 +348,7 @@ Map<String, dynamic> decodeNotes(List<String> inputs, NotesCodebook notes) {
       break;
   }
 
-  List<String> text = inputs.where((input) => input != null).map((input) {
+  List<String> text = inputs.map((input) {
     var char = '';
     var charH = '';
     var display = <String>[];
@@ -383,7 +380,7 @@ Map<String, dynamic> decodeNotes(List<String> inputs, NotesCodebook notes) {
     return char;
   }).toList();
 
-  return {'displays': displays, 'chars': text};
+  return SegmentsChars(displays: displays, chars: text);
 }
 
 Map<String, bool> filterVisibleHelpLines(Map<String, bool> displayedSegments) {

@@ -1,4 +1,5 @@
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
 
 final Map<int, List<String>> _numbersToSegments = {
   0: [],
@@ -23,22 +24,18 @@ final Map<int, List<String>> _numbersToSegments = {
   19: ['a', 'b', 'c', 'd', 'e', 'f', 'g'],
 };
 
-List<List<String>> encodeMayaNumbers(int input) {
-  if (input == null) return <List<String>>[];
+Segments encodeMayaNumbers(int? input) {
+  if (input == null) return Segments.Empty();
 
-  var vigesimal = convertBase(input.toString(), 10, 20);
-  return vigesimal.split('').map((digit) {
-    return _numbersToSegments[int.tryParse(convertBase(digit, 20, 10))];
+  var vigesimal = convertBase(input.toString(), 10, 20) ?? '';
+  var result = vigesimal.split('').map((digit) {
+    return _numbersToSegments[int.tryParse(convertBase(digit, 20, 10) ?? '')] ?? [];
   }).toList();
+  return Segments(displays:result);
 }
 
-Map<String, dynamic> decodeMayaNumbers(List<String> inputs) {
-  if (inputs == null || inputs.length == 0)
-    return {
-      'displays': <List<String>>[],
-      'numbers': [0],
-      'vigesimal': BigInt.zero
-    };
+SegmentsVigesimal decodeMayaNumbers(List<String>? inputs) {
+  if (inputs == null || inputs.isEmpty) return SegmentsVigesimal(displays: [], numbers: [0], vigesimal: BigInt.zero);
 
   var oneCharacters = ['d', 'e', 'f', 'g'];
   var fiveCharacters = ['a', 'b', 'c'];
@@ -67,7 +64,7 @@ Map<String, dynamic> decodeMayaNumbers(List<String> inputs) {
     return number;
   }).toList();
 
-  var total = convertBase(numbers.map((number) => convertBase(number.toString(), 10, 20)).join(), 20, 10);
+  var total = convertBase(numbers.map((number) => convertBase(number.toString(), 10, 20)).join(), 20, 10) ?? '';
 
-  return {'displays': displays, 'numbers': numbers, 'vigesimal': BigInt.tryParse(total)};
+  return SegmentsVigesimal(displays: displays, numbers: numbers, vigesimal: BigInt.tryParse(total) ?? BigInt.zero);
 }

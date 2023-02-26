@@ -108,7 +108,7 @@ class RALColorCodesState extends State<RALColorCodes> {
     ];
   }
 
-  _buildColorToRALOutput() {
+  Widget _buildColorToRALOutput() {
     var rgb = convertColorSpace(_currentInput, ColorSpaceKey.RGB);
     var similarRALs = findSimilarRALColors(rgb.toRGB());
 
@@ -130,7 +130,7 @@ class RALColorCodesState extends State<RALColorCodes> {
         );
   }
 
-  _buildRALToColorOutput() {
+  Widget _buildRALToColorOutput() {
     var rgbColor = HexCode(_currentValue.value.colorcode).toRGB();
 
     var name = _currentValue.value.name;
@@ -164,8 +164,8 @@ class RALColorCodesState extends State<RALColorCodes> {
     return Column(children: children);
   }
 
-  _showElement(RGB color) {
-    Navigator.of(context).push(NoAnimationMaterialPageRoute(
-        builder: (context) => GCWTool(tool: ColorTool(color: color), i18nPrefix: 'colors')));
+  void _showElement(RGB color) {
+    Navigator.of(context).push(NoAnimationMaterialPageRoute<GCWTool>(
+        builder: (context) => GCWTool(tool: ColorTool(color: color), id: 'colors')));
   }
 }

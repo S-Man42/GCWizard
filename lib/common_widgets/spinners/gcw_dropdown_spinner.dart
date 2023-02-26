@@ -23,13 +23,13 @@ class GCWDropDownSpinner extends StatefulWidget {
 class GCWDropDownSpinnerState extends State<GCWDropDownSpinner> {
   late int _currentIndex;
 
-  _increaseValue() {
+  void _increaseValue() {
     setState(() {
       _setValueAndEmitOnChange((_currentIndex + 1) % widget.items.length);
     });
   }
 
-  _decreaseValue() {
+  void _decreaseValue() {
     setState(() {
       _setValueAndEmitOnChange((_currentIndex - 1) % widget.items.length);
     });
@@ -83,13 +83,13 @@ class GCWDropDownSpinnerState extends State<GCWDropDownSpinner> {
     return widget.title == null ? Container() : Expanded(child: GCWText(text: widget.title! + ':'), flex: 1);
   }
 
-  _buildDropDown() {
+  Container _buildDropDown() {
     return Container(
-      child: GCWDropDown(
+      child: GCWDropDown<int>(
         value: widget.index % widget.items.length,
-        onChanged: (newValue) {
+        onChanged: (int newValue) {
           setState(() {
-            _setValueAndEmitOnChange(newValue as int);
+            _setValueAndEmitOnChange(newValue);
           });
         },
         items: (widget.items is List<GCWDropDownMenuItem>)
@@ -106,7 +106,7 @@ class GCWDropDownSpinnerState extends State<GCWDropDownSpinner> {
     );
   }
 
-  _setValueAndEmitOnChange(int newIndex) {
+  void _setValueAndEmitOnChange(int newIndex) {
     _currentIndex = newIndex;
     widget.onChanged(_currentIndex);
   }

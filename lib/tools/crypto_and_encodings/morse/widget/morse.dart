@@ -9,7 +9,6 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/morse/logic/morse.dart';
-import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/text_widget_utils.dart';
 
 class Morse extends StatefulWidget {
@@ -18,8 +17,8 @@ class Morse extends StatefulWidget {
 }
 
 class MorseState extends State<Morse> {
-  TextEditingController _encodeController;
-  TextEditingController _decodeController;
+  late TextEditingController _encodeController;
+  late TextEditingController _decodeController;
 
   var _currentEncodeInput = '';
   var _currentDecodeInput = '';
@@ -149,7 +148,7 @@ class MorseState extends State<Morse> {
     ]);
   }
 
-  _addCharacter(String input) {
+  void _addCharacter(String input) {
     _currentDecodeInput = textControllerInsertText(input, _currentDecodeInput, _decodeController);
   }
 
@@ -160,7 +159,7 @@ class MorseState extends State<Morse> {
     if (_currentMode == GCWSwitchPosition.left) {
       output = encodeMorse(_currentEncodeInput);
       textStyle =
-          TextStyle(fontSize: textStyle.fontSize + 15, fontFamily: textStyle.fontFamily, fontWeight: FontWeight.bold);
+          TextStyle(fontSize: textStyle.fontSize! + 15, fontFamily: textStyle.fontFamily, fontWeight: FontWeight.bold);
     } else
       output = decodeMorse(_currentDecodeInput);
 

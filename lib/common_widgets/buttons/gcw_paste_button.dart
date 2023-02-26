@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -10,7 +9,6 @@ import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard.dart';
-import 'package:gc_wizard/common_widgets/dividers/gcw_divider.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_popup_menu.dart';
 import 'package:gc_wizard/common_widgets/gcw_toast.dart';
@@ -60,14 +58,14 @@ class GCWPasteButtonState extends State<GCWPasteButton> {
     ));
   }
 
-  _buildMenuItems(BuildContext context) {
+  List<GCWPopupMenuItem> _buildMenuItems(BuildContext context) {
     var menuItems = [
       GCWPopupMenuItem(
         child: Text(i18n(context, 'common_clipboard_fromdeviceclipboard'), style: gcwDialogTextStyle()),
         action: (index) {
           try {
             Clipboard.getData('text/plain').then((ClipboardData? data) {
-              if (data == null || data.text == null || data.text!.length == 0) {
+              if (data == null || data.text == null || data.text!.isEmpty) {
                 showToast(i18n(context, 'common_clipboard_notextdatafound'));
                 return;
               }
@@ -95,11 +93,12 @@ class GCWPasteButtonState extends State<GCWPasteButton> {
     ];
 
     var gcwClipboard = Prefs.getStringList(PREFERENCE_CLIPBOARD_ITEMS)
-        .map((clipboardItem) => jsonDecode(clipboardItem))
-        .where((item) => item != null)
-        .map((item) {
-          var datetimeRaw = item['created'] == null ? 0 : int.tryParse(item['created']);
-          var datetime = DateTime.fromMillisecondsSinceEpoch(datetimeRaw ?? 0);
+        .map((String clipboardItem) {
+          return ClipboardItem.fromJson(clipboardItem);
+        })
+        .where((ClipboardItem? item) => item != null)
+        .map((ClipboardItem? item) => item as ClipboardItem)
+        .map((ClipboardItem item) {
           var dateFormat = DateFormat('yMd', Localizations.localeOf(context).toString());
           var timeFormat = DateFormat('Hms', Localizations.localeOf(context).toString());
 
@@ -109,13 +108,13 @@ class GCWPasteButtonState extends State<GCWPasteButton> {
                   children: [
                     Align(
                         child: Text(
-                          dateFormat.format(datetime) + ' ' + timeFormat.format(datetime),
+                          dateFormat.format(item.datetime) + ' ' + timeFormat.format(item.datetime),
                           style: gcwDialogTextStyle().copyWith(fontSize: max(fontSizeSmall(), 10)),
                         ),
                         alignment: Alignment.centerLeft),
                     Align(
                         child: Text(
-                          item['text'] ?? '',
+                          item.text,
                           style: gcwDialogTextStyle(),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
@@ -129,13 +128,16 @@ class GCWPasteButtonState extends State<GCWPasteButton> {
                 if (index <= 2)
                   return null;
 
-                var item = jsonDecode(Prefs.getStringList(PREFERENCE_CLIPBOARD_ITEMS)[index - 2]);
-                if (item == null || item['text'] == null)
-                  return;
+                var list = Prefs.getStringList(PREFERENCE_CLIPBOARD_ITEMS);
+                if (list.length < 2)
+                  return null;
 
-                String pasteData = item['text'];
-                widget.onSelected(pasteData);
-                insertIntoGCWClipboard(context, pasteData, useGlobalClipboard: false);
+                var item = ClipboardItem.fromJson(list[index - 2]);
+                if (item == null)
+                  return null;
+
+                widget.onSelected(item.text);
+                insertIntoGCWClipboard(context, item.text, useGlobalClipboard: false);
               });
         }).toList();
 

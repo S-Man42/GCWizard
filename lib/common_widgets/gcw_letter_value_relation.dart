@@ -64,7 +64,7 @@ class GCWLetterValueRelationState extends State<GCWLetterValueRelation> {
     );
   }
 
-  _calculateAndEmitValue() {
+  void _calculateAndEmitValue() {
     var key = _currentKey - _currentLetterValue + 1;
 
     if (key < widget.minValue) key += 26;

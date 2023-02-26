@@ -9,6 +9,7 @@ import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/science_and_technology/vanity/_common/logic/phone_models.dart';
 import 'package:gc_wizard/tools/science_and_technology/vanity/_common/logic/vanity.dart';
+import 'package:tuple/tuple.dart';
 
 class VanityMultitap extends StatefulWidget {
   @override
@@ -16,8 +17,8 @@ class VanityMultitap extends StatefulWidget {
 }
 
 class VanityMultitapState extends State<VanityMultitap> {
-  var _encodeController;
-  var _decodeController;
+  late TextEditingController _encodeController;
+  late TextEditingController _decodeController;
 
   var _currentDecodeInput = '';
   var _currentEncodeInput = '';
@@ -166,12 +167,12 @@ class VanityMultitapState extends State<VanityMultitap> {
     );
   }
 
-  _buildSpaceDescription(PhoneModel model) {
+  String _buildSpaceDescription(PhoneModel model) {
     var charMap = model.characterMap[0][PhoneCaseMode.LOWER_CASE];
     if (charMap == null) charMap = model.characterMap[0][PhoneCaseMode.UPPER_CASE];
 
     var keys = '0123456789#*'.split('').toList();
-    var key;
+    String key = '';
     for (key in keys) {
       if (charMap![key] != null && charMap[key]!.contains(' ')) break;
     }
@@ -179,18 +180,18 @@ class VanityMultitapState extends State<VanityMultitap> {
     return i18n(context, 'vanity_multitap_spaceat') + key;
   }
 
-  _buildLanguageExamples(int index) {
+  String _buildLanguageExamples(int index) {
     var charMap = _currentModel.characterMap[index][PhoneCaseMode.LOWER_CASE];
     if (charMap == null) charMap = _currentModel.characterMap[index][PhoneCaseMode.UPPER_CASE];
 
     return [
       '2: ' + charMap!['2']!,
-      '4: ' + charMap!['4']!,
-      '7: ' + charMap!['7']!,
+      '4: ' + charMap['4']!,
+      '7: ' + charMap['7']!,
     ].join(', ');
   }
 
-  _getLanguageString(List<PhoneInputLanguage> languages) {
+  String _getLanguageString(List<PhoneInputLanguage> languages) {
     return languages.map((language) {
       switch (language) {
         case PhoneInputLanguage.EXTENDED:
@@ -236,8 +237,8 @@ class VanityMultitapState extends State<VanityMultitap> {
     }).join(' ');
   }
 
-  _buildOutput() {
-    var output;
+  Widget _buildOutput() {
+    Tuple2<PhoneCaseMode?, String>? output;
 
     if (_currentSimpleMode == GCWSwitchPosition.left) {
       if (_currentMode == GCWSwitchPosition.left) {
@@ -249,7 +250,7 @@ class VanityMultitapState extends State<VanityMultitap> {
 
       if (output == null) return GCWDefaultOutput();
 
-      return GCWDefaultOutput(child: output['output']);
+      return GCWDefaultOutput(child: output.item2);
     } else {
       if (_currentMode == GCWSwitchPosition.left) {
         output =
@@ -264,18 +265,18 @@ class VanityMultitapState extends State<VanityMultitap> {
       return GCWDefaultOutput(
         child: Column(children: [
           GCWOutputText(
-            text: output['output'],
+            text: output.item2,
           ),
           GCWOutput(
             title: i18n(context, 'vanity_multitap_inputmode'),
-            child: _getModeString(output['mode']),
+            child: output.item1 == null ? null : _getModeString(output.item1!),
           )
         ]),
       );
     }
   }
 
-  _getModeString(PhoneCaseMode mode) {
+  String _getModeString(PhoneCaseMode mode) {
     switch (mode) {
       case PhoneCaseMode.UPPER_CASE:
         return 'ABC';
@@ -287,6 +288,8 @@ class VanityMultitapState extends State<VanityMultitap> {
         return '123';
       case PhoneCaseMode.SPECIAL_CHARACTERS:
         return i18n(context, 'vanity_multitap_specialchars');
+      default:
+        return '';
     }
   }
 }

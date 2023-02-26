@@ -12,8 +12,8 @@ class EarwigoTextDeobfuscation extends StatefulWidget {
 }
 
 class EarwigoTextDeobfuscationState extends State<EarwigoTextDeobfuscation> {
-  var _inputController;
-  var _inputObfuscateController;
+  late TextEditingController _inputController;
+  late TextEditingController _inputObfuscateController;
 
   var _currentInput = '';
   var _currentObfuscateInput = '';

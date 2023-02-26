@@ -27,15 +27,15 @@ class IntersectGeodeticAndCircle extends StatefulWidget {
 class IntersectBearingAndCircleState extends State<IntersectGeodeticAndCircle> {
   var _currentIntersections = [];
 
-  var _currentCoordsFormatStart = defaultCoordFormat();
+  var _currentCoordsFormatStart = defaultCoordinateFormat;
   var _currentCoordsStart = defaultCoordinate;
   var _currentBearingStart = {'text': '', 'value': 0.0};
 
-  var _currentCoordsFormatCircle = defaultCoordFormat();
+  var _currentCoordsFormatCircle = defaultCoordinateFormat;
   var _currentCoordsCircle = defaultCoordinate;
   var _currentRadiusCircle = 0.0;
 
-  var _currentOutputFormat = defaultCoordFormat();
+  var _currentOutputFormat = defaultCoordinateFormat;
   List<String> _currentOutput = [];
 
   var _currentMapPoints = <GCWMapPoint>[];
@@ -94,7 +94,7 @@ class IntersectBearingAndCircleState extends State<IntersectGeodeticAndCircle> {
     );
   }
 
-  _getEndPoint() {
+  GCWMapPoint _getEndPoint() {
     var mapPoint = GCWMapPoint(
         point: projection(
             _currentCoordsStart,
@@ -142,7 +142,7 @@ class IntersectBearingAndCircleState extends State<IntersectGeodeticAndCircle> {
         ells: defaultEllipsoid()));
   }
 
-  _showOutput(List<LatLng> output) {
+  void _showOutput(List<LatLng> output) {
     if (output == null) {
       _currentIntersections = [];
 

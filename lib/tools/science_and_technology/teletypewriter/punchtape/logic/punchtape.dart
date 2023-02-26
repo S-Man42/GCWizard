@@ -1,4 +1,5 @@
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/_common/logic/teletypewriter.dart';
 
 List<String> decenary2segments(String decenary, bool order12345, TeletypewriterCodebook language) {
@@ -203,8 +204,8 @@ String? segments2decenary(List<String> segments, bool order54321, Teletypewriter
   return convertBase(result, 2, 10);
 }
 
-List<List<String>> encodePunchtape(String input, TeletypewriterCodebook language, bool order12345) {
-  if (input == null) return [];
+Segments encodePunchtape(String? input, TeletypewriterCodebook language, bool order12345) {
+  if (input == null) return Segments.Empty();
 
   List<List<String>> result = [];
   List<String> code = [];
@@ -212,15 +213,12 @@ List<List<String>> encodePunchtape(String input, TeletypewriterCodebook language
   code.forEach((element) {
     if (int.tryParse(element) != null) result.add(decenary2segments(element, order12345, language));
   });
-  return result;
+  return Segments(displays: result);
 }
 
-Map<String, Object> decodeTextPunchtape(String? inputs, TeletypewriterCodebook language, bool order12345) {
-  if (inputs == null || inputs.length == 0)
-    return {
-      'displays': <List<String>>[],
-      'text': '',
-    };
+SegmentsText decodeTextPunchtape(String? inputs, TeletypewriterCodebook language, bool order12345) {
+  if (inputs == null || inputs.isEmpty) return SegmentsText(displays: [], text: '');
+
   var displays = <List<String>>[];
   List<String> text = [];
   List<int> intList = List<int>.filled(1, 0);
@@ -234,11 +232,11 @@ Map<String, Object> decodeTextPunchtape(String? inputs, TeletypewriterCodebook l
 
     displays.add(binary2segments(element, language));
   });
-  return {'displays': displays, 'text': text.join('')};
+  return SegmentsText(displays: displays, text: text.join(''));
 }
 
-Map<String, Object> decodeVisualPunchtape(List<String?> inputs, TeletypewriterCodebook language, bool order12345) {
-  if (inputs.length == 0) return {'displays': <List<String>>[], 'text': ''};
+SegmentsText decodeVisualPunchtape(List<String?> inputs, TeletypewriterCodebook language, bool order12345) {
+  if (inputs.isEmpty) return SegmentsText(displays: [], text: '');
 
   var displays = <List<String>>[];
 
@@ -259,5 +257,5 @@ Map<String, Object> decodeVisualPunchtape(List<String?> inputs, TeletypewriterCo
   });
 
   // convert list of decimal to character using String decodeCCITT(List<int> values, TeletypewriterCodebook language)
-  return {'displays': displays, 'text': decodeTeletypewriter(intList, language)};
+  return SegmentsText(displays: displays, text: decodeTeletypewriter(intList, language));
 }

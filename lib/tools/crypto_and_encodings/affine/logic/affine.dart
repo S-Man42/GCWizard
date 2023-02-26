@@ -35,11 +35,11 @@ final _AffineDigitToAZ = switchMapKeyValue(_AZToAffineDigit);
 
 final _reverseKeyA = {1: 1, 3: 9, 5: 21, 7: 15, 9: 3, 11: 19, 15: 7, 17: 23, 19: 11, 21: 5, 23: 17, 25: 25};
 
-String encodeAffine(String input, int keyA, int keyB) {
-  int affinePlain = 0;
-  String affineCipher = '';
+String encodeAffine(String? input, int keyA, int keyB) {
+  int? affinePlain;
+  String? affineCipher;
 
-  if (input == null || input == '') return '';
+  if (input == null || input.isEmpty) return '';
 
   return input.toUpperCase().split('').map((character) {
     if (character == ' ') return ' ';
@@ -47,24 +47,26 @@ String encodeAffine(String input, int keyA, int keyB) {
     affinePlain = _AZToAffineDigit[character];
     if (affinePlain == null) return '';
 
-    affinePlain = (keyA * affinePlain + keyB) % 26;
+    affinePlain = (keyA * affinePlain! + keyB) % 26;
 
     affineCipher = _AffineDigitToAZ[affinePlain];
     return affineCipher != null ? affineCipher : '';
   }).join();
 }
 
-String decodeAffine(String input, int keyA, int keyB) {
-  if (input == null || input == '') return '';
+String decodeAffine(String? input, int keyA, int keyB) {
+  if (input == null || input.isEmpty) return '';
 
-  int affineCipher = 0;
-  String affinePlain = '';
+  int? affineCipher;
+  String? affinePlain;
 
   return input.toUpperCase().split('').map((character) {
     if (character == ' ') return ' ';
 
     affineCipher = _AZToAffineDigit[character];
-    affineCipher = _reverseKeyA[keyA] * (affineCipher - keyB) % 26;
+    if (affineCipher == null) return '';
+
+    affineCipher = _reverseKeyA[keyA]! * (affineCipher! - keyB) % 26;
 
     affinePlain = _AffineDigitToAZ[affineCipher];
     return affinePlain != null ? affinePlain : '';

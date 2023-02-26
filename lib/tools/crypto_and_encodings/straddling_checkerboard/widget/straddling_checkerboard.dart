@@ -18,12 +18,12 @@ class StraddlingCheckerboard extends StatefulWidget {
 }
 
 class StraddlingCheckerboardState extends State<StraddlingCheckerboard> {
-  var _plainTextController;
-  var _chiffreTextController;
-  var _KeyController;
-  var _AlphabetWordController;
-  var _AlphabetController;
-  var _ColumnOrderController;
+  late TextEditingController _plainTextController;
+  late TextEditingController _chiffreTextController;
+  late TextEditingController _KeyController;
+  late TextEditingController _AlphabetWordController;
+  late TextEditingController _AlphabetController;
+  late TextEditingController _ColumnOrderController;
 
   PolybiosMode _currentAlphabetMode = PolybiosMode.AZ09;
   var _currentMode = GCWSwitchPosition.right;
@@ -169,7 +169,7 @@ class StraddlingCheckerboardState extends State<StraddlingCheckerboard> {
                   padding: EdgeInsets.only(right: DEFAULT_MARGIN),
                   child: Column(
                     children: [
-                      GCWDropDown(
+                      GCWDropDown<PolybiosMode>(
                         value: _currentAlphabetMode,
                         onChanged: (value) {
                           setState(() {
@@ -246,7 +246,7 @@ class StraddlingCheckerboardState extends State<StraddlingCheckerboard> {
     );
   }
 
-  _buildOutput() {
+  Widget _buildOutput() {
     StraddlingCheckerboardOutput _currentOutput = StraddlingCheckerboardOutput('', '');
 
     if (_currentMode == GCWSwitchPosition.left) {

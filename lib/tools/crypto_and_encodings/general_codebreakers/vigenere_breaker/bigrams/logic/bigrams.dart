@@ -9,13 +9,13 @@ import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/vigene
 class Bigrams {
   static const int maxAlphabetLength = 32;
 
-  String alphabet;
-  Map<String, String> replacementList;
+  late String alphabet;
+  Map<String, String>? replacementList;
   // The bigram with the lowest probability receives the value 0, the one with the greatest probability receives the value 1000000
-  List<List<int>> bigrams;
+  late List<List<int>> bigrams;
 }
 
-Bigrams getBigrams(VigenereBreakerAlphabet alphabet) {
+Bigrams? getBigrams(VigenereBreakerAlphabet alphabet) {
   switch (alphabet) {
     case VigenereBreakerAlphabet.ENGLISH:
       return EnglishBigrams();
@@ -30,8 +30,8 @@ Bigrams getBigrams(VigenereBreakerAlphabet alphabet) {
   }
 }
 
-double calc_fitnessBigrams(String txt, Bigrams bigrams) {
-  if (txt == null || txt == '') return null;
+double? calc_fitnessBigrams(String? txt, Bigrams? bigrams) {
+  if (txt == null || txt.isEmpty) return null;
 
   if ((bigrams == null) || (bigrams.alphabet == null) || (bigrams.bigrams == null)) return null;
 
@@ -49,7 +49,7 @@ double calc_fitnessBigrams(String txt, Bigrams bigrams) {
   for (var idx = 0; idx < (plain_bin.length - 1); idx++) {
     var ch1 = plain_bin[idx];
     var ch2 = plain_bin[idx + 1];
-    if (ch1 >= 0 && ch2 >= 0) fitness += bigrams.bigrams[ch1][ch2];
+    if (ch1 >= 0 && ch2 >= 0) fitness += bigrams.bigrams![ch1][ch2];
   }
 
   return fitness / 10000 / (plain_bin.length - 1);

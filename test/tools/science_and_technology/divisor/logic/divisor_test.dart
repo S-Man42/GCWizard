@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/science_and_technology/divisor/logic/divisor.dar
 
 void main() {
   group("divisor", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : []},
       {'input' : 0, 'expectedOutput' : [0]},
       {'input' : 1, 'expectedOutput' : [1]},
@@ -14,11 +14,11 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = divisors(elem['input']);
+        var _actual = divisors(elem['input'] as int);
         expect(_actual, elem['expectedOutput']);
-        var length = elem['expectedOutput'].length;
+        var length = (elem['expectedOutput'] as List<int>).length;
         for (int i = 0; i < length; i++) {
-          expect(_actual[i], elem['expectedOutput'][i]);
+          expect(_actual[i], (elem['expectedOutput'] as List<int>)[i]);
         }
       });
     });

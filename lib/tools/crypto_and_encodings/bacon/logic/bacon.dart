@@ -34,8 +34,8 @@ const AZToBacon = {
 // U has same code as V, so U replaces V in mapping; V will not occur in this map
 final BaconToAZ = switchMapKeyValue(AZToBacon);
 
-String encodeBacon(String input, bool inverse, bool binary) {
-  if (input == null || input == '') return '';
+String encodeBacon(String? input, bool inverse, bool binary) {
+  if (input == null || input.isEmpty) return '';
 
   var out = input.toUpperCase().split('').map((character) {
     var bacon = AZToBacon[character];
@@ -44,15 +44,15 @@ String encodeBacon(String input, bool inverse, bool binary) {
 
   if (inverse) out = _inverseString(out);
 
-  if (binary & (out != null)) {
+  if (binary) {
     out = substitution(out, {'A': '0', 'B': '1'});
   }
 
   return out;
 }
 
-String decodeBacon(String input, bool invers, bool binary) {
-  if (input == null || input == '') return '';
+String decodeBacon(String? input, bool invers, bool binary) {
+  if (input == null || input.isEmpty) return '';
 
   if (binary) {
     input = input.toUpperCase().replaceAll(RegExp('[A-B]'), '');

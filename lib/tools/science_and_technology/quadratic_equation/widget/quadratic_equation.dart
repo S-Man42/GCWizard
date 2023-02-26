@@ -19,9 +19,9 @@ class QuadraticEquationState extends State<QuadraticEquation> {
   var _currentA = '0.0';
   var _currentB = '0.0';
   var _currentC = '0.0';
-  var _aController;
-  var _bController;
-  var _cController;
+  late TextEditingController _aController;
+  late TextEditingController _bController;
+  late TextEditingController _cController;
 
   @override
   void initState() {
@@ -92,7 +92,7 @@ class QuadraticEquationState extends State<QuadraticEquation> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    Map<String, String> result = new Map<String, String>();
+    Map<String, String> result = Map<String, String>();
     result = solveQuadraticEquation(_currentA, _currentB, _currentC);
     if (result[''] == null)
       return GCWDefaultOutput(

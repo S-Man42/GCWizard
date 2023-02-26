@@ -12,7 +12,7 @@ class GCCode extends StatefulWidget {
 }
 
 class GCCodeState extends State<GCCode> {
-  var _gcCodeInputController;
+  late TextEditingController _gcCodeInputController;
 
   String _currentGCCodeInput = 'GC';
   int _currentID = 1;
@@ -65,7 +65,7 @@ class GCCodeState extends State<GCCode> {
     );
   }
 
-  _buildOutput(BuildContext context) {
+  String _buildOutput(BuildContext context) {
     var output = '';
 
     if (_currentMode == GCWSwitchPosition.right) {

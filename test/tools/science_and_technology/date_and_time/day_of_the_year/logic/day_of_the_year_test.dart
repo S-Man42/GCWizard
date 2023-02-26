@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/science_and_technology/date_and_time/day_of_the_
 
 void main() {
   group("DayOfTheYear.calculateDayInfos:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'year' : null, 'day': null, 'expectedOutput' : null},
 
       {'year' : 2022, 'day': 60, 'expectedOutput' : DayOfTheYearOutput(DateTime(2022, 3, 1), 60, 2, 3, 9, 10)},
@@ -24,23 +24,23 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('year: ${elem['year']}, day: ${elem['day']}', () {
-        var _actual = calculateDayInfos(elem['year'], elem['day']);
+        var _actual = calculateDayInfos(elem['year'] as int?, elem['day'] as int?);
         if (_actual == null)
           expect(_actual, elem['expectedOutput']);
         else {
-          expect(_actual.date, elem['expectedOutput'].date);
-          expect(_actual.dayNumber, elem['expectedOutput'].dayNumber);
-          expect(_actual.weekday, elem['expectedOutput'].weekday);
-          expect(_actual.weekdayAlternate, elem['expectedOutput'].weekdayAlternate);
-          expect(_actual.weekNumberIso, elem['expectedOutput'].weekNumberIso);
-          expect(_actual.weekNumberAlternate, elem['expectedOutput'].weekNumberAlternate);
+          expect(_actual.date, (elem['expectedOutput'] as DayOfTheYearOutput).date);
+          expect(_actual.dayNumber, (elem['expectedOutput'] as DayOfTheYearOutput).dayNumber);
+          expect(_actual.weekday, (elem['expectedOutput'] as DayOfTheYearOutput).weekday);
+          expect(_actual.weekdayAlternate, (elem['expectedOutput'] as DayOfTheYearOutput).weekdayAlternate);
+          expect(_actual.weekNumberIso, (elem['expectedOutput'] as DayOfTheYearOutput).weekNumberIso);
+          expect(_actual.weekNumberAlternate, (elem['expectedOutput'] as DayOfTheYearOutput).weekNumberAlternate);
         }
       });
     });
   });
 
   group("DayOfTheYear.isoWeekOfYear:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
 
       {'input' : DateTime(2020, 1, 1), 'expectedOutput' : 1},
@@ -62,7 +62,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = isoWeekOfYear(elem['input']);
+        var _actual = isoWeekOfYear(elem['input'] as DateTime);
         expect(_actual, elem['expectedOutput']);
       });
     });

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_metadata.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/persistence/json_provider.dart';
@@ -13,10 +14,11 @@ import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_
 import 'package:gc_wizard/tools/science_and_technology/maya_calendar/logic/maya_calendar.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:prefs/prefs.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 
 enum PreferencesInitMode { STARTUP, REINIT_ALL, REINIT_SINGLE }
 
-void initDefaultSettings(PreferencesInitMode mode, {String reinitSinglePreference: ''}) {
+void initDefaultSettings(PreferencesInitMode mode, {String reinitSinglePreference = ''}) {
   if (mode == PreferencesInitMode.REINIT_SINGLE) {
     if (reinitSinglePreference.isEmpty) return;
   }
@@ -56,18 +58,22 @@ void initDefaultSettings(PreferencesInitMode mode, {String reinitSinglePreferenc
   }
 
   var clipboardData = Prefs.getStringList(PREFERENCE_CLIPBOARD_ITEMS);
-  if (reinitSinglePreference == PREFERENCE_CLIPBOARD_ITEMS || _reinitAll || clipboardData == null) {
+  if (reinitSinglePreference == PREFERENCE_CLIPBOARD_ITEMS || _reinitAll) {
     Prefs.setStringList(PREFERENCE_CLIPBOARD_ITEMS, []);
   } else {
     clipboardData.removeWhere((item) {
       try {
-        var createdMS = int.tryParse(jsonDecode(item)['created']);
+        var decoded = jsonDecode(item)['created'];
+        if (decoded == null || !(decoded is String))
+          return true;
+
+        var createdMS = int.tryParse(decoded);
         if (createdMS == null)
           return true;
 
         var created = DateTime.fromMillisecondsSinceEpoch(createdMS);
         return created
-            .isBefore(DateTime.now().subtract(Duration(days: Prefs.get(PREFERENCE_CLIPBOARD_KEEP_ENTRIES_IN_DAYS))));
+            .isBefore(DateTime.now().subtract(Duration(days: Prefs.getInt(PREFERENCE_CLIPBOARD_KEEP_ENTRIES_IN_DAYS))));
       } catch (e) {
         return true;
       }
@@ -102,9 +108,9 @@ void initDefaultSettings(PreferencesInitMode mode, {String reinitSinglePreferenc
   if (reinitSinglePreference == PREFERENCE_COORD_DEFAULT_FORMAT ||
           _reinitAll ||
           Prefs.get(PREFERENCE_COORD_DEFAULT_FORMAT) == null ||
-          Prefs.get(PREFERENCE_COORD_DEFAULT_FORMAT) == 'coords_deg' //old name for DMM until v1.1.0
+          Prefs.get(PREFERENCE_COORD_DEFAULT_FORMAT) == 'coords_deg' //backward compatibility: old name for DMM until v1.1.0
       ) {
-    Prefs.setString(PREFERENCE_COORD_DEFAULT_FORMAT, getCoordinateFormatByKey(CoordFormatKey.DMM).persistenceKey);
+    Prefs.setString(PREFERENCE_COORD_DEFAULT_FORMAT, coordinateFormatMetadataByKey(CoordinateFormatKey.DMM).persistenceKey);
   }
 
   if (reinitSinglePreference == PREFERENCE_COORD_DEFAULT_FORMAT_SUBTYPE ||
@@ -140,8 +146,7 @@ void initDefaultSettings(PreferencesInitMode mode, {String reinitSinglePreferenc
   var _favorites = Prefs.getStringList(PREFERENCE_FAVORITES);
   if (reinitSinglePreference == PREFERENCE_FAVORITES ||
       _reinitAll ||
-      _favorites == null ||
-      _favorites.where((element) => element != null && element.isNotEmpty).isEmpty) {
+      _favorites.where((element) => element.isNotEmpty).isEmpty) {
     Prefs.setStringList(PREFERENCE_FAVORITES, [
       'AlphabetValues_alphabetvalues',
       'Morse_morse',
@@ -255,7 +260,11 @@ void initDefaultSettings(PreferencesInitMode mode, {String reinitSinglePreferenc
   if (reinitSinglePreference == PREFERENCE_THEME_FONT_SIZE ||
       _reinitAll ||
       Prefs.get(PREFERENCE_THEME_FONT_SIZE) == null) {
-    Prefs.setDouble(PREFERENCE_THEME_FONT_SIZE, Prefs.get('font_size') ?? 16.0); //font_size == pre version 1.2.0
+    var loadedFontSize = Prefs.getDouble('font_size'); //backward compatibility: font_size == pre version 1.2.0
+    if (loadedFontSize == 0.0)
+      loadedFontSize = 16.0;
+
+    Prefs.setDouble(PREFERENCE_THEME_FONT_SIZE, loadedFontSize);
   }
 
   if (reinitSinglePreference == PREFERENCE_TOOL_COUNT || _reinitAll || Prefs.get(PREFERENCE_TOOL_COUNT) == null) {

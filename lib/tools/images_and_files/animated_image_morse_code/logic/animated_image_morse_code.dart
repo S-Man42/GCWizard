@@ -12,7 +12,7 @@ import 'package:tuple/tuple.dart';
 class AnimatedImageMorseOutput extends AnimatedImageOutput {
   List<List<int>> imagesFiltered;
 
-  AnimatedImageMorseOutput(animatedImageOutput, this.imagesFiltered)
+  AnimatedImageMorseOutput(AnimatedImageOutput animatedImageOutput, this.imagesFiltered)
   : super (animatedImageOutput.images, animatedImageOutput.durations, animatedImageOutput.linkList);
 }
 
@@ -24,9 +24,10 @@ class MorseCodeOutput {
 }
 
 Future<AnimatedImageMorseOutput?> analyseImageMorseCodeAsync(GCWAsyncExecuterParameters? jobData) async {
-  if (jobData == null) return null;
+  if (jobData?.parameters is! Uint8List) return null;
 
-  var output = await analyseImageMorseCode(jobData.parameters, sendAsyncPort: jobData.sendAsyncPort);
+  var data = jobData?.parameters as Uint8List;
+  var output = await analyseImageMorseCode(data, sendAsyncPort: jobData!.sendAsyncPort);
 
   jobData.sendAsyncPort.send(output);
 
@@ -53,11 +54,10 @@ Future<AnimatedImageMorseOutput?> analyseImageMorseCode(Uint8List bytes, {SendPo
 }
 
 Future<Uint8List?> createImageAsync(GCWAsyncExecuterParameters? jobData) async {
-  if (jobData == null) return null;
+  if (jobData?.parameters is! Tuple4<Uint8List, Uint8List, String, int>) return null;
 
-  var output = await _createImage(
-      jobData.parameters.item1, jobData.parameters.item2, jobData.parameters.item3, jobData.parameters.item4,
-      sendAsyncPort: jobData.sendAsyncPort);
+  var data = jobData!.parameters as Tuple4<Uint8List, Uint8List, String, int>;
+  var output = await _createImage(data.item1, data.item2, data.item3, data.item4, sendAsyncPort: jobData.sendAsyncPort);
 
   jobData.sendAsyncPort.send(output);
 
@@ -66,7 +66,7 @@ Future<Uint8List?> createImageAsync(GCWAsyncExecuterParameters? jobData) async {
 
 Future<Uint8List?> _createImage(Uint8List? highImage, Uint8List? lowImage, String? input, int ditDuration,
     {SendPort? sendAsyncPort}) async {
-  if (input == null || input == '') return null;
+  if (input == null || input.isEmpty) return null;
   if (highImage == null || lowImage == null) return null;
   if (ditDuration <= 0) return null;
 
@@ -177,7 +177,7 @@ List<Tuple2<bool, int>>? _buildTimeList(List<int>? durations, List<bool>? onSign
 
   if (durations == null || onSignal == null || durations.length != onSignal.length) return null;
 
-  if (durations.length == 0) return timeList;
+  if (durations.isEmpty) return timeList;
 
   timeList.add(Tuple2<bool, int>(onSignal[i], durations[i]));
   for (i = 1; i < durations.length; i++) {
@@ -191,7 +191,7 @@ List<Tuple2<bool, int>>? _buildTimeList(List<int>? durations, List<bool>? onSign
 }
 
 Tuple3<int, int, int>? foundSignalTimes(List<Tuple2<bool, int>>? timeList) {
-  if (timeList == null || timeList.length == 0) return null;
+  if (timeList == null || timeList.isEmpty) return null;
 
   const toler = 1.2;
   var onl = <int>[];
@@ -206,9 +206,9 @@ Tuple3<int, int, int>? foundSignalTimes(List<Tuple2<bool, int>>? timeList) {
   onl.sort();
   offl.sort();
 
-  var t1 = onl.length > 0 ? onl[0] : 99999999;
-  var t2 = offl.length > 0 ? offl[0] : 99999999;
-  var t3 = offl.length > 0 ? offl[0] : 99999999;
+  var t1 = onl.isNotEmpty ? onl[0] : 99999999;
+  var t2 = offl.isNotEmpty ? offl[0] : 99999999;
+  var t3 = offl.isNotEmpty ? offl[0] : 99999999;
   var calct2 = true;
 
   for (int i = 1; i < onl.length; i++) {

@@ -4,7 +4,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/beghilos/logic/beghilos.dar
 void main() {
   
   group("Beghilos.encodeBeghilos:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '7718', 'expectedOutput' : 'BILL'},
       {'input' : '7353', 'expectedOutput' : 'ESEL'},
@@ -14,14 +14,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeBeghilos(elem['input']);
+        var _actual = encodeBeghilos(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
   group("Beghilos.decodeBeghilos:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : 'BILL', 'expectedOutput' : '7718'},
       {'input' : 'ESEL', 'expectedOutput' : '7353'},
@@ -33,7 +33,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeBeghilos(elem['input']);
+        var _actual = decodeBeghilos(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });

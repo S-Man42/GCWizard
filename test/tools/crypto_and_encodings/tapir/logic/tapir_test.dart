@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/tapir/logic/tapir.dart';
 
 void main() {
   group("Tapir.encryptTapir:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
@@ -21,14 +21,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, keyOneTimePad: ${elem['keyOneTimePad']}', () {
-        var _actual = encryptTapir(elem['input'], elem['keyOneTimePad']);
+        var _actual = encryptTapir(elem['input'] as String?, elem['keyOneTimePad'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
   group("Tapir.decryptTapir:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
@@ -54,7 +54,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, keyOneTimePad: ${elem['keyOneTimePad']}', () {
-        var _actual = decryptTapir(elem['input'], elem['keyOneTimePad']);
+        var _actual = decryptTapir(elem['input'] as String?, elem['keyOneTimePad'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });

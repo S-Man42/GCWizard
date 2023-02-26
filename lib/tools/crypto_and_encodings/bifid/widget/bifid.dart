@@ -20,8 +20,8 @@ class Bifid extends StatefulWidget {
 }
 
 class BifidState extends State<Bifid> {
-  var _inputController;
-  var _alphabetController;
+  late TextEditingController _inputController;
+  late TextEditingController _alphabetController;
 
   var _currentMode = GCWSwitchPosition.right;
 
@@ -80,7 +80,7 @@ class BifidState extends State<Bifid> {
 
         GCWTextDivider(text: i18n(context, 'common_alphabet')),
 
-        GCWAlphabetDropDown(
+        GCWAlphabetDropDown<PolybiosMode>(
           value: _currentBifidMode,
           items: BifidModeItems,
           customModeKey: PolybiosMode.CUSTOM,
@@ -125,15 +125,15 @@ class BifidState extends State<Bifid> {
     );
   }
 
-  _buildOutput() {
-    var key;
+  Widget _buildOutput() {
+    String key;
     if (_currentMatrixMode == GCWSwitchPosition.left) {
       key = "12345";
     } else {
       key = "123456";
     }
 
-    if (_currentInput == null || _currentInput.length == 0) return GCWDefaultOutput(child: '');
+    if (_currentInput == null || _currentInput.isEmpty) return GCWDefaultOutput(child: '');
 
     var _currentOutput = BifidOutput('', '', '');
     if (_currentMode == GCWSwitchPosition.left) {

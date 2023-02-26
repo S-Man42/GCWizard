@@ -14,10 +14,10 @@ class ADFGVX extends StatefulWidget {
 }
 
 class ADFGVXState extends State<ADFGVX> {
-  var _inputController;
-  var _substitutionKeyController;
-  var _transpositionKeyController;
-  var _alphabetController;
+  late TextEditingController _inputController;
+  late TextEditingController _substitutionKeyController;
+  late TextEditingController _transpositionKeyController;
+  late TextEditingController _alphabetController;
 
   String _currentInput = '';
   String _currentSubstitutionKey = '';
@@ -103,7 +103,7 @@ class ADFGVXState extends State<ADFGVX> {
           },
         ),
         GCWTextDivider(text: i18n(context, 'common_alphabet')),
-        GCWAlphabetDropDown(
+        GCWAlphabetDropDown<PolybiosMode>(
           value: _currentPolybiosMode,
           items: polybiosModeItems,
           customModeKey: PolybiosMode.CUSTOM,
@@ -125,8 +125,8 @@ class ADFGVXState extends State<ADFGVX> {
     );
   }
 
-  _calculateOutput() {
-    var output = '';
+  String _calculateOutput() {
+    String? output;
 
     if (_currentMode == GCWSwitchPosition.left) {
       if (_currentADFGVXMode == GCWSwitchPosition.left) {

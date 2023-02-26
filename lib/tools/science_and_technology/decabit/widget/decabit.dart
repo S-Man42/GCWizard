@@ -17,9 +17,9 @@ class Decabit extends StatefulWidget {
 }
 
 class DecabitState extends State<Decabit> {
-  var _inputController;
-  var _aController;
-  var _bController;
+  late TextEditingController _inputController;
+  late TextEditingController _aController;
+  late TextEditingController _bController;
 
   var _currentInput = '';
   var _currentA = '+';
@@ -141,12 +141,12 @@ class DecabitState extends State<Decabit> {
     ]);
   }
 
-  _addCharacter(String input) {
+  void _addCharacter(String input) {
     _currentInput = textControllerInsertText(input, _currentInput, _inputController);
   }
 
-  _buildOutput() {
-    if (_currentInput.length == 0 || _currentA.length == 0 || _currentB.length == 0) return '';
+  String _buildOutput() {
+    if (_currentInput.isEmpty || _currentA.isEmpty || _currentB.isEmpty) return '';
 
     var key = {'+': _currentA, '-': _currentB};
     return _currentMode == GCWSwitchPosition.left

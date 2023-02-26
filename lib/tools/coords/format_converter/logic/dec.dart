@@ -11,10 +11,10 @@ DEC latLonToDEC(LatLng coord) {
   return DEC(coord.latitude, coord.longitude);
 }
 
-int sign(String? match) {
-  if (match == null) return 1;
+int latLngPartSign(String? text) {
+  if (text == null) return 1;
 
-  if (match[0].contains(RegExp(r'[SW-]', caseSensitive: false))) {
+  if (text[0].contains(RegExp(r'[SW-]', caseSensitive: false))) {
     return -1;
   }
 
@@ -29,7 +29,7 @@ String? prepareInput(String? text, {bool wholeString = false}) {
     regexEnd = wholeString ? '\$' : '';
   }
 
-  if (text.length == 0) return null;
+  if (text.isEmpty) return null;
 
   return text;
 }
@@ -79,7 +79,7 @@ DEC? parseDEC(String? input, {bool wholeString = false}) {
   if (regex.hasMatch(input)) {
     var matches = regex.firstMatch(input);
 
-    var latSign = sign(matches.group(1));
+    var latSign = latLngPartSign(matches.group(1));
     var latDegrees = 0.0;
     if (matches.group(3) != null) {
       latDegrees = latSign * double.parse('${matches.group(2)}.${matches.group(3)}');
@@ -87,7 +87,7 @@ DEC? parseDEC(String? input, {bool wholeString = false}) {
       latDegrees = latSign * double.parse('${matches.group(2)}.0');
     }
 
-    var lonSign = sign(matches.group(4));
+    var lonSign = latLngPartSign(matches.group(4));
     var lonDegrees = 0.0;
     if (matches.group(6) != null) {
       lonDegrees = lonSign * double.parse('${matches.group(5)}.${matches.group(6)}');
@@ -106,7 +106,7 @@ DEC? _parseDECTrailingSigns(String text) {
   if (regex.hasMatch(text)) {
     var matches = regex.firstMatch(text);
 
-    var latSign = sign(matches.group(3));
+    var latSign = latLngPartSign(matches.group(3));
     var latDegrees = 0.0;
     if (matches.group(2) != null) {
       latDegrees = latSign * double.parse('${matches.group(1)}.${matches.group(2)}');
@@ -114,7 +114,7 @@ DEC? _parseDECTrailingSigns(String text) {
       latDegrees = latSign * double.parse('${matches.group(1)}.0');
     }
 
-    var lonSign = sign(matches.group(6));
+    var lonSign = latLngPartSign(matches.group(6));
     var lonDegrees = 0.0;
     if (matches.group(5) != null) {
       lonDegrees = lonSign * double.parse('${matches.group(4)}.${matches.group(5)}');

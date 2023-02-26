@@ -1,25 +1,52 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
+import 'package:gc_wizard/application/settings/logic/preferences.dart';
+import 'package:gc_wizard/application/theme/fixed_colors.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_paste_button.dart';
+import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_delete_alertdialog.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_divider.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/gcw_checkbox.dart';
+import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
+import 'package:gc_wizard/common_widgets/gcw_key_value_editor.dart';
 import 'package:gc_wizard/common_widgets/gcw_popup_menu.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_text_export.dart';
 import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
+import 'package:gc_wizard/tools/coords/coordinate_format_parser/logic/latlon.dart';
+import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
+import 'package:gc_wizard/tools/coords/map_view/widget/gcw_mapview.dart';
+import 'package:gc_wizard/tools/coords/variable_coordinate/persistence/json_provider.dart' as var_coords_provider;
+import 'package:gc_wizard/tools/coords/variable_coordinate/persistence/model.dart' as var_coords_model;
+import 'package:gc_wizard/tools/coords/variable_coordinate/widget/variable_coordinate.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
+import 'package:gc_wizard/tools/formula_solver/logic/formula_painter.dart';
+import 'package:gc_wizard/tools/formula_solver/logic/formula_parser.dart';
 import 'package:gc_wizard/tools/formula_solver/persistence/json_provider.dart';
 import 'package:gc_wizard/tools/formula_solver/persistence/model.dart';
-import 'package:gc_wizard/tools/formula_solver/widget/formula_solver_formulas.dart';
+import 'package:gc_wizard/utils/alphabets.dart';
+import 'package:gc_wizard/utils/json_utils.dart';
+import 'package:gc_wizard/utils/math_utils.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
+import 'package:prefs/prefs.dart';
+
+part 'package:gc_wizard/tools/formula_solver/widget/formula_replace_dialog.dart';
+part 'package:gc_wizard/tools/formula_solver/widget/formula_solver_formulas.dart';
+part 'package:gc_wizard/tools/formula_solver/widget/formula_solver_values.dart';
 
 class FormulaSolverFormulaGroups extends StatefulWidget {
   @override
@@ -27,13 +54,13 @@ class FormulaSolverFormulaGroups extends StatefulWidget {
 }
 
 class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> {
-  var _newGroupController;
-  var _editGroupController;
+  late TextEditingController _newGroupController;
+  late TextEditingController _editGroupController;
   var _currentNewName = '';
   var _currentEditedName = '';
-  var _currentEditId;
+  int? _currentEditId;
 
-  ThemeColors _themeColors;
+  ThemeColors _themeColors = themeColors();
 
   @override
   void initState() {
@@ -105,10 +132,10 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
     return name;
   }
 
-  _importFromClipboard(String data) {
+  void _importFromClipboard(String data) {
     try {
       data = normalizeCharacters(data);
-      var group = FormulaGroup.fromJson(jsonDecode(data));
+      var group = FormulaGroup.fromJson(asJsonMap(jsonDecode(data)));
       group.name = _createImportGroupName(group.name);
 
       setState(() {
@@ -120,8 +147,8 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
     }
   }
 
-  _addNewGroup() {
-    if (_currentNewName.length > 0) {
+  void _addNewGroup() {
+    if (_currentNewName.isNotEmpty) {
       var group = FormulaGroup(_currentNewName);
       insertGroup(group);
 
@@ -130,15 +157,15 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
     }
   }
 
-  _updateGroup() {
+  void _updateGroup() {
     updateFormulaGroups();
   }
 
-  _removeGroup(FormulaGroup group) {
+  void _removeGroup(FormulaGroup group) {
     deleteGroup(group.id);
   }
 
-  _exportGroup(FormulaGroup group) {
+  void _exportGroup(FormulaGroup group) {
     var mode = TextExportMode.QR;
     String text = jsonEncode(group.toMap()).toString();
     text = normalizeCharacters(text);
@@ -166,18 +193,18 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
         cancelButton: false);
   }
 
-  _buildGroupList(BuildContext context) {
+  Column _buildGroupList(BuildContext context) {
     var odd = true;
     var rows = formulaGroups.map((group) {
       var formulaTool = GCWTool(
-          tool: FormulaSolverFormulas(group: group),
+          tool: _FormulaSolverFormulas(group: group),
           toolName: '${group.name} - ${i18n(context, 'formulasolver_formulas')}',
           helpSearchString: 'formulasolver_formulas',
           defaultLanguageToolName:
-              '${group.name} - ${i18n(context, 'formulasolver_formulas', useDefaultLanguage: true)}');
+              '${group.name} - ${i18n(context, 'formulasolver_formulas', useDefaultLanguage: true)}', id: '',);
 
-      Future _navigateToSubPage(context) async {
-        Navigator.push(context, NoAnimationMaterialPageRoute(builder: (context) => formulaTool)).whenComplete(() {
+      Future<void> _navigateToSubPage(BuildContext context) async {
+        Navigator.push(context, NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => formulaTool)).whenComplete(() {
           setState(() {});
         });
       }
@@ -270,7 +297,7 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
       return output;
     }).toList();
 
-    if (rows.length > 0) {
+    if (rows.isNotEmpty) {
       rows.insert(0, GCWTextDivider(text: i18n(context, 'formulasolver_groups_currentgroups')));
     }
 

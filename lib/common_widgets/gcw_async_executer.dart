@@ -9,7 +9,7 @@ Isolate? _isolate;
 
 class GCWAsyncExecuterParameters {
   late SendPort sendAsyncPort;
-  final dynamic parameters;
+  final Object? parameters;
 
   GCWAsyncExecuterParameters(this.parameters);
 }
@@ -51,7 +51,6 @@ class _GCWAsyncExecuterState extends State<GCWAsyncExecuter> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.parameter == null) return Container();
     Stream<double> progress() async* {
       var parameter = await widget.parameter();
       if (!_cancel && parameter != null) {
@@ -64,7 +63,7 @@ class _GCWAsyncExecuterState extends State<GCWAsyncExecuter> {
         if (_cancel) _cancelProcess();
 
         await for (var event in _receivePort!) {
-          if (event is Map<String, dynamic> && event['progress'] is double) {
+          if (event is Map<String, dynamic> && event['progress'] is double) { //ToDo NullSafety dynamic ??
             yield event['progress'] as double;
           } else {
             _result = event;

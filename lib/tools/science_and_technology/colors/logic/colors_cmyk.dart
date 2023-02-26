@@ -33,7 +33,7 @@ class CMYK extends GCWBaseColor {
   }
 
   //source: https://github.com/GNOME/gimp/blob/mainline/libgimpcolor/gimpcolorspace.c
-  static CMYK fromRGB(RGB rgb, {double key: 1.0}) {
+  static CMYK fromRGB(RGB rgb, {double key = 1.0}) {
     double c = 1.0 - rgb.redPercentage;
     double m = 1.0 - rgb.greenPercentage;
     double y = 1.0 - rgb.bluePercentage;

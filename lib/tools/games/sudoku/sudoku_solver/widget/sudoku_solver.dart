@@ -51,7 +51,7 @@ class SudokuSolverState extends State<SudokuSolver> {
           ),
         ),
         Container(
-          height: 8 * DOUBLE_DEFAULT_MARGIN
+            height: 8 * DOUBLE_DEFAULT_MARGIN
         ),
         if (_currentSolutions != null && _currentSolutions!.length > 1)
           Row(
@@ -111,42 +111,42 @@ class SudokuSolverState extends State<SudokuSolver> {
             ),
             Expanded(
                 child: Container(
-              child: GCWButton(
-                text: i18n(context, 'sudokusolver_clearcalculated'),
-                onPressed: () {
-                  setState(() {
-                    for (int i = 0; i < 9; i++) {
-                      for (int j = 0; j < 9; j++) {
-                        if (_currentBoard.getFillType(i, j) == SudokuFillType.CALCULATED)
-                          _currentBoard.setValue(i, j, null);
-                      }
-                    }
-                    _currentSolutions = null;
-                  });
-                },
-              ),
-              padding: EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
-            )),
+                  child: GCWButton(
+                    text: i18n(context, 'sudokusolver_clearcalculated'),
+                    onPressed: () {
+                      setState(() {
+                        for (int i = 0; i < 9; i++) {
+                          for (int j = 0; j < 9; j++) {
+                            if (_currentBoard.getFillType(i, j) == SudokuFillType.CALCULATED)
+                              _currentBoard.setValue(i, j, null);
+                          }
+                        }
+                        _currentSolutions = null;
+                      });
+                    },
+                  ),
+                  padding: EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
+                )),
             Expanded(
                 child: Container(
-              child: GCWButton(
-                text: i18n(context, 'sudokusolver_clearall'),
-                onPressed: () {
-                  showDeleteAlertDialog(
-                    context,
-                    i18n(context, 'sudokusolver_clearall_board'),
-                        () {
-                        setState(() {
-                          _currentBoard = SudokuBoard();
+                  child: GCWButton(
+                    text: i18n(context, 'sudokusolver_clearall'),
+                    onPressed: () {
+                      showDeleteAlertDialog(
+                        context,
+                        i18n(context, 'sudokusolver_clearall_board'),
+                            () {
+                          setState(() {
+                            _currentBoard = SudokuBoard();
 
-                          _currentSolutions = null;
-                        });
+                            _currentSolutions = null;
+                          });
+                        },
+                      );
                     },
-                  );
-                },
-              ),
-              padding: EdgeInsets.only(left: DEFAULT_MARGIN),
-            ))
+                  ),
+                  padding: EdgeInsets.only(left: DEFAULT_MARGIN),
+                ))
           ],
         )
       ],
@@ -160,5 +160,5 @@ class SudokuSolverState extends State<SudokuSolver> {
         if (_currentBoard.getFillType(i, j) == SudokuFillType.USER_FILLED) continue;
         _currentBoard.setValue(i, j, _currentSolutions![_currentSolution].getValue(i, j), type: SudokuFillType.CALCULATED);
       }
-    }
+  }
 }

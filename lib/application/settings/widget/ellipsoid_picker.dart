@@ -1,7 +1,7 @@
 part of 'package:gc_wizard/application/settings/widget/settings_coordinates.dart';
 
 class _EllipsoidPicker extends StatefulWidget {
-  final Function onChanged;
+  final void Function(Ellipsoid) onChanged;
 
   const _EllipsoidPicker({Key? key, required this.onChanged}) : super(key: key);
 
@@ -54,11 +54,11 @@ class _EllipsoidPickerState extends State<_EllipsoidPicker> {
 
   @override
   Widget build(BuildContext context) {
-    final _secondCustomValues = [
-      {'key': _keyMinorAxis, 'name': i18n(context, 'coords_ellipsoid_minoraxis')},
-      {'key': _keyInverseFlattening, 'name': i18n(context, 'coords_ellipsoid_inverseflattening')},
-      {'key': _keyFlattening, 'name': i18n(context, 'coords_ellipsoid_flattening')},
-    ];
+    final _secondCustomValues = {
+       _keyMinorAxis: i18n(context, 'coords_ellipsoid_minoraxis'),
+      _keyInverseFlattening: i18n(context, 'coords_ellipsoid_inverseflattening'),
+      _keyFlattening: i18n(context, 'coords_ellipsoid_flattening'),
+    };
 
     return Column(children: <Widget>[
       GCWTwoOptionsSwitch(
@@ -112,10 +112,10 @@ class _EllipsoidPickerState extends State<_EllipsoidPicker> {
                     Expanded(
                         child: GCWDropDown<String>(
                           value: _currentEllipsoidCustom2ndValue,
-                          items: _secondCustomValues.map((value) {
+                          items: _secondCustomValues.entries.map((MapEntry<String, String> value) {
                             return GCWDropDownMenuItem(
-                              value: value['key'],
-                              child: value['name'],
+                              value: value.key,
+                              child: value.value,
                             );
                           }).toList(),
                           onChanged: (String newValue) {
@@ -160,7 +160,7 @@ class _EllipsoidPickerState extends State<_EllipsoidPicker> {
     );
   }
 
-  _setCurrentEllipsoidAndEmitOnChange(BuildContext context) {
+  void _setCurrentEllipsoidAndEmitOnChange(BuildContext context) {
     if (_currentMode == GCWSwitchPosition.left) {
       _firstCustomValueController.clear();
       _secondCustomValueController.clear();

@@ -14,8 +14,8 @@ class Hexadecimal extends StatefulWidget {
 class HexadecimalState extends State<Hexadecimal> {
   var _currentDecimalValue = '';
   var _currentHexValue = '';
-  var _hexController;
-  var _decimalController;
+  late TextEditingController _hexController;
+  late TextEditingController _decimalController;
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
@@ -69,7 +69,7 @@ class HexadecimalState extends State<Hexadecimal> {
     );
   }
 
-  _buildOutput() {
+  String _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       return _currentDecimalValue.split(' ').map((value) => convertBase(value, 10, 16)).join(' ');
     } else {

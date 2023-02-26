@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/roman_numbers/chronogram/lo
 
 void main() {
   group("Chronogram.withoutJU:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : null},
 
@@ -17,14 +17,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeChronogram(elem['input']);
+        var _actual = decodeChronogram(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
   group("Chronogram.JUToIV:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : null},
 
@@ -38,7 +38,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeChronogram(elem['input'], JUToIV: true);
+        var _actual = decodeChronogram(elem['input'] as String?, JUToIV: true);
         expect(_actual, elem['expectedOutput']);
       });
     });

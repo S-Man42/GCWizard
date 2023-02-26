@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/kenny/logic/kenny.dart';
 
 void main() {
   group("KennysCode.encryptKenny:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : '', 'caseSensitive' : false},
       {'input' : '', 'expectedOutput' : '', 'caseSensitive' : false},
       {'input' : 'A', 'replaceCharacters': null, 'expectedOutput' : '', 'caseSensitive' : false},
@@ -39,14 +39,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encryptKenny(elem['input'], elem['replaceCharacters'], elem['caseSensitive']);
+        var _actual = encryptKenny(elem['input'] as String?, elem['replaceCharacters'] as List<String>, elem['caseSensitive'] as bool);
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
   group("KennysCode.decryptKenny:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : '', 'caseSensitive' : true},
       {'input' : '', 'expectedOutput' : '', 'caseSensitive' : true},
       {'input' : 'A', 'replaceCharacters': null, 'expectedOutput' : '', 'caseSensitive' : true},
@@ -154,7 +154,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decryptKenny(elem['input'], elem['replaceCharacters'], elem['caseSensitive']);
+        var _actual = decryptKenny(elem['input'] as String?, elem['replaceCharacters'] as List<String>, elem['caseSensitive'] as bool);
         expect(_actual, elem['expectedOutput']);
       });
     });

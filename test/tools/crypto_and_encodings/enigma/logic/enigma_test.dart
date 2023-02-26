@@ -1,6 +1,7 @@
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/enigma/logic/enigma.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 
 void main() {
   // test double-step anomaly by checking the rotor setting after calculation
@@ -16,13 +17,13 @@ void main() {
       ],
     );
 
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : 'AAAA', 'expectedOutput' : 'BFY'},
     ];
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, key: $key', () {
-        var _actual = calculateEnigma(elem['input'], key)['rotorSettingAfter']
+        var _actual = calculateEnigma(elem['input'] as String?, key).value
             .sublist(1,4) //ignore ETW and UKW
             .map((setting) => alphabet_AZIndexes[setting + 1])
             .toList()
@@ -35,7 +36,7 @@ void main() {
 
   // test auto-decryption of message with message key; source: Enigma GeoCoin
   group("Enigma.calculateEnigmaWithMessageKey", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {
         'input' : 'SJDSFTTVWBZXPDUMYUCRNPLNOQDURZLAVGXOGURQIORHNRDKMAIKVUVCXBSHDELVXIIEHCRMJPQWJIANTPWNKDRGPBBEKPSPDCZBNTFKUWBY',
         'key' : EnigmaKey(
@@ -49,8 +50,8 @@ void main() {
             plugboard: {'w':'S', 'R':'F', 'Z': 'H', 'B': 'U', 'D': 'C', 'G': 'N', 'J': 'M', 'A': 'E'}
         ),
         'expectedOutput' : [
-          {'text': 'GEOGEOCTYQLIZYHXOTOLWEEDTPQXCDHNCUHZBNXEOXTCVWUOIVZMIOSTPTLJAPYOKVYSXSQBIRGEGKHOOYPJZZUWGRWZHMEXRLPYOENEPDZG', 'rotorSettingAfter': [0, 6, 10, 4, 0]},
-          {'text': 'CONGRATULATIONYOUHAVEDECRYPTSUCCESSFULTHEENIGMAGEOCOINBYFERANDERIPLEASEVISITMISSIONENIGMAINSWITZERLAND', 'rotorSettingAfter': [0, 12, 8, 6, 0]},
+          IntegerListText('GEOGEOCTYQLIZYHXOTOLWEEDTPQXCDHNCUHZBNXEOXTCVWUOIVZMIOSTPTLJAPYOKVYSXSQBIRGEGKHOOYPJZZUWGRWZHMEXRLPYOENEPDZG', [0, 6, 10, 4, 0]),
+          IntegerListText('CONGRATULATIONYOUHAVEDECRYPTSUCCESSFULTHEENIGMAGEOCOINBYFERANDERIPLEASEVISITMISSIONENIGMAINSWITZERLAND', [0, 12, 8, 6, 0]),
         ]
       },
       { //Without Entry Rotor
@@ -65,9 +66,9 @@ void main() {
             plugboard: {'w':'S', 'R':'F', 'Z': 'H', 'B': 'U', 'D': 'C', 'G': 'N', 'J': 'M', 'A': 'E'}
         ),
         'expectedOutput' : [
-          {'text': 'GEOGEOCTYQLIZYHXOTOLWEEDTPQXCDHNCUHZBNXEOXTCVWUOIVZMIOSTPTLJAPYOKVYSXSQBIRGEGKHOOYPJZZUWGRWZHMEXRLPYOENEPDZG', 'rotorSettingAfter': [6, 10, 4, 0]},
-          {'text': 'CONGRATULATIONYOUHAVEDECRYPTSUCCESSFULTHEENIGMAGEOCOINBYFERANDERIPLEASEVISITMISSIONENIGMAINSWITZERLAND', 'rotorSettingAfter': [12, 8, 6, 0]},
-        ]
+            IntegerListText('GEOGEOCTYQLIZYHXOTOLWEEDTPQXCDHNCUHZBNXEOXTCVWUOIVZMIOSTPTLJAPYOKVYSXSQBIRGEGKHOOYPJZZUWGRWZHMEXRLPYOENEPDZG', [6, 10, 4, 0]),
+            IntegerListText('CONGRATULATIONYOUHAVEDECRYPTSUCCESSFULTHEENIGMAGEOCOINBYFERANDERIPLEASEVISITMISSIONENIGMAINSWITZERLAND', [12, 8, 6, 0]),
+          ]
       },
       { //Without Entry Rotor
         'input' : 'SJDSF TTVWB ZXPDU MYUCR NPLNO QDURZ LAVGX OGURQ IORHN RDKMA IKVUV CXBSH DELVX IIEHC RMJPQ WJIAN TPWNK DRGPB BEKPS PDCZB NTFKU WBY',
@@ -81,10 +82,10 @@ void main() {
             plugboard: {'w':'S', 'R':'F', 'Z': 'H', 'B': 'U', 'D': 'C', 'G': 'N', 'J': 'M', 'A': 'E'}
         ),
         'expectedOutput' : [
-          {'text': 'GEOGEOCTYQLIZYHXOTOLWEEDTPQXCDHNCUHZBNXEOXTCVWUOIVZMIOSTPTLJAPYOKVYSXSQBIRGEGKHOOYPJZZUWGRWZHMEXRLPYOENEPDZG', 'rotorSettingAfter': [6, 10, 4, 0]},
-          {'text': 'CONGRATULATIONYOUHAVEDECRYPTSUCCESSFULTHEENIGMAGEOCOINBYFERANDERIPLEASEVISITMISSIONENIGMAINSWITZERLAND', 'rotorSettingAfter': [12, 8, 6, 0]},
-        ]
-      },
+            IntegerListText('GEOGEOCTYQLIZYHXOTOLWEEDTPQXCDHNCUHZBNXEOXTCVWUOIVZMIOSTPTLJAPYOKVYSXSQBIRGEGKHOOYPJZZUWGRWZHMEXRLPYOENEPDZG', [6, 10, 4, 0]),
+            IntegerListText('CONGRATULATIONYOUHAVEDECRYPTSUCCESSFULTHEENIGMAGEOCOINBYFERANDERIPLEASEVISITMISSIONENIGMAINSWITZERLAND', [12, 8, 6, 0]),
+          ]
+        },
       {
         'input' : 'CONGRATULATIONYOUHAVEDECRYPTSUCCESSFULTHEENIGMAGEOCOINBYFERANDERIPLEASEVISITMISSIONENIGMAINSWITZERLAND',
         'key' : EnigmaKey(
@@ -98,8 +99,8 @@ void main() {
             plugboard: {'W':'S', 'R':'F', 'Z': 'H', 'B': 'U', 'D': 'C', 'G': 'N', 'J': 'M', 'A': 'E'}
         ),
         'expectedOutput' : [
-          {'text': 'TVWBZXPDUMYUCRNPLNOQDURZLAVGXOGURQIORHNRDKMAIKVUVCXBSHDELVXIIEHCRMJPQWJIANTPWNKDRGPBBEKPSPDCZBNTFKUWBY', 'rotorSettingAfter': [0, 12, 8, 6, 0]},
-        ]
+            IntegerListText('TVWBZXPDUMYUCRNPLNOQDURZLAVGXOGURQIORHNRDKMAIKVUVCXBSHDELVXIIEHCRMJPQWJIANTPWNKDRGPBBEKPSPDCZBNTFKUWBY', [0, 12, 8, 6, 0]),
+          ]
       },
       {
         'input' : 'GEOGEOCTYQLIZYHXOTOLWEEDTPQXCDHNCUHZBNXEOXTCVWUOIVZMIOSTPTLJAPYOKVYSXSQBIRGEGKHOOYPJZZUWGRWZHMEXRLPYOENEPDZG',
@@ -114,14 +115,14 @@ void main() {
             plugboard: {'W':'S', 'R':'F', 'Z': 'H', 'B': 'U', 'D': 'C', 'G': 'N', 'J': 'M', 'A': 'E'}
         ),
         'expectedOutput' : [
-          {'text': 'SJDSFTTVWBZXPDUMYUCRNPLNOQDURZLAVGXOGURQIORHNRDKMAIKVUVCXBSHDELVXIIEHCRMJPQWJIANTPWNKDRGPBBEKPSPDCZBNTFKUWBY', 'rotorSettingAfter': [0, 6, 10, 4, 0]},
-        ]
+            IntegerListText('SJDSFTTVWBZXPDUMYUCRNPLNOQDURZLAVGXOGURQIORHNRDKMAIKVUVCXBSHDELVXIIEHCRMJPQWJIANTPWNKDRGPBBEKPSPDCZBNTFKUWBY', [0, 6, 10, 4, 0]),
+          ]
       },
     ];
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, key: ${elem['key']}', () {
-        var _actual = calculateEnigmaWithMessageKey(elem['input'], elem['key']);
+        var _actual = calculateEnigmaWithMessageKey(elem['input'] as String, elem['key'] as EnigmaKey);
         expect(_actual, elem['expectedOutput']);
       });
     });

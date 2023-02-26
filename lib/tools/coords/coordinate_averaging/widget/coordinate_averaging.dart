@@ -108,7 +108,7 @@ class CoordinateAveragingState extends State<CoordinateAveraging> {
                   _averagedLocations
                       .asMap()
                       .map((index, location) {
-                        var coord = formatCoordOutput(location.coord, defaultCoordFormat(), defaultEllipsoid());
+                        var coord = formatCoordOutput(location.coord, defaultCoordinateFormat, defaultEllipsoid());
                         var accuracy = _formatLength(location.accuracy);
 
                         return MapEntry(index, [index + 1, coord, accuracy]);

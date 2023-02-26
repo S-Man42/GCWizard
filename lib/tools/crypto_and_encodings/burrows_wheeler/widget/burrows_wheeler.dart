@@ -17,10 +17,10 @@ class BurrowsWheeler extends StatefulWidget {
 }
 
 class BurrowsWheelerState extends State<BurrowsWheeler> {
-  var plainController;
-  var cipherController;
-  var indexNumberController;
-  var indexCharacterController;
+  late TextEditingController plainController;
+  late TextEditingController cipherController;
+  late TextEditingController indexNumberController;
+  late TextEditingController indexCharacterController;
 
   var currentMode = GCWSwitchPosition.right;
   var currentIndexType = GCWSwitchPosition.left;
@@ -60,7 +60,7 @@ class BurrowsWheelerState extends State<BurrowsWheeler> {
               onChanged: (text) {
                 setState(() {
                   currentInputPlain = text;
-                  if (currentInputPlain == '' || currentInputPlain == null)
+                  if (currentInputPlain.isEmpty || currentInputPlain == null)
                     currentInputLen = 0;
                   else
                     currentInputLen = currentInputPlain.length;
@@ -73,7 +73,7 @@ class BurrowsWheelerState extends State<BurrowsWheeler> {
               onChanged: (text) {
                 setState(() {
                   currentInputCipher = text;
-                  if (currentInputCipher == '' || currentInputCipher == null)
+                  if (currentInputCipher.isEmpty || currentInputCipher == null)
                     currentInputLen = 0;
                   else
                     currentInputLen = currentInputCipher.length;
@@ -131,14 +131,14 @@ class BurrowsWheelerState extends State<BurrowsWheeler> {
     ]);
   }
 
-  _buildOutput() {
+  Widget _buildOutput() {
     BWTOutput currentOutput;
 
     if (currentMode == GCWSwitchPosition.left) {
       // encrypt
       if (currentIndexType == GCWSwitchPosition.right) {
         // encoded index - symbol
-        if (currentIndexSymbol == '' || currentIndexSymbol == null)
+        if (currentIndexSymbol.isEmpty || currentIndexSymbol == null)
           currentOutput = BWTOutput(i18n(context, 'burrowswheeler_error_no_index'), '');
         else if (currentInputPlain.contains(currentIndexSymbol))
           currentOutput = BWTOutput(i18n(context, 'burrowswheeler_error_char_index'), '');
@@ -151,7 +151,7 @@ class BurrowsWheelerState extends State<BurrowsWheeler> {
       // decrypt
       if (currentIndexType == GCWSwitchPosition.right) {
         // encoded index - symbol
-        if (currentIndexSymbol == '' || currentIndexSymbol == null)
+        if (currentIndexSymbol.isEmpty || currentIndexSymbol == null)
           currentOutput = BWTOutput(i18n(context, 'burrowswheeler_error_no_index'), '');
         else
           currentOutput = decryptBurrowsWheeler(currentInputCipher, currentIndexSymbol);
@@ -160,7 +160,7 @@ class BurrowsWheelerState extends State<BurrowsWheeler> {
       }
     }
 
-    if (currentOutput == null || currentOutput.text == null || currentOutput.text == '') return GCWDefaultOutput();
+    if (currentOutput == null || currentOutput.text == null || currentOutput.text.isEmpty) return GCWDefaultOutput();
 
     if (currentMode == GCWSwitchPosition.left && currentIndexType == GCWSwitchPosition.left) {
       return GCWMultipleOutput(

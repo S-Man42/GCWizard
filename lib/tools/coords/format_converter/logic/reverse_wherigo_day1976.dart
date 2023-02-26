@@ -243,7 +243,7 @@ ReverseWherigoDay1976 parseReverseWherigoDay1976(String input) {
   input = input.toLowerCase();
   RegExp regExp = RegExp(r'^\s*([0-9a-z]+)(\s*,\s*|\s+)([0-9a-z]+)\s*$');
   var matches = regExp.allMatches(input);
-  if (matches.length == 0) return null;
+  if (matches.isEmpty) return null;
 
   var match = matches.elementAt(0);
 

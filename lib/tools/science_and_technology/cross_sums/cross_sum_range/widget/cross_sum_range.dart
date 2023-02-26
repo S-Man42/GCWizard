@@ -17,7 +17,7 @@ final _ALERT_MAX_RANGE = 25000;
 class CrossSumRange extends StatefulWidget {
   final CrossSumType type;
 
-  CrossSumRange({Key? key, this.type: CrossSumType.NORMAL}) : super(key: key);
+  CrossSumRange({Key? key, this.type = CrossSumType.NORMAL}) : super(key: key);
 
   @override
   CrossSumRangeState createState() => CrossSumRangeState();
@@ -30,7 +30,7 @@ class CrossSumRangeState extends State<CrossSumRange> {
 
   var _currentOutput = [];
 
-  var _endController;
+  late TextEditingController _endController;
 
   @override
   void initState() {
@@ -104,20 +104,9 @@ class CrossSumRangeState extends State<CrossSumRange> {
     );
   }
 
-  _calculateOutput() {
-    List<Widget> _buildOutput(output) {
-      return [
-        GCWOutputText(
-          text: '${i18n(context, 'common_count')}: ${output.length}',
-          copyText: output.length.toString(),
-        ),
-        GCWColumnedMultilineOutput(
-            data: List<List<dynamic>>.from(output.map((element) => [element]).toList())
-        )
-      ];
-    }
+  void _calculateOutput() {
+    List<int> output;
 
-    var output;
     switch (widget.type) {
       case CrossSumType.NORMAL:
         output = crossSumRange(_currentRangeStart, _currentRangeEnd, _currentCrossSum);
@@ -143,5 +132,17 @@ class CrossSumRangeState extends State<CrossSumRange> {
         _currentOutput = _buildOutput(output);
       });
     }
+  }
+
+  List<Widget> _buildOutput(List<int> output) {
+    return [
+      GCWOutputText(
+        text: '${i18n(context, 'common_count')}: ${output.length}',
+        copyText: output.length.toString(),
+      ),
+      GCWColumnedMultilineOutput(
+          data: List<List<dynamic>>.from(output.map((element) => [element]).toList())
+      )
+    ];
   }
 }

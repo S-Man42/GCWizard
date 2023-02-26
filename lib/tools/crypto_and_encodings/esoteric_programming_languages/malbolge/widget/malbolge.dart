@@ -16,9 +16,9 @@ class Malbolge extends StatefulWidget {
 }
 
 class MalbolgeState extends State<Malbolge> {
-  var _programmController;
-  var _inputController;
-  var _outputController;
+  late TextEditingController _programmController;
+  late TextEditingController _inputController;
+  late TextEditingController _outputController;
 
   String _currentProgramm = '';
   String _currentInput = '';

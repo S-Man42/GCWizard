@@ -26,8 +26,8 @@ class KarolRobot extends StatefulWidget {
 }
 
 class KarolRobotState extends State<KarolRobot> {
-  var _decodeController;
-  var _encodeController;
+  late TextEditingController _decodeController;
+  late TextEditingController _encodeController;
 
   var _currentDecode = '';
   var _currentEncode = '';
@@ -87,7 +87,7 @@ class KarolRobotState extends State<KarolRobot> {
                 },
               )
             : Column(children: <Widget>[
-                GCWDropDown(
+                GCWDropDown<KAREL_LANGUAGES>(
                   value: _currentLanguage,
                   onChanged: (value) {
                     setState(() {
@@ -135,7 +135,7 @@ class KarolRobotState extends State<KarolRobot> {
                 size: IconButtonSize.SMALL,
                 iconColor: _outDecodeData == null ? themeColors().inActive() : null,
                 onPressed: () {
-                  _outDecodeData == null ? null : _exportFile(context, _outDecodeData);
+                  _outDecodeData == null ? null : _exportFile(context, _outDecodeData!);
                 },
               ))
           : Column(children: <Widget>[
@@ -158,7 +158,7 @@ class KarolRobotState extends State<KarolRobot> {
     ]);
   }
 
-  _createDecodeOutput(String output) {
+  void _createDecodeOutput(String output) {
     _outDecodeData = null;
     var image = binary2Image(output);
     if (image == null) return;
@@ -170,16 +170,18 @@ class KarolRobotState extends State<KarolRobot> {
   }
 
   Widget _buildGraphicDecodeOutput() {
-    if (_outDecodeData == null) return null;
+    if (_outDecodeData == null) return Container();
 
     return Column(children: <Widget>[
-      Image.memory(_outDecodeData),
+      Image.memory(_outDecodeData!),
     ]);
   }
 
-  _createEncodeOutput(String output) {
+  void _createEncodeOutput(String output) {
     _outEncodeData = null;
-    input2Image(binary2Image(output)).then((value) {
+    var image = binary2Image(output);
+    if (image == null) return;
+    input2Image(image).then((value) {
       setState(() {
         _outEncodeData = value;
       });
@@ -190,11 +192,11 @@ class KarolRobotState extends State<KarolRobot> {
     if (_outEncodeData == null) return Container();
 
     return Column(children: <Widget>[
-      Image.memory(_outEncodeData),
+      Image.memory(_outEncodeData!),
     ]);
   }
 
-  _exportFile(BuildContext context, Uint8List data) async {
+  void _exportFile(BuildContext context, Uint8List data) async {
     var value = await saveByteDataToFile(context, data, buildFileNameWithDate('img_', FileType.PNG));
 
     if (value) showExportedFileDialog(context, contentWidget: imageContent(context, data));

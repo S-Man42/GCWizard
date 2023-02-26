@@ -59,7 +59,7 @@ class PhoneModel {
   PhoneModel(this.name, String defaultCaseStateModelRaw, Map<PhoneInputLanguage, String>? specificCaseStateModelsRaw,
       this.characterMap, this.languages) {
     this.defaultCaseStateModel = _initializeCaseStateModel(defaultCaseStateModelRaw);
-    if (specificCaseStateModelsRaw != null && specificCaseStateModelsRaw.length > 0) {
+    if (specificCaseStateModelsRaw != null && specificCaseStateModelsRaw.isNotEmpty) {
       this.specificCaseStateModels = specificCaseStateModelsRaw.map((key, value) {
         return MapEntry(key, _initializeCaseStateModel(value));
       });
@@ -83,7 +83,7 @@ Map<String, Map<String, String>> _initializeCaseStateModel(String rawStateModel)
     line = line.trim();
     if (line.isEmpty || line.startsWith(RegExp(r"['@]"))) return;
 
-    var transitionPattern;
+    RegExp transitionPattern;
     if (_isStartState(line)) {
       transitionPattern = RegExp(r'(.+?)\s*-->\s*(.+)');
     } else {
@@ -93,14 +93,14 @@ Map<String, Map<String, String>> _initializeCaseStateModel(String rawStateModel)
     final match = transitionPattern.firstMatch(line);
     if (match == null) return;
 
-    final startState = match.group(1);
+    final startState = match.group(1) ?? '';
 
     if (stateModel[startState] == null) stateModel[startState] = {};
 
-    final destinationState = match.group(2);
+    final String destinationState = match.group(2) ?? '';
 
-    var transitionCharacters;
-    if (!_isStartState(line)) transitionCharacters = match.group(3);
+    String transitionCharacters = '';
+    if (!_isStartState(line)) transitionCharacters = match.group(3) ?? '';
 
     if (_isStartState(line)) {
       stateModel[startState]!.putIfAbsent('', () => destinationState);

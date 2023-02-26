@@ -7,7 +7,7 @@ import 'package:gc_wizard/tools/coords/_common/logic/gpx_kml_export.dart' as coo
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 
-showCoordinatesExportDialog(BuildContext context, List<GCWMapPoint> points, List<GCWMapPolyline> polylines,
+void showCoordinatesExportDialog(BuildContext context, List<GCWMapPoint> points, List<GCWMapPolyline> polylines,
     {String? json}) {
   const _MAX_QR_TEXT_LENGTH = 1000;
 
@@ -30,8 +30,8 @@ showCoordinatesExportDialog(BuildContext context, List<GCWMapPoint> points, List
     GCWDialogButton(
       text: 'GPX',
       onPressed: () async {
-        coordinatesExport.exportCoordinates(context, points, polylines).then((value) {
-          if (value != null) _showExportedFileDialog(context, FileType.GPX);
+        coordinatesExport.exportCoordinates(context, points, polylines).then((bool value) {
+          _showExportedFileDialog(context, FileType.GPX);
         });
       },
     ),
@@ -46,6 +46,6 @@ showCoordinatesExportDialog(BuildContext context, List<GCWMapPoint> points, List
   ]);
 }
 
-_showExportedFileDialog(BuildContext context, FileType type) {
+void _showExportedFileDialog(BuildContext context, FileType type) {
   showExportedFileDialog(context);
 }

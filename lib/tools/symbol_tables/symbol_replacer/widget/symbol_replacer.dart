@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'dart:typed_data';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +28,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substi
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/widget/quadgram_loader.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/widget/substitution_breaker_items.dart';
 import 'package:gc_wizard/tools/symbol_tables/_common/logic/symbol_table_data.dart';
+import 'package:gc_wizard/tools/symbol_tables/_common/widget/gcw_symbol_container.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/logic/symbol_replacer.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_replacer_manual_control.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_replacer_symboldata.dart';
@@ -41,15 +41,16 @@ import 'package:tuple/tuple.dart';
 class SymbolReplacer extends StatefulWidget {
   final local.GCWFile? platformFile;
   final String? symbolKey;
-  final Iterable<Map<String, SymbolData>>? imageData;
 
-  const SymbolReplacer({Key? key, this.platformFile, this.symbolKey, this.imageData}) : super(key: key);
+  const SymbolReplacer({Key? key, this.platformFile, this.symbolKey}) : super(key: key);
 
   @override
   SymbolReplacerState createState() => SymbolReplacerState();
 }
 
 class SymbolReplacerState extends State<SymbolReplacer> {
+  static String no_symbol_table_key = 'no_symbol_table';
+  final no_symbol_table = SymbolReplacerSymbolTableViewData(symbolKey: no_symbol_table_key, toolName: null, icon :null, description: null);
   SymbolReplacerImage? _symbolImage;
   local.GCWFile? _platformFile;
   double _blackLevel = 50.0;
@@ -59,20 +60,31 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   List<GCWDropDownMenuItem> _compareSymbolItems = [];
   var _gcwTextStyle = gcwTextStyle();
   var _descriptionTextStyle = gcwDescriptionTextStyle();
-  SymbolReplacerSymbolTableViewData? _currentSymbolTableViewData;
+  late SymbolReplacerSymbolTableViewData _currentSymbolTableViewData;
   var _quadgrams = Map<SubstitutionBreakerAlphabet, Quadgrams>();
   SubstitutionBreakerAlphabet _currentAlphabet = SubstitutionBreakerAlphabet.GERMAN;
   var _isLoading = <bool>[false];
   double? _currentMergeDistance;
+  var init = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _currentSymbolTableViewData = no_symbol_table;
+  }
 
   @override
   Widget build(BuildContext context) {
-    _initDropDownLists();
-    _selectSymbolTableDataItem(widget.symbolKey, widget.imageData);
+    if (init) {
+      _initDropDownLists();
+      _selectSymbolTableDataItem(widget.symbolKey);
+      init = false;
 
-    if (widget.platformFile != null) {
-      _platformFile = widget.platformFile!;
-      _replaceSymbols(true);
+      if (widget.platformFile != null) {
+        _platformFile = widget.platformFile!;
+        _replaceSymbols(true);
+      }
     }
 
     return Column(children: <Widget>[
@@ -155,8 +167,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   }
 
   Future<GCWAsyncExecuterParameters?> _buildJobDataReplacer() async {
-    if ((_currentSymbolTableViewData is SymbolReplacerSymbolTableViewData) &&
-        (_currentSymbolTableViewData!.data == null)) await _currentSymbolTableViewData!.initialize(context);
+    if (_currentSymbolTableViewData.data == null) await _currentSymbolTableViewData.initialize(context);
 
     if (_platformFile?.bytes == null) return null;
 
@@ -165,12 +176,12 @@ class SymbolReplacerState extends State<SymbolReplacer> {
         blackLevel: _blackLevel.toInt(),
         similarityLevel: _similarityLevel,
         symbolImage: _symbolImage,
-        compareSymbols: _currentSymbolTableViewData?.data?.images,
+        compareSymbols: _currentSymbolTableViewData.data?.images,
         similarityCompareLevel: _similarityCompareLevel,
         mergeDistance: _currentMergeDistance));
   }
 
-  _showOutput(SymbolReplacerImage? output) {
+  void _showOutput(SymbolReplacerImage? output) {
     _symbolImage = output;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -257,31 +268,29 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     return Row(
       children: [
         Expanded(
-          child: GCWDropDown<SymbolReplacerSymbolTableViewData?>(
+          child: GCWDropDown<SymbolReplacerSymbolTableViewData>(
             value: _currentSymbolTableViewData,
             onChanged: (value) {
               setState(() {
                 _currentSymbolTableViewData = value;
               });
               if (_symbolImage != null) {
-                if (_currentSymbolTableViewData?.data == null && _currentSymbolTableViewData != null) {
-                      _currentSymbolTableViewData!.initialize(context).then((_) {
-                        _symbolImage!.compareSymbols = _currentSymbolTableViewData?.data?.images;
+                if (_currentSymbolTableViewData.data == null && _currentSymbolTableViewData != no_symbol_table) {
+                      _currentSymbolTableViewData.initialize(context).then((_) {
+                        _symbolImage!.compareSymbols = _currentSymbolTableViewData.data?.images;
                       });
                 } else
-                  _symbolImage!.compareSymbols = _currentSymbolTableViewData?.data?.images;
+                  _symbolImage!.compareSymbols = _currentSymbolTableViewData.data?.images;
               }
             },
             items: _compareSymbolItems,
             selectedItemBuilder: (BuildContext context) {
               return _compareSymbolItems.map((item) {
                 return _buildDropDownMenuItem(
-                    (item.value is SymbolReplacerSymbolTableViewData)
-                        ? (item.value as SymbolReplacerSymbolTableViewData).icon
-                        : null,
-                    (item.value is SymbolReplacerSymbolTableViewData)
-                        ? (item.value as SymbolReplacerSymbolTableViewData).toolName
-                        : i18n(context, 'symbol_replacer_no_symbol_table'),
+                    (item.value as SymbolReplacerSymbolTableViewData).icon,
+                    ((item.value as SymbolReplacerSymbolTableViewData).symbolKey == no_symbol_table)
+                        ? i18n(context, 'symbol_replacer_no_symbol_table')
+                        : (item.value as SymbolReplacerSymbolTableViewData).toolName,
                     null);
               }).toList();
             },
@@ -320,7 +329,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     ]);
   }
 
-  _showAutoSearchDialog() {
+  void _showAutoSearchDialog() {
     showGCWDialog(
         context,
         '',
@@ -363,7 +372,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
         []);
   }
 
-  _startSubstitutionBreaker() async {
+  void _startSubstitutionBreaker() async {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -384,7 +393,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     );
   }
 
-  _startJobDataSearchSymbolTable() {
+  void _startJobDataSearchSymbolTable() {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -405,7 +414,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     );
   }
 
-  _initDropDownLists() {
+  void _initDropDownLists() {
     if (_compareSymbolItems.isEmpty) {
       List<GCWTool> _toolList = registeredTools.where((element) {
         return [
@@ -426,30 +435,31 @@ class SymbolReplacerState extends State<SymbolReplacer> {
       _compareSymbolItems.insert(
           0,
           GCWDropDownMenuItem(
-              value: null,
+              value: _currentSymbolTableViewData,
               child: _buildDropDownMenuItem(null, i18n(context, 'symbol_replacer_no_symbol_table'), null)));
     }
   }
 
-  void _selectSymbolTableDataItem(String? symbolKey, Iterable<Map<String, SymbolData>>? imageData) {
-    if ((widget.imageData != null) && (_compareSymbolItems != null) && (_currentSymbolTableViewData == null)) {
+  void _selectSymbolTableDataItem(String? symbolKey) {
+    if ((symbolKey != null)) {
       for (GCWDropDownMenuItem item in _compareSymbolItems)
         if ((item.value is SymbolReplacerSymbolTableViewData) &&
             ((item.value as SymbolReplacerSymbolTableViewData).symbolKey == symbolKey)) {
-          var _data;
-          if ((item.value as SymbolReplacerSymbolTableViewData).data == null)
-            _data = SymbolTableData(context, (item.value as SymbolReplacerSymbolTableViewData).symbolKey);
-          else
-            _data = (item.value as SymbolReplacerSymbolTableViewData).data;
 
-          _data.images = imageData;
-          _currentSymbolTableViewData = item.value;
+          SymbolReplacerSymbolTableData _data;
+          var value = item.value as SymbolReplacerSymbolTableViewData;
+          if (value.data == null)
+            _data = SymbolReplacerSymbolTableData(SymbolTableData(context, value.symbolKey));
+          else
+            _data = value.data!;
+
+          _currentSymbolTableViewData = value;
           break;
         }
     }
   }
 
-  Widget _buildDropDownMenuItem(dynamic icon, String? toolName, String? description) {
+  Widget _buildDropDownMenuItem(GCWSymbolContainer? icon, String? toolName, String? description) {
     return Row(children: [
       Container(
         child: (icon != null) ? icon : Container(width: 50),
@@ -471,6 +481,8 @@ class SymbolReplacerState extends State<SymbolReplacer> {
 
     var quadgrams =
         await loadQuadgramsAssets(_currentAlphabet, context, _quadgrams, _isLoading);
+    if (quadgrams == null) return null;
+
     if (_symbolImage!.symbolGroups.length > quadgrams.alphabet.length) {
       showToast(i18n(context, 'symbol_replacer_automatic_groups'));
       return null;
@@ -511,7 +523,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     if (_symbolImage == null) return null;
 
     list = await Future.wait(_compareSymbolItems.map((_symbolTableViewData) async {
-      SymbolReplacerSymbolTableViewData symbolTableViewData = _symbolTableViewData.value;
+      var symbolTableViewData = _symbolTableViewData.value as SymbolReplacerSymbolTableViewData;
       if (symbolTableViewData.data == null) await symbolTableViewData.initialize(context);
 
       return symbolTableViewData.data?.images ?? [];
@@ -539,13 +551,13 @@ class SymbolReplacerState extends State<SymbolReplacer> {
         var images = (item.value as SymbolReplacerSymbolTableViewData).data?.images;
         if (images?.length == imageData.length) {
           for (var i = 0; i < imageData.length; i++) {
-            if (!ListEquality().equals(imageData[i].values.first.bytes, images?[i].values.first.bytes)) {
+            if (!ListEquality<int>().equals(imageData[i].values.first.bytes, images?[i].values.first.bytes)) {
               found = false;
               break;
             }
           }
           if (found) {
-            _currentSymbolTableViewData = item.value;
+            _currentSymbolTableViewData = item.value as SymbolReplacerSymbolTableViewData;
             break;
           }
         }
@@ -558,10 +570,10 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     var subPageTool = GCWTool(
         autoScroll: false,
         tool: SymbolReplacerManualControl(symbolImage: _symbolImage!),
-        i18nPrefix: 'symbol_replacer',
+        id: 'symbol_replacer',
         searchKeys: ['symbol_replacer']);
 
-    Navigator.push(context, NoAnimationMaterialPageRoute(builder: (context) => subPageTool)).whenComplete(() {
+    Navigator.push(context, NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => subPageTool)).whenComplete(() {
       setState(() {});
     });
   }

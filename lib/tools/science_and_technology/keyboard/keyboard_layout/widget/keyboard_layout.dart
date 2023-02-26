@@ -14,7 +14,7 @@ class KeyboardLayout extends StatefulWidget {
 }
 
 class KeyboardLayoutState extends State<KeyboardLayout> {
-  var _inputController;
+  late TextEditingController _inputController;
 
   String _currentInput = '';
 
@@ -98,7 +98,7 @@ class KeyboardLayoutState extends State<KeyboardLayout> {
     );
   }
 
-  _buildOutput() {
+  Widget _buildOutput() {
     return GCWDefaultOutput(
         child: GCWOutputText(
       text: encodeKeyboard(_currentInput, _currentKeyboardFrom, _currentKeyboardTo),
