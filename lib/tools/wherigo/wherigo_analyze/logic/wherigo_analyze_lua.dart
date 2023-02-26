@@ -534,6 +534,27 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
   // second parse
   _getAllMessagesAndDialogsFromLUA(progress, lines, sendAsyncPort, progressStep);
 
+  // ------------------------------------------------------------------------------------------------------------------
+  // Save Answers to Input Objects
+  //
+  _cartridgeInputs.forEach((inputObject) {
+    _resultInputs.add(WherigoInputData(
+        inputObject.InputLUAName.trim(),
+        inputObject.InputID,
+        inputObject.InputVariableID,
+        inputObject.InputName,
+        inputObject.InputDescription,
+        inputObject.InputVisible,
+        inputObject.InputMedia,
+        inputObject.InputIcon,
+        inputObject.InputType,
+        inputObject.InputText,
+        inputObject.InputChoices,
+        _Answers[inputObject.InputLUAName.trim()] ??
+            [])); // TODO Thomas I can not check if logically correct to send empty list as exception. However this can be removed when using explicit values
+  });
+  _cartridgeInputs = _resultInputs;
+
   return WherigoCartridge(
       cartridgeGWC: WHERIGO_EMPTYCARTRIDGE_GWC,
       cartridgeLUA: WherigoCartridgeLUA(
@@ -615,252 +636,6 @@ void _checkAndGetCartridgeMetaData(String currentLine) {
 
   if (currentLine.startsWith('.LastPlayedDate'))
     _LastPlayedDate = _normalizeDate(currentLine.replaceAll('.LastPlayedDate = ', '').replaceAll('"', '').trim());
-}
-
-void _getAllMessagesAndDialogsFromLUA(int progress, List<String> lines, SendPort? sendAsyncPort, int progressStep) {
-  progress = lines.length;
-  for (int i = 0; i < lines.length; i++) {
-    progress++;
-    if (sendAsyncPort != null && (progress % progressStep == 0)) {
-      sendAsyncPort.send({'progress': progress / lines.length / 2});
-    }
-
-    lines[i] = lines[i].trim();
-    try {
-      if (RegExp(r'(Wherigo.ZCartridge\()').hasMatch(lines[i])) {
-        currentObjectSection = WHERIGO_OBJECT_TYPE.MESSAGES;
-      }
-      if (currentObjectSection == WHERIGO_OBJECT_TYPE.MESSAGES) {
-        if (lines[i].trimLeft().startsWith('_Urwigo.MessageBox(') ||
-            lines[i].trimLeft().startsWith('Wherigo.MessageBox(')) {
-          _singleMessageDialog = [];
-
-          if (lines[i].contains('Text = ') || lines[i].contains('Media = ')) {
-            String line = lines[i];
-            if (line.contains('Text = ')) {
-              do {
-                line = line.substring(1);
-              } while (!line.startsWith('Text'));
-              line = line.replaceAll('Text = ', '').replaceAll('(', '').replaceAll('{', '');
-              if (line.indexOf('"') != -1)
-                line = line.substring(0, line.indexOf('"')).replaceAll('"', '');
-              else if (line.indexOf(',') != -1)
-                line = line.substring(0, line.indexOf(',')).replaceAll('"', '');
-              else
-                line = line.substring(0, line.indexOf('}')).replaceAll('"', '');
-              if (line.length != 0)
-                _singleMessageDialog.add(WherigoActionMessageElementData(WHERIGO_ACTIONMESSAGETYPE.TEXT, line));
-            }
-            line = lines[i];
-            if (line.contains('Media = ')) {
-              do {
-                line = line.substring(1);
-              } while (!line.startsWith('Media'));
-              line = line
-                  .replaceAll('Media = ', '')
-                  .replaceAll('"', '')
-                  .replaceAll(',', '')
-                  .replaceAll(')', '')
-                  .replaceAll('}', '');
-              _singleMessageDialog.add(WherigoActionMessageElementData(WHERIGO_ACTIONMESSAGETYPE.IMAGE, line));
-            }
-          } else {
-            i++;
-            lines[i] = lines[i].trim();
-            _sectionMessages = true;
-            do {
-              if (lines[i].trimLeft().startsWith('Text')) {
-                _singleMessageDialog.add(WherigoActionMessageElementData(
-                    WHERIGO_ACTIONMESSAGETYPE.TEXT, getTextData(lines[i], _obfuscatorFunction, _obfuscatorTable)));
-              } else if (lines[i].trimLeft().startsWith('Media')) {
-                _singleMessageDialog.add(WherigoActionMessageElementData(WHERIGO_ACTIONMESSAGETYPE.IMAGE,
-                    lines[i].trimLeft().replaceAll('Media = ', '').replaceAll('"', '').replaceAll(',', '')));
-              } else if (lines[i].trimLeft().startsWith('Buttons')) {
-                if (lines[i].trimLeft().endsWith('}') || lines[i].trimLeft().endsWith('},')) {
-                  // single line
-                  _singleMessageDialog.add(WherigoActionMessageElementData(
-                      WHERIGO_ACTIONMESSAGETYPE.BUTTON,
-                      getTextData(
-                          lines[i].trim().replaceAll('Buttons = {', '').replaceAll('},', '').replaceAll('}', ''),
-                          _obfuscatorFunction,
-                          _obfuscatorTable)));
-                } else {
-                  // multi line
-                  i++;
-                  lines[i] = lines[i].trim();
-                  List<String> buttonText = [];
-                  do {
-                    buttonText
-                        .add(getTextData(lines[i].replaceAll('),', ')').trim(), _obfuscatorFunction, _obfuscatorTable));
-                    i++;
-                    lines[i] = lines[i].trim();
-                  } while (!lines[i].trimLeft().startsWith('}'));
-                  _singleMessageDialog
-                      .add(WherigoActionMessageElementData(WHERIGO_ACTIONMESSAGETYPE.BUTTON, buttonText.join(' » « ')));
-                } // end else multiline
-              } // end buttons
-
-              i++;
-              lines[i] = lines[i].trim();
-
-              if (i > lines.length - 2 || lines[i].trimLeft().startsWith('})') || lines[i].trimLeft().startsWith('end'))
-                _sectionMessages = false;
-            } while (_sectionMessages);
-          }
-          _cartridgeMessages.add(_singleMessageDialog);
-        } else if (lines[i].trimLeft().startsWith('_Urwigo.Dialog(') ||
-            lines[i].trimLeft().startsWith('Wherigo.Dialog(')) {
-          _sectionMessages = true;
-          _singleMessageDialog = [];
-          i++;
-          lines[i] = lines[i].trim();
-          do {
-            if (lines[i].contains('{Text = ')) {
-              String line = lines[i];
-              if (line.contains('Text = ')) {
-                do {
-                  line = line.substring(1);
-                } while (!line.startsWith('Text'));
-                line = line.replaceAll('Text = ', '').replaceAll('(', '').replaceAll('{', '');
-                if (line.indexOf('"') != -1)
-                  line = line.substring(0, line.indexOf('"')).replaceAll('"', '');
-                else if (line.indexOf(',') != -1)
-                  line = line.substring(0, line.indexOf(',')).replaceAll('"', '');
-                else
-                  line = line.substring(0, line.indexOf('}')).replaceAll('"', '');
-                if (line.length != 0)
-                  _singleMessageDialog.add(WherigoActionMessageElementData(WHERIGO_ACTIONMESSAGETYPE.TEXT, line));
-              }
-              line = lines[i];
-              if (line.contains('Media = ')) {
-                do {
-                  line = line.substring(1);
-                } while (!line.startsWith('Media'));
-                line = line
-                    .replaceAll('Media = ', '')
-                    .replaceAll('"', '')
-                    .replaceAll(',', '')
-                    .replaceAll(')', '')
-                    .replaceAll('}', '');
-                _singleMessageDialog.add(WherigoActionMessageElementData(WHERIGO_ACTIONMESSAGETYPE.IMAGE, line));
-              }
-            } else if (lines[i].trimLeft().startsWith('Text = ') ||
-                lines[i].trimLeft().startsWith('Text = ' + _obfuscatorFunction + '(') ||
-                lines[i].trimLeft().startsWith('Text = (' + _obfuscatorFunction + '(')) {
-              _singleMessageDialog.add(WherigoActionMessageElementData(
-                  WHERIGO_ACTIONMESSAGETYPE.TEXT, getTextData(lines[i], _obfuscatorFunction, _obfuscatorTable)));
-            } else if (lines[i].trimLeft().startsWith('Media')) {
-              _singleMessageDialog.add(WherigoActionMessageElementData(
-                  WHERIGO_ACTIONMESSAGETYPE.IMAGE, lines[i].trimLeft().replaceAll('Media = ', '')));
-            } else if (lines[i].trimLeft().startsWith('Buttons')) {
-              i++;
-              lines[i] = lines[i].trim();
-              do {
-                _singleMessageDialog.add(WherigoActionMessageElementData(WHERIGO_ACTIONMESSAGETYPE.BUTTON,
-                    getTextData('Text = ' + lines[i].trim(), _obfuscatorFunction, _obfuscatorTable)));
-                i++;
-                lines[i] = lines[i].trim();
-              } while (lines[i].trimLeft() != '}');
-            }
-
-            if (lines[i].trimLeft().startsWith('}, function(action)') ||
-                lines[i].trimLeft().startsWith('}, nil)') ||
-                lines[i].trimLeft().startsWith('})')) {
-              _sectionMessages = false;
-            }
-            i++;
-            lines[i] = lines[i].trim();
-          } while (_sectionMessages && (i < lines.length));
-          _cartridgeMessages.add(_singleMessageDialog);
-        } else if (lines[i].trimLeft().startsWith('_Urwigo.OldDialog(')) {
-          i++;
-          lines[i] = lines[i].trim();
-          _sectionMessages = true;
-          _singleMessageDialog = [];
-
-          do {
-            if (lines[i].contains('{Text = ')) {
-              String line = lines[i];
-              if (line.contains('Text = ')) {
-                do {
-                  line = line.substring(1);
-                } while (!line.startsWith('Text'));
-                line = line.replaceAll('Text = ', '').replaceAll('(', '').replaceAll('{', '');
-                if (line.indexOf('"') != -1)
-                  line = line.substring(0, line.indexOf('"')).replaceAll('"', '');
-                else if (line.indexOf(',') != -1)
-                  line = line.substring(0, line.indexOf(',')).replaceAll('"', '');
-                else
-                  line = line.substring(0, line.indexOf('}')).replaceAll('"', '');
-                if (line.length != 0)
-                  _singleMessageDialog.add(WherigoActionMessageElementData(WHERIGO_ACTIONMESSAGETYPE.TEXT, line));
-              }
-              line = lines[i];
-              if (line.contains('Media = ')) {
-                do {
-                  line = line.substring(1);
-                } while (!line.startsWith('Media'));
-                line = line
-                    .replaceAll('Media = ', '')
-                    .replaceAll('"', '')
-                    .replaceAll(',', '')
-                    .replaceAll(')', '')
-                    .replaceAll('}', '');
-                _singleMessageDialog.add(WherigoActionMessageElementData(WHERIGO_ACTIONMESSAGETYPE.IMAGE, line));
-              }
-            } else if (lines[i].trimLeft().startsWith('})')) {
-              _sectionMessages = false;
-            } else if (lines[i].trimLeft().startsWith('Text = ')) {
-              _singleMessageDialog.add(WherigoActionMessageElementData(
-                  WHERIGO_ACTIONMESSAGETYPE.TEXT, getTextData(lines[i], _obfuscatorFunction, _obfuscatorTable)));
-            } else if (lines[i].trimLeft().startsWith('Media')) {
-              _singleMessageDialog.add(WherigoActionMessageElementData(
-                  WHERIGO_ACTIONMESSAGETYPE.IMAGE, lines[i].trimLeft().replaceAll('Media = ', '')));
-            } else if (lines[i].trimLeft().startsWith('Buttons')) {
-              i++;
-              lines[i] = lines[i].trim();
-              do {
-                _singleMessageDialog.add(WherigoActionMessageElementData(WHERIGO_ACTIONMESSAGETYPE.BUTTON,
-                    getTextData('Text = ' + lines[i].trim(), _obfuscatorFunction, _obfuscatorTable)));
-                i++;
-                lines[i] = lines[i].trim();
-              } while (lines[i].trimLeft() != '}');
-            } else
-              _singleMessageDialog.add(WherigoActionMessageElementData(
-                  WHERIGO_ACTIONMESSAGETYPE.TEXT, lines[i].replaceAll('{', '').replaceAll('}', '')));
-
-            i++;
-            lines[i] = lines[i].trim();
-          } while (_sectionMessages);
-          _cartridgeMessages.add(_singleMessageDialog);
-        }
-      }
-    } catch (exception) {
-      _LUAAnalyzeStatus = WHERIGO_ANALYSE_RESULT_STATUS.ERROR_LUA;
-      _LUAAnalyzeResults.addAll(addExceptionErrorMessage(i, 'wherigo_error_lua_messages', exception));
-    }
-  } // end of second parse for i = 0 to lines.length - getting Messages/Dialogs
-
-  // ------------------------------------------------------------------------------------------------------------------
-  // Save Answers to Input Objects
-  //
-  _cartridgeInputs.forEach((inputObject) {
-    _resultInputs.add(WherigoInputData(
-        inputObject.InputLUAName.trim(),
-        inputObject.InputID,
-        inputObject.InputVariableID,
-        inputObject.InputName,
-        inputObject.InputDescription,
-        inputObject.InputVisible,
-        inputObject.InputMedia,
-        inputObject.InputIcon,
-        inputObject.InputType,
-        inputObject.InputText,
-        inputObject.InputChoices,
-        _Answers[inputObject.InputLUAName.trim()] ??
-            [])); // TODO Thomas I can not check if logically correct to send empty list as exception. However this can be removed when using explicit values
-  });
-  _cartridgeInputs = _resultInputs;
 }
 
 void _checkAndGetWherigoBuilder() {
