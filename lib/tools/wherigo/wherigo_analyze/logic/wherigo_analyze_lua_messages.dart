@@ -55,7 +55,7 @@ void _getAllMessagesAndDialogsFromLUA(int progress, List<String> lines, SendPort
             do {
               if (lines[i].trimLeft().startsWith('Text')) {
                 _singleMessageDialog.add(WherigoActionMessageElementData(
-                    WHERIGO_ACTIONMESSAGETYPE.TEXT, getTextData(lines[i], _obfuscatorFunction, _obfuscatorTable)));
+                    WHERIGO_ACTIONMESSAGETYPE.TEXT, getTextData(lines[i])));
               } else if (lines[i].trimLeft().startsWith('Media')) {
                 _singleMessageDialog.add(WherigoActionMessageElementData(WHERIGO_ACTIONMESSAGETYPE.IMAGE,
                     lines[i].trimLeft().replaceAll('Media = ', '').replaceAll('"', '').replaceAll(',', '')));
@@ -65,9 +65,7 @@ void _getAllMessagesAndDialogsFromLUA(int progress, List<String> lines, SendPort
                   _singleMessageDialog.add(WherigoActionMessageElementData(
                       WHERIGO_ACTIONMESSAGETYPE.BUTTON,
                       getTextData(
-                          lines[i].trim().replaceAll('Buttons = {', '').replaceAll('},', '').replaceAll('}', ''),
-                          _obfuscatorFunction,
-                          _obfuscatorTable)));
+                          lines[i].trim().replaceAll('Buttons = {', '').replaceAll('},', '').replaceAll('}', ''))));
                 } else {
                   // multi line
                   i++;
@@ -75,7 +73,7 @@ void _getAllMessagesAndDialogsFromLUA(int progress, List<String> lines, SendPort
                   List<String> buttonText = [];
                   do {
                     buttonText
-                        .add(getTextData(lines[i].replaceAll('),', ')').trim(), _obfuscatorFunction, _obfuscatorTable));
+                        .add(getTextData(lines[i].replaceAll('),', ')').trim()));
                     i++;
                     lines[i] = lines[i].trim();
                   } while (!lines[i].trimLeft().startsWith('}'));
@@ -132,7 +130,7 @@ void _getAllMessagesAndDialogsFromLUA(int progress, List<String> lines, SendPort
                 lines[i].trimLeft().startsWith('Text = ' + _obfuscatorFunction + '(') ||
                 lines[i].trimLeft().startsWith('Text = (' + _obfuscatorFunction + '(')) {
               _singleMessageDialog.add(WherigoActionMessageElementData(
-                  WHERIGO_ACTIONMESSAGETYPE.TEXT, getTextData(lines[i], _obfuscatorFunction, _obfuscatorTable)));
+                  WHERIGO_ACTIONMESSAGETYPE.TEXT, getTextData(lines[i])));
             } else if (lines[i].trimLeft().startsWith('Media')) {
               _singleMessageDialog.add(WherigoActionMessageElementData(
                   WHERIGO_ACTIONMESSAGETYPE.IMAGE, lines[i].trimLeft().replaceAll('Media = ', '')));
@@ -141,7 +139,7 @@ void _getAllMessagesAndDialogsFromLUA(int progress, List<String> lines, SendPort
               lines[i] = lines[i].trim();
               do {
                 _singleMessageDialog.add(WherigoActionMessageElementData(WHERIGO_ACTIONMESSAGETYPE.BUTTON,
-                    getTextData('Text = ' + lines[i].trim(), _obfuscatorFunction, _obfuscatorTable)));
+                    getTextData('Text = ' + lines[i].trim())));
                 i++;
                 lines[i] = lines[i].trim();
               } while (lines[i].trimLeft() != '}');
@@ -196,7 +194,7 @@ void _getAllMessagesAndDialogsFromLUA(int progress, List<String> lines, SendPort
               _sectionMessages = false;
             } else if (lines[i].trimLeft().startsWith('Text = ')) {
               _singleMessageDialog.add(WherigoActionMessageElementData(
-                  WHERIGO_ACTIONMESSAGETYPE.TEXT, getTextData(lines[i], _obfuscatorFunction, _obfuscatorTable)));
+                  WHERIGO_ACTIONMESSAGETYPE.TEXT, getTextData(lines[i])));
             } else if (lines[i].trimLeft().startsWith('Media')) {
               _singleMessageDialog.add(WherigoActionMessageElementData(
                   WHERIGO_ACTIONMESSAGETYPE.IMAGE, lines[i].trimLeft().replaceAll('Media = ', '')));
@@ -205,7 +203,7 @@ void _getAllMessagesAndDialogsFromLUA(int progress, List<String> lines, SendPort
               lines[i] = lines[i].trim();
               do {
                 _singleMessageDialog.add(WherigoActionMessageElementData(WHERIGO_ACTIONMESSAGETYPE.BUTTON,
-                    getTextData('Text = ' + lines[i].trim(), _obfuscatorFunction, _obfuscatorTable)));
+                    getTextData('Text = ' + lines[i].trim())));
                 i++;
                 lines[i] = lines[i].trim();
               } while (lines[i].trimLeft() != '}');

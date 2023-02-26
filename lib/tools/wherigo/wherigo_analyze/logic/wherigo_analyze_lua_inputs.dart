@@ -145,10 +145,10 @@ WherigoInputData _analyzeAndExtractInputSectionData(List<String> lines) {
     }
   }
   return WherigoInputData(
-    LUAname,
-    id,
-    variableID,
-    name,
+    LUAname.trim(),
+    id.trim(),
+    variableID.trim(),
+    name.trim(),
     description,
     visible,
     media,

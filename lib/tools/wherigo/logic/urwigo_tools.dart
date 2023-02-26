@@ -36,10 +36,10 @@ String? breakUrwigoHash(int input, HASH type) {
   return null;
 }
 
-String deobfuscateUrwigoText(String? text, String? dtable) {
-  if (text == null || text.isEmpty) return '';
+String deobfuscateUrwigoText(String text, String dtable) {
+  if (text.isEmpty) return '';
 
-  if (dtable == null || dtable.isEmpty) return '';
+  if (dtable.isEmpty) return '';
 
   if (dtable == 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@.-~')
     return gsub_wig(text);

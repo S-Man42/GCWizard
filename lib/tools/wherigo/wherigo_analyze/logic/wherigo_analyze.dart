@@ -20,6 +20,7 @@ part 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_global_enums
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze_gwc.dart';
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze_gwc_common_methods.dart';
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze_lua.dart';
+part 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze_lua_answers.dart';
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze_lua_common_methods.dart';
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze_lua_characters.dart';
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze_lua_inputs.dart';

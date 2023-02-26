@@ -29,7 +29,7 @@ String getStructData(String analyseLine, String type) {
   return analyseLine.trimLeft().replaceAll(type + ' = ', '').replaceAll('"', '').replaceAll(',', '');
 }
 
-String getTextData(String analyseLine, String obfuscator, String dtable) {
+String getTextData(String analyseLine, ) {
   String result = analyseLine
       .trimLeft()
       .replaceAll('Text = ', '')
@@ -48,7 +48,7 @@ String getTextData(String analyseLine, String obfuscator, String dtable) {
       if (group == null) return;
 
       result = result.replaceAll(
-          group, deobfuscateUrwigoText(group.replaceAll('gsub_wig("', '').replaceAll('")', ''), dtable));
+          group, deobfuscateUrwigoText(group.replaceAll('gsub_wig("', '').replaceAll('")', ''), ''));
     });
     result = result.replaceAll('..', '').replaceAll('<BR>\\n', '').replaceAll('"', '');
     RegExp(r'ucode_wig\([\d]+\)').allMatches(result).forEach((element) {
@@ -59,31 +59,34 @@ String getTextData(String analyseLine, String obfuscator, String dtable) {
           group, String.fromCharCode(int.parse(group.replaceAll('ucode_wig(', '').replaceAll(')', ''))));
     });
     result = result.replaceAll('gsub_wig()', '');
-  } else if (result.startsWith(RegExp(r'(\()+' + obfuscator))) {
-    while (result.startsWith(RegExp(r'(\()+' + obfuscator))) result = result.substring(1);
-    result = result.replaceAll('(' + obfuscator, obfuscator).replaceAll('),', ')').replaceAll('))', ')');
-    result = _getDetails(result, obfuscator, dtable);
-  } else if (result.startsWith(obfuscator)) {
-    if (_compositeObfuscatedText(result, obfuscator))
-      result = _getDetails(result, obfuscator, dtable);
-    else if (_compositeText(result)) {
-      result = _getCompositeText(result, obfuscator, dtable);
-    } else {
-      result = result.replaceAll(obfuscator + '("', '').replaceAll('"),', '').replaceAll('")', '');
-      result = deobfuscateUrwigoText(result, dtable);
-    }
-  } else if (result.replaceAll('Player.Name .. ', '').startsWith(obfuscator)) {
-    result = result.replaceAll('Player.Name .. ', '');
-    if (_compositeObfuscatedText(result, obfuscator))
-      result = _getDetails(result, obfuscator, dtable);
-    else if (_compositeText(result)) {
-      result = _getCompositeText(result, obfuscator, dtable);
-    } else {
-      result = result.replaceAll(obfuscator + '("', '').replaceAll('"),', '').replaceAll('")', '');
-      result = deobfuscateUrwigoText(result, dtable);
-    }
-    result = 'Player.Name .. ' + result;
   }
+  // else if (result.startsWith(RegExp(r'(\()+' + obfuscator))) {
+  //   while (result.startsWith(RegExp(r'(\()+' + obfuscator))) result = result.substring(1);
+  //   result = result.replaceAll('(' + obfuscator, obfuscator).replaceAll('),', ')').replaceAll('))', ')');
+  //   result = _getDetails(result, obfuscator, dtable);
+  // }
+  // else if (result.startsWith(obfuscator)) {
+  //   if (_compositeObfuscatedText(result, obfuscator))
+  //     result = _getDetails(result, obfuscator, dtable);
+  //   else if (_compositeText(result)) {
+  //     result = _getCompositeText(result, obfuscator, dtable);
+  //   } else {
+  //     result = result.replaceAll(obfuscator + '("', '').replaceAll('"),', '').replaceAll('")', '');
+  //     result = deobfuscateUrwigoText(result, dtable);
+  //   }
+  // }
+  // else if (result.replaceAll('Player.Name .. ', '').startsWith(obfuscator)) {
+  //   result = result.replaceAll('Player.Name .. ', '');
+  //   if (_compositeObfuscatedText(result, obfuscator))
+  //     result = _getDetails(result, obfuscator, dtable);
+  //   else if (_compositeText(result)) {
+  //     result = _getCompositeText(result, obfuscator, dtable);
+  //   } else {
+  //     result = result.replaceAll(obfuscator + '("', '').replaceAll('"),', '').replaceAll('")', '');
+  //     result = deobfuscateUrwigoText(result, dtable);
+  //   }
+  //   result = 'Player.Name .. ' + result;
+  // }
 
   return normalizeWIGText(result);
 }
