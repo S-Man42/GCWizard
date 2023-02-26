@@ -31,7 +31,7 @@ class MultiDecoderState extends State<MultiDecoder> {
   }
 
   void _refreshMDTTools() {
-    mdtTools = model.multiDecoderTools.map((mdtTool) {
+    mdtTools = multiDecoderTools.map((mdtTool) {
       return _multiDecoderToolToGCWMultiDecoderTool(context, mdtTool);
     }).toList();
     mdtTools.removeWhere((mdtTool) => mdtTool == null);
@@ -39,14 +39,12 @@ class MultiDecoderState extends State<MultiDecoder> {
 
   @override
   Widget build(BuildContext context) {
-    if (_firstBuild && model.multiDecoderTools.isEmpty) {
+    if (_firstBuild && multiDecoderTools.isEmpty) {
       _initializeMultiToolDecoder(context);
       _firstBuild = false;
     }
 
     _refreshMDTTools();
-
-    if (_currentOutput == null) _initOutput();
 
     return Column(
       children: <Widget>[
@@ -127,12 +125,12 @@ class MultiDecoderState extends State<MultiDecoder> {
   }
 
   String _toolTitle(AbstractMultiDecoderTool tool) {
-    var optionValues = tool.options.values.map((Object value) {
+    var optionValues = tool.options.values.map((Object? value) {
       String result = value.toString();
 
       if (tool.internalToolName == MDT_INTERNALNAMES_COORDINATEFORMATS) {
         if (CoordinateFormatKey.values.contains(value))
-          result = getCoordinateFormatByKey(value as CoordinateFormatKey).name;
+          result = coordinateFormatMetadataByKey(value as CoordinateFormatKey).name;
       }
       if ([MDT_INTERNALNAMES_BASE, MDT_INTERNALNAMES_BCD].contains(tool.internalToolName)) {
         result += '_title';

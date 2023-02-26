@@ -116,8 +116,8 @@ class FormulaParser {
   };
 
   static final Map<String, int Function(String)> _CUSTOM_TEXT_FUNCTIONS = {
-    'bww': (String arg) => sum(AlphabetValues().textToValues(arg, keepNumbers: true)).toInt(),
-    'av': (String arg) => sum(AlphabetValues().textToValues(arg, keepNumbers: true)).toInt(),
+    'bww': (String arg) => sum(AlphabetValues().textToValues(arg, keepNumbers: true).whereType<int>().toList()).toInt(),
+    'av': (String arg) => sum(AlphabetValues().textToValues(arg, keepNumbers: true).whereType<int>().toList()).toInt(),
     'len': (String arg) => arg.length,
   };
 

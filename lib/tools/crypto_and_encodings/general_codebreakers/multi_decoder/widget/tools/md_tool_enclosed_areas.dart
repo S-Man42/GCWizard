@@ -24,12 +24,12 @@ class MultiDecoderToolEnclosedAreas extends AbstractMultiDecoderTool {
             internalToolName: MDT_INTERNALNAMES_ENCLOSEDAREAS,
             onDecode: (String input, String key) {
               return decodeEnclosedAreas(input,
-                  with4: options[MDT_ENCLOSEDAREAS_OPTION_MODE] == MDT_ENCLOSEDAREAS_OPTION_WITH4);
+                  with4: checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_ENCLOSEDAREAS, options, MDT_ENCLOSEDAREAS_OPTION_MODE) == MDT_ENCLOSEDAREAS_OPTION_WITH4);
             },
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
               MDT_ENCLOSEDAREAS_OPTION_MODE: GCWStatefulDropDown<String>(
-                value: toStringOrDefault(options[MDT_ENCLOSEDAREAS_OPTION_MODE], MDT_ENCLOSEDAREAS_OPTION_WITH4),
+                value: checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_ENCLOSEDAREAS, options, MDT_ENCLOSEDAREAS_OPTION_MODE),
                 onChanged: (newValue) {
                   options[MDT_ENCLOSEDAREAS_OPTION_MODE] = newValue;
                 },
