@@ -4,7 +4,7 @@ class Force extends Unit {
   late double Function (double) toNewton;
   late double Function (double) fromNewton;
 
-  Force({required String name, required String symbol, bool isReference: false, required double inNewton})
+  Force({required String name, required String symbol, bool isReference = false, required double inNewton})
       : super(name, symbol, isReference, (e) => e * inNewton, (e) => e / inNewton) {
     toNewton = this.toReference;
     fromNewton = this.fromReference;

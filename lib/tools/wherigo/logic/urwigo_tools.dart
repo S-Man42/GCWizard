@@ -44,7 +44,7 @@ String deobfuscateUrwigoText(String? text, String? dtable) {
   if (dtable == 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@.-~')
     return gsub_wig(text);
   else
-    return readustring(text, dtable) ?? '';
+    return readustring(text, dtable);
 }
 
 String obfuscateUrwigoText(String? text, String? dtable) {

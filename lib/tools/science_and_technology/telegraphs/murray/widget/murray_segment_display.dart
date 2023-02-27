@@ -6,6 +6,7 @@ const _MURRAY_RELATIVE_DISPLAY_WIDTH = 50;
 const _MURRAY_RELATIVE_DISPLAY_HEIGHT = 110;
 const _MURRAY_RADIUS = 10.0;
 
+//ignore: must_be_immutable
 class _MurraySegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
   final bool readOnly;

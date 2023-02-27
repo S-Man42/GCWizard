@@ -129,7 +129,7 @@ class ProjectilesState extends State<Projectiles> {
     outputValue = _currentOutputUnit.value.fromReference(outputValue) / _currentOutputUnit.prefix.value;
     return NumberFormat('0.0' + '#' * 6).format(outputValue) +
         ' ' +
-        (_currentOutputUnit.prefix.symbol ?? '') +
+        (_currentOutputUnit.prefix.symbol) +
         _currentOutputUnit.value.symbol;
   }
 }

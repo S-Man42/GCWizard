@@ -618,6 +618,7 @@ Segments encodeSegment(String? input, SegmentDisplayType segmentType) {
     case SegmentDisplayType.SIXTEEN:
       AZToSegment = _AZTo16Segment;
       break;
+    default:
   }
 
   var inputCharacters = input.toUpperCase().split('').toList();
@@ -655,6 +656,7 @@ SegmentsText decodeSegment(String? input, SegmentDisplayType segmentType) {
     case SegmentDisplayType.SIXTEEN:
       baseSegments = _baseSegments16Segment;
       break;
+    default:
   }
 
   input = input.toLowerCase();

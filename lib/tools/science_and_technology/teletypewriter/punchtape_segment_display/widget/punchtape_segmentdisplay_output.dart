@@ -50,7 +50,6 @@ class _PunchtapeSegmentDisplayOutputState extends State<PunchtapeSegmentDisplayO
   }
 
   Widget build(BuildContext context) {
-    final mediaQueryData = MediaQuery.of(context);
 
     return Column(children: <Widget>[
       GCWTextDivider(
@@ -77,9 +76,8 @@ class _PunchtapeSegmentDisplayOutputState extends State<PunchtapeSegmentDisplayO
                 iconColor: (widget.segments.displays.isEmpty) ? themeColors().inActive() : null,
                 onPressed: () async {
                   await _buildPunchtapeSegmentDisplayImage(_displays, _currentUpsideDown).then((image) {
-                    if (image != null)
-                      image.toByteData(format: ui.ImageByteFormat.png).then((data) {
-                        _exportFile(context, data?.buffer.asUint8List());
+                    image.toByteData(format: ui.ImageByteFormat.png).then((data) {
+                      _exportFile(context, data?.buffer.asUint8List());
                       });
                   });
                 },
@@ -96,7 +94,7 @@ class _PunchtapeSegmentDisplayOutputState extends State<PunchtapeSegmentDisplayO
   Widget _buildDigitalOutput(Segments segments) {
     var list = _currentUpsideDown ? segments.displays.reversed : segments.displays;
 
-    _displays = list.where((character) => character != null).map((character) {
+    _displays = list.map((character) {
       var displayedSegments = Map<String, bool>.fromIterable(character, key: (e) => e.toString(), value: (e) => true);
       return widget.segmentFunction(displayedSegments, widget.readOnly, widget.codeBook);
     }).toList();

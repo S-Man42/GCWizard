@@ -34,7 +34,7 @@ class MainMenuEntryStubState extends State<MainMenuEntryStub> {
                     shape: BoxShape.rectangle,
                     borderRadius: BorderRadius.circular(ROUNDED_BORDER_RADIUS),
                   ),
-                  child: widget.content ?? Container(),
+                  child: widget.content,
                   padding: EdgeInsets.all(10)),
               padding: EdgeInsets.only(top: 50),
             )

@@ -39,7 +39,7 @@ class GCWUnitDropDownState<T extends Unit> extends State<GCWUnitDropDown> {
           return GCWDropDownMenuItem(
               value: unit,
               child: widget.onlyShowSymbols
-                  ? unit.symbol ?? ''
+                  ? unit.symbol
                   : (i18n(context, unit.name) + ' (${unit.symbol})'));
         }).toList());
   }

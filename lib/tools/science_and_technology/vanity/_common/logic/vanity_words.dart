@@ -5,6 +5,8 @@
 //
 // 678068550685506386047230386303863 07865807432360386308437
 
+// ignore_for_file: equal_keys_in_map
+
 import 'package:gc_wizard/tools/crypto_and_encodings/numeral_words/_common/logic/numeral_words.dart';
 
 class VanityWordsDecodeOutput {
