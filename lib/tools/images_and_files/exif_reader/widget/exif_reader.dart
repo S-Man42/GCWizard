@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:exif/exif.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
@@ -15,7 +14,6 @@ import 'package:gc_wizard/common_widgets/image_viewers/gcw_imageview.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coord_format_getter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/images_and_files/exif_reader/logic/exif_reader.dart';
@@ -182,17 +180,15 @@ class _ExifReaderState extends State<ExifReader> {
   /// EXIF tags grouped by section
   ///
   void _decorateExifSections(List<Widget> widgets, Map<String, List<List<dynamic>>> _tableTags) {
-    if (_tableTags != null) {
-      _tableTags.forEach((section, tags) {
-        widgets.add(GCWOutput(
-            title: i18n(context, "exif_section_" + section, ifTranslationNotExists: section ?? ''),
-            child: GCWColumnedMultilineOutput(
-                data: tags == null ? [] : tags,
-            ),
-          )
-        );
-      });
-    }
+    _tableTags.forEach((section, tags) {
+      widgets.add(GCWOutput(
+          title: i18n(context, "exif_section_" + section, ifTranslationNotExists: section ?? ''),
+          child: GCWColumnedMultilineOutput(
+              data: tags
+          ),
+        )
+      );
+    });
   }
 
   ///
@@ -270,25 +266,24 @@ class _ExifReaderState extends State<ExifReader> {
   }
 
   void _decorateImage(List<Widget> widgets, Image.Image image) {
-    if (image != null) {
-      widgets.add(GCWOutput(
-          title: i18n(context, 'exif_section_image'),
-          child: GCWColumnedMultilineOutput(
-              data: [
-                      [i18n(context, 'exif_width'), image.width ?? ''],
-                      [i18n(context, 'exif_height'), image.height ?? ''],
-                      ['Blend Method', image.blendMethod ?? ''],
-                      ['Channels', image.channels ?? ''],
-                      ['ICC Color Profile', image.iccProfile ?? ''],
-                      // Only for frames within an animation
-                      // [i18n(context, 'exif_duration'), image.duration ?? ''],
-                      // ['Offset X', image.xOffset ?? ''],
-                      // ['Offset Y', image.yOffset ?? ''],
-                      // image.exif
-                    ],
-          )
+    widgets.add(GCWOutput(
+        title: i18n(context, 'exif_section_image'),
+        child: GCWColumnedMultilineOutput(
+            data: [
+                    [i18n(context, 'exif_width'), image.width ?? ''],
+                    [i18n(context, 'exif_height'), image.height ?? ''],
+                    ['Blend Method', image.blendMethod ?? ''],
+                    ['Channels', image.channels ?? ''],
+                    ['ICC Color Profile', image.iccProfile ?? ''],
+                    // Only for frames within an animation
+                    // [i18n(context, 'exif_duration'), image.duration ?? ''],
+                    // ['Offset X', image.xOffset ?? ''],
+                    // ['Offset Y', image.yOffset ?? ''],
+                    // image.exif
+                  ],
+        )
     ));
-    }
+
   }
 
   Future<Image.Image?> _completeImageMetadata(GCWFile file) async {

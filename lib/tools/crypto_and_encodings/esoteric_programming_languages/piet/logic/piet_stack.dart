@@ -98,7 +98,6 @@ class _PietStack {
 
     var result = operatorFunc(top, second);
     push(result);
-    if (result == null) return false; //null
 
     return true;
   }

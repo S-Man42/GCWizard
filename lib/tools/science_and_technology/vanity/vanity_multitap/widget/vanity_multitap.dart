@@ -233,6 +233,8 @@ class VanityMultitapState extends State<VanityMultitap> {
         // case PhoneInputLanguage.CATALAN
         case PhoneInputLanguage.SLOVENIAN:
           return '🇸🇮';
+        case PhoneInputLanguage.UNSPECIFIED:
+          return '';
       }
     }).join(' ');
   }

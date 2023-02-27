@@ -44,7 +44,7 @@ class ImageFlipRotateState extends State<ImageFlipRotate> {
     }
   }
 
-  _resetInputs() {
+  void _resetInputs() {
     setState(() {
       _currentFlipHorizontally = false;
       _currentFlipVertically = false;

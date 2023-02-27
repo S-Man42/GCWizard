@@ -71,7 +71,7 @@ SegmentsText decodeVisualPopham(List<String> inputs) {
   });
   CODEBOOK[''] = ' ';
 
-  List<String> text = inputs.where((input) => input != null).map((input) {
+  List<String> text = inputs.map((input) {
     var char = '';
     if (CODEBOOK[input] == null) {
       char = char + UNKNOWN_ELEMENT;

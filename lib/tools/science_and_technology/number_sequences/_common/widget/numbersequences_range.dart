@@ -76,7 +76,7 @@ class NumberSequenceRangeState extends State<NumberSequenceRange> {
     );
   }
 
-  _buildOutput() {
+  void _buildOutput() {
     List<List<String>> columnData = [];
     getNumbersInRange(widget.mode, _currentInputStart, _currentInputStop).forEach((element) {
       columnData.add([element.toString()]);

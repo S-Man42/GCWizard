@@ -22,7 +22,7 @@ class MathematicalConstants extends StatefulWidget {
 }
 
 class MathematicalConstantsState extends State<MathematicalConstants> {
-  var _currentConstant;
+  String _currentConstant = '';
   late Map<String, MathematicalConstant> _constants;
 
   List<String> _orderedConstantKeys = [];
@@ -38,7 +38,7 @@ class MathematicalConstantsState extends State<MathematicalConstants> {
 
     return Column(
       children: <Widget>[
-        GCWDropDown(
+        GCWDropDown<String>(
           value: _currentConstant,
           onChanged: (value) {
             setState(() {

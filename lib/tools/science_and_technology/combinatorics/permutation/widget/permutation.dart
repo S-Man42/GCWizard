@@ -47,7 +47,7 @@ class PermutationState extends State<Permutation> {
       return GCWDefaultOutput();
     }
 
-    List out = generatePermutations(_currentInput, avoidDuplicates: !_currentShowDuplicates);
+    var out = generatePermutations(_currentInput, avoidDuplicates: !_currentShowDuplicates);
 
     return GCWMultipleOutput(
       children: [

@@ -35,14 +35,14 @@ String encodeDTMF(String plain) {
 }
 
 String decodeDTMF(String chiffre) {
-  var _chiffreList = chiffre.split(RegExp(r'[^0-9]'));
+  var _chiffreList = chiffre.split(RegExp(r'\d'));
 
   var _chiffreListClean = _chiffreList
-      .map((chiffre) => int.tryParse(chiffre)!)
+      .map((chiffre) => int.tryParse(chiffre))
       .where((chiffre) => chiffre != null && dtmfFrequencies.contains(chiffre))
       .toList();
 
-  var _dtmfCodes = <List<int>>[];
+  var _dtmfCodes = <List<int?>>[];
   for (var i = 0; i < _chiffreListClean.length - 1; i = i + 2) {
     if (i + 1 <= _chiffreListClean.length - 1) {
       var _tones = [_chiffreListClean[i], _chiffreListClean[i + 1]];

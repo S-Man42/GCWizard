@@ -80,11 +80,9 @@ class HexViewerState extends State<HexViewer> {
               return;
             }
 
-            if (value != null) {
-              _setData(value.bytes);
+            _setData(value.bytes);
 
-              setState(() {});
-            }
+            setState(() {});
           },
         ),
         GCWDefaultOutput(
@@ -111,7 +109,7 @@ class HexViewerState extends State<HexViewer> {
     );
   }
 
-  _resetScrollViews() {
+  void _resetScrollViews() {
     _scrollControllerASCII.jumpTo(0.0);
     _scrollControllerHex.jumpTo(0.0);
   }
@@ -128,7 +126,7 @@ class HexViewerState extends State<HexViewer> {
 
     var asciiText = hexTextList.map((line) {
       return line.split(' ').map((hexValue) {
-        if (hexValue == null || hexValue.isEmpty) return '';
+        if (hexValue.isEmpty) return '';
 
         var charCode = int.tryParse(hexValue, radix: 16);
         if (charCode == null) return '';

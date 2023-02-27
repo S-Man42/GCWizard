@@ -29,7 +29,7 @@ class MultiDecoderToolDummy extends AbstractMultiDecoderTool {
       id: -1,
       name: '',
       internalToolName: '',
-      onDecode: (String input, String key) {},
+      onDecode: (String input, String key) {return null;},
       options: {});
 }
 

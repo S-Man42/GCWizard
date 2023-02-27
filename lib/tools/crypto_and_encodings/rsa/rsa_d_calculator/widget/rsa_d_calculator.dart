@@ -63,12 +63,9 @@ class RSADCalculatorState extends State<RSADCalculator> {
     );
   }
 
-  _calculateOutput() {
-    if (_currentE == null ||
-        _currentE.isEmpty ||
-        _currentP == null ||
+  void _calculateOutput() {
+    if (_currentE.isEmpty ||
         _currentP.isEmpty ||
-        _currentQ == null ||
         _currentQ.isEmpty) {
       _output = null;
     }

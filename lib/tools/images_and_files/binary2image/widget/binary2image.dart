@@ -14,7 +14,6 @@ import 'package:gc_wizard/tools/images_and_files/qr_code/logic/qr_code.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/image_utils/image_utils.dart';
-import 'package:intl/intl.dart';
 
 class Binary2Image extends StatefulWidget {
   @override
@@ -94,7 +93,7 @@ class Binary2ImageState extends State<Binary2Image> {
     ]);
   }
 
-  _exportFile(BuildContext context, Uint8List data) async {
+  void _exportFile(BuildContext context, Uint8List data) async {
     var value = await saveByteDataToFile(context, data, buildFileNameWithDate('img_', FileType.PNG));
 
     if (value) showExportedFileDialog(context, contentWidget: imageContent(context, data));

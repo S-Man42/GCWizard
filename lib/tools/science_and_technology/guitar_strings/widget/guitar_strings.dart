@@ -212,7 +212,7 @@ class GuitarStringsState extends State<GuitarStrings> {
               style: gcwMonotypeTextStyle(),
               maxLines: 6,
             )),
-            outputText != null && outputText.isNotEmpty
+            outputText.isNotEmpty
                 ? GCWIconButton(
                     size: IconButtonSize.SMALL,
                     icon: Icons.content_copy,

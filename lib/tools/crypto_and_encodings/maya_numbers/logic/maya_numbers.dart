@@ -42,7 +42,7 @@ SegmentsVigesimal decodeMayaNumbers(List<String>? inputs) {
 
   var displays = <List<String>>[];
 
-  List<int> numbers = inputs.where((input) => input != null).map((input) {
+  List<int> numbers = inputs.map((input) {
     var number = 0;
     var display = <String>[];
     input.toLowerCase().split('').forEach((segment) {

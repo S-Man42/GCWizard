@@ -34,7 +34,7 @@ class ScrabbleSet {
   final Map<String, _LetterAttribute> letters;
   final bool caseSensitive;
 
-  ScrabbleSet(this.key, this.i18nNameId, this.letters, {this.caseSensitive: false});
+  ScrabbleSet(this.key, this.i18nNameId, this.letters, {this.caseSensitive = false});
 
   int letterValue(String letter) {
     if (!caseSensitive) letter = letter.toUpperCase();

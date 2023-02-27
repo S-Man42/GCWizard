@@ -1,3 +1,5 @@
+// ignore_for_file: equal_keys_in_map
+
 import 'dart:math';
 
 import 'package:flutter/material.dart';

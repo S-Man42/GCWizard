@@ -49,14 +49,14 @@ String? _encrypt(String? input, String? substitutionKey, String? transpositionKe
 
   String out = '';
   for (int i = 0; i < newIndexes.length; i++) {
-    matrix[newIndexes[i]].where((character) => character != null).forEach((character) => out += character);
+    matrix[newIndexes[i]].forEach((character) => out += character);
   }
 
   return insertSpaceEveryNthCharacter(out, 5);
 }
 
 String? decryptADFGX(String? input, String? substitutionKey, String? transpositionKey,
-    {PolybiosMode polybiosMode: PolybiosMode.ZA90, String? alphabet}) {
+    {PolybiosMode polybiosMode = PolybiosMode.ZA90, String? alphabet}) {
   return _decrypt(input, substitutionKey, transpositionKey, _ADFGVXMode.ADFGX, polybiosMode, alphabet);
 }
 

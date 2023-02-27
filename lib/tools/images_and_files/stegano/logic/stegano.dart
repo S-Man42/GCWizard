@@ -28,7 +28,7 @@ Future<String> decodeStegano(local.GCWFile file, String key) async {
   // the key is use to decrypt your encrypted message with AES256 algorithm
   _SteganoDecodeRequest request = _SteganoDecodeRequest(data, key: key);
   String response = await _decodeSteganoMessageFromImageAsync(request);
-  if (response != null && response.length > MAX_LENGTH) {
+  if (response.length > MAX_LENGTH) {
     throw Exception('abnormal_length_nothing_to_decode');
   }
   return response;

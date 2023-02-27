@@ -143,7 +143,7 @@ class VisualCryptographyState extends State<VisualCryptography> {
         text: i18n(context, 'visual_cryptography_clear'),
         onPressed: () {
           setState(() {
-            _outData = cleanImage(_decodeImage1?.bytes, _decodeImage2?.bytes, _decodeOffsetsX, _decodeOffsetsY);
+            _outData = cleanImage(_decodeImage1.bytes, _decodeImage2.bytes, _decodeOffsetsX, _decodeOffsetsY);
           });
         },
       ),
@@ -168,13 +168,12 @@ class VisualCryptographyState extends State<VisualCryptography> {
           });
         },
       ),
-      _encodeImage != null
-          ? Container(
-              child:
-                  GCWImageView(imageData: GCWImageViewData(_encodeImage), suppressedButtons: {GCWImageViewButtons.ALL}),
-              padding: EdgeInsets.symmetric(vertical: 25),
-            )
-          : Container(),
+      Container(
+          child:
+              GCWImageView(imageData: GCWImageViewData(_encodeImage), suppressedButtons: {GCWImageViewButtons.ALL}),
+          padding: EdgeInsets.symmetric(vertical: 25),
+        ),
+
       GCWOnOffSwitch(
         value: _currentEncryptionWithKeyMode,
         title: i18n(context, 'visual_cryptography_keyimage'),
@@ -286,8 +285,7 @@ class VisualCryptographyState extends State<VisualCryptography> {
     ]);
   }
 
-    void __encodeImageSize() {
-    if (_encodeImage == null) return;
+  void __encodeImageSize() {
 
     var _image = img.decodeImage(_encodeImage.bytes);
     if (_image == null) return;

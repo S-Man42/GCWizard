@@ -50,7 +50,6 @@ class CountriesFlagsState extends State<CountriesFlags> {
 
   @override
   Widget build(BuildContext context) {
-    if (_images == null) return Container();
 
     return Column(
       children: [

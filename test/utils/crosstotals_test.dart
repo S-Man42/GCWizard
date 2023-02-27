@@ -5,7 +5,7 @@ void main() {
   group("Crosstotals.sum:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'list' : [1,2,3,1,1,1,100], 'expectedOutput' : 109},
-      {'list' : [].cast<int>(), 'expectedOutput' : 0},
+      {'list' : <int>[], 'expectedOutput' : 0},
       {'list' : [null].cast<int>(), 'expectedOutput' : 0},
       {'list' : null, 'expectedOutput' : 0},
       {'list' : [null, 1, null], 'expectedOutput' : 1},
@@ -24,7 +24,7 @@ void main() {
   group("Crosstotals.product:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'list' : [1,2,3,1,1,1,100], 'expectedOutput' : 600},
-      {'list' : [].cast<int>(), 'expectedOutput' : 0},
+      {'list' : <int>[], 'expectedOutput' : 0},
       {'list' : [null].cast<int>(), 'expectedOutput' : 0},
       {'list' : null, 'expectedOutput' : 0},
       {'list' : [null, 1, null], 'expectedOutput' : 1},
@@ -44,7 +44,7 @@ void main() {
   group("Crosstotals.crossSum:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'list' : [1,2,33,1,1,1,100], 'expectedOutput' : 13},
-      {'list' : [].cast<int>(), 'expectedOutput' : 0},
+      {'list' : <int>[], 'expectedOutput' : 0},
       {'list' : [null].cast<int>(), 'expectedOutput' : 0},
       {'list' : null, 'expectedOutput' : 0},
       {'list' : [null, 666, null], 'expectedOutput' : 18},
@@ -63,7 +63,7 @@ void main() {
   group("Crosstotals.crossProduct:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'list' : [1,2,33,1,1,1,100], 'expectedOutput' : 0},
-      {'list' : [].cast<int>(), 'expectedOutput' : 0},
+      {'list' : <int>[], 'expectedOutput' : 0},
       {'list' : [null].cast<int>(), 'expectedOutput' : 0},
       {'list' : null, 'expectedOutput' : 0},
       {'list' : [null, 666, null], 'expectedOutput' : 216},
@@ -82,7 +82,7 @@ void main() {
   group("Crosstotals.crossSumIterated:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'list' : [1,2,33,1,1,1,100], 'expectedOutput' : 4},
-      {'list' : [].cast<int>(), 'expectedOutput' : 0},
+      {'list' : <int>[], 'expectedOutput' : 0},
       {'list' : [null].cast<int>(), 'expectedOutput' : 0},
       {'list' : null, 'expectedOutput' : 0},
       {'list' : [null, 666, null], 'expectedOutput' : 9},
@@ -102,7 +102,7 @@ void main() {
   group("Crosstotals.crossProductIterated:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'list' : [1,2,33,1,1,1,100], 'expectedOutput' : 0},
-      {'list' : [].cast<int>(), 'expectedOutput' : 0},
+      {'list' : <int>[], 'expectedOutput' : 0},
       {'list' : [null].cast<int>(), 'expectedOutput' : 0},
       {'list' : null, 'expectedOutput' : 0},
       {'list' : [null, 666, null], 'expectedOutput' : 2},
@@ -122,7 +122,7 @@ void main() {
   group("Crosstotals.crossSumAlternatedForward:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'list' : [1,2,33,1,1,1,100], 'expectedOutput' : -1},
-      {'list' : [].cast<int>(), 'expectedOutput' : 0},
+      {'list' : <int>[], 'expectedOutput' : 0},
       {'list' : [null].cast<int>(), 'expectedOutput' : 0},
       {'list' : null, 'expectedOutput' : 0},
       {'list' : [null, 666, null], 'expectedOutput' : 6},
@@ -144,7 +144,7 @@ void main() {
   group("Crosstotals.crossSumAlternatedBackward:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'list' : [1,2,33,1,1,1,100], 'expectedOutput' : 1},
-      {'list' : [].cast<int>(), 'expectedOutput' : 0},
+      {'list' : <int>[], 'expectedOutput' : 0},
       {'list' : [null].cast<int>(), 'expectedOutput' : 0},
       {'list' : null, 'expectedOutput' : 0},
       {'list' : [null, 666, null], 'expectedOutput' : 6},
@@ -166,7 +166,7 @@ void main() {
   group("Crosstotals.crossProductAlternated:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'list' : [1,2,33,1,1,1,100], 'expectedOutput' : 0},
-      {'list' : [].cast<int>(), 'expectedOutput' : 0},
+      {'list' : <int>[], 'expectedOutput' : 0},
       {'list' : [null].cast<int>(), 'expectedOutput' : 0},
       {'list' : null, 'expectedOutput' : 0},
       {'list' : [null, 666, null], 'expectedOutput' : -216},
@@ -188,7 +188,7 @@ void main() {
   group("Crosstotals.sumAlternatedBackward:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'list' : [1,2,33,1,1,1,100], 'expectedOutput' : 131},
-      {'list' : [].cast<int>(), 'expectedOutput' : 0},
+      {'list' : <int>[], 'expectedOutput' : 0},
       {'list' : [null].cast<int>(), 'expectedOutput' : 0},
       {'list' : null, 'expectedOutput' : 0},
       {'list' : [null, 666, null], 'expectedOutput' : 666},
@@ -210,7 +210,7 @@ void main() {
   group("Crosstotals.sumAlternatedForward:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'list' : [1,2,33,1,1,1,100], 'expectedOutput' : 131},
-      {'list' : [].cast<int>(), 'expectedOutput' : 0},
+      {'list' : <int>[], 'expectedOutput' : 0},
       {'list' : [null].cast<int>(), 'expectedOutput' : 0},
       {'list' : null, 'expectedOutput' : 0},
       {'list' : [null, 666, null], 'expectedOutput' : 666},
@@ -232,7 +232,7 @@ void main() {
   group("Crosstotals.productAlternated:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'list' : [1,2,33,1,1,1,100], 'expectedOutput' : -6600},
-      {'list' : [].cast<int>(), 'expectedOutput' : 0},
+      {'list' : <int>[], 'expectedOutput' : 0},
       {'list' : [null].cast<int>(), 'expectedOutput' : 0},
       {'list' : null, 'expectedOutput' : 0},
       {'list' : [null, 666, null], 'expectedOutput' : 666},
@@ -254,7 +254,7 @@ void main() {
   group("Crosstotals.sumCrossSum:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'list' : [1,2,33,1,1,1,100], 'expectedOutput' : 13},
-      {'list' : [].cast<int>(), 'expectedOutput' : 0},
+      {'list' : <int>[], 'expectedOutput' : 0},
       {'list' : [null].cast<int>(), 'expectedOutput' : 0},
       {'list' : null, 'expectedOutput' : 0},
       {'list' : [null, 666, null], 'expectedOutput' : 18},
@@ -276,7 +276,7 @@ void main() {
   group("Crosstotals.productCrossSum:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'list' : [1,2,33,1,1,1,100], 'expectedOutput' : 12},
-      {'list' : [].cast<int>(), 'expectedOutput' : 0},
+      {'list' : <int>[], 'expectedOutput' : 0},
       {'list' : [null].cast<int>(), 'expectedOutput' : 0},
       {'list' : null, 'expectedOutput' : 0},
       {'list' : [null, 666, null], 'expectedOutput' : 18},
@@ -298,7 +298,7 @@ void main() {
   group("Crosstotals.sumCrossSumIterated:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'list' : [1,2,33,1,1,1,100], 'expectedOutput' : 4},
-      {'list' : [].cast<int>(), 'expectedOutput' : 0},
+      {'list' : <int>[], 'expectedOutput' : 0},
       {'list' : [null].cast<int>(), 'expectedOutput' : 0},
       {'list' : null, 'expectedOutput' : 0},
       {'list' : [null, 666, null], 'expectedOutput' : 9},
@@ -320,7 +320,7 @@ void main() {
   group("Crosstotals.productCrossSumIterated:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'list' : [1,2,33,1,1,1,100], 'expectedOutput' : 3},
-      {'list' : [].cast<int>(), 'expectedOutput' : 0},
+      {'list' : <int>[], 'expectedOutput' : 0},
       {'list' : [null].cast<int>(), 'expectedOutput' : 0},
       {'list' : null, 'expectedOutput' : 0},
       {'list' : [null, 666, null], 'expectedOutput' : 9},
@@ -342,7 +342,7 @@ void main() {
   group("Crosstotals.sumCrossSumAlternatedForward:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'list' : [1,2,33,1,1,1,100], 'expectedOutput' : 7},
-      {'list' : [].cast<int>(), 'expectedOutput' : 0},
+      {'list' : <int>[], 'expectedOutput' : 0},
       {'list' : [null].cast<int>(), 'expectedOutput' : 0},
       {'list' : null, 'expectedOutput' : 0},
       {'list' : [null, 666, null], 'expectedOutput' : 6},
@@ -364,7 +364,7 @@ void main() {
   group("Crosstotals.sumCrossSumAlternatedBackward:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'list' : [1,2,33,1,1,1,100], 'expectedOutput' : 7},
-      {'list' : [].cast<int>(), 'expectedOutput' : 0},
+      {'list' : <int>[], 'expectedOutput' : 0},
       {'list' : [null].cast<int>(), 'expectedOutput' : 0},
       {'list' : null, 'expectedOutput' : 0},
       {'list' : [null, 666, null], 'expectedOutput' : 6},
@@ -386,7 +386,7 @@ void main() {
   group("Crosstotals.productCrossSumAlternatedForward:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'list' : [1,2,33,1,1,1,100], 'expectedOutput' : 0},
-      {'list' : [].cast<int>(), 'expectedOutput' : 0},
+      {'list' : <int>[], 'expectedOutput' : 0},
       {'list' : [null].cast<int>(), 'expectedOutput' : 0},
       {'list' : null, 'expectedOutput' : 0},
       {'list' : [null, 666, null], 'expectedOutput' : 6},

@@ -8,7 +8,7 @@ class EnigmaRotorDropDown extends StatefulWidget {
   const EnigmaRotorDropDown(
       {Key? key,
       required this.position,
-      this.type: EnigmaRotorType.STANDARD,
+      this.type = EnigmaRotorType.STANDARD,
       required this.onChanged})
       : super(key: key);
 

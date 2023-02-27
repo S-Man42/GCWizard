@@ -354,11 +354,9 @@ class SymbolTableData {
         ui.Image? specialEncryptionImage;
         if (encryptionArchive != null && encryptionArchive.isNotEmpty) {
           var specialFile = encryptionArchive.firstWhere((encryptionFile) => encryptionFile.name == file.name);
-          if (specialFile != null) {
-            var specialFileData = toUint8ListOrNull(specialFile.content);
-            if (specialFileData != null)
-              specialEncryptionImage = await _initializeImage(specialFileData);
-          }
+          var specialFileData = toUint8ListOrNull(specialFile.content);
+          if (specialFileData != null)
+            specialEncryptionImage = await _initializeImage(specialFileData);
         }
 
         images.add({

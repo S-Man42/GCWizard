@@ -30,7 +30,7 @@ class SymbolTableState extends State<SymbolTable> {
     _initialize();
   }
 
-  Future _initialize() async {
+  Future<void> _initialize() async {
     var symbolTableData = SymbolTableData(context, widget.symbolKey);
     await symbolTableData.initialize();
     setState(() {

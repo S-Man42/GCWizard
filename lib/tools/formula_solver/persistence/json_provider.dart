@@ -22,7 +22,7 @@ void _saveData() {
 }
 
 int insertGroup(FormulaGroup group) {
-  group.name = group.name ?? '';
+  group.name = group.name;
   var id = newID(formulaGroups.map((group) => group.id).toList());
   group.id = id;
   formulaGroups.add(group);

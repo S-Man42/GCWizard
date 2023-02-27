@@ -214,7 +214,7 @@ int _execCommand(
       // If current memory block has a 0 in it, read a single ASCII character from STDIN and store it in the current memory block.
       // If the current memory block is not 0, then print the ASCII character that corresponds to the value in the current memory block to STDOUT.
       if (memoryBlocksArray[currentBlockIndex] == 0) {
-        memoryBlocksArray[currentBlockIndex] = (STDIN ?? '').codeUnitAt(inputPointer);
+        memoryBlocksArray[currentBlockIndex] = STDIN.codeUnitAt(inputPointer);
         inputPointer++;
       } else {
         STDOUT = STDOUT + String.fromCharCode(memoryBlocksArray[currentBlockIndex] % 256);

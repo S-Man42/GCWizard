@@ -18,7 +18,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = toDoubleOrNull(elem['input'] as Object?);
+        var _actual = toDoubleOrNull(elem['input']);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -41,7 +41,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = toIntOrNull(elem['input'] as Object?);
+        var _actual = toIntOrNull(elem['input']);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -63,7 +63,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = toBoolOrNull(elem['input'] as Object?);
+        var _actual = toBoolOrNull(elem['input']);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -84,7 +84,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = toStringOrNull(elem['input'] as Object?);
+        var _actual = toStringOrNull(elem['input']);
         expect(_actual, elem['expectedOutput']);
       });
     });

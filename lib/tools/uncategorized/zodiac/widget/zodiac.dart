@@ -111,7 +111,7 @@ class ZodiacState extends State<Zodiac> {
         // ToDo Mark replace Map
           data: ZODIACSIGNS
                   .map((key, value) {
-                    var output;
+                    String output;
                     switch (_currentAttribute) {
                       case ZODIACSIGNS_ATTRIBUTE_DATE:
                         output = _createDateOutput(value[_currentAttribute] as Map<String, int>?);

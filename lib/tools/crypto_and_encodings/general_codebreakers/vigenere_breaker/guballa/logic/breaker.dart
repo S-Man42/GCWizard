@@ -44,7 +44,7 @@ BreakerResult break_vigenere(
           best_key_ch1 = key_ch1;
           best_key_ch2 = key_ch2;
         }
-        if (counterFunction != null) counterFunction();
+        counterFunction();
       }
     }
     if (key_idx == 0) {
