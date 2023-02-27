@@ -16,11 +16,11 @@ var regexEnd = '';
 
 //wholeString == false: The first match at the text begin is taken - for copy
 //wholeString == true: The whole text must be a valid coord - for var coords
-List<BaseCoordinates> parseCoordinates(String text, {wholeString = false}) {
+List<BaseCoordinates> parseCoordinates(String text, {bool wholeString = false}) {
   var coords = <BaseCoordinates>[];
 
   try {
-    BaseCoordinates coord = DMS.parse(text, wholeString: wholeString);
+    BaseCoordinates? coord = DMS.parse(text, wholeString: wholeString);
     if (coord != null) coords.add(coord);
 
     coord = DMM.parse(text, wholeString: wholeString);
