@@ -263,7 +263,7 @@ String decodeGaussWeberTelegraph(String? input, GaussWeberTelegraphMode mode) {
   if (mode == GaussWeberTelegraphMode.WHEATSTONE_COOKE_1) {
     bool letter = true;
     return input.toLowerCase().split(RegExp(r'\s+')).map((code) {
-      if (code == null || code.isEmpty) return '';
+      if (code.isEmpty) return '';
 
       var character = map[code];
 
@@ -282,7 +282,7 @@ String decodeGaussWeberTelegraph(String? input, GaussWeberTelegraphMode mode) {
   } else if (mode == GaussWeberTelegraphMode.WHEATSTONE_COOKE_2) {
     input = input.replaceAll('  ', ' ').replaceAll('] [', ']] [[');
     return input.toLowerCase().split('] [').map((code) {
-      if (code == null || code.isEmpty) return '';
+      if (code.isEmpty) return '';
 
       var character = map[code];
 
@@ -291,7 +291,7 @@ String decodeGaussWeberTelegraph(String? input, GaussWeberTelegraphMode mode) {
     }).join();
   } else
     return input.toLowerCase().split(RegExp(r'\s+')).map((code) {
-      if (code == null || code.isEmpty) return '';
+      if (code.isEmpty) return '';
 
       var character = map[code];
       if (character == null || character.isEmpty) return '';
@@ -300,7 +300,7 @@ String decodeGaussWeberTelegraph(String? input, GaussWeberTelegraphMode mode) {
 }
 
 String encodeGaussWeberTelegraph(String input, GaussWeberTelegraphMode mode) {
-  if (input == null || input.isEmpty) return '';
+  if (input.isEmpty) return '';
 
   Map<String, String> map;
   switch (mode) {
@@ -330,7 +330,7 @@ String encodeGaussWeberTelegraph(String input, GaussWeberTelegraphMode mode) {
     bool letter = true;
     List<String> result = [];
     input.toUpperCase().split('').forEach((char) {
-      if (char == null || char.isEmpty) result.add('');
+      if (char.isEmpty) result.add('');
 
       if (letter) {
         // letter mode
@@ -382,7 +382,7 @@ String encodeGaussWeberTelegraph(String input, GaussWeberTelegraphMode mode) {
         .toUpperCase()
         .split('')
         .map((char) {
-          if (char == null || char.isEmpty) return '';
+          if (char.isEmpty) return '';
 
           var code = map[char];
           if (code == null || code.isEmpty) return '';

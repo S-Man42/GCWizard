@@ -117,9 +117,9 @@ class HumidexState extends State<Humidex> {
       )
     ];
 
-    if (hint != null && hint.isNotEmpty) outputs.add(GCWOutput(title: i18n(context, 'heatindex_hint'), child: hint));
+    if (hint.isNotEmpty) outputs.add(GCWOutput(title: i18n(context, 'heatindex_hint'), child: hint));
 
-    if (hintM != null && hintM.isNotEmpty)
+    if (hintM.isNotEmpty)
       outputs.add(GCWOutput(
         title: i18n(context, 'humidex_meaning'),
         child: i18n(context, hintM),

@@ -67,7 +67,7 @@ class TeletypewriterState extends State<Teletypewriter> {
               return GCWDropDownMenuItem(
                   value: mode.key,
                   child: i18n(context, mode.value.title),
-                  subtitle: mode.value.subtitle != null ? i18n(context, mode.value.subtitle) : null);
+                  subtitle:i18n(context, mode.value.subtitle));
             }).toList(),
           ),
         _currentMode == GCWSwitchPosition.left

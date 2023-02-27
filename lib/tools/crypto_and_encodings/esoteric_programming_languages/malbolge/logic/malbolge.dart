@@ -117,7 +117,7 @@ String reverseNormalize(String instructionList) {
   return returnString;
 }
 
-int index(String s, c) {
+int index(String s, String c) {
   for (int i = 0; i < s.length; i++) if (s[i] == c) return i;
   return -1;
 }

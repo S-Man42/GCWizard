@@ -182,7 +182,6 @@ final CODEBOOK_PRUSSIA = {
   '4.24.25.1': 'NIEHEIM',
   '4.24.25.2': '',
   '4.24.25.3': '',
-  '4.25.14.1': '',
   // Seite 5
   '4.24.34.1': '',
   '4.24.34.2': '',
@@ -1595,7 +1594,7 @@ final CODEBOOK_PRUSSIA = {
   '256': 'LB',
   '257': 'LD',
   '258': 'LE',
-  '258': 'LEG',
+  '259': 'LEG',
   '260': 'LEI',
   '261': 'LEIN',
   '262': 'LEM',
@@ -1646,7 +1645,7 @@ final CODEBOOK_PRUSSIA = {
   '307': 'MIT',
   '308': 'MO',
   '309': 'MON',
-  '300': 'MOR',
+  '310': 'MOR',
   '311': 'MOS',
   '312': 'MOT',
   '313': 'MU',
@@ -2429,7 +2428,7 @@ List<String> _stringToSegment(String input) {
 }
 
 String segmentToCode(List<String> input) {
-  var segment = [];
+  List<String> segment = [];
   segment.addAll(input);
   String a = '0';
   String b = '0';

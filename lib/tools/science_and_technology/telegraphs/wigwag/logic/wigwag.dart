@@ -175,7 +175,7 @@ final Map<String, int> generalCode1872 = {
 };
 
 String encodeWigWag(String plainText, WigWagCodebook language) {
-  if (plainText == null || plainText.isEmpty) return '';
+  if (plainText.isEmpty) return '';
 
   Map<String, int> codebook;
   switch (language) {

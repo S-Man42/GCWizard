@@ -149,7 +149,7 @@ class BefungeState extends State<Befunge> {
               size: IconButtonSize.SMALL,
               icon: Icons.content_copy,
               onPressed: () {
-                var copyText = _codeGenerateController.text != null ? _codeGenerateController.text : '';
+                var copyText = _codeGenerateController.text;
                 insertIntoGCWClipboard(context, copyText);
               },
             ),

@@ -78,7 +78,7 @@ class BeghilosState extends State<Beghilos> {
         ? decodeBeghilos(_currentInputDecode)
         : encodeBeghilos(_currentInputEncode.text);
 
-    if (textOutput == null || textOutput.isEmpty) return GCWDefaultOutput();
+    if (textOutput.isEmpty) return GCWDefaultOutput();
 
     _currentDisplays = encodeSegment(
         _currentMode == GCWSwitchPosition.left ? textOutput : _currentInputEncode.text, SegmentDisplayType.SEVEN);

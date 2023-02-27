@@ -4,7 +4,6 @@ import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart'
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_datetime_picker.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/_common/logic/julian_date.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/sun_position/logic/sun_position.dart' as logic;

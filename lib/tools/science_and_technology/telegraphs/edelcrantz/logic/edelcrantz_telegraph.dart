@@ -1094,7 +1094,7 @@ final CODEBOOK_EDELCRANTZ_1808 = {
   '775': 'om',
   '776': 'on',
   '777': ' ',
-  'a001': '',
+  'a000': '',
   'a001': '',
   'a002': '',
   'a003': '',
@@ -1663,7 +1663,7 @@ final CODEBOOK_EDELCRANTZ_MUSEUM = {
   '300': 'im',
   '301': 'is',
   '302': 'it',
-  '302': 'j',
+  '303': 'j',
   '304': 'ja',
   '305': 'jo',
   '306': 'k',
@@ -1887,8 +1887,6 @@ String segmentToCode(List<String> segment) {
   int b = 0;
   int c = 0;
 
-  String A = '';
-
   if (segment.contains('a1')) a = a + 1;
   if (segment.contains('a2')) a = a + 2;
   if (segment.contains('a3')) a = a + 4;
@@ -1906,9 +1904,8 @@ String segmentToCode(List<String> segment) {
 
 List<String> _buildShutters(String segments) {
   List<String> resultElement = [];
-  bool A = false;
+
   if (segments.length == 4 && segments.startsWith('a')) {
-    A = true;
     segments = segments.substring(1);
     resultElement = ['t0'];
   }

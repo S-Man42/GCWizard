@@ -122,7 +122,6 @@ SegmentsChars decodeSemaphore(List<String>? inputs) {
 
   var displays = <List<String>>[];
   var segment = <String>[];
-  bool number_follows = false;
   bool letter_follows = true;
 
   Map<List<String>, String> CODEBOOK = switchMapKeyValue(CODEBOOK_SEMAPHORE);
@@ -149,11 +148,9 @@ SegmentsChars decodeSemaphore(List<String>? inputs) {
         switch (symbol) {
           case 'symboltables_semaphore_letters_following':
             if (letter_follows) char = char + 'J';
-            number_follows = false;
             letter_follows = true;
             break;
           case 'symboltables_semaphore_numerals_following':
-            number_follows = true;
             letter_follows = false;
             break;
           case 'symboltables_semaphore_rest':
@@ -174,7 +171,7 @@ SegmentsChars decodeSemaphore(List<String>? inputs) {
         else
           charH = DIGIT2LETTER[symbol]!;
 
-        if (charH != null) char = char + charH;
+        char = char + charH;
       }
     }
 
