@@ -41,7 +41,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = interpretMalbolge(elem['program'], elem['input'], false).output;
+        var _actual = interpretMalbolge(elem['program'] as String, elem['input'] as String, false).output;
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -59,7 +59,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = generateMalbolge(elem['input']).assembler.join('');
+        var _actual = generateMalbolge(elem['input'] as String).assembler.join('');
         expect(_actual, elem['expectedOutput']);
       });
     });

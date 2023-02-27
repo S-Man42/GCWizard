@@ -12,16 +12,16 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var cmyk = CMYK.fromRGB(elem['input']);
-        expect((cmyk.cyan - elem['expectedOutput'].cyan).abs() < 1e-5, true);
-        expect((cmyk.magenta - elem['expectedOutput'].magenta).abs() < 1e-5, true);
-        expect((cmyk.yellow - elem['expectedOutput'].yellow).abs() < 1e-5, true);
-        expect((cmyk.key - elem['expectedOutput'].key).abs() < 1e-5, true);
+        var cmyk = CMYK.fromRGB(elem['input'] as RGB);
+        expect((cmyk.cyan - (elem['expectedOutput'] as CMYK).cyan).abs() < 1e-5, true);
+        expect((cmyk.magenta - (elem['expectedOutput'] as CMYK).magenta).abs() < 1e-5, true);
+        expect((cmyk.yellow - (elem['expectedOutput'] as CMYK).yellow).abs() < 1e-5, true);
+        expect((cmyk.key - (elem['expectedOutput'] as CMYK).key).abs() < 1e-5, true);
 
         var rgb = cmyk.toRGB();
-        expect((rgb.red - elem['input'].red).abs() < 1e-5, true);
-        expect((rgb.green - elem['input'].green).abs() < 1e-5, true);
-        expect((rgb.blue - elem['input'].blue).abs() < 1e-5, true);
+        expect((rgb.red - (elem['input'] as RGB).red).abs() < 1e-5, true);
+        expect((rgb.green - (elem['input'] as RGB).green).abs() < 1e-5, true);
+        expect((rgb.blue - (elem['input'] as RGB).blue).abs() < 1e-5, true);
       });
     });
   });
@@ -35,15 +35,15 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var cmy = CMY.fromRGB(elem['input']);
-        expect((cmy.cyan - elem['expectedOutput'].cyan).abs() < 1e-5, true);
-        expect((cmy.magenta - elem['expectedOutput'].magenta).abs() < 1e-5, true);
-        expect((cmy.yellow - elem['expectedOutput'].yellow).abs() < 1e-5, true);
+        var cmy = CMY.fromRGB(elem['input'] as RGB);
+        expect((cmy.cyan - (elem['expectedOutput'] as CMY).cyan).abs() < 1e-5, true);
+        expect((cmy.magenta - (elem['expectedOutput'] as CMY).magenta).abs() < 1e-5, true);
+        expect((cmy.yellow - (elem['expectedOutput'] as CMY).yellow).abs() < 1e-5, true);
 
         var rgb = cmy.toRGB();
-        expect((rgb.red - elem['input'].red).abs() < 1e-5, true);
-        expect((rgb.green - elem['input'].green).abs() < 1e-5, true);
-        expect((rgb.blue - elem['input'].blue).abs() < 1e-5, true);
+        expect((rgb.red - (elem['input'] as RGB).red).abs() < 1e-5, true);
+        expect((rgb.green - (elem['input'] as RGB).green).abs() < 1e-5, true);
+        expect((rgb.blue - (elem['input'] as RGB).blue).abs() < 1e-5, true);
       });
     });
   });

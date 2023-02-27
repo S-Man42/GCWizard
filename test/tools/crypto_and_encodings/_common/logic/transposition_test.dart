@@ -151,7 +151,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, fillMode: ${elem['fillMode']}, countColumns: ${elem['countColumns']}, countRows: ${elem['countRows']}, countLettersPerCell: ${elem['countLettersPerCell']}', () {
-        var _actual = createTranspositionMatrix(elem['input'], elem['fillMode'], countRows: elem['countRows'], countColumns: elem['countColumns'], countLettersPerCell: elem['countLettersPerCell']);
+        var _actual = createTranspositionMatrix(elem['input'] as String?, elem['fillMode'] as TranspositionMatrixFillMode, countRows: elem['countRows'] as int?, countColumns: elem['countColumns'] as int?, countLettersPerCell: elem['countLettersPerCell'] as int);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -216,7 +216,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, countRows: ${elem['countRows']}, countColumns: ${elem['countColumns']}, countLettersPerCell: ${elem['countLettersPerCell']}', () {
-        var _actual = encryptTransposition(elem['input'], countRows: elem['countRows'], countColumns: elem['countColumns'], countLettersPerCell: elem['countLettersPerCell']);
+        var _actual = encryptTransposition(elem['input'] as String?, countRows: elem['countRows'] as int?, countColumns: elem['countColumns'] as int?, countLettersPerCell: elem['countLettersPerCell'] as int);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -280,7 +280,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, countRows: ${elem['countRows']}, countColumns: ${elem['countColumns']}, countLettersPerCell: ${elem['countLettersPerCell']}', () {
-        var _actual = decryptTransposition(elem['input'], countRows: elem['countRows'], countColumns: elem['countColumns'], countLettersPerCell: elem['countLettersPerCell']);
+        var _actual = decryptTransposition(elem['input'] as String?, countRows: elem['countRows'] as int?, countColumns: elem['countColumns'] as int?, countLettersPerCell: elem['countLettersPerCell'] as int);
         expect(_actual, elem['expectedOutput']);
       });
     });

@@ -13,6 +13,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/tools/md_tool_ccitt2.dart';
 import 'package:gc_wizard/tools/science_and_technology/maya_calendar/logic/maya_calendar.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
+import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 import 'package:prefs/prefs.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 
@@ -204,7 +205,7 @@ void initDefaultSettings(PreferencesInitMode mode, {String reinitSinglePreferenc
       if ([MDT_INTERNALNAMES_BCD, MDT_INTERNALNAMES_BASE].contains(tool.internalToolName)) {
         var options = <MultiDecoderToolOption>[];
         tool.options.forEach((option) {
-          options.add(MultiDecoderToolOption(option.name, option.value.split('_title')[0]));
+          options.add(MultiDecoderToolOption(option.name, (toStringOrNull(option.value) ?? '').split('_title')[0]));
         });
         tool.options = options;
         updateMultiDecoderTool(tool);

@@ -1,6 +1,8 @@
 // https://www.history.navy.mil/research/library/online-reading-room/title-list-alphabetically/n/navajo-code-talker-dictionary.html
 // https://www.ancestrycdn.com/aa-k12/1112/assets/Navajo-Code-Talkers-dictionary.pdf
 
+// ignore_for_file: equal_keys_in_map
+
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
@@ -728,7 +730,7 @@ String enfoldText(String input) {
       .replaceAll('TRAFFICDIAGRAM', 'TRAFFIC DIAGRAM');
 }
 
-String decodeNavajo(String cipherText, bool useOnlyAlphabet) {
+String decodeNavajo(String? cipherText, bool useOnlyAlphabet) {
   NAVAJO_DECODE_ALPHABET['BE-LA-SANA'] = 'A';
   NAVAJO_DECODE_ALPHABET['TSE-NILL'] = 'A';
   NAVAJO_DECODE_ALPHABET['TSE-NIHL'] = 'A';
@@ -794,7 +796,7 @@ String decodeNavajo(String cipherText, bool useOnlyAlphabet) {
   return result.join('');
 }
 
-String encodeNavajo(String plainText, bool useOnlyAlphabet) {
+String encodeNavajo(String? plainText, bool useOnlyAlphabet) {
   List<String> result = <String>[];
   if (plainText == null || plainText.isEmpty) return '';
 

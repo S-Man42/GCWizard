@@ -31,7 +31,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, replaceCharacter: ${elem['replaceCharacters']}', () {
-        var _actual = encryptTomTom(elem['input'], elem['replaceCharacters']);
+        var _actual = encryptTomTom(elem['input'] as String?, elem['replaceCharacters'] as Map<String, String>?);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -70,7 +70,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, replaceCharacter: ${elem['replaceCharacters']}', () {
-        var _actual = decryptTomTom(elem['input'], elem['replaceCharacters']);
+        var _actual = decryptTomTom(elem['input'] as String?, elem['replaceCharacters'] as Map<String, String>?);
         expect(_actual, elem['expectedOutput']);
       });
     });

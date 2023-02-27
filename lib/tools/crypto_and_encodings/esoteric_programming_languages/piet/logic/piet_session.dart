@@ -50,7 +50,7 @@ Future<PietResult> interpretPiet(List<List<int>> data, String? input,
           input_expected: _input_required,
           input_number_expected: _input_required_number,
           error: true,
-          errorText: err.toString() ?? err.toString(),
+          errorText: err.toString(),
           state: pietSession);
   }
 }

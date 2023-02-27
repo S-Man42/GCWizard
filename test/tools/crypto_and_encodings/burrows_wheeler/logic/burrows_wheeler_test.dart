@@ -15,9 +15,9 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
         test('input: ${elem['input']}, index: ${elem['index']}', () {
-          BWTOutput _actual = encryptBurrowsWheeler(elem['input'], elem['index']);
-          expect(_actual.text, elem['expectedOutput'].text);
-          expect(_actual.index, elem['expectedOutput'].index);
+          BWTOutput _actual = encryptBurrowsWheeler(elem['input'] as String?, elem['index'] as String);
+          expect(_actual.text, (elem['expectedOutput'] as BWTOutput).text);
+          expect(_actual.index, (elem['expectedOutput'] as BWTOutput).index);
         });
     });
   });
@@ -32,9 +32,9 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, index: ${elem['index']}', () {
-        BWTOutput _actual = encryptBurrowsWheeler(elem['input'], elem['index']);
-        expect(_actual.text, elem['expectedOutput'].text);
-        expect(_actual.index, elem['expectedOutput'].index);
+        BWTOutput _actual = encryptBurrowsWheeler(elem['input'] as String, elem['index'] as String);
+        expect(_actual.text, (elem['expectedOutput'] as BWTOutput).text);
+        expect(_actual.index, (elem['expectedOutput'] as BWTOutput).index);
       });
     });
   });
@@ -62,15 +62,15 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       BWTOutput _actual;
-      if (elem['index'].isEmpty || elem['index'] == null)
+      if ((elem['index'] as String).isEmpty || elem['index'] == null)
         _actual = BWTOutput('burrowswheeler_error_no_index', '');
-      else if (elem['input'].contains(elem['index']))
+      else if ((elem['input'] as String).contains(elem['index'] as String))
         _actual = BWTOutput('burrowswheeler_error_char_index', '');
       else
         test('input: ${elem['input']}, index: ${elem['index']}', () {
-        BWTOutput _actual = encryptBurrowsWheeler(elem['input'], elem['index']);
-          expect(_actual.text, elem['expectedOutput'].text);
-          expect(_actual.index, elem['expectedOutput'].index);
+        _actual = encryptBurrowsWheeler(elem['input'] as String, elem['index'] as String);
+          expect(_actual.text, (elem['expectedOutput'] as BWTOutput).text);
+          expect(_actual.index, (elem['expectedOutput'] as BWTOutput).index);
       });
     });
   });
@@ -84,9 +84,9 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, index: ${elem['index']}', () {
-        BWTOutput _actual = decryptBurrowsWheeler(elem['input'], elem['index']);
-        expect(_actual.text, elem['expectedOutput'].text);
-        expect(_actual.index, elem['expectedOutput'].index);
+        BWTOutput _actual = decryptBurrowsWheeler(elem['input'] as String, elem['index'] as String);
+        expect(_actual.text, (elem['expectedOutput'] as BWTOutput).text);
+        expect(_actual.index, (elem['expectedOutput'] as BWTOutput).index);
       });
     });
   });
@@ -101,9 +101,9 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, index: ${elem['index']}', () {
-        BWTOutput _actual = decryptBurrowsWheeler(elem['input'], elem['index']);
-        expect(_actual.text, elem['expectedOutput'].text);
-        expect(_actual.index, elem['expectedOutput'].index);
+        BWTOutput _actual = decryptBurrowsWheeler(elem['input'] as String, elem['index'] as String);
+        expect(_actual.text, (elem['expectedOutput'] as BWTOutput).text);
+        expect(_actual.index, (elem['expectedOutput'] as BWTOutput).index);
       });
     });
   });
@@ -131,9 +131,9 @@ void main() {
         _actual = BWTOutput('burrowswheeler_error_no_index', '');
       else
         test('input: ${elem['input']}, index: ${elem['index']}', () {
-          _actual = decryptBurrowsWheeler(elem['input'], elem['index']);
-          expect(_actual.text, elem['expectedOutput'].text);
-          expect(_actual.index, elem['expectedOutput'].index);
+          _actual = decryptBurrowsWheeler(elem['input'] as String, elem['index'] as String);
+          expect(_actual.text, (elem['expectedOutput'] as BWTOutput).text);
+          expect(_actual.index, (elem['expectedOutput'] as BWTOutput).index);
         });
     });
   });

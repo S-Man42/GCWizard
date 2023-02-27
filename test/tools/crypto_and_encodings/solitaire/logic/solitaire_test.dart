@@ -26,7 +26,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, key: ${elem['key']}', () {
-        var _actual = encryptSolitaire(elem['input'], elem['key']);
+        var _actual = encryptSolitaire(elem['input'] as String?, elem['key'] as String?);
 
         if (_actual == null) {
           expect(null, elem['expectedOutput']);
@@ -62,7 +62,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, key: ${elem['key']}', () {
-        var _actual = decryptSolitaire(elem['input'], elem['key']);
+        var _actual = decryptSolitaire(elem['input'] as String?, elem['key'] as String?);
 
         if (_actual == null) {
           expect(null, elem['expectedOutput']);

@@ -26,7 +26,7 @@ class PeriodicTableDataView extends StatefulWidget {
 class PeriodicTableDataViewState extends State<PeriodicTableDataView> {
   var _newCategory = true;
   var _currentCategory = PeriodicTableCategory.ELEMENT_NAME;
-  var _currentValueCategoryValue;
+  Object? _currentValueCategoryValue;
   List<GCWDropDownMenuItem> _currentValueCategoryListItems = [];
   var _currentSortingOrder = GCWSwitchPosition.left;
 
@@ -167,7 +167,7 @@ class PeriodicTableDataViewState extends State<PeriodicTableDataView> {
         ),
         _valueCategories.contains(_currentCategory)
             ? Container()
-            : GCWDropDown(
+            : GCWDropDown<Object?>(
                 value: _currentValueCategoryValue,
                 items: _currentValueCategoryListItems,
                 onChanged: (value) {

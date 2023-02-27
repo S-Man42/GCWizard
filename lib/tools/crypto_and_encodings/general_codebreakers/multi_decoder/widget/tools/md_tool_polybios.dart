@@ -13,7 +13,7 @@ class MultiDecoderToolPolybios extends AbstractMultiDecoderTool {
     Key? key,
     required int id,
     required String name,
-    required Map<String, Object> options})
+    required Map<String, Object?> options})
       : super(
             key: key,
             id: id,

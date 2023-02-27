@@ -1,3 +1,5 @@
+// ignore_for_file: equal_keys_in_map
+
 import 'package:collection/collection.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 

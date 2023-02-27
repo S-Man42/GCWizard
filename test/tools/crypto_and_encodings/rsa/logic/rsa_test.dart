@@ -18,7 +18,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, e: ${elem['e']}, p${elem['p']}, q: ${elem['q']},', () {
-        var _actual = encryptRSA(elem['input'], elem['e'], elem['p'], elem['q']);
+        var _actual = encryptRSA(elem['input'] as List<BigInt>?, elem['e'] as BigInt?, elem['p'] as BigInt?, elem['q'] as BigInt?);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -41,7 +41,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, d: ${elem['e']}, p${elem['p']}, q: ${elem['q']},', () {
-        var _actual = decryptRSA(elem['input'], elem['d'], elem['p'], elem['q']);
+        var _actual = decryptRSA(elem['input'] as List<BigInt>, elem['d'] as BigInt?, elem['p'] as BigInt?, elem['q'] as BigInt?);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -56,7 +56,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('e: ${elem['e']}p${elem['p']}, q: ${elem['q']},', () {
-        var _actual = calculateD(elem['e'], elem['p'], elem['q']);
+        var _actual = calculateD(elem['e'] as BigInt?, elem['p'] as BigInt?, elem['q'] as BigInt?);
         expect(_actual, elem['expectedOutput']);
       });
     });

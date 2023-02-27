@@ -18,9 +18,9 @@ void main() {
 
         var _actual;
         if (keepNumbers == null)
-          _actual = AlphabetValues().textToValues(elem['text']);
+          _actual = AlphabetValues().textToValues(elem['text'] as String?);
         else
-          _actual = AlphabetValues().textToValues(elem['text'], keepNumbers: elem['keepNumbers']);
+          _actual = AlphabetValues().textToValues(elem['text'] as String?, keepNumbers: elem['keepNumbers'] as bool);
 
         expect(_actual, elem['expectedOutput']);
       });
@@ -35,7 +35,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('alphabetValues: ${elem['alphabetValues']}, values: ${elem['values']}', () {
-        var _actual = AlphabetValues().valuesToText(elem['values']);
+        var _actual = AlphabetValues().valuesToText(elem['values'] as List<int>);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -49,7 +49,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('alphabet: ${elem['alphabet']}, text: ${elem['text']}, alphabet: ${elem['alphabet']}', () {
-        var _actual = AlphabetValues(alphabet: elem['alphabet']).textToValues(elem['text']);
+        var _actual = AlphabetValues(alphabet: elem['alphabet'] as Map<String, String>?).textToValues(elem['text'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -63,7 +63,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('alphabetValues: ${elem['alphabetValues']}, values: ${elem['values']}, alphabet: ${elem['alphabet']}', () {
-        var _actual = AlphabetValues(alphabet: elem['alphabet']).valuesToText(elem['values']);
+        var _actual = AlphabetValues(alphabet: elem['alphabet'] as Map<String, String>?).valuesToText(elem['values'] as List<int>);
         expect(_actual, elem['expectedOutput']);
       });
     });

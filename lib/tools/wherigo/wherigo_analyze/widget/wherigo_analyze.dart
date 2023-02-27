@@ -1,7 +1,7 @@
 import 'dart:collection';
 import 'dart:typed_data';
-import 'dart:ui';
 
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:prefs/prefs.dart';
@@ -32,7 +32,6 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_files_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_code_textfield.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coord_format_getter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/map_view/widget/gcw_mapview.dart';
@@ -98,7 +97,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   int _timerIndex = 1;
   int _taskIndex = 1;
   int _itemIndex = 1;
-  int _mediaIndex = 1;
   int _messageIndex = 1;
   int _answerIndex = 1;
   int _identifierIndex = 1;
@@ -391,7 +389,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     _timerIndex = 1;
     _taskIndex = 1;
     _itemIndex = 1;
-    _mediaIndex = 1;
     _messageIndex = 1;
     _answerIndex = 1;
     _identifierIndex = 1;
@@ -723,7 +720,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   Widget _buildWidgetToDisplayLUAFileData(BuildContext context) {
-    _LUA_SourceCode = _normalizeLUA(WherigoCartridgeLUAData.LUAFile, _currentDeObfuscate); // TODO Thomas: _normalizeLUA is nullable, the variable not. Please check for null and handle exception case
+    _LUA_SourceCode = _normalizeLUA(WherigoCartridgeLUAData.LUAFile, _currentDeObfuscate) ?? ''; // TODO Thomas: _normalizeLUA is nullable, the variable not. Please check for null and handle exception case
     _codeControllerHighlightedLUA.text = _LUA_SourceCode;
     return Column(
       children: <Widget>[

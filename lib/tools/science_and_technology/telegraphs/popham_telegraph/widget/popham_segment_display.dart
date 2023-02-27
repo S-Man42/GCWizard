@@ -18,6 +18,7 @@ const _INITIAL_SEGMENTS = <String, bool>{
 const _POPHAM_RELATIVE_DISPLAY_WIDTH = 110;
 const _POPHAM_RELATIVE_DISPLAY_HEIGHT = 130;
 
+//ignore: must_be_immutable
 class _PophamTelegraphSegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
   final bool readOnly;

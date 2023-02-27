@@ -379,7 +379,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
                     });
                   },
                 )
-                    : GCWText(text: (_getEntryKey(entry) ?? '').toString()),
+                    : GCWText(text: (_getEntryKey(entry)).toString()),
                 margin: EdgeInsets.only(left: 10),
               ),
               flex: 1,
@@ -401,7 +401,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
                       });
                     },
                   )
-                      : GCWText(text: (_getEntryValue(entry) ?? '').toString()),
+                      : GCWText(text: _getEntryValue(entry).toString()),
                   margin: EdgeInsets.only(left: 10),
                 ),
                 flex: 3),

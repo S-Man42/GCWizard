@@ -1,3 +1,5 @@
+// ignore_for_file: equal_keys_in_map
+
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -3653,6 +3655,7 @@ NumeralWordsOutput _isNumeralWord(String input, NumeralWordsLanguage language, M
         case NumeralWordsLanguage.EPO:
           pattern = 'mil';
           break;
+        default:
       }
       if (input.contains(pattern)) {
         // numeral word contains 1000
@@ -3689,6 +3692,7 @@ NumeralWordsOutput _isNumeralWord(String input, NumeralWordsLanguage language, M
         }
       }
       break;
+    default:
   }
   return NumeralWordsOutput(state, output, _languageList?[language] ?? '');
 } // _isNumeralWord
@@ -3810,6 +3814,7 @@ NumeralWordsOutput _isNumeralWordBelow1000(String input, NumeralWordsLanguage la
         case NumeralWordsLanguage.SOL:
           pattern = 'farere';
           break;
+        default:
       }
       if (input.contains(pattern)) {
         // numeral word contains 100
@@ -3853,6 +3858,7 @@ NumeralWordsOutput _isNumeralWordBelow1000(String input, NumeralWordsLanguage la
         }
       }
       break;
+    default:
   }
   return NumeralWordsOutput(state, output, _languageList?[language]);
 }

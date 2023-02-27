@@ -15,8 +15,8 @@ void main() {
     ];
 
     _inputsToExpected.forEach((elem) {
-      test('temperature: ${elem['temperature']}, humidity: ${elem['humidity']}, temperatureUnit: ${elem['temperatureUnit'].symbol}, isHumidity: ${elem['isHumidity']}', () {
-        var _actual = calculateHumidex(elem['temperature'], elem['humidity'], elem['temperatureUnit'], elem['isHumidity']);
+      test('temperature: ${elem['temperature']}, humidity: ${elem['humidity']}, temperatureUnit: ${(elem['temperatureUnit'] as Temperature).symbol}, isHumidity: ${elem['isHumidity']}', () {
+        var _actual = calculateHumidex(elem['temperature'] as double, elem['humidity'] as double, elem['temperatureUnit'] as Temperature, elem['isHumidity'] as bool);
         expect(_actual.toStringAsFixed(3), elem['expectedOutput']);
       });
     });

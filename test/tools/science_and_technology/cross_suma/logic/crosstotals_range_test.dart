@@ -14,7 +14,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('rangeStart: ${elem['rangeStart']}, rangeEnd: ${elem['rangeEnd']}, crossSumToFind: ${elem['crossSumToFind']},', () {
-        var _actual = crossSumRange(elem['rangeStart'], elem['rangeEnd'], elem['crossSumToFind']);
+        var _actual = crossSumRange(elem['rangeStart'] as int, elem['rangeEnd'] as int, elem['crossSumToFind'] as int);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -32,7 +32,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('rangeStart: ${elem['rangeStart']}, rangeEnd: ${elem['rangeEnd']}, crossSumToFind: ${elem['crossSumToFind']}, type: ${elem['type']}', () {
-        var _actual = crossSumRange(elem['rangeStart'], elem['rangeEnd'], elem['crossSumToFind'], type: elem['type']);
+        var _actual = crossSumRange(elem['rangeStart'] as int, elem['rangeEnd'] as int, elem['crossSumToFind'] as int, type: elem['type'] as CrossSumType);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -50,7 +50,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('rangeStart: ${elem['rangeStart']}, rangeEnd: ${elem['rangeEnd']}', () {
-        var _actual = crossSumRangeFrequencies(elem['rangeStart'], elem['rangeEnd']);
+        var _actual = crossSumRangeFrequencies(elem['rangeStart'] as int, elem['rangeEnd'] as int);
         expect(_actual, elem['expectedOutput']);
       });
     });

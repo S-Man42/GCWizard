@@ -9,7 +9,7 @@ class MultiDecoderToolEsotericLanguageMalbolge extends AbstractMultiDecoderTool 
     Key? key,
     required int id,
     required String name,
-    required Map<String, Object> options})
+    required Map<String, Object?> options})
       : super(
             key: key,
             id: id,
@@ -19,13 +19,12 @@ class MultiDecoderToolEsotericLanguageMalbolge extends AbstractMultiDecoderTool 
             onDecode: (String input, String key) {
               try {
                 var outputList = interpretMalbolge(input, key, false);
-                if (outputList != null) {
-                  String output = '';
-                  for (var element in outputList.output) {
-                    if (element != null) if (element == 'common_programming_error_invalid_program')
-                      return null;
-                    else if (!element.startsWith('malbolge_')) output = output + element + '\n';
-                  }
+                String output = '';
+                for (var element in outputList.output) {
+                  if (element == 'common_programming_error_invalid_program')
+                    return null;
+                  else if (!element.startsWith('malbolge_')) output = output + element + '\n';
+
 
                   output = output.trim();
                   return output.isEmpty ? null : output;

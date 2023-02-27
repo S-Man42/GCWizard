@@ -20,7 +20,7 @@ RightAscension? raDegree2RightAscension(RaDeg? ra) {
 }
 
 /// Right ascension hms to degree
-RaDeg? raRightAscension2Degree(RightAscension equatorial) {
+RaDeg? raRightAscension2Degree(RightAscension? equatorial) {
   if (equatorial == null) return null;
 
   var h = equatorial.hours;

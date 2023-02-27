@@ -4,17 +4,17 @@ import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/tools/crypto_and_encodings/text_analysis/logic/text_analysis.dart';
 
 void main() {
-  bool _equalMaps(Map<String, int> a, Map<String, int> b) {
+  bool _equalMaps(Map<String, int>? a, Map<String, int>? b) {
     if (a == null && b == null)
       return true;
 
     if ((a != null && b == null) || (a == null && b != null))
       return false;
 
-    if (a.length != b.length)
+    if (a!.length != b!.length)
       return false;
 
-    for (MapEntry e in a.entries) {
+    for (var e in a.entries) {
       if (!b.containsKey(e.key) || b[e.key] != e.value)
         return false;
     }
@@ -22,14 +22,14 @@ void main() {
     return true;
   }
 
-  bool equalsTextAnalysisResults(TextAnalysisCharacterCounts a, TextAnalysisCharacterCounts b) {
+  bool equalsTextAnalysisResults(TextAnalysisCharacterCounts? a, TextAnalysisCharacterCounts? b) {
     if (a == null && b == null)
       return true;
 
     if ((a != null && b == null) || (a == null && b != null))
       return false;
 
-    if (!_equalMaps(a.letters, b.letters))
+    if (!_equalMaps(a!.letters, b!.letters))
       return false;
 
     if (!_equalMaps(a.numbers, b.numbers))
@@ -78,8 +78,8 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = analyzeText(elem['input']);
-        expect(equalsTextAnalysisResults(_actual, elem['expectedOutput']), true);
+        var _actual = analyzeText(elem['input'] as String);
+        expect(equalsTextAnalysisResults(_actual, elem['expectedOutput'] as TextAnalysisCharacterCounts), true);
       });
     });
   });
@@ -98,8 +98,8 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = analyzeText(elem['input'], caseSensitive: false);
-        expect(equalsTextAnalysisResults(_actual, elem['expectedOutput']), true);
+        var _actual = analyzeText(elem['input'] as String, caseSensitive: false);
+        expect(equalsTextAnalysisResults(_actual, elem['expectedOutput'] as TextAnalysisCharacterCounts), true);
       });
     });
   });

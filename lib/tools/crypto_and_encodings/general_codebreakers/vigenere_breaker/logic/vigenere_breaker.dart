@@ -97,8 +97,6 @@ VigenereBreakerResult break_cipher(String? input, VigenereBreakerType vigenereBr
     return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.KEY_LENGTH);
 
   var bigrams = getBigrams(alphabet);
-  if (Bigrams == null) return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.NO_ALPHABET);
-
   var vigenereSquare =
       _createVigenereEncodeSquare(bigrams!.alphabet.length, vigenereBreakerType == VigenereBreakerType.BEAUFORT);
   var cipher_bin = <int>[];

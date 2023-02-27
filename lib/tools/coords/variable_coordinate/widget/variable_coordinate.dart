@@ -219,7 +219,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
             }
           },
         ),
-        _output ?? Container(),
+        _output,
       ],
     );
   }

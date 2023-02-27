@@ -8,7 +8,7 @@ abstract class AbstractMultiDecoderTool {
   final MultiDecoderToolConfiguration? configurationWidget;
   final bool requiresKey;
   final bool optionalKey;
-  late final Map<String, Object> options;
+  late final Map<String, Object?> options;
 
   AbstractMultiDecoderTool(
       {Key? key,
@@ -29,7 +29,7 @@ class MultiDecoderToolDummy extends AbstractMultiDecoderTool {
       id: -1,
       name: '',
       internalToolName: '',
-      onDecode: (String input, String key) {},
+      onDecode: (String input, String key) {return null;},
       options: {});
 }
 

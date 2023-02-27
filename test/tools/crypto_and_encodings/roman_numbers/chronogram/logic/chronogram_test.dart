@@ -17,7 +17,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeChronogram(elem['input']);
+        var _actual = decodeChronogram(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -38,7 +38,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeChronogram(elem['input'], JUToIV: true);
+        var _actual = decodeChronogram(elem['input'] as String?, JUToIV: true);
         expect(_actual, elem['expectedOutput']);
       });
     });

@@ -18,11 +18,11 @@ Map<String, int> _createSolitaireAlphabetMap() {
   return alphabet_AZ;
 }
 
-SolitaireOutput? encryptSolitaire(String input, String? key) {
+SolitaireOutput? encryptSolitaire(String? input, String? key) {
   return _solitaireBase(input, key, true);
 }
 
-SolitaireOutput? decryptSolitaire(String input, String? key) {
+SolitaireOutput? decryptSolitaire(String? input, String? key) {
   return _solitaireBase(input, key, false);
 }
 
@@ -195,12 +195,4 @@ List<int> _copyToDeck(List<int> deck, List<int> targetDeck, int positionFrom, in
   for (int i = 0; i < count; i++) targetDeck.add(deck[positionFrom + i]);
 
   return targetDeck;
-}
-
-String _solitaireDeckToString(List<int> deck) {
-  var output = '';
-
-  output = deck.map((entry) => entry.toString() + ", ").join();
-
-  return output.replaceFirst(', ', '', output.length - 2);
 }

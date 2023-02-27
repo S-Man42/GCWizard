@@ -12,7 +12,7 @@ class Bacon extends StatefulWidget {
 }
 
 class BaconState extends State<Bacon> {
-  var _controller;
+  late TextEditingController _controller;
 
   var _currentInput = '';
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;

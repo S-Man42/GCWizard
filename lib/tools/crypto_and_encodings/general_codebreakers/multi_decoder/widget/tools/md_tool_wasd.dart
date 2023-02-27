@@ -15,7 +15,7 @@ class MultiDecoderToolWasd extends AbstractMultiDecoderTool {
     Key? key,
     required int id,
     required String name,
-    required Map<String, Object> options,
+    required Map<String, Object?> options,
     required BuildContext context})
       : super(
             key: key,
@@ -23,16 +23,16 @@ class MultiDecoderToolWasd extends AbstractMultiDecoderTool {
             name: name,
             internalToolName: MDT_INTERNALNAMES_WASD,
             onDecode: (String input, String key) {
-              if (input == null) return null;
+              var value = checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_WASD, options, MDT_WASD_OPTION_SET);
               return binary2image(
-                  decodeWASDGraphic(input, (toStringOrDefault(options[MDT_WASD_OPTION_SET], '')).characters.toList()), false, false);
+                  decodeWASDGraphic(input, (value.characters.toList())), false, false);
             },
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
               MDT_WASD_OPTION_SET: GCWStatefulDropDown<WASD_TYPE>(
-                value: switchMapKeyValue(KEYBOARD_CONTROLS)[options[MDT_WASD_OPTION_SET]],
+                value: getWASD_Type(options[MDT_WASD_OPTION_SET], options),
                 onChanged: (newValue) {
-                  options[MDT_WASD_OPTION_SET] = toStringOrDefault(KEYBOARD_CONTROLS[newValue], '');
+                  options[MDT_WASD_OPTION_SET] = KEYBOARD_CONTROLS[newValue];
                 },
                 items: KEYBOARD_CONTROLS.entries.where((element) => element.key != WASD_TYPE.CUSTOM).map((mode) {
                   return GCWDropDownMenuItem(
@@ -42,4 +42,11 @@ class MultiDecoderToolWasd extends AbstractMultiDecoderTool {
                 }).toList(),
               ),
             }));
+}
+
+WASD_TYPE getWASD_Type(Object? value, Map<String, Object?> options) {
+  if (value is String && KEYBOARD_CONTROLS.values.contains(value))
+    return switchMapKeyValue(KEYBOARD_CONTROLS)[value]!;
+  value = checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_WASD, options, MDT_WASD_OPTION_SET);
+  return switchMapKeyValue(KEYBOARD_CONTROLS)[value]!;
 }

@@ -9,7 +9,7 @@ class MultiDecoderToolBrailleDotNumbers extends AbstractMultiDecoderTool {
     Key? key,
     required int id,
     required String name,
-    required Map<String, Object> options})
+    required Map<String, Object?> options})
       : super(
             key: key,
             id: id,
@@ -18,11 +18,9 @@ class MultiDecoderToolBrailleDotNumbers extends AbstractMultiDecoderTool {
             onDecode: (String input, String key) {
               var segments = decodeBraille(input.split(RegExp(r'\s+')).toList(), BrailleLanguage.SIMPLE, true);
               var out = segments.chars.join();
-              if (out is String) {
-                var out1 = out.replaceAll('<?>', '');
-                out1 = out.replaceAll(' ', '');
-                if (out1.isEmpty) return null;
-              }
+              var out1 = out.replaceAll('<?>', '');
+              out1 = out.replaceAll(' ', '');
+              if (out1.isEmpty) return null;
               return out;
             },
             options: options);

@@ -94,7 +94,7 @@ class OneTimePadState extends State<OneTimePad> {
     );
   }
 
-  _calculateOutput() {
+  String _calculateOutput() {
     return _currentMode == GCWSwitchPosition.left
         ? encryptOneTimePad(_currentInput, _currentKey, keyOffset: _currentOffset)
         : decryptOneTimePad(_currentInput, _currentKey, keyOffset: _currentOffset);

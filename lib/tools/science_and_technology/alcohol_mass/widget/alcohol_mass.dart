@@ -124,31 +124,30 @@ class AlcoholMassState extends State<AlcoholMass> {
     );
   }
 
-  _buildOutput() {
+  Widget _buildOutput() {
     if (_currentMode == _ALCOHOL_MASS) {
       var mass = alcoholMassInG(VOLUME_MILLILITER.fromCubicMeter(_currentVolume), _currentPercent);
       var outputMass = _currentOutputMass.fromGram(mass);
       return GCWDefaultOutput(
         child: NumberFormat('0.000').format(outputMass) + ' ' + _currentOutputMass.symbol,
-        copyText: outputMass,
+        copyText: outputMass.toString(),
       );
-    }
 
-    if (_currentMode == _VOLUME) {
+    } else if (_currentMode == _VOLUME) {
       var volume = alcoholVolumeInML(_currentAlcoholMass, _currentPercent);
       var outputVolume = _currentOutputVolume.fromCubicMeter(VOLUME_MILLILITER.toCubicMeter(volume));
       return GCWDefaultOutput(
         child: NumberFormat('0.000').format(outputVolume) + ' ' + _currentOutputVolume.symbol,
-        copyText: outputVolume,
+        copyText: outputVolume.toString(),
       );
-    }
 
-    if (_currentMode == _ALCOHOL_MASS_BY_VOLUME) {
+    } else if (_currentMode == _ALCOHOL_MASS_BY_VOLUME) {
       var percent = alcoholByMassInPercent(_currentAlcoholMass, VOLUME_MILLILITER.fromCubicMeter(_currentVolume));
       return GCWDefaultOutput(
         child: NumberFormat('0.000').format(percent) + ' %',
-        copyText: percent,
+        copyText: percent.toString(),
       );
     }
+    return Container();
   }
 }

@@ -6,6 +6,7 @@ import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/l
 import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/widget/segmentdisplay_painter.dart';
 import 'package:touchable/touchable.dart';
 
+//ignore: must_be_immutable
 class NSegmentDisplay extends StatefulWidget {
   final Map<String, bool> initialSegments;
   final double aspectRatio;
@@ -44,7 +45,7 @@ class NSegmentDisplayState extends State<NSegmentDisplay> {
   Widget build(BuildContext context) {
     widget.nSegmentDisplayState = this;
 
-    if (widget.segments != null) {
+    if (widget.segments.isNotEmpty) {
       _segments = Map.from(widget.segments);
 
       widget.initialSegments.keys.forEach((segmentID) {
@@ -101,7 +102,7 @@ class NSegmentDisplayState extends State<NSegmentDisplay> {
 Map<String, bool> buildSegmentMap(Segments segments) {
   Map<String, bool> segmentMap;
   if (segments.displays.isNotEmpty)
-    segmentMap = Map<String, bool>.fromIterable(segments.displays.last ?? [],
+    segmentMap = Map<String, bool>.fromIterable(segments.displays.last,
         key: (e) => e.toString(), value: (e) => true);
   else
     segmentMap = {};

@@ -14,6 +14,7 @@ import 'package:gc_wizard/common_widgets/text_input_formatters/wrapper_for_maskt
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/enigma/logic/enigma.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
+import 'package:tuple/tuple.dart';
 
 part 'package:gc_wizard/tools/crypto_and_encodings/enigma/widget/enigma_rotor_dropdown.dart';
 
@@ -98,9 +99,10 @@ class EnigmaState extends State<Enigma> {
                 child: _currentReflectorMode
                     ? EnigmaRotorDropDown(
                         type: EnigmaRotorType.REFLECTOR,
+                        position: 0, //ToDo NullSafety corect ? undefinied
                         onChanged: (value) {
                           setState(() {
-                            _currentReflector = value['rotorConfiguration'];
+                            _currentReflector = value.item2;
                           });
                         },
                       )
@@ -139,9 +141,10 @@ class EnigmaState extends State<Enigma> {
                 child: _currentEntryRotorMode
                     ? EnigmaRotorDropDown(
                         type: EnigmaRotorType.ENTRY_ROTOR,
+                        position: 0, //ToDo NullSafety corect ? undefinied
                         onChanged: (value) {
                           setState(() {
-                            _currentEntryRotor = value['rotorConfiguration'];
+                            _currentEntryRotor = value.item2;
                           });
                         },
                       )
@@ -216,7 +219,7 @@ class EnigmaState extends State<Enigma> {
           [i18n(context, 'common_type'), _rotorType(currentRotor.type)],
           [
             i18n(context, 'enigma_turnovers'),
-            (currentRotor.turnovers ?? '').isEmpty
+            currentRotor.turnovers.isEmpty
                 ? i18n(context, 'common_none')
                 : currentRotor.turnovers
           ]
@@ -229,10 +232,9 @@ class EnigmaState extends State<Enigma> {
     while (_currentRotors.length < _currentNumberRotors) {
       _currentRotors.add(EnigmaRotorDropDown(
         position: _currentRotors.length,
-        onChanged: (value) {
+        onChanged: (Tuple2<int, EnigmaRotorConfiguration> value) {
           setState(() {
-            _currentRotorsConfigurations[value['position']] =
-                value['rotorConfiguration'];
+            _currentRotorsConfigurations[value.item1] = value.item2;
           });
         },
       ));
@@ -273,21 +275,21 @@ class EnigmaState extends State<Enigma> {
     if (_currentReflectorMode) rotorConfigurations.add(_currentReflector);
 
     var key = EnigmaKey(rotorConfigurations,
-        plugboard: Map.fromIterable(
+        plugboard: Map<String, String>.fromIterable(
             _currentPlugboard
                 .split(' ')
-                .where((digraph) => digraph.length == 2),
-            key: (digraph) => digraph[0],
-            value: (digraph) => digraph[1]));
+                .where((String digraph) => digraph.length == 2),
+            key: (digraph) => digraph[0] as String,
+            value: (digraph) => digraph[1] as String));
 
     var results = calculateEnigmaWithMessageKey(_currentInput, key);
 
-    var output = [];
+    var output = <Object>[];
 
     results.forEach((result) {
-      output.add(result['text']);
+      output.add(result.text);
 
-      var rotorSettings = result['rotorSettingAfter'] as List<int>;
+      var rotorSettings = result.value;
 
       var stripHead = _currentEntryRotorMode ? 1 : 0;
       var stripTail = _currentReflectorMode ? 1 : 0;

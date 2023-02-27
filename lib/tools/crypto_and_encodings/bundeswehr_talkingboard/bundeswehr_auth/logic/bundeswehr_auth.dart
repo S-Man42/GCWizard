@@ -18,21 +18,25 @@ class BundeswehrTalkingBoardAuthentificationTable {
   final List<String> xAxis;
   final List<String> yAxis;
   final List<String> Content;
-  final Map<String, List<String>> Encoding;
+  final Map<String, List<String>>? Encoding;
 
-  BundeswehrTalkingBoardAuthentificationTable({this.xAxis, this.yAxis, this.Content, this.Encoding});
+  BundeswehrTalkingBoardAuthentificationTable({
+      required this.xAxis,
+      required this.yAxis,
+      required this.Content,
+      this.Encoding});
 }
 
 class BundeswehrTalkingBoardAuthentificationOutput {
   final List<String> ResponseCode;
-  final List<String> Tupel1;
-  final List<String> Tupel2;
-  final List<String> Tupel3;
-  final String Number;
-  final String Details;
+  final List<String>? Tupel1;
+  final List<String>? Tupel2;
+  final List<String>? Tupel3;
+  final String? Number;
+  final String? Details;
 
-  BundeswehrTalkingBoardAuthentificationOutput(
-      {this.ResponseCode, this.Tupel1, this.Tupel2, this.Tupel3, this.Number, this.Details});
+  BundeswehrTalkingBoardAuthentificationOutput({
+      required this.ResponseCode, this.Tupel1, this.Tupel2, this.Tupel3, this.Number, this.Details});
 }
 
 const BUNDESWEHR_TALKINGBOARD_AUTH_TABLE_Y_AXIS = [
@@ -309,7 +313,7 @@ String _normalizeAuthCode(String currentAuth) {
     return '';
 }
 
-bool _tableIsInvalid(BundeswehrTalkingBoardAuthentificationTable table, BundeswehrTalkingBoardAuthentificationTableType type){
+bool _tableIsInvalid(BundeswehrTalkingBoardAuthentificationTable? table, BundeswehrTalkingBoardAuthentificationTableType type){
   if (table == null) {
     return true;
   }

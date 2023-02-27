@@ -12,7 +12,7 @@ class HomophoneOutput {
 
 enum HomophoneErrorCode { OK, TABLE, CUSTOM_KEY_COUNT, CUSTOM_KEY_DUPLICATE }
 
-HomophoneOutput encryptHomophoneWithKeyMap(String input, Map<String, List<int>>? keyMap) {
+HomophoneOutput encryptHomophoneWithKeyMap(String? input, Map<String, List<int>>? keyMap) {
   if (keyMap == null || keyMap.isEmpty) {
     return HomophoneOutput('', '', HomophoneErrorCode.CUSTOM_KEY_COUNT);
   }
@@ -62,7 +62,7 @@ Map<String, List<int>> _generateKeyMap(Map<String, int> letterFrequencies, int r
   return keyMap;
 }
 
-HomophoneOutput encryptHomophoneWithGeneratedKey(String input, Alphabet alphabet, int rotation, int multiplier) {
+HomophoneOutput encryptHomophoneWithGeneratedKey(String? input, Alphabet alphabet, int rotation, int multiplier) {
   var letterFrequencies = getLetterFrequenciesFromAlphabet(alphabet);
 
   return _encryptHomophone(input, _generateKeyMap(letterFrequencies, rotation, multiplier));
@@ -88,7 +88,7 @@ HomophoneOutput _encryptHomophone(String? input, Map<String, List<int>> keyMap) 
   return HomophoneOutput(output, _keyMapToString(keyMap), error);
 }
 
-HomophoneOutput decryptHomophoneWithKeyMap(String input, Map<String, List<int>>? keyMap) {
+HomophoneOutput decryptHomophoneWithKeyMap(String? input, Map<String, List<int>>? keyMap) {
   if (keyMap == null || keyMap.isEmpty) {
     return HomophoneOutput('', '', HomophoneErrorCode.CUSTOM_KEY_COUNT);
   }
@@ -96,7 +96,7 @@ HomophoneOutput decryptHomophoneWithKeyMap(String input, Map<String, List<int>>?
   return _decryptHomophone(input, keyMap);
 }
 
-HomophoneOutput decryptHomophoneWithKeyList(String input, Alphabet alphabet, List<int>? keyList) {
+HomophoneOutput decryptHomophoneWithKeyList(String? input, Alphabet alphabet, List<int>? keyList) {
   if (keyList == null || keyList.length != 100) {
     return HomophoneOutput('', '', HomophoneErrorCode.CUSTOM_KEY_COUNT);
   }
@@ -108,7 +108,7 @@ HomophoneOutput decryptHomophoneWithKeyList(String input, Alphabet alphabet, Lis
   return _decryptHomophone(input, keyMap);
 }
 
-HomophoneOutput decryptHomophoneWithGeneratedKey(String input, Alphabet alphabet, int rotation, int multiplier) {
+HomophoneOutput decryptHomophoneWithGeneratedKey(String? input, Alphabet alphabet, int rotation, int multiplier) {
   var letterFrequencies = getLetterFrequenciesFromAlphabet(alphabet);
 
   return _decryptHomophone(input, _generateKeyMap(letterFrequencies, rotation, multiplier));

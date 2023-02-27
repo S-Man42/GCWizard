@@ -12,7 +12,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = reverse(elem['input']);
+        var _actual = reverse(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });

@@ -42,7 +42,6 @@ class _BaseOperations {
   /// </summary>
   void push() {
     _PietBlock exitedBlock = _getExitedBlock();
-    if (exitedBlock == null) return;
 
     _stack.push(exitedBlock.blockCount);
   }

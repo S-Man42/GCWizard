@@ -23,7 +23,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encryptPigLatin(elem['input']);
+        var _actual = encryptPigLatin(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -50,7 +50,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decryptPigLatin(elem['input']);
+        var _actual = decryptPigLatin(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });

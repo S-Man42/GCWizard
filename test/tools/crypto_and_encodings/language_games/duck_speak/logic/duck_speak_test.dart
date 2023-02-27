@@ -15,7 +15,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeDuckSpeak(elem['input']);
+        var _actual = encodeDuckSpeak(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -37,7 +37,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeDuckSpeak(elem['input']);
+        var _actual = decodeDuckSpeak(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });

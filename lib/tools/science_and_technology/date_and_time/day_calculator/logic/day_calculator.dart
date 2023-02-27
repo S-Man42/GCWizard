@@ -26,13 +26,13 @@ DayCalculatorOutput? calculateDayDifferences(DateTime? start, DateTime? end, {bo
 
   difference = end.difference(start);
 
-  if (countStart != null && countStart == false) {
+  if (countStart == false) {
     var newDifference = difference - Duration(days: 1);
     if (newDifference.inHours >= -1) // -1 is valid on daylight saving time change days
       difference = newDifference;
   }
 
-  if (countEnd != null && countEnd == true) difference += Duration(days: 1);
+  if (countEnd == true) difference += Duration(days: 1);
 
   var seconds = difference.inSeconds;
   var minutes = difference.inMinutes;

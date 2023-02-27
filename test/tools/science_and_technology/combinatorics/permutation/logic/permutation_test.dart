@@ -19,7 +19,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, avoidDuplicates: ${elem['avoidDuplicates']}', () {
-        var _actual = generatePermutations(elem['input'], avoidDuplicates: elem['avoidDuplicates']);
+        var _actual = generatePermutations(elem['input'] as String?, avoidDuplicates: elem['avoidDuplicates'] as bool);
         expect(_actual, elem['expectedOutput']);
       });
     });

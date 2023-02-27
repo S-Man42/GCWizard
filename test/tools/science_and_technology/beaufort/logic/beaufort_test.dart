@@ -25,7 +25,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('velocity: ${elem['velocity']}', () {
-        var _actual = meterPerSecondToBeaufort(elem['velocity']);
+        var _actual = meterPerSecondToBeaufort(elem['velocity'] as double?);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -49,7 +49,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('beaufort: ${elem['beaufort']}', () {
-        var _actual = beaufortToMeterPerSecond(elem['beaufort']);
+        var _actual = beaufortToMeterPerSecond(elem['beaufort'] as int?);
         expect(_actual, elem['expectedOutput']);
       });
     });

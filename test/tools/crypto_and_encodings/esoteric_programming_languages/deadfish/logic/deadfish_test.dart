@@ -13,7 +13,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeDeadfish(elem['input']);
+        var _actual = encodeDeadfish(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -33,7 +33,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeDeadfish(elem['input']);
+        var _actual = decodeDeadfish(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });

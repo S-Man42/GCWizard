@@ -13,8 +13,8 @@ void main() {
     ];
 
     _inputsToExpected.forEach((elem) {
-      test('temperature: ${elem['temperature']}, humidity: ${elem['humidity']}, temperatureUnit: ${elem['temperatureUnit'].symbol}', () {
-        var _actual = calculateSummerSimmerIndex(elem['temperature'], elem['humidity'], elem['temperatureUnit']);
+      test('temperature: ${elem['temperature']}, humidity: ${elem['humidity']}, temperatureUnit: ${(elem['temperatureUnit'] as Temperature).symbol}', () {
+        var _actual = calculateSummerSimmerIndex(elem['temperature'] as double, elem['humidity'] as double, elem['temperatureUnit'] as Temperature);
         expect(_actual.toStringAsFixed(3), elem['expectedOutput']);
       });
     });

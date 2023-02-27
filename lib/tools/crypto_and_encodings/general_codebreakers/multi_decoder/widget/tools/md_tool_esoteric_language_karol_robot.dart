@@ -11,7 +11,7 @@ class MultiDecoderToolEsotericLanguageKarolRobot extends AbstractMultiDecoderToo
     Key? key,
     required int id,
     required String name,
-    required Map<String, Object> options})
+    required Map<String, Object?> options})
       : super(
             key: key,
             id: id,
@@ -21,7 +21,7 @@ class MultiDecoderToolEsotericLanguageKarolRobot extends AbstractMultiDecoderToo
             onDecode: (String input, String key) {
               try {
                 var output = KarolRobotOutputDecode(input);
-                if ((output != null) && (output != "####\n#####\n#####\n#####")) {
+                if (output != "####\n#####\n#####\n#####") {
                   var image = binary2Image(output);
                   if (image == null) return null;
                   return input2Image(image);

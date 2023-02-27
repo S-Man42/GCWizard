@@ -215,7 +215,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('code: ${elem['code']}', () {
-        var _actual = KarolRobotOutputDecode(elem['code']);
+        var _actual = KarolRobotOutputDecode(elem['code'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -237,7 +237,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}', () {
-        var _actual = KarolRobotOutputEncode(elem['text'], elem['language']);
+        var _actual = KarolRobotOutputEncode(elem['text'] as String?, elem['language'] as KAREL_LANGUAGES);
         expect(_actual, elem['expectedOutput']);
       });
     });

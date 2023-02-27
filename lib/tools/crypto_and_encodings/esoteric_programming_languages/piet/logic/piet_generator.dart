@@ -49,13 +49,13 @@ DrawableImageData generatePiet(String input) {
 
     if (firstPixelColor != null) {
       pixelIndex = _searchFirstPixelIndex(block, direction);
-      if (pixelIndex != null && pixelIndex >= 0) block[pixelIndex] = firstPixelColor!;
+      if (pixelIndex >= 0) block[pixelIndex] = firstPixelColor!;
     } else if (mapEntry != result.first) block = _removeLastPixel(block);
 
     nextDirection = _getNextBlockDirection(row, column, arrangment);
 
     pixelIndex = _searchLastWhitePixelIndex(block, nextDirection);
-    if (pixelIndex != null && pixelIndex >= 0) {
+    if (pixelIndex >= 0) {
       block[pixelIndex] = mapEntry.key;
       firstPixelColor = null;
     } else
@@ -78,7 +78,7 @@ DrawableImageData generatePiet(String input) {
 }
 
 void _setBlockSize(String input) {
-  var _max = input == null || input.isEmpty ? 0 : input.runes.reduce(max);
+  var _max = input.isEmpty ? 0 : input.runes.reduce(max);
   _max = max(_minBlockSize, sqrt(_max + 1).ceil());
   _blockHeight = _max;
   _blockWidth = _max;
@@ -289,12 +289,6 @@ MapEntry<int, List<int>> _drawEndBlock(int num) {
   block.fillRange(_calcIndex(2, 1, _blockWidth), _calcIndex(2, 4, _blockWidth), _currentColor.writeOutputColor());
   block[_calcIndex(2, 4, _blockWidth)] = _black;
   block.fillRange(_calcIndex(3, 1, _blockWidth), _calcIndex(3, 4, _blockWidth), _black);
-
-  return MapEntry<int, List<int>>(_white, block);
-}
-
-MapEntry<int, List<int>> _drawWhiteBlock(int num) {
-  var block = List.filled(_blockHeight * _blockWidth, _white);
 
   return MapEntry<int, List<int>>(_white, block);
 }

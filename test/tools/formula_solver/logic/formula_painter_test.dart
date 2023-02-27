@@ -314,7 +314,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('formula: ${elem['formula']}, values: ${elem['values']}', () {
-        var _actual = formulaPainter.paintFormula(elem['formula'], elem['values'], elem['formulaId'], true);
+        var _actual = formulaPainter.paintFormula(elem['formula'] as String, elem['values'] as Map<String, String>, elem['formulaId'] as int, true);
         expect(_actual, elem['expectedOutput']);
       });
     });

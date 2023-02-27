@@ -43,7 +43,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeNavajo(elem['input'], elem['alphabet']);
+        var _actual = decodeNavajo(elem['input'] as String, elem['alphabet'] as bool);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -62,7 +62,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeNavajo(elem['input'], elem['alphabet']);
+        var _actual = encodeNavajo(elem['input'] as String?, elem['alphabet'] as bool);
         expect(_actual, elem['expectedOutput']);
       });
     });

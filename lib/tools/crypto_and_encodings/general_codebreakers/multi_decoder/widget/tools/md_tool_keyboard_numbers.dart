@@ -13,7 +13,7 @@ class MultiDecoderToolKeyboardNumbers extends AbstractMultiDecoderTool {
     Key? key,
     required int id,
     required String name,
-    required Map<String, Object> options,
+    required Map<String, Object?> options,
     required BuildContext context})
       : super(
             key: key,
@@ -22,13 +22,13 @@ class MultiDecoderToolKeyboardNumbers extends AbstractMultiDecoderTool {
             internalToolName: MDT_INTERNALNAMES_KEYBOARDNUMBERS,
             onDecode: (String input, String key) {
               return keyboardNumbersByName[
-                toStringOrDefault(options[MDT_KEYBOARDNUMBERS_OPTION_TYPE], 'keyboard_mode_qwertz_ristome_dvorak')
+                    checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_KEYBOARDNUMBERS, options, MDT_KEYBOARDNUMBERS_OPTION_TYPE)
                     ]!(input).trim();
             },
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
               MDT_KEYBOARDNUMBERS_OPTION_TYPE: GCWStatefulDropDown<String>(
-                value: options[MDT_KEYBOARDNUMBERS_OPTION_TYPE],
+                value: checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_KEYBOARDNUMBERS, options, MDT_KEYBOARDNUMBERS_OPTION_TYPE),
                 onChanged: (newValue) {
                   options[MDT_KEYBOARDNUMBERS_OPTION_TYPE] = newValue;
                 },

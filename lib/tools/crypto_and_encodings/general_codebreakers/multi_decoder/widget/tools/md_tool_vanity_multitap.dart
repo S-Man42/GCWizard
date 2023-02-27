@@ -27,7 +27,7 @@ class MultiDecoderToolVanityMultitap extends AbstractMultiDecoderTool {
     Key? key,
     required int id,
     required String name,
-    required Map<String, Object> options,
+    required Map<String, Object?> options,
     required BuildContext context})
       : super(
             key: key,
@@ -35,9 +35,8 @@ class MultiDecoderToolVanityMultitap extends AbstractMultiDecoderTool {
             name: name,
             internalToolName: MDT_INTERNALNAMES_VANITYMULTITAP,
             onDecode: (String input, String key) {
-              var model;
-
-              var modelName = _ensureBackwardsCompatibility(toStringOrDefault(options[MDT_VANITYMULTITAP_OPTION_PHONEMODEL], ''));
+              PhoneModel model;
+              var modelName = _ensureBackwardsCompatibility(checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_VANITYMULTITAP, options, MDT_VANITYMULTITAP_OPTION_PHONEMODEL));
 
               switch (modelName) {
                 case NAME_PHONEMODEL_SIMPLE_SPACE_0:
@@ -52,14 +51,17 @@ class MultiDecoderToolVanityMultitap extends AbstractMultiDecoderTool {
                 case NAME_PHONEMODEL_SIMPLE_SPACE_ASTERISK:
                   model = PHONEMODEL_SIMPLE_SPACE_ASTERISK;
                   break;
+                default:
+                  model = PHONEMODEL_SIMPLE_SPACE_0;
+                  break;
               }
 
-              return decodeVanityMultitap(input, model, PhoneInputLanguage.UNSPECIFIED)['output'];
+              return decodeVanityMultitap(input, model, PhoneInputLanguage.UNSPECIFIED)?.item2;
             },
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
               MDT_VANITYMULTITAP_OPTION_PHONEMODEL: GCWStatefulDropDown<String>(
-                  value: _ensureBackwardsCompatibility(toStringOrDefault(options[MDT_VANITYMULTITAP_OPTION_PHONEMODEL], '')),
+                  value: _ensureBackwardsCompatibility(checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_VANITYMULTITAP, options, MDT_VANITYMULTITAP_OPTION_PHONEMODEL)),
                   onChanged: (newValue) {
                     options[MDT_VANITYMULTITAP_OPTION_PHONEMODEL] = newValue;
                   },

@@ -40,7 +40,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = cryptRC4(elem['input'], elem['format'], elem['key'], elem['keyFormat'], elem['outputFormat']);
+        var _actual = cryptRC4(elem['input'] as String?, elem['format'] as InputFormat, elem['key'] as String?, elem['keyFormat'] as InputFormat, elem['outputFormat'] as OutputFormat);
         expect(_actual.output, elem['expectedOutput']);
         expect(_actual.errorCode, elem['errorCode']);
       });

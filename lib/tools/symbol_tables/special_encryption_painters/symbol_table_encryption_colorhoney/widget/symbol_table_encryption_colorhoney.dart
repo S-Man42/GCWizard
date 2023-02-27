@@ -52,8 +52,6 @@ class ColorHoneySymbolTableEncryption extends SymbolTableEncryption {
 
     var counter = 0;
     for (var index = 0; index < imageIndexes.length; index++) {
-      if (imageIndexes[index] == null) continue;
-
       var image = data.images[imageIndexes[index]].values.first.standardImage;
 
       var i = (counter / 4).floor() % countColumns;

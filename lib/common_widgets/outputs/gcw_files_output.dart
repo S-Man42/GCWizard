@@ -44,7 +44,7 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
 
       String text = '';
       if (file.fileClass == FileClass.TEXT) {
-        text = String.fromCharCodes(file.bytes ?? []);
+        text = String.fromCharCodes(file.bytes);
         if (text.length > 100) text = text.substring(0, 100) + '...';
       }
 

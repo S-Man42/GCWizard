@@ -20,11 +20,11 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test(
           'gridDimension: ${elem['gridDimension']}, firstLetters: ${elem['firstLetters']}, mode: ${elem['mode']}, fillAlphabet: ${elem['fillAlphabet']}', () {
-        String _actual = createPolybiosAlphabet(
-            elem['gridDimension'],
-            firstLetters: elem['firstLetters'],
-            mode: elem['mode'],
-            fillAlphabet: elem['fillAlphabet']
+        var _actual = createPolybiosAlphabet(
+            elem['gridDimension'] as int,
+            firstLetters: elem['firstLetters'] as String?,
+            mode: elem['mode'] as PolybiosMode,
+            fillAlphabet: elem['fillAlphabet'] as String?
         );
         expect(_actual == null ? null : _actual, elem['expectedOutput']);
       });
@@ -87,11 +87,11 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, key: ${elem['key']}, mode: ${elem['mode']}, modMode: ${elem['modificationMode']}, fillAlphabet: ${elem['fillAlphabet']}', () {
-        PolybiosOutput _actual;
+        PolybiosOutput? _actual;
         if (elem['modificationMode'] != null)
-          _actual = encryptPolybios(elem['input'], elem['key'], mode: elem['mode'], fillAlphabet: elem['fillAlphabet'], modificationMode: elem['modificationMode']);
+          _actual = encryptPolybios(elem['input'] as String?, elem['key'] as String?, mode: elem['mode'] as PolybiosMode, fillAlphabet: elem['fillAlphabet'] as String?, modificationMode: elem['modificationMode'] as AlphabetModificationMode);
         else
-          _actual = encryptPolybios(elem['input'], elem['key'], mode: elem['mode'], fillAlphabet: elem['fillAlphabet']);
+          _actual = encryptPolybios(elem['input'] as String?, elem['key'] as String?, mode: elem['mode'] as PolybiosMode, fillAlphabet: elem['fillAlphabet'] as String?);
 
         expect(_actual == null ? null : _actual.output, elem['expectedOutput']);
       });
@@ -155,11 +155,11 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, key: ${elem['key']}, mode: ${elem['mode']}, modMode: ${elem['modificationMode']}, alphabet: ${elem['fillAlphabet']}', () {
-        PolybiosOutput _actual;
+        PolybiosOutput? _actual;
         if (elem['modificationMode'] != null)
-          _actual = decryptPolybios(elem['input'], elem['key'], mode: elem['mode'], fillAlphabet: elem['fillAlphabet'], modificationMode: elem['modificationMode']);
+          _actual = decryptPolybios(elem['input'] as String?, elem['key'] as String?, mode: elem['mode'] as PolybiosMode, fillAlphabet: elem['fillAlphabet'] as String?, modificationMode: elem['modificationMode'] as AlphabetModificationMode);
         else
-          _actual = decryptPolybios(elem['input'], elem['key'], mode: elem['mode'], fillAlphabet: elem['fillAlphabet']);
+          _actual = decryptPolybios(elem['input'] as String?, elem['key'] as String?, mode: elem['mode'] as PolybiosMode, fillAlphabet: elem['fillAlphabet'] as String?);
         expect(_actual == null ? null : _actual.output, elem['expectedOutput']);
       });
     });

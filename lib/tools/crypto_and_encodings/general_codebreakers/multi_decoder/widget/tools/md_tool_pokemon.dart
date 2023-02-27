@@ -9,7 +9,7 @@ class MultiDecoderToolPokemon extends AbstractMultiDecoderTool {
     Key? key,
     required int id,
     required String name,
-    required Map<String, Object> options})
+    required Map<String, Object?> options})
       : super(
             key: key,
             id: id,
@@ -17,7 +17,7 @@ class MultiDecoderToolPokemon extends AbstractMultiDecoderTool {
             internalToolName: MDT_INTERNALNAMES_POKEMON,
             onDecode: (String input, String key) {
               var output = decodePokemon(input);
-              return output == null || output.isEmpty || output == '<?>' ? null : output;
+              return output.isEmpty || output == '<?>' ? null : output;
             },
             options: options);
 }

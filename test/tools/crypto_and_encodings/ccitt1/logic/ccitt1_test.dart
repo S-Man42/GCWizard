@@ -38,7 +38,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeTeletypewriter(elem['input'], TeletypewriterCodebook.BAUDOT_54123);
+        var _actual = encodeTeletypewriter(elem['input'] as String?, TeletypewriterCodebook.BAUDOT_54123);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -69,7 +69,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeTeletypewriter(elem['input'], TeletypewriterCodebook.BAUDOT_54123);
+        var _actual = decodeTeletypewriter(elem['input'] as List<int>?, TeletypewriterCodebook.BAUDOT_54123);
         expect(_actual, elem['expectedOutput']);
       });
     });

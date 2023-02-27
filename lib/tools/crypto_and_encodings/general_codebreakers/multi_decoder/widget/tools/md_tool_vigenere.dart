@@ -11,20 +11,20 @@ class MultiDecoderToolVigenere extends AbstractMultiDecoderTool {
     Key? key,
     required int id,
     required String name,
-    required Map<String, Object> options})
+    required Map<String, Object?> options})
       : super(
             key: key,
             id: id,
             name: name,
             internalToolName: MDT_INTERNALNAMES_VIGENERE,
             onDecode: (String input, String key) {
-              return decryptVigenere(input, key, false, aValue: toIntOrDefault(options[MDT_VIGENERE_OPTION_KEY], 1) - 1);
+              return decryptVigenere(input, key, false, aValue: checkIntFormatOrDefaultOption(MDT_INTERNALNAMES_VIGENERE, options, MDT_VIGENERE_OPTION_KEY) - 1);
             },
             requiresKey: true,
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
               MDT_VIGENERE_OPTION_KEY: GCWIntegerSpinner(
-                  value: toIntOrDefault(options[MDT_VIGENERE_OPTION_KEY], 1),
+                  value: checkIntFormatOrDefaultOption(MDT_INTERNALNAMES_VIGENERE, options, MDT_VIGENERE_OPTION_KEY),
                   onChanged: (value) {
                     options[MDT_VIGENERE_OPTION_KEY] = value;
                   }),

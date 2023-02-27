@@ -14,11 +14,11 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = divisors(elem['input']);
+        var _actual = divisors(elem['input'] as int);
         expect(_actual, elem['expectedOutput']);
-        var length = elem['expectedOutput'].length;
+        var length = (elem['expectedOutput'] as List<int>).length;
         for (int i = 0; i < length; i++) {
-          expect(_actual[i], elem['expectedOutput'][i]);
+          expect(_actual[i], (elem['expectedOutput'] as List<int>)[i]);
         }
       });
     });

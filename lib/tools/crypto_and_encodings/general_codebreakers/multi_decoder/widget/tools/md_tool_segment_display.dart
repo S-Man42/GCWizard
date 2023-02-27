@@ -13,15 +13,16 @@ class MultiDecoderToolSegmentDisplay extends AbstractMultiDecoderTool {
     Key? key,
     required int id,
     required String name,
-    required Map<String, Object> options})
+    required Map<String, Object?> options})
       : super(
             key: key,
             id: id,
             name: name,
             internalToolName: MDT_INTERNALNAMES_SEGMENTDISPLAY,
             onDecode: (String input, String key) {
-              var segmentType;
-              switch (options[MDT_SEGMENTDISPLAY_OPTION_NUMBERSEGMENTS]) {
+              SegmentDisplayType segmentType;
+              var vale = checkIntFormatOrDefaultOption(MDT_INTERNALNAMES_SEGMENTDISPLAY, options, MDT_SEGMENTDISPLAY_OPTION_NUMBERSEGMENTS);
+              switch (vale) {
                 case 7:
                   segmentType = SegmentDisplayType.SEVEN;
                   break;
@@ -31,13 +32,15 @@ class MultiDecoderToolSegmentDisplay extends AbstractMultiDecoderTool {
                 case 16:
                   segmentType = SegmentDisplayType.SIXTEEN;
                   break;
+                default:
+                  segmentType = SegmentDisplayType.SEVEN;
               }
-              return decodeSegment(input, segmentType)['text'].replaceAll(UNKNOWN_ELEMENT, '');
+              return decodeSegment(input, segmentType).text.replaceAll(UNKNOWN_ELEMENT, '');
             },
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
-              MDT_SEGMENTDISPLAY_OPTION_NUMBERSEGMENTS: GCWStatefulDropDown<String>(
-                value: options[MDT_SEGMENTDISPLAY_OPTION_NUMBERSEGMENTS],
+              MDT_SEGMENTDISPLAY_OPTION_NUMBERSEGMENTS: GCWStatefulDropDown<int>(
+                value: checkIntFormatOrDefaultOption(MDT_INTERNALNAMES_SEGMENTDISPLAY, options, MDT_SEGMENTDISPLAY_OPTION_NUMBERSEGMENTS),
                 onChanged: (newValue) {
                   options[MDT_SEGMENTDISPLAY_OPTION_NUMBERSEGMENTS] = newValue;
                 },

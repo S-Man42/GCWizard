@@ -4,6 +4,7 @@ import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_stateful_dropdown.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/bcd/_common/logic/bcd.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/multi_decoder.dart';
+import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 
 const MDT_INTERNALNAMES_BCD = 'multidecoder_tool_bcd_title';
 const MDT_BCD_OPTION_BCDFUNCTION = 'multidecoder_tool_bcd_option_bcdfunction';
@@ -32,7 +33,7 @@ class MultiDecoderToolBCD extends AbstractMultiDecoderTool {
     Key? key,
     required int id,
     required String name,
-    required Map<String, Object> options,
+    required Map<String, Object?> options,
     required BuildContext context})
       : super(
             key: key,
@@ -40,12 +41,12 @@ class MultiDecoderToolBCD extends AbstractMultiDecoderTool {
             name: name,
             internalToolName: MDT_INTERNALNAMES_BCD,
             onDecode: (String input, String key) {
-              return decodeBCD(input, _BCD_TYPES[toStringOrDefault(options[MDT_BCD_OPTION_BCDFUNCTION], 'bcd_original')]!);
+              return decodeBCD(input, _BCD_TYPES[getBCDTypeKey(options, MDT_BCD_OPTION_BCDFUNCTION)]!);
             },
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
               MDT_BCD_OPTION_BCDFUNCTION: GCWStatefulDropDown<String>(
-                value: toStringOrDefault(options[MDT_BCD_OPTION_BCDFUNCTION], 'bcd_original'),
+                value: getBCDTypeKey(options, MDT_BCD_OPTION_BCDFUNCTION),
                 onChanged: (newValue) {
                   options[MDT_BCD_OPTION_BCDFUNCTION] = newValue;
                 },
@@ -57,4 +58,11 @@ class MultiDecoderToolBCD extends AbstractMultiDecoderTool {
                 }).toList(),
               ),
             }));
+}
+
+String getBCDTypeKey(Map<String, Object?> options, String option) {
+  var key = checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_BCD, options, MDT_BCD_OPTION_BCDFUNCTION);
+  if (_BCD_TYPES.keys.contains(key))
+    return key;
+  return toStringOrNull(getDefaultValue(MDT_INTERNALNAMES_BCD, MDT_BCD_OPTION_BCDFUNCTION)) ?? 'bcd_original';
 }

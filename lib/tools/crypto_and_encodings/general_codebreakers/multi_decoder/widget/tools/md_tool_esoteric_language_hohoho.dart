@@ -9,7 +9,7 @@ class MultiDecoderToolEsotericLanguageHohoho extends AbstractMultiDecoderTool {
     Key? key,
     required int id,
     required String name,
-    required Map<String, Object> options})
+    required Map<String, Object?> options})
       : super(
             key: key,
             id: id,
@@ -19,9 +19,7 @@ class MultiDecoderToolEsotericLanguageHohoho extends AbstractMultiDecoderTool {
             onDecode: (String input, String key) {
               try {
                 var output = interpretHohoho(input, STDIN: key);
-                if (output != null) {
-                  return output.output;
-                }
+                return output.output;
               } catch (e) {}
               return null;
             },

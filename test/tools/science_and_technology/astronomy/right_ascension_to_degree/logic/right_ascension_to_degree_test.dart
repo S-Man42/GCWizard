@@ -26,7 +26,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = raDegree2RightAscension(RaDeg(elem['input']));
+        var _actual = raDegree2RightAscension(RaDeg(elem['input'] as double?));
         expect(_actual.toString(), elem['expectedOutput']);
       });
     });
@@ -47,7 +47,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = raRightAscension2Degree(RightAscension.parse(elem['input'])!);
+        var _actual = raRightAscension2Degree(RightAscension.parse(elem['input'] as String?)!);
         if (_actual == null)
           expect(_actual, elem['expectedOutput']);
         else
@@ -78,7 +78,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = RaDeg.parse(elem['input']);
+        var _actual = RaDeg.parse(elem['input'] as String?);
         if (_actual == null)
           expect(_actual, elem['expectedOutput']);
         else
@@ -106,7 +106,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = RightAscension.parse(elem['input']);
+        var _actual = RightAscension.parse(elem['input'] as String?);
         if (_actual == null)
           expect(_actual, elem['expectedOutput']);
         else

@@ -16,7 +16,6 @@ import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/image_utils/image_utils.dart';
-import 'package:intl/intl.dart';
 
 class QrCode extends StatefulWidget {
   final GCWFile? file;
@@ -68,12 +67,10 @@ class QrCodeState extends State<QrCode> {
                     return;
                   }
 
-                  if (value != null) {
-                    setState(() {
-                      _outData = value.bytes;
-                      _updateOutput();
-                    });
-                  }
+                  setState(() {
+                    _outData = value.bytes;
+                    _updateOutput();
+                  });
                 },
               )
             : GCWTextField(
@@ -139,11 +136,11 @@ class QrCodeState extends State<QrCode> {
     try {
       if (_currentMode == GCWSwitchPosition.left) {
         var currentInput = _currentInput;
-        if ((currentInput != null) && (currentInput.length > maxLength) && (lastCurrentInputLength <= maxLength)) {
+        if ((currentInput.length > maxLength) && (lastCurrentInputLength <= maxLength)) {
           currentInput = currentInput.substring(0, maxLength);
           showToast(i18n(context, 'qr_code_length_limited', parameters: [maxLength.toString()]));
         }
-        lastCurrentInputLength = _currentInput == null ? 0 : _currentInput.length;
+        lastCurrentInputLength = _currentInput.length;
 
         _outDataEncrypt = null;
         var qrCode = generateBarCode(currentInput, moduleSize: _currentModulSize, border: 2 * _currentModulSize);
@@ -170,7 +167,7 @@ class QrCodeState extends State<QrCode> {
     }
   }
 
-  _exportFile(BuildContext context, Uint8List data) async {
+  void _exportFile(BuildContext context, Uint8List data) async {
     var fileType = getFileType(data);
     var value = await saveByteDataToFile(context, data, buildFileNameWithDate('img_', fileType));
 

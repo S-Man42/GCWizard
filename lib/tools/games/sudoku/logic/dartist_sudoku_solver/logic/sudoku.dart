@@ -52,7 +52,7 @@ Map<String, String> _grid_values(List<List<int>> grid) {
   Map<String, String> gridMap = {};
   for (int i = 0; i < 9; i++) {
     for (int j = 0; j < 9; j++) {
-      gridMap.putIfAbsent(_rows[i] + _cols[j], () => grid[i][j] != null ? grid[i][j].toString() : '0');
+      gridMap.putIfAbsent(_rows[i] + _cols[j], () => grid[i][j].toString());
     }
   }
 
@@ -128,26 +128,17 @@ List<Map<String, String>>? _searchAll(Map<String, String>? values) {
     var result = _searchAll(_assign(Map<String, String>.from(values), s2, d));
     if (result == null) return;
 
-    output.addAll(result.where((element) => element != null));
+    output.addAll(result);
   });
 
   return output;
 }
 
-_wrap(value, fn(x)) => fn(value);
-
-List<String> _order(List<String> seq, {Comparator? by, List<Comparator>? byAll, required int on(String x), List<Function>? onAll}) => by != null
+List<String> _order(List<String> seq, {Comparator? by, List<Comparator>? byAll, required int on(String x)}) => by != null
     ? (seq..sort(by))
     : byAll != null
         ? (seq..sort((a, b) => byAll.firstWhere((compare) => compare(a, b) != 0, orElse: () => (x, y) => 0)(a, b)))
-        : on != null
-            ? (seq..sort((a, b) => on(a).compareTo(on(b))))
-            : onAll != null
-                ? (seq
-                  ..sort((a, b) => _wrap(
-                      onAll.firstWhere((_on) => _on(a).compareTo(_on(b)) != 0, orElse: () => (x) => 0),
-                      (_on) => _on(a).compareTo(_on(b)))))
-                : (seq..sort());
+        : (seq..sort((a, b) => on(a).compareTo(on(b))));
 
 bool _all(Iterable seq) => seq.every((e) => e != null);
 

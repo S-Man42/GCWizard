@@ -14,7 +14,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeBeghilos(elem['input']);
+        var _actual = encodeBeghilos(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -33,7 +33,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeBeghilos(elem['input']);
+        var _actual = decodeBeghilos(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });

@@ -31,9 +31,9 @@ void main() {
       test('map: ${elem['map']}, keepFirstOccurence: ${elem['keepFirstOccurence']}', () {
         var _actual;
         if (elem['keepFirstOccurence'] == null)
-          _actual = switchMapKeyValue(elem['map']);
+          _actual = switchMapKeyValue(elem['map'] as Map);
         else
-          _actual = switchMapKeyValue(elem['map'], keepFirstOccurence: elem['keepFirstOccurence'] as bool);
+          _actual = switchMapKeyValue(elem['map'] as Map, keepFirstOccurence: elem['keepFirstOccurence'] as bool);
         expect(_actual, elem['expectedOutput']);
       });
     });

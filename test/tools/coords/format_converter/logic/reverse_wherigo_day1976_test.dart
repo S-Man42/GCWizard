@@ -1,4 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -15,9 +16,9 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('coord: ${elem['coord']}', () {
-        var _actual = ReverseWherigoDay1976.fromLatLon(elem['coord']);
-        expect(_actual.s, elem['expectedOutput'][0]);
-        expect(_actual.t, elem['expectedOutput'][1]);
+        var _actual = ReverseWherigoDay1976.fromLatLon(elem['coord'] as LatLng);
+        expect(_actual.s, (elem['expectedOutput'] as ReverseWherigoDay1976).s);
+        expect(_actual.t, (elem['expectedOutput'] as ReverseWherigoDay1976).t);
       });
     });
   });
@@ -34,9 +35,9 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = ReverseWherigoDay1976.parse(elem['input'][0] + " " + elem['input'][1])?.toLatLng();
-        expect((_actual.latitude - elem['expectedOutput'].latitude).abs() < 1e-3, true);
-        expect((_actual.longitude - elem['expectedOutput'].longitude).abs() < 1e-3, true);
+        var _actual = ReverseWherigoDay1976.parse((elem['input'] as List<String>)[0] + " " + (elem['input'] as List<String>)[1])?.toLatLng();
+        expect((_actual!.latitude - (elem['expectedOutput'] as LatLng).latitude).abs() < 1e-3, true);
+        expect((_actual!.longitude - (elem['expectedOutput'] as LatLng).longitude).abs() < 1e-3, true);
       });
     });
   });
@@ -50,12 +51,12 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}', () {
-        var _actual = ReverseWherigoDay1976.parse(elem['text'])?.toLatLng();
+        var _actual = ReverseWherigoDay1976.parse(elem['text'] as String)?.toLatLng();
         if (_actual == null)
           expect(null, elem['expectedOutput']);
         else {
-          expect((_actual.latitude - elem['expectedOutput']['coordinate'].latitude).abs() < 1e-3, true);
-          expect((_actual.longitude - elem['expectedOutput']['coordinate'].longitude).abs() < 1e-3, true);
+          expect((_actual.latitude - ((elem['expectedOutput'] as Map<String, Object>)['coordinate'] as LatLng).latitude).abs() < 1e-3, true);
+          expect((_actual.longitude - ((elem['expectedOutput'] as Map<String, Object>)['coordinate'] as LatLng).longitude).abs() < 1e-3, true);
         }
       });
     });

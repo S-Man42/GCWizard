@@ -74,7 +74,7 @@ class CowState extends State<Cow> {
     );
   }
 
-  _calculateOutput() {
+  String _calculateOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       try {
         CowOutput output = interpretCow(_currentText, STDIN: _currentInput);

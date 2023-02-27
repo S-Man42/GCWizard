@@ -49,7 +49,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('code: ${elem['code']}, input: ${elem['input']}', () {
-        var _actual = interpretCow(elem['code']).output;
+        var _actual = interpretCow(elem['code'] as String?).output;
         expect(_actual, elem['expectedOutput']);
       });
     });

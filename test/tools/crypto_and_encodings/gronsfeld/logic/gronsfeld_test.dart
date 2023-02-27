@@ -100,7 +100,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, key: ${elem['key']}, aValue: ${elem['aValue']}, autoKey: ${elem['autoKey']}', () {
-        var _actual = decryptGronsfeld(elem['input'] as String?, elem['key'] as String?, elem['autoKey'] as bool, aValue: elem['aValue']as int);
+        var _actual = decryptGronsfeld(elem['input'] as String?, elem['key'] as String?, elem['autoKey'] as bool, aValue: elem['aValue'] as int);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -172,7 +172,7 @@ void main() {
   //
   //   _inputsToExpected.forEach((elem) {
   //     test('input: ${elem['input']}, aValue: ${elem['aValue']}, removeNonDigits: ${elem['removeNonDigits']}', () {
-  //       var _actual = _digitsToAlpha(elem['input'], aValue: elem['aValue'], removeNonDigits: elem['removeNonDigits']);
+  //       var _actual = _digitsToAlpha(elem['input'] as String?, aValue: elem['aValue'] as Int,, removeNonDigits: elem['removeNonDigits']);
   //       expect(_actual, elem['expectedOutput']);
   //     });
   //   });

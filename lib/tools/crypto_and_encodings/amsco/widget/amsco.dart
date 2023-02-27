@@ -90,20 +90,19 @@ class AmscoState extends State<Amsco> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    var _currentOutput;
+    AmscoOutput _currentOutput;
     if (_currentMode == GCWSwitchPosition.left) {
       _currentOutput = encryptAmsco(_currentInput, _currentKey, _currentOneCharStart == GCWSwitchPosition.left);
     } else {
       _currentOutput = decryptAmsco(_currentInput, _currentKey, _currentOneCharStart == GCWSwitchPosition.left);
     }
 
-    if (_currentOutput == null) {
-      return GCWDefaultOutput();
-    } else if (_currentOutput.errorCode != ErrorCode.OK) {
+    if (_currentOutput.errorCode != ErrorCode.OK) {
       switch (_currentOutput.errorCode) {
         case ErrorCode.Key:
           showToast(i18n(context, 'amsco_error_key'));
           break;
+        default:
       }
       return GCWDefaultOutput();
     } else if (_currentOutput.output.isEmpty) {

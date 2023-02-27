@@ -22,10 +22,10 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('coord: ${elem['coord']}, bearing: ${elem['bearing']}, distance: ${elem['distance']}', () {
-        var actual = reverseProjection(elem['coord'], elem['bearing'], elem['distance'], getEllipsoidByName(ELLIPSOID_NAME_WGS84));
+        var actual = reverseProjection(elem['coord'] as LatLng, elem['bearing'] as double, elem['distance'] as double, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
         var equals = false;
         for (LatLng l in actual) {
-          if (equalsLatLng(l, elem['expectedOutput']))
+          if (equalsLatLng(l, elem['expectedOutput'] as LatLng))
             equals = true;
         }
         expect(equals, true);

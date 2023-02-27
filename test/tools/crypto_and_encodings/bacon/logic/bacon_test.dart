@@ -16,7 +16,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeBacon(elem['input'], false, false);
+        var _actual = encodeBacon(elem['input'] as String?, false, false);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -36,7 +36,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeBacon(elem['input'], false, true);
+        var _actual = encodeBacon(elem['input'] as String?, false, true);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -56,7 +56,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeBacon(elem['input'], true, false);
+        var _actual = encodeBacon(elem['input'] as String?, true, false);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -76,7 +76,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeBacon(elem['input'], true, true);
+        var _actual = encodeBacon(elem['input'] as String?, true, true);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -104,7 +104,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeBacon(elem['input'], false, false);
+        var _actual = decodeBacon(elem['input'] as String?, false, false);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -132,7 +132,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeBacon(elem['input'], false, true);
+        var _actual = decodeBacon(elem['input'] as String?, false, true);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -160,7 +160,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeBacon(elem['input'], true, false);
+        var _actual = decodeBacon(elem['input'] as String?, true, false);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -188,7 +188,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeBacon(elem['input'], true, true);
+        var _actual = decodeBacon(elem['input'] as String?, true, true);
         expect(_actual, elem['expectedOutput']);
       });
     });

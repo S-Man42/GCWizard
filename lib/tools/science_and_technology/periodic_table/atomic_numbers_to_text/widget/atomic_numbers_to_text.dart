@@ -74,7 +74,7 @@ class AtomicNumbersToTextState extends State<AtomicNumbersToText> {
     );
   }
 
-  _buildOutput() {
+  String _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       return textToAtomicNumbers(_currentEncryptInput).map((number) => number ?? UNKNOWN_ELEMENT).join(' ');
     } else {

@@ -50,8 +50,6 @@ class DeadfishState extends State<Deadfish> {
   }
 
   String _buildOutput() {
-    if (_currentInput == null) return '';
-
     if (_currentMode == GCWSwitchPosition.right) {
       var encoded = encodeDeadfish(_currentInput);
       if (_currentDeadfishMode == GCWSwitchPosition.right) //XKCD

@@ -15,7 +15,7 @@ class MultiDecoderToolGCCode extends AbstractMultiDecoderTool {
     Key? key,
     required int id,
     required String name,
-    required Map<String, Object> options,
+    required Map<String, Object?> options,
     required BuildContext context})
       : super(
             key: key,
@@ -31,7 +31,7 @@ class MultiDecoderToolGCCode extends AbstractMultiDecoderTool {
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
               MDT_GCCODE_OPTION_MODE: GCWStatefulDropDown<String>(
-                value: options[MDT_GCCODE_OPTION_MODE],
+                value: checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_GCCODE, options, MDT_GCCODE_OPTION_MODE),
                 onChanged: (newValue) {
                   options[MDT_GCCODE_OPTION_MODE] = newValue;
                 },

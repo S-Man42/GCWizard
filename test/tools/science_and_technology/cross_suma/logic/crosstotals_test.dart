@@ -15,7 +15,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('list: ${elem['list']}', () {
-        var _actual = sum(elem['list']);
+        var _actual = sum(elem['list'] as List<int>?);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
     });
@@ -35,7 +35,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('list: ${elem['list']}', () {
-        var _actual = product(elem['list']);
+        var _actual = product(elem['list'] as List<int>?);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
     });
@@ -54,7 +54,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('list: ${elem['list']}', () {
-        var _actual = crossSum(elem['list']);
+        var _actual = crossSum(elem['list'] as List<int>?);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
     });
@@ -73,7 +73,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('list: ${elem['list']}', () {
-        var _actual = crossProduct(elem['list']);
+        var _actual = crossProduct(elem['list'] as List<int>?);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
     });
@@ -93,7 +93,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('list: ${elem['list']}', () {
-        var _actual = crossSumIterated(elem['list']);
+        var _actual = crossSumIterated(elem['list'] as List<int>?);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
     });
@@ -113,7 +113,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('list: ${elem['list']}', () {
-        var _actual = crossProductIterated(elem['list']);
+        var _actual = crossProductIterated(elem['list'] as List<int>?);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
     });
@@ -135,7 +135,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('list: ${elem['list']}', () {
-        var _actual = crossSumAlternatedForward(elem['list']);
+        var _actual = crossSumAlternatedForward(elem['list'] as List<int>?);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
     });
@@ -157,7 +157,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('list: ${elem['list']}', () {
-        var _actual = crossSumAlternatedBackward(elem['list']);
+        var _actual = crossSumAlternatedBackward(elem['list'] as List<int>?);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
     });
@@ -179,7 +179,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('list: ${elem['list']}', () {
-        var _actual = crossProductAlternated(elem['list']);
+        var _actual = crossProductAlternated(elem['list'] as List<int>?);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
     });
@@ -201,7 +201,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('list: ${elem['list']}', () {
-        var _actual = sumAlternatedBackward(elem['list']);
+        var _actual = sumAlternatedBackward(elem['list'] as List<int>?);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
     });
@@ -223,7 +223,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('list: ${elem['list']}', () {
-        var _actual = sumAlternatedForward(elem['list']);
+        var _actual = sumAlternatedForward(elem['list'] as List<int>?);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
     });
@@ -245,7 +245,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('list: ${elem['list']}', () {
-        var _actual = productAlternated(elem['list']);
+        var _actual = productAlternated(elem['list'] as List<int>?);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
     });
@@ -267,7 +267,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('list: ${elem['list']}', () {
-        var _actual = sumCrossSum(elem['list']);
+        var _actual = sumCrossSum(elem['list'] as List<int>?);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
     });
@@ -289,7 +289,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('list: ${elem['list']}', () {
-        var _actual = productCrossSum(elem['list']);
+        var _actual = productCrossSum(elem['list'] as List<int>?);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
     });
@@ -311,7 +311,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('list: ${elem['list']}', () {
-        var _actual = sumCrossSumIterated(elem['list']);
+        var _actual = sumCrossSumIterated(elem['list'] as List<int>?);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
     });
@@ -333,7 +333,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('list: ${elem['list']}', () {
-        var _actual = productCrossSumIterated(elem['list']);
+        var _actual = productCrossSumIterated(elem['list'] as List<int>?);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
     });
@@ -355,7 +355,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('list: ${elem['list']}', () {
-        var _actual = sumCrossSumAlternatedForward(elem['list']);
+        var _actual = sumCrossSumAlternatedForward(elem['list'] as List<int>?);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
     });
@@ -377,7 +377,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('list: ${elem['list']}', () {
-        var _actual = sumCrossSumAlternatedBackward(elem['list']);
+        var _actual = sumCrossSumAlternatedBackward(elem['list'] as List<int>?);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
     });
@@ -399,7 +399,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('list: ${elem['list']}', () {
-        var _actual = productCrossSumAlternatedForward(elem['list']);
+        var _actual = productCrossSumAlternatedForward(elem['list'] as List<int>?);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
     });
@@ -413,8 +413,8 @@ void main() {
     ];
 
     _inputsToExpected.forEach((elem) {
-      test('list: ${elem['list']?.join()}', () {
-        var _actual = countCharacters(elem['list']);
+      test('list: ${elem['list']}', () {
+        var _actual = countCharacters(elem['list'] as List<int>?);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -428,8 +428,8 @@ void main() {
     ];
 
     _inputsToExpected.forEach((elem) {
-      test('list: ${elem['list']?.join()}', () {
-        var _actual = countDistinctCharacters(elem['list']);
+      test('list: ${elem['list']}', () {
+        var _actual = countDistinctCharacters(elem['list'] as List<int>?);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -444,7 +444,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}', () {
-        var _actual = countLetters(elem['text']);
+        var _actual = countLetters(elem['text'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -459,7 +459,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}', () {
-        var _actual = countDigits(elem['text']);
+        var _actual = countDigits(elem['text'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     });
