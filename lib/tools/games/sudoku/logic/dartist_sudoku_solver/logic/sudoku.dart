@@ -52,7 +52,7 @@ Map<String, String> _grid_values(List<List<int>> grid) {
   Map<String, String> gridMap = {};
   for (int i = 0; i < 9; i++) {
     for (int j = 0; j < 9; j++) {
-      gridMap.putIfAbsent(_rows[i] + _cols[j], () => grid[i][j] != null ? grid[i][j].toString() : '0');
+      gridMap.putIfAbsent(_rows[i] + _cols[j], () => grid[i][j].toString());
     }
   }
 
@@ -128,7 +128,7 @@ List<Map<String, String>>? _searchAll(Map<String, String>? values) {
     var result = _searchAll(_assign(Map<String, String>.from(values), s2, d));
     if (result == null) return;
 
-    output.addAll(result.where((element) => element != null));
+    output.addAll(result);
   });
 
   return output;

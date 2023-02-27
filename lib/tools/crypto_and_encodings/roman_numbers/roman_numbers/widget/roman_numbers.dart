@@ -76,8 +76,8 @@ class RomanNumbersState extends State<RomanNumbers> {
 
     if (_currentMode == GCWSwitchPosition.left) {
       output = [
-        encodeRomanNumbers(_currentEncodeInput, type: RomanNumberType.USE_SUBTRACTION_RULE) ?? '',
-        encodeRomanNumbers(_currentEncodeInput, type: RomanNumberType.ONLY_ADDITION) ?? ''
+        encodeRomanNumbers(_currentEncodeInput, type: RomanNumberType.USE_SUBTRACTION_RULE),
+        encodeRomanNumbers(_currentEncodeInput, type: RomanNumberType.ONLY_ADDITION)
       ];
     } else {
       output = [

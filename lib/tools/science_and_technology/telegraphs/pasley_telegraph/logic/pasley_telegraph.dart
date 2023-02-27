@@ -166,7 +166,7 @@ SegmentsText decodeVisualPasley(List<String> inputs) {
   CODEBOOK['34'] = 'LETTERFOLLOWS';
   CODEBOOK[''] = ' ';
 
-  List<String> text = inputs.where((input) => input != null).map((input) {
+  List<String> text = inputs.map((input) {
     var char = '';
     var charH = '';
     if (CODEBOOK[input] == null) {

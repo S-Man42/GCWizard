@@ -57,7 +57,7 @@ class HoudiniState extends State<Houdini> {
   }
 
   Widget _buildOutput() {
-    var outputs;
+    Map<int, String>? outputs;
     if (_currentMode == GCWSwitchPosition.left) {
       outputs = encodeHoudini(_currentInput, _houdiniMode());
     } else {

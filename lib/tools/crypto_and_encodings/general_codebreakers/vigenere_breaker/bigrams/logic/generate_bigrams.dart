@@ -102,7 +102,7 @@ VigenereBreakerResult _generateFile(File bigrams_fh, String className, String al
   var replacementListString = "null";
   var first = true;
 
-  if (replacementList != null && replacementList.isNotEmpty) {
+  if (replacementList.isNotEmpty) {
     var sb = new StringBuffer();
     sb.write("{");
     replacementList.forEach((key, value) {
@@ -130,7 +130,7 @@ VigenereBreakerResult _generateFile(File bigrams_fh, String className, String al
 
   bigrams_fh.writeAsStringSync(sb.toString());
 
-  if (bigrams == null || bigrams.isEmpty)
+  if (bigrams.isEmpty)
     return VigenereBreakerResult(alphabet: alphabet, errorCode: VigenereBreakerErrorCode.WRONG_GENERATE_TEXT);
   else
     return VigenereBreakerResult(alphabet: alphabet, errorCode: VigenereBreakerErrorCode.OK);
@@ -159,7 +159,6 @@ String bigramsListToString(List<List<int>> bigrams, String alphabet) {
         first = false;
       else
         sb.write(',');
-      if (val == null) val = 0;
       out = val.toString().padLeft(7);
       sb.write(out);
     });
@@ -226,64 +225,6 @@ List<List<int>> _fillBigramArray(Map<String, int> bigramsSource, String alphabet
   return bigrams;
 }
 
-List<List<int>> _scaleBigramsX(List<List<int>> bigrams) {
-  double quadgram_sum = 0;
-  double quadgram_min = 10000000;
-
-  var _bigrams = <List<double>>[];
-  for (var row = 0; row < bigrams.length; row++) {
-    _bigrams.add(List<double>.filled(bigrams[row].length, 0));
-    for (var column = 0; column < bigrams[row].length; column++) {
-      _bigrams[row][column] = bigrams[row][column].toDouble();
-    }
-  }
-
-  for (var row = 0; row < _bigrams.length; row++) {
-    for (var column = 0; column < _bigrams[row].length; column++) {
-      if (_bigrams[row][column] != 0) {
-        quadgram_sum += _bigrams[row][column];
-        quadgram_min = min(quadgram_min, _bigrams[row][column]);
-      }
-    }
-    ;
-  }
-  ;
-  var offset = log(quadgram_min / 10 / quadgram_sum);
-
-  double prop = 0;
-  double new_val = 0;
-  double norm = 0;
-
-  for (var row = 0; row < _bigrams.length; row++) {
-    for (var column = 0; column < _bigrams[row].length; column++) {
-      if (_bigrams[row][column] != 0) {
-        prop = _bigrams[row][column] / quadgram_sum; // in Prozent
-        new_val = log(prop) - offset;
-        _bigrams[row][column] = new_val;
-        norm += prop * new_val;
-      }
-    }
-    ;
-  }
-  ;
-
-  for (var row = 0; row < _bigrams.length; row++) {
-    for (var column = 0; column < _bigrams[row].length; column++) {
-      if (_bigrams[row][column] != 0) _bigrams[row][column] = (_bigrams[row][column] / norm * 1000);
-    }
-    ;
-  }
-  ;
-
-  for (var row = 0; row < bigrams.length; row++) {
-    for (var column = 0; column < bigrams[row].length; column++) {
-      bigrams[row][column] = _bigrams[row][column].floor();
-    }
-  }
-
-  return bigrams;
-}
-
 List<List<int>> _scaleBigrams(List<List<int>> bigrams) {
   const int maximum = 1000000;
   var minValue = maximum;
@@ -297,10 +238,8 @@ List<List<int>> _scaleBigrams(List<List<int>> bigrams) {
       maxValue = max(maxValue, bigrams[row][column]);
       minValue = min(minValue, bigrams[row][column]);
       sum += bigrams[row][column];
-    }
-    ;
-  }
-  ;
+    };
+  };
 
   var minValueD = log(minValue / sum);
   var maxValueD = log(maxValue / sum);

@@ -34,7 +34,6 @@ class MultiDecoderState extends State<MultiDecoder> {
     mdtTools = multiDecoderTools.map((mdtTool) {
       return _multiDecoderToolToGCWMultiDecoderTool(context, mdtTool);
     }).toList();
-    mdtTools.removeWhere((mdtTool) => mdtTool == null);
   }
 
   @override
@@ -145,21 +144,13 @@ class MultiDecoderState extends State<MultiDecoder> {
     return result;
   }
 
-  void _initOutput() {
-    _currentOutput = Column(
-        children: mdtTools.map((tool) {
-      return GCWTextDivider(text: _toolTitle(tool));
-    }).toList());
-  }
-
   void _calculateOutput() {
     var results = mdtTools.map((tool) {
       Object? result;
 
       try {
         if (!tool.optionalKey &&
-            ((tool.requiresKey && (_currentKey ?? '').isEmpty) ||
-                !tool.requiresKey && (_currentKey != null && _currentKey.isNotEmpty))) {
+            ((tool.requiresKey && _currentKey.isEmpty) || !tool.requiresKey && (_currentKey.isNotEmpty))) {
           result = null;
         } else {
           result = tool.onDecode(_currentInput, _currentKey);
@@ -169,7 +160,7 @@ class MultiDecoderState extends State<MultiDecoder> {
       if (result is Future<String>) {
         return FutureBuilder(
             future: result,
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
+            builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
               if (snapshot.hasData && snapshot.data is String && ((snapshot.data as String).isNotEmpty)) {
                 return GCWOutput(title: _toolTitle(tool), child: snapshot.data);
               } else
@@ -178,7 +169,7 @@ class MultiDecoderState extends State<MultiDecoder> {
       } else if (result is Future<Uint8List>) {
         return FutureBuilder(
             future: result,
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
+            builder: (BuildContext context, AsyncSnapshot<Uint8List> snapshot) {
               if (snapshot.hasData && snapshot.data is Uint8List && ((snapshot.data as Uint8List).isNotEmpty)) {
                 return GCWOutput(
                     title: _toolTitle(tool),

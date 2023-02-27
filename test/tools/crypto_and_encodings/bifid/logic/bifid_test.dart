@@ -101,7 +101,7 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, key: ${elem['key']}, mode: ${elem['mode']}, alphabet: ${elem['alphabet']}, alphabetMode: ${elem['alphabetMode']}', () {
         BifidOutput _actual = decryptBifid(elem['input'] as String?, elem['key'] as String?, mode: elem['mode'] as PolybiosMode, alphabet: elem['alphabet'] as String?, alphabetMode: elem['alphabetMode'] as AlphabetModificationMode);
-        expect(_actual == null ? null : _actual.output, elem['expectedOutput']);
+        expect(_actual.output, elem['expectedOutput']);
       });
     });
   });

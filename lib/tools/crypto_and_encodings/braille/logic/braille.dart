@@ -1358,7 +1358,7 @@ SegmentsChars _decodeBrailleBASIC(List<String> inputs, bool letters) {
   var _segmentsToCharsBASICBraille = switchMapKeyValue(_CharsToSegmentsLetters[BrailleLanguage.STD] ?? {});
   _segmentsToCharsBASICBraille.addAll(switchMapKeyValue(antoineMap));
 
-  List<String> text = inputs.where((input) => input != null).map((input) {
+  List<String> text = inputs.map((input) {
     var char = '';
     var charH = '';
     var display = <String>[];
@@ -1413,7 +1413,7 @@ SegmentsChars _decodeBrailleSIMPLE(List<String> inputs) {
   // decode including french chiffre antoine
   _numberFollows = false;
   _antoinenumberFollows = false;
-  text = inputs.where((input) => input != null).map((input) {
+  text = inputs.map((input) {
     var char = '';
     var charH = '';
     var display = <String>[];
@@ -2218,7 +2218,7 @@ SegmentsChars _decodeBrailleFRA(List<String> inputs) {
 SegmentsChars _decodeBrailleEUR(List<String> inputs) {
   var displays = <List<String>>[];
 
-  List<String> text = inputs.where((input) => input != null).map((input) {
+  List<String> text = inputs.map((input) {
     var display = <String>[];
     var char = '';
 

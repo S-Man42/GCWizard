@@ -18,7 +18,7 @@ import 'package:gc_wizard/utils/string_utils.dart';
 String encryptKenny(String? input, List<String> replaceCharacters, bool caseSensitive) {
   if (input == null || input.isEmpty) return '';
 
-  if (replaceCharacters == null || replaceCharacters.length < 3) return '';
+  if (replaceCharacters.length < 3) return '';
 
   Map<String, String> substitutions = {};
   for (int i = 0; i <= 2; i++) {

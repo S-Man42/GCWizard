@@ -359,7 +359,7 @@ SegmentsChars decodeMurray(List<String>? inputs, MurrayCodebook language) {
       break;
   }
 
-  List<String> text = inputs.where((input) => input != null).map((input) {
+  List<String> text = inputs.map((input) {
     var char = '';
     var charH = '';
     var display = <String>[];

@@ -43,7 +43,7 @@ class NumberSequenceContainsDigitsState extends State<NumberSequenceContainsDigi
     );
   }
 
-  _buildOutput() {
+  void _buildOutput() {
     List<List<String>> columnData = [];
     PositionOfSequenceOutput detailedOutput;
 

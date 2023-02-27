@@ -147,7 +147,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
 
     value = value
         .split(',')
-        .where((character) => character != null && character.isNotEmpty)
+        .where((character) => character.isNotEmpty)
         .map((character) => character.toUpperCase())
         .join(',');
 
@@ -308,7 +308,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
 
   String _generateItemDescription(Alphabet alphabet) {
     var description = i18n(context, alphabet.key + '_description');
-    if (description != null && description.isNotEmpty) return description;
+    if (description.isNotEmpty) return description;
 
     var entries = alphabet.alphabet.entries.toList();
 

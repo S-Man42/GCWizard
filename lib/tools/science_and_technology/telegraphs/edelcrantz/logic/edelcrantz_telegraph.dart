@@ -2,6 +2,8 @@
 // https://trepo.tuni.fi/bitstream/handle/10024/102557/1513599679.pdf?sequence=1&isAllowed=y
 // https://en.wikipedia.org/wiki/Telegraph_code#Edelcrantz_code
 
+// ignore_for_file: equal_keys_in_map
+
 import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/_common/logic/teletypewriter.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';

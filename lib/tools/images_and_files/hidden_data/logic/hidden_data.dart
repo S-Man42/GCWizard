@@ -36,7 +36,6 @@ Future<Tuple2<List<GCWFile>, int>> _hiddenData(GCWFile data, int fileIndexCounte
   _addFiles(childrenList, result.item1);
 
   // check for empty children (backup)
-  childrenList.removeWhere((element) => element == null);
   _addChildren(data, childrenList);
 
   // recursive search in the children
@@ -45,7 +44,7 @@ Future<Tuple2<List<GCWFile>, int>> _hiddenData(GCWFile data, int fileIndexCounte
   });
 
   // search for magic bytes (hidden files) in the parent block (e.g. thumbnails) (if not a archive)
-  if (data.bytes != null && data.fileClass != FileClass.ARCHIVE) {
+  if (data.fileClass != FileClass.ARCHIVE) {
     // new file with correct size
     var dataClone = GCWFile(name: data.name, bytes: Uint8List.fromList(data.bytes.sublist(0, _fileSize(data.bytes))));
     result = await _searchMagicBytesHeader(dataClone, result.item2);
@@ -66,7 +65,7 @@ Future<Tuple2<List<GCWFile>, int>> _hiddenData(GCWFile data, int fileIndexCounte
 /// split file into separate files
 /// default is that the first block is not returned (only attachments) (ignored with onlyParent)
 /// with checking whether it is a valid block
-Future<Tuple2<List<GCWFile>, int>> _splitFile(GCWFile data, int fileIndexCounter, {bool onlyParent: false}) async {
+Future<Tuple2<List<GCWFile>, int>> _splitFile(GCWFile data, int fileIndexCounter, {bool onlyParent = false}) async {
   Uint8List? bytes = data.bytes;
   var resultList = <GCWFile>[];
   var parent = !onlyParent;
@@ -104,7 +103,7 @@ Future<Tuple2<List<GCWFile>, int>> _searchMagicBytesHeader(GCWFile data, int fil
   var result = await _searchMagicBytes(data, _fileSizeCalculationAviable(), fileIndexCounter);
   _addChildren(data, result.item1);
 
-  return Future.value(Tuple2<List<GCWFile>, int>([data], result.item2 ?? fileIndexCounter));
+  return Future.value(Tuple2<List<GCWFile>, int>([data], result.item2));
 }
 
 void _addChildren(GCWFile data, List<GCWFile>? children) {
@@ -151,7 +150,7 @@ Future<Tuple2<List<GCWFile>, int>> _searchMagicBytes(
               // append file as result, if it is a valid file
               _addFiles(resultList, result.item1);
 
-              fileIndexCounter = result.item2 ?? fileIndexCounter;
+              fileIndexCounter = result.item2;
             }
           }
         }

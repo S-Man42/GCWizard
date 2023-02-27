@@ -69,7 +69,7 @@ class WindchillState extends State<Windchill> {
     );
   }
 
-  _buildOutput() {
+  String _buildOutput() {
     double windchill =   0.0;
     late Temperature temperature;
 

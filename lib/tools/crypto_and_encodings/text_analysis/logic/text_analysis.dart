@@ -79,7 +79,7 @@ int countWords(String? text) {
 
   return removeDiacritics(text)
       .split(RegExp(_WORD_SEPARATORS))
-      .where((word) => word != null && word.isNotEmpty)
+      .where((word) => word.isNotEmpty)
       .toList()
       .length;
 }
@@ -130,7 +130,7 @@ Map<String, int> _analyzeWhitespaces(String text) {
 Map<String, int> _analyzeControlChars(String text, {bool includingWhitespaceCharacter = true}) {
   var controls = Map<String, int>();
 
-  var characters = Map.from(CONTROL_CHARACTERS);
+  var characters = Map<String,ControlCharacter>.from(CONTROL_CHARACTERS);
   if (includingWhitespaceCharacter) {
     characters.addAll(WHITESPACE_CHARACTERS);
   }

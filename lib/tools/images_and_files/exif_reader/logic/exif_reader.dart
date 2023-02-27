@@ -78,7 +78,7 @@ LatLng? completeGPSData(Map<String, IfdTag> data) {
       IfdTag? lng = data[_GPS_LNG];
       double? _lng;
       if (lng != null && lngRef != null)
-        double _lng = _getCoordDecFromIfdTag(lng, lngRef.printable, false);
+        _lng = _getCoordDecFromIfdTag(lng, lngRef.printable, false);
       if (_lng == null || _lng.isNaN) return null;
 
       if (_lat == 0 && _lng == 0) return null;
@@ -105,7 +105,7 @@ LatLng? completeGPSDataFromXmp(Map<String, dynamic> xmpTags) {
       if (pt != null) {
         var value = pt['coordinate'];
         if (value is LatLng)
-        point = value as LatLng;
+        point = value;
       }
     }
   } catch (error) {

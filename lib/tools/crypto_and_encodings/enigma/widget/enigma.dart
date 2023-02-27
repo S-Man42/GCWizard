@@ -219,7 +219,7 @@ class EnigmaState extends State<Enigma> {
           [i18n(context, 'common_type'), _rotorType(currentRotor.type)],
           [
             i18n(context, 'enigma_turnovers'),
-            (currentRotor.turnovers ?? '').isEmpty
+            currentRotor.turnovers.isEmpty
                 ? i18n(context, 'common_none')
                 : currentRotor.turnovers
           ]
@@ -284,7 +284,7 @@ class EnigmaState extends State<Enigma> {
 
     var results = calculateEnigmaWithMessageKey(_currentInput, key);
 
-    var output = [];
+    var output = <Object>[];
 
     results.forEach((result) {
       output.add(result.text);

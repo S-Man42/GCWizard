@@ -157,9 +157,9 @@ double? _calc_fitness(Iterable<int> iterator) {
 ///          greater than 100 indicate (nonsense) text with too much frequently used
 ///          quadgrams (e.g., ``tionioningatheling``).
 double? calc_fitness(String txt, {String alphabet = DEFAULT_ALPHABET, List<int>? quadgrams = null}) {
-  if (txt == null || txt.isEmpty) return null;
+  if (txt.isEmpty) return null;
 
-  if (alphabet != null) _alphabet = alphabet;
+  _alphabet = alphabet;
   if (_alphabet == null) _alphabet = DEFAULT_ALPHABET;
 
   if (quadgrams != null) _quadgrams = quadgrams;
@@ -194,7 +194,7 @@ Iterable<int> _file_iterator(File file_fh, String alphabet) sync* {
 ///          greater than 100 indicate (nonsense) text with too much frequently used
 ///          quadgrams (e.g., ``tionioningatheling``).
 double? calc_fitness_file(File cleartext_fh, {String alphabet = DEFAULT_ALPHABET, List<int>? quadgrams = null}) {
-  if (alphabet != null) _alphabet = alphabet;
+  _alphabet = alphabet;
   if (_alphabet == null) _alphabet = DEFAULT_ALPHABET;
 
   if (quadgrams != null) _quadgrams = quadgrams;

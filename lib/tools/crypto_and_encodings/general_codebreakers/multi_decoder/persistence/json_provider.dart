@@ -21,7 +21,7 @@ void _saveData() {
 }
 
 int insertMultiDecoderTool(MultiDecoderToolEntity tool) {
-  tool.name = tool.name ?? '';
+  tool.name = tool.name;
   var id = newID(multiDecoderTools.map((group) => group.id).toList());
   tool.id = id;
   multiDecoderTools.insert(0, tool);

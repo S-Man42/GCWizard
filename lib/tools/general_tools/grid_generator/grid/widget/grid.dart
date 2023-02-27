@@ -211,11 +211,11 @@ class GridState extends State<Grid> {
                     _currentConfigColumns = _GRID_CONFIGURATIONS[_currentGridConfiguration]?.width ?? 10;
                     _currentConfigRows = _GRID_CONFIGURATIONS[_currentGridConfiguration]?.height ?? 10;
                     _currentConfigBoxEnumeration = _GRID_CONFIGURATIONS[_currentGridConfiguration]?.enumeration ?? '';
-                    _boxEnumerationController.text = _currentConfigBoxEnumeration ?? '';
+                    _boxEnumerationController.text = _currentConfigBoxEnumeration;
                     _currentConfigColumnEnumeration = _GRID_CONFIGURATIONS[_currentGridConfiguration]?.columnEnumeration ?? '';
-                    _columnEnumerationController.text = _currentConfigColumnEnumeration ?? '';
+                    _columnEnumerationController.text = _currentConfigColumnEnumeration;
                     _currentConfigRowEnumeration = _GRID_CONFIGURATIONS[_currentGridConfiguration]?.rowEnumeration ?? '';
-                    _rowEnumerationController.text = _currentConfigRowEnumeration ?? '';
+                    _rowEnumerationController.text = _currentConfigRowEnumeration;
                     _currentConfigBoxEnumerationStart =
                         _GRID_CONFIGURATIONS[_currentGridConfiguration]?.enumerationStart ?? _GridEnumerationStart.TOP_LEFT;
                     _currentConfigBoxEnumerationStartDirection =
@@ -478,7 +478,7 @@ class GridState extends State<Grid> {
   List<String> _getEnumeration(String? enumeration) {
     if (enumeration == null || enumeration.isEmpty) return <String>[];
 
-    if (enumeration.contains(RegExp(r'[\,\-]')) && VARIABLESTRING.hasMatch(enumeration)) {
+    if (enumeration.contains(RegExp(r'[,\-]')) && VARIABLESTRING.hasMatch(enumeration)) {
       var expanded = VariableStringExpander('x', {'x': enumeration}, orderAndUnique: false)
           .run()
           .map((e) => e.text)

@@ -14,7 +14,6 @@ import 'package:gc_wizard/tools/science_and_technology/segment_display/7_segment
 import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/widget/n_segment_display.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/widget/segmentdisplay_output.dart';
-import 'package:gc_wizard/utils/constants.dart';
 
 class SegmentDisplay extends StatefulWidget {
   final SegmentDisplayType type;
@@ -187,8 +186,6 @@ class SegmentDisplayState extends State<SegmentDisplay> {
         GCWText(
             text: decodeSegment(
                 _currentDisplays.displays.map((character) {
-                  if (character == null) return UNKNOWN_ELEMENT;
-
                   return character.join();
                 }).join(' '),
                 widget.type).text)
@@ -232,8 +229,6 @@ class SegmentDisplayState extends State<SegmentDisplay> {
         segments = _currentDisplays;
 
       var output = segments.displays.map((character) {
-        if (character == null) return UNKNOWN_ELEMENT;
-
         return character.join();
       }).join(' ');
 

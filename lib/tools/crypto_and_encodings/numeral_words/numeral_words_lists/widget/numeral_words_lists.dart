@@ -75,7 +75,7 @@ class NumeralWordsListsState extends State<NumeralWordsLists> {
     var numeralWordsOverview = Map<String, String>();
     numeralWordsOverview = NUMERAL_WORDS[_currentLanguage] ?? {};
     var wordList = numeralWordsOverview.entries.map((entry) {
-      return (int.tryParse(entry.value) != null) ? [entry.value, entry.key] : [];
+      return (int.tryParse(entry.value) != null) ? [entry.value, entry.key] : <String>[];
     });
     return GCWDefaultOutput(
       child: GCWColumnedMultilineOutput(

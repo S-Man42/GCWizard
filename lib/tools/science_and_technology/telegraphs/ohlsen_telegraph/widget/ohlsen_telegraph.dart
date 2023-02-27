@@ -163,14 +163,6 @@ class OhlsenTelegraphState extends State<OhlsenTelegraph> {
     );
   }
 
-  String _buildCodelets(Segments segments) {
-    List<String> result = [];
-    segments.displays.forEach((codelet) {
-      if (codelet != null) result.add(codelet.join(''));
-    });
-    return result.join(' ');
-  }
-
   Widget _buildDigitalOutput(Segments segments) {
     return SegmentDisplayOutput(
         segmentFunction: (displayedSegments, readOnly) {

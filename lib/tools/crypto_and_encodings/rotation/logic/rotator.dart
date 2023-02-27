@@ -15,10 +15,6 @@ class Rotator {
 
     if (key == null) key = 0;
 
-    if (removeUnknownCharacters == null) removeUnknownCharacters = false;
-
-    if (ignoreCase == null) ignoreCase = false;
-
     if (ignoreCase) {
       return _rotateIgnoreCase(input, key, removeUnknownCharacters);
     }

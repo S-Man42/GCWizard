@@ -25,9 +25,6 @@ class PasleyTelegraphState extends State<PasleyTelegraph> {
   String _currentEncodeInput = '';
   late TextEditingController _encodeController;
 
-  late TextEditingController _decodeInputController;
-  String _currentDecodeInput = '';
-
   var _currentDisplays = Segments.Empty();
   var _currentMode = GCWSwitchPosition.right;
 

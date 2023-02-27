@@ -16,7 +16,6 @@ import 'package:gc_wizard/tools/images_and_files/hexstring2file/logic/hexstring2
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
-import 'package:intl/intl.dart';
 
 class HexString2File extends StatefulWidget {
   const HexString2File({Key? key}) : super(key: key);
@@ -62,7 +61,7 @@ class HexString2FileState extends State<HexString2File> {
     return hexDataOutput(context, <Uint8List>[_outData!]);
   }
 
-  _exportFile(BuildContext context, Uint8List data) async {
+  void _exportFile(BuildContext context, Uint8List data) async {
     var fileType = getFileType(data);
     var value = await saveByteDataToFile(context, data, buildFileNameWithDate('hex_', fileType));
 
@@ -72,7 +71,6 @@ class HexString2FileState extends State<HexString2File> {
 }
 
 Widget hexDataOutput(BuildContext context, List<Uint8List> outData) {
-  if (outData == null) return Container();
 
   var children = outData.map((Uint8List _outData) {
     var file = GCWFile(bytes: _outData);

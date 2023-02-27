@@ -74,7 +74,7 @@ String encryptVigenere(String? input, String? key, bool autoKey, {int aValue = 0
   return output;
 }
 
-String decryptVigenere(String? input, String? key, bool autoKey, {int aValue: 0, bool ignoreNonLetters = true}) {
+String decryptVigenere(String? input, String? key, bool autoKey, {int aValue = 0, bool ignoreNonLetters = true}) {
   if (input == null || input.isEmpty) return '';
 
   key = key ?? '';

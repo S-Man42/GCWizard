@@ -446,7 +446,7 @@ class _MainViewState extends State<MainView> {
 List<GCWTool> _categoryList = [];
 List<GCWTool> _mainToolList = [];
 
-refreshToolLists() {
+void refreshToolLists() {
   _categoryList = [];
   _mainToolList = [];
 }

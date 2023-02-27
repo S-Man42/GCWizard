@@ -24,7 +24,6 @@ import 'package:gc_wizard/tools/images_and_files/animated_image_morse_code/logic
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
-import 'package:intl/intl.dart';
 import 'package:tuple/tuple.dart';
 
 class AnimatedImageMorseCode extends StatefulWidget {
@@ -99,12 +98,10 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
             return;
           }
 
-          if (value != null) {
-            setState(() {
-              _file = value;
-              _analysePlatformFileAsync();
-            });
-          }
+          setState(() {
+            _file = value;
+            _analysePlatformFileAsync();
+          });
         },
       ),
       GCWDefaultOutput(

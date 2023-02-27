@@ -98,7 +98,7 @@ class PeriodicTableElement {
       this.density,
       this.mostCommonIsotop,
       this.halfLife, //German: Halbwertszeit
-      {this.comments: const []}) {
+      {this.comments = const []}) {
     var group = iupacGroupToMainSubGroup(iupacGroup);
     if (group?.item1 == GroupType.MAIN_GROUP)
       this.mainGroup = group?.item2;
@@ -563,7 +563,7 @@ final List<PeriodicTableElement> allPeriodicTableElements = [
 ];
 
 String atomicNumbersToText(List<int> atomicNumbers) {
-  if (atomicNumbers == null || atomicNumbers.isEmpty) return '';
+  if (atomicNumbers.isEmpty) return '';
 
   return atomicNumbers.map((atomicNumber) {
     var element =

@@ -318,33 +318,31 @@ double eia96(int? code, {String multiplicator = 'A'}) {
 
   var multiplicatorValue = 1.0;
 
-  if (multiplicator != null) {
-    switch (multiplicator.toUpperCase()) {
-      case 'Y':
-        multiplicatorValue = 0.01;
-        break;
-      case 'X':
-        multiplicatorValue = 0.1;
-        break;
-      case 'A':
-        multiplicatorValue = 1.0;
-        break;
-      case 'B':
-        multiplicatorValue = 10.0;
-        break;
-      case 'C':
-        multiplicatorValue = 100.0;
-        break;
-      case 'D':
-        multiplicatorValue = 1000.0;
-        break;
-      case 'E':
-        multiplicatorValue = 10000.0;
-        break;
-      case 'F':
-        multiplicatorValue = 100000.0;
-        break;
-    }
+  switch (multiplicator.toUpperCase()) {
+    case 'Y':
+      multiplicatorValue = 0.01;
+      break;
+    case 'X':
+      multiplicatorValue = 0.1;
+      break;
+    case 'A':
+      multiplicatorValue = 1.0;
+      break;
+    case 'B':
+      multiplicatorValue = 10.0;
+      break;
+    case 'C':
+      multiplicatorValue = 100.0;
+      break;
+    case 'D':
+      multiplicatorValue = 1000.0;
+      break;
+    case 'E':
+      multiplicatorValue = 10000.0;
+      break;
+    case 'F':
+      multiplicatorValue = 100000.0;
+      break;
   }
 
   return (100.0 * pow(10.0, (code.toDouble() - 1.0) / 96.0) + 0.5).floor() * multiplicatorValue;

@@ -34,7 +34,7 @@ class SudokuBoard {
   }
 
   int? getValue (int i, int j) {
-    board[i][j]?.value;
+    return board[i][j]?.value;
   }
 
   SudokuFillType getFillType(int i, int j) {

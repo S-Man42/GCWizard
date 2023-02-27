@@ -3,12 +3,10 @@ import 'package:gc_wizard/tools/symbol_tables/special_encryption_painters/symbol
 import 'package:gc_wizard/tools/symbol_tables/special_encryption_painters/symbol_table_encryption_sizes/widget/symbol_table_encryption_sizes.dart';
 
 class SymbolTableEncryption {
-  @override
   SymbolTableEncryptionSizes sizes(SymbolTableEncryptionSizes sizes) {
     return sizes;
   }
 
-  @override
   Canvas paint(SymbolTablePaintData paintData) {
     var countColumns = paintData.sizes.countColumns;
     var canvas = paintData.canvas;
@@ -31,17 +29,15 @@ class SymbolTableEncryption {
         var imageIndex = i * countColumns + j;
 
         if (imageIndex < imageIndexes.length) {
-          if (imageIndexes[imageIndex] != null) {
-            var image = data.images[imageIndexes[imageIndex]].values.first.standardImage;
+          var image = data.images[imageIndexes[imageIndex]].values.first.standardImage;
 
-            if (image != null) {
-              paintImage(
-                  canvas: canvas,
-                  fit: BoxFit.contain,
-                  rect: Rect.fromLTWH(j * _sizes.tileWidth + _sizes.absoluteBorderWidth / 2,
-                      i * _sizes.tileHeight + _sizes.absoluteBorderWidth / 2, _sizes.symbolWidth, _sizes.symbolHeight),
-                  image: image);
-            }
+          if (image != null) {
+            paintImage(
+                canvas: canvas,
+                fit: BoxFit.contain,
+                rect: Rect.fromLTWH(j * _sizes.tileWidth + _sizes.absoluteBorderWidth / 2,
+                    i * _sizes.tileHeight + _sizes.absoluteBorderWidth / 2, _sizes.symbolWidth, _sizes.symbolHeight),
+                image: image);
           }
         }
       }

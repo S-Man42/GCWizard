@@ -62,7 +62,7 @@ class GameOfLifePainter extends CustomPainter {
         var x = j * boxSize;
         var y = i * boxSize;
 
-        var isSet = state != null && state[i] != null && state[i][j] != null && state[i][j] == true;
+        var isSet = state[i][j] == true;
 
         paint.color = isSet ? themeColors().mainFont() : themeColors().gridBackground();
         paint.style = PaintingStyle.fill;

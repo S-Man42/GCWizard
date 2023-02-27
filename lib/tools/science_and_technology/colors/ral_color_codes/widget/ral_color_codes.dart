@@ -134,7 +134,7 @@ class RALColorCodesState extends State<RALColorCodes> {
     var rgbColor = HexCode(_currentValue.value.colorcode).toRGB();
 
     var name = _currentValue.value.name;
-    if (name == null || name.isEmpty) name = 'common_unknown';
+    if (name.isEmpty) name = 'common_unknown';
 
     List<Widget> children = [GCWColumnedMultilineOutput(
                                 data : [

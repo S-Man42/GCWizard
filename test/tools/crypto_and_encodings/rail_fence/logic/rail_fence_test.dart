@@ -45,7 +45,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, key: ${elem['key']}, offset: ${elem['offset']}, password: ${elem['password']}', () {
-        var _actual;
+        String _actual;
         if (elem['offset'] == null) {
           if (elem['password'] == null)
             _actual = decryptRailFence(elem['input'] as String?, elem['key'] as int);

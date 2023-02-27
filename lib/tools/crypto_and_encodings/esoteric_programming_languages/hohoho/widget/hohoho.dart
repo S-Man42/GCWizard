@@ -86,7 +86,7 @@ class HohohoState extends State<Hohoho> {
     );
   }
 
-  _calculateOutput() {
+  String _calculateOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       try {
         HohohoOutput output = interpretHohoho(_currentDecodeText, STDIN: _currentInput);
