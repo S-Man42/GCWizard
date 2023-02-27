@@ -50,7 +50,7 @@ void main() {
 
         var _actual = ReverseWherigoWaldmeister.parse((elem['input'] as List<String>)[0] + " " + (elem['input'] as List<String>)[1] + " " + (elem['input'] as List<String>)[2])?.toLatLng();
         expect((_actual!.latitude - (elem['expectedOutput'] as LatLng).latitude).abs() < 1e-8, true);
-        expect((_actual!.longitude - (elem['expectedOutput'] as LatLng).longitude).abs() < 1e-8, true);
+        expect((_actual.longitude - (elem['expectedOutput'] as LatLng).longitude).abs() < 1e-8, true);
       });
     });
   });
@@ -64,7 +64,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}', () {
-        var _actual = ReverseWherigoWaldmeister.parse(elem['text'] as String)?.toLatLng();
+        var _actual = ReverseWherigoWaldmeister.parse(elem['text'] as String).toLatLng();
         if (_actual == null)
           expect(null, elem['expectedOutput']);
         else {

@@ -17,6 +17,7 @@ const _INITIAL_SEGMENTS = <String, bool>{
 const _PREDATOR_RELATIVE_DISPLAY_WIDTH = 170; //110;
 const _PREDATOR_RELATIVE_DISPLAY_HEIGHT = 300; //100;
 
+//ignore: must_be_immutable
 class _PredatorSegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
   final bool readOnly;

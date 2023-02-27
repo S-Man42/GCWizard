@@ -62,7 +62,7 @@ class _GCWColorYCbCrState extends State<_GCWColorYCbCr> {
     );
   }
 
-  _emitOnChange() {
+  void _emitOnChange() {
     widget.onChanged(YCbCr(_currentY, _currentCb, _currentCr));
   }
 }

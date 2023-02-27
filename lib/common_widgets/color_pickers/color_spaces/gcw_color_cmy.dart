@@ -62,7 +62,7 @@ class _GCWColorCMYState extends State<_GCWColorCMY> {
     );
   }
 
-  _emitOnChange() {
+  void _emitOnChange() {
     widget.onChanged(CMY(_currentCyan / 100.0, _currentMagenta / 100.0, _currentYellow / 100.0));
   }
 }

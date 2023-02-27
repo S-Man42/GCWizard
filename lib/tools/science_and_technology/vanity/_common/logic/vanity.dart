@@ -61,7 +61,7 @@ Tuple2<PhoneCaseMode?, String>? decodeVanityMultitap(String? input, PhoneModel? 
 
   Map<String, Map<String, String>>? stateModel = model.defaultCaseStateModel;
 
-  if (model.specificCaseStateModels != null && model.specificCaseStateModels[inputLanguage] != null)
+  if (model.specificCaseStateModels[inputLanguage] != null)
     stateModel = model.specificCaseStateModels[inputLanguage];
 
   var currentState = stateModel?[PHONE_STATEMODEL_START]?.values.first;

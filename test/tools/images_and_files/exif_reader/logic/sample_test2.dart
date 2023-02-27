@@ -3,7 +3,7 @@ import "package:flutter_test/flutter_test.dart";
 
 import 'test_util.dart';
 
-main() async {
+void main() async {
   // ❯ Exiv2 test2.jpg
   // File name       : test2.jpg
   // File size       : 11260 Bytes

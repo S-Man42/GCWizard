@@ -145,8 +145,7 @@ class _HSVPicker extends StatefulWidget {
   final ValueChanged<HSVColor> onChanged;
 
   _HSVPicker({Key? key, required this.color, required this.onChanged})
-      : assert(color != null),
-        super(key: key);
+      : super(key: key);
 
   @override
   _HSVPickerState createState() => new _HSVPickerState();

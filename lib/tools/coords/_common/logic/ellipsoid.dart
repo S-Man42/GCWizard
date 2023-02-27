@@ -19,7 +19,7 @@ class Ellipsoid {
   double invf;
   EllipsoidType type;
 
-  Ellipsoid(this.name, this.a, this.invf, {this.type: EllipsoidType.STANDARD});
+  Ellipsoid(this.name, this.a, this.invf, {this.type = EllipsoidType.STANDARD});
 
   double get b {
     return a * (1 - 1 / (invf == 0.0 ? practical_epsilon : invf));

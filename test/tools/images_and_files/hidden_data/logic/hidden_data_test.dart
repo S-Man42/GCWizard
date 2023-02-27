@@ -16,11 +16,10 @@ Uint8List _getFileData(String name) {
 String _fileDescription(GCWFile file) {
   var output = '';
 
-  if (file == null) return '';
   output += (file.name != null ? file.name : '')! + ', ';
   var fileType = file.fileType;
-  output += (fileType != null ? fileType.name : '') + ', ';
-  output += (file.bytes != null ? file.bytes.length.toString() : '0') + ' bytes, ';
+  output += fileType.name + ', ';
+  output += file.bytes.length.toString() + ' bytes, ';
 
   return output;
 }
@@ -32,8 +31,8 @@ String? _fileStructureToString(List<GCWFile>? structure, {int offset = 0}) {
 
   structure.forEach((file) {
     var description  = _fileDescription(file);
-    if (description != null)
-      output += ''.padRight(offset, ' ') + description;
+
+    output += ''.padRight(offset, ' ') + description;
     if (file.children != null)
       output += '\n' + (_fileStructureToString(file.children, offset: offset + 4) ?? '');
   });
