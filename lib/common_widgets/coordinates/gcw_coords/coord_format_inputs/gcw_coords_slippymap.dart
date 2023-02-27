@@ -1,11 +1,11 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _GCWCoordsSlippyMap extends StatefulWidget {
-  final void Function(SlippyMap) onChanged;
+  final void Function(SlippyMap?) onChanged;
   final BaseCoordinates? coordinates;
-  final double zoom;
+  final CoordinateFormatKey subtype;
 
-  const _GCWCoordsSlippyMap({Key? key, required this.onChanged, this.coordinates, required this.zoom}) : super(key: key);
+  const _GCWCoordsSlippyMap({Key? key, required this.onChanged, this.coordinates, this.subtype = defaultSlippyMapType}) : super(key: key);
 
   @override
   _GCWCoordsSlippyMapState createState() => _GCWCoordsSlippyMapState();
@@ -18,13 +18,13 @@ class _GCWCoordsSlippyMapState extends State<_GCWCoordsSlippyMap> {
   var _currentX = defaultDoubleText;
   var _currentY = defaultDoubleText;
 
-  late double _currentZoom;
+  late int _currentZoom;
 
   @override
   void initState() {
     super.initState();
 
-    _currentZoom = widget.zoom;
+    _currentZoom = _slippyMapZoom();
 
     _xController = TextEditingController(text: _currentX.text);
     _yController = TextEditingController(text: _currentY.text);
@@ -43,14 +43,14 @@ class _GCWCoordsSlippyMapState extends State<_GCWCoordsSlippyMap> {
     if (widget.coordinates != null) {
       var slippyMap = widget.coordinates is SlippyMap
           ? widget.coordinates as SlippyMap
-          : SlippyMap.fromLatLon(widget.coordinates!.toLatLng(), SLIPPY_MAP_ZOOM[widget.zoom] ?? defaultSlippyMapType);
-      _currentX.value = slippyMap.x;
+          : SlippyMap.fromLatLon(widget.coordinates!.toLatLng() ?? defaultCoordinate, widget.subtype);
+      _currentX.value = slippyMap!.x;
       _currentY.value = slippyMap.y;
 
       _xController.text = _currentX.value.toString();
       _yController.text = _currentY.value.toString();
     } else if (_subtypeChanged()) {
-      _currentZoom = widget.zoom;
+      _currentZoom = _slippyMapZoom();
       WidgetsBinding.instance.addPostFrameCallback((_) => _setCurrentValueAndEmitOnChange());
     }
 
@@ -79,10 +79,14 @@ class _GCWCoordsSlippyMapState extends State<_GCWCoordsSlippyMap> {
   }
 
   bool _subtypeChanged() {
-    return _currentZoom != widget.zoom;
+    return _currentZoom != _slippyMapZoom();
   }
 
-  _setCurrentValueAndEmitOnChange() {
-    widget.onChanged(SlippyMap(_currentX.value, _currentY.value, _currentZoom));
+  int _slippyMapZoom() {
+    return switchMapKeyValue(SLIPPY_MAP_ZOOM)[widget.subtype]!;
+  }
+
+  void _setCurrentValueAndEmitOnChange() {
+    widget.onChanged(SlippyMap(_currentX.value, _currentY.value, widget.subtype));
   }
 }

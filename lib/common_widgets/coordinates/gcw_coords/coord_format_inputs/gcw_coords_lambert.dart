@@ -5,7 +5,7 @@ class _GCWCoordsLambert extends StatefulWidget {
   final BaseCoordinates? coordinates;
   final CoordinateFormatKey subtype;
 
-  const _GCWCoordsLambert({Key? key, required this.onChanged, this.coordinates, this.subtype: defaultLambertType})
+  const _GCWCoordsLambert({Key? key, required this.onChanged, this.coordinates, this.subtype = defaultLambertType})
       : super(key: key);
 
   @override
@@ -51,7 +51,7 @@ class _GCWCoordsLambertState extends State<_GCWCoordsLambert> {
     if (widget.coordinates != null) {
       var lambert = widget.coordinates is Lambert
           ? widget.coordinates as Lambert
-          : Lambert.fromLatLon(widget.coordinates!.toLatLng(), _currentSubtype, defaultEllipsoid());
+          : Lambert.fromLatLon(widget.coordinates!.toLatLng() ?? defaultCoordinate, _currentSubtype, defaultEllipsoid());
       _currentEasting.value = lambert.easting;
       _currentNorthing.value = lambert.northing;
       _currentSubtype = lambert.subtype;

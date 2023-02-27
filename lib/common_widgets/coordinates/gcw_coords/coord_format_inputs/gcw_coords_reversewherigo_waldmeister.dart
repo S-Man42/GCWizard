@@ -1,7 +1,7 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _GCWCoordsReverseWherigoWaldmeister extends StatefulWidget {
-  final void Function(ReverseWherigoWaldmeister) onChanged;
+  final void Function(ReverseWherigoWaldmeister?) onChanged;
   final BaseCoordinates coordinates;
 
   const _GCWCoordsReverseWherigoWaldmeister({Key? key, required this.onChanged, required this.coordinates}) : super(key: key);
@@ -47,18 +47,16 @@ class _GCWCoordsReverseWherigoWaldmeisterState extends State<_GCWCoordsReverseWh
 
   @override
   Widget build(BuildContext context) {
-    if (widget.coordinates != null) {
-      var waldmeister = widget.coordinates is ReverseWherigoWaldmeister
-          ? widget.coordinates as ReverseWherigoWaldmeister
-          : ReverseWherigoWaldmeister.fromLatLon(widget.coordinates.toLatLng());
-      _currentA = extractIntegerFromText(waldmeister.a);
-      _currentB = extractIntegerFromText(waldmeister.b);
-      _currentC = extractIntegerFromText(waldmeister.c);
+    var waldmeister = widget.coordinates is ReverseWherigoWaldmeister
+        ? widget.coordinates as ReverseWherigoWaldmeister
+        : ReverseWherigoWaldmeister.fromLatLon(widget.coordinates.toLatLng() ?? defaultCoordinate) ?? ReverseWherigoWaldmeister(0, 0, 0);
+    _currentA = waldmeister.a;
+    _currentB = waldmeister.b;
+    _currentC = waldmeister.c;
 
-      _ControllerA.text = waldmeister.a;
-      _ControllerB.text = waldmeister.b;
-      _ControllerC.text = waldmeister.c;
-    }
+    _ControllerA.text = waldmeister.a.toString().padLeft(6, '0');
+    _ControllerB.text = waldmeister.b.toString().padLeft(6, '0');
+    _ControllerC.text = waldmeister.c.toString().padLeft(6, '0');
 
     return Column(children: <Widget>[
       GCWTextField(
@@ -95,7 +93,7 @@ class _GCWCoordsReverseWherigoWaldmeisterState extends State<_GCWCoordsReverseWh
     ]);
   }
 
-  _setCurrentValueAndEmitOnChange() {
+  void _setCurrentValueAndEmitOnChange() {
     widget.onChanged(ReverseWherigoWaldmeister.parse(
         _currentA.toString() + '\n' + _currentB.toString() + '\n' + _currentC.toString()));
   }

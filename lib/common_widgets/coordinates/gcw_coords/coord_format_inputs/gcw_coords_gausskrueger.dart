@@ -21,7 +21,7 @@ class _GCWCoordsGaussKruegerState extends State<_GCWCoordsGaussKrueger> {
 
   late CoordinateFormatKey _currentSubtype;
 
-  _setGKSubtype() {
+  void _setGKSubtype() {
     if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.GAUSS_KRUEGER, widget.subtype))
       _currentSubtype = defaultGaussKruegerType;
     else
@@ -51,7 +51,7 @@ class _GCWCoordsGaussKruegerState extends State<_GCWCoordsGaussKrueger> {
     if (widget.coordinates != null) {
       var gausskrueger = widget.coordinates is GaussKrueger
           ? widget.coordinates as GaussKrueger
-          : GaussKrueger.fromLatLon(widget.coordinates!.toLatLng(), _currentSubtype, defaultEllipsoid());
+          : GaussKrueger.fromLatLon(widget.coordinates!.toLatLng() ?? defaultCoordinate, _currentSubtype, defaultEllipsoid());
       _currentEasting.value = gausskrueger.easting;
       _currentNorthing.value = gausskrueger.northing;
       _currentSubtype = gausskrueger.subtype;

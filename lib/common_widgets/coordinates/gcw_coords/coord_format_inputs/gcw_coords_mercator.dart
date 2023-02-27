@@ -36,7 +36,7 @@ class _GCWCoordsMercatorState extends State<_GCWCoordsMercator> {
     if (widget.coordinates != null) {
       var mercator = widget.coordinates is Mercator
           ? widget.coordinates as Mercator
-          : Mercator.fromLatLon(widget.coordinates.toLatLng(), defaultEllipsoid());
+          : Mercator.fromLatLon(widget.coordinates.toLatLng() ?? defaultCoordinate, defaultEllipsoid());
       _currentEasting.value = mercator.easting;
       _currentNorthing.value = mercator.northing;
 
