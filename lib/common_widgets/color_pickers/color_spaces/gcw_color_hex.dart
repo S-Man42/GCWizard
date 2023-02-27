@@ -54,7 +54,7 @@ class _GCWColorHexCodeState extends State<_GCWColorHexCode> {
     );
   }
 
-  _emitOnChange() {
+  void _emitOnChange() {
     widget.onChanged(HexCode(_currentHexCode));
   }
 }

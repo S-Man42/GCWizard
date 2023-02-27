@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:encrypt/encrypt.dart' as crypto;
 import 'package:flutter/foundation.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';

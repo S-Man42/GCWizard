@@ -62,7 +62,7 @@ class _GCWColorYUVState extends State<_GCWColorYUV> {
     );
   }
 
-  _emitOnChange() {
+  void _emitOnChange() {
     widget.onChanged(YUV(_currentY / 100.0, _currentU / 100.0, _currentV / 100.0));
   }
 }

@@ -1,5 +1,4 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/tools/games/sudoku/logic/dartist_sudoku_solver/logic/sudoku.dart';
 import 'package:gc_wizard/tools/games/sudoku/logic/sudoku_solver.dart';
 
 void main() {

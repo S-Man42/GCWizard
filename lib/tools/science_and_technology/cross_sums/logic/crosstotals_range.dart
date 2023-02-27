@@ -2,8 +2,8 @@ import 'package:gc_wizard/tools/science_and_technology/cross_sums/logic/crosstot
 
 enum CrossSumType { NORMAL, ITERATED }
 
-List<int> crossSumRange(int rangeStart, int rangeEnd, int crossSumToFind, {CrossSumType type = CrossSumType.NORMAL}) {
-  if (crossSumToFind == null) return [];
+List<int> crossSumRange(int? rangeStart, int? rangeEnd, int? crossSumToFind, {CrossSumType type = CrossSumType.NORMAL}) {
+  if (rangeStart == null || rangeEnd == null || crossSumToFind == null) return [];
 
   if (rangeStart > rangeEnd) {
     var help = rangeEnd;

@@ -5,20 +5,20 @@ import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/l
 void main() {
   group("MayaNumbers.encodeMayaNumbers:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : []},
+      {'input' : null, 'expectedOutput' : <String>[]},
 
-      {'input' : 0, 'expectedOutput' : [[]]},
+      {'input' : 0, 'expectedOutput' : [<String>[]]},
       {'input' : 1, 'expectedOutput' : [['d']]},
       {'input' : 5, 'expectedOutput' : [['c']]},
       {'input' : 19, 'expectedOutput' : [['a', 'b','c', 'd', 'e', 'f', 'g']]},
 
-      {'input' : 20, 'expectedOutput' : [['d'], []]},
+      {'input' : 20, 'expectedOutput' : [['d'], <String>[]]},
       {'input' : 39, 'expectedOutput' : [['d'], ['a', 'b','c', 'd', 'e', 'f', 'g']]},
-      {'input' : 40, 'expectedOutput' : [['d', 'e'], []]},
+      {'input' : 40, 'expectedOutput' : [['d', 'e'], <String>[]]},
 
       {'input' : 399, 'expectedOutput' : [['a', 'b','c', 'd', 'e', 'f', 'g'], ['a', 'b','c', 'd', 'e', 'f', 'g']]},
-      {'input' : 400, 'expectedOutput' : [['d'], [], []]},
-      {'input' : 401, 'expectedOutput' : [['d'], [], ['d']]},
+      {'input' : 400, 'expectedOutput' : [['d'], <String>[], <String>[]]},
+      {'input' : 401, 'expectedOutput' : [['d'], <String>[], ['d']]},
       {'input' : 444, 'expectedOutput' : [['d'], ['d', 'e'], ['d', 'e', 'f', 'g']]},
     ];
 

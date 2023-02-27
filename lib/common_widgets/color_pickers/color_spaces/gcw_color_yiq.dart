@@ -62,7 +62,7 @@ class _GCWColorYIQState extends State<_GCWColorYIQ> {
     );
   }
 
-  _emitOnChange() {
+  void _emitOnChange() {
     widget.onChanged(YIQ(_currentY / 100.0, _currentI / 100.0, _currentQ / 100.0));
   }
 }
