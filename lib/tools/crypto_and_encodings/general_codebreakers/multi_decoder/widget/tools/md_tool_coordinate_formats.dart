@@ -41,25 +41,25 @@ class MultiDecoderToolCoordinateFormats extends AbstractMultiDecoderTool {
                     coords = DMS.parse(input, wholeString: true).toLatLng();
                     break;
                   case CoordinateFormatKey.UTM:
-                    coords = UTMREF.parse(input).toLatLng(ells: defaultEllipsoid());
+                    coords = UTMREF.parse(input).toLatLng(ells: defaultEllipsoid);
                     break;
                   case CoordinateFormatKey.MGRS:
-                    coords = MGRS.parse(input).toLatLng(ells: defaultEllipsoid());
+                    coords = MGRS.parse(input).toLatLng(ells: defaultEllipsoid);
                     break;
                   case CoordinateFormatKey.XYZ:
-                    coords = XYZ.parse(input).toLatLng(ells: defaultEllipsoid());
+                    coords = XYZ.parse(input).toLatLng(ells: defaultEllipsoid);
                     break;
                   case CoordinateFormatKey.SWISS_GRID:
-                    coords = SwissGrid.parse(input).toLatLng(ells: defaultEllipsoid());
+                    coords = SwissGrid.parse(input).toLatLng(ells: defaultEllipsoid);
                     break;
                   case CoordinateFormatKey.SWISS_GRID_PLUS:
-                    coords = SwissGridPlus.parse(input).toLatLng(ells: defaultEllipsoid());
+                    coords = SwissGridPlus.parse(input).toLatLng(ells: defaultEllipsoid);
                     break;
                   case CoordinateFormatKey.GAUSS_KRUEGER:
-                    coords = GaussKrueger.parse(input).toLatLng(ells: defaultEllipsoid());
+                    coords = GaussKrueger.parse(input).toLatLng(ells: defaultEllipsoid);
                     break;
                   case CoordinateFormatKey.LAMBERT:
-                    coords = Lambert.parse(input).toLatLng(ells: defaultEllipsoid());
+                    coords = Lambert.parse(input).toLatLng(ells: defaultEllipsoid);
                     break;
                   case CoordinateFormatKey.DUTCH_GRID:
                     coords = DutchGrid.parse(input).toLatLng();
@@ -68,7 +68,7 @@ class MultiDecoderToolCoordinateFormats extends AbstractMultiDecoderTool {
                     coords = Maidenhead.parse(input).toLatLng();
                     break;
                   case CoordinateFormatKey.MERCATOR:
-                    coords = Mercator.parse(input).toLatLng(ells: defaultEllipsoid());
+                    coords = Mercator.parse(input).toLatLng(ells: defaultEllipsoid);
                     break;
                   case CoordinateFormatKey.NATURAL_AREA_CODE:
                     coords = NaturalAreaCode.parse(input).toLatLng();
@@ -107,7 +107,7 @@ class MultiDecoderToolCoordinateFormats extends AbstractMultiDecoderTool {
 
               if (coords == null) return null;
 
-              return formatCoordOutput(coords, defaultCoordinateFormat, defaultEllipsoid());
+              return formatCoordOutput(coords, defaultCoordinateFormat, defaultEllipsoid);
             },
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {

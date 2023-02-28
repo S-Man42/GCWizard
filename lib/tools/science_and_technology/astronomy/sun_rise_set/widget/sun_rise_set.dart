@@ -19,7 +19,7 @@ class SunRiseSet extends StatefulWidget {
 
 class SunRiseSetState extends State<SunRiseSet> {
   var _currentDateTime = DateTimeTimezone(datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
-  var _currentCoords = BaseCoordinates();
+  var _currentCoords = BaseCoordinate();
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +55,7 @@ class SunRiseSetState extends State<SunRiseSet> {
         _currentCoords.toLatLng(),
         JulianDate(_currentDateTime),
         _currentDateTime.timezone,
-        defaultEllipsoid());
+        defaultEllipsoid);
 
     var outputs = [
       [

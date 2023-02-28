@@ -11,6 +11,7 @@ import 'package:gc_wizard/common_widgets/gcw_distance.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coord_format_getter.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/shadow_length/logic/shadow_length.dart';
@@ -87,7 +88,7 @@ class ShadowLengthState extends State<ShadowLength> {
 
   Widget _buildOutput() {
     var shadowLen = shadowLength(
-        _currentHeight, _currentCoords, defaultEllipsoid(), _currentDateTime);
+        _currentHeight, _currentCoords, defaultEllipsoid, _currentDateTime);
 
     var lengthOutput = '';
     var _currentLength = shadowLen.length;
@@ -109,7 +110,7 @@ class ShadowLengthState extends State<ShadowLength> {
 
     var outputLocation = GCWCoordsOutput(
       title: i18n(context, 'shadowlength_location'),
-      outputs: [formatCoordOutput(shadowLen.shadowEndPosition, _currentCoordsFormat, defaultEllipsoid())],
+      outputs: [formatCoordOutput(shadowLen.shadowEndPosition, _currentCoordsFormat, defaultEllipsoid)],
       points: [
         GCWMapPoint(
             point: _currentCoords,

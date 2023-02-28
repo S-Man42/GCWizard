@@ -17,7 +17,7 @@ import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/text_input_formatters/variablestring_textinputformatter.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/common_widgets/units/gcw_unit_dropdown.dart';
-import 'package:gc_wizard/tools/coords/coordinate_format_parser/logic/variable_latlon.dart';
+import 'package:gc_wizard/tools/coords/variable_coordinate/logic/variable_latlon.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coord_format_getter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
@@ -348,7 +348,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
         'distance': _currentProjectionMode == false || _currentDistanceInput.isEmpty ? '0' : _currentDistanceInput,
         'reverseBearing': _currentReverseBearing,
         'lengthUnit': _currentLengthUnit,
-        'ellipsoid': defaultEllipsoid()
+        'ellipsoid': defaultEllipsoid
       };
     }
 
@@ -375,7 +375,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
 
     _currentOutput =
         List.from((_currentCoordMode == GCWSwitchPosition.left ? normalCoords : leftPaddedCoords).map((coord) {
-      var formattedCoordinate = formatCoordOutput(coord['coordinate'], _currentOutputFormat, defaultEllipsoid());
+      var formattedCoordinate = formatCoordOutput(coord['coordinate'], _currentOutputFormat, defaultEllipsoid);
       return Column(
         children: [
           GCWOutputText(text: formattedCoordinate),
@@ -445,9 +445,9 @@ class VariableCoordinateState extends State<VariableCoordinate> {
         var insertedCoord;
         if (defaultCoordinateFormat['format'] == CoordinateFormatKey.DMM) {
           //Insert Geocaching Format with exact 3 digits
-          insertedCoord = formatCoordOutput(coords, defaultCoordinateFormat, defaultEllipsoid(), 3);
+          insertedCoord = formatCoordOutput(coords, defaultCoordinateFormat, defaultEllipsoid, 3);
         } else {
-          insertedCoord = formatCoordOutput(coords, defaultCoordinateFormat, defaultEllipsoid());
+          insertedCoord = formatCoordOutput(coords, defaultCoordinateFormat, defaultEllipsoid);
         }
 
         _currentInput = insertedCoord.replaceAll('\n', ' ');

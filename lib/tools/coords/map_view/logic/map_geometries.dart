@@ -71,7 +71,7 @@ class GCWMapLine {
   }
 
   void _calculateGeodetic() {
-    DistanceBearingData _distBear = distanceBearing(start.point, end!.point, defaultEllipsoid());
+    DistanceBearingData _distBear = distanceBearing(start.point, end!.point, defaultEllipsoid);
     length = _distBear.distance;
     bearingAB = _distBear.bearingAToB;
     bearingBA = _distBear.bearingBToA;
@@ -81,7 +81,7 @@ class GCWMapLine {
     var _countSteps = (_distBear.distance / _stepLength).floor();
 
     for (int _i = 1; _i < _countSteps; _i++) {
-      var _nextPoint = projectionVincenty(start.point, _distBear.bearingAToB, _stepLength * _i, defaultEllipsoid());
+      var _nextPoint = projectionVincenty(start.point, _distBear.bearingAToB, _stepLength * _i, defaultEllipsoid);
       shape.add(_nextPoint);
     }
 
@@ -147,7 +147,7 @@ class GCWMapCircle {
     bool shouldSort = false;
 
     shape = List.generate(((360.0 + _degrees) / _degrees).floor(), (index) => index * _degrees).map((e) {
-      LatLng coord = projectionVincenty(this.centerPoint, e, this.radius, defaultEllipsoid());
+      LatLng coord = projectionVincenty(this.centerPoint, e, this.radius, defaultEllipsoid);
 
       // if there is a huge longitude step around the world (nearly 360°)
       // then one coordinate is placed to the left side of the map, the next one to the right (or vice versa)

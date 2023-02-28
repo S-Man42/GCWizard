@@ -21,12 +21,12 @@ Mercator latLonToMercator(LatLng coord, Ellipsoid ells) {
   return Mercator(y, x);
 }
 
-Mercator parseMercator(String input) {
-  RegExp regExp = RegExp(r'^\s*([\-0-9\.]+)(\s*,\s*|\s+)([\-0-9\.]+)\s*$');
+Mercator? parseMercator(String input) {
+  RegExp regExp = RegExp(r'^\s*([\-0-9.]+)(\s*,\s*|\s+)([\-0-9.]+)\s*$');
   var matches = regExp.allMatches(input);
 
-  var _eastingString = '';
-  var _northingString = '';
+  String? _eastingString = '';
+  String? _northingString = '';
 
   if (matches.isNotEmpty) {
     var match = matches.elementAt(0);
@@ -44,6 +44,8 @@ Mercator parseMercator(String input) {
   }
 
   if (matches.isEmpty) return null;
+  if (_eastingString == null || _northingString == null)
+    return null;
 
   var _easting = double.tryParse(_eastingString);
   if (_easting == null) return null;

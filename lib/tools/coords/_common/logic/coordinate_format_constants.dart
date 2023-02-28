@@ -1,4 +1,4 @@
-enum CoordinateFormatKey {BASE_FORMAT, DEC, DMM, DMS, UTM, MGRS, XYZ, SWISS_GRID, SWISS_GRID_PLUS, DUTCH_GRID,
+enum CoordinateFormatKey {BASE_FORMAT, ALL, DEC, DMM, DMS, UTM, MGRS, XYZ, SWISS_GRID, SWISS_GRID_PLUS, DUTCH_GRID,
   GAUSS_KRUEGER, LAMBERT, MAIDENHEAD, MERCATOR, NATURAL_AREA_CODE, SLIPPY_MAP, GEOHASH, GEO3X3,
   GEOHEX, OPEN_LOCATION_CODE, MAKANEY, QUADTREE, REVERSE_WIG_WALDMEISTER, REVERSE_WIG_DAY1976,
   //GaussKrueger Subtypes
@@ -45,4 +45,12 @@ const Map<int, CoordinateFormatKey> SLIPPY_MAP_ZOOM = {
   28: CoordinateFormatKey.SLIPPYMAP_28,
   29: CoordinateFormatKey.SLIPPYMAP_29,
   30: CoordinateFormatKey.SLIPPYMAP_30
+};
+
+const Map<int, CoordinateFormatKey> GAUSS_KRUEGER_CODE = {
+  1: CoordinateFormatKey.GAUSS_KRUEGER_GK1,
+  2: CoordinateFormatKey.GAUSS_KRUEGER_GK2,
+  3: CoordinateFormatKey.GAUSS_KRUEGER_GK3,
+  4: CoordinateFormatKey.GAUSS_KRUEGER_GK4,
+  5: CoordinateFormatKey.GAUSS_KRUEGER_GK5,
 };

@@ -97,7 +97,7 @@ class WaypointProjectionState extends State<WaypointProjection> {
   _calculateOutput() {
     if (_currentReverse) {
       _currentValues =
-          reverseProjection(_currentCoords, _currentBearing['value'], _currentDistance, defaultEllipsoid());
+          reverseProjection(_currentCoords, _currentBearing['value'], _currentDistance, defaultEllipsoid);
       if (_currentValues == null || _currentValues.isEmpty) {
         _currentOutput = [i18n(context, 'coords_waypointprojection_reverse_nocoordinatefound')];
         return;
@@ -124,7 +124,7 @@ class WaypointProjectionState extends State<WaypointProjection> {
         _currentMapPolylines.add(GCWMapPolyline(points: [projectionMapPoint, _currentMapPoints[0]]));
       });
     } else {
-      _currentValues = [projection(_currentCoords, _currentBearing['value'], _currentDistance, defaultEllipsoid())];
+      _currentValues = [projection(_currentCoords, _currentBearing['value'], _currentDistance, defaultEllipsoid)];
 
       _currentMapPoints = [
         GCWMapPoint(
@@ -144,7 +144,7 @@ class WaypointProjectionState extends State<WaypointProjection> {
     }
 
     _currentOutput = _currentValues.map((projection) {
-      return formatCoordOutput(projection, _currentOutputFormat, defaultEllipsoid());
+      return formatCoordOutput(projection, _currentOutputFormat, defaultEllipsoid);
     }).toList();
   }
 }

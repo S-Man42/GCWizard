@@ -104,7 +104,7 @@ class DMMOffsetState extends State<DMMOffset> {
     ];
 
     _currentOutput = _currentValues.map((projection) {
-      return formatCoordOutput(projection, _currentOutputFormat, defaultEllipsoid());
+      return formatCoordOutput(projection, _currentOutputFormat, defaultEllipsoid);
     }).toList();
   }
 }

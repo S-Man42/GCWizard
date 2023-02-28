@@ -37,13 +37,13 @@ XYZ latLonToXYZ(LatLng coord, Ellipsoid ells, {double h: 0.0}) {
   return XYZ(x, y, z);
 }
 
-XYZ parseXYZ(String input) {
+XYZ? parseXYZ(String input) {
   RegExp regExp = RegExp(r'^\s*([\-0-9\.]+)(\s*,\s*|\s+)([\-0-9\.]+)(\s*,\s*|\s+)([\-0-9\.]+)\s*$');
   var matches = regExp.allMatches(input);
 
-  var xString = '';
-  var yString = '';
-  var zString = '';
+  String? xString = '';
+  String? yString = '';
+  String? zString = '';
 
   if (matches.isNotEmpty) {
     var match = matches.elementAt(0);
@@ -64,6 +64,8 @@ XYZ parseXYZ(String input) {
   }
 
   if (matches.isEmpty) return null;
+  if (xString == null || yString == null || zString == null)
+    return null;
 
   var x = double.tryParse(xString);
   var y = double.tryParse(yString);

@@ -336,7 +336,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
   }
 
   Future<GCWFile?> _adjustToFullPicture() async {
-    await showDialog(
+    await showDialog<bool>(
       context: context,
       barrierDismissible: false,
       builder: (context) {

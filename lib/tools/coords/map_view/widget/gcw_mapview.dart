@@ -24,7 +24,7 @@ import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
-import 'package:gc_wizard/tools/coords/coordinate_format_parser/logic/latlon.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_parser.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coord_format_getter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
@@ -55,7 +55,6 @@ final _DEFAULT_BOUNDS = LatLngBounds(LatLng(51.5, 12.9), LatLng(53.5, 13.9));
 final _POLYGON_STROKEWIDTH = 3.0;
 final _BUTTONGROUP_MARGIN = 30.0;
 
-//ignore: must_be_immutable
 class GCWMapView extends StatefulWidget {
   List<GCWMapPoint> points;
   List<GCWMapPolyline>? polylines;
@@ -855,7 +854,7 @@ class GCWMapViewState extends State<GCWMapView> {
     return _polylines;
   }
 
-  List<BaseCoordinates>? _parseCoords(text) {
+  List<BaseCoordinate>? _parseCoords(text) {
     var parsed = parseCoordinates(text);
     if (parsed == null || parsed.isEmpty) {
       showToast(i18n(context, 'coords_common_clipboard_nocoordsfound'));

@@ -23,7 +23,7 @@ class _Zone {
   final int x;
   final int y;
   final String code;
-  int _level;
+  late int _level;
 
   _Zone(this.lat, this.lon, this.x, this.y, this.code) {
     this._level = this.getLevel();
@@ -119,9 +119,9 @@ _XY _getXYByCode(String code) {
   String h_dec9 = (_h_key.indexOf(code[0]) * 30 + _h_key.indexOf(code[1])).toString() + code.substring(2);
   if (_regMatch(h_dec9[0], _INC15) && _regMatch(h_dec9[1], _EXC125) && _regMatch(h_dec9[2], _EXC125)) {
     if (h_dec9[0] == '5') {
-      h_dec9 = "7" + h_dec9.substring(1, h_dec9.length);
+      h_dec9 = '7' + h_dec9.substring(1, h_dec9.length);
     } else if (h_dec9[0] == '1') {
-      h_dec9 = "3" + h_dec9.substring(1, h_dec9.length);
+      h_dec9 = '3' + h_dec9.substring(1, h_dec9.length);
     }
   }
 
@@ -133,7 +133,7 @@ _XY _getXYByCode(String code) {
 
   String h_dec3 = '';
   for (int i = 0; i < d9xlen; i++) {
-    int dec9i = int.tryParse(h_dec9[i]);
+    int dec9i = int.parse(h_dec9[i]);
     String h_dec0 = dec9i.toRadixString(3);
     if (h_dec0.length == 1) {
       h_dec3 += '0';
@@ -150,7 +150,7 @@ _XY _getXYByCode(String code) {
   }
 
   for (int i = 0; i <= level + 2; i++) {
-    int h_pow = pow(3, level + 2 - i);
+    int h_pow = pow(3, level + 2 - i).toInt();
     if (h_decx[i] == '0') {
       h_x -= h_pow;
     } else if (h_decx[i] == '2') {
@@ -178,7 +178,7 @@ _Zone _getZoneByXY(double x, double y, int level) {
   _Loc z_loc = _xy2loc(h_lon, h_lat);
   double z_loc_x = z_loc.lon;
   double z_loc_y = z_loc.lat;
-  int max_hsteps = pow(3, level + 2);
+  int max_hsteps = pow(3, level + 2).toInt();
   int hsteps = (h_x - h_y).abs();
 
   if (hsteps == max_hsteps) {
@@ -241,7 +241,7 @@ _Zone _getZoneByXY(double x, double y, int level) {
   }
 
   String h_2 = h_code.substring(3);
-  int h_1 = int.tryParse(h_code.substring(0, 3));
+  int h_1 = int.parse(h_code.substring(0, 3));
   int h_a1 = (h_1 / 30).floor();
   int h_a2 = h_1 % 30;
   String h_code_r = _h_key[h_a1] + _h_key[h_a2] + h_2.toString();
@@ -249,7 +249,7 @@ _Zone _getZoneByXY(double x, double y, int level) {
 }
 
 _XY _adjustXY(int x, int y, int level) {
-  int max_hsteps = pow(3, level + 2);
+  int max_hsteps = pow(3, level + 2).toInt();
   int hsteps = (x - y).abs();
 
   if (hsteps == max_hsteps && x > y) {

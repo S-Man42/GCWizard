@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:exif/exif.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart' as local;
 import 'package:gc_wizard/common_widgets/image_viewers/gcw_imageview.dart';
-import 'package:gc_wizard/tools/coords/coordinate_format_parser/logic/latlon.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_parser.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/dec.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/images_and_files/exif_reader/logic/external_libs/justkawal.xmp/xmp.dart';
@@ -120,9 +120,9 @@ double _getCoordDecFromIfdTag(IfdTag tag, String latlngRef, bool isLatitude) {
 }
 
 double getCoordDecFromText(List<dynamic> values, String latlngRef, bool isLatitude) {
-  double _degrees = _getRatioValue(values[0]);
-  double _minutes = _getRatioValue(values[1]);
-  double _seconds = _getRatioValue(values[2]);
+  double _degrees = _getRatioValue(values[0] is Ratio ? values[0] as Ratio : Ratio(0, 0));
+  double _minutes = _getRatioValue(values[1] is Ratio ? values[1] as Ratio : Ratio(0, 0));
+  double _seconds = _getRatioValue(values[2] is Ratio ? values[2] as Ratio : Ratio(0, 0));
   int _sign = getCoordinateSignFromString(latlngRef, isLatitude);
   return _sign * (_degrees + _minutes / 60 + _seconds / 3600);
 }

@@ -96,7 +96,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
     return GCWButton(
         text: i18n(context, 'common_loadfile_open'),
         onPressed: () async {
-          await showDialog(
+          await showDialog<bool>(
             context: context,
             barrierDismissible: false,
             builder: (context) {

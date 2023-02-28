@@ -337,7 +337,7 @@ class VisualCryptographyState extends State<VisualCryptography> {
 
   Widget _buildDecodeSubmitButton() {
     return GCWSubmitButton(onPressed: () async {
-      await showDialog(
+      await showDialog<bool>(
         context: context,
         barrierDismissible: false,
         builder: (context) {
@@ -375,7 +375,7 @@ class VisualCryptographyState extends State<VisualCryptography> {
   //   return GCWButton(
   //     text: i18n(context, 'visual_cryptography_auto') + ' XY',
   //     onPressed: () async {
-  //       await showDialog(
+  //       await showDialog<bool>(
   //         context: context,
   //         barrierDismissible: false,
   //         builder: (context) {
@@ -400,7 +400,7 @@ class VisualCryptographyState extends State<VisualCryptography> {
   //   return GCWButton(
   //       text: i18n(context, 'visual_cryptography_auto') + ' X',
   //       onPressed: () async {
-  //         await showDialog(
+  //         await showDialog<bool>(
   //           context: context,
   //           barrierDismissible: false,
   //           builder: (context) {
@@ -439,7 +439,7 @@ class VisualCryptographyState extends State<VisualCryptography> {
 
   Widget _buildEncodeSubmitButton() {
     return GCWSubmitButton(onPressed: () async {
-      await showDialog(
+      await showDialog<bool>(
         context: context,
         barrierDismissible: false,
         builder: (context) {
