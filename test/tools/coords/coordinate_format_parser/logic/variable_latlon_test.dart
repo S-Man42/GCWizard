@@ -67,9 +67,9 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}, values: ${elem['values']}, projectionData: ${elem['projectionData']}', () {
-        var _actual = parseVariableLatLon(elem['text'], elem['values'], projectionData: elem['projectionData']);
+        var _actual = parseVariableLatLon(elem['text'] as String, elem['values'] as Map<String, String>, projectionData: elem['projectionData'] as Map<String, Object>);
 
-        List<Map<String, Object?>> _actualCoords = _actual['coordinates'];
+        var _actualCoords = _actual['coordinates'];
         expect(_actualCoords.length, 12);
 
         var _expectedCoords = elem['expectedOutput']['coordinates'];
@@ -141,7 +141,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}, values: ${elem['values']}, projectionData: ${elem['projectionData']}', () {
-        var _actual = parseVariableLatLon(elem['text'], elem['values'], projectionData: elem['projectionData']);
+        var _actual = parseVariableLatLon(elem['text'] as String, elem['values'] as Map<String, String>, projectionData: elem['projectionData'] as Map<String, Object>);
 
         List<Map<String, Object?>> _actualCoords = _actual['coordinates'];
         expect(_actualCoords.length, elem['expectedOutput'].length);
@@ -178,13 +178,13 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}, values: ${elem['values']}, projectionData: ${elem['projectionData']}', () {
-        var _actual = parseVariableLatLon(elem['text'], elem['values'], projectionData: elem['projectionData']);
+        var _actual = parseVariableLatLon(elem['text'] as String, elem['values'] as Map<String, String>, projectionData: elem['projectionData'] as Map<String, Object>);
 
         List<Map<String, Object?>> _actualCoords = _actual['coordinates'];
         expect(_actualCoords.length, 1);
         var _expectedCoords = elem['expectedOutput']['coordinates'];
         _actualCoords.asMap().forEach((index, actualCoord) {
-          expect(true, equalsLatLng(actualCoord['coordinate'], _expectedCoords[index]['coordinate']));
+          expect(true, equalsLatLng(actualCoord['coordinate'] as LatLng, _expectedCoords[index]['coordinate'] as LatLng));
           expect(actualCoord['variables'], _expectedCoords[index]['variables']);
         });
 
@@ -192,7 +192,7 @@ void main() {
         expect(_actualCoords.length, 1);
         var _expectedLeftPadCoords = elem['expectedOutput']['leftPadCoordinates'];
         _actualLeftPadCoords.asMap().forEach((index, actualCoord) {
-          expect(true, equalsLatLng(actualCoord['coordinate'], _expectedLeftPadCoords[index]['coordinate']));
+          expect(true, equalsLatLng(actualCoord['coordinate'] as LatLng, _expectedLeftPadCoords[index]['coordinate'] as LatLng));
           expect(actualCoord['variables'], _expectedCoords[index]['variables']);
         });
       });

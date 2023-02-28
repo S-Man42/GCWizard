@@ -164,7 +164,7 @@ class _ExifReaderState extends State<ExifReader> {
 
     var _currentCoordsFormat = defaultCoordinateFormat;
     List<BaseCoordinate> _currentOutput = [
-      formatCoordOutput(point!, {'format': Prefs.getString(PREFERENCE_COORD_DEFAULT_FORMAT)}, defaultEllipsoid),
+      buildCoordinatesByFormat(defaultCoordinateFormat, point!, defaultEllipsoid),
     ];
 
     widgets.add(
