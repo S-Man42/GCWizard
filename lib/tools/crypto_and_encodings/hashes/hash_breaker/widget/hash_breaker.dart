@@ -134,7 +134,7 @@ class _HashBreakerState extends State<HashBreaker> {
   }
 
   void _onDoCalculation() async {
-    await showDialog(
+    await showDialog<bool>(
       context: context,
       barrierDismissible: false,
       builder: (context) {

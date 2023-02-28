@@ -31,7 +31,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('map: ${elem['map']}, keepFirstOccurence: ${elem['keepFirstOccurence']}', () {
-        Map _actual;
+        Object _actual;
         if (elem['keepFirstOccurence'] == null)
           _actual = switchMapKeyValue(elem['map'] as Map);
         else

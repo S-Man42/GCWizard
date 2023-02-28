@@ -120,9 +120,9 @@ double _getCoordDecFromIfdTag(IfdTag tag, String latlngRef, bool isLatitude) {
 }
 
 double getCoordDecFromText(List<dynamic> values, String latlngRef, bool isLatitude) {
-  double _degrees = _getRatioValue(values[0]);
-  double _minutes = _getRatioValue(values[1]);
-  double _seconds = _getRatioValue(values[2]);
+  double _degrees = _getRatioValue(values[0] is Ratio ? values[0] as Ratio : Ratio(0, 0));
+  double _minutes = _getRatioValue(values[1] is Ratio ? values[1] as Ratio : Ratio(0, 0));
+  double _seconds = _getRatioValue(values[2] is Ratio ? values[2] as Ratio : Ratio(0, 0));
   int _sign = getCoordinateSignFromString(latlngRef, isLatitude);
   return _sign * (_degrees + _minutes / 60 + _seconds / 3600);
 }

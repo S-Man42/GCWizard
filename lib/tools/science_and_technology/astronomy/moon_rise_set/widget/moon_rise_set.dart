@@ -4,6 +4,7 @@ import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart'
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_datetime_picker.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/_common/logic/julian_date.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/moon_rise_set/logic/moon_rise_set.dart' as logic;
@@ -17,7 +18,7 @@ class MoonRiseSet extends StatefulWidget {
 
 class MoonRiseSetState extends State<MoonRiseSet> {
   var _currentDateTime = DateTimeTimezone(datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
-  var _currentCoords = defaultCoordinate;
+  var _currentCoords = BaseCoordinates();
   var _currentCoordsFormat = defaultCoordinateFormat;
 
   @override
@@ -29,8 +30,7 @@ class MoonRiseSetState extends State<MoonRiseSet> {
           coordsFormat: _currentCoordsFormat,
           onChanged: (ret) {
             setState(() {
-              _currentCoordsFormat = ret['coordsFormat'];
-              _currentCoords = ret['value'];
+              _currentCoords = ret;
             });
           },
         ),
@@ -52,7 +52,7 @@ class MoonRiseSetState extends State<MoonRiseSet> {
 
   Widget _buildOutput() {
     var moonRise = logic.MoonRiseSet(
-        _currentCoords,
+        _currentCoords.toLatLng(),
         JulianDate(_currentDateTime),
         _currentDateTime.timezone,
         defaultEllipsoid);
