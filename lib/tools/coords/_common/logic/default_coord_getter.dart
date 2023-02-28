@@ -3,7 +3,6 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_metadata.
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
-import 'package:gc_wizard/utils/coordinate_utils.dart';
 import 'package:prefs/prefs.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';

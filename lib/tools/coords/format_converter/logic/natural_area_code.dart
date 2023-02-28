@@ -56,7 +56,7 @@ String _latlonComponentToNACComponent(double component, int precision) {
   }).join();
 }
 
-NaturalAreaCode latLonToNaturalAreaCode(LatLng coords, {int precision : _DEFAULT_PRECISION}) {
+NaturalAreaCode latLonToNaturalAreaCode(LatLng coords, {int precision = _DEFAULT_PRECISION}) {
   var lon = (coords.longitude + 180.0) / 360.0;
   var lat = (coords.latitude + 90.0) / 180.0;
 
@@ -85,12 +85,12 @@ LatLng naturalAreaCodeToLatLon(NaturalAreaCode nac) {
   );
 }
 
-NaturalAreaCode parseNaturalAreaCode(String input) {
+NaturalAreaCode? parseNaturalAreaCode(String input) {
   RegExp regExp = RegExp(r'^\s*([0-9A-Z]+)(\s*,\s*|\s+)([0-9A-Z]+)\s*$');
   var matches = regExp.allMatches(input);
 
-  var xString = '';
-  var yString = '';
+  String? xString = '';
+  String? yString = '';
 
   if (matches.isNotEmpty) {
     var match = matches.elementAt(0);
@@ -98,7 +98,7 @@ NaturalAreaCode parseNaturalAreaCode(String input) {
     yString = match.group(3);
   }
   if (matches.isEmpty) {
-    regExp = RegExp(r'^\s*(X|x)\:?\s*([0-9A-Z]+)(\s*,\s*|\s+)(Y|y)\:?\s*([0-9A-Z]+)\s*$');
+    regExp = RegExp(r'^\s*([Xx]):?\s*([0-9A-Z]+)(\s*,\s*|\s+)([Yy]):?\s*([0-9A-Z]+)\s*$');
     matches = regExp.allMatches(input);
     if (matches.isNotEmpty) {
       var match = matches.elementAt(0);
@@ -108,6 +108,9 @@ NaturalAreaCode parseNaturalAreaCode(String input) {
   }
 
   if (matches.isEmpty) return null;
+
+  if (xString == null || yString == null)
+    return null;
 
   return NaturalAreaCode(xString, yString);
 }

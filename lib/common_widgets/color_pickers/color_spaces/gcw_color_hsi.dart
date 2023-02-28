@@ -62,7 +62,7 @@ class _GCWColorHSIState extends State<_GCWColorHSI> {
     );
   }
 
-  _emitOnChange() {
+  void _emitOnChange() {
     widget.onChanged(HSI(_currentHue, _currentSaturation / 100.0, _currentIntensity / 100.0));
   }
 }

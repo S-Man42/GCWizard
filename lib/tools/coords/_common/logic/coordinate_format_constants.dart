@@ -46,3 +46,11 @@ const Map<int, CoordinateFormatKey> SLIPPY_MAP_ZOOM = {
   29: CoordinateFormatKey.SLIPPYMAP_29,
   30: CoordinateFormatKey.SLIPPYMAP_30
 };
+
+const Map<int, CoordinateFormatKey> GAUSS_KRUEGER_CODE = {
+  1: CoordinateFormatKey.GAUSS_KRUEGER_GK1,
+  2: CoordinateFormatKey.GAUSS_KRUEGER_GK2,
+  3: CoordinateFormatKey.GAUSS_KRUEGER_GK3,
+  4: CoordinateFormatKey.GAUSS_KRUEGER_GK4,
+  5: CoordinateFormatKey.GAUSS_KRUEGER_GK5,
+};

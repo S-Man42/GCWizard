@@ -83,7 +83,7 @@ class BaseCoordinates {
       _longitude = defaultCoordinate.longitude;
   }
 
-  LatLng toLatLng() {
+  LatLng? toLatLng() {
     return LatLng(_latitude, _longitude);
   }
 
@@ -102,7 +102,7 @@ class DEC extends BaseCoordinates {
   DEC(this.latitude, this.longitude);
 
   @override
-  LatLng toLatLng() {
+  LatLng? toLatLng() {
     return decToLatLon(this);
   }
 
@@ -216,7 +216,7 @@ class DMM extends BaseCoordinates {
   DMM(this.latitude, this.longitude);
 
   @override
-  LatLng toLatLng() {
+  LatLng? toLatLng() {
     return dmmToLatLon(this);
   }
 
@@ -333,7 +333,7 @@ class DMS extends BaseCoordinates {
   DMS(this.latitude, this.longitude);
 
   @override
-  LatLng toLatLng() {
+  LatLng? toLatLng() {
     return dmsToLatLon(this);
   }
 
@@ -341,7 +341,7 @@ class DMS extends BaseCoordinates {
     return latLonToDMS(coord);
   }
 
-  static DMS parse(String input, {bool wholeString = false}) {
+  static DMS? parse(String input, {bool wholeString = false}) {
     return parseDMS(input, wholeString: wholeString);
   }
 
@@ -371,7 +371,7 @@ class UTMREF extends BaseCoordinates {
   }
 
   @override
-  LatLng toLatLng({Ellipsoid? ells}) {
+  LatLng? toLatLng({Ellipsoid? ells}) {
     if (ells == null) ells = defaultEllipsoid();
     return UTMREFtoLatLon(this, ells);
   }
@@ -380,7 +380,7 @@ class UTMREF extends BaseCoordinates {
     return latLonToUTM(coord, ells);
   }
 
-  static UTMREF parse(String input) {
+  static UTMREF? parse(String input) {
     return parseUTM(input);
   }
 
@@ -410,7 +410,7 @@ class MGRS extends BaseCoordinates {
   MGRS(this.utmZone, this.digraph, this.easting, this.northing);
 
   @override
-  LatLng toLatLng({Ellipsoid? ells}) {
+  LatLng? toLatLng({Ellipsoid? ells}) {
     if (ells == null) ells = defaultEllipsoid();
     return mgrsToLatLon(this, ells);
   }
@@ -419,7 +419,7 @@ class MGRS extends BaseCoordinates {
     return latLonToMGRS(coord, ells);
   }
 
-  static MGRS parse(String text) {
+  static MGRS? parse(String text) {
     return parseMGRS(text);
   }
 
@@ -439,7 +439,7 @@ class SwissGrid extends BaseCoordinates {
   SwissGrid(this.easting, this.northing);
 
   @override
-  LatLng toLatLng({Ellipsoid? ells}) {
+  LatLng? toLatLng({Ellipsoid? ells}) {
     if (ells == null) ells = defaultEllipsoid();
     return swissGridToLatLon(this, ells);
   }
@@ -448,7 +448,7 @@ class SwissGrid extends BaseCoordinates {
     return latLonToSwissGrid(coord, ells);
   }
 
-  static SwissGrid parse(String input) {
+  static SwissGrid? parse(String input) {
     return parseSwissGrid(input);
   }
 
@@ -465,7 +465,7 @@ class SwissGridPlus extends SwissGrid {
   SwissGridPlus(double easting, double northing) : super(easting, northing);
 
   @override
-  LatLng toLatLng({Ellipsoid? ells}) {
+  LatLng? toLatLng({Ellipsoid? ells}) {
     if (ells == null) ells = defaultEllipsoid();
     return swissGridPlusToLatLon(this, ells);
   }
@@ -474,7 +474,7 @@ class SwissGridPlus extends SwissGrid {
     return latLonToSwissGridPlus(coord, ells);
   }
 
-  static SwissGridPlus parse(String input) {
+  static SwissGridPlus? parse(String input) {
     return parseSwissGridPlus(input);
   }
 }
@@ -489,7 +489,7 @@ class DutchGrid extends BaseCoordinates {
   DutchGrid(this.x, this.y);
 
   @override
-  LatLng toLatLng() {
+  LatLng? toLatLng() {
     return dutchGridToLatLon(this);
   }
 
@@ -497,7 +497,7 @@ class DutchGrid extends BaseCoordinates {
     return latLonToDutchGrid(coord);
   }
 
-  static DutchGrid parse(String input) {
+  static DutchGrid? parse(String input) {
     return parseDutchGrid(input);
   }
 
@@ -515,23 +515,31 @@ class GaussKrueger extends BaseCoordinates {
   double easting;
   double northing;
 
+  static final String _ERROR_INVALID_SUBTYPE = 'No valid GaussKrueger subtype given.';
+
   GaussKrueger(this.subtype, this.easting, this.northing) {
     if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.GAUSS_KRUEGER, this.subtype))
-      throw Exception('No valid GaussKrueger subtype given');
+      throw Exception(_ERROR_INVALID_SUBTYPE);
   }
 
   @override
-  LatLng toLatLng({Ellipsoid? ells}) {
+  LatLng? toLatLng({Ellipsoid? ells}) {
     if (ells == null) ells = defaultEllipsoid();
     return gaussKruegerToLatLon(this, ells);
   }
 
   static GaussKrueger fromLatLon(LatLng coord, CoordinateFormatKey subtype, Ellipsoid ells) {
+    if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.GAUSS_KRUEGER, subtype))
+      throw Exception(_ERROR_INVALID_SUBTYPE);
+
     return latLonToGaussKrueger(coord, subtype, ells);
   }
 
-  static GaussKrueger parse(String input, {CoordinateFormatKey gaussKruegerCode = defaultGaussKruegerType}) {
-    return parseGaussKrueger(input, gaussKruegerCode: gaussKruegerCode);
+  static GaussKrueger? parse(String input, {CoordinateFormatKey subtype = defaultGaussKruegerType}) {
+    if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.GAUSS_KRUEGER, subtype))
+      throw Exception(_ERROR_INVALID_SUBTYPE);
+
+    return parseGaussKrueger(input, gaussKruegerCode: subtype);
   }
 
   @override
@@ -548,23 +556,31 @@ class Lambert extends BaseCoordinates {
   double easting;
   double northing;
 
+  static final String _ERROR_INVALID_SUBTYPE = 'No valid Lambert subtype given.';
+
   Lambert(this.subtype, this.easting, this.northing) {
     if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.LAMBERT, this.subtype))
-      throw Exception('No valid Lambert subtype given.');
+      throw Exception(_ERROR_INVALID_SUBTYPE);
   }
 
   @override
-  LatLng toLatLng({Ellipsoid? ells}) {
+  LatLng? toLatLng({Ellipsoid? ells}) {
     if (ells == null) ells = defaultEllipsoid();
     return lambertToLatLon(this, ells);
   }
 
   static Lambert fromLatLon(LatLng coord, CoordinateFormatKey subtype, Ellipsoid ells) {
+    if (isSubtypeOfCoordinateFormat(CoordinateFormatKey.LAMBERT, subtype))
+      throw Exception(_ERROR_INVALID_SUBTYPE);
+
     return latLonToLambert(coord, subtype, ells);
   }
 
-  static Lambert parse(String input, {CoordinateFormatKey type = defaultLambertType}) {
-    return parseLambert(input, type: type);
+  static Lambert? parse(String input, {CoordinateFormatKey subtype = defaultLambertType}) {
+    if (isSubtypeOfCoordinateFormat(CoordinateFormatKey.LAMBERT, subtype))
+      throw Exception(_ERROR_INVALID_SUBTYPE);
+
+    return parseLambert(input, subtype: subtype);
   }
 
   @override
@@ -583,7 +599,7 @@ class Mercator extends BaseCoordinates {
   Mercator(this.easting, this.northing);
 
   @override
-  LatLng toLatLng({Ellipsoid? ells}) {
+  LatLng? toLatLng({Ellipsoid? ells}) {
     if (ells == null) ells = defaultEllipsoid();
     return mercatorToLatLon(this, ells);
   }
@@ -592,7 +608,7 @@ class Mercator extends BaseCoordinates {
     return latLonToMercator(coord, ells);
   }
 
-  static Mercator parse(String input) {
+  static Mercator? parse(String input) {
     return parseMercator(input);
   }
 
@@ -612,7 +628,7 @@ class NaturalAreaCode extends BaseCoordinates {
   NaturalAreaCode(this.x, this.y);
 
   @override
-  LatLng toLatLng() {
+  LatLng? toLatLng() {
     return naturalAreaCodeToLatLon(this);
   }
 
@@ -620,7 +636,7 @@ class NaturalAreaCode extends BaseCoordinates {
     return latLonToNaturalAreaCode(coord, precision: precision);
   }
 
-  static NaturalAreaCode parse(String input) {
+  static NaturalAreaCode? parse(String input) {
     return parseNaturalAreaCode(input);
   }
 
@@ -636,26 +652,37 @@ class SlippyMap extends BaseCoordinates {
 
   double x;
   double y;
-  double zoom;
+  CoordinateFormatKey subtype;
 
-  SlippyMap(this.x, this.y, this.zoom);
+  static final String _ERROR_INVALID_SUBTYPE = 'No valid SlippyMap subtype given.';
+
+  SlippyMap(this.x, this.y, this.subtype) {
+    if (isSubtypeOfCoordinateFormat(CoordinateFormatKey.SLIPPY_MAP, this.subtype))
+      throw Exception(_ERROR_INVALID_SUBTYPE);
+  }
 
   @override
-  LatLng toLatLng() {
+  LatLng? toLatLng() {
     return slippyMapToLatLon(this);
   }
 
-  static SlippyMap fromLatLon(LatLng coord, CoordinateFormatKey subtype) {
-    return latLonToSlippyMap(coord, switchMapKeyValue(SLIPPY_MAP_ZOOM)[subtype]!.toDouble());
+  static SlippyMap? fromLatLon(LatLng coord, CoordinateFormatKey subtype) {
+    if (isSubtypeOfCoordinateFormat(CoordinateFormatKey.SLIPPY_MAP, subtype))
+      throw Exception(_ERROR_INVALID_SUBTYPE);
+
+    return latLonToSlippyMap(coord, subtype);
   }
 
-  static SlippyMap parse(String input, CoordinateFormatKey subtype) {
-    return parseSlippyMap(input, zoom: switchMapKeyValue(SLIPPY_MAP_ZOOM)[subtype]!.toDouble());
+  static SlippyMap? parse(String input, {CoordinateFormatKey subtype = defaultSlippyMapType}) {
+    if (isSubtypeOfCoordinateFormat(CoordinateFormatKey.SLIPPY_MAP, subtype))
+      throw Exception(_ERROR_INVALID_SUBTYPE);
+
+    return parseSlippyMap(input, subtype: subtype);
   }
 
   @override
   String toString() {
-    return 'X: $x\nY: $y\nZoom: $zoom';
+    return 'X: $x\nY: $y\nZoom: $subtype';
   }
 }
 
@@ -663,20 +690,20 @@ class ReverseWherigoWaldmeister extends BaseCoordinates {
   @override
   CoordinateFormatKey get key => CoordinateFormatKey.REVERSE_WIG_WALDMEISTER;
 
-  String a, b, c;
+  int a, b, c;
 
   ReverseWherigoWaldmeister(this.a, this.b, this.c);
 
   @override
-  LatLng toLatLng() {
+  LatLng? toLatLng() {
     return reverseWIGWaldmeisterToLatLon(this);
   }
 
-  static ReverseWherigoWaldmeister fromLatLon(LatLng coord) {
+  static ReverseWherigoWaldmeister? fromLatLon(LatLng coord) {
     return latLonToReverseWIGWaldmeister(coord);
   }
 
-  static ReverseWherigoWaldmeister parse(String input) {
+  static ReverseWherigoWaldmeister? parse(String input) {
     return parseReverseWherigoWaldmeister(input);
   }
 
@@ -695,7 +722,7 @@ class ReverseWherigoDay1976 extends BaseCoordinates {
   ReverseWherigoDay1976(this.s, this.t);
 
   @override
-  LatLng toLatLng() {
+  LatLng? toLatLng() {
     return reverseWIGDay1976ToLatLon(this);
   }
 
@@ -703,7 +730,7 @@ class ReverseWherigoDay1976 extends BaseCoordinates {
     return latLonToReverseWIGDay1976(coord);
   }
 
-  static ReverseWherigoDay1976 parse(String input) {
+  static ReverseWherigoDay1976? parse(String input) {
     return parseReverseWherigoDay1976(input);
   }
 
@@ -722,7 +749,7 @@ class XYZ extends BaseCoordinates {
   XYZ(this.x, this.y, this.z);
 
   @override
-  LatLng toLatLng({Ellipsoid? ells}) {
+  LatLng? toLatLng({Ellipsoid? ells}) {
     if (ells == null) ells = defaultEllipsoid();
     return xyzToLatLon(this, ells);
   }
@@ -731,7 +758,7 @@ class XYZ extends BaseCoordinates {
     return latLonToXYZ(coord, ells, h: h);
   }
 
-  static XYZ parse(String input) {
+  static XYZ? parse(String input) {
     return parseXYZ(input);
   }
 
@@ -751,7 +778,7 @@ class Maidenhead extends BaseCoordinates {
   Maidenhead(this.text);
 
   @override
-  LatLng toLatLng() {
+  LatLng? toLatLng() {
     return maidenheadToLatLon(this);
   }
 
@@ -759,7 +786,7 @@ class Maidenhead extends BaseCoordinates {
     return latLonToMaidenhead(coord);
   }
 
-  static Maidenhead parse(String input) {
+  static Maidenhead? parse(String input) {
     return parseMaidenhead(input);
   }
 
@@ -778,7 +805,7 @@ class Makaney extends BaseCoordinates {
   Makaney(this.text);
 
   @override
-  LatLng toLatLng() {
+  LatLng? toLatLng() {
     return makaneyToLatLon(this);
   }
 
@@ -786,7 +813,7 @@ class Makaney extends BaseCoordinates {
     return latLonToMakaney(coord);
   }
 
-  static Makaney parse(String input) {
+  static Makaney? parse(String input) {
     return parseMakaney(input);
   }
 
@@ -805,7 +832,7 @@ class Geohash extends BaseCoordinates {
   Geohash(this.text);
 
   @override
-  LatLng toLatLng() {
+  LatLng? toLatLng() {
     return geohashToLatLon(this);
   }
 
@@ -813,7 +840,7 @@ class Geohash extends BaseCoordinates {
     return latLonToGeohash(coord, geohashLength);
   }
 
-  static Geohash parse(String input) {
+  static Geohash? parse(String input) {
     return parseGeohash(input);
   }
 
@@ -832,7 +859,7 @@ class GeoHex extends BaseCoordinates {
   GeoHex(this.text);
 
   @override
-  LatLng toLatLng() {
+  LatLng? toLatLng() {
     return geoHexToLatLon(this);
   }
 
@@ -840,7 +867,7 @@ class GeoHex extends BaseCoordinates {
     return latLonToGeoHex(coord, precision);
   }
 
-  static GeoHex parse(String input) {
+  static GeoHex? parse(String input) {
     return parseGeoHex(input);
   }
 
@@ -859,7 +886,7 @@ class Geo3x3 extends BaseCoordinates {
   Geo3x3(this.text);
 
   @override
-  LatLng toLatLng() {
+  LatLng? toLatLng() {
     return geo3x3ToLatLon(this);
   }
 
@@ -867,7 +894,7 @@ class Geo3x3 extends BaseCoordinates {
     return latLonToGeo3x3(coord, level);
   }
 
-  static Geo3x3 parse(String input) {
+  static Geo3x3? parse(String input) {
     return parseGeo3x3(input);
   }
 
@@ -886,7 +913,7 @@ class OpenLocationCode extends BaseCoordinates {
   OpenLocationCode(this.text);
 
   @override
-  LatLng toLatLng() {
+  LatLng? toLatLng() {
     return openLocationCodeToLatLon(this);
   }
 
@@ -894,7 +921,7 @@ class OpenLocationCode extends BaseCoordinates {
     return latLonToOpenLocationCode(coord, codeLength: codeLength);
   }
 
-  static OpenLocationCode parse(String input) {
+  static OpenLocationCode? parse(String input) {
     return parseOpenLocationCode(input);
   }
 
@@ -913,11 +940,11 @@ class Quadtree extends BaseCoordinates {
   Quadtree(this.coords);
 
   @override
-  LatLng toLatLng() {
+  LatLng? toLatLng() {
     return quadtreeToLatLon(this);
   }
 
-  static Quadtree parse(String input) {
+  static Quadtree? parse(String input) {
     return parseQuadtree(input);
   }
 

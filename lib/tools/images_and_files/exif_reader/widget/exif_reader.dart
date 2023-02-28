@@ -14,6 +14,8 @@ import 'package:gc_wizard/common_widgets/image_viewers/gcw_imageview.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/images_and_files/exif_reader/logic/exif_reader.dart';
@@ -118,7 +120,7 @@ class _ExifReaderState extends State<ExifReader> {
     }
   }
 
-  List _buildOutput(Map<String, List<List<dynamic>>>? _tableTags) {
+  List<Widget> _buildOutput(Map<String, List<List<dynamic>>>? _tableTags) {
     if (!_fileLoaded) {
       return [GCWDefaultOutput()];
     }
@@ -161,8 +163,8 @@ class _ExifReaderState extends State<ExifReader> {
     if (point == null) return;
 
     var _currentCoordsFormat = defaultCoordinateFormat;
-    List<String> _currentOutput = [
-      formatCoordOutput(point!, {'format': Prefs.get(PREFERENCE_COORD_DEFAULT_FORMAT)}, defaultEllipsoid()),
+    List<BaseCoordinates> _currentOutput = [
+      formatCoordOutput(point!, {'format': Prefs.getString(PREFERENCE_COORD_DEFAULT_FORMAT)}, defaultEllipsoid()),
     ];
 
     widgets.add(
@@ -182,7 +184,7 @@ class _ExifReaderState extends State<ExifReader> {
   void _decorateExifSections(List<Widget> widgets, Map<String, List<List<dynamic>>> _tableTags) {
     _tableTags.forEach((section, tags) {
       widgets.add(GCWOutput(
-          title: i18n(context, "exif_section_" + section, ifTranslationNotExists: section ?? ''),
+          title: i18n(context, "exif_section_" + section, ifTranslationNotExists: section),
           child: GCWColumnedMultilineOutput(
               data: tags
           ),
@@ -254,11 +256,11 @@ class _ExifReaderState extends State<ExifReader> {
           child: GCWColumnedMultilineOutput(
             data: [
                     [i18n(context, 'exif_filename'), file.name ?? ''],
-                    [i18n(context, 'exif_filesize_bytes'), file.bytes.length ?? 0],
-                    [i18n(context, 'exif_filesize_kb'), (file.bytes.length / 1024).ceil() ?? 0],
+                    [i18n(context, 'exif_filesize_bytes'), file.bytes.length],
+                    [i18n(context, 'exif_filesize_kb'), (file.bytes.length / 1024).ceil()],
                     ['lastModified', formatDate(_file?.lastModifiedSync())],
                     ['lastAccessed', formatDate(_file?.lastAccessedSync())],
-                    [i18n(context, 'exif_extension'), file.extension ?? '']
+                    [i18n(context, 'exif_extension'), file.extension]
                   ],
           )
       ));
@@ -270,11 +272,11 @@ class _ExifReaderState extends State<ExifReader> {
         title: i18n(context, 'exif_section_image'),
         child: GCWColumnedMultilineOutput(
             data: [
-                    [i18n(context, 'exif_width'), image.width ?? ''],
-                    [i18n(context, 'exif_height'), image.height ?? ''],
-                    ['Blend Method', image.blendMethod ?? ''],
-                    ['Channels', image.channels ?? ''],
-                    ['ICC Color Profile', image.iccProfile ?? ''],
+                    [i18n(context, 'exif_width'), image.width ],
+                    [i18n(context, 'exif_height'), image.height],
+                    ['Blend Method', image.blendMethod],
+                    ['Channels', image.channels],
+                    ['ICC Color Profile', image.iccProfile],
                     // Only for frames within an animation
                     // [i18n(context, 'exif_duration'), image.duration ?? ''],
                     // ['Offset X', image.xOffset ?? ''],

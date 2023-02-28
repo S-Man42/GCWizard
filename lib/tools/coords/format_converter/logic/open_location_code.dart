@@ -104,7 +104,7 @@ const _decode = <int>[
 bool _matchesPattern(String string, Pattern pattern) => string.indexOf(pattern) >= 0;
 
 bool _isValid(String code) {
-  if (code == null || code.length == 1) {
+  if (code.length == 1) {
     return false;
   }
 
@@ -133,7 +133,7 @@ bool _isValid(String code) {
     if (padMatch.length != 1) {
       return false;
     }
-    var matchLength = padMatch.first.group(0).length;
+    var matchLength = padMatch.first.group(0)!.length;
     if (matchLength.isOdd || matchLength > separatorPosition - 2) {
       return false;
     }
@@ -149,7 +149,7 @@ bool _isValid(String code) {
   }
 
   // Check code contains only valid characters.
-  var filterCallback = (ch) => !(ch > _decode.length || _decode[ch] < -1);
+  var filterCallback = (int ch) => !(ch > _decode.length || _decode[ch] < -1);
   return code.codeUnits.every(filterCallback);
 }
 
@@ -244,8 +244,6 @@ bool _isFull(String code) {
 /// * [codeLength]: The number of significant digits in the output code, not
 /// including any separator characters.
 OpenLocationCode latLonToOpenLocationCode(LatLng coords, {int codeLength = pairCodeLength}) {
-  if (codeLength == 0) return null;
-
   if (codeLength % 2 == 1) codeLength--;
 
   var code = '';
@@ -296,7 +294,7 @@ OpenLocationCode latLonToOpenLocationCode(LatLng coords, {int codeLength = pairC
   return OpenLocationCode(code.substring(0, codeLength) + (padding * (separatorPosition - codeLength)) + separator);
 }
 
-OpenLocationCode parseOpenLocationCode(String input) {
+OpenLocationCode? parseOpenLocationCode(String input) {
   var openLocationCode = OpenLocationCode(input);
   return openLocationCodeToLatLon(openLocationCode) == null ? null : openLocationCode;
 }
@@ -318,8 +316,8 @@ String _sanitizeOLCode(String olc) {
 }
 
 /// Decodes an Open Location Code into the location coordinates.
-LatLng openLocationCodeToLatLon(OpenLocationCode openLocationCode) {
-  if (openLocationCode == null || openLocationCode.text == null || openLocationCode.text.isEmpty) return null;
+LatLng? openLocationCodeToLatLon(OpenLocationCode openLocationCode) {
+  if (openLocationCode.text.isEmpty) return null;
 
   var len = openLocationCode.text.replaceAll('+', '').length;
   if (len <= 10 && len.isOdd) return null;

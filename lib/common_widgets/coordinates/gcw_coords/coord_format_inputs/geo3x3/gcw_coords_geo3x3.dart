@@ -1,7 +1,7 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _GCWCoordsGeo3x3 extends StatefulWidget {
-  final void Function(Geo3x3) onChanged;
+  final void Function(Geo3x3?) onChanged;
   final BaseCoordinates coordinates;
 
   const _GCWCoordsGeo3x3({Key? key, required this.onChanged, required this.coordinates}) : super(key: key);
@@ -31,7 +31,7 @@ class _GCWCoordsGeo3x3State extends State<_GCWCoordsGeo3x3> {
     if (widget.coordinates != null) {
       var geo3x3 = widget.coordinates is Geo3x3
           ? widget.coordinates as Geo3x3
-          : Geo3x3.fromLatLon(widget.coordinates.toLatLng(), 20);
+          : Geo3x3.fromLatLon(widget.coordinates.toLatLng() ?? defaultCoordinate, 20);
       _currentCoord = geo3x3.text;
 
       _controller.text = _currentCoord;

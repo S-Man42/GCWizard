@@ -75,7 +75,7 @@ class _GCWColorCMYKState extends State<_GCWColorCMYK> {
     );
   }
 
-  _emitOnChange() {
+  void _emitOnChange() {
     widget.onChanged(CMYK(_currentCyan / 100.0, _currentMagenta / 100.0, _currentYellow / 100.0, _currentKey / 100.0));
   }
 }

@@ -36,7 +36,7 @@ class _GCWCoordsDutchGridState extends State<_GCWCoordsDutchGrid> {
     if (widget.coordinates != null) {
       var dutchGrid = widget.coordinates is DutchGrid
           ? widget.coordinates as DutchGrid
-          : DutchGrid.fromLatLon(widget.coordinates.toLatLng());
+          : DutchGrid.fromLatLon(widget.coordinates.toLatLng() ?? defaultCoordinate);
       _currentX.value = dutchGrid.x;
       _currentY.value = dutchGrid.y;
 

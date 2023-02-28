@@ -2576,7 +2576,7 @@ Shake the carrots until shaken.
 Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.''';
-    var TuringsTastyTortillas = '''''';
+    // var TuringsTastyTortillas = '''''';
     var TuringsTortillasNotEdible = '''Turings Tortillas
 
 This is a universal turing machine in Chef. What? Yeah, really. It is. Just make sure you deliver a large enough tape.

@@ -30,7 +30,7 @@ class _Container {
   }
 
   void combine(_Container? c) {
-    if (c != null) if (c._contents != null) _contents.addAll(c._contents);
+    if (c != null) _contents.addAll(c._contents);
   }
 
   void liquefy() {

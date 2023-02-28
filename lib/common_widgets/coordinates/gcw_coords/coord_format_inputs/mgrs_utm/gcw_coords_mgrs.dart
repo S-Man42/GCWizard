@@ -45,7 +45,7 @@ class _GCWCoordsMGRSState extends State<_GCWCoordsMGRS> {
     if (widget.coordinates != null) {
       var mgrs = widget.coordinates is MGRS
           ? widget.coordinates as MGRS
-          : MGRS.fromLatLon(widget.coordinates.toLatLng(), defaultEllipsoid());
+          : MGRS.fromLatLon(widget.coordinates.toLatLng() ?? defaultCoordinate, defaultEllipsoid());
       _currentEasting.value = mgrs.easting;
       _currentNorthing.value = mgrs.northing;
 

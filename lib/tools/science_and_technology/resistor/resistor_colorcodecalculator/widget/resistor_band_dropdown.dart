@@ -44,7 +44,7 @@ class _ResistorBandDropDownState extends State<_ResistorBandDropDown> {
   void initState() {
     super.initState();
 
-    if (widget.color != null) _currentValue = widget.color;
+    _currentValue = widget.color;
   }
 
   @override

@@ -254,7 +254,6 @@ class SymbolReplacerImage {
   /// remove Symbol from SymbolGroup (create new SymbolGroup)
   /// </summary>
   void removeFromGroup(Symbol symbol) {
-    if (symbol == null) return;
     if (symbol.symbolGroup != null) symbol.symbolGroup?.symbols.remove(symbol);
     var symbolGroup = SymbolGroup();
     symbolGroups.add(symbolGroup);

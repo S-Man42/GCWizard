@@ -33,16 +33,14 @@ class _GCWCoordsSwissGridPlusState extends State<_GCWCoordsSwissGridPlus> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.coordinates != null) {
-      var swissGridPlus = widget.coordinates is SwissGridPlus
-          ? widget.coordinates as SwissGridPlus
-          : SwissGridPlus.fromLatLon(widget.coordinates.toLatLng(), defaultEllipsoid());
-      _currentEasting.value = swissGridPlus.easting;
-      _currentNorthing.value = swissGridPlus.northing;
+    var swissGridPlus = widget.coordinates is SwissGridPlus
+        ? widget.coordinates as SwissGridPlus
+        : SwissGridPlus.fromLatLon(widget.coordinates.toLatLng() ?? defaultCoordinate, defaultEllipsoid());
+    _currentEasting.value = swissGridPlus.easting;
+    _currentNorthing.value = swissGridPlus.northing;
 
-      _EastingController.text = _currentEasting.value.toString();
-      _NorthingController.text = _currentNorthing.value.toString();
-    }
+    _EastingController.text = _currentEasting.value.toString();
+    _NorthingController.text = _currentNorthing.value.toString();
 
     return Column(children: <Widget>[
       GCWDoubleTextField(

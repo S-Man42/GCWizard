@@ -1,7 +1,7 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _GCWCoordsGeohash extends StatefulWidget {
-  final void Function(Geohash) onChanged;
+  final void Function(Geohash?) onChanged;
   final BaseCoordinates coordinates;
 
   const _GCWCoordsGeohash({Key? key, required this.onChanged, required this.coordinates}) : super(key: key);
@@ -31,7 +31,7 @@ class _GCWCoordsGeohashState extends State<_GCWCoordsGeohash> {
     if (widget.coordinates != null) {
       var geohash = widget.coordinates is Geohash
           ? widget.coordinates as Geohash
-          : Geohash.fromLatLon(widget.coordinates.toLatLng(), 14);
+          : Geohash.fromLatLon(widget.coordinates.toLatLng() ?? defaultCoordinate, 14);
       _currentCoord = geohash.text;
 
       _controller.text = _currentCoord;

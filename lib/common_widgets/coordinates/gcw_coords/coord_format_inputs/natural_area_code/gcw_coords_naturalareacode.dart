@@ -37,7 +37,7 @@ class _GCWCoordsNaturalAreaCodeState extends State<_GCWCoordsNaturalAreaCode> {
     if (widget.coordinates != null) {
       var naturalAreaCode = widget.coordinates is NaturalAreaCode
           ? widget.coordinates as NaturalAreaCode
-          : NaturalAreaCode.fromLatLon(widget.coordinates.toLatLng());
+          : NaturalAreaCode.fromLatLon(widget.coordinates.toLatLng() ?? defaultCoordinate);
       _currentX = naturalAreaCode.x;
       _currentY = naturalAreaCode.y;
 

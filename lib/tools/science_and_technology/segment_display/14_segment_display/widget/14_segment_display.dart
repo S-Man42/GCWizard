@@ -24,7 +24,7 @@ const _INITIAL_SEGMENTS = <String, bool>{
 class FourteenSegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
   final bool readOnly;
-  final Function(Map<String, bool>)? onChanged;
+  final void Function(Map<String, bool>)? onChanged;
   final bool tapeStyle;
 
   FourteenSegmentDisplay({
