@@ -171,7 +171,7 @@ Lambert latLonToLambert(LatLng latLon, CoordinateFormatKey subtype, Ellipsoid el
 }
 
 LatLng lambertToLatLon(Lambert lambert, Ellipsoid ellipsoid) {
-  _LambertDefinition specificLambert = _LambertDefinitions[lambert.subtype]!;
+  _LambertDefinition specificLambert = _LambertDefinitions[lambert.format.subtype]!;
 
   LambertConformalConic lambertCC = _lambertConformalConic(specificLambert, ellipsoid);
   GeographicLibLambert transformation = _transformLambertFalseXY(specificLambert, lambertCC);

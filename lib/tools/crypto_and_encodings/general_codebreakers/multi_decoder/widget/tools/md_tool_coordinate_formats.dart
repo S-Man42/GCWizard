@@ -38,67 +38,67 @@ class MultiDecoderToolCoordinateFormats extends AbstractMultiDecoderTool {
                     coords = DMM.parse(input, wholeString: true)?.toLatLng();
                     break;
                   case CoordinateFormatKey.DMS:
-                    coords = DMS.parse(input, wholeString: true)?.toLatLng();
+                    coords = DMS.parse(input, wholeString: true).toLatLng();
                     break;
                   case CoordinateFormatKey.UTM:
-                    coords = UTMREF.parse(input)?.toLatLng(ells: defaultEllipsoid());
+                    coords = UTMREF.parse(input).toLatLng(ells: defaultEllipsoid);
                     break;
                   case CoordinateFormatKey.MGRS:
-                    coords = MGRS.parse(input)?.toLatLng(ells: defaultEllipsoid());
+                    coords = MGRS.parse(input).toLatLng(ells: defaultEllipsoid);
                     break;
                   case CoordinateFormatKey.XYZ:
-                    coords = XYZ.parse(input)?.toLatLng(ells: defaultEllipsoid());
+                    coords = XYZ.parse(input).toLatLng(ells: defaultEllipsoid);
                     break;
                   case CoordinateFormatKey.SWISS_GRID:
-                    coords = SwissGrid.parse(input)?.toLatLng(ells: defaultEllipsoid());
+                    coords = SwissGrid.parse(input).toLatLng(ells: defaultEllipsoid);
                     break;
                   case CoordinateFormatKey.SWISS_GRID_PLUS:
-                    coords = SwissGridPlus.parse(input)?.toLatLng(ells: defaultEllipsoid());
+                    coords = SwissGridPlus.parse(input).toLatLng(ells: defaultEllipsoid);
                     break;
                   case CoordinateFormatKey.GAUSS_KRUEGER:
-                    coords = GaussKrueger.parse(input)?.toLatLng(ells: defaultEllipsoid());
+                    coords = GaussKrueger.parse(input).toLatLng(ells: defaultEllipsoid);
                     break;
                   case CoordinateFormatKey.LAMBERT:
-                    coords = Lambert.parse(input)?.toLatLng(ells: defaultEllipsoid());
+                    coords = Lambert.parse(input).toLatLng(ells: defaultEllipsoid);
                     break;
                   case CoordinateFormatKey.DUTCH_GRID:
-                    coords = DutchGrid.parse(input)?.toLatLng();
+                    coords = DutchGrid.parse(input).toLatLng();
                     break;
                   case CoordinateFormatKey.MAIDENHEAD:
-                    coords = Maidenhead.parse(input)?.toLatLng();
+                    coords = Maidenhead.parse(input).toLatLng();
                     break;
                   case CoordinateFormatKey.MERCATOR:
-                    coords = Mercator.parse(input)?.toLatLng(ells: defaultEllipsoid());
+                    coords = Mercator.parse(input).toLatLng(ells: defaultEllipsoid);
                     break;
                   case CoordinateFormatKey.NATURAL_AREA_CODE:
-                    coords = NaturalAreaCode.parse(input)?.toLatLng();
+                    coords = NaturalAreaCode.parse(input).toLatLng();
                     break;
                   case CoordinateFormatKey.GEOHASH:
-                    coords = Geohash.parse(input)?.toLatLng();
+                    coords = Geohash.parse(input).toLatLng();
                     break;
                   case CoordinateFormatKey.GEOHEX:
-                    coords = GeoHex.parse(input)?.toLatLng();
+                    coords = GeoHex.parse(input).toLatLng();
                     break;
                   case CoordinateFormatKey.GEO3X3:
-                    coords = Geo3x3.parse(input)?.toLatLng();
+                    coords = Geo3x3.parse(input).toLatLng();
                     break;
                   case CoordinateFormatKey.OPEN_LOCATION_CODE:
-                    coords = OpenLocationCode.parse(input)?.toLatLng();
+                    coords = OpenLocationCode.parse(input).toLatLng();
                     break;
                   case CoordinateFormatKey.QUADTREE:
-                    coords = Quadtree.parse(input)?.toLatLng();
+                    coords = Quadtree.parse(input).toLatLng();
                     break;
                   case CoordinateFormatKey.REVERSE_WIG_WALDMEISTER:
-                    coords = ReverseWherigoWaldmeister.parse(input)?.toLatLng();
+                    coords = ReverseWherigoWaldmeister.parse(input).toLatLng();
                     break;
                   case CoordinateFormatKey.REVERSE_WIG_DAY1976:
-                    coords = ReverseWherigoDay1976.parse(input)?.toLatLng();
+                    coords = ReverseWherigoDay1976.parse(input).toLatLng();
                     break;
                   case CoordinateFormatKey.SLIPPY_MAP:
-                    coords = SlippyMap.parse(input)?.toLatLng();
+                    coords = SlippyMap.parse(input).toLatLng();
                     break;
                   case CoordinateFormatKey.MAKANEY:
-                    coords = Makaney.parse(input)?.toLatLng();
+                    coords = Makaney.parse(input).toLatLng();
                     break;
                   default:
                     coords = null;
@@ -107,7 +107,7 @@ class MultiDecoderToolCoordinateFormats extends AbstractMultiDecoderTool {
 
               if (coords == null) return null;
 
-              return formatCoordOutput(coords, defaultCoordinateFormat, defaultEllipsoid());
+              return formatCoordOutput(coords, defaultCoordinateFormat, defaultEllipsoid);
             },
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {

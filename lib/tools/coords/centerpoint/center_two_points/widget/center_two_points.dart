@@ -83,12 +83,12 @@ class CenterTwoPointsState extends State<CenterTwoPoints> {
   }
 
   _calculateOutput(BuildContext context) {
-    var _result = centerPointTwoPoints(_currentCoords1, _currentCoords2, defaultEllipsoid());
+    var _result = centerPointTwoPoints(_currentCoords1, _currentCoords2, defaultEllipsoid);
     _currentCenter = _result['centerPoint'];
     _currentDistance = _result['distance'];
 
     _currentOutput = [];
-    _currentOutput.add('${formatCoordOutput(_currentCenter, _currentOutputFormat, defaultEllipsoid())}');
+    _currentOutput.add('${formatCoordOutput(_currentCenter, _currentOutputFormat, defaultEllipsoid)}');
     _currentOutput.add(
         '${i18n(context, 'coords_center_distance')}: ${doubleFormat.format(_currentOutputUnit.fromMeter(_currentDistance))} ${_currentOutputUnit.symbol}');
 

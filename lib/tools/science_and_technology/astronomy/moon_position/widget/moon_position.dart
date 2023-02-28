@@ -4,7 +4,6 @@ import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart'
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_datetime_picker.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/_common/logic/julian_date.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/moon_position/logic/moon_position.dart' as logic;
@@ -20,7 +19,7 @@ class MoonPosition extends StatefulWidget {
 
 class MoonPositionState extends State<MoonPosition> {
   var _currentDateTime = DateTimeTimezone(datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
-  var _currentCoords = BaseCoordinates();
+  var _currentCoords = defaultCoordinate;
   var _currentCoordsFormat = defaultCoordinateFormat;
 
   @override
@@ -32,7 +31,8 @@ class MoonPositionState extends State<MoonPosition> {
           coordsFormat: _currentCoordsFormat,
           onChanged: (ret) {
             setState(() {
-              _currentCoords = ret;
+              _currentCoordsFormat = ret['coordsFormat'];
+              _currentCoords = ret['value'];
             });
           },
         ),
@@ -57,7 +57,7 @@ class MoonPositionState extends State<MoonPosition> {
 
     var julianDate = JulianDate(_currentDateTime);
 
-    var moonPosition = logic.MoonPosition(_currentCoords.toLatLng() ?? defaultCoordinate, julianDate, defaultEllipsoid());
+    var moonPosition = logic.MoonPosition(_currentCoords, julianDate, defaultEllipsoid);
 
     var outputsMoon = [
       [i18n(context, 'astronomy_position_eclipticlongitude'), format.format(moonPosition.eclipticLongitude) + '°'],

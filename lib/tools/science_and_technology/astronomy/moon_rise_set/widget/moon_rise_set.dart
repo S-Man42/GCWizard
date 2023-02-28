@@ -55,7 +55,7 @@ class MoonRiseSetState extends State<MoonRiseSet> {
         _currentCoords.toLatLng() ?? defaultCoordinate,
         JulianDate(_currentDateTime),
         _currentDateTime.timezone,
-        defaultEllipsoid());
+        defaultEllipsoid);
 
     var outputs = [
       [

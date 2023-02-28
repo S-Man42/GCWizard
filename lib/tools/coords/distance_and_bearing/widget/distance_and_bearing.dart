@@ -101,7 +101,7 @@ class DistanceBearingState extends State<DistanceBearing> {
   _calculateOutput(BuildContext context) {
     final doubleFormatCopy = NumberFormat('0.0#######');
 
-    _currentValue = distanceBearing(_currentCoords1, _currentCoords2, defaultEllipsoid());
+    _currentValue = distanceBearing(_currentCoords1, _currentCoords2, defaultEllipsoid);
 
     _currentOutput = [];
     _currentOutput.add(GCWOutputText(

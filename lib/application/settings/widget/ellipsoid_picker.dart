@@ -23,7 +23,8 @@ class _EllipsoidPickerState extends State<_EllipsoidPicker> {
   String _currentEllipsoidCustom2ndValue = _keyMinorAxis;
   late Ellipsoid _currentStandardEllipsoid;
 
-  Ellipsoid _currentEllipsoid = defaultEllipsoid();
+  Ellipsoid _currentEllipsoid = defaultEllipsoid;
+
   @override
   void initState() {
     super.initState();
@@ -33,7 +34,7 @@ class _EllipsoidPickerState extends State<_EllipsoidPicker> {
     if (_currentEllipsoid.type == EllipsoidType.USER_DEFINED) {
       _firstCustomValue = DoubleText(_currentEllipsoid.a.toString(), _currentEllipsoid.a);
       _secondCustomValue = DoubleText(_currentEllipsoid.b.toString(), _currentEllipsoid.b);
-      _currentStandardEllipsoid = getEllipsoidByName(ELLIPSOID_NAME_WGS84)!;
+      _currentStandardEllipsoid = _currentEllipsoid;
     } else {
       _firstCustomValue = defaultDoubleText;
       _secondCustomValue = defaultDoubleText;

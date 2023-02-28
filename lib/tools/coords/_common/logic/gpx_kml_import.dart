@@ -304,7 +304,7 @@ bool _completeCircle(GCWMapPolyline line, List<GCWMapPoint> points) {
   var pt2 = line.points[line.points.length ~/ 2].point;
   var pt3 = line.points[line.points.length ~/ 4].point;
   var pt4 = line.points[line.points.length * 3 ~/ 4].point;
-  var ells = defaultEllipsoid();
+  var ells = defaultEllipsoid;
 
   DistanceBearingData length1 = distanceBearing(pt1, pt2, ells);
   DistanceBearingData length2 = distanceBearing(pt3, pt4, ells);

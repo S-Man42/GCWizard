@@ -33,7 +33,7 @@ class CoordinatesSettingsState extends State<CoordinatesSettings> {
   late CoordinateFormat _currentDefaultFormat;
   var _currentDefaultHemisphereLatitude = Prefs.getString(PREFERENCE_COORD_DEFAULT_HEMISPHERE_LATITUDE);
   var _currentDefaultHemisphereLongitude = Prefs.getString(PREFERENCE_COORD_DEFAULT_HEMISPHERE_LONGITUDE);
-  Ellipsoid _currentDefaultEllipsoid = defaultEllipsoid();
+  Ellipsoid _currentDefaultEllipsoid = defaultEllipsoid;
 
   @override
   void initState() {

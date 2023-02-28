@@ -89,7 +89,6 @@ class GCWToolActionButtonsEntry {
     required this.text, required this.icon, this.onPressed});
 }
 
-//ignore: must_be_immutable
 class GCWTool extends StatefulWidget {
   final Widget tool;
   final String id;

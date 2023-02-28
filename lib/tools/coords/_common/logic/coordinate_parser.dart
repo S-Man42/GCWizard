@@ -16,11 +16,11 @@ var regexEnd = '';
 
 //wholeString == false: The first match at the text begin is taken - for copy
 //wholeString == true: The whole text must be a valid coord - for var coords
-List<BaseCoordinates> parseCoordinates(String text, {bool wholeString = false}) {
-  var coords = <BaseCoordinates>[];
+List<BaseCoordinate> parseCoordinates(String text, {bool wholeString = false}) {
+  var coords = <BaseCoordinate>[];
 
   try {
-    BaseCoordinates? coord = DMS.parse(text, wholeString: wholeString);
+    BaseCoordinate? coord = DMS.parse(text, wholeString: wholeString);
     if (coord != null) coords.add(coord);
 
     coord = DMM.parse(text, wholeString: wholeString);
@@ -100,7 +100,7 @@ List<BaseCoordinates> parseCoordinates(String text, {bool wholeString = false}) 
 
 //wholeString == false: The first match at the text begin is taken - for copy
 //wholeString == true: The whole text must be a valid coord - for var coords
-BaseCoordinates? parseStandardFormats(String text, {bool wholeString = false}) {
+BaseCoordinate? parseStandardFormats(String text, {bool wholeString = false}) {
   LatLng? coord = DMS.parse(text, wholeString: wholeString)?.toLatLng();
   if (coord != null) return DMS.fromLatLon(coord);
 
