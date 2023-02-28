@@ -273,7 +273,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
 
   Widget _buildEncodeSubmitButton() {
     return GCWSubmitButton(onPressed: () async {
-      await showDialog(
+      await showDialog<bool>(
         context: context,
         barrierDismissible: false,
         builder: (context) {
@@ -359,7 +359,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
   }
 
   void _analysePlatformFileAsync() async {
-    await showDialog(
+    await showDialog<bool>(
       context: context,
       barrierDismissible: false,
       builder: (context) {

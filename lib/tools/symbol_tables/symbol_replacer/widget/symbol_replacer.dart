@@ -145,7 +145,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
 
       _showOutput(await replaceSymbolsAsync(_jobData));
     } else {
-      showDialog(
+      showDialog<bool>(
         context: context,
         barrierDismissible: false,
         builder: (context) {
@@ -373,7 +373,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   }
 
   void _startSubstitutionBreaker() async {
-    showDialog(
+    showDialog<bool>(
       context: context,
       barrierDismissible: false,
       builder: (context) {
@@ -394,7 +394,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   }
 
   void _startJobDataSearchSymbolTable() {
-    showDialog(
+    showDialog<bool>(
       context: context,
       barrierDismissible: false,
       builder: (context) {

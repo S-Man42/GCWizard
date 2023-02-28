@@ -20,6 +20,7 @@ class SunRiseSet extends StatefulWidget {
 class SunRiseSetState extends State<SunRiseSet> {
   var _currentDateTime = DateTimeTimezone(datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
   var _currentCoords = BaseCoordinates();
+  var _currentCoordsFormat = defaultCoordinateFormat;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class SunRiseSetState extends State<SunRiseSet> {
       children: <Widget>[
         GCWCoords(
           title: i18n(context, 'common_location'),
-          coordsFormat: CoordinateFormat,
+          coordsFormat: _currentCoordsFormat,
           onChanged: (ret) {
             setState(() {
               _currentCoords = ret;
