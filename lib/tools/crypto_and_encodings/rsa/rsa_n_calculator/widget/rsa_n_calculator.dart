@@ -49,8 +49,8 @@ class RSANCalculatorState extends State<RSANCalculator> {
     );
   }
 
-  _calculateOutput() {
-    if (_currentP == null || _currentP.isEmpty || _currentQ == null || _currentQ.isEmpty) {
+  void _calculateOutput() {
+    if (_currentP.isEmpty || _currentQ.isEmpty) {
       _output = null;
     }
 

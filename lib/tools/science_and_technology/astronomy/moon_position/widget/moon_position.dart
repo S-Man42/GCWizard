@@ -20,7 +20,7 @@ class MoonPosition extends StatefulWidget {
 
 class MoonPositionState extends State<MoonPosition> {
   var _currentDateTime = DateTimeTimezone(datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
-  var _currentCoords = defaultCoordinate;
+  var _currentCoords = BaseCoordinate();
   var _currentCoordsFormat = defaultCoordinateFormat;
 
   @override
@@ -32,8 +32,7 @@ class MoonPositionState extends State<MoonPosition> {
           coordsFormat: _currentCoordsFormat,
           onChanged: (ret) {
             setState(() {
-              _currentCoordsFormat = ret['coordsFormat'];
-              _currentCoords = ret['value'];
+              _currentCoords = ret;
             });
           },
         ),
@@ -58,7 +57,7 @@ class MoonPositionState extends State<MoonPosition> {
 
     var julianDate = JulianDate(_currentDateTime);
 
-    var moonPosition = logic.MoonPosition(_currentCoords, julianDate, defaultEllipsoid());
+    var moonPosition = logic.MoonPosition(_currentCoords.toLatLng() ?? defaultCoordinate, julianDate, defaultEllipsoid);
 
     var outputsMoon = [
       [i18n(context, 'astronomy_position_eclipticlongitude'), format.format(moonPosition.eclipticLongitude) + '°'],

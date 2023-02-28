@@ -22,7 +22,6 @@ class SudokuSolver extends StatefulWidget {
 
 class SudokuSolverState extends State<SudokuSolver> {
   late SudokuBoard _currentBoard;
-  List<SudokuSolution>? _currentSolutions;
   int _currentSolution = 0;
 
   final int _MAX_SOLUTIONS = 1000;
@@ -45,7 +44,6 @@ class SudokuSolverState extends State<SudokuSolver> {
             onChanged: (newBoard) {
               setState(() {
                 _currentBoard = newBoard;
-                _currentSolutions = null;
               });
             },
           ),
@@ -53,14 +51,14 @@ class SudokuSolverState extends State<SudokuSolver> {
         Container(
             height: 8 * DOUBLE_DEFAULT_MARGIN
         ),
-        if (_currentSolutions != null && _currentSolutions!.length > 1)
+        if (_currentBoard.solutions != null && _currentBoard.solutions!.length > 1)
           Row(
             children: [
               GCWIconButton(
                 icon: Icons.arrow_back_ios,
                 onPressed: () {
                   setState(() {
-                    _currentSolution = (_currentSolution - 1 + _currentSolutions!.length) % _currentSolutions!.length;
+                    _currentSolution = (_currentSolution - 1 + _currentBoard.solutions!.length) % _currentBoard.solutions!.length;
                     _showSolution();
                   });
                 },
@@ -68,22 +66,22 @@ class SudokuSolverState extends State<SudokuSolver> {
               Expanded(
                 child: GCWText(
                   align: Alignment.center,
-                  text: '${_currentSolution + 1}/${_currentSolutions!.length}' +
-                      (_currentSolutions!.length >= _MAX_SOLUTIONS ? ' *' : ''),
+                  text: '${_currentSolution + 1}/${_currentBoard.solutions!.length}' +
+                      (_currentBoard.solutions!.length >= _MAX_SOLUTIONS ? ' *' : ''),
                 ),
               ),
               GCWIconButton(
                 icon: Icons.arrow_forward_ios,
                 onPressed: () {
                   setState(() {
-                    _currentSolution = (_currentSolution + 1) % _currentSolutions!.length;
+                    _currentSolution = (_currentSolution + 1) % _currentBoard.solutions!.length;
                     _showSolution();
                   });
                 },
               ),
             ],
           ),
-        if (_currentSolutions != null && _currentSolutions!.length >= _MAX_SOLUTIONS)
+        if (_currentBoard.solutions != null && _currentBoard.solutions!.length >= _MAX_SOLUTIONS)
           Container(
             child: GCWText(text: '*) ' + i18n(context, 'sudokusolver_maximumsolutions')),
             padding: EdgeInsets.only(top: DOUBLE_DEFAULT_MARGIN),
@@ -96,8 +94,8 @@ class SudokuSolverState extends State<SudokuSolver> {
                   text: i18n(context, 'sudokusolver_solve'),
                   onPressed: () {
                     setState(() {
-                      _currentSolutions = solveSudoku(_currentBoard.solveableBoard(), _MAX_SOLUTIONS);
-                      if (_currentSolutions == null) {
+                      _currentBoard.solveSudoku(_MAX_SOLUTIONS);
+                      if (_currentBoard.solutions == null) {
                         showToast(i18n(context, 'sudokusolver_error'));
                       } else {
                         _currentSolution = 0;
@@ -121,7 +119,7 @@ class SudokuSolverState extends State<SudokuSolver> {
                               _currentBoard.setValue(i, j, null);
                           }
                         }
-                        _currentSolutions = null;
+                        _currentBoard.solutions = null;
                       });
                     },
                   ),
@@ -138,8 +136,6 @@ class SudokuSolverState extends State<SudokuSolver> {
                             () {
                           setState(() {
                             _currentBoard = SudokuBoard();
-
-                            _currentSolutions = null;
                           });
                         },
                       );
@@ -154,11 +150,11 @@ class SudokuSolverState extends State<SudokuSolver> {
   }
 
   void _showSolution() {
-    if (_currentSolutions == null || _currentSolution >= _currentSolutions!.length) return;
+    if (_currentBoard.solutions == null || _currentSolution >= _currentBoard.solutions!.length) return;
     for (int i = 0; i < 9; i++)
       for (int j = 0; j < 9; j++) {
         if (_currentBoard.getFillType(i, j) == SudokuFillType.USER_FILLED) continue;
-        _currentBoard.setValue(i, j, _currentSolutions![_currentSolution].getValue(i, j), type: SudokuFillType.CALCULATED);
+        _currentBoard.setValue(i, j, _currentBoard.solutions![_currentSolution].getValue(i, j), type: SudokuFillType.CALCULATED);
       }
   }
 }

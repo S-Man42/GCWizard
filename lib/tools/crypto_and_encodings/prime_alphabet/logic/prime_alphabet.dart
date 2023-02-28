@@ -21,7 +21,7 @@ String decryptPrimeAlphabet(List<int>? input, {int firstRecognizedPrime = 2}) {
   }).join();
 }
 
-List<int> encryptPrimeAlphabet(String? input, {int firstRecognizedPrime: 2, int lastRecognizedPrime: 101}) {
+List<int> encryptPrimeAlphabet(String? input, {int firstRecognizedPrime = 2, int lastRecognizedPrime = 101}) {
   if (input == null) return [];
 
   input = input.toUpperCase().replaceAll(RegExp(r'[^A-Z]'), '');

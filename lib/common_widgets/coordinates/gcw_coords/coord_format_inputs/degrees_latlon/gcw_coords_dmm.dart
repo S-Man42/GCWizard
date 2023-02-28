@@ -2,7 +2,7 @@ part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart
 
 class _GCWCoordsDMM extends StatefulWidget {
   final void Function(DMM) onChanged;
-  final BaseCoordinates coordinates;
+  final DMM coordinates;
 
   const _GCWCoordsDMM({Key? key, required this.onChanged, required this.coordinates}) : super(key: key);
 
@@ -66,7 +66,7 @@ class _GCWCoordsDMMState extends State<_GCWCoordsDMM> {
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      var dmm = widget.coordinates is DMM ? widget.coordinates as DMM : DMM.fromLatLon(widget.coordinates.toLatLng());
+      var dmm = widget.coordinates is DMM ? widget.coordinates as DMM : DMM.fromLatLon(widget.coordinates.toLatLng() ?? defaultCoordinate);
       var lat = dmm.latitude.formatParts(10);
       var lon = dmm.longitude.formatParts(10);
 
@@ -243,7 +243,7 @@ class _GCWCoordsDMMState extends State<_GCWCoordsDMM> {
     ]);
   }
 
-  _setCurrentValueAndEmitOnChange() {
+  void _setCurrentValueAndEmitOnChange() {
     int _degrees = ['', '-'].contains(_currentLatDegrees) ? 0 : int.parse(_currentLatDegrees);
     int _minutes = ['', '-'].contains(_currentLatMinutes) ? 0 : int.parse(_currentLatMinutes);
     double _minutesD = double.parse('$_minutes.$_currentLatMilliMinutes');

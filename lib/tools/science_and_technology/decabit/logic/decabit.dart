@@ -156,7 +156,7 @@ String encryptDecabit(String? input, Map<String, String> replaceCharacters, bool
         .join(' ');
   }
 
-  if (replaceCharacters != null) decabit = substitution(decabit, replaceCharacters);
+  decabit = substitution(decabit, replaceCharacters);
 
   return decabit;
 }

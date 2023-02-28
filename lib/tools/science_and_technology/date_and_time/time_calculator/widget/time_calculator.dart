@@ -8,12 +8,6 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/utils/datetime_utils.dart';
 
-// enabling int value to get passed as reference
-class _WrapperForInt {
-  int value;
-  _WrapperForInt(this.value);
-}
-
 class TimeCalculator extends StatefulWidget {
   @override
   TimeCalculatorState createState() => TimeCalculatorState();

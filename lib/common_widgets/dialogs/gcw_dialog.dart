@@ -21,7 +21,7 @@ void showGCWDialog(BuildContext context, String title, Widget? child, List<Widge
       titleTextStyle: _boldTextStyle,
       contentTextStyle: _textStyle);
 
-  showDialog(
+  showDialog<bool>(
     context: context,
     barrierDismissible: closeOnOutsideTouch,
     builder: (BuildContext context) {

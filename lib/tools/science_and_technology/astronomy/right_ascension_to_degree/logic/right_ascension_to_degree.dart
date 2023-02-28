@@ -2,7 +2,7 @@
 
 import 'dart:math';
 
-import 'package:gc_wizard/tools/coords/coordinate_format_parser/logic/latlon.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_parser.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/dec.dart' as dec;
 import 'package:gc_wizard/utils/datetime_utils.dart';
 import 'package:intl/intl.dart';
@@ -20,7 +20,7 @@ RightAscension? raDegree2RightAscension(RaDeg? ra) {
 }
 
 /// Right ascension hms to degree
-RaDeg? raRightAscension2Degree(RightAscension equatorial) {
+RaDeg? raRightAscension2Degree(RightAscension? equatorial) {
   if (equatorial == null) return null;
 
   var h = equatorial.hours;

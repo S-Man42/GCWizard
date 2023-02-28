@@ -24,7 +24,7 @@ class MultiDecoderToolAlphabetValues extends AbstractMultiDecoderTool {
             internalToolName: MDT_INTERNALNAMES_ALPHABETVALUES,
             onDecode: (String input, String key) {
               var alphabet = ALL_ALPHABETS
-                  .firstWhere((alphabet) => alphabet.key == options[MDT_ALPHABETVALUES_OPTION_ALPHABET])
+                  .firstWhere((alphabet) => alphabet.key == checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_ALPHABETVALUES, options, MDT_ALPHABETVALUES_OPTION_ALPHABET))
                   .alphabet;
 
               return logic.AlphabetValues(alphabet: alphabet)
@@ -34,11 +34,11 @@ class MultiDecoderToolAlphabetValues extends AbstractMultiDecoderTool {
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
               MDT_ALPHABETVALUES_OPTION_ALPHABET: GCWStatefulDropDown<String>(
-                value: options[MDT_ALPHABETVALUES_OPTION_ALPHABET],
+                value: checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_ALPHABETVALUES, options, MDT_ALPHABETVALUES_OPTION_ALPHABET),
                 items: ALL_ALPHABETS.map((alphabet) {
                   return GCWDropDownMenuItem(
                       value: alphabet.key,
-                      child: alphabet.type == AlphabetType.STANDARD ? i18n(context, alphabet.key) : alphabet.name);
+                      child: alphabet.type == AlphabetType.STANDARD ? i18n(context, alphabet.key) : alphabet.name ?? '');
                 }).toList(),
                 onChanged: (value) {
                   options[MDT_ALPHABETVALUES_OPTION_ALPHABET] = value;

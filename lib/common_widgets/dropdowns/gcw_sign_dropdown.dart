@@ -22,7 +22,7 @@ class _GCWSignDropDownState extends State<GCWSignDropDown> {
       value: widget.value ?? _dropdownValue,
       onChanged: (newValue) {
         setState(() {
-          _dropdownValue = newValue is int ? newValue as int : _dropdownValue;
+          _dropdownValue = newValue is int ? newValue : _dropdownValue;
           widget.onChanged(_dropdownValue);
         });
       },

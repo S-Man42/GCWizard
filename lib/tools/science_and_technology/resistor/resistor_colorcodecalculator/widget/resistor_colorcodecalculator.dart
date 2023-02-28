@@ -207,7 +207,7 @@ class ResistorColorCodeCalculatorState extends State<ResistorColorCodeCalculator
   }
 
   Widget _buildOutput() {
-    var outputs = [[]];
+    var outputs = [<Object?>[]];
 
     ResistorValue resistorValue;
 

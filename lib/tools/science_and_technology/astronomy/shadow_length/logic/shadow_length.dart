@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:gc_wizard/tools/coords/_common/logic/coord_format_getter.dart' as coordUtils;
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/coords/waypoint_projection/logic/projection.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/_common/logic/julian_date.dart';
@@ -28,7 +27,7 @@ ShadowLength shadowLength(
   var shadowLen =
       objectHeight * cos(degreesToRadian(sunPosition.altitude)) / sin(degreesToRadian(sunPosition.altitude));
   // Sun is in one Direction, so shadow is the opposite direction
-  var sunAzimuth = coordUtils.normalizeBearing(sunPosition.azimuth + 180.0);
+  var sunAzimuth = normalizeBearing(sunPosition.azimuth + 180.0);
 
   var _currentPosition = projection(coords, sunAzimuth, shadowLen, ells);
 

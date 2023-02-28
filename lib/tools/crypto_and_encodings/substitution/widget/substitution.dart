@@ -123,7 +123,7 @@ class SubstitutionState extends State<Substitution> {
       _substitutions.putIfAbsent(entry.value.keys.first, () => entry.value.values.first);
     });
 
-    if (_currentFromInput != null && _currentFromInput.isNotEmpty && _currentToInput != null) {
+    if (_currentFromInput.isNotEmpty) {
       _substitutions.putIfAbsent(_currentFromInput, () => _currentToInput);
     }
 

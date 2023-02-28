@@ -117,7 +117,7 @@ class IntersectTwoCirclesState extends State<IntersectTwoCircles> {
         radius1: _currentRadius1,
         coord2: _currentCoords2,
         radius2: _currentRadius2,
-        ells: defaultEllipsoid()));
+        ells: defaultEllipsoid));
   }
 
   void _showOutput(List<LatLng> output) {
@@ -173,7 +173,7 @@ class IntersectTwoCirclesState extends State<IntersectTwoCircles> {
         .toList());
 
     _currentOutput = _currentIntersections
-        .map((intersection) => formatCoordOutput(intersection, _currentOutputFormat, defaultEllipsoid()))
+        .map((intersection) => formatCoordOutput(intersection, _currentOutputFormat, defaultEllipsoid))
         .toList();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {

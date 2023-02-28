@@ -1,8 +1,8 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _GCWCoordsGeo3x3 extends StatefulWidget {
-  final void Function(Geo3x3) onChanged;
-  final BaseCoordinates coordinates;
+  final void Function(Geo3x3?) onChanged;
+  final Geo3x3 coordinates;
 
   const _GCWCoordsGeo3x3({Key? key, required this.onChanged, required this.coordinates}) : super(key: key);
 
@@ -28,14 +28,10 @@ class _GCWCoordsGeo3x3State extends State<_GCWCoordsGeo3x3> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.coordinates != null) {
-      var geo3x3 = widget.coordinates is Geo3x3
-          ? widget.coordinates as Geo3x3
-          : Geo3x3.fromLatLon(widget.coordinates.toLatLng(), 20);
-      _currentCoord = geo3x3.text;
+    var geo3x3 = widget.coordinates;
+    _currentCoord = geo3x3.text;
 
-      _controller.text = _currentCoord;
-    }
+    _controller.text = _currentCoord;
 
     return Column(children: <Widget>[
       GCWTextField(
@@ -51,7 +47,7 @@ class _GCWCoordsGeo3x3State extends State<_GCWCoordsGeo3x3> {
     ]);
   }
 
-  _setCurrentValueAndEmitOnChange() {
+  void _setCurrentValueAndEmitOnChange() {
     try {
       widget.onChanged(Geo3x3.parse(_currentCoord));
     } catch (e) {}

@@ -46,7 +46,7 @@ class BreakerKey {
   /// return: the alphabet in normalized form (i.e., in lower cases)
   ///      null -> alphabet is invalid
   static String? check_alphabet(String alphabet) {
-    if ((alphabet == null) || (alphabet.isEmpty)) return null;
+    if (alphabet.isEmpty) return null;
     alphabet = alphabet.toLowerCase();
     if (alphabet.length != _set(alphabet).length)
       // alphabet characters must be unique
@@ -70,11 +70,7 @@ class BreakerKey {
       // key must be as long as the alphabet
       return null;
 
-    bool result = true;
-    key.split('').map((char) => result & alphabet.contains(char));
-    if (!result)
-      // key must use the same set of characters than the alphabet
-      return null;
+    key.split('').map((char) => alphabet.contains(char));
 
     return key;
   }

@@ -13,7 +13,7 @@ import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/map_view/widget/gcw_mapview.dart';
 
 class GCWCoordsOutput extends StatefulWidget {
-  final List<BaseCoordinates> outputs;
+  final List<BaseCoordinate> outputs;
   final List<String>? copyTexts;
   List<GCWMapPoint> points;
   List<GCWMapPolyline>? polylines;
@@ -34,13 +34,15 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
   @override
   Widget build(BuildContext context) {
     var children = widget.outputs
+        .where((BaseCoordinate element) => element.toLatLng() != null)
+        .toList()
         .asMap()
         .map((index, output) {
           return MapEntry(
               index,
               Container(
                 child: GCWOutput(
-                  child: output,
+                  child: output.toString(),
                   copyText:
                       widget.copyTexts != null && widget.copyTexts!.length > index ? widget.copyTexts![index] : null,
                 ),

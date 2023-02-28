@@ -75,7 +75,7 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
 
   Widget _buildSubmitButton() {
     return GCWSubmitButton(onPressed: () async {
-      await showDialog(
+      await showDialog<bool>(
         context: context,
         barrierDismissible: false,
         builder: (context) {

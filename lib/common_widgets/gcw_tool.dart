@@ -89,7 +89,6 @@ class GCWToolActionButtonsEntry {
     required this.text, required this.icon, this.onPressed});
 }
 
-//ignore: must_be_immutable
 class GCWTool extends StatefulWidget {
   final Widget tool;
   final String id;
@@ -128,7 +127,7 @@ class GCWTool extends StatefulWidget {
         this.isBeta = false,
         this.suppressHelpButton = false})
       : super(key: key) {
-    this.longId = className(tool) + '_' + (id ?? '');
+    this.longId = className(tool) + '_' + (id);
 
     if (iconPath != null) {
       this.icon = GCWSymbolContainer(

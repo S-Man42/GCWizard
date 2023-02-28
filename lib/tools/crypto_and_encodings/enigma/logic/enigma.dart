@@ -11,7 +11,7 @@ class EnigmaRotor {
   String turnovers; // see https://en.wikipedia.org/wiki/Enigma_machine#Turnover
   EnigmaRotorType type;
 
-  EnigmaRotor(this.name, this.alphabet, {this.turnovers: '', this.type: EnigmaRotorType.STANDARD});
+  EnigmaRotor(this.name, this.alphabet, {this.turnovers = '', this.type = EnigmaRotorType.STANDARD});
 
   @override
   String toString() {
@@ -155,7 +155,7 @@ class EnigmaKey {
     inversePlugboard.forEach((k, v) => this.plugboard.putIfAbsent(k.toUpperCase(), () => v.toUpperCase()));
   }
 
-  EnigmaKey(this.rotorConfigurations, {Map<String, String> plugboard: const {}}) {
+  EnigmaKey(this.rotorConfigurations, {Map<String, String> plugboard = const {}}) {
     _createPlugboard(plugboard);
   }
 

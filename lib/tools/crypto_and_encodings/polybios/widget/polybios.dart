@@ -102,7 +102,7 @@ class PolybiosState extends State<Polybios> {
             });
           },
         ),
-        _currentKey != null && _currentKey.length < 6
+        _currentKey.length < 6
             ? GCWAlphabetModificationDropDown(
                 value: _currentModificationMode,
                 onChanged: (value) {
@@ -118,9 +118,7 @@ class PolybiosState extends State<Polybios> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    if (_currentInput == null ||
-        _currentInput.isEmpty ||
-        _currentKey == null ||
+    if (_currentInput.isEmpty ||
         ![5, 6].contains(_currentKey.length)) {
       return GCWDefaultOutput(); // TODO: Exception
     }

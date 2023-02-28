@@ -1,4 +1,4 @@
-import 'package:gc_wizard/tools/coords/coordinate_format_parser/logic/latlon.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_parser.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -77,23 +77,41 @@ DEC? parseDEC(String? input, {bool wholeString = false}) {
   RegExp regex = RegExp(PATTERN_DEC + regexEnd, caseSensitive: false);
 
   if (regex.hasMatch(input)) {
-    var matches = regex.firstMatch(input);
+    RegExpMatch matches = regex.firstMatch(input)!;
+
+    if (matches.group(1) == null
+        || matches.group(2) == null
+    )
+      return null;
 
     var latSign = latLngPartSign(matches.group(1));
-    var latDegrees = 0.0;
+    double? _latDegrees = 0.0;
     if (matches.group(3) != null) {
-      latDegrees = latSign * double.parse('${matches.group(2)}.${matches.group(3)}');
+      _latDegrees = double.tryParse('${matches.group(2)}.${matches.group(3)}');
     } else {
-      latDegrees = latSign * double.parse('${matches.group(2)}.0');
+      _latDegrees = double.tryParse('${matches.group(2)}.0');
     }
+    if (_latDegrees == null)
+      return null;
+
+    var latDegrees = latSign * _latDegrees;
+
+    if (matches.group(4) == null
+        || matches.group(5) == null
+    )
+      return null;
 
     var lonSign = latLngPartSign(matches.group(4));
-    var lonDegrees = 0.0;
+    double? _lonDegrees = 0.0;
     if (matches.group(6) != null) {
-      lonDegrees = lonSign * double.parse('${matches.group(5)}.${matches.group(6)}');
+      _lonDegrees = double.tryParse('${matches.group(5)}.${matches.group(6)}');
     } else {
-      lonDegrees = lonSign * double.parse('${matches.group(5)}.0');
+      _lonDegrees = double.tryParse('${matches.group(5)}.0');
     }
+    if (_lonDegrees == null)
+      return null;
+
+    var lonDegrees = lonSign * _lonDegrees;
 
     return DEC(latDegrees, lonDegrees);
   }
@@ -104,23 +122,41 @@ DEC? parseDEC(String? input, {bool wholeString = false}) {
 DEC? _parseDECTrailingSigns(String text) {
   RegExp regex = RegExp(PATTERN_DEC_TRAILINGSIGN + regexEnd, caseSensitive: false);
   if (regex.hasMatch(text)) {
-    var matches = regex.firstMatch(text);
+    RegExpMatch matches = regex.firstMatch(text)!;
+
+    if (matches.group(3) == null
+        || matches.group(1) == null
+    )
+      return null;
 
     var latSign = latLngPartSign(matches.group(3));
-    var latDegrees = 0.0;
+    double? _latDegrees = 0.0;
     if (matches.group(2) != null) {
-      latDegrees = latSign * double.parse('${matches.group(1)}.${matches.group(2)}');
+      _latDegrees = double.tryParse('${matches.group(1)}.${matches.group(2)}');
     } else {
-      latDegrees = latSign * double.parse('${matches.group(1)}.0');
+      _latDegrees = double.tryParse('${matches.group(1)}.0');
     }
+    if (_latDegrees == null)
+      return null;
+
+    var latDegrees = latSign * _latDegrees;
+
+    if (matches.group(6) == null
+        || matches.group(4) == null
+    )
+      return null;
 
     var lonSign = latLngPartSign(matches.group(6));
-    var lonDegrees = 0.0;
+    double? _lonDegrees = 0.0;
     if (matches.group(5) != null) {
-      lonDegrees = lonSign * double.parse('${matches.group(4)}.${matches.group(5)}');
+      _lonDegrees = double.tryParse('${matches.group(4)}.${matches.group(5)}');
     } else {
-      lonDegrees = lonSign * double.parse('${matches.group(4)}.0');
+      _lonDegrees = double.tryParse('${matches.group(4)}.0');
     }
+    if (_lonDegrees == null)
+      return null;
+
+    var lonDegrees = lonSign * _lonDegrees;
 
     return DEC(latDegrees, lonDegrees);
   }

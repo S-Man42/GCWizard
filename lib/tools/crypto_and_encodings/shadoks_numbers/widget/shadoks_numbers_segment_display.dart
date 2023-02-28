@@ -20,6 +20,7 @@ double _relativeY(Size size, double y) {
   return size.height / _SHADOKS_RELATIVE_DISPLAY_HEIGHT * y;
 }
 
+//ignore: must_be_immutable
 class _ShadoksNumbersSegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
   final bool readOnly;
@@ -48,7 +49,8 @@ class _ShadoksNumbersSegmentDisplay extends NSegmentDisplay {
                 'b': [80.0, 20.0, 0.0, 60.0],
                 'c':[80.0, 80.0, -60.0, 0.0],
                 'd': [20.0, 80.0, 60.0, -60.0]
-              }.forEach((key, element) {
+              };
+              map.forEach((key, element) {
                 var path = Path();
 
                 paint.color = segmentActive(currentSegments, key) ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
@@ -83,7 +85,8 @@ class _ShadoksNumbersSegmentDisplay extends NSegmentDisplay {
               'b': [75.0, 15.0, 0.0, 70.0, 10.0, 0.0, 0.0, -70.0],
               'c':[85.0, 85.0, -70.0, 0.0, 0.0, -10.0, 70.0, 0.0],
               'd': [79.0, 11.0, 9.0, 9.0, -69.0, 69.0, -9.0, -9.0]
-              }.forEach((key, element) {
+              };
+              map .forEach((key, element) {
                 var path = Path();
                 path.moveTo(_relativeX(size, element[0]), _relativeY(size, element[1]));
                 path.relativeLineTo(_relativeX(size, element[2]), _relativeY(size, element[3]));

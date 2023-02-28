@@ -23,13 +23,11 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('jd: ${elem['jd']}', () {
         var _actual = julianDateToGregorianCalendar(elem['jd'] as double);
-        if (_actual == null)
-          expect(_actual, elem['expectedOutput']);
-        else {
-          expect(_actual.day, (elem['expectedOutput'] as DateTime).day);
-          expect(_actual.month, (elem['expectedOutput'] as DateTime).month);
-          expect(_actual.year, (elem['expectedOutput'] as DateTime).year);
-        }
+
+        expect(_actual.day, (elem['expectedOutput'] as DateTime).day);
+        expect(_actual.month, (elem['expectedOutput'] as DateTime).month);
+        expect(_actual.year, (elem['expectedOutput'] as DateTime).year);
+
       });
     });
   });
@@ -56,13 +54,10 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('jd: ${elem['jd']}', () {
         var _actual = julianDateToJulianCalendar(elem['jd'] as double);
-        if (_actual == null)
-          expect(_actual, elem['expectedOutput']);
-        else {
-          expect(_actual.day, (elem['expectedOutput'] as DateTime).day);
-          expect(_actual.month, (elem['expectedOutput'] as DateTime).month);
-          expect(_actual.year, (elem['expectedOutput'] as DateTime).year);
-        }
+
+        expect(_actual.day, (elem['expectedOutput'] as DateTime).day);
+        expect(_actual.month, (elem['expectedOutput'] as DateTime).month);
+        expect(_actual.year, (elem['expectedOutput'] as DateTime).year);
       });
     });
   });

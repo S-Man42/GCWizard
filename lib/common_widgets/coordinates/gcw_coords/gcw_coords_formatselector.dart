@@ -20,7 +20,7 @@ class GCWCoordsFormatSelector extends StatefulWidget {
   List<GCWDropDownMenuItem> getDropDownItems(BuildContext context) {
     return allCoordinateFormatMetadata.map((entry) {
       return GCWDropDownMenuItem(
-          value: entry.key, child: i18n(context, entry.name, ifTranslationNotExists: entry.name), subtitle: entry.example);
+          value: entry.type, child: i18n(context, entry.name, ifTranslationNotExists: entry.name), subtitle: entry.example);
     }).toList();
   }
 }
@@ -82,7 +82,7 @@ class GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
           value: _currentSubtype!,
           items: coordinateFormatMetadataByKey(format).subtypes!.map((subtype) {
             return GCWDropDownMenuItem(
-              value: subtype.key,
+              value: subtype.type,
               child: i18n(context, subtype.name),
             );
           }).toList(),

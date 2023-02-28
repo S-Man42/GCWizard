@@ -103,7 +103,7 @@ class CrossBearingState extends State<CrossBearing> {
   }
 
   GCWMapPoint _getEndLine1() {
-    final _ells = defaultEllipsoid();
+    final _ells = defaultEllipsoid;
 
     var mapPoint;
     if (_currentIntersection == null) {
@@ -122,7 +122,7 @@ class CrossBearingState extends State<CrossBearing> {
   }
 
   GCWMapPoint _getEndLine2() {
-    final _ells = defaultEllipsoid();
+    final _ells = defaultEllipsoid;
 
     var mapPoint;
     if (_currentIntersection == null) {
@@ -169,7 +169,7 @@ class CrossBearingState extends State<CrossBearing> {
         az13: _currentBearing1['value'],
         coord2: _currentCoords2,
         az23: _currentBearing2['value'],
-        ells: defaultEllipsoid(),
+        ells: defaultEllipsoid,
         crossbearing: true));
   }
 
@@ -201,7 +201,7 @@ class CrossBearingState extends State<CrossBearing> {
         markerText: i18n(context, "coords_common_intersection"),
         coordinateFormat: _currentOutputFormat));
 
-    _currentOutput = [formatCoordOutput(_currentIntersection, _currentOutputFormat, defaultEllipsoid())];
+    _currentOutput = [formatCoordOutput(_currentIntersection, _currentOutputFormat, defaultEllipsoid)];
 
     _currentMapPolylines = [
       GCWMapPolyline(points: [_getStartLine1(), _getEndLine1()]),

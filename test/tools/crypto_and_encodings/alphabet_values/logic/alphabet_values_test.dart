@@ -16,7 +16,7 @@ void main() {
       test('alphabet: ${elem['alphabet']}, text: ${elem['text']}, keepNumbers: ${elem['keepNumbers']}', () {
         var keepNumbers = elem['keepNumbers'];
 
-        var _actual;
+        List<int?> _actual;
         if (keepNumbers == null)
           _actual = AlphabetValues().textToValues(elem['text'] as String?);
         else

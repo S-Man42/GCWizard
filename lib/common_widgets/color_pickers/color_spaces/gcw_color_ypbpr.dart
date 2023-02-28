@@ -62,7 +62,7 @@ class _GCWColorYPbPrState extends State<_GCWColorYPbPr> {
     );
   }
 
-  _emitOnChange() {
+  void _emitOnChange() {
     widget.onChanged(YPbPr(_currentY / 100.0, _currentPb / 100.0, _currentPr / 100.0));
   }
 }

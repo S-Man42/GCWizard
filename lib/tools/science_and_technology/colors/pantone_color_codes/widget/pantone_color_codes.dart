@@ -119,7 +119,7 @@ class PantoneColorCodesState extends State<PantoneColorCodes> {
     var rgb = convertColorSpace(_currentColor, ColorSpaceKey.RGB);
     var similarPantones = findSimilarPantoneColors(rgb, _colors);
 
-    if (similarPantones == null || similarPantones.isEmpty) {
+    if (similarPantones.isEmpty) {
       return GCWDefaultOutput(
         child: i18n(context, 'pantonecolorcodes_mode_colorstoral_nocolorfound'),
       );

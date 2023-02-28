@@ -127,19 +127,17 @@ class RC4State extends State<RC4> {
     var _currentOutput =
         cryptRC4(_currentInput, _currentInputFormat, _currentKey, _currentKeyFormat, _currentOutputFormat);
 
-    if (_currentOutput == null) {
-      return GCWDefaultOutput();
-    } else if (_currentOutput.errorCode != ErrorCode.OK) {
+    if (_currentOutput.errorCode != ErrorCode.OK) {
       switch (_currentOutput.errorCode) {
         case ErrorCode.MISSING_KEY:
           return GCWDefaultOutput(child: i18n(context, 'rc4_error_missing_key'));
-          break;
-        case ErrorCode.KEY_FORMAT:
+         case ErrorCode.KEY_FORMAT:
           showToast(i18n(context, 'rc4_error_key_format'));
           break;
         case ErrorCode.INPUT_FORMAT:
           showToast(i18n(context, 'rc4_error_input_format'));
           break;
+        default:
       }
       return GCWDefaultOutput();
     }

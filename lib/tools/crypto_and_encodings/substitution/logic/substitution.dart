@@ -1,6 +1,6 @@
 import 'dart:collection';
 
-String substitution(String? input, Map<String, String> substitutions, {bool caseSensitive: true}) {
+String substitution(String? input, Map<String, String> substitutions, {bool caseSensitive = true}) {
   if (input == null || input.isEmpty) return '';
 
   if (!caseSensitive) {

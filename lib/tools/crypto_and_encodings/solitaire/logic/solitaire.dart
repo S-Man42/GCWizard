@@ -196,11 +196,3 @@ List<int> _copyToDeck(List<int> deck, List<int> targetDeck, int positionFrom, in
 
   return targetDeck;
 }
-
-String _solitaireDeckToString(List<int> deck) {
-  var output = '';
-
-  output = deck.map((entry) => entry.toString() + ", ").join();
-
-  return output.replaceFirst(', ', '', output.length - 2);
-}

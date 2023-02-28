@@ -134,7 +134,7 @@ class _HashBreakerState extends State<HashBreaker> {
   }
 
   void _onDoCalculation() async {
-    await showDialog(
+    await showDialog<bool>(
       context: context,
       barrierDismissible: false,
       builder: (context) {
@@ -181,9 +181,7 @@ class _HashBreakerState extends State<HashBreaker> {
       _substitutions.putIfAbsent(entry.value.keys.first, () => entry.value.values.first);
     });
 
-    if (_currentFromInput != null &&
-        _currentFromInput.isNotEmpty &&
-        _currentToInput != null &&
+    if (_currentFromInput.isNotEmpty &&
         _currentToInput.isNotEmpty) {
       _substitutions.putIfAbsent(_currentFromInput, () => _currentToInput);
     }

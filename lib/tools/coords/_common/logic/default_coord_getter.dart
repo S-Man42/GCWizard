@@ -3,7 +3,6 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_metadata.
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
-import 'package:gc_wizard/utils/coordinate_utils.dart';
 import 'package:prefs/prefs.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
@@ -26,6 +25,10 @@ CoordinateFormatKey? _getDefaultSubtypeForFormat(CoordinateFormatKey format) {
   }
 }
 
+BaseCoordinate get defaultBaseCoordinates {
+  return buildCoordinatesByFormat(defaultCoordinateFormat, defaultCoordinate, defaultEllipsoid);
+}
+
 const CoordinateFormatKey _fallbackDefaultCoordFormatKey = CoordinateFormatKey.DMM;
 
 CoordinateFormat get defaultCoordinateFormat {
@@ -39,7 +42,7 @@ CoordinateFormat get defaultCoordinateFormat {
     if (_format == null)
       format = _fallbackDefaultCoordFormatKey;
     else
-      format = _format.key;
+      format = _format.type;
   }
 
   return CoordinateFormat(format, defaultCoordinateFormatSubtypeForFormat(format));
@@ -73,13 +76,13 @@ CoordinateFormatKey? defaultCoordinateFormatSubtypeForFormat(CoordinateFormatKey
   } else {
 
     var _subtype = coordinateFormatMetadataSubtypeByPersistenceKey(subtypeStr);
-    if (_subtype == null || !isSubtypeOfCoordinateFormat(format, _subtype.key)) {
+    if (_subtype == null || !isSubtypeOfCoordinateFormat(format, _subtype.type)) {
 
       subtype = _getDefaultSubtypeForFormat(format)!;
 
     } else {
 
-      subtype = _subtype.key;
+      subtype = _subtype.type;
 
     }
 
@@ -99,7 +102,7 @@ int defaultHemiphereLongitude() {
   return Prefs.getString(PREFERENCE_COORD_DEFAULT_HEMISPHERE_LONGITUDE) == HemisphereLongitude.East.toString() ? 1 : -1;
 }
 
-Ellipsoid defaultEllipsoid() {
+Ellipsoid get defaultEllipsoid {
   var _WGS84Ells = getEllipsoidByName(ELLIPSOID_NAME_WGS84)!;
 
   String type = Prefs.getString(PREFERENCE_COORD_DEFAULT_ELLIPSOID_TYPE);

@@ -18,7 +18,7 @@ List<List<String>>? createTranspositionMatrix(String? input, TranspositionMatrix
   }
 
   if (countRows == null || countRows < 1) {
-    countColumns = max(1, countColumns ?? 1);
+    countColumns = max(1, countColumns);
     countRows = (necessaryCells / countColumns).ceil();
   }
 
@@ -67,7 +67,7 @@ List<List<String>>? createTranspositionMatrix(String? input, TranspositionMatrix
   return matrix;
 }
 
-String encryptTransposition(String? input, {int? countRows, int? countColumns, int countLettersPerCell: 1}) {
+String encryptTransposition(String? input, {int? countRows, int? countColumns, int countLettersPerCell = 1}) {
   if (input == null || input.isEmpty) return '';
 
   var matrix = createTranspositionMatrix(input, TranspositionMatrixFillMode.encryption,
@@ -75,12 +75,10 @@ String encryptTransposition(String? input, {int? countRows, int? countColumns, i
 
   if (matrix == null) return ''; //TODO: Exception Handling
 
-  var flattened = matrix.expand((column) => column).toList();
-  flattened.removeWhere((element) => element == null);
-  return flattened.join();
+  return matrix.expand((column) => column).join();
 }
 
-String decryptTransposition(String? input, {int? countRows, int? countColumns, int countLettersPerCell: 1}) {
+String decryptTransposition(String? input, {int? countRows, int? countColumns, int countLettersPerCell = 1}) {
   if (input == null || input.isEmpty) return '';
 
   var matrix = createTranspositionMatrix(input, TranspositionMatrixFillMode.decryption,
@@ -94,7 +92,7 @@ String decryptTransposition(String? input, {int? countRows, int? countColumns, i
   var out = '';
   for (int i = 0; i < countRows; i++) {
     for (int j = 0; j < countColumns; j++) {
-      if (matrix[j][i] != null) out += matrix[j][i];
+      out += matrix[j][i];
     }
   }
 

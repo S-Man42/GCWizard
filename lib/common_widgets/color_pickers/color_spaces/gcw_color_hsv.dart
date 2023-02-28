@@ -62,7 +62,7 @@ class _ColorHSVState extends State<_ColorHSV> {
     );
   }
 
-  _emitOnChange() {
+  void _emitOnChange() {
     widget.onChanged(HSV(_currentHue, _currentSaturation / 100.0, _currentValue / 100.0));
   }
 }

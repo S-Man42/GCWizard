@@ -14,7 +14,7 @@ Map<String, String> _LOCALE_SEARCHSTRINGS = {};
 
 final ALLOWED_SEARCH_CHARACTERS = RegExp(r'[^a-z0-9α-ω¥, ]');
 
-Future loadSearchStrings(String languageCode) async {
+Future<void> loadSearchStrings(String languageCode) async {
   if (_COMMON_SEARCHSTRINGS.isEmpty) {
     _COMMON_SEARCHSTRINGS = await _getSearchStringsForLocale('common');
     _EN_SEARCHSTRINGS = await _getSearchStringsForLocale('en');
@@ -22,7 +22,7 @@ Future loadSearchStrings(String languageCode) async {
   await _loadLocaleSearchStrings(languageCode);
 }
 
-Future _loadLocaleSearchStrings(String languageCode) async {
+Future<void> _loadLocaleSearchStrings(String languageCode) async {
   if (languageCode != 'en') {
     _LOCALE_SEARCHSTRINGS = await _getSearchStringsForLocale(languageCode);
   } else {

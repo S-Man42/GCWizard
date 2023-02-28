@@ -32,7 +32,7 @@ class MultiDecoderToolRomanNumbers extends AbstractMultiDecoderTool {
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
               MDT_ROMANNUMBERS_OPTION_MODE: GCWStatefulDropDown<String>(
-                value: toStringOrDefault(options[MDT_ROMANNUMBERS_OPTION_MODE], MDT_ROMANNUMBERS_OPTION_MODE_SUBTRACTION),
+                value: checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_ROMANNUMBERS, options, MDT_ROMANNUMBERS_OPTION_MODE),
                 onChanged: (newValue) {
                   options[MDT_ROMANNUMBERS_OPTION_MODE] = newValue;
                 },
@@ -45,6 +45,8 @@ class MultiDecoderToolRomanNumbers extends AbstractMultiDecoderTool {
                     case RomanNumberType.ONLY_ADDITION:
                       key = MDT_ROMANNUMBERS_OPTION_MODE_ADDITION;
                       break;
+                    default:
+                      key = MDT_ROMANNUMBERS_OPTION_MODE_ADDITION;
                   }
 
                   return GCWDropDownMenuItem(

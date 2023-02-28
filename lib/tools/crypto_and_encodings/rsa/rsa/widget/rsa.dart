@@ -78,15 +78,11 @@ class RSAState extends State<RSA> {
     );
   }
 
-  _calculateOutput() {
+  void _calculateOutput() {
     try {
       var ed = BigInt.tryParse(_currentED);
       var p = BigInt.tryParse(_currentP);
       var q = BigInt.tryParse(_currentQ);
-
-      if (_currentInput == null) {
-        _currentInput = '';
-      }
 
       var outputChildren = <Widget>[];
       if (_currentMode == GCWSwitchPosition.left) {
@@ -94,10 +90,9 @@ class RSAState extends State<RSA> {
           return BigInt.from(char.codeUnits.first);
         }).toList();
 
-        if (_currentInput.replaceAll(RegExp(r'\s+'), '').replaceAll(RegExp(r'[0-9]'), '').isEmpty) {
+        if (_currentInput.replaceAll(RegExp(r'\s+'), '').replaceAll(RegExp(r'\d'), '').isEmpty) {
           var inputAsInt = _currentInput
               .split(RegExp(r'\s+'))
-              .where((chunk) => chunk != null)
               .map((chunk) => BigInt.tryParse(chunk) ?? BigInt.zero)
               .toList();
 
@@ -118,7 +113,6 @@ class RSAState extends State<RSA> {
               var n = number.replaceAll(RegExp('[^0-9]'), '');
               return BigInt.tryParse(n) ?? BigInt.zero;
             })
-            .where((number) => number != null)
             .toList();
 
         var outputNumbers = decryptRSA(inputNumbers, ed, p, q);
@@ -145,8 +139,8 @@ class RSAState extends State<RSA> {
       List<List<Object?>> calculatedParameters = [];
       if (d != null) calculatedParameters.add([i18n(context, 'rsa_d'), d]);
       calculatedParameters.addAll(
-          [[i18n(context, 'rsa_n'), N(p as BigInt, q as BigInt)],
-           [i18n(context, 'rsa_phi'), phi(p as BigInt, q as BigInt)]]
+          [[i18n(context, 'rsa_n'), N(p!, q!)],
+           [i18n(context, 'rsa_phi'), phi(p, q)]]
       );
 
       outputChildren.add(

@@ -65,14 +65,14 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
     var nameOccurrences = mdtTools.where((tool) => tool.name == name).length;
     if (nameOccurrences > 0) name = '$name ${nameOccurrences + 1}';
 
-    var tool = model.MultiDecoderToolEntity(
+    var tool = MultiDecoderToolEntity(
       name,
       chosenInternalName,
     );
 
     var mdtTool = _multiDecoderToolToGCWMultiDecoderTool(context, tool);
     tool.options = mdtTool.options.entries.map((option) {
-      return model.MultiDecoderToolOption(option.key, option.value);
+      return MultiDecoderToolOption(option.key, option.value);
     }).toList();
 
     _currentEditId = insertMultiDecoderTool(tool);
@@ -83,10 +83,10 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
   }
 
   void _updateTool(AbstractMultiDecoderTool tool) {
-    var multiDecoderTool = model.findMultiDecoderToolById(tool.id);
+    var multiDecoderTool = findMultiDecoderToolById(tool.id);
     multiDecoderTool.name = tool.name;
     multiDecoderTool.options = tool.options.entries.map((option) {
-      return model.MultiDecoderToolOption(option.key, option.value);
+      return MultiDecoderToolOption(option.key, option.value);
     }).toList();
 
     updateMultiDecoderTool(multiDecoderTool);
@@ -103,10 +103,9 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
   }
 
   void _refreshMDTTools() {
-    mdtTools = model.multiDecoderTools.map((mdtTool) {
+    mdtTools = multiDecoderTools.map((mdtTool) {
       return _multiDecoderToolToGCWMultiDecoderTool(context, mdtTool);
     }).toList();
-    mdtTools.removeWhere((mdtTool) => mdtTool == null);
   }
 
   void _moveUp(int id) {
@@ -225,7 +224,7 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
 
                               if (tool.internalToolName == MDT_INTERNALNAMES_COORDINATEFORMATS) {
                                 if (CoordinateFormatKey.values.contains(value))
-                                  value = getCoordinateFormatByKey(value as CoordinateFormatKey).name;
+                                  value = coordinateFormatMetadataByKey(value as CoordinateFormatKey).name;
                               } else if ([MDT_INTERNALNAMES_BASE, MDT_INTERNALNAMES_BCD]
                                   .contains(tool.internalToolName)) {
                                 value += '_title';

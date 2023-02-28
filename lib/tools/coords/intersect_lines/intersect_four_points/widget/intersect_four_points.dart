@@ -135,7 +135,7 @@ class IntersectFourPointsState extends State<IntersectFourPoints> {
         coord12: _currentCoords12,
         coord21: _currentCoords21,
         coord22: _currentCoords22,
-        ells: defaultEllipsoid()));
+        ells: defaultEllipsoid));
   }
 
   void _showOutput(LatLng output) {
@@ -183,7 +183,7 @@ class IntersectFourPointsState extends State<IntersectFourPoints> {
         markerText: i18n(context, 'coords_common_intersection'),
         coordinateFormat: _currentOutputFormat));
 
-    _currentOutput = [formatCoordOutput(_currentIntersection, _currentOutputFormat, defaultEllipsoid())];
+    _currentOutput = [formatCoordOutput(_currentIntersection, _currentOutputFormat, defaultEllipsoid)];
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {});

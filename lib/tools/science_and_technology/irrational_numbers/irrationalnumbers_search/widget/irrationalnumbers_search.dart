@@ -79,7 +79,7 @@ class IrrationalNumbersSearchState extends State<IrrationalNumbersSearch> {
 
     if (_solutions.isEmpty) return '';
 
-    var selector = (_totalCurrentSolutions != null && _totalCurrentSolutions > 1)
+    var selector = (_totalCurrentSolutions > 1)
         ? Container(
             child: Row(
               children: [
@@ -114,7 +114,7 @@ class IrrationalNumbersSearchState extends State<IrrationalNumbersSearch> {
     var _solution = _solutions[_currentSolution];
 
     var output = [
-      _hasWildCards ? [i18n(context, 'common_value'), _solution.value] : [],
+      _hasWildCards ? [i18n(context, 'common_value'), _solution.value] : <String>[],
       [i18n(context, 'common_start'), _solution.start],
       [i18n(context, 'common_end'), _solution.end]
     ];

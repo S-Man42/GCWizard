@@ -2,7 +2,7 @@ part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart
 
 class _GCWCoordsMGRS extends StatefulWidget {
   final void Function(MGRS) onChanged;
-  final BaseCoordinates coordinates;
+  final MGRS coordinates;
 
   const _GCWCoordsMGRS({Key? key, required this.onChanged, required this.coordinates}) : super(key: key);
 
@@ -42,22 +42,18 @@ class _GCWCoordsMGRSState extends State<_GCWCoordsMGRS> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.coordinates != null) {
-      var mgrs = widget.coordinates is MGRS
-          ? widget.coordinates as MGRS
-          : MGRS.fromLatLon(widget.coordinates.toLatLng(), defaultEllipsoid());
-      _currentEasting.value = mgrs.easting;
-      _currentNorthing.value = mgrs.northing;
+    var mgrs = widget.coordinates;
+    _currentEasting.value = mgrs.easting;
+    _currentNorthing.value = mgrs.northing;
 
-      _currentLonZone.value = mgrs.utmZone.lonZone;
-      _currentLatZone = mgrs.utmZone.latZone;
-      _currentDigraphEasting = mgrs.digraph[0];
-      _currentDigraphNorthing = mgrs.digraph[1];
+    _currentLonZone.value = mgrs.utmZone.lonZone;
+    _currentLatZone = mgrs.utmZone.latZone;
+    _currentDigraphEasting = mgrs.digraph[0];
+    _currentDigraphNorthing = mgrs.digraph[1];
 
-      _LonZoneController.text = _currentLonZone.value.toString();
-      _EastingController.text = _currentEasting.value.toString();
-      _NorthingController.text = _currentNorthing.value.toString();
-    }
+    _LonZoneController.text = _currentLonZone.value.toString();
+    _EastingController.text = _currentEasting.value.toString();
+    _NorthingController.text = _currentNorthing.value.toString();
 
     return Column(children: <Widget>[
       Row(
@@ -161,7 +157,7 @@ class _GCWCoordsMGRSState extends State<_GCWCoordsMGRS> {
     ]);
   }
 
-  _setCurrentValueAndEmitOnChange() {
+  void _setCurrentValueAndEmitOnChange() {
     double easting = _currentEasting.value;
     easting = fillUpNumber(easting, _EastingController.text, 5);
 

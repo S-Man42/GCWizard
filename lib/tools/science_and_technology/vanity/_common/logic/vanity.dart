@@ -37,7 +37,7 @@ List<String> _sanitizeDecodeInput(String input) {
     prevCharacter = character;
   });
 
-  return sanitizedInput.split(' ').where((element) => element != null && element.isNotEmpty).toList();
+  return sanitizedInput.split(' ').where((element) => element.isNotEmpty).toList();
 }
 
 bool _isTransitionCharacter(Map<String, Map<String, String>> stateModel, String state, String character) {
@@ -61,7 +61,7 @@ Tuple2<PhoneCaseMode?, String>? decodeVanityMultitap(String? input, PhoneModel? 
 
   Map<String, Map<String, String>>? stateModel = model.defaultCaseStateModel;
 
-  if (model.specificCaseStateModels != null && model.specificCaseStateModels[inputLanguage] != null)
+  if (model.specificCaseStateModels[inputLanguage] != null)
     stateModel = model.specificCaseStateModels[inputLanguage];
 
   var currentState = stateModel?[PHONE_STATEMODEL_START]?.values.first;
@@ -202,6 +202,6 @@ String encodeVanitySingletap(String? input, PhoneModel model) {
 
   return encodeVanityMultitap(input, model, PhoneInputLanguage.UNSPECIFIED)!.item2
       .split(' ')
-      .map((group) => group == null || group.isEmpty ? '' : group[0])
+      .map((group) => group.isEmpty ? '' : group[0])
       .join();
 }

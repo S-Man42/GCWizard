@@ -62,7 +62,7 @@ class _GCWColorRGBState extends State<_GCWColorRGB> {
     );
   }
 
-  _emitOnChange() {
+  void _emitOnChange() {
     widget.onChanged(RGB(_currentRed, _currentGreen, _currentBlue));
   }
 }

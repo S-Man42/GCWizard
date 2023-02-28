@@ -26,7 +26,7 @@ class MultiDecoderToolCcitt1 extends AbstractMultiDecoderTool {
             name: name,
             internalToolName: MDT_INTERNALNAMES_CCITT1,
             onDecode: (String input, String key) {
-              if (options[MDT_CCITT1_OPTION_MODE] == MDT_CCITT1_OPTION_MODE_BINARY) {
+              if (checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_CCITT1, options, MDT_CCITT1_OPTION_MODE) == MDT_CCITT1_OPTION_MODE_BINARY) {
                 var intValues = textToBinaryList(input).map((value) {
                   return int.tryParse(convertBase(value, 2, 10) ?? '') ?? null;
                 }).toList();
@@ -38,7 +38,7 @@ class MultiDecoderToolCcitt1 extends AbstractMultiDecoderTool {
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
               MDT_CCITT1_OPTION_MODE: GCWStatefulDropDown<String>(
-                value: toStringOrDefault(options[MDT_CCITT1_OPTION_MODE], MDT_CCITT1_OPTION_MODE_DENARY),
+                value: checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_CCITT1, options, MDT_CCITT1_OPTION_MODE),
                 onChanged: (newValue) {
                   options[MDT_CCITT1_OPTION_MODE] = newValue;
                 },

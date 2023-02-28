@@ -156,7 +156,7 @@ class _FormulaReplaceState extends State<_FormulaReplace> {
   }
 
   List<String> _buildNewFormulas() {
-    if (widget.formulas == null || widget.formulas.isEmpty) {
+    if (widget.formulas.isEmpty) {
       return <String>[];
     }
 

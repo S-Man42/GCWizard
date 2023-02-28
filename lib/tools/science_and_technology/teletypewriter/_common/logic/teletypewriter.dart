@@ -17,6 +17,8 @@
 // - CCITT_USTTY        according to 2., 4.
 //
 
+// ignore_for_file: equal_keys_in_map
+
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/string_utils.dart';

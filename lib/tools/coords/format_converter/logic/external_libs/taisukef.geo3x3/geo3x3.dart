@@ -29,7 +29,7 @@ class _Geo3x3 {
     return res;
   }
 
-  static List decode(String code) {
+  static List<double>? decode(String code) {
     var unit = 180.0;
     var lat = 0.0;
     var lng = 0.0;

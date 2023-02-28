@@ -29,10 +29,10 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
 
   late StreamSubscription<Duration> _onPositionChangedStream;
   late StreamSubscription<Duration> _onDurationChangedStream;
-  late StreamSubscription _onCompletionStream;
+  late StreamSubscription<void> _onCompletionStream;
 
   late File _audioFile;
-  var _loadedFileBytes;
+  int _loadedFileBytes = 0;
 
   int? _currentPositionInMS;
   int? _totalDurationInMS;
@@ -78,7 +78,7 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
     });
   }
 
-  Future _initAudioFile() async {
+  Future<void> _initAudioFile() async {
     await _audioPlayerStop();
 
     // save byteData to File
@@ -115,7 +115,7 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
 
   @override
   Widget build(BuildContext context) {
-    if (_loadedFileBytes == null || _loadedFileBytes != widget.file.bytes.length) {
+    if (_loadedFileBytes != widget.file.bytes.length) {
       _currentPositionInMS = null;
       _totalDurationInMS = null;
       _isLoaded = false;
@@ -199,7 +199,7 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
     }
   }
 
-  Future _audioPlayerStop() async {
+  Future<void> _audioPlayerStop() async {
     await advancedPlayer.stop();
     setState(() {
       playerState = PlayerState.stopped;

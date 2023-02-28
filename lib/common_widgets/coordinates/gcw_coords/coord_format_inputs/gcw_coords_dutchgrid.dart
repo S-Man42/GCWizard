@@ -2,7 +2,7 @@ part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart
 
 class _GCWCoordsDutchGrid extends StatefulWidget {
   final void Function(DutchGrid) onChanged;
-  final BaseCoordinates coordinates;
+  final DutchGrid coordinates;
 
   const _GCWCoordsDutchGrid({Key? key, required this.onChanged, required this.coordinates}) : super(key: key);
 
@@ -33,16 +33,12 @@ class _GCWCoordsDutchGridState extends State<_GCWCoordsDutchGrid> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.coordinates != null) {
-      var dutchGrid = widget.coordinates is DutchGrid
-          ? widget.coordinates as DutchGrid
-          : DutchGrid.fromLatLon(widget.coordinates.toLatLng());
-      _currentX.value = dutchGrid.x;
-      _currentY.value = dutchGrid.y;
+    var dutchGrid = widget.coordinates;
+    _currentX.value = dutchGrid.x;
+    _currentY.value = dutchGrid.y;
 
-      _xController.text = _currentX.value.toString();
-      _yController.text = _currentY.value.toString();
-    }
+    _xController.text = _currentX.value.toString();
+    _yController.text = _currentY.value.toString();
 
     return Column(children: <Widget>[
       GCWDoubleTextField(
@@ -66,7 +62,7 @@ class _GCWCoordsDutchGridState extends State<_GCWCoordsDutchGrid> {
     ]);
   }
 
-  _setCurrentValueAndEmitOnChange() {
+  void _setCurrentValueAndEmitOnChange() {
     widget.onChanged(DutchGrid(_currentX.value, _currentY.value));
   }
 }
