@@ -654,7 +654,7 @@ analyzer:
 #    invalid_visibility_annotation: error
 #    invalid_visible_for_overriding_annotation: error
 #    mixin_on_sealed_class: error
-#    must_be_immutable: error
+    must_be_immutable: ignore
 #    must_call_super: error
 #    non_const_call_to_literal_constructor: error
 #    null_check_always_fails: error

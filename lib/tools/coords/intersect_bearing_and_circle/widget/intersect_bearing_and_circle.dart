@@ -99,10 +99,10 @@ class IntersectBearingAndCircleState extends State<IntersectGeodeticAndCircle> {
         point: projection(
             _currentCoordsStart,
             _currentBearingStart['value'],
-            max<double>(distanceBearing(_currentCoordsStart, _currentCoordsCircle, defaultEllipsoid()).distance,
+            max<double>(distanceBearing(_currentCoordsStart, _currentCoordsCircle, defaultEllipsoid).distance,
                     _currentRadiusCircle) *
                 2.5,
-            defaultEllipsoid()),
+            defaultEllipsoid),
         isVisible: false);
 
     _currentMapPoints.add(mapPoint);
@@ -139,7 +139,7 @@ class IntersectBearingAndCircleState extends State<IntersectGeodeticAndCircle> {
         bearingGeodetic: _currentBearingStart['value'],
         centerPoint: _currentCoordsCircle,
         radiusCircle: _currentRadiusCircle,
-        ells: defaultEllipsoid()));
+        ells: defaultEllipsoid));
   }
 
   void _showOutput(List<LatLng> output) {
@@ -185,7 +185,7 @@ class IntersectBearingAndCircleState extends State<IntersectGeodeticAndCircle> {
         .toList());
 
     _currentOutput = _currentIntersections
-        .map((intersection) => formatCoordOutput(intersection, _currentOutputFormat, defaultEllipsoid()))
+        .map((intersection) => formatCoordOutput(intersection, _currentOutputFormat, defaultEllipsoid))
         .toList();
 
     _currentMapPolylines = [

@@ -215,8 +215,8 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
 
           Map<int, _ParsedCoordinate> _foundFormulaCoordinates = {};
           calculated.results.asMap().forEach((idx, result) {
-            BaseCoordinates? _foundFormulaCoordinate = parseStandardFormats(result.result, wholeString: true);
-            if (_foundFormulaCoordinate != null) {
+            BaseCoordinate? _foundFormulaCoordinate = parseStandardFormats(result.result, wholeString: true);
+            if (_foundFormulaCoordinate != null && _foundFormulaCoordinate.toLatLng() != null) {
               _foundFormulaCoordinates.putIfAbsent(
                   idx + 1,
                   () => _ParsedCoordinate(
@@ -605,9 +605,9 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
     var name = coordinate.name;
 
     return GCWMapPoint(
-        point: coord.toLatLng(),
+        point: coord.toLatLng()!,
         markerText: i18n(context, 'formulasolver_formulas_showonmap_coordinatetext') + ' $name',
-        coordinateFormat: CoordinateFormat(coord.key),
+        coordinateFormat: CoordinateFormat(coord.format.type),
         color: resultType == _FormulaSolverResultType.FIXED
             ? COLOR_MAP_POINT
             : COLOR_FORMULASOLVER_INTERPOLATED_MAP_POINT);
@@ -684,7 +684,7 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
 }
 
 class _ParsedCoordinate {
-  final BaseCoordinates coords;
+  final BaseCoordinate coords;
   final String name;
   final _FormulaSolverResultType resultType;
 

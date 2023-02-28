@@ -2,7 +2,7 @@ part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart
 
 class _GCWCoordsNaturalAreaCode extends StatefulWidget {
   final void Function(NaturalAreaCode) onChanged;
-  final BaseCoordinates coordinates;
+  final NaturalAreaCode coordinates;
 
   const _GCWCoordsNaturalAreaCode({Key? key, required this.onChanged, required this.coordinates}) : super(key: key);
 
@@ -34,16 +34,12 @@ class _GCWCoordsNaturalAreaCodeState extends State<_GCWCoordsNaturalAreaCode> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.coordinates != null) {
-      var naturalAreaCode = widget.coordinates is NaturalAreaCode
-          ? widget.coordinates as NaturalAreaCode
-          : NaturalAreaCode.fromLatLon(widget.coordinates.toLatLng() ?? defaultCoordinate);
-      _currentX = naturalAreaCode.x;
-      _currentY = naturalAreaCode.y;
+    var naturalAreaCode = widget.coordinates;
+    _currentX = naturalAreaCode.x;
+    _currentY = naturalAreaCode.y;
 
-      _controllerX.text = _currentX;
-      _controllerY.text = _currentY;
-    }
+    _controllerX.text = _currentX;
+    _controllerY.text = _currentY;
 
     return Column(children: <Widget>[
       GCWTextField(
@@ -69,7 +65,7 @@ class _GCWCoordsNaturalAreaCodeState extends State<_GCWCoordsNaturalAreaCode> {
     ]);
   }
 
-  _setCurrentValueAndEmitOnChange() {
+  void _setCurrentValueAndEmitOnChange() {
     widget.onChanged(NaturalAreaCode(_currentX, _currentY));
   }
 }

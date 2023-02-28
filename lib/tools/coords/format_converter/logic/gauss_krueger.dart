@@ -148,7 +148,7 @@ LatLng gaussKruegerToLatLon(GaussKrueger gaussKrueger, Ellipsoid ells) {
       break;
   }
 
-  int gkno = switchMapKeyValue(GAUSS_KRUEGER_CODE)[gaussKrueger.subtype]!;
+  int gkno = switchMapKeyValue(GAUSS_KRUEGER_CODE)[gaussKrueger.format.subtype]!;
   coord = ellipsoidTransformLatLng(coord, gkno - 1, false, true);
   if (x >= 0) coord = ellipsoidTransformLatLng(coord, x, true, false);
 

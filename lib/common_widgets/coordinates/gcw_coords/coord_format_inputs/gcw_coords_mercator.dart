@@ -2,7 +2,7 @@ part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart
 
 class _GCWCoordsMercator extends StatefulWidget {
   final void Function(Mercator) onChanged;
-  final BaseCoordinates coordinates;
+  final Mercator coordinates;
 
   const _GCWCoordsMercator({Key? key, required this.onChanged, required this.coordinates}) : super(key: key);
 
@@ -33,16 +33,12 @@ class _GCWCoordsMercatorState extends State<_GCWCoordsMercator> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.coordinates != null) {
-      var mercator = widget.coordinates is Mercator
-          ? widget.coordinates as Mercator
-          : Mercator.fromLatLon(widget.coordinates.toLatLng() ?? defaultCoordinate, defaultEllipsoid());
-      _currentEasting.value = mercator.easting;
-      _currentNorthing.value = mercator.northing;
+    var mercator = widget.coordinates;
+    _currentEasting.value = mercator.easting;
+    _currentNorthing.value = mercator.northing;
 
-      _EastingController.text = _currentEasting.value.toString();
-      _NorthingController.text = _currentNorthing.value.toString();
-    }
+    _EastingController.text = _currentEasting.value.toString();
+    _NorthingController.text = _currentNorthing.value.toString();
 
     return Column(children: <Widget>[
       GCWDoubleTextField(
@@ -66,7 +62,7 @@ class _GCWCoordsMercatorState extends State<_GCWCoordsMercator> {
     ]);
   }
 
-  _setCurrentValueAndEmitOnChange() {
+  void _setCurrentValueAndEmitOnChange() {
     var mercator = Mercator(_currentEasting.value, _currentNorthing.value);
 
     widget.onChanged(mercator);

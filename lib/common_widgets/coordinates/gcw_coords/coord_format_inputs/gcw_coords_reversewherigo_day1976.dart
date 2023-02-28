@@ -2,7 +2,7 @@ part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart
 
 class _GCWCoordsReverseWherigoDay1976 extends StatefulWidget {
   final void Function(ReverseWherigoDay1976?) onChanged;
-  final BaseCoordinates coordinates;
+  final ReverseWherigoDay1976 coordinates;
 
   const _GCWCoordsReverseWherigoDay1976({Key? key, required this.onChanged, required this.coordinates}) : super(key: key);
 
@@ -39,16 +39,12 @@ class _GCWCoordsReverseWherigoDay1976State extends State<_GCWCoordsReverseWherig
 
   @override
   Widget build(BuildContext context) {
-    if (widget.coordinates != null) {
-      var day1976 = widget.coordinates is ReverseWherigoDay1976
-          ? widget.coordinates as ReverseWherigoDay1976
-          : ReverseWherigoDay1976.fromLatLon(widget.coordinates.toLatLng() ?? defaultCoordinate);
-      _currentA = day1976.s;
-      _currentB = day1976.t;
+    var day1976 = widget.coordinates;
+    _currentA = day1976.s;
+    _currentB = day1976.t;
 
-      _ControllerA.text = _currentA.toString();
-      _ControllerB.text = _currentB.toString();
-    }
+    _ControllerA.text = _currentA.toString();
+    _ControllerB.text = _currentB.toString();
 
     return Column(children: <Widget>[
       GCWTextField(
@@ -74,7 +70,7 @@ class _GCWCoordsReverseWherigoDay1976State extends State<_GCWCoordsReverseWherig
     ]);
   }
 
-  _setCurrentValueAndEmitOnChange() {
+  void _setCurrentValueAndEmitOnChange() {
     widget.onChanged(ReverseWherigoDay1976.parse(_currentA.toString() + '\n' + _currentB.toString()));
   }
 }

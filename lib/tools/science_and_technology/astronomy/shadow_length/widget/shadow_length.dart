@@ -88,7 +88,7 @@ class ShadowLengthState extends State<ShadowLength> {
 
   Widget _buildOutput() {
     var shadowLen = shadowLength(
-        _currentHeight, _currentCoords, defaultEllipsoid(), _currentDateTime);
+        _currentHeight, _currentCoords, defaultEllipsoid, _currentDateTime);
 
     var lengthOutput = '';
     var _currentLength = shadowLen.length;
@@ -110,7 +110,7 @@ class ShadowLengthState extends State<ShadowLength> {
 
     var outputLocation = GCWCoordsOutput(
       title: i18n(context, 'shadowlength_location'),
-      outputs: [formatCoordOutput(shadowLen.shadowEndPosition, _currentCoordsFormat, defaultEllipsoid())],
+      outputs: [formatCoordOutput(shadowLen.shadowEndPosition, _currentCoordsFormat, defaultEllipsoid)],
       points: [
         GCWMapPoint(
             point: _currentCoords,

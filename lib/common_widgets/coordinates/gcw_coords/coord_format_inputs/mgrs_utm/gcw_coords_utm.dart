@@ -2,7 +2,7 @@ part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart
 
 class _GCWCoordsUTM extends StatefulWidget {
   final void Function(UTMREF) onChanged;
-  final BaseCoordinates coordinates;
+  final BaseCoordinate coordinates;
 
   const _GCWCoordsUTM({Key? key, required this.onChanged, required this.coordinates}) : super(key: key);
 
@@ -42,7 +42,7 @@ class _GCWCoordsUTMState extends State<_GCWCoordsUTM> {
     if (widget.coordinates != null) {
       var utm = widget.coordinates is UTMREF
           ? widget.coordinates as UTMREF
-          : UTMREF.fromLatLon(widget.coordinates.toLatLng() ?? defaultCoordinate, defaultEllipsoid());
+          : UTMREF.fromLatLon(widget.coordinates.toLatLng() ?? defaultCoordinate, defaultEllipsoid);
       _currentLonZone.value = utm.zone.lonZone;
       _currentEasting.value = utm.easting;
       _currentNorthing.value = utm.northing;

@@ -8,7 +8,7 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinate_parser.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 
 class GCWCoordsPasteButton extends StatefulWidget {
-  final void Function(List<BaseCoordinates>) onPasted;
+  final void Function(List<BaseCoordinate>) onPasted;
   final IconButtonSize size;
 
   const GCWCoordsPasteButton({Key? key, required this.onPasted, required this.size})
@@ -28,7 +28,7 @@ class _GCWCoordsPasteButtonState extends State<GCWCoordsPasteButton> {
   }
 
   void _parseClipboardAndSetCoords(String text) {
-    List<BaseCoordinates> parsed = parseCoordinates(text);
+    List<BaseCoordinate> parsed = parseCoordinates(text);
 
     if (parsed.isEmpty) {
       showToast(i18n(context, 'coords_common_clipboard_nocoordsfound'));
@@ -37,7 +37,7 @@ class _GCWCoordsPasteButtonState extends State<GCWCoordsPasteButton> {
     } else if (parsed.length > 1) {
       var recognizedFormats = parsed.map((coords) {
         var text = '\r\n';
-        var coordFormat = allCoordinateFormatMetadata.firstWhere((format) => format.key == coords.key);
+        var coordFormat = allCoordinateFormatMetadata.firstWhere((format) => format.type == coords.format);
         if (coordFormat.subtypes == null)
           text += coordFormat.name;
         else

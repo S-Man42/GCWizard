@@ -58,7 +58,7 @@ class SunPositionState extends State<SunPosition> {
 
     var julianDate = JulianDate(_currentDateTime);
 
-    var sunPosition = logic.SunPosition(_currentCoords, julianDate, defaultEllipsoid());
+    var sunPosition = logic.SunPosition(_currentCoords, julianDate, defaultEllipsoid);
 
     var outputsSun = [
       [i18n(context, 'astronomy_position_eclipticlongitude'), format.format(sunPosition.eclipticLongitude) + '°'],

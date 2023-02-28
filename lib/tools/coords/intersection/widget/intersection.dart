@@ -117,13 +117,13 @@ class IntersectionState extends State<Intersection> {
   }
 
   Future<GCWAsyncExecuterParameters> _buildJobData() async {
-    _ells = defaultEllipsoid();
+    _ells = defaultEllipsoid;
     return GCWAsyncExecuterParameters(IntersectionJobData(
         coord1: _currentCoords1,
         alpha: _currentAngle1['value'],
         coord2: _currentCoords2,
         beta: _currentAngle2['value'],
-        ells: defaultEllipsoid()));
+        ells: defaultEllipsoid));
   }
 
   void _showOutput(List<LatLng> output) {
@@ -235,7 +235,7 @@ class IntersectionState extends State<Intersection> {
         .toList());
 
     _currentOutput = _currentIntersections
-        .map((intersection) => formatCoordOutput(intersection, _currentOutputFormat, defaultEllipsoid()))
+        .map((intersection) => formatCoordOutput(intersection, _currentOutputFormat, defaultEllipsoid))
         .toList();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {

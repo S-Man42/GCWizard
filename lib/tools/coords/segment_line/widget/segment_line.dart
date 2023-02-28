@@ -121,7 +121,7 @@ class SegmentLineState extends State<SegmentLine> {
   }
 
   _calculateOutput() {
-    var segments = segmentLine(_currentCoords1, _currentCoords2, _currentSegmentCount, defaultEllipsoid());
+    var segments = segmentLine(_currentCoords1, _currentCoords2, _currentSegmentCount, defaultEllipsoid);
 
     var startMapPoint = GCWMapPoint(
         point: _currentCoords1,
@@ -146,7 +146,7 @@ class SegmentLineState extends State<SegmentLine> {
     _currentMapPolylines = [GCWMapPolyline(points: List<GCWMapPoint>.from(_currentMapPoints))];
 
     _currentOutputs = List<String>.from(segments['points'].map((point) {
-      return formatCoordOutput(point, _currentOutputFormat, defaultEllipsoid());
+      return formatCoordOutput(point, _currentOutputFormat, defaultEllipsoid);
     }).toList());
 
     var distanceOutput = doubleFormat.format(_currentOutputUnit.fromMeter(segments['segmentDistance']));

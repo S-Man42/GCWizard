@@ -66,7 +66,7 @@ LatLng? reverseWIGWaldmeisterToLatLon(ReverseWherigoWaldmeister waldmeister) {
   return decToLatLon(DEC(_lat, _lon));
 }
 
-ReverseWherigoWaldmeister? latLonToReverseWIGWaldmeister(LatLng coord) {
+ReverseWherigoWaldmeister latLonToReverseWIGWaldmeister(LatLng coord) {
   var _lat = coord.latitude;
   var _lon = coord.longitude;
 
@@ -205,14 +205,7 @@ ReverseWherigoWaldmeister? latLonToReverseWIGWaldmeister(LatLng coord) {
         ((_lon % 10000000 - _lon % 1000000) ~/ 1000000).toString();
   }
 
-  var outA = int.tryParse(a);
-  var outB = int.tryParse(b);
-  var outC = int.tryParse(c);
-
-  if (outA == null || outB == null || outC == null)
-    return null;
-
-  return ReverseWherigoWaldmeister(outA, outB, outC);
+  return ReverseWherigoWaldmeister(int.parse(a), int.parse(b), int.parse(c));
 }
 
 ReverseWherigoWaldmeister? parseReverseWherigoWaldmeister(String input) {

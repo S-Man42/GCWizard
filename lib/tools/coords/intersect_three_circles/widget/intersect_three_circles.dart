@@ -147,7 +147,7 @@ class IntersectThreeCirclesState extends State<IntersectThreeCircles> {
         coord3: _currentCoords3,
         dist34: _currentRadius3,
         accuracy: 10,
-        ells: defaultEllipsoid()));
+        ells: defaultEllipsoid));
   }
 
   void _showOutput(List<Intersect> output) {
@@ -212,13 +212,13 @@ class IntersectThreeCirclesState extends State<IntersectThreeCircles> {
         .toList());
 
     _currentOutput = _currentIntersections.map((intersection) {
-      return '${formatCoordOutput(intersection.coords, _currentOutputFormat, defaultEllipsoid())} '
+      return '${formatCoordOutput(intersection.coords, _currentOutputFormat, defaultEllipsoid)} '
           '(${i18n(context, "coords_intersectthreecircles_accuracy")}: '
           '${doubleFormat.format(_currentOutputUnit.fromMeter(intersection.accuracy))} ${_currentOutputUnit.symbol})';
     }).toList();
 
     _currentCopyableOutput = _currentIntersections.map((intersection) {
-      return formatCoordOutput(intersection.coords, _currentOutputFormat, defaultEllipsoid());
+      return formatCoordOutput(intersection.coords, _currentOutputFormat, defaultEllipsoid);
     }).toList();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {

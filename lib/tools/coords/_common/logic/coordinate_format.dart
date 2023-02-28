@@ -7,8 +7,10 @@ class CoordinateFormat{
   CoordinateFormatKey? subtype;
 
   CoordinateFormat(this.type, [this.subtype]){
-    if (this.subtype == null || isCoordinateFormatWithSubtype(this.type)) {
-      this.subtype = defaultCoordinateFormatSubtypeForFormat(this.type);
+    if (isCoordinateFormatWithSubtype(this.type)) {
+      if (subtype == null || !isSubtypeOfCoordinateFormat(type, subtype!)) {
+        this.subtype = defaultCoordinateFormatSubtypeForFormat(this.type);
+      }
     }
   }
 
@@ -17,7 +19,7 @@ class CoordinateFormat{
     if (coordFormat == null) {
       return defaultCoordinateFormat;
     } else {
-      return CoordinateFormat(coordFormat.key);
+      return CoordinateFormat(coordFormat.type);
     }
   }
 }
@@ -32,5 +34,5 @@ bool isSubtypeOfCoordinateFormat(CoordinateFormatKey baseFormat, CoordinateForma
   if (coordFormat.subtypes == null)
     return false;
 
-  return coordFormat.subtypes!.map((CoordinateFormatMetadata _format) => _format.key).contains(typeToCheck);
+  return coordFormat.subtypes!.map((CoordinateFormatMetadata _format) => _format.type).contains(typeToCheck);
 }

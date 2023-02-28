@@ -100,7 +100,7 @@ class EquilateralTriangleState extends State<EquilateralTriangle> {
 
   Future<GCWAsyncExecuterParameters> _buildJobData() async {
     return GCWAsyncExecuterParameters(
-        EquilateralTriangleJobData(coord1: _currentCoords1, coord2: _currentCoords2, ells: defaultEllipsoid()));
+        EquilateralTriangleJobData(coord1: _currentCoords1, coord2: _currentCoords2, ells: defaultEllipsoid));
   }
 
   void _showOutput(List<LatLng> output) {
@@ -164,7 +164,7 @@ class EquilateralTriangleState extends State<EquilateralTriangle> {
     });
 
     _currentOutput = _currentIntersections
-        .map((intersection) => formatCoordOutput(intersection, _currentOutputFormat, defaultEllipsoid()))
+        .map((intersection) => formatCoordOutput(intersection, _currentOutputFormat, defaultEllipsoid))
         .toList();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {

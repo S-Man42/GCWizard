@@ -5,7 +5,6 @@ import 'package:gc_wizard/utils/math_utils.dart';
 
 enum IconButtonSize { NORMAL, SMALL, TINY }
 
-//ignore: must_be_immutable
 class GCWIconButton extends StatelessWidget {
   final void Function() onPressed;
   final IconData? icon;
