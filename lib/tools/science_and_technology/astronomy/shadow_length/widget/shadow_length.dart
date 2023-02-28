@@ -32,9 +32,9 @@ class ShadowLengthState extends State<ShadowLength> {
   var _currentCoordsFormat = defaultCoordinateFormat;
   var _currentHeight = 0.0;
 
-  Length _currentInputLength = getUnitBySymbol(allLengths(), Prefs.getString(PREFERENCE_DEFAULT_LENGTH_UNIT)) as Length;
+  Length _currentInputLength = getUnitBySymbol<Length>(allLengths(), Prefs.getString(PREFERENCE_DEFAULT_LENGTH_UNIT));
   var _currentOutput = GCWCoordsOutputFormatDistanceValue(
-      defaultCoordinateFormat, getUnitBySymbol(allLengths(), Prefs.getString(PREFERENCE_DEFAULT_LENGTH_UNIT)) as Length);
+      defaultCoordinateFormat, getUnitBySymbol<Length>(allLengths(), Prefs.getString(PREFERENCE_DEFAULT_LENGTH_UNIT)));
 
   @override
   Widget build(BuildContext context) {

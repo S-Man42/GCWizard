@@ -13,8 +13,12 @@ abstract class Unit {
   }
 }
 
-Unit getUnitBySymbol(List<Unit> units, String symbol) {
+T getUnitBySymbol<T extends Unit>(List<T> units, String symbol) {
   return units.firstWhere((unit) => unit.symbol == symbol);
+}
+
+T getUnitByName<T extends Unit>(List<T> units, String name) {
+  return units.firstWhere((unit) => unit.name == name);
 }
 
 double convert(double value, Unit from, Unit to) {

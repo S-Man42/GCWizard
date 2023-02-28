@@ -43,7 +43,7 @@ class CoordinateAveragingState extends State<CoordinateAveraging> {
   void initState() {
     super.initState();
 
-    _DEFAULT_LENGTH_UNIT = getUnitBySymbol(allLengths(), Prefs.get(PREFERENCE_DEFAULT_LENGTH_UNIT));
+    _DEFAULT_LENGTH_UNIT = getUnitBySymbol<Length>(allLengths(), Prefs.getString(PREFERENCE_DEFAULT_LENGTH_UNIT));
     _clearMeasurements();
   }
 

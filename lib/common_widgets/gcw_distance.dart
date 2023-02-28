@@ -45,7 +45,7 @@ class _GCWDistanceState extends State<GCWDistance> {
       _controller = TextEditingController(text: _currentInput.text);
     }
 
-    _currentLengthUnit = (widget.unit ?? getUnitBySymbol(allLengths(), Prefs.getString(PREFERENCE_DEFAULT_LENGTH_UNIT))) as Length;
+    _currentLengthUnit = (widget.unit ?? getUnitBySymbol<Length>(allLengths(), Prefs.getString(PREFERENCE_DEFAULT_LENGTH_UNIT)));
   }
 
   @override
