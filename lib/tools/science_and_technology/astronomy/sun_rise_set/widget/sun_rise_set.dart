@@ -53,7 +53,7 @@ class SunRiseSetState extends State<SunRiseSet> {
 
   Widget _buildOutput() {
     var sunRise = logic.SunRiseSet(
-        _currentCoords.toLatLng(),
+        _currentCoords.toLatLng() ?? defaultCoordinate,
         JulianDate(_currentDateTime),
         _currentDateTime.timezone,
         defaultEllipsoid());

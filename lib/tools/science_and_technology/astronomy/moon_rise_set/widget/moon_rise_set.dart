@@ -52,7 +52,7 @@ class MoonRiseSetState extends State<MoonRiseSet> {
 
   Widget _buildOutput() {
     var moonRise = logic.MoonRiseSet(
-        _currentCoords.toLatLng(),
+        _currentCoords.toLatLng() ?? defaultCoordinate,
         JulianDate(_currentDateTime),
         _currentDateTime.timezone,
         defaultEllipsoid());

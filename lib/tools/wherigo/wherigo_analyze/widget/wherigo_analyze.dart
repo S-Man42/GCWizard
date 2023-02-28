@@ -214,7 +214,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         onWillPop: () async {
           bool willLeave = false;
           // show the confirm dialog
-          await showDialog(
+          await showDialog<bool>(
               context: context,
               builder: (_) => AlertDialog(
                     title: Text(i18n(context, 'wherigo_exit_title')),
@@ -1418,7 +1418,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   void _analyseGwcCartridgeFileAsync() async {
-    await showDialog(
+    await showDialog<bool>(
       context: context,
       barrierDismissible: false,
       builder: (context) {
@@ -1439,7 +1439,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   void _analyseLuaCartridgeFileAsync() async {
-    await showDialog(
+    await showDialog<bool>(
       context: context,
       barrierDismissible: false,
       builder: (context) {
