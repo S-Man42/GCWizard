@@ -5,22 +5,22 @@ import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 
 class MapPolylineEditor extends StatefulWidget {
-  final dynamic polyline;
+  final GCWMapPolyline polyline;
 
-  const MapPolylineEditor({Key? key, this.polyline}) : super(key: key);
+  const MapPolylineEditor({Key? key, required this.polyline}) : super(key: key);
 
   @override
   MapPolylineEditorState createState() => MapPolylineEditorState();
 }
 
 class MapPolylineEditorState extends State<MapPolylineEditor> {
-  HSVColor _currentColorPickerColor;
+  late HSVColor _currentColorPickerColor;
 
   @override
   void initState() {
     super.initState();
 
-    if (widget.polyline is GCWMapPolyline) _currentColorPickerColor = HSVColor.fromColor(widget.polyline.color);
+    _currentColorPickerColor = HSVColor.fromColor(widget.polyline.color);
   }
 
   @override
@@ -33,8 +33,7 @@ class MapPolylineEditorState extends State<MapPolylineEditor> {
           onChanged: (color) {
             setState(() {
               _currentColorPickerColor = color;
-
-              if (widget.polyline is GCWMapPolyline) widget.polyline.color = _currentColorPickerColor.toColor();
+              widget.polyline.color = _currentColorPickerColor.toColor();
             });
           },
         ),
