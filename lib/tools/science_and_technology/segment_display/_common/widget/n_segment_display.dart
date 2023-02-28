@@ -85,8 +85,7 @@ class NSegmentDisplayState extends State<NSegmentDisplay> {
 
     final recorder = ui.PictureRecorder();
     Canvas canvas = Canvas(recorder);
-    final size = context.size;
-    if (size == null) return Future.value(null);
+    final size = context.size ?? Size(100, 100);
 
     final painter = SegmentDisplayPainter(context, widget.type, _segments, (key, value) {},
         customPaint: widget.customPaint, segment_color_on: Colors.black, segment_color_off: Colors.white);

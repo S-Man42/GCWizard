@@ -216,7 +216,7 @@ class MagicEyeSolverState extends State<MagicEyeSolver> {
     if (_encodeHiddenDataImage == null ||
         (_currentEncodeTextureType == TextureType.BITMAP && _encodeTextureImage == null)) return;
 
-    await showDialog(
+    await showDialog<bool>(
       context: context,
       barrierDismissible: false,
       builder: (context) {
