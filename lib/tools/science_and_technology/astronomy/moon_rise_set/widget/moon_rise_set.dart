@@ -18,7 +18,7 @@ class MoonRiseSet extends StatefulWidget {
 
 class MoonRiseSetState extends State<MoonRiseSet> {
   var _currentDateTime = DateTimeTimezone(datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
-  var _currentCoords = BaseCoordinates();
+  var _currentCoords = BaseCoordinate();
   var _currentCoordsFormat = defaultCoordinateFormat;
 
   @override
@@ -52,7 +52,7 @@ class MoonRiseSetState extends State<MoonRiseSet> {
 
   Widget _buildOutput() {
     var moonRise = logic.MoonRiseSet(
-        _currentCoords.toLatLng(),
+        _currentCoords.toLatLng() ?? defaultCoordinate,
         JulianDate(_currentDateTime),
         _currentDateTime.timezone,
         defaultEllipsoid);
