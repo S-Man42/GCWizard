@@ -42,7 +42,7 @@ class IPCodesState extends State<IPCodes> {
 
     var effect = i18n(context, 'ipcodes_ip1_${key}_effect');
     var example = i18n(context, 'ipcodes_ip1_${key}_example');
-    example = example != null ? '\n\n' + example : '';
+    example = '\n\n' + example;
 
     return effect + example;
   }

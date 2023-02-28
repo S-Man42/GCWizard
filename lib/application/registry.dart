@@ -415,7 +415,7 @@ import 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_analyze.d
 
 List<GCWTool> registeredTools = [];
 
-initializeRegistry(BuildContext context) {
+void initializeRegistry(BuildContext context) {
   registeredTools = [
     //MainSelection
     GCWTool(tool: Abaddon(), id: 'abaddon', categories: [
@@ -4123,6 +4123,6 @@ initializeRegistry(BuildContext context) {
   createIndexedSearchStrings();
 }
 
-refreshRegistry() {
+void refreshRegistry() {
   registeredTools = [];
 }

@@ -9,8 +9,6 @@ import 'package:gc_wizard/application/category_views/all_tools_view.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
 import 'package:gc_wizard/utils/json_utils.dart';
 
-final String _TRANSLATION_ERROR = '<TRANSLATION_ERROR>';
-
 class AppLocalizations {
   final Locale _locale;
 
@@ -29,7 +27,7 @@ class AppLocalizations {
   static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
 
   Future<bool> load() async {
-    _defaultLocalizedStrings = await loadLang(DEFAULT_LOCALE);
+    _defaultLocalizedStrings = await loadLang(DEFAULT_LOCALE.languageCode);
     Map<String, String> _localStrings = await loadLang(_locale.languageCode);
 
     // Remove new added keys with empty values (urls for manual)
@@ -49,7 +47,7 @@ class AppLocalizations {
     return Future.value(true);
   }
 
-  Future<Map<String, String>> loadLang(langCode) async {
+  Future<Map<String, String>> loadLang(String langCode) async {
     // Load the language JSON file from the "lang" folder
     String jsonString = await rootBundle.loadString('assets/i18n/$langCode.json');
     var decoded = json.decode(jsonString);
@@ -101,7 +99,7 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
  * %s2 -> parameter 2 (list index 1),
  * ...
  */
-String i18n(BuildContext context, String key, {List<dynamic> parameters: const [], bool useDefaultLanguage = false, String ifTranslationNotExists = ''}) {
+String i18n(BuildContext context, String key, {List<dynamic> parameters = const [], bool useDefaultLanguage = false, String ifTranslationNotExists = ''}) {
   Map<String, String> parametersMap = {};
   for (int i = parameters.length; i >= 1; i--) {
     parametersMap.putIfAbsent('%s' + i.toString(), () => parameters[i - 1].toString());

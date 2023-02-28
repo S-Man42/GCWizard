@@ -44,7 +44,7 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
 
       String text = '';
       if (file.fileClass == FileClass.TEXT) {
-        text = String.fromCharCodes(file.bytes ?? []);
+        text = String.fromCharCodes(file.bytes);
         if (text.length > 100) text = text.substring(0, 100) + '...';
       }
 
@@ -73,7 +73,7 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
           Row(
             children: [
               Container(
-                  child: actionButton == null ? Container() : actionButton,
+                  child: actionButton,
                   width: 42,
                   padding: EdgeInsets.only(right: 10)),
               Expanded(
@@ -94,7 +94,7 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
                                       .copyWith(fontWeight: FontWeight.bold, color: themeColors().dialogText())),
                             ),
                             GCWText(
-                                text: file.bytes == null ? '??? Bytes' : '${file.bytes.length} Bytes',
+                                text: '${file.bytes.length} Bytes',
                                 style: gcwTextStyle()
                                     .copyWith(color: themeColors().dialogText(), fontSize: defaultFontSize() - 2))
                           ],
@@ -149,10 +149,6 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
       GCWPopupMenuItem(
         child: iconedGCWPopupMenuItem(context, Icons.text_snippet_outlined, 'hexviewer_openinhexviewer'),
         action: (index) => setState(() {
-          if (file.bytes == null) {
-            showToast(i18n(context, 'hiddendata_datanotreadable'));
-            return;
-          }
           openInHexViewer(context, file);
         }),
       ),
@@ -176,12 +172,7 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
     );
   }
 
-  _exportFile(BuildContext context, GCWFile file) async {
-    if (file.bytes == null) {
-      showToast(i18n(context, 'hiddendata_datanotreadable'));
-      return;
-    }
-
+  void _exportFile(BuildContext context, GCWFile file) async {
     var fileName = file.name == null ? '' : file.name!.replaceFirst(HIDDEN_FILE_IDENTIFIER, 'hidden_file');
     var ext = fileName.split('.');
 

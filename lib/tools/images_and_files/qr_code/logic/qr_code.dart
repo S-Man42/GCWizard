@@ -13,7 +13,7 @@ Future<String?> scanBytes(Uint8List? bytes) async {
   if (bytes == null) return null;
   try {
     var codes = await scan.RScan.scanImageMemory(bytes);
-    if (codes != null) return Future.value(codes.message);
+    return Future.value(codes.message);
   } catch (e) {}
   return null;
 }
@@ -35,10 +35,9 @@ DrawableImageData? generateBarCode(String? code, {int moduleSize = 5, int border
 }
 
 List<String>? _createQrCode(qr.QrCode qrCode) {
-  if (qrCode == null) return null;
-
     var qrImage = qr.QrImage(qrCode);
     var lines = <String>[];
+
     for (int y = 0; y < qrCode.moduleCount; y++) {
       var line = '';
       for (int x = 0; x < qrCode.moduleCount; x++)

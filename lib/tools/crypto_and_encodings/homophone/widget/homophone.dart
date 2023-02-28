@@ -265,9 +265,10 @@ class HomophoneState extends State<Homophone> {
         case HomophoneErrorCode.CUSTOM_KEY_COUNT:
           showToast(i18n(context, "homophone_error_own_key"));
           return GCWDefaultOutput(child: '');
-          break;
         case HomophoneErrorCode.CUSTOM_KEY_DUPLICATE:
           showToast(i18n(context, "homophone_error_own_double_keys"));
+          return GCWDefaultOutput(child: '');
+        default:
       }
     }
 

@@ -20,8 +20,6 @@ class BeaufortState extends State<Beaufort> {
   var _currentMode = GCWSwitchPosition.left;
 
   var _currentVelocity = 0.0;
-  logic.Velocity _currentVelocityUnit = UNITCATEGORY_VELOCITY.defaultUnit as logic.Velocity;
-
   var _currentBeaufortInput = 0;
   logic.Velocity _currentOutputUnit = UNITCATEGORY_VELOCITY.defaultUnit as logic.Velocity;
 

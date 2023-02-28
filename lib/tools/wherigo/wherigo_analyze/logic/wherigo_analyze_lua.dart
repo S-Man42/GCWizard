@@ -136,7 +136,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
 
   LUAFile = normalizeLUAmultiLineText(LUAFile);
 
-  if ((byteListLUA != [] || byteListLUA != null || LUAFile != '')) LUAchecksToDo = WHERIGO_FILE_LOAD_STATE.LUA;
+  if ( LUAFile != '') LUAchecksToDo = WHERIGO_FILE_LOAD_STATE.LUA;
 
   if (LUAchecksToDo == WHERIGO_FILE_LOAD_STATE.NULL) {
     LUAAnalyzeResults.add('wherigo_error_empty_lua');

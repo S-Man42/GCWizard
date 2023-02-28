@@ -2,13 +2,13 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants
 import 'package:collection/collection.dart';
 
 class CoordinateFormatMetadata {
-  final CoordinateFormatKey key;
+  final CoordinateFormatKey type;
   String persistenceKey;
   String name;
   List<CoordinateFormatMetadata>? subtypes;
   String example;
 
-  CoordinateFormatMetadata(this.key, this.persistenceKey, this.name, this.example, {this.subtypes});
+  CoordinateFormatMetadata(this.type, this.persistenceKey, this.name, this.example, {this.subtypes});
 }
 
 List<CoordinateFormatMetadata> allCoordinateFormatMetadata = [
@@ -117,7 +117,7 @@ CoordinateFormatMetadata coordinateFormatMetadataByKey(CoordinateFormatKey key) 
   var allFormats = allCoordinateFormatMetadata;
   allFormats.addAll(_getAllSubtypeCoordinateFormats());
 
-  return allFormats.firstWhere((format) => format.key == key);
+  return allFormats.firstWhere((format) => format.type == key);
 }
 
 String persistenceKeyByCoordinateFormatKey(CoordinateFormatKey key) {

@@ -9,7 +9,7 @@ List<List<String>> buildOutputListOfZoneData(BuildContext context, WherigoZoneDa
 
   data.ZonePoints.forEach((point) {
     result.add(
-        ['', formatCoordOutput(LatLng(point.Latitude, point.Longitude), defaultCoordinateFormat, defaultEllipsoid())]);
+        ['', formatCoordOutput(LatLng(point.Latitude, point.Longitude), defaultCoordinateFormat, defaultEllipsoid)]);
   });
   return result;
 }
@@ -21,7 +21,7 @@ List<List<String>> buildOutputListOfZoneDataUserMode(BuildContext context, Wheri
     [
       i18n(context, 'wherigo_output_originalpoint'),
       formatCoordOutput(LatLng(data.ZoneOriginalPoint.Latitude, data.ZoneOriginalPoint.Longitude), defaultCoordinateFormat,
-          defaultEllipsoid())
+          defaultEllipsoid)
     ],
     [i18n(context, 'wherigo_output_zonepoints'), ''],
   ];
@@ -59,7 +59,7 @@ List<List<String>> buildOutputListOfZoneDataExpertMode(BuildContext context, Whe
     [
       i18n(context, 'wherigo_output_originalpoint'),
       formatCoordOutput(LatLng(data.ZoneOriginalPoint.Latitude, data.ZoneOriginalPoint.Longitude), defaultCoordinateFormat,
-          defaultEllipsoid())
+          defaultEllipsoid)
     ],
     [i18n(context, 'wherigo_output_zonepoints'), ''],
   ];

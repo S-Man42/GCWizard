@@ -12,8 +12,8 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('coords: ${elem['coords']}', () {
-        var actual = centroid(elem['coords']);
-        expect(equalsLatLng(actual, elem['expectedOutput']), true);
+        var actual = centroid(elem['coords'] as List<LatLng>);
+        expect(equalsLatLng(actual!, elem['expectedOutput'] as LatLng), true);
       });
     });
   });
@@ -27,8 +27,8 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('coords: ${elem['coords']}', () {
-        var actual = centroidCenterOfGravity(elem['coords']);
-        expect(equalsLatLng(actual, elem['expectedOutput']), true);
+        var actual = centroidCenterOfGravity(elem['coords'] as List<LatLng>);
+        expect(equalsLatLng(actual, elem['expectedOutput'] as LatLng), true);
       });
     });
   });
@@ -42,9 +42,9 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('coords: ${elem['coords']}', () {
-        var cog = centroidCenterOfGravity(elem['coords']);
-        var actual = centroidArithmeticMean(elem['coords'], cog);
-        expect(equalsLatLng(actual, elem['expectedOutput']), true);
+        var cog = centroidCenterOfGravity(elem['coords'] as List<LatLng>);
+        var actual = centroidArithmeticMean(elem['coords'] as List<LatLng>, cog);
+        expect(equalsLatLng(actual, elem['expectedOutput'] as LatLng), true);
       });
     });
   });

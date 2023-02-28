@@ -46,7 +46,7 @@ class GCWSymbolTableDecryptionState extends State<GCWSymbolTableDecryption> {
     super.dispose();
   }
 
-  _scrollToBottom() {
+  void _scrollToBottom() {
     _scrollController.position.jumpTo(_scrollController.position.maxScrollExtent);
   }
 
@@ -56,22 +56,20 @@ class GCWSymbolTableDecryptionState extends State<GCWSymbolTableDecryption> {
 
     return Column(
       children: <Widget>[
-        (widget.data == null)
-            ? Container()
-            : Expanded(
-                child: GCWSymbolTableSymbolMatrix(
-                imageData: _data.images,
-                symbolKey: _data.symbolKey,
-                countColumns: widget.countColumns,
-                mediaQueryData: widget.mediaQueryData,
-                onChanged: widget.onChanged,
-                onSymbolTapped: (String tappedText, SymbolData imageData) {
-                  setState(() {
-                    _decryptionOutput += tappedText;
-                    _scrollToBottom();
-                  });
-                },
-              )),
+            Expanded(
+              child: GCWSymbolTableSymbolMatrix(
+              imageData: _data.images,
+              symbolKey: _data.symbolKey,
+              countColumns: widget.countColumns,
+              mediaQueryData: widget.mediaQueryData,
+              onChanged: widget.onChanged,
+              onSymbolTapped: (String tappedText, SymbolData imageData) {
+                setState(() {
+                  _decryptionOutput += tappedText;
+                  _scrollToBottom();
+                });
+              },
+            )),
         ConstrainedBox(
           child: Column(
             mainAxisSize: MainAxisSize.min,

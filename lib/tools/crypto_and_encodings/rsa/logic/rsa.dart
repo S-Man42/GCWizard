@@ -62,12 +62,12 @@ BigInt _decryptInteger(BigInt value, BigInt d, BigInt N) {
   return value.modPow(d, N);
 }
 
-List<BigInt>? decryptRSA(List<BigInt> input, BigInt? d, BigInt? p, BigInt? q) {
+List<BigInt>? decryptRSA(List<BigInt>? input, BigInt? d, BigInt? p, BigInt? q) {
   if (input == null || input.isEmpty) return null;
 
   if (d == null || p == null || q == null) return null;
 
-  return input.where((number) => number != null).map((number) {
+  return input.map((number) {
     var _N = N(p, q);
 
     if (!validateD(d, p, q)) throw Exception('rsa_error_phi.d.not.coprime');

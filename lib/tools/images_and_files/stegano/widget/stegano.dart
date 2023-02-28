@@ -119,7 +119,7 @@ class _SteganoState extends State<Stegano> {
     );
   }
 
-  _calculateOutput() async {
+  void _calculateOutput() async {
     setState(() {
       // clear previous encoded picture
       _encodedPictureData = null;
@@ -141,7 +141,7 @@ class _SteganoState extends State<Stegano> {
   ///
   /// Decoding section
   ///
-  _calculateOutputDecoding() async {
+  void _calculateOutputDecoding() async {
     String? _text;
     String? _error;
     String? _error2;
@@ -166,7 +166,7 @@ class _SteganoState extends State<Stegano> {
   ///
   /// Encoding section
   ///
-  _calculateOutputEncoding() async {
+  void _calculateOutputEncoding() async {
     Uint8List? bytes;
     String? _error;
     String? _error2;

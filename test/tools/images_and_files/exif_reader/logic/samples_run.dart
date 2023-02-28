@@ -6,14 +6,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:gc_wizard/tools/images_and_files/exif_reader/logic/exif_reader.dart';
 
-runSamplesTest(FileSystemEntity file) async {
+Future<void> runSamplesTest(FileSystemEntity file) async {
   Uint8List content = _getFileData(file.path);
 
   var tags = await readExifFromBytes(content);
   expect(tags.length, isNonZero);
 }
 
-runSamplesTestGps(
+Future<void> runSamplesTestGps(
   FileSystemEntity file,
   double expectedLatitude,
   double expectedLongitude,

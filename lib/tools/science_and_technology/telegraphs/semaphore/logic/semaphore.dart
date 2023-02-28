@@ -131,7 +131,7 @@ SegmentsChars decodeSemaphore(List<String>? inputs) {
     displays.add(segment);
   });
 
-  List<String> text = inputs.where((input) => input != null).map((input) {
+  List<String> text = inputs.map((input) {
     var char = '';
     var charH = '';
     String symbol = '';

@@ -16,11 +16,11 @@ var regexEnd = '';
 
 //wholeString == false: The first match at the text begin is taken - for copy
 //wholeString == true: The whole text must be a valid coord - for var coords
-List<BaseCoordinates> parseCoordinates(String text, {wholeString = false}) {
-  var coords = <BaseCoordinates>[];
+List<BaseCoordinate> parseCoordinates(String text, {bool wholeString = false}) {
+  var coords = <BaseCoordinate>[];
 
   try {
-    BaseCoordinates coord = DMS.parse(text, wholeString: wholeString);
+    BaseCoordinate? coord = DMS.parse(text, wholeString: wholeString);
     if (coord != null) coords.add(coord);
 
     coord = DMM.parse(text, wholeString: wholeString);
@@ -53,7 +53,6 @@ List<BaseCoordinates> parseCoordinates(String text, {wholeString = false}) {
       if (coord != null) coords.add(coord);
     } else {
       if (coord != null) coords.add(coord);
-      if (coord != null) coords.add(swissGripPlus);
     }
 
     coord = GaussKrueger.parse(text);
@@ -101,14 +100,14 @@ List<BaseCoordinates> parseCoordinates(String text, {wholeString = false}) {
 
 //wholeString == false: The first match at the text begin is taken - for copy
 //wholeString == true: The whole text must be a valid coord - for var coords
-BaseCoordinates? parseStandardFormats(String text, {bool wholeString = false}) {
-  LatLng? coord = DMS.parse(text, wholeString: wholeString).toLatLng();
+BaseCoordinate? parseStandardFormats(String text, {bool wholeString = false}) {
+  LatLng? coord = DMS.parse(text, wholeString: wholeString)?.toLatLng();
   if (coord != null) return DMS.fromLatLon(coord);
 
-  coord = DMM.parse(text, wholeString: wholeString).toLatLng();
+  coord = DMM.parse(text, wholeString: wholeString)?.toLatLng();
   if (coord != null) return DMM.fromLatLon(coord);
 
-  coord = DEC.parse(text, wholeString: wholeString).toLatLng();
+  coord = DEC.parse(text, wholeString: wholeString)?.toLatLng();
   if (coord != null) return DEC.fromLatLon(coord);
 
   return null;

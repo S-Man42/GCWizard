@@ -16,7 +16,7 @@ final Map<String, String> _subtractionSubstitutions = {
   'IIII': 'IV'
 };
 
-String encodeRomanNumbers(int? number, {var type = RomanNumberType.USE_SUBTRACTION_RULE}) {
+String encodeRomanNumbers(int? number, {RomanNumberType type = RomanNumberType.USE_SUBTRACTION_RULE}) {
   if (number == null) return '';
 
   if (number < 1) return '';
@@ -37,7 +37,7 @@ String encodeRomanNumbers(int? number, {var type = RomanNumberType.USE_SUBTRACTI
   return out;
 }
 
-int? decodeRomanNumbers(String? input, {var type = RomanNumberType.USE_SUBTRACTION_RULE}) {
+int? decodeRomanNumbers(String? input, {RomanNumberType type = RomanNumberType.USE_SUBTRACTION_RULE}) {
   if (input == null) return null;
 
   input = input.toUpperCase().replaceAll(RegExp(r'[^MDCLXVI]'), '');

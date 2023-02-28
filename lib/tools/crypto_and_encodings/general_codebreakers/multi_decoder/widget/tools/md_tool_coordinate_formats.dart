@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_stateful_dropdown.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_metadata.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coord_format_getter.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/multi_decoder.dart';
+import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 import 'package:latlong2/latlong.dart';
 
 const MDT_INTERNALNAMES_COORDINATEFORMATS = 'multidecoder_tool_coordinateformats_title';
@@ -27,7 +30,7 @@ class MultiDecoderToolCoordinateFormats extends AbstractMultiDecoderTool {
               input = input.replaceAll(RegExp(r'\s+'), ' ').toUpperCase();
               LatLng? coords;
               try {
-                switch (options[MDT_COORDINATEFORMATS_OPTION_FORMAT]) {
+                switch (getCoordinateFormatKey(options, MDT_COORDINATEFORMATS_OPTION_FORMAT)) {
                   case CoordinateFormatKey.DEC:
                     coords = DEC.parse(input, wholeString: true)?.toLatLng();
                     break;
@@ -38,25 +41,25 @@ class MultiDecoderToolCoordinateFormats extends AbstractMultiDecoderTool {
                     coords = DMS.parse(input, wholeString: true)?.toLatLng();
                     break;
                   case CoordinateFormatKey.UTM:
-                    coords = UTMREF.parse(input)?.toLatLng(ells: defaultEllipsoid());
+                    coords = UTMREF.parse(input)?.toLatLng(ells: defaultEllipsoid);
                     break;
                   case CoordinateFormatKey.MGRS:
-                    coords = MGRS.parse(input)?.toLatLng(ells: defaultEllipsoid());
+                    coords = MGRS.parse(input)?.toLatLng(ells: defaultEllipsoid);
                     break;
                   case CoordinateFormatKey.XYZ:
-                    coords = XYZ.parse(input)?.toLatLng(ells: defaultEllipsoid());
+                    coords = XYZ.parse(input)?.toLatLng(ells: defaultEllipsoid);
                     break;
                   case CoordinateFormatKey.SWISS_GRID:
-                    coords = SwissGrid.parse(input)?.toLatLng(ells: defaultEllipsoid());
+                    coords = SwissGrid.parse(input)?.toLatLng(ells: defaultEllipsoid);
                     break;
                   case CoordinateFormatKey.SWISS_GRID_PLUS:
-                    coords = SwissGridPlus.parse(input)?.toLatLng(ells: defaultEllipsoid());
+                    coords = SwissGridPlus.parse(input)?.toLatLng(ells: defaultEllipsoid);
                     break;
                   case CoordinateFormatKey.GAUSS_KRUEGER:
-                    coords = GaussKrueger.parse(input)?.toLatLng(ells: defaultEllipsoid());
+                    coords = GaussKrueger.parse(input)?.toLatLng(ells: defaultEllipsoid);
                     break;
                   case CoordinateFormatKey.LAMBERT:
-                    coords = Lambert.parse(input)?.toLatLng(ells: defaultEllipsoid());
+                    coords = Lambert.parse(input)?.toLatLng(ells: defaultEllipsoid);
                     break;
                   case CoordinateFormatKey.DUTCH_GRID:
                     coords = DutchGrid.parse(input)?.toLatLng();
@@ -65,7 +68,7 @@ class MultiDecoderToolCoordinateFormats extends AbstractMultiDecoderTool {
                     coords = Maidenhead.parse(input)?.toLatLng();
                     break;
                   case CoordinateFormatKey.MERCATOR:
-                    coords = Mercator.parse(input)?.toLatLng(ells: defaultEllipsoid());
+                    coords = Mercator.parse(input)?.toLatLng(ells: defaultEllipsoid);
                     break;
                   case CoordinateFormatKey.NATURAL_AREA_CODE:
                     coords = NaturalAreaCode.parse(input)?.toLatLng();
@@ -97,26 +100,36 @@ class MultiDecoderToolCoordinateFormats extends AbstractMultiDecoderTool {
                   case CoordinateFormatKey.MAKANEY:
                     coords = Makaney.parse(input)?.toLatLng();
                     break;
+                  default:
+                    coords = null;
                 }
               } catch (e) {}
 
               if (coords == null) return null;
 
-              return formatCoordOutput(coords, defaultCoordinateFormat, defaultEllipsoid());
+              return formatCoordOutput(coords, defaultCoordinateFormat, defaultEllipsoid);
             },
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
               MDT_COORDINATEFORMATS_OPTION_FORMAT: GCWStatefulDropDown<CoordinateFormatKey>(
-                value: options[MDT_COORDINATEFORMATS_OPTION_FORMAT],
+                value: getCoordinateFormatKey(options, MDT_COORDINATEFORMATS_OPTION_FORMAT),
                 onChanged: (newValue) {
                   options[MDT_COORDINATEFORMATS_OPTION_FORMAT] = newValue;
                 },
-                items: allCoordinateFormatMetadata.where((format) => format.key != CoordinateFormatKey.SLIPPY_MAP).map((format) {
+                items: allCoordinateFormatMetadata.where((format) => format.persistenceKey != CoordinateFormatKey.SLIPPY_MAP).map((format) {
                   return GCWDropDownMenuItem(
-                    value: format.key,
+                    value: format.persistenceKey,
                     child: i18n(context, format.name, ifTranslationNotExists: format.name),
                   );
                 }).toList(),
               ),
             }));
+}
+
+CoordinateFormatKey getCoordinateFormatKey(Map<String, Object?> options, String option) {
+  var key = checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_COORDINATEFORMATS, options, MDT_COORDINATEFORMATS_OPTION_FORMAT);
+  if (CoordinateFormatKey.values.contains(key))
+    return CoordinateFormatKey.values.firstWhere((element) => element == key);
+  key = toStringOrNull(getDefaultValue(MDT_INTERNALNAMES_COORDINATEFORMATS, MDT_COORDINATEFORMATS_OPTION_FORMAT)) ?? '';
+  return CoordinateFormatKey.values.firstWhere((element) => element == key);
 }

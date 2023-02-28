@@ -19,9 +19,7 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/tools/images_and_files/animated_image/logic/animated_image.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
-import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
-import 'package:intl/intl.dart';
 
 class AnimatedImage extends StatefulWidget {
   final GCWFile? file;
@@ -54,12 +52,10 @@ class AnimatedImageState extends State<AnimatedImage> {
             return;
           }
 
-          if (value != null) {
-            setState(() {
-              _file = value;
-              _analysePlatformFileAsync();
-            });
-          }
+          setState(() {
+            _file = value;
+            _analysePlatformFileAsync();
+          });
         },
       ),
       GCWDefaultOutput(
@@ -122,9 +118,7 @@ class AnimatedImageState extends State<AnimatedImage> {
     ]);
   }
 
-  Widget _buildDurationOutput(List<List<dynamic>> durations) {
-    if (durations == null) return Container();
-
+  Widget _buildDurationOutput(List<List<Object>> durations) {
     return Column(children: <Widget>[
       GCWDivider(),
       GCWOutput(
@@ -153,7 +147,7 @@ class AnimatedImageState extends State<AnimatedImage> {
   }
 
   void _analysePlatformFileAsync() async {
-    await showDialog(
+    await showDialog<bool>(
       context: context,
       barrierDismissible: false,
       builder: (context) {

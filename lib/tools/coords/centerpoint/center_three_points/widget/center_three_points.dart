@@ -91,7 +91,7 @@ class CenterThreePointsState extends State<CenterThreePoints> {
 
   Widget _buildSubmitButton() {
     return GCWSubmitButton(onPressed: () async {
-      await showDialog(
+      await showDialog<bool>(
         context: context,
         barrierDismissible: false,
         builder: (context) {
@@ -114,7 +114,7 @@ class CenterThreePointsState extends State<CenterThreePoints> {
 
   Future<GCWAsyncExecuterParameters> _buildJobData() async {
     return GCWAsyncExecuterParameters(CenterPointJobData(
-        coord1: _currentCoords1, coord2: _currentCoords2, coord3: _currentCoords3, ells: defaultEllipsoid()));
+        coord1: _currentCoords1, coord2: _currentCoords2, coord3: _currentCoords3, ells: defaultEllipsoid));
   }
 
   void _showOutput(List<Map<String, dynamic>>? output) {
@@ -131,7 +131,7 @@ class CenterThreePointsState extends State<CenterThreePoints> {
     _currentDistance = output[0]['distance'];
 
     _currentOutput = output.map((coord) {
-      return '${formatCoordOutput(coord['centerPoint'], _currentOutputFormat, defaultEllipsoid())}';
+      return '${formatCoordOutput(coord['centerPoint'], _currentOutputFormat, defaultEllipsoid)}';
     }).toList();
     _currentOutput.add(
         '${i18n(context, 'coords_center_distance')}: ${doubleFormat.format(_currentOutputUnit.fromMeter(_currentDistance))} ${_currentOutputUnit.symbol}');

@@ -60,14 +60,14 @@ class WhitespaceLanguageState extends State<WhitespaceLanguage> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    if ((_currentCode == null || _currentCode.isEmpty) && (_currentOutput == null)) return GCWDefaultOutput();
+    if (_currentCode.isEmpty && (_currentOutput == null)) return GCWDefaultOutput();
 
     if (_currentOutput == null) return GCWDefaultOutput();
 
     return GCWMultipleOutput(
       children: [
         _currentOutput!.output +
-            (_currentOutput!.error && (_currentOutput!.errorText != null)
+            (_currentOutput!.error
                 ? '\n' + (i18n(context, _currentOutput!.errorText, ifTranslationNotExists: _currentOutput!.errorText))
                 : ''),
         GCWOutput(
@@ -81,7 +81,7 @@ class WhitespaceLanguageState extends State<WhitespaceLanguage> {
   }
 
   void _calcOutput(BuildContext context) async {
-    if (_currentCode == null || _currentCode.isEmpty || _isStarted) return;
+    if (_currentCode.isEmpty || _isStarted) return;
 
     _isStarted = true;
     _currentOutput = null;

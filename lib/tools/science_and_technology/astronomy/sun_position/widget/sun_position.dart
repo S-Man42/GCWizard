@@ -19,7 +19,7 @@ class SunPosition extends StatefulWidget {
 
 class SunPositionState extends State<SunPosition> {
   var _currentDateTime = DateTimeTimezone(datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
-  var _currentCoords = defaultCoordinate;
+  var _currentCoords = BaseCoordinate();
   var _currentCoordsFormat = defaultCoordinateFormat;
 
   @override
@@ -31,8 +31,7 @@ class SunPositionState extends State<SunPosition> {
           coordsFormat: _currentCoordsFormat,
           onChanged: (ret) {
             setState(() {
-              _currentCoordsFormat = ret['coordsFormat'];
-              _currentCoords = ret['value'];
+              _currentCoords = ret;
             });
           },
         ),
@@ -57,7 +56,7 @@ class SunPositionState extends State<SunPosition> {
 
     var julianDate = JulianDate(_currentDateTime);
 
-    var sunPosition = logic.SunPosition(_currentCoords, julianDate, defaultEllipsoid());
+    var sunPosition = logic.SunPosition(_currentCoords.toLatLng() ?? defaultCoordinate, julianDate, defaultEllipsoid);
 
     var outputsSun = [
       [i18n(context, 'astronomy_position_eclipticlongitude'), format.format(sunPosition.eclipticLongitude) + '°'],

@@ -174,7 +174,7 @@ class SegmentBearingsState extends State<SegmentBearings> {
   }
 
   _calculateOutput() {
-    var ells = defaultEllipsoid();
+    var ells = defaultEllipsoid;
 
     var startMapPoint = GCWMapPoint(
         point: _currentCoordsStart,
@@ -245,7 +245,7 @@ class SegmentBearingsState extends State<SegmentBearings> {
     _currentMapPolylines.add(GCWMapPolyline(points: [startMapPoint, endMapPoint2]));
 
     _currentOutputs = List<String>.from(segments['points'].map((point) {
-      return formatCoordOutput(point, _currentOutputFormat, defaultEllipsoid());
+      return formatCoordOutput(point, _currentOutputFormat, defaultEllipsoid);
     }).toList());
 
     var bearingOutput = doubleFormat.format(segments['segmentAngle']);

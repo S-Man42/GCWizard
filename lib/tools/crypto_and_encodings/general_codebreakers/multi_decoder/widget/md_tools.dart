@@ -46,6 +46,7 @@ final List<String> _mdtToolsRegistry = [
   MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_WHITESPACE,
 ];
 
+/// all multiDecoder default options
 final _initialOptions = <String, Map<String, Object>>{
   MDT_INTERNALNAMES_ALPHABETVALUES: {
     MDT_ALPHABETVALUES_OPTION_ALPHABET: 'alphabet_name_az'
@@ -115,6 +116,28 @@ final _initialOptions = <String, Map<String, Object>>{
   },
 };
 
+Object? getDefaultValue(String internalToolName, String option) {
+  return _initialOptions[internalToolName]?[option];
+}
+
+String checkStringFormatOrDefaultOption(String internalToolName, Map<String, Object?> options, String option) {
+  var value = options[option];
+  if (value is String) return value;
+  value = getDefaultValue(internalToolName, option);
+  if (value is String) return value;
+
+  throw Exception('invalid tool option');
+}
+
+int checkIntFormatOrDefaultOption(String internalToolName, Map<String, Object?> options, String option) {
+  var value = options[option];
+  if (value is int) return value;
+  value = getDefaultValue(internalToolName, option);
+  if (value is int) return value;
+
+  throw Exception('invalid tool option');
+}
+
 Map<String, Object?> _multiDecoderToolOptionToGCWMultiDecoderToolOptions(
     List<MultiDecoderToolOption> mdtOptions) {
   var gcwOptions = <String, Object?>{};
@@ -126,8 +149,8 @@ Map<String, Object?> _multiDecoderToolOptionToGCWMultiDecoderToolOptions(
   return gcwOptions;
 }
 
-AbstractMultiDecoderTool _multiDecoderToolToGCWMultiDecoderTool(
-    BuildContext context, MultiDecoderToolEntity mdtTool) {
+/// all multiDecoder tools
+AbstractMultiDecoderTool _multiDecoderToolToGCWMultiDecoderTool(BuildContext context, MultiDecoderToolEntity mdtTool) {
   AbstractMultiDecoderTool gcwTool;
 
   var options = _initialOptions[mdtTool.internalToolName] ?? <String, Object?>{};
@@ -365,6 +388,7 @@ AbstractMultiDecoderTool _multiDecoderToolToGCWMultiDecoderTool(
   return gcwTool;
 }
 
+/// default configuration
 void _initializeMultiToolDecoder(BuildContext context) {
   var newTools = [
     MultiDecoderToolEntity(

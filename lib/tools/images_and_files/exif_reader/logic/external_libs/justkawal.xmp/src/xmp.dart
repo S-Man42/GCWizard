@@ -79,7 +79,7 @@ class XMP {
   static void _addAttribute(Map<String, dynamic> result, XmlElement element, bool raw) {
     var attributeList = element.attributes.toList();
 
-    var headerName;
+    String headerName = '';
 
     if (!raw) {
       XmlElement? temporaryElement = element;

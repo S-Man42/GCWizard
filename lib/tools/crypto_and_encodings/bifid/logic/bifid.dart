@@ -10,9 +10,9 @@ class BifidOutput {
 }
 
 BifidOutput encryptBifid(String? input, String? key,
-    {PolybiosMode mode: PolybiosMode.AZ09,
+    {PolybiosMode mode = PolybiosMode.AZ09,
     String? alphabet,
-    AlphabetModificationMode alphabetMode: AlphabetModificationMode.J_TO_I}) {
+    AlphabetModificationMode alphabetMode = AlphabetModificationMode.J_TO_I}) {
   if (input == null || key == null)
     return BifidOutput('ERROR', 'bifid_error_no_encrypt_input', null);
 
@@ -20,8 +20,7 @@ BifidOutput encryptBifid(String? input, String? key,
   if (dim != 5 && dim != 6)
     return BifidOutput('ERROR', 'bifid_error_wrong_griddimension', null);
 
-  PolybiosOutput? polybiosOutput =
-      encryptPolybios(input, key, mode: mode, fillAlphabet: alphabet, modificationMode: alphabetMode);
+  var polybiosOutput = encryptPolybios(input, key, mode: mode, fillAlphabet: alphabet, modificationMode: alphabetMode);
 
   if (polybiosOutput == null)
     //return null;
@@ -49,9 +48,9 @@ BifidOutput encryptBifid(String? input, String? key,
 }
 
 BifidOutput decryptBifid(String? input, String? key,
-    {PolybiosMode mode: PolybiosMode.AZ09,
+    {PolybiosMode mode = PolybiosMode.AZ09,
     String? alphabet,
-    AlphabetModificationMode alphabetMode: AlphabetModificationMode.J_TO_I}) {
+    AlphabetModificationMode alphabetMode = AlphabetModificationMode.J_TO_I}) {
   if (input == null || key == null)
     return BifidOutput('ERROR', 'bifid_error_no_decrypt_input', null);
 
@@ -59,8 +58,7 @@ BifidOutput decryptBifid(String? input, String? key,
   if (dim != 5 && dim != 6)
     return BifidOutput('ERROR', 'bifid_error_wrong_griddimension', null);
 
-  PolybiosOutput? polybiosOutput =
-      encryptPolybios(input, key, mode: mode, fillAlphabet: alphabet, modificationMode: alphabetMode);
+  var polybiosOutput = encryptPolybios(input, key, mode: mode, fillAlphabet: alphabet, modificationMode: alphabetMode);
 
   if (polybiosOutput == null)
      return BifidOutput('ERROR', 'bifid_error_no_output', null);

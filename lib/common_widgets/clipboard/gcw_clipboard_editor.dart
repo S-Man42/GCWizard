@@ -105,7 +105,7 @@ class GCWClipboardEditorState extends State<GCWClipboardEditor> {
                 icon: Icons.check,
                 onPressed: () {
                   setState(() {
-                    if (_currentEditText != null && _currentEditText.isNotEmpty) {
+                    if (_currentEditText.isNotEmpty) {
                       item.text = _currentEditText;
 
                       var newEntries = List<String>.from(entries);

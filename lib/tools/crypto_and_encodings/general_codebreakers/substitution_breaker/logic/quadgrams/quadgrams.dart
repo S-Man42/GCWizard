@@ -46,7 +46,6 @@ class Quadgrams extends _Quadgrams {
   }
 
   static List<int>? decompressQuadgrams(Map<int, List<int>> quadgramsCompressed, int size) {
-    if (quadgramsCompressed == null) return null;
     var list = List<int>.filled(size, 0);
 
     list.fillRange(0, list.length, 0);
@@ -80,7 +79,6 @@ class Quadgrams extends _Quadgrams {
           first = false;
         else
           sb.write(',');
-        if (val == null) val = 0;
         out = val.round().toString();
         sb.write(out);
       });

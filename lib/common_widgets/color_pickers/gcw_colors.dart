@@ -47,7 +47,7 @@ class GCWColorsState extends State<GCWColors> {
     _setColorPickerColor(_currentColorsValue);
   }
 
-  _setColorPickerColor(GCWColorValue color) {
+  void _setColorPickerColor(GCWColorValue color) {
     var rgb = convertColorSpace(color, ColorSpaceKey.RGB) as RGB;
     var sysColor = Color.fromARGB(255, rgb.red.round(), rgb.green.round(), rgb.blue.round());
     _currentColorPickerColor = HSVColor.fromColor(sysColor);
@@ -91,7 +91,7 @@ class GCWColorsState extends State<GCWColors> {
     );
   }
 
-  _setCurrentValueAndEmitOnChange() {
+  void _setCurrentValueAndEmitOnChange() {
     widget.onChanged(_currentColorsValue);
   }
 }

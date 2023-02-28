@@ -27,8 +27,8 @@ class MultiDecoderToolEsotericLanguageDeadfish extends AbstractMultiDecoderTool 
             onDecode: (String input, String key) {
               try {
                 var decodeable = input;
-                if (options[MDT_ESOTERIC_LANGUAGE_DEADFISH_OPTION_MODE] ==
-                    MDT_ESOTERIC_LANGUAGES_DEADFISH_OPTION_XKCD) //XKCD
+                var option = checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_DEADFISH, options, MDT_ESOTERIC_LANGUAGE_DEADFISH_OPTION_MODE);
+                if (option == MDT_ESOTERIC_LANGUAGES_DEADFISH_OPTION_XKCD) //XKCD
                   decodeable = decodeable
                       .toLowerCase()
                       .replaceAll(RegExp(r'[iso]'), '')
@@ -44,7 +44,7 @@ class MultiDecoderToolEsotericLanguageDeadfish extends AbstractMultiDecoderTool 
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
               MDT_ESOTERIC_LANGUAGE_DEADFISH_OPTION_MODE: GCWStatefulDropDown<String>(
-                value: toStringOrDefault(options[MDT_ESOTERIC_LANGUAGE_DEADFISH_OPTION_MODE], MDT_ESOTERIC_LANGUAGES_DEADFISH_OPTION_IDSO),
+                value: checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_DEADFISH, options, MDT_ESOTERIC_LANGUAGE_DEADFISH_OPTION_MODE),
                 onChanged: (newValue) {
                   options[MDT_ESOTERIC_LANGUAGE_DEADFISH_OPTION_MODE] = newValue;
                 },

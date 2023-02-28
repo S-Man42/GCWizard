@@ -108,7 +108,7 @@ class CoordinateAveragingState extends State<CoordinateAveraging> {
                   _averagedLocations
                       .asMap()
                       .map((index, location) {
-                        var coord = formatCoordOutput(location.coord, defaultCoordinateFormat, defaultEllipsoid());
+                        var coord = formatCoordOutput(location.coord, defaultCoordinateFormat, defaultEllipsoid);
                         var accuracy = _formatLength(location.accuracy);
 
                         return MapEntry(index, [index + 1, coord, accuracy]);
@@ -184,7 +184,7 @@ class CoordinateAveragingState extends State<CoordinateAveraging> {
 
     // calculating accuracy improved by averaging
     double distance =
-        distanceBearing(LatLng(location.latitude, location.longitude), averagedCoord, defaultEllipsoid()).distance;
+        distanceBearing(LatLng(location.latitude, location.longitude), averagedCoord, defaultEllipsoid).distance;
     if (distance == 0) {
       distance = (location.accuracy == 0 ? 2 : location.accuracy);
     }

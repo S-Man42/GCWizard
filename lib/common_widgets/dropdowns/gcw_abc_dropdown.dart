@@ -25,7 +25,7 @@ class GCWABCDropDownState extends State<GCWABCDropDown> {
       value: _currentValue ?? widget.value ?? 1,
       onChanged: (newValue) {
         setState(() {
-          _currentValue = newValue is int ? newValue as int : _currentValue;
+          _currentValue = newValue is int ? newValue : _currentValue;
           widget.onChanged(_currentValue!);
         });
       },

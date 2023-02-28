@@ -5,7 +5,6 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
-import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/tools/symbol_tables/_common/logic/symbol_table_data.dart';
@@ -20,7 +19,6 @@ import 'package:gc_wizard/tools/symbol_tables/special_encryption_painters/symbol
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
-import 'package:intl/intl.dart';
 import 'package:tuple/tuple.dart';
 
 class GCWSymbolTableTextToSymbols extends StatefulWidget {
@@ -131,8 +129,6 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
   }
 
   Widget _buildEncryptionOutput(int countColumns) {
-    if (_data == null) return Container();
-
     var isCaseSensitive = _data.isCaseSensitive();
 
     var imageIndexes = _getImageIndexes(isCaseSensitive);

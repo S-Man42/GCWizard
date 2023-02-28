@@ -60,7 +60,7 @@ String _decimalToBase33(int n) {
 List<double> _makaneyToLatLon(String str) {
   var pos = str.indexOf('+');
 
-  var lon;
+  double lon;
   if (pos != -1)
     lon = _base33ToDecimal(str.substring(pos)) / 10000;
   else {

@@ -1,9 +1,10 @@
 import 'dart:typed_data';
 
 import 'package:exif/exif.dart';
+import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart' as local;
 import 'package:gc_wizard/common_widgets/image_viewers/gcw_imageview.dart';
-import 'package:gc_wizard/tools/coords/coordinate_format_parser/logic/latlon.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_parser.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/dec.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/images_and_files/exif_reader/logic/external_libs/justkawal.xmp/xmp.dart';
@@ -78,7 +79,7 @@ LatLng? completeGPSData(Map<String, IfdTag> data) {
       IfdTag? lng = data[_GPS_LNG];
       double? _lng;
       if (lng != null && lngRef != null)
-        double _lng = _getCoordDecFromIfdTag(lng, lngRef.printable, false);
+        _lng = _getCoordDecFromIfdTag(lng, lngRef.printable, false);
       if (_lng == null || _lng.isNaN) return null;
 
       if (_lat == 0 && _lng == 0) return null;
@@ -100,12 +101,12 @@ LatLng? completeGPSDataFromXmp(Map<String, dynamic> xmpTags) {
   LatLng? point;
   try {
     if (xmpTags.containsKey(_RDF_LOCATION)) {
-      String latlng = xmpTags[_RDF_LOCATION];
+      String latlng = toStringOrNull(xmpTags[_RDF_LOCATION]) ?? '';
       var pt = parseStandardFormats(latlng, wholeString: true);
       if (pt != null) {
-        var value = pt['coordinate'];
+        var value = pt.toLatLng();
         if (value is LatLng)
-        point = value as LatLng;
+        point = value;
       }
     }
   } catch (error) {
@@ -120,9 +121,9 @@ double _getCoordDecFromIfdTag(IfdTag tag, String latlngRef, bool isLatitude) {
 }
 
 double getCoordDecFromText(List<dynamic> values, String latlngRef, bool isLatitude) {
-  double _degrees = _getRatioValue(values[0]);
-  double _minutes = _getRatioValue(values[1]);
-  double _seconds = _getRatioValue(values[2]);
+  double _degrees = _getRatioValue(values[0] is Ratio ? values[0] as Ratio : Ratio(0, 0));
+  double _minutes = _getRatioValue(values[1] is Ratio ? values[1] as Ratio : Ratio(0, 0));
+  double _seconds = _getRatioValue(values[2] is Ratio ? values[2] as Ratio : Ratio(0, 0));
   int _sign = getCoordinateSignFromString(latlngRef, isLatitude);
   return _sign * (_degrees + _minutes / 60 + _seconds / 3600);
 }

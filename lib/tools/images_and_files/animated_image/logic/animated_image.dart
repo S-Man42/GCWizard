@@ -21,7 +21,7 @@ Future<AnimatedImageOutput?> analyseImageAsync(GCWAsyncExecuterParameters? jobDa
   var data = jobData!.parameters as Uint8List;
   var output = await analyseImage(data, sendAsyncPort: jobData.sendAsyncPort);
 
-  jobData.sendAsyncPort?.send(output);
+  jobData.sendAsyncPort.send(output);
 
   return output;
 }
@@ -113,24 +113,4 @@ int _checkSameHash(List<Image.Image> list, int maxSearchIndex) {
   for (int i = 0; i < maxSearchIndex; i++) if (list[i].hashCode == compareHash) return i;
 
   return -1;
-}
-
-List<List<int>> _filterImages(List<List<int>> filteredList, int imageIndex, List<Uint8List> imageList) {
-  const toler = 2;
-  for (var i = 0; i < filteredList.length; i++) {
-    var compareImage = imageList[filteredList[i].first];
-    var image = imageList[imageIndex];
-
-    if (compareImages(compareImage, image, toler: toler)) {
-      filteredList[i].add(imageIndex);
-      return filteredList;
-    }
-  }
-
-  // not found -> new List
-  var newList = <int>[];
-  newList.add(imageIndex);
-  filteredList.add(newList);
-
-  return filteredList;
 }

@@ -21,12 +21,12 @@ class MultiDecoderToolBacon extends AbstractMultiDecoderTool {
             name: name,
             internalToolName: MDT_INTERNALNAMES_BACON,
             onDecode: (String input, String key) {
-              return decodeBacon(input, false, options[MDT_BACON_OPTION_MODE] == MDT_BACON_OPTION_MODE_01);
+              return decodeBacon(input, false, checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_BACON, options, MDT_BACON_OPTION_MODE) == MDT_BACON_OPTION_MODE_01);
             },
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
               MDT_BACON_OPTION_MODE: GCWStatefulDropDown<String>(
-                value: options[MDT_BACON_OPTION_MODE],
+                value: checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_BACON, options, MDT_BACON_OPTION_MODE),
                 onChanged: (newValue) {
                   options[MDT_BACON_OPTION_MODE] = newValue;
                 },

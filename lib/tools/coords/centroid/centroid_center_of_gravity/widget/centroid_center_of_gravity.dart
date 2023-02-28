@@ -120,7 +120,7 @@ class CentroidCenterOfGravityState extends State<CentroidCenterOfGravity> {
     );
 
     _currentOutput = _currentValues.map((coord) {
-      return formatCoordOutput(coord, _currentOutputFormat, defaultEllipsoid());
+      return formatCoordOutput(coord, _currentOutputFormat, defaultEllipsoid);
     }).toList();
   }
 }

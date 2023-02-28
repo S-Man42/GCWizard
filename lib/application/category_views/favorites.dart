@@ -8,7 +8,7 @@ enum FavoriteChangeStatus { ADD, REMOVE }
 class Favorites {
   static List<String> _favoritedToolList = [];
 
-  static update(String toolId, FavoriteChangeStatus change) {
+  static void update(String toolId, FavoriteChangeStatus change) {
     var changed = false;
     switch (change) {
       case FavoriteChangeStatus.ADD:
@@ -28,7 +28,7 @@ class Favorites {
     if (changed) Prefs.setStringList(PREFERENCE_FAVORITES, _favoritedToolList);
   }
 
-  static initialize() {
+  static void initialize() {
     _favoritedToolList = Prefs.getStringList(PREFERENCE_FAVORITES);
   }
 

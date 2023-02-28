@@ -79,13 +79,12 @@ class GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> 
                 },
               ),
               flex: 4),
-          widget.symbolKey == null
-              ? Container(width: 20)
-              : GCWIconButton(
-                  icon: Icons.app_registration,
-                  onPressed: () {
-                    openInSymbolReplacer(context, widget.symbolKey);
-                  }),
+
+              GCWIconButton(
+                icon: Icons.app_registration,
+                onPressed: () {
+                  openInSymbolReplacer(context, widget.symbolKey);
+                }),
           Container(width: 15),
           GCWSymbolTableZoomButtons(
               countColumns: widget.countColumns, mediaQueryData: widget.mediaQueryData, onChanged: widget.onChanged)
@@ -106,8 +105,6 @@ class GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> 
   }
 
   Widget _buildDecryptionButtonMatrix(int countColumns, bool selectable, Function onSymbolTapped) {
-    if (_imageData == null) return Container();
-
     var rows = <Widget>[];
     var countRows = (_imageData.length / countColumns).floor();
 

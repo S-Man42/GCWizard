@@ -1,6 +1,5 @@
 import 'dart:collection';
 import 'dart:typed_data';
-import 'dart:ui';
 
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
 import 'package:intl/intl.dart';
@@ -98,7 +97,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   int _timerIndex = 1;
   int _taskIndex = 1;
   int _itemIndex = 1;
-  int _mediaIndex = 1;
   int _messageIndex = 1;
   int _answerIndex = 1;
   int _identifierIndex = 1;
@@ -216,7 +214,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         onWillPop: () async {
           bool willLeave = false;
           // show the confirm dialog
-          await showDialog(
+          await showDialog<bool>(
               context: context,
               builder: (_) => AlertDialog(
                     title: Text(i18n(context, 'wherigo_exit_title')),
@@ -391,7 +389,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     _timerIndex = 1;
     _taskIndex = 1;
     _itemIndex = 1;
-    _mediaIndex = 1;
     _messageIndex = 1;
     _answerIndex = 1;
     _identifierIndex = 1;
@@ -1421,7 +1418,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   void _analyseGwcCartridgeFileAsync() async {
-    await showDialog(
+    await showDialog<bool>(
       context: context,
       barrierDismissible: false,
       builder: (context) {
@@ -1442,7 +1439,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   void _analyseLuaCartridgeFileAsync() async {
-    await showDialog(
+    await showDialog<bool>(
       context: context,
       barrierDismissible: false,
       builder: (context) {

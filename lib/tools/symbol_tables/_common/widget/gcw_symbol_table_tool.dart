@@ -18,5 +18,5 @@ class GCWSymbolTableTool extends GCWTool {
             autoScroll: false,
             iconPath: SYMBOLTABLES_ASSETPATH + symbolKey + '/logo.png',
             helpSearchString: 'symboltables_selection_title',
-            searchKeys: ['symbol'] + (symbolSearchStrings == null ? [] : symbolSearchStrings));
+            searchKeys: ['symbol'] + symbolSearchStrings);
 }

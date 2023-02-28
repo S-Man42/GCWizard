@@ -57,7 +57,7 @@ abstract class ThemeColors {
   Color formulaError();
 }
 
-setThemeColorsByName(String themeColor) {
+void setThemeColorsByName(String themeColor) {
   if (themeColor == ThemeType.DARK.toString())
     setThemeColors(ThemeType.DARK);
   else if (themeColor == ThemeType.LIGHT.toString()) {
@@ -65,7 +65,7 @@ setThemeColorsByName(String themeColor) {
   }
 }
 
-setThemeColors(ThemeType type) {
+void setThemeColors(ThemeType type) {
   switch (type) {
     case ThemeType.DARK:
       _themeColors = _ThemeColorsDark();
@@ -74,7 +74,7 @@ setThemeColors(ThemeType type) {
       _themeColors = _ThemeColorsLight();
       break;
     default:
-      return null;
+      return;
   }
 }
 

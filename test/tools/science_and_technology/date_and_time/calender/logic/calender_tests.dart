@@ -84,9 +84,9 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('jd: ${elem['jd']}', () {
         var _actual = JulianDateToCopticCalendar(elem['jd'] as double);
-        expect(_actual.day, ((elem['expectedOutput'] as DateTime) as DateTime).day);
-        expect(_actual.month, ((elem['expectedOutput'] as DateTime) as DateTime).month);
-        expect(_actual.year, ((elem['expectedOutput'] as DateTime) as DateTime).year);
+        expect(_actual.day, (elem['expectedOutput'] as DateTime).day);
+        expect(_actual.month, (elem['expectedOutput'] as DateTime).month);
+        expect(_actual.year, (elem['expectedOutput'] as DateTime).year);
       });
     });
   });

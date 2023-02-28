@@ -61,10 +61,8 @@ class WhitespaceState {
     _code = this.code;
     _inp = this.inp;
     _output = this.output;
-    if (this.inp != null) {
-      _output += ' ' + this.inp;
-      _input.addAll(this.inp.split(''));
-    }
+    _output += ' ' + this.inp;
+    _input.addAll(this.inp.split(''));
     _input = this.input;
     _stack = this.stack;
     _return_positions = this.return_positions;
@@ -450,7 +448,7 @@ class _IO {
     if (_input.isEmpty) throw FormatException(_inputRequired);
     var a = _input_pop(1);
     var b = _stack_pop();
-    if (a == null || b == null)
+    if (b == null)
       throw FormatException('common_programming_error_invalid_opcode');
 
     _heap.addAll({b: a.codeUnits[0]});
@@ -469,7 +467,7 @@ class _IO {
     if (index < 0) index = _input.length;
     if (index >= 0) {
       var a = int.parse(_input_pop(index + 1));
-      if (a == null || b == null)
+      if (b == null)
         throw FormatException('common_programming_error_invalid_opcode');
 
       _heap.addAll({b: a});
@@ -867,7 +865,7 @@ void _dbgOutput(String command, String? label) {
 }
 
 String _WhitespaceOutputString(String input) {
-  if ((input == null) || (input.isEmpty)) return '';
+  if (input.isEmpty) return '';
   var sb = new StringBuffer();
   var i = 0;
   const push_num = "  ";

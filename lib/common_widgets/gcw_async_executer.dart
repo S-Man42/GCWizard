@@ -32,7 +32,7 @@ class GCWAsyncExecuter<T extends Object?> extends StatefulWidget {
   _GCWAsyncExecuterState createState() => _GCWAsyncExecuterState(isOverlay);
 }
 
-Future<ReceivePort> _makeIsolate(Function(GCWAsyncExecuterParameters) isolatedFunction, GCWAsyncExecuterParameters parameters) async {
+Future<ReceivePort> _makeIsolate(void Function(GCWAsyncExecuterParameters) isolatedFunction, GCWAsyncExecuterParameters parameters) async {
   ReceivePort receivePort = ReceivePort();
   parameters.sendAsyncPort = receivePort.sendPort;
 
@@ -42,7 +42,7 @@ Future<ReceivePort> _makeIsolate(Function(GCWAsyncExecuterParameters) isolatedFu
 }
 
 class _GCWAsyncExecuterState extends State<GCWAsyncExecuter> {
-  var _result;
+  Object? _result;
   bool isOverlay;
   bool _cancel = false;
   ReceivePort? _receivePort;
@@ -122,7 +122,7 @@ class _GCWAsyncExecuterState extends State<GCWAsyncExecuter> {
         });
   }
 
-  _cancelProcess() {
+  void _cancelProcess() {
     if (_isolate != null) _isolate!.kill(priority: Isolate.immediate);
     if (_receivePort != null) _receivePort!.close();
   }

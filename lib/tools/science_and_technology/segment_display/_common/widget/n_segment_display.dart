@@ -44,7 +44,7 @@ class NSegmentDisplayState extends State<NSegmentDisplay> {
   Widget build(BuildContext context) {
     widget.nSegmentDisplayState = this;
 
-    if (widget.segments != null) {
+    if (widget.segments.isNotEmpty) {
       _segments = Map.from(widget.segments);
 
       widget.initialSegments.keys.forEach((segmentID) {
@@ -85,8 +85,7 @@ class NSegmentDisplayState extends State<NSegmentDisplay> {
 
     final recorder = ui.PictureRecorder();
     Canvas canvas = Canvas(recorder);
-    final size = context.size;
-    if (size == null) return Future.value(null);
+    final size = context.size ?? Size(100, 100);
 
     final painter = SegmentDisplayPainter(context, widget.type, _segments, (key, value) {},
         customPaint: widget.customPaint, segment_color_on: Colors.black, segment_color_off: Colors.white);
@@ -101,7 +100,7 @@ class NSegmentDisplayState extends State<NSegmentDisplay> {
 Map<String, bool> buildSegmentMap(Segments segments) {
   Map<String, bool> segmentMap;
   if (segments.displays.isNotEmpty)
-    segmentMap = Map<String, bool>.fromIterable(segments.displays.last ?? [],
+    segmentMap = Map<String, bool>.fromIterable(segments.displays.last,
         key: (e) => e.toString(), value: (e) => true);
   else
     segmentMap = {};

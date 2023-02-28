@@ -1,3 +1,5 @@
+// ignore_for_file: equal_keys_in_map
+
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/utils/collection_utils.dart';
 
@@ -29,7 +31,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('map: ${elem['map']}, keepFirstOccurence: ${elem['keepFirstOccurence']}', () {
-        var _actual;
+        Object _actual;
         if (elem['keepFirstOccurence'] == null)
           _actual = switchMapKeyValue(elem['map'] as Map);
         else

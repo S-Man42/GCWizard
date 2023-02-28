@@ -7,7 +7,6 @@ import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_langua
 import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/widget/chef_language.dart'
     as chefWidget;
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/multi_decoder.dart';
-import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 
 const MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_CHEF = 'chef_title';
 const MDT_ESOTERIC_LANGUAGE_CHEF_OPTION_MODE = 'settings_general_i18n_language';
@@ -32,7 +31,7 @@ class MultiDecoderToolEsotericLanguageChef extends AbstractMultiDecoderTool {
               try {
                 if (chef.isValid(input))
                   return chefWidget.ChefState().buildOutputText(chef.interpretChef(
-                      toStringOrDefault(options[MDT_ESOTERIC_LANGUAGE_CHEF_OPTION_MODE], MDT_ESOTERIC_LANGUAGES_CHEF_OPTION_ENGLISH),
+                      checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_CHEF, options, MDT_ESOTERIC_LANGUAGE_CHEF_OPTION_MODE),
                           input.toLowerCase().replaceAll('  ', ' '), key));
               } catch (e) {}
               return null;
@@ -40,7 +39,7 @@ class MultiDecoderToolEsotericLanguageChef extends AbstractMultiDecoderTool {
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
               MDT_ESOTERIC_LANGUAGE_CHEF_OPTION_MODE: GCWStatefulDropDown<String>(
-                value: options[MDT_ESOTERIC_LANGUAGE_CHEF_OPTION_MODE],
+                value: checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_CHEF, options, MDT_ESOTERIC_LANGUAGE_CHEF_OPTION_MODE),
                 onChanged: (newValue) {
                   options[MDT_ESOTERIC_LANGUAGE_CHEF_OPTION_MODE] = newValue;
                 },

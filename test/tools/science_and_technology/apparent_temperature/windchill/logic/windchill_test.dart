@@ -21,7 +21,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('temperature: ${elem['temperature']}, windspeed: ${elem['windspeed']}, isMetric: ${elem['isMetric']}', () {
-        var _actual;
+        double? _actual;
         if (elem['isMetric'] as bool)
           _actual = calcWindchillMetric(elem['temperature'] as double?, elem['windspeed'] as double?);
         else

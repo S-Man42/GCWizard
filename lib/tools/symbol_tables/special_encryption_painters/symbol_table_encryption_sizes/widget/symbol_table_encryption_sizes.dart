@@ -31,7 +31,7 @@ class SymbolTableEncryptionSizes {
     initialize();
   }
 
-  initialize() {
+  void initialize() {
     _setCountRows();
     _setBorderWidth();
     _setSymbolSizes();
@@ -39,18 +39,18 @@ class SymbolTableEncryptionSizes {
     _setCanvasHeight();
   }
 
-  _setCountRows() {
+  void _setCountRows() {
     countRows = (countImages / countColumns).floor();
     if (countRows * countColumns < countImages) countRows = countRows + 1;
   }
 
-  _setBorderWidth() {
+  void _setBorderWidth() {
     if (relativeBorderWidth == null) relativeBorderWidth = 0.0;
 
     relativeBorderWidth = max(-0.9, relativeBorderWidth!);
   }
 
-  _setSymbolSizes() {
+  void _setSymbolSizes() {
     symbolAspectRatio = symbolWidth / symbolHeight;
 
     if (mode == SymbolTableEncryptionMode.FIXED_CANVASWIDTH) {
@@ -66,13 +66,13 @@ class SymbolTableEncryptionSizes {
     }
   }
 
-  _setCanvasWidth() {
+  void _setCanvasWidth() {
     if (mode == SymbolTableEncryptionMode.FIXED_SYMBOLSIZE) {
       canvasWidth = tileWidth * countColumns;
     }
   }
 
-  _setCanvasHeight() {
+  void _setCanvasHeight() {
     canvasHeight = tileHeight * countRows;
   }
 }

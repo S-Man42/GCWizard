@@ -138,7 +138,7 @@ class ResectionState extends State<Resection> {
       _currentOutput = [i18n(context, "coords_intersect_nointersection")];
       return null;
     }
-    _ells = defaultEllipsoid();
+    _ells = defaultEllipsoid;
     return GCWAsyncExecuterParameters(ResectionJobData(
         coord1: _currentCoords1,
         angle12: _currentAngle12['value'],
@@ -214,7 +214,7 @@ class ResectionState extends State<Resection> {
     });
 
     _currentOutput = _currentIntersections
-        .map((intersection) => formatCoordOutput(intersection, _currentOutputFormat, defaultEllipsoid()))
+        .map((intersection) => formatCoordOutput(intersection, _currentOutputFormat, defaultEllipsoid))
         .toList();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {

@@ -224,7 +224,6 @@ String encodeText(String? input, String? text, encodeOutFormat format,
   var out = '';
   var splittedResult = _wordList(input);
   var wordList = splittedResult.item1;
-  var rowList = splittedResult.item2;
   var sectionList = splittedResult.item2;
   var positionList = <Tuple2<_wordClass?, int>>[];
 
@@ -323,7 +322,7 @@ int _findWordIndex(_wordClass word, List<_wordClass> wordList) {
 }
 
 String _findWord(List<_wordClass> wordList, List<_wordClass> rowList, List<_wordClass> sectionList, searchFormat format,
-    {int section: 0, int row: 0, int word: 0, int character: 0, bool onlyFirstWordLetter = false}) {
+    {int section = 0, int row = 0, int word = 0, int character = 0, bool onlyFirstWordLetter = false}) {
   List<_wordClass> list;
   _wordClass wordEntry;
 
@@ -537,9 +536,8 @@ String _filterInput(String input,
 String _removeDiacritics(String input) {
   var copy = removeDiacritics(input);
 
-  if (copy != null) {
-    if (input.length != copy.length) return copy;
-    for (var i = input.length - 1; i >= 0; i--) if (input[i] != copy[i]) input = input.replaceRange(i, i + 1, '');
-  }
+  if (input.length != copy.length) return copy;
+  for (var i = input.length - 1; i >= 0; i--) if (input[i] != copy[i]) input = input.replaceRange(i, i + 1, '');
+
   return input;
 }

@@ -45,7 +45,7 @@ SwissGrid latLonToSwissGrid(LatLng coord, Ellipsoid ells) {
   double lat0 = degToRadian(46.952405555555556); //Bern
   double lon0 = degToRadian(7.439583333333333);
 
-  var ellsBessel = getEllipsoidByName(ELLIPSOID_NAME_BESSEL1841);
+  Ellipsoid ellsBessel = getEllipsoidByName(ELLIPSOID_NAME_BESSEL1841)!;
   double a = ellsBessel.a;
   double E = ellsBessel.e;
   double E2 = ellsBessel.e2;
@@ -89,7 +89,7 @@ LatLng swissGridToLatLon(SwissGrid coord, Ellipsoid ells) {
   double lat0 = degToRadian(46.952405555555556); //Bern
   double lon0 = degToRadian(7.439583333333333);
 
-  var ellsBessel = getEllipsoidByName(ELLIPSOID_NAME_BESSEL1841);
+  Ellipsoid ellsBessel = getEllipsoidByName(ELLIPSOID_NAME_BESSEL1841)!;
   double a = ellsBessel.a;
   double E = ellsBessel.e;
   double E2 = ellsBessel.e2;
@@ -145,11 +145,11 @@ LatLng swissGridToLatLon(SwissGrid coord, Ellipsoid ells) {
   return newCoord;
 }
 
-SwissGrid parseSwissGrid(String input) {
-  RegExp regExp = RegExp(r'^\s*([\-0-9\.]+)(\s*\,\s*|\s+)([\-0-9\.]+)\s*$');
+SwissGrid? parseSwissGrid(String input) {
+  RegExp regExp = RegExp(r'^\s*([\-0-9.]+)(\s*\,\s*|\s+)([\-0-9.]+)\s*$');
   var matches = regExp.allMatches(input);
-  var _eastingString = '';
-  var _northingString = '';
+  String? _eastingString = '';
+  String? _northingString = '';
 
   if (matches.isNotEmpty) {
     var match = matches.elementAt(0);
@@ -167,6 +167,8 @@ SwissGrid parseSwissGrid(String input) {
   }
 
   if (matches.isEmpty) return null;
+  if (_eastingString == null || _northingString == null)
+    return null;
 
   var _easting = double.tryParse(_eastingString);
   if (_easting == null) return null;
@@ -177,7 +179,7 @@ SwissGrid parseSwissGrid(String input) {
   return SwissGrid(_easting, _northing);
 }
 
-SwissGridPlus parseSwissGridPlus(String input) {
+SwissGridPlus? parseSwissGridPlus(String input) {
   var swissGrid = SwissGrid.parse(input);
   return swissGrid == null ? null : SwissGridPlus(swissGrid.easting, swissGrid.northing);
 }

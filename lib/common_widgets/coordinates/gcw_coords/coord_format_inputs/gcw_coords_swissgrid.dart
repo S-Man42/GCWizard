@@ -2,7 +2,7 @@ part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart
 
 class _GCWCoordsSwissGrid extends StatefulWidget {
   final void Function(SwissGrid) onChanged;
-  final BaseCoordinates coordinates;
+  final BaseCoordinate coordinates;
 
   const _GCWCoordsSwissGrid({Key? key, required this.onChanged, required this.coordinates}) : super(key: key);
 
@@ -33,16 +33,14 @@ class _GCWCoordsSwissGridState extends State<_GCWCoordsSwissGrid> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.coordinates != null) {
-      var swissGrid = widget.coordinates is SwissGrid
-          ? widget.coordinates as SwissGrid
-          : SwissGrid.fromLatLon(widget.coordinates.toLatLng(), defaultEllipsoid());
-      _currentEasting.value = swissGrid.easting;
-      _currentNorthing.value = swissGrid.northing;
+    var swissGrid = widget.coordinates is SwissGrid
+        ? widget.coordinates as SwissGrid
+        : SwissGrid.fromLatLon(widget.coordinates.toLatLng() ?? defaultCoordinate, defaultEllipsoid);
+    _currentEasting.value = swissGrid.easting;
+    _currentNorthing.value = swissGrid.northing;
 
-      _EastingController.text = _currentEasting.value.toString();
-      _NorthingController.text = _currentNorthing.value.toString();
-    }
+    _EastingController.text = _currentEasting.value.toString();
+    _NorthingController.text = _currentNorthing.value.toString();
 
     return Column(children: <Widget>[
       GCWDoubleTextField(
