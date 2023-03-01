@@ -17,7 +17,7 @@ void main() {
       .forEach((elem) {
         test('text: ${elem['text']}', () {
           var _actual = parseCoordinates(elem['text'] as String);
-          expect(_actual.elementAt(0).key, elem['expectedOutput']['format']);
+          expect(_actual.elementAt(0).key, (elem['expectedOutput'] as Map<String, Object>)['format']);
           expect((_actual.elementAt(0).toLatLng()?.latitude - elem['expectedOutput']['coordinate'].latitude).abs() < 1e-8, true);
           expect((_actual.elementAt(0).toLatLng()?.longitude - elem['expectedOutput']['coordinate'].longitude).abs() < 1e-8, true);
         });

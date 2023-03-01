@@ -20,7 +20,11 @@ void main() {
         var expected = elem['expectedOutput'] as List<LatLng>;
         expect(actual.length, expected.length);
         for (int i = 0; i < actual.length; i++) {
-          expect(equalsLatLng(actual[i], expected[i]), true);
+          if (actual[i] == null)
+            expect(null, expected[i]);
+          else
+            expect(equalsLatLng(actual[i]!, expected[i]), true);
+
         }
       });
     });
