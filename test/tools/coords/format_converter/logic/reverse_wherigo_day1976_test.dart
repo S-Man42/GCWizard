@@ -37,7 +37,7 @@ void main() {
       test('input: ${elem['input']}', () {
         var _actual = ReverseWherigoDay1976.parse((elem['input'] as List<String>)[0] + " " + (elem['input'] as List<String>)[1])?.toLatLng();
         expect((_actual!.latitude - (elem['expectedOutput'] as LatLng).latitude).abs() < 1e-3, true);
-        expect((_actual!.longitude - (elem['expectedOutput'] as LatLng).longitude).abs() < 1e-3, true);
+        expect((_actual.longitude - (elem['expectedOutput'] as LatLng).longitude).abs() < 1e-3, true);
       });
     });
   });

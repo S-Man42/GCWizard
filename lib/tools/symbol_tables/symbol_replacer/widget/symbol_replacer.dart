@@ -446,7 +446,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
         if ((item.value is SymbolReplacerSymbolTableViewData) &&
             ((item.value as SymbolReplacerSymbolTableViewData).symbolKey == symbolKey)) {
 
-          SymbolReplacerSymbolTableData _data;
+          SymbolReplacerSymbolTableData _data; // in progress Mike
           var value = item.value as SymbolReplacerSymbolTableViewData;
           if (value.data == null)
             _data = SymbolReplacerSymbolTableData(SymbolTableData(context, value.symbolKey));

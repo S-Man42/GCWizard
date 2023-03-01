@@ -44,10 +44,6 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var a = int.tryParse((elem['input'] as List<String>)[0]);
-        var b = int.tryParse((elem['input'] as List<String>)[1]);
-        var c = int.tryParse((elem['input'] as List<String>)[2]);
-
         var _actual = ReverseWherigoWaldmeister.parse((elem['input'] as List<String>)[0] + " " + (elem['input'] as List<String>)[1] + " " + (elem['input'] as List<String>)[2])?.toLatLng();
         expect((_actual!.latitude - (elem['expectedOutput'] as LatLng).latitude).abs() < 1e-8, true);
         expect((_actual.longitude - (elem['expectedOutput'] as LatLng).longitude).abs() < 1e-8, true);
