@@ -516,6 +516,7 @@ final Map<String, String> QWERTZ_T1toNormal = {
   '': '',
 };
 final Map<String, String> Dvorak_II_DEUtoNormal = {
+  // https://web.archive.org/web/20170117021436/http://www.go-dvorak.com/media/img/dvorak-tastatur-detailansicht.jpg
   '°': '100o',
   '!': '101o',
   '"': '102o',
@@ -553,7 +554,7 @@ final Map<String, String> Dvorak_II_DEUtoNormal = {
   'T': '209o',
   'Z': '210o',
   'ß': '211o',
-  '/': '212o',
+  '\\': '212o',
   'ü': '201u',
   ',': '202u',
   '.': '203u',
@@ -565,7 +566,7 @@ final Map<String, String> Dvorak_II_DEUtoNormal = {
   't': '209u',
   'z': '210u',
   '?': '211u',
-  '\\': '212u',
+  '/': '212u',
   'A': '301o',
   'O': '302o',
   'E': '303o',
@@ -1608,6 +1609,7 @@ final Map<String, String> AZERTYToNormal = {
   '': ''
 };
 final Map<String, String> BEPOToNormal = {
+  // https://en.wikipedia.org/wiki/B%C3%89PO#/media/File:KB_French_Dvorak_b%C3%A9po_simplifi%C3%A9.svg
   '#': '100o',
   '1': '101o',
   '2': '102o',
@@ -1683,24 +1685,24 @@ final Map<String, String> BEPOToNormal = {
   'm': '311u',
   'ç': '312u',
   'Ê': '401o',
-  'W': '402o',
-  'À': '403o',
-  'Y': '404o',
-  'X': '405o',
-  ':': '406o',
-  'K': '407o',
-  '?': '408o',
+  'À': '402o',
+  'Y': '403o',
+  'X': '404o',
+  ':': '405o',
+  'K': '406o',
+  '?': '407o',
+  'Q': '408o',
   'G': '409o',
   'H': '410o',
   'F': '411o',
   'ê': '401u',
-  'w': '402u',
-  'à': '403u',
-  'y': '404u',
-  'x': '405u',
-  '.': '406u',
-  'k': '407u',
-  "'": '408u',
+  'à': '402u',
+  'y': '403u',
+  'x': '404u',
+  '.': '405u',
+  'k': '406u',
+  "'": '407u',
+  "q": '408u',
   'g': '409u',
   'h': '410u',
   'f': '411u',
@@ -1790,8 +1792,8 @@ Map<String, String> buildConvertingMap(KeyboardType type, ConvertDirection direc
 }
 
 String encodeKeyboard(String? input, KeyboardType keyboardFrom, KeyboardType keyboardTo) {
-  Map mapSourceToNormal;
-  Map mapNormalToTarget;
+  Map<String, String> mapSourceToNormal = new Map<String, String>();
+  Map<String, String> mapNormalToTarget = new Map<String, String>();
 
   if (input == null || input.isEmpty) return '';
 

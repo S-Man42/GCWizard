@@ -253,7 +253,7 @@ SegmentsText decodeVisualPunchtape(List<String?> inputs, TeletypewriterCodebook 
   List<int> intList = [];
   displays.forEach((element) {
     var value = int.parse(segments2decenary(element, order12345, language) ?? '');
-    if (value != null) intList.add(value);
+    intList.add(value);
   });
 
   // convert list of decimal to character using String decodeCCITT(List<int> values, TeletypewriterCodebook language)

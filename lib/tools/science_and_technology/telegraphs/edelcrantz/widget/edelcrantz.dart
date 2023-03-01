@@ -68,7 +68,7 @@ class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
           return GCWDropDownMenuItem(
               value: mode.key,
               child: i18n(context, mode.value.title),
-              subtitle: mode.value.subtitle != null ? i18n(context, mode.value.subtitle) : null);
+              subtitle: i18n(context, mode.value.subtitle));
         }).toList(),
       ),
       GCWTwoOptionsSwitch(
@@ -194,7 +194,7 @@ class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
   Segments _buildShutters(Segments segments) {
     List<List<String>> result = [];
     segments.displays.forEach((element) {
-      if (element != null) if (int.tryParse(element.join('')) != null) {
+      if (int.tryParse(element.join('')) != null) {
         List<String> resultElement = [];
         switch (element[0]) {
           case '0':
@@ -278,7 +278,7 @@ class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
   String _buildCodelets(Segments segments) {
     List<String> result = [];
     segments.displays.forEach((codelet) {
-      if (codelet != null) result.add(codelet.join(''));
+      result.add(codelet.join(''));
     });
     return result.join(' ');
   }

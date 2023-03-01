@@ -84,7 +84,7 @@ class NumeralBasesState extends State<NumeralBases> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    if (_currentInput == null || _currentInput.isEmpty) {
+    if (_currentInput.isEmpty) {
       return GCWDefaultOutput();
     }
 

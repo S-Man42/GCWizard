@@ -616,19 +616,6 @@ final Map<String, List<String>> _charsToSegmentsDigits = {
   '0': ['2', '4', '5'],
 };
 
-final Map<String, List<String>> _charsToSegmentsAntoine = {
-  '1': ['1', '6'],
-  '2': ['1', '2', '6'],
-  '3': ['1', '4', '6'],
-  '4': ['1', '4', '5', '6'],
-  '5': ['1', '5', '6'],
-  '6': ['1', '2', '4', '6'],
-  '7': ['1', '2', '4', '5', '6'],
-  '8': ['1', '2', '5', '6'],
-  '9': ['2', '4', '6'],
-  '0': ['3', '4', '5', '6'],
-};
-
 final SWITCH_NUMBERFOLLOWS = ['3', '4', '5', '6'];
 final SWITCH_ANTOINE = ['6'];
 final SWITCH_LETTERFOLLOWS = ['6'];
@@ -1078,10 +1065,6 @@ bool _isNumber(String s) {
 
 bool _isNumberLetter(String s) {
   return _NumberLetters.contains(s);
-}
-
-bool _isLetter(String s) {
-  return (_isCapital(s) || _isSmallLetter(s));
 }
 
 Segments _encodeBrailleSIMPLE(String input) {

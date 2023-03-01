@@ -62,9 +62,7 @@ class BrailleDotNumbersState extends State<BrailleDotNumbers> {
             return GCWDropDownMenuItem(
                 value: mode.key,
                 child: i18n(context, mode.value.title),
-                subtitle: mode.value.subtitle != null
-                    ? i18n(context, mode.value.subtitle)
-                    : null);
+                subtitle: i18n(context, mode.value.subtitle));
           }).toList(),
         ),
         if (_currentMode == GCWSwitchPosition.left)

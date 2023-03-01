@@ -133,7 +133,7 @@ class BifidState extends State<Bifid> {
       key = "123456";
     }
 
-    if (_currentInput == null || _currentInput.isEmpty) return GCWDefaultOutput(child: '');
+    if (_currentInput.isEmpty) return GCWDefaultOutput(child: '');
 
     var _currentOutput = BifidOutput('', '', '');
     if (_currentMode == GCWSwitchPosition.left) {
