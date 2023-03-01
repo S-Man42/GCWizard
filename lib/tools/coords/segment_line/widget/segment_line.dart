@@ -38,7 +38,7 @@ class SegmentLineState extends State<SegmentLine> {
   var _currentMapPoints = <GCWMapPoint>[];
   var _currentMapPolylines = <GCWMapPolyline>[];
 
-  Length _currentOutputUnit = UNITCATEGORY_LENGTH.defaultUnit;
+  Length _currentOutputUnit = defaultLengthUnit;
   var _currentOutputFormat = defaultCoordinateFormat;
 
   List<String> _currentOutputs = [];

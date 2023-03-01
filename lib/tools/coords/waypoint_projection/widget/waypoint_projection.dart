@@ -22,7 +22,7 @@ class WaypointProjection extends StatefulWidget {
 }
 
 class WaypointProjectionState extends State<WaypointProjection> {
-  var _currentCoords = defaultBaseCoordinates;
+  var _currentCoords = defaultBaseCoordinate;
   var _currentDistance = 0.0;
   var _currentBearing = defaultDoubleText;
   var _currentReverse = false;

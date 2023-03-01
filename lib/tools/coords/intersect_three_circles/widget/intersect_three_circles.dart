@@ -5,7 +5,7 @@ import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coords_output.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coords_outputformat_distance.dart';
-import 'package:gc_wizard/common_widgets/gcw_async_executer.dart';
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
 import 'package:gc_wizard/common_widgets/gcw_distance.dart';
 import 'package:gc_wizard/tools/coords/intersect_three_circles/logic/intersect_three_circles.dart';
 
@@ -37,7 +37,7 @@ class IntersectThreeCirclesState extends State<IntersectThreeCircles> {
   var _currentRadius3 = 0.0;
 
   var _currentOutputFormat = defaultCoordinateFormat;
-  Length _currentOutputUnit = UNITCATEGORY_LENGTH.defaultUnit;
+  Length _currentOutputUnit = defaultLengthUnit;
   List<String> _currentOutput = [];
   List<String> _currentCopyableOutput = [];
   var _currentMapPoints = <GCWMapPoint>[];

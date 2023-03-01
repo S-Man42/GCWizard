@@ -97,7 +97,7 @@ class GCWCoords extends StatefulWidget {
 }
 
 class GCWCoordsState extends State<GCWCoords> {  
-  BaseCoordinate _currentCoords = defaultBaseCoordinates;
+  BaseCoordinate _currentCoords = defaultBaseCoordinate;
   late BaseCoordinate _pastedCoords;
 
   Widget? _currentWidget;
@@ -499,7 +499,8 @@ class GCWCoordsState extends State<GCWCoords> {
     if (newValue != null)
       _currentCoords = newValue;
 
-    widget.onChanged(_currentCoords);
+    if (_currentCoords.toLatLng() != null)
+      widget.onChanged(_currentCoords);
   }
 
   void _setCoords(List<BaseCoordinate> pastedCoords) {
