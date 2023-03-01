@@ -7,6 +7,7 @@ import 'package:gc_wizard/common_widgets/units/gcw_unit_input.dart';
 import 'package:gc_wizard/common_widgets/units/gcw_units.dart';
 import 'package:gc_wizard/tools/science_and_technology/projectiles/logic/projectiles.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/mass.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit_category.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit_prefix.dart';
 import 'package:intl/intl.dart';
@@ -19,7 +20,7 @@ class Projectiles extends StatefulWidget {
 class ProjectilesState extends State<Projectiles> {
   UnitCategory _currentMode = UNITCATEGORY_ENERGY;
 
-  var _currentOutputUnit = GCWUnitsValue(UNITCATEGORY_ENERGY.defaultUnit, UNITPREFIX_NONE);
+  GCWUnitsValue<Unit> _currentOutputUnit = GCWUnitsValue<Unit>(UNITCATEGORY_ENERGY.defaultUnit, UNITPREFIX_NONE);
 
   double _currentInputMass = 0.0;
   double _currentInputVelocity = 0.0;
@@ -49,11 +50,11 @@ class ProjectilesState extends State<Projectiles> {
               _currentMode = value;
 
               if (_currentMode == UNITCATEGORY_ENERGY) {
-                _currentOutputUnit = GCWUnitsValue(UNITCATEGORY_ENERGY.defaultUnit, UNITPREFIX_NONE);
+                _currentOutputUnit = GCWUnitsValue<Unit>(UNITCATEGORY_ENERGY.defaultUnit, UNITPREFIX_NONE);
               } else if (_currentMode == UNITCATEGORY_MASS) {
-                _currentOutputUnit = GCWUnitsValue(UNITCATEGORY_MASS.defaultUnit, UNITPREFIX_NONE);
+                _currentOutputUnit = GCWUnitsValue<Unit>(UNITCATEGORY_MASS.defaultUnit, UNITPREFIX_NONE);
               } else if (_currentMode == UNITCATEGORY_VELOCITY) {
-                _currentOutputUnit = GCWUnitsValue(UNITCATEGORY_VELOCITY.defaultUnit, UNITPREFIX_NONE);
+                _currentOutputUnit = GCWUnitsValue<Unit>(UNITCATEGORY_VELOCITY.defaultUnit, UNITPREFIX_NONE);
               }
             });
           },
@@ -129,7 +130,7 @@ class ProjectilesState extends State<Projectiles> {
     outputValue = _currentOutputUnit.value.fromReference(outputValue) / _currentOutputUnit.prefix.value;
     return NumberFormat('0.0' + '#' * 6).format(outputValue) +
         ' ' +
-        (_currentOutputUnit.prefix.symbol ?? '') +
+        (_currentOutputUnit.prefix.symbol) +
         _currentOutputUnit.value.symbol;
   }
 }

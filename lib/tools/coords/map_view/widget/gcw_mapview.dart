@@ -109,7 +109,7 @@ class GCWMapViewState extends State<GCWMapView> {
 
     if (widget.isEditable) _persistanceAdapter = MapViewPersistenceAdapter(widget);
 
-    defaultLengthUnit = getUnitBySymbol(allLengths(), Prefs.getString(PREFERENCE_DEFAULT_LENGTH_UNIT)) as Length;
+    defaultLengthUnit = defaultLengthUnit;
   }
 
   @override

@@ -297,7 +297,7 @@ bool _isClosedLine(GCWMapPolyline line) {
 }
 
 bool _completeCircle(GCWMapPolyline line, List<GCWMapPoint> points) {
-  const toller = 2 / 100;
+  const tolerance = 2 / 100;
   if (line.points.length < 36) return false;
 
   var pt1 = line.points[0].point;
@@ -309,13 +309,14 @@ bool _completeCircle(GCWMapPolyline line, List<GCWMapPoint> points) {
   DistanceBearingData length1 = distanceBearing(pt1, pt2, ells);
   DistanceBearingData length2 = distanceBearing(pt3, pt4, ells);
   double dist = (length1.distance - length2.distance);
-  double distToller = length1.distance * toller;
+  double distToller = length1.distance * tolerance;
   if (dist.abs() > distToller) return false;
 
   var crossPoint = intersectFourPoints(pt1, pt2, pt3, pt4, ells);
   late GCWMapPoint center;
   double minDist = double.maxFinite;
 
+  if (crossPoint == null) return false;
   points.forEach((GCWMapPoint wpt) {
     var dist = distanceBearing(wpt.point, crossPoint, ells);
     if (dist.distance < minDist && !wpt.hasCircle()) {

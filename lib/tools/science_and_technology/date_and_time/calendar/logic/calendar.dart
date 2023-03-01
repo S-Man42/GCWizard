@@ -116,7 +116,7 @@ String typeOfJewYear(int yearlength) {
     return ("common");
 }
 
-List<int> jewDayAndMonthInYear(int days, yearlength) {
+List<int> jewDayAndMonthInYear(int days, int yearlength) {
   List<int> mschema = _jregyeardef;
   if (yearlength == 353) {
     mschema = _jregyeardef;
@@ -178,7 +178,6 @@ int cyear2pesach(int xx) {
   if (xx < 1583) {
     ss = 0;
   }
-  int aa = xx + 3760;
   int a = (12 * xx + 12) % 19;
   int b = xx % 4;
   double qq = -1.904412361576 + 1.554241796621 * a + 0.25 * b - 0.003177794022 * xx + ss;

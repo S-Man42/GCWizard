@@ -3,7 +3,7 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/gcw_async_executer.dart';
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:image/image.dart' as Image;
 import 'package:tuple/tuple.dart';
@@ -66,7 +66,7 @@ Future<Tuple2<int, int>?> offsetAutoCalcAsync(GCWAsyncExecuterParameters? jobDat
       data.item1, data.item2, data.item3, data.item4,
       sendAsyncPort: jobData.sendAsyncPort);
 
-  jobData.sendAsyncPort?.send(output);
+  jobData.sendAsyncPort.send(output);
 
   return output;
 }

@@ -369,7 +369,6 @@ String _findWord(List<_wordClass> wordList, List<_wordClass> rowList, List<_word
       return _filterCharacter(character, sectionList);
   }
 
-  return "";
 }
 
 List<_wordClass> _filterSection(int index, List<_wordClass> wordList) {

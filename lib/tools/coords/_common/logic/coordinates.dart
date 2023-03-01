@@ -110,7 +110,7 @@ class DEC extends BaseCoordinate {
   }
 
   @override
-  LatLng? toLatLng() {
+  LatLng toLatLng() {
     return decToLatLon(this);
   }
 
@@ -222,7 +222,7 @@ class DMM extends BaseCoordinate {
   }
 
   @override
-  LatLng? toLatLng() {
+  LatLng toLatLng() {
     return dmmToLatLon(this);
   }
 
@@ -338,7 +338,7 @@ class DMS extends BaseCoordinate {
   }
 
   @override
-  LatLng? toLatLng() {
+  LatLng toLatLng() {
     return dmsToLatLon(this);
   }
 
@@ -376,7 +376,7 @@ class UTMREF extends BaseCoordinate {
   }
 
   @override
-  LatLng? toLatLng({Ellipsoid? ells}) {
+  LatLng toLatLng({Ellipsoid? ells}) {
     if (ells == null) ells = defaultEllipsoid;
     return UTMREFtoLatLon(this, ells);
   }
@@ -415,7 +415,7 @@ class MGRS extends BaseCoordinate {
   }
 
   @override
-  LatLng? toLatLng({Ellipsoid? ells}) {
+  LatLng toLatLng({Ellipsoid? ells}) {
     if (ells == null) ells = defaultEllipsoid;
     return mgrsToLatLon(this, ells);
   }
@@ -443,7 +443,7 @@ class SwissGrid extends BaseCoordinate {
   }
 
   @override
-  LatLng? toLatLng({Ellipsoid? ells}) {
+  LatLng toLatLng({Ellipsoid? ells}) {
     if (ells == null) ells = defaultEllipsoid;
     return swissGridToLatLon(this, ells);
   }
@@ -469,7 +469,7 @@ class SwissGridPlus extends SwissGrid {
   }
 
   @override
-  LatLng? toLatLng({Ellipsoid? ells}) {
+  LatLng toLatLng({Ellipsoid? ells}) {
     if (ells == null) ells = defaultEllipsoid;
     return swissGridPlusToLatLon(this, ells);
   }
@@ -492,7 +492,7 @@ class DutchGrid extends BaseCoordinate {
   }
 
   @override
-  LatLng? toLatLng() {
+  LatLng toLatLng() {
     return dutchGridToLatLon(this);
   }
 
@@ -521,7 +521,7 @@ class GaussKrueger extends BaseCoordinateWithSubtypes {
   }
 
   @override
-  LatLng? toLatLng({Ellipsoid? ells}) {
+  LatLng toLatLng({Ellipsoid? ells}) {
     if (ells == null) ells = defaultEllipsoid;
     return gaussKruegerToLatLon(this, ells);
   }
@@ -557,7 +557,7 @@ class Lambert extends BaseCoordinateWithSubtypes {
   }
 
   @override
-  LatLng? toLatLng({Ellipsoid? ells}) {
+  LatLng toLatLng({Ellipsoid? ells}) {
     if (ells == null) ells = defaultEllipsoid;
     return lambertToLatLon(this, ells);
   }
@@ -591,7 +591,7 @@ class Mercator extends BaseCoordinate {
   }
 
   @override
-  LatLng? toLatLng({Ellipsoid? ells}) {
+  LatLng toLatLng({Ellipsoid? ells}) {
     if (ells == null) ells = defaultEllipsoid;
     return mercatorToLatLon(this, ells);
   }
@@ -619,7 +619,7 @@ class NaturalAreaCode extends BaseCoordinate {
   }
 
   @override
-  LatLng? toLatLng() {
+  LatLng toLatLng() {
     return naturalAreaCodeToLatLon(this);
   }
 
@@ -648,7 +648,7 @@ class SlippyMap extends BaseCoordinateWithSubtypes {
   }
 
   @override
-  LatLng? toLatLng() {
+  LatLng toLatLng() {
     return slippyMapToLatLon(this);
   }
 
@@ -680,7 +680,7 @@ class ReverseWherigoWaldmeister extends BaseCoordinate {
   }
 
   @override
-  LatLng? toLatLng() {
+  LatLng toLatLng() {
     return reverseWIGWaldmeisterToLatLon(this);
   }
 
@@ -706,7 +706,7 @@ class ReverseWherigoDay1976 extends BaseCoordinate {
   }
 
   @override
-  LatLng? toLatLng() {
+  LatLng toLatLng() {
     return reverseWIGDay1976ToLatLon(this);
   }
 
@@ -732,7 +732,7 @@ class XYZ extends BaseCoordinate {
   }
 
   @override
-  LatLng? toLatLng({Ellipsoid? ells}) {
+  LatLng toLatLng({Ellipsoid? ells}) {
     if (ells == null) ells = defaultEllipsoid;
     return xyzToLatLon(this, ells);
   }
@@ -916,7 +916,7 @@ class Quadtree extends BaseCoordinate {
   }
 
   @override
-  LatLng? toLatLng() {
+  LatLng toLatLng() {
     return quadtreeToLatLon(this);
   }
 

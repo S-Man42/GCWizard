@@ -199,7 +199,7 @@ class MalbolgeState extends State<Malbolge> {
   String buildOutputText(malbolgeOutput outputList) {
     String output = '';
     outputList.output.forEach((element) {
-      if (element != null) if (element.startsWith('malbolge_') || element.startsWith('common_programming_')) {
+      if (element.startsWith('malbolge_') || element.startsWith('common_programming_')) {
         output = output + i18n(context, element) + '\n';
       } else
         output = output + element + '\n';

@@ -60,7 +60,7 @@ class BurrowsWheelerState extends State<BurrowsWheeler> {
               onChanged: (text) {
                 setState(() {
                   currentInputPlain = text;
-                  if (currentInputPlain.isEmpty || currentInputPlain == null)
+                  if (currentInputPlain.isEmpty)
                     currentInputLen = 0;
                   else
                     currentInputLen = currentInputPlain.length;
@@ -73,7 +73,7 @@ class BurrowsWheelerState extends State<BurrowsWheeler> {
               onChanged: (text) {
                 setState(() {
                   currentInputCipher = text;
-                  if (currentInputCipher.isEmpty || currentInputCipher == null)
+                  if (currentInputCipher.isEmpty)
                     currentInputLen = 0;
                   else
                     currentInputLen = currentInputCipher.length;
@@ -138,7 +138,7 @@ class BurrowsWheelerState extends State<BurrowsWheeler> {
       // encrypt
       if (currentIndexType == GCWSwitchPosition.right) {
         // encoded index - symbol
-        if (currentIndexSymbol.isEmpty || currentIndexSymbol == null)
+        if (currentIndexSymbol.isEmpty)
           currentOutput = BWTOutput(i18n(context, 'burrowswheeler_error_no_index'), '');
         else if (currentInputPlain.contains(currentIndexSymbol))
           currentOutput = BWTOutput(i18n(context, 'burrowswheeler_error_char_index'), '');
@@ -151,7 +151,7 @@ class BurrowsWheelerState extends State<BurrowsWheeler> {
       // decrypt
       if (currentIndexType == GCWSwitchPosition.right) {
         // encoded index - symbol
-        if (currentIndexSymbol.isEmpty || currentIndexSymbol == null)
+        if (currentIndexSymbol.isEmpty)
           currentOutput = BWTOutput(i18n(context, 'burrowswheeler_error_no_index'), '');
         else
           currentOutput = decryptBurrowsWheeler(currentInputCipher, currentIndexSymbol);
@@ -160,7 +160,7 @@ class BurrowsWheelerState extends State<BurrowsWheeler> {
       }
     }
 
-    if (currentOutput == null || currentOutput.text == null || currentOutput.text.isEmpty) return GCWDefaultOutput();
+    if (currentOutput.text.isEmpty) return GCWDefaultOutput();
 
     if (currentMode == GCWSwitchPosition.left && currentIndexType == GCWSwitchPosition.left) {
       return GCWMultipleOutput(

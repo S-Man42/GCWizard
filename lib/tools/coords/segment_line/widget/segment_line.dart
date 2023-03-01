@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
-import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/application/theme/fixed_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
@@ -10,16 +9,13 @@ import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/units/gcw_unit_dropdown.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coord_format_getter.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/segment_line/logic/segment_line.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/default_units_getter.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/length.dart';
-import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
-import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit_category.dart';
 import 'package:gc_wizard/utils/constants.dart';
-import 'package:prefs/prefs.dart';
 
 class SegmentLine extends StatefulWidget {
   @override
@@ -27,18 +23,15 @@ class SegmentLine extends StatefulWidget {
 }
 
 class SegmentLineState extends State<SegmentLine> {
-  var _currentCoords1 = defaultCoordinate;
-  var _currentCoords2 = defaultCoordinate;
-
-  var _currentCoordsFormat1 = defaultCoordinateFormat;
-  var _currentCoordsFormat2 = defaultCoordinateFormat;
+  var _currentCoords1 = defaultBaseCoordinate;
+  var _currentCoords2 = defaultBaseCoordinate;
 
   var _currentSegmentCount = 2;
 
   var _currentMapPoints = <GCWMapPoint>[];
   var _currentMapPolylines = <GCWMapPolyline>[];
 
-  Length _currentOutputUnit = UNITCATEGORY_LENGTH.defaultUnit;
+  Length _currentOutputUnit = defaultLengthUnit;
   var _currentOutputFormat = defaultCoordinateFormat;
 
   List<String> _currentOutputs = [];
@@ -48,7 +41,7 @@ class SegmentLineState extends State<SegmentLine> {
   void initState() {
     super.initState();
 
-    _currentOutputUnit = getUnitBySymbol(allLengths(), Prefs.get(PREFERENCE_DEFAULT_LENGTH_UNIT));
+    _currentOutputUnit = defaultLengthUnit;
   }
 
   @override
@@ -57,21 +50,19 @@ class SegmentLineState extends State<SegmentLine> {
       children: <Widget>[
         GCWCoords(
           title: i18n(context, 'coords_segmentline_start'),
-          coordsFormat: _currentCoordsFormat1,
+          coordsFormat: _currentCoords1.format,
           onChanged: (ret) {
             setState(() {
-              _currentCoordsFormat1 = ret['coordsFormat'];
-              _currentCoords1 = ret['value'];
+              _currentCoords1 = ret;
             });
           },
         ),
         GCWCoords(
           title: i18n(context, 'coords_segmentline_end'),
-          coordsFormat: _currentCoordsFormat2,
+          coordsFormat: _currentCoords2.format,
           onChanged: (ret) {
             setState(() {
-              _currentCoordsFormat2 = ret['coordsFormat'];
-              _currentCoords2 = ret['value'];
+              _currentCoords2 = ret;
             });
           },
         ),
@@ -120,20 +111,20 @@ class SegmentLineState extends State<SegmentLine> {
     );
   }
 
-  _calculateOutput() {
-    var segments = segmentLine(_currentCoords1, _currentCoords2, _currentSegmentCount, defaultEllipsoid);
+  void _calculateOutput() {
+    var segments = segmentLine(_currentCoords1.toLatLng()!, _currentCoords2.toLatLng()!, _currentSegmentCount, defaultEllipsoid);
 
     var startMapPoint = GCWMapPoint(
-        point: _currentCoords1,
+        point: _currentCoords1.toLatLng()!,
         markerText: i18n(context, 'coords_segmentline_start'),
-        coordinateFormat: _currentCoordsFormat1);
+        coordinateFormat: _currentCoords1.format);
     var endMapPoint = GCWMapPoint(
-        point: _currentCoords2,
+        point: _currentCoords2.toLatLng()!,
         markerText: i18n(context, 'coords_segmentline_end'),
-        coordinateFormat: _currentCoordsFormat2);
+        coordinateFormat: _currentCoords2.format);
 
     _currentMapPoints = [startMapPoint];
-    segments['points'].asMap().forEach((index, point) {
+    segments.points.asMap().forEach((index, point) {
       _currentMapPoints.add(GCWMapPoint(
         point: point,
         markerText: i18n(context, 'coords_segmentline_segmentdivider') + ' ' + (index + 1).toString(),
@@ -145,11 +136,11 @@ class SegmentLineState extends State<SegmentLine> {
 
     _currentMapPolylines = [GCWMapPolyline(points: List<GCWMapPoint>.from(_currentMapPoints))];
 
-    _currentOutputs = List<String>.from(segments['points'].map((point) {
+    _currentOutputs = List<String>.from(segments.points.map((point) {
       return formatCoordOutput(point, _currentOutputFormat, defaultEllipsoid);
     }).toList());
 
-    var distanceOutput = doubleFormat.format(_currentOutputUnit.fromMeter(segments['segmentDistance']));
+    var distanceOutput = doubleFormat.format(_currentOutputUnit.fromMeter(segments.segmentLength));
     _currentDistanceOutput = GCWDefaultOutput(
       child:
           i18n(context, 'coords_segmentline_segmentdistance') + ': ' + distanceOutput + ' ' + _currentOutputUnit.symbol,

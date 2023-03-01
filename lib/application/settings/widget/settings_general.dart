@@ -21,10 +21,10 @@ import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/units/gcw_unit_dropdown.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/length.dart';
-import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 import 'package:provider/provider.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/default_units_getter.dart';
 
 class GeneralSettings extends StatefulWidget {
   @override
@@ -93,13 +93,12 @@ class GeneralSettingsState extends State<GeneralSettings> {
         Row(children: [
           Expanded(child: GCWText(text: i18n(context, 'settings_general_i18n_defaultlengthunit'))),
           Expanded(
-            child: GCWUnitDropDown(
+            child: GCWUnitDropDown<Length>(
                 unitList: allLengths(),
-                value: getUnitBySymbol(allLengths(), Prefs.getString(PREFERENCE_DEFAULT_LENGTH_UNIT)),
-                onChanged: (Unit value) {
+                value: defaultLengthUnit,
+                onChanged: (Length value) {
                   setState(() {
-                    if (value is Length)
-                      Prefs.setString(PREFERENCE_DEFAULT_LENGTH_UNIT, value.symbol);
+                    Prefs.setString(PREFERENCE_DEFAULT_LENGTH_UNIT, value.symbol);
                   });
                 }),
           ),

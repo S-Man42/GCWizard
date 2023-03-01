@@ -92,7 +92,6 @@ class AbstractBCDState extends State<AbstractBCD> {
                 _currentInput = text;
               });
             });
-        break;
       case BCDType.HAMMING:
       case BCDType.BIQUINARY:
         return GCWTextField(
@@ -103,7 +102,6 @@ class AbstractBCDState extends State<AbstractBCD> {
                 _currentInput = text;
               });
             });
-        break;
       case BCDType.LIBAWCRAIG:
       case BCDType.TWOOFFIVE:
       case BCDType.PLANET:
@@ -116,7 +114,6 @@ class AbstractBCDState extends State<AbstractBCD> {
                 _currentInput = text;
               });
             });
-        break;
       default:
         return GCWTextField(
             controller: _decodeController,

@@ -19,9 +19,9 @@ class MayaCalendar extends StatefulWidget {
 }
 
 class MayaCalendarState extends State<MayaCalendar> {
-  var _currentEncodeInput = 0;
-  var _currentLongCount = '';
-  var _longCountController;
+  int _currentEncodeInput = 0;
+  String _currentLongCount = '';
+  late TextEditingController _longCountController;
 
   var _currentDisplays = Segments.Empty();
   var _currentMode = GCWSwitchPosition.right;
@@ -139,7 +139,7 @@ class MayaCalendarState extends State<MayaCalendar> {
   }
 
   Widget _buildOutput() {
-    Map outputDates = new Map();
+    var outputDates = new Map<String, Object>();
     var dateFormat = DateFormat('yMMMMd', Localizations.localeOf(context).toString());
 
     if (_currentMode == GCWSwitchPosition.left) {

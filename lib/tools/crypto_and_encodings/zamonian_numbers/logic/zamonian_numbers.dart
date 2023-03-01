@@ -6,7 +6,7 @@ String? decodeZamonian(String? input) {
   return input
       .split(RegExp(r'[^0-7]+'))
       .map((block) {
-        if (block == null || block.isEmpty) return null;
+        if (block.isEmpty) return null;
 
         return convertBase(block, 8, 10);
       })
@@ -20,7 +20,7 @@ String? encodeZamonian(String? input) {
   return input
       .split(RegExp(r'[^0-9]+'))
       .map((block) {
-        if (block == null || block.isEmpty) return null;
+        if (block.isEmpty) return null;
 
         return convertBase(block, 10, 8);
       })

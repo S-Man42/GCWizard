@@ -314,7 +314,7 @@ String generateChef(
 
 bool isValid(String input) {
   bool flag = true;
-  if (input == null || input.isEmpty) return true;
+  if (input.isEmpty) return true;
   List<String> numbers = input.split(' ');
   numbers.forEach((element) {
     if (int.tryParse(element) == null) {

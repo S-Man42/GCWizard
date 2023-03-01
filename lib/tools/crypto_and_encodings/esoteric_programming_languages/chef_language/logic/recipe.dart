@@ -22,7 +22,7 @@ class _Recipe {
     this.liquefyMissing = false;
   }
 
-  void setIngredients(String Input, language) {
+  void setIngredients(String Input, String language) {
     var f = new NumberFormat('###');
     this.ingredients = Map<String, _Ingredient>();
     var i = 0;
@@ -103,7 +103,7 @@ class _Recipe {
     }
   }
 
-  void setServes(String serves, language) {
+  void setServes(String serves, String language) {
     if (RegExp(r'^(serves |portionen(:)? )(\d*)(\.)$').hasMatch(serves)) {
       this.serves = int.parse(RegExp(r'^(serves |portionen(:)? )(\d*)(\.)$').firstMatch(serves)!.group(3)!);
     } else {
@@ -125,7 +125,7 @@ class _Recipe {
   }
 
   int? getIngredientValue(String s) {
-    return ingredients[s]?.getAmount();;
+    return ingredients[s]?.getAmount();
   }
 
   void setIngredientValue(String s, int n) {

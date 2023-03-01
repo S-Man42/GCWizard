@@ -697,6 +697,7 @@ final AZToCCITT_ITA1_UK = {
 final CCITT_ITA1_UKToAZ = switchMapKeyValue(AZToCCITT_ITA1_UK);
 
 final NumbersToCCITT_ITA1_UK = {
+  // https://en.wikipedia.org/wiki/Baudot_code
   '1': 1,
   '1/': 3,
   '2': 2,
@@ -1704,7 +1705,7 @@ int? _EncodeAZ(TeletypewriterCodebook language, String text) {
     case TeletypewriterCodebook.MURRAY:
       return AZToMurray[text]!;
     case TeletypewriterCodebook.SIEMENS:
-      return AZToSiemens[text]!;;
+      return AZToSiemens[text]!;
     case TeletypewriterCodebook.WESTERNUNION:
       return AZToWesternunion[text]!;
     case TeletypewriterCodebook.BAUDOT_54123:
@@ -1993,7 +1994,7 @@ String encodeTeletypewriter(String? input, TeletypewriterCodebook language) {
 }
 
 String encodeTeletypewriter_IA5(String input) {
-  if (input == null || input.isEmpty) return '';
+  if (input.isEmpty) return '';
 
   List<int> out = [];
   input.split('').forEach((character) {
@@ -2004,7 +2005,7 @@ String encodeTeletypewriter_IA5(String input) {
 }
 
 String encodeTeletypewriter_ZC1(String input) {
-  if (input == null || input.isEmpty) return '';
+  if (input.isEmpty) return '';
 
   List<int> out = [];
   input.split('').forEach((character) {
@@ -2063,7 +2064,6 @@ String decodeTeletypewriter(
       });
 
       return out;
-      break;
 
     // CCITT 2
     case TeletypewriterCodebook.CCITT_ITA2_1929:

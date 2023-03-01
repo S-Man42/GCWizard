@@ -25,7 +25,7 @@ num modulo360(num value) {
   return modulo(value, 360.0);
 }
 
-num round(double number, {int precision: 0}) {
+num round(double number, {int precision = 0}) {
   if (precision <= 0) return number.round();
 
   var exp = pow(10, precision);

@@ -36,7 +36,7 @@ final TYPOGRAPHY_CENTIMETER = Typography(name: 'common_unit_typography_cm_name',
 
 final TYPOGRAPHY_MILLIMETER = Typography(name: 'common_unit_typography_mm_name', symbol: 'mm', inDTPPt: 1.0 / 0.3528);
 
-final List<Unit> typographies = [
+final List<Typography> typographies = [
   TYPOGRAPHY_MILLIMETER,
   TYPOGRAPHY_CENTIMETER,
   TYPOGRAPHY_INCH,

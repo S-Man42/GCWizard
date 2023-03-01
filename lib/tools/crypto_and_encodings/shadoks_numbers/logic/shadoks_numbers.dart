@@ -1,6 +1,5 @@
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
-import 'package:gc_wizard/utils/collection_utils.dart';
 
 class ShadocksOutput extends Segments{
   List<int> numbers;

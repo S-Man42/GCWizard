@@ -27,7 +27,6 @@ Future<void> runSamplesTestGps(
   var tags = await parseExif(platformFile);
   expect(tags?.length, isNonZero);
   expect(tags, contains("GPS GPSLatitude"));
-  var lat = tags?["GPS GPSLatitude"];
 
   var _point = completeGPSData(tags!);
   expect(_point, isNotNull);

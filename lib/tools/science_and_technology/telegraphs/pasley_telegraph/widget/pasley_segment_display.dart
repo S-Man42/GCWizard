@@ -13,6 +13,7 @@ const _INITIAL_SEGMENTS = <String, bool>{
 const _PASLEY_RELATIVE_DISPLAY_WIDTH = 180;
 const _PASLEY_RELATIVE_DISPLAY_HEIGHT = 200;
 
+//ignore: must_be_immutable
 class _PasleyTelegraphSegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
   final bool readOnly;

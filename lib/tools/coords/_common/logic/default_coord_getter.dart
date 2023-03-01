@@ -25,7 +25,7 @@ CoordinateFormatKey? _getDefaultSubtypeForFormat(CoordinateFormatKey format) {
   }
 }
 
-BaseCoordinate get defaultBaseCoordinates {
+BaseCoordinate get defaultBaseCoordinate {
   return buildCoordinatesByFormat(defaultCoordinateFormat, defaultCoordinate, defaultEllipsoid);
 }
 

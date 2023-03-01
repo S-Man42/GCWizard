@@ -3,16 +3,10 @@ import 'dart:isolate';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 
 Isolate? _isolate;
-
-class GCWAsyncExecuterParameters {
-  late SendPort sendAsyncPort;
-  final Object? parameters;
-
-  GCWAsyncExecuterParameters(this.parameters);
-}
 
 class GCWAsyncExecuter<T extends Object?> extends StatefulWidget {
   final Future<T> Function(GCWAsyncExecuterParameters) isolatedFunction;
@@ -63,7 +57,7 @@ class _GCWAsyncExecuterState extends State<GCWAsyncExecuter> {
         if (_cancel) _cancelProcess();
 
         await for (var event in _receivePort!) {
-          if (event is Map<String, dynamic> && event['progress'] is double) { //ToDo NullSafety dynamic ??
+          if (event is Map<String, Object> && event['progress'] is double) {
             yield event['progress'] as double;
           } else {
             _result = event;

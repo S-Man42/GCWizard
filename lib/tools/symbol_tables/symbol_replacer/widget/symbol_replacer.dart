@@ -12,7 +12,7 @@ import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
-import 'package:gc_wizard/common_widgets/gcw_async_executer.dart';
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
 import 'package:gc_wizard/common_widgets/gcw_slider.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
@@ -36,6 +36,7 @@ import 'package:gc_wizard/tools/symbol_tables/_common/widget/gcw_symbol_table_to
 import 'package:gc_wizard/tools/symbol_tables/_common/widget/symbol_table.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart' as local;
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:tuple/tuple.dart';
 
 class SymbolReplacer extends StatefulWidget {
@@ -446,13 +447,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
         if ((item.value is SymbolReplacerSymbolTableViewData) &&
             ((item.value as SymbolReplacerSymbolTableViewData).symbolKey == symbolKey)) {
 
-          SymbolReplacerSymbolTableData _data;
           var value = item.value as SymbolReplacerSymbolTableViewData;
-          if (value.data == null)
-            _data = SymbolReplacerSymbolTableData(SymbolTableData(context, value.symbolKey));
-          else
-            _data = value.data!;
-
           _currentSymbolTableViewData = value;
           break;
         }

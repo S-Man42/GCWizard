@@ -67,7 +67,7 @@ final TEMPERATURE_SMURDLEY = Temperature(
     toKelvin: (e) => e / 0.27 + 273.15,
     fromKelvin: (e) => (e - 273.15) * 0.27);
 
-final List<Unit> temperatures = [
+final List<Temperature> temperatures = [
   TEMPERATURE_KELVIN,
   TEMPERATURE_CELSIUS,
   TEMPERATURE_FAHRENHEIT,

@@ -1,4 +1,6 @@
 import "package:flutter_test/flutter_test.dart";
+import 'package:gc_wizard/tools/coords/centroid/centroid_arithmetic_mean/logic/centroid_arithmetic_mean.dart';
+import 'package:gc_wizard/tools/coords/centroid/centroid_center_of_gravity/logic/centroid_center_of_gravity.dart';
 import 'package:gc_wizard/tools/coords/centroid/logic/centroid.dart';
 import 'package:gc_wizard/utils/coordinate_utils.dart';
 import 'package:latlong2/latlong.dart';
@@ -28,7 +30,7 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('coords: ${elem['coords']}', () {
         var actual = centroidCenterOfGravity(elem['coords'] as List<LatLng>);
-        expect(equalsLatLng(actual, elem['expectedOutput'] as LatLng), true);
+        expect(equalsLatLng(actual!, elem['expectedOutput'] as LatLng), true);
       });
     });
   });
@@ -43,8 +45,8 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('coords: ${elem['coords']}', () {
         var cog = centroidCenterOfGravity(elem['coords'] as List<LatLng>);
-        var actual = centroidArithmeticMean(elem['coords'] as List<LatLng>, cog);
-        expect(equalsLatLng(actual, elem['expectedOutput'] as LatLng), true);
+        var actual = centroidArithmeticMean(elem['coords'] as List<LatLng>, cog!);
+        expect(equalsLatLng(actual!, elem['expectedOutput'] as LatLng), true);
       });
     });
   });

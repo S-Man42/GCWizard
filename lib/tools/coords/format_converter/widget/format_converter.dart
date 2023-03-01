@@ -22,7 +22,7 @@ class FormatConverter extends StatefulWidget {
 }
 
 class FormatConverterState extends State<FormatConverter> {
-  var _currentCoords = defaultBaseCoordinates;
+  var _currentCoords = defaultBaseCoordinate;
   List<BaseCoordinate> _currentOutputs = [];
 
   var _currentOutputFormat = defaultCoordinateFormat;

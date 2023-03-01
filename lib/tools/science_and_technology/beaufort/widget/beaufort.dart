@@ -21,7 +21,7 @@ class BeaufortState extends State<Beaufort> {
 
   var _currentVelocity = 0.0;
   var _currentBeaufortInput = 0;
-  logic.Velocity _currentOutputUnit = UNITCATEGORY_VELOCITY.defaultUnit as logic.Velocity;
+  logic.Velocity _currentOutputUnit = UNITCATEGORY_VELOCITY.defaultUnit;
 
   @override
   Widget build(BuildContext context) {

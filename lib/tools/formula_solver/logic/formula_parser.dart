@@ -208,7 +208,7 @@ class FormulaParser {
     return formula;
   }
 
-  FormulaSolverResult _parseFormula(String formula, List<FormulaValue> values, bool expandValues) {
+  _FormulaSolverResult _parseFormula(String formula, List<FormulaValue> values, bool expandValues) {
     formula = normalizeCharacters(formula);
     formula = normalizeMathematicalSymbols(formula);
     safedFormulasMap = {};
@@ -550,14 +550,14 @@ class FormulaParser {
   }
 }
 
-abstract class FormulaSolverResult {
+abstract class _FormulaSolverResult {
   final FormulaState state;
   final Map<String, String>? variables;
 
-  FormulaSolverResult(this.state, {this.variables});
+  _FormulaSolverResult(this.state, {this.variables});
 }
 
-class FormulaSolverSingleResult extends FormulaSolverResult {
+class FormulaSolverSingleResult extends _FormulaSolverResult {
   final String result;
 
   FormulaSolverSingleResult(FormulaState state, this.result, {Map<String, String>? variables}): super(state, variables: variables);
@@ -568,7 +568,7 @@ class FormulaSolverSingleResult extends FormulaSolverResult {
   }
 }
 
-class FormulaSolverMultiResult extends FormulaSolverResult {
+class FormulaSolverMultiResult extends _FormulaSolverResult {
   final List<FormulaSolverSingleResult> results;
 
   FormulaSolverMultiResult(FormulaState state, this.results, {Map<String, String>? variables}): super(state, variables: variables);
