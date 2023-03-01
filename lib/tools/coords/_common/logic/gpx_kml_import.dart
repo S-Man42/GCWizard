@@ -312,6 +312,7 @@ bool _completeCircle(GCWMapPolyline line, List<GCWMapPoint> points) {
   double distToller = length1.distance * toller;
   if (dist.abs() > distToller) return false;
 
+  // TODO Mike: Please check this. Intersection could be NULL. Please handle that case
   var crossPoint = intersectFourPoints(pt1, pt2, pt3, pt4, ells);
   late GCWMapPoint center;
   double minDist = double.maxFinite;

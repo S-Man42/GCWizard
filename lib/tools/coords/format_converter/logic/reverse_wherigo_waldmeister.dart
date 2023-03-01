@@ -2,7 +2,7 @@ import 'package:gc_wizard/tools/coords/format_converter/logic/dec.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:latlong2/latlong.dart';
 
-LatLng? reverseWIGWaldmeisterToLatLon(ReverseWherigoWaldmeister waldmeister) {
+LatLng reverseWIGWaldmeisterToLatLon(ReverseWherigoWaldmeister waldmeister) {
   var a = waldmeister.a;
   var b = waldmeister.b;
   var c = waldmeister.c;

@@ -3,18 +3,19 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/theme/fixed_colors.dart';
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_angle.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coords_output.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coords_outputformat.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
 import 'package:gc_wizard/tools/coords/distance_and_bearing/logic/distance_and_bearing.dart';
-
-import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/resection/logic/resection.dart';
+import 'package:gc_wizard/utils/constants.dart';
 import 'package:latlong2/latlong.dart';
 
 class Resection extends StatefulWidget {
@@ -23,26 +24,19 @@ class Resection extends StatefulWidget {
 }
 
 class ResectionState extends State<Resection> {
-  var _currentIntersections = [];
+  var _currentIntersections = <LatLng>[];
 
-  var _currentCoordsFormat1 = defaultCoordinateFormat;
-  var _currentCoords1 = defaultCoordinate;
-
-  var _currentAngle12 = {'text': '', 'value': 0.0};
-
-  var _currentCoordsFormat2 = defaultCoordinateFormat;
-  var _currentCoords2 = defaultCoordinate;
-
-  var _currentAngle23 = {'text': '', 'value': 0.0};
-
-  var _currentCoordsFormat3 = defaultCoordinateFormat;
-  var _currentCoords3 = defaultCoordinate;
+  var _currentCoords1 = defaultBaseCoordinate;
+  var _currentAngle12 = defaultDoubleText;
+  var _currentCoords2 = defaultBaseCoordinate;
+  var _currentAngle23 = defaultDoubleText;
+  var _currentCoords3 = defaultBaseCoordinate;
 
   var _currentOutputFormat = defaultCoordinateFormat;
   List<String> _currentOutput = [];
   var _currentMapPoints = <GCWMapPoint>[];
   List<GCWMapPolyline> _currentMapPolylines = [];
-  dynamic _ells;
+  final _ellipsoid = defaultEllipsoid;
 
   @override
   Widget build(BuildContext context) {
@@ -50,11 +44,10 @@ class ResectionState extends State<Resection> {
       children: <Widget>[
         GCWCoords(
           title: i18n(context, "coords_resection_coorda"),
-          coordsFormat: _currentCoordsFormat1,
+          coordsFormat: _currentCoords1.format,
           onChanged: (ret) {
             setState(() {
-              _currentCoordsFormat1 = ret['coordsFormat'];
-              _currentCoords1 = ret['value'];
+              _currentCoords1 = ret;
             });
           },
         ),
@@ -68,11 +61,10 @@ class ResectionState extends State<Resection> {
         ),
         GCWCoords(
           title: i18n(context, "coords_resection_coordb"),
-          coordsFormat: _currentCoordsFormat2,
+          coordsFormat: _currentCoords2.format,
           onChanged: (ret) {
             setState(() {
-              _currentCoordsFormat2 = ret['coordsFormat'];
-              _currentCoords2 = ret['value'];
+              _currentCoords2 = ret;
             });
           },
         ),
@@ -86,11 +78,10 @@ class ResectionState extends State<Resection> {
         ),
         GCWCoords(
           title: i18n(context, "coords_resection_coordc"),
-          coordsFormat: _currentCoordsFormat3,
+          coordsFormat: _currentCoords3.format,
           onChanged: (ret) {
             setState(() {
-              _currentCoordsFormat3 = ret['coordsFormat'];
-              _currentCoords3 = ret['value'];
+              _currentCoords3 = ret;
             });
           },
         ),
@@ -110,15 +101,15 @@ class ResectionState extends State<Resection> {
 
   Widget _buildSubmitButton() {
     return GCWSubmitButton(onPressed: () async {
-      await showDialog(
+      await showDialog<bool>(
         context: context,
         barrierDismissible: false,
         builder: (context) {
           return Center(
             child: Container(
-              child: GCWAsyncExecuter(
+              child: GCWAsyncExecuter<List<LatLng>>(
                 isolatedFunction: resectionAsync,
-                parameter: _buildJobData(),
+                parameter: _buildJobData,
                 onReady: (data) => _showOutput(data),
                 isOverlay: true,
               ),
@@ -131,53 +122,42 @@ class ResectionState extends State<Resection> {
     });
   }
 
-  Future<GCWAsyncExecuterParameters> _buildJobData() async {
+  Future<GCWAsyncExecuterParameters?> _buildJobData() async {
     if (_currentCoords1 == _currentCoords2 ||
         _currentCoords2 == _currentCoords3 ||
         _currentCoords1 == _currentCoords3) {
       _currentOutput = [i18n(context, "coords_intersect_nointersection")];
       return null;
     }
-    _ells = defaultEllipsoid;
+
     return GCWAsyncExecuterParameters(ResectionJobData(
-        coord1: _currentCoords1,
-        angle12: _currentAngle12['value'],
-        coord2: _currentCoords2,
-        angle23: _currentAngle23['value'],
-        coord3: _currentCoords3,
-        ells: _ells));
+        coord1: _currentCoords1.toLatLng()!,
+        angle12: _currentAngle12.value,
+        coord2: _currentCoords2.toLatLng()!,
+        angle23: _currentAngle23.value,
+        coord3: _currentCoords3.toLatLng()!,
+        ells: _ellipsoid));
   }
 
   void _showOutput(List<LatLng> output) {
-    if (output == null) {
-      _currentOutput = [];
-
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        setState(() {});
-      });
-      return;
-    }
-
     _currentIntersections = output;
-
-    var ells = _ells;
 
     _currentMapPoints = [
       GCWMapPoint(
-          point: _currentCoords1,
+          point: _currentCoords1.toLatLng()!,
           markerText: i18n(context, 'coords_resection_coorda'),
-          coordinateFormat: _currentCoordsFormat1),
+          coordinateFormat: _currentCoords1.format),
       GCWMapPoint(
-          point: _currentCoords2,
+          point: _currentCoords2.toLatLng()!,
           markerText: i18n(context, 'coords_resection_coordb'),
-          coordinateFormat: _currentCoordsFormat2),
+          coordinateFormat: _currentCoords2.format),
       GCWMapPoint(
-          point: _currentCoords3,
+          point: _currentCoords3.toLatLng()!,
           markerText: i18n(context, 'coords_resection_coordc'),
-          coordinateFormat: _currentCoordsFormat3),
+          coordinateFormat: _currentCoords3.format),
     ];
 
-    if (_currentIntersections.isEmpty || (_currentIntersections[0] == null && _currentIntersections[1] == null)) {
+    if (_currentIntersections.isEmpty) {
       _currentOutput = [i18n(context, "coords_intersect_nointersection")];
       WidgetsBinding.instance.addPostFrameCallback((_) {
         setState(() {});
@@ -188,9 +168,9 @@ class ResectionState extends State<Resection> {
     //TODO:    LatLng center = centerPointThreePoints(_currentCoords1, _currentCoords2, _currentCoords3, ells)[0]['centerPoint'];
     //TODO: coord2 -> center
     _currentIntersections.sort((a, b) {
-      return distanceBearing(a, _currentCoords2, ells)
+      return distanceBearing(a, _currentCoords2.toLatLng()!, _ellipsoid)
           .distance
-          .compareTo(distanceBearing(b, _currentCoords2, ells).distance);
+          .compareTo(distanceBearing(b, _currentCoords2.toLatLng()!, _ellipsoid).distance);
     });
 
     //show max. 2 solutions; if there are more -> special cases at the end of the world -> advanced mode
