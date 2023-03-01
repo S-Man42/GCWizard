@@ -18,8 +18,6 @@ import 'package:gc_wizard/common_widgets/text_input_formatters/variablestring_te
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/common_widgets/units/gcw_unit_dropdown.dart';
 import 'package:gc_wizard/tools/coords/variable_coordinate/logic/variable_latlon.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coord_format_getter.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/variable_coordinate/persistence/json_provider.dart';
@@ -97,11 +95,11 @@ class VariableCoordinateState extends State<VariableCoordinate> {
     super.dispose();
   }
 
-  _updateValue(formula_base.FormulaValue value) {
+  void _updateValue(formula_base.FormulaValue value) {
     updateFormulaValue(value, widget.formula);
   }
 
-  _addEntry(String currentFromInput, String currentToInput, formula_base.FormulaValueType type, BuildContext context) {
+  void _addEntry(String currentFromInput, String currentToInput, formula_base.FormulaValueType type, BuildContext context) {
     if (currentFromInput.isNotEmpty) {
       insertFormulaValue(
           formula_base.FormulaValue(currentFromInput, currentToInput, type: formula_base.FormulaValueType.INTERPOLATED),
@@ -109,12 +107,12 @@ class VariableCoordinateState extends State<VariableCoordinate> {
     }
   }
 
-  _updateNewEntry(String currentFromInput, String currentToInput, BuildContext context) {
+  void _updateNewEntry(String currentFromInput, String currentToInput, BuildContext context) {
     _currentFromInput = currentFromInput;
     _currentToInput = currentToInput;
   }
 
-  _updateEntry(dynamic id, String key, String value, formula_base.FormulaValueType type) {
+  void _updateEntry(dynamic id, String key, String value, formula_base.FormulaValueType type) {
     var entry = widget.formula.values.firstWhere((element) => element.id == id);
     entry.key = key;
     entry.value = value;
@@ -122,11 +120,11 @@ class VariableCoordinateState extends State<VariableCoordinate> {
     _updateValue(entry);
   }
 
-  _removeEntry(dynamic id, BuildContext context) {
+  void _removeEntry(dynamic id, BuildContext context) {
     deleteFormulaValue(id, widget.formula);
   }
 
-  _disposeEntry(String currentFromInput, String currentToInput, BuildContext context) {
+  void _disposeEntry(String currentFromInput, String currentToInput, BuildContext context) {
     if (currentFromInput != null &&
         currentFromInput.isNotEmpty &&
         currentToInput != null &&
@@ -170,7 +168,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
               _currentProjectionMode = value;
 
               if (_currentProjectionMode) {
-                var projection = ProjectionFormula(
+                var projection = ProjectionData(
                     _currentDistanceInput, _currentLengthUnit.name, _currentBearingInput, _currentReverseBearing);
 
                 widget.formula.projection = projection;
@@ -347,8 +345,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
         'bearing': _currentProjectionMode == false || _currentBearingInput.isEmpty ? '0' : _currentBearingInput,
         'distance': _currentProjectionMode == false || _currentDistanceInput.isEmpty ? '0' : _currentDistanceInput,
         'reverseBearing': _currentReverseBearing,
-        'lengthUnit': _currentLengthUnit,
-        'ellipsoid': defaultEllipsoid
+        'lengthUnit': _currentLengthUnit
       };
     }
 

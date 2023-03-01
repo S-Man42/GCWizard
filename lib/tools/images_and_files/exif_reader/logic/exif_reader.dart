@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:exif/exif.dart';
+import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart' as local;
 import 'package:gc_wizard/common_widgets/image_viewers/gcw_imageview.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_parser.dart';
@@ -100,10 +101,10 @@ LatLng? completeGPSDataFromXmp(Map<String, dynamic> xmpTags) {
   LatLng? point;
   try {
     if (xmpTags.containsKey(_RDF_LOCATION)) {
-      String latlng = xmpTags[_RDF_LOCATION];
+      String latlng = toStringOrNull(xmpTags[_RDF_LOCATION]) ?? '';
       var pt = parseStandardFormats(latlng, wholeString: true);
       if (pt != null) {
-        var value = pt['coordinate'];
+        var value = pt.toLatLng();
         if (value is LatLng)
         point = value;
       }

@@ -48,7 +48,7 @@ class SegmentLineState extends State<SegmentLine> {
   void initState() {
     super.initState();
 
-    _currentOutputUnit = getUnitBySymbol(allLengths(), Prefs.get(PREFERENCE_DEFAULT_LENGTH_UNIT));
+    _currentOutputUnit = getUnitBySymbol<Length>(allLengths(), Prefs.get(PREFERENCE_DEFAULT_LENGTH_UNIT));
   }
 
   @override

@@ -1,13 +1,13 @@
 part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_analyze.dart';
 
-List<List<String>> buildOutputListOfVariables(BuildContext context, WherigoVariableData data) {
+List<List<String>> _buildOutputListOfVariables(BuildContext context, WherigoVariableData data) {
   return [
     [i18n(context, 'wherigo_output_luaname'), data.VariableLUAName],
     [i18n(context, 'wherigo_output_text'), data.VariableName],
   ];
 }
 
-List<List<String>> buildOutputListOfVariablesDetails(BuildContext context, WherigoVariableData data) {
+List<List<String>> _buildOutputListOfVariablesDetails(BuildContext context, WherigoVariableData data) {
   List<List<String>> result = [];
 
   if (NameToObject[data.VariableName] == null)
@@ -24,25 +24,25 @@ List<List<String>> buildOutputListOfVariablesDetails(BuildContext context, Wheri
 
     switch (NameToObject[data.VariableName]!.ObjectType) {
       case WHERIGO_OBJECT_TYPE.CHARACTER:
-        result.addAll(addDetailsCharacter(context, data));
+        result.addAll(_addDetailsCharacter(context, data));
         break;
       case WHERIGO_OBJECT_TYPE.INPUT:
-        result.addAll(addDetailsInput(context, data));
+        result.addAll(_addDetailsInput(context, data));
         break;
       case WHERIGO_OBJECT_TYPE.ITEM:
-        result.addAll(addDetailsItem(context, data));
+        result.addAll(_addDetailsItem(context, data));
         break;
       case WHERIGO_OBJECT_TYPE.MEDIA:
-        result.addAll(addDetailsMedia(context, data));
+        result.addAll(_addDetailsMedia(context, data));
         break;
       case WHERIGO_OBJECT_TYPE.TASK:
-        result.addAll(addDetailsTask(context, data));
+        result.addAll(_addDetailsTask(context, data));
         break;
       case WHERIGO_OBJECT_TYPE.TIMER:
-        result.addAll(addDetailsTimer(context, data));
+        result.addAll(_addDetailsTimer(context, data));
         break;
       case WHERIGO_OBJECT_TYPE.ZONE:
-        result.addAll(addDetailsZone(context, data));
+        result.addAll(_addDetailsZone(context, data));
         break;
       default:
     }
@@ -51,7 +51,7 @@ List<List<String>> buildOutputListOfVariablesDetails(BuildContext context, Wheri
   return result;
 }
 
-List<List<String>> addDetailsCharacter(BuildContext context, WherigoVariableData data){
+List<List<String>> _addDetailsCharacter(BuildContext context, WherigoVariableData data){
   List<List<String>> result = [];
 
   for (int i = 0; i < WherigoCartridgeLUAData.Characters.length; i++) {
@@ -69,7 +69,7 @@ List<List<String>> addDetailsCharacter(BuildContext context, WherigoVariableData
   return result;
 }
 
-List<List<String>> addDetailsTask(BuildContext context, WherigoVariableData data){
+List<List<String>> _addDetailsTask(BuildContext context, WherigoVariableData data){
   List<List<String>> result = [];
 
   for (int i = 0; i < WherigoCartridgeLUAData.Tasks.length; i++) {
@@ -83,7 +83,7 @@ List<List<String>> addDetailsTask(BuildContext context, WherigoVariableData data
   return result;
 }
 
-List<List<String>> addDetailsMedia(BuildContext context, WherigoVariableData data){
+List<List<String>> _addDetailsMedia(BuildContext context, WherigoVariableData data){
   List<List<String>> result = [];
 
   for (int i = 0; i < WherigoCartridgeLUAData.Media.length; i++) {
@@ -97,7 +97,7 @@ List<List<String>> addDetailsMedia(BuildContext context, WherigoVariableData dat
   return result;
 }
 
-List<List<String>> addDetailsItem(BuildContext context, WherigoVariableData data){
+List<List<String>> _addDetailsItem(BuildContext context, WherigoVariableData data){
   List<List<String>> result = [];
 
   for (int i = 0; i < WherigoCartridgeLUAData.Items.length; i++) {
@@ -111,7 +111,7 @@ List<List<String>> addDetailsItem(BuildContext context, WherigoVariableData data
   return result;
 }
 
-List<List<String>> addDetailsInput(BuildContext context, WherigoVariableData data){
+List<List<String>> _addDetailsInput(BuildContext context, WherigoVariableData data){
   List<List<String>> result = [];
 
   for (int i = 0; i < WherigoCartridgeLUAData.Inputs.length; i++) {
@@ -127,7 +127,7 @@ List<List<String>> addDetailsInput(BuildContext context, WherigoVariableData dat
   return result;
 }
 
-List<List<String>> addDetailsTimer(BuildContext context, WherigoVariableData data){
+List<List<String>> _addDetailsTimer(BuildContext context, WherigoVariableData data){
   List<List<String>> result = [];
 
   for (int i = 0; i < WherigoCartridgeLUAData.Timers.length; i++) {
@@ -144,7 +144,7 @@ List<List<String>> addDetailsTimer(BuildContext context, WherigoVariableData dat
   return result;
 }
 
-List<List<String>> addDetailsZone(BuildContext context, WherigoVariableData data){
+List<List<String>> _addDetailsZone(BuildContext context, WherigoVariableData data){
   List<List<String>> result = [];
   for (int i = 0; i < WherigoCartridgeLUAData.Zones.length; i++) {
     if (WherigoCartridgeLUAData.Zones[i].ZoneLUAName == data.VariableName) {

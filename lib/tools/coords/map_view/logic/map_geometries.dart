@@ -49,7 +49,9 @@ class GCWMapPoint {
   }
 }
 
-class GCWMapLine {
+abstract class GCWMapSimpleGeometry {}
+
+class GCWMapLine extends GCWMapSimpleGeometry {
   final GCWMapPolyline parent;
   final GCWMapPoint start;
   final GCWMapPoint? end;
@@ -124,7 +126,7 @@ class GCWMapPolyline {
   }
 }
 
-class GCWMapCircle {
+class GCWMapCircle extends GCWMapSimpleGeometry {
   LatLng centerPoint;
   double radius;
   Color color;

@@ -32,6 +32,7 @@ import 'package:gc_wizard/utils/string_utils.dart';
 import 'package:intl/intl.dart';
 import 'package:location/location.dart';
 import 'package:collection/collection.dart';
+import 'package:latlong2/latlong.dart';
 
 part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/degrees_latlon/degrees_lat_textinputformatter.dart';
 part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/degrees_latlon/degrees_lon_textinputformatter.dart';
@@ -75,6 +76,7 @@ class _GCWCoordWidget{
 
 class GCWCoords extends StatefulWidget {
   final void Function(BaseCoordinate) onChanged;
+  final LatLng? coordinates;
   final CoordinateFormat coordsFormat;
   final String? title;
   final bool? notitle;
@@ -84,6 +86,7 @@ class GCWCoords extends StatefulWidget {
       {Key? key,
       this.title,
       required this.onChanged,
+      this.coordinates,
       required this.coordsFormat,
       this.notitle = false,
       this.restoreCoordinates = false})
@@ -106,7 +109,7 @@ class GCWCoordsState extends State<GCWCoords> {
   void initState() {
     super.initState();
 
-    _currentCoords = buildCoordinatesByFormat(widget.coordsFormat, defaultCoordinate);
+    _currentCoords = buildCoordinatesByFormat(widget.coordsFormat, widget.coordinates ?? defaultCoordinate);
     _setPastedCoordsFormat();
     _pastedCoords = _currentCoords;
   }

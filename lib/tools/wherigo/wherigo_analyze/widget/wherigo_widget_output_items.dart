@@ -1,11 +1,11 @@
 part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_analyze.dart';
 
-List<List<String>> buildOutputListOfItemData(BuildContext context, WherigoItemData data) {
+List<List<String>> _buildOutputListOfItemData(BuildContext context, WherigoItemData data) {
   List<List<String>> result = [];
   if (wherigoExpertMode)
-    result = buildOutputListOfItemDataExpertMode(context, data);
+    result = _buildOutputListOfItemDataExpertMode(context, data);
   else
-    result = buildOutputListOfItemDataUserMode(context, data);
+    result = _buildOutputListOfItemDataUserMode(context, data);
 
   if (data.ItemLocation == 'ZonePoint')
     result.add([
@@ -26,14 +26,14 @@ List<List<String>> buildOutputListOfItemData(BuildContext context, WherigoItemDa
   return result;
 }
 
-List<List<String>> buildOutputListOfItemDataUserMode(BuildContext context, WherigoItemData data) {
+List<List<String>> _buildOutputListOfItemDataUserMode(BuildContext context, WherigoItemData data) {
   return [
     [i18n(context, 'wherigo_output_name'), data.ItemName],
     [i18n(context, 'wherigo_output_description'), data.ItemDescription],
   ];
 }
 
-List<List<String>> buildOutputListOfItemDataExpertMode(BuildContext context, WherigoItemData data) {
+List<List<String>> _buildOutputListOfItemDataExpertMode(BuildContext context, WherigoItemData data) {
   return [
     [i18n(context, 'wherigo_output_luaname'), data.ItemLUAName],
     [i18n(context, 'wherigo_output_id'), data.ItemID],
