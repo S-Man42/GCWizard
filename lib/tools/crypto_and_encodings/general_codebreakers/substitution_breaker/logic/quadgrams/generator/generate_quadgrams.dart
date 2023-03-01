@@ -12,7 +12,7 @@ part of 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/subst
 bool generate_quadgram() {
   var result = true;
 
-  List<Map<String, dynamic>> _inputsToExpected = [
+  List<Map<String, Object>> _inputsToExpected = [
     // Attention: a file is done during execution
 
     /// generate test-quadgram- file ( Source file from https://gitlab.com/guballa/SubstitutionBreaker/-/blob/development/tests/fixturefiles/quadgram_corpus.txt)
