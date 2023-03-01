@@ -2,7 +2,7 @@
 # https://dart.dev/guides/language/analysis-options
 # https://dart.dev/tools/linter-rules
 
-#include: package:flutter_lints/flutter.yaml
+include: package:flutter_lints/flutter.yaml
 
 analyzer:
   exclude: [build/**]
@@ -10,7 +10,7 @@ analyzer:
     strict-casts: true
     strict-inference: true
     strict-raw-types: true
-#  errors:
+  errors:
 #    # Linter rules: Error rules https://dart.dev/tools/linter-rules#error-rules ========================================
 #    always_use_package_imports: error
 #    avoid_dynamic_calls: error
