@@ -6,6 +6,7 @@ import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/units/gcw_unit_dropdown.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/default_units_getter.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/length.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit_category.dart';
 
@@ -28,7 +29,7 @@ class GCWCoordsOutputFormatDistance extends StatefulWidget {
 
 class GCWCoordsOutputFormatDistanceState extends State<GCWCoordsOutputFormatDistance> {
   var _currentCoordFormat = defaultCoordinateFormat;
-  Length _currentLengthUnit = UNITCATEGORY_LENGTH.defaultUnit as Length;
+  Length _currentLengthUnit = defaultLengthUnit;
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +67,7 @@ class GCWCoordsOutputFormatDistanceState extends State<GCWCoordsOutputFormatDist
     ]);
   }
 
-  _setCurrentValueAndEmitOnChange() {
+  void _setCurrentValueAndEmitOnChange() {
     widget.onChanged(GCWCoordsOutputFormatDistanceValue(_currentCoordFormat, _currentLengthUnit));
   }
 }

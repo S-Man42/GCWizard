@@ -31,7 +31,7 @@ class DistanceBearingState extends State<DistanceBearing> {
   var _currentCoordsFormat1 = defaultCoordinateFormat;
   var _currentCoordsFormat2 = defaultCoordinateFormat;
 
-  Length _currentOutputUnit = UNITCATEGORY_LENGTH.defaultUnit;
+  Length _currentOutputUnit = defaultLengthUnit;
 
   DistanceBearingData _currentValue = DistanceBearingData();
   List<GCWOutputText> _currentOutput = [];

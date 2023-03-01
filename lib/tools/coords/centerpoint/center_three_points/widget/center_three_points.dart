@@ -5,16 +5,16 @@ import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coords_output.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coords_outputformat_distance.dart';
-import 'package:gc_wizard/common_widgets/gcw_async_executer.dart';
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
 import 'package:gc_wizard/tools/coords/centerpoint/logic/centerpoint.dart';
-
-import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/default_units_getter.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/length.dart';
-import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit_category.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 
 class CenterThreePoints extends StatefulWidget {
   @override
@@ -25,16 +25,12 @@ class CenterThreePointsState extends State<CenterThreePoints> {
   LatLng _currentCenter = defaultCoordinate;
   double _currentDistance = 0.0;
 
-  var _currentCoords1 = defaultCoordinate;
-  var _currentCoords2 = defaultCoordinate;
-  var _currentCoords3 = defaultCoordinate;
-
-  var _currentCoordsFormat1 = defaultCoordinateFormat;
-  var _currentCoordsFormat2 = defaultCoordinateFormat;
-  var _currentCoordsFormat3 = defaultCoordinateFormat;
+  var _currentCoords1 = defaultBaseCoordinate;
+  var _currentCoords2 = defaultBaseCoordinate;
+  var _currentCoords3 = defaultBaseCoordinate;
 
   var _currentOutputFormat = defaultCoordinateFormat;
-  Length _currentOutputUnit = UNITCATEGORY_LENGTH.defaultUnit;
+  Length _currentOutputUnit = defaultLengthUnit;
   List<String> _currentOutput = [];
 
   var _currentMapPoints = <GCWMapPoint>[];
@@ -46,40 +42,37 @@ class CenterThreePointsState extends State<CenterThreePoints> {
       children: <Widget>[
         GCWCoords(
           title: i18n(context, 'coords_centerthreepoints_coorda'),
-          coordsFormat: _currentCoordsFormat1,
+          coordsFormat: _currentCoords1.format,
           onChanged: (ret) {
             setState(() {
-              _currentCoordsFormat1 = ret['coordsFormat'];
-              _currentCoords1 = ret['value'];
+              _currentCoords1 = ret;
             });
           },
         ),
         GCWCoords(
           title: i18n(context, 'coords_centerthreepoints_coordb'),
-          coordsFormat: _currentCoordsFormat2,
+          coordsFormat: _currentCoords2.format,
           onChanged: (ret) {
             setState(() {
-              _currentCoordsFormat2 = ret['coordsFormat'];
-              _currentCoords2 = ret['value'];
+              _currentCoords2 = ret;
             });
           },
         ),
         GCWCoords(
           title: i18n(context, 'coords_centerthreepoints_coordc'),
-          coordsFormat: _currentCoordsFormat3,
+          coordsFormat: _currentCoords3.format,
           onChanged: (ret) {
             setState(() {
-              _currentCoordsFormat3 = ret['coordsFormat'];
-              _currentCoords3 = ret['value'];
+              _currentCoords3 = ret;
             });
           },
         ),
         GCWCoordsOutputFormatDistance(
           coordFormat: _currentOutputFormat,
-          onChanged: (value) {
+          onChanged: (GCWCoordsOutputFormatDistanceValue value) {
             setState(() {
-              _currentOutputFormat = value['coordFormat'];
-              _currentOutputUnit = value['unit'];
+              _currentOutputFormat = value.format;
+              _currentOutputUnit = value.lengthUnit;
             });
           },
         ),
@@ -97,7 +90,7 @@ class CenterThreePointsState extends State<CenterThreePoints> {
         builder: (context) {
           return Center(
             child: Container(
-              child: GCWAsyncExecuter<List<Map<String, dynamic>>?>(
+              child: GCWAsyncExecuter<List<CenterPointDistance>?>(
                 isolatedFunction: centerPointThreePointsAsync,
                 parameter: _buildJobData,
                 onReady: (data) => _showOutput(data),
@@ -114,10 +107,14 @@ class CenterThreePointsState extends State<CenterThreePoints> {
 
   Future<GCWAsyncExecuterParameters> _buildJobData() async {
     return GCWAsyncExecuterParameters(CenterPointJobData(
-        coord1: _currentCoords1, coord2: _currentCoords2, coord3: _currentCoords3, ells: defaultEllipsoid));
+        coord1: _currentCoords1.toLatLng()!,
+        coord2: _currentCoords2.toLatLng()!,
+        coord3: _currentCoords3.toLatLng()!,
+        ellipsoid: defaultEllipsoid)
+    );
   }
 
-  void _showOutput(List<Map<String, dynamic>>? output) {
+  void _showOutput(List<CenterPointDistance>? output) {
     if (output == null) {
       _currentOutput = [];
 
@@ -127,34 +124,34 @@ class CenterThreePointsState extends State<CenterThreePoints> {
       return;
     }
 
-    _currentCenter = output[0]['centerPoint'];
-    _currentDistance = output[0]['distance'];
+    _currentCenter = output.first.centerPoint;
+    _currentDistance = output.first.distance;
 
     _currentOutput = output.map((coord) {
-      return '${formatCoordOutput(coord['centerPoint'], _currentOutputFormat, defaultEllipsoid)}';
+      return '${formatCoordOutput(coord.centerPoint, _currentOutputFormat, defaultEllipsoid)}';
     }).toList();
     _currentOutput.add(
         '${i18n(context, 'coords_center_distance')}: ${doubleFormat.format(_currentOutputUnit.fromMeter(_currentDistance))} ${_currentOutputUnit.symbol}');
 
     var mapPointCurrentCoords1 = GCWMapPoint(
-        point: _currentCoords1,
+        point: _currentCoords1.toLatLng()!,
         markerText: i18n(context, 'coords_centerthreepoints_coorda'),
-        coordinateFormat: _currentCoordsFormat1);
+        coordinateFormat: _currentCoords1.format);
     var mapPointCurrentCoords2 = GCWMapPoint(
-        point: _currentCoords2,
+        point: _currentCoords2.toLatLng()!,
         markerText: i18n(context, 'coords_centerthreepoints_coordb'),
-        coordinateFormat: _currentCoordsFormat2);
+        coordinateFormat: _currentCoords2.format);
     var mapPointCurrentCoords3 = GCWMapPoint(
-        point: _currentCoords3,
+        point: _currentCoords3.toLatLng()!,
         markerText: i18n(context, 'coords_centerthreepoints_coordc'),
-        coordinateFormat: _currentCoordsFormat3);
+        coordinateFormat: _currentCoords3.format);
     var mapPointCenter = GCWMapPoint(
         point: _currentCenter,
         color: COLOR_MAP_CALCULATEDPOINT,
         markerText: i18n(context, 'coords_common_centerpoint'),
         coordinateFormat: _currentOutputFormat,
         circleColorSameAsPointColor: false,
-        circle: GCWMapCircle(radius: _currentDistance));
+        circle: GCWMapCircle(radius: _currentDistance, centerPoint: _currentCenter));
 
     _currentMapPoints = [mapPointCurrentCoords1, mapPointCurrentCoords2, mapPointCurrentCoords3, mapPointCenter];
 

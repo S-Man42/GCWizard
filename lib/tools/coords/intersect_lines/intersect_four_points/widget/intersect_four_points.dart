@@ -5,10 +5,8 @@ import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coords_output.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coords_outputformat.dart';
-import 'package:gc_wizard/common_widgets/gcw_async_executer.dart';
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
 import 'package:gc_wizard/tools/coords/intersect_lines/logic/intersect_lines.dart';
-
-import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:latlong2/latlong.dart';
@@ -21,15 +19,10 @@ class IntersectFourPoints extends StatefulWidget {
 class IntersectFourPointsState extends State<IntersectFourPoints> {
   LatLng _currentIntersection;
 
-  var _currentCoords11 = defaultCoordinate;
-  var _currentCoords12 = defaultCoordinate;
-  var _currentCoords21 = defaultCoordinate;
-  var _currentCoords22 = defaultCoordinate;
-
-  var _currentCoordsFormat11 = defaultCoordinateFormat;
-  var _currentCoordsFormat12 = defaultCoordinateFormat;
-  var _currentCoordsFormat21 = defaultCoordinateFormat;
-  var _currentCoordsFormat22 = defaultCoordinateFormat;
+  var _currentCoords11 = defaultBaseCoordinate;
+  var _currentCoords12 = defaultBaseCoordinate;
+  var _currentCoords21 = defaultBaseCoordinate;
+  var _currentCoords22 = defaultBaseCoordinate;
 
   var _currentMapPoints = <GCWMapPoint>[];
   var _currentMapPolylines = <GCWMapPolyline>[];

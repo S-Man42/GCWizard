@@ -2,7 +2,7 @@ import 'dart:isolate';
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:gc_wizard/common_widgets/gcw_async_executer.dart';
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/morse/logic/morse.dart';
 import 'package:gc_wizard/tools/images_and_files/animated_image/logic/animated_image.dart' as animated_image;
 import 'package:gc_wizard/tools/images_and_files/animated_image/logic/animated_image.dart';

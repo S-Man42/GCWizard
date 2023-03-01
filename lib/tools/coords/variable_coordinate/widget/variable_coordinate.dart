@@ -26,8 +26,8 @@ import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/variable_coordinate/persistence/json_provider.dart';
 import 'package:gc_wizard/tools/coords/variable_coordinate/persistence/model.dart';
 import 'package:gc_wizard/tools/formula_solver/persistence/model.dart' as formula_base;
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/default_units_getter.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/length.dart';
-import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit_category.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/variable_string_expander.dart';
 import 'package:intl/intl.dart';
@@ -49,7 +49,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
   Widget _output = GCWCoordsOutput(outputs: []);
   GCWSwitchPosition _currentCoordMode = GCWSwitchPosition.left;
 
-  Length _currentLengthUnit = UNITCATEGORY_LENGTH.defaultUnit;
+  Length _currentLengthUnit = defaultLengthUnit;
   bool _currentProjectionMode = false;
   var _currentOutputFormat = defaultCoordinateFormat;
 
