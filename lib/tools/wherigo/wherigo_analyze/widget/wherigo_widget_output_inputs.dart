@@ -1,13 +1,13 @@
 part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_analyze.dart';
 
-List<List<String>> buildOutputListOfInputData(BuildContext context, WherigoInputData data) {
+List<List<String>> _buildOutputListOfInputData(BuildContext context, WherigoInputData data) {
   if (wherigoExpertMode)
-    return buildOutputListInputDataExpertMode(context, data);
+    return _buildOutputListInputDataExpertMode(context, data);
   else
-    return buildOutputListInputDataUserMode(context, data);
+    return _buildOutputListInputDataUserMode(context, data);
 }
 
-List<List<String>> buildOutputListInputDataExpertMode(BuildContext context, WherigoInputData data) {
+List<List<String>> _buildOutputListInputDataExpertMode(BuildContext context, WherigoInputData data) {
   return [
     [i18n(context, 'wherigo_output_luaname'), data.InputLUAName],
     [i18n(context, 'wherigo_output_id'), data.InputID],
@@ -28,7 +28,7 @@ List<List<String>> buildOutputListInputDataExpertMode(BuildContext context, Wher
   ];
 }
 
-List<List<String>> buildOutputListInputDataUserMode(BuildContext context, WherigoInputData data) {
+List<List<String>> _buildOutputListInputDataUserMode(BuildContext context, WherigoInputData data) {
   return [
     [i18n(context, 'wherigo_output_name'), data.InputName],
     [i18n(context, 'wherigo_output_description'), data.InputDescription],

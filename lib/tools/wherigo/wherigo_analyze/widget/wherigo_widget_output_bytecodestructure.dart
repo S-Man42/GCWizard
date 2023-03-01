@@ -1,12 +1,12 @@
 part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_analyze.dart';
 
-List<Widget> buildOutputListByteCodeStructure(BuildContext context, Uint8List bytes) {
+List<Widget> _buildOutputListByteCodeStructure(BuildContext context, Uint8List bytes) {
 
   int numberOfObjects = readShort(bytes, 7);
   int offset = 0;
   List<Widget> result = [];
 
-  Widget buildSectionSignature(int numberOfObjects){
+  Widget _buildSectionSignature(int numberOfObjects){
     List<List<String>> content = [];
     content = [
       [
@@ -40,7 +40,7 @@ List<Widget> buildOutputListByteCodeStructure(BuildContext context, Uint8List by
       ),
     );
   }
-  Widget buildSectionMediaFiles(int numberOfObjects){
+  Widget _buildSectionMediaFiles(int numberOfObjects){
     // id and offset of media files
     // 2 Bytes ID
     // 4 Bytes offset
@@ -72,7 +72,7 @@ List<Widget> buildOutputListByteCodeStructure(BuildContext context, Uint8List by
       ),
     );
   }
-  Widget buildSectionHeader(){
+  Widget _buildSectionHeader(){
     List<List<String>> content = [];
     content.add(['', i18n(context, 'wherigo_header_headerlength'), 'Bytes']);
     content.add([
@@ -113,7 +113,7 @@ List<Widget> buildOutputListByteCodeStructure(BuildContext context, Uint8List by
       ),
     );
   }
-  Widget buildSectionLUAByteCode(){
+  Widget _buildSectionLUAByteCode(){
     // LUA Bytecode
     // 4 Bytes Size
     // ? bytes LUA Bytecode
@@ -135,7 +135,7 @@ List<Widget> buildOutputListByteCodeStructure(BuildContext context, Uint8List by
       ),
     );
   }
-  Widget buildSectionMediaFilesDetails(){
+  Widget _buildSectionMediaFilesDetails(){
     // Media files
     // 1 Byte Valid Object (0 = nothing, else Object
     // 4 Byte Object Type
@@ -202,17 +202,17 @@ List<Widget> buildOutputListByteCodeStructure(BuildContext context, Uint8List by
     );
   }
 
-  result.add(buildSectionSignature(numberOfObjects));
-  result.add(buildSectionMediaFiles(numberOfObjects));
-  result.add(buildSectionHeader());
+  result.add(_buildSectionSignature(numberOfObjects));
+  result.add(_buildSectionMediaFiles(numberOfObjects));
+  result.add(_buildSectionHeader());
 
   offset = offset + LENGTH_INT + readInt(bytes, offset);
 
-  result.add(buildSectionLUAByteCode());
+  result.add(_buildSectionLUAByteCode());
 
   offset = offset + LENGTH_INT + readInt(bytes, offset);
 
-  result.add(buildSectionMediaFilesDetails());
+  result.add(_buildSectionMediaFilesDetails());
 
   return result;
 } // end _outputBytecodeStructure

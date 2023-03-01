@@ -89,271 +89,271 @@
 
 part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze.dart';
 
-List<String> GWCResultsGWC = [];
-WHERIGO_ANALYSE_RESULT_STATUS GWCStatus = WHERIGO_ANALYSE_RESULT_STATUS.OK;
-WHERIGO_FILE_LOAD_STATE checksToDo = WHERIGO_FILE_LOAD_STATE.NULL;
-String GWCSignature = '';
-int GWCNumberOfObjects = 0;
-List<WherigoMediaFileHeader> GWCMediaFilesHeaders = [];
-List<WherigoMediaFileContent> GWCMediaFilesContents = [];
-int GWCMediaFileID = 0;
-int GWCAddress = 0;
-int GWCHeaderLength = 0;
-double GWCLatitude = 0.0;
-double GWCLongitude = 0.0;
-double GWCAltitude = 0.0;
-int GWCSplashscreen = 0;
-int GWCSplashscreenIcon = 0;
-late int GWCDateOfCreation;
-String GWCTypeOfCartridge = '';
-String GWCPlayer = '';
-int GWCPlayerID = 0;
-String GWCCartridgeLUAName = '';
-String GWCCartridgeGUID = '';
-String GWCCartridgeDescription = '';
-String GWCStartingLocationDescription = '';
-String GWCVersion = '';
-String GWCAuthor = '';
-String GWCCompany = '';
-String GWCRecommendedDevice = '';
-int GWCLengthOfCompletionCode = 0;
-String GWCCompletionCode = '';
-int GWCUnknown3 = 0;
-int GWCoffset = 0;
-WherigoStringOffset GWCASCIIZ = WherigoStringOffset('', 0);
-int GWCMediaFileLength = 0;
-int GWCValidMediaFile = 0;
-int GWCMediaFileType = 0;
+List<String> _GWCResultsGWC = [];
+WHERIGO_ANALYSE_RESULT_STATUS _GWCStatus = WHERIGO_ANALYSE_RESULT_STATUS.OK;
+WHERIGO_FILE_LOAD_STATE _checksToDo = WHERIGO_FILE_LOAD_STATE.NULL;
+String _GWCSignature = '';
+int _GWCNumberOfObjects = 0;
+List<WherigoMediaFileHeader> _GWCMediaFilesHeaders = [];
+List<WherigoMediaFileContent> _GWCMediaFilesContents = [];
+int _GWCMediaFileID = 0;
+int _GWCAddress = 0;
+int _GWCHeaderLength = 0;
+double _GWCLatitude = 0.0;
+double _GWCLongitude = 0.0;
+double _GWCAltitude = 0.0;
+int _GWCSplashscreen = 0;
+int _GWCSplashscreenIcon = 0;
+int _GWCDateOfCreation = 0;
+String _GWCTypeOfCartridge = '';
+String _GWCPlayer = '';
+int _GWCPlayerID = 0;
+String _GWCCartridgeLUAName = '';
+String _GWCCartridgeGUID = '';
+String _GWCCartridgeDescription = '';
+String _GWCStartingLocationDescription = '';
+String _GWCVersion = '';
+String _GWCAuthor = '';
+String _GWCCompany = '';
+String _GWCRecommendedDevice = '';
+int _GWCLengthOfCompletionCode = 0;
+String _GWCCompletionCode = '';
+int _GWCUnknown3 = 0;
+int _GWCoffset = 0;
+WherigoStringOffset _GWCASCIIZ = WherigoStringOffset('', 0);
+int _GWCMediaFileLength = 0;
+int _GWCValidMediaFile = 0;
+int _GWCMediaFileType = 0;
 
 Future<WherigoCartridge> getCartridgeGWC(Uint8List byteListGWC, bool offline, {SendPort? sendAsyncPort}) async {
-  checksToDo = WHERIGO_FILE_LOAD_STATE.GWC;
+  if ((byteListGWC != [] || byteListGWC != null)) _checksToDo = WHERIGO_FILE_LOAD_STATE.GWC;
 
-  if (checksToDo == WHERIGO_FILE_LOAD_STATE.NULL) {
-    GWCResultsGWC.add('wherigo_error_runtime');
-    GWCResultsGWC.add('wherigo_error_empty_gwc');
+  if (_checksToDo == WHERIGO_FILE_LOAD_STATE.NULL) {
+    _GWCResultsGWC.add('wherigo_error_runtime');
+    _GWCResultsGWC.add('wherigo_error_empty_gwc');
 
     return WherigoCartridge(cartridgeGWC: WHERIGO_EMPTYCARTRIDGE_GWC, cartridgeLUA: WHERIGO_EMPTYCARTRIDGE_LUA);
   }
 
-  if (checksToDo == WHERIGO_FILE_LOAD_STATE.GWC) {
+  if (_checksToDo == WHERIGO_FILE_LOAD_STATE.GWC) {
     if (isInvalidCartridge(byteListGWC)) {
-      GWCResultsGWC.add('wherigo_error_runtime');
-      GWCResultsGWC.add('wherigo_error_invalid_gwc');
-      GWCStatus = WHERIGO_ANALYSE_RESULT_STATUS.ERROR_GWC;
+      _GWCResultsGWC.add('wherigo_error_runtime');
+      _GWCResultsGWC.add('wherigo_error_invalid_gwc');
+      _GWCStatus = WHERIGO_ANALYSE_RESULT_STATUS.ERROR_GWC;
     } else {
       // analyse GWC-File
-      getHeaderFromGWC(byteListGWC);
-      getLUAByteCodeFromGWC(byteListGWC);
-      getMediaFilesFromGWC(byteListGWC);
+      _getHeaderFromGWC(byteListGWC);
+      _getLUAByteCodeFromGWC(byteListGWC);
+      _getMediaFilesFromGWC(byteListGWC);
     }
   } // if checks to do GWC
 
   return WherigoCartridge(
       cartridgeGWC: WherigoCartridgeGWC(
-        Signature: GWCSignature,
-        NumberOfObjects: GWCNumberOfObjects,
-        MediaFilesHeaders: GWCMediaFilesHeaders,
-        MediaFilesContents: GWCMediaFilesContents,
-        HeaderLength: GWCHeaderLength,
-        Latitude: GWCLatitude,
-        Longitude: GWCLongitude,
-        Altitude: GWCAltitude,
-        Splashscreen: GWCSplashscreen,
-        SplashscreenIcon: GWCSplashscreenIcon,
-        DateOfCreation: GWCDateOfCreation,
-        TypeOfCartridge: GWCTypeOfCartridge,
-        Player: GWCPlayer,
-        PlayerID: GWCPlayerID,
-        CartridgeLUAName: GWCCartridgeLUAName,
-        CartridgeGUID: GWCCartridgeGUID,
-        CartridgeDescription: GWCCartridgeDescription,
-        StartingLocationDescription: GWCStartingLocationDescription,
-        Version: GWCVersion,
-        Author: GWCAuthor,
-        Company: GWCCompany,
-        RecommendedDevice: GWCRecommendedDevice,
-        LengthOfCompletionCode: GWCLengthOfCompletionCode,
-        CompletionCode: GWCCompletionCode,
-        ResultStatus: GWCStatus,
-        ResultsGWC: GWCResultsGWC,
+        Signature: _GWCSignature,
+        NumberOfObjects: _GWCNumberOfObjects,
+        MediaFilesHeaders: _GWCMediaFilesHeaders,
+        MediaFilesContents: _GWCMediaFilesContents,
+        HeaderLength: _GWCHeaderLength,
+        Latitude: _GWCLatitude,
+        Longitude: _GWCLongitude,
+        Altitude: _GWCAltitude,
+        Splashscreen: _GWCSplashscreen,
+        SplashscreenIcon: _GWCSplashscreenIcon,
+        DateOfCreation: _GWCDateOfCreation,
+        TypeOfCartridge: _GWCTypeOfCartridge,
+        Player: _GWCPlayer,
+        PlayerID: _GWCPlayerID,
+        CartridgeLUAName: _GWCCartridgeLUAName,
+        CartridgeGUID: _GWCCartridgeGUID,
+        CartridgeDescription: _GWCCartridgeDescription,
+        StartingLocationDescription: _GWCStartingLocationDescription,
+        Version: _GWCVersion,
+        Author: _GWCAuthor,
+        Company: _GWCCompany,
+        RecommendedDevice: _GWCRecommendedDevice,
+        LengthOfCompletionCode: _GWCLengthOfCompletionCode,
+        CompletionCode: _GWCCompletionCode,
+        ResultStatus: _GWCStatus,
+        ResultsGWC: _GWCResultsGWC,
       ),
       cartridgeLUA: WHERIGO_EMPTYCARTRIDGE_LUA);
 }
 
-void getHeaderFromGWC(Uint8List byteListGWC) {
+void _getHeaderFromGWC(Uint8List byteListGWC) {
   try {
     // get Header
-    getSignatureFromGWC(byteListGWC);
-    GWCNumberOfObjects = readUShort(byteListGWC, START_NUMBEROFOBJECTS);
-    GWCoffset = START_OBJCETADRESS; // File Header LUA File
+    _getSignatureFromGWC(byteListGWC);
+    _GWCNumberOfObjects = readUShort(byteListGWC, START_NUMBEROFOBJECTS);
+    _GWCoffset = START_OBJCETADRESS; // File Header LUA File
 
-    getMediaFileAddressesFromGWC(byteListGWC);
+    _getMediaFileAddressesFromGWC(byteListGWC);
 
-    START_HEADER = START_OBJCETADRESS + GWCNumberOfObjects * 6;
-    getHeaderDetailsFromGWC(byteListGWC);
+    START_HEADER = START_OBJCETADRESS + _GWCNumberOfObjects * 6;
+    _getHeaderDetailsFromGWC(byteListGWC);
 
     // sendAsyncPort?.send({'progress': 5});
   } catch (exception) {
-    GWCStatus = WHERIGO_ANALYSE_RESULT_STATUS.ERROR_GWC;
-    GWCResultsGWC.add('wherigo_error_runtime');
-    GWCResultsGWC.add('wherigo_error_runtime_exception');
-    GWCResultsGWC.add('wherigo_error_gwc_header');
-    GWCResultsGWC.add(exception.toString());
+    _GWCStatus = WHERIGO_ANALYSE_RESULT_STATUS.ERROR_GWC;
+    _GWCResultsGWC.add('wherigo_error_runtime');
+    _GWCResultsGWC.add('wherigo_error_runtime_exception');
+    _GWCResultsGWC.add('wherigo_error_gwc_header');
+    _GWCResultsGWC.add(exception.toString());
   }
 }
 
-void getHeaderDetailsFromGWC(Uint8List byteListGWC) {
-  GWCoffset = START_HEADER;
+void _getHeaderDetailsFromGWC(Uint8List byteListGWC) {
+  _GWCoffset = START_HEADER;
 
-  GWCHeaderLength = readLong(byteListGWC, GWCoffset);
-  GWCoffset = GWCoffset + LENGTH_LONG;
-  START_FILES = START_HEADER + GWCHeaderLength;
+  _GWCHeaderLength = readLong(byteListGWC, _GWCoffset);
+  _GWCoffset = _GWCoffset + LENGTH_LONG;
+  START_FILES = START_HEADER + _GWCHeaderLength;
 
-  GWCLatitude = readDouble(byteListGWC, GWCoffset);
-  if (GWCLatitude < -90.0 || GWCLatitude > 90.0) GWCLatitude = 0.0;
-  GWCoffset = GWCoffset + LENGTH_DOUBLE;
-  GWCLongitude = readDouble(byteListGWC, GWCoffset);
-  if (GWCLongitude < -180.0 || GWCLongitude > 180.0) GWCLongitude = 0.0;
-  GWCoffset = GWCoffset + LENGTH_DOUBLE;
-  GWCAltitude = readDouble(byteListGWC, GWCoffset);
-  GWCoffset = GWCoffset + LENGTH_DOUBLE;
+  _GWCLatitude = readDouble(byteListGWC, _GWCoffset);
+  if (_GWCLatitude < -90.0 || _GWCLatitude > 90.0) _GWCLatitude = 0.0;
+  _GWCoffset = _GWCoffset + LENGTH_DOUBLE;
+  _GWCLongitude = readDouble(byteListGWC, _GWCoffset);
+  if (_GWCLongitude < -180.0 || _GWCLongitude > 180.0) _GWCLongitude = 0.0;
+  _GWCoffset = _GWCoffset + LENGTH_DOUBLE;
+  _GWCAltitude = readDouble(byteListGWC, _GWCoffset);
+  _GWCoffset = _GWCoffset + LENGTH_DOUBLE;
 
-  GWCDateOfCreation = readLong(byteListGWC, GWCoffset);
-  GWCoffset = GWCoffset + LENGTH_LONG;
+  _GWCDateOfCreation = readLong(byteListGWC, _GWCoffset);
+  _GWCoffset = _GWCoffset + LENGTH_LONG;
 
-  GWCUnknown3 = readLong(byteListGWC, GWCoffset);
-  GWCoffset = GWCoffset + LENGTH_LONG;
-  GWCSplashscreen = readShort(byteListGWC, GWCoffset);
-  GWCoffset = GWCoffset + LENGTH_SHORT;
+  _GWCUnknown3 = readLong(byteListGWC, _GWCoffset);
+  _GWCoffset = _GWCoffset + LENGTH_LONG;
+  _GWCSplashscreen = readShort(byteListGWC, _GWCoffset);
+  _GWCoffset = _GWCoffset + LENGTH_SHORT;
 
-  GWCSplashscreenIcon = readShort(byteListGWC, GWCoffset);
-  GWCoffset = GWCoffset + LENGTH_SHORT;
+  _GWCSplashscreenIcon = readShort(byteListGWC, _GWCoffset);
+  _GWCoffset = _GWCoffset + LENGTH_SHORT;
 
-  GWCASCIIZ = readString(byteListGWC, GWCoffset);
-  GWCTypeOfCartridge = GWCASCIIZ.ASCIIZ;
-  GWCoffset = GWCASCIIZ.offset;
+  _GWCASCIIZ = readString(byteListGWC, _GWCoffset);
+  _GWCTypeOfCartridge = _GWCASCIIZ.ASCIIZ;
+  _GWCoffset = _GWCASCIIZ.offset;
 
-  GWCASCIIZ = readString(byteListGWC, GWCoffset);
-  GWCPlayer = GWCASCIIZ.ASCIIZ;
-  GWCoffset = GWCASCIIZ.offset;
+  _GWCASCIIZ = readString(byteListGWC, _GWCoffset);
+  _GWCPlayer = _GWCASCIIZ.ASCIIZ;
+  _GWCoffset = _GWCASCIIZ.offset;
 
-  GWCPlayerID = readLong(byteListGWC, GWCoffset);
-  GWCoffset = GWCoffset + LENGTH_LONG;
+  _GWCPlayerID = readLong(byteListGWC, _GWCoffset);
+  _GWCoffset = _GWCoffset + LENGTH_LONG;
 
-  GWCPlayerID = readLong(byteListGWC, GWCoffset);
-  GWCoffset = GWCoffset + LENGTH_LONG;
+  _GWCPlayerID = readLong(byteListGWC, _GWCoffset);
+  _GWCoffset = _GWCoffset + LENGTH_LONG;
 
-  GWCASCIIZ = readString(byteListGWC, GWCoffset);
-  GWCCartridgeLUAName = GWCASCIIZ.ASCIIZ;
-  GWCoffset = GWCASCIIZ.offset;
+  _GWCASCIIZ = readString(byteListGWC, _GWCoffset);
+  _GWCCartridgeLUAName = _GWCASCIIZ.ASCIIZ;
+  _GWCoffset = _GWCASCIIZ.offset;
 
-  GWCASCIIZ = readString(byteListGWC, GWCoffset);
-  GWCCartridgeGUID = GWCASCIIZ.ASCIIZ;
-  GWCoffset = GWCASCIIZ.offset;
+  _GWCASCIIZ = readString(byteListGWC, _GWCoffset);
+  _GWCCartridgeGUID = _GWCASCIIZ.ASCIIZ;
+  _GWCoffset = _GWCASCIIZ.offset;
 
-  GWCASCIIZ = readString(byteListGWC, GWCoffset);
-  GWCCartridgeDescription = GWCASCIIZ.ASCIIZ.replaceAll('<BR>', '\n');
-  GWCoffset = GWCASCIIZ.offset;
+  _GWCASCIIZ = readString(byteListGWC, _GWCoffset);
+  _GWCCartridgeDescription = _GWCASCIIZ.ASCIIZ.replaceAll('<BR>', '\n');
+  _GWCoffset = _GWCASCIIZ.offset;
 
-  GWCASCIIZ = readString(byteListGWC, GWCoffset);
-  GWCStartingLocationDescription = GWCASCIIZ.ASCIIZ.replaceAll('<BR>', '\n');
-  GWCoffset = GWCASCIIZ.offset;
+  _GWCASCIIZ = readString(byteListGWC, _GWCoffset);
+  _GWCStartingLocationDescription = _GWCASCIIZ.ASCIIZ.replaceAll('<BR>', '\n');
+  _GWCoffset = _GWCASCIIZ.offset;
 
-  GWCASCIIZ = readString(byteListGWC, GWCoffset);
-  GWCVersion = GWCASCIIZ.ASCIIZ;
-  GWCoffset = GWCASCIIZ.offset;
+  _GWCASCIIZ = readString(byteListGWC, _GWCoffset);
+  _GWCVersion = _GWCASCIIZ.ASCIIZ;
+  _GWCoffset = _GWCASCIIZ.offset;
 
-  GWCASCIIZ = readString(byteListGWC, GWCoffset);
-  GWCAuthor = GWCASCIIZ.ASCIIZ;
-  GWCoffset = GWCASCIIZ.offset;
+  _GWCASCIIZ = readString(byteListGWC, _GWCoffset);
+  _GWCAuthor = _GWCASCIIZ.ASCIIZ;
+  _GWCoffset = _GWCASCIIZ.offset;
 
-  GWCASCIIZ = readString(byteListGWC, GWCoffset);
-  GWCCompany = GWCASCIIZ.ASCIIZ;
-  GWCoffset = GWCASCIIZ.offset;
+  _GWCASCIIZ = readString(byteListGWC, _GWCoffset);
+  _GWCCompany = _GWCASCIIZ.ASCIIZ;
+  _GWCoffset = _GWCASCIIZ.offset;
 
-  GWCASCIIZ = readString(byteListGWC, GWCoffset);
-  GWCRecommendedDevice = GWCASCIIZ.ASCIIZ;
-  GWCoffset = GWCASCIIZ.offset;
+  _GWCASCIIZ = readString(byteListGWC, _GWCoffset);
+  _GWCRecommendedDevice = _GWCASCIIZ.ASCIIZ;
+  _GWCoffset = _GWCASCIIZ.offset;
 
-  GWCLengthOfCompletionCode = readInt(byteListGWC, GWCoffset);
-  GWCoffset = GWCoffset + LENGTH_INT;
+  _GWCLengthOfCompletionCode = readInt(byteListGWC, _GWCoffset);
+  _GWCoffset = _GWCoffset + LENGTH_INT;
 
-  GWCASCIIZ = readString(byteListGWC, GWCoffset);
-  GWCCompletionCode = GWCASCIIZ.ASCIIZ;
-  GWCoffset = GWCASCIIZ.offset;
+  _GWCASCIIZ = readString(byteListGWC, _GWCoffset);
+  _GWCCompletionCode = _GWCASCIIZ.ASCIIZ;
+  _GWCoffset = _GWCASCIIZ.offset;
 }
 
-void getMediaFileAddressesFromGWC(Uint8List byteListGWC) {
-  for (int i = 0; i < GWCNumberOfObjects; i++) {
-    GWCMediaFileID = readUShort(byteListGWC, GWCoffset);
-    GWCoffset = GWCoffset + LENGTH_USHORT;
-    GWCAddress = readInt(byteListGWC, GWCoffset);
-    GWCoffset = GWCoffset + LENGTH_INT;
-    GWCMediaFilesHeaders.add(WherigoMediaFileHeader(GWCMediaFileID, GWCAddress));
+void _getMediaFileAddressesFromGWC(Uint8List byteListGWC) {
+  for (int i = 0; i < _GWCNumberOfObjects; i++) {
+    _GWCMediaFileID = readUShort(byteListGWC, _GWCoffset);
+    _GWCoffset = _GWCoffset + LENGTH_USHORT;
+    _GWCAddress = readInt(byteListGWC, _GWCoffset);
+    _GWCoffset = _GWCoffset + LENGTH_INT;
+    _GWCMediaFilesHeaders.add(WherigoMediaFileHeader(_GWCMediaFileID, _GWCAddress));
   }
 }
 
-void getSignatureFromGWC(Uint8List byteListGWC) {
-  GWCSignature = GWCSignature + byteListGWC[0].toString();
-  GWCSignature = GWCSignature + byteListGWC[1].toString();
-  GWCSignature = GWCSignature + String.fromCharCode(byteListGWC[2]);
-  GWCSignature = GWCSignature + String.fromCharCode(byteListGWC[3]);
-  GWCSignature = GWCSignature + String.fromCharCode(byteListGWC[4]);
-  GWCSignature = GWCSignature + String.fromCharCode(byteListGWC[5]);
+void _getSignatureFromGWC(Uint8List byteListGWC) {
+  _GWCSignature = _GWCSignature + byteListGWC[0].toString();
+  _GWCSignature = _GWCSignature + byteListGWC[1].toString();
+  _GWCSignature = _GWCSignature + String.fromCharCode(byteListGWC[2]);
+  _GWCSignature = _GWCSignature + String.fromCharCode(byteListGWC[3]);
+  _GWCSignature = _GWCSignature + String.fromCharCode(byteListGWC[4]);
+  _GWCSignature = _GWCSignature + String.fromCharCode(byteListGWC[5]);
 }
 
-void getMediaFilesFromGWC(Uint8List byteListGWC) {
+void _getMediaFilesFromGWC(Uint8List byteListGWC) {
   try {
     // analysing GWC - reading Media-Files
-    for (int i = 1; i < GWCMediaFilesHeaders.length; i++) {
-      GWCoffset = GWCMediaFilesHeaders[i].MediaFileAddress;
-      GWCValidMediaFile = readByte(byteListGWC, GWCoffset);
-      if (GWCValidMediaFile != 0) {
+    for (int i = 1; i < _GWCMediaFilesHeaders.length; i++) {
+      _GWCoffset = _GWCMediaFilesHeaders[i].MediaFileAddress;
+      _GWCValidMediaFile = readByte(byteListGWC, _GWCoffset);
+      if (_GWCValidMediaFile != 0) {
         // read Filetype
-        GWCoffset = GWCoffset + LENGTH_BYTE;
-        GWCMediaFileType = readInt(byteListGWC, GWCoffset);
+        _GWCoffset = _GWCoffset + LENGTH_BYTE;
+        _GWCMediaFileType = readInt(byteListGWC, _GWCoffset);
 
         // read Length
-        GWCoffset = GWCoffset + LENGTH_INT;
-        GWCMediaFileLength = readInt(byteListGWC, GWCoffset);
+        _GWCoffset = _GWCoffset + LENGTH_INT;
+        _GWCMediaFileLength = readInt(byteListGWC, _GWCoffset);
 
         // read bytes
-        GWCoffset = GWCoffset + LENGTH_INT;
-        GWCMediaFilesContents.add(WherigoMediaFileContent(GWCMediaFilesHeaders[i].MediaFileID, GWCMediaFileType,
-            Uint8List.sublistView(byteListGWC, GWCoffset, GWCoffset + GWCMediaFileLength), GWCMediaFileLength));
+        _GWCoffset = _GWCoffset + LENGTH_INT;
+        _GWCMediaFilesContents.add(WherigoMediaFileContent(_GWCMediaFilesHeaders[i].MediaFileID, _GWCMediaFileType,
+            Uint8List.sublistView(byteListGWC, _GWCoffset, _GWCoffset + _GWCMediaFileLength), _GWCMediaFileLength));
       } else {
         // despite the medioObject exists in the LUA Sourcecode, the file is not part of the cartridge
-        GWCMediaFilesContents.add(WherigoMediaFileContent(
-            GWCMediaFilesHeaders[i].MediaFileID, WHERIGO_MEDIATYPE_UNK, Uint8List.fromList([]), 0));
+        _GWCMediaFilesContents.add(WherigoMediaFileContent(
+            _GWCMediaFilesHeaders[i].MediaFileID, WHERIGO_MEDIATYPE_UNK, Uint8List.fromList([]), 0));
       }
     }
   } catch (exception) {
-    GWCStatus = WHERIGO_ANALYSE_RESULT_STATUS.ERROR_GWC;
-    GWCResultsGWC.add('wherigo_error_runtime');
-    GWCResultsGWC.add('wherigo_error_runtime_exception');
-    GWCResultsGWC.add('wherigo_error_invalid_gwc');
-    GWCResultsGWC.add('wherigo_error_gwc_luabytecode');
-    GWCResultsGWC.add('wherigo_error_gwc_mediafiles');
-    GWCResultsGWC.add(exception.toString());
+    _GWCStatus = WHERIGO_ANALYSE_RESULT_STATUS.ERROR_GWC;
+    _GWCResultsGWC.add('wherigo_error_runtime');
+    _GWCResultsGWC.add('wherigo_error_runtime_exception');
+    _GWCResultsGWC.add('wherigo_error_invalid_gwc');
+    _GWCResultsGWC.add('wherigo_error_gwc_luabytecode');
+    _GWCResultsGWC.add('wherigo_error_gwc_mediafiles');
+    _GWCResultsGWC.add(exception.toString());
   }
 }
 
-void getLUAByteCodeFromGWC(Uint8List byteListGWC) {
+void _getLUAByteCodeFromGWC(Uint8List byteListGWC) {
   try {
     // analysing GWC - LUA Byte-Code
     // read LUA Byte-Code Object(this.ObjectID, this.Address, this.Type, this.Bytes);
-    GWCMediaFileLength = readInt(byteListGWC, GWCoffset);
-    GWCoffset = GWCoffset + LENGTH_INT;
-    GWCMediaFilesContents.add(WherigoMediaFileContent(
-        0, 0, Uint8List.sublistView(byteListGWC, GWCoffset, GWCoffset + GWCMediaFileLength), GWCMediaFileLength));
-    GWCoffset = GWCoffset + GWCMediaFileLength;
+    _GWCMediaFileLength = readInt(byteListGWC, _GWCoffset);
+    _GWCoffset = _GWCoffset + LENGTH_INT;
+    _GWCMediaFilesContents.add(WherigoMediaFileContent(
+        0, 0, Uint8List.sublistView(byteListGWC, _GWCoffset, _GWCoffset + _GWCMediaFileLength), _GWCMediaFileLength));
+    _GWCoffset = _GWCoffset + _GWCMediaFileLength;
 
     //sendAsyncPort?.send({'progress': 7});
   } catch (exception) {
-    GWCStatus = WHERIGO_ANALYSE_RESULT_STATUS.ERROR_GWC;
-    GWCResultsGWC.add('wherigo_error_runtime');
-    GWCResultsGWC.add('wherigo_error_runtime_exception');
-    GWCResultsGWC.add('wherigo_error_gwc_luabytecode');
-    GWCResultsGWC.add(exception.toString());
+    _GWCStatus = WHERIGO_ANALYSE_RESULT_STATUS.ERROR_GWC;
+    _GWCResultsGWC.add('wherigo_error_runtime');
+    _GWCResultsGWC.add('wherigo_error_runtime_exception');
+    _GWCResultsGWC.add('wherigo_error_gwc_luabytecode');
+    _GWCResultsGWC.add(exception.toString());
   }
 }

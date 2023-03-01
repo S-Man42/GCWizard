@@ -1,20 +1,20 @@
 part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze.dart';
 
-const WHERIGO_EXPERT_MODE = true;
-const WHERIGO_USER_MODE = false;
+const bool WHERIGO_EXPERT_MODE = true;
+const bool WHERIGO_USER_MODE = false;
 
-const WHERIGO_MEDIATYPE_UNK = 0;
-const WHERIGO_MEDIATYPE_BMP = 1;
-const WHERIGO_MEDIATYPE_PNG = 2;
-const WHERIGO_MEDIATYPE_JPG = 3;
-const WHERIGO_MEDIATYPE_GIF = 4;
-const WHERIGO_MEDIATYPE_WAV = 17;
-const WHERIGO_MEDIATYPE_MP3 = 18;
-const WHERIGO_MEDIATYPE_FDL = 19;
-const WHERIGO_MEDIATYPE_SND = 20;
-const WHERIGO_MEDIATYPE_OGG = 21;
-const WHERIGO_MEDIATYPE_SWF = 33;
-const WHERIGO_MEDIATYPE_TXT = 49;
+const int WHERIGO_MEDIATYPE_UNK = 0;
+const int WHERIGO_MEDIATYPE_BMP = 1;
+const int WHERIGO_MEDIATYPE_PNG = 2;
+const int WHERIGO_MEDIATYPE_JPG = 3;
+const int WHERIGO_MEDIATYPE_GIF = 4;
+const int WHERIGO_MEDIATYPE_WAV = 17;
+const int WHERIGO_MEDIATYPE_MP3 = 18;
+const int WHERIGO_MEDIATYPE_FDL = 19;
+const int WHERIGO_MEDIATYPE_SND = 20;
+const int WHERIGO_MEDIATYPE_OGG = 21;
+const int WHERIGO_MEDIATYPE_SWF = 33;
+const int WHERIGO_MEDIATYPE_TXT = 49;
 
 const Map<int, String> WHERIGO_MEDIATYPE = {
   WHERIGO_MEDIATYPE_UNK: '<?>',
@@ -31,7 +31,7 @@ const Map<int, String> WHERIGO_MEDIATYPE = {
   WHERIGO_MEDIATYPE_TXT: 'txt'
 };
 
-Map<int, String> WHERIGO_MEDIACLASS = {
+const Map<int, String> WHERIGO_MEDIACLASS = {
   WHERIGO_MEDIATYPE_UNK: 'n/a',
   WHERIGO_MEDIATYPE_BMP: 'Image',
   WHERIGO_MEDIATYPE_PNG: 'Image',
@@ -46,7 +46,7 @@ Map<int, String> WHERIGO_MEDIACLASS = {
   WHERIGO_MEDIATYPE_TXT: 'Text'
 };
 
-Map<WHERIGO_ACTIONMESSAGETYPE, String> WHERIGO_ACTIONMESSAGETYPE_TEXT = {
+const Map<WHERIGO_ACTIONMESSAGETYPE, String> WHERIGO_ACTIONMESSAGETYPE_TEXT = {
   WHERIGO_ACTIONMESSAGETYPE.TEXT: 'txt',
   WHERIGO_ACTIONMESSAGETYPE.IMAGE: 'img',
   WHERIGO_ACTIONMESSAGETYPE.BUTTON: 'btn',
@@ -54,9 +54,9 @@ Map<WHERIGO_ACTIONMESSAGETYPE, String> WHERIGO_ACTIONMESSAGETYPE_TEXT = {
   WHERIGO_ACTIONMESSAGETYPE.CASE: 'cse',
 };
 
-var WHERIGO_TEXT_ACTIONMESSAGETYPE = switchMapKeyValue(WHERIGO_ACTIONMESSAGETYPE_TEXT);
+Map<String, WHERIGO_ACTIONMESSAGETYPE> WHERIGO_TEXT_ACTIONMESSAGETYPE = switchMapKeyValue(WHERIGO_ACTIONMESSAGETYPE_TEXT);
 
-const WHERIGO_EMPTYCARTRIDGE_GWC= WherigoCartridgeGWC(
+const WherigoCartridgeGWC WHERIGO_EMPTYCARTRIDGE_GWC = WherigoCartridgeGWC(
   Signature: '',
   NumberOfObjects: 0,
   MediaFilesHeaders: [],
@@ -87,7 +87,7 @@ const WHERIGO_EMPTYCARTRIDGE_GWC= WherigoCartridgeGWC(
 
 const String WHERIGO_NULLDATE = '0-01-01 00:00:00.000';
 
-const WHERIGO_EMPTYCARTRIDGE_LUA = WherigoCartridgeLUA(
+const WherigoCartridgeLUA WHERIGO_EMPTYCARTRIDGE_LUA = WherigoCartridgeLUA(
     LUAFile: '',
     CartridgeLUAName: '',
     CartridgeGUID: '',
@@ -116,7 +116,7 @@ const WHERIGO_EMPTYCARTRIDGE_LUA = WherigoCartridgeLUA(
     PublishDate: WHERIGO_NULLDATE,
     UpdateDate: WHERIGO_NULLDATE,
     LastPlayedDate: WHERIGO_NULLDATE,
-    httpCode: '',
+    httpCode: 0,
     httpMessage: '');
 
 const Map<bool, Map<WHERIGO_FILE_LOAD_STATE, Map<WHERIGO_OBJECT, String>>> WHERIGO_DATA = {
@@ -201,15 +201,94 @@ const Map<WHERIGO_OBJECT, String> WHERIGO_DATA_LUA_USER = {
   WHERIGO_OBJECT.MESSAGES: 'wherigo_data_message_list',
 };
 
-// TODO Thomas Use HttpStatus from dart:io instead of Strings
-// not necessary because the servlet only provide theses codes
-const Map<String, String> WHERIGO_HTTP_STATUS = {
-  '200': 'wherigo_http_code_200',
-  '400': 'wherigo_http_code_400',
-  '404': 'wherigo_http_code_404',
-  '413': 'wherigo_http_code_413',
-  '500': 'wherigo_http_code_500',
-  '503': 'wherigo_http_code_503',
+const Map<int, String> WHERIGO_HTTP_STATUS = {
+  // https://api.dart.dev/stable/2.19.2/dart-html/HttpStatus-class.html
+  // https://de.wikipedia.org/wiki/HTTP-Statuscode
+  // https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
+  // https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
+  100: 'wherigo_http_code_exception',
+  101: 'wherigo_http_code_exception',
+  102: 'wherigo_http_code_exception',
+  103: 'wherigo_http_code_exception',
+  200: 'wherigo_http_code_200',
+  201: 'wherigo_http_code_exception',
+  202: 'wherigo_http_code_exception',
+  204: 'wherigo_http_code_exception',
+  205: 'wherigo_http_code_exception',
+  206: 'wherigo_http_code_exception',
+  207: 'wherigo_http_code_exception',
+  208: 'wherigo_http_code_exception',
+  226: 'wherigo_http_code_exception',
+  301: 'wherigo_http_code_exception',
+  302: 'wherigo_http_code_exception',
+  303: 'wherigo_http_code_exception',
+  304: 'wherigo_http_code_exception',
+  305: 'wherigo_http_code_exception',
+  307: 'wherigo_http_code_exception',
+  308: 'wherigo_http_code_exception',
+  400: 'wherigo_http_code_400',
+  401: 'wherigo_http_code_401',
+  402: 'wherigo_http_code_exception',
+  403: 'wherigo_http_code_exception',
+  404: 'wherigo_http_code_404',
+  405: 'wherigo_http_code_exception',
+  406: 'wherigo_http_code_exception',
+  407: 'wherigo_http_code_exception',
+  408: 'wherigo_http_code_exception',
+  409: 'wherigo_http_code_exception',
+  410: 'wherigo_http_code_exception',
+  411: 'wherigo_http_code_exception',
+  412: 'wherigo_http_code_exception',
+  413: 'wherigo_http_code_413',
+  414: 'wherigo_http_code_exception',
+  415: 'wherigo_http_code_exception',
+  416: 'wherigo_http_code_exception',
+  417: 'wherigo_http_code_exception',
+  418: 'wherigo_http_code_418',
+  420: 'wherigo_http_code_exception',
+  421: 'wherigo_http_code_exception',
+  422: 'wherigo_http_code_exception',
+  423: 'wherigo_http_code_exception',
+  424: 'wherigo_http_code_exception',
+  425: 'wherigo_http_code_exception',
+  426: 'wherigo_http_code_exception',
+  428: 'wherigo_http_code_exception',
+  429: 'wherigo_http_code_exception',
+  431: 'wherigo_http_code_exception',
+  444: 'wherigo_http_code_444',
+  451: 'wherigo_http_code_exception',
+  460: 'wherigo_http_code_exception',
+  463: 'wherigo_http_code_exception',
+  494: 'wherigo_http_code_exception',
+  495: 'wherigo_http_code_exception',
+  496: 'wherigo_http_code_exception',
+  497: 'wherigo_http_code_exception',
+  499: 'wherigo_http_code_exception',
+  500: 'wherigo_http_code_500',
+  501: 'wherigo_http_code_exception',
+  502: 'wherigo_http_code_exception',
+  503: 'wherigo_http_code_503',
+  504: 'wherigo_http_code_exception',
+  505: 'wherigo_http_code_exception',
+  506: 'wherigo_http_code_exception',
+  507: 'wherigo_http_code_exception',
+  508: 'wherigo_http_code_exception',
+  509: 'wherigo_http_code_exception',
+  510: 'wherigo_http_code_exception',
+  511: 'wherigo_http_code_exception',
+  520: 'wherigo_http_code_exception',
+  521: 'wherigo_http_code_exception',
+  522: 'wherigo_http_code_exception',
+  523: 'wherigo_http_code_exception',
+  524: 'wherigo_http_code_exception',
+  525: 'wherigo_http_code_exception',
+  526: 'wherigo_http_code_exception',
+  527: 'wherigo_http_code_exception',
+  529: 'wherigo_http_code_exception',
+  530: 'wherigo_http_code_exception',
+  561: 'wherigo_http_code_exception',
+  598: 'wherigo_http_code_exception',
+  599: 'wherigo_http_code_exception',
 };
 
 const String WHERIGO_HTTP_CODE_OK = '200';
