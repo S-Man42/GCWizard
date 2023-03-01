@@ -9,6 +9,15 @@ import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/tools/uncategorized/zodiac/logic/zodiac.dart';
 import 'package:intl/intl.dart';
 
+const _ZODIACSIGNS_ATTRIBUTES = [
+  ZODIACSIGNS_ATTRIBUTE_DATE,
+  ZODIACSIGNS_ATTRIBUTE_PLANET,
+  ZODIACSIGNS_ATTRIBUTE_ELEMENT,
+  ZODIACSIGNS_ATTRIBUTE_HOUSE,
+  ZODIACSIGNS_ATTRIBUTE_QUALITY,
+  ZODIACSIGNS_ATTRIBUTE_POLARITY,
+];
+
 class Zodiac extends StatefulWidget {
   @override
   ZodiacState createState() => ZodiacState();
@@ -17,7 +26,7 @@ class Zodiac extends StatefulWidget {
 class ZodiacState extends State<Zodiac> {
   var _currentMode = GCWSwitchPosition.left;
   var _currentZodiacSign = 0;
-  var _currentAttribute = ZODIACSIGNS_ATTRIBUTES[0];
+  var _currentAttribute = _ZODIACSIGNS_ATTRIBUTES[0];
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +62,7 @@ class ZodiacState extends State<Zodiac> {
         if (_currentMode == GCWSwitchPosition.right)
           GCWDropDown<String>(
             value: _currentAttribute,
-            items: ZODIACSIGNS_ATTRIBUTES.map((attribute) {
+            items: _ZODIACSIGNS_ATTRIBUTES.map((attribute) {
               return GCWDropDownMenuItem(value: attribute, child: i18n(context, attribute));
             }).toList(),
             onChanged: (value) {
@@ -69,10 +78,9 @@ class ZodiacState extends State<Zodiac> {
     );
   }
 
-  String _createDateOutput(Map<String, int>? dateValues) {
-    if (dateValues == null) return '';
-    var startDate = DateTime(0, dateValues['start_month'] as int, dateValues['start_day'] as int);
-    var endDate = DateTime(0, dateValues['end_month'] as int, dateValues['end_day'] as int);
+  String _createDateOutput(ZodiacDate dateValues) {
+    var startDate = DateTime(0, dateValues.start_month, dateValues.start_day);
+    var endDate = DateTime(0, dateValues.end_month, dateValues.end_day);
 
     var dateFormat = DateFormat('MMMMd', Localizations.localeOf(context).toString());
     return dateFormat.format(startDate) + ' - ' + dateFormat.format(endDate);
@@ -97,35 +105,38 @@ class ZodiacState extends State<Zodiac> {
 
       return GCWColumnedMultilineOutput(
           data: [
-                  [i18n(context, ZODIACSIGNS_ATTRIBUTE_DATE), _createDateOutput(zodiacSign[ZODIACSIGNS_ATTRIBUTE_DATE] as Map<String, int>?)],
-                  [i18n(context, ZODIACSIGNS_ATTRIBUTE_PLANET), _createPlanetOutput(zodiacSign[ZODIACSIGNS_ATTRIBUTE_PLANET] as List<String>?)],
-                  [i18n(context, ZODIACSIGNS_ATTRIBUTE_ELEMENT), i18n(context, zodiacSign[ZODIACSIGNS_ATTRIBUTE_ELEMENT] as String)],
-                  [i18n(context, ZODIACSIGNS_ATTRIBUTE_HOUSE), zodiacSign[ZODIACSIGNS_ATTRIBUTE_HOUSE]],
-                  [i18n(context, ZODIACSIGNS_ATTRIBUTE_QUALITY), i18n(context, zodiacSign[ZODIACSIGNS_ATTRIBUTE_QUALITY] as String)],
-                  [i18n(context, ZODIACSIGNS_ATTRIBUTE_POLARITY), i18n(context, zodiacSign[ZODIACSIGNS_ATTRIBUTE_POLARITY] as String)],
+                  [i18n(context, ZODIACSIGNS_ATTRIBUTE_DATE), _createDateOutput(zodiacSign.date)],
+                  [i18n(context, ZODIACSIGNS_ATTRIBUTE_PLANET), _createPlanetOutput(zodiacSign.planet)],
+                  [i18n(context, ZODIACSIGNS_ATTRIBUTE_ELEMENT), i18n(context, zodiacSign.element)],
+                  [i18n(context, ZODIACSIGNS_ATTRIBUTE_HOUSE), zodiacSign.house],
+                  [i18n(context, ZODIACSIGNS_ATTRIBUTE_QUALITY), i18n(context, zodiacSign.quality)],
+                  [i18n(context, ZODIACSIGNS_ATTRIBUTE_POLARITY), i18n(context, zodiacSign.polarity)],
                 ],
           flexValues: [1, 2]
       );
     } else {
       return GCWColumnedMultilineOutput(
-        // ToDo Mark replace Map
           data: ZODIACSIGNS
                   .map((key, value) {
                     String output = '';
                     switch (_currentAttribute) {
                       case ZODIACSIGNS_ATTRIBUTE_DATE:
-                        output = _createDateOutput(value[_currentAttribute] as Map<String, int>?);
+                        output = _createDateOutput(value.date);
                         break;
                       case ZODIACSIGNS_ATTRIBUTE_PLANET:
-                        output = _createPlanetOutput(value[_currentAttribute] as List<String>?);
+                        output = _createPlanetOutput(value.planet);
                         break;
                       case ZODIACSIGNS_ATTRIBUTE_HOUSE:
-                        output = value[_currentAttribute] as String;
+                        output = value.house.toString();
                         break;
                       case ZODIACSIGNS_ATTRIBUTE_ELEMENT:
+                        output = i18n(context, value.element);
+                        break;
                       case ZODIACSIGNS_ATTRIBUTE_QUALITY:
+                        output = i18n(context, value.quality);
+                        break;
                       case ZODIACSIGNS_ATTRIBUTE_POLARITY:
-                        output = i18n(context, value[_currentAttribute] as String);
+                        output = i18n(context, value.polarity);
                         break;
                     }
 
