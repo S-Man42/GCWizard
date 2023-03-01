@@ -8,22 +8,22 @@ import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/gcw_toolbar.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_multiple_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/map_view/widget/gcw_mapview.dart';
 
 class GCWCoordsOutput extends StatefulWidget {
-  final List<BaseCoordinate> outputs;
+  final List<Object> outputs;
   final List<String>? copyTexts;
-  List<GCWMapPoint> points;
-  List<GCWMapPolyline>? polylines;
+  late final List<GCWMapPoint> points;
+  late final List<GCWMapPolyline> polylines;
   final bool? mapButtonTop;
   final String? title;
 
   GCWCoordsOutput(
-      {Key? key, required this.outputs, this.copyTexts, required this.points, this.polylines, this.mapButtonTop = false, this.title})
+      {Key? key, required this.outputs, this.copyTexts, List<GCWMapPoint>? points, List<GCWMapPolyline>? polylines, this.mapButtonTop = false, this.title})
       : super(key: key) {
-    if (polylines == null) polylines = [];
+    this.points = points ?? [];
+    this.polylines = polylines ?? [];
   }
 
   @override
@@ -34,15 +34,13 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
   @override
   Widget build(BuildContext context) {
     var children = widget.outputs
-        .where((BaseCoordinate element) => element.toLatLng() != null)
-        .toList()
         .asMap()
-        .map((index, output) {
+        .map((int index, Object output) {
           return MapEntry(
               index,
               Container(
                 child: GCWOutput(
-                  child: output.toString(),
+                  child: output,
                   copyText:
                       widget.copyTexts != null && widget.copyTexts!.length > index ? widget.copyTexts![index] : null,
                 ),
@@ -86,7 +84,7 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
           iconColor: _hasOutput ? null : themeColors().inActive(),
           onPressed: () {
             if (_hasOutput)
-              _exportCoordinates(context, widget.points, widget.polylines!);
+              _exportCoordinates(context, widget.points, widget.polylines);
           },
         ));
   }
@@ -104,7 +102,7 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
             builder: (context) => GCWTool(
                 tool: GCWMapView(
                   points: List<GCWMapPoint>.from(widget.points),
-                  polylines: List<GCWMapPolyline>.from(widget.polylines!),
+                  polylines: List<GCWMapPolyline>.from(widget.polylines),
                   isEditable: freeMap,
                 ),
                 id: freeMap ? 'coords_openmap' : 'coords_map_view',

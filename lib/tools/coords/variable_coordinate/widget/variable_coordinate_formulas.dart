@@ -18,11 +18,11 @@ class VariableCoordinateFormulas extends StatefulWidget {
 }
 
 class VariableCoordinateFormulasState extends State<VariableCoordinateFormulas> {
-  var _newFormulaController;
-  var _editFormulaController;
+  late TextEditingController _newFormulaController;
+  late TextEditingController _editFormulaController;
   var _currentNewName = '';
   var _currentEditedName = '';
-  var _currentEditId;
+  int? _currentEditId;
 
   @override
   void initState() {
@@ -93,7 +93,8 @@ class VariableCoordinateFormulasState extends State<VariableCoordinateFormulas> 
   }
 
   void _removeFormula(Formula formula) {
-    deleteFormula(formula.id);
+    if (formula.id != null)
+      deleteFormula(formula.id!);
   }
 
   Column _buildFormulaList(BuildContext context) {
@@ -107,7 +108,7 @@ class VariableCoordinateFormulasState extends State<VariableCoordinateFormulas> 
               '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title', useDefaultLanguage: true)}',
           id: 'coords_variablecoordinate');
 
-      Future _navigateToSubPage(BuildContext context) async {
+      Future<void> _navigateToSubPage(BuildContext context) async {
         Navigator.push(context, NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => formulaTool)).whenComplete(() {
           setState(() {});
         });

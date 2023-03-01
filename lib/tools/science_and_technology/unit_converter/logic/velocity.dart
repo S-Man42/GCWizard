@@ -43,7 +43,7 @@ final VELOCITY_MACHNEG50 = Velocity(name: 'common_unit_velocity_machneg50_name',
 
 final VELOCITY_MACH20 = Velocity(name: 'common_unit_velocity_mach20_name', symbol: 'Ma', inMS: 299.63);
 
-final List<Unit> velocities = [
+final List<Velocity> velocities = [
   VELOCITY_MS,
   VELOCITY_MMIN,
   VELOCITY_KMS,

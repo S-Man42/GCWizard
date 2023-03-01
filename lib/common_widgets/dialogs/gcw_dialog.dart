@@ -31,7 +31,7 @@ void showGCWDialog(BuildContext context, String title, Widget? child, List<Widge
 }
 
 void showGCWAlertDialog(BuildContext context, String title, String text,
-    void Function() onOKPressed, {bool cancelButton = true}) {
+    void Function()? onOKPressed, {bool cancelButton = true}) {
   GCWDialogButton _okButton = GCWDialogButton(text: i18n(context, 'common_ok'), onPressed: onOKPressed);
 
   showGCWDialog(context, title, Text(text), [_okButton], cancelButton: cancelButton);

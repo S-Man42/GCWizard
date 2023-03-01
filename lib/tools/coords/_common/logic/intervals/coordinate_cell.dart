@@ -2,16 +2,15 @@ import 'dart:math';
 
 import 'package:gc_wizard/tools/coords/distance_and_bearing/logic/distance_and_bearing.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coord_format_getter.dart' as utils;
 import 'package:latlong2/latlong.dart';
 
 class Interval {
   final double a;
   final double b;
 
-  Interval({this.a, this.b});
+  Interval({required this.a, required this.b});
 
-  bool equals(Interval i, {double accuracy: 0.0}) {
+  bool equals(Interval i, {double accuracy = 0.0}) {
     return (i.a - a).abs() <= accuracy && (i.b - b).abs() <= accuracy;
   }
 
@@ -25,9 +24,9 @@ class CoordinateCell {
   Interval latInterval, lonInterval;
   Ellipsoid ellipsoid;
 
-  LatLng _cellCenter;
+  LatLng? _cellCenter;
 
-  CoordinateCell({this.latInterval, this.lonInterval, this.ellipsoid});
+  CoordinateCell({required this.latInterval, required this.lonInterval, required this.ellipsoid});
 
   @override
   String toString() {
@@ -35,11 +34,11 @@ class CoordinateCell {
   }
 
   LatLng get cellCenter {
-    if (_cellCenter != null) return _cellCenter;
+    if (_cellCenter != null) return _cellCenter!;
 
     _cellCenter =
         LatLng(radianToDeg((latInterval.a + latInterval.b) / 2), radianToDeg((lonInterval.a + lonInterval.b) / 2));
-    return _cellCenter;
+    return _cellCenter!;
   }
 
   double get maxHeight {
@@ -60,7 +59,7 @@ class CoordinateCell {
 
   //upper approximated bound for max radius (maximum distance from cell center(half width, half height) to corners or center of edges)
   double get approxMaxRadius {
-    var distances = [];
+    var distances = <double>[];
 
     var latA = radianToDeg(latInterval.a);
     var latB = radianToDeg(latInterval.b);
@@ -111,7 +110,7 @@ class CoordinateCell {
     var cornerBA = LatLng(radianToDeg(latInterval.b), radianToDeg(lonInterval.a));
     var cornerBB = LatLng(radianToDeg(latInterval.b), radianToDeg(lonInterval.b));
 
-    var bearings = [];
+    var bearings = <double>[];
 
     if (point != cornerAA) bearings.add(distanceBearingVincenty(point, cornerAA, ellipsoid).bearingBToA);
     if (point != cornerAB) bearings.add(distanceBearingVincenty(point, cornerAB, ellipsoid).bearingBToA);
@@ -119,8 +118,8 @@ class CoordinateCell {
     if (point != cornerBB) bearings.add(distanceBearingVincenty(point, cornerBB, ellipsoid).bearingBToA);
 
     var maxAngle = 0.0;
-    var lower;
-    var upper;
+    var lower = 0.0;
+    var upper = 0.0;
 
     //Finding the right thresholds of the bounds, to define whether the bearing range
     //is [350,10] or [10,350]
@@ -132,7 +131,7 @@ class CoordinateCell {
         if (bearingA == bearingB) continue;
 
         var angle = bearingA - bearingB;
-        var normalizedAngle = utils.normalizeBearing(angle);
+        var normalizedAngle = normalizeBearing(angle);
 
         if (normalizedAngle <= 180.0 && normalizedAngle > maxAngle) {
           maxAngle = normalizedAngle;

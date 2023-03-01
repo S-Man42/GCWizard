@@ -117,7 +117,7 @@ class SummerSimmerIndexState extends State<SummerSimmerIndex> {
 
     if (hint.isNotEmpty) outputs.add(GCWOutput(title: i18n(context, 'heatindex_hint'), child: hint));
 
-    if (hintM.isNotEmpty)
+    if (hintM != null && hintM.isNotEmpty)
       outputs.add(GCWOutput(title: i18n(context, 'heatindex_meaning'), child: i18n(context, hintM)));
 
     return GCWMultipleOutput(

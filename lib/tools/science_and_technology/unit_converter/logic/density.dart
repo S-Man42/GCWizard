@@ -59,7 +59,7 @@ final DENSITY_POUNDPERUSBUSHEL = Density(
     symbol: 'lb/US.bu',
     inGramPerCubicMeter: 453.59237 / (0.001 * 4.40488377086 * 8));
 
-final List<Unit> densities = [
+final List<Density> densities = [
   DENSITY_KILOGRAMPERCUBICMETER,
   DENSITY_GRAMPERCUBICCENTIMETER,
   DENSITY_GRAMPERCUBICMETER,

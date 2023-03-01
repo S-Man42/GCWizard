@@ -29,7 +29,7 @@ final ENERGY_FTLB = Energy(name: 'common_unit_energy_ftlb_name', symbol: 'ft-lb'
 // https://webmadness.net/blog/?post=knuth
 final ENERGY_VREEBLE = Energy(name: 'common_unit_energy_vreeble_name', symbol: 'v', inJoule: 34.33 * 4.1868);
 
-final List<Unit> energies = [
+final List<Energy> energies = [
   ENERGY_JOULE,
   ENERGY_CALORIE,
   ENERGY_BRITISHTHERMALUNIT,

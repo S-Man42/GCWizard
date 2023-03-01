@@ -52,7 +52,7 @@ final AREA_SECTION = Area(name: 'common_unit_area_section_name', symbol: '', inS
 
 final AREA_SOCCERFIELD = Area(name: 'common_unit_area_sofi_name', symbol: '', inSquareMeters: 68.0 * 105.0);
 
-final List<Unit> areas = [
+final List<Area> areas = [
   AREA_SQUAREMILLIMETER,
   AREA_SQUARECENTIMETER,
   AREA_SQUAREDEZIMETER,

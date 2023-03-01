@@ -43,7 +43,7 @@ class DistanceBearingState extends State<DistanceBearing> {
   void initState() {
     super.initState();
 
-    _currentOutputUnit = getUnitBySymbol<Length>(allLengths(), Prefs.get(PREFERENCE_DEFAULT_LENGTH_UNIT));
+    _currentOutputUnit = defaultLengthUnit;
   }
 
   @override

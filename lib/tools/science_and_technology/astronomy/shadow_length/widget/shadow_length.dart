@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
-import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/application/theme/fixed_colors.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coords_output.dart';
@@ -14,11 +13,10 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/shadow_length/logic/shadow_length.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/default_units_getter.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/length.dart';
-import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:intl/intl.dart';
-import 'package:prefs/prefs.dart';
 
 class ShadowLength extends StatefulWidget {
   @override
@@ -27,13 +25,12 @@ class ShadowLength extends StatefulWidget {
 
 class ShadowLengthState extends State<ShadowLength> {
   var _currentDateTime = DateTimeTimezone(datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
-  var _currentCoords = BaseCoordinate();
-  var _currentCoordsFormat = defaultCoordinateFormat;
+  var _currentCoords = defaultBaseCoordinates;
   var _currentHeight = 0.0;
 
-  Length _currentInputLength = getUnitBySymbol<Length>(allLengths(), Prefs.getString(PREFERENCE_DEFAULT_LENGTH_UNIT));
+  Length _currentInputLength = defaultLengthUnit;
   var _currentOutput = GCWCoordsOutputFormatDistanceValue(
-      defaultCoordinateFormat, getUnitBySymbol<Length>(allLengths(), Prefs.getString(PREFERENCE_DEFAULT_LENGTH_UNIT)));
+      defaultCoordinateFormat, defaultLengthUnit);
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +38,7 @@ class ShadowLengthState extends State<ShadowLength> {
       children: <Widget>[
         GCWCoords(
           title: i18n(context, 'common_location'),
-          coordsFormat: _currentCoordsFormat,
+          coordsFormat: _currentCoords.format,
           onChanged: (ret) {
             setState(() {
               _currentCoords = ret;
@@ -108,17 +105,17 @@ class ShadowLengthState extends State<ShadowLength> {
 
     var outputLocation = GCWCoordsOutput(
       title: i18n(context, 'shadowlength_location'),
-      outputs: [buildCoordinatesByFormat(_currentCoordsFormat, shadowLen.shadowEndPosition, defaultEllipsoid)],
+      outputs: [buildCoordinatesByFormat(_currentCoords.format, shadowLen.shadowEndPosition, defaultEllipsoid).toString()],
       points: [
         GCWMapPoint(
             point: _currentCoords.toLatLng() ?? defaultCoordinate,
             markerText: i18n(context, 'coords_waypointprojection_start'),
-            coordinateFormat: _currentCoordsFormat),
+            coordinateFormat: _currentCoords.format),
         GCWMapPoint(
             point: shadowLen.shadowEndPosition,
             color: COLOR_MAP_CALCULATEDPOINT,
             markerText: i18n(context, 'coords_waypointprojection_end'),
-            coordinateFormat: _currentCoordsFormat)
+            coordinateFormat: _currentCoords.format)
       ],
     );
 

@@ -8,7 +8,7 @@ import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coord
 import 'package:gc_wizard/common_widgets/gcw_async_executer.dart';
 import 'package:gc_wizard/common_widgets/gcw_distance.dart';
 import 'package:gc_wizard/tools/coords/intersect_three_circles/logic/intersect_three_circles.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coord_format_getter.dart';
+
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
