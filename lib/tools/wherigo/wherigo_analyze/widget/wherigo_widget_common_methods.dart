@@ -116,11 +116,10 @@ void _getErrorMessagesFromGWCAnalyzation(List<dynamic> _errorMsg, BuildContext c
 
 String _getCreationDate(BuildContext context, int duration) {
   // Date of creation   ; Seconds since 2004-02-10 01:00:00
-  if (duration == null) return _formatDate(context, DateTime(2004, 2, 1, 1, 0, 0, 0).toString());
   return _formatDate(context, DateTime(2004, 2, 1, 1, 0, 0, 0).add(Duration(seconds: duration)).toString());
 }
 
 String _formatDate(BuildContext context, String datetime) {
   String loc = Localizations.localeOf(context).toString();
-  return (datetime == null) ? DateTime.parse(WHERIGO_NULLDATE).toString() : DateFormat.yMd(loc).add_jms().format(DateTime.parse(datetime)).toString();
+  return DateFormat.yMd(loc).add_jms().format(DateTime.parse(datetime)).toString();
 }

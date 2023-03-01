@@ -2,8 +2,6 @@ part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze.d
 
 String _LUAFile = '';
 
-bool _beyondHeader = false;
-
 String _CartridgeLUAName = '';
 
 String _obfuscatorTable = '';
@@ -169,7 +167,6 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
     //
     try {
       if (RegExp(r'(Wherigo.ZMedia\()').hasMatch(lines[i])) {
-        _beyondHeader = true;
         currentObjectSection = WHERIGO_OBJECT_TYPE.MEDIA;
         analyzeLines = [];
         _sectionMedia = true;
@@ -197,7 +194,6 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
     //
     try {
       if (RegExp(r'( Wherigo.Zone\()').hasMatch(lines[i])) {
-        _beyondHeader = true;
         currentObjectSection = WHERIGO_OBJECT_TYPE.ZONE;
         analyzeLines = [];
         _sectionZone = true;
@@ -226,7 +222,6 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
     //
     try {
       if (RegExp(r'( Wherigo.ZCharacter\()').hasMatch(lines[i])) {
-        _beyondHeader = true;
         currentObjectSection = WHERIGO_OBJECT_TYPE.CHARACTER;
         _LUAname = getLUAName(lines[i]);
         _container = getContainer(lines[i]);
@@ -260,7 +255,6 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
     //
     try {
       if (RegExp(r'( Wherigo.ZItem\()').hasMatch(lines[i])) {
-        _beyondHeader = true;
         currentObjectSection = WHERIGO_OBJECT_TYPE.ITEM;
         _LUAname = getLUAName(lines[i]);
         _container = getContainer(lines[i]);
@@ -290,7 +284,6 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
     //
     try {
       if (RegExp(r'( Wherigo.ZTask\()').hasMatch(lines[i])) {
-        _beyondHeader = true;
         currentObjectSection = WHERIGO_OBJECT_TYPE.TASK;
         _LUAname = getLUAName(lines[i]);
         _sectionTask = true;
@@ -321,7 +314,6 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
     try {
       if (RegExp(r'(.ZVariables =)').hasMatch(lines[i])) {
         _sectionVariables = true;
-        _beyondHeader = true;
         currentObjectSection = WHERIGO_OBJECT_TYPE.VARIABLES;
         if (lines[i + 1].trim().startsWith('buildervar')) {
           _declaration = lines[i]
@@ -376,7 +368,6 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
         currentObjectSection = WHERIGO_OBJECT_TYPE.TIMER;
         _LUAname = getLUAName(lines[i]);
         _sectionTimer = true;
-        _beyondHeader = true;
         analyzeLines = [];
         do {
           i++;
@@ -542,7 +533,6 @@ void _checkAndGetCartridgeName(String currentLine) {
   if (RegExp(r'(Wherigo.ZCartridge)').hasMatch(currentLine)) {
     _CartridgeLUAName =
         currentLine.replaceAll('=', '').replaceAll(' ', '').replaceAll('Wherigo.ZCartridge()', '').trim();
-    _beyondHeader = true;
   }
 }
 

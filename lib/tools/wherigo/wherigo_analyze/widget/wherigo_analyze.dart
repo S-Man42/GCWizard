@@ -395,8 +395,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    if ((_GWCbytes == null || _GWCbytes.isEmpty) && (_LUAbytes == null || _LUAbytes.isEmpty)) return Container();
-
     if (WherigoCartridgeGWCData == null && WherigoCartridgeLUAData == null) {
       return Container();
     }
@@ -1688,8 +1686,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   void _buildCharacterPointsForMapExport() {
-    if (WherigoCartridgeLUAData == null) return;
-
     if (WherigoCartridgeLUAData.Characters != null)
       // Clear data
       _CharacterPoints.clear();

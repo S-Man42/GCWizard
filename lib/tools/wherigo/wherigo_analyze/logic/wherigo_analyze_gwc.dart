@@ -126,7 +126,7 @@ int _GWCValidMediaFile = 0;
 int _GWCMediaFileType = 0;
 
 Future<WherigoCartridge> getCartridgeGWC(Uint8List byteListGWC, bool offline, {SendPort? sendAsyncPort}) async {
-  if ((byteListGWC != [] || byteListGWC != null)) _checksToDo = WHERIGO_FILE_LOAD_STATE.GWC;
+  if ((byteListGWC != [])) _checksToDo = WHERIGO_FILE_LOAD_STATE.GWC;
 
   if (_checksToDo == WHERIGO_FILE_LOAD_STATE.NULL) {
     _GWCResultsGWC.add('wherigo_error_runtime');
