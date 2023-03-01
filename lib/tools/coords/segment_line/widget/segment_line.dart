@@ -10,7 +10,7 @@ import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/units/gcw_unit_dropdown.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coord_format_getter.dart';
+
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
@@ -48,7 +48,7 @@ class SegmentLineState extends State<SegmentLine> {
   void initState() {
     super.initState();
 
-    _currentOutputUnit = getUnitBySymbol<Length>(allLengths(), Prefs.get(PREFERENCE_DEFAULT_LENGTH_UNIT));
+    _currentOutputUnit = defaultLengthUnit;
   }
 
   @override

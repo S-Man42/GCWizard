@@ -1,6 +1,5 @@
-import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
-import 'package:gc_wizard/tools/coords/intervals/logic/coordinate_cell.dart';
-import 'package:gc_wizard/tools/coords/intervals/logic/interval_calculator.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/intervals/coordinate_cell.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/intervals/interval_calculator.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/external_libs/net.sf.geographic_lib/geographic_lib.dart';
 import 'package:gc_wizard/tools/coords/waypoint_projection/logic/vincenty/projection_vincenty.dart';
@@ -36,12 +35,14 @@ class _ReverseProjectionCalculator extends IntervalCalculator {
   }
 
   @override
-  bool checkCell(CoordinateCell cell, ReverseProjectionParameters parameters) {
-    Interval distanceToCoord = cell.distanceTo(parameters['coord']);
-    Interval bearingToCoord = cell.bearingTo(parameters['coord']);
+  bool checkCell(CoordinateCell cell, IntervalCalculatorParameters parameters) {
+    var params = parameters as ReverseProjectionParameters;
 
-    var distance = parameters['distance'];
-    var bearing = parameters['bearing'];
+    Interval distanceToCoord = cell.distanceTo(params.coordinate);
+    Interval bearingToCoord = cell.bearingTo(params.coordinate);
+
+    var distance = parameters.distance;
+    var bearing = parameters.bearing;
 
     if ((distanceToCoord.a <= distance) &&
         (distance <= distanceToCoord.b) &&
@@ -62,7 +63,7 @@ List<LatLng> reverseProjection(LatLng coord, double bearing, double distance, El
 }
 
 class ReverseProjectionParameters extends IntervalCalculatorParameters {
-  BaseCoordinate coordinate;
+  LatLng coordinate;
   double bearing;
   double distance;
 

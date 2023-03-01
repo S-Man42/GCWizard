@@ -1,10 +1,9 @@
-import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/length.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
 import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 import 'package:gc_wizard/tools/formula_solver/persistence/model.dart';
 import 'package:gc_wizard/utils/json_utils.dart';
-import 'package:prefs/prefs.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/default_units_getter.dart';
 
 List<Formula> formulas = [];
 
@@ -25,11 +24,7 @@ class ProjectionData {
 
   ProjectionData.fromJson(Map<String, Object?> json)
       : distance = toStringOrNull(json['distance']) ?? '',
-        distanceUnit = getUnitByName<Length>(
-          allLengths(),
-          toStringOrNull(json['distanceUnit'])
-            ?? getUnitBySymbol<Length>(allLengths(), Prefs.getString(PREFERENCE_DEFAULT_LENGTH_UNIT)).name
-        ),
+        distanceUnit = getUnitByName<Length>(allLengths(), toStringOrNull(json['distanceUnit']) ?? '') ?? defaultLengthUnit,
         bearing = toStringOrNull(json['bearing']) ?? '',
         reverse = toBoolOrNull(json['reverse']) ?? false;
 

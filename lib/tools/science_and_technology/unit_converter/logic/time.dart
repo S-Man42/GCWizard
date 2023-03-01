@@ -36,7 +36,7 @@ final TIME_MINGO = Time(name: 'common_unit_time_mingo_name', symbol: 'mi', inSec
 
 final TIME_COWZNOFSKI = Time(name: 'common_unit_time_cowznofski_name', symbol: 'cow', inSeconds: 8640000.0);
 
-final List<Unit> times = [
+final List<Time> times = [
   TIME_WEEK,
   TIME_DAY,
   TIME_HOUR,

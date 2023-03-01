@@ -28,7 +28,7 @@ final POWER_YODA = Power(name: 'common_unit_power_yoda_name', symbol: '', inWatt
 // https://webmadness.net/blog/?post=knuth
 final POWER_WHATMEWORRIES = Power(name: 'common_unit_power_whatmeworries_name', symbol: 'WMW', inWatt: 1.0 / 3.499651);
 
-final List<Unit> powers = [
+final List<Power> powers = [
   POWER_WATT,
   POWER_HORSEPOWER,
   POWER_METRICHORSEPOWER,
