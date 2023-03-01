@@ -478,12 +478,9 @@ String KarolRobotOutputDecode(String program) {
   output.add(outputLine.padRight(maxX + 2, '#'));
   for (y = 0; y < maxY; y++) {
     outputLine = '##';
-    for (x = 0; x < maxX; x++) {
-      if (binaryWorld[x][y] == null)
-        outputLine = outputLine + '#';
-      else
-        outputLine = outputLine + binaryWorld[x][y];
-    }
+    for (x = 0; x < maxX; x++)
+      outputLine = outputLine + binaryWorld[x][y];
+
     output.add(outputLine);
   }
   return output.join('\n');

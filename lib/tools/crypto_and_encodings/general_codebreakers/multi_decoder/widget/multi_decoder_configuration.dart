@@ -42,7 +42,7 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
     super.dispose();
   }
 
-  bool _nameExists(name) {
+  bool _nameExists(String name) {
     return mdtTools.indexWhere((tool) => tool.name == name) >= 0;
   }
 

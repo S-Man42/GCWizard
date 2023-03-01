@@ -17,6 +17,7 @@ const _EDELCRANTZ_RELATIVE_DISPLAY_WIDTH = 150;
 const _EDELCRANTZ_RELATIVE_DISPLAY_HEIGHT = 150;
 const _EDELCRANTZ_RADIUS = 10.0;
 
+//ignore: must_be_immutable
 class _EdelcrantzSegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
   final bool readOnly;

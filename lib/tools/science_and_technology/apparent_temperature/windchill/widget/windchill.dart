@@ -69,8 +69,8 @@ class WindchillState extends State<Windchill> {
     );
   }
 
-  _buildOutput() {
-    double windchill =   0.0;
+  String _buildOutput() {
+    double? windchill =   0.0;
     late Temperature temperature;
 
     if (_isMetric) {

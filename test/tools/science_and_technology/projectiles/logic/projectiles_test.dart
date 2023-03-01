@@ -33,7 +33,7 @@ void main() {
           _actual = calculateVelocity(_refInputValue1, _refInputValue2);
         }
         _actual = (elem['outputUnit'] as Unit).fromReference(_actual) / (elem['prefix'] as UnitPrefix).value;
-        expect(NumberFormat('0.0' + '#' * 6).format(_actual) + ' ' + ((elem['prefix'] as UnitPrefix).symbol ?? '') +
+        expect(NumberFormat('0.0' + '#' * 6).format(_actual) + ' ' + ((elem['prefix'] as UnitPrefix).symbol) +
             (elem['outputUnit'] as Unit).symbol, elem['expectedOutput']);
       });
     });

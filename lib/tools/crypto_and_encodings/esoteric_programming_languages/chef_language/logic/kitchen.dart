@@ -411,6 +411,7 @@ class _Kitchen {
       } // end of auxiliary recipe
       //return null;  // end of mainrecipe
     }
+    return null;
   } // cook
 
   bool _sameVerb(String? imp, String? verb, String language) {

@@ -57,7 +57,7 @@ class _GCWAsyncExecuterState extends State<GCWAsyncExecuter> {
         if (_cancel) _cancelProcess();
 
         await for (var event in _receivePort!) {
-          if (event is Map<String, dynamic> && event['progress'] is double) { //ToDo NullSafety dynamic ??
+          if (event is Map<String, Object> && event['progress'] is double) {
             yield event['progress'] as double;
           } else {
             _result = event;

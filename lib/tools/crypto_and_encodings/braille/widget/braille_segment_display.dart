@@ -18,6 +18,7 @@ const _BRAILLE_RELATIVE_DISPLAY_WIDTH = 50;
 const _BRAILLE_RELATIVE_DISPLAY_HEIGHT = 100;
 const _BRAILLE_RADIUS = 10.0;
 
+//ignore: must_be_immutable
 class BrailleSegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
   final bool readOnly;

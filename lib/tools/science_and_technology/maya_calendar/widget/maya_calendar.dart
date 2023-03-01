@@ -139,7 +139,7 @@ class MayaCalendarState extends State<MayaCalendar> {
   }
 
   Widget _buildOutput() {
-    Map<String, dynamic> outputDates = new Map<String, dynamic>();
+    var outputDates = new Map<String, Object>();
     var dateFormat = DateFormat('yMMMMd', Localizations.localeOf(context).toString());
 
     if (_currentMode == GCWSwitchPosition.left) {

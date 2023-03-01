@@ -49,6 +49,7 @@ const _NOTES_RELATIVE_DISPLAY_WIDTH = 380;
 const _NOTES_RELATIVE_DISPLAY_WIDTH_OUTPUT = 160;
 const _NOTES_RELATIVE_DISPLAY_HEIGHT = 445;
 
+//ignore: must_be_immutable
 class _NotesSegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
   final bool readOnly;

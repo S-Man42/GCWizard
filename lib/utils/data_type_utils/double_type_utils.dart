@@ -7,7 +7,7 @@ int fractionPartAsInteger(double value) {
     return int.parse(valueSplitted[1]);
 }
 
-bool doubleEquals(double a, double b, {double tolerance: 1e-10}) {
+bool doubleEquals(double a, double b, {double tolerance = 1e-10}) {
   return (a - b).abs() < tolerance;
 }
 
