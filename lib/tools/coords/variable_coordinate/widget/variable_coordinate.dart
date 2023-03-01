@@ -28,6 +28,7 @@ import 'package:gc_wizard/tools/coords/variable_coordinate/persistence/model.dar
 import 'package:gc_wizard/tools/formula_solver/persistence/model.dart' as formula_base;
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/length.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit_category.dart';
+import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/variable_string_expander.dart';
 import 'package:intl/intl.dart';
 import 'package:location/location.dart';
@@ -441,7 +442,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
       }
 
       _location.getLocation().then((locationData) {
-        if (locationData.accuracy == null || locationData.accuracy! > 20) {
+        if (locationData.accuracy == null || locationData.accuracy! > LOW_LOCATION_ACCURACY) {
           showToast(i18n(context, 'coords_common_location_lowaccuracy',
               parameters: [NumberFormat('0.0').format(locationData.accuracy)]));
         }
