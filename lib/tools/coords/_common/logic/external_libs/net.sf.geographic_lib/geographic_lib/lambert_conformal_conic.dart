@@ -78,8 +78,8 @@ part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/net.sf.geogr
  **********************************************************************/
 
 class LambertConformalConic {
-  late double _a, _f, _r, _fm, _e2, _e, _e2m;
-  late double _sign, _n, _nc, _t0nm1, _scale, _lat0, _k0;
+  late double _a, _f, /*_r,*/ _fm, _e2, _e, _e2m;
+  late double _sign, _n, _nc, _t0nm1, _scale, /*_lat0,*/ _k0;
   late double _scbet0, _tchi0, _scchi0, _psi0, _nrho0;
   static double eps_ = Geodesic._tol0_;
   static double epsx_ = _GeoMath.sq(eps_);

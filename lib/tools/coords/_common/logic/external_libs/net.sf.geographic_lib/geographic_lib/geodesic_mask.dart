@@ -32,9 +32,9 @@ class _GeodesicMask {
   static const int CAP_C2 = 1 << 2;
   static const int CAP_C3 = 1 << 3;
   static const int CAP_C4 = 1 << 4;
-  static const int CAP_ALL = 0x1F;
-  static const int CAP_MASK = CAP_ALL;
-  static const int OUT_ALL = 0x7F80;
+  // static const int CAP_ALL = 0x1F;
+  // static const int CAP_MASK = CAP_ALL;
+  // static const int OUT_ALL = 0x7F80;
   static const int OUT_MASK = 0xFF80; // Include LONG_UNROLL
 
   /*
@@ -85,7 +85,7 @@ class _GeodesicMask {
    * All capabilities, calculate everything.  (LONG_UNROLL is not included in
    * this mask.)
    **********************************************************************/
-  static const int ALL = OUT_ALL | CAP_ALL;
+  // static const int ALL = OUT_ALL | CAP_ALL;
   /*
    * Unroll <i>lon2</i>.
    **********************************************************************/

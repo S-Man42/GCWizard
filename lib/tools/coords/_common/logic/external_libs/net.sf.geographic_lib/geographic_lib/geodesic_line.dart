@@ -96,8 +96,6 @@ part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/net.sf.geogr
  * }}</pre>
  **********************************************************************/
 
-// ignore unused_field
-
 class _GeodesicLine {
   static const int _nC1_ = Geodesic.nC1_;
   static const int _nC1p_ = Geodesic.nC1p_;
@@ -131,7 +129,7 @@ class _GeodesicLine {
       _B31,
       _A4,
       _B41;
-  late double _a13, _s13;
+  // late double _a13, _s13;
   // index zero elements of _C1a, _C1pa, _C2a, _C3a are unused
   late List<double> _C1a, _C1pa, _C2a, _C3a, _C4a; // all the elements of _C4a are used
   late int _caps;
