@@ -61,7 +61,7 @@ class HexString2FileState extends State<HexString2File> {
     return hexDataOutput(context, <Uint8List>[_outData!]);
   }
 
-  void _exportFile(BuildContext context, Uint8List data) async {
+  Future<void> _exportFile(BuildContext context, Uint8List data) async {
     var fileType = getFileType(data);
     var value = await saveByteDataToFile(context, data, buildFileNameWithDate('hex_', fileType));
 

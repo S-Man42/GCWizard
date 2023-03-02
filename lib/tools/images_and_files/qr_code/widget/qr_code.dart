@@ -168,7 +168,7 @@ class QrCodeState extends State<QrCode> {
     }
   }
 
-  void _exportFile(BuildContext context, Uint8List data) async {
+  Future<void> _exportFile(BuildContext context, Uint8List data) async {
     var fileType = getFileType(data);
     var value = await saveByteDataToFile(context, data, buildFileNameWithDate('img_', fileType));
 

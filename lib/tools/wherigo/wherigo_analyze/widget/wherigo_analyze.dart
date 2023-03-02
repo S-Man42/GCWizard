@@ -1374,7 +1374,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     ]);
   }
 
-  void _exportFile(BuildContext context, Uint8List data, String name, FileType fileType) async {
+  Future<void> _exportFile(BuildContext context, Uint8List data, String name, FileType fileType) async {
     var value = await saveByteDataToFile(context, data, buildFileNameWithDate(name, fileType));
 
     var content = fileClass(fileType) == FileClass.IMAGE ? imageContent(context, data) : null;

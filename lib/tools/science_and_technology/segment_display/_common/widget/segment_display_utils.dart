@@ -79,7 +79,7 @@ Future<ui.Image> buildSegmentDisplayImage(int countColumns, List<NSegmentDisplay
   return canvasRecorder.endRecording().toImage(width.toInt(), height.toInt());
 }
 
-void _exportFile(BuildContext context, Uint8List? data) async {
+Future<void> _exportFile(BuildContext context, Uint8List? data) async {
   if (data == null) return;
   var value = await saveByteDataToFile(context, data, buildFileNameWithDate('img_', FileType.PNG));
 

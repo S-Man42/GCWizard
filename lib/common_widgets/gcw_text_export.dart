@@ -123,7 +123,7 @@ class GCWTextExportState extends State<GCWTextExport> {
   }
 }
 
-void exportFile(String text, TextExportMode mode, BuildContext context) async {
+Future<void> exportFile(String text, TextExportMode mode, BuildContext context) async {
   if (mode == TextExportMode.TEXT) {
     saveStringToFile(context, text, buildFileNameWithDate('txt_', FileType.TXT)).then((value) {
       if (value == false) return;

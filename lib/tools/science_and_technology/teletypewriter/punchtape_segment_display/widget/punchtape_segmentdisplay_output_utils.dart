@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/science_and_technology/teletypewriter/punchtape_segment_display/widget/punchtape_segmentdisplay_output.dart';
 
-void _exportFile(BuildContext context, Uint8List? data) async {
+Future<void> _exportFile(BuildContext context, Uint8List? data) async {
   if (data == null) return;
   var value = await saveByteDataToFile(context, data, buildFileNameWithDate('img_', FileType.PNG));
 

@@ -202,7 +202,7 @@ class HiddenDataState extends State<HiddenData> {
         });
   }
 
-  void _exportFile(BuildContext context, GCWFile? file) async {
+  Future<void> _exportFile(BuildContext context, GCWFile? file) async {
     if (file?.bytes == null) {
       showToast(i18n(context, 'hiddendata_datanotreadable'));
       return;

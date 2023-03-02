@@ -168,7 +168,7 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
     );
   }
 
-  void _exportFile(BuildContext context, GCWFile file) async {
+  Future<void> _exportFile(BuildContext context, GCWFile file) async {
     var fileName = file.name == null ? '' : file.name!.replaceFirst(HIDDEN_FILE_IDENTIFIER, 'hidden_file');
     var ext = fileName.split('.');
 
