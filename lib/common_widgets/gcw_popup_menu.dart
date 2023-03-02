@@ -97,7 +97,7 @@ class GCWPopupMenuState extends State<GCWPopupMenu> {
       position: _menuPosition!,
       items: _menuItems!,
       elevation: 8.0,
-      color: themeColors().accent(),
+      color: themeColors().secondary(),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(ROUNDED_BORDER_RADIUS),
       ),

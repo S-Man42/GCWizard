@@ -146,8 +146,8 @@ ExpansionTile _buildSettingsItem(BuildContext context) {
 
   return ExpansionTile(
       title: Text(i18n(context, 'mainmenu_settings_title'), style: _menuItemStyle()),
-      iconColor: themeColors().accent(),
-      collapsedIconColor: themeColors().accent(),
+      iconColor: themeColors().secondary(),
+      collapsedIconColor: themeColors().secondary(),
       leading: Icon(
         Icons.settings,
         color: themeColors().mainFont(),

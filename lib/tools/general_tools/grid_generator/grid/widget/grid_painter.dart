@@ -377,7 +377,7 @@ class _CustomGridPainter extends CustomPainter {
     double boxWidth = size.width / _countColumns;
     double boxHeight = size.height / _countRows;
 
-    paint.color = themeColors().accent();
+    paint.color = themeColors().secondary();
     paint.strokeWidth = _strokeWidth();
 
     for (int i = 0; i < _countRows - 1; i++) {
@@ -501,7 +501,7 @@ class _CustomGridPainter extends CustomPainter {
     double boxWidth = size.width / _countColumns;
     double boxHeight = size.height / _countRows;
 
-    paint.color = themeColors().accent();
+    paint.color = themeColors().secondary();
     paint.strokeWidth = _strokeWidth();
 
     for (int i = 0; i < _countRows - 1; i++) {
@@ -614,7 +614,7 @@ class _CustomGridPainter extends CustomPainter {
           onTapped(i, j, _countRows, countColumns, mode);
         });
 
-        paint.color = themeColors().accent();
+        paint.color = themeColors().secondary();
         paint.strokeWidth = _strokeWidth();
 
         _touchCanvas.drawLine(

@@ -69,7 +69,7 @@ class GameOfLifePainter extends CustomPainter {
 
         _touchCanvas.drawRect(Rect.fromLTWH(x, y, boxSize, boxSize), paint);
 
-        paint.color = themeColors().accent();
+        paint.color = themeColors().secondary();
 
         if (this.size > 50) paint.color = paint.color.withOpacity(0.0);
 
@@ -86,7 +86,7 @@ class GameOfLifePainter extends CustomPainter {
     if (this.size > 50) {
       paint.color = paint.color.withOpacity(0.0);
     } else {
-      paint.color = themeColors().accent();
+      paint.color = themeColors().secondary();
     }
 
     _touchCanvas.drawLine(Offset(size.height, 0.0), Offset(size.height, size.width), paint);

@@ -31,7 +31,7 @@ class MainMenuEntryStubState extends State<MainMenuEntryStub> {
               padding: const EdgeInsets.only(top: 50),
               child: Container(
                   decoration: BoxDecoration(
-                    border: Border.all(color: themeColors().accent(), width: 2),
+                    border: Border.all(color: themeColors().secondary(), width: 2),
                     shape: BoxShape.rectangle,
                     borderRadius: BorderRadius.circular(ROUNDED_BORDER_RADIUS),
                   ),

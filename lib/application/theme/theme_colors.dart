@@ -16,7 +16,7 @@ abstract class ThemeColors {
 
   Color primaryBackground();
   Color inputBackground();
-  Color accent();
+  Color secondary();
   Color focused();
   Color inActive();
 

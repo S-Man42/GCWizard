@@ -526,7 +526,7 @@ class GridState extends State<Grid> {
 
   BoxDecoration _getColorDecoration(_GridPaintColor color) {
     return _currentColor == color
-        ? BoxDecoration(color: (_GRID_COLORS[color]?['color'] ?? Colors.black), border: Border.all(color: themeColors().accent(), width: 5))
+        ? BoxDecoration(color: (_GRID_COLORS[color]?['color'] ?? Colors.black), border: Border.all(color: themeColors().secondary(), width: 5))
         : BoxDecoration(
             color: (_GRID_COLORS[color]?['color'] ?? Colors.black), border: Border.all(color: themeColors().mainFont(), width: 1.0));
   }

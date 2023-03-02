@@ -61,7 +61,7 @@ class _GCWToolListState extends State<GCWToolList> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: DEFAULT_MARGIN),
               margin: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
-              color: themeColors().accent(),
+              color: themeColors().secondary(),
               child: Text(
                 'BETA',
                 style: gcwBetaStyle(),

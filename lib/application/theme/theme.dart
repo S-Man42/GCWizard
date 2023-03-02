@@ -66,17 +66,15 @@ ThemeData buildTheme() {
       fontFamily: 'Roboto',
       brightness: base.brightness,
       scaffoldBackgroundColor: colors.primaryBackground(),
-      primarySwatch: _generateMaterialColor(colors.primaryBackground()),
       primaryColor: colors.primaryBackground(),
-      accentColor: colors.accent(),
       textTheme: base.textTheme,
       textSelectionTheme: TextSelectionThemeData(
-        cursorColor: colors.accent(),
-        selectionColor: colors.accent().withOpacity(0.5),
-        selectionHandleColor: colors.accent(),
+        cursorColor: colors.secondary(),
+        selectionColor: colors.secondary().withOpacity(0.5),
+        selectionHandleColor: colors.secondary(),
       ),
       buttonTheme: base.buttonTheme.copyWith(
-          buttonColor: colors.accent(),
+          buttonColor: colors.secondary(),
           textTheme: ButtonTextTheme.primary,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(ROUNDED_BORDER_RADIUS)),
@@ -89,12 +87,16 @@ ThemeData buildTheme() {
             borderSide: BorderSide(color: colors.focused(), width: 2.0),
             borderRadius: const BorderRadius.all(Radius.circular(ROUNDED_BORDER_RADIUS))),
         enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: colors.accent(), width: 1.0),
+            borderSide: BorderSide(color: colors.secondary(), width: 1.0),
             borderRadius: const BorderRadius.all(Radius.circular(ROUNDED_BORDER_RADIUS))),
         contentPadding: const EdgeInsets.all(10.0),
       ),
-      unselectedWidgetColor: colors.accent(),
-      cardColor: colors.messageBackground());
+      unselectedWidgetColor: colors.secondary(),
+      cardColor: colors.messageBackground(), 
+      colorScheme: ColorScheme.fromSwatch(
+        primarySwatch: _generateMaterialColor(colors.primaryBackground())).copyWith(secondary: colors.secondary()
+      )
+  );
 }
 
 // https://medium.com/@morgenroth/using-flutters-primary-swatch-with-a-custom-materialcolor-c5e0f18b95b0

@@ -78,7 +78,7 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
                   child: actionButton),
               Expanded(
                 child: Container(
-                    color: themeColors().accent(),
+                    color: themeColors().secondary(),
                     padding: const EdgeInsets.all(DOUBLE_DEFAULT_MARGIN),
                     child: Column(
                       children: [

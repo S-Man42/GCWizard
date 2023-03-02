@@ -89,14 +89,14 @@ class SudokuBoardPainter extends CustomPainter {
                   _showInputDialog(boardX, boardY);
                 });
 
-            paint.color = colors.accent();
+            paint.color = colors.secondary();
 
             _touchCanvas.drawLine(Offset(xInner, 0.0), Offset(xInner, size.width), paint);
             _touchCanvas.drawLine(Offset(0.0, yInner), Offset(size.height, yInner), paint);
 
             if (board.getValue(boardX, boardY) != null) {
               var textColor =
-              board.getFillType(boardX, boardY) == SudokuFillType.USER_FILLED ? colors.accent() : colors.mainFont();
+              board.getFillType(boardX, boardY) == SudokuFillType.USER_FILLED ? colors.secondary() : colors.mainFont();
 
               TextSpan span = TextSpan(
                   style: gcwTextStyle().copyWith(color: textColor, fontSize: heightInner * 0.8),

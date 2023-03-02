@@ -50,7 +50,7 @@ class _GCWDropDownState<T extends Object?> extends State<GCWDropDown> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(ROUNDED_BORDER_RADIUS),
                   border: Border.all(
-                      color: widget.alternativeColor ? colors.dialogText() : colors.accent(),
+                      color: widget.alternativeColor ? colors.dialogText() : colors.secondary(),
                       style: BorderStyle.solid,
                       width: 1.0),
                 ),
@@ -60,7 +60,7 @@ class _GCWDropDownState<T extends Object?> extends State<GCWDropDown> {
                   icon: Icon(
                     Icons.arrow_drop_down,
                     size: 30,
-                    color: widget.alternativeColor ? colors.dialogText() : colors.accent(),
+                    color: widget.alternativeColor ? colors.dialogText() : colors.secondary(),
                   ),
                   value: widget.value ?? widget.items[0].value,
                   items: widget.items.map((item) {

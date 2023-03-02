@@ -108,7 +108,7 @@ class _GCWGalleryState extends State<GCWGallery> {
     if (currentImage) {
       return Container(
           decoration: BoxDecoration(
-              border: Border.all(color: marked ? themeColors().focused() : themeColors().accent(), width: 5)),
+              border: Border.all(color: marked ? themeColors().focused() : themeColors().secondary(), width: 5)),
           child: _validImages[index]);
     } else if (marked) {
       return Container(

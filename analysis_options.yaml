@@ -639,7 +639,7 @@ analyzer:
 #    dead_code_on_catch_subtype: error
     deprecated_colon_for_default_value: error
 #    deprecated_export_use: error
-#    deprecated_member_use: error
+    deprecated_member_use: warning
 #    deprecated_member_use_from_same_package: error
 #    division_optimization: error
 #    file_import_inside_lib_references_file_outside: error

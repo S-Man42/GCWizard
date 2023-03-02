@@ -12,7 +12,7 @@ class _ThemeColorsLight extends ThemeColors {
   }
 
   @override
-  Color accent() {
+  Color secondary() {
     return Colors.orange;
   }
 
@@ -83,12 +83,12 @@ class _ThemeColorsLight extends ThemeColors {
 
   @override
   Color switchThumb2() {
-    return accent();
+    return secondary();
   }
 
   @override
   Color switchTrack2() {
-    return accent().withOpacity(0.5);
+    return secondary().withOpacity(0.5);
   }
 
   @override
@@ -106,25 +106,25 @@ class _ThemeColorsLight extends ThemeColors {
 
   @override
   Color checkBoxCheckColor() {
-    return accent();
+    return secondary();
   }
 
   @override
   Color checkBoxFocusColor() {
-    return accent().withOpacity(0.5);
+    return secondary().withOpacity(0.5);
   }
 
   @override
   Color checkBoxHoverColor() {
-    return accent();
+    return secondary();
   }
 
   @override
   Color checkBoxOverlayColor(Set<MaterialState> states) {
     if (states.contains(MaterialState.disabled)) {
-      return accent().withOpacity(0.5);
+      return secondary().withOpacity(0.5);
     }
-    return accent().withOpacity(0.5);
+    return secondary().withOpacity(0.5);
   }
 
   @override
