@@ -20,7 +20,7 @@ analyzer:
 #    avoid_returning_null_for_future: error
 #    avoid_slow_async_io: error
 #    avoid_type_to_string: error
-#    avoid_types_as_parameter_names: error
+    avoid_types_as_parameter_names: error
 #    avoid_web_libraries_in_flutter: error
 #    cancel_subscriptions: error
 #    close_sinks: error
@@ -36,7 +36,7 @@ analyzer:
 #    list_remove_unrelated_type: error
 #    literal_only_boolean_expressions: error
 #    no_adjacent_strings_in_list: error
-#    no_duplicate_case_values: error
+    no_duplicate_case_values: error
 #    no_logic_in_create_state: error
 #    prefer_relative_imports: error
 #    prefer_void_to_null: error
@@ -45,7 +45,7 @@ analyzer:
 #    unnecessary_statements: error
     unrelated_type_equality_checks: error
 #    unsafe_html: error
-#    use_build_context_synchronously: error
+    use_build_context_synchronously: ignore
     use_key_in_widget_constructors: error
 #    valid_regexps: error
 #    # Linter rules: Style rules https://dart.dev/tools/linter-rules#style-rules ========================================
@@ -151,7 +151,7 @@ analyzer:
 #    prefer_final_in_for_each: error
 #    prefer_final_locals: error
 #    prefer_final_parameters: error
-#    prefer_for_elements_to_map_fromIterable: error
+    prefer_for_elements_to_map_fromIterable: warning
 #    prefer_foreach: error
     prefer_function_declarations_over_variables: error
 #    prefer_generic_function_type_aliases: error

@@ -8,6 +8,7 @@
 
 part of 'package:gc_wizard/tools/coords/format_converter/logic/geohex.dart';
 
+// ignore: unused_element
 const String _VERSION = "3.2.2";
 const String _h_key = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 const double _h_base = 20037508.34;

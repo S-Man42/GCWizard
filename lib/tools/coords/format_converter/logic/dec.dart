@@ -34,6 +34,7 @@ String? prepareInput(String? text, {bool wholeString = false}) {
   return text;
 }
 
+// ignore: unused_element
 double _normalizeLat(double lat) {
   if (lat > 90.0) return _normalizeLat(180.0 - lat);
   if (lat < -90.0) return _normalizeLat(-180.0 + -lat);

@@ -153,6 +153,7 @@ bool _isValid(String code) {
   return code.codeUnits.every(filterCallback);
 }
 
+// ignore: unused_element
 num _clipLatitude(num latitude) => latitude.clamp(-90.0, 90.0);
 
 /// Compute the latitude precision value for a given code length.
@@ -165,17 +166,6 @@ num _computeLatitudePrecision(int codeLength) {
     return pow(encodingBase, (codeLength ~/ -2) + 2);
   }
   return 1 / (pow(encodingBase, 3) * pow(gridRows, codeLength - 10));
-}
-
-/// Normalize a [longitude] into the range -180 to 180, not including 180.
-num _normalizeLongitude(num longitude) {
-  while (longitude < -180) {
-    longitude += 360;
-  }
-  while (longitude >= 180) {
-    longitude -= 360;
-  }
-  return longitude;
 }
 
 /// Determines if a [code] is a valid short code.

@@ -86,7 +86,7 @@ int countWords(String? text) {
 
 Map<String, int> _addOrIncreaseCount(Map<String, int> map, String character) {
   if (map.containsKey(character)) {
-    map.update(character, (int) => map[character]! + 1);
+    map.update(character, (int i) => map[character]! + 1);
   } else {
     map[character] = 1;
   }

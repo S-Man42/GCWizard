@@ -101,8 +101,7 @@ class NSegmentDisplayState extends State<NSegmentDisplay> {
 Map<String, bool> buildSegmentMap(Segments segments) {
   Map<String, bool> segmentMap;
   if (segments.displays.isNotEmpty) {
-    segmentMap = Map<String, bool>.fromIterable(segments.displays.last,
-        key: (e) => e.toString(), value: (e) => true);
+    segmentMap = { for (var e in segments.displays.last) e.toString() : true };
   } else {
     segmentMap = {};
   }

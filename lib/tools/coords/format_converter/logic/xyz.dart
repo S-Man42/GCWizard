@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'dart:math';
 
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';

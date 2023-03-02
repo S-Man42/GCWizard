@@ -133,7 +133,7 @@ class _SegmentDisplayOutputState extends State<SegmentDisplayOutput> {
     var segmentsList = _currentUpsideDown ? Segments(displays: segments.displays.reversed.toList()) : segments;
 
     _displays = segmentsList.displays.map((character) {
-      var displayedSegments = Map<String, bool>.fromIterable(character, key: (e) => e.toString(), value: (e) => true);
+      var displayedSegments = { for (var e in character) e.toString() : true };
       return widget.segmentFunction(displayedSegments, widget.readOnly);
     }).toList();
 

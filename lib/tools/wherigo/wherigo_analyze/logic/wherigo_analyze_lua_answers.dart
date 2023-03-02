@@ -50,7 +50,6 @@ void _analyzeAndExtractOnGetInputSectionData(List<String> lines) {
     } else if ((i + 1 < lines.length - 1) && _OnGetInputFunctionEnd(lines[i], lines[i + 1].trim())) {
       if (_insideInputFunction) {
         _insideInputFunction = false;
-        for (var element in _answerActions) {}
         for (var answer in _answerList) {
           if (_Answers[_inputObject] == null) continue;
 
@@ -87,7 +86,6 @@ void _analyzeAndExtractOnGetInputSectionData(List<String> lines) {
     else {
       if (_isMessageActionElement(lines[i].trimLeft())) {
         _answerActions.add(_handleAnswerLine(lines[i].trimLeft()));
-        for (var element in _answerActions) {}
       }
     } // end if other line content
   }

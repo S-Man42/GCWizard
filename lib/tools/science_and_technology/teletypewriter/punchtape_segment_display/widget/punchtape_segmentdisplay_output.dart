@@ -94,7 +94,7 @@ class _PunchtapeSegmentDisplayOutputState extends State<PunchtapeSegmentDisplayO
     var list = _currentUpsideDown ? segments.displays.reversed : segments.displays;
 
     _displays = list.map((character) {
-      var displayedSegments = Map<String, bool>.fromIterable(character, key: (e) => e.toString(), value: (e) => true);
+      var displayedSegments = { for (var e in character) e.toString() : true };
       return widget.segmentFunction(displayedSegments, widget.readOnly, widget.codeBook);
     }).toList();
 

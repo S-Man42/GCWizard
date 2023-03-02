@@ -331,6 +331,7 @@ class SymbolReplacerImage {
           }
 
           // create SymbolGroups with text for the symbols
+          // ignore: unused_local_variable
           for (var element in symbolImage.symbols) {
             var symbolGroup = SymbolGroup();
             symbolGroup.symbols = symbolImage.symbols;
