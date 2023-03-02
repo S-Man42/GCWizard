@@ -19,7 +19,7 @@ void main() {
       {'index' : PI.decimalPart.length, 'expectedOutput' : PI.decimalPart[PI.decimalPart.length - 1]},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('index: ${elem['index']}', () {
         try {
           var _actual = irCalculator.decimalAt(elem['index'] as int?);
@@ -28,7 +28,7 @@ void main() {
           expect(e.message, elem['expectedOutput']);
         }
       });
-    });
+    }
   });
 
   group("IrrationalNumberCalculator.decimalRange:", () {
@@ -62,7 +62,7 @@ void main() {
       {'start' : 50, 'length': -30, 'expectedOutput' : '264338327950288419716939937510'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('start: ${elem['start']}, length: ${elem['length']}', () {
         try {
           var _actual = irCalculator.decimalRange(elem['start'] as int?, elem['length'] as int?);
@@ -71,7 +71,7 @@ void main() {
           expect(e.message, elem['expectedOutput']);
         }
       });
-    });
+    }
   });
 
   group("IrrationalNumberCalculator.decimalOccurence:", () { // Mark test
@@ -88,11 +88,11 @@ void main() {
       {'input' : '19851026', 'expectedOutput' : []},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('index: ${elem['index']}', () {
         var _actual = irCalculator.decimalOccurences(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

@@ -31,7 +31,7 @@ class AppLocalizations {
     Map<String, String> _localStrings = await loadLang(_locale.languageCode);
 
     // Remove new added keys with empty values (urls for manual)
-    _localStrings..removeWhere((k, v) => v.isEmpty);
+    _localStrings.removeWhere((k, v) => v.isEmpty);
 
     _localizedStrings = {
       ..._defaultLocalizedStrings,
@@ -106,12 +106,14 @@ String i18n(BuildContext context, String key, {List<dynamic> parameters = const 
   }
 
   var appLocalization = AppLocalizations._of(context);
-  if (appLocalization == null)
+  if (appLocalization == null) {
     return ifTranslationNotExists;
+  }
 
   var text = useDefaultLanguage ? appLocalization._translateDefault(key) : appLocalization._translate(key);
-  if (text == null)
+  if (text == null) {
     return ifTranslationNotExists;
+  }
 
   return parametersMap.isEmpty ? text : substitution(text, parametersMap);
 }

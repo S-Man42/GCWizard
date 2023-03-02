@@ -4,19 +4,20 @@ import 'dart:typed_data';
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
 
 Uint8List? hexstring2file(String input) {
-  if (_isBinary(input))
+  if (_isBinary(input)) {
     return _binaryString2bytes(input);
-  else
+  } else {
     return _hexString2bytes(input);
+  }
 }
 
 String? file2hexstring(Uint8List? input) {
   if (input == null) return null;
   var sb = StringBuffer();
 
-  input.forEach((byte) {
+  for (var byte in input) {
     sb.write(byte.toRadixString(16).padLeft(2, '0'));
-  });
+  }
 
   return sb.toString().toUpperCase();
 }

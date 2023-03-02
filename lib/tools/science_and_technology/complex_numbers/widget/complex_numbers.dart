@@ -11,6 +11,8 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/science_and_technology/complex_numbers/logic/complex_numbers.dart';
 
 class ComplexNumbers extends StatefulWidget {
+  const ComplexNumbers({Key? key}) : super(key: key);
+
   @override
   ComplexNumbersState createState() => ComplexNumbersState();
 }
@@ -121,7 +123,7 @@ class ComplexNumbersState extends State<ComplexNumbers> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    Map<String, String> coordinates = Map<String, String>();
+    Map<String, String> coordinates = <String, String>{};
     if (_currentMode == GCWSwitchPosition.right) {
       coordinates = CartesianToPolar(_currentA, _currentB);
     } else {
@@ -133,7 +135,7 @@ class ComplexNumbersState extends State<ComplexNumbers> {
             data: coordinates.entries.where((entry) => entry.key.isNotEmpty).map((entry) {
                     return [i18n(context, entry.key), entry.value];
                   }).toList(),
-            flexValues: [1, 1]
+            flexValues: const [1, 1]
             ),
     );
   }

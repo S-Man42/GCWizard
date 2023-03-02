@@ -7,7 +7,7 @@ import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_divider.dart';
-import 'package:gc_wizard/common_widgets/gcw_async_executer.dart';
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
 import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
@@ -20,6 +20,7 @@ import 'package:gc_wizard/tools/images_and_files/animated_image/logic/animated_i
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 
 class AnimatedImage extends StatefulWidget {
   final GCWFile? file;
@@ -59,7 +60,6 @@ class AnimatedImageState extends State<AnimatedImage> {
         },
       ),
       GCWDefaultOutput(
-          child: _buildOutput(),
           trailing: Row(children: <Widget>[
             GCWIconButton(
               icon: Icons.play_arrow,
@@ -89,7 +89,8 @@ class AnimatedImageState extends State<AnimatedImage> {
                 if (_outData != null && _file?.name != null) _exportFiles(context, _file!.name!, _outData!.images);
               },
             )
-          ]))
+          ]),
+          child: _buildOutput())
     ]);
   }
 
@@ -102,12 +103,12 @@ class AnimatedImageState extends State<AnimatedImage> {
       durations.addAll([
         [i18n(context, 'animated_image_table_index'), i18n(context, 'animated_image_table_duration')]
       ]);
-      _outData!.durations.forEach((value) {
+      for (var value in _outData!.durations) {
         counter++;
         durations.addAll([
           [counter, value]
         ]);
-      });
+      }
     }
 
     return Column(children: <Widget>[
@@ -120,11 +121,11 @@ class AnimatedImageState extends State<AnimatedImage> {
 
   Widget _buildDurationOutput(List<List<Object>> durations) {
     return Column(children: <Widget>[
-      GCWDivider(),
+      const GCWDivider(),
       GCWOutput(
         child: GCWColumnedMultilineOutput(
             data: durations,
-            flexValues: [1, 2],
+            flexValues: const [1, 2],
             hasHeader: true,
             copyAll: true
         )
@@ -152,15 +153,15 @@ class AnimatedImageState extends State<AnimatedImage> {
       barrierDismissible: false,
       builder: (context) {
         return Center(
-          child: Container(
+          child: SizedBox(
+            height: 220,
+            width: 150,
             child: GCWAsyncExecuter<AnimatedImageOutput?>(
               isolatedFunction: analyseImageAsync,
               parameter: _buildJobData,
               onReady: (data) => _showOutput(data),
               isOverlay: true,
             ),
-            height: 220,
-            width: 150,
           ),
         );
       },
@@ -192,11 +193,11 @@ class AnimatedImageState extends State<AnimatedImage> {
     });
   }
 
-  void _exportFiles(BuildContext context, String fileName, List<Uint8List> data) async {
+  Future<void> _exportFiles(BuildContext context, String fileName, List<Uint8List> data) async {
     createZipFile(fileName, '.' + fileExtension(FileType.PNG), data).then((bytes) async {
-      var value = await saveByteDataToFile(context, bytes, buildFileNameWithDate('anim_', FileType.ZIP));
-
-      if (value) showExportedFileDialog(context);
+      await saveByteDataToFile(context, bytes, buildFileNameWithDate('anim_', FileType.ZIP)).then((value) {
+        if (value) showExportedFileDialog(context);
+      });
     });
   }
 }

@@ -18,9 +18,10 @@ import 'package:gc_wizard/tools/images_and_files/binary2image/logic/binary2image
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/image_utils/image_utils.dart';
-import 'package:intl/intl.dart';
 
 class KarolRobot extends StatefulWidget {
+  const KarolRobot({Key? key}) : super(key: key);
+
   @override
   KarolRobotState createState() => KarolRobotState();
 }
@@ -37,10 +38,10 @@ class KarolRobotState extends State<KarolRobot> {
 
   String _output = '';
 
-  var _MASKINPUTFORMATTER_ENCODE =
+  final _MASKINPUTFORMATTER_ENCODE =
       WrapperForMaskTextInputFormatter(mask: '@' * 100, filter: {"@": RegExp(r'[A-ZÄÖÜäöüa-z0-9 .°,\n\r]')});
 
-  var _MASKINPUTFORMATTER_DECODE =
+  final _MASKINPUTFORMATTER_DECODE =
       WrapperForMaskTextInputFormatter(mask: "@" * 50000, filter: {"@": RegExp(r'[A-ZÄÖÜäöüa-z0-9() \n\r]')});
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
@@ -129,7 +130,6 @@ class KarolRobotState extends State<KarolRobot> {
     return Column(children: <Widget>[
       _currentMode == GCWSwitchPosition.left //decode
           ? GCWDefaultOutput(
-              child: _buildGraphicDecodeOutput(),
               trailing: GCWIconButton(
                 icon: Icons.save,
                 size: IconButtonSize.SMALL,
@@ -137,7 +137,8 @@ class KarolRobotState extends State<KarolRobot> {
                 onPressed: () {
                   _outDecodeData == null ? null : _exportFile(context, _outDecodeData!);
                 },
-              ))
+              ),
+              child: _buildGraphicDecodeOutput())
           : Column(children: <Widget>[
               GCWTextDivider(
                 text: i18n(context, 'karol_robot_graphicaloutput'),
@@ -196,9 +197,9 @@ class KarolRobotState extends State<KarolRobot> {
     ]);
   }
 
-  void _exportFile(BuildContext context, Uint8List data) async {
-    var value = await saveByteDataToFile(context, data, buildFileNameWithDate('img_', FileType.PNG));
-
-    if (value) showExportedFileDialog(context, contentWidget: imageContent(context, data));
+  Future<void> _exportFile(BuildContext context, Uint8List data) async {
+    await saveByteDataToFile(context, data, buildFileNameWithDate('img_', FileType.PNG)).then((value) {
+      if (value) showExportedFileDialog(context, contentWidget: imageContent(context, data));
+    });
   }
 }

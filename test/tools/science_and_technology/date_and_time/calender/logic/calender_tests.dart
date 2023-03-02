@@ -9,12 +9,12 @@ void main() {
       {'jd' : 2400000.5, 'round':  true, 'expectedOutput' : 0.0},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('jd: ${elem['jd']}', () {
         var _actual = JulianDateToModifedJulianDate(elem['jd'] as double);
         expect(_actual, (elem['expectedOutput'] as DateTime));
       });
-    });
+    }
   });
 
   group("DateTimeUtils.ModifedJulianDateToJulianDate:", () {
@@ -23,12 +23,12 @@ void main() {
       {'jd' : -2400000.5, 'round':  true, 'expectedOutput' : 0.0},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('jd: ${elem['jd']}', () {
         var _actual = ModifedJulianDateToJulianDate(elem['jd'] as double);
         expect(_actual, (elem['expectedOutput'] as DateTime));
       });
-    });
+    }
   });
 
   group("DayCalculator.www.aoi.uzh.ch.JulianDateToPersianYazdegardCal:", () {
@@ -36,14 +36,14 @@ void main() {
       {'jd' : 2459363.0, 'expectedOutput' : DateTime(1390, 11, 16)},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('jd: ${elem['jd']}', () {
         var _actual = JulianDateToPersianYazdegardCalendar(elem['jd'] as double);
         expect(_actual.day, (elem['expectedOutput'] as DateTime).day);
         expect(_actual.month, (elem['expectedOutput'] as DateTime).month);
         expect(_actual.year, (elem['expectedOutput'] as DateTime).year);
       });
-    });
+    }
   });
 
   group("DayCalculator.www.aoi.uzh.ch.JulianDateToHebrewCal:", () {
@@ -51,14 +51,14 @@ void main() {
       {'jd' : 2459363.0, 'expectedOutput' : DateTime(5781, 9, 17)},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('jd: ${elem['jd']}', () {
         var _actual = JulianDateToHebrewCalendar(elem['jd'] as double);
         expect(_actual.day, (elem['expectedOutput'] as DateTime).day);
         expect(_actual.month, (elem['expectedOutput'] as DateTime).month);
         expect(_actual.year, (elem['expectedOutput'] as DateTime).year);
       });
-    });
+    }
   });
 
   group("DayCalculator.www.aoi.uzh.ch.JulianDateToIslamicCal:", () {
@@ -66,14 +66,14 @@ void main() {
       {'jd' : 2459363.0, 'expectedOutput' : DateTime(1442, 10, 16)},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('jd: ${elem['jd']}', () {
         var _actual = JulianDateToIslamicCalendar(elem['jd'] as double);
         expect(_actual.day, (elem['expectedOutput'] as DateTime).day);
         expect(_actual.month, (elem['expectedOutput'] as DateTime).month);
         expect(_actual.year, (elem['expectedOutput'] as DateTime).year);
       });
-    });
+    }
   });
 
   group("DateTimeUtils.www.aoi.uzh.ch.JulianDateToCopticCal:", () {
@@ -81,14 +81,14 @@ void main() {
       {'jd' : 2459363.0, 'expectedOutput' : DateTime(1737, 9, 20)},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('jd: ${elem['jd']}', () {
         var _actual = JulianDateToCopticCalendar(elem['jd'] as double);
         expect(_actual.day, (elem['expectedOutput'] as DateTime).day);
         expect(_actual.month, (elem['expectedOutput'] as DateTime).month);
         expect(_actual.year, (elem['expectedOutput'] as DateTime).year);
       });
-    });
+    }
   });
 
 }

@@ -23,19 +23,19 @@ class MultiDecoderToolEntity {
       };
 
   MultiDecoderToolEntity.fromJson(Map<String, Object?> json) {
-    this.id = toIntOrNull(json['id']) ?? -1;
-    this.name = toStringOrNull(json['name']) ?? '';  // TODO Proper default types if key is not in map
-    this.internalToolName = toStringOrNull(json['decoderFunctionName']) ?? '';  // TODO Proper default types if key is not in map
+    id = toIntOrNull(json['id']) ?? -1;
+    name = toStringOrNull(json['name']) ?? '';  // TODO Proper default types if key is not in map
+    internalToolName = toStringOrNull(json['decoderFunctionName']) ?? '';  // TODO Proper default types if key is not in map
 
     var optionsRaw = toObjectWithNullableContentListOrNull(json['options']);
-    this.options = <MultiDecoderToolOption>[];
+    options = <MultiDecoderToolOption>[];
     if (optionsRaw != null) {
-      optionsRaw.forEach((Object? element) {
+      for (var element in optionsRaw) {
         var option = asJsonMapOrNull(element);
-        if (option == null) return;
+        if (option == null) continue;
 
-        this.options.add(MultiDecoderToolOption.fromJson(option));
-      });
+        options.add(MultiDecoderToolOption.fromJson(option));
+      }
     }
   }
 

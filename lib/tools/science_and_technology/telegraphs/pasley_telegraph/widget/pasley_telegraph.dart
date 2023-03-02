@@ -17,6 +17,8 @@ import 'package:gc_wizard/tools/science_and_technology/telegraphs/pasley_telegra
 part 'package:gc_wizard/tools/science_and_technology/telegraphs/pasley_telegraph/widget/pasley_segment_display.dart';
 
 class PasleyTelegraph extends StatefulWidget {
+  const PasleyTelegraph({Key? key}) : super(key: key);
+
   @override
   PasleyTelegraphState createState() => PasleyTelegraphState();
 }
@@ -76,7 +78,7 @@ class PasleyTelegraphState extends State<PasleyTelegraph> {
   Widget _buildVisualDecryption() {
     var currentDisplay = buildSegmentMap(_currentDisplays);
 
-    var onChanged = (Map<String, bool> d) {
+    onChanged(Map<String, bool> d) {
       setState(() {
         var newSegments = <String>[];
         d.forEach((key, value) {
@@ -86,14 +88,14 @@ class PasleyTelegraphState extends State<PasleyTelegraph> {
 
         _currentDisplays.replaceLastSegment(newSegments);
       });
-    };
+    }
 
     return Column(
       children: <Widget>[
         Container(
           width: 300,
           //height: 200,
-          padding: EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
+          padding: const EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
           child: Row(
             children: <Widget>[
               Expanded(

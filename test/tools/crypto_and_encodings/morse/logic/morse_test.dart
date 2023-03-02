@@ -13,12 +13,12 @@ void main() {
         , 'expectedOutput' : '.--.- .--.- .-.- ...--.. .-.-.- -....- ..--.- .--.-.'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = encodeMorse(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Morse.decodeMorse:", () {
@@ -34,11 +34,11 @@ void main() {
         , 'input' : '.--.- .--.- .-.- ...--.. .-.-.- -....- ..--.- .--.-.'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decodeMorse(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

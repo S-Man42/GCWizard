@@ -109,8 +109,9 @@ NaturalAreaCode? parseNaturalAreaCode(String input) {
 
   if (matches.isEmpty) return null;
 
-  if (xString == null || yString == null)
+  if (xString == null || yString == null) {
     return null;
+  }
 
   return NaturalAreaCode(xString, yString);
 }

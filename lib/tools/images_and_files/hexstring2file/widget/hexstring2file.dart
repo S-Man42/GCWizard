@@ -40,7 +40,6 @@ class HexString2FileState extends State<HexString2File> {
           },
         ),
         GCWDefaultOutput(
-            child: _buildOutput(),
             trailing: GCWIconButton(
               icon: Icons.save,
               size: IconButtonSize.SMALL,
@@ -48,7 +47,8 @@ class HexString2FileState extends State<HexString2File> {
               onPressed: () {
                 _outData == null ? null : _exportFile(context, _outData!);
               },
-            ))
+            ),
+            child: _buildOutput())
       ],
     );
   }
@@ -61,12 +61,12 @@ class HexString2FileState extends State<HexString2File> {
     return hexDataOutput(context, <Uint8List>[_outData!]);
   }
 
-  void _exportFile(BuildContext context, Uint8List data) async {
+  Future<void> _exportFile(BuildContext context, Uint8List data) async {
     var fileType = getFileType(data);
-    var value = await saveByteDataToFile(context, data, buildFileNameWithDate('hex_', fileType));
-
-    var content = fileClass(fileType) == FileClass.IMAGE ? imageContent(context, data) : null;
-    if (value) showExportedFileDialog(context, contentWidget: content);
+    await saveByteDataToFile(context, data, buildFileNameWithDate('hex_', fileType)).then((value) {
+      var content = fileClass(fileType) == FileClass.IMAGE ? imageContent(context, data) : null;
+      if (value) showExportedFileDialog(context, contentWidget: content);
+    });
   }
 }
 

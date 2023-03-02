@@ -17,16 +17,18 @@ import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 
 class FormatConverter extends StatefulWidget {
+  const FormatConverter({Key? key}) : super(key: key);
+
   @override
   FormatConverterState createState() => FormatConverterState();
 }
 
 class FormatConverterState extends State<FormatConverter> {
-  var _currentCoords = defaultBaseCoordinates;
+  var _currentCoords = defaultBaseCoordinate;
   List<BaseCoordinate> _currentOutputs = [];
 
   var _currentOutputFormat = defaultCoordinateFormat;
-  Widget _currentAllOutput = GCWDefaultOutput();
+  Widget _currentAllOutput = const GCWDefaultOutput();
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +39,9 @@ class FormatConverterState extends State<FormatConverter> {
           coordsFormat: _currentCoords.format,
           onChanged: (BaseCoordinate ret) {
             setState(() {
-              if (ret.toLatLng() != null)
+              if (ret.toLatLng() != null) {
                 _currentCoords = ret;
+              }
             });
           },
         ),
@@ -51,7 +54,7 @@ class FormatConverterState extends State<FormatConverter> {
             setState(() {
               if (value.type == CoordinateFormatKey.ALL) {
                 _currentOutputs = [];
-                _currentAllOutput = GCWDefaultOutput();
+                _currentAllOutput = const GCWDefaultOutput();
               }
 
               _currentOutputFormat = value;
@@ -84,9 +87,9 @@ class FormatConverterState extends State<FormatConverter> {
   }
 
   void _calculateOutput(BuildContext context) {
-    if (_currentOutputFormat.type == CoordinateFormatKey.ALL)
+    if (_currentOutputFormat.type == CoordinateFormatKey.ALL) {
       _currentAllOutput = _calculateAllOutput(context);
-    else {
+    } else {
       _currentOutputs = _currentCoords.toLatLng() != null ? [_currentCoords] : [];
     }
   }
@@ -102,8 +105,9 @@ class FormatConverterState extends State<FormatConverter> {
             if (format.subtype != null) {
               var subtypeMetadata = coordinateFormatMetadataByKey(format.subtype!);
               var subtypeName = i18n(context, subtypeMetadata.name);
-              if (subtypeName.isNotEmpty)
+              if (subtypeName.isNotEmpty) {
                 name += '\n' + subtypeName;
+              }
             }
 
             return [name, formatCoordOutput(_currentCoords.toLatLng()!, format, ellipsoid)];

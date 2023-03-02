@@ -4,10 +4,10 @@ class Force extends Unit {
   late double Function (double) toNewton;
   late double Function (double) fromNewton;
 
-  Force({required String name, required String symbol, bool isReference: false, required double inNewton})
+  Force({required String name, required String symbol, bool isReference = false, required double inNewton})
       : super(name, symbol, isReference, (e) => e * inNewton, (e) => e / inNewton) {
-    toNewton = this.toReference;
-    fromNewton = this.fromReference;
+    toNewton = toReference;
+    fromNewton = fromReference;
   }
 }
 
@@ -29,7 +29,7 @@ final FORCE_DYNE = Force(name: 'common_unit_force_dyn_name', symbol: 'dyn', inNe
 // https://webmadness.net/blog/?post=knuth
 final FORCE_BLINTZAL = Force(name: 'common_unit_force_blintzal_name', symbol: 'b-al', inNewton: 1.104380691060943e-5);
 
-final List<Unit> forces = [
+final List<Force> forces = [
   FORCE_NEWTON,
   FORCE_POUND,
   FORCE_POUNDAL,

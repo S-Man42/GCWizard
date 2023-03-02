@@ -98,7 +98,9 @@ int? getNextPrime(int? n) {
 
   if (isPrime(BigInt.from(n))) n++;
 
-  while (!isPrime(BigInt.from(n!))) n++;
+  while (!isPrime(BigInt.from(n!))) {
+    n++;
+  }
 
   return n;
 }
@@ -108,7 +110,9 @@ int? getPreviousPrime(int? n) {
 
   if (isPrime(BigInt.from(n))) n--;
 
-  while (!isPrime(BigInt.from(n!))) n--;
+  while (!isPrime(BigInt.from(n!))) {
+    n--;
+  }
 
   return n;
 }

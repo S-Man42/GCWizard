@@ -14,8 +14,8 @@ class _GCWCoordsReverseWherigoDay1976State extends State<_GCWCoordsReverseWherig
   late TextEditingController _ControllerA;
   late TextEditingController _ControllerB;
 
-  FocusNode _FocusNodeA = FocusNode();
-  FocusNode _FocusNodeB = FocusNode();
+  final FocusNode _FocusNodeA = FocusNode();
+  final FocusNode _FocusNodeB = FocusNode();
 
   var _currentA = "";
   var _currentB = "";

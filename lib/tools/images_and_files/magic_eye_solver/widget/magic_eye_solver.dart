@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
-import 'package:gc_wizard/common_widgets/gcw_async_executer.dart';
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
 import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/image_viewers/gcw_imageview.dart';
@@ -16,8 +16,11 @@ import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:image/image.dart' as Image;
 import 'package:intl/intl.dart';
 import 'package:tuple/tuple.dart';
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 
 class MagicEyeSolver extends StatefulWidget {
+  const MagicEyeSolver({Key? key}) : super(key: key);
+
   @override
   MagicEyeSolverState createState() => MagicEyeSolverState();
 }
@@ -221,15 +224,15 @@ class MagicEyeSolverState extends State<MagicEyeSolver> {
       barrierDismissible: false,
       builder: (context) {
         return Center(
-          child: Container(
+          child: SizedBox(
+            height: 220,
+            width: 150,
             child: GCWAsyncExecuter<Tuple2<Uint8List?, MagicEyeErrorCode>?>(
               isolatedFunction: generateImageAsync,
               parameter: _buildJobDataEncode,
               onReady: (data) => _saveOutputEncode(data),
               isOverlay: true,
             ),
-            height: 220,
-            width: 150,
           ),
         );
       },

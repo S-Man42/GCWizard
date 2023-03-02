@@ -46,26 +46,26 @@ class XMP {
           }
 
           // First rdf:Description
-          var rdf_Description = xml.descendants.where((node) => node is XmlElement).toList();
-          rdf_Description.forEach((element) {
-            _addAttribute(result, element as XmlElement, raw);
-          });
+          var rdf_Description = xml.descendants.whereType<XmlElement>().toList();
+          for (var element in rdf_Description) {
+            _addAttribute(result, element, raw);
+          }
 
           // Other selected known tags
-          [_listingTextTags].forEach((headerTag) {
-            headerTag.forEach((tag) {
+          for (var headerTag in [_listingTextTags]) {
+            for (var tag in headerTag) {
               var tags = xml.findAllElements(tag);
               if (tags.isNotEmpty) {
-                tags.forEach((element) {
+                for (var element in tags) {
                   var textList =
-                      element.descendants.where((node) => node is XmlText && !node.text.trim().isEmpty).toList();
-                  textList.forEach((text) {
+                      element.descendants.where((node) => node is XmlText && node.text.trim().isNotEmpty).toList();
+                  for (var text in textList) {
                     _addAttributeList(raw ? tag : camelToNormal(tag), text.text, result);
-                  });
-                });
+                  }
+                }
               }
-            });
-          });
+            }
+          }
           return result;
         } else {
           return {'Exception': 'Invalid Data'};
@@ -99,15 +99,15 @@ class XMP {
       }
     }
 
-    attributeList.forEach((attribute) {
+    for (var attribute in attributeList) {
       var attr = attribute.name.toString();
       if (!attr.contains('xmlns:') && !attr.contains('xml:')) {
         var endName = attribute.name.toString();
         var value = attribute.value.toString();
-        result[(raw ? '$endName' : '${camelToNormal(headerName)} ${camelToNormal(endName)}').toString().trim()] =
-            value ?? '';
+        result[(raw ? endName : '${camelToNormal(headerName)} ${camelToNormal(endName)}').toString().trim()] =
+            value;
       }
-    });
+    }
 
     element.children.toList().forEach((child) {
       if (child is! XmlText) {

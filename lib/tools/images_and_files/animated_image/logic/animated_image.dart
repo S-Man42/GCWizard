@@ -2,7 +2,7 @@ import 'dart:isolate';
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:gc_wizard/common_widgets/gcw_async_executer.dart';
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:image/image.dart' as Image;
 
@@ -44,9 +44,9 @@ Future<AnimatedImageOutput?> analyseImage(Uint8List bytes,
     if (animation != null) {
       int progressStep = max(animation.length ~/ 100, 1); // 100 steps
 
-      animation.frames.forEach((image) {
+      for (var image in animation.frames) {
         durations.add(image.duration);
-      });
+      }
 
       // overrides also durations
       animation.frames = _linkSameImages(animation.frames);
@@ -103,14 +103,18 @@ List<Image.Image> _linkSameImages(List<Image.Image> images) {
 bool compareImages(Uint8List image1, Uint8List image2, {int toler = 0}) {
   if (image1.length != image2.length) return false;
 
-  for (int i = 0; i < image1.length; i++) if ((image1[i] - image2[i]).abs() > toler) return false;
+  for (int i = 0; i < image1.length; i++) {
+    if ((image1[i] - image2[i]).abs() > toler) return false;
+  }
 
   return true;
 }
 
 int _checkSameHash(List<Image.Image> list, int maxSearchIndex) {
   var compareHash = list[maxSearchIndex].hashCode;
-  for (int i = 0; i < maxSearchIndex; i++) if (list[i].hashCode == compareHash) return i;
+  for (int i = 0; i < maxSearchIndex; i++) {
+    if (list[i].hashCode == compareHash) return i;
+  }
 
   return -1;
 }

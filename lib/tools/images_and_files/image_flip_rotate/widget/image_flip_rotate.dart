@@ -19,7 +19,7 @@ import 'package:image/image.dart' as img;
 class ImageFlipRotate extends StatefulWidget {
   final GCWFile? file;
 
-  const ImageFlipRotate({this.file});
+  const ImageFlipRotate({Key? key, this.file}) : super(key: key);
 
   @override
   ImageFlipRotateState createState() => ImageFlipRotateState();
@@ -79,21 +79,22 @@ class ImageFlipRotateState extends State<ImageFlipRotate> {
         if (_currentImage != null)
           GCWImageView(
             imageData: _originalData == null ? null : GCWImageViewData(GCWFile(bytes: _imageBytes(_currentImage) ?? Uint8List(0))),
-            suppressOpenInTool: {GCWImageViewOpenInTools.FLIPROTATE},
+            suppressOpenInTool: const {GCWImageViewOpenInTools.FLIPROTATE},
           ),
         if (_currentImage != null)
           Container(
-            padding: EdgeInsets.only(top: 2 * DOUBLE_DEFAULT_MARGIN),
+            padding: const EdgeInsets.only(top: 2 * DOUBLE_DEFAULT_MARGIN),
             child: GCWToolBar(
               children: [
                 GCWIconButton(
                   icon: Icons.flip,
                   onPressed: () {
                     setState(() {
-                      if (_currentRotate == 0 || _currentRotate == 180)
+                      if (_currentRotate == 0 || _currentRotate == 180) {
                         _currentFlipHorizontally = !_currentFlipHorizontally;
-                      else
+                      } else {
                         _currentFlipVertically = !_currentFlipVertically;
+                      }
                     });
                   },
                 ),
@@ -102,10 +103,11 @@ class ImageFlipRotateState extends State<ImageFlipRotate> {
                   rotateDegrees: 90.0,
                   onPressed: () {
                     setState(() {
-                      if (_currentRotate == 0 || _currentRotate == 180)
+                      if (_currentRotate == 0 || _currentRotate == 180) {
                         _currentFlipVertically = !_currentFlipVertically;
-                      else
+                      } else {
                         _currentFlipHorizontally = !_currentFlipHorizontally;
+                      }
                     });
                   },
                 ),

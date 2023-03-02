@@ -17,13 +17,14 @@ const _INITIAL_SEGMENTS = <String, bool>{
 const _PREDATOR_RELATIVE_DISPLAY_WIDTH = 170; //110;
 const _PREDATOR_RELATIVE_DISPLAY_HEIGHT = 300; //100;
 
-//ignore: must_be_immutable
-class _PredatorSegmentDisplay extends NSegmentDisplay {
-  final Map<String, bool> segments;
-  final bool readOnly;
-  final void Function(Map<String, bool>)? onChanged;
 
-  _PredatorSegmentDisplay({Key? key, required this.segments, this.readOnly = false, this.onChanged})
+class _PredatorSegmentDisplay extends NSegmentDisplay {
+
+  _PredatorSegmentDisplay({
+    Key? key,
+    required Map<String, bool> segments,
+    bool readOnly = false,
+    void Function(Map<String, bool>)? onChanged})
       : super(
             key: key,
             initialSegments: _INITIAL_SEGMENTS,
@@ -48,14 +49,17 @@ class _PredatorSegmentDisplay extends NSegmentDisplay {
               pathA.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 0,
                   size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 113);
               pathA.close();
-              if (size.height < 180) if (segmentActive(currentSegments, 'a'))
-                canvas.touchCanvas.drawPath(pathA, paint, onTapDown: (tapDetail) {
-                  setSegmentState('a', !segmentActive(currentSegments, 'a'));
-                });
-              else
-                canvas.touchCanvas.drawPath(pathA, paint, onTapDown: (tapDetail) {
-                  setSegmentState('a', !segmentActive(currentSegments, 'a'));
-                });
+              if (size.height < 180) {
+                if (segmentActive(currentSegments, 'a')) {
+                  canvas.touchCanvas.drawPath(pathA, paint, onTapDown: (tapDetail) {
+                    setSegmentState('a', !segmentActive(currentSegments, 'a'));
+                  });
+                } else {
+                  canvas.touchCanvas.drawPath(pathA, paint, onTapDown: (tapDetail) {
+                    setSegmentState('a', !segmentActive(currentSegments, 'a'));
+                  });
+                }
+              }
 
               paint.color = segmentActive(currentSegments, 'b') ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
               var pathB = Path();
@@ -68,14 +72,17 @@ class _PredatorSegmentDisplay extends NSegmentDisplay {
               pathB.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 70,
                   size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 80);
               pathB.close();
-              if (size.height < 180) if (segmentActive(currentSegments, 'b'))
-                canvas.touchCanvas.drawPath(pathB, paint, onTapDown: (tapDetail) {
-                  setSegmentState('b', !segmentActive(currentSegments, 'b'));
-                });
-              else
-                canvas.touchCanvas.drawPath(pathB, paint, onTapDown: (tapDetail) {
-                  setSegmentState('b', !segmentActive(currentSegments, 'b'));
-                });
+              if (size.height < 180) {
+                if (segmentActive(currentSegments, 'b')) {
+                  canvas.touchCanvas.drawPath(pathB, paint, onTapDown: (tapDetail) {
+                    setSegmentState('b', !segmentActive(currentSegments, 'b'));
+                  });
+                } else {
+                  canvas.touchCanvas.drawPath(pathB, paint, onTapDown: (tapDetail) {
+                    setSegmentState('b', !segmentActive(currentSegments, 'b'));
+                  });
+                }
+              }
 
               paint.color = segmentActive(currentSegments, 'c') ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
               var pathC = Path();
@@ -88,14 +95,17 @@ class _PredatorSegmentDisplay extends NSegmentDisplay {
               pathC.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 100,
                   size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 90);
               pathC.close();
-              if (size.height < 180) if (segmentActive(currentSegments, 'c'))
-                canvas.touchCanvas.drawPath(pathC, paint, onTapDown: (tapDetail) {
-                  setSegmentState('c', !segmentActive(currentSegments, 'c'));
-                });
-              else
-                canvas.touchCanvas.drawPath(pathC, paint, onTapDown: (tapDetail) {
-                  setSegmentState('c', !segmentActive(currentSegments, 'c'));
-                });
+              if (size.height < 180) {
+                if (segmentActive(currentSegments, 'c')) {
+                  canvas.touchCanvas.drawPath(pathC, paint, onTapDown: (tapDetail) {
+                    setSegmentState('c', !segmentActive(currentSegments, 'c'));
+                  });
+                } else {
+                  canvas.touchCanvas.drawPath(pathC, paint, onTapDown: (tapDetail) {
+                    setSegmentState('c', !segmentActive(currentSegments, 'c'));
+                  });
+                }
+              }
 
               paint.color = segmentActive(currentSegments, 'd') ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
               var pathD = Path();
@@ -108,14 +118,17 @@ class _PredatorSegmentDisplay extends NSegmentDisplay {
               pathD.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 100,
                   size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 113);
               pathD.close();
-              if (size.height < 180) if (segmentActive(currentSegments, 'd'))
-                canvas.touchCanvas.drawPath(pathD, paint, onTapDown: (tapDetail) {
-                  setSegmentState('d', !segmentActive(currentSegments, 'd'));
-                });
-              else
-                canvas.touchCanvas.drawPath(pathD, paint, onTapDown: (tapDetail) {
-                  setSegmentState('d', !segmentActive(currentSegments, 'd'));
-                });
+              if (size.height < 180) {
+                if (segmentActive(currentSegments, 'd')) {
+                  canvas.touchCanvas.drawPath(pathD, paint, onTapDown: (tapDetail) {
+                    setSegmentState('d', !segmentActive(currentSegments, 'd'));
+                  });
+                } else {
+                  canvas.touchCanvas.drawPath(pathD, paint, onTapDown: (tapDetail) {
+                    setSegmentState('d', !segmentActive(currentSegments, 'd'));
+                  });
+                }
+              }
 
               paint.color = segmentActive(currentSegments, 'e') ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
               var pathE = Path();
@@ -128,14 +141,17 @@ class _PredatorSegmentDisplay extends NSegmentDisplay {
               pathE.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 10,
                   size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 160);
               pathE.close();
-              if (size.height < 180) if (segmentActive(currentSegments, 'e'))
-                canvas.touchCanvas.drawPath(pathE, paint, onTapDown: (tapDetail) {
-                  setSegmentState('e', !segmentActive(currentSegments, 'e'));
-                });
-              else
-                canvas.touchCanvas.drawPath(pathE, paint, onTapDown: (tapDetail) {
-                  setSegmentState('e', !segmentActive(currentSegments, 'e'));
-                });
+              if (size.height < 180) {
+                if (segmentActive(currentSegments, 'e')) {
+                  canvas.touchCanvas.drawPath(pathE, paint, onTapDown: (tapDetail) {
+                    setSegmentState('e', !segmentActive(currentSegments, 'e'));
+                  });
+                } else {
+                  canvas.touchCanvas.drawPath(pathE, paint, onTapDown: (tapDetail) {
+                    setSegmentState('e', !segmentActive(currentSegments, 'e'));
+                  });
+                }
+              }
 
               paint.color = segmentActive(currentSegments, 'f') ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
               var pathF = Path();
@@ -148,14 +164,17 @@ class _PredatorSegmentDisplay extends NSegmentDisplay {
               pathF.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 130,
                   size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 170);
               pathF.close();
-              if (size.height < 180) if (segmentActive(currentSegments, 'f'))
-                canvas.touchCanvas.drawPath(pathF, paint, onTapDown: (tapDetail) {
-                  setSegmentState('f', !segmentActive(currentSegments, 'f'));
-                });
-              else
-                canvas.touchCanvas.drawPath(pathF, paint, onTapDown: (tapDetail) {
-                  setSegmentState('f', !segmentActive(currentSegments, 'f'));
-                });
+              if (size.height < 180) {
+                if (segmentActive(currentSegments, 'f')) {
+                  canvas.touchCanvas.drawPath(pathF, paint, onTapDown: (tapDetail) {
+                    setSegmentState('f', !segmentActive(currentSegments, 'f'));
+                  });
+                } else {
+                  canvas.touchCanvas.drawPath(pathF, paint, onTapDown: (tapDetail) {
+                    setSegmentState('f', !segmentActive(currentSegments, 'f'));
+                  });
+                }
+              }
 
               paint.color = segmentActive(currentSegments, 'g') ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
               var pathG = Path();
@@ -168,14 +187,17 @@ class _PredatorSegmentDisplay extends NSegmentDisplay {
               pathG.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 50,
                   size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 230);
               pathG.close();
-              if (size.height < 180) if (segmentActive(currentSegments, 'g'))
-                canvas.touchCanvas.drawPath(pathG, paint, onTapDown: (tapDetail) {
-                  setSegmentState('g', !segmentActive(currentSegments, 'g'));
-                });
-              else
-                canvas.touchCanvas.drawPath(pathG, paint, onTapDown: (tapDetail) {
-                  setSegmentState('g', !segmentActive(currentSegments, 'g'));
-                });
+              if (size.height < 180) {
+                if (segmentActive(currentSegments, 'g')) {
+                  canvas.touchCanvas.drawPath(pathG, paint, onTapDown: (tapDetail) {
+                    setSegmentState('g', !segmentActive(currentSegments, 'g'));
+                  });
+                } else {
+                  canvas.touchCanvas.drawPath(pathG, paint, onTapDown: (tapDetail) {
+                    setSegmentState('g', !segmentActive(currentSegments, 'g'));
+                  });
+                }
+              }
 
               paint.color = segmentActive(currentSegments, 'h') ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
               var pathH = Path();
@@ -188,14 +210,17 @@ class _PredatorSegmentDisplay extends NSegmentDisplay {
               pathH.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 100,
                   size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 230);
               pathH.close();
-              if (size.height < 180) if (segmentActive(currentSegments, 'h'))
-                canvas.touchCanvas.drawPath(pathH, paint, onTapDown: (tapDetail) {
-                  setSegmentState('h', !segmentActive(currentSegments, 'h'));
-                });
-              else
-                canvas.touchCanvas.drawPath(pathH, paint, onTapDown: (tapDetail) {
-                  setSegmentState('h', !segmentActive(currentSegments, 'h'));
-                });
+              if (size.height < 180) {
+                if (segmentActive(currentSegments, 'h')) {
+                  canvas.touchCanvas.drawPath(pathH, paint, onTapDown: (tapDetail) {
+                    setSegmentState('h', !segmentActive(currentSegments, 'h'));
+                  });
+                } else {
+                  canvas.touchCanvas.drawPath(pathH, paint, onTapDown: (tapDetail) {
+                    setSegmentState('h', !segmentActive(currentSegments, 'h'));
+                  });
+                }
+              }
 
               paint.color = segmentActive(currentSegments, 'i') ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
               var pathI = Path();
@@ -208,14 +233,17 @@ class _PredatorSegmentDisplay extends NSegmentDisplay {
               pathI.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 50,
                   size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 310);
               pathI.close();
-              if (size.height < 180) if (segmentActive(currentSegments, 'i'))
-                canvas.touchCanvas.drawPath(pathI, paint, onTapDown: (tapDetail) {
-                  setSegmentState('i', !segmentActive(currentSegments, 'i'));
-                });
-              else
-                canvas.touchCanvas.drawPath(pathI, paint, onTapDown: (tapDetail) {
-                  setSegmentState('i', !segmentActive(currentSegments, 'i'));
-                });
+              if (size.height < 180) {
+                if (segmentActive(currentSegments, 'i')) {
+                  canvas.touchCanvas.drawPath(pathI, paint, onTapDown: (tapDetail) {
+                    setSegmentState('i', !segmentActive(currentSegments, 'i'));
+                  });
+                } else {
+                  canvas.touchCanvas.drawPath(pathI, paint, onTapDown: (tapDetail) {
+                    setSegmentState('i', !segmentActive(currentSegments, 'i'));
+                  });
+                }
+              }
 
               paint.color = segmentActive(currentSegments, 'j') ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
               var pathJ = Path();
@@ -228,14 +256,17 @@ class _PredatorSegmentDisplay extends NSegmentDisplay {
               pathJ.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 70,
                   size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 310);
               pathJ.close();
-              if (size.height < 180) if (segmentActive(currentSegments, 'j'))
-                canvas.touchCanvas.drawPath(pathJ, paint, onTapDown: (tapDetail) {
-                  setSegmentState('j', !segmentActive(currentSegments, 'j'));
-                });
-              else
-                canvas.touchCanvas.drawPath(pathJ, paint, onTapDown: (tapDetail) {
-                  setSegmentState('j', !segmentActive(currentSegments, 'j'));
-                });
+              if (size.height < 180) {
+                if (segmentActive(currentSegments, 'j')) {
+                  canvas.touchCanvas.drawPath(pathJ, paint, onTapDown: (tapDetail) {
+                    setSegmentState('j', !segmentActive(currentSegments, 'j'));
+                  });
+                } else {
+                  canvas.touchCanvas.drawPath(pathJ, paint, onTapDown: (tapDetail) {
+                    setSegmentState('j', !segmentActive(currentSegments, 'j'));
+                  });
+                }
+              }
 
               paint.color = segmentActive(currentSegments, 'k') ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
               var pathK = Path();
@@ -248,13 +279,16 @@ class _PredatorSegmentDisplay extends NSegmentDisplay {
               pathK.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 90,
                   size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 310);
               pathK.close();
-              if (size.height < 180) if (segmentActive(currentSegments, 'k'))
-                canvas.touchCanvas.drawPath(pathK, paint, onTapDown: (tapDetail) {
-                  setSegmentState('k', !segmentActive(currentSegments, 'k'));
-                });
-              else
-                canvas.touchCanvas.drawPath(pathK, paint, onTapDown: (tapDetail) {
-                  setSegmentState('k', !segmentActive(currentSegments, 'k'));
-                });
+              if (size.height < 180) {
+                if (segmentActive(currentSegments, 'k')) {
+                  canvas.touchCanvas.drawPath(pathK, paint, onTapDown: (tapDetail) {
+                    setSegmentState('k', !segmentActive(currentSegments, 'k'));
+                  });
+                } else {
+                  canvas.touchCanvas.drawPath(pathK, paint, onTapDown: (tapDetail) {
+                    setSegmentState('k', !segmentActive(currentSegments, 'k'));
+                  });
+                }
+              }
             });
 }

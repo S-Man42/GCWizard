@@ -10,6 +10,8 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rabbit/logic/rabbit.dart';
 
 class Rabbit extends StatefulWidget {
+  const Rabbit({Key? key}) : super(key: key);
+
   @override
   RabbitState createState() => RabbitState();
 }
@@ -52,8 +54,9 @@ class RabbitState extends State<Rabbit> {
           },
         ),
         Row(children: <Widget>[
-          Expanded(child: GCWText(text: i18n(context, 'rc4_format') + ':'), flex: 1),
+          Expanded(flex: 1, child: GCWText(text: i18n(context, 'rc4_format') + ':')),
           Expanded(
+              flex: 2,
               child: GCWDropDown<InputFormat>(
                 value: _currentInputFormat,
                 onChanged: (value) {
@@ -67,8 +70,7 @@ class RabbitState extends State<Rabbit> {
                     child: mode.value,
                   );
                 }).toList(),
-              ),
-              flex: 2),
+              )),
         ]),
         GCWTextDivider(text: i18n(context, 'common_key')),
         GCWTextField(
@@ -80,8 +82,9 @@ class RabbitState extends State<Rabbit> {
           },
         ),
         Row(children: <Widget>[
-          Expanded(child: GCWText(text: i18n(context, 'rc4_format') + ':'), flex: 1),
+          Expanded(flex: 1, child: GCWText(text: i18n(context, 'rc4_format') + ':')),
           Expanded(
+              flex: 2,
               child: GCWDropDown<InputFormat>(
                 value: _currentKeyFormat,
                 onChanged: (value) {
@@ -95,8 +98,7 @@ class RabbitState extends State<Rabbit> {
                     child: mode.value,
                   );
                 }).toList(),
-              ),
-              flex: 2),
+              )),
         ]),
         GCWExpandableTextDivider(
             text: i18n(context, 'rabbit_initialization_vector'),
@@ -116,8 +118,9 @@ class RabbitState extends State<Rabbit> {
                 },
               ),
               Row(children: <Widget>[
-                Expanded(child: GCWText(text: i18n(context, 'rc4_format') + ':'), flex: 1),
+                Expanded(flex: 1, child: GCWText(text: i18n(context, 'rc4_format') + ':')),
                 Expanded(
+                    flex: 2,
                     child: GCWDropDown<InputFormat>(
                       value: _currentIvFormat,
                       onChanged: (value) {
@@ -131,14 +134,14 @@ class RabbitState extends State<Rabbit> {
                           child: mode.value,
                         );
                       }).toList(),
-                    ),
-                    flex: 2),
+                    )),
               ]),
             ])),
         GCWTextDivider(text: i18n(context, 'common_output') + ' ' + i18n(context, 'rc4_format')),
         Row(children: <Widget>[
-          Expanded(child: GCWText(text: i18n(context, 'rc4_format') + ':'), flex: 1),
+          Expanded(flex: 1, child: GCWText(text: i18n(context, 'rc4_format') + ':')),
           Expanded(
+              flex: 2,
               child: GCWDropDown<OutputFormat>(
                 value: _currentOutputFormat,
                 onChanged: (value) {
@@ -152,8 +155,7 @@ class RabbitState extends State<Rabbit> {
                     child: mode.value,
                   );
                 }).toList(),
-              ),
-              flex: 2),
+              )),
         ]),
         _buildOutput(context)
       ],
@@ -161,7 +163,7 @@ class RabbitState extends State<Rabbit> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    if (_currentInput.isEmpty) return GCWDefaultOutput();
+    if (_currentInput.isEmpty) return const GCWDefaultOutput();
 
     var _currentOutput = cryptRabbit(_currentInput, _currentInputFormat, _currentKey, _currentKeyFormat,
         _currentInitializationVector, _currentIvFormat, _currentOutputFormat);
@@ -182,7 +184,7 @@ class RabbitState extends State<Rabbit> {
         default:
           break;
       }
-      return GCWDefaultOutput();
+      return const GCWDefaultOutput();
     }
 
     return GCWDefaultOutput(

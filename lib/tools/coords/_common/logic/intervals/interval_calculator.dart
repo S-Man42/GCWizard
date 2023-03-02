@@ -1,8 +1,10 @@
 import 'dart:math';
 
-import 'package:gc_wizard/tools/coords/intervals/logic/coordinate_cell.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/intervals/coordinate_cell.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:latlong2/latlong.dart';
+
+abstract class IntervalCalculatorParameters {}
 
 abstract class IntervalCalculator {
   final _MAX_CELLCOUNT = 10000;
@@ -10,14 +12,14 @@ abstract class IntervalCalculator {
 
   List<LatLng> results = [];
   List<CoordinateCell> cells = [];
-  Map<String, dynamic> parameters;
+  IntervalCalculatorParameters parameters;
   Ellipsoid ells;
   double eps = 1e-13;
   bool _overlap = false;
 
   IntervalCalculator(this.parameters, this.ells);
 
-  bool checkCell(CoordinateCell cell, Map<String, dynamic> parameters);
+  bool checkCell(CoordinateCell cell, IntervalCalculatorParameters parameters);
 
   bool _resultExists(LatLng point) {
     for (LatLng result in results) {
@@ -33,7 +35,7 @@ abstract class IntervalCalculator {
     return false;
   }
 
-  _divideCell(CoordinateCell cell) {
+  void _divideCell(CoordinateCell cell) {
     var lat = cell.latInterval;
     var lon = cell.lonInterval;
 
@@ -69,7 +71,7 @@ abstract class IntervalCalculator {
 
   //Splitting the initial whole-world-interval smaller pieces for
   //avoiding creepy effects on bearing calculations
-  _initializeCells(CoordinateCell cell, [int depth = 0]) {
+  void _initializeCells(CoordinateCell cell, [int depth = 0]) {
     if (depth == 2) {
       cells.add(cell);
       return;

@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze.dart';
 
-bool insideSectionMedia(String currentLine) {
+bool _insideSectionMedia(String currentLine) {
   if (RegExp(r'(Wherigo.ZCharacter\()').hasMatch(currentLine) ||
       RegExp(r'(Wherigo.ZMedia\()').hasMatch(currentLine) ||
       RegExp(r'(Wherigo.ZItem\()').hasMatch(currentLine) ||
@@ -15,48 +15,68 @@ bool insideSectionMedia(String currentLine) {
   return true;
 }
 
-void analyzeAndExtractMediaSectionData(List<String> lines) {
+WherigoMediaData _analyzeAndExtractMediaSectionData(List<String> lines) {
+  String LUAname = '';
+  String id = '';
+  String name = '';
+  String description = '';
+  String alttext = '';
+  String type = '';
+  String medianame = '';
+
+  bool _sectionInner = true;
+
   for (int i = 0; i < lines.length; i++) {
     if (lines[i].trim().replaceAll(LUAname + '.', '').startsWith('Id')) {
-      id = getLineData(lines[i], LUAname, 'Id', obfuscatorFunction, obfuscatorTable);
+      id = getLineData(lines[i], LUAname, 'Id', _obfuscatorFunction, _obfuscatorTable);
     } else if (lines[i].trim().replaceAll(LUAname + '.', '').startsWith('Name')) {
-      name = getLineData(lines[i], LUAname, 'Name', obfuscatorFunction, obfuscatorTable);
+      name = getLineData(lines[i], LUAname, 'Name', _obfuscatorFunction, _obfuscatorTable);
     } else if (lines[i].trim().replaceAll(LUAname + '.', '').startsWith('Description')) {
       if (lines[i + 1].trim().replaceAll(LUAname + '.', '').startsWith('AltText')) {
-        description = getLineData(lines[i], LUAname, 'Description', obfuscatorFunction, obfuscatorTable);
+        description = getLineData(lines[i], LUAname, 'Description', _obfuscatorFunction, _obfuscatorTable);
       } else {
-        sectionInner = true;
+        _sectionInner = true;
         description = lines[i].trim().replaceAll(LUAname + '.', '');
         i++;
         lines[i] = lines[i].trim();
         do {
-          if (lines[i].trim().replaceAll(LUAname + '.', '').startsWith('AltText'))
-            sectionInner = false;
-          else
+          if (lines[i].trim().replaceAll(LUAname + '.', '').startsWith('AltText')) {
+            _sectionInner = false;
+          } else {
             description = description + lines[i];
+          }
           i++;
           lines[i] = lines[i].trim();
-        } while (sectionInner);
+        } while (_sectionInner);
       }
       if (description.startsWith('WWB_multi')) description = removeWWB(description);
     } else if (lines[i].trim().replaceAll(LUAname + '.', '').startsWith('AltText')) {
-      alttext = getLineData(lines[i], LUAname, 'AltText', obfuscatorFunction, obfuscatorTable);
+      alttext = getLineData(lines[i], LUAname, 'AltText', _obfuscatorFunction, _obfuscatorTable);
     } else if (lines[i].trim().replaceAll(LUAname + '.', '').startsWith('Resources')) {
       i++;
       lines[i] = lines[i].trim();
-      sectionInner = true;
+      _sectionInner = true;
       do {
         if (lines[i].trimLeft().startsWith('Filename = ')) {
           medianame = getStructData(lines[i], 'Filename');
         } else if (lines[i].trimLeft().startsWith('Type = ')) {
           type = getStructData(lines[i], 'Type');
         } else if (lines[i].trimLeft().startsWith('Directives = ')) {
-          sectionInner = false;
-          sectionMedia = false;
+          _sectionInner = false;
         }
         i++;
         lines[i] = lines[i].trim();
-      } while (sectionInner);
+      } while (_sectionInner);
     }
   }
+
+  return WherigoMediaData(
+    LUAname,
+    id,
+    name,
+    description,
+    alttext,
+    type,
+    medianame,
+  );
 }

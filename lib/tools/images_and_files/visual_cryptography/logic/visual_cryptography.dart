@@ -3,7 +3,7 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/gcw_async_executer.dart';
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:image/image.dart' as Image;
 import 'package:tuple/tuple.dart';
@@ -66,7 +66,7 @@ Future<Tuple2<int, int>?> offsetAutoCalcAsync(GCWAsyncExecuterParameters? jobDat
       data.item1, data.item2, data.item3, data.item4,
       sendAsyncPort: jobData.sendAsyncPort);
 
-  jobData.sendAsyncPort?.send(output);
+  jobData.sendAsyncPort.send(output);
 
   return output;
 }
@@ -114,11 +114,12 @@ Future<Tuple2<int, int>?> _offsetAutoCalc(Uint8List? image1, Uint8List? image2, 
 /// HighPass Filter
 Tuple2<int, int> _highPassFilter(double alpha, List<int> keyList) {
   var list = List.filled(keyList.length, 0);
-  for (var i = 0; i < keyList.length; ++i)
+  for (var i = 0; i < keyList.length; ++i) {
     list[i] = (alpha * keyList[i] -
             (i > 0 ? keyList[i - 1] : keyList[i]) -
             (i < keyList.length - 1 ? keyList[i + 1] : keyList[i]))
         .toInt();
+  }
 
   var min = list.reduce((curr, next) => curr < next ? curr : next);
   return Tuple2<int, int>(list.indexOf(min), min);
@@ -230,8 +231,9 @@ Future<Tuple2<Uint8List, Uint8List?>> _encodeWithKeyImage(
         for (var y1 = 0; y1 < 2; y1++) {
           var _paintX = x * 2 + x1 + offsetX;
           var _paintY = y * 2 + y1 + offsetY;
-          if (_checkLimits(_paintX, _paintY, image1.width, image1.height))
+          if (_checkLimits(_paintX, _paintY, image1.width, image1.height)) {
             image1.setPixel(_paintX, _paintY, pixel[2 * x1 + y1] ? whiteColor : blackColor);
+          }
         }
       }
     }
@@ -258,13 +260,15 @@ Future<Tuple2<Uint8List, Uint8List>> _encodeWithoutKeyImage(int offsetX, int off
         for (var y1 = 0; y1 < 2; y1++) {
           var offsetX = x * 2 + image1OffsetX + x1;
           var offsetY = y * 2 + image1OffsetY + y1;
-          if (_checkLimits(offsetX, offsetY, image1.width, image1.height))
+          if (_checkLimits(offsetX, offsetY, image1.width, image1.height)) {
             image1.setPixel(offsetX, offsetY, pixel.item1[2 * x1 + y1] ? whiteColor : blackColor);
+          }
 
           offsetX = x * 2 + image2OffsetX + x1;
           offsetY = y * 2 + image2OffsetY + y1;
-          if (_checkLimits(offsetX, offsetY, image2.width, image2.height))
+          if (_checkLimits(offsetX, offsetY, image2.width, image2.height)) {
             image2.setPixel(offsetX, offsetY, pixel.item2[2 * x1 + y1] ? whiteColor : blackColor);
+          }
         }
       }
     }

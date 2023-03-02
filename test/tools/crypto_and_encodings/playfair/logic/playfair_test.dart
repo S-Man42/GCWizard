@@ -32,12 +32,12 @@ void main() {
       {'input' : 'Laboulaye lady will lead to Cibola temples of gold', 'key': 'DEATH', 'mode': AlphabetModificationMode.J_TO_I, 'expectedOutput' : 'ME IK QO TX CQ TE ZX CO MW QC TE HN FB IK ME HA KR QC UN GI KM AV'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, key: ${elem['key']}, mode: ${elem['mode']}', () {
         var _actual = encryptPlayfair(elem['input'] as String?, elem['key'] as String?, mode: elem['mode'] as AlphabetModificationMode);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Playfair.decodePlayfair:", () {
@@ -66,11 +66,11 @@ void main() {
       {'expectedOutput' : 'LABOULAYELADYWILLXLEADTOCIBOLATEMPLESOFGOLDX', 'key': 'DEATH', 'mode': AlphabetModificationMode.J_TO_I, 'input' : 'MEIKQOTXCQTEZXCOMWQCTEHNFBIKMEHAKRQCUNGIKMAV'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, key: ${elem['key']}, mode: ${elem['mode']}', () {
         var _actual = decryptPlayfair(elem['input'] as String?, elem['key'] as String?, mode: elem['mode'] as AlphabetModificationMode);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

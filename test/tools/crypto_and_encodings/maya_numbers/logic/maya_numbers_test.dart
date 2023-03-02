@@ -22,12 +22,12 @@ void main() {
       {'input' : 444, 'expectedOutput' : [['d'], ['d', 'e'], ['d', 'e', 'f', 'g']]},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = encodeMayaNumbers(elem['input'] as int?);
         expect(_actual.displays, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("MayaNumbers.decodeMayaNumbers:", () {
@@ -66,12 +66,12 @@ void main() {
       {'input' : <String>['d', 'z', 'dfzzeg'], 'expectedOutput' : SegmentsVigesimal( displays: [['d'], [], ['d', 'f', 'e', 'g']], numbers: [1, 0, 4], vigesimal: BigInt.from(404))},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decodeMayaNumbers(elem['input'] as List<String>?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
 }

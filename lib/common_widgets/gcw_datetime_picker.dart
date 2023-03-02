@@ -161,10 +161,11 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
     }
 
     if (widget.config.contains(DateTimePickerConfig.DAY)) {
-      if (widget.duration != null)
+      if (widget.duration != null) {
         _currentDay = widget.duration!.inDays;
-      else
+      } else {
         _currentDay = date.day;
+      }
     }
 
     if (widget.config.contains(DateTimePickerConfig.TIME)) {
@@ -196,19 +197,22 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
 
   @override
   Widget build(BuildContext context) {
-    var widgets = Map<Widget, int>(); // widget: flex
+    var widgets = <Widget, int>{}; // widget: flex
 
     if (widget.config.contains(DateTimePickerConfig.TIME)) {
       if (widget.duration != null) {
         // update with new values (paste, ..)
         if (_currentSign != (widget.duration!.isNegative ? -1 : 1)) _currentSign = widget.duration!.isNegative ? -1 : 1;
         if (_currentHour != widget.duration!.inHours.abs()) _currentHour = widget.duration!.inHours.abs().remainder(24);
-        if (_currentMinute != widget.duration!.inMinutes.abs().remainder(60))
+        if (_currentMinute != widget.duration!.inMinutes.abs().remainder(60)) {
           _currentMinute = widget.duration!.inMinutes.abs().remainder(60);
-        if (_currentSecond != widget.duration!.inSeconds.abs().remainder(60))
+        }
+        if (_currentSecond != widget.duration!.inSeconds.abs().remainder(60)) {
           _currentSecond = widget.duration!.inSeconds.abs().remainder(60);
-        if (_currentMilliSecond != _durationMilliseconds(widget.duration!))
+        }
+        if (_currentMilliSecond != _durationMilliseconds(widget.duration!)) {
           _currentMilliSecond = _durationMilliseconds(widget.duration!);
+        }
       } else if (widget.datetime != null) {
         // update with new values (paste, ..)
         if (_currentHour != widget.datetime?.hour) _currentHour = widget.datetime!.hour;
@@ -228,7 +232,7 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
     if (widget.config.contains(DateTimePickerConfig.SIGN)) {
       widgets.addAll({
         GCWSignDropDown(
-            itemList: ['+', '-'],
+            itemList: const ['+', '-'],
             value: _currentSign,
             onChanged: (value) {
               setState(() {
@@ -308,7 +312,7 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
 
     if (widget.config.contains(DateTimePickerConfig.DATE) && widget.config.contains(DateTimePickerConfig.TIME)) {
       widgets.addAll({
-        GCWText(
+        const GCWText(
           text: '-',
           textAlign: TextAlign.center,
         ): 1
@@ -420,8 +424,8 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
     return Column(
       children: <Widget>[
         GCWToolBar(
-          children: widgets.keys.toList(),
           flexValues: widgets.values.toList(),
+          children: widgets.keys.toList(),
         ),
         widget.config.contains(DateTimePickerConfig.TIMEZONES) ? _buildTimeZonesDropdown() : Container()
       ],
@@ -439,8 +443,9 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
   Row _buildTimeZonesDropdown() {
     return Row(
       children: [
-        Expanded(child: GCWText(text: 'Timezone'), flex: 1),
+        const Expanded(flex: 1, child: GCWText(text: 'Timezone')),
         Expanded(
+            flex: 3,
             child: GCWDropDownSpinner(
               index: _currentTimezoneOffsetIndex,
               items: TIMEZONES
@@ -460,8 +465,7 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
                   _setCurrentValueAndEmitOnChange();
                 });
               },
-            ),
-            flex: 3),
+            )),
       ],
     );
   }

@@ -12,6 +12,8 @@ import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/velo
 import 'package:intl/intl.dart';
 
 class Beaufort extends StatefulWidget {
+  const Beaufort({Key? key}) : super(key: key);
+
   @override
   BeaufortState createState() => BeaufortState();
 }
@@ -21,7 +23,7 @@ class BeaufortState extends State<Beaufort> {
 
   var _currentVelocity = 0.0;
   var _currentBeaufortInput = 0;
-  logic.Velocity _currentOutputUnit = UNITCATEGORY_VELOCITY.defaultUnit as logic.Velocity;
+  logic.Velocity _currentOutputUnit = UNITCATEGORY_VELOCITY.defaultUnit;
 
   @override
   Widget build(BuildContext context) {

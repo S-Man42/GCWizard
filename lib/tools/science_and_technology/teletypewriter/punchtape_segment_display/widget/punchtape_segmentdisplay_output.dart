@@ -13,7 +13,6 @@ import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/w
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/_common/logic/teletypewriter.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
-import 'package:intl/intl.dart';
 
 part 'package:gc_wizard/tools/science_and_technology/teletypewriter/punchtape_segment_display/widget/punchtape_segmentdisplay_output_utils.dart';
 
@@ -50,8 +49,8 @@ class _PunchtapeSegmentDisplayOutputState extends State<PunchtapeSegmentDisplayO
     _currentUpsideDown = widget.upsideDownButton;
   }
 
+  @override
   Widget build(BuildContext context) {
-    final mediaQueryData = MediaQuery.of(context);
 
     return Column(children: <Widget>[
       GCWTextDivider(
@@ -59,33 +58,30 @@ class _PunchtapeSegmentDisplayOutputState extends State<PunchtapeSegmentDisplayO
         trailing: Row(
           children: <Widget>[
             widget.upsideDownButton
-                ? Container(
-                    child: GCWIconButton(
-                      icon: Icons.rotate_left,
-                      size: IconButtonSize.SMALL,
-                      onPressed: () {
-                        setState(() {
-                          _currentUpsideDown = !_currentUpsideDown;
-                        });
-                      },
-                    ),
-                  )
+                ? GCWIconButton(
+                  icon: Icons.rotate_left,
+                  size: IconButtonSize.SMALL,
+                  onPressed: () {
+                    setState(() {
+                      _currentUpsideDown = !_currentUpsideDown;
+                    });
+                  },
+                )
                 : Container(),
             Container(
+              padding: const EdgeInsets.only(right: 10.0),
               child: GCWIconButton(
                 size: IconButtonSize.SMALL,
                 icon: Icons.save,
                 iconColor: (widget.segments.displays.isEmpty) ? themeColors().inActive() : null,
                 onPressed: () async {
                   await _buildPunchtapeSegmentDisplayImage(_displays, _currentUpsideDown).then((image) {
-                    if (image != null)
-                      image.toByteData(format: ui.ImageByteFormat.png).then((data) {
-                        _exportFile(context, data?.buffer.asUint8List());
+                    image.toByteData(format: ui.ImageByteFormat.png).then((data) {
+                      _exportFile(context, data?.buffer.asUint8List());
                       });
                   });
                 },
               ),
-              padding: EdgeInsets.only(right: 10.0),
             ),
           ],
         ),
@@ -97,7 +93,7 @@ class _PunchtapeSegmentDisplayOutputState extends State<PunchtapeSegmentDisplayO
   Widget _buildDigitalOutput(Segments segments) {
     var list = _currentUpsideDown ? segments.displays.reversed : segments.displays;
 
-    _displays = list.where((character) => character != null).map((character) {
+    _displays = list.map((character) {
       var displayedSegments = Map<String, bool>.fromIterable(character, key: (e) => e.toString(), value: (e) => true);
       return widget.segmentFunction(displayedSegments, widget.readOnly, widget.codeBook);
     }).toList();

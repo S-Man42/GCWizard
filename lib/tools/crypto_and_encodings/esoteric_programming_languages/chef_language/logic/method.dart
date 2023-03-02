@@ -10,9 +10,8 @@ class _Method {
   _CHEF_Method? type;
   int? n;
 
-  _Method(String line, int n, String language) {
+  _Method(String line, int this.n, String language) {
     line = line.trim();
-    this.n = n;
     List<RegExp> matchers = <RegExp>[];
     if (language == 'ENG') {
       matchers = _CHEF_matchersENG;
@@ -22,10 +21,11 @@ class _Method {
         type = _CHEF_Method.Take;
       } else if (matchers[1].hasMatch(line)) {
         // put | fold
-        if (matchers[1].firstMatch(line)!.group(1) == 'put')
+        if (matchers[1].firstMatch(line)!.group(1) == 'put') {
           type = _CHEF_Method.Put;
-        else
+        } else {
           type = _CHEF_Method.Fold;
+        }
         ingredient = matchers[1].firstMatch(line)!.group(3)!;
         mixingbowl =
             (matchers[1].firstMatch(line)!.group(6) == null ? 1 : int.parse(matchers[1].firstMatch(line)!.group(6)!)) - 1;

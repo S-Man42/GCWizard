@@ -14,6 +14,8 @@ import 'package:gc_wizard/tools/crypto_and_encodings/polybios/logic/polybios.dar
 import 'package:gc_wizard/tools/crypto_and_encodings/trifid/logic/trifid.dart';
 
 class Trifid extends StatefulWidget {
+  const Trifid({Key? key}) : super(key: key);
+
   @override
   TrifidState createState() => TrifidState();
 }
@@ -117,7 +119,7 @@ class TrifidState extends State<Trifid> {
 
   Widget _buildOutput() {
     String output = '';
-    if (_currentInput.isEmpty) return GCWDefaultOutput(child: '');
+    if (_currentInput.isEmpty) return const GCWDefaultOutput(child: '');
 
     var _currentOutput = TrifidOutput('', '');
     if (_currentMode == GCWSwitchPosition.left) {
@@ -128,10 +130,11 @@ class TrifidState extends State<Trifid> {
           decryptTrifid(_currentInput, _currentBlockSize, mode: _currentTrifidMode, alphabet: _currentAlphabet);
     }
 
-    if (_currentOutput.output.startsWith('trifid'))
+    if (_currentOutput.output.startsWith('trifid')) {
       output = i18n(context, _currentOutput.output);
-    else
+    } else {
       output = _currentOutput.output;
+    }
     return GCWMultipleOutput(
       children: [
         output,

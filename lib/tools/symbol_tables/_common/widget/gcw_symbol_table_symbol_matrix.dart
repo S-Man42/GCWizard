@@ -64,6 +64,7 @@ class GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> 
       Row(
         children: <Widget>[
           Expanded(
+              flex: 4,
               child: GCWOnOffSwitch(
                 value: _currentShowOverlayedSymbols,
                 title: i18n(context, 'symboltables_showoverlay'),
@@ -77,8 +78,7 @@ class GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> 
                     _currentShowOverlayedSymbols = value;
                   });
                 },
-              ),
-              flex: 4),
+              )),
 
               GCWIconButton(
                 icon: Icons.app_registration,
@@ -94,7 +94,7 @@ class GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> 
           ? _buildDecryptionButtonMatrix(widget.countColumns, widget.selectable, widget.onSymbolTapped)
           : Expanded(
               child: SingleChildScrollView(
-                  physics: AlwaysScrollableScrollPhysics(),
+                  physics: const AlwaysScrollableScrollPhysics(),
                   primary: true,
                   child: _buildDecryptionButtonMatrix(widget.countColumns, widget.selectable, widget.onSymbolTapped)))
     ]);
@@ -135,7 +135,15 @@ class GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> 
                 ),
                 _currentShowOverlayedSymbols
                     ? Opacity(
+                        opacity: 0.85,
                         child: Container(
+                          //TODO: Using GCWText instead: Currently it would expand the textfield width to max.
+                          height: defaultFontSize() + 5,
+                          decoration: ShapeDecoration(
+                              color: colors.dialog(),
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(ROUNDED_BORDER_RADIUS)),
+                              )),
                           //TODO: Using GCWText instead: Currently it would expand the textfield width to max.
                           child: AutoSizeText(
                             _showSpaceSymbolInOverlay(symbolText),
@@ -143,14 +151,7 @@ class GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> 
                             maxLines: 2,
                             minFontSize: 9.0,
                           ),
-                          height: defaultFontSize() + 5,
-                          decoration: ShapeDecoration(
-                              color: colors.dialog(),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(ROUNDED_BORDER_RADIUS)),
-                              )),
-                        ),
-                        opacity: 0.85)
+                        ))
                     : Container()
               ],
             ),
@@ -171,8 +172,8 @@ class GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> 
 
         columns.add(Expanded(
             child: Container(
+          padding: const EdgeInsets.all(3),
           child: widget,
-          padding: EdgeInsets.all(3),
         )));
       }
 

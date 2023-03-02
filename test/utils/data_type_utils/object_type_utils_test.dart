@@ -16,12 +16,12 @@ void main() {
       {'input' : false, 'expectedOutput' : null},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = toDoubleOrNull(elem['input']);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("ObjectUtils.toIntOrNull:", () {
@@ -39,12 +39,12 @@ void main() {
 
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = toIntOrNull(elem['input']);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("ObjectUtils.toBoolOrNull:", () {
@@ -61,12 +61,12 @@ void main() {
       {'input' : 'A', 'expectedOutput' : null},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = toBoolOrNull(elem['input']);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("ObjectUtils.toStringOrNull:", () {
@@ -82,12 +82,12 @@ void main() {
       {'input' : false, 'expectedOutput' : 'false'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = toStringOrNull(elem['input']);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("ObjectUtils.toStringListOrNull:", () {
@@ -103,12 +103,12 @@ void main() {
       {'input' : <Object?>[true, false], 'expectedOutput' : ['', '']},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}}', () {
         var _actual = toStringListOrNull(elem['input'] as List<Object?>);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("ObjectUtils.toStringListWithNullableContentOrNull:", () {
@@ -124,11 +124,11 @@ void main() {
       {'input' : <Object?>[true, false], 'expectedOutput' : [null, null]},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}}', () {
         var _actual = toStringListWithNullableContentOrNull(elem['input'] as List<Object?>);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

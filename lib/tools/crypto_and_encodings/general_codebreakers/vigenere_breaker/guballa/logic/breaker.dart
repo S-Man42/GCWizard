@@ -130,9 +130,11 @@ Iterable<int> iterateText(String text, String alphabet, {bool ignoreNonLetters =
   text = text.toLowerCase();
   for (int i = 0; i < text.length; i++) {
     index = trans.indexOf(text[i]);
-    if (index >= 0)
+    if (index >= 0) {
       yield index;
-    else if (!ignoreNonLetters) yield -1;
+    } else if (!ignoreNonLetters) {
+      yield -1;
+    }
   }
 }
 

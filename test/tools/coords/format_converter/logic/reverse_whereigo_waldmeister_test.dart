@@ -18,14 +18,14 @@ void main() {
       {'coord': LatLng(89.67067, 179.13098), 'expectedOutput': ['716199', '889310', '792067']},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('coord: ${elem['coord']}', () {
         var _actual = ReverseWherigoWaldmeister.fromLatLon(elem['coord'] as LatLng);
         expect(_actual.a, (elem['expectedOutput'] as List<String>)[0]);
         expect(_actual.b, (elem['expectedOutput'] as List<String>)[1]);
         expect(_actual.c, (elem['expectedOutput'] as List<String>)[2]);
       });
-    });
+    }
   });
 
   group("Converter.reverseWherigooWaldmeister.waldmeisterToLatLon:", () {
@@ -42,17 +42,13 @@ void main() {
       {'expectedOutput': LatLng(89.67067, 179.13098), 'input': ['716199', '889310', '792067']},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var a = int.tryParse((elem['input'] as List<String>)[0]);
-        var b = int.tryParse((elem['input'] as List<String>)[1]);
-        var c = int.tryParse((elem['input'] as List<String>)[2]);
-
         var _actual = ReverseWherigoWaldmeister.parse((elem['input'] as List<String>)[0] + " " + (elem['input'] as List<String>)[1] + " " + (elem['input'] as List<String>)[2])?.toLatLng();
         expect((_actual!.latitude - (elem['expectedOutput'] as LatLng).latitude).abs() < 1e-8, true);
         expect((_actual.longitude - (elem['expectedOutput'] as LatLng).longitude).abs() < 1e-8, true);
       });
-    });
+    }
   });
 
   group("Converter.reverse_wherigo_waldmeister.parseLatLon:", () {
@@ -62,16 +58,16 @@ void main() {
       {'text': '104181\n924569\n248105', 'expectedOutput': {'format': CoordinateFormatKey.REVERSE_WIG_WALDMEISTER, 'coordinate': LatLng(46.21101, 025.59849)}},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('text: ${elem['text']}', () {
         var _actual = ReverseWherigoWaldmeister.parse(elem['text'] as String)?.toLatLng();
-        if (_actual == null)
+        if (_actual == null) {
           expect(null, elem['expectedOutput']);
-        else {
+        } else {
           expect((_actual.latitude - ((elem['expectedOutput'] as Map<String, Object>)['coordinate'] as LatLng).latitude).abs() < 1e-8, true);
           expect((_actual.longitude - ((elem['expectedOutput'] as Map<String, Object>)['coordinate'] as LatLng).longitude).abs() < 1e-8, true);
         }
       });
-    });
+    }
   });
 }

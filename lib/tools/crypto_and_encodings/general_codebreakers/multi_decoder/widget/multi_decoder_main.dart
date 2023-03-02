@@ -1,6 +1,8 @@
 part of 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/multi_decoder.dart';
 
 class MultiDecoder extends StatefulWidget {
+  const MultiDecoder({Key? key}) : super(key: key);
+
   @override
   MultiDecoderState createState() => MultiDecoderState();
 }
@@ -51,6 +53,7 @@ class MultiDecoderState extends State<MultiDecoder> {
           children: [
             Expanded(
                 child: Container(
+                    padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
                     child: GCWTextField(
                       controller: _controller,
                       onChanged: (text) {
@@ -61,8 +64,7 @@ class MultiDecoderState extends State<MultiDecoder> {
                           });
                         }
                       },
-                    ),
-                    padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN))),
+                    ))),
             GCWIconButton(
               icon: Icons.settings,
               onPressed: () {
@@ -106,16 +108,16 @@ class MultiDecoderState extends State<MultiDecoder> {
           },
           child: Row(
             children: [
-              Expanded(child: GCWText(text: i18n(context, 'multidecoder_key')), flex: 1),
+              Expanded(flex: 1, child: GCWText(text: i18n(context, 'multidecoder_key'))),
               Expanded(
+                  flex: 3,
                   child: GCWTextField(
                     onChanged: (text) {
                       setState(() {
                         _currentKey = text;
                       });
                     },
-                  ),
-                  flex: 3)
+                  ))
             ],
           ),
         ),
@@ -128,8 +130,9 @@ class MultiDecoderState extends State<MultiDecoder> {
       String result = value.toString();
 
       if (tool.internalToolName == MDT_INTERNALNAMES_COORDINATEFORMATS) {
-        if (CoordinateFormatKey.values.contains(value))
+        if (CoordinateFormatKey.values.contains(value)) {
           result = coordinateFormatMetadataByKey(value as CoordinateFormatKey).name;
+        }
       }
       if ([MDT_INTERNALNAMES_BASE, MDT_INTERNALNAMES_BCD].contains(tool.internalToolName)) {
         result += '_title';
@@ -163,8 +166,9 @@ class MultiDecoderState extends State<MultiDecoder> {
             builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
               if (snapshot.hasData && snapshot.data is String && ((snapshot.data as String).isNotEmpty)) {
                 return GCWOutput(title: _toolTitle(tool), child: snapshot.data);
-              } else
+              } else {
                 return Container();
+              }
             });
       } else if (result is Future<Uint8List>) {
         return FutureBuilder(
@@ -176,16 +180,18 @@ class MultiDecoderState extends State<MultiDecoder> {
                     child: GCWImageView(
                         imageData:
                             GCWImageViewData(GCWFile(bytes: (snapshot.data as Uint8List), name: _toolTitle(tool)))));
-              } else
+              } else {
                 return Container();
+              }
             });
       } else if (result != null && result.toString().isNotEmpty) {
         return GCWOutput(
           title: _toolTitle(tool),
           child: result.toString(),
         );
-      } else
+      } else {
         return Container();
+      }
     }).toList();
 
     _currentOutput = Column(children: results);

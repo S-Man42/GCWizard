@@ -10,6 +10,8 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/logic/chef_language.dart';
 
 class Chef extends StatefulWidget {
+  const Chef({Key? key}) : super(key: key);
+
   @override
   ChefState createState() => ChefState();
 }
@@ -195,11 +197,12 @@ class ChefState extends State<Chef> {
       // generate chef
       if (_currentTitle.isEmpty) {
         output = buildOutputText(['chef_error_structure_recipe', 'chef_error_structure_recipe_missing_title']);
-      } else if (_currentOutput.isEmpty)
+      } else if (_currentOutput.isEmpty) {
         output = buildOutputText(['chef_error_structure_recipe', 'chef_error_structure_recipe_missing_output']);
-      else
+      } else {
         output = generateChef(language, _currentTitle, _currentRemark, _currentTime, _currentTemperature,
             _currentOutput, _auxilaryRecipes);
+      }
     } else {
       // interpret chef
       if (isValid(_currentInput)) {
@@ -212,8 +215,9 @@ class ChefState extends State<Chef> {
             'chef_error_structure_recipe_missing_title'
           ]);
         }
-      } else
+      } else {
         output = buildOutputText(['common_programming_error_runtime', 'chef_error_runtime_invalid_input']);
+      }
     }
     return GCWOutputText(
       text: output.trim(),
@@ -223,12 +227,13 @@ class ChefState extends State<Chef> {
 
   String buildOutputText(List<String> outputList) {
     String output = '';
-    outputList.forEach((element) {
-      if (element != null) if (element.startsWith('chef_') || element.startsWith('common_programming')) {
+    for (var element in outputList) {
+      if (element.startsWith('chef_') || element.startsWith('common_programming')) {
         output = output + i18n(context, element) + '\n';
-      } else
+      } else {
         output = output + element + '\n';
-    });
+      }
+    }
     return output;
   }
 }

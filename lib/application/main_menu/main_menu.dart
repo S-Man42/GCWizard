@@ -18,31 +18,31 @@ Drawer buildMainMenu(BuildContext context) {
   var header = SizedBox(
     height: 120.0,
     child: DrawerHeader(
+      decoration: BoxDecoration(
+        color: themeColors().dialog(),
+      ),
       child: Row(
         children: <Widget>[
           Container(
             padding: const EdgeInsets.all(2.5),
-            child: Image.asset(
-              'assets/logo/circle_border_128.png',
-            ),
             width: 50.0,
             height: 50.0,
             decoration: BoxDecoration(
               color: themeColors().dialogText(),
               shape: BoxShape.circle,
             ),
+            child: Image.asset(
+              'assets/logo/circle_border_128.png',
+            ),
           ),
           Padding(
-            padding: EdgeInsets.only(left: 20),
+            padding: const EdgeInsets.only(left: 20),
             child: GCWText(
               text: i18n(context, 'common_app_title'),
               style: TextStyle(color: themeColors().dialogText(), fontSize: 22.0),
             ),
           )
         ],
-      ),
-      decoration: BoxDecoration(
-        color: themeColors().dialog(),
       ),
     ),
   );
@@ -52,11 +52,11 @@ Drawer buildMainMenu(BuildContext context) {
 
   final otherMenuItems = [
     _CategoryMetaData(
-      registeredTools.firstWhere((tool) => className(tool.tool) == className(Changelog())),
+      registeredTools.firstWhere((tool) => className(tool.tool) == className(const Changelog())),
       Icons.show_chart
     ),
     _CategoryMetaData(
-      registeredTools.firstWhere((tool) => className(tool.tool) == className(About())),
+      registeredTools.firstWhere((tool) => className(tool.tool) == className(const About())),
       Icons.info
     )
   ];
@@ -75,8 +75,8 @@ Drawer buildMainMenu(BuildContext context) {
               child: Row(
                 children: <Widget>[
                   Container(
+                    padding: const EdgeInsets.only(left: 15, right: 15),
                     child: Icon(Icons.group, color: themeColors().dialogText()),
-                    padding: EdgeInsets.only(left: 15, right: 15),
                   ),
                   Text(
                     i18n(context, 'mainmenu_callforcontribution_title'),
@@ -89,7 +89,7 @@ Drawer buildMainMenu(BuildContext context) {
             Navigator.pop(context); //close Drawer
             Navigator.of(context).push(NoAnimationMaterialPageRoute<GCWTool>(
                 builder: (context) =>
-                    registeredTools.firstWhere((tool) => className(tool.tool) == className(CallForContribution()))));
+                    registeredTools.firstWhere((tool) => className(tool.tool) == className(const CallForContribution()))));
           })
     ],
   );
@@ -122,17 +122,17 @@ ExpansionTile _buildSettingsItem(BuildContext context) {
   // TODO class type
   final settingsItems = [
     _CategoryMetaData(
-      registeredTools.firstWhere((tool) => className(tool.tool) == className(GeneralSettings())),
+      registeredTools.firstWhere((tool) => className(tool.tool) == className(const GeneralSettings())),
       Icons.settings,
       i18n(context, 'mainmenu_settings_general_title'),
     ),
     _CategoryMetaData (
-      registeredTools.firstWhere((tool) => className(tool.tool) == className(CoordinatesSettings())),
+      registeredTools.firstWhere((tool) => className(tool.tool) == className(const CoordinatesSettings())),
       Icons.language,
       i18n(context, 'mainmenu_settings_coordinates_title'),
     ),
     _CategoryMetaData (
-      registeredTools.firstWhere((tool) => className(tool.tool) == className(ToolSettings())),
+      registeredTools.firstWhere((tool) => className(tool.tool) == className(const ToolSettings())),
       Icons.category,
       i18n(context, 'mainmenu_settings_tools_title'),
     )
@@ -153,7 +153,7 @@ ExpansionTile _buildSettingsItem(BuildContext context) {
         color: themeColors().mainFont(),
       ),
       children: settingsItems.map((item) {
-        return Padding(padding: EdgeInsets.only(left: 25), child: _buildMenuItem(context, item));
+        return Padding(padding: const EdgeInsets.only(left: 25), child: _buildMenuItem(context, item));
       }).toList());
 }
 

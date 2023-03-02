@@ -8,8 +8,8 @@ class Angle extends Unit {
 
   Angle({required String name, required String symbol, bool isReference = false, required double inDegree})
       : super(name, symbol, isReference, (e) => e * inDegree, (e) => e / inDegree) {
-    toDegree = this.toReference;
-    fromDegree = this.fromReference;
+    toDegree = toReference;
+    fromDegree = fromReference;
   }
 }
 
@@ -35,7 +35,7 @@ final ANGLE_ZORCH = Angle(name: 'common_unit_angle_zorch_name', symbol: "'''", i
 
 final ANGLE_QUIRCITS = Angle(name: 'common_unit_angle_quircits_name', symbol: '""', inDegree: 0.0036);
 
-final List<Unit> angles = [
+final List<Angle> angles = [
   ANGLE_DEGREE,
   ANGLE_RADIAN,
   ANGLE_GON,

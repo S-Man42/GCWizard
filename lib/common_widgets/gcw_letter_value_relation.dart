@@ -41,11 +41,11 @@ class GCWLetterValueRelationState extends State<GCWLetterValueRelation> {
           },
         )),
         Container(
-          child: GCWText(
+          padding: const EdgeInsets.only(left: 2 * DEFAULT_MARGIN, right: 2 * DEFAULT_MARGIN),
+          child: const GCWText(
             text: '=',
             textAlign: TextAlign.center,
           ),
-          padding: EdgeInsets.only(left: 2 * DEFAULT_MARGIN, right: 2 * DEFAULT_MARGIN),
         ),
         Expanded(
           child: GCWIntegerSpinner(

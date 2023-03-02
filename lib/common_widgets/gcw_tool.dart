@@ -127,10 +127,10 @@ class GCWTool extends StatefulWidget {
         this.isBeta = false,
         this.suppressHelpButton = false})
       : super(key: key) {
-    this.longId = className(tool) + '_' + (id);
+    longId = className(tool) + '_' + (id);
 
     if (iconPath != null) {
-      this.icon = GCWSymbolContainer(
+      icon = GCWSymbolContainer(
         symbol: Image.asset(iconPath!, width: DEFAULT_LISTITEM_SIZE),
       );
     }
@@ -222,7 +222,7 @@ class _GCWToolState extends State<GCWTool> {
     url = Uri.encodeFull(url);
 
     return IconButton(
-      icon: Icon(Icons.help),
+      icon: const Icon(Icons.help),
       onPressed: () {
         launchUrl(Uri.parse(url));
       },
@@ -233,13 +233,14 @@ class _GCWToolState extends State<GCWTool> {
     List<Widget> buttonList = <Widget>[];
 
     // add further buttons as defined in registry
-    widget.buttonList.forEach((button) {
+    for (var button in widget.buttonList) {
       String url = '';
-      if (button.url.isEmpty) // 404-Page asking for help
+      if (button.url.isEmpty) {
         url = i18n(context, 'common_error_url'); // https://blog.gcwizard.net/manual/uncategorized/404/
-      else
+      } else {
         url = button.url;
-      if (button.url.isNotEmpty)
+      }
+      if (button.url.isNotEmpty) {
         buttonList.add(IconButton(
           icon: Icon(button.icon),
           onPressed: () {
@@ -257,11 +258,13 @@ class _GCWToolState extends State<GCWTool> {
                   launchUrl(Uri.parse(i18n(context, url, ifTranslationNotExists: url)));
                 },
               );
-            } else
+            } else {
               launchUrl(Uri.parse(i18n(context, url)));
+            }
           },
         ));
-    });
+      }
+    }
 
     Widget? helpButton = _buildHelpButton();
     if (helpButton != null) buttonList.add(helpButton);
@@ -275,8 +278,8 @@ class _GCWToolState extends State<GCWTool> {
     var tool = widget.tool;
     if (!widget.suppressToolMargin) {
       tool = Padding(
+        padding: const EdgeInsets.only(top: 5, left: 10, right: 10, bottom: 2),
         child: tool,
-        padding: EdgeInsets.only(top: 5, left: 10, right: 10, bottom: 2),
       );
     }
 
@@ -285,7 +288,7 @@ class _GCWToolState extends State<GCWTool> {
     }
 
     return SingleChildScrollView(
-      physics: AlwaysScrollableScrollPhysics(),
+      physics: const AlwaysScrollableScrollPhysics(),
       primary: true,
       child: tool,
     );
@@ -294,12 +297,12 @@ class _GCWToolState extends State<GCWTool> {
 
 void _setToolCount(String id) {
   var toolCountsRaw = Prefs.get(PREFERENCE_TOOL_COUNT);
-  if (toolCountsRaw == null) toolCountsRaw = '{}';
+  toolCountsRaw ??= '{}';
 
   var toolCounts = _toolCounts();
   var currentToolCount = toolCounts[id];
 
-  if (currentToolCount == null) currentToolCount = 0;
+  currentToolCount ??= 0;
 
   currentToolCount++;
   toolCounts[id] = currentToolCount;
@@ -311,21 +314,25 @@ int _sortToolListAlphabetically(GCWTool a, GCWTool b) {
   var aName = a.toolName;
   var bName = b.toolName;
 
-  if (aName == null && bName == null)
+  if (aName == null && bName == null) {
     return 0;
+  }
 
-  if (aName == null && bName != null)
+  if (aName == null && bName != null) {
     return 1;
+  }
 
-  if (bName == null && aName != null)
+  if (bName == null && aName != null) {
     return -1;
+  }
 
   return removeDiacritics(aName!).toLowerCase().compareTo(removeDiacritics(bName!).toLowerCase());
 }
 
 int sortToolList(GCWTool a, GCWTool b) {
-  if (!Prefs.getBool(PREFERENCE_TOOL_COUNT_SORT))
+  if (!Prefs.getBool(PREFERENCE_TOOL_COUNT_SORT)) {
     return _sortToolListAlphabetically(a, b);
+  }
 
   var toolCounts = _toolCounts();
 

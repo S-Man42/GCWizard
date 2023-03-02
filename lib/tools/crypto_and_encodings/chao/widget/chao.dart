@@ -10,6 +10,8 @@ import 'package:gc_wizard/tools/crypto_and_encodings/reverse/logic/reverse.dart'
 import 'package:gc_wizard/utils/alphabets.dart';
 
 class Chao extends StatefulWidget {
+  const Chao({Key? key}) : super(key: key);
+
   @override
   ChaoState createState() => ChaoState();
 }
@@ -118,7 +120,7 @@ class ChaoState extends State<Chao> {
   }
 
   Widget _buildOutput() {
-    if (_currentInput == null || _currentInput.isEmpty) return GCWDefaultOutput();
+    if (_currentInput.isEmpty) return const GCWDefaultOutput();
 
     var alphabetChiffre = '';
     var alphabetPlain = '';

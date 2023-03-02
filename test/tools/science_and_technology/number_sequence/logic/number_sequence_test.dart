@@ -19,12 +19,12 @@ void main() {
       {'sequence' : NumberSequencesMode.LYCHREL,          'position' : 20, 'expectedOutput' : BigInt.from(1767)},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('sequence: ${elem['sequence']}, position: ${elem['position']}', () {
         var _actual = getNumberAt(elem['sequence'] as NumberSequencesMode, elem['position'] as int?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("numbersequence.checkNumber:", () {
@@ -44,12 +44,12 @@ void main() {
       {'sequence' : NumberSequencesMode.LYCHREL,          'maxIndex' : 100, 'expectedOutput' : 20, 'number' : BigInt.from(1767)},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('sequence: ${elem['sequence']}, number: ${elem['number']}', () {
         var _actual = checkNumber(elem['sequence'] as NumberSequencesMode, elem['number'] as BigInt?, elem['maxIndex'] as int);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("numbersequence.getNumbersInRange:", () {
@@ -69,7 +69,7 @@ void main() {
       {'sequence' : NumberSequencesMode.LYCHREL,          'start' : 10, 'stop' : 15, 'expectedOutput' : [887, 978, 986, 1495, 1497]},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('sequence: ${elem['sequence']}, start: ${elem['start']}, stop: ${elem['stop']}', () {
         var _actual = getNumbersInRange(elem['sequence'] as NumberSequencesMode, elem['start'] as int?, elem['stop'] as int?);
         var length = (elem['expectedOutput'] as List<BigInt>).length;
@@ -77,7 +77,7 @@ void main() {
           expect(_actual[i], BigInt.from((elem['expectedOutput'] as List<int>)[i]));
         }
       });
-    });
+    }
   });
 
   group("numbersequence.getNumbersWithNDigits:", () {
@@ -97,18 +97,19 @@ void main() {
       {'sequence' : NumberSequencesMode.LYCHREL,          'digits' : 3, 'expectedOutput' : [196, 295, 394, 493, 592, 689, 691, 788, 790, 879, 887, 978, 986]}, // Mark test
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('sequence: ${elem['sequence']}, digits: ${elem['digits']}', () {
         var _actual = getNumbersWithNDigits(elem['sequence'] as NumberSequencesMode, elem['digits'] as int?);
         var length = (elem['expectedOutput'] as List<Object>).length;
         for (int i = 0; i < length; i++) {
-          if (_actual[i].runtimeType.toString() == 'String')
+          if (_actual[i].runtimeType.toString() == 'String') {
             expect(BigInt.parse(_actual[i].toString()), BigInt.from((elem['expectedOutput'] as List<int>)[i]));
-          else
+          } else {
             expect(_actual[i], BigInt.from((elem['expectedOutput'] as List<int>)[i]));
+          }
         }
       });
-    });
+    }
   });
 
   group("numbersequence.getFirstPositionOfSequence:", () {
@@ -141,14 +142,14 @@ void main() {
           38, 2)},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('sequence: ${elem['sequence']}, number: ${elem['start']}', () {
         PositionOfSequenceOutput _actual = getFirstPositionOfSequence(elem['sequence'] as NumberSequencesMode, elem['number'] as String?, elem['maxIndex'] as int);
         expect(_actual.number, (elem['expectedOutput'] as PositionOfSequenceOutput).number);
         expect(_actual.positionSequence, (elem['expectedOutput'] as PositionOfSequenceOutput).positionSequence);
         expect(_actual.positionDigits, (elem['expectedOutput'] as PositionOfSequenceOutput).positionDigits);
       });
-    });
+    }
   });
 
 

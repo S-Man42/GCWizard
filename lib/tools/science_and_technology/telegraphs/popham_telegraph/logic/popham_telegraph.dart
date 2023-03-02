@@ -60,10 +60,10 @@ SegmentsText decodeVisualPopham(List<String> inputs) {
 
   var displays = <List<String>>[];
   var segment = <String>[];
-  inputs.forEach((element) {
+  for (var element in inputs) {
     segment = _stringToSegment(element);
     displays.add(segment);
-  });
+  }
 
   Map<String, String> CODEBOOK = {};
   POPHAM.forEach((key, value) {
@@ -86,7 +86,9 @@ SegmentsText decodeVisualPopham(List<String> inputs) {
 
 List<String> _stringToSegment(String input) {
   List<String> result = [];
-  for (int i = 0; i < input.length; i++) result.add(input[i]);
+  for (int i = 0; i < input.length; i++) {
+    result.add(input[i]);
+  }
 
   return result;
 }

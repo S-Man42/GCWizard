@@ -10,6 +10,8 @@ import 'package:gc_wizard/tools/crypto_and_encodings/gade/logic/gade.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 
 class Gade extends StatefulWidget {
+  const Gade({Key? key}) : super(key: key);
+
   @override
   GadeState createState() => GadeState();
 }

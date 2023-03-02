@@ -19,6 +19,7 @@ class GCWToolList extends StatefulWidget {
 
   const GCWToolList({Key? key, required this.toolList}) : super(key: key);
 
+  @override
   _GCWToolListState createState() => _GCWToolListState();
 }
 
@@ -39,9 +40,9 @@ class _GCWToolListState extends State<GCWToolList> {
 
   Widget _buildItems() {
     return ListView.separated(
-      physics: AlwaysScrollableScrollPhysics(),
+      physics: const AlwaysScrollableScrollPhysics(),
       itemCount: widget.toolList.length,
-      separatorBuilder: (BuildContext context, int index) => Divider(),
+      separatorBuilder: (BuildContext context, int index) => const Divider(),
       itemBuilder: (BuildContext context, int i) {
         return _buildRow(context, widget.toolList[i]);
       },
@@ -58,13 +59,13 @@ class _GCWToolListState extends State<GCWToolList> {
         children: [
           if (tool.isBeta)
             Container(
+              padding: const EdgeInsets.symmetric(horizontal: DEFAULT_MARGIN),
+              margin: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
+              color: themeColors().accent(),
               child: Text(
                 'BETA',
                 style: gcwBetaStyle(),
               ),
-              padding: EdgeInsets.symmetric(horizontal: DEFAULT_MARGIN),
-              margin: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
-              color: themeColors().accent(),
             ),
           Expanded(
             child: Text(
@@ -84,7 +85,7 @@ class _GCWToolListState extends State<GCWToolList> {
       },
       leading: tool.icon,
       trailing: IconButton(
-        icon: tool.isFavorite ? Icon(Icons.star) : Icon(Icons.star_border),
+        icon: tool.isFavorite ? const Icon(Icons.star) : const Icon(Icons.star_border),
         color: themeColors().mainFont(),
         onPressed: () {
           if (tool.isFavorite) {
@@ -129,7 +130,7 @@ class _GCWToolListState extends State<GCWToolList> {
       content = Column(
         children: [
           descriptionText,
-          Container(child: exampleText, padding: EdgeInsets.only(top: DEFAULT_DESCRIPTION_MARGIN))
+          Container(padding: const EdgeInsets.only(top: DEFAULT_DESCRIPTION_MARGIN), child: exampleText)
         ],
       );
     } else if (exampleText != null) {
@@ -140,8 +141,8 @@ class _GCWToolListState extends State<GCWToolList> {
 
     return (exampleText ?? descriptionText) != null
         ? Container(
+            padding: const EdgeInsets.only(left: 10.0),
             child: content,
-            padding: EdgeInsets.only(left: 10.0),
           )
         : Container();
   }

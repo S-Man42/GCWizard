@@ -11,6 +11,8 @@ import 'package:gc_wizard/tools/science_and_technology/resistor/resistor_formatt
 part 'package:gc_wizard/tools/science_and_technology/resistor/resistor_colorcodecalculator/widget/resistor_band_dropdown.dart';
 
 class ResistorColorCodeCalculator extends StatefulWidget {
+  const ResistorColorCodeCalculator({Key? key}) : super(key: key);
+
   @override
   ResistorColorCodeCalculatorState createState() => ResistorColorCodeCalculatorState();
 }
@@ -64,6 +66,7 @@ class ResistorColorCodeCalculatorState extends State<ResistorColorCodeCalculator
     return Column(
       children: <Widget>[
         Container(
+          padding: const EdgeInsets.only(bottom: 10.0),
           child: GCWIntegerSpinner(
             title: i18n(context, 'resistor_colorcodecalculator_numberbands'),
             min: 3,
@@ -77,7 +80,6 @@ class ResistorColorCodeCalculatorState extends State<ResistorColorCodeCalculator
               });
             },
           ),
-          padding: EdgeInsets.only(bottom: 10.0),
         ),
         [3, 4].contains(_currentNumberBands) ? _resistorBandDropDown_fourBands_first : Container(),
         [3, 4].contains(_currentNumberBands) ? _resistorBandDropDown_fourBands_second : Container(),
@@ -272,7 +274,7 @@ class ResistorColorCodeCalculatorState extends State<ResistorColorCodeCalculator
     return GCWColumnedMultilineOutput(
         firstRows: [GCWTextDivider(text: i18n(context, 'common_output'))],
         data: outputs,
-        flexValues: [2, 3]
+        flexValues: const [2, 3]
     );
   }
 }

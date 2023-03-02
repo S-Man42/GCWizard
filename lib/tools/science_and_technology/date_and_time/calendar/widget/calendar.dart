@@ -13,6 +13,8 @@ import 'package:gc_wizard/utils/datetime_utils.dart';
 import 'package:intl/intl.dart';
 
 class Calendar extends StatefulWidget {
+  const Calendar({Key? key}) : super(key: key);
+
   @override
   CalendarState createState() => CalendarState();
 }
@@ -86,7 +88,7 @@ class CalendarState extends State<Calendar> {
 
   Widget _buildOutput() {
     double jd = 0.0;
-    var output = new Map<String, Object?>();
+    var output = <String, Object?>{};
     switch (_currentCalendarSystem) {
       case CalendarSystem.MODIFIEDJULIANDATE:
         jd = ModifedJulianDateToJulianDate(_currentJulianDate);
@@ -170,7 +172,7 @@ class CalendarState extends State<Calendar> {
             data: output.entries.map((entry) {
                     return [i18n(context, entry.key), entry.value];
                   }).toList(),
-            flexValues: [1, 1]
+            flexValues: const [1, 1]
           ),
     );
   }

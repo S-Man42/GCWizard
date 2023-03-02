@@ -12,12 +12,12 @@ void main() {
       {'input' : '8 9 1', 'expectedOutput' : '10 11 1'}
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = encodeZamonian(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("ZamonianNumbers.decode:", () {
@@ -30,11 +30,11 @@ void main() {
       {'input' : '10 11 1', 'expectedOutput' : '8 9 1'}
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decodeZamonian(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

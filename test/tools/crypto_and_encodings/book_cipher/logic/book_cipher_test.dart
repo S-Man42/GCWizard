@@ -53,7 +53,7 @@ void main() {
       {'input' : text2, 'text' : '8', 'outFormat' : encodeOutFormat.RowWordCharacter, 'expectedOutput' : '?.?.?', 'spacesOn' : true, 'emptyLinesOn' : true, 'ignoreSymbols' : '.;+-:!?\'"‘&(){}[]/\\_', 'diacriticsOn' : true, 'azOn' : true, 'numbersOn' : false, 'onlyFirstWordLetter' : true},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = encodeText(elem['input'] as String?, elem['text'] as String?, elem['outFormat'] as encodeOutFormat,
             spacesOn: elem['spacesOn'] as bool,
@@ -66,7 +66,7 @@ void main() {
         );
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("book_cipher.decodeSearchWord:", () {
@@ -86,7 +86,7 @@ void main() {
       {'input' : text1, 'word' : 'so', 'outFormat' : decodeOutFormat.Word, 'expectedOutput' : ': 11\n: 26', 'spacesOn' : true, 'emptyLinesOn' : true, 'ignoreSymbols' : '.;+-:!?\'"‘&(){}[]/\\_', 'diacriticsOn' : true, 'azOn' : true, 'numbersOn' : true, 'onlyFirstWordLetter' : false},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decodeSearchWord(elem['input'] as String?, elem['word'] as String?, elem['outFormat'] as decodeOutFormat, "", "", "",
             spacesOn: elem['spacesOn'] as bool,
@@ -99,7 +99,7 @@ void main() {
         );
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("book_cipher.decodeFindWord:", () {
@@ -179,7 +179,7 @@ Helmut Schickart (1931–1993). ''';
 
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decodeFindWord(elem['input'] as String?, elem['positions'] as String?, elem['searchFormat'] as searchFormat,
             spacesOn: elem['spacesOn'] as bool,
@@ -192,6 +192,6 @@ Helmut Schickart (1931–1993). ''';
         );
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

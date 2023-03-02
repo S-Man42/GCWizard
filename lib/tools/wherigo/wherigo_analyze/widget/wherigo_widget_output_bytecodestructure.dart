@@ -1,12 +1,12 @@
 part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_analyze.dart';
 
-List<Widget> buildOutputListByteCodeStructure(BuildContext context, Uint8List bytes) {
+List<Widget> _buildOutputListByteCodeStructure(BuildContext context, Uint8List bytes) {
 
   int numberOfObjects = readShort(bytes, 7);
   int offset = 0;
   List<Widget> result = [];
 
-  Widget buildSectionSignature(int numberOfObjects){
+  Widget _buildSectionSignature(int numberOfObjects){
     List<List<String>> content = [];
     content = [
       [
@@ -35,12 +35,12 @@ List<Widget> buildOutputListByteCodeStructure(BuildContext context, Uint8List by
       child: GCWColumnedMultilineOutput(
           data: content,
           suppressCopyButtons: true,
-          flexValues: [1, 3, 2],
+          flexValues: const [1, 3, 2],
           hasHeader: true
       ),
     );
   }
-  Widget buildSectionMediaFiles(int numberOfObjects){
+  Widget _buildSectionMediaFiles(int numberOfObjects){
     // id and offset of media files
     // 2 Bytes ID
     // 4 Bytes offset
@@ -49,10 +49,11 @@ List<Widget> buildOutputListByteCodeStructure(BuildContext context, Uint8List by
 
     offset = 15;
     for (int i = 1; i < numberOfObjects; i++) {
-      if (i == 1)
+      if (i == 1) {
         content.add(
           ['', i18n(context, 'wherigo_data_mediafiles'), 'ID Offset'],
         );
+      }
 
       content.add([
         offset.toString().padLeft(7, ' '),
@@ -67,12 +68,12 @@ List<Widget> buildOutputListByteCodeStructure(BuildContext context, Uint8List by
       child: GCWColumnedMultilineOutput(
           data: content,
           suppressCopyButtons: true,
-          flexValues: [1, 3, 2],
+          flexValues: const [1, 3, 2],
           hasHeader: true
       ),
     );
   }
-  Widget buildSectionHeader(){
+  Widget _buildSectionHeader(){
     List<List<String>> content = [];
     content.add(['', i18n(context, 'wherigo_header_headerlength'), 'Bytes']);
     content.add([
@@ -108,12 +109,12 @@ List<Widget> buildOutputListByteCodeStructure(BuildContext context, Uint8List by
       child: GCWColumnedMultilineOutput(
           data: content,
           suppressCopyButtons: true,
-          flexValues: [1, 3, 2],
+          flexValues: const [1, 3, 2],
           hasHeader: true
       ),
     );
   }
-  Widget buildSectionLUAByteCode(){
+  Widget _buildSectionLUAByteCode(){
     // LUA Bytecode
     // 4 Bytes Size
     // ? bytes LUA Bytecode
@@ -130,12 +131,12 @@ List<Widget> buildOutputListByteCodeStructure(BuildContext context, Uint8List by
       child: GCWColumnedMultilineOutput(
           data: content,
           suppressCopyButtons: true,
-          flexValues: [1, 3, 2],
+          flexValues: const [1, 3, 2],
           hasHeader: true
       ),
     );
   }
-  Widget buildSectionMediaFilesDetails(){
+  Widget _buildSectionMediaFilesDetails(){
     // Media files
     // 1 Byte Valid Object (0 = nothing, else Object
     // 4 Byte Object Type
@@ -143,10 +144,11 @@ List<Widget> buildOutputListByteCodeStructure(BuildContext context, Uint8List by
     // ? bytes Object Data
     List<List<String>> content = [];
     for (int i = 1; i < numberOfObjects; i++) {
-      if (i == 1)
+      if (i == 1) {
         content.add(
           ['', i18n(context, 'wherigo_data_mediafiles'), i18n(context, 'wherigo_header_valid')],
         );
+      }
       try {
         if (readByte(bytes, offset) != 0) {
           content.add([
@@ -196,23 +198,23 @@ List<Widget> buildOutputListByteCodeStructure(BuildContext context, Uint8List by
       child: GCWColumnedMultilineOutput(
           data: content,
           suppressCopyButtons: true,
-          flexValues: [1, 3, 2],
+          flexValues: const [1, 3, 2],
           hasHeader: true
       ),
     );
   }
 
-  result.add(buildSectionSignature(numberOfObjects));
-  result.add(buildSectionMediaFiles(numberOfObjects));
-  result.add(buildSectionHeader());
+  result.add(_buildSectionSignature(numberOfObjects));
+  result.add(_buildSectionMediaFiles(numberOfObjects));
+  result.add(_buildSectionHeader());
 
   offset = offset + LENGTH_INT + readInt(bytes, offset);
 
-  result.add(buildSectionLUAByteCode());
+  result.add(_buildSectionLUAByteCode());
 
   offset = offset + LENGTH_INT + readInt(bytes, offset);
 
-  result.add(buildSectionMediaFilesDetails());
+  result.add(_buildSectionMediaFilesDetails());
 
   return result;
 } // end _outputBytecodeStructure

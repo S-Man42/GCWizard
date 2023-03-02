@@ -45,7 +45,7 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
   void initState() {
     super.initState();
 
-    advancedPlayer = AudioPlayer(playerId: Uuid().v4());
+    advancedPlayer = AudioPlayer(playerId: const Uuid().v4());
 
     if (kIsWeb) {
       // Calls to Platform.isIOS fails on web
@@ -93,8 +93,9 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
     _loadedFileBytes = widget.file.bytes.length;
     _isLoaded = true;
 
-    if (!mounted) // prevents setState when currently disposing widget.
+    if (!mounted) {
       return;
+    }
 
     setState(() {});
   }
@@ -213,7 +214,7 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
     Directory tempDir = await getApplicationDocumentsDirectory();
     String tempPath = tempDir.path;
     var filePath = tempPath + '/${advancedPlayer.playerId}.tmp';
-    return new File(filePath).writeAsBytes(buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
+    return File(filePath).writeAsBytes(buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
   }
 
   String _durationText() {

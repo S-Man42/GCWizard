@@ -7,6 +7,8 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/hashes/logic/hashes.dart';
 
 class HashOverview extends StatefulWidget {
+  const HashOverview({Key? key}) : super(key: key);
+
   @override
   _HashOverviewState createState() => _HashOverviewState();
 }

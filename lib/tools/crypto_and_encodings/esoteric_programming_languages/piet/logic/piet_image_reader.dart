@@ -38,9 +38,9 @@ class PietImageReader {
       var prevColor = _toRgb(image.getPixel(0, rowIndex));
       for (var i = 1; i < image.width; i++) {
         var currentColor = _toRgb(image.getPixel(i, rowIndex));
-        if (currentColor == prevColor)
+        if (currentColor == prevColor) {
           count++;
-        else {
+        } else {
           if (count < minCount) minCount = count;
 
           prevColor = currentColor;

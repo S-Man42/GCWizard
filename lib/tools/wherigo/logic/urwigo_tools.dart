@@ -36,15 +36,16 @@ String? breakUrwigoHash(int input, HASH type) {
   return null;
 }
 
-String deobfuscateUrwigoText(String? text, String? dtable) {
-  if (text == null || text.isEmpty) return '';
+String deobfuscateUrwigoText(String text, String dtable) {
+  if (text.isEmpty) return '';
 
-  if (dtable == null || dtable.isEmpty) return '';
+  if (dtable.isEmpty) return '';
 
-  if (dtable == 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@.-~')
+  if (dtable == 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@.-~') {
     return gsub_wig(text);
-  else
-    return readustring(text, dtable) ?? '';
+  } else {
+    return readustring(text, dtable);
+  }
 }
 
 String obfuscateUrwigoText(String? text, String? dtable) {
@@ -75,12 +76,15 @@ String obfuscateUrwigoText(String? text, String? dtable) {
     } else {
       codeUnit = 1 + char.codeUnitAt(0);
     }
-    if (searchReplace[codeUnit] == null) if (32 <= codeUnit && codeUnit < 127)
-      result = result + String.fromCharCode(codeUnit);
-    else
-      result = result + '\\' + codeUnit.toString().padLeft(3, '0');
-    else
+    if (searchReplace[codeUnit] == null) {
+      if (32 <= codeUnit && codeUnit < 127) {
+        result = result + String.fromCharCode(codeUnit);
+      } else {
+        result = result + '\\' + codeUnit.toString().padLeft(3, '0');
+      }
+    } else {
       result = result + searchReplace[codeUnit]!;
+    }
   });
 
   return result;

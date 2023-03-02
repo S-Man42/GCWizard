@@ -7,6 +7,8 @@ import 'package:gc_wizard/tools/science_and_technology/vanity/_common/logic/phon
 import 'package:gc_wizard/tools/science_and_technology/vanity/_common/logic/vanity.dart';
 
 class VanitySingletap extends StatefulWidget {
+  const VanitySingletap({Key? key}) : super(key: key);
+
   @override
   VanitySingletapState createState() => VanitySingletapState();
 }

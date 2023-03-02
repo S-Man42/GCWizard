@@ -83,18 +83,20 @@ UTMREF convertMGRSToUTM(MGRS mgrs) {
 
   double false_northing;
 
-  if ((set_number % 2) == 0)
+  if ((set_number % 2) == 0) {
     false_northing = 500000.0;
-  else
+  } else {
     false_northing = 0.0;
+  }
 
   var squareLetter1 = alphabet.indexOf(mgrs.digraph[0]);
   var squareLetter2 = alphabet.indexOf(mgrs.digraph[1]);
 
   grid_northing = squareLetter2 * 100000.0;
   grid_easting = (squareLetter1 - ltr2_low_value + 1) * 100000.0;
-  if ((ltr2_low_value == alphabet.indexOf('J')) && (squareLetter1 > alphabet.indexOf('O')))
+  if ((ltr2_low_value == alphabet.indexOf('J')) && (squareLetter1 > alphabet.indexOf('O'))) {
     grid_easting = grid_easting - 100000;
+  }
 
   if (squareLetter2 > alphabet.indexOf('O')) grid_northing = grid_northing - 100000;
 
@@ -172,8 +174,9 @@ MGRS? parseMGRS(String input) {
     || _digraph == null
     || _eastingString == null
     || _northingString == null
-  )
+  ) {
     return null;
+  }
 
   var _lonZone = int.tryParse(_lonZoneString);
   if (_lonZone == null) return null;
@@ -198,9 +201,9 @@ MGRS? parseMGRS(String input) {
 // Values with a point are not changed
 // discussed with Mark on 3.2.2021
 double fillUpNumber(double number, String text, int length) {
-  if (text.contains('.'))
+  if (text.contains('.')) {
     return number;
-  else {
+  } else {
     text = text.padRight(length, '0');
     return double.parse(text);
   }

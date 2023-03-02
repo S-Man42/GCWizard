@@ -20,12 +20,14 @@ const _EUROBRAILLE_RELATIVE_DISPLAY_WIDTH = 51;
 const _EUROBRAILLE_RELATIVE_DISPLAY_HEIGHT = 130;
 const _EUROBRAILLE_RADIUS = 12;
 
-class BrailleEuroSegmentDisplay extends NSegmentDisplay {
-  final Map<String, bool> segments;
-  final bool readOnly;
-  final void Function(Map<String, bool>)? onChanged;
 
-  BrailleEuroSegmentDisplay({Key? key, required this.segments, this.readOnly = false, this.onChanged})
+class BrailleEuroSegmentDisplay extends NSegmentDisplay {
+
+  BrailleEuroSegmentDisplay({
+      Key? key,
+      required Map<String, bool> segments,
+      bool readOnly = false,
+      void Function(Map<String, bool>)? onChanged})
       : super(
             key: key,
             initialSegments: _INITIAL_SEGMENTS,

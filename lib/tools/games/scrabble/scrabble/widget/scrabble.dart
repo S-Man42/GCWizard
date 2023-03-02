@@ -11,6 +11,8 @@ import 'package:gc_wizard/tools/science_and_technology/cross_sums/widget/crossto
 import 'package:gc_wizard/utils/collection_utils.dart';
 
 class Scrabble extends StatefulWidget {
+  const Scrabble({Key? key}) : super(key: key);
+
   @override
   ScrabbleState createState() => ScrabbleState();
 }

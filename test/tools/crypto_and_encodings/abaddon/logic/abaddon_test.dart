@@ -32,12 +32,12 @@ void main() {
       {'input' : 'ANZ', 'replaceCharacters': {YEN: 'a', MY: 'b', THORN: 'c'}, 'expectedOutput' : 'aabaaccac'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, replaceCharacter: ${elem['replaceCharacters']}', () {
         var _actual = encryptAbaddon(elem['input'] as String?, elem['replaceCharacters'] as Map<String, String>?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("AbaddonCode.decryptAbaddon:", () {
@@ -75,11 +75,11 @@ void main() {
       {'input' : '001002202', 'replaceCharacters': {YEN: '', MY: '', THORN: ''}, 'expectedOutput' : ''},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, replaceCharacter: ${elem['replaceCharacters']}', () {
         var _actual = decryptAbaddon(elem['input'] as String?, elem['replaceCharacters'] as Map<String, String>?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

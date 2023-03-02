@@ -56,14 +56,14 @@ class BefungeOutput {
 class Stack {
   List<BigInt> content;
 
-  push(BigInt element) {
+  void push(BigInt element) {
     content.add(element);
   }
 
   BigInt pop() {
-    if (isEmpty())
+    if (isEmpty()) {
       return BigInt.zero;
-    else {
+    } else {
       BigInt element = content[content.length - 1];
       content.removeAt(content.length - 1);
       return element;
@@ -74,6 +74,7 @@ class Stack {
     return (content.isEmpty);
   }
 
+  @override
   String toString() {
     return content.join(' ');
   }
@@ -94,10 +95,11 @@ List<String> _Mnemonic = [];
 
 String _cur() {
   BigInt opCode = _pg[_y * LINEWIDTH + _x];
-  if (BigInt.zero < opCode && opCode < BigInt.from(256))
+  if (BigInt.zero < opCode && opCode < BigInt.from(256)) {
     return String.fromCharCode(opCode.toInt());
-  else
+  } else {
     return opCode.toString();
+  }
 }
 
 void _addDebugInformation(bool stringMode) {
@@ -106,7 +108,9 @@ void _addDebugInformation(bool stringMode) {
 
   if ((_cur() == '"' || _cur() == '”')) {
     _Mnemonic.add('stringmode');
-  } else if (stringMode) _Mnemonic.add('push ' + _cur().codeUnitAt(0).toString());
+  } else if (stringMode) {
+    _Mnemonic.add('push ' + _cur().codeUnitAt(0).toString());
+  }
 }
 
 bool _isDigit(String char) {
@@ -125,12 +129,13 @@ bool _isDigit(String char) {
 }
 
 BefungeOutput interpretBefunge(String? program, {String? input = ''}) {
-  if (program == null || program.isEmpty)
+  if (program == null || program.isEmpty) {
     return BefungeOutput(
         Output: '', Error: '', BefungeStack: _BefungeStack, PC: _PC, Command: _Command, Mnemonic: _Mnemonic);
+  }
 
   if (_correctBefungeProgramLength(program)) {
-    Random random = new Random();
+    Random random = Random();
     Stack stack = Stack([]);
     int dx = 1;
     int dy = 0;
@@ -180,16 +185,17 @@ BefungeOutput interpretBefunge(String? program, {String? input = ''}) {
 
       _addDebugInformation(stringMode);
 
-      if (stringMode) if (_cur() == '"' || _cur() == '”') {
-        stringMode = false;
+      if (stringMode) {
+        if (_cur() == '"' || _cur() == '”') {
+          stringMode = false;
+        } else {
+          stack.push(BigInt.from(_cur().codeUnitAt(0)));
+        }
       } else {
-        stack.push(BigInt.from(_cur().codeUnitAt(0)));
-      }
-      else {
         if (_isDigit(_cur())) {
           stack.push(BigInt.from(int.parse(_cur())));
           _Mnemonic.add('push ' + _cur());
-        } else
+        } else {
           switch (_cur()) {
             case '@':
               endOfProgram = true;
@@ -268,7 +274,7 @@ BefungeOutput interpretBefunge(String? program, {String? input = ''}) {
             case '/': // integer division
               a = stack.pop();
               b = stack.pop();
-              if (a == 0) {
+              if (a == BigInt.zero) {
                 if (STDIN.isEmpty) {
                   _BefungeStack.add(stack.toString());
                   return BefungeOutput(
@@ -341,10 +347,11 @@ BefungeOutput interpretBefunge(String? program, {String? input = ''}) {
 
             case '! ': //logical not
               a = stack.pop();
-              if (a == BigInt.zero)
+              if (a == BigInt.zero) {
                 stack.push(BigInt.one);
-              else
+              } else {
                 stack.push(BigInt.zero);
+              }
               _Mnemonic.add('not ' + a.toString());
               break;
 
@@ -427,7 +434,7 @@ BefungeOutput interpretBefunge(String? program, {String? input = ''}) {
             case 'g': // self modify - get value from memory/torus and push to stack
               y = stack.pop();
               x = stack.pop();
-              _Mnemonic.add('get ' + '[' + x.toString().padLeft(2) + '|' + y.toString().padLeft(2) + ']');
+              _Mnemonic.add('get ' '[' + x.toString().padLeft(2) + '|' + y.toString().padLeft(2) + ']');
 
               if (_outOfBoundsAccess(x: x, y: y)) {
                 _BefungeStack.add(stack.toString());
@@ -439,8 +446,9 @@ BefungeOutput interpretBefunge(String? program, {String? input = ''}) {
                     PC: _PC,
                     Command: _Command,
                     Mnemonic: _Mnemonic);
-              } else
+              } else {
                 stack.push(_pg[y.toInt() * SCREENWIDTH + x.toInt()]);
+              }
               break;
 
             case 'p': // self modify - put value from stack into memory/torus
@@ -466,8 +474,9 @@ BefungeOutput interpretBefunge(String? program, {String? input = ''}) {
                     PC: _PC,
                     Command: _Command,
                     Mnemonic: _Mnemonic);
-              } else
+              } else {
                 _put(x: x, y: y, value: value);
+              }
               break;
 
             case ' ':
@@ -478,13 +487,15 @@ BefungeOutput interpretBefunge(String? program, {String? input = ''}) {
             case '`':
               a = stack.pop();
               b = stack.pop();
-              if (b > a)
+              if (b > a) {
                 stack.push(BigInt.one);
-              else
+              } else {
                 stack.push(BigInt.zero);
+              }
               _Mnemonic.add('greater than');
               break;
           } // switch cur
+        }
       }
 
       _BefungeStack.add(stack.toString());
@@ -547,12 +558,12 @@ List<BigInt> _fillProgram(String program) {
 
 bool _correctBefungeProgramLength(String program) {
   int i = 1;
-  if (program.length > MAX_LENGTH_PROGRAM)
+  if (program.length > MAX_LENGTH_PROGRAM) {
     return false;
-  else {
+  } else {
     for (String line  in program.split('\n')) {
       if (line.length > SCREENWIDTH) return false;
-    };
+    }
     i++;
   }
   if (i > SCREENHEIGHT) return false;
@@ -567,8 +578,9 @@ String generateBefunge(String? OutputText) {
   if (OutputText.length > MAX_OUTPUT_LENGTH) return BEFUNGE_ERROR_INVALID_PROGRAM;
 
   OutputText.split('').reversed.toList().forEach((char) {
-    if (char.codeUnitAt(0) < 256 && _convertCharCode[char.codeUnitAt(0)] != null)
+    if (char.codeUnitAt(0) < 256 && _convertCharCode[char.codeUnitAt(0)] != null) {
       code = code + (_convertCharCode[char.codeUnitAt(0)] ?? '');
+    }
   });
 
   code = code + 'v';
@@ -599,10 +611,11 @@ String generateBefunge(String? OutputText) {
       }
     }
   }
-  if (oddRow)
+  if (oddRow) {
     befungeLine = befungeLine.padRight(LINEWIDTH, ' ');
-  else
+  } else {
     befungeLine = befungeLine.padLeft(LINEWIDTH, ' ');
+  }
   befunge.add(befungeLine);
 
   // add loop for output

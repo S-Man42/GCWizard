@@ -8,10 +8,10 @@ class Density extends Unit {
     required String name,
     required String symbol,
     bool isReference = false,
-    double inGramPerCubicMeter: 1.0,
+    double inGramPerCubicMeter = 1.0,
   }) : super(name, symbol, isReference, (e) => e * inGramPerCubicMeter, (e) => e / inGramPerCubicMeter) {
-    toGramPerCubicMeter = this.toReference;
-    fromGramPerCubicMeter = this.fromReference;
+    toGramPerCubicMeter = toReference;
+    fromGramPerCubicMeter = fromReference;
   }
 }
 
@@ -59,7 +59,7 @@ final DENSITY_POUNDPERUSBUSHEL = Density(
     symbol: 'lb/US.bu',
     inGramPerCubicMeter: 453.59237 / (0.001 * 4.40488377086 * 8));
 
-final List<Unit> densities = [
+final List<Density> densities = [
   DENSITY_KILOGRAMPERCUBICMETER,
   DENSITY_GRAMPERCUBICCENTIMETER,
   DENSITY_GRAMPERCUBICMETER,

@@ -11,12 +11,12 @@ void main() {
       {'input' : 'Test123', 'expectedOutput' : 'iissiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiioiiiiiiiiiiiiiiiiioiiiiiiiiiiiiiioiodddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddoioio'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = encodeDeadfish(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Deadfish.decodeDeadfish:", () {
@@ -31,11 +31,11 @@ void main() {
       {'expectedOutput' : '0 0 0 1 0 1 2 2 4 3', 'input' : 'Otto, Odilo und Otila wohnen in Honolulu in ihrem orangenen Domizil'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decodeDeadfish(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

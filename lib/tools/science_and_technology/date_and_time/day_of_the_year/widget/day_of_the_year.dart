@@ -14,6 +14,8 @@ import 'package:gc_wizard/utils/datetime_utils.dart';
 import 'package:intl/intl.dart';
 
 class DayOfTheYear extends StatefulWidget {
+  const DayOfTheYear({Key? key}) : super(key: key);
+
   @override
   DayOfTheYearState createState() => DayOfTheYearState();
 }
@@ -67,7 +69,7 @@ class DayOfTheYearState extends State<DayOfTheYear> {
     return Column(children: <Widget>[
       GCWTextDivider(text: i18n(context, 'dates_weekday_date')),
       GCWDateTimePicker(
-        config: {DateTimePickerConfig.DATE},
+        config: const {DateTimePickerConfig.DATE},
         datetime: _currentDecodeDate,
         onChanged: (value) {
           setState(() {
@@ -79,7 +81,7 @@ class DayOfTheYearState extends State<DayOfTheYear> {
   }
 
   Widget _dayOfTheYearPicker() {
-    var widgets = Map<Widget, int>(); // widget: flex
+    var widgets = <Widget, int>{}; // widget: flex
     widgets.addAll({
       GCWIntegerSpinner(
         layout: SpinnerLayout.VERTICAL,
@@ -116,8 +118,8 @@ class DayOfTheYearState extends State<DayOfTheYear> {
     return Column(
       children: <Widget>[
         GCWToolBar(
-          children: widgets.keys.toList(),
           flexValues: widgets.values.toList(),
+          children: widgets.keys.toList(),
         ),
       ],
     );
@@ -125,10 +127,11 @@ class DayOfTheYearState extends State<DayOfTheYear> {
 
   Widget _buildOutput(BuildContext context) {
     DayOfTheYearOutput? outputData;
-    if (_currentMode == GCWSwitchPosition.right)
+    if (_currentMode == GCWSwitchPosition.right) {
       outputData = calculateDayInfos(_currentYear, _currentDayOfTheYear);
-    else
+    } else {
       outputData = calculateDateInfos(_currentDecodeDate);
+    }
 
     if (outputData == null) return Container();
 

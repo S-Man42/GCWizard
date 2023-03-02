@@ -9,10 +9,10 @@ part of 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/subst
 /// https://wortschatz.uni-leipzig.de/de/download/german#deu_newscrawl-public_2018
 
 /// method to generate then quadgrams files from a text file
-bool generate_quadgram() {
+Future<bool> generate_quadgram() async {
   var result = true;
 
-  List<Map<String, dynamic>> _inputsToExpected = [
+  List<Map<String, Object>> _inputsToExpected = [
     // Attention: a file is done during execution
 
     /// generate test-quadgram- file ( Source file from https://gitlab.com/guballa/SubstitutionBreaker/-/blob/development/tests/fixturefiles/quadgram_corpus.txt)
@@ -33,7 +33,7 @@ bool generate_quadgram() {
     //{'input' : 'nld_news_2020_1M-sentences.txt', 'fileOut' : 'dutch_quadgrams.dart', 'className' : 'DutchQuadgrams', 'assetName' : 'nl.json', 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
   ];
 
-  _inputsToExpected.forEach((elem) async {
+  for (var elem in _inputsToExpected) {
     var filePath =
         current + "/lib/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/logic/quadgrams/";
     var fileIn = File(normalizePath(filePath + (elem['input'] as String)));
@@ -48,14 +48,14 @@ bool generate_quadgram() {
             elem['alphabet'] as String);
 
     result = result && (_actual.errorCode == BreakerErrorCode.OK);
-  });
+  }
 
   return result;
 }
 
 BreakerResult generateFiles(File quadgram_fh, File asset_fh, String className, String assetName, String alphabet,
     double quadgram_sum, String max_chars, double max_val, List<double> quadgrams) {
-  var sb = new StringBuffer();
+  var sb = StringBuffer();
   var quadgrams_sum = 0;
   var quadgramsInt = List.filled(quadgrams.length, 0);
   for (int i = 0; i < quadgrams.length; i++) {
@@ -74,7 +74,7 @@ BreakerResult generateFiles(File quadgram_fh, File asset_fh, String className, S
   sb.write("    most_frequent_quadgram = '" + max_chars + "';\n");
   sb.write("    max_fitness = " + max_val.round().toString() + ";\n");
   sb.write("    average_fitness = " + (quadgrams_sum.toDouble() / pow(alphabet.length, 4)).toString() + ";\n");
-  sb.write("    assetLocation = " + '"assets/quadgrams/' + assetName + '";\n');
+  sb.write("    assetLocation = " '"assets/quadgrams/' + assetName + '";\n');
   sb.write("  }\n");
   sb.write("}\n");
 
@@ -82,8 +82,9 @@ BreakerResult generateFiles(File quadgram_fh, File asset_fh, String className, S
 
   asset_fh.writeAsStringSync(Quadgrams.quadgramsMapToString(Quadgrams.compressQuadgrams(quadgramsInt)));
 
-  if (quadgrams_sum == 0 || max_val == 0)
+  if (quadgrams_sum == 0 || max_val == 0) {
     return BreakerResult(alphabet: alphabet, fitness: max_val, errorCode: BreakerErrorCode.WRONG_GENERATE_TEXT);
-  else
+  } else {
     return BreakerResult(alphabet: alphabet, fitness: max_val, errorCode: BreakerErrorCode.OK);
+  }
 }

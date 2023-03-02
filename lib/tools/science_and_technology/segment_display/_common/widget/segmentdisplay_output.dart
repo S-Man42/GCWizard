@@ -54,6 +54,7 @@ class _SegmentDisplayOutputState extends State<SegmentDisplayOutput> {
     _currentUpsideDown = widget.upsideDownButton;
   }
 
+  @override
   Widget build(BuildContext context) {
     final mediaQueryData = MediaQuery.of(context);
     var countColumns = mediaQueryData.orientation == Orientation.portrait
@@ -66,19 +67,18 @@ class _SegmentDisplayOutputState extends State<SegmentDisplayOutput> {
         trailing: Row(
           children: <Widget>[
             widget.upsideDownButton
-                ? Container(
-                    child: GCWIconButton(
-                      icon: Icons.rotate_left,
-                      size: IconButtonSize.SMALL,
-                      onPressed: () {
-                        setState(() {
-                          _currentUpsideDown = !_currentUpsideDown;
-                        });
-                      },
-                    ),
-                  )
+                ? GCWIconButton(
+                  icon: Icons.rotate_left,
+                  size: IconButtonSize.SMALL,
+                  onPressed: () {
+                    setState(() {
+                      _currentUpsideDown = !_currentUpsideDown;
+                    });
+                  },
+                )
                 : Container(),
             Container(
+              padding: const EdgeInsets.only(right: 10.0),
               child: GCWIconButton(
                 size: IconButtonSize.SMALL,
                 icon: Icons.save,
@@ -95,7 +95,6 @@ class _SegmentDisplayOutputState extends State<SegmentDisplayOutput> {
                   });
                 },
               ),
-              padding: EdgeInsets.only(right: 10.0),
             ),
             if (widget.showZoomButtons)
               GCWIconButton(

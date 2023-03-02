@@ -19,9 +19,9 @@ class malbolgeOutput {
   malbolgeOutput(this.output, this.assembler, this.mnemonic);
 }
 
-final xlat1 = "+b(29e*j1VMEKLyC})8&m#~W>qxdRp0wkrUo[D7,XTcA\"lI.v%{gJh4G\\-=O@5`_3i<?Z';FNQuY]szf\$!BS/|t:Pn6^Ha";
+const xlat1 = "+b(29e*j1VMEKLyC})8&m#~W>qxdRp0wkrUo[D7,XTcA\"lI.v%{gJh4G\\-=O@5`_3i<?Z';FNQuY]szf\$!BS/|t:Pn6^Ha";
 
-final xlat2 = "5z]&gqtyfr\$(we4{WP)H-Zn,[%\\3dL+Q;>U!pJS72FhOA1CB6v^=I_0/8|jsb9m<.TVac`uY*MK'X~xDl}REokN:#?G\"i@";
+const xlat2 = "5z]&gqtyfr\$(we4{WP)H-Zn,[%\\3dL+Q;>U!pJS72FhOA1CB6v^=I_0/8|jsb9m<.TVac`uY*MK'X~xDl}REokN:#?G\"i@";
 
 final validInstructions = {'j', 'i', '*', 'p', '<', '/', 'v', 'o'};
 final opCodeList = {
@@ -43,11 +43,11 @@ final opCodeList = {
   '68': 'o'
 };
 
-final MB_OUT = 5;
-final MB_ROT = 39;
-final MB_OPR = 62;
-final MB_NOP = 68;
-final MB_HALT = 81;
+const MB_OUT = 5;
+const MB_ROT = 39;
+const MB_OPR = 62;
+const MB_NOP = 68;
+const MB_HALT = 81;
 
 final p9 = [1, 9, 81, 729, 6561];
 
@@ -77,17 +77,20 @@ int rotateR(int n) {
 
 String format(int n) {
   String output = n.toString();
-  for (int i = output.length; i < 6; i++) output = ' ' + output;
+  for (int i = output.length; i < 6; i++) {
+    output = ' ' + output;
+  }
   return output;
 }
 
 bool instructionListNormalized(String instructionList) {
   bool result = true;
-  for (int i = 0; i < instructionList.length; i++)
+  for (int i = 0; i < instructionList.length; i++) {
     if (!validInstructions.contains(instructionList[i])) {
       result = false;
       break;
     }
+  }
   return result;
 }
 
@@ -111,14 +114,17 @@ String reverseNormalize(String instructionList) {
       // Checks to see if the instructions provided are valid
       tempChar = String.fromCharCode(((index(xlat1, instructionList[x]) - x) % 94) + 33);
       returnString = returnString + tempChar;
-    } else
+    } else {
       return "Invalid program string";
+    }
   }
   return returnString;
 }
 
-int index(String s, c) {
-  for (int i = 0; i < s.length; i++) if (s[i] == c) return i;
+int index(String s, String c) {
+  for (int i = 0; i < s.length; i++) {
+    if (s[i] == c) return i;
+  }
   return -1;
 }
 
@@ -127,9 +133,10 @@ var memory_runtime = List<int>.filled(59049, 0); // memory at runtime: with encr
 int last_A_val = 0; // last value of A register
 
 malbolgeOutput interpretMalbolge(String program, String STDIN, bool strict) {
-  if (program.length < 2)
+  if (program.length < 2) {
     return malbolgeOutput(
         ['common_programming_error_invalid_program', 'common_programming_error_program_to_short'], [], []);
+  }
 
   if (instructionListNormalized(program)) program = reverseNormalize(program);
 
@@ -140,12 +147,13 @@ malbolgeOutput interpretMalbolge(String program, String STDIN, bool strict) {
   while (i < program.length) {
     charCode = program.codeUnitAt(i);
     if (charCode < 127 && charCode > 32) {
-      if (!validInstructions.contains(xlat1[(charCode - 33 + i) % 94]))
+      if (!validInstructions.contains(xlat1[(charCode - 33 + i) % 94])) {
         return malbolgeOutput([
           'common_programming_error_invalid_program',
           'common_programming_error_invalid_character',
           'Position ' + i.toString() + ': ' + xlat1[(charCode - 33 + i) % 94]
         ], [], []);
+      }
     }
     if (i == 59049) {
       return malbolgeOutput(
@@ -260,14 +268,16 @@ malbolgeOutput interpretMalbolge(String program, String STDIN, bool strict) {
       }
     }
 
-    if (c == 59048)
+    if (c == 59048) {
       c = 0;
-    else
+    } else {
       c++;
-    if (d == 59048)
+    }
+    if (d == 59048) {
       d = 0;
-    else
+    } else {
       d++;
+    }
   }
   output.add(STDOUT);
   return malbolgeOutput(output, assembler, mnemonic);

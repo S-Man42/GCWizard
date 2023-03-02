@@ -11,12 +11,12 @@ void main() {
       {'input' : '2h6', 'expectedOutput' : '[697, 1336] [770, 1477]'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = encodeDTMF(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("DTMF.decodeDTMF:", () {
@@ -36,11 +36,11 @@ void main() {
       {'expectedOutput' : 'A2', 'input' : '697 1633 697 1336 1209'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decodeDTMF(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

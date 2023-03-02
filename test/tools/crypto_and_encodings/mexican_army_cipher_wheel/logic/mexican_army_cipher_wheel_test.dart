@@ -48,14 +48,14 @@ void main() {
       ]},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, keys: ${elem['keys']}', () {
         for (int i = 0; i < 1000; i++) {
           var _actual = encryptMexicanArmyCipherWheel(elem['input'] as String?, elem['keys'] as List<int>);
           expect((elem['expectedOutput'] as String).contains(_actual), true);
         }
       });
-    });
+    }
   });
 
   group("MexicanArmyCipherWheel.decryptMexicanArmyCipherWheel:", () {
@@ -74,11 +74,11 @@ void main() {
       {'expectedOutput' : 'AFIMQX', 'keys': [7,34,74,95], 'input' : '951242602392'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, keys: ${elem['keys']}', () {
         var _actual = decryptMexicanArmyCipherWheel(elem['input'] as String?, elem['keys'] as List<int>);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

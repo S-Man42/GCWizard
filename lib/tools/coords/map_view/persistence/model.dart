@@ -1,5 +1,4 @@
 import 'package:gc_wizard/application/theme/fixed_colors.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 import 'package:gc_wizard/utils/json_utils.dart';
@@ -24,29 +23,29 @@ class MapViewDAO {
       };
 
   MapViewDAO.fromJson(Map<String, Object?> json) {
-    this.name = toStringOrNull(json['name']);
-    this.id = toIntOrNull(json['id']);
+    name = toStringOrNull(json['name']);
+    id = toIntOrNull(json['id']);
 
     var pointsRaw = toObjectWithNullableContentListOrNull(json['points']);
     if (pointsRaw != null) {
-      this.points = <MapPointDAO>[];
-      pointsRaw.forEach((element) {
+      points = <MapPointDAO>[];
+      for (var element in pointsRaw) {
         var point = asJsonMapOrNull(element);
-        if (point == null) return;
+        if (point == null) continue;
 
-        this.points.add(MapPointDAO.fromJson(point));
-      });
+        points.add(MapPointDAO.fromJson(point));
+      }
     }
 
     var polylinesRaw = toObjectWithNullableContentListOrNull(json['polylines']);
     if (polylinesRaw != null) {
-      this.polylines = <MapPolylineDAO>[];
-      polylinesRaw.forEach((element) {
+      polylines = <MapPolylineDAO>[];
+      for (var element in polylinesRaw) {
         var polyline = asJsonMapOrNull(element);
-        if (polyline == null) return;
+        if (polyline == null) continue;
 
-        this.polylines.add(MapPolylineDAO.fromJson(polyline));
-      });
+        polylines.add(MapPolylineDAO.fromJson(polyline));
+      }
     }
   }
 
@@ -85,7 +84,7 @@ class MapPointDAO {
       };
 
   MapPointDAO.fromJson(Map<String, Object?> json)
-      : uuid = toStringOrNull(json['uuid']) ?? Uuid().v4(),
+      : uuid = toStringOrNull(json['uuid']) ?? const Uuid().v4(),
         name = toStringOrNull(json['name']),
         latitude = toDoubleOrNull(json['latitude']) ?? defaultCoordinate.latitude,
         longitude = toDoubleOrNull(json['longitude']) ?? defaultCoordinate.longitude,
@@ -112,7 +111,7 @@ class MapPolylineDAO {
   Map<String, Object?> toMap() => {'uuid': uuid, 'pointUUIDs': pointUUIDs, 'color': color};
 
   MapPolylineDAO.fromJson(Map<String, Object?> json)
-      : uuid = toStringOrNull(json['uuid']) ?? Uuid().v4(),
+      : uuid = toStringOrNull(json['uuid']) ?? const Uuid().v4(),
         pointUUIDs = List<String>.from(toStringListOrNull(json['pointUUIDs']) ?? []),
         color = toStringOrNull(json['color']) ?? colorToHexString(COLOR_MAP_POLYLINE);
 

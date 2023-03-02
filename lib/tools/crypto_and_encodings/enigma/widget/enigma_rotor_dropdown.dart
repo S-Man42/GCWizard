@@ -45,7 +45,9 @@ class EnigmaRotorDropDownState extends State<EnigmaRotorDropDown> {
     return Row(
       children: <Widget>[
         Expanded(
+            flex: 2,
             child: Container(
+                padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
                 child: GCWDropDown<String>(
                   value: _currentRotor,
                   items: allEnigmaRotors
@@ -53,7 +55,7 @@ class EnigmaRotorDropDownState extends State<EnigmaRotorDropDown> {
                       .map((rotor) {
                     return GCWDropDownMenuItem(
                       value: rotor.name,
-                      child: '${rotor.name}',
+                      child: rotor.name,
                     );
                   }).toList(),
                   onChanged: (value) {
@@ -62,12 +64,12 @@ class EnigmaRotorDropDownState extends State<EnigmaRotorDropDown> {
                       _setCurrentValueAndEmitOnChange();
                     });
                   },
-                ),
-                padding: EdgeInsets.only(right: DEFAULT_MARGIN)),
-            flex: 2),
+                ))),
         widget.type == EnigmaRotorType.STANDARD
             ? Expanded(
+                flex: 1,
                 child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: DEFAULT_MARGIN),
                   child: GCWABCDropDown(
                     value: _currentOffset,
                     onChanged: (value) {
@@ -77,13 +79,13 @@ class EnigmaRotorDropDownState extends State<EnigmaRotorDropDown> {
                       });
                     },
                   ),
-                  padding: EdgeInsets.symmetric(horizontal: DEFAULT_MARGIN),
-                ),
-                flex: 1)
+                ))
             : Container(),
         widget.type == EnigmaRotorType.STANDARD
             ? Expanded(
+                flex: 1,
                 child: Container(
+                  padding: const EdgeInsets.only(left: DEFAULT_MARGIN),
                   child: GCWABCDropDown(
                     value: _currentSetting,
                     onChanged: (value) {
@@ -93,9 +95,7 @@ class EnigmaRotorDropDownState extends State<EnigmaRotorDropDown> {
                       });
                     },
                   ),
-                  padding: EdgeInsets.only(left: DEFAULT_MARGIN),
-                ),
-                flex: 1)
+                ))
             : Container(),
       ],
     );

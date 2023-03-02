@@ -34,9 +34,9 @@ class _Container {
   }
 
   void liquefy() {
-    _contents.forEach((c) {
+    for (var c in _contents) {
       c.liquefy();
-    });
+    }
   }
 
   void clean() {

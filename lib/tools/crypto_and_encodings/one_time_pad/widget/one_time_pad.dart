@@ -8,6 +8,8 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/one_time_pad/logic/one_time_pad.dart';
 
 class OneTimePad extends StatefulWidget {
+  const OneTimePad({Key? key}) : super(key: key);
+
   @override
   OneTimePadState createState() => OneTimePadState();
 }
@@ -25,8 +27,8 @@ class OneTimePadState extends State<OneTimePad> {
 
   // two same maskTextInputFormatters are necessary because using the same formatter creates conflicts
   // (entered value in one input will be used for the other one)
-  var _mask = '#' * 10000;
-  var _filter = {"#": RegExp(r'[A-Za-z]')};
+  final _mask = '#' * 10000;
+  final _filter = {"#": RegExp(r'[A-Za-z]')};
   late WrapperForMaskTextInputFormatter _inputMaskInputFormatter;
   late WrapperForMaskTextInputFormatter _keyMaskInputFormatter;
 

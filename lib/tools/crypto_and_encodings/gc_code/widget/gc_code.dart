@@ -7,6 +7,8 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/gc_code/logic/gc_code.dart';
 
 class GCCode extends StatefulWidget {
+  const GCCode({Key? key}) : super(key: key);
+
   @override
   GCCodeState createState() => GCCodeState();
 }

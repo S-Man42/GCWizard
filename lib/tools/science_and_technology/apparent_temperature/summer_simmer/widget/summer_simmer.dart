@@ -9,6 +9,8 @@ import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/summ
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/temperature.dart';
 
 class SummerSimmerIndex extends StatefulWidget {
+  const SummerSimmerIndex({Key? key}) : super(key: key);
+
   @override
   SummerSimmerIndexState createState() => SummerSimmerIndexState();
 }
@@ -26,10 +28,11 @@ class SummerSimmerIndexState extends State<SummerSimmerIndex> {
         Row(
           children: [
             Expanded(
-              child: GCWText(text: i18n(context, 'common_measure_temperature')),
               flex: 1,
+              child: GCWText(text: i18n(context, 'common_measure_temperature')),
             ),
             Expanded(
+                flex: 3,
                 child: Column(
                   children: [
                     GCWTwoOptionsSwitch(
@@ -51,8 +54,7 @@ class SummerSimmerIndexState extends State<SummerSimmerIndex> {
                           });
                         }),
                   ],
-                ),
-                flex: 3)
+                ))
           ],
         ),
         GCWDoubleSpinner(
@@ -93,20 +95,21 @@ class SummerSimmerIndexState extends State<SummerSimmerIndex> {
     var hint = [hintT, hintH].where((element) => element != null && element.isNotEmpty).join('\n');
 
     String? hintM;
-    if (output > 51.7)
+    if (output > 51.7) {
       hintM = 'summersimmerindex_index_51.7';
-    else if (output > 44.4)
+    } else if (output > 44.4) {
       hintM = 'summersimmerindex_index_44.4';
-    else if (output > 37.8)
+    } else if (output > 37.8) {
       hintM = 'summersimmerindex_index_37.8';
-    else if (output > 32.8)
+    } else if (output > 32.8) {
       hintM = 'summersimmerindex_index_32.8';
-    else if (output > 28.3)
+    } else if (output > 28.3) {
       hintM = 'summersimmerindex_index_28.3';
-    else if (output > 25.0)
+    } else if (output > 25.0) {
       hintM = 'summersimmerindex_index_25.0';
-    else if (output > 21.3)
+    } else if (output > 21.3) {
       hintM = 'summersimmerindex_index_21.3';
+    }
 
     var outputs = [
       GCWOutput(
@@ -115,10 +118,11 @@ class SummerSimmerIndexState extends State<SummerSimmerIndex> {
       )
     ];
 
-    if (hint != null && hint.isNotEmpty) outputs.add(GCWOutput(title: i18n(context, 'heatindex_hint'), child: hint));
+    if (hint.isNotEmpty) outputs.add(GCWOutput(title: i18n(context, 'heatindex_hint'), child: hint));
 
-    if (hintM != null && hintM.isNotEmpty)
+    if (hintM != null && hintM.isNotEmpty) {
       outputs.add(GCWOutput(title: i18n(context, 'heatindex_meaning'), child: i18n(context, hintM)));
+    }
 
     return GCWMultipleOutput(
       children: outputs,

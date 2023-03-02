@@ -8,6 +8,8 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/gray/logic/gray.dart';
 
 class Gray extends StatefulWidget {
+  const Gray({Key? key}) : super(key: key);
+
   @override
   GrayState createState() => GrayState();
 }
@@ -23,9 +25,9 @@ class GrayState extends State<Gray> {
   GCWSwitchPosition _currentInputMode = GCWSwitchPosition.left;
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
-  var _decimalMaskFormatter = WrapperForMaskTextInputFormatter(mask: '#' * 10000, filter: {"#": RegExp(r'[0-9\s]')});
+  final _decimalMaskFormatter = WrapperForMaskTextInputFormatter(mask: '#' * 10000, filter: {"#": RegExp(r'[0-9\s]')});
 
-  var _binaryDigitsMaskFormatter =
+  final _binaryDigitsMaskFormatter =
       WrapperForMaskTextInputFormatter(mask: '#' * 10000, filter: {"#": RegExp(r'[01\s]')});
 
   @override
@@ -104,21 +106,23 @@ class GrayState extends State<Gray> {
 
     var outputChildren = <Widget>[];
 
-    if (_currentOutput.decimalOutput.isNotEmpty)
+    if (_currentOutput.decimalOutput.isNotEmpty) {
       outputChildren.add(
         GCWOutput(
           title: i18n(context, 'gray_mode_decimal'),
           child: _currentOutput.decimalOutput.join(' '),
         ),
       );
+    }
 
-    if (_currentOutput.binaryOutput.isNotEmpty)
+    if (_currentOutput.binaryOutput.isNotEmpty) {
       outputChildren.add(
         GCWOutput(
           title: i18n(context, 'gray_mode_binary'),
           child: _currentOutput.binaryOutput.join(' '),
         ),
       );
+    }
 
     return GCWDefaultOutput(
       child: Column(

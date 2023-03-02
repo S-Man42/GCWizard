@@ -19,7 +19,7 @@ void main() {
       {'mode': UNITCATEGORY_VELOCITY, 'prefix' : UNITPREFIX_NONE, 'outputUnit' : VELOCITY_MS,'inputValue1' : 0.5, 'inputUnit1': ENERGY_JOULE, 'inputValue2' : 1000.0, 'inputUnit2': MASS_GRAM, 'expectedOutput' : '1.0 m/s'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('mode: ${elem['mode']}, outputUnit: ${elem['outputUnit']}, inputValue1: ${elem['inputValue1']}, inputValue2: ${elem['inputUnit2']}, inputUnit2: ${elem['inputUnit2']}, prefix: ${elem['prefix']}', () {
         double _actual;
         double _refInputValue1 = (elem['inputUnit1'] as Unit).toReference((elem['inputValue1'] as double));
@@ -33,9 +33,9 @@ void main() {
           _actual = calculateVelocity(_refInputValue1, _refInputValue2);
         }
         _actual = (elem['outputUnit'] as Unit).fromReference(_actual) / (elem['prefix'] as UnitPrefix).value;
-        expect(NumberFormat('0.0' + '#' * 6).format(_actual) + ' ' + ((elem['prefix'] as UnitPrefix).symbol ?? '') +
+        expect(NumberFormat('0.0' + '#' * 6).format(_actual) + ' ' + ((elem['prefix'] as UnitPrefix).symbol) +
             (elem['outputUnit'] as Unit).symbol, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

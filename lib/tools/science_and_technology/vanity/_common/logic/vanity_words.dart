@@ -5,6 +5,8 @@
 //
 // 678068550685506386047230386303863 07865807432360386308437
 
+// ignore_for_file: equal_keys_in_map
+
 import 'package:gc_wizard/tools/crypto_and_encodings/numeral_words/_common/logic/numeral_words.dart';
 
 class VanityWordsDecodeOutput {
@@ -345,7 +347,7 @@ List<VanityWordsDecodeOutput> decodeVanityWords(String? text, NumeralWordsLangua
   }
 
   // build map to identify numeral words
-  var decodingTable = new Map<String, String>();
+  var decodingTable = <String, String>{};
   VanWords[language]!.forEach((key, value) {
     //decodingTable[key] = removeAccents(value);
     decodingTable[key] = (value);

@@ -1,13 +1,14 @@
 part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_analyze.dart';
 
 void buildHeader(BuildContext context) {
-  if (wherigoExpertMode)
-    outputHeader = buildHeaderExpertMode(context);
-  else
-    outputHeader = buildHeaderUserMode(context);
+  if (wherigoExpertMode) {
+    outputHeader = _buildHeaderExpertMode(context);
+  } else {
+    outputHeader = _buildHeaderUserMode(context);
+  }
 }
 
-List<List<String>> buildHeaderUserMode(BuildContext context) {
+List<List<String>> _buildHeaderUserMode(BuildContext context) {
   return [
     [i18n(context, 'wherigo_header_numberofmediafiles'), (WherigoCartridgeGWCData.NumberOfObjects - 1).toString()],
     [
@@ -34,13 +35,13 @@ List<List<String>> buildHeaderUserMode(BuildContext context) {
     [i18n(context, 'wherigo_header_startinglocation'), WherigoCartridgeGWCData.StartingLocationDescription],
     [
       i18n(context, 'wherigo_header_creationdate') + ' (GWC)',
-      getCreationDate(context, WherigoCartridgeGWCData.DateOfCreation)
+      _getCreationDate(context, WherigoCartridgeGWCData.DateOfCreation)
     ],
     [i18n(context, 'wherigo_header_author'), WherigoCartridgeGWCData.Author],
   ];
 }
 
-List<List<String>> buildHeaderExpertMode(BuildContext context) {
+List<List<String>> _buildHeaderExpertMode(BuildContext context) {
   List<List<String>> header = [
     [i18n(context, 'wherigo_header_signature'), WherigoCartridgeGWCData.Signature],
     [i18n(context, 'wherigo_header_numberofmediafiles'), (WherigoCartridgeGWCData.NumberOfObjects - 1).toString()],
@@ -82,12 +83,12 @@ List<List<String>> buildHeaderExpertMode(BuildContext context) {
     [i18n(context, 'wherigo_header_version'), WherigoCartridgeGWCData.Version],
     [
       i18n(context, 'wherigo_header_creationdate') + ' (GWC)',
-      getCreationDate(context, WherigoCartridgeGWCData.DateOfCreation)
+      _getCreationDate(context, WherigoCartridgeGWCData.DateOfCreation)
     ],
-    [i18n(context, 'wherigo_header_creationdate') + ' (LUA)', formatDate(context, WherigoCartridgeLUAData.CreateDate)],
-    [i18n(context, 'wherigo_header_publish'), formatDate(context, WherigoCartridgeLUAData.PublishDate)],
-    [i18n(context, 'wherigo_header_update'), formatDate(context, WherigoCartridgeLUAData.UpdateDate)],
-    [i18n(context, 'wherigo_header_lastplayed'), formatDate(context, WherigoCartridgeLUAData.LastPlayedDate)],
+    [i18n(context, 'wherigo_header_creationdate') + ' (LUA)', _formatDate(context, WherigoCartridgeLUAData.CreateDate)],
+    [i18n(context, 'wherigo_header_publish'), _formatDate(context, WherigoCartridgeLUAData.PublishDate)],
+    [i18n(context, 'wherigo_header_update'), _formatDate(context, WherigoCartridgeLUAData.UpdateDate)],
+    [i18n(context, 'wherigo_header_lastplayed'), _formatDate(context, WherigoCartridgeLUAData.LastPlayedDate)],
     [i18n(context, 'wherigo_header_author'), WherigoCartridgeGWCData.Author],
     [i18n(context, 'wherigo_header_company'), WherigoCartridgeGWCData.Company],
     [i18n(context, 'wherigo_header_device'), WherigoCartridgeGWCData.RecommendedDevice],
@@ -111,6 +112,8 @@ List<List<String>> buildHeaderExpertMode(BuildContext context) {
       case WHERIGO_BUILDER.GROUNDSPEAK:
         header.add([i18n(context, 'wherigo_header_builder'), 'Groundspeak']);
         break;
+
+      default: {}
     }
      header.add([i18n(context, 'wherigo_header_version'), WherigoCartridgeLUAData.BuilderVersion]);
   return header;

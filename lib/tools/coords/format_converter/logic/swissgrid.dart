@@ -167,8 +167,9 @@ SwissGrid? parseSwissGrid(String input) {
   }
 
   if (matches.isEmpty) return null;
-  if (_eastingString == null || _northingString == null)
+  if (_eastingString == null || _northingString == null) {
     return null;
+  }
 
   var _easting = double.tryParse(_eastingString);
   if (_easting == null) return null;

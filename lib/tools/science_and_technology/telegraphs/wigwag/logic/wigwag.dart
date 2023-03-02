@@ -175,7 +175,7 @@ final Map<String, int> generalCode1872 = {
 };
 
 String encodeWigWag(String plainText, WigWagCodebook language) {
-  if (plainText == null || plainText.isEmpty) return '';
+  if (plainText.isEmpty) return '';
 
   Map<String, int> codebook;
   switch (language) {
@@ -213,9 +213,9 @@ String encodeWigWag(String plainText, WigWagCodebook language) {
       .split(' ');
 
   for (int i = 0; i < encode.length; i++) {
-    if (codebook[encode[i]] != null)
+    if (codebook[encode[i]] != null) {
       output.add(codebook[encode[i]].toString());
-    else {
+    } else {
       var encodeElement = encode[i].split('');
       for (int j = 0; j < encodeElement.length; j++) {
         output.add(codebook[encodeElement[j]].toString());
@@ -242,9 +242,9 @@ String decodeWigWag(List<int>? cypherText, WigWagCodebook language) {
   }
 
   List<String> output = [];
-  cypherText.forEach((element) {
+  for (var element in cypherText) {
     if (codebook[element] != null) output.add(codebook[element]!);
-  });
+  }
   return output
       .join(' ')
       .replaceAll('ENDOFWORD', 'END OF WORD')

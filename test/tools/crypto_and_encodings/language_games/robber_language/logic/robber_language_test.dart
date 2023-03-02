@@ -12,12 +12,12 @@ void main() {
       {'input' : 'ba', 'expectedOutput' : 'boba'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = encryptRobberLanguage(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group('robber_language.decryptRobberLanguage:', () {
@@ -30,11 +30,11 @@ void main() {
       {'expectedOutput' : 'ba', 'input' : 'boba'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decryptRobberLanguage(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

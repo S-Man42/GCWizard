@@ -21,12 +21,14 @@ import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/units/gcw_unit_dropdown.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/length.dart';
-import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 import 'package:provider/provider.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/default_units_getter.dart';
 
 class GeneralSettings extends StatefulWidget {
+  const GeneralSettings({Key? key}) : super(key: key);
+
   @override
   GeneralSettingsState createState() => GeneralSettingsState();
 }
@@ -48,7 +50,7 @@ class GeneralSettingsState extends State<GeneralSettings> {
                     builder: (BuildContext context, AsyncSnapshot<Locale> snapshot) {
                       if (!snapshot.hasData) {
                         // while data is loading:
-                        return Center(
+                        return const Center(
                           child: CircularProgressIndicator(),
                         );
                       } else {
@@ -79,6 +81,7 @@ class GeneralSettingsState extends State<GeneralSettings> {
           ],
         ),
         Container(
+          padding: const EdgeInsets.only(bottom: 10 * DEFAULT_MARGIN, top: 5 * DEFAULT_MARGIN),
           child: InkWell(
             child: Text(
               i18n(context, 'settings_general_i18n_language_contributetranslation'),
@@ -88,18 +91,16 @@ class GeneralSettingsState extends State<GeneralSettings> {
               launchUrl(Uri.parse(i18n(context, 'about_crowdin_url')));
             },
           ),
-          padding: EdgeInsets.only(bottom: 10 * DEFAULT_MARGIN, top: 5 * DEFAULT_MARGIN),
         ),
         Row(children: [
           Expanded(child: GCWText(text: i18n(context, 'settings_general_i18n_defaultlengthunit'))),
           Expanded(
-            child: GCWUnitDropDown(
+            child: GCWUnitDropDown<Length>(
                 unitList: allLengths(),
-                value: getUnitBySymbol(allLengths(), Prefs.getString(PREFERENCE_DEFAULT_LENGTH_UNIT)),
-                onChanged: (Unit value) {
+                value: defaultLengthUnit,
+                onChanged: (Length value) {
                   setState(() {
-                    if (value is Length)
-                      Prefs.setString(PREFERENCE_DEFAULT_LENGTH_UNIT, value.symbol);
+                    Prefs.setString(PREFERENCE_DEFAULT_LENGTH_UNIT, value.symbol);
                   });
                 }),
           ),
@@ -247,9 +248,9 @@ class GeneralSettingsState extends State<GeneralSettings> {
         ),
 
         // always on bottom
-        Container(margin: EdgeInsets.only(top: 25.0), child: GCWDivider()),
+        Container(margin: const EdgeInsets.only(top: 25.0), child: const GCWDivider()),
         InkWell(
-          child: Icon(Icons.more_horiz, size: 20.0),
+          child: const Icon(Icons.more_horiz, size: 20.0),
           onTap: () {
             showGCWAlertDialog(
               context,
@@ -258,7 +259,7 @@ class GeneralSettingsState extends State<GeneralSettings> {
               () {
                 Navigator.of(context)
                     .push(NoAnimationMaterialPageRoute<GCWTool>(
-                        builder: (context) => GCWTool(tool: SettingsPreferences(), id: 'settings_preferences')))
+                        builder: (context) => GCWTool(tool: const SettingsPreferences(), id: 'settings_preferences')))
                     .whenComplete(() {
                   setState(() {
                     AppBuilder.of(context).rebuild();

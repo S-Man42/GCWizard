@@ -5,7 +5,6 @@ import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_datetime_picker.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/_common/logic/julian_date.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/sun_rise_set/logic/sun_rise_set.dart' as logic;
@@ -13,6 +12,8 @@ import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/datetime_utils.dart';
 
 class SunRiseSet extends StatefulWidget {
+  const SunRiseSet({Key? key}) : super(key: key);
+
   @override
   SunRiseSetState createState() => SunRiseSetState();
 }
@@ -20,7 +21,7 @@ class SunRiseSet extends StatefulWidget {
 class SunRiseSetState extends State<SunRiseSet> {
   var _currentDateTime = DateTimeTimezone(datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
   var _currentCoords = BaseCoordinate();
-  var _currentCoordsFormat = defaultCoordinateFormat;
+  final _currentCoordsFormat = defaultCoordinateFormat;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +40,7 @@ class SunRiseSetState extends State<SunRiseSet> {
           text: i18n(context, 'astronomy_riseset_date'),
         ),
         GCWDateTimePicker(
-          config: {DateTimePickerConfig.DATE, DateTimePickerConfig.TIMEZONES},
+          config: const {DateTimePickerConfig.DATE, DateTimePickerConfig.TIMEZONES},
           onChanged: (datetime) {
             setState(() {
               _currentDateTime = datetime;

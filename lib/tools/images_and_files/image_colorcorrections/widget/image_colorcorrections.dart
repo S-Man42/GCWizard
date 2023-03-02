@@ -8,7 +8,7 @@ import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
-import 'package:gc_wizard/common_widgets/gcw_async_executer.dart';
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
 import 'package:gc_wizard/common_widgets/gcw_popup_menu.dart';
 import 'package:gc_wizard/common_widgets/gcw_slider.dart';
@@ -22,11 +22,12 @@ import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:image/image.dart' as img;
 import 'package:prefs/prefs.dart';
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 
 class ImageColorCorrections extends StatefulWidget {
   final GCWFile? file;
 
-  const ImageColorCorrections({this.file});
+  const ImageColorCorrections({Key? key, this.file}) : super(key: key);
 
   @override
   ImageColorCorrectionsState createState() => ImageColorCorrectionsState();
@@ -167,13 +168,13 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
                                   children: [
                                     Text(i18n(context, value['title'] ?? ''), style: gcwDialogTextStyle()),
                                     Container(
+                                        padding: const EdgeInsets.only(left: DEFAULT_DESCRIPTION_MARGIN),
                                         child: Text(
                                           i18n(context, value['description'] ?? ''),
                                           style: gcwDescriptionTextStyle().copyWith(color: themeColors().dialogText()),
                                           maxLines: 2,
                                           overflow: TextOverflow.ellipsis,
-                                        ),
-                                        padding: EdgeInsets.only(left: DEFAULT_DESCRIPTION_MARGIN)),
+                                        )),
                                   ],
                                 ),
                                 action: (index) {
@@ -191,7 +192,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
           GCWImageView(
             imageData: _originalPreview == null ? null : GCWImageViewData(GCWFile(bytes: _imageBytes() ?? Uint8List(0))),
             onBeforeLoadBigImage: _adjustToFullPicture,
-            suppressOpenInTool: {GCWImageViewOpenInTools.COLORCORRECTIONS},
+            suppressOpenInTool: const {GCWImageViewOpenInTools.COLORCORRECTIONS},
           ),
         if (_currentPreview != null)
           GCWTextDivider(
@@ -208,7 +209,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
         if (_currentPreview != null)
           Expanded(
               child: SingleChildScrollView(
-                physics: AlwaysScrollableScrollPhysics(),
+                physics: const AlwaysScrollableScrollPhysics(),
                 primary: true,
                 child: Column(
                   children: [
@@ -341,15 +342,15 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
       barrierDismissible: false,
       builder: (context) {
         return Center(
-          child: Container(
+          child: SizedBox(
+            height: 220,
+            width: 150,
             child: GCWAsyncExecuter<img.Image?>(
               isolatedFunction: _adjustColorAsync,
               parameter: _buildJobDataAdjustColor,
               onReady: (data) => _saveOutputAdjustColor(data),
               isOverlay: true,
             ),
-            height: 220,
-            width: 150,
           ),
         );
       },
@@ -457,13 +458,15 @@ img.Image _doAdjustColor(_AdjustColorInput input) {
   for (var i = 0, len = pixels.length; i < len; i += 4) {
     var pixel = RGBPixel.getPixel(pixels, i);
 
-    if (input.red != 0.0 || input.green != 0.0 || input.blue != 0.0)
+    if (input.red != 0.0 || input.green != 0.0 || input.blue != 0.0) {
       pixel = colorOffset(pixel, input.red, input.green, input.blue);
+    }
 
     if (input.brightness != 0.0) pixel = brightness(pixel, input.brightness);
 
-    if (input.exposure != 1.0)
+    if (input.exposure != 1.0) {
       pixel = exposure(pixel, input.exposure > 1.0 ? 3 * (input.exposure - 1) + 1 : input.exposure);
+    }
 
     if (input.saturation != 0.0 || input.hue != 0.0) pixel = saturation(pixel, input.saturation, input.hue);
 

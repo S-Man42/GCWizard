@@ -1,20 +1,21 @@
 part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_analyze.dart';
 
-List<List<String>> buildOutputListOfZoneData(BuildContext context, WherigoZoneData data) {
+List<List<String>> _buildOutputListOfZoneData(BuildContext context, WherigoZoneData data) {
   List<List<String>> result = [];
-  if (wherigoExpertMode)
-    result = buildOutputListOfZoneDataExpertMode(context, data);
-  else
-    result = buildOutputListOfZoneDataUserMode(context, data);
+  if (wherigoExpertMode) {
+    result = _buildOutputListOfZoneDataExpertMode(context, data);
+  } else {
+    result = _buildOutputListOfZoneDataUserMode(context, data);
+  }
 
-  data.ZonePoints.forEach((point) {
+  for (var point in data.ZonePoints) {
     result.add(
         ['', formatCoordOutput(LatLng(point.Latitude, point.Longitude), defaultCoordinateFormat, defaultEllipsoid)]);
-  });
+  }
   return result;
 }
 
-List<List<String>> buildOutputListOfZoneDataUserMode(BuildContext context, WherigoZoneData data) {
+List<List<String>> _buildOutputListOfZoneDataUserMode(BuildContext context, WherigoZoneData data) {
   return [
     [i18n(context, 'wherigo_output_name'), data.ZoneName],
     [i18n(context, 'wherigo_output_description'), data.ZoneDescription],
@@ -27,7 +28,7 @@ List<List<String>> buildOutputListOfZoneDataUserMode(BuildContext context, Wheri
   ];
 }
 
-List<List<String>> buildOutputListOfZoneDataExpertMode(BuildContext context, WherigoZoneData data) {
+List<List<String>> _buildOutputListOfZoneDataExpertMode(BuildContext context, WherigoZoneData data) {
   return [
     [i18n(context, 'wherigo_output_luaname'), data.ZoneLUAName],
     [i18n(context, 'wherigo_output_id'), data.ZoneID],

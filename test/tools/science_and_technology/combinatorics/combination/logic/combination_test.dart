@@ -15,11 +15,11 @@ void main() {
       {'input' : 'AbbC', 'avoidDuplicates': false, 'expectedOutput' : ['A', 'b', 'b', 'C', 'Ab', 'Ab', 'AC', 'bb', 'bC', 'bC', 'Abb', 'AbC', 'AbC', 'bbC', 'AbbC']},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, avoidDuplicates: ${elem['avoidDuplicates']}', () {
         var _actual = generateCombinations(elem['input'] as String?, avoidDuplicates: elem['avoidDuplicates'] as bool);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

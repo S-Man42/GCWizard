@@ -19,6 +19,8 @@ import 'package:gc_wizard/tools/science_and_technology/telegraphs/ohlsen_telegra
 part 'package:gc_wizard/tools/science_and_technology/telegraphs/ohlsen_telegraph/widget/ohlsen_segment_display.dart';
 
 class OhlsenTelegraph extends StatefulWidget {
+  const OhlsenTelegraph({Key? key}) : super(key: key);
+
   @override
   OhlsenTelegraphState createState() => OhlsenTelegraphState();
 }
@@ -105,7 +107,7 @@ class OhlsenTelegraphState extends State<OhlsenTelegraph> {
   Widget _buildVisualDecryption() {
     var currentDisplay = buildSegmentMap(_currentDisplays);
 
-    var onChanged = (Map<String, bool> d) {
+    onChanged(Map<String, bool> d) {
       setState(() {
         var newSegments = <String>[];
         d.forEach((key, value) {
@@ -115,13 +117,13 @@ class OhlsenTelegraphState extends State<OhlsenTelegraph> {
 
         _currentDisplays.replaceLastSegment(newSegments);
       });
-    };
+    }
 
     return Column(
       children: <Widget>[
         Container(
           width: 180,
-          padding: EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
+          padding: const EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
           child: Row(
             children: <Widget>[
               Expanded(
@@ -177,9 +179,9 @@ class OhlsenTelegraphState extends State<OhlsenTelegraph> {
       //encode
       var segments = encodeOhlsenTelegraph(_currentEncodeInput.toLowerCase());
       List<String> code = [];
-      segments.displays.forEach((element) {
+      for (var element in segments.displays) {
         code.add(segmentToCode(element));
-      });
+      }
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments),

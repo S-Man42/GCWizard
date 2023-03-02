@@ -21,7 +21,7 @@ List<String> textToBinaryList(String text) {
 }
 
 String intListToString(List<int?> list, {String delimiter = ''}) {
-  return list.map((elem) => elem == null ? UNKNOWN_ELEMENT : elem).join(delimiter).trim();
+  return list.map((elem) => elem ?? UNKNOWN_ELEMENT).join(delimiter).trim();
 }
 
 Map<U, T> switchMapKeyValue<T, U>(Map<T, U> map, {bool keepFirstOccurence = false}) {
@@ -62,8 +62,12 @@ Uint8List trimNullBytes(Uint8List bytes) {
 
   var tempList = List<int>.from(bytes);
 
-  while (tempList.isNotEmpty && tempList.last == 0) tempList.removeLast();
-  while (tempList.isNotEmpty && tempList.first == 0) tempList.removeAt(0);
+  while (tempList.isNotEmpty && tempList.last == 0) {
+    tempList.removeLast();
+  }
+  while (tempList.isNotEmpty && tempList.first == 0) {
+    tempList.removeAt(0);
+  }
 
   return Uint8List.fromList(tempList);
 }

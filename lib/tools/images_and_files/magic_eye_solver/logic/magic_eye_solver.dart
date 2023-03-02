@@ -5,7 +5,7 @@ import 'dart:isolate';
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:gc_wizard/common_widgets/gcw_async_executer.dart';
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/tools/images_and_files/_common/logic/rgb_pixel.dart';
 import 'package:gc_wizard/utils/math_utils.dart';
@@ -50,9 +50,9 @@ Future<Tuple3<Image.Image, Uint8List, int>?> decodeImage(
    {SendPort? sendAsyncPort}) async {
 
   if (image == null) return null;
-  if (imageData == null) imageData = Image.decodeImage(image);
+  imageData ??= Image.decodeImage(image);
   if (imageData == null) return null;
-  if (displacement == null) displacement = _magicEyeSolver(imageData);
+  displacement ??= _magicEyeSolver(imageData);
 
   var outputImage = _createResultImage(imageData, displacement);
   var result = Tuple3<Image.Image, Uint8List, int>(imageData, outputImage, displacement);
@@ -71,7 +71,7 @@ int _magicEyeSolver(Image.Image image) {
 
   for (int displacement = _MIN_DISPLACEMENT_ALLOWED; displacement <= maxDisplacementAllowed; displacement++) {
     var totalDifference = 0.0;
-    testedLines.forEach((y) {
+    for (var y in testedLines) {
       for (int x = displacement; x < image.width; x++) {
         var _pixel1 = image.getPixel(x, y);
         var _pixel2 = image.getPixel(x - displacement, y);
@@ -83,7 +83,7 @@ int _magicEyeSolver(Image.Image image) {
         var difference = (red.abs() + green.abs() + blue.abs()) / 3.0;
         totalDifference += difference;
       }
-    });
+    }
 
     var nbPixels = (testedLines.length * (image.width - displacement));
     var averageDifference = totalDifference / nbPixels;
@@ -96,7 +96,9 @@ List<int> _computeTestedLines(Image.Image image) {
   var lines = <int>[];
   var delta = (image.height < _MAX_TESTED_LINES_COUNT) ? 1 : (image.height / _MAX_TESTED_LINES_COUNT);
 
-  for (double i = 0; i < image.height; i += delta) lines.add(i.floor());
+  for (double i = 0; i < image.height; i += delta) {
+    lines.add(i.floor());
+  }
 
   return lines;
 }
@@ -117,8 +119,9 @@ int _computeBestDisplacement(List<double> differences) {
   // The gradient helps determine the end of the lowest plateau.
   // Once found, check what was just before because maybe it was better
   for (var i = 0; i < 3; i++) {
-    if (highestGradientIndex > 0 && differences[highestGradientIndex - 1] < differences[highestGradientIndex])
+    if (highestGradientIndex > 0 && differences[highestGradientIndex - 1] < differences[highestGradientIndex]) {
       highestGradientIndex--;
+    }
   }
   return highestGradientIndex;
 }
@@ -126,8 +129,11 @@ int _computeBestDisplacement(List<double> differences) {
 Uint8List _createResultImage(Image.Image image, int displacement) {
   var bitmap = Image.Image(image.width, image.height);
 
-  for (int y = 0; y < bitmap.height; y++)
-    for (int x = 0; x < displacement; x++) bitmap.setPixel(x, y, image.getPixel(x, y));
+  for (int y = 0; y < bitmap.height; y++) {
+    for (int x = 0; x < displacement; x++) {
+      bitmap.setPixel(x, y, image.getPixel(x, y));
+    }
+  }
 
   for (int y = 0; y < bitmap.height; y++) {
     for (int x = displacement; x < bitmap.width; x++) {
@@ -176,15 +182,17 @@ Tuple2<Uint8List?, MagicEyeErrorCode>? _generateImage(
   var resolutionX = depthmap.width;
   var resolutionY = depthmap.height;
 
-  if (resolutionX < 3 * _separation)
-    return Tuple2<Uint8List?, MagicEyeErrorCode>(null, MagicEyeErrorCode.IMAGE_TOO_SMALL);
+  if (resolutionX < 3 * _separation) {
+    return const Tuple2<Uint8List?, MagicEyeErrorCode>(null, MagicEyeErrorCode.IMAGE_TOO_SMALL);
+  }
 
-  if (((textureType == TextureType.BITMAP) || (textureType == null)) && (textureImage != null))
+  if (((textureType == TextureType.BITMAP) || (textureType == null)) && (textureImage != null)) {
     texture = Image.decodeImage(textureImage);
-  else if (textureType == TextureType.GREYDOTS)
+  } else if (textureType == TextureType.GREYDOTS) {
     texture = _generateGrayDotsTexture(_separation, resolutionY);
-  else
+  } else {
     texture = _generateColoredDotsTexture(_separation, resolutionY);
+  }
 
   if (texture == null) return null;
 
@@ -241,8 +249,9 @@ Tuple2<Uint8List?, MagicEyeErrorCode>? _generateImage(
   for (int y = 0; y < _rows; y++) {
     _doLineHoroptic(y);
 
-    if (sendAsyncPort != null && (generatedLines % _progressStep == 0))
+    if (sendAsyncPort != null && (generatedLines % _progressStep == 0)) {
       sendAsyncPort.send({'progress': y / _rows});
+    }
   }
 
   var bmStereogram = Image.Image.fromBytes(_lineWidth, _rows, _pixels.buffer.asUint8List(),
@@ -312,7 +321,9 @@ void _doLineHoroptic(int y) {
 
       // Find an unconstrained pixel and constrain ourselves to it
       // Uh-oh, what happens if they become constrained to each other?  Constrainee is flagged as unconstrained, I suppose
-      while (constraints[constrainer] != constrainer) constrainer = constraints[constrainer];
+      while (constraints[constrainer] != constrainer) {
+        constrainer = constraints[constrainer];
+      }
 
       constraints[constrainee] = constrainer;
 
@@ -326,7 +337,9 @@ void _doLineHoroptic(int y) {
     int pix = i;
 
     // Find an unconstrained pixel
-    while (constraints[pix] != pix) pix = constraints[pix];
+    while (constraints[pix] != pix) {
+      pix = constraints[pix];
+    }
 
     // And get the RGBs from the tiled texture at that point
     _setStereoPixel(i, y, _getTexturePixel(pix, y));
@@ -372,7 +385,9 @@ Image.Image _generateColoredDotsTexture(int resX, int resY) {
   Random random = Random();
   var pixels = Uint8List(resX * resY * _channelCount); // (RGBA)
 
-  for (int i = 0; i < pixels.length; i++) pixels[i] = random.nextInt(256);
+  for (int i = 0; i < pixels.length; i++) {
+    pixels[i] = random.nextInt(256);
+  }
 
   return Image.Image.fromBytes(resX, resY, pixels, format: Image.Format.rgba, channels: Image.Channels.rgba);
 }

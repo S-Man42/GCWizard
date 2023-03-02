@@ -1,13 +1,14 @@
 part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_analyze.dart';
 
-List<List<String>> buildOutputListOfTimerData(BuildContext context, WherigoTimerData data) {
-  if (wherigoExpertMode)
-    return buildOutputListTimerDataExpertMode(context, data);
-  else
-    return buildOutputListTimerDataUserMode(context, data);
+List<List<String>> _buildOutputListOfTimerData(BuildContext context, WherigoTimerData data) {
+  if (wherigoExpertMode) {
+    return _buildOutputListTimerDataExpertMode(context, data);
+  } else {
+    return _buildOutputListTimerDataUserMode(context, data);
+  }
 }
 
-List<List<String>> buildOutputListTimerDataUserMode(BuildContext context, WherigoTimerData data) {
+List<List<String>> _buildOutputListTimerDataUserMode(BuildContext context, WherigoTimerData data) {
   return [
     [i18n(context, 'wherigo_output_name'), data.TimerName],
     [i18n(context, 'wherigo_output_description'), data.TimerDescription],
@@ -16,7 +17,7 @@ List<List<String>> buildOutputListTimerDataUserMode(BuildContext context, Wherig
   ];
 }
 
-List<List<String>> buildOutputListTimerDataExpertMode(BuildContext context, WherigoTimerData data) {
+List<List<String>> _buildOutputListTimerDataExpertMode(BuildContext context, WherigoTimerData data) {
   return [
     [i18n(context, 'wherigo_output_luaname'), data.TimerLUAName],
     [i18n(context, 'wherigo_output_id'), data.TimerID],

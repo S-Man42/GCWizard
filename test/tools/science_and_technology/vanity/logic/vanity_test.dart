@@ -137,57 +137,57 @@ void main() {
       {'model': phoneModelByName(NAME_PHONEMODEL_SIEMENS_A65), 'language': PhoneInputLanguage.GERMAN, 'input' : '222 ### # &%/()33mmmm3 ## 44 # 5 0 # 1 Abc 7777', 'expectedOutput' : {'mode': PhoneCaseMode.LOWER_CASE, 'output': 'c333HJ. S'}},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, model: ${elem['model']}, language: ${elem['language']}', () {
         var _actual = decodeVanityMultitap(elem['input'] as String?, elem['model'] as PhoneModel?, elem['language'] as PhoneInputLanguage?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Vanity.encodeVanityMultitap:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'model': phoneModelByName(NAME_PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'input' : null, 'expectedOutput' : Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.CAMEL_CASE, '')},
-      {'model': phoneModelByName(NAME_PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'input' : '', 'expectedOutput' : Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.CAMEL_CASE, '')},
+      {'model': phoneModelByName(NAME_PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'input' : null, 'expectedOutput' : const Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.CAMEL_CASE, '')},
+      {'model': phoneModelByName(NAME_PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'input' : '', 'expectedOutput' : const Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.CAMEL_CASE, '')},
 
-      {'model': PHONEMODEL_SIMPLE_SPACE_0, 'language': PhoneInputLanguage.UNSPECIFIED, 'input' : ' ABC. DEF0123 ', 'expectedOutput' : Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.UPPER_CASE, '0 2 22 222 0 3 33 333 00 1 2222 3333 0')},
-      {'model': PHONEMODEL_SIMPLE_SPACE_1, 'language': PhoneInputLanguage.UNSPECIFIED, 'input' : ' ABC. DEF0123 ', 'expectedOutput' : Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.UPPER_CASE, '1 2 22 222 1 3 33 333 0 11 2222 3333 1')},
-      {'model': PHONEMODEL_SIMPLE_SPACE_HASH, 'language': PhoneInputLanguage.UNSPECIFIED, 'input' : ' ABC. DEF0123 ', 'expectedOutput' : Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.UPPER_CASE, '# 2 22 222 # 3 33 333 0 1 2222 3333 #')},
+      {'model': PHONEMODEL_SIMPLE_SPACE_0, 'language': PhoneInputLanguage.UNSPECIFIED, 'input' : ' ABC. DEF0123 ', 'expectedOutput' : const Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.UPPER_CASE, '0 2 22 222 0 3 33 333 00 1 2222 3333 0')},
+      {'model': PHONEMODEL_SIMPLE_SPACE_1, 'language': PhoneInputLanguage.UNSPECIFIED, 'input' : ' ABC. DEF0123 ', 'expectedOutput' : const Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.UPPER_CASE, '1 2 22 222 1 3 33 333 0 11 2222 3333 1')},
+      {'model': PHONEMODEL_SIMPLE_SPACE_HASH, 'language': PhoneInputLanguage.UNSPECIFIED, 'input' : ' ABC. DEF0123 ', 'expectedOutput' : const Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.UPPER_CASE, '# 2 22 222 # 3 33 333 0 1 2222 3333 #')},
 
-      {'model': phoneModelByName(NAME_PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'input' : 'Abc', 'expectedOutput' : Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.LOWER_CASE, '2 22 222')},
-      {'model': phoneModelByName(NAME_PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'input' : 'AB', 'expectedOutput' : Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.UPPER_CASE, '2 # 22')},
-      {'model': phoneModelByName(NAME_PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'input' : 'Abc. Abc', 'expectedOutput' : Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.LOWER_CASE, '2 22 222 1 0 2 22 222')},
-      {'model': phoneModelByName(NAME_PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'input' : 'AB? AB', 'expectedOutput' : Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.UPPER_CASE, '2 # 22 111 0 2 # 22')},
-      {'model': phoneModelByName(NAME_PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'input' : 'abc', 'expectedOutput' : Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.LOWER_CASE, '# 2 22 222')},
-      {'model': phoneModelByName(NAME_PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'input' : 'Abc. ab2', 'expectedOutput' : Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.LOWER_CASE, '2 22 222 1 0 # 2 22 2222')},
-      {'model': phoneModelByName(NAME_PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'input' : 'Ab.c ab', 'expectedOutput' : Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.LOWER_CASE, '2 22 1 222 0 2 22')},
+      {'model': phoneModelByName(NAME_PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'input' : 'Abc', 'expectedOutput' : const Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.LOWER_CASE, '2 22 222')},
+      {'model': phoneModelByName(NAME_PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'input' : 'AB', 'expectedOutput' : const Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.UPPER_CASE, '2 # 22')},
+      {'model': phoneModelByName(NAME_PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'input' : 'Abc. Abc', 'expectedOutput' : const Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.LOWER_CASE, '2 22 222 1 0 2 22 222')},
+      {'model': phoneModelByName(NAME_PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'input' : 'AB? AB', 'expectedOutput' : const Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.UPPER_CASE, '2 # 22 111 0 2 # 22')},
+      {'model': phoneModelByName(NAME_PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'input' : 'abc', 'expectedOutput' : const Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.LOWER_CASE, '# 2 22 222')},
+      {'model': phoneModelByName(NAME_PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'input' : 'Abc. ab2', 'expectedOutput' : const Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.LOWER_CASE, '2 22 222 1 0 # 2 22 2222')},
+      {'model': phoneModelByName(NAME_PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'input' : 'Ab.c ab', 'expectedOutput' : const Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.LOWER_CASE, '2 22 1 222 0 2 22')},
 
-      {'model': phoneModelByName(NAME_PHONEMODEL_SIEMENS_S35), 'language': PhoneInputLanguage.DUTCH, 'input' : 'Abc', 'expectedOutput' : Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.LOWER_CASE, '2 22 222')},
-      {'model': phoneModelByName(NAME_PHONEMODEL_SIEMENS_S35), 'language': PhoneInputLanguage.DUTCH, 'input' : 'ABC', 'expectedOutput' : Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.LOWER_CASE, '2 * 22 * 222')},
-      {'model': phoneModelByName(NAME_PHONEMODEL_SIEMENS_S35), 'language': PhoneInputLanguage.DUTCH, 'input' : 'Abc. Abc', 'expectedOutput' : Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.LOWER_CASE, '2 22 222 0000 1 * 2 22 222')},
-      {'model': phoneModelByName(NAME_PHONEMODEL_SIEMENS_S35), 'language': PhoneInputLanguage.DUTCH, 'input' : 'A1B2', 'expectedOutput' : Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.LOWER_CASE, '2 11 * 22 2222')},
-      {'model': phoneModelByName(NAME_PHONEMODEL_SIEMENS_S35), 'language': PhoneInputLanguage.DUTCH, 'input' : 'a1B2', 'expectedOutput' : Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.LOWER_CASE, '* 2 11 * 22 2222')},
+      {'model': phoneModelByName(NAME_PHONEMODEL_SIEMENS_S35), 'language': PhoneInputLanguage.DUTCH, 'input' : 'Abc', 'expectedOutput' : const Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.LOWER_CASE, '2 22 222')},
+      {'model': phoneModelByName(NAME_PHONEMODEL_SIEMENS_S35), 'language': PhoneInputLanguage.DUTCH, 'input' : 'ABC', 'expectedOutput' : const Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.LOWER_CASE, '2 * 22 * 222')},
+      {'model': phoneModelByName(NAME_PHONEMODEL_SIEMENS_S35), 'language': PhoneInputLanguage.DUTCH, 'input' : 'Abc. Abc', 'expectedOutput' : const Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.LOWER_CASE, '2 22 222 0000 1 * 2 22 222')},
+      {'model': phoneModelByName(NAME_PHONEMODEL_SIEMENS_S35), 'language': PhoneInputLanguage.DUTCH, 'input' : 'A1B2', 'expectedOutput' : const Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.LOWER_CASE, '2 11 * 22 2222')},
+      {'model': phoneModelByName(NAME_PHONEMODEL_SIEMENS_S35), 'language': PhoneInputLanguage.DUTCH, 'input' : 'a1B2', 'expectedOutput' : const Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.LOWER_CASE, '* 2 11 * 22 2222')},
 
-      {'model': phoneModelByName(NAME_PHONEMODEL_MOTOROLA_CD930), 'language': PhoneInputLanguage.UNSPECIFIED, 'input' : 'A1B2', 'expectedOutput' : Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.UPPER_CASE, '2 111 22 2222')},
-      {'model': phoneModelByName(NAME_PHONEMODEL_MOTOROLA_CD930), 'language': PhoneInputLanguage.UNSPECIFIED, 'input' : 'a1B2c', 'expectedOutput' : Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.UPPER_CASE, '111 22 2222')},
+      {'model': phoneModelByName(NAME_PHONEMODEL_MOTOROLA_CD930), 'language': PhoneInputLanguage.UNSPECIFIED, 'input' : 'A1B2', 'expectedOutput' : const Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.UPPER_CASE, '2 111 22 2222')},
+      {'model': phoneModelByName(NAME_PHONEMODEL_MOTOROLA_CD930), 'language': PhoneInputLanguage.UNSPECIFIED, 'input' : 'a1B2c', 'expectedOutput' : const Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.UPPER_CASE, '111 22 2222')},
 
-      {'model': phoneModelByName(NAME_PHONEMODEL_MOTOROLA_V600), 'language': PhoneInputLanguage.EXTENDED, 'input' : 'Abc', 'expectedOutput' : Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.LOWER_CASE, '2 22 222')},
-      {'model': phoneModelByName(NAME_PHONEMODEL_MOTOROLA_V600), 'language': PhoneInputLanguage.EXTENDED, 'input' : 'AB', 'expectedOutput' : Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.LOWER_CASE, '2 0 22')},
-      {'model': phoneModelByName(NAME_PHONEMODEL_MOTOROLA_V600), 'language': PhoneInputLanguage.EXTENDED, 'input' : 'Abc. Abc', 'expectedOutput' : Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.LOWER_CASE, '2 22 222 1 * 2 22 222')},
-      {'model': phoneModelByName(NAME_PHONEMODEL_MOTOROLA_V600), 'language': PhoneInputLanguage.EXTENDED, 'input' : 'Ab.c aB', 'expectedOutput' : Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.LOWER_CASE, '2 22 1 222 * 2 0 22')},
-      {'model': phoneModelByName(NAME_PHONEMODEL_MOTOROLA_V600), 'language': PhoneInputLanguage.EXTENDED, 'input' : '%>?A14Bz&%! c', 'expectedOutput' : Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.LOWER_CASE, '11111111111111111111 1111111111111111111111111111111111 11 0 2 1111111111111111 4444 0 22 9999 1111111111111 11111111111111111111 111 * 00 222')},
+      {'model': phoneModelByName(NAME_PHONEMODEL_MOTOROLA_V600), 'language': PhoneInputLanguage.EXTENDED, 'input' : 'Abc', 'expectedOutput' : const Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.LOWER_CASE, '2 22 222')},
+      {'model': phoneModelByName(NAME_PHONEMODEL_MOTOROLA_V600), 'language': PhoneInputLanguage.EXTENDED, 'input' : 'AB', 'expectedOutput' : const Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.LOWER_CASE, '2 0 22')},
+      {'model': phoneModelByName(NAME_PHONEMODEL_MOTOROLA_V600), 'language': PhoneInputLanguage.EXTENDED, 'input' : 'Abc. Abc', 'expectedOutput' : const Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.LOWER_CASE, '2 22 222 1 * 2 22 222')},
+      {'model': phoneModelByName(NAME_PHONEMODEL_MOTOROLA_V600), 'language': PhoneInputLanguage.EXTENDED, 'input' : 'Ab.c aB', 'expectedOutput' : const Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.LOWER_CASE, '2 22 1 222 * 2 0 22')},
+      {'model': phoneModelByName(NAME_PHONEMODEL_MOTOROLA_V600), 'language': PhoneInputLanguage.EXTENDED, 'input' : '%>?A14Bz&%! c', 'expectedOutput' : const Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.LOWER_CASE, '11111111111111111111 1111111111111111111111111111111111 11 0 2 1111111111111111 4444 0 22 9999 1111111111111 11111111111111111111 111 * 00 222')},
 
-      {'model': phoneModelByName(NAME_PHONEMODEL_SIEMENS_C75), 'language': PhoneInputLanguage.ENGLISH, 'input' : 'Alle meine Entchen', 'expectedOutput' : Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.LOWER_CASE, '2 555 555 33 1 6 33 444 66 33 1 # 33 66 8 222 44 33 66')},
+      {'model': phoneModelByName(NAME_PHONEMODEL_SIEMENS_C75), 'language': PhoneInputLanguage.ENGLISH, 'input' : 'Alle meine Entchen', 'expectedOutput' : const Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.LOWER_CASE, '2 555 555 33 1 6 33 444 66 33 1 # 33 66 8 222 44 33 66')},
 
-      {'model': phoneModelByName(NAME_PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'input' : 'AẄb', 'expectedOutput' : Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.LOWER_CASE, '2 22')},
+      {'model': phoneModelByName(NAME_PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'input' : 'AẄb', 'expectedOutput' : const Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.LOWER_CASE, '2 22')},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, model: ${elem['model']}, language: ${elem['language']}', () {
         var _actual = encodeVanityMultitap(elem['input'] as String?, elem['model'] as PhoneModel?, elem['language'] as PhoneInputLanguage?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Vanity.reverseEncodeVanityMultitap:", () {
@@ -220,11 +220,11 @@ void main() {
       {'model': phoneModelByName(NAME_PHONEMODEL_MOTOROLA_V600), 'language': PhoneInputLanguage.EXTENDED, 'expectedOutput' : '%>?A14Bz&%! c', 'input' : '11111111111111111111 1111111111111111111111111111111111 11 0 2 1111111111111111 4444 0 22 9999 1111111111111 11111111111111111111 111 * 00 222'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, model: ${elem['model']}, language: ${elem['language']}', () {
         var _actual = decodeVanityMultitap(elem['input'] as String?, elem['model'] as PhoneModel?, elem['language'] as PhoneInputLanguage?);
         expect(_actual!.item2, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

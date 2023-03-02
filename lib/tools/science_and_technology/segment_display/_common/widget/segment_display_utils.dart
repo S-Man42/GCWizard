@@ -12,13 +12,15 @@ Future<ui.Image> buildSegmentDisplayImage(int countColumns, List<NSegmentDisplay
   var rowWidth = 0.0;
   var rowHeight = 0.0;
   var images = <ui.Image>[];
-  var offset = ui.Offset(0, bounds);
+  var offset = const ui.Offset(0, bounds);
 
   // create images
-  for (var i = 0; i < displays.length; i++) images.add(await displays[i].renderedImage);
+  for (var i = 0; i < displays.length; i++) {
+    images.add(await displays[i].renderedImage);
+  }
 
   // calc image size
-  images.forEach((image) {
+  for (var image in images) {
     rowWidth += image.width + 2 * _horizontalPadding;
     width = max(width, rowWidth);
     rowHeight = max(rowHeight, image.height.toDouble() + 2 * _verticalPadding);
@@ -30,7 +32,7 @@ Future<ui.Image> buildSegmentDisplayImage(int countColumns, List<NSegmentDisplay
       rowHeight = 0;
       columnCounter = 0;
     }
-  });
+  }
 
   width = width + 2 * bounds;
   height = height + rowHeight + 2 * bounds;
@@ -77,11 +79,11 @@ Future<ui.Image> buildSegmentDisplayImage(int countColumns, List<NSegmentDisplay
   return canvasRecorder.endRecording().toImage(width.toInt(), height.toInt());
 }
 
-void _exportFile(BuildContext context, Uint8List? data) async {
+Future<void> _exportFile(BuildContext context, Uint8List? data) async {
   if (data == null) return;
-  var value = await saveByteDataToFile(context, data, buildFileNameWithDate('img_', FileType.PNG));
-
-  if (value) showExportedFileDialog(context, contentWidget: imageContent(context, data));
+  await saveByteDataToFile(context, data, buildFileNameWithDate('img_', FileType.PNG)).then((value) {
+    if (value) showExportedFileDialog(context, contentWidget: imageContent(context, data));
+  });
 }
 
 Widget _buildSegmentDisplayOutput(int countColumns, List<Widget> displays,
@@ -103,8 +105,8 @@ Widget _buildSegmentDisplayOutput(int countColumns, List<Widget> displays,
         var display = displays[displayIndex];
 
         widget = Container(
-          child: display,
           padding: EdgeInsets.symmetric(horizontal: _horizontalPadding),
+          child: display,
         );
       } else {
         widget = Container();
@@ -112,8 +114,8 @@ Widget _buildSegmentDisplayOutput(int countColumns, List<Widget> displays,
 
       columns.add(Expanded(
           child: Container(
-            child: widget,
             padding: EdgeInsets.symmetric(vertical: _verticalPadding),
+            child: widget,
           )));
     }
 

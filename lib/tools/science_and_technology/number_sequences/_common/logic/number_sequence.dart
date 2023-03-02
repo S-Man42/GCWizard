@@ -122,17 +122,19 @@ BigInt _getJacobsthalOblong(int n) {
 }
 
 BigInt _getfactorial(int n) {
-  if (n > 0)
+  if (n > 0) {
     return n <= 1 ? One : BigInt.from(n) * _getfactorial(n - 1);
-  else
+  } else {
     return One;
+  }
 }
 
 BigInt _getBinomialCoefficient(int n, int k) {
-  if (n == k)
+  if (n == k) {
     return Zero;
-  else
+  } else {
     return _getfactorial(n) ~/ _getfactorial(k) ~/ _getfactorial(n - k);
+  }
 }
 
 BigInt Function(int)? _getNumberSequenceFunction(NumberSequencesMode mode) {
@@ -157,10 +159,11 @@ BigInt Function(int)? _getNumberSequenceFunction(NumberSequencesMode mode) {
 }
 
 BigInt getNumberAt(NumberSequencesMode sequence, int? n) {
-  if (n == null)
+  if (n == null) {
     return Zero;
-  else
+  } else {
     return getNumbersInRange(sequence, n, n)[0];
+  }
 }
 
 List<BigInt> getNumbersInRange(NumberSequencesMode sequence, int? start, int? stop) {
@@ -180,11 +183,11 @@ List<BigInt> getNumbersInRange(NumberSequencesMode sequence, int? start, int? st
     BigInt pn1 = One;
     int index = 0;
     while (index < stop + 1) {
-      if (index == 0)
+      if (index == 0) {
         number = Zero;
-      else if (index == 1)
+      } else if (index == 1) {
         number = One;
-      else {
+      } else {
         number = pn0 + pn1;
         pn0 = pn1;
         pn1 = number;
@@ -198,11 +201,11 @@ List<BigInt> getNumbersInRange(NumberSequencesMode sequence, int? start, int? st
     BigInt pn1 = One;
     int index = 0;
     while (index <= stop) {
-      if (index == 0)
+      if (index == 0) {
         number = pn0;
-      else if (index == 1)
+      } else if (index == 1) {
         number = pn1;
-      else {
+      } else {
         number = Two * pn1 + pn0;
         pn0 = pn1;
         pn1 = number;
@@ -216,11 +219,11 @@ List<BigInt> getNumbersInRange(NumberSequencesMode sequence, int? start, int? st
     BigInt pn1 = Two;
     int index = 0;
     while (index < stop + 1) {
-      if (index == 0)
+      if (index == 0) {
         number = pn0;
-      else if (index == 1)
+      } else if (index == 1) {
         number = pn1;
-      else {
+      } else {
         number = Two * pn1 + pn0;
         pn0 = pn1;
         pn1 = number;
@@ -234,11 +237,11 @@ List<BigInt> getNumbersInRange(NumberSequencesMode sequence, int? start, int? st
     BigInt pn1 = One;
     int index = 0;
     while (index <= stop) {
-      if (index == 0)
+      if (index == 0) {
         number = pn0;
-      else if (index == 1)
+      } else if (index == 1) {
         number = pn1;
-      else {
+      } else {
         number = pn0 + pn1;
         pn0 = pn1;
         pn1 = number;
@@ -254,12 +257,13 @@ List<BigInt> getNumbersInRange(NumberSequencesMode sequence, int? start, int? st
     recamanSequence.add(Zero);
     index = Zero;
     while (index < BigInt.from(stop) + One) {
-      if (index == Zero)
+      if (index == Zero) {
         number = pn0;
-      else if ((pn0 - index) > Zero && !recamanSequence.contains(pn0 - index))
+      } else if ((pn0 - index) > Zero && !recamanSequence.contains(pn0 - index)) {
         number = pn0 - index;
-      else
+      } else {
         number = pn0 + index;
+      }
       recamanSequence.add(number);
       pn0 = number;
       if (index >= BigInt.from(start)) numberList.add(number);
@@ -269,11 +273,11 @@ List<BigInt> getNumbersInRange(NumberSequencesMode sequence, int? start, int? st
     var number = BigInt.zero;
     int index = 0;
     while (index < stop + 1) {
-      if (index == 0)
+      if (index == 0) {
         number = One;
-      else if (index == 1)
+      } else if (index == 1) {
         number = One;
-      else {
+      } else {
         number = number * BigInt.from(index);
       }
       if (index >= start) numberList.add(number);
@@ -284,12 +288,13 @@ List<BigInt> getNumbersInRange(NumberSequencesMode sequence, int? start, int? st
     var number = BigInt.zero;
     int index = 0;
     while (index <= stop) {
-      if (index == 0)
+      if (index == 0) {
         number = One;
-      else
+      } else {
         for (int k = 0; k <= index - 1; k++) {
           number = number + _getBinomialCoefficient(index - 1, k) * bellList[k];
         }
+      }
       bellList.add(number);
       if (index >= start) numberList.add(number);
       index = index + 1;
@@ -329,22 +334,26 @@ List<BigInt> getNumbersInRange(NumberSequencesMode sequence, int? start, int? st
       case NumberSequencesMode.HAPPY_NUMBERS:
         sequenceList.addAll(happy_numbers);
         break;
+      default: {}
     }
-    for (int i = start; i <= stop; i++) numberList.add(BigInt.parse(sequenceList[i]));
+    for (int i = start; i <= stop; i++) {
+      numberList.add(BigInt.parse(sequenceList[i]));
+    }
   }
 
   return numberList;
 }
 
 int checkNumber(NumberSequencesMode sequence, BigInt? checkNumber, int maxIndex) {
-  if (checkNumber == null)
+  if (checkNumber == null) {
     return -1;
-  else if (getFirstPositionOfSequence(sequence, checkNumber.toString(), maxIndex).positionSequence == -1)
+  } else if (getFirstPositionOfSequence(sequence, checkNumber.toString(), maxIndex).positionSequence == -1) {
     return -1;
-  else if (getFirstPositionOfSequence(sequence, checkNumber.toString(), maxIndex).positionDigits == 1)
+  } else if (getFirstPositionOfSequence(sequence, checkNumber.toString(), maxIndex).positionDigits == 1) {
     return getFirstPositionOfSequence(sequence, checkNumber.toString(), maxIndex).positionSequence;
-  else
+  } else {
     return -1;
+  }
 }
 
 PositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode sequence, String? check, int maxIndex) {
@@ -369,7 +378,9 @@ PositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode sequence
       numberString = number.toString();
       if (numberString.contains(check)) {
         int j = 0;
-        while (!numberString.substring(j).startsWith(check)) j++;
+        while (!numberString.substring(j).startsWith(check)) {
+          j++;
+        }
         return PositionOfSequenceOutput(numberString, index, (j + 1));
       }
       index = index + 1;
@@ -391,7 +402,9 @@ PositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode sequence
         numberString = number.toString();
         if (expr.hasMatch(numberString)) {
           int j = 0;
-          while (!numberString.substring(j).startsWith(check)) j++;
+          while (!numberString.substring(j).startsWith(check)) {
+            j++;
+          }
           return PositionOfSequenceOutput(numberString, index, j + 1);
         }
         index = index + 1;
@@ -414,7 +427,9 @@ PositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode sequence
         numberString = number.toString();
         if (expr.hasMatch(numberString)) {
           int j = 0;
-          while (!numberString.substring(j).startsWith(check)) j++;
+          while (!numberString.substring(j).startsWith(check)) {
+            j++;
+          }
           return PositionOfSequenceOutput(numberString, index, j + 1);
         }
         index = index + 1;
@@ -435,7 +450,9 @@ PositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode sequence
       numberString = number.toString();
       if (expr.hasMatch(numberString)) {
         int j = 0;
-        while (!numberString.substring(j).startsWith(check)) j++;
+        while (!numberString.substring(j).startsWith(check)) {
+          j++;
+        }
         return PositionOfSequenceOutput(numberString, index, j + 1);
       }
       index = index + 1;
@@ -454,7 +471,9 @@ PositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode sequence
         numberString = number.toString();
         if (expr.hasMatch(numberString)) {
           int j = 0;
-          while (!numberString.substring(j).startsWith(check)) j++;
+          while (!numberString.substring(j).startsWith(check)) {
+            j++;
+          }
           return PositionOfSequenceOutput(numberString, index, j + 1);
         }
         index = index + 1;
@@ -471,18 +490,21 @@ PositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode sequence
     int number = 0;
     recamanSequence.add(0);
     while (index <= maxIndex) {
-      if (index == Zero)
+      if (index == 0) {
         number = 0;
-      else if ((pn0 - index) > 0 && !recamanSequence.contains(pn0 - index))
+      } else if ((pn0 - index) > 0 && !recamanSequence.contains(pn0 - index)) {
         number = pn0 - index;
-      else
+      } else {
         number = pn0 + index;
+      }
       recamanSequence.add(number);
       pn0 = number;
       numberString = number.toString();
       if (expr.hasMatch(numberString)) {
         int j = 0;
-        while (!numberString.substring(j).startsWith(check)) j++;
+        while (!numberString.substring(j).startsWith(check)) {
+          j++;
+        }
         return PositionOfSequenceOutput(numberString, index, j + 1);
       }
       index = index + 1;
@@ -500,7 +522,9 @@ PositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode sequence
         numberString = number.toString();
         if (expr.hasMatch(numberString)) {
           int j = 0;
-          while (!numberString.substring(j).startsWith(check)) j++;
+          while (!numberString.substring(j).startsWith(check)) {
+            j++;
+          }
           return PositionOfSequenceOutput(numberString, index, j + 1);
         }
         index = index + 1;
@@ -509,17 +533,20 @@ PositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode sequence
   } else if (sequence == NumberSequencesMode.BELL) {
     List<BigInt> bellList = <BigInt>[];
     while (index <= maxIndex) {
-      if (index == 0)
+      if (index == 0) {
         number = One;
-      else
+      } else {
         for (int k = 0; k <= index - 1; k++) {
           number = number + _getBinomialCoefficient(index - 1, k) * bellList[k];
         }
+      }
       bellList.add(number);
       numberString = number.toString();
       if (expr.hasMatch(numberString)) {
         int j = 0;
-        while (!numberString.substring(j).startsWith(check)) j++;
+        while (!numberString.substring(j).startsWith(check)) {
+          j++;
+        }
         return PositionOfSequenceOutput(numberString, index, j + 1);
       }
       index = index + 1;
@@ -559,11 +586,14 @@ PositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode sequence
       case NumberSequencesMode.HAPPY_NUMBERS:
         sequenceList.addAll(happy_numbers);
         break;
+      default: {}
     }
     for (int i = 0; i < sequenceList.length; i++) {
       if (expr.hasMatch(sequenceList[i])) {
         int j = 0;
-        while (!sequenceList[i].substring(j).startsWith(check)) j++;
+        while (!sequenceList[i].substring(j).startsWith(check)) {
+          j++;
+        }
         return PositionOfSequenceOutput(sequenceList[i], i, j + 1);
       }
     }
@@ -649,12 +679,13 @@ List<BigInt> getNumbersWithNDigits(NumberSequencesMode sequence, int? digits) {
     BigInt pn0 = Zero;
     List<BigInt> recamanSequence = <BigInt>[];
     for (int index = 0; index < 11111; index++) {
-      if (index == 0)
+      if (index == 0) {
         number = Zero;
-      else if ((pn0 - BigInt.from(index)) > Zero && !recamanSequence.contains(pn0 - BigInt.from(index)))
+      } else if ((pn0 - BigInt.from(index)) > Zero && !recamanSequence.contains(pn0 - BigInt.from(index))) {
         number = pn0 - BigInt.from(index);
-      else
+      } else {
         number = pn0 + BigInt.from(index);
+      }
       recamanSequence.add(number);
       pn0 = number;
       if (number.toString().length == digits) numberList.add(number);
@@ -677,12 +708,13 @@ List<BigInt> getNumbersWithNDigits(NumberSequencesMode sequence, int? digits) {
     BigInt number = One;
     int index = 0;
     while (number.toString().length < digits + 1) {
-      if (index == 0)
+      if (index == 0) {
         number = One;
-      else
+      } else {
         for (int k = 0; k <= index - 1; k++) {
           number = number + _getBinomialCoefficient(index - 1, k) * bellList[k];
         }
+      }
       bellList.add(number);
       if (number.toString().length == digits) numberList.add(number);
       index = index + 1;

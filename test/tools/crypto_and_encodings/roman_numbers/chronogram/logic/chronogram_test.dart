@@ -15,12 +15,12 @@ void main() {
       {'input' : 'SVRGE O IEHOVA ATQVE DISPERGE INIMICOS TVOS', 'expectedOutput' : 1625},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decodeChronogram(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Chronogram.JUToIV:", () {
@@ -36,11 +36,11 @@ void main() {
       {'input' : 'SVRGE O IEHOVA ATQVE DISPERGE INIMICOS TVOS', 'expectedOutput' : 1625},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decodeChronogram(elem['input'] as String?, JUToIV: true);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

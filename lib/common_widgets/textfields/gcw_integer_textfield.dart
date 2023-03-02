@@ -47,8 +47,9 @@ class _GCWIntegerTextFieldState extends State<GCWIntegerTextField> {
       hintText: widget.hintText,
       onChanged: (String text) {
         setState(() {
-          if (!isInteger(text))
+          if (!isInteger(text)) {
             return;
+          }
 
           var _value = ['', '-'].contains(text) ? max<int>(widget.min ?? 0, 0) : int.parse(text);
 

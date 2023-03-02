@@ -45,7 +45,7 @@ class SymbolTableEncryptionSizes {
   }
 
   void _setBorderWidth() {
-    if (relativeBorderWidth == null) relativeBorderWidth = 0.0;
+    relativeBorderWidth ??= 0.0;
 
     relativeBorderWidth = max(-0.9, relativeBorderWidth!);
   }

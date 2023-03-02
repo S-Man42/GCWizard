@@ -13,12 +13,12 @@ void main() {
       {'list' : [-20, -10, -1], 'expectedOutput' : -31},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('list: ${elem['list']}', () {
         var _actual = sum(elem['list'] as List<int>);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
-    });
+    }
   });
 
   group("Crosstotals.product:", () {
@@ -33,12 +33,12 @@ void main() {
       {'list' : [-20, -10, -1], 'expectedOutput' : -200},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('list: ${elem['list']}', () {
         var _actual = product(elem['list'] as List<int>);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
-    });
+    }
   });
 
   group("Crosstotals.crossSum:", () {
@@ -52,12 +52,12 @@ void main() {
       {'list' : [-20, -10, -1], 'expectedOutput' : -4},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('list: ${elem['list']}', () {
         var _actual = crossSum(elem['list'] as List<int>);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
-    });
+    }
   });
 
   group("Crosstotals.crossProduct:", () {
@@ -71,12 +71,12 @@ void main() {
       {'list' : [-20, -10, -1], 'expectedOutput' : 0},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('list: ${elem['list']}', () {
         var _actual = crossProduct(elem['list'] as List<int>);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
-    });
+    }
   });
 
   group("Crosstotals.crossSumIterated:", () {
@@ -91,12 +91,12 @@ void main() {
       {'list' : [-20, -10, -1], 'expectedOutput' : -4},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('list: ${elem['list']}', () {
         var _actual = crossSumIterated(elem['list'] as List<int>);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
-    });
+    }
   });
 
   group("Crosstotals.crossProductIterated:", () {
@@ -111,12 +111,12 @@ void main() {
       {'list' : [-20, -10, -1], 'expectedOutput' : 0},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('list: ${elem['list']}', () {
         var _actual = crossProductIterated(elem['list'] as List<int>);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
-    });
+    }
   });
 
   group("Crosstotals.crossSumAlternatedForward:", () {
@@ -133,12 +133,12 @@ void main() {
       {'list' : [-20, -10, -1], 'expectedOutput' : null},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('list: ${elem['list']}', () {
         var _actual = crossSumAlternatedForward(elem['list'] as List<int>);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
-    });
+    }
   });
 
   group("Crosstotals.crossSumAlternatedBackward:", () {
@@ -155,12 +155,12 @@ void main() {
       {'list' : [-20, -10, -1], 'expectedOutput' : null},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('list: ${elem['list']}', () {
         var _actual = crossSumAlternatedBackward(elem['list'] as List<int>);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
-    });
+    }
   });
 
   group("Crosstotals.crossProductAlternated:", () {
@@ -177,12 +177,12 @@ void main() {
       {'list' : [-20, -10, -1], 'expectedOutput' : null},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('list: ${elem['list']}', () {
         var _actual = crossProductAlternated(elem['list'] as List<int>);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
-    });
+    }
   });
 
   group("Crosstotals.sumAlternatedBackward:", () {
@@ -199,12 +199,12 @@ void main() {
       {'list' : [-20, -10, -1], 'expectedOutput' : -11},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('list: ${elem['list']}', () {
         var _actual = sumAlternatedBackward(elem['list'] as List<int>);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
-    });
+    }
   });
 
   group("Crosstotals.sumAlternatedForward:", () {
@@ -221,12 +221,12 @@ void main() {
       {'list' : [-20, -10, -1], 'expectedOutput' : -11},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('list: ${elem['list']}', () {
         var _actual = sumAlternatedForward(elem['list'] as List<int>);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
-    });
+    }
   });
 
   group("Crosstotals.productAlternated:", () {
@@ -243,12 +243,12 @@ void main() {
       {'list' : [-20, -10, -1], 'expectedOutput' : 200},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('list: ${elem['list']}', () {
         var _actual = productAlternated(elem['list'] as List<int>);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
-    });
+    }
   });
 
   group("Crosstotals.sumCrossSum:", () {
@@ -265,12 +265,12 @@ void main() {
       {'list' : [-20, -10, -1], 'expectedOutput' : -4},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('list: ${elem['list']}', () {
         var _actual = sumCrossSum(elem['list'] as List<int>);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
-    });
+    }
   });
 
   group("Crosstotals.productCrossSum:", () {
@@ -287,12 +287,12 @@ void main() {
       {'list' : [-20, -10, -1], 'expectedOutput' : -2},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('list: ${elem['list']}', () {
         var _actual = productCrossSum(elem['list'] as List<int>);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
-    });
+    }
   });
 
   group("Crosstotals.sumCrossSumIterated:", () {
@@ -309,12 +309,12 @@ void main() {
       {'list' : [-20, -10, -1], 'expectedOutput' : -4},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('list: ${elem['list']}', () {
         var _actual = sumCrossSumIterated(elem['list'] as List<int>);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
-    });
+    }
   });
 
   group("Crosstotals.productCrossSumIterated:", () {
@@ -331,12 +331,12 @@ void main() {
       {'list' : [-20, -10, -1], 'expectedOutput' : -2},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('list: ${elem['list']}', () {
         var _actual = productCrossSumIterated(elem['list'] as List<int>);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
-    });
+    }
   });
 
   group("Crosstotals.sumCrossSumAlternatedForward:", () {
@@ -353,12 +353,12 @@ void main() {
       {'list' : [-20, -10, -1], 'expectedOutput' : null},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('list: ${elem['list']}', () {
         var _actual = sumCrossSumAlternatedForward(elem['list'] as List<int>);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
-    });
+    }
   });
 
   group("Crosstotals.sumCrossSumAlternatedBackward:", () {
@@ -375,12 +375,12 @@ void main() {
       {'list' : [-20, -10, -1], 'expectedOutput' : null},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('list: ${elem['list']}', () {
         var _actual = sumCrossSumAlternatedBackward(elem['list'] as List<int>);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
-    });
+    }
   });
 
   group("Crosstotals.productCrossSumAlternatedForward:", () {
@@ -397,12 +397,12 @@ void main() {
       {'list' : [-20, -10, -1], 'expectedOutput' : null},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('list: ${elem['list']}', () {
         var _actual = productCrossSumAlternatedForward(elem['list'] as List<int>);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
-    });
+    }
   });
 
   group("Crosstotals.countCharacters:", () {
@@ -412,12 +412,12 @@ void main() {
       {'list' : null, 'expectedOutput' : 0},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('text: ${elem['text']}', () {
         var _actual = countCharacters(elem['list'] as List<int>);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Crosstotals.countLetters:", () {
@@ -427,12 +427,12 @@ void main() {
       {'text' : null, 'expectedOutput' : 0},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('text: ${elem['text']}', () {
         var _actual = countLetters(elem['text'] as String);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Crosstotals.countDigits:", () {
@@ -442,11 +442,11 @@ void main() {
       {'text' : null, 'expectedOutput' : 0},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('text: ${elem['text']}', () {
         var _actual = countDigits(elem['text'] as String);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

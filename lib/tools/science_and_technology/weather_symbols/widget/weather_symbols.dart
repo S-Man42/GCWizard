@@ -9,6 +9,8 @@ import 'package:gc_wizard/tools/symbol_tables/_common/widget/gcw_symbol_containe
 const _WEATHERSYMBOL_CLASSES = ['ww', 'w', 'a', 'n', 'c', 'cl', 'cm', 'ch'];
 
 class WeatherSymbols extends StatefulWidget {
+  const WeatherSymbols({Key? key}) : super(key: key);
+
   @override
   WeatherSymbolsState createState() => WeatherSymbolsState();
 }
@@ -16,7 +18,7 @@ class WeatherSymbols extends StatefulWidget {
 class WeatherSymbolsState extends State<WeatherSymbols> {
   var _currentWeatherSymbolClazz = 'ww';
 
-  Map<String, SymbolTableData> _data = {};
+  final Map<String, SymbolTableData> _data = {};
 
   @override
   void initState() {
@@ -69,16 +71,16 @@ class WeatherSymbolsState extends State<WeatherSymbols> {
                 return [
                   image.keys.first,
                   Container(
+                    padding: const EdgeInsets.all(10.0),
                     child: GCWSymbolContainer(
                       symbol: Image.memory(image.values.first.bytes),
                     ),
-                    padding: EdgeInsets.all(10.0),
                   ),
                   i18n(context, 'weathersymbols_${_currentWeatherSymbolClazz}_${image.keys.first}')
                 ];
               }).toList(),
         copyColumn: 2,
-        flexValues: [1, 2, 6],
+        flexValues: const [1, 2, 6],
     );
   }
 }

@@ -72,26 +72,20 @@ int? alternateWeekOfYear(DateTime? date) {
   return week;
 }
 
-/**
- * Calculates the ordinal date
- * The ordinal date is the number of days since December 31st the previous year.
- * January 1st has the ordinal date 1
- * December 31st has the ordinal date 365, or 366 in leap years
- */
+/// Calculates the ordinal date
+/// The ordinal date is the number of days since December 31st the previous year.
+/// January 1st has the ordinal date 1
+/// December 31st has the ordinal date 365, or 366 in leap years
 int _ordinalDate(DateTime date) {
   return date.ordinalDate;
 }
 
-/**
- * Check if this date is on a leap year
- */
+/// Check if this date is on a leap year
 bool _isLeapYear(DateTime date) {
   return date.isLeapYear;
 }
 
-/**
- * Gets the date of the monday of Alternate week 1 this year
- */
+/// Gets the date of the monday of Alternate week 1 this year
 DateTime _alternateWeek1Monday(DateTime date) {
   final jan1 = DateTime(date.year, 1, 1); // Jan 1 is always in week 1
 

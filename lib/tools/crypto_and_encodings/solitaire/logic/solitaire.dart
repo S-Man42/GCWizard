@@ -52,22 +52,27 @@ SolitaireOutput? _solitaireBase(String? input, String? key, bool encrypt) {
   if (encrypt) {
     output = _createEncryptOutput(input, keyStream, alphabet);
     output = insertSpaceEveryNthCharacter(output, 5);
-  } else
+  } else {
     output = _createDecryptOutput(input, keyStream, alphabet);
+  }
 
   return SolitaireOutput(output, keyStream, deck.join(', '));
 }
 
 String _createEncryptOutput(String input, String keyStream, Map<String, int> alphabet) {
   var output = '';
-  for (int i = 0; i < input.length; i++) output += _chr(alphabet[input[i]]! + alphabet[keyStream[i]]!, alphabet) ?? '';
+  for (int i = 0; i < input.length; i++) {
+    output += _chr(alphabet[input[i]]! + alphabet[keyStream[i]]!, alphabet) ?? '';
+  }
 
   return output;
 }
 
 String _createDecryptOutput(String input, String keyStream, Map<String, int> alphabet) {
   var output = "";
-  for (int i = 0; i < input.length; i++) output += _chr(alphabet[input[i]]! - alphabet[keyStream[i]]!, alphabet) ?? '';
+  for (int i = 0; i < input.length; i++) {
+    output += _chr(alphabet[input[i]]! - alphabet[keyStream[i]]!, alphabet) ?? '';
+  }
 
   return output;
 }
@@ -75,7 +80,9 @@ String _createDecryptOutput(String input, String keyStream, Map<String, int> alp
 List<int> createDeck() {
   var deck = <int>[];
   // Bridge cards +2 joker
-  for (int i = 0; i < 54; i++) deck.add(i + 1);
+  for (int i = 0; i < 54; i++) {
+    deck.add(i + 1);
+  }
 
   return deck;
 }
@@ -131,9 +138,9 @@ List<int> _cycleDeck(List<int> deck) {
   var offset = 1;
   var jokerAPos = deck.indexOf(_JOKER_A);
   // last card?
-  if (jokerAPos == deckSize - 1)
-    // under first card
+  if (jokerAPos == deckSize - 1) {
     offset += 1;
+  }
   var newPos = (jokerAPos + offset) % (deckSize);
   deck.remove(_JOKER_A);
   deck.insert(newPos, _JOKER_A);
@@ -142,9 +149,9 @@ List<int> _cycleDeck(List<int> deck) {
   offset = 2;
   var jokerBPos = deck.indexOf(_JOKER_B);
   // last/ prelast card ?
-  if (jokerBPos >= deckSize - 2)
-    // under first/ second card
+  if (jokerBPos >= deckSize - 2) {
     offset += 1;
+  }
   newPos = (jokerBPos + offset) % (deckSize);
   deck.remove(_JOKER_B);
   deck.insert(newPos, _JOKER_B);
@@ -192,7 +199,9 @@ List<int> _takeOff(List<int> deck, int liftOffPosition) {
 }
 
 List<int> _copyToDeck(List<int> deck, List<int> targetDeck, int positionFrom, int count) {
-  for (int i = 0; i < count; i++) targetDeck.add(deck[positionFrom + i]);
+  for (int i = 0; i < count; i++) {
+    targetDeck.add(deck[positionFrom + i]);
+  }
 
   return targetDeck;
 }

@@ -5,7 +5,7 @@ import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
-import 'package:gc_wizard/common_widgets/gcw_async_executer.dart';
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
 import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_multiple_output.dart';
@@ -15,8 +15,11 @@ import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/logic/vigenere_breaker.dart';
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 
 class VigenereBreaker extends StatefulWidget {
+  const VigenereBreaker({Key? key}) : super(key: key);
+
   @override
   VigenereBreakerState createState() => VigenereBreakerState();
 }
@@ -143,15 +146,15 @@ class VigenereBreakerState extends State<VigenereBreaker> {
         barrierDismissible: false,
         builder: (context) {
           return Center(
-            child: Container(
+            child: SizedBox(
+              height: 220,
+              width: 150,
               child: GCWAsyncExecuter<VigenereBreakerResult>(
                 isolatedFunction: break_cipherAsync,
                 parameter: _buildJobData,
                 onReady: (data) => _showOutput(data),
                 isOverlay: true,
               ),
-              height: 220,
-              width: 150,
             ),
           );
         },
@@ -160,13 +163,13 @@ class VigenereBreakerState extends State<VigenereBreaker> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    if (_currentInput.isEmpty) return GCWDefaultOutput();
+    if (_currentInput.isEmpty) return const GCWDefaultOutput();
 
-    if (_currentOutput == null) return GCWDefaultOutput();
+    if (_currentOutput == null) return const GCWDefaultOutput();
 
     if (_currentOutput!.errorCode != VigenereBreakerErrorCode.OK) {
       showToast(i18n(context, 'vigenerebreaker_error', parameters: [_currentOutput!.errorCode]));
-      return GCWDefaultOutput();
+      return const GCWDefaultOutput();
     }
 
     return GCWMultipleOutput(

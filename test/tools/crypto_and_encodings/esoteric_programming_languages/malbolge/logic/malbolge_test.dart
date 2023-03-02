@@ -39,12 +39,12 @@ void main() {
       {'input' : '',  'program' : beer, 'expectedOutput' : ['Bottles of beer on the wall, 99 bottles of beer.\\nTake one down and pass it around, 98 bottles of beer on the wall.\\n\\n98 Bottles of beer on the wall, 98 bottles of beer.\\nTake one down and pass it around, ']},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = interpretMalbolge(elem['program'] as String, elem['input'] as String, false).output;
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("malbolge.generator", () {
@@ -57,12 +57,12 @@ void main() {
       {'input' : 'Mark mag Malbolge', 'expectedOutput' : 'iooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo*oooopooooooop<*op<oooopoooooooooooooooooooooooooooooooooooooooooooooooooooooooop<ooo*op<ooop<oooooooooooooooooop<oo*oop<ooooooopooooop<ooo*pop<oo*oop<oopooooooop<ooo*op<oooo*ooooooop<*ooooooooooooooooooooooop<ooopop<ooopooop<ooo*oooooooooooooooooooooop<v'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = generateMalbolge(elem['input'] as String).assembler.join('');
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
 }

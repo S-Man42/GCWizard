@@ -10,8 +10,8 @@ class Volume extends Unit {
     bool isReference = false,
     required double inCubicMeters,
   }) : super(name, symbol, isReference, (e) => e * inCubicMeters, (e) => e / inCubicMeters) {
-    toCubicMeter = this.toReference;
-    fromCubicMeter = this.fromReference;
+    toCubicMeter = toReference;
+    fromCubicMeter = fromReference;
   }
 }
 
@@ -174,7 +174,7 @@ final VOLUME_WASHINGMACHINE =
 final VOLUME_NGOGN =
     Volume(name: 'common_unit_volume_ngogn_name', symbol: 'n', inCubicMeters: 0.022633 * 0.022633 * 0.022633);
 
-final List<Unit> volumes = [
+final List<Volume> volumes = [
   VOLUME_CUBICMILLIMETER,
   VOLUME_CUBICCENTIMETER,
   VOLUME_CUBICDECIMETER,

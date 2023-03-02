@@ -16,7 +16,7 @@ Uint8List _getFileData(String name) {
 String _fileDescription(GCWFile file) {
   var output = '';
 
-  output += (file.name != null ? file.name : '')! + ', ';
+  output += (file.name ?? '') + ', ';
   var fileType = file.fileType;
   output += fileType.name + ', ';
   output += file.bytes.length.toString() + ' bytes, ';
@@ -29,13 +29,14 @@ String? _fileStructureToString(List<GCWFile>? structure, {int offset = 0}) {
 
   if (structure == null) return null;
 
-  structure.forEach((file) {
+  for (var file in structure) {
     var description  = _fileDescription(file);
 
     output += ''.padRight(offset, ' ') + description;
-    if (file.children != null)
+    if (file.children != null) {
       output += '\n' + (_fileStructureToString(file.children, offset: offset + 4) ?? '');
-  });
+    }
+  }
 
   return output;
 }
@@ -121,11 +122,11 @@ void main() {
           ''},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () async {
         var _actual = await hiddenData(GCWFile(name: elem['input'] as String, bytes: _getFileData(elem['input'] as String)));
         expect(_fileStructureToString(_actual), elem['expectedOutput']);
       });
-    });
+    }
   });
 }

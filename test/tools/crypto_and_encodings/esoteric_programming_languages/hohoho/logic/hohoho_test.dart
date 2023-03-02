@@ -23,12 +23,12 @@ void main() {
 
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('code: ${elem['code']}, input: ${elem['input']}', () {
         var _actual = interpretHohoho(elem['code'] as String?, STDIN: elem['input'] as String?).output;
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Hohoho.generateHohoho:", () {
@@ -42,11 +42,11 @@ void main() {
 
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('OutputText: ${elem['OutputText']}}', () {
         var _actual = generateHohoho(elem['OutputText'] as String);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

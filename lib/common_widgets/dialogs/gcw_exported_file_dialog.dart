@@ -24,8 +24,8 @@ void showExportedFileDialog(BuildContext context, {Widget? contentWidget}) {
 
 Widget imageContent(BuildContext context, Uint8List data) {
   return Container(
-    child: Image.memory(data),
-    margin: EdgeInsets.only(top: 25),
-    decoration: BoxDecoration(border: Border.all(color: themeColors().dialogText()))
+    margin: const EdgeInsets.only(top: 25),
+    decoration: BoxDecoration(border: Border.all(color: themeColors().dialogText())),
+    child: Image.memory(data)
     );
 }

@@ -68,8 +68,9 @@ class _NumeralBaseSpinnerState extends State<NumeralBaseSpinner> {
       onChanged: (value) {
         setState(() {
           _currentValue = value;
-          if (_currentValue != null)
+          if (_currentValue != null) {
             widget.onChanged(list[_currentValue!]);
+          }
         });
       },
     );

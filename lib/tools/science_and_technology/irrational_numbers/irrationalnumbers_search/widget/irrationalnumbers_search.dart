@@ -81,6 +81,7 @@ class IrrationalNumbersSearchState extends State<IrrationalNumbersSearch> {
 
     var selector = (_totalCurrentSolutions > 1)
         ? Container(
+            margin: const EdgeInsets.symmetric(vertical: 5 * DOUBLE_DEFAULT_MARGIN),
             child: Row(
               children: [
                 GCWIconButton(
@@ -107,8 +108,7 @@ class IrrationalNumbersSearchState extends State<IrrationalNumbersSearch> {
                   },
                 ),
               ],
-            ),
-            margin: EdgeInsets.symmetric(vertical: 5 * DOUBLE_DEFAULT_MARGIN))
+            ))
         : Container();
 
     var _solution = _solutions[_currentSolution];
@@ -123,7 +123,7 @@ class IrrationalNumbersSearchState extends State<IrrationalNumbersSearch> {
       selector,
       GCWColumnedMultilineOutput(
         data: output,
-        flexValues: [2, 3]
+        flexValues: const [2, 3]
       )
     ]);
   }

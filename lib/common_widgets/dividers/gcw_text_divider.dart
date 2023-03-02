@@ -21,7 +21,7 @@ class _GCWTextDividerState extends State<GCWTextDivider> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final minDividerWidth = 100.0;
+    const minDividerWidth = 100.0;
 
     return Container(
         margin: EdgeInsets.only(

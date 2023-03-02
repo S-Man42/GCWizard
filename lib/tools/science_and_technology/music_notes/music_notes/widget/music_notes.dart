@@ -23,6 +23,8 @@ import 'package:gc_wizard/utils/constants.dart';
 part 'package:gc_wizard/tools/science_and_technology/music_notes/music_notes/widget/music_notes_segment_display.dart';
 
 class MusicNotes extends StatefulWidget {
+  const MusicNotes({Key? key}) : super(key: key);
+
   @override
   MusicNotesState createState() => MusicNotesState();
 }
@@ -30,7 +32,7 @@ class MusicNotes extends StatefulWidget {
 class MusicNotesState extends State<MusicNotes> {
   String _currentEncodeInput = '';
   late TextEditingController _encodeController;
-  var _gcwTextStyle = gcwTextStyle();
+  final _gcwTextStyle = gcwTextStyle();
   var _currentCode = NotesCodebook.TREBLE;
 
   var _currentDisplays = Segments.Empty();
@@ -120,7 +122,7 @@ class MusicNotesState extends State<MusicNotes> {
         break;
     }
 
-    var onChanged = (Map<String, bool> d) {
+    onChanged(Map<String, bool> d) {
       setState(() {
         var newSegments = <String>[];
         d.forEach((key, value) {
@@ -130,14 +132,14 @@ class MusicNotesState extends State<MusicNotes> {
 
         _currentDisplays.replaceLastSegment(newSegments);
       });
-    };
+    }
 
     return Column(
       children: <Widget>[
         Container(
           width: 180,
           height: 300,
-          padding: EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
+          padding: const EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
           child: Row(
             children: <Widget>[
               Expanded(
@@ -229,10 +231,10 @@ class MusicNotesState extends State<MusicNotes> {
 
   Map<String, String> _buildTranslationMap(NotesCodebook codeBook) {
     var keys = possibleNoteKeys(codeBook);
-    var translationMap = Map<String, String>();
+    var translationMap = <String, String>{};
     String translation;
 
-    keys.forEach((note) {
+    for (var note in keys) {
       switch (codeBook) {
         case NotesCodebook.ALT:
           translation = i18n(context, 'symboltables_notes_names_altoclef_' + note);
@@ -247,15 +249,15 @@ class MusicNotesState extends State<MusicNotes> {
           translation = '';
       }
       if (translation.isNotEmpty) translationMap.addAll({note: translation});
-    });
+    }
     return translationMap;
   }
 
   Widget _buildDropDownMenuItem(GCWSymbolContainer? icon, String toolName, String? description) {
     return Row(children: [
       Container(
+        margin: const EdgeInsets.only(left: 2, top: 2, bottom: 2, right: 10),
         child: (icon != null) ? icon : Container(width: 50),
-        margin: EdgeInsets.only(left: 2, top: 2, bottom: 2, right: 10),
       ),
       Expanded(
           child: Column(

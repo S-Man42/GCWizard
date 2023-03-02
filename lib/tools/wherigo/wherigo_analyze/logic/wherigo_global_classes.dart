@@ -338,7 +338,7 @@ class WherigoCartridgeLUA {
   final String PublishDate;
   final String UpdateDate;
   final String LastPlayedDate;
-  final String httpCode;
+  final int httpCode;
   final String httpMessage;
 
   const WherigoCartridgeLUA(
@@ -372,7 +372,7 @@ class WherigoCartridgeLUA {
       this.PublishDate = WHERIGO_NULLDATE,
       this.UpdateDate = WHERIGO_NULLDATE,
       this.LastPlayedDate = WHERIGO_NULLDATE,
-      this.httpCode = '',
+      this.httpCode = 0,
       this.httpMessage = ''});
 }
 

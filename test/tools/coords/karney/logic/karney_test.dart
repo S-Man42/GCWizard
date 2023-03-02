@@ -1,4 +1,6 @@
 
+// ignore_for_file: avoid_print
+
 import 'dart:math';
 
 import "package:flutter_test/flutter_test.dart";
@@ -50,12 +52,14 @@ void main() {
               ) {
                 if (utils.equalsLatLng(coord1, coord2) && doubleEquals(karney.s12, 0.0)
                     || (coord1.latitude.abs() == 90.0 && coord2.latitude.abs() == 90.0) && doubleEquals(karney.s12, 20003931.4586255, tolerance: 1e-3)
-                )
+                ) {
                   continue;
+                }
 
                 var antipode = antipodes(coord1);
-                if (utils.equalsLatLng(coord2, antipode) && doubleEquals(karney.s12, 20003931.45862552, tolerance: 1e-3))
+                if (utils.equalsLatLng(coord2, antipode) && doubleEquals(karney.s12, 20003931.45862552, tolerance: 1e-3)) {
                   continue;
+                }
 
                 countErrors++;
 
@@ -65,8 +69,8 @@ void main() {
                 print('B:');
                 print(coord2);
                 print('Dist Karney: ${karney.s12} vs Vincenty: ${vincenty.distance}');
-                print('AzAB Karney: ${karneyAzi1} vs Vincenty: ${vincentyAzi1}');
-                print('AzBA Karney: ${karneyAzi2} vs Vincenty: ${vincentyAzi2}');
+                print('AzAB Karney: $karneyAzi1 vs Vincenty: $vincentyAzi1');
+                print('AzBA Karney: $karneyAzi2 vs Vincenty: $vincentyAzi2');
               }
             } catch(e) {
               print('= ERROR ========================');
@@ -115,8 +119,9 @@ void main() {
         ) {
           if (utils.equalsLatLng(coord1, coord2) && doubleEquals(karney.s12, 0.0)
               || (coord1.latitude.abs() == 90.0 && coord2.latitude.abs() == 90.0) && doubleEquals(karney.s12, 20003931.4586255, tolerance: 1e-3)
-          )
+          ) {
             continue;
+          }
 
           // var antipode = antipodes(coord1);
           // if (equalsLatLng(coord2, antipode) && doubleEquals(karney.s12, 20003931.45862552, tolerance: 1e-3))
@@ -130,8 +135,8 @@ void main() {
           print('B:');
           print(coord2);
           print('Dist Karney: ${karney.s12} vs Vincenty: ${vincenty.distance}');
-          print('AzAB Karney: ${karneyAzi1} vs Vincenty: ${vincentyAzi1}');
-          print('AzBA Karney: ${karneyAzi2} vs Vincenty: ${vincentyAzi2}');
+          print('AzAB Karney: $karneyAzi1 vs Vincenty: $vincentyAzi1');
+          print('AzBA Karney: $karneyAzi2 vs Vincenty: $vincentyAzi2');
         }
       } catch(e) {
         print('= ERROR ========================');

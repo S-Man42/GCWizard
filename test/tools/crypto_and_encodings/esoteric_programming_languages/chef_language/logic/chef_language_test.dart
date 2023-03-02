@@ -86,12 +86,12 @@ Serves 1.
       {'language' : 'ENG', 'auxilary' : false, 'input' : '', 'title' : 'Marks marvellous must have',   'remark' : 'to be a wizard', 'time' : '50', 'temperature' : '180', 'expectedOutput' : testTitleCommentsTimeTemp},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = generateChef(elem['language'] as String, elem['title'] as String, elem['remark'] as String, elem['time'] as String, elem['temperature'] as String, elem['input'] as String, elem['auxilary'] as bool);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("chef_language.interpretChef:", () {
@@ -170,7 +170,7 @@ Serves 1.
       {'language' : 'ENG', 'input' : '',   'recipe' : test13,   'isValid' : true, 'expectedOutput' : ['n 432 e 708']},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = interpretChef(elem['language'] as String, (elem['recipe'] as String?)?.toLowerCase(), elem['input'] as String?);
         var length = (elem['expectedOutput'] as Map<String, Object?>).length;
@@ -178,7 +178,7 @@ Serves 1.
           expect(_actual[i], (elem['expectedOutput'] as Map<String, Object?>)[i]);
         }
       });
-    });
+    }
   }); // group
 
   group("chef_language.MethodExamples", () {
@@ -470,7 +470,7 @@ Serves 1.''';
       {'language' : 'ENG', 'input' : '',   'recipe' : refrigeratenumber,   'isValid' : true, 'expectedOutput' : ['PA']},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = interpretChef(elem['language'] as String, (elem['recipe'] as String?)?.toLowerCase(), elem['input'] as String?);
         var length = (elem['expectedOutput'] as Map<String, Object?>).length;
@@ -478,7 +478,7 @@ Serves 1.''';
           expect(_actual[i], (elem['expectedOutput'] as Map<String, Object?>)[i]);
         }
       });
-    });
+    }
   });
 
   group("chef_language.testErrors", () {
@@ -755,7 +755,7 @@ Serves.''';
       {'language' : 'ENG', 'input' : '',   'recipe' : testServeNoNumber,   'isValid' : true, 'expectedOutput' : ['chef_error_syntax','chef_error_syntax_serves','chef_error_syntax_serves_without_number','serves.']},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = interpretChef(elem['language'] as String, (elem['recipe'] as String?)?.toLowerCase(), elem['input'] as String?);
         var length = (elem['expectedOutput'] as Map<String, Object?>).length;
@@ -763,7 +763,7 @@ Serves.''';
           expect(_actual[i], (elem['expectedOutput'] as Map<String, Object?>)[i]);
         }
       });
-    });
+    }
   });
 
   group("chef_language.generatedRecipes", () {
@@ -1074,7 +1074,7 @@ Add cocoa powder into the mixing bowl.''';
         {'language' : 'ENG', 'input' : '',  'recipe' : testENGgeneratedAuxDouble, 'expectedOutput' : ['N48° 44.859 E8° 0.282']},
       ];
 
-      _inputsToExpected.forEach((elem) {
+      for (var elem in _inputsToExpected) {
         test('input: ${elem['input']}', () {
           var _actual = interpretChef(elem['language'] as String, (elem['recipe'] as String?)?.toLowerCase(), elem['input'] as String?);
           var length = (elem['expectedOutput'] as Map<String, Object?>).length;
@@ -1082,7 +1082,7 @@ Add cocoa powder into the mixing bowl.''';
             expect(_actual[i], (elem['expectedOutput'] as Map<String, Object?>)[i]);
           }
         });
-      });
+      }
   });
 
   group("chef_language.deuAnweisungen", () {
@@ -1358,7 +1358,7 @@ Portionen: 1.''';
       {'language' : 'DEU', 'input' : '',   'recipe' : gefriereNummer,   'isValid' : true, 'expectedOutput' : ['PA']},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = interpretChef(elem['language'] as String, (elem['recipe'] as String?)?.toLowerCase(), elem['input'] as String?);
         var length = (elem['expectedOutput'] as Map<String, Object?>).length;
@@ -1366,7 +1366,7 @@ Portionen: 1.''';
           expect(_actual[i], (elem['expectedOutput'] as Map<String, Object?>)[i]);
         }
       });
-    });
+    }
   });
 
   group("chef_language.progopedia.acme-chef", () {
@@ -1477,15 +1477,7 @@ Serves 1.''';
 
     List<Map<String, Object?>> _inputsToExpected = [
       {'language' : 'ENG', 'input' : '',  'recipe' : HelloWorld, 'expectedOutput' : ['Hello, World!\n']},
-      {'language' : 'ENG', 'input' : '',  'recipe' : Factorial, 'expectedOutput' : ['0! = 1\n' +
-        '1! = 1\n' +
-        '2! = 2\n' +
-        '3! = 6\n' +
-        '4! = 24\n' +
-        '5! = 120\n' +
-        '6! = 720\n' +
-        '7! = 5040\n' +
-        '8! = 40320\n' +
+      {'language' : 'ENG', 'input' : '',  'recipe' : Factorial, 'expectedOutput' : ['0! = 1\n' '1! = 1\n' '2! = 2\n' '3! = 6\n' '4! = 24\n' '5! = 120\n' '6! = 720\n' '7! = 5040\n' '8! = 40320\n' +
         '9! = 362880\n' +
         '10! = 3628800\n' +
         '11! = 39916800\n' +
@@ -1498,7 +1490,7 @@ Serves 1.''';
       {'language' : 'ENG', 'input' : '',   'recipe' : Fibonacci,  'expectedOutput' : ['1123581321345589144233377610987']},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = interpretChef(elem['language'] as String, (elem['recipe'] as String?)?.toLowerCase(), elem['input'] as String?);
         var length = (elem['expectedOutput'] as Map<String, Object?>).length;
@@ -1506,7 +1498,7 @@ Serves 1.''';
           expect(_actual[i], (elem['expectedOutput'] as Map<String, Object?>)[i]);
         }
       });
-    });
+    }
   });
 
   group("chef_language.progopedia.acme-chef-1.01", () {
@@ -1618,15 +1610,7 @@ Serves 1.''';
 
     List<Map<String, Object?>> _inputsToExpected = [
       {'language' : 'ENG', 'input' : '',  'recipe' : HelloWorld, 'expectedOutput' : ['Hello, World!\n']},
-      {'language' : 'ENG', 'input' : '',  'recipe' : Factorial, 'expectedOutput' : ['0! = 1\n' +
-          '1! = 1\n' +
-          '2! = 2\n' +
-          '3! = 6\n' +
-          '4! = 24\n' +
-          '5! = 120\n' +
-          '6! = 720\n' +
-          '7! = 5040\n' +
-          '8! = 40320\n' +
+      {'language' : 'ENG', 'input' : '',  'recipe' : Factorial, 'expectedOutput' : ['0! = 1\n' '1! = 1\n' '2! = 2\n' '3! = 6\n' '4! = 24\n' '5! = 120\n' '6! = 720\n' '7! = 5040\n' '8! = 40320\n' +
           '9! = 362880\n' +
           '10! = 3628800\n' +
           '11! = 39916800\n' +
@@ -1639,7 +1623,7 @@ Serves 1.''';
       {'language' : 'ENG', 'input' : '',   'recipe' : Fibonacci,  'expectedOutput' : ['1123581321345589144233377610987']},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = interpretChef(elem['language'] as String, (elem['recipe'] as String?)?.toLowerCase(), elem['input'] as String?);
         var length = (elem['expectedOutput'] as Map<String, Object?>).length;
@@ -1647,7 +1631,7 @@ Serves 1.''';
           expect(_actual[i], (elem['expectedOutput'] as Map<String, Object?>)[i]);
         }
       });
-    });
+    }
   });
 
   group("chef_language.metacpan.acme-chef-1.01.examples", () {
@@ -1939,7 +1923,7 @@ Refrigerate for 1 hour.''';
       {'language' : 'ENG', 'input' : '5',   'recipe' : stdin,   'isValid' : true, 'expectedOutput' : ['5']},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = interpretChef(elem['language'] as String, (elem['recipe'] as String?)?.toLowerCase(), elem['input'] as String?);
         var length = (elem['expectedOutput'] as Map<String, Object?>).length;
@@ -1947,7 +1931,7 @@ Refrigerate for 1 hour.''';
           expect(_actual[i], (elem['expectedOutput'] as Map<String, Object?>)[i]);
         }
       });
-    });
+    }
   });
 
   group("chef_language.mike-worth-HelloWorld", () {
@@ -2021,7 +2005,7 @@ Refrigerate for 1 hour.''';
       {'language' : 'ENG', 'input' : '',  'recipe' : HelloWorld, 'expectedOutput' : ['Hello world!']},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = interpretChef(elem['language'] as String, (elem['recipe'] as String?)?.toLowerCase(), elem['input'] as String?);
         var length = (elem['expectedOutput'] as Map<String, Object?>).length;
@@ -2029,7 +2013,7 @@ Refrigerate for 1 hour.''';
           expect(_actual[i], (elem['expectedOutput'] as Map<String, Object?>)[i]);
         }
       });
-    });
+    }
   });
 
   group("chef_language.99bottlesOfBeer", () {
@@ -2228,7 +2212,7 @@ Serves 1.''';
       {'language' : 'ENG', 'input' : '',  'recipe' : BottlesOfBeer, 'expectedOutput' : ['99 Bottles of beer on the wall, 99 bottles of beer.\nTake one down and pass it around, 98 bottles of beer on the wall.\n\n98 Bottles of beer on the wall, 98 bottles of beer.\nTake one down and pass it around, 97 bottles of beer on the wall.\n\n97 Bottles of beer on the wall, 97 bottles of beer.\nTake one down and pass it around, 96 bottles of beer on the wall.\n\n96 Bottles of beer on the wall, 96 bottles of beer.\nTake one down and pass it around, 95 bottles of beer on the wall.\n\n95 Bottles of beer on the wall, 95 bottles of beer.\nTake one down and pass it around, 94 bottles of beer on the wall.\n\n94 Bottles of beer on the wall, 94 bottles of beer.\nTake one down and pass it around, 93 bottles of beer on the wall.\n\n93 Bottles of beer on the wall, 93 bottles of beer.\nTake one down and pass it around, 92 bottles of beer on the wall.\n\n92 Bottles of beer on the wall, 92 bottles of beer.\nTake one down and pass it around, 91 bottles of beer on the wall.\n\n91 Bottles of beer on the wall, 91 bottles of beer.\nTake one down and pass it around, 90 bottles of beer on the wall.\n\n90 Bottles of beer on the wall, 90 bottles of beer.\nTake one down and pass it around, 89 bottles of beer on the wall.\n\n89 Bottles of beer on the wall, 89 bottles of beer.\nTake one down and pass it around, 88 bottles of beer on the wall.\n\n88 Bottles of beer on the wall, 88 bottles of beer.\nTake one down and pass it around, 87 bottles of beer on the wall.\n\n87 Bottles of beer on the wall, 87 bottles of beer.\nTake one down and pass it around, 86 bottles of beer on the wall.\n\n86 Bottles of beer on the wall, 86 bottles of beer.\nTake one down and pass it around, 85 bottles of beer on the wall.\n\n85 Bottles of beer on the wall, 85 bottles of beer.\nTake one down and pass it around, 84 bottles of beer on the wall.\n\n84 Bottles of beer on the wall, 84 bottles of beer.\nTake one down and pass it around, 83 bottles of beer on the wall.\n\n83 Bottles of beer on the wall, 83 bottles of beer.\nTake one down and pass it around, 82 bottles of beer on the wall.\n\n82 Bottles of beer on the wall, 82 bottles of beer.\nTake one down and pass it around, 81 bottles of beer on the wall.\n\n81 Bottles of beer on the wall, 81 bottles of beer.\nTake one down and pass it around, 80 bottles of beer on the wall.\n\n80 Bottles of beer on the wall, 80 bottles of beer.\nTake one down and pass it around, 79 bottles of beer on the wall.\n\n79 Bottles of beer on the wall, 79 bottles of beer.\nTake one down and pass it around, 78 bottles of beer on the wall.\n\n78 Bottles of beer on the wall, 78 bottles of beer.\nTake one down and pass it around, 77 bottles of beer on the wall.\n\n77 Bottles of beer on the wall, 77 bottles of beer.\nTake one down and pass it around, 76 bottles of beer on the wall.\n\n76 Bottles of beer on the wall, 76 bottles of beer.\nTake one down and pass it around, 75 bottles of beer on the wall.\n\n75 Bottles of beer on the wall, 75 bottles of beer.\nTake one down and pass it around, 74 bottles of beer on the wall.\n\n74 Bottles of beer on the wall, 74 bottles of beer.\nTake one down and pass it around, 73 bottles of beer on the wall.\n\n73 Bottles of beer on the wall, 73 bottles of beer.\nTake one down and pass it around, 72 bottles of beer on the wall.\n\n72 Bottles of beer on the wall, 72 bottles of beer.\nTake one down and pass it around, 71 bottles of beer on the wall.\n\n71 Bottles of beer on the wall, 71 bottles of beer.\nTake one down and pass it around, 70 bottles of beer on the wall.\n\n70 Bottles of beer on the wall, 70 bottles of beer.\nTake one down and pass it around, 69 bottles of beer on the wall.\n\n69 Bottles of beer on the wall, 69 bottles of beer.\nTake one down and pass it around, 68 bottles of beer on the wall.\n\n68 Bottles of beer on the wall, 68 bottles of beer.\nTake one down and pass it around, 67 bottles of beer on the wall.\n\n67 Bottles of beer on the wall, 67 bottles of beer.\nTake one down and pass it around, 66 bottles of beer on the wall.\n\n66 Bottles of beer on the wall, 66 bottles of beer.\nTake one down and pass it around, 65 bottles of beer on the wall.\n\n65 Bottles of beer on the wall, 65 bottles of beer.\nTake one down and pass it around, 64 bottles of beer on the wall.\n\n64 Bottles of beer on the wall, 64 bottles of beer.\nTake one down and pass it around, 63 bottles of beer on the wall.\n\n63 Bottles of beer on the wall, 63 bottles of beer.\nTake one down and pass it around, 62 bottles of beer on the wall.\n\n62 Bottles of beer on the wall, 62 bottles of beer.\nTake one down and pass it around, 61 bottles of beer on the wall.\n\n61 Bottles of beer on the wall, 61 bottles of beer.\nTake one down and pass it around, 60 bottles of beer on the wall.\n\n60 Bottles of beer on the wall, 60 bottles of beer.\nTake one down and pass it around, 59 bottles of beer on the wall.\n\n59 Bottles of beer on the wall, 59 bottles of beer.\nTake one down and pass it around, 58 bottles of beer on the wall.\n\n58 Bottles of beer on the wall, 58 bottles of beer.\nTake one down and pass it around, 57 bottles of beer on the wall.\n\n57 Bottles of beer on the wall, 57 bottles of beer.\nTake one down and pass it around, 56 bottles of beer on the wall.\n\n56 Bottles of beer on the wall, 56 bottles of beer.\nTake one down and pass it around, 55 bottles of beer on the wall.\n\n55 Bottles of beer on the wall, 55 bottles of beer.\nTake one down and pass it around, 54 bottles of beer on the wall.\n\n54 Bottles of beer on the wall, 54 bottles of beer.\nTake one down and pass it around, 53 bottles of beer on the wall.\n\n53 Bottles of beer on the wall, 53 bottles of beer.\nTake one down and pass it around, 52 bottles of beer on the wall.\n\n52 Bottles of beer on the wall, 52 bottles of beer.\nTake one down and pass it around, 51 bottles of beer on the wall.\n\n51 Bottles of beer on the wall, 51 bottles of beer.\nTake one down and pass it around, 50 bottles of beer on the wall.\n\n50 Bottles of beer on the wall, 50 bottles of beer.\nTake one down and pass it around, 49 bottles of beer on the wall.\n\n49 Bottles of beer on the wall, 49 bottles of beer.\nTake one down and pass it around, 48 bottles of beer on the wall.\n\n48 Bottles of beer on the wall, 48 bottles of beer.\nTake one down and pass it around, 47 bottles of beer on the wall.\n\n47 Bottles of beer on the wall, 47 bottles of beer.\nTake one down and pass it around, 46 bottles of beer on the wall.\n\n46 Bottles of beer on the wall, 46 bottles of beer.\nTake one down and pass it around, 45 bottles of beer on the wall.\n\n45 Bottles of beer on the wall, 45 bottles of beer.\nTake one down and pass it around, 44 bottles of beer on the wall.\n\n44 Bottles of beer on the wall, 44 bottles of beer.\nTake one down and pass it around, 43 bottles of beer on the wall.\n\n43 Bottles of beer on the wall, 43 bottles of beer.\nTake one down and pass it around, 42 bottles of beer on the wall.\n\n42 Bottles of beer on the wall, 42 bottles of beer.\nTake one down and pass it around, 41 bottles of beer on the wall.\n\n41 Bottles of beer on the wall, 41 bottles of beer.\nTake one down and pass it around, 40 bottles of beer on the wall.\n\n40 Bottles of beer on the wall, 40 bottles of beer.\nTake one down and pass it around, 39 bottles of beer on the wall.\n\n39 Bottles of beer on the wall, 39 bottles of beer.\nTake one down and pass it around, 38 bottles of beer on the wall.\n\n38 Bottles of beer on the wall, 38 bottles of beer.\nTake one down and pass it around, 37 bottles of beer on the wall.\n\n37 Bottles of beer on the wall, 37 bottles of beer.\nTake one down and pass it around, 36 bottles of beer on the wall.\n\n36 Bottles of beer on the wall, 36 bottles of beer.\nTake one down and pass it around, 35 bottles of beer on the wall.\n\n35 Bottles of beer on the wall, 35 bottles of beer.\nTake one down and pass it around, 34 bottles of beer on the wall.\n\n34 Bottles of beer on the wall, 34 bottles of beer.\nTake one down and pass it around, 33 bottles of beer on the wall.\n\n33 Bottles of beer on the wall, 33 bottles of beer.\nTake one down and pass it around, 32 bottles of beer on the wall.\n\n32 Bottles of beer on the wall, 32 bottles of beer.\nTake one down and pass it around, 31 bottles of beer on the wall.\n\n31 Bottles of beer on the wall, 31 bottles of beer.\nTake one down and pass it around, 30 bottles of beer on the wall.\n\n30 Bottles of beer on the wall, 30 bottles of beer.\nTake one down and pass it around, 29 bottles of beer on the wall.\n\n29 Bottles of beer on the wall, 29 bottles of beer.\nTake one down and pass it around, 28 bottles of beer on the wall.\n\n28 Bottles of beer on the wall, 28 bottles of beer.\nTake one down and pass it around, 27 bottles of beer on the wall.\n\n27 Bottles of beer on the wall, 27 bottles of beer.\nTake one down and pass it around, 26 bottles of beer on the wall.\n\n26 Bottles of beer on the wall, 26 bottles of beer.\nTake one down and pass it around, 25 bottles of beer on the wall.\n\n25 Bottles of beer on the wall, 25 bottles of beer.\nTake one down and pass it around, 24 bottles of beer on the wall.\n\n24 Bottles of beer on the wall, 24 bottles of beer.\nTake one down and pass it around, 23 bottles of beer on the wall.\n\n23 Bottles of beer on the wall, 23 bottles of beer.\nTake one down and pass it around, 22 bottles of beer on the wall.\n\n22 Bottles of beer on the wall, 22 bottles of beer.\nTake one down and pass it around, 21 bottles of beer on the wall.\n\n21 Bottles of beer on the wall, 21 bottles of beer.\nTake one down and pass it around, 20 bottles of beer on the wall.\n\n20 Bottles of beer on the wall, 20 bottles of beer.\nTake one down and pass it around, 19 bottles of beer on the wall.\n\n19 Bottles of beer on the wall, 19 bottles of beer.\nTake one down and pass it around, 18 bottles of beer on the wall.\n\n18 Bottles of beer on the wall, 18 bottles of beer.\nTake one down and pass it around, 17 bottles of beer on the wall.\n\n17 Bottles of beer on the wall, 17 bottles of beer.\nTake one down and pass it around, 16 bottles of beer on the wall.\n\n16 Bottles of beer on the wall, 16 bottles of beer.\nTake one down and pass it around, 15 bottles of beer on the wall.\n\n15 Bottles of beer on the wall, 15 bottles of beer.\nTake one down and pass it around, 14 bottles of beer on the wall.\n\n14 Bottles of beer on the wall, 14 bottles of beer.\nTake one down and pass it around, 13 bottles of beer on the wall.\n\n13 Bottles of beer on the wall, 13 bottles of beer.\nTake one down and pass it around, 12 bottles of beer on the wall.\n\n12 Bottles of beer on the wall, 12 bottles of beer.\nTake one down and pass it around, 11 bottles of beer on the wall.\n\n11 Bottles of beer on the wall, 11 bottles of beer.\nTake one down and pass it around, 10 bottles of beer on the wall.\n\n10 Bottles of beer on the wall, 10 bottles of beer.\nTake one down and pass it around, 9 bottles of beer on the wall.\n\n9 Bottles of beer on the wall, 9 bottles of beer.\nTake one down and pass it around, 8 bottles of beer on the wall.\n\n8 Bottles of beer on the wall, 8 bottles of beer.\nTake one down and pass it around, 7 bottles of beer on the wall.\n\n7 Bottles of beer on the wall, 7 bottles of beer.\nTake one down and pass it around, 6 bottles of beer on the wall.\n\n6 Bottles of beer on the wall, 6 bottles of beer.\nTake one down and pass it around, 5 bottles of beer on the wall.\n\n5 Bottles of beer on the wall, 5 bottles of beer.\nTake one down and pass it around, 4 bottles of beer on the wall.\n\n4 Bottles of beer on the wall, 4 bottles of beer.\nTake one down and pass it around, 3 bottles of beer on the wall.\n\n3 Bottles of beer on the wall, 3 bottles of beer.\nTake one down and pass it around, 2 bottles of beer on the wall.\n\n2 Bottles of beer on the wall, 2 bottles of beer.\nTake one down and pass it around, 1 bottles of beer on the wall.\n\n1 Bottle of beer on the wall, 1 bottle of beer.\nTake one down and pass it around, no more bottles of beer on the wall.\n\nNo more bottle of beer on the wall, no more bottle of beer...\nGo to the store and buy some more...99 Bottles of beer.']},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = interpretChef(elem['language'] as String, (elem['recipe'] as String?)?.toLowerCase(), elem['input'] as String?);
         var length = (elem['expectedOutput'] as Map<String, Object?>).length;
@@ -2236,7 +2220,7 @@ Serves 1.''';
           expect(_actual[i], (elem['expectedOutput'] as Map<String, Object?>)[i]);
         }
       });
-    });
+    }
   });
 
   group("chef_language.joostrijneveld", () {
@@ -2726,7 +2710,7 @@ Serves 1.''';
       {'language' : 'ENG', 'input' : '8 1 1 0 1 1 1 1 0 3 1 1 1 1 1 1 0 1 1 2 2 1 1 1 2 2 0 0 0 3 3 1 0 0 0 3 0 0 0 0 0',  'recipe' : TuringsTortillasNotEdible, 'expectedOutput' : ['11111100']},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = interpretChef(elem['language'] as String, (elem['recipe'] as String?)?.toLowerCase(), elem['input'] as String?);
         var length = (elem['expectedOutput'] as Map<String, Object?>).length;
@@ -2734,7 +2718,7 @@ Serves 1.''';
           expect(_actual[i], (elem['expectedOutput'] as Map<String, Object?>)[i]);
         }
       });
-    });
+    }
   });
 
   group("chef_language.correctFaultyRecipes", () {
@@ -2821,7 +2805,7 @@ Portionen: 1.''';
       {'language' : 'DEU', 'input' : '',  'recipe' : FormatWithSpaces, 'expectedOutput' : ['55249']},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = interpretChef(elem['language'] as String, (elem['recipe'] as String?)?.toLowerCase(), elem['input'] as String?);
         var length = (elem['expectedOutput'] as Map<String, Object?>).length;
@@ -2829,7 +2813,7 @@ Portionen: 1.''';
           expect(_actual[i], (elem['expectedOutput'] as Map<String, Object?>)[i]);
         }
       });
-    });
+    }
   });
 
   group("chef_language.realGeoCaches", () {
@@ -3073,7 +3057,7 @@ Portionen: 1.''';
       {'language' : 'DEU', 'input' : '109 3',  'recipe' : GC82M59, 'expectedOutput' : ['5248176327048109']}, //52 48 176 3270 48 109
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = interpretChef(elem['language'] as String, (elem['recipe'] as String?)?.toLowerCase(), elem['input'] as String?);
         var length = (elem['expectedOutput'] as Map<String, Object?>).length;
@@ -3081,7 +3065,7 @@ Portionen: 1.''';
           expect(_actual[i], (elem['expectedOutput'] as Map<String, Object?>)[i]);
         }
       });
-    });
+    }
   });
 
 }

@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze.dart';
 
-String normalizeLUAmultiLineText(String LUA) {
+String _normalizeLUAmultiLineText(String LUA) {
   return LUA
       .replaceAll('[[\n', '[[')
       .replaceAll('<BR>\n', '<BR>')
@@ -19,7 +19,7 @@ String normalizeLUAmultiLineText(String LUA) {
       .replaceAll('\n\n', '\n');
 }
 
-WherigoZonePoint getPoint(String line) {
+WherigoZonePoint _getPoint(String line) {
   List<String> data = line
       .trimLeft()
       .replaceAll('ZonePoint(', '')
@@ -30,16 +30,15 @@ WherigoZonePoint getPoint(String line) {
   return WherigoZonePoint(double.parse(data[0]), double.parse(data[1]), double.parse(data[2]));
 }
 
-List<String> getAnswers(
-    int i, String line, String lineBefore, String obfuscator, String dtable, List<WherigoVariableData> variables) {
+List<String> _getAnswers(int i, String line, String lineBefore, List<WherigoVariableData> variables) {
   if (line.trim().startsWith('if input == ') ||
       line.trim().startsWith('if input >= ') ||
       line.trim().startsWith('if input <= ') ||
       line.trim().startsWith('elseif input == ') ||
       line.trim().startsWith('elseif input >= ') ||
       line.trim().startsWith('elseif input <= ') ||
-      line.trim().startsWith('if ' + answerVariable + ' == ') ||
-      line.trim().startsWith('elseif ' + answerVariable + ' == ')) {
+      line.trim().startsWith('if ' + _answerVariable + ' == ') ||
+      line.trim().startsWith('elseif ' + _answerVariable + ' == ')) {
     if (line.contains('<=') && line.contains('>=')) {
       return [
         line
@@ -60,7 +59,7 @@ List<String> getAnswers(
         .replaceAll('input', '')
         .replaceAll('==', '')
         .replaceAll('then', '')
-        .replaceAll(answerVariable, '')
+        .replaceAll(_answerVariable, '')
         .replaceAll(' ', '')
         .replaceAll('and', ' and ')
         .split(RegExp(r'(or)'));
@@ -92,7 +91,7 @@ List<String> getAnswers(
         .replaceAll('+r', '+')
         .replaceAll('+', '');
     line.split('or').forEach((element) {
-      hashvalue = int.parse(element.replaceAll('\D+', ''));
+      hashvalue = int.parse(element.replaceAll('D+', ''));
       results.add(hashvalue.toString() +
           '\x01' +
           breakUrwigoHash(hashvalue, HASH.ALPHABETICAL).toString() +
@@ -102,13 +101,13 @@ List<String> getAnswers(
     return results;
   } else if (line.trim().startsWith('if Wherigo.NoCaseEquals(') ||
       line.trim().startsWith('elseif Wherigo.NoCaseEquals(')) {
-    if (answerVariable.isEmpty) answerVariable = getVariable(lineBefore);
+    if (_answerVariable.isEmpty) _answerVariable = _getVariable(lineBefore);
     line = line
         .trim()
         .replaceAll('if ', '')
         .replaceAll('elseif ', '')
         .replaceAll('Wherigo.NoCaseEquals', '')
-        .replaceAll(answerVariable, '')
+        .replaceAll(_answerVariable, '')
         .replaceAll('(', '')
         .replaceAll(')', '')
         .replaceAll('"', '')
@@ -119,9 +118,9 @@ List<String> getAnswers(
         .replaceAll('input', '')
         .replaceAll('Answer,', '')
         .trim();
-    if (RegExp(r'(' + obfuscator + ')').hasMatch(line)) {
-      line = deobfuscateUrwigoText(line.replaceAll(obfuscator, '').replaceAll('("', '').replaceAll('")', ''), dtable);
-    }
+    //if (RegExp(r'(' + obfuscator + ')').hasMatch(line)) {
+    //  line = deobfuscateUrwigoText(line.replaceAll(obfuscator, '').replaceAll('("', '').replaceAll('")', ''), dtable);
+    //}
     line = line.split(' or ').map((element) {
       return element.trim();
     }).join('\n');
@@ -143,138 +142,112 @@ List<String> getAnswers(
       'No Answers found'); // TODO Thomas: Please check if empty list instead is logically meaningful; I chose Exception because I believe this line should never be reached.
 }
 
-bool OnGetInputSectionEnd(String line) {
-  if (line.trim().startsWith('if input == ') ||
-      line.trim().startsWith('if input >= ') ||
-      line.trim().startsWith('if input <= ') ||
-      line.trim().startsWith('elseif input == ') ||
-      line.trim().startsWith('elseif input >= ') ||
-      line.trim().startsWith('elseif input <= ') ||
-      line.trim().startsWith('if _Urwigo.Hash(') ||
-      line.trim().startsWith('if (_Urwigo.Hash(') ||
-      line.trim().startsWith('elseif _Urwigo.Hash(') ||
-      line.trim().startsWith('elseif (_Urwigo.Hash(') ||
-      line.trim().startsWith('if Wherigo.NoCaseEquals(') ||
-      line.trim().startsWith('elseif Wherigo.NoCaseEquals(') ||
-      line.trim().startsWith('if ' + answerVariable + ' == ') ||
-      line.trim().startsWith('elseif ' + answerVariable + ' == '))
+bool _isMessageActionElement(String line) {
+  if (line.startsWith('Wherigo.PlayAudio') ||
+      line.startsWith('Wherigo.GetInput') ||
+      line.startsWith('Text = ') ||
+      line.startsWith('Media = ') ||
+      line.startsWith('Buttons = ')) {
     return true;
-  else
+  } else {
     return false;
+  }
 }
 
-bool OnGetInputFunctionEnd(String line1, String line2) {
-  return (line1.trimLeft().startsWith('end') &&
-      (line2.trimLeft().startsWith('function') || line2.trimLeft().startsWith('return')));
-}
-
-WherigoActionMessageElementData? handleAnswerLine(String line, String dtable, String obfuscator) {
+WherigoActionMessageElementData _handleAnswerLine(String line) {
   line = line.trim();
   if (line.startsWith('Wherigo.PlayAudio')) {
     return WherigoActionMessageElementData(WHERIGO_ACTIONMESSAGETYPE.COMMAND, line.trim());
-  } else if (line.startsWith('Wherigo.GetInput'))
+  } else if (line.startsWith('Wherigo.GetInput')) {
     return WherigoActionMessageElementData(WHERIGO_ACTIONMESSAGETYPE.COMMAND, line.trim());
-  else if (line.startsWith('_Urwigo') ||
-      line.startsWith('Callback') ||
-      line.startsWith('Wherigo') ||
-      line.startsWith('Buttons') ||
-      line.startsWith('end') ||
-      line == ']]' ||
-      line.startsWith('if action') ||
-      line.startsWith('{') ||
-      line.startsWith('}'))
-    return null; // TODO Thomas: Nullable here ok? This makes the method nullable and so potentially all consumers
-  else if (line.startsWith('Text = ')) {
-    return WherigoActionMessageElementData(WHERIGO_ACTIONMESSAGETYPE.TEXT, getTextData(line, obfuscator, dtable));
+  } else if (line.startsWith('Text = ')) {
+    return WherigoActionMessageElementData(WHERIGO_ACTIONMESSAGETYPE.TEXT, getTextData(line));
   } else if (line.startsWith('Media = ')) {
     return WherigoActionMessageElementData(
         WHERIGO_ACTIONMESSAGETYPE.IMAGE, line.trim().replaceAll('Media = ', '').replaceAll(',', ''));
   } else if (line.startsWith('Buttons = ')) {
     if (line.endsWith('}') || line.endsWith('},')) {
       // single line
-      return WherigoActionMessageElementData(
-          WHERIGO_ACTIONMESSAGETYPE.BUTTON,
-          getTextData(
-              line.trim().replaceAll('Buttons = {', '').replaceAll('},', '').replaceAll('}', ''), obfuscator, dtable));
+      return WherigoActionMessageElementData(WHERIGO_ACTIONMESSAGETYPE.BUTTON,
+          getTextData(line.trim().replaceAll('Buttons = {', '').replaceAll('},', '').replaceAll('}', '')));
     }
-  } else if (line.startsWith('if ') || line.startsWith('elseif ') || line.startsWith('else'))
+  } else if (line.startsWith('if ') || line.startsWith('elseif ') || line.startsWith('else')) {
     return WherigoActionMessageElementData(WHERIGO_ACTIONMESSAGETYPE.CASE, line.trim());
-  else {
+  } else {
     String actionLine = '';
-    if (RegExp(r'(' + obfuscator + ')').hasMatch(line)) {
-      List<String> actions = line.trim().split('=');
-      if (actions.length == 2) {
-        actionLine = actions[0].trim() +
-            ' = ' +
-            deobfuscateUrwigoText(
-                (actions[1].indexOf('")') > 0)
-                    ? actions[1]
-                    .substring(0, actions[1].indexOf('")'))
-                    .replaceAll(obfuscator, '')
-                    .replaceAll('("', '')
-                    .replaceAll('")', '')
-                    .trim()
-                    : actions[1].replaceAll(obfuscator, '').replaceAll('("', '').replaceAll('")', '').trim(),
-                dtable);
-      } else {
-        actionLine = deobfuscateUrwigoText(
-            actions[0].replaceAll(obfuscator, '').replaceAll('("', '').replaceAll('")', '').trim(), dtable);
-      }
-    } else
-      actionLine = line.trimLeft();
+    // if (RegExp(r'(' + obfuscator + ')').hasMatch(line)) {
+    //   List<String> actions = line.trim().split('=');
+    //   if (actions.length == 2) {
+    //     actionLine = actions[0].trim() +
+    //         ' = ' +
+    //         deobfuscateUrwigoText(
+    //             (actions[1].indexOf('")') > 0)
+    //                 ? actions[1]
+    //                 .substring(0, actions[1].indexOf('")'))
+    //                 .replaceAll(obfuscator, '')
+    //                 .replaceAll('("', '')
+    //                 .replaceAll('")', '')
+    //                 .trim()
+    //                 : actions[1].replaceAll(obfuscator, '').replaceAll('("', '').replaceAll('")', '').trim(),
+    //             dtable);
+    //   } else {
+    //     actionLine = deobfuscateUrwigoText(
+    //         actions[0].replaceAll(obfuscator, '').replaceAll('("', '').replaceAll('")', '').trim(), dtable);
+    //   }
+    // } else
+    actionLine = line.trimLeft();
     actionLine = actionLine.replaceAll('<BR>', '\n').replaceAll(']],', '');
     return WherigoActionMessageElementData(WHERIGO_ACTIONMESSAGETYPE.COMMAND, actionLine);
   }
+  return WherigoActionMessageElementData(WHERIGO_ACTIONMESSAGETYPE.NONE, '');
 }
 
-String getVariable(String line) {
+String _getVariable(String line) {
   if (line.trim().endsWith('= input')) line = line.trim().replaceAll(' = input', '').replaceAll(' ', '');
-  if (line.trim().endsWith('~= nil then'))
+  if (line.trim().endsWith('~= nil then')) {
     line = line.trim().replaceAll('if', '').replaceAll(' ~= nil then', '').replaceAll(' ', '');
+  }
   return line;
 }
 
-String normalizeDate(String dateString) {
-  if (dateString == null || dateString.isEmpty || dateString == '1/1/0001 12:00:00 AM') return WHERIGO_NULLDATE;
+String _normalizeDate(String dateString) {
+  if (dateString.isEmpty || dateString == '1/1/0001 12:00:00 AM') return WHERIGO_NULLDATE;
 
   List<String> dateTime = dateString.split(' ');
   List<String> date = dateTime[0].split('/');
   List<String> time = dateTime[1].split(':');
 
   return DateTime(
-      int.parse(date[2]),
-      int.parse(date[0]),
-      int.parse(date[1]),
-      (dateTime.length == 3 && dateTime[2] == 'PM') ? int.parse(time[0]) + 12 : int.parse(time[0]),
-      int.parse(time[1]),
-      int.parse(time[2])).toString();
+          int.parse(date[2]),
+          int.parse(date[0]),
+          int.parse(date[1]),
+          (dateTime.length == 3 && dateTime[2] == 'PM') ? int.parse(time[0]) + 12 : int.parse(time[0]),
+          int.parse(time[1]),
+          int.parse(time[2]))
+      .toString();
 }
 
 bool isInvalidLUASourcecode(String header) {
   return (!header.replaceAll('(', ' ').replaceAll(')', '').startsWith('require "Wherigo"'));
 }
 
-WherigoCartridgeLUA faultyWherigoCartridgeLUA(
-                      String _LUAFile,
-                      WHERIGO_ANALYSE_RESULT_STATUS resultStatus,
-                      List<String> _http_code_http,
-                      String _httpCode,
-                      String _httpMessage) {
+WherigoCartridgeLUA _faultyWherigoCartridgeLUA(String _LUAFile, WHERIGO_ANALYSE_RESULT_STATUS resultStatus,
+    List<String> _http_code_http, int _httpCode, String _httpMessage) {
   return WherigoCartridgeLUA(
-  LUAFile: _LUAFile,
-  Characters: [],
-  Items: [],
-  Tasks: [],
-  Inputs: [],
-  Zones: [],
-  Timers: [],
-  Media: [],
-  Messages: [],
-  Answers: [],
-  Variables: [],
-  NameToObject: {},
-  ResultStatus: resultStatus,
-  ResultsLUA: _http_code_http,
-  httpCode: _httpCode,
-  httpMessage: _httpMessage);
+      LUAFile: _LUAFile,
+      Characters: [],
+      Items: [],
+      Tasks: [],
+      Inputs: [],
+      Zones: [],
+      Timers: [],
+      Media: [],
+      Messages: [],
+      Answers: [],
+      Variables: [],
+      NameToObject: {},
+      ResultStatus: resultStatus,
+      ResultsLUA: _http_code_http,
+      httpCode: _httpCode,
+      httpMessage: _httpMessage);
 }

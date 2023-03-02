@@ -12,8 +12,8 @@ class Length extends Unit {
     bool isReference = false,
     required double inMeters,
   }) : super(name, symbol, isReference, (e) => e * inMeters, (e) => e / inMeters) {
-    toMeter = this.toReference;
-    fromMeter = this.fromReference;
+    toMeter = toReference;
+    fromMeter = fromReference;
   }
 }
 
@@ -77,7 +77,7 @@ final LENGTH_FURP = Length(
 final LENGTH_SMOOT = Length(
     name: 'common_unit_length_smoot_name', symbol: 'smoot', inMeters: 5 * 0.3048 + 7 * 0.3048 / 12.0); // 5 ft 7 in
 
-final List<Unit> baseLengths = [
+final List<Length> baseLengths = [
   LENGTH_METER,
   LENGTH_STATUTEMILE,
   LENGTH_INCH,

@@ -6,8 +6,8 @@ class Time extends Unit {
 
   Time({required String name, required String symbol, bool isReference = false, required double inSeconds})
       : super(name, symbol, isReference, (e) => e * inSeconds, (e) => e / inSeconds) {
-    toSeconds = this.toReference;
-    fromSeconds = this.fromReference;
+    toSeconds = toReference;
+    fromSeconds = fromReference;
   }
 }
 
@@ -36,7 +36,7 @@ final TIME_MINGO = Time(name: 'common_unit_time_mingo_name', symbol: 'mi', inSec
 
 final TIME_COWZNOFSKI = Time(name: 'common_unit_time_cowznofski_name', symbol: 'cow', inSeconds: 8640000.0);
 
-final List<Unit> times = [
+final List<Time> times = [
   TIME_WEEK,
   TIME_DAY,
   TIME_HOUR,

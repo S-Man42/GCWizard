@@ -45,7 +45,7 @@ class _LambertDefinition {
 
 final Map<CoordinateFormatKey, _LambertDefinition> _LambertDefinitions = {
   //EPSG 2154, LAMB93, RGF93, Reseau Geodesique Francais 1993
-  CoordinateFormatKey.LAMBERT93: _LambertDefinition(
+  CoordinateFormatKey.LAMBERT93: const _LambertDefinition(
       centralMeridian: 3.0,
       latitudeOfOrigin: 46.5,
       standardParallel1: 49.0,
@@ -53,7 +53,7 @@ final Map<CoordinateFormatKey, _LambertDefinition> _LambertDefinitions = {
       falseEasting: 700000.0,
       falseNorthing: 6600000.0),
   //EPSG 3812, Belgian Lambert 2008
-  CoordinateFormatKey.LAMBERT2008: _LambertDefinition(
+  CoordinateFormatKey.LAMBERT2008: const _LambertDefinition(
       centralMeridian: 4.359215833333335,
       latitudeOfOrigin: 50.79781500000001,
       standardParallel1: 49.833333333333336,
@@ -61,7 +61,7 @@ final Map<CoordinateFormatKey, _LambertDefinition> _LambertDefinitions = {
       falseEasting: 649328.0,
       falseNorthing: 665262.0),
   //EPSG 31370
-  CoordinateFormatKey.LAMBERT72: _LambertDefinition(
+  CoordinateFormatKey.LAMBERT72: const _LambertDefinition(
       centralMeridian: 4.367486666666666,
       latitudeOfOrigin: 90.0,
       standardParallel1: 51.16666723333333,
@@ -69,7 +69,7 @@ final Map<CoordinateFormatKey, _LambertDefinition> _LambertDefinitions = {
       falseEasting: 150000.013,
       falseNorthing: 5400088.438),
   //EPSG 3034
-  CoordinateFormatKey.ETRS89LCC: _LambertDefinition(
+  CoordinateFormatKey.ETRS89LCC: const _LambertDefinition(
       centralMeridian: 10.0,
       latitudeOfOrigin: 52.0,
       standardParallel1: 35.0,
@@ -77,7 +77,7 @@ final Map<CoordinateFormatKey, _LambertDefinition> _LambertDefinitions = {
       falseEasting: 4000000.0,
       falseNorthing: 2800000.0),
   //EPSG 3942, RGF93
-  CoordinateFormatKey.LAMBERT93_CC42: _LambertDefinition(
+  CoordinateFormatKey.LAMBERT93_CC42: const _LambertDefinition(
       centralMeridian: 3.0,
       latitudeOfOrigin: 42.0,
       standardParallel1: 41.25,
@@ -85,7 +85,7 @@ final Map<CoordinateFormatKey, _LambertDefinition> _LambertDefinitions = {
       falseEasting: 1700000.0,
       falseNorthing: 1200000.0),
   //EPSG 3943, RGF93
-  CoordinateFormatKey.LAMBERT93_CC43: _LambertDefinition(
+  CoordinateFormatKey.LAMBERT93_CC43: const _LambertDefinition(
       centralMeridian: 3.0,
       latitudeOfOrigin: 43.0,
       standardParallel1: 42.25,
@@ -93,7 +93,7 @@ final Map<CoordinateFormatKey, _LambertDefinition> _LambertDefinitions = {
       falseEasting: 1700000.0,
       falseNorthing: 2200000.0),
   //EPSG 3944, RGF93
-  CoordinateFormatKey.LAMBERT93_CC44: _LambertDefinition(
+  CoordinateFormatKey.LAMBERT93_CC44: const _LambertDefinition(
       centralMeridian: 3.0,
       latitudeOfOrigin: 44.0,
       standardParallel1: 43.25,
@@ -101,7 +101,7 @@ final Map<CoordinateFormatKey, _LambertDefinition> _LambertDefinitions = {
       falseEasting: 1700000.0,
       falseNorthing: 3200000.0),
   //EPSG 3945, RGF93
-  CoordinateFormatKey.LAMBERT93_CC45: _LambertDefinition(
+  CoordinateFormatKey.LAMBERT93_CC45: const _LambertDefinition(
       centralMeridian: 3.0,
       latitudeOfOrigin: 45.0,
       standardParallel1: 44.25,
@@ -109,7 +109,7 @@ final Map<CoordinateFormatKey, _LambertDefinition> _LambertDefinitions = {
       falseEasting: 1700000.0,
       falseNorthing: 4200000.0),
   //EPSG 3946, RGF93
-  CoordinateFormatKey.LAMBERT93_CC46: _LambertDefinition(
+  CoordinateFormatKey.LAMBERT93_CC46: const _LambertDefinition(
       centralMeridian: 3.0,
       latitudeOfOrigin: 46.0,
       standardParallel1: 45.25,
@@ -117,7 +117,7 @@ final Map<CoordinateFormatKey, _LambertDefinition> _LambertDefinitions = {
       falseEasting: 1700000.0,
       falseNorthing: 5200000.0),
   //EPSG 3947, RGF93
-  CoordinateFormatKey.LAMBERT93_CC47: _LambertDefinition(
+  CoordinateFormatKey.LAMBERT93_CC47: const _LambertDefinition(
       centralMeridian: 3.0,
       latitudeOfOrigin: 47.0,
       standardParallel1: 46.25,
@@ -125,7 +125,7 @@ final Map<CoordinateFormatKey, _LambertDefinition> _LambertDefinitions = {
       falseEasting: 1700000.0,
       falseNorthing: 6200000.0),
   //EPSG 3948, RGF93
-  CoordinateFormatKey.LAMBERT93_CC48: _LambertDefinition(
+  CoordinateFormatKey.LAMBERT93_CC48: const _LambertDefinition(
       centralMeridian: 3.0,
       latitudeOfOrigin: 48.0,
       standardParallel1: 47.25,
@@ -133,7 +133,7 @@ final Map<CoordinateFormatKey, _LambertDefinition> _LambertDefinitions = {
       falseEasting: 1700000.0,
       falseNorthing: 7200000.0),
   //EPSG 3949, RGF93
-  CoordinateFormatKey.LAMBERT93_CC49: _LambertDefinition(
+  CoordinateFormatKey.LAMBERT93_CC49: const _LambertDefinition(
       centralMeridian: 3.0,
       latitudeOfOrigin: 49.0,
       standardParallel1: 48.25,
@@ -141,7 +141,7 @@ final Map<CoordinateFormatKey, _LambertDefinition> _LambertDefinitions = {
       falseEasting: 1700000.0,
       falseNorthing: 8200000.0),
   //EPSG 3950, RGF93
-  CoordinateFormatKey.LAMBERT93_CC50: _LambertDefinition(
+  CoordinateFormatKey.LAMBERT93_CC50: const _LambertDefinition(
       centralMeridian: 3.0,
       latitudeOfOrigin: 50.0,
       standardParallel1: 49.25,
@@ -154,8 +154,9 @@ final Map<CoordinateFormatKey, _LambertDefinition> _LambertDefinitions = {
 // https://sourceforge.net/p/geographiclib/code/ci/release/tree/examples/example-LambertConformalConic.cpp#l36
 
 Lambert latLonToLambert(LatLng latLon, CoordinateFormatKey subtype, Ellipsoid ellipsoid) {
-  if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.LAMBERT, subtype))
+  if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.LAMBERT, subtype)) {
     subtype = defaultLambertType;
+  }
 
   _LambertDefinition specificLambert = _LambertDefinitions[subtype] ?? _LambertDefinitions[defaultLambertType]!;
 
@@ -227,8 +228,9 @@ Lambert? parseLambert(String input, {CoordinateFormatKey subtype = defaultLamber
   }
 
   if (matches.isEmpty) return null;
-  if (_eastingString == null || _northingString == null)
+  if (_eastingString == null || _northingString == null) {
     return null;
+  }
 
   var _easting = double.tryParse(_eastingString);
   if (_easting == null) return null;

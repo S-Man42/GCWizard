@@ -18,6 +18,8 @@ import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors_rgb.d
 import 'package:gc_wizard/tools/science_and_technology/colors/pantone_color_codes/logic/pantone_color_codes.dart';
 
 class PantoneColorCodes extends StatefulWidget {
+  const PantoneColorCodes({Key? key}) : super(key: key);
+
   @override
   PantoneColorCodesState createState() => PantoneColorCodesState();
 }
@@ -101,7 +103,7 @@ class PantoneColorCodesState extends State<PantoneColorCodes> {
 
     return [
       Container(
-        margin: EdgeInsets.only(right: 4 * DOUBLE_DEFAULT_MARGIN),
+        margin: const EdgeInsets.only(right: 4 * DOUBLE_DEFAULT_MARGIN),
         height: 50,
         width: 50,
         decoration: BoxDecoration(
@@ -131,7 +133,7 @@ class PantoneColorCodesState extends State<PantoneColorCodes> {
             : i18n(context, 'pantonecolorcodes_mode_colorstoral_similarcolorsfound'),
         child: GCWColumnedMultilineOutput(
                   data:  similarPantones.map((e) => _buildPantoneColorOutput(e)).toList(),
-                  flexValues: [1, 1, 2],
+                  flexValues: const [1, 1, 2],
                   copyColumn: 2
               ),
         );
@@ -153,7 +155,7 @@ class PantoneColorCodesState extends State<PantoneColorCodes> {
                               )];
 
     children.add(Container(
-      margin: EdgeInsets.only(top: 10 * DEFAULT_MARGIN),
+      margin: const EdgeInsets.only(top: 10 * DEFAULT_MARGIN),
       height: 200,
       width: 400,
       decoration: BoxDecoration(

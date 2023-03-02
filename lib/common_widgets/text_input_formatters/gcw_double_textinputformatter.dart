@@ -11,14 +11,15 @@ class GCWDoubleTextInputFormatter extends TextInputFormatter {
   late int? _minIntegerLength;
 
   GCWDoubleTextInputFormatter({this.min, this.max, this.numberDecimalDigits}) {
-    _maxIntegerLength = max == null ? null : max?.abs().floor().toString().length;
-    _minIntegerLength = min == null ? null : min?.abs().floor().toString().length;
+    _maxIntegerLength = max?.abs().floor().toString().length;
+    _minIntegerLength = min?.abs().floor().toString().length;
 
     var _decimalRegex = '\$';
-    if (numberDecimalDigits == null || numberDecimalDigits! > 0)
+    if (numberDecimalDigits == null || numberDecimalDigits! > 0) {
       _decimalRegex = '(\\.[0-9]' + (numberDecimalDigits == null ? '*' : '{0,$numberDecimalDigits}') + ')?\$';
+    }
 
-    _exp = new RegExp(_buildIntegerRegex() + _decimalRegex);
+    _exp = RegExp(_buildIntegerRegex() + _decimalRegex);
   }
 
   @override
@@ -36,25 +37,25 @@ class GCWDoubleTextInputFormatter extends TextInputFormatter {
     var regex = '';
 
     if (min == null) {
-      if (max == null)
-        regex = '^\-?[0-9]*';
-      else if (max! < 0) {
-        regex = '^(\-[0-9]{0,$_maxIntegerLength})?';
+      if (max == null) {
+        regex = '^-?[0-9]*';
+      } else if (max! < 0) {
+        regex = '^(-[0-9]{0,$_maxIntegerLength})?';
       } else if (max! >= 0) {
         regex = '^((-[0-9]*)|([0-9]{0,$_maxIntegerLength}))';
       }
     } else if (min! < 0) {
-      if (max == null)
-        regex = '^((\-[0-9]{0,$_minIntegerLength})|([0-9]*))';
-      else if (max! < 0) {
-        regex = '^(\-[0-9]{0,$_minIntegerLength})?';
+      if (max == null) {
+        regex = '^((-[0-9]{0,$_minIntegerLength})|([0-9]*))';
+      } else if (max! < 0) {
+        regex = '^(-[0-9]{0,$_minIntegerLength})?';
       } else if (max! >= 0) {
-        regex = '^((\-[0-9]{0,$_minIntegerLength})|([0-9]{0,$_maxIntegerLength}))';
+        regex = '^((-[0-9]{0,$_minIntegerLength})|([0-9]{0,$_maxIntegerLength}))';
       }
     } else if (min! >= 0) {
-      if (max == null)
+      if (max == null) {
         regex = '^[0-9]*';
-      else if (max! >= 0) {
+      } else if (max! >= 0) {
         regex = '^[0-9]{0,$_maxIntegerLength}';
       }
     }

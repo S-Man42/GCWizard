@@ -4,7 +4,6 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
-import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coords_output.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
@@ -14,7 +13,6 @@ import 'package:gc_wizard/common_widgets/image_viewers/gcw_imageview.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
@@ -26,12 +24,11 @@ import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:image/image.dart' as Image;
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:prefs/prefs.dart';
 
 class ExifReader extends StatefulWidget {
   final GCWFile? file;
 
-  ExifReader({Key? key, this.file}) : super(key: key);
+  const ExifReader({Key? key, this.file}) : super(key: key);
 
   @override
   _ExifReaderState createState() => _ExifReaderState();
@@ -122,16 +119,16 @@ class _ExifReaderState extends State<ExifReader> {
 
   List<Widget> _buildOutput(Map<String, List<List<dynamic>>>? _tableTags) {
     if (!_fileLoaded) {
-      return [GCWDefaultOutput()];
+      return [const GCWDefaultOutput()];
     }
 
     List<Widget> widgets = [];
     widgets.add(Container(
+      padding: const EdgeInsets.only(top: 10),
       child: GCWImageView(
         imageData: GCWImageViewData(file!),
-        suppressOpenInTool: {GCWImageViewOpenInTools.METADATA},
+        suppressOpenInTool: const {GCWImageViewOpenInTools.METADATA},
       ),
-      padding: EdgeInsets.only(top: 10),
     ));
     _decorateFile(widgets, file);
     if (image != null) _decorateImage(widgets, image!);
@@ -207,8 +204,9 @@ class _ExifReaderState extends State<ExifReader> {
         var jpegData = Image.JpegData();
         jpegData.read(file.bytes);
 
-        if (jpegData.comment != null && jpegData.comment!.isNotEmpty)
+        if (jpegData.comment != null && jpegData.comment!.isNotEmpty) {
           data.add([i18n(context, 'exif_comment'), jpegData.comment]);
+        }
         if (jpegData.adobe != null) {
           var adobe = jpegData.adobe!;
           if (adobe.version != null) data.add(['Adobe Version', adobe.version]);
@@ -240,16 +238,6 @@ class _ExifReaderState extends State<ExifReader> {
       if (file.path != null) {
         _file = File(file.path!);
       }
-
-      String lastModified;
-      try {
-        lastModified = formatDate(_file?.lastModifiedSync());
-      } catch (e) {}
-
-      String lastAccessed;
-      try {
-        lastAccessed = formatDate(_file?.lastAccessedSync());
-      } catch (e) {}
 
       widgets.add(GCWOutput(
           title: i18n(context, "exif_section_file"),

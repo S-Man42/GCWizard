@@ -36,11 +36,11 @@ class _GCWUnitPrefixDropDownState extends State<_GCWUnitPrefixDropDown> {
         selectedItemBuilder: (context) {
           return unitPrefixes.map((prefix) {
             return Align(
+              alignment: Alignment.centerLeft,
               child: GCWText(
                   text: widget.onlyShowSymbols
                       ? prefix.symbol
                       : (i18n(context, prefix.key, ifTranslationNotExists: '')) + ' (${prefix.symbol})'),
-              alignment: Alignment.centerLeft,
             );
           }).toList();
         });

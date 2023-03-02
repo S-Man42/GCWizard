@@ -182,7 +182,6 @@ final CODEBOOK_PRUSSIA = {
   '4.24.25.1': 'NIEHEIM',
   '4.24.25.2': '',
   '4.24.25.3': '',
-  '4.25.14.1': '',
   // Seite 5
   '4.24.34.1': '',
   '4.24.34.2': '',
@@ -1595,7 +1594,7 @@ final CODEBOOK_PRUSSIA = {
   '256': 'LB',
   '257': 'LD',
   '258': 'LE',
-  '258': 'LEG',
+  '259': 'LEG',
   '260': 'LEI',
   '261': 'LEIN',
   '262': 'LEM',
@@ -1646,7 +1645,7 @@ final CODEBOOK_PRUSSIA = {
   '307': 'MIT',
   '308': 'MO',
   '309': 'MON',
-  '300': 'MOR',
+  '310': 'MOR',
   '311': 'MOS',
   '312': 'MOT',
   '313': 'MU',
@@ -2362,15 +2361,16 @@ SegmentsText decodeVisualPrussianTelegraph(List<String>? inputs) {
   String text = '';
   String code = '';
 
-  inputs!.forEach((element) {
+  for (var element in inputs!) {
     segment = _stringToSegment(element);
     displays.add(segment);
     code = segmentToCode(segment);
-    if (CODEBOOK_PRUSSIA[code] != null)
+    if (CODEBOOK_PRUSSIA[code] != null) {
       text = text + CODEBOOK_PRUSSIA[code]!;
-    else
+    } else {
       text = text + UNKNOWN_ELEMENT;
-  });
+    }
+  }
   return SegmentsText(displays: displays, text: text);
 }
 
@@ -2429,7 +2429,7 @@ List<String> _stringToSegment(String input) {
 }
 
 String segmentToCode(List<String> input) {
-  var segment = [];
+  List<String> segment = [];
   segment.addAll(input);
   String a = '0';
   String b = '0';
@@ -2489,127 +2489,145 @@ String segmentToCode(List<String> input) {
         if (firstA) {
           a = '1';
           firstA = false;
-        } else
+        } else {
           a = '1.' + a;
+        }
         break;
       case 'a2':
         if (firstA) {
           a = '2';
           firstA = false;
-        } else
+        } else {
           a = '2.' + a;
+        }
         break;
       case 'a3':
         if (firstA) {
           a = '3';
           firstA = false;
-        } else
+        } else {
           a = '3.' + a;
+        }
         break;
       case 'a4':
         if (firstA) {
           a = '4';
           firstA = false;
-        } else
+        } else {
           a = '4.' + a;
+        }
         break;
       case 'a5':
         if (firstA) {
           a = '5';
           firstA = false;
-        } else
+        } else {
           a = '5.' + a;
+        }
         break;
       case 'a6':
         if (firstA) {
           a = '6';
           firstA = false;
-        } else
+        } else {
           a = '6.' + a;
+        }
         break;
       case 'b1':
         if (firstB) {
           b = '1';
           firstB = false;
-        } else
+        } else {
           b = '1.' + b;
+        }
         break;
       case 'b2':
         if (firstB) {
           b = '2';
           firstB = false;
-        } else
+        } else {
           b = '2.' + b;
+        }
         break;
       case 'b3':
         if (firstB) {
           b = '3';
           firstB = false;
-        } else
+        } else {
           b = '3.' + b;
+        }
         break;
       case 'b4':
         if (firstB) {
           b = '4';
           firstB = false;
-        } else
+        } else {
           b = '4.' + b;
+        }
         break;
       case 'b5':
         if (firstB) {
           b = '5';
           firstB = false;
-        } else
+        } else {
           b = '5.' + b;
+        }
         break;
       case 'b6':
         if (firstB) {
           b = '6';
           firstB = false;
-        } else
+        } else {
           b = '6.' + b;
+        }
         break;
       case 'c1':
         if (firstC) {
           c = '1';
           firstC = false;
-        } else
+        } else {
           c = '1.' + c;
+        }
         break;
       case 'c2':
         if (firstC) {
           c = '2';
           firstC = false;
-        } else
+        } else {
           c = '2.' + c;
+        }
         break;
       case 'c3':
         if (firstC) {
           c = '3';
           firstC = false;
-        } else
+        } else {
           c = '3.' + c;
+        }
         break;
       case 'c4':
         if (firstC) {
           c = '4';
           firstC = false;
-        } else
+        } else {
           c = '4.' + c;
+        }
         break;
       case 'c5':
         if (firstC) {
           c = '5';
           firstC = false;
-        } else
+        } else {
           c = '5.' + c;
+        }
         break;
       case 'c6':
         if (firstC) {
           c = '6';
           firstC = false;
-        } else
+        } else {
           c = '6.' + c;
+        }
         break;
     }
   }

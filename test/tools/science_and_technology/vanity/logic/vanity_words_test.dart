@@ -71,7 +71,7 @@ void main(){
         ]},
     ];
 
-    _inputsToExpected.forEach((elem) { // Mark test
+    for (var elem in _inputsToExpected) { // Mark test
       test('input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
         var _actual = decodeVanityWords(removeAccents(elem['input'].toString().toLowerCase()), elem['language'] as NumeralWordsLanguage);
         var list = elem['expectedOutput'] as List<VanityWordsDecodeOutput>;
@@ -82,6 +82,6 @@ void main(){
           expect(_actual[i].digit, list[i].digit);
         }
       });
-    });
+    }
   });
 }

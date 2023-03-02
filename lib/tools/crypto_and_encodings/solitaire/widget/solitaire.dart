@@ -10,6 +10,8 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/solitaire/logic/solitaire.dart';
 
 class Solitaire extends StatefulWidget {
+  const Solitaire({Key? key}) : super(key: key);
+
   @override
   SolitaireState createState() => SolitaireState();
 }
@@ -54,7 +56,7 @@ class SolitaireState extends State<Solitaire> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    if (_currentInput.isEmpty) return GCWDefaultOutput();
+    if (_currentInput.isEmpty) return const GCWDefaultOutput();
 
     SolitaireOutput? _currentOutput;
     if (_currentMode == GCWSwitchPosition.left) {
@@ -63,7 +65,7 @@ class SolitaireState extends State<Solitaire> {
       _currentOutput = decryptSolitaire(_currentInput, _currentKey);
     }
 
-    if (_currentOutput == null || _currentOutput.output.isEmpty) return GCWDefaultOutput();
+    if (_currentOutput == null || _currentOutput.output.isEmpty) return const GCWDefaultOutput();
 
     return GCWMultipleOutput(
       children: [

@@ -37,10 +37,11 @@ class GCWAlphabetModificationDropDownState extends State<GCWAlphabetModification
       modifications = allModifications;
     } else {
       modifications = {};
-      allModifications.entries.forEach((MapEntry<AlphabetModificationMode, String> modification) {
-        if (widget.allowedModifications!.contains(modification.key))
+      for (var modification in allModifications.entries) {
+        if (widget.allowedModifications!.contains(modification.key)) {
           modifications.putIfAbsent(modification.key, () => modification.value);
-      });
+        }
+      }
     }
   }
 
@@ -49,8 +50,9 @@ class GCWAlphabetModificationDropDownState extends State<GCWAlphabetModification
     return Row(
       children: <Widget>[
         if (!widget.suppressTitle)
-          Expanded(child: GCWText(text: i18n(context, 'common_alphabetmodification_title') + ':'), flex: 1),
+          Expanded(flex: 1, child: GCWText(text: i18n(context, 'common_alphabetmodification_title') + ':')),
         Expanded(
+            flex: 2,
             child: GCWDropDown<AlphabetModificationMode>(
               value: _currentValue ?? widget.value ?? AlphabetModificationMode.J_TO_I,
               onChanged: (AlphabetModificationMode newValue) {
@@ -65,8 +67,7 @@ class GCWAlphabetModificationDropDownState extends State<GCWAlphabetModification
                   child: i18n(context, entry.value),
                 );
               }).toList(),
-            ),
-            flex: 2)
+            ))
       ],
     );
   }

@@ -181,17 +181,19 @@ List<LatLng> geodesicArcIntercept(
     double A = acos(sin(B) * cos(dErr.abs() / ells.sphereRad));
     double c;
 
-    if (sin(A).abs() < doubleTolerance)
+    if (sin(A).abs() < doubleTolerance) {
       c = dErr;
-    else if (A.abs() < doubleTolerance)
+    } else if (A.abs() < doubleTolerance) {
       c = dErr / cos(B);
-    else
+    } else {
       c = ells.sphereRad * asin(sin(dErr / ells.sphereRad) / sin(A));
+    }
 
-    if (dErr > 0)
+    if (dErr > 0) {
       dist = dist + c;
-    else
+    } else {
       dist = dist - c;
+    }
 
     pt = projectionRadian(perpPt, crs, dist, ells);
     distBear = distanceBearing(ptC, pt, ells);

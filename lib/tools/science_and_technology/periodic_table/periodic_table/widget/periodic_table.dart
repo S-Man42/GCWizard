@@ -15,6 +15,8 @@ const _LEGEND_WIDTH = 2;
 const _LEGEND_START_IUPAC_GROUP = 6;
 
 class PeriodicTable extends StatefulWidget {
+  const PeriodicTable({Key? key}) : super(key: key);
+
   @override
   PeriodicTableState createState() => PeriodicTableState();
 }
@@ -22,7 +24,7 @@ class PeriodicTable extends StatefulWidget {
 class PeriodicTableState extends State<PeriodicTable> {
   late double _cellWidth;
   late double _maxCellHeight;
-  BorderSide _border = BorderSide(width: 1.0, color: Colors.black87);
+  final BorderSide _border = const BorderSide(width: 1.0, color: Colors.black87);
 
   @override
   void initState() {
@@ -45,13 +47,13 @@ class PeriodicTableState extends State<PeriodicTable> {
   Color _getColorByStateOfMatter(StateOfMatter stateOfMatter) {
     switch (stateOfMatter) {
       case StateOfMatter.GAS:
-        return Color(0xFFFFCDD2);
+        return const Color(0xFFFFCDD2);
       case StateOfMatter.LIQUID:
-        return Color(0xFFBCFF9F);
+        return const Color(0xFFBCFF9F);
       case StateOfMatter.SOLID:
-        return Color(0xFF9DCBFF);
+        return const Color(0xFF9DCBFF);
       case StateOfMatter.UNKNOWN:
-        return Color(0xFFD9D9D9);
+        return const Color(0xFFD9D9D9);
     }
   }
 
@@ -71,6 +73,7 @@ class PeriodicTableState extends State<PeriodicTable> {
                         : BorderSide.none,
                     bottom: element.period == 7 ? _border : BorderSide.none),
               ),
+              width: _cellWidth,
               child: Column(
                 children: [
                   Expanded(
@@ -89,7 +92,6 @@ class PeriodicTableState extends State<PeriodicTable> {
                   ))
                 ],
               ),
-              width: _cellWidth,
             ),
             onTap: () {
               Navigator.of(context).push(NoAnimationMaterialPageRoute<GCWTool>(
@@ -103,8 +105,9 @@ class PeriodicTableState extends State<PeriodicTable> {
   Widget _buildGroupHeadlineElement(int iupacGroup) {
     var group = iupacGroupToMainSubGroup(iupacGroup);
 
-    return Container(
+    return SizedBox(
       height: min(defaultFontSize() * 2.5, _maxCellHeight),
+      width: _cellWidth,
       child: Column(
         children: [
           Expanded(
@@ -123,13 +126,12 @@ class PeriodicTableState extends State<PeriodicTable> {
           ))
         ],
       ),
-      width: _cellWidth,
     );
   }
 
   Widget? _buildHeadlineElement(int period, int iupacGroup) {
     if (iupacGroup == 0 && period > 0) {
-      return Container(
+      return SizedBox(
         width: _cellWidth,
         child: Text(
           period.toString(),
@@ -190,7 +192,7 @@ class PeriodicTableState extends State<PeriodicTable> {
 
     lanthanides.insert(
         0,
-        Container(
+        SizedBox(
             width: _cellWidth * 4,
             child: AutoSizeText(
               i18n(context, 'periodictable_attribute_iupacgroupname_lanthanides'),
@@ -210,7 +212,7 @@ class PeriodicTableState extends State<PeriodicTable> {
 
     actinides.insert(
         0,
-        Container(
+        SizedBox(
             width: _cellWidth * 4,
             child: AutoSizeText(
               i18n(context, 'periodictable_attribute_iupacgroupname_actinides'),

@@ -28,6 +28,7 @@ class MapPolylineEditorState extends State<MapPolylineEditor> {
     return Column(children: [
       GCWTextDivider(text: i18n(context, 'coords_openmap_lineeditor_line_color')),
       Container(
+        padding: const EdgeInsets.only(bottom: 20.0),
         child: GCWColorPicker(
           hsvColor: _currentColorPickerColor,
           onChanged: (color) {
@@ -37,7 +38,6 @@ class MapPolylineEditorState extends State<MapPolylineEditor> {
             });
           },
         ),
-        padding: EdgeInsets.only(bottom: 20.0),
       )
     ]);
   }

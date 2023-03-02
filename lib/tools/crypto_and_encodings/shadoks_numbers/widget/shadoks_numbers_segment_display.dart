@@ -10,7 +10,7 @@ const _INITIAL_SEGMENTS = <String, bool>{
 const _SHADOKS_RELATIVE_DISPLAY_WIDTH = 100;
 const _SHADOKS_RELATIVE_DISPLAY_HEIGHT = 100;
 
-final _TRANSPARENT_COLOR = Color.fromARGB(0, 0, 0, 0);
+const _TRANSPARENT_COLOR = Color.fromARGB(0, 0, 0, 0);
 
 double _relativeX(Size size, double x) {
   return size.width / _SHADOKS_RELATIVE_DISPLAY_WIDTH * x;
@@ -20,13 +20,14 @@ double _relativeY(Size size, double y) {
   return size.height / _SHADOKS_RELATIVE_DISPLAY_HEIGHT * y;
 }
 
-//ignore: must_be_immutable
-class _ShadoksNumbersSegmentDisplay extends NSegmentDisplay {
-  final Map<String, bool> segments;
-  final bool readOnly;
-  final void Function(Map<String, bool>)? onChanged;
 
-  _ShadoksNumbersSegmentDisplay({Key? key, required this.segments, this.readOnly = false, this.onChanged})
+class _ShadoksNumbersSegmentDisplay extends NSegmentDisplay {
+
+  _ShadoksNumbersSegmentDisplay({
+    Key? key,
+    required Map<String, bool> segments,
+    bool readOnly = false,
+    void Function(Map<String, bool>)? onChanged})
       : super(
             key: key,
             initialSegments: _INITIAL_SEGMENTS,

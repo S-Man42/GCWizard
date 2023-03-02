@@ -15,12 +15,12 @@ import 'package:prefs/prefs.dart';
 
 enum CORRELATION { THOMPSON, SMILEY, WEITZEL }
 
-final THOMPSON_CORRELATION = 584283;
-final SMILEY_CORRELATION = 482699;
-final WEITZEL_CORRELATION = 774078;
-final THOMPSON = 'Thompson';
-final SMILEY = 'Smiley';
-final WEITZEL = 'Weitzel';
+const THOMPSON_CORRELATION = 584283;
+const SMILEY_CORRELATION = 482699;
+const WEITZEL_CORRELATION = 774078;
+const THOMPSON = 'Thompson';
+const SMILEY = 'Smiley';
+const WEITZEL = 'Weitzel';
 
 final Map<String, int> _CORRELATION_NUMBER = {
   THOMPSON: THOMPSON_CORRELATION,
@@ -126,7 +126,9 @@ List<int> _longCountToList(int numberDec) {
   List<int> result = <int>[];
 
   int start = 0;
-  while (numberDec < mayaCalendarSystem[mayaCalendarSystem.length - 1 - start]) start++;
+  while (numberDec < mayaCalendarSystem[mayaCalendarSystem.length - 1 - start]) {
+    start++;
+  }
   for (int position = mayaCalendarSystem.length - start; position > 0; position--) {
     int value = 0;
     while (numberDec >= mayaCalendarSystem[position - 1]) {
@@ -169,10 +171,11 @@ SegmentsVigesimal decodeMayaCalendar(List<String?>? inputs) {
   total = '0';
   bool invalid = false;
   for (int i = 0; i < numbers.length; i++) {
-    if ((i == numbers.length - 2) && (mayaCalendarSystem[numbers.length - i - 1] == 20) && (numbers[i] > 17))
+    if ((i == numbers.length - 2) && (mayaCalendarSystem[numbers.length - i - 1] == 20) && (numbers[i] > 17)) {
       invalid = true;
-    else
+    } else {
       total = (int.parse(total) + numbers[i] * mayaCalendarSystem[numbers.length - i - 1]).toString();
+    }
   }
   if (invalid) total = '-1';
 
@@ -187,7 +190,9 @@ String convertDecToMayaCalendar(String? input) {
 
   String result = '';
   int start = 0;
-  while (numberDec < (mayaCalendarSystem[mayaCalendarSystem.length - 1 - start])) start++;
+  while (numberDec < (mayaCalendarSystem[mayaCalendarSystem.length - 1 - start])) {
+    start++;
+  }
   for (int position = mayaCalendarSystem.length - start; position > 0; position--) {
     int value = 0;
     while (numberDec >= (mayaCalendarSystem[position - 1])) {
@@ -221,8 +226,12 @@ String MayaLongCount(List<int> longCount) {
   if (MayaLongCountToMayaDayCount(longCount) == 0) return [0, 0, 0, 0, 13, 0, 0, 0, 0].join('.');
 
   List<int> result = <int>[];
-  for (int i = longCount.length; i < 9; i++) result.add(0);
-  for (int i = 0; i < longCount.length; i++) result.add(longCount[i]);
+  for (int i = longCount.length; i < 9; i++) {
+    result.add(0);
+  }
+  for (int i = 0; i < longCount.length; i++) {
+    result.add(longCount[i]);
+  }
   if (result[4] == 0 && result[3] != 0) result[4] = 13;
   return result.join('.');
 }
@@ -230,7 +239,9 @@ String MayaLongCount(List<int> longCount) {
 int MayaLongCountToMayaDayCount(List<int> longCount) {
   int dayCount = 0;
   longCount = longCount.reversed.toList();
-  for (int i = 0; i < longCount.length; i++) dayCount = dayCount + longCount[i] * mayaCalendarSystem[i];
+  for (int i = 0; i < longCount.length; i++) {
+    dayCount = dayCount + longCount[i] * mayaCalendarSystem[i];
+  }
   return dayCount;
 }
 
@@ -244,18 +255,20 @@ DateTime MayaDayCountToGregorianCalendar(int mayaDayCount) {
 
 int MayaDayCountToJulianDate(int mayaDayCount) {
   var correlation = Prefs.getString(PREFERENCE_MAYACALENDAR_CORRELATION);
-  if (correlation.isEmpty)
+  if (correlation.isEmpty) {
     return (mayaDayCount + _CORRELATION_NUMBER[THOMPSON]!);
-  else
+  } else {
     return (mayaDayCount + (_CORRELATION_NUMBER[correlation] ?? 0));
+  }
 }
 
 int JulianDateToMayaDayCount(double jd) {
   var correlation = Prefs.getString(PREFERENCE_MAYACALENDAR_CORRELATION);
-  if (correlation.isEmpty)
+  if (correlation.isEmpty) {
     jd = (jd - _CORRELATION_NUMBER[THOMPSON]!);
-  else
+  } else {
     jd = (jd - (_CORRELATION_NUMBER[correlation] ?? 0));
+  }
   return jd.round();
 }
 
@@ -275,8 +288,12 @@ List<int> JulianDateToMayaLongCount(double jd) {
 List<int?> MayaDayCountToMayaLongCount(int MayaDayCount) {
   String longCount = convertDecToMayaCalendar(MayaDayCount.toString());
   List<int?> result = [];
-  for (int i = longCount.length; i > 0; i--) result.add(_toNumber(longCount[i - 1]));
-  for (int i = longCount.length; i < 9; i++) result.add(0);
+  for (int i = longCount.length; i > 0; i--) {
+    result.add(_toNumber(longCount[i - 1]));
+  }
+  for (int i = longCount.length; i < 9; i++) {
+    result.add(0);
+  }
 
   return result.reversed.toList();
 }

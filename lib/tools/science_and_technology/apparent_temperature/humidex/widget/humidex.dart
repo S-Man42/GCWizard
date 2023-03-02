@@ -9,6 +9,8 @@ import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/humi
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/temperature.dart';
 
 class Humidex extends StatefulWidget {
+  const Humidex({Key? key}) : super(key: key);
+
   @override
   HumidexState createState() => HumidexState();
 }
@@ -44,8 +46,8 @@ class HumidexState extends State<Humidex> {
               });
             }),
         Container(
-          child: GCWDivider(),
-          padding: EdgeInsets.only(top: 10),
+          padding: const EdgeInsets.only(top: 10),
+          child: const GCWDivider(),
         ),
         GCWTwoOptionsSwitch(
           leftValue: i18n(context, 'common_measure_humidity'),
@@ -95,20 +97,22 @@ class HumidexState extends State<Humidex> {
     String? hintH;
     if (_isHumidity) {
       if (_currentDewPoint < 40) hintH = i18n(context, 'heatindex_hint_humidity');
-    } else
+    } else {
       hintH = '';
+    }
 
     var hint = [hintT, hintH].where((element) => element != null && element.isNotEmpty).join('\n');
 
     String hintM = '';
-    if (output > 45)
+    if (output > 45) {
       hintM = 'humidex_index_45';
-    else if (output > 39)
+    } else if (output > 39) {
       hintM = 'humidex_index_40';
-    else if (output > 29)
+    } else if (output > 29) {
       hintM = 'humidex_index_30';
-    else if (output > 19)
+    } else if (output > 19) {
       hintM = 'humidex_index_20';
+    }
 
     var outputs = [
       GCWOutput(
@@ -117,13 +121,14 @@ class HumidexState extends State<Humidex> {
       )
     ];
 
-    if (hint != null && hint.isNotEmpty) outputs.add(GCWOutput(title: i18n(context, 'heatindex_hint'), child: hint));
+    if (hint.isNotEmpty) outputs.add(GCWOutput(title: i18n(context, 'heatindex_hint'), child: hint));
 
-    if (hintM != null && hintM.isNotEmpty)
+    if (hintM.isNotEmpty) {
       outputs.add(GCWOutput(
         title: i18n(context, 'humidex_meaning'),
         child: i18n(context, hintM),
       ));
+    }
 
     return GCWMultipleOutput(
       children: outputs,

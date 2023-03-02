@@ -89,10 +89,11 @@ List<int> encodeCatan(String? input, CatanMode mode) {
 
     if (value != null) values.add(value);
 
-    if (input.length > 1)
+    if (input.length > 1) {
       input = input.substring(1);
-    else
+    } else {
       break;
+    }
   }
 
   return values;

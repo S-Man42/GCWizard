@@ -1,6 +1,5 @@
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
-import 'package:gc_wizard/utils/collection_utils.dart';
 
 class ShadocksOutput extends Segments{
   List<int> numbers;
@@ -36,8 +35,9 @@ Segments encodeShadoksNumbers(int? input) {
 }
 
 ShadocksOutput decodeShadoksNumbers(List<String>? inputs) {
-  if (inputs == null || inputs.isEmpty)
+  if (inputs == null || inputs.isEmpty) {
     return ShadocksOutput([['a']], [0], BigInt.zero, _numberToWord['0']!);
+  }
 
   var displays = <List<String>>[];
 

@@ -18,12 +18,12 @@ void main() {
       {'input' : '1082158111 2355712317° 2111355772 2309215781.1603217532 0229798165 7273291356', 'expectedOutput' : '5 1 0 6 6 2'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decodeEnclosedAreas(elem['input'] as String?, with4: true);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("EnclosedAreas.without4:", () {
@@ -38,12 +38,12 @@ void main() {
       {'input' : '._*&%><', 'expectedOutput' : '4'},
    ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decodeEnclosedAreas(elem['input'] as String?, with4: false);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("EnclosedAreas.onlyNumbers:", () {
@@ -59,11 +59,11 @@ void main() {
       {'input' : '1082158111 2355712317° 2111355772 2309215781.1603217532 0229798165 7273291356', 'expectedOutput' : '5 0 0 4 2 6 2'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decodeEnclosedAreas(elem['input'] as String?, with4: true, onlyNumbers: true);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

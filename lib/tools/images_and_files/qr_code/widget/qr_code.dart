@@ -84,8 +84,8 @@ class QrCodeState extends State<QrCode> {
               ),
         ((_currentMode == GCWSwitchPosition.right) && (_outData != null))
             ? Container(
+                padding: const EdgeInsets.symmetric(vertical: 20),
                 child: Image.memory(_outData!),
-                padding: EdgeInsets.symmetric(vertical: 20),
               )
             : Container(),
         _currentMode == GCWSwitchPosition.right
@@ -128,8 +128,9 @@ class QrCodeState extends State<QrCode> {
     if (_currentMode == GCWSwitchPosition.left) {
       if (_outDataEncrypt == null) return null;
       return Image.memory(_outDataEncrypt!);
-    } else
+    } else {
       return _outDataDecrypt!;
+    }
   }
 
   void _updateOutput() {
@@ -167,11 +168,11 @@ class QrCodeState extends State<QrCode> {
     }
   }
 
-  void _exportFile(BuildContext context, Uint8List data) async {
+  Future<void> _exportFile(BuildContext context, Uint8List data) async {
     var fileType = getFileType(data);
-    var value = await saveByteDataToFile(context, data, buildFileNameWithDate('img_', fileType));
-
-    var content = fileClass(fileType) == FileClass.IMAGE ? imageContent(context, data) : null;
-    if (value) showExportedFileDialog(context, contentWidget: content);
+    await saveByteDataToFile(context, data, buildFileNameWithDate('img_', fileType)).then((value) {
+      var content = fileClass(fileType) == FileClass.IMAGE ? imageContent(context, data) : null;
+      if (value) showExportedFileDialog(context, contentWidget: content);
+    });
   }
 }

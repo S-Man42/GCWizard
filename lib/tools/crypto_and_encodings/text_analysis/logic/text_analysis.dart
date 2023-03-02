@@ -1,7 +1,7 @@
 import 'package:diacritic/diacritic.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 
-final String _WORD_SEPARATORS = r'[^A-Za-z0-9\-ß\u1e9e]';
+const String _WORD_SEPARATORS = r'[^A-Za-z0-9\-ß\u1e9e]';
 
 class ControlCharacter {
   final int asciiValue;
@@ -87,8 +87,9 @@ int countWords(String? text) {
 Map<String, int> _addOrIncreaseCount(Map<String, int> map, String character) {
   if (map.containsKey(character)) {
     map.update(character, (int) => map[character]! + 1);
-  } else
+  } else {
     map[character] = 1;
+  }
   return map;
 }
 
@@ -97,7 +98,7 @@ Map<String, int> _analyzeLetters(String text, bool caseSensitive) {
     text = text.toUpperCase().replaceAll('ß', '\u1e9e');
   }
 
-  var letters = Map<String, int>();
+  var letters = <String, int>{};
   text.split('').forEach((character) {
     if (!isOnlyLetters(character)) return;
 
@@ -110,7 +111,7 @@ Map<String, int> _analyzeLetters(String text, bool caseSensitive) {
 Map<String, int> _analyzeNumbers(String text) {
   text = text.replaceAll(RegExp(r'[^0-9]'), '');
 
-  var numbers = Map<String, int>();
+  var numbers = <String, int>{};
   text.split('').forEach((character) {
     _addOrIncreaseCount(numbers, character);
   });
@@ -119,7 +120,7 @@ Map<String, int> _analyzeNumbers(String text) {
 }
 
 Map<String, int> _analyzeWhitespaces(String text) {
-  var whiteSpaces = Map<String, int>();
+  var whiteSpaces = <String, int>{};
   text.split('').forEach((character) {
     if (WHITESPACE_CHARACTERS.containsKey(character)) _addOrIncreaseCount(whiteSpaces, character);
   });
@@ -128,7 +129,7 @@ Map<String, int> _analyzeWhitespaces(String text) {
 }
 
 Map<String, int> _analyzeControlChars(String text, {bool includingWhitespaceCharacter = true}) {
-  var controls = Map<String, int>();
+  var controls = <String, int>{};
 
   var characters = Map<String,ControlCharacter>.from(CONTROL_CHARACTERS);
   if (includingWhitespaceCharacter) {
@@ -148,7 +149,7 @@ Map<String, int> _analyzeSpecialChars(String text) {
   var controlsAndWhiteSpaces = WHITESPACE_CHARACTERS.keys.toList();
   controlsAndWhiteSpaces.addAll(CONTROL_CHARACTERS.keys.toList());
 
-  var specialChars = Map<String, int>();
+  var specialChars = <String, int>{};
   text.split('').forEach((character) {
     if (controlsAndWhiteSpaces.contains(character)) return;
 

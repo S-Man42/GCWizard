@@ -14,7 +14,7 @@ class Teletypewriter extends StatefulWidget {
   final TeletypewriterCodebook defaultCodebook;
   final Map<TeletypewriterCodebook, CodebookConfig>? codebook;
 
-  Teletypewriter({Key? key, required this.defaultCodebook, required this.codebook}) : super(key: key);
+  const Teletypewriter({Key? key, required this.defaultCodebook, required this.codebook}) : super(key: key);
 
   @override
   TeletypewriterState createState() => TeletypewriterState();
@@ -67,7 +67,7 @@ class TeletypewriterState extends State<Teletypewriter> {
               return GCWDropDownMenuItem(
                   value: mode.key,
                   child: i18n(context, mode.value.title),
-                  subtitle: mode.value.subtitle != null ? i18n(context, mode.value.subtitle) : null);
+                  subtitle:i18n(context, mode.value.subtitle));
             }).toList(),
           ),
         _currentMode == GCWSwitchPosition.left

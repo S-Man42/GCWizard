@@ -41,10 +41,11 @@ class NumberSequenceCheckNumberState extends State<NumberSequenceCheckNumber> {
           ],
           onChanged: (text) {
             setState(() {
-              if (text == null || text.isEmpty)
+              if (text.isEmpty) {
                 _currentInputN = '0';
-              else
+              } else {
                 _currentInputN = text;
+              }
             });
           },
         ),

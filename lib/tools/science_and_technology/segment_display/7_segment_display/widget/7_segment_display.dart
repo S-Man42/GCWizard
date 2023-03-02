@@ -13,19 +13,14 @@ const _INITIAL_SEGMENTS = <String, bool>{
   'dp': false
 };
 
-//ignore: must_be_immutable
+
 class SevenSegmentDisplay extends NSegmentDisplay {
-  final Map<String, bool> segments;
-  final bool readOnly;
-  final void Function(Map<String, bool>)? onChanged;
-  final bool tapeStyle;
 
   SevenSegmentDisplay({
     Key? key,
-    required this.segments,
-    this.readOnly = false,
-    this.onChanged,
-    this.tapeStyle = false})
+    required Map<String, bool> segments,
+    bool readOnly = false,
+    void Function(Map<String, bool>)? onChanged})
       : super(
             key: key,
             initialSegments: _INITIAL_SEGMENTS,

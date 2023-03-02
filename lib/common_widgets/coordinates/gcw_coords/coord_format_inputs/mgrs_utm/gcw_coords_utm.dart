@@ -39,19 +39,17 @@ class _GCWCoordsUTMState extends State<_GCWCoordsUTM> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.coordinates != null) {
-      var utm = widget.coordinates is UTMREF
-          ? widget.coordinates as UTMREF
-          : UTMREF.fromLatLon(widget.coordinates.toLatLng() ?? defaultCoordinate, defaultEllipsoid);
-      _currentLonZone.value = utm.zone.lonZone;
-      _currentEasting.value = utm.easting;
-      _currentNorthing.value = utm.northing;
-      _currentLatZone = utm.zone.latZone;
+    var utm = widget.coordinates is UTMREF
+        ? widget.coordinates as UTMREF
+        : UTMREF.fromLatLon(widget.coordinates.toLatLng() ?? defaultCoordinate, defaultEllipsoid);
+    _currentLonZone.value = utm.zone.lonZone;
+    _currentEasting.value = utm.easting;
+    _currentNorthing.value = utm.northing;
+    _currentLatZone = utm.zone.latZone;
 
-      _LonZoneController.text = _currentLonZone.value.toString();
-      _EastingController.text = _currentEasting.value.toString();
-      _NorthingController.text = _currentNorthing.value.toString();
-    }
+    _LonZoneController.text = _currentLonZone.value.toString();
+    _EastingController.text = _currentEasting.value.toString();
+    _NorthingController.text = _currentNorthing.value.toString();
 
     return Column(children: <Widget>[
       Row(
@@ -70,6 +68,7 @@ class _GCWCoordsUTMState extends State<_GCWCoordsUTM> {
           ),
           Expanded(
               child: Container(
+            padding: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
             child: GCWDropDown<String>(
               value: _currentLatZone,
               onChanged: (String newValue) {
@@ -85,7 +84,6 @@ class _GCWCoordsUTMState extends State<_GCWCoordsUTM> {
                 );
               }).toList(),
             ),
-            padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
           )),
         ],
       ),
@@ -112,7 +110,7 @@ class _GCWCoordsUTMState extends State<_GCWCoordsUTM> {
     ]);
   }
 
-  _setCurrentValueAndEmitOnChange() {
+  void _setCurrentValueAndEmitOnChange() {
     var _lonZone = _currentLonZone.value;
 
     var zone = UTMZone(_lonZone, _lonZone, _currentLatZone);

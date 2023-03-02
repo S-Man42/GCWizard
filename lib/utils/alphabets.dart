@@ -271,7 +271,7 @@ final Alphabet alphabetGreek1 = Alphabet(key: 'alphabet_name_greek1', type: Alph
   String.fromCharCode(937): '24', // Ω
 });
 
-final Alphabet alphabetGreek2 = Alphabet(key: 'alphabet_name_greek2', type: AlphabetType.STANDARD, alphabet: {
+const Alphabet alphabetGreek2 = Alphabet(key: 'alphabet_name_greek2', type: AlphabetType.STANDARD, alphabet: {
   'Α': '1',
   'Ά': '2',
   'Β': '3',

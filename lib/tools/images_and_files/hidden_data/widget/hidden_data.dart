@@ -131,7 +131,7 @@ class HiddenDataState extends State<HiddenData> {
             },
           ),
         Container(height: 15),
-        GCWDivider(),
+        const GCWDivider(),
         GCWButton(
           text: i18n(context, 'hiddendata_hideandsave'),
           onPressed: () {
@@ -140,8 +140,9 @@ class HiddenDataState extends State<HiddenData> {
               if (_currentHideMode == GCWSwitchPosition.left) {
                 data = mergeFiles([_publicFile!.bytes, _currentHideInput]);
               } else {
-                if (_secretFile?.bytes != null)
+                if (_secretFile?.bytes != null) {
                   data = mergeFiles([_publicFile!.bytes, _secretFile!.bytes]);
+                }
               }
             }
             _exportFile(
@@ -172,8 +173,8 @@ class HiddenDataState extends State<HiddenData> {
         ),
 
         GCWDefaultOutput(
-          child: _buildOutput(),
           suppressCopyButton: true,
+          child: _buildOutput(),
         )
       ],
     );
@@ -191,16 +192,17 @@ class HiddenDataState extends State<HiddenData> {
     return FutureBuilder(
         future: _hiddenDataList,
         builder: (BuildContext context, AsyncSnapshot<List<GCWFile>> snapshot) {
-          if (!_complete)
+          if (!_complete) {
             return GCWOutputText(text: i18n(context, 'common_please_wait'), suppressCopyButton: true);
-          else if ((snapshot.data == null) || snapshot.data!.isEmpty)
+          } else if ((snapshot.data == null) || snapshot.data!.isEmpty) {
             return GCWOutputText(text: i18n(context, 'hiddendata_nohiddendatafound'), suppressCopyButton: true);
-          else
+          } else {
             return GCWFilesOutput(files: snapshot.data!);
+          }
         });
   }
 
-  void _exportFile(BuildContext context, GCWFile? file) async {
+  Future<void> _exportFile(BuildContext context, GCWFile? file) async {
     if (file?.bytes == null) {
       showToast(i18n(context, 'hiddendata_datanotreadable'));
       return;
@@ -211,9 +213,10 @@ class HiddenDataState extends State<HiddenData> {
 
     if (ext.length <= 1 || ext.last.length >= 5) fileName = fileName + '.' + fileExtension(file.fileType);
 
-    var value = await saveByteDataToFile(context, file.bytes, fileName);
-    var content = fileClass(file.fileType) == FileClass.IMAGE ? imageContent(context, file.bytes) : null;
-    if (value) showExportedFileDialog(context, contentWidget: content) ;
+    await saveByteDataToFile(context, file.bytes, fileName).then((value) {
+      var content = fileClass(file.fileType) == FileClass.IMAGE ? imageContent(context, file.bytes) : null;
+      if (value) showExportedFileDialog(context, contentWidget: content) ;
+    });
   }
 }
 

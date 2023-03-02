@@ -39,12 +39,12 @@ void main() {
       {'input' : '0 63 126', 'replaceCharacters': {'+': '-', '-': '+'}, 'numericMode' : true, 'expectedOutput' : '++-+---+-+ --+++--++- ----------'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, replaceCharacter: ${elem['replaceCharacters']}, numericMode: ${elem['numericMode']}', () {
         var _actual = encryptDecabit(elem['input'] as String?, elem['replaceCharacters'] as Map<String, String>, elem['numericMode'] as bool);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Decabit.decryptDecabit:", () {
@@ -96,11 +96,11 @@ void main() {
       {'input' : '+- +-+-++-+-- +---+-+++- +-+---+++- -+--++-++- +---+++-+- +-+-++-+-- +-+++---+- +++-++---- +-+-++-+-- -+++--+-+- -+++-+-+-- +++-+---+- -++--+++-- -+-+--+++- +-+-++-+-- +++-++---- ++--+--++- +-+-+---++ +-+-++-+-- +-+---+-++ +-++--+-+- -+-+--+++- +-+-++-+-- ++--+--++- +--+-+-++- ++-++---+- +-+-++-+-- +---+-+++- +-+---+++- -+--', 'numericMode' : false, 'expectedOutput' : '>Grad 47 Punkt 706 Ost 013 Gr'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, replaceCharacter: ${elem['replaceCharacters']}, numericMode: ${elem['numericMode']}', () {
         var _actual = decryptDecabit(elem['input'] as String?, elem['replaceCharacters'] as Map<String, String>, elem['numericMode']as bool);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

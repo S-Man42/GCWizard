@@ -71,6 +71,7 @@ class GCWSymbolTableDecryptionState extends State<GCWSymbolTableDecryption> {
               },
             )),
         ConstrainedBox(
+          constraints: BoxConstraints(maxHeight: widget.mediaQueryData.orientation == Orientation.portrait ? 350 : 150),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -88,8 +89,9 @@ class GCWSymbolTableDecryptionState extends State<GCWSymbolTableDecryption> {
                   icon: Icons.backspace,
                   onPressed: () {
                     setState(() {
-                      if (_decryptionOutput.isNotEmpty)
+                      if (_decryptionOutput.isNotEmpty) {
                         _decryptionOutput = _decryptionOutput.substring(0, _decryptionOutput.length - 1);
+                      }
                       _scrollToBottom();
                     });
                   },
@@ -106,7 +108,7 @@ class GCWSymbolTableDecryptionState extends State<GCWSymbolTableDecryption> {
               ]),
               Flexible(
                   child: SingleChildScrollView(
-                      physics: AlwaysScrollableScrollPhysics(),
+                      physics: const AlwaysScrollableScrollPhysics(),
                       controller: _scrollController,
                       child: widget.onAfterDecrypt != null
                         ? Column(
@@ -119,7 +121,6 @@ class GCWSymbolTableDecryptionState extends State<GCWSymbolTableDecryption> {
               ))
             ],
           ),
-          constraints: BoxConstraints(maxHeight: widget.mediaQueryData.orientation == Orientation.portrait ? 350 : 150),
         ),
       ],
     );

@@ -16,6 +16,8 @@ import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/w
 import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/widget/segmentdisplay_output.dart';
 
 class Braille extends StatefulWidget {
+  const Braille({Key? key}) : super(key: key);
+
   @override
   BrailleState createState() => BrailleState();
 }
@@ -56,9 +58,7 @@ class BrailleState extends State<Braille> {
           return GCWDropDownMenuItem(
               value: mode.key,
               child: i18n(context, mode.value.title),
-              subtitle: mode.value.subtitle != null
-                  ? i18n(context, mode.value.subtitle)
-                  : null);
+              subtitle: i18n(context, mode.value.subtitle));
         }).toList(),
       ),
       GCWTwoOptionsSwitch(
@@ -91,7 +91,7 @@ class BrailleState extends State<Braille> {
   Widget _buildVisualDecryption() {
     var currentDisplay = buildSegmentMap(_currentDisplays);
 
-    var onChanged = (Map<String, bool> d) {
+    onChanged(Map<String, bool> d) {
       setState(() {
         var newSegments = <String>[];
         d.forEach((key, value) {
@@ -101,14 +101,14 @@ class BrailleState extends State<Braille> {
 
         _currentDisplays.replaceLastSegment(newSegments);
       });
-    };
+    }
 
     return Column(
       children: <Widget>[
         Container(
           width: 180,
           height: 200,
-          padding: EdgeInsets.only(
+          padding: const EdgeInsets.only(
               top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
           child: Row(
             children: <Widget>[
@@ -162,12 +162,13 @@ class BrailleState extends State<Braille> {
   Widget _buildDigitalOutput(Segments segments) {
     return SegmentDisplayOutput(
         segmentFunction: (displayedSegments, readOnly) {
-          if (_currentLanguage == BrailleLanguage.EUR)
+          if (_currentLanguage == BrailleLanguage.EUR) {
             return BrailleEuroSegmentDisplay(
                 segments: displayedSegments, readOnly: readOnly);
-          else
+          } else {
             return BrailleSegmentDisplay(
                 segments: displayedSegments, readOnly: readOnly);
+          }
         },
         segments: segments,
         readOnly: true);
@@ -224,19 +225,20 @@ class BrailleState extends State<Braille> {
   }
 
   String _normalizeChars(String input) {
-    if (input.endsWith('NUMBER FOLLOWS>'))
+    if (input.endsWith('NUMBER FOLLOWS>')) {
       return input
               .replaceAll('<NUMBER FOLLOWS>', '')
               .replaceAll('<ANTOINE NUMBER FOLLOWS>', '') +
           i18n(context, 'symboltables_braille_de_number_follows');
-    else if (input.endsWith('ANTOINE NUMBER FOLLOWS>'))
+    } else if (input.endsWith('ANTOINE NUMBER FOLLOWS>')) {
       return input
               .replaceAll('<NUMBER FOLLOWS>', '')
               .replaceAll('<ANTOINE NUMBER FOLLOWS>', '') +
           i18n(context, 'symboltables_braille_en_mathmatics_follows');
-    else
+    } else {
       return input
           .replaceAll('<NUMBER FOLLOWS>', '')
           .replaceAll('<ANTOINE NUMBER FOLLOWS>', '');
+    }
   }
 }

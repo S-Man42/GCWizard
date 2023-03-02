@@ -60,6 +60,7 @@ class _GCWCoordsMGRSState extends State<_GCWCoordsMGRS> {
         children: <Widget>[
           Expanded(
               child: Container(
+            padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
             child: GCWIntegerTextField(
                 hintText: i18n(context, 'coords_formatconverter_mgrs_lonzone'),
                 textInputFormatter: _UTMLonZoneTextInputFormatter(),
@@ -70,10 +71,10 @@ class _GCWCoordsMGRSState extends State<_GCWCoordsMGRS> {
                     //   _setCurrentValueAndEmitOnChange();
                   });
                 }),
-            padding: EdgeInsets.only(right: DEFAULT_MARGIN),
           )),
           Expanded(
               child: Container(
+                  padding: const EdgeInsets.only(left: DEFAULT_MARGIN),
                   child: GCWDropDown<String>(
                     value: _currentLatZone,
                     onChanged: (String newValue) {
@@ -88,14 +89,14 @@ class _GCWCoordsMGRSState extends State<_GCWCoordsMGRS> {
                         child: char,
                       );
                     }).toList(),
-                  ),
-                  padding: EdgeInsets.only(left: DEFAULT_MARGIN))),
+                  ))),
         ],
       ),
       Row(
         children: <Widget>[
           Expanded(
               child: Container(
+            padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
             child: GCWDropDown<String>(
               value: _currentDigraphEasting,
               onChanged: (String newValue) {
@@ -111,10 +112,10 @@ class _GCWCoordsMGRSState extends State<_GCWCoordsMGRS> {
                 );
               }).toList(),
             ),
-            padding: EdgeInsets.only(right: DEFAULT_MARGIN),
           )),
           Expanded(
               child: Container(
+            padding: const EdgeInsets.only(left: DEFAULT_MARGIN),
             child: GCWDropDown<String>(
               value: _currentDigraphNorthing,
               onChanged: (String newValue) {
@@ -130,7 +131,6 @@ class _GCWCoordsMGRSState extends State<_GCWCoordsMGRS> {
                 );
               }).toList(),
             ),
-            padding: EdgeInsets.only(left: DEFAULT_MARGIN),
           ))
         ],
       ),

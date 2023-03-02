@@ -12,6 +12,8 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/burrows_wheeler/logic/burrows_wheeler.dart';
 
 class BurrowsWheeler extends StatefulWidget {
+  const BurrowsWheeler({Key? key}) : super(key: key);
+
   @override
   BurrowsWheelerState createState() => BurrowsWheelerState();
 }
@@ -31,7 +33,7 @@ class BurrowsWheelerState extends State<BurrowsWheeler> {
   int currentIndexPosition = 1;
   int currentInputLen = 0;
 
-  var _maskInputFormatter = WrapperForMaskTextInputFormatter(mask: '#', filter: {"#": RegExp(r'.')});
+  final _maskInputFormatter = WrapperForMaskTextInputFormatter(mask: '#', filter: {"#": RegExp(r'.')});
 
   @override
   void initState() {
@@ -60,10 +62,11 @@ class BurrowsWheelerState extends State<BurrowsWheeler> {
               onChanged: (text) {
                 setState(() {
                   currentInputPlain = text;
-                  if (currentInputPlain.isEmpty || currentInputPlain == null)
+                  if (currentInputPlain.isEmpty) {
                     currentInputLen = 0;
-                  else
+                  } else {
                     currentInputLen = currentInputPlain.length;
+                  }
                 });
               },
             )
@@ -73,10 +76,11 @@ class BurrowsWheelerState extends State<BurrowsWheeler> {
               onChanged: (text) {
                 setState(() {
                   currentInputCipher = text;
-                  if (currentInputCipher.isEmpty || currentInputCipher == null)
+                  if (currentInputCipher.isEmpty) {
                     currentInputLen = 0;
-                  else
+                  } else {
                     currentInputLen = currentInputCipher.length;
+                  }
                 });
               },
             ),
@@ -138,12 +142,13 @@ class BurrowsWheelerState extends State<BurrowsWheeler> {
       // encrypt
       if (currentIndexType == GCWSwitchPosition.right) {
         // encoded index - symbol
-        if (currentIndexSymbol.isEmpty || currentIndexSymbol == null)
+        if (currentIndexSymbol.isEmpty) {
           currentOutput = BWTOutput(i18n(context, 'burrowswheeler_error_no_index'), '');
-        else if (currentInputPlain.contains(currentIndexSymbol))
+        } else if (currentInputPlain.contains(currentIndexSymbol)) {
           currentOutput = BWTOutput(i18n(context, 'burrowswheeler_error_char_index'), '');
-        else
+        } else {
           currentOutput = encryptBurrowsWheeler(currentInputPlain, currentIndexSymbol);
+        }
       } else {
         currentOutput = encryptBurrowsWheeler(currentInputPlain, '0');
       }
@@ -151,16 +156,17 @@ class BurrowsWheelerState extends State<BurrowsWheeler> {
       // decrypt
       if (currentIndexType == GCWSwitchPosition.right) {
         // encoded index - symbol
-        if (currentIndexSymbol.isEmpty || currentIndexSymbol == null)
+        if (currentIndexSymbol.isEmpty) {
           currentOutput = BWTOutput(i18n(context, 'burrowswheeler_error_no_index'), '');
-        else
+        } else {
           currentOutput = decryptBurrowsWheeler(currentInputCipher, currentIndexSymbol);
+        }
       } else {
         currentOutput = decryptBurrowsWheeler(currentInputCipher, currentIndexPosition.toString());
       }
     }
 
-    if (currentOutput == null || currentOutput.text == null || currentOutput.text.isEmpty) return GCWDefaultOutput();
+    if (currentOutput.text.isEmpty) return const GCWDefaultOutput();
 
     if (currentMode == GCWSwitchPosition.left && currentIndexType == GCWSwitchPosition.left) {
       return GCWMultipleOutput(

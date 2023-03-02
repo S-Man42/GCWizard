@@ -9,6 +9,8 @@ import 'package:gc_wizard/tools/science_and_technology/telegraphs/wigwag/logic/w
 import 'package:gc_wizard/utils/constants.dart';
 
 class WigWagSemaphoreTelegraph extends StatefulWidget {
+  const WigWagSemaphoreTelegraph({Key? key}) : super(key: key);
+
   @override
   WigWagSemaphoreTelegraphState createState() => WigWagSemaphoreTelegraphState();
 }
@@ -55,7 +57,7 @@ class WigWagSemaphoreTelegraphState extends State<WigWagSemaphoreTelegraph> {
             return GCWDropDownMenuItem(
                 value: mode.key,
                 child: i18n(context, mode.value.title),
-                subtitle: mode.value.subtitle != null ? i18n(context, mode.value.subtitle) : null);
+                subtitle: i18n(context, mode.value.subtitle));
           }).toList(),
         ),
         _currentMode == GCWSwitchPosition.left

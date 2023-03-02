@@ -34,12 +34,12 @@ void main() {
       {'input' : 'AbCDeF', 'aValue': -52, 'expectedOutput' : 'AcEGiK'}
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, key: ${elem['key']}, aValue: ${elem['aValue']}, autoKey: ${elem['autoKey']}', () {
         var _actual = encryptTrithemius(elem['input'] as String, aValue: elem['aValue'] as int);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Trithemius.decrypt:", () {
@@ -74,11 +74,11 @@ void main() {
       {'input' : 'AbCDeF', 'aValue': -52, 'expectedOutput' : 'AaAAaA'}
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, key: ${elem['key']}, aValue: ${elem['aValue']}, autoKey: ${elem['autoKey']}', () {
         var _actual = decryptTrithemius(elem['input'] as String, aValue: elem['aValue'] as int);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

@@ -154,12 +154,12 @@ class _ThemeColorsLight extends ThemeColors {
 
   @override
   Color formulaNumber() {
-    return Color.fromRGBO(48, 145, 0, 1);
+    return const Color.fromRGBO(48, 145, 0, 1);
   }
 
   @override
   Color formulaVariable() {
-    return Color.fromRGBO(255, 135, 0, 1);
+    return const Color.fromRGBO(255, 135, 0, 1);
   }
 
   @override

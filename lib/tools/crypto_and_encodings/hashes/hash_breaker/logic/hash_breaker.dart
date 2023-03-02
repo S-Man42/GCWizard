@@ -1,6 +1,6 @@
 import 'dart:isolate';
 
-import 'package:gc_wizard/common_widgets/gcw_async_executer.dart';
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/variable_string_expander.dart';
 
@@ -46,10 +46,11 @@ BoolText? breakHash(
     var withoutBrackets = expandedText.replaceAll(RegExp(r'[\[\]]'), '');
     var hashValue = hashFunction(withoutBrackets).toLowerCase();
 
-    if (hashValue == input)
+    if (hashValue == input) {
       return withoutBrackets;
-    else
+    } else {
       return null;
+    }
   }, breakCondition: VariableStringExpanderBreakCondition.BREAK_ON_FIRST_FOUND, sendAsyncPort: sendAsyncPort);
 
   var results = expander.run();

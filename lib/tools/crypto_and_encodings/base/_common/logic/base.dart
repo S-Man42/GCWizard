@@ -103,7 +103,7 @@ String decode(String? input, String Function(String?) function) {
     try {
       output = function(input);
 
-      if (output.isEmpty && input.isNotEmpty) throw FormatException();
+      if (output.isEmpty && input.isNotEmpty) throw const FormatException();
 
       break;
     } on FormatException {
@@ -208,7 +208,9 @@ String decodeBase58(String? input) {
   String alphabet = '123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ';
   String num = '';
 
-  for (int i = 0; i < input.length; i++) if (BASE58_ALPHABET.contains(input[i])) num = num + input[i];
+  for (int i = 0; i < input.length; i++) {
+    if (BASE58_ALPHABET.contains(input[i])) num = num + input[i];
+  }
 
   int len = num.length;
   int multi = 1;
@@ -222,7 +224,9 @@ String decodeBase58(String? input) {
 }
 
 int _strPos(String text, String char) {
-  for (int i = 0; i < text.length; i++) if (text[i] == char) return i;
+  for (int i = 0; i < text.length; i++) {
+    if (text[i] == char) return i;
+  }
   return 0;
 }
 
@@ -364,9 +368,13 @@ String decodeBase91(String? d) {
 
   Map<int, int> b91_dectab = {};
 
-  for (int i = 0; i < 256; i++) b91_dectab[i] = -1;
+  for (int i = 0; i < 256; i++) {
+    b91_dectab[i] = -1;
+  }
 
-  for (int i = 0; i < 91; ++i) b91_dectab[_b91_enctab[i].codeUnitAt(0)] = i;
+  for (int i = 0; i < 91; ++i) {
+    b91_dectab[_b91_enctab[i].codeUnitAt(0)] = i;
+  }
 
   int dbq = 0;
   int dn = 0;
@@ -375,9 +383,9 @@ String decodeBase91(String? d) {
 
   for (int i = 0; i < d.length; ++i) {
     if (b91_dectab[d[i].codeUnitAt(0)] != -1) {
-      if (dv == -1)
+      if (dv == -1) {
         dv = b91_dectab[d[i].codeUnitAt(0)]!;
-      else {
+      } else {
         dv = dv + b91_dectab[d[i].codeUnitAt(0)]! * 91;
         dbq |= dv << dn;
         dn += (dv & 8191) > 88 ? 13 : 14;

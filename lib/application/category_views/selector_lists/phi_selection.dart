@@ -7,6 +7,8 @@ import 'package:gc_wizard/tools/science_and_technology/irrational_numbers/phi/wi
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 
 class PhiSelection extends GCWSelection {
+  const PhiSelection({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final List<GCWTool> _toolList = registeredTools.where((element) {
@@ -17,6 +19,6 @@ class PhiSelection extends GCWSelection {
       ].contains(className(element.tool));
     }).toList();
 
-    return Container(child: GCWToolList(toolList: _toolList));
+    return GCWToolList(toolList: _toolList);
   }
 }

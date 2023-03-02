@@ -1,3 +1,5 @@
+import 'package:collection/collection.dart';
+
 abstract class Unit {
   final  String name;
   final String symbol;
@@ -6,15 +8,19 @@ abstract class Unit {
   late double Function (double) fromReference;
 
   Unit(this.name, this.symbol, this.isReferenceUnit, this.toReference, this.fromReference) {
-    if (this.isReferenceUnit) {
+    if (isReferenceUnit) {
       toReference = (e) => e;
       fromReference = (e) => e;
     }
   }
 }
 
-Unit getUnitBySymbol(List<Unit> units, String symbol) {
-  return units.firstWhere((unit) => unit.symbol == symbol);
+T? getUnitBySymbol<T extends Unit>(List<T> units, String symbol) {
+  return units.firstWhereOrNull((unit) => unit.symbol == symbol);
+}
+
+T? getUnitByName<T extends Unit>(List<T> units, String name) {
+  return units.firstWhereOrNull((unit) => unit.name == name);
 }
 
 double convert(double value, Unit from, Unit to) {

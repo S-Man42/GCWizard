@@ -12,8 +12,8 @@ class TrifidOutput {
 TrifidOutput encryptTrifid(String? input, int blockSize, {PolybiosMode mode = PolybiosMode.AZ09, required String alphabet}) {
   if (input == null || input.isEmpty) return TrifidOutput('', '');
 
-  Map<String, String> EncodeMatrix = Map<String, String>();
-  Map<String, String> DecodeMatrix = Map<String, String>();
+  Map<String, String> EncodeMatrix = <String, String>{};
+  Map<String, String> DecodeMatrix = <String, String>{};
 
   List<String> line1 = <String>[];
   List<String> line2 = <String>[];
@@ -31,9 +31,11 @@ TrifidOutput encryptTrifid(String? input, int blockSize, {PolybiosMode mode = Po
       alphabet = alphabet_AZ.keys.toList().reversed.join() + '+';
       break;
     case PolybiosMode.CUSTOM:
-      if (alphabet.length != 27)
+      if (alphabet.length != 27) {
         return TrifidOutput('trifid_error_alphabet', '');
-      else if (incompleteCustomAlphabet(alphabet)) return TrifidOutput('trifid_invalid_alphabet', '');
+      } else if (incompleteCustomAlphabet(alphabet)) {
+        return TrifidOutput('trifid_invalid_alphabet', '');
+      }
   }
   EncodeMatrix = _buildEncodeMatrix(alphabet);
   DecodeMatrix = switchMapKeyValue(EncodeMatrix);
@@ -67,8 +69,8 @@ TrifidOutput decryptTrifid(String? input, int blockSize, {PolybiosMode mode = Po
   input = input.toUpperCase();
   alphabet = alphabet.toUpperCase();
 
-  Map<String, String> EncodeMatrix = Map<String, String>();
-  Map<String, String> DecodeMatrix = Map<String, String>();
+  Map<String, String> EncodeMatrix = <String, String>{};
+  Map<String, String> DecodeMatrix = <String, String>{};
   List<String> result = <String>[];
   String line1 = '';
   String line2 = '';
@@ -84,9 +86,11 @@ TrifidOutput decryptTrifid(String? input, int blockSize, {PolybiosMode mode = Po
       alphabet = alphabet_AZ.keys.toList().reversed.join() + '+';
       break;
     case PolybiosMode.CUSTOM:
-      if (alphabet.length != 27)
+      if (alphabet.length != 27) {
         return TrifidOutput('trifid_error_alphabet', '');
-      else if (incompleteCustomAlphabet(alphabet)) return TrifidOutput('trifid_invalid_alphabet', '');
+      } else if (incompleteCustomAlphabet(alphabet)) {
+        return TrifidOutput('trifid_invalid_alphabet', '');
+      }
   }
   EncodeMatrix = _buildEncodeMatrix(alphabet);
   DecodeMatrix = switchMapKeyValue(EncodeMatrix);
@@ -185,7 +189,7 @@ Map<String, String> _buildEncodeMatrix(String alphabet) {
   int x = 0;
   int y = 0;
   int z = 0;
-  Map<String, String> result = Map<String, String>();
+  Map<String, String> result = <String, String>{};
   for (int i = 0; i < alphabet.length; i++) {
     j = i % 9;
     z = (i ~/ 9) + 1;
@@ -199,10 +203,12 @@ Map<String, String> _buildEncodeMatrix(String alphabet) {
 bool incompleteCustomAlphabet(String alphabet) {
   String result = '';
   for (int j = 0; j < 26; j++) {
-    if (alphabet[j] != '+')
+    if (alphabet[j] != '+') {
       result = result + alphabet[j];
-    else {
-      for (int i = j + 1; i < 26; i++) result = result + alphabet[i];
+    } else {
+      for (int i = j + 1; i < 26; i++) {
+        result = result + alphabet[i];
+      }
       j = 26;
     }
   }
@@ -210,10 +216,12 @@ bool incompleteCustomAlphabet(String alphabet) {
   result = '';
   for (int i = 65; i < 92; i++) {
     for (int j = 0; j < alphabet.length; j++) {
-      if (alphabet[j] != String.fromCharCode(i))
+      if (alphabet[j] != String.fromCharCode(i)) {
         result = result + alphabet[j];
-      else {
-        for (int k = j + 1; k < alphabet.length; k++) result = result + alphabet[k];
+      } else {
+        for (int k = j + 1; k < alphabet.length; k++) {
+          result = result + alphabet[k];
+        }
         j = alphabet.length;
       }
     }

@@ -11,36 +11,35 @@ class _Kitchen {
   late List<String> error;
   late bool liquefyMissing;
 
-  _Kitchen(this.recipes, this.recipe, List<_Container>? mbowls, List<_Container>? bdishes,
-      String language) {
-    this.valid = true;
-    this.exception = false;
-    this.meal = <String>[];
-    this.error = <String>[];
-    this.liquefyMissing = true;
+  _Kitchen(this.recipes, this.recipe, List<_Container>? mbowls, List<_Container>? bdishes, String language) {
+    valid = true;
+    exception = false;
+    meal = <String>[];
+    error = <String>[];
+    liquefyMissing = true;
     //start with at least 1 mixing bowl.
     int maxbowl = 0;
     int maxdish = -1;
 
-    if (this.recipe.getMethods() != null) {
-      this.recipe.getMethods()!.forEach((m) {
+    if (recipe.getMethods() != null) {
+      for (var m in recipe.getMethods()!) {
         if (m.bakingdish != null && m.bakingdish! > maxdish) maxdish = m.bakingdish!;
         if (m.mixingbowl != null && m.mixingbowl! > maxbowl) maxbowl = m.mixingbowl!;
-      });
+      }
 
-      this.mixingbowls = List<_Container>.filled(mbowls == null ? maxbowl + 1 : max(maxbowl + 1, mbowls.length),
-          _Container(null));
+      mixingbowls =
+          List<_Container>.filled(mbowls == null ? maxbowl + 1 : max(maxbowl + 1, mbowls.length), _Container(null));
       if (mbowls != null) {
         for (int i = 0; i < mbowls.length; i++) {
-          this.mixingbowls[i] = _Container(mbowls[i]);
+          mixingbowls[i] = _Container(mbowls[i]);
         }
       }
 
-      this.bakingdishes = List<_Container>.filled(bdishes == null ? maxdish + 1 : max(maxdish + 1, bdishes.length),
-          _Container(null));
+      bakingdishes =
+          List<_Container>.filled(bdishes == null ? maxdish + 1 : max(maxdish + 1, bdishes.length), _Container(null));
       if (bdishes != null) {
         for (int i = 0; i < bdishes.length; i++) {
-          this.bakingdishes[i] = _Container(bdishes[i]);
+          bakingdishes[i] = _Container(bdishes[i]);
         }
       }
     } else {
@@ -54,7 +53,7 @@ class _Kitchen {
     }
   }
 
-  _Container? cook(String additionalIngredients, String  language, int depth) {
+  _Container? cook(String additionalIngredients, String language, int depth) {
     int ingredientIndex = 0;
     List<String> input = additionalIngredients.split(' ');
 
@@ -68,48 +67,28 @@ class _Kitchen {
     methodloop:
     while (i < (methods?.length ?? 0) && !deepfrozen && !exceptionArose) {
       _Method m = methods![i];
-      switch (m.type) {
-        case _CHEF_Method.Invalid:
+      if (m.type == _CHEF_Method.Invalid) {
+        valid = false;
+        error.addAll([
+          _CHEF_Messages[language]?['chef_error_syntax_method'] ?? '',
+          m.ingredient ?? '',
+          _CHEF_Messages[language]?['chef_error_syntax_method_unsupported'] ?? '',
+          ''
+        ]);
+        return null;
+      } else {
+        if (ingredients[m.ingredient] == null) {
           valid = false;
           error.addAll([
-            _CHEF_Messages[language]?['chef_error_syntax_method'] ?? '',
+            _CHEF_Messages[language]?['common_programming_error_runtime'] ?? '',
+            _CHEF_Messages[language]?['chef_error_runtime_method_step'] ?? '',
+            m.n.toString() + ' : ' + m.type.toString(),
+            _CHEF_Messages[language]?['chef_error_runtime_ingredient_not_found'] ?? '',
             m.ingredient ?? '',
-            _CHEF_Messages[language]?['chef_error_syntax_method_unsupported'] ?? '',
             ''
           ]);
           return null;
-        case _CHEF_Method.Take:
-        case _CHEF_Method.Nehmen:
-        case _CHEF_Method.Put:
-        case _CHEF_Method.Geben:
-        case _CHEF_Method.Fold:
-        case _CHEF_Method.Unterheben:
-        case _CHEF_Method.Add:
-        case _CHEF_Method.Dazugeben:
-        case _CHEF_Method.Remove:
-        case _CHEF_Method.Abschoepfen:
-        case _CHEF_Method.Combine:
-        case _CHEF_Method.Kombinieren:
-        case _CHEF_Method.Divide:
-        case _CHEF_Method.Teilen:
-        case _CHEF_Method.Liquefy:
-        case _CHEF_Method.Schmelzen:
-        case _CHEF_Method.StirInto:
-        case _CHEF_Method.ZutatRuehren:
-        case _CHEF_Method.Verb:
-        case _CHEF_Method.Wiederholen:
-          if (ingredients[m.ingredient] == null) {
-            valid = false;
-            error.addAll([
-              _CHEF_Messages[language]?['common_programming_error_runtime'] ?? '',
-              _CHEF_Messages[language]?['chef_error_runtime_method_step'] ?? '',
-              m.n.toString() + ' : ' + m.type.toString(),
-              _CHEF_Messages[language]?['chef_error_runtime_ingredient_not_found'] ?? '',
-              m.ingredient ?? '',
-              ''
-            ]);
-            return null;
-          }
+        }
       }
       switch (m.type) {
         case _CHEF_Method.Take:
@@ -224,7 +203,7 @@ class _Kitchen {
           ingredients.forEach((key, value) {
             if (value.getState() == _State.Dry) sum += value.getAmount()!;
           });
-          mixingbowls[m.mixingbowl!].push(new _Component(sum, _State.Dry, ''));
+          mixingbowls[m.mixingbowl!].push(_Component(sum, _State.Dry, ''));
           break;
 
         case _CHEF_Method.Liquefy:
@@ -314,8 +293,9 @@ class _Kitchen {
           if (ingredients[m.ingredient]!.getAmount()! <= 0) {
             i = end + 1;
             continue methodloop;
-          } else
+          } else {
             loops.insertAll(0, {_LoopData(i, end, m.verb!)});
+          }
           break;
 
         case _CHEF_Method.VerbUntil:
@@ -329,8 +309,9 @@ class _Kitchen {
             ]);
             return null;
           }
-          if (ingredients[m.ingredient] != null)
+          if (ingredients[m.ingredient] != null) {
             ingredients[m.ingredient]!.setAmount(ingredients[m.ingredient]!.getAmount()! - 1);
+          }
           i = loops[0].from;
           loops.removeAt(0);
           continue methodloop;
@@ -350,7 +331,6 @@ class _Kitchen {
             loops.removeAt(0);
             continue methodloop;
           }
-          break;
 
         case _CHEF_Method.Serve:
         case _CHEF_Method.Servieren:
@@ -373,9 +353,9 @@ class _Kitchen {
               //error.removeRange(0, error.length-1);
               error.addAll(k.error);
               continue methodloop;
-            } else if (con != null)
+            } else if (con != null) {
               mixingbowls[0].combine(con);
-            else {
+            } else {
               valid = false;
               error.addAll([
                 _CHEF_Messages[language]?['common_programming_error_runtime'] ?? '',
@@ -433,6 +413,7 @@ class _Kitchen {
       } // end of auxiliary recipe
       //return null;  // end of mainrecipe
     }
+    return null;
   } // cook
 
   bool _sameVerb(String? imp, String? verb, String language) {

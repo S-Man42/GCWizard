@@ -37,10 +37,11 @@ List<List<String>>? createTranspositionMatrix(String? input, TranspositionMatrix
       String chunk;
       if (input.length - i < countLettersPerCell) {
         chunk = input.substring(i);
-      } else if (input.length < maxInputLengthInCurrentCell)
+      } else if (input.length < maxInputLengthInCurrentCell) {
         chunk = input.substring(i, i + countLettersPerCell - maxInputLengthInCurrentCell + input.length);
-      else
+      } else {
         chunk = input.substring(i, i + countLettersPerCell);
+      }
 
       matrix[currentColumn][currentRow] = chunk;
 

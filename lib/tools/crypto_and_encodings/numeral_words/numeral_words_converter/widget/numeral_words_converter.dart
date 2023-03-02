@@ -14,6 +14,8 @@ import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 
 class NumeralWordsConverter extends StatefulWidget {
+  const NumeralWordsConverter({Key? key}) : super(key: key);
+
   @override
   NumeralWordsConverterState createState() => NumeralWordsConverterState();
 }
@@ -45,10 +47,8 @@ class NumeralWordsConverterState extends State<NumeralWordsConverter> {
 
   @override
   Widget build(BuildContext context) {
-    if (_LANGUAGES == null) {
-      _LANGUAGES = SplayTreeMap.from(
+    _LANGUAGES ??= SplayTreeMap.from(
           switchMapKeyValue(NUMERALWORDS_LANGUAGES_CONVERTER).map((key, value) => MapEntry(i18n(context, key), value)));
-    }
 
     return Column(
       children: <Widget>[
@@ -105,10 +105,11 @@ class NumeralWordsConverterState extends State<NumeralWordsConverter> {
     if (_currentMode == GCWSwitchPosition.right) {
       // decode
       output = decodeNumeralWordToNumber(_currentLanguage, removeAccents(_currentDecodeInput).toLowerCase());
-      if (output.error.isNotEmpty)
+      if (output.error.isNotEmpty) {
         return GCWDefaultOutput(
           child: i18n(context, output.error),
         );
+      }
     } else {
       // encode
       output = encodeNumberToNumeralWord(_currentLanguage, _currentNumber);

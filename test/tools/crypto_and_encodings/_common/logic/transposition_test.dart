@@ -149,12 +149,12 @@ void main() {
       {'input' : 'ABCDEFG', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 3, 'expectedOutput' : [['A', 'D', 'G'], ['B', 'E', null], ['C', 'F', null]]},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, fillMode: ${elem['fillMode']}, countColumns: ${elem['countColumns']}, countRows: ${elem['countRows']}, countLettersPerCell: ${elem['countLettersPerCell']}', () {
         var _actual = createTranspositionMatrix(elem['input'] as String?, elem['fillMode'] as TranspositionMatrixFillMode, countRows: elem['countRows'] as int?, countColumns: elem['countColumns'] as int?, countLettersPerCell: elem['countLettersPerCell'] as int);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Transposition.encryptTransposition:", () {
@@ -214,12 +214,12 @@ void main() {
       {'input' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZab', 'countRows' : 3, 'countColumns': 4, 'countLettersPerCell': 3, 'expectedOutput' : 'ABCMNOYZaDEFPQRbGHISTUJKLVWX'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, countRows: ${elem['countRows']}, countColumns: ${elem['countColumns']}, countLettersPerCell: ${elem['countLettersPerCell']}', () {
         var _actual = encryptTransposition(elem['input'] as String?, countRows: elem['countRows'] as int?, countColumns: elem['countColumns'] as int?, countLettersPerCell: elem['countLettersPerCell'] as int);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Transposition.decryptTransposition:", () {
@@ -278,11 +278,11 @@ void main() {
       {'expectedOutput' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZab', 'countRows' : 3, 'countColumns': 4, 'countLettersPerCell': 3, 'input' : 'ABCMNOYZaDEFPQRbGHISTUJKLVWX'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, countRows: ${elem['countRows']}, countColumns: ${elem['countColumns']}, countLettersPerCell: ${elem['countLettersPerCell']}', () {
         var _actual = decryptTransposition(elem['input'] as String?, countRows: elem['countRows'] as int?, countColumns: elem['countColumns'] as int?, countLettersPerCell: elem['countLettersPerCell'] as int);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

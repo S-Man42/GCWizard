@@ -98,14 +98,14 @@ class SymbolTableExamplesSelectState extends State<SymbolTableExamplesSelect> {
             Expanded(
                 child: GCWButton(
               text: i18n(context, 'symboltablesexamples_selectall'),
-              margin: EdgeInsets.only(top: 5.0, bottom: 5.0),
+              margin: const EdgeInsets.only(top: 5.0, bottom: 5.0),
               onPressed: () {
                 setState(() {
-                  images.forEach((image) {
+                  for (var image in images) {
                     var data = image.values.first;
                     data.primarySelected = true;
                     selectedSymbolTables.add(_symbolKey(data.path));
-                  });
+                  }
                 });
               },
             )),
@@ -113,14 +113,14 @@ class SymbolTableExamplesSelectState extends State<SymbolTableExamplesSelect> {
             Expanded(
                 child: GCWButton(
               text: i18n(context, 'symboltablesexamples_deselectall'),
-              margin: EdgeInsets.only(top: 5.0, bottom: 5.0),
+              margin: const EdgeInsets.only(top: 5.0, bottom: 5.0),
               onPressed: () {
                 setState(() {
-                  images.forEach((image) {
+                  for (var image in images) {
                     var data = image.values.first;
                     data.primarySelected = false;
                     selectedSymbolTables = <String>[];
-                  });
+                  }
                 });
               },
             )),
@@ -144,7 +144,7 @@ class SymbolTableExamplesSelectState extends State<SymbolTableExamplesSelect> {
         )),
         GCWButton(
           text: i18n(context, 'symboltablesexamples_submitandnext'),
-          margin: EdgeInsets.only(top: 5.0, bottom: 5.0),
+          margin: const EdgeInsets.only(top: 5.0, bottom: 5.0),
           onPressed: () {
             if (selectedSymbolTables.length <= _ALERT_COUNT_SELECTIONS) {
               _openInSymbolSearch();

@@ -9,7 +9,7 @@ class _wordClass {
   int wordIndex;
   String text;
 
-  _wordClass(int this.sectionIndex, int this.rowIndex, int this.wordIndex, String this.text);
+  _wordClass(this.sectionIndex, this.rowIndex, this.wordIndex, this.text);
 }
 
 enum searchFormat {
@@ -101,7 +101,7 @@ String decodeFindWord(String? input, String? positions, searchFormat format,
   List<String> out = <String>[];
   int i = 0;
 
-  RegExp regExp = new RegExp("[0-9]{1,}");
+  RegExp regExp = RegExp("[0-9]{1,}");
   regExp.allMatches(positions).forEach((elem) {
     var value = int.tryParse(positions.substring(elem.start, elem.end));
     if (value != null) positionList.add(value);
@@ -123,75 +123,84 @@ String decodeFindWord(String? input, String? positions, searchFormat format,
   while (i < positionList.length) {
     switch (format) {
       case searchFormat.SectionRowWord:
-        if (i + 2 < positionList.length)
+        if (i + 2 < positionList.length) {
           out.add(_findWord(wordList, rowList, sectionList, format,
               section: positionList[i + 0],
               row: positionList[i + 1],
               word: positionList[i + 2],
               onlyFirstWordLetter: onlyFirstWordLetter));
+        }
         i += 3;
         break;
 
       case searchFormat.SectionCharacter:
-        if (i + 1 < positionList.length)
+        if (i + 1 < positionList.length) {
           out.add(_findWord(wordList, rowList, sectionList, format,
               section: positionList[i + 0], character: positionList[i + 1], onlyFirstWordLetter: false));
+        }
         i += 2;
         break;
 
       case searchFormat.RowWord:
-        if (i + 1 < positionList.length)
+        if (i + 1 < positionList.length) {
           out.add(_findWord(wordList, rowList, sectionList, format,
               row: positionList[i + 0], word: positionList[i + 1], onlyFirstWordLetter: onlyFirstWordLetter));
+        }
         i += 2;
         break;
 
       case searchFormat.Word:
-        if (i + 0 < positionList.length)
+        if (i + 0 < positionList.length) {
           out.add(_findWord(wordList, rowList, sectionList, format,
               word: positionList[i + 0], onlyFirstWordLetter: onlyFirstWordLetter));
+        }
         i += 1;
         break;
 
       case searchFormat.SectionRowWordCharacter:
-        if (i + 3 < positionList.length)
+        if (i + 3 < positionList.length) {
           out.add(_findWord(wordList, rowList, sectionList, format,
               section: positionList[i + 0],
               row: positionList[i + 1],
               word: positionList[i + 2],
               character: positionList[i + 3],
               onlyFirstWordLetter: false));
+        }
         i += 4;
         break;
 
       case searchFormat.RowWordCharacter:
-        if (i + 2 < positionList.length)
+        if (i + 2 < positionList.length) {
           out.add(_findWord(wordList, rowList, sectionList, format,
               row: positionList[i + 0],
               word: positionList[i + 1],
               character: positionList[i + 2],
               onlyFirstWordLetter: false));
+        }
         i += 3;
         break;
 
       case searchFormat.RowCharacter:
-        if (i + 1 < positionList.length)
+        if (i + 1 < positionList.length) {
           out.add(_findWord(wordList, rowList, sectionList, format,
               row: positionList[i + 0], character: positionList[i + 1], onlyFirstWordLetter: false));
+        }
         i += 2;
         break;
 
       case searchFormat.WordCharacter:
-        if (i + 1 < positionList.length)
+        if (i + 1 < positionList.length) {
           out.add(_findWord(wordList, rowList, sectionList, format,
               word: positionList[i + 0], character: positionList[i + 1], onlyFirstWordLetter: false));
+        }
         i += 2;
         break;
 
       case searchFormat.Character:
-        if (i + 0 < positionList.length)
+        if (i + 0 < positionList.length) {
           out.add(_findWord(wordList, rowList, sectionList, format,
               character: positionList[i + 0], onlyFirstWordLetter: false));
+        }
         i += 1;
         break;
     }
@@ -227,50 +236,56 @@ String encodeText(String? input, String? text, encodeOutFormat format,
   var sectionList = splittedResult.item2;
   var positionList = <Tuple2<_wordClass?, int>>[];
 
-  if (onlyFirstWordLetter)
-    wordList.forEach((element) {
+  if (onlyFirstWordLetter) {
+    for (var element in wordList) {
       if (element.text.isNotEmpty) element.text = element.text[0];
-    });
+    }
+  }
 
   text.split('').forEach((letter) {
-    if (format == encodeOutFormat.Character)
+    if (format == encodeOutFormat.Character) {
       positionList.add(_selectRandomLetterPosition(letter, sectionList));
-    else
+    } else {
       positionList.add(_selectRandomLetterPosition(letter, wordList));
+    }
   });
 
-  positionList.forEach((element) {
+  for (var element in positionList) {
     var e = element.item1;
     switch (format) {
       case encodeOutFormat.SectionRowWordCharacter:
-        if (e == null)
+        if (e == null) {
           out += _createOutElement(true, -1, -1, -1, -1);
-        else
+        } else {
           out += _createOutElement(false, e.sectionIndex, e.rowIndex, e.wordIndex, element.item2);
+        }
         break;
 
       case encodeOutFormat.RowWordCharacter:
-        if (e == null)
+        if (e == null) {
           out += _createOutElement(true, 0, -1, -1, -1);
-        else
+        } else {
           out += _createOutElement(false, 0, _findRowIndex(e, wordList), e.wordIndex, element.item2);
+        }
         break;
 
       case encodeOutFormat.WordCharacter:
-        if (e == null)
+        if (e == null) {
           out += _createOutElement(true, 0, 0, -1, -1);
-        else
+        } else {
           out += _createOutElement(false, 0, 0, _findWordIndex(e, wordList), element.item2);
+        }
         break;
 
       case encodeOutFormat.Character:
-        if (e == null)
+        if (e == null) {
           out += _createOutElement(true, 0, 0, 0, -1);
-        else
+        } else {
           out += _createOutElement(false, 0, 0, 0, _globalCharacterPosition(e, element.item2, sectionList));
+        }
         break;
     }
-  });
+  }
 
   return out.trim();
 }
@@ -301,9 +316,11 @@ int _findRowIndex(_wordClass word, List<_wordClass> wordList) {
   var sectionIndex = 0;
 
   for (var item in wordList) {
-    if (sectionIndex != item.sectionIndex)
+    if (sectionIndex != item.sectionIndex) {
       rowIndexTmp += 1;
-    else if (lastRowIndex != item.rowIndex) rowIndexTmp += 1;
+    } else if (lastRowIndex != item.rowIndex) {
+      rowIndexTmp += 1;
+    }
 
     lastRowIndex = item.rowIndex;
     sectionIndex = item.sectionIndex;
@@ -369,15 +386,14 @@ String _findWord(List<_wordClass> wordList, List<_wordClass> rowList, List<_word
       return _filterCharacter(character, sectionList);
   }
 
-  return "";
 }
 
 List<_wordClass> _filterSection(int index, List<_wordClass> wordList) {
   var list = <_wordClass>[];
 
-  wordList.forEach((item) {
+  for (var item in wordList) {
     if (item.sectionIndex == index) list.add(item);
-  });
+  }
 
   return list;
 }
@@ -388,16 +404,18 @@ List<_wordClass> _filterRow(int index, List<_wordClass> wordList) {
   var lastRowIndex = 0;
   var sectionIndex = 0;
 
-  wordList.forEach((item) {
-    if (sectionIndex != item.sectionIndex)
+  for (var item in wordList) {
+    if (sectionIndex != item.sectionIndex) {
       rowIndex += 1;
-    else if (lastRowIndex != item.rowIndex) rowIndex += 1;
+    } else if (lastRowIndex != item.rowIndex) {
+      rowIndex += 1;
+    }
 
     lastRowIndex = item.rowIndex;
     sectionIndex = item.sectionIndex;
 
     if (rowIndex == index) list.add(item);
-  });
+  }
 
   return list;
 }
@@ -408,21 +426,22 @@ _wordClass _filterWord(int index, List<_wordClass> wordList, bool onlyFirstWordL
     return wordList[index - 1];
   }
 
-  return new _wordClass(-1, -1, -1, "");
+  return _wordClass(-1, -1, -1, "");
 }
 
 _wordClass _onlyFirstWordLetter(_wordClass wordClass) {
-  if (wordClass.text.isNotEmpty)
-    return new _wordClass(wordClass.sectionIndex, wordClass.rowIndex, wordClass.rowIndex, wordClass.text[0]);
-  return new _wordClass(-1, -1, -1, "");
+  if (wordClass.text.isNotEmpty) {
+    return _wordClass(wordClass.sectionIndex, wordClass.rowIndex, wordClass.rowIndex, wordClass.text[0]);
+  }
+  return _wordClass(-1, -1, -1, "");
 }
 
 String _filterCharacter(int index, List<_wordClass> wordList) {
   var text = "";
 
-  wordList.forEach((item) {
+  for (var item in wordList) {
     text += item.text;
-  });
+  }
 
   if (index > 0 && index <= text.length) return text[index - 1];
 
@@ -450,11 +469,11 @@ Tuple2<_wordClass?, int> _selectRandomLetterPosition(String letter, List<_wordCl
 
   var regexp = RegExp(letter, caseSensitive: false);
 
-  wordList.forEach((element) {
+  for (var element in wordList) {
     letterCountTmp = regexp.allMatches(element.text).length;
     if (letterCountTmp > 0) letterWordList.add(element);
     letterCount += letterCountTmp;
-  });
+  }
 
   if (letterCount > 0) {
     var randomIndex = Random().nextInt(letterCount);
@@ -490,17 +509,17 @@ Tuple3<List<_wordClass>, List<_wordClass>, List<_wordClass>> _wordList(String in
     sectionIndex += 1;
     rowIndex = 0;
     wordIndex = 0;
-    sectionList.add(new _wordClass(sectionIndex, rowIndex, wordIndex, section));
+    sectionList.add(_wordClass(sectionIndex, rowIndex, wordIndex, section));
 
     section.split(RegExp(r"\n")).forEach((row) {
       rowIndex += 1;
       wordIndex = 0;
-      rowList.add(new _wordClass(sectionIndex, rowIndex, wordIndex, row));
+      rowList.add(_wordClass(sectionIndex, rowIndex, wordIndex, row));
 
       row.split(RegExp(r"[\s]|[\.]|[,]|[!]|[\?]|[\\]")).forEach((word) {
         if (word.isNotEmpty) {
           wordIndex += 1;
-          wordList.add(new _wordClass(sectionIndex, rowIndex, wordIndex, word));
+          wordList.add(_wordClass(sectionIndex, rowIndex, wordIndex, word));
         }
       });
     });
@@ -538,7 +557,9 @@ String _removeDiacritics(String input) {
   var copy = removeDiacritics(input);
 
   if (input.length != copy.length) return copy;
-  for (var i = input.length - 1; i >= 0; i--) if (input[i] != copy[i]) input = input.replaceRange(i, i + 1, '');
+  for (var i = input.length - 1; i >= 0; i--) {
+    if (input[i] != copy[i]) input = input.replaceRange(i, i + 1, '');
+  }
 
   return input;
 }

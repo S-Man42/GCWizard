@@ -5,7 +5,7 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 abstract class AbstractRotation extends StatefulWidget {
   final String Function(String) rotate;
 
-  AbstractRotation({Key? key, required this.rotate}) : super(key: key);
+  const AbstractRotation({Key? key, required this.rotate}) : super(key: key);
 
   @override
   AbstractRotationState createState() => AbstractRotationState();

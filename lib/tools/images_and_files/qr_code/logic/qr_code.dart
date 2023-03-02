@@ -40,8 +40,9 @@ List<String>? _createQrCode(qr.QrCode qrCode) {
 
     for (int y = 0; y < qrCode.moduleCount; y++) {
       var line = '';
-      for (int x = 0; x < qrCode.moduleCount; x++)
-         line += (qrImage.isDark(y, x)) ? '1' : '0';
+      for (int x = 0; x < qrCode.moduleCount; x++) {
+        line += (qrImage.isDark(y, x)) ? '1' : '0';
+      }
       lines.add(line);
     }
 

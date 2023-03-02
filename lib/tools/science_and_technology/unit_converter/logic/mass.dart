@@ -10,8 +10,8 @@ class Mass extends Unit {
     bool isReference = false,
     required double inGram,
   }) : super(name, symbol, isReference, (e) => e * inGram, (e) => e / inGram) {
-    toGram = this.toReference;
-    fromGram = this.fromReference;
+    toGram = toReference;
+    fromGram = fromReference;
   }
 }
 
@@ -58,7 +58,7 @@ final MASS_FARBLINTZ = Mass(name: 'common_unit_mass_farb_name', symbol: 'fb', in
 
 final MASS_FURBLINTZ = Mass(name: 'common_unit_mass_furb_name', symbol: 'Fb', inGram: 1000 * 1000 * 36.42538631);
 
-final List<Unit> baseMasses = [
+final List<Mass> baseMasses = [
   MASS_GRAM,
   MASS_TON,
   MASS_GRAIN,

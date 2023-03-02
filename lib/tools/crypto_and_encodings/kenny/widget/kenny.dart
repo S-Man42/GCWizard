@@ -8,6 +8,8 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/kenny/logic/kenny.dart';
 
 class Kenny extends StatefulWidget {
+  const Kenny({Key? key}) : super(key: key);
+
   @override
   KennyState createState() => KennyState();
 }
@@ -63,6 +65,7 @@ class KennyState extends State<Kenny> {
           children: <Widget>[
             Expanded(
               child: Container(
+                  padding: const EdgeInsets.only(left: 6, right: 6),
                   child: GCWTextField(
                     controller: _mController,
                     onChanged: (text) {
@@ -70,11 +73,11 @@ class KennyState extends State<Kenny> {
                         _currentM = text;
                       });
                     },
-                  ),
-                  padding: EdgeInsets.only(left: 6, right: 6)),
+                  )),
             ),
             Expanded(
               child: Container(
+                  padding: const EdgeInsets.only(left: 6, right: 6),
                   child: GCWTextField(
                     controller: _pController,
                     onChanged: (text) {
@@ -82,11 +85,11 @@ class KennyState extends State<Kenny> {
                         _currentP = text;
                       });
                     },
-                  ),
-                  padding: EdgeInsets.only(left: 6, right: 6)),
+                  )),
             ),
             Expanded(
               child: Container(
+                  padding: const EdgeInsets.only(left: 6, right: 6),
                   child: GCWTextField(
                     controller: _fController,
                     onChanged: (text) {
@@ -94,8 +97,7 @@ class KennyState extends State<Kenny> {
                         _currentF = text;
                       });
                     },
-                  ),
-                  padding: EdgeInsets.only(left: 6, right: 6)),
+                  )),
             ),
           ],
         ),

@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
-import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_double_textfield.dart';
 import 'package:gc_wizard/common_widgets/units/gcw_unit_dropdown.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/default_units_getter.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/length.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/constants.dart';
-import 'package:prefs/prefs.dart';
 
 class GCWDistance extends StatefulWidget {
   final void Function(double) onChanged;
@@ -45,7 +44,7 @@ class _GCWDistanceState extends State<GCWDistance> {
       _controller = TextEditingController(text: _currentInput.text);
     }
 
-    _currentLengthUnit = (widget.unit ?? getUnitBySymbol(allLengths(), Prefs.getString(PREFERENCE_DEFAULT_LENGTH_UNIT))) as Length;
+    _currentLengthUnit = widget.unit ?? defaultLengthUnit;
   }
 
   @override
@@ -61,6 +60,7 @@ class _GCWDistanceState extends State<GCWDistance> {
         Expanded(
             flex: 3,
             child: Container(
+                padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
                 child: GCWDoubleTextField(
                   hintText: widget.hintText ?? i18n(context, 'common_distance_hint'),
                   min: widget.allowNegativeValues ? null : 0.0,
@@ -71,8 +71,7 @@ class _GCWDistanceState extends State<GCWDistance> {
                       _setCurrentValueAndEmitOnChange();
                     });
                   },
-                ),
-                padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN))),
+                ))),
         Expanded(
           flex: 1,
           child: GCWUnitDropDown(

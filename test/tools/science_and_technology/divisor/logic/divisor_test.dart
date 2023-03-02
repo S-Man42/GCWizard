@@ -12,7 +12,7 @@ void main() {
       {'input' : 24, 'expectedOutput' : [1, 2, 3, 4, 6, 8, 12, 24]},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = divisors(elem['input'] as int);
         expect(_actual, elem['expectedOutput']);
@@ -21,7 +21,7 @@ void main() {
           expect(_actual[i], (elem['expectedOutput'] as List<int>)[i]);
         }
       });
-    });
+    }
   });
 
 }

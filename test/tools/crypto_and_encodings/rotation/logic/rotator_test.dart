@@ -45,14 +45,14 @@ void main() {
       {'alphabet': 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'input' : 'ABMNYZ', 'key' : null, 'removeUnknownCharacters' : false, 'ignoreCase': true, 'expectedOutput' : 'ABMNYZ'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('alphabet: ${elem['alphabet']}, input: ${elem['input']}, key: ${elem['key']}, removeUnknownCharacters: ${elem['removeUnknownCharacters']}, ignoreCase: ${elem['ignoreCase']}', () {
         var _rotator = Rotator(alphabet: elem['alphabet'] as String?);
 
         var _actual = _rotator.rotate(elem['input'] as String?, elem['key'] as int?, removeUnknownCharacters: elem['removeUnknownCharacters'] as bool, ignoreCase: elem['ignoreCase'] as bool);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   /****************************/
@@ -69,12 +69,12 @@ void main() {
 
     var _rotator = Rotator();
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = _rotator.rot13(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   /****************************/
@@ -90,12 +90,12 @@ void main() {
 
     var _rotator = Rotator();
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = _rotator.rot5(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   /****************************/
@@ -113,12 +113,12 @@ void main() {
 
     var _rotator = Rotator();
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = _rotator.rot18(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   /****************************/
@@ -142,11 +142,11 @@ void main() {
 
     var _rotator = Rotator();
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = _rotator.rot47(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

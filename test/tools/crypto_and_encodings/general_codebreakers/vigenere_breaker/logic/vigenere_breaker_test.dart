@@ -45,14 +45,14 @@ void main() {
       {'input' : text24, 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'ignoreNonLetters' : false, 'alphabet' : VigenereBreakerAlphabet.FRENCH, 'keyLengthMin' : 3, 'keyLengthMax' : 30, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : 'GCWIZARD', 'expectedOutput' : text25},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () async {
         var _actual = break_cipher(elem['input'] as String?, elem['VigenereBreakerType'] as VigenereBreakerType, elem['alphabet'] as VigenereBreakerAlphabet, elem['keyLengthMin'] as int, elem['keyLengthMax'] as int, elem['ignoreNonLetters'] as bool, counterFunction: () => {});
         expect(_actual.plaintext, elem['expectedOutput']);
         expect(_actual.key, elem['key']);
         expect(_actual.errorCode, elem['errorCode']);
       });
-    });
+    }
 
   });
 
@@ -76,11 +76,11 @@ void main() {
       {'input' : 'nder', 'alphabet' : VigenereBreakerAlphabet.GERMAN, 'expectedOutput' : 96.20213333333334},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = calc_fitnessBigrams(elem['input'] as String?, getBigrams(elem['alphabet'] as VigenereBreakerAlphabet));
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

@@ -12,6 +12,8 @@ import 'package:gc_wizard/tools/crypto_and_encodings/tomtom/logic/tomtom.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/text_widget_utils.dart';
 
 class TomTom extends StatefulWidget {
+  const TomTom({Key? key}) : super(key: key);
+
   @override
   TomTomState createState() => TomTomState();
 }
@@ -66,6 +68,7 @@ class TomTomState extends State<TomTom> {
           children: <Widget>[
             Expanded(
               child: Container(
+                  padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
                   child: GCWTextField(
                     controller: _aController,
                     onChanged: (text) {
@@ -73,11 +76,13 @@ class TomTomState extends State<TomTom> {
                         _currentA = text;
                       });
                     },
-                  ),
-                  padding: EdgeInsets.only(right: DEFAULT_MARGIN)),
+                  )),
             ),
             Expanded(
               child: Container(
+                  padding: const EdgeInsets.only(
+                    left: DEFAULT_MARGIN,
+                  ),
                   child: GCWTextField(
                     controller: _bController,
                     onChanged: (text) {
@@ -85,9 +90,6 @@ class TomTomState extends State<TomTom> {
                         _currentB = text;
                       });
                     },
-                  ),
-                  padding: EdgeInsets.only(
-                    left: DEFAULT_MARGIN,
                   )),
             ),
           ],

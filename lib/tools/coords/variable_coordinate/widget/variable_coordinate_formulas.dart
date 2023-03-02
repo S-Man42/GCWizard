@@ -13,16 +13,18 @@ import 'package:gc_wizard/tools/coords/variable_coordinate/persistence/model.dar
 import 'package:gc_wizard/tools/coords/variable_coordinate/widget/variable_coordinate.dart';
 
 class VariableCoordinateFormulas extends StatefulWidget {
+  const VariableCoordinateFormulas({Key? key}) : super(key: key);
+
   @override
   VariableCoordinateFormulasState createState() => VariableCoordinateFormulasState();
 }
 
 class VariableCoordinateFormulasState extends State<VariableCoordinateFormulas> {
-  var _newFormulaController;
-  var _editFormulaController;
+  late TextEditingController _newFormulaController;
+  late TextEditingController _editFormulaController;
   var _currentNewName = '';
   var _currentEditedName = '';
-  var _currentEditId;
+  int? _currentEditId;
 
   @override
   void initState() {
@@ -50,6 +52,9 @@ class VariableCoordinateFormulasState extends State<VariableCoordinateFormulas> 
           children: <Widget>[
             Expanded(
               child: Padding(
+                padding: const EdgeInsets.only(
+                  right: 2,
+                ),
                 child: GCWTextField(
                   hintText: i18n(context, 'coords_variablecoordinate_newformula_hint'),
                   controller: _newFormulaController,
@@ -58,9 +63,6 @@ class VariableCoordinateFormulasState extends State<VariableCoordinateFormulas> 
                       _currentNewName = text;
                     });
                   },
-                ),
-                padding: EdgeInsets.only(
-                  right: 2,
                 ),
               ),
             ),
@@ -93,7 +95,9 @@ class VariableCoordinateFormulasState extends State<VariableCoordinateFormulas> 
   }
 
   void _removeFormula(Formula formula) {
-    deleteFormula(formula.id);
+    if (formula.id != null) {
+      deleteFormula(formula.id!);
+    }
   }
 
   Column _buildFormulaList(BuildContext context) {
@@ -107,7 +111,7 @@ class VariableCoordinateFormulasState extends State<VariableCoordinateFormulas> 
               '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title', useDefaultLanguage: true)}',
           id: 'coords_variablecoordinate');
 
-      Future _navigateToSubPage(BuildContext context) async {
+      Future<void> _navigateToSubPage(BuildContext context) async {
         Navigator.push(context, NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => formulaTool)).whenComplete(() {
           setState(() {});
         });
@@ -119,8 +123,12 @@ class VariableCoordinateFormulasState extends State<VariableCoordinateFormulas> 
           child: Row(
             children: <Widget>[
               Expanded(
+                flex: 1,
                 child: _currentEditId == formula.id
                     ? Padding(
+                        padding: const EdgeInsets.only(
+                          right: 2,
+                        ),
                         child: GCWTextField(
                           controller: _editFormulaController,
                           autofocus: true,
@@ -130,12 +138,8 @@ class VariableCoordinateFormulasState extends State<VariableCoordinateFormulas> 
                             });
                           },
                         ),
-                        padding: EdgeInsets.only(
-                          right: 2,
-                        ),
                       )
-                    : IgnorePointer(child: GCWText(text: '${formula.name}')),
-                flex: 1,
+                    : IgnorePointer(child: GCWText(text: formula.name)),
               ),
               _currentEditId == formula.id
                   ? GCWIconButton(

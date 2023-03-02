@@ -74,7 +74,7 @@ class GCWTextExportState extends State<GCWTextExport> {
   Widget build(BuildContext context) {
     if (_currentMode == TextExportMode.QR && _qrImageData == null) _buildQRCode();
 
-    return Container(
+    return SizedBox(
         width: 300,
         height: 360,
         child: Column(
@@ -123,7 +123,7 @@ class GCWTextExportState extends State<GCWTextExport> {
   }
 }
 
-void exportFile(String text, TextExportMode mode, BuildContext context) async {
+Future<void> exportFile(String text, TextExportMode mode, BuildContext context) async {
   if (mode == TextExportMode.TEXT) {
     saveStringToFile(context, text, buildFileNameWithDate('txt_', FileType.TXT)).then((value) {
       if (value == false) return;
@@ -134,9 +134,10 @@ void exportFile(String text, TextExportMode mode, BuildContext context) async {
     var qrCode = generateBarCode(text);
     if (qrCode == null) return;
     input2Image(qrCode).then((data) async {
-      var value = await saveByteDataToFile(context, data, buildFileNameWithDate('img_', FileType.PNG));
+      saveByteDataToFile(context, data, buildFileNameWithDate('img_', FileType.PNG)).then((value){
+        if (value) showExportedFileDialog(context, contentWidget: imageContent(context, data));
+      });
 
-      if (value) showExportedFileDialog(context, contentWidget: imageContent(context, data));
     });
   }
 }

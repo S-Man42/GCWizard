@@ -66,8 +66,12 @@ String decryptMexicanArmyCipherWheel(String? input, List<int> keys) {
       number -= keys[3] - 1;
     }
 
-    while (number > 26) number -= 26;
-    while (number < 1) number += 26;
+    while (number > 26) {
+      number -= 26;
+    }
+    while (number < 1) {
+      number += 26;
+    }
 
     output += alphabet_AZIndexes[number] ?? '';
     i += 2;

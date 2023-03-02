@@ -21,9 +21,11 @@ class MultiDecoderToolEsotericLanguageMalbolge extends AbstractMultiDecoderTool 
                 var outputList = interpretMalbolge(input, key, false);
                 String output = '';
                 for (var element in outputList.output) {
-                  if (element == 'common_programming_error_invalid_program')
+                  if (element == 'common_programming_error_invalid_program') {
                     return null;
-                  else if (!element.startsWith('malbolge_')) output = output + element + '\n';
+                  } else if (!element.startsWith('malbolge_')) {
+                    output = output + element + '\n';
+                  }
 
 
                   output = output.trim();

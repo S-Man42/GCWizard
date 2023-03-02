@@ -94,10 +94,11 @@ abstract class BaseCoordinateWithSubtypes extends BaseCoordinate {
     latitude = latitude ?? defaultCoordinate.latitude;
     longitude = longitude ?? defaultCoordinate.longitude;
 
-    if (!isSubtypeOfCoordinateFormat(format.type, subtypeKey))
+    if (!isSubtypeOfCoordinateFormat(format.type, subtypeKey)) {
       throw Exception('$subtypeKey is not a valid subtype of ${format.type}');
-    else
+    } else {
       format.subtype = subtypeKey;
+    }
   }
 }
 
@@ -110,7 +111,7 @@ class DEC extends BaseCoordinate {
   }
 
   @override
-  LatLng? toLatLng() {
+  LatLng toLatLng() {
     return decToLatLon(this);
   }
 
@@ -222,7 +223,7 @@ class DMM extends BaseCoordinate {
   }
 
   @override
-  LatLng? toLatLng() {
+  LatLng toLatLng() {
     return dmmToLatLon(this);
   }
 
@@ -338,7 +339,7 @@ class DMS extends BaseCoordinate {
   }
 
   @override
-  LatLng? toLatLng() {
+  LatLng toLatLng() {
     return dmsToLatLon(this);
   }
 
@@ -376,8 +377,8 @@ class UTMREF extends BaseCoordinate {
   }
 
   @override
-  LatLng? toLatLng({Ellipsoid? ells}) {
-    if (ells == null) ells = defaultEllipsoid;
+  LatLng toLatLng({Ellipsoid? ells}) {
+    ells ??= defaultEllipsoid;
     return UTMREFtoLatLon(this, ells);
   }
 
@@ -415,8 +416,8 @@ class MGRS extends BaseCoordinate {
   }
 
   @override
-  LatLng? toLatLng({Ellipsoid? ells}) {
-    if (ells == null) ells = defaultEllipsoid;
+  LatLng toLatLng({Ellipsoid? ells}) {
+    ells ??= defaultEllipsoid;
     return mgrsToLatLon(this, ells);
   }
 
@@ -443,8 +444,8 @@ class SwissGrid extends BaseCoordinate {
   }
 
   @override
-  LatLng? toLatLng({Ellipsoid? ells}) {
-    if (ells == null) ells = defaultEllipsoid;
+  LatLng toLatLng({Ellipsoid? ells}) {
+    ells ??= defaultEllipsoid;
     return swissGridToLatLon(this, ells);
   }
 
@@ -469,8 +470,8 @@ class SwissGridPlus extends SwissGrid {
   }
 
   @override
-  LatLng? toLatLng({Ellipsoid? ells}) {
-    if (ells == null) ells = defaultEllipsoid;
+  LatLng toLatLng({Ellipsoid? ells}) {
+    ells ??= defaultEllipsoid;
     return swissGridPlusToLatLon(this, ells);
   }
 
@@ -492,7 +493,7 @@ class DutchGrid extends BaseCoordinate {
   }
 
   @override
-  LatLng? toLatLng() {
+  LatLng toLatLng() {
     return dutchGridToLatLon(this);
   }
 
@@ -514,28 +515,30 @@ class GaussKrueger extends BaseCoordinateWithSubtypes {
   double easting;
   double northing;
 
-  static final String _ERROR_INVALID_SUBTYPE = 'No valid GaussKrueger subtype given.';
+  static const String _ERROR_INVALID_SUBTYPE = 'No valid GaussKrueger subtype given.';
 
   GaussKrueger(CoordinateFormatKey subtypeKey, this.easting, this.northing) : super(subtypeKey) {
     format = CoordinateFormat(CoordinateFormatKey.GAUSS_KRUEGER);
   }
 
   @override
-  LatLng? toLatLng({Ellipsoid? ells}) {
-    if (ells == null) ells = defaultEllipsoid;
+  LatLng toLatLng({Ellipsoid? ells}) {
+    ells ??= defaultEllipsoid;
     return gaussKruegerToLatLon(this, ells);
   }
 
   static GaussKrueger fromLatLon(LatLng coord, CoordinateFormatKey subtype, Ellipsoid ells) {
-    if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.GAUSS_KRUEGER, subtype))
+    if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.GAUSS_KRUEGER, subtype)) {
       throw Exception(_ERROR_INVALID_SUBTYPE);
+    }
 
     return latLonToGaussKrueger(coord, subtype, ells);
   }
 
   static GaussKrueger? parse(String input, {CoordinateFormatKey subtype = defaultGaussKruegerType}) {
-    if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.GAUSS_KRUEGER, subtype))
+    if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.GAUSS_KRUEGER, subtype)) {
       throw Exception(_ERROR_INVALID_SUBTYPE);
+    }
 
     return parseGaussKrueger(input, gaussKruegerCode: subtype);
   }
@@ -550,28 +553,30 @@ class Lambert extends BaseCoordinateWithSubtypes {
   double easting;
   double northing;
 
-  static final String _ERROR_INVALID_SUBTYPE = 'No valid Lambert subtype given.';
+  static const String _ERROR_INVALID_SUBTYPE = 'No valid Lambert subtype given.';
 
   Lambert(CoordinateFormatKey subtypeKey, this.easting, this.northing) : super(subtypeKey) {
     format = CoordinateFormat(CoordinateFormatKey.LAMBERT);
   }
 
   @override
-  LatLng? toLatLng({Ellipsoid? ells}) {
-    if (ells == null) ells = defaultEllipsoid;
+  LatLng toLatLng({Ellipsoid? ells}) {
+    ells ??= defaultEllipsoid;
     return lambertToLatLon(this, ells);
   }
 
   static Lambert fromLatLon(LatLng coord, CoordinateFormatKey subtype, Ellipsoid ells) {
-    if (isSubtypeOfCoordinateFormat(CoordinateFormatKey.LAMBERT, subtype))
+    if (isSubtypeOfCoordinateFormat(CoordinateFormatKey.LAMBERT, subtype)) {
       throw Exception(_ERROR_INVALID_SUBTYPE);
+    }
 
     return latLonToLambert(coord, subtype, ells);
   }
 
   static Lambert? parse(String input, {CoordinateFormatKey subtype = defaultLambertType}) {
-    if (isSubtypeOfCoordinateFormat(CoordinateFormatKey.LAMBERT, subtype))
+    if (isSubtypeOfCoordinateFormat(CoordinateFormatKey.LAMBERT, subtype)) {
       throw Exception(_ERROR_INVALID_SUBTYPE);
+    }
 
     return parseLambert(input, subtype: subtype);
   }
@@ -591,8 +596,8 @@ class Mercator extends BaseCoordinate {
   }
 
   @override
-  LatLng? toLatLng({Ellipsoid? ells}) {
-    if (ells == null) ells = defaultEllipsoid;
+  LatLng toLatLng({Ellipsoid? ells}) {
+    ells ??= defaultEllipsoid;
     return mercatorToLatLon(this, ells);
   }
 
@@ -619,7 +624,7 @@ class NaturalAreaCode extends BaseCoordinate {
   }
 
   @override
-  LatLng? toLatLng() {
+  LatLng toLatLng() {
     return naturalAreaCodeToLatLon(this);
   }
 
@@ -641,27 +646,29 @@ class SlippyMap extends BaseCoordinateWithSubtypes {
   double x;
   double y;
 
-  static final String _ERROR_INVALID_SUBTYPE = 'No valid SlippyMap subtype given.';
+  static const String _ERROR_INVALID_SUBTYPE = 'No valid SlippyMap subtype given.';
 
   SlippyMap(this.x, this.y, CoordinateFormatKey subtypeKey) : super(subtypeKey) {
     format = CoordinateFormat(CoordinateFormatKey.SLIPPY_MAP);
   }
 
   @override
-  LatLng? toLatLng() {
+  LatLng toLatLng() {
     return slippyMapToLatLon(this);
   }
 
   static SlippyMap fromLatLon(LatLng coord, CoordinateFormatKey subtype) {
-    if (isSubtypeOfCoordinateFormat(CoordinateFormatKey.SLIPPY_MAP, subtype))
+    if (isSubtypeOfCoordinateFormat(CoordinateFormatKey.SLIPPY_MAP, subtype)) {
       throw Exception(_ERROR_INVALID_SUBTYPE);
+    }
 
     return latLonToSlippyMap(coord, subtype);
   }
 
   static SlippyMap? parse(String input, {CoordinateFormatKey subtype = defaultSlippyMapType}) {
-    if (isSubtypeOfCoordinateFormat(CoordinateFormatKey.SLIPPY_MAP, subtype))
+    if (isSubtypeOfCoordinateFormat(CoordinateFormatKey.SLIPPY_MAP, subtype)) {
       throw Exception(_ERROR_INVALID_SUBTYPE);
+    }
 
     return parseSlippyMap(input, subtype: subtype);
   }
@@ -680,7 +687,7 @@ class ReverseWherigoWaldmeister extends BaseCoordinate {
   }
 
   @override
-  LatLng? toLatLng() {
+  LatLng toLatLng() {
     return reverseWIGWaldmeisterToLatLon(this);
   }
 
@@ -706,7 +713,7 @@ class ReverseWherigoDay1976 extends BaseCoordinate {
   }
 
   @override
-  LatLng? toLatLng() {
+  LatLng toLatLng() {
     return reverseWIGDay1976ToLatLon(this);
   }
 
@@ -732,8 +739,8 @@ class XYZ extends BaseCoordinate {
   }
 
   @override
-  LatLng? toLatLng({Ellipsoid? ells}) {
-    if (ells == null) ells = defaultEllipsoid;
+  LatLng toLatLng({Ellipsoid? ells}) {
+    ells ??= defaultEllipsoid;
     return xyzToLatLon(this, ells);
   }
 
@@ -916,7 +923,7 @@ class Quadtree extends BaseCoordinate {
   }
 
   @override
-  LatLng? toLatLng() {
+  LatLng toLatLng() {
     return quadtreeToLatLon(this);
   }
 
@@ -936,12 +943,12 @@ class Quadtree extends BaseCoordinate {
 
 BaseCoordinate buildCoordinatesByFormat(CoordinateFormat format, LatLng coords, [Ellipsoid? ellipsoid]) {
   if (isCoordinateFormatWithSubtype(format.type)) {
-    if (format.subtype == null || !isSubtypeOfCoordinateFormat(format.type, format.subtype!))
-    format.subtype = defaultCoordinateFormatSubtypeForFormat(format.type);
+    if (format.subtype == null || !isSubtypeOfCoordinateFormat(format.type, format.subtype!)) {
+      format.subtype = defaultCoordinateFormatSubtypeForFormat(format.type);
+    }
   }
   
-  if (ellipsoid == null)
-    ellipsoid = defaultEllipsoid;
+  ellipsoid ??= defaultEllipsoid;
 
   switch (format.type) {
     case CoordinateFormatKey.DEC:

@@ -19,6 +19,8 @@ import 'package:gc_wizard/tools/science_and_technology/telegraphs/prussia_telegr
 part 'package:gc_wizard/tools/science_and_technology/telegraphs/prussia_telegraph/widget/prussia_telegraph_segment_display.dart';
 
 class PrussiaTelegraph extends StatefulWidget {
+  const PrussiaTelegraph({Key? key}) : super(key: key);
+
   @override
   PrussiaTelegraphState createState() => PrussiaTelegraphState();
 }
@@ -105,7 +107,7 @@ class PrussiaTelegraphState extends State<PrussiaTelegraph> {
   Widget _buildVisualDecryption() {
     var currentDisplay = buildSegmentMap(_currentDisplays);
 
-    var onChanged = (Map<String, bool> d) {
+    onChanged(Map<String, bool> d) {
       setState(() {
         var newSegments = <String>[];
         d.forEach((key, value) {
@@ -115,13 +117,13 @@ class PrussiaTelegraphState extends State<PrussiaTelegraph> {
 
         _currentDisplays.replaceLastSegment(newSegments);
       });
-    };
+    }
 
     return Column(
       children: <Widget>[
         Container(
           width: 180,
-          padding: EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
+          padding: const EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
           child: Row(
             children: <Widget>[
               Expanded(
@@ -165,8 +167,8 @@ class PrussiaTelegraphState extends State<PrussiaTelegraph> {
 
   Segments _buildShutters(Segments segments) {
     List<List<String>> result = [];
-    segments.displays.forEach((element) {
-      if (element != null) if (int.tryParse(element.join('')) != null) {
+    for (var element in segments.displays) {
+      if (int.tryParse(element.join('')) != null) {
         List<String> resultElement = [];
         switch (element[0]) {
           case '0':
@@ -259,17 +261,18 @@ class PrussiaTelegraphState extends State<PrussiaTelegraph> {
             break;
         }
         result.add(resultElement);
-      } else
+      } else {
         result.add(element);
-    });
+      }
+    }
     return Segments(displays: result);
   }
 
   String _buildCodelets(Segments segments) {
     List<String> result = [];
-    segments.displays.forEach((codelet) {
-      if (codelet != null) result.add(codelet.join(''));
-    });
+    for (var codelet in segments.displays) {
+      result.add(codelet.join(''));
+    }
     return result.join(' ');
   }
 

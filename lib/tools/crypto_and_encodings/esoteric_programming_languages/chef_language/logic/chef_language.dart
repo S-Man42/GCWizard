@@ -29,10 +29,11 @@ List<String> _getAuxiliaryRecipe(String name, int value, List<String> ingredient
     if (nList.length != 2) {
       nOne = value;
       for (int i = 0; i < nList.length - 1; i++) {
-        if (nOne > sqrt(value))
+        if (nOne > sqrt(value)) {
           nOne = nOne ~/ nList[i].toInt();
-        else
+        } else {
           break;
+        }
       }
       nTwo = value ~/ nOne;
     } else {
@@ -48,10 +49,11 @@ List<String> _getAuxiliaryRecipe(String name, int value, List<String> ingredient
   output.add('');
   output.add(_getText(_CHEF_textId.Method, '', language));
   output.add(_getText(_CHEF_textId.Put, ingredientOne[1], language));
-  if (combine)
+  if (combine) {
     output.add(_getText(_CHEF_textId.Combine, ingredientTwo[1], language));
-  else
+  } else {
     output.add(_getText(_CHEF_textId.Add, ingredientTwo[1], language));
+  }
   return output;
 }
 
@@ -63,10 +65,10 @@ String generateChef(
   List<String> outputElements = <String>[]; // store the output elements
   List<String> methodList = <String>[]; // store the methods
   List<String> ingredientList = <String>[]; // store the ingredients
-  Map<String, List<String>> auxiliaryRecipes = Map<String, List<String>>(); // store the auxiliary recipes
+  Map<String, List<String>> auxiliaryRecipes = <String, List<String>>{}; // store the auxiliary recipes
 
-  Map<int, String> amount = Map<int, String>(); // store the already got value
-  Map<String, String> ingredientListed = Map<String, String>(); // store the already used ingredients
+  Map<int, String> amount = <int, String>{}; // store the already got value
+  Map<String, String> ingredientListed = <String, String>{}; // store the already used ingredients
 
   List<String> itemList = <String>[]; // List with all ingredients
   List<String> itemListLiquid = <String>[]; // List with only liquid ingredients
@@ -83,7 +85,7 @@ String generateChef(
   List<String> ingredientOne = <String>[]; // store 1st ingredient, amount an measure for aux recipe
   List<String> ingredientTwo = <String>[]; // store 2nd ingredient, amount an measure for aux recipe
 
-  Random random = new Random();
+  Random random = Random();
 
   // fill the lists for the ingredients depending on language
   if (language == 'ENG') {
@@ -113,7 +115,7 @@ String generateChef(
     }
 
     // divide output into groups of digits and non-digits
-    RegExp expr = new RegExp(r'(([\D]+)|([\d]+))+?'); // any non digit | any digit
+    RegExp expr = RegExp(r'(([\D]+)|([\d]+))+?'); // any non digit | any digit
     expr.allMatches(outputToGenerate).forEach((match) {
       if (match.group(1) != null) {
         outputElements.add(match.group(1)!);
@@ -124,15 +126,16 @@ String generateChef(
     for (i = 0; i < outputElements.length / 2; i++) {
       var temp = outputElements[i];
       if (int.tryParse(temp) == null) temp = temp.split('').reversed.join('');
-      if (int.tryParse(outputElements[outputElements.length - 1 - i]) == null)
+      if (int.tryParse(outputElements[outputElements.length - 1 - i]) == null) {
         outputElements[i] = outputElements[outputElements.length - 1 - i].split('').reversed.join('');
-      else
+      } else {
         outputElements[i] = outputElements[outputElements.length - 1 - i];
+      }
       outputElements[outputElements.length - 1 - i] = temp;
     }
 
     i = 0;
-    outputElements.forEach((element) {
+    for (var element in outputElements) {
       // check element => number => 0 - 9    => 48 - 57 = liquid
       //                            10 - 99  => numbers = dry
       //                            100 ...  => aux recipe
@@ -229,7 +232,7 @@ String generateChef(
       } else {
         // element is a string of non-digits  => Liquid ingredients
         List<String> Elements = element.split('');
-        Elements.forEach((element) {
+        for (var element in Elements) {
           value = element.codeUnitAt(0);
           if (amount[value] == null) {
             // a new character
@@ -248,10 +251,10 @@ String generateChef(
             // character was already processed {
             methodList.add(_getText(_CHEF_textId.Put, amount[value]!, language));
           }
-        });
+        }
       }
       i++;
-    }); // outputElements.forEach((element)
+    } // outputElements.forEach((element)
   } else {
     // build "normal" linear recipe
     itemList.addAll(itemListDry);
@@ -265,7 +268,7 @@ String generateChef(
       outputElements[i] = outputElements[outputElements.length - 1 - i];
       outputElements[outputElements.length - 1 - i] = temp;
     }
-    outputElements.forEach((element) {
+    for (var element in outputElements) {
       value = element.codeUnitAt(0);
       if (amount[value] == null) {
         item = itemList.elementAt(random.nextInt(itemList.length));
@@ -280,7 +283,7 @@ String generateChef(
       } else {
         methodList.add(_getText(_CHEF_textId.Put, amount[value]!, language));
       }
-    });
+    }
   }
 
   output.writeln(title + '.');
@@ -314,13 +317,13 @@ String generateChef(
 
 bool isValid(String input) {
   bool flag = true;
-  if (input == null || input.isEmpty) return true;
+  if (input.isEmpty) return true;
   List<String> numbers = input.split(' ');
-  numbers.forEach((element) {
+  for (var element in numbers) {
     if (int.tryParse(element) == null) {
       flag = false;
     }
-  });
+  }
   return flag;
 }
 
@@ -342,15 +345,17 @@ List<String> _decodeChef(String language, String recipe, String additionalIngred
       if (interpreter.liquefyMissing) {
         result.add('\n');
         result.add('chef_warning_liquefy_missing_title');
-        if (language == "ENG")
+        if (language == "ENG") {
           result.add('» Liquefy contents of the mixing bowl. «');
-        else
+        } else {
           result.add('» Inhalt der Schüssel auf dem Stövchen erhitzen. «');
+        }
         result.add('chef_warning_liquefy_missing_hint');
-        if (language == "ENG")
+        if (language == "ENG") {
           result.add('» Pour contents of the mixing bowl into the baking dish. «');
-        else
+        } else {
           result.add('» Schüssel in eine Servierschale stürzen. «');
+        }
       }
       return result;
     } else {
@@ -365,17 +370,17 @@ List<String> _decodeChef(String language, String recipe, String additionalIngred
 
 bool _isMethod(String testString) {
   bool result = false;
-  _CHEF_matchersDEU.forEach((element) {
+  for (var element in _CHEF_matchersDEU) {
     if (element.hasMatch(testString)) result = true;
-  });
-  _CHEF_matchersENG.forEach((element) {
+  }
+  for (var element in _CHEF_matchersENG) {
     if (element.hasMatch(testString)) result = true;
-  });
+  }
   return result;
 }
 
 class _Chef {
-  var recipes = Map<String, _Recipe>();
+  var recipes = <String, _Recipe>{};
   _Recipe? mainrecipe;
   var error = <String>[];
   bool valid = true;
@@ -416,8 +421,9 @@ class _Chef {
     readRecipe = recipe.join('\n');
 
     // check and add missing title
-    if (readRecipe.startsWith('ingredients') || readRecipe.startsWith('zutaten'))
+    if (readRecipe.startsWith('ingredients') || readRecipe.startsWith('zutaten')) {
       readRecipe = 'nouvelle cuisine\n\n' + readRecipe;
+    }
 
     // check and repair recipe regarding blank lines, whitespace
     recipe = readRecipe.split('\n');
@@ -508,7 +514,7 @@ class _Chef {
         r!.setIngredients(line, language);
         ingredientsFound = true;
         if (r.error) {
-          this.error.addAll(r.errorList);
+          error.addAll(r.errorList);
           valid = false;
         }
       } else if (line.startsWith("cooking time") || line.startsWith("garzeit")) {
@@ -519,8 +525,8 @@ class _Chef {
         progress = 4;
         r!.setCookingTime(line, language);
         if (r.error) {
-          this.error.addAll(r.errorList);
-          this.valid = false;
+          error.addAll(r.errorList);
+          valid = false;
         }
       } else if (line.startsWith("pre-heat oven") || line.startsWith("pre heat oven") || line.startsWith("ofen auf")) {
         if (progress > 5) {
@@ -530,8 +536,8 @@ class _Chef {
         progress = 5;
         r!.setOvenTemp(line, language);
         if (r.error) {
-          this.error.addAll(r.errorList);
-          this.valid = false;
+          error.addAll(r.errorList);
+          valid = false;
         }
       } else if (line.startsWith("method") || line.startsWith("zubereitung")) {
         if (progress > 5) {
@@ -543,8 +549,8 @@ class _Chef {
         methodsFound = true;
         if (line.contains('refrigerate') || line.contains('einfrieren')) refrigerateFound = true;
         if (r.error) {
-          this.error.addAll(r.errorList);
-          this.valid = false;
+          error.addAll(r.errorList);
+          valid = false;
         }
       } else if (line.startsWith("serves") || line.startsWith("portionen")) {
         if (progress != 6) {
@@ -555,8 +561,8 @@ class _Chef {
         r!.setServes(line, language);
         servesFound = true;
         if (r.error) {
-          this.error.addAll(r.errorList);
-          this.valid = false;
+          error.addAll(r.errorList);
+          valid = false;
         }
       } else {
         if (progress == 0 || progress >= 6) {
@@ -705,14 +711,14 @@ class _Chef {
   }
 
   void bake(String language, String additionalIngredients) {
-    if (this.mainrecipe == null) return;
-    _Kitchen k = _Kitchen(this.recipes, this.mainrecipe!, null, null, language);
+    if (mainrecipe == null) return;
+    _Kitchen k = _Kitchen(recipes, mainrecipe!, null, null, language);
     if (k.valid) {
       k.cook(additionalIngredients, language, 1);
     }
-    this.valid = k.valid;
-    this.meal = k.meal;
-    this.error = k.error;
-    this.liquefyMissing = k.liquefyMissing;
+    valid = k.valid;
+    meal = k.meal;
+    error = k.error;
+    liquefyMissing = k.liquefyMissing;
   }
 }

@@ -6,8 +6,8 @@ class Pressure extends Unit {
 
   Pressure({required String key, required String symbol, bool isReference = false, required double inPascal})
       : super(key, symbol, isReference, (e) => e * inPascal, (e) => e / inPascal) {
-    toPascal = this.toReference;
-    fromPascal = this.fromReference;
+    toPascal = toReference;
+    fromPascal = fromReference;
   }
 }
 
@@ -34,7 +34,7 @@ final PRESSURE_INCHOFMERCURY = Pressure(key: 'common_unit_pressure_inhg_name', s
 
 final PRESSURE_TORR = Pressure(key: 'common_unit_pressure_torr_name', symbol: 'Torr', inPascal: 101325.0 / 760.0);
 
-final List<Unit> pressures = [
+final List<Pressure> pressures = [
   PRESSURE_PASCAL,
   PRESSURE_BAR,
   PRESSURE_POUNDSPERSQUAREINCH,

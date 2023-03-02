@@ -1,13 +1,14 @@
 part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_analyze.dart';
 
-List<List<String>> buildOutputListOfTaskData(BuildContext context, WherigoTaskData data) {
-  if (wherigoExpertMode)
-    return buildOutputListTaskDataExpertMode(context, data);
-  else
-    return buildOutputListTaskDataUserMode(context, data);
+List<List<String>> _buildOutputListOfTaskData(BuildContext context, WherigoTaskData data) {
+  if (wherigoExpertMode) {
+    return _buildOutputListTaskDataExpertMode(context, data);
+  } else {
+    return _buildOutputListTaskDataUserMode(context, data);
+  }
 }
 
-List<List<String>> buildOutputListTaskDataExpertMode(BuildContext context, WherigoTaskData data) {
+List<List<String>> _buildOutputListTaskDataExpertMode(BuildContext context, WherigoTaskData data) {
   return [
     [i18n(context, 'wherigo_output_luaname'), data.TaskLUAName],
     [i18n(context, 'wherigo_output_id'), data.TaskID],
@@ -34,7 +35,7 @@ List<List<String>> buildOutputListTaskDataExpertMode(BuildContext context, Wheri
   ];
 }
 
-List<List<String>> buildOutputListTaskDataUserMode(BuildContext context, WherigoTaskData data) {
+List<List<String>> _buildOutputListTaskDataUserMode(BuildContext context, WherigoTaskData data) {
   return [
     [i18n(context, 'wherigo_output_name'), data.TaskName],
     [i18n(context, 'wherigo_output_description'), data.TaskDescription],

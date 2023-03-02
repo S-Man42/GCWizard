@@ -10,12 +10,12 @@ void main() {
       {'input' : '', 'from' : KeyboardType.Dvorak, 'to' : KeyboardType.QWERTZ_T1, 'expectedOutput' : ''},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, from: ${elem['from']}, to: ${elem['to']}', () {
         var _actual = encodeKeyboard(elem['input'] as String?, elem['from'] as KeyboardType, elem['to'] as KeyboardType);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Keyboard.QWERTZ_T1:", () {
@@ -35,12 +35,12 @@ void main() {
       {'input' : inputString, 'from' : KeyboardType.QWERTZ_T1, 'to' : KeyboardType.BONE,          'expectedOutput' : 'cöüiueoblnrszymwjatxhädvfpqgßCÖÜIUEOBLNRSZYMWJATXHÄDVFPQGẞ1234567890'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, from: ${elem['from']}, to: ${elem['to']}', () {
         var _actual = encodeKeyboard(elem['input'] as String?, elem['from'] as KeyboardType, elem['to'] as KeyboardType);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Keyboard.QWERTY_US_INT:", () {
@@ -60,12 +60,12 @@ void main() {
       {'input' : inputString, 'from' : KeyboardType.QWERTY_US_INT, 'to' : KeyboardType.BONE,          'expectedOutput' : 'cöüiueoblnrszymwjatxhädvpfCÖÜIUEOBLNRSZYMWJATXHÄDVPF1234567890'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, from: ${elem['from']}, to: ${elem['to']}', () {
         var _actual = encodeKeyboard(elem['input'] as String?, elem['from'] as KeyboardType, elem['to'] as KeyboardType);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Keyboard.Dvorak:", () {
@@ -85,12 +85,12 @@ void main() {
       {'input' : inputString, 'from' : KeyboardType.Dvorak, 'to' : KeyboardType.BONE,          'expectedOutput' : 'cylbiphnoüäwzstavmgre.,öxkCYLBIPHNOÜÄWZSTAVMGRE·-ÖXK234567890'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, from: ${elem['from']}, to: ${elem['to']}', () {
         var _actual = encodeKeyboard(elem['input'] as String?, elem['from'] as KeyboardType, elem['to'] as KeyboardType);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Keyboard.Dvorak_II_DEU:", () {
@@ -110,12 +110,12 @@ void main() {
       {'input' : inputString, 'from' : KeyboardType.Dvorak_II_DEU, 'to' : KeyboardType.BONE,          'expectedOutput' : 'cylniphbeüäqzstavrgmo.,öxwfjCYLNIPHBEÜÄQZSTAVRGMO·-ÖXWFJ1234567890'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, from: ${elem['from']}, to: ${elem['to']}', () {
         var _actual = encodeKeyboard(elem['input'] as String?, elem['from'] as KeyboardType, elem['to'] as KeyboardType);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Keyboard.Dvorak_I_DEU1:", () {
@@ -135,12 +135,12 @@ void main() {
       {'input' : inputString, 'from' : KeyboardType.Dvorak_I_DEU1, 'to' : KeyboardType.BONE,          'expectedOutput' : 'cölbiphnovüwystaßmgre,zäx.jfCÖLBIPHNOVÜWYSTAẞMGRE-ZÄX·JF1234567890'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, from: ${elem['from']}, to: ${elem['to']}', () {
         var _actual = encodeKeyboard(elem['input'] as String?, elem['from'] as KeyboardType, elem['to'] as KeyboardType);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Keyboard.Dvorak_I_DEU2:", () {
@@ -160,12 +160,12 @@ void main() {
       {'input' : inputString, 'from' : KeyboardType.Dvorak_I_DEU2, 'to' : KeyboardType.BONE,          'expectedOutput' : 'cölbiphnovüwystamgre,zäx.ujdCÖLBIPHNOVÜWYSTAẞMGRE-ZÄX·UJD1234567890'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, from: ${elem['from']}, to: ${elem['to']}', () {
         var _actual = encodeKeyboard(elem['input'] as String?, elem['from'] as KeyboardType, elem['to'] as KeyboardType);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Keyboard.Dvorak_I_DEU3:", () {
@@ -185,12 +185,12 @@ void main() {
       {'input' : inputString, 'from' : KeyboardType.Dvorak_I_DEU3, 'to' : KeyboardType.BONE,          'expectedOutput' : 'cölbiphnovüwystamgre,zäx.jduCÖLBIPHNOVÜWYSTAẞMGRE-ZÄX·JDU1234567890'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, from: ${elem['from']}, to: ${elem['to']}', () {
         var _actual = encodeKeyboard(elem['input'] as String?, elem['from'] as KeyboardType, elem['to'] as KeyboardType);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Keyboard.COLEMAK:", () {
@@ -210,12 +210,12 @@ void main() {
       {'input' : inputString, 'from' : KeyboardType.COLEMAK, 'to' : KeyboardType.BONE,          'expectedOutput' : 'cöüoruxbspyhzngajtielädvmfCÖÜORUXBSPYHZNGAJTIELÄDVMF1234567890'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, from: ${elem['from']}, to: ${elem['to']}', () {
         var _actual = encodeKeyboard(elem['input'] as String?, elem['from'] as KeyboardType, elem['to'] as KeyboardType);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Keyboard.NEO:", () {
@@ -235,12 +235,12 @@ void main() {
       {'input' : inputString, 'from' : KeyboardType.NEO, 'to' : KeyboardType.BONE,          'expectedOutput' : 'iyagemlhtkpuznoäwrbscdxjqöüvfIYAGEMLHTKPUZNOÄWRBSCDXJQÖÜVF1234567890'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, from: ${elem['from']}, to: ${elem['to']}', () {
         var _actual = encodeKeyboard(elem['input'] as String?, elem['from'] as KeyboardType, elem['to'] as KeyboardType);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Keyboard.RISTOME:", () {
@@ -260,12 +260,12 @@ void main() {
       {'input' : inputString, 'from' : KeyboardType.RISTOME, 'to' : KeyboardType.BONE,          'expectedOutput' : 'ipxlngürowötäeadjushbvmfqcyßzIPXLNGÜROWÖTÄEADJUSHBVMFQCYẞZ1234567890'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, from: ${elem['from']}, to: ${elem['to']}', () {
         var _actual = encodeKeyboard(elem['input'] as String?, elem['from'] as KeyboardType, elem['to'] as KeyboardType);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Keyboard.FRA_AZERTY:", () {
@@ -285,12 +285,12 @@ void main() {
       {'input' : inputString, 'from' : KeyboardType.FRA_AZERTY, 'to' : KeyboardType.BONE,          'expectedOutput' : 'jöüiueoblnrsgymwcatxhäfvpdJÖÜIUEOBLNRSGYMWCATXHÄFVPD°§ℓ»«\$€„“”'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, from: ${elem['from']}, to: ${elem['to']}', () {
         var _actual = encodeKeyboard(elem['input'] as String?, elem['from'] as KeyboardType, elem['to'] as KeyboardType);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Keyboard.FRA_BEPO:", () {
@@ -310,12 +310,12 @@ void main() {
       {'input' : inputString, 'from' : KeyboardType.FRA_BEPO, 'to' : KeyboardType.BONE,          'expectedOutput' : 'cjblek,.iwymqgausrnthfäüßCJBLEK-·IWYMQGAUSRNTHFÄÜẞ°§ℓ»«\$€„“”'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, from: ${elem['from']}, to: ${elem['to']}', () {
         var _actual = encodeKeyboard(elem['input'] as String?, elem['from'] as KeyboardType, elem['to'] as KeyboardType);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Keyboard.encodeKeyboardNumbers:", () {
@@ -332,12 +332,12 @@ void main() {
       ]},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = encodeKeyboardNumbers(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Keyboard.decodeKeyboardNumbers:", () {
@@ -362,12 +362,12 @@ void main() {
       ]},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decodeKeyboardNumbers(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
 }

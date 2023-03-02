@@ -10,8 +10,9 @@ import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:latlong2/latlong.dart';
 
 GaussKrueger latLonToGaussKrueger(LatLng coord, CoordinateFormatKey subtype, Ellipsoid ells) {
-  if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.GAUSS_KRUEGER, subtype))
+  if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.GAUSS_KRUEGER, subtype)) {
     subtype = defaultGaussKruegerType;
+  }
 
   int x = -1;
   switch (ells.name) {
@@ -177,8 +178,9 @@ GaussKrueger? parseGaussKrueger(String input, {CoordinateFormatKey gaussKruegerC
   }
 
   if (matches.isEmpty) return null;
-  if (_eastingString == null || _northingString == null)
+  if (_eastingString == null || _northingString == null) {
     return null;
+  }
 
   var _easting = double.tryParse(_eastingString);
   if (_easting == null) return null;

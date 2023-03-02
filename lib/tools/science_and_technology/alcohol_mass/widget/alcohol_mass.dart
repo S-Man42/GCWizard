@@ -13,11 +13,13 @@ import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/volume.dart';
 import 'package:intl/intl.dart';
 
-final _ALCOHOL_MASS = 'alcoholmass_alcoholmass';
-final _VOLUME = 'alcoholmass_volume';
-final _ALCOHOL_MASS_BY_VOLUME = 'alcoholmass_alcoholbyvolume';
+const _ALCOHOL_MASS = 'alcoholmass_alcoholmass';
+const _VOLUME = 'alcoholmass_volume';
+const _ALCOHOL_MASS_BY_VOLUME = 'alcoholmass_alcoholbyvolume';
 
 class AlcoholMass extends StatefulWidget {
+  const AlcoholMass({Key? key}) : super(key: key);
+
   @override
   AlcoholMassState createState() => AlcoholMassState();
 }
@@ -78,11 +80,12 @@ class AlcoholMassState extends State<AlcoholMass> {
           Row(
             children: [
               Expanded(
+                  flex: 3,
                   child: GCWText(
                     text: i18n(context, _ALCOHOL_MASS_BY_VOLUME),
-                  ),
-                  flex: 3),
+                  )),
               Expanded(
+                  flex: 13,
                   child: GCWDoubleSpinner(
                     value: _currentPercent,
                     onChanged: (value) {
@@ -90,8 +93,7 @@ class AlcoholMassState extends State<AlcoholMass> {
                         _currentPercent = value;
                       });
                     },
-                  ),
-                  flex: 13)
+                  ))
             ],
           ),
         if (_currentMode != _ALCOHOL_MASS_BY_VOLUME) GCWTextDivider(text: i18n(context, 'common_outputunit')),

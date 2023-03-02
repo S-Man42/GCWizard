@@ -5,7 +5,7 @@ import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 
 Map<String, List<int>> _createKeyGrid(String? key, AlphabetModificationMode mode) {
-  if (key == null) key = '';
+  key ??= '';
 
   key = key.toUpperCase().replaceAll(RegExp(r'[^A-Z]'), '');
   var characters = key.split('').toList();
@@ -63,19 +63,21 @@ String encryptPlayfair(String? input, String? key, {AlphabetModificationMode mod
   int i = 0;
   while (i < input!.length - 1) {
     if (input[i] == input[i + 1]) {
-      if (input[i] == 'X')
+      if (input[i] == 'X') {
         input = insertCharacter(input, i + 1, 'Q');
-      else
+      } else {
         input = insertCharacter(input, i + 1, 'X');
+      }
     }
     i += 2;
   }
 
   if (input.length % 2 == 1) {
-    if (input.endsWith('X'))
+    if (input.endsWith('X')) {
       input += 'Q';
-    else
+    } else {
       input += 'X';
+    }
   }
 
   var out = '';
@@ -98,8 +100,9 @@ String encryptPlayfair(String? input, String? key, {AlphabetModificationMode mod
       }
 
       out += ' ';
-    } else
+    } else {
       out += UNKNOWN_ELEMENT;
+    }
 
     i += 2;
   }
@@ -114,10 +117,11 @@ String decryptPlayfair(String? input, String? key, {AlphabetModificationMode mod
   int i = 0;
 
   if (input.length % 2 == 1) {
-    if (input.endsWith('X'))
+    if (input.endsWith('X')) {
       input += 'Q';
-    else
+    } else {
       input += 'X';
+    }
   }
 
   var out = '';
@@ -138,8 +142,9 @@ String decryptPlayfair(String? input, String? key, {AlphabetModificationMode mod
         out += polybiosGridCharacterByCoordinate(keyGrid, coordsCharacter1[0], coordsCharacter2[1]);
         out += polybiosGridCharacterByCoordinate(keyGrid, coordsCharacter2[0], coordsCharacter1[1]);
       }
-    } else
+    } else {
       out += UNKNOWN_ELEMENT;
+    }
     i += 2;
   }
 

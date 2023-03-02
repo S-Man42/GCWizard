@@ -26,6 +26,8 @@ import 'package:gc_wizard/tools/science_and_technology/astronomy/right_ascension
 
 
 class RightAscensionToDegree extends StatefulWidget {
+  const RightAscensionToDegree({Key? key}) : super(key: key);
+
   @override
   RightAscensionToDegreeState createState() => RightAscensionToDegreeState();
 }
@@ -232,7 +234,8 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
 
   Widget _buildHmsWidget() {
     return Column(children: [
-      GCWToolBar(
+      const GCWToolBar(
+        flexValues: [5, 5, 1, 5, 1, 5, 1, 8],
         children: [
           GCWText(text: '+/-', align: Alignment.center),
           GCWText(text: 'h', align: Alignment.center),
@@ -243,10 +246,9 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
           GCWText(text: ''),
           GCWText(text: 'ms', align: Alignment.center)
         ],
-        flexValues: [5, 5, 1, 5, 1, 5, 1, 8],
       ),
       GCWDateTimePicker(
-        config: {
+        config: const {
           DateTimePickerConfig.SIGN,
           DateTimePickerConfig.TIME,
           DateTimePickerConfig.SECOND_AS_INT,
@@ -274,7 +276,7 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
           Expanded(
             flex: 6,
             child: GCWSignDropDown(
-                itemList: ['+', '-'],
+                itemList: const ['+', '-'],
                 value: _currentDmmSign,
                 onChanged: (value) {
                   setState(() {
@@ -286,6 +288,7 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
           Expanded(
               flex: 6,
               child: Container(
+                padding: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
                 child: GCWIntegerTextField(
                     hintText: 'DD',
                     textInputFormatter: GCWIntegerTextInputFormatter(min: 0),
@@ -296,9 +299,8 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
                         _setDmmDegrees();
                       });
                     }),
-                padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
               )),
-          Expanded(
+          const Expanded(
             flex: 1,
             child: GCWText(align: Alignment.center, text: '°'),
           ),
@@ -318,7 +320,7 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
                   });
                 }),
           ),
-          Expanded(
+          const Expanded(
             flex: 1,
             child: GCWText(align: Alignment.center, text: '.'),
           ),
@@ -336,7 +338,7 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
                   });
                 }),
           ),
-          Expanded(
+          const Expanded(
             flex: 1,
             child: GCWText(align: Alignment.center, text: '\''),
           ),
@@ -352,7 +354,7 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
           Expanded(
             flex: 6,
             child: GCWSignDropDown(
-                itemList: ['+', '-'],
+                itemList: const ['+', '-'],
                 value: _currentDmsSign,
                 onChanged: (value) {
                   setState(() {
@@ -364,6 +366,7 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
           Expanded(
               flex: 6,
               child: Container(
+                padding: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
                 child: GCWIntegerTextField(
                     hintText: 'DD',
                     textInputFormatter: GCWIntegerTextInputFormatter(min: 0),
@@ -374,9 +377,8 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
                         _setDmsRightAscension();
                       });
                     }),
-                padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
               )),
-          Expanded(
+          const Expanded(
             flex: 1,
             child: GCWText(align: Alignment.center, text: '°'),
           ),
@@ -396,7 +398,7 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
                   });
                 }),
           ),
-          Expanded(
+          const Expanded(
             flex: 1,
             child: GCWText(align: Alignment.center, text: '\''),
           ),
@@ -416,7 +418,7 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
                   });
                 }),
           ),
-          Expanded(
+          const Expanded(
             flex: 1,
             child: GCWText(align: Alignment.center, text: '.'),
           ),
@@ -434,7 +436,7 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
                   });
                 }),
           ),
-          Expanded(
+          const Expanded(
             flex: 1,
             child: GCWText(align: Alignment.center, text: '"'),
           ),
@@ -474,7 +476,7 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
           Expanded(
             flex: 6,
             child: GCWSignDropDown(
-                itemList: ['+', '-'],
+                itemList: const ['+', '-'],
                 value: _currentDecSign,
                 onChanged: (value) {
                   setState(() {
@@ -486,6 +488,7 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
           Expanded(
               flex: 6,
               child: Container(
+                padding: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
                 child: GCWIntegerTextField(
                     hintText: 'DD',
                     textInputFormatter: GCWIntegerTextInputFormatter(min: 0),
@@ -496,9 +499,8 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
                         _setDecRightAscension();
                       });
                     }),
-                padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
               )),
-          Expanded(
+          const Expanded(
             flex: 1,
             child: GCWText(align: Alignment.center, text: '.'),
           ),
@@ -516,7 +518,7 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
                   });
                 }),
           ),
-          Expanded(
+          const Expanded(
             flex: 1,
             child: GCWText(align: Alignment.center, text: '°'),
           ),

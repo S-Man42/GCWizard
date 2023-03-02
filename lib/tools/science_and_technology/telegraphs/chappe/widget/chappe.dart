@@ -18,6 +18,8 @@ import 'package:gc_wizard/tools/science_and_technology/telegraphs/chappe/logic/c
 part 'package:gc_wizard/tools/science_and_technology/telegraphs/chappe/widget/chappe_segment_display.dart';
 
 class ChappeTelegraph extends StatefulWidget {
+  const ChappeTelegraph({Key? key}) : super(key: key);
+
   @override
   ChappeTelegraphState createState() => ChappeTelegraphState();
 }
@@ -64,7 +66,7 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
           return GCWDropDownMenuItem(
               value: mode.key,
               child: i18n(context, mode.value.title),
-              subtitle: mode.value.subtitle != null ? i18n(context, mode.value.subtitle) : null);
+              subtitle: i18n(context, mode.value.subtitle));
         }).toList(),
       ),
       GCWTwoOptionsSwitch(
@@ -121,7 +123,7 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
   Widget _buildVisualDecryption() {
     var currentDisplay = buildSegmentMap(_currentDisplays);
 
-    var onChanged = (Map<String, bool> d) {
+    onChanged(Map<String, bool> d) {
       setState(() {
         var newSegments = <String>[];
         d.forEach((key, value) {
@@ -131,14 +133,14 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
 
         _currentDisplays.replaceLastSegment(newSegments);
       });
-    };
+    }
 
     return Column(
       children: <Widget>[
         Container(
           width: 300,
           //height: 200,
-          padding: EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
+          padding: const EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
           child: Row(
             children: <Widget>[
               Expanded(

@@ -101,7 +101,7 @@ const _decode = <int>[
   14, 15, 16, -2, -2, -2, 17, 18, 19, -2, -2, -2, -2, -2, -2, -2,
 ]; //
 
-bool _matchesPattern(String string, Pattern pattern) => string.indexOf(pattern) >= 0;
+bool _matchesPattern(String string, Pattern pattern) => string.contains(pattern);
 
 bool _isValid(String code) {
   if (code.length == 1) {
@@ -149,7 +149,7 @@ bool _isValid(String code) {
   }
 
   // Check code contains only valid characters.
-  var filterCallback = (int ch) => !(ch > _decode.length || _decode[ch] < -1);
+  filterCallback(int ch) => !(ch > _decode.length || _decode[ch] < -1);
   return code.codeUnits.every(filterCallback);
 }
 

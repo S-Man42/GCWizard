@@ -4,7 +4,7 @@ class _SudokuBoard extends StatefulWidget {
   final void Function(SudokuBoard) onChanged;
   final SudokuBoard board;
 
-  _SudokuBoard({Key? key, required this.onChanged, required this.board}) : super(key: key);
+  const _SudokuBoard({Key? key, required this.onChanged, required this.board}) : super(key: key);
 
   @override
   _SudokuBoardState createState() => _SudokuBoardState();
@@ -19,7 +19,7 @@ class _SudokuBoardState extends State<_SudokuBoard> {
             child: AspectRatio(
                 aspectRatio: 1 / 1,
                 child: CanvasTouchDetector(
-                  gesturesToOverride: [GestureType.onTapDown],
+                  gesturesToOverride: const [GestureType.onTapDown],
                   builder: (context) {
                     return CustomPaint(
                         painter: SudokuBoardPainter(context, widget.board, (x, y, value) {
@@ -166,7 +166,7 @@ class SudokuBoardPainter extends CustomPainter {
     showGCWDialog(
         context,
         i18n(context, 'sudokusolver_entervalue'),
-        Container(
+        SizedBox(
           height: 300,
           child: Column(children: columns),
         ),

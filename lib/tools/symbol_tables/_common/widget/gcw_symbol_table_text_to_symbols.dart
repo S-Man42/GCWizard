@@ -48,7 +48,7 @@ class GCWSymbolTableTextToSymbols extends StatefulWidget {
 }
 
 class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols> {
-  var _alphabetMap = <String, int>{};
+  final _alphabetMap = <String, int>{};
 
   var _encryptionHasImages = false;
 
@@ -59,9 +59,9 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
     super.initState();
 
     _data = widget.data;
-    _data.images.forEach((element) {
+    for (var element in _data.images) {
       _alphabetMap.putIfAbsent(element.keys.first, () => _data.images.indexOf(element));
-    });
+    }
   }
 
   @override
@@ -71,7 +71,7 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
         widget.fixed
             ? _buildEncryptionOutput(widget.countColumns)
             : Expanded(child: SingleChildScrollView(
-                physics: AlwaysScrollableScrollPhysics(),
+                physics: const AlwaysScrollableScrollPhysics(),
                 primary: true,
                 child: _buildEncryptionOutput(widget.countColumns)
               )),
@@ -119,10 +119,11 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
 
       if ((widget.ignoreUnknown && imageIndex != null) || !widget.ignoreUnknown) imageIndexes.add(imageIndex!);
 
-      if (imageIndex == null)
+      if (imageIndex == null) {
         _text = _text.substring(1, _text.length);
-      else
+      } else {
         _text = _text.substring(i, _text.length);
+      }
     }
 
     return imageIndexes;
@@ -145,7 +146,7 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
       canvasWidth: MediaQuery.of(context).size.width * 0.95,
     ));
 
-    return Container(
+    return SizedBox(
       width: sizes.canvasWidth,
       height: sizes.canvasHeight,
       child: CustomPaint(
@@ -205,7 +206,7 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
     final data = await img.toByteData(format: ui.ImageByteFormat.png);
 
     var bytes = data?.buffer.asUint8List();
-    if (bytes == null) return Tuple2<bool, Uint8List?>(false, null);
+    if (bytes == null) return const Tuple2<bool, Uint8List?>(false, null);
     bytes = trimNullBytes(bytes);
     return Tuple2<bool, Uint8List?>(await saveByteDataToFile(context, bytes,
         buildFileNameWithDate('img_', FileType.PNG)), bytes);

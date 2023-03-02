@@ -22,7 +22,7 @@ void showCoordinatesExportDialog(BuildContext context, List<GCWMapPoint> points,
                   context,
                   'JSON ' + i18n(context, 'common_text'),
                   GCWTextExport(text: json, initMode: TextExportMode.TEXT, possibileExportMode: possibileExportMode),
-                  [GCWDialogButton(text: 'OK')],
+                  [const GCWDialogButton(text: 'OK')],
                   cancelButton: false);
             },
           )

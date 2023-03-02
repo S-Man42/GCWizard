@@ -7,6 +7,8 @@ import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_langua
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 
 class Cow extends StatefulWidget {
+  const Cow({Key? key}) : super(key: key);
+
   @override
   CowState createState() => CowState();
 }
@@ -78,10 +80,11 @@ class CowState extends State<Cow> {
     if (_currentMode == GCWSwitchPosition.left) {
       try {
         CowOutput output = interpretCow(_currentText, STDIN: _currentInput);
-        if (output.error.isEmpty)
+        if (output.error.isEmpty) {
           return output.output;
-        else
+        } else {
           return output.output + '\n' + i18n(context, output.error);
+        }
       } on FormatException catch (e) {
         return printErrorMessage(context, e.message);
       }

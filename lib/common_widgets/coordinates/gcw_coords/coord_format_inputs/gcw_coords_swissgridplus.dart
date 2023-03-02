@@ -64,7 +64,7 @@ class _GCWCoordsSwissGridPlusState extends State<_GCWCoordsSwissGridPlus> {
     ]);
   }
 
-  _setCurrentValueAndEmitOnChange() {
+  void _setCurrentValueAndEmitOnChange() {
     widget.onChanged(SwissGridPlus(_currentEasting.value, _currentNorthing.value));
   }
 }

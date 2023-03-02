@@ -43,8 +43,9 @@ class _Geo3x3 {
       begin = 1;
     } else if (c == '+' || c == 'E') {
       begin = 1;
-    } else
+    } else {
       return null;
+    }
     final clen = code.length;
     for (int i = begin; i < clen; i++) {
       var n = "0123456789".indexOf(code[i]);

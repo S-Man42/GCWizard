@@ -3,7 +3,7 @@ import 'dart:isolate';
 import 'dart:async';
 import 'dart:math';
 
-import 'package:gc_wizard/common_widgets/gcw_async_executer.dart';
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +20,7 @@ part 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_global_enums
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze_gwc.dart';
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze_gwc_common_methods.dart';
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze_lua.dart';
+part 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze_lua_answers.dart';
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze_lua_common_methods.dart';
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze_lua_characters.dart';
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze_lua_inputs.dart';
