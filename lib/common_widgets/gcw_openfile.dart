@@ -322,8 +322,8 @@ Future<Object?> _downloadFileAsync(GCWAsyncExecuterParameters? jobData) async {
   var request = http.Request("GET", uri);
   var client = http.Client();
   await client.send(request).timeout(const Duration(seconds: 10), onTimeout: () {
-    sendAsyncPort?.send(null);
-    return Future.value(null); //http.Response('Error', 500);
+    //sendAsyncPort?.send(null);
+    return http.StreamedResponse(Stream.fromIterable([]), 500); //http.Response('Error', 500);
   }).then((http.StreamedResponse response) async {
     if (response.statusCode != 200) {
       sendAsyncPort?.send('common_loadfile_exception_responsestatus');
@@ -332,7 +332,7 @@ Future<Object?> _downloadFileAsync(GCWAsyncExecuterParameters? jobData) async {
     _total = response.contentLength ?? 0;
     int progressStep = max(_total ~/ 100, 1);
 
-    await response.stream.listen((value) {
+    response.stream.listen((value) {
       _bytes.addAll(value);
 
       if (_total != 0 &&
@@ -386,7 +386,7 @@ Future<GCWFile?> _openFileExplorer({List<FileType>? allowedFileTypes}) async {
     if (bytes == null) return null;
 
     return GCWFile(path: path, name: files.first.name, bytes: bytes);
-  } on PlatformException catch (e) {  }
+  } catch (e) {}
   return null;
 }
 

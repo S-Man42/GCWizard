@@ -23,7 +23,8 @@ class GCWAsyncExecuter<T extends Object?> extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _GCWAsyncExecuterState createState() => _GCWAsyncExecuterState(isOverlay);
+  _GCWAsyncExecuterState createState() => _GCWAsyncExecuterState();
+
 }
 
 Future<ReceivePort> _makeIsolate(void Function(GCWAsyncExecuterParameters) isolatedFunction, GCWAsyncExecuterParameters parameters) async {
@@ -37,11 +38,17 @@ Future<ReceivePort> _makeIsolate(void Function(GCWAsyncExecuterParameters) isola
 
 class _GCWAsyncExecuterState extends State<GCWAsyncExecuter> {
   Object? _result;
-  bool isOverlay;
+  bool isOverlay = true;
   bool _cancel = false;
   ReceivePort? _receivePort;
 
-  _GCWAsyncExecuterState(this.isOverlay);
+  _GCWAsyncExecuterState();
+
+  @override
+  void initState() {
+    super.initState();
+    isOverlay = widget.isOverlay;
+  }
 
   @override
   Widget build(BuildContext context) {

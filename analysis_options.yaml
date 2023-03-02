@@ -190,7 +190,7 @@ analyzer:
     unnecessary_brace_in_string_interps: warning
     unnecessary_const: warning
 #    unnecessary_constructor_name: error
-    unnecessary_getters_setters: war
+    unnecessary_getters_setters: warning
 #    unnecessary_lambdas: error
 #    unnecessary_late: error
 #    unnecessary_library_directive: error
