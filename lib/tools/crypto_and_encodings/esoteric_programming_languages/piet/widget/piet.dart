@@ -19,7 +19,7 @@ import 'package:gc_wizard/utils/ui_dependent_utils/image_utils/image_utils.dart'
 class Piet extends StatefulWidget {
   final GCWFile? file;
 
-  const Piet({this.file});
+  const Piet({Key? key, this.file}) : super(key: key);
 
   @override
   PietState createState() => PietState();
@@ -109,7 +109,7 @@ class PietState extends State<Piet> {
   }
 
   Widget _buildInterpreterOutput(BuildContext context) {
-    if (_originalData?.bytes == null) return GCWDefaultOutput();
+    if (_originalData?.bytes == null) return const GCWDefaultOutput();
     if (_currentInterpreterOutput == null) return GCWDefaultOutput(child: i18n(context, 'common_please_wait'));
 
     return GCWDefaultOutput(
@@ -139,7 +139,7 @@ class PietState extends State<Piet> {
         if (output.finished) {
           _currentInterpreterOutput = output;
           _isStarted = false;
-          this.setState(() {});
+          setState(() {});
         } else {
           _currentInterpreterOutput = output;
           _currentInterpreterInput = null;
@@ -174,7 +174,7 @@ class PietState extends State<Piet> {
   }
 
   Widget _buildGeneratorOutput(BuildContext context) {
-    if (_currentGeneratorOutput == null) return GCWDefaultOutput();
+    if (_currentGeneratorOutput == null) return const GCWDefaultOutput();
 
     return GCWDefaultOutput(child: GCWImageView(imageData: GCWImageViewData(GCWFile(bytes: _currentGeneratorOutput!))));
   }
@@ -195,7 +195,7 @@ class PietState extends State<Piet> {
     showGCWDialog(
         context,
         text,
-        Container(
+        SizedBox(
           width: 300,
           height: 100,
           child: Column(

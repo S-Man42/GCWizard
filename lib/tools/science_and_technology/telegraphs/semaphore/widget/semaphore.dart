@@ -16,6 +16,8 @@ import 'package:gc_wizard/tools/science_and_technology/telegraphs/semaphore/logi
 part 'package:gc_wizard/tools/science_and_technology/telegraphs/semaphore/widget/semaphore_segment_display.dart';
 
 class SemaphoreTelegraph extends StatefulWidget {
+  const SemaphoreTelegraph({Key? key}) : super(key: key);
+
   @override
   SemaphoreTelegraphState createState() => SemaphoreTelegraphState();
 }
@@ -72,7 +74,7 @@ class SemaphoreTelegraphState extends State<SemaphoreTelegraph> {
   Widget _buildVisualDecryption() {
     var currentDisplay = buildSegmentMap(_currentDisplays);
 
-    var onChanged = (Map<String, bool> d) {
+    onChanged(Map<String, bool> d) {
       setState(() {
         var newSegments = <String>[];
         d.forEach((key, value) {
@@ -82,14 +84,14 @@ class SemaphoreTelegraphState extends State<SemaphoreTelegraph> {
 
         _currentDisplays.replaceLastSegment(newSegments);
       });
-    };
+    }
 
     return Column(
       children: <Widget>[
         Container(
           width: 180,
           height: 200,
-          padding: EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
+          padding: const EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
           child: Row(
             children: <Widget>[
               Expanded(

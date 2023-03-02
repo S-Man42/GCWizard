@@ -56,8 +56,9 @@ List<Intersect> _distIntersection(
 }
 
 Future<List<Intersect>> intersectThreeCirclesAsync(GCWAsyncExecuterParameters? jobData) async {
-  if (jobData?.parameters is! IntersectThreeCirclesJobData)
+  if (jobData?.parameters is! IntersectThreeCirclesJobData) {
     throw Exception('Unexpected data for Intersect 3 Circles');
+  }
 
   var data = jobData!.parameters as IntersectThreeCirclesJobData;
 

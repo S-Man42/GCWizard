@@ -8,7 +8,6 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/default_units_getter.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/length.dart';
-import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit_category.dart';
 
 class GCWCoordsOutputFormatDistanceValue {
   final CoordinateFormat format;
@@ -40,16 +39,16 @@ class GCWCoordsOutputFormatDistanceState extends State<GCWCoordsOutputFormatDist
           Expanded(
               flex: 3,
               child: Container(
+                  padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
                   child: GCWCoordsFormatSelector(
-                    format: widget.coordFormat ?? _currentCoordFormat,
+                    format: widget.coordFormat,
                     onChanged: (value) {
                       setState(() {
                         _currentCoordFormat = value;
                         _setCurrentValueAndEmitOnChange();
                       });
                     },
-                  ),
-                  padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN))),
+                  ))),
           Expanded(
             flex: 1,
             child: GCWUnitDropDown<Length>(

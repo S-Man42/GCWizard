@@ -20,7 +20,7 @@ const _EUROBRAILLE_RELATIVE_DISPLAY_WIDTH = 51;
 const _EUROBRAILLE_RELATIVE_DISPLAY_HEIGHT = 130;
 const _EUROBRAILLE_RADIUS = 12;
 
-//ignore: must_be_immutable
+
 class BrailleEuroSegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
   final bool readOnly;

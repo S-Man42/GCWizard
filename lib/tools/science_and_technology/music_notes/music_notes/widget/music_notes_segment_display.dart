@@ -49,7 +49,7 @@ const _NOTES_RELATIVE_DISPLAY_WIDTH = 380;
 const _NOTES_RELATIVE_DISPLAY_WIDTH_OUTPUT = 160;
 const _NOTES_RELATIVE_DISPLAY_HEIGHT = 445;
 
-//ignore: must_be_immutable
+
 class _NotesSegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
   final bool readOnly;
@@ -94,24 +94,26 @@ class _NotesSegmentDisplay extends NSegmentDisplay {
               var pathL = Path();
               var counter = 0;
               paint.color = Colors.grey;
-              lines.forEach((key) {
-                if (key.isEmpty || segmentActive(currentSegments, key))
+              for (var key in lines) {
+                if (key.isEmpty || segmentActive(currentSegments, key)) {
                   pathL.addPath(
                       _createLine(
                           key.isNotEmpty, size, Offset(0, counter * LINE_DISTANCE + LINE_OFFSET_Y), LINE_OFFSET_X, readOnly),
-                      Offset(0, 0));
+                      const Offset(0, 0));
+                }
                 counter++;
-              });
+              }
               var xOffset = readOnly ? 0.0 : -size.width / _getSymbolWidth(readOnly) * 100.0;
-              if (segmentActive(currentSegments, trebleClef))
+              if (segmentActive(currentSegments, trebleClef)) {
                 pathL.addPath(_createTrebleClef(size, Offset(xOffset, 7 * LINE_DISTANCE + LINE_OFFSET_Y), readOnly),
-                    Offset(0, 0));
-              else if (segmentActive(currentSegments, altClef))
+                    const Offset(0, 0));
+              } else if (segmentActive(currentSegments, altClef)) {
                 pathL.addPath(
-                    _createAltClef(size, Offset(xOffset, 7 * LINE_DISTANCE + LINE_OFFSET_Y), readOnly), Offset(0, 0));
-              else if (segmentActive(currentSegments, bassClef))
+                    _createAltClef(size, Offset(xOffset, 7 * LINE_DISTANCE + LINE_OFFSET_Y), readOnly), const Offset(0, 0));
+              } else if (segmentActive(currentSegments, bassClef)) {
                 pathL.addPath(
-                    _createBassClef(size, Offset(xOffset, 7 * LINE_DISTANCE + LINE_OFFSET_Y), readOnly), Offset(0, 0));
+                    _createBassClef(size, Offset(xOffset, 7 * LINE_DISTANCE + LINE_OFFSET_Y), readOnly), const Offset(0, 0));
+              }
 
               canvas.touchCanvas.drawPath(pathL, paint);
 
@@ -150,7 +152,7 @@ class _NotesSegmentDisplay extends NSegmentDisplay {
 
               var notePositions = [105, 35, -35, -105];
               counter = 0;
-              notePosition.forEach((key) {
+              for (var key in notePosition) {
                 var offsetX = size.width /
                     _getSymbolWidth(readOnly) *
                     (readOnly
@@ -169,7 +171,7 @@ class _NotesSegmentDisplay extends NSegmentDisplay {
                     SEGMENTS_COLOR_ON,
                     SEGMENTS_COLOR_OFF);
                 counter++;
-              });
+              }
             });
 
   static int _getSymbolWidth(bool readOnly) {
@@ -402,8 +404,8 @@ class _NotesSegmentDisplay extends NSegmentDisplay {
     var path = Path();
     var scale = size.width / _getSymbolWidth(readOnly);
 
-    path.addRect(Rect.fromLTWH(0, -60, 15.066, 120.002));
-    path.addRect(Rect.fromLTWH(20.116, -60, 4.964, 120.002));
+    path.addRect(const Rect.fromLTWH(0, -60, 15.066, 120.002));
+    path.addRect(const Rect.fromLTWH(20.116, -60, 4.964, 120.002));
 
     path.moveTo(44.065, -52.249);
     path.lineTo(45.806, -52.075);
@@ -565,9 +567,9 @@ class _NotesSegmentDisplay extends NSegmentDisplay {
     path.lineTo(16.807, -53.165);
     path.lineTo(14.804, -50.640);
 
-    path.addOval(Rect.fromLTWH(70.016, -26.692, 16.300, 16.300));
+    path.addOval(const Rect.fromLTWH(70.016, -26.692, 16.300, 16.300));
 
-    path.addOval(Rect.fromLTWH(70.016, -52.381, 16.300, 16.300));
+    path.addOval(const Rect.fromLTWH(70.016, -52.381, 16.300, 16.300));
 
     final translateM =
         Float64List.fromList([scale, 0, 0, 0, 0, scale, 0, 0, 0, 0, scale, 0, offset.dx, offset.dy, 0, 1]);

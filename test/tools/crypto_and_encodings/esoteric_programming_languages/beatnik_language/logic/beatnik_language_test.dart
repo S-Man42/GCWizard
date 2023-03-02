@@ -170,13 +170,13 @@ DIE IRONIE IST UNSER VERLUST AN STARKER ETHIK - SO ZIEMLICH.''';
     List<Map<String, Object?>> _inputsToExpected = [
       {'scrabbleSet' : scrabbleID_EN, 'sourcecode' : HelloWorld, 'input' : '', 'expectedOutput' : BeatnikOutput(['Hello, world!\n'], [], [], [], [])},
       {'scrabbleSet' : scrabbleID_EN, 'sourcecode' : Rudimentary, 'input' : 'a', 'expectedOutput' : BeatnikOutput(['h'], [], [], [], [])},
-      {'scrabbleSet' : scrabbleID_EN, 'sourcecode' : Alphabet, 'input' : '', 'expectedOutput' : BeatnikOutput([' !"#\$%&'+"'"+'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~'], [], [], [], [])},
+      {'scrabbleSet' : scrabbleID_EN, 'sourcecode' : Alphabet, 'input' : '', 'expectedOutput' : BeatnikOutput([' !"#\$%&'"'"'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~'], [], [], [], [])},
       {'scrabbleSet' : scrabbleID_EN, 'sourcecode' : Cliffle, 'input' : '', 'expectedOutput' : BeatnikOutput(['common_programming_error_runtime','beatnik_error_runtime_stack','beatnik_error_runtime_add'], [], [], [], [])},
       {'scrabbleSet' : scrabbleID_EN, 'sourcecode' : CliffleCorrect, 'input' : '', 'expectedOutput' : BeatnikOutput(['\niH'], [], [], [], [])},
       {'scrabbleSet' : scrabbleID_D, 'sourcecode' : GC2M99K, 'input' : '', 'expectedOutput' : BeatnikOutput(['Cache bei:N51°15.176 E6° 32.373'], [], [], [], [])},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = interpretBeatnik(elem['scrabbleSet'] as String, elem['sourcecode'] as String?, elem['input'] as String);
         var length = (elem['expectedOutput'] as BeatnikOutput).output.length;
@@ -184,7 +184,7 @@ DIE IRONIE IST UNSER VERLUST AN STARKER ETHIK - SO ZIEMLICH.''';
           expect(_actual.output[i], (elem['expectedOutput'] as BeatnikOutput).output[i]);
         }
       });
-    });
+    }
   });
 
 

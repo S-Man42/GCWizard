@@ -25,7 +25,7 @@ const _OHLSEN_RELATIVE_DISPLAY_WIDTH = 150;
 const _OHLSEN_RELATIVE_DISPLAY_HEIGHT = 160;
 const _OHLSEN_RADIUS = 10.0;
 
-//ignore: must_be_immutable
+
 class _OhlsenSegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
   final bool readOnly;

@@ -8,10 +8,11 @@ final TextStyle _boldTextStyle = _textStyle.copyWith(fontWeight: FontWeight.bold
 
 void showGCWDialog(BuildContext context, String title, Widget? child, List<Widget> buttons,
     {bool cancelButton = true, bool closeOnOutsideTouch = false}) {
-  if (cancelButton)
+  if (cancelButton) {
     buttons.add(GCWDialogButton(
       text: i18n(context, 'common_cancel'),
     ));
+  }
 
   AlertDialog dialog = AlertDialog(
       title: Text(title),

@@ -10,8 +10,8 @@ class Typography extends Unit {
     bool isReference = false,
     required double inDTPPt,
   }) : super(name, symbol, isReference, (e) => e * inDTPPt, (e) => e / inDTPPt) {
-    toDTPPt = this.toReference;
-    fromDTPPt = this.fromReference;
+    toDTPPt = toReference;
+    fromDTPPt = fromReference;
   }
 }
 

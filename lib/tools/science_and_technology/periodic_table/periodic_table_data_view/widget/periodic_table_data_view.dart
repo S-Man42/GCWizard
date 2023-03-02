@@ -31,9 +31,9 @@ class PeriodicTableDataViewState extends State<PeriodicTableDataView> {
   var _currentSortingOrder = GCWSwitchPosition.left;
 
   var _categories = <PeriodicTableCategory, String>{};
-  Map<int, String> _elementNames = {};
-  Map<int, String> _chemicalSymbols = {};
-  Map<int, int> _atomicNumbers = {};
+  final Map<int, String> _elementNames = {};
+  final Map<int, String> _chemicalSymbols = {};
+  final Map<int, int> _atomicNumbers = {};
   late List<int> _iupacGroups;
   late List<int> _mainGroups;
   late List<int> _subGroups;
@@ -96,11 +96,11 @@ class PeriodicTableDataViewState extends State<PeriodicTableDataView> {
       PeriodicTableCategory.IS_SYNTHETIC: 'periodictable_attribute_issynthetic',
     };
 
-    allPeriodicTableElements.forEach((element) {
+    for (var element in allPeriodicTableElements) {
       _elementNames.putIfAbsent(element.atomicNumber, () => element.name);
       _chemicalSymbols.putIfAbsent(element.atomicNumber, () => element.chemicalSymbol);
       _atomicNumbers.putIfAbsent(element.atomicNumber, () => element.atomicNumber);
-    });
+    }
 
     _iupacGroups = allPeriodicTableElements.map((element) => element.iupacGroup).toSet().toList();
     _iupacGroups.sort();
@@ -199,33 +199,51 @@ class PeriodicTableDataViewState extends State<PeriodicTableDataView> {
 
     switch (category) {
       case PeriodicTableCategory.ELEMENT_NAME:
-        _elementNames.entries.forEach((entry) => listItems.putIfAbsent(i18n(context, entry.value), () => entry.key));
+        for (var entry in _elementNames.entries) {
+          listItems.putIfAbsent(i18n(context, entry.value), () => entry.key);
+        }
         break;
       case PeriodicTableCategory.CHEMICAL_SYMBOL:
-        _chemicalSymbols.entries.forEach((entry) => listItems.putIfAbsent(entry.value, () => entry.key));
+        for (var entry in _chemicalSymbols.entries) {
+          listItems.putIfAbsent(entry.value, () => entry.key);
+        }
         break;
       case PeriodicTableCategory.ATOMIC_NUMBER:
-        _atomicNumbers.entries.forEach((entry) => listItems.putIfAbsent(entry.value, () => entry.key));
+        for (var entry in _atomicNumbers.entries) {
+          listItems.putIfAbsent(entry.value, () => entry.key);
+        }
         break;
       case PeriodicTableCategory.IUPAC_GROUP:
-        _iupacGroups.forEach((entry) => listItems.putIfAbsent(entry, () => entry));
+        for (var entry in _iupacGroups) {
+          listItems.putIfAbsent(entry, () => entry);
+        }
         break;
       case PeriodicTableCategory.IUPAC_GROUP_NAME:
-        _iupacGroupNames.forEach((entry) => listItems.putIfAbsent(
-            i18n(context, entry), () => iupacGroupNameToString.map((k, v) => MapEntry(v, k))[entry]!));
+        for (var entry in _iupacGroupNames) {
+          listItems.putIfAbsent(
+            i18n(context, entry), () => iupacGroupNameToString.map((k, v) => MapEntry(v, k))[entry]!);
+        }
         break;
       case PeriodicTableCategory.MAIN_GROUP:
-        _mainGroups.forEach((entry) => listItems.putIfAbsent(encodeRomanNumbers(entry), () => entry));
+        for (var entry in _mainGroups) {
+          listItems.putIfAbsent(encodeRomanNumbers(entry), () => entry);
+        }
         break;
       case PeriodicTableCategory.SUB_GROUP:
-        _subGroups.forEach((entry) => listItems.putIfAbsent(encodeRomanNumbers(entry), () => entry));
+        for (var entry in _subGroups) {
+          listItems.putIfAbsent(encodeRomanNumbers(entry), () => entry);
+        }
         break;
       case PeriodicTableCategory.PERIOD:
-        _periods.forEach((entry) => listItems.putIfAbsent(entry, () => entry));
+        for (var entry in _periods) {
+          listItems.putIfAbsent(entry, () => entry);
+        }
         break;
       case PeriodicTableCategory.STATE_OF_MATTER:
-        _statesOfMatter.forEach((entry) => listItems.putIfAbsent(
-            i18n(context, entry), () => stateOfMatterToString.map((k, v) => MapEntry(v, k))[entry]!));
+        for (var entry in _statesOfMatter) {
+          listItems.putIfAbsent(
+            i18n(context, entry), () => stateOfMatterToString.map((k, v) => MapEntry(v, k))[entry]!);
+        }
         break;
       case PeriodicTableCategory.IS_RADIOACTIVE:
         listItems.putIfAbsent(i18n(context, 'periodictable_attribute_isradioactive_true'), () => true);

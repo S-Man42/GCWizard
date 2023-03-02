@@ -49,12 +49,12 @@ void main() {
       {'value' : 2.6, 'modulator': 2.5, 'expectedOutput' : 0.10000000000000009},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('value: ${elem['value']}, modulator:  ${elem['modulator']}', () {
         var _actual = modulo(elem['value'] as num, elem['modulator'] as num);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("MathUtils.round:", () {
@@ -84,11 +84,11 @@ void main() {
       {'input' : 1.257, 'precision': 2, 'expectedOutput' : 1.26},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, precision: ${elem['precision']}', () {
         var _actual = round(elem['input'] as double, precision: elem['precision'] as int);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

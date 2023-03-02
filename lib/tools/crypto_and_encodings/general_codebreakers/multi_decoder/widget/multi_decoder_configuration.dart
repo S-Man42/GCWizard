@@ -146,6 +146,7 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
         Row(children: [
           Expanded(
             child: Container(
+                padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
                 child: GCWDropDown<int>(
                   value: _currentChosenTool ?? -1,
                   onChanged: (value) {
@@ -166,8 +167,7 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
                       })
                       .values
                       .toList(),
-                ),
-                padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN)),
+                )),
           ),
           GCWIconButton(
             icon: Icons.add,
@@ -197,34 +197,36 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
           Expanded(
               child: _currentEditId == tool.id
                   ? Container(
+                      padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
                       child: Column(children: [
                         Row(
                           children: [
-                            Expanded(child: GCWText(text: i18n(context, 'multidecoder_configuration_name')), flex: 1),
+                            Expanded(flex: 1, child: GCWText(text: i18n(context, 'multidecoder_configuration_name'))),
                             Expanded(
+                                flex: 3,
                                 child: GCWTextField(
                                   controller: _editingToolNameController,
                                   onChanged: (value) {
                                     _editingToolName = value;
                                   },
-                                ),
-                                flex: 3)
+                                ))
                           ],
                         ),
                         tool.configurationWidget ?? Container()
-                      ]),
-                      padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN))
+                      ]))
                   : Column(
                       children: [
                         GCWText(text: tool.name),
                         Container(
+                          padding: const EdgeInsets.only(left: DEFAULT_DESCRIPTION_MARGIN),
                           child: GCWText(
                             text: tool.options.entries.map((entry) {
                               var value = entry.value.toString();
 
                               if (tool.internalToolName == MDT_INTERNALNAMES_COORDINATEFORMATS) {
-                                if (CoordinateFormatKey.values.contains(value))
+                                if (CoordinateFormatKey.values.contains(value)) {
                                   value = coordinateFormatMetadataByKey(value as CoordinateFormatKey).name;
+                                }
                               } else if ([MDT_INTERNALNAMES_BASE, MDT_INTERNALNAMES_BCD]
                                   .contains(tool.internalToolName)) {
                                 value += '_title';
@@ -234,7 +236,6 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
                             }).join('\n'),
                             style: gcwDescriptionTextStyle(),
                           ),
-                          padding: EdgeInsets.only(left: DEFAULT_DESCRIPTION_MARGIN),
                         )
                       ],
                     )),

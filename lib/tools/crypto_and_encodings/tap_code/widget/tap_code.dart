@@ -8,6 +8,8 @@ import 'package:gc_wizard/tools/crypto_and_encodings/_common/logic/crypt_alphabe
 import 'package:gc_wizard/tools/crypto_and_encodings/tap_code/logic/tap_code.dart';
 
 class TapCode extends StatefulWidget {
+  const TapCode({Key? key}) : super(key: key);
+
   @override
   TapCodeState createState() => TapCodeState();
 }
@@ -21,7 +23,7 @@ class TapCodeState extends State<TapCode> {
   AlphabetModificationMode _currentModificationMode = AlphabetModificationMode.J_TO_I;
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
-  var _maskFormatter = WrapperForMaskTextInputFormatter(mask: '## ' * 100000 + '##', filter: {"#": RegExp(r'[1-5]')});
+  final _maskFormatter = WrapperForMaskTextInputFormatter(mask: '## ' * 100000 + '##', filter: {"#": RegExp(r'[1-5]')});
 
   @override
   void initState() {

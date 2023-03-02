@@ -65,12 +65,14 @@ void initDefaultSettings(PreferencesInitMode mode, {String reinitSinglePreferenc
     clipboardData.removeWhere((item) {
       try {
         var decoded = jsonDecode(item)['created'];
-        if (decoded == null || !(decoded is String))
+        if (decoded == null || decoded is! String) {
           return true;
+        }
 
         var createdMS = int.tryParse(decoded);
-        if (createdMS == null)
+        if (createdMS == null) {
           return true;
+        }
 
         var created = DateTime.fromMillisecondsSinceEpoch(createdMS);
         return created
@@ -204,9 +206,9 @@ void initDefaultSettings(PreferencesInitMode mode, {String reinitSinglePreferenc
       // ensure backward compatibility; breaking change in 2.0.1 due to a bug fix
       if ([MDT_INTERNALNAMES_BCD, MDT_INTERNALNAMES_BASE].contains(tool.internalToolName)) {
         var options = <MultiDecoderToolOption>[];
-        tool.options.forEach((option) {
+        for (var option in tool.options) {
           options.add(MultiDecoderToolOption(option.name, (toStringOrNull(option.value) ?? '').split('_title')[0]));
-        });
+        }
         tool.options = options;
         updateMultiDecoderTool(tool);
         // ensure backward compatibility; breaking change in 2.2.1 due to a bug fix
@@ -262,8 +264,9 @@ void initDefaultSettings(PreferencesInitMode mode, {String reinitSinglePreferenc
       _reinitAll ||
       Prefs.get(PREFERENCE_THEME_FONT_SIZE) == null) {
     var loadedFontSize = Prefs.getDouble('font_size'); //backward compatibility: font_size == pre version 1.2.0
-    if (loadedFontSize == 0.0)
+    if (loadedFontSize == 0.0) {
       loadedFontSize = 16.0;
+    }
 
     Prefs.setDouble(PREFERENCE_THEME_FONT_SIZE, loadedFontSize);
   }

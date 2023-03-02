@@ -14,7 +14,7 @@ class GCWAsyncExecuter<T extends Object?> extends StatefulWidget {
   final void Function(T) onReady;
   final bool isOverlay;
 
-  GCWAsyncExecuter({
+  const GCWAsyncExecuter({
     Key? key,
     required this.isolatedFunction,
     required this.parameter,
@@ -72,8 +72,9 @@ class _GCWAsyncExecuterState extends State<GCWAsyncExecuter> {
         stream: progress(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            if (widget.isOverlay)
+            if (widget.isOverlay) {
               Navigator.of(context).pop(); // Pop from dialog on completion (needen on overlay)
+            }
             widget.onReady(_result);
           }
           return Column(children: <Widget>[
@@ -83,7 +84,7 @@ class _GCWAsyncExecuterState extends State<GCWAsyncExecuter> {
                     CircularProgressIndicator(
                       value: snapshot.data as double?,
                       backgroundColor: Colors.white,
-                      valueColor: new AlwaysStoppedAnimation<Color>(Colors.amber),
+                      valueColor: const AlwaysStoppedAnimation<Color>(Colors.amber),
                       strokeWidth: 20,
                     ),
                     Positioned(
@@ -91,20 +92,20 @@ class _GCWAsyncExecuterState extends State<GCWAsyncExecuter> {
                         child: Text(
                           ((snapshot.data as double) * 100).toStringAsFixed(0).toString() + '%',
                           textAlign: TextAlign.center,
-                          style: TextStyle(color: Colors.white, decoration: TextDecoration.none),
+                          style: const TextStyle(color: Colors.white, decoration: TextDecoration.none),
                         ),
                       ),
                     ),
                   ]))
                 : Expanded(
-                    child: Stack(fit: StackFit.expand, children: [
+                    child: Stack(fit: StackFit.expand, children: const [
                     CircularProgressIndicator(
                       backgroundColor: Colors.white,
-                      valueColor: new AlwaysStoppedAnimation<Color>(Colors.amber),
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.amber),
                       strokeWidth: 20,
                     )
                   ])),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             GCWButton(
               text: i18n(context, 'common_cancel'),
               onPressed: () {

@@ -89,12 +89,13 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
       );
     }
   } // end if not offline
-  else
+  else {
     _LUAFile = String.fromCharCodes(byteListLUA);
+  }
 
   _LUAFile = _normalizeLUAmultiLineText(_LUAFile);
 
-  if ((byteListLUA != [] || byteListLUA != null || _LUAFile != '')) _LUAchecksToDo = WHERIGO_FILE_LOAD_STATE.LUA;
+  if ((byteListLUA.isNotEmpty || _LUAFile != '')) _LUAchecksToDo = WHERIGO_FILE_LOAD_STATE.LUA;
 
   if (_LUAchecksToDo == WHERIGO_FILE_LOAD_STATE.NULL) {
     _LUAAnalyzeResults.add('wherigo_error_empty_lua');
@@ -137,6 +138,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
   List<WherigoTimerData> _cartridgeTimers = [];
   List<WherigoMediaData> _cartridgeMedia = [];
 
+  // TODO Thomas: Unused variables
   bool _sectionCharacter = true;
   bool _sectionMedia = true;
   bool _sectionZone = true;
@@ -336,9 +338,10 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
                 deobfuscateUrwigoText(
                     _declaration[2].replaceAll(_obfuscatorFunction, '').replaceAll('("', '').replaceAll('")', ''),
                     _obfuscatorTable)));
-          } else
+          } else {
             _cartridgeVariables.add(// content not obfuscated
                 WherigoVariableData(_declaration[1].trim(), _declaration[2].replaceAll('"', '')));
+          }
         }
         i++;
         lines[i] = lines[i].trim();
@@ -352,11 +355,13 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
                   deobfuscateUrwigoText(
                       _declaration[1].replaceAll(_obfuscatorFunction, '').replaceAll('("', '').replaceAll('")', ''),
                       _obfuscatorTable)));
-            } else
+            } else {
               _cartridgeVariables.add(// content not obfuscated
                   WherigoVariableData(_declaration[0].trim(), _declaration[1].replaceAll('"', '')));
-          } else // only one element
+            }
+          } else {
             _cartridgeVariables.add(WherigoVariableData(_declaration[0].trim(), ''));
+          }
 
           i++;
           lines[i] = lines[i].trim();
@@ -461,7 +466,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
   // ------------------------------------------------------------------------------------------------------------------
   // Save Answers to Input Objects
   //
-  _cartridgeInputs.forEach((inputObject) {
+  for (var inputObject in _cartridgeInputs) {
     // _Answers.forEach((answer) {
     //   if (answer.InputLUAName == inputObject.InputLUAName) {
     //     _resultInputs.add(WherigoInputData(
@@ -495,7 +500,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
         // TODO Thomas I can not check if logically correct to send empty list as exception. However this can be removed when using explicit values
         // it is logically correct. If there is no input then there will be no answer
         _Answers[inputObject.InputLUAName] ?? []));
-  });
+  }
   _cartridgeInputs = _resultInputs;
 
   // ----------------------------------------------------------------------------------------------------------------
@@ -557,38 +562,47 @@ void _checkAndGetCartridgeMetaData(String currentLine) {
     _LUACartridgeGUID = currentLine.replaceAll('.Id = ', '').replaceAll('"', '').trim();
   }
 
-  if (currentLine.startsWith('.BuilderVersion'))
+  if (currentLine.startsWith('.BuilderVersion')) {
     _BuilderVersion = currentLine.replaceAll('.BuilderVersion = ', '').replaceAll('"', '').trim();
+  }
 
-  if (currentLine.startsWith('.TargetDeviceVersion'))
+  if (currentLine.startsWith('.TargetDeviceVersion')) {
     _TargetDeviceVersion = currentLine.replaceAll('.TargetDeviceVersion = ', '').replaceAll('"', '').trim();
+  }
 
-  if (currentLine.startsWith('.CountryId'))
+  if (currentLine.startsWith('.CountryId')) {
     _CountryID = currentLine.replaceAll('.CountryId = ', '').replaceAll('"', '').trim();
+  }
 
-  if (currentLine.startsWith('.StateId'))
+  if (currentLine.startsWith('.StateId')) {
     _StateID = currentLine.replaceAll('.StateId = ', '').replaceAll('"', '').trim();
+  }
 
-  if (currentLine.startsWith('.UseLogging'))
+  if (currentLine.startsWith('.UseLogging')) {
     _UseLogging = currentLine.replaceAll('.UseLogging = ', '').replaceAll('"', '').trim().toLowerCase();
+  }
 
-  if (currentLine.startsWith('.CreateDate'))
+  if (currentLine.startsWith('.CreateDate')) {
     _CreateDate = _normalizeDate(currentLine.replaceAll('.CreateDate = ', '').replaceAll('"', '').trim());
+  }
 
-  if (currentLine.startsWith('.PublishDate'))
+  if (currentLine.startsWith('.PublishDate')) {
     _PublishDate = _normalizeDate(currentLine.replaceAll('.PublishDate = ', '').replaceAll('"', '').trim());
+  }
 
-  if (currentLine.startsWith('.UpdateDate'))
+  if (currentLine.startsWith('.UpdateDate')) {
     _UpdateDate = _normalizeDate(currentLine.replaceAll('.UpdateDate = ', '').replaceAll('"', '').trim());
+  }
 
-  if (currentLine.startsWith('.LastPlayedDate'))
+  if (currentLine.startsWith('.LastPlayedDate')) {
     _LastPlayedDate = _normalizeDate(currentLine.replaceAll('.LastPlayedDate = ', '').replaceAll('"', '').trim());
+  }
 }
 
 void _checkAndGetWherigoBuilder() {
-  if (RegExp(r'(_Urwigo)').hasMatch(_LUAFile))
+  if (RegExp(r'(_Urwigo)').hasMatch(_LUAFile)) {
     _builder = WHERIGO_BUILDER.URWIGO;
-  else if (RegExp(r'(WWB_deobf)').hasMatch(_LUAFile)) {
+  } else if (RegExp(r'(WWB_deobf)').hasMatch(_LUAFile)) {
     _builder = WHERIGO_BUILDER.EARWIGO;
   } else if (RegExp(r'(gsub_wig)').hasMatch(_LUAFile)) {
     _builder = WHERIGO_BUILDER.WHERIGOKIT;

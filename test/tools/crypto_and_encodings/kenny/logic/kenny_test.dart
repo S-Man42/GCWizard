@@ -37,12 +37,12 @@ void main() {
       {'input' : 'A1', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'Mmm1', 'caseSensitive' : true},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = encryptKenny(elem['input'] as String?, elem['replaceCharacters'] as List<String>, elem['caseSensitive'] as bool);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("KennysCode.decryptKenny:", () {
@@ -152,11 +152,11 @@ void main() {
       {'input' : 'MfmFmffmp mfmmppppmmmmmmfmfpfmp!', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'GUT GEMACHT!', 'caseSensitive' : false},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decryptKenny(elem['input'] as String?, elem['replaceCharacters'] as List<String>, elem['caseSensitive'] as bool);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

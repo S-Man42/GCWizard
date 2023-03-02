@@ -21,6 +21,8 @@ import 'package:latlong2/latlong.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 
 class Intersection extends StatefulWidget {
+  const Intersection({Key? key}) : super(key: key);
+
   @override
   IntersectionState createState() => IntersectionState();
 }
@@ -99,15 +101,15 @@ class IntersectionState extends State<Intersection> {
         barrierDismissible: false,
         builder: (context) {
           return Center(
-            child: Container(
+            child: SizedBox(
+              height: 220,
+              width: 150,
               child: GCWAsyncExecuter<List<LatLng?>>(
                 isolatedFunction: intersectionAsync,
                 parameter: _buildJobData,
                 onReady: (data) => _showOutput(data),
                 isOverlay: true,
               ),
-              height: 220,
-              width: 150,
             ),
           );
         },

@@ -14,12 +14,12 @@ void main() {
       {'input' : 'ABC QUICK 1023 PRAYXYZ', 'mode': HoudiniMode.LETTERS, 'expectedOutput' : {0: 'ABCQUICK1023AXYZ'}}
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, mode: ${elem['mode']}', () {
         var _actual = decodeHoudini(elem['input'] as String?, elem['mode'] as HoudiniMode);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Houdini.encodeHoudini:", () {
@@ -35,11 +35,11 @@ void main() {
       {'input' : 'ABCQUICK1023AXYZ', 'mode': HoudiniMode.LETTERS, 'expectedOutput' : {0: 'PRAY ANSWER SAY QULOOK SAY K1023PRAY XYZ'}}
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, mode: ${elem['mode']}', () {
         var _actual = encodeHoudini(elem['input'] as String?, elem['mode'] as HoudiniMode);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

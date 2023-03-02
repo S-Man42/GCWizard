@@ -14,13 +14,15 @@ import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/w
 import 'package:intl/intl.dart';
 
 class MayaCalendar extends StatefulWidget {
+  const MayaCalendar({Key? key}) : super(key: key);
+
   @override
   MayaCalendarState createState() => MayaCalendarState();
 }
 
 class MayaCalendarState extends State<MayaCalendar> {
   int _currentEncodeInput = 0;
-  String _currentLongCount = '';
+  final String _currentLongCount = '';
   late TextEditingController _longCountController;
 
   var _currentDisplays = Segments.Empty();
@@ -71,7 +73,7 @@ class MayaCalendarState extends State<MayaCalendar> {
   Widget _buildVisualDecryption() {
     var currentDisplay = buildSegmentMap(_currentDisplays);
 
-    var onChanged = (Map<String, bool> d) {
+    onChanged(Map<String, bool> d) {
       setState(() {
         var newSegments = <String>[];
         d.forEach((key, value) {
@@ -81,13 +83,13 @@ class MayaCalendarState extends State<MayaCalendar> {
 
         _currentDisplays.replaceLastSegment(newSegments);
       });
-    };
+    }
 
     return Column(
       children: <Widget>[
         Container(
           width: 180,
-          padding: EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
+          padding: const EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
           child: Row(
             children: <Widget>[
               Expanded(
@@ -139,7 +141,7 @@ class MayaCalendarState extends State<MayaCalendar> {
   }
 
   Widget _buildOutput() {
-    var outputDates = new Map<String, Object>();
+    var outputDates = <String, Object>{};
     var dateFormat = DateFormat('yMMMMd', Localizations.localeOf(context).toString());
 
     if (_currentMode == GCWSwitchPosition.left) {
@@ -164,7 +166,7 @@ class MayaCalendarState extends State<MayaCalendar> {
             data: outputDates.entries.map((entry) {
                     return [entry.key, entry.value];
                   }).toList(),
-            flexValues: [1, 1]
+            flexValues: const [1, 1]
           ),
         ],
       );
@@ -191,7 +193,7 @@ class MayaCalendarState extends State<MayaCalendar> {
             data: outputDates.entries.map((entry) {
                     return [entry.key, entry.value];
                   }).toList(),
-            flexValues: [1, 1]
+            flexValues: const [1, 1]
           ),
         ],
       );

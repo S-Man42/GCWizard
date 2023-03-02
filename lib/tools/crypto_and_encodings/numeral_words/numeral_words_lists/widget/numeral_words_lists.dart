@@ -12,6 +12,8 @@ import 'package:gc_wizard/tools/crypto_and_encodings/numeral_words/_common/logic
 import 'package:gc_wizard/utils/collection_utils.dart';
 
 class NumeralWordsLists extends StatefulWidget {
+  const NumeralWordsLists({Key? key}) : super(key: key);
+
   @override
   NumeralWordsListsState createState() => NumeralWordsListsState();
 }
@@ -19,7 +21,7 @@ class NumeralWordsLists extends StatefulWidget {
 class NumeralWordsListsState extends State<NumeralWordsLists> {
   late TextEditingController _decodeController;
 
-  var _currentDecodeInput = '';
+  final _currentDecodeInput = '';
   var _currentLanguage = NumeralWordsLanguage.DEU;
   int _valueFontsizeOffset = 0;
   bool _setDefaultLanguage = false;
@@ -44,10 +46,8 @@ class NumeralWordsListsState extends State<NumeralWordsLists> {
       _currentLanguage = _defaultLanguage(context);
       _setDefaultLanguage = true;
     }
-    if (_LANGUAGES == null) {
-      _LANGUAGES = SplayTreeMap.from(
+    _LANGUAGES ??= SplayTreeMap.from(
           switchMapKeyValue(NUMERALWORDS_LANGUAGES).map((key, value) => MapEntry(i18n(context, key), value)));
-    }
 
     return Column(
       children: <Widget>[
@@ -72,17 +72,12 @@ class NumeralWordsListsState extends State<NumeralWordsLists> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    var numeralWordsOverview = Map<String, String>();
+    var numeralWordsOverview = <String, String>{};
     numeralWordsOverview = NUMERAL_WORDS[_currentLanguage] ?? {};
     var wordList = numeralWordsOverview.entries.map((entry) {
       return (int.tryParse(entry.value) != null) ? [entry.value, entry.key] : <String>[];
     });
     return GCWDefaultOutput(
-      child: GCWColumnedMultilineOutput(
-          data: wordList.where((element) => element.isNotEmpty).toList(),
-          flexValues: [1, 3],
-          fontSize: defaultFontSize() + _valueFontsizeOffset
-      ),
       trailing: ZOOMABLE_LANGUAGE.contains(_currentLanguage)
           ? Row(
               children: <Widget>[
@@ -107,6 +102,11 @@ class NumeralWordsListsState extends State<NumeralWordsLists> {
               ],
             )
           : null,
+      child: GCWColumnedMultilineOutput(
+          data: wordList.where((element) => element.isNotEmpty).toList(),
+          flexValues: const [1, 3],
+          fontSize: defaultFontSize() + _valueFontsizeOffset
+      ),
     );
   }
 

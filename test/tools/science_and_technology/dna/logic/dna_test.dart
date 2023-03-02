@@ -11,12 +11,12 @@ void main() {
       {'input' : 'THE WORLD IS NOT FAIR', 'expectedOutput' : 'ACUCAUGAAUGGCGAUUAGAUAUUUCUAAUACUUUCGCUAUUCGA'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = encodeRNANucleobaseSequence(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("DNA.decodeRNANucleobaseSequence:", () {
@@ -29,12 +29,12 @@ void main() {
       {'expectedOutput' : 'THEWRLDISNTFAI', 'input' : 'ACUCAUGAAUGGCGAUUAGAUAUUUCUAAUACUUUCGCUAUUC'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decodeRNANucleobaseSequence(elem['input'] as String?).map((e) => e.symbolShort).join();
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("DNA.decodeRNANucleobaseSequenceWithStop:", () {
@@ -42,12 +42,12 @@ void main() {
       {'expectedOutput' : [NucleobaseSequenceType.STOP, NucleobaseSequenceType.NORMAL, NucleobaseSequenceType.START], 'input' : 'UAACACGUG'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decodeRNANucleobaseSequence(elem['input'] as String?).map((e) => e.type).toList();
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("DNA.encodeDNANucleobaseSequence:", () {
@@ -59,12 +59,12 @@ void main() {
       {'input' : 'THE WORLD IS NOT FAIR', 'expectedOutput' : 'ACTCATGAATGGCGATTAGATATTTCTAATACTTTCGCTATTCGA'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = encodeDNANucleobaseSequence(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("DNA.decodeDNANucleobaseSequence:", () {
@@ -79,12 +79,12 @@ void main() {
       {'expectedOutput' : 'THEWRLDISNTFAI', 'input' : 'THIS IS MY WORLD'},// Mark test
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decodeDNANucleobaseSequence(elem['input'] as String?).map((e) => e.symbolShort).join();
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("DNA.encodeRNASymbolLong:", () {
@@ -96,12 +96,12 @@ void main() {
       {'input' : 'THE WORLD IS NOT FAIR', 'expectedOutput' : 'THRHISGLUTRPARGLEUASPILESERASNTHRPHEALAILEARG'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = encodeRNASymbolLong(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("DNA.decodeRNASymbolLong:", () {
@@ -126,11 +126,11 @@ void main() {
       {'expectedOutput' : 'THEWRLDISNTFAIR', 'input' : 'THRHISGLUTRPARGLEUASPILESERASNTHRPHEALAILEARG'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decodeRNASymbolLong(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

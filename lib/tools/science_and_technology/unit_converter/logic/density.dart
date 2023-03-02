@@ -10,8 +10,8 @@ class Density extends Unit {
     bool isReference = false,
     double inGramPerCubicMeter = 1.0,
   }) : super(name, symbol, isReference, (e) => e * inGramPerCubicMeter, (e) => e / inGramPerCubicMeter) {
-    toGramPerCubicMeter = this.toReference;
-    fromGramPerCubicMeter = this.fromReference;
+    toGramPerCubicMeter = toReference;
+    fromGramPerCubicMeter = fromReference;
   }
 }
 

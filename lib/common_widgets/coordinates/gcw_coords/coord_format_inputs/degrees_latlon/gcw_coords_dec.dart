@@ -16,8 +16,8 @@ class _GCWCoordsDECState extends State<_GCWCoordsDEC> {
   late TextEditingController _LonDegreesController;
   late TextEditingController _LonMilliDegreesController;
 
-  FocusNode _latMilliDegreesFocusNode = FocusNode();
-  FocusNode _lonMilliDegreesFocusNode = FocusNode();
+  final FocusNode _latMilliDegreesFocusNode = FocusNode();
+  final FocusNode _lonMilliDegreesFocusNode = FocusNode();
 
   int _currentLatSign = defaultHemiphereLatitude();
   int _currentLonSign = defaultHemiphereLongitude();
@@ -74,7 +74,7 @@ class _GCWCoordsDECState extends State<_GCWCoordsDEC> {
           Expanded(
             flex: 6,
             child: GCWSignDropDown(
-                itemList: ['+', '-'],
+                itemList: const ['+', '-'],
                 value: _currentLatSign,
                 onChanged: (value) {
                   setState(() {
@@ -86,6 +86,7 @@ class _GCWCoordsDECState extends State<_GCWCoordsDEC> {
           Expanded(
               flex: 6,
               child: Container(
+                padding: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
                 child: GCWIntegerTextField(
                     hintText: 'DD',
                     textInputFormatter: _DegreesLatTextInputFormatter(allowNegativeValues: false),
@@ -95,13 +96,13 @@ class _GCWCoordsDECState extends State<_GCWCoordsDEC> {
                         _currentLatDegrees = ret.text;
                         _setCurrentValueAndEmitOnChange();
 
-                        if (_currentLatDegrees.length == 2)
+                        if (_currentLatDegrees.length == 2) {
                           FocusScope.of(context).requestFocus(_latMilliDegreesFocusNode);
+                        }
                       });
                     }),
-                padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
               )),
-          Expanded(
+          const Expanded(
             flex: 1,
             child: GCWText(align: Alignment.center, text: '.'),
           ),
@@ -119,7 +120,7 @@ class _GCWCoordsDECState extends State<_GCWCoordsDEC> {
                   });
                 }),
           ),
-          Expanded(
+          const Expanded(
             flex: 1,
             child: GCWText(align: Alignment.center, text: '°'),
           ),
@@ -130,7 +131,7 @@ class _GCWCoordsDECState extends State<_GCWCoordsDEC> {
           Expanded(
             flex: 6,
             child: GCWSignDropDown(
-                itemList: ['+', '-'],
+                itemList: const ['+', '-'],
                 value: _currentLonSign,
                 onChanged: (value) {
                   setState(() {
@@ -142,6 +143,7 @@ class _GCWCoordsDECState extends State<_GCWCoordsDEC> {
           Expanded(
               flex: 6,
               child: Container(
+                padding: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
                 child: GCWIntegerTextField(
                     hintText: 'DD',
                     textInputFormatter: _DegreesLonTextInputFormatter(allowNegativeValues: false),
@@ -151,13 +153,13 @@ class _GCWCoordsDECState extends State<_GCWCoordsDEC> {
                         _currentLonDegrees = ret.text;
                         _setCurrentValueAndEmitOnChange();
 
-                        if (_currentLonDegrees.length == 3)
+                        if (_currentLonDegrees.length == 3) {
                           FocusScope.of(context).requestFocus(_lonMilliDegreesFocusNode);
+                        }
                       });
                     }),
-                padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
               )),
-          Expanded(
+          const Expanded(
             flex: 1,
             child: GCWText(align: Alignment.center, text: '.'),
           ),
@@ -175,7 +177,7 @@ class _GCWCoordsDECState extends State<_GCWCoordsDEC> {
                   });
                 }),
           ),
-          Expanded(
+          const Expanded(
             flex: 1,
             child: GCWText(align: Alignment.center, text: '°'),
           ),

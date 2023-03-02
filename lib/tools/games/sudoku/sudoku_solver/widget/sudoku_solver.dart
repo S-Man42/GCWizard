@@ -16,6 +16,8 @@ import 'package:touchable/touchable.dart';
 part 'package:gc_wizard/tools/games/sudoku/sudoku_solver/widget/sudoku_board.dart';
 
 class SudokuSolver extends StatefulWidget {
+  const SudokuSolver({Key? key}) : super(key: key);
+
   @override
   SudokuSolverState createState() => SudokuSolverState();
 }
@@ -83,13 +85,14 @@ class SudokuSolverState extends State<SudokuSolver> {
           ),
         if (_currentBoard.solutions != null && _currentBoard.solutions!.length >= _MAX_SOLUTIONS)
           Container(
+            padding: const EdgeInsets.only(top: DOUBLE_DEFAULT_MARGIN),
             child: GCWText(text: '*) ' + i18n(context, 'sudokusolver_maximumsolutions')),
-            padding: EdgeInsets.only(top: DOUBLE_DEFAULT_MARGIN),
           ),
         Row(
           children: <Widget>[
             Expanded(
               child: Container(
+                padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
                 child: GCWButton(
                   text: i18n(context, 'sudokusolver_solve'),
                   onPressed: () {
@@ -104,29 +107,30 @@ class SudokuSolverState extends State<SudokuSolver> {
                     });
                   },
                 ),
-                padding: EdgeInsets.only(right: DEFAULT_MARGIN),
               ),
             ),
             Expanded(
                 child: Container(
+                  padding: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
                   child: GCWButton(
                     text: i18n(context, 'sudokusolver_clearcalculated'),
                     onPressed: () {
                       setState(() {
                         for (int i = 0; i < 9; i++) {
                           for (int j = 0; j < 9; j++) {
-                            if (_currentBoard.getFillType(i, j) == SudokuFillType.CALCULATED)
+                            if (_currentBoard.getFillType(i, j) == SudokuFillType.CALCULATED) {
                               _currentBoard.setValue(i, j, null);
+                            }
                           }
                         }
                         _currentBoard.solutions = null;
                       });
                     },
                   ),
-                  padding: EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
                 )),
             Expanded(
                 child: Container(
+                  padding: const EdgeInsets.only(left: DEFAULT_MARGIN),
                   child: GCWButton(
                     text: i18n(context, 'sudokusolver_clearall'),
                     onPressed: () {
@@ -141,7 +145,6 @@ class SudokuSolverState extends State<SudokuSolver> {
                       );
                     },
                   ),
-                  padding: EdgeInsets.only(left: DEFAULT_MARGIN),
                 ))
           ],
         )
@@ -151,10 +154,12 @@ class SudokuSolverState extends State<SudokuSolver> {
 
   void _showSolution() {
     if (_currentBoard.solutions == null || _currentSolution >= _currentBoard.solutions!.length) return;
-    for (int i = 0; i < 9; i++)
+    for (int i = 0; i < 9; i++) {
       for (int j = 0; j < 9; j++) {
         if (_currentBoard.getFillType(i, j) == SudokuFillType.USER_FILLED) continue;
-        _currentBoard.setValue(i, j, _currentBoard.solutions![_currentSolution].getValue(i, j), type: SudokuFillType.CALCULATED);
+        _currentBoard.setValue(i, j, _currentBoard.solutions![_currentSolution].getValue(i, j),
+            type: SudokuFillType.CALCULATED);
       }
+    }
   }
 }

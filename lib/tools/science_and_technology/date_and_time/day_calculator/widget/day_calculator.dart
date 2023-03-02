@@ -8,6 +8,8 @@ import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/day_calculator/logic/day_calculator.dart';
 
 class DayCalculator extends StatefulWidget {
+  const DayCalculator({Key? key}) : super(key: key);
+
   @override
   DayCalculatorState createState() => DayCalculatorState();
 }
@@ -33,7 +35,7 @@ class DayCalculatorState extends State<DayCalculator> {
       children: <Widget>[
         GCWTextDivider(text: i18n(context, 'dates_daycalculator_startdate')),
         GCWDateTimePicker(
-          config: {DateTimePickerConfig.DATE},
+          config: const {DateTimePickerConfig.DATE},
           datetime: _currentStartDate,
           onChanged: (value) {
             setState(() {
@@ -43,7 +45,7 @@ class DayCalculatorState extends State<DayCalculator> {
         ),
         GCWTextDivider(text: i18n(context, 'dates_daycalculator_enddate')),
         GCWDateTimePicker(
-          config: {DateTimePickerConfig.DATE},
+          config: const {DateTimePickerConfig.DATE},
           datetime: _currentEndDate,
           onChanged: (value) {
             setState(() {
@@ -78,7 +80,7 @@ class DayCalculatorState extends State<DayCalculator> {
     var outputData = calculateDayDifferences(_currentStartDate, _currentEndDate,
         countStart: _currentCountStart, countEnd: _currentCountEnd);
     if (outputData == null) {
-      return GCWDefaultOutput();
+      return const GCWDefaultOutput();
     }
 
     var rows = [

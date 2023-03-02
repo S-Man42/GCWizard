@@ -60,7 +60,6 @@ class AnimatedImageState extends State<AnimatedImage> {
         },
       ),
       GCWDefaultOutput(
-          child: _buildOutput(),
           trailing: Row(children: <Widget>[
             GCWIconButton(
               icon: Icons.play_arrow,
@@ -90,7 +89,8 @@ class AnimatedImageState extends State<AnimatedImage> {
                 if (_outData != null && _file?.name != null) _exportFiles(context, _file!.name!, _outData!.images);
               },
             )
-          ]))
+          ]),
+          child: _buildOutput())
     ]);
   }
 
@@ -103,12 +103,12 @@ class AnimatedImageState extends State<AnimatedImage> {
       durations.addAll([
         [i18n(context, 'animated_image_table_index'), i18n(context, 'animated_image_table_duration')]
       ]);
-      _outData!.durations.forEach((value) {
+      for (var value in _outData!.durations) {
         counter++;
         durations.addAll([
           [counter, value]
         ]);
-      });
+      }
     }
 
     return Column(children: <Widget>[
@@ -121,11 +121,11 @@ class AnimatedImageState extends State<AnimatedImage> {
 
   Widget _buildDurationOutput(List<List<Object>> durations) {
     return Column(children: <Widget>[
-      GCWDivider(),
+      const GCWDivider(),
       GCWOutput(
         child: GCWColumnedMultilineOutput(
             data: durations,
-            flexValues: [1, 2],
+            flexValues: const [1, 2],
             hasHeader: true,
             copyAll: true
         )
@@ -153,15 +153,15 @@ class AnimatedImageState extends State<AnimatedImage> {
       barrierDismissible: false,
       builder: (context) {
         return Center(
-          child: Container(
+          child: SizedBox(
+            height: 220,
+            width: 150,
             child: GCWAsyncExecuter<AnimatedImageOutput?>(
               isolatedFunction: analyseImageAsync,
               parameter: _buildJobData,
               onReady: (data) => _showOutput(data),
               isOverlay: true,
             ),
-            height: 220,
-            width: 150,
           ),
         );
       },

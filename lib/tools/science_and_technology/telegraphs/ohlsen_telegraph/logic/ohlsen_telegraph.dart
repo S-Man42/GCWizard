@@ -285,20 +285,21 @@ Segments encodeOhlsenTelegraph(String? input) {
 }
 
 SegmentsCodpoints decodeVisualOhlsenTelegraph(List<String>? inputs) {
-  if (inputs == null || inputs.isEmpty)
+  if (inputs == null || inputs.isEmpty) {
     return SegmentsCodpoints(displays: <List<String>>[], text: '', codepoints: '');
+  }
 
   var displays = <List<String>>[];
   List<String> codepoints = [];
   var segment = <String>[];
   String text = '';
 
-  inputs.forEach((element) {
+  for (var element in inputs) {
     segment = _stringToSegment(element);
     displays.add(segment);
     codepoints.add(segmentToCode(segment));
     text = text + (CODEBOOK_OHLSEN[segmentToCode(segment)] ?? UNKNOWN_ELEMENT);
-  });
+  }
 
   return SegmentsCodpoints(displays: displays, text: text, codepoints: codepoints.join(' '));
 }

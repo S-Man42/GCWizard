@@ -104,37 +104,40 @@ class GCWPasteButtonState extends State<GCWPasteButton> {
 
           return GCWPopupMenuItem(
               child: Container(
+                padding: const EdgeInsets.only(bottom: 15),
                 child: Column(
                   children: [
                     Align(
+                        alignment: Alignment.centerLeft,
                         child: Text(
                           dateFormat.format(item.datetime) + ' ' + timeFormat.format(item.datetime),
                           style: gcwDialogTextStyle().copyWith(fontSize: max(fontSizeSmall(), 10)),
-                        ),
-                        alignment: Alignment.centerLeft),
+                        )),
                     Align(
+                        alignment: Alignment.centerLeft,
                         child: Text(
                           item.text,
                           style: gcwDialogTextStyle(),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                        ),
-                        alignment: Alignment.centerLeft),
+                        )),
                   ],
                 ),
-                padding: EdgeInsets.only(bottom: 15),
               ),
               action: (int index) {
-                if (index <= 2)
-                  return null;
+                if (index <= 2) {
+                  return;
+                }
 
                 var list = Prefs.getStringList(PREFERENCE_CLIPBOARD_ITEMS);
-                if (list.length < 2)
-                  return null;
+                if (list.length < 2) {
+                  return;
+                }
 
                 var item = ClipboardItem.fromJson(list[index - 2]);
-                if (item == null)
-                  return null;
+                if (item == null) {
+                  return;
+                }
 
                 widget.onSelected(item.text);
                 insertIntoGCWClipboard(context, item.text, useGlobalClipboard: false);

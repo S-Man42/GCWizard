@@ -20,6 +20,8 @@ import 'package:gc_wizard/utils/ui_dependent_utils/image_utils/image_utils.dart'
 import 'package:gc_wizard/utils/ui_dependent_utils/text_widget_utils.dart';
 
 class WASD extends StatefulWidget {
+  const WASD({Key? key}) : super(key: key);
+
   @override
   WASDState createState() => WASDState();
 }
@@ -45,7 +47,7 @@ class WASDState extends State<WASD> {
   var _currentKeyboardControls = WASD_TYPE.CURSORS;
 
 
-  var _maskInputFormatter = WrapperForMaskTextInputFormatter(mask: '#', filter: {"#": RegExp(r'.')});
+  final _maskInputFormatter = WrapperForMaskTextInputFormatter(mask: '#', filter: {"#": RegExp(r'.')});
 
   Uint8List? _outDecodeData;
   Uint8List? _outEncodeData;
@@ -134,7 +136,7 @@ class WASDState extends State<WASD> {
   }
 
   Widget _buildButton(String text) {
-    return Container(
+    return SizedBox(
       height: 55,
       width: 40,
       child: GCWButton(
@@ -300,7 +302,6 @@ class WASDState extends State<WASD> {
           ),
         if (_currentMode == GCWSwitchPosition.right) //decode
           GCWDefaultOutput(
-              child: _buildGraphicDecodeOutput(),
               trailing: GCWIconButton(
                 icon: Icons.save,
                 size: IconButtonSize.SMALL,
@@ -308,10 +309,10 @@ class WASDState extends State<WASD> {
                 onPressed: () {
                   _outDecodeData == null ? null : _exportFile(context, _outDecodeData!);
                 },
-              ))
+              ),
+              child: _buildGraphicDecodeOutput())
         else
           GCWDefaultOutput(
-              child: _buildGraphicEncodeOutput(),
               trailing: GCWIconButton(
                 icon: Icons.save,
                 size: IconButtonSize.SMALL,
@@ -319,7 +320,8 @@ class WASDState extends State<WASD> {
                 onPressed: () {
                   _outEncodeData == null ? null : _exportFile(context, _outEncodeData!);
                 },
-              )),
+              ),
+              child: _buildGraphicEncodeOutput()),
         if (_currentMode == GCWSwitchPosition.left ||
             (_currentMode == GCWSwitchPosition.right && _currentOutputMode == GCWSwitchPosition.right)) //text & graphic
              GCWDefaultOutput(child: _buildOutput())

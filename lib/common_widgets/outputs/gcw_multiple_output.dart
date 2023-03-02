@@ -32,9 +32,10 @@ class _GCWMultipleOutputState extends State<GCWMultipleOutput> {
       );
     }).toList();
 
-    if (!widget.suppressDefaultTitle)
+    if (!widget.suppressDefaultTitle) {
       children.insert(
-          0, GCWTextDivider(text: this.widget.title ?? i18n(context, 'common_output'), trailing: widget.trailing));
+          0, GCWTextDivider(text: widget.title ?? i18n(context, 'common_output'), trailing: widget.trailing));
+    }
 
     return Column(children: children);
   }

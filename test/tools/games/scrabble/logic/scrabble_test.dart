@@ -42,11 +42,11 @@ void main() {
 
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, scrabbleVersion: ${elem['scrabbleVersion']}', () {
         var _actual = scrabbleTextToLetterValues(elem['input'] as String, elem['scrabbleVersion'] as String);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

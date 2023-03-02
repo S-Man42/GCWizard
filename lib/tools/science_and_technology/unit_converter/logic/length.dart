@@ -12,8 +12,8 @@ class Length extends Unit {
     bool isReference = false,
     required double inMeters,
   }) : super(name, symbol, isReference, (e) => e * inMeters, (e) => e / inMeters) {
-    toMeter = this.toReference;
-    fromMeter = this.fromReference;
+    toMeter = toReference;
+    fromMeter = fromReference;
   }
 }
 

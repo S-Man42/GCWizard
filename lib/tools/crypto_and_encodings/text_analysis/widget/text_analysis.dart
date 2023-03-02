@@ -15,6 +15,8 @@ import 'package:intl/intl.dart';
 enum _SORT_TYPES { ALPHABETICAL, COUNT_GROUP, COUNT_OVERALL }
 
 class TextAnalysis extends StatefulWidget {
+  const TextAnalysis({Key? key}) : super(key: key);
+
   @override
   TextAnalysisState createState() => TextAnalysisState();
 }
@@ -70,7 +72,7 @@ class TextAnalysisState extends State<TextAnalysis> {
         _currentOptions
             ? Column(
                 children: [
-                  GCWDivider(),
+                  const GCWDivider(),
                   GCWOnOffSwitch(
                     value: _currentCaseSensitive,
                     title: i18n(context, 'common_case_sensitive'),
@@ -125,7 +127,7 @@ class TextAnalysisState extends State<TextAnalysis> {
                       });
                     },
                   ),
-                  GCWDivider()
+                  const GCWDivider()
                 ],
               )
             : Container(),

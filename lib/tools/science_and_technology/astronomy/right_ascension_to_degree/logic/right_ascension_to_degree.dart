@@ -45,15 +45,14 @@ class RightAscension {
   late int minutes;
   late double seconds;
 
-  RightAscension(int sign, int hours, int min, double sec) {
-    this.sign = sign;
+  RightAscension(this.sign, int hours, int min, double sec) {
     this.hours = hours.abs();
-    this.minutes = min.abs();
-    this.seconds = sec.abs();
+    minutes = min.abs();
+    seconds = sec.abs();
   }
 
   int get milliseconds {
-    return ((this.seconds - this.seconds.truncate()) * 1000).round();
+    return ((seconds - seconds.truncate()) * 1000).round();
   }
 
   static RightAscension? fromDuration(Duration? duration) {
@@ -69,7 +68,7 @@ class RightAscension {
 
   Duration toDuration() {
     var duration = Duration(
-        hours: this.hours, minutes: this.minutes, seconds: this.seconds.truncate(), milliseconds: this.milliseconds);
+        hours: hours, minutes: minutes, seconds: seconds.truncate(), milliseconds: milliseconds);
 
     if (sign < 0) duration = -duration;
 
@@ -77,22 +76,23 @@ class RightAscension {
   }
 
   static RightAscension? parse(String? input) {
-    var regex = new RegExp(r"([+|-]?)([\d]*):([\d]*):([\d]*)(\.\d*)*");
+    var regex = RegExp(r"([+|-]?)([\d]*):([\d]*):([\d]*)(\.\d*)*");
     if (input == null) return null;
 
     var matches = regex.allMatches(input);
 
     if (matches.isNotEmpty) {
       var match =matches.first;
-      return new RightAscension(
+      return RightAscension(
           (matches.first.group(1) == "-") ? -1 : 1,
           int.parse(match.group(2) ?? ''),
           int.parse(match.group(3) ?? ''),
           ((match.group(5) == null) || match.group(5)!.isEmpty)
               ? double.parse(match.group(4) ?? '')
               : double.parse((match.group(4) ?? '') + match.group(5)!));
-    } else
+    } else {
       return null;
+    }
   }
 
   @override
@@ -106,28 +106,26 @@ class RightAscension {
 class RaDeg {
   late double? degrees;
 
-  RaDeg(double? degrees) {
-    this.degrees = degrees;
-  }
+  RaDeg(this.degrees);
 
   static RaDeg fromDMM(int? sign, int? degrees, double? minutes) {
-    if (sign == null) sign = 1;
-    if (degrees == null) degrees = 0;
-    if (minutes == null) minutes = 0.0;
+    sign ??= 1;
+    degrees ??= 0;
+    minutes ??= 0.0;
     return RaDeg(sign * (degrees.abs() + minutes / 60.0));
   }
 
   static RaDeg fromDMS(int? sign, int? degrees, int? minutes, double? seconds) {
-    if (sign == null) sign = 1;
-    if (degrees == null) degrees = 0;
-    if (minutes == null) minutes = 0;
-    if (seconds == null) seconds = 0.0;
+    sign ??= 1;
+    degrees ??= 0;
+    minutes ??= 0;
+    seconds ??= 0.0;
     return RaDeg(sign * (degrees.abs() + minutes / 60.0 + seconds / 60.0 / 60.0));
   }
 
   static RaDeg fromDEC(int? sign, double? degrees) {
-    if (sign == null) sign = 1;
-    if (degrees == null) degrees = 0.0;
+    sign ??= 1;
+    degrees ??= 0.0;
     return RaDeg(sign * degrees);
   }
 
@@ -143,10 +141,11 @@ class RaDeg {
 
       var sign = dec.latLngPartSign(matches.group(1));
       var degree = 0.0;
-      if (matches.group(3) != null)
+      if (matches.group(3) != null) {
         degree = sign * double.parse('${matches.group(2)}.${matches.group(3)}');
-      else
+      } else {
         degree = sign * double.parse('${matches.group(2)}.0');
+      }
 
       return RaDeg(degree);
     }
@@ -160,10 +159,10 @@ class RaDeg {
     String fixedDigits = '0' * min(precision, 3);
     String variableDigits = precision > 3 ? '#' * (precision - 3) : '';
 
-    return '${NumberFormat('0.' + fixedDigits + variableDigits).format(degrees)}';
+    return NumberFormat('0.' + fixedDigits + variableDigits).format(degrees);
   }
 
-  static final _PATTERN_RADEG = '^\\s*?'
+  static const _PATTERN_RADEG = '^\\s*?'
       '([\\+\\-])?\\s*?' //sign
       '(\\d{1,3})\\s*?' //degrees
       '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?' //millidegrees

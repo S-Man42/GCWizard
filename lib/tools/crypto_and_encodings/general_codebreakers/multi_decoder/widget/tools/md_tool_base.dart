@@ -44,7 +44,8 @@ class MultiDecoderToolBase extends AbstractMultiDecoderTool {
 
 String getBaseKey(Map<String, Object?> options, String option) {
   var key = checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_BASE, options, MDT_BASE_OPTION_BASEFUNCTION);
-  if (BASE_FUNCTIONS.keys.contains(key))
+  if (BASE_FUNCTIONS.keys.contains(key)) {
     return key;
+  }
   return toStringOrNull(getDefaultValue(MDT_INTERNALNAMES_BASE, MDT_BASE_OPTION_BASEFUNCTION)) ?? 'base_base16';
 }

@@ -10,12 +10,12 @@ void main() {
       {'input' : 'WELLDONEISBETTERTHANWELLSAID', 'keyPlain' : 'PTLNBQDEOYSFAVZKGJRIHWXUMC', 'keyChiffre': 'HXUCZVAMDSLKPEFJRIGTWOBNYQ', 'expectedOutput' : 'OAHQHCNYNXTSZJRRHJBYHQKSOUJY'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, keyPlain: ${elem['keyPlain']}, keyChiffre: ${elem['keyChiffre']}', () {
         var _actual = encryptChao(elem['input'] as String, elem['keyPlain'] as String, elem['keyChiffre'] as String);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Chao.decryptChao:", () {
@@ -25,12 +25,12 @@ void main() {
       {'expectedOutput' : 'WELLDONEISBETTERTHANWELLSAID', 'keyPlain' : 'PTLNBQDEOYSFAVZKGJRIHWXUMC', 'keyChiffre': 'HXUCZVAMDSLKPEFJRIGTWOBNYQ', 'input' : 'OAHQHCNYNXTSZJRRHJBYHQKSOUJY'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, keyPlain: ${elem['keyPlain']}, keyChiffre: ${elem['keyChiffre']}', () {
         var _actual = decryptChao(elem['input'] as String, elem['keyPlain'] as String, elem['keyChiffre'] as String);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
 }

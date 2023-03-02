@@ -357,6 +357,6 @@ String decodeBCD(String? input, BCDType type) {
 
   return input.split(RegExp(r'[^01]')).map((bcd) {
     var character = bcdMap[bcd];
-    return character != null ? character : '';
+    return character ?? '';
   }).join();
 }

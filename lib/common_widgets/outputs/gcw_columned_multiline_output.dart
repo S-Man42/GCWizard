@@ -74,13 +74,13 @@ class _GCWColumnedMultilineOutputState extends State<GCWColumnedMultilineOutput>
               }
             }
 
-            return MapEntry(index, Expanded(child: child, flex: index < widget.flexValues.length ? widget.flexValues[index] : 1));
+            return MapEntry(index, Expanded(flex: index < widget.flexValues.length ? widget.flexValues[index] : 1, child: child));
           })
           .values
           .toList();
 
       String? copyText;
-      if (copyColumn == null) copyColumn = rowData.length - 1;
+      copyColumn ??= rowData.length - 1;
       if (copyColumn != null && copyColumn! >= 0) {
         copyText = rowData[copyColumn!] is Widget ? null : rowData[copyColumn!].toString();
         if (isFirst && widget.hasHeader && widget.copyAll) {
@@ -92,6 +92,7 @@ class _GCWColumnedMultilineOutputState extends State<GCWColumnedMultilineOutput>
       }
 
       var row = Container(
+        margin: const EdgeInsets.only(top: 6, bottom: 6),
         child: Row(
           children: [
             Expanded(
@@ -113,7 +114,6 @@ class _GCWColumnedMultilineOutputState extends State<GCWColumnedMultilineOutput>
             )
           ],
         ),
-        margin: EdgeInsets.only(top: 6, bottom: 6),
       );
 
       if (odd) {
@@ -127,8 +127,8 @@ class _GCWColumnedMultilineOutputState extends State<GCWColumnedMultilineOutput>
 
       if (widget.tappables != null) {
         return InkWell(
-          child: output,
           onTap: widget.tappables![index++],
+          child: output,
         );
       } else {
         return output;

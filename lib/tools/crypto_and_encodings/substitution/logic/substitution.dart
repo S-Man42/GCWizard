@@ -13,22 +13,22 @@ String substitution(String? input, Map<String, String> substitutions, {bool case
 
   //Copy map to keep the original one
   Map<String, String> substCopy = {};
-  substitutions.entries.forEach((entry) {
-    if (entry.key.isEmpty) return;
+  for (var entry in substitutions.entries) {
+    if (entry.key.isEmpty) continue;
 
     if (caseSensitive) {
       substCopy.putIfAbsent(entry.key, () => entry.value);
     } else {
       substCopy.putIfAbsent(entry.key.toUpperCase(), () => entry.value.toUpperCase());
     }
-  });
+  }
 
-  substCopy.entries.forEach((entry) {
+  for (var entry in substCopy.entries) {
     var key = entry.key;
     if (!caseSensitive) key = key.toUpperCase();
 
     keys.add(key);
-  });
+  }
   keys.sort((a, b) => b.length.compareTo(a.length));
 
   //SplayTreeMap is ordered by key
@@ -37,17 +37,17 @@ String substitution(String? input, Map<String, String> substitutions, {bool case
   //this ensures, that the input indexes remain but already considered patterns not occur twice
   //e.g.: ABBBA -> replace BB only should replace A_BB_BA and not also AB_BB_A
   //So find first -> replace it -> A__BA. Second occurrence not found anymore
-  keys.forEach((key) {
+  for (var key in keys) {
     int i = 0;
     while (input!.indexOf(key, i) >= 0) {
-      var index = input!.indexOf(key, i);
+      var index = input.indexOf(key, i);
       replacements.putIfAbsent(index, () => key);
 
-      input = input!.replaceRange(index, index + key.length, String.fromCharCode(0) * key.length);
+      input = input.replaceRange(index, index + key.length, String.fromCharCode(0) * key.length);
 
       i = index + key.length;
     }
-  });
+  }
 
   //Unconsidered elements are put into the index map and the substitution map
   //The will be replaced by themselves.
@@ -59,9 +59,9 @@ String substitution(String? input, Map<String, String> substitutions, {bool case
   });
 
   var output = '';
-  replacements.entries.forEach((entry) {
+  for (var entry in replacements.entries) {
     if (substCopy.containsKey(entry.value)) output += substCopy[entry.value]!;
-  });
+  }
 
   return output;
 }

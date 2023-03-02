@@ -66,7 +66,7 @@ final Map<String, int> _SpecialCharsMap = {
 final _With4 = {'4': 1};
 
 Map<String, int> _createAlpabetMap(bool with4, bool onlyNumbers) {
-  var alphabetMap = Map<String, int>();
+  var alphabetMap = <String, int>{};
 
   alphabetMap.addAll(_NumbersMap);
   if (with4) alphabetMap.addAll(_With4);

@@ -71,12 +71,12 @@ class _GCWCodeTextFieldState extends State<GCWCodeTextField> {
           readOnly: widget.readOnly,
           selectionControls: GCWTextSelectionControls(),
           wrap: widget.wrap ?? false,
-          textStyle: widget.textStyle ?? TextStyle(fontFamily: 'SourceCode'),
+          textStyle: widget.textStyle ?? const TextStyle(fontFamily: 'SourceCode'),
           lineNumberStyle: widget.lineNumberStyle != null
               ? LineNumberStyle(
                   width: widget.lineNumberStyle!.width,
                 )
-              : LineNumberStyle(width: 0.0, margin: 0.0, textStyle: TextStyle(fontSize: 0.1, color: Colors.black87)),
+              : const LineNumberStyle(width: 0.0, margin: 0.0, textStyle: TextStyle(fontSize: 0.1, color: Colors.black87)),
         )
     );
   }

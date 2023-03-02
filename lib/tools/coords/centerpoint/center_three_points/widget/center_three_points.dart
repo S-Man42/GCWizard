@@ -17,6 +17,8 @@ import 'package:latlong2/latlong.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 
 class CenterThreePoints extends StatefulWidget {
+  const CenterThreePoints({Key? key}) : super(key: key);
+
   @override
   CenterThreePointsState createState() => CenterThreePointsState();
 }
@@ -89,15 +91,15 @@ class CenterThreePointsState extends State<CenterThreePoints> {
         barrierDismissible: false,
         builder: (context) {
           return Center(
-            child: Container(
+            child: SizedBox(
+              height: 220,
+              width: 150,
               child: GCWAsyncExecuter<List<CenterPointDistance>?>(
                 isolatedFunction: centerPointThreePointsAsync,
                 parameter: _buildJobData,
                 onReady: (data) => _showOutput(data),
                 isOverlay: true,
               ),
-              height: 220,
-              width: 150,
             ),
           );
         },
@@ -128,7 +130,7 @@ class CenterThreePointsState extends State<CenterThreePoints> {
     _currentDistance = output.first.distance;
 
     _currentOutput = output.map((coord) {
-      return '${formatCoordOutput(coord.centerPoint, _currentOutputFormat, defaultEllipsoid)}';
+      return formatCoordOutput(coord.centerPoint, _currentOutputFormat, defaultEllipsoid);
     }).toList();
     _currentOutput.add(
         '${i18n(context, 'coords_center_distance')}: ${doubleFormat.format(_currentOutputUnit.fromMeter(_currentDistance))} ${_currentOutputUnit.symbol}');

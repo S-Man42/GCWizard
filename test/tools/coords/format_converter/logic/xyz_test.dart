@@ -17,16 +17,16 @@ void main() {
 
     var ells = getEllipsoidByName('coords_ellipsoid_earthsphere');
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('text: ${elem['text']}', () {
         var _actual = XYZ.parse(elem['text'] as String)?.toLatLng(ells: ells);
-        if (_actual == null)
+        if (_actual == null) {
           expect(null, elem['expectedOutput']);
-        else {
+        } else {
           expect((_actual.latitude - ((elem['expectedOutput'] as Map<String, Object>)['coordinate'] as LatLng).latitude).abs() < 1e-8, true);
           expect((_actual.longitude - ((elem['expectedOutput'] as Map<String, Object>)['coordinate'] as LatLng).longitude).abs() < 1e-8, true);
         }
       });
-    });
+    }
   });
 }

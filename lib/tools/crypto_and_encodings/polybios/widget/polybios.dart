@@ -13,6 +13,8 @@ import 'package:gc_wizard/tools/crypto_and_encodings/_common/logic/crypt_alphabe
 import 'package:gc_wizard/tools/crypto_and_encodings/polybios/logic/polybios.dart';
 
 class Polybios extends StatefulWidget {
+  const Polybios({Key? key}) : super(key: key);
+
   @override
   PolybiosState createState() => PolybiosState();
 }
@@ -120,7 +122,7 @@ class PolybiosState extends State<Polybios> {
   Widget _buildOutput(BuildContext context) {
     if (_currentInput.isEmpty ||
         ![5, 6].contains(_currentKey.length)) {
-      return GCWDefaultOutput(); // TODO: Exception
+      return const GCWDefaultOutput(); // TODO: Exception
     }
 
     PolybiosOutput? _currentOutput;
@@ -133,7 +135,7 @@ class PolybiosState extends State<Polybios> {
     }
 
     if (_currentOutput == null || _currentOutput.output.isEmpty) {
-      return GCWDefaultOutput(); // TODO: Exception
+      return const GCWDefaultOutput(); // TODO: Exception
     }
 
     return GCWMultipleOutput(

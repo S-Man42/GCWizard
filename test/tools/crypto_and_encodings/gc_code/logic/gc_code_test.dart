@@ -26,12 +26,12 @@ void main() {
       {'input' : '  GC85P95  ', 'expectedOutput' : 7147429},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = gcCodeToID(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("GCCode.gcCodeToID.noValidGCCode:", () {
@@ -44,7 +44,7 @@ void main() {
       {'input' : 'GC85P  95'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         try {
           gcCodeToID(elem['input'] as String?);
@@ -53,7 +53,7 @@ void main() {
           expect(true, true);
         }
       });
-    });
+    }
   });
 
   group("GCCode.idToGCCode:", () {
@@ -79,11 +79,11 @@ void main() {
       {'expectedOutput' : 'GCGCGCGC', 'input' : 469226244},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = idToGCCode(elem['input'] as int?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

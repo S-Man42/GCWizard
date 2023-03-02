@@ -285,12 +285,12 @@ void main() {
       {'expectedOutput' : '-42.42', 'destinationBase' : 10, 'startBase' : -62, 'input' : '1K.RyUF8ZIeKA53XmtSjNhrwyUF8ZIeKA53XmtSjNhrwyUF8ZIeKA'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, startBase: ${elem['startBase']}, destinationBase: ${elem['destinationBase']}', () {
         var _actual = convertBase(elem['input'] as String?, elem['startBase'] as int, elem['destinationBase'] as int);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("NumeralBases.convertNegativeValuesOnNegativeBases:", () {
@@ -328,7 +328,7 @@ void main() {
       {'input' : '-42.42', 'destinationBase' : 10, 'startBase' : -62, 'expectedOutput' : null},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, startBase: ${elem['startBase']}, destinationBase: ${elem['destinationBase']}', () {
         try {
           convertBase(elem['input'] as String?, elem['startBase'] as int, elem['destinationBase'] as int);
@@ -337,6 +337,6 @@ void main() {
           expect(true, true);
         }
       });
-    });
+    }
   });
 }

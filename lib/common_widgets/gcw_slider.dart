@@ -45,6 +45,7 @@ class _GCWSliderState extends State<GCWSlider> {
       children: [
         if (widget.title.isNotEmpty) Expanded(child: GCWText(text: widget.title + ':')),
         Expanded(
+          flex: 3,
           child: Slider(
             value: widget.value,
             min: widget.min,
@@ -63,7 +64,6 @@ class _GCWSliderState extends State<GCWSlider> {
             activeColor: themeColors().switchThumb2(),
             inactiveColor: themeColors().switchTrack2(),
           ),
-          flex: 3,
         ),
         if (!widget.suppressReset)
           GCWIconButton(

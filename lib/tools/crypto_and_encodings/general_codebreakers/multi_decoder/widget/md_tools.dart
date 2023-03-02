@@ -142,9 +142,9 @@ Map<String, Object?> _multiDecoderToolOptionToGCWMultiDecoderToolOptions(
     List<MultiDecoderToolOption> mdtOptions) {
   var gcwOptions = <String, Object?>{};
 
-  mdtOptions.forEach((option) {
+  for (var option in mdtOptions) {
     gcwOptions.putIfAbsent(option.name, () => option.value);
-  });
+  }
 
   return gcwOptions;
 }
@@ -622,7 +622,7 @@ void _initializeMultiToolDecoder(BuildContext context) {
             options: [MultiDecoderToolOption(MDT_ROTATION_OPTION_KEY, i)]));
   }
 
-  newTools.reversed.forEach((tool) {
+  for (var tool in newTools.reversed) {
     insertMultiDecoderTool(tool);
-  });
+  }
 }

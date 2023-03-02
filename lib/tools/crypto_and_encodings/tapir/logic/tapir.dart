@@ -40,9 +40,9 @@ final Map<String, String> NumbersToTapir = {
 };
 final Map<String, String> TapirToNumbers = switchMapKeyValue(NumbersToTapir);
 
-final _NUMBERS_FOLLOW = '82';
-final _LETTERS_FOLLOW = '81';
-final _FILLING = '83';
+const _NUMBERS_FOLLOW = '82';
+const _LETTERS_FOLLOW = '81';
+const _FILLING = '83';
 
 String _encodeTapir(String input) {
   //remove non-encodable chars
@@ -209,8 +209,9 @@ String decryptTapir(String? input, String? keyOneTimePad) {
   input = input.replaceAll(RegExp(r'[^0-9]'), '');
   if (input.isEmpty) return '';
 
-  if (keyOneTimePad != null && keyOneTimePad.isNotEmpty)
+  if (keyOneTimePad != null && keyOneTimePad.isNotEmpty) {
     input = _subtractOneTimePad(input, keyOneTimePad);
+  }
 
   return _decodeTapir(input);
 }

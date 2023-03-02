@@ -6,6 +6,8 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/utils/datetime_utils.dart';
 
 class Weekday extends StatefulWidget {
+  const Weekday({Key? key}) : super(key: key);
+
   @override
   WeekdayState createState() => WeekdayState();
 }
@@ -26,7 +28,7 @@ class WeekdayState extends State<Weekday> {
       children: <Widget>[
         GCWTextDivider(text: i18n(context, 'dates_weekday_date')),
         GCWDateTimePicker(
-          config: {DateTimePickerConfig.DATE},
+          config: const {DateTimePickerConfig.DATE},
           datetime: _currentDate,
           onChanged: (value) {
             setState(() {

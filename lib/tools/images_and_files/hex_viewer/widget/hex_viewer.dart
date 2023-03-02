@@ -86,7 +86,6 @@ class HexViewerState extends State<HexViewer> {
           },
         ),
         GCWDefaultOutput(
-            child: _buildOutput(),
             trailing: Row(
               children: [
                 GCWIconButton(
@@ -104,7 +103,8 @@ class HexViewerState extends State<HexViewer> {
                   },
                 ),
               ],
-            ))
+            ),
+            child: _buildOutput())
       ],
     );
   }
@@ -140,6 +140,7 @@ class HexViewerState extends State<HexViewer> {
       children: [
         if (_hexData!.length > _MAX_LINES)
           Container(
+            padding: const EdgeInsets.only(bottom: 10),
             child: Row(
               children: [
                 GCWIconButton(
@@ -178,72 +179,67 @@ class HexViewerState extends State<HexViewer> {
                 )
               ],
             ),
-            padding: EdgeInsets.only(bottom: 10),
           ),
         Row(
           children: [
             Expanded(
-              child: Container(
+              flex: 15,
+              child: NotificationListener<ScrollNotification>(
+                  child: SingleChildScrollView(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      controller: _scrollControllerHex,
+                      scrollDirection: Axis.horizontal,
+                      child: GCWText(
+                        text: hexText,
+                        style: gcwMonotypeTextStyle(),
+                      ),
+                ),
+                onNotification: (ScrollNotification scrollNotification) {
+                  if (_isASCIIScrolling) return false;
+
+                  if (scrollNotification is ScrollStartNotification) {
+                    _isHexScrolling = true;
+                  } else if (scrollNotification is ScrollEndNotification) {
+                    _isHexScrolling = false;
+                  } else if (scrollNotification is ScrollUpdateNotification) {
+                    _scrollControllerASCII.position.jumpTo(_scrollControllerASCII.position.maxScrollExtent *
+                        _scrollControllerHex.position.pixels /
+                        _scrollControllerHex.position.maxScrollExtent);
+                  }
+
+                  return true;
+                },
+              ),
+            ),
+            Expanded(flex: 1, child: Container()),
+            Expanded(
+                flex: 5,
                 child: NotificationListener<ScrollNotification>(
-                    child: SingleChildScrollView(
-                        physics: AlwaysScrollableScrollPhysics(),
-                        controller: _scrollControllerHex,
-                        scrollDirection: Axis.horizontal,
-                        child: GCWText(
-                          text: hexText,
-                          style: gcwMonotypeTextStyle(),
-                        ),
+                  child: SingleChildScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    controller: _scrollControllerASCII,
+                    scrollDirection: Axis.horizontal,
+                    child: GCWText(
+                      text: asciiText,
+                      style: gcwMonotypeTextStyle(),
+                    ),
                   ),
                   onNotification: (ScrollNotification scrollNotification) {
-                    if (_isASCIIScrolling) return false;
+                    if (_isHexScrolling) return false;
 
                     if (scrollNotification is ScrollStartNotification) {
-                      _isHexScrolling = true;
+                      _isASCIIScrolling = true;
                     } else if (scrollNotification is ScrollEndNotification) {
-                      _isHexScrolling = false;
+                      _isASCIIScrolling = false;
                     } else if (scrollNotification is ScrollUpdateNotification) {
-                      _scrollControllerASCII.position.jumpTo(_scrollControllerASCII.position.maxScrollExtent *
-                          _scrollControllerHex.position.pixels /
-                          _scrollControllerHex.position.maxScrollExtent);
+                      _scrollControllerHex.position.jumpTo(_scrollControllerHex.position.maxScrollExtent *
+                          _scrollControllerASCII.position.pixels /
+                          _scrollControllerASCII.position.maxScrollExtent);
                     }
 
                     return true;
                   },
-                ),
-              ),
-              flex: 15,
-            ),
-            Expanded(child: Container(), flex: 1),
-            Expanded(
-                child: Container(
-                  child: NotificationListener<ScrollNotification>(
-                    child: SingleChildScrollView(
-                      physics: AlwaysScrollableScrollPhysics(),
-                      controller: _scrollControllerASCII,
-                      scrollDirection: Axis.horizontal,
-                      child: GCWText(
-                        text: asciiText,
-                        style: gcwMonotypeTextStyle(),
-                      ),
-                    ),
-                    onNotification: (ScrollNotification scrollNotification) {
-                      if (_isHexScrolling) return false;
-
-                      if (scrollNotification is ScrollStartNotification) {
-                        _isASCIIScrolling = true;
-                      } else if (scrollNotification is ScrollEndNotification) {
-                        _isASCIIScrolling = false;
-                      } else if (scrollNotification is ScrollUpdateNotification) {
-                        _scrollControllerHex.position.jumpTo(_scrollControllerHex.position.maxScrollExtent *
-                            _scrollControllerASCII.position.pixels /
-                            _scrollControllerASCII.position.maxScrollExtent);
-                      }
-
-                      return true;
-                    },
-                  ),
-                ),
-                flex: 5)
+                ))
           ],
         )
       ],

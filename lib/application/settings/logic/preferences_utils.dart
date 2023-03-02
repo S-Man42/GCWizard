@@ -4,12 +4,12 @@ enum PrefType { STRING, STRINGLIST, INT, DOUBLE, BOOL }
 
 PrefType getPrefType(String key) {
   try {
-    String x = Prefs.getString(key);
+    Prefs.getString(key);
     return PrefType.STRING;
   } catch (e) {}
 
   try {
-    List<String> x = Prefs.getStringList(key);
+    Prefs.getStringList(key);
     return PrefType.STRINGLIST;
   } catch (e) {}
 
@@ -20,17 +20,17 @@ PrefType getPrefType(String key) {
   // } catch (e) {}
 
   try {
-    int x = Prefs.getInt(key);
+    Prefs.getInt(key);
     return PrefType.INT;
   } catch (e) {}
 
   try {
-    double x = Prefs.getDouble(key);
+    Prefs.getDouble(key);
     return PrefType.DOUBLE;
   } catch (e) {}
 
   try {
-    bool x = Prefs.getBool(key);
+    Prefs.getBool(key);
     return PrefType.BOOL;
   } catch (e) {}
 
@@ -59,7 +59,9 @@ void setUntypedPref(String key, Object value) {
           saveList = value;
           saveList.removeWhere((element) => element.isEmpty);
         } else {
-          (value as List<Object>).forEach((element) => saveList.add(element.toString()));
+          for (var element in (value as List<Object>)) {
+            saveList.add(element.toString());
+          }
         }
 
         Prefs.setStringList(key, saveList);

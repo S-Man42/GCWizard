@@ -29,12 +29,12 @@ void main() {
       {'input' : 'ANZ', 'replaceCharacters': {'/': '\\', '\\': '/'}, 'expectedOutput' : '\\ /\\\\\\ \\/\\/'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, replaceCharacter: ${elem['replaceCharacters']}', () {
         var _actual = encryptTomTom(elem['input'] as String?, elem['replaceCharacters'] as Map<String, String>?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("TomTom.decryptTomTom:", () {
@@ -68,11 +68,11 @@ void main() {
       {'input' : '/ \\/// /\\/\\', 'replaceCharacters': {'/': '', '\\': ''}, 'expectedOutput' : 'ANZ'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, replaceCharacter: ${elem['replaceCharacters']}', () {
         var _actual = decryptTomTom(elem['input'] as String?, elem['replaceCharacters'] as Map<String, String>?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

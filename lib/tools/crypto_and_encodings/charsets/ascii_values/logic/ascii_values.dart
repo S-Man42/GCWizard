@@ -1,4 +1,4 @@
-final int _MAX_UTF16 = 1112064;
+const int _MAX_UTF16 = 1112064;
 
 List<int> asciiEncode(String? input) {
   if (input == null || input.isEmpty) return <int>[];

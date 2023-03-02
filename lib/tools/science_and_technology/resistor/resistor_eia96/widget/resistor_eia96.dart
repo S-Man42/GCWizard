@@ -8,6 +8,8 @@ import 'package:gc_wizard/tools/science_and_technology/resistor/resistor_formatt
 import 'package:gc_wizard/utils/ui_dependent_utils/text_widget_utils.dart';
 
 class ResistorEIA96 extends StatefulWidget {
+  const ResistorEIA96({Key? key}) : super(key: key);
+
   @override
   ResistorEIA96State createState() => ResistorEIA96State();
 }

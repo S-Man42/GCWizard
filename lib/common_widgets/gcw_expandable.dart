@@ -33,14 +33,15 @@ class _GCWExpandableTextDividerState extends State<GCWExpandableTextDivider> {
     setState(() {
       _currentExpanded = !_currentExpanded!;
 
-      if (widget.onChanged != null)
+      if (widget.onChanged != null) {
         widget.onChanged!(_currentExpanded!);
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_currentExpanded == null) _currentExpanded = widget.expanded;
+    _currentExpanded ??= widget.expanded;
 
     return Column(
       children: [

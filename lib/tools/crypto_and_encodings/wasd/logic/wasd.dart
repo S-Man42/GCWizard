@@ -31,7 +31,7 @@ enum WASD_TYPE { CURSORS, WASD, IJMK, ESDF, ULDR, OLUR, VLZR, WQSE, ARROWS, NWSE
 
 enum WASD_DIRECTION { UP, DOWN, LEFT, RIGHT, START }
 
-final _SEGMENT_LENGTH = 5;
+const _SEGMENT_LENGTH = 5;
 
 Map<WASD_TYPE, String> KEYBOARD_CONTROLS = {
   WASD_TYPE.CURSORS: '↑←↓→',
@@ -123,10 +123,11 @@ String encodeWASD(String? input, List<String> controlSet) {
   Random rnd = Random();
   List<String> result = [];
   input.split('').forEach((element) {
-    if (WASD_ENCODE[element] == null)
+    if (WASD_ENCODE[element] == null) {
       result.add('');
-    else
+    } else {
       result.add(WASD_ENCODE[element]![rnd.nextInt(WASD_ENCODE[element]!.length)].toString());
+    }
   });
 
   return substitution(result.join(' '), {
@@ -170,8 +171,9 @@ String decodeWASD(String? input, List<String> controlSet) {
       if (found) {
         resultDecode.add(result);
         found = false;
-      } else
+      } else {
         resultDecode.add(UNKNOWN_ELEMENT);
+      }
     }
   });
   return resultDecode.join('');
@@ -209,7 +211,7 @@ String decodeWASDGraphic(String? input, List<String> controlSet) {
   int minSentenceX = 0;
   int minSentenceY = 0;
 
-  Map<String, String> sentence = Map();
+  Map<String, String> sentence = {};
 
   var direction = WASD_DIRECTION.START;
 
@@ -227,7 +229,7 @@ String decodeWASDGraphic(String? input, List<String> controlSet) {
 
     direction = WASD_DIRECTION.START;
 
-    Map<String, String> letter = Map();
+    Map<String, String> letter = {};
 
     word.split('').forEach((element) {
       switch (element) {
@@ -245,7 +247,7 @@ String decodeWASDGraphic(String? input, List<String> controlSet) {
             case WASD_DIRECTION.RIGHT:
               x++;
               break;
-            default: ;
+            default: {}
           }
           for (int i = 0; i < _SEGMENT_LENGTH; i++) {
             y++;
@@ -272,7 +274,7 @@ String decodeWASDGraphic(String? input, List<String> controlSet) {
             case WASD_DIRECTION.RIGHT:
               x++;
               break;
-            default: ;
+            default: {}
           }
           for (int i = 0; i < _SEGMENT_LENGTH; i++) {
             y--;
@@ -299,7 +301,7 @@ String decodeWASDGraphic(String? input, List<String> controlSet) {
             case WASD_DIRECTION.RIGHT:
               x++;
               break;
-            default: ;
+            default: {}
           }
           for (int i = 0; i < _SEGMENT_LENGTH; i++) {
             x--;
@@ -326,7 +328,7 @@ String decodeWASDGraphic(String? input, List<String> controlSet) {
             case WASD_DIRECTION.RIGHT:
               x++;
               break;
-            default: ;
+            default: {}
           }
           for (int i = 0; i < _SEGMENT_LENGTH; i++) {
             x++;
@@ -352,7 +354,7 @@ String decodeWASDGraphic(String? input, List<String> controlSet) {
 
     if (minLetterX < 0) xOffset = -1 * minLetterX;
 
-    Map<String, String> transformedLetter = Map();
+    Map<String, String> transformedLetter = {};
     letter.forEach((key, value) {
       transformedLetter[(int.parse(key.split('|')[0]) + xOffset).toString() +
           '|' +
@@ -385,10 +387,11 @@ String decodeWASDGraphic(String? input, List<String> controlSet) {
   for (y = 0; y < maxSentenceY - minSentenceY + 1; y++) {
     outputLine = '##';
     for (x = 0; x < maxSentenceX - minSentenceX + 1; x++) {
-      if (binaryWorld[x][y] == null)
+      if (binaryWorld[x][y] == null) {
         outputLine = outputLine + '#';
-      else
+      } else {
         outputLine = outputLine + binaryWorld[x][y]!;
+      }
     }
     output.add(outputLine);
   }

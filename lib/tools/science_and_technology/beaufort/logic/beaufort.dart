@@ -26,7 +26,7 @@ List<double>? beaufortToMeterPerSecond(int? beaufort) {
     if (b == null || b < beaufort) continue;
 
     if (b == beaufort) {
-      if (lowerV == null) lowerV = mPerS;
+      lowerV ??= mPerS;
       upperV = mPerS;
     }
 

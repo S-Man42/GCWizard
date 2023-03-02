@@ -37,11 +37,12 @@ class _GCWCoordsPasteButtonState extends State<GCWCoordsPasteButton> {
     } else if (parsed.length > 1) {
       var recognizedFormats = parsed.map((coords) {
         var text = '\r\n';
-        var coordFormat = allCoordinateFormatMetadata.firstWhere((format) => format.type == coords.format);
-        if (coordFormat.subtypes == null)
+        var coordFormat = allCoordinateFormatMetadata.firstWhere((format) => format.type == coords.format.type);
+        if (coordFormat.subtypes == null) {
           text += coordFormat.name;
-        else
+        } else {
           text += i18n(context, coordFormat.name);
+        }
         return text;
       }).join();
       showToast(i18n(context, 'coords_common_clipboard_recognizedcoordformats') + ':' + recognizedFormats);

@@ -183,8 +183,9 @@ String decryptDecabit(String? input, Map<String, String>? replaceCharacters, boo
     if (character != null) {
       out += character;
       i += 10;
-    } else
+    } else {
       i += 1;
+    }
   }
 
   if (numericMode) out = out.trim();

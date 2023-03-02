@@ -24,7 +24,7 @@ const _INITIAL_SEGMENTS = <String, bool>{
   'u': false
 };
 
-//ignore: must_be_immutable
+
 class _CistercianNumbersSegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
   final bool readOnly;

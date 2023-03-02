@@ -1,4 +1,4 @@
-final int PERMUTATION_MAX_LENGTH = 7;
+const int PERMUTATION_MAX_LENGTH = 7;
 
 void _swap(List<String> characters, int a, int b) {
   var help = characters[a];

@@ -10,7 +10,7 @@ import 'package:gc_wizard/tools/science_and_technology/telegraphs/gauss_weber_te
 class GaussWeberTelegraph extends StatefulWidget {
   final GaussWeberTelegraphMode mode;
 
-  GaussWeberTelegraph({Key? key, this.mode = GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL}) : super(key: key);
+  const GaussWeberTelegraph({Key? key, this.mode = GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL}) : super(key: key);
 
   @override
   GaussWeberTelegraphState createState() => GaussWeberTelegraphState();
@@ -118,15 +118,17 @@ class GaussWeberTelegraphState extends State<GaussWeberTelegraph> {
     } else {
       String output;
       if (_currentMode == GCWSwitchPosition.left) {
-        if (widget.mode == GaussWeberTelegraphMode.WHEATSTONE_COOKE_5)
+        if (widget.mode == GaussWeberTelegraphMode.WHEATSTONE_COOKE_5) {
           output = encodeGaussWeberTelegraph(_currentEncodeInput, _currentNeedleNumber);
-        else
+        } else {
           output = encodeGaussWeberTelegraph(_currentEncodeInput, widget.mode);
+        }
       } else {
-        if (widget.mode == GaussWeberTelegraphMode.WHEATSTONE_COOKE_5)
+        if (widget.mode == GaussWeberTelegraphMode.WHEATSTONE_COOKE_5) {
           output = decodeGaussWeberTelegraph(_currentDecodeInput, _currentNeedleNumber);
-        else
+        } else {
           output = decodeGaussWeberTelegraph(_currentDecodeInput, widget.mode);
+        }
         output = output
             .replaceAll('telegraph_schillingcanstatt_stop', i18n(context, 'telegraph_schillingcanstatt_stop'))
             .replaceAll('telegraph_schillingcanstatt_goon', i18n(context, 'telegraph_schillingcanstatt_goon'))

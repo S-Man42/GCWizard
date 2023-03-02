@@ -26,14 +26,16 @@ void _getAllMessagesAndDialogsFromLUA(int progress, List<String> lines, SendPort
                 line = line.substring(1);
               } while (!line.startsWith('Text'));
               line = line.replaceAll('Text = ', '').replaceAll('(', '').replaceAll('{', '');
-              if (line.indexOf('"') != -1)
+              if (line.contains('"')) {
                 line = line.substring(0, line.indexOf('"')).replaceAll('"', '');
-              else if (line.indexOf(',') != -1)
+              } else if (line.contains(',')) {
                 line = line.substring(0, line.indexOf(',')).replaceAll('"', '');
-              else
+              } else {
                 line = line.substring(0, line.indexOf('}')).replaceAll('"', '');
-              if (line.length != 0)
+              }
+              if (line.isNotEmpty) {
                 _singleMessageDialog.add(WherigoActionMessageElementData(WHERIGO_ACTIONMESSAGETYPE.TEXT, line));
+              }
             }
             line = lines[i];
             if (line.contains('Media = ')) {
@@ -85,8 +87,9 @@ void _getAllMessagesAndDialogsFromLUA(int progress, List<String> lines, SendPort
               i++;
               lines[i] = lines[i].trim();
 
-              if (i > lines.length - 2 || lines[i].trimLeft().startsWith('})') || lines[i].trimLeft().startsWith('end'))
+              if (i > lines.length - 2 || lines[i].trimLeft().startsWith('})') || lines[i].trimLeft().startsWith('end')) {
                 _sectionMessages = false;
+              }
             } while (_sectionMessages);
           }
           _cartridgeMessages.add(_singleMessageDialog);
@@ -104,14 +107,16 @@ void _getAllMessagesAndDialogsFromLUA(int progress, List<String> lines, SendPort
                   line = line.substring(1);
                 } while (!line.startsWith('Text'));
                 line = line.replaceAll('Text = ', '').replaceAll('(', '').replaceAll('{', '');
-                if (line.indexOf('"') != -1)
+                if (line.contains('"')) {
                   line = line.substring(0, line.indexOf('"')).replaceAll('"', '');
-                else if (line.indexOf(',') != -1)
+                } else if (line.contains(',')) {
                   line = line.substring(0, line.indexOf(',')).replaceAll('"', '');
-                else
+                } else {
                   line = line.substring(0, line.indexOf('}')).replaceAll('"', '');
-                if (line.length != 0)
+                }
+                if (line.isNotEmpty) {
                   _singleMessageDialog.add(WherigoActionMessageElementData(WHERIGO_ACTIONMESSAGETYPE.TEXT, line));
+                }
               }
               line = lines[i];
               if (line.contains('Media = ')) {
@@ -168,14 +173,16 @@ void _getAllMessagesAndDialogsFromLUA(int progress, List<String> lines, SendPort
                   line = line.substring(1);
                 } while (!line.startsWith('Text'));
                 line = line.replaceAll('Text = ', '').replaceAll('(', '').replaceAll('{', '');
-                if (line.indexOf('"') != -1)
+                if (line.contains('"')) {
                   line = line.substring(0, line.indexOf('"')).replaceAll('"', '');
-                else if (line.indexOf(',') != -1)
+                } else if (line.contains(',')) {
                   line = line.substring(0, line.indexOf(',')).replaceAll('"', '');
-                else
+                } else {
                   line = line.substring(0, line.indexOf('}')).replaceAll('"', '');
-                if (line.length != 0)
+                }
+                if (line.isNotEmpty) {
                   _singleMessageDialog.add(WherigoActionMessageElementData(WHERIGO_ACTIONMESSAGETYPE.TEXT, line));
+                }
               }
               line = lines[i];
               if (line.contains('Media = ')) {
@@ -207,9 +214,10 @@ void _getAllMessagesAndDialogsFromLUA(int progress, List<String> lines, SendPort
                 i++;
                 lines[i] = lines[i].trim();
               } while (lines[i].trimLeft() != '}');
-            } else
+            } else {
               _singleMessageDialog.add(WherigoActionMessageElementData(
                   WHERIGO_ACTIONMESSAGETYPE.TEXT, lines[i].replaceAll('{', '').replaceAll('}', '')));
+            }
 
             i++;
             lines[i] = lines[i].trim();

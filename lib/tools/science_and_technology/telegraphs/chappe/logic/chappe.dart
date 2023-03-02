@@ -208,13 +208,14 @@ final Map<String, List<String>> CODEBOOK_KULIBIN = {
 };
 
 Segments encodeChappe(String? input, ChappeCodebook language) {
-  if (input == null) return Segments.Empty();;
+  if (input == null) return Segments.Empty();
 
   List<String> inputs = [];
-  if (language == ChappeCodebook.CODEPOINTS)
+  if (language == ChappeCodebook.CODEPOINTS) {
     inputs = input.split(' ');
-  else
+  } else {
     inputs = input.split('');
+  }
   List<List<String>> result = [];
 
   Map<String, List<String>> CODEBOOK;
@@ -247,7 +248,7 @@ SegmentsText decodeVisualChappe(List<String>? inputs, ChappeCodebook language) {
   var displays = <List<String>>[];
   var segment = <String>[];
 
-  Map<List<String>, String> CODEBOOK = Map<List<String>, String>();
+  Map<List<String>, String> CODEBOOK = <List<String>, String>{};
 
   switch (language) {
     case ChappeCodebook.ALPHABET:
@@ -264,10 +265,10 @@ SegmentsText decodeVisualChappe(List<String>? inputs, ChappeCodebook language) {
       break;
   }
 
-  inputs.forEach((element) {
+  for (var element in inputs) {
     segment = _stringToSegment(element);
     displays.add(segment);
-  });
+  }
 
   List<String> text = inputs.map((input) {
     var char = '';
@@ -294,8 +295,9 @@ List<String> _stringToSegment(String input) {
       j = j + 2;
     }
     return result;
-  } else
+  } else {
     return [];
+  }
 }
 
 SegmentsText decodeTextChappeTelegraph(String? inputs, ChappeCodebook language) {
@@ -304,7 +306,7 @@ SegmentsText decodeTextChappeTelegraph(String? inputs, ChappeCodebook language) 
   var displays = <List<String>>[];
   String text = '';
 
-  Map<String, List<String>> CODEBOOK = Map<String, List<String>>();
+  Map<String, List<String>> CODEBOOK = <String, List<String>>{};
 
   switch (language) {
     case ChappeCodebook.ALPHABET:

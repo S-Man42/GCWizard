@@ -28,7 +28,7 @@ void main() {
       {'a' : '1/1', 'b' : '-*4.0', 'c' : '2*2', 'expectedOutput' : ['']},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('a: ${elem['a']}, b: ${elem['b']}, c: ${elem['c']}', () {
         var _actual = solveQuadraticEquation(elem['a'] as String?, elem['b'] as String?, elem['c'] as String?);
         var coordinate = _actual.values;
@@ -36,7 +36,7 @@ void main() {
           expect(coordinate.elementAt(i), (elem['expectedOutput']as List<String>)[i]);
         }
       });
-    });
+    }
   });
 
 }

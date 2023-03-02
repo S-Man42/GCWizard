@@ -36,12 +36,12 @@ void main() {
       {'input' : '2-A-2', 'expectedOutput' : '8 2 25 16 4 20 8 2'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = encodeTeletypewriter(elem['input'] as String?, TeletypewriterCodebook.BAUDOT_54123);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("CCITT1.decodeCCITT1:", () { // Mark test
@@ -67,11 +67,11 @@ void main() {
       {'expectedOutput' : 'ABC ABC ABC ABC', 'input' : [4, 9, 13, 16, 4, 9, 13, 16, 4, 9, 13, 16, 4, 9, 13]},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decodeTeletypewriter(elem['input'] as List<int>?, TeletypewriterCodebook.BAUDOT_54123);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

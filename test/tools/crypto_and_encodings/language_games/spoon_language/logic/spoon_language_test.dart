@@ -27,12 +27,12 @@ void main() {
       {'input' : 'ie', 'expectedOutput' : 'ielewie'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = encryptSpoonLanguage(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group('spoon_language.decryptSpoonLanguage:', () {
@@ -60,11 +60,11 @@ void main() {
       {'expectedOutput' : 'ie', 'input' : 'ielewie'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decryptSpoonLanguage(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

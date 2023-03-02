@@ -91,7 +91,7 @@ List<String> _getAnswers(int i, String line, String lineBefore, List<WherigoVari
         .replaceAll('+r', '+')
         .replaceAll('+', '');
     line.split('or').forEach((element) {
-      hashvalue = int.parse(element.replaceAll('\D+', ''));
+      hashvalue = int.parse(element.replaceAll('D+', ''));
       results.add(hashvalue.toString() +
           '\x01' +
           breakUrwigoHash(hashvalue, HASH.ALPHABETICAL).toString() +
@@ -147,10 +147,11 @@ bool _isMessageActionElement(String line) {
       line.startsWith('Wherigo.GetInput') ||
       line.startsWith('Text = ') ||
       line.startsWith('Media = ') ||
-      line.startsWith('Buttons = '))
+      line.startsWith('Buttons = ')) {
     return true;
-  else
+  } else {
     return false;
+  }
 }
 
 WherigoActionMessageElementData _handleAnswerLine(String line) {
@@ -203,13 +204,14 @@ WherigoActionMessageElementData _handleAnswerLine(String line) {
 
 String _getVariable(String line) {
   if (line.trim().endsWith('= input')) line = line.trim().replaceAll(' = input', '').replaceAll(' ', '');
-  if (line.trim().endsWith('~= nil then'))
+  if (line.trim().endsWith('~= nil then')) {
     line = line.trim().replaceAll('if', '').replaceAll(' ~= nil then', '').replaceAll(' ', '');
+  }
   return line;
 }
 
 String _normalizeDate(String dateString) {
-  if (dateString == null || dateString.isEmpty || dateString == '1/1/0001 12:00:00 AM') return WHERIGO_NULLDATE;
+  if (dateString.isEmpty || dateString == '1/1/0001 12:00:00 AM') return WHERIGO_NULLDATE;
 
   List<String> dateTime = dateString.split(' ');
   List<String> date = dateTime[0].split('/');

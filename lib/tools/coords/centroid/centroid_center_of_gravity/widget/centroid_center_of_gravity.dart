@@ -13,13 +13,15 @@ import 'package:gc_wizard/tools/coords/centroid/centroid_center_of_gravity/logic
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 
 class CentroidCenterOfGravity extends StatefulWidget {
+  const CentroidCenterOfGravity({Key? key}) : super(key: key);
+
   @override
   CentroidCenterOfGravityState createState() => CentroidCenterOfGravityState();
 }
 
 class CentroidCenterOfGravityState extends State<CentroidCenterOfGravity> {
   var _currentCountCoords = 1;
-  var _currentCoords = [defaultBaseCoordinate];
+  final _currentCoords = [defaultBaseCoordinate];
 
   var _currentValues = [defaultCoordinate];
   var _currentMapPoints = <GCWMapPoint>[];
@@ -91,8 +93,9 @@ class CentroidCenterOfGravityState extends State<CentroidCenterOfGravity> {
   }
 
   void _calculateOutput() {
-    if (_currentCoords.isEmpty)
+    if (_currentCoords.isEmpty) {
       return;
+    }
 
     _currentValues = [centroidCenterOfGravity(_currentCoords.map((e) => e.toLatLng()!).toList())!];
 

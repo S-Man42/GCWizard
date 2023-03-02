@@ -31,7 +31,7 @@ String encodeMorse(String? input) {
     if (character == ' ') return '|';
 
     var morse = AZToMorse[character];
-    return morse != null ? morse : '';
+    return morse ?? '';
   }).join(String.fromCharCode(8195)); // using wide space
 }
 
@@ -42,6 +42,6 @@ String decodeMorse(String? input) {
     if (morse == '|' || morse == '/') return ' ';
 
     var character = MorseToAZ[morse];
-    return character != null ? character : '';
+    return character ?? '';
   }).join();
 }

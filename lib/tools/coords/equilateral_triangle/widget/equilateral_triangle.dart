@@ -14,6 +14,8 @@ import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:latlong2/latlong.dart';
 
 class EquilateralTriangle extends StatefulWidget {
+  const EquilateralTriangle({Key? key}) : super(key: key);
+
   @override
   EquilateralTriangleState createState() => EquilateralTriangleState();
 }
@@ -77,15 +79,15 @@ class EquilateralTriangleState extends State<EquilateralTriangle> {
         barrierDismissible: false,
         builder: (context) {
           return Center(
-            child: Container(
+            child: SizedBox(
+              height: 220,
+              width: 150,
               child: GCWAsyncExecuter<List<LatLng>>(
                 isolatedFunction: equilateralTriangleAsync,
                 parameter: _buildJobData,
                 onReady: (data) => _showOutput(data),
                 isOverlay: true,
               ),
-              height: 220,
-              width: 150,
             ),
           );
         },
@@ -134,7 +136,7 @@ class EquilateralTriangleState extends State<EquilateralTriangle> {
       GCWMapPolyline(points: [_currentMapPoints[0], _currentMapPoints[1]]),
     ];
 
-    intersectionMapPoints.forEach((intersection) {
+    for (var intersection in intersectionMapPoints) {
       _currentMapPolylines.addAll([
         GCWMapPolyline(
             points: [_currentMapPoints[0], intersection],
@@ -147,7 +149,7 @@ class EquilateralTriangleState extends State<EquilateralTriangle> {
                 .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness - 0.3)
                 .toColor())
       ]);
-    });
+    }
 
     _currentOutput = _currentIntersections
         .map((intersection) => formatCoordOutput(intersection, _currentOutputFormat, defaultEllipsoid))

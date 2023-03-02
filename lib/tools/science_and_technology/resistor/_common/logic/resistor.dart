@@ -5,7 +5,7 @@ enum ResistorBandType { FIRST, SECOND, THIRD, MULTIPLIER, TOLERANCE, TEMPERATURE
 // source: https://en.wikipedia.org/wiki/Electronic_color_code#cite_note-IEC_60062_2016ECC-7
 enum ResistorBandColor { PINK, SILVER, GOLD, BLACK, BROWN, RED, ORANGE, YELLOW, GREEN, BLUE, VIOLET, GREY, WHITE }
 
-final defaultResistorBandColor = ResistorBandColor.BROWN;
+const defaultResistorBandColor = ResistorBandColor.BROWN;
 
 // source: https://de.wikipedia.org/wiki/Widerstand_(Bauelement)#Angaben_auf_Widerst%C3%A4nden
 final Map<ResistorBandColor, Map<ResistorBandType, double>> _RESISTOR_VALUES_THREE_AND_FOUR_BANDS = {
@@ -309,7 +309,7 @@ ResistorValue getResistorValue(List<ResistorBandColor> colors) {
     case 6:
       return _getFiveOrSixBandResistorValue(6, colors);
     default:
-      return ResistorValue(null, 0);
+      return const ResistorValue(null, 0);
   }
 }
 

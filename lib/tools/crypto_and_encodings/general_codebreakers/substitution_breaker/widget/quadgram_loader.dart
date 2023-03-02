@@ -19,10 +19,10 @@ Future<Quadgrams?> loadQuadgramsAssets(SubstitutionBreakerAlphabet alphabet, Bui
 
   String data = await DefaultAssetBundle.of(context).loadString(quadgrams.assetLocation);
   Map<String, dynamic> jsonData = asJsonMap(jsonDecode(data));
-  quadgrams.quadgramsCompressed = Map<int, List<int>>();
-  jsonData.entries.forEach((entry) {
+  quadgrams.quadgramsCompressed = <int, List<int>>{};
+  for (var entry in jsonData.entries) {
     quadgrams.quadgramsCompressed!.putIfAbsent(int.tryParse(entry.key) ?? 0, () => List<int>.from(entry.value as List<int>));
-  });
+  }
 
   quadgramsMap.putIfAbsent(alphabet, () => quadgrams);
 

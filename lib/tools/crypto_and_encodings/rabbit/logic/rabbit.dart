@@ -43,9 +43,9 @@ RabbitOutput cryptRabbit(String? input, InputFormat inputFormat, String? key, In
     if (ivList == null || ivList.isEmpty) return RabbitOutput('', null, null, ErrorCode.IV_FORMAT);
     ivData = _generateData(ivList, 8);
     if (ivData == null || ivData.isEmpty) return RabbitOutput('', null, null, ErrorCode.IV_FORMAT);
-  } else
-    // for same result like http://kryptografie.de/kryptografie/chiffre/rabbit.htm
+  } else {
     ivData = _generateData([0], 8);
+  }
 
   if (ivData == null || ivData.isEmpty) return RabbitOutput('', null, null, ErrorCode.IV_FORMAT);
   var rabbit = Rabbit(keyData, ivData);
@@ -62,7 +62,9 @@ Uint8List? _generateData(List<int>? data, int length) {
 
   var list = Uint8List(length);
   list.fillRange(0, list.length, 0);
-  for (var i = 0; i < min(data.length, length); i++) list[i] = data[i] & 0xFF;
+  for (var i = 0; i < min(data.length, length); i++) {
+    list[i] = data[i] & 0xFF;
+  }
 
   return list;
 }
@@ -96,22 +98,22 @@ rc4.OutputFormat _convertOutputFormatEnum(OutputFormat outputFormat) {
 }
 
 class Rabbit {
-  _context _master = new _context();
+  final _context _master = _context();
   _context? _working; // this is created on class construction/initialization
   bool initialized = false;
 
   Rabbit(Uint8List? key, Uint8List iv) {
-    if (key != null && key.length != 16)
-      // If Key is not NULL, then Key MUST be 16 bytes in length!
+    if (key != null && key.length != 16) {
       return;
+    }
     _keySetup(key);
     initialized = _reSeedIV(iv);
   }
 
   bool _reSeedIV(Uint8List? iv) {
-    if (iv != null && iv.length != 8)
-      // If IV is not NULL, then IV MUST be 8 bytes in length!
+    if (iv != null && iv.length != 8) {
       return false;
+    }
 
     if (iv == null) {
       _working = _master.clone(true); // assume a blank reset to master
@@ -127,18 +129,20 @@ class Rabbit {
 
     var output = Uint8List(msg.length);
     /* Encrypt/decrypt the data */
-    for (var i = 0; i < msg.length; i++) output[i] = msg[i] ^ keyStream[i];
+    for (var i = 0; i < msg.length; i++) {
+      output[i] = msg[i] ^ keyStream[i];
+    }
 
     return output;
   }
 
   Uint8List? keyStreamBytes(int? length) {
-    if (!initialized || _working == null)
-      // Cannot get KeyStream if object not initialized! Call Initialize(x[,x]) first!
+    if (!initialized || _working == null) {
       return null;
-    if (length == null || length < 1)
-      // Length must be an integer greater than 1.");
+    }
+    if (length == null || length < 1) {
       return null;
+    }
 
     /* Temporary variables */
     var buffer = Uint32List(4);
@@ -207,7 +211,9 @@ class Rabbit {
     int i;
 
     /* Save old counter values */
-    for (i = 0; i < 8; i++) c_old[i] = ctx.counters[i];
+    for (i = 0; i < 8; i++) {
+      c_old[i] = ctx.counters[i];
+    }
 
     /* Calculate new counter values */
     ctx.counters[0] = _uint32(ctx.counters[0] + 0x4D34D34D + ctx.carry);
@@ -221,7 +227,9 @@ class Rabbit {
     ctx.carry = (ctx.counters[7] < c_old[7] ? 1 : 0);
 
     /* Calculate the g-values */
-    for (i = 0; i < 8; i++) g[i] = _g(_uint32(ctx.state[i] + ctx.counters[i]));
+    for (i = 0; i < 8; i++) {
+      g[i] = _g(_uint32(ctx.state[i] + ctx.counters[i]));
+    }
 
     /* Calculate new state values */
     ctx.state[0] = _uint32(g[0] + _rotateLeft(g[7], 16) + _rotateLeft(g[6], 16));
@@ -242,7 +250,9 @@ class Rabbit {
 
     /* Generate four subkeys */
     if (key != null) {
-      for (i = 0; i < k.length; i++) k[i] = _fromBytesToUInt32(key, i * 4); // 16 Bytes to 4 UInt32
+      for (i = 0; i < k.length; i++) {
+        k[i] = _fromBytesToUInt32(key, i * 4); // 16 Bytes to 4 UInt32
+      }
     }
 
     /* Generate initial state variables */
@@ -269,10 +279,14 @@ class Rabbit {
     _master.carry = 0;
 
     /* Iterate the system four times */
-    for (i = 0; i < 4; i++) _nextState(_master);
+    for (i = 0; i < 4; i++) {
+      _nextState(_master);
+    }
 
     /* Modify the counters */
-    for (i = 0; i < 8; i++) _master.counters[i] ^= _master.state[(i + 4) & 0x7];
+    for (i = 0; i < 8; i++) {
+      _master.counters[i] ^= _master.state[(i + 4) & 0x7];
+    }
 
     /* Copy master instance to work instance */
     _working = _master.clone(true); // include counters
@@ -306,7 +320,9 @@ class Rabbit {
     _working!.counters[7] = _master.counters[7] ^ ii[3];
 
     /* Iterate the system four times */
-    for (i = 0; i < 4; i++) _nextState(_working!);
+    for (i = 0; i < 4; i++) {
+      _nextState(_working!);
+    }
 
     return true;
   }
@@ -325,14 +341,16 @@ class _context {
 
   _context clone(bool IncludeCounters) {
     var temp = _context();
-    temp.carry = this.carry;
-    if (IncludeCounters) temp.counters.setRange(0, this.counters.length, this.counters);
-    temp.state.setRange(0, this.state.length, this.state);
+    temp.carry = carry;
+    if (IncludeCounters) temp.counters.setRange(0, counters.length, counters);
+    temp.state.setRange(0, state.length, state);
     return temp;
   }
 
   void clear() {
     carry = 0;
-    for (int i = 0; i < counters.length; i++) counters[i] = state[i] = 0;
+    for (int i = 0; i < counters.length; i++) {
+      counters[i] = state[i] = 0;
+    }
   }
 }

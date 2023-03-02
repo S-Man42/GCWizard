@@ -24,7 +24,7 @@ class CompassDirection {
   });
 }
 
-final _NO_COMPASS_DIRECTION = '-';
+const _NO_COMPASS_DIRECTION = '-';
 
 final List<CompassDirection> _COMPASS_ROSE = [
   CompassDirection(symbol: _NO_COMPASS_DIRECTION, name: _NO_COMPASS_DIRECTION, value: double.nan, level: -1),
@@ -92,10 +92,7 @@ class _GCWBearingState extends State<GCWBearing> {
 
   @override
   Widget build(BuildContext context) {
-    if (_currentCompassValue == null) {
-      _currentCompassValue =
-          _COMPASS_ROSE.firstWhere((direction) => direction.symbol == 'common_compassrose_n_symbol').symbol;
-    }
+    _currentCompassValue ??= _COMPASS_ROSE.firstWhere((direction) => direction.symbol == 'common_compassrose_n_symbol').symbol;
 
     return Row(children: <Widget>[
       Expanded(
@@ -111,16 +108,17 @@ class _GCWBearingState extends State<GCWBearing> {
               var normalizedBearing = modulo360(_currentBearing.value);
 
               var compassValue = _COMPASS_ROSE.firstWhereOrNull((direction) => direction.value == normalizedBearing);
-              if (compassValue != null)
+              if (compassValue != null) {
                 _currentCompassValue = compassValue.symbol;
-              else
+              } else {
                 _currentCompassValue = _NO_COMPASS_DIRECTION;
+              }
 
               widget.onChanged(_currentBearing);
             });
           }),
       ),
-      Expanded(
+      const Expanded(
         flex: 1,
         child: GCWText(text: ' °  = '),
       ),
@@ -130,18 +128,20 @@ class _GCWBearingState extends State<GCWBearing> {
           value: _currentCompassValue!,
           items: _COMPASS_ROSE.map((direction) {
             if (direction.symbol == _NO_COMPASS_DIRECTION) {
-              return GCWDropDownMenuItem(value: _NO_COMPASS_DIRECTION, child: _NO_COMPASS_DIRECTION);
+              return const GCWDropDownMenuItem(value: _NO_COMPASS_DIRECTION, child: _NO_COMPASS_DIRECTION);
             }
 
             FontWeight fontweight = FontWeight.normal;
             var level = direction.level;
-            if (level == 0)
+            if (level == 0) {
               fontweight = FontWeight.w900;
-            else if (level == 1)
+            } else if (level == 1) {
               fontweight = FontWeight.w600;
-            else if (level == 2)
+            } else if (level == 2) {
               fontweight = FontWeight.w400;
-            else if (level == 3) fontweight = FontWeight.w300;
+            } else if (level == 3) {
+              fontweight = FontWeight.w300;
+            }
 
             return GCWDropDownMenuItem(
                 value: direction.symbol,

@@ -11,12 +11,13 @@ LatLng? centroidArithmeticMean(List<LatLng> coords, LatLng centerOfGravity) {
   var y = 0.0;
   for (LatLng coord in coords) {
     double lon;
-    if (coord.longitude + centerOfGravity.longitude < -180.0)
+    if (coord.longitude + centerOfGravity.longitude < -180.0) {
       lon = coord.longitude + 360.0;
-    else if (coord.longitude + centerOfGravity.longitude > 180.0)
+    } else if (coord.longitude + centerOfGravity.longitude > 180.0) {
       lon = coord.longitude - 360.0;
-    else
+    } else {
       lon = coord.longitude;
+    }
 
     x += coord.latitude;
     y += lon;

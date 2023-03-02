@@ -29,8 +29,8 @@ class GCWMapPoint {
       this.circle,
       this.circleColorSameAsPointColor = true,
       this.isVisible = true}) {
-    if (uuid == null || uuid!.isEmpty) uuid = Uuid().v4();
-    if (coordinateFormat == null) coordinateFormat = defaultCoordinateFormat;
+    if (uuid == null || uuid!.isEmpty) uuid = const Uuid().v4();
+    coordinateFormat ??= defaultCoordinateFormat;
     update();
   }
 
@@ -63,7 +63,7 @@ class GCWMapLine extends GCWMapSimpleGeometry {
   List<LatLng> shape = [];
 
   GCWMapLine(this.parent, this.start, this.end) {
-    if (this.end == null) {
+    if (end == null) {
       shape.add(start.point);
       return;
     }
@@ -104,7 +104,7 @@ class GCWMapPolyline {
     required this.points,
     this.color = COLOR_MAP_POLYLINE,
   }) {
-    if (uuid == null || uuid!.isEmpty) uuid = Uuid().v4();
+    if (uuid == null || uuid!.isEmpty) uuid = const Uuid().v4();
     update();
   }
 
@@ -138,7 +138,7 @@ class GCWMapCircle extends GCWMapSimpleGeometry {
   }
 
   void _update() {
-    if (this.radius <= 0.0) {
+    if (radius <= 0.0) {
       shape = [];
       return;
     }
@@ -149,7 +149,7 @@ class GCWMapCircle extends GCWMapSimpleGeometry {
     bool shouldSort = false;
 
     shape = List.generate(((360.0 + _degrees) / _degrees).floor(), (index) => index * _degrees).map((e) {
-      LatLng coord = projectionVincenty(this.centerPoint, e, this.radius, defaultEllipsoid);
+      LatLng coord = projectionVincenty(centerPoint, e, radius, defaultEllipsoid);
 
       // if there is a huge longitude step around the world (nearly 360°)
       // then one coordinate is placed to the left side of the map, the next one to the right (or vice versa)

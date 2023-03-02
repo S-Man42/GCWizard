@@ -49,7 +49,7 @@ class _GCWAngleState extends State<GCWAngle> {
           },
         ),
       ),
-      Expanded(
+      const Expanded(
         flex: 1,
         child: GCWText(text: '°'),
       ),

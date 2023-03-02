@@ -13,8 +13,9 @@ class EquilateralTriangleJobData {
 }
 
 Future<List<LatLng>> equilateralTriangleAsync(GCWAsyncExecuterParameters? jobData) async {
-  if (jobData?.parameters is! EquilateralTriangleJobData)
+  if (jobData?.parameters is! EquilateralTriangleJobData) {
     throw Exception('Unexpected data for Equilateral Triangle');
+  }
 
   var data = jobData!.parameters as EquilateralTriangleJobData;
   var output = equilateralTriangle(data.coord1, data.coord2, data.ells);

@@ -37,15 +37,16 @@ class _GCWDropDownState<T extends Object?> extends State<GCWDropDown> {
       children: [
         if (widget.title != null && widget.title!.isNotEmpty)
           Expanded(
+              flex: 1,
               child: GCWText(
                 text: widget.title! + ':',
-              ),
-              flex: 1),
+              )),
         Expanded(
+            flex: 3,
             child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 0.0),
+                padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 0.0),
                 height: 39,
-                margin: EdgeInsets.symmetric(vertical: DEFAULT_MARGIN),
+                margin: const EdgeInsets.symmetric(vertical: DEFAULT_MARGIN),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(ROUNDED_BORDER_RADIUS),
                   border: Border.all(
@@ -72,18 +73,17 @@ class _GCWDropDownState<T extends Object?> extends State<GCWDropDown> {
                       (context) {
                         return widget.items.map((item) {
                           return Align(
+                            alignment: Alignment.centerLeft,
                             child: item.child is Widget
                                 ? item.child as Widget
                                 : Text(
                                     item.child.toString(),
                                     style: textStyle,
                                   ),
-                            alignment: Alignment.centerLeft,
                           );
                         }).toList();
                       },
-                ))),
-            flex: 3)
+                ))))
       ],
     );
   }
@@ -101,6 +101,7 @@ Widget _buildMenuItemChild(GCWDropDownMenuItem item) {
           );
   } else {
     return Container(
+      padding: const EdgeInsets.only(bottom: 10),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text(
           item.child.toString(),
@@ -109,15 +110,14 @@ Widget _buildMenuItemChild(GCWDropDownMenuItem item) {
           style: item.style ?? gcwTextStyle(),
         ),
         Container(
+            padding: const EdgeInsets.only(left: DEFAULT_DESCRIPTION_MARGIN),
             child: Text(
               item.subtitle.toString(),
               style: gcwDescriptionTextStyle(),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-            ),
-            padding: EdgeInsets.only(left: DEFAULT_DESCRIPTION_MARGIN)),
+            )),
       ]),
-      padding: EdgeInsets.only(bottom: 10),
     );
   }
 }

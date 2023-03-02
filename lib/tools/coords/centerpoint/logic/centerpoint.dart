@@ -126,7 +126,9 @@ CenterPointDistance _calculateCenterPointThreePoints(LatLng coord1, LatLng coord
       dist *= 1.5; //adjusted these values empirical
       d = newD;
       distSum = newDistSum;
-    } else if (newD > d || newDistSum > distSum + 1000000) dist /= 1.2;
+    } else if (newD > d || newDistSum > distSum + 1000000) {
+      dist /= 1.2;
+    }
   }
 
   return CenterPointDistance(calculatedPoint, dist1);

@@ -2,39 +2,36 @@ part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_analyze.
 
 List<Widget> _buildOutputListOfMessageData(BuildContext context, List<WherigoActionMessageElementData> data) {
   List<Widget> resultWidget = [];
-  data.forEach((element) {
+  for (var element in data) {
     switch (element.ActionMessageType) {
       case WHERIGO_ACTIONMESSAGETYPE.TEXT:
         resultWidget.add(Container(
+          padding: const EdgeInsets.only(top: DOUBLE_DEFAULT_MARGIN, bottom: DOUBLE_DEFAULT_MARGIN),
           child: GCWOutput(
             child: element.ActionMessageContent,
             suppressCopyButton: false,
           ),
-          padding: EdgeInsets.only(top: DOUBLE_DEFAULT_MARGIN, bottom: DOUBLE_DEFAULT_MARGIN),
         ));
         break;
       case WHERIGO_ACTIONMESSAGETYPE.IMAGE:
         var file = _getFileFrom(context, element.ActionMessageContent);
         if (file == null) break;
 
-        resultWidget.add(Container(
-          child: GCWImageView(
-            imageData: GCWImageViewData(file),
-            suppressedButtons: {GCWImageViewButtons.ALL},
-          ),
+        resultWidget.add(GCWImageView(
+          imageData: GCWImageViewData(file),
+          suppressedButtons: const {GCWImageViewButtons.ALL},
         ));
         break;
       case WHERIGO_ACTIONMESSAGETYPE.BUTTON:
-        resultWidget.add(Container(
-            child: Text(
-                '\n' +
-                    i18n(context, 'wherigo_output_action_btn') +
-                    ' « ' +
-                    element.ActionMessageContent +
-                    ' »' +
-                    '\n',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontWeight: FontWeight.bold))));
+        resultWidget.add(Text(
+            '\n' +
+                i18n(context, 'wherigo_output_action_btn') +
+                ' « ' +
+                element.ActionMessageContent +
+                ' »' +
+                '\n',
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontWeight: FontWeight.bold)));
         break;
       case WHERIGO_ACTIONMESSAGETYPE.COMMAND:
         if (element.ActionMessageContent.startsWith('Wherigo.PlayAudio')) {
@@ -42,22 +39,24 @@ List<Widget> _buildOutputListOfMessageData(BuildContext context, List<WherigoAct
           if (
           NameToObject[LUAName] == null ||
               NameToObject[LUAName]!.ObjectIndex >= WherigoCartridgeGWCData.MediaFilesContents.length
-          )
+          ) {
             break;
+          }
           resultWidget.add(GCWSoundPlayer(
             file: GCWFile(
                 bytes: WherigoCartridgeGWCData.MediaFilesContents[NameToObject[LUAName]!.ObjectIndex].MediaFileBytes,
                 name: NameToObject[LUAName]!.ObjectMedia),
           ));
-        } else
+        } else {
           resultWidget.add(GCWOutput(
             child: '\n' + _resolveLUAName(element.ActionMessageContent) + '\n',
             suppressCopyButton: true,
           ));
+        }
         break;
-      default: ;
+      default: {}
     }
-  });
+  }
   return resultWidget;
 }
 

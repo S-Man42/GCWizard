@@ -25,7 +25,7 @@ void main() {
       {'text': 'N 51.[A][A+1] E [B][B^A].[4]23', 'values': {'A': '1-3', 'B': '4-0#2,1', 'C': '12,34'}, 'projectionData': ProjectionData('[A*2]50, [B+5]', UNITCATEGORY_LENGTH.defaultUnit, 'A00.B', false), 'expectedOutput': expectedLatLngList},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('text: ${elem['text']}, values: ${elem['values']}, projectionData: ${elem['projectionData']}', () {
         var _actual = parseVariableLatLon(elem['text'] as String, elem['values'] as Map<String, String>, projectionData: elem['projectionData'] as ProjectionData?);
 
@@ -39,7 +39,7 @@ void main() {
         });
         expect(_actual.leftPadCoordinates, (elem['expectedOutput'] as VariableCoordinateResults)..leftPadCoordinates);
       });
-    });
+    }
   });
   
   group("Parser.variableLatLon.parseVariableLatLonWithoutVariables:", () {
@@ -72,7 +72,7 @@ void main() {
       },
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('text: ${elem['text']}, values: ${elem['values']}, projectionData: ${elem['projectionData']}', () {
         var _actual = parseVariableLatLon(elem['text'] as String, elem['values'] as Map<String, String>, projectionData: elem['projectionData'] as ProjectionData?);
 
@@ -84,7 +84,7 @@ void main() {
         });
         // expect(_actual['leftPadCoordinates'], elem['expectedOutput']['leftPadCoordinates']);
       });
-    });
+    }
   });
 
   group("Parser.variableLatLon.parseVariableLatLonWithLeftPadAndReplaceE:", () {
@@ -109,7 +109,7 @@ void main() {
       {'text': '52° 30.123 11° 20.E4', 'values': {'E': '5'}, 'expectedOutput': expectedLatLngList},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('text: ${elem['text']}, values: ${elem['values']}, projectionData: ${elem['projectionData']}', () {
         var _actual = parseVariableLatLon(elem['text'] as String, elem['values'] as Map<String, String>, projectionData: elem['projectionData'] as ProjectionData?);
 
@@ -129,6 +129,6 @@ void main() {
           expect(actualCoord.variables, _expectedCoords[index].variables);
         });
       });
-    });
+    }
   });
 }

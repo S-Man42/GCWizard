@@ -18,7 +18,7 @@ class NumberSequenceContainsDigits extends StatefulWidget {
 class NumberSequenceContainsDigitsState extends State<NumberSequenceContainsDigits> {
   int currentInputN = 0;
 
-  Widget _currentOutput = GCWDefaultOutput();
+  Widget _currentOutput = const GCWDefaultOutput();
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +60,7 @@ class NumberSequenceContainsDigitsState extends State<NumberSequenceContainsDigi
     _currentOutput = GCWDefaultOutput(
         child: GCWColumnedMultilineOutput(
             data: columnData,
-            flexValues: [4, 2, 1],
+            flexValues: const [4, 2, 1],
             copyColumn: 0,
             hasHeader: true
         ));

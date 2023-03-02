@@ -24,6 +24,8 @@ import 'package:tuple/tuple.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 
 class VisualCryptography extends StatefulWidget {
+  const VisualCryptography({Key? key}) : super(key: key);
+
   @override
   VisualCryptographyState createState() => VisualCryptographyState();
 }
@@ -170,9 +172,9 @@ class VisualCryptographyState extends State<VisualCryptography> {
         },
       ),
       Container(
+          padding: const EdgeInsets.symmetric(vertical: 25),
           child:
-              GCWImageView(imageData: GCWImageViewData(_encodeImage), suppressedButtons: {GCWImageViewButtons.ALL}),
-          padding: EdgeInsets.symmetric(vertical: 25),
+              GCWImageView(imageData: GCWImageViewData(_encodeImage), suppressedButtons: const {GCWImageViewButtons.ALL}),
         ),
 
       GCWOnOffSwitch(
@@ -203,7 +205,7 @@ class VisualCryptographyState extends State<VisualCryptography> {
                     });
                   },
                 ),
-                GCWDivider()
+                const GCWDivider()
               ],
             )
           : Container(),
@@ -267,14 +269,14 @@ class VisualCryptographyState extends State<VisualCryptography> {
                           if (_encodeImageSize != null)
                             Row(
                               children: [
-                                Expanded(child: Container(), flex: 1),
+                                Expanded(flex: 1, child: Container()),
                                 Expanded(
+                                    flex: 3,
                                     child: GCWText(
                                       align: Alignment.bottomCenter,
                                       text: _encodeImageSize ?? '',
                                       style: gcwDescriptionTextStyle(),
-                                    ),
-                                    flex: 3)
+                                    ))
                               ],
                             ),
                         ],
@@ -343,15 +345,15 @@ class VisualCryptographyState extends State<VisualCryptography> {
         barrierDismissible: false,
         builder: (context) {
           return Center(
-            child: Container(
+            child: SizedBox(
+              height: 220,
+              width: 150,
               child: GCWAsyncExecuter<Uint8List?>(
                 isolatedFunction: decodeImagesAsync,
                 parameter: _buildJobDataDecode,
                 onReady: (data) => _saveOutputDecode(data),
                 isOverlay: true,
               ),
-              height: 220,
-              width: 150,
             ),
           );
         },
@@ -445,15 +447,15 @@ class VisualCryptographyState extends State<VisualCryptography> {
         barrierDismissible: false,
         builder: (context) {
           return Center(
-            child: Container(
+            child: SizedBox(
+              height: 220,
+              width: 150,
               child: GCWAsyncExecuter<Tuple2<Uint8List, Uint8List?>?>(
                 isolatedFunction: encodeImagesAsync,
                 parameter: _buildJobDataEncode,
                 onReady: (data) => _saveOutputEncode(data),
                 isOverlay: true,
               ),
-              height: 220,
-              width: 150,
             ),
           );
         },

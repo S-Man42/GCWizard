@@ -1,10 +1,11 @@
 part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_analyze.dart';
 
 void buildHeader(BuildContext context) {
-  if (wherigoExpertMode)
+  if (wherigoExpertMode) {
     outputHeader = _buildHeaderExpertMode(context);
-  else
+  } else {
     outputHeader = _buildHeaderUserMode(context);
+  }
 }
 
 List<List<String>> _buildHeaderUserMode(BuildContext context) {
@@ -112,7 +113,7 @@ List<List<String>> _buildHeaderExpertMode(BuildContext context) {
         header.add([i18n(context, 'wherigo_header_builder'), 'Groundspeak']);
         break;
 
-      default: ;
+      default: {}
     }
      header.add([i18n(context, 'wherigo_header_version'), WherigoCartridgeLUAData.BuilderVersion]);
   return header;

@@ -10,6 +10,8 @@ import 'package:gc_wizard/tools/science_and_technology/periodic_table/_common/lo
 import 'package:gc_wizard/utils/constants.dart';
 
 class AtomicNumbersToText extends StatefulWidget {
+  const AtomicNumbersToText({Key? key}) : super(key: key);
+
   @override
   AtomicNumbersToTextState createState() => AtomicNumbersToTextState();
 }

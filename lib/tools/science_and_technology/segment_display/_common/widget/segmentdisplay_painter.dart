@@ -60,8 +60,9 @@ class SegmentDisplayPainter extends CustomPainter {
         _paintSixteenSegmentDisplay(size);
         break;
       case SegmentDisplayType.CUSTOM:
-        if (customPaint != null)
+        if (customPaint != null) {
           customPaint!(_touchCanvas, size, segments, setSegmentState, segment_color_on, segment_color_off);
+        }
         break;
     }
   }

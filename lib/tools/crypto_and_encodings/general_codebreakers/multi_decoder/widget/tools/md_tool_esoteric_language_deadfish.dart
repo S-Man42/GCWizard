@@ -28,13 +28,14 @@ class MultiDecoderToolEsotericLanguageDeadfish extends AbstractMultiDecoderTool 
               try {
                 var decodeable = input;
                 var option = checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_DEADFISH, options, MDT_ESOTERIC_LANGUAGE_DEADFISH_OPTION_MODE);
-                if (option == MDT_ESOTERIC_LANGUAGES_DEADFISH_OPTION_XKCD) //XKCD
+                if (option == MDT_ESOTERIC_LANGUAGES_DEADFISH_OPTION_XKCD) {
                   decodeable = decodeable
                       .toLowerCase()
                       .replaceAll(RegExp(r'[iso]'), '')
                       .replaceAll('x', 'i')
                       .replaceAll('k', 's')
                       .replaceAll('c', 'o');
+                }
 
                 var output = decodeDeadfish(decodeable);
                 return output.trim().isEmpty ? null : output;

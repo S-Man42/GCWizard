@@ -6,8 +6,8 @@ class _Ingredient {
   String? _name;
   int? _amount;
   _State? _state;
-  bool _error = false;
-  var _errorList = <String>[];
+  final bool _error = false;
+  final _errorList = <String>[];
 
   _Ingredient(String ingredient) {
     //var tokens = ingredient.replaceAll('-', ' ').split(' ');
@@ -79,7 +79,7 @@ class _Ingredient {
   }
 
   void setAmount(int? n) {
-    if (n == null) throw FormatException('setAmount');
+    if (n == null) throw const FormatException('setAmount');
     _amount = n;
   }
 

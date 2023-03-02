@@ -128,14 +128,15 @@ Segments encodePasley(String? input) {
   List<List<String>> result = [];
 
   for (int i = 0; i < inputs.length; i++) {
-    if (letter) if (LETTER.contains(inputs[i])) {
-      result.add(PASLEY[inputs[i].toUpperCase()]!);
-    } else {
-      result.add(PASLEY_MODIFIER['NUMBERFOLLOWS']!);
-      result.add(PASLEY[inputs[i]]!);
-      letter = false;
-    }
-    else if (LETTER.contains(inputs[i])) {
+    if (letter) {
+      if (LETTER.contains(inputs[i])) {
+        result.add(PASLEY[inputs[i].toUpperCase()]!);
+      } else {
+        result.add(PASLEY_MODIFIER['NUMBERFOLLOWS']!);
+        result.add(PASLEY[inputs[i]]!);
+        letter = false;
+      }
+    } else if (LETTER.contains(inputs[i])) {
       result.add(PASLEY_MODIFIER['LETTERFOLLOWS']!);
       result.add(PASLEY[inputs[i].toUpperCase()]!);
       letter = true;
@@ -151,10 +152,10 @@ SegmentsText decodeVisualPasley(List<String> inputs) {
 
   var displays = <List<String>>[];
   var segment = <String>[];
-  inputs.forEach((element) {
+  for (var element in inputs) {
     segment = _stringToSegment(element);
     displays.add(segment);
-  });
+  }
 
   bool letter = true;
 
@@ -173,12 +174,13 @@ SegmentsText decodeVisualPasley(List<String> inputs) {
       char = char + UNKNOWN_ELEMENT;
     } else {
       charH = CODEBOOK[input]!;
-      if (charH == 'LETTERFOLLOWS')
+      if (charH == 'LETTERFOLLOWS') {
         letter = true;
-      else if (charH == 'NUMBERFOLLOWS')
+      } else if (charH == 'NUMBERFOLLOWS') {
         letter = false;
-      else
+      } else {
         char = char + (_decode(charH, letter) ?? '');
+      }
     }
 
     return char;
@@ -188,14 +190,17 @@ SegmentsText decodeVisualPasley(List<String> inputs) {
 
 List<String> _stringToSegment(String input) {
   List<String> result = [];
-  for (int i = 0; i < input.length; i++) result.add(input[i]);
+  for (int i = 0; i < input.length; i++) {
+    result.add(input[i]);
+  }
 
   return result;
 }
 
 String? _decode(String code, bool letter) {
-  if (letter)
+  if (letter) {
     return code;
-  else
+  } else {
     return LetterToDigit[code];
+  }
 }

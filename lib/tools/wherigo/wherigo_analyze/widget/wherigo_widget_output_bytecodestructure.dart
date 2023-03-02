@@ -35,7 +35,7 @@ List<Widget> _buildOutputListByteCodeStructure(BuildContext context, Uint8List b
       child: GCWColumnedMultilineOutput(
           data: content,
           suppressCopyButtons: true,
-          flexValues: [1, 3, 2],
+          flexValues: const [1, 3, 2],
           hasHeader: true
       ),
     );
@@ -49,10 +49,11 @@ List<Widget> _buildOutputListByteCodeStructure(BuildContext context, Uint8List b
 
     offset = 15;
     for (int i = 1; i < numberOfObjects; i++) {
-      if (i == 1)
+      if (i == 1) {
         content.add(
           ['', i18n(context, 'wherigo_data_mediafiles'), 'ID Offset'],
         );
+      }
 
       content.add([
         offset.toString().padLeft(7, ' '),
@@ -67,7 +68,7 @@ List<Widget> _buildOutputListByteCodeStructure(BuildContext context, Uint8List b
       child: GCWColumnedMultilineOutput(
           data: content,
           suppressCopyButtons: true,
-          flexValues: [1, 3, 2],
+          flexValues: const [1, 3, 2],
           hasHeader: true
       ),
     );
@@ -108,7 +109,7 @@ List<Widget> _buildOutputListByteCodeStructure(BuildContext context, Uint8List b
       child: GCWColumnedMultilineOutput(
           data: content,
           suppressCopyButtons: true,
-          flexValues: [1, 3, 2],
+          flexValues: const [1, 3, 2],
           hasHeader: true
       ),
     );
@@ -130,7 +131,7 @@ List<Widget> _buildOutputListByteCodeStructure(BuildContext context, Uint8List b
       child: GCWColumnedMultilineOutput(
           data: content,
           suppressCopyButtons: true,
-          flexValues: [1, 3, 2],
+          flexValues: const [1, 3, 2],
           hasHeader: true
       ),
     );
@@ -143,10 +144,11 @@ List<Widget> _buildOutputListByteCodeStructure(BuildContext context, Uint8List b
     // ? bytes Object Data
     List<List<String>> content = [];
     for (int i = 1; i < numberOfObjects; i++) {
-      if (i == 1)
+      if (i == 1) {
         content.add(
           ['', i18n(context, 'wherigo_data_mediafiles'), i18n(context, 'wherigo_header_valid')],
         );
+      }
       try {
         if (readByte(bytes, offset) != 0) {
           content.add([
@@ -196,7 +198,7 @@ List<Widget> _buildOutputListByteCodeStructure(BuildContext context, Uint8List b
       child: GCWColumnedMultilineOutput(
           data: content,
           suppressCopyButtons: true,
-          flexValues: [1, 3, 2],
+          flexValues: const [1, 3, 2],
           hasHeader: true
       ),
     );

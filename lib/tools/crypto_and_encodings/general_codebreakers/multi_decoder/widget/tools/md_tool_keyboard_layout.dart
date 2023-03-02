@@ -25,9 +25,9 @@ class MultiDecoderToolKeyboardLayout extends AbstractMultiDecoderTool {
             onDecode: (String input, String key) {
 
               var from = getKeyboardTypeByName(checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_KEYBOARDLAYOUT, options, MDT_KEYBOARDLAYOUT_OPTION_FROM));
-              if (from == null) from = getKeyboardTypeByName(toStringOrNull(getDefaultValue(MDT_INTERNALNAMES_KEYBOARDLAYOUT,MDT_KEYBOARDLAYOUT_OPTION_FROM)) ?? '');
+              from ??= getKeyboardTypeByName(toStringOrNull(getDefaultValue(MDT_INTERNALNAMES_KEYBOARDLAYOUT,MDT_KEYBOARDLAYOUT_OPTION_FROM)) ?? '');
               var to = getKeyboardTypeByName(checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_KEYBOARDLAYOUT, options, MDT_KEYBOARDLAYOUT_OPTION_TO));
-              if (to == null) to = getKeyboardTypeByName(toStringOrNull(getDefaultValue(MDT_INTERNALNAMES_KEYBOARDLAYOUT, MDT_KEYBOARDLAYOUT_OPTION_TO)) ?? '');
+              to ??= getKeyboardTypeByName(toStringOrNull(getDefaultValue(MDT_INTERNALNAMES_KEYBOARDLAYOUT, MDT_KEYBOARDLAYOUT_OPTION_TO)) ?? '');
               if (from == null || to == null) return null;
               return encodeKeyboard(input, from, to);
             },

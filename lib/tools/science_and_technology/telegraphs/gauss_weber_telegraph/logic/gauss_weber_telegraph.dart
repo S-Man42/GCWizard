@@ -132,7 +132,7 @@ Map<String, String> _WHEATSTONE_COOKE_5 = {
   'F': '|/|\\|',
   'G': '||/|\\',
   'H': '/\\|||',
-  'I': '|/\|||',
+  'I': '|/|||',
   'K': '||/\\|',
   'L': '|||/\\',
   'M': '\\/|||',
@@ -143,7 +143,7 @@ Map<String, String> _WHEATSTONE_COOKE_5 = {
   'S': '|\\|/|',
   'T': '||\\|/',
   'U': '\\||/|',
-  'W': '|\||/',
+  'W': '|||/',
   'Y': '\\|||/',
 };
 
@@ -289,7 +289,7 @@ String decodeGaussWeberTelegraph(String? input, GaussWeberTelegraphMode mode) {
       if (character == null || character.isEmpty) return '';
       return character;
     }).join();
-  } else
+  } else {
     return input.toLowerCase().split(RegExp(r'\s+')).map((code) {
       if (code.isEmpty) return '';
 
@@ -297,6 +297,7 @@ String decodeGaussWeberTelegraph(String? input, GaussWeberTelegraphMode mode) {
       if (character == null || character.isEmpty) return '';
       return character;
     }).join();
+  }
 }
 
 String encodeGaussWeberTelegraph(String input, GaussWeberTelegraphMode mode) {
@@ -339,17 +340,17 @@ String encodeGaussWeberTelegraph(String input, GaussWeberTelegraphMode mode) {
           letter = false;
           result.add(map['NUMERAL']!);
           var code = map[switchMapKeyValue(_WHEATSTONE_COOKE_LETTER_2_NUMERAL)[char]];
-          if (code == null || code.isEmpty)
+          if (code == null || code.isEmpty) {
             result.add('');
-          else {
+          } else {
             result.add(code);
           }
         } else {
           // letter mode and letter is coming
           var code = map[char];
-          if (code == null || code.isEmpty)
+          if (code == null || code.isEmpty) {
             result.add('');
-          else {
+          } else {
             result.add(code);
           }
         }
@@ -358,9 +359,9 @@ String encodeGaussWeberTelegraph(String input, GaussWeberTelegraphMode mode) {
         if (DIGITS.contains(char)) {
           // digit mode and digit is coming
           var code = map[switchMapKeyValue(_WHEATSTONE_COOKE_LETTER_2_NUMERAL)[char]];
-          if (code == null || code.isEmpty)
+          if (code == null || code.isEmpty) {
             result.add('');
-          else {
+          } else {
             result.add(code);
           }
         } else {
@@ -368,16 +369,16 @@ String encodeGaussWeberTelegraph(String input, GaussWeberTelegraphMode mode) {
           letter = true;
           result.add(map['LETTER']!);
           var code = map[char];
-          if (code == null || code.isEmpty)
+          if (code == null || code.isEmpty) {
             result.add('');
-          else {
+          } else {
             result.add(map[char]!);
           }
         }
       }
     });
     return result.join(' ');
-  } else
+  } else {
     return input
         .toUpperCase()
         .split('')
@@ -390,5 +391,6 @@ String encodeGaussWeberTelegraph(String input, GaussWeberTelegraphMode mode) {
           return code;
         })
         .join(' ')
-        .replaceAll(RegExp('\s+'), ' ');
+        .replaceAll(RegExp('s+'), ' ');
+  }
 }

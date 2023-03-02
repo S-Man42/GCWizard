@@ -6,7 +6,7 @@ import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/l
 import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/widget/segmentdisplay_painter.dart';
 import 'package:touchable/touchable.dart';
 
-//ignore: must_be_immutable
+
 class NSegmentDisplay extends StatefulWidget {
   final Map<String, bool> initialSegments;
   final double aspectRatio;
@@ -48,9 +48,9 @@ class NSegmentDisplayState extends State<NSegmentDisplay> {
     if (widget.segments.isNotEmpty) {
       _segments = Map.from(widget.segments);
 
-      widget.initialSegments.keys.forEach((segmentID) {
+      for (var segmentID in widget.initialSegments.keys) {
         _segments.putIfAbsent(segmentID, () => widget.initialSegments[segmentID]!);
-      });
+      }
     } else {
       _segments = Map.from(widget.initialSegments);
     }
@@ -61,7 +61,7 @@ class NSegmentDisplayState extends State<NSegmentDisplay> {
             child: AspectRatio(
                 aspectRatio: widget.aspectRatio,
                 child: CanvasTouchDetector(
-                    gesturesToOverride: [GestureType.onTapDown],
+                    gesturesToOverride: const [GestureType.onTapDown],
                     builder: (context) {
                       return CustomPaint(
                           painter: SegmentDisplayPainter(context, widget.type, _segments, (key, value) {
@@ -80,13 +80,13 @@ class NSegmentDisplayState extends State<NSegmentDisplay> {
   Future<ui.Image> get renderedImage async {
      _segments = Map.from(widget.segments);
 
-    widget.initialSegments.keys.forEach((segmentID) {
+    for (var segmentID in widget.initialSegments.keys) {
       _segments.putIfAbsent(segmentID, () => widget.initialSegments[segmentID]!);
-    });
+    }
 
     final recorder = ui.PictureRecorder();
     Canvas canvas = Canvas(recorder);
-    final size = context.size ?? Size(100, 100);
+    final size = context.size ?? const Size(100, 100);
 
     final painter = SegmentDisplayPainter(context, widget.type, _segments, (key, value) {},
         customPaint: widget.customPaint, segment_color_on: Colors.black, segment_color_off: Colors.white);
@@ -100,11 +100,12 @@ class NSegmentDisplayState extends State<NSegmentDisplay> {
 
 Map<String, bool> buildSegmentMap(Segments segments) {
   Map<String, bool> segmentMap;
-  if (segments.displays.isNotEmpty)
+  if (segments.displays.isNotEmpty) {
     segmentMap = Map<String, bool>.fromIterable(segments.displays.last,
         key: (e) => e.toString(), value: (e) => true);
-  else
+  } else {
     segmentMap = {};
+  }
 
   return segmentMap;
 }

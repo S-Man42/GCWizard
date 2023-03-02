@@ -89,8 +89,8 @@ class _FormulaReplaceState extends State<_FormulaReplace> {
           style: textStyle,
         ),
         Container(
+          padding: const EdgeInsets.only(top: 6 * DEFAULT_MARGIN),
           child: GCWDivider(color: textStyle.color),
-          padding: EdgeInsets.only(top: 6 * DEFAULT_MARGIN),
         ),
         GCWCheckBox(
           value: _currentValueBracket,

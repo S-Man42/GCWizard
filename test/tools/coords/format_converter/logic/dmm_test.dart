@@ -71,15 +71,16 @@ void main() {
   group("Converter.dmm.parseDMM:", () {
     List<Map<String, Object?>> _inputsToExpected = inputsToExpectedDMM;
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('text: ${elem['text']}', () {
         var _actual = DMM.parse(elem['text'] as String)?.toLatLng();
-        if (_actual == null)
+        if (_actual == null) {
           expect(null, elem['expectedOutput']);
-        else
+        } else {
           expect(_actual, (elem['expectedOutput'] as Map<String, Object>)['coordinate']);
+        }
       });
-    });
+    }
   });
 
   group("Converter.dmm.parseDMMWithLeftPadMilliminutes:", () {
@@ -134,12 +135,12 @@ void main() {
       {'text': 'N 52° 12.3189452\' E 20° 12.15846874\'', 'leftPadMilliMinutes': true, 'expectedOutput': {'format': CoordinateFormatKey.DMM, 'coordinate': LatLng(52.2053157533, 20.2026411457)}},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('text: ${elem['text']}, leftPadMilliMinutes: ${elem['leftPadMilliMinutes']}', () {
         var _actual = DMM.parse(elem['text'] as String, leftPadMilliMinutes: elem['leftPadMilliMinutes'] as bool)?.toLatLng();
         expect((_actual!.latitude - (((elem['expectedOutput'] as Map<String, Object>)['coordinate']) as LatLng).latitude).abs() < 1e-8, true);
         expect((_actual.longitude - (((elem['expectedOutput'] as Map<String, Object>)['coordinate']) as LatLng).longitude).abs() < 1e-8, true);
       });
-    });
+    }
   });
 }

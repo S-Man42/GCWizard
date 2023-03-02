@@ -25,7 +25,7 @@ LatLng xyzToLatLon(XYZ xyz, Ellipsoid ells) {
   return LatLng(radianToDeg(lat), radianToDeg(lon));
 }
 
-XYZ latLonToXYZ(LatLng coord, Ellipsoid ells, {double h: 0.0}) {
+XYZ latLonToXYZ(LatLng coord, Ellipsoid ells, {double h = 0.0}) {
   var lat = coord.latitudeInRad;
   var lon = coord.longitudeInRad;
   var v = ells.a / sqrt(1 - ells.e2 * sin(lat) * sin(lat));
@@ -64,8 +64,9 @@ XYZ? parseXYZ(String input) {
   }
 
   if (matches.isEmpty) return null;
-  if (xString == null || yString == null || zString == null)
+  if (xString == null || yString == null || zString == null) {
     return null;
+  }
 
   var x = double.tryParse(xString);
   var y = double.tryParse(yString);

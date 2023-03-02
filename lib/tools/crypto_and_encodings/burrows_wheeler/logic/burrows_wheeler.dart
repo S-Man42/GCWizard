@@ -25,9 +25,9 @@ BWTOutput encryptBurrowsWheeler(String? plain, String indexChar) {
     if (matrix[i] == plain) index = i;
   }
 
-  if (int.tryParse(indexChar) == null)
+  if (int.tryParse(indexChar) == null) {
     chiffre = chiffre.substring(0, index) + indexChar + chiffre.substring(index);
-  else {
+  } else {
     index = index + 1;
     indexChar = index.toString();
   }
@@ -45,17 +45,18 @@ BWTOutput decryptBurrowsWheeler(String? chiffre, String indexChar) {
   if (int.tryParse(indexChar) == null) {
     // index is encoded with a special symbol within the chiffre
     for (int i = 0; i < len; i++) {
-      if (chiffre[i] != indexChar)
+      if (chiffre[i] != indexChar) {
         input = input + chiffre[i];
-      else
+      } else {
         index = i;
+      }
     }
     len = len - 1;
   } else {
     index = int.parse(indexChar) - 1;
     input = chiffre;
   }
-  var tabelle = Map<int, List<String>>();
+  var tabelle = <int, List<String>>{};
 
   for (int i = 0; i < len; i++) {
     tabelle[i] = ([i.toString(), input[i]]);

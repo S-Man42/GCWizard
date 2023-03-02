@@ -16,6 +16,8 @@ import 'package:gc_wizard/utils/constants.dart';
 import 'package:intl/intl.dart';
 
 class DistanceBearing extends StatefulWidget {
+  const DistanceBearing({Key? key}) : super(key: key);
+
   @override
   DistanceBearingState createState() => DistanceBearingState();
 }

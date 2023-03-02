@@ -114,7 +114,9 @@ Uint8List? decodeASCII85(String? chars) {
       var decodedChunk = _decodeChunk(chunk);
       if (decodedChunk == null) return null;
 
-      for (int j = 0; j < decodedChunk.length; j++) bytebuff[bufferIndex++] = decodedChunk[j];
+      for (int j = 0; j < decodedChunk.length; j++) {
+        bytebuff[bufferIndex++] = decodedChunk[j];
+      }
 
       chunk = Uint8List(5);
       chunkIndex = 0;
@@ -124,7 +126,9 @@ Uint8List? decodeASCII85(String? chars) {
   //If we didn't end on 0, then we need some padding
   if (chunkIndex > 0) {
     int numPadded = chunk.length - chunkIndex;
-    for (int j = chunkIndex; j < chunk.length; j++) chunk[j] = 'u'.codeUnitAt(0);
+    for (int j = chunkIndex; j < chunk.length; j++) {
+      chunk[j] = 'u'.codeUnitAt(0);
+    }
 
     var paddedDecode = _decodeChunk(chunk);
     if (paddedDecode == null) return null;

@@ -37,7 +37,9 @@ List<int> _rc4(List<int> input, List<int> key) {
   var s = List<int>.filled(256, 0);
   var out = <int>[];
   int i;
-  for (i = 0; i <= 255; ++i) s[i] = i;
+  for (i = 0; i <= 255; ++i) {
+    s[i] = i;
+  }
 
   int temp, randomValue;
   int j = 0;
@@ -137,14 +139,15 @@ List<int>? _addToIntList(String input, int base, List<int> list) {
 String formatOutput(List<int> outList, OutputFormat outputFormat) {
   var out = '';
 
-  outList.forEach((item) {
+  for (var item in outList) {
     switch (outputFormat) {
       case OutputFormat.TEXT:
         item = (item % pow(2, 16)).toInt();
-        if (item < 33 || (item > 126 && item < 161))
+        if (item < 33 || (item > 126 && item < 161)) {
           out += ".";
-        else
+        } else {
           out += String.fromCharCode(item);
+        }
         break;
       case OutputFormat.HEX:
         if (out.isNotEmpty) out += ' ';
@@ -164,6 +167,6 @@ String formatOutput(List<int> outList, OutputFormat outputFormat) {
       default:
         break;
     }
-  });
+  }
   return out;
 }

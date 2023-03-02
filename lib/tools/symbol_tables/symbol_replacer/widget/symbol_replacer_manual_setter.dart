@@ -17,9 +17,9 @@ class SymbolReplacerManualSetter extends StatefulWidget {
 }
 
 class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> {
-  var _symbolMap = Map<Symbol, Map<String, SymbolData>>();
+  final _symbolMap = <Symbol, Map<String, SymbolData>>{};
   List<GCWDropDownMenuItem>? _symbolDataItems;
-  var _gcwTextStyle = gcwTextStyle();
+  final _gcwTextStyle = gcwTextStyle();
   var _currentMode = GCWSwitchPosition.left;
   Map<String, SymbolReplacerSymbolData>? _currentSymbolData;
   var _init = true;
@@ -52,11 +52,12 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
       _fillSymbolMap(widget.symbolImage, widget.viewSymbols);
 
       // select all
-      _symbolMap.values.forEach((image) {
+      for (var image in _symbolMap.values) {
         image.values.first.primarySelected = true;
-      });
-      if (_symbolMap.values.isNotEmpty)
+      }
+      if (_symbolMap.values.isNotEmpty) {
         _selectSymbol(_symbolMap.values.first.values.first);
+      }
 
       if ((widget.symbolImage.compareSymbols == null) ||
           (widget.viewSymbols.isEmpty ||
@@ -76,8 +77,9 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
       if (_symbolMap.containsKey(symbol)) {
         var _symbolData = _symbolMap[symbol];
         var _displayText = symbol.symbolGroup?.text ?? '';
-        if (_symbolData?.values.first.displayName != _displayText)
+        if (_symbolData?.values.first.displayName != _displayText) {
           _symbolMap[symbol] = _cloneSymbolData(_symbolData!, _displayText);
+        }
       }
       // else //ToDo Mike Nullsafety
       //   _symbolMap.addAll({
@@ -158,6 +160,7 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
   Widget _buildTextEditRow() {
     return Column(children: [
       GCWToolBar(
+        flexValues: const [3, 1],
         children: <Widget>[
           _currentMode == GCWSwitchPosition.right
               ? GCWTextField(
@@ -179,28 +182,28 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
                 : themeColors().inActive(),
             onPressed: () {
               setState(() {
-                if (_currentMode == GCWSwitchPosition.left)
+                if (_currentMode == GCWSwitchPosition.left) {
                   _setSelectedSymbolsText(_currentSymbolData?.keys.first,
                       symbolData: _currentSymbolData?.values.first);
-                else
+                } else {
                   _setSelectedSymbolsText(_editValueController.text);
+                }
               });
             },
           ),
         ],
-        flexValues: [3, 1],
       ),
       Row(
         children: [
           Expanded(
               child: GCWButton(
             text: i18n(context, 'symboltablesexamples_selectall'),
-            margin: EdgeInsets.only(top: 5.0, bottom: 5.0),
+            margin: const EdgeInsets.only(top: 5.0, bottom: 5.0),
             onPressed: () {
               setState(() {
-                _symbolMap.values.forEach((image) {
+                for (var image in _symbolMap.values) {
                   image.values.first.primarySelected = true;
-                });
+                }
               });
             },
           )),
@@ -208,12 +211,12 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
           Expanded(
               child: GCWButton(
             text: i18n(context, 'symboltablesexamples_deselectall'),
-            margin: EdgeInsets.only(top: 5.0, bottom: 5.0),
+            margin: const EdgeInsets.only(top: 5.0, bottom: 5.0),
             onPressed: () {
               setState(() {
-                _symbolMap.values.forEach((image) {
+                for (var image in _symbolMap.values) {
                   image.values.first.primarySelected = false;
-                });
+                }
               });
             },
           )),
@@ -225,12 +228,13 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
   void _selectSymbolDataItem(SymbolData symbolData) {
     var compareSymbol = _getSymbol(_symbolMap, symbolData)?.symbolGroup?.compareSymbol;
     if ((widget.symbolImage.compareSymbols != null) && (compareSymbol != null) && (_symbolDataItems != null)) {
-      for (GCWDropDownMenuItem item in _symbolDataItems!)
+      for (GCWDropDownMenuItem item in _symbolDataItems!) {
         if ((item.value is Map<String, SymbolReplacerSymbolData>) &&
             ((item.value as Map<String, SymbolReplacerSymbolData>).values.first == compareSymbol)) {
           _currentSymbolData = item.value as Map<String, SymbolReplacerSymbolData>?;
           break;
         }
+      }
     }
   }
 
@@ -241,10 +245,10 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
         value: symbolData,
         child: Row(children: [
           Container(
+            margin: const EdgeInsets.only(left: 2, top: 2, bottom: 2, right: 10),
             child: (iconBytes != null)
                 ? GCWSymbolContainer(symbol: Image.memory(iconBytes))
                 : Container(width: DEFAULT_LISTITEM_SIZE),
-            margin: EdgeInsets.only(left: 2, top: 2, bottom: 2, right: 10),
           ),
           Expanded(
               child: Column(

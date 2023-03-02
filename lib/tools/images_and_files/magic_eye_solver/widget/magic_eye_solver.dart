@@ -19,6 +19,8 @@ import 'package:tuple/tuple.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 
 class MagicEyeSolver extends StatefulWidget {
+  const MagicEyeSolver({Key? key}) : super(key: key);
+
   @override
   MagicEyeSolverState createState() => MagicEyeSolverState();
 }
@@ -222,15 +224,15 @@ class MagicEyeSolverState extends State<MagicEyeSolver> {
       barrierDismissible: false,
       builder: (context) {
         return Center(
-          child: Container(
+          child: SizedBox(
+            height: 220,
+            width: 150,
             child: GCWAsyncExecuter<Tuple2<Uint8List?, MagicEyeErrorCode>?>(
               isolatedFunction: generateImageAsync,
               parameter: _buildJobDataEncode,
               onReady: (data) => _saveOutputEncode(data),
               isOverlay: true,
             ),
-            height: 220,
-            width: 150,
           ),
         );
       },

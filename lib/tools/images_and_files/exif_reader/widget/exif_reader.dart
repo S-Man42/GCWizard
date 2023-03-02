@@ -28,7 +28,7 @@ import 'package:latlong2/latlong.dart';
 class ExifReader extends StatefulWidget {
   final GCWFile? file;
 
-  ExifReader({Key? key, this.file}) : super(key: key);
+  const ExifReader({Key? key, this.file}) : super(key: key);
 
   @override
   _ExifReaderState createState() => _ExifReaderState();
@@ -119,16 +119,16 @@ class _ExifReaderState extends State<ExifReader> {
 
   List<Widget> _buildOutput(Map<String, List<List<dynamic>>>? _tableTags) {
     if (!_fileLoaded) {
-      return [GCWDefaultOutput()];
+      return [const GCWDefaultOutput()];
     }
 
     List<Widget> widgets = [];
     widgets.add(Container(
+      padding: const EdgeInsets.only(top: 10),
       child: GCWImageView(
         imageData: GCWImageViewData(file!),
-        suppressOpenInTool: {GCWImageViewOpenInTools.METADATA},
+        suppressOpenInTool: const {GCWImageViewOpenInTools.METADATA},
       ),
-      padding: EdgeInsets.only(top: 10),
     ));
     _decorateFile(widgets, file);
     if (image != null) _decorateImage(widgets, image!);
@@ -204,8 +204,9 @@ class _ExifReaderState extends State<ExifReader> {
         var jpegData = Image.JpegData();
         jpegData.read(file.bytes);
 
-        if (jpegData.comment != null && jpegData.comment!.isNotEmpty)
+        if (jpegData.comment != null && jpegData.comment!.isNotEmpty) {
           data.add([i18n(context, 'exif_comment'), jpegData.comment]);
+        }
         if (jpegData.adobe != null) {
           var adobe = jpegData.adobe!;
           if (adobe.version != null) data.add(['Adobe Version', adobe.version]);

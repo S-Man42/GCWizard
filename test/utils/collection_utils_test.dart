@@ -29,16 +29,17 @@ void main() {
       {'map' : {1: 'A', 1: 'B'}, 'expectedOutput': {'B': 1}}, //input map will be reduced to {1: 'B'}
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('map: ${elem['map']}, keepFirstOccurence: ${elem['keepFirstOccurence']}', () {
         Object _actual;
-        if (elem['keepFirstOccurence'] == null)
+        if (elem['keepFirstOccurence'] == null) {
           _actual = switchMapKeyValue(elem['map'] as Map);
-        else
+        } else {
           _actual = switchMapKeyValue(elem['map'] as Map, keepFirstOccurence: elem['keepFirstOccurence'] as bool);
+        }
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("CollectionUtils.textToBinaryList:", () {
@@ -56,11 +57,11 @@ void main() {
       {'text' : '1dasjk1123ssd12jd10ak', 'expectedOutput' : ['1', '11', '1', '10']},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('text: ${elem['text']}', () {
         var _actual = textToBinaryList(elem['text'] as String);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

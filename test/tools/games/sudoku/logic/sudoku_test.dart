@@ -9,13 +9,13 @@ void main() {
       },
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
 
         var _actual = SudokuBoard(board: elem['input'] as List<List<int>>);
         _actual.solveSudoku(10);
         expect(_actual.solutions, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

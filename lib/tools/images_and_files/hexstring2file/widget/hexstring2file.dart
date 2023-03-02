@@ -40,7 +40,6 @@ class HexString2FileState extends State<HexString2File> {
           },
         ),
         GCWDefaultOutput(
-            child: _buildOutput(),
             trailing: GCWIconButton(
               icon: Icons.save,
               size: IconButtonSize.SMALL,
@@ -48,7 +47,8 @@ class HexString2FileState extends State<HexString2File> {
               onPressed: () {
                 _outData == null ? null : _exportFile(context, _outData!);
               },
-            ))
+            ),
+            child: _buildOutput())
       ],
     );
   }

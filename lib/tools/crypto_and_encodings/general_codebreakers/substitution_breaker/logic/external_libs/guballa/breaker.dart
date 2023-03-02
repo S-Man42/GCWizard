@@ -68,9 +68,11 @@ Iterable<int> iterateText(String text, String alphabet, {bool ignoreNonLetters =
   text = text.toLowerCase();
   for (int i = 0; i < text.length; i++) {
     index = trans.indexOf(text[i]);
-    if (index >= 0)
+    if (index >= 0) {
       yield index;
-    else if (!ignoreNonLetters) yield -1;
+    } else if (!ignoreNonLetters) {
+      yield -1;
+    }
   }
 }
 
@@ -88,7 +90,9 @@ Iterable<int> iterateText(String text, String alphabet, {bool ignoreNonLetters =
 /// :return: tuple of the max_fitness and the number of keys evaluated
 Tuple2<int, int> _hill_climbing(List<int> key, List<int> cipher_bin, List<List<int>> char_positions) {
   var plaintext = <int>[];
-  cipher_bin.forEach((idx) => plaintext.add(key.indexOf(idx)));
+  for (var idx in cipher_bin) {
+    plaintext.add(key.indexOf(idx));
+  }
   var key_len = _alphabet_len;
   var nbr_keys = 0;
   var max_fitness = 0;
@@ -100,12 +104,12 @@ Tuple2<int, int> _hill_climbing(List<int> key, List<int> cipher_bin, List<List<i
       for (var idx2 = idx1 + 1; idx2 < key_len; idx2++) {
         var ch1 = key[idx1];
         var ch2 = key[idx2];
-        char_positions[ch1].forEach((idx) {
+        for (var idx in char_positions[ch1]) {
           plaintext[idx] = idx2;
-        });
-        char_positions[ch2].forEach((idx) {
+        }
+        for (var idx in char_positions[ch2]) {
           plaintext[idx] = idx1;
-        });
+        }
         nbr_keys += 1;
         var tmp_fitness = 0;
         var quad_idx = (plaintext[0] << 10) + (plaintext[1] << 5) + plaintext[2];
@@ -120,12 +124,12 @@ Tuple2<int, int> _hill_climbing(List<int> key, List<int> cipher_bin, List<List<i
           key[idx1] = ch2;
           key[idx2] = ch1;
         } else {
-          char_positions[ch1].forEach((idx) {
+          for (var idx in char_positions[ch1]) {
             plaintext[idx] = idx1;
-          });
-          char_positions[ch2].forEach((idx) {
+          }
+          for (var idx in char_positions[ch2]) {
             plaintext[idx] = idx2;
-          });
+          }
         }
       }
     }
@@ -141,15 +145,15 @@ Tuple2<int, int> _hill_climbing(List<int> key, List<int> cipher_bin, List<List<i
 BreakerResult break_cipher(Quadgrams quadgrams, String ciphertext, {int maxRounds = 10000, int consolidate = 3}) {
   _initBreaker(quadgrams);
 
-  if ((maxRounds < 1) || (maxRounds > 10000))
-    // maximum number of rounds not in the valid range 1..10000"
+  if ((maxRounds < 1) || (maxRounds > 10000)) {
     return BreakerResult(errorCode: BreakerErrorCode.MAX_ROUNDS_PARAMETER);
-  if ((consolidate < 1) || (consolidate > 30))
-    // consolidate parameter out of valid range 1..30"
+  }
+  if ((consolidate < 1) || (consolidate > 30)) {
     return BreakerResult(errorCode: BreakerErrorCode.CONSOLIDATE_PARAMETER);
-  if ((_alphabet == null) || (_alphabet!.isEmpty))
-    // consolidate parameter out of valid range 1..30"
+  }
+  if ((_alphabet == null) || (_alphabet!.isEmpty)) {
     return BreakerResult(errorCode: BreakerErrorCode.ALPHABET_TOO_SHORT);
+  }
 
   var start_time = DateTime.now();
   var nbr_keys = 0;
@@ -158,18 +162,18 @@ BreakerResult break_cipher(Quadgrams quadgrams, String ciphertext, {int maxRound
     cipher_bin.add(char);
   });
 
-  if (cipher_bin.length < 4)
-    // ciphertext is too short
+  if (cipher_bin.length < 4) {
     return BreakerResult(errorCode: BreakerErrorCode.TEXT_TOO_SHORT);
+  }
 
   var char_positions = <List<int>>[];
   for (int idx = 0; idx < _alphabet!.length; idx++) {
     var posList = <int>[];
     var i = 0;
-    cipher_bin.forEach((x) {
+    for (var x in cipher_bin) {
       if (x == idx) posList.add(i);
       i += 1;
-    });
+    }
     char_positions.add(posList);
   }
 

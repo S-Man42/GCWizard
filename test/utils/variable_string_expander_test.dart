@@ -78,7 +78,7 @@ void main() {
       }
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, substitutions: ${elem['substitutions']}', () {
         var _actual = VariableStringExpander(
             elem['input'] as String?,
@@ -88,7 +88,7 @@ void main() {
             .run();
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("VariableStringExpander.runError:", () {
@@ -98,7 +98,7 @@ void main() {
       },
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, substitutions: ${elem['substitutions']}', () {
         var _actual = VariableStringExpander(
             elem['input'] as String?,
@@ -108,7 +108,7 @@ void main() {
             .run();
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("VariableStringExpander.runUnorderedNotUnique:", () {
@@ -160,7 +160,7 @@ void main() {
       },
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, substitutions: ${elem['substitutions']}', () {
         var _actual = VariableStringExpander(
             elem['input'] as String?,
@@ -170,7 +170,7 @@ void main() {
             orderAndUnique: false).run();
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("VariableStringExpander.runOnlyPrecheckWithSpaces:", () {
@@ -180,7 +180,7 @@ void main() {
       }
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, substitutions: ${elem['substitutions']}', () {
         var _actual = VariableStringExpander(
             elem['input'] as String?,
@@ -190,7 +190,7 @@ void main() {
             .run(onlyPrecheck: true);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("VariableStringExpander.runOnlyPrecheck:", () {
@@ -200,7 +200,7 @@ void main() {
       }
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, substitutions: ${elem['substitutions']}', () {
         var _actual = VariableStringExpander(
             elem['input'] as String?,
@@ -210,6 +210,6 @@ void main() {
             .run(onlyPrecheck: true);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

@@ -7,6 +7,8 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/easter/logic/easter.dart';
 
 class EasterYears extends StatefulWidget {
+  const EasterYears({Key? key}) : super(key: key);
+
   @override
   EasterYearsState createState() => EasterYearsState();
 }
@@ -38,6 +40,7 @@ class EasterYearsState extends State<EasterYears> {
           children: [
             Expanded(
                 child: Container(
+                  padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
                   child: GCWDropDown<int>(
                     value: _currentMonth,
                     onChanged: (value) {
@@ -66,10 +69,10 @@ class EasterYearsState extends State<EasterYears> {
                       )
                     ],
                   ),
-                padding: EdgeInsets.only(right: DEFAULT_MARGIN),
             )),
             Expanded(
               child: Container(
+                padding: const EdgeInsets.only(left: DEFAULT_MARGIN),
                 child: GCWDropDown<int>(
                   value: _currentDay,
                   items: _currentDayList.map((day) {
@@ -84,7 +87,6 @@ class EasterYearsState extends State<EasterYears> {
                     });
                   },
                 ),
-                padding: EdgeInsets.only(left: DEFAULT_MARGIN),
               ),
             )
           ],

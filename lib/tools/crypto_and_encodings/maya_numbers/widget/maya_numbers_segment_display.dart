@@ -14,7 +14,7 @@ const _INITIAL_SEGMENTS = <String, bool>{
   'g': false
 };
 
-//ignore: must_be_immutable
+
 class MayaNumbersSegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
   final bool readOnly;

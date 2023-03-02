@@ -13,6 +13,8 @@ import 'package:gc_wizard/tools/crypto_and_encodings/bundeswehr_talkingboard/bun
 import 'package:gc_wizard/tools/crypto_and_encodings/bundeswehr_talkingboard/bundeswehr_code/logic/bundeswehr_code.dart';
 
 class BundeswehrTalkingBoardObfuscation extends StatefulWidget {
+  const BundeswehrTalkingBoardObfuscation({Key? key}) : super(key: key);
+
   @override
   BundeswehrTalkingBoardObfuscationState createState() => BundeswehrTalkingBoardObfuscationState();
 }
@@ -35,13 +37,13 @@ class BundeswehrTalkingBoardObfuscationState extends State<BundeswehrTalkingBoar
   var _currentMode = GCWSwitchPosition.right;
   var _currentTableMode = GCWSwitchPosition.left;
 
-  var _cryptedTextMaskFormatter =
+  final _cryptedTextMaskFormatter =
       WrapperForMaskTextInputFormatter(mask: '## ' * 1000 + '##', filter: {"#": RegExp(r'[a-zA-Z]')});
 
-  var _numeralCodeyXAxisCodeMaskFormatter =
+  final _numeralCodeyXAxisCodeMaskFormatter =
       WrapperForMaskTextInputFormatter(mask: '#' * 13, filter: {"#": RegExp(r'[a-zA-Z]')});
 
-  var _numeralCodeYAxisCodeMaskFormatter =
+  final _numeralCodeYAxisCodeMaskFormatter =
       WrapperForMaskTextInputFormatter(mask: '#' * 13, filter: {"#": RegExp(r'[a-zA-Z]')});
 
   @override
@@ -170,13 +172,15 @@ class BundeswehrTalkingBoardObfuscationState extends State<BundeswehrTalkingBoar
         );
       }
     }
-    if (_tableNumeralCode == null)
-      return GCWDefaultOutput();
+    if (_tableNumeralCode == null) {
+      return const GCWDefaultOutput();
+    }
 
-    if (_currentMode == GCWSwitchPosition.right) // decrypt
+    if (_currentMode == GCWSwitchPosition.right) {
       output = decodeBundeswehr(_currentDecode, _tableNumeralCode!);
-    else
+    } else {
       output = encodeBundeswehr(_currentEncode, _tableNumeralCode);
+    }
     return GCWDefaultOutput(
         child: output.ResponseCode == BUNDESWEHR_TALKINGBOARD_CODE_RESPONSE_OK
             ? output.Details
@@ -243,7 +247,7 @@ class BundeswehrTalkingBoardObfuscationState extends State<BundeswehrTalkingBoar
         'Y',
         'Z',
       ];
-      var random = new Random();
+      var random = Random();
       int rnd = 0;
       String description = '';
       while (alphabet.isNotEmpty) {
@@ -271,14 +275,14 @@ class BundeswehrTalkingBoardObfuscationState extends State<BundeswehrTalkingBoar
 
     int i = 0;
     _numeralCodeString = '   ' + _colTitle.join(' ') + '\n----------------------------\n ';
-    _rowTitle.forEach((row) {
+    for (var row in _rowTitle) {
       _numeralCodeString = _numeralCodeString + row + ' ';
       for (int j = 0; j < 13; j++) {
         _numeralCodeString = _numeralCodeString + _numeralCode[i * 13 + j] + ' ';
       }
       i++;
       _numeralCodeString = _numeralCodeString + '\n ';
-    });
+    }
 
     _tableEncoding['0'] = [
       _colTitle[0] + _rowTitle[0],
@@ -699,10 +703,11 @@ class BundeswehrTalkingBoardObfuscationState extends State<BundeswehrTalkingBoar
     if (text.length != 13) return true;
     List<String> dublicates = [];
     text.split('').forEach((element) {
-      if (dublicates.contains(element))
+      if (dublicates.contains(element)) {
         return;
-      else
+      } else {
         dublicates.add(element);
+      }
     });
     return (dublicates.length != text.length);
   }
@@ -710,10 +715,11 @@ class BundeswehrTalkingBoardObfuscationState extends State<BundeswehrTalkingBoar
   bool _invalidAxisDescription(String text) {
     List<String> dublicates = [];
     text.split('').forEach((element) {
-      if (dublicates.contains(element))
+      if (dublicates.contains(element)) {
         return;
-      else
+      } else {
         dublicates.add(element);
+      }
     });
     return (dublicates.length != text.length);
   }

@@ -1,6 +1,5 @@
 /* https://ktuusj.medium.com/flutter-custom-selection-toolbar-3acbe7937dd3 ***/
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_paste_button.dart';
 import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard.dart';
 
@@ -39,51 +38,47 @@ class GCWTextSelectionControls extends MaterialTextSelectionControls {
       anchorBelow: anchorBelow,
       clipboardStatus: clipboardStatus,
       delegate: delegate,
-      handleCopy: canCopy(delegate) && handleCopy != null
+      handleCopy: canCopy(delegate)
           ? () {
               insertIntoGCWClipboard(
                   context, delegate.textEditingValue.selection.textInside(delegate.textEditingValue.text));
               handleCopy(delegate, clipboardStatus);
             }
-          : () => {},
+          : () {},
 
       /// Custom code
-      handleGCWPasteButton: canPaste(delegate) && handlePaste != null
+      handleGCWPasteButton: canPaste(delegate)
           ? (String text, int start, int end) {
               // From original handlePaste code
               final TextEditingValue value = delegate.textEditingValue;
-              if (start == null) start = 0;
-              if (end == null) end = 0;
 
-              if (text != null) {
-                var textBefore = value.text.substring(0, start);
-                var textAfter = value.text.substring(end, value.text.length);
+              var textBefore = value.text.substring(0, start);
+              var textAfter = value.text.substring(end, value.text.length);
 
-                delegate.userUpdateTextEditingValue(
-                  TextEditingValue(
-                    text: textBefore + text + textAfter,
-                    selection: TextSelection.collapsed(
-                      offset: (textBefore.length + text.length).toInt(),
-                    ),
+              delegate.userUpdateTextEditingValue(
+                TextEditingValue(
+                  text: textBefore + text + textAfter,
+                  selection: TextSelection.collapsed(
+                    offset: (textBefore.length + text.length).toInt(),
                   ),
-                  SelectionChangedCause.toolbar,
-                );
-              }
+                ),
+                SelectionChangedCause.toolbar,
+              );
               delegate.bringIntoView(delegate.textEditingValue.selection.extent);
               delegate.hideToolbar();
             }
-          :  () => {},
-      handleCut: canCut(delegate) && handleCut != null
+          :  () {},
+      handleCut: canCut(delegate)
           ? () {
               insertIntoGCWClipboard(
                   context, delegate.textEditingValue.selection.textInside(delegate.textEditingValue.text));
               handleCut(delegate, clipboardStatus);
             }
-          :  () => {},
+          :  () {},
       // handlePaste: canPaste(delegate) && handlePaste != null
       //     ? () => handlePaste(delegate)
       //     : null,
-      handleSelectAll: canSelectAll(delegate) && handleSelectAll != null ? () => handleSelectAll(delegate) : () => {},
+      handleSelectAll: canSelectAll(delegate) ? () => handleSelectAll(delegate) : () => {},
     );
   }
 }
@@ -114,15 +109,15 @@ class _GCWTextSelectionToolbar extends StatefulWidget {
   final void Function()? handleSelectAll;
 
   /// Custom
-  final handleGCWPasteButton;
+  final Function handleGCWPasteButton;
 
   @override
   _GCWTextSelectionToolbarState createState() => _GCWTextSelectionToolbarState();
 }
 
 class _GCWTextSelectionToolbarState extends State<_GCWTextSelectionToolbar> {
-  var start;
-  var end;
+  int? start;
+  int? end;
 
   void _onChangedClipboardStatus() {
     setState(() {
@@ -171,18 +166,17 @@ class _GCWTextSelectionToolbarState extends State<_GCWTextSelectionToolbar> {
           onPressed: widget.handleCopy,
           child: Text(localizations.copyButtonLabel),
         ),
-      if (widget.handleGCWPasteButton != null)
-        GCWPasteButton(
-            isTextSelectionToolBarButton: true,
-            textSelectionToolBarButtonPadding: TextSelectionToolbarTextButton.getPadding(2, 4),
-            textSelectionToolBarButtonLabel: localizations.pasteButtonLabel,
-            onBeforePressed: () {
-              start = widget.delegate?.textEditingValue.selection.start;
-              end = widget.delegate?.textEditingValue.selection.end;
-            },
-            onSelected: (text) {
-              widget.handleGCWPasteButton(text, start, end);
-            }),
+      GCWPasteButton(
+          isTextSelectionToolBarButton: true,
+          textSelectionToolBarButtonPadding: TextSelectionToolbarTextButton.getPadding(2, 4),
+          textSelectionToolBarButtonLabel: localizations.pasteButtonLabel,
+          onBeforePressed: () {
+            start = widget.delegate?.textEditingValue.selection.start;
+            end = widget.delegate?.textEditingValue.selection.end;
+          },
+          onSelected: (text) {
+            widget.handleGCWPasteButton(text, start, end);
+          }),
       if (widget.handleSelectAll != null)
         TextSelectionToolbarTextButton(
           padding: TextSelectionToolbarTextButton.getPadding(3, 4),

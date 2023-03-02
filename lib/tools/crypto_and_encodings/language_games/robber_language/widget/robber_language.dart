@@ -5,6 +5,8 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/language_games/robber_language/logic/robber_language.dart';
 
 class RobberLanguage extends StatefulWidget {
+  const RobberLanguage({Key? key}) : super(key: key);
+
   @override
   RobberLanguageState createState() => RobberLanguageState();
 }

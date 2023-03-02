@@ -35,8 +35,9 @@ Segments encodeShadoksNumbers(int? input) {
 }
 
 ShadocksOutput decodeShadoksNumbers(List<String>? inputs) {
-  if (inputs == null || inputs.isEmpty)
+  if (inputs == null || inputs.isEmpty) {
     return ShadocksOutput([['a']], [0], BigInt.zero, _numberToWord['0']!);
+  }
 
   var displays = <List<String>>[];
 

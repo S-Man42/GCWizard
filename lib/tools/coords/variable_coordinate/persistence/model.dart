@@ -58,14 +58,14 @@ class Formula {
     projection = ProjectionData.fromJson(asJsonMapOrNull(json['projection']) ?? <String, Object?>{});
 
     var valuesRaw = toObjectWithNullableContentListOrNull(json['values']);
-    this.values = <FormulaValue>[];
+    values = <FormulaValue>[];
     if (valuesRaw != null) {
-      valuesRaw.forEach((Object? element) {
+      for (var element in valuesRaw) {
         var value = asJsonMapOrNull(element);
-        if (value == null) return;
+        if (value == null) continue;
 
-        this.values.add(FormulaValue.fromJson(value));
-      });
+        values.add(FormulaValue.fromJson(value));
+      }
     }
   }
 

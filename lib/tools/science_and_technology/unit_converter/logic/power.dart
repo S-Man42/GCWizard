@@ -6,8 +6,8 @@ class Power extends Unit {
 
   Power({required String name, required String symbol, bool isReference = false, required double inWatt})
       : super(name, symbol, isReference, (e) => e * inWatt, (e) => e / inWatt) {
-    toWatt = this.toReference;
-    fromWatt = this.fromReference;
+    toWatt = toReference;
+    fromWatt = fromReference;
   }
 }
 

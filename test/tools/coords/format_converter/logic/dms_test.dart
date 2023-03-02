@@ -19,11 +19,11 @@ final List<Map<String, Object?>> inputsToExpectedDMS = [
   {'text': '52°12\'30.15" North, 20°12\'30.15"O', 'expectedOutput': {'format': CoordinateFormatKey.DMS, 'coordinate': LatLng(52.208375, 20.208375)}},
   {'text': '52°12\'30.15" Süden 20°12\'30.15" Westen', 'expectedOutput': {'format': CoordinateFormatKey.DMS, 'coordinate': LatLng(-52.208375, -20.208375)}},
   {'text': '052°12\'30.15" Süden 20°12\'30.15" Westen', 'expectedOutput': {'format': CoordinateFormatKey.DMS, 'coordinate': LatLng(-52.208375, -20.208375)}},
-  {'text': '52° 12\′ 30\″ N, 20°12\′ 31\″ O', 'expectedOutput': {'format': CoordinateFormatKey.DMS, 'coordinate': LatLng(52.2083333333, 020.2086111111)}},
-  {'text': '52° 12\′ 30“ N, 20°12\′ 31” O', 'expectedOutput': {'format': CoordinateFormatKey.DMS, 'coordinate': LatLng(52.2083333333, 020.2086111111)}},
+  {'text': '52° 12′ 30″ N, 20°12′ 31″ O', 'expectedOutput': {'format': CoordinateFormatKey.DMS, 'coordinate': LatLng(52.2083333333, 020.2086111111)}},
+  {'text': '52° 12′ 30“ N, 20°12′ 31” O', 'expectedOutput': {'format': CoordinateFormatKey.DMS, 'coordinate': LatLng(52.2083333333, 020.2086111111)}},
 
   {'text': 'N 52° 12\' 30.15" E 20° 12\' 30.15"', 'expectedOutput': {'format': CoordinateFormatKey.DMS, 'coordinate': LatLng(52.208375, 20.208375)}},
-  {'text': 'N 52° 12\′ 30\″,O 20°12\′ 31\″', 'expectedOutput': {'format': CoordinateFormatKey.DMS, 'coordinate': LatLng(52.2083333333, 020.2086111111)}},
+  {'text': 'N 52° 12′ 30″,O 20°12′ 31″', 'expectedOutput': {'format': CoordinateFormatKey.DMS, 'coordinate': LatLng(52.2083333333, 020.2086111111)}},
   {'text': 'N 52°12\'30.15" E 20°12\'30.15"', 'expectedOutput': {'format': CoordinateFormatKey.DMS, 'coordinate': LatLng(52.208375, 20.208375)}},
   {'text': '52°12\'30.15" 20°12\'30.15"', 'expectedOutput': {'format': CoordinateFormatKey.DMS, 'coordinate': LatLng(52.208375, 20.208375)}},
   {'text': 'N 52 12 30.15 E 20 12 30.15', 'expectedOutput': {'format': CoordinateFormatKey.DMS, 'coordinate': LatLng(52.208375, 20.208375)}},
@@ -66,16 +66,16 @@ void main() {
   group("Converter.dms.parseDMS:", () {
     List<Map<String, Object?>> _inputsToExpected = inputsToExpectedDMS;
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('text: ${elem['text']}', () {
         var _actual = DMS.parse(elem['text'] as String)?.toLatLng();
-        if (_actual == null)
+        if (_actual == null) {
           expect(null, elem['expectedOutput']);
-        else {
+        } else {
           expect((_actual.latitude - ((elem['expectedOutput'] as Map<String, Object>)['coordinate'] as LatLng).latitude).abs() < 1e-8, true);
           expect((_actual.longitude - ((elem['expectedOutput'] as Map<String, Object>)['coordinate'] as LatLng).longitude).abs() < 1e-8, true);
         }
       });
-    });
+    }
   });
 }

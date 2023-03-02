@@ -15,12 +15,12 @@ void main() {
       {'input' : 'Haus', 'expectedOutput' : ''},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = encodeBCD(elem['input'] as String?, BCDType.ORIGINAL);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("BCD.decodeOriginal:", () {
@@ -33,12 +33,12 @@ void main() {
       {'expectedOutput' : '', 'input' : 'Haus'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decodeBCD(elem['input'] as String?, BCDType.ORIGINAL);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   }); // group
 
 
@@ -54,12 +54,12 @@ void main() {
       {'input' : 'Haus', 'expectedOutput' : ''},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = encodeBCD(elem['input'] as String?, BCDType.AIKEN);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("BCD.decodeAiken:", () {
@@ -72,12 +72,12 @@ void main() {
       {'expectedOutput' : '', 'input' : 'Haus'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decodeBCD(elem['input'] as String?, BCDType.AIKEN);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   }); // group
 
 
@@ -93,12 +93,12 @@ void main() {
       {'input' : 'Haus', 'expectedOutput' : ''},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = encodeBCD(elem['input'] as String?, BCDType.LIBAWCRAIG);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("BCD.decodeLibawCraig:", () {
@@ -111,12 +111,12 @@ void main() {
       {'expectedOutput' : '', 'input' : 'Haus'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decodeBCD(elem['input'] as String?, BCDType.LIBAWCRAIG);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   }); // group
 
 
@@ -132,12 +132,12 @@ void main() {
       {'input' : 'Haus', 'expectedOutput' : ''},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = encodeBCD(elem['input'] as String?, BCDType.STIBITZ);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("BCD.decodeStibitz:", () {
@@ -150,12 +150,12 @@ void main() {
       {'expectedOutput' : '', 'input' : 'Haus'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decodeBCD(elem['input'] as String?, BCDType.STIBITZ);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   }); // group
 
 
@@ -171,12 +171,12 @@ void main() {
       {'input' : 'Haus', 'expectedOutput' : ''},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = encodeBCD(elem['input'] as String?, BCDType.GRAY);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("BCD.decodeGray:", () {
@@ -189,12 +189,12 @@ void main() {
       {'expectedOutput' : '', 'input' : 'Haus'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decodeBCD(elem['input'] as String?, BCDType.GRAY);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   }); // group
 
 
@@ -210,12 +210,12 @@ void main() {
       {'input' : 'Haus', 'expectedOutput' : ''},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = encodeBCD(elem['input'] as String?, BCDType.GLIXON);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("BCD.decodeGlixon:", () {
@@ -228,12 +228,12 @@ void main() {
       {'expectedOutput' : '', 'input' : 'Haus'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decodeBCD(elem['input'] as String?, BCDType.GLIXON);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   }); // group
 
 
@@ -249,12 +249,12 @@ void main() {
       {'input' : 'Haus', 'expectedOutput' : ''},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = encodeBCD(elem['input'] as String?, BCDType.OBRIEN);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("BCD.decodeOBrien:", () {
@@ -267,12 +267,12 @@ void main() {
       {'expectedOutput' : '', 'input' : 'Haus'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decodeBCD(elem['input'] as String?, BCDType.OBRIEN);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   }); // group
 
 
@@ -288,12 +288,12 @@ void main() {
       {'input' : 'Haus', 'expectedOutput' : ''},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = encodeBCD(elem['input'] as String?, BCDType.PETHERICK);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("BCD.decodePetherick:", () {
@@ -306,12 +306,12 @@ void main() {
       {'expectedOutput' : '', 'input' : 'Haus'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decodeBCD(elem['input'] as String?, BCDType.PETHERICK);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   }); // group
 
 
@@ -327,12 +327,12 @@ void main() {
       {'input' : 'Haus', 'expectedOutput' : ''},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = encodeBCD(elem['input'] as String?, BCDType.TOMPKINS);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("BCD.decodeTompkins:", () {
@@ -345,12 +345,12 @@ void main() {
       {'expectedOutput' : '', 'input' : 'Haus'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decodeBCD(elem['input'] as String?, BCDType.TOMPKINS);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   }); // group
 
 
@@ -366,12 +366,12 @@ void main() {
       {'input' : 'Haus', 'expectedOutput' : ''},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = encodeBCD(elem['input'] as String?, BCDType.HAMMING);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("BCD.decodeHamming:", () {
@@ -384,12 +384,12 @@ void main() {
       {'expectedOutput' : '', 'input' : 'Haus'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decodeBCD(elem['input'] as String?, BCDType.HAMMING);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   }); // group
 
 
@@ -405,12 +405,12 @@ void main() {
       {'input' : 'Haus', 'expectedOutput' : ''},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = encodeBCD(elem['input'] as String?, BCDType.BIQUINARY);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("BCD.decodeBiquinaer:", () {
@@ -423,12 +423,12 @@ void main() {
       {'expectedOutput' : '', 'input' : 'Haus'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decodeBCD(elem['input'] as String?, BCDType.BIQUINARY);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   }); // group
 
 
@@ -444,12 +444,12 @@ void main() {
       {'input' : 'Haus', 'expectedOutput' : ''},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = encodeBCD(elem['input'] as String?, BCDType.ONEOFTEN);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("BCD.decode1of10:", () {
@@ -462,12 +462,12 @@ void main() {
       {'expectedOutput' : '', 'input' : 'Haus'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decodeBCD(elem['input'] as String?, BCDType.ONEOFTEN);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   }); // group
 
 
@@ -483,12 +483,12 @@ void main() {
       {'input' : 'Haus', 'expectedOutput' : ''},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = encodeBCD(elem['input'] as String?, BCDType.TWOOFFIVE);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("BCD.decode2of5:", () {
@@ -501,12 +501,12 @@ void main() {
       {'expectedOutput' : '', 'input' : 'Haus'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decodeBCD(elem['input'] as String?, BCDType.TWOOFFIVE);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   }); // group
 
 
@@ -522,12 +522,12 @@ void main() {
       {'input' : 'Haus', 'expectedOutput' : ''},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = encodeBCD(elem['input'] as String?, BCDType.POSTNET);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("BCD.decodePostnet:", () {
@@ -540,12 +540,12 @@ void main() {
       {'expectedOutput' : '', 'input' : 'Haus'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decodeBCD(elem['input'] as String?, BCDType.POSTNET);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   }); // group
 
   // 2of5Postnet -------------------------------------------------------------------
@@ -560,12 +560,12 @@ void main() {
       {'input' : 'Haus', 'expectedOutput' : ''},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = encodeBCD(elem['input'] as String?, BCDType.PLANET);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("BCD.decodePlanet:", () {
@@ -578,12 +578,12 @@ void main() {
       {'expectedOutput' : '', 'input' : 'Haus'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decodeBCD(elem['input'] as String?, BCDType.PLANET);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   }); // group
 
 }

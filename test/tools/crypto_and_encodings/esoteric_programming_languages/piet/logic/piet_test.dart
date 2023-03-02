@@ -43,12 +43,12 @@ void main() {
 
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () async {
         var _actual = await interpretPiet(PietImageReader().readImage(_getFileData(elem['input'] as String))!, elem['inputText'] as String?);
         expect(_actual.output, elem['expectedOutput']);
       });
-    });
+    }
   });
 
 }

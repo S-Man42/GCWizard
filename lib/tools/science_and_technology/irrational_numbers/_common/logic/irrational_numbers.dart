@@ -1,5 +1,5 @@
-final ERROR_IRRATIONALNUMBERS_INDEXTOOSMALL = 'irrationalnumbers_error_indextoosmall';
-final ERROR_IRRATIONALNUMBERS_INDEXTOOBIG = 'irrationalnumbers_error_indextoobig';
+const ERROR_IRRATIONALNUMBERS_INDEXTOOSMALL = 'irrationalnumbers_error_indextoosmall';
+const ERROR_IRRATIONALNUMBERS_INDEXTOOBIG = 'irrationalnumbers_error_indextoobig';
 
 class IrrationalNumber {
   final String integerPart;
@@ -15,8 +15,8 @@ class IrrationalNumberCalculator {
   IrrationalNumberCalculator({required this.irrationalNumber});
 
   String decimalAt(int? index) {
-    if (index == null || index <= 0) throw FormatException(ERROR_IRRATIONALNUMBERS_INDEXTOOSMALL);
-    if (index > irrationalNumber.decimalPart.length) throw FormatException(ERROR_IRRATIONALNUMBERS_INDEXTOOBIG);
+    if (index == null || index <= 0) throw const FormatException(ERROR_IRRATIONALNUMBERS_INDEXTOOSMALL);
+    if (index > irrationalNumber.decimalPart.length) throw const FormatException(ERROR_IRRATIONALNUMBERS_INDEXTOOBIG);
 
     return irrationalNumber.decimalPart[index - 1];
   }
@@ -24,10 +24,12 @@ class IrrationalNumberCalculator {
   String decimalRange(int? start, int? length) {
     if (length == null || length == 0) return '';
 
-    if (start == null || start <= 0 || (start + length) < 0)
-      throw FormatException(ERROR_IRRATIONALNUMBERS_INDEXTOOSMALL);
-    if ((start + length) > irrationalNumber.decimalPart.length)
-      throw FormatException(ERROR_IRRATIONALNUMBERS_INDEXTOOBIG);
+    if (start == null || start <= 0 || (start + length) < 0) {
+      throw const FormatException(ERROR_IRRATIONALNUMBERS_INDEXTOOSMALL);
+    }
+    if ((start + length) > irrationalNumber.decimalPart.length) {
+      throw const FormatException(ERROR_IRRATIONALNUMBERS_INDEXTOOBIG);
+    }
 
     if (length < 0) {
       length *= -1;

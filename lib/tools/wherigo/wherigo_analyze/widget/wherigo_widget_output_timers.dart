@@ -1,10 +1,11 @@
 part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_analyze.dart';
 
 List<List<String>> _buildOutputListOfTimerData(BuildContext context, WherigoTimerData data) {
-  if (wherigoExpertMode)
+  if (wherigoExpertMode) {
     return _buildOutputListTimerDataExpertMode(context, data);
-  else
+  } else {
     return _buildOutputListTimerDataUserMode(context, data);
+  }
 }
 
 List<List<String>> _buildOutputListTimerDataUserMode(BuildContext context, WherigoTimerData data) {

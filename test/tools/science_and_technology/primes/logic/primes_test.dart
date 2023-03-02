@@ -16,12 +16,12 @@ void main() {
       {'input' : 77777, 'expectedOutput' : 989999},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = getNthPrime(elem['input'] as int?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Primes.getPrimeIndex:", () {
@@ -44,12 +44,12 @@ void main() {
       {'expectedOutput' : 77777, 'input' : 989999},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = getPrimeIndex(elem['input'] as int?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Primes.getNearestPrime:", () {
@@ -77,12 +77,12 @@ void main() {
       {'input' : 1000001, 'expectedOutput' : null}, //too big input
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = getNearestPrime(elem['input'] as int?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Primes.getNextPrime:", () {
@@ -109,12 +109,12 @@ void main() {
       {'input' : 692, 'expectedOutput' : 701},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = getNextPrime(elem['input'] as int?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Primes.getPreviousPrime:", () {
@@ -137,11 +137,11 @@ void main() {
       {'input' : 690, 'expectedOutput' : 683},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = getPreviousPrime(elem['input'] as int?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

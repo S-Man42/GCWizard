@@ -69,12 +69,12 @@ void main() {
       {'input' : 5111, 'type': RomanNumberType.ONLY_ADDITION, 'expectedOutput' : 'MMMMMCXI'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, type: ${elem['type']}', () {
         var _actual = encodeRomanNumbers(elem['input'] as int?, type: elem['type'] as RomanNumberType);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("RomanNumbers.decodeRomanNumbers:", () {
@@ -211,11 +211,11 @@ void main() {
       {'input' : 'SVRGE O IEHOVA ATQVE DISPERGE INIMICOS TVOS', 'expectedOutput' : 1625, 'type': RomanNumberType.ONLY_ADDITION},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, type: ${elem['type']}', () {
         var _actual = decodeRomanNumbers(elem['input'] as String?, type: elem['type'] as RomanNumberType);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

@@ -21,7 +21,7 @@ final _GRID_COLORS = {
   _GridPaintColor.GREEN: {'color': Colors.green, 'fontColor': Colors.black},
 };
 
-//ignore: must_be_immutable
+
 class _GridPainter extends StatefulWidget {
   final _GridType type;
   final int countRows;
@@ -62,10 +62,11 @@ class _GridPainterState extends State<_GridPainter> {
 
     List<List<String?>> helper = List.filled(widget.countRows, List.filled(widget.countColumns, null));
     List<String> boxEnumeration;
-    if (widget.boxEnumeration.length > widget.countColumns * widget.countRows)
+    if (widget.boxEnumeration.length > widget.countColumns * widget.countRows) {
       boxEnumeration = widget.boxEnumeration.sublist(0, widget.countRows * widget.countColumns);
-    else
+    } else {
       boxEnumeration = widget.boxEnumeration;
+    }
 
     var i = widget.boxEnumerationStart == _GridEnumerationStart.TOP_LEFT ||
             widget.boxEnumerationStart == _GridEnumerationStart.TOP_RIGHT
@@ -254,7 +255,7 @@ class _GridPainterState extends State<_GridPainter> {
             child: AspectRatio(
                 aspectRatio: widget.countColumns / widget.countRows,
                 child: CanvasTouchDetector(
-                    gesturesToOverride: [GestureType.onTapDown],
+                    gesturesToOverride: const [GestureType.onTapDown],
                     builder: (context) {
                       return CustomPaint(
                           painter: _CustomGridPainter(
@@ -268,7 +269,7 @@ class _GridPainterState extends State<_GridPainter> {
                               widget.rowEnumeration,
                               gridState ?? {}, (int i, int j, int countRows, int countColumns, _TapMode mode) {
                         setState(() {
-                          if (gridState == null) gridState = <int, Map<int, _GridPaintColor>>{};
+                          gridState ??= <int, Map<int, _GridPaintColor>>{};
 
                           if (gridState![i] == null) {
                             gridState![i] = <int, _GridPaintColor>{};

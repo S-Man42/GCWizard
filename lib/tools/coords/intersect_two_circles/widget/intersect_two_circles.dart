@@ -15,6 +15,8 @@ import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:latlong2/latlong.dart';
 
 class IntersectTwoCircles extends StatefulWidget {
+  const IntersectTwoCircles({Key? key}) : super(key: key);
+
   @override
   IntersectTwoCirclesState createState() => IntersectTwoCirclesState();
 }
@@ -91,15 +93,15 @@ class IntersectTwoCirclesState extends State<IntersectTwoCircles> {
         barrierDismissible: false,
         builder: (context) {
           return Center(
-            child: Container(
+            child: SizedBox(
+              height: 220,
+              width: 150,
               child: GCWAsyncExecuter<List<LatLng>>(
                 isolatedFunction: intersectTwoCirclesAsync,
                 parameter: _buildJobData,
                 onReady: (data) => _showOutput(data),
                 isOverlay: true,
               ),
-              height: 220,
-              width: 150,
             ),
           );
         },

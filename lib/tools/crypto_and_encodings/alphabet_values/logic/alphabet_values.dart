@@ -7,12 +7,11 @@ import 'package:gc_wizard/utils/constants.dart';
 
 
 class AlphabetValues {
-  late Map<String, String> alphabet;
+  late Map<String, String> _alphabet;
 
   AlphabetValues({Map<String, String>? alphabet}) {
-    if (alphabet == null) alphabet = alphabetAZ.alphabet;
-
-    this.alphabet = alphabet;
+    alphabet ??= alphabetAZ.alphabet;
+    _alphabet = alphabet;
   }
 
   /*
@@ -24,10 +23,11 @@ class AlphabetValues {
    */
   String _toUpperCase(String text) {
     return text.split('').map((character) {
-      if (character != String.fromCharCode(223))
+      if (character != String.fromCharCode(223)) {
         return character.toUpperCase();
-      else
+      } else {
         return character;
+      }
     }).join();
   }
 
@@ -38,12 +38,13 @@ class AlphabetValues {
 
     text = _toUpperCase(text);
 
-    var entries = alphabet.entries.toList();
+    var entries = _alphabet.entries.toList();
 
     if (keepNumbers) {
-      alphabet_09.entries.forEach((entry) {
-        if (!entries.contains(entry.key)) entries.add(MapEntry(entry.key, entry.value.toString()));
-      });
+      var entryKeys = entries.map((e) => e.key).toList();
+      for (var entry in alphabet_09.entries) {
+        if (!entryKeys.contains(entry.key)) entries.add(MapEntry(entry.key, entry.value.toString()));
+      }
     }
 
     entries.sort((a, b) {
@@ -79,12 +80,12 @@ class AlphabetValues {
   }
 
   String valuesToText(List<int> values) {
-    var alphabetMap = switchMapKeyValue(alphabet, keepFirstOccurence: true);
+    var alphabetMap = switchMapKeyValue(_alphabet, keepFirstOccurence: true);
 
     return values
         .map((value) {
           var character = alphabetMap[value.toString()];
-          return character == null ? UNKNOWN_ELEMENT : character;
+          return character ?? UNKNOWN_ELEMENT;
         })
         .toList()
         .join();

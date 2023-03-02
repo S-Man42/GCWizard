@@ -16,7 +16,7 @@ const _INITIAL_SEGMENTS = <String, bool>{
   '8': false
 };
 
-//ignore: must_be_immutable
+
 class PUNCHTAPESegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
   final bool readOnly;

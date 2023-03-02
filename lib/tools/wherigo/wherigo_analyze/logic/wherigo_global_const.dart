@@ -291,7 +291,7 @@ const Map<int, String> WHERIGO_HTTP_STATUS = {
   599: 'wherigo_http_code_exception',
 };
 
-const String WHERIGO_HTTP_CODE_OK = '200';
+const int WHERIGO_HTTP_CODE_OK = 200;
 
 const Map<String, TextStyle> WHERIGO_SYNTAX_HIGHLIGHT_STRINGMAP = {
   // fontWeight: FontWeight.bold

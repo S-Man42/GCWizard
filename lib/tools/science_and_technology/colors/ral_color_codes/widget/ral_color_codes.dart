@@ -20,6 +20,8 @@ import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors_rgb.d
 import 'package:gc_wizard/tools/science_and_technology/colors/ral_color_codes/logic/ral_color_codes.dart';
 
 class RALColorCodes extends StatefulWidget {
+  const RALColorCodes({Key? key}) : super(key: key);
+
   @override
   RALColorCodesState createState() => RALColorCodesState();
 }
@@ -94,7 +96,7 @@ class RALColorCodesState extends State<RALColorCodes> {
 
     return [
       Container(
-        margin: EdgeInsets.only(right: 4 * DOUBLE_DEFAULT_MARGIN),
+        margin: const EdgeInsets.only(right: 4 * DOUBLE_DEFAULT_MARGIN),
         height: 50,
         width: 50,
         decoration: BoxDecoration(
@@ -124,7 +126,7 @@ class RALColorCodesState extends State<RALColorCodes> {
             : i18n(context, 'ralcolorcodes_mode_colorstoral_similarcolorsfound'),
         child: GCWColumnedMultilineOutput(
                   data: similarRALs.entries.map((e) => _buildRALColorOutput(e)).toList(),
-                  flexValues: [1, 2, 2],
+                  flexValues: const [1, 2, 2],
                   copyColumn: 1
               ),
         );
@@ -146,7 +148,7 @@ class RALColorCodesState extends State<RALColorCodes> {
                             )];
 
     children.add(Container(
-      margin: EdgeInsets.only(top: 10 * DEFAULT_MARGIN),
+      margin: const EdgeInsets.only(top: 10 * DEFAULT_MARGIN),
       height: 200,
       width: 400,
       decoration: BoxDecoration(

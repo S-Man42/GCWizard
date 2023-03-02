@@ -40,10 +40,11 @@ WherigoMediaData _analyzeAndExtractMediaSectionData(List<String> lines) {
         i++;
         lines[i] = lines[i].trim();
         do {
-          if (lines[i].trim().replaceAll(LUAname + '.', '').startsWith('AltText'))
+          if (lines[i].trim().replaceAll(LUAname + '.', '').startsWith('AltText')) {
             _sectionInner = false;
-          else
+          } else {
             description = description + lines[i];
+          }
           i++;
           lines[i] = lines[i].trim();
         } while (_sectionInner);

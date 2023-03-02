@@ -16,6 +16,8 @@ import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/w
 part 'package:gc_wizard/tools/crypto_and_encodings/shadoks_numbers/widget/shadoks_numbers_segment_display.dart';
 
 class ShadoksNumbers extends StatefulWidget {
+  const ShadoksNumbers({Key? key}) : super(key: key);
+
   @override
   ShadoksNumbersState createState() => ShadoksNumbersState();
 }
@@ -65,7 +67,7 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
   }
 
   Widget _buildVisualDecryption() {
-    var onChanged = (Map<String, bool> d) {
+    onChanged(Map<String, bool> d) {
       setState(() {
         _currentDisplay = d;
 
@@ -77,13 +79,13 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
         newSegments.remove('a');
         _currentDisplays.replaceLastSegment(newSegments);
       });
-    };
+    }
 
     return Column(
       children: <Widget>[
         Container(
           width: 180,
-          padding: EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
+          padding: const EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
           child: Row(
             children: <Widget>[
               Expanded(
@@ -113,7 +115,9 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
 
                 if (_currentDisplays.displays.isNotEmpty) {
                   _currentDisplay = {};
-                  _currentDisplays.displays.last.forEach((element) => _currentDisplay.putIfAbsent(element, () => true));
+                  for (var element in _currentDisplays.displays.last) {
+                    _currentDisplay.putIfAbsent(element, () => true);
+                  }
                   _currentDisplay.putIfAbsent('a', () => false);
                 } else {
                   _currentDisplays = Segments(displays: [['a']]);
@@ -138,9 +142,9 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
 
   String _segmentsToShadoks(Segments segments) {
     String result = '';
-    segments.displays.forEach((element) {
+    for (var element in segments.displays) {
       result = result + (_segmentToWord[element.join('')] ?? '');
-    });
+    }
     return result;
   }
 

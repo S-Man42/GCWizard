@@ -83,7 +83,7 @@ Segments encodeCistercian(String? input) {
     int? encodeNumber = int.tryParse(character);
     var encodeString = (encodeNumber ?? '').toString();
     if (encodeNumber != null && encodeNumber < 10000) {
-      var display = Set<String>();
+      var display = <String>{};
       for (int i = 0; i < encodeString.length; i++) {
         digit = ((int.parse(encodeString[i])) * pow(10, encodeString.length - i - 1)).toInt();
         if (digit != 0) {
@@ -121,7 +121,7 @@ SegmentsText decodeCistercian(String? input) {
       continue;
     }
 
-    if (currentDisplay == null) currentDisplay = [];
+    currentDisplay ??= [];
 
     currentDisplay.add(segment);
   }
@@ -327,10 +327,11 @@ SegmentsText decodeCistercian(String? input) {
       if (tokens[i].isEmpty) unknownToken = false;
     }
 
-    if (unknownToken)
+    if (unknownToken) {
       out = out + ' ' + UNKNOWN_ELEMENT;
-    else
+    } else {
       out = out + ' ' + digit.toString();
+    }
   }
 
   return SegmentsText(displays: displays, text: out);

@@ -92,9 +92,9 @@ class _GCWImageViewState extends State<GCWImageView> {
       if (widget.imageData?.file.bytes != null) {
         _image = MemoryImage(widget.imageData!.file.bytes);
 
-        if (widget.maxHeightInPreview == null)
+        if (widget.maxHeightInPreview == null) {
           _previewImage = MemoryImage(widget.imageData!.file.bytes);
-        else {
+        } else {
           _previewImage = _resizeImage();
         }
       }
@@ -150,7 +150,7 @@ class _GCWImageViewState extends State<GCWImageView> {
         ),
         if ((widget.imageData?.description ?? '').trim().isNotEmpty)
           Container(
-              padding: EdgeInsets.only(top: 10),
+              padding: const EdgeInsets.only(top: 10),
               child: GCWText(
                 text: (widget.imageData?.description ?? '').trim(),
                 align: Alignment.center,
@@ -222,8 +222,9 @@ class _GCWImageViewState extends State<GCWImageView> {
                           widget.onBeforeLoadBigImage!().then((imgData) {
                             if (imgData != null) openInMetadataViewer(context, imgData);
                           });
-                        } else if (widget.imageData?.file != null)
+                        } else if (widget.imageData?.file != null) {
                           openInMetadataViewer(context, widget.imageData!.file);
+                        }
                       }),
                     ),
                   if (widget.suppressOpenInTool == null ||
@@ -235,8 +236,9 @@ class _GCWImageViewState extends State<GCWImageView> {
                           widget.onBeforeLoadBigImage!().then((imgData) {
                             if (imgData != null) openInHexViewer(context, imgData);
                           });
-                        } else if (widget.imageData?.file != null)
+                        } else if (widget.imageData?.file != null) {
                           openInHexViewer(context, widget.imageData!.file);
+                        }
                       }),
                     ),
                   if (widget.suppressOpenInTool == null ||
@@ -248,8 +250,9 @@ class _GCWImageViewState extends State<GCWImageView> {
                           widget.onBeforeLoadBigImage!().then((imgData) {
                             if (imgData != null) openInHiddenData(context, imgData);
                           });
-                        } else if (widget.imageData?.file != null)
+                        } else if (widget.imageData?.file != null) {
                           openInHiddenData(context, widget.imageData!.file);
+                        }
                       }),
                     ),
                   if (widget.suppressOpenInTool == null ||
@@ -262,8 +265,9 @@ class _GCWImageViewState extends State<GCWImageView> {
                                 widget.onBeforeLoadBigImage!().then((imgData) {
                                   if (imgData != null) openInColorCorrections(context, imgData);
                                 });
-                              } else if (widget.imageData?.file != null)
+                              } else if (widget.imageData?.file != null) {
                                 openInColorCorrections(context, widget.imageData!.file);
+                              }
                             })),
                   if (widget.suppressOpenInTool == null ||
                       !widget.suppressOpenInTool!.contains(GCWImageViewOpenInTools.FLIPROTATE))
@@ -274,8 +278,9 @@ class _GCWImageViewState extends State<GCWImageView> {
                                 widget.onBeforeLoadBigImage!().then((imgData) {
                                   if (imgData != null) openInFlipRotate(context, imgData);
                                 });
-                              } else if (widget.imageData?.file != null)
+                              } else if (widget.imageData?.file != null) {
                                 openInFlipRotate(context, widget.imageData!.file);
+                              }
                             })),
                 ])
     ];

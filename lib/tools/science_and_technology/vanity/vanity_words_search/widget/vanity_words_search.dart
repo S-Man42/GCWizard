@@ -11,6 +11,8 @@ import 'package:gc_wizard/tools/science_and_technology/vanity/_common/logic/vani
 import 'package:gc_wizard/utils/string_utils.dart';
 
 class VanityWordsTextSearch extends StatefulWidget {
+  const VanityWordsTextSearch({Key? key}) : super(key: key);
+
   @override
   VanityWordsTextSearchState createState() => VanityWordsTextSearchState();
 }
@@ -21,7 +23,7 @@ class VanityWordsTextSearchState extends State<VanityWordsTextSearch> {
   var _currentDecodeInput = '';
   var _currentLanguage = NumeralWordsLanguage.DEU;
 
-  Map<NumeralWordsLanguage, String> _languageList= {};
+  final Map<NumeralWordsLanguage, String> _languageList= {};
 
   @override
   void initState() {
@@ -80,33 +82,38 @@ class VanityWordsTextSearchState extends State<VanityWordsTextSearch> {
     String output = '';
     int ambigous = 0;
     for (int i = 0; i < detailedOutput.length; i++) {
-      if (detailedOutput[i].number.isNotEmpty) if (ambigous > 0 || detailedOutput[i].ambigous) {
-        if (ambigous == 0) {
-          output = output +
-              ' (' +
-              (detailedOutput[i].digit.startsWith('numeralwords_')
-                  ? ' ' + i18n(context, detailedOutput[i].digit) + ' '
-                  : detailedOutput[i].digit);
-          ambigous++;
-        } else if (ambigous == 1) {
-          output = output +
-              '  | ' +
-              (detailedOutput[i].digit.startsWith('numeralwords_')
-                  ? ' ' + i18n(context, detailedOutput[i].digit) + ' '
-                  : detailedOutput[i].digit) +
-              ') - ' +
-              i18n(context, 'vanity_words_search_ambigous');
-          ambigous++;
+      if (detailedOutput[i].number.isNotEmpty) {
+        if (ambigous > 0 || detailedOutput[i].ambigous) {
+          if (ambigous == 0) {
+            output = output +
+                ' (' +
+                (detailedOutput[i].digit.startsWith('numeralwords_')
+                    ? ' ' + i18n(context, detailedOutput[i].digit) + ' '
+                    : detailedOutput[i].digit);
+            ambigous++;
+          } else if (ambigous == 1) {
+            output = output +
+                '  | ' +
+                (detailedOutput[i].digit.startsWith('numeralwords_')
+                    ? ' ' + i18n(context, detailedOutput[i].digit) + ' '
+                    : detailedOutput[i].digit) +
+                ') - ' +
+                i18n(context, 'vanity_words_search_ambigous');
+            ambigous++;
+          }
+        } else {
+          if (detailedOutput[i].number == '?') {
+            output = output + '.';
+          } else if (detailedOutput[i].digit.toString() == 'null') {
+            output = output + ' ';
+          } else {
+            output = output +
+                (detailedOutput[i].digit.startsWith('numeralwords_')
+                    ? ' ' + i18n(context, detailedOutput[i].digit) + ' '
+                    : detailedOutput[i].digit);
+          }
         }
-      } else if (detailedOutput[i].number == '?')
-        output = output + '.';
-      else if (detailedOutput[i].digit.toString() == 'null')
-        output = output + ' ';
-      else
-        output = output +
-            (detailedOutput[i].digit.startsWith('numeralwords_')
-                ? ' ' + i18n(context, detailedOutput[i].digit) + ' '
-                : detailedOutput[i].digit);
+      }
     }
 
     List<List<String>> columnData = <List<String>>[];
@@ -137,7 +144,7 @@ class VanityWordsTextSearchState extends State<VanityWordsTextSearch> {
                 title: i18n(context, 'common_outputdetail'),
                 child: GCWColumnedMultilineOutput(
                     data: columnData,
-                    flexValues: [2, 2, 1],
+                    flexValues: const [2, 2, 1],
                     copyColumn: 1),
               ),
       ],

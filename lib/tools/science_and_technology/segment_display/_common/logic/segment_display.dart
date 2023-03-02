@@ -680,7 +680,7 @@ SegmentsText decodeSegment(String? input, SegmentDisplayType segmentType) {
       continue;
     }
 
-    if (currentDisplay == null) currentDisplay = [];
+    currentDisplay ??= [];
 
     currentDisplay.add(segment);
   }

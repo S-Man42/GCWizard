@@ -112,7 +112,7 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
   }
 
   Widget _buildTitle() {
-    return (widget.title == null) ? Container() : Expanded(child: GCWText(text: widget.title! + ':'), flex: 1);
+    return (widget.title == null) ? Container() : Expanded(flex: 1, child: GCWText(text: widget.title! + ':'));
   }
 
   Widget _buildTextField() {
@@ -137,20 +137,20 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
         children: <Widget>[
           _buildTitle(),
           Expanded(
+              flex: 3,
               child: Row(
                 children: <Widget>[
                   Container(
+                    margin: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
                     child: GCWIconButton(icon: Icons.remove, onPressed: _decreaseValue),
-                    margin: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
                   ),
                   Expanded(child: _buildTextField()),
                   Container(
+                    margin: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
                     child: GCWIconButton(icon: Icons.add, onPressed: _increaseValue),
-                    margin: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
                   )
                 ],
-              ),
-              flex: 3)
+              ))
         ],
       );
     } else {
@@ -158,6 +158,7 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
         children: <Widget>[
           _buildTitle(),
           Expanded(
+              flex: 3,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
@@ -165,8 +166,7 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
                   _buildTextField(),
                   GCWIconButton(icon: Icons.arrow_drop_down, onPressed: _decreaseValue),
                 ],
-              ),
-              flex: 3),
+              )),
         ],
       );
     }
@@ -176,8 +176,9 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
     if (setTextFieldText) {
       var text = _currentValue.toString();
 
-      if (widget.leftPadZeros != null && widget.leftPadZeros! > 0)
+      if (widget.leftPadZeros != null && widget.leftPadZeros! > 0) {
         text = text.padLeft(widget.leftPadZeros!, '0');
+      }
 
       _controller.text = text;
     }

@@ -21,7 +21,7 @@ class NumberSequenceRangeState extends State<NumberSequenceRange> {
   int _currentInputStop = 0;
   int _currentInputStart = 0;
 
-  Widget _currentOutput = GCWDefaultOutput();
+  Widget _currentOutput = const GCWDefaultOutput();
   late TextEditingController _stopController;
 
   @override

@@ -22,8 +22,9 @@ class SudokuBoard {
     if (board != null) {
       for (int i = 0; i < min(board.length, this.board.length); i++ ) {
         for (int j = 0; j < min(board[i].length, this.board[i].length); j++ ) {
-          if (board[i][j] > 0 && board[i][j] <= 9)
+          if (board[i][j] > 0 && board[i][j] <= 9) {
             setValue(i, j, board[i][j]);
+          }
         }
       }
     }
@@ -45,7 +46,7 @@ class SudokuBoard {
 
   void solveSudoku(int maxSolutions) {
     var solutions = solve(_solveableBoard(), maxSolutions: maxSolutions);
-    if (solutions == null) return null;
+    if (solutions == null) return;
 
     this.solutions = solutions.map((solution) => _SudokuSolution(solution)).toList();
   }
@@ -62,9 +63,9 @@ class SudokuBoard {
 }
 
 class _SudokuSolution {
-  List<List<int?>> _solution;
+  final List<List<int?>> _solution;
 
-  _SudokuSolution(List<List<int?>> this._solution);
+  _SudokuSolution(this._solution);
 
   int? getValue (int i, int j) {
     return _solution[i][j];

@@ -14,6 +14,8 @@ import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:latlong2/latlong.dart';
 
 class IntersectFourPoints extends StatefulWidget {
+  const IntersectFourPoints({Key? key}) : super(key: key);
+
   @override
   IntersectFourPointsState createState() => IntersectFourPointsState();
 }
@@ -92,15 +94,15 @@ class IntersectFourPointsState extends State<IntersectFourPoints> {
         barrierDismissible: false,
         builder: (context) {
           return Center(
-            child: Container(
+            child: SizedBox(
+              height: 220,
+              width: 150,
               child: GCWAsyncExecuter<LatLng?>(
                 isolatedFunction: intersectFourPointsAsync,
                 parameter: _buildJobData,
                 onReady: (data) => _showOutput(data),
                 isOverlay: true,
               ),
-              height: 220,
-              width: 150,
             ),
           );
         },

@@ -28,9 +28,9 @@ double _relativeY(Size size, double y) {
   return size.height / _BABYLON_RELATIVE_DISPLAY_HEIGHT * y;
 }
 
-final _TRANSPARENT_COLOR = Color.fromARGB(0, 0, 0, 0);
+const _TRANSPARENT_COLOR = Color.fromARGB(0, 0, 0, 0);
 
-//ignore: must_be_immutable
+
 class _BabylonNumbersSegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
   final bool readOnly;

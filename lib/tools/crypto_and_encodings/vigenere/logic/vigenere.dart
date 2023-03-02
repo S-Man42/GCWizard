@@ -20,8 +20,12 @@ _KeyOutput? _getKey(String? key, int aValue) {
     var number = int.tryParse(keyNumber);
     if (number == null) return '';
 
-    while (number! <= 0) number += 26;
-    while (number! > 26) number -= 26;
+    while (number! <= 0) {
+      number += 26;
+    }
+    while (number! > 26) {
+      number -= 26;
+    }
     var letter = alphabet_AZIndexes[number];
     return letter ?? '';
   }).join();

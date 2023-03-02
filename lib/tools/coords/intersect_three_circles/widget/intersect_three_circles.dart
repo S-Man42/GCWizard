@@ -17,6 +17,8 @@ import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/leng
 import 'package:gc_wizard/utils/constants.dart';
 
 class IntersectThreeCircles extends StatefulWidget {
+  const IntersectThreeCircles({Key? key}) : super(key: key);
+
   @override
   IntersectThreeCirclesState createState() => IntersectThreeCirclesState();
 }
@@ -86,7 +88,7 @@ class IntersectThreeCirclesState extends State<IntersectThreeCircles> {
             });
           },
         ),
-        new GCWDistance(
+        GCWDistance(
           hintText: i18n(context, "common_radius"),
           onChanged: (value) {
             setState(() {
@@ -116,15 +118,15 @@ class IntersectThreeCirclesState extends State<IntersectThreeCircles> {
         barrierDismissible: false,
         builder: (context) {
           return Center(
-            child: Container(
+            child: SizedBox(
+              height: 220,
+              width: 150,
               child: GCWAsyncExecuter<List<Intersect>>(
                 isolatedFunction: intersectThreeCirclesAsync,
                 parameter: _buildJobData,
                 onReady: (data) => _showOutput(data),
                 isOverlay: true,
               ),
-              height: 220,
-              width: 150,
             ),
           );
         },

@@ -13,6 +13,8 @@ import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/l
 import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/widget/segmentdisplay_output.dart';
 
 class BrailleDotNumbers extends StatefulWidget {
+  const BrailleDotNumbers({Key? key}) : super(key: key);
+
   @override
   BrailleDotNumbersState createState() => BrailleDotNumbersState();
 }
@@ -28,7 +30,7 @@ class BrailleDotNumbersState extends State<BrailleDotNumbers> {
 
   var _currentMode = GCWSwitchPosition.right;
 
-  var _decodeInputFormatter = WrapperForMaskTextInputFormatter(
+  final _decodeInputFormatter = WrapperForMaskTextInputFormatter(
       mask: '#' * 100000, filter: {"#": RegExp(r'[0-9\s]')});
 
   @override
@@ -99,8 +101,9 @@ class BrailleDotNumbersState extends State<BrailleDotNumbers> {
 
   Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
-      if (_currentEncodeInput.isEmpty)
-        return GCWDefaultOutput();
+      if (_currentEncodeInput.isEmpty) {
+        return const GCWDefaultOutput();
+      }
 
       var segments = encodeBraille(_currentEncodeInput, _currentLanguage);
       return Column(
@@ -111,8 +114,9 @@ class BrailleDotNumbersState extends State<BrailleDotNumbers> {
         ],
       );
     } else {
-      if (_currentDecodeInput.isEmpty)
-        return GCWDefaultOutput();
+      if (_currentDecodeInput.isEmpty) {
+        return const GCWDefaultOutput();
+      }
 
       var segments = decodeBraille(
           _currentDecodeInput.split(RegExp(r'\s+')).toList(),
@@ -160,12 +164,13 @@ class BrailleDotNumbersState extends State<BrailleDotNumbers> {
   Widget _buildDigitalOutput(Segments segments) {
     return SegmentDisplayOutput(
         segmentFunction: (displayedSegments, readOnly) {
-          if (_currentLanguage == BrailleLanguage.EUR)
+          if (_currentLanguage == BrailleLanguage.EUR) {
             return BrailleEuroSegmentDisplay(
                 segments: displayedSegments, readOnly: readOnly);
-          else
+          } else {
             return BrailleSegmentDisplay(
                 segments: displayedSegments, readOnly: readOnly);
+          }
         },
         segments: segments,
         readOnly: true);

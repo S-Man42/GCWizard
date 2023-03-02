@@ -23,8 +23,8 @@ class PietResult {
 
 var _input_required = false;
 var _input_required_number = false;
-final _inputRequired = "input required";
-final _maxOutputLength = 1000;
+const _inputRequired = "input required";
+const _maxOutputLength = 1000;
 
 Future<PietResult> interpretPiet(List<List<int>> data, String? input,
     {int timeOut = 15000, bool multipleInputs = false, _PietSession? continueState}) async {
@@ -44,7 +44,7 @@ Future<PietResult> interpretPiet(List<List<int>> data, String? input,
           input_expected: _input_required,
           input_number_expected: _input_required_number,
           finished: false);
-    } else
+    } else {
       return PietResult(
           output: pietSession._output,
           input_expected: _input_required,
@@ -52,6 +52,7 @@ Future<PietResult> interpretPiet(List<List<int>> data, String? input,
           error: true,
           errorText: err.toString(),
           state: pietSession);
+    }
   }
 }
 
@@ -112,8 +113,9 @@ class _PietSession {
     var startTime = DateTime.now();
 
     while (running) {
-      if ((DateTime.now().difference(startTime)).inMilliseconds > _timeOut)
+      if ((DateTime.now().difference(startTime)).inMilliseconds > _timeOut) {
         throw Exception('common_programming_error_maxiterations');
+      }
 
       _step();
     }

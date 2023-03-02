@@ -14,13 +14,13 @@ void main() {
       {'coord': LatLng(12.8974833333, 77.6074166667),   'expectedOutput': ['fc654', 'jm44m']},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('coord: ${elem['coord']}', () {
         var _actual = ReverseWherigoDay1976.fromLatLon(elem['coord'] as LatLng);
         expect(_actual.s, (elem['expectedOutput'] as ReverseWherigoDay1976).s);
         expect(_actual.t, (elem['expectedOutput'] as ReverseWherigoDay1976).t);
       });
-    });
+    }
   });
 
   group("Converter.reverseWherigooDay1976.day1976ToLatLon:", () {
@@ -33,13 +33,13 @@ void main() {
       {'expectedOutput': LatLng(12.8974833333, 77.6074166667),   'input': ['fc654', 'jm44m']},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = ReverseWherigoDay1976.parse((elem['input'] as List<String>)[0] + " " + (elem['input'] as List<String>)[1])?.toLatLng();
         expect((_actual!.latitude - (elem['expectedOutput'] as LatLng).latitude).abs() < 1e-3, true);
         expect((_actual.longitude - (elem['expectedOutput'] as LatLng).longitude).abs() < 1e-3, true);
       });
-    });
+    }
   });
 
   group("Converter.reverse_wherigo_day1976.parseLatLon:", () {
@@ -49,16 +49,16 @@ void main() {
       {'text': 'fc654\njm44m', 'expectedOutput': {'format': CoordinateFormatKey.REVERSE_WIG_DAY1976, 'coordinate': LatLng(12.8974833333, 77.6074166667)}},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('text: ${elem['text']}', () {
         var _actual = ReverseWherigoDay1976.parse(elem['text'] as String)?.toLatLng();
-        if (_actual == null)
+        if (_actual == null) {
           expect(null, elem['expectedOutput']);
-        else {
+        } else {
           expect((_actual.latitude - ((elem['expectedOutput'] as Map<String, Object>)['coordinate'] as LatLng).latitude).abs() < 1e-3, true);
           expect((_actual.longitude - ((elem['expectedOutput'] as Map<String, Object>)['coordinate'] as LatLng).longitude).abs() < 1e-3, true);
         }
       });
-    });
+    }
   });
 }

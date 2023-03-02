@@ -24,7 +24,7 @@ void main() {
       {'input' : 'ABC*%&/', 'key': '', 'expectedOutput' : 'EYMVF', 'keyStream': 'DWJXH'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, key: ${elem['key']}', () {
         var _actual = encryptSolitaire(elem['input'] as String?, elem['key'] as String?);
 
@@ -37,7 +37,7 @@ void main() {
         expect(_actual.output, elem['expectedOutput']);
         expect(_actual.keyStream, elem['keyStream']);
       });
-    });
+    }
   });
 
   group("Solitaire.decryptSolitaire:", () {
@@ -60,7 +60,7 @@ void main() {
       {'input' : 'EYMVF', 'key': '', 'expectedOutput' : 'ABCXX', 'keyStream': 'DWJXH'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, key: ${elem['key']}', () {
         var _actual = decryptSolitaire(elem['input'] as String?, elem['key'] as String?);
 
@@ -73,6 +73,6 @@ void main() {
         expect(_actual.output, elem['expectedOutput']);
         expect(_actual.keyStream, elem['keyStream']);
       });
-    });
+    }
   });
 }

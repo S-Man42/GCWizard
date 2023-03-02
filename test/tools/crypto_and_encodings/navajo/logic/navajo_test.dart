@@ -41,12 +41,12 @@ void main() {
       {'expectedOutput' : o4d, 'alphabet' : true, 'input' : oD4},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decodeNavajo(elem['input'] as String, elem['alphabet'] as bool);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Navajo.encrypt:", () {
@@ -60,11 +60,11 @@ void main() {
       {'input' : in4, 'alphabet' : true, 'expectedOutput' : oK4},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = encodeNavajo(elem['input'] as String?, elem['alphabet'] as bool);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

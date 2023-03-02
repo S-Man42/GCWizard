@@ -14,10 +14,11 @@ bool _OnGetInputSectionEnd(String line) {
       line.trim().startsWith('if Wherigo.NoCaseEquals(') ||
       line.trim().startsWith('elseif Wherigo.NoCaseEquals(') ||
       line.trim().startsWith('if ' + _answerVariable + ' == ') ||
-      line.trim().startsWith('elseif ' + _answerVariable + ' == '))
+      line.trim().startsWith('elseif ' + _answerVariable + ' == ')) {
     return true;
-  else
+  } else {
     return false;
+  }
 }
 
 bool _OnGetInputFunctionEnd(String line1, String line2) {

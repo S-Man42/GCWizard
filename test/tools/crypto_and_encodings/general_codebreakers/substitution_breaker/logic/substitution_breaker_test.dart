@@ -11,12 +11,12 @@ void main() {
       {'input' : 'aba', 'expectedOutput' : null},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = BreakerKey.check_alphabet(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("substitution_breaker.check_key:", () {
@@ -31,12 +31,12 @@ void main() {
       {'input' : 'abcd', 'alphabet' : 'abc', 'expectedOutput' : null},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = BreakerKey.check_key(elem['input'] as String?, elem['alphabet'] as String);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("substitution_breaker.keydecode:", () {
@@ -47,13 +47,13 @@ void main() {
       {'input' : 'Hallo 23', 'expectedOutput' : 'Hallo 23'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var key = BreakerKey('abcdefghijklmnopqrstuvwxyz');
         var _actual = key.decode(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("substitution_breaker.keyencode:", () {
@@ -64,13 +64,13 @@ void main() {
       {'input' : 'Hallo 23', 'expectedOutput' : 'Hallo 23'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var key = BreakerKey('abcdefghijklmnopqrstuvwxyz');
         var _actual = key.encode(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("substitution_breaker.compressQuadgrams:", () {
@@ -80,13 +80,13 @@ void main() {
       {'input' : quadgrams, 'errorCode' : BreakerErrorCode.OK, 'expectedOutput' : '{"3":[747],"10":[11,12,13,0,0,0,17]}'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
 
       test('input: ${elem['input']}', () async {
         var _actual = Quadgrams.quadgramsMapToString(Quadgrams.compressQuadgrams(elem['input'] as List<int>));
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
 
@@ -100,12 +100,12 @@ void main() {
       {'input' : quadgramsCpmpressed1, 'size' : 17, 'errorCode' : BreakerErrorCode.OK, 'expectedOutput' : quadgrams},
     ];
 
-    _inputsToExpected.forEach((elem) async {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () async {
         var _actual = Quadgrams.decompressQuadgrams(elem['input'] as Map<int,List<int>>, elem['size'] as int);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
 

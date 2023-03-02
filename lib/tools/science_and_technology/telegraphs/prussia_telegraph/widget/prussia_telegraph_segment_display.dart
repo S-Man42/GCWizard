@@ -24,7 +24,7 @@ const _INITIAL_SEGMENTS = <String, bool>{
 const _PRUSSIA_RELATIVE_DISPLAY_WIDTH = 120;
 const _PRUSSIA_RELATIVE_DISPLAY_HEIGHT = 220;
 
-//ignore: must_be_immutable
+
 class PrussiaTelegraphSegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
   final bool readOnly;

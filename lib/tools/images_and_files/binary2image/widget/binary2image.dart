@@ -16,6 +16,8 @@ import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/image_utils/image_utils.dart';
 
 class Binary2Image extends StatefulWidget {
+  const Binary2Image({Key? key}) : super(key: key);
+
   @override
   Binary2ImageState createState() => Binary2ImageState();
 }
@@ -54,7 +56,6 @@ class Binary2ImageState extends State<Binary2Image> {
           },
         ),
         GCWDefaultOutput(
-            child: _buildOutput(),
             trailing: GCWIconButton(
               icon: Icons.save,
               size: IconButtonSize.SMALL,
@@ -62,7 +63,8 @@ class Binary2ImageState extends State<Binary2Image> {
               onPressed: () {
                 _outData == null ? null : _exportFile(context, _outData!);
               },
-            ))
+            ),
+            child: _buildOutput())
       ],
     );
   }

@@ -7,6 +7,8 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rsa/logic/rsa.dart';
 
 class RSADChecker extends StatefulWidget {
+  const RSADChecker({Key? key}) : super(key: key);
+
   @override
   RSADCheckerState createState() => RSADCheckerState();
 }
@@ -16,7 +18,7 @@ class RSADCheckerState extends State<RSADChecker> {
   String _currentP = '';
   String _currentQ = '';
 
-  var _integerInputFormatter = GCWIntegerTextInputFormatter(min: 0);
+  final _integerInputFormatter = GCWIntegerTextInputFormatter(min: 0);
   Widget? _output;
 
   @override
@@ -51,7 +53,7 @@ class RSADCheckerState extends State<RSADChecker> {
             });
           },
         ),
-        _output ?? GCWDefaultOutput(),
+        _output ?? const GCWDefaultOutput(),
       ],
     );
   }

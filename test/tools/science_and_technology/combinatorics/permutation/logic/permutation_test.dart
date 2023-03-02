@@ -17,11 +17,11 @@ void main() {
       {'input' : '122', 'avoidDuplicates': false, 'expectedOutput' : ['122', '122', '212', '212', '221', '221']},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, avoidDuplicates: ${elem['avoidDuplicates']}', () {
         var _actual = generatePermutations(elem['input'] as String?, avoidDuplicates: elem['avoidDuplicates'] as bool);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

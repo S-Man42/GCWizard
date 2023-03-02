@@ -15,6 +15,8 @@ import 'package:gc_wizard/utils/constants.dart';
 import 'package:latlong2/latlong.dart';
 
 class CenterTwoPoints extends StatefulWidget {
+  const CenterTwoPoints({Key? key}) : super(key: key);
+
   @override
   CenterTwoPointsState createState() => CenterTwoPointsState();
 }
@@ -82,7 +84,7 @@ class CenterTwoPointsState extends State<CenterTwoPoints> {
     _currentDistance = _result.distance;
 
     _currentOutput = [];
-    _currentOutput.add('${formatCoordOutput(_currentCenter, _currentOutputFormat, defaultEllipsoid)}');
+    _currentOutput.add(formatCoordOutput(_currentCenter, _currentOutputFormat, defaultEllipsoid));
     _currentOutput.add(
         '${i18n(context, 'coords_center_distance')}: ${doubleFormat.format(_currentOutputUnit.fromMeter(_currentDistance))} ${_currentOutputUnit.symbol}');
 

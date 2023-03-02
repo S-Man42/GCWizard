@@ -5,6 +5,8 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/language_games/spoon_language/logic/spoon_language.dart';
 
 class SpoonLanguage extends StatefulWidget {
+  const SpoonLanguage({Key? key}) : super(key: key);
+
   @override
   SpoonLanguageState createState() => SpoonLanguageState();
 }

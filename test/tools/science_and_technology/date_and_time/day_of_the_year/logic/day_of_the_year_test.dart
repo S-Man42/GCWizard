@@ -22,12 +22,12 @@ void main() {
       {'year' : 2022, 'day': 0,   'expectedOutput' : DayOfTheYearOutput(DateTime(2021, 12, 31), 365, 5, 6, 52, 53)},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('year: ${elem['year']}, day: ${elem['day']}', () {
         var _actual = calculateDayInfos(elem['year'] as int?, elem['day'] as int?);
-        if (_actual == null)
+        if (_actual == null) {
           expect(_actual, elem['expectedOutput']);
-        else {
+        } else {
           expect(_actual.date, (elem['expectedOutput'] as DayOfTheYearOutput).date);
           expect(_actual.dayNumber, (elem['expectedOutput'] as DayOfTheYearOutput).dayNumber);
           expect(_actual.weekday, (elem['expectedOutput'] as DayOfTheYearOutput).weekday);
@@ -36,7 +36,7 @@ void main() {
           expect(_actual.weekNumberAlternate, (elem['expectedOutput'] as DayOfTheYearOutput).weekNumberAlternate);
         }
       });
-    });
+    }
   });
 
   group("DayOfTheYear.isoWeekOfYear:", () {
@@ -60,11 +60,11 @@ void main() {
       {'input' : DateTime(2021, 2, 29), 'expectedOutput' : 9},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = isoWeekOfYear(elem['input'] as DateTime);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

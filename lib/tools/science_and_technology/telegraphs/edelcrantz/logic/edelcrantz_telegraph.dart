@@ -1775,10 +1775,11 @@ final CODEBOOK_EDELCRANTZ_MUSEUM = {
 };
 
 String _nightTime(String code) {
-  if (code.startsWith('a'))
+  if (code.startsWith('a')) {
     return ('a' + (777 - int.parse(code.substring(1))).toString().padLeft(3, '0'));
-  else
+  } else {
     return (777 - int.parse(code)).toString().padLeft(3, '0');
+  }
 }
 
 Segments encodeEdelcrantzTelegraph(String? input, EdelcrantzCodebook language, bool daytime) {
@@ -1799,10 +1800,13 @@ Segments encodeEdelcrantzTelegraph(String? input, EdelcrantzCodebook language, b
   }
 
   input.split('').forEach((element) {
-    if (CODEBOOK[element] != null) if (daytime)
-      encodedText.add(CODEBOOK[element]!.split(''));
-    else
-      encodedText.add(_nightTime(CODEBOOK[element] ?? '').split(''));
+    if (CODEBOOK[element] != null) {
+      if (daytime) {
+        encodedText.add(CODEBOOK[element]!.split(''));
+      } else {
+        encodedText.add(_nightTime(CODEBOOK[element] ?? '').split(''));
+      }
+    }
   });
   return Segments(displays: encodedText);
 }
@@ -1827,16 +1831,19 @@ SegmentsText decodeVisualEdelcrantzTelegraph(List<String>? inputs, EdelcrantzCod
       break;
   }
 
-  inputs.forEach((element) {
+  for (var element in inputs) {
     segment = _stringToSegment(element);
     displays.add(segment);
-    if (CODEBOOK[segmentToCode(segment)] != null) if (daytime)
-      text = text + CODEBOOK[segmentToCode(segment)]!;
-    else
-      text = text + CODEBOOK[_nightTime(segmentToCode(segment))]!;
-    else
+    if (CODEBOOK[segmentToCode(segment)] != null) {
+      if (daytime) {
+        text = text + CODEBOOK[segmentToCode(segment)]!;
+      } else {
+        text = text + CODEBOOK[_nightTime(segmentToCode(segment))]!;
+      }
+    } else {
       text = text + UNKNOWN_ELEMENT;
-  });
+    }
+  }
 
   return SegmentsText(displays: displays, text: text);
 }
@@ -1862,10 +1869,11 @@ SegmentsText decodeTextEdelcrantzTelegraph(String? inputs, EdelcrantzCodebook la
 
   inputs.split(' ').forEach((element) {
     if (CODEBOOK[element] != null) {
-      if (daytime)
+      if (daytime) {
         text = text + CODEBOOK[element]!;
-      else
+      } else {
         text = text + CODEBOOK[_nightTime(element)]!;
+      }
     } else {
       text = text + UNKNOWN_ELEMENT;
     }
@@ -1898,10 +1906,11 @@ String segmentToCode(List<String> segment) {
   if (segment.contains('c1')) c = c + 1;
   if (segment.contains('c2')) c = c + 2;
   if (segment.contains('c3')) c = c + 4;
-  if (segment.contains('t0'))
+  if (segment.contains('t0')) {
     return 'a' + a.toString() + b.toString() + c.toString();
-  else
+  } else {
     return a.toString() + b.toString() + c.toString();
+  }
 }
 
 List<String> _buildShutters(String segments) {

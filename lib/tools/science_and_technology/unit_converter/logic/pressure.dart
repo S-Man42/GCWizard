@@ -6,8 +6,8 @@ class Pressure extends Unit {
 
   Pressure({required String key, required String symbol, bool isReference = false, required double inPascal})
       : super(key, symbol, isReference, (e) => e * inPascal, (e) => e / inPascal) {
-    toPascal = this.toReference;
-    fromPascal = this.fromReference;
+    toPascal = toReference;
+    fromPascal = fromReference;
   }
 }
 

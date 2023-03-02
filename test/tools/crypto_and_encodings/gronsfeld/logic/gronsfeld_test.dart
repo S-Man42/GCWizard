@@ -46,12 +46,12 @@ void main() {
       {'input' : 'AbCDeF', 'key': '01', 'autoKey': true, 'aValue': -52, 'expectedOutput' : 'AcCEgI'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, key: ${elem['key']}, aValue: ${elem['aValue']}, autoKey: ${elem['autoKey']}', () {
         var _actual = encryptGronsfeld(elem['input'] as String?, elem['key'] as String?, elem['autoKey'] as bool, aValue: elem['aValue'] as int);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Gronsfeld.decrypt:", () {
@@ -98,12 +98,12 @@ void main() {
       {'input' : 'AbCDeF', 'key': '01', 'autoKey': true, 'aValue': -52, 'expectedOutput' : 'AaCDcC'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, key: ${elem['key']}, aValue: ${elem['aValue']}, autoKey: ${elem['autoKey']}', () {
         var _actual = decryptGronsfeld(elem['input'] as String?, elem['key'] as String?, elem['autoKey'] as bool, aValue: elem['aValue'] as int);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   // group("Gronsfeld.digitsToAlpha:", () {

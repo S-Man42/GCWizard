@@ -8,6 +8,8 @@ import 'package:gc_wizard/tools/science_and_technology/compound_interest/logic/c
 import 'package:intl/intl.dart';
 
 class CompoundInterest extends StatefulWidget {
+  const CompoundInterest({Key? key}) : super(key: key);
+
   @override
   CompoundInterestState createState() => CompoundInterestState();
 }

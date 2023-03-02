@@ -86,10 +86,10 @@ SegmentsChars decodePredator(List<String>? inputs) {
 
   Map<List<String>, String> CODEBOOK = switchMapKeyValue(CODEBOOK_PREDATOR);
 
-  inputs.forEach((element) {
+  for (var element in inputs) {
     segment = _stringToSegment(element);
     displays.add(segment);
-  });
+  }
 
   List<String> text = inputs.map((input) {
     var char = '';

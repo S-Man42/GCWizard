@@ -8,6 +8,8 @@ import 'package:gc_wizard/tools/crypto_and_encodings/rotation/logic/rotator.dart
 import 'package:gc_wizard/utils/math_utils.dart';
 
 class RotationGeneral extends StatefulWidget {
+  const RotationGeneral({Key? key}) : super(key: key);
+
   @override
   RotationGeneralState createState() => RotationGeneralState();
 }
@@ -57,7 +59,7 @@ class RotationGeneralState extends State<RotationGeneral> {
   }
 
   Widget _buildOutput() {
-    if (_currentInput.isEmpty) return GCWDefaultOutput();
+    if (_currentInput.isEmpty) return const GCWDefaultOutput();
 
     var reverseKey = modulo(26 - _currentKey, 26).toInt();
 

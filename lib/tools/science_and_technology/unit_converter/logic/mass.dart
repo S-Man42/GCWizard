@@ -10,8 +10,8 @@ class Mass extends Unit {
     bool isReference = false,
     required double inGram,
   }) : super(name, symbol, isReference, (e) => e * inGram, (e) => e / inGram) {
-    toGram = this.toReference;
-    fromGram = this.fromReference;
+    toGram = toReference;
+    fromGram = fromReference;
   }
 }
 

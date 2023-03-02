@@ -26,8 +26,9 @@ class IntersectBearingJobData {
 }
 
 Future<LatLng?> intersectBearingsAsync(GCWAsyncExecuterParameters? jobData) async {
-  if (jobData?.parameters is! IntersectBearingJobData)
+  if (jobData?.parameters is! IntersectBearingJobData) {
     throw Exception('Unexpected Intersect data');
+  }
 
   var data = jobData!.parameters as IntersectBearingJobData;
   var output = intersectBearings(data.coord1, data.az13, data.coord2,
@@ -107,7 +108,9 @@ LatLng? intersectBearings(LatLng coord1, double az13, LatLng coord2, double az23
 
       dist *= 1.5; //adjusted these values empirical
       d = newD;
-    } else if (newD > d) dist /= 1.2;
+    } else if (newD > d) {
+      dist /= 1.2;
+    }
   }
 
   if (broke) return null;
@@ -127,8 +130,9 @@ class IntersectFourPointsJobData {
 }
 
 Future<LatLng?> intersectFourPointsAsync(GCWAsyncExecuterParameters? jobData) async {
-  if (jobData?.parameters is! IntersectFourPointsJobData)
+  if (jobData?.parameters is! IntersectFourPointsJobData) {
     throw Exception('Unexpected Intersect data');
+  }
 
   var data = jobData!.parameters as IntersectFourPointsJobData;
   var output = intersectFourPoints(data.coord11, data.coord12, data.coord21,

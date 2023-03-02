@@ -18,14 +18,14 @@ Widget _buildPunchtapeSegmentDisplayOutput(List<Widget> displays) {
     widget = Container(
       width: 200,
       height: 40,
+      padding: const EdgeInsets.all(2),
       child: display,
-      padding: EdgeInsets.all(2),
     );
 
     columns.add(Expanded(
         child: Container(
+          padding: const EdgeInsets.all(3),
           child: widget,
-          padding: EdgeInsets.all(3),
         )));
 
     rows.add(Row(
@@ -33,7 +33,7 @@ Widget _buildPunchtapeSegmentDisplayOutput(List<Widget> displays) {
     ));
   }
 
-  return Container(
+  return SizedBox(
       width: 300,
       child: Column(
         children: rows,
@@ -48,7 +48,7 @@ Future<ui.Image> _buildPunchtapeSegmentDisplayImage(List<NSegmentDisplay> displa
   var rowWidth = 0.0;
   var rowHeight = 0.0;
   var images = <ui.Image>[];
-  var offset = ui.Offset(0, bounds);
+  var offset = const ui.Offset(0, bounds);
 
   // create images
   for (var i = 0; i < displays.length; i++) {
@@ -56,12 +56,12 @@ Future<ui.Image> _buildPunchtapeSegmentDisplayImage(List<NSegmentDisplay> displa
   }
 
   // calc image size
-  images.forEach((image) {
+  for (var image in images) {
     rowWidth = max(rowWidth, image.width.toDouble() + 2 * padding);
     width = max(width, rowWidth);
     rowHeight += image.height + 6 * padding;
     height = max(height, rowHeight);
-  });
+  }
 
   width = width + 2 * bounds;
   height = height + 2 * bounds;

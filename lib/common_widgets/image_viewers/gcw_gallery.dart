@@ -59,11 +59,11 @@ class _GCWGalleryState extends State<GCWGallery> {
           ),
           //Expanded(child: Container(),)
           Container(
+            padding: const EdgeInsets.symmetric(horizontal: 30),
             child: GCWImageView(
               imageData: widget.imageData[_currentImageIndex],
               toolBarRight: false,
             ),
-            padding: EdgeInsets.symmetric(horizontal: 30),
           ),
 
           Positioned(
@@ -82,7 +82,7 @@ class _GCWGalleryState extends State<GCWGallery> {
         ],
       ),
       Container(
-        margin: EdgeInsets.only(top: 10),
+        margin: const EdgeInsets.only(top: 10),
         height: 50,
         child: ScrollablePositionedList.builder(
             itemScrollController: _scrollController,
@@ -105,16 +105,17 @@ class _GCWGalleryState extends State<GCWGallery> {
 
   Widget imageDecoration(int index, bool currentImage) {
     var marked = (index < widget.imageData.length ? widget.imageData[index].marked : false) ?? false;
-    if (currentImage)
+    if (currentImage) {
       return Container(
           decoration: BoxDecoration(
               border: Border.all(color: marked ? themeColors().focused() : themeColors().accent(), width: 5)),
           child: _validImages[index]);
-    else if (marked)
+    } else if (marked) {
       return Container(
           decoration: BoxDecoration(border: Border.all(color: themeColors().focused(), width: 2)),
           child: _validImages[index]);
-    else
+    } else {
       return _validImages[index];
+    }
   }
 }

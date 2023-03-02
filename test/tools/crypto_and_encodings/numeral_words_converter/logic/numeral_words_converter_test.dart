@@ -31,16 +31,17 @@ void main(){
       { 'input': 'mrrzazampxevozampuzamvol', 'language': NumeralWordsLanguage.NAVI,        'expectedOutput': OutputConvertToNumber(22408, '', '', '')},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test(
           'input: ${elem['input']}, language: ${elem['language']}, ', () {
         var _actual = decodeNumeralWordToNumber(elem['language'] as NumeralWordsLanguage, removeAccents(elem['input'].toString().toLowerCase()));
-        if (_actual.error == 'numeralwords_converter_error_navi')
+        if (_actual.error == 'numeralwords_converter_error_navi') {
           expect(_actual.error, (elem['expectedOutput'] as OutputConvertToNumber).error);
-        else
+        } else {
           expect(_actual.number, (elem['expectedOutput'] as OutputConvertToNumber).number);
+        }
       });
-    });
+    }
   });
 
   group("encode Navi:", () {
@@ -68,16 +69,17 @@ void main(){
       { 'input': 22408, 'language': NumeralWordsLanguage.NAVI,        'expectedOutput': OutputConvertToNumeralWord('mrrzazapxevozapuzavol', '', '', '')},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test(
           'input: ${elem['input']}, language: ${elem['language']}, ', () {
         var _actual = encodeNumberToNumeralWord(elem['language'] as NumeralWordsLanguage, elem['input'] as int?);
-        if (_actual.error == 'numeralwords_converter_error_navi')
+        if (_actual.error == 'numeralwords_converter_error_navi') {
           expect(_actual.error, (elem['expectedOutput'] as OutputConvertToNumeralWord).error);
-        else
+        } else {
           expect(_actual.numeralWord, (elem['expectedOutput'] as OutputConvertToNumeralWord).numeralWord);
+        }
       });
-    });
+    }
   });
 
 }

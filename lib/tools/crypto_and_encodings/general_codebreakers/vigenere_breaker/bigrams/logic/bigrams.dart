@@ -42,9 +42,9 @@ double? calc_fitnessBigrams(String? txt, Bigrams? bigrams) {
     plain_bin.add(char);
   });
 
-  if (plain_bin.length < 2)
-    // More than two characters from the given alphabet are required
+  if (plain_bin.length < 2) {
     return null;
+  }
 
   for (var idx = 0; idx < (plain_bin.length - 1); idx++) {
     var ch1 = plain_bin[idx];

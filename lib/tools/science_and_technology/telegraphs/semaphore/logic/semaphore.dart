@@ -126,10 +126,10 @@ SegmentsChars decodeSemaphore(List<String>? inputs) {
 
   Map<List<String>, String> CODEBOOK = switchMapKeyValue(CODEBOOK_SEMAPHORE);
 
-  inputs.forEach((element) {
+  for (var element in inputs) {
     segment = _stringToSegment(element);
     displays.add(segment);
-  });
+  }
 
   List<String> text = inputs.map((input) {
     var char = '';
@@ -162,14 +162,17 @@ SegmentsChars decodeSemaphore(List<String>? inputs) {
             break;
         }
       } else {
-        if (letter_follows) if (LETTER.contains(symbol))
+        if (letter_follows) {
+          if (LETTER.contains(symbol)) {
+            charH = symbol;
+          } else {
+            charH = LETTER2DIGIT[symbol]!;
+          }
+        } else if (NUMBER.contains(symbol)) {
           charH = symbol;
-        else
-          charH = LETTER2DIGIT[symbol]!;
-        else if (NUMBER.contains(symbol))
-          charH = symbol;
-        else
+        } else {
           charH = DIGIT2LETTER[symbol]!;
+        }
 
         char = char + charH;
       }

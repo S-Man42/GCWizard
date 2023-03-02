@@ -4,9 +4,9 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:latlong2/latlong.dart';
 
-final double _k0 = 0.9996;
-final double _drad = pi / 180.0;
-final String latZones = 'CDEFGHJKLMNPQRSTUVWX';
+const double _k0 = 0.9996;
+const double _drad = pi / 180.0;
+const String latZones = 'CDEFGHJKLMNPQRSTUVWX';
 
 UTMREF latLonToUTM(LatLng coord, Ellipsoid ells) {
   double a = ells.a;
@@ -213,8 +213,9 @@ UTMREF? parseUTM(String input) {
     || _lonZoneString == null
     || _eastingString == null
     || _northingString == null
-  )
+  ) {
     return null;
+  }
 
   var _lonZone = int.tryParse(_lonZoneString);
   if (_lonZone == null) return null;

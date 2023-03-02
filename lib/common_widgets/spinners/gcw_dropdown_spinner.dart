@@ -44,20 +44,20 @@ class GCWDropDownSpinnerState extends State<GCWDropDownSpinner> {
         children: <Widget>[
           _buildTitle(),
           Expanded(
+              flex: 3,
               child: Row(
                 children: <Widget>[
                   Container(
+                    margin: const EdgeInsets.only(right: DEFAULT_MARGIN),
                     child: GCWIconButton(icon: Icons.remove, onPressed: _decreaseValue),
-                    margin: EdgeInsets.only(right: DEFAULT_MARGIN),
                   ),
                   Expanded(child: _buildDropDown()),
                   Container(
+                    margin: const EdgeInsets.only(left: DEFAULT_MARGIN),
                     child: GCWIconButton(icon: Icons.add, onPressed: _increaseValue),
-                    margin: EdgeInsets.only(left: DEFAULT_MARGIN),
                   )
                 ],
-              ),
-              flex: 3)
+              ))
         ],
       );
     } else {
@@ -80,11 +80,12 @@ class GCWDropDownSpinnerState extends State<GCWDropDownSpinner> {
   }
 
   Widget _buildTitle() {
-    return widget.title == null ? Container() : Expanded(child: GCWText(text: widget.title! + ':'), flex: 1);
+    return widget.title == null ? Container() : Expanded(flex: 1, child: GCWText(text: widget.title! + ':'));
   }
 
   Container _buildDropDown() {
     return Container(
+      padding: const EdgeInsets.symmetric(horizontal: DEFAULT_MARGIN),
       child: GCWDropDown<int>(
         value: widget.index % widget.items.length,
         onChanged: (int newValue) {
@@ -102,7 +103,6 @@ class GCWDropDownSpinnerState extends State<GCWDropDownSpinner> {
                 .values
                 .toList(),
       ),
-      padding: EdgeInsets.symmetric(horizontal: DEFAULT_MARGIN),
     );
   }
 

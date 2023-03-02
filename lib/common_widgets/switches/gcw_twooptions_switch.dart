@@ -45,46 +45,44 @@ class GCWTwoOptionsSwitchState extends State<GCWTwoOptionsSwitch> {
         widget.notitle
             ? Container()
             : Expanded(
+                flex: 1,
                 child: GCWText(
                   text: (widget.title ?? i18n(context, 'common_mode')) + ':',
                   style: textStyle,
-                ),
-                flex: 1),
+                )),
         Expanded(
-            child: Container(
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                      child: GCWText(
-                        text: widget.leftValue ?? i18n(context, 'common_encrypt'),
-                        align: Alignment.center,
-                        style: textStyle,
-                      ),
-                      flex: 1),
-                  GCWSwitch(
-                    value: _currentValue == GCWSwitchPosition.right,
-                    onChanged: (value) {
-                      setState(() {
-                        _currentValue = value ? GCWSwitchPosition.right : GCWSwitchPosition.left;
-                        widget.onChanged(_currentValue);
-                      });
-                    },
-                    activeThumbColor: widget.alternativeColor ? colors.switchThumb1() : colors.switchThumb2(),
-                    activeTrackColor: widget.alternativeColor ? colors.switchTrack1() : colors.switchTrack2(),
-                    inactiveThumbColor: widget.alternativeColor ? colors.switchThumb1() : colors.switchThumb2(),
-                    inactiveTrackColor: widget.alternativeColor ? colors.switchTrack1() : colors.switchTrack2(),
-                  ),
-                  Expanded(
-                      child: GCWText(
-                        text: widget.rightValue ?? i18n(context, 'common_decrypt'),
-                        align: Alignment.center,
-                        style: textStyle,
-                      ),
-                      flex: 1)
-                ],
-              ),
-            ),
-            flex: 3)
+            flex: 3,
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                    flex: 1,
+                    child: GCWText(
+                      text: widget.leftValue ?? i18n(context, 'common_encrypt'),
+                      align: Alignment.center,
+                      style: textStyle,
+                    )),
+                GCWSwitch(
+                  value: _currentValue == GCWSwitchPosition.right,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentValue = value ? GCWSwitchPosition.right : GCWSwitchPosition.left;
+                      widget.onChanged(_currentValue);
+                    });
+                  },
+                  activeThumbColor: widget.alternativeColor ? colors.switchThumb1() : colors.switchThumb2(),
+                  activeTrackColor: widget.alternativeColor ? colors.switchTrack1() : colors.switchTrack2(),
+                  inactiveThumbColor: widget.alternativeColor ? colors.switchThumb1() : colors.switchThumb2(),
+                  inactiveTrackColor: widget.alternativeColor ? colors.switchTrack1() : colors.switchTrack2(),
+                ),
+                Expanded(
+                    flex: 1,
+                    child: GCWText(
+                      text: widget.rightValue ?? i18n(context, 'common_decrypt'),
+                      align: Alignment.center,
+                      style: textStyle,
+                    ))
+              ],
+            ))
       ],
     );
   }

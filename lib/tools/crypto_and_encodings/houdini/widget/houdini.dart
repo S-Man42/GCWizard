@@ -7,6 +7,8 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/houdini/logic/houdini.dart';
 
 class Houdini extends StatefulWidget {
+  const Houdini({Key? key}) : super(key: key);
+
   @override
   HoudiniState createState() => HoudiniState();
 }
@@ -64,7 +66,7 @@ class HoudiniState extends State<Houdini> {
       outputs = decodeHoudini(_currentInput, _houdiniMode());
     }
 
-    if (outputs == null) return GCWDefaultOutput();
+    if (outputs == null) return const GCWDefaultOutput();
 
     if (outputs[10] == null || outputs[0] == outputs[10]) {
       return GCWDefaultOutput(child: outputs[0]);

@@ -20,7 +20,7 @@ const _INITIAL_SEGMENTS = <String, bool>{
   'dp': false
 };
 
-//ignore: must_be_immutable
+
 class FourteenSegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
   final bool readOnly;

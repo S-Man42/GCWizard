@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 import 'package:gc_wizard/tools/symbol_tables/_common/logic/symbol_table_data.dart';
 import 'package:gc_wizard/tools/symbol_tables/_common/widget/gcw_symbol_container.dart';
 
@@ -32,7 +32,7 @@ class SymbolReplacerSymbolTableData {
   late List<Map<String, SymbolReplacerSymbolData>> images;
 
   SymbolReplacerSymbolTableData(SymbolTableData data) {
-    this.images = data.images.map((Map<String, SymbolData> elem) {
+    images = data.images.map((Map<String, SymbolData> elem) {
       Map<String, SymbolReplacerSymbolData> _tempMap = {};
       elem.forEach((String key, SymbolData value) {
         _tempMap.putIfAbsent(key, () => SymbolReplacerSymbolData(value));
@@ -48,7 +48,7 @@ class SymbolReplacerSymbolData {
   String? displayName;
 
   SymbolReplacerSymbolData(SymbolData data) {
-    this.bytes = data.bytes;
-    this.displayName = data.displayName;
+    bytes = data.bytes;
+    displayName = data.displayName;
   }
 }

@@ -41,7 +41,7 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
   String? _currentEncryptionInput = '';
   late TextEditingController _encryptionInputController;
 
-  var _alphabetMap = <String, int>{};
+  final _alphabetMap = <String, int>{};
 
   var _currentIgnoreUnknown = false;
   var _currentSpecialEncryption = GCWSwitchPosition.left;
@@ -54,9 +54,9 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
     super.initState();
 
     _data = widget.data;
-    _data.images.forEach((element) {
+    for (var element in _data.images) {
       _alphabetMap.putIfAbsent(element.keys.first, () => _data.images.indexOf(element));
-    });
+    }
 
     _encryptionInputController = TextEditingController(text: _currentEncryptionInput);
   }

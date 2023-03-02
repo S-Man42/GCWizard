@@ -14,6 +14,8 @@ import 'package:gc_wizard/utils/datetime_utils.dart';
 import 'package:intl/intl.dart';
 
 class MoonPosition extends StatefulWidget {
+  const MoonPosition({Key? key}) : super(key: key);
+
   @override
   MoonPositionState createState() => MoonPositionState();
 }
@@ -21,7 +23,7 @@ class MoonPosition extends StatefulWidget {
 class MoonPositionState extends State<MoonPosition> {
   var _currentDateTime = DateTimeTimezone(datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
   var _currentCoords = BaseCoordinate();
-  var _currentCoordsFormat = defaultCoordinateFormat;
+  final _currentCoordsFormat = defaultCoordinateFormat;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +42,7 @@ class MoonPositionState extends State<MoonPosition> {
           text: i18n(context, 'astronomy_postion_datetime'),
         ),
         GCWDateTimePicker(
-          config: {DateTimePickerConfig.DATE, DateTimePickerConfig.TIME, DateTimePickerConfig.TIMEZONES},
+          config: const {DateTimePickerConfig.DATE, DateTimePickerConfig.TIME, DateTimePickerConfig.TIMEZONES},
           onChanged: (datetime) {
             setState(() {
               _currentDateTime = datetime;

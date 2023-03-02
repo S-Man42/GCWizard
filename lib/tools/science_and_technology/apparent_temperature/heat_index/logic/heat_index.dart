@@ -31,12 +31,13 @@ double calculateHeatIndex(double temperature, double humidity, Temperature tempe
   Map<int, double> c;
   double heatIndex = 0;
 
-  if (temperatureUnit == TEMPERATURE_CELSIUS)
+  if (temperatureUnit == TEMPERATURE_CELSIUS) {
     c = _heatParameterCelsius;
-  else if (temperatureUnit == TEMPERATURE_FAHRENHEIT)
+  } else if (temperatureUnit == TEMPERATURE_FAHRENHEIT) {
     c = _heatParameterFahrenheit;
-  else
+  } else {
     return double.nan;
+  }
 
   heatIndex = c[1]! +
       c[2]! * temperature +

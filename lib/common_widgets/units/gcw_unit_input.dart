@@ -18,7 +18,7 @@ class GCWUnitInput<T extends Unit> extends StatefulWidget {
 
   final void Function(double) onChanged;
 
-  GCWUnitInput(
+  const GCWUnitInput(
       {Key? key,
       this.title,
       this.min,
@@ -54,7 +54,9 @@ class _GCWUnitInputState<T extends Unit> extends State<GCWUnitInput> {
   Widget build(BuildContext context) {
     return Row(children: [
       Expanded(
+          flex: 3,
           child: Container(
+            padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
             child: GCWDoubleSpinner(
               title: widget.title,
               min: widget.min,
@@ -69,10 +71,9 @@ class _GCWUnitInputState<T extends Unit> extends State<GCWUnitInput> {
                 });
               },
             ),
-            padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
-          ),
-          flex: 3),
+          )),
       Expanded(
+          flex: 1,
           child: GCWUnitDropDown<T>(
             value: _currentUnit,
             unitList: _unitList,
@@ -82,8 +83,7 @@ class _GCWUnitInputState<T extends Unit> extends State<GCWUnitInput> {
                 _convertToReferenceAndEmitOnChange();
               });
             },
-          ),
-          flex: 1)
+          ))
     ]);
   }
 

@@ -14,12 +14,12 @@ void main() {
       {'input' : 'ABC123%&ijk', 'mode': AlphabetModificationMode.C_TO_K, 'expectedOutput' : '11 12 13 24 25 13'},
      ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, mode: ${elem['mode']}', () {
         var _actual = encryptTapCode(elem['input'] as String?, mode: elem['mode'] as AlphabetModificationMode);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("TapCode.decryptTapCode:", () {
@@ -35,11 +35,11 @@ void main() {
       {'input' : '45 67', 'mode': AlphabetModificationMode.C_TO_K, 'expectedOutput' : 'U'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, mode: ${elem['mode']}', () {
         var _actual = decryptTapCode(elem['input'] as String, mode: elem['mode'] as AlphabetModificationMode);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

@@ -42,7 +42,9 @@ Future<AnimatedImageMorseOutput?> analyseImageMorseCode(Uint8List bytes, {SendPo
     List<Uint8List> imageList = out.images;
     var filteredList = <List<int>>[];
 
-    for (var i = 0; i < imageList.length; i++) filteredList = _filterImages(filteredList, i, imageList);
+    for (var i = 0; i < imageList.length; i++) {
+      filteredList = _filterImages(filteredList, i, imageList);
+    }
 
     filteredList = _searchHighSignalImage(out.frames!, filteredList);
     var outMorse = AnimatedImageMorseOutput(out, filteredList);
@@ -159,14 +161,15 @@ MorseCodeOutput? decodeMorseCode(List<int> durations, List<bool> onSignal) {
   if (signalTimes == null || timeList == null) return null;
 
   var out = '';
-  timeList.forEach((element) {
-    if (element.item1)
+  for (var element in timeList) {
+    if (element.item1) {
       out += (element.item2 > signalTimes.item1) ? '-' : '.'; //2
-    else if (element.item2 > signalTimes.item3) //5
+    } else if (element.item2 > signalTimes.item3) {
       out += String.fromCharCode(8195) + "|" + String.fromCharCode(8195);
-    else if (element.item2 > signalTimes.item2) //3
+    } else if (element.item2 > signalTimes.item2) {
       out += " ";
-  });
+    }
+  }
   
   return MorseCodeOutput(out, decodeMorse(out));
 }
@@ -181,11 +184,11 @@ List<Tuple2<bool, int>>? _buildTimeList(List<int>? durations, List<bool>? onSign
 
   timeList.add(Tuple2<bool, int>(onSignal[i], durations[i]));
   for (i = 1; i < durations.length; i++) {
-    if (onSignal[i - 1] != onSignal[i])
+    if (onSignal[i - 1] != onSignal[i]) {
       timeList.add(Tuple2<bool, int>(onSignal[i], durations[i]));
-    else
-      // same signal -> add
+    } else {
       timeList.last = Tuple2<bool, int>(onSignal[i], timeList.last.item2 + durations[i]);
+    }
   }
   return timeList;
 }
@@ -197,12 +200,13 @@ Tuple3<int, int, int>? foundSignalTimes(List<Tuple2<bool, int>>? timeList) {
   var onl = <int>[];
   var offl = <int>[];
 
-  timeList.forEach((element) {
-    if (element.item1)
+  for (var element in timeList) {
+    if (element.item1) {
       onl.add(element.item2);
-    else
+    } else {
       offl.add(element.item2);
-  });
+    }
+  }
   onl.sort();
   offl.sort();
 

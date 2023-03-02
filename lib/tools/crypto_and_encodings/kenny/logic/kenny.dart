@@ -37,10 +37,11 @@ String encryptKenny(String? input, List<String> replaceCharacters, bool caseSens
     var value = convertBase((alphabet_AZ[letter.toUpperCase()]! - 1).toString(), 10, 3)!.padLeft(3, '0');
     value = substitution(value, substitutions);
     if (caseSensitive) {
-      if (isUpperCase(letter))
+      if (isUpperCase(letter)) {
         value = value[0].toUpperCase() + value.substring(1).toLowerCase();
-      else
+      } else {
         value = value.toLowerCase();
+      }
     }
     output += value;
   });
@@ -131,9 +132,9 @@ String decryptKenny(String? input, List<String>? replaceCharacters, bool caseSen
         var outputChar = alphabet_AZIndexes[index + 1] ?? '';
         if (caseSensitive) {
           // first character in the original lower case ?
-          if (!isUpperCase(input[chunkStart]))
-            // char to lower case
+          if (!isUpperCase(input[chunkStart])) {
             outputChar = outputChar.toLowerCase();
+          }
         }
         output += outputChar;
         continue;
@@ -141,7 +142,9 @@ String decryptKenny(String? input, List<String>? replaceCharacters, bool caseSen
     }
 
     var outputTmp = substitution(chunk, substitutionsSwitched);
-    for (int i = 0; i < outputTmp.length; i++) output += input[chunkStart + i];
+    for (int i = 0; i < outputTmp.length; i++) {
+      output += input[chunkStart + i];
+    }
   }
   // restore unused chunks to the original text
   output = _restoreChunks(output + _input, input, 0, substitutionsSwitched);
@@ -162,8 +165,9 @@ String _restoreChunks(String chunk, String input, int position, Map<String, Stri
       output += input.substring(position, position + (substitutionsSwitched[chunk[i]] ?? '').length);
       // note the position in the original text
       position += (substitutionsSwitched[chunk[i]] ?? '').length;
-    } else
+    } else {
       output += chunk[i];
+    }
     // note the position in the original text
     position += chunk[i].length;
   }

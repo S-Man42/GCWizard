@@ -11,7 +11,9 @@ List<int>? _validateAndSanitizeList(List<int>? list) {
 bool _containsNegativeValue(List<int>? list) {
   if (list == null) return false;
 
-  for (int i = 0; i < list.length; i++) if (list[i] < 0) return true;
+  for (int i = 0; i < list.length; i++) {
+    if (list[i] < 0) return true;
+  }
 
   return false;
 }

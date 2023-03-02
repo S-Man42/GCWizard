@@ -19,6 +19,8 @@ import 'package:prefs/prefs.dart';
 const _PREF_VALUE_MAX_LENGTH = 300;
 
 class SettingsPreferences extends StatefulWidget {
+  const SettingsPreferences({Key? key}) : super(key: key);
+
   @override
   SettingsPreferencesState createState() => SettingsPreferencesState();
 }
@@ -28,7 +30,7 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
   String? _editKey;
   Object? _editedValue;
 
-  List<String> _expandedValues = [];
+  final List<String> _expandedValues = [];
 
   List<TextEditingController> _controllers = [];
 
@@ -89,26 +91,24 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
               suppressBottomSpace: true,
               suppressTopSpace: true,
             ),
-            Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  _buildEditSaveButton(key),
-                  if (_editKey != null && _editKey == key)
-                    Row(
-                      children: [
-                        _buildEmptyButton(key),
-                        _buildUndoButton(key),
-                        Container(width: DEFAULT_MARGIN),
-                        _buildDefaultButton(key),
-                      ],
-                    ),
-                  Container(
-                    width: 3 * DOUBLE_DEFAULT_MARGIN,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _buildEditSaveButton(key),
+                if (_editKey != null && _editKey == key)
+                  Row(
+                    children: [
+                      _buildEmptyButton(key),
+                      _buildUndoButton(key),
+                      Container(width: DEFAULT_MARGIN),
+                      _buildDefaultButton(key),
+                    ],
                   ),
-                  _buildCopyButton(key)
-                ],
-              ),
+                Container(
+                  width: 3 * DOUBLE_DEFAULT_MARGIN,
+                ),
+                _buildCopyButton(key)
+              ],
             ),
             _editKey != null && _editKey == key
                 ? _buildEditView(key)
@@ -121,23 +121,22 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
                         style: gcwMonotypeTextStyle().copyWith(fontSize: defaultFontSize() - 3),
                       ),
                       prefValue.length > _PREF_VALUE_MAX_LENGTH
-                          ? Container(
-                              child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                GCWIconButton(
-                                  icon: _expandedValues.contains(key) ? Icons.arrow_drop_up : Icons.more_horiz,
-                                  size: IconButtonSize.SMALL,
-                                  onPressed: () {
-                                    setState(() {
-                                      _expandedValues.contains(key)
-                                          ? _expandedValues.remove(key)
-                                          : _expandedValues.add(key);
-                                    });
-                                  },
-                                )
-                              ],
-                            ))
+                          ? Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            GCWIconButton(
+                              icon: _expandedValues.contains(key) ? Icons.arrow_drop_up : Icons.more_horiz,
+                              size: IconButtonSize.SMALL,
+                              onPressed: () {
+                                setState(() {
+                                  _expandedValues.contains(key)
+                                      ? _expandedValues.remove(key)
+                                      : _expandedValues.add(key);
+                                });
+                              },
+                            )
+                          ],
+                            )
                           : Container()
                     ],
                   ),
@@ -197,7 +196,7 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
       case PrefType.BOOL:
         return _editedValue != Prefs.get(key);
       case PrefType.STRINGLIST:
-        if (!(_editedValue is List<String>) && !(_editedValue is List<Object>)) return false;
+        if (_editedValue is! List<String> && _editedValue is! List<Object>) return false;
 
         var list = Prefs.get(key);
         if (list == null) return true;
@@ -275,7 +274,7 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
   Widget _buildEditView(String key) {
     switch (getPrefType(key)) {
       case PrefType.STRING:
-        if (_editedValue == null || !(_editedValue is String)) {
+        if (_editedValue == null || _editedValue is! String) {
           _controllers = [TextEditingController(text: Prefs.getString(key))];
         }
         return GCWTextField(
@@ -287,7 +286,7 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
           },
         );
       case PrefType.INT:
-        if (_editedValue == null || !(_editedValue is int)) {
+        if (_editedValue == null || _editedValue is! int) {
           _editedValue = Prefs.getInt(key);
         }
 
@@ -300,7 +299,7 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
           },
         );
       case PrefType.DOUBLE:
-        if (_editedValue == null || !(_editedValue is double)) {
+        if (_editedValue == null || _editedValue is! double) {
           _editedValue = Prefs.getDouble(key);
         }
 
@@ -313,7 +312,7 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
           },
         );
       case PrefType.BOOL:
-        if (_editedValue == null || !(_editedValue is bool)) {
+        if (_editedValue == null || _editedValue is! bool) {
           _editedValue = Prefs.getBool(key);
         }
 
@@ -326,7 +325,7 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
           },
         );
       case PrefType.STRINGLIST:
-        if (_editedValue == null || !(_editedValue is List)) {
+        if (_editedValue == null || _editedValue is! List) {
           _editedValue = List<String>.from(Prefs.getStringList(key)).map((e) => e.toString()).toList();
           _controllers = [];
         }

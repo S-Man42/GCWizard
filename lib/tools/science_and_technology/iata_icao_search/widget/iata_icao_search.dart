@@ -8,6 +8,8 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/science_and_technology/iata_icao_search/logic/iata_icao.dart';
 
 class IATAICAOSearch extends StatefulWidget {
+  const IATAICAOSearch({Key? key}) : super(key: key);
+
   @override
   IATAICAOSearchState createState() => IATAICAOSearchState();
 }

@@ -11,11 +11,11 @@ void main() {
       {'temperature' : 0.0, 'humidity' : 0.0, 'temperatureUnit' : TEMPERATURE_FAHRENHEIT, 'expectedOutput' : '-42.379'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('temperature: ${elem['temperature']}, humidity: ${elem['humidity']}, temperatureUnit: ${(elem['temperatureUnit'] as Temperature).symbol}', () {
         var _actual = calculateHeatIndex(elem['temperature'] as double, elem['humidity'] as double, elem['temperatureUnit'] as Temperature);
         expect(_actual.toStringAsFixed(3), elem['expectedOutput']);
       });
-    });
+    }
   });
 }

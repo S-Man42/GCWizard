@@ -32,7 +32,7 @@ class _GridConfiguration {
       this.rowEnumeration});
 }
 
-final _GRID_CUSTOM_KEY = 'grid_custom';
+const _GRID_CUSTOM_KEY = 'grid_custom';
 
 final _GRID_CONFIGURATIONS = {
   _GRID_CUSTOM_KEY: _GridConfiguration(
@@ -106,6 +106,8 @@ final _GRID_CONFIGURATIONS = {
 };
 
 class Grid extends StatefulWidget {
+  const Grid({Key? key}) : super(key: key);
+
   @override
   GridState createState() => GridState();
 }
@@ -297,8 +299,9 @@ class GridState extends State<Grid> {
         _currentConfigType == _GridType.BOXES
             ? Row(
                 children: [
-                  Expanded(child: GCWText(text: i18n(context, 'grid_boxenumeration') + ':'), flex: 1),
+                  Expanded(flex: 1, child: GCWText(text: i18n(context, 'grid_boxenumeration') + ':')),
                   Expanded(
+                      flex: 3,
                       child: GCWTextField(
                         controller: _boxEnumerationController,
                         onChanged: (text) {
@@ -306,19 +309,19 @@ class GridState extends State<Grid> {
                             _currentConfigBoxEnumeration = text;
                           });
                         },
-                      ),
-                      flex: 3)
+                      ))
                 ],
               )
             : Container(),
         Row(
           children: [
             Expanded(
+                flex: 1,
                 child: GCWText(
                   text: i18n(context, 'grid_columnenumeration') + ':',
-                ),
-                flex: 1),
+                )),
             Expanded(
+                flex: 3,
                 child: GCWTextField(
                   controller: _columnEnumerationController,
                   onChanged: (text) {
@@ -326,18 +329,18 @@ class GridState extends State<Grid> {
                       _currentConfigColumnEnumeration = text;
                     });
                   },
-                ),
-                flex: 3)
+                ))
           ],
         ),
         Row(
           children: [
             Expanded(
+                flex: 1,
                 child: GCWText(
                   text: i18n(context, 'grid_rowenumeration') + ':',
-                ),
-                flex: 1),
+                )),
             Expanded(
+                flex: 3,
                 child: GCWTextField(
                   controller: _rowEnumerationController,
                   onChanged: (text) {
@@ -345,8 +348,7 @@ class GridState extends State<Grid> {
                       _currentConfigRowEnumeration = text;
                     });
                   },
-                ),
-                flex: 3)
+                ))
           ],
         ),
         _currentConfigType == _GridType.BOXES ? _buildBoxEnumerationOptions() : Container()
@@ -456,6 +458,7 @@ class GridState extends State<Grid> {
       children: [
         Container(
           constraints: BoxConstraints(maxWidth: min(500, MediaQuery.of(context).size.height * 0.8)),
+          margin: const EdgeInsets.symmetric(vertical: 20.0),
           child: _GridPainter(
             tapColor: _currentColor,
             type: _currentConfigType,
@@ -468,7 +471,6 @@ class GridState extends State<Grid> {
             boxEnumerationStartDirection: _currentConfigBoxEnumerationStartDirection,
             boxEnumerationBehaviour: _currentConfigBoxEnumerationBehaviour,
           ),
-          margin: EdgeInsets.symmetric(vertical: 20.0),
         ),
         Row(children: _GridPaintColor.values.map((color) => _buildColorField(color)).toList())
       ],

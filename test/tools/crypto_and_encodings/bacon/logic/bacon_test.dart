@@ -14,12 +14,12 @@ void main() {
       {'input' : ' A_12Z%', 'expectedOutput' : 'AAAAABABBB'}
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = encodeBacon(elem['input'] as String?, false, false);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Bacon.encodeBaconBinary:", () {
@@ -34,12 +34,12 @@ void main() {
       {'input' : ' A_12Z%', 'expectedOutput' : '0000010111'}
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = encodeBacon(elem['input'] as String?, false, true);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Bacon.encodeBaconInverse:", () {
@@ -54,12 +54,12 @@ void main() {
       {'input' : ' A_12Z%', 'expectedOutput' : 'BBBBBABAAA'}
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = encodeBacon(elem['input'] as String?, true, false);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Bacon.encodeBaconInverseBinary:", () {
@@ -74,12 +74,12 @@ void main() {
       {'input' : ' A_12Z%', 'expectedOutput' : '1111101000'}
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = encodeBacon(elem['input'] as String?, true, true);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Bacon.decodeBacon:", () {
@@ -102,12 +102,12 @@ void main() {
       {'expectedOutput' : '', 'input' : 'BBBBB bbbbb BBBA'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decodeBacon(elem['input'] as String?, false, false);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Bacon.decodeBaconBinary:", () {
@@ -130,12 +130,12 @@ void main() {
       {'expectedOutput' : '', 'input' : '11111 11111 1110'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decodeBacon(elem['input'] as String?, false, true);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Bacon.decodeBaconInverse:", () {
@@ -158,12 +158,12 @@ void main() {
       {'expectedOutput' : '', 'input' : 'AAAAA AAAAA AAAB'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decodeBacon(elem['input'] as String?, true, false);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Bacon.decodeBaconInverseBinary:", () {
@@ -186,12 +186,12 @@ void main() {
       {'expectedOutput' : '', 'input' : '00000 00000 0001'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decodeBacon(elem['input'] as String?, true, true);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
 

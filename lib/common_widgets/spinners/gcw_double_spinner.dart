@@ -21,7 +21,7 @@ class GCWDoubleSpinner extends StatefulWidget {
   final FocusNode? focusNode;
   final bool suppressOverflow;
 
-  GCWDoubleSpinner(
+  const GCWDoubleSpinner(
       {Key? key,
         required this.onChanged,
         this.title,
@@ -57,10 +57,11 @@ class GCWDoubleSpinnerState extends State<GCWDoubleSpinner> {
     if (widget.numberDecimalDigits > 0) formatString += '.' + '#' * widget.numberDecimalDigits;
     _numberFormat = NumberFormat(formatString);
 
-    if (widget.controller != null)
+    if (widget.controller != null) {
       _controller = widget.controller!;
-    else
+    } else {
       _controller = TextEditingController(text: _numberFormat.format(_currentValue));
+    }
   }
 
   @override
@@ -120,7 +121,7 @@ class GCWDoubleSpinnerState extends State<GCWDoubleSpinner> {
   }
 
   Widget _buildTitle() {
-    return widget.title == null ? Container() : Expanded(child: GCWText(text: widget.title! + ':'), flex: 1);
+    return widget.title == null ? Container() : Expanded(flex: 1, child: GCWText(text: widget.title! + ':'));
   }
 
   Widget _buildTextField() {
@@ -146,20 +147,20 @@ class GCWDoubleSpinnerState extends State<GCWDoubleSpinner> {
         children: <Widget>[
           _buildTitle(),
           Expanded(
+              flex: 3,
               child: Row(
                 children: <Widget>[
                   Container(
+                    margin: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
                     child: GCWIconButton(icon: Icons.remove, onPressed: _decreaseValue),
-                    margin: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
                   ),
                   Expanded(child: _buildTextField()),
                   Container(
+                    margin: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
                     child: GCWIconButton(icon: Icons.add, onPressed: _increaseValue),
-                    margin: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
                   )
                 ],
-              ),
-              flex: 3)
+              ))
         ],
       );
     } else {
@@ -167,6 +168,7 @@ class GCWDoubleSpinnerState extends State<GCWDoubleSpinner> {
         children: <Widget>[
           _buildTitle(),
           Expanded(
+              flex: 3,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
@@ -174,8 +176,7 @@ class GCWDoubleSpinnerState extends State<GCWDoubleSpinner> {
                   _buildTextField(),
                   GCWIconButton(icon: Icons.arrow_drop_down, onPressed: _decreaseValue),
                 ],
-              ),
-              flex: 3),
+              )),
         ],
       );
     }

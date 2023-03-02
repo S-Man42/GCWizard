@@ -14,19 +14,20 @@ void main() {
         ]},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('coord1: ${elem['coord1']}, alpha: ${elem['alpha']}, coord2: ${elem['coord2']}, beta: ${elem['beta']}', () {
         var actual = intersection(elem['coord1'] as LatLng, elem['alpha'] as double, elem['coord2'] as LatLng, elem['beta'] as double, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
         var expected = elem['expectedOutput'] as List<LatLng>;
         expect(actual.length, expected.length);
         for (int i = 0; i < actual.length; i++) {
-          if (actual[i] == null)
+          if (actual[i] == null) {
             expect(null, expected[i]);
-          else
+          } else {
             expect(equalsLatLng(actual[i]!, expected[i]), true);
+          }
 
         }
       });
-    });
+    }
   });
 }

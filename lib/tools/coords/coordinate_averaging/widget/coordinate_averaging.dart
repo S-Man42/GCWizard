@@ -17,6 +17,8 @@ import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 
 class CoordinateAveraging extends StatefulWidget {
+  const CoordinateAveraging({Key? key}) : super(key: key);
+
   @override
   CoordinateAveragingState createState() => CoordinateAveragingState();
 }
@@ -24,9 +26,9 @@ class CoordinateAveraging extends StatefulWidget {
 class CoordinateAveragingState extends State<CoordinateAveraging> {
   bool? _currentLocationPermissionGranted;
   StreamSubscription<LocationData>? _locationSubscription;
-  Location _currentLocation = Location();
+  final Location _currentLocation = Location();
 
-  Length _DEFAULT_LENGTH_UNIT = defaultLengthUnit;
+  final Length _DEFAULT_LENGTH_UNIT = defaultLengthUnit;
 
   var _isMeasuring = false;
 
@@ -114,7 +116,7 @@ class CoordinateAveragingState extends State<CoordinateAveraging> {
                       .toList()
                       .reversed
                       .toList(),
-              flexValues: [1, 6, 4],
+              flexValues: const [1, 6, 4],
               copyColumn: 1,
               hasHeader: true
             ),

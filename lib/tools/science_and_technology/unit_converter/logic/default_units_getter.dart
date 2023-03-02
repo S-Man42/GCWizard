@@ -11,8 +11,9 @@ Length get defaultLengthUnit {
   }
 
   var prefLength = getUnitBySymbol<Length>(allLengths(), Prefs.getString(PREFERENCE_DEFAULT_LENGTH_UNIT));
-  if (prefLength == null)
+  if (prefLength == null) {
     return UNITCATEGORY_LENGTH.defaultUnit;
+  }
 
   return prefLength;
 }

@@ -38,12 +38,12 @@
 
 import 'package:gc_wizard/utils/collection_utils.dart';
 
-final ERROR_COW_INVALIDCODE = 'common_programming_error_invalid_opcode';
-final ERROR_COW_LOOPNOTOPEND = 'cow_error_nomatchingMOO';
-final ERROR_COW_LOOPNOTCLOSED = 'cow_error_nomatchingmoo';
-final ERROR_COW_MEMORYOUTOFBOUNDS = 'common_programming_error_memoryoutofbounds';
-final ERROR_COW_INFINITELOOP = 'common_programming_error_infinite_loop';
-final ERROR_COW_MAXITERATIONS = 'common_programming_error_maxiterations';
+const ERROR_COW_INVALIDCODE = 'common_programming_error_invalid_opcode';
+const ERROR_COW_LOOPNOTOPEND = 'cow_error_nomatchingMOO';
+const ERROR_COW_LOOPNOTCLOSED = 'cow_error_nomatchingmoo';
+const ERROR_COW_MEMORYOUTOFBOUNDS = 'common_programming_error_memoryoutofbounds';
+const ERROR_COW_INFINITELOOP = 'common_programming_error_infinite_loop';
+const ERROR_COW_MAXITERATIONS = 'common_programming_error_maxiterations';
 
 final commandsMooToInteger = {
   'moo': 0,
@@ -76,9 +76,9 @@ final mnemonicList = {
   11: 'input int [mem]'
 };
 
-final MEMORY_SIZE = 256;
-final MAX_NUMBER_OF_INSTRUCTIONS = 512;
-final MAX_ITERATIONS = 9999999;
+const MEMORY_SIZE = 256;
+const MAX_NUMBER_OF_INSTRUCTIONS = 512;
+const MAX_ITERATIONS = 9999999;
 
 class CowOutput {
   String output = '';
@@ -112,7 +112,9 @@ CowOutput interpretCow(String? code, {String? STDIN}) {
     }
   }
 
-  for (int i = 0; i < MEMORY_SIZE; i++) memoryBlocksArray[i] = 0;
+  for (int i = 0; i < MEMORY_SIZE; i++) {
+    memoryBlocksArray[i] = 0;
+  }
   currentBlockIndex = 0;
   halt = false;
   reg = 0;
@@ -133,7 +135,6 @@ CowOutput interpretCow(String? code, {String? STDIN}) {
       halt = true;
     }
   }
-  ;
 
   return CowOutput(STDOUT, error, debug);
 }
@@ -158,10 +159,11 @@ int _execCommand(
             moo_count++;
             break;
           case 7: //MOO
-            if (moo_count == 0)
+            if (moo_count == 0) {
               return instructionIndex;
-            else
+            } else {
               moo_count--;
+            }
             break;
         }
         instructionIndex--;
@@ -243,10 +245,11 @@ int _execCommand(
         while (instructionIndex < numberOfInstructions) {
           switch (instructionsArray[instructionIndex]) {
             case 0: // moo
-              if (MOO_count == 0)
+              if (MOO_count == 0) {
                 return instructionIndex + 1;
-              else
+              } else {
                 MOO_count--;
+              }
               break;
             case 7: //MOO
               MOO_count++;
@@ -267,10 +270,11 @@ int _execCommand(
     case 9: // MMM
       // If no current value in register, copy current memory block value.
       // If there is a value in the register, then paste that value into the current memory block and clear the register.
-      if (!isRegisterInitialized)
+      if (!isRegisterInitialized) {
         reg = memoryBlocksArray[currentBlockIndex];
-      else
+      } else {
         memoryBlocksArray[currentBlockIndex] = reg;
+      }
       isRegisterInitialized = !isRegisterInitialized;
       break;
 

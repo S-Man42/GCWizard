@@ -21,7 +21,7 @@ class GCWFile {
   final Uint8List bytes;
 
   GCWFile({this.path, this.name, required this.bytes, this.children}) {
-    if (this.children == null) this.children = [];
+    children ??= [];
   }
 
   utils.FileType get fileType => utils.getFileType(bytes);

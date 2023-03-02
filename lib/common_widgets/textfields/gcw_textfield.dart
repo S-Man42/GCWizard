@@ -72,7 +72,7 @@ class _GCWTextFieldState extends State<GCWTextField> {
   Widget build(BuildContext context) {
     ThemeColors colors = themeColors();
     var textField = Container(
-        margin: EdgeInsets.symmetric(vertical: DEFAULT_MARGIN),
+        margin: const EdgeInsets.symmetric(vertical: DEFAULT_MARGIN),
         child: LayoutBuilder(builder: (context, constraints) {
           return TextFormField(
             autocorrect: false,
@@ -84,18 +84,18 @@ class _GCWTextFieldState extends State<GCWTextField> {
                 filled: widget.filled,
                 prefixIcon: widget.icon,
                 isDense: true,
-                suffixIconConstraints: BoxConstraints(
+                suffixIconConstraints: const BoxConstraints(
                   minWidth: 2,
                   minHeight: 2,
                 ),
                 suffixIcon: constraints.maxWidth > 100
                     ? InkWell(
                         child: Container(
+                          padding: const EdgeInsets.only(right: 5, top: 5, bottom: 5),
                           child: Icon(
                             Icons.clear,
                             color: colors.mainFont(),
                           ),
-                          padding: EdgeInsets.only(right: 5, top: 5, bottom: 5),
                         ),
                         onTap: () {
                           if (widget.controller != null) widget.controller?.clear();
@@ -123,9 +123,7 @@ class _GCWTextFieldState extends State<GCWTextField> {
             maxLines: widget.maxLines,
             focusNode: widget.focusNode,
             autofocus: widget.autofocus ?? false,
-            style: widget.style != null
-                ? widget.style
-                : TextStyle(
+            style: widget.style ?? TextStyle(
                     fontSize: widget.fontSize ?? defaultFontSize(),
                     color: widget.filled == true ? colors.textFieldFillText() : colors.mainFont()),
             maxLengthEnforcement: MaxLengthEnforcement.enforced,
@@ -139,11 +137,11 @@ class _GCWTextFieldState extends State<GCWTextField> {
     return Row(
       children: [
         Expanded(
+            flex: 1,
             child: GCWText(
               text: widget.title + ':',
-            ),
-            flex: 1),
-        Expanded(child: textField, flex: 3)
+            )),
+        Expanded(flex: 3, child: textField)
       ],
     );
   }

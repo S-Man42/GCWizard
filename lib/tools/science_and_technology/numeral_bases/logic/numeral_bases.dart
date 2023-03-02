@@ -44,7 +44,7 @@ String? convertBase(String? input, int startBase, int destinationBase, {String? 
   }
 
   if (startBase < 0 && input.startsWith('-')) {
-    throw FormatException('Negative Values on negative bases are not defined');
+    throw const FormatException('Negative Values on negative bases are not defined');
   }
 
   input = _sanitizeInput(input, startBase, usedAlphabet);
@@ -165,7 +165,7 @@ String? _decToNegaDouble(double? num, int base, String alphabet) {
   }
 
   number = output.split('.');
-  output = _intDecToBase(BigInt.tryParse(number[0]), base, alphabet) ?? '' + '.' + number[1];
+  output = _intDecToBase(BigInt.tryParse(number[0]), base, alphabet) ?? '' '.' + number[1];
 
   return output;
 }

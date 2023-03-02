@@ -16,9 +16,9 @@ String getLineData(String analyseLine, String LUAname, String type, String obfus
   if (result.startsWith(obfuscator)) {
     result = result.replaceAll(obfuscator + '("', '').replaceAll('")', '');
     result = deobfuscateUrwigoText(result, dtable);
-  } else if (result.startsWith('WWB_multi'))
+  } else if (result.startsWith('WWB_multi')) {
     result = result.replaceAll('WWB_multiplatform_string("', '').replaceAll('")', '');
-  else {
+  } else {
     result = result.replaceAll('"', '');
   }
 
@@ -91,6 +91,8 @@ String getTextData(String analyseLine, ) {
   return normalizeWIGText(result);
 }
 
+
+// TODO Thomas unused methods, you have a lot of them, please check "Dart Analysis -> hints"
 String _getDetails(String line, String obfuscator, String dtable) {
   // line is a concatination of several obfuscated strings
   String element = '';
@@ -114,10 +116,11 @@ String _getDetails(String line, String obfuscator, String dtable) {
     if (line.isNotEmpty) {
       do {
         // get something else in between
-        if (line.substring(i).startsWith(obfuscator))
+        if (line.substring(i).startsWith(obfuscator)) {
           section = false;
-        else
+        } else {
           i = i + 1;
+        }
       } while (section && i < line.length);
       //i--;
       result = result + line.substring(0, i).replaceAll(')', '');
@@ -211,7 +214,7 @@ String deObfuscateText(String text, String obfuscatorFunction, String obfuscator
   }
 }
 
-List<String> addExceptionErrorMessage(int lineNumber, String section, var exception) {
+List<String> addExceptionErrorMessage(int lineNumber, String section, Object exception) {
   return [
     'wherigo_error_runtime',
     'wherigo_error_runtime_exception',

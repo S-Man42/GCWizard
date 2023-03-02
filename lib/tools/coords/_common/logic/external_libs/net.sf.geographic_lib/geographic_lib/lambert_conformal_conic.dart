@@ -86,7 +86,7 @@ class LambertConformalConic {
   static double tol_ = 0.1 * sqrt(eps_);
   // static double ahypover_ = real(numeric_limits<real>::digits) * log(real(numeric_limits<real>::radix)) + 2;
   static double ahypover_ = 53.0 * log(2.0) + 2.0;
-  static final int numit_ = 5;
+  static const int numit_ = 5;
 
   static double hyp(double x) {
     return _hypot(1.0, x);
@@ -275,9 +275,9 @@ class LambertConformalConic {
       double den = Dasinh(tphi2, tphi1, scphi2, scphi1) - Deatanhe(sphi2, sphi1) * Dsn(tphi2, tphi1, sphi2, sphi1);
       _n = num / den;
 
-      if (_n < 0.25)
+      if (_n < 0.25) {
         _nc = sqrt((1 - _n) * (1 + _n));
-      else {
+      } else {
         // Compute nc = cos(phi0) = sqrt((1 - n) * (1 + n)), evaluating 1 - n
         // carefully.  First write
         //
@@ -441,12 +441,13 @@ class LambertConformalConic {
    **********************************************************************/
 
   GeographicLibLambert forward(double lon0, double lat, double lon) {
-    if (lon - lon0 >= 180)
+    if (lon - lon0 >= 180) {
       lon -= lon0 + 360;
-    else if (lon - lon0 < -180)
+    } else if (lon - lon0 < -180) {
       lon -= lon0 - 360;
-    else
+    } else {
       lon -= lon0;
+    }
 
     lat *= _sign;
     // From Snyder, we have
@@ -574,12 +575,13 @@ class LambertConformalConic {
     var lon = lam / _GeoMath.degree();
 
     // Avoid losing a bit of accuracy in lon (assuming lon0 is an integer)
-    if (lon + lon0 >= 180)
+    if (lon + lon0 >= 180) {
       lon += lon0 - 360;
-    else if (lon + lon0 < -180)
+    } else if (lon + lon0 < -180) {
       lon += lon0 + 360;
-    else
+    } else {
       lon += lon0;
+    }
 
     var k = _k0 *
         (scbet / _scbet0) /

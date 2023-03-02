@@ -28,6 +28,8 @@ import 'package:gc_wizard/utils/json_utils.dart';
 import 'package:prefs/prefs.dart';
 
 class AlphabetValues extends StatefulWidget {
+  const AlphabetValues({Key? key}) : super(key: key);
+
   @override
   AlphabetValuesState createState() => AlphabetValuesState();
 }
@@ -363,20 +365,22 @@ class AlphabetValuesState extends State<AlphabetValues> {
         Row(
           children: [
             Expanded(
+              flex: isCustomAlphabet ? 2 : 1,
               child: isCustomAlphabet
                   ? Container(
+                      padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
                       child: GCWButton(
                           text: i18n(context, 'alphabetvalues_edit_mode_customize_deletealphabet'),
                           onPressed: () {
                             _removeAlphabet();
                           }),
-                      padding: EdgeInsets.only(right: DEFAULT_MARGIN),
                     )
                   : Container(),
-              flex: isCustomAlphabet ? 2 : 1,
             ),
             Expanded(
+                flex: 2,
                 child: Container(
+                  padding: EdgeInsets.only(left: isCustomAlphabet ? DEFAULT_MARGIN : 0),
                   child: GCWButton(
                     text: i18n(context, 'alphabetvalues_edit_mode_customize_savealphabet'),
                     onPressed: () {
@@ -385,13 +389,11 @@ class AlphabetValuesState extends State<AlphabetValues> {
                       });
                     },
                   ),
-                  padding: EdgeInsets.only(left: isCustomAlphabet ? DEFAULT_MARGIN : 0),
-                ),
-                flex: 2),
-            isCustomAlphabet ? Container() : Expanded(child: Container(), flex: 1)
+                )),
+            isCustomAlphabet ? Container() : Expanded(flex: 1, child: Container())
           ],
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         GCWKeyValueEditor(
             keyHintText: i18n(context, 'alphabetvalues_edit_mode_customize_letter'),
             valueHintText: i18n(context, 'alphabetvalues_edit_mode_customize_value'),
@@ -404,7 +406,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
             keyValueMap: _currentCustomizedAlphabet,
             onRemoveEntry: _removeEntry,
             editAllowed: false),
-        GCWDivider()
+        const GCWDivider()
       ],
     );
   }
@@ -433,7 +435,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
             });
           },
         ),
-        GCWDivider()
+        const GCWDivider()
       ],
     );
   }
@@ -460,7 +462,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
     showGCWDialog(
         context,
         i18n(context, 'alphabetvalues_edit_mode_customize_savealphabet'),
-        Container(
+        SizedBox(
           width: 300,
           height: 100,
           child: Column(
@@ -482,8 +484,9 @@ class AlphabetValuesState extends State<AlphabetValues> {
             text: i18n(context, 'alphabetvalues_edit_mode_customize_savealphabet_save'),
             onPressed: () {
               var name = _currentCustomAlphabetName;
-              if (name.isEmpty)
+              if (name.isEmpty) {
                 name = i18n(context, 'alphabetvalues_edit_mode_customize_savealphabet_customname');
+              }
 
               if (_currentCustomizedAlphabet == null) return;
               var entries = _currentCustomizedAlphabet!.entries.toList();

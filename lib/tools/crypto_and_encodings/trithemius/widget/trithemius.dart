@@ -6,6 +6,8 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/trithemius/logic/trithemius.dart';
 
 class Trithemius extends StatefulWidget {
+  const Trithemius({Key? key}) : super(key: key);
+
   @override
   TrithemiusState createState() => TrithemiusState();
 }

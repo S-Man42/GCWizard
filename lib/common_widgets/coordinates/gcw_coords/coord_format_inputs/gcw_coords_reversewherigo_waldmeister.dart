@@ -15,15 +15,15 @@ class _GCWCoordsReverseWherigoWaldmeisterState extends State<_GCWCoordsReverseWh
   late TextEditingController _ControllerB;
   late TextEditingController _ControllerC;
 
-  var _FocusNodeA = FocusNode();
-  var _FocusNodeB = FocusNode();
-  var _FocusNodeC = FocusNode();
+  final _FocusNodeA = FocusNode();
+  final _FocusNodeB = FocusNode();
+  final _FocusNodeC = FocusNode();
 
   var _currentA = 0;
   var _currentB = 0;
   var _currentC = 0;
 
-  var _integerInputFormatter = GCWIntegerTextInputFormatter(min: 0, max: 999999);
+  final _integerInputFormatter = GCWIntegerTextInputFormatter(min: 0, max: 999999);
 
   @override
   void initState() {

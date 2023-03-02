@@ -18,7 +18,7 @@ import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/w
 class SegmentDisplay extends StatefulWidget {
   final SegmentDisplayType type;
 
-  SegmentDisplay({Key? key, required this.type}) : super(key: key);
+  const SegmentDisplay({Key? key, required this.type}) : super(key: key);
 
   @override
   SegmentDisplayState createState() => SegmentDisplayState();
@@ -103,7 +103,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
     NSegmentDisplay displayWidget;
     var currentDisplay = buildSegmentMap(_currentDisplays);
 
-    var onChanged = (Map<String, bool> d) {
+    onChanged(Map<String, bool> d) {
       setState(() {
         var newSegments = <String>[];
         d.forEach((key, value) {
@@ -118,7 +118,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
 
         _currentDisplays.replaceLastSegment(newSegments, trailingDisplay: containsDot ? 'dp' : null);
       });
-    };
+    }
 
     switch (widget.type) {
       case SegmentDisplayType.SEVEN:
@@ -147,7 +147,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
       children: <Widget>[
         Container(
           width: 180,
-          padding: EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
+          padding: const EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
           child: Row(
             children: <Widget>[
               Expanded(
@@ -213,7 +213,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
                 readOnly: true,
               );
             default:
-              return SevenSegmentDisplay(segments: {});
+              return SevenSegmentDisplay(segments: const {});
           }
         },
         segments: segments,
@@ -223,10 +223,11 @@ class SegmentDisplayState extends State<SegmentDisplay> {
   Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       Segments segments;
-      if (_currentEncryptMode == GCWSwitchPosition.left)
+      if (_currentEncryptMode == GCWSwitchPosition.left) {
         segments = encodeSegment(_currentEncodeInput, widget.type);
-      else
+      } else {
         segments = _currentDisplays;
+      }
 
       var output = segments.displays.map((character) {
         return character.join();

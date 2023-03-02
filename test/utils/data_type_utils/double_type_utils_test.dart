@@ -15,12 +15,12 @@ void main() {
       {'a' : 52.123, 'b': 52.133, 'tolerance': 1e-2, 'expectedOutput' : false},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('a: ${elem['a']}, b: ${elem['b']}, tolerance: ${elem['tolerance']}', () {
         var _actual = doubleEquals(elem['a'] as double, elem['b'] as double, tolerance: elem['tolerance'] as double);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("DoubleTypeUtils.fractionPartAsInteger:", () {
@@ -35,11 +35,11 @@ void main() {
       {'input' : 12.345, 'expectedOutput' : 345},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = fractionPartAsInteger(elem['input'] as double);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

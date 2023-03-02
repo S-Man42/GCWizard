@@ -41,16 +41,18 @@ const _binaryLength = 5;
 
 String? _getCharacterByBinary(String binary) {
   var characterSet = _alphabet.firstWhereOrNull((entry) => entry['binary'] == binary);
-  if (characterSet == null)
+  if (characterSet == null) {
     return null;
+  }
 
   return characterSet['character'];
 }
 
 String? _getBinaryByCharacter(String character) {
   var characterSet = _alphabet.firstWhereOrNull((entry) => entry['character'] == character);
-  if (characterSet == null)
+  if (characterSet == null) {
     return null;
+  }
 
   return characterSet['binary'];
 }

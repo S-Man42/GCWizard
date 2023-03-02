@@ -8,8 +8,8 @@ class Angle extends Unit {
 
   Angle({required String name, required String symbol, bool isReference = false, required double inDegree})
       : super(name, symbol, isReference, (e) => e * inDegree, (e) => e / inDegree) {
-    toDegree = this.toReference;
-    fromDegree = this.fromReference;
+    toDegree = toReference;
+    fromDegree = fromReference;
   }
 }
 

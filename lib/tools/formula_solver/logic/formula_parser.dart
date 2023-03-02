@@ -30,7 +30,7 @@ const SAFED_RECURSIVE_FORMULA_MARKER = '\x02';
 const _PHI = 1.6180339887498948482045868343656381177;
 
 class FormulaParser {
-  ContextModel _context = ContextModel();
+  final ContextModel _context = ContextModel();
   Parser parser = Parser();
 
   bool unlimitedExpanded = false;
@@ -128,12 +128,10 @@ class FormulaParser {
     '*': '×•',
   };
 
-  FormulaParser({bool unlimitedExpanded = false}) {
-    this.unlimitedExpanded = unlimitedExpanded;
-
-    CONSTANTS.entries.forEach((constant) {
+  FormulaParser({this.unlimitedExpanded = false}) {
+    for (var constant in CONSTANTS.entries) {
       _context.bindVariableName(constant.key, Number(constant.value));
-    });
+    }
 
     _CUSTOM_FUNCTIONS.forEach((name, handler) {
       parser.addFunction(name, handler);
@@ -218,10 +216,10 @@ class FormulaParser {
     var fixedValues = <String, String>{};
     var textValues = <String, String>{};
     var interpolatedValues = <String, String>{};
-    preparedValues.forEach((value) {
+    for (var value in preparedValues) {
       if (expandValues == false || value.type == null) {
         fixedValues.putIfAbsent(value.key, () => value.value);
-        return;
+        continue;
       }
 
       switch (value.type) {
@@ -234,9 +232,9 @@ class FormulaParser {
         case FormulaValueType.TEXT:
           textValues.putIfAbsent(value.key, () => value.value);
           break;
-        default: return;
+        default: continue;
       }
-    });
+    }
 
     //replace formula replacements
     var safedFormulaReplacements = _safeFormulaReplacements(formula);
@@ -334,17 +332,17 @@ class FormulaParser {
       var regex = RegExp('(' + name + r'\s*\(\s*([^\(\)]+)\s*\))');
       var matches = regex.allMatches(out);
 
-      matches.forEach((match) {
+      for (var match in matches) {
         var foundFunction = match.group(1);
-        if (foundFunction == null) return;
+        if (foundFunction == null) continue;
 
         var argument = match.group(2);
-        if (argument == null) return;
+        if (argument == null) continue;
 
         var result = function(argument);
 
         out = out.replaceFirst(foundFunction, result.toString());
-      });
+      }
     });
 
     return out;
@@ -366,7 +364,7 @@ class FormulaParser {
 
   List<FormulaValue> _prepareValues(List<FormulaValue> values) {
     List<FormulaValue> val = [];
-    values.forEach((element) {
+    for (var element in values) {
       var key = element.key.trim();
       var value = element.value;
 
@@ -387,7 +385,7 @@ class FormulaParser {
       }
 
       val.add(FormulaValue(key, value, type: element.type));
-    });
+    }
     return val;
   }
 
@@ -396,7 +394,7 @@ class FormulaParser {
         FormulaState.STATE_SINGLE_ERROR, [FormulaSolverSingleResult(FormulaState.STATE_SINGLE_ERROR, formula)]);
   }
 
-  String _MATCHED_VARIABLES_NO_KEY = '\x00';
+  final String _MATCHED_VARIABLES_NO_KEY = '\x00';
   FormulaSolverOutput parse(String formula, List<FormulaValue> values, {bool expandValues = true}) {
     formula = formula.trim();
 
@@ -416,9 +414,9 @@ class FormulaParser {
 
     var overallState = FormulaState.STATE_SINGLE_OK;
     try {
-      matches.forEach((match) {
+      for (var match in matches) {
         var matchString = match.group(0);
-        if (matchString == null) return;
+        if (matchString == null) continue;
 
         ////////// MAGIC
         var result = _parseFormula(matchString, values, expandValues);
@@ -466,7 +464,7 @@ class FormulaParser {
             break;
           case FormulaState.STATE_EXPANDED_OK:
           case FormulaState.STATE_EXPANDED_ERROR:
-            (result as FormulaSolverMultiResult).results.forEach((FormulaSolverSingleResult result) {
+            for (var result in (result as FormulaSolverMultiResult).results) {
               String formatted;
               if (result.state == FormulaState.STATE_SINGLE_OK) {
                 formatted = _formatOutput(result.result);
@@ -488,31 +486,32 @@ class FormulaParser {
               // SINGLE_OK can be overwritten by EXPANDED_OK
               // *_OK can overwritten by *_ERROR
               if (state == FormulaState.STATE_EXPANDED_OK) {
-                if (overallState == FormulaState.STATE_SINGLE_ERROR)
+                if (overallState == FormulaState.STATE_SINGLE_ERROR) {
                   overallState = FormulaState.STATE_EXPANDED_ERROR;
-                else if (overallState != FormulaState.STATE_EXPANDED_ERROR)
+                } else if (overallState != FormulaState.STATE_EXPANDED_ERROR) {
                   overallState = result.state == FormulaState.STATE_SINGLE_OK
                       ? FormulaState.STATE_EXPANDED_OK
                       : FormulaState.STATE_EXPANDED_ERROR;
+                }
               } else {
                 overallState = FormulaState.STATE_EXPANDED_ERROR;
               }
-            });
+            }
 
             break;
         }
-      });
+      }
     } catch (e) {}
 
     // Here the magic happens, which was decribed above
     // Variable sets with independent matchStrings will be substituted dependently here
     List<FormulaSolverSingleResult> output = [];
-    matchedVariables.values.forEach((Map<String, FormulaSolverSingleResult> matchedResults) {
+    for (var matchedResults in matchedVariables.values) {
       Map<String, String> substitutions = {};
       Map<String, String>? variables;
       var state = FormulaState.STATE_SINGLE_OK;
       matchedResults.forEach((String matchedString, FormulaSolverSingleResult result) {
-        if (variables == null) variables = result.variables;
+        variables ??= result.variables;
         if (result.state == FormulaState.STATE_SINGLE_ERROR) state = FormulaState.STATE_SINGLE_ERROR;
         substitutions.putIfAbsent(matchedString, () => result .result);
       });
@@ -530,7 +529,7 @@ class FormulaParser {
         var out = FormulaSolverSingleResult(state, substitution(formula, substitutions), variables: variables);
         output.add(out);
       }
-    });
+    }
 
     // if EXPANDED state althought only one result -> make it to SINGLE state
     if (output.length <= 1) {

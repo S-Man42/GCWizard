@@ -74,7 +74,7 @@ class GCWTextExportState extends State<GCWTextExport> {
   Widget build(BuildContext context) {
     if (_currentMode == TextExportMode.QR && _qrImageData == null) _buildQRCode();
 
-    return Container(
+    return SizedBox(
         width: 300,
         height: 360,
         child: Column(

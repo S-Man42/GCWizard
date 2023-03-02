@@ -58,9 +58,9 @@ class PhoneModel {
 
   PhoneModel(this.name, String defaultCaseStateModelRaw, Map<PhoneInputLanguage, String>? specificCaseStateModelsRaw,
       this.characterMap, this.languages) {
-    this.defaultCaseStateModel = _initializeCaseStateModel(defaultCaseStateModelRaw);
+    defaultCaseStateModel = _initializeCaseStateModel(defaultCaseStateModelRaw);
     if (specificCaseStateModelsRaw != null && specificCaseStateModelsRaw.isNotEmpty) {
-      this.specificCaseStateModels = specificCaseStateModelsRaw.map((key, value) {
+      specificCaseStateModels = specificCaseStateModelsRaw.map((key, value) {
         return MapEntry(key, _initializeCaseStateModel(value));
       });
     }
@@ -68,7 +68,7 @@ class PhoneModel {
 
   @override
   String toString() {
-    return this.name;
+    return name;
   }
 }
 

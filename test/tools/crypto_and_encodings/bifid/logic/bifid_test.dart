@@ -54,12 +54,12 @@ void main() {
       {'input' : 'THE QUICK BROWN FOX JUMPS OVER A LAZY DOGS BACK', 'key': '123456', 'mode': PolybiosMode.CUSTOM, 'alphabet': 'BGWKZ0QPNDS2IOAXE4FCLUM6THYVR813579J', 'alphabetMode': AlphabetModificationMode.J_TO_I, 'expectedOutput' : 'ROLFZIDA7CNYYLZNGWFGTFDZNID7HHMYAYCSWD'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, key: ${elem['key']}, mode: ${elem['mode']}, alphabet: ${elem['alphabet']}, alphabetMode: ${elem['alphabetMode']}', () {
         BifidOutput _actual = encryptBifid(elem['input'] as String?, elem['key'] as String?, mode: elem['mode'] as PolybiosMode, alphabet: elem['alphabet'] as String?, alphabetMode: elem['alphabetMode'] as AlphabetModificationMode);
                     expect(_actual.output, elem['expectedOutput']);
         });
-    });
+    }
   });
 
   group("Bifid.decryptBifid:", () {
@@ -98,11 +98,11 @@ void main() {
 
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, key: ${elem['key']}, mode: ${elem['mode']}, alphabet: ${elem['alphabet']}, alphabetMode: ${elem['alphabetMode']}', () {
         BifidOutput _actual = decryptBifid(elem['input'] as String?, elem['key'] as String?, mode: elem['mode'] as PolybiosMode, alphabet: elem['alphabet'] as String?, alphabetMode: elem['alphabetMode'] as AlphabetModificationMode);
         expect(_actual.output, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

@@ -61,7 +61,7 @@ class HexCode extends GCWBaseColor {
     return null;
   }
 
-  HexCode(String hexCode) {
+  HexCode(this.hexCode) {
     hexCode = hexCode.toUpperCase().replaceAll(RegExp(r'[^0-9A-F]'), '');
 
     if (hexCode.length == 3) {
@@ -71,8 +71,6 @@ class HexCode extends GCWBaseColor {
 
     if (hexCode.length < 6) hexCode = hexCode.padRight(6, '0');
     if (hexCode.length > 6) hexCode = hexCode.substring(0, 6);
-
-    this.hexCode = hexCode;
   }
 
   @override
@@ -104,11 +102,11 @@ List<RGB> findNearestRGBs(GCWBaseColor fromRGB, List<RGB> toRGBs, {int distance 
   var out = <RGB>[];
   var _fromRGB = fromRGB.toRGB();
 
-  toRGBs.forEach((toRGB) {
+  for (var toRGB in toRGBs) {
     var actualDistance = _rgbDistance(_fromRGB, toRGB);
 
     if (actualDistance <= distance) out.add(toRGB);
-  });
+  }
 
   out.sort((a, b) {
     var aDistance = _rgbDistance(a, _fromRGB);

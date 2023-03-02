@@ -26,7 +26,7 @@ class SubstitutionState extends State<Substitution> {
   var _currentCaseSensitive = false;
 
   var _currentIdCount = 0;
-  var _currentSubstitutions = <int, Map<String, String>>{};
+  final _currentSubstitutions = <int, Map<String, String>>{};
 
   String _output = '';
 
@@ -35,9 +35,9 @@ class SubstitutionState extends State<Substitution> {
     super.initState();
 
     if (widget.substitutions != null) {
-      widget.substitutions!.entries.forEach((element) {
+      for (var element in widget.substitutions!.entries) {
         _currentSubstitutions.putIfAbsent(++_currentIdCount, () => {element.key: element.value});
-      });
+      }
     }
 
     if (widget.input != null) {
@@ -56,8 +56,9 @@ class SubstitutionState extends State<Substitution> {
   }
 
   void _addEntry(String currentFromInput, String currentToInput, FormulaValueType type, BuildContext context) {
-    if (currentFromInput.isNotEmpty)
+    if (currentFromInput.isNotEmpty) {
       _currentSubstitutions.putIfAbsent(++_currentIdCount, () => {currentFromInput: currentToInput});
+    }
     _calculateOutput();
   }
 
@@ -119,9 +120,9 @@ class SubstitutionState extends State<Substitution> {
 
   void _calculateOutput() {
     var _substitutions = <String, String>{};
-    _currentSubstitutions.entries.forEach((entry) {
+    for (var entry in _currentSubstitutions.entries) {
       _substitutions.putIfAbsent(entry.value.keys.first, () => entry.value.values.first);
-    });
+    }
 
     if (_currentFromInput.isNotEmpty) {
       _substitutions.putIfAbsent(_currentFromInput, () => _currentToInput);

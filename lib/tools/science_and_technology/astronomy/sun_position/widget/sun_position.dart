@@ -13,6 +13,8 @@ import 'package:gc_wizard/utils/datetime_utils.dart';
 import 'package:intl/intl.dart';
 
 class SunPosition extends StatefulWidget {
+  const SunPosition({Key? key}) : super(key: key);
+
   @override
   SunPositionState createState() => SunPositionState();
 }
@@ -38,7 +40,7 @@ class SunPositionState extends State<SunPosition> {
           text: i18n(context, 'astronomy_postion_datetime'),
         ),
         GCWDateTimePicker(
-          config: {DateTimePickerConfig.DATE, DateTimePickerConfig.TIME, DateTimePickerConfig.TIMEZONES},
+          config: const {DateTimePickerConfig.DATE, DateTimePickerConfig.TIME, DateTimePickerConfig.TIMEZONES},
           onChanged: (datetime) {
             setState(() {
               _currentDateTime = datetime;

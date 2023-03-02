@@ -81,8 +81,9 @@ DEC? parseDEC(String? input, {bool wholeString = false}) {
 
     if (matches.group(1) == null
         || matches.group(2) == null
-    )
+    ) {
       return null;
+    }
 
     var latSign = latLngPartSign(matches.group(1));
     double? _latDegrees = 0.0;
@@ -91,15 +92,17 @@ DEC? parseDEC(String? input, {bool wholeString = false}) {
     } else {
       _latDegrees = double.tryParse('${matches.group(2)}.0');
     }
-    if (_latDegrees == null)
+    if (_latDegrees == null) {
       return null;
+    }
 
     var latDegrees = latSign * _latDegrees;
 
     if (matches.group(4) == null
         || matches.group(5) == null
-    )
+    ) {
       return null;
+    }
 
     var lonSign = latLngPartSign(matches.group(4));
     double? _lonDegrees = 0.0;
@@ -108,8 +111,9 @@ DEC? parseDEC(String? input, {bool wholeString = false}) {
     } else {
       _lonDegrees = double.tryParse('${matches.group(5)}.0');
     }
-    if (_lonDegrees == null)
+    if (_lonDegrees == null) {
       return null;
+    }
 
     var lonDegrees = lonSign * _lonDegrees;
 
@@ -126,8 +130,9 @@ DEC? _parseDECTrailingSigns(String text) {
 
     if (matches.group(3) == null
         || matches.group(1) == null
-    )
+    ) {
       return null;
+    }
 
     var latSign = latLngPartSign(matches.group(3));
     double? _latDegrees = 0.0;
@@ -136,15 +141,17 @@ DEC? _parseDECTrailingSigns(String text) {
     } else {
       _latDegrees = double.tryParse('${matches.group(1)}.0');
     }
-    if (_latDegrees == null)
+    if (_latDegrees == null) {
       return null;
+    }
 
     var latDegrees = latSign * _latDegrees;
 
     if (matches.group(6) == null
         || matches.group(4) == null
-    )
+    ) {
       return null;
+    }
 
     var lonSign = latLngPartSign(matches.group(6));
     double? _lonDegrees = 0.0;
@@ -153,8 +160,9 @@ DEC? _parseDECTrailingSigns(String text) {
     } else {
       _lonDegrees = double.tryParse('${matches.group(4)}.0');
     }
-    if (_lonDegrees == null)
+    if (_lonDegrees == null) {
       return null;
+    }
 
     var lonDegrees = lonSign * _lonDegrees;
 
@@ -164,7 +172,7 @@ DEC? _parseDECTrailingSigns(String text) {
   return null;
 }
 
-final PATTERN_DEC_TRAILINGSIGN = '^\\s*?'
+const PATTERN_DEC_TRAILINGSIGN = '^\\s*?'
     '(\\d{1,3})\\s*?' //lat degrees
     '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?' //lat millidegrees
     '[\\s°]?\\s*?' //lat degrees symbol
@@ -178,7 +186,7 @@ final PATTERN_DEC_TRAILINGSIGN = '^\\s*?'
     '([EWO]$LETTER*?|[\\+\\-])' //lon sign;
     '\\s*?';
 
-final PATTERN_DEC = '^\\s*?'
+const PATTERN_DEC = '^\\s*?'
     '([NS]$LETTER*?|[\\+\\-])?\\s*?' //lat sign
     '(\\d{1,3})\\s*?' //lat degrees
     '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?' //lat millidegrees

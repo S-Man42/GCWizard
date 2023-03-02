@@ -9,7 +9,7 @@ import 'package:gc_wizard/tools/science_and_technology/countries/logic/countries
 class Countries extends StatefulWidget {
   final List<CountryProperties> fields;
 
-  Countries({Key? key, required this.fields}) : super(key: key);
+  const Countries({Key? key, required this.fields}) : super(key: key);
 
   @override
   CountriesState createState() => CountriesState();
@@ -18,7 +18,7 @@ class Countries extends StatefulWidget {
 class CountriesState extends State<Countries> {
   var _currentSwitchSort = GCWSwitchPosition.left;
   var _currentSort = 0;
-  List<String> _currentSortList = ['common_countries'];
+  final List<String> _currentSortList = ['common_countries'];
 
   @override
   void initState() {

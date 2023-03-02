@@ -35,14 +35,15 @@ CoordinateFormat get defaultCoordinateFormat {
   var formatStr = Prefs.getString(PREFERENCE_COORD_DEFAULT_FORMAT);
 
   CoordinateFormatKey format;
-  if(formatStr.isEmpty)
+  if(formatStr.isEmpty) {
     format = _fallbackDefaultCoordFormatKey;
-  else {
+  } else {
     var _format = coordinateFormatMetadataByPersistenceKey(formatStr);
-    if (_format == null)
+    if (_format == null) {
       format = _fallbackDefaultCoordFormatKey;
-    else
+    } else {
       format = _format.type;
+    }
   }
 
   return CoordinateFormat(format, defaultCoordinateFormatSubtypeForFormat(format));
@@ -58,15 +59,17 @@ String get defaultCoordinateFormatPersistenceKey {
 
 String? get defaultCoordinateFormatSubtypePersistenceKey {
   var defaultSubtype = defaultCoordinateFormat.subtype;
-  if (defaultSubtype == null)
+  if (defaultSubtype == null) {
     return null;
+  }
   
   return coordinateFormatMetadataByKey(defaultSubtype).persistenceKey;
 }
 
 CoordinateFormatKey? defaultCoordinateFormatSubtypeForFormat(CoordinateFormatKey format) {
-  if (!(isCoordinateFormatWithSubtype(format)))
+  if (!(isCoordinateFormatWithSubtype(format))) {
     return null;
+  }
 
   CoordinateFormatKey subtype;
 
@@ -106,25 +109,29 @@ Ellipsoid get defaultEllipsoid {
   var _WGS84Ells = getEllipsoidByName(ELLIPSOID_NAME_WGS84)!;
 
   String type = Prefs.getString(PREFERENCE_COORD_DEFAULT_ELLIPSOID_TYPE);
-  if (type.isEmpty)
+  if (type.isEmpty) {
     type = EllipsoidType.STANDARD.toString();
+  }
 
   if (type == EllipsoidType.STANDARD.toString()) {
     var ells = getEllipsoidByName(Prefs.getString(PREFERENCE_COORD_DEFAULT_ELLIPSOID_NAME));
-    if (ells == null)
+    if (ells == null) {
       return _WGS84Ells;
+    }
 
     return ells;
   }
 
   else if (type == EllipsoidType.USER_DEFINED.toString()) {
     double a = Prefs.getDouble(PREFERENCE_COORD_DEFAULT_ELLIPSOID_A);
-    if (a == 0)
+    if (a == 0) {
       a = _WGS84Ells.a;
+    }
 
     double invf = Prefs.getDouble(PREFERENCE_COORD_DEFAULT_ELLIPSOID_INVF);
-    if (invf == 0)
+    if (invf == 0) {
       invf = _WGS84Ells.invf;
+    }
 
     return Ellipsoid(null, a, invf, type: EllipsoidType.USER_DEFINED);
   }

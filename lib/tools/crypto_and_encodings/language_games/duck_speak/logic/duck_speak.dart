@@ -25,11 +25,11 @@ String encodeDuckSpeak(String? text) {
   if (text == null || text.isEmpty) return '';
 
   var out = <String>[];
-  text.codeUnits.forEach((ascii) {
+  for (var ascii in text.codeUnits) {
     var binary = ascii.toRadixString(2).padLeft(8, '0');
     out.add(halfByteToDuck[convertBase(binary.substring(0, 4), 2, 10)] ?? '');
     out.add(halfByteToDuck[convertBase(binary.substring(4, 8), 2, 10)] ?? '');
-  });
+  }
   return out.join(' ');
 }
 
@@ -50,11 +50,12 @@ String decodeDuckSpeak(String? text) {
     binary.add(decimal[i].toRadixString(2) + decimal[i + 1].toRadixString(2).padLeft(4, '0'));
   }
   var out = '';
-  binary.forEach((binaryVal) {
+  for (var binaryVal in binary) {
     var ascii = int.tryParse(convertBase(binaryVal, 2, 10) ?? '');
-    if (ascii != null)
+    if (ascii != null) {
       out += (String.fromCharCode(ascii));
-  });
+    }
+  }
   return out.replaceAll(RegExp(r'[\x00-\x0F]'), '');
 }
 

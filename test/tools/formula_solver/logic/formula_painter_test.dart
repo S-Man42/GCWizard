@@ -312,11 +312,11 @@ void main() {
 
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('formula: ${elem['formula']}, values: ${elem['values']}', () {
         var _actual = formulaPainter.paintFormula(elem['formula'] as String, elem['values'] as Map<String, String>, elem['formulaId'] as int, true);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

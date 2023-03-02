@@ -9,7 +9,6 @@ import 'package:gc_wizard/common_widgets/gcw_popup_menu.dart';
 import 'package:gc_wizard/common_widgets/gcw_soundplayer.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_textviewer.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/image_viewers/gcw_imageview.dart';
 import 'package:gc_wizard/tools/images_and_files/hex_viewer/widget/hex_viewer.dart';
 import 'package:gc_wizard/tools/images_and_files/hidden_data/logic/hidden_data.dart';
@@ -61,8 +60,9 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
 
           fileName = '$prefix: ' + file.fileType.toString().split('.').last;
         }
-      } else
+      } else {
         fileName = '';
+      }
 
       var parentsString = parents.join(' → ');
       var newParents = List<String>.from(parents);
@@ -73,11 +73,13 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
           Row(
             children: [
               Container(
-                  child: actionButton,
                   width: 42,
-                  padding: EdgeInsets.only(right: 10)),
+                  padding: const EdgeInsets.only(right: 10),
+                  child: actionButton),
               Expanded(
                 child: Container(
+                    color: themeColors().accent(),
+                    padding: const EdgeInsets.all(DOUBLE_DEFAULT_MARGIN),
                     child: Column(
                       children: [
                         if (parents.isNotEmpty)
@@ -100,28 +102,26 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
                           ],
                         )
                       ],
-                    ),
-                    color: themeColors().accent(),
-                    padding: EdgeInsets.all(DOUBLE_DEFAULT_MARGIN)),
+                    )),
               ),
             ],
           ),
           if (file.fileClass == FileClass.IMAGE)
             Container(
+                margin: const EdgeInsets.only(left: 42),
                 child: GCWImageView(
                   imageData: GCWImageViewData(file),
                   suppressedButtons: widget.suppressedButtons,
-                ),
-                margin: EdgeInsets.only(left: 42)),
+                )),
           if (file.fileClass == FileClass.TEXT)
-            Container(child: GCWText(style: gcwMonotypeTextStyle(), text: text), margin: EdgeInsets.only(left: 42)),
+            Container(margin: const EdgeInsets.only(left: 42), child: GCWText(style: gcwMonotypeTextStyle(), text: text)),
           if (file.fileClass == FileClass.SOUND)
-            Container(child: GCWSoundPlayer(file: file), margin: EdgeInsets.only(left: 42)),
+            Container(margin: const EdgeInsets.only(left: 42), child: GCWSoundPlayer(file: file)),
           if (hasChildren)
             Container(
               child: _buildFileTree(file.children ?? [], newParents, level: level + 1),
             ),
-          if (level == 0 && isFirst) GCWDivider(),
+          if (level == 0 && isFirst) const GCWDivider(),
           if (!widget.suppressHiddenDataMessage)
             if (files.length <= 1 && level == 0 && !hasChildren)
               GCWText(text: i18n(context, 'hiddendata_nohiddendatafound'))
@@ -156,10 +156,6 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
         GCWPopupMenuItem(
           child: iconedGCWPopupMenuItem(context, Icons.text_snippet_outlined, 'textviewer_openintextviewer'),
           action: (index) => setState(() {
-            if (file.bytes == null) {
-              showToast(i18n(context, 'hiddendata_datanotreadable'));
-              return;
-            }
             openInTextViewer(context, String.fromCharCodes(file.bytes));
           }),
         ),

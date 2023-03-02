@@ -209,31 +209,31 @@ class Geodesic {
   /*
    * The order of the expansions used by Geodesic.
    **********************************************************************/
-  static final int GEOGRAPHICLIB_GEODESIC_ORDER = 6;
+  static const int GEOGRAPHICLIB_GEODESIC_ORDER = 6;
 
-  static final int nA1_ = GEOGRAPHICLIB_GEODESIC_ORDER;
-  static final int nC1_ = GEOGRAPHICLIB_GEODESIC_ORDER;
-  static final int nC1p_ = GEOGRAPHICLIB_GEODESIC_ORDER;
-  static final int nA2_ = GEOGRAPHICLIB_GEODESIC_ORDER;
-  static final int nC2_ = GEOGRAPHICLIB_GEODESIC_ORDER;
-  static final int nA3_ = GEOGRAPHICLIB_GEODESIC_ORDER;
-  static final int nA3x_ = nA3_;
-  static final int nC3_ = GEOGRAPHICLIB_GEODESIC_ORDER;
-  static final int nC3x_ = (nC3_ * (nC3_ - 1)) ~/ 2;
-  static final int nC4_ = GEOGRAPHICLIB_GEODESIC_ORDER;
-  static final int nC4x_ = (nC4_ * (nC4_ + 1)) ~/ 2;
-  static final int _maxit1_ = 20;
-  static final int _maxit2_ = _maxit1_ + _GeoMath.digits + 10;
+  static const int nA1_ = GEOGRAPHICLIB_GEODESIC_ORDER;
+  static const int nC1_ = GEOGRAPHICLIB_GEODESIC_ORDER;
+  static const int nC1p_ = GEOGRAPHICLIB_GEODESIC_ORDER;
+  static const int nA2_ = GEOGRAPHICLIB_GEODESIC_ORDER;
+  static const int nC2_ = GEOGRAPHICLIB_GEODESIC_ORDER;
+  static const int nA3_ = GEOGRAPHICLIB_GEODESIC_ORDER;
+  static const int nA3x_ = nA3_;
+  static const int nC3_ = GEOGRAPHICLIB_GEODESIC_ORDER;
+  static const int nC3x_ = (nC3_ * (nC3_ - 1)) ~/ 2;
+  static const int nC4_ = GEOGRAPHICLIB_GEODESIC_ORDER;
+  static const int nC4x_ = (nC4_ * (nC4_ + 1)) ~/ 2;
+  static const int _maxit1_ = 20;
+  static const int _maxit2_ = _maxit1_ + _GeoMath.digits + 10;
 
   // Underflow guard.  We require
   //   tiny_ * epsilon() > 0
   //   tiny_ + epsilon() == epsilon()
   static final double tiny_ = sqrt(double.minPositive);
-  static final double _tol0_ = double.minPositive;
+  static const double _tol0_ = double.minPositive;
   // Increase multiplier in defn of tol1_ from 100 to 200 to fix inverse case
   // 52.784459512564 0 -52.784459512563990912 179.634407464943777557
   // which otherwise failed for Visual Studio 10 (Release and Debug)
-  static final double _tol1_ = 200 * _tol0_;
+  static const double _tol1_ = 200 * _tol0_;
   static final double _tol2_ = sqrt(_tol0_);
   // Check on bisection interval
   static final double _tolb_ = _tol0_ * _tol2_;
@@ -372,7 +372,7 @@ class Geodesic {
   GeodesicData _direct(double lat1, double lon1, double azi1, bool arcmode, double s12_a12, int outmask) {
     // Automatically supply DISTANCE_IN if necessary
     if (!arcmode) outmask |= _GeodesicMask.DISTANCE_IN;
-    return new _GeodesicLine(this, lat1, lon1, azi1, outmask)
+    return _GeodesicLine(this, lat1, lon1, azi1, outmask)
         . // Note the dot!
         Position(arcmode, s12_a12, outmask);
   }
@@ -415,8 +415,8 @@ class Geodesic {
     r.lat1 = lat1 = _GeoMath.LatFix(lat1!);
     r.lat2 = lat2 = _GeoMath.LatFix(lat2!);
     // If really close to the equator, treat as on equator.
-    lat1 = _GeoMath.AngRound(lat1!);
-    lat2 = _GeoMath.AngRound(lat2!);
+    lat1 = _GeoMath.AngRound(lat1);
+    lat2 = _GeoMath.AngRound(lat2);
     double lon12, lon12s;
     _GeoMath.AngDiff(p, lon1, lon2);
     lon12 = p.first;
@@ -552,9 +552,9 @@ class Geodesic {
         m12x *= b;
         s12x *= b;
         a12 = _toDegrees(sig12);
-      } else
-        // m12 < 0, i.e., prolate and too close to anti-podal
+      } else {
         meridian = false;
+      }
     }
 
     late double omg12, somg12 = 2, comg12;
@@ -728,9 +728,9 @@ class Geodesic {
         C4f(eps, C4a);
         double B41 = SinCosSeries(false, ssig1, csig1, C4a), B42 = SinCosSeries(false, ssig2, csig2, C4a);
         r.S12 = A4 * (B42 - B41);
-      } else
-        // Avoid problems with indeterminate sig1, sig2 on equator
+      } else {
         r.S12 = 0;
+      }
 
       if (!meridian && somg12 > 1) {
         somg12 = sin(omg12);
@@ -917,7 +917,9 @@ class Geodesic {
       }
     } else if ((outmask & (_GeodesicMask.REDUCEDLENGTH | _GeodesicMask.GEODESICSCALE)) != 0) {
       // Assume here that nC1_ >= nC2_
-      for (int l = 1; l <= nC2_; ++l) C2a[l] = A1 * C1a[l] - A2 * C2a[l];
+      for (int l = 1; l <= nC2_; ++l) {
+        C2a[l] = A1 * C1a[l] - A2 * C2a[l];
+      }
       J12 = m0x * sig12 + (SinCosSeries(true, ssig2, csig2, C2a) - SinCosSeries(true, ssig1, csig1, C2a));
     }
     if ((outmask & _GeodesicMask.REDUCEDLENGTH) != 0) {
@@ -1172,10 +1174,9 @@ class Geodesic {
     // Object to hold lam12, salp2, calp2, sig12, ssig1, csig1, ssig2, csig2,
     // eps, domg12, dlam12;
 
-    if (sbet1 == 0 && _calp1 == 0)
-      // Break degeneracy of equatorial line.  This case has already been
-      // handled.
+    if (sbet1 == 0 && _calp1 == 0) {
       _calp1 = -tiny_;
+    }
 
     double
         // sin(alp1) * cos(bet1) = sin(alp0)
@@ -1234,9 +1235,9 @@ class Geodesic {
     w.lam12 = eta + w.domg12;
 
     if (diffp) {
-      if (w.calp2 == 0)
+      if (w.calp2 == 0) {
         w.dlam12 = -2 * f1 * dn1 / sbet1;
-      else {
+      } else {
         _Lengths(v, w.eps, w.sig12, w.ssig1, w.csig1, dn1, w.ssig2, w.csig2, dn2, cbet1, cbet2,
             _GeodesicMask.REDUCEDLENGTH, C1a, C2a);
         w.dlam12 = v._m12b;

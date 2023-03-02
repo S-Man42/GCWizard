@@ -10,7 +10,7 @@ void main() {
       {'input' : RGB(255, 255, 255), 'expectedOutput' : CMYK(0.0, 0.0, 0.0, 0.0)},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var cmyk = CMYK.fromRGB(elem['input'] as RGB);
         expect((cmyk.cyan - (elem['expectedOutput'] as CMYK).cyan).abs() < 1e-5, true);
@@ -23,7 +23,7 @@ void main() {
         expect((rgb.green - (elem['input'] as RGB).green).abs() < 1e-5, true);
         expect((rgb.blue - (elem['input'] as RGB).blue).abs() < 1e-5, true);
       });
-    });
+    }
   });
 
   group("Colors.CMY:", () {
@@ -33,7 +33,7 @@ void main() {
       {'input' : RGB(255, 255, 255), 'expectedOutput' : CMY(0.0, 0.0, 0.0)},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var cmy = CMY.fromRGB(elem['input'] as RGB);
         expect((cmy.cyan - (elem['expectedOutput'] as CMY).cyan).abs() < 1e-5, true);
@@ -45,6 +45,6 @@ void main() {
         expect((rgb.green - (elem['input'] as RGB).green).abs() < 1e-5, true);
         expect((rgb.blue - (elem['input'] as RGB).blue).abs() < 1e-5, true);
       });
-    });
+    }
   });
 }

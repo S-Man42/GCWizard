@@ -11,8 +11,9 @@ class SegmentedAngle {
 
 SegmentedAngle segmentBearings(
     LatLng coord, double angle1, double angle2, double distance, int countSegments, Ellipsoid ells) {
-  if (countSegments < 1)
+  if (countSegments < 1) {
     countSegments = 1;
+  }
 
   var angles = <double>[];
   angles.add(angle1);

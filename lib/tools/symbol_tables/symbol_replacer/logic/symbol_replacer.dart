@@ -53,7 +53,7 @@ Future<SymbolReplacerImage?> replaceSymbols(Uint8List image, int blackLevel, dou
     List<Map<String, SymbolReplacerSymbolData>>? compareSymbols,
     double? similarityCompareLevel,
     double? mergeDistance}) async {
-  if (symbolImage == null) symbolImage = SymbolReplacerImage(image);
+  symbolImage ??= SymbolReplacerImage(image);
 
   symbolImage.splitAndGroupSymbols(blackLevel * 255 ~/ 100, similarityLevel,
       gap: gap,
@@ -88,20 +88,20 @@ class SymbolReplacerImage {
   List<_SymbolRow> lines = [];
 
   /// detected lines from _image
-  List<_SymbolRow> _sourceLines = [];
+  final List<_SymbolRow> _sourceLines = [];
 
   /// detected symbols (after symbol merge)
   List<Symbol> symbols = [];
 
   /// detected symbols
-  List<Symbol> _sourceSymbols = [];
+  final List<Symbol> _sourceSymbols = [];
 
   /// symbol groups (same symbol/ text)
   List<SymbolGroup> symbolGroups = [];
 
   List<double>? _mergeDistanceSteps;
   double? _mergeDistance;
-  static int _mergeDistanceInit = 5; // %
+  static const int _mergeDistanceInit = 5; // %
 
   int? _blackLevel;
   double? _similarityLevel;
@@ -145,15 +145,15 @@ class SymbolReplacerImage {
     var output = '';
     var referenceWidth = _referenceWidth(symbols);
 
-    lines.forEach((line) {
+    for (var line in lines) {
       var rightBorder = 0.0;
-      line.symbols.forEach((symbol) {
+      for (var symbol in line.symbols) {
         if (symbol.refPoint.dx - rightBorder > referenceWidth) output += ' ';
         output += symbol.symbolGroup?.text != null ? symbol.symbolGroup!.text! : '';
         rightBorder = symbol.refPoint.dx + symbol.bmp.width;
-      });
+      }
       if (withLinebreak) output += '\r\n';
-    });
+    }
     return output.trim();
   }
 
@@ -166,7 +166,7 @@ class SymbolReplacerImage {
       double? similarityCompareLevel = 80,
       bool groupSymbols = true,
       double? mergeDistance}) {
-    if (_bmp == null) _bmp = Image.decodeImage(_image);
+    _bmp ??= Image.decodeImage(_image);
     if (_bmp == null) return;
 
     // detect changed parameter -> recalc
@@ -203,16 +203,16 @@ class SymbolReplacerImage {
 
     var symbolsCloned = false;
     if (_sourceSymbols.isEmpty && _blackLevel != null) {
-      _sourceLines.forEach((line) {
+      for (var line in _sourceLines) {
         line._splitLineToSymbols(gap, _blackLevel!);
         _sourceSymbols.addAll(line.symbols);
-      });
+      }
       symbolsCloned = true;
       _cloneSourceLines();
     }
 
     if (symbolGroups.isEmpty && groupSymbols) {
-      if (_mergeDistance == null) _mergeDistance = _mergeSymbolsDefault(_mergeDistanceInit);
+      _mergeDistance ??= _mergeSymbolsDefault(_mergeDistanceInit);
 
       if (!symbolsCloned) _cloneSourceLines();
       if (_mergeDistance != null && _mergeDistance! > 0) _mergeSymbols(_mergeDistance!);
@@ -263,8 +263,9 @@ class SymbolReplacerImage {
 
   void _addSymbolToGroup(Symbol symbol, SymbolGroup symbolGroup) {
     symbolGroup.symbols.add(symbol);
-    if ((symbol.symbolGroup?.symbols != null) && (symbol.symbolGroup!.symbols.isEmpty))
+    if ((symbol.symbolGroup?.symbols != null) && (symbol.symbolGroup!.symbols.isEmpty)) {
       symbolGroups.remove(symbol.symbolGroup);
+    }
     symbol.symbolGroup = symbolGroup;
   }
 
@@ -275,7 +276,9 @@ class SymbolReplacerImage {
     if (symbols.isEmpty) return;
 
     removeFromGroup(symbols.first);
-    for (var i = 1; i < symbols.length; i++) addToGroup(symbols[i], symbols.first.symbolGroup);
+    for (var i = 1; i < symbols.length; i++) {
+      addToGroup(symbols[i], symbols.first.symbolGroup);
+    }
   }
 
   /// <summary>
@@ -303,10 +306,10 @@ class SymbolReplacerImage {
   /// reset all SymbolGroup text
   /// </summary>
   void resetGroupText() {
-    symbolGroups.forEach((group) {
+    for (var group in symbolGroups) {
       group.text = null;
       group.compareSymbol = null;
-    });
+    }
   }
 
   /// <summary>
@@ -317,32 +320,33 @@ class SymbolReplacerImage {
     if (_blackLevel == null || _similarityLevel == null || _gap == null) return null;
     var compareSymbolImage = SymbolReplacerImage(compareSymbols.first.values.first.bytes!);
 
-    compareSymbols.forEach((element) {
+    for (var element in compareSymbols) {
       element.forEach((text, symbolData) {
         if (symbolData.bytes != null) {
           var symbolImage = SymbolReplacerImage(symbolData.bytes!);
           symbolImage.splitAndGroupSymbols(_blackLevel!, _similarityLevel!, gap: _gap!, groupSymbols: false);
           // merge all symbols parts
-          for (var i = symbolImage.symbols.length - 2; i >= 0; i--)
+          for (var i = symbolImage.symbols.length - 2; i >= 0; i--) {
             symbolImage.mergeSymbol(symbolImage.symbols[i], symbolImage.symbols[i + 1], null);
+          }
 
           // create SymbolGroups with text for the symbols
-          symbolImage.symbols.forEach((element) {
+          for (var element in symbolImage.symbols) {
             var symbolGroup = SymbolGroup();
             symbolGroup.symbols = symbolImage.symbols;
             symbolGroup.text = text;
-            symbolGroup.symbols.forEach((symbol) {
+            for (var symbol in symbolGroup.symbols) {
               symbol.symbolGroup = symbolGroup;
-            });
+            }
             symbolGroup.compareSymbol = symbolData;
 
             compareSymbolImage.symbols.addAll(symbolGroup.symbols);
             compareSymbolImage.symbolGroups.add(symbolGroup);
-          });
+          }
           symbolImage.symbols = [];
         }
       });
-    });
+    }
 
     return compareSymbolImage;
   }
@@ -357,8 +361,9 @@ class SymbolReplacerImage {
     if (_similarityCompareLevel == null) return 0;
 
     // build hash for compare
-    for (int i = 0; i < compareSymbolImage.symbols.length; i++)
+    for (int i = 0; i < compareSymbolImage.symbols.length; i++) {
       compareSymbolImage.symbols[i].hash = ImageHashing.AverageHash(compareSymbolImage.symbols[i].bmp);
+    }
 
     // found the best compare symbols
     for (int i = 0; i < symbolGroups.length; i++) {
@@ -396,7 +401,7 @@ class SymbolReplacerImage {
 
     Image.drawImage(bmp, _bmp!);
 
-    symbols.forEach((symbol) {
+    for (var symbol in symbols) {
       var rect = Rectangle<int>(
         symbol.refPoint.dx.toInt(),
         symbol.refPoint.dy.toInt(),
@@ -406,7 +411,7 @@ class SymbolReplacerImage {
 
       Image.drawRect(bmp, rect.left, rect.top, rect.right, rect.bottom, Colors.blue.value);
       Image.drawRect(bmp, rect.left - 1, rect.top - 1, rect.right + 1, rect.bottom + 1, Colors.blue.value);
-    });
+    }
 
     return bmp;
   }
@@ -421,7 +426,9 @@ class SymbolReplacerImage {
     /// <summary>
     /// search empty lines
     /// </summary>
-    for (int y = 0; y < _bmp!.height; y++) if (_emptyRow(_bmp!, 0, _bmp!.width - 1, y, _blackLevel!)) emptyLineIndex.add(y);
+    for (int y = 0; y < _bmp!.height; y++) {
+      if (_emptyRow(_bmp!, 0, _bmp!.width - 1, y, _blackLevel!)) emptyLineIndex.add(y);
+    }
 
     if (emptyLineIndex.isEmpty) emptyLineIndex.add(_bmp!.width - 1);
 
@@ -435,8 +442,9 @@ class SymbolReplacerImage {
       }
 
       // last line
-      if ((emptyLineIndex.last != _bmp!.height - 1) & (emptyLineIndex.last != 0))
+      if ((emptyLineIndex.last != _bmp!.height - 1) & (emptyLineIndex.last != 0)) {
         _cutLine(emptyLineIndex.last + 1, _bmp!.height - 1);
+      }
     }
   }
 
@@ -447,9 +455,10 @@ class SymbolReplacerImage {
     if (_bmp == null) return;
     var rect = Rectangle<double>(0, startIndex.toDouble(), _bmp!.width.toDouble(), (endIndex - startIndex).toDouble());
 
-    if (rect.height > 0)
+    if (rect.height > 0) {
       _sourceLines.add(_SymbolRow(
           rect, Image.copyCrop(_bmp!, rect.left.toInt(), rect.top.toInt(), rect.width.toInt(), rect.height.toInt())));
+    }
   }
 
   /// <summary>
@@ -457,7 +466,9 @@ class SymbolReplacerImage {
   /// </summary>
   void _groupSymbols() {
     if (_similarityLevel == null) return;
-    for (int i = 0; i < symbols.length; i++) symbols[i].hash = ImageHashing.AverageHash(symbols[i].bmp);
+    for (int i = 0; i < symbols.length; i++) {
+      symbols[i].hash = ImageHashing.AverageHash(symbols[i].bmp);
+    }
 
     for (int i = 0; i < symbols.length; i++) {
       double maxPercent = 0;
@@ -515,9 +526,9 @@ class SymbolReplacerImage {
   static int _referenceWidth(List<Symbol> symbols) {
     int width = 0;
 
-    symbols.forEach((symbol) {
+    for (var symbol in symbols) {
       width = max(symbol.bmp.width, width);
-    });
+    }
 
     return width;
   }
@@ -569,7 +580,7 @@ class SymbolReplacerImage {
   /// </summary>
   double? _mergeSymbolsDefault(int mergeDistance) {
     // calc possible steps
-    if (_mergeDistanceSteps == null) _mergeDistanceSteps = _calcMergeDistances();
+    _mergeDistanceSteps ??= _calcMergeDistances();
 
     double? minLineDistance;
 
@@ -584,10 +595,11 @@ class SymbolReplacerImage {
     // value symbol width
     _mergeDistance = referenceWidth * mergeDistance / 100.0;
     // and line distance
-    if (minLineDistance != null && minLineDistance > 0)
+    if (minLineDistance != null && minLineDistance > 0) {
       _mergeDistance = (_mergeDistance == 0.0)
           ? referenceWidth.toDouble()
           : min(_mergeDistance, (minLineDistance - 1) / 2);
+    }
 
     if (_mergeDistance > 0) return prevMergeDistance(_mergeDistance);
 
@@ -622,9 +634,9 @@ class SymbolReplacerImage {
 
     symbolList.addAll(symbols);
     // build rectangles with oversize
-    symbolList.forEach((symbol) {
+    for (var symbol in symbolList) {
       if (symbol != null) rectList.add(symbol._borderRectangleWithOffset(maxDistance));
-    });
+    }
 
     do {
       changed = false;
@@ -652,7 +664,9 @@ class SymbolReplacerImage {
   /// Find the row that the symbol is associated with
   /// </summary>
   _SymbolRow? _searchSymbolRow(Symbol symbol) {
-    for (_SymbolRow line in lines) if (line.symbols.contains(symbol)) return line;
+    for (_SymbolRow line in lines) {
+      if (line.symbols.contains(symbol)) return line;
+    }
     return null;
   }
 
@@ -660,7 +674,9 @@ class SymbolReplacerImage {
   /// Find the SymbolGroup that the symbol is associated with
   /// </summary>
   SymbolGroup? _searchSymbolGroup(Symbol symbol) {
-    for (SymbolGroup group in symbolGroups) if (group.symbols.contains(symbol)) return group;
+    for (SymbolGroup group in symbolGroups) {
+      if (group.symbols.contains(symbol)) return group;
+    }
     return null;
   }
 
@@ -670,7 +686,7 @@ class SymbolReplacerImage {
   void mergeSymbol(Symbol symbol1, Symbol symbol2, _SymbolRow? line) {
     var box = symbol1._borderRectangle().boundingBox(symbol2._borderRectangle());
 
-    if (_bmp == null) return null;
+    if (_bmp == null) return;
     symbol1.refPoint = Offset(box.left, box.top);
     symbol1.bmp = Image.copyCrop(_bmp!, box.left.toInt(), box.top.toInt(), box.width.toInt(), box.height.toInt());
 
@@ -684,11 +700,11 @@ class SymbolReplacerImage {
   void _cloneSourceLines() {
     lines.clear();
     symbols.clear();
-    _sourceLines.forEach((line) {
+    for (var line in _sourceLines) {
       var lineClone = line._clone();
       lines.add(lineClone);
       symbols.addAll(lineClone.symbols);
-    });
+    }
   }
 }
 
@@ -697,18 +713,15 @@ class _SymbolRow {
   late Image.Image bmp;
   var symbols = <Symbol>[];
 
-  _SymbolRow(Rectangle<double> size, Image.Image bmp) {
-    this.size = size;
-    this.bmp = bmp;
-  }
+  _SymbolRow(this.size, this.bmp);
 
   _SymbolRow _clone() {
     var symbolRow = _SymbolRow(size, bmp);
-    symbols.forEach((symbol) {
+    for (var symbol in symbols) {
       var symbolClone = symbol._clone();
       symbolClone.row = symbolRow;
       symbolRow.symbols.add(symbolClone);
-    });
+    }
     return symbolRow;
   }
 
@@ -738,12 +751,14 @@ class _SymbolRow {
       if (emptyColumnIndex.first != 0) _cutSymbol(0, emptyColumnIndex.first - 1, blackLevel);
 
       for (int i = 1; i < emptyColumnIndex.length; i++) {
-        if (emptyColumnIndex[i - 1] != emptyColumnIndex[i] - 1)
+        if (emptyColumnIndex[i - 1] != emptyColumnIndex[i] - 1) {
           _cutSymbol(emptyColumnIndex[i - 1] + 1, emptyColumnIndex[i] - 1, blackLevel);
+        }
       }
 
-      if ((emptyColumnIndex.last != bmp.width - 1) & (emptyColumnIndex.last != 0))
+      if ((emptyColumnIndex.last != bmp.width - 1) & (emptyColumnIndex.last != 0)) {
         _cutSymbol(emptyColumnIndex.last + 1, bmp.width - 1, blackLevel);
+      }
     }
   }
 
@@ -754,7 +769,11 @@ class _SymbolRow {
         if (emptyColumnIndex[i - 1] != emptyColumnIndex[i] - 1) {
           var emtyColumnsCount = _countEmptyColumns(emptyColumnIndex, i);
 
-          if (emtyColumnsCount <= gap) for (int x = emtyColumnsCount - 1; x >= 0; x--) emptyColumnIndex.removeAt(i + x);
+          if (emtyColumnsCount <= gap) {
+            for (int x = emtyColumnsCount - 1; x >= 0; x--) {
+              emptyColumnIndex.removeAt(i + x);
+            }
+          }
         }
       }
     }
@@ -767,10 +786,11 @@ class _SymbolRow {
   int _countEmptyColumns(List<int> emptyColumnIndex, int startIndex) {
     var counter = 1;
     for (int i = startIndex; i < emptyColumnIndex.length - 1; i++) {
-      if (emptyColumnIndex[i] == emptyColumnIndex[i + 1] - 1)
+      if (emptyColumnIndex[i] == emptyColumnIndex[i + 1] - 1) {
         counter++;
-      else
+      } else {
         break;
+      }
     }
     return counter;
   }
@@ -823,11 +843,7 @@ class Symbol {
   SymbolGroup? symbolGroup;
   Uint8List? _outputImageBytes;
 
-  Symbol(Offset refPoint, Image.Image bmp, _SymbolRow row) {
-    this.refPoint = refPoint;
-    this.bmp = bmp;
-    this.row = row;
-  }
+  Symbol(this.refPoint, this.bmp, this.row);
 
   Symbol _clone() {
     var symbol = Symbol(refPoint, bmp, row);
@@ -923,7 +939,7 @@ Future<List<Map<String, SymbolReplacerSymbolData>>?> searchSymbolTable(
 
   sendAsyncPort?.send({'progress': 0.0});
 
-  compareSymbols.forEach((symbolTable) {
+  for (var symbolTable in compareSymbols) {
     imageTmp.resetGroupText();
     var compareSymbolImage = imageTmp._buildCompareSymbols(symbolTable);
     if (compareSymbolImage != null) {
@@ -935,7 +951,7 @@ Future<List<Map<String, SymbolReplacerSymbolData>>?> searchSymbolTable(
     }
     progress++;
     sendAsyncPort?.send({'progress': progress / compareSymbols.length});
-  });
+  }
   return Future.value(maxPercentSymbolTable);
 }
 
@@ -978,7 +994,9 @@ class ImageHashing {
   /// <returns>The total bit count.</returns>
   static int _BitCount(int num) {
     int count = 0;
-    for (; num > 0; num >>= 8) count += _bitCounts[(num & 0xff)];
+    for (; num > 0; num >>= 8) {
+      count += _bitCounts[(num & 0xff)];
+    }
     return count;
   }
 
@@ -996,7 +1014,7 @@ class ImageHashing {
     // Reduce colors to 6-bit grayscale and calculate average color value
     var grayscale = Uint8List(64);
     int averageValue = 0;
-    for (int y = 0; y < 8; y++)
+    for (int y = 0; y < 8; y++) {
       for (int x = 0; x < 8; x++) {
         int pixel = squeezed.getPixel(x, y); //..ToArgb();
         int gray = (pixel & 0x00ff0000) >> 16;
@@ -1007,12 +1025,15 @@ class ImageHashing {
         grayscale[x + (y * 8)] = gray;
         averageValue += gray;
       }
+    }
     averageValue = averageValue ~/ 64;
 
     // Compute the hash: each bit is a pixel
     // 1 = higher than average, 0 = lower than average
     int hash = 0;
-    for (int i = 0; i < 64; i++) if (grayscale[i] >= averageValue) hash |= (1 << (63 - i));
+    for (int i = 0; i < 64; i++) {
+      if (grayscale[i] >= averageValue) hash |= (1 << (63 - i));
+    }
 
     if (hash < 0) hash = ~hash; //no uint
     return hash;

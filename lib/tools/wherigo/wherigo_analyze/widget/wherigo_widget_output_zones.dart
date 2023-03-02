@@ -2,15 +2,16 @@ part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_analyze.
 
 List<List<String>> _buildOutputListOfZoneData(BuildContext context, WherigoZoneData data) {
   List<List<String>> result = [];
-  if (wherigoExpertMode)
+  if (wherigoExpertMode) {
     result = _buildOutputListOfZoneDataExpertMode(context, data);
-  else
+  } else {
     result = _buildOutputListOfZoneDataUserMode(context, data);
+  }
 
-  data.ZonePoints.forEach((point) {
+  for (var point in data.ZonePoints) {
     result.add(
         ['', formatCoordOutput(LatLng(point.Latitude, point.Longitude), defaultCoordinateFormat, defaultEllipsoid)]);
-  });
+  }
   return result;
 }
 

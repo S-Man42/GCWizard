@@ -34,11 +34,11 @@ void main() {
       {'input' : 'abcd123XYZA', 'alphabet': 'ABCDEFGH', 'ignoreCase': false, 'expectedOutput' : 'abcd123XYZE'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, alphabet: ${elem['alphabet']}, ignoreCase : ${elem['ignoreCase']}', () {
         var _actual = encryptKamasutra(elem['input'] as String?, elem['alphabet'] as String?, ignoreCase: elem['ignoreCase'] as bool);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

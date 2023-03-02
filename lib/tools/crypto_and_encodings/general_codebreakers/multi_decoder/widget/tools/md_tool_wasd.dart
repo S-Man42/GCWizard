@@ -45,8 +45,9 @@ class MultiDecoderToolWasd extends AbstractMultiDecoderTool {
 }
 
 WASD_TYPE getWASD_Type(Object? value, Map<String, Object?> options) {
-  if (value is String && KEYBOARD_CONTROLS.values.contains(value))
+  if (value is String && KEYBOARD_CONTROLS.values.contains(value)) {
     return switchMapKeyValue(KEYBOARD_CONTROLS)[value]!;
+  }
   value = checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_WASD, options, MDT_WASD_OPTION_SET);
   return switchMapKeyValue(KEYBOARD_CONTROLS)[value]!;
 }

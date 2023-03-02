@@ -19,29 +19,29 @@ class FormulaGroup {
       };
 
   FormulaGroup.fromJson(Map<String, Object?> json) {
-    this.name = toStringOrNull(json['name']) ?? ''; // TODO Proper default types if key is not in map
-    this.id = toIntOrNull(json['id']);
+    name = toStringOrNull(json['name']) ?? ''; // TODO Proper default types if key is not in map
+    id = toIntOrNull(json['id']);
 
     var formulasRaw = toObjectWithNullableContentListOrNull(json['formulas']);
-    this.formulas = <Formula>[];
+    formulas = <Formula>[];
     if (formulasRaw != null) {
-      formulasRaw.forEach((Object? element) {
+      for (var element in formulasRaw) {
         var formula = asJsonMapOrNull(element);
-        if (formula == null) return;
+        if (formula == null) continue;
 
-        this.formulas.add(Formula.fromJson(formula));
-      });
+        formulas.add(Formula.fromJson(formula));
+      }
     }
 
     var valuesRaw = toObjectWithNullableContentListOrNull(json['values']);
-    this.values = <FormulaValue>[];
+    values = <FormulaValue>[];
     if (valuesRaw != null) {
-      valuesRaw.forEach((Object? element) {
+      for (var element in valuesRaw) {
         var value = asJsonMapOrNull(element);
-        if (value == null) return;
+        if (value == null) continue;
 
-        this.values.add(FormulaValue.fromJson(value));
-      });
+        values.add(FormulaValue.fromJson(value));
+      }
     }
   }
 

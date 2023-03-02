@@ -16,8 +16,9 @@ List<List<String>> _buildOutputListAnswers(BuildContext context, WherigoInputDat
     ];
     if (hash != '0') {
       for (int i = 0; i < input.InputChoices.length; i++) {
-        if (RSHash(input.InputChoices[i].toLowerCase()).toString() == hash)
+        if (RSHash(input.InputChoices[i].toLowerCase()).toString() == hash) {
           result.add([i18n(context, 'wherigo_output_answerdecrypted'), input.InputChoices[i], '']);
+        }
       }
     }
   } else {
@@ -39,15 +40,15 @@ List<Widget> _outputAnswerActionsWidgets(BuildContext context, WherigoAnswerData
   List<Widget> resultWidget = [];
 
   if (data.AnswerActions.isNotEmpty) {
-    data.AnswerActions.forEach((element) {
+    for (var element in data.AnswerActions) {
       switch (element.ActionMessageType) {
         case WHERIGO_ACTIONMESSAGETYPE.TEXT:
           resultWidget.add(Container(
+            padding: const EdgeInsets.only(top: DOUBLE_DEFAULT_MARGIN, bottom: DOUBLE_DEFAULT_MARGIN),
             child: GCWOutput(
               child: element.ActionMessageContent,
               suppressCopyButton: true,
             ),
-            padding: EdgeInsets.only(top: DOUBLE_DEFAULT_MARGIN, bottom: DOUBLE_DEFAULT_MARGIN),
           ));
           break;
 
@@ -55,40 +56,37 @@ List<Widget> _outputAnswerActionsWidgets(BuildContext context, WherigoAnswerData
           var file = _getFileFrom(context, element.ActionMessageContent);
           if (file == null) break;
 
-          resultWidget.add(Container(
-            child: GCWImageView(
-              imageData: GCWImageViewData(file),
-              suppressedButtons: {GCWImageViewButtons.ALL},
-            ),
+          resultWidget.add(GCWImageView(
+            imageData: GCWImageViewData(file),
+            suppressedButtons: const {GCWImageViewButtons.ALL},
           ));
           break;
 
         case WHERIGO_ACTIONMESSAGETYPE.BUTTON:
-          resultWidget.add(Container(
-              child: Text('\n' + '« ' + element.ActionMessageContent + ' »' + '\n',
-                  textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold))));
+          resultWidget.add(Text('\n' '« ' + element.ActionMessageContent + ' »' + '\n',
+              textAlign: TextAlign.center, style: const TextStyle(fontWeight: FontWeight.bold)));
           break;
 
         case WHERIGO_ACTIONMESSAGETYPE.CASE:
           wherigoExpertMode
-              ? resultWidget.add(Container(
-              child: Text(
+              ? resultWidget.add(Text(
                 '\n' + (element.ActionMessageContent.toUpperCase()) + '\n',
                 textAlign: TextAlign.center,
-              )))
+              ))
               : null;
           break;
 
         case WHERIGO_ACTIONMESSAGETYPE.COMMAND:
           if (element.ActionMessageContent.startsWith('Wherigo.PlayAudio')) {
             String LUAName = element.ActionMessageContent.replaceAll('Wherigo.PlayAudio(', '').replaceAll(')', '');
-            if (NameToObject[LUAName] == null || NameToObject[LUAName]!.ObjectIndex >= WherigoCartridgeGWCData.MediaFilesContents.length)
+            if (NameToObject[LUAName] == null || NameToObject[LUAName]!.ObjectIndex >= WherigoCartridgeGWCData.MediaFilesContents.length) {
               break;
+            }
 
-            if (WherigoCartridgeGWCData.MediaFilesContents.isNotEmpty)
+            if (WherigoCartridgeGWCData.MediaFilesContents.isNotEmpty) {
               resultWidget.add(GCWFilesOutput(
                 suppressHiddenDataMessage: true,
-                suppressedButtons: {GCWImageViewButtons.SAVE},
+                suppressedButtons: const {GCWImageViewButtons.SAVE},
                 files: [
                   GCWFile(
                     //bytes: _WherigoCartridge.MediaFilesContents[_mediaFileIndex].MediaFileBytes,
@@ -97,17 +95,19 @@ List<Widget> _outputAnswerActionsWidgets(BuildContext context, WherigoAnswerData
                       name: NameToObject[LUAName]!.ObjectMedia),
                 ],
               ));
-          } else
+            }
+          } else {
             wherigoExpertMode
                 ? resultWidget.add(GCWOutput(
               child: '\n' + _resolveLUAName(element.ActionMessageContent) + '\n',
               suppressCopyButton: true,
             ))
                 : null;
+          }
           break;
-        default: ;
+        default: {}
       }
-    });
+    }
   }
   return resultWidget;
 }

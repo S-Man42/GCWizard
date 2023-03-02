@@ -121,7 +121,7 @@ class SymbolTableExamplesState extends State<SymbolTableExamples> {
                       NoAnimationMaterialPageRoute<GCWSymbolTableTool>(
                           builder: (context) => GCWSymbolTableTool(
                                 symbolKey: symbolKey,
-                                symbolSearchStrings: [],
+                                symbolSearchStrings: const [],
                               )));
                 },
               )),
@@ -131,7 +131,7 @@ class SymbolTableExamplesState extends State<SymbolTableExamples> {
     }).toList();
 
     return SingleChildScrollView(
-        physics: AlwaysScrollableScrollPhysics(),
+        physics: const AlwaysScrollableScrollPhysics(),
         primary: true,
         child: Column(
             children: symbols

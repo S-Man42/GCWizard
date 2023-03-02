@@ -84,8 +84,8 @@ class QrCodeState extends State<QrCode> {
               ),
         ((_currentMode == GCWSwitchPosition.right) && (_outData != null))
             ? Container(
+                padding: const EdgeInsets.symmetric(vertical: 20),
                 child: Image.memory(_outData!),
-                padding: EdgeInsets.symmetric(vertical: 20),
               )
             : Container(),
         _currentMode == GCWSwitchPosition.right
@@ -128,8 +128,9 @@ class QrCodeState extends State<QrCode> {
     if (_currentMode == GCWSwitchPosition.left) {
       if (_outDataEncrypt == null) return null;
       return Image.memory(_outDataEncrypt!);
-    } else
+    } else {
       return _outDataDecrypt!;
+    }
   }
 
   void _updateOutput() {

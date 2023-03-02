@@ -13,6 +13,7 @@ dependencies:
   cached_network_image: ^3.2.2
   code_text_field:
     git: https://github.com/BertrandBev/code_field
+  collection: 1.17.0
   diacritic: ^0.1.1
   encrypt: ^5.0.0
   exif: ^3.1.2
@@ -20,16 +21,19 @@ dependencies:
   file_picker_writable: ^2.0.3
   flutter:
     sdk: flutter
+  flutter_highlight: ^0.7.0
   flutter_localizations:
     sdk: flutter
   flutter_map: ^1.1.1
   flutter_map_marker_popup: ^3.1.0+1
   flutter_map_tappable_polyline: ^3.2.0
   fluttertoast: ^8.1.1
+  highlight: ^0.7.0
   http: ^0.13.5
   http_parser: ^4.0.2
   image: ^3.2.2
   intl: ^0.17.0
+  latlong2: ^0.8.1
   location: ^4.4.0
   mask_text_input_formatter: ^2.4.0
   math_expressions: ^2.3.1
@@ -44,6 +48,7 @@ dependencies:
   qr: ^3.0.1
   r_scan: ^0.1.6+1
   scrollable_positioned_list: ^0.3.5
+  shared_preferences: ^2.0.15
   touchable: ^1.0.2
   tuple: ^2.0.1
   universal_html: ^2.0.4
@@ -52,6 +57,7 @@ dependencies:
   url_launcher: ^6.1.6
   utility: ^1.0.3
   week_of_year: ^2.0.0
+  xml: ^6.1.0
 
 dev_dependencies:
   flutter_test:

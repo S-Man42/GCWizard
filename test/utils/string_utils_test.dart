@@ -15,12 +15,12 @@ void main() {
       {'input' : 'ABC', 'index': 4, 'character' : 'D', 'expectedOutput' : 'ABCD'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, input: ${elem['index']}, input: ${elem['character']}', () {
         var _actual = insertCharacter(elem['input'] as String, elem['index'] as int, elem['character'] as String);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("StringUtils.insertSpaceEveryNthCharacter:", () {
@@ -33,12 +33,12 @@ void main() {
       {'input' : 'ABCDEFGHIJ', 'n': 3, 'expectedOutput' : 'ABC DEF GHI J'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, n: ${elem['n']}', () {
         var _actual = insertSpaceEveryNthCharacter(elem['input'] as String, elem['n'] as int);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("StringUtils.insertEveryNthCharacter:", () {
@@ -49,12 +49,12 @@ void main() {
       {'input' : 'ABCDEFGHI', 'n': 3, 'textToInsert': '123', 'expectedOutput' : 'ABC123DEF123GHI'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, n: ${elem['n']}, textToInsert: ${elem['textToInsert']}', () {
         var _actual = insertEveryNthCharacter(elem['input'] as String, elem['n'] as int, elem['textToInsert'] as String);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("StringUtils.isUpperCase:", () {
@@ -72,12 +72,12 @@ void main() {
       {'letter' : 'ß', 'expectedOutput' : false},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('letter: ${elem['letter']}', () {
         var _actual = isUpperCase(elem['letter'] as String);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("StringUtils.removeDuplicateCharacters:", () {
@@ -93,12 +93,12 @@ void main() {
       {'input' : 'remove Duplicate Characters', 'expectedOutput' : 'remov DuplicatChs'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = removeDuplicateCharacters(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("StringUtils.hasDuplicateCharacters:", () {
@@ -117,12 +117,12 @@ void main() {
       {'input' : 'remove Duplicate Characters', 'expectedOutput' : true},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = hasDuplicateCharacters(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("StringUtils.countCharacters:", () {
@@ -141,12 +141,12 @@ void main() {
       {'input' : 'ABCABC', 'characters': 'ABCD', 'expectedOutput' : 6},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, characters: ${elem['characters']}', () {
         var _actual = countCharacters(elem['input'] as String, elem['characters'] as String);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("StringUtils.allSameCharacters:", () {
@@ -164,12 +164,12 @@ void main() {
       {'input' : '9977', 'expectedOutput' : false},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = allSameCharacters(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("StringUtils.isOnlyLetters:", () {
@@ -188,12 +188,12 @@ void main() {
       {'input' : 'a.x', 'expectedOutput' : false}
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = isOnlyLetters(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("StringUtils.isOnlyNumerals:", () {
@@ -210,12 +210,12 @@ void main() {
       {'input' : '0.1', 'expectedOutput' : false}
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = isOnlyNumerals(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("StringUtils.extractIntegerFromText:", () {
@@ -233,12 +233,12 @@ void main() {
       {'input' : '1a2', 'expectedOutput' : 12}
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = extractIntegerFromText(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("StringUtils.normalizeCharacters", () {
@@ -254,12 +254,12 @@ void main() {
       {'input' : '—\u2019\u2005\u201c', 'expectedOutput' : '-\' "'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = normalizeCharacters(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("StringUtils.removeControlCharacters", () {
@@ -271,11 +271,11 @@ void main() {
       {'input' : '\u0000\u0020\u001f', 'expectedOutput' : ' '},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = removeControlCharacters(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }
