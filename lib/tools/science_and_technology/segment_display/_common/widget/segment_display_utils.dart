@@ -81,9 +81,9 @@ Future<ui.Image> buildSegmentDisplayImage(int countColumns, List<NSegmentDisplay
 
 Future<void> _exportFile(BuildContext context, Uint8List? data) async {
   if (data == null) return;
-  var value = await saveByteDataToFile(context, data, buildFileNameWithDate('img_', FileType.PNG));
-
-  if (value) showExportedFileDialog(context, contentWidget: imageContent(context, data));
+  await saveByteDataToFile(context, data, buildFileNameWithDate('img_', FileType.PNG)).then((value) {
+    if (value) showExportedFileDialog(context, contentWidget: imageContent(context, data));
+  });
 }
 
 Widget _buildSegmentDisplayOutput(int countColumns, List<Widget> displays,

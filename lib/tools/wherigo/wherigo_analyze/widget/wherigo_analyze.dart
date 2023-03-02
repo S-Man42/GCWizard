@@ -1375,10 +1375,10 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   Future<void> _exportFile(BuildContext context, Uint8List data, String name, FileType fileType) async {
-    var value = await saveByteDataToFile(context, data, buildFileNameWithDate(name, fileType));
-
-    var content = fileClass(fileType) == FileClass.IMAGE ? imageContent(context, data) : null;
-    if (value) showExportedFileDialog(context, contentWidget: content);
+    await saveByteDataToFile(context, data, buildFileNameWithDate(name, fileType)).then((value) {
+      var content = fileClass(fileType) == FileClass.IMAGE ? imageContent(context, data) : null;
+      if (value) showExportedFileDialog(context, contentWidget: content);
+    });
   }
 
   Future<void> _exportCoordinates(

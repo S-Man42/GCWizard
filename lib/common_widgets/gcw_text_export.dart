@@ -134,9 +134,10 @@ Future<void> exportFile(String text, TextExportMode mode, BuildContext context) 
     var qrCode = generateBarCode(text);
     if (qrCode == null) return;
     input2Image(qrCode).then((data) async {
-      var value = await saveByteDataToFile(context, data, buildFileNameWithDate('img_', FileType.PNG));
+      saveByteDataToFile(context, data, buildFileNameWithDate('img_', FileType.PNG)).then((value){
+        if (value) showExportedFileDialog(context, contentWidget: imageContent(context, data));
+      });
 
-      if (value) showExportedFileDialog(context, contentWidget: imageContent(context, data));
     });
   }
 }

@@ -374,9 +374,9 @@ class WASDState extends State<WASD> {
   }
 
   Future<void> _exportFile(BuildContext context, Uint8List data) async {
-    var value = await saveByteDataToFile(context, data, buildFileNameWithDate('img_', FileType.PNG));
-
-    if (value) showExportedFileDialog(context, contentWidget: imageContent(context, data));
+    await saveByteDataToFile(context, data, buildFileNameWithDate('img_', FileType.PNG)).then((value) {
+      if (value) showExportedFileDialog(context, contentWidget: imageContent(context, data));
+    });
   }
 
   String _buildOutput() {

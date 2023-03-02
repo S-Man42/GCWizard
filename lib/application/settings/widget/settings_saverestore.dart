@@ -103,8 +103,8 @@ class SaveRestoreSettingsState extends State<SaveRestoreSettings> {
   }
 
   Future<void> _exportSettings(BuildContext context, Uint8List data) async {
-    var value = await saveByteDataToFile(context, data, buildFileNameWithDate('settings_', FileType.GCW));
-
-    if (value) showToast(i18n(context, 'settings_saverestore_save_success'));
+    await saveByteDataToFile(context, data, buildFileNameWithDate('settings_', FileType.GCW)).then((value) {
+      if (value) showToast(i18n(context, 'settings_saverestore_save_success'));
+    });
   }
 }
