@@ -32,11 +32,12 @@ const _TRANSPARENT_COLOR = Color.fromARGB(0, 0, 0, 0);
 
 
 class _BabylonNumbersSegmentDisplay extends NSegmentDisplay {
-  final Map<String, bool> segments;
-  final bool readOnly;
-  final void Function(Map<String, bool>)? onChanged;
 
-  _BabylonNumbersSegmentDisplay({Key? key, required this.segments, this.readOnly = false, this.onChanged})
+  _BabylonNumbersSegmentDisplay({
+      Key? key,
+      required Map<String, bool> segments,
+      bool readOnly = false,
+      void Function(Map<String, bool>)? onChanged})
       : super(
       key: key,
       initialSegments: _INITIAL_SEGMENTS,

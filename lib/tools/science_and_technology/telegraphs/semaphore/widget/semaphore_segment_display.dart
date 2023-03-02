@@ -18,11 +18,12 @@ const _SEMAPHORE_RELATIVE_DISPLAY_HEIGHT = 260; //100;
 
 
 class _SemaphoreSegmentDisplay extends NSegmentDisplay {
-  final Map<String, bool> segments;
-  final bool readOnly;
-  final void Function(Map<String, bool>)? onChanged;
 
-  _SemaphoreSegmentDisplay({Key? key, required this.segments, this.readOnly = false, this.onChanged})
+  _SemaphoreSegmentDisplay({
+      Key? key,
+      required Map<String, bool> segments,
+      bool readOnly = false,
+      void Function(Map<String, bool>)? onChanged})
       : super(
             key: key,
             initialSegments: _INITIAL_SEGMENTS,

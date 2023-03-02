@@ -16,11 +16,12 @@ const _INITIAL_SEGMENTS = <String, bool>{
 
 
 class MayaNumbersSegmentDisplay extends NSegmentDisplay {
-  final Map<String, bool> segments;
-  final bool readOnly;
-  final void Function(Map<String, bool>)? onChanged;
 
-  MayaNumbersSegmentDisplay({Key? key, required this.segments, this.readOnly = false, this.onChanged})
+  MayaNumbersSegmentDisplay({
+    Key? key,
+    required Map<String, bool> segments,
+    bool readOnly = false,
+    void Function(Map<String, bool>)? onChanged})
       : super(
             key: key,
             initialSegments: _INITIAL_SEGMENTS,

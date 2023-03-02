@@ -74,6 +74,7 @@ class Stack {
     return (content.isEmpty);
   }
 
+  @override
   String toString() {
     return content.join(' ');
   }

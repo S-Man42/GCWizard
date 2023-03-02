@@ -18,12 +18,13 @@ const _INITIAL_SEGMENTS = <String, bool>{
 
 
 class PUNCHTAPESegmentDisplay extends NSegmentDisplay {
-  final Map<String, bool> segments;
-  final bool readOnly;
-  final void Function(Map<String, bool>)? onChanged;
   final TeletypewriterCodebook codeBook;
 
-  PUNCHTAPESegmentDisplay(this.codeBook, {Key? key, required this.segments, this.readOnly = false, this.onChanged})
+  PUNCHTAPESegmentDisplay(this.codeBook, {
+      Key? key,
+      required Map<String, bool> segments,
+      bool readOnly = false,
+      void Function(Map<String, bool>)? onChanged})
       : super(
             key: key,
             initialSegments: _INITIAL_SEGMENTS,
