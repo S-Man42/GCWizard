@@ -76,9 +76,9 @@ int _magicEyeSolver(Image.Image image) {
         var _pixel1 = image.getPixel(x, y);
         var _pixel2 = image.getPixel(x - displacement, y);
 
-        var red = Image.getRed(_pixel1) - Image.getRed(_pixel2);
-        var green = Image.getGreen(_pixel1) - Image.getGreen(_pixel2);
-        var blue = Image.getBlue(_pixel1) - Image.getBlue(_pixel2);
+        var red = _pixel1.r - _pixel2.r;
+        var green = _pixel1.g - _pixel2.g;
+        var blue = _pixel1.b - _pixel2.b;
 
         var difference = (red.abs() + green.abs() + blue.abs()) / 3.0;
         totalDifference += difference;
@@ -127,7 +127,7 @@ int _computeBestDisplacement(List<double> differences) {
 }
 
 Uint8List _createResultImage(Image.Image image, int displacement) {
-  var bitmap = Image.Image(image.width, image.height);
+  var bitmap = Image.Image(width: image.width, height: image.height);
 
   for (int y = 0; y < bitmap.height; y++) {
     for (int x = 0; x < displacement; x++) {
@@ -140,11 +140,8 @@ Uint8List _createResultImage(Image.Image image, int displacement) {
       var _pixel1 = image.getPixel(x, y);
       var _pixel2 = image.getPixel(x - displacement, y);
 
-      var color = Image.Color.fromRgb(
-          (Image.getRed(_pixel1) - Image.getRed(_pixel2)).abs(),
-          (Image.getGreen(_pixel1) - Image.getGreen(_pixel2)).abs(),
-          (Image.getBlue(_pixel1) - Image.getBlue(_pixel2)).abs());
-      bitmap.setPixel(x, y, color);
+      bitmap.setPixelRgb(x, y,
+          (_pixel1.r - _pixel2.r).abs(), (_pixel1.g - _pixel2.g).abs(), (_pixel1.b - _pixel2.b).abs());
     }
   }
   return encodeTrimmedPng(bitmap);
@@ -230,13 +227,13 @@ Tuple2<Uint8List?, MagicEyeErrorCode>? _generateImage(
   _pixels = Uint32List(_lineWidth * _rows);
 
   // Copy the texture data into a buffer
-  _texturePixels = bmTexture.getBytes(format: Image.Format.rgba);
+  _texturePixels = bmTexture.getBytes(order: Image.ChannelOrder.rgba);
 
   // grayscale and invert
   bmDepthMap = Image.grayscale(bmDepthMap);
   bmDepthMap = Image.invert(bmDepthMap);
   // Copy the depthmap data into a buffer
-  _depthBytes = bmDepthMap.getBytes(format: Image.Format.rgba);
+  _depthBytes = bmDepthMap.getBytes(order: Image.ChannelOrder.rgba);
 
   // progress indicator
   var generatedLines = 0;
@@ -254,8 +251,8 @@ Tuple2<Uint8List?, MagicEyeErrorCode>? _generateImage(
     }
   }
 
-  var bmStereogram = Image.Image.fromBytes(_lineWidth, _rows, _pixels.buffer.asUint8List(),
-      format: Image.Format.rgba, channels: Image.Channels.rgba);
+  var bmStereogram = Image.Image.fromBytes(width: _lineWidth, height: _rows, bytes: _pixels.buffer,
+      order: Image.ChannelOrder.rgba);
 
   // High quality images need to be scaled back down...
   if (oversample > 1) {
@@ -389,7 +386,7 @@ Image.Image _generateColoredDotsTexture(int resX, int resY) {
     pixels[i] = random.nextInt(256);
   }
 
-  return Image.Image.fromBytes(resX, resY, pixels, format: Image.Format.rgba, channels: Image.Channels.rgba);
+  return Image.Image.fromBytes(width: resX, height: resY, bytes: pixels.buffer, order: Image.ChannelOrder.rgba);
 }
 
 Image.Image _generateGrayDotsTexture(int resX, int resY) {

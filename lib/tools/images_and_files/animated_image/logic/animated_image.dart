@@ -34,32 +34,36 @@ Future<AnimatedImageOutput?> analyseImage(Uint8List bytes,
 
     if (decoder == null) return null;
 
-    var animation = decoder.decodeAnimation(bytes);
+    var animation = <Image.Image>[];
+    for (int i= 0; i < decoder.numFrames(); i++) {
+      var image = decoder.decode(bytes, frame: i);
+      if (image != null) animation.add(image);
+    }
 
     var imageList = <Uint8List>[];
     var durations = <int>[];
     var linkList = <int>[];
     FileType extension = getFileType(bytes);
 
-    if (animation != null) {
+    if (animation.isNotEmpty) {
       int progressStep = max(animation.length ~/ 100, 1); // 100 steps
 
-      for (var image in animation.frames) {
-        durations.add(image.duration);
+      for (var image in animation) {
+        durations.add(image.frameDuration);
       }
 
       // overrides also durations
-      animation.frames = _linkSameImages(animation.frames);
+      animation = _linkSameImages(animation);
 
-      for (int i = 0; i < animation.frames.length; i++) {
-        var index = _checkSameHash(animation.frames, i);
+      for (int i = 0; i < animation.length; i++) {
+        var index = _checkSameHash(animation, i);
         if (index < 0) {
           switch (extension) {
             case FileType.PNG:
-              imageList.add(encodeTrimmedPng(animation.frames[i]));
+              imageList.add(encodeTrimmedPng(animation[i]));
               break;
             default:
-              imageList.add(Uint8List.fromList(Image.encodeGif(animation.frames[i])));
+              imageList.add(Uint8List.fromList(Image.encodeGif(animation[i])));
               break;
           }
           linkList.add(i);
@@ -77,7 +81,7 @@ Future<AnimatedImageOutput?> analyseImage(Uint8List bytes,
 
     var out = AnimatedImageOutput(imageList, durations, linkList);
 
-    if (animation != null && withFramesOutput) out.frames = animation.frames;
+    if (animation.isNotEmpty && withFramesOutput) out.frames = animation;
 
     return out;
   } on Exception {

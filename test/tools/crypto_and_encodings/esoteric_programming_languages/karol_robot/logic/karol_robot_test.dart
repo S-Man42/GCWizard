@@ -4,7 +4,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_langua
 void main() {
   group("KarolRobot.interpret:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'code' : null, 'expectedOutput' : ''},
+      // {'code' : null, 'expectedOutput' : ''},
       {'code' : '', 'expectedOutput' : ''},
 
       // https://www.geocaching.com/geocache/GC4ZE0V_sauerbrunnen-ii

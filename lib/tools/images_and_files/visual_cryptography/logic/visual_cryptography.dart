@@ -8,8 +8,8 @@ import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:image/image.dart' as Image;
 import 'package:tuple/tuple.dart';
 
-int whiteColor = Colors.white.value;
-int blackColor = Colors.black.value;
+var whiteColor = Colors.white;
+var blackColor = Colors.black;
 
 Future<Uint8List?> decodeImagesAsync(GCWAsyncExecuterParameters? jobData) async {
   if (jobData?.parameters is! Tuple4<Uint8List, Uint8List, int, int>) return null;
@@ -30,8 +30,8 @@ Future<Uint8List?> _decodeImages(Uint8List? image1, Uint8List? image2, int offse
 
   if (_image1 == null || _image2 == null) return Future.value(null);
 
-  var image = Image.Image(
-      max(_image1.width, _image2.width) + offsetX.abs(), max(_image1.height, _image2.height) + offsetY.abs());
+  var image = Image.Image(width: max(_image1.width, _image2.width) + offsetX.abs(),
+      height: max(_image1.height, _image2.height) + offsetY.abs());
 
   image = _pasteImage(image, _image1, min(offsetX, 0).abs(), min(offsetY, 0).abs(), false);
   image = _pasteImage(image, _image2, max(offsetX, 0).abs(), max(offsetY, 0).abs(), true);
@@ -134,7 +134,7 @@ Uint8List? cleanImage(Uint8List? image1, Uint8List? image2, int offsetX, int off
   if (_image1 == null || _image2 == null) return null;
 
   var coreImageSize = _coreImageSize(_image1, _image2, offsetX, offsetY);
-  var image = Image.Image(coreImageSize.item2 - coreImageSize.item1, coreImageSize.item4 - coreImageSize.item3);
+  var image = Image.Image(width: coreImageSize.item2 - coreImageSize.item1, height: coreImageSize.item4 - coreImageSize.item3);
 
   for (var x = coreImageSize.item1; x < coreImageSize.item2 - 1; x += 2) {
     for (var y = coreImageSize.item3; y < coreImageSize.item4 - 1; y += 2) {
@@ -322,12 +322,12 @@ int _calcBlackBlockCount(Image.Image image1, Image.Image image2, int offsetX, in
   return counter;
 }
 
-bool _blackPixel(int color) {
-  return (Image.getAlpha(color) > 128 && Image.getLuminance(color) < 128);
+bool _blackPixel(Image.Pixel pixel) {
+  return (pixel.a > 128 && Image.getLuminance(pixel) < 128);
 }
 
-bool _blackResultPixel(int color1, int color2) {
-  return (_blackPixel(color1) || _blackPixel(color2));
+bool _blackResultPixel(Image.Pixel pixel1, Image.Pixel pixel2) {
+  return (_blackPixel(pixel1) || _blackPixel(pixel2));
 }
 
 bool _blackArea(Image.Image image1, Image.Image image2, int x, int y, int offsetX, int offsetY) {
