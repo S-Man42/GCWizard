@@ -290,7 +290,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
               return _compareSymbolItems.map((item) {
                 return _buildDropDownMenuItem(
                     (item.value as SymbolReplacerSymbolTableViewData).icon,
-                    ((item.value as SymbolReplacerSymbolTableViewData).symbolKey == no_symbol_table)
+                    (item.value as SymbolReplacerSymbolTableViewData == no_symbol_table)
                         ? i18n(context, 'symbol_replacer_no_symbol_table')
                         : (item.value as SymbolReplacerSymbolTableViewData).toolName,
                     null);

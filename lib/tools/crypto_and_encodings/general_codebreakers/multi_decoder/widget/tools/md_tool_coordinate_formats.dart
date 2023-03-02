@@ -126,16 +126,24 @@ class MultiDecoderToolCoordinateFormats extends AbstractMultiDecoderTool {
             }));
 }
 
-// TODO Mike I guess something is strange here...
+// TODO Mark   Mike I guess something is strange here...
+// TODO Mark  I do not undertand this. Why ? -> Please don't use the enum as enumerator. For that the metadata is there...
 // 1. options is still a map instead of a type
 // 2. What are you trying? CoordinateFormatKey can be fetched from persistence key with a function
 // 3. Please don't use the enum as enumerator. For that the metadata is there...
-// 4. You compare a String with a CoordinateFormatKey
+// 4. You compare a String with a CoordinateFormatKey ok
 CoordinateFormatKey getCoordinateFormatKey(Map<String, Object?> options, String option) {
   var key = checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_COORDINATEFORMATS, options, MDT_COORDINATEFORMATS_OPTION_FORMAT);
-  if (CoordinateFormatKey.values.contains(key)) {
-    return CoordinateFormatKey.values.firstWhere((element) => element == key);
-  }
+  var formatKey = getCoordinateFormatKeyFromString(key);
+  if (formatKey != null) return formatKey;
+
   key = toStringOrNull(getDefaultValue(MDT_INTERNALNAMES_COORDINATEFORMATS, MDT_COORDINATEFORMATS_OPTION_FORMAT)) ?? '';
-  return CoordinateFormatKey.values.firstWhere((element) => element == key);
+  return getCoordinateFormatKeyFromString(key) ?? CoordinateFormatKey.values.first;
+}
+
+CoordinateFormatKey? getCoordinateFormatKeyFromString(String key) {
+  for (CoordinateFormatKey element in CoordinateFormatKey.values) {
+    if (element.name == key) return element;
+  }
+  return null;
 }

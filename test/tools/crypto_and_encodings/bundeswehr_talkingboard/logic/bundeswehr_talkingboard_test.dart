@@ -272,7 +272,7 @@ void main() {
       test('currentCallSign: ${elem['currentCallSign']}, currentLetterAuth: ${elem['currentLetterAuth']}, currentLetterCallSign: ${elem['currentLetterCallSign']}, tableNumeralCode: ${elem['tableNumeralCode']}, tableAuthentificationCode: ${elem['tableAuthentificationCode']}, ', () {
         var _actual = buildAuthBundeswehr(elem['currentCallSign'] as String, elem['currentLetterAuth'] as String, elem['currentLetterCallSign'] as String, elem['tableNumeralCode'] as BundeswehrTalkingBoardAuthentificationTable, elem['tableAuthentificationCode'] as BundeswehrTalkingBoardAuthentificationTable);
         expect(_actual.ResponseCode, (elem['expectedOutput'] as BundeswehrTalkingBoardAuthentificationOutput).ResponseCode);
-        if (_actual.ResponseCode == BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_OK) {
+        if (_actual.ResponseCode.contains(BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_OK)) {
           expect(_actual.Tupel1, (elem['expectedOutput'] as BundeswehrTalkingBoardAuthentificationOutput).Tupel1);
           expect(_actual.Tupel2, (elem['expectedOutput'] as BundeswehrTalkingBoardAuthentificationOutput).Tupel2);
           expect(_actual.Tupel3, (elem['expectedOutput'] as BundeswehrTalkingBoardAuthentificationOutput).Tupel3);

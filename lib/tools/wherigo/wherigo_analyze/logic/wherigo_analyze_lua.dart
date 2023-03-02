@@ -614,7 +614,7 @@ Future<void> _getDecompiledLUAFileFromServer(Uint8List byteListLUA) async {
   var uri = Uri.parse(address);
   var request = http.MultipartRequest('POST', uri)
     ..files.add(
-        await http.MultipartFile.fromBytes('file', byteListLUA, contentType: MediaType('application', 'octet-stream')));
+        http.MultipartFile.fromBytes('file', byteListLUA, contentType: MediaType('application', 'octet-stream')));
   var response = await request.send();
 
   httpCode = response.statusCode;
