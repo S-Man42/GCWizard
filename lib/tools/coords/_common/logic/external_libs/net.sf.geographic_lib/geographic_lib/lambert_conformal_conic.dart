@@ -188,7 +188,7 @@ class LambertConformalConic {
   LambertConformalConic(double a, double f, double stdlat1, double stdlat2, double k1) {
     _a = a;
     _f = f <= 1 ? f : 1 / f;
-    _r = 1 / f;
+    // _r = 1 / f;
     _fm = 1 - _f;
     _e2 = _f * (2 - _f);
     _e = sqrt(_e2.abs());
@@ -398,7 +398,7 @@ class LambertConformalConic {
     _scchi0 = hyp(_tchi0);
     _psi0 = _GeoMath.asinh(_tchi0);
 
-    _lat0 = atan(_sign * tphi0) / _GeoMath.degree();
+    // _lat0 = atan(_sign * tphi0) / _GeoMath.degree();
     _t0nm1 = _GeoMath.expm1(-_n * _psi0); // Snyder's t0^n - 1
     // a * k1 * m1/t1^n = a * k1 * m2/t2^n = a * k1 * n * (Snyder's F)
     // = a * k1 / (scbet1 * exp(-n * psi1))
