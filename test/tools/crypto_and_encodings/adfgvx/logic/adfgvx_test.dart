@@ -35,7 +35,7 @@ void main() {
 
   group("ADFGVX.decryptADFGX:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'expectedOutput' : '', 'substitutionKey' : 'Wikipedia', 'transpositionKey': 'Beobachtungsliste', 'polybiosMode' : PolybiosMode.ZA90, 'input' : null},
+      {'expectedOutput' : null, 'substitutionKey' : 'Wikipedia', 'transpositionKey': 'Beobachtungsliste', 'polybiosMode' : PolybiosMode.ZA90, 'input' : null},
       {'expectedOutput' : 'MUNITIONIERUNGBESCHLEUNIGENPUNKTSOWEITNICHTEINGESEHENAUCHBEITAG', 'substitutionKey' : null, 'transpositionKey': null, 'polybiosMode' : PolybiosMode.ZA90, 'input' : 'FGDAF FGDDD GDFDF FGDXA DGDAF FGGXG XADFX FGFFX XADAF FGDGG XAFFF ADAFF GADDD FFDAG XAGDD DFFGD XFGFD DXAGD FFGGX ADFXA GFXAF FXXDA XFGFX GXAGD DDXXG G'},
       {'expectedOutput' : 'MUNITIONIERUNGBESCHLEUNIGENPUNKTSOWEITNICHTEINGESEHENAUCHBEITAG', 'substitutionKey' : null, 'transpositionKey': 'Beobachtungsliste', 'polybiosMode' : PolybiosMode.ZA90, 'input' : 'FGFAG DXXFD XAADX DADFF AGFXF DXDDF XGGXF FGXAD GFXDD FGGGF AGAGG AXADF DGDXD DFXGF GGDXF XDGAG FXFDA GFXAF DDXFD DDFFA GFGAX DFAFD GAFDG FFGAD FDFFG X'},
       {'expectedOutput' : 'MUNITIONIERUNGBESCHLEUNIGENPUNKTSOWEITNICHTEINGESEHENAUCHBEITAG', 'substitutionKey' : 'Wikipedia', 'transpositionKey': null, 'polybiosMode' : PolybiosMode.ZA90, 'input' : 'GGFDG FADFF ADGDG FADAX FXFDG FXDXX AXFGX GXAGX AXFDG FADXD AXGFA GFDGF AFFFF GGDAA AXADF FGFAD XGXAF FAXAD GFXDA XFGAX XAAXG FDDFD XGXAX XAXAD FFDDX D'},

@@ -44,7 +44,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('key: ${elem['key']} iv: ${elem['iv']}', () {
-        var _actual = Rabbit(elem['key'] as Uint8List, elem['iv'] as Uint8List)
+        var _actual = Rabbit(elem['key'] as Uint8List?, elem['iv'] as Uint8List)
             .keyStreamBytes((elem['expectedOutput'] as Uint8List).length);
         expect(_actual, elem['expectedOutput']);
       });

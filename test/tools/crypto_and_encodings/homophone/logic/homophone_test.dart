@@ -60,7 +60,7 @@ void main() {
 
   group("Homophone.encryptKeyMap:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : 'Test', 'errorcode': HomophoneErrorCode.OK, 'keyMap': {'E': [9], 'S': [80], 'T': [90]}, 'expectedOutput': '90 09 80 90'},
+      {'input' : 'Test', 'errorcode': HomophoneErrorCode.OK, 'keyMap': {'E': [9], 'S': [80], 'T': [90]}, 'multiplier': 1, 'expectedOutput': '90 09 80 90'},
     ];
 
     for (var elem in _inputsToExpected) {

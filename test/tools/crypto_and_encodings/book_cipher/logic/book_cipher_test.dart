@@ -173,9 +173,9 @@ Helmut Schickart (1931–1993). ''';
 
       {'input' : 'TEILEN IST EINE SIEBEN TESTWEISE', 'positions' : '1.1 1.3´1.4 1.5', 'searchFormat' : searchFormat.RowWord, 'expectedOutput' : 'TEST', 'spacesOn' : true, 'emptyLinesOn' : true, 'ignoreSymbols' : '.;+-:!?\'"‘&(){}[]/\\_', 'diacriticsOn' : true, 'azOn' : true, 'numbersOn' : true, 'onlyFirstWordLetter' : true},
 
-      {'input' : testText1, 'positions' : '4,12; 1,3; 14,3; 1,7; 14,3; 12,1; 2,4; 3,14; 2,2; 4,4; 9,37; 8,4; 14,13; 15,4; 6,8; 7,11; 3,5; 14,4; 14,5; 16,21; 15,4; 14,3; 6,8; 6,6; 1,5', 'searchFormat' : searchFormat.RowCharacter, 'expectedOutput' : 'F 7 79 2E 4 5 2F 1 3 72 E', 'spacesOn' : true, 'emptyLinesOn' : true, 'ignoreSymbols' : null, 'diacriticsOn' : true, 'azOn' : true, 'numbersOn' : true, 'onlyFirstWordLetter' : false},
+      {'input' : testText1, 'positions' : '4,12; 1,3; 14,3; 1,7; 14,3; 12,1; 2,4; 3,14; 2,2; 4,4; 9,37; 8,4; 14,13; 15,4; 6,8; 7,11; 3,5; 14,4; 14,5; 16,21; 15,4; 14,3; 6,8; 6,6; 1,5', 'searchFormat' : searchFormat.RowCharacter, 'expectedOutput' : 'F 7 79 2E 4 5 2F 1 3 72 E', 'spacesOn' : true, 'emptyLinesOn' : true, 'ignoreSymbols' : '', 'diacriticsOn' : true, 'azOn' : true, 'numbersOn' : true, 'onlyFirstWordLetter' : false},
 
-      {'input' : 'Helmut Schickart (1931–1993).', 'positions' : ' 1,21; ', 'searchFormat' : searchFormat.SectionCharacter, 'expectedOutput' : '3', 'spacesOn' : true, 'emptyLinesOn' : true, 'ignoreSymbols' : null, 'diacriticsOn' : true, 'azOn' : true, 'numbersOn' : true, 'onlyFirstWordLetter' : false},
+      {'input' : 'Helmut Schickart (1931–1993).', 'positions' : ' 1,21; ', 'searchFormat' : searchFormat.SectionCharacter, 'expectedOutput' : '3', 'spacesOn' : true, 'emptyLinesOn' : true, 'ignoreSymbols' : '', 'diacriticsOn' : true, 'azOn' : true, 'numbersOn' : true, 'onlyFirstWordLetter' : false},
 
     ];
 
