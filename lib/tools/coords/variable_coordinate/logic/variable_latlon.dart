@@ -51,7 +51,7 @@ class VariableCoordinateSingleResult {
   LatLng coordinate;
   Map<String, String>? variables;
 
-  VariableCoordinateSingleResult(this.coordinate, this.variables);
+  VariableCoordinateSingleResult(this.coordinate, [this.variables]);
 }
 
 VariableCoordinateResults parseVariableLatLon(String coordinate, Map<String, String> substitutions, {ProjectionData? projectionData}) {
@@ -100,7 +100,7 @@ VariableCoordinateResults parseVariableLatLon(String coordinate, Map<String, Str
               coordinate.toLatLng()!,
               parsedBearing,
               projectionData.distanceUnit.toMeter(parsedDistance),
-              defaultEllipsoid
+              projectionData.ellipsoid ?? defaultEllipsoid
           );
           if (revProjected.isEmpty) return [];
 
@@ -116,7 +116,7 @@ VariableCoordinateResults parseVariableLatLon(String coordinate, Map<String, Str
               coordinate.toLatLng()!,
               parsedBearing,
               projectionData.distanceUnit.toMeter(parsedDistance),
-              defaultEllipsoid
+              projectionData.ellipsoid ?? defaultEllipsoid
             ),
             expandedText.variables
           );
