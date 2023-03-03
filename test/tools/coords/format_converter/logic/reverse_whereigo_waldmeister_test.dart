@@ -21,9 +21,9 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('coord: ${elem['coord']}', () {
         var _actual = ReverseWherigoWaldmeister.fromLatLon(elem['coord'] as LatLng);
-        expect(_actual.a, (elem['expectedOutput'] as List<String>)[0]);
-        expect(_actual.b, (elem['expectedOutput'] as List<String>)[1]);
-        expect(_actual.c, (elem['expectedOutput'] as List<String>)[2]);
+        expect(_actual.a, int.parse((elem['expectedOutput'] as List<String>)[0]));
+        expect(_actual.b, int.parse((elem['expectedOutput'] as List<String>)[1]));
+        expect(_actual.c, int.parse((elem['expectedOutput'] as List<String>)[2]));
       });
     }
   });
@@ -44,7 +44,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = ReverseWherigoWaldmeister.parse((elem['input'] as List<String>)[0] + " " + (elem['input'] as List<String>)[1] + " " + (elem['input'] as List<String>)[2])?.toLatLng();
+        var _actual = ReverseWherigoWaldmeister.parse((elem['input'] as List<String>).join(' '))?.toLatLng();
         expect((_actual!.latitude - (elem['expectedOutput'] as LatLng).latitude).abs() < 1e-8, true);
         expect((_actual.longitude - (elem['expectedOutput'] as LatLng).longitude).abs() < 1e-8, true);
       });

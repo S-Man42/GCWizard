@@ -17,8 +17,8 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('coord: ${elem['coord']}', () {
         var _actual = ReverseWherigoDay1976.fromLatLon(elem['coord'] as LatLng);
-        expect(_actual.s, (elem['expectedOutput'] as ReverseWherigoDay1976).s);
-        expect(_actual.t, (elem['expectedOutput'] as ReverseWherigoDay1976).t);
+        expect(_actual.s, (elem['expectedOutput'] as List<String>)[0]);
+        expect(_actual.t, (elem['expectedOutput'] as List<String>)[1]);
       });
     }
   });

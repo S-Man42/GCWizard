@@ -56,8 +56,7 @@ DMM? parseDMM(String input, {bool leftPadMilliMinutes = false, bool wholeString 
   if (regex.hasMatch(_input)) {
     RegExpMatch matches = regex.firstMatch(_input)!;
 
-    if (matches.group(1) == null
-        || matches.group(2) == null
+    if (matches.group(2) == null
         || matches.group(3) == null
     ) {
       return null;
@@ -85,8 +84,7 @@ DMM? parseDMM(String input, {bool leftPadMilliMinutes = false, bool wholeString 
 
     var lat = DMMLatitude(latSign, latDegrees, latMinutes);
 
-    if (matches.group(5) == null
-        || matches.group(6) == null
+    if (matches.group(6) == null
         || matches.group(7) == null
     ) {
       return null;
@@ -135,8 +133,7 @@ DMM? _parseDMMTrailingSigns(String text, bool leftPadMilliMinutes) {
   if (regex.hasMatch(text)) {
     RegExpMatch matches = regex.firstMatch(text)!;
 
-    if (matches.group(1) == null
-      || matches.group(2) == null
+    if (matches.group(2) == null
       || matches.group(4) == null
     ) {
       return null;
@@ -164,8 +161,7 @@ DMM? _parseDMMTrailingSigns(String text, bool leftPadMilliMinutes) {
 
     var lat = DMMLatitude(latSign, latDegrees, latMinutes);
 
-    if (matches.group(5) == null
-        || matches.group(6) == null
+    if (matches.group(6) == null
         || matches.group(8) == null
     ) {
       return null;

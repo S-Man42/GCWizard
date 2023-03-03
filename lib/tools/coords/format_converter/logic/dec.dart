@@ -21,9 +21,7 @@ int latLngPartSign(String? text) {
   return 1;
 }
 
-String? prepareInput(String? text, {bool wholeString = false}) {
-  if (text == null) return null;
-
+String? prepareInput(String text, {bool wholeString = false}) {
   if (wholeString) {
     text = text.trim();
     regexEnd = wholeString ? '\$' : '';
@@ -68,21 +66,19 @@ DEC normalizeDEC(DEC coord) {
   return DEC(normalizedLat, normalizedLon);
 }
 
-DEC? parseDEC(String? input, {bool wholeString = false}) {
-  input = prepareInput(input, wholeString: wholeString);
-  if (input == null) return null;
+DEC? parseDEC(String input, {bool wholeString = false}) {
+  var _input = prepareInput(input, wholeString: wholeString);
+  if (_input == null) return null;
 
-  var parsedTrailingSigns = _parseDECTrailingSigns(input);
+  var parsedTrailingSigns = _parseDECTrailingSigns(_input);
   if (parsedTrailingSigns != null) return parsedTrailingSigns;
 
   RegExp regex = RegExp(PATTERN_DEC + regexEnd, caseSensitive: false);
 
-  if (regex.hasMatch(input)) {
-    RegExpMatch matches = regex.firstMatch(input)!;
+  if (regex.hasMatch(_input)) {
+    RegExpMatch matches = regex.firstMatch(_input)!;
 
-    if (matches.group(1) == null
-        || matches.group(2) == null
-    ) {
+    if (matches.group(2) == null) {
       return null;
     }
 
@@ -99,9 +95,7 @@ DEC? parseDEC(String? input, {bool wholeString = false}) {
 
     var latDegrees = latSign * _latDegrees;
 
-    if (matches.group(4) == null
-        || matches.group(5) == null
-    ) {
+    if (matches.group(5) == null) {
       return null;
     }
 
@@ -129,8 +123,7 @@ DEC? _parseDECTrailingSigns(String text) {
   if (regex.hasMatch(text)) {
     RegExpMatch matches = regex.firstMatch(text)!;
 
-    if (matches.group(3) == null
-        || matches.group(1) == null
+    if (matches.group(1) == null
     ) {
       return null;
     }
@@ -148,8 +141,7 @@ DEC? _parseDECTrailingSigns(String text) {
 
     var latDegrees = latSign * _latDegrees;
 
-    if (matches.group(6) == null
-        || matches.group(4) == null
+    if (matches.group(4) == null
     ) {
       return null;
     }
