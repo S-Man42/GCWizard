@@ -4,7 +4,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substi
 void main() {
   group("substitution_breaker.check_alphabet:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : null},
+      // {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : null},
 
       {'input' : 'ABc', 'expectedOutput' : 'abc'},
@@ -41,7 +41,7 @@ void main() {
 
   group("substitution_breaker.keydecode:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
+      // {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
       {'input' : 'Hallo 23', 'expectedOutput' : 'Hallo 23'},
@@ -58,7 +58,7 @@ void main() {
 
   group("substitution_breaker.keyencode:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
+      // {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
       {'input' : 'Hallo 23', 'expectedOutput' : 'Hallo 23'},

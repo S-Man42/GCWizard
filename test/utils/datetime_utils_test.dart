@@ -119,7 +119,7 @@ void main() {
 
   group("Calender.formatDurationToHHmmss:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : null},
+      // {'input' : null, 'expectedOutput' : null},
       {'input' : const Duration(days: 1, hours: 10, seconds: 33, milliseconds: 100), 'days': true, 'milliseconds': true, 'limitHours': true, 'expectedOutput' : '1:10:00:33.000'},
       {'input' : const Duration(days: 1, hours: 10, seconds: 33, milliseconds: 100), 'days': true, 'milliseconds': false, 'limitHours': true, 'expectedOutput' : '1:10:00:33'},
       {'input' : const Duration(days: 1, hours: 10, seconds: 33, milliseconds: 100), 'days': false, 'milliseconds': true, 'limitHours': true, 'expectedOutput' : '10:00:33.000'},
@@ -146,7 +146,7 @@ void main() {
 
   group("Calender.formatHoursToHHmmss:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : null},
+      // {'input' : null, 'expectedOutput' : null},
       {'input' : 1.23456789, 'milliseconds': true, 'limitHours': true, 'expectedOutput' : '01:14:04.444'},
       {'input' : 1.23456789, 'milliseconds': false, 'limitHours': true, 'expectedOutput' : '01:14:04'},
       {'input' : 1.23456789, 'milliseconds': true, 'limitHours': false, 'expectedOutput' : '01:14:04.444'},

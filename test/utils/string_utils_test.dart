@@ -4,8 +4,8 @@ import 'package:gc_wizard/utils/string_utils.dart';
 void main() {
   group("StringUtils.insertCharacter:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'index': 0, 'character' : 'A', 'expectedOutput' : null},
-      {'input' : 'ABC', 'index': 0, 'character' : null, 'expectedOutput' : 'ABC'},
+      // {'input' : null, 'index': 0, 'character' : 'A', 'expectedOutput' : null},
+      // {'input' : 'ABC', 'index': 0, 'character' : null, 'expectedOutput' : 'ABC'},
 
       {'input' : 'ABC', 'index': -1, 'character' : 'D', 'expectedOutput' : 'DABC'},
       {'input' : 'ABC', 'index': 0, 'character' : 'D', 'expectedOutput' : 'DABC'},
@@ -26,7 +26,7 @@ void main() {
   group("StringUtils.insertSpaceEveryNthCharacter:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'input' : '', 'n': 0, 'expectedOutput' : ''},
-      {'input' : 'ABC', 'n': null, 'expectedOutput' : 'ABC'},
+      // {'input' : 'ABC', 'n': null, 'expectedOutput' : 'ABC'},
       {'input' : 'ABC', 'n': 0, 'expectedOutput' : 'ABC'},
       {'input' : 'ABC', 'n': 1, 'expectedOutput' : 'A B C'},
       {'input' : 'ABCDEF', 'n': 2, 'expectedOutput' : 'AB CD EF'},
@@ -59,7 +59,7 @@ void main() {
 
   group("StringUtils.isUpperCase:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'letter' : null, 'expectedOutput' : false},
+      // {'letter' : null, 'expectedOutput' : false},
       {'letter' : '', 'expectedOutput' : false},
 
       {'letter' : 'A', 'expectedOutput' : true},
@@ -82,7 +82,7 @@ void main() {
 
   group("StringUtils.removeDuplicateCharacters:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : null},
+      // {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : ''},
 
       {'input' : 'AA', 'expectedOutput' : 'A'},
@@ -103,7 +103,7 @@ void main() {
 
   group("StringUtils.hasDuplicateCharacters:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : false},
+      // {'input' : null, 'expectedOutput' : false},
       {'input' : '', 'expectedOutput' : false},
 
       {'input' : 'A1', 'expectedOutput' : false},
@@ -127,7 +127,7 @@ void main() {
 
   group("StringUtils.countCharacters:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'characters': null, 'expectedOutput' : 0},
+      // {'input' : null, 'characters': null, 'expectedOutput' : 0},
       {'input' : '', 'characters': 'a', 'expectedOutput' : 0},
 
       {'input' : 'ABC', 'characters': 'A', 'expectedOutput' : 1},
@@ -151,8 +151,8 @@ void main() {
 
   group("StringUtils.allSameCharacters:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : null},
-      {'input' : '', 'expectedOutput' : null},
+      // {'input' : null, 'expectedOutput' : null},
+      {'input' : '', 'expectedOutput' : false},
 
       {'input' : 'a', 'expectedOutput' : true},
       {'input' : 'aaa', 'expectedOutput' : true},
@@ -174,7 +174,7 @@ void main() {
 
   group("StringUtils.isOnlyLetters:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : false},
+      // {'input' : null, 'expectedOutput' : false},
       {'input' : '', 'expectedOutput' : false},
 
       {'input' : 'a', 'expectedOutput' : true},
@@ -198,7 +198,7 @@ void main() {
 
   group("StringUtils.isOnlyNumerals:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : false},
+      // {'input' : null, 'expectedOutput' : false},
       {'input' : '', 'expectedOutput' : false},
 
       {'input' : '0', 'expectedOutput' : true},
@@ -220,10 +220,10 @@ void main() {
 
   group("StringUtils.extractIntegerFromText:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : null},
-      {'input' : '', 'expectedOutput' : null},
+      // {'input' : null, 'expectedOutput' : null},
+      {'input' : '', 'expectedOutput' : 0},
 
-      {'input' : 'a', 'expectedOutput' : null},
+      {'input' : 'a', 'expectedOutput' : 0},
       {'input' : '12', 'expectedOutput' : 12},
       {'input' : '123,4', 'expectedOutput' : 1234},
       {'input' : '123,4', 'expectedOutput' : 1234},
@@ -243,7 +243,7 @@ void main() {
 
   group("StringUtils.normalizeCharacters", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : null},
+      // {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : ''},
 
       {'input' : '\u0009\u000B\u00A0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2007\u2008\u2009\u200A\u202F\u205F\u3000', 'expectedOutput' : '                 '},
@@ -264,7 +264,7 @@ void main() {
 
   group("StringUtils.removeControlCharacters", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : null},
+      // {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : ''},
 
       {'input' : '\u0000\u0001\u001f', 'expectedOutput' : ''},

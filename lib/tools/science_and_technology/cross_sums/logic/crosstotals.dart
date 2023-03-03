@@ -84,16 +84,16 @@ BigInt sumCrossSumIterated(List<int>? list) {
 }
 
 BigInt? sumCrossSumAlternatedBackward(List<int>? list) {
-  if (_containsNegativeValue(list)) return null;
+  if (list == null || _containsNegativeValue(list)) return null;
 
-  BigInt s = sum(list!);
+  BigInt s = sum(list);
   return _crossSumAlternatedBackward([s]);
 }
 
 BigInt? sumCrossSumAlternatedForward(List<int>? list) {
-  if (_containsNegativeValue(list)) return null;
+  if (list == null || _containsNegativeValue(list)) return null;
 
-  BigInt s = sum(list!);
+  BigInt s = sum(list);
   return _crossSumAlternatedForward([s]);
 }
 
@@ -103,16 +103,16 @@ BigInt productCrossSumIterated(List<int>? list) {
 }
 
 BigInt? productCrossSumAlternatedBackward(List<int>? list) {
-  if (_containsNegativeValue(list)) return null;
+  if (list == null || _containsNegativeValue(list)) return null;
 
-  BigInt p = product(list!);
+  BigInt p = product(list);
   return _crossSumAlternatedBackward([p]);
 }
 
 BigInt? productCrossSumAlternatedForward(List<int>? list) {
-  if (_containsNegativeValue(list)) return null;
+  if (list == null || _containsNegativeValue(list)) return null;
 
-  BigInt p = product(list!);
+  BigInt p = product(list);
   return _crossSumAlternatedForward([p]);
 }
 
