@@ -68,8 +68,8 @@ bool? toBoolOrNull(Object? value) {
 }
 
 String? toStringOrNull(Object? value) {
-  if (isString(value)) {
-    return value as String;
+  if (value != null) {
+    return value.toString();
   }
 
   return null;

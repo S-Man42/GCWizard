@@ -2,7 +2,7 @@ import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 
 void main() {
-  group("ObjectUtils.toDoubleOrNull:", () {
+  group("ObjectTypeUtils.toDoubleOrNull:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : null},
@@ -24,7 +24,7 @@ void main() {
     }
   });
 
-  group("ObjectUtils.toIntOrNull:", () {
+  group("ObjectTypeUtils.toIntOrNull:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : null},
@@ -47,7 +47,7 @@ void main() {
     }
   });
 
-  group("ObjectUtils.toBoolOrNull:", () {
+  group("ObjectTypeUtils.toBoolOrNull:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : null},
@@ -69,7 +69,7 @@ void main() {
     }
   });
 
-  group("ObjectUtils.toStringOrNull:", () {
+  group("ObjectTypeUtils.toStringOrNull:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : ''},
@@ -90,7 +90,7 @@ void main() {
     }
   });
 
-  group("ObjectUtils.toStringListOrNull:", () {
+  group("ObjectTypeUtils.toStringListOrNull:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : <Object?>[], 'expectedOutput' : <String>[]},
@@ -105,13 +105,13 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}}', () {
-        var _actual = toStringListOrNull(elem['input'] as List<Object?>);
+        var _actual = toStringListOrNull(elem['input']);
         expect(_actual, elem['expectedOutput']);
       });
     }
   });
 
-  group("ObjectUtils.toStringListWithNullableContentOrNull:", () {
+  group("ObjectTypeUtils.toStringListWithNullableContentOrNull:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : <Object?>[], 'expectedOutput' : <String?>[]},
@@ -126,7 +126,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}}', () {
-        var _actual = toStringListWithNullableContentOrNull(elem['input'] as List<Object?>);
+        var _actual = toStringListWithNullableContentOrNull(elem['input']);
         expect(_actual, elem['expectedOutput']);
       });
     }

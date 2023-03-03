@@ -387,7 +387,7 @@ FileClass fileClass(FileType type) {
 
 List<List<int>>? magicBytes(FileType type) {
   _checkFileType(type);
-  return _FILE_TYPES[type]!.magic_bytes!;
+  return _FILE_TYPES[type]!.magic_bytes;
 }
 
 List<int>? magicBytesDetail(FileType type) {

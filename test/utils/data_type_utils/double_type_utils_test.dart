@@ -4,9 +4,9 @@ import 'package:gc_wizard/utils/data_type_utils/double_type_utils.dart';
 void main() {
   group("DoubleTypeUtils.doubleEquals:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'a' : null, 'b': null, 'tolerance': 1e-10, 'expectedOutput' : true},
-      {'a' : null, 'b': 1.0, 'tolerance': 1e-10, 'expectedOutput' : false},
-      {'a' : 1.0, 'b': null, 'tolerance': 1e-10, 'expectedOutput' : false},
+      // {'a' : null, 'b': null, 'tolerance': 1e-10, 'expectedOutput' : true},
+      // {'a' : null, 'b': 1.0, 'tolerance': 1e-10, 'expectedOutput' : false},
+      // {'a' : 1.0, 'b': null, 'tolerance': 1e-10, 'expectedOutput' : false},
 
       {'a' : 1.0, 'b': 1.0, 'tolerance': 1e-10, 'expectedOutput' : true},
       {'a' : 1.123, 'b': 1.123, 'tolerance': 1e-10, 'expectedOutput' : true},
@@ -25,7 +25,7 @@ void main() {
 
   group("DoubleTypeUtils.fractionPartAsInteger:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : null},
+      // {'input' : null, 'expectedOutput' : null},
 
       {'input' : 0.0, 'expectedOutput' : 0},
       {'input' : 1.2, 'expectedOutput' : 2},

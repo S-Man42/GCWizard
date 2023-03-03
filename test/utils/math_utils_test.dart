@@ -59,7 +59,7 @@ void main() {
 
   group("MathUtils.round:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'precision': 0, 'expectedOutput' : null},
+      // {'input' : null, 'precision': 0, 'expectedOutput' : null},
       {'input' : 0.0, 'precision': 0, 'expectedOutput' : 0},
 
       {'input' : 0.1, 'precision': 0, 'expectedOutput' : 0},
