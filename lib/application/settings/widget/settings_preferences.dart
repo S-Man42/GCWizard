@@ -200,9 +200,9 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
 
         var list = Prefs.get(key);
         if (list == null) return true;
-        if ((_editedValue as List).length != list.length) return true;
+        if ((_editedValue as List).length != (list as List<String>).length) return true;
 
-        for (var i = 0; i < (list as List).length; i++) {
+        for (var i = 0; i < list.length; i++) {
           if ((_editedValue as List)[i].toString() != list[i].toString()) {
             return true;
           }
