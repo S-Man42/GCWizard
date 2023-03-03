@@ -8,8 +8,10 @@ import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:image/image.dart' as Image;
 import 'package:tuple/tuple.dart';
 
-var whiteColor = Colors.white;
-var blackColor = Colors.black;
+var whiteColor = Image.ColorInt8(3);
+var blackColor = Image.ColorInt8(3);
+
+
 
 Future<Uint8List?> decodeImagesAsync(GCWAsyncExecuterParameters? jobData) async {
   if (jobData?.parameters is! Tuple4<Uint8List, Uint8List, int, int>) return null;
@@ -29,6 +31,9 @@ Future<Uint8List?> _decodeImages(Uint8List? image1, Uint8List? image2, int offse
   var _image2 = Image.decodeImage(image2);
 
   if (_image1 == null || _image2 == null) return Future.value(null);
+
+  whiteColor.setRgb(255, 255, 255);
+  blackColor.setRgb(0, 0, 0);
 
   var image = Image.Image(width: max(_image1.width, _image2.width) + offsetX.abs(),
       height: max(_image1.height, _image2.height) + offsetY.abs());
@@ -180,13 +185,13 @@ Future<Tuple2<Uint8List, Uint8List?>?> _encodeImage(
   if (scale > 0 && scale != 100) _image = Image.copyResize(_image, height: _image.height * scale ~/ 100);
 
   if (hasKeyImage) {
-    var _dstImage = Image.Image(_keyImage!.width ~/ 2, _keyImage.height ~/ 2);
-    _dstImage = Image.drawRect(_dstImage, 0, 0, _dstImage.width, _dstImage.height, Colors.white.value);
+    var _dstImage = Image.Image(width: _keyImage!.width ~/ 2, height: _keyImage.height ~/ 2);
+    _dstImage = Image.drawRect(_dstImage, x1: 0, y1: 0, x2: _dstImage.width, y2: _dstImage.height, color: whiteColor);
 
     var _dstXOffset = (_dstImage.width - _image.width) ~/ 2;
     var _dstYOffset = (_dstImage.height - _image.height) ~/ 2;
 
-    _dstImage = Image.drawImage(_dstImage, _image,
+    _dstImage = Image.dr.drawImage(_dstImage, _image,
         dstX: _dstXOffset, dstY: _dstYOffset, dstW: _image.width, dstH: _image.height);
 
     return _encodeWithKeyImage(offsetX, offsetY, _dstImage, _keyImage);
@@ -206,7 +211,7 @@ List<bool> _keyPixels(Image.Image _keyImage, int x, int y) {
 
 Future<Tuple2<Uint8List, Uint8List?>> _encodeWithKeyImage(
     int offsetX, int offsetY, Image.Image _image, Image.Image _keyImage) {
-  var image1 = Image.Image(_image.width * 2, _image.height * 2);
+  var image1 = Image.Image(width: _image.width * 2, height: _image.height * 2);
 
   for (var x = 0; x < _image.width; x++) {
     for (var y = 0; y < _image.height; y++) {
@@ -248,8 +253,8 @@ Future<Tuple2<Uint8List, Uint8List>> _encodeWithoutKeyImage(int offsetX, int off
   var image2OffsetX = min(offsetX, 0).abs();
   var image2OffsetY = min(offsetY, 0).abs();
   var image1 =
-      Image.Image(_image.width * 2 + image1OffsetX + image2OffsetX, _image.height * 2 + image1OffsetY + image2OffsetY);
-  var image2 = Image.Image(image1.width, image1.height);
+      Image.Image(width: _image.width * 2 + image1OffsetX + image2OffsetX, height: _image.height * 2 + image1OffsetY + image2OffsetY);
+  var image2 = Image.Image(width: image1.width, height: image1.height);
 
   for (var x = -(image1OffsetX + image2OffsetX); x < image1OffsetX + image2OffsetX + _image.width; x++) {
     for (var y = -(image1OffsetY + image2OffsetY); y < image1OffsetY + image2OffsetY + _image.height; y++) {

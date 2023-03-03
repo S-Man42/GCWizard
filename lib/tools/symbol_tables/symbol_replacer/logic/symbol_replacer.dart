@@ -398,7 +398,7 @@ class SymbolReplacerImage {
   /// </summary>
   Image.Image? _mergeBorderData() {
     if (_bmp == null) return null;
-    var bmp = Image.Image(_bmp!.width, _bmp!.height);
+    var bmp = Image.Image(width: _bmp!.width, height: _bmp!.height);
 
     Image.drawImage(bmp, _bmp!);
 
@@ -410,8 +410,8 @@ class SymbolReplacerImage {
         symbol.bmp.height,
       );
 
-      Image.drawRect(bmp, rect.left, rect.top, rect.right, rect.bottom, Colors.blue.value);
-      Image.drawRect(bmp, rect.left - 1, rect.top - 1, rect.right + 1, rect.bottom + 1, Colors.blue.value);
+      Image.drawRect(bmp, x1: rect.left, y1: rect.top, x2: rect.right, y2: rect.bottom, Colors.blue.value);
+      Image.drawRect(bmp, x1: rect.left - 1, y1: rect.top - 1, x2: rect.right + 1,y2:  rect.bottom + 1, Colors.blue.value);
     }
 
     return bmp;
@@ -458,7 +458,7 @@ class SymbolReplacerImage {
 
     if (rect.height > 0) {
       _sourceLines.add(_SymbolRow(
-          rect, Image.copyCrop(_bmp!, rect.left.toInt(), rect.top.toInt(), rect.width.toInt(), rect.height.toInt())));
+          rect, Image.copyCrop(_bmp!, x: rect.left.toInt(), y: rect.top.toInt(), width: rect.width.toInt(), height: rect.height.toInt())));
     }
   }
 
@@ -517,8 +517,8 @@ class SymbolReplacerImage {
   /// <summary>
   /// Pixels darker than threshold  ?
   /// </summary>
-  static bool _blackPixel(int color, int blackLevel) {
-    return (Image.getLuminance(color) <= blackLevel);
+  static bool _blackPixel(Image.Pixel pixel, int blackLevel) {
+    return (pixel.luminance <= blackLevel);
   }
 
   /// <summary>
@@ -689,7 +689,7 @@ class SymbolReplacerImage {
 
     if (_bmp == null) return;
     symbol1.refPoint = Offset(box.left, box.top);
-    symbol1.bmp = Image.copyCrop(_bmp!, box.left.toInt(), box.top.toInt(), box.width.toInt(), box.height.toInt());
+    symbol1.bmp = Image.copyCrop(_bmp!, x: box.left.toInt(), y: box.top.toInt(), width: box.width.toInt(), height: box.height.toInt());
 
     var group = _searchSymbolGroup(symbol2);
     if (group != null) group.symbols.remove(symbol2);
@@ -807,7 +807,7 @@ class _SymbolRow {
       var refPoint = Offset(box.left, box.top);
       refPoint = refPoint.translate(size.left, size.top);
       symbols.add(Symbol(refPoint,
-          Image.copyCrop(bmp, box.left.toInt(), box.top.toInt(), box.width.toInt(), box.height.toInt()), this));
+          Image.copyCrop(bmp, x: box.left.toInt(), y: box.top.toInt(), width: box.width.toInt(), height: box.height.toInt()), this));
     }
     return rect;
   }
@@ -1017,10 +1017,8 @@ class ImageHashing {
     int averageValue = 0;
     for (int y = 0; y < 8; y++) {
       for (int x = 0; x < 8; x++) {
-        int pixel = squeezed.getPixel(x, y); //..ToArgb();
-        int gray = (pixel & 0x00ff0000) >> 16;
-        gray += (pixel & 0x0000ff00) >> 8;
-        gray += (pixel & 0x000000ff);
+        var pixel = squeezed.getPixel(x, y); //..ToArgb();
+        int gray = (pixel.r + pixel.g +pixel.r + pixel.b).toInt();
         gray = gray ~/ 12;
 
         grayscale[x + (y * 8)] = gray;
