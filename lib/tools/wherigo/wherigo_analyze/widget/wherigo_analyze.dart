@@ -582,9 +582,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             GCWIconButton(
               icon: Icons.save,
               size: IconButtonSize.SMALL,
-              iconColor: WherigoCartridgeGWCData.MediaFilesContents[0].MediaFileBytes == null
-                  ? themeColors().inActive()
-                  : null,
+              iconColor: themeColors().mainFont(),
               onPressed: () {
                 _exportFile(context, WherigoCartridgeGWCData.MediaFilesContents[0].MediaFileBytes, 'LUAByteCode',
                     FileType.LUAC);
