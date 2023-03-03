@@ -466,7 +466,7 @@ class GCWCoordsState extends State<GCWCoords> {
             if (widget.restoreCoordinates != null && widget.restoreCoordinates!) {
               _pastedCoords = _currentCoords;
             } else if (_currentCoords.format.subtype == newFormat.subtype) {
-              _currentCoords = BaseCoordinate();
+              _currentCoords = defaultBaseCoordinate;
             }
 
             _currentCoords.format = newFormat;
@@ -583,7 +583,13 @@ class GCWCoordsState extends State<GCWCoords> {
               parameters: [NumberFormat('0.0').format(locationData.accuracy)]));
         }
 
-        _pastedCoords = BaseCoordinate(locationData.latitude, locationData.longitude);
+        LatLng _coords;
+        if (locationData.latitude == null || locationData.longitude == null) {
+          _coords = defaultCoordinate;
+        } else {
+          _coords = LatLng(locationData.latitude!, locationData.longitude!);
+        }
+        _pastedCoords = buildDefaultCoordinatesByFormat(_coords);
         _currentCoords = _pastedCoords;
         _setPastedCoordsFormat();
 

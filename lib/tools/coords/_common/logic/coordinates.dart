@@ -67,7 +67,7 @@ int getCoordinateSignFromString(String text, bool isLatitude) {
   return _sign;
 }
 
-class BaseCoordinate {
+abstract class BaseCoordinate {
   late double _latitude;
   late double _longitude;
   late CoordinateFormat format;
@@ -941,6 +941,10 @@ class Quadtree extends BaseCoordinate {
   }
 }
 
+BaseCoordinate buildDefaultCoordinatesByFormat(LatLng coords) {
+  return buildCoordinatesByFormat(defaultCoordinateFormat, coords, defaultEllipsoid);
+}
+
 BaseCoordinate buildCoordinatesByFormat(CoordinateFormat format, LatLng coords, [Ellipsoid? ellipsoid]) {
   if (isCoordinateFormatWithSubtype(format.type)) {
     if (format.subtype == null || !isSubtypeOfCoordinateFormat(format.type, format.subtype!)) {
@@ -999,6 +1003,6 @@ BaseCoordinate buildCoordinatesByFormat(CoordinateFormat format, LatLng coords, 
       return ReverseWherigoDay1976.fromLatLon(coords);
     case CoordinateFormatKey.BASE_FORMAT:
     default:
-      return BaseCoordinate(coords.latitude, coords.longitude);
+      return buildDefaultCoordinatesByFormat(coords);
   }
 }
