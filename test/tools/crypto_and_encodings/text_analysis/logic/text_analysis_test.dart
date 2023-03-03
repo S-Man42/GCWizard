@@ -5,44 +5,55 @@ import 'package:gc_wizard/tools/crypto_and_encodings/text_analysis/logic/text_an
 
 void main() {
   bool _equalMaps(Map<String, int>? a, Map<String, int>? b) {
-    if (a == null && b == null)
+    if (a == null && b == null) {
       return true;
+    }
 
-    if ((a != null && b == null) || (a == null && b != null))
+    if ((a != null && b == null) || (a == null && b != null)) {
       return false;
+    }
 
-    if (a!.length != b!.length)
+    if (a!.length != b!.length) {
       return false;
+    }
 
     for (var e in a.entries) {
-      if (!b.containsKey(e.key) || b[e.key] != e.value)
+      if (!b.containsKey(e.key) || b[e.key] != e.value) {
         return false;
+      }
     }
 
     return true;
   }
 
   bool equalsTextAnalysisResults(TextAnalysisCharacterCounts? a, TextAnalysisCharacterCounts? b) {
-    if (a == null && b == null)
+    if (a == null && b == null) {
       return true;
+    }
 
-    if ((a != null && b == null) || (a == null && b != null))
+    if ((a != null && b == null) || (a == null && b != null)) {
       return false;
+    }
 
-    if (!_equalMaps(a!.letters, b!.letters))
+    if (!_equalMaps(a!.letters, b!.letters)) {
       return false;
+    }
 
-    if (!_equalMaps(a.numbers, b.numbers))
+    if (!_equalMaps(a.numbers, b.numbers)) {
       return false;
+    }
 
-    if (!_equalMaps(a.whiteSpaces, b.whiteSpaces))
+    if (!_equalMaps(a.whiteSpaces, b.whiteSpaces)) {
       return false;
+    }
 
-    if (!_equalMaps(a.controlChars, b.controlChars))
+    if (!_equalMaps(a.controlChars, b.controlChars)) {
       return false;
+    }
 
-    if (!_equalMaps(a.specialChars, b.specialChars))
+    if (!_equalMaps(a.specialChars, b.specialChars)) {
       return false;
+    }
 
     return true;
   }
@@ -76,12 +87,12 @@ void main() {
       )},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = analyzeText(elem['input'] as String);
         expect(equalsTextAnalysisResults(_actual, elem['expectedOutput'] as TextAnalysisCharacterCounts), true);
       });
-    });
+    }
   });
 
   group("TextAnalysis.analyseTextNotCaseSensitive:", () {
@@ -96,11 +107,11 @@ void main() {
       )},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = analyzeText(elem['input'] as String, caseSensitive: false);
         expect(equalsTextAnalysisResults(_actual, elem['expectedOutput'] as TextAnalysisCharacterCounts), true);
       });
-    });
+    }
   });
 }

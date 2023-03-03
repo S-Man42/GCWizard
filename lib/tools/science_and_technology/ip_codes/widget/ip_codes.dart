@@ -7,6 +7,8 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/tools/science_and_technology/ip_codes/logic/ip_codes.dart';
 
 class IPCodes extends StatefulWidget {
+  const IPCodes({Key? key}) : super(key: key);
+
   @override
   IPCodesState createState() => IPCodesState();
 }
@@ -50,13 +52,13 @@ class IPCodesState extends State<IPCodes> {
   Widget _buildOutput() {
     return GCWColumnedMultilineOutput(
         firstRows: [Container(
+                      padding: const EdgeInsets.only(bottom: 10),
                       child: GCWText(text: i18n(context, 'ipcodes_${_currentIPClass}_description')),
-                      padding: EdgeInsets.only(bottom: 10),
                     )],
         data: IP_CODES[_currentIPClass]!.map((key) {
                 return [key, _ipTexts(key)];
               }).toList(),
-        flexValues: [1, 4]
+        flexValues: const [1, 4]
     );
   }
 }

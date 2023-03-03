@@ -51,7 +51,7 @@ class VariableCoordinateSingleResult {
   LatLng coordinate;
   Map<String, String>? variables;
 
-  VariableCoordinateSingleResult(this.coordinate, this.variables);
+  VariableCoordinateSingleResult(this.coordinate, [this.variables]);
 }
 
 VariableCoordinateResults parseVariableLatLon(String coordinate, Map<String, String> substitutions, {ProjectionData? projectionData}) {
@@ -100,7 +100,7 @@ VariableCoordinateResults parseVariableLatLon(String coordinate, Map<String, Str
               coordinate.toLatLng()!,
               parsedBearing,
               projectionData.distanceUnit.toMeter(parsedDistance),
-              defaultEllipsoid
+              projectionData.ellipsoid ?? defaultEllipsoid
           );
           if (revProjected.isEmpty) return [];
 
@@ -116,7 +116,7 @@ VariableCoordinateResults parseVariableLatLon(String coordinate, Map<String, Str
               coordinate.toLatLng()!,
               parsedBearing,
               projectionData.distanceUnit.toMeter(parsedDistance),
-              defaultEllipsoid
+              projectionData.ellipsoid ?? defaultEllipsoid
             ),
             expandedText.variables
           );
@@ -129,21 +129,23 @@ VariableCoordinateResults parseVariableLatLon(String coordinate, Map<String, Str
       //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-      if (parsedCoord.coordinate.toLatLng() == null)
+      if (parsedCoord.coordinate.toLatLng() == null) {
         continue;
+      }
 
       coords.addAll(_projectCoordinates(parsedCoord.coordinate));
 
-      if (parsedCoord.leftPadCoordinate != null && parsedCoord.leftPadCoordinate!.toLatLng() != null)
+      if (parsedCoord.leftPadCoordinate != null) {
         leftPadCoords.addAll(_projectCoordinates(parsedCoord.leftPadCoordinate!));
+      }
 
     } else {
       var parsedCoord = _parseCoordText(_removeBrackets(expandedText.result));
       if (parsedCoord == null || parsedCoord.coordinate.toLatLng() == null) continue;
 
       coords.add(VariableCoordinateSingleResult(parsedCoord.coordinate.toLatLng()!, expandedText.variables));
-      if (parsedCoord.leftPadCoordinate != null && parsedCoord.leftPadCoordinate!.toLatLng() != null) {
-        leftPadCoords.add(VariableCoordinateSingleResult(parsedCoord.leftPadCoordinate!.toLatLng()!, expandedText.variables));
+      if (parsedCoord.leftPadCoordinate != null) {
+        leftPadCoords.add(VariableCoordinateSingleResult(parsedCoord.leftPadCoordinate!.toLatLng(), expandedText.variables));
       }
     }
   }

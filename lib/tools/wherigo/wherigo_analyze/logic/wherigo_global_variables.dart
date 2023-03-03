@@ -4,11 +4,11 @@ List<String> errorMsg_MediaFiles = [];
 
 List<List<String>> outputHeader = [];
 
-WherigoCartridgeGWC WherigoCartridgeGWCData = WherigoCartridgeGWC(
+WherigoCartridgeGWC WherigoCartridgeGWCData = const WherigoCartridgeGWC(
     MediaFilesHeaders: [],
     MediaFilesContents: [], ResultsGWC: []);
 
-WherigoCartridgeLUA WherigoCartridgeLUAData = WherigoCartridgeLUA(
+WherigoCartridgeLUA WherigoCartridgeLUAData = const WherigoCartridgeLUA(
     Characters: [],
     Items: [],
     Tasks: [],

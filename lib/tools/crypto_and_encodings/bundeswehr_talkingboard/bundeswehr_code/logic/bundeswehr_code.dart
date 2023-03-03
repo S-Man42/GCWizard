@@ -14,17 +14,19 @@ class BundeswehrTalkingBoardCodingOutput {
 
 BundeswehrTalkingBoardCodingOutput encodeBundeswehr(
     String? plainText, BundeswehrTalkingBoardAuthentificationTable? tableEncoding) {
-  if (tableEncoding == null || tableEncoding.Encoding!.isEmpty)
+  if (tableEncoding == null || tableEncoding.Encoding!.isEmpty) {
     return BundeswehrTalkingBoardCodingOutput(
         ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CUSTOM_NUMERAL_TABLE, Details: '');
+  }
 
-  if (plainText == null || plainText.isEmpty)
+  if (plainText == null || plainText.isEmpty) {
     return BundeswehrTalkingBoardCodingOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_CODE_RESPONSE_OK, Details: '');
+  }
 
   plainText = plainText.toUpperCase();
 
   List<String> result = [];
-  var random = new Random();
+  var random = Random();
   plainText.split('').forEach((char) {
     if (random.nextInt(100) > 75) {
       result.add(_getObfuscatedTupel(tableEncoding));
@@ -37,14 +39,16 @@ BundeswehrTalkingBoardCodingOutput encodeBundeswehr(
 
 BundeswehrTalkingBoardCodingOutput decodeBundeswehr(
     String? cypherText, BundeswehrTalkingBoardAuthentificationTable? tableNumeralCode) {
-  if (tableNumeralCode == null || tableNumeralCode.Content.isEmpty)
+  if (tableNumeralCode == null || tableNumeralCode.Content.isEmpty) {
     return BundeswehrTalkingBoardCodingOutput(
         ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CUSTOM_NUMERAL_TABLE, Details: '');
+  }
 
   String result = '';
 
-  if (cypherText == null || cypherText.isEmpty)
+  if (cypherText == null || cypherText.isEmpty) {
     return BundeswehrTalkingBoardCodingOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_CODE_RESPONSE_OK, Details: result);
+  }
 
   cypherText = cypherText.toUpperCase();
 
@@ -70,14 +74,15 @@ String _decodeNumeralCode(String tupel, BundeswehrTalkingBoardAuthentificationTa
     index = tableNumeralCode.xAxis.indexOf(tupel[0]) + 13 * tableNumeralCode.yAxis.indexOf(tupel[1]);
   }
 
-  if (0 < index && index < 169)
+  if (0 < index && index < 169) {
     return tableNumeralCode.Content[index];
-  else
+  } else {
     return '';
+  }
 }
 
 String _getObfuscatedTupel(BundeswehrTalkingBoardAuthentificationTable tableNumeralCode) {
-  var random = new Random();
+  var random = Random();
   if (random.nextInt(100) > 50) {
     return tableNumeralCode.yAxis[random.nextInt(13)] + tableNumeralCode.yAxis[random.nextInt(13)];
   } else {

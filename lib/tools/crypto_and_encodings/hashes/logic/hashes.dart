@@ -5,7 +5,7 @@ import 'package:pointycastle/export.dart';
 
 // Wrapper for PointyCastle library
 String _digest(Digest digest, String? data) {
-  if (data == null) data = '';
+  data ??= '';
 
   var dataToDigest = utf8.encode(data);
   return _toHexString(digest.process(Uint8List.fromList(dataToDigest)));
@@ -13,10 +13,10 @@ String _digest(Digest digest, String? data) {
 
 // Wrapper for PointyCastle library
 String _hMac(HMac hmac, String? data, String? key) {
-  if (data == null) data = '';
-  if (key == null) key = '';
+  data ??= '';
+  key ??= '';
 
-  hmac..init(KeyParameter(Uint8List.fromList(utf8.encode(key))));
+  hmac.init(KeyParameter(Uint8List.fromList(utf8.encode(key))));
   var dataToDigest = utf8.encode(data);
   return _toHexString(hmac.process(Uint8List.fromList(dataToDigest)));
 }

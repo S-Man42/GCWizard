@@ -17,6 +17,8 @@ import 'package:gc_wizard/tools/science_and_technology/telegraphs/murray/logic/m
 part 'package:gc_wizard/tools/science_and_technology/telegraphs/murray/widget/murray_segment_display.dart';
 
 class MurrayTelegraph extends StatefulWidget {
+  const MurrayTelegraph({Key? key}) : super(key: key);
+
   @override
   MurrayTelegraphState createState() => MurrayTelegraphState();
 }
@@ -89,7 +91,7 @@ class MurrayTelegraphState extends State<MurrayTelegraph> {
   Widget _buildVisualDecryption() {
     var currentDisplay = buildSegmentMap(_currentDisplays);
 
-    var onChanged = (Map<String, bool> d) {
+    onChanged(Map<String, bool> d) {
       setState(() {
         var newSegments = <String>[];
         d.forEach((key, value) {
@@ -99,14 +101,14 @@ class MurrayTelegraphState extends State<MurrayTelegraph> {
 
         _currentDisplays.replaceLastSegment(newSegments);
       });
-    };
+    }
 
     return Column(
       children: <Widget>[
         Container(
           width: 180,
           height: 220,
-          padding: EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
+          padding: const EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
           child: Row(
             children: <Widget>[
               Expanded(

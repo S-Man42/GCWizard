@@ -215,8 +215,9 @@ ReverseWherigoWaldmeister? parseReverseWherigoWaldmeister(String input) {
 
   var match = matches.elementAt(0);
 
-  if (match.group(1) == null || match.group(3) == null || match.group(5) == null)
+  if (match.group(1) == null || match.group(3) == null || match.group(5) == null) {
     return null;
+  }
 
   var a = int.tryParse(match.group(1)!);
   var b = int.tryParse(match.group(3)!);

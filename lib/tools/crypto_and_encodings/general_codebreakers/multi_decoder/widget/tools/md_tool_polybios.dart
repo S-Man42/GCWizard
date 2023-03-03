@@ -24,7 +24,7 @@ class MultiDecoderToolPolybios extends AbstractMultiDecoderTool {
                   mode: PolybiosMode.AZ09,
                   modificationMode:
                       _parseStringToEnum(stringNullableTypeCheck(options[MDT_POLYBIOS_OPTION_MODE], null)));
-              return polybiosOutput == null ? null : polybiosOutput.output;
+              return polybiosOutput?.output;
             },
             requiresKey: true,
             options: options,

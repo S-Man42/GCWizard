@@ -19,10 +19,12 @@ int extractIntegerFromText(String text, {bool allowNegative = true}) {
 
 String normalizeUmlauts(String input) {
   return input.split('').map((letter) {
-    if (letter == String.fromCharCode(223)) //ß
+    if (letter == String.fromCharCode(223)) {
       return 'ss';
-    if (letter == String.fromCharCode(7838)) //Capital ß = ẞ
+    }
+    if (letter == String.fromCharCode(7838)) {
       return 'SS';
+    }
 
     var isLowerCase = letter == letter.toLowerCase();
 
@@ -125,16 +127,18 @@ bool isOnlyNumerals(String input) {
 }
 
 String removeControlCharacters(String input) {
-  if (input.isEmpty)
+  if (input.isEmpty) {
     return input;
+  }
 
   var removedCodes = input.codeUnits.where((element) => element >= 32).toList();
   return String.fromCharCodes(removedCodes);
 }
 
 String normalizeCharacters(String input) {
-  if (input.isEmpty)
+  if (input.isEmpty) {
     return input;
+  }
 
   final Map<String, String> _ALTERNATE_CHARACTERS = {
     // https://www.compart.com/de/unicode/category/Zs and Tab
@@ -153,8 +157,8 @@ String normalizeCharacters(String input) {
 
 List<String> allCharacters() {
   var characters = <String>[];
-  ALL_ALPHABETS.forEach((alphabet) {
+  for (var alphabet in ALL_ALPHABETS) {
     characters.addAll(alphabet.alphabet.keys);
-  });
+  }
   return characters.toSet().toList();
 }

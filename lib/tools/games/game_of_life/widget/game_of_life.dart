@@ -14,6 +14,8 @@ import 'package:gc_wizard/tools/games/game_of_life/logic/game_of_life.dart';
 import 'package:gc_wizard/tools/games/game_of_life/widget/game_of_life_board.dart';
 
 class GameOfLife extends StatefulWidget {
+  const GameOfLife({Key? key}) : super(key: key);
+
   @override
   GameOfLifeState createState() => GameOfLifeState();
 }
@@ -35,7 +37,7 @@ class GameOfLifeState extends State<GameOfLife> {
   late TextEditingController _currentCustomBirthController;
   var _currentCustomInverse = false;
 
-  var _maskInputFormatter = WrapperForMaskTextInputFormatter(mask: '*********', filter: {"*": RegExp(r'[012345678]')});
+  final _maskInputFormatter = WrapperForMaskTextInputFormatter(mask: '*********', filter: {"*": RegExp(r'[012345678]')});
 
   @override
   void initState() {
@@ -177,6 +179,7 @@ class GameOfLifeState extends State<GameOfLife> {
         ),
         Container(
           constraints: BoxConstraints(maxWidth: min(500, MediaQuery.of(context).size.height * 0.8)),
+          margin: const EdgeInsets.symmetric(vertical: 20.0),
           child: GameOfLifeBoard(
             state: _currentBoard,
             size: _currentSize,
@@ -186,7 +189,6 @@ class GameOfLifeState extends State<GameOfLife> {
               });
             },
           ),
-          margin: EdgeInsets.symmetric(vertical: 20.0),
         ),
         Row(
           children: [
@@ -195,7 +197,9 @@ class GameOfLifeState extends State<GameOfLife> {
               rotateDegrees: 180.0,
               onPressed: () {
                 setState(() {
-                  for (int i = 0; i < 10; i++) _backwards();
+                  for (int i = 0; i < 10; i++) {
+                    _backwards();
+                  }
                 });
               },
             ),
@@ -329,7 +333,7 @@ class GameOfLifeState extends State<GameOfLife> {
           births: _toSet(_currentCustomBirth),
           isInverse: _currentCustomInverse);
     } else {
-      rules = _allRules[_currentRules] ?? GameOfLifeRules();
+      rules = _allRules[_currentRules] ?? const GameOfLifeRules();
     }
 
     _boards.add(calculateGameOfLifeStep(_currentBoard, rules, isWrapWorld: _currentWrapWorld));

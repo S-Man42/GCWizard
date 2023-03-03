@@ -1441,10 +1441,10 @@ List<PantoneColor> findSimilarPantoneColors(GCWBaseColor rgb, List<PantoneColor>
     var nearestRGBs = findNearestRGBs(rgb, pantoneRGBs, distance: distance);
 
     if (nearestRGBs.length >= 5) {
-      nearestRGBs.forEach((nearestRGB) {
+      for (var nearestRGB in nearestRGBs) {
         var nearestPantone = _pantoneByRGB(nearestRGB, pantoneValues);
-        if (nearestPantone != null) return out.add(nearestPantone);
-      });
+        if (nearestPantone != null) continue;
+      }
 
       return out;
     }

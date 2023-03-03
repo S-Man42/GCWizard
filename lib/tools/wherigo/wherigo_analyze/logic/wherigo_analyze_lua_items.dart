@@ -57,17 +57,21 @@ WherigoItemData _analyzeAndExtractItemSectionData(List<String> lines) {
       description = getLineData(description, LUAname, 'Description', _obfuscatorFunction, _obfuscatorTable).trim();
     }
 
-    if (lines[i].trim().startsWith(LUAname + '.Visible'))
+    if (lines[i].trim().startsWith(LUAname + '.Visible')) {
       visible = getLineData(lines[i], LUAname, 'Visible', _obfuscatorFunction, _obfuscatorTable);
+    }
 
-    if (lines[i].trim().startsWith(LUAname + '.Media'))
+    if (lines[i].trim().startsWith(LUAname + '.Media')) {
       media = getLineData(lines[i], LUAname, 'Media', _obfuscatorFunction, _obfuscatorTable).trim();
+    }
 
-    if (lines[i].trim().startsWith(LUAname + '.Icon'))
+    if (lines[i].trim().startsWith(LUAname + '.Icon')) {
       icon = getLineData(lines[i], LUAname, 'Icon', _obfuscatorFunction, _obfuscatorTable);
+    }
 
-    if (lines[i].trim().startsWith(LUAname + '.Locked'))
+    if (lines[i].trim().startsWith(LUAname + '.Locked')) {
       locked = getLineData(lines[i], LUAname, 'Locked', _obfuscatorFunction, _obfuscatorTable);
+    }
 
     if (lines[i].trim().startsWith(LUAname + '.Opened')) {
       opened = getLineData(lines[i], LUAname, 'Opened', _obfuscatorFunction, _obfuscatorTable);
@@ -76,15 +80,16 @@ WherigoItemData _analyzeAndExtractItemSectionData(List<String> lines) {
     if (lines[i].trim().startsWith(LUAname + '.ObjectLocation')) {
       location =
           lines[i].trim().replaceAll(LUAname + '.ObjectLocation', '').replaceAll(' ', '').replaceAll('=', '');
-      if (location.endsWith('INVALID_ZONEPOINT'))
+      if (location.endsWith('INVALID_ZONEPOINT')) {
         location = '';
-      else if (location.startsWith('ZonePoint')) {
+      } else if (location.startsWith('ZonePoint')) {
         location = location.replaceAll('ZonePoint(', '').replaceAll(')', '').replaceAll(' ', '');
         zonePoint = WherigoZonePoint(double.parse(location.split(',')[0]), double.parse(location.split(',')[1]),
             double.parse(location.split(',')[2]));
         location = 'ZonePoint';
-      } else
+      } else {
         location = getLineData(lines[i], LUAname, 'ObjectLocation', _obfuscatorFunction, _obfuscatorTable);
+      }
     }
   }
   return WherigoItemData(

@@ -8,7 +8,7 @@ abstract class Unit {
   late double Function (double) fromReference;
 
   Unit(this.name, this.symbol, this.isReferenceUnit, this.toReference, this.fromReference) {
-    if (this.isReferenceUnit) {
+    if (isReferenceUnit) {
       toReference = (e) => e;
       fromReference = (e) => e;
     }

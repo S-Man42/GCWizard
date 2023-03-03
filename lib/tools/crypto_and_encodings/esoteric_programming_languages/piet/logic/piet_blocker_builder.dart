@@ -38,7 +38,7 @@ class _PietBlockerBuilder {
 
   List<List<int>> _data = [];
   late _PietBlock _block;
-  var _blockCache = Map<Point<int>, _PietBlock>();
+  final _blockCache = <Point<int>, _PietBlock>{};
   int _width = 0;
   int _height = 0;
 
@@ -66,10 +66,10 @@ class _PietBlockerBuilder {
   }
 
   void _buildPietBlockRec(int x, int y, int currentColor) {
-    var queue = Set<Point<int>>();
+    var queue = <Point<int>>{};
     queue.add(Point<int>(x, y));
 
-    while (!queue.isEmpty) {
+    while (queue.isNotEmpty) {
       var queuePixel = queue.last;
       queue.remove(queuePixel);
       _block.addPixel(queuePixel);
@@ -84,11 +84,13 @@ class _PietBlockerBuilder {
   }
 
   Set<Point<int>> _addIsValidBlock(int x, int y, int color, Set<Point<int>> queue) {
-    if (x < 0 || x >= _width || y < 0 || y >= _height) // out of bounds
+    if (x < 0 || x >= _width || y < 0 || y >= _height) {
       return queue;
+    }
     // colors don't match - you hit an edge
-    if (_data[x][y] == color && !_block.containsPixel(Point<int>(x, y)))
+    if (_data[x][y] == color && !_block.containsPixel(Point<int>(x, y))) {
       queue.add(Point<int>(x, y));
+    }
     return queue;
   }
 }

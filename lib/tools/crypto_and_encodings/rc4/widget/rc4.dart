@@ -9,6 +9,8 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rc4/logic/rc4.dart';
 
 class RC4 extends StatefulWidget {
+  const RC4({Key? key}) : super(key: key);
+
   @override
   RC4State createState() => RC4State();
 }
@@ -48,8 +50,9 @@ class RC4State extends State<RC4> {
           },
         ),
         Row(children: <Widget>[
-          Expanded(child: GCWText(text: i18n(context, 'rc4_format') + ':'), flex: 1),
+          Expanded(flex: 1, child: GCWText(text: i18n(context, 'rc4_format') + ':')),
           Expanded(
+              flex: 2,
               child: GCWDropDown<InputFormat>(
                 value: _currentInputFormat,
                 onChanged: (value) {
@@ -63,8 +66,7 @@ class RC4State extends State<RC4> {
                     child: mode.value,
                   );
                 }).toList(),
-              ),
-              flex: 2),
+              )),
         ]),
         GCWTextDivider(text: i18n(context, 'common_key')),
         GCWTextField(
@@ -76,8 +78,9 @@ class RC4State extends State<RC4> {
           },
         ),
         Row(children: <Widget>[
-          Expanded(child: GCWText(text: i18n(context, 'rc4_format') + ':'), flex: 1),
+          Expanded(flex: 1, child: GCWText(text: i18n(context, 'rc4_format') + ':')),
           Expanded(
+              flex: 2,
               child: GCWDropDown<InputFormat>(
                 value: _currentKeyFormat,
                 onChanged: (value) {
@@ -91,13 +94,13 @@ class RC4State extends State<RC4> {
                     child: mode.value,
                   );
                 }).toList(),
-              ),
-              flex: 2),
+              )),
         ]),
         GCWTextDivider(text: i18n(context, 'common_output') + ' ' + i18n(context, 'rc4_format')),
         Row(children: <Widget>[
-          Expanded(child: GCWText(text: i18n(context, 'rc4_format') + ':'), flex: 1),
+          Expanded(flex: 1, child: GCWText(text: i18n(context, 'rc4_format') + ':')),
           Expanded(
+              flex: 2,
               child: GCWDropDown<OutputFormat>(
                 value: _currentOutputFormat,
                 onChanged: (value) {
@@ -111,8 +114,7 @@ class RC4State extends State<RC4> {
                     child: mode.value,
                   );
                 }).toList(),
-              ),
-              flex: 2),
+              )),
         ]),
         _buildOutput(context)
       ],
@@ -121,7 +123,7 @@ class RC4State extends State<RC4> {
 
   Widget _buildOutput(BuildContext context) {
     if (_currentInput.isEmpty) {
-      return GCWDefaultOutput();
+      return const GCWDefaultOutput();
     }
 
     var _currentOutput =
@@ -139,7 +141,7 @@ class RC4State extends State<RC4> {
           break;
         default:
       }
-      return GCWDefaultOutput();
+      return const GCWDefaultOutput();
     }
 
     return GCWDefaultOutput(

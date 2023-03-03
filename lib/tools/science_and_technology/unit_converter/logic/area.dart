@@ -10,8 +10,8 @@ class Area extends Unit {
     bool isReference = false,
     required double inSquareMeters,
   }) : super(name, symbol, isReference, (e) => e * inSquareMeters, (e) => e / inSquareMeters) {
-    toSquareMeter = this.toReference;
-    fromSquareMeter = this.fromReference;
+    toSquareMeter = toReference;
+    fromSquareMeter = fromReference;
   }
 }
 

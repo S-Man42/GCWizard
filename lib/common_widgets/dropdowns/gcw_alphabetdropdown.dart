@@ -48,7 +48,7 @@ class _GCWAlphabetDropDownState extends State<GCWAlphabetDropDown> {
       ),
       if (_currentMode == widget.customModeKey)
         GCWTextField(
-          hintText: widget.textFieldHintText == null ? i18n(context, 'common_alphabet') : widget.textFieldHintText,
+          hintText: widget.textFieldHintText ?? i18n(context, 'common_alphabet'),
           controller: widget.textFieldController,
           onChanged: widget.onCustomAlphabetChanged,
         ),

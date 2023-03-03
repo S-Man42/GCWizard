@@ -473,82 +473,95 @@ String _getText(_CHEF_textId id, String parameter, String language) {
   var text = '';
   switch (id) {
     case _CHEF_textId.Put:
-      if (language == 'ENG')
+      if (language == 'ENG') {
         text = 'Put %1 into the mixing bowl.';
-      else
+      } else {
         text = '%1 in die Schüssel geben.';
+      }
       break;
     case _CHEF_textId.Add:
-      if (language == 'ENG')
+      if (language == 'ENG') {
         text = 'Add %1 into the mixing bowl.';
-      else
+      } else {
         text = '%1 dazugeben.';
+      }
       break;
     case _CHEF_textId.Combine:
-      if (language == 'ENG')
+      if (language == 'ENG') {
         text = 'Combine %1 into mixing bowl.';
-      else
+      } else {
         text = '%1 kombinieren.';
+      }
       break;
     case _CHEF_textId.Ingredients:
-      if (language == 'ENG')
+      if (language == 'ENG') {
         text = 'Ingredients.';
-      else
+      } else {
         text = 'Zutaten:';
+      }
       break;
     case _CHEF_textId.Cooking_time:
-      if (language == 'ENG')
+      if (language == 'ENG') {
         text = 'Cooking time: %1 minutes.';
-      else
+      } else {
         text = 'Garzeit: %1 Minuten.';
+      }
       break;
     case _CHEF_textId.Pre_heat_oven:
-      if (language == 'ENG')
+      if (language == 'ENG') {
         text = 'Pre-heat oven to %1 degrees Celsius.';
-      else
+      } else {
         text = 'Ofen auf %1 Grad Celsius vorheizen.';
+      }
       break;
     case _CHEF_textId.Method:
-      if (language == 'ENG')
+      if (language == 'ENG') {
         text = 'Method.';
-      else
+      } else {
         text = 'Zubereitung:';
+      }
       break;
     case _CHEF_textId.Liquefy:
-      if (language == 'ENG')
+      if (language == 'ENG') {
         text = 'Liquefy %1.';
-      else
+      } else {
         text = '%1 zerlassen.';
+      }
       break;
     case _CHEF_textId.Liquefy_contents:
-      if (language == 'ENG')
+      if (language == 'ENG') {
         text = 'Liquefy contents of the mixing bowl.';
-      else
+      } else {
         text = 'Inhalt der Schüssel auf dem Stövchen erhitzen.';
+      }
       break;
     case _CHEF_textId.Pour:
-      if (language == 'ENG')
+      if (language == 'ENG') {
         text = 'Pour contents of the mixing bowl into the baking dish.';
-      else
+      } else {
         text = 'Schüssel in eine Servierschale stürzen.';
+      }
       break;
     case _CHEF_textId.Serves:
-      if (language == 'ENG')
+      if (language == 'ENG') {
         text = 'Serves 1.';
-      else
+      } else {
         text = 'Portionen: 1.';
+      }
       break;
     case _CHEF_textId.Serve_with:
-      if (language == 'ENG')
+      if (language == 'ENG') {
         text = 'Serve with %1.';
-      else
+      } else {
         text = 'Serviere mit %1.';
+      }
       break;
     case _CHEF_textId.Clean:
-      if (language == 'ENG')
+      if (language == 'ENG') {
         text = 'Clean %1 mixing bowl.';
-      else
+      } else {
         text = '%1 Schüssel abwaschen.';
+      }
       break;
   }
 

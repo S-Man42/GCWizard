@@ -6,8 +6,8 @@ class Energy extends Unit {
 
   Energy({required String name, required String symbol, bool isReference = false, required double inJoule})
       : super(name, symbol, isReference, (e) => e * inJoule, (e) => e / inJoule) {
-    toJoule = this.toReference;
-    fromJoule = this.fromReference;
+    toJoule = toReference;
+    fromJoule = fromReference;
   }
 }
 

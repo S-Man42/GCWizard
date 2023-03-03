@@ -15,8 +15,9 @@ Future<bool> exportCoordinates(BuildContext context, List<GCWMapPoint> points, L
     defaultName = 'GC Wizard Export ' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now());
   }
 
-  if ((points.isEmpty) && (polylines.isEmpty))
+  if ((points.isEmpty) && (polylines.isEmpty)) {
     return false;
+  }
 
   if (kmlFormat) {
     data = _KmlWriter().asString(defaultName, points, polylines);
@@ -61,19 +62,19 @@ class _GpxWriter {
       builder.attribute('xmlns:gsak', 'http://www.gsak.net/xmlv1/6');
 
       var i = 0;
-      points.forEach((point) {
+      for (var point in points) {
         _writePoint(builder, (i != 0), name, 'S' + i.toString(), point);
         i++;
-      });
+      }
 
       var circles = points.where((GCWMapPoint point) => point.hasCircle()).map((point) => point.circle!).toList();
-      circles.forEach((circle) {
+      for (var circle in circles) {
         _writeLines(builder, name, 'circle', circle.shape);
-      });
+      }
 
-      polylines.forEach((geodetic) {
+      for (var geodetic in polylines) {
         _writeLines(builder, name, 'line', geodetic.points.map((mapPoint) => mapPoint.point).toList());
-      });
+      }
     });
 
     return builder.buildDocument();
@@ -85,8 +86,9 @@ class _GpxWriter {
       _writeAttribute(builder, 'lon', wpt.point.longitude);
       if (!waypoint) {
         _writeElement(builder, 'name', cacheName);
-        if (wpt.markerText != null)
+        if (wpt.markerText != null) {
           _writeElement(builder, 'desc', wpt.markerText!);
+        }
         _writeElement(builder, 'urlname', cacheName);
         _writeElement(builder, 'sym', 'Geocache');
         _writeElement(builder, 'type', 'Geocache|User defined cache');
@@ -100,8 +102,9 @@ class _GpxWriter {
           });
         });
       } else {
-        if (wpt.markerText != null)
+        if (wpt.markerText != null) {
           _writeElement(builder, 'name', wpt.markerText!);
+        }
         _writeElement(builder, 'cmt', '');
         _writeElement(builder, 'desc', '');
         _writeElement(builder, 'sym', 'Virtual Stage');
@@ -119,12 +122,12 @@ class _GpxWriter {
       _writeElement(builder, 'name', tagName);
 
       builder.element('trkseg', nest: () {
-        shapes.forEach((point) {
+        for (var point in shapes) {
           builder.element('trkpt', nest: () {
             _writeAttribute(builder, 'lat', point.latitude);
             _writeAttribute(builder, 'lon', point.longitude);
           });
-        });
+        }
       });
     });
 
@@ -154,7 +157,7 @@ class _KmlWriter {
   XmlNode _build(String name, List<GCWMapPoint> points, List<GCWMapPolyline> polylines) {
     final builder = XmlBuilder();
     var i = 0;
-    var styleMap = Map<String, String>();
+    var styleMap = <String, String>{};
 
     if ((points.isEmpty) && (polylines.isEmpty)) return builder.buildDocument();
     elementNames.clear();
@@ -281,12 +284,14 @@ class _KmlWriter {
 
           for (i = 0; i < points.length; i++) {
             var waypointStyle = styleMap['waypoint' + i.toString()];
-            if (waypointStyle == null)
+            if (waypointStyle == null) {
               continue;
+            }
 
-            if (i == 0)
+            if (i == 0) {
               _writePoint(
                   builder, false, name, 'S' + i.toString(), points[i], '#' + waypointStyle);
+            }
             _writePoint(
                 builder, true, name, 'S' + i.toString(), points[i], '#' + waypointStyle);
           }
@@ -295,8 +300,9 @@ class _KmlWriter {
 
         for (i = 0; i < circles.length; i++) {
           var circleStyle = styleMap['circle' + i.toString()];
-          if (circleStyle == null)
+          if (circleStyle == null) {
             continue;
+          }
 
           _writeLines(builder, circles[i].shape, '#' + circleStyle);
         }
@@ -304,8 +310,9 @@ class _KmlWriter {
         if (polylines.isNotEmpty) {
           for (i = 0; i < polylines.length; i++) {
             var polylineStyle = styleMap['polyline' + i.toString()];
-            if (polylineStyle == null)
+            if (polylineStyle == null) {
               continue;
+            }
 
             _writeLines(builder, polylines[i].points.map((mapPoint) => mapPoint.point).toList(),
                 '#' + polylineStyle);

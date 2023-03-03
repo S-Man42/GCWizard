@@ -20,7 +20,7 @@ class _GCWStatefulDropDownState<T extends Object> extends State<GCWStatefulDropD
 
   @override
   Widget build(BuildContext context) {
-    if (_currentValue == null) _currentValue = widget.value as T;
+    _currentValue ??= widget.value as T;
 
     return GCWDropDown<T>(
       value: _currentValue!,

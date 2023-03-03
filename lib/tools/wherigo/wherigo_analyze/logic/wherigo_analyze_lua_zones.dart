@@ -37,8 +37,9 @@ WherigoZoneData _analyzeAndExtractZoneSectionData(List<String> lines) {
 
   for (int i = 0; i < lines.length; i++) {
     lines[i] = lines[i].trim();
-    if (lines[i].startsWith(LUAname + '.Id'))
+    if (lines[i].startsWith(LUAname + '.Id')) {
       id = getLineData(lines[i], LUAname, 'Id', _obfuscatorFunction, _obfuscatorTable);
+    }
 
     if (lines[i].startsWith(LUAname + '.Name')) {
       name = getLineData(lines[i], LUAname, 'Name', _obfuscatorFunction, _obfuscatorTable);
@@ -58,33 +59,42 @@ WherigoZoneData _analyzeAndExtractZoneSectionData(List<String> lines) {
       if (description.startsWith('WWB_multi')) description = removeWWB(description);
     }
 
-    if (lines[i].startsWith(LUAname + '.Visible'))
+    if (lines[i].startsWith(LUAname + '.Visible')) {
       visible = getLineData(lines[i], LUAname, 'Visible', _obfuscatorFunction, _obfuscatorTable);
+    }
 
-    if (lines[i].startsWith(LUAname + '.Media'))
+    if (lines[i].startsWith(LUAname + '.Media')) {
       media = getLineData(lines[i], LUAname, 'Media', _obfuscatorFunction, _obfuscatorTable);
+    }
 
-    if (lines[i].startsWith(LUAname + '.Icon'))
+    if (lines[i].startsWith(LUAname + '.Icon')) {
       icon = getLineData(lines[i], LUAname, 'Icon', _obfuscatorFunction, _obfuscatorTable);
+    }
 
-    if (lines[i].startsWith(LUAname + '.Active'))
+    if (lines[i].startsWith(LUAname + '.Active')) {
       active = getLineData(lines[i], LUAname, 'Active', _obfuscatorFunction, _obfuscatorTable);
+    }
 
-    if (lines[i].startsWith(LUAname + '.DistanceRangeUOM ='))
+    if (lines[i].startsWith(LUAname + '.DistanceRangeUOM =')) {
       distanceRangeUOM = getLineData(lines[i], LUAname, 'DistanceRangeUOM', _obfuscatorFunction, _obfuscatorTable);
+    }
 
-    if (lines[i].startsWith(LUAname + '.ProximityRangeUOM ='))
+    if (lines[i].startsWith(LUAname + '.ProximityRangeUOM =')) {
       proximityRangeUOM =
           getLineData(lines[i], LUAname, 'ProximityRangeUOM', _obfuscatorFunction, _obfuscatorTable);
+    }
 
-    if (lines[i].startsWith(LUAname + '.DistanceRange ='))
+    if (lines[i].startsWith(LUAname + '.DistanceRange =')) {
       distanceRange = getLineData(lines[i], LUAname, 'DistanceRange', _obfuscatorFunction, _obfuscatorTable);
+    }
 
-    if (lines[i].startsWith(LUAname + '.ShowObjects'))
+    if (lines[i].startsWith(LUAname + '.ShowObjects')) {
       showObjects = getLineData(lines[i], LUAname, 'ShowObjects', _obfuscatorFunction, _obfuscatorTable);
+    }
 
-    if (lines[i].startsWith(LUAname + '.ProximityRange ='))
+    if (lines[i].startsWith(LUAname + '.ProximityRange =')) {
       proximityRange = getLineData(lines[i], LUAname, 'ProximityRange', _obfuscatorFunction, _obfuscatorTable);
+    }
 
     if (lines[i].startsWith(LUAname + '.OriginalPoint')) {
       String point = getLineData(lines[i], LUAname, 'OriginalPoint', _obfuscatorFunction, _obfuscatorTable);
@@ -94,11 +104,13 @@ WherigoZoneData _analyzeAndExtractZoneSectionData(List<String> lines) {
           WherigoZonePoint(double.parse(pointdata[0]), double.parse(pointdata[1]), double.parse(pointdata[2]));
     }
 
-    if (lines[i].startsWith(LUAname + '.OutOfRangeName'))
+    if (lines[i].startsWith(LUAname + '.OutOfRangeName')) {
       outOfRange = getLineData(lines[i], LUAname, 'OutOfRangeName', _obfuscatorFunction, _obfuscatorTable);
+    }
 
-    if (lines[i].startsWith(LUAname + '.InRangeName'))
+    if (lines[i].startsWith(LUAname + '.InRangeName')) {
       inRange = getLineData(lines[i], LUAname, 'InRangeName', _obfuscatorFunction, _obfuscatorTable);
+    }
 
     if (lines[i].startsWith(LUAname + '.Points = ')) {
       i++;

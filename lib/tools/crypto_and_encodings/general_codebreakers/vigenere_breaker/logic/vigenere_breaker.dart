@@ -83,8 +83,9 @@ Future<VigenereBreakerResult> break_cipherAsync(GCWAsyncExecuterParameters? jobD
 
 void progressCounter() {
   _progress++;
-  if (_sendAsyncPort != null && (_progress % _progressStep == 0))
+  if (_sendAsyncPort != null && (_progress % _progressStep == 0)) {
     _sendAsyncPort?.send({'progress': _progress / _countCombinations});
+  }
 }
 
 VigenereBreakerResult break_cipher(String? input, VigenereBreakerType vigenereBreakerType,
@@ -92,9 +93,9 @@ VigenereBreakerResult break_cipher(String? input, VigenereBreakerType vigenereBr
     {required void Function() counterFunction}) {
   if (input == null || input.isEmpty) return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.OK);
 
-  if (((keyLengthMin < 3) || (keyLengthMin > 1000)) || ((keyLengthMax < 3) || (keyLengthMax > 1000)))
-    // key length not in the valid range 3..1000
+  if (((keyLengthMin < 3) || (keyLengthMin > 1000)) || ((keyLengthMax < 3) || (keyLengthMax > 1000))) {
     return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.KEY_LENGTH);
+  }
 
   var bigrams = getBigrams(alphabet);
   var vigenereSquare =
@@ -110,16 +111,17 @@ VigenereBreakerResult break_cipher(String? input, VigenereBreakerType vigenereBr
   var cipher_binLength = cipher_bin.where((element) => element > 0).length;
   if (cipher_binLength < 3) return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.TEXT_TOO_SHORT);
 
-  if ((keyLengthMin > cipher_binLength) && (keyLengthMax > cipher_binLength))
-    // Minimum key length must be equal or greater than the length of the ciphertext
+  if ((keyLengthMin > cipher_binLength) && (keyLengthMax > cipher_binLength)) {
     return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.KEY_TOO_LONG);
+  }
 
   keyLengthMax = min(keyLengthMax, cipher_bin.length);
 
   _progress = 0;
   _countCombinations = 0;
-  for (int keyLength = keyLengthMin; keyLength <= keyLengthMax; keyLength++)
+  for (int keyLength = keyLengthMin; keyLength <= keyLengthMax; keyLength++) {
     _countCombinations += (pow(bigrams.alphabet.length, 2) * keyLength).toInt();
+  }
 
   _progressStep = max(_countCombinations ~/ 100, 1); // 100 steps
 
@@ -151,18 +153,20 @@ VigenereBreakerResult? _bestSolution(List<VigenereBreakerResult>? keyList) {
 
   keyList = _highPassFilter(2, keyList);
   var bestFitness = keyList[0];
-  for (var i = 1; i < keyList.length; ++i)
+  for (var i = 1; i < keyList.length; ++i) {
     if (bestFitness.fitnessFiltered < keyList[i].fitnessFiltered) bestFitness = keyList[i];
+  }
 
   return bestFitness;
 }
 
 /// HighPass Filter
 List<VigenereBreakerResult> _highPassFilter(double alpha, List<VigenereBreakerResult> keyList) {
-  for (var i = 0; i < keyList.length; ++i)
+  for (var i = 0; i < keyList.length; ++i) {
     keyList[i].fitnessFiltered = alpha * keyList[i].fitness -
         (i > 0 ? keyList[i - 1].fitness : keyList[i].fitness) -
         (i < keyList.length - 1 ? keyList[i + 1].fitness : keyList[i].fitness);
+  }
 
   return keyList;
 }

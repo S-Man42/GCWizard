@@ -53,12 +53,12 @@ void main() {
       {'input' : 'ö.a', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': [['dp'],['a', 'b', 'c', 'e', 'f', 'g']]},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, segmentType: ${elem['segmentType']}', () {
         var _actual = encodeSegment(elem['input'] as String?, elem['segmentType'] as SegmentDisplayType);
         expect(_actual.displays, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("SegmentDisplay.decodeSegment:", () {
@@ -109,11 +109,11 @@ void main() {
       {'input' : 'dp bcdp dp', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': {'displays': [['dp'], ['b', 'c', 'dp'], ['dp']], 'text': '.1..'}},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, segmentType: ${elem['segmentType']}', () {
         var _actual = decodeSegment(elem['input'] as String?, elem['segmentType'] as SegmentDisplayType);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

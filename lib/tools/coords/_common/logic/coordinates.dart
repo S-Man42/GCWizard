@@ -67,7 +67,7 @@ int getCoordinateSignFromString(String text, bool isLatitude) {
   return _sign;
 }
 
-class BaseCoordinate {
+abstract class BaseCoordinate {
   late double _latitude;
   late double _longitude;
   late CoordinateFormat format;
@@ -75,7 +75,6 @@ class BaseCoordinate {
   BaseCoordinate ([double? latitude, double? longitude]) {
     _latitude = latitude ?? defaultCoordinate.latitude;
     _longitude = longitude ?? defaultCoordinate.longitude;
-    format = CoordinateFormat(CoordinateFormatKey.BASE_FORMAT);
   }
 
   // TODO: Make this null-safe. Some inheriting CoordFormats may return null here. This shall be avoided.
@@ -89,17 +88,7 @@ class BaseCoordinate {
   }
 }
 
-abstract class BaseCoordinateWithSubtypes extends BaseCoordinate {
-  BaseCoordinateWithSubtypes (CoordinateFormatKey subtypeKey, [double? latitude, double? longitude]) {
-    latitude = latitude ?? defaultCoordinate.latitude;
-    longitude = longitude ?? defaultCoordinate.longitude;
-
-    if (!isSubtypeOfCoordinateFormat(format.type, subtypeKey))
-      throw Exception('$subtypeKey is not a valid subtype of ${format.type}');
-    else
-      format.subtype = subtypeKey;
-  }
-}
+abstract class BaseCoordinateWithSubtypes extends BaseCoordinate {}
 
 class DEC extends BaseCoordinate {
   double latitude;
@@ -377,7 +366,7 @@ class UTMREF extends BaseCoordinate {
 
   @override
   LatLng toLatLng({Ellipsoid? ells}) {
-    if (ells == null) ells = defaultEllipsoid;
+    ells ??= defaultEllipsoid;
     return UTMREFtoLatLon(this, ells);
   }
 
@@ -416,7 +405,7 @@ class MGRS extends BaseCoordinate {
 
   @override
   LatLng toLatLng({Ellipsoid? ells}) {
-    if (ells == null) ells = defaultEllipsoid;
+    ells ??= defaultEllipsoid;
     return mgrsToLatLon(this, ells);
   }
 
@@ -444,7 +433,7 @@ class SwissGrid extends BaseCoordinate {
 
   @override
   LatLng toLatLng({Ellipsoid? ells}) {
-    if (ells == null) ells = defaultEllipsoid;
+    ells ??= defaultEllipsoid;
     return swissGridToLatLon(this, ells);
   }
 
@@ -470,7 +459,7 @@ class SwissGridPlus extends SwissGrid {
 
   @override
   LatLng toLatLng({Ellipsoid? ells}) {
-    if (ells == null) ells = defaultEllipsoid;
+    ells ??= defaultEllipsoid;
     return swissGridPlusToLatLon(this, ells);
   }
 
@@ -514,28 +503,34 @@ class GaussKrueger extends BaseCoordinateWithSubtypes {
   double easting;
   double northing;
 
-  static final String _ERROR_INVALID_SUBTYPE = 'No valid GaussKrueger subtype given.';
+  static const String _ERROR_INVALID_SUBTYPE = 'No valid GaussKrueger subtype given.';
 
-  GaussKrueger(CoordinateFormatKey subtypeKey, this.easting, this.northing) : super(subtypeKey) {
-    format = CoordinateFormat(CoordinateFormatKey.GAUSS_KRUEGER);
+  GaussKrueger(CoordinateFormatKey subtypeKey, this.easting, this.northing) {
+    if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.GAUSS_KRUEGER, subtypeKey)) {
+      throw Exception(_ERROR_INVALID_SUBTYPE);
+    }
+
+    format = CoordinateFormat(CoordinateFormatKey.GAUSS_KRUEGER, subtypeKey);
   }
 
   @override
   LatLng toLatLng({Ellipsoid? ells}) {
-    if (ells == null) ells = defaultEllipsoid;
+    ells ??= defaultEllipsoid;
     return gaussKruegerToLatLon(this, ells);
   }
 
   static GaussKrueger fromLatLon(LatLng coord, CoordinateFormatKey subtype, Ellipsoid ells) {
-    if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.GAUSS_KRUEGER, subtype))
+    if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.GAUSS_KRUEGER, subtype)) {
       throw Exception(_ERROR_INVALID_SUBTYPE);
+    }
 
     return latLonToGaussKrueger(coord, subtype, ells);
   }
 
   static GaussKrueger? parse(String input, {CoordinateFormatKey subtype = defaultGaussKruegerType}) {
-    if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.GAUSS_KRUEGER, subtype))
+    if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.GAUSS_KRUEGER, subtype)) {
       throw Exception(_ERROR_INVALID_SUBTYPE);
+    }
 
     return parseGaussKrueger(input, gaussKruegerCode: subtype);
   }
@@ -550,28 +545,34 @@ class Lambert extends BaseCoordinateWithSubtypes {
   double easting;
   double northing;
 
-  static final String _ERROR_INVALID_SUBTYPE = 'No valid Lambert subtype given.';
+  static const String _ERROR_INVALID_SUBTYPE = 'No valid Lambert subtype given.';
 
-  Lambert(CoordinateFormatKey subtypeKey, this.easting, this.northing) : super(subtypeKey) {
-    format = CoordinateFormat(CoordinateFormatKey.LAMBERT);
+  Lambert(CoordinateFormatKey subtypeKey, this.easting, this.northing) {
+    if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.LAMBERT, subtypeKey)) {
+      throw Exception(_ERROR_INVALID_SUBTYPE);
+    }
+
+    format = CoordinateFormat(CoordinateFormatKey.LAMBERT, subtypeKey);
   }
 
   @override
   LatLng toLatLng({Ellipsoid? ells}) {
-    if (ells == null) ells = defaultEllipsoid;
+    ells ??= defaultEllipsoid;
     return lambertToLatLon(this, ells);
   }
 
   static Lambert fromLatLon(LatLng coord, CoordinateFormatKey subtype, Ellipsoid ells) {
-    if (isSubtypeOfCoordinateFormat(CoordinateFormatKey.LAMBERT, subtype))
+    if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.LAMBERT, subtype)) {
       throw Exception(_ERROR_INVALID_SUBTYPE);
+    }
 
     return latLonToLambert(coord, subtype, ells);
   }
 
   static Lambert? parse(String input, {CoordinateFormatKey subtype = defaultLambertType}) {
-    if (isSubtypeOfCoordinateFormat(CoordinateFormatKey.LAMBERT, subtype))
+    if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.LAMBERT, subtype)) {
       throw Exception(_ERROR_INVALID_SUBTYPE);
+    }
 
     return parseLambert(input, subtype: subtype);
   }
@@ -592,7 +593,7 @@ class Mercator extends BaseCoordinate {
 
   @override
   LatLng toLatLng({Ellipsoid? ells}) {
-    if (ells == null) ells = defaultEllipsoid;
+    ells ??= defaultEllipsoid;
     return mercatorToLatLon(this, ells);
   }
 
@@ -641,10 +642,14 @@ class SlippyMap extends BaseCoordinateWithSubtypes {
   double x;
   double y;
 
-  static final String _ERROR_INVALID_SUBTYPE = 'No valid SlippyMap subtype given.';
+  static const String _ERROR_INVALID_SUBTYPE = 'No valid SlippyMap subtype given.';
 
-  SlippyMap(this.x, this.y, CoordinateFormatKey subtypeKey) : super(subtypeKey) {
-    format = CoordinateFormat(CoordinateFormatKey.SLIPPY_MAP);
+  SlippyMap(this.x, this.y, CoordinateFormatKey subtypeKey) {
+    if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.SLIPPY_MAP, subtypeKey)) {
+      throw Exception(_ERROR_INVALID_SUBTYPE);
+    }
+
+    format = CoordinateFormat(CoordinateFormatKey.SLIPPY_MAP, subtypeKey);
   }
 
   @override
@@ -653,15 +658,17 @@ class SlippyMap extends BaseCoordinateWithSubtypes {
   }
 
   static SlippyMap fromLatLon(LatLng coord, CoordinateFormatKey subtype) {
-    if (isSubtypeOfCoordinateFormat(CoordinateFormatKey.SLIPPY_MAP, subtype))
+    if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.SLIPPY_MAP, subtype)) {
       throw Exception(_ERROR_INVALID_SUBTYPE);
+    }
 
     return latLonToSlippyMap(coord, subtype);
   }
 
   static SlippyMap? parse(String input, {CoordinateFormatKey subtype = defaultSlippyMapType}) {
-    if (isSubtypeOfCoordinateFormat(CoordinateFormatKey.SLIPPY_MAP, subtype))
+    if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.SLIPPY_MAP, subtype)) {
       throw Exception(_ERROR_INVALID_SUBTYPE);
+    }
 
     return parseSlippyMap(input, subtype: subtype);
   }
@@ -692,9 +699,13 @@ class ReverseWherigoWaldmeister extends BaseCoordinate {
     return parseReverseWherigoWaldmeister(input);
   }
 
+  String _leftPadComponent(int x) {
+    return x.toString().padLeft(6, '0');
+  }
+
   @override
   String toString() {
-    return '$a\n$b\n$c';
+    return [a, b, c].map((e) => _leftPadComponent(e)).join('\n');
   }
 }
 
@@ -733,7 +744,7 @@ class XYZ extends BaseCoordinate {
 
   @override
   LatLng toLatLng({Ellipsoid? ells}) {
-    if (ells == null) ells = defaultEllipsoid;
+    ells ??= defaultEllipsoid;
     return xyzToLatLon(this, ells);
   }
 
@@ -934,14 +945,18 @@ class Quadtree extends BaseCoordinate {
   }
 }
 
+BaseCoordinate buildDefaultCoordinatesByFormat(LatLng coords) {
+  return buildCoordinatesByFormat(defaultCoordinateFormat, coords, defaultEllipsoid);
+}
+
 BaseCoordinate buildCoordinatesByFormat(CoordinateFormat format, LatLng coords, [Ellipsoid? ellipsoid]) {
   if (isCoordinateFormatWithSubtype(format.type)) {
-    if (format.subtype == null || !isSubtypeOfCoordinateFormat(format.type, format.subtype!))
-    format.subtype = defaultCoordinateFormatSubtypeForFormat(format.type);
+    if (format.subtype == null || !isSubtypeOfCoordinateFormat(format.type, format.subtype!)) {
+      format.subtype = defaultCoordinateFormatSubtypeForFormat(format.type);
+    }
   }
   
-  if (ellipsoid == null)
-    ellipsoid = defaultEllipsoid;
+  ellipsoid ??= defaultEllipsoid;
 
   switch (format.type) {
     case CoordinateFormatKey.DEC:
@@ -990,8 +1005,7 @@ BaseCoordinate buildCoordinatesByFormat(CoordinateFormat format, LatLng coords, 
       return ReverseWherigoWaldmeister.fromLatLon(coords);
     case CoordinateFormatKey.REVERSE_WIG_DAY1976:
       return ReverseWherigoDay1976.fromLatLon(coords);
-    case CoordinateFormatKey.BASE_FORMAT:
     default:
-      return BaseCoordinate(coords.latitude, coords.longitude);
+      return buildDefaultCoordinatesByFormat(coords);
   }
 }

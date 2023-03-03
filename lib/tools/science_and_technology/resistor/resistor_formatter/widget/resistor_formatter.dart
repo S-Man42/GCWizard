@@ -28,7 +28,7 @@ RichText formatResistorTemperatureCoefficient(double temperatureCoefficient, Tex
       text: TextSpan(style: textStyle, children: [
     TextSpan(text: temperatureCoefficient.floor().toString() + ' ' + String.fromCharCode(215) + ' 10'),
     superscriptedTextForRichText('-6', textStyle: textStyle),
-    TextSpan(text: ' K'),
+    const TextSpan(text: ' K'),
     superscriptedTextForRichText('-1', textStyle: textStyle),
   ]));
 }

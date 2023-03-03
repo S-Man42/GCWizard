@@ -16,13 +16,13 @@ void main() {
       {'coord': LatLng(-89.99999, -179.99999), 'expectedOutput': NaturalAreaCode('00000N7H', '00001BH0')},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('coord: ${elem['coord']}', () {
         var _actual = NaturalAreaCode.fromLatLon(elem['coord'] as LatLng);
         expect(_actual.x, (elem['expectedOutput'] as NaturalAreaCode).x);
         expect(_actual.y, (elem['expectedOutput'] as NaturalAreaCode).y);
       });
-    });
+    }
   });
 
   group("Converter.naturalAreaCode.naturalAreaCodeToLatLon:", () {
@@ -42,17 +42,17 @@ void main() {
       {'expectedOutput': LatLng(-89.99999, -179.99999), 'nac': NaturalAreaCode('00000N7H', '00001BH0')},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('nac: ${elem['nac']}', () {
         var _actual = (elem['nac'] as NaturalAreaCode?)?.toLatLng();
-        if (_actual == null)
+        if (_actual == null) {
           expect(null, elem['expectedOutput']);
-        else {
+        } else {
           expect((_actual.latitude - (elem['expectedOutput'] as LatLng).latitude).abs() < 1e-4, true);
           expect((_actual.longitude - (elem['expectedOutput'] as LatLng).longitude).abs() < 1e-4, true);
         }
       });
-    });
+    }
   });
 
   group("Converter.natural_area_code.parseLatLon:", () {
@@ -65,16 +65,16 @@ void main() {
       {'text': 'X K3ZVLFSS Y QP1MKBNZ', 'expectedOutput': {'format': CoordinateFormatKey.NATURAL_AREA_CODE, 'coordinate': LatLng(46.2110174566, 025.598495717)}},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('text: ${elem['text']}', () {
         var _actual = NaturalAreaCode.parse(elem['text'] as String)?.toLatLng();
-        if (_actual == null)
+        if (_actual == null) {
           expect(null, elem['expectedOutput']);
-        else {
+        } else {
           expect((_actual.latitude - ((elem['expectedOutput'] as Map<String, Object>)['coordinate'] as LatLng).latitude).abs() < 1e-8, true);
           expect((_actual.longitude - ((elem['expectedOutput'] as Map<String, Object>)['coordinate'] as LatLng).longitude).abs() < 1e-8, true);
         }
       });
-    });
+    }
   });
 }

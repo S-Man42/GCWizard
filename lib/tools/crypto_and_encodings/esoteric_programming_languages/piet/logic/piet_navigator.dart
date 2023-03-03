@@ -25,7 +25,7 @@ class _PietNavigator {
     _height = _data[0].length;
   }
 
-  var _currentPoint = Point<int>(0, 0);
+  var _currentPoint = const Point<int>(0, 0);
   Point<int> get currentPoint => _currentPoint;
 
   Tuple2<bool, Point<int>> tryNavigate(_PietBlock block) {
@@ -35,28 +35,29 @@ class _PietNavigator {
     bool moveStraight = block.color == white || !block.knownColor;
 
     while (failureCount < 8) {
-      var exitPoint = Point<int>(0, 0);
+      var exitPoint = const Point<int>(0, 0);
 
-      if (moveStraight)
+      if (moveStraight) {
         exitPoint = currentPoint;
-      else if (direction == _Direction.East && codelChooser == _CodelChoice.Left)
+      } else if (direction == _Direction.East && codelChooser == _CodelChoice.Left) {
         exitPoint = block.eastLeft;
-      else if (direction == _Direction.East && codelChooser == _CodelChoice.Right)
+      } else if (direction == _Direction.East && codelChooser == _CodelChoice.Right) {
         exitPoint = block.eastRight;
-      else if (direction == _Direction.South && codelChooser == _CodelChoice.Left)
+      } else if (direction == _Direction.South && codelChooser == _CodelChoice.Left) {
         exitPoint = block.southLeft;
-      else if (direction == _Direction.South && codelChooser == _CodelChoice.Right)
+      } else if (direction == _Direction.South && codelChooser == _CodelChoice.Right) {
         exitPoint = block.southRight;
-      else if (direction == _Direction.West && codelChooser == _CodelChoice.Left)
+      } else if (direction == _Direction.West && codelChooser == _CodelChoice.Left) {
         exitPoint = block.westLeft;
-      else if (direction == _Direction.West && codelChooser == _CodelChoice.Right)
+      } else if (direction == _Direction.West && codelChooser == _CodelChoice.Right) {
         exitPoint = block.westRight;
-      else if (direction == _Direction.North && codelChooser == _CodelChoice.Left)
+      } else if (direction == _Direction.North && codelChooser == _CodelChoice.Left) {
         exitPoint = block.northLeft;
-      else if (direction == _Direction.North && codelChooser == _CodelChoice.Right)
+      } else if (direction == _Direction.North && codelChooser == _CodelChoice.Right) {
         exitPoint = block.northRight;
-      else
+      } else {
         return throw Exception('common_programming_error_invalid_opcode');
+      }
 
       if (moveStraight) {
         var prevStep = exitPoint;
@@ -84,16 +85,17 @@ class _PietNavigator {
       }
 
       Point<int> nextStep;
-      if (direction == _Direction.East)
+      if (direction == _Direction.East) {
         nextStep = Point<int>(exitPoint.x + 1, exitPoint.y);
-      else if (direction == _Direction.South)
+      } else if (direction == _Direction.South) {
         nextStep = Point<int>(exitPoint.x, exitPoint.y + 1);
-      else if (direction == _Direction.West)
+      } else if (direction == _Direction.West) {
         nextStep = Point<int>(exitPoint.x - 1, exitPoint.y);
-      else if (direction == _Direction.North)
+      } else if (direction == _Direction.North) {
         nextStep = Point<int>(exitPoint.x, exitPoint.y - 1);
-      else
+      } else {
         return throw Exception('common_programming_error_invalid_opcode');
+      }
 
       bool isOutOfBounds = nextStep.x < 0 || nextStep.y < 0 || nextStep.x >= _width || nextStep.y >= _height;
 
@@ -108,15 +110,16 @@ class _PietNavigator {
 
       _currentPoint = exitPoint;
 
-      if (failureCount % 2 == 0)
+      if (failureCount % 2 == 0) {
         toggleCodelChooser(1);
-      else
+      } else {
         rotateDirectionPointer(1);
+      }
 
       failureCount++;
     }
 
-    result = Point<int>(0, 0);
+    result = const Point<int>(0, 0);
     return Tuple2<bool, Point<int>>(false, result);
   }
 

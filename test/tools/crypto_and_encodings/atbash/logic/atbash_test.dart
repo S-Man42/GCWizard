@@ -14,11 +14,11 @@ void main() {
       {'input' : [225,114,118,237,122,116,369,114,337,116,252,107,246,114,102,250,114,243,103,233,112].map((charCode) => String.fromCharCode(charCode)).join(), 'expectedOutput' : 'ZIERAGFILGFVPLVIUFILTVK'}, //árvíztűrőtükörfúrógép
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = atbash(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

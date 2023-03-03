@@ -42,7 +42,9 @@ Future<AnimatedImageMorseOutput?> analyseImageMorseCode(Uint8List bytes, {SendPo
     List<Uint8List> imageList = out.images;
     var filteredList = <List<int>>[];
 
-    for (var i = 0; i < imageList.length; i++) filteredList = _filterImages(filteredList, i, imageList);
+    for (var i = 0; i < imageList.length; i++) {
+      filteredList = _filterImages(filteredList, i, imageList);
+    }
 
     filteredList = _searchHighSignalImage(out.frames!, filteredList);
     var outMorse = AnimatedImageMorseOutput(out, filteredList);
@@ -75,7 +77,7 @@ Future<Uint8List?> _createImage(Uint8List? highImage, Uint8List? lowImage, Strin
   try {
     var _highImage = Image.decodeImage(highImage);
     var _lowImage = Image.decodeImage(lowImage);
-    var animation = Image.Animation();
+    var animation = <Image.Image>[];
     if (_highImage == null || _lowImage == null) return null;
 
     input = input.replaceAll(String.fromCharCode(8195), ' ');
@@ -112,20 +114,24 @@ Future<Uint8List?> _createImage(Uint8List? highImage, Uint8List? lowImage, Strin
       }
 
       var image = Image.Image.from(on ? _highImage : _lowImage);
-      image.duration = duration;
-      animation.addFrame(image);
+      image.frameDuration = duration;
+      animation.add(image);
       outList.add(on);
     }
 
     // image count optimation
-    for (var i = animation.frames.length - 1; i > 0; i--) {
+    for (var i = animation.length - 1; i > 0; i--) {
       if (outList[i] == outList[i - 1]) {
-        animation.frames[i - 1].duration += animation.frames[i].duration;
-        animation.frames.removeAt(i);
+        animation[i - 1].frameDuration += animation[i].frameDuration;
+        animation.removeAt(i);
       }
     }
+    var encoder = Image.GifEncoder();
+    animation.forEach((image) {
+      encoder.addFrame(image);
+    });
 
-    var list = Image.encodeGifAnimation(animation);
+    var list = encoder.finish();
     return Future.value((list == null) ? null : Uint8List.fromList(list));
   } on Exception {
     return null;
@@ -159,14 +165,15 @@ MorseCodeOutput? decodeMorseCode(List<int> durations, List<bool> onSignal) {
   if (signalTimes == null || timeList == null) return null;
 
   var out = '';
-  timeList.forEach((element) {
-    if (element.item1)
+  for (var element in timeList) {
+    if (element.item1) {
       out += (element.item2 > signalTimes.item1) ? '-' : '.'; //2
-    else if (element.item2 > signalTimes.item3) //5
+    } else if (element.item2 > signalTimes.item3) {
       out += String.fromCharCode(8195) + "|" + String.fromCharCode(8195);
-    else if (element.item2 > signalTimes.item2) //3
+    } else if (element.item2 > signalTimes.item2) {
       out += " ";
-  });
+    }
+  }
   
   return MorseCodeOutput(out, decodeMorse(out));
 }
@@ -181,11 +188,11 @@ List<Tuple2<bool, int>>? _buildTimeList(List<int>? durations, List<bool>? onSign
 
   timeList.add(Tuple2<bool, int>(onSignal[i], durations[i]));
   for (i = 1; i < durations.length; i++) {
-    if (onSignal[i - 1] != onSignal[i])
+    if (onSignal[i - 1] != onSignal[i]) {
       timeList.add(Tuple2<bool, int>(onSignal[i], durations[i]));
-    else
-      // same signal -> add
+    } else {
       timeList.last = Tuple2<bool, int>(onSignal[i], timeList.last.item2 + durations[i]);
+    }
   }
   return timeList;
 }
@@ -197,12 +204,13 @@ Tuple3<int, int, int>? foundSignalTimes(List<Tuple2<bool, int>>? timeList) {
   var onl = <int>[];
   var offl = <int>[];
 
-  timeList.forEach((element) {
-    if (element.item1)
+  for (var element in timeList) {
+    if (element.item1) {
       onl.add(element.item2);
-    else
+    } else {
       offl.add(element.item2);
-  });
+    }
+  }
   onl.sort();
   offl.sort();
 
@@ -258,22 +266,22 @@ Image.Image _searchBrightestImage(Image.Image image1, Image.Image image2) {
 Image.Image _differenceImage(Image.Image image1, Image.Image image2) {
   for (var x = 0; x < min(image1.width, image2.width); x++) {
     for (var y = 0; y < min(image1.height, image2.height); y++) {
-      if (_diffBetweenPixels(image1.getPixel(x, y), true, image2.getPixel(x, y)) < 0.3) image2.setPixel(x, y, 0);
+      if (_diffBetweenPixels(image1.getPixel(x, y), true, image2.getPixel(x, y)) < 0.3) image2.setPixelRgb(x, y, 0, 0, 0);
     }
   }
   return image2;
 }
 
 /// Returns a single number representing the difference between two RGB pixels
-num _diffBetweenPixels(int firstPixel, bool ignoreAlpha, int secondPixel) {
-  var fRed = Image.getRed(firstPixel);
-  var fGreen = Image.getGreen(firstPixel);
-  var fBlue = Image.getBlue(firstPixel);
-  var fAlpha = Image.getAlpha(firstPixel);
-  var sRed = Image.getRed(secondPixel);
-  var sGreen = Image.getGreen(secondPixel);
-  var sBlue = Image.getBlue(secondPixel);
-  var sAlpha = Image.getAlpha(secondPixel);
+num _diffBetweenPixels(Image.Pixel firstPixel, bool ignoreAlpha, Image.Pixel secondPixel) {
+  var fRed = firstPixel.r;
+  var fGreen = firstPixel.g;
+  var fBlue = firstPixel.b;
+  var fAlpha = firstPixel.a;
+  var sRed = secondPixel.r;
+  var sGreen = secondPixel.g;
+  var sBlue = secondPixel.b;
+  var sAlpha = secondPixel.a;
 
   num diff = (fRed - sRed).abs() + (fGreen - sGreen).abs() + (fBlue - sBlue).abs();
 
@@ -288,10 +296,10 @@ num _diffBetweenPixels(int firstPixel, bool ignoreAlpha, int secondPixel) {
 }
 
 double _imageLuminance(Image.Image image) {
-  var sum = 0;
+  num sum = 0;
   for (var x = 0; x < image.width; x++) {
     for (var y = 0; y < image.height; y++) {
-      sum += Image.getLuminance(image.getPixel(x, y));
+      sum += image.getPixel(x, y).luminance;
     }
   }
 

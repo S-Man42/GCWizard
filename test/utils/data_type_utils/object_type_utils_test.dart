@@ -2,7 +2,7 @@ import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 
 void main() {
-  group("ObjectUtils.toDoubleOrNull:", () {
+  group("ObjectTypeUtils.toDoubleOrNull:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : null},
@@ -16,15 +16,15 @@ void main() {
       {'input' : false, 'expectedOutput' : null},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = toDoubleOrNull(elem['input']);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
-  group("ObjectUtils.toIntOrNull:", () {
+  group("ObjectTypeUtils.toIntOrNull:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : null},
@@ -39,15 +39,15 @@ void main() {
 
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = toIntOrNull(elem['input']);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
-  group("ObjectUtils.toBoolOrNull:", () {
+  group("ObjectTypeUtils.toBoolOrNull:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : null},
@@ -61,36 +61,36 @@ void main() {
       {'input' : 'A', 'expectedOutput' : null},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = toBoolOrNull(elem['input']);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
-  group("ObjectUtils.toStringOrNull:", () {
+  group("ObjectTypeUtils.toStringOrNull:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : ''},
 
       {'input' : 'test', 'expectedOutput' : 'test'},
-      {'input' : 1, 'expectedOutput' : '1'},
-      {'input' : 1.0, 'expectedOutput' : '1.0'},
+      {'input' : 1, 'expectedOutput' : null},
+      {'input' : 1.0, 'expectedOutput' : null},
 
-      {'input' : true, 'expectedOutput' : 'true'},
-      {'input' : false, 'expectedOutput' : 'false'},
+      {'input' : true, 'expectedOutput' : null},
+      {'input' : false, 'expectedOutput' : null},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = toStringOrNull(elem['input']);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
-  group("ObjectUtils.toStringListOrNull:", () {
+  group("ObjectTypeUtils.toStringListOrNull:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : <Object?>[], 'expectedOutput' : <String>[]},
@@ -103,15 +103,15 @@ void main() {
       {'input' : <Object?>[true, false], 'expectedOutput' : ['', '']},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}}', () {
-        var _actual = toStringListOrNull(elem['input'] as List<Object?>);
+        var _actual = toStringListOrNull(elem['input']);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
-  group("ObjectUtils.toStringListWithNullableContentOrNull:", () {
+  group("ObjectTypeUtils.toStringListWithNullableContentOrNull:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : <Object?>[], 'expectedOutput' : <String?>[]},
@@ -124,11 +124,11 @@ void main() {
       {'input' : <Object?>[true, false], 'expectedOutput' : [null, null]},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}}', () {
-        var _actual = toStringListWithNullableContentOrNull(elem['input'] as List<Object?>);
+        var _actual = toStringListWithNullableContentOrNull(elem['input']);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

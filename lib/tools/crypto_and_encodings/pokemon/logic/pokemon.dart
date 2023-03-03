@@ -96,7 +96,9 @@ List<Map<String, String>> _DECODE_POKEMON = [
 String encodePokemon(String? plainText) {
   if (plainText == null || plainText.isEmpty) return '';
   String result = '';
-  for (int i = 0; i < plainText.length; i++) result = result + (_POKEMON[plainText[i].toLowerCase()] ?? '');
+  for (int i = 0; i < plainText.length; i++) {
+    result = result + (_POKEMON[plainText[i].toLowerCase()] ?? '');
+  }
   return result.toUpperCase();
 }
 

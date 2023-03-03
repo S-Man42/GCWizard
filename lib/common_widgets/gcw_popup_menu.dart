@@ -83,8 +83,8 @@ class GCWPopupMenuState extends State<GCWPopupMenu> {
     var items = widget.menuItemBuilder(context).asMap().map((index, GCWPopupMenuItem item) {
       return MapEntry<PopupMenuEntry<int>, void Function(int)>(
           item.isDivider
-              ? PopupMenuDivider() as PopupMenuEntry<int>
-              : PopupMenuItem(child: item.child, value: index), item.action);
+              ? const PopupMenuDivider() as PopupMenuEntry<int>
+              : PopupMenuItem(value: index, child: item.child), item.action);
     });
 
     _afterLayout();
@@ -97,7 +97,7 @@ class GCWPopupMenuState extends State<GCWPopupMenu> {
       position: _menuPosition!,
       items: _menuItems!,
       elevation: 8.0,
-      color: themeColors().accent(),
+      color: themeColors().secondary(),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(ROUNDED_BORDER_RADIUS),
       ),
@@ -126,11 +126,11 @@ Row iconedGCWPopupMenuItem(BuildContext context, IconData icon, String title,
     children: [
       GestureDetector(
         child: Container(
+          padding: const EdgeInsets.only(right: 10),
           child: Transform.rotate(
             angle: degreesToRadian(rotateDegrees),
             child: Icon(icon, color: color),
           ),
-          padding: EdgeInsets.only(right: 10),
         ),
         onLongPress: () => onLongPress,
       ),

@@ -41,27 +41,25 @@ class GCWCheckBoxState extends State<GCWCheckBox> {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        if (!widget.notitle) Expanded(child: GCWText(text: (widget.title), style: widget.textStyle), flex: 3),
+        if (!widget.notitle) Expanded(flex: 3, child: GCWText(text: (widget.title), style: widget.textStyle)),
         Expanded(
-            child: Container(
-              child: Row(
-                children: <Widget>[
-                  Expanded(child: Container(), flex: 1),
-                  Checkbox(
-                    value: widget.value,
-                    onChanged: widget.onChanged,
-                    activeColor: widget.activeColor ?? themeColors().checkBoxActiveColor(),
-                    fillColor: widget.fillColor ?? MaterialStateColor.resolveWith(themeColors().checkBoxFillColor),
-                    checkColor: widget.checkColor ?? themeColors().checkBoxCheckColor(),
-                    focusColor: widget.focusColor ?? themeColors().checkBoxFocusColor(),
-                    hoverColor: widget.hoverColor ?? themeColors().checkBoxHoverColor(),
-                    overlayColor:
-                        widget.overlayColor ?? MaterialStateColor.resolveWith(themeColors().checkBoxOverlayColor),
-                  )
-                ],
-              ),
-            ),
-            flex: 3),
+            flex: 3,
+            child: Row(
+              children: <Widget>[
+                Expanded(flex: 1, child: Container()),
+                Checkbox(
+                  value: widget.value,
+                  onChanged: widget.onChanged,
+                  activeColor: widget.activeColor ?? themeColors().checkBoxActiveColor(),
+                  fillColor: widget.fillColor ?? MaterialStateColor.resolveWith(themeColors().checkBoxFillColor),
+                  checkColor: widget.checkColor ?? themeColors().checkBoxCheckColor(),
+                  focusColor: widget.focusColor ?? themeColors().checkBoxFocusColor(),
+                  hoverColor: widget.hoverColor ?? themeColors().checkBoxHoverColor(),
+                  overlayColor:
+                      widget.overlayColor ?? MaterialStateColor.resolveWith(themeColors().checkBoxOverlayColor),
+                )
+              ],
+            )),
       ],
     );
   }

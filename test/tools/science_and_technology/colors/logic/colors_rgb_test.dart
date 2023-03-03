@@ -11,14 +11,14 @@ void main() {
       {'input' : RGB(255, 255, 255), 'expectedOutput' : '#FFFFFF'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var hexCode = HexCode.fromRGB(elem['input'] as RGB);
         var _actual = hexCode.toString();
         expect(_actual, elem['expectedOutput']);
         expect(hexCode.toRGB().toString(), elem['input'].toString());
       });
-    });
+    }
   });
 
   group("Colors.findNearestRGBs:", () {
@@ -28,13 +28,11 @@ void main() {
       }).toList(), 'expectedOutput' : ['#28724F', '#228848', '#285C4D', '#286140', '#205C40', '#43695B']},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('fromRGB: ${elem['fromRGB']}', () {
         List<RGB> _actual = findNearestRGBs(elem['fromRGB'] as GCWBaseColor, elem['toRGBs'] as List<RGB>);
-        print(_actual);
-
         expect(_actual.map((e) => HexCode.fromRGB(e).toString()).toList(), elem['expectedOutput']);
       });
-    });
+    }
   });
 }

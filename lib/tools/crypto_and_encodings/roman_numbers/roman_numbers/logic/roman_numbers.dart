@@ -23,12 +23,12 @@ String encodeRomanNumbers(int? number, {RomanNumberType type = RomanNumberType.U
 
   var out = '';
   var remaining = number;
-  _romanToNumber.entries.forEach((value) {
+  for (var value in _romanToNumber.entries) {
     while (remaining >= value.value) {
       out += value.key;
       remaining -= value.value;
     }
-  });
+  }
 
   if (type == RomanNumberType.USE_SUBTRACTION_RULE) {
     out = substitution(out, _subtractionSubstitutions);
@@ -44,8 +44,9 @@ int? decodeRomanNumbers(String? input, {RomanNumberType type = RomanNumberType.U
   if (input.isEmpty) return null;
 
   var roman = input;
-  if (type == RomanNumberType.USE_SUBTRACTION_RULE)
+  if (type == RomanNumberType.USE_SUBTRACTION_RULE) {
     roman = substitution(input, switchMapKeyValue(_subtractionSubstitutions));
+  }
 
   var out = 0;
   roman.split('').forEach((character) => out += (_romanToNumber[character] ?? 0));

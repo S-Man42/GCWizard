@@ -233,12 +233,13 @@ String KarolRobotOutputEncode(String? output, KAREL_LANGUAGES language) {
   output.trim().toUpperCase().split('\n').forEach((line) {
     line.split('').forEach((char) {
       program = program + (KAREL_ENCODING[char] ?? '') + ' ';
-      if (char == '.')
+      if (char == '.') {
         lineLength = lineLength + 3;
-      else if (char == 'I' || char == '1' || char == '°')
+      } else if (char == 'I' || char == '1' || char == '°') {
         lineLength = lineLength + 5;
-      else
+      } else {
         lineLength = lineLength + 7;
+      }
     });
 
     program = program +
@@ -274,7 +275,9 @@ String KarolRobotOutputEncode(String? output, KAREL_LANGUAGES language) {
           if (int.tryParse(m.group(0)!.replaceAll(_MOVE, '').replaceAll('(', '').replaceAll(')', '')) != null) {
             for (int i = 0;
                 i < int.parse(m.group(0)!.replaceAll(_MOVE, '').replaceAll('(', '').replaceAll(')', ''));
-                i++) MOVE_LIST.add('move');
+                i++) {
+              MOVE_LIST.add('move');
+            }
             return MOVE_LIST.join(' ');
           } else {
             return 'move';
@@ -301,7 +304,7 @@ String KarolRobotOutputDecode(String program) {
   var direction = _KAROL_DIRECTION.SOUTH;
   int maxX = 1;
   int maxY = 1;
-  Map<String, String> world = new Map();
+  Map<String, String> world = {};
   bool halt = false;
 
   String? color = '#';
@@ -317,150 +320,155 @@ String KarolRobotOutputDecode(String program) {
       .replaceAll('\n', '')
       .split(' ')
       .forEach((element) {
-    if (!halt) if (expSchritt.hasMatch(element)) {
-      if (int.tryParse(expSchritt
+    if (!halt) {
+      if (expSchritt.hasMatch(element)) {
+        if (int.tryParse(expSchritt
+                .firstMatch(element)!
+                .group(0)!
+                .replaceAll(_SCHRITT, '')
+                .replaceAll(_MOVE, '')
+                .replaceAll(_ETAPE, '')
+                .replaceAll('(', '')
+                .replaceAll(')', '')) ==
+            null) {
+          count = 1;
+        } else {
+          count = int.parse(expSchritt
               .firstMatch(element)!
               .group(0)!
               .replaceAll(_SCHRITT, '')
               .replaceAll(_MOVE, '')
               .replaceAll(_ETAPE, '')
               .replaceAll('(', '')
-              .replaceAll(')', '')) ==
-          null)
-        count = 1;
-      else
-        count = int.parse(expSchritt
-            .firstMatch(element)!
-            .group(0)!
-            .replaceAll(_SCHRITT, '')
-            .replaceAll(_MOVE, '')
-            .replaceAll(_ETAPE, '')
-            .replaceAll('(', '')
-            .replaceAll(')', ''));
-      switch (direction) {
-        case _KAROL_DIRECTION.NORTH:
-          y = y - count;
-          break;
-        case _KAROL_DIRECTION.SOUTH:
-          y = y + count;
-          break;
-        case _KAROL_DIRECTION.WEST:
-          x = x - count;
-          break;
-        case _KAROL_DIRECTION.EAST:
-          x = x + count;
-          break;
-      }
-      if (x > maxX) maxX = x;
-      if (y > maxY) maxY = y;
-    } else if (expHinlegen.hasMatch(element)) {
-      color = _KAROL_COLORS[element
-          .replaceAll(_HINLEGEN, '')
-          .replaceAll(_PUTBRICK, '')
-          .replaceAll(_ALLONGER, '')
-          .replaceAll('(', '')
-          .replaceAll(')', '')];
-      if (color == null) color = '8';
-      switch (direction) {
-        case _KAROL_DIRECTION.NORTH:
-          world[x.toString() + '|' + (y - 1).toString()] = color!;
-          break;
-        case _KAROL_DIRECTION.SOUTH:
-          world[x.toString() + '|' + (y + 1).toString()] = color!;
-          break;
-        case _KAROL_DIRECTION.EAST:
-          world[(x + 1).toString() + '|' + (y).toString()] = color!;
-          break;
-        case _KAROL_DIRECTION.WEST:
-          world[(x - 1).toString() + '|' + (y).toString()] = color!;
-          break;
-      }
-    } else {
-      if (_SET_MOVE.contains(element)) {
+              .replaceAll(')', ''));
+        }
         switch (direction) {
           case _KAROL_DIRECTION.NORTH:
-            y = y - 1;
+            y = y - count;
             break;
           case _KAROL_DIRECTION.SOUTH:
-            y = y + 1;
+            y = y + count;
             break;
           case _KAROL_DIRECTION.WEST:
-            x = x - 1;
+            x = x - count;
             break;
           case _KAROL_DIRECTION.EAST:
-            x = x + 1;
+            x = x + count;
             break;
         }
         if (x > maxX) maxX = x;
         if (y > maxY) maxY = y;
-      } else if (_SET_TURNLEFT.contains(element)) {
-        switch (direction) {
-          case _KAROL_DIRECTION.NORTH:
-            direction = _KAROL_DIRECTION.WEST;
-            break;
-          case _KAROL_DIRECTION.SOUTH:
-            direction = _KAROL_DIRECTION.EAST;
-            break;
-          case _KAROL_DIRECTION.WEST:
-            direction = _KAROL_DIRECTION.SOUTH;
-            break;
-          case _KAROL_DIRECTION.EAST:
-            direction = _KAROL_DIRECTION.NORTH;
-            break;
+      } else {
+        if (expHinlegen.hasMatch(element)) {
+          color = _KAROL_COLORS[element
+              .replaceAll(_HINLEGEN, '')
+              .replaceAll(_PUTBRICK, '')
+              .replaceAll(_ALLONGER, '')
+              .replaceAll('(', '')
+              .replaceAll(')', '')];
+          color ??= '8';
+          switch (direction) {
+            case _KAROL_DIRECTION.NORTH:
+              world[x.toString() + '|' + (y - 1).toString()] = color!;
+              break;
+            case _KAROL_DIRECTION.SOUTH:
+              world[x.toString() + '|' + (y + 1).toString()] = color!;
+              break;
+            case _KAROL_DIRECTION.EAST:
+              world[(x + 1).toString() + '|' + (y).toString()] = color!;
+              break;
+            case _KAROL_DIRECTION.WEST:
+              world[(x - 1).toString() + '|' + (y).toString()] = color!;
+              break;
+          }
+        } else {
+          if (_SET_MOVE.contains(element)) {
+            switch (direction) {
+              case _KAROL_DIRECTION.NORTH:
+                y = y - 1;
+                break;
+              case _KAROL_DIRECTION.SOUTH:
+                y = y + 1;
+                break;
+              case _KAROL_DIRECTION.WEST:
+                x = x - 1;
+                break;
+              case _KAROL_DIRECTION.EAST:
+                x = x + 1;
+                break;
+            }
+            if (x > maxX) maxX = x;
+            if (y > maxY) maxY = y;
+          } else if (_SET_TURNLEFT.contains(element)) {
+            switch (direction) {
+              case _KAROL_DIRECTION.NORTH:
+                direction = _KAROL_DIRECTION.WEST;
+                break;
+              case _KAROL_DIRECTION.SOUTH:
+                direction = _KAROL_DIRECTION.EAST;
+                break;
+              case _KAROL_DIRECTION.WEST:
+                direction = _KAROL_DIRECTION.SOUTH;
+                break;
+              case _KAROL_DIRECTION.EAST:
+                direction = _KAROL_DIRECTION.NORTH;
+                break;
+            }
+          } else if (_SET_TURNRIGHT.contains(element)) {
+            switch (direction) {
+              case _KAROL_DIRECTION.NORTH:
+                direction = _KAROL_DIRECTION.EAST;
+                break;
+              case _KAROL_DIRECTION.SOUTH:
+                direction = _KAROL_DIRECTION.WEST;
+                break;
+              case _KAROL_DIRECTION.WEST:
+                direction = _KAROL_DIRECTION.NORTH;
+                break;
+              case _KAROL_DIRECTION.EAST:
+                direction = _KAROL_DIRECTION.SOUTH;
+                break;
+            }
+          } else if (_SET_PICKBRICK.contains(element)) {
+            switch (direction) {
+              case _KAROL_DIRECTION.NORTH:
+                world[x.toString() + '|' + (y - 1).toString()] = '#';
+                break;
+              case _KAROL_DIRECTION.SOUTH:
+                world[x.toString() + '|' + (y + 1).toString()] = '#';
+                break;
+              case _KAROL_DIRECTION.EAST:
+                world[(x + 1).toString() + '|' + (y).toString()] = '#';
+                break;
+              case _KAROL_DIRECTION.WEST:
+                world[(x - 1).toString() + '|' + (y).toString()] = '#';
+                break;
+            }
+          } else if (_SET_PUTBRICK.contains(element)) {
+            switch (direction) {
+              case _KAROL_DIRECTION.NORTH:
+                world[x.toString() + '|' + (y - 1).toString()] = '8';
+                break;
+              case _KAROL_DIRECTION.SOUTH:
+                world[x.toString() + '|' + (y + 1).toString()] = '8';
+                break;
+              case _KAROL_DIRECTION.EAST:
+                world[(x + 1).toString() + '|' + (y).toString()] = '8';
+                break;
+              case _KAROL_DIRECTION.WEST:
+                world[(x - 1).toString() + '|' + (y).toString()] = '8';
+                break;
+            }
+          } else if (_SET_PICKBEEPER.contains(element)) {
+            world[x.toString() + '|' + (y).toString()] = '#';
+          } else if (_SET_PUTBEEPER.contains(element)) {
+            world[x.toString() + '|' + (y).toString()] = '9';
+          } else if (_SET_HALT.contains(element)) {
+            halt = true;
+          } else if (_SET_WAIT.contains(element)) {
+          } else if (_SET_SOUND.contains(element)) {}
         }
-      } else if (_SET_TURNRIGHT.contains(element)) {
-        switch (direction) {
-          case _KAROL_DIRECTION.NORTH:
-            direction = _KAROL_DIRECTION.EAST;
-            break;
-          case _KAROL_DIRECTION.SOUTH:
-            direction = _KAROL_DIRECTION.WEST;
-            break;
-          case _KAROL_DIRECTION.WEST:
-            direction = _KAROL_DIRECTION.NORTH;
-            break;
-          case _KAROL_DIRECTION.EAST:
-            direction = _KAROL_DIRECTION.SOUTH;
-            break;
-        }
-      } else if (_SET_PICKBRICK.contains(element)) {
-        switch (direction) {
-          case _KAROL_DIRECTION.NORTH:
-            world[x.toString() + '|' + (y - 1).toString()] = '#';
-            break;
-          case _KAROL_DIRECTION.SOUTH:
-            world[x.toString() + '|' + (y + 1).toString()] = '#';
-            break;
-          case _KAROL_DIRECTION.EAST:
-            world[(x + 1).toString() + '|' + (y).toString()] = '#';
-            break;
-          case _KAROL_DIRECTION.WEST:
-            world[(x - 1).toString() + '|' + (y).toString()] = '#';
-            break;
-        }
-      } else if (_SET_PUTBRICK.contains(element)) {
-        switch (direction) {
-          case _KAROL_DIRECTION.NORTH:
-            world[x.toString() + '|' + (y - 1).toString()] = '8';
-            break;
-          case _KAROL_DIRECTION.SOUTH:
-            world[x.toString() + '|' + (y + 1).toString()] = '8';
-            break;
-          case _KAROL_DIRECTION.EAST:
-            world[(x + 1).toString() + '|' + (y).toString()] = '8';
-            break;
-          case _KAROL_DIRECTION.WEST:
-            world[(x - 1).toString() + '|' + (y).toString()] = '8';
-            break;
-        }
-      } else if (_SET_PICKBEEPER.contains(element)) {
-        world[x.toString() + '|' + (y).toString()] = '#';
-      } else if (_SET_PUTBEEPER.contains(element)) {
-        world[x.toString() + '|' + (y).toString()] = '9';
-      } else if (_SET_HALT.contains(element)) {
-        halt = true;
-      } else if (_SET_WAIT.contains(element)) {
-      } else if (_SET_SOUND.contains(element)) {}
+      }
     }
   }); //forEach command
 
@@ -478,8 +486,9 @@ String KarolRobotOutputDecode(String program) {
   output.add(outputLine.padRight(maxX + 2, '#'));
   for (y = 0; y < maxY; y++) {
     outputLine = '##';
-    for (x = 0; x < maxX; x++)
+    for (x = 0; x < maxX; x++) {
       outputLine = outputLine + binaryWorld[x][y];
+    }
 
     output.add(outputLine);
   }

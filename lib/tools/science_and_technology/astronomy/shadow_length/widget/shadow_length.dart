@@ -19,6 +19,8 @@ import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:intl/intl.dart';
 
 class ShadowLength extends StatefulWidget {
+  const ShadowLength({Key? key}) : super(key: key);
+
   @override
   ShadowLengthState createState() => ShadowLengthState();
 }
@@ -28,7 +30,7 @@ class ShadowLengthState extends State<ShadowLength> {
   var _currentCoords = defaultBaseCoordinate;
   var _currentHeight = 0.0;
 
-  Length _currentInputLength = defaultLengthUnit;
+  final Length _currentInputLength = defaultLengthUnit;
   var _currentOutput = GCWCoordsOutputFormatDistanceValue(
       defaultCoordinateFormat, defaultLengthUnit);
 
@@ -49,7 +51,7 @@ class ShadowLengthState extends State<ShadowLength> {
           text: i18n(context, 'astronomy_postion_datetime'),
         ),
         GCWDateTimePicker(
-          config: {DateTimePickerConfig.DATE, DateTimePickerConfig.TIME, DateTimePickerConfig.TIMEZONES},
+          config: const {DateTimePickerConfig.DATE, DateTimePickerConfig.TIME, DateTimePickerConfig.TIMEZONES},
           onChanged: (datetime) {
             setState(() {
               _currentDateTime = datetime;
@@ -90,9 +92,9 @@ class ShadowLengthState extends State<ShadowLength> {
 
     var format = NumberFormat('0.000');
     double? _currentFormattedLength;
-    if (_currentLength < 0)
+    if (_currentLength < 0) {
       lengthOutput = i18n(context, 'shadowlength_no_shadow');
-    else {
+    } else {
       _currentFormattedLength = _currentOutput.lengthUnit.fromMeter(_currentLength);
       lengthOutput = format.format(_currentFormattedLength) + ' ' + _currentOutput.lengthUnit.symbol;
     }

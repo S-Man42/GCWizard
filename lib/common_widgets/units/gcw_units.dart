@@ -24,7 +24,7 @@ class GCWUnits<T extends Unit> extends StatefulWidget {
   final bool onlyShowPrefixSymbols;
   final GCWUnitsValue? value;
 
-  GCWUnits(
+  const GCWUnits(
       {Key? key,
       required this.unitCategory,
       required this.onChanged,
@@ -57,7 +57,9 @@ class _GCWUnitsState<T extends Unit> extends State<GCWUnits> {
           children: <Widget>[
             widget.unitCategory.usesPrefixes
                 ? Expanded(
+                    flex: 1,
                     child: Container(
+                      padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
                       child: _GCWUnitPrefixDropDown(
                         onlyShowSymbols: widget.onlyShowPrefixSymbols,
                         value: _currentPrefix,
@@ -68,11 +70,10 @@ class _GCWUnitsState<T extends Unit> extends State<GCWUnits> {
                           });
                         },
                       ),
-                      padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
-                    ),
-                    flex: 1)
+                    ))
                 : Container(),
             Expanded(
+                flex: widget.unitCategory.usesPrefixes ? 2 : 1,
                 child: GCWUnitDropDown<T>(
                   value: _currentUnit,
                   unitList: widget.unitCategory.units as List<T>,
@@ -83,8 +84,7 @@ class _GCWUnitsState<T extends Unit> extends State<GCWUnits> {
                       _emitOnChange();
                     });
                   },
-                ),
-                flex: widget.unitCategory.usesPrefixes ? 2 : 1)
+                ))
           ],
         ),
       ],

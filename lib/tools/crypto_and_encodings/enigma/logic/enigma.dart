@@ -19,9 +19,9 @@ class EnigmaRotor {
   }
 }
 
-final String defaultRotorStandard = 'I, Enigma I \'Wehrmacht\'';
-final String defaultRotorEntryRotor = 'ETW, Enigma I \'Wehrmacht\'';
-final String defaultRotorReflector = 'UKW B, M3 + M4 \'Wehrmacht\'';
+const String defaultRotorStandard = 'I, Enigma I \'Wehrmacht\'';
+const String defaultRotorEntryRotor = 'ETW, Enigma I \'Wehrmacht\'';
+const String defaultRotorReflector = 'UKW B, M3 + M4 \'Wehrmacht\'';
 
 final List<EnigmaRotor> allEnigmaRotors = [
   // Enigma I, M3, M4 (Kriegsmarine)
@@ -131,9 +131,9 @@ class EnigmaRotorConfiguration {
   }
 
   EnigmaRotorConfiguration clone() {
-    return EnigmaRotorConfiguration(this.rotor,
-        offset: this.offset + 1, // +1 because the constructor subtracts one
-        setting: this.setting + 1);
+    return EnigmaRotorConfiguration(rotor,
+        offset: offset + 1, // +1 because the constructor subtracts one
+        setting: setting + 1);
   }
 
   @override
@@ -202,8 +202,9 @@ List<int> _rotorConfigurations(EnigmaKey key) {
 }
 
 IntegerListText calculateEnigma(String? input, EnigmaKey key) {
-  if (input == null || _standardRotorConfigurations(key).isEmpty)
+  if (input == null || _standardRotorConfigurations(key).isEmpty) {
     return IntegerListText('', _rotorConfigurations(key));
+  }
 
   input = _normalizeInput(input);
   if (input.isEmpty) return IntegerListText('', _rotorConfigurations(key));
@@ -283,9 +284,9 @@ List<IntegerListText> calculateEnigmaWithMessageKey(String input, EnigmaKey key)
         .toList(); // backwards because of the typically inverse order of the rotors
 
     int i = 0;
-    standardRotorConfigurations.forEach((configuration) {
+    for (var configuration in standardRotorConfigurations) {
       configuration.setting = pattern[i++];
-    });
+    }
 
     output.add(calculateEnigma(input.replaceAll(' ', '').substring(numberRotors * 2), key));
   }

@@ -15,7 +15,7 @@ class GeneralCharsetValues extends StatefulWidget {
   final String Function(List<int>) decode;
   final String charsetName;
 
-  GeneralCharsetValues({Key? key, required this.encode, required this.decode, required this.charsetName}) : super(key: key);
+  const GeneralCharsetValues({Key? key, required this.encode, required this.decode, required this.charsetName}) : super(key: key);
 
   @override
   GeneralCharsetValuesState createState() => GeneralCharsetValuesState();
@@ -203,8 +203,9 @@ class GeneralCharsetValuesState extends State<GeneralCharsetValues> {
         if (radix != 10) blockValue = convertBase(blockValue, radix, 10);
         if (blockValue != null) {
           var value = int.tryParse(blockValue);
-          if (value != null)
+          if (value != null) {
             decodeInputList.add(value);
+          }
         }
     });
 

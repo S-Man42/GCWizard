@@ -49,6 +49,7 @@ class _PunchtapeSegmentDisplayOutputState extends State<PunchtapeSegmentDisplayO
     _currentUpsideDown = widget.upsideDownButton;
   }
 
+  @override
   Widget build(BuildContext context) {
 
     return Column(children: <Widget>[
@@ -57,19 +58,18 @@ class _PunchtapeSegmentDisplayOutputState extends State<PunchtapeSegmentDisplayO
         trailing: Row(
           children: <Widget>[
             widget.upsideDownButton
-                ? Container(
-                    child: GCWIconButton(
-                      icon: Icons.rotate_left,
-                      size: IconButtonSize.SMALL,
-                      onPressed: () {
-                        setState(() {
-                          _currentUpsideDown = !_currentUpsideDown;
-                        });
-                      },
-                    ),
-                  )
+                ? GCWIconButton(
+                  icon: Icons.rotate_left,
+                  size: IconButtonSize.SMALL,
+                  onPressed: () {
+                    setState(() {
+                      _currentUpsideDown = !_currentUpsideDown;
+                    });
+                  },
+                )
                 : Container(),
             Container(
+              padding: const EdgeInsets.only(right: 10.0),
               child: GCWIconButton(
                 size: IconButtonSize.SMALL,
                 icon: Icons.save,
@@ -82,7 +82,6 @@ class _PunchtapeSegmentDisplayOutputState extends State<PunchtapeSegmentDisplayO
                   });
                 },
               ),
-              padding: EdgeInsets.only(right: 10.0),
             ),
           ],
         ),
@@ -95,7 +94,7 @@ class _PunchtapeSegmentDisplayOutputState extends State<PunchtapeSegmentDisplayO
     var list = _currentUpsideDown ? segments.displays.reversed : segments.displays;
 
     _displays = list.map((character) {
-      var displayedSegments = Map<String, bool>.fromIterable(character, key: (e) => e.toString(), value: (e) => true);
+      var displayedSegments = { for (var e in character) e.toString() : true };
       return widget.segmentFunction(displayedSegments, widget.readOnly, widget.codeBook);
     }).toList();
 

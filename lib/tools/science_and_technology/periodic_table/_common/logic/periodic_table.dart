@@ -100,61 +100,62 @@ class PeriodicTableElement {
       this.halfLife, //German: Halbwertszeit
       {this.comments = const []}) {
     var group = iupacGroupToMainSubGroup(iupacGroup);
-    if (group?.item1 == GroupType.MAIN_GROUP)
-      this.mainGroup = group?.item2;
-    else
-      this.subGroup = group?.item2;
-
-    if (this.boilingPoint == -double.infinity && this.meltingPoint == -double.infinity) {
-      this.stateOfMatter = StateOfMatter.UNKNOWN;
-    } else if (this.boilingPoint > -double.infinity && this.boilingPoint < 20) {
-      this.stateOfMatter = StateOfMatter.GAS;
-    } else if (this.meltingPoint > -double.infinity && this.meltingPoint < 20) {
-      this.stateOfMatter = StateOfMatter.LIQUID;
+    if (group?.item1 == GroupType.MAIN_GROUP) {
+      mainGroup = group?.item2;
     } else {
-      this.stateOfMatter = StateOfMatter.SOLID;
+      subGroup = group?.item2;
     }
 
-    switch (this.iupacGroup) {
+    if (boilingPoint == -double.infinity && meltingPoint == -double.infinity) {
+      stateOfMatter = StateOfMatter.UNKNOWN;
+    } else if (boilingPoint > -double.infinity && boilingPoint < 20) {
+      stateOfMatter = StateOfMatter.GAS;
+    } else if (meltingPoint > -double.infinity && meltingPoint < 20) {
+      stateOfMatter = StateOfMatter.LIQUID;
+    } else {
+      stateOfMatter = StateOfMatter.SOLID;
+    }
+
+    switch (iupacGroup) {
       case 1:
-        this.iupacGroupName = IUPACGroupName.ALKALI_METALS;
+        iupacGroupName = IUPACGroupName.ALKALI_METALS;
         break;
       case 2:
-        this.iupacGroupName = IUPACGroupName.ALKALINE_EARTH_METALS;
+        iupacGroupName = IUPACGroupName.ALKALINE_EARTH_METALS;
         break;
       case 13:
-        this.iupacGroupName = IUPACGroupName.EARTH_METALS;
+        iupacGroupName = IUPACGroupName.EARTH_METALS;
         break;
       case 14:
-        this.iupacGroupName = IUPACGroupName.TETRELS;
+        iupacGroupName = IUPACGroupName.TETRELS;
         break;
       case 15:
-        this.iupacGroupName = IUPACGroupName.PNICTOGENS;
+        iupacGroupName = IUPACGroupName.PNICTOGENS;
         break;
       case 16:
-        this.iupacGroupName = IUPACGroupName.CHALCOGENS;
+        iupacGroupName = IUPACGroupName.CHALCOGENS;
         break;
       case 17:
-        this.iupacGroupName = IUPACGroupName.HALOGENS;
+        iupacGroupName = IUPACGroupName.HALOGENS;
         break;
       case 18:
-        this.iupacGroupName = IUPACGroupName.NOBLE_GASES;
+        iupacGroupName = IUPACGroupName.NOBLE_GASES;
         break;
     }
 
-    if (this.atomicNumber >= 57 && this.atomicNumber <= 71) {
-      this.iupacGroupName = IUPACGroupName.LANTHANIDES;
-    } else if (this.atomicNumber >= 89 && this.atomicNumber <= 103) {
-      this.iupacGroupName = IUPACGroupName.ACTINIDES;
+    if (atomicNumber >= 57 && atomicNumber <= 71) {
+      iupacGroupName = IUPACGroupName.LANTHANIDES;
+    } else if (atomicNumber >= 89 && atomicNumber <= 103) {
+      iupacGroupName = IUPACGroupName.ACTINIDES;
     }
   }
 
   String get formattedHalfLife {
-    return formatDaysToNearestUnit(this.halfLife);
+    return formatDaysToNearestUnit(halfLife);
   }
 
   String get formattedDensity {
-    return (this.density < 0.1) ? this.density.toStringAsExponential() : this.density.toString();
+    return (density < 0.1) ? density.toStringAsExponential() : density.toString();
   }
 
   @override
@@ -182,8 +183,9 @@ Tuple2<GroupType, int>? iupacGroupToMainSubGroup(int iupacGroup) {
   } else if ([13, 14, 15, 16, 17, 18].contains(iupacGroup)) {
     type = GroupType.MAIN_GROUP;
     value = iupacGroup - 10;
-  } else
+  } else {
     return null;
+  }
 
   return Tuple2<GroupType, int>(type, value);
 }

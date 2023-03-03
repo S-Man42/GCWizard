@@ -7,6 +7,8 @@ import 'package:gc_wizard/tools/science_and_technology/astronomy/seasons/logic/s
 import 'package:intl/intl.dart';
 
 class Seasons extends StatefulWidget {
+  const Seasons({Key? key}) : super(key: key);
+
   @override
   SeasonsState createState() => SeasonsState();
 }
@@ -88,7 +90,7 @@ class SeasonsState extends State<Seasons> {
     return GCWColumnedMultilineOutput(
         firstRows: [GCWTextDivider(text: i18n(context, 'common_output'))],
         data: outputs,
-        flexValues: [1, 2]
+        flexValues: const [1, 2]
     );
   }
 }

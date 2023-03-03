@@ -28,12 +28,12 @@ void main() {
 
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = encryptChickenLanguage(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group('chicken_language.decryptChickenLanguage:', () {
@@ -64,11 +64,11 @@ void main() {
       {'expectedOutput' : 'au', 'input' : 'ahadefau'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decryptChickenLanguage(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

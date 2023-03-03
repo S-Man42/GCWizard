@@ -347,7 +347,7 @@ List<VanityWordsDecodeOutput> decodeVanityWords(String? text, NumeralWordsLangua
   }
 
   // build map to identify numeral words
-  var decodingTable = new Map<String, String>();
+  var decodingTable = <String, String>{};
   VanWords[language]!.forEach((key, value) {
     //decodingTable[key] = removeAccents(value);
     decodingTable[key] = (value);

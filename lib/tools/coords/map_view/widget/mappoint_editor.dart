@@ -41,10 +41,11 @@ class MapPointEditorState extends State<MapPointEditor> {
     }
 
     _currentMarkerColorPickerColor = HSVColor.fromColor(widget.mapPoint.color);
-    if (widget.mapPoint.hasCircle() && !widget.mapPoint.circleColorSameAsPointColor)
+    if (widget.mapPoint.hasCircle() && !widget.mapPoint.circleColorSameAsPointColor) {
       _currentCircleColorPickerColor = HSVColor.fromColor(widget.mapPoint.circle!.color);
-    else
+    } else {
       _currentCircleColorPickerColor = HSVColor.fromColor(widget.mapPoint.color);
+    }
   }
 
   @override
@@ -72,8 +73,9 @@ class MapPointEditorState extends State<MapPointEditor> {
         restoreCoordinates: true,
         onChanged: (BaseCoordinate ret) {
           setState(() {
-            if (ret.toLatLng() == null)
+            if (ret.toLatLng() == null) {
               return;
+            }
 
             widget.mapPoint.coordinateFormat = ret.format;
             widget.mapPoint.point = ret.toLatLng()!;
@@ -82,6 +84,7 @@ class MapPointEditorState extends State<MapPointEditor> {
       ),
       GCWTextDivider(text: i18n(context, 'coords_openmap_pointeditor_point_color')),
       Container(
+        padding: const EdgeInsets.only(bottom: 20.0),
         child: GCWColorPicker(
           hsvColor: _currentMarkerColorPickerColor,
           onChanged: (color) {
@@ -91,7 +94,6 @@ class MapPointEditorState extends State<MapPointEditor> {
             });
           },
         ),
-        padding: EdgeInsets.only(bottom: 20.0),
       ),
       GCWTextDivider(text: i18n(context, 'coords_openmap_pointeditor_circle')),
       GCWOnOffSwitch(
@@ -137,6 +139,7 @@ class MapPointEditorState extends State<MapPointEditor> {
                 widget.mapPoint.circleColorSameAsPointColor
                     ? Container()
                     : Container(
+                        padding: const EdgeInsets.only(bottom: 20.0),
                         child: GCWColorPicker(
                           hsvColor: _currentCircleColorPickerColor,
                           onChanged: (color) {
@@ -146,7 +149,6 @@ class MapPointEditorState extends State<MapPointEditor> {
                             });
                           },
                         ),
-                        padding: EdgeInsets.only(bottom: 20.0),
                       ),
               ],
             )

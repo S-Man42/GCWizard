@@ -337,8 +337,9 @@ final Map<FileType, FileTypeInfo> _FILE_TYPES = {
 
 FileType? fileTypeByFilename(String fileName) {
   fileName = fileName.split('.').last;
-  if (fileName.isEmpty)
+  if (fileName.isEmpty) {
     return null;
+  }
 
   return _FILE_TYPES.keys.firstWhereOrNull((type) {
     return _FILE_TYPES[type]!.extensions.contains(fileName);
@@ -346,14 +347,16 @@ FileType? fileTypeByFilename(String fileName) {
 }
 
 void _checkFileType(FileType type) {
-  if (_FILE_TYPES[type] == null)
+  if (_FILE_TYPES[type] == null) {
     throw Exception('No file type extension');
+  }
 }
 
 String fileExtension(FileType type) {
   _checkFileType(type);
-  if (_FILE_TYPES[type]!.extensions.contains(null))
+  if (_FILE_TYPES[type]!.extensions.contains(null)) {
     throw Exception('No file type extension');
+  }
 
   return _FILE_TYPES[type]!.extensions.first;
 }
@@ -361,8 +364,9 @@ String fileExtension(FileType type) {
 List<String> fileExtensions(List<FileType> types) {
   return types.map((type) {
     _checkFileType(type);
-    if (_FILE_TYPES[type]!.extensions.contains(null))
+    if (_FILE_TYPES[type]!.extensions.contains(null)) {
       throw Exception('No file type extension');
+    }
 
     return _FILE_TYPES[type]!.extensions;
   }).expand((List<String> extensions) => extensions).toList();
@@ -383,7 +387,7 @@ FileClass fileClass(FileType type) {
 
 List<List<int>>? magicBytes(FileType type) {
   _checkFileType(type);
-  return _FILE_TYPES[type]!.magic_bytes!;
+  return _FILE_TYPES[type]!.magic_bytes;
 }
 
 List<int>? magicBytesDetail(FileType type) {
@@ -434,17 +438,18 @@ FileType getFileType(Uint8List blobBytes, {FileType defaultType = FileType.TXT})
 
     for (var bytes in _magicBytes) {
       if (blobBytes.length >= (bytes.length + offset) &&
-          ListEquality<int>().equals(blobBytes.sublist(offset, offset + bytes.length), bytes)) {
+          const ListEquality<int>().equals(blobBytes.sublist(offset, offset + bytes.length), bytes)) {
         // test if RIFF then test for details
-        if (ListEquality<int>().equals(bytes, RIFF)) {
+        if (const ListEquality<int>().equals(bytes, RIFF)) {
           for (var fileTypeContainer in _FILE_TYPES.keys) {
             var _magicBytesDetails = magicBytesDetail(fileTypeContainer);
-            if (ListEquality<int>().equals(blobBytes.sublist(8, 12), _magicBytesDetails)) {
+            if (const ListEquality<int>().equals(blobBytes.sublist(8, 12), _magicBytesDetails)) {
               return fileTypeContainer;
             }
           }
-        } else
+        } else {
           return fileType;
+        }
       }
     }
   }
@@ -526,7 +531,7 @@ Future<Uint8List> createZipFile(String fileName, String extension, List<Uint8Lis
 
     for (Uint8List imageBytes in imageList) {
       counter++;
-      var fileNameZip = '$fileName' + '_$counter$extension';
+      var fileNameZip = '$fileName' '_$counter$extension';
       var tmpPath = '$tmpDir/$fileNameZip';
       if (File(tmpPath).existsSync()) File(tmpPath).delete();
 

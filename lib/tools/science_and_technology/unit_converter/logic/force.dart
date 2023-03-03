@@ -6,8 +6,8 @@ class Force extends Unit {
 
   Force({required String name, required String symbol, bool isReference = false, required double inNewton})
       : super(name, symbol, isReference, (e) => e * inNewton, (e) => e / inNewton) {
-    toNewton = this.toReference;
-    fromNewton = this.fromReference;
+    toNewton = toReference;
+    fromNewton = fromReference;
   }
 }
 

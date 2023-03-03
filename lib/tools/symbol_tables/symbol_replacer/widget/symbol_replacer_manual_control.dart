@@ -31,7 +31,7 @@ class SymbolReplacerManualControl extends StatefulWidget {
 }
 
 class SymbolReplacerManualControlState extends State<SymbolReplacerManualControl> {
-  var _symbolMap = Map<Symbol, Map<String, SymbolData>>();
+  final _symbolMap = <Symbol, Map<String, SymbolData>>{};
   SymbolData? _selectedSymbolData;
   var _removeActiv = false;
   var _addActiv = false;
@@ -65,7 +65,7 @@ class SymbolReplacerManualControlState extends State<SymbolReplacerManualControl
   }
 
   Widget _buildMatrix(SymbolReplacerImage symbolImage, int countColumns, MediaQueryData mediaQueryData) {
-    symbolImage.symbols.forEach((symbol) {
+    for (var symbol in symbolImage.symbols) {
       if (_symbolMap.containsKey(symbol)) {
         var _symbolData = _symbolMap[symbol];
         var _displayText = symbol.symbolGroup?.text ?? '';
@@ -77,7 +77,7 @@ class SymbolReplacerManualControlState extends State<SymbolReplacerManualControl
       //   _symbolMap.addAll({
       //     symbol: {null: SymbolData(bytes: symbol.getImage(), displayName: symbol?.symbolGroup?.text ?? '')}
       //   });
-    });
+    }
 
     return Expanded(
         child: GCWSymbolTableSymbolMatrix(
@@ -100,10 +100,11 @@ class SymbolReplacerManualControlState extends State<SymbolReplacerManualControl
     if (_selectedSymbolData == null) return;
     var _symbol = _getSymbol(_symbolMap,imageData);
 
-    if (!(_addActiv || _removeActiv))
+    if (!(_addActiv || _removeActiv)) {
       _selectedSymbolData = selected ? imageData : null;
-    else
+    } else {
       selected = _symbol?.symbolGroup == _getSymbol(_symbolMap,_selectedSymbolData!)?.symbolGroup;
+    }
 
     if (_addActiv && !selected && _symbol != null) {
       widget.symbolImage.addToGroup(_symbol, _getSymbol(_symbolMap,_selectedSymbolData!)?.symbolGroup);
@@ -116,27 +117,29 @@ class SymbolReplacerManualControlState extends State<SymbolReplacerManualControl
       if (_selectedSymbolData == imageData) {
         var symbolGroup = _getSymbol(_symbolMap,_selectedSymbolData!)?.symbolGroup;
         widget.symbolImage.removeFromGroup(_symbol);
-        if (symbolGroup != null)
+        if (symbolGroup != null) {
           _selectedSymbolData = symbolGroup.symbols.isEmpty ? null : _symbolMap[symbolGroup.symbols.first]?.values.first;
-      } else
+        }
+      } else {
         widget.symbolImage.removeFromGroup(_symbol);
+      }
       _symbol = _getSymbol(_symbolMap,_selectedSymbolData!);
     }
 
-    if (selected)
-      // reset all selections
-      _symbolMap.values.forEach((image) {
+    if (selected) {
+      for (var image in _symbolMap.values) {
         image.values.first.primarySelected = false;
-      });
+      }
+    }
 
     if (_symbol?.symbolGroup?.symbols != null) {
-      _symbol!.symbolGroup!.symbols.forEach((symbol) {
+      for (var symbol in _symbol!.symbolGroup!.symbols) {
         var image = _symbolMap[symbol];
         if (image != null) {
           image.values.first.primarySelected = selected;
           _editValueController.text = image.values.first.displayName ?? '';
         }
-      });
+      }
     }
   }
 
@@ -150,6 +153,7 @@ class SymbolReplacerManualControlState extends State<SymbolReplacerManualControl
     return Row(
       children: <Widget>[
         Expanded(
+          flex: 1,
           child: Column(
             children: [
               GCWToolBar(children: <Widget>[
@@ -189,7 +193,6 @@ class SymbolReplacerManualControlState extends State<SymbolReplacerManualControl
                   })
             ],
           ),
-          flex: 1,
         ),
         _identifiedSymbol()
       ],
@@ -199,12 +202,13 @@ class SymbolReplacerManualControlState extends State<SymbolReplacerManualControl
   Widget _identifiedSymbol() {
     if (widget.symbolImage.compareSymbols == null) {
       return Expanded(
-        child: Column(children: [Container()]),
         flex: 1,
+        child: Column(children: [Container()]),
       );
     }
 
     return Expanded(
+      flex: 1,
       child: Column(children: [
         AutoSizeText(i18n(context, 'symbol_replacer_symbol'),
             textAlign: TextAlign.center,
@@ -213,16 +217,15 @@ class SymbolReplacerManualControlState extends State<SymbolReplacerManualControl
             maxLines: 2),
         Container(height: 3),
         Row(children: [
-          Expanded(child: Container(), flex: 1),
-          Container(
+          Expanded(flex: 1, child: Container()),
+          SizedBox(
               height: 80,
               child: _selectedSymbolData == null || _getGroupSymbol(_selectedSymbolData!)?.bytes == null
                   ? Container(width: 80, color: Colors.white)
                   : GCWSymbolContainer(symbol: Image.memory(_getGroupSymbol(_selectedSymbolData!)!.bytes!))),
-          Expanded(child: Container(), flex: 1),
+          Expanded(flex: 1, child: Container()),
         ])
       ]),
-      flex: 1,
     );
   }
 
@@ -239,7 +242,7 @@ class SymbolReplacerManualControlState extends State<SymbolReplacerManualControl
         autoScroll: false,
         tool: SymbolReplacerManualSetter(symbolImage: widget.symbolImage, viewSymbols: selectedSymbols),
         id: 'symbol_replacer',
-        searchKeys: ['symbol_replacer']);
+        searchKeys: const ['symbol_replacer']);
 
     Navigator.push(context, NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => subPageTool)).whenComplete(() {
       setState(() {

@@ -28,7 +28,7 @@ class MultiDecoderToolPlayfair extends AbstractMultiDecoderTool {
                 suppressTitle: true,
                 value: _parseStringToEnum(stringNullableTypeCheck(options[MDT_PLAYFAIR_OPTION_MODE],
                     alphabetModeName(AlphabetModificationMode.J_TO_I))),
-                allowedModifications: [
+                allowedModifications: const [
                   AlphabetModificationMode.J_TO_I,
                   AlphabetModificationMode.W_TO_VV,
                   AlphabetModificationMode.C_TO_K

@@ -12,6 +12,8 @@ import 'package:gc_wizard/tools/crypto_and_encodings/morse/logic/morse.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/text_widget_utils.dart';
 
 class Morse extends StatefulWidget {
+  const Morse({Key? key}) : super(key: key);
+
   @override
   MorseState createState() => MorseState();
 }
@@ -81,6 +83,7 @@ class MorseState extends State<Morse> {
 
     return GCWToolBar(children: [
       Container(
+        padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
         child: Row(
           children: [
             Expanded(
@@ -105,9 +108,9 @@ class MorseState extends State<Morse> {
             ),
           ],
         ),
-        padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
       ),
       Container(
+        padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN, left: DOUBLE_DEFAULT_MARGIN),
         child: Row(
           children: [
             Expanded(
@@ -132,9 +135,9 @@ class MorseState extends State<Morse> {
             ),
           ],
         ),
-        padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN, left: DOUBLE_DEFAULT_MARGIN),
       ),
       Container(
+        padding: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
         child: GCWIconButton(
           icon: Icons.backspace,
           onPressed: () {
@@ -143,7 +146,6 @@ class MorseState extends State<Morse> {
             });
           },
         ),
-        padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
       )
     ]);
   }
@@ -160,8 +162,9 @@ class MorseState extends State<Morse> {
       output = encodeMorse(_currentEncodeInput);
       textStyle =
           TextStyle(fontSize: textStyle.fontSize! + 15, fontFamily: textStyle.fontFamily, fontWeight: FontWeight.bold);
-    } else
+    } else {
       output = decodeMorse(_currentDecodeInput);
+    }
 
     return GCWOutputText(text: output, style: textStyle);
   }

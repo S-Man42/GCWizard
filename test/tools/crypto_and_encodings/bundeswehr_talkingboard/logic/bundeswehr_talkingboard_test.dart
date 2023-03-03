@@ -154,12 +154,12 @@ void main() {
 
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('currentCallSign: ${elem['currentCallSign']}, currentAuth: ${elem['currentAuth']}, currentLetterAuth: ${elem['currentLetterAuth']}, tableNumeralCode: ${elem['tableNumeralCode']}, tableAuthentificationCode: ${elem['tableAuthentificationCode']}, ', () {
         var _actual = checkAuthBundeswehr(elem['currentCallSign'] as String, elem['currentAuth'] as String, elem['currentLetterAuth'] as String, elem['tableNumeralCode'] as BundeswehrTalkingBoardAuthentificationTable, elem['tableAuthentificationCode'] as BundeswehrTalkingBoardAuthentificationTable);
         expect(_actual.ResponseCode, (elem['expectedOutput'] as BundeswehrTalkingBoardAuthentificationOutput).ResponseCode);
       });
-    });
+    }
   });
 
   group("bundeswehr.create_auth:", () {
@@ -268,18 +268,18 @@ void main() {
 
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('currentCallSign: ${elem['currentCallSign']}, currentLetterAuth: ${elem['currentLetterAuth']}, currentLetterCallSign: ${elem['currentLetterCallSign']}, tableNumeralCode: ${elem['tableNumeralCode']}, tableAuthentificationCode: ${elem['tableAuthentificationCode']}, ', () {
         var _actual = buildAuthBundeswehr(elem['currentCallSign'] as String, elem['currentLetterAuth'] as String, elem['currentLetterCallSign'] as String, elem['tableNumeralCode'] as BundeswehrTalkingBoardAuthentificationTable, elem['tableAuthentificationCode'] as BundeswehrTalkingBoardAuthentificationTable);
         expect(_actual.ResponseCode, (elem['expectedOutput'] as BundeswehrTalkingBoardAuthentificationOutput).ResponseCode);
-        if (_actual.ResponseCode == BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_OK) {
+        if (_actual.ResponseCode.contains(BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_OK)) {
           expect(_actual.Tupel1, (elem['expectedOutput'] as BundeswehrTalkingBoardAuthentificationOutput).Tupel1);
           expect(_actual.Tupel2, (elem['expectedOutput'] as BundeswehrTalkingBoardAuthentificationOutput).Tupel2);
           expect(_actual.Tupel3, (elem['expectedOutput'] as BundeswehrTalkingBoardAuthentificationOutput).Tupel3);
           expect(_actual.Number, (elem['expectedOutput'] as BundeswehrTalkingBoardAuthentificationOutput).Number);
         }
       });
-    });
+    }
   });
 
   group("bundeswehr.decode:", () {
@@ -307,7 +307,7 @@ void main() {
             Details: GC7DF7R_plainText)},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('cypherText: ${elem['cypherText']}, tableNumeralCode: ${elem['tableNumeralCode']}', () {
         var _actual = decodeBundeswehr(elem['cypherText'] as String?, elem['tableNumeralCode'] as BundeswehrTalkingBoardAuthentificationTable?);
         expect(_actual.ResponseCode, (elem['expectedOutput'] as BundeswehrTalkingBoardCodingOutput).ResponseCode);
@@ -315,7 +315,7 @@ void main() {
           expect(_actual.Details, (elem['expectedOutput'] as BundeswehrTalkingBoardCodingOutput).Details);
         }
       });
-    });
+    }
   });
 
   group("bundeswehr.encode:", () {
@@ -333,7 +333,7 @@ void main() {
         'expectedOutput' : BundeswehrTalkingBoardCodingOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CUSTOM_NUMERAL_TABLE,  Details: '')},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('cypherText: ${elem['cypherText']}, tableNumeralCode: ${elem['tableNumeralCode']}', () {
         var _actual = encodeBundeswehr(elem['cypherText'] as String?, elem['tableNumeralCode']  as BundeswehrTalkingBoardAuthentificationTable);
         expect(_actual.ResponseCode, (elem['expectedOutput'] as BundeswehrTalkingBoardCodingOutput).ResponseCode);
@@ -341,6 +341,6 @@ void main() {
           expect(_actual.Details, (elem['expectedOutput'] as BundeswehrTalkingBoardCodingOutput).Details);
         }
       });
-    });
+    }
   });
 }

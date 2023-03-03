@@ -11,6 +11,8 @@ import 'package:gc_wizard/tools/science_and_technology/numeral_bases/widget/nume
 List<int> _COMMON_BASES = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 60];
 
 class NumeralBases extends StatefulWidget {
+  const NumeralBases({Key? key}) : super(key: key);
+
   @override
   NumeralBasesState createState() => NumeralBasesState();
 }
@@ -85,7 +87,7 @@ class NumeralBasesState extends State<NumeralBases> {
 
   Widget _buildOutput(BuildContext context) {
     if (_currentInput.isEmpty) {
-      return GCWDefaultOutput();
+      return const GCWDefaultOutput();
     }
 
     var calculateableToBases = _currentToMode == GCWSwitchPosition.left ? _COMMON_BASES : [_currentToKey];
@@ -116,7 +118,7 @@ class NumeralBasesState extends State<NumeralBases> {
       return GCWColumnedMultilineOutput(
           firstRows: [GCWTextDivider(text: i18n(context, 'common_output'))],
           data: outputValues,
-          flexValues: [1, 3]
+          flexValues: const [1, 3]
       );
     }
   }

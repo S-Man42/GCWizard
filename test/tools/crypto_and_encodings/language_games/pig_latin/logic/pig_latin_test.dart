@@ -21,12 +21,12 @@ void main() {
       {'input' : 'America', 'expectedOutput' : 'America-ay'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = encryptPigLatin(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("PigLatin.decrypt:", () {
@@ -48,11 +48,11 @@ void main() {
       {'expectedOutput' : 'America', 'input' : 'America-ay'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decryptPigLatin(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

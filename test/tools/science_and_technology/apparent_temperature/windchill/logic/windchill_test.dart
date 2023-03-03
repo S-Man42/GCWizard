@@ -19,16 +19,17 @@ void main() {
       {'temperature' : 41.0, 'windspeed' : 6.22, 'isMetric' : false, 'expectedOutput' : 36.80887834850828},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('temperature: ${elem['temperature']}, windspeed: ${elem['windspeed']}, isMetric: ${elem['isMetric']}', () {
         double? _actual;
-        if (elem['isMetric'] as bool)
+        if (elem['isMetric'] as bool) {
           _actual = calcWindchillMetric(elem['temperature'] as double?, elem['windspeed'] as double?);
-        else
+        } else {
           _actual = calcWindchillImperial(elem['temperature'] as double?, elem['windspeed'] as double?);
+        }
 
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

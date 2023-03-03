@@ -8,13 +8,15 @@ import 'package:gc_wizard/tools/symbol_tables/_common/logic/symbol_table_data.da
 import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 
 class CountriesFlags extends StatefulWidget {
+  const CountriesFlags({Key? key}) : super(key: key);
+
   @override
   CountriesFlagsState createState() => CountriesFlagsState();
 }
 
 class CountriesFlagsState extends State<CountriesFlags> {
-  var _ASSET_PATH = 'assets/symbol_tables/country_flags/country_flags.zip';
-  var _KEY_PREFIX = 'common_country_';
+  final _ASSET_PATH = 'assets/symbol_tables/country_flags/country_flags.zip';
+  final _KEY_PREFIX = 'common_country_';
 
   List<Map<String, SymbolData>> _images = [];
   String _currentImageKey = '';
@@ -29,7 +31,7 @@ class CountriesFlagsState extends State<CountriesFlags> {
   void _initalizeImages() async {
     // Read the Zip file from disk.
     final bytes = await DefaultAssetBundle.of(context).load(_ASSET_PATH);
-    InputStream input = new InputStream(bytes.buffer.asByteData());
+    InputStream input = InputStream(bytes.buffer.asByteData());
     // Decode the Zip file
     final archive = ZipDecoder().decodeBuffer(input);
 
@@ -38,7 +40,7 @@ class CountriesFlagsState extends State<CountriesFlags> {
 
       var data = toUint8ListOrNull(file.content) ?? Uint8List(0);
 
-      return {key: new SymbolData(path: file.name, bytes: data)};
+      return {key: SymbolData(path: file.name, bytes: data)};
     }).toList();
 
     _images.sort((a, b) => a.keys.first.compareTo(b.keys.first));
@@ -65,9 +67,9 @@ class CountriesFlagsState extends State<CountriesFlags> {
           },
         ),
         Container(
+          padding: const EdgeInsets.only(top: 20),
           child:
               Image.memory(_images.firstWhere((element) => element.keys.first == _currentImageKey).values.first.bytes),
-          padding: EdgeInsets.only(top: 20),
         ),
       ],
     );

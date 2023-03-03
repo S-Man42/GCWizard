@@ -17,6 +17,8 @@ import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 
 class NumeralWordsTextSearch extends StatefulWidget {
+  const NumeralWordsTextSearch({Key? key}) : super(key: key);
+
   @override
   NumeralWordsTextSearchState createState() => NumeralWordsTextSearchState();
 }
@@ -111,10 +113,13 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
         language: _currentLanguage,
         decodeModeWholeWords: (_currentDecodeMode == GCWSwitchPosition.left));
     for (int i = 0; i < detailedOutput.length; i++) {
-      if (detailedOutput[i].number.isNotEmpty) if (detailedOutput[i].number.startsWith('numeralwords_'))
-        output.add(i18n(context, detailedOutput[i].number));
-      else
-        output.add(detailedOutput[i].number);
+      if (detailedOutput[i].number.isNotEmpty) {
+        if (detailedOutput[i].number.startsWith('numeralwords_')) {
+          output.add(i18n(context, detailedOutput[i].number));
+        } else {
+          output.add(detailedOutput[i].number);
+        }
+      }
     }
 
     List<List<String>> columnData = [];
@@ -123,14 +128,16 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
     String columnDataRowNumWord;
 
     for (int i = 0; i < detailedOutput.length; i++) {
-      if (detailedOutput[i].number.startsWith('numeralwords_'))
+      if (detailedOutput[i].number.startsWith('numeralwords_')) {
         columnDataRowNumber = i18n(context, detailedOutput[i].number);
-      else
+      } else {
         columnDataRowNumber = detailedOutput[i].number;
-      if (detailedOutput[i].numWord.startsWith('numeralwords_'))
+      }
+      if (detailedOutput[i].numWord.startsWith('numeralwords_')) {
         columnDataRowNumWord = i18n(context, detailedOutput[i].numWord);
-      else
+      } else {
         columnDataRowNumWord = detailedOutput[i].numWord;
+      }
       columnData.add([columnDataRowNumber, columnDataRowNumWord]);
     }
 
@@ -164,7 +171,7 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
                 expanded: true,
                 child: GCWColumnedMultilineOutput(
                     data: columnData,
-                    flexValues: [1, 2],
+                    flexValues: const [1, 2],
                     copyColumn: 1
                 )
               ),
@@ -175,26 +182,29 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
   Map<String, TextStyle> _numeralWordsHiglightMap() {
     Map<String, TextStyle> result = {};
     if (NUMERAL_WORDS_ACCENTS[_currentLanguage] != null) {
-      NUMERAL_WORDS_ACCENTS[_currentLanguage]!.forEach((element) {
+      for (var element in NUMERAL_WORDS_ACCENTS[_currentLanguage]!) {
         if ((int.tryParse(NUMERAL_WORDS[_currentLanguage]![removeAccents(element)] ?? '') ?? 0) < 10) {
-          result[r'' + element + ''] = TextStyle(color: Colors.red);
-          result[r'' + removeAccents(element) + ''] = TextStyle(color: Colors.red);
+          result[r'' + element + ''] = const TextStyle(color: Colors.red);
+          result[r'' + removeAccents(element) + ''] = const TextStyle(color: Colors.red);
         } else {
-          result[r'' + element + ''] = TextStyle(color: Colors.orange);
-          result[r'' + removeAccents(element) + ''] = TextStyle(color: Colors.orange);
+          result[r'' + element + ''] = const TextStyle(color: Colors.orange);
+          result[r'' + removeAccents(element) + ''] = const TextStyle(color: Colors.orange);
         }
-      });
+      }
     }
 
     NUMERAL_WORDS[_currentLanguage]!.forEach((key, value) {
-      if (int.tryParse(value) == null) if (value.startsWith('numeral'))
-        result[r'' + key + ''] = TextStyle(color: Colors.blue);
-      else
-        result[r'' + key + ''] = TextStyle(color: Colors.green);
-      else if (int.parse(value) < 10)
-        result[r'' + key + ''] = TextStyle(color: Colors.red);
-      else
-        result[r'' + key + ''] = TextStyle(color: Colors.orange);
+      if (int.tryParse(value) == null) {
+        if (value.startsWith('numeral')) {
+          result[r'' + key + ''] = const TextStyle(color: Colors.blue);
+        } else {
+          result[r'' + key + ''] = const TextStyle(color: Colors.green);
+        }
+      } else if (int.parse(value) < 10) {
+        result[r'' + key + ''] = const TextStyle(color: Colors.red);
+      } else {
+        result[r'' + key + ''] = const TextStyle(color: Colors.orange);
+      }
     });
     return result;
   }

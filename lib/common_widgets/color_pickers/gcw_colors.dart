@@ -58,6 +58,7 @@ class GCWColorsState extends State<GCWColors> {
     return Column(
       children: [
         Container(
+          padding: const EdgeInsets.only(bottom: 20.0),
           child: GCWColorPicker(
             hsvColor: _currentColorPickerColor,
             onChanged: (color) {
@@ -72,7 +73,6 @@ class GCWColorsState extends State<GCWColors> {
               });
             },
           ),
-          padding: EdgeInsets.only(bottom: 20.0),
         ),
         _GCWColorValuesPicker(
           colorsValue: _currentColorsValue,

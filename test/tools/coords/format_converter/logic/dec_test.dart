@@ -63,12 +63,12 @@ void main() {
   group("Converter.dec.parseDEC:", () {
     List<Map<String, Object?>> _inputsToExpected = inputsToExpectedDEC;
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('text: ${elem['text']}', () {
         var _actual = DEC.parse(elem['text'] as String)?.toLatLng();
         expect(_actual, (elem['expectedOutput'] as Map<String, Object>)['coordinate']);
       });
-    });
+    }
   });
 
   group("Coordinate.normalizeDEC:", () {
@@ -111,12 +111,12 @@ void main() {
       {'coord' : DEC(300.0, 190.0), 'expectedOutput' : DEC(-60.0, -170.0)},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('coord: ${elem['coord']}', () {
         var _actual = normalizeDEC(elem['coord'] as DEC);
         expect((_actual.latitude - (elem['expectedOutput'] as DEC).latitude).abs() < 1e-10, true);
         expect((_actual.longitude - (elem['expectedOutput'] as DEC).longitude) .abs() < 1e-10, true);
       });
-    });
+    }
   });
 }

@@ -24,12 +24,12 @@ void main() {
       {'input' : -47.000, 'expectedOutput' : '-03:08:00.000'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = raDegree2RightAscension(RaDeg(elem['input'] as double?));
         expect(_actual.toString(), elem['expectedOutput']);
       });
-    });
+    }
   });
 
 
@@ -45,15 +45,16 @@ void main() {
       {'input' : '-3:8:0', 'expectedOutput' : '-47.000'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = raRightAscension2Degree(RightAscension.parse(elem['input'] as String?)!);
-        if (_actual == null)
+        if (_actual == null) {
           expect(_actual, elem['expectedOutput']);
-        else
+        } else {
           expect(_actual.toString(), elem['expectedOutput']);
+        }
       });
-    });
+    }
   });
 
   group("raDeg.parse:", () {
@@ -76,15 +77,16 @@ void main() {
       {'input' : '720', 'expectedOutput' : '720.000'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = RaDeg.parse(elem['input'] as String?);
-        if (_actual == null)
+        if (_actual == null) {
           expect(_actual, elem['expectedOutput']);
-        else
+        } else {
           expect(_actual.toString(), elem['expectedOutput']);
+        }
       });
-    });
+    }
   });
 
   group("RightAscension.parse:", () {
@@ -104,14 +106,15 @@ void main() {
       {'input' : '-48:01:28.999999', 'expectedOutput' : '-48:01:29.000'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = RightAscension.parse(elem['input'] as String?);
-        if (_actual == null)
+        if (_actual == null) {
           expect(_actual, elem['expectedOutput']);
-        else
+        } else {
           expect(_actual.toString(), elem['expectedOutput']);
+        }
       });
-    });
+    }
   });
 }

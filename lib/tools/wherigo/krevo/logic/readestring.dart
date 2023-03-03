@@ -1,7 +1,9 @@
 import 'package:gc_wizard/tools/wherigo/krevo/logic/readustring.dart';
 
 int find(String palette, String char) {
-  for (int i = 0; i < palette.length; i++) if (palette[i] == char) return (i + 1);
+  for (int i = 0; i < palette.length; i++) {
+    if (palette[i] == char) return (i + 1);
+  }
   return -1;
 }
 

@@ -11,12 +11,12 @@ void main() {
       {'input' : '22.04.1968 01.07.1987 11.02.1994', 'expectedOutput' : {'A':'0', 'B':'0', 'C':'0', 'D':'0', 'E':'1', 'F':'1', 'G':'1', 'H':'1', 'I':'1', 'J':'1', 'K':'2', 'L':'2', 'M':'2', 'N':'4', 'O':'4', 'P':'6', 'Q':'7', 'R':'7', 'S':'8', 'T':'8', 'U':'9', 'V':'9', 'W':'9', 'X':'9', 'Y':'3', 'Z':'5'}},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = buildGade(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
 }

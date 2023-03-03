@@ -53,8 +53,9 @@ Future<Tuple2<List<GCWFile>, int>> _hiddenData(GCWFile data, int fileIndexCounte
     if (dataClone.children != null && dataClone.children!.isNotEmpty) {
       // check for hidden archives (other types are checked)
       await Future.forEach(dataClone.children!, (GCWFile data) async {
-        if (data.fileClass == FileClass.ARCHIVE)
+        if (data.fileClass == FileClass.ARCHIVE) {
           result = await _hiddenData(data, result.item2);
+        }
       });
     }
   }
@@ -86,10 +87,11 @@ Future<Tuple2<List<GCWFile>, int>> _splitFile(GCWFile data, int fileIndexCounter
       fileIndexCounter++;
       var fileName = HIDDEN_FILE_IDENTIFIER + '_$fileIndexCounter';
       var file = GCWFile(name: fileName, bytes: resultBytes);
-      if (await _checkFileValid(file))
+      if (await _checkFileValid(file)) {
         resultList.add(file);
-      else
+      } else {
         fileIndexCounter--;
+      }
       if (onlyParent) break;
     }
     parent = false;
@@ -108,10 +110,11 @@ Future<Tuple2<List<GCWFile>, int>> _searchMagicBytesHeader(GCWFile data, int fil
 
 void _addChildren(GCWFile data, List<GCWFile>? children) {
   if (children != null && children.isNotEmpty) {
-    if (data.children != null)
+    if (data.children != null) {
       data.children!.addAll(children);
-    else
+    } else {
       data.children = children;
+    }
   }
 }
 
@@ -166,9 +169,9 @@ Future<bool> _checkFileValid(GCWFile data) async {
   var result = true;
   try {
     var _fileClass = data.fileClass;
-    if (_fileClass == FileClass.IMAGE)
+    if (_fileClass == FileClass.IMAGE) {
       result = Image.decodeImage(data.bytes) != null;
-    else if (_fileClass == FileClass.SOUND) {
+    } else if (_fileClass == FileClass.SOUND) {
       var advancedPlayer = Audio.AudioPlayer();
       await advancedPlayer.setSourceBytes(data.bytes);
       var duration = await advancedPlayer.getDuration();
@@ -185,11 +188,13 @@ Uint8List? mergeFiles(List<Object>? data) {
   if (data == null) return null;
   var result = <int>[];
 
-  data.forEach((element) {
-    if (element is Uint8List)
+  for (var element in data) {
+    if (element is Uint8List) {
       result.addAll(trimNullBytes(element));
-    else if (element is String) result.addAll(Uint8List.fromList(element.toString().codeUnits));
-  });
+    } else if (element is String) {
+      result.addAll(Uint8List.fromList(element.toString().codeUnits));
+    }
+  }
 
   return trimNullBytes(Uint8List.fromList(result));
 }

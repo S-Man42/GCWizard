@@ -13,12 +13,12 @@ void main() {
       {'coord': LatLng(50.6569, 11.35443333), 'expectedOutput': 'JO50QP27MP77QK35'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('coord: ${elem['coord']}', () {
         var _actual = Maidenhead.fromLatLon(elem['coord'] as LatLng).toString();
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Converter.maidenhead.maidenheadToLatLon:", () {
@@ -35,17 +35,17 @@ void main() {
       {'expectedOutput': LatLng(46.2110242332, 025.5985060764), 'coord': 'kn26tf10tp64xx49'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('coord: ${elem['coord']}', () {
         var _actual = Maidenhead.parse(elem['coord'] as String)?.toLatLng();
-        if (_actual == null)
+        if (_actual == null) {
           expect(null, elem['expectedOutput']);
-        else {
+        } else {
           expect((_actual.latitude - (elem['expectedOutput'] as LatLng).latitude).abs() < 1e-4, true);
           expect((_actual.longitude - (elem['expectedOutput'] as LatLng).longitude).abs() < 1e-4, true);
         }
       });
-    });
+    }
   });
 
 }

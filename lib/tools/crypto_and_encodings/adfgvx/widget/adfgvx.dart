@@ -9,6 +9,8 @@ import 'package:gc_wizard/tools/crypto_and_encodings/adfgvx/logic/adfgvx.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/polybios/logic/polybios.dart';
 
 class ADFGVX extends StatefulWidget {
+  const ADFGVX({Key? key}) : super(key: key);
+
   @override
   ADFGVXState createState() => ADFGVXState();
 }

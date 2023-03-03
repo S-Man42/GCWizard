@@ -49,6 +49,8 @@ part 'package:gc_wizard/tools/formula_solver/widget/formula_solver_formulas.dart
 part 'package:gc_wizard/tools/formula_solver/widget/formula_solver_values.dart';
 
 class FormulaSolverFormulaGroups extends StatefulWidget {
+  const FormulaSolverFormulaGroups({Key? key}) : super(key: key);
+
   @override
   FormulaSolverFormulaGroupsState createState() => FormulaSolverFormulaGroupsState();
 }
@@ -92,6 +94,9 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
           children: <Widget>[
             Expanded(
               child: Padding(
+                padding: const EdgeInsets.only(
+                  right: 2,
+                ),
                 child: GCWTextField(
                   hintText: i18n(context, 'formulasolver_groups_newgroup_hint'),
                   controller: _newGroupController,
@@ -100,9 +105,6 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
                       _currentNewName = text;
                     });
                   },
-                ),
-                padding: EdgeInsets.only(
-                  right: 2,
                 ),
               ),
             ),
@@ -127,7 +129,9 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
 
     int i = 1;
     var name = baseName;
-    while (existingNames.contains(name)) name = baseName + ' (${i++})';
+    while (existingNames.contains(name)) {
+      name = baseName + ' (${i++})';
+    }
 
     return name;
   }
@@ -186,7 +190,7 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
               exportFile(text, mode, context);
             },
           ),
-          GCWDialogButton(
+          const GCWDialogButton(
             text: 'OK',
           )
         ],
@@ -215,8 +219,12 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
           child: Row(
             children: <Widget>[
               Expanded(
+                flex: 1,
                 child: _currentEditId == group.id
                     ? Padding(
+                        padding: const EdgeInsets.only(
+                          right: 2,
+                        ),
                         child: GCWTextField(
                           controller: _editGroupController,
                           autofocus: true,
@@ -226,26 +234,22 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
                             });
                           },
                         ),
-                        padding: EdgeInsets.only(
-                          right: 2,
-                        ),
                       )
                     : IgnorePointer(
                         child: Column(
                         children: <Widget>[
-                          GCWText(text: '${group.name}'),
+                          GCWText(text: group.name),
                           Container(
+                            padding: const EdgeInsets.only(left: DEFAULT_DESCRIPTION_MARGIN),
                             child: GCWText(
                               text: '${group.formulas.length} ' +
                                   i18n(context,
                                       group.formulas.length == 1 ? 'formulasolver_formula' : 'formulasolver_formulas'),
                               style: gcwDescriptionTextStyle(),
                             ),
-                            padding: EdgeInsets.only(left: DEFAULT_DESCRIPTION_MARGIN),
                           )
                         ],
                       )),
-                flex: 1,
               ),
               _currentEditId == group.id
                   ? GCWIconButton(

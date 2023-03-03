@@ -28,12 +28,13 @@ class MultiDecoderToolCcitt1 extends AbstractMultiDecoderTool {
             onDecode: (String input, String key) {
               if (checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_CCITT1, options, MDT_CCITT1_OPTION_MODE) == MDT_CCITT1_OPTION_MODE_BINARY) {
                 var intValues = textToBinaryList(input).map((value) {
-                  return int.tryParse(convertBase(value, 2, 10) ?? '') ?? null;
+                  return int.tryParse(convertBase(value, 2, 10) ?? '');
                 }).toList();
                 return decodeTeletypewriter(intValues.whereType<int>().toList(),
                     TeletypewriterCodebook.CCITT_ITA1_EU);
-              } else
+              } else {
                 return decodeTeletypewriter(textToIntList(input), TeletypewriterCodebook.CCITT_ITA1_EU);
+              }
             },
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {

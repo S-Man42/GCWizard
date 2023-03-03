@@ -29,11 +29,11 @@ String? createPolybiosAlphabet(int gridDimension,
     PolybiosMode mode = PolybiosMode.AZ09,
     String? fillAlphabet,
     AlphabetModificationMode? modificationMode = AlphabetModificationMode.J_TO_I}) {
-  if (firstLetters == null) firstLetters = '';
+  firstLetters ??= '';
 
-  if (fillAlphabet == null) fillAlphabet = '';
+  fillAlphabet ??= '';
 
-  if (modificationMode == null) modificationMode = AlphabetModificationMode.J_TO_I;
+  modificationMode ??= AlphabetModificationMode.J_TO_I;
 
   switch (gridDimension) {
     case 5:
@@ -111,7 +111,7 @@ String? createPolybiosAlphabet(int gridDimension,
 // }
 
 Map<String, List<int>> createPolybiosGrid(String input, int dimension) {
-  var grid = Map<String, List<int>>();
+  var grid = <String, List<int>>{};
 
   input = input.substring(0, min(input.length, dimension * dimension));
 
@@ -133,7 +133,7 @@ PolybiosOutput? encryptPolybios(String? input, String? key,
     AlphabetModificationMode? modificationMode = AlphabetModificationMode.J_TO_I}) {
   if (input == null || key == null) return null; //TODO Exception
 
-  if (modificationMode == null) modificationMode = AlphabetModificationMode.J_TO_I;
+  modificationMode ??= AlphabetModificationMode.J_TO_I;
 
   int dim = key.length;
   if (dim != 5 && dim != 6) return null; //TODO Exception
@@ -168,7 +168,7 @@ PolybiosOutput? decryptPolybios(String? input, String? key,
     AlphabetModificationMode? modificationMode = AlphabetModificationMode.J_TO_I}) {
   if (input == null || key == null) return null; //TODO Exception
 
-  if (modificationMode == null) modificationMode = AlphabetModificationMode.J_TO_I;
+  modificationMode ??= AlphabetModificationMode.J_TO_I;
 
   int dim = key.length;
   if (dim != 5 && dim != 6) return null; //TODO Exception
@@ -205,13 +205,13 @@ String polybiosGridToString(Map<String, List<int>> grid, String key) {
   var output = '  | ' + key.split('').join(' ');
   output += '\n--+' + '-' * key.length * 2;
 
-  grid.entries.forEach((entry) {
+  for (var entry in grid.entries) {
     if (entry.value[0] > currentRow) {
       currentRow++;
       output += '\n' + key[currentRow] + ' |';
     }
     output += ' ' + entry.key;
-  });
+  }
 
   return output;
 }

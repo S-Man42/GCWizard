@@ -21,37 +21,42 @@ StraddlingCheckerboardOutput encryptStraddlingCheckerboard(
   alphabet = alphabet.toUpperCase();
 
   if (_invalidKey(key, matrix4x10)) return StraddlingCheckerboardOutput('straddlingcheckerboard_wrong_key_error', '');
-  if (_invalidColumnOrder(columnOrder))
+  if (_invalidColumnOrder(columnOrder)) {
     return StraddlingCheckerboardOutput('straddlingcheckerboard_wrong_order_error', '');
+  }
 
   try {
-    Map<String, String> EncodeMatrix = Map<String, String>();
-    Map<String, String> DecodeMatrix = Map<String, String>();
+    Map<String, String> EncodeMatrix = <String, String>{};
+    Map<String, String> DecodeMatrix = <String, String>{};
     List<String> result = <String>[];
 
     DecodeMatrix = _buildDecodeMatrix(key, columnOrder, matrix4x10, alphabetWord, mode: mode, alphabet: alphabet);
-    if (DecodeMatrix['ERROR'] != null)
+    if (DecodeMatrix['ERROR'] != null) {
       return StraddlingCheckerboardOutput('straddlingcheckerboard__wrong_key_error', '');
+    }
 
     EncodeMatrix = switchMapKeyValue(DecodeMatrix);
 
-    for (int i = 0; i < input.length; i++)
+    for (int i = 0; i < input.length; i++) {
       if (matrix4x10) {
-        if (EncodeMatrix[input[i]] == null)
+        if (EncodeMatrix[input[i]] == null) {
           result.add('');
-        else
+        } else {
           result.add(EncodeMatrix[input[i]] ?? '');
+        }
       } else {
-        if (int.tryParse(input[i]) != null)
+        if (int.tryParse(input[i]) != null) {
           result.addAll([EncodeMatrix['/'] ?? '', input[i]]);
-        else if (EncodeMatrix[input[i]] == null)
+        } else if (EncodeMatrix[input[i]] == null) {
           result.add('');
-        else
+        } else {
           result.add(EncodeMatrix[input[i]] ?? '');
+        }
       }
+    }
     return StraddlingCheckerboardOutput(result.join(''), _buildGrid(DecodeMatrix, columnOrder, matrix4x10));
   } catch (e) {
-    return StraddlingCheckerboardOutput('straddlingcheckerboard_runtime_error' + '#' + e.toString(), '');
+    return StraddlingCheckerboardOutput('straddlingcheckerboard_runtime_error' '#' + e.toString(), '');
   }
 }
 
@@ -66,44 +71,49 @@ StraddlingCheckerboardOutput decryptStraddlingCheckerboard(
   alphabet = alphabet.toUpperCase();
 
   if (_invalidKey(key, matrix4x10)) return StraddlingCheckerboardOutput('straddlingcheckerboard_wrong_key_error', '');
-  if (_invalidColumnOrder(columnOrder))
+  if (_invalidColumnOrder(columnOrder)) {
     return StraddlingCheckerboardOutput('straddlingcheckerboard_wrong_order_error', '');
+  }
 
   try {
-    Map<String, String> DecodeMatrix = Map<String, String>();
+    Map<String, String> DecodeMatrix = <String, String>{};
     List<String> result = <String>[];
 
     DecodeMatrix = _buildDecodeMatrix(key, columnOrder, matrix4x10, alphabetWord, mode: mode, alphabet: alphabet);
-    if (DecodeMatrix['ERROR'] != null)
+    if (DecodeMatrix['ERROR'] != null) {
       return StraddlingCheckerboardOutput('straddlingcheckerboard_wrong_key_error', '');
+    }
 
     for (int i = 0; i < input.length; i++) {
       if (matrix4x10) {
-        if (DecodeMatrix[input[i]] == null)
+        if (DecodeMatrix[input[i]] == null) {
           result.add('');
-        else if (DecodeMatrix[input[i]] == ' ') {
+        } else if (DecodeMatrix[input[i]] == ' ') {
           result.add(DecodeMatrix[input[i] + input[i + 1]] ?? '');
           i++;
-        } else
+        } else {
           result.add(DecodeMatrix[input[i]] ?? '');
+        }
       } else {
-        if (DecodeMatrix[input[i]] == null)
+        if (DecodeMatrix[input[i]] == null) {
           result.add('');
-        else if (DecodeMatrix[input[i]] == ' ') {
+        } else if (DecodeMatrix[input[i]] == ' ') {
           if (DecodeMatrix[input[i] + input[i + 1]] == '/') {
             result.add(input[i + 2]);
             i++;
-          } else
+          } else {
             result.add(DecodeMatrix[input[i] + input[i + 1]] ?? '');
+          }
           i++;
-        } else
+        } else {
           result.add(DecodeMatrix[input[i]] ?? '');
+        }
       }
     }
     return StraddlingCheckerboardOutput(
         result.join('').replaceAll('.', ' '), _buildGrid(DecodeMatrix, columnOrder, matrix4x10));
   } catch (e) {
-    return StraddlingCheckerboardOutput('straddlingcheckerboard_runtime_error' + '#' + e.toString(), '');
+    return StraddlingCheckerboardOutput('straddlingcheckerboard_runtime_error' '#' + e.toString(), '');
   }
 }
 
@@ -127,15 +137,16 @@ bool _invalidColumnOrder(String columnOrder) {
 
   if (columnOrder.length != 10) return true;
 
-  for (int i = 1; i < columnOrder.length; i++)
+  for (int i = 1; i < columnOrder.length; i++) {
     if (columnOrder.substring(0, i - 1).contains(columnOrder[i])) return true;
+  }
 
   return false;
 }
 
 Map<String, String> _buildDecodeMatrix(String key, String columnOrder, bool matrix4x10, String alphabetWord,
     {PolybiosMode mode = PolybiosMode.AZ09, required String alphabet}) {
-  Map<String, String> result = Map<String, String>();
+  Map<String, String> result = <String, String>{};
   List<String> usedAlphabet = <String>[];
   String line1 = '';
   String line2 = '';
@@ -147,52 +158,68 @@ Map<String, String> _buildDecodeMatrix(String key, String columnOrder, bool matr
   wholeAlphabet = key + alphabetWord;
   switch (mode) {
     case PolybiosMode.AZ09:
-      if (matrix4x10) if (wholeAlphabet.contains('.'))
-        wholeAlphabet = wholeAlphabet + 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-      else
-        wholeAlphabet = wholeAlphabet + 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.';
-      else if (wholeAlphabet.contains('.')) if (wholeAlphabet.contains('/'))
+      if (matrix4x10) {
+        if (wholeAlphabet.contains('.')) {
+          wholeAlphabet = wholeAlphabet + 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        } else {
+          wholeAlphabet = wholeAlphabet + 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.';
+        }
+      } else if (wholeAlphabet.contains('.')) {
+        if (wholeAlphabet.contains('/')) {
+          wholeAlphabet = wholeAlphabet + 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        } else {
+          wholeAlphabet = wholeAlphabet + 'ABCDEFGHIJKLMNOPQRSTUVWXYZ/';
+        }
+      } else if (wholeAlphabet.contains('/')) {
         wholeAlphabet = wholeAlphabet + 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-      else
-        wholeAlphabet = wholeAlphabet + 'ABCDEFGHIJKLMNOPQRSTUVWXYZ/';
-      else if (wholeAlphabet.contains('/'))
-        wholeAlphabet = wholeAlphabet + 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-      else
+      } else {
         wholeAlphabet = wholeAlphabet + 'ABCDEFGHIJKLMNOPQRSTUVWXYZ./';
+      }
       break;
     case PolybiosMode.ZA90:
-      if (matrix4x10) if (wholeAlphabet.contains('.'))
+      if (matrix4x10) {
+        if (wholeAlphabet.contains('.')) {
+          wholeAlphabet = wholeAlphabet + 'ZYXWVUTSRQPONMLKJIHGFEDCBA9876543210';
+        } else {
+          wholeAlphabet = wholeAlphabet + 'ZYXWVUTSRQPONMLKJIHGFEDCBA9876543210.';
+        }
+      } else if (wholeAlphabet.contains('.')) {
+        if (wholeAlphabet.contains('/')) {
+          wholeAlphabet = wholeAlphabet + 'ZYXWVUTSRQPONMLKJIHGFEDCBA9876543210';
+        } else {
+          wholeAlphabet = wholeAlphabet + 'ZYXWVUTSRQPONMLKJIHGFEDCBA9876543210/';
+        }
+      } else if (wholeAlphabet.contains('/')) {
         wholeAlphabet = wholeAlphabet + 'ZYXWVUTSRQPONMLKJIHGFEDCBA9876543210';
-      else
-        wholeAlphabet = wholeAlphabet + 'ZYXWVUTSRQPONMLKJIHGFEDCBA9876543210.';
-      else if (wholeAlphabet.contains('.')) if (wholeAlphabet.contains('/'))
-        wholeAlphabet = wholeAlphabet + 'ZYXWVUTSRQPONMLKJIHGFEDCBA9876543210';
-      else
-        wholeAlphabet = wholeAlphabet + 'ZYXWVUTSRQPONMLKJIHGFEDCBA9876543210/';
-      else if (wholeAlphabet.contains('/'))
-        wholeAlphabet = wholeAlphabet + 'ZYXWVUTSRQPONMLKJIHGFEDCBA9876543210';
-      else
+      } else {
         wholeAlphabet = wholeAlphabet + 'ZYXWVUTSRQPONMLKJIHGFEDCBA9876543210./';
+      }
       break;
     case PolybiosMode.CUSTOM:
       wholeAlphabet = wholeAlphabet + alphabet;
-      if (matrix4x10) if (!wholeAlphabet.contains('.')) {
-        result['ERROR'] = 'invalidLength';
-        return result;
-      } else if (!wholeAlphabet.contains('.') || !wholeAlphabet.contains('/')) {
-        result['ERROR'] = 'invalidLength';
-        return result;
+      if (matrix4x10) {
+        if (!wholeAlphabet.contains('.')) {
+          result['ERROR'] = 'invalidLength';
+          return result;
+        } else {
+          if (!wholeAlphabet.contains('.') || !wholeAlphabet.contains('/')) {
+            result['ERROR'] = 'invalidLength';
+            return result;
+          }
+        }
       }
       break;
   }
 
   // Build matrix - first row with single numbers
   for (int i = 0; i < 10; i++) {
-    if (wholeAlphabet[i] == ' ' && line1.isEmpty)
+    if (wholeAlphabet[i] == ' ' && line1.isEmpty) {
       line1 = columnOrder[i];
-    else if (wholeAlphabet[i] == ' ' && line2.isEmpty)
+    } else if (wholeAlphabet[i] == ' ' && line2.isEmpty) {
       line2 = columnOrder[i];
-    else if (wholeAlphabet[i] == ' ' && line3.isEmpty) line3 = columnOrder[i];
+    } else if (wholeAlphabet[i] == ' ' && line3.isEmpty) {
+      line3 = columnOrder[i];
+    }
 
     result[columnOrder[i]] = wholeAlphabet[i];
     usedAlphabet.add(wholeAlphabet[i]);
@@ -233,11 +260,13 @@ String _buildGrid(Map<String, String> grid, String columnOrder, bool matrix4x10)
   result = result + '  |';
   for (int i = 0; i < 10; i++) {
     result = result + ' ' + (grid[columnOrder[i]] ?? '');
-    if (grid[columnOrder[i]] == ' ' && line1.isEmpty)
+    if (grid[columnOrder[i]] == ' ' && line1.isEmpty) {
       line1 = columnOrder[i];
-    else if (grid[columnOrder[i]] == ' ' && line2.isEmpty)
+    } else if (grid[columnOrder[i]] == ' ' && line2.isEmpty) {
       line2 = columnOrder[i];
-    else if (grid[columnOrder[i]] == ' ' && line3.isEmpty) line3 = columnOrder[i];
+    } else if (grid[columnOrder[i]] == ' ' && line3.isEmpty) {
+      line3 = columnOrder[i];
+    }
   }
   result = result + '\n';
 

@@ -50,7 +50,7 @@ String encodeAffine(String? input, int keyA, int keyB) {
     affinePlain = (keyA * affinePlain! + keyB) % 26;
 
     affineCipher = _AffineDigitToAZ[affinePlain];
-    return affineCipher != null ? affineCipher : '';
+    return affineCipher ?? '';
   }).join();
 }
 
@@ -69,6 +69,6 @@ String decodeAffine(String? input, int keyA, int keyB) {
     affineCipher = _reverseKeyA[keyA]! * (affineCipher! - keyB) % 26;
 
     affinePlain = _AffineDigitToAZ[affineCipher];
-    return affinePlain != null ? affinePlain : '';
+    return affinePlain ?? '';
   }).join();
 }

@@ -16,7 +16,7 @@ import 'package:gc_wizard/utils/file_utils/gcw_file.dart' as local;
 class Stegano extends StatefulWidget {
   final local.GCWFile? file;
 
-  Stegano({Key? key, this.file}) : super(key: key);
+  const Stegano({Key? key, this.file}) : super(key: key);
 
   @override
   _SteganoState createState() => _SteganoState();
@@ -28,7 +28,7 @@ class _SteganoState extends State<Stegano> {
   String _currentInput = '';
   String _currentKey = '';
   String? _filenameTarget = 'output.png'; //TODO choose output filename (sample.jpg, output.png, ..)
-  String _extensionTarget = '.png'; //TODO  output extension (jpg, png..)
+  final String _extensionTarget = '.png'; //TODO  output extension (jpg, png..)
 
   String? _decodedText;
   String? _decodingErrorText;
@@ -258,7 +258,7 @@ class _SteganoState extends State<Stegano> {
 
   List<Widget> loading() {
     return [
-      Center(
+      const Center(
         //child: CircularProgressIndicator(),
         child: CircularProgressIndicator(
           backgroundColor: Colors.white,

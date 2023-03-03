@@ -1,3 +1,4 @@
+import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/length.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
 import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
@@ -12,8 +13,9 @@ class ProjectionData {
   Length distanceUnit;
   String bearing;
   bool reverse;
+  Ellipsoid? ellipsoid;
 
-  ProjectionData(this.distance, this.distanceUnit, this.bearing, this.reverse);
+  ProjectionData(this.distance, this.distanceUnit, this.bearing, this.reverse, [this.ellipsoid]);
 
   Map<String, Object?> toMap() => {
         'distance': distance,
@@ -58,14 +60,14 @@ class Formula {
     projection = ProjectionData.fromJson(asJsonMapOrNull(json['projection']) ?? <String, Object?>{});
 
     var valuesRaw = toObjectWithNullableContentListOrNull(json['values']);
-    this.values = <FormulaValue>[];
+    values = <FormulaValue>[];
     if (valuesRaw != null) {
-      valuesRaw.forEach((Object? element) {
+      for (var element in valuesRaw) {
         var value = asJsonMapOrNull(element);
-        if (value == null) return;
+        if (value == null) continue;
 
-        this.values.add(FormulaValue.fromJson(value));
-      });
+        values.add(FormulaValue.fromJson(value));
+      }
     }
   }
 

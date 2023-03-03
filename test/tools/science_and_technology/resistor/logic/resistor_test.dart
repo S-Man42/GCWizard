@@ -10,20 +10,20 @@ void main() {
       {'colors' : [ResistorBandColor.RED, ResistorBandColor.RED], 'expectedOutput' : null},
       {'colors' : [ResistorBandColor.RED, ResistorBandColor.RED, ResistorBandColor.RED, ResistorBandColor.RED, ResistorBandColor.RED, ResistorBandColor.RED, ResistorBandColor.RED], 'expectedOutput' : null},
 
-      {'colors' : [ResistorBandColor.YELLOW, ResistorBandColor.VIOLET, ResistorBandColor.RED], 'expectedOutput' : ResistorValue(4700.0, 0.2)},
-      {'colors' : [ResistorBandColor.YELLOW, ResistorBandColor.VIOLET, ResistorBandColor.RED, ResistorBandColor.BROWN], 'expectedOutput' : ResistorValue(4700.0, 0.01)},
-      {'colors' : [ResistorBandColor.GREEN, ResistorBandColor.BROWN, ResistorBandColor.BROWN, ResistorBandColor.ORANGE, ResistorBandColor.BLUE], 'expectedOutput' : ResistorValue(511000.0, 0.0025)},
-      {'colors' : [ResistorBandColor.GREEN, ResistorBandColor.BROWN, ResistorBandColor.BROWN, ResistorBandColor.ORANGE, ResistorBandColor.BLUE, ResistorBandColor.ORANGE], 'expectedOutput' : ResistorValue(511000.0, 0.0025, temperatureCoefficient: 15)},
+      {'colors' : [ResistorBandColor.YELLOW, ResistorBandColor.VIOLET, ResistorBandColor.RED], 'expectedOutput' : const ResistorValue(4700.0, 0.2)},
+      {'colors' : [ResistorBandColor.YELLOW, ResistorBandColor.VIOLET, ResistorBandColor.RED, ResistorBandColor.BROWN], 'expectedOutput' : const ResistorValue(4700.0, 0.01)},
+      {'colors' : [ResistorBandColor.GREEN, ResistorBandColor.BROWN, ResistorBandColor.BROWN, ResistorBandColor.ORANGE, ResistorBandColor.BLUE], 'expectedOutput' : const ResistorValue(511000.0, 0.0025)},
+      {'colors' : [ResistorBandColor.GREEN, ResistorBandColor.BROWN, ResistorBandColor.BROWN, ResistorBandColor.ORANGE, ResistorBandColor.BLUE, ResistorBandColor.ORANGE], 'expectedOutput' : const ResistorValue(511000.0, 0.0025, temperatureCoefficient: 15)},
 
-      {'colors' : [ResistorBandColor.SILVER, ResistorBandColor.VIOLET, ResistorBandColor.RED], 'expectedOutput' : ResistorValue(700.0, 0.2)},
-      {'colors' : [ResistorBandColor.SILVER, ResistorBandColor.BLACK, ResistorBandColor.RED, ResistorBandColor.WHITE, ResistorBandColor.WHITE], 'expectedOutput' : ResistorValue(2000000000.0, null)},
-      {'colors' : [ResistorBandColor.BLACK, ResistorBandColor.BLACK, ResistorBandColor.ORANGE, ResistorBandColor.ORANGE], 'expectedOutput' : ResistorValue(0.0, null)},
-      {'colors' : [ResistorBandColor.WHITE, ResistorBandColor.BLACK, ResistorBandColor.ORANGE, ResistorBandColor.ORANGE], 'expectedOutput' : ResistorValue(90000.0, null)},
-      {'colors' : [ResistorBandColor.BLUE, ResistorBandColor.BLACK, ResistorBandColor.PINK], 'expectedOutput' : ResistorValue(0.060, 0.2)},
-      {'colors' : [ResistorBandColor.GREEN, ResistorBandColor.BLUE, ResistorBandColor.BLACK, ResistorBandColor.BLACK, ResistorBandColor.BROWN], 'expectedOutput' : ResistorValue(560, 0.01)},
+      {'colors' : [ResistorBandColor.SILVER, ResistorBandColor.VIOLET, ResistorBandColor.RED], 'expectedOutput' : const ResistorValue(700.0, 0.2)},
+      {'colors' : [ResistorBandColor.SILVER, ResistorBandColor.BLACK, ResistorBandColor.RED, ResistorBandColor.WHITE, ResistorBandColor.WHITE], 'expectedOutput' : const ResistorValue(2000000000.0, null)},
+      {'colors' : [ResistorBandColor.BLACK, ResistorBandColor.BLACK, ResistorBandColor.ORANGE, ResistorBandColor.ORANGE], 'expectedOutput' : const ResistorValue(0.0, null)},
+      {'colors' : [ResistorBandColor.WHITE, ResistorBandColor.BLACK, ResistorBandColor.ORANGE, ResistorBandColor.ORANGE], 'expectedOutput' : const ResistorValue(90000.0, null)},
+      {'colors' : [ResistorBandColor.BLUE, ResistorBandColor.BLACK, ResistorBandColor.PINK], 'expectedOutput' : const ResistorValue(0.060, 0.2)},
+      {'colors' : [ResistorBandColor.GREEN, ResistorBandColor.BLUE, ResistorBandColor.BLACK, ResistorBandColor.BLACK, ResistorBandColor.BROWN], 'expectedOutput' : const ResistorValue(560, 0.01)},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('colors: ${elem['colors']}', () {
         var _actual = getResistorValue(elem['colors'] as List<ResistorBandColor>);
 
@@ -35,7 +35,7 @@ void main() {
           expect(_actual.temperatureCoefficient, (elem['expectedOutput'] as ResistorValue).temperatureCoefficient);
         }
       });
-    });
+    }
   });
 
   group("Resistor.eia96:", () {
@@ -51,11 +51,11 @@ void main() {
       {'code' : 96, 'multiplicator': 'F', 'expectedOutput' : 97600000.0},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('code: ${elem['code']}, multiplicator: ${elem['multiplicator']}', () {
         var _actual = eia96(elem['code'] as int?, multiplicator: elem['multiplicator'] as String);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

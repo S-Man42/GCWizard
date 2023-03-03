@@ -29,13 +29,13 @@ class _FormulaSolverFormulaValuesState extends State<_FormulaSolverFormulaValues
 
   String _maxLetter() {
     int maxLetterIndex = 0;
-    widget.group.values.forEach((value) {
-      if (value.key.length != 1) return;
+    for (var value in widget.group.values) {
+      if (value.key.length != 1) continue;
       var alphabetIndex = alphabet_AZ[value.key.toUpperCase()];
-      if (alphabetIndex == null) return;
+      if (alphabetIndex == null) continue;
 
       maxLetterIndex = max(maxLetterIndex, alphabetIndex);
-    });
+    }
 
     if (alphabet_AZIndexes.keys.contains(maxLetterIndex)) {
       return alphabet_AZIndexes[maxLetterIndex + 1]!;

@@ -10,18 +10,18 @@ import 'package:gc_wizard/tools/symbol_tables/_common/logic/symbol_table_data_sp
 import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 import 'package:gc_wizard/utils/json_utils.dart';
 
-final SYMBOLTABLES_ASSETPATH = 'assets/symbol_tables/';
+const SYMBOLTABLES_ASSETPATH = 'assets/symbol_tables/';
 
 class SymbolTableConstants {
   static final IMAGE_SUFFIXES = RegExp(r'\.(png|jpg|bmp|gif)', caseSensitive: false);
   static final ARCHIVE_SUFFIX = RegExp(r'\.(zip)', caseSensitive: false);
 
-  static final CONFIG_FILENAME = 'config.file';
-  static final CONFIG_SPECIALMAPPINGS = 'special_mappings';
-  static final CONFIG_TRANSLATE = 'translate';
-  static final CONFIG_TRANSLATION_PREFIX = 'translation_prefix';
-  static final CONFIG_CASESENSITIVE = 'case_sensitive';
-  static final CONFIG_IGNORE = 'ignore';
+  static const CONFIG_FILENAME = 'config.file';
+  static const CONFIG_SPECIALMAPPINGS = 'special_mappings';
+  static const CONFIG_TRANSLATE = 'translate';
+  static const CONFIG_TRANSLATION_PREFIX = 'translation_prefix';
+  static const CONFIG_CASESENSITIVE = 'case_sensitive';
+  static const CONFIG_IGNORE = 'ignore';
 
   static final Map<String, String> CONFIG_SPECIAL_CHARS = {
     "ampersand": "&",
@@ -211,7 +211,7 @@ class SymbolTableData {
   List<Map<String, SymbolData>> images = [];
   int maxSymbolTextLength = 0;
 
-  List<String> _translateables = [];
+  final List<String> _translateables = [];
   int Function(Map<String, SymbolData>, Map<String, SymbolData>)? _sort;
 
   Future<void> initialize({bool importEncryption = true}) async {
@@ -238,19 +238,21 @@ class SymbolTableData {
       file = await DefaultAssetBundle.of(_context).loadString(_pathKey() + SymbolTableConstants.CONFIG_FILENAME);
     } catch (e) {}
 
-    if (file == null) file = '{}';
+    file ??= '{}';
 
     config = asJsonMap(json.decode(file));
 
-    if (config[SymbolTableConstants.CONFIG_IGNORE] == null)
+    if (config[SymbolTableConstants.CONFIG_IGNORE] == null) {
       config.putIfAbsent(SymbolTableConstants.CONFIG_IGNORE, () => <String>[]);
+    }
 
-    if (config[SymbolTableConstants.CONFIG_SPECIALMAPPINGS] == null)
-      config.putIfAbsent(SymbolTableConstants.CONFIG_SPECIALMAPPINGS, () => Map<String, String>());
+    if (config[SymbolTableConstants.CONFIG_SPECIALMAPPINGS] == null) {
+      config.putIfAbsent(SymbolTableConstants.CONFIG_SPECIALMAPPINGS, () => <String, String>{});
+    }
 
-    SymbolTableConstants.CONFIG_SPECIAL_CHARS.entries.forEach((element) {
+    for (var element in SymbolTableConstants.CONFIG_SPECIAL_CHARS.entries) {
       (config[SymbolTableConstants.CONFIG_SPECIALMAPPINGS] as Map<String, String>).putIfAbsent(element.key, () => element.value);
-    });
+    }
 
     switch (symbolKey) {
       case "notes_names_altoclef":
@@ -355,8 +357,9 @@ class SymbolTableData {
         if (encryptionArchive != null && encryptionArchive.isNotEmpty) {
           var specialFile = encryptionArchive.firstWhere((encryptionFile) => encryptionFile.name == file.name);
           var specialFileData = toUint8ListOrNull(specialFile.content);
-          if (specialFileData != null)
+          if (specialFileData != null) {
             specialEncryptionImage = await _initializeImage(specialFileData);
+          }
         }
 
         images.add({

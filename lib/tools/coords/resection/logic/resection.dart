@@ -102,8 +102,9 @@ class _ResectionCalculator extends IntervalCalculator {
 }
 
 Future<List<LatLng>> resectionAsync(GCWAsyncExecuterParameters? jobData) async {
-  if (jobData?.parameters is! ResectionJobData)
+  if (jobData?.parameters is! ResectionJobData) {
     throw Exception('Unexpected data for Equilateral Triangle');
+  }
 
   var data = jobData!.parameters as ResectionJobData;
   var output = resection(data.coord1, data.angle12, data.coord2,

@@ -10,8 +10,8 @@ class Volume extends Unit {
     bool isReference = false,
     required double inCubicMeters,
   }) : super(name, symbol, isReference, (e) => e * inCubicMeters, (e) => e / inCubicMeters) {
-    toCubicMeter = this.toReference;
-    fromCubicMeter = this.fromReference;
+    toCubicMeter = toReference;
+    fromCubicMeter = fromReference;
   }
 }
 

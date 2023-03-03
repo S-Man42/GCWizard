@@ -20,8 +20,9 @@ LatLng slippyMapToLatLon(SlippyMap slippyMap) {
 }
 
 SlippyMap latLonToSlippyMap(LatLng coords, CoordinateFormatKey subtype) {
-  if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.SLIPPY_MAP, subtype))
+  if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.SLIPPY_MAP, subtype)) {
     subtype = defaultSlippyMapType;
+  }
 
   int zoom = switchMapKeyValue(SLIPPY_MAP_ZOOM)[subtype]!;
 
@@ -55,8 +56,9 @@ SlippyMap? parseSlippyMap(String input, {CoordinateFormatKey subtype = defaultSl
   }
 
   if (matches.isEmpty) return null;
-  if (xString == null || yString == null)
+  if (xString == null || yString == null) {
     return null;
+  }
 
   var x = double.tryParse(xString);
   if (x == null) return null;

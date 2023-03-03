@@ -18,13 +18,14 @@ const _BRAILLE_RELATIVE_DISPLAY_WIDTH = 50;
 const _BRAILLE_RELATIVE_DISPLAY_HEIGHT = 100;
 const _BRAILLE_RADIUS = 10.0;
 
-//ignore: must_be_immutable
-class BrailleSegmentDisplay extends NSegmentDisplay {
-  final Map<String, bool> segments;
-  final bool readOnly;
-  final void Function(Map<String, bool>)? onChanged;
 
-  BrailleSegmentDisplay({Key? key, required this.segments, this.readOnly = false, this.onChanged})
+class BrailleSegmentDisplay extends NSegmentDisplay {
+
+  BrailleSegmentDisplay({
+      Key? key,
+      required Map<String, bool> segments,
+      bool readOnly = false,
+      void Function(Map<String, bool>)? onChanged})
       : super(
             key: key,
             initialSegments: _INITIAL_SEGMENTS,

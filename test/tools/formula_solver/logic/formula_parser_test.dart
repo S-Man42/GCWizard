@@ -23,8 +23,9 @@ void main() {
           'result': result.result,
           'state': _formulaStateToString(result.state)
         };
-        if (result.variables != null)
+        if (result.variables != null) {
           out.putIfAbsent('variables', () => result.variables);
+        }
 
         return out;
       }).toList()
@@ -38,13 +39,8 @@ void main() {
     };
 
     List<Map<String, Object?>> _inputsToExpected = [
-      {'formula' : null, 'values': null, 'expectedOutput' : {'state': 'error', 'output': [{'result': null, 'state': 'error'}]}},
-      {'formula' : null, 'values': <String, String>{}, 'expectedOutput' : {'state': 'error', 'output': [{'result': null, 'state': 'error'}]}},
-      {'formula' : null, 'expectedOutput' : {'state': 'error', 'output': [{'result': null, 'state': 'error'}]}},
       {'formula' : '', 'expectedOutput' : {'state': 'error', 'output': [{'result': '', 'state': 'error'}]}},
       {'formula' : ' ', 'expectedOutput' : {'state': 'error', 'output': [{'result': '', 'state': 'error'}]}},
-      {'formula' : 'A', 'values': null, 'expectedOutput' : {'state': 'error', 'output': [{'result': 'A', 'state': 'error'}]}},
-      {'formula' : '0', 'values': null, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '0', 'state': 'ok'}]}},
       {'formula' : 'A', 'values': <String, String>{}, 'expectedOutput' : {'state': 'error', 'output': [{'result': 'A', 'state': 'error'}]}},
       {'formula' : '0', 'values': <String, String>{}, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '0', 'state': 'ok'}]}},
 
@@ -100,21 +96,21 @@ void main() {
 
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('formula: ${elem['formula']}, values: ${elem['values']}', () {
         if (elem['values'] == null) {
           var _actual = FormulaParser().parse(elem['formula'] as String, []);
           expect(_formulaSolverOutputToMap(_actual), elem['expectedOutput']);
         } else {
           var values = <FormulaValue>[];
-          (elem['values'] as Map<String, String>).entries.forEach((value) {
+          for (var value in (elem['values'] as Map<String, String>).entries) {
             values.add(FormulaValue(value.key, value.value));
-          });
+          }
           var _actual = FormulaParser().parse(elem['formula'] as String, values);
           expect(_formulaSolverOutputToMap(_actual), elem['expectedOutput']);
         }
       });
-    });
+    }
   });
 
   group("FormulaParser.parse - Functionnames contain variables:", () {
@@ -163,16 +159,16 @@ void main() {
       {'formula' : 'A + nth  (1234.  , cs (  11  ))', 'values': <String, String>{'a': '2000'}, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '2002', 'state': 'ok'}]}},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('formula: ${elem['formula']}, values: ${elem['values']}', () {
         var values = <FormulaValue>[];
-        (elem['values'] as Map<String, String>).entries.forEach((value) {
+        for (var value in (elem['values'] as Map<String, String>).entries) {
           values.add(FormulaValue(value.key, value.value));
-        });
+        }
         var _actual = FormulaParser().parse(elem['formula'] as String, values);
         expect(_formulaSolverOutputToMap(_actual), elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("FormulaParser.parse - Variables contain Functions:", () {
@@ -213,20 +209,20 @@ void main() {
       ], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '1.414213562373', 'state': 'ok'}]}},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('formula: ${elem['formula']}, values: ${elem['values']}', () {
         var values = <FormulaValue>[];
-        if (elem['values'] is List<FormulaValue>)
+        if (elem['values'] is List<FormulaValue>) {
           values = elem['values'] as List<FormulaValue>;
-        else {
-          (elem['values'] as Map<String, String>).entries.forEach((value) {
+        } else {
+          for (var value in (elem['values'] as Map<String, String>).entries) {
             values.add(FormulaValue(value.key, value.value));
-          });
+          }
         }
         var _actual = FormulaParser().parse(elem['formula'] as String, values);
         expect(_formulaSolverOutputToMap(_actual), elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("FormulaParser.parse - String functions:", () {
@@ -263,12 +259,12 @@ void main() {
       {'formula' : 'len(AB)', 'values': [FormulaValue('A', '', type: FormulaValueType.TEXT), FormulaValue('B', 'C', type: FormulaValueType.TEXT),], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '1', 'state': 'ok'}]}},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('formula: ${elem['formula']}, values: ${elem['values']}', () {
         var _actual = FormulaParser().parse(elem['formula'] as String, elem['values'] as List<FormulaValue>);
         expect(_formulaSolverOutputToMap(_actual), elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("FormulaParser.parse - Expanded functions:", () {
@@ -426,15 +422,16 @@ void main() {
       ]}},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('formula: ${elem['formula']}, values: ${elem['values']}, expandValues: ${elem['expandValues']}', () {
         FormulaSolverOutput _actual;
-        if (elem['expandValues'] == null)
+        if (elem['expandValues'] == null) {
           _actual = FormulaParser().parse(elem['formula'] as String, elem['values'] as List<FormulaValue>);
-        else
+        } else {
           _actual = FormulaParser().parse(elem['formula'] as String, elem['values'] as List<FormulaValue>, expandValues: elem['expandValues'] as bool);
+        }
         expect(_formulaSolverOutputToMap(_actual), elem['expectedOutput']);
       });
-    });
+    }
   });
 }

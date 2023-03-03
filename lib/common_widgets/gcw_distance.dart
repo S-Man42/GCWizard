@@ -60,6 +60,7 @@ class _GCWDistanceState extends State<GCWDistance> {
         Expanded(
             flex: 3,
             child: Container(
+                padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
                 child: GCWDoubleTextField(
                   hintText: widget.hintText ?? i18n(context, 'common_distance_hint'),
                   min: widget.allowNegativeValues ? null : 0.0,
@@ -70,8 +71,7 @@ class _GCWDistanceState extends State<GCWDistance> {
                       _setCurrentValueAndEmitOnChange();
                     });
                   },
-                ),
-                padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN))),
+                ))),
         Expanded(
           flex: 1,
           child: GCWUnitDropDown(

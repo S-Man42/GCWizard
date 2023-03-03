@@ -16,8 +16,9 @@ class IntersectionJobData {
 }
 
 Future<List<LatLng?>> intersectionAsync(GCWAsyncExecuterParameters? jobData) async {
-  if (jobData?.parameters is! IntersectionJobData)
+  if (jobData?.parameters is! IntersectionJobData) {
     throw Exception('Unexpected data for Intersection');
+  }
 
   var data = jobData!.parameters as IntersectionJobData;
   var output = intersection(data.coord1, data.alpha, data.coord2,

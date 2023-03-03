@@ -1,10 +1,11 @@
 part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_analyze.dart';
 
 List<List<String>> _buildOutputListOfInputData(BuildContext context, WherigoInputData data) {
-  if (wherigoExpertMode)
+  if (wherigoExpertMode) {
     return _buildOutputListInputDataExpertMode(context, data);
-  else
+  } else {
     return _buildOutputListInputDataUserMode(context, data);
+  }
 }
 
 List<List<String>> _buildOutputListInputDataExpertMode(BuildContext context, WherigoInputData data) {

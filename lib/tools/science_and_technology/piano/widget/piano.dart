@@ -8,6 +8,8 @@ import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/tools/science_and_technology/piano/logic/piano.dart';
 
 class Piano extends StatefulWidget {
+  const Piano({Key? key}) : super(key: key);
+
   @override
   PianoState createState() => PianoState();
 }
@@ -15,7 +17,7 @@ class Piano extends StatefulWidget {
 class PianoState extends State<Piano> {
   var _currentSort = 0;
   var _currentIndex = 9; // Key number 1
-  List<String> _currentSortList = [
+  final List<String> _currentSortList = [
     'piano_number',
     'piano_color',
     'piano_frequency',
@@ -94,7 +96,7 @@ class PianoState extends State<Piano> {
       return GCWColumnedMultilineOutput(
           data: data,
           hasHeader: true,
-          flexValues: [1, 2]
+          flexValues: const [1, 2]
       );
     } else {
       var keyNumber = PIANO_KEYS.keys.toList()[_currentIndex];
@@ -110,7 +112,7 @@ class PianoState extends State<Piano> {
                   [i18n(context, 'piano_midi'), PIANO_KEYS[keyNumber]!.midi],
                   [i18n(context, 'piano_latin'), PIANO_KEYS[keyNumber]!.latin],
                 ],
-          flexValues: [1, 2]
+          flexValues: const [1, 2]
       );
     }
   }

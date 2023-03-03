@@ -223,7 +223,7 @@ class BrainfkState extends State<Brainfk> {
 
   Object _calculateOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
-      if (_currentOriginal == GCWSwitchPosition.left)
+      if (_currentOriginal == GCWSwitchPosition.left) {
         try {
           return widget.interpret == null
               ? interpretBrainfk(_currentText, input: _currentInput)
@@ -231,8 +231,8 @@ class BrainfkState extends State<Brainfk> {
         } on FormatException catch (e) {
           return printErrorMessage(context, e.message);
         }
-      else {
-        if (_currentDerivate == BRAINFKDERIVATIVE_CUSTOM)
+      } else {
+        if (_currentDerivate == BRAINFKDERIVATIVE_CUSTOM) {
           try {
             return BrainfkDerivatives(
                     pointerShiftRightInstruction: _currentInput_shiftRight,
@@ -247,14 +247,15 @@ class BrainfkState extends State<Brainfk> {
           } catch (e) {
             return printErrorMessage(context, 'brainfk_error_customundefined');
           }
-        else
+        } else {
           return _currentDerivate.interpretBrainfkDerivatives(_currentText, input: _currentInput);
+        }
       }
     } else {
-      if (_currentOriginal == GCWSwitchPosition.left)
+      if (_currentOriginal == GCWSwitchPosition.left) {
         return widget.generate == null ? generateBrainfk(_currentText) : widget.generate!(_currentText);
-      else {
-        if (_currentDerivate == BRAINFKDERIVATIVE_CUSTOM)
+      } else {
+        if (_currentDerivate == BRAINFKDERIVATIVE_CUSTOM) {
           try {
             return BrainfkDerivatives(
                     pointerShiftRightInstruction: _currentInput_shiftRight,
@@ -269,8 +270,9 @@ class BrainfkState extends State<Brainfk> {
           } catch (e) {
             return printErrorMessage(context, 'brainfk_error_customundefined');
           }
-        else
+        } else {
           return _currentDerivate.generateBrainfkDerivative(_currentText);
+        }
       }
     }
   }

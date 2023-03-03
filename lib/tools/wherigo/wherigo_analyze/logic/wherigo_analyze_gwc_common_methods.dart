@@ -68,6 +68,9 @@ int readByte(Uint8List byteList, int offset) {
 }
 
 bool isInvalidCartridge(Uint8List byteList) {
+
+  if (byteList.isEmpty) return true;
+
   // @0000:                      ; Signature
   //        BYTE     0x02        ; Version Major 2
   //        BYTE     0x0a        ;         Minor 10 11

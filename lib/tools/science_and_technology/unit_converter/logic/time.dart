@@ -6,8 +6,8 @@ class Time extends Unit {
 
   Time({required String name, required String symbol, bool isReference = false, required double inSeconds})
       : super(name, symbol, isReference, (e) => e * inSeconds, (e) => e / inSeconds) {
-    toSeconds = this.toReference;
-    fromSeconds = this.fromReference;
+    toSeconds = toReference;
+    fromSeconds = fromReference;
   }
 }
 

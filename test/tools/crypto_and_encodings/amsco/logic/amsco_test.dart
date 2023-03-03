@@ -21,13 +21,13 @@ void main() {
       {'input': 'Beispielklartext und noch mehr Text', 'key': '524136', 'oneCharStart': true, 'errorcode': ErrorCode.OK, 'expectedOutput': 'PIEXHMEIARNOEXETESTCTBLDTLKUNHR'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = encryptAmsco(elem['input'] as String?, elem['key'] as String?, elem['oneCharStart'] as bool);
         expect(_actual.output, elem['expectedOutput']);
         expect(_actual.errorCode, elem['errorcode']);
       });
-    });
+    }
   });
 
 
@@ -50,12 +50,12 @@ void main() {
       {'input': 'PIEXHM EIARNOEXET ESTCTBLDTLKUNHR', 'key': '524136', 'oneCharStart': true, 'errorcode': ErrorCode.OK, 'expectedOutput': 'BEISPIELKLARTEXTUNDNOCHMEHRTEXT'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decryptAmsco(elem['input'] as String?, elem['key'] as String?, elem['oneCharStart'] as bool);
         expect(_actual.output, elem['expectedOutput']);
         expect(_actual.errorCode, elem['errorcode']);
       });
-    });
+    }
   });
 }

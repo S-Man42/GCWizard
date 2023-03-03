@@ -18,6 +18,8 @@ import 'package:gc_wizard/tools/science_and_technology/teletypewriter/punchtape_
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/punchtape_segment_display/widget/punchtape_segmentdisplay_output.dart';
 
 class TeletypewriterPunchTape extends StatefulWidget {
+  const TeletypewriterPunchTape({Key? key}) : super(key: key);
+
   @override
   TeletypewriterPunchTapeState createState() => TeletypewriterPunchTapeState();
 }
@@ -161,7 +163,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
   Widget _buildVisualDecryption() {
     var currentDisplay = buildSegmentMap(_currentDisplays);
 
-    var onChanged = (Map<String, bool> d) {
+    onChanged(Map<String, bool> d) {
       setState(() {
         var newSegments = <String>[];
         d.forEach((key, value) {
@@ -171,14 +173,14 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
 
         _currentDisplays.replaceLastSegment(newSegments);
       });
-    };
+    }
 
     return Column(
       children: <Widget>[
         Container(
           width: 340,
           height: 70,
-          padding: EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
+          padding: const EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
           child: Row(
             children: <Widget>[
               Expanded(
@@ -254,7 +256,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
               : (_currentOrderMode == GCWSwitchPosition.left));
       List<String> binaryList = [];
       List<String?> decimalList = [];
-      segments.displays.forEach((segment) {
+      for (var segment in segments.displays) {
         binaryList.add(segments2binary(
             segment,
             _currentCode,
@@ -270,7 +272,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
                     : (_currentOrderMode == GCWSwitchPosition.left)),
             2,
             10));
-      });
+      }
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments),
@@ -337,16 +339,16 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
 
 String _mirrorListOfBinaryToDecimal(List<String> binaryList) {
   List<String?> result = [];
-  binaryList.forEach((element) {
+  for (var element in binaryList) {
     result.add(convertBase(element.split('').reversed.join(''), 2, 10));
-  });
+  }
   return result.join(' ');
 }
 
 String _mirrorListOfBinary(List<String> binaryList) {
   List<String> result = [];
-  binaryList.forEach((element) {
+  for (var element in binaryList) {
     result.add(element.split('').reversed.join(''));
-  });
+  }
   return result.join(' ');
 }

@@ -13,12 +13,12 @@ void main() {
       {'input' : '123', 'expectedOutput' : 'Nanananak Nanak Nanananak Nananak Nanananak Nanananak'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = encodeDuckSpeak(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("DuckSpeak.decodeDuckSpeak:", () {
@@ -35,11 +35,11 @@ void main() {
       {'expectedOutput' : '', 'input' : 'keinnaklaut'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decodeDuckSpeak(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

@@ -11,6 +11,8 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/whitespace_language/logic/whitespace_language.dart';
 
 class WhitespaceLanguage extends StatefulWidget {
+  const WhitespaceLanguage({Key? key}) : super(key: key);
+
   @override
   WhitespaceLanguageState createState() => WhitespaceLanguageState();
 }
@@ -60,9 +62,9 @@ class WhitespaceLanguageState extends State<WhitespaceLanguage> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    if (_currentCode.isEmpty && (_currentOutput == null)) return GCWDefaultOutput();
+    if (_currentCode.isEmpty && (_currentOutput == null)) return const GCWDefaultOutput();
 
-    if (_currentOutput == null) return GCWDefaultOutput();
+    if (_currentOutput == null) return const GCWDefaultOutput();
 
     return GCWMultipleOutput(
       children: [
@@ -94,7 +96,7 @@ class WhitespaceLanguageState extends State<WhitespaceLanguage> {
         if (output.finished) {
           _currentOutput = output;
           _isStarted = false;
-          this.setState(() {});
+          setState(() {});
         } else {
           _continueState = output.state;
           _currentInput = "";
@@ -106,7 +108,7 @@ class WhitespaceLanguageState extends State<WhitespaceLanguage> {
       currentOutputFuture.then((output) {
         _currentOutput = output;
         _isStarted = false;
-        this.setState(() {});
+        setState(() {});
       });
     }
   }
@@ -115,7 +117,7 @@ class WhitespaceLanguageState extends State<WhitespaceLanguage> {
     showGCWDialog(
         context,
         text,
-        Container(
+        SizedBox(
           width: 300,
           height: 100,
           child: Column(

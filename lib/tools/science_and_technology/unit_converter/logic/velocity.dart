@@ -6,8 +6,8 @@ class Velocity extends Unit {
 
   Velocity({required String name, required String symbol, bool isReference = false, required double inMS})
       : super(name, symbol, isReference, (e) => e * inMS, (e) => e / inMS) {
-    toMS = this.toReference;
-    fromMS = this.fromReference;
+    toMS = toReference;
+    fromMS = fromReference;
   }
 }
 

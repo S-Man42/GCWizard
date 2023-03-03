@@ -88,7 +88,7 @@ class TransformableDate {
 }
 
 final List<TransformableDate> transformableDates = [
-  TransformableDate('$ELLIPSOID_NAME_WGS84', null, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!),
+  TransformableDate(ELLIPSOID_NAME_WGS84, null, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!),
   TransformableDate(
       '$ELLIPSOID_NAME_BESSEL1841: DHDN(Potsdam) 2001', 0, getEllipsoidByName(ELLIPSOID_NAME_BESSEL1841)!),
   TransformableDate(
@@ -102,7 +102,7 @@ final List<TransformableDate> transformableDates = [
   TransformableDate('$ELLIPSOID_NAME_AIRY1830: OSGB36', 6, getEllipsoidByName(ELLIPSOID_NAME_AIRY1830)!),
   TransformableDate('$ELLIPSOID_NAME_AIRYMODIFIED: IRL 1965', 7, getEllipsoidByName(ELLIPSOID_NAME_AIRYMODIFIED)!),
   TransformableDate('$ELLIPSOID_NAME_HAYFORD1924: ED50', 8, getEllipsoidByName(ELLIPSOID_NAME_HAYFORD1924)!),
-  TransformableDate('$ELLIPSOID_NAME_CLARKE1866', 9, getEllipsoidByName(ELLIPSOID_NAME_CLARKE1866)!),
+  TransformableDate(ELLIPSOID_NAME_CLARKE1866, 9, getEllipsoidByName(ELLIPSOID_NAME_CLARKE1866)!),
 ];
 
 class _TransformationData {
@@ -213,10 +213,11 @@ LatLng ellipsoidTransformLatLng(LatLng coord, int transformationIndex, bool back
   _Vector mV = _Vector(mVx, mVy, mVz);
 
   EllipsoidTransformation trans;
-  if (!GK)
+  if (!GK) {
     trans = _getTransformation(srcElls, dstElls, transformationIndex, back);
-  else
+  } else {
     trans = _getTransformationGK(srcElls, dstElls, transformationIndex, back);
+  }
 
   _Vector RotV = trans.RotationMatrix().multiply(mV);
   _Vector dV = trans.RotationMatrix().multiply(trans.mTParam);

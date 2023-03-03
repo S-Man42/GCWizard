@@ -102,7 +102,7 @@ class GCWCoordsState extends State<GCWCoords> {
 
   Widget? _currentWidget;
 
-  var _location = Location();
+  final _location = Location();
   bool _isOnLocationAccess = false;
 
   @override
@@ -429,8 +429,8 @@ class GCWCoordsState extends State<GCWCoords> {
             children: [
               Expanded(child: _buildInputFormatSelector()),
               Container(
-                  child: _buildTrailingButtons(IconButtonSize.NORMAL),
-                  padding: EdgeInsets.only(left: 2 * DEFAULT_MARGIN))
+                  padding: const EdgeInsets.only(left: 2 * DEFAULT_MARGIN),
+                  child: _buildTrailingButtons(IconButtonSize.NORMAL))
             ],
           )
         ],
@@ -462,11 +462,12 @@ class GCWCoordsState extends State<GCWCoords> {
       onChanged: (CoordinateFormat newFormat) {
         setState(() {
           // TODO Mike Please check against previous code. The change made here is not quite simple and clear if logic still does the same here for changing Coords Format and Subtypes
-          if (_currentCoords.format.type != newFormat) {
-            if (widget.restoreCoordinates != null && widget.restoreCoordinates!)
+          if (_currentCoords.format.type != newFormat.type) {
+            if (widget.restoreCoordinates != null && widget.restoreCoordinates!) {
               _pastedCoords = _currentCoords;
-            else if (_currentCoords.format.subtype == newFormat.subtype)
-              _currentCoords = BaseCoordinate();
+            } else if (_currentCoords.format.subtype == newFormat.subtype) {
+              _currentCoords = defaultBaseCoordinate;
+            }
 
             _currentCoords.format = newFormat;
             _setCurrentValueAndEmitOnChange();
@@ -481,6 +482,7 @@ class GCWCoordsState extends State<GCWCoords> {
     return Row(
       children: [
         Container(
+          padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
           child: GCWIconButton(
             icon: _isOnLocationAccess ? Icons.refresh : Icons.location_on,
             size: size,
@@ -488,7 +490,6 @@ class GCWCoordsState extends State<GCWCoords> {
               _setUserLocationCoords();
             },
           ),
-          padding: EdgeInsets.only(right: DEFAULT_MARGIN),
         ),
         GCWCoordsPasteButton(size: size, onPasted: _setCoords)
       ],
@@ -496,17 +497,19 @@ class GCWCoordsState extends State<GCWCoords> {
   }
 
   void _setCurrentValueAndEmitOnChange([BaseCoordinate? newValue]) {
-    if (newValue != null)
+    if (newValue != null) {
       _currentCoords = newValue;
+    }
 
-    if (_currentCoords.toLatLng() != null)
+    if (_currentCoords.toLatLng() != null) {
       widget.onChanged(_currentCoords);
+    }
   }
 
   void _setCoords(List<BaseCoordinate> pastedCoords) {
     if (pastedCoords.isEmpty) return;
 
-    var _coordsForCurrentFormat = pastedCoords.firstWhereOrNull((BaseCoordinate coords) => coords.format == _currentCoords.format.type);
+    var _coordsForCurrentFormat = pastedCoords.firstWhereOrNull((BaseCoordinate coords) => coords.format.type == _currentCoords.format.type);
     if (_coordsForCurrentFormat == null) {
       _coordsForCurrentFormat = pastedCoords.first;
       _currentCoords.format = pastedCoords.first.format;
@@ -580,7 +583,13 @@ class GCWCoordsState extends State<GCWCoords> {
               parameters: [NumberFormat('0.0').format(locationData.accuracy)]));
         }
 
-        _pastedCoords = BaseCoordinate(locationData.latitude, locationData.longitude);
+        LatLng _coords;
+        if (locationData.latitude == null || locationData.longitude == null) {
+          _coords = defaultCoordinate;
+        } else {
+          _coords = LatLng(locationData.latitude!, locationData.longitude!);
+        }
+        _pastedCoords = buildDefaultCoordinatesByFormat(_coords);
         _currentCoords = _pastedCoords;
         _setPastedCoordsFormat();
 

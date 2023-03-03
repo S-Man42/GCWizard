@@ -29,10 +29,10 @@ class _GCWCoordsDMMState extends State<_GCWCoordsDMM> {
   String _currentLonMinutes = '';
   String _currentLonMilliMinutes = '';
 
-  FocusNode _latMinutesFocusNode = FocusNode();
-  FocusNode _latMilliMinutesFocusNode = FocusNode();
-  FocusNode _lonMinutesFocusNode = FocusNode();
-  FocusNode _lonMilliMinutesFocusNode = FocusNode();
+  final FocusNode _latMinutesFocusNode = FocusNode();
+  final FocusNode _latMilliMinutesFocusNode = FocusNode();
+  final FocusNode _lonMinutesFocusNode = FocusNode();
+  final FocusNode _lonMilliMinutesFocusNode = FocusNode();
 
   @override
   void initState() {
@@ -65,29 +65,27 @@ class _GCWCoordsDMMState extends State<_GCWCoordsDMM> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.coordinates != null) {
-      var dmm = widget.coordinates is DMM ? widget.coordinates as DMM : DMM.fromLatLon(widget.coordinates.toLatLng() ?? defaultCoordinate);
-      var lat = dmm.latitude.formatParts(10);
-      var lon = dmm.longitude.formatParts(10);
+    var dmm = widget.coordinates;
+    var lat = dmm.latitude.formatParts(10);
+    var lon = dmm.longitude.formatParts(10);
 
-      _currentLatDegrees = lat.degrees;
-      _currentLatMinutes = lat.minutes.split('.')[0];
-      _currentLatMilliMinutes = lat.minutes.split('.')[1];
-      _currentLatSign = lat.sign.value;
+    _currentLatDegrees = lat.degrees;
+    _currentLatMinutes = lat.minutes.split('.')[0];
+    _currentLatMilliMinutes = lat.minutes.split('.')[1];
+    _currentLatSign = lat.sign.value;
 
-      _currentLonDegrees = lon.degrees;
-      _currentLonMinutes = lon.minutes.split('.')[0];
-      _currentLonMilliMinutes = lon.minutes.split('.')[1];
-      _currentLonSign = lon.sign.value;
+    _currentLonDegrees = lon.degrees;
+    _currentLonMinutes = lon.minutes.split('.')[0];
+    _currentLonMilliMinutes = lon.minutes.split('.')[1];
+    _currentLonSign = lon.sign.value;
 
-      _LatDegreesController.text = _currentLatDegrees;
-      _LatMinutesController.text = _currentLatMinutes;
-      _LatMilliMinutesController.text = _currentLatMilliMinutes;
+    _LatDegreesController.text = _currentLatDegrees;
+    _LatMinutesController.text = _currentLatMinutes;
+    _LatMilliMinutesController.text = _currentLatMilliMinutes;
 
-      _LonDegreesController.text = _currentLonDegrees;
-      _LonMinutesController.text = _currentLonMinutes;
-      _LonMilliMinutesController.text = _currentLonMilliMinutes;
-    }
+    _LonDegreesController.text = _currentLonDegrees;
+    _LonMinutesController.text = _currentLonMinutes;
+    _LonMilliMinutesController.text = _currentLonMilliMinutes;
 
     return Column(children: <Widget>[
       Row(
@@ -95,7 +93,7 @@ class _GCWCoordsDMMState extends State<_GCWCoordsDMM> {
           Expanded(
             flex: 6,
             child: GCWSignDropDown(
-                itemList: ['N', 'S'],
+                itemList: const ['N', 'S'],
                 value: _currentLatSign,
                 onChanged: (value) {
                   setState(() {
@@ -107,6 +105,7 @@ class _GCWCoordsDMMState extends State<_GCWCoordsDMM> {
           Expanded(
               flex: 6,
               child: Container(
+                padding: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
                 child: GCWIntegerTextField(
                     hintText: 'DD',
                     textInputFormatter: _DegreesLatTextInputFormatter(allowNegativeValues: false),
@@ -119,9 +118,8 @@ class _GCWCoordsDMMState extends State<_GCWCoordsDMM> {
                         if (_currentLatDegrees.length == 2) FocusScope.of(context).requestFocus(_latMinutesFocusNode);
                       });
                     }),
-                padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
               )),
-          Expanded(
+          const Expanded(
             flex: 1,
             child: GCWText(align: Alignment.center, text: '°'),
           ),
@@ -141,7 +139,7 @@ class _GCWCoordsDMMState extends State<_GCWCoordsDMM> {
                   });
                 }),
           ),
-          Expanded(
+          const Expanded(
             flex: 1,
             child: GCWText(align: Alignment.center, text: '.'),
           ),
@@ -159,7 +157,7 @@ class _GCWCoordsDMMState extends State<_GCWCoordsDMM> {
                   });
                 }),
           ),
-          Expanded(
+          const Expanded(
             flex: 1,
             child: GCWText(align: Alignment.center, text: '\''),
           ),
@@ -170,7 +168,7 @@ class _GCWCoordsDMMState extends State<_GCWCoordsDMM> {
           Expanded(
             flex: 6,
             child: GCWSignDropDown(
-                itemList: ['E', 'W'],
+                itemList: const ['E', 'W'],
                 value: _currentLonSign,
                 onChanged: (value) {
                   setState(() {
@@ -182,6 +180,7 @@ class _GCWCoordsDMMState extends State<_GCWCoordsDMM> {
           Expanded(
               flex: 6,
               child: Container(
+                padding: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
                 child: GCWIntegerTextField(
                     hintText: 'DD',
                     textInputFormatter: _DegreesLonTextInputFormatter(),
@@ -194,9 +193,8 @@ class _GCWCoordsDMMState extends State<_GCWCoordsDMM> {
                         if (_currentLonDegrees.length == 3) FocusScope.of(context).requestFocus(_lonMinutesFocusNode);
                       });
                     }),
-                padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
               )),
-          Expanded(
+          const Expanded(
             flex: 1,
             child: GCWText(align: Alignment.center, text: '°'),
           ),
@@ -216,7 +214,7 @@ class _GCWCoordsDMMState extends State<_GCWCoordsDMM> {
                   });
                 }),
           ),
-          Expanded(
+          const Expanded(
             flex: 1,
             child: GCWText(align: Alignment.center, text: '.'),
           ),
@@ -234,7 +232,7 @@ class _GCWCoordsDMMState extends State<_GCWCoordsDMM> {
                   });
                 }),
           ),
-          Expanded(
+          const Expanded(
             flex: 1,
             child: GCWText(align: Alignment.center, text: '\''),
           ),

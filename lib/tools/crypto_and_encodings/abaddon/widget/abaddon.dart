@@ -11,6 +11,8 @@ import 'package:gc_wizard/tools/crypto_and_encodings/abaddon/logic/abaddon.dart'
 import 'package:gc_wizard/utils/ui_dependent_utils/text_widget_utils.dart';
 
 class Abaddon extends StatefulWidget {
+  const Abaddon({Key? key}) : super(key: key);
+
   @override
   AbaddonState createState() => AbaddonState();
 }
@@ -66,6 +68,7 @@ class AbaddonState extends State<Abaddon> {
           children: <Widget>[
             Expanded(
               child: Container(
+                  padding: const EdgeInsets.only(left: 6, right: 6),
                   child: GCWTextField(
                     controller: _aController,
                     onChanged: (text) {
@@ -73,11 +76,11 @@ class AbaddonState extends State<Abaddon> {
                         _currentA = text;
                       });
                     },
-                  ),
-                  padding: EdgeInsets.only(left: 6, right: 6)),
+                  )),
             ),
             Expanded(
               child: Container(
+                  padding: const EdgeInsets.only(left: 6, right: 6),
                   child: GCWTextField(
                     controller: _bController,
                     onChanged: (text) {
@@ -85,11 +88,11 @@ class AbaddonState extends State<Abaddon> {
                         _currentB = text;
                       });
                     },
-                  ),
-                  padding: EdgeInsets.only(left: 6, right: 6)),
+                  )),
             ),
             Expanded(
               child: Container(
+                  padding: const EdgeInsets.only(left: 6, right: 6),
                   child: GCWTextField(
                     controller: _cController,
                     onChanged: (text) {
@@ -97,8 +100,7 @@ class AbaddonState extends State<Abaddon> {
                         _currentC = text;
                       });
                     },
-                  ),
-                  padding: EdgeInsets.only(left: 6, right: 6)),
+                  )),
             ),
           ],
         ),

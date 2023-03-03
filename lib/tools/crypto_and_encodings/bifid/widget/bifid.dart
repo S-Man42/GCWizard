@@ -15,6 +15,8 @@ import 'package:gc_wizard/tools/crypto_and_encodings/_common/logic/crypt_alphabe
 import 'package:gc_wizard/tools/crypto_and_encodings/polybios/logic/polybios.dart';
 
 class Bifid extends StatefulWidget {
+  const Bifid({Key? key}) : super(key: key);
+
   @override
   BifidState createState() => BifidState();
 }
@@ -133,7 +135,7 @@ class BifidState extends State<Bifid> {
       key = "123456";
     }
 
-    if (_currentInput.isEmpty) return GCWDefaultOutput(child: '');
+    if (_currentInput.isEmpty) return const GCWDefaultOutput(child: '');
 
     var _currentOutput = BifidOutput('', '', '');
     if (_currentMode == GCWSwitchPosition.left) {
@@ -146,7 +148,7 @@ class BifidState extends State<Bifid> {
 
     if (_currentOutput.state == 'ERROR') {
       showToast(i18n(context, _currentOutput.output));
-      return GCWDefaultOutput(child: '');
+      return const GCWDefaultOutput(child: '');
     }
 
     return GCWMultipleOutput(

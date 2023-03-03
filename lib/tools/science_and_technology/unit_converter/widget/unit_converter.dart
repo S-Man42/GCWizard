@@ -67,6 +67,8 @@ final List<UnitCategoryConfig> _categories = [
 ];
 
 class UnitConverter extends StatefulWidget {
+  const UnitConverter({Key? key}) : super(key: key);
+
   @override
   UnitConverterState createState() => UnitConverterState();
 }
@@ -124,8 +126,9 @@ class UnitConverterState extends State<UnitConverter> {
         ),
         Row(
           children: [
-            Expanded(child: GCWText(text: i18n(context, 'unitconverter_from')), flex: 1),
+            Expanded(flex: 1, child: GCWText(text: i18n(context, 'unitconverter_from'))),
             Expanded(
+                flex: 4,
                 child: GCWUnits(
                   value: _currentFromUnit,
                   unitCategory: _currentCategory.category,
@@ -134,14 +137,14 @@ class UnitConverterState extends State<UnitConverter> {
                       _currentFromUnit = value;
                     });
                   },
-                ),
-                flex: 4)
+                ))
           ],
         ),
         Row(
           children: [
-            Expanded(child: GCWText(text: i18n(context, 'unitconverter_to')), flex: 1),
+            Expanded(flex: 1, child: GCWText(text: i18n(context, 'unitconverter_to'))),
             Expanded(
+                flex: 4,
                 child: GCWUnits(
                   value: _currentToUnit,
                   unitCategory: _currentCategory.category,
@@ -150,8 +153,7 @@ class UnitConverterState extends State<UnitConverter> {
                       _currentToUnit = value;
                     });
                   },
-                ),
-                flex: 4)
+                ))
           ],
         ),
         GCWDefaultOutput(child: _buildOutput())

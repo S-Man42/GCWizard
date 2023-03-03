@@ -15,7 +15,7 @@ void main() {
       {'a' : '3,05909465', 'b' : '0,71522325', 'expectedOutput' : ['3.14159265', '13.15950005']},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('a: ${elem['a']}, b: ${elem['b']}', () {
         var _actual = CartesianToPolar(elem['a'] as String?, elem['b'] as String?,);
         var coordinate = _actual.values;
@@ -23,7 +23,7 @@ void main() {
           expect(coordinate.elementAt(i), (elem['expectedOutput'] as Map<String, String>)[i]);
         }
       });
-    });
+    }
   });
 
   group("ComplexNumbers.PolarToCartesian:", () {
@@ -39,7 +39,7 @@ void main() {
       {'r' : '3,14159265', 'a' : '13.1595001', 'expectedOutput' : ['3.0590946', '0.7152233']},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('r: ${elem['r']}, a: ${elem['a']}', () {
         var _actual = PolarToCartesian(elem['r'] as String?, elem['a'] as String?);
         var coordinate = _actual.values;
@@ -47,6 +47,6 @@ void main() {
           expect(coordinate.elementAt(i), (elem['expectedOutput'] as Map<String, String>)[i]);
         }
       });
-    });
+    }
   });
 }

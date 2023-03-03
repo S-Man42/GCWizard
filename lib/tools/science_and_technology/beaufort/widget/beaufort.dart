@@ -12,6 +12,8 @@ import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/velo
 import 'package:intl/intl.dart';
 
 class Beaufort extends StatefulWidget {
+  const Beaufort({Key? key}) : super(key: key);
+
   @override
   BeaufortState createState() => BeaufortState();
 }

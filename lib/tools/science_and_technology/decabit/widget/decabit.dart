@@ -12,6 +12,8 @@ import 'package:gc_wizard/tools/science_and_technology/decabit/logic/decabit.dar
 import 'package:gc_wizard/utils/ui_dependent_utils/text_widget_utils.dart';
 
 class Decabit extends StatefulWidget {
+  const Decabit({Key? key}) : super(key: key);
+
   @override
   DecabitState createState() => DecabitState();
 }
@@ -64,6 +66,7 @@ class DecabitState extends State<Decabit> {
           children: <Widget>[
             Expanded(
               child: Container(
+                  padding: const EdgeInsets.only(left: 6, right: 6),
                   child: GCWTextField(
                     controller: _aController,
                     onChanged: (text) {
@@ -71,11 +74,11 @@ class DecabitState extends State<Decabit> {
                         _currentA = text;
                       });
                     },
-                  ),
-                  padding: EdgeInsets.only(left: 6, right: 6)),
+                  )),
             ),
             Expanded(
               child: Container(
+                  padding: const EdgeInsets.only(left: 6, right: 6),
                   child: GCWTextField(
                     controller: _bController,
                     onChanged: (text) {
@@ -83,8 +86,7 @@ class DecabitState extends State<Decabit> {
                         _currentB = text;
                       });
                     },
-                  ),
-                  padding: EdgeInsets.only(left: 6, right: 6)),
+                  )),
             ),
           ],
         ),

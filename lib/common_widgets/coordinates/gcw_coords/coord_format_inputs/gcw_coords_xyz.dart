@@ -85,7 +85,7 @@ class _GCWCoordsXYZState extends State<_GCWCoordsXYZ> {
     ]);
   }
 
-  _setCurrentValueAndEmitOnChange() {
+  void _setCurrentValueAndEmitOnChange() {
     widget.onChanged(XYZ(_currentX, _currentY, _currentZ));
   }
 }

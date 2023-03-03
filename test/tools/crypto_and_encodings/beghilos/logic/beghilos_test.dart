@@ -12,12 +12,12 @@ void main() {
       {'input' : '. 2507146938', 'expectedOutput' : 'BEGghILOSZ .'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = encodeBeghilos(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Beghilos.decodeBeghilos:", () {
@@ -31,12 +31,12 @@ void main() {
       {'input' : 'beHilosz', 'expectedOutput' : '25071438'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decodeBeghilos(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
 }

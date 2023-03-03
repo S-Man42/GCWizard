@@ -11,12 +11,12 @@ class YUV extends GCWBaseColor {
   late double v; //chrominance: red projection
 
   //values for standard ITU-R BT.601; //TODO: standard BT.709
-  static final double U_MAX = 0.436;
-  static final double V_MAX = 0.615;
+  static const double U_MAX = 0.436;
+  static const double V_MAX = 0.615;
 
-  static final double _W_R = 0.299;
-  static final double _W_B = 0.114;
-  static final double _W_G = 1.0 - _W_B - _W_R;
+  static const double _W_R = 0.299;
+  static const double _W_B = 0.114;
+  static const double _W_G = 1.0 - _W_B - _W_R;
 
   YUV(double y, double u, double v) {
     this.y = min(1.0, max(0.0, y));
@@ -58,17 +58,18 @@ class YPbPr extends GCWBaseColor {
   late double pr; //chrominance: red projection
 
   //values for standard ITU-R BT.601; //TODO: standard BT.709, BT.2020, SMPTE 240M, JPEG
-  static final double _K_R = 0.299;
-  static final double _K_B = 0.114;
-  static final double _K_G = 1.0 - _K_R - _K_B;
+  static const double _K_R = 0.299;
+  static const double _K_B = 0.114;
+  static const double _K_G = 1.0 - _K_R - _K_B;
 
   @override
   YPbPr(double y, double p_b, double p_r) {
     this.y = min(1.0, max(0.0, y));
-    this.pb = min(0.5, max(-0.5, p_b));
-    this.pr = min(0.5, max(-0.5, p_r));
+    pb = min(0.5, max(-0.5, p_b));
+    pr = min(0.5, max(-0.5, p_r));
   }
 
+  @override
   RGB toRGB() {
     double red = y + pr * (2.0 - 2.0 * _K_R);
     double green = y - pb * (_K_B / _K_G * (2.0 - 2.0 * _K_B)) - pr * (_K_R / _K_G * (2.0 - 2.0 * _K_R));
@@ -103,8 +104,8 @@ class YCbCr extends GCWBaseColor {
 
   YCbCr(double y, double p_b, double p_r) {
     this.y = min(235.0, max(16.0, y));
-    this.cb = min(240.0, max(16.0, p_b));
-    this.cr = min(240.0, max(16.0, p_r));
+    cb = min(240.0, max(16.0, p_b));
+    cr = min(240.0, max(16.0, p_r));
   }
 
   YPbPr toYPbPr() {
@@ -144,8 +145,8 @@ class YIQ extends GCWBaseColor {
   late double i; //cyan orange balance
   late double q; //magenta green balance
 
-  static final double I_MAX = 0.5957;
-  static final double Q_MAX = 0.5226;
+  static const double I_MAX = 0.5957;
+  static const double Q_MAX = 0.5226;
 
   YIQ(double y, double i, double q) {
     this.y = min(1.0, max(0.0, y));

@@ -4,7 +4,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/cipher_wheel/logic/cipher_w
 void main() {
   group("CipherWheel.encryptCipherWheel:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'key': 1, 'expectedOutput' : []},
+      // {'input' : null, 'key': 1, 'expectedOutput' : []},
       {'input' : '', 'key': 1, 'expectedOutput' : []},
 
       {'input' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'key': 1, 'expectedOutput' : [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26]},
@@ -13,12 +13,12 @@ void main() {
       {'input' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'key': 26, 'expectedOutput' : [26,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25]},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = encryptCipherWheel(elem['input'] as String, elem['key'] as int);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("CipherWheel.decryptCipherWheel:", () {
@@ -32,11 +32,11 @@ void main() {
       {'expectedOutput' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'key': 26, 'input' : [26,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25]},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decryptCipherWheel(elem['input'] as List<int>, elem['key'] as int);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

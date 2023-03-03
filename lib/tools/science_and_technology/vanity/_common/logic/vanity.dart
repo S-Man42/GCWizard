@@ -61,16 +61,18 @@ Tuple2<PhoneCaseMode?, String>? decodeVanityMultitap(String? input, PhoneModel? 
 
   Map<String, Map<String, String>>? stateModel = model.defaultCaseStateModel;
 
-  if (model.specificCaseStateModels[inputLanguage] != null)
+  if (model.specificCaseStateModels[inputLanguage] != null) {
     stateModel = model.specificCaseStateModels[inputLanguage];
+  }
 
   var currentState = stateModel?[PHONE_STATEMODEL_START]?.values.first;
   if (currentState == null || stateModel == null) return null;
 
   var currentMode = _getModeFromState(currentState);
 
-  if (input == null || input.trim().isEmpty || currentMode == null)
+  if (input == null || input.trim().isEmpty || currentMode == null) {
     return Tuple2<PhoneCaseMode?, String>(currentMode, '');
+  }
 
   var languageIndex = model.languages.indexWhere((langList) => langList.contains(inputLanguage));
   var languageCharmap = model.characterMap[languageIndex];
@@ -160,8 +162,9 @@ Tuple2<PhoneCaseMode?, String>? encodeVanityMultitap(String? input, PhoneModel? 
 
   var stateModel = model.defaultCaseStateModel;
 
-  if (model.specificCaseStateModels[inputLanguage] != null)
+  if (model.specificCaseStateModels[inputLanguage] != null) {
     stateModel = model.specificCaseStateModels[inputLanguage]!;
+  }
 
   var currentState = stateModel[PHONE_STATEMODEL_START]!.values.first;
   var currentMode = _getModeFromState(currentState);

@@ -21,6 +21,8 @@ import 'package:gc_wizard/utils/constants.dart';
 import 'package:latlong2/latlong.dart';
 
 class IntersectGeodeticAndCircle extends StatefulWidget {
+  const IntersectGeodeticAndCircle({Key? key}) : super(key: key);
+
   @override
   IntersectBearingAndCircleState createState() => IntersectBearingAndCircleState();
 }
@@ -114,15 +116,15 @@ class IntersectBearingAndCircleState extends State<IntersectGeodeticAndCircle> {
         barrierDismissible: false,
         builder: (context) {
           return Center(
-            child: Container(
+            child: SizedBox(
+              height: 220,
+              width: 150,
               child: GCWAsyncExecuter<List<LatLng>>(
                 isolatedFunction: intersectGeodeticAndCircleAsync,
                 parameter: _buildJobData,
                 onReady: (data) => _showOutput(data),
                 isOverlay: true,
               ),
-              height: 220,
-              width: 150,
             ),
           );
         },

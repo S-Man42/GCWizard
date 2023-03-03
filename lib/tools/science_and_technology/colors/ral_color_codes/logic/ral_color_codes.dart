@@ -241,17 +241,17 @@ Map<String, RalColor> findSimilarRALColors(RGB rgb) {
 
   var RALRGBs = RAL_COLOR_CODES.values.map((ral) => HexCode(ral.colorcode).toRGB()).toList();
 
-  var out = Map<String, RalColor>();
+  var out = <String, RalColor>{};
   var distance = 0;
   while (distance < 100) {
     distance++;
     var nearestRGBs = findNearestRGBs(rgb, RALRGBs, distance: distance);
 
     if (nearestRGBs.length >= 5) {
-      nearestRGBs.forEach((nearestRGB) {
+      for (var nearestRGB in nearestRGBs) {
         var nearestRAL = _ralByRGB(nearestRGB);
         if (nearestRAL != null) out.addAll({nearestRAL.key: nearestRAL.value});
-      });
+      }
       return out;
     }
   }

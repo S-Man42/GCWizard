@@ -87,8 +87,9 @@ class BrainfkDerivatives {
     if (text == null || text.isEmpty) return '';
 
     var brainfk = generateBrainfk(text);
-    if (commandDelimiter != null && commandDelimiter!.isNotEmpty)
+    if (commandDelimiter != null && commandDelimiter!.isNotEmpty) {
       brainfk = insertEveryNthCharacter(brainfk, 1, commandDelimiter!);
+    }
 
     return substitution(brainfk, switchMapKeyValue(substitutions));
   }
@@ -101,14 +102,14 @@ final BrainfkDerivatives BRAINFKDERIVATIVE_OMAM = BrainfkDerivatives(
     pointerShiftLeftInstruction: 'sleep until the sun goes down',
     increaseValueInstruction: 'through the woods we ran',
     decreaseValueInstruction: 'deep into the mountain sound',
-    outputInstruction: 'don' + "'" + 't listen to a word i say',
+    outputInstruction: 'don' "'" 't listen to a word i say',
     inputInstruction: 'the screams all sound the same',
     startLoopInstruction: '	though the truth may vary',
     endLoopInstruction: 'this ship will carry',
     commandDelimiter: '\n');
 
 final BrainfkDerivatives BRAINFKDERIVATIVE_REVOLUTION9 = BrainfkDerivatives(
-    pointerShiftRightInstruction: 'It' + "'" + 's alright',
+    pointerShiftRightInstruction: 'It' "'" 's alright',
     pointerShiftLeftInstruction: 'turn me on, dead man',
     increaseValueInstruction: 'Number 9',
     decreaseValueInstruction: 'if you become naked',
@@ -123,15 +124,11 @@ final BrainfkDerivatives BRAINFKDERIVATIVE_DETAILEDFK = BrainfkDerivatives(
     pointerShiftLeftInstruction: 'MOVE THE MEMORY POINTER ONE CELL TO THE LEFT',
     increaseValueInstruction: 'INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE',
     decreaseValueInstruction: 'DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE',
-    outputInstruction: 'PRINT THE CELL UNDER THE MEMORY POINTER' + "'" + 'S VALUE AS AN ASCII CHARACTER',
+    outputInstruction: 'PRINT THE CELL UNDER THE MEMORY POINTER' "'" 'S VALUE AS AN ASCII CHARACTER',
     inputInstruction:
-        'REPLACE THE CELL UNDER THE MEMORY POINTER' + "'" + 'S VALUE WITH THE ASCII CHARACTER CODE OF USER INPUT',
-    startLoopInstruction: 'IF THE CELL UNDER THE MEMORY POINTER' +
-        "'" +
-        'S VALUE IS ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE ] COMMAND IN BRAINFUCK',
-    endLoopInstruction: 'IF THE CELL UNDER THE MEMORY POINTER' +
-        "'" +
-        'S VALUE IS NOT ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE [ COMMAND IN BRAINFUCK',
+        'REPLACE THE CELL UNDER THE MEMORY POINTER' "'" 'S VALUE WITH THE ASCII CHARACTER CODE OF USER INPUT',
+    startLoopInstruction: 'IF THE CELL UNDER THE MEMORY POINTER' "'" 'S VALUE IS ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE ] COMMAND IN BRAINFUCK',
+    endLoopInstruction: 'IF THE CELL UNDER THE MEMORY POINTER' "'" 'S VALUE IS NOT ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE [ COMMAND IN BRAINFUCK',
     commandDelimiter: '\n');
 
 final BrainfkDerivatives BRAINFKDERIVATIVE_GERMAN = BrainfkDerivatives(

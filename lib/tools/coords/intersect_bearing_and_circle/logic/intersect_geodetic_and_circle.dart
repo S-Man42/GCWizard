@@ -20,8 +20,9 @@ class IntersectGeodeticAndCircleJobData {
 }
 
 Future<List<LatLng>> intersectGeodeticAndCircleAsync(dynamic jobData) async {
-  if (jobData?.parameters is! IntersectGeodeticAndCircleJobData)
+  if (jobData?.parameters is! IntersectGeodeticAndCircleJobData) {
     throw Exception('Unexpected data for Intersectopm Geodetic and Circle');
+  }
 
   var data = jobData!.parameters as IntersectGeodeticAndCircleJobData;
 

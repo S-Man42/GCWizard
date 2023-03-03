@@ -116,7 +116,7 @@ class MultiDecoderToolCoordinateFormats extends AbstractMultiDecoderTool {
                 onChanged: (newValue) {
                   options[MDT_COORDINATEFORMATS_OPTION_FORMAT] = newValue;
                 },
-                items: allCoordinateFormatMetadata.where((format) => format.persistenceKey != CoordinateFormatKey.SLIPPY_MAP).map((format) {
+                items: allCoordinateFormatMetadata.where((format) => format.type != CoordinateFormatKey.SLIPPY_MAP).map((format) {
                   return GCWDropDownMenuItem(
                     value: format.persistenceKey,
                     child: i18n(context, format.name, ifTranslationNotExists: format.name),
@@ -128,8 +128,9 @@ class MultiDecoderToolCoordinateFormats extends AbstractMultiDecoderTool {
 
 CoordinateFormatKey getCoordinateFormatKey(Map<String, Object?> options, String option) {
   var key = checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_COORDINATEFORMATS, options, MDT_COORDINATEFORMATS_OPTION_FORMAT);
-  if (CoordinateFormatKey.values.contains(key))
-    return CoordinateFormatKey.values.firstWhere((element) => element == key);
+  var formatKey = coordinateFormatMetadataByPersistenceKey(key)?.type;
+  if (formatKey != null) return formatKey;
+
   key = toStringOrNull(getDefaultValue(MDT_INTERNALNAMES_COORDINATEFORMATS, MDT_COORDINATEFORMATS_OPTION_FORMAT)) ?? '';
-  return CoordinateFormatKey.values.firstWhere((element) => element == key);
+  return coordinateFormatMetadataByPersistenceKey(key)?.type ?? defaultCoordinateFormat.type;
 }

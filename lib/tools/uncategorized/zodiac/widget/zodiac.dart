@@ -19,6 +19,8 @@ enum _ZODIACSIGNS_ATTRIBUTES {
 }
 
 class Zodiac extends StatefulWidget {
+  const Zodiac({Key? key}) : super(key: key);
+
   @override
   ZodiacState createState() => ZodiacState();
 }
@@ -112,7 +114,7 @@ class ZodiacState extends State<Zodiac> {
                   [i18n(context, _ZODIACSIGNS_ATTRIBUTES.quality.name), i18n(context, zodiacSign.quality)],
                   [i18n(context, _ZODIACSIGNS_ATTRIBUTES.polarity.name), i18n(context, zodiacSign.polarity)],
                 ],
-          flexValues: [1, 2]
+          flexValues: const [1, 2]
       );
     } else {
       return GCWColumnedMultilineOutput(

@@ -37,8 +37,9 @@ void updateFormulaGroups() {
 }
 
 void deleteGroup(int? groupId) {
-  if (groupId == null)
+  if (groupId == null) {
     throw Exception('Formula group id not found');
+  }
 
   formulaGroups.removeWhere((group) => group.id == groupId);
 
@@ -66,8 +67,9 @@ int insertFormula(Formula formula, FormulaGroup group) {
 
 void updateFormula(Formula formula, FormulaGroup group) {
   group.formulas = group.formulas.map((groupFormula) {
-    if (formula.id == null || groupFormula.id == null)
+    if (formula.id == null || groupFormula.id == null) {
       throw Exception('Formula id not found');
+    }
 
     if (groupFormula.id == formula.id) return formula;
 
@@ -91,8 +93,9 @@ int insertFormulaValue(FormulaValue formulaValue, FormulaGroup group) {
 
 void updateFormulaValue(FormulaValue formulaValue, FormulaGroup group) {
   group.values = group.values.map((value) {
-    if (value.id == null || formulaValue.id == null)
+    if (value.id == null || formulaValue.id == null) {
       throw Exception('Formula value id not found');
+    }
 
     if (value.id == formulaValue.id) return formulaValue;
 
@@ -104,11 +107,13 @@ void updateFormulaValue(FormulaValue formulaValue, FormulaGroup group) {
 }
 
 void deleteFormula(int? formulaId, FormulaGroup group) {
-  if (formulaId == null)
+  if (formulaId == null) {
     throw Exception('Formula id not found');
+  }
 
-  if (group.id == null)
+  if (group.id == null) {
     throw Exception('Formula group id not found');
+  }
 
   group.formulas.removeWhere((formula) => formula.id == formulaId);
 

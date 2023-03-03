@@ -8,6 +8,8 @@ import 'package:gc_wizard/tools/science_and_technology/physical_constants/logic/
 import 'package:gc_wizard/utils/ui_dependent_utils/text_widget_utils.dart';
 
 class PhysicalConstants extends StatefulWidget {
+  const PhysicalConstants({Key? key}) : super(key: key);
+
   @override
   PhysicalConstantsState createState() => PhysicalConstantsState();
 }
@@ -15,7 +17,7 @@ class PhysicalConstants extends StatefulWidget {
 class PhysicalConstantsState extends State<PhysicalConstants> {
   var _currentConstant = PHYSICAL_CONSTANTS.entries.first.key;
 
-  List<String> _constants = [];
+  final List<String> _constants = [];
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +75,7 @@ class PhysicalConstantsState extends State<PhysicalConstants> {
 
     return GCWColumnedMultilineOutput(
       data: data as List<List<Object?>>,
-      flexValues: [2, 3, 2],
+      flexValues: const [2, 3, 2],
       copyColumn: 1,
     );
   }
@@ -84,6 +86,6 @@ class PhysicalConstantsState extends State<PhysicalConstants> {
     return RichText(
         text: TextSpan(
             style: gcwTextStyle(),
-            children: [TextSpan(text: ' × 10'), superscriptedTextForRichText(exponent.toString())]));
+            children: [const TextSpan(text: ' × 10'), superscriptedTextForRichText(exponent.toString())]));
   }
 }

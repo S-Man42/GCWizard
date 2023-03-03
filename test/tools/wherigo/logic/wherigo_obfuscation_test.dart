@@ -16,12 +16,12 @@ void main() {
       {'input' : ' Soehne - Die Ofenbauer von Auschwitz', 'expectedOutput' : ' IdSUZP 3 6WR ~PVdQOhQc mec 1gdMYmXhm'}
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = obfuscateEarwigoText(elem['input'] as String?, EARWIGO_DEOBFUSCATION.GSUB_WIG);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Obfuscation.Earwigo_WWB_DEOBF:", () {
@@ -36,12 +36,12 @@ void main() {
       {'input' : 'He, Sie! Hier ist überall Sperrbereich. Und angefasst werden darf hier erst recht nichts. Legen Sie alle Gegenstände wieder an ihren Platz und verlassen Sie das Gelände.', 'expectedOutput' : 'Qo, fwt! Rtq4 x82 üos6quv e2s67ko2qvqwN eyp o2wnpl457 -n1oq0 sq0p tvs6 n135 5tsq3 zvqw91H Xrut3 ctq o01n Rqts282äzqs -rooq4 p3 ss3r1 fuk4. 82t 5p3yo78nx evs tj2 SrzäwnpJ'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = obfuscateEarwigoText(elem['input'] as String?, EARWIGO_DEOBFUSCATION.WWB_DEOBF);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Obfuscation.Urwigo:", () {
@@ -60,12 +60,12 @@ void main() {
       {'input' : 'Es gibt keinen Spielplan. Du bestimmst, wohin Du gehst und was Du tust.', 'dtable' : dtable,  'expectedOutput' : '9C/DSpF/\\022\\025S\\024\\025\\024/&\\019S\\025w\\019wz\\024e/\\015L/p\\025CFS,,CF\\023/6lGS\\024/\\015L/D\\025GCF/L\\024c/6zC/\\015L/FLCFe'}
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']} dtable: ${elem['dtable']}', () {
         var _actual = obfuscateUrwigoText(elem['input'] as String?, elem['dtable'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Obfuscation.Urwigo:", () {
@@ -85,12 +85,12 @@ void main() {
         'expectedOutput' : '?M\\025PP\\025\\022@cr\\022)IyI\\022jKx%Moy\\016'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']} dtable: ${elem['dtable']}', () {
         var _actual = obfuscateUrwigoText(elem['input'] as String?, elem['dtable'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
 }

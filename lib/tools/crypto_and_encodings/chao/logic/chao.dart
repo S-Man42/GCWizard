@@ -73,7 +73,7 @@ String encryptChao(String plaintext, String alphabetPlain, String alphabetChiffr
   String plainChar;
   for (int i = 0; i < plaintext.length; i++) {
     plainChar = plaintext[i].toUpperCase();
-    if (alphabetPlain.indexOf(plainChar) >= 0) {
+    if (alphabetPlain.contains(plainChar)) {
       chiffreChar = alphabetChiffre[alphabetPlain.indexOf(plainChar)];
       chiffretext = chiffretext + chiffreChar;
       alphabetChiffre = _permuteChiffreAlphabet(chiffreChar, alphabetChiffre);
@@ -90,7 +90,7 @@ String decryptChao(String chiffretext, String alphabetPlain, String alphabetChif
   String plainChar;
   for (int i = 0; i < chiffretext.length; i++) {
     chiffreChar = chiffretext[i].toUpperCase();
-    if (alphabetChiffre.indexOf(chiffreChar) >= 0) {
+    if (alphabetChiffre.contains(chiffreChar)) {
       plainChar = alphabetPlain[alphabetChiffre.indexOf(chiffreChar)];
       plaintext = plaintext + plainChar;
       alphabetChiffre = _permuteChiffreAlphabet(chiffreChar, alphabetChiffre);

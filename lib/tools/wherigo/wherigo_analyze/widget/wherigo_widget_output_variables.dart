@@ -10,11 +10,11 @@ List<List<String>> _buildOutputListOfVariables(BuildContext context, WherigoVari
 List<List<String>> _buildOutputListOfVariablesDetails(BuildContext context, WherigoVariableData data) {
   List<List<String>> result = [];
 
-  if (NameToObject[data.VariableName] == null)
+  if (NameToObject[data.VariableName] == null) {
     result = [
       [i18n(context, 'wherigo_output_identifier_no_detail'), '']
     ];
-  else {
+  } else {
     result = [
       [
         i18n(context, 'wherigo_output_identifier_detail_title'),

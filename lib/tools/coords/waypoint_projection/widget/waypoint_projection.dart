@@ -17,6 +17,8 @@ import 'package:gc_wizard/utils/constants.dart';
 import 'package:latlong2/latlong.dart';
 
 class WaypointProjection extends StatefulWidget {
+  const WaypointProjection({Key? key}) : super(key: key);
+
   @override
   WaypointProjectionState createState() => WaypointProjectionState();
 }
@@ -96,8 +98,9 @@ class WaypointProjectionState extends State<WaypointProjection> {
 
   void _calculateOutput() {
     if (_currentReverse) {
-      if (_currentCoords.toLatLng() == null)
+      if (_currentCoords.toLatLng() == null) {
         return;
+      }
 
       _currentValues = reverseProjection(_currentCoords.toLatLng()!, _currentBearing.value, _currentDistance, defaultEllipsoid);
       if (_currentValues.isEmpty) {
@@ -114,7 +117,7 @@ class WaypointProjectionState extends State<WaypointProjection> {
 
       _currentMapPolylines = <GCWMapPolyline>[];
 
-      _currentValues.forEach((projection) {
+      for (var projection in _currentValues) {
         var projectionMapPoint = GCWMapPoint(
             point: projection,
             color: COLOR_MAP_CALCULATEDPOINT,
@@ -124,7 +127,7 @@ class WaypointProjectionState extends State<WaypointProjection> {
         _currentMapPoints.add(projectionMapPoint);
 
         _currentMapPolylines.add(GCWMapPolyline(points: [projectionMapPoint, _currentMapPoints[0]]));
-      });
+      }
     } else {
       _currentValues = [projection(_currentCoords.toLatLng()!, _currentBearing.value, _currentDistance, defaultEllipsoid)];
 

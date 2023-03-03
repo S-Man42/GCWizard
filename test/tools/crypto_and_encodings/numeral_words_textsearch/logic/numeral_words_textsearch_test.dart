@@ -63,7 +63,7 @@ void main(){
         'expectedOutput' : [NumeralWordsDecodeOutput('333333', 'dreihundertdreiunddreissigtausenddreihundertdreiunddreissig', 'common_language_german')]},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
         var _actual = decodeNumeralwords(input: removeAccents(elem['input'].toString().toLowerCase()), language: elem['language'] as NumeralWordsLanguage, decodeModeWholeWords: elem['decodeMode'] as bool);
         var length = (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>).length;
@@ -73,7 +73,7 @@ void main(){
           expect(_actual[i].language, (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>)[i].language);
         }
       });
-    });
+    }
   });
 
   group("NumeralWords.decodeNumeralwordsEntireWordsENG:", () {
@@ -161,7 +161,7 @@ void main(){
         'expectedOutput' : [NumeralWordsDecodeOutput('275101', 'twohundredseventyfivethousandhundredone', 'common_language_english')]},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
         var _actual = decodeNumeralwords(input: removeAccents(elem['input'].toString().toLowerCase()), language: elem['language'] as NumeralWordsLanguage, decodeModeWholeWords: elem['decodeMode'] as bool);
         var length = (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>).length;
@@ -171,12 +171,13 @@ void main(){
           expect(_actual[i].language, (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>)[i].language);
         }
       });
-    });
+    }
   });
 
   group("NumeralWords.decodeNumeralwordsEntireWordsAsParts:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : '', 'language' : NumeralWordsLanguage.DEU, 'decodeMode' : false, 'expectedOutput' : ''},
+      {'input' : '', 'language' : NumeralWordsLanguage.DEU, 'decodeMode' : false,
+        'expectedOutput' : [NumeralWordsDecodeOutput('', '', 'numeralwords_language_empty')]},
       {'input' : 'fünfundzwanzig', 'language' : NumeralWordsLanguage.DEU, 'decodeMode' : false,
         'expectedOutput' : [NumeralWordsDecodeOutput('5', 'fuenf', 'common_language_german'),
                             NumeralWordsDecodeOutput('20', 'zwanzig', 'common_language_german')]},
@@ -384,7 +385,7 @@ void main(){
                             NumeralWordsDecodeOutput('1', 'one', 'common_language_english')]},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
         var _actual = decodeNumeralwords(input: removeAccents(elem['input'].toString().toLowerCase()), language: elem['language'] as NumeralWordsLanguage, decodeModeWholeWords: elem['decodeMode'] as bool);
         var length = (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>).length;
@@ -394,7 +395,7 @@ void main(){
           expect(_actual[i].language, (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>)[i].language);
         }
       });
-    });
+    }
   });
 
   group("NumeralWords.decodeNumeralwordsWordParts:", () {
@@ -484,7 +485,7 @@ void main(){
                             NumeralWordsDecodeOutput('5', 'five', 'common_language_english')]},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
         var _actual = decodeNumeralwords(input: removeAccents(elem['input'].toString().toLowerCase()), language: elem['language'] as NumeralWordsLanguage, decodeModeWholeWords: elem['decodeMode'] as bool);
         var length = (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>).length;
@@ -494,7 +495,7 @@ void main(){
           expect(_actual[i].language, (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>)[i].language);
         }
       });
-    });
+    }
   });
 
   group("NumeralWords.decodeNumeralwordsEntireWordsVOL:", () {
@@ -502,7 +503,7 @@ void main(){
       {'input' : '', 'language' : NumeralWordsLanguage.VOL, 'decodeMode' : true,
         'expectedOutput' : [NumeralWordsDecodeOutput('', '', 'numeralwords_language_empty')]},
       {'input' : 'fünfundzwanzig', 'language' : NumeralWordsLanguage.VOL, 'decodeMode' : true,
-        'expectedOutput' : []},
+        'expectedOutput' : [NumeralWordsDecodeOutput('', '', 'numeralwords_language_empty')]},
 
       {'input' : 'degbal', 'language' : NumeralWordsLanguage.VOL, 'decodeMode' : true,
         'expectedOutput' : [NumeralWordsDecodeOutput('11', 'degbal', 'common_language_volapuek')]},
@@ -528,7 +529,7 @@ void main(){
         'expectedOutput' : [NumeralWordsDecodeOutput('876329', 'joeltumveldegmaelmilkiltumteldegzuel', 'common_language_volapuek')]},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
         var _actual = decodeNumeralwords(input: removeAccents(elem['input'].toString().toLowerCase()), language: elem['language'] as NumeralWordsLanguage, decodeModeWholeWords: elem['decodeMode'] as bool);
         var length = (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>).length;
@@ -538,7 +539,7 @@ void main(){
           expect(_actual[i].language, (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>)[i].language);
         }
       });
-    });
+    }
   });
 
   group("NumeralWords.decodeNumeralwordsEntireWordsEPO:", () {
@@ -546,7 +547,7 @@ void main(){
       {'input' : '', 'language' : NumeralWordsLanguage.EPO, 'decodeMode' : true,
         'expectedOutput' : [NumeralWordsDecodeOutput('', '', 'numeralwords_language_empty')]},
       {'input' : 'fünfundzwanzig', 'language' : NumeralWordsLanguage.EPO, 'decodeMode' : true,
-        'expectedOutput' : []},
+        'expectedOutput' : [NumeralWordsDecodeOutput('', '', 'numeralwords_language_empty')]},
 
       {'input' : 'dek du', 'language' : NumeralWordsLanguage.EPO, 'decodeMode' : true,
         'expectedOutput' : [NumeralWordsDecodeOutput('12', 'dekdu', 'common_language_esperanto')]},
@@ -566,7 +567,7 @@ void main(){
         'expectedOutput' : [NumeralWordsDecodeOutput('435689', 'kvarcenttridekkvinmilsescentokdeknau', 'common_language_esperanto')]},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
         var _actual = decodeNumeralwords(input: removeAccents(elem['input'].toString().toLowerCase()), language: elem['language'] as NumeralWordsLanguage, decodeModeWholeWords: elem['decodeMode'] as bool);
         var length = (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>).length;
@@ -576,7 +577,7 @@ void main(){
           expect(_actual[i].language, (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>)[i].language);
         }
       });
-    });
+    }
   });
 
   group("NumeralWords.decodeNumeralwordsEntireWordsSOL:", () {
@@ -584,7 +585,7 @@ void main(){
       {'input' : '', 'language' : NumeralWordsLanguage.SOL, 'decodeMode' : true,
         'expectedOutput' : [NumeralWordsDecodeOutput('', '', 'numeralwords_language_empty')]},
       {'input' : 'fünfundzwanzig', 'language' : NumeralWordsLanguage.SOL, 'decodeMode' : true,
-        'expectedOutput' : []},
+        'expectedOutput' : [NumeralWordsDecodeOutput('', '', 'numeralwords_language_empty')]},
 
       {'input' : 'mimisi', 'language' : NumeralWordsLanguage.SOL, 'decodeMode' : true,
         'expectedOutput' : [NumeralWordsDecodeOutput('12', 'mimisi', 'common_language_solresol')]},
@@ -611,7 +612,7 @@ void main(){
           NumeralWordsDecodeOutput('435689', 'resolsolfarerefafamirelalafamimiresisifarerefadodomimifa', 'common_language_solresol')]},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
         var _actual = decodeNumeralwords(input: removeAccents(elem['input'].toString().toLowerCase()), language: elem['language'] as NumeralWordsLanguage, decodeModeWholeWords: elem['decodeMode'] as bool);
         var length = (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>).length;
@@ -621,7 +622,7 @@ void main(){
           expect(_actual[i].language, (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>)[i].language);
         }
       });
-    });
+    }
   });
 
   group("NumeralWords.decodeNumeralwordsEntireWordsLAT:", () {
@@ -629,7 +630,7 @@ void main(){
       {'input' : '', 'language' : NumeralWordsLanguage.LAT, 'decodeMode' : true,
         'expectedOutput' : [NumeralWordsDecodeOutput('', '', 'numeralwords_language_empty')]},
       {'input' : 'fünfundzwanzig', 'language' : NumeralWordsLanguage.LAT, 'decodeMode' : true,
-        'expectedOutput' : []},
+        'expectedOutput' : [NumeralWordsDecodeOutput('', '', 'numeralwords_language_empty')]},
 
       {'input' : 'quinque duo gradus quattuor quattuor punctum octo octo octo zerum unus tria gradus zerum unus punctum tria hexas quinque', 'language' : NumeralWordsLanguage.LAT, 'decodeMode' : true,
         'expectedOutput' : [
@@ -655,7 +656,7 @@ void main(){
         ]},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
         var _actual = decodeNumeralwords(input: removeAccents(elem['input'].toString().toLowerCase()), language: elem['language'] as NumeralWordsLanguage, decodeModeWholeWords: elem['decodeMode'] as bool);
         var length = (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>).length;
@@ -665,7 +666,7 @@ void main(){
           expect(_actual[i].language, (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>)[i].language);
         }
       });
-    });
+    }
   });
 
 
@@ -689,7 +690,7 @@ void main(){
         },
       ];
 
-      _inputsToExpected.forEach((elem) {
+      for (var elem in _inputsToExpected) {
         test(
             'input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
           var _actual = decodeNumeralwords(input: removeAccents(elem['input'].toString().toLowerCase()), language: elem['language'] as NumeralWordsLanguage, decodeModeWholeWords: elem['decodeMode'] as bool);
@@ -700,7 +701,7 @@ void main(){
             expect(_actual[i].language, (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>)[i].language);
           }
         });
-      });
+      }
     });
 
   group("NumeralWords.Shadoks:", () {
@@ -723,7 +724,7 @@ void main(){
           },
         ];
 
-        _inputsToExpected.forEach((elem) {
+        for (var elem in _inputsToExpected) {
           test(
               'input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
             var _actual = decodeNumeralwords(input: removeAccents(elem['input'].toString().toLowerCase()), language: elem['language'] as NumeralWordsLanguage, decodeModeWholeWords: elem['decodeMode'] as bool);
@@ -734,7 +735,7 @@ void main(){
               expect(_actual[i].language, (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>)[i].language);
             }
           });
-        });
+        }
       });
 
   group("NumeralWords.Klingon:", () {
@@ -763,7 +764,7 @@ void main(){
           NumeralWordsDecodeOutput("numeralwords_n", "'oy'", 'numeralwords_language_kli'),
           NumeralWordsDecodeOutput("52", "vaghmah cha'", 'numeralwords_language_kli'),
           NumeralWordsDecodeOutput("°", "qoch", 'numeralwords_language_kli'),
-          NumeralWordsDecodeOutput("27", "cha\'mah soch", 'numeralwords_language_kli'),
+          NumeralWordsDecodeOutput("27", "cha'mah soch", 'numeralwords_language_kli'),
           NumeralWordsDecodeOutput(".", "ngev", 'numeralwords_language_kli'),
           NumeralWordsDecodeOutput("369", "wejvatlh javmah hut", 'numeralwords_language_kli'),
           NumeralWordsDecodeOutput("numeralwords_e", "chan", 'numeralwords_language_kli'),
@@ -778,7 +779,7 @@ void main(){
       },
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test(
           'input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
         var _actual = decodeNumeralwords(input: removeAccents(elem['input'].toString().toLowerCase()), language: elem['language'] as NumeralWordsLanguage, decodeModeWholeWords: elem['decodeMode'] as bool);
@@ -789,7 +790,7 @@ void main(){
           expect(_actual[i].language, (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>)[i].language);
         }
       });
-    });
+    }
   });
 
   group("NumeralWords.Navi:", () {
@@ -858,7 +859,7 @@ void main(){
       },
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test(
           'input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
         var _actual = decodeNumeralwords(input: removeAccents(elem['input'].toString().toLowerCase()), language: elem['language'] as NumeralWordsLanguage, decodeModeWholeWords: elem['decodeMode'] as bool);
@@ -869,7 +870,7 @@ void main(){
           expect(_actual[i].language, (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>)[i].language);
         }
       });
-    });
+    }
   });
 
   group("NumeralWords.DEU:", () {
@@ -917,7 +918,7 @@ void main(){
       },
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test(
           'input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
         var _actual = decodeNumeralwords(input: removeAccents(elem['input'].toString().toLowerCase()), language: elem['language'] as NumeralWordsLanguage, decodeModeWholeWords: elem['decodeMode'] as bool);
@@ -928,6 +929,6 @@ void main(){
           expect(_actual[i].language, (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>)[i].language);
         }
       });
-    });
+    }
   });
 }

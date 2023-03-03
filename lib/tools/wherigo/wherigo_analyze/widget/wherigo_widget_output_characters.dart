@@ -2,19 +2,21 @@ part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_analyze.
 
 List<List<String>> _buildOutputListOfCharacterData(BuildContext context, WherigoCharacterData data) {
   List<List<String>> result = [];
-  if (wherigoExpertMode)
+  if (wherigoExpertMode) {
     result = _buildOutputListCharacterDataExpertMode(context, data);
-  else
+  } else {
     result = _buildOutputListCharacterDataUserMode(context, data);
+  }
 
-  if (data.CharacterLocation == 'ZonePoint')
+  if (data.CharacterLocation == 'ZonePoint') {
     result.add([
       i18n(context, 'wherigo_output_location'),
       formatCoordOutput(LatLng(data.CharacterZonepoint.Latitude, data.CharacterZonepoint.Longitude),
           defaultCoordinateFormat, defaultEllipsoid)
     ]);
-  else
+  } else {
     result.add([i18n(context, 'wherigo_output_location'), data.CharacterLocation]);
+  }
 
   return result;
 }

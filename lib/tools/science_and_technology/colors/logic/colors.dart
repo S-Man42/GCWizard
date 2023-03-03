@@ -18,9 +18,9 @@ abstract class GCWBaseColor {
   RGB toRGB();
 }
 
-final ColorSpaceKey defaultColorSpace = ColorSpaceKey.RGB;
+const ColorSpaceKey defaultColorSpace = ColorSpaceKey.RGB;
 final RGB defaultColor = RGB(255.0, 155.0, 0.0);
-final int COLOR_DOUBLE_PRECISION = 5;
+const int COLOR_DOUBLE_PRECISION = 5;
 
 final List<ColorSpace> allColorSpaces = [
   ColorSpace(ColorSpaceKey.RGB, 'colors_rgb', 'colors_colorspace_rgb_title'),

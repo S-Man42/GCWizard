@@ -1,5 +1,5 @@
 String _sanitizePassword(String? password, int key) {
-  if (password == null) password = '';
+  password ??= '';
 
   password = password.toUpperCase().replaceAll(RegExp('[^A-Z]'), 'Z');
 
@@ -18,9 +18,9 @@ List<List<String>> _applyPasswordToMatrix(List<List<String>> matrix, String pass
   indexedPassword.sort((a, b) => a.value.key.compareTo(b.value.key));
 
   var shuffledMatrix = <List<String>>[];
-  indexedPassword.forEach((character) {
+  for (var character in indexedPassword) {
     shuffledMatrix.add(matrix[character.key]);
-  });
+  }
 
   return shuffledMatrix;
 }
@@ -67,11 +67,11 @@ String encryptRailFence(String? input, int key, {int? offset, String? password})
   matrix = _applyPasswordToMatrix(matrix, password);
 
   var out = '';
-  matrix.forEach((row) {
-    row.forEach((cell) {
+  for (var row in matrix) {
+    for (var cell in row) {
       if (cell != '.') out += cell;
-    });
-  });
+    }
+  }
 
   return out.replaceAll('\x00', '');
 }

@@ -18,7 +18,7 @@ String? _encrypt(String? input, String? substitutionKey, String? transpositionKe
     PolybiosMode polybiosMode, String? alphabet) {
   if (input == null || input.isEmpty) return '';
 
-  if (substitutionKey == null) substitutionKey = '';
+  substitutionKey ??= '';
 
   var adfgvxMode = mode.toString().split('.')[1]; //mode.toString() == _ADFGVX.ADFGX
   alphabet = createPolybiosAlphabet(adfgvxMode.length,
@@ -49,7 +49,9 @@ String? _encrypt(String? input, String? substitutionKey, String? transpositionKe
 
   String out = '';
   for (int i = 0; i < newIndexes.length; i++) {
-    matrix[newIndexes[i]].forEach((character) => out += character);
+    for (var character in matrix[newIndexes[i]]) {
+      out += character;
+    }
   }
 
   return insertSpaceEveryNthCharacter(out, 5);
@@ -90,11 +92,11 @@ String? _decrypt(String? input, String? substitutionKey, String? transpositionKe
     List<List<String>> matrix = List.generate(countColumns, (_) => List<String>.filled(countRows, ''));
 
     int i = 0;
-    newIndexes.forEach((index) {
+    for (var index in newIndexes) {
       var maxRow = countRows;
 
       var fillColumn = false;
-      if ((countRows - 1) * countColumns + index + 1 > input!.length) {
+      if ((countRows - 1) * countColumns + index + 1 > input.length) {
         maxRow -= 1;
         fillColumn = true;
       }
@@ -104,7 +106,7 @@ String? _decrypt(String? input, String? substitutionKey, String? transpositionKe
 
       matrix[index] = chunk.split('');
       i += maxRow;
-    });
+    }
 
     transposed = '';
     for (int i = 0; i < countRows; i++) {
@@ -114,9 +116,9 @@ String? _decrypt(String? input, String? substitutionKey, String? transpositionKe
     }
   }
 
-  if (transposed == null) transposed = input;
+  transposed ??= input;
 
-  if (substitutionKey == null) substitutionKey = '';
+  substitutionKey ??= '';
 
   var adfgvxMode = mode.toString().split('.')[1]; //mode.toString() == _ADFGVX.ADFGX
   alphabet = createPolybiosAlphabet(adfgvxMode.length,

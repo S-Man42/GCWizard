@@ -2024,13 +2024,14 @@ String decodeTeletypewriter(
   String out = '';
   var isLetterMode = true;
 
-  if (language == TeletypewriterCodebook.BAUDOT_54123)
+  if (language == TeletypewriterCodebook.BAUDOT_54123) {
     values = values.map((decimal) {
       return int.parse(convertBase(
           convertBase(decimal.toString(), 10, 2)?.padLeft(BINARY_LENGTH[language]!, '0').split('').reversed.join('') ?? '',
           2,
           10) ?? '');
     }).toList();
+  }
 
   switch (language) {
     // CCITT1
@@ -2043,17 +2044,17 @@ String decodeTeletypewriter(
     case TeletypewriterCodebook.CCITT_ITA1_1929:
     case TeletypewriterCodebook.CCITT_ITA1_EU:
     case TeletypewriterCodebook.CCITT_ITA1_UK:
-      values.forEach((value) {
+      for (var value in values) {
         if (value == _NUMBERS_FOLLOW[language]) {
           if (out.isNotEmpty) out += ' ';
           isLetterMode = false;
-          return;
+          continue;
         }
 
         if (value == _LETTERS_FOLLOW[language]) {
           out += ' ';
           isLetterMode = true;
-          return;
+          continue;
         }
 
         if (isLetterMode) {
@@ -2061,7 +2062,7 @@ String decodeTeletypewriter(
         } else {
           out += _DecodeNumber(language, value) ?? '';
         }
-      });
+      }
 
       return out;
 
@@ -2077,15 +2078,15 @@ String decodeTeletypewriter(
     case TeletypewriterCodebook.ILLIAC:
     case TeletypewriterCodebook.TTS:
     case TeletypewriterCodebook.ALGOL:
-      values.forEach((value) {
+      for (var value in values) {
         if (value == _NUMBERS_FOLLOW[language]) {
           isLetterMode = false;
-          return;
+          continue;
         }
 
         if (value == _LETTERS_FOLLOW[language]) {
           isLetterMode = true;
-          return;
+          continue;
         }
 
         if (isLetterMode) {
@@ -2093,7 +2094,7 @@ String decodeTeletypewriter(
         } else {
           out += _DecodeNumber(language, value) ?? '';
         }
-      });
+      }
 
       return out;
     case TeletypewriterCodebook.CCITT_IA5:
@@ -2108,9 +2109,9 @@ String decodeTeletypewriter_IA5(List<int>? values) {
 
   String out = '';
 
-  values.forEach((value) {
+  for (var value in values) {
     if (value < 128) out = out + String.fromCharCode(value);
-  });
+  }
 
   return out;
 }
@@ -2119,9 +2120,9 @@ String decodeTeletypewriter_ZC1(List<int>? values) {
   if (values == null || values.isEmpty) return '';
 
   String out = '';
-  values.forEach((value) {
+  for (var value in values) {
     if (ZC1ToAZ[value] != null) out += ZC1ToAZ[value]!;
-  });
+  }
 
   return out;
 }

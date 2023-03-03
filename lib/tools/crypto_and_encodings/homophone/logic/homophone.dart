@@ -132,18 +132,22 @@ HomophoneOutput _decryptHomophone(String? input, Map<String, List<int>> keyMap) 
 List<int> getMultipliers() {
   var multipliers = <int>[];
 
-  for (int i = 1; i <= 99; i += 2) multipliers.add(i);
+  for (int i = 1; i <= 99; i += 2) {
+    multipliers.add(i);
+  }
 
-  for (int i = 5; i < 99; i += 10) multipliers.remove(i);
+  for (int i = 5; i < 99; i += 10) {
+    multipliers.remove(i);
+  }
 
   return multipliers;
 }
 
 bool _checkDoubleKey(Map<String, List<int>> table) {
   var keyList = <int>[];
-  table.values.forEach((element) {
+  for (var element in table.values) {
     keyList.addAll(element);
-  });
+  }
   return (keyList.length != keyList.toSet().length);
 }
 
@@ -151,7 +155,7 @@ int _charToNumber(String character, Map<String, List<int>> table) {
   if (table.containsKey(character)) {
     var list = table[character];
     if (list!.isEmpty) return -1;
-    var rnd = new Random();
+    var rnd = Random();
     var index = rnd.nextInt(list.length);
 
     return list[index];
@@ -178,9 +182,9 @@ String _keyMapToString(Map<String, List<int>> table) {
   var output = "";
   table.forEach((key, value) {
     output += key + " = ";
-    value.forEach((item) {
+    for (var item in value) {
       output += item.toString().padLeft(2, '0') + " ";
-    });
+    }
     output = output.trim();
     output += "\n";
   });

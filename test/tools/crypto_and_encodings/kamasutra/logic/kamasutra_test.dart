@@ -4,13 +4,13 @@ import 'package:gc_wizard/tools/crypto_and_encodings/kamasutra/logic/kamasutra.d
 void main() {
   group("Kamasutra.encryptKamasutra:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'alphabet': null, 'expectedOutput' : ''},
-      {'input' : '', 'alphabet': null, 'expectedOutput' : ''},
-      {'input' : null, 'alphabet': '', 'expectedOutput' : ''},
-      {'input' : null, 'alphabet': null, 'expectedOutput' : ''},
+      {'input' : null, 'alphabet': null, 'ignoreCase': true, 'expectedOutput' : ''},
+      {'input' : '', 'alphabet': null, 'ignoreCase': true, 'expectedOutput' : ''},
+      {'input' : null, 'alphabet': '', 'ignoreCase': true, 'expectedOutput' : ''},
+      {'input' : null, 'alphabet': null, 'ignoreCase': true, 'expectedOutput' : ''},
 
-      {'input' : null, 'alphabet': 'AB', 'expectedOutput' : ''},
-      {'input' : '', 'alphabet': 'AB', 'expectedOutput' : ''},
+      {'input' : null, 'alphabet': 'AB', 'ignoreCase': true, 'expectedOutput' : ''},
+      {'input' : '', 'alphabet': 'AB', 'ignoreCase': true, 'expectedOutput' : ''},
 
       {'input' : 'ABC', 'alphabet': null, 'ignoreCase': true, 'expectedOutput' : 'ABC'},
       {'input' : 'ABC', 'alphabet': '', 'ignoreCase': true, 'expectedOutput' : 'ABC'},
@@ -34,11 +34,11 @@ void main() {
       {'input' : 'abcd123XYZA', 'alphabet': 'ABCDEFGH', 'ignoreCase': false, 'expectedOutput' : 'abcd123XYZE'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, alphabet: ${elem['alphabet']}, ignoreCase : ${elem['ignoreCase']}', () {
         var _actual = encryptKamasutra(elem['input'] as String?, elem['alphabet'] as String?, ignoreCase: elem['ignoreCase'] as bool);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

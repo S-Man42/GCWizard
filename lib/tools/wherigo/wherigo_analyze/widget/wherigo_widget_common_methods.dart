@@ -1,22 +1,25 @@
 part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_analyze.dart';
 
+// TODO Thomas: Does not return anything in some cases. For example if filedata == null but Contents.length > 1 (else case of "if" in line 17)
 GCWFile? _getFileFrom(BuildContext context, String resourceName) {
   Uint8List? filedata;
   String? filename;
   int fileindex = 0;
   try {
     if (WherigoCartridgeGWCData.MediaFilesContents.length > 1) {
-      WherigoCartridgeLUAData.Media.forEach((element) {
+      for (var element in WherigoCartridgeLUAData.Media) {
         if (element.MediaLUAName == resourceName) {
           filename = element.MediaFilename;
           filedata = WherigoCartridgeGWCData.MediaFilesContents[fileindex + 1].MediaFileBytes;
         }
         fileindex++;
-      });
-      if (filedata != null)
-        return GCWFile(bytes: filedata!, name: filename);
-    } else
+      }
+      if (filedata != null) {
+        return GCWFile(bytes: filedata, name: filename);
+      }
+    } else {
       return null;
+    }
   } catch (exception) {
     errorMsg_MediaFiles = [];
     errorMsg_MediaFiles.add('');
@@ -42,14 +45,17 @@ GCWFile? _getFileFrom(BuildContext context, String resourceName) {
 
 String _resolveLUAName(String chiffre) {
   String resolve(List<String> chiffreList, String joinPattern) {
-    if (NameToObject[chiffreList[0]] == null)
+    if (NameToObject[chiffreList[0]] == null) {
       return '';
+    }
 
     List<String> result = [];
     result.add(NameToObject[chiffreList[0]]!.ObjectType.toString().split('.')[1] +
         ' ' +
         NameToObject[chiffreList[0]]!.ObjectName);
-    for (int i = 1; i < chiffreList.length; i++) result.add(chiffreList[i]);
+    for (int i = 1; i < chiffreList.length; i++) {
+      result.add(chiffreList[i]);
+    }
     return result.join(joinPattern);
   }
 
@@ -57,16 +63,19 @@ String _resolveLUAName(String chiffre) {
     List<String> listChiffre = chiffre.split('.');
     if (NameToObject[listChiffre[0]] != null) {
       return resolve(listChiffre, '.');
-    } else
+    } else {
       return chiffre;
+    }
   } else if (chiffre.split(':').length > 1) {
     List<String> listChiffre = chiffre.split(':');
     if (NameToObject[listChiffre[0]] != null) {
       return resolve(listChiffre, ':');
-    } else
+    } else {
       return chiffre;
-  } else
+    }
+  } else {
     return chiffre;
+  }
 }
 
 Widget _buildImageView(BuildContext context, bool condition, String fileSource) {
@@ -79,7 +88,7 @@ Widget _buildImageView(BuildContext context, bool condition, String fileSource) 
 
   return GCWImageView(
     imageData: GCWImageViewData(file),
-    suppressedButtons: {GCWImageViewButtons.ALL},
+    suppressedButtons: const {GCWImageViewButtons.ALL},
   );
 }
 
@@ -90,11 +99,13 @@ void _getErrorMessagesFromLUAAnalyzation(List<String> _errorMsg, BuildContext co
     _errorMsg.add(i18n(context, 'wherigo_error_no_error'));
   } else {
     _errorMsg.add(i18n(context, 'wherigo_error_runtime_lua'));
-    for (int i = 0; i < WherigoCartridgeLUAData.ResultsLUA.length; i++)
-      if (WherigoCartridgeLUAData.ResultsLUA[i].startsWith('wherigo'))
+    for (int i = 0; i < WherigoCartridgeLUAData.ResultsLUA.length; i++) {
+      if (WherigoCartridgeLUAData.ResultsLUA[i].startsWith('wherigo')) {
         _errorMsg.add(i18n(context, WherigoCartridgeLUAData.ResultsLUA[i]));
-      else
+      } else {
         _errorMsg.add(WherigoCartridgeLUAData.ResultsLUA[i]);
+    }
+      }
   }
 }
 
@@ -105,11 +116,13 @@ void _getErrorMessagesFromGWCAnalyzation(List<dynamic> _errorMsg, BuildContext c
     _errorMsg.add('');
   } else {
     _errorMsg.add(i18n(context, 'wherigo_error_runtime_gwc'));
-    for (int i = 0; i < WherigoCartridgeGWCData.ResultsGWC.length; i++)
-      if (WherigoCartridgeGWCData.ResultsGWC[i].startsWith('wherigo'))
+    for (int i = 0; i < WherigoCartridgeGWCData.ResultsGWC.length; i++) {
+      if (WherigoCartridgeGWCData.ResultsGWC[i].startsWith('wherigo')) {
         _errorMsg.add(i18n(context, WherigoCartridgeGWCData.ResultsGWC[i]));
-      else
+      } else {
         _errorMsg.add(WherigoCartridgeGWCData.ResultsGWC[i]);
+    }
+      }
   }
 }
 

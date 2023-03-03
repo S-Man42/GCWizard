@@ -17,10 +17,11 @@ final Map<CalendarSystem, Map<int, String>> MONTH_NAMES = {
 };
 
 int intPart(double floatNum) {
-  if (floatNum < -0.0000001)
+  if (floatNum < -0.0000001) {
     return (floatNum - 0.0000001).ceil();
-  else
+  } else {
     return (floatNum + 0.0000001).floor();
+  }
 }
 
 double JulianDateToModifedJulianDate(double jd) {
@@ -112,8 +113,9 @@ String typeOfJewYear(int yearlength) {
     return "embolistic, regular";
   } else if (yearlength == 385) {
     return "embolistic, complete";
-  } else
+  } else {
     return ("common");
+  }
 }
 
 List<int> jewDayAndMonthInYear(int days, int yearlength) {
@@ -184,11 +186,13 @@ int cyear2pesach(int xx) {
   int j = ((qq).floor() + 3 * xx + 5 * b + 2 - ss) % 7;
   double r = qq - (qq).floor();
   int dd = (qq).floor() + 22;
-  if (j == 2 || j == 4 || j == 6)
+  if (j == 2 || j == 4 || j == 6) {
     dd = (qq).floor() + 23;
-  else if (j == 1 && a > 6 && r >= 0.632870370)
+  } else if (j == 1 && a > 6 && r >= 0.632870370) {
     dd = (qq).floor() + 24;
-  else if (j == 0 && a > 11 && r >= 0.897723765) dd = (qq).floor() + 23;
+  } else if (j == 0 && a > 11 && r >= 0.897723765) {
+    dd = (qq).floor() + 23;
+  }
   return dd;
 }
 

@@ -31,10 +31,11 @@ void _analyzeAndExtractOnGetInputSectionData(List<String> lines) {
 
     else if (_OnGetInputSectionEnd(lines[i])) {
       if (_insideInputFunction) {
-        _answerList.forEach((answer) {
+        for (var answer in _answerList) {
           if (answer != 'NIL') {
-            if (_Answers[_inputObject] == null)
-              return; // TODO Thomas Maybe not necessary if concrete return value is used
+            if (_Answers[_inputObject] == null) {
+              continue; // TODO Thomas Maybe not necessary if concrete return value is used
+            }
 
             _Answers[_inputObject]!.add(WherigoAnswerData(
               answer,
@@ -42,24 +43,24 @@ void _analyzeAndExtractOnGetInputSectionData(List<String> lines) {
               _answerActions,
             ));
           }
-        });
+        }
         _answerActions = [];
         _answerList = _getAnswers(i, lines[i], lines[i - 1], _cartridgeVariables);
       }
     } else if ((i + 1 < lines.length - 1) && _OnGetInputFunctionEnd(lines[i], lines[i + 1].trim())) {
       if (_insideInputFunction) {
         _insideInputFunction = false;
-        _answerActions.forEach((element) {});
-        _answerList.forEach((answer) {
-          if (_Answers[_inputObject] == null) return;
+        for (var answer in _answerList) {
+          if (_Answers[_inputObject] == null) continue;
 
-          if (answer != 'NIL')
+          if (answer != 'NIL') {
             _Answers[_inputObject]!.add(WherigoAnswerData(
               answer,
               _answerHash,
               _answerActions,
             ));
-        });
+          }
+        }
         _answerActions = [];
         _answerList = [];
         _answerVariable = '';
@@ -69,14 +70,15 @@ void _analyzeAndExtractOnGetInputSectionData(List<String> lines) {
         i++;
         lines[i] = lines[i].trim();
         if (!(lines[i].trim() == '}' || lines[i].trim() == '},')) {
-          if (lines[i].trimLeft().startsWith(_obfuscatorFunction))
+          if (lines[i].trimLeft().startsWith(_obfuscatorFunction)) {
             _answerActions.add(WherigoActionMessageElementData(
                 WHERIGO_ACTIONMESSAGETYPE.BUTTON,
                 deobfuscateUrwigoText(lines[i].trim().replaceAll(_obfuscatorFunction + '("', '').replaceAll('")', ''),
                     _obfuscatorTable)));
-          else
+          } else {
             _answerActions.add(WherigoActionMessageElementData(WHERIGO_ACTIONMESSAGETYPE.BUTTON,
                 lines[i].trim().replaceAll(_obfuscatorFunction + '("', '').replaceAll('")', '')));
+          }
         }
       } while (!lines[i].trim().startsWith('}'));
     } // end buttons
@@ -84,7 +86,6 @@ void _analyzeAndExtractOnGetInputSectionData(List<String> lines) {
     else {
       if (_isMessageActionElement(lines[i].trimLeft())) {
         _answerActions.add(_handleAnswerLine(lines[i].trimLeft()));
-        _answerActions.forEach((element) {});
       }
     } // end if other line content
   }

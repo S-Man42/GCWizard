@@ -36,12 +36,12 @@ void main() {
       //{'input' : '', 'key': '', 'alphabetWord' : '', 'columnOrder' : '0123456789', 'matrix4x10' : false, 'mode': PolybiosMode.AZ09, 'alphabet': '', 'expectedOutput' : ''},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, key: ${elem['key']}, alphabetWord: ${elem['alphabetWord']}, columnOrder: ${elem['columnOrder']}, matrix4x10: ${elem['matrix4x10']}, mode: ${elem['mode']}, alphabet: ${elem['alphabet']}', () {
         StraddlingCheckerboardOutput _actual = encryptStraddlingCheckerboard(elem['input'] as String?, elem['key'] as String?, elem['alphabetWord'] as String, elem['columnOrder'] as String, elem['matrix4x10'] as bool, mode: elem['mode'] as PolybiosMode, alphabet: elem['alphabet'] as String);
         expect(_actual.output, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("decrypt", () {
@@ -70,11 +70,11 @@ void main() {
 
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, key: ${elem['key']}, alphabetWord: ${elem['alphabetWord']}, columnOrder: ${elem['columnOrder']}, matrix4x10: ${elem['matrix4x10']}, mode: ${elem['mode']}, alphabet: ${elem['alphabet']}', () {
         StraddlingCheckerboardOutput _actual = decryptStraddlingCheckerboard(elem['input'] as String?, elem['key'] as String?, elem['alphabetWord'] as String, elem['columnOrder'] as String, elem['matrix4x10'] as bool, mode: elem['mode'] as PolybiosMode, alphabet: elem['alphabet'] as String);
         expect(_actual.output, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

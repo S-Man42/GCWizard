@@ -10,12 +10,12 @@ void main() {
       {'input' : 'Nummer 123 kommt', 'keyA' : 17, 'keyB': 10, 'expectedOutput' : 'XMGGAN  YOGGV'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, keyA: ${elem['keyA']}, keyB: ${elem['keyB']}', () {
         var _actual = encodeAffine(elem['input'] as String?, elem['keyA'] as int, elem['keyB'] as int);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Affine.decodeAffine:", () {
@@ -25,12 +25,12 @@ void main() {
       {'input' : 'XMGGAN YOGGV', 'keyA' : 17, 'keyB': 10, 'expectedOutput' : 'NUMMER KOMMT'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, keyA: ${elem['keyA']}, keyB: ${elem['keyB']}', () {
         var _actual = decodeAffine(elem['input'] as String?, elem['keyA'] as int, elem['keyB'] as int);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
 }

@@ -12,12 +12,12 @@ void main() {
       {'atomicNumbers' : [4,16,-1], 'expectedOutput' : 'BeS<?>'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('atomicNumbers: ${elem['atomicNumbers']}', () {
         var _actual = atomicNumbersToText(elem['atomicNumbers'] as List<int>);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("PeriodicTable.textToAtomicNumbers:", () {
@@ -34,11 +34,11 @@ void main() {
       {'expectedOutput' : [32, 8, 20, 6, 2], 'text' : 'GeO CaCHe'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('text: ${elem['text']}', () {
         var _actual = textToAtomicNumbers(elem['text'] as String);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

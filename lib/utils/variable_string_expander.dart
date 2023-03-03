@@ -51,8 +51,8 @@ class VariableStringExpanderValue {
      - Decision for 2. Best Cost/Price-Balance
  */
 class VariableStringExpander {
-  String? _input;
-  Map<String, String>? _substitutions;
+  final String? _input;
+  final Map<String, String>? _substitutions;
   String? Function(String)? onAfterExpandedText;
   SendPort? sendAsyncPort;
 
@@ -64,21 +64,21 @@ class VariableStringExpander {
       this.breakCondition = VariableStringExpanderBreakCondition.RUN_ALL,
       this.orderAndUnique = true,
       this.sendAsyncPort}) {
-    if (this.onAfterExpandedText == null) this.onAfterExpandedText = (e) => e;
+    onAfterExpandedText ??= (e) => e;
   }
 
-  List<List<String>> _expandedVariableGroups = [];
-  List<String> _substitutionKeys = [];
+  final List<List<String>> _expandedVariableGroups = [];
+  final List<String> _substitutionKeys = [];
 
   List<String> _variableGroups = [];
   int _countVariableGroups = -1;
   String _variableGroup = '';
 
-  List<VariableStringExpanderValue> _results = [];
-  List<String> _uniqueResults = [];
+  final List<VariableStringExpanderValue> _results = [];
+  final List<String> _uniqueResults = [];
 
-  List<int> _variableValueIndexes = [];
-  List<int> _countVariableValues = [];
+  final List<int> _variableValueIndexes = [];
+  final List<int> _countVariableValues = [];
   int _currentVariableIndex = -1;
 
   int _countCombinations = -1;
@@ -87,25 +87,23 @@ class VariableStringExpander {
   List<String> _expandVariableGroup(String group) {
     dynamic output; // Explicit dynamic type is intended here!
 
-    if (orderAndUnique)
-      //TODO: For philosophy: Maybe not use SplayTreeSet here;
-      // Pro: output can be defined as List<String>;
-      // Contra: You need to check for existing elements on both .add() calls and sort manually afterwards if flag is set
+    if (orderAndUnique) {
       output = SplayTreeSet<String>();
-    else
+    } else {
       output = <String>[];
+    }
 
     group = group.replaceAll(RegExp(r'[^\d,\-#]'), '');
 
     if (group.isEmpty) return [];
 
     var ranges = group.split(',');
-    ranges.forEach((range) {
+    for (var range in ranges) {
       var rangeParts = range.split('#');
       var rangeBounds = rangeParts[0].split('-');
       if (rangeBounds.length == 1) {
         output.add(int.tryParse(rangeBounds[0]).toString());
-        return;
+        continue;
       }
 
       var start = int.parse(rangeBounds[0]);
@@ -113,18 +111,22 @@ class VariableStringExpander {
 
       if (start == end) {
         output.add(start.toString());
-        return;
+        continue;
       }
 
       var increment = 1;
       if (rangeParts.length > 1) increment = int.parse(rangeParts[1]);
 
       if (start < end) {
-        for (int i = start; i <= end; i += increment) output.add(i.toString());
+        for (int i = start; i <= end; i += increment) {
+          output.add(i.toString());
+        }
       } else {
-        for (int i = start; i >= end; i -= increment) output.add(i.toString());
+        for (int i = start; i >= end; i -= increment) {
+          output.add(i.toString());
+        }
       }
-    });
+    }
 
     return output.toList() as List<String>;
   }

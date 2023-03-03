@@ -13,6 +13,8 @@ import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/w
 import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/widget/segmentdisplay_output.dart';
 
 class MayaNumbers extends StatefulWidget {
+  const MayaNumbers({Key? key}) : super(key: key);
+
   @override
   MayaNumbersState createState() => MayaNumbersState();
 }
@@ -55,7 +57,7 @@ class MayaNumbersState extends State<MayaNumbers> {
   Widget _buildVisualDecryption() {
     var currentDisplay = buildSegmentMap(_currentDisplays);
 
-    var onChanged = (Map<String, bool> d) {
+    onChanged(Map<String, bool> d) {
       setState(() {
         var newSegments = <String>[];
         d.forEach((key, value) {
@@ -65,13 +67,13 @@ class MayaNumbersState extends State<MayaNumbers> {
 
         _currentDisplays.replaceLastSegment(newSegments);
       });
-    };
+    }
 
     return Column(
       children: <Widget>[
         Container(
           width: 180,
-          padding: EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
+          padding: const EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
           child: Row(
             children: <Widget>[
               Expanded(

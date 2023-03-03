@@ -8,6 +8,8 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/tapir/logic/tapir.dart';
 
 class Tapir extends StatefulWidget {
+  const Tapir({Key? key}) : super(key: key);
+
   @override
   TapirState createState() => TapirState();
 }
@@ -22,7 +24,7 @@ class TapirState extends State<Tapir> {
 
   var _currentOneTimePad = '';
 
-  var _maskFormatter =
+  final _maskFormatter =
       WrapperForMaskTextInputFormatter(mask: '##### ' * 100000 + '#####', filter: {"#": RegExp(r'[0-9]')});
 
   @override

@@ -1,16 +1,16 @@
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:latlong2/latlong.dart';
 
-final PATTERN_NO_NUMBERS = r'\s+?';
-final PATTERN_NOTHING_OR_NO_NUMBERS = r'\s*?';
-final PATTERN_LAT_SIGN = r'([NS][A-Za-zÄÖÜäöü]*?|[\+\-])';
-final PATTERN_LON_SIGN = r'([EWO][A-Za-zÄÖÜäöü]*?|[\+\-])';
-final PATTERN_LON_SIGN_WITH_SPACE = '(?:\\s+?$PATTERN_LON_SIGN)?';
-final PATTERN_LAT_DEGREE_INT = r'(\d{1,2})[\s°]+?';
-final PATTERN_LON_DEGREE_INT = r'(\d{1,3})[\s°]+?';
-final PATTERN_SECONDS_MINUTES = '([0-5]?[0-9])[\\s\']+?';
-final PATTERN_DECIMAL = r'(?:\s*?[\.,]\s*?(\d+))?' + '[\\s\'°"]+?';
-final LETTER = '[A-ZÄÖÜ]';
+const PATTERN_NO_NUMBERS = r'\s+?';
+const PATTERN_NOTHING_OR_NO_NUMBERS = r'\s*?';
+const PATTERN_LAT_SIGN = r'([NS][A-Za-zÄÖÜäöü]*?|[\+\-])';
+const PATTERN_LON_SIGN = r'([EWO][A-Za-zÄÖÜäöü]*?|[\+\-])';
+const PATTERN_LON_SIGN_WITH_SPACE = '(?:\\s+?$PATTERN_LON_SIGN)?';
+const PATTERN_LAT_DEGREE_INT = r'(\d{1,2})[\s°]+?';
+const PATTERN_LON_DEGREE_INT = r'(\d{1,3})[\s°]+?';
+const PATTERN_SECONDS_MINUTES = '([0-5]?[0-9])[\\s\']+?';
+const PATTERN_DECIMAL = r'(?:\s*?[\.,]\s*?(\d+))?' '[\\s\'°"]+?';
+const LETTER = '[A-ZÄÖÜ]';
 
 var regexEnd = '';
 

@@ -71,15 +71,17 @@ LatLng? completeGPSData(Map<String, IfdTag> data) {
       IfdTag? latRef = data[_GPS_LAT_REF];
       IfdTag? lat = data[_GPS_LAT];
       double? _lat;
-      if (lat != null && latRef != null)
+      if (lat != null && latRef != null) {
         _lat = _getCoordDecFromIfdTag(lat, latRef.printable, true);
+      }
       if (_lat == null || _lat.isNaN) return null;
 
       IfdTag? lngRef = data[_GPS_LNG_REF];
       IfdTag? lng = data[_GPS_LNG];
       double? _lng;
-      if (lng != null && lngRef != null)
+      if (lng != null && lngRef != null) {
         _lng = _getCoordDecFromIfdTag(lng, lngRef.printable, false);
+      }
       if (_lng == null || _lng.isNaN) return null;
 
       if (_lat == 0 && _lng == 0) return null;
@@ -88,7 +90,6 @@ LatLng? completeGPSData(Map<String, IfdTag> data) {
       return decToLatLon(DEC(_lat, _lng));
     }
   } catch (error) {
-    print("silent error: $error");
   }
 
   return null;
@@ -105,12 +106,12 @@ LatLng? completeGPSDataFromXmp(Map<String, dynamic> xmpTags) {
       var pt = parseStandardFormats(latlng, wholeString: true);
       if (pt != null) {
         var value = pt.toLatLng();
-        if (value is LatLng)
-        point = value;
+        if (value is LatLng) {
+          point = value;
+        }
       }
     }
   } catch (error) {
-    print("silent error: $error");
   }
 
   return point;

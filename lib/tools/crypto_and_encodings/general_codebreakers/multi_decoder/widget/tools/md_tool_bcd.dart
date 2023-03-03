@@ -62,7 +62,8 @@ class MultiDecoderToolBCD extends AbstractMultiDecoderTool {
 
 String getBCDTypeKey(Map<String, Object?> options, String option) {
   var key = checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_BCD, options, MDT_BCD_OPTION_BCDFUNCTION);
-  if (_BCD_TYPES.keys.contains(key))
+  if (_BCD_TYPES.keys.contains(key)) {
     return key;
+  }
   return toStringOrNull(getDefaultValue(MDT_INTERNALNAMES_BCD, MDT_BCD_OPTION_BCDFUNCTION)) ?? 'bcd_original';
 }

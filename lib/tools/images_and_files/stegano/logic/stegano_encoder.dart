@@ -48,7 +48,7 @@ Uint8List? _encodeSteganoMessageIntoImage(_SteganoEncodeRequest req) {
       encodedImg[i] = img[i] & lastBitMask;
     }
   }
-  Image editableImage = Image.fromBytes(origin.width, origin.height, encodedImg.toList());
+  Image editableImage = Image.fromBytes(width: origin.width, height: origin.height, bytes: encodedImg.buffer);
   Uint8List data = Uint8List.fromList(encodeTrimmedPng(editableImage));
   return data;
 }

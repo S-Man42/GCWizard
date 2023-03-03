@@ -39,12 +39,12 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
           return MapEntry(
               index,
               Container(
+                padding: const EdgeInsets.only(bottom: 15),
                 child: GCWOutput(
                   child: output,
                   copyText:
                       widget.copyTexts != null && widget.copyTexts!.length > index ? widget.copyTexts![index] : null,
                 ),
-                padding: EdgeInsets.only(bottom: 15),
               ));
         })
         .values
@@ -77,23 +77,24 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
 
     return GCWMultipleOutput(
         title: widget.title,
-        children: _children,
         trailing: GCWIconButton(
           icon: Icons.save,
           size: IconButtonSize.SMALL,
           iconColor: _hasOutput ? null : themeColors().inActive(),
           onPressed: () {
-            if (_hasOutput)
+            if (_hasOutput) {
               _exportCoordinates(context, widget.points, widget.polylines);
+            }
           },
-        ));
+        ),
+        children: _children);
   }
 
   void _openInMap({bool freeMap = false}) {
     if (freeMap) {
-      widget.points.forEach((point) {
+      for (var point in widget.points) {
         point.isEditable = true;
-      });
+      }
     }
 
     Navigator.push(

@@ -71,8 +71,9 @@ class GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
 
     if (_currentSubtype == null) {
       _currentSubtype = defaultCoordinateFormatSubtypeForFormat(format);
-      if (_currentSubtype == null)
+      if (_currentSubtype == null) {
         return Container();
+      }
     }
 
     switch (format) {

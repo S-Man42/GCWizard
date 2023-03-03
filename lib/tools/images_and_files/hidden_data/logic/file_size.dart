@@ -67,17 +67,19 @@ int? _jpgImageSize(Uint8List? data) {
 
 int __jpgSegmentLength(Uint8List data, int offset) {
   // Data Segment and not SOS Segment
-  if ((offset + 3 < data.length) & (data[offset] == 0xFF) & (data[offset + 1] != 0xDA))
+  if ((offset + 3 < data.length) & (data[offset] == 0xFF) & (data[offset + 1] != 0xDA)) {
     return 256 * data[offset + 2] + data[offset + 3] + 2;
+  }
   return 0;
 }
 
 int __jpgSosSegmentLength(Uint8List data, int offset) {
   //  SOS Segment ?
-  if ((offset + 1 < data.length) & (data[offset] == 0xFF) & (data[offset + 1] == 0xDA))
-    for (int i = offset + 2; i < data.length - 1; i++)
-      // EOI-Segment ?
+  if ((offset + 1 < data.length) & (data[offset] == 0xFF) & (data[offset + 1] == 0xDA)) {
+    for (int i = offset + 2; i < data.length - 1; i++) {
       if (data[i] == 0xFF && data[i + 1] == 0xD9) return i - offset + 2;
+    }
+  }
 
   return 0;
 }
@@ -130,18 +132,17 @@ int? _gifImageSize(Uint8List? data) {
     if (offset + 1 >= data.length) return data.length;
 
     // Application Extension, Comment Extension
-    if ((data[offset] == 0x21) & ((data[offset + 1] == 0xFF) | (data[offset] == 0xFE)))
+    if ((data[offset] == 0x21) & ((data[offset + 1] == 0xFF) | (data[offset] == 0xFE))) {
       offset = __gifExtensionBlock(data, offset);
-    else {
+    } else {
       //Graphics Control Extension (option)
       offset = __gifExtensionBlock(data, offset);
 
       if (offset + 1 >= data.length) return data.length;
 
-      if ((data[offset] == 0x21) & (data[offset + 1] == 0xFF))
-        // Plain Text Extension
+      if ((data[offset] == 0x21) & (data[offset + 1] == 0xFF)) {
         offset = __gifExtensionBlock(data, offset);
-      else {
+      } else {
         //Image Descriptor
         offset += 10;
 
@@ -186,7 +187,7 @@ int __gifColorMap(Uint8List data, int offset, int countOffset) {
 
 int? _zipFileSize(Uint8List? data) {
   if (data == null) return null;
-  if (getFileType(data) != '.zip') return null;
+  if (getFileType(data) != FileType.ZIP) return null;
 
   var offset = 0;
   if (offset + 30 > data.length) return null;
@@ -264,8 +265,9 @@ int? _rarFileSize(Uint8List? data) {
   (data[offset + 6] == 0x01) &
   (data[offset + 7] == 0x00)) {
     offset += 8;
-  } else
+  } else {
     return null;
+  }
 
   do {
     archiveBlockFound = false;
@@ -340,7 +342,7 @@ int? _rarFileSize(Uint8List? data) {
 Tuple2<int, int> __rarVint(Uint8List data, int offset) {
   var index = 0;
   var value = 0;
-  if (offset >= data.length) return Tuple2<int, int>(0, 0);
+  if (offset >= data.length) return const Tuple2<int, int>(0, 0);
 
   do {
     value |= ((data[offset + index] & 0x7F) << index * 7);
@@ -432,7 +434,9 @@ int __mp3Vint(Uint8List data, int offset) {
   if (offset + 3 >= data.length) return 0;
 
   // big EndianFormat
-  for (int i = 0; i < 4; i++) value |= ((data[offset + 3 - i] & 0x7F) << i * 7);
+  for (int i = 0; i < 4; i++) {
+    value |= ((data[offset + 3 - i] & 0x7F) << i * 7);
+  }
 
   return value;
 }
@@ -472,14 +476,16 @@ int? _tarFileSize(Uint8List? data) {
       if ((fileSize < 0) || ((offset + usedSize) > data.length)) return null;
       offset += usedSize.toInt();
       fileNames.add(utf8.decode(trimNullBytes(Uint8List.fromList(data.skip(offset + 0).take(100).toList()))));
-    } else
+    } else {
       break;
+    }
   }
 
-  if ((offset + 2 * blockSize) <= data.length)
+  if ((offset + 2 * blockSize) <= data.length) {
     offset = data.skip(offset).take(2 * blockSize).any((element) => element == 0x0) ? offset + (2 * blockSize) : null;
-  else
+  } else {
     offset = null;
+  }
 
   return offset;
 }

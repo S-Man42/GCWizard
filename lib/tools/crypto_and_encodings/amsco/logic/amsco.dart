@@ -33,7 +33,7 @@ String _cleanKey(String key) {
 }
 
 Map<String, List<String>> _createAmscoGrid(String input, String key, bool oneCharStart, bool decrypt) {
-  var grid = Map<String, List<String>>();
+  var grid = <String, List<String>>{};
 
   input = input.replaceAll(' ', '');
   input = input.toUpperCase();
@@ -45,7 +45,7 @@ Map<String, List<String>> _createAmscoGrid(String input, String key, bool oneCha
   int i = 0;
   bool twoChar;
   while (i < input.length) {
-    grid.keys.forEach((_key) {
+    for (var _key in grid.keys) {
       if (i < input.length) {
         twoChar = (key.indexOf(_key) % 2) == (oneCharStart ? 1 : 0);
         if (key.length % 2 == 1) {
@@ -56,7 +56,7 @@ Map<String, List<String>> _createAmscoGrid(String input, String key, bool oneCha
         i += twoChar ? 2 : 1;
         twoChar = !twoChar;
       }
-    });
+    }
   }
 
   if (decrypt) {
@@ -84,11 +84,11 @@ AmscoOutput encryptAmsco(String? input, String? key, bool oneCharStart) {
   var output = '';
 
   sortedKeys.sort();
-  sortedKeys.forEach((_key) {
-    grid[_key]!.forEach((text) {
+  for (var _key in sortedKeys) {
+    for (var text in grid[_key]!) {
       output += text;
-    });
-  });
+    }
+  }
 
   return AmscoOutput(output, _amscoGridToString(grid), ErrorCode.OK);
 }
@@ -120,16 +120,16 @@ String _amscoGridToString(Map<String, List<String>> grid) {
   var finish = false;
   var output = '';
 
-  grid.keys.forEach((_key) {
+  for (var _key in grid.keys) {
     output += _key.toString().padRight(2) + " ";
-  });
+  }
   output += '\n';
 
   while (!finish) {
-    grid.keys.forEach((_key) {
+    for (var _key in grid.keys) {
       if (row >= grid[_key]!.length) finish = true;
       if (!finish) output += grid[_key]![row].padRight(2) + " ";
-    });
+    }
     output += '\n';
     row += 1;
   }

@@ -18,6 +18,8 @@ import 'package:gc_wizard/utils/constants.dart';
 import 'package:latlong2/latlong.dart';
 
 class IntersectBearings extends StatefulWidget {
+  const IntersectBearings({Key? key}) : super(key: key);
+
   @override
   IntersectBearingsState createState() => IntersectBearingsState();
 }
@@ -136,15 +138,15 @@ class IntersectBearingsState extends State<IntersectBearings> {
         barrierDismissible: false,
         builder: (context) {
           return Center(
-            child: Container(
+            child: SizedBox(
+              height: 220,
+              width: 150,
               child: GCWAsyncExecuter<LatLng?>(
                 isolatedFunction: intersectBearingsAsync,
                 parameter: _buildJobData,
                 onReady: (data) => _showOutput(data),
                 isOverlay: true,
               ),
-              height: 220,
-              width: 150,
             ),
           );
         },

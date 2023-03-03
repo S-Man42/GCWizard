@@ -7,6 +7,8 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rotation/logic/rotator.dart';
 
 class Caesar extends StatefulWidget {
+  const Caesar({Key? key}) : super(key: key);
+
   @override
   CaesarState createState() => CaesarState();
 }

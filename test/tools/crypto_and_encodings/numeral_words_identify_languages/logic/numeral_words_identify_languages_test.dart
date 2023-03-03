@@ -87,7 +87,7 @@ void main(){
       },
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
         var _actual = decodeNumeralwords(input: removeAccents(elem['input'].toString().toLowerCase()), language: elem['language'] as NumeralWordsLanguage, decodeModeWholeWords: elem['decodeMode'] as bool);
         var length = (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>).length;
@@ -97,7 +97,7 @@ void main(){
           expect(_actual[i].language, (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>)[i].language);
         }
       });
-    });
+    }
   });
 
   group("NumeralWords.decodeNumeralwordsEntireWordsAsParts:", () {
@@ -147,7 +147,7 @@ void main(){
       },
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
         var _actual = decodeNumeralwords(input: removeAccents(elem['input'].toString().toLowerCase()), language: elem['language'] as NumeralWordsLanguage, decodeModeWholeWords: elem['decodeMode'] as bool);
         var length = (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>).length;
@@ -157,7 +157,7 @@ void main(){
           expect(_actual[i].language, (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>)[i].language);
         }
       });
-    });
+    }
   });
 
   group("NumeralWords.decodeNumeralwordsWordParts:", () {
@@ -327,18 +327,17 @@ void main(){
        },
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
         var _actual = decodeNumeralwords(input: removeAccents(elem['input'].toString().toLowerCase()), language: elem['language'] as NumeralWordsLanguage, decodeModeWholeWords: elem['decodeMode'] as bool);
         var length = (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>).length;
         for (int i = 0; i < length; i++) {
-          print(_actual[i].number.toString()+' '+_actual[i].numWord.toString()+' '+_actual[i].language.toString());
           expect(_actual[i].number, (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>)[i].number);
           expect(_actual[i].numWord, (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>)[i].numWord);
           expect(_actual[i].language, (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>)[i].language);
         }
       });
-    });
+    }
   });
 
   group("NumeralWords.GC97P76:", () {
@@ -361,7 +360,7 @@ void main(){
       },
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test(
           'input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
         var _actual = decodeNumeralwords(input: removeAccents(elem['input'].toString().toLowerCase()), language: elem['language'] as NumeralWordsLanguage, decodeModeWholeWords: elem['decodeMode'] as bool);
@@ -372,7 +371,7 @@ void main(){
           expect(_actual[i].language, (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>)[i].language);
         }
       });
-    });
+    }
   });
 
   group("NumeralWords.Klingon:", () {
@@ -478,7 +477,7 @@ void main(){
       },
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test(
           'input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
         var _actual = decodeNumeralwords(input: removeAccents(elem['input'].toString().toLowerCase()), language: elem['language'] as NumeralWordsLanguage, decodeModeWholeWords: elem['decodeMode'] as bool);
@@ -489,7 +488,7 @@ void main(){
           expect(_actual[i].language, (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>)[i].language);
         }
       });
-    });
+    }
   });
 
   group("NumeralWords.unicode languages:", () {
@@ -531,7 +530,7 @@ void main(){
       },
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test(
           'input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
         var _actual = decodeNumeralwords(input: removeAccents(elem['input'].toString().toLowerCase()), language: elem['language'] as NumeralWordsLanguage, decodeModeWholeWords: elem['decodeMode'] as bool);
@@ -542,7 +541,7 @@ void main(){
           expect(_actual[i].language, (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>)[i].language);
         }
       });
-    });
+    }
   });
   
 }

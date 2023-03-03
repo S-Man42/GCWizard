@@ -37,43 +37,48 @@ bool isObjectList(Object? value) {
 }
 
 double? toDoubleOrNull(Object? value) {
-  if (isDouble(value))
+  if (isDouble(value)) {
     return value as double;
-  else if (isInt(value))
+  } else if (isInt(value)) {
     return (value as int).toDouble();
+  }
 
   return null;
 }
 
 int? toIntOrNull(Object? value) {
-  if (isInt(value))
+  if (isInt(value)) {
     return value as int;
-  else if (isDouble(value)) {
+  } else if (isDouble(value)) {
     double val = value as double;
-    if (val == val.toInt())
+    if (val == val.toInt()) {
       return val.toInt();
+    }
   }
 
   return null;
 }
 
 bool? toBoolOrNull(Object? value) {
-  if (isBool(value))
+  if (isBool(value)) {
     return value as bool;
+  }
 
   return null;
 }
 
 String? toStringOrNull(Object? value) {
-  if (isString(value))
+  if (isString(value)) {
     return value as String;
+  }
 
   return null;
 }
 
 Uint8List? toUint8ListOrNull(Object? value) {
-  if (isUint8List(value))
+  if (isUint8List(value)) {
     return value as Uint8List;
+  }
 
   return null;
 }

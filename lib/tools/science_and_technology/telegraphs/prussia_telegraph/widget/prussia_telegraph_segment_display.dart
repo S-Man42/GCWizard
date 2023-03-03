@@ -24,13 +24,14 @@ const _INITIAL_SEGMENTS = <String, bool>{
 const _PRUSSIA_RELATIVE_DISPLAY_WIDTH = 120;
 const _PRUSSIA_RELATIVE_DISPLAY_HEIGHT = 220;
 
-//ignore: must_be_immutable
-class PrussiaTelegraphSegmentDisplay extends NSegmentDisplay {
-  final Map<String, bool> segments;
-  final bool readOnly;
-  final void Function(Map<String, bool>)? onChanged;
 
-  PrussiaTelegraphSegmentDisplay({Key? key, required this.segments, this.readOnly = false, this.onChanged})
+class PrussiaTelegraphSegmentDisplay extends NSegmentDisplay {
+
+  PrussiaTelegraphSegmentDisplay({
+      Key? key,
+      required Map<String, bool> segments,
+      bool readOnly = false,
+      void Function(Map<String, bool>)? onChanged})
       : super(
             key: key,
             initialSegments: _INITIAL_SEGMENTS,

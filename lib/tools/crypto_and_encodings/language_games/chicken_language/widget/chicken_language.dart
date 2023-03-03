@@ -5,6 +5,8 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/language_games/chicken_language/logic/chicken_language.dart';
 
 class ChickenLanguage extends StatefulWidget {
+  const ChickenLanguage({Key? key}) : super(key: key);
+
   @override
   ChickenLanguageState createState() => ChickenLanguageState();
 }

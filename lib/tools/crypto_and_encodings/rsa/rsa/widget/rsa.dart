@@ -12,6 +12,8 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rsa/logic/rsa.dart';
 
 class RSA extends StatefulWidget {
+  const RSA({Key? key}) : super(key: key);
+
   @override
   RSAState createState() => RSAState();
 }
@@ -22,7 +24,7 @@ class RSAState extends State<RSA> {
   String _currentP = '';
   String _currentQ = '';
 
-  var _integerInputFormatter = GCWIntegerTextInputFormatter(min: 0);
+  final _integerInputFormatter = GCWIntegerTextInputFormatter(min: 0);
   var _currentMode = GCWSwitchPosition.right;
   Widget? _output;
 
@@ -73,7 +75,7 @@ class RSAState extends State<RSA> {
             });
           },
         ),
-        _output ?? GCWDefaultOutput(),
+        _output ?? const GCWDefaultOutput(),
       ],
     );
   }
@@ -150,7 +152,7 @@ class RSAState extends State<RSA> {
       _output = GCWColumnedMultilineOutput(
           firstRows: outputChildren,
           data: calculatedParameters,
-          flexValues: [1, 2]
+          flexValues: const [1, 2]
       );
     } catch (exception) {
       _output = null;

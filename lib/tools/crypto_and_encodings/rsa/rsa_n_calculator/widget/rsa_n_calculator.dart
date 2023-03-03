@@ -8,6 +8,8 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rsa/logic/rsa.dart';
 
 class RSANCalculator extends StatefulWidget {
+  const RSANCalculator({Key? key}) : super(key: key);
+
   @override
   RSANCalculatorState createState() => RSANCalculatorState();
 }
@@ -16,7 +18,7 @@ class RSANCalculatorState extends State<RSANCalculator> {
   String _currentP = '';
   String _currentQ = '';
 
-  var _integerInputFormatter = GCWIntegerTextInputFormatter(min: 0);
+  final _integerInputFormatter = GCWIntegerTextInputFormatter(min: 0);
   Widget? _output;
 
   @override
@@ -44,7 +46,7 @@ class RSANCalculatorState extends State<RSANCalculator> {
             });
           },
         ),
-        _output ?? GCWDefaultOutput(),
+        _output ?? const GCWDefaultOutput(),
       ],
     );
   }

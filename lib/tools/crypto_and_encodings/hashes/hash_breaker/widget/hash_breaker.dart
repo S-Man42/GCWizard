@@ -16,7 +16,7 @@ import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/variable_string_expander.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 
-final _ALERT_COMBINATIONS = 100000;
+const _ALERT_COMBINATIONS = 100000;
 
 class HashBreaker extends StatefulWidget {
   final Function? hashFunction;
@@ -40,7 +40,7 @@ class _HashBreakerState extends State<HashBreaker> {
 
   var _currentOutput = '';
   Function _currentHashFunction = md5Digest;
-  var _currentSubstitutions = <int, Map<String, String>>{};
+  final _currentSubstitutions = <int, Map<String, String>>{};
 
   @override
   void initState() {
@@ -59,8 +59,9 @@ class _HashBreakerState extends State<HashBreaker> {
   }
 
   void _addEntry(String currentFromInput, String currentToInput, FormulaValueType type, BuildContext context) {
-    if (currentFromInput.isNotEmpty)
+    if (currentFromInput.isNotEmpty) {
       _currentSubstitutions.putIfAbsent(++_currentIdCount, () => {currentFromInput: currentToInput});
+    }
   }
 
   void _updateEntry(Object id, String key, String value, FormulaValueType type) {
@@ -140,15 +141,15 @@ class _HashBreakerState extends State<HashBreaker> {
       barrierDismissible: false,
       builder: (context) {
         return Center(
-          child: Container(
+          child: SizedBox(
+            height: 220,
+            width: 150,
             child: GCWAsyncExecuter<BoolText?>(
               isolatedFunction: breakHashAsync,
               parameter: _buildJobData,
               onReady: (data) => _showOutput(data),
               isOverlay: true,
             ),
-            height: 220,
-            width: 150,
           ),
         );
       },
@@ -178,9 +179,9 @@ class _HashBreakerState extends State<HashBreaker> {
 
   Map<String, String> _getSubstitutions() {
     var _substitutions = <String, String>{};
-    _currentSubstitutions.entries.forEach((entry) {
+    for (var entry in _currentSubstitutions.entries) {
       _substitutions.putIfAbsent(entry.value.keys.first, () => entry.value.values.first);
-    });
+    }
 
     if (_currentFromInput.isNotEmpty &&
         _currentToInput.isNotEmpty) {
@@ -208,8 +209,9 @@ class _HashBreakerState extends State<HashBreaker> {
   void _showOutput(BoolText? output) {
     if (output == null || !output.value) {
       _currentOutput = i18n(context, 'hashes_hashbreaker_solutionnotfound');
-    } else
+    } else {
       _currentOutput = output.text;
+    }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {});

@@ -13,18 +13,20 @@ BifidOutput encryptBifid(String? input, String? key,
     {PolybiosMode mode = PolybiosMode.AZ09,
     String? alphabet,
     AlphabetModificationMode alphabetMode = AlphabetModificationMode.J_TO_I}) {
-  if (input == null || key == null)
+  if (input == null || key == null) {
     return BifidOutput('ERROR', 'bifid_error_no_encrypt_input', null);
+  }
 
   int dim = key.length;
-  if (dim != 5 && dim != 6)
+  if (dim != 5 && dim != 6) {
     return BifidOutput('ERROR', 'bifid_error_wrong_griddimension', null);
+  }
 
   var polybiosOutput = encryptPolybios(input, key, mode: mode, fillAlphabet: alphabet, modificationMode: alphabetMode);
 
-  if (polybiosOutput == null)
-    //return null;
+  if (polybiosOutput == null) {
     return BifidOutput('ERROR', 'bifid_error_no_output', null);
+  }
 
   var polybiosEncoded = polybiosOutput.output.replaceAll(' ', '');
 
@@ -41,27 +43,31 @@ BifidOutput encryptBifid(String? input, String? key,
   helpInput = row1 + row2;
 
   polybiosOutput = decryptPolybios(helpInput, key, mode: mode, fillAlphabet: alphabet, modificationMode: alphabetMode);
-  if (polybiosOutput != null)
+  if (polybiosOutput != null) {
     return BifidOutput('OK', polybiosOutput.output, polybiosOutput.grid);
-  else
+  } else {
     return BifidOutput('ERROR', 'bifid_error_no_output', null);
+  }
 }
 
 BifidOutput decryptBifid(String? input, String? key,
     {PolybiosMode mode = PolybiosMode.AZ09,
     String? alphabet,
     AlphabetModificationMode alphabetMode = AlphabetModificationMode.J_TO_I}) {
-  if (input == null || key == null)
+  if (input == null || key == null) {
     return BifidOutput('ERROR', 'bifid_error_no_decrypt_input', null);
+  }
 
   int dim = key.length;
-  if (dim != 5 && dim != 6)
+  if (dim != 5 && dim != 6) {
     return BifidOutput('ERROR', 'bifid_error_wrong_griddimension', null);
+  }
 
   var polybiosOutput = encryptPolybios(input, key, mode: mode, fillAlphabet: alphabet, modificationMode: alphabetMode);
 
-  if (polybiosOutput == null)
-     return BifidOutput('ERROR', 'bifid_error_no_output', null);
+  if (polybiosOutput == null) {
+    return BifidOutput('ERROR', 'bifid_error_no_output', null);
+  }
 
   var polybiosEncoded = polybiosOutput.output.replaceAll(' ', '');
 
@@ -80,8 +86,9 @@ BifidOutput decryptBifid(String? input, String? key,
 
   polybiosOutput = decryptPolybios(helpInput, key, mode: mode, fillAlphabet: alphabet, modificationMode: alphabetMode);
 
-  if (polybiosOutput != null)
+  if (polybiosOutput != null) {
     return BifidOutput('OK', polybiosOutput.output, polybiosOutput.grid);
-  else
+  } else {
     return BifidOutput('ERROR', 'bifid_error_no_output', null);
+  }
 }

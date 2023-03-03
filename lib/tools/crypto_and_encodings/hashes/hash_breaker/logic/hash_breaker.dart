@@ -46,10 +46,11 @@ BoolText? breakHash(
     var withoutBrackets = expandedText.replaceAll(RegExp(r'[\[\]]'), '');
     var hashValue = hashFunction(withoutBrackets).toLowerCase();
 
-    if (hashValue == input)
+    if (hashValue == input) {
       return withoutBrackets;
-    else
+    } else {
       return null;
+    }
   }, breakCondition: VariableStringExpanderBreakCondition.BREAK_ON_FIRST_FOUND, sendAsyncPort: sendAsyncPort);
 
   var results = expander.run();

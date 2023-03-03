@@ -10,7 +10,7 @@ void main() {
       {'input' : RGB(255, 255, 255), 'expectedOutput' : HSV(0.0, 0.0, 1.0)},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var hsv = HSV.fromRGB(elem['input'] as RGB);
         expect((hsv.hue - (elem['expectedOutput'] as HSV).hue).abs() < 1e-5, true);
@@ -22,7 +22,7 @@ void main() {
         expect((rgb.green - (elem['input'] as RGB).green).abs() < 1e-5, true);
         expect((rgb.blue - (elem['input'] as RGB).blue).abs() < 1e-5, true);
       });
-    });
+    }
   });
 
   group("Colors.HSL:", () {
@@ -32,7 +32,7 @@ void main() {
       {'input' : RGB(255, 255, 255), 'expectedOutput' : HSL(0.0, 0.0, 1.0)},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var hsl = HSL.fromRGB(elem['input'] as RGB);
         expect((hsl.hue - (elem['expectedOutput'] as HSL).hue).abs() < 1e-5, true);
@@ -44,7 +44,7 @@ void main() {
         expect((rgb.green - (elem['input'] as RGB).green).abs() < 1e-5, true);
         expect((rgb.blue - (elem['input'] as RGB).blue).abs() < 1e-5, true);
       });
-    });
+    }
   });
 
   group("Colors.HSI:", () {
@@ -54,7 +54,7 @@ void main() {
       {'input' : RGB(255, 255, 255), 'expectedOutput' : HSI(0.0, 0.0, 1.0)},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var hsi = HSI.fromRGB(elem['input'] as RGB);
         expect((hsi.hue - (elem['expectedOutput'] as HSI).hue).abs() < 1e-5, true);
@@ -66,6 +66,6 @@ void main() {
         expect((rgb.green - (elem['input'] as RGB).green).abs() < 0.5, true);
         expect((rgb.blue - (elem['input'] as RGB).blue).abs() < 0.5, true);
       });
-    });
+    }
   });
 }

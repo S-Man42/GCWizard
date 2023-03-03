@@ -23,8 +23,8 @@ class GCWDatePickerState extends State<GCWDatePicker> {
   late int _currentMonth;
   late int _currentDay;
 
-  var _monthFocusNode = FocusNode();
-  var _dayFocusNode = FocusNode();
+  final _monthFocusNode = FocusNode();
+  final _dayFocusNode = FocusNode();
 
   @override
   void initState() {
@@ -51,6 +51,7 @@ class GCWDatePickerState extends State<GCWDatePicker> {
       children: <Widget>[
         Expanded(
           child: Padding(
+              padding: const EdgeInsets.only(right: 2),
               child: GCWIntegerSpinner(
                 layout: SpinnerLayout.VERTICAL,
                 value: _currentYear,
@@ -66,14 +67,13 @@ class GCWDatePickerState extends State<GCWDatePicker> {
                     }
                   });
                 },
-              ),
-              padding: EdgeInsets.only(right: 2)),
+              )),
         ),
-        Expanded(child: Padding(child: _buildMonthSpinner(widget.type), padding: EdgeInsets.only(left: 2, right: 2))),
+        Expanded(child: Padding(padding: const EdgeInsets.only(left: 2, right: 2), child: _buildMonthSpinner(widget.type))),
         Expanded(
             child: Padding(
+          padding: const EdgeInsets.only(left: 2),
           child: _buildDaySpinner(widget.type),
-          padding: EdgeInsets.only(left: 2),
         ))
       ],
     );
@@ -103,7 +103,7 @@ class GCWDatePickerState extends State<GCWDatePicker> {
         type == CalendarSystem.PERSIANYAZDEGARDCALENDAR ||
         type == CalendarSystem.HEBREWCALENDAR ||
         type == CalendarSystem.POTRZEBIECALENDAR ||
-        type == CalendarSystem.COPTICCALENDAR)
+        type == CalendarSystem.COPTICCALENDAR) {
       return GCWDropDownSpinner(
         index: _currentMonth,
         layout: SpinnerLayout.VERTICAL,
@@ -120,7 +120,7 @@ class GCWDatePickerState extends State<GCWDatePicker> {
           });
         },
       );
-    else if (type == CalendarSystem.JULIANCALENDAR || type == CalendarSystem.GREGORIANCALENDAR)
+    } else if (type == CalendarSystem.JULIANCALENDAR || type == CalendarSystem.GREGORIANCALENDAR) {
       return GCWIntegerSpinner(
         focusNode: _monthFocusNode,
         layout: SpinnerLayout.VERTICAL,
@@ -138,8 +138,9 @@ class GCWDatePickerState extends State<GCWDatePicker> {
           });
         },
       );
-    else
+    } else {
       return Container();
+    }
   }
 
   void _setCurrentNamedCalendarValueAndEmitOnChange() {

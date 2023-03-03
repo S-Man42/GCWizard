@@ -12,12 +12,12 @@ void main() {
       {'input' : 'ABC123XYZ', 'expectedOutput' : '11 12 13 36 37 38'}
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = encodeFox(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Fox.decodeFox:", () {
@@ -33,11 +33,11 @@ void main() {
       {'expectedOutput' : 'ABDY', 'input' : '1112144637ab'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decodeFox(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

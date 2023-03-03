@@ -5,7 +5,7 @@ String encodeDeadfish(String? text) {
 
   var out = '';
   var memory = 0;
-  text.codeUnits.forEach((ascii) {
+  for (var ascii in text.codeUnits) {
     if (ascii > memory) {
       while (memory != ascii) {
         if (memory <= 1) {
@@ -30,7 +30,7 @@ String encodeDeadfish(String? text) {
       }
     }
     out += 'o';
-  });
+  }
 
   return out;
 }

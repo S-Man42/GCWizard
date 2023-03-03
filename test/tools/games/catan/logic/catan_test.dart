@@ -43,11 +43,11 @@ void main() {
       {'input' : 'BZDA', 'mode': CatanMode.EXPANSION, 'expectedOutput' : [5, 6, 2]},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, mode: ${elem['mode']}', () {
         var _actual = encodeCatan(elem['input'] as String?, elem['mode'] as CatanMode);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

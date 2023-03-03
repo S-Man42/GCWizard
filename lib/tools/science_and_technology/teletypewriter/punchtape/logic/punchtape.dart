@@ -14,7 +14,9 @@ List<String> decenary2segments(String decenary, bool order12345, TeletypewriterC
   if (REVERSE_CODEBOOK.contains(language)) {
     binary = binary.split('').reversed.join('');
   }
-  for (int i = 0; i < binary.length; i++) if (binary[i] == '1') result.add((i + 1).toString());
+  for (int i = 0; i < binary.length; i++) {
+    if (binary[i] == '1') result.add((i + 1).toString());
+  }
   return result;
 }
 
@@ -24,7 +26,9 @@ List<String> binary2segments(String binary, TeletypewriterCodebook language) {
 
   List<String> result = [];
 
-  for (int i = 0; i < binary.length; i++) if (binary[i] == '1') result.add((i + 1).toString());
+  for (int i = 0; i < binary.length; i++) {
+    if (binary[i] == '1') result.add((i + 1).toString());
+  }
   return result;
 }
 
@@ -72,65 +76,76 @@ String segments2binary(List<String> segments2convert, TeletypewriterCodebook lan
     }
   }
   String result = '';
-  if (segments.contains('1'))
+  if (segments.contains('1')) {
     result = result + '1';
-  else
+  } else {
     result = result + '0';
+  }
 
-  if (segments.contains('2'))
+  if (segments.contains('2')) {
     result = result + '1';
-  else
+  } else {
     result = result + '0';
+  }
 
-  if (segments.contains('3'))
+  if (segments.contains('3')) {
     result = result + '1';
-  else
+  } else {
     result = result + '0';
+  }
 
-  if (segments.contains('4'))
+  if (segments.contains('4')) {
     result = result + '1';
-  else
+  } else {
     result = result + '0';
+  }
 
-  if (segments.contains('5'))
+  if (segments.contains('5')) {
     result = result + '1';
-  else
+  } else {
     result = result + '0';
+  }
 
   if (BINARY_LENGTH[language] == 6) {
-    if (segments.contains('6'))
+    if (segments.contains('6')) {
       result = result + '1';
-    else
+    } else {
       result = result + '0';
+    }
   }
 
   if (BINARY_LENGTH[language] == 7) {
-    if (segments.contains('6'))
+    if (segments.contains('6')) {
       result = result + '1';
-    else
+    } else {
       result = result + '0';
+    }
 
-    if (segments.contains('7'))
+    if (segments.contains('7')) {
       result = result + '1';
-    else
+    } else {
       result = result + '0';
+    }
   }
 
   if (BINARY_LENGTH[language] == 8) {
-    if (segments.contains('6'))
+    if (segments.contains('6')) {
       result = result + '1';
-    else
+    } else {
       result = result + '0';
+    }
 
-    if (segments.contains('7'))
+    if (segments.contains('7')) {
       result = result + '1';
-    else
+    } else {
       result = result + '0';
+    }
 
-    if (segments.contains('8'))
+    if (segments.contains('8')) {
       result = result + '1';
-    else
+    } else {
       result = result + '0';
+    }
   }
   return result;
 }
@@ -139,65 +154,76 @@ String? segments2decenary(List<String> segments, bool order54321, Teletypewriter
   // [1,2,3,4,5] => 0 ... 31
   String result = '';
 
-  if (segments.contains('1'))
+  if (segments.contains('1')) {
     result = result + '1';
-  else
+  } else {
     result = result + '0';
+  }
 
-  if (segments.contains('2'))
+  if (segments.contains('2')) {
     result = result + '1';
-  else
+  } else {
     result = result + '0';
+  }
 
-  if (segments.contains('3'))
+  if (segments.contains('3')) {
     result = result + '1';
-  else
+  } else {
     result = result + '0';
+  }
 
-  if (segments.contains('4'))
+  if (segments.contains('4')) {
     result = result + '1';
-  else
+  } else {
     result = result + '0';
+  }
 
-  if (segments.contains('5'))
+  if (segments.contains('5')) {
     result = result + '1';
-  else
+  } else {
     result = result + '0';
+  }
 
   if (BINARY_LENGTH[language] == 6) {
-    if (segments.contains('6'))
+    if (segments.contains('6')) {
       result = result + '1';
-    else
+    } else {
       result = result + '0';
+    }
   }
 
   if (BINARY_LENGTH[language] == 7) {
-    if (segments.contains('6'))
+    if (segments.contains('6')) {
       result = result + '1';
-    else
+    } else {
       result = result + '0';
+    }
 
-    if (segments.contains('7'))
+    if (segments.contains('7')) {
       result = result + '1';
-    else
+    } else {
       result = result + '0';
+    }
   }
 
   if (BINARY_LENGTH[language] == 8) {
-    if (segments.contains('6'))
+    if (segments.contains('6')) {
       result = result + '1';
-    else
+    } else {
       result = result + '0';
+    }
 
-    if (segments.contains('7'))
+    if (segments.contains('7')) {
       result = result + '1';
-    else
+    } else {
       result = result + '0';
+    }
 
-    if (segments.contains('8'))
+    if (segments.contains('8')) {
       result = result + '1';
-    else
+    } else {
       result = result + '0';
+    }
   }
 
   if (order54321) result = result.split('').reversed.join('');
@@ -210,9 +236,9 @@ Segments encodePunchtape(String? input, TeletypewriterCodebook language, bool or
   List<List<String>> result = [];
   List<String> code = [];
   code = encodeTeletypewriter(input, language).split(' ');
-  code.forEach((element) {
+  for (var element in code) {
     if (int.tryParse(element) != null) result.add(decenary2segments(element, order12345, language));
-  });
+  }
   return Segments(displays: result);
 }
 
@@ -251,10 +277,10 @@ SegmentsText decodeVisualPunchtape(List<String?> inputs, TeletypewriterCodebook 
 
   // convert list of displays to list of decimal using String segments2decenary(List<String> segments)
   List<int> intList = [];
-  displays.forEach((element) {
+  for (var element in displays) {
     var value = int.parse(segments2decenary(element, order12345, language) ?? '');
     intList.add(value);
-  });
+  }
 
   // convert list of decimal to character using String decodeCCITT(List<int> values, TeletypewriterCodebook language)
   return SegmentsText(displays: displays, text: decodeTeletypewriter(intList, language));

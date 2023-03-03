@@ -53,18 +53,18 @@ void main() {
       {'start' : DateTime(2019, 10, 26), 'end': DateTime(2019, 10, 29), 'countStart': false, 'countEnd': false, 'expectedOutput' : DayCalculatorOutput(2, 49, 2940, 176400)},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('start: ${elem['start']}, end: ${elem['end']}, countStart: ${elem['countStart']}, countEnd: ${elem['countEnd']}', () {
         var _actual = calculateDayDifferences(elem['start'] as DateTime, elem['end'] as DateTime, countStart: elem['countStart'] as bool, countEnd: elem['countEnd'] as bool);
-        if (_actual == null)
+        if (_actual == null) {
           expect(_actual, elem['expectedOutput']);
-        else {
+        } else {
           expect(_actual.days, (elem['expectedOutput'] as DayCalculatorOutput).days);
           expect(_actual.hours, (elem['expectedOutput'] as DayCalculatorOutput).hours);
           expect(_actual.minutes, (elem['expectedOutput'] as DayCalculatorOutput).minutes);
           expect(_actual.seconds, (elem['expectedOutput'] as DayCalculatorOutput).seconds);
         }
       });
-    });
+    }
   });
 }

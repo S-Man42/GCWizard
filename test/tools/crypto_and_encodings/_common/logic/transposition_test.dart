@@ -30,11 +30,11 @@ void main() {
       {'input' : 'AB', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 1, 'countRows': 1, 'countLettersPerCell': 2, 'expectedOutput' : [['AB']]},
       {'input' : 'AB', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 1, 'countRows': 1, 'countLettersPerCell': 3, 'expectedOutput' : [['AB']]},
 
-      {'input' : 'A', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 1, 'countRows': 2, 'countLettersPerCell': 1, 'expectedOutput' : [['A', null]]},
+      {'input' : 'A', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 1, 'countRows': 2, 'countLettersPerCell': 1, 'expectedOutput' : [['A', '']]},
       {'input' : 'AB', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 1, 'countRows': 2, 'countLettersPerCell': 1, 'expectedOutput' : [['A', 'B']]},
       {'input' : 'ABC', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 1, 'countRows': 2, 'countLettersPerCell': 1, 'expectedOutput' : [['A', 'B']]},
 
-      {'input' : 'A', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 2, 'countRows': 1, 'countLettersPerCell': 1, 'expectedOutput' : [['A'], [null]]},
+      {'input' : 'A', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 2, 'countRows': 1, 'countLettersPerCell': 1, 'expectedOutput' : [['A'], ['']]},
       {'input' : 'AB', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 2, 'countRows': 1, 'countLettersPerCell': 1, 'expectedOutput' : [['A'], ['B']]},
       {'input' : 'ABC', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 2, 'countRows': 1, 'countLettersPerCell': 1, 'expectedOutput' : [['A'], ['B']]},
 
@@ -42,30 +42,30 @@ void main() {
       {'input' : 'ABCDE', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 2, 'countRows': 2, 'countLettersPerCell': 1, 'expectedOutput' : [['A', 'C'], ['B', 'D']]},
       {'input' : 'ABCD', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 2, 'countRows': 2, 'expectedOutput' : [['A', 'C'], ['B', 'D']]},
       {'input' : 'ABCDE', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 2, 'countRows': 2, 'countLettersPerCell': 1, 'expectedOutput' : [['A', 'C'], ['B', 'D']]},
-      {'input' : 'ABCDE', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 2, 'countRows': 2, 'countLettersPerCell': 2, 'expectedOutput' : [['AB', 'E'], ['CD', null]]},
-      {'input' : 'ABCDE', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 2, 'countRows': 2, 'countLettersPerCell': 3, 'expectedOutput' : [['ABC', null], ['DE', null]]},
-      {'input' : 'ABCDEF', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 2, 'countRows': 2, 'countLettersPerCell': 3, 'expectedOutput' : [['ABC', null], ['DEF', null]]},
-      {'input' : 'ABCDEFG', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 2, 'countRows': 2, 'countLettersPerCell': 3, 'expectedOutput' : [['ABC', 'G'], ['DEF', null]]},
-      {'input' : 'ABCDE', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 2, 'countRows': 2, 'countLettersPerCell': 5, 'expectedOutput' : [['ABCDE', null], [null, null]]},
-      {'input' : 'ABCDE', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 2, 'countRows': 2, 'countLettersPerCell': 6, 'expectedOutput' : [['ABCDE', null], [null, null]]},
+      {'input' : 'ABCDE', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 2, 'countRows': 2, 'countLettersPerCell': 2, 'expectedOutput' : [['AB', 'E'], ['CD', '']]},
+      {'input' : 'ABCDE', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 2, 'countRows': 2, 'countLettersPerCell': 3, 'expectedOutput' : [['ABC', ''], ['DE', '']]},
+      {'input' : 'ABCDEF', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 2, 'countRows': 2, 'countLettersPerCell': 3, 'expectedOutput' : [['ABC', ''], ['DEF', '']]},
+      {'input' : 'ABCDEFG', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 2, 'countRows': 2, 'countLettersPerCell': 3, 'expectedOutput' : [['ABC', 'G'], ['DEF', '']]},
+      {'input' : 'ABCDE', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 2, 'countRows': 2, 'countLettersPerCell': 5, 'expectedOutput' : [['ABCDE', ''], ['', '']]},
+      {'input' : 'ABCDE', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 2, 'countRows': 2, 'countLettersPerCell': 6, 'expectedOutput' : [['ABCDE', ''], ['', '']]},
 
-      {'input' : 'ABC', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 2, 'countRows': 3, 'countLettersPerCell': 1, 'expectedOutput' : [['A', 'C', null], ['B', null, null]]},
-      {'input' : 'ABCD', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 2, 'countRows': 3, 'countLettersPerCell': 1, 'expectedOutput' : [['A', 'C', null], ['B', 'D', null]]},
-      {'input' : 'ABCDE', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 2, 'countRows': 3, 'countLettersPerCell': 1, 'expectedOutput' : [['A', 'C', 'E'], ['B', 'D', null]]},
+      {'input' : 'ABC', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 2, 'countRows': 3, 'countLettersPerCell': 1, 'expectedOutput' : [['A', 'C', ''], ['B', '', '']]},
+      {'input' : 'ABCD', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 2, 'countRows': 3, 'countLettersPerCell': 1, 'expectedOutput' : [['A', 'C', ''], ['B', 'D', '']]},
+      {'input' : 'ABCDE', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 2, 'countRows': 3, 'countLettersPerCell': 1, 'expectedOutput' : [['A', 'C', 'E'], ['B', 'D', '']]},
       {'input' : 'ABCDEF', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 2, 'countRows': 3, 'countLettersPerCell': 1, 'expectedOutput' : [['A', 'C', 'E'], ['B', 'D', 'F']]},
       {'input' : 'ABCDEFG', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 2, 'countRows': 3, 'countLettersPerCell': 1, 'expectedOutput' : [['A', 'C', 'E'], ['B', 'D', 'F']]},
 
-      {'input' : 'ABC', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 3, 'countRows': 2, 'countLettersPerCell': 1, 'expectedOutput' : [['A', null], ['B', null], ['C', null]]},
-      {'input' : 'ABCD', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 3, 'countRows': 2, 'countLettersPerCell': 1, 'expectedOutput' : [['A', 'D'], ['B', null], ['C', null]]},
-      {'input' : 'ABCDE', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 3, 'countRows': 2, 'countLettersPerCell': 1, 'expectedOutput' : [['A', 'D'], ['B', 'E'], ['C', null]]},
+      {'input' : 'ABC', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 3, 'countRows': 2, 'countLettersPerCell': 1, 'expectedOutput' : [['A', ''], ['B', ''], ['C', '']]},
+      {'input' : 'ABCD', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 3, 'countRows': 2, 'countLettersPerCell': 1, 'expectedOutput' : [['A', 'D'], ['B', ''], ['C', '']]},
+      {'input' : 'ABCDE', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 3, 'countRows': 2, 'countLettersPerCell': 1, 'expectedOutput' : [['A', 'D'], ['B', 'E'], ['C', '']]},
       {'input' : 'ABCDEF', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 3, 'countRows': 2, 'countLettersPerCell': 1, 'expectedOutput' : [['A', 'D'], ['B', 'E'], ['C', 'F']]},
       {'input' : 'ABCDEFG', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 3, 'countRows': 2, 'countLettersPerCell': 1, 'expectedOutput' : [['A', 'D'], ['B', 'E'], ['C', 'F']]},
 
-      {'input' : 'A', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 1, 'countRows': 2, 'countLettersPerCell': 1, 'expectedOutput' : [['A', null]]},
+      {'input' : 'A', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 1, 'countRows': 2, 'countLettersPerCell': 1, 'expectedOutput' : [['A', '']]},
       {'input' : 'AB', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 1, 'countRows': 2, 'countLettersPerCell': 1, 'expectedOutput' : [['A', 'B']]},
       {'input' : 'ABC', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 1, 'countRows': 2, 'countLettersPerCell': 1, 'expectedOutput' : [['A', 'B']]},
 
-      {'input' : 'A', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 2, 'countRows': 1, 'countLettersPerCell': 1, 'expectedOutput' : [['A'], [null]]},
+      {'input' : 'A', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 2, 'countRows': 1, 'countLettersPerCell': 1, 'expectedOutput' : [['A'], ['']]},
       {'input' : 'AB', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 2, 'countRows': 1, 'countLettersPerCell': 1, 'expectedOutput' : [['A'], ['B']]},
       {'input' : 'ABC', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 2, 'countRows': 1, 'countLettersPerCell': 1, 'expectedOutput' : [['A'], ['B']]},
 
@@ -73,88 +73,94 @@ void main() {
       {'input' : 'ABCDE', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 2, 'countRows': 2, 'countLettersPerCell': 1, 'expectedOutput' : [['A', 'B'], ['C', 'D']]},
       {'input' : 'ABCD', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 2, 'countRows': 2, 'expectedOutput' : [['A', 'B'], ['C', 'D']]},
       {'input' : 'ABCDE', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 2, 'countRows': 2, 'countLettersPerCell': 1, 'expectedOutput' : [['A', 'B'], ['C', 'D']]},
-      {'input' : 'ABCDE', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 2, 'countRows': 2, 'countLettersPerCell': 2, 'expectedOutput' : [['AB', 'C'], ['DE', null]]},
-      {'input' : 'ABCDE', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 2, 'countRows': 2, 'countLettersPerCell': 3, 'expectedOutput' : [['ABC', null], ['DE', null]]},
-      {'input' : 'ABCDEF', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 2, 'countRows': 2, 'countLettersPerCell': 3, 'expectedOutput' : [['ABC', null], ['DEF', null]]},
-      {'input' : 'ABCDEFG', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 2, 'countRows': 2, 'countLettersPerCell': 3, 'expectedOutput' : [['ABC', 'D'], ['EFG', null]]},
-      {'input' : 'ABCDE', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 2, 'countRows': 2, 'countLettersPerCell': 5, 'expectedOutput' : [['ABCDE', null], [null, null]]},
-      {'input' : 'ABCDE', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 2, 'countRows': 2, 'countLettersPerCell': 6, 'expectedOutput' : [['ABCDE', null], [null, null]]},
+      {'input' : 'ABCDE', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 2, 'countRows': 2, 'countLettersPerCell': 2, 'expectedOutput' : [['AB', 'C'], ['DE', '']]},
+      {'input' : 'ABCDE', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 2, 'countRows': 2, 'countLettersPerCell': 3, 'expectedOutput' : [['ABC', ''], ['DE', '']]},
+      {'input' : 'ABCDEF', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 2, 'countRows': 2, 'countLettersPerCell': 3, 'expectedOutput' : [['ABC', ''], ['DEF', '']]},
+      {'input' : 'ABCDEFG', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 2, 'countRows': 2, 'countLettersPerCell': 3, 'expectedOutput' : [['ABC', 'D'], ['EFG', '']]},
+      {'input' : 'ABCDE', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 2, 'countRows': 2, 'countLettersPerCell': 5, 'expectedOutput' : [['ABCDE', ''], ['', '']]},
+      {'input' : 'ABCDE', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 2, 'countRows': 2, 'countLettersPerCell': 6, 'expectedOutput' : [['ABCDE', ''], ['', '']]},
 
-      {'input' : 'ABC', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 2, 'countRows': 3, 'countLettersPerCell': 1, 'expectedOutput' : [['A', 'B', null], ['C', null, null]]},
-      {'input' : 'ABCD', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 2, 'countRows': 3, 'countLettersPerCell': 1, 'expectedOutput' : [['A', 'B', null], ['C', 'D', null]]},
-      {'input' : 'ABCDE', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 2, 'countRows': 3, 'countLettersPerCell': 1, 'expectedOutput' : [['A', 'B', 'C'], ['D', 'E', null]]},
+      {'input' : 'ABC', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 2, 'countRows': 3, 'countLettersPerCell': 1, 'expectedOutput' : [['A', 'B', ''], ['C', '', '']]},
+      {'input' : 'ABCD', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 2, 'countRows': 3, 'countLettersPerCell': 1, 'expectedOutput' : [['A', 'B', ''], ['C', 'D', '']]},
+      {'input' : 'ABCDE', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 2, 'countRows': 3, 'countLettersPerCell': 1, 'expectedOutput' : [['A', 'B', 'C'], ['D', 'E', '']]},
       {'input' : 'ABCDEF', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 2, 'countRows': 3, 'countLettersPerCell': 1, 'expectedOutput' : [['A', 'B', 'C'], ['D', 'E', 'F']]},
       {'input' : 'ABCDEFG', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 2, 'countRows': 3, 'countLettersPerCell': 1, 'expectedOutput' : [['A', 'B', 'C'], ['D', 'E', 'F']]},
 
-      {'input' : 'ABC', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 3, 'countRows': 2, 'countLettersPerCell': 1, 'expectedOutput' : [['A', null], ['B', null], ['C', null]]},
-      {'input' : 'ABCD', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 3, 'countRows': 2, 'countLettersPerCell': 1, 'expectedOutput' : [['A', 'B'], ['C', null], ['D', null]]},
-      {'input' : 'ABCDE', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 3, 'countRows': 2, 'countLettersPerCell': 1, 'expectedOutput' : [['A', 'B'], ['C', 'D'], ['E', null]]},
+      {'input' : 'ABC', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 3, 'countRows': 2, 'countLettersPerCell': 1, 'expectedOutput' : [['A', ''], ['B', ''], ['C', '']]},
+      {'input' : 'ABCD', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 3, 'countRows': 2, 'countLettersPerCell': 1, 'expectedOutput' : [['A', 'B'], ['C', ''], ['D', '']]},
+      {'input' : 'ABCDE', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 3, 'countRows': 2, 'countLettersPerCell': 1, 'expectedOutput' : [['A', 'B'], ['C', 'D'], ['E', '']]},
       {'input' : 'ABCDEF', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 3, 'countRows': 2, 'countLettersPerCell': 1, 'expectedOutput' : [['A', 'B'], ['C', 'D'], ['E', 'F']]},
       {'input' : 'ABCDEFG', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 3, 'countRows': 2, 'countLettersPerCell': 1, 'expectedOutput' : [['A', 'B'], ['C', 'D'], ['E', 'F']]},
 
-      {'input' : 'A', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 2, 'expectedOutput' : [['A'], [null]]},
+      {'input' : 'A', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 2, 'expectedOutput' : [['A'], ['']]},
       {'input' : 'AB', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 2, 'expectedOutput' : [['A'], ['B']]},
-      {'input' : 'ABC', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 2, 'expectedOutput' : [['A', 'B'], ['C', null]]},
+      {'input' : 'ABC', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 2, 'expectedOutput' : [['A', 'B'], ['C', '']]},
       {'input' : 'ABCD', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 2, 'expectedOutput' : [['A', 'B'], ['C', 'D']]},
-      {'input' : 'ABCDE', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 2, 'expectedOutput' : [['A', 'B', 'C'], ['D', 'E', null]]},
+      {'input' : 'ABCDE', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 2, 'expectedOutput' : [['A', 'B', 'C'], ['D', 'E', '']]},
 
-      {'input' : 'A', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 2, 'expectedOutput' : [['A'], [null]]},
+      {'input' : 'A', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 2, 'expectedOutput' : [['A'], ['']]},
       {'input' : 'AB', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 2, 'expectedOutput' : [['A'], ['B']]},
-      {'input' : 'ABC', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 2, 'expectedOutput' : [['A', 'C'], ['B', null]]},
+      {'input' : 'ABC', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 2, 'expectedOutput' : [['A', 'C'], ['B', '']]},
       {'input' : 'ABCD', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 2, 'expectedOutput' : [['A', 'C'], ['B', 'D']]},
-      {'input' : 'ABCDE', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 2, 'expectedOutput' : [['A', 'C', 'E'], ['B', 'D', null]]},
+      {'input' : 'ABCDE', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 2, 'expectedOutput' : [['A', 'C', 'E'], ['B', 'D', '']]},
 
-      {'input' : 'A', 'fillMode': TranspositionMatrixFillMode.decryption, 'countRows' : 2, 'expectedOutput' : [['A', null]]},
+      {'input' : 'A', 'fillMode': TranspositionMatrixFillMode.decryption, 'countRows' : 2, 'expectedOutput' : [['A', '']]},
       {'input' : 'AB', 'fillMode': TranspositionMatrixFillMode.decryption, 'countRows' : 2, 'expectedOutput' : [['A', 'B']]},
-      {'input' : 'ABC', 'fillMode': TranspositionMatrixFillMode.decryption, 'countRows' : 2, 'expectedOutput' : [['A', 'B'], ['C', null]]},
+      {'input' : 'ABC', 'fillMode': TranspositionMatrixFillMode.decryption, 'countRows' : 2, 'expectedOutput' : [['A', 'B'], ['C', '']]},
       {'input' : 'ABCD', 'fillMode': TranspositionMatrixFillMode.decryption, 'countRows' : 2, 'expectedOutput' : [['A', 'B'], ['C', 'D']]},
-      {'input' : 'ABCDE', 'fillMode': TranspositionMatrixFillMode.decryption, 'countRows' : 2, 'expectedOutput' : [['A', 'B'], ['C', 'D'], ['E', null]]},
+      {'input' : 'ABCDE', 'fillMode': TranspositionMatrixFillMode.decryption, 'countRows' : 2, 'expectedOutput' : [['A', 'B'], ['C', 'D'], ['E', '']]},
 
-      {'input' : 'A', 'fillMode': TranspositionMatrixFillMode.encryption, 'countRows' : 2, 'expectedOutput' : [['A', null]]},
+      {'input' : 'A', 'fillMode': TranspositionMatrixFillMode.encryption, 'countRows' : 2, 'expectedOutput' : [['A', '']]},
       {'input' : 'AB', 'fillMode': TranspositionMatrixFillMode.encryption, 'countRows' : 2, 'expectedOutput' : [['A', 'B']]},
-      {'input' : 'ABC', 'fillMode': TranspositionMatrixFillMode.encryption, 'countRows' : 2, 'expectedOutput' : [['A', 'C'], ['B', null]]},
+      {'input' : 'ABC', 'fillMode': TranspositionMatrixFillMode.encryption, 'countRows' : 2, 'expectedOutput' : [['A', 'C'], ['B', '']]},
       {'input' : 'ABCD', 'fillMode': TranspositionMatrixFillMode.encryption, 'countRows' : 2, 'expectedOutput' : [['A', 'C'], ['B', 'D']]},
-      {'input' : 'ABCDE', 'fillMode': TranspositionMatrixFillMode.encryption, 'countRows' : 2, 'expectedOutput' : [['A', 'D'], ['B', 'E'], ['C', null]]},
+      {'input' : 'ABCDE', 'fillMode': TranspositionMatrixFillMode.encryption, 'countRows' : 2, 'expectedOutput' : [['A', 'D'], ['B', 'E'], ['C', '']]},
 
-      {'input' : 'A', 'fillMode': TranspositionMatrixFillMode.encryption, 'countRows' : 3, 'expectedOutput' : [['A', null, null]]},
-      {'input' : 'AB', 'fillMode': TranspositionMatrixFillMode.encryption, 'countRows' : 3, 'expectedOutput' : [['A', 'B', null]]},
+      {'input' : 'A', 'fillMode': TranspositionMatrixFillMode.encryption, 'countRows' : 3, 'expectedOutput' : [['A', '', '']]},
+      {'input' : 'AB', 'fillMode': TranspositionMatrixFillMode.encryption, 'countRows' : 3, 'expectedOutput' : [['A', 'B', '']]},
       {'input' : 'ABC', 'fillMode': TranspositionMatrixFillMode.encryption, 'countRows' : 3, 'expectedOutput' : [['A', 'B', 'C']]},
-      {'input' : 'ABCD', 'fillMode': TranspositionMatrixFillMode.encryption, 'countRows' : 3, 'expectedOutput' : [['A', 'C', null], ['B', 'D', null]]},
-      {'input' : 'ABCDE', 'fillMode': TranspositionMatrixFillMode.encryption, 'countRows' : 3, 'expectedOutput' : [['A', 'C', 'E'], ['B', 'D', null]]},
+      {'input' : 'ABCD', 'fillMode': TranspositionMatrixFillMode.encryption, 'countRows' : 3, 'expectedOutput' : [['A', 'C', ''], ['B', 'D', '']]},
+      {'input' : 'ABCDE', 'fillMode': TranspositionMatrixFillMode.encryption, 'countRows' : 3, 'expectedOutput' : [['A', 'C', 'E'], ['B', 'D', '']]},
       {'input' : 'ABCDEF', 'fillMode': TranspositionMatrixFillMode.encryption, 'countRows' : 3, 'expectedOutput' : [['A', 'C', 'E'], ['B', 'D', 'F']]},
-      {'input' : 'ABCDEFG', 'fillMode': TranspositionMatrixFillMode.encryption, 'countRows' : 3, 'expectedOutput' : [['A', 'D', 'G'], ['B', 'E', null], ['C', 'F', null]]},
+      {'input' : 'ABCDEFG', 'fillMode': TranspositionMatrixFillMode.encryption, 'countRows' : 3, 'expectedOutput' : [['A', 'D', 'G'], ['B', 'E', ''], ['C', 'F', '']]},
 
-      {'input' : 'A', 'fillMode': TranspositionMatrixFillMode.decryption, 'countRows' : 3, 'expectedOutput' : [['A', null, null]]},
-      {'input' : 'AB', 'fillMode': TranspositionMatrixFillMode.decryption, 'countRows' : 3, 'expectedOutput' : [['A', 'B', null]]},
+      {'input' : 'A', 'fillMode': TranspositionMatrixFillMode.decryption, 'countRows' : 3, 'expectedOutput' : [['A', '', '']]},
+      {'input' : 'AB', 'fillMode': TranspositionMatrixFillMode.decryption, 'countRows' : 3, 'expectedOutput' : [['A', 'B', '']]},
       {'input' : 'ABC', 'fillMode': TranspositionMatrixFillMode.decryption, 'countRows' : 3, 'expectedOutput' : [['A', 'B', 'C']]},
-      {'input' : 'ABCD', 'fillMode': TranspositionMatrixFillMode.decryption, 'countRows' : 3, 'expectedOutput' : [['A', 'B', null], ['C', 'D', null]]},
-      {'input' : 'ABCDE', 'fillMode': TranspositionMatrixFillMode.decryption, 'countRows' : 3, 'expectedOutput' : [['A', 'B', 'C'], ['D', 'E', null]]},
+      {'input' : 'ABCD', 'fillMode': TranspositionMatrixFillMode.decryption, 'countRows' : 3, 'expectedOutput' : [['A', 'B', ''], ['C', 'D', '']]},
+      {'input' : 'ABCDE', 'fillMode': TranspositionMatrixFillMode.decryption, 'countRows' : 3, 'expectedOutput' : [['A', 'B', 'C'], ['D', 'E', '']]},
       {'input' : 'ABCDEF', 'fillMode': TranspositionMatrixFillMode.decryption, 'countRows' : 3, 'expectedOutput' : [['A', 'B', 'C'], ['D', 'E', 'F']]},
-      {'input' : 'ABCDEFG', 'fillMode': TranspositionMatrixFillMode.decryption, 'countRows' : 3, 'expectedOutput' : [['A', 'B', 'C'], ['D', 'E', null], ['F', 'G', null]]},
+      {'input' : 'ABCDEFG', 'fillMode': TranspositionMatrixFillMode.decryption, 'countRows' : 3, 'expectedOutput' : [['A', 'B', 'C'], ['D', 'E', ''], ['F', 'G', '']]},
 
-      {'input' : 'A', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 3, 'expectedOutput' : [['A'], [null], [null]]},
-      {'input' : 'AB', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 3, 'expectedOutput' : [['A'], ['B'], [null]]},
+      {'input' : 'A', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 3, 'expectedOutput' : [['A'], [''], ['']]},
+      {'input' : 'AB', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 3, 'expectedOutput' : [['A'], ['B'], ['']]},
       {'input' : 'ABC', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 3, 'expectedOutput' : [['A'], ['B'], ['C']]},
-      {'input' : 'ABCD', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 3, 'expectedOutput' : [['A', 'B'], ['C', null], ['D', null]]},
-      {'input' : 'ABCDE', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 3, 'expectedOutput' : [['A', 'B'], ['C', 'D'], ['E', null]]},
+      {'input' : 'ABCD', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 3, 'expectedOutput' : [['A', 'B'], ['C', ''], ['D', '']]},
+      {'input' : 'ABCDE', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 3, 'expectedOutput' : [['A', 'B'], ['C', 'D'], ['E', '']]},
       {'input' : 'ABCDEF', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 3, 'expectedOutput' : [['A', 'B'], ['C', 'D'], ['E', 'F']]},
-      {'input' : 'ABCDEFG', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 3, 'expectedOutput' : [['A', 'B', 'C'], ['D', 'E', null], ['F', 'G', null]]},
+      {'input' : 'ABCDEFG', 'fillMode': TranspositionMatrixFillMode.decryption, 'countColumns' : 3, 'expectedOutput' : [['A', 'B', 'C'], ['D', 'E', ''], ['F', 'G', '']]},
 
-      {'input' : 'A', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 3, 'expectedOutput' : [['A'], [null], [null]]},
-      {'input' : 'AB', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 3, 'expectedOutput' : [['A'], ['B'], [null]]},
+      {'input' : 'A', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 3, 'expectedOutput' : [['A'], [''], ['']]},
+      {'input' : 'AB', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 3, 'expectedOutput' : [['A'], ['B'], ['']]},
       {'input' : 'ABC', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 3, 'expectedOutput' : [['A'], ['B'], ['C']]},
-      {'input' : 'ABCD', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 3, 'expectedOutput' : [['A', 'D'], ['B', null], ['C', null]]},
-      {'input' : 'ABCDE', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 3, 'expectedOutput' : [['A', 'D'], ['B', 'E'], ['C', null]]},
+      {'input' : 'ABCD', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 3, 'expectedOutput' : [['A', 'D'], ['B', ''], ['C', '']]},
+      {'input' : 'ABCDE', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 3, 'expectedOutput' : [['A', 'D'], ['B', 'E'], ['C', '']]},
       {'input' : 'ABCDEF', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 3, 'expectedOutput' : [['A', 'D'], ['B', 'E'], ['C', 'F']]},
-      {'input' : 'ABCDEFG', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 3, 'expectedOutput' : [['A', 'D', 'G'], ['B', 'E', null], ['C', 'F', null]]},
+      {'input' : 'ABCDEFG', 'fillMode': TranspositionMatrixFillMode.encryption, 'countColumns' : 3, 'expectedOutput' : [['A', 'D', 'G'], ['B', 'E', ''], ['C', 'F', '']]},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, fillMode: ${elem['fillMode']}, countColumns: ${elem['countColumns']}, countRows: ${elem['countRows']}, countLettersPerCell: ${elem['countLettersPerCell']}', () {
-        var _actual = createTranspositionMatrix(elem['input'] as String?, elem['fillMode'] as TranspositionMatrixFillMode, countRows: elem['countRows'] as int?, countColumns: elem['countColumns'] as int?, countLettersPerCell: elem['countLettersPerCell'] as int);
-        expect(_actual, elem['expectedOutput']);
+
+       if (elem['countLettersPerCell'] == null) {
+         var _actual = createTranspositionMatrix(elem['input'] as String?, elem['fillMode'] as TranspositionMatrixFillMode, countRows: elem['countRows'] as int?, countColumns: elem['countColumns'] as int?);
+         expect(_actual, elem['expectedOutput']);
+       } else {
+         var _actual = createTranspositionMatrix(elem['input'] as String?, elem['fillMode'] as TranspositionMatrixFillMode, countRows: elem['countRows'] as int?, countColumns: elem['countColumns'] as int?, countLettersPerCell: elem['countLettersPerCell'] as int);
+         expect(_actual, elem['expectedOutput']);
+       }
       });
-    });
+    }
   });
 
   group("Transposition.encryptTransposition:", () {
@@ -214,12 +220,12 @@ void main() {
       {'input' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZab', 'countRows' : 3, 'countColumns': 4, 'countLettersPerCell': 3, 'expectedOutput' : 'ABCMNOYZaDEFPQRbGHISTUJKLVWX'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, countRows: ${elem['countRows']}, countColumns: ${elem['countColumns']}, countLettersPerCell: ${elem['countLettersPerCell']}', () {
         var _actual = encryptTransposition(elem['input'] as String?, countRows: elem['countRows'] as int?, countColumns: elem['countColumns'] as int?, countLettersPerCell: elem['countLettersPerCell'] as int);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Transposition.decryptTransposition:", () {
@@ -278,11 +284,11 @@ void main() {
       {'expectedOutput' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZab', 'countRows' : 3, 'countColumns': 4, 'countLettersPerCell': 3, 'input' : 'ABCMNOYZaDEFPQRbGHISTUJKLVWX'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, countRows: ${elem['countRows']}, countColumns: ${elem['countColumns']}, countLettersPerCell: ${elem['countLettersPerCell']}', () {
         var _actual = decryptTransposition(elem['input'] as String?, countRows: elem['countRows'] as int?, countColumns: elem['countColumns'] as int?, countLettersPerCell: elem['countLettersPerCell'] as int);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

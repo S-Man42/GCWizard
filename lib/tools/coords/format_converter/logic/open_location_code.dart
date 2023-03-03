@@ -101,7 +101,7 @@ const _decode = <int>[
   14, 15, 16, -2, -2, -2, 17, 18, 19, -2, -2, -2, -2, -2, -2, -2,
 ]; //
 
-bool _matchesPattern(String string, Pattern pattern) => string.indexOf(pattern) >= 0;
+bool _matchesPattern(String string, Pattern pattern) => string.contains(pattern);
 
 bool _isValid(String code) {
   if (code.length == 1) {
@@ -149,10 +149,11 @@ bool _isValid(String code) {
   }
 
   // Check code contains only valid characters.
-  var filterCallback = (int ch) => !(ch > _decode.length || _decode[ch] < -1);
+  filterCallback(int ch) => !(ch > _decode.length || _decode[ch] < -1);
   return code.codeUnits.every(filterCallback);
 }
 
+// ignore: unused_element
 num _clipLatitude(num latitude) => latitude.clamp(-90.0, 90.0);
 
 /// Compute the latitude precision value for a given code length.
@@ -160,23 +161,12 @@ num _clipLatitude(num latitude) => latitude.clamp(-90.0, 90.0);
 /// Lengths <= 10 have the same precision for latitude and longitude, but
 /// lengths > 10 have different precisions due to the grid method having fewer
 /// columns than rows.
-num _computeLatitudePrecision(int codeLength) {
-  if (codeLength <= 10) {
-    return pow(encodingBase, (codeLength ~/ -2) + 2);
-  }
-  return 1 / (pow(encodingBase, 3) * pow(gridRows, codeLength - 10));
-}
-
-/// Normalize a [longitude] into the range -180 to 180, not including 180.
-num _normalizeLongitude(num longitude) {
-  while (longitude < -180) {
-    longitude += 360;
-  }
-  while (longitude >= 180) {
-    longitude -= 360;
-  }
-  return longitude;
-}
+// num _computeLatitudePrecision(int codeLength) {
+//   if (codeLength <= 10) {
+//     return pow(encodingBase, (codeLength ~/ -2) + 2);
+//   }
+//   return 1 / (pow(encodingBase, 3) * pow(gridRows, codeLength - 10));
+// }
 
 /// Determines if a [code] is a valid short code.
 ///

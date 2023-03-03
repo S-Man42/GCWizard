@@ -47,7 +47,9 @@ double _r0(double t) {
   ];
 
   double r0 = 0;
-  for (int i = 0; i < LArray.length; ++i) r0 = r0 + LArray[i][0] * cos(LArray[i][1] + LArray[i][2] * t);
+  for (int i = 0; i < LArray.length; ++i) {
+    r0 = r0 + LArray[i][0] * cos(LArray[i][1] + LArray[i][2] * t);
+  }
 
   return r0;
 }
@@ -67,7 +69,9 @@ double _r1(double t) {
   ];
 
   double r1 = 0;
-  for (int i = 0; i < LArray.length; ++i) r1 = r1 + LArray[i][0] * cos(LArray[i][1] + LArray[i][2] * t);
+  for (int i = 0; i < LArray.length; ++i) {
+    r1 = r1 + LArray[i][0] * cos(LArray[i][1] + LArray[i][2] * t);
+  }
 
   return r1;
 }
@@ -83,7 +87,9 @@ double _r2(double t) {
   ];
 
   double r2 = 0;
-  for (int i = 0; i < LArray.length; ++i) r2 = r2 + LArray[i][0] * cos(LArray[i][1] + LArray[i][2] * t);
+  for (int i = 0; i < LArray.length; ++i) {
+    r2 = r2 + LArray[i][0] * cos(LArray[i][1] + LArray[i][2] * t);
+  }
 
   return r2;
 }
@@ -95,7 +101,9 @@ double _r3(double t) {
   ];
 
   double r3 = 0;
-  for (int i = 0; i < LArray.length; ++i) r3 = r3 + LArray[i][0] * cos(LArray[i][1] + LArray[i][2] * t);
+  for (int i = 0; i < LArray.length; ++i) {
+    r3 = r3 + LArray[i][0] * cos(LArray[i][1] + LArray[i][2] * t);
+  }
 
   return r3;
 }
@@ -127,10 +135,11 @@ double _JD(int date, int month, int year, double STD) {
     year = year - 1;
   }
 
-  if (A <= 15821004.1)
+  if (A <= 15821004.1) {
     B = -2 + ((year + 4716) / 4).floor() - 1179;
-  else
+  } else {
     B = (year / 400).floor() - (year / 100).floor() + (year / 4).floor();
+  }
 
   A = 365.0 * year - 679004.0;
   MJD = A + B + (30.6001 * (month + 1)).floor() + date + STD / 24.0;

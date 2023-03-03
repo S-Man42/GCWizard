@@ -32,7 +32,7 @@ class GCWTextViewerState extends State<GCWTextViewer> {
           },
         ),
         Container(
-          padding: EdgeInsets.only(top: 20),
+          padding: const EdgeInsets.only(top: 20),
           child: GCWText(
             text: text,
             style: gcwMonotypeTextStyle(),

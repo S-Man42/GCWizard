@@ -29,10 +29,10 @@ class GCWColorPickerState extends State<GCWColorPicker> {
           decoration: BoxDecoration(
             border: Border.all(color: themeColors().mainFont(), width: 1),
             shape: BoxShape.rectangle,
-            borderRadius: BorderRadius.all(Radius.circular(3 * ROUNDED_BORDER_RADIUS)),
+            borderRadius: const BorderRadius.all(Radius.circular(3 * ROUNDED_BORDER_RADIUS)),
             color: _currentColor.toColor(),
           ),
-          margin: EdgeInsets.only(right: 7 * DEFAULT_MARGIN),
+          margin: const EdgeInsets.only(right: 7 * DEFAULT_MARGIN),
         ),
         Expanded(
             child: _HSVPicker(

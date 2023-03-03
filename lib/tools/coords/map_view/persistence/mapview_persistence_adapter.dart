@@ -103,20 +103,17 @@ class MapViewPersistenceAdapter {
           .toList());
     }
 
-    if (mapWidget.polylines == null) mapWidget.polylines = <GCWMapPolyline>[];
-
-    if (mapWidget.polylines!.isNotEmpty) {
-      _mapViewDAO.polylines.addAll(mapWidget.polylines!
-          .where((polyline) =>
+    if (mapWidget.polylines.isNotEmpty) {
+      _mapViewDAO.polylines.addAll(mapWidget.polylines.where((polyline) =>
               !_mapViewDAO.polylines.map((polylineDAO) => polylineDAO.uuid).toList().contains(polyline.uuid))
           .map((polyline) => gcwMapPolylineToMapPolylineDAO(polyline))
           .toList());
     }
 
     if (_mapViewDAO.polylines.isNotEmpty) {
-      mapWidget.polylines!.addAll(_mapViewDAO.polylines
+      mapWidget.polylines.addAll(_mapViewDAO.polylines
           .where((polylineDAO) =>
-              !mapWidget.polylines!.map((polyline) => polyline.uuid).toList().contains(polylineDAO.uuid))
+              !mapWidget.polylines.map((polyline) => polyline.uuid).toList().contains(polylineDAO.uuid))
           .map((polylineDAO) => _mapPolylineDAOToGCWMapPolyline(polylineDAO))
           .toList());
     }
@@ -164,8 +161,7 @@ class MapViewPersistenceAdapter {
 
     updateMapPointDAO(mapPointDAO, _mapViewDAO);
 
-    mapWidget.polylines!
-        .where((polyline) => polyline.points.contains(mapPoint))
+    mapWidget.polylines.where((polyline) => polyline.points.contains(mapPoint))
         .forEach((polyline) => updateMapPolyline(polyline));
   }
 
@@ -181,10 +177,10 @@ class MapViewPersistenceAdapter {
 
   void removeMapPointFromMapPolyline(GCWMapPoint mapPoint) {
     var removablePolylines = <GCWMapPolyline>[];
-    mapWidget.polylines!.forEach((polyline) {
+    for (var polyline in mapWidget.polylines) {
       var polylineDAO = _mapPolylineDAOByUUID(polyline.uuid!);
 
-      while (polyline.points.indexOf(mapPoint) > -1) {
+      while (polyline.points.contains(mapPoint)) {
         polyline.points.remove(mapPoint);
         polylineDAO.pointUUIDs.remove(mapPoint.uuid);
       }
@@ -195,11 +191,11 @@ class MapViewPersistenceAdapter {
         polyline.update();
         updateMapPolylineDAO(polylineDAO, _mapViewDAO);
       }
-    });
+    }
 
-    removablePolylines.forEach((polyline) {
+    for (var polyline in removablePolylines) {
       removeMapPolyline(polyline);
-    });
+    }
   }
 
   void removeMapPoint(GCWMapPoint mapPoint) {
@@ -210,31 +206,31 @@ class MapViewPersistenceAdapter {
   }
 
   void removeMapPolyline(GCWMapPolyline polyline, {bool removePoints = false}) {
-    mapWidget.polylines!.remove(polyline);
+    mapWidget.polylines.remove(polyline);
     deleteMapPolylineDAO(polyline.uuid!, _mapViewDAO);
 
     if (removePoints) {
-      polyline.points.forEach((point) {
-        for (GCWMapPolyline anotherPolyline in mapWidget.polylines!) {
+      for (var point in polyline.points) {
+        for (GCWMapPolyline anotherPolyline in mapWidget.polylines) {
           if (anotherPolyline.uuid == polyline.uuid) continue;
 
-          if (anotherPolyline.points.contains(point)) return;
+          if (anotherPolyline.points.contains(point)) continue;
         }
 
         removeMapPoint(point);
-      });
+      }
     }
   }
 
   void clearMapView() {
     mapWidget.points.clear();
-    mapWidget.polylines!.clear();
+    mapWidget.polylines.clear();
     clearMapViewDAO(_mapViewDAO);
   }
 
   GCWMapPolyline createMapPolyline() {
     var polyline = GCWMapPolyline(points: []);
-    mapWidget.polylines!.add(polyline);
+    mapWidget.polylines.add(polyline);
     insertMapPolylineDAO(gcwMapPolylineToMapPolylineDAO(polyline), _mapViewDAO);
 
     return polyline;
@@ -251,7 +247,7 @@ class MapViewPersistenceAdapter {
 
   String getJsonMapViewData() {
     var json = jsonMapViewData(_mapViewDAO);
-    var regExp = RegExp("(\"uuid\":\")([\^\"]+)(\")");
+    var regExp = RegExp("(\"uuid\":\")([^\"]+)(\")");
     var id = 1;
     regExp.allMatches(json).forEach((uuid) {
       if (uuid.group(2) == null) return;
@@ -299,8 +295,8 @@ class MapViewPersistenceAdapter {
 
   String _removeEmptyElements(String json) {
     var regExpList = {
-      "(\")([\^\"]+)(\":null,)": "",
-      "(,\")([\^\"]+)(\":null})": "}",
+      "(\")([^\"]+)(\":null,)": "",
+      "(,\")([^\"]+)(\":null})": "}",
       "(\"name\":\"\",)": "",
       "(\"isVisible\":true,)": "",
       "(\"isVisible\":true})": "}"
@@ -313,13 +309,13 @@ class MapViewPersistenceAdapter {
   }
 
   String _restoreUUIDs(String json) {
-    var regExp = RegExp("(\"uuid\":\")([\^\"]+)(\")");
+    var regExp = RegExp("(\"uuid\":\")([^\"]+)(\")");
     var regExpPoly = RegExp("(\"pointUUIDs\":\\[)([^\\]]+)(\\])");
 
     regExp.allMatches(json).forEach((uuid) {
       if (uuid.group(2) == null) return;
 
-      var newId = Uuid().v4();
+      var newId = const Uuid().v4();
       var oldUuid = "\"uuid\":\"" + uuid.group(2)! + "\"";
       var newUuid = "\"uuid\":\"" + newId + "\"";
 

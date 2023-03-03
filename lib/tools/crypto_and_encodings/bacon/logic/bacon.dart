@@ -39,7 +39,7 @@ String encodeBacon(String? input, bool inverse, bool binary) {
 
   var out = input.toUpperCase().split('').map((character) {
     var bacon = AZToBacon[character];
-    return bacon != null ? bacon : '';
+    return bacon ?? '';
   }).join();
 
   if (inverse) out = _inverseString(out);

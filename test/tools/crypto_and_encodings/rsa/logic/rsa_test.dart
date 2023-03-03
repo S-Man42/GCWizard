@@ -16,12 +16,12 @@ void main() {
       {'input' : [BigInt.from(1921)], 'e': BigInt.from(17), 'p': BigInt.from(71), 'q': BigInt.from(83), 'expectedOutput' : [BigInt.from(1172)]},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, e: ${elem['e']}, p${elem['p']}, q: ${elem['q']},', () {
         var _actual = encryptRSA(elem['input'] as List<BigInt>?, elem['e'] as BigInt?, elem['p'] as BigInt?, elem['q'] as BigInt?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("RSA.decryptRSA:", () {
@@ -39,12 +39,12 @@ void main() {
       {'input' : [BigInt.from(1172)], 'd': BigInt.from(1013), 'p': BigInt.from(71), 'q': BigInt.from(83), 'expectedOutput' : [BigInt.from(1921)]},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, d: ${elem['e']}, p${elem['p']}, q: ${elem['q']},', () {
         var _actual = decryptRSA(elem['input'] as List<BigInt>, elem['d'] as BigInt?, elem['p'] as BigInt?, elem['q'] as BigInt?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("RSA.calculateD:", () {
@@ -54,11 +54,11 @@ void main() {
       {'e': BigInt.from(17), 'p': BigInt.from(71), 'q': BigInt.from(83), 'expectedOutput' : BigInt.from(1013)},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('e: ${elem['e']}p${elem['p']}, q: ${elem['q']},', () {
         var _actual = calculateD(elem['e'] as BigInt?, elem['p'] as BigInt?, elem['q'] as BigInt?);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

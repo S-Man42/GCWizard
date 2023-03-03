@@ -4,7 +4,7 @@ import 'package:gc_wizard/utils/string_utils.dart';
 class FormulaPainter {
   static final _operators = {'+', '-', '*', '/', '^', '%'};
   static final _bracket = {'[': ']', '(': ')', '{': '}'};
-  static final numberRegEx = r'(\s*(\d+.\d*|\d*\.\d|\d+)\s*)';
+  static const numberRegEx = r'(\s*(\d+.\d*|\d*\.\d|\d+)\s*)';
   static final _allCharacters = allCharacters();
   Map<String, String> _values = {};
   var _variables = <String>[];
@@ -34,7 +34,7 @@ class FormulaPainter {
     if (!coloredFormulas) return result;
 
     var subResult = '';
-    this._formulaId = formulaIndex;
+    _formulaId = formulaIndex;
 
     _variables = values.keys.map((variable) {
       return ((variable.isEmpty)) ? '' : variable;
@@ -55,7 +55,7 @@ class FormulaPainter {
       // formel references
       result = _paintOutsideFormulaReferences(formula, result, matches);
 
-      matches.forEach((match) {
+      for (var match in matches) {
         var _parserResult = [formula.substring(0, match.start), match.group(1), match.group(2), match.group(3)];
         var literal = _parserResult[2];
         var emptyLiteral = (literal ?? '').trim().isEmpty;
@@ -64,7 +64,7 @@ class FormulaPainter {
         _operatorBevor = true;
         subResult = _paintSubFormula(literal, 0);
         result = _replaceRange(result, _calcOffset(_parserResult, count: 2), null, subResult);
-      });
+      }
     } else {
       _operatorBevor = true;
       result = _paintSubFormula(formula, 0);
@@ -115,7 +115,9 @@ class FormulaPainter {
       if (_parserResult != null) {
         result = _coloredFormulaReference(result, _parserResult);
         offset = _calcOffset(_parserResult);
-      } else if (onlyFormulaReference) offset = 1;
+      } else if (onlyFormulaReference) {
+        offset = 1;
+      }
     }
     // function
     if (offset == 0) {
@@ -290,10 +292,11 @@ class FormulaPainter {
 
   String _coloredFormulaReference(String result, List<String> parts) {
     result = _replaceRange(result, 0, parts[0].length, 'b');
-    if ((int.tryParse(parts[1]) ?? 9999999 )< _formulaId)
+    if ((int.tryParse(parts[1]) ?? 9999999 )< _formulaId) {
       result = _replaceRange(result, _calcOffset(parts, count: 1), parts[1].length, 'b');
-    else
+    } else {
       result = _replaceRange(result, _calcOffset(parts, count: 1), parts[1].length, 'B');
+    }
     result = _replaceRange(result, _calcOffset(parts, count: 2), parts[2].length, 'b');
 
     return result;
@@ -371,9 +374,9 @@ class FormulaPainter {
       if (maxCommaCount != null && i >= maxCommaCount) {
         var subresult = _paintSubFormula(arguments[i], 0);
         result.add(subresult.toUpperCase());
-      } else if (arguments[i] == ',')
+      } else if (arguments[i] == ',') {
         result.add(_wordFunction(functionName) ? 'g' : 'b');
-      else {
+      } else {
         _operatorBevor = true;
         var subresult = _paintSubFormula(arguments[i], 0);
         if (_wordFunction(functionName) && _emptyValues()) subresult = subresult.replaceAll('R', 'g');
@@ -410,10 +413,12 @@ class FormulaPainter {
 
   String _coloredSpecialFunctionsLiteral(String result, List<String>? parts) {
     if (parts != null) {
-      for (var i = 0; i < parts.length; i++)
+      for (var i = 0; i < parts.length; i++) {
         result = _replaceRange(result, _calcOffset(parts, count: i), null, parts[i]);
-    } else
+      }
+    } else {
       result = _buildResultString('R', result.length);
+    }
 
     return result;
   }
@@ -515,17 +520,20 @@ class FormulaPainter {
     RegExp regex = RegExp(r'^(\S)');
     var match = regex.firstMatch(formula);
 
-    if ((match != null) && (_allCharacters.contains(match.group(1))))
+    if ((match != null) && (_allCharacters.contains(match.group(1)))) {
       return [match.group(0)!];
-    else
+    } else {
       return null;
+    }
   }
 
   String _coloredVariable(String result, List<String> parts, bool hasError) {
     var char = hasError ? 'R' : 'r';
-    if (hasError && _wordFunction(_parentFunctionName))
+    if (hasError && _wordFunction(_parentFunctionName)) {
       char = _coloredWordFunctionVariable(parts[0]);
-    else if (_numberFunction(_parentFunctionName)) char = _coloredNumberFunctionVariable(parts[0]);
+    } else if (_numberFunction(_parentFunctionName)) {
+      char = _coloredNumberFunctionVariable(parts[0]);
+    }
 
     return _replaceRange(result, 0, parts[0].length, char);
   }
@@ -587,10 +595,11 @@ class FormulaPainter {
   }
 
   String _replaceRange(String string, int start, int? length, String replacement) {
-    if (length == null)
+    if (length == null) {
       return string.replaceRange(start, start + replacement.length, replacement);
-    else
+    } else {
       return string.replaceRange(start, start + length, replacement * length);
+    }
   }
 
   int _calcOffset(List<String?> list, {int count = -1}) {
@@ -624,13 +633,14 @@ class FormulaPainter {
         if (bracketPosition < 0) bracketPosition = i;
       } else if ((formula[i] == closeBracket) && (bracketCounter > 0)) {
         bracketCounter--;
-        if (bracketCounter == 0)
+        if (bracketCounter == 0) {
           return [
             formula.substring(0, bracketPosition),
             formula[bracketPosition],
             formula.substring(bracketPosition + 1, i),
             formula[i]
           ];
+        }
       }
     }
 
@@ -673,10 +683,13 @@ class FormulaPainter {
   }
 
   String _replaceSpaces(String result) {
-    for (var i = 1; i < result.length; i++) if (result[i] == 'S') result = _replaceRange(result, i, 1, result[i - 1]);
+    for (var i = 1; i < result.length; i++) {
+      if (result[i] == 'S') result = _replaceRange(result, i, 1, result[i - 1]);
+    }
 
-    for (var i = result.length - 2; i > 0; i--)
+    for (var i = result.length - 2; i > 0; i--) {
       if (result[i] == 'S') result = _replaceRange(result, i, 1, result[i + 1]);
+    }
 
     return result;
   }

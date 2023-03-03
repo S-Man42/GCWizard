@@ -4,8 +4,8 @@ import 'package:gc_wizard/tools/crypto_and_encodings/one_time_pad/logic/one_time
 void main() {
   group("OneTimePad.encrypt:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
-      {'input' : '', 'expectedOutput' : ''},
+      {'input' : null, 'key': null, 'expectedOutput' : ''},
+      {'input' : '', 'key': null, 'expectedOutput' : ''},
       {'input' : 'ABC', 'key': null, 'expectedOutput' : 'ABC'},
       {'input' : 'ABC', 'key': '', 'expectedOutput' : 'ABC'},
 
@@ -30,12 +30,18 @@ void main() {
       {'input' : 'AbcxyZ', 'key': 'abc', 'keyOffset': 10,  'expectedOutput' : 'LNPXYZ'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, key: ${elem['key']}, keyOffset: ${elem['keyOffset']}', () {
-        var _actual = encryptOneTimePad(elem['input'] as String?, elem['key'] as String?, keyOffset: elem['keyOffset'] as int);
-        expect(_actual, elem['expectedOutput']);
+        if (elem['keyOffset'] == null) {
+          var _actual = encryptOneTimePad(elem['input'] as String?, elem['key'] as String?);
+          expect(_actual, elem['expectedOutput']);
+        } else {
+          var _actual = encryptOneTimePad(
+              elem['input'] as String?, elem['key'] as String?, keyOffset: elem['keyOffset'] as int);
+          expect(_actual, elem['expectedOutput']);
+        }
       });
-    });
+    }
   });
 
   group("OneTimePad.decrypt:", () {
@@ -66,11 +72,17 @@ void main() {
       {'expectedOutput' : 'ABCXYZ', 'key': 'abc', 'keyOffset': 10,  'input' : 'LNPXYZ'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, key: ${elem['key']}, keyOffset: ${elem['keyOffset']}', () {
-        var _actual = decryptOneTimePad(elem['input'] as String?, elem['key'] as String?, keyOffset: elem['keyOffset'] as int);
-        expect(_actual, elem['expectedOutput']);
+        if (elem['keyOffset'] == null) {
+          var _actual = decryptOneTimePad(elem['input'] as String?, elem['key'] as String?);
+          expect(_actual, elem['expectedOutput']);
+        } else {
+          var _actual = decryptOneTimePad(
+              elem['input'] as String?, elem['key'] as String?, keyOffset: elem['keyOffset'] as int);
+          expect(_actual, elem['expectedOutput']);
+        }
       });
-    });
+    }
   });
 }

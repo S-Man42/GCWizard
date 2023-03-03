@@ -11,13 +11,13 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/tools/science_and_technology/cross_sums/logic/crosstotals_range.dart';
 
-final _ALERT_MAX_OUTPUT = 200;
-final _ALERT_MAX_RANGE = 25000;
+const _ALERT_MAX_OUTPUT = 200;
+const _ALERT_MAX_RANGE = 25000;
 
 class CrossSumRange extends StatefulWidget {
   final CrossSumType type;
 
-  CrossSumRange({Key? key, this.type = CrossSumType.NORMAL}) : super(key: key);
+  const CrossSumRange({Key? key, this.type = CrossSumType.NORMAL}) : super(key: key);
 
   @override
   CrossSumRangeState createState() => CrossSumRangeState();

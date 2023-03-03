@@ -18,8 +18,9 @@ class ClipboardItem {
 
   static ClipboardItem? fromJson(String jsonString) {
     var decoded = jsonDecode(jsonString);
-    if (decoded == null || !(isJsonMap(decoded)))
+    if (decoded == null || !(isJsonMap(decoded))) {
       return null;
+    }
 
     var created = toStringOrNull(decoded['created']) ?? '0';
 
@@ -46,7 +47,9 @@ void insertIntoGCWClipboard(BuildContext context, String text, {bool useGlobalCl
             {'text': jsonDecode(existingText)['text'], 'created': DateTime.now().millisecondsSinceEpoch.toString()}));
   } else {
     gcwClipboard.insert(0, jsonEncode({'text': text, 'created': DateTime.now().millisecondsSinceEpoch.toString()}));
-    while (gcwClipboard.length > Prefs.getInt(PREFERENCE_CLIPBOARD_MAX_ITEMS)) gcwClipboard.removeLast();
+    while (gcwClipboard.length > Prefs.getInt(PREFERENCE_CLIPBOARD_MAX_ITEMS)) {
+      gcwClipboard.removeLast();
+    }
   }
 
   Prefs.setStringList(PREFERENCE_CLIPBOARD_ITEMS, gcwClipboard);

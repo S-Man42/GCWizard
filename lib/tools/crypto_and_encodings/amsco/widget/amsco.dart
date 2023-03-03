@@ -12,6 +12,8 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/amsco/logic/amsco.dart';
 
 class Amsco extends StatefulWidget {
+  const Amsco({Key? key}) : super(key: key);
+
   @override
   AmscoState createState() => AmscoState();
 }
@@ -26,7 +28,7 @@ class AmscoState extends State<Amsco> {
   var _currentMode = GCWSwitchPosition.right;
   var _currentOneCharStart = GCWSwitchPosition.left;
 
-  var _maskFormatter = WrapperForMaskTextInputFormatter(mask: '#' * 9, filter: {"#": RegExp(r'[ 0-9]')});
+  final _maskFormatter = WrapperForMaskTextInputFormatter(mask: '#' * 9, filter: {"#": RegExp(r'[ 0-9]')});
 
   @override
   void initState() {
@@ -104,9 +106,9 @@ class AmscoState extends State<Amsco> {
           break;
         default:
       }
-      return GCWDefaultOutput();
+      return const GCWDefaultOutput();
     } else if (_currentOutput.output.isEmpty) {
-      return GCWDefaultOutput();
+      return const GCWDefaultOutput();
     }
 
     return GCWMultipleOutput(

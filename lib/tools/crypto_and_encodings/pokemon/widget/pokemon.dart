@@ -6,6 +6,8 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/pokemon/logic/pokemon.dart';
 
 class Pokemon extends StatefulWidget {
+  const Pokemon({Key? key}) : super(key: key);
+
   @override
   PokemonState createState() => PokemonState();
 }

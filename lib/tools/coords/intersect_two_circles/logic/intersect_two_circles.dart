@@ -36,8 +36,9 @@ class _IntersectTwoCirclesCalculator extends IntervalCalculator {
 }
 
 Future<List<LatLng>> intersectTwoCirclesAsync(GCWAsyncExecuterParameters? jobData) async {
-  if (jobData?.parameters is! IntersectTwoCirclesJobData)
+  if (jobData?.parameters is! IntersectTwoCirclesJobData) {
     throw Exception('Unexpected data for Intersect Two Circles');
+  }
 
   var data = jobData!.parameters as IntersectTwoCirclesJobData;
   var output = intersectTwoCircles(data.coord1, data.radius1, data.coord2,

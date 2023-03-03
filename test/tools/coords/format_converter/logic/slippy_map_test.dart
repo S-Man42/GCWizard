@@ -15,16 +15,16 @@ void main() {
       {'text': 'x584.813499y363.434344', 'expectedOutput': {'format': CoordinateFormatKey.SLIPPY_MAP, 'coordinate': LatLng(46.211017406, 025.5984957422)}},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('text: ${elem['text']}', () {
         var _actual = SlippyMap.parse(elem['text'] as String)?.toLatLng();
-        if (_actual == null)
+        if (_actual == null) {
           expect(null, elem['expectedOutput']);
-        else {
+        } else {
           expect((_actual.latitude - ((elem['expectedOutput'] as Map<String, Object>)['coordinate'] as LatLng).latitude).abs() < 1e-8, true);
           expect((_actual.longitude - ((elem['expectedOutput'] as Map<String, Object>)['coordinate'] as LatLng).longitude).abs() < 1e-8, true);
         }
       });
-    });
+    }
   });
 }

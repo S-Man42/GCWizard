@@ -782,14 +782,19 @@ String decodeNavajo(String? cipherText, bool useOnlyAlphabet) {
   cipherText = cipherText.toUpperCase().replaceAll(RegExp(r'\s{3,}'), '  ');
   cipherText.split('  ').forEach((element) {
     element.split(' ').forEach((element) {
-      if (NAVAJO_DECODE_ALPHABET[element] == null) if (useOnlyAlphabet)
-        result.add(UNKNOWN_ELEMENT);
-      else if (NAVAJO_DECODE_DICTIONARY[element] == null)
-        result.add(UNKNOWN_ELEMENT);
-      else
-        result.add(enfoldText(NAVAJO_DECODE_DICTIONARY[element]!));
-      else
+      if (NAVAJO_DECODE_ALPHABET[element] == null) {
+        if (useOnlyAlphabet) {
+          result.add(UNKNOWN_ELEMENT);
+        } else {
+          if (NAVAJO_DECODE_DICTIONARY[element] == null) {
+            result.add(UNKNOWN_ELEMENT);
+          } else {
+            result.add(enfoldText(NAVAJO_DECODE_DICTIONARY[element]!));
+          }
+        }
+      } else {
         result.add(NAVAJO_DECODE_ALPHABET[element]!); // ToDo Thomas double else ??
+      }
     });
     result.add(' ');
   });
@@ -801,12 +806,13 @@ String encodeNavajo(String? plainText, bool useOnlyAlphabet) {
   if (plainText == null || plainText.isEmpty) return '';
 
   shrinkText(plainText.toUpperCase()).split(' ').forEach((element) {
-    if (useOnlyAlphabet)
+    if (useOnlyAlphabet) {
       result.add(encodeLetterWise(element));
-    else if (NAVAJO_ENCODE_DICTIONARY[element] == null)
+    } else if (NAVAJO_ENCODE_DICTIONARY[element] == null) {
       result.add(encodeLetterWise(element));
-    else
+    } else {
       result.add(NAVAJO_ENCODE_DICTIONARY[element]!);
+    }
     result.add('');
   });
   return result.join(' ').trim();
@@ -815,10 +821,11 @@ String encodeNavajo(String? plainText, bool useOnlyAlphabet) {
 String encodeLetterWise(String plainText) {
   List<String> result = <String>[];
   plainText.split('').forEach((element) {
-    if (NAVAJO_ENCODE_ALPHABET[element] == null)
+    if (NAVAJO_ENCODE_ALPHABET[element] == null) {
       result.add(element);
-    else
+    } else {
       result.add(NAVAJO_ENCODE_ALPHABET[element]!);
+    }
   });
   return result.join(' ');
 }

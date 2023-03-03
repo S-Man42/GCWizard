@@ -19,6 +19,8 @@ import 'package:tuple/tuple.dart';
 part 'package:gc_wizard/tools/crypto_and_encodings/enigma/widget/enigma_rotor_dropdown.dart';
 
 class Enigma extends StatefulWidget {
+  const Enigma({Key? key}) : super(key: key);
+
   @override
   EnigmaState createState() => EnigmaState();
 }
@@ -40,12 +42,12 @@ class EnigmaState extends State<Enigma> {
   var _isTextChange = false;
 
   var _currentNumberRotors = 3;
-  List<EnigmaRotorDropDown> _currentRotors = [];
-  List<EnigmaRotorConfiguration> _currentRotorsConfigurations = [];
+  final List<EnigmaRotorDropDown> _currentRotors = [];
+  final List<EnigmaRotorConfiguration> _currentRotorsConfigurations = [];
 
   var _currentRotorInformation = 0;
 
-  var _plugboardMaskFormatter = WrapperForMaskTextInputFormatter(
+  final _plugboardMaskFormatter = WrapperForMaskTextInputFormatter(
       mask: '## ' * 25 + '##', filter: {"#": RegExp(r'[A-Za-z]')});
 
   @override
@@ -85,6 +87,7 @@ class EnigmaState extends State<Enigma> {
         Row(
           children: <Widget>[
             Expanded(
+                flex: 1,
                 child: GCWOnOffSwitch(
                   notitle: true,
                   value: _currentReflectorMode,
@@ -93,9 +96,9 @@ class EnigmaState extends State<Enigma> {
                       _currentReflectorMode = value;
                     });
                   },
-                ),
-                flex: 1),
+                )),
             Expanded(
+                flex: 4,
                 child: _currentReflectorMode
                     ? EnigmaRotorDropDown(
                         type: EnigmaRotorType.REFLECTOR,
@@ -106,8 +109,7 @@ class EnigmaState extends State<Enigma> {
                           });
                         },
                       )
-                    : Container(),
-                flex: 4)
+                    : Container())
           ],
         ),
         GCWTextDivider(text: i18n(context, 'enigma_rotors')),
@@ -127,6 +129,7 @@ class EnigmaState extends State<Enigma> {
         Row(
           children: <Widget>[
             Expanded(
+                flex: 1,
                 child: GCWOnOffSwitch(
                   notitle: true,
                   value: _currentEntryRotorMode,
@@ -135,9 +138,9 @@ class EnigmaState extends State<Enigma> {
                       _currentEntryRotorMode = value;
                     });
                   },
-                ),
-                flex: 1),
+                )),
             Expanded(
+                flex: 4,
                 child: _currentEntryRotorMode
                     ? EnigmaRotorDropDown(
                         type: EnigmaRotorType.ENTRY_ROTOR,
@@ -148,8 +151,7 @@ class EnigmaState extends State<Enigma> {
                           });
                         },
                       )
-                    : Container(),
-                flex: 4)
+                    : Container())
           ],
         ),
         GCWTextDivider(text: i18n(context, 'enigma_plugboard')),
@@ -191,8 +193,9 @@ class EnigmaState extends State<Enigma> {
 
     if (_allRotors.isEmpty) return Container();
 
-    if (_currentRotorInformation >= _allRotors.length)
+    if (_currentRotorInformation >= _allRotors.length) {
       _currentRotorInformation = 0;
+    }
 
     var currentRotor = _allRotors[_currentRotorInformation].rotor;
 
@@ -250,16 +253,16 @@ class EnigmaState extends State<Enigma> {
     }
 
     return Padding(
+      padding: const EdgeInsets.only(top: 10),
       child: Column(
         children: _currentRotors,
       ),
-      padding: EdgeInsets.only(top: 10),
     );
   }
 
   Widget _buildOutput() {
     if (!_isTextChange) {
-      FocusScope.of(context).requestFocus(new FocusNode());
+      FocusScope.of(context).requestFocus(FocusNode());
     } else {
       _isTextChange = false;
     }
@@ -275,18 +278,15 @@ class EnigmaState extends State<Enigma> {
     if (_currentReflectorMode) rotorConfigurations.add(_currentReflector);
 
     var key = EnigmaKey(rotorConfigurations,
-        plugboard: Map<String, String>.fromIterable(
-            _currentPlugboard
+        plugboard: { for (var digraph in _currentPlugboard
                 .split(' ')
-                .where((String digraph) => digraph.length == 2),
-            key: (digraph) => digraph[0] as String,
-            value: (digraph) => digraph[1] as String));
+                .where((String digraph) => digraph.length == 2)) digraph[0] : digraph[1] });
 
     var results = calculateEnigmaWithMessageKey(_currentInput, key);
 
     var output = <Object>[];
 
-    results.forEach((result) {
+    for (var result in results) {
       output.add(result.text);
 
       var rotorSettings = result.value;
@@ -305,11 +305,12 @@ class EnigmaState extends State<Enigma> {
             rotorSetting.join(' - '),
         copyText: rotorSetting.join(),
       ));
-    });
+    }
 
-    if (results.length == 2)
+    if (results.length == 2) {
       output.insert(
           2, GCWTextDivider(text: i18n(context, 'enigma_usedmessagekey')));
+    }
 
     return GCWMultipleOutput(children: output);
   }

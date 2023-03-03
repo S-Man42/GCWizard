@@ -31,10 +31,11 @@ import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/leng
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/variable_string_expander.dart';
 import 'package:intl/intl.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 
-final _WARNING_COUNT = 500;
-final _TOOMANY_COUNT = 5000;
+const _WARNING_COUNT = 500;
+const _TOOMANY_COUNT = 5000;
 
 class VariableCoordinate extends StatefulWidget {
   final Formula formula;
@@ -46,7 +47,7 @@ class VariableCoordinate extends StatefulWidget {
 }
 
 class VariableCoordinateState extends State<VariableCoordinate> {
-  Widget _output = GCWCoordsOutput(outputs: []);
+  Widget _output = GCWCoordsOutput(outputs: const []);
   GCWSwitchPosition _currentCoordMode = GCWSwitchPosition.left;
 
   Length _currentLengthUnit = defaultLengthUnit;
@@ -68,7 +69,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
   List<GCWMapPoint> _currentMapPoints = [];
 
   bool _isOnLocationAccess = false;
-  var _location = Location();
+  final _location = Location();
 
   @override
   void initState() {
@@ -79,7 +80,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
 
     if (_currentProjectionMode) {
       _currentDistanceInput = widget.formula.projection!.distance;
-      _currentLengthUnit = baseLengths.firstWhere((unit) => unit.name == widget.formula.projection!.distanceUnit);
+      _currentLengthUnit = baseLengths.firstWhere((unit) => unit.name == widget.formula.projection!.distanceUnit.name);
       _currentBearingInput = widget.formula.projection!.bearing;
       _currentReverseBearing = widget.formula.projection!.reverse;
     }
@@ -141,6 +142,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
           children: [
             Expanded(
               child: Container(
+                padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
                 child: GCWTextField(
                   controller: _inputController,
                   onChanged: (value) {
@@ -149,7 +151,6 @@ class VariableCoordinateState extends State<VariableCoordinate> {
                     updateFormula(widget.formula);
                   },
                 ),
-                padding: EdgeInsets.only(right: DEFAULT_MARGIN),
               ),
             ),
             GCWIconButton(
@@ -235,8 +236,9 @@ class VariableCoordinateState extends State<VariableCoordinate> {
       varcoords: true,
       onUpdateEntry: _updateEntry,
       onRemoveEntry: (Object id, BuildContext context) {
-        if (id is int)
+        if (id is int) {
           _removeEntry(id, context);
+        }
       },
     );
   }
@@ -250,18 +252,19 @@ class VariableCoordinateState extends State<VariableCoordinate> {
                   Expanded(
                       flex: 3,
                       child: Container(
+                        padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
                         child: GCWTextField(
                           hintText: i18n(context, 'common_distance_hint'),
                           controller: _distanceController,
                           onChanged: (text) {
                             _currentDistanceInput = text;
 
-                            if (_currentProjectionMode)
+                            if (_currentProjectionMode) {
                               widget.formula.projection!.distance = _currentDistanceInput;
+                            }
                             updateFormula(widget.formula);
                           },
                         ),
-                        padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
                       )),
                   Expanded(
                       flex: 1,
@@ -272,8 +275,9 @@ class VariableCoordinateState extends State<VariableCoordinate> {
                             setState(() {
                               _currentLengthUnit = value;
 
-                              if (_currentProjectionMode)
+                              if (_currentProjectionMode) {
                                 widget.formula.projection!.distanceUnit = _currentLengthUnit;
+                              }
                               updateFormula(widget.formula);
                             });
                           }))
@@ -288,13 +292,14 @@ class VariableCoordinateState extends State<VariableCoordinate> {
                     onChanged: (text) {
                       _currentBearingInput = text;
 
-                      if (_currentProjectionMode)
+                      if (_currentProjectionMode) {
                         widget.formula.projection!.bearing = _currentBearingInput;
+                      }
                       updateFormula(widget.formula);
                     },
                   ),
                 ),
-                Expanded(
+                const Expanded(
                   flex: 1,
                   child: GCWText(text: '°'),
                 ),
@@ -313,8 +318,9 @@ class VariableCoordinateState extends State<VariableCoordinate> {
                         setState(() {
                           _currentReverseBearing = value;
 
-                          if (_currentProjectionMode)
+                          if (_currentProjectionMode) {
                             widget.formula.projection!.reverse = _currentReverseBearing;
+                          }
                           updateFormula(widget.formula);
                         });
                       },
@@ -329,9 +335,9 @@ class VariableCoordinateState extends State<VariableCoordinate> {
     Map<String, String> _substitutions = {};
     if (widget.formula.values.isEmpty) return _substitutions;
 
-    widget.formula.values.forEach((value) {
+    for (var value in widget.formula.values) {
       _substitutions.putIfAbsent(value.key, () => value.value);
-    });
+    }
 
     if (_currentFromInput.isNotEmpty &&
         _currentToInput.isNotEmpty) {
@@ -447,7 +453,14 @@ class VariableCoordinateState extends State<VariableCoordinate> {
               parameters: [NumberFormat('0.0').format(locationData.accuracy)]));
         }
 
-        var coords = BaseCoordinate(locationData.latitude, locationData.longitude);
+        LatLng _coords;
+        if (locationData.latitude == null || locationData.longitude == null) {
+          _coords = defaultCoordinate;
+        } else {
+          _coords = LatLng(locationData.latitude!, locationData.longitude!);
+        }
+
+        var coords = buildDefaultCoordinatesByFormat(_coords);
         String insertedCoord;
         if (defaultCoordinateFormat.type == CoordinateFormatKey.DMM) {
           //Insert Geocaching Format with exact 3 digits

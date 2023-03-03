@@ -9,6 +9,8 @@ import 'package:gc_wizard/tools/science_and_technology/telegraphs/wigwag/logic/w
 import 'package:gc_wizard/utils/constants.dart';
 
 class WigWagSemaphoreTelegraph extends StatefulWidget {
+  const WigWagSemaphoreTelegraph({Key? key}) : super(key: key);
+
   @override
   WigWagSemaphoreTelegraphState createState() => WigWagSemaphoreTelegraphState();
 }

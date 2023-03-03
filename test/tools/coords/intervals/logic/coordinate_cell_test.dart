@@ -66,7 +66,7 @@ void main() {
       {'point': LatLng(10.0, 12.0), 'expectedOutput': [5, 89]},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('point: ${elem['point']}', () {
         var _actualDouble = cell.bearingTo(elem['point'] as LatLng);
         var _actual = [
@@ -75,6 +75,6 @@ void main() {
         ];
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

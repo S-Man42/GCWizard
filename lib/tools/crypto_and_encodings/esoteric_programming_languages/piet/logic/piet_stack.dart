@@ -1,7 +1,7 @@
 part of 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/piet/logic/piet_language.dart';
 
 class _PietStack {
-  List<int> _stack = <int>[];
+  final List<int> _stack = <int>[];
   int get length => _stack.length;
   bool get isNotEmpty => length > 0;
 
@@ -113,14 +113,15 @@ class _PietStack {
     if (numberOfRolls == null || depthOfRoll == null) return;
     int absNumberOfRolls = numberOfRolls.abs();
 
-    if (numberOfRolls > 0)
+    if (numberOfRolls > 0) {
       RotateRight(depthOfRoll, absNumberOfRolls);
-    else
+    } else {
       RotateLeft(depthOfRoll, absNumberOfRolls);
+    }
   }
 
   Tuple2<bool, int?> tryPop() {
-    if (_stack.length < 1) return Tuple2<bool, int?>(false, null); //null
+    if (_stack.isEmpty) return const Tuple2<bool, int?>(false, null); //null
 
     var result = _stack.last;
     _stack.removeLast();
@@ -129,7 +130,7 @@ class _PietStack {
   }
 
   Tuple2<bool, Tuple2<int?, int?>> tryPop2() {
-    if (_stack.length < 2) return Tuple2<bool, Tuple2<int?, int?>>(false, Tuple2<int, int>(0, 0));
+    if (_stack.length < 2) return const Tuple2<bool, Tuple2<int?, int?>>(false, Tuple2<int, int>(0, 0));
 
     return Tuple2<bool, Tuple2<int?, int?>>(true, Tuple2<int?, int?>(pop(), pop()));
   }
@@ -142,15 +143,20 @@ class _PietStack {
     var stack1 = _PietStack();
     var stack2 = _PietStack();
     for (var i = 0; i < depth; i++) {
-      if (i < absoluteIterations)
+      if (i < absoluteIterations) {
         stack1.push(pop());
-      else
+      } else {
         stack2.push(pop());
+      }
     }
 
-    while (stack1.isNotEmpty) push(stack1.pop());
+    while (stack1.isNotEmpty) {
+      push(stack1.pop());
+    }
 
-    while (stack2.isNotEmpty) push(stack2.pop());
+    while (stack2.isNotEmpty) {
+      push(stack2.pop());
+    }
 
     return true;
   }
@@ -163,15 +169,20 @@ class _PietStack {
     var stack1 = _PietStack();
     var stack2 = _PietStack();
     for (var i = depth; i > 0; i--) {
-      if (i <= absoluteIterations)
+      if (i <= absoluteIterations) {
         stack1.push(pop());
-      else
+      } else {
         stack2.push(pop());
+      }
     }
 
-    while (stack2.isNotEmpty) push(stack2.pop());
+    while (stack2.isNotEmpty) {
+      push(stack2.pop());
+    }
 
-    while (stack1.isNotEmpty) push(stack1.pop());
+    while (stack1.isNotEmpty) {
+      push(stack1.pop());
+    }
 
     return true;
   }

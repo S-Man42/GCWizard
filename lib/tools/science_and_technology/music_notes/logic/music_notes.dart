@@ -298,18 +298,20 @@ Segments encodeNotes(String input, NotesCodebook notes, Map<String, String> tran
   // sorted by length (longest first)
   var entries = translationMap.entries.toList();
   entries.sort((MapEntry<String, String> a, MapEntry<String, String> b) {
-    if (b.value.length != a.value.length)
+    if (b.value.length != a.value.length) {
       return b.value.length.compareTo(a.value.length);
-    else {
+    } else {
       var aKey = int.parse(a.key.split('_')[0]);
       var bKey = int.parse(b.key.split('_')[0]);
       var aMainEntry = (aKey >= mainEntrysStart) && (aKey <= mainEntrysEnd);
       var bMainEntry = (bKey >= mainEntrysStart) && (bKey <= mainEntrysEnd);
-      if (aMainEntry && bMainEntry)
+      if (aMainEntry && bMainEntry) {
         return bKey.compareTo(aKey);
-      else if (aMainEntry)
+      } else if (aMainEntry) {
         return -1;
-      else if (bMainEntry) return 1;
+      } else if (bMainEntry) {
+        return 1;
+      }
       return 0;
     }
   });
@@ -322,7 +324,9 @@ Segments encodeNotes(String input, NotesCodebook notes, Map<String, String> tran
 
   List<String> inputs = input.split(RegExp(r'\s'));
 
-  for (int i = 0; i < inputs.length; i++) result.add(CODEBOOK[inputs[i]]!);
+  for (int i = 0; i < inputs.length; i++) {
+    result.add(CODEBOOK[inputs[i]]!);
+  }
 
   return Segments(displays: result);
 }
@@ -365,12 +369,13 @@ SegmentsChars decodeNotes(List<String>? inputs, NotesCodebook notes) {
     } else if (input.contains(bLabel)) {
       display.add(input.replaceAll(bLabel, ''));
       display.add(bLabel);
-    } else
+    } else {
       display.add(input);
+    }
 
-    if (CODEBOOK.map((key, value) => MapEntry(key.join(), value.toString()))[input.split('').join()] == null)
+    if (CODEBOOK.map((key, value) => MapEntry(key.join(), value.toString()))[input.split('').join()] == null) {
       char = char + UNKNOWN_ELEMENT;
-    else {
+    } else {
       charH = CODEBOOK.map((key, value) => MapEntry(key.join(), value.toString()))[input.split('').join()] ?? '';
       char = char + charH;
     }
@@ -392,8 +397,9 @@ Map<String, bool> filterVisibleHelpLines(Map<String, bool> displayedSegments) {
         displayedSegments[helpLine3] = false;
         if (!_containsNote([notePosition[5], notePosition[6]], displayedSegments)) {
           displayedSegments[helpLine2] = false;
-          if (!_containsNote([notePosition[7], notePosition[8]], displayedSegments))
+          if (!_containsNote([notePosition[7], notePosition[8]], displayedSegments)) {
             displayedSegments[helpLine1] = false;
+          }
         }
       }
     }
@@ -405,8 +411,9 @@ Map<String, bool> filterVisibleHelpLines(Map<String, bool> displayedSegments) {
       displayedSegments[helpLineN3] = false;
       if (!_containsNote([notePosition[23], notePosition[22]], displayedSegments)) {
         displayedSegments[helpLineN2] = false;
-        if (!_containsNote([notePosition[21], notePosition[20]], displayedSegments))
+        if (!_containsNote([notePosition[21], notePosition[20]], displayedSegments)) {
           displayedSegments[helpLineN1] = false;
+        }
       }
     }
   }
@@ -414,7 +421,9 @@ Map<String, bool> filterVisibleHelpLines(Map<String, bool> displayedSegments) {
 }
 
 bool _containsNote(List<String> notes, Map<String, bool> displayedSegments) {
-  for (var note in notes) if (displayedSegments[note] != null) return true;
+  for (var note in notes) {
+    if (displayedSegments[note] != null) return true;
+  }
   return false;
 }
 

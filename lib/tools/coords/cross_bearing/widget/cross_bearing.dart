@@ -18,6 +18,8 @@ import 'package:latlong2/latlong.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 
 class CrossBearing extends StatefulWidget {
+  const CrossBearing({Key? key}) : super(key: key);
+
   @override
   CrossBearingState createState() => CrossBearingState();
 }
@@ -144,15 +146,15 @@ class CrossBearingState extends State<CrossBearing> {
         barrierDismissible: false,
         builder: (context) {
           return Center(
-            child: Container(
+            child: SizedBox(
+              height: 220,
+              width: 150,
               child: GCWAsyncExecuter<LatLng?>(
                 isolatedFunction: intersectBearingsAsync,
                 parameter: _buildJobData,
                 onReady: (data) => _showOutput(data),
                 isOverlay: true,
               ),
-              height: 220,
-              width: 150,
             ),
           );
         },

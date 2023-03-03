@@ -19,6 +19,8 @@ import 'package:gc_wizard/utils/constants.dart';
 import 'package:latlong2/latlong.dart';
 
 class Resection extends StatefulWidget {
+  const Resection({Key? key}) : super(key: key);
+
   @override
   ResectionState createState() => ResectionState();
 }
@@ -35,7 +37,7 @@ class ResectionState extends State<Resection> {
   var _currentOutputFormat = defaultCoordinateFormat;
   List<String> _currentOutput = [];
   var _currentMapPoints = <GCWMapPoint>[];
-  List<GCWMapPolyline> _currentMapPolylines = [];
+  final List<GCWMapPolyline> _currentMapPolylines = [];
   final _ellipsoid = defaultEllipsoid;
 
   @override
@@ -106,15 +108,15 @@ class ResectionState extends State<Resection> {
         barrierDismissible: false,
         builder: (context) {
           return Center(
-            child: Container(
+            child: SizedBox(
+              height: 220,
+              width: 150,
               child: GCWAsyncExecuter<List<LatLng>>(
                 isolatedFunction: resectionAsync,
                 parameter: _buildJobData,
                 onReady: (data) => _showOutput(data),
                 isOverlay: true,
               ),
-              height: 220,
-              width: 150,
             ),
           );
         },
@@ -185,13 +187,13 @@ class ResectionState extends State<Resection> {
 
     _currentMapPoints.addAll(intersectionMapPoints);
 
-    intersectionMapPoints.forEach((intersection) {
+    for (var intersection in intersectionMapPoints) {
       _currentMapPolylines.addAll([
         GCWMapPolyline(points: [intersection, _currentMapPoints[0]]),
         GCWMapPolyline(points: [intersection, _currentMapPoints[1]]),
         GCWMapPolyline(points: [intersection, _currentMapPoints[2]]),
       ]);
-    });
+    }
 
     _currentOutput = _currentIntersections
         .map((intersection) => formatCoordOutput(intersection, _currentOutputFormat, defaultEllipsoid))

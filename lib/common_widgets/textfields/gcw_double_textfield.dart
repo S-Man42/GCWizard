@@ -48,8 +48,9 @@ class _GCWDoubleTextFieldState extends State<GCWDoubleTextField> {
       hintText: widget.hintText,
       onChanged: (text) {
         setState(() {
-          if (!isDouble(text))
+          if (!isDouble(text)) {
             return;
+          }
 
           double _value;
 
@@ -70,7 +71,7 @@ class _GCWDoubleTextFieldState extends State<GCWDoubleTextField> {
       },
       controller: widget.controller,
       inputFormatters: [widget.textInputFormatter ?? _doubleInputFormatter],
-      keyboardType: TextInputType.numberWithOptions(signed: true, decimal: true),
+      keyboardType: const TextInputType.numberWithOptions(signed: true, decimal: true),
     );
   }
 }

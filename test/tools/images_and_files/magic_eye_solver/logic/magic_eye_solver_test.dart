@@ -25,12 +25,12 @@ void main() {
       {'input' : 'thumbsup.jpg', 'expectedOutput' : 56},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () async {
         var _actual = await decodeImage(_getFileData(elem['input'] as String), null, null);
         expect(_actual?.item3, elem['expectedOutput']);
       });
-    });
+    }
   });
 
 }

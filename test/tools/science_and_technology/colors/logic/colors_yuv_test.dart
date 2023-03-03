@@ -10,7 +10,7 @@ void main() {
       {'input' : RGB(255, 255, 255), 'expectedOutput' : YUV(1.0, 0.0, 0.0)},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var yuv = YUV.fromRGB(elem['input'] as RGB);
         expect((yuv.y - (elem['expectedOutput'] as YUV).y).abs() < 1e-5, true);
@@ -22,7 +22,7 @@ void main() {
         expect((rgb.green - (elem['input'] as RGB).green).abs() < 1e-5, true);
         expect((rgb.blue - (elem['input'] as RGB).blue).abs() < 1e-5, true);
       });
-    });
+    }
   });
 
   //implicitely tests YPbPr because of the conversion RGB <-> YPbPr <-> YCbCr
@@ -33,7 +33,7 @@ void main() {
       {'input' : RGB(255, 255, 255), 'expectedOutput' : YCbCr(235.0, 128.0, 128.0)},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var yCbCr = YCbCr.fromRGB(elem['input'] as RGB);
         expect((yCbCr.y - (elem['expectedOutput'] as YCbCr).y).abs() < 1e-5, true);
@@ -45,7 +45,7 @@ void main() {
         expect((rgb.green - (elem['input'] as RGB).green).abs() < 1e-5, true);
         expect((rgb.blue - (elem['input'] as RGB).blue).abs() < 1e-5, true);
       });
-    });
+    }
   });
 
   group("Colors.YIQ:", () {
@@ -55,7 +55,7 @@ void main() {
       {'input' : RGB(255, 255, 255), 'expectedOutput' : YIQ(1.0, 0.0, 0.0)},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var yiq = YIQ.fromRGB(elem['input'] as RGB);
         expect((yiq.y - (elem['expectedOutput'] as YIQ).y).abs() < 1e-5, true);
@@ -67,6 +67,6 @@ void main() {
         expect((rgb.green - (elem['input'] as RGB).green).abs() < 1e-5, true);
         expect((rgb.blue - (elem['input'] as RGB).blue).abs() < 1e-5, true);
       });
-    });
+    }
   });
 }

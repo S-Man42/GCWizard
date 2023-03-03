@@ -13,6 +13,8 @@ import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit
 import 'package:intl/intl.dart';
 
 class Projectiles extends StatefulWidget {
+  const Projectiles({Key? key}) : super(key: key);
+
   @override
   ProjectilesState createState() => ProjectilesState();
 }

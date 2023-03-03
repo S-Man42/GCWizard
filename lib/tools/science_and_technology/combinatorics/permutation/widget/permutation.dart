@@ -8,6 +8,8 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/science_and_technology/combinatorics/permutation/logic/permutation.dart';
 
 class Permutation extends StatefulWidget {
+  const Permutation({Key? key}) : super(key: key);
+
   @override
   PermutationState createState() => PermutationState();
 }
@@ -44,7 +46,7 @@ class PermutationState extends State<Permutation> {
 
   Widget _buildOutput(BuildContext context) {
     if (_currentInput.isEmpty) {
-      return GCWDefaultOutput();
+      return const GCWDefaultOutput();
     }
 
     var out = generatePermutations(_currentInput, avoidDuplicates: !_currentShowDuplicates);

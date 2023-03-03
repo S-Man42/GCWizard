@@ -25,13 +25,14 @@ const _OHLSEN_RELATIVE_DISPLAY_WIDTH = 150;
 const _OHLSEN_RELATIVE_DISPLAY_HEIGHT = 160;
 const _OHLSEN_RADIUS = 10.0;
 
-//ignore: must_be_immutable
-class _OhlsenSegmentDisplay extends NSegmentDisplay {
-  final Map<String, bool> segments;
-  final bool readOnly;
-  final void Function(Map<String, bool>)? onChanged;
 
-  _OhlsenSegmentDisplay({Key? key, required this.segments, this.readOnly = false, this.onChanged})
+class _OhlsenSegmentDisplay extends NSegmentDisplay {
+
+  _OhlsenSegmentDisplay({
+      Key? key,
+      required Map<String, bool> segments,
+      bool readOnly = false,
+      void Function(Map<String, bool>)? onChanged})
       : super(
             key: key,
             initialSegments: _INITIAL_SEGMENTS,

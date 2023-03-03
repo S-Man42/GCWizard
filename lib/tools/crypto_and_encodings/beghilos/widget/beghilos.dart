@@ -11,6 +11,8 @@ import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/w
 import 'package:gc_wizard/utils/constants.dart';
 
 class Beghilos extends StatefulWidget {
+  const Beghilos({Key? key}) : super(key: key);
+
   @override
   BeghilosState createState() => BeghilosState();
 }
@@ -78,7 +80,7 @@ class BeghilosState extends State<Beghilos> {
         ? decodeBeghilos(_currentInputDecode)
         : encodeBeghilos(_currentInputEncode.text);
 
-    if (textOutput.isEmpty) return GCWDefaultOutput();
+    if (textOutput.isEmpty) return const GCWDefaultOutput();
 
     _currentDisplays = encodeSegment(
         _currentMode == GCWSwitchPosition.left ? textOutput : _currentInputEncode.text, SegmentDisplayType.SEVEN);

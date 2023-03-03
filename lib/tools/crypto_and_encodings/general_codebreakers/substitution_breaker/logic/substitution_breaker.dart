@@ -11,8 +11,9 @@ class SubstitutionBreakerJobData {
 }
 
 Future<SubstitutionBreakerResult?> break_cipherAsync(GCWAsyncExecuterParameters? jobData) async {
-  if (jobData?.parameters is! SubstitutionBreakerJobData)
+  if (jobData?.parameters is! SubstitutionBreakerJobData) {
     return SubstitutionBreakerResult(errorCode: SubstitutionBreakerErrorCode.OK);
+  }
 
   var data = jobData!.parameters as SubstitutionBreakerJobData;
   var output = _break_cipher(data.input, data.quadgrams);
@@ -23,8 +24,9 @@ Future<SubstitutionBreakerResult?> break_cipherAsync(GCWAsyncExecuterParameters?
 }
 
 SubstitutionBreakerResult _break_cipher(String? input, Quadgrams? quadgrams) {
-  if (input == null || input.isEmpty || quadgrams == null)
+  if (input == null || input.isEmpty || quadgrams == null) {
     return SubstitutionBreakerResult(errorCode: SubstitutionBreakerErrorCode.OK);
+  }
 
   return _convertBreakerResult(break_cipher(quadgrams, input));
 }

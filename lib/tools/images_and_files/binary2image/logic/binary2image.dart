@@ -40,10 +40,11 @@ DrawableImageData? binary2image(String input, bool squareFormat, bool invers) {
   if (!squareFormat) filter += "\n";
   input = _filterInput(input, filter);
 
-  if (invers)
+  if (invers) {
     input = substitution(input, {filter[0]: '1', filter[1]: '0'});
-  else
+  } else {
     input = substitution(input, {filter[0]: '0', filter[1]: '1'});
+  }
 
   if (squareFormat) {
     var size = sqrt(input.length).ceil();
@@ -68,7 +69,7 @@ String _buildFilter(String input) {
   if (alphabet.length == 3 && alphabet.contains(' ')) return alphabet.replaceAll(' ', '');
 
   var filter = '';
-  var map = Map<String, int>();
+  var map = <String, int>{};
 
   alphabet.split('').forEach((char) {
     map.addAll({char: char.allMatches(input).length});
@@ -86,10 +87,11 @@ String _buildFilter(String input) {
   filter = filter.split('').reversed.join();
 
   filter = filter.substring(0, 3);
-  if (filter.contains(' '))
+  if (filter.contains(' ')) {
     return filter.replaceAll(' ', '');
-  else
+  } else {
     return filter.substring(0, 2);
+  }
 }
 
 String _filterInput(String input, String filter) {
@@ -106,8 +108,9 @@ DrawableImageData? binary2Image(String? input) {
 
   var lines = input.split('\n');
 
-  if (lines.length == 1)
+  if (lines.length == 1) {
     lines.addAll(List<String>.filled(9, lines[0]));
+  }
   return DrawableImageData(lines, colorMap);
 }
 

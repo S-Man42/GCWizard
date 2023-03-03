@@ -93,8 +93,9 @@ class _EllipsoidPickerState extends State<_EllipsoidPicker> {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    Expanded(child: GCWText(text: i18n(context, 'coords_ellipsoid_majoraxis')), flex: 2),
+                    Expanded(flex: 2, child: GCWText(text: i18n(context, 'coords_ellipsoid_majoraxis'))),
                     Expanded(
+                        flex: 3,
                         child: GCWDoubleTextField(
                           controller: _firstCustomValueController,
                           min: 0.0,
@@ -104,13 +105,13 @@ class _EllipsoidPickerState extends State<_EllipsoidPicker> {
                               _setCurrentEllipsoidAndEmitOnChange(context);
                             });
                           },
-                        ),
-                        flex: 3)
+                        ))
                   ],
                 ),
                 Row(
                   children: <Widget>[
                     Expanded(
+                        flex: 2,
                         child: GCWDropDown<String>(
                           value: _currentEllipsoidCustom2ndValue,
                           items: _secondCustomValues.entries.map((MapEntry<String, String> value) {
@@ -125,9 +126,9 @@ class _EllipsoidPickerState extends State<_EllipsoidPicker> {
                               _setCurrentEllipsoidAndEmitOnChange(context);
                             });
                           },
-                        ),
-                        flex: 2),
+                        )),
                     Expanded(
+                        flex: 3,
                         child: GCWDoubleTextField(
                           controller: _secondCustomValueController,
                           min: 0.0,
@@ -137,8 +138,7 @@ class _EllipsoidPickerState extends State<_EllipsoidPicker> {
                               _setCurrentEllipsoidAndEmitOnChange(context);
                             });
                           },
-                        ),
-                        flex: 3)
+                        ))
                   ],
                 ),
               ],
@@ -156,8 +156,8 @@ class _EllipsoidPickerState extends State<_EllipsoidPicker> {
     ];
 
     return Padding(
+      padding: const EdgeInsets.only(top: 20),
       child: GCWColumnedMultilineOutput(data: ellipsoidData),
-      padding: EdgeInsets.only(top: 20),
     );
   }
 

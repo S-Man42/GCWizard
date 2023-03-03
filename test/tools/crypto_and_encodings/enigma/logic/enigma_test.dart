@@ -21,7 +21,7 @@ void main() {
       {'input' : 'AAAA', 'expectedOutput' : 'BFY'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, key: $key', () {
         var _actual = calculateEnigma(elem['input'] as String?, key).value
             .sublist(1,4) //ignore ETW and UKW
@@ -31,7 +31,7 @@ void main() {
             .join();
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   // test auto-decryption of message with message key; source: Enigma GeoCoin
@@ -120,11 +120,17 @@ void main() {
       },
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, key: ${elem['key']}', () {
         var _actual = calculateEnigmaWithMessageKey(elem['input'] as String, elem['key'] as EnigmaKey);
-        expect(_actual, elem['expectedOutput']);
+
+        var expected =elem['expectedOutput'] as List<IntegerListText>;
+        expect(_actual.length, expected.length);
+
+        for (var i=0; i< _actual.length; i++){
+          expect(_actual[i], _actual[i]);
+        }
       });
-    });
+    }
   });
 }

@@ -102,15 +102,15 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
             barrierDismissible: false,
             builder: (context) {
               return Center(
-                child: Container(
+                child: SizedBox(
+                  height: 220,
+                  width: 150,
                   child: GCWAsyncExecuter<Object?>(
                     isolatedFunction: _downloadFileAsync,
                     parameter: _buildJobDataDownload,
                     onReady: (data) => _saveDownload(data),
                     isOverlay: true,
                   ),
-                  height: 220,
-                  width: 150,
                 ),
               );
             },
@@ -144,7 +144,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
         controller: _urlController,
         filled: widget.isDialog,
         hintText: i18n(context, 'common_loadfile_openfrom_url_address'),
-        hintColor: widget.isDialog ? Color.fromRGBO(150, 150, 150, 1.0) : themeColors().textFieldHintText(),
+        hintColor: widget.isDialog ? const Color.fromRGBO(150, 150, 150, 1.0) : themeColors().textFieldHintText(),
         onChanged: (String value) {
           if (value.trim().isEmpty) {
             _currentUrl = null;
@@ -156,10 +156,10 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
     if (widget.isDialog) {
       return Column(
         children: [
-          Container(
-            child: urlTextField,
+          SizedBox(
             width: 220,
             height: 50,
+            child: urlTextField,
           ),
           _buildDownloadButton()
         ],
@@ -169,7 +169,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
         children: [
           Expanded(child: urlTextField),
           Container(
-            padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
+            padding: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
             child: _buildDownloadButton(),
           )
         ],
@@ -182,7 +182,9 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
     if (data is Uint8List && _currentUrl != null) {
       _loadedFile =
           GCWFile(name: Uri.decodeFull(_currentUrl!).split('/').last.split('?').first, path: _currentUrl, bytes: data);
-    } else if (data is String) showToast(i18n(context, data));
+    } else if (data is String) {
+      showToast(i18n(context, data));
+    }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       widget.onLoaded(_loadedFile);
@@ -319,9 +321,9 @@ Future<Object?> _downloadFileAsync(GCWAsyncExecuterParameters? jobData) async {
   if (uri == null) return null;
   var request = http.Request("GET", uri);
   var client = http.Client();
-  await client.send(request).timeout(Duration(seconds: 10), onTimeout: () {
-    sendAsyncPort?.send(null);
-    return Future.value(null); //http.Response('Error', 500);
+  await client.send(request).timeout(const Duration(seconds: 10), onTimeout: () {
+    //sendAsyncPort?.send(null);
+    return http.StreamedResponse(Stream.fromIterable([]), 500); //http.Response('Error', 500);
   }).then((http.StreamedResponse response) async {
     if (response.statusCode != 200) {
       sendAsyncPort?.send('common_loadfile_exception_responsestatus');
@@ -330,7 +332,7 @@ Future<Object?> _downloadFileAsync(GCWAsyncExecuterParameters? jobData) async {
     _total = response.contentLength ?? 0;
     int progressStep = max(_total ~/ 100, 1);
 
-    await response.stream.listen((value) {
+    response.stream.listen((value) {
       _bytes.addAll(value);
 
       if (_total != 0 &&
@@ -384,9 +386,7 @@ Future<GCWFile?> _openFileExplorer({List<FileType>? allowedFileTypes}) async {
     if (bytes == null) return null;
 
     return GCWFile(path: path, name: files.first.name, bytes: bytes);
-  } on PlatformException catch (e) {
-    print("Unsupported operation " + e.toString());
-  }
+  } catch (e) {}
   return null;
 }
 
@@ -404,8 +404,9 @@ bool _hasUnsupportedTypes(List<FileType>? allowedExtensions) {
   if (allowedExtensions == null) return false;
   if (kIsWeb) return false;
 
-  for (int i = 0; i < allowedExtensions.length; i++)
+  for (int i = 0; i < allowedExtensions.length; i++) {
     if (_UNSUPPORTED_FILEPICKERPLUGIN_TYPES.contains(allowedExtensions[i])) return true;
+  }
 
   return false;
 }

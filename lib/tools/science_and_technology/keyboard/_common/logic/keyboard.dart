@@ -1785,15 +1785,16 @@ Map<String, String> buildConvertingMap(KeyboardType type, ConvertDirection direc
       keyboardMap = ColemakToNormal;
       break;
   }
-  if (direction == ConvertDirection.toNormal)
+  if (direction == ConvertDirection.toNormal) {
     return keyboardMap;
-  else
+  } else {
     return switchMapKeyValue(keyboardMap);
+  }
 }
 
 String encodeKeyboard(String? input, KeyboardType keyboardFrom, KeyboardType keyboardTo) {
-  Map<String, String> mapSourceToNormal = new Map<String, String>();
-  Map<String, String> mapNormalToTarget = new Map<String, String>();
+  Map<String, String> mapSourceToNormal = <String, String>{};
+  Map<String, String> mapNormalToTarget = <String, String>{};
 
   if (input == null || input.isEmpty) return '';
 
@@ -1806,23 +1807,26 @@ String encodeKeyboard(String? input, KeyboardType keyboardFrom, KeyboardType key
       var target = mapNormalToTarget[normal];
       if (target != null) {
         return target;
-      } else
+      } else {
         return '';
-    } else
+      }
+    } else {
       return '';
+    }
   }).join('');
 }
 
 String convert(String input, Map<String, String> layout) {
   return input.split('').map((character) {
-    if (character == ' ')
+    if (character == ' ') {
       return ' ';
-    else if (character == '.')
+    } else if (character == '.') {
       return '.';
-    else if (layout[character] == null)
+    } else if (layout[character] == null) {
       return ' ';
-    else
+    } else {
       return layout[character];
+    }
   }).join('');
 }
 
