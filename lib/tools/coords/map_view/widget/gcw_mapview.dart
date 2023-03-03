@@ -181,17 +181,17 @@ class GCWMapViewState extends State<GCWMapView> {
       });
     }
 
-    var tileLayerOptions = _currentLayer == _LayerType.MAPBOX_SATELLITE && _mapBoxToken != null && _mapBoxToken!.isNotEmpty
-        ? TileLayerOptions(
-        urlTemplate: 'https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}@2x.jpg90?access_token={accessToken}',
-        additionalOptions: {'accessToken': _mapBoxToken!},
-        tileProvider: const CachedNetworkTileProvider())
-        : TileLayerOptions(
-        urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-        subdomains: ['a', 'b', 'c'],
-        tileProvider: const CachedNetworkTileProvider());
+    var tileLayer = _currentLayer == _LayerType.MAPBOX_SATELLITE && _mapBoxToken != null && _mapBoxToken!.isNotEmpty
+        ? TileLayer(
+          urlTemplate: 'https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}@2x.jpg90?access_token={accessToken}',
+          additionalOptions: {'accessToken': _mapBoxToken!},
+          tileProvider: const CachedNetworkTileProvider())
+        : TileLayer(
+          urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+          subdomains: ['a', 'b', 'c'],
+          tileProvider: const CachedNetworkTileProvider());
 
-    var layers = <Widget>[TileLayerWidget(options: tileLayerOptions)];
+    var layers = <Widget>[tileLayer];
     layers.addAll(_buildLinesAndMarkersLayers());
 
     return Listener(
@@ -270,8 +270,8 @@ class GCWMapViewState extends State<GCWMapView> {
       var filled = Prefs.getBool(PREFERENCE_MAPVIEW_CIRCLE_COLORFILLED);
       var circleColor = COLOR_MAP_USERPOSITION.withOpacity(filled ? 0.3 : 0.0);
 
-      layers.add(CircleLayerWidget(
-          options: CircleLayerOptions(circles: [
+      layers.add(CircleLayer(
+          circles: [
             CircleMarker(
               point: _currentPosition!,
               borderStrokeWidth: 1,
@@ -280,7 +280,7 @@ class GCWMapViewState extends State<GCWMapView> {
               color: circleColor,
               borderColor: COLOR_MAP_USERPOSITION,
             )
-          ])));
+          ]));
     }
 
     List<Marker> _markers = _buildMarkers();
@@ -290,18 +290,17 @@ class GCWMapViewState extends State<GCWMapView> {
     _polylines.addAll(_circlePolylines);
 
     layers.addAll([
-      TappablePolylineLayerWidget(
-          options: TappablePolylineLayerOptions(
-            polylineCulling: true,
-            polylines: _polylines as List<TaggedPolyline>,
-            onTap: (polylines, details) {
-              if (polylines.isEmpty) {
-                return;
-              }
+      TappablePolylineLayer(
+          polylineCulling: true,
+          polylines: _polylines as List<TaggedPolyline>,
+          onTap: (polylines, details) {
+            if (polylines.isEmpty) {
+              return;
+            }
 
-              _showPolylineDialog(polylines.first as _GCWTappablePolyline);
-            },
-          )),
+            _showPolylineDialog(polylines.first as _GCWTappablePolyline);
+          },
+        ),
       PopupMarkerLayerWidget(
           options: PopupMarkerLayerOptions(
               markers: _markers,
