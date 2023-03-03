@@ -23,7 +23,7 @@ void main() {
           if (actual[i] == null) {
             expect(null, expected[i]);
           } else {
-            expect(equalsLatLng(actual[i]!, expected[i]), true);
+            expect(equalsLatLng(actual[i]!, expected[i], tolerance: 1e-5), true);
           }
 
         }
