@@ -75,11 +75,11 @@ void main() {
       {'input' : '', 'expectedOutput' : ''},
 
       {'input' : 'test', 'expectedOutput' : 'test'},
-      {'input' : 1, 'expectedOutput' : '1'},
-      {'input' : 1.0, 'expectedOutput' : '1.0'},
+      {'input' : 1, 'expectedOutput' : null},
+      {'input' : 1.0, 'expectedOutput' : null},
 
-      {'input' : true, 'expectedOutput' : 'true'},
-      {'input' : false, 'expectedOutput' : 'false'},
+      {'input' : true, 'expectedOutput' : null},
+      {'input' : false, 'expectedOutput' : null},
     ];
 
     for (var elem in _inputsToExpected) {

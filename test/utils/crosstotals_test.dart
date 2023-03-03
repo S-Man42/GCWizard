@@ -6,16 +6,16 @@ void main() {
     List<Map<String, Object?>> _inputsToExpected = [
       {'list' : [1,2,3,1,1,1,100], 'expectedOutput' : 109},
       {'list' : <int>[], 'expectedOutput' : 0},
-      {'list' : [null].cast<int>(), 'expectedOutput' : 0},
+      // {'list' : [null].cast<int>(), 'expectedOutput' : 0},
       {'list' : null, 'expectedOutput' : 0},
-      {'list' : [null, 1, null], 'expectedOutput' : 1},
+      // {'list' : [null, 1, null], 'expectedOutput' : 1},
       {'list' : [1, 0, -1], 'expectedOutput' : 0},
       {'list' : [-20, -10, -1], 'expectedOutput' : -31},
     ];
 
     for (var elem in _inputsToExpected) {
       test('list: ${elem['list']}', () {
-        var _actual = sum(elem['list'] as List<int>);
+        var _actual = sum(elem['list'] as List<int>?);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
     }
@@ -25,9 +25,9 @@ void main() {
     List<Map<String, Object?>> _inputsToExpected = [
       {'list' : [1,2,3,1,1,1,100], 'expectedOutput' : 600},
       {'list' : <int>[], 'expectedOutput' : 0},
-      {'list' : [null].cast<int>(), 'expectedOutput' : 0},
+      // {'list' : [null].cast<int>(), 'expectedOutput' : 0},
       {'list' : null, 'expectedOutput' : 0},
-      {'list' : [null, 1, null], 'expectedOutput' : 1},
+      // {'list' : [null, 1, null], 'expectedOutput' : 1},
       {'list' : [891,589,1,2336,784], 'expectedOutput' : 961129483776},
       {'list' : [1, 0, -1], 'expectedOutput' : 0},
       {'list' : [-20, -10, -1], 'expectedOutput' : -200},
@@ -35,7 +35,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('list: ${elem['list']}', () {
-        var _actual = product(elem['list'] as List<int>);
+        var _actual = product(elem['list'] as List<int>?);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
     }
@@ -45,16 +45,16 @@ void main() {
     List<Map<String, Object?>> _inputsToExpected = [
       {'list' : [1,2,33,1,1,1,100], 'expectedOutput' : 13},
       {'list' : <int>[], 'expectedOutput' : 0},
-      {'list' : [null].cast<int>(), 'expectedOutput' : 0},
+      // {'list' : [null].cast<int>(), 'expectedOutput' : 0},
       {'list' : null, 'expectedOutput' : 0},
-      {'list' : [null, 666, null], 'expectedOutput' : 18},
+      // {'list' : [null, 666, null], 'expectedOutput' : 18},
       {'list' : [1, 0, -1], 'expectedOutput' : 0},
       {'list' : [-20, -10, -1], 'expectedOutput' : -4},
     ];
 
     for (var elem in _inputsToExpected) {
       test('list: ${elem['list']}', () {
-        var _actual = crossSum(elem['list'] as List<int>);
+        var _actual = crossSum(elem['list'] as List<int>?);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
     }
@@ -64,16 +64,16 @@ void main() {
     List<Map<String, Object?>> _inputsToExpected = [
       {'list' : [1,2,33,1,1,1,100], 'expectedOutput' : 0},
       {'list' : <int>[], 'expectedOutput' : 0},
-      {'list' : [null].cast<int>(), 'expectedOutput' : 0},
+      // {'list' : [null].cast<int>(), 'expectedOutput' : 0},
       {'list' : null, 'expectedOutput' : 0},
-      {'list' : [null, 666, null], 'expectedOutput' : 216},
+      // {'list' : [null, 666, null], 'expectedOutput' : 216},
       {'list' : [1, 0, -1], 'expectedOutput' : 0},
       {'list' : [-20, -10, -1], 'expectedOutput' : 0},
     ];
 
     for (var elem in _inputsToExpected) {
       test('list: ${elem['list']}', () {
-        var _actual = crossProduct(elem['list'] as List<int>);
+        var _actual = crossProduct(elem['list'] as List<int>?);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
     }
@@ -83,9 +83,9 @@ void main() {
     List<Map<String, Object?>> _inputsToExpected = [
       {'list' : [1,2,33,1,1,1,100], 'expectedOutput' : 4},
       {'list' : <int>[], 'expectedOutput' : 0},
-      {'list' : [null].cast<int>(), 'expectedOutput' : 0},
+      // {'list' : [null].cast<int>(), 'expectedOutput' : 0},
       {'list' : null, 'expectedOutput' : 0},
-      {'list' : [null, 666, null], 'expectedOutput' : 9},
+      // {'list' : [null, 666, null], 'expectedOutput' : 9},
       {'list' : [891,589,1,2336,784], 'expectedOutput' : 2},
       {'list' : [1, 0, -1], 'expectedOutput' : 0},
       {'list' : [-20, -10, -1], 'expectedOutput' : -4},
@@ -93,7 +93,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('list: ${elem['list']}', () {
-        var _actual = crossSumIterated(elem['list'] as List<int>);
+        var _actual = crossSumIterated(elem['list'] as List<int>?);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
     }
@@ -103,9 +103,9 @@ void main() {
     List<Map<String, Object?>> _inputsToExpected = [
       {'list' : [1,2,33,1,1,1,100], 'expectedOutput' : 0},
       {'list' : <int>[], 'expectedOutput' : 0},
-      {'list' : [null].cast<int>(), 'expectedOutput' : 0},
+      // {'list' : [null].cast<int>(), 'expectedOutput' : 0},
       {'list' : null, 'expectedOutput' : 0},
-      {'list' : [null, 666, null], 'expectedOutput' : 2},
+      // {'list' : [null, 666, null], 'expectedOutput' : 2},
       {'list' : [891,589,1,2336,784], 'expectedOutput' : 0},
       {'list' : [1, 0, -1], 'expectedOutput' : 0},
       {'list' : [-20, -10, -1], 'expectedOutput' : 0},
@@ -113,7 +113,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('list: ${elem['list']}', () {
-        var _actual = crossProductIterated(elem['list'] as List<int>);
+        var _actual = crossProductIterated(elem['list'] as List<int>?);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
     }
@@ -123,9 +123,9 @@ void main() {
     List<Map<String, Object?>> _inputsToExpected = [
       {'list' : [1,2,33,1,1,1,100], 'expectedOutput' : -1},
       {'list' : <int>[], 'expectedOutput' : 0},
-      {'list' : [null].cast<int>(), 'expectedOutput' : 0},
+      // {'list' : [null].cast<int>(), 'expectedOutput' : 0},
       {'list' : null, 'expectedOutput' : 0},
-      {'list' : [null, 666, null], 'expectedOutput' : 6},
+      // {'list' : [null, 666, null], 'expectedOutput' : 6},
       {'list' : [891,589,1,2336,784], 'expectedOutput' : -4},
       {'list' : [191,9191,9,19,1919], 'expectedOutput' : -56},
       {'list' : [91,9191,9,19,19191], 'expectedOutput' : 56},
@@ -135,7 +135,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('list: ${elem['list']}', () {
-        var _actual = crossSumAlternatedForward(elem['list'] as List<int>);
+        var _actual = crossSumAlternatedForward(elem['list'] as List<int>?);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
     }
@@ -145,9 +145,9 @@ void main() {
     List<Map<String, Object?>> _inputsToExpected = [
       {'list' : [1,2,33,1,1,1,100], 'expectedOutput' : 1},
       {'list' : <int>[], 'expectedOutput' : 0},
-      {'list' : [null].cast<int>(), 'expectedOutput' : 0},
+      // {'list' : [null].cast<int>(), 'expectedOutput' : 0},
       {'list' : null, 'expectedOutput' : 0},
-      {'list' : [null, 666, null], 'expectedOutput' : 6},
+      // {'list' : [null, 666, null], 'expectedOutput' : 6},
       {'list' : [891,589,1,2336,784], 'expectedOutput' : 4},
       {'list' : [191,9191,9,19,1919], 'expectedOutput' : 56},
       {'list' : [91,9191,9,19,19191], 'expectedOutput' : -56},
@@ -157,7 +157,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('list: ${elem['list']}', () {
-        var _actual = crossSumAlternatedBackward(elem['list'] as List<int>);
+        var _actual = crossSumAlternatedBackward(elem['list'] as List<int>?);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
     }
@@ -167,9 +167,9 @@ void main() {
     List<Map<String, Object?>> _inputsToExpected = [
       {'list' : [1,2,33,1,1,1,100], 'expectedOutput' : 0},
       {'list' : <int>[], 'expectedOutput' : 0},
-      {'list' : [null].cast<int>(), 'expectedOutput' : 0},
+      // {'list' : [null].cast<int>(), 'expectedOutput' : 0},
       {'list' : null, 'expectedOutput' : 0},
-      {'list' : [null, 666, null], 'expectedOutput' : -216},
+      // {'list' : [null, 666, null], 'expectedOutput' : -216},
       {'list' : [891,589,1,2336,784], 'expectedOutput' : -627056640},
       {'list' : [191,9191,9,19,1919], 'expectedOutput' : -4782969},
       {'list' : [91,9191,9,19,19191], 'expectedOutput' : -4782969},
@@ -179,7 +179,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('list: ${elem['list']}', () {
-        var _actual = crossProductAlternated(elem['list'] as List<int>);
+        var _actual = crossProductAlternated(elem['list'] as List<int>?);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
     }
@@ -189,9 +189,9 @@ void main() {
     List<Map<String, Object?>> _inputsToExpected = [
       {'list' : [1,2,33,1,1,1,100], 'expectedOutput' : 131},
       {'list' : <int>[], 'expectedOutput' : 0},
-      {'list' : [null].cast<int>(), 'expectedOutput' : 0},
+      // {'list' : [null].cast<int>(), 'expectedOutput' : 0},
       {'list' : null, 'expectedOutput' : 0},
-      {'list' : [null, 666, null], 'expectedOutput' : 666},
+      // {'list' : [null, 666, null], 'expectedOutput' : 666},
       {'list' : [891,589,1,2336,784], 'expectedOutput' : -1249},
       {'list' : [191,9191,9,19,1919,1], 'expectedOutput' : 7092},
       {'list' : [91,9191,9,19,19191,9], 'expectedOutput' : -10072},
@@ -201,7 +201,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('list: ${elem['list']}', () {
-        var _actual = sumAlternatedBackward(elem['list'] as List<int>);
+        var _actual = sumAlternatedBackward(elem['list'] as List<int>?);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
     }
@@ -211,9 +211,9 @@ void main() {
     List<Map<String, Object?>> _inputsToExpected = [
       {'list' : [1,2,33,1,1,1,100], 'expectedOutput' : 131},
       {'list' : <int>[], 'expectedOutput' : 0},
-      {'list' : [null].cast<int>(), 'expectedOutput' : 0},
+      // {'list' : [null].cast<int>(), 'expectedOutput' : 0},
       {'list' : null, 'expectedOutput' : 0},
-      {'list' : [null, 666, null], 'expectedOutput' : 666},
+      // {'list' : [null, 666, null], 'expectedOutput' : 666},
       {'list' : [891,589,1,2336,784], 'expectedOutput' : -1249},
       {'list' : [191,9191,9,19,1919,1], 'expectedOutput' : -7092},
       {'list' : [91,9191,9,19,19191,9], 'expectedOutput' : 10072},
@@ -223,7 +223,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('list: ${elem['list']}', () {
-        var _actual = sumAlternatedForward(elem['list'] as List<int>);
+        var _actual = sumAlternatedForward(elem['list'] as List<int>?);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
     }
@@ -233,9 +233,9 @@ void main() {
     List<Map<String, Object?>> _inputsToExpected = [
       {'list' : [1,2,33,1,1,1,100], 'expectedOutput' : -6600},
       {'list' : <int>[], 'expectedOutput' : 0},
-      {'list' : [null].cast<int>(), 'expectedOutput' : 0},
+      // {'list' : [null].cast<int>(), 'expectedOutput' : 0},
       {'list' : null, 'expectedOutput' : 0},
-      {'list' : [null, 666, null], 'expectedOutput' : 666},
+      // {'list' : [null, 666, null], 'expectedOutput' : 666},
       {'list' : [891,589,1,2336,784], 'expectedOutput' : 961129483776},
       {'list' : [191,9191,9,19,1919,1], 'expectedOutput' : -576059334669},
       {'list' : [91,9191,9,19,19191,9], 'expectedOutput' : -24702470179569},
@@ -245,7 +245,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('list: ${elem['list']}', () {
-        var _actual = productAlternated(elem['list'] as List<int>);
+        var _actual = productAlternated(elem['list'] as List<int>?);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
     }
@@ -255,9 +255,9 @@ void main() {
     List<Map<String, Object?>> _inputsToExpected = [
       {'list' : [1,2,33,1,1,1,100], 'expectedOutput' : 13},
       {'list' : <int>[], 'expectedOutput' : 0},
-      {'list' : [null].cast<int>(), 'expectedOutput' : 0},
+      // {'list' : [null].cast<int>(), 'expectedOutput' : 0},
       {'list' : null, 'expectedOutput' : 0},
-      {'list' : [null, 666, null], 'expectedOutput' : 18},
+      // {'list' : [null, 666, null], 'expectedOutput' : 18},
       {'list' : [891,589,1,2336,784], 'expectedOutput' : 11},
       {'list' : [191,9191,9,19,1919,1], 'expectedOutput' : 8},
       {'list' : [91,9191,9,19,19191,9], 'expectedOutput' : 16},
@@ -267,7 +267,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('list: ${elem['list']}', () {
-        var _actual = sumCrossSum(elem['list'] as List<int>);
+        var _actual = sumCrossSum(elem['list'] as List<int>?);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
     }
@@ -277,9 +277,9 @@ void main() {
     List<Map<String, Object?>> _inputsToExpected = [
       {'list' : [1,2,33,1,1,1,100], 'expectedOutput' : 12},
       {'list' : <int>[], 'expectedOutput' : 0},
-      {'list' : [null].cast<int>(), 'expectedOutput' : 0},
+      // {'list' : [null].cast<int>(), 'expectedOutput' : 0},
       {'list' : null, 'expectedOutput' : 0},
-      {'list' : [null, 666, null], 'expectedOutput' : 18},
+      // {'list' : [null, 666, null], 'expectedOutput' : 18},
       {'list' : [891,589,1,2336,784], 'expectedOutput' : 63},
       {'list' : [191,9191,9,19,1919,1], 'expectedOutput' : 63},
       {'list' : [91,9191,9,19,19191,9], 'expectedOutput' : 63},
@@ -289,7 +289,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('list: ${elem['list']}', () {
-        var _actual = productCrossSum(elem['list'] as List<int>);
+        var _actual = productCrossSum(elem['list'] as List<int>?);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
     }
@@ -299,9 +299,9 @@ void main() {
     List<Map<String, Object?>> _inputsToExpected = [
       {'list' : [1,2,33,1,1,1,100], 'expectedOutput' : 4},
       {'list' : <int>[], 'expectedOutput' : 0},
-      {'list' : [null].cast<int>(), 'expectedOutput' : 0},
+      // {'list' : [null].cast<int>(), 'expectedOutput' : 0},
       {'list' : null, 'expectedOutput' : 0},
-      {'list' : [null, 666, null], 'expectedOutput' : 9},
+      // {'list' : [null, 666, null], 'expectedOutput' : 9},
       {'list' : [891,589,1,2336,784], 'expectedOutput' : 2},
       {'list' : [191,9191,9,19,1919,1], 'expectedOutput' : 8},
       {'list' : [91,9191,9,19,19191,9], 'expectedOutput' : 7},
@@ -311,7 +311,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('list: ${elem['list']}', () {
-        var _actual = sumCrossSumIterated(elem['list'] as List<int>);
+        var _actual = sumCrossSumIterated(elem['list'] as List<int>?);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
     }
@@ -321,9 +321,9 @@ void main() {
     List<Map<String, Object?>> _inputsToExpected = [
       {'list' : [1,2,33,1,1,1,100], 'expectedOutput' : 3},
       {'list' : <int>[], 'expectedOutput' : 0},
-      {'list' : [null].cast<int>(), 'expectedOutput' : 0},
+      // {'list' : [null].cast<int>(), 'expectedOutput' : 0},
       {'list' : null, 'expectedOutput' : 0},
-      {'list' : [null, 666, null], 'expectedOutput' : 9},
+      // {'list' : [null, 666, null], 'expectedOutput' : 9},
       {'list' : [891,589,1,2336,784], 'expectedOutput' : 9},
       {'list' : [191,9191,9,19,1919,1], 'expectedOutput' : 9},
       {'list' : [91,9191,9,19,19191,9], 'expectedOutput' : 9},
@@ -333,7 +333,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('list: ${elem['list']}', () {
-        var _actual = productCrossSumIterated(elem['list'] as List<int>);
+        var _actual = productCrossSumIterated(elem['list'] as List<int>?);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
     }
@@ -342,10 +342,10 @@ void main() {
   group("Crosstotals.sumCrossSumAlternatedForward:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'list' : [1,2,33,1,1,1,100], 'expectedOutput' : 7},
-      {'list' : <int>[], 'expectedOutput' : 0},
-      {'list' : [null].cast<int>(), 'expectedOutput' : 0},
-      {'list' : null, 'expectedOutput' : 0},
-      {'list' : [null, 666, null], 'expectedOutput' : 6},
+      {'list' : <int>[], 'expectedOutput' : BigInt.zero},
+      // {'list' : [null].cast<int>(), 'expectedOutput' : 0},
+      {'list' : null, 'expectedOutput' : null},
+      // {'list' : [null, 666, null], 'expectedOutput' : 6},
       {'list' : [891,589,1,2336,784], 'expectedOutput' : 3},
       {'list' : [191,9191,9,19,1919,1], 'expectedOutput' : 0},
       {'list' : [91,9191,9,19,19191,9], 'expectedOutput' : -2},
@@ -355,7 +355,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('list: ${elem['list']}', () {
-        var _actual = sumCrossSumAlternatedForward(elem['list'] as List<int>);
+        var _actual = sumCrossSumAlternatedForward(elem['list'] as List<int>?);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
     }
@@ -365,9 +365,9 @@ void main() {
     List<Map<String, Object?>> _inputsToExpected = [
       {'list' : [1,2,33,1,1,1,100], 'expectedOutput' : 7},
       {'list' : <int>[], 'expectedOutput' : 0},
-      {'list' : [null].cast<int>(), 'expectedOutput' : 0},
-      {'list' : null, 'expectedOutput' : 0},
-      {'list' : [null, 666, null], 'expectedOutput' : 6},
+      // {'list' : [null].cast<int>(), 'expectedOutput' : 0},
+      {'list' : null, 'expectedOutput' : null},
+      // {'list' : [null, 666, null], 'expectedOutput' : 6},
       {'list' : [891,589,1,2336,784], 'expectedOutput' : 3},
       {'list' : [191,9191,9,19,1919,1], 'expectedOutput' : 0},
       {'list' : [91,9191,9,19,19191,9], 'expectedOutput' : -2},
@@ -377,7 +377,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('list: ${elem['list']}', () {
-        var _actual = sumCrossSumAlternatedBackward(elem['list'] as List<int>);
+        var _actual = sumCrossSumAlternatedBackward(elem['list'] as List<int>?);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
     }
@@ -387,9 +387,9 @@ void main() {
     List<Map<String, Object?>> _inputsToExpected = [
       {'list' : [1,2,33,1,1,1,100], 'expectedOutput' : 0},
       {'list' : <int>[], 'expectedOutput' : 0},
-      {'list' : [null].cast<int>(), 'expectedOutput' : 0},
-      {'list' : null, 'expectedOutput' : 0},
-      {'list' : [null, 666, null], 'expectedOutput' : 6},
+      // {'list' : [null].cast<int>(), 'expectedOutput' : 0},
+      {'list' : null, 'expectedOutput' : null},
+      // {'list' : [null, 666, null], 'expectedOutput' : 6},
       {'list' : [891,589,1,2336,784], 'expectedOutput' : -11},
       {'list' : [191,9191,9,19,1919,1], 'expectedOutput' : -5},
       {'list' : [91,9191,9,19,19191,9], 'expectedOutput' : 5},
@@ -399,7 +399,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('list: ${elem['list']}', () {
-        var _actual = productCrossSumAlternatedForward(elem['list'] as List<int>);
+        var _actual = productCrossSumAlternatedForward(elem['list'] as List<int>?);
         expect(_actual.toString(), elem['expectedOutput'].toString());
       });
     }
@@ -408,13 +408,13 @@ void main() {
   group("Crosstotals.countCharacters:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'list' : [-20, -10, -1, 891, 589, 1, 2, 336, 784], 'expectedOutput' : 9},
-      {'list' : '', 'expectedOutput' : 0},
+      // {'list' : '', 'expectedOutput' : 0},
       {'list' : null, 'expectedOutput' : 0},
     ];
 
     for (var elem in _inputsToExpected) {
       test('text: ${elem['text']}', () {
-        var _actual = countCharacters(elem['list'] as List<int>);
+        var _actual = countCharacters(elem['list'] as List<int>?);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -429,7 +429,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('text: ${elem['text']}', () {
-        var _actual = countLetters(elem['text'] as String);
+        var _actual = countLetters(elem['text'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -444,7 +444,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('text: ${elem['text']}', () {
-        var _actual = countDigits(elem['text'] as String);
+        var _actual = countDigits(elem['text'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     }

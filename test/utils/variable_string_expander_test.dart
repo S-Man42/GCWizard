@@ -86,7 +86,13 @@ void main() {
             onAfterExpandedText: elem['onAfterExpandedText'] as String? Function(String)?,
             breakCondition: elem['breakCondition'] as VariableStringExpanderBreakCondition)
             .run();
-        expect(_actual, elem['expectedOutput']);
+        var expected = elem['expectedOutput'] as List<VariableStringExpanderValue>;
+        expect(_actual.length, expected.length);
+
+        for (var i=0; i<_actual.length; i++) {
+          expect(_actual[i].text, expected[i].text);
+          expect(_actual[i].variables, expected[i].variables);
+        }
       });
     }
   });
@@ -106,7 +112,14 @@ void main() {
             onAfterExpandedText: elem['onAfterExpandedText'] as String? Function(String)?,
             breakCondition: elem['breakCondition'] as VariableStringExpanderBreakCondition)
             .run();
-        expect(_actual, elem['expectedOutput']);
+
+        var expected = elem['expectedOutput'] as List<VariableStringExpanderValue>;
+        expect(_actual.length, expected.length);
+
+        for (var i=0; i<_actual.length; i++) {
+          expect(_actual[i].text, expected[i].text);
+          expect(_actual[i].variables, expected[i].variables);
+        }
       });
     }
   });
@@ -168,7 +181,14 @@ void main() {
             onAfterExpandedText: elem['onAfterExpandedText'] as String? Function(String)?,
             breakCondition: elem['breakCondition'] as VariableStringExpanderBreakCondition,
             orderAndUnique: false).run();
-        expect(_actual, elem['expectedOutput']);
+
+        var expected = elem['expectedOutput'] as List<VariableStringExpanderValue>;
+        expect(_actual.length, expected.length);
+
+        for (var i=0; i<_actual.length; i++) {
+          expect(_actual[i].text, expected[i].text);
+          expect(_actual[i].variables, expected[i].variables);
+        }
       });
     }
   });
@@ -176,7 +196,7 @@ void main() {
   group("VariableStringExpander.runOnlyPrecheckWithSpaces:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'input': 'N 51.[A][A+1] E [B][B^A].[4]23', 'substitutions': {'A': '1- 3', 'B': '4 -0#  2,  1', 'C': '12  ,34,  10'}, 'onAfterExpandedText' : (String? e) => e, 'breakCondition' : VariableStringExpanderBreakCondition.RUN_ALL,
-        'expectedOutput': [{'count' : 36}]
+        'expectedOutput': [VariableStringExpanderValue(count : 36)]
       }
     ];
 
@@ -188,7 +208,13 @@ void main() {
             onAfterExpandedText: elem['onAfterExpandedText'] as String? Function(String)?,
             breakCondition: elem['breakCondition'] as VariableStringExpanderBreakCondition)
             .run(onlyPrecheck: true);
-        expect(_actual, elem['expectedOutput']);
+
+        var expected = elem['expectedOutput'] as List<VariableStringExpanderValue>;
+        expect(_actual.length, expected.length);
+
+        for (var i=0; i<_actual.length; i++) {
+          expect(_actual[i].count, expected[i].count);
+        }
       });
     }
   });
@@ -196,7 +222,7 @@ void main() {
   group("VariableStringExpander.runOnlyPrecheck:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'input': 'N 51.[A][A+1] E [B][B^A].[4]23', 'substitutions': {'A': '1-3', 'B': '4-0#2,1', 'C': '12,34'}, 'onAfterExpandedText' : (String? e) => e, 'breakCondition' : VariableStringExpanderBreakCondition.RUN_ALL,
-        'expectedOutput': [{'count' : 24}]
+        'expectedOutput': [VariableStringExpanderValue(count : 24)]
       }
     ];
 
@@ -208,7 +234,13 @@ void main() {
             onAfterExpandedText: elem['onAfterExpandedText'] as String? Function(String)?,
             breakCondition: elem['breakCondition'] as VariableStringExpanderBreakCondition)
             .run(onlyPrecheck: true);
-        expect(_actual, elem['expectedOutput']);
+
+        var expected = elem['expectedOutput'] as List<VariableStringExpanderValue>;
+        expect(_actual.length, expected.length);
+
+        for (var i=0; i<_actual.length; i++) {
+          expect(_actual[i].count, expected[i].count);
+         }
       });
     }
   });

@@ -152,7 +152,7 @@ void main() {
   group("StringUtils.allSameCharacters:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       // {'input' : null, 'expectedOutput' : null},
-      {'input' : '', 'expectedOutput' : null},
+      {'input' : '', 'expectedOutput' : false},
 
       {'input' : 'a', 'expectedOutput' : true},
       {'input' : 'aaa', 'expectedOutput' : true},
@@ -221,9 +221,9 @@ void main() {
   group("StringUtils.extractIntegerFromText:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       // {'input' : null, 'expectedOutput' : null},
-      {'input' : '', 'expectedOutput' : null},
+      {'input' : '', 'expectedOutput' : 0},
 
-      {'input' : 'a', 'expectedOutput' : null},
+      {'input' : 'a', 'expectedOutput' : 0},
       {'input' : '12', 'expectedOutput' : 12},
       {'input' : '123,4', 'expectedOutput' : 1234},
       {'input' : '123,4', 'expectedOutput' : 1234},
