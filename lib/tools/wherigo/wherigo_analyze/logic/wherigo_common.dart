@@ -211,7 +211,7 @@ String deObfuscateText(String text, String obfuscatorFunction, String obfuscator
   }
 }
 
-List<String> addExceptionErrorMessage(int lineNumber, String section, var exception) {
+List<String> addExceptionErrorMessage(int lineNumber, String section, Object exception) {
   return [
     'wherigo_error_runtime',
     'wherigo_error_runtime_exception',

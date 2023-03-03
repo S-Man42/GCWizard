@@ -332,18 +332,16 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           return;
         }
 
-        if (_LUAfile != null) {
-          _setLUAData(_LUAfile.bytes);
+        _setLUAData(_LUAfile.bytes);
 
-          _resetIndices();
+        _resetIndices();
 
-          _analyseCartridgeFileAsync(WHERIGO_CARTRIDGE_DATA_TYPE.LUA);
+        _analyseCartridgeFileAsync(WHERIGO_CARTRIDGE_DATA_TYPE.LUA);
 
-          setState(() {
-            _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
-            _displayCartridgeDataList = _setDisplayCartridgeDataList();
-          });
-        }
+        setState(() {
+          _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
+          _displayCartridgeDataList = _setDisplayCartridgeDataList();
+        });
       },
     );
   }
@@ -362,22 +360,20 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           return;
         }
 
-        if (_GWCfile != null) {
-          _setGWCData(_GWCfile.bytes);
+        _setGWCData(_GWCfile.bytes);
 
-          _resetIndices();
+        _resetIndices();
 
-          _getLUAOnline = true;
-          _nohttpError = true;
-          _WherigoShowLUASourcecodeDialog = true;
+        _getLUAOnline = true;
+        _nohttpError = true;
+        _WherigoShowLUASourcecodeDialog = true;
 
-          _analyseCartridgeFileAsync(WHERIGO_CARTRIDGE_DATA_TYPE.GWC);
+        _analyseCartridgeFileAsync(WHERIGO_CARTRIDGE_DATA_TYPE.GWC);
 
-          setState(() {
-            _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
-            _displayCartridgeDataList = _setDisplayCartridgeDataList();
-          });
-        }
+        setState(() {
+          _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
+          _displayCartridgeDataList = _setDisplayCartridgeDataList();
+        });
       },
     );
   }
@@ -396,10 +392,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    if (WherigoCartridgeGWCData == null && WherigoCartridgeLUAData == null) {
-      return Container();
-    }
-
     List<String> errorMsg = [];
     _getErrorMessagesFromGWCAnalyzation(errorMsg, context);
     errorMsg.add('');
@@ -585,10 +577,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                   ? themeColors().inActive()
                   : null,
               onPressed: () {
-                WherigoCartridgeGWCData.MediaFilesContents[0].MediaFileBytes == null
-                    ? null
-                    : _exportFile(context, WherigoCartridgeGWCData.MediaFilesContents[0].MediaFileBytes, 'LUAByteCode',
-                        FileType.LUAC);
+                _exportFile(context, WherigoCartridgeGWCData.MediaFilesContents[0].MediaFileBytes, 'LUAByteCode',
+                    FileType.LUAC);
               },
             )
           ]),
@@ -598,20 +588,13 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   Widget _buildWidgetToDisplayMediaFilesData(BuildContext context) {
-    if ((WherigoCartridgeLUAData.Media.isEmpty ||
-            WherigoCartridgeLUAData.Media == null ||
-            WherigoCartridgeLUAData.Media.isEmpty) &&
-        (WherigoCartridgeGWCData.MediaFilesContents.isEmpty ||
-            WherigoCartridgeGWCData.MediaFilesContents == null ||
-            WherigoCartridgeGWCData.MediaFilesContents.isEmpty))
+    if ((WherigoCartridgeLUAData.Media.isEmpty) && (WherigoCartridgeGWCData.MediaFilesContents.isEmpty))
       return GCWDefaultOutput(
         child: i18n(context, 'wherigo_data_nodata'),
         suppressCopyButton: true,
       );
 
-    if (WherigoCartridgeGWCData.MediaFilesContents.isEmpty ||
-        WherigoCartridgeGWCData.MediaFilesContents == null ||
-        WherigoCartridgeGWCData.MediaFilesContents.isEmpty) {
+    if (WherigoCartridgeGWCData.MediaFilesContents.isEmpty) {
       return GCWDefaultOutput(
         child: i18n(context, 'wherigo_data_nodata'),
         suppressCopyButton: true,
@@ -760,7 +743,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                   size: IconButtonSize.SMALL,
                   icon: Icons.content_copy,
                   onPressed: () {
-                    var copyText = WherigoCartridgeLUAData.LUAFile != null ? _LUA_SourceCode : '';
+                    var copyText = _LUA_SourceCode;
                     insertIntoGCWClipboard(context, copyText);
                   },
                 ),
@@ -769,14 +752,12 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                   size: IconButtonSize.SMALL,
                   iconColor: WherigoCartridgeLUAData.LUAFile == null ? themeColors().inActive() : null,
                   onPressed: () {
-                    WherigoCartridgeLUAData.LUAFile == null
-                        ? null
-                        : _exportFile(
-                            context,
-                            Uint8List.fromList(_LUA_SourceCode.codeUnits),
-                            //_normalizeLUA(WherigoCartridgeLUAData.LUAFile, _currentDeObfuscate).codeUnits),
-                            'LUAsourceCode',
-                            FileType.LUA);
+                    _exportFile(
+                        context,
+                        Uint8List.fromList(_LUA_SourceCode.codeUnits),
+                        //_normalizeLUA(WherigoCartridgeLUAData.LUAFile, _currentDeObfuscate).codeUnits),
+                        'LUAsourceCode',
+                        FileType.LUA);
                   },
                 ),
               ],
@@ -786,9 +767,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   Widget _buildWidgetToDisplayCharactersData(BuildContext context) {
-    if (WherigoCartridgeLUAData.Characters.isEmpty ||
-        WherigoCartridgeLUAData.Characters == null ||
-        WherigoCartridgeLUAData.Characters.isEmpty)
+    if (WherigoCartridgeLUAData.Characters.isEmpty)
       return GCWDefaultOutput(
         child: i18n(context, 'wherigo_data_nodata'),
         suppressCopyButton: true,
@@ -878,9 +857,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   Widget _buildWidgetToDisplayZonesData(BuildContext context) {
-    if (WherigoCartridgeLUAData.Zones.isEmpty ||
-        WherigoCartridgeLUAData.Zones == null ||
-        WherigoCartridgeLUAData.Zones.isEmpty)
+    if (WherigoCartridgeLUAData.Zones.isEmpty)
       return GCWDefaultOutput(
         child: i18n(context, 'wherigo_data_nodata'),
         suppressCopyButton: true,
@@ -961,9 +938,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   Widget _buildWidgetToDisplayInputsData(BuildContext context) {
-    if (WherigoCartridgeLUAData.Inputs.isEmpty ||
-        WherigoCartridgeLUAData.Inputs == null ||
-        WherigoCartridgeLUAData.Inputs.isEmpty)
+    if (WherigoCartridgeLUAData.Inputs.isEmpty)
       return GCWDefaultOutput(
         child: i18n(context, 'wherigo_data_nodata'),
         suppressCopyButton: true,
@@ -1015,79 +990,62 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       GCWColumnedMultilineOutput(
           data: _buildOutputListOfInputData(context, WherigoCartridgeLUAData.Inputs[_inputIndex - 1]),
           flexValues: [1, 3]),
-      (WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers != null)
-          ? Row(
-              children: <Widget>[
-                GCWIconButton(
-                  icon: Icons.arrow_back_ios,
-                  onPressed: () {
-                    setState(() {
-                      _answerIndex--;
-                      if (_answerIndex < 1)
-                        _answerIndex = WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers.length;
-                    });
-                  },
-                ),
-                Expanded(
-                  child: GCWText(
-                    align: Alignment.center,
-                    text: i18n(context, 'wherigo_data_answer') +
-                        ' ' +
-                        _answerIndex.toString() +
-                        ' / ' +
-                        (WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers.length).toString(),
-                  ),
-                ),
-                GCWIconButton(
-                  icon: Icons.arrow_forward_ios,
-                  onPressed: () {
-                    setState(() {
-                      _answerIndex++;
-                      if (_answerIndex > WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers.length)
-                        _answerIndex = 1;
-                    });
-                  },
-                ),
-              ],
-            )
-          : Container(),
-      (WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers != null &&
-              WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers.isNotEmpty)
-          ? Column(
-              children: <Widget>[
-                GCWColumnedMultilineOutput(
-                    data: _buildOutputListAnswers(context, WherigoCartridgeLUAData.Inputs[_inputIndex - 1],
-                        WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers[_answerIndex - 1]),
-                    copyColumn: 1,
-                    flexValues: [2, 3, 3]),
-                GCWExpandableTextDivider(
-                  expanded: false,
-                  text: i18n(context, 'wherigo_output_answeractions'),
-                  suppressTopSpace: false,
-                  child: Column(
-                      children: _outputAnswerActionsWidgets(
-                          context, WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers[_answerIndex - 1])),
-                ),
-              ],
-            )
-          : GCWOutput(
-              title: i18n(context, 'wherigo_error_runtime_exception'),
-              child: i18n(context, 'wherigo_error_runtime_exception_no_answers_1') +
-                  '\n' +
-                  WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputLUAName +
-                  '\n' +
-                  i18n(context, 'wherigo_error_runtime_exception_no_answers_2') +
-                  '\n' +
-                  '\n' +
-                  i18n(context, 'wherigo_error_hint_2'),
-            )
+      Row(
+        children: <Widget>[
+          GCWIconButton(
+            icon: Icons.arrow_back_ios,
+            onPressed: () {
+              setState(() {
+                _answerIndex--;
+                if (_answerIndex < 1)
+                  _answerIndex = WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers.length;
+              });
+            },
+          ),
+          Expanded(
+            child: GCWText(
+              align: Alignment.center,
+              text: i18n(context, 'wherigo_data_answer') +
+                  ' ' +
+                  _answerIndex.toString() +
+                  ' / ' +
+                  (WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers.length).toString(),
+            ),
+          ),
+          GCWIconButton(
+            icon: Icons.arrow_forward_ios,
+            onPressed: () {
+              setState(() {
+                _answerIndex++;
+                if (_answerIndex > WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers.length)
+                  _answerIndex = 1;
+              });
+            },
+          ),
+        ],
+      ),
+      Column(
+        children: <Widget>[
+          GCWColumnedMultilineOutput(
+              data: _buildOutputListAnswers(context, WherigoCartridgeLUAData.Inputs[_inputIndex - 1],
+                  WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers[_answerIndex - 1]),
+              copyColumn: 1,
+              flexValues: [2, 3, 3]),
+          GCWExpandableTextDivider(
+            expanded: false,
+            text: i18n(context, 'wherigo_output_answeractions'),
+            suppressTopSpace: false,
+            child: Column(
+                children: _outputAnswerActionsWidgets(
+                    context, WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers[_answerIndex - 1])),
+          ),
+        ],
+      ),
     ]);
   }
 
   Widget _buildWidgetToDisplayTasksData(BuildContext context) {
-    if (WherigoCartridgeLUAData.Tasks.isEmpty ||
-        WherigoCartridgeLUAData.Tasks == null ||
-        WherigoCartridgeLUAData.Tasks.isEmpty)
+    if (WherigoCartridgeLUAData.Tasks.isEmpty)
       return GCWDefaultOutput(
         child: i18n(context, 'wherigo_data_nodata'),
         suppressCopyButton: true,
@@ -1138,9 +1096,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   Widget _buildWidgetToDisplayTimersData(BuildContext context) {
-    if (WherigoCartridgeLUAData.Timers.isEmpty ||
-        WherigoCartridgeLUAData.Timers == null ||
-        WherigoCartridgeLUAData.Timers.isEmpty)
+    if (WherigoCartridgeLUAData.Timers.isEmpty)
       return GCWDefaultOutput(
         child: i18n(context, 'wherigo_data_nodata'),
         suppressCopyButton: true,
@@ -1187,9 +1143,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   Widget _buildWidgetToDisplayItemsData(BuildContext context) {
-    if (WherigoCartridgeLUAData.Items.isEmpty ||
-        WherigoCartridgeLUAData.Items == null ||
-        WherigoCartridgeLUAData.Items.isEmpty)
+    if (WherigoCartridgeLUAData.Items.isEmpty)
       return GCWDefaultOutput(
         child: i18n(context, 'wherigo_data_nodata'),
         suppressCopyButton: true,
@@ -1278,9 +1232,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   Widget _buildWidgetToDisplayMessagesData(BuildContext context) {
-    if (WherigoCartridgeLUAData.Messages.isEmpty ||
-        WherigoCartridgeLUAData.Messages == null ||
-        WherigoCartridgeLUAData.Messages.isEmpty)
+    if (WherigoCartridgeLUAData.Messages.isEmpty)
       return GCWDefaultOutput(
         child: i18n(context, 'wherigo_data_nodata'),
         suppressCopyButton: true,
@@ -1325,9 +1277,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   Widget _buildWidgetToDisplayIdentifierData(BuildContext context) {
-    if (WherigoCartridgeLUAData.Variables.isEmpty ||
-        WherigoCartridgeLUAData.Variables == null ||
-        WherigoCartridgeLUAData.Variables.isEmpty)
+    if (WherigoCartridgeLUAData.Variables.isEmpty)
       return GCWDefaultOutput(
         child: i18n(context, 'wherigo_data_nodata'),
         suppressCopyButton: true,
@@ -1410,7 +1360,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       case WHERIGO_CARTRIDGE_DATA_TYPE.LUA:
         _analyseLuaCartridgeFileAsync();
         break;
-      default: ;
+      default:
+        ;
     }
   }
 
@@ -1471,127 +1422,122 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     String toastMessage = '';
     int toastDuration = 3;
 
-    if (_outData == null) {
-      // ToDo empty check
-      toastMessage = i18n(context, 'common_loadfile_exception_notloaded');
+    WherigoCartridgeLUAData = _outData.cartridgeLUA;
+
+    if (WherigoCartridgeLUAData != null) {
+      NameToObject = WherigoCartridgeLUAData.NameToObject;
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {});
+      });
+
       return;
-    } else {
-      WherigoCartridgeLUAData = _outData.cartridgeLUA;
+    } else
+      NameToObject = {};
 
-      if (WherigoCartridgeLUAData != null) {
-        NameToObject = WherigoCartridgeLUAData.NameToObject;
+    switch (WherigoCartridgeLUAData.ResultStatus) {
+      case WHERIGO_ANALYSE_RESULT_STATUS.OK:
+        toastMessage = i18n(context, 'wherigo_data_loaded') + ': ' + WHERIGO_CARTRIDGE_DATA_TYPE.GWC.toString();
+        toastDuration = 5;
+        _nohttpError = false;
 
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          setState(() {});
-        });
-
-        return;
-      } else
-        NameToObject = {};
-
-      switch (WherigoCartridgeLUAData.ResultStatus) {
-        case WHERIGO_ANALYSE_RESULT_STATUS.OK:
-          toastMessage = i18n(context, 'wherigo_data_loaded') + ': ' + WHERIGO_CARTRIDGE_DATA_TYPE.GWC.toString();
-          toastDuration = 5;
-          _nohttpError = false;
-
-          // check if GWC and LUA are from the same cartridge
-          if ((WherigoCartridgeGWCData.CartridgeGUID != WherigoCartridgeLUAData.CartridgeGUID &&
-                  WherigoCartridgeLUAData.CartridgeGUID != '') &&
-              (WherigoCartridgeGWCData.CartridgeLUAName != WherigoCartridgeLUAData.CartridgeLUAName &&
-                  WherigoCartridgeLUAData.CartridgeLUAName != '')) {
-            // files belong to different cartridges
-            WherigoCartridgeLUAData = _resetLUA('wherigo_error_diff_gwc_lua_1');
-            _fileLoadedState = WHERIGO_FILE_LOAD_STATE.GWC;
-            _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
-            toastMessage =
-                i18n(context, 'wherigo_error_diff_gwc_lua_1') + '\n' + i18n(context, 'wherigo_error_diff_gwc_lua_2');
-            toastDuration = 30;
-          } else {
-            _fileLoadedState = WHERIGO_FILE_LOAD_STATE.FULL;
-            _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
-          }
-          break;
-
-        case WHERIGO_ANALYSE_RESULT_STATUS.ERROR_LUA:
-          toastMessage = i18n(context, 'wherigo_error_runtime') +
-              '\n' +
-              i18n(context, 'wherigo_error_runtime_lua') +
-              '\n\n' +
-              i18n(context, 'wherigo_error_hint_1');
-          toastDuration = 20;
-          break;
-
-        case WHERIGO_ANALYSE_RESULT_STATUS.ERROR_HTTP:
+        // check if GWC and LUA are from the same cartridge
+        if ((WherigoCartridgeGWCData.CartridgeGUID != WherigoCartridgeLUAData.CartridgeGUID &&
+                WherigoCartridgeLUAData.CartridgeGUID != '') &&
+            (WherigoCartridgeGWCData.CartridgeLUAName != WherigoCartridgeLUAData.CartridgeLUAName &&
+                WherigoCartridgeLUAData.CartridgeLUAName != '')) {
+          // files belong to different cartridges
+          WherigoCartridgeLUAData = _resetLUA('wherigo_error_diff_gwc_lua_1');
           _fileLoadedState = WHERIGO_FILE_LOAD_STATE.GWC;
-          _nohttpError = false;
           _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
-          toastMessage = i18n(context, 'wherigo_http_code') +
-              ' ' +
-              WherigoCartridgeLUAData.httpCode.toString() +
-              '\n\n' +
-              (WHERIGO_HTTP_STATUS[WherigoCartridgeLUAData.httpCode] != null
-                  ? i18n(context, WHERIGO_HTTP_STATUS[WherigoCartridgeLUAData.httpCode]!)
-                  : '') +
-              '\n';
-
-          if (WherigoCartridgeLUAData.httpMessage.startsWith('wherigo'))
-            toastMessage = toastMessage + i18n(context, WherigoCartridgeLUAData.httpMessage);
-          else
-            toastMessage = toastMessage + WherigoCartridgeLUAData.httpMessage;
-          _getLUAOnline = false;
-          WherigoCartridgeLUAData = WherigoCartridgeLUA(
-            LUAFile: '',
-            CartridgeLUAName: '',
-            CartridgeGUID: '',
-            ObfuscatorTable: '',
-            ObfuscatorFunction: '',
-            Characters: [],
-            Items: [],
-            Tasks: [],
-            Inputs: [],
-            Zones: [],
-            Timers: [],
-            Media: [],
-            Messages: [],
-            Answers: [],
-            Variables: [],
-            NameToObject: {},
-            Builder: WHERIGO_BUILDER.UNKNOWN,
-            BuilderVersion: '',
-            TargetDeviceVersion: '',
-            CountryID: '',
-            StateID: '',
-            UseLogging: '',
-            CreateDate: WHERIGO_NULLDATE,
-            PublishDate: WHERIGO_NULLDATE,
-            UpdateDate: WHERIGO_NULLDATE,
-            LastPlayedDate: WHERIGO_NULLDATE,
-            httpCode: WherigoCartridgeLUAData.httpCode,
-            httpMessage: WherigoCartridgeLUAData.httpMessage,
-            ResultStatus: WHERIGO_ANALYSE_RESULT_STATUS.ERROR_HTTP,
-            ResultsLUA: [
-              i18n(context, 'wherigo_error_runtime'),
-              i18n(context, 'wherigo_error_decompile_gwc'),
-              i18n(context, 'wherigo_http_code') + ' ' + WherigoCartridgeLUAData.httpCode.toString() + '\n',
-              (WHERIGO_HTTP_STATUS[WherigoCartridgeLUAData.httpCode] != null
-                  ? i18n(context, WHERIGO_HTTP_STATUS[WherigoCartridgeLUAData.httpCode]!)
-                  : ''),
-              WherigoCartridgeLUAData.httpMessage.startsWith('wherigo')
-                  ? i18n(context, WherigoCartridgeLUAData.httpMessage)
-                  : WherigoCartridgeLUAData.httpMessage,
-              '',
-              i18n(context, 'wherigo_error_hint_2'),
-            ],
-          );
+          toastMessage =
+              i18n(context, 'wherigo_error_diff_gwc_lua_1') + '\n' + i18n(context, 'wherigo_error_diff_gwc_lua_2');
           toastDuration = 30;
-          break;
-        default: ;
-      }
+        } else {
+          _fileLoadedState = WHERIGO_FILE_LOAD_STATE.FULL;
+          _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
+        }
+        break;
 
-      showToast(toastMessage, duration: toastDuration);
+      case WHERIGO_ANALYSE_RESULT_STATUS.ERROR_LUA:
+        toastMessage = i18n(context, 'wherigo_error_runtime') +
+            '\n' +
+            i18n(context, 'wherigo_error_runtime_lua') +
+            '\n\n' +
+            i18n(context, 'wherigo_error_hint_1');
+        toastDuration = 20;
+        break;
 
-      _updateOutput();
+      case WHERIGO_ANALYSE_RESULT_STATUS.ERROR_HTTP:
+        _fileLoadedState = WHERIGO_FILE_LOAD_STATE.GWC;
+        _nohttpError = false;
+        _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
+        toastMessage = i18n(context, 'wherigo_http_code') +
+            ' ' +
+            WherigoCartridgeLUAData.httpCode.toString() +
+            '\n\n' +
+            (WHERIGO_HTTP_STATUS[WherigoCartridgeLUAData.httpCode] != null
+                ? i18n(context, WHERIGO_HTTP_STATUS[WherigoCartridgeLUAData.httpCode]!)
+                : '') +
+            '\n';
+
+        if (WherigoCartridgeLUAData.httpMessage.startsWith('wherigo'))
+          toastMessage = toastMessage + i18n(context, WherigoCartridgeLUAData.httpMessage);
+        else
+          toastMessage = toastMessage + WherigoCartridgeLUAData.httpMessage;
+        _getLUAOnline = false;
+        WherigoCartridgeLUAData = WherigoCartridgeLUA(
+          LUAFile: '',
+          CartridgeLUAName: '',
+          CartridgeGUID: '',
+          ObfuscatorTable: '',
+          ObfuscatorFunction: '',
+          Characters: [],
+          Items: [],
+          Tasks: [],
+          Inputs: [],
+          Zones: [],
+          Timers: [],
+          Media: [],
+          Messages: [],
+          Answers: [],
+          Variables: [],
+          NameToObject: {},
+          Builder: WHERIGO_BUILDER.UNKNOWN,
+          BuilderVersion: '',
+          TargetDeviceVersion: '',
+          CountryID: '',
+          StateID: '',
+          UseLogging: '',
+          CreateDate: WHERIGO_NULLDATE,
+          PublishDate: WHERIGO_NULLDATE,
+          UpdateDate: WHERIGO_NULLDATE,
+          LastPlayedDate: WHERIGO_NULLDATE,
+          httpCode: WherigoCartridgeLUAData.httpCode,
+          httpMessage: WherigoCartridgeLUAData.httpMessage,
+          ResultStatus: WHERIGO_ANALYSE_RESULT_STATUS.ERROR_HTTP,
+          ResultsLUA: [
+            i18n(context, 'wherigo_error_runtime'),
+            i18n(context, 'wherigo_error_decompile_gwc'),
+            i18n(context, 'wherigo_http_code') + ' ' + WherigoCartridgeLUAData.httpCode.toString() + '\n',
+            (WHERIGO_HTTP_STATUS[WherigoCartridgeLUAData.httpCode] != null
+                ? i18n(context, WHERIGO_HTTP_STATUS[WherigoCartridgeLUAData.httpCode]!)
+                : ''),
+            WherigoCartridgeLUAData.httpMessage.startsWith('wherigo')
+                ? i18n(context, WherigoCartridgeLUAData.httpMessage)
+                : WherigoCartridgeLUAData.httpMessage,
+            '',
+            i18n(context, 'wherigo_error_hint_2'),
+          ],
+        );
+        toastDuration = 30;
+        break;
+      default:
+        ;
+
+        showToast(toastMessage, duration: toastDuration);
+
+        _updateOutput();
     } // outData != null
   }
 
@@ -1600,57 +1546,48 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     String toastMessage = '';
     int toastDuration = 3;
 
-    if (_outData == null) {
-      //ToDo empty check
-      toastMessage = i18n(context, 'common_loadfile_exception_notloaded');
+    WherigoCartridgeGWCData = _outData.cartridgeGWC;
 
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        setState(() {});
-      });
+    switch (WherigoCartridgeGWCData.ResultStatus) {
+      case WHERIGO_ANALYSE_RESULT_STATUS.OK:
+        toastMessage = i18n(context, 'wherigo_data_loaded') + ': ' + WHERIGO_CARTRIDGE_DATA_TYPE.LUA.toString();
+        break;
 
-      return;
+      case WHERIGO_ANALYSE_RESULT_STATUS.ERROR_GWC:
+        toastMessage = i18n(context, 'wherigo_error_runtime') +
+            '\n' +
+            i18n(context, 'wherigo_error_runtime_gwc') +
+            '\n\n' +
+            i18n(context, 'wherigo_error_hint_1');
+        toastDuration = 20;
+        break;
+      default:
+        ;
+    }
+
+    // check if GWC and LUA are from the same cartridge
+    if ((WherigoCartridgeGWCData.CartridgeGUID != WherigoCartridgeLUAData.CartridgeGUID &&
+            WherigoCartridgeLUAData.CartridgeGUID != '') &&
+        (WherigoCartridgeGWCData.CartridgeLUAName != WherigoCartridgeLUAData.CartridgeLUAName &&
+            WherigoCartridgeLUAData.CartridgeLUAName != '')) {
+      // files belong to different cartridges
+      WherigoCartridgeLUAData = _resetLUA('wherigo_error_diff_gwc_lua_1');
+      _fileLoadedState = WHERIGO_FILE_LOAD_STATE.GWC;
+      _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
+      _getLUAOnline = true;
+      _nohttpError = true;
+      _WherigoShowLUASourcecodeDialog = true;
+      showToast(i18n(context, 'wherigo_error_diff_gwc_lua_1') + '\n' + i18n(context, 'wherigo_error_diff_gwc_lua_2'),
+          duration: 30);
     } else {
-      WherigoCartridgeGWCData = _outData.cartridgeGWC;
+      _fileLoadedState = WHERIGO_FILE_LOAD_STATE.GWC;
+      _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
+    }
 
-      switch (WherigoCartridgeGWCData.ResultStatus) {
-        case WHERIGO_ANALYSE_RESULT_STATUS.OK:
-          toastMessage = i18n(context, 'wherigo_data_loaded') + ': ' + WHERIGO_CARTRIDGE_DATA_TYPE.LUA.toString();
-          break;
+    showToast(toastMessage, duration: toastDuration);
 
-        case WHERIGO_ANALYSE_RESULT_STATUS.ERROR_GWC:
-          toastMessage = i18n(context, 'wherigo_error_runtime') +
-              '\n' +
-              i18n(context, 'wherigo_error_runtime_gwc') +
-              '\n\n' +
-              i18n(context, 'wherigo_error_hint_1');
-          toastDuration = 20;
-          break;
-        default: ;
-      }
-
-      // check if GWC and LUA are from the same cartridge
-      if ((WherigoCartridgeGWCData.CartridgeGUID != WherigoCartridgeLUAData.CartridgeGUID &&
-              WherigoCartridgeLUAData.CartridgeGUID != '') &&
-          (WherigoCartridgeGWCData.CartridgeLUAName != WherigoCartridgeLUAData.CartridgeLUAName &&
-              WherigoCartridgeLUAData.CartridgeLUAName != '')) {
-        // files belong to different cartridges
-        WherigoCartridgeLUAData = _resetLUA('wherigo_error_diff_gwc_lua_1');
-        _fileLoadedState = WHERIGO_FILE_LOAD_STATE.GWC;
-        _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
-        _getLUAOnline = true;
-        _nohttpError = true;
-        _WherigoShowLUASourcecodeDialog = true;
-        showToast(i18n(context, 'wherigo_error_diff_gwc_lua_1') + '\n' + i18n(context, 'wherigo_error_diff_gwc_lua_2'),
-            duration: 30);
-      } else {
-        _fileLoadedState = WHERIGO_FILE_LOAD_STATE.GWC;
-        _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
-      }
-
-      showToast(toastMessage, duration: toastDuration);
-
-      _updateOutput();
-    } // outData != null
+    _updateOutput();
+    // outData != null
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {});
@@ -1687,9 +1624,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   void _buildCharacterPointsForMapExport() {
-    if (WherigoCartridgeLUAData.Characters != null)
-      // Clear data
-      _CharacterPoints.clear();
+    _CharacterPoints.clear();
 
     // Build data
     WherigoCartridgeLUAData.Characters.forEach((character) {
@@ -1707,43 +1642,39 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   void _buildZonesForMapExport() {
-    if (WherigoCartridgeLUAData.Zones != null) {
-      // Clear data
-      _ZonePoints.clear();
-      _ZonePolylines.clear();
+    // Clear data
+    _ZonePoints.clear();
+    _ZonePolylines.clear();
 
-      // Build data
-      WherigoCartridgeLUAData.Zones.forEach((zone) {
-        if (NameToObject[zone.ZoneLUAName] == null) return;
+    // Build data
+    WherigoCartridgeLUAData.Zones.forEach((zone) {
+      if (NameToObject[zone.ZoneLUAName] == null) return;
 
-        _ZonePoints.add(// add originalpoint of zone
-            GCWMapPoint(
-                uuid: 'Original Point ' + NameToObject[zone.ZoneLUAName]!.ObjectName,
-                markerText: NameToObject[zone.ZoneLUAName]!.ObjectName,
-                point: LatLng(zone.ZoneOriginalPoint.Latitude, zone.ZoneOriginalPoint.Longitude),
-                color: Colors.black87));
+      _ZonePoints.add(// add originalpoint of zone
+          GCWMapPoint(
+              uuid: 'Original Point ' + NameToObject[zone.ZoneLUAName]!.ObjectName,
+              markerText: NameToObject[zone.ZoneLUAName]!.ObjectName,
+              point: LatLng(zone.ZoneOriginalPoint.Latitude, zone.ZoneOriginalPoint.Longitude),
+              color: Colors.black87));
 
-        List<GCWMapPoint> polyline = [];
-        zone.ZonePoints.forEach((point) {
-          polyline.add(GCWMapPoint(point: LatLng(point.Latitude, point.Longitude), color: Colors.black));
-        });
-        polyline.add(// close polyline
-            GCWMapPoint(point: LatLng(zone.ZonePoints[0].Latitude, zone.ZonePoints[0].Longitude), color: Colors.black));
-        _ZonePolylines.add(GCWMapPolyline(uuid: zone.ZoneLUAName, points: polyline, color: Colors.black));
+      List<GCWMapPoint> polyline = [];
+      zone.ZonePoints.forEach((point) {
+        polyline.add(GCWMapPoint(point: LatLng(point.Latitude, point.Longitude), color: Colors.black));
       });
+      polyline.add(// close polyline
+          GCWMapPoint(point: LatLng(zone.ZonePoints[0].Latitude, zone.ZonePoints[0].Longitude), color: Colors.black));
+      _ZonePolylines.add(GCWMapPolyline(uuid: zone.ZoneLUAName, points: polyline, color: Colors.black));
+    });
 
-      if (WherigoCartridgeGWCData.Latitude != 0.0 && WherigoCartridgeGWCData.Longitude != 0.0)
-        _ZonePoints.add(GCWMapPoint(
-            uuid: 'Cartridge Start',
-            markerText: 'Wherigo "' + WherigoCartridgeGWCData.CartridgeLUAName + '"',
-            point: LatLng(WherigoCartridgeGWCData.Latitude, WherigoCartridgeGWCData.Longitude),
-            color: Colors.redAccent));
-    }
+    if (WherigoCartridgeGWCData.Latitude != 0.0 && WherigoCartridgeGWCData.Longitude != 0.0)
+      _ZonePoints.add(GCWMapPoint(
+          uuid: 'Cartridge Start',
+          markerText: 'Wherigo "' + WherigoCartridgeGWCData.CartridgeLUAName + '"',
+          point: LatLng(WherigoCartridgeGWCData.Latitude, WherigoCartridgeGWCData.Longitude),
+          color: Colors.redAccent));
   }
 
   String _normalizeLUA(String LUAFile, bool deObfuscate) {
-    if (WherigoCartridgeLUAData == null) return '';
-
     if (deObfuscate) {
       LUAFile = LUAFile.replaceAll(WherigoCartridgeLUAData.ObfuscatorFunction, 'deObfuscate');
       LUAFile = LUAFile.replaceAll(WherigoCartridgeLUAData.CartridgeLUAName,
