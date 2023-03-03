@@ -100,7 +100,7 @@ void main() {
   group("VariableStringExpander.runError:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'input': 'A', 'substitutions': {'A': '1-Z', 'B': '4-0#2,1', 'C': '12,34'}, 'onAfterExpandedText' : (String? e) => e, 'breakCondition' : VariableStringExpanderBreakCondition.RUN_ALL,
-        'expectedOutput': [VariableStringExpanderValue(text: 'A', variables: <String, String>{})]
+        'expectedOutput': [VariableStringExpanderValue(text: 'A', variables: null)]
       },
     ];
 
