@@ -59,8 +59,7 @@ DMS? parseDMS(String input, {bool wholeString = false}) {
   if (regex.hasMatch(_input)) {
     RegExpMatch matches = regex.firstMatch(_input)!;
 
-    if (matches.group(1) == null
-        || matches.group(2) == null
+    if (matches.group(2) == null
         || matches.group(3) == null
         || matches.group(4) == null
     ) {
@@ -86,8 +85,7 @@ DMS? parseDMS(String input, {bool wholeString = false}) {
 
     var lat = DMSLatitude(latSign, latDegrees, latMinutes, latSeconds);
 
-    if (matches.group(6) == null
-        || matches.group(7) == null
+    if (matches.group(7) == null
         || matches.group(8) == null
         || matches.group(9) == null
     ) {
@@ -124,8 +122,7 @@ DMS? _parseDMSTrailingSigns(String text) {
   if (regex.hasMatch(text)) {
     RegExpMatch matches = regex.firstMatch(text)!;
 
-    if (matches.group(1) == null
-        || matches.group(2) == null
+    if (matches.group(2) == null
         || matches.group(3) == null
         || matches.group(5) == null
     ) {
@@ -151,8 +148,7 @@ DMS? _parseDMSTrailingSigns(String text) {
 
     var lat = DMSLatitude(latSign, latDegrees, latMinutes, latSeconds);
 
-    if (matches.group(6) == null
-        || matches.group(7) == null
+    if (matches.group(7) == null
         || matches.group(8) == null
         || matches.group(10) == null
     ) {

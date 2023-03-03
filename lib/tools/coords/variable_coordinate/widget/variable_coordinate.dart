@@ -31,6 +31,7 @@ import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/leng
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/variable_string_expander.dart';
 import 'package:intl/intl.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 
 const _WARNING_COUNT = 500;
@@ -452,7 +453,14 @@ class VariableCoordinateState extends State<VariableCoordinate> {
               parameters: [NumberFormat('0.0').format(locationData.accuracy)]));
         }
 
-        var coords = BaseCoordinate(locationData.latitude, locationData.longitude);
+        LatLng _coords;
+        if (locationData.latitude == null || locationData.longitude == null) {
+          _coords = defaultCoordinate;
+        } else {
+          _coords = LatLng(locationData.latitude!, locationData.longitude!);
+        }
+
+        var coords = buildDefaultCoordinatesByFormat(_coords);
         String insertedCoord;
         if (defaultCoordinateFormat.type == CoordinateFormatKey.DMM) {
           //Insert Geocaching Format with exact 3 digits
