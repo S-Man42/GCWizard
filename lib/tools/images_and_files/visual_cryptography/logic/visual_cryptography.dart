@@ -8,9 +8,8 @@ import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:image/image.dart' as Image;
 import 'package:tuple/tuple.dart';
 
-var whiteColor = Image.ColorInt8(3);
-var blackColor = Image.ColorInt8(3);
-
+var whiteColor = Image.ColorRgb8(Colors.white.red, Colors.white.green, Colors.white.blue);
+var blackColor = Image.ColorRgb8(Colors.black.red, Colors.black.green, Colors.black.blue);
 
 
 Future<Uint8List?> decodeImagesAsync(GCWAsyncExecuterParameters? jobData) async {
@@ -31,9 +30,6 @@ Future<Uint8List?> _decodeImages(Uint8List? image1, Uint8List? image2, int offse
   var _image2 = Image.decodeImage(image2);
 
   if (_image1 == null || _image2 == null) return Future.value(null);
-
-  whiteColor.setRgb(255, 255, 255);
-  blackColor.setRgb(0, 0, 0);
 
   var image = Image.Image(width: max(_image1.width, _image2.width) + offsetX.abs(),
       height: max(_image1.height, _image2.height) + offsetY.abs());
@@ -191,7 +187,7 @@ Future<Tuple2<Uint8List, Uint8List?>?> _encodeImage(
     var _dstXOffset = (_dstImage.width - _image.width) ~/ 2;
     var _dstYOffset = (_dstImage.height - _image.height) ~/ 2;
 
-    _dstImage = Image.dr.drawImage(_dstImage, _image,
+    _dstImage = Image.compositeImage(_dstImage, _image,
         dstX: _dstXOffset, dstY: _dstYOffset, dstW: _image.width, dstH: _image.height);
 
     return _encodeWithKeyImage(offsetX, offsetY, _dstImage, _keyImage);

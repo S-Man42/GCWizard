@@ -400,7 +400,7 @@ class SymbolReplacerImage {
     if (_bmp == null) return null;
     var bmp = Image.Image(width: _bmp!.width, height: _bmp!.height);
 
-    Image.drawImage(bmp, _bmp!);
+    Image.compositeImage(bmp, _bmp!);
 
     for (var symbol in symbols) {
       var rect = Rectangle<int>(
@@ -410,8 +410,9 @@ class SymbolReplacerImage {
         symbol.bmp.height,
       );
 
-      Image.drawRect(bmp, x1: rect.left, y1: rect.top, x2: rect.right, y2: rect.bottom, Colors.blue.value);
-      Image.drawRect(bmp, x1: rect.left - 1, y1: rect.top - 1, x2: rect.right + 1,y2:  rect.bottom + 1, Colors.blue.value);
+      var color = Image.ColorRgb8(Colors.blue.red, Colors.blue.green, Colors.blue.blue);
+      Image.drawRect(bmp, x1: rect.left, y1: rect.top, x2: rect.right, y2: rect.bottom, color: color);
+      Image.drawRect(bmp, x1: rect.left - 1, y1: rect.top - 1, x2: rect.right + 1,y2:  rect.bottom + 1, color: color);
     }
 
     return bmp;
