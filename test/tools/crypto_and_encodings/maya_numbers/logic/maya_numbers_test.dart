@@ -69,7 +69,10 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decodeMayaNumbers(elem['input'] as List<String>?);
-        expect(_actual, elem['expectedOutput']);
+        var expected = elem['expectedOutput'] as SegmentsVigesimal;
+        expect(_actual.displays, expected.displays);
+        expect(_actual.numbers, expected.numbers);
+        expect(_actual.vigesimal, expected.vigesimal);
       });
     }
   });

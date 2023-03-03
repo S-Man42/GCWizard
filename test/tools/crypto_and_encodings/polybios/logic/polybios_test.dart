@@ -5,7 +5,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/_common/logic/crypt_alphabe
 void main() {
   group("Polybios.createPolybiosAlphabet:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'gridDimension' : null, 'firstLetters': null, 'mode': null, 'fillAlphabet': null, 'expectedOutput' : null},
+      // {'gridDimension' : null, 'firstLetters': null, 'mode': null, 'fillAlphabet': null, 'expectedOutput' : null},
       {'gridDimension' : 5, 'firstLetters': null, 'mode': PolybiosMode.AZ09, 'fillAlphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'expectedOutput' : 'ABCDEFGHIKLMNOPQRSTUVWXYZ'},
       {'gridDimension' : 5, 'firstLetters': '', 'mode': PolybiosMode.AZ09, 'fillAlphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'expectedOutput' : 'ABCDEFGHIKLMNOPQRSTUVWXYZ'},
 

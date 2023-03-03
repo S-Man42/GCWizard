@@ -176,7 +176,8 @@ void main(){
 
   group("NumeralWords.decodeNumeralwordsEntireWordsAsParts:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : '', 'language' : NumeralWordsLanguage.DEU, 'decodeMode' : false, 'expectedOutput' : ''},
+      {'input' : '', 'language' : NumeralWordsLanguage.DEU, 'decodeMode' : false,
+        'expectedOutput' : [NumeralWordsDecodeOutput('', '', 'numeralwords_language_empty')]},
       {'input' : 'fünfundzwanzig', 'language' : NumeralWordsLanguage.DEU, 'decodeMode' : false,
         'expectedOutput' : [NumeralWordsDecodeOutput('5', 'fuenf', 'common_language_german'),
                             NumeralWordsDecodeOutput('20', 'zwanzig', 'common_language_german')]},
@@ -502,7 +503,7 @@ void main(){
       {'input' : '', 'language' : NumeralWordsLanguage.VOL, 'decodeMode' : true,
         'expectedOutput' : [NumeralWordsDecodeOutput('', '', 'numeralwords_language_empty')]},
       {'input' : 'fünfundzwanzig', 'language' : NumeralWordsLanguage.VOL, 'decodeMode' : true,
-        'expectedOutput' : []},
+        'expectedOutput' : [NumeralWordsDecodeOutput('', '', 'numeralwords_language_empty')]},
 
       {'input' : 'degbal', 'language' : NumeralWordsLanguage.VOL, 'decodeMode' : true,
         'expectedOutput' : [NumeralWordsDecodeOutput('11', 'degbal', 'common_language_volapuek')]},
@@ -546,7 +547,7 @@ void main(){
       {'input' : '', 'language' : NumeralWordsLanguage.EPO, 'decodeMode' : true,
         'expectedOutput' : [NumeralWordsDecodeOutput('', '', 'numeralwords_language_empty')]},
       {'input' : 'fünfundzwanzig', 'language' : NumeralWordsLanguage.EPO, 'decodeMode' : true,
-        'expectedOutput' : []},
+        'expectedOutput' : [NumeralWordsDecodeOutput('', '', 'numeralwords_language_empty')]},
 
       {'input' : 'dek du', 'language' : NumeralWordsLanguage.EPO, 'decodeMode' : true,
         'expectedOutput' : [NumeralWordsDecodeOutput('12', 'dekdu', 'common_language_esperanto')]},
@@ -584,7 +585,7 @@ void main(){
       {'input' : '', 'language' : NumeralWordsLanguage.SOL, 'decodeMode' : true,
         'expectedOutput' : [NumeralWordsDecodeOutput('', '', 'numeralwords_language_empty')]},
       {'input' : 'fünfundzwanzig', 'language' : NumeralWordsLanguage.SOL, 'decodeMode' : true,
-        'expectedOutput' : []},
+        'expectedOutput' : [NumeralWordsDecodeOutput('', '', 'numeralwords_language_empty')]},
 
       {'input' : 'mimisi', 'language' : NumeralWordsLanguage.SOL, 'decodeMode' : true,
         'expectedOutput' : [NumeralWordsDecodeOutput('12', 'mimisi', 'common_language_solresol')]},
@@ -629,7 +630,7 @@ void main(){
       {'input' : '', 'language' : NumeralWordsLanguage.LAT, 'decodeMode' : true,
         'expectedOutput' : [NumeralWordsDecodeOutput('', '', 'numeralwords_language_empty')]},
       {'input' : 'fünfundzwanzig', 'language' : NumeralWordsLanguage.LAT, 'decodeMode' : true,
-        'expectedOutput' : []},
+        'expectedOutput' : [NumeralWordsDecodeOutput('', '', 'numeralwords_language_empty')]},
 
       {'input' : 'quinque duo gradus quattuor quattuor punctum octo octo octo zerum unus tria gradus zerum unus punctum tria hexas quinque', 'language' : NumeralWordsLanguage.LAT, 'decodeMode' : true,
         'expectedOutput' : [

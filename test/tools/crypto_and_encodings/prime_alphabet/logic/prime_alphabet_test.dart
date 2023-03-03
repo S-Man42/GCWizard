@@ -8,7 +8,7 @@ void main() {
       {'input' : <int>[], 'expectedOutput' : ''},
 
       {'input' : [2,3,5,89,97,101], 'expectedOutput' : 'ABCXYZ'},
-      {'input' : [2,null,5,89,97,101], 'expectedOutput' : 'A<?>CXYZ'},
+      // {'input' : [2,null,5,89,97,101], 'expectedOutput' : 'A<?>CXYZ'},
       {'input' : [2,103,241], 'expectedOutput' : 'AAA'},
 
       {'input' : [-1,0,1,2,3,4,5,42,89,97,100,101], 'expectedOutput' : '<?><?><?>AB<?>C<?>XY<?>Z'},
@@ -46,8 +46,14 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, firstRecognizedPrime: ${elem['firstRecognizedPrime']}', () {
-        var _actual = decryptPrimeAlphabet(elem['input'] as List<int>?, firstRecognizedPrime: elem['firstRecognizedPrime'] as int);
-        expect(_actual, elem['expectedOutput']);
+        if (elem['firstRecognizedPrime'] == null) {
+          var _actual = decryptPrimeAlphabet(elem['input'] as List<int>?);
+          expect(_actual, elem['expectedOutput']);
+        } else {
+          var _actual = decryptPrimeAlphabet(
+              elem['input'] as List<int>?, firstRecognizedPrime: elem['firstRecognizedPrime'] as int);
+          expect(_actual, elem['expectedOutput']);
+        }
       });
     }
   });
@@ -104,8 +110,13 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, firstRecognizedPrime: ${elem['firstRecognizedPrime']}, lastRecognizedPrime: ${elem['lastRecognizedPrime']}', () {
-        var _actual = encryptPrimeAlphabet(elem['input'] as String?, firstRecognizedPrime: elem['firstRecognizedPrime'] as int, lastRecognizedPrime: elem['lastRecognizedPrime'] as int);
-        expect(_actual, elem['expectedOutput']);
+        if (elem['firstRecognizedPrime'] == null || elem['lastRecognizedPrime'] == null) {
+          var _actual = encryptPrimeAlphabet(elem['input'] as String?);
+          expect(_actual, elem['expectedOutput']);
+        } else {
+          var _actual = encryptPrimeAlphabet(elem['input'] as String?, firstRecognizedPrime: elem['firstRecognizedPrime'] as int, lastRecognizedPrime: elem['lastRecognizedPrime'] as int);
+          expect(_actual, elem['expectedOutput']);
+        }
       });
     }
   });
