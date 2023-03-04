@@ -502,7 +502,8 @@ class Geodesic {
 
     double dn1 = sqrt(1 + ep2 * _GeoMath.sq(sbet1)), dn2 = sqrt(1 + ep2 * _GeoMath.sq(sbet2));
 
-    late double a12, sig12, _calp1, _salp1, calp2, salp2;
+    late double a12, sig12, _calp1, _salp1;
+    double? calp2, salp2;
     // index zero elements of these arrays are unused
     List<double> C1a = List<double>.generate(nC1_ + 1, (index) => 0.0);
     List<double> C2a = List<double>.generate(nC2_ + 1, (index) => 0.0);
@@ -575,7 +576,7 @@ class Geodesic {
       // meridian and geodesic is neither meridional or equatorial.
 
       // Figure a starting point for Newton's method
-      double dnm;
+      double? dnm;
       {
         _InverseStartV s = _InverseStart(sbet1, cbet1, dn1, sbet2, cbet2, dn2, lam12, slam12, clam12, C1a, C2a, p, v);
         sig12 = s._sig12;
@@ -588,7 +589,7 @@ class Geodesic {
 
       if (sig12 >= 0) {
         // Short lines (InverseStart sets salp2, calp2, dnm)
-        s12x = sig12 * b * dnm;
+        s12x = sig12 * b * dnm!;
         m12x = _GeoMath.sq(dnm) * b * sin(sig12 / dnm);
         if ((outmask & _GeodesicMask.GEODESICSCALE) != 0) r.M12 = r.M21 = cos(sig12 / dnm);
         a12 = _toDegrees(sig12);
@@ -713,7 +714,7 @@ class Geodesic {
             ssig1 = sbet1,
             csig1 = _calp1 * cbet1,
             ssig2 = sbet2,
-            csig2 = calp2 * cbet2,
+            csig2 = calp2! * cbet2,
             k2 = _GeoMath.sq(calp0) * ep2,
             eps = k2 / (2 * (1 + sqrt(1 + k2)) + k2),
             // Multiplier = a^2 * e^2 * cos(alpha0) * sin(alpha0).
@@ -748,7 +749,7 @@ class Geodesic {
         alp12 = 2 * atan2(somg12 * (sbet1 * dbet2 + sbet2 * dbet1), domg12 * (sbet1 * sbet2 + dbet1 * dbet2));
       } else {
         // alp12 = alp2 - alp1, used in atan2 so no need to normalize
-        double _salp12 = salp2 * _calp1 - calp2 * _salp1, _calp12 = calp2 * _calp1 + salp2 * _salp1;
+        double _salp12 = salp2! * _calp1 - calp2! * _salp1, _calp12 = calp2 * _calp1 + salp2 * _salp1;
         // The right thing appears to happen if alp1 = +/-180 and alp2 = 0, viz
         // _salp12 = -0 and alp12 = -180.  However this depends on the sign
         // being attached to 0 correctly.  The following ensures the correct
@@ -769,12 +770,12 @@ class Geodesic {
     if (swapp < 0) {
       {
         double t = _salp1;
-        _salp1 = salp2;
+        _salp1 = salp2!;
         salp2 = t;
       }
       {
         double t = _calp1;
-        _calp1 = calp2;
+        _calp1 = calp2!;
         calp2 = t;
       }
       if ((outmask & _GeodesicMask.GEODESICSCALE) != 0) {
@@ -786,8 +787,8 @@ class Geodesic {
 
     _salp1 *= swapp * lonsign;
     _calp1 *= swapp * latsign;
-    salp2 *= swapp * lonsign;
-    calp2 *= swapp * latsign;
+    salp2 = salp2! * swapp * lonsign;
+    calp2 = calp2! * swapp * latsign;
 
     // Returned value in [0, 180]
     r.a12 = a12;
@@ -1021,7 +1022,7 @@ class Geodesic {
       // =  (sbet1 + sbet2)^2 / ((sbet1 + sbet2)^2 + (cbet1 + cbet2)^2)
       sbetm2 /= sbetm2 + _GeoMath.sq(cbet1 + cbet2);
       w._dnm = sqrt(1 + ep2 * sbetm2);
-      double omg12 = lam12 / (f1 * w._dnm);
+      double omg12 = lam12 / (f1 * w._dnm!);
       somg12 = sin(omg12);
       comg12 = cos(omg12);
     } else {
@@ -1040,7 +1041,7 @@ class Geodesic {
       // really short lines
       w._salp2 = cbet1 * somg12;
       w._calp2 = sbet12 - cbet1 * sbet2 * (comg12 >= 0 ? _GeoMath.sq(somg12) / (1 + comg12) : 1 - comg12);
-      _GeoMath.norm(p, w._salp2, w._calp2);
+      _GeoMath.norm(p, w._salp2!, w._calp2!);
       w._salp2 = p.first;
       w._calp2 = p.second;
       // Set return value
@@ -1529,12 +1530,9 @@ class _Lambda12V {
 }
 
 class _InverseStartV {
-  late double _sig12,
-      _salp1,
-      _calp1,
-      // Only updated if return val >= 0
-      _salp2,
-      _calp2,
-      // Only updated for short lines
-      _dnm;
+  late double _sig12, _salp1, _calp1;
+  // Only updated if return val >= 0
+  double? _salp2, _calp2;
+  // Only updated for short lines
+  double? _dnm;
 }

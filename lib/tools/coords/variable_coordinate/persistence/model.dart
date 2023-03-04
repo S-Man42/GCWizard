@@ -1,3 +1,4 @@
+import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/length.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
 import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
@@ -12,8 +13,9 @@ class ProjectionData {
   Length distanceUnit;
   String bearing;
   bool reverse;
+  Ellipsoid? ellipsoid;
 
-  ProjectionData(this.distance, this.distanceUnit, this.bearing, this.reverse);
+  ProjectionData(this.distance, this.distanceUnit, this.bearing, this.reverse, [this.ellipsoid]);
 
   Map<String, Object?> toMap() => {
         'distance': distance,

@@ -129,14 +129,14 @@ class RaDeg {
     return RaDeg(sign * degrees);
   }
 
-  static RaDeg? parse(String? input, {bool wholeString = false}) {
-    input = dec.prepareInput(input, wholeString: wholeString);
-    if (input == null) return null;
+  static RaDeg? parse(String input, {bool wholeString = false}) {
+    var _input = dec.prepareInput(input, wholeString: wholeString);
+    if (_input == null) return null;
 
     RegExp regex = RegExp(_PATTERN_RADEG + regexEnd, caseSensitive: false);
 
-    if (regex.hasMatch(input)) {
-      var matches = regex.firstMatch(input);
+    if (regex.hasMatch(_input)) {
+      var matches = regex.firstMatch(_input);
       if (matches == null) return null;
 
       var sign = dec.latLngPartSign(matches.group(1));

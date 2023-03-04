@@ -50,14 +50,14 @@ void main() {
                   !doubleEquals(karneyAzi1, vincentyAzi1, tolerance: 1e-4) ||
                   !doubleEquals(karneyAzi2, vincentyAzi2, tolerance: 1e-4)
               ) {
-                if (utils.equalsLatLng(coord1, coord2) && doubleEquals(karney.s12, 0.0)
+                if (utils.equalsLatLng(coord1, coord2, tolerance: 1e-5) && doubleEquals(karney.s12, 0.0)
                     || (coord1.latitude.abs() == 90.0 && coord2.latitude.abs() == 90.0) && doubleEquals(karney.s12, 20003931.4586255, tolerance: 1e-3)
                 ) {
                   continue;
                 }
 
                 var antipode = antipodes(coord1);
-                if (utils.equalsLatLng(coord2, antipode) && doubleEquals(karney.s12, 20003931.45862552, tolerance: 1e-3)) {
+                if (utils.equalsLatLng(coord2, antipode, tolerance: 1e-5) && doubleEquals(karney.s12, 20003931.45862552, tolerance: 1e-3)) {
                   continue;
                 }
 
@@ -117,7 +117,7 @@ void main() {
             !doubleEquals(karneyAzi1, vincentyAzi1, tolerance: 1e-2) ||
             !doubleEquals(karneyAzi2, vincentyAzi2, tolerance: 1e-2)
         ) {
-          if (utils.equalsLatLng(coord1, coord2) && doubleEquals(karney.s12, 0.0)
+          if (utils.equalsLatLng(coord1, coord2, tolerance: 1e-5) && doubleEquals(karney.s12, 0.0)
               || (coord1.latitude.abs() == 90.0 && coord2.latitude.abs() == 90.0) && doubleEquals(karney.s12, 20003931.4586255, tolerance: 1e-3)
           ) {
             continue;
@@ -179,7 +179,7 @@ void main() {
               GeodesicData karneyA = Geodesic(ellipsoid.a, ellipsoid.f).direct(coord2.latitude, coord2.longitude, karneyAzi2, karney.s12);
               LatLng calcA = LatLng(karneyA.lat2, karneyA.lon2);
 
-              if (!utils.equalsLatLng(calcB, coord2))
+              if (!utils.equalsLatLng(calcB, coord2, tolerance: 1e-5))
               {
                 countErrors++;
                 print('A -> B ==============================');
@@ -199,7 +199,7 @@ void main() {
                 print(coord2);
               }
 
-              if (!utils.equalsLatLng(calcA, coord1))
+              if (!utils.equalsLatLng(calcA, coord1, tolerance: 1e-5))
               {
                 countErrors++;
                 print('B -> A ==============================');
@@ -264,7 +264,7 @@ void main() {
         GeodesicData karneyA = Geodesic(ellipsoid.a, ellipsoid.f).direct(coord2.latitude, coord2.longitude, karneyAzi2, karney.s12);
         LatLng calcA = LatLng(karneyA.lat2, karneyA.lon2);
 
-        if (!utils.equalsLatLng(calcB, coord2)) {
+        if (!utils.equalsLatLng(calcB, coord2, tolerance: 1e-5)) {
           countErrors++;
           print('A -> B ==============================');
           print('A:');
@@ -283,7 +283,7 @@ void main() {
           print(coord2);
         }
 
-        if (!utils.equalsLatLng(calcA, coord1)) {
+        if (!utils.equalsLatLng(calcA, coord1, tolerance: 1e-5)) {
           countErrors++;
           print('B -> A ==============================');
           print('A:');

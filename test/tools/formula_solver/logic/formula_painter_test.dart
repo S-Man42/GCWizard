@@ -11,13 +11,8 @@ void main() {
     };
 
     List<Map<String, Object?>> _inputsToExpected = [
-      // {'formula' : null, 'values': null, 'expectedOutput' : null},
-      // {'formula' : null, 'values': <String, String>{}, 'expectedOutput' : null},
-      // {'formula' : null, 'expectedOutput' : null},
-      // {'formula' : '', 'expectedOutput' : ''},
-      // {'formula' : ' ', 'expectedOutput' : 'S'},
-      // {'formula' : 'A', 'values': null, 'expectedOutput' : 'R'},
-      // {'formula' : '0', 'values': null, 'expectedOutput' : 'g'},
+      {'formula' : '', 'expectedOutput' : ''},
+      {'formula' : ' ', 'expectedOutput' : 'S'},
       {'formula' : 'A', 'values': <String, String>{}, 'expectedOutput' : 'R'},
       {'formula' : '0', 'values': <String, String>{}, 'expectedOutput' : 'g'},
 
@@ -110,17 +105,14 @@ void main() {
       {'formula' : 'cs(33)', 'expectedOutput' : 'bbbggb'},
       {'formula' : 'cs(33 , 444,  55)', 'expectedOutput' : 'bbbgggbggggbggggb'},
       {'formula' : 'cs(A)', 'values': <String, String>{}, 'expectedOutput' : 'bbbRb'},
-      {'formula' : 'cs(A)', 'values': {'A': null}, 'expectedOutput' : 'bbbRb'},
       {'formula' : 'cs(A)', 'values': {'A': ''}, 'expectedOutput' : 'bbbRb'},
       {'formula' : 'cs(A)', 'values': {'A': '1'}, 'expectedOutput' : 'bbbrb'},
       {'formula' : 'cs(A)', 'values': {'A': 'X'}, 'expectedOutput' : 'bbbRb'}, // no number in number function
       {'formula' : 'cs(AB)', 'values': {'A': '1'}, 'expectedOutput' : 'bbbrRb'},
-      {'formula' : 'cs(AB)', 'values': {'A': '1', 'B': null}, 'expectedOutput' : 'bbbrRb'},
       {'formula' : 'cs(AB)', 'values': {'A': '1', 'B': ''}, 'expectedOutput' : 'bbbrRb'},
       {'formula' : 'cs(AB)', 'values': {'A': '1', 'B': '2'}, 'expectedOutput' : 'bbbrrb'},
       {'formula' : 'cs(AB)', 'values': {'A': '1', 'B': 'Y'}, 'expectedOutput' : 'bbbrRb'},
       {'formula' : 'csi(AB)', 'values': {'A': '1'}, 'expectedOutput' : 'bbbbrRb'},
-      {'formula' : 'csi(AB)', 'values': {'A': '1', 'B': null}, 'expectedOutput' : 'bbbbrRb'},
       {'formula' : 'csi(AB)', 'values': {'A': '1', 'B': ''}, 'expectedOutput' : 'bbbbrRb'},
       {'formula' : 'csi(AB)', 'values': {'A': '1', 'B': '2'}, 'expectedOutput' : 'bbbbrrb'},
       {'formula' : 'csi(AB)', 'values': {'A': '1', 'B': 'Y'}, 'expectedOutput' : 'bbbbrRb'},
@@ -140,12 +132,10 @@ void main() {
       {'formula' : 'bww(223)', 'values': {'C':'1'}, 'expectedOutput' : 'bbbbgggb'},
       {'formula' : 'bww(223)', 'expectedOutput' : 'bbbbgggb'},
       {'formula' : 'bww(A)', 'values': <String, String>{}, 'expectedOutput' : 'bbbbgb'},  // no set variable makes any text inside a text function to pure text input (= green)
-      {'formula' : 'bww(A)', 'values': {'A': null}, 'expectedOutput' : 'bbbbRb'},
       {'formula' : 'bww(A)', 'values': {'A': ''}, 'expectedOutput' : 'bbbbRb'},
       {'formula' : 'bww(A)', 'values': {'A': '1'}, 'expectedOutput' : 'bbbbrb'},
       {'formula' : 'bww(A)', 'values': {'A': 'X'}, 'expectedOutput' : 'bbbbrb'},
       {'formula' : 'bww(AB)', 'values': {'A': '1'}, 'expectedOutput' : 'bbbbrgb'},  // no set variable makes any text inside a text function to pure text input (= green)
-      {'formula' : 'bww(AB)', 'values': {'A': '1', 'B': null}, 'expectedOutput' : 'bbbbrRb'},
       {'formula' : 'bww(AB)', 'values': {'A': '1', 'B': ''}, 'expectedOutput' : 'bbbbrRb'},
       {'formula' : 'bww(AB)', 'values': {'A': '1', 'B': '2'}, 'expectedOutput' : 'bbbbrrb'},
       {'formula' : 'bww(AB)', 'values': {'A': '1', 'B': 'Y'}, 'expectedOutput' : 'bbbbrrb'},
@@ -304,7 +294,6 @@ void main() {
 
       //empty variables are always hint for forgotten values, so always R
       {'formula' : 'A', 'values': <String, String>{}, 'expectedOutput' : 'R'},
-      {'formula' : 'A', 'values': {'A': null}, 'expectedOutput' : 'R'},
       {'formula' : 'A', 'values': {'A': ''}, 'expectedOutput' : 'R'},
       {'formula' : 'A', 'values': {'A': '1'}, 'expectedOutput' : 'r'},
 
@@ -314,7 +303,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('formula: ${elem['formula']}, values: ${elem['values']}', () {
-        var _actual = formulaPainter.paintFormula(elem['formula'] as String, elem['values'] as Map<String, String>, (elem['formulaId'] ?? 1) as int, true);
+        var _actual = formulaPainter.paintFormula(elem['formula'] as String, elem['values'] as Map<String, String>, elem['formulaId'] as int, true);
         expect(_actual, elem['expectedOutput']);
       });
     }

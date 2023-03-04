@@ -8,11 +8,11 @@ class DistanceBearingData {
   DistanceBearingData();
 
   set bearingAToBInRadian(double bearingAToB) {
-    bearingAToB = radianToDeg(bearingAToB);
+    this.bearingAToB = radianToDeg(bearingAToB);
   }
 
   set bearingBToAInRadian(double bearingBToA) {
-    bearingBToA = radianToDeg(bearingBToA);
+    this.bearingBToA = radianToDeg(bearingBToA);
   }
 
   double get bearingAToBInRadian {

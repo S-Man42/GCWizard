@@ -211,6 +211,7 @@ String _getVariable(String line) {
 }
 
 String _normalizeDate(String dateString) {
+
   if (dateString.isEmpty || dateString == '1/1/0001 12:00:00 AM') return WHERIGO_NULLDATE;
 
   List<String> dateTime = dateString.split(' ');

@@ -51,7 +51,7 @@ void main() {
         List<LatLng> expected = elem['expectedOutput'] as List<LatLng>;
         expect(actual.length, expected.length);
         for (int i = 0; i < actual.length; i++) {
-          expect(equalsLatLng(actual[i], expected[i]), true);
+          expect(equalsLatLng(actual[i], expected[i], tolerance: 1e-5), true);
         }
       });
     }

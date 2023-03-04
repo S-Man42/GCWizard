@@ -185,11 +185,11 @@ class GCWMapViewState extends State<GCWMapView> {
         ? TileLayer(
           urlTemplate: 'https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}@2x.jpg90?access_token={accessToken}',
           additionalOptions: {'accessToken': _mapBoxToken!},
-          tileProvider: const CachedNetworkTileProvider())
+          tileProvider: CachedNetworkTileProvider())
         : TileLayer(
           urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-          subdomains: ['a', 'b', 'c'],
-          tileProvider: const CachedNetworkTileProvider());
+          subdomains: const ['a', 'b', 'c'],
+          tileProvider: CachedNetworkTileProvider());
 
     var layers = <Widget>[tileLayer];
     layers.addAll(_buildLinesAndMarkersLayers());
@@ -201,33 +201,31 @@ class GCWMapViewState extends State<GCWMapView> {
             FlutterMap(
               mapController: _mapController,
               options: MapOptions(
-                  allowPanningOnScrollingParent: false,
+                absorbPanEventsOnScrollables: false,
 
-                  /// IMPORTANT for dragging
-                  bounds: _getBounds(),
-                  boundsOptions: const FitBoundsOptions(padding: EdgeInsets.all(30.0)),
-                  minZoom: 1.0,
-                  maxZoom: 18.0,
-                  interactiveFlags: InteractiveFlag.all & ~InteractiveFlag.rotate, // suppress rotation
-                  plugins: [TappablePolylineMapPlugin()],
-                  onTap: (_, __) => _popupLayerController.hidePopup(),
-                  onLongPress: widget.isEditable // == _persistanceAdapter is set
-                      ? (_, LatLng coordinate) {
-                          setState(() {
-                            if (_persistanceAdapter != null) {
-                              var newPoint = _persistanceAdapter!.addMapPoint(coordinate);
+                /// IMPORTANT for dragging
+                bounds: _getBounds(),
+                boundsOptions: const FitBoundsOptions(padding: EdgeInsets.all(30.0)),
+                minZoom: 1.0,
+                maxZoom: 18.0,
+                interactiveFlags: InteractiveFlag.all & ~InteractiveFlag.rotate, // suppress rotation
+                onTap: (_, __) => _popupLayerController.hidePopup(),
+                onLongPress: widget.isEditable // == _persistanceAdapter is set
+                    ? (_, LatLng coordinate) {
+                        setState(() {
+                          if (_persistanceAdapter != null) {
+                            var newPoint = _persistanceAdapter!.addMapPoint(coordinate);
 
-                              if (_isPolylineDrawing) {
-                                if (widget.polylines.isEmpty) _persistanceAdapter!.createMapPolyline();
+                            if (_isPolylineDrawing) {
+                              if (widget.polylines.isEmpty) _persistanceAdapter!.createMapPolyline();
 
-                                _persistanceAdapter!.addMapPointIntoPolyline(newPoint, widget.polylines.last);
-                              }
+                              _persistanceAdapter!.addMapPointIntoPolyline(newPoint, widget.polylines.last);
                             }
-                          });
-                        }
-                      : null),
+                          }
+                        });
+                      }
+                    : null),
               children: layers,
-              // layers: layers,
             ),
             Positioned(top: 15.0, right: 15.0, child: Column(children: _buildLayerButtons())),
             widget.isEditable
@@ -996,10 +994,8 @@ class _GCWMapPopupController {
 }
 
 class CachedNetworkTileProvider extends TileProvider {
-  const CachedNetworkTileProvider();
-
   @override
-  ImageProvider getImage(Coords<num> coords, TileLayerOptions options) {
-    return CachedNetworkImageProvider(getTileUrl(coords, options));
+  ImageProvider getImage(Coords<num> coords, TileLayer layer) {
+    return CachedNetworkImageProvider(getTileUrl(coords, layer));
   }
 }

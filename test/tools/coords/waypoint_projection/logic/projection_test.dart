@@ -25,7 +25,7 @@ void main() {
         var actual = reverseProjection(elem['coord'] as LatLng, elem['bearing'] as double, elem['distance'] as double, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
         var equals = false;
         for (LatLng l in actual) {
-          if (equalsLatLng(l, elem['expectedOutput'] as LatLng)) {
+          if (equalsLatLng(l, elem['expectedOutput'] as LatLng, tolerance: 1e-5)) {
             equals = true;
           }
         }
