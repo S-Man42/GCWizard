@@ -12,7 +12,7 @@ bool _insideSectionItem(String currentLine) {
   return true;
 }
 
-WherigoItemData _analyzeAndExtractItemSectionData(List<String> lines) {
+WherigoItemData _analyzeAndExtractItemSectionData(List<String> lines, String container) {
   String LUAname = '';
   String id = '';
   String name = '';
@@ -22,7 +22,6 @@ WherigoItemData _analyzeAndExtractItemSectionData(List<String> lines) {
   String icon = '';
   String location = '';
   WherigoZonePoint zonePoint = WherigoZonePoint(0.0, 0.0, 0.0);
-  String container = '';
   String locked = '';
   String opened = '';
 

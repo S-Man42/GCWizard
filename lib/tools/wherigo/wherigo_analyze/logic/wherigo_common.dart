@@ -91,46 +91,6 @@ String getTextData(String analyseLine, ) {
   return normalizeWIGText(result);
 }
 
-
-// TODO Thomas unused methods, you have a lot of them, please check "Dart Analysis -> hints"
-String _getDetails(String line, String obfuscator, String dtable) {
-  // line is a concatination of several obfuscated strings
-  String element = '';
-  String result = '';
-  int i = 0;
-  bool section = true;
-  do {
-    i = obfuscator.length + 2;
-    element = '';
-
-    do {
-      //get obfuscated string
-      element = element + line[i];
-      i = i + 1;
-    } while ((line[i] + line[i + 1] != '")') && (i + 2 < line[i].length));
-    result = result + deobfuscateUrwigoText(element, dtable);
-    line = line.substring(i + 2);
-
-    i = 0;
-    section = true;
-    if (line.isNotEmpty) {
-      do {
-        // get something else in between
-        if (line.substring(i).startsWith(obfuscator)) {
-          section = false;
-        } else {
-          i = i + 1;
-        }
-      } while (section && i < line.length);
-      //i--;
-      result = result + line.substring(0, i).replaceAll(')', '');
-      line = line.substring(i);
-    }
-  } while (line.isNotEmpty);
-
-  return normalizeWIGText(result);
-}
-
 List<String> getChoicesSingleLine(String choicesLine, String LUAname, String obfuscator, String dtable) {
   List<String> result = [];
   choicesLine
@@ -142,29 +102,6 @@ List<String> getChoicesSingleLine(String choicesLine, String LUAname, String obf
     result.add(element.trim());
   });
   return result;
-}
-
-bool _compositeText(String text) {
-  RegExp expr = RegExp(r'"\) .. ');
-  return (expr.hasMatch(text));
-}
-
-bool _compositeObfuscatedText(String text, String obfuscator) {
-  return (RegExp(r'' + obfuscator).allMatches(text).length > 1);
-}
-
-String _getCompositeText(String text, String obfuscator, String dtable) {
-  String hashText = '';
-  String result = '';
-
-  int i = obfuscator.length + 2;
-  do {
-    hashText = hashText + text[i];
-    i++;
-  } while ((text[i] + text[i + 1] != '")'));
-  text = text.substring(i + 2);
-  result = result + deobfuscateUrwigoText(hashText, dtable) + text;
-  return normalizeWIGText(result);
 }
 
 String normalizeWIGText(String text) {

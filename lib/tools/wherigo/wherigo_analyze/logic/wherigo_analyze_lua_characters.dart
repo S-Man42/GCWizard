@@ -13,7 +13,7 @@ bool _insideSectionCharacter(String currentLine) {
   return true;
 }
 
-WherigoCharacterData _analyzeAndExtractCharacterSectionData(List<String> lines) {
+WherigoCharacterData _analyzeAndExtractCharacterSectionData(List<String> lines, String container) {
   String LUAname = '';
   String id = '';
   String name = '';
@@ -25,7 +25,6 @@ WherigoCharacterData _analyzeAndExtractCharacterSectionData(List<String> lines) 
   WherigoZonePoint zonePoint = WherigoZonePoint(0.0, 0.0, 0.0);
   String type = '';
   String gender = '';
-  String container = '';
 
   bool _sectionDescription = true;
 

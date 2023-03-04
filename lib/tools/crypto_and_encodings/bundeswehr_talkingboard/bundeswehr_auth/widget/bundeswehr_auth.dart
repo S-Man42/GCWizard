@@ -401,7 +401,7 @@ class BundeswehrTalkingBoardAuthentificationState extends State<BundeswehrTalkin
       int rnd = 0;
       while (authCode.length != 65) {
         rnd = random.nextInt(100);
-        if (authCode.contains(rnd)) {
+        if (authCode.contains(rnd.toString().padLeft(2, '0'))) {
         } else {
           authCode.add(rnd.toString().padLeft(2, '0'));
         }

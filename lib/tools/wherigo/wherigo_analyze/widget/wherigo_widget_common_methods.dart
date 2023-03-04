@@ -5,6 +5,8 @@ GCWFile? _getFileFrom(BuildContext context, String resourceName) {
   Uint8List? filedata;
   String? filename;
   int fileindex = 0;
+  GCWFile? result;
+
   try {
     if (WherigoCartridgeGWCData.MediaFilesContents.length > 1) {
       for (var element in WherigoCartridgeLUAData.Media) {
@@ -15,10 +17,10 @@ GCWFile? _getFileFrom(BuildContext context, String resourceName) {
         fileindex++;
       }
       if (filedata != null) {
-        return GCWFile(bytes: filedata, name: filename);
+        result = GCWFile(bytes: filedata, name: filename);
       }
     } else {
-      return null;
+      result = null;
     }
   } catch (exception) {
     errorMsg_MediaFiles = [];
@@ -41,6 +43,7 @@ GCWFile? _getFileFrom(BuildContext context, String resourceName) {
             i18n(context, 'wherigo_error_hint_2'),
         duration: 45);
   }
+  return result;
 }
 
 String _resolveLUAName(String chiffre) {

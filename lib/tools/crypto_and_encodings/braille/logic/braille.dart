@@ -1928,9 +1928,6 @@ SegmentsChars _decodeBrailleENG(List<String> inputs) {
                 case '1256':
                   text.add('|');
                   break;
-                case '356':  // TODO Thomas: Please check. I cannot find the original source for verification
-                  text.add('%');
-                  break;
                 case '1456':
                   text.add('#');
                   break;
