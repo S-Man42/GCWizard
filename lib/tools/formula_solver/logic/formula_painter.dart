@@ -579,7 +579,7 @@ class FormulaPainter {
     return (match == null)
         ? null
         : [
-            _combineGroups([match.group(1)!, match.group(2)!, match.group(3)!, match.group(4)!])
+            _combineGroups([match.group(1), match.group(2), match.group(3), match.group(4)])
           ];
   }
 
@@ -676,7 +676,7 @@ class FormulaPainter {
     return arguments;
   }
 
-  String _combineGroups(List<String> list) {
+  String _combineGroups(List<String?> list) {
     return list.map((e) {
       return e;
     }).join();

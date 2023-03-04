@@ -102,7 +102,7 @@ class Rabbit {
   _context? _working; // this is created on class construction/initialization
   bool initialized = false;
 
-  Rabbit(Uint8List? key, Uint8List iv) {
+  Rabbit(Uint8List? key, Uint8List? iv) {
     if (key != null && key.length != 16) {
       return;
     }

@@ -71,8 +71,13 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, type: ${elem['type']}', () {
-        var _actual = encodeRomanNumbers(elem['input'] as int?, type: elem['type'] as RomanNumberType);
-        expect(_actual, elem['expectedOutput']);
+        if (elem['type'] == null) {
+          var _actual = encodeRomanNumbers(elem['input'] as int?);
+          expect(_actual, elem['expectedOutput']);
+        } else {
+          var _actual = encodeRomanNumbers(elem['input'] as int?, type: elem['type'] as RomanNumberType);
+          expect(_actual, elem['expectedOutput']);
+        }
       });
     }
   });
@@ -213,8 +218,13 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, type: ${elem['type']}', () {
-        var _actual = decodeRomanNumbers(elem['input'] as String?, type: elem['type'] as RomanNumberType);
-        expect(_actual, elem['expectedOutput']);
+        if (elem['type'] == null) {
+          var _actual = decodeRomanNumbers(elem['input'] as String?);
+          expect(_actual, elem['expectedOutput']);
+        } else {
+          var _actual = decodeRomanNumbers(elem['input'] as String?, type: elem['type'] as RomanNumberType);
+          expect(_actual, elem['expectedOutput']);
+        }
       });
     }
   });

@@ -16,7 +16,9 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, searchMask: ${elem['searchMask']}, substitutions: ${elem['substitutions']}', () {
         var _actual = breakHash(elem['input'] as String?, elem['searchMask'] as String?, elem['substitutions'] as Map<String, String>?, elem['hashFunction'] as Function?);
-        expect(_actual, elem['expectedOutput']);
+        var expected =  elem['expectedOutput'] as BoolText?;
+        expect(_actual?.text, expected?.text);
+        expect(_actual?.value, expected?.value);
       });
     }
   });

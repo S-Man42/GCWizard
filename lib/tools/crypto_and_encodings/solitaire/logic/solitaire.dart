@@ -45,7 +45,7 @@ SolitaireOutput? _solitaireBase(String? input, String? key, bool encrypt) {
   }
 
   var deck = createDeck();
-  var tuple = createKeyStream(input, key!, deck, alphabet);
+  var tuple = createKeyStream(input, key, deck, alphabet);
   var keyStream = tuple.item1;
   deck = tuple.item2;
   String output;

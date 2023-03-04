@@ -44,8 +44,8 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('key: ${elem['key']} iv: ${elem['iv']}', () {
-        var _actual = Rabbit(elem['key'] as Uint8List?, elem['iv'] as Uint8List)
-            .keyStreamBytes((elem['expectedOutput'] as Uint8List).length);
+        var _actual = Rabbit(elem['key'] as Uint8List?, elem['iv'] as Uint8List?)
+            .keyStreamBytes((elem['expectedOutput'] as Uint8List?)?.length);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -53,10 +53,10 @@ void main() {
 
   group("rabbit.cryptRabbit:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input': null, 'inputFormat': null, 'key': null, 'keyFormat': null, 'iv': null, 'ivFormat': null, 'outputFormat': null,
+      {'input': null, 'inputFormat': InputFormat.HEX, 'key': null, 'keyFormat': InputFormat.AUTO, 'iv': null, 'ivFormat': InputFormat.AUTO, 'outputFormat': OutputFormat.HEX,
         'expectedOutput': RabbitOutput('', null, null, ErrorCode.OK)
       },
-      {'input': '', 'inputFormat': null, 'key': null, 'keyFormat': null, 'iv': null, 'ivFormat': null, 'outputFormat': null,
+      {'input': '', 'inputFormat': InputFormat.HEX, 'key': null, 'keyFormat': InputFormat.AUTO, 'iv': null, 'ivFormat': InputFormat.AUTO, 'outputFormat': OutputFormat.HEX,
         'expectedOutput': RabbitOutput('', null, null, ErrorCode.OK)
       },
       {'input': '00 00 00 00 00 00 00 00', 'inputFormat': InputFormat.HEX, 'key': '10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00', 'keyFormat': InputFormat.HEX, 'iv': '00 00 00 00', 'ivFormat': InputFormat.HEX, 'outputFormat': OutputFormat.HEX,

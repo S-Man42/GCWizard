@@ -60,7 +60,6 @@ void main() {
 
   group("TextAnalysis.analyseText:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' :
         TextAnalysisCharacterCounts(
           letters: SplayTreeMap<String, int>(),

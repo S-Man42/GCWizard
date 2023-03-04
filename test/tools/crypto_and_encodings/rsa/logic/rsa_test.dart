@@ -27,8 +27,10 @@ void main() {
   group("RSA.decryptRSA:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'input' : null, 'd': null, 'p': null, 'q': null, 'expectedOutput' : null},
-      {'input' : null, 'd': null, 'p': null, 'q': null, 'expectedOutput' : null},
-      {'input' : null, 'd': null, 'p': null, 'q': null, 'expectedOutput' : null},
+      {'input' : null, 'd': BigInt.from(1373), 'p': null, 'q': null, 'expectedOutput' : null},
+      {'input' : null, 'd': null, 'p': BigInt.from(1373), 'q': null, 'expectedOutput' : null},
+      {'input' : null, 'd': null, 'p': null, 'q': BigInt.from(1373), 'expectedOutput' : null},
+
       {'input' : null, 'd': BigInt.from(1373), 'p': BigInt.from(307), 'q': BigInt.from(859), 'expectedOutput' : null},
       {'input' : null, 'd': BigInt.from(1373), 'p': BigInt.from(307), 'q': BigInt.from(859), 'expectedOutput' : null},
       {'input' : [BigInt.from(35225), BigInt.from(253912), BigInt.from(163314), BigInt.from(253912), BigInt.from(251016), BigInt.from(133372), BigInt.from(139634), BigInt.from(253912), BigInt.from(114917), BigInt.from(191731), BigInt.from(253912), BigInt.from(218980), BigInt.from(211928), BigInt.from(191731), BigInt.from(33825), BigInt.from(241474), BigInt.from(192628)],
@@ -41,7 +43,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, d: ${elem['e']}, p${elem['p']}, q: ${elem['q']},', () {
-        var _actual = decryptRSA(elem['input'] as List<BigInt>, elem['d'] as BigInt?, elem['p'] as BigInt?, elem['q'] as BigInt?);
+        var _actual = decryptRSA(elem['input'] as List<BigInt>?, elem['d'] as BigInt?, elem['p'] as BigInt?, elem['q'] as BigInt?);
         expect(_actual, elem['expectedOutput']);
       });
     }

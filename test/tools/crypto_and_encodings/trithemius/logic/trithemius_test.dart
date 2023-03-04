@@ -36,8 +36,13 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, key: ${elem['key']}, aValue: ${elem['aValue']}, autoKey: ${elem['autoKey']}', () {
-        var _actual = encryptTrithemius(elem['input'] as String, aValue: elem['aValue'] as int);
-        expect(_actual, elem['expectedOutput']);
+        if (elem['aValue'] == null) {
+          var _actual = encryptTrithemius(elem['input'] as String?);
+          expect(_actual, elem['expectedOutput']);
+        } else {
+          var _actual = encryptTrithemius(elem['input'] as String?, aValue: elem['aValue'] as int);
+          expect(_actual, elem['expectedOutput']);
+        }
       });
     }
   });
@@ -76,8 +81,13 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, key: ${elem['key']}, aValue: ${elem['aValue']}, autoKey: ${elem['autoKey']}', () {
-        var _actual = decryptTrithemius(elem['input'] as String, aValue: elem['aValue'] as int);
-        expect(_actual, elem['expectedOutput']);
+        if (elem['aValue'] == null) {
+          var _actual = decryptTrithemius(elem['input'] as String?);
+          expect(_actual, elem['expectedOutput']);
+        } else {
+          var _actual = decryptTrithemius(elem['input'] as String?, aValue: elem['aValue'] as int);
+          expect(_actual, elem['expectedOutput']);
+        }
       });
     }
   });

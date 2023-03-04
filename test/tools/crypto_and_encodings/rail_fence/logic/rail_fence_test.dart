@@ -4,8 +4,8 @@ import 'package:gc_wizard/tools/crypto_and_encodings/rail_fence/logic/rail_fence
 void main() {
   group("RailFence.encrypt:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
-      {'input' : '', 'expectedOutput' : ''},
+      {'input' : null, 'key': 4, 'expectedOutput' : ''},
+      {'input' : '', 'key': 4, 'expectedOutput' : ''},
 
       {'input' : 'DIESISTEINEGEHEIMEBOTSCHAFT', 'key': 4, 'expectedOutput': 'DTEBAISEGHEOHFEIIEEMTCTSNIS'},
       {'input' : 'DIESISTEINEGEHEIMEBOTSCHAFT', 'key': 4, 'offset': 2, 'expectedOutput': 'IEMCSSNGIESHDETIEEBTATIEHOF'},
@@ -36,8 +36,8 @@ void main() {
 
   group("RailFence.decrypt:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
-      {'input' : '', 'expectedOutput' : ''},
+      {'input' : null, 'key': 4, 'expectedOutput' : ''},
+      {'input' : '', 'key': 4, 'expectedOutput' : ''},
 
       {'expectedOutput' : 'DIESISTEINEGEHEIMEBOTSCHAFT', 'key': 4, 'input': 'DTEBAISEGHEOHFEIIEEMTCTSNIS'},
       {'expectedOutput' : 'DIESISTEINEGEHEIMEBOTSCHAFT', 'key': 4, 'offset': 2, 'input': 'IEMCSSNGIESHDETIEEBTATIEHOF'},
