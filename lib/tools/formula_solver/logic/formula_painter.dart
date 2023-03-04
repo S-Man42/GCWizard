@@ -12,7 +12,7 @@ class FormulaPainter {
   var _constants = <String>[];
   late int _formulaId;
   late bool _operatorBevor;
-  late String? _parentFunctionName;
+  String? _parentFunctionName;
   late String formula;
 
   late String _operatorsRegEx;
@@ -350,7 +350,7 @@ class FormulaPainter {
         maxCommaCount = 1;
         break;
       case 'NRT':
-        maxCommaCount = minCommaCount;
+        maxCommaCount = null;
         break;
       case 'MIN':
       case 'MAX':
@@ -360,7 +360,7 @@ class FormulaPainter {
       case 'BWW':
       case 'AV':
       case 'LEN':
-        maxCommaCount = minCommaCount;
+        maxCommaCount = null;
         break;
       default:
         maxCommaCount = minCommaCount;
@@ -677,9 +677,11 @@ class FormulaPainter {
   }
 
   String _combineGroups(List<String?> list) {
-    return list.map((e) {
-      return e;
-    }).join();
+    var result = '';
+    for (String? char in list) {
+      if (char != null) result += char;
+    }
+    return result;
   }
 
   String _replaceSpaces(String result) {

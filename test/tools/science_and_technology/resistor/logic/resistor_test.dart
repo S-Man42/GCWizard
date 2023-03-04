@@ -4,11 +4,10 @@ import 'package:gc_wizard/tools/science_and_technology/resistor/_common/logic/re
 void main() {
   group("Resistor.resistor:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'colors' : null, 'expectedOutput' : null},
-      {'colors' : <ResistorBandColor>[], 'expectedOutput' : null},
-      {'colors' : [ResistorBandColor.RED], 'expectedOutput' : null},
-      {'colors' : [ResistorBandColor.RED, ResistorBandColor.RED], 'expectedOutput' : null},
-      {'colors' : [ResistorBandColor.RED, ResistorBandColor.RED, ResistorBandColor.RED, ResistorBandColor.RED, ResistorBandColor.RED, ResistorBandColor.RED, ResistorBandColor.RED], 'expectedOutput' : null},
+      {'colors' : <ResistorBandColor>[], 'expectedOutput' : ResistorValue(null, 0.0)},
+      {'colors' : [ResistorBandColor.RED], 'expectedOutput' :  ResistorValue(null, 0.0)},
+      {'colors' : [ResistorBandColor.RED, ResistorBandColor.RED], 'expectedOutput' :  ResistorValue(null, 0.0)},
+      {'colors' : [ResistorBandColor.RED, ResistorBandColor.RED, ResistorBandColor.RED, ResistorBandColor.RED, ResistorBandColor.RED, ResistorBandColor.RED, ResistorBandColor.RED], 'expectedOutput' : ResistorValue(null, 0.0)},
 
       {'colors' : [ResistorBandColor.YELLOW, ResistorBandColor.VIOLET, ResistorBandColor.RED], 'expectedOutput' : const ResistorValue(4700.0, 0.2)},
       {'colors' : [ResistorBandColor.YELLOW, ResistorBandColor.VIOLET, ResistorBandColor.RED, ResistorBandColor.BROWN], 'expectedOutput' : const ResistorValue(4700.0, 0.01)},
@@ -27,13 +26,9 @@ void main() {
       test('colors: ${elem['colors']}', () {
         var _actual = getResistorValue(elem['colors'] as List<ResistorBandColor>);
 
-        if (elem['expectedOutput'] == null) {
-          expect(_actual, null);
-        } else {
-          expect(_actual.value, (elem['expectedOutput'] as ResistorValue).value);
-          expect(_actual.tolerance, (elem['expectedOutput'] as ResistorValue).tolerance);
-          expect(_actual.temperatureCoefficient, (elem['expectedOutput'] as ResistorValue).temperatureCoefficient);
-        }
+        expect(_actual.value, (elem['expectedOutput'] as ResistorValue).value);
+        expect(_actual.tolerance, (elem['expectedOutput'] as ResistorValue).tolerance);
+        expect(_actual.temperatureCoefficient, (elem['expectedOutput'] as ResistorValue).temperatureCoefficient);
       });
     }
   });
@@ -53,8 +48,13 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('code: ${elem['code']}, multiplicator: ${elem['multiplicator']}', () {
-        var _actual = eia96(elem['code'] as int?, multiplicator: elem['multiplicator'] as String);
-        expect(_actual, elem['expectedOutput']);
+        if (elem['multiplicator'] == null) {
+          var _actual = eia96(elem['code'] as int?);
+          expect(_actual, elem['expectedOutput']);
+        } else {
+          var _actual = eia96(elem['code'] as int?, multiplicator: elem['multiplicator'] as String);
+          expect(_actual, elem['expectedOutput']);
+        }
       });
     }
   });

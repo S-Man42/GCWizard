@@ -90,7 +90,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('index: ${elem['index']}', () {
-        var _actual = irCalculator.decimalOccurences(elem['input'] as String);
+        var _actual = irCalculator.decimalOccurences(elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     }

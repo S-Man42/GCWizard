@@ -4,7 +4,6 @@ import 'package:gc_wizard/tools/science_and_technology/periodic_table/_common/lo
 void main() {
   group("PeriodicTable.atomicNumbersToText:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'atomicNumbers' : null, 'expectedOutput' : ''},
       {'atomicNumbers' : <int>[], 'expectedOutput' : ''},
 
       {'atomicNumbers' : [1,2,3], 'expectedOutput' : 'HHeLi'},
@@ -36,7 +35,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('text: ${elem['text']}', () {
-        var _actual = textToAtomicNumbers(elem['text'] as String);
+        var _actual = textToAtomicNumbers(elem['text'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     }

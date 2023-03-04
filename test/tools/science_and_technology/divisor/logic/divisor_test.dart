@@ -4,7 +4,6 @@ import 'package:gc_wizard/tools/science_and_technology/divisor/logic/divisor.dar
 void main() {
   group("divisor", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : []},
       {'input' : 0, 'expectedOutput' : [0]},
       {'input' : 1, 'expectedOutput' : [1]},
       {'input' : 2, 'expectedOutput' : [1, 2]},

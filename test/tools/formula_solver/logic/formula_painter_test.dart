@@ -11,9 +11,7 @@ void main() {
     };
 
     List<Map<String, Object?>> _inputsToExpected = [
-      {'formula' : '', 'expectedOutput' : ''},
-      {'formula' : ' ', 'expectedOutput' : 'S'},
-      {'formula' : 'A', 'values': <String, String>{}, 'expectedOutput' : 'R'},
+     {'formula' : 'A', 'values': <String, String>{}, 'expectedOutput' : 'R'},
       {'formula' : '0', 'values': <String, String>{}, 'expectedOutput' : 'g'},
 
       {'formula' : '1', 'values': values, 'expectedOutput' : 'g'},
@@ -303,7 +301,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('formula: ${elem['formula']}, values: ${elem['values']}', () {
-        var _actual = formulaPainter.paintFormula(elem['formula'] as String, elem['values'] as Map<String, String>, elem['formulaId'] as int, true);
+        var _actual = formulaPainter.paintFormula(elem['formula'] as String, (elem['values'] ?? <String, String>{}) as Map<String, String>, (elem['formulaId'] ?? 0) as int, true);
         expect(_actual, elem['expectedOutput']);
       });
     }

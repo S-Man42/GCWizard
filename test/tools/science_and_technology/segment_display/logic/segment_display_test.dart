@@ -41,9 +41,9 @@ void main() {
       {'input' : '  ', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': [<String>[],<String>[]]},
       {'input' : ' .', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': [['dp']]},
       {'input' : '  .', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': [<String>[],['dp']]},
-      {'input' : '1 1', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': [['b', 'c'], [<String>[]], ['b', 'c']]},
+      {'input' : '1 1', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': [['b', 'c'], <String>[], ['b', 'c']]},
 
-      {'input' : 'ö', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': [<String>[]]},
+      {'input' : 'ö', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': []},
       {'input' : 'öa', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': [['a', 'b', 'c', 'e', 'f', 'g']]},
       {'input' : 'ö.', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': [['dp']]},
       {'input' : 'aö', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': [['a', 'b', 'c', 'e', 'f', 'g']]},
@@ -63,56 +63,58 @@ void main() {
 
   group("SegmentDisplay.decodeSegment:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': {'displays':[<String>[]], 'text': ''}},
-      {'input' : '', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': {'displays':[<String>[]], 'text': ''}},
+      {'input' : null, 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': SegmentsText(displays:[], text: '')},
+      {'input' : '', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': SegmentsText(displays:[], text: '')},
 
-      {'input' : 'bc', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': {'displays':[['b','c']], 'text': '1'}},
-      {'input' : 'bc bc', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': {'displays':[['b','c'],['b','c']], 'text': '11'}},
-      {'input' : 'bbcc', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': {'displays':[['b','c']], 'text': '1'}},
+      {'input' : 'bc', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': SegmentsText(displays:[['b','c']], text: '1')},
+      {'input' : 'bc bc', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': SegmentsText(displays:[['b','c'],['b','c']], text: '11')},
+      {'input' : 'bbcc', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': SegmentsText(displays:[['b','c']], text: '1')},
 
-      {'input' : 'cb', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': {'displays':[['b','c']], 'text': '1'}},
+      {'input' : 'cb', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': SegmentsText(displays:[['b','c']], text: '1')},
 
-      {'input' : 'ba', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': {'displays':[['a','b']], 'text': UNKNOWN_ELEMENT}},
-      {'input' : 'a', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': {'displays':[['a']], 'text': UNKNOWN_ELEMENT}},
-      {'input' : 'bc a', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': {'displays':[['b','c'],['a']], 'text': '1' + UNKNOWN_ELEMENT}},
-      {'input' : 'a cb', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': {'displays':[['a'],['b','c']], 'text': UNKNOWN_ELEMENT + '1'}},
-      {'input' : 'a CB', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': {'displays':[['a'],['b','c']], 'text': UNKNOWN_ELEMENT + '1'}},
+      {'input' : 'ba', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': SegmentsText(displays:[['a','b']], text: UNKNOWN_ELEMENT)},
+      {'input' : 'a', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': SegmentsText(displays:[['a']], text: UNKNOWN_ELEMENT)},
+      {'input' : 'bc a', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': SegmentsText(displays:[['b','c'],['a']], text: '1' + UNKNOWN_ELEMENT)},
+      {'input' : 'a cb', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': SegmentsText(displays:[['a'],['b','c']], text: UNKNOWN_ELEMENT + '1')},
+      {'input' : 'a CB', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': SegmentsText(displays:[['a'],['b','c']], text: UNKNOWN_ELEMENT + '1')},
 
-      {'input' : 'z', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': {'displays':[<String>[]], 'text': ''}},
-      {'input' : 'z bc', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': {'displays':[['b','c']], 'text': '1'}},
-      {'input' : 'bc z', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': {'displays':[['b','c']], 'text': '1'}},
-      {'input' : 'bczbc', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': {'displays':[['b','c'],['b','c']], 'text': '11'}},
-      {'input' : 'bczzz zzzbc', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': {'displays':[['b','c'],['b','c']], 'text': '11'}},
+      {'input' : 'z', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': SegmentsText(displays:[], text: '')},
+      {'input' : 'z bc', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': SegmentsText(displays:[['b','c']], text: '1')},
+      {'input' : 'bc z', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': SegmentsText(displays:[['b','c']], text: '1')},
+      {'input' : 'bczbc', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': SegmentsText(displays:[['b','c'],['b','c']], text: '11')},
+      {'input' : 'bczzz zzzbc', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': SegmentsText(displays:[['b','c'],['b','c']], text: '11')},
 
-      {'input' : 'a1', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': {'displays':[['a1']], 'text': UNKNOWN_ELEMENT}},
-      {'input' : 'a1a1', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': {'displays':[['a1']], 'text': UNKNOWN_ELEMENT}},
-      {'input' : 'ba1a2c', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': {'displays':[['a1','a2','b','c']], 'text': '7'}},
+      {'input' : 'a1', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': SegmentsText(displays:[['a1']], text: UNKNOWN_ELEMENT)},
+      {'input' : 'a1a1', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': SegmentsText(displays:[['a1']], text: UNKNOWN_ELEMENT)},
+      {'input' : 'ba1a2c', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': SegmentsText(displays:[['a1','a2','b','c']], text: '7')},
 
-      {'input' : 'b1', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': {'displays':[<String>[]], 'text': ''}},
-      {'input' : 'a1 b1', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': {'displays':[['a1']], 'text': UNKNOWN_ELEMENT}},
-      {'input' : 'a1 b1a2', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': {'displays':[['a1'],['a2']], 'text': UNKNOWN_ELEMENT * 2}},
-      {'input' : 'a3', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': {'displays':[<String>[]], 'text': ''}},
-      {'input' : 'b1a', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': {'displays':[<String>[]], 'text': ''}},
-      {'input' : '1a', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': {'displays':[<String>[]], 'text': ''}},
-      {'input' : '1a1', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': {'displays': [['a1']], 'text': '<?>'}},
+      {'input' : 'b1', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': SegmentsText(displays:[], text: '')},
+      {'input' : 'a1 b1', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': SegmentsText(displays:[['a1']], text: UNKNOWN_ELEMENT)},
+      {'input' : 'a1 b1a2', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': SegmentsText(displays:[['a1'],['a2']], text: UNKNOWN_ELEMENT * 2)},
+      {'input' : 'a3', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': SegmentsText(displays:[], text: '')},
+      {'input' : 'b1a', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': SegmentsText(displays:[], text: '')},
+      {'input' : '1a', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': SegmentsText(displays:[], text: '')},
+      {'input' : '1a1', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': SegmentsText(displays: [['a1']], text: '<?>')},
 
-      {'input' : 'dp', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': {'displays':[['dp']], 'text': '.'}},
-      {'input' : 'dpdp', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': {'displays':[['dp']], 'text': '.'}},
-      {'input' : 'dp dp', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': {'displays': [['dp'], ['dp']], 'text': '..'}},
-      {'input' : 'bcdp', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': {'displays': [['b', 'c', 'dp']], 'text': '1.'}},
-      {'input' : 'bc dp', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': {'displays': [['b', 'c'], ['dp']], 'text': '1.'}},
-      {'input' : 'bcdp dp', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': {'displays': [['b', 'c', 'dp'], ['dp']], 'text': '1..'}},
-      {'input' : 'dpcb bdpc', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': {'displays': [['b', 'c', 'dp'], ['b', 'c', 'dp']], 'text': '1.1.'}},
-      {'input' : 'dp bc', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': {'displays': [['dp'], ['b', 'c']], 'text': '.1'}},
-      {'input' : 'dp bcdp', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': {'displays': [['dp'], ['b', 'c', 'dp']], 'text': '.1.'}},
-      {'input' : 'dp bcdpdp', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': {'displays': [['dp'], ['b', 'c', 'dp']], 'text': '.1.'}},
-      {'input' : 'dp bcdp dp', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': {'displays': [['dp'], ['b', 'c', 'dp'], ['dp']], 'text': '.1..'}},
+      {'input' : 'dp', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': SegmentsText(displays:[['dp']], text: '.')},
+      {'input' : 'dpdp', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': SegmentsText(displays:[['dp']], text: '.')},
+      {'input' : 'dp dp', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': SegmentsText(displays: [['dp'], ['dp']], text: '..')},
+      {'input' : 'bcdp', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': SegmentsText(displays: [['b', 'c', 'dp']], text: '1.')},
+      {'input' : 'bc dp', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': SegmentsText(displays: [['b', 'c'], ['dp']], text: '1.')},
+      {'input' : 'bcdp dp', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': SegmentsText(displays: [['b', 'c', 'dp'], ['dp']], text: '1..')},
+      {'input' : 'dpcb bdpc', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': SegmentsText(displays: [['b', 'c', 'dp'], ['b', 'c', 'dp']], text: '1.1.')},
+      {'input' : 'dp bc', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': SegmentsText(displays: [['dp'], ['b', 'c']], text: '.1')},
+      {'input' : 'dp bcdp', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': SegmentsText(displays: [['dp'], ['b', 'c', 'dp']], text: '.1.')},
+      {'input' : 'dp bcdpdp', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': SegmentsText(displays: [['dp'], ['b', 'c', 'dp']], text: '.1.')},
+      {'input' : 'dp bcdp dp', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': SegmentsText(displays: [['dp'], ['b', 'c', 'dp'], ['dp']], text: '.1..')},
     ];
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, segmentType: ${elem['segmentType']}', () {
         var _actual = decodeSegment(elem['input'] as String?, elem['segmentType'] as SegmentDisplayType);
-        expect(_actual, elem['expectedOutput']);
+        var expected  = elem['expectedOutput'] as SegmentsText;
+        expect(_actual.text, expected.text);
+        expect(_actual.displays, expected.displays);
       });
     }
   });

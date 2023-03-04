@@ -62,7 +62,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = isoWeekOfYear(elem['input'] as DateTime);
+        var _actual = isoWeekOfYear(elem['input'] as DateTime?);
         expect(_actual, elem['expectedOutput']);
       });
     }

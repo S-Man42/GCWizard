@@ -55,7 +55,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('start: ${elem['start']}, end: ${elem['end']}, countStart: ${elem['countStart']}, countEnd: ${elem['countEnd']}', () {
-        var _actual = calculateDayDifferences(elem['start'] as DateTime, elem['end'] as DateTime, countStart: elem['countStart'] as bool, countEnd: elem['countEnd'] as bool);
+        var _actual = calculateDayDifferences(elem['start'] as DateTime?, elem['end'] as DateTime?, countStart: elem['countStart'] as bool, countEnd: elem['countEnd'] as bool);
         if (_actual == null) {
           expect(_actual, elem['expectedOutput']);
         } else {
