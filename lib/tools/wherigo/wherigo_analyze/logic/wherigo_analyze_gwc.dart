@@ -118,7 +118,6 @@ String _GWCCompany = '';
 String _GWCRecommendedDevice = '';
 int _GWCLengthOfCompletionCode = 0;
 String _GWCCompletionCode = '';
-int _GWCUnknown3 = 0;
 int _GWCoffset = 0;
 WherigoStringOffset _GWCASCIIZ = WherigoStringOffset('', 0);
 int _GWCMediaFileLength = 0;
@@ -221,7 +220,9 @@ void _getHeaderDetailsFromGWC(Uint8List byteListGWC) {
   _GWCDateOfCreation = readLong(byteListGWC, _GWCoffset);
   _GWCoffset = _GWCoffset + LENGTH_LONG;
 
-  _GWCUnknown3 = readLong(byteListGWC, _GWCoffset);
+  // no idea what the meaning of this long is
+  readLong(byteListGWC, _GWCoffset);
+
   _GWCoffset = _GWCoffset + LENGTH_LONG;
   _GWCSplashscreen = readShort(byteListGWC, _GWCoffset);
   _GWCoffset = _GWCoffset + LENGTH_SHORT;

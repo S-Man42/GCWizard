@@ -224,7 +224,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           }
         } while (_insideSectionCharacter(lines[i + 1]) && (i < lines.length - 1));
 
-        WherigoCharacterData cartridgeCharacterData = _analyzeAndExtractCharacterSectionData(analyzeLines);
+        WherigoCharacterData cartridgeCharacterData = _analyzeAndExtractCharacterSectionData(analyzeLines, _container);
 
         _cartridgeCharacters.add(cartridgeCharacterData);
         _cartridgeNameToObject[_LUAname] = WherigoObjectData(
@@ -256,7 +256,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           }
         } while (_insideSectionItem(lines[i + 1]) && (i < lines.length - 1));
 
-        WherigoItemData cartridgeItemData = _analyzeAndExtractItemSectionData(analyzeLines);
+        WherigoItemData cartridgeItemData = _analyzeAndExtractItemSectionData(analyzeLines, _container);
 
         _cartridgeItems.add(cartridgeItemData);
         _cartridgeNameToObject[_LUAname] = WherigoObjectData(cartridgeItemData.ItemID, 0, cartridgeItemData.ItemName,

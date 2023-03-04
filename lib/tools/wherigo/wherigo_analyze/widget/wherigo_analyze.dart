@@ -1004,7 +1004,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputMedia),
       GCWColumnedMultilineOutput(
           data: _buildOutputListOfInputData(context, WherigoCartridgeLUAData.Inputs[_inputIndex - 1]),
-          flexValues: [1, 3]),
+          flexValues: const[1, 3]),
       Row(
         children: <Widget>[
           GCWIconButton(
@@ -1047,7 +1047,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               data: _buildOutputListAnswers(context, WherigoCartridgeLUAData.Inputs[_inputIndex - 1],
                   WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers[_answerIndex - 1]),
               copyColumn: 1,
-              flexValues: [2, 3, 3]),
+              flexValues: const[2, 3, 3]),
           GCWExpandableTextDivider(
             expanded: false,
             text: i18n(context, 'wherigo_output_answeractions'),
@@ -1670,7 +1670,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
     // Build data
 
-    WherigoCartridgeLUAData.Zones.forEach((zone) {
+    for (WherigoZoneData zone in WherigoCartridgeLUAData.Zones) {
       if (NameToObject[zone.ZoneLUAName] == null) return;
 
       _ZonePoints.add(// add originalpoint of zone
@@ -1682,13 +1682,13 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
       List<GCWMapPoint> polyline = [];
 
-      zone.ZonePoints.forEach((point) {
+      for (WherigoZonePoint point in zone.ZonePoints) {
         polyline.add(GCWMapPoint(point: LatLng(point.Latitude, point.Longitude), color: Colors.black));
-      });
+      }
       polyline.add(// close polyline
           GCWMapPoint(point: LatLng(zone.ZonePoints[0].Latitude, zone.ZonePoints[0].Longitude), color: Colors.black));
       _ZonePolylines.add(GCWMapPolyline(uuid: zone.ZoneLUAName, points: polyline, color: Colors.black));
-    });
+    }
 
     if (WherigoCartridgeGWCData.Latitude != 0.0 && WherigoCartridgeGWCData.Longitude != 0.0) {
       _ZonePoints.add(GCWMapPoint(
