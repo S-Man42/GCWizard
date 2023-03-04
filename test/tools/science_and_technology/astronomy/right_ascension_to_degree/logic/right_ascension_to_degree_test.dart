@@ -35,7 +35,6 @@ void main() {
 
   group("right_ascension_to_degree.raRightAscension2Degree:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : null},
       {'input' : '4:27:40.386', 'expectedOutput' : '66.918275'},
       {'input' : '-4:27:40.386', 'expectedOutput' : '-66.918275'},
       {'input' : '0:38:28.39', 'expectedOutput' : '9.6182916667'},
@@ -47,7 +46,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = raRightAscension2Degree(RightAscension.parse(elem['input'] as String?)!);
+        var _actual = raRightAscension2Degree(RightAscension.parse(elem['input'] as String)!);
         if (_actual == null) {
           expect(_actual, elem['expectedOutput']);
         } else {
@@ -59,7 +58,6 @@ void main() {
 
   group("raDeg.parse:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : null},
       {'input' : '66.918277', 'expectedOutput' : '66.918277'},
       {'input' : '-66.918277', 'expectedOutput' : '-66.918277'},
       {'input' : '9.618291666666666', 'expectedOutput' : '9.6182916667'},
@@ -79,7 +77,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = RaDeg.parse(elem['input'] as String?);
+        var _actual = RaDeg.parse(elem['input'] as String);
         if (_actual == null) {
           expect(_actual, elem['expectedOutput']);
         } else {
@@ -91,7 +89,6 @@ void main() {
 
   group("RightAscension.parse:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : null},
       {'input' : '4:27:40.386', 'expectedOutput' : '04:27:40.386'},
       {'input' : '-4:27:40.386', 'expectedOutput' : '-04:27:40.386'},
       {'input' : '0:38:28.39', 'expectedOutput' : '00:38:28.390'},
@@ -108,7 +105,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = RightAscension.parse(elem['input'] as String?);
+        var _actual = RightAscension.parse(elem['input'] as String);
         if (_actual == null) {
           expect(_actual, elem['expectedOutput']);
         } else {

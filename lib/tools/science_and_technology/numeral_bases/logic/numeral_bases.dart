@@ -19,8 +19,8 @@ String _sanitizeInput(String input, int startBase, String alphabet) {
   return input;
 }
 
-String? convertBase(String? input, int startBase, int destinationBase, {String? alphabet}) {
-  if (input == null || input.isEmpty) return '';
+String? convertBase(String input, int startBase, int destinationBase, {String? alphabet}) {
+  if (input.isEmpty) return '';
 
   var usedAlphabet = alphabet ?? _alphabet;
 
@@ -60,8 +60,8 @@ String? convertBase(String? input, int startBase, int destinationBase, {String? 
     var intPart = _intDecToBase(_intBaseToDec(number[0], startBase, usedAlphabet), destinationBase, usedAlphabet);
     var realPart = '';
 
-    if (number.length == 2 && intPart != null) {
-      if (number[0].startsWith('-') && !intPart.startsWith('-')) {
+    if (number.length == 2) {
+      if (number[0].startsWith('-')  && intPart != null && !intPart.startsWith('-')) {
         intPart = '-' + intPart;
       }
 
@@ -69,8 +69,9 @@ String? convertBase(String? input, int startBase, int destinationBase, {String? 
           '.' + (_doubleDecToBase(_doubleBaseToDec(number[1], startBase, usedAlphabet), destinationBase, usedAlphabet) ?? '');
     }
 
-    var output = intPart ?? '';
-    if (realPart != '.')  output += realPart;
+    var output = (intPart ?? '');
+    output += (realPart);
+    // if (realPart != '.')  output += realPart;
     if (output.isEmpty) return null;
     return output;
   }

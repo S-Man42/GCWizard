@@ -56,17 +56,15 @@ String? _getNewState(Map<String, Map<String, String>> stateModel, String state, 
   return stateModel[state]?['x'];
 }
 
-Tuple2<PhoneCaseMode?, String>? decodeVanityMultitap(String? input, PhoneModel? model, PhoneInputLanguage? inputLanguage) {
-  if (model == null || inputLanguage == null) return null;
+Tuple2<PhoneCaseMode?, String>? decodeVanityMultitap(String? input, PhoneModel model, PhoneInputLanguage inputLanguage) {
+  var stateModel = model.defaultCaseStateModel;
 
-  Map<String, Map<String, String>>? stateModel = model.defaultCaseStateModel;
-
-  if (model.specificCaseStateModels[inputLanguage] != null) {
-    stateModel = model.specificCaseStateModels[inputLanguage];
+  if (model.specificCaseStateModels != null && model.specificCaseStateModels![inputLanguage] != null) {
+    stateModel = model.specificCaseStateModels![inputLanguage]!;
   }
 
-  var currentState = stateModel?[PHONE_STATEMODEL_START]?.values.first;
-  if (currentState == null || stateModel == null) return null;
+  var currentState = stateModel[PHONE_STATEMODEL_START]?.values.first;
+  if (currentState == null) return null;
 
   var currentMode = _getModeFromState(currentState);
 
@@ -157,13 +155,13 @@ String _getInputForCharacter(Map<String, String> charMap, String character) {
 }
 
 
-Tuple2<PhoneCaseMode?, String>? encodeVanityMultitap(String? input, PhoneModel? model, PhoneInputLanguage? inputLanguage) {
-  if (model == null || inputLanguage == null) return null;
+Tuple2<PhoneCaseMode?, String>? encodeVanityMultitap(String? input, PhoneModel model, PhoneInputLanguage? inputLanguage) {
+  if (inputLanguage == null) return null;
 
   var stateModel = model.defaultCaseStateModel;
 
-  if (model.specificCaseStateModels[inputLanguage] != null) {
-    stateModel = model.specificCaseStateModels[inputLanguage]!;
+  if (model.specificCaseStateModels != null && model.specificCaseStateModels![inputLanguage] != null) {
+    stateModel = model.specificCaseStateModels![inputLanguage]!;
   }
 
   var currentState = stateModel[PHONE_STATEMODEL_START]!.values.first;

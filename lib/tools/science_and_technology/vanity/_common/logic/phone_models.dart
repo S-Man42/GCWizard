@@ -52,7 +52,7 @@ const PHONE_STATEMODEL_START = '[*]';
 class PhoneModel {
   String name;
   late Map<String, Map<String, String>> defaultCaseStateModel;
-  late Map<PhoneInputLanguage, Map<String, Map<String, String>>> specificCaseStateModels;
+  Map<PhoneInputLanguage, Map<String, Map<String, String>>>? specificCaseStateModels;
   List<Map<PhoneCaseMode, Map<String, String>>> characterMap;
   List<List<PhoneInputLanguage>> languages;
 

@@ -16,7 +16,7 @@ void main(){
       {'input' : 'e', 'language' : NumeralWordsLanguage.DEU,
         'expectedOutput' : [VanityWordsDecodeOutput('?', '', '', false)]},
       {'input' : 'fünfundzwanzig', 'language' : NumeralWordsLanguage.LAT,
-        'expectedOutput' : []},
+        'expectedOutput' : <VanityWordsDecodeOutput>[]},
       // mixed input
       {'input' : '8437676386e', 'language' : NumeralWordsLanguage.DEU,
         'expectedOutput' : [

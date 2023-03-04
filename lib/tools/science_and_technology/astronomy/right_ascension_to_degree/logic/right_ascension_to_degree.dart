@@ -8,8 +8,8 @@ import 'package:gc_wizard/utils/datetime_utils.dart';
 import 'package:intl/intl.dart';
 
 /// degree to Right ascension
-RightAscension? raDegree2RightAscension(RaDeg? ra) {
-  if ((ra == null) || (ra.degrees == null)) return null;
+RightAscension? raDegree2RightAscension(RaDeg ra) {
+  if (ra.degrees == null) return null;
   var deg = ra.degrees!.abs();
 
   var hour = (deg / 15.0).floor();
@@ -20,9 +20,7 @@ RightAscension? raDegree2RightAscension(RaDeg? ra) {
 }
 
 /// Right ascension hms to degree
-RaDeg? raRightAscension2Degree(RightAscension? equatorial) {
-  if (equatorial == null) return null;
-
+RaDeg? raRightAscension2Degree(RightAscension equatorial) {
   var h = equatorial.hours;
   var m = equatorial.minutes;
   var s = equatorial.seconds;
@@ -75,10 +73,8 @@ class RightAscension {
     return duration;
   }
 
-  static RightAscension? parse(String? input) {
+  static RightAscension? parse(String input) {
     var regex = RegExp(r"([+|-]?)([\d]*):([\d]*):([\d]*)(\.\d*)*");
-    if (input == null) return null;
-
     var matches = regex.allMatches(input);
 
     if (matches.isNotEmpty) {
