@@ -5,7 +5,6 @@ void main() {
 
   group("Gray.encodeGray", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'mode': GrayMode.DECIMAL,'expectedOutput' : GrayOutput([], [])},
       {'input' : '', 'mode': GrayMode.DECIMAL,'expectedOutput' : GrayOutput([], [])},
 
       {'input' : '99', 'mode': GrayMode.DECIMAL,'expectedOutput' : GrayOutput(['82'], ['1010010'])},
@@ -33,7 +32,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, mode: ${elem['mode']}', () {
-        var _actual = encodeGray(elem['input'] as String?, mode: elem['mode'] as GrayMode);
+        var _actual = encodeGray(elem['input'] as String, mode: elem['mode'] as GrayMode);
         expect(_actual.decimalOutput, (elem['expectedOutput'] as GrayOutput).decimalOutput);
         expect(_actual.binaryOutput, (elem['expectedOutput'] as GrayOutput).binaryOutput);
       });
@@ -42,7 +41,6 @@ void main() {
 
   group("Gray.decodeGray:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'mode': GrayMode.DECIMAL,'expectedOutput' : GrayOutput([], [])},
       {'input' : '', 'mode': GrayMode.DECIMAL,'expectedOutput' : GrayOutput([], [])},
 
       {'input' : '82', 'mode': GrayMode.DECIMAL,'expectedOutput' : GrayOutput(['99'], ['1100011'])},
@@ -66,7 +64,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, mode: ${elem['mode']}', () {
-        var _actual = decodeGray(elem['input'] as String?, mode: elem['mode'] as GrayMode);
+        var _actual = decodeGray(elem['input'] as String, mode: elem['mode'] as GrayMode);
         expect(_actual.decimalOutput, (elem['expectedOutput'] as GrayOutput).decimalOutput);
         expect(_actual.binaryOutput, (elem['expectedOutput'] as GrayOutput).binaryOutput);
       });

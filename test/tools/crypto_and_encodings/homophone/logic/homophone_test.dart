@@ -9,7 +9,6 @@ void main() {
   group("Homophone.encryptGenerated:", () {
     List<Map<String, Object?>> _inputsToExpected = [
 
-      {'input' : null, 'errorcode': HomophoneErrorCode.OK, 'alphabet': alphabetGerman1, 'rotation': 1, 'multiplier': 1, 'expectedOutput' : ''},
       {'input' : '', 'errorcode': HomophoneErrorCode.OK, 'alphabet': alphabetGerman1, 'rotation': 3, 'multiplier': 1, 'expectedOutput' : ''},
 
       {'input' : 'Test', 'errorcode': HomophoneErrorCode.OK, 'alphabet': alphabetGerman1, 'rotation': 1, 'multiplier': 3, 'expectedOutput': '58 48 37 58'},
@@ -20,7 +19,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, alphabet: ${elem['alphabet']}, rotation: ${elem['rotation']}, multiplier: ${elem['multiplier']}', () {
-        var _actual = encryptHomophoneWithGeneratedKey(elem['input'] as String?, elem['alphabet'] as Alphabet, elem['rotation'] as int, elem['multiplier'] as int);
+        var _actual = encryptHomophoneWithGeneratedKey(elem['input'] as String, elem['alphabet'] as Alphabet, elem['rotation'] as int, elem['multiplier'] as int);
 
         var map = replaceMap(elem['rotation'] as int, elem['multiplier'] as int, elem['alphabet'] as Alphabet);
         var output = changeOutput(_actual.output, map);
@@ -47,7 +46,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, alphabet: ${elem['alphabet']}, keyList: ${elem['keyList']}', () {
-        var _actual = encryptHomophoneWithKeyList(elem['input'] as String?, elem['alphabet'] as Alphabet, textToIntList(elem['keyList'] as String));
+        var _actual = encryptHomophoneWithKeyList(elem['input'] as String, elem['alphabet'] as Alphabet, textToIntList(elem['keyList'] as String));
         Map<String, String> map ;
         map = replaceOwnMap(elem['keyList'] as String, elem['alphabet'] as Alphabet);
         var output = changeOutput(_actual.output, map);

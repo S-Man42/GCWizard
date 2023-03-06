@@ -4,7 +4,6 @@ import 'package:gc_wizard/tools/crypto_and_encodings/kenny/logic/kenny.dart';
 void main() {
   group("KennysCode.encryptKenny:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'replaceCharacters': <String>[], 'expectedOutput' : '', 'caseSensitive' : false},
       {'input' : '', 'replaceCharacters': <String>[], 'expectedOutput' : '', 'caseSensitive' : false},
       {'input' : 'A', 'replaceCharacters': null, 'expectedOutput' : '', 'caseSensitive' : false},
       {'input' : 'A', 'replaceCharacters': <String>[], 'expectedOutput' : '', 'caseSensitive' : false},
@@ -39,7 +38,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = encryptKenny(elem['input'] as String?, elem['replaceCharacters'] as List<String>, elem['caseSensitive'] as bool);
+        var _actual = encryptKenny(elem['input'] as String, elem['replaceCharacters'] as List<String>, elem['caseSensitive'] as bool);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -47,7 +46,6 @@ void main() {
 
   group("KennysCode.decryptKenny:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'replaceCharacters': <String>[], 'expectedOutput' : '', 'caseSensitive' : true},
       {'input' : '', 'replaceCharacters': <String>[], 'expectedOutput' : '', 'caseSensitive' : true},
       {'input' : 'A', 'replaceCharacters': null, 'expectedOutput' : '', 'caseSensitive' : true},
       {'input' : 'A', 'replaceCharacters': <String>[], 'expectedOutput' : '', 'caseSensitive' : true},
@@ -154,7 +152,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = decryptKenny(elem['input'] as String?, elem['replaceCharacters'] as List<String>, elem['caseSensitive'] as bool);
+        var _actual = decryptKenny(elem['input'] as String, elem['replaceCharacters'] as List<String>, elem['caseSensitive'] as bool);
         expect(_actual, elem['expectedOutput']);
       });
     }

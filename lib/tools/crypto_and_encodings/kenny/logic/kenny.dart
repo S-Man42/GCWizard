@@ -15,8 +15,8 @@ import 'package:gc_wizard/utils/string_utils.dart';
  * These values can be converted into their alphabet values (adding +1, naturally).
  */
 
-String encryptKenny(String? input, List<String> replaceCharacters, bool caseSensitive) {
-  if (input == null || input.isEmpty) return '';
+String encryptKenny(String input, List<String> replaceCharacters, bool caseSensitive) {
+  if (input.isEmpty) return '';
 
   if (replaceCharacters.length < 3) return '';
 
@@ -69,8 +69,8 @@ String encryptKenny(String? input, List<String> replaceCharacters, bool caseSens
  * For this single - and, to be honest, absolutely rare case - the function grows that nasty size. So:
  * TODO: Find more readable algorithm
  */
-String decryptKenny(String? input, List<String>? replaceCharacters, bool caseSensitive) {
-  if (input == null || input.isEmpty) return '';
+String decryptKenny(String input, List<String>? replaceCharacters, bool caseSensitive) {
+  if (input.isEmpty) return '';
 
   if (replaceCharacters == null || replaceCharacters.length < 3) return '';
 

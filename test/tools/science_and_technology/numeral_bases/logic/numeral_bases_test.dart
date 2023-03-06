@@ -4,7 +4,6 @@ import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numer
 void main() {
   group("NumeralBases.convert:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'startBase' : 0, 'destinationBase' : 0, 'expectedOutput' : ''},
 
       {'input' : '16', 'startBase' : 10, 'destinationBase' : 2, 'expectedOutput' : '10000'},
       {'input' : '10000', 'startBase' : 2, 'destinationBase' : 10, 'expectedOutput' : '16'},

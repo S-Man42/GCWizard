@@ -79,10 +79,10 @@ class WhitespaceState {
   }
 }
 
-Future<WhitespaceResult> interpreterWhitespace(String? code, String inp,
+Future<WhitespaceResult> interpreterWhitespace(String code, String inp,
     {int timeOut = 30000, WhitespaceState? continueState}) async {
   try {
-    if (code == null || code.isEmpty) return WhitespaceResult();
+    if (code.isEmpty) return WhitespaceResult();
 
     _timeOut = max(timeOut, 100);
 

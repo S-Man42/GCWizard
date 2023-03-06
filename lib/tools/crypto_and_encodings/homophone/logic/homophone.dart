@@ -62,13 +62,13 @@ Map<String, List<int>> _generateKeyMap(Map<String, int> letterFrequencies, int r
   return keyMap;
 }
 
-HomophoneOutput encryptHomophoneWithGeneratedKey(String? input, Alphabet alphabet, int rotation, int multiplier) {
+HomophoneOutput encryptHomophoneWithGeneratedKey(String input, Alphabet alphabet, int rotation, int multiplier) {
   var letterFrequencies = getLetterFrequenciesFromAlphabet(alphabet);
 
   return _encryptHomophone(input, _generateKeyMap(letterFrequencies, rotation, multiplier));
 }
 
-HomophoneOutput _encryptHomophone(String? input, Map<String, List<int>> keyMap) {
+HomophoneOutput _encryptHomophone(String input, Map<String, List<int>> keyMap) {
   if (input == null || input.isEmpty) return HomophoneOutput('', '', HomophoneErrorCode.OK);
 
   var error = HomophoneErrorCode.OK;
