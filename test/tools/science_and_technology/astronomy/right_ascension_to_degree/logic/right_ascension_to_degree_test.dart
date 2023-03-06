@@ -5,7 +5,6 @@ void main() {
 
   group("right_ascension_to_degree.raDegree2RightAscension:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : null.toString()},
       {'input' : 66.918277, 'expectedOutput' : '04:27:40.386'},
       {'input' : -66.918277, 'expectedOutput' : '-04:27:40.386'},
       {'input' : 9.618291666666666, 'expectedOutput' : '00:38:28.390'},
@@ -26,7 +25,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = raDegree2RightAscension(RaDeg(elem['input'] as double?));
+        var _actual = raDegree2RightAscension(RaDeg(elem['input'] as double));
         expect(_actual.toString(), elem['expectedOutput']);
       });
     }

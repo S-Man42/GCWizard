@@ -4,8 +4,6 @@ import 'package:gc_wizard/tools/crypto_and_encodings/vigenere/logic/vigenere.dar
 void main() {
   group("Vigenere.encrypt:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'key': null, 'autoKey': false, 'aValue': 0, 'expectedOutput' : ''},
-      {'input' : null, 'key': 'ABC', 'autoKey': false, 'aValue': 0, 'expectedOutput' : ''},
       {'input' : 'ABC', 'key': null, 'autoKey': false, 'aValue': 0, 'expectedOutput' : 'ABC'},
       {'input' : '', 'key': '', 'autoKey': false, 'aValue': 0, 'expectedOutput' : ''},
       {'input' : '', 'key': 'ABC', 'autoKey': false, 'aValue': 0, 'expectedOutput' : ''},
@@ -48,11 +46,11 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, key: ${elem['key']}, aValue: ${elem['aValue']}, autoKey: ${elem['autoKey']}', () {
         if (elem['aValue']  == null) {
-          var _actual = encryptVigenere(elem['input'] as String?, elem['key'] as String?, elem['autoKey'] as bool);
+          var _actual = encryptVigenere(elem['input'] as String, elem['key'] as String, elem['autoKey'] as bool);
           expect(_actual, elem['expectedOutput']);
         } else {
           var _actual = encryptVigenere(
-              elem['input'] as String?, elem['key'] as String?, elem['autoKey'] as bool, aValue: elem['aValue'] as int);
+              elem['input'] as String, elem['key'] as String, elem['autoKey'] as bool, aValue: elem['aValue'] as int);
           expect(_actual, elem['expectedOutput']);
         }
       });
@@ -73,10 +71,10 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, key: ${elem['key']}, aValue: ${elem['aValue']}, autoKey: ${elem['autoKey']}', () {
         if (elem['aValue']  == null) {
-          var _actual = encryptVigenere(elem['input'] as String?, elem['key'] as String?, elem['autoKey'] as bool, ignoreNonLetters: false);
+          var _actual = encryptVigenere(elem['input'] as String, elem['key'] as String, elem['autoKey'] as bool, ignoreNonLetters: false);
           expect(_actual, elem['expectedOutput']);
         } else {
-          var _actual = encryptVigenere(elem['input'] as String?, elem['key'] as String?, elem['autoKey'] as bool, aValue: elem['aValue'] as int, ignoreNonLetters: false);
+          var _actual = encryptVigenere(elem['input'] as String, elem['key'] as String, elem['autoKey'] as bool, aValue: elem['aValue'] as int, ignoreNonLetters: false);
           expect(_actual, elem['expectedOutput']);
         }
       });
@@ -95,7 +93,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, key: ${elem['key']}, aValue: ${elem['aValue']}, autoKey: ${elem['autoKey']}', () {
-        var _actual = encryptVigenere(elem['input'] as String?, elem['key'] as String?, elem['autoKey'] as bool, aValue: elem['aValue'] as int, ignoreNonLetters: false);
+        var _actual = encryptVigenere(elem['input'] as String, elem['key'] as String, elem['autoKey'] as bool, aValue: elem['aValue'] as int, ignoreNonLetters: false);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -146,7 +144,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, key: ${elem['key']}, aValue: ${elem['aValue']}, autoKey: ${elem['autoKey']}', () {
-        var _actual = decryptVigenere(elem['input'] as String?, elem['key'] as String?, elem['autoKey'] as bool, aValue: elem['aValue'] as int);
+        var _actual = decryptVigenere(elem['input'] as String, elem['key'] as String, elem['autoKey'] as bool, aValue: elem['aValue'] as int);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -172,7 +170,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, key: ${elem['key']}, aValue: ${elem['aValue']}, autoKey: ${elem['autoKey']}', () {
-        var _actual = decryptVigenere(elem['input'] as String?, elem['key'] as String?, elem['autoKey'] as bool, aValue: elem['aValue'] as int, ignoreNonLetters: false);
+        var _actual = decryptVigenere(elem['input'] as String, elem['key'] as String, elem['autoKey'] as bool, aValue: elem['aValue'] as int, ignoreNonLetters: false);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -190,7 +188,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, key: ${elem['key']}, aValue: ${elem['aValue']}, autoKey: ${elem['autoKey']}', () {
-        var _actual = decryptVigenere(elem['input'] as String?, elem['key'] as String?, elem['autoKey'] as bool, aValue: elem['aValue'] as int, ignoreNonLetters: false);
+        var _actual = decryptVigenere(elem['input'] as String, elem['key'] as String, elem['autoKey'] as bool, aValue: elem['aValue'] as int, ignoreNonLetters: false);
         expect(_actual, elem['expectedOutput']);
       });
     }

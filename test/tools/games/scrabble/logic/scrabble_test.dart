@@ -5,7 +5,6 @@ import 'package:gc_wizard/tools/games/scrabble/scrabble/logic/scrabble.dart';
 void main() {
   group("Scrabble.textToLetterValues:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'scrabbleVersion': scrabbleID_KLINGON, 'expectedOutput' : []},
       {'input' : '', 'scrabbleVersion': scrabbleID_KLINGON, 'expectedOutput' : []},
       {'input' : ' ', 'scrabbleVersion': scrabbleID_KLINGON, 'expectedOutput' : [0]},
 

@@ -2,8 +2,8 @@ import 'dart:math';
 
 const int COMBINATION_MAX_LENGTH = 12;
 
-List<String> generateCombinations(String? input, {bool avoidDuplicates = false}) {
-  if (input == null || input.isEmpty) return [];
+List<String> generateCombinations(String input, {bool avoidDuplicates = false}) {
+  if (input.isEmpty) return [];
 
   var out = <String>[];
 

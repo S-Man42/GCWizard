@@ -4,9 +4,6 @@ import 'package:gc_wizard/tools/science_and_technology/complex_numbers/logic/com
 void main() {
   group("ComplexNumbers.CartesianToPolar:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'a' : null, 'b' : null, 'expectedOutput' : ['']},
-      {'a' : null, 'b' : '', 'expectedOutput' : ['']},
-      {'a' : '', 'b' : null, 'expectedOutput' : ['']},
       {'a' : '', 'b' : '', 'expectedOutput' : ['']},
       {'a' : '0.0', 'b' : '0.0', 'expectedOutput' : ['0.0', '0.0']},
       {'a' : '1,91372648', 'b' : '0.0', 'expectedOutput' : ['1.91372648', '0.0']},
@@ -17,7 +14,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('a: ${elem['a']}, b: ${elem['b']}', () {
-        var _actual = CartesianToPolar(elem['a'] as String?, elem['b'] as String?);
+        var _actual = CartesianToPolar(elem['a'] as String, elem['b'] as String);
         var coordinate = _actual.values;
         for (int i = 0; i < coordinate.length; i++) {
           expect(coordinate.elementAt(i), (elem['expectedOutput'] as List<String>)[i]);
@@ -28,9 +25,6 @@ void main() {
 
   group("ComplexNumbers.PolarToCartesian:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'r' : null, 'a' : null, 'expectedOutput' : ['']},
-      {'r' : null, 'a' : '', 'expectedOutput' : ['']},
-      {'r' : '', 'a' : null, 'expectedOutput' : ['']},
       {'r' : '', 'a' : '', 'expectedOutput' : ['']},
       {'r' : '0.0', 'a' : '0.0', 'expectedOutput' : ['0.0', '0.0']},
       {'r' : '3,14159265', 'a' : '0.0', 'expectedOutput' : ['3.1415927', '0.0']},
@@ -41,7 +35,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('r: ${elem['r']}, a: ${elem['a']}', () {
-        var _actual = PolarToCartesian(elem['r'] as String?, elem['a'] as String?);
+        var _actual = PolarToCartesian(elem['r'] as String, elem['a'] as String);
         var coordinate = _actual.values;
         for (int i = 0; i < coordinate.length; i++) {
           expect(coordinate.elementAt(i), (elem['expectedOutput'] as List<String>)[i]);

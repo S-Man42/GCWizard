@@ -2,25 +2,19 @@ import 'package:gc_wizard/tools/crypto_and_encodings/rotation/logic/rotator.dart
 import 'package:gc_wizard/tools/crypto_and_encodings/vigenere/logic/vigenere.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 
-String encryptGronsfeld(String? input, String? key, bool autoKey, {int aValue = 0}) {
-  if (input == null) return '';
-
+String encryptGronsfeld(String input, String key, bool autoKey, {int aValue = 0}) {
   key = _digitsToAlpha(key);
 
   return encryptVigenere(input, key, autoKey, aValue: aValue);
 }
 
-String decryptGronsfeld(String? input, String? key, bool autoKey, {int aValue = 0}) {
-  if (input == null) return '';
-
+String decryptGronsfeld(String input, String key, bool autoKey, {int aValue = 0}) {
   key = _digitsToAlpha(key);
 
   return decryptVigenere(input, key, autoKey, aValue: aValue);
 }
 
-String? _digitsToAlpha(String? input, {int? aValue = 0, bool? removeNonDigits = true}) {
-  if (input == null) return input;
-
+String _digitsToAlpha(String input, {int? aValue = 0, bool? removeNonDigits = true}) {
   aValue ??= 0;
 
   removeNonDigits ??= false;

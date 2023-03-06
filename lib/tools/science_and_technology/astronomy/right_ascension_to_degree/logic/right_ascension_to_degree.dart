@@ -9,14 +9,13 @@ import 'package:intl/intl.dart';
 
 /// degree to Right ascension
 RightAscension? raDegree2RightAscension(RaDeg ra) {
-  if (ra.degrees == null) return null;
-  var deg = ra.degrees!.abs();
+  var deg = ra.degrees.abs();
 
   var hour = (deg / 15.0).floor();
   var min = (((deg / 15.0) - hour) * 60).floor();
   var sec = ((((deg / 15.0) - hour) * 60) - min) * 60;
 
-  return RightAscension(_sign(ra.degrees!), hour, min, sec);
+  return RightAscension(_sign(ra.degrees), hour, min, sec);
 }
 
 /// Right ascension hms to degree
@@ -100,7 +99,7 @@ class RightAscension {
 }
 
 class RaDeg {
-  late double? degrees;
+  late double degrees;
 
   RaDeg(this.degrees);
 

@@ -535,9 +535,9 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
           child: raDegree2RightAscension(_currentRaDeg).toString());
     } else {
       RaDeg output = raRightAscension2Degree(_currentRightAscension)!;
-      var dmm = DMMLatitude.from(doubleToDMMPart(output.degrees!)).format(6).replaceAll('N ', '').replaceAll('S ', '-');
+      var dmm = DMMLatitude.from(doubleToDMMPart(output.degrees)).format(6).replaceAll('N ', '').replaceAll('S ', '-');
 
-      var dms = DMSLatitude.from(doubleToDMSPart(output.degrees!)).format(6).replaceAll('N ', '').replaceAll('S ', '-');
+      var dms = DMSLatitude.from(doubleToDMSPart(output.degrees)).format(6).replaceAll('N ', '').replaceAll('S ', '-');
 
       var rows = [
         [coordinateFormatMetadataByKey(CoordinateFormatKey.DEC).name, output.toString() + '°'],

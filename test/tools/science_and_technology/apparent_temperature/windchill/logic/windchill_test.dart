@@ -4,13 +4,6 @@ import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/wind
 void main() {
   group("Windchill.calculate:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'temperature' : null, 'windspeed' : null, 'isMetric' : true, 'expectedOutput' : null},
-      {'temperature' : null, 'windspeed' : null, 'isMetric' : false, 'expectedOutput' : null},
-      {'temperature' : -10.0, 'windspeed' : null, 'isMetric' : true, 'expectedOutput' : null},
-      {'temperature' : -10.0, 'windspeed' : null, 'isMetric' : false, 'expectedOutput' : null},
-      {'temperature' : null, 'windspeed' : -10.0, 'isMetric' : true, 'expectedOutput' : null},
-      {'temperature' : null, 'windspeed' : -10.0, 'isMetric' : false, 'expectedOutput' : null},
-
       {'temperature' : -10.0, 'windspeed' : 5.0, 'isMetric' : true, 'expectedOutput' : -12.933963619176676},
       {'temperature' : -10.0, 'windspeed' : 5.0, 'isMetric' : false, 'expectedOutput' : -22.255535954192787},
       {'temperature' : 5.0, 'windspeed' : 5.0, 'isMetric' : true, 'expectedOutput' : 4.082845877077206},
@@ -23,9 +16,9 @@ void main() {
       test('temperature: ${elem['temperature']}, windspeed: ${elem['windspeed']}, isMetric: ${elem['isMetric']}', () {
         double? _actual;
         if (elem['isMetric'] as bool) {
-          _actual = calcWindchillMetric(elem['temperature'] as double?, elem['windspeed'] as double?);
+          _actual = calcWindchillMetric(elem['temperature'] as double, elem['windspeed'] as double);
         } else {
-          _actual = calcWindchillImperial(elem['temperature'] as double?, elem['windspeed'] as double?);
+          _actual = calcWindchillImperial(elem['temperature'] as double, elem['windspeed'] as double);
         }
 
         expect(_actual, elem['expectedOutput']);
