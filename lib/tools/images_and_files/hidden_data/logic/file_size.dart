@@ -193,8 +193,8 @@ int? _zipFileSize(Uint8List? data) {
   if (offset + 30 > data.length) return null;
 
   // ZIP Signature file header
-  while (
-  (data[offset] == 0x50) & (data[offset + 1] == 0x4B) & (data[offset + 2] == 0x03) & (data[offset + 3] == 0x04)) {
+  while (offset + 30 <= data.length &&
+    (data[offset] == 0x50) & (data[offset + 1] == 0x4B) & (data[offset + 2] == 0x03) & (data[offset + 3] == 0x04)) {
     offset += 30;
 
     var fileNameLength = data.buffer.asByteData(offset - 4, 2).getInt16(0, Endian.little);
@@ -220,10 +220,20 @@ int? _zipFileSize(Uint8List? data) {
 
       offset += fileNameLength + extraFieldLength + commentLength;
       fileHeaderFound = true;
-    }
 
-    // header end central directory
-    else if ((data[offset] == 0x50) &
+    } else if ((data[offset] == 0x50) &
+    (data[offset + 1] == 0x4B) &
+    (data[offset + 2] == 0x07) &
+    (data[offset + 3] == 0x08)) {
+      if (offset + 12 > data.length) return null;
+
+      var compressedSize = data.buffer.asByteData(offset + 8, 4).getInt32(0, Endian.little);
+      // 4 Byte uncompressedSize
+      offset += 12 + compressedSize;
+      fileHeaderFound = true;
+
+      // header end central directory
+    } else if ((data[offset] == 0x50) &
     (data[offset + 1] == 0x4B) &
     (data[offset + 2] == 0x05) &
     (data[offset + 3] == 0x06)) {

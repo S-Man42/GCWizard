@@ -65,7 +65,7 @@ void main() {
           '            <<!!!HIDDEN_FILE!!!>>_2, JPEG, 14942 bytes, \n'
           '            <<!!!HIDDEN_FILE!!!>>_3, JPEG, 2551 bytes, \n'
           '            <<!!!HIDDEN_FILE!!!>>_4, JPEG, 2551 bytes, \n'
-          '            <<!!!HIDDEN_FILE!!!>>_5, ZIP, 16893 bytes, \n'
+          '            <<!!!HIDDEN_FILE!!!>>_5, ZIP, 175 bytes, \n'
           '                lon.txt, TXT, 63 bytes, \n'
           '    <<!!!HIDDEN_FILE!!!>>_6, JPEG, 1670 bytes, \n'
           '    <<!!!HIDDEN_FILE!!!>>_7, JPEG, 1670 bytes, \n'
@@ -77,8 +77,9 @@ void main() {
           ''},
       {'input' : 'hidden6.jpg', 'expectedOutput' :
           'hidden6.jpg, JPEG, 237081 bytes, \n'
-          '    <<!!!HIDDEN_FILE!!!>>_1, ZIP, 178 bytes, \n'
+          '    <<!!!HIDDEN_FILE!!!>>_1, ZIP, 164 bytes, \n'
           '        secret.txt, TXT, 10 bytes, \n'
+          '    <<!!!HIDDEN_FILE!!!>>_2, TXT, 14 bytes, \n'
           ''},
       {'input' : 'hidden7.jpg', 'expectedOutput' :
           'hidden7.jpg, JPEG, 239449 bytes, \n'
@@ -108,6 +109,8 @@ void main() {
           '        Temp.zip, ZIP, 45060 bytes, \n'
           '            donald.jpg, JPEG, 17708 bytes, \n'
           '            garfield.jpg, JPEG, 27696 bytes, \n'
+          '            <<!!!HIDDEN_FILE!!!>>_1, TXT, 45030 bytes, \n'
+          '                <<!!!HIDDEN_FILE!!!>>_2, ZIP, 27623 bytes, \n'
           ''},
       {'input' : 'hidden12.jpg', 'expectedOutput' :
           'hidden12.jpg, JPEG, 243577 bytes, \n'

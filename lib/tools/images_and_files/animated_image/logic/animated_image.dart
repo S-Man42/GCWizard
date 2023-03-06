@@ -35,10 +35,8 @@ Future<AnimatedImageOutput?> analyseImage(Uint8List bytes,
     if (decoder == null) return null;
 
     var animation = <Image.Image>[];
-    for (int i= 0; i < decoder.numFrames(); i++) {
-      var image = decoder.decode(bytes, frame: i);
-      if (image != null) animation.add(image);
-    }
+    var image = decoder.decode(bytes);
+    if (image != null) animation.addAll(image.frames);
 
     var imageList = <Uint8List>[];
     var durations = <int>[];

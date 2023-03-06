@@ -42,7 +42,7 @@ class IrrationalNumberCalculator {
   List<IrrationalNumberDecimalOccurence> decimalOccurences(String input) {
     if (input.isEmpty) return [];
 
-    if (!input.contains(RegExp(r'[0-9]'))) throw Exception('irrationalnumbers_error_nonumbers');
+    if (!input.contains(RegExp(r'[\d]'))) throw Exception('irrationalnumbers_error_nonumbers');
 
     var _input = input.replaceAll(RegExp(r'[^0-9]'), '.');
 

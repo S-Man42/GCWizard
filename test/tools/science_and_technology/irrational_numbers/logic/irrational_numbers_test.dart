@@ -71,7 +71,7 @@ void main() {
     }
   });
 
-  group("IrrationalNumberCalculator.decimalOccurence:", () { // Mark test
+  group("IrrationalNumberCalculator.decimalOccurence:", () { // ToDo Mark test not working
     var irCalculator = IrrationalNumberCalculator(irrationalNumber: PI);
 
     List<Map<String, Object?>> _inputsToExpected = [
@@ -85,9 +85,9 @@ void main() {
     ];
 
     for (var elem in _inputsToExpected) {
-      test('index: ${elem['index']}', () {
+      test('index: ${elem['input']}', () {
         var _actual = irCalculator.decimalOccurences(elem['input'] as String);
-        expect(_actual, elem['expectedOutput']);
+        expect(_actual.length, elem['expectedOutput']);
       });
     }
   });

@@ -566,8 +566,8 @@ List<GCWFile> _archiveToPlatformFileList(Archive archive) {
 
         return GCWFile(name: file.name, bytes: content);
       })
-      .where((file) => file != null)
-      .toList() as List<GCWFile>;
+      .whereType<GCWFile>()
+      .toList();
 }
 
 Future<List<GCWFile>> extractArchive(GCWFile file) async {
