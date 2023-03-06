@@ -2027,9 +2027,9 @@ String decodeTeletypewriter(
   if (language == TeletypewriterCodebook.BAUDOT_54123) {
     values = values.map((decimal) {
       return int.parse(convertBase(
-          convertBase(decimal.toString(), 10, 2)?.padLeft(BINARY_LENGTH[language]!, '0').split('').reversed.join('') ?? '',
+          convertBase(decimal.toString(), 10, 2).padLeft(BINARY_LENGTH[language]!, '0').split('').reversed.join(''),
           2,
-          10) ?? '');
+          10));
     }).toList();
   }
 

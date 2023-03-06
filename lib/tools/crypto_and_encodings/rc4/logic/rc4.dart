@@ -128,7 +128,7 @@ List<int>? _addToIntList(String input, int base, List<int> list) {
   if (input.isEmpty) return list;
   var valueString = convertBase(input, base, 10);
 
-  var value = int.tryParse(valueString ?? '');
+  var value = int.tryParse(valueString);
   // invalid input
   if (value == null) return null;
   list.add(value);
@@ -152,12 +152,12 @@ String formatOutput(List<int> outList, OutputFormat outputFormat) {
       case OutputFormat.HEX:
         if (out.isNotEmpty) out += ' ';
 
-        out += (convertBase(item.toString(), 10, 16) ?? '').padLeft(2, '0');
+        out += (convertBase(item.toString(), 10, 16)).padLeft(2, '0');
         break;
       case OutputFormat.BINARY:
         if (out.isNotEmpty) out += ' ';
 
-        out += (convertBase(item.toString(), 10, 2) ?? '').padLeft(8, '0');
+        out += (convertBase(item.toString(), 10, 2)).padLeft(8, '0');
         break;
       case OutputFormat.ASCIIVALUES:
         if (out.isNotEmpty) out += ' ';

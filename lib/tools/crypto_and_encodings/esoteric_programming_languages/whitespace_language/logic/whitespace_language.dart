@@ -860,7 +860,7 @@ int _whitespaceToInt(String code) {
 /// Converts an integer to Whitespace representation.
 String _IntToWhitespace(int value) {
   if (value == 0) return ' \n';
-  var code = convertBase(value.abs().toString(), 10, 2) ?? '';
+  var code = convertBase(value.abs().toString(), 10, 2);
   final Map<String, String> keys = {'0': ' ', '1': '\t'};
   code = (value < 0 ? '1' : '0') + code;
   code = substitution(code, keys) + '\n';

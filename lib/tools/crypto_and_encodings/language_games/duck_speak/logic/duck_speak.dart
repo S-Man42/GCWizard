@@ -51,7 +51,7 @@ String decodeDuckSpeak(String? text) {
   }
   var out = '';
   for (var binaryVal in binary) {
-    var ascii = int.tryParse(convertBase(binaryVal, 2, 10) ?? '');
+    var ascii = int.tryParse(convertBase(binaryVal, 2, 10));
     if (ascii != null) {
       out += (String.fromCharCode(ascii));
     }

@@ -35,10 +35,8 @@ Uint8List? _hexString2bytes(String? input) {
     var valueString = hex.substring(i, min(i + 2, hex.length - 1));
     if (valueString.isNotEmpty) {
       var converted = convertBase(valueString, 16, 10);
-      if (converted != null) {
-        int? value = int.tryParse(converted);
-        if (value != null) data.add(value);
-      }
+      int? value = int.tryParse(converted);
+      if (value != null) data.add(value);
     }
   }
 
@@ -63,10 +61,8 @@ Uint8List? _binaryString2bytes(String? input) {
     var valueString = binary.substring(i, min(i + 8, binary.length - 1));
     if (valueString.isNotEmpty) {
       var converted = convertBase(valueString, 2, 10);
-      if (converted != null) {
-        int? value = int.tryParse(converted);
-        if (value != null) data.add(value);
-      }
+      int? value = int.tryParse(converted);
+      if (value != null) data.add(value);
     }
   }
 
