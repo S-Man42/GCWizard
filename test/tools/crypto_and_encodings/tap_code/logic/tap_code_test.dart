@@ -16,7 +16,7 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, mode: ${elem['mode']}', () {
         if (elem['mode'] == null) {
-          var _actual = encryptTapCode(elem['input'] as String?);
+          var _actual = encryptTapCode(elem['input'] as String);
           expect(_actual, elem['expectedOutput']);
         } else {
           var _actual = encryptTapCode(elem['input'] as String, mode: elem['mode'] as AlphabetModificationMode);
@@ -41,7 +41,7 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, mode: ${elem['mode']}', () {
         if (elem['mode'] == null) {
-          var _actual = decryptTapCode(elem['input'] as String?);
+          var _actual = decryptTapCode(elem['input'] as String);
           expect(_actual, elem['expectedOutput']);
         } else {
           var _actual = decryptTapCode(elem['input'] as String, mode: elem['mode'] as AlphabetModificationMode);

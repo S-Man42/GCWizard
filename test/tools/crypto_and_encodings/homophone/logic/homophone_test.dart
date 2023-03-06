@@ -334,7 +334,7 @@ Map<String, String> replaceOwnMap(String keyList, Alphabet alphabet){
   return map;
 }
 
-String? changeOutput(String? input, Map<String, String>? replaceNumbers){
+String changeOutput(String input, Map<String, String>? replaceNumbers){
   if (replaceNumbers != null) {
     replaceNumbers.forEach((key, value){
       input = substitution(input, replaceNumbers);

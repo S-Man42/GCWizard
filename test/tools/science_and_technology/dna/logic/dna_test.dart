@@ -50,7 +50,6 @@ void main() {
 
   group("DNA.encodeDNANucleobaseSequence:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
       {'input' : 'HALLO', 'expectedOutput' : 'CATGCTTTATTA'},
@@ -67,7 +66,6 @@ void main() {
 
   group("DNA.decodeDNANucleobaseSequence:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
       {'expectedOutput' : 'HALL', 'input' : 'CATGCTTTATTA'},
@@ -87,7 +85,6 @@ void main() {
 
   group("DNA.encodeRNASymbolLong:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
       {'input' : 'HALLO', 'expectedOutput' : 'HISALALEULEU'},
@@ -104,7 +101,6 @@ void main() {
 
   group("DNA.decodeRNASymbolLong:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
       {'expectedOutput' : '', 'input' : 'H'},

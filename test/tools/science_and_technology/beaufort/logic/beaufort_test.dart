@@ -33,7 +33,6 @@ void main() {
 
   group("Beaufort.beaufortToMeterPerSecond:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'beaufort' : null, 'expectedOutput' : null},
       {'beaufort' : -1, 'expectedOutput' : null},
       {'beaufort' : 20, 'expectedOutput' : [56.1, double.infinity]},
 

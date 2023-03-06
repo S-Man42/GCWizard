@@ -39,7 +39,6 @@ void main() {
       {'start' : 1, 'length': -2, 'expectedOutput' : ERROR_IRRATIONALNUMBERS_INDEXTOOSMALL},
       {'start' : 10, 'length': -11, 'expectedOutput' : ERROR_IRRATIONALNUMBERS_INDEXTOOSMALL},
 
-      {'start' : 10, 'length': null, 'expectedOutput' : ''},
       {'start' : 10, 'length': 0, 'expectedOutput' : ''},
 
       {'start' : 1, 'length': 1, 'expectedOutput' : '1'},
@@ -76,7 +75,6 @@ void main() {
     var irCalculator = IrrationalNumberCalculator(irrationalNumber: PI);
 
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : []},
       {'input' : '', 'expectedOutput' : []},
 
       {'input' : '1', 'expectedOutput' : 1},

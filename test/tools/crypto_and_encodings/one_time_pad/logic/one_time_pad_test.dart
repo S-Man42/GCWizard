@@ -30,11 +30,11 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, key: ${elem['key']}, keyOffset: ${elem['keyOffset']}', () {
         if (elem['keyOffset'] == null) {
-          var _actual = encryptOneTimePad(elem['input'] as String?, elem['key'] as String?);
+          var _actual = encryptOneTimePad(elem['input'] as String, elem['key'] as String);
           expect(_actual, elem['expectedOutput']);
         } else {
           var _actual = encryptOneTimePad(
-              elem['input'] as String?, elem['key'] as String, keyOffset: elem['keyOffset'] as int);
+              elem['input'] as String, elem['key'] as String, keyOffset: elem['keyOffset'] as int);
           expect(_actual, elem['expectedOutput']);
         }
       });
@@ -70,7 +70,7 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, key: ${elem['key']}, keyOffset: ${elem['keyOffset']}', () {
         if (elem['keyOffset'] == null) {
-          var _actual = decryptOneTimePad(elem['input'] as String?, elem['key'] as String?);
+          var _actual = decryptOneTimePad(elem['input'] as String, elem['key'] as String);
           expect(_actual, elem['expectedOutput']);
         } else {
           var _actual = decryptOneTimePad(
