@@ -442,8 +442,8 @@ class PeriodicTableDataViewState extends State<PeriodicTableDataView> {
           pte.iupacGroupName == null ? '' : i18n(context, iupacGroupNameToString[pte.iupacGroupName]!)
         ],
         pte.mainGroup == null
-            ? [i18n(context, 'periodictable_attribute_subgroup'), encodeRomanNumbers(pte.subGroup)]
-            : [i18n(context, 'periodictable_attribute_maingroup'), encodeRomanNumbers(pte.mainGroup)],
+            ? [i18n(context, 'periodictable_attribute_subgroup'), encodeRomanNumbers(pte.subGroup!)]
+            : [i18n(context, 'periodictable_attribute_maingroup'), encodeRomanNumbers(pte.mainGroup!)],
         [i18n(context, 'periodictable_attribute_period'), pte.period],
         [
           i18n(context, 'periodictable_attribute_stateofmatter'),

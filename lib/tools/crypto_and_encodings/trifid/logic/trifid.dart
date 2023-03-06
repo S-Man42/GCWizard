@@ -46,12 +46,12 @@ TrifidOutput encryptTrifid(String input, int blockSize, {PolybiosMode mode = Pol
   }
   input = '';
   for (int i = 0; i < line1.length ~/ blockSize; i++) {
-    input = input! +
+    input = input +
         line1.join('').substring(i * blockSize, i * blockSize + blockSize) +
         line2.join('').substring(i * blockSize, i * blockSize + blockSize) +
         line3.join('').substring(i * blockSize, i * blockSize + blockSize);
   }
-  input = input! +
+  input = input +
       line1.join('').substring(line1.length ~/ blockSize * blockSize) +
       line2.join('').substring(line1.length ~/ blockSize * blockSize) +
       line3.join('').substring(line1.length ~/ blockSize * blockSize);

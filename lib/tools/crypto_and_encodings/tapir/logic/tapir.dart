@@ -12,9 +12,9 @@ final Map<String, String> _AZToTapir = {
   String.fromCharCode(220): '99', // Ü
   String.fromCharCode(223): '65', // ß
 };
-final Map<String, String> _TapirToAZ = switchMapKeyValue(AZToTapir);
+final Map<String, String> _TapirToAZ = switchMapKeyValue(_AZToTapir);
 
-final Map<String, String> NumbersToTapir = {
+final Map<String, String> _NumbersToTapir = {
   ' ': '83',
   '\n': '80',
   '.': '89',
@@ -38,7 +38,7 @@ final Map<String, String> NumbersToTapir = {
   '8': '88',
   '9': '99'
 };
-final Map<String, String> TapirToNumbers = switchMapKeyValue(NumbersToTapir);
+final Map<String, String> _TapirToNumbers = switchMapKeyValue(_NumbersToTapir);
 
 const _NUMBERS_FOLLOW = '82';
 const _LETTERS_FOLLOW = '81';
@@ -47,7 +47,7 @@ const _FILLING = '83';
 String _encodeTapir(String input) {
   //remove non-encodable chars
   input = input.toUpperCase();
-  input = input.split('').where((char) => AZToTapir[char] != null || NumbersToTapir[char] != null).join();
+  input = input.split('').where((char) => _AZToTapir[char] != null || _NumbersToTapir[char] != null).join();
 
   var isLetterMode = true;
   List<String> out = [];
@@ -58,7 +58,7 @@ String _encodeTapir(String input) {
     String? code;
 
     if (isLetterMode && i + 1 < input.length) {
-      code = AZToTapir[input.substring(i, i + 2)];
+      code = _AZToTapir[input.substring(i, i + 2)];
       if (code != null) {
         out.add(code);
         i += 2;
@@ -69,11 +69,11 @@ String _encodeTapir(String input) {
     var character = input[i++];
 
     if (isLetterMode) {
-      var code = AZToTapir[character];
+      var code = _AZToTapir[character];
       if (code != null) {
         out.add(code);
       } else {
-        code = NumbersToTapir[character];
+        code = _NumbersToTapir[character];
         if (code != null) {
           out.add(_NUMBERS_FOLLOW);
           out.add(code);
@@ -81,11 +81,11 @@ String _encodeTapir(String input) {
         }
       }
     } else {
-      var code = NumbersToTapir[character];
+      var code = _NumbersToTapir[character];
       if (code != null) {
         out.add(code);
       } else {
-        code = AZToTapir[character];
+        code = _AZToTapir[character];
         if (code != null) {
           out.add(_LETTERS_FOLLOW);
           out.add(code);
@@ -140,7 +140,7 @@ String encryptTapir(String input, String? keyOneTimePad) {
 }
 
 String? _checkCode(String code, bool isLetterMode) {
-  return isLetterMode ? TapirToAZ[code] : TapirToNumbers[code];
+  return isLetterMode ? _TapirToAZ[code] : _TapirToNumbers[code];
 }
 
 String _decodeTapir(String input) {

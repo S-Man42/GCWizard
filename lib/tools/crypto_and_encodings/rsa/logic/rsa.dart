@@ -60,7 +60,7 @@ BigInt _decryptInteger(BigInt value, BigInt d, BigInt N) {
   return value.modPow(d, N);
 }
 
-List<BigInt>? decryptRSA(List<BigInt>? input, BigInt d, BigInt p, BigInt q) {
+List<BigInt>? decryptRSA(List<BigInt> input, BigInt d, BigInt p, BigInt q) {
   if (input.isEmpty) return null;
 
   return input.map((number) {

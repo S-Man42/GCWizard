@@ -60,7 +60,7 @@ String encryptPlayfair(String input, String key, {AlphabetModificationMode mode 
   input = _sanitizeInput(input, mode);
 
   int i = 0;
-  while (i < input!.length - 1) {
+  while (i < input.length - 1) {
     if (input[i] == input[i + 1]) {
       if (input[i] == 'X') {
         input = insertCharacter(input, i + 1, 'Q');

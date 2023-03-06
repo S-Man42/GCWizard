@@ -87,46 +87,51 @@ class RSAState extends State<RSA> {
       var q = BigInt.tryParse(_currentQ);
 
       var outputChildren = <Widget>[];
-      if (_currentMode == GCWSwitchPosition.left) {
-        var inputAsText = _currentInput.split('').map((char) {
-          return BigInt.from(char.codeUnits.first);
-        }).toList();
+      if (ed != null && p != null && q != null) {
+        if (_currentMode == GCWSwitchPosition.left) {
+          var inputAsText = _currentInput.split('').map((char) {
+            return BigInt.from(char.codeUnits.first);
+          }).toList();
 
-        if (_currentInput.replaceAll(RegExp(r'\s+'), '').replaceAll(RegExp(r'\d'), '').isEmpty) {
-          var inputAsInt = _currentInput
-              .split(RegExp(r'\s+'))
-              .map((chunk) => BigInt.tryParse(chunk) ?? BigInt.zero)
-              .toList();
+          if (_currentInput
+              .replaceAll(RegExp(r'\s+'), '')
+              .replaceAll(RegExp(r'\d'), '')
+              .isEmpty) {
+            var inputAsInt = _currentInput
+                .split(RegExp(r'\s+'))
+                .map((chunk) => BigInt.tryParse(chunk) ?? BigInt.zero)
+                .toList();
+
+            outputChildren.add(GCWOutput(
+              child: (encryptRSA(inputAsInt, ed, p, q) ?? []).join(' '),
+              title: i18n(context, 'common_output') + ' (${i18n(context, 'rsa_encryption_output_textasnumbers')})',
+            ));
+          }
 
           outputChildren.add(GCWOutput(
-            child: (encryptRSA(inputAsInt, ed, p, q) ?? []).join(' '),
-            title: i18n(context, 'common_output') + ' (${i18n(context, 'rsa_encryption_output_textasnumbers')})',
+            child: (encryptRSA(inputAsText, ed, p, q) ?? []).join(' '),
+            title: i18n(context, 'common_output') + ' (${i18n(context, 'rsa_encryption_output_textasascii')})',
+          ));
+        } else {
+          var inputNumbers = _currentInput
+              .split(RegExp(r'\s+'))
+              .map((number) {
+            var n = number.replaceAll(RegExp('[^0-9]'), '');
+            return BigInt.tryParse(n) ?? BigInt.zero;
+          })
+              .toList();
+
+          var outputNumbers = decryptRSA(inputNumbers, ed, p, q);
+          outputChildren.add(GCWOutput(
+            child: (outputNumbers ?? []).join(' '),
+            title: i18n(context, 'common_output') + ' (${i18n(context, 'rsa_decryption_output_numbers')})',
+          ));
+
+          outputChildren.add(GCWOutput(
+            child: (outputNumbers ?? []).map((number) => String.fromCharCode(number.toInt())).join(''),
+            title: i18n(context, 'common_output') + ' (${i18n(context, 'rsa_decryption_output_numbersasascii')})',
           ));
         }
-
-        outputChildren.add(GCWOutput(
-          child: (encryptRSA(inputAsText, ed, p, q) ?? []).join(' '),
-          title: i18n(context, 'common_output') + ' (${i18n(context, 'rsa_encryption_output_textasascii')})',
-        ));
-      } else {
-        var inputNumbers = _currentInput
-            .split(RegExp(r'\s+'))
-            .map((number) {
-              var n = number.replaceAll(RegExp('[^0-9]'), '');
-              return BigInt.tryParse(n) ?? BigInt.zero;
-            })
-            .toList();
-
-        var outputNumbers = decryptRSA(inputNumbers, ed, p, q);
-        outputChildren.add(GCWOutput(
-          child: (outputNumbers ?? []).join(' '),
-          title: i18n(context, 'common_output') + ' (${i18n(context, 'rsa_decryption_output_numbers')})',
-        ));
-
-        outputChildren.add(GCWOutput(
-          child: (outputNumbers ?? []).map((number) => String.fromCharCode(number.toInt())).join(''),
-          title: i18n(context, 'common_output') + ' (${i18n(context, 'rsa_decryption_output_numbersasascii')})',
-        ));
       }
 
       String? d;

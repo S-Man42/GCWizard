@@ -53,6 +53,7 @@ String? convertBase(String input, int startBase, int destinationBase, {String? a
 
   if (number.length == 2 && (destinationBase < 0 || startBase < 0)) {
     var d = _negaDoubleToDec(number[0], number[1], startBase, usedAlphabet);
+    if (d== null) return '';
     var output = _decToNegaDouble(d, destinationBase, usedAlphabet);
 
     return output;
@@ -105,8 +106,7 @@ double? _negaDoubleToDec(String intPart, String floatPart, int base, String alph
   return output * sign;
 }
 
-String? _decToNegaDouble(double? num, int base, String alphabet) {
-  if (num == null) return null;
+String? _decToNegaDouble(double num, int base, String alphabet) {
   String numString = num.toString();
 
   if (base == 10) {

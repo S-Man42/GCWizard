@@ -199,7 +199,7 @@ class FormulaParser {
     formula = formula.replaceAllMapped(RegExp('[\u2070\u00B9\u00B2\u00B3\u2074\u2075\u2076\u2077\u2078\u2079]+'),
         (Match match) {
       var group = match.group(0);
-      group = substitution(group, switchMapKeyValue(SUPERSCRIPT_CHARACTERS));
+      group = substitution(group!, switchMapKeyValue(SUPERSCRIPT_CHARACTERS));
       return '^$group';
     });
 

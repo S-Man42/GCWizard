@@ -154,7 +154,7 @@ PolybiosOutput? encryptPolybios(String input, String key,
     var coords = grid[character];
     if (coords == null || coords.length < 2) return '';
 
-    return '${key![coords[0]]}${key[coords[1]]}';
+    return '${key[coords[0]]}${key[coords[1]]}';
   }).join(' ');
 
   return PolybiosOutput(output, polybiosGridToString(grid, key));
@@ -176,7 +176,7 @@ PolybiosOutput? decryptPolybios(String input, String key,
   if (alphabet == null) return null;
 
   key = key.toUpperCase();
-  input = input.split('').map((character) => key!.contains(character) ? character : '').join();
+  input = input.split('').map((character) => key.contains(character) ? character : '').join();
 
   if (input.length % 2 != 0) input = input.substring(0, input.length - 1);
 

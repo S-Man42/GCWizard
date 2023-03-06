@@ -39,7 +39,7 @@ String substitution(String input, Map<String, String> substitutions, {bool caseS
   //So find first -> replace it -> A__BA. Second occurrence not found anymore
   for (var key in keys) {
     int i = 0;
-    while (input!.indexOf(key, i) >= 0) {
+    while (input.indexOf(key, i) >= 0) {
       var index = input.indexOf(key, i);
       replacements.putIfAbsent(index, () => key);
 
@@ -51,7 +51,7 @@ String substitution(String input, Map<String, String> substitutions, {bool caseS
 
   //Unconsidered elements are put into the index map and the substitution map
   //The will be replaced by themselves.
-  input!.split('').asMap().forEach((index, character) {
+  input.split('').asMap().forEach((index, character) {
     if (character != String.fromCharCode(0)) {
       replacements.putIfAbsent(index, () => character);
       substCopy.putIfAbsent(character, () => character);
