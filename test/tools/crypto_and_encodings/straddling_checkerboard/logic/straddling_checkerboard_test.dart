@@ -7,7 +7,6 @@ void main() {
   group("encrypt", () {
     List<Map<String, Object?>> _inputsToExpected = [
       // empty Input
-      {'input' : null, 'key': null, 'alphabetWord' : '', 'columnOrder' : '', 'matrix4x10' : false, 'mode': PolybiosMode.AZ09, 'alphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'expectedOutput' : ''},
       {'input' : '', 'key': '', 'alphabetWord' : '', 'columnOrder' : '', 'matrix4x10' : false, 'mode': PolybiosMode.AZ09, 'alphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'expectedOutput' : ''},
       {'input' : 'cache bei n 52 345 678 o 13 09 451', 'key': null, 'alphabetWord' : '', 'columnOrder' : '', 'matrix4x10' : false, 'mode': PolybiosMode.AZ09, 'alphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'expectedOutput' : ''},
 
@@ -38,7 +37,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, key: ${elem['key']}, alphabetWord: ${elem['alphabetWord']}, columnOrder: ${elem['columnOrder']}, matrix4x10: ${elem['matrix4x10']}, mode: ${elem['mode']}, alphabet: ${elem['alphabet']}', () {
-        StraddlingCheckerboardOutput _actual = encryptStraddlingCheckerboard(elem['input'] as String?, elem['key'] as String?, elem['alphabetWord'] as String, elem['columnOrder'] as String, elem['matrix4x10'] as bool, mode: elem['mode'] as PolybiosMode, alphabet: elem['alphabet'] as String);
+        StraddlingCheckerboardOutput _actual = encryptStraddlingCheckerboard(elem['input'] as String, elem['key'] as String, elem['alphabetWord'] as String, elem['columnOrder'] as String, elem['matrix4x10'] as bool, mode: elem['mode'] as PolybiosMode, alphabet: elem['alphabet'] as String);
         expect(_actual.output, elem['expectedOutput']);
       });
     }
@@ -72,7 +71,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, key: ${elem['key']}, alphabetWord: ${elem['alphabetWord']}, columnOrder: ${elem['columnOrder']}, matrix4x10: ${elem['matrix4x10']}, mode: ${elem['mode']}, alphabet: ${elem['alphabet']}', () {
-        StraddlingCheckerboardOutput _actual = decryptStraddlingCheckerboard(elem['input'] as String?, elem['key'] as String?, elem['alphabetWord'] as String, elem['columnOrder'] as String, elem['matrix4x10'] as bool, mode: elem['mode'] as PolybiosMode, alphabet: elem['alphabet'] as String);
+        StraddlingCheckerboardOutput _actual = decryptStraddlingCheckerboard(elem['input'] as String, elem['key'] as String, elem['alphabetWord'] as String, elem['columnOrder'] as String, elem['matrix4x10'] as bool, mode: elem['mode'] as PolybiosMode, alphabet: elem['alphabet'] as String);
         expect(_actual.output, elem['expectedOutput']);
       });
     }

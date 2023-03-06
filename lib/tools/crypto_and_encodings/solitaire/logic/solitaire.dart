@@ -18,24 +18,23 @@ Map<String, int> _createSolitaireAlphabetMap() {
   return alphabet_AZ;
 }
 
-SolitaireOutput? encryptSolitaire(String? input, String? key) {
+SolitaireOutput? encryptSolitaire(String input, String key) {
   return _solitaireBase(input, key, true);
 }
 
-SolitaireOutput? decryptSolitaire(String? input, String? key) {
+SolitaireOutput? decryptSolitaire(String input, String key) {
   return _solitaireBase(input, key, false);
 }
 
-SolitaireOutput? _solitaireBase(String? input, String? key, bool encrypt) {
-  if (input == null || input.isEmpty) return null;
+SolitaireOutput? _solitaireBase(String input, String key, bool encrypt) {
+  if (input.isEmpty) return null;
 
   var alphabet = _createSolitaireAlphabetMap();
 
   input = input.toUpperCase().split('').map((character) => alphabet.containsKey(character) ? character : '').join();
 
-  if (key != null) {
-    key = key.toUpperCase().split('').map((character) => alphabet.containsKey(character) ? character : '').join();
-  }
+  key = key.toUpperCase().split('').map((character) => alphabet.containsKey(character) ? character : '').join();
+
 
   if (encrypt) {
     // Groups of 5 letters

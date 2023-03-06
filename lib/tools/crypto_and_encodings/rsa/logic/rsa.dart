@@ -28,10 +28,8 @@ BigInt _encryptInteger(BigInt value, BigInt e, BigInt N) {
   return value.modPow(e, N);
 }
 
-List<BigInt>? encryptRSA(List<BigInt>? input, BigInt? e, BigInt? p, BigInt? q) {
-  if (input == null || input.isEmpty) return null;
-
-  if (e == null || p == null || q == null) return null;
+List<BigInt>? encryptRSA(List<BigInt> input, BigInt e, BigInt p, BigInt q) {
+  if (input.isEmpty) return null;
 
   var _N = N(p, q);
 
@@ -62,10 +60,8 @@ BigInt _decryptInteger(BigInt value, BigInt d, BigInt N) {
   return value.modPow(d, N);
 }
 
-List<BigInt>? decryptRSA(List<BigInt>? input, BigInt? d, BigInt? p, BigInt? q) {
-  if (input == null || input.isEmpty) return null;
-
-  if (d == null || p == null || q == null) return null;
+List<BigInt>? decryptRSA(List<BigInt>? input, BigInt d, BigInt p, BigInt q) {
+  if (input.isEmpty) return null;
 
   return input.map((number) {
     var _N = N(p, q);

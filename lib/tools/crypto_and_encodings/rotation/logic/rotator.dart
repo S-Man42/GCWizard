@@ -10,11 +10,7 @@ class Rotator {
     this.alphabet = alphabet ?? '';
   }
 
-  String rotate(String? input, int? key, {bool removeUnknownCharacters = false, bool ignoreCase = true}) {
-    input ??= '';
-
-    key ??= 0;
-
+  String rotate(String input, int key, {bool removeUnknownCharacters = false, bool ignoreCase = true}) {
     if (ignoreCase) {
       return _rotateIgnoreCase(input, key, removeUnknownCharacters);
     }

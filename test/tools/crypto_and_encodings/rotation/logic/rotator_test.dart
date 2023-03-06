@@ -49,7 +49,7 @@ void main() {
       test('alphabet: ${elem['alphabet']}, input: ${elem['input']}, key: ${elem['key']}, removeUnknownCharacters: ${elem['removeUnknownCharacters']}, ignoreCase: ${elem['ignoreCase']}', () {
         var _rotator = Rotator(alphabet: elem['alphabet'] as String?);
 
-        var _actual = _rotator.rotate(elem['input'] as String?, elem['key'] as int?, removeUnknownCharacters: elem['removeUnknownCharacters'] as bool, ignoreCase: elem['ignoreCase'] as bool);
+        var _actual = _rotator.rotate(elem['input'] as String, (elem['key'] ?? 0) as int, removeUnknownCharacters: elem['removeUnknownCharacters'] as bool, ignoreCase: elem['ignoreCase'] as bool);
         expect(_actual, elem['expectedOutput']);
       });
     }

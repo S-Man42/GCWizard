@@ -10,10 +10,10 @@ class StraddlingCheckerboardOutput {
 }
 
 StraddlingCheckerboardOutput encryptStraddlingCheckerboard(
-    String? input, String? key, String alphabetWord, String columnOrder, bool matrix4x10,
+    String input, String key, String alphabetWord, String columnOrder, bool matrix4x10,
     {PolybiosMode mode = PolybiosMode.AZ09, required String alphabet}) {
-  if (input == null || input.isEmpty) return StraddlingCheckerboardOutput('', '');
-  if (key == null || key.isEmpty) return StraddlingCheckerboardOutput('', '');
+  if (input.isEmpty) return StraddlingCheckerboardOutput('', '');
+  if (key.isEmpty) return StraddlingCheckerboardOutput('', '');
 
   input = input.toUpperCase().replaceAll(' ', '.');
   key = _fillKey(key.toUpperCase(), matrix4x10);
@@ -61,10 +61,10 @@ StraddlingCheckerboardOutput encryptStraddlingCheckerboard(
 }
 
 StraddlingCheckerboardOutput decryptStraddlingCheckerboard(
-    String? input, String? key, String alphabetWord, String columnOrder, bool matrix4x10,
+    String input, String key, String alphabetWord, String columnOrder, bool matrix4x10,
     {PolybiosMode mode = PolybiosMode.AZ09, required String alphabet}) {
-  if (input == null || input.isEmpty) return StraddlingCheckerboardOutput('', '');
-  if (key == null || key.isEmpty) return StraddlingCheckerboardOutput('', '');
+  if (input.isEmpty) return StraddlingCheckerboardOutput('', '');
+  if (key.isEmpty) return StraddlingCheckerboardOutput('', '');
 
   key = _fillKey(key.toUpperCase(), matrix4x10);
   alphabetWord = alphabetWord.toUpperCase();
