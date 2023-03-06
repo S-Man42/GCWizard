@@ -1,16 +1,12 @@
 import 'package:diacritic/diacritic.dart';
 
-List<int>? _validateAndSanitizeList(List<int>? list) {
-  if (list == null) return null;
-
+List<int>? _validateAndSanitizeList(List<int> list) {
   if (list.isEmpty) return null;
 
   return list;
 }
 
-bool _containsNegativeValue(List<int>? list) {
-  if (list == null) return false;
-
+bool _containsNegativeValue(List<int> list) {
   for (int i = 0; i < list.length; i++) {
     if (list[i] < 0) return true;
   }
@@ -18,16 +14,16 @@ bool _containsNegativeValue(List<int>? list) {
   return false;
 }
 
-BigInt sum(List<int>? list) {
+BigInt sum(List<int> list) {
   if (_validateAndSanitizeList(list) == null) return BigInt.zero;
 
-  return list!.map((e) => BigInt.from(e)).reduce((a, b) => a + b);
+  return list.map((e) => BigInt.from(e)).reduce((a, b) => a + b);
 }
 
-BigInt product(List<int>? list) {
+BigInt product(List<int> list) {
   if (_validateAndSanitizeList(list) == null) return BigInt.zero;
 
-  return list!.map((e) => BigInt.from(e)).reduce((a, b) => a * b);
+  return list.map((e) => BigInt.from(e)).reduce((a, b) => a * b);
 }
 
 List<BigInt> _intListToIntDigitList(List<BigInt> list) {
@@ -68,89 +64,89 @@ BigInt _crossProductNumberIterated(BigInt number) {
   return number;
 }
 
-BigInt sumCrossSum(List<int>? list) {
+BigInt sumCrossSum(List<int> list) {
   BigInt s = sum(list);
   return _crossSumNumber(s);
 }
 
-BigInt productCrossSum(List<int>? list) {
+BigInt productCrossSum(List<int> list) {
   BigInt p = product(list);
   return _crossSumNumber(p);
 }
 
-BigInt sumCrossSumIterated(List<int>? list) {
+BigInt sumCrossSumIterated(List<int> list) {
   BigInt s = sum(list);
   return _crossSumNumberIterated(s);
 }
 
-BigInt? sumCrossSumAlternatedBackward(List<int>? list) {
-  if (list == null || _containsNegativeValue(list)) return null;
+BigInt? sumCrossSumAlternatedBackward(List<int> list) {
+  if (_containsNegativeValue(list)) return null;
 
   BigInt s = sum(list);
   return _crossSumAlternatedBackward([s]);
 }
 
-BigInt? sumCrossSumAlternatedForward(List<int>? list) {
-  if (list == null || _containsNegativeValue(list)) return null;
+BigInt? sumCrossSumAlternatedForward(List<int> list) {
+  if (_containsNegativeValue(list)) return null;
 
   BigInt s = sum(list);
   return _crossSumAlternatedForward([s]);
 }
 
-BigInt productCrossSumIterated(List<int>? list) {
+BigInt productCrossSumIterated(List<int> list) {
   BigInt p = product(list);
   return _crossSumNumberIterated(p);
 }
 
-BigInt? productCrossSumAlternatedBackward(List<int>? list) {
-  if (list == null || _containsNegativeValue(list)) return null;
+BigInt? productCrossSumAlternatedBackward(List<int> list) {
+  if (_containsNegativeValue(list)) return null;
 
   BigInt p = product(list);
   return _crossSumAlternatedBackward([p]);
 }
 
-BigInt? productCrossSumAlternatedForward(List<int>? list) {
-  if (list == null || _containsNegativeValue(list)) return null;
+BigInt? productCrossSumAlternatedForward(List<int> list) {
+  if (_containsNegativeValue(list)) return null;
 
   BigInt p = product(list);
   return _crossSumAlternatedForward([p]);
 }
 
-BigInt crossSumIterated(List<int>? list) {
+BigInt crossSumIterated(List<int> list) {
   BigInt c = crossSum(list);
   return _crossSumNumberIterated(c);
 }
 
-BigInt crossProductIterated(List<int>? list) {
+BigInt crossProductIterated(List<int> list) {
   BigInt c = crossProduct(list);
   return _crossProductNumberIterated(c);
 }
 
-BigInt sumAlternatedForward(List<int>? list) {
+BigInt sumAlternatedForward(List<int> list) {
   if (_validateAndSanitizeList(list) == null) return BigInt.zero;
 
   BigInt i = BigInt.one;
-  return list!.map((e) => BigInt.from(e)).reduce((a, b) {
+  return list.map((e) => BigInt.from(e)).reduce((a, b) {
     i *= BigInt.from(-1);
     return a + i * b;
   });
 }
 
-BigInt sumAlternatedBackward(List<int>? list) {
+BigInt sumAlternatedBackward(List<int> list) {
   if (_validateAndSanitizeList(list) == null) return BigInt.zero;
 
   BigInt i = BigInt.one;
-  return list!.reversed.map((e) => BigInt.from(e)).reduce((a, b) {
+  return list.reversed.map((e) => BigInt.from(e)).reduce((a, b) {
     i *= BigInt.from(-1);
     return a + i * b;
   });
 }
 
-BigInt productAlternated(List<int>? list) {
+BigInt productAlternated(List<int> list) {
   if (_validateAndSanitizeList(list) == null) return BigInt.zero;
 
   BigInt i = BigInt.one;
-  return list!.reversed.map((e) => BigInt.from(e)).reduce((a, b) {
+  return list.reversed.map((e) => BigInt.from(e)).reduce((a, b) {
     i *= BigInt.from(-1);
     return a * i * b;
   });
@@ -164,12 +160,12 @@ BigInt _crossSumAlternatedForward(List<BigInt> list) {
   });
 }
 
-BigInt? crossSumAlternatedForward(List<int>? list) {
+BigInt? crossSumAlternatedForward(List<int> list) {
   if (_containsNegativeValue(list)) return null;
 
   if (_validateAndSanitizeList(list) == null) return BigInt.zero;
 
-  return _crossSumAlternatedForward(list!.map((e) => BigInt.from(e)).toList());
+  return _crossSumAlternatedForward(list.map((e) => BigInt.from(e)).toList());
 }
 
 BigInt _crossSumAlternatedBackward(List<BigInt> list) {
@@ -180,62 +176,54 @@ BigInt _crossSumAlternatedBackward(List<BigInt> list) {
   });
 }
 
-BigInt? crossSumAlternatedBackward(List<int>? list) {
+BigInt? crossSumAlternatedBackward(List<int> list) {
   if (_containsNegativeValue(list)) return null;
 
   if (_validateAndSanitizeList(list) == null) return BigInt.zero;
 
-  return _crossSumAlternatedBackward(list!.map((e) => BigInt.from(e)).toList());
+  return _crossSumAlternatedBackward(list.map((e) => BigInt.from(e)).toList());
 }
 
-BigInt? crossProductAlternated(List<int>? list) {
+BigInt? crossProductAlternated(List<int> list) {
   if (_containsNegativeValue(list)) return null;
 
   if (_validateAndSanitizeList(list) == null) return BigInt.zero;
 
   BigInt i = BigInt.one;
-  return _intListToIntDigitList(list!.map((e) => BigInt.from(e)).toList()).reversed.reduce((a, b) {
+  return _intListToIntDigitList(list.map((e) => BigInt.from(e)).toList()).reversed.reduce((a, b) {
     i *= BigInt.from(-1);
     return a * i * b;
   });
 }
 
-BigInt crossSum(List<int>? list) {
+BigInt crossSum(List<int> list) {
   if (_validateAndSanitizeList(list) == null) return BigInt.zero;
 
-  return list!.map((element) {
+  return list.map((element) {
     return _crossSumNumber(BigInt.from(element));
   }).reduce((a, b) => a + b);
 }
 
-BigInt crossProduct(List<int>? list) {
+BigInt crossProduct(List<int> list) {
   if (_validateAndSanitizeList(list) == null) return BigInt.zero;
 
-  return list!.map((element) {
+  return list.map((element) {
     return _crossProductNumber(BigInt.from(element));
   }).reduce((a, b) => a * b);
 }
 
-int countCharacters(List<int>? list) {
-  if (list == null) return 0;
-
+int countCharacters(List<int> list) {
   return list.length;
 }
 
-int countDistinctCharacters(List<int>? list) {
-  if (list == null) return 0;
-
+int countDistinctCharacters(List<int> list) {
   return list.toSet().length;
 }
 
-int countLetters(String? text) {
-  if (text == null) return 0;
-
+int countLetters(String text) {
   return removeDiacritics(text).toUpperCase().replaceAll(RegExp('[^A-Zß\u1e9e]'), '').length;
 }
 
-int countDigits(String? text) {
-  if (text == null) return 0;
-
+int countDigits(String text) {
   return text.replaceAll(RegExp(r'[^0-9]'), '').length;
 }

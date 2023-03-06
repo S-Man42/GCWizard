@@ -14,8 +14,7 @@ part 'package:gc_wizard/tools/images_and_files/hidden_data/logic/file_size.dart'
 
 const HIDDEN_FILE_IDENTIFIER = '<<!!!HIDDEN_FILE!!!>>';
 
-Future<List<GCWFile>> hiddenData(GCWFile? data) async {
-  if (data == null) return [];
+Future<List<GCWFile>> hiddenData(GCWFile data) async {
 
   data.children = null;
   return Future.value((await _hiddenData(data, 0)).item1);

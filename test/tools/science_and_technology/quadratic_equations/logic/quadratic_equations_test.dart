@@ -4,11 +4,7 @@ import 'package:gc_wizard/tools/science_and_technology/quadratic_equation/logic/
 void main() {
   group("QuadratcEquation.SolveEquation:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'a' : null, 'b' : null, 'c' : null, 'expectedOutput' : ['']},
-      {'a' : null, 'b' : '',   'c' : '',   'expectedOutput' : ['']},
-      {'a' : null, 'b' : null, 'c' : null, 'expectedOutput' : ['']},
-      {'a' : '',   'b' : '',   'c' : '',   'expectedOutput' : ['']},
-      {'a' : '',   'b' : null, 'c' : null, 'expectedOutput' : ['']},
+
       {'a' : '',   'b' : '',   'c' : '',   'expectedOutput' : ['']},
 
       {'a' : '0.0', 'b' : '0.0', 'c' : '0.0', 'expectedOutput' : ['quadratic_equation_hint_a_b_null', '0.0', 'NaN']},
@@ -30,7 +26,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('a: ${elem['a']}, b: ${elem['b']}, c: ${elem['c']}', () {
-        var _actual = solveQuadraticEquation(elem['a'] as String?, elem['b'] as String?, elem['c'] as String?);
+        var _actual = solveQuadraticEquation(elem['a'] as String, elem['b'] as String, elem['c'] as String);
         var coordinate = _actual.values;
         for (int i = 0; i < coordinate.length; i++) {
           expect(coordinate.elementAt(i), (elem['expectedOutput']as List<String>)[i]);

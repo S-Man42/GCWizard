@@ -6,13 +6,12 @@ void main() {
 
   group("Keyboard.null:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'from' : KeyboardType.Dvorak, 'to' : KeyboardType.QWERTZ_T1, 'expectedOutput' : ''},
       {'input' : '', 'from' : KeyboardType.Dvorak, 'to' : KeyboardType.QWERTZ_T1, 'expectedOutput' : ''},
     ];
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, from: ${elem['from']}, to: ${elem['to']}', () {
-        var _actual = encodeKeyboard(elem['input'] as String?, elem['from'] as KeyboardType, elem['to'] as KeyboardType);
+        var _actual = encodeKeyboard(elem['input'] as String, elem['from'] as KeyboardType, elem['to'] as KeyboardType);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -37,7 +36,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, from: ${elem['from']}, to: ${elem['to']}', () {
-        var _actual = encodeKeyboard(elem['input'] as String?, elem['from'] as KeyboardType, elem['to'] as KeyboardType);
+        var _actual = encodeKeyboard(elem['input'] as String, elem['from'] as KeyboardType, elem['to'] as KeyboardType);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -62,7 +61,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, from: ${elem['from']}, to: ${elem['to']}', () {
-        var _actual = encodeKeyboard(elem['input'] as String?, elem['from'] as KeyboardType, elem['to'] as KeyboardType);
+        var _actual = encodeKeyboard(elem['input'] as String, elem['from'] as KeyboardType, elem['to'] as KeyboardType);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -87,7 +86,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, from: ${elem['from']}, to: ${elem['to']}', () {
-        var _actual = encodeKeyboard(elem['input'] as String?, elem['from'] as KeyboardType, elem['to'] as KeyboardType);
+        var _actual = encodeKeyboard(elem['input'] as String, elem['from'] as KeyboardType, elem['to'] as KeyboardType);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -112,7 +111,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, from: ${elem['from']}, to: ${elem['to']}', () {
-        var _actual = encodeKeyboard(elem['input'] as String?, elem['from'] as KeyboardType, elem['to'] as KeyboardType);
+        var _actual = encodeKeyboard(elem['input'] as String, elem['from'] as KeyboardType, elem['to'] as KeyboardType);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -137,7 +136,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, from: ${elem['from']}, to: ${elem['to']}', () {
-        var _actual = encodeKeyboard(elem['input'] as String?, elem['from'] as KeyboardType, elem['to'] as KeyboardType);
+        var _actual = encodeKeyboard(elem['input'] as String, elem['from'] as KeyboardType, elem['to'] as KeyboardType);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -162,7 +161,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, from: ${elem['from']}, to: ${elem['to']}', () {
-        var _actual = encodeKeyboard(elem['input'] as String?, elem['from'] as KeyboardType, elem['to'] as KeyboardType);
+        var _actual = encodeKeyboard(elem['input'] as String, elem['from'] as KeyboardType, elem['to'] as KeyboardType);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -187,7 +186,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, from: ${elem['from']}, to: ${elem['to']}', () {
-        var _actual = encodeKeyboard(elem['input'] as String?, elem['from'] as KeyboardType, elem['to'] as KeyboardType);
+        var _actual = encodeKeyboard(elem['input'] as String, elem['from'] as KeyboardType, elem['to'] as KeyboardType);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -212,7 +211,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, from: ${elem['from']}, to: ${elem['to']}', () {
-        var _actual = encodeKeyboard(elem['input'] as String?, elem['from'] as KeyboardType, elem['to'] as KeyboardType);
+        var _actual = encodeKeyboard(elem['input'] as String, elem['from'] as KeyboardType, elem['to'] as KeyboardType);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -237,7 +236,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, from: ${elem['from']}, to: ${elem['to']}', () {
-        var _actual = encodeKeyboard(elem['input'] as String?, elem['from'] as KeyboardType, elem['to'] as KeyboardType);
+        var _actual = encodeKeyboard(elem['input'] as String, elem['from'] as KeyboardType, elem['to'] as KeyboardType);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -262,7 +261,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, from: ${elem['from']}, to: ${elem['to']}', () {
-        var _actual = encodeKeyboard(elem['input'] as String?, elem['from'] as KeyboardType, elem['to'] as KeyboardType);
+        var _actual = encodeKeyboard(elem['input'] as String, elem['from'] as KeyboardType, elem['to'] as KeyboardType);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -287,7 +286,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, from: ${elem['from']}, to: ${elem['to']}', () {
-        var _actual = encodeKeyboard(elem['input'] as String?, elem['from'] as KeyboardType, elem['to'] as KeyboardType);
+        var _actual = encodeKeyboard(elem['input'] as String, elem['from'] as KeyboardType, elem['to'] as KeyboardType);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -312,7 +311,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, from: ${elem['from']}, to: ${elem['to']}', () {
-        var _actual = encodeKeyboard(elem['input'] as String?, elem['from'] as KeyboardType, elem['to'] as KeyboardType);
+        var _actual = encodeKeyboard(elem['input'] as String, elem['from'] as KeyboardType, elem['to'] as KeyboardType);
         expect(_actual, elem['expectedOutput']);
       });
     }

@@ -61,15 +61,13 @@ int getNthPrime(int? n) {
   return primes[n - 1];
 }
 
-int getPrimeIndex(int? n) {
-  if (n == null) return -1; //TODO: Exception
-
+int getPrimeIndex(int n) {
   var output = binarySearch(primes, n);
   return (output < 0) ? -1 : output + 1;
 }
 
-List<int>? getNearestPrime(int? n) {
-  if (n == null || n > 1000000) return null; //TODO: Exception('Too big');
+List<int>? getNearestPrime(int n) {
+  if (n > 1000000) return null; //TODO: Exception('Too big');
 
   if (n <= 2) return [2];
 
@@ -93,24 +91,24 @@ List<int>? getNearestPrime(int? n) {
   return [max(valueBefore, valueAfter)];
 }
 
-int? getNextPrime(int? n) {
-  if (n == null || n > 1000000) return null;
+int? getNextPrime(int n) {
+  if (n > 1000000) return null;
 
   if (isPrime(BigInt.from(n))) n++;
 
-  while (!isPrime(BigInt.from(n!))) {
+  while (!isPrime(BigInt.from(n))) {
     n++;
   }
 
   return n;
 }
 
-int? getPreviousPrime(int? n) {
-  if (n == null || n <= 2) return null;
+int? getPreviousPrime(int n) {
+  if (n <= 2) return null;
 
   if (isPrime(BigInt.from(n))) n--;
 
-  while (!isPrime(BigInt.from(n!))) {
+  while (!isPrime(BigInt.from(n))) {
     n--;
   }
 

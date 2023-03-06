@@ -184,7 +184,7 @@ class HiddenDataState extends State<HiddenData> {
     if (_unHideFile == null) return Container();
 
     var _complete = false;
-    var _hiddenDataList = hiddenData(_unHideFile);
+    var _hiddenDataList = hiddenData(_unHideFile!);
     _hiddenDataList.then((value) {
       _complete = true;
     });

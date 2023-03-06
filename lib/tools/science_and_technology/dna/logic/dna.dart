@@ -54,8 +54,8 @@ AminoAcid? aminoAcidByNucleobaseSequence(String sequence) {
   return aminoAcids.firstWhereOrNull((element) => element.nucleobaseSequences.contains(sequence.toUpperCase()));
 }
 
-String encodeRNANucleobaseSequence(String? input) {
-  if (input == null || input.isEmpty) return '';
+String encodeRNANucleobaseSequence(String input) {
+  if (input.isEmpty) return '';
 
   return input.toUpperCase().split('').map((character) {
     var aminoAcid = aminoAcidBySymbolShort(character);
@@ -65,12 +65,12 @@ String encodeRNANucleobaseSequence(String? input) {
   }).join('');
 }
 
-String encodeDNANucleobaseSequence(String? input) {
+String encodeDNANucleobaseSequence(String input) {
   return encodeRNANucleobaseSequence(input).replaceAll('U', 'T');
 }
 
-String encodeRNASymbolLong(String? input) {
-  if (input == null || input.isEmpty) return '';
+String encodeRNASymbolLong(String input) {
+  if (input.isEmpty) return '';
 
   return input.toUpperCase().split('').map((character) {
     var aminoAcid = aminoAcidBySymbolShort(character);
@@ -80,18 +80,18 @@ String encodeRNASymbolLong(String? input) {
   }).join('');
 }
 
-List<AminoAcid> decodeDNANucleobaseSequence(String? input) {
-  if (input == null || input.isEmpty) return [];
+List<AminoAcid> decodeDNANucleobaseSequence(String input) {
+  if (input.isEmpty) return [];
 
   return decodeRNANucleobaseSequence(input.toUpperCase().replaceAll(RegExp(r'[^ATCG]'), '').replaceAll('T', 'U'));
 }
 
-List<AminoAcid> decodeRNANucleobaseSequence(String? input) {
-  if (input == null || input.length < 3) return [];
+List<AminoAcid> decodeRNANucleobaseSequence(String input) {
+  if (input.length < 3) return [];
 
   input = input.toUpperCase().replaceAll(RegExp(r'[^AUCG]'), '');
 
-  while (input!.length % 3 != 0) {
+  while (input.length % 3 != 0) {
     input = input.substring(0, input.length - 1);
   }
 
@@ -107,13 +107,13 @@ List<AminoAcid> decodeRNANucleobaseSequence(String? input) {
   return out;
 }
 
-String decodeRNASymbolLong(String? input) {
-  if (input == null || input.length < 3) return '';
+String decodeRNASymbolLong(String input) {
+  if (input.length < 3) return '';
 
   input = input.toUpperCase();
 
   var out = '';
-  while (input!.length >= 3) {
+  while (input.length >= 3) {
     var symbol = input.substring(0, 3);
     var aminoAcid = aminoAcidBySymbolLong(symbol);
     if (aminoAcid == null) {

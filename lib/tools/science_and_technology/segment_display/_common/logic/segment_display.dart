@@ -604,8 +604,8 @@ class SegmentsSexagesimal extends Segments {
 
 
 
-Segments encodeSegment(String? input, SegmentDisplayType segmentType) {
-  if (input == null || input.isEmpty) return Segments.Empty();
+Segments encodeSegment(String input, SegmentDisplayType segmentType) {
+  if (input.isEmpty) return Segments.Empty();
 
   Map<String, List<String>> AZToSegment = {};
   switch (segmentType) {
@@ -642,8 +642,8 @@ Segments encodeSegment(String? input, SegmentDisplayType segmentType) {
   return Segments(displays: output);
 }
 
-SegmentsText decodeSegment(String? input, SegmentDisplayType segmentType) {
-  if (input == null || input.isEmpty) return SegmentsText(displays: [], text: '');
+SegmentsText decodeSegment(String input, SegmentDisplayType segmentType) {
+  if (input.isEmpty) return SegmentsText(displays: [], text: '');
   List<String> baseSegments = [];
 
   switch (segmentType) {

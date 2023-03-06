@@ -21,7 +21,6 @@ void main() {
 
   group("PeriodicTable.textToAtomicNumbers:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'expectedOutput' : <int>[], 'text' : null},
       {'expectedOutput' : <int>[], 'text' : ''},
 
       {'expectedOutput' : [1,2,3], 'text' : 'HHeLi'},
@@ -35,7 +34,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('text: ${elem['text']}', () {
-        var _actual = textToAtomicNumbers(elem['text'] as String?);
+        var _actual = textToAtomicNumbers(elem['text'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     }

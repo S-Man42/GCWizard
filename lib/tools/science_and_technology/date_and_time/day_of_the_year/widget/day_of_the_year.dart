@@ -133,8 +133,6 @@ class DayOfTheYearState extends State<DayOfTheYear> {
       outputData = calculateDateInfos(_currentDecodeDate);
     }
 
-    if (outputData == null) return Container();
-
     var dateFormat = DateFormat('yMd', Localizations.localeOf(context).toString());
 
     var children = <Widget>[];

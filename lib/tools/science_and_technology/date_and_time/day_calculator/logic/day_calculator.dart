@@ -7,9 +7,7 @@ class DayCalculatorOutput {
   DayCalculatorOutput(this.days, this.hours, this.minutes, this.seconds);
 }
 
-DayCalculatorOutput? calculateDayDifferences(DateTime? start, DateTime? end, {bool countStart = true, bool countEnd = true}) {
-  if (start == null || end == null) return null;
-
+DayCalculatorOutput calculateDayDifferences(DateTime start, DateTime end, {bool countStart = true, bool countEnd = true}) {
   Duration difference;
   if (start.compareTo(end) == 0) {
     if (!countStart && !countEnd) return DayCalculatorOutput(0, 0, 0, 0);

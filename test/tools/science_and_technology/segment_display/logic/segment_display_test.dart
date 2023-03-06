@@ -5,7 +5,6 @@ import 'package:gc_wizard/utils/constants.dart';
 void main() {
   group("SegmentDisplay.encodeSegment:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': []},
       {'input' : '', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': []},
 
       {'input' : 'A', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': [['a', 'b', 'c', 'e', 'f', 'g']]},
@@ -55,7 +54,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, segmentType: ${elem['segmentType']}', () {
-        var _actual = encodeSegment(elem['input'] as String?, elem['segmentType'] as SegmentDisplayType);
+        var _actual = encodeSegment(elem['input'] as String, elem['segmentType'] as SegmentDisplayType);
         expect(_actual.displays, elem['expectedOutput']);
       });
     }
@@ -63,7 +62,6 @@ void main() {
 
   group("SegmentDisplay.decodeSegment:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': SegmentsText(displays:[], text: '')},
       {'input' : '', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': SegmentsText(displays:[], text: '')},
 
       {'input' : 'bc', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': SegmentsText(displays:[['b','c']], text: '1')},
@@ -111,7 +109,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, segmentType: ${elem['segmentType']}', () {
-        var _actual = decodeSegment(elem['input'] as String?, elem['segmentType'] as SegmentDisplayType);
+        var _actual = decodeSegment(elem['input'] as String, elem['segmentType'] as SegmentDisplayType);
         var expected  = elem['expectedOutput'] as SegmentsText;
         expect(_actual.text, expected.text);
         expect(_actual.displays, expected.displays);

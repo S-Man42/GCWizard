@@ -7,7 +7,6 @@ void main() {
     var irCalculator = IrrationalNumberCalculator(irrationalNumber: PI);
 
     List<Map<String, Object?>> _inputsToExpected = [
-      {'index' : null, 'expectedOutput' : ERROR_IRRATIONALNUMBERS_INDEXTOOSMALL},
       {'index' : -1, 'expectedOutput' : ERROR_IRRATIONALNUMBERS_INDEXTOOSMALL},
       {'index' : PI.decimalPart.length + 1, 'expectedOutput' : ERROR_IRRATIONALNUMBERS_INDEXTOOBIG},
 
@@ -22,7 +21,7 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('index: ${elem['index']}', () {
         try {
-          var _actual = irCalculator.decimalAt(elem['index'] as int?);
+          var _actual = irCalculator.decimalAt(elem['index'] as int);
           expect(_actual, elem['expectedOutput']);
         } on FormatException catch(e) {
           expect(e.message, elem['expectedOutput']);
@@ -35,7 +34,6 @@ void main() {
     var irCalculator = IrrationalNumberCalculator(irrationalNumber: PI);
 
     List<Map<String, Object?>> _inputsToExpected = [
-      {'start' : null, 'length': 1, 'expectedOutput' : ERROR_IRRATIONALNUMBERS_INDEXTOOSMALL},
       {'start' : -1, 'length': 1, 'expectedOutput' : ERROR_IRRATIONALNUMBERS_INDEXTOOSMALL},
       {'start' : 0, 'length': 1, 'expectedOutput' : ERROR_IRRATIONALNUMBERS_INDEXTOOSMALL},
       {'start' : 1, 'length': -2, 'expectedOutput' : ERROR_IRRATIONALNUMBERS_INDEXTOOSMALL},
@@ -65,7 +63,7 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('start: ${elem['start']}, length: ${elem['length']}', () {
         try {
-          var _actual = irCalculator.decimalRange(elem['start'] as int?, elem['length'] as int?);
+          var _actual = irCalculator.decimalRange(elem['start'] as int, elem['length'] as int);
           expect(_actual, elem['expectedOutput']);
         } on FormatException catch(e) {
           expect(e.message, elem['expectedOutput']);
@@ -90,7 +88,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('index: ${elem['index']}', () {
-        var _actual = irCalculator.decimalOccurences(elem['input'] as String?);
+        var _actual = irCalculator.decimalOccurences(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     }

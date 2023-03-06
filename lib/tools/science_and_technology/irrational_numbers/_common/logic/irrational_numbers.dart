@@ -14,17 +14,17 @@ class IrrationalNumberCalculator {
 
   IrrationalNumberCalculator({required this.irrationalNumber});
 
-  String decimalAt(int? index) {
-    if (index == null || index <= 0) throw const FormatException(ERROR_IRRATIONALNUMBERS_INDEXTOOSMALL);
+  String decimalAt(int index) {
+    if (index <= 0) throw const FormatException(ERROR_IRRATIONALNUMBERS_INDEXTOOSMALL);
     if (index > irrationalNumber.decimalPart.length) throw const FormatException(ERROR_IRRATIONALNUMBERS_INDEXTOOBIG);
 
     return irrationalNumber.decimalPart[index - 1];
   }
 
-  String decimalRange(int? start, int? length) {
-    if (length == null || length == 0) return '';
+  String decimalRange(int start, int length) {
+    if (length == 0) return '';
 
-    if (start == null || start <= 0 || (start + length) < 0) {
+    if (start <= 0 || (start + length) < 0) {
       throw const FormatException(ERROR_IRRATIONALNUMBERS_INDEXTOOSMALL);
     }
     if ((start + length) > irrationalNumber.decimalPart.length) {
@@ -39,8 +39,8 @@ class IrrationalNumberCalculator {
     return irrationalNumber.decimalPart.substring(start - 1, start + length - 1);
   }
 
-  List<IrrationalNumberDecimalOccurence> decimalOccurences(String? input) {
-    if (input == null || input.isEmpty) return [];
+  List<IrrationalNumberDecimalOccurence> decimalOccurences(String input) {
+    if (input.isEmpty) return [];
 
     if (!input.contains(RegExp(r'[0-9]'))) throw Exception('irrationalnumbers_error_nonumbers');
 

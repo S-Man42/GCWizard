@@ -3,8 +3,8 @@ import 'dart:math';
 import 'package:intl/intl.dart';
 import 'package:math_expressions/math_expressions.dart';
 
-Map<String, String> solveQuadraticEquation(String? currentA, String? currentB, String? currentC) {
-  if (currentA == null || currentA.isEmpty || currentB == null || currentB.isEmpty || currentC == null || currentC.isEmpty) {
+Map<String, String> solveQuadraticEquation(String currentA, String currentB, String currentC) {
+  if (currentA.isEmpty || currentB.isEmpty || currentC.isEmpty) {
     return {'': ''};
   }
 

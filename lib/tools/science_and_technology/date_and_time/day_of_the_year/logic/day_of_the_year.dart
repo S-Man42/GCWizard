@@ -12,18 +12,15 @@ class DayOfTheYearOutput {
       this.date, this.dayNumber, this.weekday, this.weekdayAlternate, this.weekNumberIso, this.weekNumberAlternate);
 }
 
-DayOfTheYearOutput? calculateDayInfos(int? year, int? day) {
-  if (year == null || day == null) return null;
+DayOfTheYearOutput calculateDayInfos(int year, int day) {
   var date = DateTime(year, 1, day);
 
   return calculateDateInfos(date);
 }
 
-DayOfTheYearOutput? calculateDateInfos(DateTime? date) {
-  if (date == null) return null;
-
-  return DayOfTheYearOutput(date, dayNumber(date), date.weekday, _weekdayAlternate(date.weekday), isoWeekOfYear(date)!,
-      alternateWeekOfYear(date)!);
+DayOfTheYearOutput calculateDateInfos(DateTime date) {
+  return DayOfTheYearOutput(date, dayNumber(date), date.weekday, _weekdayAlternate(date.weekday), isoWeekOfYear(date),
+      alternateWeekOfYear(date));
 }
 
 int _weekdayAlternate(int weekday) {
@@ -31,14 +28,11 @@ int _weekdayAlternate(int weekday) {
   return weekday == 0 ? 7 : weekday;
 }
 
-int? isoWeekOfYear(DateTime? date) {
-  if (date == null) return null;
+int isoWeekOfYear(DateTime date) {
   return date.weekOfYear;
 }
 
-int? alternateWeekOfYear(DateTime? date) {
-  if (date == null) return null;
-
+int alternateWeekOfYear(DateTime date) {
   // Get the monday of week 1
   final DateTime mondayWeek1 = _alternateWeek1Monday(date);
 

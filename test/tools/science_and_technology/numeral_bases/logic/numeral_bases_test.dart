@@ -287,7 +287,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, startBase: ${elem['startBase']}, destinationBase: ${elem['destinationBase']}', () {
-        var _actual = convertBase(elem['input'] as String?, elem['startBase'] as int, elem['destinationBase'] as int);
+        var _actual = convertBase(elem['input'] as String, elem['startBase'] as int, elem['destinationBase'] as int);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -331,7 +331,7 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, startBase: ${elem['startBase']}, destinationBase: ${elem['destinationBase']}', () {
         try {
-          convertBase(elem['input'] as String?, elem['startBase'] as int, elem['destinationBase'] as int);
+          convertBase(elem['input'] as String, elem['startBase'] as int, elem['destinationBase'] as int);
           expect(false, true);
         } catch(e) {
           expect(true, true);

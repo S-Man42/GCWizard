@@ -1792,11 +1792,11 @@ Map<String, String> buildConvertingMap(KeyboardType type, ConvertDirection direc
   }
 }
 
-String encodeKeyboard(String? input, KeyboardType keyboardFrom, KeyboardType keyboardTo) {
+String encodeKeyboard(String input, KeyboardType keyboardFrom, KeyboardType keyboardTo) {
   Map<String, String> mapSourceToNormal = <String, String>{};
   Map<String, String> mapNormalToTarget = <String, String>{};
 
-  if (input == null || input.isEmpty) return '';
+  if (input.isEmpty) return '';
 
   mapSourceToNormal = buildConvertingMap(keyboardFrom, ConvertDirection.toNormal);
   mapNormalToTarget = buildConvertingMap(keyboardTo, ConvertDirection.fromNormal);

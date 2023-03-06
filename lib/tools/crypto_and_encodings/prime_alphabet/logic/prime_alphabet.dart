@@ -3,14 +3,15 @@ import 'package:gc_wizard/tools/science_and_technology/primes/_common/logic/prim
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
-String decryptPrimeAlphabet(List<int?>? input, {int firstRecognizedPrime = 2}) {
-  if (input == null || input.isEmpty) return '';
+String decryptPrimeAlphabet(List<int?> input, {int firstRecognizedPrime = 2}) {
+  if (input.isEmpty) return '';
 
   int? _firstRecognizedPrime = firstRecognizedPrime;
   if (!isPrime(BigInt.from(_firstRecognizedPrime))) {
     _firstRecognizedPrime = getNextPrime(_firstRecognizedPrime);
   }
 
+  if (_firstRecognizedPrime == null) return '';
   var firstIndex = getPrimeIndex(_firstRecognizedPrime);
 
   return input.map((number) {
@@ -22,9 +23,7 @@ String decryptPrimeAlphabet(List<int?>? input, {int firstRecognizedPrime = 2}) {
   }).join();
 }
 
-List<int?> encryptPrimeAlphabet(String? input, {int firstRecognizedPrime = 2, int lastRecognizedPrime = 101}) {
-  if (input == null) return [];
-
+List<int?> encryptPrimeAlphabet(String input, {int firstRecognizedPrime = 2, int lastRecognizedPrime = 101}) {
   input = input.toUpperCase().replaceAll(RegExp(r'[^A-Z]'), '');
   if (input.isEmpty) return [];
 

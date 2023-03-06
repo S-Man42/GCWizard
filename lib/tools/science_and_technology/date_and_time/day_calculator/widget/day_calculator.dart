@@ -3,7 +3,6 @@ import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_datetime_picker.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
-import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/day_calculator/logic/day_calculator.dart';
 
@@ -79,9 +78,6 @@ class DayCalculatorState extends State<DayCalculator> {
   Widget _buildOutput() {
     var outputData = calculateDayDifferences(_currentStartDate, _currentEndDate,
         countStart: _currentCountStart, countEnd: _currentCountEnd);
-    if (outputData == null) {
-      return const GCWDefaultOutput();
-    }
 
     var rows = [
       [i18n(context, 'dates_daycalculator_days'), outputData.days],

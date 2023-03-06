@@ -6,7 +6,6 @@ import 'package:tuple/tuple.dart';
 void main() {
   group("Vanity.decodeVanityMultitap:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'model': phoneModelByName(NAME_PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'input' : null, 'expectedOutput' : Tuple2<PhoneCaseMode?, String>(PhoneCaseMode.CAMEL_CASE, '')},
       {'model': phoneModelByName(NAME_PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'input' : '', 'expectedOutput' : Tuple2<PhoneCaseMode?, String>(PhoneCaseMode.CAMEL_CASE, '')},
 
       {'model': PHONEMODEL_SIMPLE_SPACE_0, 'language': PhoneInputLanguage.UNSPECIFIED, 'input' : '222 9999999 00 0 11 111 8888', 'expectedOutput' : Tuple2<PhoneCaseMode?, String>(PhoneCaseMode.UPPER_CASE, 'CX0 111118')},
@@ -139,7 +138,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, model: ${elem['model']}, language: ${elem['language']}', () {
-        var _actual = decodeVanityMultitap(elem['input'] as String?, elem['model'] as PhoneModel, elem['language'] as PhoneInputLanguage);
+        var _actual = decodeVanityMultitap(elem['input'] as String, elem['model'] as PhoneModel, elem['language'] as PhoneInputLanguage);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -147,7 +146,6 @@ void main() {
 
   group("Vanity.encodeVanityMultitap:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'model': phoneModelByName(NAME_PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'input' : null, 'expectedOutput' : const Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.CAMEL_CASE, '')},
       {'model': phoneModelByName(NAME_PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'input' : '', 'expectedOutput' : const Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.CAMEL_CASE, '')},
 
       {'model': PHONEMODEL_SIMPLE_SPACE_0, 'language': PhoneInputLanguage.UNSPECIFIED, 'input' : ' ABC. DEF0123 ', 'expectedOutput' : const Tuple2<PhoneCaseMode?, String>( PhoneCaseMode.UPPER_CASE, '0 2 22 222 0 3 33 333 00 1 2222 3333 0')},
@@ -184,7 +182,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, model: ${elem['model']}, language: ${elem['language']}', () {
-        var _actual = encodeVanityMultitap(elem['input'] as String?, elem['model'] as PhoneModel, elem['language'] as PhoneInputLanguage);
+        var _actual = encodeVanityMultitap(elem['input'] as String, elem['model'] as PhoneModel, elem['language'] as PhoneInputLanguage);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -222,7 +220,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, model: ${elem['model']}, language: ${elem['language']}', () {
-        var _actual = decodeVanityMultitap(elem['input'] as String?, elem['model'] as PhoneModel, elem['language'] as PhoneInputLanguage);
+        var _actual = decodeVanityMultitap(elem['input'] as String, elem['model'] as PhoneModel, elem['language'] as PhoneInputLanguage);
         expect(_actual!.item2, elem['expectedOutput']);
       });
     }

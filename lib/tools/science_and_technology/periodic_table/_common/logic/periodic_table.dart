@@ -574,8 +574,8 @@ String atomicNumbersToText(List<int> atomicNumbers) {
   }).join();
 }
 
-List<int?> textToAtomicNumbers(String? input) {
-  if (input == null || input.isEmpty) return <int>[];
+List<int?> textToAtomicNumbers(String input) {
+  if (input.isEmpty) return <int>[];
   input = input.replaceAll(RegExp(r'[^A-Za-z]'), '');
   if (input.isEmpty) return <int>[];
 
