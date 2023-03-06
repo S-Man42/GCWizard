@@ -179,7 +179,7 @@ class BundeswehrTalkingBoardObfuscationState extends State<BundeswehrTalkingBoar
     if (_currentMode == GCWSwitchPosition.right) {
       output = decodeBundeswehr(_currentDecode, _tableNumeralCode!);
     } else {
-      output = encodeBundeswehr(_currentEncode, _tableNumeralCode);
+      output = encodeBundeswehr(_currentEncode, _tableNumeralCode!);
     }
     return GCWDefaultOutput(
         child: output.ResponseCode == BUNDESWEHR_TALKINGBOARD_CODE_RESPONSE_OK

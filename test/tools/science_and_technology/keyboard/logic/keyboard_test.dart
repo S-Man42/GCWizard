@@ -30,7 +30,7 @@ void main() {
       {'input' : inputString, 'from' : KeyboardType.QWERTZ_T1, 'to' : KeyboardType.COLEMAK,       'expectedOutput' : 'abcsftdhuneimky;qprglvwxzj\'o[ABCSFTDHUNEIMKY:QPRGLVWXZJ"O{1234567890'},
       {'input' : inputString, 'from' : KeyboardType.QWERTZ_T1, 'to' : KeyboardType.NEO,           'expectedOutput' : 'uzäaleosgnrtmbfqxciwhpvöükydßUZÄALEOSGNRTMBFQXCIWHPVÖÜKYDẞ1234567890'},
       {'input' : inputString, 'from' : KeyboardType.QWERTZ_T1, 'to' : KeyboardType.FRA_AZERTY,    'expectedOutput' : 'qbcdefghijkl.noparstuvzxwy/m-QBCDEFGHIJKL?NOPARSTUVZXWY\\M_àéèê()ߵߴ«»'},
-      {'input' : inputString, 'from' : KeyboardType.QWERTZ_T1, 'to' : KeyboardType.FRA_BEPO,      'expectedOutput' : 'a.yipe,cdtsr\'kljbouèvxéàw^mnzA:YIPE;CDTSR?KLJBOUÈVXÉÀW!MNZ"«»()@+-/*'},
+      {'input' : inputString, 'from' : KeyboardType.QWERTZ_T1, 'to' : KeyboardType.FRA_BEPO,      'expectedOutput' : 'akxipe,cdtsrq\'ljbouèv.éyà^mnzAKXIPE;CDTSRQ?LJBOUÈV:ÉYÀ!MNZ"«»()@+-/*'},
       {'input' : inputString, 'from' : KeyboardType.QWERTZ_T1, 'to' : KeyboardType.BONE,          'expectedOutput' : 'cöüiueoblnrszymwjatxhädvfpqgßCÖÜIUEOBLNRSZYMWJATXHÄDVFPQGẞ1234567890'},
     ];
 
@@ -55,7 +55,7 @@ void main() {
       {'input' : inputString, 'from' : KeyboardType.QWERTY_US_INT, 'to' : KeyboardType.NEO,           'expectedOutput' : 'uzäaleosgnrtmbfqxciwhpvöküUZÄALEOSGNRTMBFQXCIWHPVÖKÜ1234567890'},
       {'input' : inputString, 'from' : KeyboardType.QWERTY_US_INT, 'to' : KeyboardType.RISTOME,       'expectedOutput' : 'zkgarniudehsüäwjqolctmpvbxZKGARNIUDEHSÜÄWJQOLCTMPVBX1234567890'},
       {'input' : inputString, 'from' : KeyboardType.QWERTY_US_INT, 'to' : KeyboardType.FRA_AZERTY,    'expectedOutput' : 'qbcdefghijkl.noparstuvzxywQBCDEFGHIJKL?NOPARSTUVZXYWàéèê()ߵߴ«»'},
-      {'input' : inputString, 'from' : KeyboardType.QWERTY_US_INT, 'to' : KeyboardType.FRA_BEPO,      'expectedOutput' : 'a.yipe,cdtsr\'kljbouèvxéà^wA:YIPE;CDTSR?KLJBOUÈVXÉÀ!W"«»()@+-/*'},
+      {'input' : inputString, 'from' : KeyboardType.QWERTY_US_INT, 'to' : KeyboardType.FRA_BEPO,      'expectedOutput' : 'akxipe,cdtsrq\'ljbouèv.éy^àAKXIPE;CDTSRQ?LJBOUÈV:ÉY!À"«»()@+-/*'},
       {'input' : inputString, 'from' : KeyboardType.QWERTY_US_INT, 'to' : KeyboardType.BONE,          'expectedOutput' : 'cöüiueoblnrszymwjatxhädvpfCÖÜIUEOBLNRSZYMWJATXHÄDVPF1234567890'},
     ];
 
@@ -80,7 +80,7 @@ void main() {
       {'input' : inputString, 'from' : KeyboardType.Dvorak, 'to' : KeyboardType.NEO,           'expectedOutput' : 'ubgsakhnoäpqmticöfdre.,zwjUBGSAKHNOÄPQMTICÖFDRE·-ZWJ234567890'},
       {'input' : inputString, 'from' : KeyboardType.Dvorak, 'to' : KeyboardType.RISTOME,       'expectedOutput' : 'zäduabteigmjüslovwfhn,ßkc.ZÄDUABTEIGMJÜSLOVWFHN;?KC:234567890-'},
       {'input' : inputString, 'from' : KeyboardType.Dvorak, 'to' : KeyboardType.FRA_AZERTY,    'expectedOutput' : 'qnihdyujgcvp.lsrxomkf:,bt;QNIHDYUJGCVP?LSRXOMKF…!BT=éèê()ߵߴ«»\''},
-      {'input' : inputString, 'from' : KeyboardType.Dvorak, 'to' : KeyboardType.FRA_BEPO,      'expectedOutput' : 'akdci^vt,yxj\'ruoàlnsehg.èfAKDCI!VT;YXJ?RUOÀLNSEHG:ÈF«»()@+-/*='},
+      {'input' : inputString, 'from' : KeyboardType.Dvorak, 'to' : KeyboardType.FRA_BEPO,      'expectedOutput' : 'a\'dci^vt,x.jqruoylnsehgkèfA?DCI!VT;X:JQRUOYLNSEHGKÈF«»()@+-/*='},
       {'input' : inputString, 'from' : KeyboardType.Dvorak, 'to' : KeyboardType.BONE,          'expectedOutput' : 'cylbiphnoüäwzstavmgre.,öxkCYLBIPHNOÜÄWZSTAVMGRE·-ÖXK234567890'},
     ];
 
@@ -105,7 +105,7 @@ void main() {
       {'input' : inputString, 'from' : KeyboardType.Dvorak_II_DEU, 'to' : KeyboardType.NEO,           'expectedOutput' : 'ubgnakhseäpymticördfo.,zwqüxUBGNAKHSEÄPYMTICÖRDFO·-ZWQÜX1234567890'},
       {'input' : inputString, 'from' : KeyboardType.Dvorak_II_DEU, 'to' : KeyboardType.RISTOME,       'expectedOutput' : 'zädeabtungmyüslovhfwi,ßkcj<xqZÄDEABTUNGMYÜSLOVHFWI;?KCJ>XQ1234567890'},
       {'input' : inputString, 'from' : KeyboardType.Dvorak_II_DEU, 'to' : KeyboardType.FRA_AZERTY,    'expectedOutput' : 'qnijdyuhfcv/.lsrxkmog:,btp<waQNIJDYUHFCV\\?LSRXKMOG…!BTP>WAàéèê()ߵߴ«»'},
-      {'input' : inputString, 'from' : KeyboardType.Dvorak_II_DEU, 'to' : KeyboardType.FRA_BEPO,      'expectedOutput' : 'akdti^vceyxm\'ruoàsnl,hg.èjêwbAKDTI!VCEYXM?RUOÀSNL;HG:ÈJÊWB"«»()@+-/*'},
+      {'input' : inputString, 'from' : KeyboardType.Dvorak_II_DEU, 'to' : KeyboardType.FRA_BEPO,      'expectedOutput' : 'a\'dti^vcex.mqruoysnl,hgkèjêàbA?DTI!VCEX:MQRUOYSNL;HGKÈJÊÀB"«»()@+-/*'},
       {'input' : inputString, 'from' : KeyboardType.Dvorak_II_DEU, 'to' : KeyboardType.BONE,          'expectedOutput' : 'cylniphbeüäqzstavrgmo.,öxwfjCYLNIPHBEÜÄQZSTAVRGMO·-ÖXWFJ1234567890'},
     ];
 
@@ -130,7 +130,7 @@ void main() {
       {'input' : inputString, 'from' : KeyboardType.Dvorak_I_DEU1, 'to' : KeyboardType.NEO,           'expectedOutput' : 'uzgsakhnoöäqbticßfdre,mpw.xüUZGSAKHNOÖÄQBTICẞFDRE-MPW·XÜ1234567890'},
       {'input' : inputString, 'from' : KeyboardType.Dvorak_I_DEU1, 'to' : KeyboardType.RISTOME,       'expectedOutput' : 'zkduabteivgjäsloöwfhnßümc,q<xZKDUABTEIVGJÄSLOÖWFHN?ÜMC;Q>X1234567890'},
       {'input' : inputString, 'from' : KeyboardType.Dvorak_I_DEU1, 'to' : KeyboardType.FRA_AZERTY,    'expectedOutput' : 'qbihdyujgxcpnlsr-omkf,.vt:a<wQBIHDYUJGXCPNLSR_OMKF!?VT…A>Wàéèê()ߵߴ«»'},
-      {'input' : inputString, 'from' : KeyboardType.Dvorak_I_DEU1, 'to' : KeyboardType.FRA_BEPO,      'expectedOutput' : 'a.dci^vt,àyjkruozlnseg\'xèhbêwA:DCI!VT;ÀYJKRUOZLNSEG?XÈHBÊW"«»()@+-/*'},
+      {'input' : inputString, 'from' : KeyboardType.Dvorak_I_DEU1, 'to' : KeyboardType.FRA_BEPO,      'expectedOutput' : 'akdci^vt,yxj\'ruozlnsegq.èhbêàAKDCI!VT;YXJ?RUOZLNSEGQ:ÈHBÊÀ"«»()@+-/*'},
       {'input' : inputString, 'from' : KeyboardType.Dvorak_I_DEU1, 'to' : KeyboardType.BONE,          'expectedOutput' : 'cölbiphnovüwystaßmgre,zäx.jfCÖLBIPHNOVÜWYSTAẞMGRE-ZÄX·JF1234567890'},
     ];
 
@@ -155,7 +155,7 @@ void main() {
       {'input' : inputString, 'from' : KeyboardType.Dvorak_I_DEU2, 'to' : KeyboardType.NEO,           'expectedOutput' : 'uzgsakhnoöäqbticfdre,mpw.lxvUZGSAKHNOÖÄQBTICẞFDRE-MPW·LXV1234567890'},
       {'input' : inputString, 'from' : KeyboardType.Dvorak_I_DEU2, 'to' : KeyboardType.RISTOME,       'expectedOutput' : 'zkduabteivgjäslo#wfhnßümc,rqpZKDUABTEIVGJÄSLOÖWFHN?ÜMC;RQP1234567890'},
       {'input' : inputString, 'from' : KeyboardType.Dvorak_I_DEU2, 'to' : KeyboardType.FRA_AZERTY,    'expectedOutput' : 'qbihdyujgxcpnlsr*omkf,.vt:eazQBIHDYUJGXCPNLSR_OMKF!?VT…EAZàéèê()ߵߴ«»'},
-      {'input' : inputString, 'from' : KeyboardType.Dvorak_I_DEU2, 'to' : KeyboardType.FRA_BEPO,      'expectedOutput' : 'a.dci^vt,àyjkruoçlnseg\'xèhpbéA:DCI!VT;ÀYJKRUOZLNSEG?XÈHPBÉ"«»()@+-/*'},
+      {'input' : inputString, 'from' : KeyboardType.Dvorak_I_DEU2, 'to' : KeyboardType.FRA_BEPO,      'expectedOutput' : 'akdci^vt,yxj\'ruoçlnsegq.èhpbéAKDCI!VT;YXJ?RUOZLNSEGQ:ÈHPBÉ"«»()@+-/*'},
       {'input' : inputString, 'from' : KeyboardType.Dvorak_I_DEU2, 'to' : KeyboardType.BONE,          'expectedOutput' : 'cölbiphnovüwystamgre,zäx.ujdCÖLBIPHNOVÜWYSTAẞMGRE-ZÄX·UJD1234567890'},
     ];
 
@@ -180,7 +180,7 @@ void main() {
       {'input' : inputString, 'from' : KeyboardType.Dvorak_I_DEU3, 'to' : KeyboardType.NEO,           'expectedOutput' : 'uzgsakhnoöäqbticfdre,mpw.xvlUZGSAKHNOÖÄQBTICẞFDRE-MPW·XVL1234567890'},
       {'input' : inputString, 'from' : KeyboardType.Dvorak_I_DEU3, 'to' : KeyboardType.RISTOME,       'expectedOutput' : 'zkduabteivgjäslo#wfhnßümc,qprZKDUABTEIVGJÄSLOÖWFHN?ÜMC;QPR1234567890'},
       {'input' : inputString, 'from' : KeyboardType.Dvorak_I_DEU3, 'to' : KeyboardType.FRA_AZERTY,    'expectedOutput' : 'qbihdyujgxcpnlsr*omkf,.vt:azeQBIHDYUJGXCPNLSR_OMKF!?VT…AZEàéèê()ߵߴ«»'},
-      {'input' : inputString, 'from' : KeyboardType.Dvorak_I_DEU3, 'to' : KeyboardType.FRA_BEPO,      'expectedOutput' : 'a.dci^vt,àyjkruoçlnseg\'xèhbépA:DCI!VT;ÀYJKRUOZLNSEG?XÈHBÉP"«»()@+-/*'},
+      {'input' : inputString, 'from' : KeyboardType.Dvorak_I_DEU3, 'to' : KeyboardType.FRA_BEPO,      'expectedOutput' : 'akdci^vt,yxj\'ruoçlnsegq.èhbépAKDCI!VT;YXJ?RUOZLNSEGQ:ÈHBÉP"«»()@+-/*'},
       {'input' : inputString, 'from' : KeyboardType.Dvorak_I_DEU3, 'to' : KeyboardType.BONE,          'expectedOutput' : 'cölbiphnovüwystamgre,zäx.jduCÖLBIPHNOVÜWYSTAẞMGRE-ZÄX·JDU1234567890'},
     ];
 
@@ -205,7 +205,7 @@ void main() {
       {'input' : inputString, 'from' : KeyboardType.COLEMAK, 'to' : KeyboardType.NEO,           'expectedOutput' : 'uzäorlwstkbhmndcxiaegpvöfüUZÄORLWSTKBHMNDCXIAEGPVÖFÜ1234567890'},
       {'input' : inputString, 'from' : KeyboardType.COLEMAK, 'to' : KeyboardType.RISTOME,       'expectedOutput' : 'zkgihrcusbätüefoqlandmpvwxZKGIHRCUSBÄTÜEFOQLANDMPVWX1234567890'},
       {'input' : inputString, 'from' : KeyboardType.COLEMAK, 'to' : KeyboardType.FRA_AZERTY,    'expectedOutput' : 'qbcgkethlynu.jmrasdfivzxowQBCGKETHLYNU?JMRASDFIVZXOWàéèê()ߵߴ«»'},
-      {'input' : inputString, 'from' : KeyboardType.COLEMAK, 'to' : KeyboardType.FRA_BEPO,      'expectedOutput' : 'a.y,spècr^kv\'tnobuiedxéàlwA:Y;SPÈCR!KV?TNOBUIEDXÉÀLW"«»()@+-/*'},
+      {'input' : inputString, 'from' : KeyboardType.COLEMAK, 'to' : KeyboardType.FRA_BEPO,      'expectedOutput' : 'akx,spècr^\'vqtnobuied.éylàAKX;SPÈCR!?VQTNOBUIED:ÉYLÀ"«»()@+-/*'},
       {'input' : inputString, 'from' : KeyboardType.COLEMAK, 'to' : KeyboardType.BONE,          'expectedOutput' : 'cöüoruxbspyhzngajtielädvmfCÖÜORUXBSPYHZNGAJTIELÄDVMF1234567890'},
     ];
 
@@ -230,7 +230,7 @@ void main() {
       {'input' : inputString, 'from' : KeyboardType.NEO, 'to' : KeyboardType.NEO,           'expectedOutput' : 'abcdefghijklmnopqrstuvwxyzäöüABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜ1234567890'},
       {'input' : inputString, 'from' : KeyboardType.NEO, 'to' : KeyboardType.RISTOME,       'expectedOutput' : 'aäofnwdtl.brüeimjhuszpcqykgvxAÄOFNWDTL:BRÜEIMJHUSZPCQYKGVX1234567890'},
       {'input' : inputString, 'from' : KeyboardType.NEO, 'to' : KeyboardType.FRA_AZERTY,    'expectedOutput' : 'dnrmfoius;ye.jgvpkhlqzta/bcxwDNRMFOIUS=YE?JGVPKHLQZTA\\BCXWàéèê()ߵߴ«»'},
-      {'input' : inputString, 'from' : KeyboardType.NEO, 'to' : KeyboardType.FRA_BEPO,      'expectedOutput' : 'ikoneldvuf^p\'t,xjscraéèbm.yàwIKONELDVUF!P?T;XJSCRAÉÈBM:YÀW"«»()@+-/*'},
+      {'input' : inputString, 'from' : KeyboardType.NEO, 'to' : KeyboardType.FRA_BEPO,      'expectedOutput' : 'i\'oneldvuf^pqt,.jscraéèbmkxyàI?ONELDVUF!PQT;:JSCRAÉÈBMKXYÀ"«»()@+-/*'},
       {'input' : inputString, 'from' : KeyboardType.NEO, 'to' : KeyboardType.BONE,          'expectedOutput' : 'iyagemlhtkpuznoäwrbscdxjqöüvfIYAGEMLHTKPUZNOÄWRBSCDXJQÖÜVF1234567890'},
     ];
 
@@ -255,7 +255,7 @@ void main() {
       {'input' : inputString, 'from' : KeyboardType.RISTOME, 'to' : KeyboardType.NEO,           'expectedOutput' : 'akwgndäroqzipecvxlthsöfüyubßmAKWGNDÄROQZIPECVXLTHSÖFÜYUBẞM1234567890'},
       {'input' : inputString, 'from' : KeyboardType.RISTOME, 'to' : KeyboardType.RISTOME,       'expectedOutput' : 'abcdefghijklmnopqrstuvwxyzäöüABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜ1234567890'},
       {'input' : inputString, 'from' : KeyboardType.RISTOME, 'to' : KeyboardType.FRA_AZERTY,    'expectedOutput' : 'dytijmckgpbsvfrzaeluhxow/qn-.DYTIJMCKGPBSVFRZAELUHXOW\\QN_?àéèê()ߵߴ«»'},
-      {'input' : inputString, 'from' : KeyboardType.RISTOME, 'to' : KeyboardType.FRA_BEPO,      'expectedOutput' : 'i^èdtnys,j.uxeoébprvcàlwmakz\'I!ÈDTNYS;J:UXEOÉBPRVCÀLWMAKZ?"«»()@+-/*'},
+      {'input' : inputString, 'from' : KeyboardType.RISTOME, 'to' : KeyboardType.FRA_BEPO,      'expectedOutput' : 'i^èdtnxs,jku.eoébprvcylàma\'zqI!ÈDTNXS;JKU:EOÉBPRVCYLÀMA?ZQ"«»()@+-/*'},
       {'input' : inputString, 'from' : KeyboardType.RISTOME, 'to' : KeyboardType.BONE,          'expectedOutput' : 'ipxlngürowötäeadjushbvmfqcyßzIPXLNGÜROWÖTÄEADJUSHBVMFQCYẞZ1234567890'},
     ];
 
@@ -280,7 +280,7 @@ void main() {
       {'input' : inputString, 'from' : KeyboardType.FRA_AZERTY, 'to' : KeyboardType.NEO,           'expectedOutput' : 'xzäaleosgnrtdbfquciwhpüökvXZÄALEOSGNRTDBFQUCIWHPÜÖKV°§ℓ»«\$€„“”'},
       {'input' : inputString, 'from' : KeyboardType.FRA_AZERTY, 'to' : KeyboardType.RISTOME,       'expectedOutput' : 'qkgarniudehsfäwjzolctmxvbpQKGARNIUDEHSFÄWJZOLCTMXVBP!"§\$%&/()='},
       {'input' : inputString, 'from' : KeyboardType.FRA_AZERTY, 'to' : KeyboardType.FRA_AZERTY,    'expectedOutput' : 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'},
-      {'input' : inputString, 'from' : KeyboardType.FRA_AZERTY, 'to' : KeyboardType.FRA_BEPO,      'expectedOutput' : 'b.yipe,cdtsrnkljaouèvxwà^éB:YIPE;CDTSRNKLJAOUÈVXWÀ!É1234567890'},
+      {'input' : inputString, 'from' : KeyboardType.FRA_AZERTY, 'to' : KeyboardType.FRA_BEPO,      'expectedOutput' : 'bkxipe,cdtsrn\'ljaouèv.ày^éBKXIPE;CDTSRN?LJAOUÈV:ÀY!É1234567890'},
       {'input' : inputString, 'from' : KeyboardType.FRA_AZERTY, 'to' : KeyboardType.BONE,          'expectedOutput' : 'jöüiueoblnrsgymwcatxhäfvpdJÖÜIUEOBLNRSGYMWCATXHÄFVPD°§ℓ»«\$€„“”'},
     ];
 
@@ -294,19 +294,19 @@ void main() {
 
   group("Keyboard.FRA_BEPO:", () {
 	List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : inputString, 'from' : KeyboardType.FRA_BEPO, 'to' : KeyboardType.QWERTZ_T1,     'expectedOutput' : 'aqhif-,.dpnoäörelkjsuyvcüAQHIF_;:DPNOÄÖRELKJSUYVCÜ!"§\$%&/()='},
-      {'input' : inputString, 'from' : KeyboardType.FRA_BEPO, 'to' : KeyboardType.QWERTY_US_INT, 'expectedOutput' : 'aqhif/,.dpno\';relkjsuzvc[AQHIF?<>DPNO":RELKJSUZVC{!@#\$%^&*()'},
-      {'input' : inputString, 'from' : KeyboardType.FRA_BEPO, 'to' : KeyboardType.Dvorak,        'expectedOutput' : 'a\'dcuzwvelbr-sp.nthog;kj/A"DCUZWVELBR_SP>NTHOG:KJ?~!@#\$%^&*('},
-      {'input' : inputString, 'from' : KeyboardType.FRA_BEPO, 'to' : KeyboardType.Dvorak_II_DEU, 'expectedOutput' : 'aühci\'wvezbtlsp.nrdogökj?AÜHCI#WVEZBTLSP:NRDOGÖKJß!"§\$%&()='},
-      {'input' : inputString, 'from' : KeyboardType.FRA_BEPO, 'to' : KeyboardType.Dvorak_I_DEU1, 'expectedOutput' : 'aädcuvzelmrßsp.nthogüxkqAÄDCUVZELMR?SP:NTHOGÜXKQ!"§\$%&()='},
-      {'input' : inputString, 'from' : KeyboardType.FRA_BEPO, 'to' : KeyboardType.Dvorak_I_DEU2, 'expectedOutput' : 'aödcuvzelmrßspänthog,xkAÖDCUVZELMR?SPÄNTHOG;XKQ!"§\$%&()='},
-      {'input' : inputString, 'from' : KeyboardType.FRA_BEPO, 'to' : KeyboardType.Dvorak_I_DEU3, 'expectedOutput' : 'aädcuvzelmrßspünthog,xkAÄDCUVZELMR?SPÜNTHOG;XKQ!"§\$%&()='},
-      {'input' : inputString, 'from' : KeyboardType.FRA_BEPO, 'to' : KeyboardType.COLEMAK,       'expectedOutput' : 'aqhut/,.s;ky\'opfienrlzvc[AQHUT?<>S:KY"OPFIENRLZVC{!@#\$%^&*()'},
-      {'input' : inputString, 'from' : KeyboardType.FRA_BEPO, 'to' : KeyboardType.NEO,           'expectedOutput' : 'uxsgej,.aqbfydcltrnihüpäßUXSGEJ-·AQBFYDCLTRNIHÜPÄẞ°§ℓ»«\$€„“”'},
-      {'input' : inputString, 'from' : KeyboardType.FRA_BEPO, 'to' : KeyboardType.RISTOME,       'expectedOutput' : 'zqudn.ß,ajäwyforsheltxmgöZQUDN:?;AJÄWYFORSHELTXMGÖ!"§\$%&/()='},
-      {'input' : inputString, 'from' : KeyboardType.FRA_BEPO, 'to' : KeyboardType.FRA_AZERTY,    'expectedOutput' : 'qahif;,:dpno/mrelkjsuwvc-QAHIF=!…DPNO\\MRELKJSUWVC_1234567890'},
-      {'input' : inputString, 'from' : KeyboardType.FRA_BEPO, 'to' : KeyboardType.FRA_BEPO,      'expectedOutput' : 'abcdefghijklmnoprstuvwxyzABCDEFGHIJKLMNOPRSTUVWXYZ1234567890'},
-      {'input' : inputString, 'from' : KeyboardType.FRA_BEPO, 'to' : KeyboardType.BONE,          'expectedOutput' : 'cjblek,.iwymqgausrnthfäüßCJBLEK-·IWYMQGAUSRNTHFÄÜẞ°§ℓ»«\$€„“”'},
+      {'input' : inputString, 'from' : KeyboardType.FRA_BEPO, 'to' : KeyboardType.QWERTZ_T1,     'expectedOutput' : 'aqhif-,.dpboäöremlkjsu+cxüAQHIF_;:DPBOÄÖREMLKJSU*CXÜ!"§\$%&/()='},
+      {'input' : inputString, 'from' : KeyboardType.FRA_BEPO, 'to' : KeyboardType.QWERTY_US_INT, 'expectedOutput' : 'aqhif/,.dpbo\';remlkjsu]cx[AQHIF?<>DPBO":REMLKJSU}CX{!@#\$%^&*()'},
+      {'input' : inputString, 'from' : KeyboardType.FRA_BEPO, 'to' : KeyboardType.Dvorak,        'expectedOutput' : 'a\'dcuzwvelxr-sp.mnthog=jq/A"DCUZWVELXR_SP>MNTHOG+JQ?~!@#\$%^&*('},
+      {'input' : inputString, 'from' : KeyboardType.FRA_BEPO, 'to' : KeyboardType.Dvorak_II_DEU, 'expectedOutput' : 'aühci\'wvezxtlsp.mnrdog/jq?AÜHCI#WVEZXTLSP:MNRDOG\\JQß!"§\$%&()='},
+      {'input' : inputString, 'from' : KeyboardType.FRA_BEPO, 'to' : KeyboardType.Dvorak_I_DEU1, 'expectedOutput' : 'aädcuvzelbrßsp.wnthog\\kjqAÄDCUVZELBR?SP:WNTHOG/KJQ!"§\$%&()='},
+      {'input' : inputString, 'from' : KeyboardType.FRA_BEPO, 'to' : KeyboardType.Dvorak_I_DEU2, 'expectedOutput' : 'aödcuvzelbrßspäwnthog\\kjAÖDCUVZELBR?SPÄWNTHOG/KJQ!"§\$%&()='},
+      {'input' : inputString, 'from' : KeyboardType.FRA_BEPO, 'to' : KeyboardType.Dvorak_I_DEU3, 'expectedOutput' : 'aädcuvzelbrßspüwnthog\\kjAÄDCUVZELBR?SPÜWNTHOG/KJQ!"§\$%&()='},
+      {'input' : inputString, 'from' : KeyboardType.FRA_BEPO, 'to' : KeyboardType.COLEMAK,       'expectedOutput' : 'aqhut/,.s;by\'opfmienrl]cx[AQHUT?<>S:BY"OPFMIENRL}CX{!@#\$%^&*()'},
+      {'input' : inputString, 'from' : KeyboardType.FRA_BEPO, 'to' : KeyboardType.NEO,           'expectedOutput' : 'uxsgej,.aqzfydclmtrnih´äößUXSGEJ-·AQZFYDCLMTRNIH˜ÄÖẞ°§ℓ»«\$€„“”'},
+      {'input' : inputString, 'from' : KeyboardType.FRA_BEPO, 'to' : KeyboardType.RISTOME,       'expectedOutput' : 'zqudn.ß,ajkwyforüshelt+gvöZQUDN:?;AJKWYFORÜSHELT*GVÖ!"§\$%&/()='},
+      {'input' : inputString, 'from' : KeyboardType.FRA_BEPO, 'to' : KeyboardType.FRA_AZERTY,    'expectedOutput' : 'qahif;,:dpbo/mre.lkjsu+cx-QAHIF=!…DPBO\\MRE?LKJSU±CX_1234567890'},
+      {'input' : inputString, 'from' : KeyboardType.FRA_BEPO, 'to' : KeyboardType.FRA_BEPO,      'expectedOutput' : 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'},
+      {'input' : inputString, 'from' : KeyboardType.FRA_BEPO, 'to' : KeyboardType.BONE,          'expectedOutput' : 'cjblek,.iwömqgauzsrnth´üvßCJBLEK-·IWÖMQGAUZSRNTH˜ÜVẞ°§ℓ»«\$€„“”'},
     ];
 
     for (var elem in _inputsToExpected) {

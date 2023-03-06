@@ -25,7 +25,7 @@ class PietImageReader {
   }
 
   int _toRgb(Image.Pixel abgr24) {
-    return (abgr24.r.toInt() << 16) | (abgr24.g.toInt() << 8) | (abgr24.b.toInt() << 8); // -> RGB
+    return (abgr24.r.toInt() << 16) | (abgr24.g.toInt() << 8) | (abgr24.b.toInt()); // -> RGB
   }
 
   int _estimateCodelSize(Image.Image image) {

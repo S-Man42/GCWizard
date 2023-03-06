@@ -35,7 +35,7 @@ String encodeDTMF(String plain) {
 }
 
 String decodeDTMF(String chiffre) {
-  var _chiffreList = chiffre.split(RegExp(r'\d'));
+  var _chiffreList = chiffre.split(RegExp(r'\D'));
 
   var _chiffreListClean = _chiffreList
       .map((chiffre) => int.tryParse(chiffre))

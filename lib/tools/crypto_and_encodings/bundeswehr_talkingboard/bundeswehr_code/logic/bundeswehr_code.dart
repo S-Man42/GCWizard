@@ -13,13 +13,13 @@ class BundeswehrTalkingBoardCodingOutput {
 }
 
 BundeswehrTalkingBoardCodingOutput encodeBundeswehr(
-    String? plainText, BundeswehrTalkingBoardAuthentificationTable? tableEncoding) {
-  if (tableEncoding == null || tableEncoding.Encoding!.isEmpty) {
+    String plainText, BundeswehrTalkingBoardAuthentificationTable tableEncoding) {
+  if (tableEncoding.Encoding!.isEmpty) {
     return BundeswehrTalkingBoardCodingOutput(
         ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CUSTOM_NUMERAL_TABLE, Details: '');
   }
 
-  if (plainText == null || plainText.isEmpty) {
+  if (plainText.isEmpty) {
     return BundeswehrTalkingBoardCodingOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_CODE_RESPONSE_OK, Details: '');
   }
 
@@ -38,15 +38,15 @@ BundeswehrTalkingBoardCodingOutput encodeBundeswehr(
 }
 
 BundeswehrTalkingBoardCodingOutput decodeBundeswehr(
-    String? cypherText, BundeswehrTalkingBoardAuthentificationTable? tableNumeralCode) {
-  if (tableNumeralCode == null || tableNumeralCode.Content.isEmpty) {
+    String cypherText, BundeswehrTalkingBoardAuthentificationTable tableNumeralCode) {
+  if (tableNumeralCode.Content.isEmpty) {
     return BundeswehrTalkingBoardCodingOutput(
         ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CUSTOM_NUMERAL_TABLE, Details: '');
   }
 
   String result = '';
 
-  if (cypherText == null || cypherText.isEmpty) {
+  if (cypherText.isEmpty) {
     return BundeswehrTalkingBoardCodingOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_CODE_RESPONSE_OK, Details: result);
   }
 

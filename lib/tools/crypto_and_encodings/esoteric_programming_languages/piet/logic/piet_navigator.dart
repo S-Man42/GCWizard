@@ -56,7 +56,7 @@ class _PietNavigator {
       } else if (direction == _Direction.North && codelChooser == _CodelChoice.Right) {
         exitPoint = block.northRight;
       } else {
-        return throw Exception('common_programming_error_invalid_opcode');
+        return throw const FormatException('common_programming_error_invalid_opcode');
       }
 
       if (moveStraight) {
@@ -77,7 +77,7 @@ class _PietNavigator {
               exitPoint = Point<int>(exitPoint.x, exitPoint.y - 1);
               break;
             default:
-              return throw Exception('common_programming_error_invalid_opcode');
+              return throw const FormatException('common_programming_error_invalid_opcode');
           }
         }
         // we've crossed the boundary, one step back to be on the edge
@@ -94,7 +94,7 @@ class _PietNavigator {
       } else if (direction == _Direction.North) {
         nextStep = Point<int>(exitPoint.x, exitPoint.y - 1);
       } else {
-        return throw Exception('common_programming_error_invalid_opcode');
+        return throw const FormatException('common_programming_error_invalid_opcode');
       }
 
       bool isOutOfBounds = nextStep.x < 0 || nextStep.y < 0 || nextStep.x >= _width || nextStep.y >= _height;

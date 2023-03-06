@@ -4,7 +4,6 @@ import 'package:gc_wizard/tools/science_and_technology/beaufort/logic/beaufort.d
 void main() {
   group("Beaufort.meterPerSecondToBeaufort:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'velocity' : null, 'expectedOutput' : null},
       {'velocity' : -1.0, 'expectedOutput' : null},
       {'velocity' : 60.1, 'expectedOutput' : 17},
 

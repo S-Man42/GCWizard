@@ -48,7 +48,6 @@ void main() {
 
   group("Decabit.decryptDecabit:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'numericMode' : false, 'expectedOutput' : ''},
       {'input' : '', 'numericMode' : false, 'expectedOutput' : ''},
       {'input' : '', 'replaceCharacters' : null, 'numericMode' : false, 'expectedOutput' : ''},
       {'input' : '', 'replaceCharacters' : <String, String>{}, 'numericMode' : false, 'expectedOutput' : ''},

@@ -37,8 +37,8 @@ Future<PietResult> interpretPiet(List<List<int>> data, String? input,
 
     return PietResult(
         output: pietSession._output, input_expected: _input_required, input_number_expected: _input_required_number);
-  } catch(err) {
-    if (err.toString() == _inputRequired) {
+  } on FormatException catch(err) {
+    if (err.message == _inputRequired) {
       return PietResult(
           output: pietSession._output,
           input_expected: _input_required,
@@ -114,7 +114,7 @@ class _PietSession {
 
     while (running) {
       if ((DateTime.now().difference(startTime)).inMilliseconds > _timeOut) {
-        throw Exception('common_programming_error_maxiterations');
+        throw const FormatException('common_programming_error_maxiterations');
       }
 
       _step();
@@ -123,11 +123,11 @@ class _PietSession {
 
   void output(String value) {
     _output += value;
-    if (_output.length > _maxOutputLength) throw Exception('common_programming_error_maxiterations');
+    if (_output.length > _maxOutputLength) throw const FormatException('common_programming_error_maxiterations');
   }
 
   int? readInt() {
-    if (_inputNeeded(true)) throw Exception(_inputRequired);
+    if (_inputNeeded(true)) throw const FormatException(_inputRequired);
 
     if (input == null || input!.isEmpty) return null;
     var match = RegExp(r'^[0-9]+').firstMatch(input!);
@@ -144,7 +144,7 @@ class _PietSession {
   }
 
   String? readChar() {
-    if (_inputNeeded(false)) throw Exception(_inputRequired);
+    if (_inputNeeded(false)) throw const FormatException(_inputRequired);
 
     if (input == null || input!.isEmpty) return null;
     var _input = input![0];

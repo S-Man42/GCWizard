@@ -47,32 +47,6 @@ const GC7DF7R_plainText = 'N5122850E746328';
 void main() {
   group("bundeswehr.check_auth:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'currentCallSign' : null,
-        'currentAuth' : null,
-        'currentLetterAuth' : null,
-        'tableNumeralCode' : null,
-        'tableAuthentificationCode' : null,
-        'expectedOutput' : BundeswehrTalkingBoardAuthentificationOutput(
-            ResponseCode: [
-              BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CALLSIGN,
-              BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_AUTHCODE,
-              BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_AUTHENTIFICATION_LETTER,
-              BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CUSTOM_NUMERAL_TABLE,
-              BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CUSTOM_AUTH_TABLE,
-            ])},
-
-      {'currentCallSign' : null,
-        'currentAuth' : null,
-        'currentLetterAuth' : null,
-        'tableNumeralCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: [], yAxis: [], Content: [], Encoding: {}),
-        'tableAuthentificationCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: [], yAxis: [], Content: [], Encoding: {}),
-        'expectedOutput' : BundeswehrTalkingBoardAuthentificationOutput(
-            ResponseCode: [BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CALLSIGN,
-              BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_AUTHCODE,
-              BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_AUTHENTIFICATION_LETTER,
-              BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CUSTOM_NUMERAL_TABLE,
-              BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CUSTOM_AUTH_TABLE,],
-            Tupel1: [], Tupel2: [], Tupel3: [], Number: '', Details: '')},
 
       {'currentCallSign' : '',
         'currentAuth' : '',
@@ -309,7 +283,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('cypherText: ${elem['cypherText']}, tableNumeralCode: ${elem['tableNumeralCode']}', () {
-        var _actual = decodeBundeswehr(elem['cypherText'] as String?, elem['tableNumeralCode'] as BundeswehrTalkingBoardAuthentificationTable?);
+        var _actual = decodeBundeswehr(elem['cypherText'] as String, elem['tableNumeralCode'] as BundeswehrTalkingBoardAuthentificationTable);
         expect(_actual.ResponseCode, (elem['expectedOutput'] as BundeswehrTalkingBoardCodingOutput).ResponseCode);
         if (_actual.ResponseCode == BUNDESWEHR_TALKINGBOARD_CODE_RESPONSE_OK) {
           expect(_actual.Details, (elem['expectedOutput'] as BundeswehrTalkingBoardCodingOutput).Details);
@@ -320,13 +294,6 @@ void main() {
 
   group("bundeswehr.encode:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      { 'cypherText' : null,
-        'tableNumeralCode' : null,
-        'expectedOutput' : BundeswehrTalkingBoardCodingOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CUSTOM_NUMERAL_TABLE, Details: '')},
-
-      { 'cypherText' : null,
-        'tableNumeralCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: [], yAxis: [], Content: [], Encoding: {}),
-        'expectedOutput' : BundeswehrTalkingBoardCodingOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CUSTOM_NUMERAL_TABLE, Details: '')},
 
       { 'cypherText' : '',
         'tableNumeralCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: [], yAxis: [], Content: [], Encoding: {}),
@@ -335,7 +302,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('cypherText: ${elem['cypherText']}, tableNumeralCode: ${elem['tableNumeralCode']}', () {
-        var _actual = encodeBundeswehr(elem['cypherText'] as String?, elem['tableNumeralCode']  as BundeswehrTalkingBoardAuthentificationTable);
+        var _actual = encodeBundeswehr(elem['cypherText'] as String, elem['tableNumeralCode']  as BundeswehrTalkingBoardAuthentificationTable);
         expect(_actual.ResponseCode, (elem['expectedOutput'] as BundeswehrTalkingBoardCodingOutput).ResponseCode);
         if (_actual.ResponseCode == BUNDESWEHR_TALKINGBOARD_CODE_RESPONSE_OK) {
           expect(_actual.Details, (elem['expectedOutput'] as BundeswehrTalkingBoardCodingOutput).Details);

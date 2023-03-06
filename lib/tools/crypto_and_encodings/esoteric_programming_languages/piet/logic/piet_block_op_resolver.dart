@@ -61,7 +61,7 @@ class _PietBlockOpResolver {
       } else if (comparePoint == const Point<int>(5, 2)) {
         return _PietOps.OutputChar;
       } else {
-        throw Exception('common_programming_error_invalid_opcode');
+        throw const FormatException('common_programming_error_invalid_opcode');
       }
     }
     return _PietOps.Noop;

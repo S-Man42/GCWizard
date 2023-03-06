@@ -9,7 +9,7 @@ import 'package:gc_wizard/utils/collection_utils.dart';
 // 3. adapt List<KeyboardData> allKeyboards
 // 4. adapt buildConvertingMap
 
-enum ConvertDirection { toNormal, fromNormal }
+enum _ConvertDirection { toNormal, fromNormal }
 
 enum KeyboardType {
   QWERTZ_T1,
@@ -27,7 +27,7 @@ enum KeyboardType {
   FRA_BEPO
 }
 
-final Map<String, String> QWERTZ_T1NumberToSymbol = {
+final Map<String, String> _QWERTZ_T1NumberToSymbol = {
   '1': '!',
   '2': '"',
   '3': '§',
@@ -41,7 +41,7 @@ final Map<String, String> QWERTZ_T1NumberToSymbol = {
   ' ': ' ',
   '.': '.'
 };
-final Map<String, String> DvorakDeuIINumberToSymbol = {
+final Map<String, String> _DvorakDeuIINumberToSymbol = {
   '1': '!',
   '2': '"',
   '3': '§',
@@ -55,7 +55,7 @@ final Map<String, String> DvorakDeuIINumberToSymbol = {
   ' ': ' ',
   '.': '.'
 };
-final Map<String, String> DvorakDeuI1NumberToSymbol = {
+final Map<String, String> _DvorakDeuI1NumberToSymbol = {
   '1': '!',
   '2': '"',
   '3': '§',
@@ -69,7 +69,7 @@ final Map<String, String> DvorakDeuI1NumberToSymbol = {
   ' ': ' ',
   '.': '.'
 };
-final Map<String, String> DvorakDeuI2NumberToSymbol = {
+final Map<String, String> _DvorakDeuI2NumberToSymbol = {
   '1': '!',
   '2': '"',
   '3': '§',
@@ -83,7 +83,7 @@ final Map<String, String> DvorakDeuI2NumberToSymbol = {
   ' ': ' ',
   '.': '.'
 };
-final Map<String, String> DvorakDeuI3NumberToSymbol = {
+final Map<String, String> _DvorakDeuI3NumberToSymbol = {
   '1': '!',
   '2': '"',
   '3': '§',
@@ -97,7 +97,7 @@ final Map<String, String> DvorakDeuI3NumberToSymbol = {
   ' ': ' ',
   '.': '.'
 };
-final Map<String, String> AZERTYNumberToSymbol = {
+final Map<String, String> _AZERTYNumberToSymbol = {
   '1': '&',
   '2': 'é',
   '3': '"',
@@ -111,7 +111,7 @@ final Map<String, String> AZERTYNumberToSymbol = {
   ' ': ' ',
   '.': '.'
 };
-final Map<String, String> BEPONumberToSymbol = {
+final Map<String, String> _BEPONumberToSymbol = {
   '1': '"',
   '2': '«',
   '3': '»',
@@ -125,7 +125,7 @@ final Map<String, String> BEPONumberToSymbol = {
   ' ': ' ',
   '.': '.'
 };
-final Map<String, String> RistomeNumberToSymbol = {
+final Map<String, String> _RistomeNumberToSymbol = {
   '1': '!',
   '2': '"',
   '3': '§',
@@ -139,7 +139,7 @@ final Map<String, String> RistomeNumberToSymbol = {
   ' ': ' ',
   '.': '.'
 };
-final Map<String, String> NeoNumberToSymbol = {
+final Map<String, String> _NeoNumberToSymbol = {
   '1': '°',
   '2': '§',
   '3': 'ℓ',
@@ -153,7 +153,7 @@ final Map<String, String> NeoNumberToSymbol = {
   ' ': ' ',
   '.': '.'
 };
-final Map<String, String> Neo3NumberToSymbol = {
+final Map<String, String> _Neo3NumberToSymbol = {
   '1': '¹',
   '2': '²',
   '3': '³',
@@ -167,7 +167,7 @@ final Map<String, String> Neo3NumberToSymbol = {
   ' ': ' ',
   '.': '.'
 };
-final Map<String, String> Neo5NumberToSymbol = {
+final Map<String, String> _Neo5NumberToSymbol = {
   '1': '¹',
   '2': '²',
   '3': '³',
@@ -181,7 +181,7 @@ final Map<String, String> Neo5NumberToSymbol = {
   ' ': ' ',
   '.': '.'
 };
-final Map<String, String> Neo6NumberToSymbol = {
+final Map<String, String> _Neo6NumberToSymbol = {
   '1': '¬',
   '2': '∨',
   '3': '∧',
@@ -195,7 +195,7 @@ final Map<String, String> Neo6NumberToSymbol = {
   ' ': ' ',
   '.': '.'
 };
-final Map<String, String> QWERTY_USNumberToSymbol = {
+final Map<String, String> _QWERTY_USNumberToSymbol = {
   '1': '!',
   '2': '@',
   '3': '#',
@@ -209,10 +209,10 @@ final Map<String, String> QWERTY_USNumberToSymbol = {
   ' ': ' ',
   '.': '.'
 };
-final Map<String, String> DvorakNumberToSymbol = QWERTY_USNumberToSymbol;
-final Map<String, String> ColemakNumberToSymbol = QWERTY_USNumberToSymbol;
+final Map<String, String> _DvorakNumberToSymbol = _QWERTY_USNumberToSymbol;
+final Map<String, String> _ColemakNumberToSymbol = _QWERTY_USNumberToSymbol;
 
-final Map<String, String> SymbolToQWERTZ_T1Number = {
+final Map<String, String> _SymbolToQWERTZ_T1Number = {
   '!': '1',
   '"': '2',
   '§': '3',
@@ -232,7 +232,7 @@ final Map<String, String> SymbolToQWERTZ_T1Number = {
   ' ': ' ',
   '.': '.'
 };
-final Map<String, String> SymbolToDvorakDeuIINumber = {
+final Map<String, String> _SymbolToDvorakDeuIINumber = {
   '!': '1',
   '"': '2',
   '§': '3',
@@ -254,7 +254,7 @@ final Map<String, String> SymbolToDvorakDeuIINumber = {
   ' ': ' ',
   '.': '.'
 };
-final Map<String, String> SymbolToDvorakDeuI1Number = {
+final Map<String, String> _SymbolToDvorakDeuI1Number = {
   '!': '1',
   '"': '2',
   '§': '3',
@@ -266,7 +266,7 @@ final Map<String, String> SymbolToDvorakDeuI1Number = {
   ')': '9',
   '=': '0',
 };
-final Map<String, String> SymbolToDvorakDeuI2Number = {
+final Map<String, String> _SymbolToDvorakDeuI2Number = {
   '!': '1',
   '"': '2',
   '§': '3',
@@ -278,7 +278,7 @@ final Map<String, String> SymbolToDvorakDeuI2Number = {
   ')': '9',
   '=': '0',
 };
-final Map<String, String> SymbolToDvorakDeuI3Number = {
+final Map<String, String> _SymbolToDvorakDeuI3Number = {
   '!': '1',
   '"': '2',
   '§': '3',
@@ -290,7 +290,7 @@ final Map<String, String> SymbolToDvorakDeuI3Number = {
   ')': '9',
   '=': '0',
 };
-final Map<String, String> SymbolToAZERTYNumber = {
+final Map<String, String> _SymbolToAZERTYNumber = {
   '&': '1',
   'é': '2',
   '"': '3',
@@ -313,7 +313,7 @@ final Map<String, String> SymbolToAZERTYNumber = {
   ' ': ' ',
   '.': '.'
 };
-final Map<String, String> SymbolToBEPONumber = {
+final Map<String, String> _SymbolToBEPONumber = {
   '"': '1',
   '«': '2',
   '»': '3',
@@ -336,7 +336,7 @@ final Map<String, String> SymbolToBEPONumber = {
   ' ': ' ',
   '.': '.'
 };
-final Map<String, String> SymbolToRistomeNumber = {
+final Map<String, String> _SymbolToRistomeNumber = {
   '!': '1',
   '"': '2',
   '§': '3',
@@ -348,7 +348,7 @@ final Map<String, String> SymbolToRistomeNumber = {
   ')': '9',
   '=': '0',
 };
-final Map<String, String> SymbolToNeoNumber = {
+final Map<String, String> _SymbolToNeoNumber = {
   '°': '1',
   '§': '2',
   'ℓ': '3',
@@ -362,7 +362,7 @@ final Map<String, String> SymbolToNeoNumber = {
   ' ': ' ',
   '.': '.'
 };
-final Map<String, String> SymbolToNeo3Number = {
+final Map<String, String> _SymbolToNeo3Number = {
   '¹': '1',
   '²': '2',
   '³': '3',
@@ -376,7 +376,7 @@ final Map<String, String> SymbolToNeo3Number = {
   ' ': ' ',
   '.': '.'
 };
-final Map<String, String> SymbolToNeo5Number = {
+final Map<String, String> _SymbolToNeo5Number = {
   '¹': '1',
   '²': '2',
   '³': '3',
@@ -390,7 +390,7 @@ final Map<String, String> SymbolToNeo5Number = {
   ' ': ' ',
   '.': '.'
 };
-final Map<String, String> SymbolToNeo6Number = {
+final Map<String, String> _SymbolToNeo6Number = {
   '¬': '1',
   '∨': '2',
   '∧': '3',
@@ -404,11 +404,11 @@ final Map<String, String> SymbolToNeo6Number = {
   ' ': ' ',
   '.': '.'
 };
-final Map<String, String> SymbolToQWERTY_USNumber = switchMapKeyValue(QWERTY_USNumberToSymbol);
-final Map<String, String> SymbolToDvorakNumber = SymbolToQWERTY_USNumber;
-final Map<String, String> SymbolToColemakNumber = SymbolToQWERTY_USNumber;
+final Map<String, String> _SymbolToQWERTY_USNumber = switchMapKeyValue(_QWERTY_USNumberToSymbol);
+final Map<String, String> _SymbolToDvorakNumber = _SymbolToQWERTY_USNumber;
+final Map<String, String> _SymbolToColemakNumber = _SymbolToQWERTY_USNumber;
 
-final Map<String, String> QWERTZ_T1toNormal = {
+final Map<String, String> _QWERTZ_T1toNormal = {
   '°': '100o',
   '!': '101o',
   '"': '102o',
@@ -515,7 +515,7 @@ final Map<String, String> QWERTZ_T1toNormal = {
   'µ': '212a',
   '': '',
 };
-final Map<String, String> Dvorak_II_DEUtoNormal = {
+final Map<String, String> _Dvorak_II_DEUtoNormal = {
   // https://web.archive.org/web/20170117021436/http://www.go-dvorak.com/media/img/dvorak-tastatur-detailansicht.jpg
   '°': '100o',
   '!': '101o',
@@ -628,7 +628,7 @@ final Map<String, String> Dvorak_II_DEUtoNormal = {
   '`': '112a',
   '´': '212a'
 };
-final Map<String, String> Dvorak_I_DEU1toNormal = {
+final Map<String, String> _Dvorak_I_DEU1toNormal = {
   '°': '100o',
   '!': '101o',
   '"': '102o',
@@ -726,7 +726,7 @@ final Map<String, String> Dvorak_I_DEU1toNormal = {
   ' ': '501',
   '': ''
 };
-final Map<String, String> Dvorak_I_DEU2toNormal = {
+final Map<String, String> _Dvorak_I_DEU2toNormal = {
   '°': '100o',
   '!': '101o',
   '"': '102o',
@@ -824,7 +824,7 @@ final Map<String, String> Dvorak_I_DEU2toNormal = {
   ' ': '501',
   '': ''
 };
-final Map<String, String> Dvorak_I_DEU3toNormal = {
+final Map<String, String> _Dvorak_I_DEU3toNormal = {
   '°': '100o',
   '!': '101o',
   '"': '102o',
@@ -922,7 +922,7 @@ final Map<String, String> Dvorak_I_DEU3toNormal = {
   ' ': '501',
   '': ''
 };
-final Map<String, String> NeoToNormal = {
+final Map<String, String> _NeoToNormal = {
   'ˇ': '100o',
   '°': '101o',
   '§': '102o',
@@ -1018,7 +1018,7 @@ final Map<String, String> NeoToNormal = {
   ' ': '501',
   '': ''
 };
-final Map<String, String> BoneToNormal = {
+final Map<String, String> _BoneToNormal = {
   'ˇ': '100o',
   '°': '101o',
   '§': '102o',
@@ -1114,7 +1114,7 @@ final Map<String, String> BoneToNormal = {
   ' ': '501',
   '': ''
 };
-final Map<String, String> RistomeToNormal = {
+final Map<String, String> _RistomeToNormal = {
   '°': '100o',
   '!': '101o',
   '"': '102o',
@@ -1214,7 +1214,7 @@ final Map<String, String> RistomeToNormal = {
   ' ': '501',
   '': ''
 };
-final Map<String, String> QWERTY_US_INTtoNormal = {
+final Map<String, String> _QWERTY_US_INTtoNormal = {
   '~': '100o',
   '!': '101o',
   '@': '102o',
@@ -1312,7 +1312,7 @@ final Map<String, String> QWERTY_US_INTtoNormal = {
   ' ': '501',
   '': ''
 };
-final Map<String, String> DvoraktoNormal = {
+final Map<String, String> _DvoraktoNormal = {
   '~': '101o',
   '!': '102o',
   '@': '103o',
@@ -1410,7 +1410,7 @@ final Map<String, String> DvoraktoNormal = {
   ' ': '501',
   '': ''
 };
-final Map<String, String> ColemakToNormal = {
+final Map<String, String> _ColemakToNormal = {
   '~': '100o',
   '!': '101o',
   '@': '102o',
@@ -1508,7 +1508,7 @@ final Map<String, String> ColemakToNormal = {
   ' ': '501',
   '': ''
 };
-final Map<String, String> AZERTYToNormal = {
+final Map<String, String> _AZERTYToNormal = {
   '#': '100o',
   '1': '101o',
   '2': '102o',
@@ -1608,7 +1608,7 @@ final Map<String, String> AZERTYToNormal = {
   ' ': '501',
   '': ''
 };
-final Map<String, String> BEPOToNormal = {
+final Map<String, String> _BEPOToNormal = {
   // https://en.wikipedia.org/wiki/B%C3%89PO#/media/File:KB_French_Dvorak_b%C3%A9po_simplifi%C3%A9.svg
   '#': '100o',
   '1': '101o',
@@ -1742,50 +1742,50 @@ KeyboardType? getKeyboardTypeByName(String name) {
   return allKeyboards.firstWhereOrNull((element) => element.name == name)?.type;
 }
 
-Map<String, String> buildConvertingMap(KeyboardType type, ConvertDirection direction) {
+Map<String, String> _buildConvertingMap(KeyboardType type, _ConvertDirection direction) {
   Map<String, String> keyboardMap;
   switch (type) {
     case KeyboardType.QWERTZ_T1:
-      keyboardMap = QWERTZ_T1toNormal;
+      keyboardMap = _QWERTZ_T1toNormal;
       break;
     case KeyboardType.RISTOME:
-      keyboardMap = RistomeToNormal;
+      keyboardMap = _RistomeToNormal;
       break;
     case KeyboardType.NEO:
-      keyboardMap = NeoToNormal;
+      keyboardMap = _NeoToNormal;
       break;
     case KeyboardType.BONE:
-      keyboardMap = BoneToNormal;
+      keyboardMap = _BoneToNormal;
       break;
     case KeyboardType.Dvorak_I_DEU1:
-      keyboardMap = Dvorak_I_DEU1toNormal;
+      keyboardMap = _Dvorak_I_DEU1toNormal;
       break;
     case KeyboardType.Dvorak_I_DEU2:
-      keyboardMap = Dvorak_I_DEU2toNormal;
+      keyboardMap = _Dvorak_I_DEU2toNormal;
       break;
     case KeyboardType.Dvorak_I_DEU3:
-      keyboardMap = Dvorak_I_DEU3toNormal;
+      keyboardMap = _Dvorak_I_DEU3toNormal;
       break;
     case KeyboardType.Dvorak_II_DEU:
-      keyboardMap = Dvorak_II_DEUtoNormal;
+      keyboardMap = _Dvorak_II_DEUtoNormal;
       break;
     case KeyboardType.FRA_AZERTY:
-      keyboardMap = AZERTYToNormal;
+      keyboardMap = _AZERTYToNormal;
       break;
     case KeyboardType.FRA_BEPO:
-      keyboardMap = BEPOToNormal;
+      keyboardMap = _BEPOToNormal;
       break;
     case KeyboardType.QWERTY_US_INT:
-      keyboardMap = QWERTY_US_INTtoNormal;
+      keyboardMap = _QWERTY_US_INTtoNormal;
       break;
     case KeyboardType.Dvorak:
-      keyboardMap = DvoraktoNormal;
+      keyboardMap = _DvoraktoNormal;
       break;
     case KeyboardType.COLEMAK:
-      keyboardMap = ColemakToNormal;
+      keyboardMap = _ColemakToNormal;
       break;
   }
-  if (direction == ConvertDirection.toNormal) {
+  if (direction == _ConvertDirection.toNormal) {
     return keyboardMap;
   } else {
     return switchMapKeyValue(keyboardMap);
@@ -1798,8 +1798,8 @@ String encodeKeyboard(String input, KeyboardType keyboardFrom, KeyboardType keyb
 
   if (input.isEmpty) return '';
 
-  mapSourceToNormal = buildConvertingMap(keyboardFrom, ConvertDirection.toNormal);
-  mapNormalToTarget = buildConvertingMap(keyboardTo, ConvertDirection.fromNormal);
+  mapSourceToNormal = _buildConvertingMap(keyboardFrom, _ConvertDirection.toNormal);
+  mapNormalToTarget = _buildConvertingMap(keyboardTo, _ConvertDirection.fromNormal);
 
   return input.split('').map((character) {
     var normal = mapSourceToNormal[character];
@@ -1816,7 +1816,7 @@ String encodeKeyboard(String input, KeyboardType keyboardFrom, KeyboardType keyb
   }).join('');
 }
 
-String convert(String input, Map<String, String> layout) {
+String _convert(String input, Map<String, String> layout) {
   return input.split('').map((character) {
     if (character == ' ') {
       return ' ';
@@ -1832,27 +1832,27 @@ String convert(String input, Map<String, String> layout) {
 
 List<List<String>> encodeKeyboardNumbers(String input) {
   List<List<String>> output = <List<String>>[];
-  output.add(['keyboard_mode_qwertz_ristome_dvorak', convert(input, QWERTZ_T1NumberToSymbol)]);
-  output.add(['keyboard_mode_neo', convert(input, NeoNumberToSymbol)]);
-  output.add(['keyboard_mode_neo_3', convert(input, Neo3NumberToSymbol)]);
-  output.add(['keyboard_mode_neo_5', convert(input, Neo5NumberToSymbol)]);
-  output.add(['keyboard_mode_neo_6', convert(input, Neo6NumberToSymbol)]);
-  output.add(['keyboard_mode_fra_azerty', convert(input, AZERTYNumberToSymbol)]);
-  output.add(['keyboard_mode_fra_bepo', convert(input, BEPONumberToSymbol)]);
-  output.add(['keyboard_mode_qwerty_us_int_colemak_dvorak', convert(input, QWERTY_USNumberToSymbol)]);
+  output.add(['keyboard_mode_qwertz_ristome_dvorak', _convert(input, _QWERTZ_T1NumberToSymbol)]);
+  output.add(['keyboard_mode_neo', _convert(input, _NeoNumberToSymbol)]);
+  output.add(['keyboard_mode_neo_3', _convert(input, _Neo3NumberToSymbol)]);
+  output.add(['keyboard_mode_neo_5', _convert(input, _Neo5NumberToSymbol)]);
+  output.add(['keyboard_mode_neo_6', _convert(input, _Neo6NumberToSymbol)]);
+  output.add(['keyboard_mode_fra_azerty', _convert(input, _AZERTYNumberToSymbol)]);
+  output.add(['keyboard_mode_fra_bepo', _convert(input, _BEPONumberToSymbol)]);
+  output.add(['keyboard_mode_qwerty_us_int_colemak_dvorak', _convert(input, _QWERTY_USNumberToSymbol)]);
 
   return output;
 }
 
 final Map<String, String Function(String)> keyboardNumbersByName = {
-  'keyboard_mode_qwertz_ristome_dvorak': (String input) => convert(input, SymbolToQWERTZ_T1Number),
-  'keyboard_mode_neo': (String input) => convert(input, SymbolToNeoNumber),
-  'keyboard_mode_neo_3': (String input) => convert(input, SymbolToNeo3Number),
-  'keyboard_mode_neo_5': (String input) => convert(input, SymbolToNeo5Number),
-  'keyboard_mode_neo_6': (String input) => convert(input, SymbolToNeo6Number),
-  'keyboard_mode_fra_azerty': (String input) => convert(input, SymbolToAZERTYNumber),
-  'keyboard_mode_fra_bepo': (String input) => convert(input, SymbolToBEPONumber),
-  'keyboard_mode_qwerty_us_int_colemak_dvorak': (String input) => convert(input, SymbolToDvorakNumber),
+  'keyboard_mode_qwertz_ristome_dvorak': (String input) => _convert(input, _SymbolToQWERTZ_T1Number),
+  'keyboard_mode_neo': (String input) => _convert(input, _SymbolToNeoNumber),
+  'keyboard_mode_neo_3': (String input) => _convert(input, _SymbolToNeo3Number),
+  'keyboard_mode_neo_5': (String input) => _convert(input, _SymbolToNeo5Number),
+  'keyboard_mode_neo_6': (String input) => _convert(input, _SymbolToNeo6Number),
+  'keyboard_mode_fra_azerty': (String input) => _convert(input, _SymbolToAZERTYNumber),
+  'keyboard_mode_fra_bepo': (String input) => _convert(input, _SymbolToBEPONumber),
+  'keyboard_mode_qwerty_us_int_colemak_dvorak': (String input) => _convert(input, _SymbolToDvorakNumber),
 };
 
 List<List<String>> decodeKeyboardNumbers(String input) {
