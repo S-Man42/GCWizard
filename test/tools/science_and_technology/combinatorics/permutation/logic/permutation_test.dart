@@ -4,8 +4,6 @@ import 'package:gc_wizard/tools/science_and_technology/combinatorics/permutation
 void main() {
   group("Combinatorics.Permutations.generatePermutations:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'avoidDuplicates': true, 'expectedOutput' : []},
-      {'input' : null, 'avoidDuplicates': false, 'expectedOutput' : []},
       {'input' : '', 'avoidDuplicates': true, 'expectedOutput' : []},
       {'input' : '', 'avoidDuplicates': false, 'expectedOutput' : []},
 
@@ -19,7 +17,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, avoidDuplicates: ${elem['avoidDuplicates']}', () {
-        var _actual = generatePermutations(elem['input'] as String?, avoidDuplicates: elem['avoidDuplicates'] as bool);
+        var _actual = generatePermutations(elem['input'] as String, avoidDuplicates: elem['avoidDuplicates'] as bool);
         expect(_actual, elem['expectedOutput']);
       });
     }

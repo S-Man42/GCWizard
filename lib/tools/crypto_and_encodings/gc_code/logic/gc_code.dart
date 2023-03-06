@@ -6,8 +6,7 @@ const _ALPHABET = '0123456789ABCDEFGHJKMNPQRTVWXYZ';
 final _OFFSET = (pow(16, 4) - 16 * pow(31, 3)).toInt();
 const _NO_VALID_GC_CODE = 'gccode_novalidgcode';
 
-int? gcCodeToID(String? gcCode) {
-  if (gcCode == null) return null;
+int? gcCodeToID(String gcCode) {
   gcCode = gcCode.trim();
   if (gcCode.isEmpty) return null;
 
@@ -32,8 +31,8 @@ int? gcCodeToID(String? gcCode) {
   }
 }
 
-String idToGCCode(int? id) {
-  if (id == null || id < 0) return '';
+String idToGCCode(int id) {
+  if (id < 0) return '';
 
   if (id < 65536) return 'GC' + (convertBase('$id', 10, 16) ?? '');
 

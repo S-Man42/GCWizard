@@ -12,7 +12,7 @@ class HomophoneOutput {
 
 enum HomophoneErrorCode { OK, TABLE, CUSTOM_KEY_COUNT, CUSTOM_KEY_DUPLICATE }
 
-HomophoneOutput encryptHomophoneWithKeyMap(String? input, Map<String, List<int>>? keyMap) {
+HomophoneOutput encryptHomophoneWithKeyMap(String input, Map<String, List<int>>? keyMap) {
   if (keyMap == null || keyMap.isEmpty) {
     return HomophoneOutput('', '', HomophoneErrorCode.CUSTOM_KEY_COUNT);
   }
@@ -34,7 +34,7 @@ Map<String, List<int>> _keyListToKeyMap(Map<String, int> letterFrequencies, List
   return keyMap;
 }
 
-HomophoneOutput encryptHomophoneWithKeyList(String? input, Alphabet alphabet, List<int>? keyList) {
+HomophoneOutput encryptHomophoneWithKeyList(String input, Alphabet alphabet, List<int>? keyList) {
   if (keyList == null || keyList.length != 100) {
     return HomophoneOutput('', '', HomophoneErrorCode.CUSTOM_KEY_COUNT);
   }
@@ -69,7 +69,7 @@ HomophoneOutput encryptHomophoneWithGeneratedKey(String input, Alphabet alphabet
 }
 
 HomophoneOutput _encryptHomophone(String input, Map<String, List<int>> keyMap) {
-  if (input == null || input.isEmpty) return HomophoneOutput('', '', HomophoneErrorCode.OK);
+  if (input.isEmpty) return HomophoneOutput('', '', HomophoneErrorCode.OK);
 
   var error = HomophoneErrorCode.OK;
   if (_checkDoubleKey(keyMap)) {

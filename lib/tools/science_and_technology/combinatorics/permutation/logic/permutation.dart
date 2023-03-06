@@ -20,8 +20,8 @@ void _permutation(List<String> characters, int endIndex, List<String> out) {
   }
 }
 
-List<String> generatePermutations(String? input, {bool avoidDuplicates = false}) {
-  if (input == null || input.isEmpty) return [];
+List<String> generatePermutations(String input, {bool avoidDuplicates = false}) {
+  if (input.isEmpty) return [];
 
   var characters = input.split('');
   var out = <String>[];

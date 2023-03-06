@@ -4,7 +4,6 @@ import 'package:gc_wizard/tools/crypto_and_encodings/gc_code/logic/gc_code.dart'
 void main() {
   group("GCCode.gcCodeToID:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : null},
 
       {'input' : 'GC0', 'expectedOutput' : 0},
@@ -28,7 +27,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = gcCodeToID(elem['input'] as String?);
+        var _actual = gcCodeToID(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -47,7 +46,7 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         try {
-          gcCodeToID(elem['input'] as String?);
+          gcCodeToID(elem['input'] as String);
           expect(false, true);
         } catch(e) {
           expect(true, true);
@@ -58,7 +57,6 @@ void main() {
 
   group("GCCode.idToGCCode:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
       {'input' : -1, 'expectedOutput' : ''},
 
       {'expectedOutput' : 'GC0', 'input' : 0},
@@ -81,7 +79,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = idToGCCode(elem['input'] as int?);
+        var _actual = idToGCCode(elem['input'] as int);
         expect(_actual, elem['expectedOutput']);
       });
     }

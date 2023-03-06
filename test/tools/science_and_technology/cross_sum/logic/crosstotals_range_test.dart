@@ -4,7 +4,6 @@ import 'package:gc_wizard/tools/science_and_technology/cross_sums/logic/crosstot
 void main() {
   group("CrossSum.crossSumRange:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'rangeStart' : null, 'rangeEnd' : null, 'crossSumToFind' : null, 'expectedOutput' : []},
 
       {'rangeStart' : 0, 'rangeEnd' : 100, 'crossSumToFind' : 15, 'expectedOutput' : [69, 78, 87, 96]},
       {'rangeStart' : 0, 'rangeEnd' : -100, 'crossSumToFind' : -15, 'expectedOutput' : [-96, -87, -78, -69]},
@@ -14,7 +13,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('rangeStart: ${elem['rangeStart']}, rangeEnd: ${elem['rangeEnd']}, crossSumToFind: ${elem['crossSumToFind']},', () {
-        var _actual = crossSumRange(elem['rangeStart'] as int?, elem['rangeEnd'] as int?, elem['crossSumToFind'] as int?);
+        var _actual = crossSumRange(elem['rangeStart'] as int, elem['rangeEnd'] as int, elem['crossSumToFind'] as int);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -22,7 +21,6 @@ void main() {
 
   group("CrossSum.crossSumRangeIterated:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'rangeStart' : null, 'rangeEnd' : null, 'crossSumToFind' : null, 'type': CrossSumType.ITERATED, 'expectedOutput' : []},
 
       {'rangeStart' : 0, 'rangeEnd' : 100, 'crossSumToFind' : 1, 'type': CrossSumType.ITERATED, 'expectedOutput' : [1, 10, 19, 28, 37, 46, 55, 64, 73, 82, 91, 100]},
       {'rangeStart' : 0, 'rangeEnd' : -100, 'crossSumToFind' : -5, 'type': CrossSumType.ITERATED, 'expectedOutput' : [-95, -86, -77, -68, -59, -50, -41, -32, -23, -14, -5]},
@@ -32,7 +30,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('rangeStart: ${elem['rangeStart']}, rangeEnd: ${elem['rangeEnd']}, crossSumToFind: ${elem['crossSumToFind']}, type: ${elem['type']}', () {
-        var _actual = crossSumRange(elem['rangeStart'] as int?, elem['rangeEnd'] as int?, elem['crossSumToFind'] as int?, type: elem['type'] as CrossSumType);
+        var _actual = crossSumRange(elem['rangeStart'] as int, elem['rangeEnd'] as int, elem['crossSumToFind'] as int, type: elem['type'] as CrossSumType);
         expect(_actual, elem['expectedOutput']);
       });
     }

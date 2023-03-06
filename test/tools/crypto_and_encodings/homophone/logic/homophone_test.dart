@@ -64,7 +64,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, keyMap: ${elem['keyMap']}', () {
-        var _actual = encryptHomophoneWithKeyMap(elem['input'] as String?, elem['keyMap'] as Map<String, List<int>>?);
+        var _actual = encryptHomophoneWithKeyMap(elem['input'] as String, elem['keyMap'] as Map<String, List<int>>?);
         Map<String, String> map ;
         map = replaceMap(elem['rotation'] as int, elem['multiplier'] as int, elem['alphabet'] as Alphabet);
         var output = changeOutput(_actual.output, map);
