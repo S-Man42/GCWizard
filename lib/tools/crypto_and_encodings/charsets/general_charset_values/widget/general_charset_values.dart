@@ -201,11 +201,9 @@ class GeneralCharsetValuesState extends State<GeneralCharsetValues> {
     decodeInput.split(' ').map((block) {
       String? blockValue = block;
         if (radix != 10) blockValue = convertBase(blockValue, radix, 10);
-        if (blockValue != null) {
-          var value = int.tryParse(blockValue);
-          if (value != null) {
-            decodeInputList.add(value);
-          }
+        var value = int.tryParse(blockValue);
+        if (value != null) {
+          decodeInputList.add(value);
         }
     });
 
@@ -224,8 +222,7 @@ class GeneralCharsetValuesState extends State<GeneralCharsetValues> {
       output = encodeOutput.map((value) {
         String? valueStr = value.toString();
         if (radix != 10) {
-            valueStr = convertBase(valueStr, 10, radix);
-            if (valueStr == null) return '';
+          valueStr = convertBase(valueStr, 10, radix);
         }
         if (blockSize != null) {
           valueStr = valueStr.padLeft(blockSize, '0');

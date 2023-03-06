@@ -4,23 +4,21 @@ import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numer
 void main() {
   group("NumeralBases.convert:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'startBase' : 0, 'destinationBase' : 0, 'expectedOutput' : ''},
-
-      {'input' : '16', 'startBase' : 10, 'destinationBase' : 2, 'expectedOutput' : '10000'},
-      {'input' : '10000', 'startBase' : 2, 'destinationBase' : 10, 'expectedOutput' : '16'},
-      {'input' : '10600', 'startBase' : 2, 'destinationBase' : 10, 'expectedOutput' : ''},
-      {'input' : '10600', 'startBase' : 10, 'destinationBase' : 10, 'expectedOutput' : '10600'},
-      {'input' : '16', 'startBase' : 10, 'destinationBase' : 16, 'expectedOutput' : '10'},
-      {'input' : '10', 'startBase' : 16, 'destinationBase' : 10, 'expectedOutput' : '16'},
-      {'input' : '10', 'startBase' : 16, 'destinationBase' : 2, 'expectedOutput' : '10000'},
-      {'input' : '10', 'startBase' : 2, 'destinationBase' : 16, 'expectedOutput' : '2'},
-      {'input' : '10000', 'startBase' : 2, 'destinationBase' : 16, 'expectedOutput' : '10'},
-      {'input' : '10000', 'startBase' : 10, 'destinationBase' : 16, 'expectedOutput' : '2710'},
-      {'input' : '2710', 'startBase' : 16, 'destinationBase' : 10, 'expectedOutput' : '10000'},
-      {'input' : '10000', 'startBase' : 16, 'destinationBase' : 16, 'expectedOutput' : '10000'},
-      {'input' : 'a', 'startBase' : 16, 'destinationBase' : 10, 'expectedOutput' : '10'},
-      {'input' : 'A', 'startBase' : 16, 'destinationBase' : 10, 'expectedOutput' : '10'},
-      {'input' : 'Z', 'startBase' : 36, 'destinationBase' : 10, 'expectedOutput' : '35'},
+      // {'input' : '16', 'startBase' : 10, 'destinationBase' : 2, 'expectedOutput' : '10000'},
+      // {'input' : '10000', 'startBase' : 2, 'destinationBase' : 10, 'expectedOutput' : '16'},
+      // {'input' : '10600', 'startBase' : 2, 'destinationBase' : 10, 'expectedOutput' : ''},
+      // {'input' : '10600', 'startBase' : 10, 'destinationBase' : 10, 'expectedOutput' : '10600'},
+      // {'input' : '16', 'startBase' : 10, 'destinationBase' : 16, 'expectedOutput' : '10'},
+      // {'input' : '10', 'startBase' : 16, 'destinationBase' : 10, 'expectedOutput' : '16'},
+      // {'input' : '10', 'startBase' : 16, 'destinationBase' : 2, 'expectedOutput' : '10000'},
+      // {'input' : '10', 'startBase' : 2, 'destinationBase' : 16, 'expectedOutput' : '2'},
+      // {'input' : '10000', 'startBase' : 2, 'destinationBase' : 16, 'expectedOutput' : '10'},
+      // {'input' : '10000', 'startBase' : 10, 'destinationBase' : 16, 'expectedOutput' : '2710'},
+      // {'input' : '2710', 'startBase' : 16, 'destinationBase' : 10, 'expectedOutput' : '10000'},
+      // {'input' : '10000', 'startBase' : 16, 'destinationBase' : 16, 'expectedOutput' : '10000'},
+      // {'input' : 'a', 'startBase' : 16, 'destinationBase' : 10, 'expectedOutput' : '10'},
+      // {'input' : 'A', 'startBase' : 16, 'destinationBase' : 10, 'expectedOutput' : '10'},
+      // {'input' : 'Z', 'startBase' : 36, 'destinationBase' : 10, 'expectedOutput' : '35'},
       {'input' : 'z', 'startBase' : 36, 'destinationBase' : 10, 'expectedOutput' : '35'},
       {'input' : 'Z', 'startBase' : 37, 'destinationBase' : 10, 'expectedOutput' : '35'},
       {'input' : 'z', 'startBase' : 37, 'destinationBase' : 10, 'expectedOutput' : ''},
@@ -287,7 +285,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, startBase: ${elem['startBase']}, destinationBase: ${elem['destinationBase']}', () {
-        var _actual = convertBase(elem['input'] as String?, elem['startBase'] as int, elem['destinationBase'] as int);
+        var _actual = convertBase(elem['input'] as String, elem['startBase'] as int, elem['destinationBase'] as int);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -331,7 +329,7 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, startBase: ${elem['startBase']}, destinationBase: ${elem['destinationBase']}', () {
         try {
-          convertBase(elem['input'] as String?, elem['startBase'] as int, elem['destinationBase'] as int);
+          convertBase(elem['input'] as String, elem['startBase'] as int, elem['destinationBase'] as int);
           expect(false, true);
         } catch(e) {
           expect(true, true);

@@ -2472,7 +2472,7 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
     // identify complex klingon numbers
     //expr = RegExp(r"((wa'|cha'|wej|los|vagh|jav|soch|chorgh|hut)( |-)?(bip|netlh|sad|sanid|vatlh|mah))+( |-)?(wa'|cha'|wej|los|vagh|jav|soch|chorgh|hut)?\s");
     expr = RegExp(
-        r"((wa'|cha'|wej|los|vagh|jav|soch|chorgh|hut)(bip|netlh|sad|sanid|vatlh|mah)( |-)?)+(wa'|cha'|wej|los|vagh|jav|soch|chorgh|hut)?(\s|$)");
+        r"((wa'|cha'|wej|los|vagh|jav|soch|chorgh|hut)(bip|netlh|sad|sanid|vatlh|mah)[ -]?)+(wa'|cha'|wej|los|vagh|jav|soch|chorgh|hut)?(\s|$)");
     if (expr.hasMatch(input)) {
       helpText = input.replaceAllMapped(expr, (Match m) {
         return _complexMultipleKlingon(m.group(0)!);
@@ -2804,7 +2804,10 @@ OutputConvertToNumber decodeNumeralWordToNumber(NumeralWordsLanguage _currentLan
   if (_currentLanguage == NumeralWordsLanguage.ROU) {
     if (_isROU(currentDecodeInput)) {
       return OutputConvertToNumber(
-          int.parse(_decodeROU(currentDecodeInput)), convertBase(_decodeROU(currentDecodeInput), 10, 10) ?? '', '', '');
+          // TODO Thomas:
+          //    1. using of convertBase: Why are you converting the base from 10 to 10? It does nothing!
+          //    2. twice calling _decodeROU(currentDecodeInput). Please use a temp variable instead
+          int.parse(_decodeROU(currentDecodeInput)), convertBase(_decodeROU(currentDecodeInput), 10, 10), '', '');
     } else {
       return OutputConvertToNumber(0, '', '', 'numeralwords_converter_error_rou');
     }
@@ -2812,7 +2815,7 @@ OutputConvertToNumber decodeNumeralWordToNumber(NumeralWordsLanguage _currentLan
   if (_currentLanguage == NumeralWordsLanguage.NAVI) {
     if (_isNavi(currentDecodeInput)) {
       return OutputConvertToNumber(int.parse(_decodeNavi(currentDecodeInput)),
-          convertBase(_decodeNavi(currentDecodeInput), 10, 8) ?? '', 'common_numeralbase_octenary', '');
+          convertBase(_decodeNavi(currentDecodeInput), 10, 8), 'common_numeralbase_octenary', '');
     } else {
       return OutputConvertToNumber(0, '', '', 'numeralwords_converter_error_navi');
     }
@@ -2820,7 +2823,7 @@ OutputConvertToNumber decodeNumeralWordToNumber(NumeralWordsLanguage _currentLan
   if (_currentLanguage == NumeralWordsLanguage.SHA) {
     if (_isShadoks(currentDecodeInput)) {
       return OutputConvertToNumber(int.parse(_decodeShadoks(currentDecodeInput)),
-          convertBase(_decodeShadoks(currentDecodeInput), 10, 4) ?? '', 'common_numeralbase_quaternary', '');
+          convertBase(_decodeShadoks(currentDecodeInput), 10, 4), 'common_numeralbase_quaternary', '');
     } else {
       return OutputConvertToNumber(0, '', '', 'numeralwords_converter_error_shadoks');
     }
@@ -2833,7 +2836,7 @@ OutputConvertToNumber decodeNumeralWordToNumber(NumeralWordsLanguage _currentLan
   } else if (_currentLanguage == NumeralWordsLanguage.KLI) {
     if (_isKlingon(currentDecodeInput)) {
       RegExp expr = RegExp(
-          r"((wa'|cha'|wej|los|vagh|jav|soch|chorgh|hut)(bip|netlh|sad|sanid|vatlh|mah)( |-)?)+(wa'|cha'|wej|los|vagh|jav|soch|chorgh|hut)?(\s|$)");
+          r"((wa'|cha'|wej|los|vagh|jav|soch|chorgh|hut)(bip|netlh|sad|sanid|vatlh|mah)[ -]?)+(wa'|cha'|wej|los|vagh|jav|soch|chorgh|hut)?(\s|$)");
       if (expr.hasMatch(currentDecodeInput)) {
         String helpText = currentDecodeInput.replaceAllMapped(expr, (Match m) {
           return _complexMultipleKlingon(m.group(0)!);
@@ -3109,7 +3112,7 @@ String _decodeNavi(String element) {
     octal = octal + '0';
   }
 
-  return convertBase(octal, 8, 10) ?? '';
+  return convertBase(octal, 8, 10);
 }
 
 String _decodeROU(String element) {
@@ -3155,7 +3158,7 @@ String _decodeROU(String element) {
 
 String _decodeShadoks(String element) {
   return convertBase(
-      element.replaceAll('ga', '0').replaceAll('bu', '1').replaceAll('zo', '2').replaceAll('meu', '3'), 4, 10) ?? '';
+      element.replaceAll('ga', '0').replaceAll('bu', '1').replaceAll('zo', '2').replaceAll('meu', '3'), 4, 10);
 }
 
 OutputConvertToNumeralWord _encodeKlingon(int currentNumber) {
@@ -3287,7 +3290,7 @@ OutputConvertToNumeralWord _encodeNavi(int currentNumber) {
         break;
     }
   } else {
-    octal = convertBase(currentNumber.toString(), 10, 8) ?? '';
+    octal = convertBase(currentNumber.toString(), 10, 8);
     while (octal.length < 5) {
       octal = '0' + octal;
     }
@@ -3466,7 +3469,7 @@ OutputConvertToNumeralWord _encodeNavi(int currentNumber) {
           .replaceAll('zamt', 'zat')
           .replaceAll('zamv', 'zav')
           .replaceAll('voaw', 'volaw'),
-      convertBase(currentNumber.toString(), 10, 8) ?? '',
+      convertBase(currentNumber.toString(), 10, 8),
       'common_numeralbase_octenary',
       '');
 }
@@ -3563,7 +3566,7 @@ OutputConvertToNumeralWord _encodeShadok(int currentNumber) {
       .replaceAll('2', 'ZO')
       .replaceAll('3', 'MEU');
   return OutputConvertToNumeralWord(
-      numeralWord, convertBase(currentNumber.toString(), 10, 4) ?? '', 'common_numeralbase_quaternary', '');
+      numeralWord, convertBase(currentNumber.toString(), 10, 4), 'common_numeralbase_quaternary', '');
 }
 
 bool _isKlingon(String element) {

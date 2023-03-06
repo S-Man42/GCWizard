@@ -250,8 +250,9 @@ SegmentsText decodeTextPunchtape(String? inputs, TeletypewriterCodebook language
   List<int> intList = List<int>.filled(1, 0);
 
   inputs.split(' ').forEach((element) {
-    if (int.tryParse(convertBase(element, 2, 10) ?? '') != null) {
-      intList[0] = int.parse(convertBase(element, 2, 10)!);
+    var val = int.tryParse(convertBase(element, 2, 10));
+    if (val != null) {
+      intList[0] = val;
       text.add(decodeTeletypewriter(intList, language));
     }
     if (!order12345) element = element.split('').reversed.join('');

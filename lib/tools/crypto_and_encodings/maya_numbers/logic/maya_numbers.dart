@@ -27,9 +27,9 @@ final Map<int, List<String>> _numbersToSegments = {
 Segments encodeMayaNumbers(int? input) {
   if (input == null) return Segments.Empty();
 
-  var vigesimal = convertBase(input.toString(), 10, 20) ?? '';
+  var vigesimal = convertBase(input.toString(), 10, 20);
   var result = vigesimal.split('').map((digit) {
-    return _numbersToSegments[int.tryParse(convertBase(digit, 20, 10) ?? '')] ?? [];
+    return _numbersToSegments[int.tryParse(convertBase(digit, 20, 10))] ?? [];
   }).toList();
   return Segments(displays:result);
 }
@@ -64,7 +64,7 @@ SegmentsVigesimal decodeMayaNumbers(List<String>? inputs) {
     return number;
   }).toList();
 
-  var total = convertBase(numbers.map((number) => convertBase(number.toString(), 10, 20)).join(), 20, 10) ?? '';
+  var total = convertBase(numbers.map((number) => convertBase(number.toString(), 10, 20)).join(), 20, 10);
 
   return SegmentsVigesimal(displays: displays, numbers: numbers, vigesimal: BigInt.tryParse(total) ?? BigInt.zero);
 }

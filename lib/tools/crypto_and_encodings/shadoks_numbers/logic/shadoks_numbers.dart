@@ -27,9 +27,9 @@ final Map<String, String> _numberToWord = {
 Segments encodeShadoksNumbers(int? input) {
   if (input == null) return Segments.Empty();
 
-  var quaternary = convertBase(input.toString(), 10, 4) ?? '';
+  var quaternary = convertBase(input.toString(), 10, 4);
   var result = quaternary.split('').map((digit) {
-    return _numbersToSegments[int.tryParse(convertBase(digit, 4, 10) ?? '0') ?? 0]!;
+    return _numbersToSegments[int.tryParse(convertBase(digit, 4, 10)) ?? 0]!;
   }).toList();
   return Segments(displays: result);
 }
@@ -55,7 +55,7 @@ ShadocksOutput decodeShadoksNumbers(List<String>? inputs) {
     return number;
   }).toList();
 
-  var total = convertBase(numbers.map((number) => convertBase(number.toString(), 10, 4)).join(), 4, 10) ?? '0';
+  var total = convertBase(numbers.map((number) => convertBase(number.toString(), 10, 4)).join(), 4, 10);
 
   return ShadocksOutput(displays, numbers, BigInt.tryParse(total) ?? BigInt.zero, _shadoks(numbers));
 }

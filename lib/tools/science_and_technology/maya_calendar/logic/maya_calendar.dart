@@ -112,8 +112,8 @@ SegmentsVigesimal encodeMayaCalendar(int? input) {
   var vigesimal = convertDecToMayaCalendar(input.toString());
 
   var displays = <List<String>>[];
-  vigesimal.split('').map((digit) {
-    var list = _numbersToSegments[int.tryParse(convertBase(digit, 20, 10) ?? '')];
+  vigesimal.split('').forEach((digit) {
+    var list = _numbersToSegments[int.tryParse(convertBase(digit, 20, 10)) ?? ''];
     if (list != null) displays.add(list);
   });
 

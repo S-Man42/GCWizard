@@ -34,7 +34,7 @@ String encryptKenny(String? input, List<String> replaceCharacters, bool caseSens
       output += letter;
       return;
     }
-    var value = convertBase((alphabet_AZ[letter.toUpperCase()]! - 1).toString(), 10, 3)!.padLeft(3, '0');
+    var value = convertBase((alphabet_AZ[letter.toUpperCase()]! - 1).toString(), 10, 3).padLeft(3, '0');
     value = substitution(value, substitutions);
     if (caseSensitive) {
       if (isUpperCase(letter)) {
@@ -127,7 +127,7 @@ String decryptKenny(String? input, List<String>? replaceCharacters, bool caseSen
 
     // when chunk length reaches 3, convert it.
     if (chunk.length == 3) {
-      var index = int.tryParse(convertBase(substitution(chunk, integerSubstitutions), 3, 10) ?? '') ?? 0;
+      var index = int.tryParse(convertBase(substitution(chunk, integerSubstitutions), 3, 10)) ?? 0;
       if (index < 26) {
         var outputChar = alphabet_AZIndexes[index + 1] ?? '';
         if (caseSensitive) {
