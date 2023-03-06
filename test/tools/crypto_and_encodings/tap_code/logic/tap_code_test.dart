@@ -5,7 +5,6 @@ import 'package:gc_wizard/tools/crypto_and_encodings/_common/logic/crypt_alphabe
 void main() {
   group("TapCode.encryptTapCode:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
       {'input' : 'ABCIJK', 'mode': AlphabetModificationMode.J_TO_I, 'expectedOutput' : '11 12 13 24 24 25'},
@@ -20,7 +19,7 @@ void main() {
           var _actual = encryptTapCode(elem['input'] as String?);
           expect(_actual, elem['expectedOutput']);
         } else {
-          var _actual = encryptTapCode(elem['input'] as String?, mode: elem['mode'] as AlphabetModificationMode);
+          var _actual = encryptTapCode(elem['input'] as String, mode: elem['mode'] as AlphabetModificationMode);
           expect(_actual, elem['expectedOutput']);
         }
       });
@@ -29,7 +28,6 @@ void main() {
 
   group("TapCode.decryptTapCode:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
       {'expectedOutput' : 'ABCIK', 'mode': AlphabetModificationMode.J_TO_I, 'input' : '11 12 13 24 25'},

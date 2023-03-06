@@ -1,7 +1,7 @@
 import 'dart:collection';
 
-String substitution(String? input, Map<String, String> substitutions, {bool caseSensitive = true}) {
-  if (input == null || input.isEmpty) return '';
+String substitution(String input, Map<String, String> substitutions, {bool caseSensitive = true}) {
+  if (input.isEmpty) return '';
 
   if (!caseSensitive) {
     input = input.toUpperCase();

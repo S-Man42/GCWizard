@@ -4,7 +4,6 @@ import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitu
 void main() {
   group("Substitution.substitution:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'substitution': <String, String>{}, 'caseSensitive': true, 'expectedOutput' : ''},
       {'input' : 'ABC', 'substitution': <String, String>{}, 'caseSensitive': true, 'expectedOutput' : 'ABC'},
       {'input' : 'Abc123', 'substitution': <String, String>{}, 'caseSensitive': true, 'expectedOutput' : 'Abc123'},
       {'input' : 'ABC', 'substitution': {'': '1'}, 'caseSensitive': true, 'expectedOutput' : 'ABC'},
@@ -28,7 +27,7 @@ void main() {
       test('input: ${elem['input']}, substitution: ${elem['substitution']}, caseSensitive: ${elem['caseSensitive']}', () {
 
 
-        var _actual = substitution(elem['input'] as String?, elem['substitution'] as Map<String, String>, caseSensitive: elem['caseSensitive'] as bool);
+        var _actual = substitution(elem['input'] as String, elem['substitution'] as Map<String, String>, caseSensitive: elem['caseSensitive'] as bool);
         expect(_actual, elem['expectedOutput']);
       });
     }

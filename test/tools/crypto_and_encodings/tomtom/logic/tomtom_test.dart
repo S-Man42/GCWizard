@@ -4,7 +4,6 @@ import 'package:gc_wizard/tools/crypto_and_encodings/tomtom/logic/tomtom.dart';
 void main() {
   group("TomTom.encryptTomTom:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
       {'input' : '', 'replaceCharacters': null, 'expectedOutput' : ''},
       {'input' : '', 'replaceCharacters': <String, String>{}, 'expectedOutput' : ''},
@@ -31,7 +30,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, replaceCharacter: ${elem['replaceCharacters']}', () {
-        var _actual = encryptTomTom(elem['input'] as String?, elem['replaceCharacters'] as Map<String, String>?);
+        var _actual = encryptTomTom(elem['input'] as String, elem['replaceCharacters'] as Map<String, String>?);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -39,7 +38,6 @@ void main() {
 
   group("TomTom.decryptTomTom:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
       {'input' : '', 'replaceCharacters': null, 'expectedOutput' : ''},
       {'input' : '', 'replaceCharacters': <String, String>{}, 'expectedOutput' : ''},
@@ -70,7 +68,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, replaceCharacter: ${elem['replaceCharacters']}', () {
-        var _actual = decryptTomTom(elem['input'] as String?, elem['replaceCharacters'] as Map<String, String>?);
+        var _actual = decryptTomTom(elem['input'] as String, elem['replaceCharacters'] as Map<String, String>?);
         expect(_actual, elem['expectedOutput']);
       });
     }
