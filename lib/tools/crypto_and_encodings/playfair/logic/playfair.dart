@@ -4,8 +4,7 @@ import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 
-Map<String, List<int>> _createKeyGrid(String? key, AlphabetModificationMode mode) {
-  key ??= '';
+Map<String, List<int>> _createKeyGrid(String key, AlphabetModificationMode mode) {
 
   key = key.toUpperCase().replaceAll(RegExp(r'[^A-Z]'), '');
   var characters = key.split('').toList();
@@ -56,7 +55,7 @@ String _sanitizeInput(String? input, AlphabetModificationMode mode) {
   return input;
 }
 
-String encryptPlayfair(String? input, String? key, {AlphabetModificationMode mode = AlphabetModificationMode.J_TO_I}) {
+String encryptPlayfair(String input, String key, {AlphabetModificationMode mode = AlphabetModificationMode.J_TO_I}) {
   var keyGrid = _createKeyGrid(key, mode);
   input = _sanitizeInput(input, mode);
 
@@ -110,7 +109,7 @@ String encryptPlayfair(String? input, String? key, {AlphabetModificationMode mod
   return out.trim();
 }
 
-String decryptPlayfair(String? input, String? key, {AlphabetModificationMode mode = AlphabetModificationMode.J_TO_I}) {
+String decryptPlayfair(String input, String key, {AlphabetModificationMode mode = AlphabetModificationMode.J_TO_I}) {
   var keyGrid = _createKeyGrid(key, mode);
   input = _sanitizeInput(input, mode);
 

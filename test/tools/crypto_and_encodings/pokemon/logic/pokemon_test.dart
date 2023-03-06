@@ -4,7 +4,6 @@ import 'package:gc_wizard/tools/crypto_and_encodings/pokemon/logic/pokemon.dart'
 void main() {
   group("Pokemon.encodePokemon:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
       {'input' : 'cache nord drei vier sechs acht', 'expectedOutput' : 'FLAPIFLAKASA TUSAMKLALU LUKLASAFLOR ASFLORSAKLA SESAFLAKASE PIFLAKADA'},
@@ -13,7 +12,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = encodePokemon(elem['input'] as String?);
+        var _actual = encodePokemon(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -21,7 +20,6 @@ void main() {
 
   group("Pokemon.decodePokemon:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
       {'input' : 'se', 'expectedOutput' : 'S'},
@@ -35,7 +33,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}}', () {
-        var _actual = decodePokemon(elem['input'] as String?);
+        var _actual = decodePokemon(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     }

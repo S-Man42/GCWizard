@@ -126,12 +126,11 @@ String polybiosGridCharacterByCoordinate(Map<String, List<int>> grid, int row, i
   return grid.entries.firstWhere((entry) => entry.value[0] == row && entry.value[1] == column).key;
 }
 
-PolybiosOutput? encryptPolybios(String? input, String? key,
+PolybiosOutput? encryptPolybios(String input, String key,
     {PolybiosMode mode = PolybiosMode.AZ09,
     String? fillAlphabet,
     String? firstLetters,
     AlphabetModificationMode? modificationMode = AlphabetModificationMode.J_TO_I}) {
-  if (input == null || key == null) return null; //TODO Exception
 
   modificationMode ??= AlphabetModificationMode.J_TO_I;
 
@@ -161,12 +160,11 @@ PolybiosOutput? encryptPolybios(String? input, String? key,
   return PolybiosOutput(output, polybiosGridToString(grid, key));
 }
 
-PolybiosOutput? decryptPolybios(String? input, String? key,
+PolybiosOutput? decryptPolybios(String input, String key,
     {PolybiosMode mode = PolybiosMode.AZ09,
     String? fillAlphabet,
     String? firstLetters,
     AlphabetModificationMode? modificationMode = AlphabetModificationMode.J_TO_I}) {
-  if (input == null || key == null) return null; //TODO Exception
 
   modificationMode ??= AlphabetModificationMode.J_TO_I;
 

@@ -53,9 +53,6 @@ void main() {
 
   group("rabbit.cryptRabbit:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input': null, 'inputFormat': InputFormat.HEX, 'key': null, 'keyFormat': InputFormat.AUTO, 'iv': null, 'ivFormat': InputFormat.AUTO, 'outputFormat': OutputFormat.HEX,
-        'expectedOutput': RabbitOutput('', null, null, ErrorCode.OK)
-      },
       {'input': '', 'inputFormat': InputFormat.HEX, 'key': null, 'keyFormat': InputFormat.AUTO, 'iv': null, 'ivFormat': InputFormat.AUTO, 'outputFormat': OutputFormat.HEX,
         'expectedOutput': RabbitOutput('', null, null, ErrorCode.OK)
       },
@@ -116,7 +113,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']} key: ${elem['key']} iv: ${elem['iv']} iv: ${elem['iv']} outputFormat: ${elem['outputFormat']}', () {
-        var _actual = cryptRabbit(elem['input'] as String?, elem['inputFormat'] as InputFormat, elem['key'] as String?, elem['keyFormat'] as InputFormat, elem['iv'] as String?, elem['ivFormat'] as InputFormat, elem['outputFormat'] as OutputFormat);
+        var _actual = cryptRabbit(elem['input'] as String, elem['inputFormat'] as InputFormat, elem['key'] as String?, elem['keyFormat'] as InputFormat, elem['iv'] as String?, elem['ivFormat'] as InputFormat, elem['outputFormat'] as OutputFormat);
         expect(_actual.output, (elem['expectedOutput'] as RabbitOutput?)?.output);
         expect(_actual.keyHexFormat, (elem['expectedOutput'] as RabbitOutput?)?.keyHexFormat);
         expect(_actual.ivHexFormat, (elem['expectedOutput'] as RabbitOutput?)?.ivHexFormat);

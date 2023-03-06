@@ -4,9 +4,6 @@ import 'package:gc_wizard/tools/crypto_and_encodings/one_time_pad/logic/one_time
 void main() {
   group("OneTimePad.encrypt:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'key': null, 'expectedOutput' : ''},
-      {'input' : '', 'key': null, 'expectedOutput' : ''},
-      {'input' : 'ABC', 'key': null, 'expectedOutput' : 'ABC'},
       {'input' : 'ABC', 'key': '', 'expectedOutput' : 'ABC'},
 
       {'input' : 'A', 'key': 'A', 'expectedOutput' : 'B'},
@@ -37,7 +34,7 @@ void main() {
           expect(_actual, elem['expectedOutput']);
         } else {
           var _actual = encryptOneTimePad(
-              elem['input'] as String?, elem['key'] as String?, keyOffset: elem['keyOffset'] as int);
+              elem['input'] as String?, elem['key'] as String, keyOffset: elem['keyOffset'] as int);
           expect(_actual, elem['expectedOutput']);
         }
       });
@@ -46,9 +43,7 @@ void main() {
 
   group("OneTimePad.decrypt:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
-      {'input' : '', 'expectedOutput' : ''},
-      {'input' : 'ABC', 'key': null, 'expectedOutput' : 'ABC'},
+      {'input' : '', 'key': '', 'expectedOutput' : ''},
       {'input' : 'ABC', 'key': '', 'expectedOutput' : 'ABC'},
 
       {'expectedOutput' : 'A', 'key': 'A', 'input' : 'B'},
@@ -79,7 +74,7 @@ void main() {
           expect(_actual, elem['expectedOutput']);
         } else {
           var _actual = decryptOneTimePad(
-              elem['input'] as String?, elem['key'] as String?, keyOffset: elem['keyOffset'] as int);
+              elem['input'] as String, elem['key'] as String, keyOffset: elem['keyOffset'] as int);
           expect(_actual, elem['expectedOutput']);
         }
       });

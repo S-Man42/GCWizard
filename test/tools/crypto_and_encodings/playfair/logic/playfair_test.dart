@@ -5,11 +5,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/_common/logic/crypt_alphabe
 void main() {
   group("Playfair.encodePlayfair:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'key': null, 'mode': AlphabetModificationMode.J_TO_I, 'expectedOutput' : ''},
-      {'input' : '', 'key': null, 'mode': AlphabetModificationMode.J_TO_I, 'expectedOutput' : ''},
-      {'input' : null, 'key': '', 'mode': AlphabetModificationMode.J_TO_I, 'expectedOutput' : ''},
       {'input' : '', 'key': '', 'mode': AlphabetModificationMode.J_TO_I, 'expectedOutput' : ''},
-      {'input' : 'A', 'key': null, 'mode': AlphabetModificationMode.J_TO_I, 'expectedOutput' : 'CV'},
       {'input' : 'A', 'key': '', 'mode': AlphabetModificationMode.J_TO_I, 'expectedOutput' : 'CV'},
 
       {'input' : 'AX', 'key': '', 'mode': AlphabetModificationMode.J_TO_I, 'expectedOutput' : 'CV'},
@@ -34,7 +30,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, key: ${elem['key']}, mode: ${elem['mode']}', () {
-        var _actual = encryptPlayfair(elem['input'] as String?, elem['key'] as String?, mode: elem['mode'] as AlphabetModificationMode);
+        var _actual = encryptPlayfair(elem['input'] as String, elem['key'] as String, mode: elem['mode'] as AlphabetModificationMode);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -42,9 +38,6 @@ void main() {
 
   group("Playfair.decodePlayfair:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'key': null, 'mode': AlphabetModificationMode.J_TO_I, 'expectedOutput' : ''},
-      {'input' : '', 'key': null, 'mode': AlphabetModificationMode.J_TO_I, 'expectedOutput' : ''},
-      {'input' : null, 'key': '', 'mode': AlphabetModificationMode.J_TO_I, 'expectedOutput' : ''},
       {'input' : '', 'key': '', 'mode': AlphabetModificationMode.J_TO_I, 'expectedOutput' : ''},
       {'expectedOutput' : 'AX', 'key': null, 'mode': AlphabetModificationMode.J_TO_I, 'input' : 'CV'},
       {'expectedOutput' : 'AX', 'key': '', 'mode': AlphabetModificationMode.J_TO_I, 'input' : 'CV'},
@@ -68,7 +61,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, key: ${elem['key']}, mode: ${elem['mode']}', () {
-        var _actual = decryptPlayfair(elem['input'] as String?, elem['key'] as String?, mode: elem['mode'] as AlphabetModificationMode);
+        var _actual = decryptPlayfair(elem['input'] as String, elem['key'] as String, mode: elem['mode'] as AlphabetModificationMode);
         expect(_actual, elem['expectedOutput']);
       });
     }

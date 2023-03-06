@@ -21,9 +21,9 @@ class RabbitOutput {
   RabbitOutput(this.output, this.keyHexFormat, this.ivHexFormat, this.errorCode);
 }
 
-RabbitOutput cryptRabbit(String? input, InputFormat inputFormat, String? key, InputFormat keyFormat,
+RabbitOutput cryptRabbit(String input, InputFormat inputFormat, String? key, InputFormat keyFormat,
     String? initializationVector, InputFormat ivFormat, OutputFormat outputFormat) {
-  if (input == null || input.isEmpty) return RabbitOutput('', null, null, ErrorCode.OK);
+  if (input.isEmpty) return RabbitOutput('', null, null, ErrorCode.OK);
 
   var inputList = rc4.convertInputToIntList(input, _convertInputFormatEnum(inputFormat));
   if (inputList == null || inputList.isEmpty) return RabbitOutput('', null, null, ErrorCode.INPUT_FORMAT);

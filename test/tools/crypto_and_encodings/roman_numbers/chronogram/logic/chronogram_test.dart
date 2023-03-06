@@ -4,7 +4,6 @@ import 'package:gc_wizard/tools/crypto_and_encodings/roman_numbers/chronogram/lo
 void main() {
   group("Chronogram.withoutJU:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : null},
 
       {'input' : 'ALICIMAAMADMIDIAILACMIICLIIIDIMCAMMIDIIDIACADDIDADIILDMICALMLII', 'expectedOutput' : 14921},
@@ -17,7 +16,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeChronogram(elem['input'] as String?);
+        var _actual = decodeChronogram(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -25,7 +24,6 @@ void main() {
 
   group("Chronogram.JUToIV:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : null},
 
       {'input' : 'ALICIMAAMADMIDIAILACMIICLIIIDIMCAMMIDIIDIACADDIDADIILDMICALMLII', 'expectedOutput' : 14921},
@@ -38,7 +36,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeChronogram(elem['input'] as String?, JUToIV: true);
+        var _actual = decodeChronogram(elem['input'] as String, JUToIV: true);
         expect(_actual, elem['expectedOutput']);
       });
     }

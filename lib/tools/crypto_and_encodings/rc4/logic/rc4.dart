@@ -16,13 +16,13 @@ class RC4Output {
 }
 
 RC4Output cryptRC4(
-    String? input, InputFormat inputFormat, String? key, InputFormat keyFormat, OutputFormat outputFormat) {
-  if (input == null || input.isEmpty) return RC4Output('', ErrorCode.OK);
+    String input, InputFormat inputFormat, String key, InputFormat keyFormat, OutputFormat outputFormat) {
+  if (input.isEmpty) return RC4Output('', ErrorCode.OK);
 
   var inputList = convertInputToIntList(input, inputFormat);
   if (inputList == null || inputList.isEmpty) return RC4Output('', ErrorCode.INPUT_FORMAT);
 
-  if (key == null || key.isEmpty) return RC4Output('', ErrorCode.MISSING_KEY);
+  if (key.isEmpty) return RC4Output('', ErrorCode.MISSING_KEY);
 
   var keyList = convertInputToIntList(key, keyFormat);
   if (keyList == null || keyList.isEmpty) return RC4Output('', ErrorCode.KEY_FORMAT);
@@ -68,8 +68,8 @@ List<int> _rc4(List<int> input, List<int> key) {
   return out;
 }
 
-List<int>? convertInputToIntList(String? input, InputFormat format) {
-  if (input == null || input.isEmpty) return null;
+List<int>? convertInputToIntList(String input, InputFormat format) {
+  if (input.isEmpty) return null;
 
   switch (format) {
     case InputFormat.AUTO:
