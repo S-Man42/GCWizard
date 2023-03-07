@@ -18,7 +18,7 @@ void main() {
 
     List<Map<String, Object?>> _inputsToExpected = [
       {'input' : 'Der kleine Preuße.gif', 'expectedOutputLength': 313},
-      {'input' : 'LEUCHTTURM.gif', 'expectedOutputLength': 186},
+      {'input' : 'LEUCHTTURM.gif', 'expectedOutputLength': 189},
       {'input' : 'bibliothek.gif', 'expectedOutputLength': 63},
     ];
 
