@@ -3,7 +3,7 @@
 import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
-final Map<String, List<String>> PASLEY = {
+final Map<String, List<String>> _PASLEY = {
   ' ': [],
   '1': ['7'],
   '2': ['1'],
@@ -43,12 +43,12 @@ final Map<String, List<String>> PASLEY = {
   'Z': ['5', '6'],
 };
 
-final Map<String, List<String>> PASLEY_MODIFIER = {
+final Map<String, List<String>> _PASLEY_MODIFIER = {
   'LETTERFOLLOWS': ['3', '4'],
   'NUMBERFOLLOWS': ['2', '6'],
 };
 
-final Map<String, String> DigitToLetter = {
+final Map<String, String> _DigitToLetter = {
   '1': 'A',
   '2': 'B',
   '3': 'C',
@@ -62,7 +62,7 @@ final Map<String, String> DigitToLetter = {
   ' ': ' '
 };
 
-final Map<String, String> LetterToDigit = {
+final Map<String, String> _LetterToDigit = {
   'A': '1',
   'B': '2',
   'C': '3',
@@ -76,7 +76,7 @@ final Map<String, String> LetterToDigit = {
   ' ': ' '
 };
 
-final List<String> LETTER = [
+final List<String> _LETTER = [
   ' ',
   'A',
   'B',
@@ -105,7 +105,7 @@ final List<String> LETTER = [
   'Y',
   'Z',
 ];
-final List<String> DIGIT = [
+final List<String> _DIGIT = [
   ' ',
   '1',
   '2',
@@ -119,8 +119,8 @@ final List<String> DIGIT = [
   '0',
 ];
 
-Segments encodePasley(String? input) {
-  if (input == null || input.isEmpty) return Segments.Empty();
+Segments encodePasley(String input) {
+  if (input.isEmpty) return Segments.Empty();
 
   bool letter = true;
 
@@ -129,19 +129,19 @@ Segments encodePasley(String? input) {
 
   for (int i = 0; i < inputs.length; i++) {
     if (letter) {
-      if (LETTER.contains(inputs[i])) {
-        result.add(PASLEY[inputs[i].toUpperCase()]!);
+      if (_LETTER.contains(inputs[i])) {
+        result.add(_PASLEY[inputs[i].toUpperCase()]!);
       } else {
-        result.add(PASLEY_MODIFIER['NUMBERFOLLOWS']!);
-        result.add(PASLEY[inputs[i]]!);
+        result.add(_PASLEY_MODIFIER['NUMBERFOLLOWS']!);
+        result.add(_PASLEY[inputs[i]]!);
         letter = false;
       }
-    } else if (LETTER.contains(inputs[i])) {
-      result.add(PASLEY_MODIFIER['LETTERFOLLOWS']!);
-      result.add(PASLEY[inputs[i].toUpperCase()]!);
+    } else if (_LETTER.contains(inputs[i])) {
+      result.add(_PASLEY_MODIFIER['LETTERFOLLOWS']!);
+      result.add(_PASLEY[inputs[i].toUpperCase()]!);
       letter = true;
     } else {
-      result.add(PASLEY[inputs[i]]!);
+      result.add(_PASLEY[inputs[i]]!);
     }
   }
   return Segments(displays: result);
@@ -160,7 +160,7 @@ SegmentsText decodeVisualPasley(List<String> inputs) {
   bool letter = true;
 
   Map<String, String> CODEBOOK = {};
-  PASLEY.forEach((key, value) {
+  _PASLEY.forEach((key, value) {
     CODEBOOK[value.join('')] = key;
   });
   CODEBOOK['26'] = 'NUMBERFOLLOWS';
@@ -201,6 +201,6 @@ String? _decode(String code, bool letter) {
   if (letter) {
     return code;
   } else {
-    return LetterToDigit[code];
+    return _LetterToDigit[code];
   }
 }

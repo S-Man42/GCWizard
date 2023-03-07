@@ -57,7 +57,7 @@ Map<MurrayCodebook, CodebookConfig> MURRAY_CODEBOOK = {
   ),
 };
 
-final Map<String, List<String>> CODEBOOK_ROYALNAVY = {
+final Map<String, List<String>> _CODEBOOK_ROYALNAVY = {
   // https://cms.sachsen.schule/fileadmin/_special/gruppen/592/klappentelegraph/download/klappentelegraphenalphabet_2016.pdf
   'A': ['2', '3', '4', '5', '6'],
   'B': ['1', '3', '4', '5', '6'],
@@ -99,7 +99,7 @@ final Map<String, List<String>> CODEBOOK_ROYALNAVY = {
   ';': ['2', '5'],
 };
 
-final Map<String, List<String>> CODEBOOK_GEOCACHING = {
+final Map<String, List<String>> _CODEBOOK_GEOCACHING = {
   // https://cms.sachsen.schule/fileadmin/_special/gruppen/592/klappentelegraph/download/klappentelegraphenalphabet_f_2007.pdf
   'A': [],
   'B': ['1', '3', '5'],
@@ -145,7 +145,7 @@ final Map<String, List<String>> CODEBOOK_GEOCACHING = {
   '.': ['6'],
 };
 
-final Map<String, List<String>> CODEBOOK_FISCHER = {
+final Map<String, List<String>> _CODEBOOK_FISCHER = {
   // https://cms.sachsen.schule/fileadmin/_special/gruppen/592/klappentelegraph/download/klappentelegraphenalphabet_b_2007.pdf
   'A': [],
   'B': ['1', '3', '5'],
@@ -191,7 +191,7 @@ final Map<String, List<String>> CODEBOOK_FISCHER = {
   '.': ['6'],
 };
 
-final Map<String, List<String>> CODEBOOK_ROUCOUX = {
+final Map<String, List<String>> _CODEBOOK_ROUCOUX = {
   // http://virtual-library.culturalservices.net/webingres/bedfordshire/vlib/0.digitised_resources/dunstable_article_signalling_station_enlargement.htm
   'A': ['2', '3', '4', '5', '6'],
   'B': ['1', '3', '4', '5', '6'],
@@ -219,11 +219,11 @@ final Map<String, List<String>> CODEBOOK_ROUCOUX = {
   'Z': ['2', '4'],
 };
 
-final Map<String, List<String>> CODEBOOK_MYGEOTOOLS = CODEBOOK_GEOCACHING;
+final Map<String, List<String>> _CODEBOOK_MYGEOTOOLS = _CODEBOOK_GEOCACHING;
 
-final Map<String, List<String>> CODEBOOK_GEOCACHINGTOOLBOX_1 = CODEBOOK_GEOCACHING;
+final Map<String, List<String>> _CODEBOOK_GEOCACHINGTOOLBOX_1 = _CODEBOOK_GEOCACHING;
 
-final Map<String, List<String>> CODEBOOK_GEOCACHINGTOOLBOX_2 = {
+final Map<String, List<String>> _CODEBOOK_GEOCACHINGTOOLBOX_2 = {
   'A': ['2', '3', '4', '5', '6'],
   'B': ['1', '3', '4', '5', '6'],
   'C': ['1', '2', '4', '5', '6'],
@@ -254,7 +254,7 @@ final Map<String, List<String>> CODEBOOK_GEOCACHINGTOOLBOX_2 = {
   'END': ['6'],
 };
 
-final Map<String, List<String>> CODEBOOK_GEOCACHINGTOOLBOX_3 = {
+final Map<String, List<String>> _CODEBOOK_GEOCACHINGTOOLBOX_3 = {
   // https://lewiswalpole.files.wordpress.com/2011/12/lwlpr25106.jpg
   'A': ['2', '3', '4', '5', '6'],
   'B': ['1', '3', '4', '5', '6'],
@@ -286,34 +286,33 @@ final Map<String, List<String>> CODEBOOK_GEOCACHINGTOOLBOX_3 = {
   'WEST': ['1', '2', '4', '5'],
 };
 
-Segments encodeMurray(String? input, MurrayCodebook language) {
-  if (input == null) return Segments.Empty();
+Segments encodeMurray(String input, MurrayCodebook language) {
 
   Map<String, List<String>> CODEBOOK = <String, List<String>>{};
   switch (language) {
     case MurrayCodebook.GEOCACHING:
-      CODEBOOK = CODEBOOK_GEOCACHING;
+      CODEBOOK = _CODEBOOK_GEOCACHING;
       break;
     case MurrayCodebook.ROYALNAVY:
-      CODEBOOK = CODEBOOK_ROYALNAVY;
+      CODEBOOK = _CODEBOOK_ROYALNAVY;
       break;
     case MurrayCodebook.FISCHER:
-      CODEBOOK = CODEBOOK_FISCHER;
+      CODEBOOK = _CODEBOOK_FISCHER;
       break;
     case MurrayCodebook.ROUCOUX:
-      CODEBOOK = CODEBOOK_ROUCOUX;
+      CODEBOOK = _CODEBOOK_ROUCOUX;
       break;
     case MurrayCodebook.GEOCACHINGTOOLBOX_1:
-      CODEBOOK = CODEBOOK_GEOCACHINGTOOLBOX_1;
+      CODEBOOK = _CODEBOOK_GEOCACHINGTOOLBOX_1;
       break;
     case MurrayCodebook.GEOCACHINGTOOLBOX_2:
-      CODEBOOK = CODEBOOK_GEOCACHINGTOOLBOX_2;
+      CODEBOOK = _CODEBOOK_GEOCACHINGTOOLBOX_2;
       break;
     case MurrayCodebook.GEOCACHINGTOOLBOX_3:
-      CODEBOOK = CODEBOOK_GEOCACHINGTOOLBOX_3;
+      CODEBOOK = _CODEBOOK_GEOCACHINGTOOLBOX_3;
       break;
     case MurrayCodebook.MYGEOTOOLS:
-      CODEBOOK = CODEBOOK_MYGEOTOOLS;
+      CODEBOOK = _CODEBOOK_MYGEOTOOLS;
       break;
   }
 
@@ -326,36 +325,36 @@ Segments encodeMurray(String? input, MurrayCodebook language) {
   return Segments(displays: result);
 }
 
-SegmentsChars decodeMurray(List<String>? inputs, MurrayCodebook language) {
-  if (inputs == null || inputs.isEmpty) return  SegmentsChars(displays: <List<String>>[], chars: []);
+SegmentsChars decodeMurray(List<String> inputs, MurrayCodebook language) {
+  if (inputs.isEmpty) return  SegmentsChars(displays: <List<String>>[], chars: []);
 
   var displays = <List<String>>[];
 
   Map<List<String>, String> CODEBOOK = <List<String>, String>{};
   switch (language) {
     case MurrayCodebook.GEOCACHING:
-      CODEBOOK = switchMapKeyValue(CODEBOOK_GEOCACHING);
+      CODEBOOK = switchMapKeyValue(_CODEBOOK_GEOCACHING);
       break;
     case MurrayCodebook.ROYALNAVY:
-      CODEBOOK = switchMapKeyValue(CODEBOOK_ROYALNAVY);
+      CODEBOOK = switchMapKeyValue(_CODEBOOK_ROYALNAVY);
       break;
     case MurrayCodebook.FISCHER:
-      CODEBOOK = switchMapKeyValue(CODEBOOK_FISCHER);
+      CODEBOOK = switchMapKeyValue(_CODEBOOK_FISCHER);
       break;
     case MurrayCodebook.ROUCOUX:
-      CODEBOOK = switchMapKeyValue(CODEBOOK_ROUCOUX);
+      CODEBOOK = switchMapKeyValue(_CODEBOOK_ROUCOUX);
       break;
     case MurrayCodebook.GEOCACHINGTOOLBOX_1:
-      CODEBOOK = switchMapKeyValue(CODEBOOK_GEOCACHINGTOOLBOX_1);
+      CODEBOOK = switchMapKeyValue(_CODEBOOK_GEOCACHINGTOOLBOX_1);
       break;
     case MurrayCodebook.GEOCACHINGTOOLBOX_2:
-      CODEBOOK = switchMapKeyValue(CODEBOOK_GEOCACHINGTOOLBOX_2);
+      CODEBOOK = switchMapKeyValue(_CODEBOOK_GEOCACHINGTOOLBOX_2);
       break;
     case MurrayCodebook.GEOCACHINGTOOLBOX_3:
-      CODEBOOK = switchMapKeyValue(CODEBOOK_GEOCACHINGTOOLBOX_3);
+      CODEBOOK = switchMapKeyValue(_CODEBOOK_GEOCACHINGTOOLBOX_3);
       break;
     case MurrayCodebook.MYGEOTOOLS:
-      CODEBOOK = switchMapKeyValue(CODEBOOK_MYGEOTOOLS);
+      CODEBOOK = switchMapKeyValue(_CODEBOOK_MYGEOTOOLS);
       break;
   }
 

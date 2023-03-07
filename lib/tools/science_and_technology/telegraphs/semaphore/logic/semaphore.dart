@@ -2,7 +2,7 @@ import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/l
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
-final Map<String, List<String>> CODEBOOK_SEMAPHORE = {
+final Map<String, List<String>> _CODEBOOK_SEMAPHORE = {
   'A': ['l4', 'r5'],
   'B': ['l3', 'r5'],
   'C': ['l2', 'r5'],
@@ -48,7 +48,7 @@ final Map<String, List<String>> CODEBOOK_SEMAPHORE = {
   'symboltables_semaphore_rest': ['l5', 'r5'],
 };
 
-final Map<String, String> LETTER2DIGIT = {
+final Map<String, String> _LETTER2DIGIT = {
   '1': 'A',
   '2': 'B',
   '3': 'C',
@@ -61,11 +61,11 @@ final Map<String, String> LETTER2DIGIT = {
   '0': 'K',
 };
 
-final Map<String, String> DIGIT2LETTER = switchMapKeyValue(LETTER2DIGIT);
+final Map<String, String> _DIGIT2LETTER = switchMapKeyValue(_LETTER2DIGIT);
 
-final NUMBER = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
+final _NUMBER = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
 
-final LETTER = {
+final _LETTER = {
   'A',
   'B',
   'C',
@@ -94,37 +94,35 @@ final LETTER = {
   'Z'
 };
 
-Segments encodeSemaphore(String? input) {
-  if (input == null) return Segments(displays: <List<String>>[]);
-
+Segments encodeSemaphore(String input) {
   List<String> inputs = input.toUpperCase().split('');
   List<List<String>> result = [];
   bool number_follows = false;
   bool letter_follows = false;
   for (int i = 0; i < inputs.length; i++) {
-    if (LETTER.contains(inputs[i]) && !letter_follows) {
+    if (_LETTER.contains(inputs[i]) && !letter_follows) {
       letter_follows = true;
       number_follows = false;
-      result.add(CODEBOOK_SEMAPHORE['symboltables_semaphore_letters_following']!);
+      result.add(_CODEBOOK_SEMAPHORE['symboltables_semaphore_letters_following']!);
     }
-    if (NUMBER.contains(inputs[i]) && !number_follows) {
+    if (_NUMBER.contains(inputs[i]) && !number_follows) {
       number_follows = true;
       letter_follows = false;
-      result.add(CODEBOOK_SEMAPHORE['symboltables_semaphore_numerals_following']!);
+      result.add(_CODEBOOK_SEMAPHORE['symboltables_semaphore_numerals_following']!);
     }
-    if (CODEBOOK_SEMAPHORE[inputs[i]] != null) result.add(CODEBOOK_SEMAPHORE[inputs[i]]!);
+    if (_CODEBOOK_SEMAPHORE[inputs[i]] != null) result.add(_CODEBOOK_SEMAPHORE[inputs[i]]!);
   }
   return Segments(displays: result);
 }
 
-SegmentsChars decodeSemaphore(List<String>? inputs) {
-  if (inputs == null || inputs.isEmpty) return SegmentsChars(displays: <List<String>>[], chars: []);
+SegmentsChars decodeSemaphore(List<String> inputs) {
+  if (inputs.isEmpty) return SegmentsChars(displays: <List<String>>[], chars: []);
 
   var displays = <List<String>>[];
   var segment = <String>[];
   bool letter_follows = true;
 
-  Map<List<String>, String> CODEBOOK = switchMapKeyValue(CODEBOOK_SEMAPHORE);
+  Map<List<String>, String> CODEBOOK = switchMapKeyValue(_CODEBOOK_SEMAPHORE);
 
   for (var element in inputs) {
     segment = _stringToSegment(element);
@@ -163,15 +161,15 @@ SegmentsChars decodeSemaphore(List<String>? inputs) {
         }
       } else {
         if (letter_follows) {
-          if (LETTER.contains(symbol)) {
+          if (_LETTER.contains(symbol)) {
             charH = symbol;
           } else {
-            charH = LETTER2DIGIT[symbol]!;
+            charH = _LETTER2DIGIT[symbol]!;
           }
-        } else if (NUMBER.contains(symbol)) {
+        } else if (_NUMBER.contains(symbol)) {
           charH = symbol;
         } else {
-          charH = DIGIT2LETTER[symbol]!;
+          charH = _DIGIT2LETTER[symbol]!;
         }
 
         char = char + charH;

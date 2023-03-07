@@ -26,7 +26,7 @@ Map<EdelcrantzCodebook, CodebookConfig> MURRAY_CODEBOOK = {
   ),
 };
 
-final CODEBOOK_EDELCRANTZ_1795 = {
+final _CODEBOOK_EDELCRANTZ_1795 = {
   '000': ' ',
   '001': '1',
   '002': '2',
@@ -541,7 +541,7 @@ final CODEBOOK_EDELCRANTZ_1795 = {
   '777': ' ',
 };
 
-final CODEBOOK_EDELCRANTZ_1808 = {
+final _CODEBOOK_EDELCRANTZ_1808 = {
   '000': ' ',
   '001': '1',
   '002': '2',
@@ -1610,7 +1610,7 @@ final CODEBOOK_EDELCRANTZ_1808 = {
   'a777': '',
 };
 
-final CODEBOOK_EDELCRANTZ_MUSEUM = {
+final _CODEBOOK_EDELCRANTZ_MUSEUM = {
   '000': '0',
   '001': '1',
   '002': '2',
@@ -1789,13 +1789,13 @@ Segments encodeEdelcrantzTelegraph(String? input, EdelcrantzCodebook language, b
   Map<String, String> CODEBOOK;
   switch (language) {
     case EdelcrantzCodebook.YEAR_1795:
-      CODEBOOK = switchMapKeyValue(CODEBOOK_EDELCRANTZ_1795);
+      CODEBOOK = switchMapKeyValue(_CODEBOOK_EDELCRANTZ_1795);
       break;
     case EdelcrantzCodebook.YEAR_1808:
-      CODEBOOK = switchMapKeyValue(CODEBOOK_EDELCRANTZ_1808);
+      CODEBOOK = switchMapKeyValue(_CODEBOOK_EDELCRANTZ_1808);
       break;
     case EdelcrantzCodebook.MUSEUM:
-      CODEBOOK = switchMapKeyValue(CODEBOOK_EDELCRANTZ_MUSEUM);
+      CODEBOOK = switchMapKeyValue(_CODEBOOK_EDELCRANTZ_MUSEUM);
       break;
   }
 
@@ -1821,13 +1821,13 @@ SegmentsText decodeVisualEdelcrantzTelegraph(List<String>? inputs, EdelcrantzCod
   Map<String, String> CODEBOOK;
   switch (language) {
     case EdelcrantzCodebook.YEAR_1795:
-      CODEBOOK = CODEBOOK_EDELCRANTZ_1795;
+      CODEBOOK = _CODEBOOK_EDELCRANTZ_1795;
       break;
     case EdelcrantzCodebook.YEAR_1808:
-      CODEBOOK = CODEBOOK_EDELCRANTZ_1808;
+      CODEBOOK = _CODEBOOK_EDELCRANTZ_1808;
       break;
     case EdelcrantzCodebook.MUSEUM:
-      CODEBOOK = CODEBOOK_EDELCRANTZ_MUSEUM;
+      CODEBOOK = _CODEBOOK_EDELCRANTZ_MUSEUM;
       break;
   }
 
@@ -1857,13 +1857,13 @@ SegmentsText decodeTextEdelcrantzTelegraph(String? inputs, EdelcrantzCodebook la
   Map<String, String> CODEBOOK;
   switch (language) {
     case EdelcrantzCodebook.YEAR_1795:
-      CODEBOOK = CODEBOOK_EDELCRANTZ_1795;
+      CODEBOOK = _CODEBOOK_EDELCRANTZ_1795;
       break;
     case EdelcrantzCodebook.YEAR_1808:
-      CODEBOOK = CODEBOOK_EDELCRANTZ_1808;
+      CODEBOOK = _CODEBOOK_EDELCRANTZ_1808;
       break;
     case EdelcrantzCodebook.MUSEUM:
-      CODEBOOK = CODEBOOK_EDELCRANTZ_MUSEUM;
+      CODEBOOK = _CODEBOOK_EDELCRANTZ_MUSEUM;
       break;
   }
 

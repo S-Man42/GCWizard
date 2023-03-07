@@ -6,7 +6,7 @@ import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/l
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
-final CODEBOOK_PRUSSIA = {
+final _CODEBOOK_PRUSSIA = {
   // codebook classe 5.2
   // Seite 1
   '4.100': 'ERWARTET EINE DEPESCHE.',
@@ -2344,29 +2344,29 @@ final CODEBOOK_PRUSSIA = {
   '999': '',
 };
 
-Segments encodePrussianTelegraph(String? input) {
-  if (input == null || input.isEmpty) return Segments.Empty();
+Segments encodePrussianTelegraph(String input) {
+  if (input.isEmpty) return Segments.Empty();
 
-  var result = input.split('').where((letter) => switchMapKeyValue(CODEBOOK_PRUSSIA)[letter] != null).map((letter) {
-    return switchMapKeyValue(CODEBOOK_PRUSSIA)[letter]!.split('');
+  var result = input.split('').where((letter) => switchMapKeyValue(_CODEBOOK_PRUSSIA)[letter] != null).map((letter) {
+    return switchMapKeyValue(_CODEBOOK_PRUSSIA)[letter]!.split('');
   }).toList();
   return Segments(displays: result);
 }
 
-SegmentsText decodeVisualPrussianTelegraph(List<String>? inputs) {
-  if (inputs == null || inputs.isEmpty) SegmentsText(displays: [], text: '');
+SegmentsText decodeVisualPrussianTelegraph(List<String> inputs) {
+  if (inputs.isEmpty) SegmentsText(displays: [], text: '');
 
   var displays = <List<String>>[];
   var segment = <String>[];
   String text = '';
   String code = '';
 
-  for (var element in inputs!) {
+  for (var element in inputs) {
     segment = _stringToSegment(element);
     displays.add(segment);
     code = segmentToCode(segment);
-    if (CODEBOOK_PRUSSIA[code] != null) {
-      text = text + CODEBOOK_PRUSSIA[code]!;
+    if (_CODEBOOK_PRUSSIA[code] != null) {
+      text = text + _CODEBOOK_PRUSSIA[code]!;
     } else {
       text = text + UNKNOWN_ELEMENT;
     }
@@ -2397,10 +2397,10 @@ SegmentsText decodeTextPrussianTelegraph(String inputs) {
               element.endsWith('4.1') ||
               element.endsWith('4.2') ||
               element.endsWith('4.3'))) {
-        text = text + CODEBOOK_PRUSSIA['00' + element.substring(2)]!.replaceAll('##', element.substring(0, 2));
+        text = text + _CODEBOOK_PRUSSIA['00' + element.substring(2)]!.replaceAll('##', element.substring(0, 2));
       }
-    } else if (CODEBOOK_PRUSSIA[element] != null) {
-      decodedElement = CODEBOOK_PRUSSIA[element]!;
+    } else if (_CODEBOOK_PRUSSIA[element] != null) {
+      decodedElement = _CODEBOOK_PRUSSIA[element]!;
       if (decodedElement.contains('##')) {
         decodedElement = _replaceNumber(decodedElement, element);
       }
