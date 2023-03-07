@@ -256,14 +256,18 @@ class _ExifReaderState extends State<ExifReader> {
   }
 
   void _decorateImage(List<Widget> widgets, Image.Image image) {
+    String channels = 'RGB';
+    if (image.numChannels == 4) {
+      channels = 'ARGB';
+    }
+
     widgets.add(GCWOutput(
         title: i18n(context, 'exif_section_image'),
         child: GCWColumnedMultilineOutput(
             data: [
                     [i18n(context, 'exif_width'), image.width ],
                     [i18n(context, 'exif_height'), image.height],
-                    ['Blend Method', image.blendMethod],
-                    ['Channels', image.channels],
+                    ['Color Channels', channels ],
                     ['ICC Color Profile', image.iccProfile],
                     // Only for frames within an animation
                     // [i18n(context, 'exif_duration'), image.duration ?? ''],
