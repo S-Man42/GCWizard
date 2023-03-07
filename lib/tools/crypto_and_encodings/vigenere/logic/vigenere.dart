@@ -5,7 +5,7 @@ class _KeyOutput {
   String key;
   String type;
 
-  _KeyOutput(this.key, this.type);
+  _KeyOutput(this.type, this.key);
 }
 
 _KeyOutput? _getKey(String key, int aValue) {

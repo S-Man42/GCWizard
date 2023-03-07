@@ -109,7 +109,7 @@ Tuple2<PhoneCaseMode?, String>? decodeVanityMultitap(String input, PhoneModel mo
     } else {
       // Transition
       currentState = stateModel[currentState]?[firstLetter];
-      currentMode = _getModeFromState(currentState!);
+      currentMode = _getModeFromState(currentState);
       currentCharmap = _getCharMap(languageCharmap, currentMode!);
 
       if (block.length > 1) {
@@ -198,8 +198,8 @@ Tuple2<PhoneCaseMode?, String>? encodeVanityMultitap(String input, PhoneModel mo
   return Tuple2<PhoneCaseMode?, String>( _getModeFromState(currentState), output.join(' '));
 }
 
-String encodeVanitySingletap(String? input, PhoneModel model) {
-  if (input == null || input.isEmpty) return '';
+String encodeVanitySingletap(String input, PhoneModel model) {
+  if (input.isEmpty) return '';
 
   return encodeVanityMultitap(input, model, PhoneInputLanguage.UNSPECIFIED)!.item2
       .split(' ')

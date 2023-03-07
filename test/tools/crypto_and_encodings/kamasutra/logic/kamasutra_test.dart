@@ -4,15 +4,9 @@ import 'package:gc_wizard/tools/crypto_and_encodings/kamasutra/logic/kamasutra.d
 void main() {
   group("Kamasutra.encryptKamasutra:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'alphabet': null, 'ignoreCase': true, 'expectedOutput' : ''},
-      {'input' : '', 'alphabet': null, 'ignoreCase': true, 'expectedOutput' : ''},
-      {'input' : null, 'alphabet': '', 'ignoreCase': true, 'expectedOutput' : ''},
-      {'input' : null, 'alphabet': null, 'ignoreCase': true, 'expectedOutput' : ''},
-
-      {'input' : null, 'alphabet': 'AB', 'ignoreCase': true, 'expectedOutput' : ''},
+      {'input' : '', 'alphabet': '', 'ignoreCase': true, 'expectedOutput' : ''},
       {'input' : '', 'alphabet': 'AB', 'ignoreCase': true, 'expectedOutput' : ''},
 
-      {'input' : 'ABC', 'alphabet': null, 'ignoreCase': true, 'expectedOutput' : 'ABC'},
       {'input' : 'ABC', 'alphabet': '', 'ignoreCase': true, 'expectedOutput' : 'ABC'},
       {'input' : 'ABC', 'alphabet': 'A', 'ignoreCase': true, 'expectedOutput' : 'ABC'},
       {'input' : 'ABC', 'alphabet': 'AB', 'ignoreCase': true, 'expectedOutput' : 'BAC'},
@@ -36,7 +30,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, alphabet: ${elem['alphabet']}, ignoreCase : ${elem['ignoreCase']}', () {
-        var _actual = encryptKamasutra(elem['input'] as String?, elem['alphabet'] as String?, ignoreCase: elem['ignoreCase'] as bool);
+        var _actual = encryptKamasutra(elem['input'] as String, elem['alphabet'] as String, ignoreCase: elem['ignoreCase'] as bool);
         expect(_actual, elem['expectedOutput']);
       });
     }

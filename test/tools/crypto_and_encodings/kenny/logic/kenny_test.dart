@@ -113,7 +113,6 @@ void main() {
       {'input' : 'MpfAPFf', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'FAR', 'caseSensitive' : true},
       {'input' : 'Mfmfmffmp mfmmppppmmmmmmfmfpfmp!', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'Gut gemacht!', 'caseSensitive' : true},
 
-      {'input' : null, 'replaceCharacters': <String>[], 'expectedOutput' : '', 'caseSensitive' : false},
       {'input' : '', 'replaceCharacters': <String>[], 'expectedOutput' : '', 'caseSensitive' : false},
       {'input' : 'A', 'replaceCharacters': null, 'expectedOutput' : '', 'caseSensitive' : false},
       {'input' : 'A', 'replaceCharacters': <String>[], 'expectedOutput' : '', 'caseSensitive' : false},

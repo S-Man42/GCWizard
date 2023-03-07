@@ -7,7 +7,7 @@ import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/l
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
-final CODEBOOK_OHLSEN = {
+final _CODEBOOK_OHLSEN = {
   '000': 'seilere sees, som kommme vestlig fra.',
   '001': 'seilere sees, som kommer nord fra.',
   '002': 'seilere sees, som kommer sydlig fra.',
@@ -274,7 +274,7 @@ Segments encodeOhlsenTelegraph(String? input) {
   if (input == null || input.isEmpty) return Segments.Empty();
 
   List<List<String>> encodedText = [];
-  var CODEBOOK = switchMapKeyValue(CODEBOOK_OHLSEN);
+  var CODEBOOK = switchMapKeyValue(_CODEBOOK_OHLSEN);
 
   if (CODEBOOK[input] != null) encodedText.add(_buildShutters(CODEBOOK[input]!));
 
@@ -298,7 +298,7 @@ SegmentsCodpoints decodeVisualOhlsenTelegraph(List<String>? inputs) {
     segment = _stringToSegment(element);
     displays.add(segment);
     codepoints.add(segmentToCode(segment));
-    text = text + (CODEBOOK_OHLSEN[segmentToCode(segment)] ?? UNKNOWN_ELEMENT);
+    text = text + (_CODEBOOK_OHLSEN[segmentToCode(segment)] ?? UNKNOWN_ELEMENT);
   }
 
   return SegmentsCodpoints(displays: displays, text: text, codepoints: codepoints.join(' '));
@@ -311,7 +311,7 @@ SegmentsCodpoints decodeTextOhlsenTelegraph(String? inputs) {
   String text = '';
 
   inputs!.split(' ').forEach((element) {
-    text = text + (CODEBOOK_OHLSEN[element] ?? UNKNOWN_ELEMENT);
+    text = text + (_CODEBOOK_OHLSEN[element] ?? UNKNOWN_ELEMENT);
 
     displays.add(_buildShutters(element));
   });

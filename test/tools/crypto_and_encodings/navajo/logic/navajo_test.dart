@@ -28,7 +28,6 @@ void main() {
 
   group("Navajo.decrypt:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'alphabet' : true, 'expectedOutput' : ''},
       {'input' : '', 'alphabet' : true, 'expectedOutput' : ''},
 
       {'expectedOutput' : o1k, 'alphabet' : true, 'input' : oK11},
@@ -43,7 +42,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeNavajo(elem['input'] as String?, elem['alphabet'] as bool);
+        var _actual = decodeNavajo(elem['input'] as String, elem['alphabet'] as bool);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -62,7 +61,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeNavajo(elem['input'] as String?, elem['alphabet'] as bool);
+        var _actual = encodeNavajo(elem['input'] as String, elem['alphabet'] as bool);
         expect(_actual, elem['expectedOutput']);
       });
     }

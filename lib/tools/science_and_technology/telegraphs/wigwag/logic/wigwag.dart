@@ -18,7 +18,7 @@ Map<WigWagCodebook, CodebookConfig> CCITT_CODEBOOK = {
   ),
 };
 
-final Map<String, int> originalCode = {
+final Map<String, int> _originalCode = {
   'ENDOFWORD': 3,
   'ENDOFSENTENCE': 33,
   'ENDOFMESSAGE': 333,
@@ -67,7 +67,7 @@ final Map<String, int> originalCode = {
   'Z': 2222,
 };
 
-final Map<String, int> generalCode1860 = {
+final Map<String, int> _generalCode1860 = {
   'ENDOFWORD': 3,
   'ENDOFSENTENCE': 33,
   'ENDOFMESSAGE': 333,
@@ -116,7 +116,7 @@ final Map<String, int> generalCode1860 = {
   'Z': 113,
 };
 
-final Map<String, int> generalCode1872 = {
+final Map<String, int> _generalCode1872 = {
   'ENDOFWORD': 5,
   'ENDOFSENTENCE': 55,
   'ENDOFMESSAGE': 555,
@@ -180,13 +180,13 @@ String encodeWigWag(String plainText, WigWagCodebook language) {
   Map<String, int> codebook;
   switch (language) {
     case WigWagCodebook.ORIGINAL:
-      codebook = originalCode;
+      codebook = _originalCode;
       break;
     case WigWagCodebook.GENERALSERVICECODE1860:
-      codebook = generalCode1860;
+      codebook = _generalCode1860;
       break;
     case WigWagCodebook.GENERALSERVICECODE1872:
-      codebook = generalCode1872;
+      codebook = _generalCode1872;
       break;
   }
 
@@ -225,19 +225,19 @@ String encodeWigWag(String plainText, WigWagCodebook language) {
   return output.join(' ');
 }
 
-String decodeWigWag(List<int>? cypherText, WigWagCodebook language) {
-  if (cypherText == null || cypherText.isEmpty) return '';
+String decodeWigWag(List<int> cypherText, WigWagCodebook language) {
+  if (cypherText.isEmpty) return '';
 
   Map<int, String> codebook;
   switch (language) {
     case WigWagCodebook.ORIGINAL:
-      codebook = switchMapKeyValue(originalCode);
+      codebook = switchMapKeyValue(_originalCode);
       break;
     case WigWagCodebook.GENERALSERVICECODE1860:
-      codebook = switchMapKeyValue(generalCode1860);
+      codebook = switchMapKeyValue(_generalCode1860);
       break;
     case WigWagCodebook.GENERALSERVICECODE1872:
-      codebook = switchMapKeyValue(generalCode1872);
+      codebook = switchMapKeyValue(_generalCode1872);
       break;
   }
 

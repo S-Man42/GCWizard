@@ -24,9 +24,7 @@ final Map<int, List<String>> _numbersToSegments = {
   19: ['a', 'b', 'c', 'd', 'e', 'f', 'g'],
 };
 
-Segments encodeMayaNumbers(int? input) {
-  if (input == null) return Segments.Empty();
-
+Segments encodeMayaNumbers(int input) {
   var vigesimal = convertBase(input.toString(), 10, 20);
   var result = vigesimal.split('').map((digit) {
     return _numbersToSegments[int.tryParse(convertBase(digit, 20, 10))] ?? [];
@@ -34,8 +32,8 @@ Segments encodeMayaNumbers(int? input) {
   return Segments(displays:result);
 }
 
-SegmentsVigesimal decodeMayaNumbers(List<String>? inputs) {
-  if (inputs == null || inputs.isEmpty) return SegmentsVigesimal(displays: [], numbers: [0], vigesimal: BigInt.zero);
+SegmentsVigesimal decodeMayaNumbers(List<String> inputs) {
+  if (inputs.isEmpty) return SegmentsVigesimal(displays: [], numbers: [0], vigesimal: BigInt.zero);
 
   var oneCharacters = ['d', 'e', 'f', 'g'];
   var fiveCharacters = ['a', 'b', 'c'];

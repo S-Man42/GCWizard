@@ -5,8 +5,6 @@ import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/l
 void main() {
   group("MayaNumbers.encodeMayaNumbers:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : <String>[]},
-
       {'input' : 0, 'expectedOutput' : [<String>[]]},
       {'input' : 1, 'expectedOutput' : [['d']]},
       {'input' : 5, 'expectedOutput' : [['c']]},
@@ -24,7 +22,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeMayaNumbers(elem['input'] as int?);
+        var _actual = encodeMayaNumbers(elem['input'] as int);
         expect(_actual.displays, elem['expectedOutput']);
       });
     }
@@ -32,7 +30,6 @@ void main() {
 
   group("MayaNumbers.decodeMayaNumbers:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : SegmentsVigesimal( displays: [], numbers: [0], vigesimal: BigInt.from(0))},
       {'input' : <String>[], 'expectedOutput' : SegmentsVigesimal( displays: [], numbers: [0], vigesimal: BigInt.from(0))},
 
       {'input' : <String>[''], 'expectedOutput' : SegmentsVigesimal( displays: [[]], numbers: [0], vigesimal: BigInt.from(0))},
@@ -68,7 +65,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeMayaNumbers(elem['input'] as List<String>?);
+        var _actual = decodeMayaNumbers(elem['input'] as List<String>);
         var expected = elem['expectedOutput'] as SegmentsVigesimal;
         expect(_actual.displays, expected.displays);
         expect(_actual.numbers, expected.numbers);

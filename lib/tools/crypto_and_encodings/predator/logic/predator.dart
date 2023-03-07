@@ -2,7 +2,7 @@ import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/l
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
-final Map<String, List<String>> CODEBOOK_PREDATOR = {
+final Map<String, List<String>> _CODEBOOK_PREDATOR = {
   'a': ['b', 'f', 'h'],
   'b': ['b', 'd', 'f', 'h'],
   'c': ['b'],
@@ -73,7 +73,7 @@ Segments encodePredator(String? input) {
   List<String> inputs = input.split('');
   List<List<String>> result = [];
   for (int i = 0; i < inputs.length; i++) {
-    if (CODEBOOK_PREDATOR[inputs[i]] != null) result.add(CODEBOOK_PREDATOR[inputs[i]]!);
+    if (_CODEBOOK_PREDATOR[inputs[i]] != null) result.add(_CODEBOOK_PREDATOR[inputs[i]]!);
   }
   return Segments(displays: result);
 }
@@ -84,7 +84,7 @@ SegmentsChars decodePredator(List<String>? inputs) {
   var displays = <List<String>>[];
   var segment = <String>[];
 
-  Map<List<String>, String> CODEBOOK = switchMapKeyValue(CODEBOOK_PREDATOR);
+  Map<List<String>, String> CODEBOOK = switchMapKeyValue(_CODEBOOK_PREDATOR);
 
   for (var element in inputs) {
     segment = _stringToSegment(element);
