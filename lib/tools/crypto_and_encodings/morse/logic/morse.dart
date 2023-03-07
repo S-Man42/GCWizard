@@ -24,8 +24,8 @@ final Map<String, String> AZToMorse = {
 // Å has same code as À, so À replaces Å in mapping; Å will not occur in this map
 final MorseToAZ = switchMapKeyValue(AZToMorse);
 
-String encodeMorse(String? input) {
-  if (input == null || input.isEmpty) return '';
+String encodeMorse(String input) {
+  if (input.isEmpty) return '';
 
   return input.toUpperCase().split('').map((character) {
     if (character == ' ') return '|';
@@ -35,8 +35,8 @@ String encodeMorse(String? input) {
   }).join(String.fromCharCode(8195)); // using wide space
 }
 
-String decodeMorse(String? input) {
-  if (input == null || input.isEmpty) return '';
+String decodeMorse(String input) {
+  if (input.isEmpty) return '';
 
   return input.split(RegExp(r'[^\.\-/\|]')).map((morse) {
     if (morse == '|' || morse == '/') return ' ';

@@ -17,9 +17,7 @@ int _getMaxValue(int wheelNo) {
   }
 }
 
-String encryptMexicanArmyCipherWheel(String? input, List<int> keys) {
-  if (input == null) return '';
-
+String encryptMexicanArmyCipherWheel(String input, List<int> keys) {
   input = input.toUpperCase().replaceAll(RegExp(r'[^A-Z]'), '');
 
   if (input.isEmpty) return '';
@@ -42,10 +40,10 @@ String encryptMexicanArmyCipherWheel(String? input, List<int> keys) {
   }).join();
 }
 
-String decryptMexicanArmyCipherWheel(String? input, List<int> keys) {
-  if (input == null || input.isEmpty) return '';
+String decryptMexicanArmyCipherWheel(String input, List<int> keys) {
+  if (input.isEmpty) return '';
 
-  input = input.replaceAll(RegExp(r'[^0-9]'), '');
+  input = input.replaceAll(RegExp(r'\D'), '');
   if (input.length % 2 == 1) input = input.substring(0, input.length - 1);
 
   if (input.isEmpty) return '';

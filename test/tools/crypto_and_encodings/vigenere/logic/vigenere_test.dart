@@ -100,6 +100,8 @@ void main() {
 
   group("Vigenere.decrypt:", () {
     List<Map<String, Object?>> _inputsToExpected = [
+      {'input' : 'MOQ', 'key': 'MNO', 'autoKey': false, 'aValue': 0, 'expectedOutput' : 'ABC'},
+
       {'input' : '', 'key': '', 'autoKey': false, 'aValue': 0, 'expectedOutput' : ''},
       {'input' : '', 'key': 'ABC', 'autoKey': false, 'aValue': 0, 'expectedOutput' : ''},
       {'input' : 'ABC', 'key': '', 'autoKey': false, 'aValue': 0, 'expectedOutput' : 'ABC'},

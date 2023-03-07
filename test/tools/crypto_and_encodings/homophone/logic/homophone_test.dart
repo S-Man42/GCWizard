@@ -64,8 +64,8 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, keyMap: ${elem['keyMap']}', () {
-        var _actual = encryptHomophoneWithKeyMap(elem['input'] as String, elem['keyMap'] as Map<String, List<int>>?);
-        Map<String, String> map ;
+        var _actual = encryptHomophoneWithKeyMap(elem['input'] as String, elem['keyMap'] as Map<String, List<int>>);
+        Map<String, String> map;
         map = replaceMap(elem['rotation'] as int, elem['multiplier'] as int, elem['alphabet'] as Alphabet);
         var output = changeOutput(_actual.output, map);
         expect(_actual.errorCode, elem['errorcode']);
@@ -89,7 +89,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, alphabet: ${elem['alphabet']}, rotation: ${elem['rotation']}, multiplier: ${elem['multiplier']}', () {
-        var _actual = decryptHomophoneWithGeneratedKey(elem['input'] as String? , elem['alphabet'] as Alphabet, elem['rotation'] as int, elem['multiplier'] as int);
+        var _actual = decryptHomophoneWithGeneratedKey(elem['input'] as String , elem['alphabet'] as Alphabet, elem['rotation'] as int, elem['multiplier'] as int);
         expect(_actual.errorCode, elem['errorcode']);
         expect(_actual.output, elem['expectedOutput']);
       });
@@ -118,7 +118,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']},alphabet: ${elem['alphabet']}, keyList: ${elem['keyList']}', () {
-        var _actual = decryptHomophoneWithKeyList(elem['input'] as String? , elem['alphabet'] as Alphabet, textToIntList(elem['keyList'] as String));
+        var _actual = decryptHomophoneWithKeyList(elem['input'] as String , elem['alphabet'] as Alphabet, textToIntList(elem['keyList'] as String));
         expect(_actual.errorCode, elem['errorcode']);
         expect(_actual.output, elem['expectedOutput']);
       });
@@ -133,7 +133,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, keyMap: ${elem['keyMap']}', () {
-        var _actual = decryptHomophoneWithKeyMap(elem['input'] as String?, elem['keyMap'] as Map<String, List<int>>?);
+        var _actual = decryptHomophoneWithKeyMap(elem['input'] as String, elem['keyMap'] as Map<String, List<int>>?);
         expect(_actual.errorCode, elem['errorcode']);
         expect(_actual.output, elem['expectedOutput']);
       });
