@@ -4,7 +4,6 @@ import 'package:gc_wizard/tools/science_and_technology/teletypewriter/_common/lo
 void main() {
   group("CCITT1.encodeCCITT1:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
       {'input' : 'ABC', 'expectedOutput' : '4 9 13'},
@@ -38,7 +37,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeTeletypewriter(elem['input'] as String?, TeletypewriterCodebook.BAUDOT_54123);
+        var _actual = encodeTeletypewriter(elem['input'] as String, TeletypewriterCodebook.BAUDOT_54123);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -46,7 +45,6 @@ void main() {
 
   group("CCITT1.decodeCCITT1:", () { // Mark test
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
       {'input' : <int>[], 'expectedOutput' : ''},
 
       {'expectedOutput' : 'ABC', 'input' : [4, 9, 13]},
@@ -69,7 +67,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeTeletypewriter(elem['input'] as List<int>?, TeletypewriterCodebook.BAUDOT_54123);
+        var _actual = decodeTeletypewriter(elem['input'] as List<int>, TeletypewriterCodebook.BAUDOT_54123);
         expect(_actual, elem['expectedOutput']);
       });
     }

@@ -21,7 +21,7 @@ Map<ChappeCodebook, CodebookConfig> CHAPPE_CODEBOOK = {
   ),
 };
 
-final Map<String, List<String>> CODEBOOK_CHAPPE_DIGITS = {
+final Map<String, List<String>> _CODEBOOK_CHAPPE_DIGITS = {
   '1': ['30', '70'],
   '2': ['10', '50'],
   '3': ['30', '3r', '70'],
@@ -34,7 +34,7 @@ final Map<String, List<String>> CODEBOOK_CHAPPE_DIGITS = {
   '0': ['10', '50', '5l'],
 };
 
-final Map<String, List<String>> CODEBOOK_CHAPPE_ALPHABET = {
+final Map<String, List<String>> _CODEBOOK_CHAPPE_ALPHABET = {
   'A': ['10', '1r', '50', '5l'],
   'B': ['20', '2r', '60', '6l'],
   'C': ['30', '3r', '70', '7l'],
@@ -73,7 +73,7 @@ final Map<String, List<String>> CODEBOOK_CHAPPE_ALPHABET = {
   '&': ['20', '60', '6l'],
 };
 
-final Map<String, List<String>> CODEBOOK_CHAPPE_CODEPOINTS = {
+final Map<String, List<String>> _CODEBOOK_CHAPPE_CODEPOINTS = {
   '1': ['30', '3o', '70'],
   '2': ['30', '3u', '70'],
   '3': ['30', '70', '7o'],
@@ -168,7 +168,7 @@ final Map<String, List<String>> CODEBOOK_CHAPPE_CODEPOINTS = {
   '92': ['10', '1l', '50', '5a'],
 };
 
-final Map<String, List<String>> CODEBOOK_KULIBIN = {
+final Map<String, List<String>> _CODEBOOK_KULIBIN = {
   'A': ['10', '1r', '50', '5l'],
   'B': ['20', '2r', '60', '6l'],
   'C': ['30', '3r', '70', '7l'],
@@ -221,16 +221,16 @@ Segments encodeChappe(String? input, ChappeCodebook language) {
   Map<String, List<String>> CODEBOOK;
   switch (language) {
     case ChappeCodebook.ALPHABET:
-      CODEBOOK = CODEBOOK_CHAPPE_ALPHABET;
+      CODEBOOK = _CODEBOOK_CHAPPE_ALPHABET;
       break;
     case ChappeCodebook.CODEPOINTS:
-      CODEBOOK = CODEBOOK_CHAPPE_CODEPOINTS;
+      CODEBOOK = _CODEBOOK_CHAPPE_CODEPOINTS;
       break;
     case ChappeCodebook.DIGITS:
-      CODEBOOK = CODEBOOK_CHAPPE_DIGITS;
+      CODEBOOK = _CODEBOOK_CHAPPE_DIGITS;
       break;
     case ChappeCodebook.KULIBIN:
-      CODEBOOK = CODEBOOK_KULIBIN;
+      CODEBOOK = _CODEBOOK_KULIBIN;
       break;
   }
 
@@ -252,16 +252,16 @@ SegmentsText decodeVisualChappe(List<String>? inputs, ChappeCodebook language) {
 
   switch (language) {
     case ChappeCodebook.ALPHABET:
-      CODEBOOK = switchMapKeyValue(CODEBOOK_CHAPPE_ALPHABET);
+      CODEBOOK = switchMapKeyValue(_CODEBOOK_CHAPPE_ALPHABET);
       break;
     case ChappeCodebook.CODEPOINTS:
-      CODEBOOK = switchMapKeyValue(CODEBOOK_CHAPPE_CODEPOINTS);
+      CODEBOOK = switchMapKeyValue(_CODEBOOK_CHAPPE_CODEPOINTS);
       break;
     case ChappeCodebook.DIGITS:
-      CODEBOOK = switchMapKeyValue(CODEBOOK_CHAPPE_DIGITS);
+      CODEBOOK = switchMapKeyValue(_CODEBOOK_CHAPPE_DIGITS);
       break;
     case ChappeCodebook.KULIBIN:
-      CODEBOOK = switchMapKeyValue(CODEBOOK_KULIBIN);
+      CODEBOOK = switchMapKeyValue(_CODEBOOK_KULIBIN);
       break;
   }
 
@@ -310,16 +310,16 @@ SegmentsText decodeTextChappeTelegraph(String? inputs, ChappeCodebook language) 
 
   switch (language) {
     case ChappeCodebook.ALPHABET:
-      CODEBOOK = CODEBOOK_CHAPPE_ALPHABET;
+      CODEBOOK = _CODEBOOK_CHAPPE_ALPHABET;
       break;
     case ChappeCodebook.CODEPOINTS:
-      CODEBOOK = CODEBOOK_CHAPPE_CODEPOINTS;
+      CODEBOOK = _CODEBOOK_CHAPPE_CODEPOINTS;
       break;
     case ChappeCodebook.DIGITS:
-      CODEBOOK = CODEBOOK_CHAPPE_DIGITS;
+      CODEBOOK = _CODEBOOK_CHAPPE_DIGITS;
       break;
     case ChappeCodebook.KULIBIN:
-      CODEBOOK = CODEBOOK_KULIBIN;
+      CODEBOOK = _CODEBOOK_KULIBIN;
       break;
   }
 

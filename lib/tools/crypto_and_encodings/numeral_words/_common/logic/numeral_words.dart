@@ -120,7 +120,7 @@ class OutputConvertToNumeralWord extends OutputConvertBase {
       : super(numbersystem, title, error);
 }
 
-final Map<String, String> AMHWordToNum = {
+final Map<String, String> _AMHWordToNum = {
   'bado': '0',
   'ahnd': '1',
   'hulet': '2',
@@ -133,7 +133,7 @@ final Map<String, String> AMHWordToNum = {
   'zetegn': '9',
   '\'asser ': '10',
 };
-final Map<String, String> BASWordToNum = {
+final Map<String, String> _BASWordToNum = {
   'huts / zero': '0',
   'bat': '1',
   'bi': '2',
@@ -146,7 +146,7 @@ final Map<String, String> BASWordToNum = {
   'bederatzi': '9',
   'hamar': '10',
 };
-final Map<String, String> BREWordToNum = {
+final Map<String, String> _BREWordToNum = {
   'mann': '0',
   'unan': '1',
   'daou': '2',
@@ -159,7 +159,7 @@ final Map<String, String> BREWordToNum = {
   'nav': '9',
   'dek': '10',
 };
-final Map<String, String> BULKYRWordToNum = {
+final Map<String, String> _BULKYRWordToNum = {
   'нула': '0',
   "едно": '1',
   "една": '1',
@@ -198,7 +198,7 @@ final Map<String, String> BULKYRWordToNum = {
   'запад': 'numeralwords_w',
   'юг': 'numeralwords_s',
 };
-final Map<String, String> BULWordToNum = {
+final Map<String, String> _BULWordToNum = {
   'nula': '0',
   "edno": '1',
   "edna": '1',
@@ -237,7 +237,7 @@ final Map<String, String> BULWordToNum = {
   'zapad': 'numeralwords_w',
   'yug': 'numeralwords_s',
 };
-final Map<String, String> CEQWordToNum = {
+final Map<String, String> _CEQWordToNum = {
   'han': '1',
   'du': '2',
   'tri': '3',
@@ -249,7 +249,7 @@ final Map<String, String> CEQWordToNum = {
   'gau': '9',
   'hanzoi': '10',
 };
-final Map<String, String> CHIFinanceWordToNum = {
+final Map<String, String> _CHIFinanceWordToNum = {
 // https://de.wikipedia.org/wiki/Chinesische_Zahlzeichen
   '零': '0',
   '壹': '1',
@@ -287,7 +287,7 @@ final Map<String, String> CHIFinanceWordToNum = {
   '仟': '1000',
   '萬': '10000'
 };
-final Map<String, String> CHISymbolWordToNum = {
+final Map<String, String> _CHISymbolWordToNum = {
 // https://de.wikipedia.org/wiki/Chinesische_Zahlzeichen
   '零': '0',
   '〇': '0',
@@ -324,7 +324,7 @@ final Map<String, String> CHISymbolWordToNum = {
   '万': '10000',
   '萬': '10000',
 };
-final Map<String, String> CHIWordToNum = {
+final Map<String, String> _CHIWordToNum = {
 // https://de.wikipedia.org/wiki/Chinesische_Zahlzeichen
   'líng': '0',
   'yī': '1',
@@ -360,7 +360,7 @@ final Map<String, String> CHIWordToNum = {
   'qiān': '1000',
   'wàn': '10000'
 };
-final Map<String, String> CHIZhuyinWordToNum = {
+final Map<String, String> _CHIZhuyinWordToNum = {
 // https://de.wikipedia.org/wiki/Chinesische_Zahlzeichen
   'ㄌㄧㄥˊ': '0',
   'ㄧ': '1',
@@ -395,7 +395,7 @@ final Map<String, String> CHIZhuyinWordToNum = {
   'ㄑㄧㄢ': '1000',
   'ㄨㄢˋ': '10000'
 };
-final Map<String, String> CZEWordToNum = {
+final Map<String, String> _CZEWordToNum = {
   'zero': '0',
   'jedna': '1',
   'dva': '2',
@@ -434,7 +434,7 @@ final Map<String, String> CZEWordToNum = {
   'západní': 'numeralwords_w',
   'jih': 'numeralwords_s',
 };
-final Map<String, String> DEUWordToNum = {
+final Map<String, String> _DEUWordToNum = {
   'null': '0',
   'eins': '1',
   'zwei': '2',
@@ -474,7 +474,7 @@ final Map<String, String> DEUWordToNum = {
   'west': 'numeralwords_w',
   'sued': 'numeralwords_s',
 };
-final Map<String, String> DNKWordToNum = {
+final Map<String, String> _DNKWordToNum = {
   'nul': '0',
   'en': '1',
   'to': '2',
@@ -513,7 +513,7 @@ final Map<String, String> DNKWordToNum = {
   'vest': 'numeralwords_w',
   'syd': 'numeralwords_s'
 };
-final Map<String, String> DOTWordToNum = {
+final Map<String, String> _DOTWordToNum = {
   'som': '0',
   'at': '1',
   'akat': '2',
@@ -545,7 +545,7 @@ final Map<String, String> DOTWordToNum = {
   'ken': '100',
   'dalen': '1000',
 };
-final Map<String, String> ENGWordToNum = {
+final Map<String, String> _ENGWordToNum = {
   'zero': '0',
   'one': '1',
   'two': '2',
@@ -585,7 +585,7 @@ final Map<String, String> ENGWordToNum = {
   'west': 'numeralwords_w',
   'south': 'numeralwords_s'
 };
-final Map<String, String> EPOWordToNum = {
+final Map<String, String> _EPOWordToNum = {
   'nulo': '0',
   'unu': '1',
   'du': '2',
@@ -626,7 +626,7 @@ final Map<String, String> EPOWordToNum = {
   'grado': 'grad',
   'punkto': 'punkt',
 };
-final Map<String, String> ESPWordToNum = {
+final Map<String, String> _ESPWordToNum = {
   'cero': '0',
   'uno': '1',
   'una': '1',
@@ -666,7 +666,7 @@ final Map<String, String> ESPWordToNum = {
   'oeste': 'numeralwords_w',
   'sur': 'numeralwords_s'
 };
-final Map<String, String> FINWordToNum = {
+final Map<String, String> _FINWordToNum = {
   'nolla': '0',
   'yksi': '1',
   'kaksi': '2',
@@ -679,7 +679,7 @@ final Map<String, String> FINWordToNum = {
   'yhdeksän': '9',
   'kymmenen': '10',
 };
-final Map<String, String> FRAWordToNum = {
+final Map<String, String> _FRAWordToNum = {
   'zéro': '0',
   'un': '1',
   'une': '1',
@@ -719,7 +719,7 @@ final Map<String, String> FRAWordToNum = {
   'ouest': 'numeralwords_w',
   'sud': 'numeralwords_s'
 };
-final Map<String, String> GRCLATWordToNum = {
+final Map<String, String> _GRCLATWordToNum = {
   'midén': '0',
   'énas': '1',
   'miá': '1',
@@ -767,7 +767,7 @@ final Map<String, String> GRCLATWordToNum = {
   'dusk': 'numeralwords_w',
   'notia': 'numeralwords_s',
 };
-final Map<String, String> GRCWordToNum = {
+final Map<String, String> _GRCWordToNum = {
   'μηδέν': '0',
   'ένας': '1',
   'μία': '1',
@@ -819,7 +819,7 @@ final Map<String, String> GRCWordToNum = {
   'δυτικά': 'numeralwords_w',
   'νότια': 'numeralwords_s',
 };
-final Map<String, String> GRCOLDLATWordToNum = {
+final Map<String, String> _GRCOLDLATWordToNum = {
   'midén': '0',
   'heîs': '1',
   'mía': '1',
@@ -866,7 +866,7 @@ final Map<String, String> GRCOLDLATWordToNum = {
   'dusk': 'numeralwords_w',
   'notia': 'numeralwords_s',
 };
-final Map<String, String> GRCOLDWordToNum = {
+final Map<String, String> _GRCOLDWordToNum = {
   'μηδέν': '0',
   'εἷς': '1',
   'μία': '1',
@@ -913,7 +913,7 @@ final Map<String, String> GRCOLDWordToNum = {
   'δυτικά': 'numeralwords_w',
   'νότια': 'numeralwords_s',
 };
-final Map<String, String> HANGULKORWordToNum = {
+final Map<String, String> _HANGULKORWordToNum = {
   '하나': '1',
   '하': '1',
   '두': '2',
@@ -954,7 +954,7 @@ final Map<String, String> HANGULKORWordToNum = {
   '드먼': '10000',
   '골': '10000',
 };
-final Map<String, String> HANGULSINOKORWordToNum = {
+final Map<String, String> _HANGULSINOKORWordToNum = {
   '영': '0',
   '령': '0',
   '일': '1',
@@ -991,7 +991,7 @@ final Map<String, String> HANGULSINOKORWordToNum = {
   '천': '1000',
   '만': '10000',
 };
-final Map<String, String> HANJAWordToNum = {
+final Map<String, String> _HANJAWordToNum = {
   '零': '0',
   '空': '0',
   '一': '1',
@@ -1025,7 +1025,7 @@ final Map<String, String> HANJAWordToNum = {
   '千': '1000',
   '萬': '10000'
 };
-final Map<String, String> INDWordToNum = {
+final Map<String, String> _INDWordToNum = {
   'nol': '0',
   'satu': '1',
   'dua': '2',
@@ -1038,7 +1038,7 @@ final Map<String, String> INDWordToNum = {
   'sembilan': '9',
   'sepuluh': '10',
 };
-final Map<String, String> ITAWordToNum = {
+final Map<String, String> _ITAWordToNum = {
   'zero': '0',
   'uno': '1',
   'due': '2',
@@ -1077,7 +1077,7 @@ final Map<String, String> ITAWordToNum = {
   'ovest': 'numeralwords_w',
   'sud': 'numeralwords_s'
 };
-final Map<String, String> JAPHiraganaWordToNum = {
+final Map<String, String> _JAPHiraganaWordToNum = {
 // https://darkfairyssenf.de/2018/05/17/nihongo-zahlen-auf-japanisch/#:~:text=Gro%C3%9Fe%20Spr%C3%BCnge%20%20%20%20Zahl%20%20,1000%20%20%20sen%20%20%20%E3%81%9B%E3%82%93%20
   'ゼロ': '0',
   'れい': '0',
@@ -1120,7 +1120,7 @@ final Map<String, String> JAPHiraganaWordToNum = {
   'ひゃく': '100',
   'せん': '1000',
 };
-final Map<String, String> JAPWordToNum = {
+final Map<String, String> _JAPWordToNum = {
 // https://darkfairyssenf.de/2018/05/17/nihongo-zahlen-auf-japanisch/#:~:text=Gro%C3%9Fe%20Spr%C3%BCnge%20%20%20%20Zahl%20%20,1000%20%20%20sen%20%20%20%E3%81%9B%E3%82%93%20
   'zero': '0',
   'rei': '0',
@@ -1163,7 +1163,7 @@ final Map<String, String> JAPWordToNum = {
   'hyaku': '100',
   'sen': '1000',
 };
-final Map<String, String> KLIWordToNum = {
+final Map<String, String> _KLIWordToNum = {
   'pagh': '0',
   'wa\'': '1',
   'cha\'': '2',
@@ -1215,7 +1215,7 @@ final Map<String, String> KLIWordToNum = {
   '\'evting': 'numeralwords_w',
   'maH': 'numeralwords_w',
 };
-final Map<String, String> KORWordToNum = {
+final Map<String, String> _KORWordToNum = {
   'hana': '1',
   'hah-nah': '1',
   'han': '1',
@@ -1314,7 +1314,7 @@ final Map<String, String> KORWordToNum = {
   'deumeun': '10000',
   'gol': '10000',
 };
-final Map<String, String> KYRWordToNum = {
+final Map<String, String> _KYRWordToNum = {
   'ноль': '0',
   'нуль': '0',
   'один': '1',
@@ -1357,7 +1357,7 @@ final Map<String, String> KYRWordToNum = {
   'Запад': 'numeralwords_w',
   'юг': 'numeralwords_s'
 };
-final Map<String, String> LATWordToNum = {
+final Map<String, String> _LATWordToNum = {
   'zerum': '0',
   'nullum': '0',
   'unus': '1',
@@ -1398,7 +1398,7 @@ final Map<String, String> LATWordToNum = {
   'west': 'numeralwords_w',
   'meridies': 'numeralwords_s',
 };
-final Map<String, String> LOJWordToNum = {
+final Map<String, String> _LOJWordToNum = {
   'no': '0',
   'pa': '1',
   're': '2',
@@ -1411,7 +1411,7 @@ final Map<String, String> LOJWordToNum = {
   'so': '9',
   'pano': '10',
 };
-final Map<String, String> MAPWordToNum = {
+final Map<String, String> _MAPWordToNum = {
   'kinhe': '1',
   'epu': '2',
   'kyla': '3',
@@ -1423,7 +1423,7 @@ final Map<String, String> MAPWordToNum = {
   'ailha': '9',
   'mari ': '10',
 };
-final Map<String, String> MEGWordToNum = {
+final Map<String, String> _MEGWordToNum = {
   'zero': '0',
   'ună': '1',
   'dău': '2',
@@ -1436,7 +1436,7 @@ final Map<String, String> MEGWordToNum = {
   'nău': '9',
   'dzieţi ': '10',
 };
-final Map<String, String> MINWordToNum = {
+final Map<String, String> _MINWordToNum = {
   'hana': '1',
   'dul': '2',
   'sae': '3',
@@ -1448,7 +1448,7 @@ final Map<String, String> MINWordToNum = {
   'saesaesae': '9',
   'saesaesaehana': '10',
 };
-final Map<String, String> NAVIWordToNum = {
+final Map<String, String> _NAVIWordToNum = {
   'kew': '0',
   "'aw": '1',
   'mune': '2',
@@ -1474,7 +1474,7 @@ final Map<String, String> NAVIWordToNum = {
   'ftaer': 'numeralwords_w',
   'nekll': 'numeralwords_s',
 };
-final Map<String, String> NLDWordToNum = {
+final Map<String, String> _NLDWordToNum = {
   'nul': '0',
   'een': '1',
   'twee': '2',
@@ -1513,7 +1513,7 @@ final Map<String, String> NLDWordToNum = {
   'west': 'numeralwords_w',
   'zuid': 'numeralwords_s'
 };
-final Map<String, String> NORWordToNum = {
+final Map<String, String> _NORWordToNum = {
   'nul': '0',
   'en': '1',
   'ett': '1',
@@ -1554,7 +1554,7 @@ final Map<String, String> NORWordToNum = {
   'vest': 'numeralwords_w',
   'sør': 'numeralwords_s'
 };
-final Map<String, String> PERWordToNum = {
+final Map<String, String> _PERWordToNum = {
   'sefr': '0',
   'yek': '1',
   'do': '2',
@@ -1567,7 +1567,7 @@ final Map<String, String> PERWordToNum = {
   'noh': '9',
   'dah': '10',
 };
-final Map<String, String> POLWordToNum = {
+final Map<String, String> _POLWordToNum = {
   'zero': '0',
   'jeden': '1',
   'jedna': '1',
@@ -1609,7 +1609,7 @@ final Map<String, String> POLWordToNum = {
   'zachód': 'numeralwords_w',
   'południe': 'numeralwords_s'
 };
-final Map<String, String> PORWordToNum = {
+final Map<String, String> _PORWordToNum = {
   'zero': '0',
   'um': '1',
   'dois': '2',
@@ -1650,7 +1650,7 @@ final Map<String, String> PORWordToNum = {
   'oeste': 'numeralwords_w',
   'sul': 'numeralwords_s'
 };
-final Map<String, String> QUEWordToNum = {
+final Map<String, String> _QUEWordToNum = {
   'huk': '0',
   'iskay': '1',
   'kimsa': '2',
@@ -1662,7 +1662,7 @@ final Map<String, String> QUEWordToNum = {
   'isqon': '8',
   'chunka ': '9',
 };
-final Map<String, String> ROUWordToNum = {
+final Map<String, String> _ROUWordToNum = {
   'zero': '0',
   'unu': '1',
   'una': '1',
@@ -1705,7 +1705,7 @@ final Map<String, String> ROUWordToNum = {
   'vest': 'numeralwords_w',
   'sud': 'numeralwords_s',
 };
-final Map<String, String> RUSWordToNum = {
+final Map<String, String> _RUSWordToNum = {
   'nol': '0',
   'nul': '0',
   'adna': '1',
@@ -1747,7 +1747,7 @@ final Map<String, String> RUSWordToNum = {
   'zapad': 'numeralwords_w',
   'yug': 'numeralwords_s'
 };
-final Map<String, String> SCOWordToNum = {
+final Map<String, String> _SCOWordToNum = {
   'nocht': '0',
   'ane': '1',
   'ae': '1',
@@ -1761,7 +1761,7 @@ final Map<String, String> SCOWordToNum = {
   'nine': '9',
   'ten ': '10',
 };
-final Map<String, String> SHAWordToNum = {
+final Map<String, String> _SHAWordToNum = {
   'ga': '0',
   'bu': '1',
   'zo': '2',
@@ -1774,7 +1774,7 @@ final Map<String, String> SHAWordToNum = {
   'zobu': '9',
   'zozo': '10',
 };
-final Map<String, String> SINOKORWordToNum = {
+final Map<String, String> _SINOKORWordToNum = {
   'yeong': '0',
   'ryeong': '0',
   'eel': '1',
@@ -1831,7 +1831,7 @@ final Map<String, String> SINOKORWordToNum = {
   'cheon': '1000',
   'man': '10000',
 };
-final Map<String, String> SOLWordToNum = {
+final Map<String, String> _SOLWordToNum = {
   'soldo': '0',
   'redodo': '1',
   'remimi': '2',
@@ -1869,7 +1869,7 @@ final Map<String, String> SOLWordToNum = {
   'famidosi': 'grad',
   'relaresol': 'punkt',
 };
-final Map<String, String> SVKWordToNum = {
+final Map<String, String> _SVKWordToNum = {
   'nula': '0',
   'jeden': '1',
   'dva': '2',
@@ -1908,7 +1908,7 @@ final Map<String, String> SVKWordToNum = {
   'západ': 'numeralwords_w',
   'juh': 'numeralwords_s',
 };
-final Map<String, String> SWEWordToNum = {
+final Map<String, String> _SWEWordToNum = {
   'noll': '0',
   'en': '1',
   'ett': '1',
@@ -1948,7 +1948,7 @@ final Map<String, String> SWEWordToNum = {
   'väst': 'numeralwords_w',
   'syd': 'numeralwords_s'
 };
-final Map<String, String> TAMWordToNum = {
+final Map<String, String> _TAMWordToNum = {
   'cuḻiyam': '0',
   'oṉdṟu': '1',
   'irandu': '2',
@@ -1961,7 +1961,7 @@ final Map<String, String> TAMWordToNum = {
   'oṉbadhu': '9',
   'paththu': '10',
 };
-final Map<String, String> THAIRTGSWordToNum = {
+final Map<String, String> _THAIRTGSWordToNum = {
   'sun': '0',
   'nueng': '1',
   'song': '2',
@@ -1995,7 +1995,7 @@ final Map<String, String> THAIRTGSWordToNum = {
   'phan': '1000',
   'muen': '10000',
 };
-final Map<String, String> THAIWordToNum = {
+final Map<String, String> _THAIWordToNum = {
   'ศูนย์': '0',
   'หนึ่ง': '1',
   'สอง': '2',
@@ -2029,7 +2029,7 @@ final Map<String, String> THAIWordToNum = {
   'พันสิบ': '1000',
   'หมื่นสิบ': '10000',
 };
-final Map<String, String> TURWordToNum = {
+final Map<String, String> _TURWordToNum = {
   'sıfır': '0',
   'bir': '1',
   'iki': '2',
@@ -2044,7 +2044,7 @@ final Map<String, String> TURWordToNum = {
   'yüz': '100',
   'bin': '1000',
 };
-final Map<String, String> UNGWordToNum = {
+final Map<String, String> _UNGWordToNum = {
   'nulla': '0',
   'egy': '1',
   'kettő': '2',
@@ -2057,7 +2057,7 @@ final Map<String, String> UNGWordToNum = {
   'kilenc': '9',
   'tíz ': '10',
 };
-final Map<String, String> VIECHUNOMWordToNum = {
+final Map<String, String> _VIECHUNOMWordToNum = {
   // https://chunom.org/pages/?search=mot
   // https://www.omniglot.com/language/numbers/vietnamese.htm
   '𠬠': '1',
@@ -2089,7 +2089,7 @@ final Map<String, String> VIECHUNOMWordToNum = {
   '𢒂𨒒': '90',
   '𠬠𤾓': '100',
 };
-final Map<String, String> VIEHANTUWordToNum = {
+final Map<String, String> _VIEHANTUWordToNum = {
 // https://chunom.org/pages/?search=mot
   '空': '0',
   '零': '0',
@@ -2114,7 +2114,7 @@ final Map<String, String> VIEHANTUWordToNum = {
   '十': '10',
   '拾': '10',
 };
-final Map<String, String> VIESINOWordToNum = {
+final Map<String, String> _VIESINOWordToNum = {
 // https://chunom.org/pages/?search=mot
   'không': '0',
   'nhất': '1',
@@ -2128,7 +2128,7 @@ final Map<String, String> VIESINOWordToNum = {
   'cửu': '9',
   'thập': '10',
 };
-final Map<String, String> VIEWordToNum = {
+final Map<String, String> _VIEWordToNum = {
   'cê-rô': '0',
   'một': '1',
   'hai': '2',
@@ -2159,7 +2159,7 @@ final Map<String, String> VIEWordToNum = {
   'chín mười': '90',
   'một trăm': '100',
 };
-final Map<String, String> VOLWordToNum = {
+final Map<String, String> _VOLWordToNum = {
   'ser': '0',
   'bal': '1',
   'tel': '2',
@@ -2317,69 +2317,69 @@ final Map<NumeralWordsLanguage, String> NUMERALWORDS_LANGUAGES_CONVERTER = {
 };
 
 final Map<NumeralWordsLanguage, Map<String, String>> NUMERAL_WORDS = {
-  NumeralWordsLanguage.AMH: AMHWordToNum,
-  NumeralWordsLanguage.BAS: BASWordToNum,
-  NumeralWordsLanguage.BRE: BREWordToNum,
-  NumeralWordsLanguage.BUL: BULWordToNum,
-  NumeralWordsLanguage.BULKYR: BULKYRWordToNum,
-  NumeralWordsLanguage.CEQ: CEQWordToNum,
-  NumeralWordsLanguage.CHI: CHIWordToNum,
-  NumeralWordsLanguage.CHISYMBOL: CHISymbolWordToNum,
-  NumeralWordsLanguage.CHIZHUYIN: CHIZhuyinWordToNum,
-  NumeralWordsLanguage.CHIFINANCE: CHIFinanceWordToNum,
-  NumeralWordsLanguage.CZE: CZEWordToNum,
-  NumeralWordsLanguage.DEU: DEUWordToNum,
-  NumeralWordsLanguage.DNK: DNKWordToNum,
-  NumeralWordsLanguage.DOT: DOTWordToNum,
-  NumeralWordsLanguage.ENG: ENGWordToNum,
-  NumeralWordsLanguage.EPO: EPOWordToNum,
-  NumeralWordsLanguage.ESP: ESPWordToNum,
-  NumeralWordsLanguage.FIN: FINWordToNum,
-  NumeralWordsLanguage.FRA: FRAWordToNum,
-  NumeralWordsLanguage.GRC: GRCWordToNum,
-  NumeralWordsLanguage.GRCLAT: GRCLATWordToNum,
-  NumeralWordsLanguage.GRCOLD: GRCOLDWordToNum,
-  NumeralWordsLanguage.GRCOLDLAT: GRCOLDLATWordToNum,
-  NumeralWordsLanguage.HANJA: HANJAWordToNum,
-  NumeralWordsLanguage.HANGULKOR: HANGULKORWordToNum,
-  NumeralWordsLanguage.HANGULSINOKOR: HANGULSINOKORWordToNum,
-  NumeralWordsLanguage.IND: INDWordToNum,
-  NumeralWordsLanguage.ITA: ITAWordToNum,
-  NumeralWordsLanguage.JAP: JAPWordToNum,
-  NumeralWordsLanguage.JAPHIRAGANA: JAPHiraganaWordToNum,
-  NumeralWordsLanguage.KLI: KLIWordToNum,
-  NumeralWordsLanguage.KOR: KORWordToNum,
-  NumeralWordsLanguage.KYR: KYRWordToNum,
-  NumeralWordsLanguage.LAT: LATWordToNum,
-  NumeralWordsLanguage.LOJ: LOJWordToNum,
-  NumeralWordsLanguage.MAP: MAPWordToNum,
-  NumeralWordsLanguage.MEG: MEGWordToNum,
-  NumeralWordsLanguage.MIN: MINWordToNum,
-  NumeralWordsLanguage.NAVI: NAVIWordToNum,
-  NumeralWordsLanguage.NLD: NLDWordToNum,
-  NumeralWordsLanguage.NOR: NORWordToNum,
-  NumeralWordsLanguage.PER: PERWordToNum,
-  NumeralWordsLanguage.POL: POLWordToNum,
-  NumeralWordsLanguage.POR: PORWordToNum,
-  NumeralWordsLanguage.QUE: QUEWordToNum,
-  NumeralWordsLanguage.ROU: ROUWordToNum,
-  NumeralWordsLanguage.RUS: RUSWordToNum,
-  NumeralWordsLanguage.SCO: SCOWordToNum,
-  NumeralWordsLanguage.SHA: SHAWordToNum,
-  NumeralWordsLanguage.SINOKOR: SINOKORWordToNum,
-  NumeralWordsLanguage.SOL: SOLWordToNum,
-  NumeralWordsLanguage.SVK: SVKWordToNum,
-  NumeralWordsLanguage.SWE: SWEWordToNum,
-  NumeralWordsLanguage.TAM: TAMWordToNum,
-  NumeralWordsLanguage.THAI: THAIWordToNum,
-  NumeralWordsLanguage.THAIRTGS: THAIRTGSWordToNum,
-  NumeralWordsLanguage.TUR: TURWordToNum,
-  NumeralWordsLanguage.UNG: UNGWordToNum,
-  NumeralWordsLanguage.VIE: VIEWordToNum,
-  NumeralWordsLanguage.VIEHANTU: VIEHANTUWordToNum,
-  NumeralWordsLanguage.VIESINO: VIESINOWordToNum,
-  NumeralWordsLanguage.VIECHUNOM: VIECHUNOMWordToNum,
-  NumeralWordsLanguage.VOL: VOLWordToNum,
+  NumeralWordsLanguage.AMH: _AMHWordToNum,
+  NumeralWordsLanguage.BAS: _BASWordToNum,
+  NumeralWordsLanguage.BRE: _BREWordToNum,
+  NumeralWordsLanguage.BUL: _BULWordToNum,
+  NumeralWordsLanguage.BULKYR: _BULKYRWordToNum,
+  NumeralWordsLanguage.CEQ: _CEQWordToNum,
+  NumeralWordsLanguage.CHI: _CHIWordToNum,
+  NumeralWordsLanguage.CHISYMBOL: _CHISymbolWordToNum,
+  NumeralWordsLanguage.CHIZHUYIN: _CHIZhuyinWordToNum,
+  NumeralWordsLanguage.CHIFINANCE: _CHIFinanceWordToNum,
+  NumeralWordsLanguage.CZE: _CZEWordToNum,
+  NumeralWordsLanguage.DEU: _DEUWordToNum,
+  NumeralWordsLanguage.DNK: _DNKWordToNum,
+  NumeralWordsLanguage.DOT: _DOTWordToNum,
+  NumeralWordsLanguage.ENG: _ENGWordToNum,
+  NumeralWordsLanguage.EPO: _EPOWordToNum,
+  NumeralWordsLanguage.ESP: _ESPWordToNum,
+  NumeralWordsLanguage.FIN: _FINWordToNum,
+  NumeralWordsLanguage.FRA: _FRAWordToNum,
+  NumeralWordsLanguage.GRC: _GRCWordToNum,
+  NumeralWordsLanguage.GRCLAT: _GRCLATWordToNum,
+  NumeralWordsLanguage.GRCOLD: _GRCOLDWordToNum,
+  NumeralWordsLanguage.GRCOLDLAT: _GRCOLDLATWordToNum,
+  NumeralWordsLanguage.HANJA: _HANJAWordToNum,
+  NumeralWordsLanguage.HANGULKOR: _HANGULKORWordToNum,
+  NumeralWordsLanguage.HANGULSINOKOR: _HANGULSINOKORWordToNum,
+  NumeralWordsLanguage.IND: _INDWordToNum,
+  NumeralWordsLanguage.ITA: _ITAWordToNum,
+  NumeralWordsLanguage.JAP: _JAPWordToNum,
+  NumeralWordsLanguage.JAPHIRAGANA: _JAPHiraganaWordToNum,
+  NumeralWordsLanguage.KLI: _KLIWordToNum,
+  NumeralWordsLanguage.KOR: _KORWordToNum,
+  NumeralWordsLanguage.KYR: _KYRWordToNum,
+  NumeralWordsLanguage.LAT: _LATWordToNum,
+  NumeralWordsLanguage.LOJ: _LOJWordToNum,
+  NumeralWordsLanguage.MAP: _MAPWordToNum,
+  NumeralWordsLanguage.MEG: _MEGWordToNum,
+  NumeralWordsLanguage.MIN: _MINWordToNum,
+  NumeralWordsLanguage.NAVI: _NAVIWordToNum,
+  NumeralWordsLanguage.NLD: _NLDWordToNum,
+  NumeralWordsLanguage.NOR: _NORWordToNum,
+  NumeralWordsLanguage.PER: _PERWordToNum,
+  NumeralWordsLanguage.POL: _POLWordToNum,
+  NumeralWordsLanguage.POR: _PORWordToNum,
+  NumeralWordsLanguage.QUE: _QUEWordToNum,
+  NumeralWordsLanguage.ROU: _ROUWordToNum,
+  NumeralWordsLanguage.RUS: _RUSWordToNum,
+  NumeralWordsLanguage.SCO: _SCOWordToNum,
+  NumeralWordsLanguage.SHA: _SHAWordToNum,
+  NumeralWordsLanguage.SINOKOR: _SINOKORWordToNum,
+  NumeralWordsLanguage.SOL: _SOLWordToNum,
+  NumeralWordsLanguage.SVK: _SVKWordToNum,
+  NumeralWordsLanguage.SWE: _SWEWordToNum,
+  NumeralWordsLanguage.TAM: _TAMWordToNum,
+  NumeralWordsLanguage.THAI: _THAIWordToNum,
+  NumeralWordsLanguage.THAIRTGS: _THAIRTGSWordToNum,
+  NumeralWordsLanguage.TUR: _TURWordToNum,
+  NumeralWordsLanguage.UNG: _UNGWordToNum,
+  NumeralWordsLanguage.VIE: _VIEWordToNum,
+  NumeralWordsLanguage.VIEHANTU: _VIEHANTUWordToNum,
+  NumeralWordsLanguage.VIESINO: _VIESINOWordToNum,
+  NumeralWordsLanguage.VIECHUNOM: _VIECHUNOMWordToNum,
+  NumeralWordsLanguage.VOL: _VOLWordToNum,
 };
 
 final Map<NumeralWordsLanguage, List<String>> NUMERAL_WORDS_ACCENTS = {
@@ -2423,10 +2423,10 @@ final Map<NumeralWordsLanguage, List<String>> NUMERAL_WORDS_ACCENTS = {
 };
 
 List<NumeralWordsDecodeOutput> decodeNumeralwords(
-    {String? input, required NumeralWordsLanguage language, bool decodeModeWholeWords = false}) {
+    {required String input, required NumeralWordsLanguage language, bool decodeModeWholeWords = false}) {
   RegExp expr;
   List<NumeralWordsDecodeOutput> output = [];
-  if (input == null || input.isEmpty) {
+  if (input.isEmpty) {
     output.add(NumeralWordsDecodeOutput('', '', 'numeralwords_language_empty'));
     return output;
   }
@@ -2798,8 +2798,8 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
   }
 }
 
-OutputConvertToNumber decodeNumeralWordToNumber(NumeralWordsLanguage _currentLanguage, String? currentDecodeInput) {
-  if (currentDecodeInput == null || currentDecodeInput.isEmpty) return OutputConvertToNumber(0, '', '', '');
+OutputConvertToNumber decodeNumeralWordToNumber(NumeralWordsLanguage _currentLanguage, String currentDecodeInput) {
+  if (currentDecodeInput.isEmpty) return OutputConvertToNumber(0, '', '', '');
 
   if (_currentLanguage == NumeralWordsLanguage.ROU) {
     if (_isROU(currentDecodeInput)) {
@@ -2853,8 +2853,7 @@ OutputConvertToNumber decodeNumeralWordToNumber(NumeralWordsLanguage _currentLan
   }
 }
 
-OutputConvertToNumeralWord encodeNumberToNumeralWord(NumeralWordsLanguage _currentLanguage, int? currentNumber) {
-  if (currentNumber == null) return OutputConvertToNumeralWord('', '', '', '');
+OutputConvertToNumeralWord encodeNumberToNumeralWord(NumeralWordsLanguage _currentLanguage, int currentNumber) {
 
   switch (_currentLanguage) {
     case NumeralWordsLanguage.NAVI:
@@ -2930,7 +2929,7 @@ String _decodeNavi(String element) {
   // https://james-camerons-avatar.fandom.com/de/wiki/Oktale_Arithmetik
   // https://forum.learnnavi.org/navi-lernen/das-navi-zahlensystem/#:~:text=Das%20Na%27vi%20hat%20zwei%20Lehnw%C3%B6rter%20aus%20dem%20Englischen.,Ziffern%2C%20wie%20z.%20B.%20Telefonnummern%2C%20Autokennzeichen%2C%20IDs%20etc.
   String octal = '';
-  if (NAVIWordToNum[element] != null) return (NAVIWordToNum[element] ?? '');
+  if (_NAVIWordToNum[element] != null) return (_NAVIWordToNum[element] ?? '');
 
   element = element
       .replaceAll('zame', 'zamme')
@@ -3147,7 +3146,7 @@ String _decodeROU(String element) {
   } else {
     syllables = element.split('mii');
   }
-  Map<String, String> ROU_numbers = _normalize(ROUWordToNum);
+  Map<String, String> ROU_numbers = _normalize(_ROUWordToNum);
   if (syllables.length == 1) {
     return decodeTripel(syllables[0].trim(), ROU_numbers).toString();
   } else {
@@ -3519,7 +3518,7 @@ OutputConvertToNumeralWord _encodeROU(int currentNumber) {
                 : (ROU_numbers[(ten * 10).toString()] ?? '') + (one == 0 ? '' : ' şi ' + (ROU_numbers[one.toString()] ?? '')));
   }
 
-  Map<String, String> ROU_numbers = switchMapKeyValue(ROUWordToNum);
+  Map<String, String> ROU_numbers = switchMapKeyValue(_ROUWordToNum);
   if (currentNumber < 20) {
     return OutputConvertToNumeralWord(
         (ROU_numbers[currentNumber.toString()] ?? ''), currentNumber.toString(), 'common_numeralbase_decenary', '');

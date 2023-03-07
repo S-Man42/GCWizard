@@ -300,7 +300,7 @@ Map<TeletypewriterCodebook, int> BINARY_LENGTH = {
   TeletypewriterCodebook.ALGOL: 5,
 };
 
-final AZToCCITT_BAUDOT = {
+final _AZToCCITT_BAUDOT = {
 // Original code from US Patent in Bit-Order 54321
   'A': 1,
   'B': 12,
@@ -332,13 +332,13 @@ final AZToCCITT_BAUDOT = {
   'Ṯ': 17,
   '✲': 24,
 };
-final CCITT_BAUDOTToAZ = switchMapKeyValue(AZToCCITT_BAUDOT);
+final _CCITT_BAUDOTToAZ = switchMapKeyValue(_AZToCCITT_BAUDOT);
 
 // original Baudot according to US Patent has no numbers
-final Map<String, int> NumbersToCCITT_BAUDOT = {};
-final CCITT_BAUDOTToNumbers = switchMapKeyValue(NumbersToCCITT_BAUDOT);
+final Map<String, int> _NumbersToCCITT_BAUDOT = {};
+final _CCITT_BAUDOTToNumbers = switchMapKeyValue(_NumbersToCCITT_BAUDOT);
 
-final AZToBaudot_54123 = {
+final _AZToBaudot_54123 = {
   // Baudot-Code from DEU Wikipedia in Bit-Order 54321
   'A': 4, // 12345 1
   'B': 18, // 12345 11
@@ -370,9 +370,9 @@ final AZToBaudot_54123 = {
   'Ṯ': 5, // 12345 17
   '✲': 3, // 12345 24
 };
-final Baudot_54123ToAZ = switchMapKeyValue(AZToBaudot_54123);
+final _Baudot_54123ToAZ = switchMapKeyValue(_AZToBaudot_54123);
 
-final NumbersToBaudot_54123 = {
+final _NumbersToBaudot_54123 = {
   '1': 4, // 12345 1
   '8': 18, // 12345 12
   '9': 22, // 12345 13
@@ -404,9 +404,9 @@ final NumbersToBaudot_54123 = {
   '✲': 3, // 12345 24
   String.fromCharCode(163) /* £ */ : 27,
 };
-final Baudot_54123ToNumbers = switchMapKeyValue(NumbersToBaudot_54123);
+final _Baudot_54123ToNumbers = switchMapKeyValue(_NumbersToBaudot_54123);
 
-final AZToMurray = {
+final _AZToMurray = {
   'A': 3,
   'B': 25,
   'C': 14,
@@ -436,9 +436,9 @@ final AZToMurray = {
   '+': 8,
   ' ': 4
 };
-final MurrayToAZ = switchMapKeyValue(AZToMurray);
+final _MurrayToAZ = switchMapKeyValue(_AZToMurray);
 
-final NumbersToMurray = {
+final _NumbersToMurray = {
 //  'A': 3,
   '/': 25,
   '\'': 14,
@@ -469,9 +469,9 @@ final NumbersToMurray = {
   '.': 8,
   ' ': 4
 };
-final MurrayToNumbers = switchMapKeyValue(NumbersToMurray);
+final _MurrayToNumbers = switchMapKeyValue(_NumbersToMurray);
 
-final AZToWesternunion = {
+final _AZToWesternunion = {
   'A': 3,
   'B': 25,
   'C': 14,
@@ -502,9 +502,9 @@ final AZToWesternunion = {
   '\r': 8,
   '\n': 2,
 };
-final WesternunionToAZ = switchMapKeyValue(AZToWesternunion);
+final _WesternunionToAZ = switchMapKeyValue(_AZToWesternunion);
 
-final NumbersToWesternunion = {
+final _NumbersToWesternunion = {
   '-': 3,
   '?': 25,
   ':': 14,
@@ -535,9 +535,9 @@ final NumbersToWesternunion = {
   '\r': 8,
   '\n': 2,
 };
-final WesternunionToNumbers = switchMapKeyValue(NumbersToWesternunion);
+final _WesternunionToNumbers = switchMapKeyValue(_NumbersToWesternunion);
 
-final AZToSiemens = {
+final _AZToSiemens = {
   'A': 6,
   'B': 26,
   'C': 23,
@@ -565,9 +565,9 @@ final AZToSiemens = {
   'Y': 5,
   'Z': 21,
 };
-final SiemensToAZ = switchMapKeyValue(AZToSiemens);
+final _SiemensToAZ = switchMapKeyValue(_AZToSiemens);
 
-final NumbersToSiemens = {
+final _NumbersToSiemens = {
   '.': 6,
   '/': 26,
   '\'': 23,
@@ -595,9 +595,9 @@ final NumbersToSiemens = {
   '6': 5,
   ',': 21,
 };
-final SiemensToNumbers = switchMapKeyValue(NumbersToSiemens);
+final _SiemensToNumbers = switchMapKeyValue(_NumbersToSiemens);
 
-final AZToCCITT_ITA1_EU = {
+final _AZToCCITT_ITA1_EU = {
   // Code according to ENG Wikipedia, Bit-Order 54321
   'A': 1,
   String.fromCharCode(201) /* É */ : 3,
@@ -628,9 +628,9 @@ final AZToCCITT_ITA1_EU = {
   'Z': 19,
   '-': 17,
 };
-final CCITT_ITA1_EUToAZ = switchMapKeyValue(AZToCCITT_ITA1_EU);
+final _CCITT_ITA1_EUToAZ = switchMapKeyValue(_AZToCCITT_ITA1_EU);
 
-final NumbersToCCITT_ITA1_EU = {
+final _NumbersToCCITT_ITA1_EU = {
   // Code according to ENG Wikipedia, Bit-Order 54321
   '1': 1,
   '&': 3,
@@ -661,9 +661,9 @@ final NumbersToCCITT_ITA1_EU = {
   ':': 19,
   '.': 17,
 };
-final CCITT_ITA1_EUToNumbers = switchMapKeyValue(NumbersToCCITT_ITA1_EU);
+final _CCITT_ITA1_EUToNumbers = switchMapKeyValue(_NumbersToCCITT_ITA1_EU);
 
-final AZToCCITT_ITA1_UK = {
+final _AZToCCITT_ITA1_UK = {
   // Code according to ENG Wikipedia, Bit-Order 54321
   'A': 1,
   '/': 3,
@@ -694,9 +694,9 @@ final AZToCCITT_ITA1_UK = {
   'Z': 19,
   '-': 17,
 };
-final CCITT_ITA1_UKToAZ = switchMapKeyValue(AZToCCITT_ITA1_UK);
+final _CCITT_ITA1_UKToAZ = switchMapKeyValue(_AZToCCITT_ITA1_UK);
 
-final NumbersToCCITT_ITA1_UK = {
+final _NumbersToCCITT_ITA1_UK = {
   // https://en.wikipedia.org/wiki/Baudot_code
   '1': 1,
   '1/': 3,
@@ -727,9 +727,9 @@ final NumbersToCCITT_ITA1_UK = {
   ':': 19,
   '.': 17,
 };
-final CCITT_ITA1_UKToNumbers = switchMapKeyValue(NumbersToCCITT_ITA1_UK);
+final _CCITT_ITA1_UKToNumbers = switchMapKeyValue(_NumbersToCCITT_ITA1_UK);
 
-final AZToCCITT_ITA2_MTK2 = {
+final _AZToCCITT_ITA2_MTK2 = {
   //according to ENG Wikipedia, Bit-Order 54321
   ' ': 4,
   '\r': 2,
@@ -761,9 +761,9 @@ final AZToCCITT_ITA2_MTK2 = {
   'Ь': 29,
   'Ж': 30
 };
-final CCITT_ITA2_MTK2ToAZ = switchMapKeyValue(AZToCCITT_ITA2_MTK2);
+final _CCITT_ITA2_MTK2ToAZ = switchMapKeyValue(_AZToCCITT_ITA2_MTK2);
 
-final NumbersToCCITT_MTK2 = {
+final _NumbersToCCITT_MTK2 = {
   //according to ENG Wikipedia, Bit-Order 54321
   ' ': 4,
   '\r': 2,
@@ -795,9 +795,9 @@ final NumbersToCCITT_MTK2 = {
   '/': 29,
   '=': 30
 };
-final CCITT_MTK2ToNumbers = switchMapKeyValue(NumbersToCCITT_MTK2);
+final _CCITT_MTK2ToNumbers = switchMapKeyValue(_NumbersToCCITT_MTK2);
 
-final AZToCCITT_USTTY = {
+final _AZToCCITT_USTTY = {
   //according to ENG Wikipedia, Bit-Order 54321
   ' ': 4,
   '\r': 2,
@@ -829,9 +829,9 @@ final AZToCCITT_USTTY = {
   'X': 29,
   'V': 30
 };
-final CCITT_USTTYToAZ = switchMapKeyValue(AZToCCITT_USTTY);
+final _CCITT_USTTYToAZ = switchMapKeyValue(_AZToCCITT_USTTY);
 
-final NumbersToCCITT_ITA2_USTTY = {
+final _NumbersToCCITT_ITA2_USTTY = {
   //according to ENG Wikipedia, Bit-Order 54321
   ' ': 4,
   '\r': 2,
@@ -859,9 +859,9 @@ final NumbersToCCITT_ITA2_USTTY = {
   '/': 29,
   ';': 30
 };
-final CCITT_USTTYToNumbers = switchMapKeyValue(NumbersToCCITT_ITA2_USTTY);
+final _CCITT_USTTYToNumbers = switchMapKeyValue(_NumbersToCCITT_ITA2_USTTY);
 
-final AZToCCITT_ITA1_1926 = {
+final _AZToCCITT_ITA1_1926 = {
   'A': 1,
   'B': 12,
   'C': 13,
@@ -892,9 +892,9 @@ final AZToCCITT_ITA1_1926 = {
   'Ṯ': 17,
   '✲': 24,
 };
-final CCITT_ITA1_1926ToAZ = switchMapKeyValue(AZToCCITT_ITA1_1926);
+final _CCITT_ITA1_1926ToAZ = switchMapKeyValue(_AZToCCITT_ITA1_1926);
 
-final AZToCCITT_ITA1_1929 = {
+final _AZToCCITT_ITA1_1929 = {
   'A': 1,
   'B': 12,
   'C': 13,
@@ -925,9 +925,9 @@ final AZToCCITT_ITA1_1929 = {
   '\n': 3,
   '\r': 17,
 };
-final CCITT_ITA1_1929ToAZ = switchMapKeyValue(AZToCCITT_ITA1_1929);
+final _CCITT_ITA1_1929ToAZ = switchMapKeyValue(_AZToCCITT_ITA1_1929);
 
-final AZToCCITT_ITA2_1929 = {
+final _AZToCCITT_ITA2_1929 = {
   'A': 1,
   'B': 12,
   'C': 13,
@@ -957,9 +957,9 @@ final AZToCCITT_ITA2_1929 = {
   '\n': 3,
   '\r': 17,
 };
-final CCITT_ITA2_1929ToAZ = switchMapKeyValue(AZToCCITT_ITA2_1929);
+final _CCITT_ITA2_1929ToAZ = switchMapKeyValue(_AZToCCITT_ITA2_1929);
 
-final AZToCCITT_ITA2_1931 = {
+final _AZToCCITT_ITA2_1931 = {
   'A': 3,
   'B': 25,
   'C': 14,
@@ -990,9 +990,9 @@ final AZToCCITT_ITA2_1931 = {
   '\r': 2,
   '\n': 8,
 };
-final CCITT_ITA2_1931ToAZ = switchMapKeyValue(AZToCCITT_ITA2_1931);
+final _CCITT_ITA2_1931ToAZ = switchMapKeyValue(_AZToCCITT_ITA2_1931);
 
-final AZToCCITT_ITA3 = {
+final _AZToCCITT_ITA3 = {
   'A': 44,
   'B': 76,
   'C': 25,
@@ -1023,9 +1023,9 @@ final AZToCCITT_ITA3 = {
   '\r': 13,
   ' ': 11
 };
-final CCITT_ITA3ToAZ = switchMapKeyValue(AZToCCITT_ITA3);
+final _CCITT_ITA3ToAZ = switchMapKeyValue(_AZToCCITT_ITA3);
 
-final AZToCCITT_ITA4 = {
+final _AZToCCITT_ITA4 = {
   'A': 6,
   'B': 50,
   'C': 28,
@@ -1056,9 +1056,9 @@ final AZToCCITT_ITA4 = {
   '\r': 4,
   ' ': 8
 };
-final CCITT_ITA4ToAZ = switchMapKeyValue(AZToCCITT_ITA4);
+final _CCITT_ITA4ToAZ = switchMapKeyValue(_AZToCCITT_ITA4);
 
-final AZToCCIR476 = {
+final _AZToCCIR476 = {
   // https://en.wikipedia.org/wiki/CCIR_476
   'A': 71,
   'B': 114,
@@ -1090,9 +1090,9 @@ final AZToCCIR476 = {
   '\r': 108,
   '\n': 120,
 };
-final CCIR476ToAZ = switchMapKeyValue(AZToCCIR476);
+final _CCIR476ToAZ = switchMapKeyValue(_AZToCCIR476);
 
-final AZToALGOL = {
+final _AZToALGOL = {
   'A': 3,
   'B': 25,
   'C': 14,
@@ -1123,9 +1123,9 @@ final AZToALGOL = {
   '\r': 2,
   '\n': 8,
 };
-final ALGOLToAZ = switchMapKeyValue(AZToALGOL);
+final _ALGOLToAZ = switchMapKeyValue(_AZToALGOL);
 
-final NumbersToCCITT_ITA1_1926 = {
+final _NumbersToCCITT_ITA1_1926 = {
   '1': 1,
   '8': 12,
   '9': 13,
@@ -1156,9 +1156,9 @@ final NumbersToCCITT_ITA1_1926 = {
   '.': 17,
   '✲': 24,
 };
-final CCITT_ITA1_1926ToNumbers = switchMapKeyValue(NumbersToCCITT_ITA1_1926);
+final _CCITT_ITA1_1926ToNumbers = switchMapKeyValue(_NumbersToCCITT_ITA1_1926);
 
-final NumbersToCCITT_ITA1_1929 = {
+final _NumbersToCCITT_ITA1_1929 = {
   '1': 1,
   '8': 12,
   '9': 13,
@@ -1189,9 +1189,9 @@ final NumbersToCCITT_ITA1_1929 = {
   '\n': 3,
   '\r': 17,
 };
-final CCITT_ITA1_1929ToNumbers = switchMapKeyValue(NumbersToCCITT_ITA1_1929);
+final _CCITT_ITA1_1929ToNumbers = switchMapKeyValue(_NumbersToCCITT_ITA1_1929);
 
-final NumbersToCCITT_ITA2_1929 = {
+final _NumbersToCCITT_ITA2_1929 = {
   ':': 1,
   '?': 12,
   '(': 13,
@@ -1221,9 +1221,9 @@ final NumbersToCCITT_ITA2_1929 = {
   '\n': 3,
   '\r': 17,
 };
-final CCITT_ITA2_1929ToNumbers = switchMapKeyValue(NumbersToCCITT_ITA2_1929);
+final _CCITT_ITA2_1929ToNumbers = switchMapKeyValue(_NumbersToCCITT_ITA2_1929);
 
-final NumbersToCCITT_ITA2_1931 = {
+final _NumbersToCCITT_ITA2_1931 = {
   '-': 3,
   '?': 25,
   ':': 14,
@@ -1254,9 +1254,9 @@ final NumbersToCCITT_ITA2_1931 = {
   '\r': 2,
   '\n': 8,
 };
-final CCITT_ITA2_1931ToNumbers = switchMapKeyValue(NumbersToCCITT_ITA2_1931);
+final _CCITT_ITA2_1931ToNumbers = switchMapKeyValue(_NumbersToCCITT_ITA2_1931);
 
-final NumbersToCCITT_ITA3 = {
+final _NumbersToCCITT_ITA3 = {
   '-': 44,
   '?': 76,
   ':': 25,
@@ -1287,9 +1287,9 @@ final NumbersToCCITT_ITA3 = {
   '\r': 13,
   ' ': 11
 };
-final CCITT_ITA3ToNumbers = switchMapKeyValue(NumbersToCCITT_ITA3);
+final _CCITT_ITA3ToNumbers = switchMapKeyValue(_NumbersToCCITT_ITA3);
 
-final NumbersToCCITT_ITA4 = {
+final _NumbersToCCITT_ITA4 = {
   '-': 64,
   '?': 50,
   ':': 28,
@@ -1320,9 +1320,9 @@ final NumbersToCCITT_ITA4 = {
   '\r': 4,
   ' ': 8
 };
-final CCITT_ITA4ToNumbers = switchMapKeyValue(NumbersToCCITT_ITA4);
+final _CCITT_ITA4ToNumbers = switchMapKeyValue(_NumbersToCCITT_ITA4);
 
-final NumbersToCCIR476 = {
+final _NumbersToCCIR476 = {
   '-': 71,
   '?': 114,
   ':': 29,
@@ -1352,9 +1352,9 @@ final NumbersToCCIR476 = {
   '\r': 108,
   '\n': 120,
 };
-final CCIR476ToNumbers = switchMapKeyValue(NumbersToCCIR476);
+final _CCIR476ToNumbers = switchMapKeyValue(_NumbersToCCIR476);
 
-final NumbersToALGOL = {
+final _NumbersToALGOL = {
   '-': 3,
   '*': 25,
   ':': 14,
@@ -1385,9 +1385,9 @@ final NumbersToALGOL = {
   '\r': 2,
   '\n': 8,
 };
-final ALGOLToNumbers = switchMapKeyValue(NumbersToALGOL);
+final _ALGOLToNumbers = switchMapKeyValue(_NumbersToALGOL);
 
-final AZToZC1 = {
+final _AZToZC1 = {
   '"': 96,
   '\'': 97,
   '´': 98,
@@ -1509,9 +1509,9 @@ final AZToZC1 = {
   'ü': 252,
   'ß': 253,
 };
-final ZC1ToAZ = switchMapKeyValue(AZToZC1);
+final _ZC1ToAZ = switchMapKeyValue(_AZToZC1);
 
-final AZToILLIAC = {
+final _AZToILLIAC = {
   'A': 22,
   'B': 19,
   'C': 29,
@@ -1541,9 +1541,9 @@ final AZToILLIAC = {
   ' ': 31,
   '\n': 18,
 };
-final ILLIACToAZ = switchMapKeyValue(AZToILLIAC);
+final _ILLIACToAZ = switchMapKeyValue(_AZToILLIAC);
 
-final NumbersToILLIAC = {
+final _NumbersToILLIAC = {
   ')': 22,
   '(': 19,
   ':': 29,
@@ -1573,9 +1573,9 @@ final NumbersToILLIAC = {
   ' ': 31,
   '\n': 18,
 };
-final ILLIACToNumbers = switchMapKeyValue(NumbersToILLIAC);
+final _ILLIACToNumbers = switchMapKeyValue(_NumbersToILLIAC);
 
-final AZToTTS = {
+final _AZToTTS = {
   // https://druck-mediengeschichte.org/2020/08/06/zwischen-morsecode-und-digitaler-fonttechnologie-2/
   // Wilfried Kusterka
   'T': 32,
@@ -1614,9 +1614,9 @@ final AZToTTS = {
   '?': 45,
   '&': 49,
 };
-final TTSToAZ = switchMapKeyValue(AZToTTS);
+final _TTSToAZ = switchMapKeyValue(_AZToTTS);
 
-final NumbersToTTS = {
+final _NumbersToTTS = {
   't': 32,
   'o': 48,
   'n': 24,
@@ -1653,7 +1653,7 @@ final NumbersToTTS = {
   '0': 45,
   '9': 49,
 };
-final TTSToNumbers = switchMapKeyValue(NumbersToTTS);
+final _TTSToNumbers = switchMapKeyValue(_NumbersToTTS);
 
 final _NUMBERS_FOLLOW = {
   TeletypewriterCodebook.BAUDOT_54123: 2, // 12345 8
@@ -1701,44 +1701,44 @@ final _LETTERS_FOLLOW = {
 int? _EncodeAZ(TeletypewriterCodebook language, String text) {
   switch (language) {
     case TeletypewriterCodebook.BAUDOT:
-      return AZToCCITT_BAUDOT[text]!;
+      return _AZToCCITT_BAUDOT[text]!;
     case TeletypewriterCodebook.MURRAY:
-      return AZToMurray[text]!;
+      return _AZToMurray[text]!;
     case TeletypewriterCodebook.SIEMENS:
-      return AZToSiemens[text]!;
+      return _AZToSiemens[text]!;
     case TeletypewriterCodebook.WESTERNUNION:
-      return AZToWesternunion[text]!;
+      return _AZToWesternunion[text]!;
     case TeletypewriterCodebook.BAUDOT_54123:
-      return AZToBaudot_54123[text]!;
+      return _AZToBaudot_54123[text]!;
     case TeletypewriterCodebook.CCITT_ITA1_1926:
-      return AZToCCITT_ITA1_1926[text]!;
+      return _AZToCCITT_ITA1_1926[text]!;
     case TeletypewriterCodebook.CCITT_ITA1_1929:
-      return AZToCCITT_ITA1_1929[text]!;
+      return _AZToCCITT_ITA1_1929[text]!;
     case TeletypewriterCodebook.CCITT_ITA1_EU:
-      return AZToCCITT_ITA1_EU[text]!;
+      return _AZToCCITT_ITA1_EU[text]!;
     case TeletypewriterCodebook.CCITT_ITA1_UK:
-      return AZToCCITT_ITA1_UK[text]!;
+      return _AZToCCITT_ITA1_UK[text]!;
     case TeletypewriterCodebook.CCITT_ITA2_1929:
-      return AZToCCITT_ITA2_1929[text]!;
+      return _AZToCCITT_ITA2_1929[text]!;
     case TeletypewriterCodebook.CCITT_ITA2_1931:
     case TeletypewriterCodebook.Z22:
-      return AZToCCITT_ITA2_1931[text]!;
+      return _AZToCCITT_ITA2_1931[text]!;
     case TeletypewriterCodebook.CCITT_ITA2_MTK2:
-      return AZToCCITT_ITA2_MTK2[text]!;
+      return _AZToCCITT_ITA2_MTK2[text]!;
     case TeletypewriterCodebook.CCITT_ITA2_USTTY:
-      return AZToCCITT_USTTY[text]!;
+      return _AZToCCITT_USTTY[text]!;
     case TeletypewriterCodebook.CCITT_ITA3:
-      return AZToCCITT_ITA3[text]!;
+      return _AZToCCITT_ITA3[text]!;
     case TeletypewriterCodebook.CCITT_ITA4:
-      return AZToCCITT_ITA4[text]!;
+      return _AZToCCITT_ITA4[text]!;
     case TeletypewriterCodebook.CCIR476:
-      return AZToCCIR476[text]!;
+      return _AZToCCIR476[text]!;
     case TeletypewriterCodebook.ILLIAC:
-      return AZToILLIAC[text]!;
+      return _AZToILLIAC[text]!;
     case TeletypewriterCodebook.TTS:
-      return AZToTTS[text]!;
+      return _AZToTTS[text]!;
     case TeletypewriterCodebook.ALGOL:
-      return AZToALGOL[text]!;
+      return _AZToALGOL[text]!;
     default:
       return  null;
   }
@@ -1747,45 +1747,45 @@ int? _EncodeAZ(TeletypewriterCodebook language, String text) {
 int? _EncodeNumber(TeletypewriterCodebook language, String text) {
   switch (language) {
     case TeletypewriterCodebook.BAUDOT:
-      return NumbersToCCITT_BAUDOT[text];
+      return _NumbersToCCITT_BAUDOT[text];
     case TeletypewriterCodebook.MURRAY:
-      return NumbersToMurray[text]!;
+      return _NumbersToMurray[text]!;
     case TeletypewriterCodebook.SIEMENS:
-      return NumbersToSiemens[text]!;
+      return _NumbersToSiemens[text]!;
 
     case TeletypewriterCodebook.WESTERNUNION:
-      return NumbersToWesternunion[text]!;
+      return _NumbersToWesternunion[text]!;
     case TeletypewriterCodebook.BAUDOT_54123:
-      return NumbersToBaudot_54123[text]!;
+      return _NumbersToBaudot_54123[text]!;
     case TeletypewriterCodebook.CCITT_ITA1_1926:
-      return NumbersToCCITT_ITA1_1926[text]!;
+      return _NumbersToCCITT_ITA1_1926[text]!;
     case TeletypewriterCodebook.CCITT_ITA1_1929:
-      return NumbersToCCITT_ITA1_1929[text]!;
+      return _NumbersToCCITT_ITA1_1929[text]!;
     case TeletypewriterCodebook.CCITT_ITA1_EU:
-      return NumbersToCCITT_ITA1_EU[text];
+      return _NumbersToCCITT_ITA1_EU[text];
     case TeletypewriterCodebook.CCITT_ITA1_UK:
-      return NumbersToCCITT_ITA1_UK[text]!;
+      return _NumbersToCCITT_ITA1_UK[text]!;
     case TeletypewriterCodebook.CCITT_ITA2_1929:
-      return NumbersToCCITT_ITA2_1929[text]!;
+      return _NumbersToCCITT_ITA2_1929[text]!;
     case TeletypewriterCodebook.CCITT_ITA2_1931:
     case TeletypewriterCodebook.Z22:
-      return NumbersToCCITT_ITA2_1931[text]!;
+      return _NumbersToCCITT_ITA2_1931[text]!;
     case TeletypewriterCodebook.CCITT_ITA2_MTK2:
-      return NumbersToCCITT_MTK2[text]!;
+      return _NumbersToCCITT_MTK2[text]!;
     case TeletypewriterCodebook.CCITT_ITA2_USTTY:
-      return NumbersToCCITT_ITA2_USTTY[text]!;
+      return _NumbersToCCITT_ITA2_USTTY[text]!;
     case TeletypewriterCodebook.CCITT_ITA3:
-      return NumbersToCCITT_ITA3[text]!;
+      return _NumbersToCCITT_ITA3[text]!;
     case TeletypewriterCodebook.CCITT_ITA4:
-      return NumbersToCCITT_ITA4[text]!;
+      return _NumbersToCCITT_ITA4[text]!;
     case TeletypewriterCodebook.CCIR476:
-      return NumbersToCCIR476[text]!;
+      return _NumbersToCCIR476[text]!;
     case TeletypewriterCodebook.ILLIAC:
-      return NumbersToILLIAC[text]!;
+      return _NumbersToILLIAC[text]!;
     case TeletypewriterCodebook.TTS:
-      return NumbersToTTS[text]!;
+      return _NumbersToTTS[text]!;
     case TeletypewriterCodebook.ALGOL:
-      return NumbersToALGOL[text]!;
+      return _NumbersToALGOL[text]!;
     default:
       return  null;
   }
@@ -1794,44 +1794,44 @@ int? _EncodeNumber(TeletypewriterCodebook language, String text) {
 String? _DecodeAZ(TeletypewriterCodebook language, int code) {
   switch (language) {
     case TeletypewriterCodebook.BAUDOT:
-      return CCITT_BAUDOTToAZ[code]!;
+      return _CCITT_BAUDOTToAZ[code]!;
     case TeletypewriterCodebook.MURRAY:
-      return MurrayToAZ[code]!;
+      return _MurrayToAZ[code]!;
     case TeletypewriterCodebook.SIEMENS:
-      return SiemensToAZ[code]!;
+      return _SiemensToAZ[code]!;
     case TeletypewriterCodebook.WESTERNUNION:
-      return WesternunionToAZ[code]!;
+      return _WesternunionToAZ[code]!;
     case TeletypewriterCodebook.BAUDOT_54123:
-      return Baudot_54123ToAZ[code]!;
+      return _Baudot_54123ToAZ[code]!;
     case TeletypewriterCodebook.CCITT_ITA1_1926:
-      return CCITT_ITA1_1926ToAZ[code]!;
+      return _CCITT_ITA1_1926ToAZ[code]!;
     case TeletypewriterCodebook.CCITT_ITA1_1929:
-      return CCITT_ITA1_1929ToAZ[code]!;
+      return _CCITT_ITA1_1929ToAZ[code]!;
     case TeletypewriterCodebook.CCITT_ITA1_EU:
-      return CCITT_ITA1_EUToAZ[code]!;
+      return _CCITT_ITA1_EUToAZ[code]!;
     case TeletypewriterCodebook.CCITT_ITA1_UK:
-      return CCITT_ITA1_UKToAZ[code]!;
+      return _CCITT_ITA1_UKToAZ[code]!;
     case TeletypewriterCodebook.CCITT_ITA2_1929:
-      return CCITT_ITA2_1929ToAZ[code]!;
+      return _CCITT_ITA2_1929ToAZ[code]!;
     case TeletypewriterCodebook.CCITT_ITA2_1931:
     case TeletypewriterCodebook.Z22:
-      return CCITT_ITA2_1931ToAZ[code]!;
+      return _CCITT_ITA2_1931ToAZ[code]!;
     case TeletypewriterCodebook.CCITT_ITA2_MTK2:
-      return CCITT_ITA2_MTK2ToAZ[code]!;
+      return _CCITT_ITA2_MTK2ToAZ[code]!;
     case TeletypewriterCodebook.CCITT_ITA2_USTTY:
-      return CCITT_USTTYToAZ[code]!;
+      return _CCITT_USTTYToAZ[code]!;
     case TeletypewriterCodebook.CCITT_ITA3:
-      return CCITT_ITA3ToAZ[code]!;
+      return _CCITT_ITA3ToAZ[code]!;
     case TeletypewriterCodebook.CCITT_ITA4:
-      return CCITT_ITA4ToAZ[code]!;
+      return _CCITT_ITA4ToAZ[code]!;
     case TeletypewriterCodebook.CCIR476:
-      return CCIR476ToAZ[code]!;
+      return _CCIR476ToAZ[code]!;
     case TeletypewriterCodebook.ILLIAC:
-      return ILLIACToAZ[code]!;
+      return _ILLIACToAZ[code]!;
     case TeletypewriterCodebook.TTS:
-      return TTSToAZ[code]!;
+      return _TTSToAZ[code]!;
     case TeletypewriterCodebook.ALGOL:
-      return ALGOLToAZ[code]!;
+      return _ALGOLToAZ[code]!;
     default:
       return  null;
   }
@@ -1840,51 +1840,51 @@ String? _DecodeAZ(TeletypewriterCodebook language, int code) {
 String? _DecodeNumber(TeletypewriterCodebook language, int code) {
   switch (language) {
     case TeletypewriterCodebook.BAUDOT:
-      return CCITT_BAUDOTToNumbers[code]!;
+      return _CCITT_BAUDOTToNumbers[code]!;
     case TeletypewriterCodebook.MURRAY:
-      return MurrayToNumbers[code]!;
+      return _MurrayToNumbers[code]!;
     case TeletypewriterCodebook.SIEMENS:
-      return SiemensToNumbers[code]!;
+      return _SiemensToNumbers[code]!;
     case TeletypewriterCodebook.WESTERNUNION:
-      return WesternunionToNumbers[code]!;
+      return _WesternunionToNumbers[code]!;
     case TeletypewriterCodebook.BAUDOT_54123:
-      return Baudot_54123ToNumbers[code]!;
+      return _Baudot_54123ToNumbers[code]!;
     case TeletypewriterCodebook.CCITT_ITA1_1926:
-      return CCITT_ITA1_1926ToNumbers[code]!;
+      return _CCITT_ITA1_1926ToNumbers[code]!;
     case TeletypewriterCodebook.CCITT_ITA1_1929:
-      return CCITT_ITA1_1929ToNumbers[code]!;
+      return _CCITT_ITA1_1929ToNumbers[code]!;
     case TeletypewriterCodebook.CCITT_ITA1_EU:
-      return CCITT_ITA1_EUToNumbers[code]!;
+      return _CCITT_ITA1_EUToNumbers[code]!;
     case TeletypewriterCodebook.CCITT_ITA1_UK:
-      return CCITT_ITA1_UKToNumbers[code]!;
+      return _CCITT_ITA1_UKToNumbers[code]!;
     case TeletypewriterCodebook.CCITT_ITA2_1929:
-      return CCITT_ITA2_1929ToNumbers[code]!;
+      return _CCITT_ITA2_1929ToNumbers[code]!;
     case TeletypewriterCodebook.CCITT_ITA2_1931:
     case TeletypewriterCodebook.Z22:
-      return CCITT_ITA2_1931ToNumbers[code]!;
+      return _CCITT_ITA2_1931ToNumbers[code]!;
     case TeletypewriterCodebook.CCITT_ITA2_MTK2:
-      return CCITT_MTK2ToNumbers[code]!;
+      return _CCITT_MTK2ToNumbers[code]!;
     case TeletypewriterCodebook.CCITT_ITA2_USTTY:
-      return CCITT_USTTYToNumbers[code]!;
+      return _CCITT_USTTYToNumbers[code]!;
     case TeletypewriterCodebook.CCITT_ITA3:
-      return CCITT_ITA3ToNumbers[code]!;
+      return _CCITT_ITA3ToNumbers[code]!;
     case TeletypewriterCodebook.CCITT_ITA4:
-      return CCITT_ITA4ToNumbers[code]!;
+      return _CCITT_ITA4ToNumbers[code]!;
     case TeletypewriterCodebook.CCIR476:
-      return CCIR476ToNumbers[code]!;
+      return _CCIR476ToNumbers[code]!;
     case TeletypewriterCodebook.ILLIAC:
-      return ILLIACToNumbers[code]!;
+      return _ILLIACToNumbers[code]!;
     case TeletypewriterCodebook.TTS:
-      return TTSToNumbers[code]!;
+      return _TTSToNumbers[code]!;
     case TeletypewriterCodebook.ALGOL:
-      return ALGOLToNumbers[code]!;
+      return _ALGOLToNumbers[code]!;
     default:
       return  null;
   }
 }
 
-String encodeTeletypewriter(String? input, TeletypewriterCodebook language) {
-  if (input == null || input.isEmpty) return '';
+String encodeTeletypewriter(String input, TeletypewriterCodebook language) {
+  if (input.isEmpty) return '';
 
   var isLetterMode = true;
 
@@ -2009,17 +2009,14 @@ String encodeTeletypewriter_ZC1(String input) {
 
   List<int> out = [];
   input.split('').forEach((character) {
-    return out.add(AZToZC1[character]!);
+    return out.add(_AZToZC1[character]!);
   });
 
   return out.join(' ');
 }
 
-String decodeTeletypewriter(
-  List<int>? values,
-  TeletypewriterCodebook language,
-) {
-  if (values == null || values.isEmpty) return '';
+String decodeTeletypewriter(List<int> values, TeletypewriterCodebook language) {
+  if (values.isEmpty) return '';
 
   String out = '';
   var isLetterMode = true;
@@ -2104,8 +2101,8 @@ String decodeTeletypewriter(
   }
 }
 
-String decodeTeletypewriter_IA5(List<int>? values) {
-  if (values == null || values.isEmpty) return '';
+String decodeTeletypewriter_IA5(List<int> values) {
+  if (values.isEmpty) return '';
 
   String out = '';
 
@@ -2116,12 +2113,12 @@ String decodeTeletypewriter_IA5(List<int>? values) {
   return out;
 }
 
-String decodeTeletypewriter_ZC1(List<int>? values) {
-  if (values == null || values.isEmpty) return '';
+String decodeTeletypewriter_ZC1(List<int> values) {
+  if (values.isEmpty) return '';
 
   String out = '';
   for (var value in values) {
-    if (ZC1ToAZ[value] != null) out += ZC1ToAZ[value]!;
+    if (_ZC1ToAZ[value] != null) out += _ZC1ToAZ[value]!;
   }
 
   return out;

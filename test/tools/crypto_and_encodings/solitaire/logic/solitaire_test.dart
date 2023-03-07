@@ -4,10 +4,9 @@ import 'package:gc_wizard/tools/crypto_and_encodings/solitaire/logic/solitaire.d
 void main() {
   group("Solitaire.encryptSolitaire:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-       {'input' : '', 'key': '', 'expectedOutput' : null, 'keyStream': null},
+      {'input' : '', 'key': '', 'expectedOutput' : null, 'keyStream': null},
       {'input' : '', 'key': 'FOO', 'expectedOutput' : null, 'keyStream': null},
 
-      {'input' : 'DONOTUSEPC', 'key': null, 'expectedOutput' : 'HLXMB TKKTJ', 'keyStream': 'DWJXHYRFDG'},
       {'input' : 'DONOTUSEPC', 'key': '', 'expectedOutput' : 'HLXMB TKKTJ', 'keyStream': 'DWJXHYRFDG'},
       {'input' : 'AAAAAAAAAA', 'key': '', 'expectedOutput' : 'EXKYI ZSGEH', 'keyStream': 'DWJXHYRFDG'},
       {'input' : 'AAAAAAAAAAAAAAA', 'key': 'FOO', 'expectedOutput' : 'ITHZU JIWGR FARMW', 'keyStream': 'HSGYTIHVFQEZQLV'},
@@ -43,7 +42,6 @@ void main() {
       {'input' : '', 'key': '', 'expectedOutput' : null, 'keyStream': null},
       {'input' : '', 'key': 'FOO', 'expectedOutput' : null, 'keyStream': null},
 
-      {'input' : 'HLXMB TKKTJ', 'key': null, 'expectedOutput' : 'DONOTUSEPC', 'keyStream': 'DWJXHYRFDG'},
       {'input' : 'HLXMB TKKTJ', 'key': '', 'expectedOutput' : 'DONOTUSEPC', 'keyStream': 'DWJXHYRFDG'},
       {'input' : 'EXKYI ZSGEH', 'key': '', 'expectedOutput' : 'AAAAAAAAAA', 'keyStream': 'DWJXHYRFDG'},
       {'input' : 'ITHZU JIWGR FARMW', 'key': 'FOO', 'expectedOutput' : 'AAAAAAAAAAAAAAA', 'keyStream': 'HSGYTIHVFQEZQLV'},

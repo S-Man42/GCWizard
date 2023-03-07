@@ -3,7 +3,7 @@
 import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
-final Map<String, List<String>> POPHAM = {
+final Map<String, List<String>> _POPHAM = {
   ' ': [],
   '1': ['1'],
   '2': ['2'],
@@ -43,14 +43,14 @@ final Map<String, List<String>> POPHAM = {
   'Z': ['4', 'f'],
 };
 
-Segments encodePopham(String? input) {
-  if (input == null || input.isEmpty) Segments.Empty();
+Segments encodePopham(String input) {
+  if (input.isEmpty) Segments.Empty();
 
-  List<String> inputs = input!.toUpperCase().split('');
+  List<String> inputs = input.toUpperCase().split('');
   List<List<String>> result = [];
 
   for (int i = 0; i < inputs.length; i++) {
-    result.add(POPHAM[inputs[i]]!);
+    result.add(_POPHAM[inputs[i]]!);
   }
   return Segments(displays: result);
 }
@@ -66,7 +66,7 @@ SegmentsText decodeVisualPopham(List<String> inputs) {
   }
 
   Map<String, String> CODEBOOK = {};
-  POPHAM.forEach((key, value) {
+  _POPHAM.forEach((key, value) {
     CODEBOOK[value.join('')] = key;
   });
   CODEBOOK[''] = ' ';

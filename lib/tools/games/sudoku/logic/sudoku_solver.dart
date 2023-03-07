@@ -63,12 +63,12 @@ class SudokuBoard {
 }
 
 class _SudokuSolution {
-  final List<List<int?>> _solution;
+  final List<List<int>> solution;
 
-  _SudokuSolution(this._solution);
+  _SudokuSolution(this.solution);
 
   int? getValue (int i, int j) {
-    return _solution[i][j];
+    return solution[i][j];
   }
 }
 
