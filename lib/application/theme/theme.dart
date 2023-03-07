@@ -64,9 +64,7 @@ ThemeData buildTheme() {
   final ThemeData base = colors.base();
   return ThemeData(
       fontFamily: 'Roboto',
-      brightness: base.brightness,
       scaffoldBackgroundColor: colors.primaryBackground(),
-      primaryColor: colors.primaryBackground(),
       textTheme: base.textTheme,
       textSelectionTheme: TextSelectionThemeData(
         cursorColor: colors.secondary(),
@@ -94,7 +92,8 @@ ThemeData buildTheme() {
       unselectedWidgetColor: colors.secondary(),
       cardColor: colors.messageBackground(), 
       colorScheme: ColorScheme.fromSwatch(
-        primarySwatch: _generateMaterialColor(colors.primaryBackground())).copyWith(secondary: colors.secondary()
+        primarySwatch: _generateMaterialColor(colors.primaryBackground())).copyWith(secondary: colors.secondary(),
+        brightness: base.brightness,
       )
   );
 }
