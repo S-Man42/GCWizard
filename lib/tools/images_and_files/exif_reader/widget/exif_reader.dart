@@ -301,7 +301,7 @@ class _ExifReaderState extends State<ExifReader> {
   ///
   Future<void> _decorateHiddenData(List<Widget> widgets) async {
     if (file == null) return;
-    var _hiddenData = await hiddenData(file);
+    var _hiddenData = await hiddenData(file!);
 
     if (_hiddenData.length <= 1) return;
 
