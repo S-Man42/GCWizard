@@ -101,7 +101,7 @@ String decodeFindWord(String input, String positions, searchFormat format,
   List<String> out = <String>[];
   int i = 0;
 
-  RegExp regExp = RegExp("[0-9]{1,}");
+  RegExp regExp = RegExp("\\d{1,}");
   regExp.allMatches(positions).forEach((elem) {
     var value = int.tryParse(positions.substring(elem.start, elem.end));
     if (value != null) positionList.add(value);
@@ -548,7 +548,7 @@ String _filterInput(String input,
   }
   if (!diacriticsOn) input = _removeDiacritics(input);
   if (!azOn) input = input.replaceAll(RegExp(r'[A-Za-z]'), '');
-  if (!numbersOn) input = input.replaceAll(RegExp(r'[0-9]'), '');
+  if (!numbersOn) input = input.replaceAll(RegExp(r'\d'), '');
 
   return input;
 }

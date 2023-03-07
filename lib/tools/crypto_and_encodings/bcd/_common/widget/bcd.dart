@@ -19,7 +19,7 @@ class AbstractBCDState extends State<AbstractBCD> {
   late TextEditingController _decodeController;
 
   final _encodeMaskFormatter = WrapperForMaskTextInputFormatter(mask: '#' * 10000, // allow 10000 characters input
-      filter: {"#": RegExp(r'[0-9]')});
+      filter: {"#": RegExp(r'\d')});
 
   final _decode4DigitsMaskFormatter = WrapperForMaskTextInputFormatter(
       mask: '#### ' * 5000, // allow 5000 4-digit binary blocks, spaces will be set automatically after each block

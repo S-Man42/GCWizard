@@ -76,7 +76,6 @@ void main() {
 
   group("Homophone.decryptGenerated:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'errorcode': HomophoneErrorCode.OK, 'alphabet': alphabetGerman1, 'rotation': 1, 'multiplier': 1, 'expectedOutput' : ''},
       {'input' : '', 'errorcode': HomophoneErrorCode.OK, 'alphabet': alphabetGerman1, 'rotation': 3, 'multiplier': 1, 'expectedOutput' : ''},
       {'input' : 'T', 'errorcode': HomophoneErrorCode.OK, 'alphabet': alphabetGerman1, 'rotation': 3, 'multiplier': 1, 'expectedOutput' : ''},
 

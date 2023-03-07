@@ -243,7 +243,7 @@ ReverseWherigoDay1976 latLonToReverseWIGDay1976(LatLng coord) {
 
 ReverseWherigoDay1976? parseReverseWherigoDay1976(String input) {
   input = input.toLowerCase();
-  RegExp regExp = RegExp(r'^\s*([0-9a-z]+)(\s*,\s*|\s+)([0-9a-z]+)\s*$');
+  RegExp regExp = RegExp(r'^\s*([\da-z]+)(\s*,\s*|\s+)([\da-z]+)\s*$');
   var matches = regExp.allMatches(input);
   if (matches.isEmpty) return null;
 

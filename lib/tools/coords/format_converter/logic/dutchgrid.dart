@@ -16,7 +16,7 @@ LatLng dutchGridToLatLon(DutchGrid dutchGrid) {
 }
 
 DutchGrid? parseDutchGrid(String input) {
-  RegExp regExp = RegExp(r'^\s*([\-0-9.]+)(\s*,\s*|\s+)([\-0-9.]+)\s*$');
+  RegExp regExp = RegExp(r'^\s*([\-\d.]+)(\s*,\s*|\s+)([\-\d.]+)\s*$');
   var matches = regExp.allMatches(input);
   String? _xString = '';
   String? _yString = '';
@@ -27,7 +27,7 @@ DutchGrid? parseDutchGrid(String input) {
     _yString = match.group(3);
   }
   if (matches.isEmpty) {
-    regExp = RegExp(r'^\s*([Xx]):?\s*([\-0-9.]+)(\s*,?\s*)([Yy]):?\s*([\-0-9.]+)\s*$');
+    regExp = RegExp(r'^\s*([Xx]):?\s*([\-\d.]+)(\s*,?\s*)([Yy]):?\s*([\-\d.]+)\s*$');
     matches = regExp.allMatches(input);
     if (matches.isNotEmpty) {
       var match = matches.elementAt(0);

@@ -262,7 +262,7 @@ class WASDState extends State<WASD> {
         if (_currentMode == GCWSwitchPosition.left) // encode
           GCWTextField(
               controller: _encodeController,
-              inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[0-9]')),],
+              inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'\d')),],
               hintText: '0123456789',
               onChanged: (text) {
                 setState(() {

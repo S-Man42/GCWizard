@@ -213,7 +213,7 @@ class _KmlReader {
     if (coords == null) return [];
 
     var line = GCWMapPolyline(points: <GCWMapPoint>[]);
-    var regExp = RegExp(r'(-?[\.0-9]+),(-?[\.0-9]+),?(-?[\.0-9]+)?');
+    var regExp = RegExp(r'(-?[\.\d]+),(-?[\.\d]+),?(-?[\.\d]+)?');
 
     regExp.allMatches(coords.innerText).forEach((coordinates) {
       var lat = coordinates.group(2);

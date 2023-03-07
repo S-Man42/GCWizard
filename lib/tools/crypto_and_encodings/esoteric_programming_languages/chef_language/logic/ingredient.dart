@@ -14,8 +14,8 @@ class _Ingredient {
     var tokens = ingredient.trim().split(' ');
     int i = 0;
     _state = _State.Dry;
-    if (RegExp(r'^([0-9]+)[ a-z]*').hasMatch(tokens[i])) {
-      _amount = int.parse(RegExp(r'^([0-9]+)[ a-zäöüß]*').firstMatch(tokens[i])!.group(1)!);
+    if (RegExp(r'^(\d+)[ a-z]*').hasMatch(tokens[i])) {
+      _amount = int.parse(RegExp(r'^(\d+)[ a-zäöüß]*').firstMatch(tokens[i])!.group(1)!);
       i++;
       if (i < tokens.length) {
         if (_CHEF_MeasureType.hasMatch(tokens[i])) {

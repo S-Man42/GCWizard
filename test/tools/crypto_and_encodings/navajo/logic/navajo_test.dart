@@ -50,7 +50,6 @@ void main() {
 
   group("Navajo.encrypt:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'alphabet' : true, 'expectedOutput' : ''},
       {'input' : '', 'alphabet' : true, 'expectedOutput' : ''},
 
       {'input' : in1, 'alphabet' : true, 'expectedOutput' : oK12},

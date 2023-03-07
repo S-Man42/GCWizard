@@ -30,7 +30,7 @@ LatLng? maidenheadToLatLon(Maidenhead maidenhead) {
       } else {
         reslon /= 10;
         reslat /= 10;
-        if (!RegExp(r'[0-9]{2}').hasMatch(_maidenhead.substring(i, i + 2))) return null;
+        if (!RegExp(r'\d{2}').hasMatch(_maidenhead.substring(i, i + 2))) return null;
         lon += int.parse(_maidenhead[i]) * reslon;
         lat += int.parse(_maidenhead[i + 1]) * reslat;
         ++res;

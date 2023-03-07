@@ -6,8 +6,6 @@ void main() {
     List<Map<String, Object?>> _inputsToExpected = [
       {'input' : '._*&%><', 'expectedOutput' : '4'},
 
-
-      {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
       {'input' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜß', 'expectedOutput' : '10'},

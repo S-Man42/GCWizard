@@ -130,7 +130,7 @@ class _PietSession {
     if (_inputNeeded(true)) throw const FormatException(_inputRequired);
 
     if (input == null || input!.isEmpty) return null;
-    var match = RegExp(r'^[0-9]+').firstMatch(input!);
+    var match = RegExp(r'^\d+').firstMatch(input!);
     String _input;
     if (match == null) {
       _input = '';

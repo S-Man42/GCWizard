@@ -180,7 +180,7 @@ Map<String, int> _fillSourceList(File source_fh) {
   var list = <String, int>{};
   String text = source_fh.readAsStringSync();
 
-  RegExp regExp = RegExp(r"(\S\S)(\s)([0-9]*)");
+  RegExp regExp = RegExp(r"(\S\S)(\s)(\d*)");
   Iterable<Match> matches = regExp.allMatches(text);
   for (Match match in matches) {
     list.addAll({match.group(1)!.toLowerCase(): int.tryParse(match.group(3)!) ?? 0});

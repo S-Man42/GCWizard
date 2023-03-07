@@ -14,7 +14,7 @@ String decodeZamonian(String input) {
 
 String encodeZamonian(String input) {
   return input
-      .split(RegExp(r'[^0-9]+'))
+      .split(RegExp(r'\D+'))
       .map((block) {
         if (block.isEmpty) return null;
 

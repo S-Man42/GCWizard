@@ -148,7 +148,7 @@ UTMZone _getZone(LatLng coord) {
 }
 
 UTMREF? parseUTM(String input) {
-  RegExp regExp = RegExp(r'^\s*(\d+)\s?([' + latZones + r'])\s?([0-9\.]+)\s+([0-9\.]+)\s*$');
+  RegExp regExp = RegExp(r'^\s*(\d+)\s?([' + latZones + r'])\s?([\d\.]+)\s+([\d\.]+)\s*$');
   var matches = regExp.allMatches(input);
   String? _lonZoneString = '';
   String? _latZone = '';
@@ -163,7 +163,7 @@ UTMREF? parseUTM(String input) {
     _northingString = match.group(4);
   }
   if (matches.isEmpty) {
-    regExp = RegExp(r'^\s*(\d+)\s?([' + latZones + r'])\s*m?\s*([E|W])\s*([0-9\.]+)\s*m?\s*([N|S])\s?([0-9\.]+)\s*$');
+    regExp = RegExp(r'^\s*(\d+)\s?([' + latZones + r'])\s*m?\s*([E|W])\s*([\d\.]+)\s*m?\s*([N|S])\s?([\d\.]+)\s*$');
     matches = regExp.allMatches(input);
     if (matches.isNotEmpty) {
       var match = matches.elementAt(0);
@@ -174,7 +174,7 @@ UTMREF? parseUTM(String input) {
     }
   }
   if (matches.isEmpty) {
-    regExp = RegExp(r'^\s*(\d+)\s?([' + latZones + r'])\s*([0-9\.]+)\s*m?\s*([E|W])\s*([0-9\.]+)\s*m?\s*([N|S])\s*$');
+    regExp = RegExp(r'^\s*(\d+)\s?([' + latZones + r'])\s*([\d\.]+)\s*m?\s*([E|W])\s*([\d\.]+)\s*m?\s*([N|S])\s*$');
     matches = regExp.allMatches(input);
     if (matches.isNotEmpty) {
       var match = matches.elementAt(0);
@@ -185,7 +185,7 @@ UTMREF? parseUTM(String input) {
     }
   }
   if (matches.isEmpty) {
-    regExp = RegExp(r'^\s*(\d+)\s?([' + latZones + r'])\s?([0-9]{13})\s*$');
+    regExp = RegExp(r'^\s*(\d+)\s?([' + latZones + r'])\s?(\d{13})\s*$');
     matches = regExp.allMatches(input);
     if (matches.isNotEmpty) {
       var match = matches.elementAt(0);
@@ -196,7 +196,7 @@ UTMREF? parseUTM(String input) {
     }
   }
   if (matches.isEmpty) {
-    regExp = RegExp(r'^\s*(\d+)\s?([' + latZones + r'])\s?([0-9]{10})\s*$');
+    regExp = RegExp(r'^\s*(\d+)\s?([' + latZones + r'])\s?(\d{10})\s*$');
     matches = regExp.allMatches(input);
     if (matches.isNotEmpty) {
       var match = matches.elementAt(0);

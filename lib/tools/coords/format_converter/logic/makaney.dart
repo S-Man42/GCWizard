@@ -10,7 +10,7 @@ LatLng? makaneyToLatLon(Makaney makaney) {
 
   var _text = makaney.text.toLowerCase().replaceAll(RegExp(r'[^\-+abo2zptscjkwmgnxqfd984ery3h5l76ui]'), '');
 
-  var regexCheck = RegExp(r'-?[a-z0-9]+([+-])[a-z0-9]+');
+  var regexCheck = RegExp(r'-?[a-z\d]+([+-])[a-z\d]+');
   if (!regexCheck.hasMatch(_text)) {
     return null;
   }

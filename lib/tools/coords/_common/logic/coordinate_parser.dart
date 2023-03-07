@@ -8,7 +8,7 @@ const PATTERN_LON_SIGN = r'([EWO][A-Za-zÄÖÜäöü]*?|[\+\-])';
 const PATTERN_LON_SIGN_WITH_SPACE = '(?:\\s+?$PATTERN_LON_SIGN)?';
 const PATTERN_LAT_DEGREE_INT = r'(\d{1,2})[\s°]+?';
 const PATTERN_LON_DEGREE_INT = r'(\d{1,3})[\s°]+?';
-const PATTERN_SECONDS_MINUTES = '([0-5]?[0-9])[\\s\']+?';
+const PATTERN_SECONDS_MINUTES = '([0-5]?\\d)[\\s\']+?';
 const PATTERN_DECIMAL = r'(?:\s*?[\.,]\s*?(\d+))?' '[\\s\'°"]+?';
 const LETTER = '[A-ZÄÖÜ]';
 

@@ -86,7 +86,7 @@ LatLng naturalAreaCodeToLatLon(NaturalAreaCode nac) {
 }
 
 NaturalAreaCode? parseNaturalAreaCode(String input) {
-  RegExp regExp = RegExp(r'^\s*([0-9A-Z]+)(\s*,\s*|\s+)([0-9A-Z]+)\s*$');
+  RegExp regExp = RegExp(r'^\s*([\dA-Z]+)(\s*,\s*|\s+)([\dA-Z]+)\s*$');
   var matches = regExp.allMatches(input);
 
   String? xString = '';
@@ -98,7 +98,7 @@ NaturalAreaCode? parseNaturalAreaCode(String input) {
     yString = match.group(3);
   }
   if (matches.isEmpty) {
-    regExp = RegExp(r'^\s*([Xx]):?\s*([0-9A-Z]+)(\s*,\s*|\s+)([Yy]):?\s*([0-9A-Z]+)\s*$');
+    regExp = RegExp(r'^\s*([Xx]):?\s*([\dA-Z]+)(\s*,\s*|\s+)([Yy]):?\s*([\dA-Z]+)\s*$');
     matches = regExp.allMatches(input);
     if (matches.isNotEmpty) {
       var match = matches.elementAt(0);

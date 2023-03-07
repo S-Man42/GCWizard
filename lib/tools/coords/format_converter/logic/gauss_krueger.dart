@@ -157,7 +157,7 @@ LatLng gaussKruegerToLatLon(GaussKrueger gaussKrueger, Ellipsoid ells) {
 }
 
 GaussKrueger? parseGaussKrueger(String input, {CoordinateFormatKey gaussKruegerCode = defaultGaussKruegerType}) {
-  RegExp regExp = RegExp(r'^\s*([\-0-9.]+)(\s*,\s*|\s+)([\-0-9.]+)\s*$');
+  RegExp regExp = RegExp(r'^\s*([\-\d.]+)(\s*,\s*|\s+)([\-\d.]+)\s*$');
   var matches = regExp.allMatches(input);
   String? _eastingString = '';
   String? _northingString = '';
@@ -168,7 +168,7 @@ GaussKrueger? parseGaussKrueger(String input, {CoordinateFormatKey gaussKruegerC
     _northingString = match.group(3);
   }
   if (matches.isEmpty) {
-    regExp = RegExp(r'^\s*([RrXx]):?\s*([\-0-9.]+)(\s*,?\s*)([HhYy]):?\s*([\-0-9.]+)\s*$');
+    regExp = RegExp(r'^\s*([RrXx]):?\s*([\-\d.]+)(\s*,?\s*)([HhYy]):?\s*([\-\d.]+)\s*$');
     matches = regExp.allMatches(input);
     if (matches.isNotEmpty) {
       var match = matches.elementAt(0);

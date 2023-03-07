@@ -123,7 +123,7 @@ bool isOnlyLetters(String input) {
 bool isOnlyNumerals(String input) {
   if (input.isEmpty) return false;
 
-  return input.replaceAll(RegExp(r'[0-9]'), '').isEmpty;
+  return input.replaceAll(RegExp(r'\d'), '').isEmpty;
 }
 
 String removeControlCharacters(String input) {

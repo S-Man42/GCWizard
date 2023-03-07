@@ -96,7 +96,7 @@ class StraddlingCheckerboardState extends State<StraddlingCheckerboard> {
                 controller: _chiffreTextController,
                 hintText: i18n(context, 'straddlingcheckerboard_hint_chiffretext'),
                 inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                  FilteringTextInputFormatter.allow(RegExp(r'\d')),
                 ],
                 onChanged: (text) {
                   setState(() {
@@ -231,7 +231,7 @@ class StraddlingCheckerboardState extends State<StraddlingCheckerboard> {
                       hintText: i18n(context, 'straddlingcheckerboard_hint_column'),
                       inputFormatters: [
                         LengthLimitingTextInputFormatter(10),
-                        FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                        FilteringTextInputFormatter.allow(RegExp(r'\d')),
                       ],
                       onChanged: (text) {
                         setState(() {

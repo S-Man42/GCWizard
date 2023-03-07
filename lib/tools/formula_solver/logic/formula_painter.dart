@@ -284,7 +284,7 @@ class FormulaPainter {
   }
 
   List<String>? _isFormulaReference(String formula) {
-    RegExp regex = RegExp(r'^({)([1-9][0-9]*)(})');
+    RegExp regex = RegExp(r'^({)([1-9]\d*)(})');
     var match = regex.firstMatch(formula);
 
     return (match == null) ? null : [match.group(1)!, match.group(2)!, match.group(3)!];

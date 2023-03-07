@@ -39,7 +39,6 @@ void main() {
   group("Playfair.decodePlayfair:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'input' : '', 'key': '', 'mode': AlphabetModificationMode.J_TO_I, 'expectedOutput' : ''},
-      {'expectedOutput' : 'AX', 'key': null, 'mode': AlphabetModificationMode.J_TO_I, 'input' : 'CV'},
       {'expectedOutput' : 'AX', 'key': '', 'mode': AlphabetModificationMode.J_TO_I, 'input' : 'CV'},
 
       {'expectedOutput' : 'AX', 'key': '', 'mode': AlphabetModificationMode.J_TO_I, 'input' : 'CV'},

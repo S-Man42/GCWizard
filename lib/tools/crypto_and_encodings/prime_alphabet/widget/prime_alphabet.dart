@@ -111,7 +111,7 @@ class PrimeAlphabetState extends State<PrimeAlphabet> {
   String _buildOutput() {
     if (_currentMode == GCWSwitchPosition.right) {
       return decryptPrimeAlphabet(
-          RegExp(r'[0-9]+').allMatches(_currentDecryptInput).map((number) => int.tryParse(number.group(0)!) ?? 0).toList(),
+          RegExp(r'\d+').allMatches(_currentDecryptInput).map((number) => int.tryParse(number.group(0)!) ?? 0).toList(),
           firstRecognizedPrime: _PRIMES_LIST[_currentStartIndex]);
     } else {
       return encryptPrimeAlphabet(

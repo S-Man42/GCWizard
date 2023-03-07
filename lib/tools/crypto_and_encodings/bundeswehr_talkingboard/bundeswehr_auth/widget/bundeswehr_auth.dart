@@ -49,7 +49,7 @@ class BundeswehrTalkingBoardAuthentificationState extends State<BundeswehrTalkin
   String _numeralCodeString = '';
 
   final _authTableMaskFormatter =
-      WrapperForMaskTextInputFormatter(mask: '## ' * 64 + '##', filter: {"#": RegExp(r'[0-9]')});
+      WrapperForMaskTextInputFormatter(mask: '## ' * 64 + '##', filter: {"#": RegExp(r'\d')});
 
   final _authCodeMaskFormatter =
       WrapperForMaskTextInputFormatter(mask: '## ' * 2 + '##', filter: {"#": RegExp(r'[a-zA-Z]')});

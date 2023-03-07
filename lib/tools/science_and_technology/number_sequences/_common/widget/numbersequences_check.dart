@@ -37,7 +37,7 @@ class NumberSequenceCheckNumberState extends State<NumberSequenceCheckNumber> {
         GCWTextField(
           controller: currentInputController,
           inputFormatters: [
-            FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+            FilteringTextInputFormatter.allow(RegExp(r'\d')),
           ],
           onChanged: (text) {
             setState(() {

@@ -16,7 +16,7 @@ class GCWDoubleTextInputFormatter extends TextInputFormatter {
 
     var _decimalRegex = '\$';
     if (numberDecimalDigits == null || numberDecimalDigits! > 0) {
-      _decimalRegex = '(\\.[0-9]' + (numberDecimalDigits == null ? '*' : '{0,$numberDecimalDigits}') + ')?\$';
+      _decimalRegex = '(\\.\\d' + (numberDecimalDigits == null ? '*' : '{0,$numberDecimalDigits}') + ')?\$';
     }
 
     _exp = RegExp(_buildIntegerRegex() + _decimalRegex);
@@ -38,25 +38,25 @@ class GCWDoubleTextInputFormatter extends TextInputFormatter {
 
     if (min == null) {
       if (max == null) {
-        regex = '^-?[0-9]*';
+        regex = '^-?\\d*';
       } else if (max! < 0) {
-        regex = '^(-[0-9]{0,$_maxIntegerLength})?';
+        regex = '^(-\\d{0,$_maxIntegerLength})?';
       } else if (max! >= 0) {
-        regex = '^((-[0-9]*)|([0-9]{0,$_maxIntegerLength}))';
+        regex = '^((-\\d*)|(\\d{0,$_maxIntegerLength}))';
       }
     } else if (min! < 0) {
       if (max == null) {
-        regex = '^((-[0-9]{0,$_minIntegerLength})|([0-9]*))';
+        regex = '^((-\\d{0,$_minIntegerLength})|(\\d*))';
       } else if (max! < 0) {
-        regex = '^(-[0-9]{0,$_minIntegerLength})?';
+        regex = '^(-\\d{0,$_minIntegerLength})?';
       } else if (max! >= 0) {
-        regex = '^((-[0-9]{0,$_minIntegerLength})|([0-9]{0,$_maxIntegerLength}))';
+        regex = '^((-\\d{0,$_minIntegerLength})|(\\d{0,$_maxIntegerLength}))';
       }
     } else if (min! >= 0) {
       if (max == null) {
-        regex = '^[0-9]*';
+        regex = '^\\d*';
       } else if (max! >= 0) {
-        regex = '^[0-9]{0,$_maxIntegerLength}';
+        regex = '^\\d{0,$_maxIntegerLength}';
       }
     }
 

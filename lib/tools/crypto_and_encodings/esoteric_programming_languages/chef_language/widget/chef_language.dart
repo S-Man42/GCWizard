@@ -34,11 +34,11 @@ class ChefState extends State<Chef> {
   var _currentOutput = '';
 
   var TimeInputFormatter = WrapperForMaskTextInputFormatter(mask: '#' * 3, // allow 3 characters input
-      filter: {"#": RegExp(r'[0-9]')});
+      filter: {"#": RegExp(r'\d')});
   var TemperatureInputFormatter = WrapperForMaskTextInputFormatter(mask: '#' * 3, // allow 3 characters input
-      filter: {"#": RegExp(r'[0-9]')});
+      filter: {"#": RegExp(r'\d')});
   var DigitSpacesInputFormatter = WrapperForMaskTextInputFormatter(mask: '#' * 1000, // allow 1000 characters input
-      filter: {"#": RegExp(r'[0-9] ')});
+      filter: {"#": RegExp(r'\d ')});
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left; // interpret
   GCWSwitchPosition _currentLanguage = GCWSwitchPosition.right; // english

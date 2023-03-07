@@ -5,7 +5,6 @@ void main() {
   group("KennysCode.encryptKenny:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'input' : '', 'replaceCharacters': <String>[], 'expectedOutput' : '', 'caseSensitive' : false},
-      {'input' : 'A', 'replaceCharacters': null, 'expectedOutput' : '', 'caseSensitive' : false},
       {'input' : 'A', 'replaceCharacters': <String>[], 'expectedOutput' : '', 'caseSensitive' : false},
       {'input' : 'A', 'replaceCharacters': ['m', 'p'], 'expectedOutput' : '', 'caseSensitive' : false},
       {'input' : 'A', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'mmm', 'caseSensitive' : false},
@@ -19,9 +18,7 @@ void main() {
       {'input' : '1', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : '1', 'caseSensitive' : false},
       {'input' : 'A1', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'mmm1', 'caseSensitive' : false},
 
-      {'input' : null, 'replaceCharacters': <String>[], 'expectedOutput' : '', 'caseSensitive' : true},
       {'input' : '', 'replaceCharacters': <String>[], 'expectedOutput' : '', 'caseSensitive' : true},
-      {'input' : 'A', 'replaceCharacters': null, 'expectedOutput' : '', 'caseSensitive' : true},
       {'input' : 'A', 'replaceCharacters': <String>[], 'expectedOutput' : '', 'caseSensitive' : true},
       {'input' : 'A', 'replaceCharacters': ['m', 'p'], 'expectedOutput' : '', 'caseSensitive' : true},
       {'input' : 'A', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'Mmm', 'caseSensitive' : true},
@@ -47,7 +44,6 @@ void main() {
   group("KennysCode.decryptKenny:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'input' : '', 'replaceCharacters': <String>[], 'expectedOutput' : '', 'caseSensitive' : true},
-      {'input' : 'A', 'replaceCharacters': null, 'expectedOutput' : '', 'caseSensitive' : true},
       {'input' : 'A', 'replaceCharacters': <String>[], 'expectedOutput' : '', 'caseSensitive' : true},
       {'input' : 'A', 'replaceCharacters': ['m', 'p'], 'expectedOutput' : '', 'caseSensitive' : true},
       {'input' : 'mmm', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'a', 'caseSensitive' : true},
@@ -114,7 +110,6 @@ void main() {
       {'input' : 'Mfmfmffmp mfmmppppmmmmmmfmfpfmp!', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'Gut gemacht!', 'caseSensitive' : true},
 
       {'input' : '', 'replaceCharacters': <String>[], 'expectedOutput' : '', 'caseSensitive' : false},
-      {'input' : 'A', 'replaceCharacters': null, 'expectedOutput' : '', 'caseSensitive' : false},
       {'input' : 'A', 'replaceCharacters': <String>[], 'expectedOutput' : '', 'caseSensitive' : false},
       {'input' : 'A', 'replaceCharacters': ['m', 'p'], 'expectedOutput' : '', 'caseSensitive' : false},
       {'input' : 'Mmm', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'A', 'caseSensitive' : false},

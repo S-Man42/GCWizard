@@ -139,7 +139,7 @@ LatLng mgrsToLatLon(MGRS mgrs, Ellipsoid ells) {
 }
 
 MGRS? parseMGRS(String input) {
-  RegExp regExp = RegExp(r'^\s*(\d+)\s?([A-Z])\s?([A-Z]{2})\s?([0-9.]+)\s+([0-9.]+)\s*$');
+  RegExp regExp = RegExp(r'^\s*(\d+)\s?([A-Z])\s?([A-Z]{2})\s?([\d.]+)\s+([\d.]+)\s*$');
   var matches = regExp.allMatches(input);
   String? _lonZoneString = '';
   String? _latZone = '';
@@ -156,7 +156,7 @@ MGRS? parseMGRS(String input) {
     _northingString = match.group(5);
   }
   if (matches.isEmpty) {
-    regExp = RegExp(r'^\s*(\d+)\s?([A-Z])\s?([A-Z]{2})\s?([0-9]{10})\s*$');
+    regExp = RegExp(r'^\s*(\d+)\s?([A-Z])\s?([A-Z]{2})\s?(\d{10})\s*$');
     matches = regExp.allMatches(input);
     if (matches.isNotEmpty) {
       var match = matches.elementAt(0);

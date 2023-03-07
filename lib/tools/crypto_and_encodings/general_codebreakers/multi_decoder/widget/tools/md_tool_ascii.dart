@@ -15,7 +15,7 @@ class MultiDecoderToolASCII extends AbstractMultiDecoderTool {
             name: name,
             internalToolName: MDT_INTERNALNAMES_ASCII,
             onDecode: (String input, String key) {
-              return String.fromCharCodes(input.split(RegExp(r'[^0-9]')).map((value) => int.tryParse(value) ?? 0).toList());
+              return String.fromCharCodes(input.split(RegExp(r'\D')).map((value) => int.tryParse(value) ?? 0).toList());
             },
             options: options);
 }

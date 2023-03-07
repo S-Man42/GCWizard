@@ -24,25 +24,25 @@ class GCWIntegerTextInputFormatter extends TextInputFormatter {
 
     if (min == null) {
       if (max == null) {
-        regex = '^-?[0-9]*\$';
+        regex = '^-?\\d*\$';
       } else if (max! < 0) {
-        regex = '^(-[0-9]{0,${max!.abs().toString().length}})?\$';
+        regex = '^(-\\d{0,${max!.abs().toString().length}})?\$';
       } else if (max! >= 0) {
-        regex = '^((-[0-9]*)|([0-9]{0,${max.toString().length}}))\$';
+        regex = '^((-\\d*)|(\\d{0,${max.toString().length}}))\$';
       }
     } else if (min! < 0) {
       if (max == null) {
-        regex = '^((-[0-9]{0,${min!.abs().toString().length}})|([0-9]*))\$';
+        regex = '^((-\\d{0,${min!.abs().toString().length}})|(\\d*))\$';
       } else if (max! < 0) {
-        regex = '^(-[0-9]{0,${min!.abs().toString().length}})?\$';
+        regex = '^(-\\d{0,${min!.abs().toString().length}})?\$';
       } else if (max! >= 0) {
-        regex = '^((-[0-9]{0,${min!.abs().toString().length}})|([0-9]{0,${max.toString().length}}))\$';
+        regex = '^((-\\d{0,${min!.abs().toString().length}})|(\\d{0,${max.toString().length}}))\$';
       }
     } else if (min! >= 0) {
       if (max == null) {
-        regex = '^[0-9]*\$';
+        regex = '^\\d*\$';
       } else if (max! >= 0) {
-        regex = '^[0-9]{0,${max.toString().length}}\$';
+        regex = '^\\d{0,${max.toString().length}}\$';
       }
     }
 
