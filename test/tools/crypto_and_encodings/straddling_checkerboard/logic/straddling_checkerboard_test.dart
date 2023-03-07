@@ -8,7 +8,7 @@ void main() {
     List<Map<String, Object?>> _inputsToExpected = [
       // empty Input
       {'input' : '', 'key': '', 'alphabetWord' : '', 'columnOrder' : '', 'matrix4x10' : false, 'mode': PolybiosMode.AZ09, 'alphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'expectedOutput' : ''},
-      {'input' : 'cache bei n 52 345 678 o 13 09 451', 'key': null, 'alphabetWord' : '', 'columnOrder' : '', 'matrix4x10' : false, 'mode': PolybiosMode.AZ09, 'alphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'expectedOutput' : ''},
+      {'input' : 'cache bei n 52 345 678 o 13 09 451', 'key': '', 'alphabetWord' : '', 'columnOrder' : '', 'matrix4x10' : false, 'mode': PolybiosMode.AZ09, 'alphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'expectedOutput' : ''},
 
       {'input' : 'cache bei n 52 345 678 o 13 09 451', 'key': 'gc wizard ', 'alphabetWord' : '', 'columnOrder' : '0246813579', 'matrix4x10' : false, 'mode': PolybiosMode.AZ09, 'alphabet': '', 'expectedOutput' : '2324642974042897479799599297993994995979969979989749979919939799099997994995991'},
       {'input' : 'cache bei n 52 345 678 o 13 09 451', 'key': 'g c wizad ', 'alphabetWord' : '', 'columnOrder' : '0246813579', 'matrix4x10' : true, 'mode': PolybiosMode.AZ09, 'alphabet': '', 'expectedOutput' : '4542622992022199279998929994969899919395992999909499699799969890'},

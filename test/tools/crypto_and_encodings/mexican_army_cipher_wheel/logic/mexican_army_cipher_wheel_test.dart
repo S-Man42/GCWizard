@@ -4,7 +4,6 @@ import 'package:gc_wizard/tools/crypto_and_encodings/mexican_army_cipher_wheel/l
 void main() {
   group("MexicanArmyCipherWheel.encryptMexicanArmyCipherWheel:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'keys': <int>[], 'expectedOutput' : ''},
       {'input' : '', 'keys': <int>[], 'expectedOutput' : ''},
 
       {'input' : 'AZ', 'keys': [1,27,53,79],   'expectedOutput' : '0126 2726 5326 7926  0152 2752 5352 7952  0178 2778 5378 7978'},
@@ -19,7 +18,7 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, keys: ${elem['keys']}', () {
         for (int i = 0; i < 1000; i++) {
-          var _actual = encryptMexicanArmyCipherWheel(elem['input'] as String?, elem['keys'] as List<int>);
+          var _actual = encryptMexicanArmyCipherWheel(elem['input'] as String, elem['keys'] as List<int>);
           expect((elem['expectedOutput'] as String).contains(_actual), true);
         }
       });
@@ -29,7 +28,6 @@ void main() {
   group("MexicanArmyCipherWheel.decryptMexicanArmyCipherWheel:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'expectedOutput' : '', 'keys': <int>[], 'input' : ''},
-      {'expectedOutput' : '', 'keys': <int>[], 'input' : null},
 
       {'expectedOutput' : 'AFIMQX', 'keys': [22,40,58,90], 'input' : '406304088055'},
       {'expectedOutput' : 'AFIMQX', 'keys': [22,40,58,90], 'input' : '900104521287'},
@@ -44,7 +42,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, keys: ${elem['keys']}', () {
-        var _actual = decryptMexicanArmyCipherWheel(elem['input'] as String?, elem['keys'] as List<int>);
+        var _actual = decryptMexicanArmyCipherWheel(elem['input'] as String, elem['keys'] as List<int>);
         expect(_actual, elem['expectedOutput']);
       });
     }

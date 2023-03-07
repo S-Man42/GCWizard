@@ -4,7 +4,6 @@ import 'package:gc_wizard/tools/crypto_and_encodings/houdini/logic/houdini.dart'
 void main() {
   group("Houdini.decodeHoudini:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'mode': HoudiniMode.NUMBERS, 'expectedOutput' : null},
       {'input' : '', 'mode': HoudiniMode.NUMBERS, 'expectedOutput' : null},
 
       {'input' : 'BE QUICK SAY PRAY QUICKLY', 'mode': HoudiniMode.NUMBERS, 'expectedOutput' : {0: '0318', 10: '10318'}},
@@ -16,7 +15,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, mode: ${elem['mode']}', () {
-        var _actual = decodeHoudini(elem['input'] as String?, elem['mode'] as HoudiniMode);
+        var _actual = decodeHoudini(elem['input'] as String, elem['mode'] as HoudiniMode);
         expect(_actual, elem['expectedOutput']);
       });
     }

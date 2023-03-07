@@ -25,8 +25,8 @@ final Map<String, String> _KEYWORDS_LETTERS = {
   'J': 'BEQUICK'
 };
 
-Map<int, String>? decodeHoudini(String? input, HoudiniMode mode) {
-  if (input == null || input.isEmpty) return null;
+Map<int, String>? decodeHoudini(String input, HoudiniMode mode) {
+  if (input.isEmpty) return null;
 
   Map<String, String> replaceMap;
   if (mode == HoudiniMode.LETTERS) {

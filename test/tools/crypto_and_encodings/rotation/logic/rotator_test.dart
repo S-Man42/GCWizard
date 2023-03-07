@@ -37,9 +37,7 @@ void main() {
       {'alphabet': '', 'input' : 'ABMNYZ', 'key' : 13, 'removeUnknownCharacters' : true, 'ignoreCase': true, 'expectedOutput' : ''},
 
       {'alphabet': 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'input' : '', 'key' : 13, 'removeUnknownCharacters' : false, 'ignoreCase': false, 'expectedOutput' : ''},
-      {'alphabet': 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'input' : null, 'key' : 13, 'removeUnknownCharacters' : false, 'ignoreCase': true, 'expectedOutput' : ''},
       {'alphabet': 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'input' : '', 'key' : 13, 'removeUnknownCharacters' : false, 'ignoreCase': true, 'expectedOutput' : ''},
-      {'alphabet': 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'input' : null, 'key' : 13, 'removeUnknownCharacters' : true, 'ignoreCase': true, 'expectedOutput' : ''},
 
       {'alphabet': 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'input' : 'ABMNYZ', 'key' : null, 'removeUnknownCharacters' : false, 'ignoreCase': false, 'expectedOutput' : 'ABMNYZ'},
       {'alphabet': 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'input' : 'ABMNYZ', 'key' : null, 'removeUnknownCharacters' : false, 'ignoreCase': true, 'expectedOutput' : 'ABMNYZ'},
