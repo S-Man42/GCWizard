@@ -215,8 +215,8 @@ bool _checkNormalize(List<String> instructions) {
   return result;
 }
 
-BeatnikOutput interpretBeatnik(String ScrabbleVersion, String? sourcecode, String input) {
-  if (sourcecode == null || sourcecode.isEmpty) {
+BeatnikOutput interpretBeatnik(String ScrabbleVersion, String sourcecode, String input) {
+  if (sourcecode.isEmpty) {
     return BeatnikOutput([''], [''], [''], [''], [DebugOutput('', '', '', '')]);
   }
 

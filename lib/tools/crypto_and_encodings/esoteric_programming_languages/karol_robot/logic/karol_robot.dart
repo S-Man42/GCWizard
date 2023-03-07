@@ -225,10 +225,10 @@ final _KAROL_COLORS = {
 
 enum _KAROL_DIRECTION { SOUTH, NORTH, EAST, WEST }
 
-String KarolRobotOutputEncode(String? output, KAREL_LANGUAGES language) {
+String KarolRobotOutputEncode(String output, KAREL_LANGUAGES language) {
   String program = '';
   int lineLength = 0;
-  if (output == null || output.isEmpty) return '';
+  if (output.isEmpty) return '';
 
   output.trim().toUpperCase().split('\n').forEach((line) {
     line.split('').forEach((char) {

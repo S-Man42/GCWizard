@@ -31,10 +31,10 @@ class AlphabetValues {
     }).join();
   }
 
-  List<int?> textToValues(String? text, {bool keepNumbers = false}) {
+  List<int?> textToValues(String text, {bool keepNumbers = false}) {
     var output = <int?>[];
 
-    if (text == null || text.isEmpty) return output;
+    if (text.isEmpty) return output;
 
     text = _toUpperCase(text);
 
@@ -53,11 +53,11 @@ class AlphabetValues {
 
     var maxKeyLength = entries.first.key.length;
 
-    while (text!.isNotEmpty) {
+    while (text.isNotEmpty) {
       String? value;
       int i = 0;
       for (i = min(maxKeyLength, text.length); i >= 1; i--) {
-        var entry = entries.firstWhereOrNull((entry) => entry.key == text!.substring(0, i));
+        var entry = entries.firstWhereOrNull((entry) => entry.key == text.substring(0, i));
         if (entry != null) {
           value = entry.value;
           break;

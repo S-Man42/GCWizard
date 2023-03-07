@@ -9,7 +9,6 @@ final _SPACE = YEN + MY + MY;
 void main() {
   group("AbaddonCode.encryptAbaddon:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
       {'input' : '', 'replaceCharacters': null, 'expectedOutput' : ''},
       {'input' : '', 'replaceCharacters': <String, String>{}, 'expectedOutput' : ''},
@@ -34,7 +33,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, replaceCharacter: ${elem['replaceCharacters']}', () {
-        var _actual = encryptAbaddon(elem['input'] as String?, elem['replaceCharacters'] as Map<String, String>?);
+        var _actual = encryptAbaddon(elem['input'] as String, elem['replaceCharacters'] as Map<String, String>?);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -42,7 +41,6 @@ void main() {
 
   group("AbaddonCode.decryptAbaddon:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
       {'input' : '', 'replaceCharacters': null, 'expectedOutput' : ''},
       {'input' : '', 'replaceCharacters': <String, String>{}, 'expectedOutput' : ''},
@@ -77,7 +75,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, replaceCharacter: ${elem['replaceCharacters']}', () {
-        var _actual = decryptAbaddon(elem['input'] as String?, elem['replaceCharacters'] as Map<String, String>?);
+        var _actual = decryptAbaddon(elem['input'] as String, elem['replaceCharacters'] as Map<String, String>?);
         expect(_actual, elem['expectedOutput']);
       });
     }

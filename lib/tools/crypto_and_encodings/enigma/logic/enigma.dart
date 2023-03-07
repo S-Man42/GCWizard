@@ -201,8 +201,8 @@ List<int> _rotorConfigurations(EnigmaKey key) {
   return key.rotorConfigurations.map((configuration) => configuration.setting).toList();
 }
 
-IntegerListText calculateEnigma(String? input, EnigmaKey key) {
-  if (input == null || _standardRotorConfigurations(key).isEmpty) {
+IntegerListText calculateEnigma(String input, EnigmaKey key) {
+  if (_standardRotorConfigurations(key).isEmpty) {
     return IntegerListText('', _rotorConfigurations(key));
   }
 

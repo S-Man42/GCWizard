@@ -178,7 +178,7 @@ DIE IRONIE IST UNSER VERLUST AN STARKER ETHIK - SO ZIEMLICH.''';
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = interpretBeatnik(elem['scrabbleSet'] as String, elem['sourcecode'] as String?, elem['input'] as String);
+        var _actual = interpretBeatnik(elem['scrabbleSet'] as String, elem['sourcecode'] as String, elem['input'] as String);
         var length = (elem['expectedOutput'] as BeatnikOutput).output.length;
         for (int i = 0; i < length; i++) {
           expect(_actual.output[i], (elem['expectedOutput'] as BeatnikOutput).output[i]);

@@ -48,7 +48,7 @@ Map<WASD_TYPE, String> KEYBOARD_CONTROLS = {
   WASD_TYPE.CUSTOM: 'wasd_keyboard_custom',
 };
 
-final Map<String, List<String>> WASD_ENCODE = {
+final Map<String, List<String>> _WASD_ENCODE = {
   '0': [
     '←↓↓→↑↑',
     '↓↓→↑↑←',
@@ -112,10 +112,10 @@ final Map<String, List<String>> WASD_ENCODE = {
   '.': ['.']
 };
 
-final Map<List<String>, String> WASD_DECODE = switchMapKeyValue(WASD_ENCODE);
+final Map<List<String>, String> _WASD_DECODE = switchMapKeyValue(_WASD_ENCODE);
 
-String encodeWASD(String? input, List<String> controlSet) {
-  if (input == null || input.isEmpty) return '';
+String encodeWASD(String input, List<String> controlSet) {
+  if (input.isEmpty) return '';
 
   controlSet = _normalizeControlSet(controlSet);
 
@@ -123,10 +123,10 @@ String encodeWASD(String? input, List<String> controlSet) {
   Random rnd = Random();
   List<String> result = [];
   input.split('').forEach((element) {
-    if (WASD_ENCODE[element] == null) {
+    if (_WASD_ENCODE[element] == null) {
       result.add('');
     } else {
-      result.add(WASD_ENCODE[element]![rnd.nextInt(WASD_ENCODE[element]!.length)].toString());
+      result.add(_WASD_ENCODE[element]![rnd.nextInt(_WASD_ENCODE[element]!.length)].toString());
     }
   });
 
@@ -151,8 +151,8 @@ String _normalizeDecodingInput(String input, List<String> controlSet) {
   });
 }
 
-String decodeWASD(String? input, List<String> controlSet) {
-  if (input == null || input.isEmpty) return '';
+String decodeWASD(String input, List<String> controlSet) {
+  if (input.isEmpty) return '';
 
   controlSet = _normalizeControlSet(controlSet);
 
@@ -162,7 +162,7 @@ String decodeWASD(String? input, List<String> controlSet) {
 
   _normalizeDecodingInput(input, controlSet).split(' ').forEach((element) {
     if (element.isNotEmpty) {
-      WASD_DECODE.forEach((key, value) {
+      _WASD_DECODE.forEach((key, value) {
         if (key.contains(element)) {
           found = true;
           result = value;
@@ -193,8 +193,8 @@ List<String> _normalizeControlSet(List<String> controlSet) {
   return normalized.map((e) => (e ?? '').toUpperCase()).toList();
 }
 
-String decodeWASDGraphic(String? input, List<String> controlSet) {
-  if (input == null || input.isEmpty) return '';
+String decodeWASDGraphic(String input, List<String> controlSet) {
+  if (input.isEmpty) return '';
 
   controlSet = _normalizeControlSet(controlSet);
 

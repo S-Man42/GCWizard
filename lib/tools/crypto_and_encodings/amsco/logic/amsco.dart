@@ -73,8 +73,8 @@ Map<String, List<String>> _createAmscoGrid(String input, String key, bool oneCha
   return grid;
 }
 
-AmscoOutput encryptAmsco(String? input, String? key, bool oneCharStart) {
-  if (input == null || key == null || input.isEmpty || key.isEmpty) return AmscoOutput('', '', ErrorCode.OK);
+AmscoOutput encryptAmsco(String input, String key, bool oneCharStart) {
+  if (input.isEmpty || key.isEmpty) return AmscoOutput('', '', ErrorCode.OK);
 
   key = _cleanKey(key);
   if (!_validKey(key)) return AmscoOutput('', '', ErrorCode.Key);
@@ -93,8 +93,8 @@ AmscoOutput encryptAmsco(String? input, String? key, bool oneCharStart) {
   return AmscoOutput(output, _amscoGridToString(grid), ErrorCode.OK);
 }
 
-AmscoOutput decryptAmsco(String? input, String? key, bool oneCharStart) {
-  if (input == null || key == null || input.isEmpty || key.isEmpty) return AmscoOutput('', '', ErrorCode.OK);
+AmscoOutput decryptAmsco(String input, String key, bool oneCharStart) {
+  if (input.isEmpty || key.isEmpty) return AmscoOutput('', '', ErrorCode.OK);
 
   key = _cleanKey(key);
   if (!_validKey(key)) return AmscoOutput('', '', ErrorCode.Key);

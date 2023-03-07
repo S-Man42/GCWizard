@@ -4,8 +4,6 @@ import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_langua
 void main() {
   group("Befunge.interpretBefunge", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'code' : null, 'input' : null, 'expectedOutput' : BefungeOutput(Output: '', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
-      {'code' : null, 'input' : '', 'expectedOutput' : BefungeOutput(Output: '', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
       {'code' : '', 'input' : '', 'expectedOutput' : BefungeOutput(Output: '', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
       {'code' : 'ABC123;', 'input' : '', 'expectedOutput' : BefungeOutput(Output: '', Error: BEFUNGE_ERROR_INFINITE_LOOP, BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
 
@@ -27,7 +25,7 @@ v,,,,,,"World!"<
 >25*,@'
 */
       {'code' : '>              v\n' 'v  ,,,,,"Hello"<\n' '>48*,          v\n' 'v,,,,,,"World!"<\n' '>25*,@',
-        'input' : null,
+        'input' : '',
         'expectedOutput' :
         BefungeOutput(
             Output: 'Hello World!\n',
@@ -308,7 +306,7 @@ v                                              >
 
     for (var elem in _inputsToExpected) {
       test('code: ${elem['code']}, input: ${elem['input']}', () {
-        var _actual = interpretBefunge(elem['code'] as String?, input: elem['input'] as String?);
+        var _actual = interpretBefunge(elem['code'] as String, input: elem['input'] as String);
         expect(_actual.Output, (elem['expectedOutput']as BefungeOutput).Output);
         expect(_actual.Error, (elem['expectedOutput']as BefungeOutput).Error);
       });

@@ -4,21 +4,19 @@ import 'package:gc_wizard/utils/string_utils.dart';
 
 enum _ADFGVXMode { ADFGX, ADFGVX }
 
-String? encryptADFGX(String? input, String? substitutionKey, String? transpositionKey,
+String? encryptADFGX(String input, String substitutionKey, String transpositionKey,
     {PolybiosMode polybiosMode = PolybiosMode.ZA90, String? alphabet}) {
   return _encrypt(input, substitutionKey, transpositionKey, _ADFGVXMode.ADFGX, polybiosMode, alphabet);
 }
 
-String? encryptADFGVX(String? input, String? substitutionKey, String? transpositionKey,
+String? encryptADFGVX(String input, String substitutionKey, String transpositionKey,
     {PolybiosMode polybiosMode = PolybiosMode.ZA90, String? alphabet}) {
   return _encrypt(input, substitutionKey, transpositionKey, _ADFGVXMode.ADFGVX, polybiosMode, alphabet);
 }
 
-String? _encrypt(String? input, String? substitutionKey, String? transpositionKey, _ADFGVXMode mode,
+String? _encrypt(String input, String substitutionKey, String transpositionKey, _ADFGVXMode mode,
     PolybiosMode polybiosMode, String? alphabet) {
-  if (input == null || input.isEmpty) return '';
-
-  substitutionKey ??= '';
+  if (input.isEmpty) return '';
 
   var adfgvxMode = mode.toString().split('.')[1]; //mode.toString() == _ADFGVX.ADFGX
   alphabet = createPolybiosAlphabet(adfgvxMode.length,
@@ -29,7 +27,7 @@ String? _encrypt(String? input, String? substitutionKey, String? transpositionKe
   if (polybiosOutput == null) return null;
 
   var polybiosEncoded = polybiosOutput.output.replaceAll(' ', '');
-  if (transpositionKey == null || transpositionKey.isEmpty) return insertSpaceEveryNthCharacter(polybiosEncoded, 5);
+  if (transpositionKey.isEmpty) return insertSpaceEveryNthCharacter(polybiosEncoded, 5);
 
   transpositionKey = transpositionKey.toUpperCase();
 
@@ -57,24 +55,24 @@ String? _encrypt(String? input, String? substitutionKey, String? transpositionKe
   return insertSpaceEveryNthCharacter(out, 5);
 }
 
-String? decryptADFGX(String? input, String? substitutionKey, String? transpositionKey,
+String? decryptADFGX(String input, String substitutionKey, String transpositionKey,
     {PolybiosMode polybiosMode = PolybiosMode.ZA90, String? alphabet}) {
   return _decrypt(input, substitutionKey, transpositionKey, _ADFGVXMode.ADFGX, polybiosMode, alphabet);
 }
 
-String? decryptADFGVX(String? input, String? substitutionKey, String? transpositionKey,
+String? decryptADFGVX(String input, String substitutionKey, String transpositionKey,
     {PolybiosMode polybiosMode = PolybiosMode.ZA90, String? alphabet}) {
   return _decrypt(input, substitutionKey, transpositionKey, _ADFGVXMode.ADFGVX, polybiosMode, alphabet);
 }
 
-String? _decrypt(String? input, String? substitutionKey, String? transpositionKey, _ADFGVXMode mode,
+String? _decrypt(String input, String substitutionKey, String transpositionKey, _ADFGVXMode mode,
     PolybiosMode polybiosMode, String? alphabet) {
-  if (input == null || input.isEmpty) return null;
+  if (input.isEmpty) return null;
 
   input = input.toUpperCase().replaceAll(' ', '');
 
   String? transposed;
-  if (transpositionKey != null && transpositionKey.isNotEmpty) {
+  if (transpositionKey.isNotEmpty) {
     transpositionKey = transpositionKey.toUpperCase();
 
     var transpositionKeySorted = transpositionKey.split('');
@@ -117,8 +115,6 @@ String? _decrypt(String? input, String? substitutionKey, String? transpositionKe
   }
 
   transposed ??= input;
-
-  substitutionKey ??= '';
 
   var adfgvxMode = mode.toString().split('.')[1]; //mode.toString() == _ADFGVX.ADFGX
   alphabet = createPolybiosAlphabet(adfgvxMode.length,

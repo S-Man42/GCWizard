@@ -35,11 +35,11 @@ final _AffineDigitToAZ = switchMapKeyValue(_AZToAffineDigit);
 
 final _reverseKeyA = {1: 1, 3: 9, 5: 21, 7: 15, 9: 3, 11: 19, 15: 7, 17: 23, 19: 11, 21: 5, 23: 17, 25: 25};
 
-String encodeAffine(String? input, int keyA, int keyB) {
+String encodeAffine(String input, int keyA, int keyB) {
   int? affinePlain;
   String? affineCipher;
 
-  if (input == null || input.isEmpty) return '';
+  if (input.isEmpty) return '';
 
   return input.toUpperCase().split('').map((character) {
     if (character == ' ') return ' ';
@@ -54,8 +54,8 @@ String encodeAffine(String? input, int keyA, int keyB) {
   }).join();
 }
 
-String decodeAffine(String? input, int keyA, int keyB) {
-  if (input == null || input.isEmpty) return '';
+String decodeAffine(String input, int keyA, int keyB) {
+  if (input.isEmpty) return '';
 
   int? affineCipher;
   String? affinePlain;

@@ -344,8 +344,7 @@ class _CustomGridPainter extends CustomPainter {
     this.onTapped,
   );
 
-  String? _getEnumeration(List<String>? enumeration, int index) {
-    if (enumeration == null) return null;
+  String? _getEnumeration(List<String> enumeration, int index) {
     if (index >= enumeration.length) return null;
 
     return enumeration[index];

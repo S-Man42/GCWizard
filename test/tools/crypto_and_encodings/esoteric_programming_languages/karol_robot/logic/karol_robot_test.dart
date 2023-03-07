@@ -223,9 +223,6 @@ void main() {
 
   group("KarolRobot.generate:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'language' : KAREL_LANGUAGES.DEU, 'text' : null, 'expectedOutput' : ''},
-      {'language' : KAREL_LANGUAGES.ENG, 'text' : null, 'expectedOutput' : ''},
-      {'language' : KAREL_LANGUAGES.FRA, 'text' : null, 'expectedOutput' : ''},
       {'language' : KAREL_LANGUAGES.DEU, 'text' : '', 'expectedOutput' : ''},
       {'language' : KAREL_LANGUAGES.ENG, 'text' : '', 'expectedOutput' : ''},
       {'language' : KAREL_LANGUAGES.FRA, 'text' : '', 'expectedOutput' : ''},
@@ -237,7 +234,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('text: ${elem['text']}', () {
-        var _actual = KarolRobotOutputEncode(elem['text'] as String?, elem['language'] as KAREL_LANGUAGES);
+        var _actual = KarolRobotOutputEncode(elem['text'] as String, elem['language'] as KAREL_LANGUAGES);
         expect(_actual, elem['expectedOutput']);
       });
     }

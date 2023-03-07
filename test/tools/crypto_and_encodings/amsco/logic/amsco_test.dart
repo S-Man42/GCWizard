@@ -4,10 +4,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/amsco/logic/amsco.dart';
 void main() {
   group("Amsco.encodeAmsco:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input': null, 'key': '', 'oneCharStart': false, 'errorcode': ErrorCode.OK, 'expectedOutput': ''},
       {'input': '', 'key': '', 'oneCharStart': false, 'errorcode': ErrorCode.OK, 'expectedOutput': ''},
-      {'input': null, 'key': null, 'oneCharStart': false, 'errorcode': ErrorCode.OK, 'expectedOutput': ''},
-      {'input': '', 'key': null, 'oneCharStart': false, 'errorcode': ErrorCode.OK, 'expectedOutput': ''},
 
       {'input': 'Beispielklartext', 'key': '52413', 'oneCharStart': false, 'errorcode': ErrorCode.OK, 'expectedOutput': 'ITEILAELXSPRBEKT'},
       {'input': 'Beispielklartext', 'key': ' 52413 ', 'oneCharStart': false, 'errorcode': ErrorCode.OK, 'expectedOutput': 'ITEILAELXSPRBEKT'},
@@ -23,7 +20,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = encryptAmsco(elem['input'] as String?, elem['key'] as String?, elem['oneCharStart'] as bool);
+        var _actual = encryptAmsco(elem['input'] as String, elem['key'] as String, elem['oneCharStart'] as bool);
         expect(_actual.output, elem['expectedOutput']);
         expect(_actual.errorCode, elem['errorcode']);
       });
@@ -33,10 +30,7 @@ void main() {
 
   group("Amsco.decodeAmsco:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input': null, 'key': '', 'oneCharStart': false, 'errorcode': ErrorCode.OK, 'expectedOutput': ''},
       {'input': '', 'key': '', 'oneCharStart': false, 'errorcode': ErrorCode.OK, 'expectedOutput': ''},
-      {'input': null, 'key': null, 'oneCharStart': false, 'errorcode': ErrorCode.OK, 'expectedOutput': ''},
-      {'input': '', 'key': null, 'oneCharStart': false, 'errorcode': ErrorCode.OK, 'expectedOutput': ''},
 
       {'input': 'iteilaelxsprBekt', 'key': '52413', 'oneCharStart': false, 'errorcode': ErrorCode.OK, 'expectedOutput': 'BEISPIELKLARTEXT'},
       {'input': 'iteilaelxsprBekt', 'key': ' 52413 ', 'oneCharStart': false, 'errorcode': ErrorCode.OK, 'expectedOutput': 'BEISPIELKLARTEXT'},
@@ -52,7 +46,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = decryptAmsco(elem['input'] as String?, elem['key'] as String?, elem['oneCharStart'] as bool);
+        var _actual = decryptAmsco(elem['input'] as String, elem['key'] as String, elem['oneCharStart'] as bool);
         expect(_actual.output, elem['expectedOutput']);
         expect(_actual.errorCode, elem['errorcode']);
       });

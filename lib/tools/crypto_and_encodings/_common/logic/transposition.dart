@@ -2,9 +2,9 @@ import 'dart:math';
 
 enum TranspositionMatrixFillMode { encryption, decryption }
 
-List<List<String>>? createTranspositionMatrix(String? input, TranspositionMatrixFillMode fillMode,
+List<List<String>>? createTranspositionMatrix(String input, TranspositionMatrixFillMode fillMode,
     {int? countRows, int? countColumns, int countLettersPerCell = 1}) {
-  if (input == null || input.isEmpty) return null;
+  if (input.isEmpty) return null;
 
   if (countRows == null && countColumns == null) return null;
 
@@ -68,8 +68,8 @@ List<List<String>>? createTranspositionMatrix(String? input, TranspositionMatrix
   return matrix;
 }
 
-String encryptTransposition(String? input, {int? countRows, int? countColumns, int countLettersPerCell = 1}) {
-  if (input == null || input.isEmpty) return '';
+String encryptTransposition(String input, {int? countRows, int? countColumns, int countLettersPerCell = 1}) {
+  if (input.isEmpty) return '';
 
   var matrix = createTranspositionMatrix(input, TranspositionMatrixFillMode.encryption,
       countColumns: countColumns, countRows: countRows, countLettersPerCell: countLettersPerCell);
@@ -79,8 +79,8 @@ String encryptTransposition(String? input, {int? countRows, int? countColumns, i
   return matrix.expand((column) => column).join();
 }
 
-String decryptTransposition(String? input, {int? countRows, int? countColumns, int countLettersPerCell = 1}) {
-  if (input == null || input.isEmpty) return '';
+String decryptTransposition(String input, {int? countRows, int? countColumns, int countLettersPerCell = 1}) {
+  if (input.isEmpty) return '';
 
   var matrix = createTranspositionMatrix(input, TranspositionMatrixFillMode.decryption,
       countColumns: countColumns, countRows: countRows, countLettersPerCell: countLettersPerCell);

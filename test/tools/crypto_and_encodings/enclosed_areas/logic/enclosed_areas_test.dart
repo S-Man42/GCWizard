@@ -20,7 +20,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeEnclosedAreas(elem['input'] as String?, with4: true);
+        var _actual = decodeEnclosedAreas(elem['input'] as String, with4: true);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -28,7 +28,6 @@ void main() {
 
   group("EnclosedAreas.without4:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
       {'input' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜß', 'expectedOutput' : '10'},
@@ -40,7 +39,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeEnclosedAreas(elem['input'] as String?, with4: false);
+        var _actual = decodeEnclosedAreas(elem['input'] as String, with4: false);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -48,7 +47,6 @@ void main() {
 
   group("EnclosedAreas.onlyNumbers:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
       {'input' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜß', 'expectedOutput' : ''},
@@ -61,7 +59,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeEnclosedAreas(elem['input'] as String?, with4: true, onlyNumbers: true);
+        var _actual = decodeEnclosedAreas(elem['input'] as String, with4: true, onlyNumbers: true);
         expect(_actual, elem['expectedOutput']);
       });
     }

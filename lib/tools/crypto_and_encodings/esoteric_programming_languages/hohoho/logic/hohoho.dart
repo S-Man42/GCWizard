@@ -29,8 +29,8 @@ class HohohoOutput {
   HohohoOutput(this.output, this.error);
 }
 
-HohohoOutput interpretHohoho(String? plainText, {String? STDIN}) {
-  if (plainText == null || plainText.isEmpty) return HohohoOutput('', '');
+HohohoOutput interpretHohoho(String plainText, {String? STDIN}) {
+  if (plainText.isEmpty) return HohohoOutput('', '');
 
   plainText = plainText.trim();
   String result = plainText.replaceAll('!', '').replaceAll(' ', '');

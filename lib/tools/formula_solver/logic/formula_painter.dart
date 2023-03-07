@@ -62,7 +62,7 @@ class FormulaPainter {
         result = _coloredContent(result, _parserResult, emptyLiteral);
 
         _operatorBevor = true;
-        subResult = _paintSubFormula(literal, 0);
+        subResult = _paintSubFormula(literal ?? '', 0);
         result = _replaceRange(result, _calcOffset(_parserResult, count: 2), null, subResult);
       }
     } else {
@@ -101,9 +101,9 @@ class FormulaPainter {
     return result;
   }
 
-  String _paintSubFormula(String? formula, int literalOffset, {bool onlyFormulaReference = false}) {
+  String _paintSubFormula(String formula, int literalOffset, {bool onlyFormulaReference = false}) {
     var offset = 0;
-    if (formula == null || formula.isEmpty) return '';
+    if (formula.isEmpty) return '';
     var result = _buildResultString('t', formula.length);
     var isOperator = false;
     String subResult;

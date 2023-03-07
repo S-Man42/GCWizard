@@ -33,9 +33,7 @@ Map<String, List<int>> _createKeyGrid(String key, AlphabetModificationMode mode)
   return createPolybiosGrid(key, 5);
 }
 
-String _sanitizeInput(String? input, AlphabetModificationMode mode) {
-  if (input == null) return '';
-
+String _sanitizeInput(String input, AlphabetModificationMode mode) {
   input = input.toUpperCase().replaceAll(RegExp(r'[^A-Z]'), '');
 
   switch (mode) {

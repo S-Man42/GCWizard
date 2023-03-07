@@ -74,8 +74,8 @@ class TextAnalysisCharacterCounts {
     required this.controlChars});
 }
 
-int countWords(String? text) {
-  if (text == null || text.isEmpty) return 0;
+int countWords(String text) {
+  if (text.isEmpty) return 0;
 
   return removeDiacritics(text)
       .split(RegExp(_WORD_SEPARATORS))

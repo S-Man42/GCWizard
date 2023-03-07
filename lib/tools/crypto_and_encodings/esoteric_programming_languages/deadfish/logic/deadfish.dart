@@ -1,7 +1,7 @@
 import 'dart:math';
 
-String encodeDeadfish(String? text) {
-  if (text == null || text.isEmpty) return '';
+String encodeDeadfish(String text) {
+  if (text.isEmpty) return '';
 
   var out = '';
   var memory = 0;
@@ -35,8 +35,8 @@ String encodeDeadfish(String? text) {
   return out;
 }
 
-String decodeDeadfish(String? text) {
-  if (text == null || text.isEmpty) return '';
+String decodeDeadfish(String text) {
+  if (text.isEmpty) return '';
 
   var memory = 0;
   List<int> ascii = [];

@@ -4,7 +4,6 @@ import 'package:gc_wizard/tools/crypto_and_encodings/fox/logic/fox.dart';
 void main() {
   group("Fox.encodeFox:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
       {'input' : 'ABC XYZ', 'expectedOutput' : '11 12 13 39 36 37 38'},
@@ -14,7 +13,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeFox(elem['input'] as String?);
+        var _actual = encodeFox(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -22,7 +21,6 @@ void main() {
 
   group("Fox.decodeFox:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
       {'expectedOutput' : 'ABC XYZ', 'input' : '11 12 13 39 36 37 38'},
@@ -35,7 +33,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeFox(elem['input'] as String?);
+        var _actual = decodeFox(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     }

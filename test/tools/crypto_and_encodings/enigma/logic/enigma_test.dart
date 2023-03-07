@@ -23,7 +23,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, key: $key', () {
-        var _actual = calculateEnigma(elem['input'] as String?, key).value
+        var _actual = calculateEnigma(elem['input'] as String, key).value
             .sublist(1,4) //ignore ETW and UKW
             .map((setting) => alphabet_AZIndexes[setting + 1])
             .toList()

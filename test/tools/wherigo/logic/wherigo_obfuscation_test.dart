@@ -6,7 +6,6 @@ void main() {
   group("Obfuscation.Earwigo_GSUB_WIG:", () {
     // GC5K2GK „Stets gern für Sie beschäftigt,…"
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
       {'input' : 'Leider falsch...', 'expectedOutput' : 'CUXRRd PRbhQUxwv'},
@@ -18,7 +17,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = obfuscateEarwigoText(elem['input'] as String?, EARWIGO_DEOBFUSCATION.GSUB_WIG);
+        var _actual = obfuscateEarwigoText(elem['input'] as String, EARWIGO_DEOBFUSCATION.GSUB_WIG);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -27,7 +26,6 @@ void main() {
   group("Obfuscation.Earwigo_WWB_DEOBF:", () {
     // GC27GWW Das Geheimnis des Klosters
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
       {'input' : 'Bruder Malusvisus, der beste Angler des Klosters Bebenhausen.', 'expectedOutput' : 'K15pr5 cjv548w7@1, pr5 rn24q O2wuo2 qs7 Tvz46s68 Lpnr1wq32pzK'},
@@ -38,7 +36,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = obfuscateEarwigoText(elem['input'] as String?, EARWIGO_DEOBFUSCATION.WWB_DEOBF);
+        var _actual = obfuscateEarwigoText(elem['input'] as String, EARWIGO_DEOBFUSCATION.WWB_DEOBF);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -48,9 +46,7 @@ void main() {
     // GC7HCQG  Das Geheimnis der Premiere
     var dtable = '2;f\\nV\\018\\0054?\'_GUJD\\001\\r+pN\\016k,neO5}{\$=6[\\a\\023]\\015SF\\024L\\019\\"mYr 9\\002Z0KRw<\\027E|\\\\\\003:-qPx(sg@th1X\\bcuz\\031\\025CQMi\\021!\\014&%\\029\\017\\fI\\t\\020Tj`)dy.\\022/\\v3\\000vo*W8bH7\\006\\028BAl~^a>\\030\\026\\004#';
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null,  'dtable' : '', 'expectedOutput' : ''},
       {'input' : '',    'dtable' : '', 'expectedOutput' : ''},
-      {'input' : null,  'dtable' : dtable, 'expectedOutput' : ''},
       {'input' : '',    'dtable' : dtable, 'expectedOutput' : ''},
 
       {'input' : 'Erzaehler', 'dtable' : dtable,  'expectedOutput' : '9.Mz\\025Gw\\025.'},
@@ -62,7 +58,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']} dtable: ${elem['dtable']}', () {
-        var _actual = obfuscateUrwigoText(elem['input'] as String?, elem['dtable'] as String?);
+        var _actual = obfuscateUrwigoText(elem['input'] as String, elem['dtable'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -72,9 +68,7 @@ void main() {
     // ytrohs_und_der Folterknecht aus Bayern
     var dtable = '`:\\024G\\bj\\f\\003IOY\'dAWfC&VbD X\\017eJ\\0159]\\020E}\\nLBil^7TP=\\vw2!Q\\"~1?rs\\025\\r{-(zF\\027kHv\\tR.3)N\\022\\\\a;c\\014u\\002yt>+\\026\\004K\\0304\\018\\028q[6</\\0198_%o\\023*\\000#\\031\\005S\$\\029\\001@m\\016|n\\021x50UhpZ\\a,\\006Mg';
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null,  'dtable' : '', 'expectedOutput' : ''},
       {'input' : '',    'dtable' : '', 'expectedOutput' : ''},
-      {'input' : null,  'dtable' : dtable, 'expectedOutput' : ''},
       {'input' : '',    'dtable' : dtable, 'expectedOutput' : ''},
 
       {'input' : 'Miraculix',
@@ -87,7 +81,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']} dtable: ${elem['dtable']}', () {
-        var _actual = obfuscateUrwigoText(elem['input'] as String?, elem['dtable'] as String?);
+        var _actual = obfuscateUrwigoText(elem['input'] as String, elem['dtable'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     }

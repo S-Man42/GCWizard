@@ -18,9 +18,9 @@ void main() {
 
         List<int?> _actual;
         if (keepNumbers == null) {
-          _actual = AlphabetValues().textToValues(elem['text'] as String?);
+          _actual = AlphabetValues().textToValues(elem['text'] as String);
         } else {
-          _actual = AlphabetValues().textToValues(elem['text'] as String?, keepNumbers: elem['keepNumbers'] as bool);
+          _actual = AlphabetValues().textToValues(elem['text'] as String, keepNumbers: elem['keepNumbers'] as bool);
         }
 
         expect(_actual, elem['expectedOutput']);
@@ -50,7 +50,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('alphabet: ${elem['alphabet']}, text: ${elem['text']}, alphabet: ${elem['alphabet']}', () {
-        var _actual = AlphabetValues(alphabet: elem['alphabet'] as Map<String, String>?).textToValues(elem['text'] as String?);
+        var _actual = AlphabetValues(alphabet: elem['alphabet'] as Map<String, String>?).textToValues(elem['text'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     }

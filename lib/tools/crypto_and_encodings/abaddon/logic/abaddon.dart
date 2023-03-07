@@ -6,7 +6,7 @@ final YEN = String.fromCharCode(165);
 final MY = String.fromCharCode(181);
 final THORN = String.fromCharCode(254);
 
-final AZToAbaddon = {
+final _AZToAbaddon = {
   'A': '$YEN$YEN$MY',
   'B': '$YEN$THORN$YEN',
   'C': '$THORN$MY$MY',
@@ -36,14 +36,14 @@ final AZToAbaddon = {
   ' ': '$YEN$MY$MY'
 };
 
-String encryptAbaddon(String? input, Map<String, String>? replaceCharacters) {
-  if (input == null || input.isEmpty) return '';
+String encryptAbaddon(String input, Map<String, String>? replaceCharacters) {
+  if (input.isEmpty) return '';
 
   var abaddon = normalizeUmlauts(input)
       .toUpperCase()
       .split('')
-      .where((character) => AZToAbaddon[character] != null)
-      .map((character) => substitution(character, AZToAbaddon))
+      .where((character) => _AZToAbaddon[character] != null)
+      .map((character) => substitution(character, _AZToAbaddon))
       .join();
 
   if (replaceCharacters != null) abaddon = substitution(abaddon, replaceCharacters);
@@ -51,17 +51,17 @@ String encryptAbaddon(String? input, Map<String, String>? replaceCharacters) {
   return abaddon;
 }
 
-String decryptAbaddon(String? input, Map<String, String>? replaceCharacters) {
-  if (input == null || input.isEmpty) return '';
+String decryptAbaddon(String input, Map<String, String>? replaceCharacters) {
+  if (input.isEmpty) return '';
 
   if (replaceCharacters != null) input = substitution(input, switchMapKeyValue(replaceCharacters));
 
-  final abaddonToAZ = switchMapKeyValue(AZToAbaddon);
+  final abaddonToAZ = switchMapKeyValue(_AZToAbaddon);
   input = input.replaceAll(RegExp(r'[^' + YEN + MY + THORN + ']'), '');
 
   return RegExp(r'[' + YEN + MY + THORN + ']{3,3}')
       .allMatches(input)
-      .map((pattern) => input!.substring(pattern.start, pattern.end))
+      .map((pattern) => input.substring(pattern.start, pattern.end))
       .where((pattern) => abaddonToAZ[pattern] != null)
       .map((pattern) => abaddonToAZ[pattern])
       .join();

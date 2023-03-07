@@ -477,8 +477,8 @@ class GridState extends State<Grid> {
     );
   }
 
-  List<String> _getEnumeration(String? enumeration) {
-    if (enumeration == null || enumeration.isEmpty) return <String>[];
+  List<String> _getEnumeration(String enumeration) {
+    if (enumeration.isEmpty) return <String>[];
 
     if (enumeration.contains(RegExp(r'[,\-]')) && VARIABLESTRING.hasMatch(enumeration)) {
       var expanded = VariableStringExpander('x', {'x': enumeration}, orderAndUnique: false)

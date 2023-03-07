@@ -4,7 +4,6 @@ import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_langua
 void main() {
   group("Deadfish.encodeDeadfish:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
       {'input' : 'Hallo Welt', 'expectedOutput' : 'iissiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiioiiiiiiiiiiiiiiiiiiiiiiiiioiiiiiiiiiiiooiiiodddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddoiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiioiiiiiiiiiiiiiioiiiiiiioiiiiiiiio'},
@@ -13,7 +12,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeDeadfish(elem['input'] as String?);
+        var _actual = encodeDeadfish(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -21,7 +20,6 @@ void main() {
 
   group("Deadfish.decodeDeadfish:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
       {'expectedOutput' : 'Hallo Welt', 'input' : 'iisiiiisiiiiiiiioiiiiiiiiiiiiiiiiiiiiiiiiioiiiiiiiiiiiooiiiodddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddoiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiioiiiiiiiiiiiiiioiiiiiiioiiiiiiiio'},
@@ -33,7 +31,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeDeadfish(elem['input'] as String?);
+        var _actual = decodeDeadfish(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     }

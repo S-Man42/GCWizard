@@ -76,8 +76,8 @@ Map<String, int> _createAlpabetMap(bool with4, bool onlyNumbers) {
   return alphabetMap;
 }
 
-String decodeEnclosedAreas(String? input, {bool with4 = false, bool onlyNumbers = false}) {
-  if (input == null || input.isEmpty) return '';
+String decodeEnclosedAreas(String input, {bool with4 = false, bool onlyNumbers = false}) {
+  if (input.isEmpty) return '';
 
   var alphabetMap = _createAlpabetMap(with4, onlyNumbers);
 

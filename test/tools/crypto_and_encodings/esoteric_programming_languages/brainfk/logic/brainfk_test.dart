@@ -4,7 +4,6 @@ import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_langua
 void main() {
   group("Brainfk.interpretBrainfk:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'code' : null, 'expectedOutput' : ''},
       {'code' : '', 'expectedOutput' : ''},
       {'code' : 'ABC123;', 'expectedOutput' : ''},
       {'code' : '++', 'expectedOutput' : ''},
@@ -30,7 +29,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('code: ${elem['code']}, input: ${elem['input']}', () {
-        var _actual = interpretBrainfk(elem['code'] as String?, input: elem['input'] as String?);
+        var _actual = interpretBrainfk(elem['code'] as String, input: elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     }

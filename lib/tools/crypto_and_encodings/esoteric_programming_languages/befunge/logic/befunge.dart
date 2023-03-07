@@ -16,22 +16,22 @@
 
 import 'dart:math';
 
-const BEFUNGE_ERROR_INVALID_PROGRAM = 'befunge_error_syntax_invalidprogram';
-const BEFUNGE_ERROR_NO_INPUT = 'befunge_error_no_input';
-const BEFUNGE_ERROR_INVALID_INPUT = 'befunge_error_invalid_input';
+const _BEFUNGE_ERROR_INVALID_PROGRAM = 'befunge_error_syntax_invalidprogram';
+const _BEFUNGE_ERROR_NO_INPUT = 'befunge_error_no_input';
+const _BEFUNGE_ERROR_INVALID_INPUT = 'befunge_error_invalid_input';
 const BEFUNGE_ERROR_INFINITE_LOOP = 'befunge_error_infinite_loop';
-const BEFUNGE_ERROR_INVALID_CHARCODE = 'befunge_error_invalid_charcode';
-const BEFUNGE_ERROR_NULL_COMMAND = 'befunge_error_null_command';
-const BEFUNGE_ERROR_INTEGER_OVERFLOW = 'befunge_error_integer_overflow';
-const BEFUNGE_ERROR_OUT_OF_BOUNDS_ACCESS = 'befunge_error_access_out_of_bounds';
+const _BEFUNGE_ERROR_INVALID_CHARCODE = 'befunge_error_invalid_charcode';
+const _BEFUNGE_ERROR_NULL_COMMAND = 'befunge_error_null_command';
+const _BEFUNGE_ERROR_INTEGER_OVERFLOW = 'befunge_error_integer_overflow';
+const _BEFUNGE_ERROR_OUT_OF_BOUNDS_ACCESS = 'befunge_error_access_out_of_bounds';
 
-const BEFUNGE_EMPTY_LINE = '                                                                                ';
+const _BEFUNGE_EMPTY_LINE = '                                                                                ';
 
 const MAX_LENGTH_PROGRAM = 80 * 25;
-const LINEWIDTH = 80;
-const PAGEHEIGHT = 25;
-const SCREENWIDTH = LINEWIDTH - 1;
-const SCREENHEIGHT = PAGEHEIGHT - 1;
+const _LINEWIDTH = 80;
+const _PAGEHEIGHT = 25;
+const _SCREENWIDTH = _LINEWIDTH - 1;
+const _SCREENHEIGHT = _PAGEHEIGHT - 1;
 
 const MAX_ITERATIONS = 9999;
 const MAX_OUTPUT_LENGTH = 160;
@@ -94,7 +94,7 @@ List<String> _Command = [];
 List<String> _Mnemonic = [];
 
 String _cur() {
-  BigInt opCode = _pg[_y * LINEWIDTH + _x];
+  BigInt opCode = _pg[_y * _LINEWIDTH + _x];
   if (BigInt.zero < opCode && opCode < BigInt.from(256)) {
     return String.fromCharCode(opCode.toInt());
   } else {
@@ -128,8 +128,8 @@ bool _isDigit(String char) {
   ].contains(char);
 }
 
-BefungeOutput interpretBefunge(String? program, {String? input = ''}) {
-  if (program == null || program.isEmpty) {
+BefungeOutput interpretBefunge(String program, {String input = ''}) {
+  if (program.isEmpty) {
     return BefungeOutput(
         Output: '', Error: '', BefungeStack: _BefungeStack, PC: _PC, Command: _Command, Mnemonic: _Mnemonic);
   }
@@ -144,7 +144,7 @@ BefungeOutput interpretBefunge(String? program, {String? input = ''}) {
     BigInt x;
     BigInt y;
     BigInt value;
-    List<String> STDIN = input == null ? [] : input.split(' ');
+    List<String> STDIN = input.split(' ');
     List<String> STDOUT = [];
 
     bool stringMode = false;
@@ -176,7 +176,7 @@ BefungeOutput interpretBefunge(String? program, {String? input = ''}) {
         _BefungeStack.add(stack.toString());
         return BefungeOutput(
             Output: STDOUT.join(''),
-            Error: BEFUNGE_ERROR_NULL_COMMAND,
+            Error: _BEFUNGE_ERROR_NULL_COMMAND,
             BefungeStack: _BefungeStack,
             PC: _PC,
             Command: _Command,
@@ -279,7 +279,7 @@ BefungeOutput interpretBefunge(String? program, {String? input = ''}) {
                   _BefungeStack.add(stack.toString());
                   return BefungeOutput(
                       Output: STDOUT.join(''),
-                      Error: BEFUNGE_ERROR_NO_INPUT,
+                      Error: _BEFUNGE_ERROR_NO_INPUT,
                       BefungeStack: _BefungeStack,
                       PC: _PC,
                       Command: _Command,
@@ -290,7 +290,7 @@ BefungeOutput interpretBefunge(String? program, {String? input = ''}) {
                   _BefungeStack.add(stack.toString());
                   return BefungeOutput(
                       Output: STDOUT.join(''),
-                      Error: BEFUNGE_ERROR_INVALID_INPUT,
+                      Error: _BEFUNGE_ERROR_INVALID_INPUT,
                       BefungeStack: _BefungeStack,
                       PC: _PC,
                       Command: _Command,
@@ -393,7 +393,7 @@ BefungeOutput interpretBefunge(String? program, {String? input = ''}) {
                 _BefungeStack.add(stack.toString());
                 return BefungeOutput(
                     Output: STDOUT.join(''),
-                    Error: BEFUNGE_ERROR_NO_INPUT,
+                    Error: _BEFUNGE_ERROR_NO_INPUT,
                     BefungeStack: _BefungeStack,
                     PC: _PC,
                     Command: _Command,
@@ -404,7 +404,7 @@ BefungeOutput interpretBefunge(String? program, {String? input = ''}) {
                 _BefungeStack.add(stack.toString());
                 return BefungeOutput(
                     Output: STDOUT.join(''),
-                    Error: BEFUNGE_ERROR_INVALID_INPUT,
+                    Error: _BEFUNGE_ERROR_INVALID_INPUT,
                     BefungeStack: _BefungeStack,
                     PC: _PC,
                     Command: _Command,
@@ -421,7 +421,7 @@ BefungeOutput interpretBefunge(String? program, {String? input = ''}) {
                 _BefungeStack.add(stack.toString());
                 return BefungeOutput(
                     Output: STDOUT.join(''),
-                    Error: BEFUNGE_ERROR_NO_INPUT,
+                    Error: _BEFUNGE_ERROR_NO_INPUT,
                     BefungeStack: _BefungeStack,
                     PC: _PC,
                     Command: _Command,
@@ -441,13 +441,13 @@ BefungeOutput interpretBefunge(String? program, {String? input = ''}) {
                 return BefungeOutput(
                     Output:
                         STDOUT.join('') + '\n\nget(' + x.toString().padLeft(2) + '|' + y.toString().padLeft(2) + ')',
-                    Error: BEFUNGE_ERROR_OUT_OF_BOUNDS_ACCESS,
+                    Error: _BEFUNGE_ERROR_OUT_OF_BOUNDS_ACCESS,
                     BefungeStack: _BefungeStack,
                     PC: _PC,
                     Command: _Command,
                     Mnemonic: _Mnemonic);
               } else {
-                stack.push(_pg[y.toInt() * SCREENWIDTH + x.toInt()]);
+                stack.push(_pg[y.toInt() * _SCREENWIDTH + x.toInt()]);
               }
               break;
 
@@ -469,7 +469,7 @@ BefungeOutput interpretBefunge(String? program, {String? input = ''}) {
                 return BefungeOutput(
                     Output:
                         STDOUT.join('') + '\n\nput(' + x.toString().padLeft(2) + '|' + y.toString().padLeft(2) + ')',
-                    Error: BEFUNGE_ERROR_OUT_OF_BOUNDS_ACCESS,
+                    Error: _BEFUNGE_ERROR_OUT_OF_BOUNDS_ACCESS,
                     BefungeStack: _BefungeStack,
                     PC: _PC,
                     Command: _Command,
@@ -501,11 +501,11 @@ BefungeOutput interpretBefunge(String? program, {String? input = ''}) {
       _BefungeStack.add(stack.toString());
 
       _x = _x + dx;
-      if (_x < 0) _x = SCREENWIDTH;
-      if (_x == LINEWIDTH) _x = 0;
+      if (_x < 0) _x = _SCREENWIDTH;
+      if (_x == _LINEWIDTH) _x = 0;
       _y = _y + dy;
-      if (_y < 0) _y = SCREENHEIGHT;
-      if (_y == PAGEHEIGHT) _y = 0;
+      if (_y < 0) _y = _SCREENHEIGHT;
+      if (_y == _PAGEHEIGHT) _y = 0;
       _iterations++;
     } // while
 
@@ -518,7 +518,7 @@ BefungeOutput interpretBefunge(String? program, {String? input = ''}) {
         Mnemonic: _Mnemonic);
   } else {
     return BefungeOutput(
-        Output: '', Error: BEFUNGE_ERROR_INVALID_PROGRAM, BefungeStack: [], PC: [], Command: [], Mnemonic: []);
+        Output: '', Error: _BEFUNGE_ERROR_INVALID_PROGRAM, BefungeStack: [], PC: [], Command: [], Mnemonic: []);
   }
 }
 
@@ -527,28 +527,28 @@ bool _infiniteLoop() {
 }
 
 bool _outOfBounds() {
-  return (_y > SCREENHEIGHT || _x > SCREENWIDTH);
+  return (_y > _SCREENHEIGHT || _x > _SCREENWIDTH);
 }
 
 bool _outOfBoundsAccess({required BigInt y, required BigInt x}) {
-  return (y > BigInt.from(SCREENHEIGHT) || y < BigInt.zero || x > BigInt.from(SCREENWIDTH) || x < BigInt.zero);
+  return (y > BigInt.from(_SCREENHEIGHT) || y < BigInt.zero || x > BigInt.from(_SCREENWIDTH) || x < BigInt.zero);
 }
 
 void _put({required BigInt y, required BigInt x, required BigInt value}) {
-  _pg[y.toInt() * SCREENWIDTH + x.toInt()] = value;
+  _pg[y.toInt() * _SCREENWIDTH + x.toInt()] = value;
 }
 
 List<BigInt> _fillProgram(String program) {
   List<BigInt> pg = [];
 
   program.split('\n').forEach((line) {
-    line.padRight(LINEWIDTH, ' ').split('').forEach((element) {
+    line.padRight(_LINEWIDTH, ' ').split('').forEach((element) {
       pg.add(BigInt.from(element.codeUnitAt(0)));
     });
   });
 
   while (pg.length < MAX_LENGTH_PROGRAM) {
-    BEFUNGE_EMPTY_LINE.split('').forEach((element) {
+    _BEFUNGE_EMPTY_LINE.split('').forEach((element) {
       pg.add(BigInt.from(element.codeUnitAt(0)));
     });
   }
@@ -562,20 +562,20 @@ bool _correctBefungeProgramLength(String program) {
     return false;
   } else {
     for (String line  in program.split('\n')) {
-      if (line.length > SCREENWIDTH) return false;
+      if (line.length > _SCREENWIDTH) return false;
     }
     i++;
   }
-  if (i > SCREENHEIGHT) return false;
+  if (i > _SCREENHEIGHT) return false;
   return true;
 }
 
-String generateBefunge(String? OutputText) {
-  if (OutputText == null || OutputText.isEmpty) return '';
+String generateBefunge(String OutputText) {
+  if (OutputText.isEmpty) return '';
 
   String code = '';
 
-  if (OutputText.length > MAX_OUTPUT_LENGTH) return BEFUNGE_ERROR_INVALID_PROGRAM;
+  if (OutputText.length > MAX_OUTPUT_LENGTH) return _BEFUNGE_ERROR_INVALID_PROGRAM;
 
   OutputText.split('').reversed.toList().forEach((char) {
     if (char.codeUnitAt(0) < 256 && _convertCharCode[char.codeUnitAt(0)] != null) {
@@ -594,7 +594,7 @@ String generateBefunge(String? OutputText) {
     if (oddRow) {
       befungeLine = befungeLine + code[i];
       column++;
-      if (column % (SCREENWIDTH - 1) == 0) {
+      if (column % (_SCREENWIDTH - 1) == 0) {
         befungeLine = befungeLine + 'v';
         oddRow = !oddRow;
         befunge.add(befungeLine);
@@ -603,7 +603,7 @@ String generateBefunge(String? OutputText) {
     } else {
       befungeLine = code[i] + befungeLine;
       column++;
-      if (column % (SCREENWIDTH - 1) == 0) {
+      if (column % (_SCREENWIDTH - 1) == 0) {
         befungeLine = 'v' + befungeLine;
         oddRow = !oddRow;
         befunge.add(befungeLine);
@@ -612,9 +612,9 @@ String generateBefunge(String? OutputText) {
     }
   }
   if (oddRow) {
-    befungeLine = befungeLine.padRight(LINEWIDTH, ' ');
+    befungeLine = befungeLine.padRight(_LINEWIDTH, ' ');
   } else {
-    befungeLine = befungeLine.padLeft(LINEWIDTH, ' ');
+    befungeLine = befungeLine.padLeft(_LINEWIDTH, ' ');
   }
   befunge.add(befungeLine);
 

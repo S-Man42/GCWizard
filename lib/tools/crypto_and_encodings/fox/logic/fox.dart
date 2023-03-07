@@ -31,8 +31,8 @@ Map<String, String> _MAP = {
   '39': ' '
 };
 
-String encodeFox(String? input) {
-  if (input == null || input.isEmpty) return '';
+String encodeFox(String input) {
+  if (input.isEmpty) return '';
 
   var encodeMap = switchMapKeyValue(_MAP);
 
@@ -50,8 +50,8 @@ String encodeFox(String? input) {
       .replaceAll(RegExp(r'\s+'), ' ');
 }
 
-String decodeFox(String? input) {
-  if (input == null || input.isEmpty) return '';
+String decodeFox(String input) {
+  if (input.isEmpty) return '';
 
   input = input.replaceAll(RegExp(r'[^1-9]'), '');
   input = insertEveryNthCharacter(input, 2, ' ');

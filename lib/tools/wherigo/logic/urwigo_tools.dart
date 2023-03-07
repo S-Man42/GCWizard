@@ -48,10 +48,10 @@ String deobfuscateUrwigoText(String text, String dtable) {
   }
 }
 
-String obfuscateUrwigoText(String? text, String? dtable) {
-  if (text == null || text.isEmpty) return '';
+String obfuscateUrwigoText(String text, String dtable) {
+  if (text.isEmpty) return '';
 
-  if (dtable == null || dtable.isEmpty) return '';
+  if (dtable.isEmpty) return '';
 
   var searchReplace = {
     8: "\\b", // x08   backspace
