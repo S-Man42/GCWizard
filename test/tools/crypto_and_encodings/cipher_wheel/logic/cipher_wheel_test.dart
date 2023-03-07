@@ -22,7 +22,6 @@ void main() {
 
   group("CipherWheel.decryptCipherWheel:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'expectedOutput' : '', 'key': 1, 'input' : null},
       {'expectedOutput' : '', 'key': 1, 'input' : <int>[]},
 
       {'expectedOutput' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'key': 1, 'input' : [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26]},
@@ -33,7 +32,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = decryptCipherWheel(elem['input'] as List<int>?, elem['key'] as int);
+        var _actual = decryptCipherWheel(elem['input'] as List<int>, elem['key'] as int);
         expect(_actual, elem['expectedOutput']);
       });
     }

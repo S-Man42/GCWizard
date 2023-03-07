@@ -67,10 +67,10 @@ final Map<String, List<String>> _AZToSegmentCistercian = {
   '9000': ['k', 'l', 'n', 't'],
 };
 
-Segments encodeCistercian(String? input) {
-  if (input == null || input.isEmpty) Segments.Empty();
+Segments encodeCistercian(String input) {
+  if (input.isEmpty) Segments.Empty();
 
-  List<String> inputCharacters = input!.split(RegExp(r'[^1234567890]')).toList();
+  List<String> inputCharacters = input.split(RegExp(r'[^1234567890]')).toList();
   var output = <List<String>>[];
   var digit = 0;
 
@@ -99,8 +99,8 @@ Segments encodeCistercian(String? input) {
   return Segments(displays: output);
 }
 
-SegmentsText decodeCistercian(String? input) {
-  if (input == null || input.isEmpty) return SegmentsText(displays: [], text: '');
+SegmentsText decodeCistercian(String input) {
+  if (input.isEmpty) return SegmentsText(displays: [], text: '');
 
   var baseSegments = _baseSegmentsCistercianSegment;
 

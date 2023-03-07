@@ -4,7 +4,6 @@ import 'package:gc_wizard/tools/crypto_and_encodings/bacon/logic/bacon.dart';
 void main() {
   group("Bacon.encodeBacon:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
       {'input' : 'AZ', 'expectedOutput' : 'AAAAABABBB'},
@@ -16,7 +15,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeBacon(elem['input'] as String?, false, false);
+        var _actual = encodeBacon(elem['input'] as String, false, false);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -24,7 +23,6 @@ void main() {
 
   group("Bacon.encodeBaconBinary:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
       {'input' : 'AZ', 'expectedOutput' : '0000010111'},
@@ -36,7 +34,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeBacon(elem['input'] as String?, false, true);
+        var _actual = encodeBacon(elem['input'] as String, false, true);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -44,7 +42,6 @@ void main() {
 
   group("Bacon.encodeBaconInverse:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
       {'input' : 'AZ', 'expectedOutput' : 'BBBBBABAAA'},
@@ -56,7 +53,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeBacon(elem['input'] as String?, true, false);
+        var _actual = encodeBacon(elem['input'] as String, true, false);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -64,7 +61,6 @@ void main() {
 
   group("Bacon.encodeBaconInverseBinary:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
       {'input' : 'AZ', 'expectedOutput' : '1111101000'},
@@ -76,7 +72,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeBacon(elem['input'] as String?, true, true);
+        var _actual = encodeBacon(elem['input'] as String, true, true);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -84,7 +80,6 @@ void main() {
 
   group("Bacon.decodeBacon:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
       {'expectedOutput' : 'AZ', 'input' : 'AAAAABABBB'},
@@ -104,7 +99,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeBacon(elem['input'] as String?, false, false);
+        var _actual = decodeBacon(elem['input'] as String, false, false);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -112,7 +107,6 @@ void main() {
 
   group("Bacon.decodeBaconBinary:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
       {'expectedOutput' : 'AZ', 'input' : '0000010111ABABA'},
@@ -132,7 +126,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeBacon(elem['input'] as String?, false, true);
+        var _actual = decodeBacon(elem['input'] as String, false, true);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -140,7 +134,6 @@ void main() {
 
   group("Bacon.decodeBaconInverse:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
       {'expectedOutput' : 'AZ', 'input' : 'BBBBBABAAA'},
@@ -160,7 +153,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeBacon(elem['input'] as String?, true, false);
+        var _actual = decodeBacon(elem['input'] as String, true, false);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -168,7 +161,6 @@ void main() {
 
   group("Bacon.decodeBaconInverseBinary:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
       {'expectedOutput' : 'AZ', 'input' : '1111101000ABABA'},
@@ -188,7 +180,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeBacon(elem['input'] as String?, true, true);
+        var _actual = decodeBacon(elem['input'] as String, true, true);
         expect(_actual, elem['expectedOutput']);
       });
     }

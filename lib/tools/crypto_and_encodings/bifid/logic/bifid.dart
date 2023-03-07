@@ -9,13 +9,10 @@ class BifidOutput {
   BifidOutput(this.state, this.output, this.grid);
 }
 
-BifidOutput encryptBifid(String? input, String? key,
+BifidOutput encryptBifid(String input, String key,
     {PolybiosMode mode = PolybiosMode.AZ09,
     String? alphabet,
     AlphabetModificationMode alphabetMode = AlphabetModificationMode.J_TO_I}) {
-  if (input == null || key == null) {
-    return BifidOutput('ERROR', 'bifid_error_no_encrypt_input', null);
-  }
 
   int dim = key.length;
   if (dim != 5 && dim != 6) {
@@ -50,13 +47,10 @@ BifidOutput encryptBifid(String? input, String? key,
   }
 }
 
-BifidOutput decryptBifid(String? input, String? key,
+BifidOutput decryptBifid(String input, String key,
     {PolybiosMode mode = PolybiosMode.AZ09,
     String? alphabet,
     AlphabetModificationMode alphabetMode = AlphabetModificationMode.J_TO_I}) {
-  if (input == null || key == null) {
-    return BifidOutput('ERROR', 'bifid_error_no_decrypt_input', null);
-  }
 
   int dim = key.length;
   if (dim != 5 && dim != 6) {

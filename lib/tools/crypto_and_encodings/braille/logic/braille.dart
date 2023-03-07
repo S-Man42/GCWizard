@@ -616,9 +616,9 @@ final Map<String, List<String>> _charsToSegmentsDigits = {
   '0': ['2', '4', '5'],
 };
 
-final SWITCH_NUMBERFOLLOWS = ['3', '4', '5', '6'];
-final SWITCH_ANTOINE = ['6'];
-final SWITCH_LETTERFOLLOWS = ['6'];
+final _SWITCH_NUMBERFOLLOWS = ['3', '4', '5', '6'];
+final _SWITCH_ANTOINE = ['6'];
+final _SWITCH_LETTERFOLLOWS = ['6'];
 
 final Map<BrailleLanguage, List<String>> _Switches = {
   BrailleLanguage.DEU: [
@@ -1080,11 +1080,11 @@ Segments _encodeBrailleSIMPLE(String input) {
   for (int i = 0; i < inputs.length; i++) {
     if (_isNumber(inputs[i])) {
       if (!numberFollows) {
-        result.addSegment(SWITCH_NUMBERFOLLOWS);
+        result.addSegment(_SWITCH_NUMBERFOLLOWS);
         numberFollows = true;
       }
     } else {
-      if (_isNumberLetter(inputs[i]) && numberFollows) result.addSegment(SWITCH_LETTERFOLLOWS);
+      if (_isNumberLetter(inputs[i]) && numberFollows) result.addSegment(_SWITCH_LETTERFOLLOWS);
       numberFollows = false;
     }
     if (_charsToSegments[inputs[i].toLowerCase()] != null) result.addSegment(_charsToSegments[inputs[i].toLowerCase()]);
@@ -1117,7 +1117,7 @@ Segments _encodeBrailleDEU(String input) {
       }
       result.addSegment(_charsToSegments[inputs[i]]);
     } else {
-      if (_isNumberLetter(inputs[i]) && stateNumberFollows) result.addSegment(SWITCH_LETTERFOLLOWS);
+      if (_isNumberLetter(inputs[i]) && stateNumberFollows) result.addSegment(_SWITCH_LETTERFOLLOWS);
       if (_isSmallLetter(inputs[i])) {
         if (stateCapitals) stateCapitals = false;
       }
@@ -1183,7 +1183,7 @@ Segments _encodeBrailleENG(String input) {
       result.addSegments(_CharsToSegmentsSymbolsComposed[BrailleLanguage.ENG]?[inputs[i]]);
     } else if (_isNumber(inputs[i])) {
       if (!stateNumberFollows) {
-        result.addSegment(SWITCH_NUMBERFOLLOWS);
+        result.addSegment(_SWITCH_NUMBERFOLLOWS);
         stateNumberFollows = true;
       }
       result.addSegment(_charsToSegments[inputs[i]]);
@@ -1304,7 +1304,7 @@ Segments _encodeBrailleFRA(String input) {
       result.addSegments(_CharsToSegmentsSymbolsComposed[BrailleLanguage.FRA]?[inputs[i]]);
     } else if (_isNumber(inputs[i])) {
       if (!stateNumberFollows) {
-        result.addSegment(SWITCH_NUMBERFOLLOWS);
+        result.addSegment(_SWITCH_NUMBERFOLLOWS);
         stateNumberFollows = true;
       }
       result.addSegment(_charsToSegments[inputs[i]]);
@@ -1400,12 +1400,12 @@ SegmentsChars _decodeBrailleSIMPLE(List<String> inputs) {
 
   Map<List<String>, String> _segmentsToCharsSIMPLEBraille = <List<String>, String>{};
   _segmentsToCharsSIMPLEBraille.addAll(switchMapKeyValue(_CharsToSegmentsLetters[BrailleLanguage.STD] ?? {}));
-  _segmentsToCharsSIMPLEBraille.addAll({SWITCH_NUMBERFOLLOWS: 'NUMBERFOLLOWS'});
+  _segmentsToCharsSIMPLEBraille.addAll({_SWITCH_NUMBERFOLLOWS: 'NUMBERFOLLOWS'});
 
   Map<List<String>, String> _segmentsToCharsSIMPLEBrailleFrench = <List<String>, String>{};
   _segmentsToCharsSIMPLEBrailleFrench.addAll(switchMapKeyValue(_CharsToSegmentsLetters[BrailleLanguage.STD] ?? {}));
-  _segmentsToCharsSIMPLEBrailleFrench.addAll({SWITCH_NUMBERFOLLOWS: 'NUMBERFOLLOWS'});
-  _segmentsToCharsSIMPLEBrailleFrench.addAll({SWITCH_ANTOINE: 'ANTOINENUMBERFOLLOWS'});
+  _segmentsToCharsSIMPLEBrailleFrench.addAll({_SWITCH_NUMBERFOLLOWS: 'NUMBERFOLLOWS'});
+  _segmentsToCharsSIMPLEBrailleFrench.addAll({_SWITCH_ANTOINE: 'ANTOINENUMBERFOLLOWS'});
   _segmentsToCharsSIMPLEBrailleFrench.addAll(switchMapKeyValue(_charsToSegmentsLettersAntoine));
 
   bool _numberFollows = false;

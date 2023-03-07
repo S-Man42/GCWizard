@@ -64,9 +64,7 @@ final Map<int, List<String>> _numbersToSegments = {
   59: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n'],
 };
 
-Segments encodeBabylonNumbers(int? input) {
-  if (input == null) return Segments.Empty();
-
+Segments encodeBabylonNumbers(int input) {
   var sexagesimal = convertBase(input.toString(), 10, 60);
   var result =  sexagesimal.split('').map((digit) {
     return _numbersToSegments[int.tryParse(convertBase(digit, 60, 10))] ?? [];
@@ -75,8 +73,8 @@ Segments encodeBabylonNumbers(int? input) {
   return Segments(displays: result);
 }
 
-SegmentsSexagesimal decodeBabylonNumbers(List<String>? inputs) {
-  if (inputs == null || inputs.isEmpty) return SegmentsSexagesimal(displays: [], numbers: [0], sexagesimal: BigInt.zero);
+SegmentsSexagesimal decodeBabylonNumbers(List<String> inputs) {
+  if (inputs.isEmpty) return SegmentsSexagesimal(displays: [], numbers: [0], sexagesimal: BigInt.zero);
 
   var oneCharacters = ['f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n'];
   var tenCharacters = [

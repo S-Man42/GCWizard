@@ -5,8 +5,8 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/base/_common/logic/base.dart';
 
 abstract class AbstractBase extends StatefulWidget {
-  final String Function(String?) encode;
-  final String Function(String?) decode;
+  final String Function(String) encode;
+  final String Function(String) decode;
 
   const AbstractBase({Key? key, required this.encode, required this.decode}) : super(key: key);
 

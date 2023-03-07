@@ -5,7 +5,6 @@ void main() {
   
   group("Beghilos.encodeBeghilos:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
       {'input' : '7718', 'expectedOutput' : 'BILL'},
       {'input' : '7353', 'expectedOutput' : 'ESEL'},
       {'input' : '351073', 'expectedOutput' : 'ELOISE'},
@@ -14,7 +13,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeBeghilos(elem['input'] as String?);
+        var _actual = encodeBeghilos(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -22,7 +21,6 @@ void main() {
 
   group("Beghilos.decodeBeghilos:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
       {'input' : 'BILL', 'expectedOutput' : '7718'},
       {'input' : 'ESEL', 'expectedOutput' : '7353'},
       {'input' : 'ELOISE', 'expectedOutput' : '351073'},
@@ -33,7 +31,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeBeghilos(elem['input'] as String?);
+        var _actual = decodeBeghilos(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     }

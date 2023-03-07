@@ -33,7 +33,7 @@ enum decodeOutFormat {
 enum encodeOutFormat { SectionRowWordCharacter, RowWordCharacter, WordCharacter, Character }
 
 String decodeSearchWord(
-    String? input, String? word, decodeOutFormat format, String sectionLabel, String rowLabel, String wordLabel,
+    String input, String word, decodeOutFormat format, String sectionLabel, String rowLabel, String wordLabel,
     {bool spacesOn = true,
     bool emptyLinesOn = true,
     String ignoreSymbols = '',
@@ -41,8 +41,8 @@ String decodeSearchWord(
     bool azOn = true,
     bool numbersOn = true,
     bool onlyFirstWordLetter = false}) {
-  if (input == null || input.isEmpty) return "";
-  if (word == null || word.isEmpty) return "";
+  if (input.isEmpty) return "";
+  if (word.isEmpty) return "";
 
   input = _filterInput(input,
       spacesOn: spacesOn,
@@ -86,7 +86,7 @@ String decodeSearchWord(
   return out;
 }
 
-String decodeFindWord(String? input, String? positions, searchFormat format,
+String decodeFindWord(String input, String positions, searchFormat format,
     {bool spacesOn = true,
     bool emptyLinesOn = true,
     String ignoreSymbols = '',
@@ -94,8 +94,8 @@ String decodeFindWord(String? input, String? positions, searchFormat format,
     bool azOn = true,
     bool numbersOn = true,
     bool onlyFirstWordLetter = false}) {
-  if (input == null || input.isEmpty) return "";
-  if (positions == null || positions.isEmpty) return "";
+  if (input.isEmpty) return "";
+  if (positions.isEmpty) return "";
 
   List<int> positionList = <int>[];
   List<String> out = <String>[];
@@ -211,7 +211,7 @@ String decodeFindWord(String? input, String? positions, searchFormat format,
   }).join();
 }
 
-String encodeText(String? input, String? text, encodeOutFormat format,
+String encodeText(String input, String text, encodeOutFormat format,
     {bool spacesOn = true,
     bool emptyLinesOn = true,
     String ignoreSymbols = '',
@@ -219,8 +219,8 @@ String encodeText(String? input, String? text, encodeOutFormat format,
     bool azOn = true,
     bool numbersOn = true,
     bool onlyFirstWordLetter = false}) {
-  if (input == null || input.isEmpty) return "";
-  if (text == null || text.isEmpty) return "";
+  if (input.isEmpty) return "";
+  if (text.isEmpty) return "";
 
   input = _filterInput(input,
       spacesOn: spacesOn,

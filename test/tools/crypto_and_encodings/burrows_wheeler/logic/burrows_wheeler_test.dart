@@ -15,7 +15,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
         test('input: ${elem['input']}, index: ${elem['index']}', () {
-          BWTOutput _actual = encryptBurrowsWheeler(elem['input'] as String?, elem['index'] as String);
+          BWTOutput _actual = encryptBurrowsWheeler(elem['input'] as String, elem['index'] as String);
           expect(_actual.text, (elem['expectedOutput'] as BWTOutput).text);
           expect(_actual.index, (elem['expectedOutput'] as BWTOutput).index);
         });
