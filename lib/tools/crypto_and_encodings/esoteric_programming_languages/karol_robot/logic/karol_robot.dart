@@ -220,7 +220,7 @@ final _KAROL_COLORS = {
   'orangeclair': 'L',
   'orangefonce': 'M',
   'brun': 'N',
-  'brun fonce': 'O',
+  'brunfonce': 'O',
 };
 
 enum _KAROL_DIRECTION { SOUTH, NORTH, EAST, WEST }
@@ -467,6 +467,9 @@ String KarolRobotOutputDecode(String program) {
             halt = true;
           } else if (_SET_WAIT.contains(element)) {
           } else if (_SET_SOUND.contains(element)) {}
+          else {
+            world[x.toString() + '|' + (y).toString()] = '#';
+          }
         }
       }
     }
@@ -474,7 +477,7 @@ String KarolRobotOutputDecode(String program) {
 
   maxX = maxX + 2;
   maxY = maxY + 2;
-  var binaryWorld = List<List<String>>.generate(maxX, (y) => List<String>.filled(maxY, ''), growable: false);
+  var binaryWorld = List<List<String>>.generate(maxX, (y) => List<String>.filled(maxY, '#'), growable: false);
   world.forEach((key, value) {
     x = int.parse(key.split('|')[0]) - 1;
     y = int.parse(key.split('|')[1]) - 1;
