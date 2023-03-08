@@ -2700,7 +2700,11 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
           }); //forEach searchLanguage
         }
       }
-    } //for each element to decode
+    }
+    //for each element to decode
+    if (output.isEmpty) {
+      output.add(NumeralWordsDecodeOutput('', '', 'numeralwords_language_empty'));
+    }
     return output;
   } else  { // entire parts - search parts of words: weight => eight => 8
 
@@ -2794,6 +2798,10 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
         });
       } // else
     } // for element
+
+    if (output.isEmpty) {
+      output.add(NumeralWordsDecodeOutput('', '', 'numeralwords_language_empty'));
+    }
     return output;
   }
 }

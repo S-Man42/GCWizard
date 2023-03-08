@@ -73,13 +73,22 @@ class PunchtapekConfig {
 }
 
 Map<TeletypewriterCodebook, CodebookConfig> ANCIENT_CODEBOOK = {
-  TeletypewriterCodebook.BAUDOT: CodebookConfig(title: 'punchtape_baudot_title', subtitle: 'punchtape_baudot_description'),
+  TeletypewriterCodebook.BAUDOT: CodebookConfig(
+    title: 'punchtape_baudot_title',
+    subtitle: 'punchtape_baudot_description'
+  ),
   TeletypewriterCodebook.BAUDOT_54123: CodebookConfig(
     title: 'punchtape_baudot_54123_title',
     subtitle: 'punchtape_baudot_54123_description'
   ),
-  TeletypewriterCodebook.MURRAY: CodebookConfig(title: 'punchtape_murray_title', subtitle: 'punchtape_murray_description'),
-  TeletypewriterCodebook.SIEMENS: CodebookConfig(title: 'punchtape_siemens_title', subtitle: 'punchtape_siemens_description'),
+  TeletypewriterCodebook.MURRAY: CodebookConfig(
+    title: 'punchtape_murray_title',
+    subtitle: 'punchtape_murray_description'
+  ),
+  TeletypewriterCodebook.SIEMENS: CodebookConfig(
+    title: 'punchtape_siemens_title',
+    subtitle: 'punchtape_siemens_description'
+  ),
   TeletypewriterCodebook.WESTERNUNION: CodebookConfig(
     title: 'punchtape_westernunion_title',
     subtitle: 'punchtape_westernunion_description'
@@ -176,21 +185,45 @@ Map<TeletypewriterCodebook, CodebookConfig> CCITT_CODEBOOK = {
 };
 
 Map<TeletypewriterCodebook, CodebookConfig> OTHER_CODEBOOK = {
-  TeletypewriterCodebook.ZC1: CodebookConfig(title: 'punchtape_zc1_title', subtitle: 'punchtape_zc1_description'),
-  TeletypewriterCodebook.Z22: CodebookConfig(title: 'punchtape_z22_title', subtitle: 'punchtape_z22_description'),
-  TeletypewriterCodebook.TTS: CodebookConfig(title: 'punchtape_tts_title', subtitle: 'punchtape_tts_description'),
-  TeletypewriterCodebook.ILLIAC: CodebookConfig(title: 'punchtape_illiac_title', subtitle: 'punchtape_illiac_description'),
-  TeletypewriterCodebook.ALGOL: CodebookConfig(title: 'punchtape_algol_title', subtitle: 'punchtape_algol_description'),
+  TeletypewriterCodebook.ZC1: CodebookConfig(
+    title: 'punchtape_zc1_title',
+    subtitle: 'punchtape_zc1_description'
+  ),
+  TeletypewriterCodebook.Z22: CodebookConfig(
+    title: 'punchtape_z22_title',
+    subtitle: 'punchtape_z22_description'
+  ),
+  TeletypewriterCodebook.TTS: CodebookConfig(
+    title: 'punchtape_tts_title',
+    subtitle: 'punchtape_tts_description'
+  ),
+  TeletypewriterCodebook.ILLIAC: CodebookConfig(
+    title: 'punchtape_illiac_title',
+    subtitle: 'punchtape_illiac_description'
+  ),
+  TeletypewriterCodebook.ALGOL: CodebookConfig(
+    title: 'punchtape_algol_title',
+    subtitle: 'punchtape_algol_description'
+  ),
 };
 
 Map<TeletypewriterCodebook, CodebookConfig> ALL_CODES_CODEBOOK = {
-  TeletypewriterCodebook.BAUDOT: CodebookConfig(title: 'punchtape_baudot_title', subtitle: 'punchtape_baudot_description'),
+  TeletypewriterCodebook.BAUDOT: CodebookConfig(
+    title: 'punchtape_baudot_title',
+    subtitle: 'punchtape_baudot_description'
+  ),
   TeletypewriterCodebook.BAUDOT_54123: CodebookConfig(
     title: 'punchtape_baudot_54123_title',
     subtitle: 'punchtape_baudot_54123_description'
   ),
-  TeletypewriterCodebook.MURRAY: CodebookConfig(title: 'punchtape_murray_title', subtitle: 'punchtape_murray_description'),
-  TeletypewriterCodebook.SIEMENS: CodebookConfig(title: 'punchtape_siemens_title', subtitle: 'punchtape_siemens_description'),
+  TeletypewriterCodebook.MURRAY: CodebookConfig(
+    title: 'punchtape_murray_title',
+    subtitle: 'punchtape_murray_description'
+  ),
+  TeletypewriterCodebook.SIEMENS: CodebookConfig(
+    title: 'punchtape_siemens_title',
+    subtitle: 'punchtape_siemens_description'
+  ),
   TeletypewriterCodebook.WESTERNUNION: CodebookConfig(
     title: 'punchtape_westernunion_title',
     subtitle: 'punchtape_westernunion_description'
