@@ -225,5 +225,5 @@ int countLetters(String text) {
 }
 
 int countDigits(String text) {
-  return text.replaceAll(RegExp(r'[^0-9]'), '').length;
+  return text.replaceAll(RegExp(r'\D'), '').length;
 }

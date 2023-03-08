@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:gc_wizard/utils/constants.dart';
 
 List<int> textToIntList(String text, {bool allowNegativeValues = false}) {
-  var regex = allowNegativeValues ? RegExp(r'[^\-0-9]') : RegExp(r'[^0-9]');
+  var regex = allowNegativeValues ? RegExp(r'[^\-0-9]') : RegExp(r'\D');
 
   var list = text.split(regex);
   list.removeWhere((value) => value.isEmpty);

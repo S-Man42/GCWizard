@@ -56,7 +56,7 @@ class DuckSpeakState extends State<DuckSpeak> {
     } else {
       if (_currentMode == GCWSwitchPosition.left) {
         var numbers = _currentInput
-            .replaceAll(RegExp(r'[^0-9]'), '')
+            .replaceAll(RegExp(r'\D'), '')
             .split('')
             .map((number) => int.tryParse(number))
             .where((number) => number != null)

@@ -82,7 +82,7 @@ String decodeEnclosedAreas(String input, {bool with4 = false, bool onlyNumbers =
   var alphabetMap = _createAlpabetMap(with4, onlyNumbers);
 
   return input
-      .split(RegExp(onlyNumbers ? r'[^0-9]+' : r'\s+'))
+      .split(RegExp(onlyNumbers ? r'\D+' : r'\s+'))
       .where((block) => block.isNotEmpty)
       .map((block) => _decodeEnclosedAreaBlock(block, alphabetMap))
       .join(' ');

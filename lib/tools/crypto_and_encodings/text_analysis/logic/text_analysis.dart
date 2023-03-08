@@ -109,7 +109,7 @@ Map<String, int> _analyzeLetters(String text, bool caseSensitive) {
 }
 
 Map<String, int> _analyzeNumbers(String text) {
-  text = text.replaceAll(RegExp(r'[^0-9]'), '');
+  text = text.replaceAll(RegExp(r'\D'), '');
 
   var numbers = <String, int>{};
   text.split('').forEach((character) {

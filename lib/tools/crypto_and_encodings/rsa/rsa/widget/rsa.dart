@@ -116,7 +116,7 @@ class RSAState extends State<RSA> {
           var inputNumbers = _currentInput
               .split(RegExp(r'\s+'))
               .map((number) {
-            var n = number.replaceAll(RegExp('[^0-9]'), '');
+            var n = number.replaceAll(RegExp(r'\D'), '');
             return BigInt.tryParse(n) ?? BigInt.zero;
           })
               .toList();

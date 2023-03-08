@@ -15,7 +15,7 @@ class RecyclingState extends State<Recycling> {
   Widget build(BuildContext context) {
     List<List<dynamic>> data = RECYCLING_CODES.entries.map((entry) {
       return <dynamic>[
-        entry.key.replaceAll(RegExp(r'[^0-9]'), ''),
+        entry.key.replaceAll(RegExp(r'\D'), ''),
         entry.value['short'],
         i18n(context, entry.value['name']!)
       ];

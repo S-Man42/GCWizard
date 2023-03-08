@@ -29,7 +29,7 @@ GrayOutput encodeGray(String plainText, {GrayMode mode = GrayMode.DECIMAL}) {
   if (plainText.isEmpty) return GrayOutput([], []);
 
   var encoded = plainText
-      .split(RegExp(mode == GrayMode.DECIMAL ? r'[^0-9]' : r'[^01]'))
+      .split(RegExp(mode == GrayMode.DECIMAL ? r'\D' : r'[^01]'))
       .where((input) => input.isNotEmpty)
       .map((input) {
     var inputIntPlain = BigInt.tryParse(input, radix: mode == GrayMode.DECIMAL ? 10 : 2) ?? BigInt.zero;
@@ -43,7 +43,7 @@ GrayOutput decodeGray(String plainText, {GrayMode mode = GrayMode.DECIMAL}) {
   if (plainText.isEmpty) return GrayOutput([], []);
 
   var decoded = plainText
-      .split(RegExp(mode == GrayMode.DECIMAL ? r'[^0-9]' : r'[^01]'))
+      .split(RegExp(mode == GrayMode.DECIMAL ? r'\D' : r'[^01]'))
       .where((input) => input.isNotEmpty)
       .map((input) {
     var inputIntPlain = BigInt.tryParse(input, radix: mode == GrayMode.DECIMAL ? 10 : 2) ?? BigInt.zero;

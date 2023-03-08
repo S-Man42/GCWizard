@@ -44,7 +44,7 @@ class HomophoneState extends State<Homophone> {
   final _currentSubstitutions = <String, String>{};
 
   final _mask = '#';
-  final _filter = {"#": RegExp(r'[^0-9]')};
+  final _filter = {"#": RegExp(r'\D')};
   final aKeys = [1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 25];
 
   @override

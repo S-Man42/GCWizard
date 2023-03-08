@@ -28,7 +28,7 @@ class MultiDecoderToolAlphabetValues extends AbstractMultiDecoderTool {
                   .alphabet;
 
               return logic.AlphabetValues(alphabet: alphabet)
-                  .valuesToText(input.split(RegExp(r'[^0-9]')).map((value) => int.tryParse(value) ?? 0).toList())
+                  .valuesToText(input.split(RegExp(r'\D')).map((value) => int.tryParse(value) ?? 0).toList())
                   .replaceAll(UNKNOWN_ELEMENT, '');
             },
             options: options,

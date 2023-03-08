@@ -108,7 +108,7 @@ String _encodeTapir(String input) {
 }
 
 String _addOneTimePad(String input, String keyOneTimePad) {
-  keyOneTimePad = keyOneTimePad.replaceAll(RegExp(r'[^0-9]'), '');
+  keyOneTimePad = keyOneTimePad.replaceAll(RegExp(r'\D'), '');
   if (keyOneTimePad.isEmpty) return input;
 
   var out = '';
@@ -184,7 +184,7 @@ String _decodeTapir(String input) {
 }
 
 String _subtractOneTimePad(String input, String keyOneTimePad) {
-  keyOneTimePad = keyOneTimePad.replaceAll(RegExp(r'[^0-9]'), '');
+  keyOneTimePad = keyOneTimePad.replaceAll(RegExp(r'\D'), '');
   if (keyOneTimePad.isEmpty) return input;
 
   var out = '';
@@ -206,7 +206,7 @@ String _subtractOneTimePad(String input, String keyOneTimePad) {
 String decryptTapir(String? input, String? keyOneTimePad) {
   if (input == null) return '';
 
-  input = input.replaceAll(RegExp(r'[^0-9]'), '');
+  input = input.replaceAll(RegExp(r'\D'), '');
   if (input.isEmpty) return '';
 
   if (keyOneTimePad != null && keyOneTimePad.isNotEmpty) {

@@ -68,10 +68,10 @@ class GadeState extends State<Gade> {
           .where((e) => e != null)
           .join(' ');
     } else {
-      _input = _currentGadeInput.replaceAll(RegExp(r'[^0-9]'), '');
+      _input = _currentGadeInput.replaceAll(RegExp(r'\D'), '');
     }
 
-    var sorted = _input.replaceAll(RegExp(r'[^0-9]'), '').split('').toList();
+    var sorted = _input.replaceAll(RegExp(r'\D'), '').split('').toList();
     sorted.sort();
     var sortedStr = sorted.join();
 

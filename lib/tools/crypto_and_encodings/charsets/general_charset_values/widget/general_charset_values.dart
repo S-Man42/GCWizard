@@ -185,7 +185,7 @@ class GeneralCharsetValuesState extends State<GeneralCharsetValues> {
         decodeInput = decodeInput.replaceAll(RegExp(r'[^01]+'), ' ');
         break;
       case 10:
-        decodeInput = decodeInput.replaceAll(RegExp(r'[^0-9]+'), ' ');
+        decodeInput = decodeInput.replaceAll(RegExp(r'\D+'), ' ');
         break;
       case 16:
         decodeInput = decodeInput.toUpperCase().replaceAll(RegExp(r'[^0-9A-F]+'), ' ');

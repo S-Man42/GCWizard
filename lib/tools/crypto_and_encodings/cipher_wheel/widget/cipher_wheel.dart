@@ -71,7 +71,7 @@ class CipherWheelState extends State<CipherWheel> {
   void _calculateOutput() {
     if (_currentMode == GCWSwitchPosition.right) {
       var input = _currentInput
-          .split(RegExp('[^0-9]+'))
+          .split(RegExp(r'\D+'))
           .where((number) => number.isNotEmpty)
           .map((number) => int.tryParse(number)!)
           .toList();
