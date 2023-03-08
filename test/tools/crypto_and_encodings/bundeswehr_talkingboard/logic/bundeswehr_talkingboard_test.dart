@@ -138,31 +138,6 @@ void main() {
 
   group("bundeswehr.create_auth:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'currentCallSign' : null,
-        'currentLetterAuth' : null,
-        'currentLetterCallSign' : null,
-        'tableNumeralCode' : null,
-        'tableAuthentificationCode' : null,
-        'expectedOutput' : BundeswehrTalkingBoardAuthentificationOutput(
-            ResponseCode: [
-              BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CALLSIGN,
-              BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CALLSIGN_LETTER,
-              BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CUSTOM_NUMERAL_TABLE,
-              BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CUSTOM_AUTH_TABLE,])},
-
-      {'currentCallSign' : null,
-        'currentLetterAuth' : null,
-        'currentLetterCallSign' : null,
-        'tableNumeralCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: [], yAxis: [], Content: [], Encoding: {}),
-        'tableAuthentificationCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: [], yAxis: [], Content: [], Encoding: {}),
-        'expectedOutput' : BundeswehrTalkingBoardAuthentificationOutput(
-            ResponseCode: [
-              BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CALLSIGN,
-              BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CALLSIGN_LETTER,
-              BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CUSTOM_NUMERAL_TABLE,
-              BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CUSTOM_AUTH_TABLE,],
-            Tupel1: [], Tupel2: [], Tupel3: [], Number: '', Details: '')},
-
       {'currentCallSign' : '',
         'currentLetterAuth' : '',
         'currentLetterCallSign' : '',
@@ -258,14 +233,6 @@ void main() {
 
   group("bundeswehr.decode:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      { 'cypherText' : null,
-        'tableNumeralCode' : null,
-        'expectedOutput' : BundeswehrTalkingBoardCodingOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CUSTOM_NUMERAL_TABLE, Details: '')},
-
-      { 'cypherText' : null,
-        'tableNumeralCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: [], yAxis: [], Content: [], Encoding: {}),
-        'expectedOutput' : BundeswehrTalkingBoardCodingOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CUSTOM_NUMERAL_TABLE, Details: '')},
-
       { 'cypherText' : '',
         'tableNumeralCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: [], yAxis: [], Content: [], Encoding: {}),
         'expectedOutput' : BundeswehrTalkingBoardCodingOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CUSTOM_NUMERAL_TABLE, Details: '')},
