@@ -131,7 +131,7 @@ Future<WherigoCartridge> getCartridgeGWC(Uint8List byteListGWC, bool offline, {S
     _GWCResultsGWC.add('wherigo_error_runtime');
     _GWCResultsGWC.add('wherigo_error_empty_gwc');
 
-    return WherigoCartridge(cartridgeGWC: WHERIGO_EMPTYCARTRIDGE_GWC, cartridgeLUA: WHERIGO_EMPTYCARTRIDGE_LUA);
+    return WherigoCartridge(cartridgeGWC: _WHERIGO_EMPTYCARTRIDGE_GWC, cartridgeLUA: WHERIGO_EMPTYCARTRIDGE_LUA);
   }
 
   if (_checksToDo == WHERIGO_FILE_LOAD_STATE.GWC) {
@@ -325,7 +325,7 @@ void _getMediaFilesFromGWC(Uint8List byteListGWC) {
       } else {
         // despite the medioObject exists in the LUA Sourcecode, the file is not part of the cartridge
         _GWCMediaFilesContents.add(WherigoMediaFileContent(
-            _GWCMediaFilesHeaders[i].MediaFileID, WHERIGO_MEDIATYPE_UNK, Uint8List.fromList([]), 0));
+            _GWCMediaFilesHeaders[i].MediaFileID, _WHERIGO_MEDIATYPE_UNK, Uint8List.fromList([]), 0));
       }
     }
   } catch (exception) {

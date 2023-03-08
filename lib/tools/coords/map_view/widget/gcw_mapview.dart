@@ -46,10 +46,10 @@ import 'package:prefs/prefs.dart';
 
 enum _LayerType { OPENSTREETMAP_MAPNIK, MAPBOX_SATELLITE }
 
-const OSM_TEXT = 'coords_mapview_osm';
-const OSM_URL = 'coords_mapview_osm_url';
-const MAPBOX_SATELLITE_TEXT = 'coords_mapview_mapbox_satellite';
-const MAPBOX_SATELLITE_URL = 'coords_mapview_mapbox_satellite_url';
+const _OSM_TEXT = 'coords_mapview_osm';
+const _OSM_URL = 'coords_mapview_osm_url';
+const _MAPBOX_SATELLITE_TEXT = 'coords_mapview_mapbox_satellite';
+const _MAPBOX_SATELLITE_URL = 'coords_mapview_mapbox_satellite_url';
 
 final _DEFAULT_BOUNDS = LatLngBounds(LatLng(51.5, 12.9), LatLng(53.5, 13.9));
 const _POLYGON_STROKEWIDTH = 3.0;
@@ -241,7 +241,7 @@ class GCWMapViewState extends State<GCWMapView> {
                       color: COLOR_MAP_LICENSETEXT_BACKGROUND,
                       child: Text(
                           i18n(context,
-                              _currentLayer == _LayerType.OPENSTREETMAP_MAPNIK ? OSM_TEXT : MAPBOX_SATELLITE_TEXT),
+                              _currentLayer == _LayerType.OPENSTREETMAP_MAPNIK ? _OSM_TEXT : _MAPBOX_SATELLITE_TEXT),
                           style: TextStyle(
                               color: COLOR_MAP_LICENSETEXT,
                               fontSize: fontSizeSmall(),
@@ -249,7 +249,7 @@ class GCWMapViewState extends State<GCWMapView> {
                 ),
                 onTap: () {
                   launchUrl(Uri.parse(i18n(
-                      context, _currentLayer == _LayerType.OPENSTREETMAP_MAPNIK ? OSM_URL : MAPBOX_SATELLITE_URL)));
+                      context, _currentLayer == _LayerType.OPENSTREETMAP_MAPNIK ? _OSM_URL : _MAPBOX_SATELLITE_URL)));
                 },
               ),
             )

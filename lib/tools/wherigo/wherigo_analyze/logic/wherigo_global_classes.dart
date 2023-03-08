@@ -380,7 +380,7 @@ class WherigoCartridge {
   final WherigoCartridgeGWC cartridgeGWC;
   final WherigoCartridgeLUA cartridgeLUA;
 
-  WherigoCartridge({this.cartridgeGWC = WHERIGO_EMPTYCARTRIDGE_GWC, this.cartridgeLUA = WHERIGO_EMPTYCARTRIDGE_LUA});
+  WherigoCartridge({this.cartridgeGWC = _WHERIGO_EMPTYCARTRIDGE_GWC, this.cartridgeLUA = WHERIGO_EMPTYCARTRIDGE_LUA});
 }
 
 class WherigoJobData {

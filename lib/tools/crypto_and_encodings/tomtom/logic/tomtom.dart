@@ -2,7 +2,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitu
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 
-const Map<String, String> AZToTomTom = {
+const Map<String, String> _AZToTomTom = {
   'A': '/',
   'B': '//',
   'C': '///',
@@ -37,8 +37,8 @@ String encryptTomTom(String input, Map<String, String>? replaceCharacters) {
   var tomtom = normalizeUmlauts(input)
       .toUpperCase()
       .split('')
-      .where((character) => AZToTomTom[character] != null)
-      .map((character) => substitution(character, AZToTomTom))
+      .where((character) => _AZToTomTom[character] != null)
+      .map((character) => substitution(character, _AZToTomTom))
       .join(' ');
 
   if (replaceCharacters != null) tomtom = substitution(tomtom, replaceCharacters);
@@ -51,7 +51,7 @@ String decryptTomTom(String input, Map<String, String>? replaceCharacters) {
 
   if (replaceCharacters != null) input = substitution(input, switchMapKeyValue(replaceCharacters));
 
-  final tomTomToAZ = switchMapKeyValue(AZToTomTom);
+  final tomTomToAZ = switchMapKeyValue(_AZToTomTom);
 
   return input
       .split(RegExp(r'[^/\\]'))

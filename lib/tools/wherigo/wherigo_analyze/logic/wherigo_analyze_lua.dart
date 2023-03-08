@@ -79,9 +79,9 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
       httpCode = 503;
       httpMessage = exception.toString();
     } // end catch exception
-    if (httpCode != WHERIGO_HTTP_CODE_OK) {
+    if (httpCode != _WHERIGO_HTTP_CODE_OK) {
       return WherigoCartridge(
-        cartridgeGWC: WHERIGO_EMPTYCARTRIDGE_GWC,
+        cartridgeGWC: _WHERIGO_EMPTYCARTRIDGE_GWC,
         cartridgeLUA: _faultyWherigoCartridgeLUA(_LUAFile, WHERIGO_ANALYSE_RESULT_STATUS.ERROR_HTTP,
             ['wherigo_http_code', WHERIGO_HTTP_STATUS[httpCode] ?? ''], httpCode, httpMessage),
       );
@@ -98,7 +98,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
   if (_LUAchecksToDo == WHERIGO_FILE_LOAD_STATE.NULL) {
     _LUAAnalyzeResults.add('wherigo_error_empty_lua');
     return WherigoCartridge(
-        cartridgeGWC: WHERIGO_EMPTYCARTRIDGE_GWC,
+        cartridgeGWC: _WHERIGO_EMPTYCARTRIDGE_GWC,
         cartridgeLUA:
             _faultyWherigoCartridgeLUA('', WHERIGO_ANALYSE_RESULT_STATUS.ERROR_LUA, _LUAAnalyzeResults, 0, ''));
   }
@@ -480,7 +480,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
   _getAllMessagesAndDialogsFromLUA(progress, lines, sendAsyncPort, progressStep);
 
   return WherigoCartridge(
-      cartridgeGWC: WHERIGO_EMPTYCARTRIDGE_GWC,
+      cartridgeGWC: _WHERIGO_EMPTYCARTRIDGE_GWC,
       cartridgeLUA: WherigoCartridgeLUA(
         LUAFile: _LUAFile,
         CartridgeLUAName: _LUACartridgeName,

@@ -54,7 +54,7 @@ const notePosition = [
   '-5hs'
 ];
 
-final Map<String, List<String>> CODEBOOK_MUSIC_NOTES_ALT = {
+final Map<String, List<String>> _CODEBOOK_MUSIC_NOTES_ALT = {
   '1': [notePosition[21]],
   '1_b': [notePosition[21], bLabel],
   '1_k': [notePosition[21], hashLabel],
@@ -123,7 +123,7 @@ final Map<String, List<String>> CODEBOOK_MUSIC_NOTES_ALT = {
   '22_k': [notePosition[0], hashLabel],
 };
 
-final Map<String, List<String>> CODEBOOK_MUSIC_NOTES_BASS = {
+final Map<String, List<String>> _CODEBOOK_MUSIC_NOTES_BASS = {
   '1': [notePosition[22]],
   '1_b': [notePosition[22], bLabel],
   '1_k': [notePosition[22], hashLabel],
@@ -192,7 +192,7 @@ final Map<String, List<String>> CODEBOOK_MUSIC_NOTES_BASS = {
   '22_k': [notePosition[1], hashLabel],
 };
 
-final Map<String, List<String>> CODEBOOK_MUSIC_NOTES_TREBLE = {
+final Map<String, List<String>> _CODEBOOK_MUSIC_NOTES_TREBLE = {
   '1': [notePosition[27]],
   '1_b': [notePosition[27], bLabel],
   '1_k': [notePosition[27], hashLabel],
@@ -276,19 +276,19 @@ Segments encodeNotes(String input, NotesCodebook notes, Map<String, String> tran
   Map<String, List<String>> CODEBOOK;
   switch (notes) {
     case NotesCodebook.ALT:
-      CODEBOOK = CODEBOOK_MUSIC_NOTES_ALT;
+      CODEBOOK = _CODEBOOK_MUSIC_NOTES_ALT;
       result.add([altClef]);
       mainEntrysStart = 8;
       mainEntrysEnd = 14;
       break;
     case NotesCodebook.BASS:
-      CODEBOOK = CODEBOOK_MUSIC_NOTES_BASS;
+      CODEBOOK = _CODEBOOK_MUSIC_NOTES_BASS;
       result.add([bassClef]);
       mainEntrysStart = 8;
       mainEntrysEnd = 14;
       break;
     case NotesCodebook.TREBLE:
-      CODEBOOK = CODEBOOK_MUSIC_NOTES_TREBLE;
+      CODEBOOK = _CODEBOOK_MUSIC_NOTES_TREBLE;
       result.add([trebleClef]);
       mainEntrysStart = 5;
       mainEntrysEnd = 14;
@@ -339,15 +339,15 @@ SegmentsChars decodeNotes(List<String>? inputs, NotesCodebook notes) {
   Map<List<String>, String> CODEBOOK;
   switch (notes) {
     case NotesCodebook.ALT:
-      CODEBOOK = switchMapKeyValue(CODEBOOK_MUSIC_NOTES_ALT);
+      CODEBOOK = switchMapKeyValue(_CODEBOOK_MUSIC_NOTES_ALT);
       displays.add([altClef]);
       break;
     case NotesCodebook.BASS:
-      CODEBOOK = switchMapKeyValue(CODEBOOK_MUSIC_NOTES_BASS);
+      CODEBOOK = switchMapKeyValue(_CODEBOOK_MUSIC_NOTES_BASS);
       displays.add([bassClef]);
       break;
     case NotesCodebook.TREBLE:
-      CODEBOOK = switchMapKeyValue(CODEBOOK_MUSIC_NOTES_TREBLE);
+      CODEBOOK = switchMapKeyValue(_CODEBOOK_MUSIC_NOTES_TREBLE);
       displays.add([trebleClef]);
       break;
   }
