@@ -102,11 +102,11 @@ List<Image.Image> _linkSameImages(List<Image.Image> images) {
   return images;
 }
 
-bool compareImages(Uint8List image1, Uint8List image2, {int toler = 0}) {
+bool compareImages(Uint8List image1, Uint8List image2, {int tolerance = 0}) {
   if (image1.length != image2.length) return false;
 
   for (int i = 0; i < image1.length; i++) {
-    if ((image1[i] - image2[i]).abs() > toler) return false;
+    if ((image1[i] - image2[i]).abs() > tolerance) return false;
   }
 
   return true;

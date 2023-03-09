@@ -1,7 +1,7 @@
 import 'dart:isolate';
 import 'dart:math';
-import 'dart:typed_data';
 
+import 'package:flutter/foundation.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/morse/logic/morse.dart';
 import 'package:gc_wizard/tools/images_and_files/animated_image/logic/animated_image.dart' as animated_image;
@@ -143,7 +143,7 @@ List<List<int>> _filterImages(List<List<int>> filteredList, int imageIndex, List
     var compareImage = imageList[filteredList[i].first];
     var image = imageList[imageIndex];
 
-    if (animated_image.compareImages(compareImage, image, toler: toler)) {
+    if (animated_image.compareImages(compareImage, image, tolerance: toler)) {
       filteredList[i].add(imageIndex);
       return filteredList;
     }
@@ -256,19 +256,23 @@ List<List<int>> _searchHighSignalImage(List<Image.Image> frames, List<List<int>>
 }
 
 Image.Image _searchBrightestImage(Image.Image image1, Image.Image image2) {
-  var diff1 = _differenceImage(image2, image1);
-  var diff2 = _differenceImage(image1, image2);
+  var images = _maskedImages(image1, image2);
 
-  return _imageLuminance(diff1) > _imageLuminance(diff2) ? image1 : image2;
+  return _imageLuminance(images.item1) > _imageLuminance(images.item2) ? image1 : image2;
 }
 
-Image.Image _differenceImage(Image.Image image1, Image.Image image2) {
+Tuple2<Image.Image, Image.Image> _maskedImages(Image.Image image1, Image.Image image2) {
+  var clone1 = image1.clone();
+  var clone2 = image2.clone();
   for (var x = 0; x < min(image1.width, image2.width); x++) {
     for (var y = 0; y < min(image1.height, image2.height); y++) {
-      if (_diffBetweenPixels(image1.getPixel(x, y), true, image2.getPixel(x, y)) < 0.3) image2.setPixelRgb(x, y, 0, 0, 0);
+      if (_diffBetweenPixels(image1.getPixel(x, y), true, image2.getPixel(x, y)) < 0.3) {
+        clone1.setPixelRgb(x, y, 0, 0, 0);
+        clone2.setPixelRgb(x, y, 0, 0, 0);
+      }
     }
   }
-  return image2;
+  return Tuple2<Image.Image, Image.Image>(clone1, clone2);
 }
 
 /// Returns a single number representing the difference between two RGB pixels
@@ -279,10 +283,10 @@ num _diffBetweenPixels(Image.Pixel firstPixel, bool ignoreAlpha, Image.Pixel sec
             (firstPixel.b - secondPixel.b).abs();
 
   if (ignoreAlpha) {
-    diff = (diff / 255) / 3;
+    diff = (diff / 255.0) / 3.0;
   } else {
     diff += (firstPixel.a - secondPixel.a).abs();
-    diff = (diff / 255) / 4;
+    diff = (diff / 255.0) / 4.0;
   }
 
   return diff;
