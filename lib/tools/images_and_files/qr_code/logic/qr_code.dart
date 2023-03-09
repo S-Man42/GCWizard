@@ -19,8 +19,8 @@ Future<String?> scanBytes(Uint8List? bytes) async {
 }
 
 /// Generating Bar Code
-DrawableImageData? generateBarCode(String? code, {int moduleSize = 5, int border = 10}) {
-  if (code == null || code == "") return null;
+DrawableImageData? generateBarCode(String code, {int moduleSize = 5, int border = 10}) {
+  if (code == '') return null;
 
   var qrCode = qr.QrCode.fromData(
     data: code,

@@ -99,7 +99,7 @@ class WhitespaceLanguageState extends State<WhitespaceLanguage> {
           setState(() {});
         } else {
           _continueState = output.state;
-          _currentInput = "";
+          _currentInput = '';
           _showDialogBox(context, output.output);
         }
       });

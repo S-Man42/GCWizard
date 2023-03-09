@@ -41,8 +41,8 @@ String decodeSearchWord(
     bool azOn = true,
     bool numbersOn = true,
     bool onlyFirstWordLetter = false}) {
-  if (input.isEmpty) return "";
-  if (word.isEmpty) return "";
+  if (input.isEmpty) return '';
+  if (word.isEmpty) return '';
 
   input = _filterInput(input,
       spacesOn: spacesOn,
@@ -94,8 +94,8 @@ String decodeFindWord(String input, String positions, searchFormat format,
     bool azOn = true,
     bool numbersOn = true,
     bool onlyFirstWordLetter = false}) {
-  if (input.isEmpty) return "";
-  if (positions.isEmpty) return "";
+  if (input.isEmpty) return '';
+  if (positions.isEmpty) return '';
 
   List<int> positionList = <int>[];
   List<String> out = <String>[];
@@ -219,8 +219,8 @@ String encodeText(String input, String text, encodeOutFormat format,
     bool azOn = true,
     bool numbersOn = true,
     bool onlyFirstWordLetter = false}) {
-  if (input.isEmpty) return "";
-  if (text.isEmpty) return "";
+  if (input.isEmpty) return '';
+  if (text.isEmpty) return '';
 
   input = _filterInput(input,
       spacesOn: spacesOn,
@@ -426,18 +426,18 @@ _wordClass _filterWord(int index, List<_wordClass> wordList, bool onlyFirstWordL
     return wordList[index - 1];
   }
 
-  return _wordClass(-1, -1, -1, "");
+  return _wordClass(-1, -1, -1, '');
 }
 
 _wordClass _onlyFirstWordLetter(_wordClass wordClass) {
   if (wordClass.text.isNotEmpty) {
     return _wordClass(wordClass.sectionIndex, wordClass.rowIndex, wordClass.rowIndex, wordClass.text[0]);
   }
-  return _wordClass(-1, -1, -1, "");
+  return _wordClass(-1, -1, -1, '');
 }
 
 String _filterCharacter(int index, List<_wordClass> wordList) {
-  var text = "";
+  var text = '';
 
   for (var item in wordList) {
     text += item.text;
@@ -445,11 +445,11 @@ String _filterCharacter(int index, List<_wordClass> wordList) {
 
   if (index > 0 && index <= text.length) return text[index - 1];
 
-  return "";
+  return '';
 }
 
 int _globalCharacterPosition(_wordClass word, int characterPosition, List<_wordClass> sectionList) {
-  var text = "";
+  var text = '';
 
   for (var item in sectionList) {
     if (item == word) break;

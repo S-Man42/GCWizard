@@ -111,7 +111,7 @@ class IATAICAOSearchState extends State<IATAICAOSearch> {
   Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       // search for name
-      if (_currentInputName == "") return Container();
+      if (_currentInputName.isEmpty) return Container();
 
       List<List<String>> data = [];
       List<int> flexValues = List<int>.generate(4, (index) => 1);
@@ -139,7 +139,7 @@ class IATAICAOSearchState extends State<IATAICAOSearch> {
       );
     } else {
       // search for code
-      if (_currentInputCode == "") return Container();
+      if (_currentInputCode.isEmpty) return Container();
 
       List<int> flexValues = List<int>.generate(4, (index) => 1);
 

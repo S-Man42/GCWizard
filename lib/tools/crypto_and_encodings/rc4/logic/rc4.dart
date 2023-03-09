@@ -88,13 +88,13 @@ List<int>? convertInputToIntList(String input, InputFormat format) {
 }
 
 InputFormat _autoType(String input) {
-  String bin = input.replaceAll(RegExp("[ 01]"), "");
+  String bin = input.replaceAll(RegExp("[ 01]"), '');
   if (bin.isEmpty) return InputFormat.BINARY;
 
-  String hex = input.toUpperCase().replaceAll(RegExp("[0-9A-F]"), "").replaceAll(" ", "");
+  String hex = input.toUpperCase().replaceAll(RegExp("[0-9A-F]"), '').replaceAll(' ', '');
   if (hex.isEmpty) return InputFormat.HEX;
 
-  String ascii = input.replaceAll(RegExp("[ 0-9]"), "");
+  String ascii = input.replaceAll(RegExp('[ 0-9]'), '');
   bool ok = true;
   if (ascii.isEmpty) {
     input.split(" ").forEach((text) {

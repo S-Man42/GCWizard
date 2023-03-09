@@ -66,10 +66,9 @@ Future<Uint8List?> createImageAsync(GCWAsyncExecuterParameters? jobData) async {
   return output;
 }
 
-Future<Uint8List?> _createImage(Uint8List? highImage, Uint8List? lowImage, String? input, int ditDuration,
+Future<Uint8List?> _createImage(Uint8List highImage, Uint8List lowImage, String input, int ditDuration,
     {SendPort? sendAsyncPort}) async {
-  if (input == null || input.isEmpty) return null;
-  if (highImage == null || lowImage == null) return null;
+  if (input.isEmpty) return null;
   if (ditDuration <= 0) return null;
 
   input = encodeMorse(input);
@@ -127,9 +126,9 @@ Future<Uint8List?> _createImage(Uint8List? highImage, Uint8List? lowImage, Strin
       }
     }
     var encoder = Image.GifEncoder();
-    animation.forEach((image) {
+    for (var image in animation) {
       encoder.addFrame(image);
-    });
+    }
 
     var list = encoder.finish();
     return Future.value((list == null) ? null : Uint8List.fromList(list));
@@ -162,7 +161,7 @@ MorseCodeOutput? decodeMorseCode(List<int> durations, List<bool> onSignal) {
   var timeList = _buildTimeList(durations, onSignal);
   var signalTimes = foundSignalTimes(timeList);
 
-  if (signalTimes == null || timeList == null) return null;
+  if (signalTimes == null) return null;
 
   var out = '';
   for (var element in timeList) {
@@ -178,11 +177,11 @@ MorseCodeOutput? decodeMorseCode(List<int> durations, List<bool> onSignal) {
   return MorseCodeOutput(out, decodeMorse(out));
 }
 
-List<Tuple2<bool, int>>? _buildTimeList(List<int>? durations, List<bool>? onSignal) {
+List<Tuple2<bool, int>> _buildTimeList(List<int> durations, List<bool> onSignal) {
   var timeList = <Tuple2<bool, int>>[];
   var i = 0;
 
-  if (durations == null || onSignal == null || durations.length != onSignal.length) return null;
+  if (durations.length != onSignal.length) return timeList;
 
   if (durations.isEmpty) return timeList;
 
@@ -197,8 +196,8 @@ List<Tuple2<bool, int>>? _buildTimeList(List<int>? durations, List<bool>? onSign
   return timeList;
 }
 
-Tuple3<int, int, int>? foundSignalTimes(List<Tuple2<bool, int>>? timeList) {
-  if (timeList == null || timeList.isEmpty) return null;
+Tuple3<int, int, int>? foundSignalTimes(List<Tuple2<bool, int>> timeList) {
+  if (timeList.isEmpty) return null;
 
   const toler = 1.2;
   var onl = <int>[];
@@ -274,21 +273,15 @@ Image.Image _differenceImage(Image.Image image1, Image.Image image2) {
 
 /// Returns a single number representing the difference between two RGB pixels
 num _diffBetweenPixels(Image.Pixel firstPixel, bool ignoreAlpha, Image.Pixel secondPixel) {
-  var fRed = firstPixel.r;
-  var fGreen = firstPixel.g;
-  var fBlue = firstPixel.b;
-  var fAlpha = firstPixel.a;
-  var sRed = secondPixel.r;
-  var sGreen = secondPixel.g;
-  var sBlue = secondPixel.b;
-  var sAlpha = secondPixel.a;
 
-  num diff = (fRed - sRed).abs() + (fGreen - sGreen).abs() + (fBlue - sBlue).abs();
+  num diff = (firstPixel.r - secondPixel.r).abs() +
+            (firstPixel.g - secondPixel.g).abs() +
+            (firstPixel.b - secondPixel.b).abs();
 
   if (ignoreAlpha) {
     diff = (diff / 255) / 3;
   } else {
-    diff += (fAlpha - sAlpha).abs();
+    diff += (firstPixel.a - secondPixel.a).abs();
     diff = (diff / 255) / 4;
   }
 

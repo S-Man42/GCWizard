@@ -4,9 +4,8 @@ import 'package:gc_wizard/tools/science_and_technology/teletypewriter/_common/lo
 
 List<String> decenary2segments(String decenary, bool order12345, TeletypewriterCodebook language) {
   // 0 ... 31 => 00000 ... 11111
-  String? binary = convertBase(decenary, 10, 2)?.padLeft(BINARY_LENGTH[language]!, '0');
+  String? binary = convertBase(decenary, 10, 2).padLeft(BINARY_LENGTH[language]!, '0');
   List<String> result = [];
-  if (binary == null) return result;
   if (!order12345) {
     binary = binary.split('').reversed.join('');
   }

@@ -68,7 +68,7 @@ String _createEncryptOutput(String input, String keyStream, Map<String, int> alp
 }
 
 String _createDecryptOutput(String input, String keyStream, Map<String, int> alphabet) {
-  var output = "";
+  var output = '';
   for (int i = 0; i < input.length; i++) {
     output += _chr(alphabet[input[i]]! - alphabet[keyStream[i]]!, alphabet) ?? '';
   }

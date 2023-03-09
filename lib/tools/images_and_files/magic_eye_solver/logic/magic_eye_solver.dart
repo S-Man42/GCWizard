@@ -155,6 +155,7 @@ Future<Tuple2<Uint8List?, MagicEyeErrorCode>?> generateImageAsync(GCWAsyncExecut
   Uint8List? textureImage = data.item2;
   TextureType? textureType = data.item3;
 
+  if (hiddenImage == null) return null;
   var outputData = _generateImage(hiddenImage, textureImage, textureType);
 
   jobData.sendAsyncPort.send(outputData);
@@ -163,7 +164,7 @@ Future<Tuple2<Uint8List?, MagicEyeErrorCode>?> generateImageAsync(GCWAsyncExecut
 }
 
 Tuple2<Uint8List?, MagicEyeErrorCode>? _generateImage(
-    Uint8List? hiddenDataImage, Uint8List? textureImage, TextureType? textureType,
+    Uint8List hiddenDataImage, Uint8List? textureImage, TextureType? textureType,
     {SendPort? sendAsyncPort}) {
   var bInterpolateDepthmap = true;
   var oversample = 2;
@@ -172,7 +173,7 @@ Tuple2<Uint8List?, MagicEyeErrorCode>? _generateImage(
   _fieldDepth = 0.33333;
   _separation = 128;
 
-  if ((hiddenDataImage == null) || ((textureType == TextureType.BITMAP) && (textureImage == null))) return null;
+  if (((textureType == TextureType.BITMAP) && (textureImage == null))) return null;
 
   var depthmap = Image.decodeImage(hiddenDataImage);
   if (depthmap == null) return null;

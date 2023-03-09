@@ -240,7 +240,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
   String _decimalToBinary(String decimal, TeletypewriterCodebook language) {
     List<String?> result = [];
     decimal.split(' ').forEach((decimalNumber) {
-      result.add(convertBase(decimalNumber, 10, 2)?.padLeft(BINARY_LENGTH[language]!, '0'));
+      result.add(convertBase(decimalNumber, 10, 2).padLeft(BINARY_LENGTH[language]!, '0'));
     });
     return result.join(' ');
   }

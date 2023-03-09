@@ -660,7 +660,7 @@ class FormulaPainter {
         arguments.add(separator);
         // empty argument ?
         if (startIndex == formula.length) {
-          arguments.add("");
+          arguments.add('');
         }
       } else if (_bracket.containsKey(formula[i])) {
         var literal = _separateLiteral(formula.substring(i), formula[i], _bracket[formula[i]]!);

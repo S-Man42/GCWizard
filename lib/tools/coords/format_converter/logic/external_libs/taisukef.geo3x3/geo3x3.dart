@@ -6,9 +6,9 @@ part of 'package:gc_wizard/tools/coords/format_converter/logic/geo3x3.dart';
 class _Geo3x3 {
   static String encode(num lat, num lng, num level) {
     if (level < 1) {
-      return "";
+      return '';
     }
-    var res = "";
+    var res = '';
     var lng2 = lng;
     if (lng >= 0) {
       res = "E";

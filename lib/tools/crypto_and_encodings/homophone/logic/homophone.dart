@@ -179,7 +179,7 @@ String _numberToChar(String numberString, Map<String, List<int>> keyMap) {
 }
 
 String _keyMapToString(Map<String, List<int>> table) {
-  var output = "";
+  var output = '';
   table.forEach((key, value) {
     output += key + " = ";
     for (var item in value) {

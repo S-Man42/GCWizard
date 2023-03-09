@@ -4,10 +4,10 @@ import 'package:gc_wizard/tools/science_and_technology/resistor/_common/logic/re
 void main() {
   group("Resistor.resistor:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'colors' : <ResistorBandColor>[], 'expectedOutput' : ResistorValue(null, 0.0)},
-      {'colors' : [ResistorBandColor.RED], 'expectedOutput' :  ResistorValue(null, 0.0)},
-      {'colors' : [ResistorBandColor.RED, ResistorBandColor.RED], 'expectedOutput' :  ResistorValue(null, 0.0)},
-      {'colors' : [ResistorBandColor.RED, ResistorBandColor.RED, ResistorBandColor.RED, ResistorBandColor.RED, ResistorBandColor.RED, ResistorBandColor.RED, ResistorBandColor.RED], 'expectedOutput' : ResistorValue(null, 0.0)},
+      {'colors' : <ResistorBandColor>[], 'expectedOutput' : const ResistorValue(null, 0.0)},
+      {'colors' : [ResistorBandColor.RED], 'expectedOutput' :  const ResistorValue(null, 0.0)},
+      {'colors' : [ResistorBandColor.RED, ResistorBandColor.RED], 'expectedOutput' :  const ResistorValue(null, 0.0)},
+      {'colors' : [ResistorBandColor.RED, ResistorBandColor.RED, ResistorBandColor.RED, ResistorBandColor.RED, ResistorBandColor.RED, ResistorBandColor.RED, ResistorBandColor.RED], 'expectedOutput' : const ResistorValue(null, 0.0)},
 
       {'colors' : [ResistorBandColor.YELLOW, ResistorBandColor.VIOLET, ResistorBandColor.RED], 'expectedOutput' : const ResistorValue(4700.0, 0.2)},
       {'colors' : [ResistorBandColor.YELLOW, ResistorBandColor.VIOLET, ResistorBandColor.RED, ResistorBandColor.BROWN], 'expectedOutput' : const ResistorValue(4700.0, 0.01)},
