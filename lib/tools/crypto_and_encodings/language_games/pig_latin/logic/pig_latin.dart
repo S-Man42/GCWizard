@@ -12,8 +12,8 @@ String _decodeQQ(String input) {
   return substitution(input, switchMapKeyValue(_QUSubstitutions));
 }
 
-String encryptPigLatin(String? input) {
-  if (input == null || input.isEmpty) return '';
+String encryptPigLatin(String input) {
+  if (input.isEmpty) return '';
 
   input = _encodeQU(removeAccents(input));
 
@@ -25,8 +25,8 @@ String encryptPigLatin(String? input) {
   }));
 }
 
-String decryptPigLatin(String? input) {
-  if (input == null || input.isEmpty) return '';
+String decryptPigLatin(String input) {
+  if (input.isEmpty) return '';
 
   return input.replaceAllMapped(RegExp(r'\b(\w+)-(\w*)ay', caseSensitive: false), (match) {
     var output = (match[2] ?? '') + (match[1]?? '');

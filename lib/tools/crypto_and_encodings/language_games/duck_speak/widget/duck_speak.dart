@@ -59,8 +59,7 @@ class DuckSpeakState extends State<DuckSpeak> {
             .replaceAll(RegExp(r'\D'), '')
             .split('')
             .map((number) => int.tryParse(number))
-            .where((number) => number != null)
-            .cast<int>()
+            .whereType<int>()
             .toList();
         return encodeDuckSpeakNumbers(numbers);
       } else {

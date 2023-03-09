@@ -27,10 +27,10 @@ class Quadgrams extends _Quadgrams {
       if (blockStart >= 0) {
         // if five 0 => new list
         if (((i + zeroCount < quadgrams.length) &&
-            (quadgrams[i + 1] == 0) |
-            (quadgrams[i + 2] == 0) |
-            (quadgrams[i + 3] == 0) |
-            (quadgrams[i + 4] == 0) |
+            (quadgrams[i + 1] == 0) &&
+            (quadgrams[i + 2] == 0) &&
+            (quadgrams[i + 3] == 0) &&
+            (quadgrams[i + 4] == 0) &&
             (quadgrams[i + 5] == 0)) ||
             (i + zeroCount >= quadgrams.length)) {
           var quadgramList = <int>[];

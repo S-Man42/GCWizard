@@ -1,7 +1,7 @@
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
 
-String encryptChickenLanguage(String? input) {
-  if (input == null || input.isEmpty) return '';
+String encryptChickenLanguage(String input) {
+  if (input.isEmpty) return '';
 
   return substitution(
           input,
@@ -24,8 +24,8 @@ String encryptChickenLanguage(String? input) {
       .toLowerCase();
 }
 
-String decryptChickenLanguage(String? input) {
-  if (input == null || input.isEmpty) return '';
+String decryptChickenLanguage(String input) {
+  if (input.isEmpty) return '';
 
   var regex = RegExp(r'([aeiouäöü]|ei|ie|au|äu|eu)h\1def\1');
 

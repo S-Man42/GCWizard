@@ -298,7 +298,7 @@ v                                              >
         'expectedOutput' :
         BefungeOutput(
             Output: '',
-            Error: 'befunge_error_infinite_loop',
+            Error: 'befunge_error_syntax_invalidprogram',
             BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
 
 

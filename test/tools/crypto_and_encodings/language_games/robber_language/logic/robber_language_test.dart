@@ -4,7 +4,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/language_games/robber_langu
 void main() {
   group('robber_language.encryptRobberLanguage:', () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
+      {'input' : '', 'expectedOutput' : ''},
 
       {'input' : 'Hallo Welt', 'expectedOutput' : 'hohalollolo woweloltot'},
       {'input' : 'Robber', 'expectedOutput' : 'rorobobboberor'},
@@ -14,7 +14,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = encryptRobberLanguage(elem['input'] as String?);
+        var _actual = encryptRobberLanguage(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -22,7 +22,7 @@ void main() {
 
   group('robber_language.decryptRobberLanguage:', () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
+      {'input' : '', 'expectedOutput' : ''},
 
       {'expectedOutput' : 'hallo welt', 'input' : 'hohalollolo woweloltot'},
       {'expectedOutput' : 'robber', 'input' : 'rorobobboberor'},
@@ -32,7 +32,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = decryptRobberLanguage(elem['input'] as String?);
+        var _actual = decryptRobberLanguage(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     }

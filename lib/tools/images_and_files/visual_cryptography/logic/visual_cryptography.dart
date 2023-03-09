@@ -8,8 +8,8 @@ import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:image/image.dart' as Image;
 import 'package:tuple/tuple.dart';
 
-var whiteColor = Image.ColorRgb8(Colors.white.red, Colors.white.green, Colors.white.blue);
-var blackColor = Image.ColorRgb8(Colors.black.red, Colors.black.green, Colors.black.blue);
+var _whiteColor = Image.ColorRgb8(Colors.white.red, Colors.white.green, Colors.white.blue);
+var _blackColor = Image.ColorRgb8(Colors.black.red, Colors.black.green, Colors.black.blue);
 
 
 Future<Uint8List?> decodeImagesAsync(GCWAsyncExecuterParameters? jobData) async {
@@ -23,9 +23,7 @@ Future<Uint8List?> decodeImagesAsync(GCWAsyncExecuterParameters? jobData) async 
   return output;
 }
 
-Future<Uint8List?> _decodeImages(Uint8List? image1, Uint8List? image2, int offsetX, int offsetY) {
-  if (image1 == null || image2 == null) return Future.value(null);
-
+Future<Uint8List?> _decodeImages(Uint8List image1, Uint8List image2, int offsetX, int offsetY) {
   var _image1 = Image.decodeImage(image1);
   var _image2 = Image.decodeImage(image2);
 
@@ -45,13 +43,13 @@ Image.Image _pasteImage(Image.Image targetImage, Image.Image image, int offsetX,
   if (secondLayer) {
     for (var x = 0; x < image.width; x++) {
       for (var y = 0; y < image.height; y++) {
-        if (_blackPixel(image.getPixel(x, y))) targetImage.setPixel(x + offsetX, y + offsetY, blackColor);
+        if (_blackPixel(image.getPixel(x, y))) targetImage.setPixel(x + offsetX, y + offsetY, _blackColor);
       }
     }
   } else {
     for (var x = 0; x < image.width; x++) {
       for (var y = 0; y < image.height; y++) {
-        targetImage.setPixel(x + offsetX, y + offsetY, _blackPixel(image.getPixel(x, y)) ? blackColor : whiteColor);
+        targetImage.setPixel(x + offsetX, y + offsetY, _blackPixel(image.getPixel(x, y)) ? _blackColor : _whiteColor);
       }
     }
   }
@@ -72,9 +70,8 @@ Future<Tuple2<int, int>?> offsetAutoCalcAsync(GCWAsyncExecuterParameters? jobDat
   return output;
 }
 
-Future<Tuple2<int, int>?> _offsetAutoCalc(Uint8List? image1, Uint8List? image2, int? offsetX, int? offsetY,
+Future<Tuple2<int, int>?> _offsetAutoCalc(Uint8List image1, Uint8List image2, int? offsetX, int? offsetY,
     {SendPort? sendAsyncPort}) {
-  if (image1 == null || image2 == null) return Future.value(null);
 
   var _image1 = Image.decodeImage(image1);
   var _image2 = Image.decodeImage(image2);
@@ -126,8 +123,7 @@ Tuple2<int, int> _highPassFilter(double alpha, List<int> keyList) {
   return Tuple2<int, int>(list.indexOf(min), min);
 }
 
-Uint8List? cleanImage(Uint8List? image1, Uint8List? image2, int offsetX, int offsetY) {
-  if (image1 == null || image2 == null) return null;
+Uint8List? cleanImage(Uint8List image1, Uint8List image2, int offsetX, int offsetY) {
 
   var _image1 = Image.decodeImage(image1);
   var _image2 = Image.decodeImage(image2);
@@ -140,10 +136,10 @@ Uint8List? cleanImage(Uint8List? image1, Uint8List? image2, int offsetX, int off
   for (var x = coreImageSize.item1; x < coreImageSize.item2 - 1; x += 2) {
     for (var y = coreImageSize.item3; y < coreImageSize.item4 - 1; y += 2) {
       if (!(_blackArea(_image1, _image2, x, y, offsetX, offsetY))) {
-        image.setPixel(x - coreImageSize.item1, y - coreImageSize.item3, whiteColor);
-        image.setPixel(x + 1 - coreImageSize.item1, y - coreImageSize.item3, whiteColor);
-        image.setPixel(x - coreImageSize.item1, y + 1 - coreImageSize.item3, whiteColor);
-        image.setPixel(x + 1 - coreImageSize.item1, y + 1 - coreImageSize.item3, whiteColor);
+        image.setPixel(x - coreImageSize.item1, y - coreImageSize.item3, _whiteColor);
+        image.setPixel(x + 1 - coreImageSize.item1, y - coreImageSize.item3, _whiteColor);
+        image.setPixel(x - coreImageSize.item1, y + 1 - coreImageSize.item3, _whiteColor);
+        image.setPixel(x + 1 - coreImageSize.item1, y + 1 - coreImageSize.item3, _whiteColor);
       }
     }
   }
@@ -163,8 +159,7 @@ Future<Tuple2<Uint8List, Uint8List?>?> encodeImagesAsync(GCWAsyncExecuterParamet
 }
 
 Future<Tuple2<Uint8List, Uint8List?>?> _encodeImage(
-    Uint8List? image, Uint8List? keyImage, int offsetX, int offsetY, int scale) {
-  if (image == null) return Future.value(null);
+    Uint8List image, Uint8List? keyImage, int offsetX, int offsetY, int scale) {
 
   var _image = Image.decodeImage(image);
   if (_image == null) return Future.value(null);
@@ -182,7 +177,7 @@ Future<Tuple2<Uint8List, Uint8List?>?> _encodeImage(
 
   if (hasKeyImage) {
     var _dstImage = Image.Image(width: _keyImage!.width ~/ 2, height: _keyImage.height ~/ 2);
-    _dstImage = Image.drawRect(_dstImage, x1: 0, y1: 0, x2: _dstImage.width, y2: _dstImage.height, color: whiteColor);
+    _dstImage = Image.drawRect(_dstImage, x1: 0, y1: 0, x2: _dstImage.width, y2: _dstImage.height, color: _whiteColor);
 
     var _dstXOffset = (_dstImage.width - _image.width) ~/ 2;
     var _dstYOffset = (_dstImage.height - _image.height) ~/ 2;
@@ -216,7 +211,7 @@ Future<Tuple2<Uint8List, Uint8List?>> _encodeWithKeyImage(
         for (var y1 = 0; y1 < 2; y1++) {
           var _paintX = x * 2 + x1;
           var _paintY = y * 2 + y1;
-          image1.setPixel(_paintX, _paintY, pixel[2 * x1 + y1] ? whiteColor : blackColor);
+          image1.setPixel(_paintX, _paintY, pixel[2 * x1 + y1] ? _whiteColor : _blackColor);
         }
       }
     }
@@ -233,7 +228,7 @@ Future<Tuple2<Uint8List, Uint8List?>> _encodeWithKeyImage(
           var _paintX = x * 2 + x1 + offsetX;
           var _paintY = y * 2 + y1 + offsetY;
           if (_checkLimits(_paintX, _paintY, image1.width, image1.height)) {
-            image1.setPixel(_paintX, _paintY, pixel[2 * x1 + y1] ? whiteColor : blackColor);
+            image1.setPixel(_paintX, _paintY, pixel[2 * x1 + y1] ? _whiteColor : _blackColor);
           }
         }
       }
@@ -262,13 +257,13 @@ Future<Tuple2<Uint8List, Uint8List>> _encodeWithoutKeyImage(int offsetX, int off
           var offsetX = x * 2 + image1OffsetX + x1;
           var offsetY = y * 2 + image1OffsetY + y1;
           if (_checkLimits(offsetX, offsetY, image1.width, image1.height)) {
-            image1.setPixel(offsetX, offsetY, pixel.item1[2 * x1 + y1] ? whiteColor : blackColor);
+            image1.setPixel(offsetX, offsetY, pixel.item1[2 * x1 + y1] ? _whiteColor : _blackColor);
           }
 
           offsetX = x * 2 + image2OffsetX + x1;
           offsetY = y * 2 + image2OffsetY + y1;
           if (_checkLimits(offsetX, offsetY, image2.width, image2.height)) {
-            image2.setPixel(offsetX, offsetY, pixel.item2[2 * x1 + y1] ? whiteColor : blackColor);
+            image2.setPixel(offsetX, offsetY, pixel.item2[2 * x1 + y1] ? _whiteColor : _blackColor);
           }
         }
       }

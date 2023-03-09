@@ -66,7 +66,7 @@ void main() {
       test('input: ${elem['input']}, keyMap: ${elem['keyMap']}', () {
         var _actual = encryptHomophoneWithKeyMap(elem['input'] as String, elem['keyMap'] as Map<String, List<int>>);
         Map<String, String> map;
-        map = replaceMap(elem['rotation'] as int, elem['multiplier'] as int, elem['alphabet'] as Alphabet);
+        map = replaceMap(elem['rotation'] as int?, elem['multiplier'] as int?, elem['alphabet'] as Alphabet?);
         var output = changeOutput(_actual.output, map);
         expect(_actual.errorCode, elem['errorcode']);
         expect(output, elem['expectedOutput']);
@@ -158,7 +158,7 @@ Map<String, String> fillMapOwn(int startIndex, int startOffset, int count, int o
 
 // create substition Table
 // to change random number to first number in the row
-Map<String, String> replaceMap(int rotation, int multiplier, Alphabet alphabet){
+Map<String, String> replaceMap(int? rotation, int? multiplier, Alphabet? alphabet){
   var map = <String, String>{};
 
   if (alphabet == alphabetGerman1) {
@@ -166,7 +166,7 @@ Map<String, String> replaceMap(int rotation, int multiplier, Alphabet alphabet){
       case 1:
         switch (multiplier) {
           case 3:
-            var offset = multiplier;
+            var offset = multiplier!;
             map = fillMap(3, 5, offset, map);
             map = fillMap(21, 1, offset, map);
             map = fillMap(21, 1, offset, map);
@@ -191,7 +191,7 @@ Map<String, String> replaceMap(int rotation, int multiplier, Alphabet alphabet){
       case 3:
         switch (multiplier) {
           case 7:
-            var offset = multiplier;
+            var offset = multiplier!;
             map = fillMap(21, 7, offset, map);
             map = fillMap(77, 1, offset, map);
             map = fillMap(91, 2, offset, map);
@@ -219,7 +219,7 @@ Map<String, String> replaceMap(int rotation, int multiplier, Alphabet alphabet){
       case 1:
         switch (multiplier) {
           case 9:
-            var offset = multiplier;
+            var offset = multiplier!;
             map = fillMap(09, 6, offset, map);
             map = fillMap(72, 1, offset, map);
             map = fillMap(90, 3, offset, map);
@@ -246,7 +246,7 @@ Map<String, String> replaceMap(int rotation, int multiplier, Alphabet alphabet){
       case 6:
         switch (multiplier) {
           case 99:
-            var offset = multiplier;
+            var offset = multiplier!;
             map = fillMap(94, 11, offset, map);
             map = fillMap(81, 3, offset, map);
             map = fillMap(77, 4, offset, map);
@@ -268,7 +268,7 @@ Map<String, String> replaceMap(int rotation, int multiplier, Alphabet alphabet){
       case 500:
         switch (multiplier) {
           case 31:
-            var offset = multiplier;
+            var offset = multiplier!;
             map = fillMap(00, 12, offset, map);
             map = fillMap(34, 1, offset, map);
             map = fillMap(96, 1, offset, map);

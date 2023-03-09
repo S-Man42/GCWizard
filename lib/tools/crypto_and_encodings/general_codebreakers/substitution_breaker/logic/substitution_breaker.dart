@@ -23,8 +23,8 @@ Future<SubstitutionBreakerResult?> break_cipherAsync(GCWAsyncExecuterParameters?
   return output;
 }
 
-SubstitutionBreakerResult _break_cipher(String? input, Quadgrams? quadgrams) {
-  if (input == null || input.isEmpty || quadgrams == null) {
+SubstitutionBreakerResult _break_cipher(String input, Quadgrams? quadgrams) {
+  if (input.isEmpty || quadgrams == null) {
     return SubstitutionBreakerResult(errorCode: SubstitutionBreakerErrorCode.OK);
   }
 

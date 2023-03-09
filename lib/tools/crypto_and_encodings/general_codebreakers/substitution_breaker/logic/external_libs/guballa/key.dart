@@ -59,8 +59,8 @@ class BreakerKey {
   /// :param alphabet: the alphabet against which the key is validated
   /// return: the validated key in normalized form (i.e., in lower cases)
   ///      null -> key is invalid
-  static String? check_key(String? key, String alphabet) {
-    if ((key == null) || (key.isEmpty)) return null;
+  static String? check_key(String key, String alphabet) {
+    if (key.isEmpty) return null;
     key = key.toLowerCase();
     if (key.length != _set(key).length) {
       return null;

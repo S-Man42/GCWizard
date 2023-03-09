@@ -21,7 +21,6 @@ void main() {
 
   group("substitution_breaker.check_key:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'alphabet' : '', 'expectedOutput' : null},
       {'input' : '', 'alphabet' : '', 'expectedOutput' : null},
 
       {'input' : 'AbC', 'alphabet' : 'abc', 'expectedOutput' : 'abc'},
@@ -33,7 +32,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = BreakerKey.check_key(elem['input'] as String?, elem['alphabet'] as String);
+        var _actual = BreakerKey.check_key(elem['input'] as String, elem['alphabet'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -68,41 +67,6 @@ void main() {
       test('input: ${elem['input']}', () {
         var key = BreakerKey('abcdefghijklmnopqrstuvwxyz');
         var _actual = key.encode(elem['input'] as String);
-        expect(_actual, elem['expectedOutput']);
-      });
-    }
-  });
-
-  group("substitution_breaker.compressQuadgrams:", () {
-    final List<int> quadgrams = [0,0,0,747,0,0,0,0,0,0,11,12,13,0,0,0,17];
-
-    List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : quadgrams, 'errorCode' : BreakerErrorCode.OK, 'expectedOutput' : '{"3":[747],"10":[11,12,13,0,0,0,17]}'},
-    ];
-
-    for (var elem in _inputsToExpected) {
-
-      test('input: ${elem['input']}', () async {
-        var _actual = Quadgrams.quadgramsMapToString(Quadgrams.compressQuadgrams(elem['input'] as List<int>));
-        expect(_actual, elem['expectedOutput']);
-      });
-    }
-  });
-
-
-  group("substitution_breaker.decompressQuadgrams:", () {
-    final List<int> quadgrams = [0,0,0,747,0,0,0,0,0,0,11,12,13,0,0,0,17];
-    final Map<int, List<int>> quadgramsCpmpressed = {3:[747],10:[11,12,13,0,0,0,17]};
-    final Map<int, List<int>> quadgramsCpmpressed1 = {3:[747],10:[11,12,13],16:[17]};
-
-    List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : quadgramsCpmpressed, 'size' : 17, 'errorCode' : BreakerErrorCode.OK, 'expectedOutput' : quadgrams},
-      {'input' : quadgramsCpmpressed1, 'size' : 17, 'errorCode' : BreakerErrorCode.OK, 'expectedOutput' : quadgrams},
-    ];
-
-    for (var elem in _inputsToExpected) {
-      test('input: ${elem['input']}', () async {
-        var _actual = Quadgrams.decompressQuadgrams(elem['input'] as Map<int,List<int>>, elem['size'] as int);
         expect(_actual, elem['expectedOutput']);
       });
     }

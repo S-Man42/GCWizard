@@ -33,10 +33,10 @@ late Uint8List _texturePixels;
 late Uint8List _depthBytes;
 
 Future<Tuple3<Image.Image, Uint8List, int>?> decodeImageAsync(GCWAsyncExecuterParameters? jobData) async {
-  if (jobData?.parameters is! Tuple3<Uint8List?, Image.Image?, int?>) return null;
+  if (jobData?.parameters is! Tuple3<Uint8List, Image.Image?, int?>) return null;
 
-  var data = jobData!.parameters as Tuple3<Uint8List?, Image.Image?, int?>;
-  Uint8List? image = data.item1;
+  var data = jobData!.parameters as Tuple3<Uint8List, Image.Image?, int?>;
+  Uint8List image = data.item1;
   Image.Image? imageData = data.item2;
   int? displacement = data.item3;
   
@@ -44,12 +44,11 @@ Future<Tuple3<Image.Image, Uint8List, int>?> decodeImageAsync(GCWAsyncExecuterPa
 }
 
 Future<Tuple3<Image.Image, Uint8List, int>?> decodeImage(
-    Uint8List? image,
+    Uint8List image,
     Image.Image? imageData,
     int? displacement,
    {SendPort? sendAsyncPort}) async {
 
-  if (image == null) return null;
   imageData ??= Image.decodeImage(image);
   if (imageData == null) return null;
   displacement ??= _magicEyeSolver(imageData);

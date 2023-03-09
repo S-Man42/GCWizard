@@ -4,7 +4,6 @@ import 'package:gc_wizard/tools/crypto_and_encodings/language_games/pig_latin/lo
 void main() {
   group("PigLatin.encrypt:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
       {'input' : 'I have a secret now!', 'expectedOutput' : 'I-ay ave-hay a-ay ecret-say ow-nay!'},
@@ -23,7 +22,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = encryptPigLatin(elem['input'] as String?);
+        var _actual = encryptPigLatin(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -31,7 +30,6 @@ void main() {
 
   group("PigLatin.decrypt:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
       {'expectedOutput' : 'I have a secret now!', 'input' : 'I-ay ave-hay a-ay ecret-say ow-nay!'},
@@ -50,7 +48,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = decryptPigLatin(elem['input'] as String?);
+        var _actual = decryptPigLatin(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     }

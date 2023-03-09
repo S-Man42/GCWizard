@@ -84,14 +84,14 @@ Future<VigenereBreakerResult> break_cipherAsync(GCWAsyncExecuterParameters? jobD
 void progressCounter() {
   _progress++;
   if (_sendAsyncPort != null && (_progress % _progressStep == 0)) {
-    _sendAsyncPort?.send({'progress': _progress / _countCombinations});
+    _sendAsyncPort!.send({'progress': _progress / _countCombinations});
   }
 }
 
-VigenereBreakerResult break_cipher(String? input, VigenereBreakerType vigenereBreakerType,
+VigenereBreakerResult break_cipher(String input, VigenereBreakerType vigenereBreakerType,
     VigenereBreakerAlphabet alphabet, int keyLengthMin, int keyLengthMax, bool ignoreNonLetters,
     {required void Function() counterFunction}) {
-  if (input == null || input.isEmpty) return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.OK);
+  if (input.isEmpty) return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.OK);
 
   if (((keyLengthMin < 3) || (keyLengthMin > 1000)) || ((keyLengthMax < 3) || (keyLengthMax > 1000))) {
     return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.KEY_LENGTH);

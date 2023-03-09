@@ -23,7 +23,7 @@ void main() {
 
   group("DuckSpeak.decodeDuckSpeak:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
+      {'expectedOutput' : '23', 'input' : 'NanananakNanak Nanananak Nanananak Nananak Nanananak Nanananak'},
       {'input' : '', 'expectedOutput' : ''},
 
       {'expectedOutput' : 'Hallo Welt', 'input' : 'Nak? Nak. Naknak Nanak Naknak naknak Naknak naknak Naknak naknaknak Nananak Nak nak? Naknaknak Naknak nak? Naknak naknak Naknaknak Nak?'},
@@ -37,7 +37,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeDuckSpeak(elem['input'] as String?);
+        var _actual = decodeDuckSpeak(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     }

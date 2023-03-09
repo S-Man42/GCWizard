@@ -68,6 +68,7 @@ class MagicEyeSolverState extends State<MagicEyeSolver> {
           _decodeOutData = null;
           _displacement = null;
 
+          if (_decodeImage == null) return;
           decodeImageAsync(_buildJobDataDecode()).then((output) {
             _saveOutputDecode(output);
           });
@@ -82,6 +83,7 @@ class MagicEyeSolverState extends State<MagicEyeSolver> {
             _displacement = value;
             _decodeOutData = null;
 
+            if (_decodeImage == null) return;
             decodeImageAsync(_buildJobDataDecode()).then((output) {
               _saveOutputDecode(output);
             });
@@ -106,7 +108,7 @@ class MagicEyeSolverState extends State<MagicEyeSolver> {
 
   GCWAsyncExecuterParameters _buildJobDataDecode() {
     return GCWAsyncExecuterParameters(
-        Tuple3<Uint8List?, Image.Image?, int?>(_decodeImage?.bytes, _decodeImageData, _displacement));
+        Tuple3<Uint8List, Image.Image?, int?>(_decodeImage!.bytes, _decodeImageData, _displacement));
   }
 
   void _saveOutputDecode(Tuple3<Image.Image, Uint8List, int>? output) {

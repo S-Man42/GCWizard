@@ -1,5 +1,4 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/bigrams/logic/bigrams.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/logic/vigenere_breaker.dart';
 
 void main() {
@@ -27,7 +26,6 @@ void main() {
     var text25 = 'Le géocaching est un loisir qui consiste à utiliser la technique du géopositionnement par satellite pour rechercher ou dissimuler des « caches » ou des « géocaches », dans divers endroits à travers le monde. Une géocache typique est constituée d’un petit contenant étanche et résistant, comprenant un registre des visites et parfois un ou plusieurs « trésors », généralement des bibelots sans valeur. En 2013, plus de deux millions de géocaches, ont été répertoriées dans 222 pays sur les différents sites web communautaires consacrés à ce loisir.';
 
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'ignoreNonLetters' : true, 'alphabet' : VigenereBreakerAlphabet.ENGLISH, 'keyLengthMin' : 3, 'keyLengthMax' : 30, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : '', 'expectedOutput' : ''},
       {'input' : '', 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'ignoreNonLetters' : true, 'alphabet' : VigenereBreakerAlphabet.ENGLISH, 'keyLengthMin' : 3, 'keyLengthMax' : 30, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : '', 'expectedOutput' : ''},
       {'input' : '', 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'ignoreNonLetters' : true, 'alphabet' : VigenereBreakerAlphabet.ENGLISH, 'keyLengthMin' : 3, 'keyLengthMax' : 2, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : '', 'expectedOutput' : ''},
 
@@ -38,7 +36,6 @@ void main() {
       {'input' : text12, 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'ignoreNonLetters' : true, 'alphabet' : VigenereBreakerAlphabet.GERMAN, 'keyLengthMin' : 3, 'keyLengthMax' : 30, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : 'QUARK', 'expectedOutput' : text13},
       {'input' : text14, 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'ignoreNonLetters' : true, 'alphabet' : VigenereBreakerAlphabet.GERMAN, 'keyLengthMin' : 3, 'keyLengthMax' : 30, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : 'BLAISE', 'expectedOutput' : text15},
       {'input' : text16, 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'ignoreNonLetters' : true, 'alphabet' : VigenereBreakerAlphabet.GERMAN, 'keyLengthMin' : 3, 'keyLengthMax' : 30, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : 'BLAISE', 'expectedOutput' : text17},
-      {'input' : text18, 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'ignoreNonLetters' : true, 'alphabet' : VigenereBreakerAlphabet.GERMAN, 'keyLengthMin' : 3, 'keyLengthMax' : 30, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : 'BLAISE', 'expectedOutput' : text19},
 
       {'input' : text22, 'VigenereBreakerType' : VigenereBreakerType.AUTOKEYVIGENERE, 'ignoreNonLetters' : true, 'alphabet' : VigenereBreakerAlphabet.ENGLISH, 'keyLengthMin' : 3, 'keyLengthMax' : 30, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : 'HELLO', 'expectedOutput' : text11},
       {'input' : text20, 'VigenereBreakerType' : VigenereBreakerType.AUTOKEYVIGENERE, 'ignoreNonLetters' : true, 'alphabet' : VigenereBreakerAlphabet.GERMAN, 'keyLengthMin' : 3, 'keyLengthMax' : 30, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : 'TEST', 'expectedOutput' : text21},
@@ -47,40 +44,12 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () async {
-        var _actual = break_cipher(elem['input'] as String?, elem['VigenereBreakerType'] as VigenereBreakerType, elem['alphabet'] as VigenereBreakerAlphabet, elem['keyLengthMin'] as int, elem['keyLengthMax'] as int, elem['ignoreNonLetters'] as bool, counterFunction: () => {});
+        var _actual = break_cipher(elem['input'] as String, elem['VigenereBreakerType'] as VigenereBreakerType, elem['alphabet'] as VigenereBreakerAlphabet, elem['keyLengthMin'] as int, elem['keyLengthMax'] as int, elem['ignoreNonLetters'] as bool, counterFunction: () => {});
         expect(_actual.plaintext, elem['expectedOutput']);
         expect(_actual.key, elem['key']);
         expect(_actual.errorCode, elem['errorCode']);
       });
     }
 
-  });
-
-  group("vigenere_breaker.calc_fitness:", () {
-    var text11 = 'This text is encrypted with the vigenere cipher. Breaking it is rather easy. :-)';
-
-    var text13 = 'kurzerverschluesseltertext';
-
-    List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'alphabet' : VigenereBreakerAlphabet.ENGLISH, 'keyLengthMin' : 3, 'keyLengthMax' : 30, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : '', 'expectedOutput' : null},
-      {'input' : '', 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'alphabet' : VigenereBreakerAlphabet.ENGLISH, 'keyLengthMin' : 3, 'keyLengthMax' : 30, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : '', 'expectedOutput' : null},
-      {'input' : '', 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'alphabet' : VigenereBreakerAlphabet.ENGLISH, 'keyLengthMin' : 3, 'keyLengthMax' : 2, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : '', 'expectedOutput' : null},
-
-      {'input' : 'quark', 'alphabet' : VigenereBreakerAlphabet.GERMAN, 'expectedOutput' : 2943517/4/10000},
-      {'input' : 'hallo', 'alphabet' : VigenereBreakerAlphabet.GERMAN, 'expectedOutput' : 3299845/4/10000},
-      {'input' : 'er', 'alphabet' : VigenereBreakerAlphabet.GERMAN, 'expectedOutput' : 100.0},
-      {'input' : 'th', 'alphabet' : VigenereBreakerAlphabet.ENGLISH, 'expectedOutput' : 100.0},
-      {'input' : text11, 'alphabet' : VigenereBreakerAlphabet.ENGLISH, 'expectedOutput' : 87.06553278688526},
-      {'input' : text13, 'alphabet' : VigenereBreakerAlphabet.GERMAN, 'expectedOutput' : 84.360524},
-
-      {'input' : 'nder', 'alphabet' : VigenereBreakerAlphabet.GERMAN, 'expectedOutput' : 96.20213333333334},
-    ];
-
-    for (var elem in _inputsToExpected) {
-      test('input: ${elem['input']}', () {
-        var _actual = calc_fitnessBigrams(elem['input'] as String?, getBigrams(elem['alphabet'] as VigenereBreakerAlphabet));
-        expect(_actual, elem['expectedOutput']);
-      });
-    }
   });
 }

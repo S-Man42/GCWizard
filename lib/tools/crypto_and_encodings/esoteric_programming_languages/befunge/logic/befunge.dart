@@ -33,8 +33,8 @@ const _PAGEHEIGHT = 25;
 const _SCREENWIDTH = _LINEWIDTH - 1;
 const _SCREENHEIGHT = _PAGEHEIGHT - 1;
 
-const MAX_ITERATIONS = 9999;
-const MAX_OUTPUT_LENGTH = 160;
+const _MAX_ITERATIONS = 9999;
+const _MAX_OUTPUT_LENGTH = 160;
 
 class BefungeOutput {
   String Output = '';
@@ -523,7 +523,7 @@ BefungeOutput interpretBefunge(String program, {String input = ''}) {
 }
 
 bool _infiniteLoop() {
-  return (_iterations > MAX_ITERATIONS);
+  return (_iterations > _MAX_ITERATIONS);
 }
 
 bool _outOfBounds() {
@@ -561,7 +561,7 @@ bool _correctBefungeProgramLength(String program) {
   if (program.length > MAX_LENGTH_PROGRAM) {
     return false;
   } else {
-    for (String line  in program.split('\n')) {
+    for (String line in program.split('\n')) {
       if (line.length > _SCREENWIDTH) return false;
     }
     i++;
@@ -575,7 +575,7 @@ String generateBefunge(String OutputText) {
 
   String code = '';
 
-  if (OutputText.length > MAX_OUTPUT_LENGTH) return _BEFUNGE_ERROR_INVALID_PROGRAM;
+  if (OutputText.length > _MAX_OUTPUT_LENGTH) return _BEFUNGE_ERROR_INVALID_PROGRAM;
 
   OutputText.split('').reversed.toList().forEach((char) {
     if (char.codeUnitAt(0) < 256 && _convertCharCode[char.codeUnitAt(0)] != null) {
