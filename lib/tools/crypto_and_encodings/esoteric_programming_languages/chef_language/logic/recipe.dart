@@ -52,13 +52,13 @@ class _Recipe {
   }
 
   void setMethod(String method, String language) {
-    var f = NumberFormat('###');
+    NumberFormat f = NumberFormat('###');
     methods = <_Method>[];
     //List<String> scanner = method.replaceAll("\n", "").replaceAll(". ",".").split('.');
     List<String> methodList =
         method.replaceAll("zubereitung:", "zubereitung.").replaceAll("\n", " ").replaceAll(". ", ".").split('.');
     for (int i = 1; i < methodList.length - 1; i++) {
-      var m = _Method(methodList[i], i, language);
+      _Method m = _Method(methodList[i], i, language);
       if (m.type == _CHEF_Method.Invalid || m.type == _CHEF_Method.Unbekannt) {
         error = true;
         errorList.add(_CHEF_Messages[language]?['chef_error_syntax'] ?? '');

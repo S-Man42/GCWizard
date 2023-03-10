@@ -76,20 +76,21 @@ class _Kitchen {
           ''
         ]);
         return null;
-      } else {
-        if (ingredients[m.ingredient] == null) {
-          valid = false;
-          error.addAll([
-            _CHEF_Messages[language]?['common_programming_error_runtime'] ?? '',
-            _CHEF_Messages[language]?['chef_error_runtime_method_step'] ?? '',
-            m.n.toString() + ' : ' + m.type.toString(),
-            _CHEF_Messages[language]?['chef_error_runtime_ingredient_not_found'] ?? '',
-            m.ingredient ?? '',
-            ''
-          ]);
-          return null;
-        }
       }
+      // else {
+      //   if (ingredients[m.ingredient] == null) {
+      //     valid = false;
+      //     error.addAll([
+      //       _CHEF_Messages[language]?['common_programming_error_runtime'] ?? '',
+      //       _CHEF_Messages[language]?['chef_error_runtime_method_step'] ?? '',
+      //       m.n.toString() + ' : ' + m.type.toString(),
+      //       _CHEF_Messages[language]?['chef_error_runtime_ingredient_not_found'] ?? '',
+      //       m.ingredient ?? '',
+      //       ''
+      //     ]);
+      //     return null;
+      //   }
+      // }
       switch (m.type) {
         case _CHEF_Method.Take:
         case _CHEF_Method.Nehmen:
