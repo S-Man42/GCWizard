@@ -45,8 +45,7 @@ AlphabetModificationMode _parseStringToEnum(String? item) {
       .firstWhereOrNull((e) => alphabetModeName(e) == item);
   if( result != null) return result;
   var value = _parseStringToEnum((getDefaultValue(MDT_INTERNALNAMES_PLAYFAIR, MDT_PLAYFAIR_OPTION_MODE) ?? '').toString());
-  if (value is AlphabetModificationMode) return value;
-  return AlphabetModificationMode.J_TO_I;
+  return value;
 }
 
 String alphabetModeName(AlphabetModificationMode? item) {
