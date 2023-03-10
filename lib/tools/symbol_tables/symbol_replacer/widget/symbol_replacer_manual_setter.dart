@@ -18,10 +18,10 @@ class SymbolReplacerManualSetter extends StatefulWidget {
 
 class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> {
   final _symbolMap = <Symbol, Map<String, SymbolData>>{};
-  List<GCWDropDownMenuItem>? _symbolDataItems;
+  List<GCWDropDownMenuItem<Map<String, SymbolReplacerSymbolData>>> _symbolDataItems = [];
   final _gcwTextStyle = gcwTextStyle();
   var _currentMode = GCWSwitchPosition.left;
-  Map<String, SymbolReplacerSymbolData>? _currentSymbolData;
+  late Map<String, SymbolReplacerSymbolData> _currentSymbolData;
   var _init = true;
 
   late TextEditingController _editValueController;
@@ -48,7 +48,7 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
 
     if (_init) {
       _fillSymbolDataItems(widget.symbolImage.compareSymbols);
-      _currentSymbolData = widget.symbolImage.compareSymbols?.first;
+      _currentSymbolData = widget.symbolImage.compareSymbols!.first;  // TODO Mike: I needed to make _currentSymbolData nullsafe; therefore I changed ?.first to !.first here. Please chacke if compareSymbols can be null here nonetheless
       _fillSymbolMap(widget.symbolImage, widget.viewSymbols);
 
       // select all
@@ -90,7 +90,7 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
 
   void _fillSymbolDataItems(List<Map<String, SymbolReplacerSymbolData>>? compareSymbols) {
     _symbolDataItems = (compareSymbols == null)
-        ? <GCWDropDownMenuItem>[].toList()
+        ? <GCWDropDownMenuItem<Map<String, SymbolReplacerSymbolData>>>[].toList()
         : compareSymbols.map((symbolData) {
             return _buildDropDownMenuItem(symbolData);
           }).toList();
@@ -167,14 +167,14 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
                   controller: _editValueController,
                   autofocus: true,
                 )
-              : GCWDropDown<Map<String, SymbolReplacerSymbolData>?>(
+              : GCWDropDown<Map<String, SymbolReplacerSymbolData>>(
                   value: _currentSymbolData,
                   onChanged: (value) {
                     setState(() {
                       _currentSymbolData = value;
                     });
                   },
-                  items: _symbolDataItems ?? []),
+                  items: _symbolDataItems),
           GCWIconButton(
             icon: Icons.alt_route,
             iconColor: _symbolMap.values.any((symbol) => symbol.values.first.primarySelected)
@@ -183,8 +183,8 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
             onPressed: () {
               setState(() {
                 if (_currentMode == GCWSwitchPosition.left) {
-                  _setSelectedSymbolsText(_currentSymbolData?.keys.first,
-                      symbolData: _currentSymbolData?.values.first);
+                  _setSelectedSymbolsText(_currentSymbolData.keys.first,
+                      symbolData: _currentSymbolData.values.first);
                 } else {
                   _setSelectedSymbolsText(_editValueController.text);
                 }
@@ -227,18 +227,18 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
 
   void _selectSymbolDataItem(SymbolData symbolData) {
     var compareSymbol = _getSymbol(_symbolMap, symbolData)?.symbolGroup?.compareSymbol;
-    if ((widget.symbolImage.compareSymbols != null) && (compareSymbol != null) && (_symbolDataItems != null)) {
-      for (GCWDropDownMenuItem item in _symbolDataItems!) {
+    if ((widget.symbolImage.compareSymbols != null) && (compareSymbol != null)) {
+      for (GCWDropDownMenuItem item in _symbolDataItems) {
         if ((item.value is Map<String, SymbolReplacerSymbolData>) &&
             ((item.value as Map<String, SymbolReplacerSymbolData>).values.first == compareSymbol)) {
-          _currentSymbolData = item.value as Map<String, SymbolReplacerSymbolData>?;
+          _currentSymbolData = item.value as Map<String, SymbolReplacerSymbolData>;
           break;
         }
       }
     }
   }
 
-  GCWDropDownMenuItem _buildDropDownMenuItem(Map<String, SymbolReplacerSymbolData> symbolData) {
+  GCWDropDownMenuItem<Map<String, SymbolReplacerSymbolData>> _buildDropDownMenuItem(Map<String, SymbolReplacerSymbolData> symbolData) {
     var iconBytes = symbolData.values.first.bytes;
     var displayText = symbolData.keys.first;
     return GCWDropDownMenuItem(

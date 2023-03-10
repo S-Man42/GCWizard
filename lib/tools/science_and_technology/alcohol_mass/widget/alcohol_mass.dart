@@ -41,16 +41,18 @@ class AlcoholMassState extends State<AlcoholMass> {
         GCWDropDown<String>(
           value: _currentMode,
           items: _MODES.map((mode) {
-            return GCWDropDownMenuItem(value: mode, child: i18n(context, mode));
+            return GCWDropDownMenuItem<String>(value: mode, child: i18n(context, mode));
           }).toList(),
           onChanged: (value) {
             setState(() {
-              _currentMode = value;
+
+                _currentMode = value;
+
             });
           },
         ),
         _currentMode != _VOLUME
-            ? GCWUnitInput(
+            ? GCWUnitInput<Volume>(
                 value: _currentVolume,
                 title: i18n(context, _VOLUME),
                 min: 0.0,
@@ -64,7 +66,7 @@ class AlcoholMassState extends State<AlcoholMass> {
               )
             : Container(), // Container Construct instead of simple "if" avoids some NULL Pointer issues, however... (when opening -> switching to VOLUME -> Crash because no Volume DropDown...)
         _currentMode != _ALCOHOL_MASS
-            ? GCWUnitInput(
+            ? GCWUnitInput<Mass>(
                 value: _currentAlcoholMass,
                 title: i18n(context, _ALCOHOL_MASS),
                 min: 0.0,
@@ -104,7 +106,9 @@ class AlcoholMassState extends State<AlcoholMass> {
                 onlyShowSymbols: false,
                 onChanged: (value) {
                   setState(() {
-                    _currentOutputMass = value;
+
+                      _currentOutputMass = value;
+
                   });
                 },
               )
@@ -116,7 +120,9 @@ class AlcoholMassState extends State<AlcoholMass> {
                 onlyShowSymbols: false,
                 onChanged: (value) {
                   setState(() {
-                    _currentOutputVolume = value;
+
+                      _currentOutputVolume = value;
+
                   });
                 },
               )

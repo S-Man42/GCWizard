@@ -17,26 +17,26 @@ class GCWUnitDropDown<T extends Unit> extends StatefulWidget {
       : super(key: key);
 
   @override
-  GCWUnitDropDownState createState() => GCWUnitDropDownState<T>();
+  GCWUnitDropDownState<T> createState() => GCWUnitDropDownState<T>();
 }
 
-class GCWUnitDropDownState<T extends Unit> extends State<GCWUnitDropDown> {
-  T? _currentUnit;
+class GCWUnitDropDownState<T extends Unit> extends State<GCWUnitDropDown<T>> {
+  late T _currentUnit;
 
   @override
   Widget build(BuildContext context) {
     List<T> _currentUnitList = (widget.unitList ?? widget.unitCategory?.units ?? <T>[]) as List<T>;
 
     return GCWDropDown<T>(
-        value: widget.value as T,
+        value: widget.value,
         onChanged: (T newValue) {
           setState(() {
             _currentUnit = newValue;
-            if (_currentUnit is Unit) widget.onChanged(_currentUnit!);
+            widget.onChanged(_currentUnit);
           });
         },
         items: _currentUnitList.map((unit) {
-          return GCWDropDownMenuItem(
+          return GCWDropDownMenuItem<T>(
               value: unit,
               child: widget.onlyShowSymbols
                   ? unit.symbol

@@ -3,9 +3,9 @@ import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 
-class GCWDropDown<T extends Object?> extends StatefulWidget {
+class GCWDropDown<T> extends StatefulWidget {
   final void Function(T) onChanged;
-  final List<GCWDropDownMenuItem> items;
+  final List<GCWDropDownMenuItem<T>> items;
   final T value;
   final DropdownButtonBuilder? selectedItemBuilder;
   final String? title;
@@ -22,12 +22,16 @@ class GCWDropDown<T extends Object?> extends StatefulWidget {
       : super(key: key);
 
   @override
-  _GCWDropDownState createState() => _GCWDropDownState<T>();
+  _GCWDropDownState<T> createState() => _GCWDropDownState<T>();
 }
 
-class _GCWDropDownState<T extends Object?> extends State<GCWDropDown> {
+class _GCWDropDownState<T> extends State<GCWDropDown<T>> {
+  T? _currentValue;
+
   @override
   Widget build(BuildContext context) {
+    _currentValue = widget.value;
+
     ThemeColors colors = themeColors();
 
     var textStyle = gcwTextStyle();
@@ -55,19 +59,23 @@ class _GCWDropDownState<T extends Object?> extends State<GCWDropDown> {
                       width: 1.0),
                 ),
                 child: DropdownButtonHideUnderline(
-                    child: DropdownButton(
+                    child: DropdownButton<T?>(
                   isExpanded: true,
                   icon: Icon(
                     Icons.arrow_drop_down,
                     size: 30,
                     color: widget.alternativeColor ? colors.dialogText() : colors.secondary(),
                   ),
-                  value: widget.value ?? widget.items[0].value,
+                  value: _currentValue,// ?? widget.items[0].value,
                   items: widget.items.map((item) {
-                    return DropdownMenuItem(
-                        value: item.value, child: item.child is Widget ? item.child as Widget : _buildMenuItemChild(item));
+                    return DropdownMenuItem<T>(
+                        value: item._internalValue, child: item.child is Widget ? item.child as Widget : _buildMenuItemChild<T>(item));
                   }).toList(),
-                  onChanged: widget.onChanged,
+                  onChanged: (value) {
+                    if (value != null) {
+                      widget.onChanged(value);
+                    }
+                  },
                   style: textStyle,
                   selectedItemBuilder: widget.selectedItemBuilder ??
                       (context) {
@@ -91,7 +99,7 @@ class _GCWDropDownState<T extends Object?> extends State<GCWDropDown> {
 
 //Note: No GCWText, since GCWText contains SelectableText which suppress clicks,
 // and therefore generate non-selectable dropdown items (09/2020)
-Widget _buildMenuItemChild(GCWDropDownMenuItem item) {
+Widget _buildMenuItemChild<T>(GCWDropDownMenuItem<T> item) {
   if (item.subtitle == null || item.subtitle!.isEmpty) {
     return item.child is Widget
         ? item.child as Widget
@@ -122,11 +130,15 @@ Widget _buildMenuItemChild(GCWDropDownMenuItem item) {
   }
 }
 
-class GCWDropDownMenuItem {
-  final Object value;
+class GCWDropDownMenuItem<T> {
+  final T value;
   final Object child;
   final String? subtitle;
   final TextStyle? style;
 
-  const GCWDropDownMenuItem({required this.value, required this.child, this.subtitle, this.style});
+  late T? _internalValue;
+
+  GCWDropDownMenuItem({required this.value, required this.child, this.subtitle, this.style}) {
+    _internalValue = this.value;
+  }
 }

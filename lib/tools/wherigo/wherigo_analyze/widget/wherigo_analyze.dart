@@ -69,7 +69,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   Uint8List _GWCbytes = Uint8List(0);
   Uint8List _LUAbytes = Uint8List(0);
 
-  List<GCWDropDownMenuItem> _displayCartridgeDataList = [];
+  List<GCWDropDownMenuItem<WHERIGO_OBJECT>> _displayCartridgeDataList = [];
 
   WHERIGO_FILE_LOAD_STATE _fileLoadedState = WHERIGO_FILE_LOAD_STATE.NULL;
 
@@ -1780,9 +1780,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     return WHERIGO_EMPTYCARTRIDGE_LUA;
   }
 
-  List<GCWDropDownMenuItem> _setDisplayCartridgeDataList() {
+  List<GCWDropDownMenuItem<WHERIGO_OBJECT>> _setDisplayCartridgeDataList() {
     var loadedState = WHERIGO_DATA[wherigoExpertMode]?[_fileLoadedState];
-    if (loadedState == null) return <GCWDropDownMenuItem>[];
+    if (loadedState == null) return <GCWDropDownMenuItem<WHERIGO_OBJECT>>[];
 
     return SplayTreeMap<String, WHERIGO_OBJECT>.from(switchMapKeyValue(loadedState)
             .map((String key, WHERIGO_OBJECT value) => MapEntry<String, WHERIGO_OBJECT>(i18n(context, key), value)))

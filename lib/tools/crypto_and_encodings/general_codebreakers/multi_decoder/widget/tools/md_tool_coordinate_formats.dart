@@ -117,8 +117,8 @@ class MultiDecoderToolCoordinateFormats extends AbstractMultiDecoderTool {
                   options[MDT_COORDINATEFORMATS_OPTION_FORMAT] = newValue;
                 },
                 items: allCoordinateFormatMetadata.where((format) => format.type != CoordinateFormatKey.SLIPPY_MAP).map((format) {
-                  return GCWDropDownMenuItem(
-                    value: format.persistenceKey,
+                  return GCWDropDownMenuItem<CoordinateFormatKey>(
+                    value: format.type,
                     child: i18n(context, format.name, ifTranslationNotExists: format.name),
                   );
                 }).toList(),

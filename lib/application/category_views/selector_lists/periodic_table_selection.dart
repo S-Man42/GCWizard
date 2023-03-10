@@ -16,7 +16,7 @@ class PeriodicTableSelection extends GCWSelection {
     final List<GCWTool> _toolList = registeredTools.where((element) {
       return [
         className(const PeriodicTable()),
-        className(const PeriodicTableDataView()),
+        className(const PeriodicTableDataView(atomicNumber: 1,)),
         className(const AtomicNumbersToText()),
       ].contains(className(element.tool));
     }).toList();

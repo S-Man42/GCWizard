@@ -57,7 +57,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   double _similarityLevel = 90.0;
   double _similarityCompareLevel = 80.0;
   var _currentSimpleMode = GCWSwitchPosition.left;
-  List<GCWDropDownMenuItem> _compareSymbolItems = [];
+  List<GCWDropDownMenuItem<SymbolReplacerSymbolTableViewData>> _compareSymbolItems = [];
   final _gcwTextStyle = gcwTextStyle();
   final _descriptionTextStyle = gcwDescriptionTextStyle();
   late SymbolReplacerSymbolTableViewData _currentSymbolTableViewData;
@@ -289,10 +289,10 @@ class SymbolReplacerState extends State<SymbolReplacer> {
             selectedItemBuilder: (BuildContext context) {
               return _compareSymbolItems.map((item) {
                 return _buildDropDownMenuItem(
-                    (item.value as SymbolReplacerSymbolTableViewData).icon,
-                    (item.value as SymbolReplacerSymbolTableViewData == no_symbol_table)
+                    item.value.icon,
+                    (item.value == no_symbol_table)
                         ? i18n(context, 'symbol_replacer_no_symbol_table')
-                        : (item.value as SymbolReplacerSymbolTableViewData).toolName,
+                        : item.value.toolName,
                     null);
               }).toList();
             },
@@ -519,7 +519,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     if (_symbolImage == null) return null;
 
     list = await Future.wait(_compareSymbolItems.map((_symbolTableViewData) async {
-      var symbolTableViewData = _symbolTableViewData.value as SymbolReplacerSymbolTableViewData;
+      var symbolTableViewData = _symbolTableViewData.value;
       if (symbolTableViewData.data == null) await symbolTableViewData.initialize(context);
 
       return symbolTableViewData.data?.images ?? [];

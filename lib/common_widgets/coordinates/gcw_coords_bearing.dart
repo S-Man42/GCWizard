@@ -128,7 +128,7 @@ class _GCWBearingState extends State<GCWBearing> {
           value: _currentCompassValue!,
           items: _COMPASS_ROSE.map((direction) {
             if (direction.symbol == _NO_COMPASS_DIRECTION) {
-              return const GCWDropDownMenuItem(value: _NO_COMPASS_DIRECTION, child: _NO_COMPASS_DIRECTION);
+              return GCWDropDownMenuItem(value: _NO_COMPASS_DIRECTION, child: _NO_COMPASS_DIRECTION);
             }
 
             FontWeight fontweight = FontWeight.normal;
