@@ -52,17 +52,16 @@ class PredatorState extends State<Predator> {
           });
         },
       ),
-      if (_currentMode == GCWSwitchPosition.left) // encrypt: input number => output segment
-        GCWTextField(
-          controller: _encodeController,
-          onChanged: (text) {
-            setState(() {
-              _currentEncodeInput = text;
-            });
-          },
-        )
-      else
-        Column(
+      (_currentMode == GCWSwitchPosition.left) // encrypt: input number => output segment
+        ? GCWTextField(
+            controller: _encodeController,
+            onChanged: (text) {
+              setState(() {
+                _currentEncodeInput = text;
+              });
+            },
+          )
+        : Column(
           // decrpyt: input segment => output number
           children: <Widget>[_buildVisualDecryption()],
         ),
