@@ -42,7 +42,7 @@ Future<SymbolReplacerImage?> replaceSymbolsAsync(GCWAsyncExecuterParameters? job
       similarityCompareLevel: data.similarityCompareLevel,
       mergeDistance: data.mergeDistance);
 
-  jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }
@@ -226,7 +226,7 @@ class SymbolReplacerImage {
       if (this.compareSymbols != _usedCompareSymbols || _usedCompareSymbolsImage == null) {
         _usedCompareSymbolsImage = _buildCompareSymbols(compareSymbols!);
       }
-      _useCompareSymbols(_usedCompareSymbolsImage!);
+      _useCompareSymbols(_usedCompareSymbolsImage);
       _usedCompareSymbols = compareSymbols;
       this.compareSymbols = compareSymbols;
       mergeSymbolGroups();
@@ -316,7 +316,7 @@ class SymbolReplacerImage {
   /// extract symbols from the compare symbol table
   /// </summary>
   SymbolReplacerImage? _buildCompareSymbols(List<Map<String, SymbolReplacerSymbolData>> compareSymbols) {
-    if (compareSymbols.first.values.first.bytes == null) return null;
+    if (compareSymbols.isEmpty || compareSymbols.first.values.first.bytes == null) return null;
     if (_blackLevel == null || _similarityLevel == null || _gap == null) return null;
     var compareSymbolImage = SymbolReplacerImage(compareSymbols.first.values.first.bytes!);
 
@@ -357,9 +357,9 @@ class SymbolReplacerImage {
   /// then assign the text to the groups
   /// return: Sum of percent match for all symbols
   /// </summary>
-  double _useCompareSymbols(SymbolReplacerImage compareSymbolImage) {
+  double _useCompareSymbols(SymbolReplacerImage? compareSymbolImage) {
     var percentSum = 0.0;
-    if (_similarityCompareLevel == null) return 0;
+    if (compareSymbolImage == null || _similarityCompareLevel == null) return 0;
 
     // build hash for compare
     for (int i = 0; i < compareSymbolImage.symbols.length; i++) {
@@ -917,7 +917,7 @@ Future<List<Map<String, SymbolReplacerSymbolData>>?> searchSymbolTableAsync(GCWA
   var data = jobData!.parameters as Tuple2<SymbolReplacerImage, List<List<Map<String, SymbolReplacerSymbolData>>>>;
   var output = await searchSymbolTable(data.item1, data.item2, sendAsyncPort: jobData.sendAsyncPort);
 
-  jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }

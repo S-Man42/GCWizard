@@ -76,7 +76,7 @@ Future<VigenereBreakerResult> break_cipherAsync(GCWAsyncExecuterParameters? jobD
       data.ignoreNonLetters,
       counterFunction: progressCounter);
 
-  jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }

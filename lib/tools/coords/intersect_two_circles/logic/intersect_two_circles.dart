@@ -44,7 +44,7 @@ Future<List<LatLng>> intersectTwoCirclesAsync(GCWAsyncExecuterParameters? jobDat
   var output = intersectTwoCircles(data.coord1, data.radius1, data.coord2,
       data.radius2, data.ells);
 
-  jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }

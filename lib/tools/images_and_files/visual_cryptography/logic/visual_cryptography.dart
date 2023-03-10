@@ -18,7 +18,7 @@ Future<Uint8List?> decodeImagesAsync(GCWAsyncExecuterParameters? jobData) async 
   var data = jobData!.parameters as Tuple4<Uint8List, Uint8List, int, int>;
   var output = await _decodeImages(data.item1, data.item2, data.item3, data.item4);
 
-  jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }
@@ -65,7 +65,7 @@ Future<Tuple2<int, int>?> offsetAutoCalcAsync(GCWAsyncExecuterParameters? jobDat
       data.item1, data.item2, data.item3, data.item4,
       sendAsyncPort: jobData.sendAsyncPort);
 
-  jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }
@@ -153,7 +153,7 @@ Future<Tuple2<Uint8List, Uint8List?>?> encodeImagesAsync(GCWAsyncExecuterParamet
   var data = jobData!.parameters as Tuple5<Uint8List, Uint8List?, int, int, int>;
   var output = await _encodeImage(data.item1, data.item2, data.item3, data.item4, data.item5);
 
-  jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }

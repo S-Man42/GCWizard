@@ -20,7 +20,7 @@ Future<List<LatLng>> equilateralTriangleAsync(GCWAsyncExecuterParameters? jobDat
   var data = jobData!.parameters as EquilateralTriangleJobData;
   var output = equilateralTriangle(data.coord1, data.coord2, data.ells);
 
-  jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }

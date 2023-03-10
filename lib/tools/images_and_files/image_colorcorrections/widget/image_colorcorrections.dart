@@ -413,7 +413,7 @@ Future<img.Image?> _adjustColorAsync(GCWAsyncExecuterParameters? jobData) async 
 
   var output = _doAdjustColor(jobData!.parameters as _AdjustColorInput);
 
-  jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return Future.value(output);
 }

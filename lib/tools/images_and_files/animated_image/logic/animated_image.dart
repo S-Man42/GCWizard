@@ -21,7 +21,7 @@ Future<AnimatedImageOutput?> analyseImageAsync(GCWAsyncExecuterParameters? jobDa
   var data = jobData!.parameters as Uint8List;
   var output = await analyseImage(data, sendAsyncPort: jobData.sendAsyncPort);
 
-  jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }

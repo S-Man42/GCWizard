@@ -157,7 +157,7 @@ Future<Tuple2<Uint8List?, MagicEyeErrorCode>?> generateImageAsync(GCWAsyncExecut
   if (hiddenImage == null) return null;
   var outputData = _generateImage(hiddenImage, textureImage, textureType);
 
-  jobData.sendAsyncPort.send(outputData);
+  jobData.sendAsyncPort?.send(outputData);
 
   return Future.value(outputData);
 }

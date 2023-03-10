@@ -42,7 +42,7 @@ Future<WherigoCartridge> getGcwCartridgeAsync(GCWAsyncExecuterParameters? jobDat
       gcw.jobDataMode,
       sendAsyncPort: jobData.sendAsyncPort);
 
-  jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }
@@ -56,7 +56,7 @@ Future<WherigoCartridge> getLuaCartridgeAsync(GCWAsyncExecuterParameters? jobDat
       lua.jobDataMode,
       sendAsyncPort: jobData.sendAsyncPort);
 
-  jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }

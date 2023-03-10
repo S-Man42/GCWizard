@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:collection/collection.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_alphabetmodification_dropdown.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/multi_decoder.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/tools/md_tool_playfair.dart';
@@ -31,7 +32,7 @@ class MultiDecoderToolPolybios extends AbstractMultiDecoderTool {
             configurationWidget: MultiDecoderToolConfiguration(widgets: {
               MDT_POLYBIOS_OPTION_MODE: GCWAlphabetModificationDropDown(
                 suppressTitle: true,
-                value: _parseStringToEnum(stringNullableTypeCheck(options[MDT_POLYBIOS_OPTION_MODE], null)),
+                value:  _parseStringToEnum(stringNullableTypeCheck(options[MDT_POLYBIOS_OPTION_MODE], null)),
                 onChanged: (newValue) {
                   options[MDT_POLYBIOS_OPTION_MODE] =
                       alphabetModeName(newValue);
@@ -41,6 +42,10 @@ class MultiDecoderToolPolybios extends AbstractMultiDecoderTool {
 }
 
 AlphabetModificationMode _parseStringToEnum(String? item) {
-  return AlphabetModificationMode.values
-      .firstWhere((e) => alphabetModeName(e) == item);
+  var result = AlphabetModificationMode.values
+      .firstWhereOrNull((e) => alphabetModeName(e) == item);
+  if( result != null) return result;
+  var value = _parseStringToEnum((getDefaultValue(MDT_INTERNALNAMES_POLYBIOS, MDT_POLYBIOS_OPTION_MODE) ?? '').toString());
+  if (value is AlphabetModificationMode) return value;
+  return AlphabetModificationMode.J_TO_I;
 }
