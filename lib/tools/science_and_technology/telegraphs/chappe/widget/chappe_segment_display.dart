@@ -123,16 +123,11 @@ class _ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
               path10.lineTo(
                   size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 30, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 100);
               path10.close();
-              if (size.height < OUTPUT_SIZE_LEVEL) {
-                if (segmentActive(currentSegments, '10')) {
-                  canvas.touchCanvas.drawPath(path10, paint, onTapDown: (tapDetail) {
-                    setSegmentState('10', !segmentActive(currentSegments, '10'));
-                  });
-                } else {
-                  canvas.touchCanvas.drawPath(path10, paint, onTapDown: (tapDetail) {
-                    setSegmentState('10', !segmentActive(currentSegments, '10'));
-                  });
-                }
+
+              if (segmentActive(currentSegments, '10') || !readOnly) {
+                canvas.touchCanvas.drawPath(path10, paint, onTapDown: (tapDetail) {
+                  setSegmentState('10', !segmentActive(currentSegments, '10'));
+                });
               }
 
               paint.color = segmentActive(currentSegments, '1l') ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
@@ -146,14 +141,8 @@ class _ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
               path1l.lineTo(
                   size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 20, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 120);
               path1l.close();
-              if (size.height < OUTPUT_SIZE_LEVEL) {
-                if (segmentActive(currentSegments, '1l')) {
-                  canvas.touchCanvas.drawPath(path1l, paint, onTapDown: (tapDetail) {
-                    setSegmentState('1l', !segmentActive(currentSegments, '1l'));
-                  });
-                } else {
-                }
-              } else {
+
+              if (segmentActive(currentSegments, '1l') || !readOnly) {
                 canvas.touchCanvas.drawPath(path1l, paint, onTapDown: (tapDetail) {
                   setSegmentState('1l', !segmentActive(currentSegments, '1l'));
                 });
@@ -170,14 +159,8 @@ class _ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
               path1r.lineTo(
                   size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 20, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 70);
               path1r.close();
-              if (size.height < OUTPUT_SIZE_LEVEL) {
-                if (segmentActive(currentSegments, '1r')) {
-                  canvas.touchCanvas.drawPath(path1r, paint, onTapDown: (tapDetail) {
-                    setSegmentState('1r', !segmentActive(currentSegments, '1r'));
-                  });
-                } else {
-                }
-              } else {
+
+              if (segmentActive(currentSegments, '1r') || !readOnly) {
                 canvas.touchCanvas.drawPath(path1r, paint, onTapDown: (tapDetail) {
                   setSegmentState('1r', !segmentActive(currentSegments, '1r'));
                 });
@@ -194,14 +177,8 @@ class _ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
               path1o.lineTo(
                   size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 50, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 90);
               path1o.close();
-              if (size.height < OUTPUT_SIZE_LEVEL) {
-                if (segmentActive(currentSegments, '1o')) {
-                  canvas.touchCanvas.drawPath(path1o, paint, onTapDown: (tapDetail) {
-                    setSegmentState('1o', !segmentActive(currentSegments, '1o'));
-                  });
-                } else {
-                }
-              } else {
+
+              if (segmentActive(currentSegments, '1o') || !readOnly) {
                 canvas.touchCanvas.drawPath(path1o, paint, onTapDown: (tapDetail) {
                   setSegmentState('1o', !segmentActive(currentSegments, '1o'));
                 });
@@ -218,14 +195,8 @@ class _ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
               path1u.lineTo(
                   size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 50, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 100);
               path1u.close();
-              if (size.height < OUTPUT_SIZE_LEVEL) {
-                if (segmentActive(currentSegments, '1u')) {
-                  canvas.touchCanvas.drawPath(path1u, paint, onTapDown: (tapDetail) {
-                    setSegmentState('1u', !segmentActive(currentSegments, '1u'));
-                  });
-                } else {
-                }
-              } else {
+
+              if (segmentActive(currentSegments, '1u') || !readOnly) {
                 canvas.touchCanvas.drawPath(path1u, paint, onTapDown: (tapDetail) {
                   setSegmentState('1u', !segmentActive(currentSegments, '1u'));
                 });
@@ -242,14 +213,8 @@ class _ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
               path1a.lineTo(
                   size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 20, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 80);
               path1a.close();
-              if (size.height < OUTPUT_SIZE_LEVEL) {
-                if (segmentActive(currentSegments, '1a')) {
-                  canvas.touchCanvas.drawPath(path1a, paint, onTapDown: (tapDetail) {
-                    setSegmentState('1a', !segmentActive(currentSegments, '1a'));
-                  });
-                } else {
-                }
-              } else {
+
+              if (segmentActive(currentSegments, '1a') || !readOnly) {
                 canvas.touchCanvas.drawPath(path1a, paint, onTapDown: (tapDetail) {
                   setSegmentState('1a', !segmentActive(currentSegments, '1a'));
                 });
@@ -266,14 +231,8 @@ class _ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
               path1b.lineTo(
                   size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 20, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 110);
               path1b.close();
-              if (size.height < OUTPUT_SIZE_LEVEL) {
-                if (segmentActive(currentSegments, '1b')) {
-                  canvas.touchCanvas.drawPath(path1b, paint, onTapDown: (tapDetail) {
-                    setSegmentState('1b', !segmentActive(currentSegments, '1b'));
-                  });
-                } else {
-                }
-              } else {
+
+              if (segmentActive(currentSegments, '1b') || !readOnly) {
                 canvas.touchCanvas.drawPath(path1b, paint, onTapDown: (tapDetail) {
                   setSegmentState('1b', !segmentActive(currentSegments, '1b'));
                 });
@@ -292,14 +251,8 @@ class _ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
               path20.lineTo(
                   size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 40, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 50);
               path20.close();
-              if (size.height < OUTPUT_SIZE_LEVEL) {
-                if (segmentActive(currentSegments, '20')) {
-                  canvas.touchCanvas.drawPath(path20, paint, onTapDown: (tapDetail) {
-                    setSegmentState('20', !segmentActive(currentSegments, '20'));
-                  });
-                } else {
-                }
-              } else {
+
+              if (segmentActive(currentSegments, '20') || !readOnly) {
                 canvas.touchCanvas.drawPath(path20, paint, onTapDown: (tapDetail) {
                   setSegmentState('20', !segmentActive(currentSegments, '20'));
                 });
@@ -316,14 +269,8 @@ class _ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
               path2l.lineTo(
                   size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 25, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 65);
               path2l.close();
-              if (size.height < OUTPUT_SIZE_LEVEL) {
-                if (segmentActive(currentSegments, '2l')) {
-                  canvas.touchCanvas.drawPath(path2l, paint, onTapDown: (tapDetail) {
-                    setSegmentState('2l', !segmentActive(currentSegments, '2l'));
-                  });
-                } else {
-                }
-              } else {
+
+              if (segmentActive(currentSegments, '2l') || !readOnly) {
                 canvas.touchCanvas.drawPath(path2l, paint, onTapDown: (tapDetail) {
                   setSegmentState('2l', !segmentActive(currentSegments, '2l'));
                 });
@@ -340,14 +287,8 @@ class _ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
               path2r.lineTo(
                   size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 50, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 40);
               path2r.close();
-              if (size.height < OUTPUT_SIZE_LEVEL) {
-                if (segmentActive(currentSegments, '2r')) {
-                  canvas.touchCanvas.drawPath(path2r, paint, onTapDown: (tapDetail) {
-                    setSegmentState('2r', !segmentActive(currentSegments, '2r'));
-                  });
-                } else {
-                }
-              } else {
+
+              if (segmentActive(currentSegments, '2r') || !readOnly) {
                 canvas.touchCanvas.drawPath(path2r, paint, onTapDown: (tapDetail) {
                   setSegmentState('2r', !segmentActive(currentSegments, '2r'));
                 });
@@ -366,14 +307,8 @@ class _ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
               path30.lineTo(
                   size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 90, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 30);
               path30.close();
-              if (size.height < OUTPUT_SIZE_LEVEL) {
-                if (segmentActive(currentSegments, '30')) {
-                  canvas.touchCanvas.drawPath(path30, paint, onTapDown: (tapDetail) {
-                    setSegmentState('30', !segmentActive(currentSegments, '30'));
-                  });
-                } else {
-                }
-              } else {
+
+              if (segmentActive(currentSegments, '30') || !readOnly) {
                 canvas.touchCanvas.drawPath(path30, paint, onTapDown: (tapDetail) {
                   setSegmentState('30', !segmentActive(currentSegments, '30'));
                 });
@@ -390,14 +325,8 @@ class _ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
               path3l.lineTo(
                   size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 70, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 30);
               path3l.close();
-              if (size.height < OUTPUT_SIZE_LEVEL) {
-                if (segmentActive(currentSegments, '3l')) {
-                  canvas.touchCanvas.drawPath(path3l, paint, onTapDown: (tapDetail) {
-                    setSegmentState('3l', !segmentActive(currentSegments, '3l'));
-                  });
-                } else {
-                }
-              } else {
+
+              if (segmentActive(currentSegments, '3l') || !readOnly) {
                 canvas.touchCanvas.drawPath(path3l, paint, onTapDown: (tapDetail) {
                   setSegmentState('3l', !segmentActive(currentSegments, '3l'));
                 });
@@ -414,14 +343,8 @@ class _ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
               path3r.lineTo(
                   size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 100, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 30);
               path3r.close();
-              if (size.height < OUTPUT_SIZE_LEVEL) {
-                if (segmentActive(currentSegments, '3r')) {
-                  canvas.touchCanvas.drawPath(path3r, paint, onTapDown: (tapDetail) {
-                    setSegmentState('3r', !segmentActive(currentSegments, '3r'));
-                  });
-                } else {
-                }
-              } else {
+
+              if (segmentActive(currentSegments, '3r') || !readOnly) {
                 canvas.touchCanvas.drawPath(path3r, paint, onTapDown: (tapDetail) {
                   setSegmentState('3r', !segmentActive(currentSegments, '3r'));
                 });
@@ -438,14 +361,8 @@ class _ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
               path3a.lineTo(
                   size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 70, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 10);
               path3a.close();
-              if (size.height < OUTPUT_SIZE_LEVEL) {
-                if (segmentActive(currentSegments, '3a')) {
-                  canvas.touchCanvas.drawPath(path3a, paint, onTapDown: (tapDetail) {
-                    setSegmentState('3a', !segmentActive(currentSegments, '3a'));
-                  });
-                } else {
-                }
-              } else {
+
+              if (segmentActive(currentSegments, '3a') || !readOnly) {
                 canvas.touchCanvas.drawPath(path3a, paint, onTapDown: (tapDetail) {
                   setSegmentState('3a', !segmentActive(currentSegments, '3a'));
                 });
@@ -462,14 +379,8 @@ class _ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
               path3b.lineTo(
                   size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 120, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 10);
               path3b.close();
-              if (size.height < OUTPUT_SIZE_LEVEL) {
-                if (segmentActive(currentSegments, '3b')) {
-                  canvas.touchCanvas.drawPath(path3b, paint, onTapDown: (tapDetail) {
-                    setSegmentState('3b', !segmentActive(currentSegments, '3b'));
-                  });
-                } else {
-                }
-              } else {
+
+              if (segmentActive(currentSegments, '3b') || !readOnly) {
                 canvas.touchCanvas.drawPath(path3b, paint, onTapDown: (tapDetail) {
                   setSegmentState('3b', !segmentActive(currentSegments, '3b'));
                 });
@@ -486,14 +397,8 @@ class _ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
               path3u.lineTo(
                   size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 80, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 30);
               path3u.close();
-              if (size.height < OUTPUT_SIZE_LEVEL) {
-                if (segmentActive(currentSegments, '3u')) {
-                  canvas.touchCanvas.drawPath(path3u, paint, onTapDown: (tapDetail) {
-                    setSegmentState('3u', !segmentActive(currentSegments, '3u'));
-                  });
-                } else {
-                }
-              } else {
+
+              if (segmentActive(currentSegments, '3u') || !readOnly) {
                 canvas.touchCanvas.drawPath(path3u, paint, onTapDown: (tapDetail) {
                   setSegmentState('3u', !segmentActive(currentSegments, '3u'));
                 });
@@ -510,14 +415,8 @@ class _ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
               path3o.lineTo(
                   size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 110, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 30);
               path3o.close();
-              if (size.height < OUTPUT_SIZE_LEVEL) {
-                if (segmentActive(currentSegments, '3o')) {
-                  canvas.touchCanvas.drawPath(path3o, paint, onTapDown: (tapDetail) {
-                    setSegmentState('3o', !segmentActive(currentSegments, '3o'));
-                  });
-                } else {
-                }
-              } else {
+
+              if (segmentActive(currentSegments, '3o') || !readOnly) {
                 canvas.touchCanvas.drawPath(path3o, paint, onTapDown: (tapDetail) {
                   setSegmentState('3o', !segmentActive(currentSegments, '3o'));
                 });
@@ -536,14 +435,8 @@ class _ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
               path40.lineTo(
                   size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 110, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 90);
               path40.close();
-              if (size.height < OUTPUT_SIZE_LEVEL) {
-                if (segmentActive(currentSegments, '40')) {
-                  canvas.touchCanvas.drawPath(path40, paint, onTapDown: (tapDetail) {
-                    setSegmentState('40', !segmentActive(currentSegments, '40'));
-                  });
-                } else {
-                }
-              } else {
+
+              if (segmentActive(currentSegments, '40') || !readOnly) {
                 canvas.touchCanvas.drawPath(path40, paint, onTapDown: (tapDetail) {
                   setSegmentState('40', !segmentActive(currentSegments, '40'));
                 });
@@ -560,14 +453,8 @@ class _ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
               path4l.lineTo(
                   size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 140, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 40);
               path4l.close();
-              if (size.height < OUTPUT_SIZE_LEVEL) {
-                if (segmentActive(currentSegments, '4l')) {
-                  canvas.touchCanvas.drawPath(path4l, paint, onTapDown: (tapDetail) {
-                    setSegmentState('4l', !segmentActive(currentSegments, '4l'));
-                  });
-                } else {
-                }
-              } else {
+
+              if (segmentActive(currentSegments, '4l') || !readOnly) {
                 canvas.touchCanvas.drawPath(path4l, paint, onTapDown: (tapDetail) {
                   setSegmentState('4l', !segmentActive(currentSegments, '4l'));
                 });
@@ -584,14 +471,8 @@ class _ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
               path4r.lineTo(
                   size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 150, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 50);
               path4r.close();
-              if (size.height < OUTPUT_SIZE_LEVEL) {
-                if (segmentActive(currentSegments, '4r')) {
-                  canvas.touchCanvas.drawPath(path4r, paint, onTapDown: (tapDetail) {
-                    setSegmentState('4r', !segmentActive(currentSegments, '4r'));
-                  });
-                } else {
-                }
-              } else {
+
+              if (segmentActive(currentSegments, '4r') || !readOnly) {
                 canvas.touchCanvas.drawPath(path4r, paint, onTapDown: (tapDetail) {
                   setSegmentState('4r', !segmentActive(currentSegments, '4r'));
                 });
@@ -610,14 +491,8 @@ class _ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
               path50.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 160,
                   size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 100);
               path50.close();
-              if (size.height < OUTPUT_SIZE_LEVEL) {
-                if (segmentActive(currentSegments, '50')) {
-                  canvas.touchCanvas.drawPath(path50, paint, onTapDown: (tapDetail) {
-                    setSegmentState('50', !segmentActive(currentSegments, '50'));
-                  });
-                } else {
-                }
-              } else {
+
+              if (segmentActive(currentSegments, '50') || !readOnly) {
                 canvas.touchCanvas.drawPath(path50, paint, onTapDown: (tapDetail) {
                   setSegmentState('50', !segmentActive(currentSegments, '50'));
                 });
@@ -634,14 +509,8 @@ class _ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
               path5l.lineTo(
                   size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 170, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 70);
               path5l.close();
-              if (size.height < OUTPUT_SIZE_LEVEL) {
-                if (segmentActive(currentSegments, '5l')) {
-                  canvas.touchCanvas.drawPath(path5l, paint, onTapDown: (tapDetail) {
-                    setSegmentState('5l', !segmentActive(currentSegments, '5l'));
-                  });
-                } else {
-                }
-              } else {
+
+              if (segmentActive(currentSegments, '5l') || !readOnly) {
                 canvas.touchCanvas.drawPath(path5l, paint, onTapDown: (tapDetail) {
                   setSegmentState('5l', !segmentActive(currentSegments, '5l'));
                 });
@@ -658,14 +527,8 @@ class _ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
               path5r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 160,
                   size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 100);
               path5r.close();
-              if (size.height < OUTPUT_SIZE_LEVEL) {
-                if (segmentActive(currentSegments, '5r')) {
-                  canvas.touchCanvas.drawPath(path5r, paint, onTapDown: (tapDetail) {
-                    setSegmentState('5r', !segmentActive(currentSegments, '5r'));
-                  });
-                } else {
-                }
-              } else {
+
+              if (segmentActive(currentSegments, '5r') || !readOnly) {
                 canvas.touchCanvas.drawPath(path5r, paint, onTapDown: (tapDetail) {
                   setSegmentState('5r', !segmentActive(currentSegments, '5r'));
                 });
@@ -682,14 +545,8 @@ class _ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
               path5o.lineTo(
                   size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 140, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 90);
               path5o.close();
-              if (size.height < OUTPUT_SIZE_LEVEL) {
-                if (segmentActive(currentSegments, '5o')) {
-                  canvas.touchCanvas.drawPath(path5o, paint, onTapDown: (tapDetail) {
-                    setSegmentState('5o', !segmentActive(currentSegments, '5o'));
-                  });
-                } else {
-                }
-              } else {
+
+              if (segmentActive(currentSegments, '5o') || !readOnly) {
                 canvas.touchCanvas.drawPath(path5o, paint, onTapDown: (tapDetail) {
                   setSegmentState('5o', !segmentActive(currentSegments, '5o'));
                 });
@@ -706,14 +563,8 @@ class _ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
               path5u.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 140,
                   size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 100);
               path5u.close();
-              if (size.height < OUTPUT_SIZE_LEVEL) {
-                if (segmentActive(currentSegments, '5u')) {
-                  canvas.touchCanvas.drawPath(path5u, paint, onTapDown: (tapDetail) {
-                    setSegmentState('5u', !segmentActive(currentSegments, '5u'));
-                  });
-                } else {
-                }
-              } else {
+
+              if (segmentActive(currentSegments, '5u') || !readOnly) {
                 canvas.touchCanvas.drawPath(path5u, paint, onTapDown: (tapDetail) {
                   setSegmentState('5u', !segmentActive(currentSegments, '5u'));
                 });
@@ -730,14 +581,8 @@ class _ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
               path5a.lineTo(
                   size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 170, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 95);
               path5a.close();
-              if (size.height < OUTPUT_SIZE_LEVEL) {
-                if (segmentActive(currentSegments, '5a')) {
-                  canvas.touchCanvas.drawPath(path5a, paint, onTapDown: (tapDetail) {
-                    setSegmentState('5a', !segmentActive(currentSegments, '5a'));
-                  });
-                } else {
-                }
-              } else {
+
+              if (segmentActive(currentSegments, '5a') || !readOnly) {
                 canvas.touchCanvas.drawPath(path5a, paint, onTapDown: (tapDetail) {
                   setSegmentState('5a', !segmentActive(currentSegments, '5a'));
                 });
@@ -754,14 +599,8 @@ class _ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
               path5b.lineTo(
                   size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 170, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 95);
               path5b.close();
-              if (size.height < OUTPUT_SIZE_LEVEL) {
-                if (segmentActive(currentSegments, '5b')) {
-                  canvas.touchCanvas.drawPath(path5b, paint, onTapDown: (tapDetail) {
-                    setSegmentState('5b', !segmentActive(currentSegments, '5b'));
-                  });
-                } else {
-                }
-              } else {
+
+              if (segmentActive(currentSegments, '5b') || !readOnly) {
                 canvas.touchCanvas.drawPath(path5b, paint, onTapDown: (tapDetail) {
                   setSegmentState('5b', !segmentActive(currentSegments, '5b'));
                 });
@@ -780,14 +619,8 @@ class _ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
               path60.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 140,
                   size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 150);
               path60.close();
-              if (size.height < OUTPUT_SIZE_LEVEL) {
-                if (segmentActive(currentSegments, '60')) {
-                  canvas.touchCanvas.drawPath(path60, paint, onTapDown: (tapDetail) {
-                    setSegmentState('60', !segmentActive(currentSegments, '60'));
-                  });
-                } else {
-                }
-              } else {
+
+              if (segmentActive(currentSegments, '60') || !readOnly) {
                 canvas.touchCanvas.drawPath(path60, paint, onTapDown: (tapDetail) {
                   setSegmentState('60', !segmentActive(currentSegments, '60'));
                 });
@@ -804,14 +637,8 @@ class _ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
               path6l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 150,
                   size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 140);
               path6l.close();
-              if (size.height < OUTPUT_SIZE_LEVEL) {
-                if (segmentActive(currentSegments, '6l')) {
-                  canvas.touchCanvas.drawPath(path6l, paint, onTapDown: (tapDetail) {
-                    setSegmentState('6l', !segmentActive(currentSegments, '6l'));
-                  });
-                } else {
-                }
-              } else {
+
+              if (segmentActive(currentSegments, '6l') || !readOnly) {
                 canvas.touchCanvas.drawPath(path6l, paint, onTapDown: (tapDetail) {
                   setSegmentState('6l', !segmentActive(currentSegments, '6l'));
                 });
@@ -828,14 +655,8 @@ class _ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
               path6r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 140,
                   size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 150);
               path6r.close();
-              if (size.height < OUTPUT_SIZE_LEVEL) {
-                if (segmentActive(currentSegments, '6r')) {
-                  canvas.touchCanvas.drawPath(path6r, paint, onTapDown: (tapDetail) {
-                    setSegmentState('6r', !segmentActive(currentSegments, '6r'));
-                  });
-                } else {
-                }
-              } else {
+
+              if (segmentActive(currentSegments, '6r') || !readOnly) {
                 canvas.touchCanvas.drawPath(path6r, paint, onTapDown: (tapDetail) {
                   setSegmentState('6r', !segmentActive(currentSegments, '6r'));
                 });
@@ -854,14 +675,8 @@ class _ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
               path70.lineTo(
                   size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 90, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 160);
               path70.close();
-              if (size.height < OUTPUT_SIZE_LEVEL) {
-                if (segmentActive(currentSegments, '70')) {
-                  canvas.touchCanvas.drawPath(path70, paint, onTapDown: (tapDetail) {
-                    setSegmentState('70', !segmentActive(currentSegments, '70'));
-                  });
-                } else {
-                }
-              } else {
+
+              if (segmentActive(currentSegments, '70') || !readOnly) {
                 canvas.touchCanvas.drawPath(path70, paint, onTapDown: (tapDetail) {
                   setSegmentState('70', !segmentActive(currentSegments, '70'));
                 });
@@ -878,14 +693,8 @@ class _ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
               path7l.lineTo(
                   size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 95, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 170);
               path7l.close();
-              if (size.height < OUTPUT_SIZE_LEVEL) {
-                if (segmentActive(currentSegments, '7l')) {
-                  canvas.touchCanvas.drawPath(path7l, paint, onTapDown: (tapDetail) {
-                    setSegmentState('7l', !segmentActive(currentSegments, '7l'));
-                  });
-                } else {
-                }
-              } else {
+
+              if (segmentActive(currentSegments, '7l') || !readOnly) {
                 canvas.touchCanvas.drawPath(path7l, paint, onTapDown: (tapDetail) {
                   setSegmentState('7l', !segmentActive(currentSegments, '7l'));
                 });
@@ -902,14 +711,8 @@ class _ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
               path7r.lineTo(
                   size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 90, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 160);
               path7r.close();
-              if (size.height < OUTPUT_SIZE_LEVEL) {
-                if (segmentActive(currentSegments, '7r')) {
-                  canvas.touchCanvas.drawPath(path7r, paint, onTapDown: (tapDetail) {
-                    setSegmentState('7r', !segmentActive(currentSegments, '7r'));
-                  });
-                } else {
-                }
-              } else {
+
+              if (segmentActive(currentSegments, '7r') || !readOnly) {
                 canvas.touchCanvas.drawPath(path7r, paint, onTapDown: (tapDetail) {
                   setSegmentState('7r', !segmentActive(currentSegments, '7r'));
                 });
@@ -926,14 +729,8 @@ class _ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
               path7a.lineTo(
                   size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 70, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 180);
               path7a.close();
-              if (size.height < OUTPUT_SIZE_LEVEL) {
-                if (segmentActive(currentSegments, '7a')) {
-                  canvas.touchCanvas.drawPath(path7a, paint, onTapDown: (tapDetail) {
-                    setSegmentState('7a', !segmentActive(currentSegments, '7a'));
-                  });
-                } else {
-                }
-              } else {
+
+              if (segmentActive(currentSegments, '7a') || !readOnly) {
                 canvas.touchCanvas.drawPath(path7a, paint, onTapDown: (tapDetail) {
                   setSegmentState('7a', !segmentActive(currentSegments, '7a'));
                 });
@@ -950,14 +747,8 @@ class _ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
               path7b.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 120,
                   size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 180);
               path7b.close();
-              if (size.height < OUTPUT_SIZE_LEVEL) {
-                if (segmentActive(currentSegments, '7b')) {
-                  canvas.touchCanvas.drawPath(path7b, paint, onTapDown: (tapDetail) {
-                    setSegmentState('7b', !segmentActive(currentSegments, '7b'));
-                  });
-                } else {
-                }
-              } else {
+
+              if (segmentActive(currentSegments, '7b') || !readOnly) {
                 canvas.touchCanvas.drawPath(path7b, paint, onTapDown: (tapDetail) {
                   setSegmentState('7b', !segmentActive(currentSegments, '7b'));
                 });
@@ -974,14 +765,8 @@ class _ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
               path7u.lineTo(
                   size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 80, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 160);
               path7u.close();
-              if (size.height < OUTPUT_SIZE_LEVEL) {
-                if (segmentActive(currentSegments, '7u')) {
-                  canvas.touchCanvas.drawPath(path7u, paint, onTapDown: (tapDetail) {
-                    setSegmentState('7u', !segmentActive(currentSegments, '7u'));
-                  });
-                } else {
-                }
-              } else {
+
+              if (segmentActive(currentSegments, '7u') || !readOnly) {
                 canvas.touchCanvas.drawPath(path7u, paint, onTapDown: (tapDetail) {
                   setSegmentState('7u', !segmentActive(currentSegments, '7u'));
                 });
@@ -998,14 +783,8 @@ class _ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
               path7o.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 110,
                   size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 160);
               path7o.close();
-              if (size.height < OUTPUT_SIZE_LEVEL) {
-                if (segmentActive(currentSegments, '7o')) {
-                  canvas.touchCanvas.drawPath(path7o, paint, onTapDown: (tapDetail) {
-                    setSegmentState('7o', !segmentActive(currentSegments, '7o'));
-                  });
-                } else {
-                }
-              } else {
+
+              if (segmentActive(currentSegments, '7o') || !readOnly) {
                 canvas.touchCanvas.drawPath(path7o, paint, onTapDown: (tapDetail) {
                   setSegmentState('7o', !segmentActive(currentSegments, '7o'));
                 });
@@ -1024,14 +803,8 @@ class _ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
               path80.lineTo(
                   size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 40, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 140);
               path80.close();
-              if (size.height < OUTPUT_SIZE_LEVEL) {
-                if (segmentActive(currentSegments, '80')) {
-                  canvas.touchCanvas.drawPath(path80, paint, onTapDown: (tapDetail) {
-                    setSegmentState('80', !segmentActive(currentSegments, '80'));
-                  });
-                } else {
-                }
-              } else {
+
+              if (segmentActive(currentSegments, '80') || !readOnly) {
                 canvas.touchCanvas.drawPath(path80, paint, onTapDown: (tapDetail) {
                   setSegmentState('80', !segmentActive(currentSegments, '80'));
                 });
@@ -1048,14 +821,8 @@ class _ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
               path8l.lineTo(
                   size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 50, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 150);
               path8l.close();
-              if (size.height < OUTPUT_SIZE_LEVEL) {
-                if (segmentActive(currentSegments, '8l')) {
-                  canvas.touchCanvas.drawPath(path8l, paint, onTapDown: (tapDetail) {
-                    setSegmentState('8l', !segmentActive(currentSegments, '8l'));
-                  });
-                } else {
-                }
-              } else {
+
+              if (segmentActive(currentSegments, '8l') || !readOnly) {
                 canvas.touchCanvas.drawPath(path8l, paint, onTapDown: (tapDetail) {
                   setSegmentState('8l', !segmentActive(currentSegments, '8l'));
                 });
@@ -1072,14 +839,8 @@ class _ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
               path8r.lineTo(
                   size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 40, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 140);
               path8r.close();
-              if (size.height < OUTPUT_SIZE_LEVEL) {
-                if (segmentActive(currentSegments, '8r')) {
-                  canvas.touchCanvas.drawPath(path8r, paint, onTapDown: (tapDetail) {
-                    setSegmentState('8r', !segmentActive(currentSegments, '8r'));
-                  });
-                } else {
-                }
-              } else {
+
+              if (segmentActive(currentSegments, '8r') || !readOnly) {
                 canvas.touchCanvas.drawPath(path8r, paint, onTapDown: (tapDetail) {
                   setSegmentState('8r', !segmentActive(currentSegments, '8r'));
                 });

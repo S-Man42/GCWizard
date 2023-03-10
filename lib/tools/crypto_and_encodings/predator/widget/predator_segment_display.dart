@@ -49,6 +49,7 @@ class _PredatorSegmentDisplay extends NSegmentDisplay {
               pathA.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 0,
                   size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 113);
               pathA.close();
+
               if (segmentActive(currentSegments, 'a') || (size.height > OUTPUT_SIZE_LEVEL)) {
                 canvas.touchCanvas.drawPath(pathA, paint, onTapDown: (tapDetail) {
                   setSegmentState('a', !segmentActive(currentSegments, 'a'));
@@ -66,6 +67,7 @@ class _PredatorSegmentDisplay extends NSegmentDisplay {
               pathB.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 70,
                   size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 80);
               pathB.close();
+
               if (segmentActive(currentSegments, 'b') || (size.height > OUTPUT_SIZE_LEVEL)) {
                 canvas.touchCanvas.drawPath(pathB, paint, onTapDown: (tapDetail) {
                   setSegmentState('b', !segmentActive(currentSegments, 'b'));
@@ -84,6 +86,7 @@ class _PredatorSegmentDisplay extends NSegmentDisplay {
               pathC.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 100,
                   size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 90);
               pathC.close();
+
               if (segmentActive(currentSegments, 'c') || (size.height > OUTPUT_SIZE_LEVEL)) {
                 canvas.touchCanvas.drawPath(pathC, paint, onTapDown: (tapDetail) {
                   setSegmentState('c', !segmentActive(currentSegments, 'c'));
@@ -101,6 +104,7 @@ class _PredatorSegmentDisplay extends NSegmentDisplay {
               pathD.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 100,
                   size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 113);
               pathD.close();
+
               if (segmentActive(currentSegments, 'd') || (size.height > OUTPUT_SIZE_LEVEL)) {
                 canvas.touchCanvas.drawPath(pathD, paint, onTapDown: (tapDetail) {
                   setSegmentState('d', !segmentActive(currentSegments, 'd'));
@@ -118,6 +122,7 @@ class _PredatorSegmentDisplay extends NSegmentDisplay {
               pathE.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 10,
                   size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 160);
               pathE.close();
+
               if (segmentActive(currentSegments, 'e') || (size.height > OUTPUT_SIZE_LEVEL)) {
                 canvas.touchCanvas.drawPath(pathE, paint, onTapDown: (tapDetail) {
                   setSegmentState('e', !segmentActive(currentSegments, 'e'));
@@ -135,6 +140,7 @@ class _PredatorSegmentDisplay extends NSegmentDisplay {
               pathF.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 130,
                   size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 170);
               pathF.close();
+
               if (segmentActive(currentSegments, 'f') || (size.height > OUTPUT_SIZE_LEVEL)) {
                 canvas.touchCanvas.drawPath(pathF, paint, onTapDown: (tapDetail) {
                   setSegmentState('f', !segmentActive(currentSegments, 'f'));
@@ -152,6 +158,7 @@ class _PredatorSegmentDisplay extends NSegmentDisplay {
               pathG.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 50,
                   size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 230);
               pathG.close();
+
               if (segmentActive(currentSegments, 'g') || (size.height > OUTPUT_SIZE_LEVEL)) {
                 canvas.touchCanvas.drawPath(pathG, paint, onTapDown: (tapDetail) {
                   setSegmentState('g', !segmentActive(currentSegments, 'g'));
@@ -169,6 +176,7 @@ class _PredatorSegmentDisplay extends NSegmentDisplay {
               pathH.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 100,
                   size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 230);
               pathH.close();
+
               if (segmentActive(currentSegments, 'h') || (size.height > OUTPUT_SIZE_LEVEL)) {
                 canvas.touchCanvas.drawPath(pathH, paint, onTapDown: (tapDetail) {
                   setSegmentState('h', !segmentActive(currentSegments, 'h'));
@@ -186,6 +194,7 @@ class _PredatorSegmentDisplay extends NSegmentDisplay {
               pathI.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 50,
                   size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 310);
               pathI.close();
+
               if (segmentActive(currentSegments, 'i') || (size.height > OUTPUT_SIZE_LEVEL)) {
                 canvas.touchCanvas.drawPath(pathI, paint, onTapDown: (tapDetail) {
                   setSegmentState('i', !segmentActive(currentSegments, 'i'));
@@ -203,6 +212,7 @@ class _PredatorSegmentDisplay extends NSegmentDisplay {
               pathJ.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 70,
                   size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 310);
               pathJ.close();
+
               if (segmentActive(currentSegments, 'j') || (size.height > OUTPUT_SIZE_LEVEL)) {
                 canvas.touchCanvas.drawPath(pathJ, paint, onTapDown: (tapDetail) {
                   setSegmentState('j', !segmentActive(currentSegments, 'j'));
@@ -220,7 +230,8 @@ class _PredatorSegmentDisplay extends NSegmentDisplay {
               pathK.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 90,
                   size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 310);
               pathK.close();
-              if (segmentActive(currentSegments, 'k') || (size.height > OUTPUT_SIZE_LEVEL)) {
+
+              if (segmentActive(currentSegments, 'k') || !readOnly) {
                 canvas.touchCanvas.drawPath(pathK, paint, onTapDown: (tapDetail) {
                   setSegmentState('k', !segmentActive(currentSegments, 'k'));
                 });
