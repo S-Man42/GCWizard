@@ -17,10 +17,10 @@ class GCWUnitDropDown<T extends Unit> extends StatefulWidget {
       : super(key: key);
 
   @override
-  GCWUnitDropDownState createState() => GCWUnitDropDownState<T>();
+  GCWUnitDropDownState<T> createState() => GCWUnitDropDownState<T>();
 }
 
-class GCWUnitDropDownState<T extends Unit> extends State<GCWUnitDropDown> {
+class GCWUnitDropDownState<T extends Unit> extends State<GCWUnitDropDown<T>> {
   late T _currentUnit;
 
   @override
@@ -28,7 +28,7 @@ class GCWUnitDropDownState<T extends Unit> extends State<GCWUnitDropDown> {
     List<T> _currentUnitList = (widget.unitList ?? widget.unitCategory?.units ?? <T>[]) as List<T>;
 
     return GCWDropDown<T>(
-        value: widget.value as T,
+        value: widget.value,
         onChanged: (T newValue) {
           setState(() {
             _currentUnit = newValue;
