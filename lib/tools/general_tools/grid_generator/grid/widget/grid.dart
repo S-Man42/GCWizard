@@ -389,7 +389,7 @@ class GridState extends State<Grid> {
         GCWDropDown<_GridBoxEnumerationStartDirection>(
           title: i18n(context, 'grid_boxes_startdirection_title'),
           value: _currentConfigBoxEnumerationStartDirection,
-          items: _currentConfigBoxEnumerationStartDirections.map<GCWDropDownMenuItem>((direction) {
+          items: _currentConfigBoxEnumerationStartDirections.map<GCWDropDownMenuItem<_GridBoxEnumerationStartDirection>>((direction) {
             String name;
             switch (direction) {
               case _GridBoxEnumerationStartDirection.RIGHT:

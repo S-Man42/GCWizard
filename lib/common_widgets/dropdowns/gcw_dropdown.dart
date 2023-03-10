@@ -3,9 +3,9 @@ import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 
-class GCWDropDown<T extends Object?> extends StatefulWidget {
-  final void Function(T) onChanged;
-  final List<GCWDropDownMenuItem> items;
+class GCWDropDown<T extends Object> extends StatefulWidget {
+  final void Function<T>(T) onChanged;
+  final List<GCWDropDownMenuItem<T>> items;
   final T value;
   final DropdownButtonBuilder? selectedItemBuilder;
   final String? title;
@@ -25,7 +25,7 @@ class GCWDropDown<T extends Object?> extends StatefulWidget {
   _GCWDropDownState createState() => _GCWDropDownState<T>();
 }
 
-class _GCWDropDownState<T extends Object?> extends State<GCWDropDown> {
+class _GCWDropDownState<T extends Object> extends State<GCWDropDown> {
   @override
   Widget build(BuildContext context) {
     ThemeColors colors = themeColors();
@@ -62,12 +62,16 @@ class _GCWDropDownState<T extends Object?> extends State<GCWDropDown> {
                     size: 30,
                     color: widget.alternativeColor ? colors.dialogText() : colors.secondary(),
                   ),
-                  value: widget.value ?? widget.items[0].value,
+                  value: widget.value,// ?? widget.items[0].value,
                   items: widget.items.map((item) {
                     return DropdownMenuItem(
                         value: item.value, child: item.child is Widget ? item.child as Widget : _buildMenuItemChild(item));
                   }).toList(),
-                  onChanged: widget.onChanged,
+                  onChanged: (value) {
+                    if (value != null) {
+                      widget.onChanged(value as T);
+                    }
+                  },
                   style: textStyle,
                   selectedItemBuilder: widget.selectedItemBuilder ??
                       (context) {
@@ -122,8 +126,8 @@ Widget _buildMenuItemChild(GCWDropDownMenuItem item) {
   }
 }
 
-class GCWDropDownMenuItem {
-  final Object value;
+class GCWDropDownMenuItem<T extends Object?> {
+  final T value;
   final Object child;
   final String? subtitle;
   final TextStyle? style;

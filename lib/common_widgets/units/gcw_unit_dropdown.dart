@@ -21,7 +21,7 @@ class GCWUnitDropDown<T extends Unit> extends StatefulWidget {
 }
 
 class GCWUnitDropDownState<T extends Unit> extends State<GCWUnitDropDown> {
-  T? _currentUnit;
+  late T _currentUnit;
 
   @override
   Widget build(BuildContext context) {
@@ -32,11 +32,11 @@ class GCWUnitDropDownState<T extends Unit> extends State<GCWUnitDropDown> {
         onChanged: (T newValue) {
           setState(() {
             _currentUnit = newValue;
-            if (_currentUnit is Unit) widget.onChanged(_currentUnit!);
+            widget.onChanged(_currentUnit);
           });
         },
         items: _currentUnitList.map((unit) {
-          return GCWDropDownMenuItem(
+          return GCWDropDownMenuItem<T>(
               value: unit,
               child: widget.onlyShowSymbols
                   ? unit.symbol

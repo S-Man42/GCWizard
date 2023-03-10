@@ -45,7 +45,9 @@ class AlcoholMassState extends State<AlcoholMass> {
           }).toList(),
           onChanged: (value) {
             setState(() {
-              _currentMode = value;
+
+                _currentMode = value;
+
             });
           },
         ),
@@ -104,7 +106,9 @@ class AlcoholMassState extends State<AlcoholMass> {
                 onlyShowSymbols: false,
                 onChanged: (value) {
                   setState(() {
-                    _currentOutputMass = value;
+
+                      _currentOutputMass = value;
+
                   });
                 },
               )
@@ -116,7 +120,9 @@ class AlcoholMassState extends State<AlcoholMass> {
                 onlyShowSymbols: false,
                 onChanged: (value) {
                   setState(() {
-                    _currentOutputVolume = value;
+
+                      _currentOutputVolume = value;
+
                   });
                 },
               )

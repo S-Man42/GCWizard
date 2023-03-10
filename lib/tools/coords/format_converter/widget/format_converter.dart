@@ -122,7 +122,7 @@ class _GCWCoordsFormatSelectorAll extends GCWCoordsFormatSelector {
       : super(key: key, onChanged: onChanged, format: format);
 
   @override
-  List<GCWDropDownMenuItem> getDropDownItems(BuildContext context) {
+  List<GCWDropDownMenuItem<CoordinateFormatKey>> getDropDownItems(BuildContext context) {
     var items = super.getDropDownItems(context);
     items.insert(
         0, GCWDropDownMenuItem(value: CoordinateFormatKey.ALL, child: i18n(context, 'coords_formatconverter_all_formats')));

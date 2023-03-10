@@ -7,18 +7,18 @@ class GCWAlphabetDropDown<T extends Object?> extends StatefulWidget {
   final void Function(T) onChanged;
   final void Function(String)? onCustomAlphabetChanged;
   final Map<Object, String> items;
-  final dynamic customModeKey;
-  final dynamic value;
+  final Object customModeKey;
+  final Object value;
   final TextEditingController? textFieldController;
   final String? textFieldHintText;
 
   const GCWAlphabetDropDown({
     Key? key,
-    this.value,
+    required this.value,
     required this.items,
     required this.onChanged,
     this.onCustomAlphabetChanged,
-    this.customModeKey,
+    required this.customModeKey,
     this.textFieldController,
     this.textFieldHintText,
   }) : super(key: key);
@@ -34,7 +34,7 @@ class _GCWAlphabetDropDownState extends State<GCWAlphabetDropDown> {
   Widget build(BuildContext context) {
 
     return Column(children: <Widget>[
-      GCWDropDown(
+      GCWDropDown<Object>(
         value: widget.value,
         onChanged: (value) {
           setState(() {
