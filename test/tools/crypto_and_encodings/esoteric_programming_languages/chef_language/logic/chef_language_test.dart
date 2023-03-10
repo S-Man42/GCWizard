@@ -173,7 +173,7 @@ Serves 1.
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = interpretChef(elem['language'] as String, (elem['recipe'] as String?)?.toLowerCase(), elem['input'] as String?);
-        var length = (elem['expectedOutput'] as List<String>).length;
+        var length = (elem['expectedOutput'] as List<dynamic>).length;
         for (int i = 0; i < length; i++) {
           expect(_actual[i], (elem['expectedOutput'] as List<String>)[i]);
         }
@@ -473,7 +473,7 @@ Serves 1.''';
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = interpretChef(elem['language'] as String, (elem['recipe'] as String?)?.toLowerCase(), elem['input'] as String?);
-        var length = (elem['expectedOutput'] as List<String>).length;
+        var length = (elem['expectedOutput'] as List<dynamic>).length;
         for (int i = 0; i < length; i++) {
           expect(_actual[i], (elem['expectedOutput'] as List<String>)[i]);
         }
@@ -758,7 +758,7 @@ Serves.''';
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = interpretChef(elem['language'] as String, (elem['recipe'] as String?)?.toLowerCase(), elem['input'] as String?);
-        var length = (elem['expectedOutput'] as List<String>).length;
+        var length = (elem['expectedOutput'] as List<dynamic>).length;
         for (int i = 0; i < length; i++) {
           expect(_actual[i], (elem['expectedOutput'] as List<String>)[i]);
         }
@@ -1361,9 +1361,9 @@ Portionen: 1.''';
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = interpretChef(elem['language'] as String, (elem['recipe'] as String?)?.toLowerCase(), elem['input'] as String?);
-        var length = (elem['expectedOutput'] as List<String>).length;
+        var length = (elem['expectedOutput'] as List<dynamic>).length;
         for (int i = 0; i < length; i++) {
-          expect(_actual[i], (elem['expectedOutput'] as List<String>)[i]);
+          expect(_actual[i], (elem['expectedOutput'] as List<dynamic>)[i]);
         }
       });
     }
@@ -2008,7 +2008,7 @@ Refrigerate for 1 hour.''';
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = interpretChef(elem['language'] as String, (elem['recipe'] as String?)?.toLowerCase(), elem['input'] as String?);
-        var length = (elem['expectedOutput'] as Map<String, Object?>).length;
+        var length = (elem['expectedOutput'] as List<dynamic>).length;
         for (int i = 0; i < length; i++) {
           expect(_actual[i], (elem['expectedOutput'] as List<String>)[i]);
         }
