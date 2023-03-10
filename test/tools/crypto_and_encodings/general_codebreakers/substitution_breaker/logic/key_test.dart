@@ -120,7 +120,7 @@ void main() {
 //       test('input: ${elem['input']}', () async {
 //
 //         var quad = await getQuadgram(elem['alphabet']);
-//         var _actual = break_cipher(elem['input'] as String?, quad);
+//         var _actual = break_cipher(elem['input'] as String, quad);
 //         expect(_actual.plaintext, elem['expectedOutput']);
 //         expect(_actual.errorCode, elem['errorCode']);
 //       });
@@ -145,7 +145,7 @@ void main() {
 //
 //     _inputsToExpected.forEach((elem) async {
 //       test('input: ${elem['input']}', () async {
-//         var _actual = calc_fitness(elem['input'] as String?, alphabet: elem['alphabet'], quadgrams: await en.quadgrams()); // elem['quadgrams']
+//         var _actual = calc_fitness(elem['input'] as String, alphabet: elem['alphabet'], quadgrams: await en.quadgrams()); // elem['quadgrams']
 //         expect(_actual != null ? _actual.round() : _actual, elem['expectedOutput']);
 //       });
 //     });

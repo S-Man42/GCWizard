@@ -32,10 +32,9 @@ Future<BoolText?> breakHashAsync(GCWAsyncExecuterParameters? jobData) async {
 }
 
 BoolText? breakHash(
-    String? input, String? searchMask, Map<String, String>? substitutions, Function? hashFunction,
+    String input, String? searchMask, Map<String, String>? substitutions, Function? hashFunction,
     {SendPort? sendAsyncPort}) {
-  if (input == null ||
-      input.isEmpty ||
+  if (input.isEmpty ||
       searchMask == null ||
       searchMask.isEmpty ||
       substitutions == null ||

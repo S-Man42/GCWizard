@@ -203,8 +203,7 @@ String _subtractOneTimePad(String input, String keyOneTimePad) {
   return out;
 }
 
-String decryptTapir(String? input, String? keyOneTimePad) {
-  if (input == null) return '';
+String decryptTapir(String input, String? keyOneTimePad) {
 
   input = input.replaceAll(RegExp(r'\D'), '');
   if (input.isEmpty) return '';

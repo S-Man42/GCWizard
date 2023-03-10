@@ -127,7 +127,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
       return null;
     }
 
-    await _getAndValidateUri(_currentUrl?.trim()).then((uri) {
+    await _getAndValidateUri(_currentUrl!.trim()).then((uri) {
       if (uri == null) {
         showToast(i18n(context, 'common_loadfile_exception_url'));
         return null;
@@ -257,11 +257,10 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
     return false;
   }
 
-  Future<Uri?> _getAndValidateUri(String? url) async {
+  Future<Uri?> _getAndValidateUri(String url) async {
     const _HTTP = 'http://';
     const _HTTPS = 'https://';
 
-    if (url == null) return null;
     var prefixes = [_HTTP, _HTTPS];
     if (url.startsWith(_HTTP)) {
       url = url.replaceAll(_HTTP, '');

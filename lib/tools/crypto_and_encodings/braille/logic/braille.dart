@@ -1332,8 +1332,7 @@ Segments _encodeBrailleEUR(String input) {
   return result;
 }
 
-Segments encodeBraille(String? input, BrailleLanguage language) {
-  if (input == null) return Segments.Empty();
+Segments encodeBraille(String input, BrailleLanguage language) {
 
   switch (language) {
     case BrailleLanguage.SIMPLE:

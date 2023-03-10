@@ -86,12 +86,12 @@ List<int> createDeck() {
   return deck;
 }
 
-Tuple2<String, List<int>> createKeyStream(String input, String? key, List<int> deck, Map<String, int> alphabet) {
+Tuple2<String, List<int>> createKeyStream(String input, String key, List<int> deck, Map<String, int> alphabet) {
   var streamLetters = '';
   int issueCard;
 
   // use key -> init deck
-  if (key != null && key.isNotEmpty) {
+  if (key.isNotEmpty) {
     for (int i = 0; i < key.length; i++) {
       deck = _cycleDeck(deck);
       // Step 4 (position -> value from key letter)
@@ -124,7 +124,7 @@ String? _chr(int letter, Map<String, int> alphabet) {
   return letterString;
 }
 
-int _issueCard(String? key, int index, List<int> deck) {
+int _issueCard(String key, int index, List<int> deck) {
   int cardIndex = deck[0];
 
   if (cardIndex == _JOKER_B) cardIndex = _JOKER_A;

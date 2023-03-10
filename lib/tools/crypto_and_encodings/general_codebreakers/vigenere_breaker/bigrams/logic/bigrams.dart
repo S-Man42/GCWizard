@@ -30,8 +30,8 @@ Bigrams? getBigrams(VigenereBreakerAlphabet alphabet) {
   }
 }
 
-double? calc_fitnessBigrams(String? txt, Bigrams? bigrams) {
-  if (txt == null || txt.isEmpty) return null;
+double? calc_fitnessBigrams(String txt, Bigrams? bigrams) {
+  if (txt.isEmpty) return null;
 
   if (bigrams == null) return null;
 

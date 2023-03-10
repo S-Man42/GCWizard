@@ -207,9 +207,7 @@ final Map<String, List<String>> _CODEBOOK_KULIBIN = {
   '&': ['20', '60', '6l'],
 };
 
-Segments encodeChappe(String? input, ChappeCodebook language) {
-  if (input == null) return Segments.Empty();
-
+Segments encodeChappe(String input, ChappeCodebook language) {
   List<String> inputs = [];
   if (language == ChappeCodebook.CODEPOINTS) {
     inputs = input.split(' ');
@@ -300,8 +298,8 @@ List<String> _stringToSegment(String input) {
   }
 }
 
-SegmentsText decodeTextChappeTelegraph(String? inputs, ChappeCodebook language) {
-  if (inputs == null || inputs.isEmpty) return SegmentsText(displays: [], text: '');
+SegmentsText decodeTextChappeTelegraph(String inputs, ChappeCodebook language) {
+  if (inputs.isEmpty) return SegmentsText(displays: [], text: '');
 
   var displays = <List<String>>[];
   String text = '';

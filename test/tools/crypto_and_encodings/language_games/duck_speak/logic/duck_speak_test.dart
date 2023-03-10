@@ -15,7 +15,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeDuckSpeak(elem['input'] as String?);
+        var _actual = encodeDuckSpeak(elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     }

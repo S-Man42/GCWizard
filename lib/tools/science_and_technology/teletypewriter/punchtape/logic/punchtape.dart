@@ -229,9 +229,7 @@ String? segments2decenary(List<String> segments, bool order54321, Teletypewriter
   return convertBase(result, 2, 10);
 }
 
-Segments encodePunchtape(String? input, TeletypewriterCodebook language, bool order12345) {
-  if (input == null) return Segments.Empty();
-
+Segments encodePunchtape(String input, TeletypewriterCodebook language, bool order12345) {
   List<List<String>> result = [];
   List<String> code = [];
   code = encodeTeletypewriter(input, language).split(' ');
@@ -241,8 +239,8 @@ Segments encodePunchtape(String? input, TeletypewriterCodebook language, bool or
   return Segments(displays: result);
 }
 
-SegmentsText decodeTextPunchtape(String? inputs, TeletypewriterCodebook language, bool order12345) {
-  if (inputs == null || inputs.isEmpty) return SegmentsText(displays: [], text: '');
+SegmentsText decodeTextPunchtape(String inputs, TeletypewriterCodebook language, bool order12345) {
+  if (inputs.isEmpty) return SegmentsText(displays: [], text: '');
 
   var displays = <List<String>>[];
   List<String> text = [];

@@ -103,8 +103,8 @@ String _filterInput(String input, String filter) {
   return input.replaceAll(RegExp('[^$filter]'), '');
 }
 
-DrawableImageData? binary2Image(String? input) {
-  if (input == null || input.isEmpty) return null;
+DrawableImageData? binary2Image(String input) {
+  if (input.isEmpty) return null;
 
   var lines = input.split('\n');
 

@@ -77,8 +77,8 @@ Map<int, String> _encodeHoudiniLetters(String input) {
   return {0: output};
 }
 
-Map<int, String>? encodeHoudini(String? input, HoudiniMode mode) {
-  if (input == null || input.isEmpty) return null;
+Map<int, String>? encodeHoudini(String input, HoudiniMode mode) {
+  if (input.isEmpty) return null;
 
   if (mode == HoudiniMode.LETTERS) {
     return _encodeHoudiniLetters(input);

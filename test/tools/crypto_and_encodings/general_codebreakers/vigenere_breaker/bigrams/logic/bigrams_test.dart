@@ -10,7 +10,6 @@ void main() {
     var text13 = 'kurzerverschluesseltertext';
 
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'alphabet' : VigenereBreakerAlphabet.ENGLISH, 'keyLengthMin' : 3, 'keyLengthMax' : 30, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : '', 'expectedOutput' : null},
       {'input' : '', 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'alphabet' : VigenereBreakerAlphabet.ENGLISH, 'keyLengthMin' : 3, 'keyLengthMax' : 30, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : '', 'expectedOutput' : null},
       {'input' : '', 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'alphabet' : VigenereBreakerAlphabet.ENGLISH, 'keyLengthMin' : 3, 'keyLengthMax' : 2, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : '', 'expectedOutput' : null},
 
@@ -26,7 +25,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = calc_fitnessBigrams(elem['input'] as String?, getBigrams(elem['alphabet'] as VigenereBreakerAlphabet));
+        var _actual = calc_fitnessBigrams(elem['input'] as String, getBigrams(elem['alphabet'] as VigenereBreakerAlphabet));
         expect(_actual, elem['expectedOutput']);
       });
     }

@@ -9,7 +9,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_langua
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 
 class Brainfk extends StatefulWidget {
-  final String Function(String?, {String? input})? interpret;
+  final String Function(String, {String? input})? interpret;
   final String Function(String)? generate;
 
   const Brainfk({Key? key, this.interpret, this.generate}) : super(key: key);

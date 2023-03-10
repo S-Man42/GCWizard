@@ -54,8 +54,8 @@ class BrainfkDerivatives {
     return code.toUpperCase().replaceAll(RegExp('[^$allChars]'), '').replaceAll(RegExp(r'\s'), '');
   }
 
-  String interpretBrainfkDerivatives(String? code, {String? input}) {
-    if (code == null || code.isEmpty) return '';
+  String interpretBrainfkDerivatives(String code, {String? input}) {
+    if (code.isEmpty) return '';
 
     var brainfk = '';
     code = _sanitizeCode(code);
@@ -65,7 +65,7 @@ class BrainfkDerivatives {
       _sanitizedSubstitutions.putIfAbsent(entry.key.toUpperCase().replaceAll(RegExp(r'\s'), ''), () => entry.value);
     }
 
-    while (code!.isNotEmpty) {
+    while (code.isNotEmpty) {
       var chunk = '';
       var i = 0;
       while (_sanitizedSubstitutions[chunk] == null && i < code.length) {
@@ -83,8 +83,8 @@ class BrainfkDerivatives {
     return interpretBrainfk(brainfk, input: input);
   }
 
-  String generateBrainfkDerivative(String? text) {
-    if (text == null || text.isEmpty) return '';
+  String generateBrainfkDerivative(String text) {
+    if (text.isEmpty) return '';
 
     var brainfk = generateBrainfk(text);
     if (commandDelimiter != null && commandDelimiter!.isNotEmpty) {

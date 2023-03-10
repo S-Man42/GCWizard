@@ -51,7 +51,7 @@ class VariableStringExpanderValue {
      - Decision for 2. Best Cost/Price-Balance
  */
 class VariableStringExpander {
-  final String? _input;
+  final String _input;
   final Map<String, String>? _substitutions;
   String? Function(String)? onAfterExpandedText;
   SendPort? sendAsyncPort;
@@ -201,7 +201,7 @@ class VariableStringExpander {
 
   // do the substitution of the variables set with their specific values given by their counted indexes
   void _substitute() {
-    _result = _input!;
+    _result = _input;
     for (_variableGroupIndex = 0; _variableGroupIndex < _countVariableGroups; _variableGroupIndex++) {
       _variableGroup = _variableGroups[_variableGroupIndex];
 
@@ -217,11 +217,11 @@ class VariableStringExpander {
   }
 
   List<VariableStringExpanderValue> run({bool onlyPrecheck = false}) {
-    if (_input == null || _input!.isEmpty) return [];
+    if (_input.isEmpty) return [];
 
     if (_substitutions == null || _substitutions!.isEmpty) {
       return [
-        VariableStringExpanderValue(text: _input!)
+        VariableStringExpanderValue(text: _input)
       ];
     }
 
@@ -229,7 +229,7 @@ class VariableStringExpander {
     for (MapEntry<String, String> substitution in _substitutions!.entries) {
       if (!VARIABLESTRING.hasMatch(substitution.value)) {
         return [
-          VariableStringExpanderValue(text: _input!)
+          VariableStringExpanderValue(text: _input)
         ];
       }
 
@@ -255,10 +255,10 @@ class VariableStringExpander {
 
     // Find matching formula groups
     RegExp regExp = RegExp(r'\[.+?\]');
-    if (regExp.hasMatch(_input!)) {
-      _variableGroups = regExp.allMatches(_input!.trim()).map((elem) => elem.group(0)!).toList();
+    if (regExp.hasMatch(_input)) {
+      _variableGroups = regExp.allMatches(_input.trim()).map((elem) => elem.group(0)!).toList();
     } else {
-      _variableGroups = [_input!];
+      _variableGroups = [_input];
     }
     _countVariableGroups = _variableGroups.length;
 

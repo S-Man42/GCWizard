@@ -1782,8 +1782,8 @@ String _nightTime(String code) {
   }
 }
 
-Segments encodeEdelcrantzTelegraph(String? input, EdelcrantzCodebook language, bool daytime) {
-  if (input == null || input.isEmpty) return Segments.Empty();
+Segments encodeEdelcrantzTelegraph(String input, EdelcrantzCodebook language, bool daytime) {
+  if (input.isEmpty) return Segments.Empty();
 
   List<List<String>> encodedText = [];
   Map<String, String> CODEBOOK;
@@ -1848,8 +1848,8 @@ SegmentsText decodeVisualEdelcrantzTelegraph(List<String>? inputs, EdelcrantzCod
   return SegmentsText(displays: displays, text: text);
 }
 
-SegmentsText decodeTextEdelcrantzTelegraph(String? inputs, EdelcrantzCodebook language, bool daytime) {
-  if (inputs == null || inputs.isEmpty) return SegmentsText(displays: [], text: '');
+SegmentsText decodeTextEdelcrantzTelegraph(String inputs, EdelcrantzCodebook language, bool daytime) {
+  if (inputs.isEmpty) return SegmentsText(displays: [], text: '');
 
   var displays = <List<String>>[];
   String text = '';

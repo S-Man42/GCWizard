@@ -270,8 +270,8 @@ final _CODEBOOK_OHLSEN = {
   '259': '',
 };
 
-Segments encodeOhlsenTelegraph(String? input) {
-  if (input == null || input.isEmpty) return Segments.Empty();
+Segments encodeOhlsenTelegraph(String input) {
+  if (input.isEmpty) return Segments.Empty();
 
   List<List<String>> encodedText = [];
   var CODEBOOK = switchMapKeyValue(_CODEBOOK_OHLSEN);
@@ -304,13 +304,13 @@ SegmentsCodpoints decodeVisualOhlsenTelegraph(List<String>? inputs) {
   return SegmentsCodpoints(displays: displays, text: text, codepoints: codepoints.join(' '));
 }
 
-SegmentsCodpoints decodeTextOhlsenTelegraph(String? inputs) {
-  if (inputs == null || inputs.isEmpty) SegmentsCodpoints(displays: <List<String>>[], text: '', codepoints: '');
+SegmentsCodpoints decodeTextOhlsenTelegraph(String inputs) {
+  if (inputs.isEmpty) SegmentsCodpoints(displays: <List<String>>[], text: '', codepoints: '');
 
   var displays = <List<String>>[];
   String text = '';
 
-  inputs!.split(' ').forEach((element) {
+  inputs.split(' ').forEach((element) {
     text = text + (_CODEBOOK_OHLSEN[element] ?? UNKNOWN_ELEMENT);
 
     displays.add(_buildShutters(element));

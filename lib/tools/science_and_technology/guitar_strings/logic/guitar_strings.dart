@@ -85,8 +85,8 @@ final GUITAR_STRING_NOTES = <Tuple2<GuitarStringName, int>, String>{
   const Tuple2(GuitarStringName.E2, 12): 'symboltables_notes_names_trebleclef_10',
 };
 
-List<Tuple2<GuitarStringName, int>?> textToGuitarTabs(String? input) {
-  if (input == null || input.isEmpty) return [];
+List<Tuple2<GuitarStringName, int>?> textToGuitarTabs(String input) {
+  if (input.isEmpty) return [];
 
   input = input.toLowerCase().replaceAll(RegExp(r'[^abcdefgh]'), '');
 

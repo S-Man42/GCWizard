@@ -182,8 +182,8 @@ SegmentsVigesimal decodeMayaCalendar(List<String?>? inputs) {
   return SegmentsVigesimal(displays: displays, numbers: numbers, vigesimal: BigInt.tryParse(total) ?? BigInt.zero);
 }
 
-String convertDecToMayaCalendar(String? input) {
-  if (input == null || input.isEmpty) return '';
+String convertDecToMayaCalendar(String input) {
+  if (input.isEmpty) return '';
 
   int numberDec = int.parse(input);
   if (numberDec == 0) return '0';

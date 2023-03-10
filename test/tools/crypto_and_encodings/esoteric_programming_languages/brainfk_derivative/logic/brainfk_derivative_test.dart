@@ -4,7 +4,6 @@ import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_langua
 void main() {
   group("Ook.interpretOok:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'code' : null, 'expectedOutput' : ''},
       {'code' : '', 'expectedOutput' : ''},
 
       {'code' : '.', 'input': 'ABC123', 'expectedOutput' : ''}, // error case: no fitting subsitution
@@ -51,7 +50,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('code: ${elem['code']}, input: ${elem['input']}', () {
-        var _actual = BRAINFKDERIVATIVE_SHORTOOK.interpretBrainfkDerivatives(elem['code'] as String?, input: elem['input'] as String?);
+        var _actual = BRAINFKDERIVATIVE_SHORTOOK.interpretBrainfkDerivatives(elem['code'] as String, input: elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -59,7 +58,6 @@ void main() {
 
   group("Ook.generateOok:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'text' : null, 'expectedOutput' : ''},
       {'text' : '', 'expectedOutput' : ''},
 
       //Input copy
@@ -68,7 +66,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('text: ${elem['text']}', () {
-        var _actual = BRAINFKDERIVATIVE_OOK.generateBrainfkDerivative(elem['text'] as String?);
+        var _actual = BRAINFKDERIVATIVE_OOK.generateBrainfkDerivative(elem['text'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -141,7 +139,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('code: ${elem['code']}, input: ${elem['input']}', () {
-        var _actual = BRAINFKDERIVATIVE_DETAILEDFK.interpretBrainfkDerivatives(elem['code'] as String?, input: elem['input'] as String?);
+        var _actual = BRAINFKDERIVATIVE_DETAILEDFK.interpretBrainfkDerivatives(elem['code'] as String, input: elem['input'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     }

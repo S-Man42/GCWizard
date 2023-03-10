@@ -129,7 +129,7 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, firstRecognizedPrime: ${elem['firstRecognizedPrime']}, lastRecognizedPrime: ${elem['lastRecognizedPrime']}', () {
         var _actual = encryptPrimeAlphabet(elem['input'] as String, firstRecognizedPrime: elem['firstRecognizedPrime'] as int, lastRecognizedPrime: elem['lastRecognizedPrime'] as int);
-        expect(decryptPrimeAlphabet(_actual, firstRecognizedPrime: elem['firstRecognizedPrime'] as int), elem['input'] as String?);
+        expect(decryptPrimeAlphabet(_actual, firstRecognizedPrime: elem['firstRecognizedPrime'] as int), elem['input'] as String);
       });
     }
   });

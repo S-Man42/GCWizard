@@ -233,8 +233,8 @@ Map<GaussWeberTelegraphMode, CodebookConfig> WHEATSTONECOOKENEEDLENUMBER = {
   ),
 };
 
-String decodeGaussWeberTelegraph(String? input, GaussWeberTelegraphMode mode) {
-  if (input == null || input.isEmpty) return '';
+String decodeGaussWeberTelegraph(String input, GaussWeberTelegraphMode mode) {
+  if (input.isEmpty) return '';
 
   Map<String, String> map;
   switch (mode) {

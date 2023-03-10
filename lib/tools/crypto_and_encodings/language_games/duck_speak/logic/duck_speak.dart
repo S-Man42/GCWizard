@@ -1,7 +1,7 @@
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 
-final Map<String, String> halfByteToDuck = {
+final Map<String, String> _halfByteToDuck = {
   '0': 'Nak',
   '1': 'Nanak',
   '2': 'Nananak',
@@ -19,16 +19,16 @@ final Map<String, String> halfByteToDuck = {
   '14': 'nak.',
   '15': 'naknaknak',
 };
-final Map<String, String> duckToHalfByte = switchMapKeyValue(halfByteToDuck);
+final Map<String, String> _duckToHalfByte = switchMapKeyValue(_halfByteToDuck);
 
-String encodeDuckSpeak(String? text) {
-  if (text == null || text.isEmpty) return '';
+String encodeDuckSpeak(String text) {
+  if (text.isEmpty) return '';
 
   var out = <String>[];
   for (var ascii in text.codeUnits) {
     var binary = ascii.toRadixString(2).padLeft(8, '0');
-    out.add(halfByteToDuck[convertBase(binary.substring(0, 4), 2, 10)] ?? '');
-    out.add(halfByteToDuck[convertBase(binary.substring(4, 8), 2, 10)] ?? '');
+    out.add(_halfByteToDuck[convertBase(binary.substring(0, 4), 2, 10)] ?? '');
+    out.add(_halfByteToDuck[convertBase(binary.substring(4, 8), 2, 10)] ?? '');
   }
   return out.join(' ');
 }
@@ -38,7 +38,7 @@ String decodeDuckSpeak(String text) {
 
   var decimal = <int>[];
   text.split(RegExp(r'\s+')).forEach((nak) {
-    decimal.add((int.tryParse(duckToHalfByte[nak] ?? '') ?? 0));
+    decimal.add((int.tryParse(_duckToHalfByte[nak] ?? '') ?? 0));
   });
   var binary = <String>[];
   for (var i = 0, j = decimal.length; i < j - j % 2; i = i + 2) {
@@ -55,14 +55,14 @@ String decodeDuckSpeak(String text) {
 }
 
 String encodeDuckSpeakNumbers(List<int> numbers) {
-  return numbers.map((number) => halfByteToDuck[number.toString()]).join(' ');
+  return numbers.map((number) => _halfByteToDuck[number.toString()]).join(' ');
 }
 
 List<int> decodeDuckSpeakNumbers(String text) {
   return text
       .split(RegExp(r'\s+'))
       .map((code) {
-        var number = duckToHalfByte[code];
+        var number = _duckToHalfByte[code];
         if (number == null) return null;
         return int.tryParse(number);
       })

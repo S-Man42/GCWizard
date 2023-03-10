@@ -81,7 +81,7 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, substitutions: ${elem['substitutions']}', () {
         var _actual = VariableStringExpander(
-            elem['input'] as String?,
+            elem['input'] as String,
             elem['substitutions'] as Map<String, String>?,
             onAfterExpandedText: elem['onAfterExpandedText'] as String? Function(String)?,
             breakCondition: elem['breakCondition'] as VariableStringExpanderBreakCondition)
@@ -107,7 +107,7 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, substitutions: ${elem['substitutions']}', () {
         var _actual = VariableStringExpander(
-            elem['input'] as String?,
+            elem['input'] as String,
             elem['substitutions'] as Map<String, String>?,
             onAfterExpandedText: elem['onAfterExpandedText'] as String? Function(String)?,
             breakCondition: elem['breakCondition'] as VariableStringExpanderBreakCondition)
@@ -176,7 +176,7 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, substitutions: ${elem['substitutions']}', () {
         var _actual = VariableStringExpander(
-            elem['input'] as String?,
+            elem['input'] as String,
             elem['substitutions'] as Map<String, String>?,
             onAfterExpandedText: elem['onAfterExpandedText'] as String? Function(String)?,
             breakCondition: elem['breakCondition'] as VariableStringExpanderBreakCondition,
@@ -203,7 +203,7 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, substitutions: ${elem['substitutions']}', () {
         var _actual = VariableStringExpander(
-            elem['input'] as String?,
+            elem['input'] as String,
             elem['substitutions'] as Map<String, String>?,
             onAfterExpandedText: elem['onAfterExpandedText'] as String? Function(String)?,
             breakCondition: elem['breakCondition'] as VariableStringExpanderBreakCondition)
@@ -229,7 +229,7 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, substitutions: ${elem['substitutions']}', () {
         var _actual = VariableStringExpander(
-            elem['input'] as String?,
+            elem['input'] as String,
             elem['substitutions'] as Map<String, String>?,
             onAfterExpandedText: elem['onAfterExpandedText'] as String? Function(String)?,
             breakCondition: elem['breakCondition'] as VariableStringExpanderBreakCondition)

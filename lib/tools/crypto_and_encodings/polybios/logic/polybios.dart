@@ -12,8 +12,8 @@ class PolybiosOutput {
   PolybiosOutput(this.output, this.grid);
 }
 
-String _sanitizeAlphabet(String? alphabet) {
-  if (alphabet == null || alphabet.isEmpty) return '';
+String _sanitizeAlphabet(String alphabet) {
+  if (alphabet.isEmpty) return '';
 
   alphabet += alphabet_AZ.keys.join();
   alphabet += alphabet_09.keys.join();

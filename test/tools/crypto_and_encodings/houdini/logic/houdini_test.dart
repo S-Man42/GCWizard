@@ -23,7 +23,6 @@ void main() {
 
   group("Houdini.encodeHoudini:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'mode': HoudiniMode.NUMBERS, 'expectedOutput' : null},
       {'input' : '', 'mode': HoudiniMode.NUMBERS, 'expectedOutput' : null},
 
       {'input' : '0318', 'mode': HoudiniMode.NUMBERS, 'expectedOutput' : {0: 'BE QUICK SAY PRAY QUICKLY', 10: 'BE QUICK SAY PRAY QUICKLY'}},
@@ -36,7 +35,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, mode: ${elem['mode']}', () {
-        var _actual = encodeHoudini(elem['input'] as String?, elem['mode'] as HoudiniMode);
+        var _actual = encodeHoudini(elem['input'] as String, elem['mode'] as HoudiniMode);
         expect(_actual, elem['expectedOutput']);
       });
     }
