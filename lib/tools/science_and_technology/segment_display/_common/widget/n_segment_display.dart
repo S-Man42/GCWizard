@@ -6,8 +6,6 @@ import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/l
 import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/widget/segmentdisplay_painter.dart';
 import 'package:touchable/touchable.dart';
 
-const OUTPUT_SIZE_LEVEL = 180;
-
 class NSegmentDisplay extends StatefulWidget {
   final Map<String, bool> initialSegments;
   final double aspectRatio;
