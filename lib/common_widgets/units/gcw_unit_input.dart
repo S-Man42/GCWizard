@@ -33,7 +33,7 @@ class GCWUnitInput<T extends Unit> extends StatefulWidget {
       : super(key: key);
 
   @override
-  _GCWUnitInputState createState() => _GCWUnitInputState<T>();
+  _GCWUnitInputState<T> createState() => _GCWUnitInputState<T>();
 }
 
 class _GCWUnitInputState<T extends Unit> extends State<GCWUnitInput> {
@@ -46,7 +46,7 @@ class _GCWUnitInputState<T extends Unit> extends State<GCWUnitInput> {
     super.initState();
 
     _currentValue = widget.value;
-    _unitList = (widget.unitCategory?.units ?? <T>[]) as List<T>;
+    _unitList = (widget.unitList ?? widget.unitCategory?.units ?? <T>[]) as List<T>;
     _currentUnit = (widget.initialUnit ?? getReferenceUnit<T>(_unitList)) as T;
   }
 

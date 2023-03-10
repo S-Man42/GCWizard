@@ -93,8 +93,8 @@ class GCWDropDownSpinnerState extends State<GCWDropDownSpinner> {
             _setValueAndEmitOnChange(newValue);
           });
         },
-        items: (widget.items is List<GCWDropDownMenuItem>)
-            ? widget.items as List<GCWDropDownMenuItem>
+        items: (widget.items is List<GCWDropDownMenuItem<int>>)
+            ? widget.items as List<GCWDropDownMenuItem<int>>
             : widget.items
                 .asMap()
                 .map((index, item) {

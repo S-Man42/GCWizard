@@ -2876,7 +2876,7 @@ void initializeRegistry(BuildContext context) {
 
     //PeriodicTableSelection ***************************************************************************************
     GCWTool(tool: const PeriodicTable(), id: 'periodictable', searchKeys: const []),
-    GCWTool(tool: const PeriodicTableDataView(), id: 'periodictable_dataview', searchKeys: const [
+    GCWTool(tool: const PeriodicTableDataView(atomicNumber: 1,), id: 'periodictable_dataview', searchKeys: const [
       'periodictabledataview',
     ]),
     GCWTool(tool: const AtomicNumbersToText(), id: 'atomicnumberstotext', searchKeys: const [

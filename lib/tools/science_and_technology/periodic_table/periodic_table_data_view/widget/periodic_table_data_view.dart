@@ -15,9 +15,9 @@ import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/temp
 import 'package:intl/intl.dart';
 
 class PeriodicTableDataView extends StatefulWidget {
-  final int? atomicNumber;
+  final int atomicNumber;
 
-  const PeriodicTableDataView({Key? key, this.atomicNumber}) : super(key: key);
+  const PeriodicTableDataView({Key? key, required this.atomicNumber}) : super(key: key);
 
   @override
   PeriodicTableDataViewState createState() => PeriodicTableDataViewState();
@@ -26,8 +26,8 @@ class PeriodicTableDataView extends StatefulWidget {
 class PeriodicTableDataViewState extends State<PeriodicTableDataView> {
   var _newCategory = true;
   var _currentCategory = PeriodicTableCategory.ELEMENT_NAME;
-  Object? _currentValueCategoryValue;
-  List<GCWDropDownMenuItem> _currentValueCategoryListItems = [];
+  late Object _currentValueCategoryValue;
+  List<GCWDropDownMenuItem<Object>> _currentValueCategoryListItems = [];
   var _currentSortingOrder = GCWSwitchPosition.left;
 
   var _categories = <PeriodicTableCategory, String>{};
@@ -133,10 +133,8 @@ class PeriodicTableDataViewState extends State<PeriodicTableDataView> {
         allPeriodicTableElements.map((element) => stateOfMatterToString[element.stateOfMatter]!).toSet().toList();
     _statesOfMatter.sort();
 
-    if (widget.atomicNumber != null) {
-      _setSpecificValue = true;
-      _currentValueCategoryValue = widget.atomicNumber;
-    }
+    _setSpecificValue = true;
+    _currentValueCategoryValue = widget.atomicNumber;
   }
 
   @override
@@ -167,7 +165,7 @@ class PeriodicTableDataViewState extends State<PeriodicTableDataView> {
         ),
         _valueCategories.contains(_currentCategory)
             ? Container()
-            : GCWDropDown<Object?>(
+            : GCWDropDown<Object>(
                 value: _currentValueCategoryValue,
                 items: _currentValueCategoryListItems,
                 onChanged: (value) {
@@ -194,7 +192,7 @@ class PeriodicTableDataViewState extends State<PeriodicTableDataView> {
     );
   }
 
-  List<GCWDropDownMenuItem> _buildNonValueCategoryItems(PeriodicTableCategory category) {
+  List<GCWDropDownMenuItem<Object>> _buildNonValueCategoryItems(PeriodicTableCategory category) {
     var listItems = SplayTreeMap<Object, Object>();
 
     switch (category) {
@@ -257,7 +255,7 @@ class PeriodicTableDataViewState extends State<PeriodicTableDataView> {
         break;
     }
 
-    if (!_setSpecificValue) _currentValueCategoryValue = listItems[listItems.firstKey()];
+    if (!_setSpecificValue) _currentValueCategoryValue = listItems[listItems.firstKey()]!;
 
     return listItems.entries.map((entry) {
       return GCWDropDownMenuItem(

@@ -601,7 +601,7 @@ void _initStaticToolList() {
       className(const PasleyTelegraph()),
       className(const PophamTelegraph()),
       className(const PeriodicTable()),
-      className(const PeriodicTableDataView()),
+      className(const PeriodicTableDataView(atomicNumber: 1,)),
       className(const Permutation()),
       className(const PhiSelection()),
       className(const PhysicalConstants()),
