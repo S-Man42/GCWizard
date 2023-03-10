@@ -111,7 +111,9 @@ class _Method {
         // xxx (the) ingredient until yyyed
         type = _CHEF_Method.VerbUntil;
         verb = matchers[15].firstMatch(line)!.group(5)!;
-        ingredient = matchers[15].firstMatch(line)!.group(4)!;
+        if (matchers[15].firstMatch(line)?.group(4) != null) {
+          ingredient = matchers[15].firstMatch(line)!.group(4)!;
+        }
       } else if (matchers[16].hasMatch(line)) {
         // yyy (the) ingredient
         type = _CHEF_Method.Verb;
