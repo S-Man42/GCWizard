@@ -126,7 +126,8 @@ Serves 1.
 
 ''';
 
-    // OK OK     SELFMADE A mysterious marmelade cake.
+    // SELFMADE A mysterious marmelade cake.
+    // fehlerfrei im Emulator
     var test13 = '''A mysterious marmelade cake. 
 
 Giving power to the brain while waiting for an idea.
@@ -738,7 +739,7 @@ Serves.''';
 
     List<Map<String, Object?>> _inputsToExpected = [
       {'language' : 'ENG', 'input' : '',  'recipe' : testNoInput, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_missing_input']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : testPutNoInput,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_method_step','1 : _CHEF_Method.Verb','chef_error_runtime_ingredient_not_found']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testPutNoInput,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_method_loop','1 : _CHEF_Method.Verb',]},
       {'language' : 'ENG', 'input' : '',   'recipe' : testFoldEmptyBow,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_folded_from_empty_mixing_bowl','chef_error_runtime_method_step','1 : _CHEF_Method.Fold => 1']},
       {'language' : 'ENG', 'input' : '',   'recipe' : testAddEmptyBowl,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_add_to_empty_mixing_bowl','chef_error_runtime_method_step','1 : _CHEF_Method.Add => 1']},
       {'language' : 'ENG', 'input' : '',   'recipe' : testRemoveEmptyBowl,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_remove_from_empty_mixing_bowl','chef_error_runtime_method_step','1 : _CHEF_Method.Remove => 1']},
@@ -751,7 +752,7 @@ Serves.''';
       {'language' : 'ENG', 'input' : '',   'recipe' : testStirEmptyIngredient,   'isValid' : true, 'expectedOutput' : ['5431']},
       {'language' : 'ENG', 'input' : '',   'recipe' : testLoopWrongEnd,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_method_loop','1 : _CHEF_Method.Verb',]},
       {'language' : 'ENG', 'input' : '',   'recipe' : testLoopWrongStart,   'isValid' : true, 'expectedOutput' : ['chef_error_syntax','chef_error_syntax_method','1 : count',]},
-      {'language' : 'ENG', 'input' : '',   'recipe' : testServeNoRecipe,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_method_step','3 : _CHEF_Method.Verb']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testServeNoRecipe,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_method_loop','3 : _CHEF_Method.Verb']},
       {'language' : 'ENG', 'input' : '',   'recipe' : testServeNoNumber,   'isValid' : true, 'expectedOutput' : ['chef_error_syntax','chef_error_syntax_serves','chef_error_syntax_serves_without_number','serves.']},
     ];
 
