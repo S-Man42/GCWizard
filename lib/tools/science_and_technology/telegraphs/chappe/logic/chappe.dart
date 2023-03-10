@@ -322,9 +322,12 @@ SegmentsText decodeTextChappeTelegraph(String inputs, ChappeCodebook language) {
   }
 
   inputs.split(' ').forEach((element) {
-    text = text + ((CODEBOOK[element] != null) ? element : UNKNOWN_ELEMENT);
-
-    displays.add(CODEBOOK[element]!);
+    if (CODEBOOK[element] != null) {
+      text += element;
+      displays.add(CODEBOOK[element]!);
+    } else {
+      text += UNKNOWN_ELEMENT;
+    }
   });
   return SegmentsText(displays: displays, text: text);
 }

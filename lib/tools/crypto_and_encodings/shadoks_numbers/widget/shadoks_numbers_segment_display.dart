@@ -48,7 +48,7 @@ class _ShadoksNumbersSegmentDisplay extends NSegmentDisplay {
 
               var map =  {
                 'b': [80.0, 20.0, 0.0, 60.0],
-                'c':[80.0, 80.0, -60.0, 0.0],
+                'c': [80.0, 80.0, -60.0, 0.0],
                 'd': [20.0, 80.0, 60.0, -60.0]
               };
               map.forEach((key, element) {
@@ -84,7 +84,7 @@ class _ShadoksNumbersSegmentDisplay extends NSegmentDisplay {
 
              map =  {
               'b': [75.0, 15.0, 0.0, 70.0, 10.0, 0.0, 0.0, -70.0],
-              'c':[85.0, 85.0, -70.0, 0.0, 0.0, -10.0, 70.0, 0.0],
+              'c': [85.0, 85.0, -70.0, 0.0, 0.0, -10.0, 70.0, 0.0],
               'd': [79.0, 11.0, 9.0, 9.0, -69.0, 69.0, -9.0, -9.0]
               };
               map .forEach((key, element) {

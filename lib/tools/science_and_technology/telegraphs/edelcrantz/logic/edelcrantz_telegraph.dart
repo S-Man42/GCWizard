@@ -1870,12 +1870,12 @@ SegmentsText decodeTextEdelcrantzTelegraph(String inputs, EdelcrantzCodebook lan
   inputs.split(' ').forEach((element) {
     if (CODEBOOK[element] != null) {
       if (daytime) {
-        text = text + CODEBOOK[element]!;
+        text += CODEBOOK[element]!;
       } else {
-        text = text + CODEBOOK[_nightTime(element)]!;
+        text += CODEBOOK[_nightTime(element)] ?? '';
       }
     } else {
-      text = text + UNKNOWN_ELEMENT;
+      text += UNKNOWN_ELEMENT;
     }
     displays.add(_buildShutters(element));
   });
