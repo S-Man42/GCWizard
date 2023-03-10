@@ -183,10 +183,10 @@ class SymbolReplacerState extends State<SymbolReplacer> {
 
   void _showOutput(SymbolReplacerImage? output) {
     _symbolImage = output;
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      setState(() {});
-    });
+    setState(() {});
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   setState(() {});
+    // });
   }
 
   Widget _buildAdvancedModeControl(BuildContext context) {

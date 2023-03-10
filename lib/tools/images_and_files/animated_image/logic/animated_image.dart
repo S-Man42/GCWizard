@@ -3,6 +3,7 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:image/image.dart' as Image;
 
@@ -72,7 +73,7 @@ Future<AnimatedImageOutput?> analyseImage(Uint8List bytes,
 
         progress++;
         if (sendAsyncPort != null && (progress % progressStep == 0)) {
-          sendAsyncPort.send({'progress': progress / animation.length});
+          sendAsyncPort.send(DoubleText('progress', progress / animation.length));
         }
       }
     }

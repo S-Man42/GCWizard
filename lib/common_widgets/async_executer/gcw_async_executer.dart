@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 
 Isolate? _isolate;
 
@@ -64,8 +65,8 @@ class _GCWAsyncExecuterState extends State<GCWAsyncExecuter> {
         if (_cancel) _cancelProcess();
 
         await for (var event in _receivePort!) {
-          if (event is Map<String, Object> && event['progress'] is double) {
-            yield event['progress'] as double;
+          if (event is DoubleText && event.text == 'progress') {
+            yield event.value;
           } else {
             _result = event;
             _receivePort!.close();

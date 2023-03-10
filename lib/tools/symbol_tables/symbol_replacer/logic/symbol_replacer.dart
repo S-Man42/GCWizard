@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_replacer_symboldata.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:image/image.dart' as Image;
 import 'package:tuple/tuple.dart';
@@ -939,7 +940,7 @@ Future<List<Map<String, SymbolReplacerSymbolData>>?> searchSymbolTable(
   imageTmp._similarityLevel = 0;
   imageTmp._gap = image._gap;
 
-  sendAsyncPort?.send({'progress': 0.0});
+  sendAsyncPort?.send(DoubleText('progress', 0.0));
 
   for (var symbolTable in compareSymbols) {
     imageTmp.resetGroupText();
@@ -952,7 +953,7 @@ Future<List<Map<String, SymbolReplacerSymbolData>>?> searchSymbolTable(
       }
     }
     progress++;
-    sendAsyncPort?.send({'progress': progress / compareSymbols.length});
+    sendAsyncPort?.send(DoubleText('progress', progress / compareSymbols.length));
   }
   return Future.value(maxPercentSymbolTable);
 }

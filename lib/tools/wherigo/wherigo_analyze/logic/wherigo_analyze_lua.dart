@@ -148,7 +148,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
     lines[i] = lines[i].trim();
 
     if (sendAsyncPort != null && (i % progressStep == 0)) {
-      sendAsyncPort.send({'progress': i / lines.length / 2});
+      sendAsyncPort.send(DoubleText('progress', i / lines.length / 2));
     }
 
     _checkAndGetCartridgeName(lines[i]);
@@ -166,7 +166,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           i++;
           analyzeLines.add(lines[i]);
           if (sendAsyncPort != null && (i % progressStep == 0)) {
-            sendAsyncPort.send({'progress': i / lines.length / 2});
+            sendAsyncPort.send(DoubleText('progress', i / lines.length / 2));
           }
         } while (_insideSectionMedia(lines[i + 1]) && (i < lines.length - 1));
 
@@ -192,7 +192,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           i++;
           analyzeLines.add(lines[i]);
           if (sendAsyncPort != null && (i % progressStep == 0)) {
-            sendAsyncPort.send({'progress': i / lines.length / 2});
+            sendAsyncPort.send(DoubleText('progress', i / lines.length / 2));
           }
         } while (_insideSectionZone(lines[i + 1]) && (i < lines.length - 1));
 
@@ -220,7 +220,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           i++;
           analyzeLines.add(lines[i]);
           if (sendAsyncPort != null && (i % progressStep == 0)) {
-            sendAsyncPort.send({'progress': i / lines.length / 2});
+            sendAsyncPort.send(DoubleText('progress', i / lines.length / 2));
           }
         } while (_insideSectionCharacter(lines[i + 1]) && (i < lines.length - 1));
 
@@ -252,7 +252,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           i++;
           analyzeLines.add(lines[i]);
           if (sendAsyncPort != null && (i % progressStep == 0)) {
-            sendAsyncPort.send({'progress': i / lines.length / 2});
+            sendAsyncPort.send(DoubleText('progress', i / lines.length / 2));
           }
         } while (_insideSectionItem(lines[i + 1]) && (i < lines.length - 1));
 
@@ -279,7 +279,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           i++;
           analyzeLines.add(lines[i]);
           if (sendAsyncPort != null && (i % progressStep == 0)) {
-            sendAsyncPort.send({'progress': i / lines.length / 2});
+            sendAsyncPort.send(DoubleText('progress', i / lines.length / 2));
           }
         } while (_insideSectionTask(lines[i + 1]) && (i < lines.length - 1));
 
@@ -361,7 +361,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           i++;
           analyzeLines.add(lines[i]);
           if (sendAsyncPort != null && (i % progressStep == 0)) {
-            sendAsyncPort.send({'progress': i / lines.length / 2});
+            sendAsyncPort.send(DoubleText('progress', i / lines.length / 2));
           }
         } while (_insideSectionTimer(lines[i + 1]) && (i < lines.length - 1));
 
@@ -388,7 +388,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           i++;
           analyzeLines.add(lines[i]);
           if (sendAsyncPort != null && (i % progressStep == 0)) {
-            sendAsyncPort.send({'progress': i / lines.length / 2});
+            sendAsyncPort.send(DoubleText('progress', i / lines.length / 2));
           }
         } while (_insideSectionInput(lines[i + 1]) && (i < lines.length - 1));
 
@@ -424,7 +424,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           analyzeLines.add(lines[i].trim());
 
           if (sendAsyncPort != null && (i % progressStep == 0)) {
-            sendAsyncPort.send({'progress': i / lines.length / 2});
+            sendAsyncPort.send(DoubleText('progress', i / lines.length / 2));
           }
         } while (_insideSectionOnGetInput(lines[i], lines[i + 1]) && (i < lines.length - 1));
         _analyzeAndExtractOnGetInputSectionData(analyzeLines);
