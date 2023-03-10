@@ -50,7 +50,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('code: ${elem['code']}, input: ${elem['input']}', () {
-        var _actual = BRAINFKDERIVATIVE_SHORTOOK.interpretBrainfkDerivatives(elem['code'] as String, input: elem['input'] as String);
+        var _actual = BRAINFKDERIVATIVE_SHORTOOK.interpretBrainfkDerivatives(elem['code'] as String, input: elem['input'] as String?);
         expect(_actual, elem['expectedOutput']);
       });
     }

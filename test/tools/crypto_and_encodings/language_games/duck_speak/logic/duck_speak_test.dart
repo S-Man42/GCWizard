@@ -4,7 +4,6 @@ import 'package:gc_wizard/tools/crypto_and_encodings/language_games/duck_speak/l
 void main() {
   group("DuckSpeak.encodeDuckSpeak:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
       {'input' : 'Hallo Welt', 'expectedOutput' : 'Nak? Nak. Naknak Nanak Naknak naknak Naknak naknak Naknak naknaknak Nananak Nak nak? Naknaknak Naknak nak? Naknak naknak Naknaknak Nak?'},
