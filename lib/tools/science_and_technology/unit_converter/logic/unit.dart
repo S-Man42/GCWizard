@@ -28,6 +28,5 @@ double convert(double value, Unit from, Unit to) {
 }
 
 T getReferenceUnit<T extends Unit>(List<T> units) {
-  print(units);
   return units.firstWhere((unit) => unit.isReferenceUnit == true);
 }
