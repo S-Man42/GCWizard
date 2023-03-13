@@ -5,13 +5,13 @@ import 'package:gc_wizard/tools/science_and_technology/irrational_numbers/irrati
 import 'package:gc_wizard/tools/science_and_technology/irrational_numbers/sqrt3/logic/sqrt3.dart';
 
 class SQRT3NthDecimal extends IrrationalNumbersNthDecimal {
-  SQRT3NthDecimal({Key? key}) : super(key: key, irrationalNumber: SQRT_3);
+  const SQRT3NthDecimal({Key? key}) : super(key: key, irrationalNumber: SQRT_3);
 }
 
 class SQRT3DecimalRange extends IrrationalNumbersDecimalRange {
-  SQRT3DecimalRange({Key? key}) : super(key: key, irrationalNumber: SQRT_3);
+  const SQRT3DecimalRange({Key? key}) : super(key: key, irrationalNumber: SQRT_3);
 }
 
 class SQRT3Search extends IrrationalNumbersSearch {
-  SQRT3Search({Key? key}) : super(key: key, irrationalNumber: SQRT_3);
+  const SQRT3Search({Key? key}) : super(key: key, irrationalNumber: SQRT_3);
 }

@@ -1432,8 +1432,8 @@ void initializeRegistry(BuildContext context) {
     ]),
 
     //CCITT Selection **********************************************************************************************
-    GCWTool(tool: CCITT1(), id: 'ccitt_1', searchKeys: const ['ccitt', 'ccitt_1', 'symbol_baudot']),
-    GCWTool(tool: CCITT2(), id: 'ccitt_2', searchKeys: const [
+    GCWTool(tool: const CCITT1(), id: 'ccitt_1', searchKeys: const ['ccitt', 'ccitt_1', 'symbol_baudot']),
+    GCWTool(tool: const CCITT2(), id: 'ccitt_2', searchKeys: const [
       'ccitt',
       'ccitt_2',
       'teletypewriter',
@@ -1853,13 +1853,13 @@ void initializeRegistry(BuildContext context) {
     ]),
 
     //E Selection *************************************************************************************************
-    GCWTool(tool: ENthDecimal(), id: 'irrationalnumbers_nthdecimal', searchKeys: const [
+    GCWTool(tool: const ENthDecimal(), id: 'irrationalnumbers_nthdecimal', searchKeys: const [
       'enthdecimal',
     ]),
-    GCWTool(tool: EDecimalRange(), id: 'irrationalnumbers_decimalrange', searchKeys: const [
+    GCWTool(tool: const EDecimalRange(), id: 'irrationalnumbers_decimalrange', searchKeys: const [
       'edecimalrange',
     ]),
-    GCWTool(tool: ESearch(), id: 'irrationalnumbers_search', searchKeys: const [
+    GCWTool(tool: const ESearch(), id: 'irrationalnumbers_search', searchKeys: const [
       'esearch',
     ]),
 
@@ -3058,35 +3058,35 @@ void initializeRegistry(BuildContext context) {
     ]),
 
     //SQRT 2 Selection **********************************************************************************************
-    GCWTool(tool: SQRT2NthDecimal(), id: 'irrationalnumbers_nthdecimal', searchKeys: const [
+    GCWTool(tool: const SQRT2NthDecimal(), id: 'irrationalnumbers_nthdecimal', searchKeys: const [
       '',
     ]),
-    GCWTool(tool: SQRT2DecimalRange(), id: 'irrationalnumbers_decimalrange', searchKeys: const [
+    GCWTool(tool: const SQRT2DecimalRange(), id: 'irrationalnumbers_decimalrange', searchKeys: const [
       '',
     ]),
-    GCWTool(tool: SQRT2Search(), id: 'irrationalnumbers_search', searchKeys: const [
+    GCWTool(tool: const SQRT2Search(), id: 'irrationalnumbers_search', searchKeys: const [
       '',
     ]),
 
     //SQRT 3 Selection **********************************************************************************************
-    GCWTool(tool: SQRT3NthDecimal(), id: 'irrationalnumbers_nthdecimal', searchKeys: const [
+    GCWTool(tool: const SQRT3NthDecimal(), id: 'irrationalnumbers_nthdecimal', searchKeys: const [
       '',
     ]),
-    GCWTool(tool: SQRT3DecimalRange(), id: 'irrationalnumbers_decimalrange', searchKeys: const [
+    GCWTool(tool: const SQRT3DecimalRange(), id: 'irrationalnumbers_decimalrange', searchKeys: const [
       '',
     ]),
-    GCWTool(tool: SQRT3Search(), id: 'irrationalnumbers_search', searchKeys: const [
+    GCWTool(tool: const SQRT3Search(), id: 'irrationalnumbers_search', searchKeys: const [
       '',
     ]),
 
     //SQRT 5 Selection **********************************************************************************************
-    GCWTool(tool: SQRT5NthDecimal(), id: 'irrationalnumbers_nthdecimal', searchKeys: const [
+    GCWTool(tool: const SQRT5NthDecimal(), id: 'irrationalnumbers_nthdecimal', searchKeys: const [
       '',
     ]),
-    GCWTool(tool: SQRT5DecimalRange(), id: 'irrationalnumbers_decimalrange', searchKeys: const [
+    GCWTool(tool: const SQRT5DecimalRange(), id: 'irrationalnumbers_decimalrange', searchKeys: const [
       '',
     ]),
-    GCWTool(tool: SQRT5Search(), id: 'irrationalnumbers_search', searchKeys: const [
+    GCWTool(tool: const SQRT5Search(), id: 'irrationalnumbers_search', searchKeys: const [
       '',
     ]),
 
@@ -4015,7 +4015,7 @@ void initializeRegistry(BuildContext context) {
     ]),
 
     //Teletypewriter Selection **********************************************************************************************
-    GCWTool(tool: AncientTeletypewriter(), id: 'ccitt_ancient', searchKeys: const [
+    GCWTool(tool: const AncientTeletypewriter(), id: 'ccitt_ancient', searchKeys: const [
       'ccitt',
       'ccitt_ancient',
       'teletypewriter',
@@ -4024,7 +4024,7 @@ void initializeRegistry(BuildContext context) {
       'symbol_murraybaudot',
       'symbol_baudot'
     ]),
-    GCWTool(tool: CCITTTeletypewriter(), id: 'ccitt', searchKeys: const [
+    GCWTool(tool: const CCITTTeletypewriter(), id: 'ccitt', searchKeys: const [
       'ccitt',
       'ccitt_1',
       'ccitt_2',
@@ -4037,7 +4037,7 @@ void initializeRegistry(BuildContext context) {
           'symbol_murraybaudot',
     ]),
     GCWTool(
-        tool: OtherTeletypewriter(),
+        tool: const OtherTeletypewriter(),
         id: 'ccitt_other',
         searchKeys: const ['teletypewriter', 'z22', 'zc1', 'illiac', 'algol', 'tts']),
 

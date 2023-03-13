@@ -13,9 +13,9 @@ class ESelection extends GCWSelection {
   Widget build(BuildContext context) {
     final List<GCWTool> _toolList = registeredTools.where((element) {
       return [
-        className(ENthDecimal()),
-        className(EDecimalRange()),
-        className(ESearch()),
+        className(const ENthDecimal()),
+        className(const EDecimalRange()),
+        className(const ESearch()),
       ].contains(className(element.tool));
     }).toList();
 
