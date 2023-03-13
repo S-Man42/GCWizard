@@ -23,7 +23,7 @@ class SymbolTableConstants {
   static const CONFIG_CASESENSITIVE = 'case_sensitive';
   static const CONFIG_IGNORE = 'ignore';
 
-  static final Map<String, String> CONFIG_SPECIAL_CHARS = {
+  static const Map<String, String> CONFIG_SPECIAL_CHARS = {
     "ampersand": "&",
     "asterisk": "*",
     "apostrophe": "'",
@@ -201,13 +201,21 @@ class SymbolData {
   }
 }
 
+class _SymbolTableConfig {
+  var caseSensitive = false;
+  var ignore = <String>[];
+  var specialMappings = <String, String>{};
+  var translate = <String>[];
+  var translationPrefix = '';
+}
+
 class SymbolTableData {
   final BuildContext _context;
   final String symbolKey;
 
   SymbolTableData(this._context, this.symbolKey);
 
-  Map<String, Object?> config = {};
+  var config = _SymbolTableConfig();
   List<Map<String, SymbolData>> images = [];
   int maxSymbolTextLength = 0;
 
@@ -224,8 +232,7 @@ class SymbolTableData {
   }
 
   bool isCaseSensitive() {
-    return config[SymbolTableConstants.CONFIG_CASESENSITIVE] != null &&
-        config[SymbolTableConstants.CONFIG_CASESENSITIVE] == true;
+    return config.caseSensitive;
   }
 
   String _pathKey() {
@@ -240,18 +247,18 @@ class SymbolTableData {
 
     file ??= '{}';
 
-    config = asJsonMap(json.decode(file));
+    var jsonConfig = asJsonMap(json.decode(file));
 
-    if (config[SymbolTableConstants.CONFIG_IGNORE] == null) {
-      config.putIfAbsent(SymbolTableConstants.CONFIG_IGNORE, () => <String>[]);
+    config.caseSensitive = jsonConfig[SymbolTableConstants.CONFIG_CASESENSITIVE] != null;
+    config.translationPrefix = toStringOrNull(jsonConfig[SymbolTableConstants.CONFIG_TRANSLATION_PREFIX]) ?? '';
+
+    if (jsonConfig[SymbolTableConstants.CONFIG_IGNORE] == null) {
+      config.ignore = toStringListOrNull(jsonConfig[SymbolTableConstants.CONFIG_IGNORE]) ?? [];
     }
 
-    if (config[SymbolTableConstants.CONFIG_SPECIALMAPPINGS] == null) {
-      config.putIfAbsent(SymbolTableConstants.CONFIG_SPECIALMAPPINGS, () => <String, String>{});
-    }
-
-    for (var element in SymbolTableConstants.CONFIG_SPECIAL_CHARS.entries) {
-      (config[SymbolTableConstants.CONFIG_SPECIALMAPPINGS] as Map<String, String>).putIfAbsent(element.key, () => element.value);
+    var map = asJsonMapOrNull(jsonConfig[SymbolTableConstants.CONFIG_SPECIALMAPPINGS]);
+    if (map != null) {
+      config.specialMappings = toStringMapOrNull(map) ?? {};
     }
 
     switch (symbolKey) {
@@ -287,13 +294,11 @@ class SymbolTableData {
 
     String key;
 
-    if ((config[SymbolTableConstants.CONFIG_SPECIALMAPPINGS] as Map<String, String>).containsKey(imageKey)) {
-      key = (config[SymbolTableConstants.CONFIG_SPECIALMAPPINGS] as Map<String, String>)[imageKey]!;
-    } else if (((config[SymbolTableConstants.CONFIG_TRANSLATE] as List<String>?) != null) &&
-        ((config[SymbolTableConstants.CONFIG_TRANSLATE] as List<String>).contains(imageKey))) {
-      String? translationPrefix = (config[SymbolTableConstants.CONFIG_TRANSLATION_PREFIX] as String?);
-      if (translationPrefix != null && translationPrefix.isNotEmpty) {
-        key = i18n(_context, translationPrefix + imageKey);
+    if (SymbolTableConstants.CONFIG_SPECIAL_CHARS.containsKey(imageKey)) {
+      key = SymbolTableConstants.CONFIG_SPECIAL_CHARS[imageKey]!;
+    } else if ((config.translate.contains(imageKey))) {
+      if (config.translationPrefix.isNotEmpty) {
+        key = i18n(_context, config.translationPrefix + imageKey);
       } else {
         key = i18n(_context, 'symboltables_' + symbolKey + '_' + imageKey);
       }
@@ -345,7 +350,7 @@ class SymbolTableData {
     for (ArchiveFile file in archive) {
       var key = _createKey(file.name);
 
-      if ((config[SymbolTableConstants.CONFIG_IGNORE] as List<String>? ?? []).contains(key)) continue;
+      if (config.ignore.contains(key)) continue;
 
       var imagePath = (file.isFile && SymbolTableConstants.IMAGE_SUFFIXES.hasMatch(file.name)) ? file.name : null;
       if (imagePath == null) continue;
