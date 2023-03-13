@@ -1,6 +1,6 @@
 // split lists to avoid keeping all available primes in cache
 
-final List<int> primes = [
+const List<int> primes = [
   2,
   3,
   5,

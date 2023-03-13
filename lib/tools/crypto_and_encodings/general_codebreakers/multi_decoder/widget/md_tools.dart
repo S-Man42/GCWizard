@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/multi_decoder.dart';
 
-final List<String> _mdtToolsRegistry = [
+const List<String> _mdtToolsRegistry = [
   MDT_INTERNALNAMES_ROTATION,
   MDT_INTERNALNAMES_ROT5,
   MDT_INTERNALNAMES_ROT18,

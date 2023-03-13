@@ -92,13 +92,13 @@ double PersianYazdegardCalendarToJulianDate(DateTime date) {
   return (yaz_ep + d - 1 + m * 30 + y * 365).toDouble();
 }
 
-final List<int> _jregyeardef = [30, 29, 29, 29, 30, 29, 30, 29, 30, 29, 30, 29];
-final List<int> _jregyearreg = [30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29];
-final List<int> _jregyearcom = [30, 30, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29];
+const List<int> _jregyeardef = [30, 29, 29, 29, 30, 29, 30, 29, 30, 29, 30, 29];
+const List<int> _jregyearreg = [30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29];
+const List<int> _jregyearcom = [30, 30, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29];
 
-final List<int> _jembyeardef = [30, 29, 29, 29, 30, 30, 29, 30, 29, 30, 29, 30, 29];
-final List<int> _jembyearreg = [30, 29, 30, 29, 30, 30, 29, 30, 29, 30, 29, 30, 29];
-final List<int> _jembyearcom = [30, 30, 30, 29, 30, 30, 29, 30, 29, 30, 29, 30, 29];
+const List<int> _jembyeardef = [30, 29, 29, 29, 30, 30, 29, 30, 29, 30, 29, 30, 29];
+const List<int> _jembyearreg = [30, 29, 30, 29, 30, 30, 29, 30, 29, 30, 29, 30, 29];
+const List<int> _jembyearcom = [30, 30, 30, 29, 30, 30, 29, 30, 29, 30, 29, 30, 29];
 
 String typeOfJewYear(int yearlength) {
   if (yearlength == 353) {

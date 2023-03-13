@@ -11,7 +11,7 @@ class ColorSpace {
   final String persistanceKey;
   final String name;
 
-  ColorSpace(this.key, this.persistanceKey, this.name);
+  const ColorSpace(this.key, this.persistanceKey, this.name);
 }
 
 abstract class GCWBaseColor {
@@ -22,7 +22,7 @@ const ColorSpaceKey defaultColorSpace = ColorSpaceKey.RGB;
 final RGB defaultColor = RGB(255.0, 155.0, 0.0);
 const int COLOR_DOUBLE_PRECISION = 5;
 
-final List<ColorSpace> allColorSpaces = [
+const List<ColorSpace> allColorSpaces = [
   ColorSpace(ColorSpaceKey.RGB, 'colors_rgb', 'colors_colorspace_rgb_title'),
   ColorSpace(ColorSpaceKey.HEXCODE, 'colors_hex', 'colors_colorspace_hex_title'),
   ColorSpace(ColorSpaceKey.HSV, 'colors_hsv', 'colors_colorspace_hsv_title'),

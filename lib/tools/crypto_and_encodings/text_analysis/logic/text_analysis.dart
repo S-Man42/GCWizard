@@ -11,10 +11,10 @@ class ControlCharacter {
   final String? escapeCode;
   final List<String> symbols;
 
-  ControlCharacter(this.asciiValue, this.unicode, this.name, this.abbreviation, this.escapeCode, this.symbols);
+  const ControlCharacter(this.asciiValue, this.unicode, this.name, this.abbreviation, this.escapeCode, this.symbols);
 }
 
-final Map<String, ControlCharacter> WHITESPACE_CHARACTERS = {
+const Map<String, ControlCharacter> WHITESPACE_CHARACTERS = {
   '\u0009': ControlCharacter(
       9, 'U+0009', 'textanalysis_whitespace_charactertabulation', 'TAB/HT', '\\t', ['\u21e5', '\u21b9', '\u2409']),
   '\u000A': ControlCharacter(10, 'U+000A', 'textanalysis_whitespace_linefeed', 'LF', '\\n',
@@ -28,7 +28,7 @@ final Map<String, ControlCharacter> WHITESPACE_CHARACTERS = {
       ControlCharacter(133, 'U+0085', 'textanalysis_whitespace_nextline', 'NEL', null, ['\u21B5', '\u23CE', '\u2424']),
 };
 
-final Map<String, ControlCharacter> CONTROL_CHARACTERS = {
+const Map<String, ControlCharacter> CONTROL_CHARACTERS = {
   '\u0000': ControlCharacter(0, 'U+0000', 'textanalysis_control_null', 'NUL', '\\0', ['\u2400']),
   '\u0001': ControlCharacter(1, 'U+0001', 'textanalysis_control_startofheading', 'SOH', null, ['\u2401']),
   '\u0002': ControlCharacter(2, 'U+0002', 'textanalysis_control_startoftext', 'STX', null, ['\u2402']),

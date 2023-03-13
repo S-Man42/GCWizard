@@ -6,12 +6,12 @@ import 'package:gc_wizard/utils/string_utils.dart';
 enum EnigmaRotorType { STANDARD, ENTRY_ROTOR, REFLECTOR }
 
 class EnigmaRotor {
-  String name;
-  String alphabet;
-  String turnovers; // see https://en.wikipedia.org/wiki/Enigma_machine#Turnover
-  EnigmaRotorType type;
+  final String name;
+  final String alphabet;
+  final String turnovers; // see https://en.wikipedia.org/wiki/Enigma_machine#Turnover
+  final EnigmaRotorType type;
 
-  EnigmaRotor(this.name, this.alphabet, {this.turnovers = '', this.type = EnigmaRotorType.STANDARD});
+  const EnigmaRotor(this.name, this.alphabet, {this.turnovers = '', this.type = EnigmaRotorType.STANDARD});
 
   @override
   String toString() {
@@ -23,7 +23,7 @@ const String defaultRotorStandard = 'I, Enigma I \'Wehrmacht\'';
 const String defaultRotorEntryRotor = 'ETW, Enigma I \'Wehrmacht\'';
 const String defaultRotorReflector = 'UKW B, M3 + M4 \'Wehrmacht\'';
 
-final List<EnigmaRotor> allEnigmaRotors = [
+const List<EnigmaRotor> allEnigmaRotors = [
   // Enigma I, M3, M4 (Kriegsmarine)
   EnigmaRotor(defaultRotorEntryRotor, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', type: EnigmaRotorType.ENTRY_ROTOR),
   EnigmaRotor(defaultRotorStandard, 'EKMFLGDQVZNTOWYHXUSPAIBRCJ', turnovers: 'Q'),

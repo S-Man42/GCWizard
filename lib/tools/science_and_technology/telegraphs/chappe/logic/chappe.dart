@@ -5,7 +5,7 @@ import 'package:gc_wizard/utils/constants.dart';
 
 enum ChappeCodebook { ALPHABET, CODEPOINTS, DIGITS, KULIBIN }
 
-final Map<ChappeCodebook, CodebookConfig> CHAPPE_CODEBOOK = {
+const Map<ChappeCodebook, CodebookConfig> CHAPPE_CODEBOOK = {
   ChappeCodebook.DIGITS: CodebookConfig(title: 'telegraph_chappe_digits_title', subtitle: 'telegraph_chappe_digits_description'),
   ChappeCodebook.CODEPOINTS: CodebookConfig(
     title: 'telegraph_chappe_codepoints_title',

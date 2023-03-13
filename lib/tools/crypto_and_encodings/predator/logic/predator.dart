@@ -2,7 +2,7 @@ import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/l
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
-final Map<String, List<String>> _CODEBOOK_PREDATOR = {
+const Map<String, List<String>> _CODEBOOK_PREDATOR = {
   'a': ['b', 'f', 'h'],
   'b': ['b', 'd', 'f', 'h'],
   'c': ['b'],

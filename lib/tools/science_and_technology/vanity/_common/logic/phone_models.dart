@@ -50,11 +50,11 @@ enum PhoneCaseMode { LOWER_CASE, UPPER_CASE, CAMEL_CASE, NUMBERS, SPECIAL_CHARAC
 const PHONE_STATEMODEL_START = '[*]';
 
 class PhoneModel {
-  String name;
+  final String name;
   late Map<String, Map<String, String>> defaultCaseStateModel;
   Map<PhoneInputLanguage, Map<String, Map<String, String>>>? specificCaseStateModels;
-  List<Map<PhoneCaseMode, Map<String, String>>> characterMap;
-  List<List<PhoneInputLanguage>> languages;
+  final List<Map<PhoneCaseMode, Map<String, String>>> characterMap;
+  final List<List<PhoneInputLanguage>> languages;
 
   PhoneModel(this.name, String defaultCaseStateModelRaw, Map<PhoneInputLanguage, String>? specificCaseStateModelsRaw,
       this.characterMap, this.languages) {

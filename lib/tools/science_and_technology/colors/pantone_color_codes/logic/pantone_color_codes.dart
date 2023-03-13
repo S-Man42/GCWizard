@@ -3,20 +3,20 @@ import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors.dart'
 import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors_rgb.dart';
 
 class PantoneColor {
-  String colorcode;
-  String name;
+  final String colorcode;
+  final String name;
 
-  PantoneColor({
+  const PantoneColor({
     required this.colorcode,
     required this.name,
   });
 }
 
 class PantoneColorExt extends PantoneColor {
-  String? suffix;
-  String? prefix;
+  final String? suffix;
+  final String? prefix;
 
-  PantoneColorExt({
+  const PantoneColorExt({
     required String colorcode,
     required String name,
     this.suffix,
@@ -24,7 +24,7 @@ class PantoneColorExt extends PantoneColor {
   }) :super(colorcode: colorcode, name: name);
 }
 
-final Map<String, PantoneColorExt> PANTONE_COLOR_CODES_WITH_NAMES = {
+const Map<String, PantoneColorExt> PANTONE_COLOR_CODES_WITH_NAMES = {
   "Black 1": PantoneColorExt(colorcode: "#2D2926", name: "common_color_black", suffix: "1"),
   "Black 2": PantoneColorExt(colorcode: "#332F21", name: "common_color_black", suffix: "2"),
   "Black 3": PantoneColorExt(colorcode: "#212721", name: "common_color_black", suffix: "3"),
@@ -196,7 +196,7 @@ final Map<String, PantoneColorExt> PANTONE_COLOR_CODES_WITH_NAMES = {
   "Yellow 0131": PantoneColorExt(colorcode: "#F2F0A1", name: "common_color_yellow", suffix: "0131"),
 };
 
-final Map<String, PantoneColor> PANTONE_COLOR_CODES_ONLY_NUMBERS = {
+const Map<String, PantoneColor> PANTONE_COLOR_CODES_ONLY_NUMBERS = {
   "144": PantoneColor(colorcode: "#ED8B00", name: "144"),
   "145": PantoneColor(colorcode: "#CF7F00", name: "145"),
   "146": PantoneColor(colorcode: "#A76D11", name: "146"),

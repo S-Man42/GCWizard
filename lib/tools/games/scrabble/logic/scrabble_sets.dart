@@ -34,7 +34,7 @@ class ScrabbleSet {
   final Map<String, _LetterAttribute> letters;
   final bool caseSensitive;
 
-  ScrabbleSet(this.key, this.i18nNameId, this.letters, {this.caseSensitive = false});
+  const ScrabbleSet(this.key, this.i18nNameId, this.letters, {this.caseSensitive = false});
 
   int letterValue(String letter) {
     if (!caseSensitive) letter = letter.toUpperCase();
@@ -745,10 +745,7 @@ final Map<String, ScrabbleSet> scrabbleSets = {
     'Q': _LetterAttribute(0, 0), //There's no real letter but the rules allow them as blanko
     'W': _LetterAttribute(0, 0), //There's no real letter but the rules allow them as blanko
   }),
-  scrabbleID_KLINGON: ScrabbleSet(
-      scrabbleID_KLINGON,
-      'common_language_klingon',
-      {
+  scrabbleID_KLINGON: ScrabbleSet(scrabbleID_KLINGON, 'common_language_klingon', {
         ' ': _LetterAttribute(0, 2),
         'a': _LetterAttribute(1, 10),
         'e': _LetterAttribute(1, 8),

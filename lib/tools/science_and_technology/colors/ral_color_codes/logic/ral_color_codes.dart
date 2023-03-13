@@ -4,16 +4,16 @@ import 'package:collection/collection.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors_rgb.dart';
 
 class RalColor {
-  String colorcode;
-  String name;
+  final String colorcode;
+  final String name;
 
-  RalColor({
+  const RalColor({
     required this.colorcode,
     required this.name,
   });
 }
 
-final Map<String, RalColor> RAL_COLOR_CODES = {
+const Map<String, RalColor> RAL_COLOR_CODES = {
   "RAL 1000": RalColor(colorcode: "#BEBD7F", name: "ralcolorcodes_color_name_1000"),
   "RAL 1001": RalColor(colorcode: "#C2B078", name: "ralcolorcodes_color_name_1001"),
   "RAL 1002": RalColor(colorcode: "#C6A664", name: "ralcolorcodes_color_name_1002"),
