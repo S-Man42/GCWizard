@@ -168,7 +168,7 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
                   autofocus: true,
                 )
               : GCWDropDown<Map<String, SymbolReplacerSymbolData>>(
-                  value: _currentSymbolData,
+                  value: _currentSymbolData ?? _symbolDataItems.first.value,
                   onChanged: (value) {
                     setState(() {
                       _currentSymbolData = value;
@@ -183,8 +183,8 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
             onPressed: () {
               setState(() {
                 if (_currentMode == GCWSwitchPosition.left) {
-                  _setSelectedSymbolsText(_currentSymbolData.keys.first,
-                      symbolData: _currentSymbolData.values.first);
+                  _setSelectedSymbolsText(_currentSymbolData?.keys.first,
+                      symbolData: _currentSymbolData?.values.first);
                 } else {
                   _setSelectedSymbolsText(_editValueController.text);
                 }
