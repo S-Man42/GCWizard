@@ -4,9 +4,9 @@ import 'package:gc_wizard/utils/constants.dart';
 
 enum SegmentDisplayType { SEVEN, FOURTEEN, SIXTEEN, CUSTOM }
 
-final _baseSegments7Segment = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'dp'];
-final _baseSegments14Segment = ['a', 'b', 'c', 'd', 'e', 'f', 'g1', 'g2', 'h', 'i', 'j', 'k', 'l', 'm', 'dp'];
-final _baseSegments16Segment = [
+const _baseSegments7Segment = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'dp'];
+const _baseSegments14Segment = ['a', 'b', 'c', 'd', 'e', 'f', 'g1', 'g2', 'h', 'i', 'j', 'k', 'l', 'm', 'dp'];
+const _baseSegments16Segment = [
   'a1',
   'a2',
   'b',
@@ -26,7 +26,7 @@ final _baseSegments16Segment = [
   'dp'
 ];
 
-final Map<String, List<String>> _AZTo16Segment = {
+const Map<String, List<String>> _AZTo16Segment = {
   '1': ['b', 'c', 'j'],
   '2': ['a1', 'a2', 'b', 'd1', 'd2', 'e', 'g1', 'g2'],
   '3': ['a1', 'a2', 'b', 'c', 'd1', 'd2', 'g1', 'g2'],
@@ -88,7 +88,7 @@ final Map<String, List<String>> _AZTo16Segment = {
   '&': ['a1', 'a2', 'c', 'd1', 'd2', 'e', 'g1', 'h', 'j', 'm']
 };
 
-final Map<String, List<String>> _AZTo14Segment = {
+const Map<String, List<String>> _AZTo14Segment = {
   '1': ['b', 'c', 'j'],
   '2': ['a', 'b', 'd', 'e', 'g1', 'g2'],
   '3': ['a', 'b', 'c', 'd', 'g1', 'g2'],
@@ -149,7 +149,7 @@ final Map<String, List<String>> _AZTo14Segment = {
   '&': ['a', 'c', 'd', 'e', 'g1', 'h', 'j', 'm']
 };
 
-final Map<String, List<String>> _AZTo7Segment = {
+const Map<String, List<String>> _AZTo7Segment = {
   // https://www.wikizero.com/en/Seven-segment_display
   '1': ['b', 'c'], //'1' : ['a','e'],
   '2': ['a', 'b', 'd', 'e', 'g'],
@@ -195,7 +195,7 @@ final Map<String, List<String>> _AZTo7Segment = {
   ' ': []
 };
 
-final Map<List<String>, String> _Segment7ToAZ = {
+const Map<List<String>, String> _Segment7ToAZ = {
   ['b', 'c']: '1',
   ['a', 'b', 'd', 'e', 'g']: '2',
   ['a', 'b', 'c', 'd', 'g']: '3',
@@ -250,7 +250,7 @@ final Map<List<String>, String> _Segment7ToAZ = {
   []: ' '
 };
 
-final Map<List<String>, String> _Segment14ToAZ = {
+const Map<List<String>, String> _Segment14ToAZ = {
   ['b', 'c', 'j']: '1',
   ['b', 'c']: '1',
   ['a', 'b', 'd', 'e', 'g1', 'g2']: '2',
@@ -372,7 +372,7 @@ final Map<List<String>, String> _Segment14ToAZ = {
   ['m']: '.', //acc. to Kenwood Car Hifi Display
 };
 
-final Map<List<String>, String> _Segment16ToAZ = {
+const Map<List<String>, String> _Segment16ToAZ = {
   ['a1', 'i', 'l']: '1',
   ['a1', 'd1', 'd2', 'i', 'l']: '1',
   ['b', 'c', 'j']: '1',
@@ -457,7 +457,6 @@ final Map<List<String>, String> _Segment16ToAZ = {
   ['d2', 'g2', 'm']: 'S',
   ['a1', 'a2', 'i', 'l']: 'T',
   ['d1', 'd2', 'e', 'f', 'g1', 'g2']: 'T',
-  ['d2', 'g1', 'g2', 'i', 'l']: 'T',
   ['d2', 'g1', 'g2', 'i', 'l']: 'T',
   ['d1', 'e', 'f', 'g1']: 'T',
   ['b', 'c', 'd1', 'd2', 'e', 'f']: 'U',

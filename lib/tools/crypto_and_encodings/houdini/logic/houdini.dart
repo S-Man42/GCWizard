@@ -1,6 +1,6 @@
 enum HoudiniMode { NUMBERS, LETTERS }
 
-final Map<String, String> _KEYWORDS_NUMBERS = {
+const Map<String, String> _KEYWORDS_NUMBERS = {
   '1': 'PRAY',
   '2': 'ANSWER',
   '3': 'SAY',
@@ -12,7 +12,7 @@ final Map<String, String> _KEYWORDS_NUMBERS = {
   '9': 'LOOK',
   '0': 'BEQUICK'
 };
-final Map<String, String> _KEYWORDS_LETTERS = {
+const Map<String, String> _KEYWORDS_LETTERS = {
   'A': 'PRAY',
   'B': 'ANSWER',
   'C': 'SAY',

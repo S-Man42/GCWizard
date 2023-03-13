@@ -120,7 +120,7 @@ class OutputConvertToNumeralWord extends OutputConvertBase {
       : super(numbersystem, title, error);
 }
 
-final Map<String, String> _AMHWordToNum = {
+const Map<String, String> _AMHWordToNum = {
   'bado': '0',
   'ahnd': '1',
   'hulet': '2',
@@ -133,7 +133,7 @@ final Map<String, String> _AMHWordToNum = {
   'zetegn': '9',
   '\'asser ': '10',
 };
-final Map<String, String> _BASWordToNum = {
+const Map<String, String> _BASWordToNum = {
   'huts / zero': '0',
   'bat': '1',
   'bi': '2',
@@ -146,7 +146,7 @@ final Map<String, String> _BASWordToNum = {
   'bederatzi': '9',
   'hamar': '10',
 };
-final Map<String, String> _BREWordToNum = {
+const Map<String, String> _BREWordToNum = {
   'mann': '0',
   'unan': '1',
   'daou': '2',
@@ -159,7 +159,7 @@ final Map<String, String> _BREWordToNum = {
   'nav': '9',
   'dek': '10',
 };
-final Map<String, String> _BULKYRWordToNum = {
+const Map<String, String> _BULKYRWordToNum = {
   'нула': '0',
   "едно": '1',
   "една": '1',
@@ -198,7 +198,7 @@ final Map<String, String> _BULKYRWordToNum = {
   'запад': 'numeralwords_w',
   'юг': 'numeralwords_s',
 };
-final Map<String, String> _BULWordToNum = {
+const Map<String, String> _BULWordToNum = {
   'nula': '0',
   "edno": '1',
   "edna": '1',
@@ -237,7 +237,7 @@ final Map<String, String> _BULWordToNum = {
   'zapad': 'numeralwords_w',
   'yug': 'numeralwords_s',
 };
-final Map<String, String> _CEQWordToNum = {
+const Map<String, String> _CEQWordToNum = {
   'han': '1',
   'du': '2',
   'tri': '3',
@@ -249,7 +249,7 @@ final Map<String, String> _CEQWordToNum = {
   'gau': '9',
   'hanzoi': '10',
 };
-final Map<String, String> _CHIFinanceWordToNum = {
+const Map<String, String> _CHIFinanceWordToNum = {
 // https://de.wikipedia.org/wiki/Chinesische_Zahlzeichen
   '零': '0',
   '壹': '1',
@@ -287,7 +287,7 @@ final Map<String, String> _CHIFinanceWordToNum = {
   '仟': '1000',
   '萬': '10000'
 };
-final Map<String, String> _CHISymbolWordToNum = {
+const Map<String, String> _CHISymbolWordToNum = {
 // https://de.wikipedia.org/wiki/Chinesische_Zahlzeichen
   '零': '0',
   '〇': '0',
@@ -324,7 +324,7 @@ final Map<String, String> _CHISymbolWordToNum = {
   '万': '10000',
   '萬': '10000',
 };
-final Map<String, String> _CHIWordToNum = {
+const Map<String, String> _CHIWordToNum = {
 // https://de.wikipedia.org/wiki/Chinesische_Zahlzeichen
   'líng': '0',
   'yī': '1',
@@ -360,7 +360,7 @@ final Map<String, String> _CHIWordToNum = {
   'qiān': '1000',
   'wàn': '10000'
 };
-final Map<String, String> _CHIZhuyinWordToNum = {
+const Map<String, String> _CHIZhuyinWordToNum = {
 // https://de.wikipedia.org/wiki/Chinesische_Zahlzeichen
   'ㄌㄧㄥˊ': '0',
   'ㄧ': '1',
@@ -395,7 +395,7 @@ final Map<String, String> _CHIZhuyinWordToNum = {
   'ㄑㄧㄢ': '1000',
   'ㄨㄢˋ': '10000'
 };
-final Map<String, String> _CZEWordToNum = {
+const Map<String, String> _CZEWordToNum = {
   'zero': '0',
   'jedna': '1',
   'dva': '2',
@@ -434,7 +434,7 @@ final Map<String, String> _CZEWordToNum = {
   'západní': 'numeralwords_w',
   'jih': 'numeralwords_s',
 };
-final Map<String, String> _DEUWordToNum = {
+const Map<String, String> _DEUWordToNum = {
   'null': '0',
   'eins': '1',
   'zwei': '2',
@@ -474,7 +474,7 @@ final Map<String, String> _DEUWordToNum = {
   'west': 'numeralwords_w',
   'sued': 'numeralwords_s',
 };
-final Map<String, String> _DNKWordToNum = {
+const Map<String, String> _DNKWordToNum = {
   'nul': '0',
   'en': '1',
   'to': '2',
@@ -513,7 +513,7 @@ final Map<String, String> _DNKWordToNum = {
   'vest': 'numeralwords_w',
   'syd': 'numeralwords_s'
 };
-final Map<String, String> _DOTWordToNum = {
+const Map<String, String> _DOTWordToNum = {
   'som': '0',
   'at': '1',
   'akat': '2',
@@ -545,7 +545,7 @@ final Map<String, String> _DOTWordToNum = {
   'ken': '100',
   'dalen': '1000',
 };
-final Map<String, String> _ENGWordToNum = {
+const Map<String, String> _ENGWordToNum = {
   'zero': '0',
   'one': '1',
   'two': '2',
@@ -626,7 +626,7 @@ final Map<String, String> _EPOWordToNum = {
   'grado': 'grad',
   'punkto': 'punkt',
 };
-final Map<String, String> _ESPWordToNum = {
+const Map<String, String> _ESPWordToNum = {
   'cero': '0',
   'uno': '1',
   'una': '1',
@@ -666,7 +666,7 @@ final Map<String, String> _ESPWordToNum = {
   'oeste': 'numeralwords_w',
   'sur': 'numeralwords_s'
 };
-final Map<String, String> _FINWordToNum = {
+const Map<String, String> _FINWordToNum = {
   'nolla': '0',
   'yksi': '1',
   'kaksi': '2',
@@ -679,7 +679,7 @@ final Map<String, String> _FINWordToNum = {
   'yhdeksän': '9',
   'kymmenen': '10',
 };
-final Map<String, String> _FRAWordToNum = {
+const Map<String, String> _FRAWordToNum = {
   'zéro': '0',
   'un': '1',
   'une': '1',
@@ -719,7 +719,7 @@ final Map<String, String> _FRAWordToNum = {
   'ouest': 'numeralwords_w',
   'sud': 'numeralwords_s'
 };
-final Map<String, String> _GRCLATWordToNum = {
+const Map<String, String> _GRCLATWordToNum = {
   'midén': '0',
   'énas': '1',
   'miá': '1',
@@ -767,7 +767,7 @@ final Map<String, String> _GRCLATWordToNum = {
   'dusk': 'numeralwords_w',
   'notia': 'numeralwords_s',
 };
-final Map<String, String> _GRCWordToNum = {
+const Map<String, String> _GRCWordToNum = {
   'μηδέν': '0',
   'ένας': '1',
   'μία': '1',
@@ -819,7 +819,7 @@ final Map<String, String> _GRCWordToNum = {
   'δυτικά': 'numeralwords_w',
   'νότια': 'numeralwords_s',
 };
-final Map<String, String> _GRCOLDLATWordToNum = {
+const Map<String, String> _GRCOLDLATWordToNum = {
   'midén': '0',
   'heîs': '1',
   'mía': '1',
@@ -866,7 +866,7 @@ final Map<String, String> _GRCOLDLATWordToNum = {
   'dusk': 'numeralwords_w',
   'notia': 'numeralwords_s',
 };
-final Map<String, String> _GRCOLDWordToNum = {
+const Map<String, String> _GRCOLDWordToNum = {
   'μηδέν': '0',
   'εἷς': '1',
   'μία': '1',
@@ -913,7 +913,7 @@ final Map<String, String> _GRCOLDWordToNum = {
   'δυτικά': 'numeralwords_w',
   'νότια': 'numeralwords_s',
 };
-final Map<String, String> _HANGULKORWordToNum = {
+const Map<String, String> _HANGULKORWordToNum = {
   '하나': '1',
   '하': '1',
   '두': '2',
@@ -954,7 +954,7 @@ final Map<String, String> _HANGULKORWordToNum = {
   '드먼': '10000',
   '골': '10000',
 };
-final Map<String, String> _HANGULSINOKORWordToNum = {
+const Map<String, String> _HANGULSINOKORWordToNum = {
   '영': '0',
   '령': '0',
   '일': '1',
@@ -991,7 +991,7 @@ final Map<String, String> _HANGULSINOKORWordToNum = {
   '천': '1000',
   '만': '10000',
 };
-final Map<String, String> _HANJAWordToNum = {
+const Map<String, String> _HANJAWordToNum = {
   '零': '0',
   '空': '0',
   '一': '1',
@@ -1025,7 +1025,7 @@ final Map<String, String> _HANJAWordToNum = {
   '千': '1000',
   '萬': '10000'
 };
-final Map<String, String> _INDWordToNum = {
+const Map<String, String> _INDWordToNum = {
   'nol': '0',
   'satu': '1',
   'dua': '2',
@@ -1038,7 +1038,7 @@ final Map<String, String> _INDWordToNum = {
   'sembilan': '9',
   'sepuluh': '10',
 };
-final Map<String, String> _ITAWordToNum = {
+const Map<String, String> _ITAWordToNum = {
   'zero': '0',
   'uno': '1',
   'due': '2',
@@ -1077,7 +1077,7 @@ final Map<String, String> _ITAWordToNum = {
   'ovest': 'numeralwords_w',
   'sud': 'numeralwords_s'
 };
-final Map<String, String> _JAPHiraganaWordToNum = {
+const Map<String, String> _JAPHiraganaWordToNum = {
 // https://darkfairyssenf.de/2018/05/17/nihongo-zahlen-auf-japanisch/#:~:text=Gro%C3%9Fe%20Spr%C3%BCnge%20%20%20%20Zahl%20%20,1000%20%20%20sen%20%20%20%E3%81%9B%E3%82%93%20
   'ゼロ': '0',
   'れい': '0',
@@ -1120,7 +1120,7 @@ final Map<String, String> _JAPHiraganaWordToNum = {
   'ひゃく': '100',
   'せん': '1000',
 };
-final Map<String, String> _JAPWordToNum = {
+const Map<String, String> _JAPWordToNum = {
 // https://darkfairyssenf.de/2018/05/17/nihongo-zahlen-auf-japanisch/#:~:text=Gro%C3%9Fe%20Spr%C3%BCnge%20%20%20%20Zahl%20%20,1000%20%20%20sen%20%20%20%E3%81%9B%E3%82%93%20
   'zero': '0',
   'rei': '0',
@@ -1163,7 +1163,7 @@ final Map<String, String> _JAPWordToNum = {
   'hyaku': '100',
   'sen': '1000',
 };
-final Map<String, String> _KLIWordToNum = {
+const Map<String, String> _KLIWordToNum = {
   'pagh': '0',
   'wa\'': '1',
   'cha\'': '2',
@@ -1215,7 +1215,7 @@ final Map<String, String> _KLIWordToNum = {
   '\'evting': 'numeralwords_w',
   'maH': 'numeralwords_w',
 };
-final Map<String, String> _KORWordToNum = {
+const Map<String, String> _KORWordToNum = {
   'hana': '1',
   'hah-nah': '1',
   'han': '1',
@@ -1314,7 +1314,7 @@ final Map<String, String> _KORWordToNum = {
   'deumeun': '10000',
   'gol': '10000',
 };
-final Map<String, String> _KYRWordToNum = {
+const Map<String, String> _KYRWordToNum = {
   'ноль': '0',
   'нуль': '0',
   'один': '1',
@@ -1357,7 +1357,7 @@ final Map<String, String> _KYRWordToNum = {
   'Запад': 'numeralwords_w',
   'юг': 'numeralwords_s'
 };
-final Map<String, String> _LATWordToNum = {
+const Map<String, String> _LATWordToNum = {
   'zerum': '0',
   'nullum': '0',
   'unus': '1',
@@ -1398,7 +1398,7 @@ final Map<String, String> _LATWordToNum = {
   'west': 'numeralwords_w',
   'meridies': 'numeralwords_s',
 };
-final Map<String, String> _LOJWordToNum = {
+const Map<String, String> _LOJWordToNum = {
   'no': '0',
   'pa': '1',
   're': '2',
@@ -1411,7 +1411,7 @@ final Map<String, String> _LOJWordToNum = {
   'so': '9',
   'pano': '10',
 };
-final Map<String, String> _MAPWordToNum = {
+const Map<String, String> _MAPWordToNum = {
   'kinhe': '1',
   'epu': '2',
   'kyla': '3',
@@ -1423,7 +1423,7 @@ final Map<String, String> _MAPWordToNum = {
   'ailha': '9',
   'mari ': '10',
 };
-final Map<String, String> _MEGWordToNum = {
+const Map<String, String> _MEGWordToNum = {
   'zero': '0',
   'ună': '1',
   'dău': '2',
@@ -1436,7 +1436,7 @@ final Map<String, String> _MEGWordToNum = {
   'nău': '9',
   'dzieţi ': '10',
 };
-final Map<String, String> _MINWordToNum = {
+const Map<String, String> _MINWordToNum = {
   'hana': '1',
   'dul': '2',
   'sae': '3',
@@ -1448,7 +1448,7 @@ final Map<String, String> _MINWordToNum = {
   'saesaesae': '9',
   'saesaesaehana': '10',
 };
-final Map<String, String> _NAVIWordToNum = {
+const Map<String, String> _NAVIWordToNum = {
   'kew': '0',
   "'aw": '1',
   'mune': '2',
@@ -1474,7 +1474,7 @@ final Map<String, String> _NAVIWordToNum = {
   'ftaer': 'numeralwords_w',
   'nekll': 'numeralwords_s',
 };
-final Map<String, String> _NLDWordToNum = {
+const Map<String, String> _NLDWordToNum = {
   'nul': '0',
   'een': '1',
   'twee': '2',
@@ -1513,7 +1513,7 @@ final Map<String, String> _NLDWordToNum = {
   'west': 'numeralwords_w',
   'zuid': 'numeralwords_s'
 };
-final Map<String, String> _NORWordToNum = {
+const Map<String, String> _NORWordToNum = {
   'nul': '0',
   'en': '1',
   'ett': '1',
@@ -1554,7 +1554,7 @@ final Map<String, String> _NORWordToNum = {
   'vest': 'numeralwords_w',
   'sør': 'numeralwords_s'
 };
-final Map<String, String> _PERWordToNum = {
+const Map<String, String> _PERWordToNum = {
   'sefr': '0',
   'yek': '1',
   'do': '2',
@@ -1567,7 +1567,7 @@ final Map<String, String> _PERWordToNum = {
   'noh': '9',
   'dah': '10',
 };
-final Map<String, String> _POLWordToNum = {
+const Map<String, String> _POLWordToNum = {
   'zero': '0',
   'jeden': '1',
   'jedna': '1',
@@ -1609,7 +1609,7 @@ final Map<String, String> _POLWordToNum = {
   'zachód': 'numeralwords_w',
   'południe': 'numeralwords_s'
 };
-final Map<String, String> _PORWordToNum = {
+const Map<String, String> _PORWordToNum = {
   'zero': '0',
   'um': '1',
   'dois': '2',
@@ -1650,7 +1650,7 @@ final Map<String, String> _PORWordToNum = {
   'oeste': 'numeralwords_w',
   'sul': 'numeralwords_s'
 };
-final Map<String, String> _QUEWordToNum = {
+const Map<String, String> _QUEWordToNum = {
   'huk': '0',
   'iskay': '1',
   'kimsa': '2',
@@ -1662,7 +1662,7 @@ final Map<String, String> _QUEWordToNum = {
   'isqon': '8',
   'chunka ': '9',
 };
-final Map<String, String> _ROUWordToNum = {
+const Map<String, String> _ROUWordToNum = {
   'zero': '0',
   'unu': '1',
   'una': '1',
@@ -1705,7 +1705,7 @@ final Map<String, String> _ROUWordToNum = {
   'vest': 'numeralwords_w',
   'sud': 'numeralwords_s',
 };
-final Map<String, String> _RUSWordToNum = {
+const Map<String, String> _RUSWordToNum = {
   'nol': '0',
   'nul': '0',
   'adna': '1',
@@ -1747,7 +1747,7 @@ final Map<String, String> _RUSWordToNum = {
   'zapad': 'numeralwords_w',
   'yug': 'numeralwords_s'
 };
-final Map<String, String> _SCOWordToNum = {
+const Map<String, String> _SCOWordToNum = {
   'nocht': '0',
   'ane': '1',
   'ae': '1',
@@ -1761,7 +1761,7 @@ final Map<String, String> _SCOWordToNum = {
   'nine': '9',
   'ten ': '10',
 };
-final Map<String, String> _SHAWordToNum = {
+const Map<String, String> _SHAWordToNum = {
   'ga': '0',
   'bu': '1',
   'zo': '2',
@@ -1774,7 +1774,7 @@ final Map<String, String> _SHAWordToNum = {
   'zobu': '9',
   'zozo': '10',
 };
-final Map<String, String> _SINOKORWordToNum = {
+const Map<String, String> _SINOKORWordToNum = {
   'yeong': '0',
   'ryeong': '0',
   'eel': '1',
@@ -1831,7 +1831,7 @@ final Map<String, String> _SINOKORWordToNum = {
   'cheon': '1000',
   'man': '10000',
 };
-final Map<String, String> _SOLWordToNum = {
+const Map<String, String> _SOLWordToNum = {
   'soldo': '0',
   'redodo': '1',
   'remimi': '2',
@@ -1869,7 +1869,7 @@ final Map<String, String> _SOLWordToNum = {
   'famidosi': 'grad',
   'relaresol': 'punkt',
 };
-final Map<String, String> _SVKWordToNum = {
+const Map<String, String> _SVKWordToNum = {
   'nula': '0',
   'jeden': '1',
   'dva': '2',
@@ -1908,7 +1908,7 @@ final Map<String, String> _SVKWordToNum = {
   'západ': 'numeralwords_w',
   'juh': 'numeralwords_s',
 };
-final Map<String, String> _SWEWordToNum = {
+const Map<String, String> _SWEWordToNum = {
   'noll': '0',
   'en': '1',
   'ett': '1',
@@ -1948,7 +1948,7 @@ final Map<String, String> _SWEWordToNum = {
   'väst': 'numeralwords_w',
   'syd': 'numeralwords_s'
 };
-final Map<String, String> _TAMWordToNum = {
+const Map<String, String> _TAMWordToNum = {
   'cuḻiyam': '0',
   'oṉdṟu': '1',
   'irandu': '2',
@@ -1961,7 +1961,7 @@ final Map<String, String> _TAMWordToNum = {
   'oṉbadhu': '9',
   'paththu': '10',
 };
-final Map<String, String> _THAIRTGSWordToNum = {
+const Map<String, String> _THAIRTGSWordToNum = {
   'sun': '0',
   'nueng': '1',
   'song': '2',
@@ -1995,7 +1995,7 @@ final Map<String, String> _THAIRTGSWordToNum = {
   'phan': '1000',
   'muen': '10000',
 };
-final Map<String, String> _THAIWordToNum = {
+const Map<String, String> _THAIWordToNum = {
   'ศูนย์': '0',
   'หนึ่ง': '1',
   'สอง': '2',
@@ -2029,7 +2029,7 @@ final Map<String, String> _THAIWordToNum = {
   'พันสิบ': '1000',
   'หมื่นสิบ': '10000',
 };
-final Map<String, String> _TURWordToNum = {
+const Map<String, String> _TURWordToNum = {
   'sıfır': '0',
   'bir': '1',
   'iki': '2',
@@ -2044,7 +2044,7 @@ final Map<String, String> _TURWordToNum = {
   'yüz': '100',
   'bin': '1000',
 };
-final Map<String, String> _UNGWordToNum = {
+const Map<String, String> _UNGWordToNum = {
   'nulla': '0',
   'egy': '1',
   'kettő': '2',
@@ -2057,7 +2057,7 @@ final Map<String, String> _UNGWordToNum = {
   'kilenc': '9',
   'tíz ': '10',
 };
-final Map<String, String> _VIECHUNOMWordToNum = {
+const Map<String, String> _VIECHUNOMWordToNum = {
   // https://chunom.org/pages/?search=mot
   // https://www.omniglot.com/language/numbers/vietnamese.htm
   '𠬠': '1',
@@ -2089,7 +2089,7 @@ final Map<String, String> _VIECHUNOMWordToNum = {
   '𢒂𨒒': '90',
   '𠬠𤾓': '100',
 };
-final Map<String, String> _VIEHANTUWordToNum = {
+const Map<String, String> _VIEHANTUWordToNum = {
 // https://chunom.org/pages/?search=mot
   '空': '0',
   '零': '0',
@@ -2114,7 +2114,7 @@ final Map<String, String> _VIEHANTUWordToNum = {
   '十': '10',
   '拾': '10',
 };
-final Map<String, String> _VIESINOWordToNum = {
+const Map<String, String> _VIESINOWordToNum = {
 // https://chunom.org/pages/?search=mot
   'không': '0',
   'nhất': '1',
@@ -2128,7 +2128,7 @@ final Map<String, String> _VIESINOWordToNum = {
   'cửu': '9',
   'thập': '10',
 };
-final Map<String, String> _VIEWordToNum = {
+const Map<String, String> _VIEWordToNum = {
   'cê-rô': '0',
   'một': '1',
   'hai': '2',
@@ -2159,7 +2159,7 @@ final Map<String, String> _VIEWordToNum = {
   'chín mười': '90',
   'một trăm': '100',
 };
-final Map<String, String> _VOLWordToNum = {
+const Map<String, String> _VOLWordToNum = {
   'ser': '0',
   'bal': '1',
   'tel': '2',

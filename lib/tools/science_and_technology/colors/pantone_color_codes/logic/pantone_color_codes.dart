@@ -24,7 +24,7 @@ class PantoneColorExt extends PantoneColor {
   }) :super(colorcode: colorcode, name: name);
 }
 
-Map<String, PantoneColorExt> PANTONE_COLOR_CODES_WITH_NAMES = {
+final Map<String, PantoneColorExt> PANTONE_COLOR_CODES_WITH_NAMES = {
   "Black 1": PantoneColorExt(colorcode: "#2D2926", name: "common_color_black", suffix: "1"),
   "Black 2": PantoneColorExt(colorcode: "#332F21", name: "common_color_black", suffix: "2"),
   "Black 3": PantoneColorExt(colorcode: "#212721", name: "common_color_black", suffix: "3"),
@@ -196,7 +196,7 @@ Map<String, PantoneColorExt> PANTONE_COLOR_CODES_WITH_NAMES = {
   "Yellow 0131": PantoneColorExt(colorcode: "#F2F0A1", name: "common_color_yellow", suffix: "0131"),
 };
 
-Map<String, PantoneColor> PANTONE_COLOR_CODES_ONLY_NUMBERS = {
+final Map<String, PantoneColor> PANTONE_COLOR_CODES_ONLY_NUMBERS = {
   "144": PantoneColor(colorcode: "#ED8B00", name: "144"),
   "145": PantoneColor(colorcode: "#CF7F00", name: "145"),
   "146": PantoneColor(colorcode: "#A76D11", name: "146"),

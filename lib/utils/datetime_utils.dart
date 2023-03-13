@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
 
-final Map<int, String> WEEKDAY = {
+const Map<int, String> WEEKDAY = {
   1: 'dates_weekday_monday',
   2: 'dates_weekday_tuesday',
   3: 'dates_weekday_wednesday',
@@ -10,7 +10,7 @@ final Map<int, String> WEEKDAY = {
   7: 'dates_weekday_sunday'
 };
 
-final Map<int, String> MONTH = {
+const Map<int, String> MONTH = {
   1: 'common_month_january',
   2: 'common_month_february',
   3: 'common_month_march',

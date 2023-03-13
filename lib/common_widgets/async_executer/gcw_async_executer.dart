@@ -24,7 +24,7 @@ class GCWAsyncExecuter<T> extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _GCWAsyncExecuterState createState() => _GCWAsyncExecuterState();
+  _GCWAsyncExecuterState<T> createState() => _GCWAsyncExecuterState<T>();
 
 }
 
@@ -37,8 +37,8 @@ Future<ReceivePort> _makeIsolate(void Function(GCWAsyncExecuterParameters) isola
   return receivePort;
 }
 
-class _GCWAsyncExecuterState extends State<GCWAsyncExecuter> {
-  Object? _result;
+class _GCWAsyncExecuterState<T> extends State<GCWAsyncExecuter<T>> {
+  T? _result;
   bool isOverlay = true;
   bool _cancel = false;
   ReceivePort? _receivePort;
@@ -67,7 +67,7 @@ class _GCWAsyncExecuterState extends State<GCWAsyncExecuter> {
         await for (var event in _receivePort!) {
           if (event is DoubleText && event.text == 'progress') {
             yield event.value;
-          } else {
+          } else if (event is T) {
             _result = event;
             _receivePort!.close();
             return;
@@ -83,7 +83,9 @@ class _GCWAsyncExecuterState extends State<GCWAsyncExecuter> {
             if (widget.isOverlay) {
               Navigator.of(context).pop(); // Pop from dialog on completion (needen on overlay)
             }
-            widget.onReady(_result);
+            if (_result is T) {
+              widget.onReady(_result as T);
+            }
           }
           return Column(children: <Widget>[
             (snapshot.hasData)

@@ -3,7 +3,7 @@
 import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
-final Map<String, List<String>> _PASLEY = {
+const Map<String, List<String>> _PASLEY = {
   ' ': [],
   '1': ['7'],
   '2': ['1'],
@@ -43,12 +43,12 @@ final Map<String, List<String>> _PASLEY = {
   'Z': ['5', '6'],
 };
 
-final Map<String, List<String>> _PASLEY_MODIFIER = {
+const Map<String, List<String>> _PASLEY_MODIFIER = {
   'LETTERFOLLOWS': ['3', '4'],
   'NUMBERFOLLOWS': ['2', '6'],
 };
 
-final Map<String, String> _DigitToLetter = {
+const Map<String, String> _DigitToLetter = {
   '1': 'A',
   '2': 'B',
   '3': 'C',
@@ -62,7 +62,7 @@ final Map<String, String> _DigitToLetter = {
   ' ': ' '
 };
 
-final Map<String, String> _LetterToDigit = {
+const Map<String, String> _LetterToDigit = {
   'A': '1',
   'B': '2',
   'C': '3',
@@ -76,7 +76,7 @@ final Map<String, String> _LetterToDigit = {
   ' ': ' '
 };
 
-final List<String> _LETTER = [
+const List<String> _LETTER = [
   ' ',
   'A',
   'B',
@@ -105,7 +105,7 @@ final List<String> _LETTER = [
   'Y',
   'Z',
 ];
-final List<String> _DIGIT = [
+const List<String> _DIGIT = [
   ' ',
   '1',
   '2',

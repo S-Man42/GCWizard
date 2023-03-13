@@ -54,7 +54,7 @@ class PianoKey {
   }
 }
 
-Map<int, PianoKey> PIANO_KEYS = {
+final Map<int, PianoKey> PIANO_KEYS = {
   89: PianoKey (
     number: "89 (-8)",
     color: "common_color_white",

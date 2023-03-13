@@ -3,7 +3,7 @@ import 'package:gc_wizard/utils/collection_utils.dart';
 
 enum WigWagCodebook { ORIGINAL, GENERALSERVICECODE1860, GENERALSERVICECODE1872 }
 
-Map<WigWagCodebook, CodebookConfig> CCITT_CODEBOOK = {
+final Map<WigWagCodebook, CodebookConfig> CCITT_CODEBOOK = {
   WigWagCodebook.ORIGINAL: CodebookConfig(
     title: 'telegraph_wigwag_original_title',
     subtitle: 'telegraph_wigwag_original_description'
@@ -18,7 +18,7 @@ Map<WigWagCodebook, CodebookConfig> CCITT_CODEBOOK = {
   ),
 };
 
-final Map<String, int> _originalCode = {
+const Map<String, int> _originalCode = {
   'ENDOFWORD': 3,
   'ENDOFSENTENCE': 33,
   'ENDOFMESSAGE': 333,
@@ -67,7 +67,7 @@ final Map<String, int> _originalCode = {
   'Z': 2222,
 };
 
-final Map<String, int> _generalCode1860 = {
+const Map<String, int> _generalCode1860 = {
   'ENDOFWORD': 3,
   'ENDOFSENTENCE': 33,
   'ENDOFMESSAGE': 333,
@@ -116,7 +116,7 @@ final Map<String, int> _generalCode1860 = {
   'Z': 113,
 };
 
-final Map<String, int> _generalCode1872 = {
+const Map<String, int> _generalCode1872 = {
   'ENDOFWORD': 5,
   'ENDOFSENTENCE': 55,
   'ENDOFMESSAGE': 555,

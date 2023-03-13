@@ -3,7 +3,7 @@
 
 import 'package:gc_wizard/utils/constants.dart';
 
-Map<String, String> _POKEMON = {
+const Map<String, String> _POKEMON = {
 // http://fbcs.bplaced.net/multi_encoder_decoder.html
   'g': 'ar',
   'v': 'as',
@@ -34,7 +34,7 @@ Map<String, String> _POKEMON = {
   ' ': ' ',
 };
 
-List<Map<String, String>> _DECODE_POKEMON = [
+const List<Map<String, String>> _DECODE_POKEMON = [
   {'same': 'ef'},
   {'saman': 'ek'},
   {'samon': 'eb'},

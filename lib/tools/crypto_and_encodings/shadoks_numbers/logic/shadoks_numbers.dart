@@ -10,14 +10,14 @@ class ShadocksOutput extends Segments{
     : super(displays : displays);
 }
 
-final Map<int, List<String>> _numbersToSegments = {
+const Map<int, List<String>> _numbersToSegments = {
   0: ['a'],
   1: ['b'],
   2: ['b', 'c'],
   3: ['b', 'c', 'd'],
 };
 
-final Map<String, String> _numberToWord = {
+const Map<String, String> _numberToWord = {
   '0': 'GA',
   '1': 'BU',
   '2': 'ZO',

@@ -5,7 +5,7 @@ import 'package:gc_wizard/utils/constants.dart';
 
 enum ChappeCodebook { ALPHABET, CODEPOINTS, DIGITS, KULIBIN }
 
-Map<ChappeCodebook, CodebookConfig> CHAPPE_CODEBOOK = {
+final Map<ChappeCodebook, CodebookConfig> CHAPPE_CODEBOOK = {
   ChappeCodebook.DIGITS: CodebookConfig(title: 'telegraph_chappe_digits_title', subtitle: 'telegraph_chappe_digits_description'),
   ChappeCodebook.CODEPOINTS: CodebookConfig(
     title: 'telegraph_chappe_codepoints_title',
@@ -21,7 +21,7 @@ Map<ChappeCodebook, CodebookConfig> CHAPPE_CODEBOOK = {
   ),
 };
 
-final Map<String, List<String>> _CODEBOOK_CHAPPE_DIGITS = {
+const Map<String, List<String>> _CODEBOOK_CHAPPE_DIGITS = {
   '1': ['30', '70'],
   '2': ['10', '50'],
   '3': ['30', '3r', '70'],
@@ -34,7 +34,7 @@ final Map<String, List<String>> _CODEBOOK_CHAPPE_DIGITS = {
   '0': ['10', '50', '5l'],
 };
 
-final Map<String, List<String>> _CODEBOOK_CHAPPE_ALPHABET = {
+const Map<String, List<String>> _CODEBOOK_CHAPPE_ALPHABET = {
   'A': ['10', '1r', '50', '5l'],
   'B': ['20', '2r', '60', '6l'],
   'C': ['30', '3r', '70', '7l'],
@@ -73,7 +73,7 @@ final Map<String, List<String>> _CODEBOOK_CHAPPE_ALPHABET = {
   '&': ['20', '60', '6l'],
 };
 
-final Map<String, List<String>> _CODEBOOK_CHAPPE_CODEPOINTS = {
+const Map<String, List<String>> _CODEBOOK_CHAPPE_CODEPOINTS = {
   '1': ['30', '3o', '70'],
   '2': ['30', '3u', '70'],
   '3': ['30', '70', '7o'],
@@ -168,7 +168,7 @@ final Map<String, List<String>> _CODEBOOK_CHAPPE_CODEPOINTS = {
   '92': ['10', '1l', '50', '5a'],
 };
 
-final Map<String, List<String>> _CODEBOOK_KULIBIN = {
+const Map<String, List<String>> _CODEBOOK_KULIBIN = {
   'A': ['10', '1r', '50', '5l'],
   'B': ['20', '2r', '60', '6l'],
   'C': ['30', '3r', '70', '7l'],

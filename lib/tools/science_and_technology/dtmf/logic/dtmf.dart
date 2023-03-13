@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 
-final Map<String, List<int>> _DigitToDTMF = {
+const Map<String, List<int>> _DigitToDTMF = {
   '1': [697, 1209],
   '2': [697, 1336],
   '3': [697, 1477],

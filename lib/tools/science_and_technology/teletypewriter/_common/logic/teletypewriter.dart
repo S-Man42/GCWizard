@@ -72,7 +72,7 @@ class PunchtapekConfig {
   });
 }
 
-Map<TeletypewriterCodebook, CodebookConfig> ANCIENT_CODEBOOK = {
+final Map<TeletypewriterCodebook, CodebookConfig> ANCIENT_CODEBOOK = {
   TeletypewriterCodebook.BAUDOT: CodebookConfig(
     title: 'punchtape_baudot_title',
     subtitle: 'punchtape_baudot_description'
@@ -95,7 +95,7 @@ Map<TeletypewriterCodebook, CodebookConfig> ANCIENT_CODEBOOK = {
   ),
 };
 
-Map<TeletypewriterCodebook, CodebookConfig> CCITT1_CODEBOOK = {
+final Map<TeletypewriterCodebook, CodebookConfig> CCITT1_CODEBOOK = {
   TeletypewriterCodebook.CCITT_ITA1_1926: CodebookConfig(
     title: 'punchtape_ccitt_ita1_1926_title',
     subtitle: 'punchtape_ccitt_ita1_1926_description'
@@ -114,7 +114,7 @@ Map<TeletypewriterCodebook, CodebookConfig> CCITT1_CODEBOOK = {
   ),
 };
 
-Map<TeletypewriterCodebook, CodebookConfig> CCITT2_CODEBOOK = {
+final Map<TeletypewriterCodebook, CodebookConfig> CCITT2_CODEBOOK = {
   TeletypewriterCodebook.CCITT_ITA2_1929: CodebookConfig(
     title: 'punchtape_ccitt_ita2_1929_title',
     subtitle: 'punchtape_ccitt_ita2_1929_description'
@@ -133,7 +133,7 @@ Map<TeletypewriterCodebook, CodebookConfig> CCITT2_CODEBOOK = {
   ),
 };
 
-Map<TeletypewriterCodebook, CodebookConfig> CCITT_CODEBOOK = {
+final Map<TeletypewriterCodebook, CodebookConfig> CCITT_CODEBOOK = {
   TeletypewriterCodebook.CCITT_ITA1_1926: CodebookConfig(
     title: 'punchtape_ccitt_ita1_1926_title',
     subtitle: 'punchtape_ccitt_ita1_1926_description'
@@ -184,7 +184,7 @@ Map<TeletypewriterCodebook, CodebookConfig> CCITT_CODEBOOK = {
   ),
 };
 
-Map<TeletypewriterCodebook, CodebookConfig> OTHER_CODEBOOK = {
+final Map<TeletypewriterCodebook, CodebookConfig> OTHER_CODEBOOK = {
   TeletypewriterCodebook.ZC1: CodebookConfig(
     title: 'punchtape_zc1_title',
     subtitle: 'punchtape_zc1_description'
@@ -207,7 +207,7 @@ Map<TeletypewriterCodebook, CodebookConfig> OTHER_CODEBOOK = {
   ),
 };
 
-Map<TeletypewriterCodebook, CodebookConfig> ALL_CODES_CODEBOOK = {
+final Map<TeletypewriterCodebook, CodebookConfig> ALL_CODES_CODEBOOK = {
   TeletypewriterCodebook.BAUDOT: CodebookConfig(
     title: 'punchtape_baudot_title',
     subtitle: 'punchtape_baudot_description'
@@ -283,7 +283,7 @@ Map<TeletypewriterCodebook, CodebookConfig> ALL_CODES_CODEBOOK = {
   TeletypewriterCodebook.ALGOL: CodebookConfig(title: 'punchtape_algol_title', subtitle: 'punchtape_algol_description'),
 };
 
-Map<TeletypewriterCodebook, PunchtapekConfig> PUNCHTAPE_DEFINITION = {
+final Map<TeletypewriterCodebook, PunchtapekConfig> PUNCHTAPE_DEFINITION = {
   TeletypewriterCodebook.BAUDOT: PunchtapekConfig(punchHoles: 5, sprocketHole: 0),
   TeletypewriterCodebook.BAUDOT_54123: PunchtapekConfig(punchHoles: 5, sprocketHole: 3),
   TeletypewriterCodebook.MURRAY: PunchtapekConfig(punchHoles: 5, sprocketHole: 0),
@@ -308,7 +308,7 @@ Map<TeletypewriterCodebook, PunchtapekConfig> PUNCHTAPE_DEFINITION = {
   TeletypewriterCodebook.ALGOL: PunchtapekConfig(punchHoles: 5, sprocketHole: 4),
 };
 
-Map<TeletypewriterCodebook, int> BINARY_LENGTH = {
+const Map<TeletypewriterCodebook, int> BINARY_LENGTH = {
   TeletypewriterCodebook.BAUDOT: 5,
   TeletypewriterCodebook.BAUDOT_54123: 5,
   TeletypewriterCodebook.MURRAY: 5,
@@ -368,10 +368,10 @@ final _AZToCCITT_BAUDOT = {
 final _CCITT_BAUDOTToAZ = switchMapKeyValue(_AZToCCITT_BAUDOT);
 
 // original Baudot according to US Patent has no numbers
-final Map<String, int> _NumbersToCCITT_BAUDOT = {};
+const Map<String, int> _NumbersToCCITT_BAUDOT = {};
 final _CCITT_BAUDOTToNumbers = switchMapKeyValue(_NumbersToCCITT_BAUDOT);
 
-final _AZToBaudot_54123 = {
+const _AZToBaudot_54123 = {
   // Baudot-Code from DEU Wikipedia in Bit-Order 54321
   'A': 4, // 12345 1
   'B': 18, // 12345 11

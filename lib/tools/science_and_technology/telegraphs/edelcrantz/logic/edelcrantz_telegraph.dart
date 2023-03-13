@@ -11,7 +11,7 @@ import 'package:gc_wizard/utils/constants.dart';
 
 enum EdelcrantzCodebook { YEAR_1795, YEAR_1808, MUSEUM }
 
-Map<EdelcrantzCodebook, CodebookConfig> MURRAY_CODEBOOK = {
+final Map<EdelcrantzCodebook, CodebookConfig> MURRAY_CODEBOOK = {
   EdelcrantzCodebook.YEAR_1795: CodebookConfig(
     title: 'telegraph_edelcrantz_1795_title',
     subtitle: 'telegraph_edelcrantz_1795_description'

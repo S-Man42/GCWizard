@@ -9,7 +9,7 @@ import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 const MDT_INTERNALNAMES_BCD = 'multidecoder_tool_bcd_title';
 const MDT_BCD_OPTION_BCDFUNCTION = 'multidecoder_tool_bcd_option_bcdfunction';
 
-final Map<String, BCDType> _BCD_TYPES = {
+const Map<String, BCDType> _BCD_TYPES = {
   'bcd_original': BCDType.ORIGINAL,
   'bcd_1of10': BCDType.ONEOFTEN,
   'bcd_2of5': BCDType.TWOOFFIVE,
