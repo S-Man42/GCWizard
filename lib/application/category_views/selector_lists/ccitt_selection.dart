@@ -29,8 +29,8 @@ class CCITTSelection extends GCWSelection {
       }
 
       return [
-        className(CCITT1()),
-        className(CCITT2()),
+        className(const CCITT1()),
+        className(const CCITT2()),
         className(const CCITT3()),
         className(const CCITT4()),
         className(const CCITT5()),

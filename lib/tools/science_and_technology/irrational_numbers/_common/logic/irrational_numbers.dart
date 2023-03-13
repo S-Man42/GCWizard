@@ -6,7 +6,7 @@ class IrrationalNumber {
   final String decimalPart;
   final String symbol;
 
-  IrrationalNumber({required this.symbol, required this.integerPart, required this.decimalPart});
+  const IrrationalNumber({required this.symbol, required this.integerPart, required this.decimalPart});
 }
 
 class IrrationalNumberCalculator {

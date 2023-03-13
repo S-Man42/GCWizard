@@ -22,7 +22,7 @@ enum MurrayCodebook {
   MYGEOTOOLS
 }
 
-final Map<MurrayCodebook, CodebookConfig> MURRAY_CODEBOOK = {
+const Map<MurrayCodebook, CodebookConfig> MURRAY_CODEBOOK = {
   MurrayCodebook.ROYALNAVY: CodebookConfig(
     title: 'telegraph_murray_royalnavy_title',
     subtitle: 'telegraph_murray_royalnavy_description'

@@ -10,16 +10,16 @@ enum CountryProperties {
 }
 
 class Country {
-  String name;
-  String callingcode;
-  String vehiclecode;
-  String iso3166_1_2;
-  String iso3166_1_3;
-  String iso3166_1_n;
-  String iso3166_2;
-  String ioccode;
+  final String name;
+  final String callingcode;
+  final String vehiclecode;
+  final String iso3166_1_2;
+  final String iso3166_1_3;
+  final String iso3166_1_n;
+  final String iso3166_2;
+  final String ioccode;
 
-  Country({
+  const Country({
     required this.name,
     required this.callingcode,
     required this.vehiclecode,
@@ -52,7 +52,7 @@ class Country {
   }
 }
 
-final Map<String, Country> COUNTRIES = {
+const Map<String, Country> COUNTRIES = {
   "Andorra": Country(
     name: "common_country_Andorra",
     callingcode: "+376",

@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
-final _baseSegmentsCistercianSegment = [
+const _baseSegmentsCistercianSegment = [
   'a',
   'b',
   'c',
@@ -27,7 +27,7 @@ final _baseSegmentsCistercianSegment = [
   'u'
 ];
 
-final Map<String, List<String>> _AZToSegmentCistercian = {
+const Map<String, List<String>> _AZToSegmentCistercian = {
   '0': ['k'],
   '1': ['b', 'k'],
   '2': ['j', 'k'],

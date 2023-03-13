@@ -14,6 +14,7 @@ class VanityWordsDecodeOutput {
   final String numWord;
   final String digit;
   final bool ambigous;
+
   VanityWordsDecodeOutput(this.number, this.numWord, this.digit, this.ambigous);
 }
 

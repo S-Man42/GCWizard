@@ -218,7 +218,7 @@ const Map<String, String> _WHEATSTONE_COOKE_LETTER_2_NUMERAL = {
 };
 final DIGITS = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
 
-final Map<GaussWeberTelegraphMode, CodebookConfig> WHEATSTONECOOKENEEDLENUMBER = {
+const Map<GaussWeberTelegraphMode, CodebookConfig> WHEATSTONECOOKENEEDLENUMBER = {
   GaussWeberTelegraphMode.WHEATSTONE_COOKE_1: CodebookConfig(
     title: 'telegraph_wheatstonecooke_1_needle_title',
     subtitle: 'telegraph_wheatstonecooke_1_needle_description'

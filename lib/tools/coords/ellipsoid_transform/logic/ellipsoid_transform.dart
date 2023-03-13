@@ -66,7 +66,7 @@ class EllipsoidTransformation {
   }
 }
 
-final List<_TransformationData> _transformationsGK = [
+const List<_TransformationData> _transformationsGK = [
   _TransformationData(
       ELLIPSOID_NAME_BESSEL1841, ELLIPSOID_NAME_WGS84, -1.040, -0.350, 3.080, 582.0, 105.0, 414.0, 8.3e-6), //GK1 2001
   _TransformationData(
@@ -84,7 +84,7 @@ class TransformableDate {
   final int? transformationIndex;
   final Ellipsoid ellipsoid;
 
-  TransformableDate(this.name, this.transformationIndex, this.ellipsoid);
+  const TransformableDate(this.name, this.transformationIndex, this.ellipsoid);
 }
 
 final List<TransformableDate> transformableDates = [
@@ -116,10 +116,10 @@ class _TransformationData {
   final double dz;
   final double m;
 
-  _TransformationData(this.from, this.to, this.ex, this.ey, this.ez, this.dx, this.dy, this.dz, this.m);
+  const _TransformationData(this.from, this.to, this.ex, this.ey, this.ez, this.dx, this.dy, this.dz, this.m);
 }
 
-final List<_TransformationData> _transformations = [
+const List<_TransformationData> _transformations = [
   _TransformationData(ELLIPSOID_NAME_BESSEL1841, ELLIPSOID_NAME_WGS84, -0.202, -0.045, 2.455, 598.1, 73.7, 418.2,
       6.7e-6), //DHDN(Potsdam) 2001
   _TransformationData(ELLIPSOID_NAME_BESSEL1841, ELLIPSOID_NAME_WGS84, -1.04, -0.35, 3.08, 582.0, 105.0, 414.0,

@@ -19,7 +19,7 @@ const _MODE_ORIGINALPRINCIPALSUM = 'compoundinterest_modes_originalprincipalsum'
 const _MODE_ANNUALRATE = 'compoundinterest_modes_annualrate';
 const _MODE_TOTALYEARS = 'compoundinterest_modes_totalyears';
 
-final _MODES = [
+const _MODES = [
   _MODE_PRINCIPALSUM,
   _MODE_ORIGINALPRINCIPALSUM,
   _MODE_ANNUALRATE,

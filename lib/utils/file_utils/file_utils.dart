@@ -49,15 +49,15 @@ enum FileType {
 enum FileClass { IMAGE, ARCHIVE, SOUND, DATA, TEXT, BINARY }
 
 class FileTypeInfo {
-  List<String> extensions;
-  List<List<int>>? magic_bytes;
-  List<int>? magic_bytes_detail;
-  int? magic_bytes_offset;
-  List<String>? mime_types;
-  FileClass file_class;
-  String? uniform_type_identifier;
+  final List<String> extensions;
+  final List<List<int>>? magic_bytes;
+  final List<int>? magic_bytes_detail;
+  final int? magic_bytes_offset;
+  final List<String>? mime_types;
+  final FileClass file_class;
+  final String? uniform_type_identifier;
   
-  FileTypeInfo({
+  const FileTypeInfo({
     required this.extensions,
     this.magic_bytes,
     this.magic_bytes_detail,
@@ -67,8 +67,8 @@ class FileTypeInfo {
     this.uniform_type_identifier
   });
 }
-//ToDo NulSafety replace map with class
-final Map<FileType, FileTypeInfo> _FILE_TYPES = {
+
+const Map<FileType, FileTypeInfo> _FILE_TYPES = {
   // GCWizard's own suffix. e.g. for settings
   FileType.GCW: FileTypeInfo(
     extensions: ['gcw'],

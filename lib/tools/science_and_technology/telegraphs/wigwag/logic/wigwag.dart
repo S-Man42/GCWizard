@@ -3,7 +3,7 @@ import 'package:gc_wizard/utils/collection_utils.dart';
 
 enum WigWagCodebook { ORIGINAL, GENERALSERVICECODE1860, GENERALSERVICECODE1872 }
 
-final Map<WigWagCodebook, CodebookConfig> CCITT_CODEBOOK = {
+const Map<WigWagCodebook, CodebookConfig> CCITT_CODEBOOK = {
   WigWagCodebook.ORIGINAL: CodebookConfig(
     title: 'telegraph_wigwag_original_title',
     subtitle: 'telegraph_wigwag_original_description'

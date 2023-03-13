@@ -24,23 +24,23 @@ const _ZODIACSIGNS_ATTRIBUTE_PLANET_VALUE_URANUS = 'symboltables_planets_uranus'
 const _ZODIACSIGNS_ATTRIBUTE_PLANET_VALUE_PLUTO = 'symboltables_planets_pluto';
 
 class ZodiacDate {
-  int start_month;
-  int start_day;
-  int end_month;
-  int end_day;
+  final int start_month;
+  final int start_day;
+  final int end_month;
+  final int end_day;
 
-  ZodiacDate({required this.start_month, required  this.start_day, required  this.end_month, required  this.end_day});
+  const ZodiacDate({required this.start_month, required  this.start_day, required  this.end_month, required  this.end_day});
 }
 
 class ZodiacSign {
-  ZodiacDate date;
-  List<String> planet;
-  int house;
-  String element;
-  String polarity;
-  String quality;
+  final ZodiacDate date;
+  final List<String> planet;
+  final int house;
+  final String element;
+  final String polarity;
+  final String quality;
   
-  ZodiacSign({
+  const ZodiacSign({
     required this.date,
     required this.planet, 
     required this.house, 
@@ -49,7 +49,7 @@ class ZodiacSign {
     required this.quality});
 }
 
-final Map<String, ZodiacSign> ZODIACSIGNS = {
+const Map<String, ZodiacSign> ZODIACSIGNS = {
   'astronomy_signs_aries': ZodiacSign (
     date: ZodiacDate (
       start_month: 3,

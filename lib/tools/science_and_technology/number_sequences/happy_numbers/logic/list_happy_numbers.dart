@@ -1,4 +1,4 @@
-final List<String> happy_numbers = [
+const List<String> happy_numbers = [
   '1',
   '7',
   '10',

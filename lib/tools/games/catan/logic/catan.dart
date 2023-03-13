@@ -1,6 +1,6 @@
 enum CatanMode { BASE, EXPANSION }
 
-final Map<String, int> _catanBaseAZToNumbers = {
+const Map<String, int> _catanBaseAZToNumbers = {
   "A": 5,
   "B": 2,
   "C": 6,
@@ -21,7 +21,7 @@ final Map<String, int> _catanBaseAZToNumbers = {
   "R": 11
 };
 
-final Map<String, int> _catanExpansionAZToNumbers = {
+const Map<String, int> _catanExpansionAZToNumbers = {
   "A": 2,
   "B": 5,
   "C": 4,

@@ -31,9 +31,9 @@ class TeletypewriterSelection extends GCWSelection {
       }
 
       return [
-        className(AncientTeletypewriter()),
-        className(OtherTeletypewriter()),
-        className(CCITTTeletypewriter()),
+        className(const AncientTeletypewriter()),
+        className(const OtherTeletypewriter()),
+        className(const CCITTTeletypewriter()),
         className(const TeletypewriterPunchTape()),
       ].contains(className(element.tool));
     }).toList();

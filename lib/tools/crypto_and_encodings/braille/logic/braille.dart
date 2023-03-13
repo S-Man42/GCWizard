@@ -37,7 +37,7 @@ import 'package:gc_wizard/utils/constants.dart';
 
 enum BrailleLanguage { BASIC, SIMPLE, STD, DEU, ENG, FRA, EUR }
 
-final Map<BrailleLanguage, CodebookConfig> BRAILLE_LANGUAGES = {
+const Map<BrailleLanguage, CodebookConfig> BRAILLE_LANGUAGES = {
   BrailleLanguage.SIMPLE: CodebookConfig(title: 'braille_language_simple', subtitle: 'braille_language_simple_description'),
   BrailleLanguage.DEU: CodebookConfig(title: 'common_language_german', subtitle: 'braille_language_german_description'),
   BrailleLanguage.ENG: CodebookConfig(title: 'common_language_english', subtitle: 'braille_language_english_description'),
@@ -242,304 +242,81 @@ final Map<BrailleLanguage, Map<String, List<String>>> _CharsToSegmentsModifier =
 };
 const Map<BrailleLanguage, Map<String, List<List<String>>>> _CharsToSegmentsSymbolsComposed = {
   BrailleLanguage.DEU: {
-    '[': [
-      _MODIFIER_6,
-      ['2', '3', '5', '6']
-    ],
-    ']': [
-      _MODIFIER_6,
-      ['2', '3', '5', '6']
-    ],
-    '@': [
-      _MODIFIER_4,
-      ['3', '4', '5']
-    ],
-    '°': [
-      _MODIFIER_4,
-      ['3', '5', '6']
-    ],
-    '_': [
-      _MODIFIER_4,
-      ['4', '5', '6']
-    ],
-    '"': [
-      _MODIFIER_4,
-      ['3', '5'],
-      ['3', '5']
-    ],
-    '&': [
-      _MODIFIER_5,
-      ['1', '3', '6']
-    ],
-    '/': [
-      _MODIFIER_5,
-      ['2']
-    ],
-    '|': [
-      _MODIFIER_456,
-      ['1', '2', '3']
-    ],
-    '\\': [
-      _MODIFIER_4,
-      ['3', '4']
-    ],
-    '%': [
-      _MODIFIER_3456,
-      ['2', '4', '5'],
-      ['3', '5', '6']
-    ],
-    '+': [
-      _MODIFIER_4,
-      ['2', '3', '5']
-    ],
-    '=': [
-      _MODIFIER_4,
-      ['2', '3', '5', '6']
-    ],
-    '<': [
-      _MODIFIER_4,
-      ['2', '4', '6'],
-      ['3']
-    ],
-    '>': [
-      _MODIFIER_4,
-      ['1', '3', '5'],
-      ['2']
-    ],
-    '^': [
-      _MODIFIER_4,
-      ['3', '4', '6']
-    ],
-    '*': [
-      _MODIFIER_4,
-      ['3', '4', '6']
-    ],
-    '÷': [
-      _MODIFIER_4,
-      ['3', '5']
-    ],
-    '×': [
-      _MODIFIER_4,
-      ['2', '5'],
-      ['2', '5']
-    ],
-    '‰': [
-      _MODIFIER_3456,
-      ['2', '4', '5'],
-      ['3', '5', '6'],
-      ['3', '5', '6']
-    ],
+    '[': [_MODIFIER_6, ['2', '3', '5', '6']], 
+    ']': [_MODIFIER_6, ['2', '3', '5', '6']],
+    '@': [_MODIFIER_4, ['3', '4', '5']], 
+    '°': [_MODIFIER_4, ['3', '5', '6']],
+    '_': [_MODIFIER_4, ['4', '5', '6']], 
+    '"': [_MODIFIER_4, ['3', '5'], ['3', '5']],
+    '&': [_MODIFIER_5, ['1', '3', '6']],
+    '/': [_MODIFIER_5, ['2']],
+    '|': [_MODIFIER_456, ['1', '2', '3']],
+    '\\': [_MODIFIER_4, ['3', '4']],
+    '%': [_MODIFIER_3456, ['2', '4', '5'], ['3', '5', '6']],
+    '+': [_MODIFIER_4, ['2', '3', '5']],
+    '=': [_MODIFIER_4, ['2', '3', '5', '6']],
+    '<': [_MODIFIER_4, ['2', '4', '6'], ['3']],
+    '>': [_MODIFIER_4, ['1', '3', '5'], ['2']],
+    '^': [_MODIFIER_4, ['3', '4', '6']],
+    '*': [_MODIFIER_4, ['3', '4', '6']],
+    '÷': [_MODIFIER_4, ['3', '5']],
+    '×': [_MODIFIER_4, ['2', '5'], ['2', '5']],
+    '‰': [_MODIFIER_3456, ['2', '4', '5'], ['3', '5', '6'], ['3', '5', '6']],
   },
   BrailleLanguage.ENG: {
-    '§': [
-      _MODIFIER_45,
-      ['2', '3', '4']
-    ],
-    '@': [
-      _MODIFIER_4,
-      ['1']
-    ],
-    '°': [
-      _MODIFIER_45,
-      ['2', '4', '5']
-    ],
-    '&': [
-      _MODIFIER_4,
-      ['1', '2', '3', '4', '6']
-    ],
-    '/': [
-      _MODIFIER_456,
-      ['3', '4']
-    ],
-    '|': [
-      _MODIFIER_456,
-      ['1', '2', '5', '6']
-    ],
-    '"': [
-      _MODIFIER_6,
-      ['2', '3', '5', '6']
-    ],
-    '%': [
-      _MODIFIER_46,
-      ['3', '5', '6']
-    ],
-    '_': [
-      _MODIFIER_46,
-      ['3', '6']
-    ],
-    '\\': [
-      _MODIFIER_345,
-      ['1', '6']
-    ],
-    '#': [
-      _MODIFIER_456,
-      ['1', '4', '5', '6']
-    ],
-    '~': [
-      _MODIFIER_4,
-      ['3', '5']
-    ],
-    '[': [
-      _MODIFIER_46,
-      ['1', '2', '6']
-    ],
-    ']': [
-      _MODIFIER_46,
-      ['3', '4', '5']
-    ],
-    '{': [
-      _MODIFIER_46,
-      ['1', '2', '6']
-    ],
-    '}': [
-      _MODIFIER_456,
-      ['3', '4', '5']
-    ],
-    '(': [
-      _MODIFIER_5,
-      ['1', '2', '6']
-    ],
-    ')': [
-      _MODIFIER_5,
-      ['3', '4', '5']
-    ],
-    '„': [
-      _MODIFIER_45,
-      ['2', '3', '6']
-    ],
-    '“': [
-      _MODIFIER_45,
-      ['3', '5', '6']
-    ],
-    '«': [
-      _MODIFIER_456,
-      ['3', '5', '6']
-    ],
-    '»': [
-      _MODIFIER_456,
-      ['2', '3', '6']
-    ],
-    '‘': [
-      _MODIFIER_6,
-      ['2', '3', '6']
-    ],
-    '’': [
-      _MODIFIER_6,
-      ['3', '5', '6']
-    ],
-    '+': [
-      _MODIFIER_5,
-      ['2', '3', '5']
-    ],
-    '=': [
-      _MODIFIER_5,
-      ['2', '3', '5', '6']
-    ],
-    '<': [
-      _MODIFIER_4,
-      ['1', '2', '6']
-    ],
-    '>': [
-      _MODIFIER_4,
-      ['3', '4', '5']
-    ],
-    '^': [
-      _MODIFIER_4,
-      ['2', '6']
-    ],
-    '*': [
-      _MODIFIER_5,
-      ['3', '5']
-    ],
-    '÷': [
-      _MODIFIER_5,
-      ['3', '4']
-    ],
-    '×': [
-      _MODIFIER_5,
-      ['2', '3', '6']
-    ],
+    '§': [_MODIFIER_45, ['2', '3', '4']],
+    '@': [_MODIFIER_4, ['1']],
+    '°': [_MODIFIER_45, ['2', '4', '5']],
+    '&': [_MODIFIER_4, ['1', '2', '3', '4', '6']],
+    '/': [_MODIFIER_456, ['3', '4']],
+    '|': [_MODIFIER_456, ['1', '2', '5', '6']],
+    '"': [_MODIFIER_6, ['2', '3', '5', '6']],
+    '%': [_MODIFIER_46, ['3', '5', '6']],
+    '_': [_MODIFIER_46, ['3', '6']],
+    '\\': [_MODIFIER_345, ['1', '6']],
+    '#': [_MODIFIER_456, ['1', '4', '5', '6']],
+    '~': [_MODIFIER_4, ['3', '5']],
+    '[': [_MODIFIER_46, ['1', '2', '6']],
+    ']': [_MODIFIER_46, ['3', '4', '5']],
+    '{': [_MODIFIER_46, ['1', '2', '6']],
+    '}': [_MODIFIER_456, ['3', '4', '5']],
+    '(': [_MODIFIER_5, ['1', '2', '6']],
+    ')': [_MODIFIER_5, ['3', '4', '5']],
+    '„': [_MODIFIER_45, ['2', '3', '6']],
+    '“': [_MODIFIER_45, ['3', '5', '6']],
+    '«': [_MODIFIER_456, ['3', '5', '6']],
+    '»': [_MODIFIER_456, ['2', '3', '6']],
+    '‘': [_MODIFIER_6, ['2', '3', '6']],
+    '’': [_MODIFIER_6, ['3', '5', '6']],
+    '+': [_MODIFIER_5, ['2', '3', '5']],
+    '=': [_MODIFIER_5, ['2', '3', '5', '6']],
+    '<': [_MODIFIER_4, ['1', '2', '6']],
+    '>': [_MODIFIER_4, ['3', '4', '5']],
+    '^': [_MODIFIER_4, ['2', '6']],
+    '*': [_MODIFIER_5, ['3', '5']],
+    '÷': [_MODIFIER_5, ['3', '4']],
+    '×': [_MODIFIER_5, ['2', '3', '6']],
   },
   BrailleLanguage.FRA: {
-    '[': [
-      _MODIFIER_45,
-      ['2', '3', '6']
-    ],
-    ']': [
-      _MODIFIER_356,
-      ['1', '2']
-    ],
-    '{': [
-      _MODIFIER_6,
-      ['6'],
-      ['2', '3', '6']
-    ],
-    '}': [
-      _MODIFIER_356,
-      ['3'],
-      ['3']
-    ],
-    '§': [
-      _MODIFIER_5,
-      ['1', '2', '3', '4', '5', '6']
-    ],
-    '°': [
-      _MODIFIER_5,
-      ['1', '3', '5']
-    ],
-    '%': [
-      _MODIFIER_5,
-      ['3', '4', '6']
-    ],
-    '_': [
-      _MODIFIER_5,
-      ['3', '6']
-    ],
-    '\\': [
-      _MODIFIER_5,
-      ['3', '4']
-    ],
-    '#': [
-      _MODIFIER_5,
-      ['3', '4', '5', '6']
-    ],
-    '~': [
-      _MODIFIER_5,
-      ['2', '6']
-    ],
-    '+': [
-      _MODIFIER_6,
-      ['2', '3', '5']
-    ],
-    '=': [
-      _MODIFIER_6,
-      ['2', '3', '5', '6']
-    ],
-    '<': [
-      _MODIFIER_5,
-      ['1', '2', '6']
-    ],
-    '>': [
-      _MODIFIER_5,
-      ['3', '4', '5']
-    ],
-    '*': [
-      _MODIFIER_5,
-      ['3', '5']
-    ],
-    '÷': [
-      _MODIFIER_6,
-      ['2', '5']
-    ],
-    '×': [
-      _MODIFIER_6,
-      ['3', '5']
-    ],
-    '‰': [
-      _MODIFIER_5,
-      ['3', '4', '6'],
-      ['3', '4', '6']
-    ],
+    '[': [_MODIFIER_45, ['2', '3', '6']],
+    ']': [_MODIFIER_356, ['1', '2']],
+    '{': [_MODIFIER_6, ['6'], ['2', '3', '6']],
+    '}': [_MODIFIER_356, ['3'], ['3']],
+    '§': [_MODIFIER_5, ['1', '2', '3', '4', '5', '6']],
+    '°': [_MODIFIER_5, ['1', '3', '5']],
+    '%': [_MODIFIER_5, ['3', '4', '6']],
+    '_': [_MODIFIER_5, ['3', '6']],
+    '\\': [_MODIFIER_5, ['3', '4']],
+    '#': [_MODIFIER_5, ['3', '4', '5', '6']],
+    '~': [_MODIFIER_5, ['2', '6']],
+    '+': [_MODIFIER_6, ['2', '3', '5']],
+    '=': [_MODIFIER_6, ['2', '3', '5', '6']],
+    '<': [_MODIFIER_5, ['1', '2', '6']],
+    '>': [_MODIFIER_5, ['3', '4', '5']],
+    '*': [_MODIFIER_5, ['3', '5']],
+    '÷': [_MODIFIER_6, ['2', '5']],
+    '×': [_MODIFIER_6, ['3', '5']],
+    '‰': [_MODIFIER_5, ['3', '4', '6'], ['3', '4', '6']],
   },
 };
 

@@ -2242,7 +2242,7 @@ final Map<NumeralWordsLanguage, List<int>> MIN_MAX_NUMBER = {
   NumeralWordsLanguage.ROU: [0, 999999],
 };
 
-final Map<NumeralWordsLanguage, String> NUMERALWORDS_LANGUAGES = {
+const Map<NumeralWordsLanguage, String> NUMERALWORDS_LANGUAGES = {
   NumeralWordsLanguage.GRC: 'common_language_greek',
   NumeralWordsLanguage.GRCOLD: 'numeralwords_language_grc_old',
   NumeralWordsLanguage.GRCOLDLAT: 'numeralwords_language_grc_old_lat',
@@ -2308,7 +2308,7 @@ final Map<NumeralWordsLanguage, String> NUMERALWORDS_LANGUAGES = {
   NumeralWordsLanguage.ROU: 'common_language_romanian',
 };
 
-final Map<NumeralWordsLanguage, String> NUMERALWORDS_LANGUAGES_CONVERTER = {
+const Map<NumeralWordsLanguage, String> NUMERALWORDS_LANGUAGES_CONVERTER = {
   NumeralWordsLanguage.KLI: 'numeralwords_language_kli',
   NumeralWordsLanguage.MIN: 'numeralwords_language_min',
   NumeralWordsLanguage.NAVI: 'numeralwords_language_navi',
@@ -2382,7 +2382,7 @@ final Map<NumeralWordsLanguage, Map<String, String>> NUMERAL_WORDS = {
   NumeralWordsLanguage.VOL: _VOLWordToNum,
 };
 
-final Map<NumeralWordsLanguage, List<String>> NUMERAL_WORDS_ACCENTS = {
+const Map<NumeralWordsLanguage, List<String>> NUMERAL_WORDS_ACCENTS = {
   NumeralWordsLanguage.DEU: [
     'dreißig',
     'zwölf',
