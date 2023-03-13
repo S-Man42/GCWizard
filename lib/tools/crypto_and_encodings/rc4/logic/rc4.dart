@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
+import 'package:gc_wizard/utils/string_utils.dart';
 
 enum InputFormat { AUTO, TEXT, HEX, BINARY, ASCIIVALUES }
 
@@ -113,6 +114,14 @@ InputFormat _autoType(String input) {
 List<int> _convertToIntList(String input, int base) {
   List<int>? out = [];
 
+  if (base == 16) {
+    input = input.trim();
+    if (!input.contains(' ')) {
+      input = input.toUpperCase().replaceAll(RegExp(r'[\n ]'), '');
+      input = insertSpaceEveryNthCharacter(input, 2);
+    }
+  }
+
   if (input.contains(' ')) {
     input.split(' ').forEach((text) {
       if (out != null) out = _addToIntList(text, base, out!);
@@ -143,7 +152,7 @@ String formatOutput(List<int> outList, OutputFormat outputFormat) {
     switch (outputFormat) {
       case OutputFormat.TEXT:
         item = (item % pow(2, 16)).toInt();
-        if (item < 33 || (item > 126 && item < 161)) {
+        if (item < 32 || (item > 126 && item < 161)) {
           out += ".";
         } else {
           out += String.fromCharCode(item);

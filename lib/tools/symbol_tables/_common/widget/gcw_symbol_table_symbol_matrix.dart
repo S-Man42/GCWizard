@@ -79,12 +79,13 @@ class GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> 
                   });
                 },
               )),
-
-              GCWIconButton(
-                icon: Icons.app_registration,
-                onPressed: () {
-                  openInSymbolReplacer(context, widget.symbolKey);
-                }),
+          widget.symbolKey.isEmpty
+              ? Container(width: 20)
+              : GCWIconButton(
+              icon: Icons.app_registration,
+              onPressed: () {
+                openInSymbolReplacer(context, widget.symbolKey);
+              }),
           Container(width: 15),
           GCWSymbolTableZoomButtons(
               countColumns: widget.countColumns, mediaQueryData: widget.mediaQueryData, onChanged: widget.onChanged)

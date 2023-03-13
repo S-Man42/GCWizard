@@ -17,14 +17,14 @@ String deobfuscateEarwigoText(String text, EARWIGO_DEOBFUSCATION tool) {
 String obfuscateEarwigoText(String text, EARWIGO_DEOBFUSCATION tool) {
   switch (tool) {
     case EARWIGO_DEOBFUSCATION.GSUB_WIG:
-      return gsub_wig_obfuscation(text);
+      return _gsub_wig_obfuscation(text);
     case EARWIGO_DEOBFUSCATION.WWB_DEOBF:
       return _wwb_deobf_obfuscation(text);
     default: return '';
   }
 }
 
-String gsub_wig_obfuscation(String text) {
+String _gsub_wig_obfuscation(String text) {
   if (text.isEmpty) return '';
 
   String result = '';
