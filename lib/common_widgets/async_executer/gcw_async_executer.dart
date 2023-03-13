@@ -9,7 +9,7 @@ import 'package:gc_wizard/utils/complex_return_types.dart';
 
 Isolate? _isolate;
 
-class GCWAsyncExecuter<T extends Object?> extends StatefulWidget {
+class GCWAsyncExecuter<T> extends StatefulWidget {
   final Future<T> Function(GCWAsyncExecuterParameters) isolatedFunction;
   final Future<GCWAsyncExecuterParameters?> Function() parameter;
   final void Function(T) onReady;

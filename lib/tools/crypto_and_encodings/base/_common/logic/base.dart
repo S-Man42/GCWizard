@@ -76,8 +76,8 @@ String decodeBase64(String input) {
   return out;
 }
 
-String encodeBase85(String? input) {
-  if (input == null || input.isEmpty) return '';
+String encodeBase85(String input) {
+  if (input.isEmpty) return '';
 
   var encoded = encodeASCII85(Uint8List.fromList(utf8.encode(input)));
 
