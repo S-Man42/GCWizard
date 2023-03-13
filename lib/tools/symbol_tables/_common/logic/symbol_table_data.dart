@@ -417,3 +417,7 @@ class SymbolTableData {
 String filenameWithoutSuffix(String filename) {
   return filename.split('.').first;
 }
+
+class defaultSymbolTableData extends SymbolTableData {
+  defaultSymbolTableData(BuildContext context) : super (context, '');
+}

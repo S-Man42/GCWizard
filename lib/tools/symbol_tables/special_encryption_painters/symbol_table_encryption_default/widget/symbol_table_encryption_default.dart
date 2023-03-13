@@ -29,7 +29,7 @@ class SymbolTableEncryption {
         var imageIndex = i * countColumns + j;
 
         if (imageIndex < imageIndexes.length) {
-          var image = data.images[imageIndexes[imageIndex]].values.first.standardImage;
+          var image = imageIndexes[imageIndex] < 0 ? null : data.images[imageIndexes[imageIndex]]?.values.first.standardImage;
 
           if (image != null) {
             paintImage(
