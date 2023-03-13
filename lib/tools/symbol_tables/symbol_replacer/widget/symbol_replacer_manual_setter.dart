@@ -21,7 +21,7 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
   List<GCWDropDownMenuItem<Map<String, SymbolReplacerSymbolData>>> _symbolDataItems = [];
   final _gcwTextStyle = gcwTextStyle();
   var _currentMode = GCWSwitchPosition.left;
-  late Map<String, SymbolReplacerSymbolData> _currentSymbolData;
+  Map<String, SymbolReplacerSymbolData>? _currentSymbolData;
   var _init = true;
 
   late TextEditingController _editValueController;
@@ -48,7 +48,7 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
 
     if (_init) {
       _fillSymbolDataItems(widget.symbolImage.compareSymbols);
-      _currentSymbolData = widget.symbolImage.compareSymbols!.first;  // TODO Mike: I needed to make _currentSymbolData nullsafe; therefore I changed ?.first to !.first here. Please chacke if compareSymbols can be null here nonetheless
+      _currentSymbolData = widget.symbolImage.compareSymbols?.first;  // TODO Mike: I needed to make _currentSymbolData nullsafe; therefore I changed ?.first to !.first here. Please chacke if compareSymbols can be null here nonetheless
       _fillSymbolMap(widget.symbolImage, widget.viewSymbols);
 
       // select all
@@ -266,6 +266,7 @@ Map<String, SymbolData> _cloneSymbolData(Map<String, SymbolData> image, String t
   symbolData.secondarySelected = image.values.first.secondarySelected;
   return {'': symbolData};
 }
-Symbol? _getSymbol(Map<Symbol, Map<String, SymbolData>> _symbolMap, SymbolData imageData) {
+
+Symbol? _getSymbol(Map<Symbol, Map<String, SymbolData>> _symbolMap, SymbolData? imageData) {
   return _symbolMap.entries.firstWhere((entry) => entry.value.values.first == imageData).key;
 }

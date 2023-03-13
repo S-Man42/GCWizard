@@ -17,9 +17,9 @@ import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/tools/images_and_files/visual_cryptography/logic/visual_cryptography.dart';
+import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:image/image.dart' as img;
-import 'package:intl/intl.dart';
 import 'package:tuple/tuple.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 
@@ -140,7 +140,7 @@ class VisualCryptographyState extends State<VisualCryptography> {
       GCWImageView(
         imageData: GCWImageViewData(GCWFile(bytes: _outData!)),
         toolBarRight: false,
-        fileName: 'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()),
+        fileName: buildFileNameWithDate('img_', null),
       ),
       GCWButton(
         text: i18n(context, 'visual_cryptography_clear'),
@@ -321,7 +321,7 @@ class VisualCryptographyState extends State<VisualCryptography> {
       GCWImageView(
         imageData: GCWImageViewData(GCWFile(bytes: _encodeOutputImages?.item1 ?? Uint8List(0))),
         toolBarRight: true,
-        fileName: 'img1_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()),
+        fileName: buildFileNameWithDate('img1_', null),
       ),
       _currentEncryptionWithKeyMode
           ? Container()
@@ -331,7 +331,7 @@ class VisualCryptographyState extends State<VisualCryptography> {
                 GCWImageView(
                   imageData: GCWImageViewData(GCWFile(bytes: _encodeOutputImages?.item2 ?? Uint8List(0))),
                   toolBarRight: true,
-                  fileName: 'img2_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()),
+                  fileName: buildFileNameWithDate('img2_', null),
                 ),
               ],
             )

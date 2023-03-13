@@ -7,7 +7,7 @@ import 'package:archive/archive_io.dart';
 import 'package:collection/collection.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
-import 'package:image/image.dart' as img;
+import 'package:image/image.dart' as Image;
 import 'package:intl/intl.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -477,8 +477,8 @@ String normalizePath(String path) {
   return normalize(path);
 }
 
-String buildFileNameWithDate(String name, FileType type) {
-  return name + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(type);
+String buildFileNameWithDate(String name, FileType? type) {
+  return name + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + (type == null ? '' : '.' + fileExtension(type));
 }
 
 Future<File> _createTmpFile(String extension, Uint8List bytes) async {
@@ -621,7 +621,7 @@ Future<List<GCWFile>> _extractRarArchive(GCWFile file, {String? password}) async
   return fileList;
 }
 
-Uint8List encodeTrimmedPng(img.Image image) {
-  var out = img.encodePng(image);
+Uint8List encodeTrimmedPng(Image.Image image) {
+  var out = Image.encodePng(image);
   return trimNullBytes(Uint8List.fromList(out));
 }

@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
+import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
-import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:xml/xml.dart';
 
 Future<bool> exportCoordinates(BuildContext context, List<GCWMapPoint> points, List<GCWMapPolyline> polylines,
     {bool kmlFormat = false}) async {
   String data;
-  String extension;
+  FileType fileType;
 
   var defaultName = points.first.markerText;
   if (defaultName == null || defaultName.isEmpty) {
-    defaultName = 'GC Wizard Export ' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now());
+    defaultName = buildFileNameWithDate('GC Wizard Export ', null);
   }
 
   if ((points.isEmpty) && (polylines.isEmpty)) {
@@ -21,14 +21,14 @@ Future<bool> exportCoordinates(BuildContext context, List<GCWMapPoint> points, L
 
   if (kmlFormat) {
     data = _KmlWriter().asString(defaultName, points, polylines);
-    extension = '.kml';
+    fileType = FileType.KML;
   } else {
     data = _GpxWriter().asString(defaultName, points, polylines);
-    extension = '.gpx';
+    fileType = FileType.GPX;
   }
 
   try {
-    var fileName = 'coords_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + extension;
+    var fileName = buildFileNameWithDate('coords_', fileType);
     return saveStringToFile(context, data, fileName);
   } on Exception {
     return false;
