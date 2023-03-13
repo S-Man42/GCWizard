@@ -67,7 +67,7 @@ class FileTypeInfo {
     this.uniform_type_identifier
   });
 }
-//ToDo NulSafety replace map with class
+
 const Map<FileType, FileTypeInfo> _FILE_TYPES = {
   // GCWizard's own suffix. e.g. for settings
   FileType.GCW: FileTypeInfo(

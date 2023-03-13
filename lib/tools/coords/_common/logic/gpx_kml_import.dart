@@ -72,16 +72,15 @@ MapViewDAO? parseCoordinatesFile(String xml, {bool kmlFormat = false}) {
           }
 
           result.points[x].name = result.points[x].name;
-          // TODO Mike: Why are you using a BITWISE OR here instead of normal OR? Please check if the NULL check can be removed here
           result.points[x].color = (result.points[x].color == '#000000')
               ? result.points[y].color
               : result.points[x].color;
           result.points[x].radius = result.points[x].radius ?? result.points[y].radius;
           result.points[x].circleColor =
-              (result.points[x].circleColor == null) | (result.points[x].circleColor == '#000000')
+              (result.points[x].circleColor == null) || (result.points[x].circleColor == '#000000')
                   ? result.points[y].circleColor
                   : result.points[x].circleColor;
-          result.points[x].circleColorSameAsColor |= result.points[y].circleColorSameAsColor;
+          result.points[x].circleColorSameAsColor = result.points[x].circleColorSameAsColor || result.points[y].circleColorSameAsColor;
 
           result.points.removeAt(y);
           y--;
