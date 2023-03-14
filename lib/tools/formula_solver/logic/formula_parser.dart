@@ -37,7 +37,7 @@ class FormulaParser {
   Map<String, String> safedFormulasMap = {};
   Map<String, String> safedFormulaReplacementMap = {};
 
-  static final Map<String, double> CONSTANTS = {
+  static const Map<String, double> CONSTANTS = {
     'ln10': ln10,
     'ln2': ln2,
     'log2e': log2e,
@@ -56,7 +56,7 @@ class FormulaParser {
     'sqrt2': sqrt2,
   };
 
-  static final List<String> _BUILTIN_FUNCTIONS = [
+  static const List<String> _BUILTIN_FUNCTIONS = [
     'sqrt',
     'nrt',
     'arcsin',
@@ -122,7 +122,7 @@ class FormulaParser {
   };
 
   // different minus/hyphens/dashes
-  static final Map<String, String> alternateOperators = {
+  static const Map<String, String> alternateOperators = {
     //'-': '—–˗−‒', // not required here, because normalized in common_utils.normalizeCharacters()
     '/': ':÷',
     '*': '×•',

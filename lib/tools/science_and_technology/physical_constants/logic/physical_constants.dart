@@ -7,7 +7,7 @@ class PhysicalConstant {
   final String? standard_uncertainty;
   final String? unit;
 
-  PhysicalConstant({
+  const PhysicalConstant({
     required this.symbol,
     required this.value,
     this.exponent,
@@ -16,7 +16,7 @@ class PhysicalConstant {
   });
 }
 
-final Map<String, PhysicalConstant> PHYSICAL_CONSTANTS = {
+const Map<String, PhysicalConstant> PHYSICAL_CONSTANTS = {
   'physical_constants_atomic_mass': PhysicalConstant(
     symbol: 'm_u_',
     value: '1.660 539 066 60',

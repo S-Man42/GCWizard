@@ -623,8 +623,8 @@ final Map<String, String> _EPOWordToNum = {
   'sudo': 'numeralwords_s',
   'oriento': 'numeralwords_e',
   'okcidento': 'numeralwords_w',
-  'grado': 'grad',
-  'punkto': 'punkt',
+  'grado': 'grad', //double entry ??
+  'punkto': 'punkt', //double entry ??
 };
 const Map<String, String> _ESPWordToNum = {
   'cero': '0',

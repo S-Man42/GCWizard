@@ -8,7 +8,7 @@
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/calendar/logic/calendar_constants.dart';
 import 'package:gc_wizard/utils/datetime_utils.dart';
 
-final Map<CalendarSystem, Map<int, String>> MONTH_NAMES = {
+const Map<CalendarSystem, Map<int, String>> MONTH_NAMES = {
   CalendarSystem.ISLAMICCALENDAR: MONTH_ISLAMIC,
   CalendarSystem.PERSIANYAZDEGARDCALENDAR: MONTH_PERSIAN,
   CalendarSystem.HEBREWCALENDAR: MONTH_HEBREW,

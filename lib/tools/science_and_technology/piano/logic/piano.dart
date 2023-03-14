@@ -22,7 +22,7 @@ class PianoKey {
   final String midi;
   final String latin;
 
-  PianoKey({
+  const PianoKey({
     required this.number,
     required this.color,
     required this.frequency,
@@ -54,7 +54,7 @@ class PianoKey {
   }
 }
 
-final Map<int, PianoKey> PIANO_KEYS = {
+const Map<int, PianoKey> PIANO_KEYS = {
   89: PianoKey (
     number: "89 (-8)",
     color: "common_color_white",

@@ -1,16 +1,16 @@
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 
-final Map<String, String> _AZToTapir = {
+const Map<String, String> _AZToTapir = {
   ' ': '83', '\n': '80', 'A': '0', 'E': '1', 'I': '2', 'N': '3', 'R': '4', 'B': '50', 'BE': '51', 'C': '52', 'CH': '53',
   'D': '54', 'DE': '55', 'F': '56',
   'G': '57', 'GE': '58', 'H': '59', 'J': '60', 'K': '61', 'L': '62', 'M': '63', 'O': '64', 'P': '67', 'Q': '68',
   'S': '69', 'T': '70',
   'TE': '71', 'U': '72', 'UN': '73', 'V': '74', 'W': '76', 'X': '77', 'Y': '78', 'Z': '79',
-  String.fromCharCode(196): '66', // Ä
-  String.fromCharCode(214): '88', // Ö
-  String.fromCharCode(220): '99', // Ü
-  String.fromCharCode(223): '65', // ß
+  '\u00C4': '66', // Ä
+  '\u00D6': '88', // Ö
+  '\u00DC': '99', // Ü
+  '\u00DF': '65', // ß
 };
 final Map<String, String> _TapirToAZ = switchMapKeyValue(_AZToTapir);
 
