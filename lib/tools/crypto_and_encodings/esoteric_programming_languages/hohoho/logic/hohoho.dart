@@ -11,7 +11,7 @@ import 'package:gc_wizard/utils/collection_utils.dart';
 
 const HOHOHO_ERROR_INVALID_PROGRAM = 'hohoho_error_syntax_invalidprogram';
 
-final _HOHOHO_SUBSTITUTIONS = {
+const _HOHOHO_SUBSTITUTIONS = {
   '>': 'HoHoho',
   '<': 'hoHoHo',
   '+': 'HoHoHo',

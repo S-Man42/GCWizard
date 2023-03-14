@@ -2,11 +2,11 @@ import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitu
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 
-final YEN = String.fromCharCode(165);
-final MY = String.fromCharCode(181);
-final THORN = String.fromCharCode(254);
+const YEN = '\u00A5'; //¥
+const MY = '\u00B5'; //µ
+const THORN = '\u00FE'; //þ
 
-final _AZToAbaddon = {
+const _AZToAbaddon = {
   'A': '$YEN$YEN$MY',
   'B': '$YEN$THORN$YEN',
   'C': '$THORN$MY$MY',

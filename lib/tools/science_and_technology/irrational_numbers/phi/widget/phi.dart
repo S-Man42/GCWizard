@@ -5,13 +5,13 @@ import 'package:gc_wizard/tools/science_and_technology/irrational_numbers/irrati
 import 'package:gc_wizard/tools/science_and_technology/irrational_numbers/phi/logic/phi.dart';
 
 class PhiNthDecimal extends IrrationalNumbersNthDecimal {
-  PhiNthDecimal({Key? key}) : super(key: key, irrationalNumber: PHI);
+  const PhiNthDecimal({Key? key}) : super(key: key, irrationalNumber: PHI);
 }
 
 class PhiDecimalRange extends IrrationalNumbersDecimalRange {
-  PhiDecimalRange({Key? key}) : super(key: key, irrationalNumber: PHI);
+  const PhiDecimalRange({Key? key}) : super(key: key, irrationalNumber: PHI);
 }
 
 class PhiSearch extends IrrationalNumbersSearch {
-  PhiSearch({Key? key}) : super(key: key, irrationalNumber: PHI);
+  const PhiSearch({Key? key}) : super(key: key, irrationalNumber: PHI);
 }

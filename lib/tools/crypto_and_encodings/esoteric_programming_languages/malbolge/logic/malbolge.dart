@@ -23,8 +23,8 @@ const _xlat1 = "+b(29e*j1VMEKLyC})8&m#~W>qxdRp0wkrUo[D7,XTcA\"lI.v%{gJh4G\\-=O@5
 
 const _xlat2 = "5z]&gqtyfr\$(we4{WP)H-Zn,[%\\3dL+Q;>U!pJS72FhOA1CB6v^=I_0/8|jsb9m<.TVac`uY*MK'X~xDl}REokN:#?G\"i@";
 
-final _validInstructions = {'j', 'i', '*', 'p', '<', '/', 'v', 'o'};
-final _opCodeList = {
+const _validInstructions = {'j', 'i', '*', 'p', '<', '/', 'v', 'o'};
+const _opCodeList = {
   'i': 'jmp [d]',
   '4': 'i',
   '<': 'out a',
@@ -49,9 +49,9 @@ const _MB_OPR = 62;
 const _MB_NOP = 68;
 const _MB_HALT = 81;
 
-final _p9 = [1, 9, 81, 729, 6561];
+const _p9 = [1, 9, 81, 729, 6561];
 
-final _o = [
+const _o = [
   [4, 3, 3, 1, 0, 0, 1, 0, 0],
   [4, 3, 5, 1, 0, 2, 1, 0, 2],
   [5, 5, 4, 2, 2, 1, 2, 2, 1],

@@ -31,7 +31,7 @@ String encodeDTMF(String plain) {
       .split('')
       .where((digit) => _DigitToDTMF[digit] != null)
       .map((digit) => _DigitToDTMF[digit])
-      .join(String.fromCharCode(8195));
+      .join('\u2003');
 }
 
 String decodeDTMF(String chiffre) {

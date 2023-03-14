@@ -19,10 +19,10 @@ int extractIntegerFromText(String text, {bool allowNegative = true}) {
 
 String normalizeUmlauts(String input) {
   return input.split('').map((letter) {
-    if (letter == String.fromCharCode(223)) {
+    if (letter == '\u00DF') { //ß
       return 'ss';
     }
-    if (letter == String.fromCharCode(7838)) {
+    if (letter == '\u1E9E') { //ẞ
       return 'SS';
     }
 

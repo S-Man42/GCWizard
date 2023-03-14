@@ -23,7 +23,7 @@ class BloodAlcoholContent extends StatefulWidget {
 }
 
 class BloodAlcoholContentState extends State<BloodAlcoholContent> {
-  final _GENDERS = {
+  static const _GENDERS = {
     BloodAlcoholGender.MEN: 'bloodalcoholcontent_person_male',
     BloodAlcoholGender.WOMEN: 'bloodalcoholcontent_person_female',
     BloodAlcoholGender.CHILDREN: 'bloodalcoholcontent_person_child',

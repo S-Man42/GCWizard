@@ -17,7 +17,7 @@ class EasterYearsState extends State<EasterYears> {
   int _currentMonth = 3;
   int _currentDay = 22;
 
-  final _listDaysForMarch = <int>[22, 23, 24, 25, 26, 27, 28, 29, 30, 31];
+  static const _listDaysForMarch = <int>[22, 23, 24, 25, 26, 27, 28, 29, 30, 31];
   final _listDaysForApril = List<int>.generate(25, (index) => index + 1);
 
   late List<int> _currentDayList;

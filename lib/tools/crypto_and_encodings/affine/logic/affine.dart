@@ -3,7 +3,7 @@ import 'package:gc_wizard/utils/collection_utils.dart';
 // https://de.wikipedia.org/wiki/Affine_Chiffre
 // https://en.wikipedia.org/wiki/Affine_cipher
 
-final _AZToAffineDigit = {
+const _AZToAffineDigit = {
   'A': 0,
   'B': 1,
   'C': 2,

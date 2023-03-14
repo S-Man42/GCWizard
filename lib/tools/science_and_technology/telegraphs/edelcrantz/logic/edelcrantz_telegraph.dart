@@ -26,7 +26,7 @@ const Map<EdelcrantzCodebook, CodebookConfig> MURRAY_CODEBOOK = {
   ),
 };
 
-final _CODEBOOK_EDELCRANTZ_1795 = {
+const _CODEBOOK_EDELCRANTZ_1795 = {
   '000': ' ',
   '001': '1',
   '002': '2',
@@ -1610,7 +1610,7 @@ final _CODEBOOK_EDELCRANTZ_1808 = {
   'a777': '',
 };
 
-final _CODEBOOK_EDELCRANTZ_MUSEUM = {
+const _CODEBOOK_EDELCRANTZ_MUSEUM = {
   '000': '0',
   '001': '1',
   '002': '2',

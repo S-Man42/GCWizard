@@ -333,14 +333,14 @@ const Map<TeletypewriterCodebook, int> BINARY_LENGTH = {
   TeletypewriterCodebook.ALGOL: 5,
 };
 
-final _AZToCCITT_BAUDOT = {
+const _AZToCCITT_BAUDOT = {
 // Original code from US Patent in Bit-Order 54321
   'A': 1,
   'B': 12,
   'C': 13,
   'D': 15,
   'E': 2,
-  String.fromCharCode(201) /* É */ : 3,
+  '\u00C9' /* É */ : 3,
   'F': 14,
   'G': 10,
   'H': 11,
@@ -405,7 +405,7 @@ const _AZToBaudot_54123 = {
 };
 final _Baudot_54123ToAZ = switchMapKeyValue(_AZToBaudot_54123);
 
-final _NumbersToBaudot_54123 = {
+const _NumbersToBaudot_54123 = {
   '1': 4, // 12345 1
   '8': 18, // 12345 12
   '9': 22, // 12345 13
@@ -435,7 +435,7 @@ final _NumbersToBaudot_54123 = {
   ':': 13, // 12345 19
   '.': 5, // 12345 17
   '✲': 3, // 12345 24
-  String.fromCharCode(163) /* £ */ : 27,
+  '\u00A3' /* £ */ : 27,
 };
 final _Baudot_54123ToNumbers = switchMapKeyValue(_NumbersToBaudot_54123);
 
@@ -630,10 +630,10 @@ const _NumbersToSiemens = {
 };
 final _SiemensToNumbers = switchMapKeyValue(_NumbersToSiemens);
 
-final _AZToCCITT_ITA1_EU = {
+const _AZToCCITT_ITA1_EU = {
   // Code according to ENG Wikipedia, Bit-Order 54321
   'A': 1,
-  String.fromCharCode(201) /* É */ : 3,
+  '\u00C9' /* É */ : 3,
   'E': 2,
   'I': 6,
   'O': 7,
@@ -1933,9 +1933,9 @@ String encodeTeletypewriter(String input, TeletypewriterCodebook language) {
     case TeletypewriterCodebook.CCITT_ITA1_1929:
     case TeletypewriterCodebook.CCITT_ITA1_EU:
     case TeletypewriterCodebook.CCITT_ITA1_UK:
-      input = input.toUpperCase().replaceAll(String.fromCharCode(201), String.fromCharCode(0));
+      input = input.toUpperCase().replaceAll('\u00C9', String.fromCharCode(0));
       input =
-          removeAccents(input).replaceAll(String.fromCharCode(0), String.fromCharCode(201)); // keep É as only accent
+          removeAccents(input).replaceAll(String.fromCharCode(0), '\u00C9'); // keep É as only accent
 
       var cachedSpace = false;
       input.split('').forEach((character) {

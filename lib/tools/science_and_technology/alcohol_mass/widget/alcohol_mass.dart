@@ -25,7 +25,7 @@ class AlcoholMass extends StatefulWidget {
 }
 
 class AlcoholMassState extends State<AlcoholMass> {
-  final _MODES = [_ALCOHOL_MASS, _VOLUME, _ALCOHOL_MASS_BY_VOLUME];
+  static const _MODES = [_ALCOHOL_MASS, _VOLUME, _ALCOHOL_MASS_BY_VOLUME];
   var _currentMode = _ALCOHOL_MASS;
   var _currentVolume = 0.0;
   var _currentPercent = 0.0;

@@ -19,7 +19,7 @@ class _ResistorBandDropDown extends StatefulWidget {
 }
 
 class _ResistorBandDropDownState extends State<_ResistorBandDropDown> {
-  final _colorAttributes = {
+  static const _colorAttributes = {
     ResistorBandColor.PINK: _ResistorColorAttributes('common_color_pink', const Color(0xffffb6c1), Colors.black),
     ResistorBandColor.SILVER: _ResistorColorAttributes('common_color_silver', const Color(0xffd3d3d3), Colors.black),
     ResistorBandColor.GOLD: _ResistorColorAttributes('common_color_gold', const Color(0xffdaa520), Colors.black),
@@ -119,9 +119,9 @@ class _ResistorBandDropDownState extends State<_ResistorBandDropDown> {
 }
 
 class _ResistorColorAttributes {
-  String name;
-  Color backgroundColor;
-  Color textColor;
+  final String name;
+  final Color backgroundColor;
+  final Color textColor;
 
-  _ResistorColorAttributes(this.name, this.backgroundColor, this.textColor);
+  const _ResistorColorAttributes(this.name, this.backgroundColor, this.textColor);
 }

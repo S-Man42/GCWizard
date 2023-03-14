@@ -43,7 +43,7 @@ const _ERROR_COW_MEMORYOUTOFBOUNDS = 'common_programming_error_memoryoutofbounds
 const _ERROR_COW_INFINITELOOP = 'common_programming_error_infinite_loop';
 const _ERROR_COW_MAXITERATIONS = 'common_programming_error_maxiterations';
 
-final _commandsMooToInteger = {
+const _commandsMooToInteger = {
   'moo': 0,
   'mOo': 1,
   'moO': 2,
@@ -58,7 +58,7 @@ final _commandsMooToInteger = {
   'oom': 11
 };
 
-final _mnemonicList = {
+const _mnemonicList = {
   0: 'jump loop start',
   1: 'dec mem',
   2: 'inc mem',

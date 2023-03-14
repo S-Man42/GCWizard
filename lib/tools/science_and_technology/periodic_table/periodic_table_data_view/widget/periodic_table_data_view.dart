@@ -43,7 +43,7 @@ class PeriodicTableDataViewState extends State<PeriodicTableDataView> {
 
   var _setSpecificValue = false;
 
-  final _valueCategories = [
+  static const _valueCategories = [
     PeriodicTableCategory.MASS,
     PeriodicTableCategory.MELTING_POINT,
     PeriodicTableCategory.BOILING_POINT,
@@ -53,7 +53,7 @@ class PeriodicTableDataViewState extends State<PeriodicTableDataView> {
     PeriodicTableCategory.MOST_COMMON_ISOTOP,
   ];
 
-  final _sortableCategories = [
+  static const _sortableCategories = [
     PeriodicTableCategory.IUPAC_GROUP,
     PeriodicTableCategory.IUPAC_GROUP_NAME,
     PeriodicTableCategory.MAIN_GROUP,
