@@ -2884,29 +2884,29 @@ void initializeRegistry(BuildContext context) {
     ]),
 
     //Phi Selection **********************************************************************************************
-    GCWTool(tool: PhiNthDecimal(), id: 'irrationalnumbers_nthdecimal', searchKeys: const [
+    GCWTool(tool: const PhiNthDecimal(), id: 'irrationalnumbers_nthdecimal', searchKeys: const [
       'irrationalnumbers',
       'phidecimalrange',
     ]),
-    GCWTool(tool: PhiDecimalRange(), id: 'irrationalnumbers_decimalrange', searchKeys: const [
+    GCWTool(tool: const PhiDecimalRange(), id: 'irrationalnumbers_decimalrange', searchKeys: const [
       'irrationalnumbers',
       'phidecimalrange',
     ]),
-    GCWTool(tool: PhiSearch(), id: 'irrationalnumbers_search', searchKeys: const [
+    GCWTool(tool: const PhiSearch(), id: 'irrationalnumbers_search', searchKeys: const [
       'irrationalnumbers',
       'phisearch',
     ]),
 
     //Pi Selection **********************************************************************************************
-    GCWTool(tool: PiNthDecimal(), id: 'irrationalnumbers_nthdecimal', searchKeys: const [
+    GCWTool(tool: const PiNthDecimal(), id: 'irrationalnumbers_nthdecimal', searchKeys: const [
       'irrationalnumbers',
       'pinthdecimal',
     ]),
-    GCWTool(tool: PiDecimalRange(), id: 'irrationalnumbers_decimalrange', searchKeys: const [
+    GCWTool(tool: const PiDecimalRange(), id: 'irrationalnumbers_decimalrange', searchKeys: const [
       'irrationalnumbers',
       'pidecimalrange',
     ]),
-    GCWTool(tool: PiSearch(), id: 'irrationalnumbers_search', searchKeys: const [
+    GCWTool(tool: const PiSearch(), id: 'irrationalnumbers_search', searchKeys: const [
       'irrationalnumbers',
       'pisearch',
     ]),
@@ -3047,13 +3047,13 @@ void initializeRegistry(BuildContext context) {
     ]),
 
     //Silver Ratio Selection **********************************************************************************************
-    GCWTool(tool: SilverRatioNthDecimal(), id: 'irrationalnumbers_nthdecimal', searchKeys: const [
+    GCWTool(tool: const SilverRatioNthDecimal(), id: 'irrationalnumbers_nthdecimal', searchKeys: const [
       'silverratiodecimalrange',
     ]),
-    GCWTool(tool: SilverRatioDecimalRange(), id: 'irrationalnumbers_decimalrange', searchKeys: const [
+    GCWTool(tool: const SilverRatioDecimalRange(), id: 'irrationalnumbers_decimalrange', searchKeys: const [
       'silverratiodecimalrange',
     ]),
-    GCWTool(tool: SilverRatioSearch(), id: 'irrationalnumbers_search', searchKeys: const [
+    GCWTool(tool: const SilverRatioSearch(), id: 'irrationalnumbers_search', searchKeys: const [
       'silverratiosearch',
     ]),
 

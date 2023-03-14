@@ -34,7 +34,7 @@ RichText formatResistorMultiplier(double multiplier, TextStyle textStyle) {
 
   return RichText(
     text: TextSpan(style: textStyle, children: [
-      TextSpan(text: '\u00D7 10'),
+      const TextSpan(text: '\u00D7 10'),
       superscriptedTextForRichText(valueExponential[1].replaceFirst('+', ''), textStyle: textStyle),
       TextSpan(text: ' = ${formatter.format(multiplier).replaceAll(',', ' ')}')
     ]),

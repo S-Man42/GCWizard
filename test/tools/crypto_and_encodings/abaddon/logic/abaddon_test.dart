@@ -1,10 +1,10 @@
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/tools/crypto_and_encodings/abaddon/logic/abaddon.dart';
 
-final _A = YEN + YEN + MY;
-final _N = YEN + YEN + THORN;
-final _Z = THORN + YEN + THORN;
-final _SPACE = YEN + MY + MY;
+const _A = YEN + YEN + MY;
+const _N = YEN + YEN + THORN;
+const _Z = THORN + YEN + THORN;
+const _SPACE = YEN + MY + MY;
 
 void main() {
   group("AbaddonCode.encryptAbaddon:", () {

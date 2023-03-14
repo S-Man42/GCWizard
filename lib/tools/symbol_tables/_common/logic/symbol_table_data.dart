@@ -217,7 +217,7 @@ class SymbolTableData {
 
   SymbolTableData(this._context, this.symbolKey);
 
-  var _config = _SymbolTableConfig();
+  final _config = _SymbolTableConfig();
   List<Map<String, SymbolData>> images = [];
   int maxSymbolTextLength = 0;
 
