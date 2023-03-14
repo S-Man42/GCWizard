@@ -487,7 +487,7 @@ class SymbolReplacerImage {
         }
       }
 
-      if ((maxPercent < _similarityLevel!) | (maxPercentSymbolIndex > i)) {
+      if ((maxPercent < _similarityLevel!) || (maxPercentSymbolIndex > i)) {
         var group = SymbolGroup();
         symbolGroups.add(group);
         symbolGroups[symbolGroups.length - 1].symbols.add(symbol1);
