@@ -1406,7 +1406,7 @@ Put hazelnuts into the mixing bowl.
 Liquify contents of the mixing bowl.
 Pour contents of the mixing bowl into the baking dish.
 
-Serves 1.'''; // works in emulator - but why
+Serves 1.''';
     var Factorial = '''Factorial as a Piece of Cake.
 
 This recipe calculates and prints factorials of first integers.
@@ -2699,7 +2699,7 @@ Pour contents of the 2nd mixing bowl into the baking dish.
 Serves 1.''';
 
     List<Map<String, Object?>> _inputsToExpected = [
-      {'language' : 'ENG', 'input' : '5 7 4 6 3 8',  'recipe' : BubbledAndBacon, 'expectedOutput' : ['34678']},
+      {'language' : 'ENG', 'input' : '5 7 4 6 3 8',  'recipe' : BubbledAndBacon, 'expectedOutput' : ['345678']},
       {'language' : 'ENG', 'input' : '12',  'recipe' : FactorialAndFish, 'expectedOutput' : ['479001600']},
       {'language' : 'ENG', 'input' : '12',  'recipe' : FibonacciDuFromage, 'expectedOutput' : ['1123581321345589144']},
       {'language' : 'ENG', 'input' : '',  'recipe' : FibonacciNumberswithCaramelSauce, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_exception','chef_error_runtime_serving_aux','Stack Overflow']},
@@ -2874,6 +2874,7 @@ Method.
 Clean mixing bowl. Put sauerkraut into mixing bowl. Remove einhornhaar. Combine schweine into mixing bowl. Add pfeffer. Put wasser into mixing bowl. Remove sauerkraut. Add einhornhaar. Put wasser into mixing bowl. Remove einhornhaar. Divide pfeffer into mixing bowl. Put schweine into mixing bowl. Combine petersilie into mixing bowl. Add sauerkraut. Put sauerkraut into mixing bowl. Combine sauerkraut into mixing bowl. Add einhornhaar. Put wasser into mixing bowl. Put sauerkraut into mixing bowl. Combine sauerkraut into mixing bowl. Put schweine into mixing bowl. Combine petersilie into mixing bowl.''';
 
     // https://www.geocaching.com/geocache/GC9CAQJ #18 Oma Krimhildes gesunder Strudel
+    // läuft fehlerfrei im Emulator
     var GC9CAQJ = '''Oma Krimhildes Strudel 
 
 Zutaten:
@@ -2907,6 +2908,7 @@ Schüssel in eine Servierschale stürzen.
 
 Portionen: 1.
 ''';
+    // läuft fehlerfrei im Emulator
     var GC9CAQJKorrigiert = '''Oma Krimhildes Strudel 
 
 Zutaten:
