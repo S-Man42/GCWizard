@@ -32,7 +32,7 @@ void main() {
         symbolKey: (tool as GCWSymbolTableTool).symbolKey,
         icon: null,
         toolName: 'dancing man', //tool.toolName,
-        description: null)
+        description: null);
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () async {
