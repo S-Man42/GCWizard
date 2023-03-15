@@ -2,6 +2,8 @@ import 'dart:io' as io;
 import 'dart:typed_data';
 
 import "package:flutter_test/flutter_test.dart";
+import 'package:gc_wizard/application/registry.dart';
+import 'package:gc_wizard/tools/symbol_tables/_common/logic/symbol_table_data.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/logic/symbol_replacer.dart';
 import 'package:path/path.dart' as path;
 
@@ -19,10 +21,16 @@ void main() {
       {'input' : 'dancing_man.png', 'expectedOutputSymbolsCount' : 12, 'expectedOutputText' : '1234'},
     ];
 
+    var compareSymbolTable = registeredTools.where((element) => element.i18nPrefix == 'symbol_dancing_men').first;
+    var symbolData = SymbolTableData(null, 'symbol_dancing_men');
+    symbolData.initialize(importEncryption: false);
+
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () async {
         var _actual = await replaceSymbols(_getFileData(elem['input']), 50, 80);
         expect(_actual.symbols.length, elem['expectedOutputSymbolsCount']);
+        expect(_actual.getTextOutput(), elem['expectedOutputText']);
+
       });
     });
   });
