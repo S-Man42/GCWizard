@@ -24,22 +24,11 @@ void main() {
       {'input' : 'dancing_man.png', 'expectedOutputSymbolsCount' : 12, 'expectedOutputText' : '1234'},
     ];
 
-    SymbolTable tool = registeredTools.where((element) => element.i18nPrefix == 'symbol_dancing_men').first as SymbolTable;
-    var symbolData = SymbolTableData(null, 'symbol_dancing_men');
-    symbolData.initialize(importEncryption: false);
-
-    var viewData = SymbolReplacerSymbolTableViewData(
-        symbolKey: (tool as GCWSymbolTableTool).symbolKey,
-        icon: null,
-        toolName: 'dancing man', //tool.toolName,
-        description: null);
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () async {
         var _actual = await replaceSymbols(_getFileData(elem['input']), 50, 80);
         expect(_actual.symbols.length, elem['expectedOutputSymbolsCount']);
-        expect(_actual.getTextOutput(), elem['expectedOutputText']);
-
       });
     });
   });

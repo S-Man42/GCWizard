@@ -377,7 +377,7 @@ class SymbolReplacerImage {
             maxPercentSymbol = compareSymbolImage.symbols[x];
           }
         }
-        if (maxPercent >= _similarityCompareLevel && (maxPercentSymbol?.symbolGroup != null)) {
+        if (maxPercent >= _similarityCompareLevel && (maxPercentSymbol.symbolGroup != null)) {
           symbolGroups[i].text = maxPercentSymbol.symbolGroup.text;
           symbolGroups[i].compareSymbol = maxPercentSymbol.symbolGroup.compareSymbol;
         }
