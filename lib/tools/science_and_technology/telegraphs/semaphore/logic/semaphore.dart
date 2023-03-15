@@ -2,7 +2,7 @@ import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/l
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
-final Map<String, List<String>> _CODEBOOK_SEMAPHORE = {
+const Map<String, List<String>> _CODEBOOK_SEMAPHORE = {
   'A': ['l4', 'r5'],
   'B': ['l3', 'r5'],
   'C': ['l2', 'r5'],
@@ -48,7 +48,7 @@ final Map<String, List<String>> _CODEBOOK_SEMAPHORE = {
   'symboltables_semaphore_rest': ['l5', 'r5'],
 };
 
-final Map<String, String> _LETTER2DIGIT = {
+const Map<String, String> _LETTER2DIGIT = {
   '1': 'A',
   '2': 'B',
   '3': 'C',
@@ -63,9 +63,9 @@ final Map<String, String> _LETTER2DIGIT = {
 
 final Map<String, String> _DIGIT2LETTER = switchMapKeyValue(_LETTER2DIGIT);
 
-final _NUMBER = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
+const _NUMBER = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
 
-final _LETTER = {
+const _LETTER = {
   'A',
   'B',
   'C',

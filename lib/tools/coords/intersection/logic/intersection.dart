@@ -24,7 +24,7 @@ Future<List<LatLng?>> intersectionAsync(GCWAsyncExecuterParameters? jobData) asy
   var output = intersection(data.coord1, data.alpha, data.coord2,
       data.beta, data.ells);
 
-  jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }

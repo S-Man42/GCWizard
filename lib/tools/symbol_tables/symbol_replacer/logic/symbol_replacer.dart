@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_replacer_symboldata.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:image/image.dart' as Image;
 import 'package:tuple/tuple.dart';
@@ -42,7 +43,7 @@ Future<SymbolReplacerImage?> replaceSymbolsAsync(GCWAsyncExecuterParameters? job
       similarityCompareLevel: data.similarityCompareLevel,
       mergeDistance: data.mergeDistance);
 
-  jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }
@@ -226,7 +227,7 @@ class SymbolReplacerImage {
       if (this.compareSymbols != _usedCompareSymbols || _usedCompareSymbolsImage == null) {
         _usedCompareSymbolsImage = _buildCompareSymbols(compareSymbols!);
       }
-      _useCompareSymbols(_usedCompareSymbolsImage!);
+      _useCompareSymbols(_usedCompareSymbolsImage);
       _usedCompareSymbols = compareSymbols;
       this.compareSymbols = compareSymbols;
       mergeSymbolGroups();
@@ -316,7 +317,7 @@ class SymbolReplacerImage {
   /// extract symbols from the compare symbol table
   /// </summary>
   SymbolReplacerImage? _buildCompareSymbols(List<Map<String, SymbolReplacerSymbolData>> compareSymbols) {
-    if (compareSymbols.first.values.first.bytes == null) return null;
+    if (compareSymbols.isEmpty || compareSymbols.first.values.first.bytes == null) return null;
     if (_blackLevel == null || _similarityLevel == null || _gap == null) return null;
     var compareSymbolImage = SymbolReplacerImage(compareSymbols.first.values.first.bytes!);
 
@@ -357,9 +358,9 @@ class SymbolReplacerImage {
   /// then assign the text to the groups
   /// return: Sum of percent match for all symbols
   /// </summary>
-  double _useCompareSymbols(SymbolReplacerImage compareSymbolImage) {
+  double _useCompareSymbols(SymbolReplacerImage? compareSymbolImage) {
     var percentSum = 0.0;
-    if (_similarityCompareLevel == null) return 0;
+    if (compareSymbolImage == null || _similarityCompareLevel == null) return 0;
 
     // build hash for compare
     for (int i = 0; i < compareSymbolImage.symbols.length; i++) {
@@ -917,7 +918,7 @@ Future<List<Map<String, SymbolReplacerSymbolData>>?> searchSymbolTableAsync(GCWA
   var data = jobData!.parameters as Tuple2<SymbolReplacerImage, List<List<Map<String, SymbolReplacerSymbolData>>>>;
   var output = await searchSymbolTable(data.item1, data.item2, sendAsyncPort: jobData.sendAsyncPort);
 
-  jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }
@@ -939,7 +940,7 @@ Future<List<Map<String, SymbolReplacerSymbolData>>?> searchSymbolTable(
   imageTmp._similarityLevel = 0;
   imageTmp._gap = image._gap;
 
-  sendAsyncPort?.send({'progress': 0.0});
+  sendAsyncPort?.send(DoubleText('progress', 0.0));
 
   for (var symbolTable in compareSymbols) {
     imageTmp.resetGroupText();
@@ -952,7 +953,7 @@ Future<List<Map<String, SymbolReplacerSymbolData>>?> searchSymbolTable(
       }
     }
     progress++;
-    sendAsyncPort?.send({'progress': progress / compareSymbols.length});
+    sendAsyncPort?.send(DoubleText('progress', progress / compareSymbols.length));
   }
   return Future.value(maxPercentSymbolTable);
 }

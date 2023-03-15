@@ -1,12 +1,12 @@
 // https://physics.nist.gov/cuu/Constants/index.html
 
 class MathematicalConstant {
-  String? symbol;
-  String value;
-  List<String>? additional_names;
-  String? tool;
+  final String? symbol;
+  final String value;
+  final List<String>? additional_names;
+  final String? tool;
 
-  MathematicalConstant({
+  const MathematicalConstant({
     this.symbol,
     required this.value,
     this.additional_names,
@@ -15,7 +15,7 @@ class MathematicalConstant {
   });
 }
 
-final Map<String, MathematicalConstant> MATHEMATICAL_CONSTANTS = {
+const Map<String, MathematicalConstant> MATHEMATICAL_CONSTANTS = {
   'mathematical_constants_zero': MathematicalConstant(
     symbol: '0',
     value: '0',

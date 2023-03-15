@@ -161,17 +161,28 @@ class MultiDecoderState extends State<MultiDecoder> {
       } catch (e) {}
 
       if (result is Future<String>) {
-        return FutureBuilder(
+        return FutureBuilder<String>(
             future: result,
             builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-              if (snapshot.hasData && snapshot.data is String && ((snapshot.data as String).isNotEmpty)) {
+              if (snapshot.hasData && (snapshot.data is String) && (snapshot.data!.isNotEmpty)) {
+                return GCWOutput(title: _toolTitle(tool), child: snapshot.data);
+              } else {
+                return Container();
+              }
+            });
+      } else if (result is Future<String?>) {
+        return FutureBuilder<String?>(
+            future: result,
+            builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
+              if (snapshot.hasData && snapshot.data != null &&
+                  snapshot.data!.isNotEmpty) {
                 return GCWOutput(title: _toolTitle(tool), child: snapshot.data);
               } else {
                 return Container();
               }
             });
       } else if (result is Future<Uint8List>) {
-        return FutureBuilder(
+        return FutureBuilder<Uint8List>(
             future: result,
             builder: (BuildContext context, AsyncSnapshot<Uint8List> snapshot) {
               if (snapshot.hasData && snapshot.data is Uint8List && ((snapshot.data as Uint8List).isNotEmpty)) {
@@ -180,6 +191,20 @@ class MultiDecoderState extends State<MultiDecoder> {
                     child: GCWImageView(
                         imageData:
                             GCWImageViewData(GCWFile(bytes: (snapshot.data as Uint8List), name: _toolTitle(tool)))));
+              } else {
+                return Container();
+              }
+            });
+      } else if (result is Future<Uint8List?>) {
+        return FutureBuilder<Uint8List?>(
+            future: result,
+            builder: (BuildContext context, AsyncSnapshot<Uint8List?> snapshot) {
+              if (snapshot.hasData && snapshot.data is Uint8List && ((snapshot.data as Uint8List).isNotEmpty)) {
+                return GCWOutput(
+                    title: _toolTitle(tool),
+                    child: GCWImageView(
+                        imageData:
+                        GCWImageViewData(GCWFile(bytes: (snapshot.data as Uint8List), name: _toolTitle(tool)))));
               } else {
                 return Container();
               }

@@ -114,7 +114,7 @@ final RegExp _CHEF_MeasureDry = RegExp(r'^g(r)?$|^kg$|^pinch(es)?$|^prise(n)$');
 final RegExp _CHEF_MeasureLiquid = RegExp(r'^ml$|^l$|^dash(es)?$|^drop(s)?$|^spritzer$|^tropfen$');
 final RegExp _CHEF_MeasureElse = RegExp(r'^cup(s)?$|^tasse(n)?$|^teaspoon(s)?$|^tablespoon(s)?$|^teeloeffel$|^essloeffel$');
 
-final Map<String, Map<String, String>> _CHEF_Messages = {
+const Map<String, Map<String, String>> _CHEF_Messages = {
   'DEU': {
     "chef_error_structure_recipe": "chef_error_structure_recipe",
     "chef_error_structure_subrecipe": "chef_error_structure_subrecipe",
@@ -227,19 +227,19 @@ final Map<String, Map<String, String>> _CHEF_Messages = {
   }
 };
 
-final List<String> _CHEF_liquidMeasuresDEU = ['ml', 'l', 'Spritzer', 'Tropfen'];
+const List<String> _CHEF_liquidMeasuresDEU = ['ml', 'l', 'Spritzer', 'Tropfen'];
 
-final List<String> _CHEF_liquidMeasuresENG = ['ml', 'l', 'dashes', 'drops'];
+const List<String> _CHEF_liquidMeasuresENG = ['ml', 'l', 'dashes', 'drops'];
 
-final List<String> _CHEF_dryMeasuresDEU = ['g', 'kg', 'Prisen'];
+const List<String> _CHEF_dryMeasuresDEU = ['g', 'kg', 'Prisen'];
 
-final List<String> _CHEF_dryMeasuresENG = ['g', 'kg', 'pinches'];
+const List<String> _CHEF_dryMeasuresENG = ['g', 'kg', 'pinches'];
 
-final List<String> _CHEF_measuresDEU = ['Teelöffel', 'Esslöffel', 'Tasse'];
+const List<String> _CHEF_measuresDEU = ['Teelöffel', 'Esslöffel', 'Tasse'];
 
-final List<String> _CHEF_measuresENG = ['teaspoons', 'tablespoons', 'cups'];
+const List<String> _CHEF_measuresENG = ['teaspoons', 'tablespoons', 'cups'];
 
-final List<String> _CHEF_itemListLiquidENG = [
+const List<String> _CHEF_itemListLiquidENG = [
   'milk',
   'water',
   'oil',
@@ -295,7 +295,7 @@ final List<String> _CHEF_itemListLiquidENG = [
   'lillet'
 ];
 
-final List<String> _CHEF_itemListLiquidDEU = [
+const List<String> _CHEF_itemListLiquidDEU = [
   'Milch',
   'Wasser',
   'Öl',
@@ -351,7 +351,7 @@ final List<String> _CHEF_itemListLiquidDEU = [
   'Lillet'
 ];
 
-final List<String> _CHEF_itemListDryENG = [
+const List<String> _CHEF_itemListDryENG = [
   'flour',
   'white sugar',
   'salt',
@@ -404,7 +404,7 @@ final List<String> _CHEF_itemListDryENG = [
   'banana chips'
 ];
 
-final List<String> _CHEF_itemListDryDEU = [
+const List<String> _CHEF_itemListDryDEU = [
   'Mehl',
   'weißer Zucker',
   'Salz',
@@ -455,14 +455,14 @@ final List<String> _CHEF_itemListDryDEU = [
   'Bananenchips'
 ];
 
-final List<List<String>> _CHEF_itemListAuxiliaryDEU = [
+const List<List<String>> _CHEF_itemListAuxiliaryDEU = [
   ['fluffige ', 'leichte ', 'cremige ', 'schwere ', 'luftige '],
   ['bittere ', 'sauere ', 'süße ', 'scharfe ', 'salzige '],
   ['Honig', 'Senf', 'Ketchup', 'Curry', 'Preiselbeeren'],
   ['soße', 'dressings', 'toppings', 'chips', 'relish']
 ];
 
-final List<List<String>> _CHEF_itemListAuxiliaryENG = [
+const List<List<String>> _CHEF_itemListAuxiliaryENG = [
   ['fluffy ', 'light ', 'creamy ', 'heavy ', 'uncongested '],
   ['bitter ', 'sour ', 'sweet ', 'hot ', 'salty '],
   ['honey', 'mustard', 'ketchup', 'curry', 'cranberry'],

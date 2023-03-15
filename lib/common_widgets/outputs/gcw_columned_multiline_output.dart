@@ -7,6 +7,7 @@ import 'package:gc_wizard/common_widgets/gcw_text.dart';
 
 class GCWColumnedMultilineOutput extends StatefulWidget {
   //TODO: Is input data type correctly defined? Is there a better way than List<List<...>>? Own return type?
+  // -> I found lists with different types (example -> blood_alcohol -> dynamic list)
   final List<List<Object?>> data;
   final List<int> flexValues;
   final int? copyColumn;

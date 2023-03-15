@@ -8,7 +8,7 @@ enum ResistorBandColor { PINK, SILVER, GOLD, BLACK, BROWN, RED, ORANGE, YELLOW, 
 const defaultResistorBandColor = ResistorBandColor.BROWN;
 
 // source: https://de.wikipedia.org/wiki/Widerstand_(Bauelement)#Angaben_auf_Widerst%C3%A4nden
-final Map<ResistorBandColor, Map<ResistorBandType, double>> _RESISTOR_VALUES_THREE_AND_FOUR_BANDS = {
+const Map<ResistorBandColor, Map<ResistorBandType, double>> _RESISTOR_VALUES_THREE_AND_FOUR_BANDS = {
   ResistorBandColor.PINK: {ResistorBandType.MULTIPLIER: 1e-3},
   ResistorBandColor.SILVER: {ResistorBandType.MULTIPLIER: 1e-2, ResistorBandType.TOLERANCE: 0.1},
   ResistorBandColor.GOLD: {ResistorBandType.MULTIPLIER: 1e-1, ResistorBandType.TOLERANCE: 0.05},
@@ -55,7 +55,7 @@ final Map<ResistorBandColor, Map<ResistorBandType, double>> _RESISTOR_VALUES_THR
 };
 
 // source: Temperature coefficient: https://web.archive.org/web/20180723125246/https://www.sis.se/api/document/preview/8021442/
-final Map<ResistorBandColor, Map<ResistorBandType, double>> _RESISTOR_VALUES_FIVE_AND_SIX_BANDS = {
+const Map<ResistorBandColor, Map<ResistorBandType, double>> _RESISTOR_VALUES_FIVE_AND_SIX_BANDS = {
   ResistorBandColor.PINK: {ResistorBandType.MULTIPLIER: 1e-3},
   ResistorBandColor.SILVER: {ResistorBandType.MULTIPLIER: 1e-2, ResistorBandType.TOLERANCE: 0.1},
   ResistorBandColor.GOLD: {ResistorBandType.MULTIPLIER: 1e-1, ResistorBandType.TOLERANCE: 0.05},

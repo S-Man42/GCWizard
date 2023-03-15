@@ -6,6 +6,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_
 import 'package:gc_wizard/tools/crypto_and_encodings/wasd/logic/wasd.dart';
 import 'package:gc_wizard/tools/images_and_files/binary2image/logic/binary2image.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
+import 'package:gc_wizard/utils/ui_dependent_utils/image_utils/image_utils.dart';
 
 const MDT_INTERNALNAMES_WASD = 'multidecoder_tool_wasd_title';
 const MDT_WASD_OPTION_SET = 'wasd_control_set';
@@ -24,8 +25,10 @@ class MultiDecoderToolWasd extends AbstractMultiDecoderTool {
             internalToolName: MDT_INTERNALNAMES_WASD,
             onDecode: (String input, String key) {
               var value = checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_WASD, options, MDT_WASD_OPTION_SET);
-              return binary2image(
+              var output = binary2image(
                   decodeWASDGraphic(input, (value.characters.toList())), false, false);
+              if (output == null) return null;
+              return input2Image(output);
             },
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {

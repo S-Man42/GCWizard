@@ -37,7 +37,7 @@ import 'package:gc_wizard/utils/constants.dart';
 
 enum BrailleLanguage { BASIC, SIMPLE, STD, DEU, ENG, FRA, EUR }
 
-Map<BrailleLanguage, CodebookConfig> BRAILLE_LANGUAGES = {
+const Map<BrailleLanguage, CodebookConfig> BRAILLE_LANGUAGES = {
   BrailleLanguage.SIMPLE: CodebookConfig(title: 'braille_language_simple', subtitle: 'braille_language_simple_description'),
   BrailleLanguage.DEU: CodebookConfig(title: 'common_language_german', subtitle: 'braille_language_german_description'),
   BrailleLanguage.ENG: CodebookConfig(title: 'common_language_english', subtitle: 'braille_language_english_description'),
@@ -45,7 +45,7 @@ Map<BrailleLanguage, CodebookConfig> BRAILLE_LANGUAGES = {
   BrailleLanguage.EUR: CodebookConfig(title: 'braille_language_euro', subtitle: ''),
 };
 
-final Map<BrailleLanguage, Map<String, List<String>>> _CharsToSegmentsLetters = {
+const Map<BrailleLanguage, Map<String, List<String>>> _CharsToSegmentsLetters = {
   BrailleLanguage.STD: {
     ' ': [],
     'a': ['1'],
@@ -136,7 +136,7 @@ final Map<BrailleLanguage, Map<String, List<String>>> _CharsToSegmentsLetters = 
   }
 };
 
-final Map<BrailleLanguage, Map<String, List<String>>> _CharsToSegmentsSymbols = {
+const Map<BrailleLanguage, Map<String, List<String>>> _CharsToSegmentsSymbols = {
   BrailleLanguage.STD: {
     ',': ['2'],
     ';': ['2', '3'],
@@ -179,16 +179,16 @@ final Map<BrailleLanguage, Map<String, List<String>>> _CharsToSegmentsSymbols = 
   }
 };
 
-final _MODIFIER_4 = ['4'];
-final _MODIFIER_5 = ['5'];
-final _MODIFIER_6 = ['6'];
-final _MODIFIER_45 = ['4', '5'];
-final _MODIFIER_46 = ['4', '6'];
-final _MODIFIER_56 = ['5', '6'];
-final _MODIFIER_345 = ['3', '4', '5'];
-final _MODIFIER_356 = ['3', '5', '6'];
-final _MODIFIER_456 = ['4', '5', '6'];
-final _MODIFIER_3456 = ['3', '4', '5', '6']; // Number follows
+const _MODIFIER_4 = ['4'];
+const _MODIFIER_5 = ['5'];
+const _MODIFIER_6 = ['6'];
+const _MODIFIER_45 = ['4', '5'];
+const _MODIFIER_46 = ['4', '6'];
+const _MODIFIER_56 = ['5', '6'];
+const _MODIFIER_345 = ['3', '4', '5'];
+const _MODIFIER_356 = ['3', '5', '6'];
+const _MODIFIER_456 = ['4', '5', '6'];
+const _MODIFIER_3456 = ['3', '4', '5', '6']; // Number follows
 
 final Map<BrailleLanguage, List<String>> _Modifier = {
   BrailleLanguage.DEU: [
@@ -240,310 +240,87 @@ final Map<BrailleLanguage, Map<String, List<String>>> _CharsToSegmentsModifier =
     _MODIFIER_356.join(''): ['3', '5', '6'],
   },
 };
-final Map<BrailleLanguage, Map<String, List<List<String>>>> _CharsToSegmentsSymbolsComposed = {
+const Map<BrailleLanguage, Map<String, List<List<String>>>> _CharsToSegmentsSymbolsComposed = {
   BrailleLanguage.DEU: {
-    '[': [
-      _MODIFIER_6,
-      ['2', '3', '5', '6']
-    ],
-    ']': [
-      _MODIFIER_6,
-      ['2', '3', '5', '6']
-    ],
-    '@': [
-      _MODIFIER_4,
-      ['3', '4', '5']
-    ],
-    '°': [
-      _MODIFIER_4,
-      ['3', '5', '6']
-    ],
-    '_': [
-      _MODIFIER_4,
-      ['4', '5', '6']
-    ],
-    '"': [
-      _MODIFIER_4,
-      ['3', '5'],
-      ['3', '5']
-    ],
-    '&': [
-      _MODIFIER_5,
-      ['1', '3', '6']
-    ],
-    '/': [
-      _MODIFIER_5,
-      ['2']
-    ],
-    '|': [
-      _MODIFIER_456,
-      ['1', '2', '3']
-    ],
-    '\\': [
-      _MODIFIER_4,
-      ['3', '4']
-    ],
-    '%': [
-      _MODIFIER_3456,
-      ['2', '4', '5'],
-      ['3', '5', '6']
-    ],
-    '+': [
-      _MODIFIER_4,
-      ['2', '3', '5']
-    ],
-    '=': [
-      _MODIFIER_4,
-      ['2', '3', '5', '6']
-    ],
-    '<': [
-      _MODIFIER_4,
-      ['2', '4', '6'],
-      ['3']
-    ],
-    '>': [
-      _MODIFIER_4,
-      ['1', '3', '5'],
-      ['2']
-    ],
-    '^': [
-      _MODIFIER_4,
-      ['3', '4', '6']
-    ],
-    '*': [
-      _MODIFIER_4,
-      ['3', '4', '6']
-    ],
-    '÷': [
-      _MODIFIER_4,
-      ['3', '5']
-    ],
-    '×': [
-      _MODIFIER_4,
-      ['2', '5'],
-      ['2', '5']
-    ],
-    '‰': [
-      _MODIFIER_3456,
-      ['2', '4', '5'],
-      ['3', '5', '6'],
-      ['3', '5', '6']
-    ],
+    '[': [_MODIFIER_6, ['2', '3', '5', '6']], 
+    ']': [_MODIFIER_6, ['2', '3', '5', '6']],
+    '@': [_MODIFIER_4, ['3', '4', '5']], 
+    '°': [_MODIFIER_4, ['3', '5', '6']],
+    '_': [_MODIFIER_4, ['4', '5', '6']], 
+    '"': [_MODIFIER_4, ['3', '5'], ['3', '5']],
+    '&': [_MODIFIER_5, ['1', '3', '6']],
+    '/': [_MODIFIER_5, ['2']],
+    '|': [_MODIFIER_456, ['1', '2', '3']],
+    '\\': [_MODIFIER_4, ['3', '4']],
+    '%': [_MODIFIER_3456, ['2', '4', '5'], ['3', '5', '6']],
+    '+': [_MODIFIER_4, ['2', '3', '5']],
+    '=': [_MODIFIER_4, ['2', '3', '5', '6']],
+    '<': [_MODIFIER_4, ['2', '4', '6'], ['3']],
+    '>': [_MODIFIER_4, ['1', '3', '5'], ['2']],
+    '^': [_MODIFIER_4, ['3', '4', '6']],
+    '*': [_MODIFIER_4, ['3', '4', '6']],
+    '÷': [_MODIFIER_4, ['3', '5']],
+    '×': [_MODIFIER_4, ['2', '5'], ['2', '5']],
+    '‰': [_MODIFIER_3456, ['2', '4', '5'], ['3', '5', '6'], ['3', '5', '6']],
   },
   BrailleLanguage.ENG: {
-    '§': [
-      _MODIFIER_45,
-      ['2', '3', '4']
-    ],
-    '@': [
-      _MODIFIER_4,
-      ['1']
-    ],
-    '°': [
-      _MODIFIER_45,
-      ['2', '4', '5']
-    ],
-    '&': [
-      _MODIFIER_4,
-      ['1', '2', '3', '4', '6']
-    ],
-    '/': [
-      _MODIFIER_456,
-      ['3', '4']
-    ],
-    '|': [
-      _MODIFIER_456,
-      ['1', '2', '5', '6']
-    ],
-    '"': [
-      _MODIFIER_6,
-      ['2', '3', '5', '6']
-    ],
-    '%': [
-      _MODIFIER_46,
-      ['3', '5', '6']
-    ],
-    '_': [
-      _MODIFIER_46,
-      ['3', '6']
-    ],
-    '\\': [
-      _MODIFIER_345,
-      ['1', '6']
-    ],
-    '#': [
-      _MODIFIER_456,
-      ['1', '4', '5', '6']
-    ],
-    '~': [
-      _MODIFIER_4,
-      ['3', '5']
-    ],
-    '[': [
-      _MODIFIER_46,
-      ['1', '2', '6']
-    ],
-    ']': [
-      _MODIFIER_46,
-      ['3', '4', '5']
-    ],
-    '{': [
-      _MODIFIER_46,
-      ['1', '2', '6']
-    ],
-    '}': [
-      _MODIFIER_456,
-      ['3', '4', '5']
-    ],
-    '(': [
-      _MODIFIER_5,
-      ['1', '2', '6']
-    ],
-    ')': [
-      _MODIFIER_5,
-      ['3', '4', '5']
-    ],
-    '„': [
-      _MODIFIER_45,
-      ['2', '3', '6']
-    ],
-    '“': [
-      _MODIFIER_45,
-      ['3', '5', '6']
-    ],
-    '«': [
-      _MODIFIER_456,
-      ['3', '5', '6']
-    ],
-    '»': [
-      _MODIFIER_456,
-      ['2', '3', '6']
-    ],
-    '‘': [
-      _MODIFIER_6,
-      ['2', '3', '6']
-    ],
-    '’': [
-      _MODIFIER_6,
-      ['3', '5', '6']
-    ],
-    '+': [
-      _MODIFIER_5,
-      ['2', '3', '5']
-    ],
-    '=': [
-      _MODIFIER_5,
-      ['2', '3', '5', '6']
-    ],
-    '<': [
-      _MODIFIER_4,
-      ['1', '2', '6']
-    ],
-    '>': [
-      _MODIFIER_4,
-      ['3', '4', '5']
-    ],
-    '^': [
-      _MODIFIER_4,
-      ['2', '6']
-    ],
-    '*': [
-      _MODIFIER_5,
-      ['3', '5']
-    ],
-    '÷': [
-      _MODIFIER_5,
-      ['3', '4']
-    ],
-    '×': [
-      _MODIFIER_5,
-      ['2', '3', '6']
-    ],
+    '§': [_MODIFIER_45, ['2', '3', '4']],
+    '@': [_MODIFIER_4, ['1']],
+    '°': [_MODIFIER_45, ['2', '4', '5']],
+    '&': [_MODIFIER_4, ['1', '2', '3', '4', '6']],
+    '/': [_MODIFIER_456, ['3', '4']],
+    '|': [_MODIFIER_456, ['1', '2', '5', '6']],
+    '"': [_MODIFIER_6, ['2', '3', '5', '6']],
+    '%': [_MODIFIER_46, ['3', '5', '6']],
+    '_': [_MODIFIER_46, ['3', '6']],
+    '\\': [_MODIFIER_345, ['1', '6']],
+    '#': [_MODIFIER_456, ['1', '4', '5', '6']],
+    '~': [_MODIFIER_4, ['3', '5']],
+    '[': [_MODIFIER_46, ['1', '2', '6']],
+    ']': [_MODIFIER_46, ['3', '4', '5']],
+    '{': [_MODIFIER_46, ['1', '2', '6']],
+    '}': [_MODIFIER_456, ['3', '4', '5']],
+    '(': [_MODIFIER_5, ['1', '2', '6']],
+    ')': [_MODIFIER_5, ['3', '4', '5']],
+    '„': [_MODIFIER_45, ['2', '3', '6']],
+    '“': [_MODIFIER_45, ['3', '5', '6']],
+    '«': [_MODIFIER_456, ['3', '5', '6']],
+    '»': [_MODIFIER_456, ['2', '3', '6']],
+    '‘': [_MODIFIER_6, ['2', '3', '6']],
+    '’': [_MODIFIER_6, ['3', '5', '6']],
+    '+': [_MODIFIER_5, ['2', '3', '5']],
+    '=': [_MODIFIER_5, ['2', '3', '5', '6']],
+    '<': [_MODIFIER_4, ['1', '2', '6']],
+    '>': [_MODIFIER_4, ['3', '4', '5']],
+    '^': [_MODIFIER_4, ['2', '6']],
+    '*': [_MODIFIER_5, ['3', '5']],
+    '÷': [_MODIFIER_5, ['3', '4']],
+    '×': [_MODIFIER_5, ['2', '3', '6']],
   },
   BrailleLanguage.FRA: {
-    '[': [
-      _MODIFIER_45,
-      ['2', '3', '6']
-    ],
-    ']': [
-      _MODIFIER_356,
-      ['1', '2']
-    ],
-    '{': [
-      _MODIFIER_6,
-      ['6'],
-      ['2', '3', '6']
-    ],
-    '}': [
-      _MODIFIER_356,
-      ['3'],
-      ['3']
-    ],
-    '§': [
-      _MODIFIER_5,
-      ['1', '2', '3', '4', '5', '6']
-    ],
-    '°': [
-      _MODIFIER_5,
-      ['1', '3', '5']
-    ],
-    '%': [
-      _MODIFIER_5,
-      ['3', '4', '6']
-    ],
-    '_': [
-      _MODIFIER_5,
-      ['3', '6']
-    ],
-    '\\': [
-      _MODIFIER_5,
-      ['3', '4']
-    ],
-    '#': [
-      _MODIFIER_5,
-      ['3', '4', '5', '6']
-    ],
-    '~': [
-      _MODIFIER_5,
-      ['2', '6']
-    ],
-    '+': [
-      _MODIFIER_6,
-      ['2', '3', '5']
-    ],
-    '=': [
-      _MODIFIER_6,
-      ['2', '3', '5', '6']
-    ],
-    '<': [
-      _MODIFIER_5,
-      ['1', '2', '6']
-    ],
-    '>': [
-      _MODIFIER_5,
-      ['3', '4', '5']
-    ],
-    '*': [
-      _MODIFIER_5,
-      ['3', '5']
-    ],
-    '÷': [
-      _MODIFIER_6,
-      ['2', '5']
-    ],
-    '×': [
-      _MODIFIER_6,
-      ['3', '5']
-    ],
-    '‰': [
-      _MODIFIER_5,
-      ['3', '4', '6'],
-      ['3', '4', '6']
-    ],
+    '[': [_MODIFIER_45, ['2', '3', '6']],
+    ']': [_MODIFIER_356, ['1', '2']],
+    '{': [_MODIFIER_6, ['6'], ['2', '3', '6']],
+    '}': [_MODIFIER_356, ['3'], ['3']],
+    '§': [_MODIFIER_5, ['1', '2', '3', '4', '5', '6']],
+    '°': [_MODIFIER_5, ['1', '3', '5']],
+    '%': [_MODIFIER_5, ['3', '4', '6']],
+    '_': [_MODIFIER_5, ['3', '6']],
+    '\\': [_MODIFIER_5, ['3', '4']],
+    '#': [_MODIFIER_5, ['3', '4', '5', '6']],
+    '~': [_MODIFIER_5, ['2', '6']],
+    '+': [_MODIFIER_6, ['2', '3', '5']],
+    '=': [_MODIFIER_6, ['2', '3', '5', '6']],
+    '<': [_MODIFIER_5, ['1', '2', '6']],
+    '>': [_MODIFIER_5, ['3', '4', '5']],
+    '*': [_MODIFIER_5, ['3', '5']],
+    '÷': [_MODIFIER_6, ['2', '5']],
+    '×': [_MODIFIER_6, ['3', '5']],
+    '‰': [_MODIFIER_5, ['3', '4', '6'], ['3', '4', '6']],
   },
 };
 
-final Map<BrailleLanguage, List<String>> _CharsetSymbolsComposed = {
+const Map<BrailleLanguage, List<String>> _CharsetSymbolsComposed = {
   BrailleLanguage.DEU: [
     '[',
     ']',
@@ -603,7 +380,7 @@ final Map<BrailleLanguage, List<String>> _CharsetSymbolsComposed = {
   BrailleLanguage.FRA: ['[', ']', '{', '}', '§', '°', '%', '_', '\\', '#', '~', '+', '=', '<', '>', '*', '÷', '×', '‰'],
 };
 
-final Map<String, List<String>> _charsToSegmentsDigits = {
+const Map<String, List<String>> _charsToSegmentsDigits = {
   '1': ['1'],
   '2': ['1', '2'],
   '3': ['1', '4'],
@@ -616,11 +393,11 @@ final Map<String, List<String>> _charsToSegmentsDigits = {
   '0': ['2', '4', '5'],
 };
 
-final _SWITCH_NUMBERFOLLOWS = ['3', '4', '5', '6'];
-final _SWITCH_ANTOINE = ['6'];
-final _SWITCH_LETTERFOLLOWS = ['6'];
+const _SWITCH_NUMBERFOLLOWS = ['3', '4', '5', '6'];
+const _SWITCH_ANTOINE = ['6'];
+const _SWITCH_LETTERFOLLOWS = ['6'];
 
-final Map<BrailleLanguage, List<String>> _Switches = {
+const Map<BrailleLanguage, List<String>> _Switches = {
   BrailleLanguage.DEU: [
     'ONECAPITALFOLLOWS',
     'CAPITALFOLLOWS',
@@ -634,7 +411,7 @@ final Map<BrailleLanguage, List<String>> _Switches = {
   BrailleLanguage.FRA: ['CAPITALS', 'NUMBERFOLLOWS', 'ANTOINENUMBERFOLLOWS', 'BASE'],
 };
 
-final Map<BrailleLanguage, Map<String, List<String>>> _CharsToSegmentsSwitches = {
+const Map<BrailleLanguage, Map<String, List<String>>> _CharsToSegmentsSwitches = {
   BrailleLanguage.DEU: {
     'ONECAPITALFOLLOWS': ['4', '6'],
     'CAPITALFOLLOWS': ['4', '5'],
@@ -653,7 +430,7 @@ final Map<BrailleLanguage, Map<String, List<String>>> _CharsToSegmentsSwitches =
   },
 };
 
-final Map<String, List<String>> _charsToSegmentsLettersAntoine = {
+const Map<String, List<String>> _charsToSegmentsLettersAntoine = {
   'â': ['1', '6'], // 1
   'ê': ['1', '2', '6'], // 2
   'î': ['1', '4', '6'], // 3
@@ -666,7 +443,7 @@ final Map<String, List<String>> _charsToSegmentsLettersAntoine = {
   'NUMBERFOLLOWS': ['3', '4', '5', '6'], // 0
 };
 
-final Map<String, List<String>> _charsToSegmentsEUR = {
+const Map<String, List<String>> _charsToSegmentsEUR = {
   // http://fakoo.de/braille/computerbraille-text.html
   'NUL': ['3', '4', '5', '7', '8'],
   'SOH': ['1', '7', '8'],
@@ -926,11 +703,11 @@ final Map<String, List<String>> _charsToSegmentsEUR = {
   'ÿ': ['1', '3', '4', '5', '6', '8'],
 };
 
-final _Numbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+const _Numbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
 
-final _NumberLetters = {'j', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'};
+const _NumberLetters = {'j', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'};
 
-final _SmallLetters = {
+const _SmallLetters = {
   'a',
   'b',
   'c',
@@ -977,7 +754,7 @@ final _SmallLetters = {
   'û',
 };
 
-final _CapitalLetters = {
+const _CapitalLetters = {
   'A',
   'B',
   'C',
@@ -1023,9 +800,9 @@ final _CapitalLetters = {
   'Û',
 };
 
-final _AntoineLetters = {'â', 'ê', 'î', 'ô', 'û', 'ë', 'ï', 'ü', 'œ', 'NUMBERFOLLOWS'};
+const _AntoineLetters = {'â', 'ê', 'î', 'ô', 'û', 'ë', 'ï', 'ü', 'œ', 'NUMBERFOLLOWS'};
 
-final Map<String, String> _LetterToDigit = {
+const Map<String, String> _LetterToDigit = {
   'a': '1',
   'b': '2',
   'c': '3',
@@ -1038,7 +815,7 @@ final Map<String, String> _LetterToDigit = {
   'j': '0',
 };
 
-final Map<String, String> _AntoineToDigit = {
+const Map<String, String> _AntoineToDigit = {
   'â': '1',
   'ê': '2',
   'î': '3',

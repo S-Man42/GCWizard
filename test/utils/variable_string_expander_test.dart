@@ -5,7 +5,7 @@ void main() {
 
   group("VariableStringExpander.run:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input': 'N 51.[A][A+1] E [B][B^A].[4]23', 'substitutions': {'A': '1-3', 'B': '4-0#2,1', 'C': '12,34'}, 'onAfterExpandedText' : (String? e) => e, 'breakCondition' : VariableStringExpanderBreakCondition.RUN_ALL,
+      {'input': 'N 51.[A][A+1] E [B][B^A].[4]23', 'substitutions': {'A': '1-3', 'B': '4-0#2,1', 'C': '12,34'}, 'onAfterExpandedText' : (String e) => e, 'breakCondition' : VariableStringExpanderBreakCondition.RUN_ALL,
         'expectedOutput': [
           VariableStringExpanderValue(text: 'N 51.[1][1+1] E [0][0^1].[4]23', variables: {'A': '1', 'B': '0', 'C': '12'}),
           VariableStringExpanderValue(text: 'N 51.[1][1+1] E [0][0^1].[4]23', variables: {'A': '1', 'B': '0', 'C': '34'}),
@@ -35,31 +35,31 @@ void main() {
           VariableStringExpanderValue(text: 'N 51.[3][3+1] E [4][4^3].[4]23', variables: {'A': '3', 'B': '4', 'C': '34'}),
         ]
       },
-      {'input': 'N 51.[A][A+1] E [B][B^A].[4]23', 'substitutions': {'A': '1-3', 'B': '4-0#2,1', 'C': '12,34'}, 'onAfterExpandedText' : (String? e) => e, 'breakCondition' : VariableStringExpanderBreakCondition.BREAK_ON_FIRST_FOUND,
+      {'input': 'N 51.[A][A+1] E [B][B^A].[4]23', 'substitutions': {'A': '1-3', 'B': '4-0#2,1', 'C': '12,34'}, 'onAfterExpandedText' : (String e) => e, 'breakCondition' : VariableStringExpanderBreakCondition.BREAK_ON_FIRST_FOUND,
         'expectedOutput': [
           VariableStringExpanderValue(text: 'N 51.[1][1+1] E [0][0^1].[4]23', variables: {'A': '1', 'B': '0', 'C': '12'}),
         ]
       },
-      {'input': 'A', 'substitutions': {'A': '1'}, 'onAfterExpandedText' : (String? e) => e, 'breakCondition' : VariableStringExpanderBreakCondition.RUN_ALL,
+      {'input': 'A', 'substitutions': {'A': '1'}, 'onAfterExpandedText' : (String e) => e, 'breakCondition' : VariableStringExpanderBreakCondition.RUN_ALL,
         'expectedOutput': [
           VariableStringExpanderValue(text: '1', variables: {'A': '1'}),
         ]
       },
-      {'input': 'A', 'substitutions': {'A': '1-3'}, 'onAfterExpandedText' : (String? e) => e, 'breakCondition' : VariableStringExpanderBreakCondition.RUN_ALL,
+      {'input': 'A', 'substitutions': {'A': '1-3'}, 'onAfterExpandedText' : (String e) => e, 'breakCondition' : VariableStringExpanderBreakCondition.RUN_ALL,
         'expectedOutput': [
           VariableStringExpanderValue(text: '1', variables: {'A': '1'}),
           VariableStringExpanderValue(text: '2', variables: {'A': '2'}),
           VariableStringExpanderValue(text: '3', variables: {'A': '3'}),
         ]
       },
-      {'input': 'AA', 'substitutions': {'A': '1-3'}, 'onAfterExpandedText' : (String? e) => e, 'breakCondition' : VariableStringExpanderBreakCondition.RUN_ALL,
+      {'input': 'AA', 'substitutions': {'A': '1-3'}, 'onAfterExpandedText' : (String e) => e, 'breakCondition' : VariableStringExpanderBreakCondition.RUN_ALL,
         'expectedOutput': [
           VariableStringExpanderValue(text: '11', variables: {'A': '1'}),
           VariableStringExpanderValue(text: '22', variables: {'A': '2'}),
           VariableStringExpanderValue(text: '33', variables: {'A': '3'}),
         ]
       },
-      {'input': 'AB', 'substitutions': {'A': '1-3', 'B': '4,6'}, 'onAfterExpandedText' : (String? e) => e, 'breakCondition' : VariableStringExpanderBreakCondition.RUN_ALL,
+      {'input': 'AB', 'substitutions': {'A': '1-3', 'B': '4,6'}, 'onAfterExpandedText' : (String e) => e, 'breakCondition' : VariableStringExpanderBreakCondition.RUN_ALL,
         'expectedOutput': [
           VariableStringExpanderValue(text: '14', variables: {'A': '1', 'B': '4'}),
           VariableStringExpanderValue(text: '16', variables: {'A': '1', 'B': '6'}),
@@ -69,7 +69,7 @@ void main() {
           VariableStringExpanderValue(text: '36', variables: {'A': '3', 'B': '6'})
         ]
       },
-      {'input': 'N49 32.[n] E010 59.[e]', 'substitutions': {'n':'3-5', 'e': '7'}, 'onAfterExpandedText' : (String? e) => e, 'breakCondition' : VariableStringExpanderBreakCondition.RUN_ALL,
+      {'input': 'N49 32.[n] E010 59.[e]', 'substitutions': {'n':'3-5', 'e': '7'}, 'onAfterExpandedText' : (String e) => e, 'breakCondition' : VariableStringExpanderBreakCondition.RUN_ALL,
         'expectedOutput': [
           VariableStringExpanderValue(text: 'N49 32.[3] E010 59.[7]', variables: {'N': '3', 'E': '7'}),
           VariableStringExpanderValue(text: 'N49 32.[4] E010 59.[7]', variables: {'N': '4', 'E': '7'}),
@@ -99,7 +99,7 @@ void main() {
 
   group("VariableStringExpander.runError:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input': 'A', 'substitutions': {'A': '1-Z', 'B': '4-0#2,1', 'C': '12,34'}, 'onAfterExpandedText' : (String? e) => e, 'breakCondition' : VariableStringExpanderBreakCondition.RUN_ALL,
+      {'input': 'A', 'substitutions': {'A': '1-Z', 'B': '4-0#2,1', 'C': '12,34'}, 'onAfterExpandedText' : (String e) => e, 'breakCondition' : VariableStringExpanderBreakCondition.RUN_ALL,
         'expectedOutput': [VariableStringExpanderValue(text: 'A', variables: null)]
       },
     ];
@@ -126,14 +126,14 @@ void main() {
 
   group("VariableStringExpander.runUnorderedNotUnique:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input': 'AA', 'substitutions': {'A': '3-1'}, 'onAfterExpandedText' : (String? e) => e, 'breakCondition' : VariableStringExpanderBreakCondition.RUN_ALL,
+      {'input': 'AA', 'substitutions': {'A': '3-1'}, 'onAfterExpandedText' : (String e) => e, 'breakCondition' : VariableStringExpanderBreakCondition.RUN_ALL,
         'expectedOutput': [
           VariableStringExpanderValue(text: '33', variables: {'A': '3'}),
           VariableStringExpanderValue(text: '22', variables: {'A': '2'}),
           VariableStringExpanderValue(text: '11', variables: {'A': '1'}),
         ]
       },
-      {'input': 'A', 'substitutions': {'A': '  5    - 1#   2, 10    -12,   23, 30-40  #5,50-  47   ,100'}, 'onAfterExpandedText' : (String? e) => e, 'breakCondition' : VariableStringExpanderBreakCondition.RUN_ALL,
+      {'input': 'A', 'substitutions': {'A': '  5    - 1#   2, 10    -12,   23, 30-40  #5,50-  47   ,100'}, 'onAfterExpandedText' : (String e) => e, 'breakCondition' : VariableStringExpanderBreakCondition.RUN_ALL,
         'expectedOutput': [
           VariableStringExpanderValue(text: '5', variables: {'A': '5'}),
           VariableStringExpanderValue(text: '3', variables: {'A': '3'}),
@@ -152,7 +152,7 @@ void main() {
           VariableStringExpanderValue(text: '100', variables: {'A': '100'}),
         ]
       },
-      {'input': 'AA', 'substitutions': {'A': '1,2,1,1,2'}, 'onAfterExpandedText' : (String? e) => e, 'breakCondition' : VariableStringExpanderBreakCondition.RUN_ALL,
+      {'input': 'AA', 'substitutions': {'A': '1,2,1,1,2'}, 'onAfterExpandedText' : (String e) => e, 'breakCondition' : VariableStringExpanderBreakCondition.RUN_ALL,
         'expectedOutput': [
           VariableStringExpanderValue(text: '11', variables: {'A': '1'}),
           VariableStringExpanderValue(text: '22', variables: {'A': '2'}),
@@ -161,7 +161,7 @@ void main() {
           VariableStringExpanderValue(text: '22', variables: {'A': '2'}),
         ]
       },
-      {'input': 'AA', 'substitutions': {'A': '3-1,2-4'}, 'onAfterExpandedText' : (String? e) => e, 'breakCondition' : VariableStringExpanderBreakCondition.RUN_ALL,
+      {'input': 'AA', 'substitutions': {'A': '3-1,2-4'}, 'onAfterExpandedText' : (String e) => e, 'breakCondition' : VariableStringExpanderBreakCondition.RUN_ALL,
         'expectedOutput': [
           VariableStringExpanderValue(text: '33', variables: {'A': '3'}),
           VariableStringExpanderValue(text: '22', variables: {'A': '2'}),
@@ -195,7 +195,7 @@ void main() {
 
   group("VariableStringExpander.runOnlyPrecheckWithSpaces:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input': 'N 51.[A][A+1] E [B][B^A].[4]23', 'substitutions': {'A': '1- 3', 'B': '4 -0#  2,  1', 'C': '12  ,34,  10'}, 'onAfterExpandedText' : (String? e) => e, 'breakCondition' : VariableStringExpanderBreakCondition.RUN_ALL,
+      {'input': 'N 51.[A][A+1] E [B][B^A].[4]23', 'substitutions': {'A': '1- 3', 'B': '4 -0#  2,  1', 'C': '12  ,34,  10'}, 'onAfterExpandedText' : (String e) => e, 'breakCondition' : VariableStringExpanderBreakCondition.RUN_ALL,
         'expectedOutput': [VariableStringExpanderValue(count : 36)]
       }
     ];
@@ -221,7 +221,7 @@ void main() {
 
   group("VariableStringExpander.runOnlyPrecheck:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input': 'N 51.[A][A+1] E [B][B^A].[4]23', 'substitutions': {'A': '1-3', 'B': '4-0#2,1', 'C': '12,34'}, 'onAfterExpandedText' : (String? e) => e, 'breakCondition' : VariableStringExpanderBreakCondition.RUN_ALL,
+      {'input': 'N 51.[A][A+1] E [B][B^A].[4]23', 'substitutions': {'A': '1-3', 'B': '4-0#2,1', 'C': '12,34'}, 'onAfterExpandedText' : (String e) => e, 'breakCondition' : VariableStringExpanderBreakCondition.RUN_ALL,
         'expectedOutput': [VariableStringExpanderValue(count : 24)]
       }
     ];

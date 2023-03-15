@@ -22,7 +22,7 @@ enum MurrayCodebook {
   MYGEOTOOLS
 }
 
-Map<MurrayCodebook, CodebookConfig> MURRAY_CODEBOOK = {
+const Map<MurrayCodebook, CodebookConfig> MURRAY_CODEBOOK = {
   MurrayCodebook.ROYALNAVY: CodebookConfig(
     title: 'telegraph_murray_royalnavy_title',
     subtitle: 'telegraph_murray_royalnavy_description'
@@ -57,7 +57,7 @@ Map<MurrayCodebook, CodebookConfig> MURRAY_CODEBOOK = {
   ),
 };
 
-final Map<String, List<String>> _CODEBOOK_ROYALNAVY = {
+const Map<String, List<String>> _CODEBOOK_ROYALNAVY = {
   // https://cms.sachsen.schule/fileadmin/_special/gruppen/592/klappentelegraph/download/klappentelegraphenalphabet_2016.pdf
   'A': ['2', '3', '4', '5', '6'],
   'B': ['1', '3', '4', '5', '6'],
@@ -99,7 +99,7 @@ final Map<String, List<String>> _CODEBOOK_ROYALNAVY = {
   ';': ['2', '5'],
 };
 
-final Map<String, List<String>> _CODEBOOK_GEOCACHING = {
+const Map<String, List<String>> _CODEBOOK_GEOCACHING = {
   // https://cms.sachsen.schule/fileadmin/_special/gruppen/592/klappentelegraph/download/klappentelegraphenalphabet_f_2007.pdf
   'A': [],
   'B': ['1', '3', '5'],
@@ -145,7 +145,7 @@ final Map<String, List<String>> _CODEBOOK_GEOCACHING = {
   '.': ['6'],
 };
 
-final Map<String, List<String>> _CODEBOOK_FISCHER = {
+const Map<String, List<String>> _CODEBOOK_FISCHER = {
   // https://cms.sachsen.schule/fileadmin/_special/gruppen/592/klappentelegraph/download/klappentelegraphenalphabet_b_2007.pdf
   'A': [],
   'B': ['1', '3', '5'],
@@ -191,7 +191,7 @@ final Map<String, List<String>> _CODEBOOK_FISCHER = {
   '.': ['6'],
 };
 
-final Map<String, List<String>> _CODEBOOK_ROUCOUX = {
+const Map<String, List<String>> _CODEBOOK_ROUCOUX = {
   // http://virtual-library.culturalservices.net/webingres/bedfordshire/vlib/0.digitised_resources/dunstable_article_signalling_station_enlargement.htm
   'A': ['2', '3', '4', '5', '6'],
   'B': ['1', '3', '4', '5', '6'],
@@ -219,11 +219,11 @@ final Map<String, List<String>> _CODEBOOK_ROUCOUX = {
   'Z': ['2', '4'],
 };
 
-final Map<String, List<String>> _CODEBOOK_MYGEOTOOLS = _CODEBOOK_GEOCACHING;
+const Map<String, List<String>> _CODEBOOK_MYGEOTOOLS = _CODEBOOK_GEOCACHING;
 
-final Map<String, List<String>> _CODEBOOK_GEOCACHINGTOOLBOX_1 = _CODEBOOK_GEOCACHING;
+const Map<String, List<String>> _CODEBOOK_GEOCACHINGTOOLBOX_1 = _CODEBOOK_GEOCACHING;
 
-final Map<String, List<String>> _CODEBOOK_GEOCACHINGTOOLBOX_2 = {
+const Map<String, List<String>> _CODEBOOK_GEOCACHINGTOOLBOX_2 = {
   'A': ['2', '3', '4', '5', '6'],
   'B': ['1', '3', '4', '5', '6'],
   'C': ['1', '2', '4', '5', '6'],
@@ -254,7 +254,7 @@ final Map<String, List<String>> _CODEBOOK_GEOCACHINGTOOLBOX_2 = {
   'END': ['6'],
 };
 
-final Map<String, List<String>> _CODEBOOK_GEOCACHINGTOOLBOX_3 = {
+const Map<String, List<String>> _CODEBOOK_GEOCACHINGTOOLBOX_3 = {
   // https://lewiswalpole.files.wordpress.com/2011/12/lwlpr25106.jpg
   'A': ['2', '3', '4', '5', '6'],
   'B': ['1', '3', '4', '5', '6'],

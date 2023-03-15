@@ -30,19 +30,19 @@ class GameOfLifeRules {
   }
 }
 
-final Map<String, GameOfLifeRules> DEFAULT_GAME_OF_LIFE_RULES = {
-  'gameoflife_conway': const GameOfLifeRules(survivals: {2, 3}, births: {3}),
-  'gameoflife_copy': const GameOfLifeRules(survivals: {1, 3, 5, 7}, births: {1, 3, 5, 7}),
-  'gameoflife_3_3': const GameOfLifeRules(survivals: {3}, births: {3}),
-  'gameoflife_13_3': const GameOfLifeRules(survivals: {1, 3}, births: {3}),
-  'gameoflife_34_3': const GameOfLifeRules(survivals: {3, 4}, births: {3}),
-  'gameoflife_35_3': const GameOfLifeRules(survivals: {3, 5}, births: {3}),
-  'gameoflife_2_3': const GameOfLifeRules(survivals: {2}, births: {3}),
-  'gameoflife_24_3': const GameOfLifeRules(survivals: {2, 4}, births: {3}),
-  'gameoflife_245_3': const GameOfLifeRules(survivals: {2, 4, 5}, births: {3}),
-  'gameoflife_125_36': const GameOfLifeRules(survivals: {1, 2, 5}, births: {3, 6}),
-  'gameoflife_inverseconway': const GameOfLifeRules(survivals: {2, 3}, births: {3}, isInverse: true),
-  'gameoflife_inversecopy': const GameOfLifeRules(survivals: {1, 3, 5, 7}, births: {1, 3, 5, 7}, isInverse: true),
+const Map<String, GameOfLifeRules> DEFAULT_GAME_OF_LIFE_RULES = {
+  'gameoflife_conway': GameOfLifeRules(survivals: {2, 3}, births: {3}),
+  'gameoflife_copy': GameOfLifeRules(survivals: {1, 3, 5, 7}, births: {1, 3, 5, 7}),
+  'gameoflife_3_3': GameOfLifeRules(survivals: {3}, births: {3}),
+  'gameoflife_13_3': GameOfLifeRules(survivals: {1, 3}, births: {3}),
+  'gameoflife_34_3': GameOfLifeRules(survivals: {3, 4}, births: {3}),
+  'gameoflife_35_3': GameOfLifeRules(survivals: {3, 5}, births: {3}),
+  'gameoflife_2_3': GameOfLifeRules(survivals: {2}, births: {3}),
+  'gameoflife_24_3': GameOfLifeRules(survivals: {2, 4}, births: {3}),
+  'gameoflife_245_3': GameOfLifeRules(survivals: {2, 4, 5}, births: {3}),
+  'gameoflife_125_36': GameOfLifeRules(survivals: {1, 2, 5}, births: {3, 6}),
+  'gameoflife_inverseconway': GameOfLifeRules(survivals: {2, 3}, births: {3}, isInverse: true),
+  'gameoflife_inversecopy': GameOfLifeRules(survivals: {1, 3, 5, 7}, births: {1, 3, 5, 7}, isInverse: true),
 };
 
 int _countNeighbors(List<List<bool>> _currentBoard, int i, int j, {bool isOpenWorld = false}) {

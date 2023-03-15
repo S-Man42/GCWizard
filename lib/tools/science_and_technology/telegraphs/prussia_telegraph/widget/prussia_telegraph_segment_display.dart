@@ -69,6 +69,7 @@ class PrussiaTelegraphSegmentDisplay extends NSegmentDisplay {
               pathC1.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 90,
                   size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 30);
               pathC1.close();
+
               canvas.touchCanvas.drawPath(pathC1, paint, onTapDown: (tapDetail) {
                 setSegmentState('c1', !segmentActive(currentSegments, 'c1'));
                 if (segmentActive(currentSegments, 'c1')) {
@@ -88,6 +89,7 @@ class PrussiaTelegraphSegmentDisplay extends NSegmentDisplay {
               pathC2.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 60,
                   size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 60);
               pathC2.close();
+
               canvas.touchCanvas.drawPath(pathC2, paint, onTapDown: (tapDetail) {
                 setSegmentState('c2', !segmentActive(currentSegments, 'c2'));
                 if (segmentActive(currentSegments, 'c2')) {
@@ -107,6 +109,7 @@ class PrussiaTelegraphSegmentDisplay extends NSegmentDisplay {
               pathC3.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 60,
                   size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 70);
               pathC3.close();
+
               canvas.touchCanvas.drawPath(pathC3, paint, onTapDown: (tapDetail) {
                 setSegmentState('c3', !segmentActive(currentSegments, 'c3'));
                 if (segmentActive(currentSegments, 'c3')) {
@@ -126,6 +129,7 @@ class PrussiaTelegraphSegmentDisplay extends NSegmentDisplay {
               pathC4.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 20,
                   size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 80);
               pathC4.close();
+
               canvas.touchCanvas.drawPath(pathC4, paint, onTapDown: (tapDetail) {
                 setSegmentState('c4', !segmentActive(currentSegments, 'c4'));
                 if (segmentActive(currentSegments, 'c4')) {
@@ -145,6 +149,7 @@ class PrussiaTelegraphSegmentDisplay extends NSegmentDisplay {
               pathC5.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 10,
                   size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 60);
               pathC5.close();
+
               canvas.touchCanvas.drawPath(pathC5, paint, onTapDown: (tapDetail) {
                 setSegmentState('c5', !segmentActive(currentSegments, 'c5'));
                 if (segmentActive(currentSegments, 'c5')) {
@@ -166,6 +171,7 @@ class PrussiaTelegraphSegmentDisplay extends NSegmentDisplay {
               pathC6.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 50,
                   size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 50);
               pathC6.close();
+
               canvas.touchCanvas.drawPath(pathC6, paint, onTapDown: (tapDetail) {
                 setSegmentState('c6', !segmentActive(currentSegments, 'c6'));
                 if (segmentActive(currentSegments, 'c6')) {
@@ -185,6 +191,7 @@ class PrussiaTelegraphSegmentDisplay extends NSegmentDisplay {
               pathB1.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 90,
                   size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 110);
               pathB1.close();
+
               canvas.touchCanvas.drawPath(pathB1, paint, onTapDown: (tapDetail) {
                 setSegmentState('b1', !segmentActive(currentSegments, 'b1'));
                 if (segmentActive(currentSegments, 'b1')) {
@@ -204,6 +211,7 @@ class PrussiaTelegraphSegmentDisplay extends NSegmentDisplay {
               pathB2.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 60,
                   size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 140);
               pathB2.close();
+
               canvas.touchCanvas.drawPath(pathB2, paint, onTapDown: (tapDetail) {
                 setSegmentState('b2', !segmentActive(currentSegments, 'b2'));
                 if (segmentActive(currentSegments, 'b2')) {
@@ -223,6 +231,7 @@ class PrussiaTelegraphSegmentDisplay extends NSegmentDisplay {
               pathB3.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 60,
                   size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 150);
               pathB3.close();
+
               canvas.touchCanvas.drawPath(pathB3, paint, onTapDown: (tapDetail) {
                 setSegmentState('b3', !segmentActive(currentSegments, 'b3'));
                 if (segmentActive(currentSegments, 'b3')) {
@@ -242,6 +251,7 @@ class PrussiaTelegraphSegmentDisplay extends NSegmentDisplay {
               pathB4.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 20,
                   size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 160);
               pathB4.close();
+
               canvas.touchCanvas.drawPath(pathB4, paint, onTapDown: (tapDetail) {
                 setSegmentState('b4', !segmentActive(currentSegments, 'b4'));
                 if (segmentActive(currentSegments, 'b4')) {
@@ -261,6 +271,7 @@ class PrussiaTelegraphSegmentDisplay extends NSegmentDisplay {
               pathB5.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 10,
                   size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 140);
               pathB5.close();
+
               canvas.touchCanvas.drawPath(pathB5, paint, onTapDown: (tapDetail) {
                 setSegmentState('b5', !segmentActive(currentSegments, 'b5'));
                 if (segmentActive(currentSegments, 'b5')) {
@@ -282,6 +293,7 @@ class PrussiaTelegraphSegmentDisplay extends NSegmentDisplay {
               pathB6.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 50,
                   size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 130);
               pathB6.close();
+
               canvas.touchCanvas.drawPath(pathB6, paint, onTapDown: (tapDetail) {
                 setSegmentState('b6', !segmentActive(currentSegments, 'b6'));
                 if (segmentActive(currentSegments, 'b6')) {
@@ -301,6 +313,7 @@ class PrussiaTelegraphSegmentDisplay extends NSegmentDisplay {
               pathA1.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 90,
                   size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 190);
               pathA1.close();
+
               canvas.touchCanvas.drawPath(pathA1, paint, onTapDown: (tapDetail) {
                 setSegmentState('a1', !segmentActive(currentSegments, 'a1'));
                 if (segmentActive(currentSegments, 'a1')) {
@@ -320,6 +333,7 @@ class PrussiaTelegraphSegmentDisplay extends NSegmentDisplay {
               pathA2.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 60,
                   size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 220);
               pathA2.close();
+
               canvas.touchCanvas.drawPath(pathA2, paint, onTapDown: (tapDetail) {
                 setSegmentState('a2', !segmentActive(currentSegments, 'a2'));
                 if (segmentActive(currentSegments, 'a2')) {
@@ -339,6 +353,7 @@ class PrussiaTelegraphSegmentDisplay extends NSegmentDisplay {
               pathA3.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 60,
                   size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 230);
               pathA3.close();
+
               canvas.touchCanvas.drawPath(pathA3, paint, onTapDown: (tapDetail) {
                 setSegmentState('a3', !segmentActive(currentSegments, 'a3'));
                 if (segmentActive(currentSegments, 'a3')) {
@@ -358,6 +373,7 @@ class PrussiaTelegraphSegmentDisplay extends NSegmentDisplay {
               pathA4.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 20,
                   size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 240);
               pathA4.close();
+
               canvas.touchCanvas.drawPath(pathA4, paint, onTapDown: (tapDetail) {
                 setSegmentState('a4', !segmentActive(currentSegments, 'a4'));
                 if (segmentActive(currentSegments, 'a4')) {
@@ -377,6 +393,7 @@ class PrussiaTelegraphSegmentDisplay extends NSegmentDisplay {
               pathA5.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 10,
                   size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 220);
               pathA5.close();
+
               canvas.touchCanvas.drawPath(pathA5, paint, onTapDown: (tapDetail) {
                 setSegmentState('a5', !segmentActive(currentSegments, 'a5'));
                 if (segmentActive(currentSegments, 'a5')) {
@@ -398,6 +415,7 @@ class PrussiaTelegraphSegmentDisplay extends NSegmentDisplay {
               pathA6.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 50,
                   size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 210);
               pathA6.close();
+
               canvas.touchCanvas.drawPath(pathA6, paint, onTapDown: (tapDetail) {
                 setSegmentState('a6', !segmentActive(currentSegments, 'a6'));
                 if (segmentActive(currentSegments, 'a6')) {

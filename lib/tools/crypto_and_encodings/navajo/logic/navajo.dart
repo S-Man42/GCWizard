@@ -6,7 +6,7 @@
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
-final Map<String, String> _NAVAJO_ENCODE_ALPHABET = {
+const Map<String, String> _NAVAJO_ENCODE_ALPHABET = {
   // although the dictionary has several encodings, these are used by kryptografie.de
   // dcode.fr uses all letters randomly for encoding
   'A': 'WOL-LA-CHEE',
@@ -79,7 +79,7 @@ final Map<String, String> _NAVAJO_ENCODE_DICTIONARY = {
   'FIGHTERPLANE': 'DA-HE-TIH-HI',
   'BOMBERPLANE': 'JAY-SHO',
   'PATROLPLANE': 'GA-GIH',
-  'TRANSPORT': 'ATSAH',
+  'TRANSPORT': 'ATSAH', //double entry ??
   'SHIPS': 'TOH-DINEH-IH',
   'BATTLESHIP': 'LO-TSO',
   'AIRCRAFT': 'TSIDI-MOFFA-YE-HI',
@@ -303,7 +303,7 @@ final Map<String, String> _NAVAJO_ENCODE_DICTIONARY = {
   'ESTABLISH': 'HAS-TAY-DZAH',
   'ESTIMATE': 'BIH-KE-TSE-HOD-DES-KEZ',
   'EVACUATE': 'HA-NA',
-  'EXCEPT': 'NEH-DIH',
+  // 'EXCEPT': 'NEH-DIH', // double entry
   'EXCEPT': 'NA-WOL-NE',
   'EXCHANGE': 'ALH-NAHL-YAH',
   'EXECUTE': 'A-DO-NIL',
@@ -654,9 +654,9 @@ final Map<String, String> _NAVAJO_ENCODE_DICTIONARY = {
   'ZONE': 'BIH-NA-HAS-DZOH',
 };
 
-Map<String, String> _NAVAJO_DECODE_DICTIONARY = switchMapKeyValue(_NAVAJO_ENCODE_DICTIONARY);
+final Map<String, String> _NAVAJO_DECODE_DICTIONARY = switchMapKeyValue(_NAVAJO_ENCODE_DICTIONARY);
 
-Map<String, String> _NAVAJO_DECODE_ALPHABET = switchMapKeyValue(_NAVAJO_ENCODE_ALPHABET);
+final Map<String, String> _NAVAJO_DECODE_ALPHABET = switchMapKeyValue(_NAVAJO_ENCODE_ALPHABET);
 
 String shrinkText(String input) {
   return input

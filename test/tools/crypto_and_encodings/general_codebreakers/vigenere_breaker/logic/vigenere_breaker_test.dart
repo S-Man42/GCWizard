@@ -16,8 +16,8 @@ void main() {
     var text16 = 'elseavexomypjnhewmmoezsphzrqllnfszwgiepmjjpcmifxjdt';
     var text17 = 'daswirdmoeglichweilderalgorithmusrechtperformantist';
 
-    var text18 = 'Els eavg mgaoclov, aktt fln Etrrvztssij zxjtn hvvhvkbeey wjf.';
-    var text19 = 'Das wird moeglich, weil der Algorithmus recht performant ist.';
+    // var text18 = 'Els eavg mgaoclov, aktt fln Etrrvztssij zxjtn hvvhvkbeey wjf.';
+    // var text19 = 'Das wird moeglich, weil der Algorithmus recht performant ist.';
 
     var text20 = 'Wmwl lax wqf Mifg nq aby Qqbwguemgzdypmfk xcg jqu Uuimlvv ze xvrnxr';
     var text21 = 'Dies ist ein Text um die Entschluesselung mit dem Breaker zu testen';

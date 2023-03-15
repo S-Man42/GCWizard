@@ -1,7 +1,7 @@
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 
-final Map<String, String> _halfByteToDuck = {
+const Map<String, String> _halfByteToDuck = {
   '0': 'Nak',
   '1': 'Nanak',
   '2': 'Nananak',

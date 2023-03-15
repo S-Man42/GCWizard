@@ -110,7 +110,7 @@ Future<List<LatLng>> resectionAsync(GCWAsyncExecuterParameters? jobData) async {
   var output = resection(data.coord1, data.angle12, data.coord2,
       data.angle23, data.coord3, data.ells);
 
-  jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }

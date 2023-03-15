@@ -33,7 +33,7 @@ enum WASD_DIRECTION { UP, DOWN, LEFT, RIGHT, START }
 
 const _SEGMENT_LENGTH = 5;
 
-Map<WASD_TYPE, String> KEYBOARD_CONTROLS = {
+const Map<WASD_TYPE, String> KEYBOARD_CONTROLS = {
   WASD_TYPE.CURSORS: '↑←↓→',
   WASD_TYPE.NWSE: 'NWSE',
   WASD_TYPE.NWSO: 'NWSO',
@@ -48,7 +48,7 @@ Map<WASD_TYPE, String> KEYBOARD_CONTROLS = {
   WASD_TYPE.CUSTOM: 'wasd_keyboard_custom',
 };
 
-final Map<String, List<String>> _WASD_ENCODE = {
+const Map<String, List<String>> _WASD_ENCODE = {
   '0': [
     '←↓↓→↑↑',
     '↓↓→↑↑←',

@@ -4,7 +4,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitu
 import 'package:gc_wizard/utils/string_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/image_utils/drawable_image_data.dart';
 
-Map<String, int> colorMap = {
+const Map<String, int> colorMap = {
   '0': 0xFFFFFFFF, //Colors.white
   '1': 0xFF000000, //Colors.black
   '2': 0xFFFF5252, //Colors.redAccent //light red

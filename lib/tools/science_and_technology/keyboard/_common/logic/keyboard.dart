@@ -27,7 +27,7 @@ enum KeyboardType {
   FRA_BEPO
 }
 
-final Map<String, String> _QWERTZ_T1NumberToSymbol = {
+const Map<String, String> _QWERTZ_T1NumberToSymbol = {
   '1': '!',
   '2': '"',
   '3': '§',
@@ -41,7 +41,7 @@ final Map<String, String> _QWERTZ_T1NumberToSymbol = {
   ' ': ' ',
   '.': '.'
 };
-final Map<String, String> _DvorakDeuIINumberToSymbol = {
+const Map<String, String> _DvorakDeuIINumberToSymbol = {
   '1': '!',
   '2': '"',
   '3': '§',
@@ -55,7 +55,7 @@ final Map<String, String> _DvorakDeuIINumberToSymbol = {
   ' ': ' ',
   '.': '.'
 };
-final Map<String, String> _DvorakDeuI1NumberToSymbol = {
+const Map<String, String> _DvorakDeuI1NumberToSymbol = {
   '1': '!',
   '2': '"',
   '3': '§',
@@ -69,7 +69,7 @@ final Map<String, String> _DvorakDeuI1NumberToSymbol = {
   ' ': ' ',
   '.': '.'
 };
-final Map<String, String> _DvorakDeuI2NumberToSymbol = {
+const Map<String, String> _DvorakDeuI2NumberToSymbol = {
   '1': '!',
   '2': '"',
   '3': '§',
@@ -83,7 +83,7 @@ final Map<String, String> _DvorakDeuI2NumberToSymbol = {
   ' ': ' ',
   '.': '.'
 };
-final Map<String, String> _DvorakDeuI3NumberToSymbol = {
+const Map<String, String> _DvorakDeuI3NumberToSymbol = {
   '1': '!',
   '2': '"',
   '3': '§',
@@ -97,7 +97,7 @@ final Map<String, String> _DvorakDeuI3NumberToSymbol = {
   ' ': ' ',
   '.': '.'
 };
-final Map<String, String> _AZERTYNumberToSymbol = {
+const Map<String, String> _AZERTYNumberToSymbol = {
   '1': '&',
   '2': 'é',
   '3': '"',
@@ -111,7 +111,7 @@ final Map<String, String> _AZERTYNumberToSymbol = {
   ' ': ' ',
   '.': '.'
 };
-final Map<String, String> _BEPONumberToSymbol = {
+const Map<String, String> _BEPONumberToSymbol = {
   '1': '"',
   '2': '«',
   '3': '»',
@@ -125,7 +125,7 @@ final Map<String, String> _BEPONumberToSymbol = {
   ' ': ' ',
   '.': '.'
 };
-final Map<String, String> _RistomeNumberToSymbol = {
+const Map<String, String> _RistomeNumberToSymbol = {
   '1': '!',
   '2': '"',
   '3': '§',
@@ -139,7 +139,7 @@ final Map<String, String> _RistomeNumberToSymbol = {
   ' ': ' ',
   '.': '.'
 };
-final Map<String, String> _NeoNumberToSymbol = {
+const Map<String, String> _NeoNumberToSymbol = {
   '1': '°',
   '2': '§',
   '3': 'ℓ',
@@ -153,7 +153,7 @@ final Map<String, String> _NeoNumberToSymbol = {
   ' ': ' ',
   '.': '.'
 };
-final Map<String, String> _Neo3NumberToSymbol = {
+const Map<String, String> _Neo3NumberToSymbol = {
   '1': '¹',
   '2': '²',
   '3': '³',
@@ -167,7 +167,7 @@ final Map<String, String> _Neo3NumberToSymbol = {
   ' ': ' ',
   '.': '.'
 };
-final Map<String, String> _Neo5NumberToSymbol = {
+const Map<String, String> _Neo5NumberToSymbol = {
   '1': '¹',
   '2': '²',
   '3': '³',
@@ -181,7 +181,7 @@ final Map<String, String> _Neo5NumberToSymbol = {
   ' ': ' ',
   '.': '.'
 };
-final Map<String, String> _Neo6NumberToSymbol = {
+const Map<String, String> _Neo6NumberToSymbol = {
   '1': '¬',
   '2': '∨',
   '3': '∧',
@@ -195,7 +195,7 @@ final Map<String, String> _Neo6NumberToSymbol = {
   ' ': ' ',
   '.': '.'
 };
-final Map<String, String> _QWERTY_USNumberToSymbol = {
+const Map<String, String> _QWERTY_USNumberToSymbol = {
   '1': '!',
   '2': '@',
   '3': '#',
@@ -209,10 +209,10 @@ final Map<String, String> _QWERTY_USNumberToSymbol = {
   ' ': ' ',
   '.': '.'
 };
-final Map<String, String> _DvorakNumberToSymbol = _QWERTY_USNumberToSymbol;
-final Map<String, String> _ColemakNumberToSymbol = _QWERTY_USNumberToSymbol;
+const Map<String, String> _DvorakNumberToSymbol = _QWERTY_USNumberToSymbol;
+const Map<String, String> _ColemakNumberToSymbol = _QWERTY_USNumberToSymbol;
 
-final Map<String, String> _SymbolToQWERTZ_T1Number = {
+const Map<String, String> _SymbolToQWERTZ_T1Number = {
   '!': '1',
   '"': '2',
   '§': '3',
@@ -232,7 +232,7 @@ final Map<String, String> _SymbolToQWERTZ_T1Number = {
   ' ': ' ',
   '.': '.'
 };
-final Map<String, String> _SymbolToDvorakDeuIINumber = {
+const Map<String, String> _SymbolToDvorakDeuIINumber = {
   '!': '1',
   '"': '2',
   '§': '3',
@@ -254,7 +254,7 @@ final Map<String, String> _SymbolToDvorakDeuIINumber = {
   ' ': ' ',
   '.': '.'
 };
-final Map<String, String> _SymbolToDvorakDeuI1Number = {
+const Map<String, String> _SymbolToDvorakDeuI1Number = {
   '!': '1',
   '"': '2',
   '§': '3',
@@ -266,7 +266,7 @@ final Map<String, String> _SymbolToDvorakDeuI1Number = {
   ')': '9',
   '=': '0',
 };
-final Map<String, String> _SymbolToDvorakDeuI2Number = {
+const Map<String, String> _SymbolToDvorakDeuI2Number = {
   '!': '1',
   '"': '2',
   '§': '3',
@@ -278,7 +278,7 @@ final Map<String, String> _SymbolToDvorakDeuI2Number = {
   ')': '9',
   '=': '0',
 };
-final Map<String, String> _SymbolToDvorakDeuI3Number = {
+const Map<String, String> _SymbolToDvorakDeuI3Number = {
   '!': '1',
   '"': '2',
   '§': '3',
@@ -290,7 +290,7 @@ final Map<String, String> _SymbolToDvorakDeuI3Number = {
   ')': '9',
   '=': '0',
 };
-final Map<String, String> _SymbolToAZERTYNumber = {
+const Map<String, String> _SymbolToAZERTYNumber = {
   '&': '1',
   'é': '2',
   '"': '3',
@@ -313,7 +313,7 @@ final Map<String, String> _SymbolToAZERTYNumber = {
   ' ': ' ',
   '.': '.'
 };
-final Map<String, String> _SymbolToBEPONumber = {
+const Map<String, String> _SymbolToBEPONumber = {
   '"': '1',
   '«': '2',
   '»': '3',
@@ -336,7 +336,7 @@ final Map<String, String> _SymbolToBEPONumber = {
   ' ': ' ',
   '.': '.'
 };
-final Map<String, String> _SymbolToRistomeNumber = {
+const Map<String, String> _SymbolToRistomeNumber = {
   '!': '1',
   '"': '2',
   '§': '3',
@@ -348,7 +348,7 @@ final Map<String, String> _SymbolToRistomeNumber = {
   ')': '9',
   '=': '0',
 };
-final Map<String, String> _SymbolToNeoNumber = {
+const Map<String, String> _SymbolToNeoNumber = {
   '°': '1',
   '§': '2',
   'ℓ': '3',
@@ -362,7 +362,7 @@ final Map<String, String> _SymbolToNeoNumber = {
   ' ': ' ',
   '.': '.'
 };
-final Map<String, String> _SymbolToNeo3Number = {
+const Map<String, String> _SymbolToNeo3Number = {
   '¹': '1',
   '²': '2',
   '³': '3',
@@ -376,7 +376,7 @@ final Map<String, String> _SymbolToNeo3Number = {
   ' ': ' ',
   '.': '.'
 };
-final Map<String, String> _SymbolToNeo5Number = {
+const Map<String, String> _SymbolToNeo5Number = {
   '¹': '1',
   '²': '2',
   '³': '3',
@@ -390,7 +390,7 @@ final Map<String, String> _SymbolToNeo5Number = {
   ' ': ' ',
   '.': '.'
 };
-final Map<String, String> _SymbolToNeo6Number = {
+const Map<String, String> _SymbolToNeo6Number = {
   '¬': '1',
   '∨': '2',
   '∧': '3',
@@ -408,7 +408,7 @@ final Map<String, String> _SymbolToQWERTY_USNumber = switchMapKeyValue(_QWERTY_U
 final Map<String, String> _SymbolToDvorakNumber = _SymbolToQWERTY_USNumber;
 final Map<String, String> _SymbolToColemakNumber = _SymbolToQWERTY_USNumber;
 
-final Map<String, String> _QWERTZ_T1toNormal = {
+const Map<String, String> _QWERTZ_T1toNormal = {
   '°': '100o',
   '!': '101o',
   '"': '102o',
@@ -524,7 +524,7 @@ final Map<String, String> _Dvorak_II_DEUtoNormal = {
   '\$': '104o',
   '%': '105o',
   '&': '106o',
-  '/': '107o',
+  '/': '107o', //double entry ??
   '(': '108o',
   ')': '109o',
   '=': '110o',
@@ -636,7 +636,7 @@ final Map<String, String> _Dvorak_I_DEU1toNormal = {
   '\$': '104o',
   '%': '105o',
   '&': '106o',
-  '/': '107o',
+  '/': '107o', //double entry ??
   '(': '108o',
   ')': '109o',
   '=': '110o',
@@ -734,7 +734,7 @@ final Map<String, String> _Dvorak_I_DEU2toNormal = {
   '\$': '104o',
   '%': '105o',
   '&': '106o',
-  '/': '107o',
+  '/': '107o', //double entry ??
   '(': '108o',
   ')': '109o',
   '=': '110o',
@@ -775,7 +775,7 @@ final Map<String, String> _Dvorak_I_DEU2toNormal = {
   'c': '208u',
   'r': '209u',
   'l': '210u',
-  'q': '211u',
+  'q': '211u', //double entry ??
   '\\': '212u',
   'A': '301o',
   'O': '302o',
@@ -832,7 +832,7 @@ final Map<String, String> _Dvorak_I_DEU3toNormal = {
   '\$': '104o',
   '%': '105o',
   '&': '106o',
-  '/': '107o',
+  '/': '107o', //double entry ??
   '(': '108o',
   ')': '109o',
   '=': '110o',
@@ -873,7 +873,7 @@ final Map<String, String> _Dvorak_I_DEU3toNormal = {
   'c': '208u',
   'r': '209u',
   'l': '210u',
-  'q': '211u',
+  'q': '211u', //double entry ??
   '\\': '212u',
   'A': '301o',
   'O': '302o',
@@ -947,7 +947,7 @@ final Map<String, String> _NeoToNormal = {
   '8': '108u',
   '9': '109u',
   '0': '110u',
-  '-': '111u',
+  '-': '111u', //double entry ??
   '`': '112u',
   'X': '201o',
   'V': '202o',
@@ -1043,7 +1043,7 @@ final Map<String, String> _BoneToNormal = {
   '8': '108u',
   '9': '109u',
   '0': '110u',
-  '-': '111u',
+  '-': '111u', //double entry ??
   '`': '112u',
   'J': '201o',
   'D': '202o',
@@ -1114,7 +1114,7 @@ final Map<String, String> _BoneToNormal = {
   ' ': '501',
   '': ''
 };
-final Map<String, String> _RistomeToNormal = {
+const Map<String, String> _RistomeToNormal = {
   '°': '100o',
   '!': '101o',
   '"': '102o',
@@ -1214,7 +1214,7 @@ final Map<String, String> _RistomeToNormal = {
   ' ': '501',
   '': ''
 };
-final Map<String, String> _QWERTY_US_INTtoNormal = {
+const Map<String, String> _QWERTY_US_INTtoNormal = {
   '~': '100o',
   '!': '101o',
   '@': '102o',
@@ -1312,7 +1312,7 @@ final Map<String, String> _QWERTY_US_INTtoNormal = {
   ' ': '501',
   '': ''
 };
-final Map<String, String> _DvoraktoNormal = {
+const Map<String, String> _DvoraktoNormal = {
   '~': '101o',
   '!': '102o',
   '@': '103o',
@@ -1410,7 +1410,7 @@ final Map<String, String> _DvoraktoNormal = {
   ' ': '501',
   '': ''
 };
-final Map<String, String> _ColemakToNormal = {
+const Map<String, String> _ColemakToNormal = {
   '~': '100o',
   '!': '101o',
   '@': '102o',
@@ -1508,7 +1508,7 @@ final Map<String, String> _ColemakToNormal = {
   ' ': '501',
   '': ''
 };
-final Map<String, String> _AZERTYToNormal = {
+const Map<String, String> _AZERTYToNormal = {
   '#': '100o',
   '1': '101o',
   '2': '102o',
@@ -1529,12 +1529,12 @@ final Map<String, String> _AZERTYToNormal = {
   'ê': '104u',
   '(': '105u',
   ')': '106u',
-  "\u07F5": '107u',
-  "\u07F4": '108u',
-  "«": '109u',
-  "»": '110u',
+  '\u07F5': '107u',
+  '\u07F4': '108u',
+  '«': '109u',
+  '»': '110u',
   "'": '111u',
-  "^": '112u',
+  '^': '112u',
   'A': '201o',
   'Z': '202o',
   'E': '203o',
@@ -1608,7 +1608,7 @@ final Map<String, String> _AZERTYToNormal = {
   ' ': '501',
   '': ''
 };
-final Map<String, String> _BEPOToNormal = {
+const Map<String, String> _BEPOToNormal = {
   // https://en.wikipedia.org/wiki/B%C3%89PO#/media/File:KB_French_Dvorak_b%C3%A9po_simplifi%C3%A9.svg
   '#': '100o',
   '1': '101o',

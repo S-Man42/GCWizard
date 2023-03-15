@@ -5,6 +5,7 @@ import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_param
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/bigrams/logic/bigrams.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/guballa/logic/breaker.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/vigenere/logic/vigenere.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 
 enum VigenereBreakerType { VIGENERE, AUTOKEYVIGENERE, BEAUFORT }
 
@@ -76,7 +77,7 @@ Future<VigenereBreakerResult> break_cipherAsync(GCWAsyncExecuterParameters? jobD
       data.ignoreNonLetters,
       counterFunction: progressCounter);
 
-  jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }
@@ -84,7 +85,7 @@ Future<VigenereBreakerResult> break_cipherAsync(GCWAsyncExecuterParameters? jobD
 void progressCounter() {
   _progress++;
   if (_sendAsyncPort != null && (_progress % _progressStep == 0)) {
-    _sendAsyncPort!.send({'progress': _progress / _countCombinations});
+    _sendAsyncPort!.send(DoubleText('progress', _progress / _countCombinations));
   }
 }
 

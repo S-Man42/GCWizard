@@ -26,7 +26,7 @@ Future<BoolText?> breakHashAsync(GCWAsyncExecuterParameters? jobData) async {
       data.hashFunction,
       sendAsyncPort: jobData.sendAsyncPort);
 
-  jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }

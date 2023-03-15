@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:image/image.dart' as Image;
 import 'package:tuple/tuple.dart';
@@ -18,7 +19,7 @@ Future<Uint8List?> decodeImagesAsync(GCWAsyncExecuterParameters? jobData) async 
   var data = jobData!.parameters as Tuple4<Uint8List, Uint8List, int, int>;
   var output = await _decodeImages(data.item1, data.item2, data.item3, data.item4);
 
-  jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }
@@ -65,7 +66,7 @@ Future<Tuple2<int, int>?> offsetAutoCalcAsync(GCWAsyncExecuterParameters? jobDat
       data.item1, data.item2, data.item3, data.item4,
       sendAsyncPort: jobData.sendAsyncPort);
 
-  jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }
@@ -88,7 +89,7 @@ Future<Tuple2<int, int>?> _offsetAutoCalc(Uint8List image1, Uint8List image2, in
   int _countCombinations = max(((maxX - minX + 1) * (maxY - minY + 1)).toInt(), 1);
   int _progressStep = max(_countCombinations ~/ 100, 1); // 100 steps
 
-  sendAsyncPort?.send({'progress': 0.0});
+  sendAsyncPort?.send(DoubleText('progress', 0.0));
 
   for (var y = minY; y <= maxY; y++) {
     var solutionsRow = <int>[];
@@ -97,7 +98,7 @@ Future<Tuple2<int, int>?> _offsetAutoCalc(Uint8List image1, Uint8List image2, in
 
       progress++;
       if (sendAsyncPort != null && (progress % _progressStep == 0)) {
-        sendAsyncPort.send({'progress': progress / _countCombinations});
+        sendAsyncPort.send(DoubleText('progress', progress / _countCombinations));
       }
     }
     solutionsAll.add(_highPassFilter(0.2, solutionsRow));
@@ -153,7 +154,7 @@ Future<Tuple2<Uint8List, Uint8List?>?> encodeImagesAsync(GCWAsyncExecuterParamet
   var data = jobData!.parameters as Tuple5<Uint8List, Uint8List?, int, int, int>;
   var output = await _encodeImage(data.item1, data.item2, data.item3, data.item4, data.item5);
 
-  jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }

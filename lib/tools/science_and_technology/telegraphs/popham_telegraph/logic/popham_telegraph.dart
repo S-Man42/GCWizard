@@ -3,7 +3,7 @@
 import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
-final Map<String, List<String>> _POPHAM = {
+const Map<String, List<String>> _POPHAM = {
   ' ': [],
   '1': ['1'],
   '2': ['2'],

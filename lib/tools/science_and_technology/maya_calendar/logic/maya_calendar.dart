@@ -22,19 +22,19 @@ const THOMPSON = 'Thompson';
 const SMILEY = 'Smiley';
 const WEITZEL = 'Weitzel';
 
-final Map<String, int> _CORRELATION_NUMBER = {
+const Map<String, int> _CORRELATION_NUMBER = {
   THOMPSON: THOMPSON_CORRELATION,
   SMILEY: SMILEY_CORRELATION,
   WEITZEL: WEITZEL_CORRELATION,
 };
 
-Map<String, String> CORRELATION_SYSTEMS = {
+const Map<String, String> CORRELATION_SYSTEMS = {
   THOMPSON: 'Thompson (584283)',
   SMILEY: 'Smiley (482699)',
   WEITZEL: 'Weitzel (774078)',
 };
 
-final _maya_tzolkin = {
+const _maya_tzolkin = {
   1: 'Imix',
   2: 'Ik',
   3: 'Akbal',
@@ -57,7 +57,7 @@ final _maya_tzolkin = {
   20: 'Ahau',
 };
 
-final _maya_haab = {
+const _maya_haab = {
   1: 'Pop',
   2: 'Uo',
   3: 'Zip',
@@ -79,7 +79,7 @@ final _maya_haab = {
   19: 'Uayeb'
 };
 
-final Map<int, List<String>> _numbersToSegments = {
+const Map<int, List<String>> _numbersToSegments = {
   0: [],
   1: ['d'],
   2: ['d', 'e'],
@@ -299,7 +299,7 @@ List<int?> MayaDayCountToMayaLongCount(int MayaDayCount) {
 }
 
 int? _toNumber(String digit) {
-  final Map<String, int> NUMBER = {
+  const Map<String, int> NUMBER = {
     '0': 0,
     '1': 1,
     '2': 2,

@@ -5,7 +5,7 @@
 // https://www.cs.mtsu.edu/~untch/karel/
 // https://en.wikipedia.org/wiki/Karel_(programming_language)
 
-final KAREL_ENCODING = {
+const KAREL_ENCODING = {
   ' ': 'linksdrehen schritt(7) rechtsdrehen',
   'A':
       'schritt(3) markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen rechtsdrehen rechtsdrehen schritt(3) rechtsdrehen schritt markesetzen linksdrehen schritt schritt markesetzen rechtsdrehen schritt linksdrehen schritt markesetzen rechtsdrehen schritt rechtsdrehen schritt markesetzen schritt schritt markesetzen rechtsdrehen schritt markesetzen linksdrehen schritt(3) linksdrehen schritt(2) linksdrehen markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt(3) rechtsdrehen schritt(3) rechtsdrehen',
@@ -88,7 +88,7 @@ final KAREL_ENCODING = {
 
 enum KAREL_LANGUAGES { DEU, ENG, FRA }
 
-final Map<KAREL_LANGUAGES, String> KAREL_LANGUAGES_LIST = {
+const Map<KAREL_LANGUAGES, String> KAREL_LANGUAGES_LIST = {
   KAREL_LANGUAGES.DEU: 'common_language_german',
   KAREL_LANGUAGES.ENG: 'common_language_english',
   KAREL_LANGUAGES.FRA: 'common_language_french',
@@ -128,18 +128,18 @@ const _FINIR = 'finir';
 const _SON = 'son';
 const _ATTENDRE = 'attendre';
 
-Set<String> _SET_TURNLEFT = {_LINKSDREHEN, _TURNLEFT, _TOURNERGAUCHE};
-Set<String> _SET_TURNRIGHT = {_RECHTSDREHEN, _TURNRIGHT, _TOURNERDROIT};
-Set<String> _SET_MOVE = {_SCHRITT, _MOVE, _ETAPE};
-Set<String> _SET_PICKBRICK = {_AUFHEBEN, _PICKBRICK, _RAMASSER};
-Set<String> _SET_PUTBRICK = {_HINLEGEN, _PUTBRICK, _ALLONGER};
-Set<String> _SET_PICKBEEPER = {_MARKELOESCHEN, _PICKBEEPER, _MARQUESUPPRESION};
-Set<String> _SET_PUTBEEPER = {_MARKESETZEN, _PUTBEEPER, _MARQUEETABLIE};
-Set<String> _SET_HALT = {_BEENDEN, _TURNOFF, _FINIR};
-Set<String> _SET_WAIT = {_WARTEN, _ATTENDRE};
-Set<String> _SET_SOUND = {_TON, _SON};
+const Set<String> _SET_TURNLEFT = {_LINKSDREHEN, _TURNLEFT, _TOURNERGAUCHE};
+const Set<String> _SET_TURNRIGHT = {_RECHTSDREHEN, _TURNRIGHT, _TOURNERDROIT};
+const Set<String> _SET_MOVE = {_SCHRITT, _MOVE, _ETAPE};
+const Set<String> _SET_PICKBRICK = {_AUFHEBEN, _PICKBRICK, _RAMASSER};
+const Set<String> _SET_PUTBRICK = {_HINLEGEN, _PUTBRICK, _ALLONGER};
+const Set<String> _SET_PICKBEEPER = {_MARKELOESCHEN, _PICKBEEPER, _MARQUESUPPRESION};
+const Set<String> _SET_PUTBEEPER = {_MARKESETZEN, _PUTBEEPER, _MARQUEETABLIE};
+const Set<String> _SET_HALT = {_BEENDEN, _TURNOFF, _FINIR};
+const Set<String> _SET_WAIT = {_WARTEN, _ATTENDRE};
+const Set<String> _SET_SOUND = {_TON, _SON};
 
-final _KAROL_COLORS = {
+const _KAROL_COLORS = {
   'weiß': '0',
   'weiss': '0',
   'schwarz': '1',

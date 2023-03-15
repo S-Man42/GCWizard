@@ -14,7 +14,7 @@ final Map<String, String> _AZToTapir = {
 };
 final Map<String, String> _TapirToAZ = switchMapKeyValue(_AZToTapir);
 
-final Map<String, String> _NumbersToTapir = {
+const Map<String, String> _NumbersToTapir = {
   ' ': '83',
   '\n': '80',
   '.': '89',

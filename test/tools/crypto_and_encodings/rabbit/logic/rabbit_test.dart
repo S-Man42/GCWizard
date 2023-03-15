@@ -53,6 +53,10 @@ void main() {
 
   group("rabbit.cryptRabbit:", () {
     List<Map<String, Object?>> _inputsToExpected = [
+      {'input': 'Test', 'inputFormat': InputFormat.TEXT, 'key': 'Test', 'keyFormat': InputFormat.TEXT, 'iv': 'Test', 'ivFormat': InputFormat.HEX, 'outputFormat': OutputFormat.HEX,
+        'expectedOutput': RabbitOutput('', null, null, ErrorCode.IV_FORMAT)
+      },
+
       {'input': '', 'inputFormat': InputFormat.HEX, 'key': null, 'keyFormat': InputFormat.AUTO, 'iv': null, 'ivFormat': InputFormat.AUTO, 'outputFormat': OutputFormat.HEX,
         'expectedOutput': RabbitOutput('', null, null, ErrorCode.OK)
       },
@@ -108,6 +112,10 @@ void main() {
       },
       {'input': 'Test', 'inputFormat': InputFormat.TEXT, 'key': 'Test', 'keyFormat': InputFormat.TEXT, 'iv': 'Test', 'ivFormat': InputFormat.HEX, 'outputFormat': OutputFormat.HEX,
         'expectedOutput': RabbitOutput('', null, null, ErrorCode.IV_FORMAT)
+      },
+
+      {'input': 'FCD8073FFA61FB0DB88CE39360171962E4FCC2C26CE5', 'inputFormat': InputFormat.AUTO, 'key': 'Karotten', 'keyFormat': InputFormat.TEXT, 'iv': null, 'ivFormat': InputFormat.HEX, 'outputFormat': OutputFormat.TEXT,
+        'expectedOutput': RabbitOutput('N52 36.668 E013 00.413', '4B 61 72 6F 74 74 65 6E 00 00 00 00 00 00 00 00', '00 00 00 00 00 00 00 00', ErrorCode.OK)
       },
     ];
 

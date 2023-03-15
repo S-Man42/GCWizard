@@ -34,7 +34,7 @@ Future<LatLng?> intersectBearingsAsync(GCWAsyncExecuterParameters? jobData) asyn
   var output = intersectBearings(data.coord1, data.az13, data.coord2,
       data.az23, data.ells, data.crossbearing);
 
-  jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }
@@ -138,7 +138,7 @@ Future<LatLng?> intersectFourPointsAsync(GCWAsyncExecuterParameters? jobData) as
   var output = intersectFourPoints(data.coord11, data.coord12, data.coord21,
       data.coord22, data.ells);
 
-  jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }

@@ -37,6 +37,8 @@ class GCWSymbolTableDecryptionState extends State<GCWSymbolTableDecryption> {
   @override
   void initState() {
     super.initState();
+
+
     _scrollController = ScrollController();
   }
 

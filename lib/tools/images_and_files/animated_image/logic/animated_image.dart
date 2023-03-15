@@ -3,6 +3,7 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:image/image.dart' as Image;
 
@@ -21,7 +22,7 @@ Future<AnimatedImageOutput?> analyseImageAsync(GCWAsyncExecuterParameters? jobDa
   var data = jobData!.parameters as Uint8List;
   var output = await analyseImage(data, sendAsyncPort: jobData.sendAsyncPort);
 
-  jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }
@@ -72,7 +73,7 @@ Future<AnimatedImageOutput?> analyseImage(Uint8List bytes,
 
         progress++;
         if (sendAsyncPort != null && (progress % progressStep == 0)) {
-          sendAsyncPort.send({'progress': progress / animation.length});
+          sendAsyncPort.send(DoubleText('progress', progress / animation.length));
         }
       }
     }

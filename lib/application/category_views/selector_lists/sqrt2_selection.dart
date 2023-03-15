@@ -13,9 +13,9 @@ class SQRT2Selection extends GCWSelection {
   Widget build(BuildContext context) {
     final List<GCWTool> _toolList = registeredTools.where((element) {
       return [
-        className(SQRT2NthDecimal()),
-        className(SQRT2DecimalRange()),
-        className(SQRT2Search()),
+        className(const SQRT2NthDecimal()),
+        className(const SQRT2DecimalRange()),
+        className(const SQRT2Search()),
       ].contains(className(element.tool));
     }).toList();
 

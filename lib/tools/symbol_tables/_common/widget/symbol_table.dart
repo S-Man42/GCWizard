@@ -27,6 +27,7 @@ class SymbolTableState extends State<SymbolTable> {
   void initState() {
     super.initState();
 
+    _data = defaultSymbolTableData(context);
     _initialize();
   }
 

@@ -1,7 +1,7 @@
 import 'dart:isolate';
 
 class GCWAsyncExecuterParameters {
-  late SendPort sendAsyncPort;
+  SendPort? sendAsyncPort;
   final Object? parameters;
 
   GCWAsyncExecuterParameters(this.parameters);

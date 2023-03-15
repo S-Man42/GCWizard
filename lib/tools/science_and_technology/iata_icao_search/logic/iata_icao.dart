@@ -1,12 +1,12 @@
 // https://de.wikipedia.org/wiki/Liste_der_Fliegerhorste_in_Deutschland
 
 class IataIcaoCodes {
-  String name;
-  String iata;
-  String icoa;
-  String location_served;
+  final String name;
+  final String iata;
+  final String icoa;
+  final String location_served;
 
-  IataIcaoCodes({
+  const IataIcaoCodes({
     required this.name,
     required this.iata,
     required this.icoa,
@@ -14,7 +14,7 @@ class IataIcaoCodes {
   });
 }
 
-final Map<String, IataIcaoCodes> IATA_ICAO_CODES = {
+const Map<String, IataIcaoCodes> IATA_ICAO_CODES = {
   "ETEB": IataIcaoCodes(
     name: "Army Heliport Ansbach",
     iata: "",

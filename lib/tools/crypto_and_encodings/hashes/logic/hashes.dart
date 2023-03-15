@@ -25,7 +25,7 @@ String _toHexString(Uint8List bytes) {
   return bytes.map((byte) => byte.toRadixString(16).padLeft(2, '0')).join();
 }
 
-final Map<String, String Function(String)> HASH_FUNCTIONS = {
+const Map<String, String Function(String)> HASH_FUNCTIONS = {
   'hashes_md5': md5Digest,
   'hashes_sha1': sha1Digest,
   'hashes_sha224': sha224Digest,
@@ -59,7 +59,7 @@ final Map<String, String Function(String)> HASH_FUNCTIONS = {
   'hashes_whirlpool512': whirlpool_512Digest,
 };
 
-final Map<String, String Function(String, String)> HASHKEY_FUNCTIONS = {
+const Map<String, String Function(String, String)> HASHKEY_FUNCTIONS = {
   'hashes_md5hmac': md5Hmac,
   'hashes_sha1hmac': sha1Hmac,
   'hashes_sha224hmac': sha224Hmac,

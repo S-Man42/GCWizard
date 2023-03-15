@@ -1,7 +1,7 @@
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 
-Map<String, String> _MAP = {
+const Map<String, String> _MAP = {
   '11': 'A',
   '12': 'B',
   '13': 'C',

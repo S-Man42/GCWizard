@@ -5,10 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 
 Isolate? _isolate;
 
-class GCWAsyncExecuter<T extends Object?> extends StatefulWidget {
+class GCWAsyncExecuter<T> extends StatefulWidget {
   final Future<T> Function(GCWAsyncExecuterParameters) isolatedFunction;
   final Future<GCWAsyncExecuterParameters?> Function() parameter;
   final void Function(T) onReady;
@@ -23,7 +24,7 @@ class GCWAsyncExecuter<T extends Object?> extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _GCWAsyncExecuterState createState() => _GCWAsyncExecuterState();
+  _GCWAsyncExecuterState<T> createState() => _GCWAsyncExecuterState<T>();
 
 }
 
@@ -36,8 +37,8 @@ Future<ReceivePort> _makeIsolate(void Function(GCWAsyncExecuterParameters) isola
   return receivePort;
 }
 
-class _GCWAsyncExecuterState extends State<GCWAsyncExecuter> {
-  Object? _result;
+class _GCWAsyncExecuterState<T> extends State<GCWAsyncExecuter<T>> {
+  T? _result;
   bool isOverlay = true;
   bool _cancel = false;
   ReceivePort? _receivePort;
@@ -64,9 +65,9 @@ class _GCWAsyncExecuterState extends State<GCWAsyncExecuter> {
         if (_cancel) _cancelProcess();
 
         await for (var event in _receivePort!) {
-          if (event is Map<String, Object> && event['progress'] is double) {
-            yield event['progress'] as double;
-          } else {
+          if (event is DoubleText && event.text == 'progress') {
+            yield event.value;
+          } else if (event is T) {
             _result = event;
             _receivePort!.close();
             return;
@@ -82,7 +83,9 @@ class _GCWAsyncExecuterState extends State<GCWAsyncExecuter> {
             if (widget.isOverlay) {
               Navigator.of(context).pop(); // Pop from dialog on completion (needen on overlay)
             }
-            widget.onReady(_result);
+            if (_result is T) {
+              widget.onReady(_result as T);
+            }
           }
           return Column(children: <Widget>[
             (snapshot.hasData)

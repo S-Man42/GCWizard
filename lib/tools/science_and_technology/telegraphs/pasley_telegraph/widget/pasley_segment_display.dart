@@ -59,6 +59,7 @@ class _PasleyTelegraphSegmentDisplay extends NSegmentDisplay {
               path00.lineTo(
                   size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 20, size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 220);
               path00.close();
+
               canvas.touchCanvas.drawPath(path00, paint);
 
               paint.color = segmentActive(currentSegments, '1') ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
@@ -72,14 +73,8 @@ class _PasleyTelegraphSegmentDisplay extends NSegmentDisplay {
               path10.lineTo(
                   size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 30, size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 102);
               path10.close();
-              if (size.height < 180) {
-                if (segmentActive(currentSegments, '1')) {
-                  canvas.touchCanvas.drawPath(path10, paint, onTapDown: (tapDetail) {
-                    setSegmentState('1', !segmentActive(currentSegments, '1'));
-                  });
-                } else {
-                }
-              } else {
+
+              if (!readOnly || segmentActive(currentSegments, '1')) {
                 canvas.touchCanvas.drawPath(path10, paint, onTapDown: (tapDetail) {
                   setSegmentState('1', !segmentActive(currentSegments, '1'));
                 });
@@ -96,14 +91,8 @@ class _PasleyTelegraphSegmentDisplay extends NSegmentDisplay {
               path20.lineTo(
                   size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 40, size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 50);
               path20.close();
-              if (size.height < 180) {
-                if (segmentActive(currentSegments, '2')) {
-                  canvas.touchCanvas.drawPath(path20, paint, onTapDown: (tapDetail) {
-                    setSegmentState('2', !segmentActive(currentSegments, '2'));
-                  });
-                } else {
-                }
-              } else {
+
+              if (!readOnly || segmentActive(currentSegments, '2')) {
                 canvas.touchCanvas.drawPath(path20, paint, onTapDown: (tapDetail) {
                   setSegmentState('2', !segmentActive(currentSegments, '2'));
                 });
@@ -120,16 +109,11 @@ class _PasleyTelegraphSegmentDisplay extends NSegmentDisplay {
               path30.lineTo(
                   size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 88, size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 30);
               path30.close();
-              if (size.height < 180) {
-                if (segmentActive(currentSegments, '3')) {
-                  canvas.touchCanvas.drawPath(path30, paint, onTapDown: (tapDetail) {
-                    setSegmentState('3', !segmentActive(currentSegments, '3'));
-                  });
-                } else {
-                  canvas.touchCanvas.drawPath(path30, paint, onTapDown: (tapDetail) {
-                    setSegmentState('3', !segmentActive(currentSegments, '3'));
-                  });
-                }
+
+              if (!readOnly || segmentActive(currentSegments, '3')) {
+                canvas.touchCanvas.drawPath(path30, paint, onTapDown: (tapDetail) {
+                  setSegmentState('3', !segmentActive(currentSegments, '3'));
+                });
               }
 
               paint.color = segmentActive(currentSegments, '4') ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
@@ -143,16 +127,11 @@ class _PasleyTelegraphSegmentDisplay extends NSegmentDisplay {
               path40.lineTo(
                   size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 110, size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 90);
               path40.close();
-              if (size.height < 180) {
-                if (segmentActive(currentSegments, '4')) {
-                  canvas.touchCanvas.drawPath(path40, paint, onTapDown: (tapDetail) {
-                    setSegmentState('4', !segmentActive(currentSegments, '4'));
-                  });
-                } else {
-                  canvas.touchCanvas.drawPath(path40, paint, onTapDown: (tapDetail) {
-                    setSegmentState('4', !segmentActive(currentSegments, '4'));
-                  });
-                }
+
+              if (!readOnly || segmentActive(currentSegments, '4')) {
+                canvas.touchCanvas.drawPath(path40, paint, onTapDown: (tapDetail) {
+                  setSegmentState('4', !segmentActive(currentSegments, '4'));
+                });
               }
 
               paint.color = segmentActive(currentSegments, '5') ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
@@ -166,16 +145,11 @@ class _PasleyTelegraphSegmentDisplay extends NSegmentDisplay {
               path50.lineTo(size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 160,
                   size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 102);
               path50.close();
-              if (size.height < 180) {
-                if (segmentActive(currentSegments, '5')) {
-                  canvas.touchCanvas.drawPath(path50, paint, onTapDown: (tapDetail) {
-                    setSegmentState('5', !segmentActive(currentSegments, '5'));
-                  });
-                } else {
-                  canvas.touchCanvas.drawPath(path50, paint, onTapDown: (tapDetail) {
-                    setSegmentState('5', !segmentActive(currentSegments, '5'));
-                  });
-                }
+
+              if (!readOnly || segmentActive(currentSegments, '5')) {
+                canvas.touchCanvas.drawPath(path50, paint, onTapDown: (tapDetail) {
+                  setSegmentState('5', !segmentActive(currentSegments, '5'));
+                });
               }
 
               paint.color = segmentActive(currentSegments, '6') ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
@@ -189,16 +163,11 @@ class _PasleyTelegraphSegmentDisplay extends NSegmentDisplay {
               path60.lineTo(size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 140,
                   size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 150);
               path60.close();
-              if (size.height < 180) {
-                if (segmentActive(currentSegments, '6')) {
-                  canvas.touchCanvas.drawPath(path60, paint, onTapDown: (tapDetail) {
-                    setSegmentState('6', !segmentActive(currentSegments, '6'));
-                  });
-                } else {
-                  canvas.touchCanvas.drawPath(path60, paint, onTapDown: (tapDetail) {
-                    setSegmentState('6', !segmentActive(currentSegments, '6'));
-                  });
-                }
+
+              if (!readOnly || segmentActive(currentSegments, '6')) {
+                canvas.touchCanvas.drawPath(path60, paint, onTapDown: (tapDetail) {
+                  setSegmentState('6', !segmentActive(currentSegments, '6'));
+                });
               }
 
               paint.color = segmentActive(currentSegments, '7') ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
@@ -212,16 +181,11 @@ class _PasleyTelegraphSegmentDisplay extends NSegmentDisplay {
               path70.lineTo(
                   size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 40, size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 140);
               path70.close();
-              if (size.height < 180) {
-                if (segmentActive(currentSegments, '7')) {
-                  canvas.touchCanvas.drawPath(path70, paint, onTapDown: (tapDetail) {
-                    setSegmentState('7', !segmentActive(currentSegments, '7'));
-                  });
-                } else {
-                  canvas.touchCanvas.drawPath(path70, paint, onTapDown: (tapDetail) {
-                    setSegmentState('7', !segmentActive(currentSegments, '7'));
-                  });
-                }
+
+              if (!readOnly || segmentActive(currentSegments, '7')) {
+                canvas.touchCanvas.drawPath(path70, paint, onTapDown: (tapDetail) {
+                  setSegmentState('7', !segmentActive(currentSegments, '7'));
+                });
               }
             });
 }

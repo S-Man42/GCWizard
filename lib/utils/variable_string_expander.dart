@@ -2,6 +2,8 @@ import 'dart:collection';
 import 'dart:isolate';
 import 'dart:math';
 
+import 'package:gc_wizard/utils/complex_return_types.dart';
+
 final RegExp VARIABLESTRING =
     RegExp(r'^((\s*\d+(\s*-\s*(\d*|\d+\s*#\s*\d*))?)\s*,)*(\s*\d*|(\s*\d+\s*-\s*(\d*|\d+\s*#\s*\d*)))\s*$');
 
@@ -194,7 +196,7 @@ class VariableStringExpander {
 
       progress++;
       if (sendAsyncPort != null && (progress % progressStep == 0)) {
-        sendAsyncPort!.send({'progress': progress / _countCombinations});
+        sendAsyncPort!.send(DoubleText('progress', progress / _countCombinations));
       }
     } while (_setIndexes() == false);
   }

@@ -11,7 +11,7 @@ import 'package:gc_wizard/utils/constants.dart';
 
 enum EdelcrantzCodebook { YEAR_1795, YEAR_1808, MUSEUM }
 
-Map<EdelcrantzCodebook, CodebookConfig> MURRAY_CODEBOOK = {
+const Map<EdelcrantzCodebook, CodebookConfig> MURRAY_CODEBOOK = {
   EdelcrantzCodebook.YEAR_1795: CodebookConfig(
     title: 'telegraph_edelcrantz_1795_title',
     subtitle: 'telegraph_edelcrantz_1795_description'
@@ -1870,12 +1870,12 @@ SegmentsText decodeTextEdelcrantzTelegraph(String inputs, EdelcrantzCodebook lan
   inputs.split(' ').forEach((element) {
     if (CODEBOOK[element] != null) {
       if (daytime) {
-        text = text + CODEBOOK[element]!;
+        text += CODEBOOK[element]!;
       } else {
-        text = text + CODEBOOK[_nightTime(element)]!;
+        text += CODEBOOK[_nightTime(element)] ?? '';
       }
     } else {
-      text = text + UNKNOWN_ELEMENT;
+      text += UNKNOWN_ELEMENT;
     }
     displays.add(_buildShutters(element));
   });

@@ -6,6 +6,7 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/tools/images_and_files/_common/logic/rgb_pixel.dart';
 import 'package:gc_wizard/utils/math_utils.dart';
@@ -157,7 +158,7 @@ Future<Tuple2<Uint8List?, MagicEyeErrorCode>?> generateImageAsync(GCWAsyncExecut
   if (hiddenImage == null) return null;
   var outputData = _generateImage(hiddenImage, textureImage, textureType);
 
-  jobData.sendAsyncPort.send(outputData);
+  jobData.sendAsyncPort?.send(outputData);
 
   return Future.value(outputData);
 }
@@ -239,7 +240,7 @@ Tuple2<Uint8List?, MagicEyeErrorCode>? _generateImage(
   var generatedLines = 0;
   var _progressStep = max(_rows ~/ 100, 1); // 100 steps
 
-  sendAsyncPort?.send({'progress': 0.0});
+  sendAsyncPort?.send(DoubleText('progress', 0.0));
 
   _initHoroptic();
 
@@ -247,7 +248,7 @@ Tuple2<Uint8List?, MagicEyeErrorCode>? _generateImage(
     _doLineHoroptic(y);
 
     if (sendAsyncPort != null && (generatedLines % _progressStep == 0)) {
-      sendAsyncPort.send({'progress': y / _rows});
+      sendAsyncPort.send(DoubleText('progress', y / _rows));
     }
   }
 

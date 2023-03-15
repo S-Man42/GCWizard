@@ -37,7 +37,7 @@ Future<List<CenterPointDistance>?> centerPointThreePointsAsync(GCWAsyncExecuterP
   var data = jobData!.parameters as CenterPointJobData;
   var output = centerPointThreePoints(data.coord1, data.coord2, data.coord3, data.ellipsoid);
 
-  jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }

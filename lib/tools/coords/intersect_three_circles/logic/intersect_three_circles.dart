@@ -72,7 +72,7 @@ Future<List<Intersect>> intersectThreeCirclesAsync(GCWAsyncExecuterParameters? j
       data.accuracy,
       data.ells);
 
-  jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }

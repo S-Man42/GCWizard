@@ -48,7 +48,7 @@ enum TeletypewriterCodebook {
   ALGOL
 }
 
-final List<TeletypewriterCodebook> REVERSE_CODEBOOK = [
+const List<TeletypewriterCodebook> REVERSE_CODEBOOK = [
   TeletypewriterCodebook.ILLIAC,
 ];
 
@@ -56,7 +56,7 @@ class CodebookConfig {
   final String title;
   final String subtitle;
 
-  CodebookConfig({
+  const CodebookConfig({
     required this.title,
     required this.subtitle,
   });
@@ -66,13 +66,13 @@ class PunchtapekConfig {
   final int punchHoles;
   final int sprocketHole;
 
-  PunchtapekConfig({
+  const PunchtapekConfig({
     required this.punchHoles,
     required this.sprocketHole,
   });
 }
 
-Map<TeletypewriterCodebook, CodebookConfig> ANCIENT_CODEBOOK = {
+const Map<TeletypewriterCodebook, CodebookConfig> ANCIENT_CODEBOOK = {
   TeletypewriterCodebook.BAUDOT: CodebookConfig(
     title: 'punchtape_baudot_title',
     subtitle: 'punchtape_baudot_description'
@@ -95,7 +95,7 @@ Map<TeletypewriterCodebook, CodebookConfig> ANCIENT_CODEBOOK = {
   ),
 };
 
-Map<TeletypewriterCodebook, CodebookConfig> CCITT1_CODEBOOK = {
+const Map<TeletypewriterCodebook, CodebookConfig> CCITT1_CODEBOOK = {
   TeletypewriterCodebook.CCITT_ITA1_1926: CodebookConfig(
     title: 'punchtape_ccitt_ita1_1926_title',
     subtitle: 'punchtape_ccitt_ita1_1926_description'
@@ -114,7 +114,7 @@ Map<TeletypewriterCodebook, CodebookConfig> CCITT1_CODEBOOK = {
   ),
 };
 
-Map<TeletypewriterCodebook, CodebookConfig> CCITT2_CODEBOOK = {
+const Map<TeletypewriterCodebook, CodebookConfig> CCITT2_CODEBOOK = {
   TeletypewriterCodebook.CCITT_ITA2_1929: CodebookConfig(
     title: 'punchtape_ccitt_ita2_1929_title',
     subtitle: 'punchtape_ccitt_ita2_1929_description'
@@ -133,7 +133,7 @@ Map<TeletypewriterCodebook, CodebookConfig> CCITT2_CODEBOOK = {
   ),
 };
 
-Map<TeletypewriterCodebook, CodebookConfig> CCITT_CODEBOOK = {
+const Map<TeletypewriterCodebook, CodebookConfig> CCITT_CODEBOOK = {
   TeletypewriterCodebook.CCITT_ITA1_1926: CodebookConfig(
     title: 'punchtape_ccitt_ita1_1926_title',
     subtitle: 'punchtape_ccitt_ita1_1926_description'
@@ -184,7 +184,7 @@ Map<TeletypewriterCodebook, CodebookConfig> CCITT_CODEBOOK = {
   ),
 };
 
-Map<TeletypewriterCodebook, CodebookConfig> OTHER_CODEBOOK = {
+const Map<TeletypewriterCodebook, CodebookConfig> OTHER_CODEBOOK = {
   TeletypewriterCodebook.ZC1: CodebookConfig(
     title: 'punchtape_zc1_title',
     subtitle: 'punchtape_zc1_description'
@@ -207,7 +207,7 @@ Map<TeletypewriterCodebook, CodebookConfig> OTHER_CODEBOOK = {
   ),
 };
 
-Map<TeletypewriterCodebook, CodebookConfig> ALL_CODES_CODEBOOK = {
+const Map<TeletypewriterCodebook, CodebookConfig> ALL_CODES_CODEBOOK = {
   TeletypewriterCodebook.BAUDOT: CodebookConfig(
     title: 'punchtape_baudot_title',
     subtitle: 'punchtape_baudot_description'
@@ -283,7 +283,7 @@ Map<TeletypewriterCodebook, CodebookConfig> ALL_CODES_CODEBOOK = {
   TeletypewriterCodebook.ALGOL: CodebookConfig(title: 'punchtape_algol_title', subtitle: 'punchtape_algol_description'),
 };
 
-Map<TeletypewriterCodebook, PunchtapekConfig> PUNCHTAPE_DEFINITION = {
+const Map<TeletypewriterCodebook, PunchtapekConfig> PUNCHTAPE_DEFINITION = {
   TeletypewriterCodebook.BAUDOT: PunchtapekConfig(punchHoles: 5, sprocketHole: 0),
   TeletypewriterCodebook.BAUDOT_54123: PunchtapekConfig(punchHoles: 5, sprocketHole: 3),
   TeletypewriterCodebook.MURRAY: PunchtapekConfig(punchHoles: 5, sprocketHole: 0),
@@ -308,7 +308,7 @@ Map<TeletypewriterCodebook, PunchtapekConfig> PUNCHTAPE_DEFINITION = {
   TeletypewriterCodebook.ALGOL: PunchtapekConfig(punchHoles: 5, sprocketHole: 4),
 };
 
-Map<TeletypewriterCodebook, int> BINARY_LENGTH = {
+const Map<TeletypewriterCodebook, int> BINARY_LENGTH = {
   TeletypewriterCodebook.BAUDOT: 5,
   TeletypewriterCodebook.BAUDOT_54123: 5,
   TeletypewriterCodebook.MURRAY: 5,
@@ -368,10 +368,10 @@ final _AZToCCITT_BAUDOT = {
 final _CCITT_BAUDOTToAZ = switchMapKeyValue(_AZToCCITT_BAUDOT);
 
 // original Baudot according to US Patent has no numbers
-final Map<String, int> _NumbersToCCITT_BAUDOT = {};
+const Map<String, int> _NumbersToCCITT_BAUDOT = {};
 final _CCITT_BAUDOTToNumbers = switchMapKeyValue(_NumbersToCCITT_BAUDOT);
 
-final _AZToBaudot_54123 = {
+const _AZToBaudot_54123 = {
   // Baudot-Code from DEU Wikipedia in Bit-Order 54321
   'A': 4, // 12345 1
   'B': 18, // 12345 11
@@ -439,7 +439,7 @@ final _NumbersToBaudot_54123 = {
 };
 final _Baudot_54123ToNumbers = switchMapKeyValue(_NumbersToBaudot_54123);
 
-final _AZToMurray = {
+const _AZToMurray = {
   'A': 3,
   'B': 25,
   'C': 14,
@@ -471,7 +471,7 @@ final _AZToMurray = {
 };
 final _MurrayToAZ = switchMapKeyValue(_AZToMurray);
 
-final _NumbersToMurray = {
+const _NumbersToMurray = {
 //  'A': 3,
   '/': 25,
   '\'': 14,
@@ -504,7 +504,7 @@ final _NumbersToMurray = {
 };
 final _MurrayToNumbers = switchMapKeyValue(_NumbersToMurray);
 
-final _AZToWesternunion = {
+const _AZToWesternunion = {
   'A': 3,
   'B': 25,
   'C': 14,
@@ -537,7 +537,7 @@ final _AZToWesternunion = {
 };
 final _WesternunionToAZ = switchMapKeyValue(_AZToWesternunion);
 
-final _NumbersToWesternunion = {
+const _NumbersToWesternunion = {
   '-': 3,
   '?': 25,
   ':': 14,
@@ -570,7 +570,7 @@ final _NumbersToWesternunion = {
 };
 final _WesternunionToNumbers = switchMapKeyValue(_NumbersToWesternunion);
 
-final _AZToSiemens = {
+const _AZToSiemens = {
   'A': 6,
   'B': 26,
   'C': 23,
@@ -600,7 +600,7 @@ final _AZToSiemens = {
 };
 final _SiemensToAZ = switchMapKeyValue(_AZToSiemens);
 
-final _NumbersToSiemens = {
+const _NumbersToSiemens = {
   '.': 6,
   '/': 26,
   '\'': 23,
@@ -663,7 +663,7 @@ final _AZToCCITT_ITA1_EU = {
 };
 final _CCITT_ITA1_EUToAZ = switchMapKeyValue(_AZToCCITT_ITA1_EU);
 
-final _NumbersToCCITT_ITA1_EU = {
+const _NumbersToCCITT_ITA1_EU = {
   // Code according to ENG Wikipedia, Bit-Order 54321
   '1': 1,
   '&': 3,
@@ -696,7 +696,7 @@ final _NumbersToCCITT_ITA1_EU = {
 };
 final _CCITT_ITA1_EUToNumbers = switchMapKeyValue(_NumbersToCCITT_ITA1_EU);
 
-final _AZToCCITT_ITA1_UK = {
+const _AZToCCITT_ITA1_UK = {
   // Code according to ENG Wikipedia, Bit-Order 54321
   'A': 1,
   '/': 3,
@@ -743,7 +743,7 @@ final _NumbersToCCITT_ITA1_UK = {
   '0': 15,
   '5/': 14,
   '7': 10,
-  '¹': 11,
+  '¹': 11, //double entry ??
   '6': 12,
   '(': 25,
   '=': 27,
@@ -762,7 +762,7 @@ final _NumbersToCCITT_ITA1_UK = {
 };
 final _CCITT_ITA1_UKToNumbers = switchMapKeyValue(_NumbersToCCITT_ITA1_UK);
 
-final _AZToCCITT_ITA2_MTK2 = {
+const _AZToCCITT_ITA2_MTK2 = {
   //according to ENG Wikipedia, Bit-Order 54321
   ' ': 4,
   '\r': 2,
@@ -796,7 +796,7 @@ final _AZToCCITT_ITA2_MTK2 = {
 };
 final _CCITT_ITA2_MTK2ToAZ = switchMapKeyValue(_AZToCCITT_ITA2_MTK2);
 
-final _NumbersToCCITT_MTK2 = {
+const _NumbersToCCITT_MTK2 = {
   //according to ENG Wikipedia, Bit-Order 54321
   ' ': 4,
   '\r': 2,
@@ -830,7 +830,7 @@ final _NumbersToCCITT_MTK2 = {
 };
 final _CCITT_MTK2ToNumbers = switchMapKeyValue(_NumbersToCCITT_MTK2);
 
-final _AZToCCITT_USTTY = {
+const _AZToCCITT_USTTY = {
   //according to ENG Wikipedia, Bit-Order 54321
   ' ': 4,
   '\r': 2,
@@ -864,7 +864,7 @@ final _AZToCCITT_USTTY = {
 };
 final _CCITT_USTTYToAZ = switchMapKeyValue(_AZToCCITT_USTTY);
 
-final _NumbersToCCITT_ITA2_USTTY = {
+const _NumbersToCCITT_ITA2_USTTY = {
   //according to ENG Wikipedia, Bit-Order 54321
   ' ': 4,
   '\r': 2,
@@ -894,7 +894,7 @@ final _NumbersToCCITT_ITA2_USTTY = {
 };
 final _CCITT_USTTYToNumbers = switchMapKeyValue(_NumbersToCCITT_ITA2_USTTY);
 
-final _AZToCCITT_ITA1_1926 = {
+const _AZToCCITT_ITA1_1926 = {
   'A': 1,
   'B': 12,
   'C': 13,
@@ -927,7 +927,7 @@ final _AZToCCITT_ITA1_1926 = {
 };
 final _CCITT_ITA1_1926ToAZ = switchMapKeyValue(_AZToCCITT_ITA1_1926);
 
-final _AZToCCITT_ITA1_1929 = {
+const _AZToCCITT_ITA1_1929 = {
   'A': 1,
   'B': 12,
   'C': 13,
@@ -960,7 +960,7 @@ final _AZToCCITT_ITA1_1929 = {
 };
 final _CCITT_ITA1_1929ToAZ = switchMapKeyValue(_AZToCCITT_ITA1_1929);
 
-final _AZToCCITT_ITA2_1929 = {
+const _AZToCCITT_ITA2_1929 = {
   'A': 1,
   'B': 12,
   'C': 13,
@@ -992,7 +992,7 @@ final _AZToCCITT_ITA2_1929 = {
 };
 final _CCITT_ITA2_1929ToAZ = switchMapKeyValue(_AZToCCITT_ITA2_1929);
 
-final _AZToCCITT_ITA2_1931 = {
+const _AZToCCITT_ITA2_1931 = {
   'A': 3,
   'B': 25,
   'C': 14,
@@ -1025,7 +1025,7 @@ final _AZToCCITT_ITA2_1931 = {
 };
 final _CCITT_ITA2_1931ToAZ = switchMapKeyValue(_AZToCCITT_ITA2_1931);
 
-final _AZToCCITT_ITA3 = {
+const _AZToCCITT_ITA3 = {
   'A': 44,
   'B': 76,
   'C': 25,
@@ -1058,7 +1058,7 @@ final _AZToCCITT_ITA3 = {
 };
 final _CCITT_ITA3ToAZ = switchMapKeyValue(_AZToCCITT_ITA3);
 
-final _AZToCCITT_ITA4 = {
+const _AZToCCITT_ITA4 = {
   'A': 6,
   'B': 50,
   'C': 28,
@@ -1091,7 +1091,7 @@ final _AZToCCITT_ITA4 = {
 };
 final _CCITT_ITA4ToAZ = switchMapKeyValue(_AZToCCITT_ITA4);
 
-final _AZToCCIR476 = {
+const _AZToCCIR476 = {
   // https://en.wikipedia.org/wiki/CCIR_476
   'A': 71,
   'B': 114,
@@ -1125,7 +1125,7 @@ final _AZToCCIR476 = {
 };
 final _CCIR476ToAZ = switchMapKeyValue(_AZToCCIR476);
 
-final _AZToALGOL = {
+const _AZToALGOL = {
   'A': 3,
   'B': 25,
   'C': 14,
@@ -1158,7 +1158,7 @@ final _AZToALGOL = {
 };
 final _ALGOLToAZ = switchMapKeyValue(_AZToALGOL);
 
-final _NumbersToCCITT_ITA1_1926 = {
+const _NumbersToCCITT_ITA1_1926 = {
   '1': 1,
   '8': 12,
   '9': 13,
@@ -1191,7 +1191,7 @@ final _NumbersToCCITT_ITA1_1926 = {
 };
 final _CCITT_ITA1_1926ToNumbers = switchMapKeyValue(_NumbersToCCITT_ITA1_1926);
 
-final _NumbersToCCITT_ITA1_1929 = {
+const _NumbersToCCITT_ITA1_1929 = {
   '1': 1,
   '8': 12,
   '9': 13,
@@ -1224,7 +1224,7 @@ final _NumbersToCCITT_ITA1_1929 = {
 };
 final _CCITT_ITA1_1929ToNumbers = switchMapKeyValue(_NumbersToCCITT_ITA1_1929);
 
-final _NumbersToCCITT_ITA2_1929 = {
+const _NumbersToCCITT_ITA2_1929 = {
   ':': 1,
   '?': 12,
   '(': 13,
@@ -1256,7 +1256,7 @@ final _NumbersToCCITT_ITA2_1929 = {
 };
 final _CCITT_ITA2_1929ToNumbers = switchMapKeyValue(_NumbersToCCITT_ITA2_1929);
 
-final _NumbersToCCITT_ITA2_1931 = {
+const _NumbersToCCITT_ITA2_1931 = {
   '-': 3,
   '?': 25,
   ':': 14,
@@ -1289,7 +1289,7 @@ final _NumbersToCCITT_ITA2_1931 = {
 };
 final _CCITT_ITA2_1931ToNumbers = switchMapKeyValue(_NumbersToCCITT_ITA2_1931);
 
-final _NumbersToCCITT_ITA3 = {
+const _NumbersToCCITT_ITA3 = {
   '-': 44,
   '?': 76,
   ':': 25,
@@ -1322,7 +1322,7 @@ final _NumbersToCCITT_ITA3 = {
 };
 final _CCITT_ITA3ToNumbers = switchMapKeyValue(_NumbersToCCITT_ITA3);
 
-final _NumbersToCCITT_ITA4 = {
+const _NumbersToCCITT_ITA4 = {
   '-': 64,
   '?': 50,
   ':': 28,
@@ -1355,7 +1355,7 @@ final _NumbersToCCITT_ITA4 = {
 };
 final _CCITT_ITA4ToNumbers = switchMapKeyValue(_NumbersToCCITT_ITA4);
 
-final _NumbersToCCIR476 = {
+const _NumbersToCCIR476 = {
   '-': 71,
   '?': 114,
   ':': 29,
@@ -1387,7 +1387,7 @@ final _NumbersToCCIR476 = {
 };
 final _CCIR476ToNumbers = switchMapKeyValue(_NumbersToCCIR476);
 
-final _NumbersToALGOL = {
+const _NumbersToALGOL = {
   '-': 3,
   '*': 25,
   ':': 14,
@@ -1420,7 +1420,7 @@ final _NumbersToALGOL = {
 };
 final _ALGOLToNumbers = switchMapKeyValue(_NumbersToALGOL);
 
-final _AZToZC1 = {
+const _AZToZC1 = {
   '"': 96,
   '\'': 97,
   '´': 98,
@@ -1544,7 +1544,7 @@ final _AZToZC1 = {
 };
 final _ZC1ToAZ = switchMapKeyValue(_AZToZC1);
 
-final _AZToILLIAC = {
+const _AZToILLIAC = {
   'A': 22,
   'B': 19,
   'C': 29,
@@ -1576,7 +1576,7 @@ final _AZToILLIAC = {
 };
 final _ILLIACToAZ = switchMapKeyValue(_AZToILLIAC);
 
-final _NumbersToILLIAC = {
+const _NumbersToILLIAC = {
   ')': 22,
   '(': 19,
   ':': 29,
@@ -1608,7 +1608,7 @@ final _NumbersToILLIAC = {
 };
 final _ILLIACToNumbers = switchMapKeyValue(_NumbersToILLIAC);
 
-final _AZToTTS = {
+const _AZToTTS = {
   // https://druck-mediengeschichte.org/2020/08/06/zwischen-morsecode-und-digitaler-fonttechnologie-2/
   // Wilfried Kusterka
   'T': 32,
@@ -1649,7 +1649,7 @@ final _AZToTTS = {
 };
 final _TTSToAZ = switchMapKeyValue(_AZToTTS);
 
-final _NumbersToTTS = {
+const _NumbersToTTS = {
   't': 32,
   'o': 48,
   'n': 24,
@@ -1688,7 +1688,7 @@ final _NumbersToTTS = {
 };
 final _TTSToNumbers = switchMapKeyValue(_NumbersToTTS);
 
-final _NUMBERS_FOLLOW = {
+const _NUMBERS_FOLLOW = {
   TeletypewriterCodebook.BAUDOT_54123: 2, // 12345 8
   TeletypewriterCodebook.SIEMENS: 30,
   TeletypewriterCodebook.MURRAY: 27,
@@ -1709,7 +1709,7 @@ final _NUMBERS_FOLLOW = {
   TeletypewriterCodebook.ILLIAC: 27,
   TeletypewriterCodebook.ALGOL: 62,
 };
-final _LETTERS_FOLLOW = {
+const _LETTERS_FOLLOW = {
   TeletypewriterCodebook.BAUDOT_54123: 1, //16,
   TeletypewriterCodebook.SIEMENS: 28,
   TeletypewriterCodebook.MURRAY: 31,

@@ -18,6 +18,7 @@ import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:http/http.dart' as http;
@@ -337,7 +338,7 @@ Future<Object?> _downloadFileAsync(GCWAsyncExecuterParameters? jobData) async {
       if (_total != 0 &&
           sendAsyncPort != null &&
           (_received % progressStep > (_received + value.length) % progressStep)) {
-        sendAsyncPort.send({'progress': (_received + value.length) / _total});
+        sendAsyncPort.send(DoubleText('progress', (_received + value.length) / _total));
       }
       _received += value.length;
     },

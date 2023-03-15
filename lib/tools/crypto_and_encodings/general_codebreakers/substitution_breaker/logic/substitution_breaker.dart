@@ -18,7 +18,7 @@ Future<SubstitutionBreakerResult?> break_cipherAsync(GCWAsyncExecuterParameters?
   var data = jobData!.parameters as SubstitutionBreakerJobData;
   var output = _break_cipher(data.input, data.quadgrams);
 
-  jobData.sendAsyncPort.send(output);
+  jobData.sendAsyncPort?.send(output);
 
   return output;
 }

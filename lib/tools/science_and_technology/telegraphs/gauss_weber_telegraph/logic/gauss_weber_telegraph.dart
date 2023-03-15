@@ -18,7 +18,7 @@ enum GaussWeberTelegraphMode {
   WHEATSTONE_COOKE_1
 }
 
-Map<String, String> _GAUSS_WEBER_ORIGINAL = {
+const Map<String, String> _GAUSS_WEBER_ORIGINAL = {
   'A': '+',
   'B': '-',
   'C': '++',
@@ -46,7 +46,7 @@ Map<String, String> _GAUSS_WEBER_ORIGINAL = {
   'Z': '-+-+'
 };
 
-Map<String, String> _GAUSS_WEBER_ALTERNATIVE = {
+const Map<String, String> _GAUSS_WEBER_ALTERNATIVE = {
   'A': 'r',
   'B': 'll',
   'C': 'rrr',
@@ -81,7 +81,7 @@ Map<String, String> _GAUSS_WEBER_ALTERNATIVE = {
   '9': 'llll'
 };
 
-Map<String, String> _SCHILLING_CANSTATT = {
+const Map<String, String> _SCHILLING_CANSTATT = {
   'A': 'rl',
   'B': 'rrr',
   'C': 'rll',
@@ -124,7 +124,7 @@ Map<String, String> _SCHILLING_CANSTATT = {
   'schillingcanntatt_finish': 'llrl'
 };
 
-Map<String, String> _WHEATSTONE_COOKE_5 = {
+const Map<String, String> _WHEATSTONE_COOKE_5 = {
   'A': '/|||\\',
   'B': '/||\\|',
   'D': '|/||\\',
@@ -147,7 +147,7 @@ Map<String, String> _WHEATSTONE_COOKE_5 = {
   'Y': '\\|||/',
 };
 
-Map<String, String> _WHEATSTONE_COOKE_2 = {
+const Map<String, String> _WHEATSTONE_COOKE_2 = {
   'A': '[\\\\  |]',
   'B': '[\\\\\\ |]',
   'C': '[\\/ |]',
@@ -173,7 +173,7 @@ Map<String, String> _WHEATSTONE_COOKE_2 = {
   'Y': '[/// ///]',
 };
 
-Map<String, String> _WHEATSTONE_COOKE_1 = {
+const Map<String, String> _WHEATSTONE_COOKE_1 = {
   // https://www.flickr.com/photos/10983301@N06/2619001486/
   'A': '\\\\',
   'B': '\\\\\\',
@@ -204,7 +204,7 @@ Map<String, String> _WHEATSTONE_COOKE_1 = {
   'LETTER': '/\\/\\/\\',
   'NUMERAL': '\\/\\/\\/',
 };
-Map<String, String> _WHEATSTONE_COOKE_LETTER_2_NUMERAL = {
+const Map<String, String> _WHEATSTONE_COOKE_LETTER_2_NUMERAL = {
   'M': '1',
   'N': '2',
   'O': '3',
@@ -218,7 +218,7 @@ Map<String, String> _WHEATSTONE_COOKE_LETTER_2_NUMERAL = {
 };
 final DIGITS = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
 
-Map<GaussWeberTelegraphMode, CodebookConfig> WHEATSTONECOOKENEEDLENUMBER = {
+const Map<GaussWeberTelegraphMode, CodebookConfig> WHEATSTONECOOKENEEDLENUMBER = {
   GaussWeberTelegraphMode.WHEATSTONE_COOKE_1: CodebookConfig(
     title: 'telegraph_wheatstonecooke_1_needle_title',
     subtitle: 'telegraph_wheatstonecooke_1_needle_description'

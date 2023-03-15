@@ -12,9 +12,9 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/tools/images_and_files/magic_eye_solver/logic/magic_eye_solver.dart';
+import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:image/image.dart' as Image;
-import 'package:intl/intl.dart';
 import 'package:tuple/tuple.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 
@@ -101,7 +101,7 @@ class MagicEyeSolverState extends State<MagicEyeSolver> {
       GCWImageView(
         imageData: GCWImageViewData(GCWFile(bytes: _decodeOutData!)),
         toolBarRight: false,
-        fileName: 'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()),
+        fileName: buildFileNameWithDate('img_', null),
       ),
     ]);
   }
@@ -193,7 +193,7 @@ class MagicEyeSolverState extends State<MagicEyeSolver> {
       GCWImageView(
         imageData: GCWImageViewData(GCWFile(bytes: _encodeOutData!)),
         toolBarRight: false,
-        fileName: 'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()),
+        fileName: buildFileNameWithDate('img_', null),
       ),
     ]);
   }
