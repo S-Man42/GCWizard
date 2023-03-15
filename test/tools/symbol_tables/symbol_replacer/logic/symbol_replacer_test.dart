@@ -4,7 +4,10 @@ import 'dart:typed_data';
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/application/registry.dart';
 import 'package:gc_wizard/tools/symbol_tables/_common/logic/symbol_table_data.dart';
+import 'package:gc_wizard/tools/symbol_tables/_common/widget/gcw_symbol_table_tool.dart';
+import 'package:gc_wizard/tools/symbol_tables/_common/widget/symbol_table.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/logic/symbol_replacer.dart';
+import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_replacer_symboldata.dart';
 import 'package:path/path.dart' as path;
 
 var testDirPath = 'test/tools/symbol_tables/symbol_replacer/resources/';
@@ -21,9 +24,15 @@ void main() {
       {'input' : 'dancing_man.png', 'expectedOutputSymbolsCount' : 12, 'expectedOutputText' : '1234'},
     ];
 
-    var compareSymbolTable = registeredTools.where((element) => element.i18nPrefix == 'symbol_dancing_men').first;
+    SymbolTable tool = registeredTools.where((element) => element.i18nPrefix == 'symbol_dancing_men').first as SymbolTable;
     var symbolData = SymbolTableData(null, 'symbol_dancing_men');
     symbolData.initialize(importEncryption: false);
+
+    var viewData = SymbolReplacerSymbolTableViewData(
+        symbolKey: (tool as GCWSymbolTableTool).symbolKey,
+        icon: null,
+        toolName: 'dancing man', //tool.toolName,
+        description: null)
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () async {
