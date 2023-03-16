@@ -23,7 +23,7 @@ class SymbolTableConstants {
   static const CONFIG_CASESENSITIVE = 'case_sensitive';
   static const CONFIG_IGNORE = 'ignore';
 
-  static final Map<String, String> CONFIG_SPECIAL_CHARS = {
+  static const Map<String, String> CONFIG_SPECIAL_CHARS = {
     "ampersand": "&",
     "asterisk": "*",
     "apostrophe": "'",
@@ -201,18 +201,25 @@ class SymbolData {
   }
 }
 
+class _SymbolTableConfig {
+  var caseSensitive = false;
+  var ignore = <String>[];
+  var specialMappings = <String, String>{};
+  var translate = <String>[];
+  var translationPrefix = '';
+  int Function(Map<String, SymbolData>, Map<String, SymbolData>)? sort;
+  final translateables = <String>[];
+}
+
 class SymbolTableData {
   final BuildContext _context;
   final String symbolKey;
 
   SymbolTableData(this._context, this.symbolKey);
 
-  Map<String, Object?> config = {};
+  final _config = _SymbolTableConfig();
   List<Map<String, SymbolData>> images = [];
   int maxSymbolTextLength = 0;
-
-  final List<String> _translateables = [];
-  int Function(Map<String, SymbolData>, Map<String, SymbolData>)? _sort;
 
   Future<void> initialize({bool importEncryption = true}) async {
     await _loadConfig();
@@ -224,8 +231,7 @@ class SymbolTableData {
   }
 
   bool isCaseSensitive() {
-    return config[SymbolTableConstants.CONFIG_CASESENSITIVE] != null &&
-        config[SymbolTableConstants.CONFIG_CASESENSITIVE] == true;
+    return _config.caseSensitive;
   }
 
   String _pathKey() {
@@ -240,41 +246,41 @@ class SymbolTableData {
 
     file ??= '{}';
 
-    config = asJsonMap(json.decode(file));
+    var jsonConfig = asJsonMap(json.decode(file));
 
-    if (config[SymbolTableConstants.CONFIG_IGNORE] == null) {
-      config.putIfAbsent(SymbolTableConstants.CONFIG_IGNORE, () => <String>[]);
+    _config.caseSensitive = jsonConfig[SymbolTableConstants.CONFIG_CASESENSITIVE] != null;
+    _config.translationPrefix = toStringOrNull(jsonConfig[SymbolTableConstants.CONFIG_TRANSLATION_PREFIX]) ?? '';
+
+    if (jsonConfig[SymbolTableConstants.CONFIG_IGNORE] == null) {
+      _config.ignore = toStringListOrNull(jsonConfig[SymbolTableConstants.CONFIG_IGNORE]) ?? [];
     }
 
-    if (config[SymbolTableConstants.CONFIG_SPECIALMAPPINGS] == null) {
-      config.putIfAbsent(SymbolTableConstants.CONFIG_SPECIALMAPPINGS, () => <String, String>{});
-    }
-
-    for (var element in SymbolTableConstants.CONFIG_SPECIAL_CHARS.entries) {
-      (config[SymbolTableConstants.CONFIG_SPECIALMAPPINGS] as Map<String, String>).putIfAbsent(element.key, () => element.value);
+    var map = asJsonMapOrNull(jsonConfig[SymbolTableConstants.CONFIG_SPECIALMAPPINGS]);
+    if (map != null) {
+      _config.specialMappings = toStringMapOrNull(map) ?? {};
     }
 
     switch (symbolKey) {
       case "notes_names_altoclef":
-        _sort = specialSortNoteNames;
+        _config.sort = specialSortNoteNames;
         break;
       case "notes_names_bassclef":
-        _sort = specialSortNoteNames;
+        _config.sort = specialSortNoteNames;
         break;
       case "notes_names_trebleclef":
-        _sort = specialSortNoteNames;
+        _config.sort = specialSortNoteNames;
         break;
       case "notes_notevalues":
-        _sort = specialSortNoteValues;
+        _config.sort = specialSortNoteValues;
         break;
       case "notes_restvalues":
-        _sort = specialSortNoteValues;
+        _config.sort = specialSortNoteValues;
         break;
       case "trafficsigns_germany":
-        _sort = specialSortTrafficSignsGermany;
+        _config.sort = specialSortTrafficSignsGermany;
         break;
       default:
-        _sort = defaultSymbolSort;
+        _config.sort = defaultSymbolSort;
         break;
     }
   }
@@ -287,13 +293,11 @@ class SymbolTableData {
 
     String key;
 
-    if ((config[SymbolTableConstants.CONFIG_SPECIALMAPPINGS] as Map<String, String>).containsKey(imageKey)) {
-      key = (config[SymbolTableConstants.CONFIG_SPECIALMAPPINGS] as Map<String, String>)[imageKey]!;
-    } else if (((config[SymbolTableConstants.CONFIG_TRANSLATE] as List<String>?) != null) &&
-        ((config[SymbolTableConstants.CONFIG_TRANSLATE] as List<String>).contains(imageKey))) {
-      String? translationPrefix = (config[SymbolTableConstants.CONFIG_TRANSLATION_PREFIX] as String?);
-      if (translationPrefix != null && translationPrefix.isNotEmpty) {
-        key = i18n(_context, translationPrefix + imageKey);
+    if (SymbolTableConstants.CONFIG_SPECIAL_CHARS.containsKey(imageKey)) {
+      key = SymbolTableConstants.CONFIG_SPECIAL_CHARS[imageKey]!;
+    } else if ((_config.translate.contains(imageKey))) {
+      if (_config.translationPrefix.isNotEmpty) {
+        key = i18n(_context, _config.translationPrefix + imageKey);
       } else {
         key = i18n(_context, 'symboltables_' + symbolKey + '_' + imageKey);
       }
@@ -304,7 +308,7 @@ class SymbolTableData {
 
     if (!isCaseSensitive()) key = key.toUpperCase();
 
-    if (setTranslateable) _translateables.add(key);
+    if (setTranslateable) _config.translateables.add(key);
 
     if (key.length > maxSymbolTextLength) maxSymbolTextLength = key.length;
 
@@ -345,7 +349,7 @@ class SymbolTableData {
     for (ArchiveFile file in archive) {
       var key = _createKey(file.name);
 
-      if ((config[SymbolTableConstants.CONFIG_IGNORE] as List<String>? ?? []).contains(key)) continue;
+      if (_config.ignore.contains(key)) continue;
 
       var imagePath = (file.isFile && SymbolTableConstants.IMAGE_SUFFIXES.hasMatch(file.name)) ? file.name : null;
       if (imagePath == null) continue;
@@ -372,7 +376,7 @@ class SymbolTableData {
       }
     }
 
-    images.sort(_sort);
+    images.sort(_config.sort);
   }
 
   Future<ui.Image> _initializeImage(Uint8List bytes) async {
@@ -388,14 +392,14 @@ class SymbolTableData {
 
     if (intA == null) {
       if (intB == null) {
-        if (_translateables.contains(keyA)) {
-          if (_translateables.contains(keyB)) {
+        if (_config.translateables.contains(keyA)) {
+          if (_config.translateables.contains(keyB)) {
             return keyA.compareTo(keyB);
           } else {
             return 1;
           }
         } else {
-          if (_translateables.contains(keyB)) {
+          if (_config.translateables.contains(keyB)) {
             return -1;
           } else {
             return keyA.compareTo(keyB);

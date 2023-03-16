@@ -23,7 +23,7 @@ class AlphabetValues {
    */
   String _toUpperCase(String text) {
     return text.split('').map((character) {
-      if (character != String.fromCharCode(223)) {
+      if (character != '\u00DF') { //ß
         return character.toUpperCase();
       } else {
         return character;

@@ -13,9 +13,9 @@ class PiSelection extends GCWSelection {
   Widget build(BuildContext context) {
     final List<GCWTool> _toolList = registeredTools.where((element) {
       return [
-        className(PiNthDecimal()),
-        className(PiDecimalRange()),
-        className(PiSearch()),
+        className(const PiNthDecimal()),
+        className(const PiDecimalRange()),
+        className(const PiSearch()),
       ].contains(className(element.tool));
     }).toList();
 

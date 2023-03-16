@@ -23,7 +23,7 @@ class ShadoksNumbers extends StatefulWidget {
 }
 
 class ShadoksNumbersState extends State<ShadoksNumbers> {
-  final Map<String, String> _segmentToWord = {
+  static const Map<String, String> _segmentToWord = {
     'a': 'GA',
     'b': 'BU',
     'bc': 'ZO',

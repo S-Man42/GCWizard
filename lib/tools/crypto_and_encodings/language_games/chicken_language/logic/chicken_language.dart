@@ -11,14 +11,14 @@ String encryptChickenLanguage(String input) {
             'i',
             'o',
             'u',
-            String.fromCharCode(228) /* ä */,
-            String.fromCharCode(246) /* ö */,
-            String.fromCharCode(252) /* ü */,
+            '\u00E4' /* ä */,
+            '\u00F6' /* ö */,
+            '\u00FC' /* ü */,
             'au',
             'ei',
             'ie',
             'eu',
-            '${String.fromCharCode(228)}u' /* äu */
+            '\u00E4u' /* äu */
           ].asMap().map((index, character) => MapEntry(character, character + 'h' + character + 'def' + character)),
           caseSensitive: false)
       .toLowerCase();

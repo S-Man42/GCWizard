@@ -95,6 +95,20 @@ List<String>? toStringListOrNull(Object? value) {
   return stringList;
 }
 
+Map<String, String>? toStringMapOrNull(Map<String, Object?>? map) {
+  if (map == null) return null;
+
+  var stringMap = <String, String>{};
+  for (var i = 0; i < map.length; i++) {
+    var entry = map.entries.elementAt(i);
+    if (isString(entry.value)) {
+      stringMap.addAll({entry.key: entry.value.toString()});
+    }
+  }
+
+  return stringMap;
+}
+
 List<String?>? toStringListWithNullableContentOrNull(Object? value) {
   if (!isObjectList(value)) return null;
 

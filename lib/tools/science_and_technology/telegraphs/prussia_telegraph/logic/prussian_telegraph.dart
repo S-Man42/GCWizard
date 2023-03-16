@@ -6,7 +6,7 @@ import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/l
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
-final _CODEBOOK_PRUSSIA = {
+const _CODEBOOK_PRUSSIA = {
   // codebook classe 5.2
   // Seite 1
   '4.100': 'ERWARTET EINE DEPESCHE.',

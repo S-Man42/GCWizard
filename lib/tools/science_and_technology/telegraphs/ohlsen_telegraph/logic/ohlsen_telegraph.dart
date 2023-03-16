@@ -7,7 +7,7 @@ import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/l
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
-final _CODEBOOK_OHLSEN = {
+const _CODEBOOK_OHLSEN = {
   '000': 'seilere sees, som kommme vestlig fra.',
   '001': 'seilere sees, som kommer nord fra.',
   '002': 'seilere sees, som kommer sydlig fra.',

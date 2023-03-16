@@ -113,9 +113,9 @@ class AlphabetValuesState extends State<AlphabetValues> {
     var lastValue = _setValueOffset(lastEntry.value);
 
     _reverseSwitchTitleLeft =
-        firstEntry.key + '-' + lastEntry.key + ' ' + String.fromCharCode(8594) + ' ' + firstValue + '-' + lastValue;
+        firstEntry.key + '-' + lastEntry.key + ' \u2192 ' + firstValue + '-' + lastValue;
     _reverseSwitchTitleRight =
-        lastEntry.key + '-' + firstEntry.key + ' ' + String.fromCharCode(8594) + ' ' + firstValue + '-' + lastValue;
+        lastEntry.key + '-' + firstEntry.key + ' \u2192 ' + firstValue + '-' + lastValue;
   }
 
   String _setValueOffset(String value) {
@@ -321,9 +321,9 @@ class AlphabetValuesState extends State<AlphabetValues> {
     if (entries.isEmpty) return description;
 
     description += ': ';
-    description += entries.first.key + ' ' + String.fromCharCode(8594) + ' ' + entries.first.value;
+    description += entries.first.key + ' \u2192 ' + entries.first.value;
     description += ' ... ';
-    description += entries.last.key + ' ' + String.fromCharCode(8594) + ' ' + entries.last.value;
+    description += entries.last.key + ' \u2192 ' + entries.last.value;
 
     return description;
   }

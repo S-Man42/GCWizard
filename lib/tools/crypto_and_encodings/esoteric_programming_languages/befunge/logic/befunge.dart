@@ -628,12 +628,12 @@ String generateBefunge(String OutputText) {
   loopLine = loopLine + '>';
   befunge.add(loopLine);
   befunge.add('>52*52**' + digitHundred + '*52*' + digitTen + '*' + digitOne + '++1+>1-:v');
-  befunge.add('                    ^,' + String.fromCharCode(92) + ' _@');
+  befunge.add('                    ^,\u005C _@');
 
   return befunge.join('\n');
 }
 
-final Map<int, String> _convertCharCode = {
+const Map<int, String> _convertCharCode = {
 // https://www.thepcmanwebsite.com/ascii-chart.shtml
 // https://www.torsten-horn.de/techdocs/ascii.htm
 // !“#$%&‘()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_‘abcdefghijklmnopqrstuvwxyz{|}~€‚ƒ„…†‡ˆ‰Š‹ŒŽ

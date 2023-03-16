@@ -1,7 +1,7 @@
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
 
-final Map<int, List<String>> _numbersToSegments = {
+const Map<int, List<String>> _numbersToSegments = {
   0: [],
   1: ['f'],
   2: ['f', 'g'],

@@ -201,7 +201,7 @@ class _Interpreter {
   [tab][line-feed]: Input/Output
   [line-feed]: Flow Control
   */
-  final Map<String, String> _IMP = {
+  static const Map<String, String> _IMP = {
     ' ': 'Stack',
     '\t ': 'Arithmetic',
     '\t\t': 'Heap',
@@ -297,7 +297,7 @@ class _Stack {
   [line-feed][tab]: Swap the top two value on the stack.
   [line-feed][line-feed]: Discard the top value on the stack.
   */
-  final Map<String, String> _STACK_IMP = {
+  static const Map<String, String> _STACK_IMP = {
     ' ': 'push_num',
     '\t ': 'duplicate_nth',
     '\t\n': 'discard_n',
@@ -406,7 +406,7 @@ class _IO {
   [tab][space]: Read a character from input, a, Pop a value off the stack, b, then store the ASCII value of a at heap address b.
   [tab][tab]: Read a number from input, a, Pop a value off the stack, b, then store a at heap address b.
   */
-  final Map<String, String> _IO_IMP = {
+  static const Map<String, String> _IO_IMP = {
     '  ': 'output_char',
     ' \t': 'output_num',
     '\t ': 'input_char',
@@ -504,7 +504,7 @@ class _FlowControl {
   [tab][line-feed]: Exit a subroutine and return control to the location from which the subroutine was called.
   [line-feed][line-feed]: Exit the program.
   */
-  final Map<String, String> _FLOW_IMP = {
+  static const Map<String, String> _FLOW_IMP = {
     '  ': 'mark_label',
     ' \t': 'call_subroutine',
     ' \n': 'jump',
@@ -651,7 +651,7 @@ class _Arithmetic {
   [tab][tab]: Pop a and b, then push b%a*. If a is zero, throw an error.
   *Note that the result is defined as the remainder after division and sign (+/-) of the divisor (a).
   */
-  final Map<String, String> _ARITHMETIC_IMP = {
+  static const Map<String, String> _ARITHMETIC_IMP = {
     '  ': 'add',
     ' \t': 'sub',
     ' \n': 'mul',
@@ -753,7 +753,7 @@ class _Heap {
   [space]: Pop a and b, then store a at heap address b.
   [tab]: Pop a and then push the value at heap address a onto the stack.
   */
-  final Map<String, String> _HEAP_IMP = {' ': 'store', '\t': 'push'};
+  static const Map<String, String> _HEAP_IMP = {' ': 'store', '\t': 'push'};
 
   /// Parses the next heap IMP.
   void parse() {
@@ -861,7 +861,7 @@ int _whitespaceToInt(String code) {
 String _IntToWhitespace(int value) {
   if (value == 0) return ' \n';
   var code = convertBase(value.abs().toString(), 10, 2);
-  final Map<String, String> keys = {'0': ' ', '1': '\t'};
+  const Map<String, String> keys = {'0': ' ', '1': '\t'};
   code = (value < 0 ? '1' : '0') + code;
   code = substitution(code, keys) + '\n';
   return code;

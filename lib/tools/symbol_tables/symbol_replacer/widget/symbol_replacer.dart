@@ -33,13 +33,13 @@ import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_repl
 import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_replacer_symboldata.dart';
 import 'package:gc_wizard/tools/symbol_tables/_common/widget/gcw_symbol_table_tool.dart';
 import 'package:gc_wizard/tools/symbol_tables/_common/widget/symbol_table.dart';
-import 'package:gc_wizard/utils/file_utils/gcw_file.dart' as local;
+import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:tuple/tuple.dart';
 
 class SymbolReplacer extends StatefulWidget {
-  final local.GCWFile? platformFile;
+  final GCWFile? platformFile;
   final String? symbolKey;
 
   const SymbolReplacer({Key? key, this.platformFile, this.symbolKey}) : super(key: key);
@@ -52,7 +52,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   static String no_symbol_table_key = 'no_symbol_table';
   final no_symbol_table = SymbolReplacerSymbolTableViewData(symbolKey: no_symbol_table_key, toolName: null, icon :null, description: null);
   SymbolReplacerImage? _symbolImage;
-  local.GCWFile? _platformFile;
+  GCWFile? _platformFile;
   double _blackLevel = 50.0;
   double _similarityLevel = 90.0;
   double _similarityCompareLevel = 80.0;
@@ -119,7 +119,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
       Container(height: 10),
       _symbolImage?.getBorderImage() != null
           ? GCWImageView(
-              imageData: GCWImageViewData(local.GCWFile(bytes: _symbolImage!.getBorderImage()!)),
+              imageData: GCWImageViewData(GCWFile(bytes: _symbolImage!.getBorderImage()!)),
               suppressedButtons: const {GCWImageViewButtons.SAVE},
               suppressOpenInTool: const {GCWImageViewOpenInTools.HIDDENDATA},
             )

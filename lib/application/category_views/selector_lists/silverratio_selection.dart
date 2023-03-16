@@ -13,9 +13,9 @@ class SilverRatioSelection extends GCWSelection {
   Widget build(BuildContext context) {
     final List<GCWTool> _toolList = registeredTools.where((element) {
       return [
-        className(SilverRatioNthDecimal()),
-        className(SilverRatioDecimalRange()),
-        className(SilverRatioSearch()),
+        className(const SilverRatioNthDecimal()),
+        className(const SilverRatioDecimalRange()),
+        className(const SilverRatioSearch()),
       ].contains(className(element.tool));
     }).toList();
 

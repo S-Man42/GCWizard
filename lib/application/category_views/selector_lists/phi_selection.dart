@@ -13,9 +13,9 @@ class PhiSelection extends GCWSelection {
   Widget build(BuildContext context) {
     final List<GCWTool> _toolList = registeredTools.where((element) {
       return [
-        className(PhiNthDecimal()),
-        className(PhiDecimalRange()),
-        className(PhiSearch()),
+        className(const PhiNthDecimal()),
+        className(const PhiDecimalRange()),
+        className(const PhiSearch()),
       ].contains(className(element.tool));
     }).toList();
 
