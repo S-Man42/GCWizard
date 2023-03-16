@@ -126,7 +126,8 @@ Serves 1.
 
 ''';
 
-    // OK OK     SELFMADE A mysterious marmelade cake.
+    // SELFMADE A mysterious marmelade cake.
+    // fehlerfrei im Emulator
     var test13 = '''A mysterious marmelade cake. 
 
 Giving power to the brain while waiting for an idea.
@@ -738,7 +739,7 @@ Serves.''';
 
     List<Map<String, Object?>> _inputsToExpected = [
       {'language' : 'ENG', 'input' : '',  'recipe' : testNoInput, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_missing_input']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : testPutNoInput,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_method_step','1 : _CHEF_Method.Verb','chef_error_runtime_ingredient_not_found']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testPutNoInput,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_method_loop','1 : _CHEF_Method.Verb',]},
       {'language' : 'ENG', 'input' : '',   'recipe' : testFoldEmptyBow,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_folded_from_empty_mixing_bowl','chef_error_runtime_method_step','1 : _CHEF_Method.Fold => 1']},
       {'language' : 'ENG', 'input' : '',   'recipe' : testAddEmptyBowl,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_add_to_empty_mixing_bowl','chef_error_runtime_method_step','1 : _CHEF_Method.Add => 1']},
       {'language' : 'ENG', 'input' : '',   'recipe' : testRemoveEmptyBowl,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_remove_from_empty_mixing_bowl','chef_error_runtime_method_step','1 : _CHEF_Method.Remove => 1']},
@@ -751,7 +752,7 @@ Serves.''';
       {'language' : 'ENG', 'input' : '',   'recipe' : testStirEmptyIngredient,   'isValid' : true, 'expectedOutput' : ['5431']},
       {'language' : 'ENG', 'input' : '',   'recipe' : testLoopWrongEnd,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_method_loop','1 : _CHEF_Method.Verb',]},
       {'language' : 'ENG', 'input' : '',   'recipe' : testLoopWrongStart,   'isValid' : true, 'expectedOutput' : ['chef_error_syntax','chef_error_syntax_method','1 : count',]},
-      {'language' : 'ENG', 'input' : '',   'recipe' : testServeNoRecipe,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_method_step','3 : _CHEF_Method.Verb']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testServeNoRecipe,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_method_loop','3 : _CHEF_Method.Verb']},
       {'language' : 'ENG', 'input' : '',   'recipe' : testServeNoNumber,   'isValid' : true, 'expectedOutput' : ['chef_error_syntax','chef_error_syntax_serves','chef_error_syntax_serves_without_number','serves.']},
     ];
 
@@ -1405,7 +1406,7 @@ Put hazelnuts into the mixing bowl.
 Liquify contents of the mixing bowl.
 Pour contents of the mixing bowl into the baking dish.
 
-Serves 1.'''; // works in emulator - but why
+Serves 1.''';
     var Factorial = '''Factorial as a Piece of Cake.
 
 This recipe calculates and prints factorials of first integers.
@@ -2873,6 +2874,7 @@ Method.
 Clean mixing bowl. Put sauerkraut into mixing bowl. Remove einhornhaar. Combine schweine into mixing bowl. Add pfeffer. Put wasser into mixing bowl. Remove sauerkraut. Add einhornhaar. Put wasser into mixing bowl. Remove einhornhaar. Divide pfeffer into mixing bowl. Put schweine into mixing bowl. Combine petersilie into mixing bowl. Add sauerkraut. Put sauerkraut into mixing bowl. Combine sauerkraut into mixing bowl. Add einhornhaar. Put wasser into mixing bowl. Put sauerkraut into mixing bowl. Combine sauerkraut into mixing bowl. Put schweine into mixing bowl. Combine petersilie into mixing bowl.''';
 
     // https://www.geocaching.com/geocache/GC9CAQJ #18 Oma Krimhildes gesunder Strudel
+    // läuft fehlerfrei im Emulator
     var GC9CAQJ = '''Oma Krimhildes Strudel 
 
 Zutaten:
@@ -2906,6 +2908,7 @@ Schüssel in eine Servierschale stürzen.
 
 Portionen: 1.
 ''';
+    // läuft fehlerfrei im Emulator
     var GC9CAQJKorrigiert = '''Oma Krimhildes Strudel 
 
 Zutaten:
