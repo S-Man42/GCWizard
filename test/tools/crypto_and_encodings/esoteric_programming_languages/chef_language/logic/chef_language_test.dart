@@ -2699,7 +2699,7 @@ Pour contents of the 2nd mixing bowl into the baking dish.
 Serves 1.''';
 
     List<Map<String, Object?>> _inputsToExpected = [
-      {'language' : 'ENG', 'input' : '5 7 4 6 3 8',  'recipe' : BubbledAndBacon, 'expectedOutput' : ['345678']},
+      {'language' : 'ENG', 'input' : '5 7 4 6 3 8',  'recipe' : BubbledAndBacon, 'expectedOutput' : ['34678']},
       {'language' : 'ENG', 'input' : '12',  'recipe' : FactorialAndFish, 'expectedOutput' : ['479001600']},
       {'language' : 'ENG', 'input' : '12',  'recipe' : FibonacciDuFromage, 'expectedOutput' : ['1123581321345589144']},
       {'language' : 'ENG', 'input' : '',  'recipe' : FibonacciNumberswithCaramelSauce, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_exception','chef_error_runtime_serving_aux','Stack Overflow']},

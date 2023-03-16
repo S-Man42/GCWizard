@@ -28,7 +28,7 @@ class _Kitchen {
       }
 
       mixingbowls =
-          List<_Container>.filled(mbowls == null ? maxbowl + 1 : max(maxbowl + 1, mbowls.length), _Container(null));
+          List<_Container>.generate(mbowls == null ? maxbowl + 1 : max(maxbowl + 1, mbowls.length), (i) {return _Container(null);});
       if (mbowls != null) {
         for (int i = 0; i < mbowls.length; i++) {
           mixingbowls[i] = _Container(mbowls[i]);
@@ -36,7 +36,9 @@ class _Kitchen {
       }
 
       bakingdishes =
-          List<_Container>.filled(bdishes == null ? maxdish + 1 : max(maxdish + 1, bdishes.length), _Container(null));
+          List<_Container>.generate(bdishes == null ? maxdish + 1 : max(maxdish + 1, bdishes.length), (i) {return
+            _Container(null);
+          });
       if (bdishes != null) {
         for (int i = 0; i < bdishes.length; i++) {
           bakingdishes[i] = _Container(bdishes[i]);
@@ -110,6 +112,9 @@ class _Kitchen {
 
         case _CHEF_Method.Put:
         case _CHEF_Method.Geben:
+          // var mb = mixingbowls[m.mixingbowl!];
+          // mb.push(_Component.Contructor1(ingredients[m.ingredient]!));
+          // mixingbowls[m.mixingbowl!] = mb;
           mixingbowls[m.mixingbowl!].push(_Component.Contructor1(ingredients[m.ingredient]!));
           break;
 
@@ -126,6 +131,9 @@ class _Kitchen {
             ]);
             return null;
           }
+          // var mb = mixingbowls[m.mixingbowl!];
+          // c = mb.pop();
+          // mixingbowls[m.mixingbowl!] = mb;
           c = mixingbowls[m.mixingbowl!].pop();
           ingredients[m.ingredient]!.setAmount(c!.getValue());
           ingredients[m.ingredient]!.setState(c.getState());
