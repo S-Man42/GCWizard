@@ -20,6 +20,9 @@ import 'package:gc_wizard/utils/json_utils.dart';
 import 'package:gc_wizard/utils/math_utils.dart';
 import 'package:gc_wizard/utils/variable_string_expander.dart';
 
+part "package:gc_wizard/common_widgets/key_value_editor/alphabet_widgets.dart";
+part "package:gc_wizard/common_widgets/key_value_editor/key_value_row.dart";
+
 /*
   TODO: TECHNICAL DEBT:
   - Violation of SoC (https://en.wikipedia.org/wiki/Separation_of_concerns)
@@ -47,8 +50,15 @@ import 'package:gc_wizard/utils/variable_string_expander.dart';
    --> Refactor completely, maybe as GCWKeyValueEditor<T>, whereas T is the specific type?
 
  */
+class KeyValueBase <T, U>{
+  T key;
+  U value;
 
-class GCWKeyValueEditor extends StatefulWidget {
+  KeyValueBase(this.key, this.value);
+}
+
+
+class GCWKeyValueEditor <T, U> extends StatefulWidget {
   final void Function(String, String, BuildContext)? onNewEntryChanged;
   final String? keyHintText;
   final TextEditingController? keyController;
@@ -64,9 +74,7 @@ class GCWKeyValueEditor extends StatefulWidget {
 
   final Widget? middleWidget;
 
-  final Map<int, Map<String, String>>? keyKeyValueMap;
-  final Map<String, String>? keyValueMap;
-  final List<FormulaValue>? formulaValueList;
+  final Map<T, U>? keyValueMap;
   final bool varcoords;
   final String? dividerText;
   final bool editAllowed;
@@ -88,9 +96,7 @@ class GCWKeyValueEditor extends StatefulWidget {
     this.alphabetInstertButtonLabel,
     this.alphabetAddAndAdjustLetterButtonLabel,
     this.middleWidget,
-    this.keyKeyValueMap,
     this.keyValueMap,
-    this.formulaValueList,
     this.varcoords = false,
     this.dividerText,
     this.editAllowed = true,
@@ -253,35 +259,6 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
     );
   }
 
-  Widget _alphabetAddLetterButton() {
-    return Container(
-        padding: const EdgeInsets.only(left: 4, right: 2),
-        child: GCWButton(
-          text: widget.alphabetInstertButtonLabel ?? '',
-          onPressed: () {
-            setState(() {
-              _addEntry(_currentKeyInput, _currentValueInput);
-            });
-          },
-        ));
-  }
-
-  Widget _alphabetAddAndAdjustLetterButton() {
-    return Container(
-        padding: const EdgeInsets.only(left: 4, right: 2),
-        child: GCWButton(
-          text: widget.alphabetAddAndAdjustLetterButtonLabel ?? '',
-          onPressed: () => _isAddAndAdjustEnabled()
-              ? () {
-            setState(() {
-              if (widget.onAddEntry2 != null) widget.onAddEntry2!(_currentKeyInput, _currentValueInput, context);
-
-              _onNewEntryChanged(true);
-            });
-          }
-              : null,
-        ));
-  }
 
   void _addEntry(String key, String value, {bool clearInput = true, FormulaValueType formulaType = FormulaValueType.FIXED}) {
     if (widget.onAddEntry != null) {
@@ -324,17 +301,11 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
   Widget _buildList() {
     var odd = false;
     List<Widget>? rows;
-    if (widget.formulaValueList != null) {
-      rows = widget.formulaValueList?.map((entry) {
-        odd = !odd;
-        return _buildRow(entry, odd);
-      }).toList();
-    } else {
-      rows = (widget.keyKeyValueMap?.entries ?? widget.keyValueMap?.entries)?.map((entry) {
-        odd = !odd;
-        return _buildRow(entry, odd);
-      }).toList();
-    }
+
+    rows = widget.keyValueMap?.entries.map((entry) {
+      odd = !odd;
+      return _buildRow(entry, odd);
+    }).toList();
 
     if (rows != null) {
       rows.insert(
@@ -362,109 +333,6 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
     return rows == null ? Container() : Column(children: rows);
   }
 
-  Widget _buildRow(Object entry, bool odd) {
-    Widget output;
-
-    var row = Row(
-      children: <Widget>[
-        Expanded(
-          flex: 1,
-          child: Container(
-            margin: const EdgeInsets.only(left: 10),
-            child: _currentEditId == _getEntryId(entry)
-                ? GCWTextField(
-              controller: _editKeyController,
-              inputFormatters: widget.keyInputFormatters,
-              onChanged: (text) {
-                setState(() {
-                  _currentEditedKey = text;
-                });
-              },
-            )
-                : GCWText(text: (_getEntryKey(entry)).toString()),
-          ),
-        ),
-        Icon(
-          Icons.arrow_forward,
-          color: themeColors().mainFont(),
-        ),
-        Expanded(
-            flex: 3,
-            child: Container(
-              margin: const EdgeInsets.only(left: 10),
-              child: _currentEditId == _getEntryId(entry)
-                  ? GCWTextField(
-                controller: _editValueController,
-                focusNode: _focusNodeEditValue,
-                inputFormatters: widget.valueInputFormatters,
-                onChanged: (text) {
-                  setState(() {
-                    _currentEditedValue = text;
-                  });
-                },
-              )
-                  : GCWText(text: _getEntryValue(entry).toString()),
-            )),
-        widget.formulaValueList != null && !widget.varcoords
-            ? Expanded(
-            child: Container(
-                child: _currentEditId == _getEntryId(entry)
-                    ? Container(
-                    padding: const EdgeInsets.only(left: DEFAULT_MARGIN),
-                    child: GCWPopupMenu(
-                      iconData: _formulaValueTypeIcon(_currentEditedFormulaValueTypeInput),
-                      rotateDegrees: _currentEditedFormulaValueTypeInput == FormulaValueType.TEXT ? 0.0 : 90.0,
-                      menuItemBuilder: (context) => [
-                        GCWPopupMenuItem(
-                            child: iconedGCWPopupMenuItem(context, Icons.vertical_align_center_outlined,
-                                i18n(context, 'formulasolver_values_type_fixed'),
-                                rotateDegrees: 90.0),
-                            action: (index) => setState(() {
-                              _currentEditedFormulaValueTypeInput = FormulaValueType.FIXED;
-                            })),
-                        GCWPopupMenuItem(
-                            child: iconedGCWPopupMenuItem(
-                                context, Icons.expand, i18n(context, 'formulasolver_values_type_interpolated'),
-                                rotateDegrees: 90.0),
-                            action: (index) => setState(() {
-                              _currentEditedFormulaValueTypeInput = FormulaValueType.INTERPOLATED;
-                            })),
-                        GCWPopupMenuItem(
-                            child: iconedGCWPopupMenuItem(
-                                context, Icons.text_fields, i18n(context, 'formulasolver_values_type_text')),
-                            action: (index) => setState(() {
-                              _currentEditedFormulaValueTypeInput = FormulaValueType.TEXT;
-                            })),
-                      ],
-                    ))
-                    : Transform.rotate(
-                  // TODO Mike Check that entry is really of type FormulaValue and type is really not NULL
-                  angle: degreesToRadian((entry as FormulaValue).type == FormulaValueType.TEXT ? 0.0 : 90.0),
-                  // TODO Mike Check that entry is really of type FormulaValue and type is really not NULL
-                  child: Icon(_formulaValueTypeIcon((entry).type!), color: themeColors().mainFont()),
-                )))
-            : Container(),
-        _editButton(entry),
-        GCWIconButton(
-          icon: Icons.remove,
-          onPressed: () {
-            setState(() {
-              var entryId = _getEntryId(entry);
-              if (widget.onRemoveEntry != null) widget.onRemoveEntry!(entryId, context);
-            });
-          },
-        )
-      ],
-    );
-
-    if (odd) {
-      output = Container(color: themeColors().outputListOddRows(), child: row);
-    } else {
-      output = Container(child: row);
-    }
-
-    return output;
-  }
 
   IconData _formulaValueTypeIcon(FormulaValueType formulaValueType) {
     switch (formulaValueType) {

@@ -8,7 +8,7 @@ import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coord
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coords_outputformat.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
-import 'package:gc_wizard/common_widgets/gcw_key_value_editor.dart';
+import 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
@@ -224,7 +224,7 @@ class _VariableCoordinateState extends State<VariableCoordinate> {
   }
 
   Widget _buildVariablesEditor() {
-    return GCWKeyValueEditor(
+    return GCWKeyValueEditor<int, Formula>(
       keyHintText: i18n(context, 'coords_variablecoordinate_variable'),
       valueHintText: i18n(context, 'coords_variablecoordinate_possiblevalues'),
       valueInputFormatters: [VariableStringTextInputFormatter()],
@@ -232,7 +232,7 @@ class _VariableCoordinateState extends State<VariableCoordinate> {
       onAddEntry: _addEntry,
       onNewEntryChanged: _updateNewEntry,
       onDispose: _disposeEntry,
-      formulaValueList: widget.formula.values,
+      keyValueMap: widget.formula.values,
       varcoords: true,
       onUpdateEntry: _updateEntry,
       onRemoveEntry: (Object id, BuildContext context) {
