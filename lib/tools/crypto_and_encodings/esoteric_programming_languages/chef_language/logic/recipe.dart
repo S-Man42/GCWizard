@@ -11,14 +11,12 @@ class _Recipe {
   late int serves;
   bool error = false;
   late List<String> errorList;
-  late bool liquefyMissing;
 
   _Recipe(this.title) {
     comment = '';
     serves = 0;
     error = false;
     errorList = <String>[];
-    liquefyMissing = false;
   }
 
   void setIngredients(String Input, String language) {
@@ -103,7 +101,8 @@ class _Recipe {
   }
 
   void setServes(String serves, String language) {
-    if (RegExp(r'^(serves |portionen(:)? )(\d*)(\.)$').hasMatch(serves)) {
+    RegExp regex = RegExp(r'^(serves |portionen(:)? )(\d*)(\.)$');
+    if (regex.hasMatch(serves)) {
       this.serves = int.parse(RegExp(r'^(serves |portionen(:)? )(\d*)(\.)$').firstMatch(serves)!.group(3)!);
     } else {
       error = true;
