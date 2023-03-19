@@ -1608,6 +1608,7 @@ const Map<String, int> _AZToZC1 = {
 final Map<int, String> _ZC1ToAZ = switchMapKeyValue(_AZToZC1);
 
 const Map<String, int> _AZToILLIAC = {
+  // http://www.bitsavers.org/pdf/univOfIllinoisUrbana/illiac/ILLIAC/ILLIAC_programming_Sep56.pdf  page 154
   'A': 22,
   'B': 19,
   'C': 29,
