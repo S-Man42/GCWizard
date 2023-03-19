@@ -117,8 +117,7 @@ class TeletypewriterState extends State<Teletypewriter> {
     // all other codes are usually shown in Bitorder 54321
     // hence the binary representation should be mirrored
     bool mirrorBinary = false;
-    if (_currentCode == TeletypewriterCodebook.BAUDOT_54123 ||
-        _currentCode == TeletypewriterCodebook.BAUDOT ||
+    if (_currentCode == TeletypewriterCodebook.BAUDOT_12345 ||
         _currentCode == TeletypewriterCodebook.MURRAY ||
         _currentCode == TeletypewriterCodebook.SIEMENS ||
         _currentCode == TeletypewriterCodebook.WESTERNUNION) mirrorBinary = true;
