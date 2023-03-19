@@ -27,12 +27,12 @@ void main() {
       {'input' : 'A B 1 2', 'expectedOutput' : '4 16 9 8 4 8 2'},
       {'input' : 'ABC ABC ABC ABC', 'expectedOutput' : '4 9 13 16 4 9 13 16 4 9 13 16 4 9 13'},
 
-      {'input' : 'A-', 'expectedOutput' : '4 20'},
+      {'input' : 'A-', 'expectedOutput' : '4 8 25'},
       {'input' : '2-', 'expectedOutput' : '8 2 25'},
-      {'input' : 'A-2', 'expectedOutput' : '4 20 8 2'},
+      {'input' : 'A-2', 'expectedOutput' : '4 8 25 2'},
       {'input' : '2-A', 'expectedOutput' : '8 2 25 16 4'},
-      {'input' : 'A-2-A', 'expectedOutput' : '4 20 8 2 25 16 4'},
-      {'input' : '2-A-2', 'expectedOutput' : '8 2 25 16 4 20 8 2'},
+      {'input' : 'A-2-A', 'expectedOutput' : '4 8 25 2 25 16 4'},
+      {'input' : '2-A-2', 'expectedOutput' : '8 2 25 16 4 8 25 2'},
     ];
 
     for (var elem in _inputsToExpected) {
@@ -55,7 +55,7 @@ void main() {
       {'expectedOutput' : '123', 'input' : [8, 4, 2, 1]},
       {'expectedOutput' : '1 2 3', 'input' : [8, 4, 8, 2, 8, 1]},
       {'expectedOutput' : '.=7/', 'input' : [8, 20, 30, 10, 29]},
-      {'expectedOutput' : '.=7/', 'input' : [8, 20, 30, 17]}, // Mark test
+      {'expectedOutput' : '.=;', 'input' : [8, 20, 30, 17]}, // Mark test
 
       {'expectedOutput' : 'AB 12', 'input' : [4, 9, 8, 4, 2]},
       {'expectedOutput' : '12 AB', 'input' : [8, 4, 2, 16, 4, 9]},

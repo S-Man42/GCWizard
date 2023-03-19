@@ -8,8 +8,8 @@
 //    6.1 Recommendation S.1 (11/88) International Telegraph Alphabet No. 2 https://www.itu.int/rec/dologin_pub.asp?lang=e&id=T-REC-S.1-195811-S!!PDF-E&type=items
 //
 // Code Tables
-// - CCITT_BAUDOT       according to 1. with Bit-Order 54321
-// - CCITT_BAUDOT_MISS  according to 3. ITA1
+// - BAUDOT       according to 1. with Bit-Order 54321
+// - BAUDOT_MISS  according to 3. ITA1
 // - CCITT_ITA1_EU      according to 2.
 // - CCITT_ITA1_UK      according to 2.
 // - CCITT_ITA2         according to 2., 4., 5.
@@ -24,7 +24,8 @@ import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 
 enum TeletypewriterCodebook {
-  BAUDOT,
+  BAUDOT_12345,
+  BAUDOT_54321,
   BAUDOT_54123,
   SIEMENS,
   MURRAY,
@@ -62,20 +63,24 @@ class CodebookConfig {
   });
 }
 
-class PunchtapekConfig {
+class PunchtapeConfig {
   final int punchHoles;
   final int sprocketHole;
 
-  const PunchtapekConfig({
+  const PunchtapeConfig({
     required this.punchHoles,
     required this.sprocketHole,
   });
 }
 
 const Map<TeletypewriterCodebook, CodebookConfig> ANCIENT_CODEBOOK = {
-  TeletypewriterCodebook.BAUDOT: CodebookConfig(
+  TeletypewriterCodebook.BAUDOT_12345: CodebookConfig(
     title: 'punchtape_baudot_title',
     subtitle: 'punchtape_baudot_description'
+  ),
+  TeletypewriterCodebook.BAUDOT_54321: CodebookConfig(
+      title: 'punchtape_baudot_54321_title',
+      subtitle: 'punchtape_baudot_54321_description'
   ),
   TeletypewriterCodebook.BAUDOT_54123: CodebookConfig(
     title: 'punchtape_baudot_54123_title',
@@ -96,6 +101,18 @@ const Map<TeletypewriterCodebook, CodebookConfig> ANCIENT_CODEBOOK = {
 };
 
 const Map<TeletypewriterCodebook, CodebookConfig> CCITT1_CODEBOOK = {
+  TeletypewriterCodebook.BAUDOT_12345: CodebookConfig(
+      title: 'punchtape_baudot_title',
+      subtitle: 'punchtape_baudot_description'
+  ),
+  TeletypewriterCodebook.BAUDOT_54321: CodebookConfig(
+      title: 'punchtape_baudot_54321_title',
+      subtitle: 'punchtape_baudot_54321_description'
+  ),
+  TeletypewriterCodebook.BAUDOT_54123: CodebookConfig(
+      title: 'punchtape_baudot_54123_title',
+      subtitle: 'punchtape_baudot_54123_description'
+  ),
   TeletypewriterCodebook.CCITT_ITA1_1926: CodebookConfig(
     title: 'punchtape_ccitt_ita1_1926_title',
     subtitle: 'punchtape_ccitt_ita1_1926_description'
@@ -115,6 +132,10 @@ const Map<TeletypewriterCodebook, CodebookConfig> CCITT1_CODEBOOK = {
 };
 
 const Map<TeletypewriterCodebook, CodebookConfig> CCITT2_CODEBOOK = {
+  TeletypewriterCodebook.MURRAY: CodebookConfig(
+      title: 'punchtape_murray_title',
+      subtitle: 'punchtape_murray_description'
+  ),
   TeletypewriterCodebook.CCITT_ITA2_1929: CodebookConfig(
     title: 'punchtape_ccitt_ita2_1929_title',
     subtitle: 'punchtape_ccitt_ita2_1929_description'
@@ -208,13 +229,17 @@ const Map<TeletypewriterCodebook, CodebookConfig> OTHER_CODEBOOK = {
 };
 
 const Map<TeletypewriterCodebook, CodebookConfig> ALL_CODES_CODEBOOK = {
-  TeletypewriterCodebook.BAUDOT: CodebookConfig(
-    title: 'punchtape_baudot_title',
-    subtitle: 'punchtape_baudot_description'
+  TeletypewriterCodebook.BAUDOT_12345: CodebookConfig(
+      title: 'punchtape_baudot_title',
+      subtitle: 'punchtape_baudot_description'
+  ),
+  TeletypewriterCodebook.BAUDOT_54321: CodebookConfig(
+      title: 'punchtape_baudot_54321_title',
+      subtitle: 'punchtape_baudot_54321_description'
   ),
   TeletypewriterCodebook.BAUDOT_54123: CodebookConfig(
-    title: 'punchtape_baudot_54123_title',
-    subtitle: 'punchtape_baudot_54123_description'
+      title: 'punchtape_baudot_54123_title',
+      subtitle: 'punchtape_baudot_54123_description'
   ),
   TeletypewriterCodebook.MURRAY: CodebookConfig(
     title: 'punchtape_murray_title',
@@ -283,33 +308,35 @@ const Map<TeletypewriterCodebook, CodebookConfig> ALL_CODES_CODEBOOK = {
   TeletypewriterCodebook.ALGOL: CodebookConfig(title: 'punchtape_algol_title', subtitle: 'punchtape_algol_description'),
 };
 
-const Map<TeletypewriterCodebook, PunchtapekConfig> PUNCHTAPE_DEFINITION = {
-  TeletypewriterCodebook.BAUDOT: PunchtapekConfig(punchHoles: 5, sprocketHole: 0),
-  TeletypewriterCodebook.BAUDOT_54123: PunchtapekConfig(punchHoles: 5, sprocketHole: 3),
-  TeletypewriterCodebook.MURRAY: PunchtapekConfig(punchHoles: 5, sprocketHole: 0),
-  TeletypewriterCodebook.SIEMENS: PunchtapekConfig(punchHoles: 5, sprocketHole: 0),
-  TeletypewriterCodebook.WESTERNUNION: PunchtapekConfig(punchHoles: 5, sprocketHole: 0),
-  TeletypewriterCodebook.CCITT_ITA1_1926: PunchtapekConfig(punchHoles: 5, sprocketHole: 4),
-  TeletypewriterCodebook.CCITT_ITA1_1929: PunchtapekConfig(punchHoles: 5, sprocketHole: 4),
-  TeletypewriterCodebook.CCITT_ITA1_EU: PunchtapekConfig(punchHoles: 5, sprocketHole: 4),
-  TeletypewriterCodebook.CCITT_ITA1_UK: PunchtapekConfig(punchHoles: 5, sprocketHole: 4),
-  TeletypewriterCodebook.CCITT_ITA2_1929: PunchtapekConfig(punchHoles: 5, sprocketHole: 4),
-  TeletypewriterCodebook.CCITT_ITA2_1931: PunchtapekConfig(punchHoles: 5, sprocketHole: 4),
-  TeletypewriterCodebook.CCITT_ITA2_MTK2: PunchtapekConfig(punchHoles: 5, sprocketHole: 4),
-  TeletypewriterCodebook.CCITT_ITA2_USTTY: PunchtapekConfig(punchHoles: 5, sprocketHole: 4),
-  TeletypewriterCodebook.CCITT_ITA3: PunchtapekConfig(punchHoles: 7, sprocketHole: 4),
-  TeletypewriterCodebook.CCITT_ITA4: PunchtapekConfig(punchHoles: 6, sprocketHole: 4),
-  TeletypewriterCodebook.CCITT_IA5: PunchtapekConfig(punchHoles: 7, sprocketHole: 4),
-  TeletypewriterCodebook.CCIR476: PunchtapekConfig(punchHoles: 7, sprocketHole: 4),
-  TeletypewriterCodebook.ZC1: PunchtapekConfig(punchHoles: 8, sprocketHole: 4),
-  TeletypewriterCodebook.Z22: PunchtapekConfig(punchHoles: 5, sprocketHole: 4),
-  TeletypewriterCodebook.TTS: PunchtapekConfig(punchHoles: 6, sprocketHole: 4),
-  TeletypewriterCodebook.ILLIAC: PunchtapekConfig(punchHoles: 5, sprocketHole: 4),
-  TeletypewriterCodebook.ALGOL: PunchtapekConfig(punchHoles: 5, sprocketHole: 4),
+const Map<TeletypewriterCodebook, PunchtapeConfig> PUNCHTAPE_DEFINITION = {
+  TeletypewriterCodebook.BAUDOT_12345: PunchtapeConfig(punchHoles: 5, sprocketHole: 0),
+  TeletypewriterCodebook.BAUDOT_54321: PunchtapeConfig(punchHoles: 5, sprocketHole: 0),
+  TeletypewriterCodebook.BAUDOT_54123: PunchtapeConfig(punchHoles: 5, sprocketHole: 3),
+  TeletypewriterCodebook.MURRAY: PunchtapeConfig(punchHoles: 5, sprocketHole: 0),
+  TeletypewriterCodebook.SIEMENS: PunchtapeConfig(punchHoles: 5, sprocketHole: 0),
+  TeletypewriterCodebook.WESTERNUNION: PunchtapeConfig(punchHoles: 5, sprocketHole: 0),
+  TeletypewriterCodebook.CCITT_ITA1_1926: PunchtapeConfig(punchHoles: 5, sprocketHole: 4),
+  TeletypewriterCodebook.CCITT_ITA1_1929: PunchtapeConfig(punchHoles: 5, sprocketHole: 4),
+  TeletypewriterCodebook.CCITT_ITA1_EU: PunchtapeConfig(punchHoles: 5, sprocketHole: 4),
+  TeletypewriterCodebook.CCITT_ITA1_UK: PunchtapeConfig(punchHoles: 5, sprocketHole: 4),
+  TeletypewriterCodebook.CCITT_ITA2_1929: PunchtapeConfig(punchHoles: 5, sprocketHole: 4),
+  TeletypewriterCodebook.CCITT_ITA2_1931: PunchtapeConfig(punchHoles: 5, sprocketHole: 4),
+  TeletypewriterCodebook.CCITT_ITA2_MTK2: PunchtapeConfig(punchHoles: 5, sprocketHole: 4),
+  TeletypewriterCodebook.CCITT_ITA2_USTTY: PunchtapeConfig(punchHoles: 5, sprocketHole: 4),
+  TeletypewriterCodebook.CCITT_ITA3: PunchtapeConfig(punchHoles: 7, sprocketHole: 4),
+  TeletypewriterCodebook.CCITT_ITA4: PunchtapeConfig(punchHoles: 6, sprocketHole: 4),
+  TeletypewriterCodebook.CCITT_IA5: PunchtapeConfig(punchHoles: 7, sprocketHole: 4),
+  TeletypewriterCodebook.CCIR476: PunchtapeConfig(punchHoles: 7, sprocketHole: 4),
+  TeletypewriterCodebook.ZC1: PunchtapeConfig(punchHoles: 8, sprocketHole: 4),
+  TeletypewriterCodebook.Z22: PunchtapeConfig(punchHoles: 5, sprocketHole: 4),
+  TeletypewriterCodebook.TTS: PunchtapeConfig(punchHoles: 6, sprocketHole: 4),
+  TeletypewriterCodebook.ILLIAC: PunchtapeConfig(punchHoles: 5, sprocketHole: 4),
+  TeletypewriterCodebook.ALGOL: PunchtapeConfig(punchHoles: 5, sprocketHole: 4),
 };
 
 const Map<TeletypewriterCodebook, int> BINARY_LENGTH = {
-  TeletypewriterCodebook.BAUDOT: 5,
+  TeletypewriterCodebook.BAUDOT_12345: 5,
+  TeletypewriterCodebook.BAUDOT_54321: 5,
   TeletypewriterCodebook.BAUDOT_54123: 5,
   TeletypewriterCodebook.MURRAY: 5,
   TeletypewriterCodebook.SIEMENS: 5,
@@ -333,7 +360,44 @@ const Map<TeletypewriterCodebook, int> BINARY_LENGTH = {
   TeletypewriterCodebook.ALGOL: 5,
 };
 
-const _AZToCCITT_BAUDOT = {
+const Map<String, int> _AZToBaudot_12345 = {
+// Original code from US Patent in Bit-Order 12345
+  'A': 16,
+  'B': 6,
+  'C': 22,
+  'D': 30,
+  'E': 8,
+  '\u00C9' /* É */ : 24,
+  'F': 14,
+  'G': 10,
+  'H': 26,
+  'I': 12,
+  'J': 18,
+  'K': 19,
+  'L': 27,
+  'M': 11,
+  'N': 15,
+  'O': 18,
+  'P': 31,
+  'Q': 23,
+  'R': 7,
+  'S': 5,
+  'T': 21,
+  'U': 20,
+  'V': 29,
+  'W': 13,
+  'X': 9,
+  'Y': 4,
+  'Z': 25,
+  'Ṯ': 17,
+  '✲': 3,
+  ' ' : 0,
+};
+final Map<int, String> _Baudot_12345ToAZ = switchMapKeyValue(_AZToBaudot_12345);
+
+// original Baudot according to US Patent has no numbers
+
+const _AZToBAUDOT_54321 = {
 // Original code from US Patent in Bit-Order 54321
   'A': 1,
   'B': 12,
@@ -364,82 +428,81 @@ const _AZToCCITT_BAUDOT = {
   'Z': 19,
   'Ṯ': 17,
   '✲': 24,
+  ' ' : 0,
 };
-final _CCITT_BAUDOTToAZ = switchMapKeyValue(_AZToCCITT_BAUDOT);
+final Map<int, String> _BAUDOT_54321ToAZ = switchMapKeyValue(_AZToBAUDOT_54321);
 
-// original Baudot according to US Patent has no numbers
-const Map<String, int> _NumbersToCCITT_BAUDOT = {};
-final _CCITT_BAUDOTToNumbers = switchMapKeyValue(_NumbersToCCITT_BAUDOT);
+const Map<String, int> _NumbersToBAUDOT_54321 = {};
+final Map<int, String> _BAUDOT_54321ToNumbers = switchMapKeyValue(_NumbersToBAUDOT_54321);
 
-const _AZToBaudot_54123 = {
-  // Baudot-Code from DEU Wikipedia in Bit-Order 54321
-  'A': 4, // 12345 1
-  'B': 18, // 12345 11
-  'C': 22, // 12345 13
-  'D': 30, // 12345 15
-  'E': 8, // 12345 2
-  'É': 12, // 12345 3
-  'F': 26, // 12345 14
-  'G': 10, // 12345 10
-  'H': 14, // 12345 11
-  'I': 24, // 12345 6
-  'J': 6, // 12345 9
-  'K': 7, // 12345 25
-  'L': 15, // 12345 27
-  'M': 11, // 12345 26
-  'N': 27, // 12345 30
-  'O': 28, // 12345 7
-  'P': 31, // 12345 31
-  'Q': 23, // 12345 29
-  'R': 19, // 12345 28
-  'S': 17, // 12345 20
-  'T': 21, // 12345 13
-  'U': 20, // 12345 5
-  'V': 29, // 12345 23
-  'W': 25, // 12345 22
-  'X': 9, // 12345 18
-  'Y': 16, // 12345 4
-  'Z': 13, // 12345 19
-  'Ṯ': 5, // 12345 17
-  '✲': 3, // 12345 24
+const  Map<String, int> _AZToBaudot_54123 = {
+  // Baudot-Code from EN Wikipedia in Bit-Order 54321
+  'A': 4,
+  'B': 9,
+  'C': 13,
+  'D': 30,
+  'E': 2,
+  'É': 6,
+  'F': 11,
+  'G': 10,
+  'H': 14,
+  'I': 3,
+  'J': 12,
+  'K': 28,
+  'L': 30,
+  'M': 26,
+  'N': 27,
+  'O': 7,
+  'P': 31,
+  'Q': 29,
+  'R': 25,
+  'S': 17,
+  'T': 21,
+  'U': 5,
+  'V': 23,
+  'W': 19,
+  'X': 18,
+  'Y': 1,
+  'Z': 22,
+  'Ṯ': 20,
+  '✲': 24,
 };
-final _Baudot_54123ToAZ = switchMapKeyValue(_AZToBaudot_54123);
+final Map<int, String> _Baudot_54123ToAZ = switchMapKeyValue(_AZToBaudot_54123);
 
-const _NumbersToBaudot_54123 = {
-  '1': 4, // 12345 1
-  '8': 18, // 12345 12
-  '9': 22, // 12345 13
-  '0': 30, // 12345 15
-  '2': 8, // 12345 2
-  '&': 12, // 12345 3
-  '₣': 26, // 12345 14
-  '7': 10, // 12345 10
-  'Ḫ': 14, // 12345 11
-  'Ḏ': 24, // 12345 6
-  '6': 6, // 12345 9
-  '(': 7, // 12345 25
-  '=': 15, // 12345 27
-  ')': 11, // 12345 26
-  '№': 27, // 12345 30
-  '5': 28, // 12345 7
-  '%': 31, // 12345 31
-  '/': 23, // 12345 29
-  '-': 19, // 12345 28
-  ';': 17, // 12345 20
-  '!': 21, // 12345 13
-  '4': 20, // 12345 5
-  '\'': 29, // 12345 23
-  '?': 25, // 12345 22
-  ',': 9, // 12345 18
-  '3': 16, // 12345 4
-  ':': 13, // 12345 19
-  '.': 5, // 12345 17
-  '✲': 3, // 12345 24
-  '\u00A3' /* £ */ : 27,
+const  Map<String, int> _NumbersToBaudot_54123 = {
+  '1': 4,
+  '8': 9,
+  '9': 13,
+  '0': 30,
+  '2': 2,
+  '&': 6,
+  'f': 11,
+  '7': 10,
+  'h': 14,
+  'o': 3,
+  '6': 12,
+  '(': 28,
+  '=': 30,
+  ')': 26,
+  'N°': 27,
+  '5': 7,
+  '%': 31,
+  '/': 29,
+  '-': 25,
+  ';': 17,
+  '!': 21,
+  '4': 5,
+  "'": 23,
+  '?': 19,
+  ',': 18,
+  '3': 1,
+  ':': 22,
+  '.': 20,
+  '✲': 24,
 };
-final _Baudot_54123ToNumbers = switchMapKeyValue(_NumbersToBaudot_54123);
+final Map<int, String> _Baudot_54123ToNumbers = switchMapKeyValue(_NumbersToBaudot_54123);
 
-const _AZToMurray = {
+const  Map<String, int> _AZToMurray = {
   'A': 3,
   'B': 25,
   'C': 14,
@@ -469,9 +532,9 @@ const _AZToMurray = {
   '+': 8,
   ' ': 4
 };
-final _MurrayToAZ = switchMapKeyValue(_AZToMurray);
+final Map<int, String> _MurrayToAZ = switchMapKeyValue(_AZToMurray);
 
-const _NumbersToMurray = {
+const  Map<String, int> _NumbersToMurray = {
 //  'A': 3,
   '/': 25,
   '\'': 14,
@@ -502,9 +565,9 @@ const _NumbersToMurray = {
   '.': 8,
   ' ': 4
 };
-final _MurrayToNumbers = switchMapKeyValue(_NumbersToMurray);
+final Map<int, String> _MurrayToNumbers = switchMapKeyValue(_NumbersToMurray);
 
-const _AZToWesternunion = {
+const  Map<String, int> _AZToWesternunion = {
   'A': 3,
   'B': 25,
   'C': 14,
@@ -535,9 +598,9 @@ const _AZToWesternunion = {
   '\r': 8,
   '\n': 2,
 };
-final _WesternunionToAZ = switchMapKeyValue(_AZToWesternunion);
+final Map<int, String> _WesternunionToAZ = switchMapKeyValue(_AZToWesternunion);
 
-const _NumbersToWesternunion = {
+const Map<String, int> _NumbersToWesternunion = {
   '-': 3,
   '?': 25,
   ':': 14,
@@ -568,9 +631,9 @@ const _NumbersToWesternunion = {
   '\r': 8,
   '\n': 2,
 };
-final _WesternunionToNumbers = switchMapKeyValue(_NumbersToWesternunion);
+final Map<int, String> _WesternunionToNumbers = switchMapKeyValue(_NumbersToWesternunion);
 
-const _AZToSiemens = {
+const Map<String, int> _AZToSiemens = {
   'A': 6,
   'B': 26,
   'C': 23,
@@ -598,9 +661,9 @@ const _AZToSiemens = {
   'Y': 5,
   'Z': 21,
 };
-final _SiemensToAZ = switchMapKeyValue(_AZToSiemens);
+final Map<int, String> _SiemensToAZ = switchMapKeyValue(_AZToSiemens);
 
-const _NumbersToSiemens = {
+const Map<String, int> _NumbersToSiemens = {
   '.': 6,
   '/': 26,
   '\'': 23,
@@ -628,9 +691,9 @@ const _NumbersToSiemens = {
   '6': 5,
   ',': 21,
 };
-final _SiemensToNumbers = switchMapKeyValue(_NumbersToSiemens);
+final Map<int, String> _SiemensToNumbers = switchMapKeyValue(_NumbersToSiemens);
 
-const _AZToCCITT_ITA1_EU = {
+const Map<String, int> _AZToCCITT_ITA1_EU = {
   // Code according to ENG Wikipedia, Bit-Order 54321
   'A': 1,
   '\u00C9' /* É */ : 3,
@@ -661,9 +724,9 @@ const _AZToCCITT_ITA1_EU = {
   'Z': 19,
   '-': 17,
 };
-final _CCITT_ITA1_EUToAZ = switchMapKeyValue(_AZToCCITT_ITA1_EU);
+final Map<int, String> _CCITT_ITA1_EUToAZ = switchMapKeyValue(_AZToCCITT_ITA1_EU);
 
-const _NumbersToCCITT_ITA1_EU = {
+const Map<String, int> _NumbersToCCITT_ITA1_EU = {
   // Code according to ENG Wikipedia, Bit-Order 54321
   '1': 1,
   '&': 3,
@@ -694,9 +757,9 @@ const _NumbersToCCITT_ITA1_EU = {
   ':': 19,
   '.': 17,
 };
-final _CCITT_ITA1_EUToNumbers = switchMapKeyValue(_NumbersToCCITT_ITA1_EU);
+final Map<int, String> _CCITT_ITA1_EUToNumbers = switchMapKeyValue(_NumbersToCCITT_ITA1_EU);
 
-const _AZToCCITT_ITA1_UK = {
+const Map<String, int> _AZToCCITT_ITA1_UK = {
   // Code according to ENG Wikipedia, Bit-Order 54321
   'A': 1,
   '/': 3,
@@ -727,9 +790,9 @@ const _AZToCCITT_ITA1_UK = {
   'Z': 19,
   '-': 17,
 };
-final _CCITT_ITA1_UKToAZ = switchMapKeyValue(_AZToCCITT_ITA1_UK);
+final Map<int, String> _CCITT_ITA1_UKToAZ = switchMapKeyValue(_AZToCCITT_ITA1_UK);
 
-final _NumbersToCCITT_ITA1_UK = {
+final Map<String, int> _NumbersToCCITT_ITA1_UK = {
   // https://en.wikipedia.org/wiki/Baudot_code
   '1': 1,
   '1/': 3,
@@ -760,9 +823,9 @@ final _NumbersToCCITT_ITA1_UK = {
   ':': 19,
   '.': 17,
 };
-final _CCITT_ITA1_UKToNumbers = switchMapKeyValue(_NumbersToCCITT_ITA1_UK);
+final Map<int, String> _CCITT_ITA1_UKToNumbers = switchMapKeyValue(_NumbersToCCITT_ITA1_UK);
 
-const _AZToCCITT_ITA2_MTK2 = {
+const Map<String, int> _AZToCCITT_ITA2_MTK2 = {
   //according to ENG Wikipedia, Bit-Order 54321
   ' ': 4,
   '\r': 2,
@@ -794,9 +857,9 @@ const _AZToCCITT_ITA2_MTK2 = {
   'Ь': 29,
   'Ж': 30
 };
-final _CCITT_ITA2_MTK2ToAZ = switchMapKeyValue(_AZToCCITT_ITA2_MTK2);
+final Map<int, String> _CCITT_ITA2_MTK2ToAZ = switchMapKeyValue(_AZToCCITT_ITA2_MTK2);
 
-const _NumbersToCCITT_MTK2 = {
+const Map<String, int> _NumbersToCCITT_MTK2 = {
   //according to ENG Wikipedia, Bit-Order 54321
   ' ': 4,
   '\r': 2,
@@ -828,9 +891,9 @@ const _NumbersToCCITT_MTK2 = {
   '/': 29,
   '=': 30
 };
-final _CCITT_MTK2ToNumbers = switchMapKeyValue(_NumbersToCCITT_MTK2);
+final Map<int, String> _CCITT_MTK2ToNumbers = switchMapKeyValue(_NumbersToCCITT_MTK2);
 
-const _AZToCCITT_USTTY = {
+const Map<String, int> _AZToCCITT_USTTY = {
   //according to ENG Wikipedia, Bit-Order 54321
   ' ': 4,
   '\r': 2,
@@ -862,9 +925,9 @@ const _AZToCCITT_USTTY = {
   'X': 29,
   'V': 30
 };
-final _CCITT_USTTYToAZ = switchMapKeyValue(_AZToCCITT_USTTY);
+final Map<int, String> _CCITT_USTTYToAZ = switchMapKeyValue(_AZToCCITT_USTTY);
 
-const _NumbersToCCITT_ITA2_USTTY = {
+const Map<String, int> _NumbersToCCITT_ITA2_USTTY = {
   //according to ENG Wikipedia, Bit-Order 54321
   ' ': 4,
   '\r': 2,
@@ -892,9 +955,9 @@ const _NumbersToCCITT_ITA2_USTTY = {
   '/': 29,
   ';': 30
 };
-final _CCITT_USTTYToNumbers = switchMapKeyValue(_NumbersToCCITT_ITA2_USTTY);
+final Map<int, String> _CCITT_USTTYToNumbers = switchMapKeyValue(_NumbersToCCITT_ITA2_USTTY);
 
-const _AZToCCITT_ITA1_1926 = {
+const Map<String, int> _AZToCCITT_ITA1_1926 = {
   'A': 1,
   'B': 12,
   'C': 13,
@@ -925,9 +988,9 @@ const _AZToCCITT_ITA1_1926 = {
   'Ṯ': 17,
   '✲': 24,
 };
-final _CCITT_ITA1_1926ToAZ = switchMapKeyValue(_AZToCCITT_ITA1_1926);
+final Map<int, String> _CCITT_ITA1_1926ToAZ = switchMapKeyValue(_AZToCCITT_ITA1_1926);
 
-const _AZToCCITT_ITA1_1929 = {
+const Map<String, int> _AZToCCITT_ITA1_1929 = {
   'A': 1,
   'B': 12,
   'C': 13,
@@ -958,9 +1021,9 @@ const _AZToCCITT_ITA1_1929 = {
   '\n': 3,
   '\r': 17,
 };
-final _CCITT_ITA1_1929ToAZ = switchMapKeyValue(_AZToCCITT_ITA1_1929);
+final Map<int, String> _CCITT_ITA1_1929ToAZ = switchMapKeyValue(_AZToCCITT_ITA1_1929);
 
-const _AZToCCITT_ITA2_1929 = {
+const Map<String, int> _AZToCCITT_ITA2_1929 = {
   'A': 1,
   'B': 12,
   'C': 13,
@@ -990,9 +1053,9 @@ const _AZToCCITT_ITA2_1929 = {
   '\n': 3,
   '\r': 17,
 };
-final _CCITT_ITA2_1929ToAZ = switchMapKeyValue(_AZToCCITT_ITA2_1929);
+final Map<int, String> _CCITT_ITA2_1929ToAZ = switchMapKeyValue(_AZToCCITT_ITA2_1929);
 
-const _AZToCCITT_ITA2_1931 = {
+const Map<String, int> _AZToCCITT_ITA2_1931 = {
   'A': 3,
   'B': 25,
   'C': 14,
@@ -1023,9 +1086,9 @@ const _AZToCCITT_ITA2_1931 = {
   '\r': 2,
   '\n': 8,
 };
-final _CCITT_ITA2_1931ToAZ = switchMapKeyValue(_AZToCCITT_ITA2_1931);
+final Map<int, String> _CCITT_ITA2_1931ToAZ = switchMapKeyValue(_AZToCCITT_ITA2_1931);
 
-const _AZToCCITT_ITA3 = {
+const Map<String, int> _AZToCCITT_ITA3 = {
   'A': 44,
   'B': 76,
   'C': 25,
@@ -1056,9 +1119,9 @@ const _AZToCCITT_ITA3 = {
   '\r': 13,
   ' ': 11
 };
-final _CCITT_ITA3ToAZ = switchMapKeyValue(_AZToCCITT_ITA3);
+final Map<int, String> _CCITT_ITA3ToAZ = switchMapKeyValue(_AZToCCITT_ITA3);
 
-const _AZToCCITT_ITA4 = {
+const Map<String, int> _AZToCCITT_ITA4 = {
   'A': 6,
   'B': 50,
   'C': 28,
@@ -1089,9 +1152,9 @@ const _AZToCCITT_ITA4 = {
   '\r': 4,
   ' ': 8
 };
-final _CCITT_ITA4ToAZ = switchMapKeyValue(_AZToCCITT_ITA4);
+final Map<int, String> _CCITT_ITA4ToAZ = switchMapKeyValue(_AZToCCITT_ITA4);
 
-const _AZToCCIR476 = {
+const Map<String, int> _AZToCCIR476 = {
   // https://en.wikipedia.org/wiki/CCIR_476
   'A': 71,
   'B': 114,
@@ -1123,9 +1186,9 @@ const _AZToCCIR476 = {
   '\r': 108,
   '\n': 120,
 };
-final _CCIR476ToAZ = switchMapKeyValue(_AZToCCIR476);
+final Map<int, String> _CCIR476ToAZ = switchMapKeyValue(_AZToCCIR476);
 
-const _AZToALGOL = {
+const Map<String, int> _AZToALGOL = {
   'A': 3,
   'B': 25,
   'C': 14,
@@ -1156,9 +1219,9 @@ const _AZToALGOL = {
   '\r': 2,
   '\n': 8,
 };
-final _ALGOLToAZ = switchMapKeyValue(_AZToALGOL);
+final Map<int, String> _ALGOLToAZ = switchMapKeyValue(_AZToALGOL);
 
-const _NumbersToCCITT_ITA1_1926 = {
+const Map<String, int> _NumbersToCCITT_ITA1_1926 = {
   '1': 1,
   '8': 12,
   '9': 13,
@@ -1189,9 +1252,9 @@ const _NumbersToCCITT_ITA1_1926 = {
   '.': 17,
   '✲': 24,
 };
-final _CCITT_ITA1_1926ToNumbers = switchMapKeyValue(_NumbersToCCITT_ITA1_1926);
+final Map<int, String> _CCITT_ITA1_1926ToNumbers = switchMapKeyValue(_NumbersToCCITT_ITA1_1926);
 
-const _NumbersToCCITT_ITA1_1929 = {
+const Map<String, int> _NumbersToCCITT_ITA1_1929 = {
   '1': 1,
   '8': 12,
   '9': 13,
@@ -1222,9 +1285,9 @@ const _NumbersToCCITT_ITA1_1929 = {
   '\n': 3,
   '\r': 17,
 };
-final _CCITT_ITA1_1929ToNumbers = switchMapKeyValue(_NumbersToCCITT_ITA1_1929);
+final Map<int, String> _CCITT_ITA1_1929ToNumbers = switchMapKeyValue(_NumbersToCCITT_ITA1_1929);
 
-const _NumbersToCCITT_ITA2_1929 = {
+const Map<String, int> _NumbersToCCITT_ITA2_1929 = {
   ':': 1,
   '?': 12,
   '(': 13,
@@ -1254,9 +1317,9 @@ const _NumbersToCCITT_ITA2_1929 = {
   '\n': 3,
   '\r': 17,
 };
-final _CCITT_ITA2_1929ToNumbers = switchMapKeyValue(_NumbersToCCITT_ITA2_1929);
+final Map<int, String> _CCITT_ITA2_1929ToNumbers = switchMapKeyValue(_NumbersToCCITT_ITA2_1929);
 
-const _NumbersToCCITT_ITA2_1931 = {
+const Map<String, int> _NumbersToCCITT_ITA2_1931 = {
   '-': 3,
   '?': 25,
   ':': 14,
@@ -1287,9 +1350,9 @@ const _NumbersToCCITT_ITA2_1931 = {
   '\r': 2,
   '\n': 8,
 };
-final _CCITT_ITA2_1931ToNumbers = switchMapKeyValue(_NumbersToCCITT_ITA2_1931);
+final Map<int, String> _CCITT_ITA2_1931ToNumbers = switchMapKeyValue(_NumbersToCCITT_ITA2_1931);
 
-const _NumbersToCCITT_ITA3 = {
+const Map<String, int> _NumbersToCCITT_ITA3 = {
   '-': 44,
   '?': 76,
   ':': 25,
@@ -1320,9 +1383,9 @@ const _NumbersToCCITT_ITA3 = {
   '\r': 13,
   ' ': 11
 };
-final _CCITT_ITA3ToNumbers = switchMapKeyValue(_NumbersToCCITT_ITA3);
+final Map<int, String> _CCITT_ITA3ToNumbers = switchMapKeyValue(_NumbersToCCITT_ITA3);
 
-const _NumbersToCCITT_ITA4 = {
+const Map<String, int> _NumbersToCCITT_ITA4 = {
   '-': 64,
   '?': 50,
   ':': 28,
@@ -1353,9 +1416,9 @@ const _NumbersToCCITT_ITA4 = {
   '\r': 4,
   ' ': 8
 };
-final _CCITT_ITA4ToNumbers = switchMapKeyValue(_NumbersToCCITT_ITA4);
+final Map<int, String> _CCITT_ITA4ToNumbers = switchMapKeyValue(_NumbersToCCITT_ITA4);
 
-const _NumbersToCCIR476 = {
+const Map<String, int> _NumbersToCCIR476 = {
   '-': 71,
   '?': 114,
   ':': 29,
@@ -1385,9 +1448,9 @@ const _NumbersToCCIR476 = {
   '\r': 108,
   '\n': 120,
 };
-final _CCIR476ToNumbers = switchMapKeyValue(_NumbersToCCIR476);
+final Map<int, String> _CCIR476ToNumbers = switchMapKeyValue(_NumbersToCCIR476);
 
-const _NumbersToALGOL = {
+const Map<String, int> _NumbersToALGOL = {
   '-': 3,
   '*': 25,
   ':': 14,
@@ -1418,9 +1481,9 @@ const _NumbersToALGOL = {
   '\r': 2,
   '\n': 8,
 };
-final _ALGOLToNumbers = switchMapKeyValue(_NumbersToALGOL);
+final Map<int, String> _ALGOLToNumbers = switchMapKeyValue(_NumbersToALGOL);
 
-const _AZToZC1 = {
+const Map<String, int> _AZToZC1 = {
   '"': 96,
   '\'': 97,
   '´': 98,
@@ -1542,9 +1605,9 @@ const _AZToZC1 = {
   'ü': 252,
   'ß': 253,
 };
-final _ZC1ToAZ = switchMapKeyValue(_AZToZC1);
+final Map<int, String> _ZC1ToAZ = switchMapKeyValue(_AZToZC1);
 
-const _AZToILLIAC = {
+const Map<String, int> _AZToILLIAC = {
   'A': 22,
   'B': 19,
   'C': 29,
@@ -1574,9 +1637,9 @@ const _AZToILLIAC = {
   ' ': 31,
   '\n': 18,
 };
-final _ILLIACToAZ = switchMapKeyValue(_AZToILLIAC);
+final Map<int, String> _ILLIACToAZ = switchMapKeyValue(_AZToILLIAC);
 
-const _NumbersToILLIAC = {
+const Map<String, int> _NumbersToILLIAC = {
   ')': 22,
   '(': 19,
   ':': 29,
@@ -1606,9 +1669,9 @@ const _NumbersToILLIAC = {
   ' ': 31,
   '\n': 18,
 };
-final _ILLIACToNumbers = switchMapKeyValue(_NumbersToILLIAC);
+final Map<int, String> _ILLIACToNumbers = switchMapKeyValue(_NumbersToILLIAC);
 
-const _AZToTTS = {
+const Map<String, int> _AZToTTS = {
   // https://druck-mediengeschichte.org/2020/08/06/zwischen-morsecode-und-digitaler-fonttechnologie-2/
   // Wilfried Kusterka
   'T': 32,
@@ -1647,9 +1710,9 @@ const _AZToTTS = {
   '?': 45,
   '&': 49,
 };
-final _TTSToAZ = switchMapKeyValue(_AZToTTS);
+final Map<int, String> _TTSToAZ = switchMapKeyValue(_AZToTTS);
 
-const _NumbersToTTS = {
+const Map<String, int> _NumbersToTTS = {
   't': 32,
   'o': 48,
   'n': 24,
@@ -1686,10 +1749,10 @@ const _NumbersToTTS = {
   '0': 45,
   '9': 49,
 };
-final _TTSToNumbers = switchMapKeyValue(_NumbersToTTS);
+final Map<int, String> _TTSToNumbers = switchMapKeyValue(_NumbersToTTS);
 
-const _NUMBERS_FOLLOW = {
-  TeletypewriterCodebook.BAUDOT_54123: 2, // 12345 8
+const Map<TeletypewriterCodebook, int> _NUMBERS_FOLLOW = {
+  TeletypewriterCodebook.BAUDOT_54123: 8,
   TeletypewriterCodebook.SIEMENS: 30,
   TeletypewriterCodebook.MURRAY: 27,
   TeletypewriterCodebook.WESTERNUNION: 27,
@@ -1709,8 +1772,8 @@ const _NUMBERS_FOLLOW = {
   TeletypewriterCodebook.ILLIAC: 27,
   TeletypewriterCodebook.ALGOL: 62,
 };
-const _LETTERS_FOLLOW = {
-  TeletypewriterCodebook.BAUDOT_54123: 1, //16,
+const Map<TeletypewriterCodebook, int> _LETTERS_FOLLOW = {
+  TeletypewriterCodebook.BAUDOT_54123: 16,
   TeletypewriterCodebook.SIEMENS: 28,
   TeletypewriterCodebook.MURRAY: 31,
   TeletypewriterCodebook.WESTERNUNION: 31,
@@ -1733,45 +1796,47 @@ const _LETTERS_FOLLOW = {
 
 int? _EncodeAZ(TeletypewriterCodebook language, String text) {
   switch (language) {
-    case TeletypewriterCodebook.BAUDOT:
-      return _AZToCCITT_BAUDOT[text]!;
-    case TeletypewriterCodebook.MURRAY:
-      return _AZToMurray[text]!;
-    case TeletypewriterCodebook.SIEMENS:
-      return _AZToSiemens[text]!;
-    case TeletypewriterCodebook.WESTERNUNION:
-      return _AZToWesternunion[text]!;
+    case TeletypewriterCodebook.BAUDOT_12345:
+      return _AZToBaudot_12345[text];
     case TeletypewriterCodebook.BAUDOT_54123:
-      return _AZToBaudot_54123[text]!;
+      return _AZToBaudot_54123[text];
+    case TeletypewriterCodebook.BAUDOT_54321:
+      return _AZToBAUDOT_54321[text];
+    case TeletypewriterCodebook.MURRAY:
+      return _AZToMurray[text];
+    case TeletypewriterCodebook.SIEMENS:
+      return _AZToSiemens[text];
+    case TeletypewriterCodebook.WESTERNUNION:
+      return _AZToWesternunion[text];
     case TeletypewriterCodebook.CCITT_ITA1_1926:
-      return _AZToCCITT_ITA1_1926[text]!;
+      return _AZToCCITT_ITA1_1926[text];
     case TeletypewriterCodebook.CCITT_ITA1_1929:
-      return _AZToCCITT_ITA1_1929[text]!;
+      return _AZToCCITT_ITA1_1929[text];
     case TeletypewriterCodebook.CCITT_ITA1_EU:
-      return _AZToCCITT_ITA1_EU[text]!;
+      return _AZToCCITT_ITA1_EU[text];
     case TeletypewriterCodebook.CCITT_ITA1_UK:
-      return _AZToCCITT_ITA1_UK[text]!;
+      return _AZToCCITT_ITA1_UK[text];
     case TeletypewriterCodebook.CCITT_ITA2_1929:
-      return _AZToCCITT_ITA2_1929[text]!;
+      return _AZToCCITT_ITA2_1929[text];
     case TeletypewriterCodebook.CCITT_ITA2_1931:
     case TeletypewriterCodebook.Z22:
-      return _AZToCCITT_ITA2_1931[text]!;
+      return _AZToCCITT_ITA2_1931[text];
     case TeletypewriterCodebook.CCITT_ITA2_MTK2:
-      return _AZToCCITT_ITA2_MTK2[text]!;
+      return _AZToCCITT_ITA2_MTK2[text];
     case TeletypewriterCodebook.CCITT_ITA2_USTTY:
-      return _AZToCCITT_USTTY[text]!;
+      return _AZToCCITT_USTTY[text];
     case TeletypewriterCodebook.CCITT_ITA3:
-      return _AZToCCITT_ITA3[text]!;
+      return _AZToCCITT_ITA3[text];
     case TeletypewriterCodebook.CCITT_ITA4:
-      return _AZToCCITT_ITA4[text]!;
+      return _AZToCCITT_ITA4[text];
     case TeletypewriterCodebook.CCIR476:
-      return _AZToCCIR476[text]!;
+      return _AZToCCIR476[text];
     case TeletypewriterCodebook.ILLIAC:
-      return _AZToILLIAC[text]!;
+      return _AZToILLIAC[text];
     case TeletypewriterCodebook.TTS:
-      return _AZToTTS[text]!;
+      return _AZToTTS[text];
     case TeletypewriterCodebook.ALGOL:
-      return _AZToALGOL[text]!;
+      return _AZToALGOL[text];
     default:
       return  null;
   }
@@ -1779,46 +1844,46 @@ int? _EncodeAZ(TeletypewriterCodebook language, String text) {
 
 int? _EncodeNumber(TeletypewriterCodebook language, String text) {
   switch (language) {
-    case TeletypewriterCodebook.BAUDOT:
-      return _NumbersToCCITT_BAUDOT[text];
+    case TeletypewriterCodebook.BAUDOT_54123:
+      return _NumbersToBaudot_54123[text];
+    case TeletypewriterCodebook.BAUDOT_54321:
+      return _NumbersToBAUDOT_54321[text];
     case TeletypewriterCodebook.MURRAY:
-      return _NumbersToMurray[text]!;
+      return _NumbersToMurray[text];
     case TeletypewriterCodebook.SIEMENS:
-      return _NumbersToSiemens[text]!;
+      return _NumbersToSiemens[text];
 
     case TeletypewriterCodebook.WESTERNUNION:
-      return _NumbersToWesternunion[text]!;
-    case TeletypewriterCodebook.BAUDOT_54123:
-      return _NumbersToBaudot_54123[text]!;
+      return _NumbersToWesternunion[text];
     case TeletypewriterCodebook.CCITT_ITA1_1926:
-      return _NumbersToCCITT_ITA1_1926[text]!;
+      return _NumbersToCCITT_ITA1_1926[text];
     case TeletypewriterCodebook.CCITT_ITA1_1929:
-      return _NumbersToCCITT_ITA1_1929[text]!;
+      return _NumbersToCCITT_ITA1_1929[text];
     case TeletypewriterCodebook.CCITT_ITA1_EU:
       return _NumbersToCCITT_ITA1_EU[text];
     case TeletypewriterCodebook.CCITT_ITA1_UK:
-      return _NumbersToCCITT_ITA1_UK[text]!;
+      return _NumbersToCCITT_ITA1_UK[text];
     case TeletypewriterCodebook.CCITT_ITA2_1929:
-      return _NumbersToCCITT_ITA2_1929[text]!;
+      return _NumbersToCCITT_ITA2_1929[text];
     case TeletypewriterCodebook.CCITT_ITA2_1931:
     case TeletypewriterCodebook.Z22:
-      return _NumbersToCCITT_ITA2_1931[text]!;
+      return _NumbersToCCITT_ITA2_1931[text];
     case TeletypewriterCodebook.CCITT_ITA2_MTK2:
-      return _NumbersToCCITT_MTK2[text]!;
+      return _NumbersToCCITT_MTK2[text];
     case TeletypewriterCodebook.CCITT_ITA2_USTTY:
-      return _NumbersToCCITT_ITA2_USTTY[text]!;
+      return _NumbersToCCITT_ITA2_USTTY[text];
     case TeletypewriterCodebook.CCITT_ITA3:
-      return _NumbersToCCITT_ITA3[text]!;
+      return _NumbersToCCITT_ITA3[text];
     case TeletypewriterCodebook.CCITT_ITA4:
-      return _NumbersToCCITT_ITA4[text]!;
+      return _NumbersToCCITT_ITA4[text];
     case TeletypewriterCodebook.CCIR476:
-      return _NumbersToCCIR476[text]!;
+      return _NumbersToCCIR476[text];
     case TeletypewriterCodebook.ILLIAC:
-      return _NumbersToILLIAC[text]!;
+      return _NumbersToILLIAC[text];
     case TeletypewriterCodebook.TTS:
-      return _NumbersToTTS[text]!;
+      return _NumbersToTTS[text];
     case TeletypewriterCodebook.ALGOL:
-      return _NumbersToALGOL[text]!;
+      return _NumbersToALGOL[text];
     default:
       return  null;
   }
@@ -1826,45 +1891,47 @@ int? _EncodeNumber(TeletypewriterCodebook language, String text) {
 
 String? _DecodeAZ(TeletypewriterCodebook language, int code) {
   switch (language) {
-    case TeletypewriterCodebook.BAUDOT:
-      return _CCITT_BAUDOTToAZ[code]!;
-    case TeletypewriterCodebook.MURRAY:
-      return _MurrayToAZ[code]!;
-    case TeletypewriterCodebook.SIEMENS:
-      return _SiemensToAZ[code]!;
-    case TeletypewriterCodebook.WESTERNUNION:
-      return _WesternunionToAZ[code]!;
+    case TeletypewriterCodebook.BAUDOT_12345:
+      return _Baudot_12345ToAZ[code];
     case TeletypewriterCodebook.BAUDOT_54123:
-      return _Baudot_54123ToAZ[code]!;
+      return _Baudot_54123ToAZ[code];
+    case TeletypewriterCodebook.BAUDOT_54321:
+      return _BAUDOT_54321ToAZ[code];
+    case TeletypewriterCodebook.MURRAY:
+      return _MurrayToAZ[code];
+    case TeletypewriterCodebook.SIEMENS:
+      return _SiemensToAZ[code];
+    case TeletypewriterCodebook.WESTERNUNION:
+      return _WesternunionToAZ[code];
     case TeletypewriterCodebook.CCITT_ITA1_1926:
-      return _CCITT_ITA1_1926ToAZ[code]!;
+      return _CCITT_ITA1_1926ToAZ[code];
     case TeletypewriterCodebook.CCITT_ITA1_1929:
-      return _CCITT_ITA1_1929ToAZ[code]!;
+      return _CCITT_ITA1_1929ToAZ[code];
     case TeletypewriterCodebook.CCITT_ITA1_EU:
-      return _CCITT_ITA1_EUToAZ[code]!;
+      return _CCITT_ITA1_EUToAZ[code];
     case TeletypewriterCodebook.CCITT_ITA1_UK:
-      return _CCITT_ITA1_UKToAZ[code]!;
+      return _CCITT_ITA1_UKToAZ[code];
     case TeletypewriterCodebook.CCITT_ITA2_1929:
-      return _CCITT_ITA2_1929ToAZ[code]!;
+      return _CCITT_ITA2_1929ToAZ[code];
     case TeletypewriterCodebook.CCITT_ITA2_1931:
     case TeletypewriterCodebook.Z22:
-      return _CCITT_ITA2_1931ToAZ[code]!;
+      return _CCITT_ITA2_1931ToAZ[code];
     case TeletypewriterCodebook.CCITT_ITA2_MTK2:
-      return _CCITT_ITA2_MTK2ToAZ[code]!;
+      return _CCITT_ITA2_MTK2ToAZ[code];
     case TeletypewriterCodebook.CCITT_ITA2_USTTY:
-      return _CCITT_USTTYToAZ[code]!;
+      return _CCITT_USTTYToAZ[code];
     case TeletypewriterCodebook.CCITT_ITA3:
-      return _CCITT_ITA3ToAZ[code]!;
+      return _CCITT_ITA3ToAZ[code];
     case TeletypewriterCodebook.CCITT_ITA4:
-      return _CCITT_ITA4ToAZ[code]!;
+      return _CCITT_ITA4ToAZ[code];
     case TeletypewriterCodebook.CCIR476:
-      return _CCIR476ToAZ[code]!;
+      return _CCIR476ToAZ[code];
     case TeletypewriterCodebook.ILLIAC:
-      return _ILLIACToAZ[code]!;
+      return _ILLIACToAZ[code];
     case TeletypewriterCodebook.TTS:
-      return _TTSToAZ[code]!;
+      return _TTSToAZ[code];
     case TeletypewriterCodebook.ALGOL:
-      return _ALGOLToAZ[code]!;
+      return _ALGOLToAZ[code];
     default:
       return  null;
   }
@@ -1872,45 +1939,45 @@ String? _DecodeAZ(TeletypewriterCodebook language, int code) {
 
 String? _DecodeNumber(TeletypewriterCodebook language, int code) {
   switch (language) {
-    case TeletypewriterCodebook.BAUDOT:
-      return _CCITT_BAUDOTToNumbers[code]!;
+    case TeletypewriterCodebook.BAUDOT_54321:
+      return _BAUDOT_54321ToNumbers[code];
     case TeletypewriterCodebook.MURRAY:
-      return _MurrayToNumbers[code]!;
+      return _MurrayToNumbers[code];
     case TeletypewriterCodebook.SIEMENS:
-      return _SiemensToNumbers[code]!;
+      return _SiemensToNumbers[code];
     case TeletypewriterCodebook.WESTERNUNION:
-      return _WesternunionToNumbers[code]!;
+      return _WesternunionToNumbers[code];
     case TeletypewriterCodebook.BAUDOT_54123:
-      return _Baudot_54123ToNumbers[code]!;
+      return _Baudot_54123ToNumbers[code];
     case TeletypewriterCodebook.CCITT_ITA1_1926:
-      return _CCITT_ITA1_1926ToNumbers[code]!;
+      return _CCITT_ITA1_1926ToNumbers[code];
     case TeletypewriterCodebook.CCITT_ITA1_1929:
-      return _CCITT_ITA1_1929ToNumbers[code]!;
+      return _CCITT_ITA1_1929ToNumbers[code];
     case TeletypewriterCodebook.CCITT_ITA1_EU:
-      return _CCITT_ITA1_EUToNumbers[code]!;
+      return _CCITT_ITA1_EUToNumbers[code];
     case TeletypewriterCodebook.CCITT_ITA1_UK:
-      return _CCITT_ITA1_UKToNumbers[code]!;
+      return _CCITT_ITA1_UKToNumbers[code];
     case TeletypewriterCodebook.CCITT_ITA2_1929:
-      return _CCITT_ITA2_1929ToNumbers[code]!;
+      return _CCITT_ITA2_1929ToNumbers[code];
     case TeletypewriterCodebook.CCITT_ITA2_1931:
     case TeletypewriterCodebook.Z22:
-      return _CCITT_ITA2_1931ToNumbers[code]!;
+      return _CCITT_ITA2_1931ToNumbers[code];
     case TeletypewriterCodebook.CCITT_ITA2_MTK2:
-      return _CCITT_MTK2ToNumbers[code]!;
+      return _CCITT_MTK2ToNumbers[code];
     case TeletypewriterCodebook.CCITT_ITA2_USTTY:
-      return _CCITT_USTTYToNumbers[code]!;
+      return _CCITT_USTTYToNumbers[code];
     case TeletypewriterCodebook.CCITT_ITA3:
-      return _CCITT_ITA3ToNumbers[code]!;
+      return _CCITT_ITA3ToNumbers[code];
     case TeletypewriterCodebook.CCITT_ITA4:
-      return _CCITT_ITA4ToNumbers[code]!;
+      return _CCITT_ITA4ToNumbers[code];
     case TeletypewriterCodebook.CCIR476:
-      return _CCIR476ToNumbers[code]!;
+      return _CCIR476ToNumbers[code];
     case TeletypewriterCodebook.ILLIAC:
-      return _ILLIACToNumbers[code]!;
+      return _ILLIACToNumbers[code];
     case TeletypewriterCodebook.TTS:
-      return _TTSToNumbers[code]!;
+      return _TTSToNumbers[code];
     case TeletypewriterCodebook.ALGOL:
-      return _ALGOLToNumbers[code]!;
+      return _ALGOLToNumbers[code];
     default:
       return  null;
   }
@@ -1924,7 +1991,8 @@ String encodeTeletypewriter(String input, TeletypewriterCodebook language) {
   List<int> out = [];
   switch (language) {
     // CCITT1
-    case TeletypewriterCodebook.BAUDOT:
+    case TeletypewriterCodebook.BAUDOT_12345:
+    case TeletypewriterCodebook.BAUDOT_54321:
     case TeletypewriterCodebook.BAUDOT_54123:
     case TeletypewriterCodebook.MURRAY:
     case TeletypewriterCodebook.SIEMENS:
@@ -2054,22 +2122,14 @@ String decodeTeletypewriter(List<int> values, TeletypewriterCodebook language) {
   String out = '';
   var isLetterMode = true;
 
-  if (language == TeletypewriterCodebook.BAUDOT_54123) {
-    values = values.map((decimal) {
-      return int.parse(convertBase(
-          convertBase(decimal.toString(), 10, 2).padLeft(BINARY_LENGTH[language]!, '0').split('').reversed.join(''),
-          2,
-          10));
-    }).toList();
-  }
-
   switch (language) {
     // CCITT1
-    case TeletypewriterCodebook.BAUDOT:
+    case TeletypewriterCodebook.BAUDOT_12345:
+    case TeletypewriterCodebook.BAUDOT_54321:
+    case TeletypewriterCodebook.BAUDOT_54123:
     case TeletypewriterCodebook.MURRAY:
     case TeletypewriterCodebook.SIEMENS:
     case TeletypewriterCodebook.WESTERNUNION:
-    case TeletypewriterCodebook.BAUDOT_54123:
     case TeletypewriterCodebook.CCITT_ITA1_1926:
     case TeletypewriterCodebook.CCITT_ITA1_1929:
     case TeletypewriterCodebook.CCITT_ITA1_EU:
