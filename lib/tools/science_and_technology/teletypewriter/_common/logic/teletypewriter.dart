@@ -19,7 +19,6 @@
 
 // ignore_for_file: equal_keys_in_map
 
-import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 
@@ -1188,7 +1187,40 @@ const Map<String, int> _AZToCCIR476 = {
 };
 final Map<int, String> _CCIR476ToAZ = switchMapKeyValue(_AZToCCIR476);
 
+const Map<String, int> _NumbersToCCIR476 = {
+  '-': 71,
+  '?': 114,
+  ':': 29,
+  // 'D': 83, national
+  '3': 86,
+  //'F': 27,
+  //'G': 53,
+  //'H': 105,
+  '8': 77,
+  '🔔': 23, // Bell
+  '(': 30,
+  ')': 101,
+  '.': 57,
+  ',': 89,
+  '9': 113,
+  '0': 45,
+  '1': 46,
+  '4': 85,
+  '\'': 75,
+  '5': 116,
+  '7': 78,
+  '=': 60,
+  '2': 39,
+  '/': 58,
+  '6': 43,
+  '+': 99,
+  '\r': 108,
+  '\n': 120,
+};
+final Map<int, String> _CCIR476ToNumbers = switchMapKeyValue(_NumbersToCCIR476);
+
 const Map<String, int> _AZToALGOL = {
+  // Breuer, Hans: ALGOL-Fibel. ISBN 3-411-00506-8. Anhang 1.
   'A': 3,
   'B': 25,
   'C': 14,
@@ -1220,6 +1252,39 @@ const Map<String, int> _AZToALGOL = {
   '\n': 8,
 };
 final Map<int, String> _ALGOLToAZ = switchMapKeyValue(_AZToALGOL);
+
+const Map<String, int> _NumbersToALGOL = {
+  '-': 3,
+  '*': 25,
+  ':': 14,
+  // national : 9
+  '3': 1,
+  '[': 13,
+  ']': 26,
+  // national : 20
+  '8': 6,
+  ';': 11, // Bell
+  '(': 15,
+  ')': 18,
+  '.': 28,
+  ',': 12,
+  '9': 24,
+  '0': 22,
+  '1': 23,
+  '4': 10,
+  '\'': 5,
+  '5': 16,
+  '7': 7,
+  '=': 30,
+  '2': 19,
+  '/': 29,
+  '6': 21,
+  '+': 17,
+  ' ': 4,
+  '\r': 2,
+  '\n': 8,
+};
+final Map<int, String> _ALGOLToNumbers = switchMapKeyValue(_NumbersToALGOL);
 
 const Map<String, int> _NumbersToCCITT_ITA1_1926 = {
   '1': 1,
@@ -1418,71 +1483,6 @@ const Map<String, int> _NumbersToCCITT_ITA4 = {
 };
 final Map<int, String> _CCITT_ITA4ToNumbers = switchMapKeyValue(_NumbersToCCITT_ITA4);
 
-const Map<String, int> _NumbersToCCIR476 = {
-  '-': 71,
-  '?': 114,
-  ':': 29,
-  // 'D': 83, national
-  '3': 86,
-  //'F': 27,
-  //'G': 53,
-  //'H': 105,
-  '8': 77,
-  '🔔': 23, // Bell
-  '(': 30,
-  ')': 101,
-  '.': 57,
-  ',': 89,
-  '9': 113,
-  '0': 45,
-  '1': 46,
-  '4': 85,
-  '\'': 75,
-  '5': 116,
-  '7': 78,
-  '=': 60,
-  '2': 39,
-  '/': 58,
-  '6': 43,
-  '+': 99,
-  '\r': 108,
-  '\n': 120,
-};
-final Map<int, String> _CCIR476ToNumbers = switchMapKeyValue(_NumbersToCCIR476);
-
-const Map<String, int> _NumbersToALGOL = {
-  '-': 3,
-  '*': 25,
-  ':': 14,
-  // national : 9
-  '3': 1,
-  '[': 13,
-  ']': 26,
-  // national : 20
-  '8': 6,
-  ';': 11, // Bell
-  '(': 15,
-  ')': 18,
-  '.': 28,
-  ',': 12,
-  '9': 24,
-  '0': 22,
-  '1': 23,
-  '4': 10,
-  '\'': 5,
-  '5': 16,
-  '7': 7,
-  '=': 30,
-  '2': 19,
-  '/': 29,
-  '6': 21,
-  '+': 17,
-  ' ': 4,
-  '\r': 2,
-  '\n': 8,
-};
-final Map<int, String> _ALGOLToNumbers = switchMapKeyValue(_NumbersToALGOL);
-
 const Map<String, int> _AZToZC1 = {
   '"': 96,
   '\'': 97,
@@ -1608,6 +1608,7 @@ const Map<String, int> _AZToZC1 = {
 final Map<int, String> _ZC1ToAZ = switchMapKeyValue(_AZToZC1);
 
 const Map<String, int> _AZToILLIAC = {
+  // http://www.bitsavers.org/pdf/univOfIllinoisUrbana/illiac/ILLIAC/ILLIAC_programming_Sep56.pdf  page 154
   'A': 22,
   'B': 19,
   'C': 29,
