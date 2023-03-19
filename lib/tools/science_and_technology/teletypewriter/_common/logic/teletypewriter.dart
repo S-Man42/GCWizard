@@ -1220,6 +1220,7 @@ const Map<String, int> _NumbersToCCIR476 = {
 final Map<int, String> _CCIR476ToNumbers = switchMapKeyValue(_NumbersToCCIR476);
 
 const Map<String, int> _AZToALGOL = {
+  // Breuer, Hans: ALGOL-Fibel. ISBN 3-411-00506-8. Anhang 1.
   'A': 3,
   'B': 25,
   'C': 14,
