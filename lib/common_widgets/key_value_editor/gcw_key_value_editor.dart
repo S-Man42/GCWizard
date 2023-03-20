@@ -50,11 +50,36 @@ part "package:gc_wizard/common_widgets/key_value_editor/key_value_row.dart";
    --> Refactor completely, maybe as GCWKeyValueEditor<T>, whereas T is the specific type?
 
  */
-class KeyValueBase <T, U>{
-  T key;
-  U value;
+class KeyValueBase {
+  String _id;
+  String get id => _id;
+  set id(String id) => _id = id;
 
-  KeyValueBase(this.key, this.value);
+  String _key;
+  String get key => _key;
+  set key(String key) => _key = key;
+
+  String _value;
+  String get value => _value;
+  set value(String value) => _value = value;
+
+  KeyValueBase(this._id, this._key, this._value);
+}
+
+class KeyValueString extends KeyValueBase {
+
+  KeyValueString(MapEntry<String, String> entry)
+    : super (entry.key, entry.key, entry.value);
+}
+
+class KeyValueFormulaValue extends KeyValueBase {
+  @override
+  String get id => _key;
+  @override
+  set id(String id) => _key = id;
+
+  KeyValueFormulaValue(FormulaValue entry)
+      : super (entry.id?.toString() ?? '', entry.key, entry.value);
 }
 
 
@@ -74,7 +99,7 @@ class GCWKeyValueEditor <T, U> extends StatefulWidget {
 
   final Widget? middleWidget;
 
-  final Map<T, U>? keyValueMap;
+  final KeyValueBase? keyValueMap;
   final bool varcoords;
   final String? dividerText;
   final bool editAllowed;

@@ -2,23 +2,26 @@ part of 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.
 
 
 class GCWKeyValueRow extends StatefulWidget {
-  String id;
-  String key_;
-  String value;
+  KeyValueBase keyValueEntry;
   bool odd;
   List<TextInputFormatter>? keyInputFormatters;
   List<TextInputFormatter>? valueInputFormatters;
   final bool editAllowed;
 
+  final void Function(Object, String, String, FormulaValueType)? onUpdateEntry;
+  final void Function(Object, BuildContext)? onRemoveEntry;
+
   GCWKeyValueRow(
      {Key? key,
-       required this.id,
-       required this.key_,
-       required this.value,
+       required this.keyValueEntry,
+
        required this.odd,
        this.keyInputFormatters,
        this.valueInputFormatters,
-       this.editAllowed = true})
+       this.editAllowed = true,
+       this.onUpdateEntry,
+       this.onRemoveEntry,
+     })
      : super(key: key);
 
  @override
@@ -65,7 +68,7 @@ class GCWKeyValueRowState extends State<GCWKeyValueRow> {
           flex: 1,
           child: Container(
             margin: const EdgeInsets.only(left: 10),
-            child: _currentEditId == _getEntryId(entry)
+            child: _currentEditId == widget.keyValueEntry.id
                 ? GCWTextField(
               controller: _editKeyController,
               inputFormatters: widget.keyInputFormatters,
@@ -75,7 +78,7 @@ class GCWKeyValueRowState extends State<GCWKeyValueRow> {
                 });
               },
             )
-                : GCWText(text: widget.key_),
+                : GCWText(text: widget.keyValueEntry.key),
           ),
         ),
         Icon(
@@ -86,7 +89,7 @@ class GCWKeyValueRowState extends State<GCWKeyValueRow> {
             flex: 3,
             child: Container(
               margin: const EdgeInsets.only(left: 10),
-              child: _currentEditId == widget.id
+              child: _currentEditId == widget.keyValueEntry.id
                   ? GCWTextField(
                 controller: _editValueController,
                 focusNode: _focusNodeEditValue,
@@ -97,15 +100,14 @@ class GCWKeyValueRowState extends State<GCWKeyValueRow> {
                   });
                 },
               )
-                  : GCWText(text: _getEntryValue(entry).toString()),
+                  : GCWText(text: widget.keyValueEntry.value),
             )),
         _editButton(entry),
         GCWIconButton(
           icon: Icons.remove,
           onPressed: () {
             setState(() {
-              var entryId = _getEntryId(entry);
-              if (widget.onRemoveEntry != null) widget.onRemoveEntry!(entryId, context);
+              if (widget.onRemoveEntry != null) widget.onRemoveEntry!(widget.keyValueEntry.id, context);
             });
           },
         )
@@ -121,7 +123,7 @@ class GCWKeyValueRowState extends State<GCWKeyValueRow> {
     return output;
   }
 
-  Widget _editButton(Object entry) {
+  Widget _editButton() {
     if (!widget.editAllowed) return Container();
 
     return _currentEditId == _getEntryId(entry)
