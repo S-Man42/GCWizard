@@ -40,7 +40,7 @@ class GCWCodeTextField extends StatefulWidget {
 }
 
 class _GCWCodeTextFieldState extends State<GCWCodeTextField> {
-  late Mode _language;
+  Mode? _language;
 
   @override
   void initState() {
