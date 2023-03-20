@@ -15,17 +15,17 @@ class GCWStatefulDropDown<T> extends StatefulWidget {
   _GCWStatefulDropDownState<T> createState() => _GCWStatefulDropDownState<T>();
 }
 
-class _GCWStatefulDropDownState<T> extends State<GCWStatefulDropDown> {
+class _GCWStatefulDropDownState<T> extends State<GCWStatefulDropDown<T>> {
   T? _currentValue;
 
   @override
   Widget build(BuildContext context) {
-    _currentValue ??= widget.value as T;
+    _currentValue = widget.value;
 
     return GCWDropDown<T>(
       value: _currentValue!,
-      items: widget.items.map((e) => e as GCWDropDownMenuItem<T>).toList(),
-      onChanged: (T value) {
+      items: widget.items,
+      onChanged: (value) {
         setState(() {
           _currentValue = value;
         });
