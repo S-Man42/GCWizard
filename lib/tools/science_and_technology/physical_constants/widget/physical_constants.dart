@@ -74,7 +74,7 @@ class PhysicalConstantsState extends State<PhysicalConstants> {
     ];
 
     return GCWColumnedMultilineOutput(
-      data: data as List<List<Object?>>,
+      data: data.whereType<List<Object?>>().toList(),
       flexValues: const [2, 3, 2],
       copyColumn: 1,
     );

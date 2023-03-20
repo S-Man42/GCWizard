@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 
 //TODO: Maybe we should make the normal GCWDropDown stateful.
-class GCWStatefulDropDown<T extends Object> extends StatefulWidget {
+class GCWStatefulDropDown<T> extends StatefulWidget {
   final void Function(T) onChanged;
   final List<GCWDropDownMenuItem<T>> items;
   final T value;
@@ -15,17 +15,17 @@ class GCWStatefulDropDown<T extends Object> extends StatefulWidget {
   _GCWStatefulDropDownState<T> createState() => _GCWStatefulDropDownState<T>();
 }
 
-class _GCWStatefulDropDownState<T extends Object> extends State<GCWStatefulDropDown> {
+class _GCWStatefulDropDownState<T> extends State<GCWStatefulDropDown<T>> {
   T? _currentValue;
 
   @override
   Widget build(BuildContext context) {
-    _currentValue ??= widget.value as T;
+    _currentValue = widget.value;
 
     return GCWDropDown<T>(
       value: _currentValue!,
-      items: widget.items.map((e) => e as GCWDropDownMenuItem<T>).toList(),
-      onChanged: (T value) {
+      items: widget.items,
+      onChanged: (value) {
         setState(() {
           _currentValue = value;
         });

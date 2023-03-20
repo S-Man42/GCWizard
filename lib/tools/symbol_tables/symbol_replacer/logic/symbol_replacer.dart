@@ -445,7 +445,7 @@ class SymbolReplacerImage {
       }
 
       // last line
-      if ((emptyLineIndex.last != _bmp!.height - 1) & (emptyLineIndex.last != 0)) {
+      if ((emptyLineIndex.last != _bmp!.height - 1) && (emptyLineIndex.last != 0)) {
         _cutLine(emptyLineIndex.last + 1, _bmp!.height - 1);
       }
     }
@@ -759,7 +759,7 @@ class _SymbolRow {
         }
       }
 
-      if ((emptyColumnIndex.last != bmp.width - 1) & (emptyColumnIndex.last != 0)) {
+      if ((emptyColumnIndex.last != bmp.width - 1) && (emptyColumnIndex.last != 0)) {
         _cutSymbol(emptyColumnIndex.last + 1, bmp.width - 1, blackLevel);
       }
     }

@@ -27,7 +27,6 @@ class MultiDecoderToolEsotericLanguageMalbolge extends AbstractMultiDecoderTool 
                     output = output + element + '\n';
                   }
 
-
                   output = output.trim();
                   return output.isEmpty ? null : output;
                 }
