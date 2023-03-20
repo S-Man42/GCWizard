@@ -57,7 +57,7 @@ class GeneralSettingsState extends State<GeneralSettings> {
                         // data loaded:
                         final Locale? currentLocale = snapshot.data;
 
-                        return GCWStatefulDropDown<String>(
+                        return GCWStatefulDropDown<Object>(
                             items: SUPPORTED_LOCALES.entries.map((locale) {
                               String languageName = locale.value['name_native'] as String;
 
@@ -73,8 +73,8 @@ class GeneralSettingsState extends State<GeneralSettings> {
                             value: currentLocale != null && isLocaleSupported(currentLocale)
                                 ? currentLocale.languageCode
                                 : DEFAULT_LOCALE.languageCode,
-                            onChanged: (String newValue) {
-                              appLanguage.changeLanguage(newValue);
+                            onChanged: (newValue) {
+                              appLanguage.changeLanguage(newValue as String);
                             });
                       }
                     })),
