@@ -38,7 +38,7 @@ class AnimatedImageMorseCode extends StatefulWidget {
 
 class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
   AnimatedImageMorseOutput? _outData;
-  List<bool>? _marked = [];
+  List<bool> _marked = [];
   MorseCodeOutput? _outText;
   GCWFile? _file;
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
@@ -164,10 +164,10 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
                     setState(() {
                       List<List<int>> imagesFiltered = _outData!.imagesFiltered;
 
-                      if (_marked != null) {
-                        _marked![imagesFiltered[index].first] = !_marked![imagesFiltered[index].first];
-                        _markedListSetColumn(imagesFiltered[index], _marked![imagesFiltered[index].first]);
-                        _outText = decodeMorseCode(_outData!.durations, _marked!);
+                      if (_marked.isNotEmpty) {
+                        _marked[imagesFiltered[index].first] = !_marked[imagesFiltered[index].first];
+                        _markedListSetColumn(imagesFiltered[index], _marked[imagesFiltered[index].first]);
+                        _outText = decodeMorseCode(_outData!.durations, _marked);
                       }
                     });
                   },
@@ -176,8 +176,8 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
                   imageData: _convertImageData(_outData!.images, _outData!.durations, _outData!.imagesFiltered),
                   onDoubleTap: (index) {
                     setState(() {
-                      if (_marked != null && index < _marked!.length) _marked![index] = !_marked![index];
-                      _outText = decodeMorseCode(_outData!.durations, _marked!);
+                      if (index < _marked.length) _marked[index] = !_marked[index];
+                      _outText = decodeMorseCode(_outData!.durations, _marked);
                     });
                   },
                 ),
@@ -304,7 +304,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
   }
 
   void _initMarkedList(List<Uint8List> images, List<List<int>> imagesFiltered) {
-    if (_marked == null || _marked!.length != images.length) {
+    if (_marked.length != images.length) {
       _marked = List.filled(images.length, false);
 
       // first image default as high signal
@@ -315,9 +315,8 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
   }
 
   void _markedListSetColumn(List<int> imagesFiltered, bool value) {
-    if (_marked == null) return;
     for (var idx in imagesFiltered) {
-      _marked![idx] = value;
+      _marked[idx] = value;
     }
   }
 
@@ -325,7 +324,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
       List<Uint8List>? images, List<int> durations, List<List<int>> imagesFiltered) {
     var list = <GCWImageViewData>[];
 
-    if (images != null && _marked != null) {
+    if (images != null) {
       var imageCount = images.length;
       _initMarkedList(images, imagesFiltered);
 
@@ -334,18 +333,17 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
 
         var image = images[imagesFiltered[i].first];
         list.add(GCWImageViewData(GCWFile(bytes: image),
-            description: description, marked: _marked![imagesFiltered[i].first]));
+            description: description, marked: _marked[imagesFiltered[i].first]));
       }
-      _outText = decodeMorseCode(durations, _marked!);
+      _outText = decodeMorseCode(durations, _marked);
     }
     return list;
   }
 
-  List<GCWImageViewData> _convertImageData(
-      List<Uint8List>? images, List<int> durations, List<List<int>> imagesFiltered) {
+  List<GCWImageViewData> _convertImageData(List<Uint8List>? images, List<int> durations, List<List<int>> imagesFiltered) {
     var list = <GCWImageViewData>[];
 
-    if (images != null && _marked != null) {
+    if (images != null) {
       var imageCount = images.length;
       _initMarkedList(images, imagesFiltered);
 
@@ -355,9 +353,9 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
           description += ': ' + durations[i].toString() + ' ms';
         }
 
-        list.add(GCWImageViewData(GCWFile(bytes: images[i]), description: description, marked: _marked![i]));
+        list.add(GCWImageViewData(GCWFile(bytes: images[i]), description: description, marked: _marked[i]));
       }
-      _outText = decodeMorseCode(durations, _marked!);
+      _outText = decodeMorseCode(durations, _marked);
     }
     return list;
   }
@@ -396,14 +394,13 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
 
   void _saveOutputDecode(AnimatedImageMorseOutput? output) {
     _outData = output;
-    _marked = null;
+    _marked = [];
 
     // restore image references (problem with sendPort, lose references)
     if (_outData != null) {
-      var images = _outData!.images;
       var linkList = _outData!.linkList;
-      for (int i = 0; i < images.length; i++) {
-        images[i] = images[linkList[i]];
+      for (int i = 0; i < _outData!.images.length; i++) {
+        _outData!.images[i] = _outData!.images[linkList[i]];
       }
     } else {
       showToast(i18n(context, 'common_loadfile_exception_notloaded'));
