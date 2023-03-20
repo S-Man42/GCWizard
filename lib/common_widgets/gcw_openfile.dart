@@ -368,10 +368,10 @@ Future<Object?> _downloadFileAsync(GCWAsyncExecuterParameters? jobData) async {
 /// * [allowedFileTypes] specifies a list of file extensions that will be displayed for selection, if empty - files with any extension are displayed. Example: `['jpg', 'jpeg']`
 Future<GCWFile?> _openFileExplorer({List<FileType>? allowedFileTypes}) async {
   try {
-    if (_hasUnsupportedTypes(allowedFileTypes)) allowedFileTypes = [];
+    if (allowedFileTypes == null || _hasUnsupportedTypes(allowedFileTypes)) allowedFileTypes = [];
 
     var files = (await filePicker.FilePicker.platform.pickFiles(
-        type: allowedFileTypes!.isEmpty ? filePicker.FileType.any : filePicker.FileType.custom,
+        type: allowedFileTypes.isEmpty ? filePicker.FileType.any : filePicker.FileType.custom,
         allowMultiple: false,
         allowedExtensions:
         allowedFileTypes.isEmpty ? null : allowedFileTypes.map((type) => fileExtension(type)).toList()))
