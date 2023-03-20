@@ -31,9 +31,9 @@ class MultiDecoderToolCcitt1 extends AbstractMultiDecoderTool {
                   return int.tryParse(convertBase(value, 2, 10));
                 }).toList();
                 return decodeTeletypewriter(intValues.whereType<int>().toList(),
-                    TeletypewriterCodebook.CCITT_ITA1_EU);
+                    TeletypewriterCodebook.BAUDOT_54123);
               } else {
-                return decodeTeletypewriter(textToIntList(input), TeletypewriterCodebook.CCITT_ITA1_EU);
+                return decodeTeletypewriter(textToIntList(input), TeletypewriterCodebook.BAUDOT_54123);
               }
             },
             options: options,
