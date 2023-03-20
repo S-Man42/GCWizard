@@ -158,8 +158,7 @@ Put baking soda into the mixing bowl.
 Liquefy contents of the mixing bowl.
 Pour contents of the mixing bowl into the baking dish. 
 
-Serves 1.
-''';
+Serves 1.''';
 
         List<Map<String, Object?>> _inputsToExpected = [
       {'language' : 'ENG', 'input' : '',   'recipe' : test0, 'expectedOutput' : []},
@@ -1899,8 +1898,7 @@ Put creeps into the mixing bowl.
 Liquify contents of the mixing bowl.
 Pour contents of the mixing bowl into the baking dish.
 
-Serves 1.
-'''; // run in the emulator
+Serves 1.'''; // run in the emulator
     var stdin = '''STDIN stew.
 
 Read flour from STDIN and output it.
@@ -2906,8 +2904,7 @@ Champignons in die Schüssel geben.
 Honig in die Schüssel geben.
 Schüssel in eine Servierschale stürzen.
 
-Portionen: 1.
-''';
+Portionen: 1.''';
     // läuft fehlerfrei im Emulator
     var GC9CAQJKorrigiert = '''Oma Krimhildes Strudel 
 
@@ -2941,8 +2938,7 @@ Honig in die Schüssel geben.
 Inhalt der Schüssel auf dem Stövchen erhitzen.
 Schüssel in eine Servierschale stürzen.
 
-Portionen: 1.
-''';
+Portionen: 1.''';
 
     // https://www.geocaching.com/geocache/GC7NYHW_backe-backe-kuchen
     var GC7NYHW = '''Zutaten:
@@ -3052,8 +3048,8 @@ Portionen: 1.''';
 
     List<Map<String, Object?>> _inputsToExpected = [
       {'language' : 'ENG', 'input' : '',  'recipe' : GC6HRCE, 'expectedOutput' : ['21m296g E013 17.699N52 25.763']},
-      {'language' : 'DEU', 'input' : '',  'recipe' : GC9CAQJ, 'expectedOutput' : ['809711711510111098114ot1310', '',' chef_warning_liquefy_missing_title', '» Inhalt der Schüssel auf dem Stövchen erhitzen. «', 'chef_warning_liquefy_missing_hint', '» Schüssel in eine Servierschale stürzen. «']},  // works in emulator
-      {'language' : 'DEU', 'input' : '',  'recipe' : GC9CAQJKorrigiert, 'expectedOutput' : ['Pausenbrot']}, // works in emulator
+      {'language' : 'DEU', 'input' : '',  'recipe' : GC9CAQJ, 'expectedOutput' : ['809711711510111098114ot1310', '','chef_warning_liquefy_missing_title', '» Inhalt der Schüssel auf dem Stövchen erhitzen. «', 'chef_warning_liquefy_missing_hint', '» Schüssel in eine Servierschale stürzen. «']},  // works in emulator
+      {'language' : 'DEU', 'input' : '',  'recipe' : GC9CAQJKorrigiert, 'expectedOutput' : ['Pausenbrot\r\n']}, // works in emulator
       {'language' : 'DEU', 'input' : '',  'recipe' : GC7NYHW, 'expectedOutput' : ['5256176325256.565452326932484857176324848.55249']},
       {'language' : 'DEU', 'input' : '',  'recipe' : GC8WY5T, 'expectedOutput' : ['783253491763250534651525332326932541763251494657515213106511010310110811032105110325410932Hö104101']},
       {'language' : 'DEU', 'input' : '',  'recipe' : GC8WY5TCorrect, 'expectedOutput' : ['N 51° 25.345  E 6° 31.934\r\nAngeln in 6m Höhe']},

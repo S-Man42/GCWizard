@@ -4,5 +4,5 @@ import 'package:gc_wizard/tools/science_and_technology/teletypewriter/teletypewr
 
 class AncientTeletypewriter extends Teletypewriter {
   const AncientTeletypewriter({Key? key})
-      : super(key: key, defaultCodebook: TeletypewriterCodebook.BAUDOT, codebook: ANCIENT_CODEBOOK);
+      : super(key: key, defaultCodebook: TeletypewriterCodebook.BAUDOT_12345, codebook: ANCIENT_CODEBOOK);
 }
