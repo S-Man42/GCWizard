@@ -325,7 +325,10 @@ Segments encodeNotes(String input, NotesCodebook notes, Map<String, String> tran
   List<String> inputs = input.split(RegExp(r'\s'));
 
   for (int i = 0; i < inputs.length; i++) {
-    result.add(CODEBOOK[inputs[i]]!);
+    var value = CODEBOOK[inputs[i]];
+    if (value != null) {
+      result.add(value);
+    }
   }
 
   return Segments(displays: result);
