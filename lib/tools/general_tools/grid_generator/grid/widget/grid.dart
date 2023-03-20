@@ -168,10 +168,6 @@ class GridState extends State<Grid> {
     _currentConfigBoxEnumerationBehaviour =
         _GRID_CONFIGURATIONS[_currentGridConfiguration]?.enumerationBehaviour ?? _GridBoxEnumerationBehaviour.ALIGNED;
 
-    // _boxEnumerationController.text = _currentConfigBoxEnumeration ?? '';
-    // _columnEnumerationController.text = _currentConfigColumnEnumeration ?? '';
-    // _rowEnumerationController.text = _currentConfigRowEnumeration ?? '';
-
     _currentConfigBoxEnumerationStartDirections = _possibleStartDirections();
   }
 

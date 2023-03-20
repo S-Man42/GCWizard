@@ -20,7 +20,7 @@ import 'package:gc_wizard/tools/images_and_files/image_colorcorrections/logic/im
 import 'package:gc_wizard/tools/images_and_files/_common/logic/rgb_pixel.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
-import 'package:image/image.dart' as img;
+import 'package:image/image.dart' as Image;
 import 'package:prefs/prefs.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 
@@ -37,8 +37,8 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
   GCWFile? _originalData;
   Uint8List? _convertedOutputImage;
 
-  img.Image? _currentPreview;
-  img.Image? _originalPreview;
+  Image.Image? _currentPreview;
+  Image.Image? _originalPreview;
 
   var _currentSaturation = 0.0;
   var _currentContrast = 0.0;
@@ -77,15 +77,15 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
     },
   };
 
-  img.Image? _currentDataInit({int? previewSize}) {
+  Image.Image? _currentDataInit({int? previewSize}) {
     var previewHeight = previewSize ?? Prefs.getInt(PREFERENCE_IMAGECOLORCORRECTIONS_MAXPREVIEWHEIGHT);
 
     if(_originalData?.bytes == null) return null;
-    img.Image? image = img.decodeImage(_originalData!.bytes);
+    Image.Image? image = Image.decodeImage(_originalData!.bytes);
 
     if(image == null) return null;
     if (image.height > previewHeight) {
-      img.Image resized = img.copyResize(image, height: previewHeight);
+      Image.Image resized = Image.copyResize(image, height: previewHeight);
       return resized;
     } else {
       return image;
@@ -100,7 +100,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
       _originalData = widget.file;
 
       _originalPreview = _currentDataInit();
-      if (_originalPreview != null) _currentPreview = img.Image.from(_originalPreview!);
+      if (_originalPreview != null) _currentPreview = Image.Image.from(_originalPreview!);
     }
   }
 
@@ -142,7 +142,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
               _originalData = value;
 
               _originalPreview = _currentDataInit();
-              if (_originalPreview != null) _currentPreview = img.Image.from(_originalPreview!);
+              if (_originalPreview != null) _currentPreview = Image.Image.from(_originalPreview!);
 
               _resetInputs();
             });
@@ -182,7 +182,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
                                     Prefs.setInt(PREFERENCE_IMAGECOLORCORRECTIONS_MAXPREVIEWHEIGHT, key);
 
                                     _originalPreview = _currentDataInit(previewSize: key);
-                                    if (_originalPreview != null) _currentPreview = img.Image.from(_originalPreview!);
+                                    if (_originalPreview != null) _currentPreview = Image.Image.from(_originalPreview!);
                                   });
                                 }));
                       })
@@ -345,7 +345,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
           child: SizedBox(
             height: 220,
             width: 150,
-            child: GCWAsyncExecuter<img.Image?>(
+            child: GCWAsyncExecuter<Image.Image?>(
               isolatedFunction: _adjustColorAsync,
               parameter: _buildJobDataAdjustColor,
               onReady: (data) => _saveOutputAdjustColor(data),
@@ -362,7 +362,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
 
   Future<GCWAsyncExecuterParameters?> _buildJobDataAdjustColor() async {
     if (_originalData?.bytes == null) return null;
-    var image = img.decodeImage(_originalData!.bytes);
+    var image = Image.decodeImage(_originalData!.bytes);
     if (image == null) return null;
     return GCWAsyncExecuterParameters(_AdjustColorInput(
         image: image,
@@ -380,11 +380,11 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
         brightness: _currentBrightness));
   }
 
-  void _saveOutputAdjustColor(img.Image? output) {
+  void _saveOutputAdjustColor(Image.Image? output) {
     if (output != null) _convertedOutputImage = encodeTrimmedPng(output);
   }
 
-  img.Image _adjustColor(img.Image image) {
+  Image.Image _adjustColor(Image.Image image) {
     return _doAdjustColor(_AdjustColorInput(
         image: image,
         invert: _currentInvert,
@@ -408,7 +408,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
   }
 }
 
-Future<img.Image?> _adjustColorAsync(GCWAsyncExecuterParameters? jobData) async {
+Future<Image.Image?> _adjustColorAsync(GCWAsyncExecuterParameters? jobData) async {
   if (jobData?.parameters is! _AdjustColorInput) return null;
 
   var output = _doAdjustColor(jobData!.parameters as _AdjustColorInput);
@@ -419,7 +419,7 @@ Future<img.Image?> _adjustColorAsync(GCWAsyncExecuterParameters? jobData) async 
 }
 
 class _AdjustColorInput {
-  final img.Image image;
+  final Image.Image image;
   final bool invert;
   final bool grayscale;
   final double edgeDetection;
@@ -449,10 +449,10 @@ class _AdjustColorInput {
       this.brightness = 0.0});
 }
 
-img.Image _doAdjustColor(_AdjustColorInput input) {
-  img.Image image = img.Image.from(input.image);
+Image.Image _doAdjustColor(_AdjustColorInput input) {
+  Image.Image image = Image.Image.from(input.image);
 
-  if (input.edgeDetection > 0.0) image = img.sobel(image, amount: input.edgeDetection);
+  if (input.edgeDetection > 0.0) image = Image.sobel(image, amount: input.edgeDetection);
 
   final pixels = image.getBytes();
   for (var i = 0, len = pixels.length; i < len; i += 4) {
