@@ -48,7 +48,7 @@ class GameOfLifeState extends State<GameOfLife> {
 
     _generateBoard();
 
-    _allRules = DEFAULT_GAME_OF_LIFE_RULES;
+    _allRules = Map<String, GameOfLifeRules?>.from(DEFAULT_GAME_OF_LIFE_RULES);
     _allRules.removeWhere((key, value) => value == null);
     _allRules.putIfAbsent(_KEY_CUSTOM_RULES, () => null);
   }
