@@ -374,10 +374,9 @@ Future<GCWFile?> _openFileExplorer({List<FileType>? allowedFileTypes}) async {
         type: allowedFileTypes.isEmpty ? filePicker.FileType.any : filePicker.FileType.custom,
         allowMultiple: false,
         allowedExtensions:
-        allowedFileTypes.isEmpty ? null : allowedFileTypes.map((type) => fileExtension(type)).toList()))
-        ?.files;
+            allowedFileTypes.isEmpty ? null : allowedFileTypes.map((type) => fileExtension(type)).toList()))?.files;
 
-    if (allowedFileTypes.isEmpty && files != null) files = _filterFiles(files, allowedFileTypes);
+    if (allowedFileTypes.isNotEmpty && files != null) files = _filterFiles(files, allowedFileTypes);
 
     if (files == null || files.isEmpty) return null;
 
