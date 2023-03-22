@@ -137,5 +137,11 @@ String _getCreationDate(BuildContext context, int duration) {
 
 String _formatDate(BuildContext context, String datetime) {
   String loc = Localizations.localeOf(context).toString();
-  return DateFormat.yMd(loc).add_jms().format(DateTime.parse(datetime)).toString();
+  String result = '';
+  try {
+    result = DateFormat.yMd(loc).add_jms().format(DateTime.parse(datetime)).toString();
+  } catch (exception) {
+    result = WHERIGO_NULLDATE;
+  }
+  return result;
 }
