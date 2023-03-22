@@ -36,7 +36,6 @@ part 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze_lua_
 
 Future<WherigoCartridge> getGcwCartridgeAsync(GCWAsyncExecuterParameters? jobData) async {
   if (jobData?.parameters is! WherigoJobData) return Future.value(WherigoCartridge());
-
   var gcw = jobData!.parameters as WherigoJobData;
   var output = await getCartridgeGWC(
       gcw.jobDataBytes,
@@ -44,7 +43,6 @@ Future<WherigoCartridge> getGcwCartridgeAsync(GCWAsyncExecuterParameters? jobDat
       sendAsyncPort: jobData.sendAsyncPort);
 
   jobData.sendAsyncPort?.send(output);
-
   return output;
 }
 

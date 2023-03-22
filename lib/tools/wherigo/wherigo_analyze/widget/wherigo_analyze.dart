@@ -1379,7 +1379,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   void _analyseCartridgeFileAsync(WHERIGO_CARTRIDGE_DATA_TYPE dataType) async {
     switch (dataType) {
       case WHERIGO_CARTRIDGE_DATA_TYPE.GWC:
-        _analyseGwcCartridgeFileAsync();
+        _analyseGWCCartridgeFileAsync();
         break;
       case WHERIGO_CARTRIDGE_DATA_TYPE.LUA:
         _analyseLuaCartridgeFileAsync();
@@ -1389,7 +1389,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     }
   }
 
-  void _analyseGwcCartridgeFileAsync() async {
+  void _analyseGWCCartridgeFileAsync() async {
     await showDialog<bool>(
       context: context,
       barrierDismissible: false,
@@ -1401,7 +1401,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             child: GCWAsyncExecuter<WherigoCartridge>(
               isolatedFunction: getGcwCartridgeAsync,
               parameter: _buildGwcJobData,
-              onReady: (data) => _showGcwCartridgeOutput(data),
+              onReady: (data) => _showCartridgeOutputGWC(data),
               isOverlay: true,
             ),
           ),
@@ -1422,7 +1422,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             child: GCWAsyncExecuter<WherigoCartridge>(
               isolatedFunction: getLuaCartridgeAsync,
               parameter: _buildLuaJobData,
-              onReady: (data) => _showLuaCartridgeOutput(data),
+              onReady: (data) => _showCartridgeOutputLUA(data),
               isOverlay: true,
             ),
           ),
@@ -1441,7 +1441,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         jobDataBytes: _LUAbytes, jobDataMode: _getLUAOnline, jobDataType: WHERIGO_CARTRIDGE_DATA_TYPE.LUA));
   }
 
-  void _showGcwCartridgeOutput(WherigoCartridge output) {
+  void _showCartridgeOutputLUA(WherigoCartridge output) {
     _outData = output;
     String toastMessage = '';
     int toastDuration = 3;
@@ -1562,7 +1562,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     } // outData != null
   }
 
-  void _showLuaCartridgeOutput(WherigoCartridge output) {
+  void _showCartridgeOutputGWC(WherigoCartridge output) {
     _outData = output;
     String toastMessage = '';
     int toastDuration = 3;
@@ -1587,23 +1587,17 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     }
 
     // check if GWC and LUA are from the same cartridge
-    if ((WherigoCartridgeGWCData.CartridgeGUID != WherigoCartridgeLUAData.CartridgeGUID &&
-            WherigoCartridgeLUAData.CartridgeGUID != '') &&
-        (WherigoCartridgeGWCData.CartridgeLUAName != WherigoCartridgeLUAData.CartridgeLUAName &&
-            WherigoCartridgeLUAData.CartridgeLUAName != '')) {
+    if (_GCWandLUAareFromDifferentCartridges()) {
       // files belong to different cartridges
       WherigoCartridgeLUAData = _resetLUA('wherigo_error_diff_gwc_lua_1');
-      _fileLoadedState = WHERIGO_FILE_LOAD_STATE.GWC;
-      _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
       _getLUAOnline = true;
       _nohttpError = true;
       _WherigoShowLUASourcecodeDialog = true;
       showToast(i18n(context, 'wherigo_error_diff_gwc_lua_1') + '\n' + i18n(context, 'wherigo_error_diff_gwc_lua_2'),
           duration: 30);
-    } else {
-      _fileLoadedState = WHERIGO_FILE_LOAD_STATE.GWC;
-      _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
     }
+    _fileLoadedState = WHERIGO_FILE_LOAD_STATE.GWC;
+    _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
 
     showToast(toastMessage, duration: toastDuration);
 
@@ -1613,6 +1607,13 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {});
     });
+  }
+
+  bool _GCWandLUAareFromDifferentCartridges(){
+    return ((WherigoCartridgeGWCData.CartridgeGUID != WherigoCartridgeLUAData.CartridgeGUID &&
+        WherigoCartridgeLUAData.CartridgeGUID != '') &&
+        (WherigoCartridgeGWCData.CartridgeLUAName != WherigoCartridgeLUAData.CartridgeLUAName &&
+            WherigoCartridgeLUAData.CartridgeLUAName != ''));
   }
 
   void _updateOutput() {
@@ -1781,7 +1782,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   List<GCWDropDownMenuItem<WHERIGO_OBJECT>> _setDisplayCartridgeDataList() {
-    var loadedState = WHERIGO_DATA[wherigoExpertMode]?[_fileLoadedState];
+    var loadedState = WHERIGO_DROPDOWN_DATA[wherigoExpertMode]?[_fileLoadedState];
     if (loadedState == null) return <GCWDropDownMenuItem<WHERIGO_OBJECT>>[];
 
     return SplayTreeMap<String, WHERIGO_OBJECT>.from(switchMapKeyValue(loadedState)

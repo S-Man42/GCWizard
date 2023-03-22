@@ -326,7 +326,6 @@
   "befunge_error_no_input": "Input is missing",
   "befunge_error_invalid_input": "Input is invalid: not a number",
   "befunge_error_infinite_loop": "RUNTIME ERROR: Infinite Loop",
-  "befunge_error_invalid_charcode": "RUNTIME ERROR: Invalid CharCode in Stack",
   "befunge_error_null_command": "RUNTIME ERROR: No command found",
   "befunge_error_access_out_of_bounds": "RUNTIME ERROR: Access out of bounds",
   "beghilos_title" : "Beghilos",

@@ -20,9 +20,7 @@ const _BEFUNGE_ERROR_INVALID_PROGRAM = 'befunge_error_syntax_invalidprogram';
 const _BEFUNGE_ERROR_NO_INPUT = 'befunge_error_no_input';
 const _BEFUNGE_ERROR_INVALID_INPUT = 'befunge_error_invalid_input';
 const BEFUNGE_ERROR_INFINITE_LOOP = 'befunge_error_infinite_loop';
-const _BEFUNGE_ERROR_INVALID_CHARCODE = 'befunge_error_invalid_charcode';
 const _BEFUNGE_ERROR_NULL_COMMAND = 'befunge_error_null_command';
-const _BEFUNGE_ERROR_INTEGER_OVERFLOW = 'befunge_error_integer_overflow';
 const _BEFUNGE_ERROR_OUT_OF_BOUNDS_ACCESS = 'befunge_error_access_out_of_bounds';
 
 const _BEFUNGE_EMPTY_LINE = '                                                                                ';
