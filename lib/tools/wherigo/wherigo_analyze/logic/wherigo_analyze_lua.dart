@@ -242,25 +242,24 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
     // ----------------------------------------------------------------------------------------------------------------
     // search and get Item Object
     //
+    late WherigoItemData cartridgeItemData;
     try {
       if (RegExp(r'( Wherigo.ZItem\()').hasMatch(lines[i])) {
         currentObjectSection = WHERIGO_OBJECT_TYPE.ITEM;
-        _LUAname = getLUAName(lines[i]);
-        _container = getContainer(lines[i]);
         analyzeLines = [];
         do {
-          i++;
-          analyzeLines.add(lines[i]);
-          if (sendAsyncPort != null && (i % progressStep == 0)) {
-            sendAsyncPort.send(DoubleText('progress', i / lines.length / 2));
-          }
-        } while (_insideSectionItem(lines[i + 1]) && (i < lines.length - 1));
-
-        WherigoItemData cartridgeItemData = _analyzeAndExtractItemSectionData(analyzeLines, _container);
-
-        _cartridgeItems.add(cartridgeItemData);
-        _cartridgeNameToObject[_LUAname] = WherigoObjectData(cartridgeItemData.ItemID, 0, cartridgeItemData.ItemName,
-            cartridgeItemData.ItemMedia, WHERIGO_OBJECT_TYPE.ITEM);
+          do {
+            analyzeLines.add(lines[i]);
+            if (sendAsyncPort != null && (i % progressStep == 0)) {
+              sendAsyncPort.send(DoubleText('progress', i / lines.length / 2));
+            }
+            i++;
+          } while (_insideSectionItem(lines[i]) && (i + 1 < lines.length - 1));
+          cartridgeItemData = _analyzeAndExtractItemSectionData(analyzeLines);
+          _cartridgeItems.add(cartridgeItemData);
+          _cartridgeNameToObject[_LUAname] = WherigoObjectData(cartridgeItemData.ItemID, 0, cartridgeItemData.ItemName,
+              cartridgeItemData.ItemMedia, WHERIGO_OBJECT_TYPE.ITEM);
+        } while (_notDoneWithItems(lines[i]) && (i + 1 < lines.length - 1));
       } // end if
     } catch (exception) {
       _LUAAnalyzeStatus = WHERIGO_ANALYSE_RESULT_STATUS.ERROR_LUA;
