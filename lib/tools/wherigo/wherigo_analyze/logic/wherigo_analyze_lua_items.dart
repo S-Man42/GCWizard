@@ -1,8 +1,14 @@
 part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze.dart';
 
 bool _insideSectionItem(String currentLine) {
-  if (RegExp(r'( Wherigo.ZItem\()').hasMatch(currentLine) ||
-      RegExp(r'( Wherigo.ZTask\()').hasMatch(currentLine) ||
+  if (RegExp(r'( Wherigo.ZItem\()').hasMatch(currentLine)) {
+    return false;
+  }
+  return true;
+}
+
+bool _notDoneWithItems(String currentLine) {
+  if (RegExp(r'( Wherigo.ZTask\()').hasMatch(currentLine) ||
       RegExp(r'(.ZVariables =)').hasMatch(currentLine) ||
       RegExp(r'( Wherigo.ZTimer\()').hasMatch(currentLine) ||
       RegExp(r'( Wherigo.ZInput\()').hasMatch(currentLine) ||
@@ -12,8 +18,9 @@ bool _insideSectionItem(String currentLine) {
   return true;
 }
 
-WherigoItemData _analyzeAndExtractItemSectionData(List<String> lines, String container) {
+WherigoItemData _analyzeAndExtractItemSectionData(List<String> lines) {
   String LUAname = '';
+  String container = '';
   String id = '';
   String name = '';
   String description = '';
@@ -29,6 +36,10 @@ WherigoItemData _analyzeAndExtractItemSectionData(List<String> lines, String con
 
   for (int i = 0; i < lines.length; i++) {
     lines[i] = lines[i].trim();
+    if (RegExp(r'( Wherigo.ZItem\()').hasMatch(lines[i])) {
+      LUAname = getLUAName(lines[i]);
+      container = getContainer(lines[i]);
+    }
     if (lines[i].trim().startsWith(LUAname + 'Container =')) {
       container = getContainer(lines[i]);
     }

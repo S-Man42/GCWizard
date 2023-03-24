@@ -195,6 +195,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   void _setGWCData(Uint8List bytes) {
+
     _GWCbytes = bytes;
     _GWCFileStructure = _buildOutputListByteCodeStructure(context, _GWCbytes);
 
@@ -1456,7 +1457,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
     switch (WherigoCartridgeLUAData.ResultStatus) {
       case WHERIGO_ANALYSE_RESULT_STATUS.OK:
-        toastMessage = i18n(context, 'wherigo_data_loaded') + ': ' + WHERIGO_CARTRIDGE_DATA_TYPE.GWC.toString();
+        toastMessage = i18n(context, 'wherigo_data_loaded') + ': LUA';
         toastDuration = 5;
         _nohttpError = false;
 
@@ -1571,7 +1572,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
     switch (WherigoCartridgeGWCData.ResultStatus) {
       case WHERIGO_ANALYSE_RESULT_STATUS.OK:
-        toastMessage = i18n(context, 'wherigo_data_loaded') + ': ' + WHERIGO_CARTRIDGE_DATA_TYPE.LUA.toString();
+        toastMessage = i18n(context, 'wherigo_data_loaded') + ': GWC';
         break;
 
       case WHERIGO_ANALYSE_RESULT_STATUS.ERROR_GWC:
