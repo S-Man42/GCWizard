@@ -1,8 +1,14 @@
 part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze.dart';
 
 bool _insideSectionMedia(String currentLine) {
+  if (RegExp(r'(Wherigo.ZMedia\()').hasMatch(currentLine)) {
+    return false;
+  }
+  return _notDoneWithMedias(currentLine);
+}
+
+bool _notDoneWithMedias(String currentLine) {
   if (RegExp(r'(Wherigo.ZCharacter\()').hasMatch(currentLine) ||
-      RegExp(r'(Wherigo.ZMedia\()').hasMatch(currentLine) ||
       RegExp(r'(Wherigo.ZItem\()').hasMatch(currentLine) ||
       RegExp(r'(Wherigo.ZTask\()').hasMatch(currentLine) ||
       RegExp(r'(.ZVariables =)').hasMatch(currentLine) ||

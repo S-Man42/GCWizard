@@ -1047,7 +1047,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         children: <Widget>[
           GCWColumnedMultilineOutput(
               data: _buildOutputListAnswers(context, WherigoCartridgeLUAData.Inputs[_inputIndex - 1],
-                  WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers[_answerIndex - 1]),
+                  WherigoAnswerData('', '', [])
+                  //WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers[_answerIndex - 1]
+              ),
               copyColumn: 1,
               flexValues: const[2, 3, 3]),
           GCWExpandableTextDivider(
@@ -1056,7 +1058,11 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             suppressTopSpace: false,
             child: Column(
                 children: _outputAnswerActionsWidgets(
-                    context, WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers[_answerIndex - 1])),
+                    context,
+                    WherigoAnswerData('', '', [])
+                    //WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers[_answerIndex - 1]
+                )
+            ),
           ),
         ],
       ),
