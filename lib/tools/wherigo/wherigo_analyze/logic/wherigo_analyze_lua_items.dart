@@ -4,7 +4,8 @@ bool _insideSectionItem(String currentLine) {
   if (RegExp(r'( Wherigo.ZItem\()').hasMatch(currentLine)) {
     return false;
   }
-  return true;
+
+  return _notDoneWithItems(currentLine);
 }
 
 bool _notDoneWithItems(String currentLine) {
@@ -40,19 +41,19 @@ WherigoItemData _analyzeAndExtractItemSectionData(List<String> lines) {
       LUAname = getLUAName(lines[i]);
       container = getContainer(lines[i]);
     }
-    if (lines[i].trim().startsWith(LUAname + 'Container =')) {
+    if (lines[i].startsWith(LUAname + 'Container =')) {
       container = getContainer(lines[i]);
     }
 
-    if (lines[i].trim().startsWith(LUAname + '.Id')) {
+    if (lines[i].startsWith(LUAname + '.Id')) {
       id = getLineData(lines[i], LUAname, 'Id', _obfuscatorFunction, _obfuscatorTable);
     }
 
-    if (lines[i].trim().startsWith(LUAname + '.Name')) {
+    if (lines[i].startsWith(LUAname + '.Name')) {
       name = getLineData(lines[i], LUAname, 'Name', _obfuscatorFunction, _obfuscatorTable);
     }
 
-    if (lines[i].trim().startsWith(LUAname + '.Description')) {
+    if (lines[i].startsWith(LUAname + '.Description')) {
       description = '';
       _sectionDescription = true;
       do {
@@ -67,27 +68,27 @@ WherigoItemData _analyzeAndExtractItemSectionData(List<String> lines) {
       description = getLineData(description, LUAname, 'Description', _obfuscatorFunction, _obfuscatorTable).trim();
     }
 
-    if (lines[i].trim().startsWith(LUAname + '.Visible')) {
+    if (lines[i].startsWith(LUAname + '.Visible')) {
       visible = getLineData(lines[i], LUAname, 'Visible', _obfuscatorFunction, _obfuscatorTable);
     }
 
-    if (lines[i].trim().startsWith(LUAname + '.Media')) {
+    if (lines[i].startsWith(LUAname + '.Media')) {
       media = getLineData(lines[i], LUAname, 'Media', _obfuscatorFunction, _obfuscatorTable).trim();
     }
 
-    if (lines[i].trim().startsWith(LUAname + '.Icon')) {
+    if (lines[i].startsWith(LUAname + '.Icon')) {
       icon = getLineData(lines[i], LUAname, 'Icon', _obfuscatorFunction, _obfuscatorTable);
     }
 
-    if (lines[i].trim().startsWith(LUAname + '.Locked')) {
+    if (lines[i].startsWith(LUAname + '.Locked')) {
       locked = getLineData(lines[i], LUAname, 'Locked', _obfuscatorFunction, _obfuscatorTable);
     }
 
-    if (lines[i].trim().startsWith(LUAname + '.Opened')) {
+    if (lines[i].startsWith(LUAname + '.Opened')) {
       opened = getLineData(lines[i], LUAname, 'Opened', _obfuscatorFunction, _obfuscatorTable);
     }
 
-    if (lines[i].trim().startsWith(LUAname + '.ObjectLocation')) {
+    if (lines[i].startsWith(LUAname + '.ObjectLocation')) {
       location =
           lines[i].trim().replaceAll(LUAname + '.ObjectLocation', '').replaceAll(' ', '').replaceAll('=', '');
       if (location.endsWith('INVALID_ZONEPOINT')) {
