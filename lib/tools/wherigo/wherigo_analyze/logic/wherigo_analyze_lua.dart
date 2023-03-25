@@ -392,7 +392,6 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
     late WherigoInputData cartridgeInputData;
     try {
       if (RegExp(r'( Wherigo.ZInput\()').hasMatch(lines[i])) {
-        print('found input');
         currentObjectSection = WHERIGO_OBJECT_TYPE.INPUT;
 
         do {
