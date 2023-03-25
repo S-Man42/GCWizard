@@ -248,6 +248,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             _widgetOpenGWCFile(context),
 
             // Show Button if GWC File loaded and not httpError
+            _widgetShowDecompileButton(context),
             if (_fileLoadedState == WHERIGO_FILE_LOAD_STATE.GWC && _nohttpError) _widgetShowDecompileButton(context),
 
             // Show OpenFileDialog if GWC File loaded an get LUA offline
@@ -1477,6 +1478,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         } else {
           _fileLoadedState = WHERIGO_FILE_LOAD_STATE.FULL;
           _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
+          showToast(toastMessage, duration: toastDuration);
+
+          _updateOutput();
         }
         break;
 
@@ -1556,10 +1560,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         break;
       default:
         {}
-
-        showToast(toastMessage, duration: toastDuration);
-
-        _updateOutput();
     } // outData != null
   }
 

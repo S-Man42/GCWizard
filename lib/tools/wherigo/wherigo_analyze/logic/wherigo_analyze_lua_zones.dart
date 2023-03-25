@@ -1,14 +1,20 @@
 part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze.dart';
 
 bool _insideSectionZone(String currentLine) {
-  if (RegExp(r'( Wherigo.ZCharacter\()').hasMatch(currentLine) ||
-      RegExp(r'( Wherigo.ZItem\()').hasMatch(currentLine) ||
-      RegExp(r'( Wherigo.ZTask\()').hasMatch(currentLine) ||
+  if (RegExp(r'( Wherigo.Zone\()').hasMatch(currentLine)) {
+    return false;
+  }
+  return _notDoneWithZones(currentLine);
+}
+
+bool _notDoneWithZones(String currentLine) {
+  if (RegExp(r'(Wherigo.ZCharacter\()').hasMatch(currentLine) ||
+      RegExp(r'(Wherigo.ZItem\()').hasMatch(currentLine) ||
+      RegExp(r'(Wherigo.ZTask\()').hasMatch(currentLine) ||
       RegExp(r'(.ZVariables =)').hasMatch(currentLine) ||
-      RegExp(r'( Wherigo.ZTimer\()').hasMatch(currentLine) ||
-      RegExp(r'( Wherigo.ZInput\()').hasMatch(currentLine) ||
-      RegExp(r'(function)').hasMatch(currentLine) ||
-      RegExp(r'( Wherigo.Zone\()').hasMatch(currentLine)) {
+      RegExp(r'(Wherigo.ZTimer\()').hasMatch(currentLine) ||
+      RegExp(r'(Wherigo.ZInput\()').hasMatch(currentLine) ||
+      RegExp(r'(function)').hasMatch(currentLine)) {
     return false;
   }
   return true;
@@ -37,6 +43,9 @@ WherigoZoneData _analyzeAndExtractZoneSectionData(List<String> lines) {
 
   for (int i = 0; i < lines.length; i++) {
     lines[i] = lines[i].trim();
+    if (RegExp(r'( Wherigo.Zone\()').hasMatch(lines[i])) {
+      LUAname = getLUAName(lines[i]);
+    }
     if (lines[i].startsWith(LUAname + '.Id')) {
       id = getLineData(lines[i], LUAname, 'Id', _obfuscatorFunction, _obfuscatorTable);
     }
