@@ -32,7 +32,7 @@ WherigoZoneData _analyzeAndExtractZoneSectionData(List<String> lines) {
   String distanceRange = '';
   String showObjects = '';
   String proximityRange = '';
-  WherigoZonePoint originalPoint = WherigoZonePoint(0.0, 0.0, 0.0);
+  WherigoZonePoint originalPoint = WHERIGO_NULLPOINT;
   String distanceRangeUOM = '';
   String proximityRangeUOM = '';
   String outOfRange = '';
@@ -110,7 +110,10 @@ WherigoZoneData _analyzeAndExtractZoneSectionData(List<String> lines) {
       List<String> pointdata =
       point.replaceAll('ZonePoint(', '').replaceAll(')', '').replaceAll(' ', '').split(',');
       originalPoint =
-          WherigoZonePoint(double.parse(pointdata[0]), double.parse(pointdata[1]), double.parse(pointdata[2]));
+          WherigoZonePoint(
+              Latitude: double.parse(pointdata[0]),
+              Longitude: double.parse(pointdata[1]),
+              Altitude: double.parse(pointdata[2]));
     }
 
     if (lines[i].startsWith(LUAname + '.OutOfRangeName')) {
@@ -134,22 +137,22 @@ WherigoZoneData _analyzeAndExtractZoneSectionData(List<String> lines) {
     }
   }
   return WherigoZoneData(
-    LUAname,
-    id,
-    name,
-    description,
-    visible,
-    media,
-    icon,
-    active,
-    distanceRange,
-    showObjects,
-    proximityRange,
-    originalPoint,
-    distanceRangeUOM,
-    proximityRangeUOM,
-    outOfRange,
-    inRange,
-    points,
+    ZoneLUAName: LUAname,
+    ZoneID: id,
+    ZoneName: name,
+    ZoneDescription: description,
+    ZoneVisible: visible,
+    ZoneMediaName: media,
+    ZoneIconName: icon,
+    ZoneActive: active,
+    ZoneDistanceRange: distanceRange,
+    ZoneShowObjects: showObjects,
+    ZoneProximityRange: proximityRange,
+    ZoneOriginalPoint: originalPoint,
+    ZoneDistanceRangeUOM: distanceRangeUOM,
+    ZoneProximityRangeUOM: proximityRangeUOM,
+    ZoneOutOfRange: outOfRange,
+    ZoneInRange: inRange,
+    ZonePoints: points,
   );
 }

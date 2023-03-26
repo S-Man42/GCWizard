@@ -38,9 +38,9 @@ void _analyzeAndExtractOnGetInputSectionData(List<String> lines) {
             }
 
             _Answers[_inputObject]!.add(WherigoAnswerData(
-              answer,
-              _answerHash,
-              _answerActions,
+              AnswerAnswer: answer,
+              AnswerHash: _answerHash,
+              AnswerActions: _answerActions,
             ));
           }
         }
@@ -55,9 +55,9 @@ void _analyzeAndExtractOnGetInputSectionData(List<String> lines) {
 
           if (answer != 'NIL') {
             _Answers[_inputObject]!.add(WherigoAnswerData(
-              answer,
-              _answerHash,
-              _answerActions,
+              AnswerAnswer: answer,
+              AnswerHash: _answerHash,
+              AnswerActions: _answerActions,
             ));
           }
         }
@@ -72,12 +72,13 @@ void _analyzeAndExtractOnGetInputSectionData(List<String> lines) {
         if (!(lines[i].trim() == '}' || lines[i].trim() == '},')) {
           if (lines[i].trimLeft().startsWith(_obfuscatorFunction)) {
             _answerActions.add(WherigoActionMessageElementData(
-                WHERIGO_ACTIONMESSAGETYPE.BUTTON,
-                deobfuscateUrwigoText(lines[i].trim().replaceAll(_obfuscatorFunction + '("', '').replaceAll('")', ''),
+                ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.BUTTON,
+                ActionMessageContent: deobfuscateUrwigoText(lines[i].trim().replaceAll(_obfuscatorFunction + '("', '').replaceAll('")', ''),
                     _obfuscatorTable)));
           } else {
-            _answerActions.add(WherigoActionMessageElementData(WHERIGO_ACTIONMESSAGETYPE.BUTTON,
-                lines[i].trim().replaceAll(_obfuscatorFunction + '("', '').replaceAll('")', '')));
+            _answerActions.add(WherigoActionMessageElementData(
+                ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.BUTTON,
+                ActionMessageContent: lines[i].trim().replaceAll(_obfuscatorFunction + '("', '').replaceAll('")', '')));
           }
         }
       } while (!lines[i].trim().startsWith('}'));
