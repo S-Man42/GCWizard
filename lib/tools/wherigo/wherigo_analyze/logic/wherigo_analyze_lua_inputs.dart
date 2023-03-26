@@ -110,7 +110,6 @@ WherigoInputData _analyzeAndExtractInputSectionData(List<String> lines) {
 
     if (lines[i].startsWith(LUAname + '.Text')) {
       if (lines[i].endsWith('"')) {
-      //if (_singleLine(lines[i + 1], LUAname)) {
         text = getLineData(lines[i], LUAname, 'Text', _obfuscatorFunction, _obfuscatorTable);
       } else {
         // multi Lines of Text
@@ -143,18 +142,18 @@ WherigoInputData _analyzeAndExtractInputSectionData(List<String> lines) {
     }
   }
   return WherigoInputData(
-    LUAname,
-    id,
-    variableID,
-    name,
-    description,
-    visible,
-    media,
-    icon,
-    inputType,
-    text,
-    listChoices,
-    [],
+    InputLUAName: LUAname,
+    InputID: id,
+    InputVariableID: variableID,
+    InputName: name,
+    InputDescription: description,
+    InputVisible: visible,
+    InputMedia: media,
+    InputIcon: icon,
+    InputType: inputType,
+    InputText: text,
+    InputChoices: listChoices,
+    InputAnswers: [],
   );
 }
 

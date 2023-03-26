@@ -67,12 +67,12 @@ WherigoTimerData _analyzeAndExtractTimerSectionData(List<String> lines) {
     }
   }
   return WherigoTimerData(
-    LUAname,
-    id,
-    name,
-    description,
-    visible,
-    duration,
-    type,
+    TimerLUAName: LUAname,
+    TimerID: id,
+    TimerName: name,
+    TimerDescription: description,
+    TimerVisible: visible,
+    TimerDuration: duration,
+    TimerType: type,
   );
 }

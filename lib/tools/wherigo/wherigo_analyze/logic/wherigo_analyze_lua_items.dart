@@ -29,7 +29,7 @@ WherigoItemData _analyzeAndExtractItemSectionData(List<String> lines) {
   String media = '';
   String icon = '';
   String location = '';
-  WherigoZonePoint zonePoint = WherigoZonePoint(0.0, 0.0, 0.0);
+  WherigoZonePoint zonePoint = WHERIGO_NULLPOINT ;
   String locked = '';
   String opened = '';
 
@@ -95,8 +95,10 @@ WherigoItemData _analyzeAndExtractItemSectionData(List<String> lines) {
         location = '';
       } else if (location.startsWith('ZonePoint')) {
         location = location.replaceAll('ZonePoint(', '').replaceAll(')', '').replaceAll(' ', '');
-        zonePoint = WherigoZonePoint(double.parse(location.split(',')[0]), double.parse(location.split(',')[1]),
-            double.parse(location.split(',')[2]));
+        zonePoint = WherigoZonePoint(
+            Latitude: double.parse(location.split(',')[0]),
+            Longitude: double.parse(location.split(',')[1]),
+            Altitude: double.parse(location.split(',')[2]));
         location = 'ZonePoint';
       } else {
         location = getLineData(lines[i], LUAname, 'ObjectLocation', _obfuscatorFunction, _obfuscatorTable);
@@ -104,5 +106,16 @@ WherigoItemData _analyzeAndExtractItemSectionData(List<String> lines) {
     }
   }
   return WherigoItemData(
-      LUAname, id, name, description, visible, media, icon, location, zonePoint, container, locked, opened);
+      ItemLUAName: LUAname,
+      ItemID: id,
+      ItemName: name,
+      ItemDescription: description,
+      ItemVisible: visible,
+      ItemMedia: media,
+      ItemIcon: icon,
+      ItemLocation: location,
+      ItemZonepoint: zonePoint,
+      ItemContainer: container,
+      ItemLocked: locked,
+      ItemOpened: opened);
 }

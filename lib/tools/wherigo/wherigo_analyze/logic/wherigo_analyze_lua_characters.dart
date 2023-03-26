@@ -29,13 +29,13 @@ WherigoCharacterData _analyzeAndExtractCharacterSectionData(List<String> lines) 
   String media = '';
   String icon = '';
   String location = '';
-  WherigoZonePoint zonePoint = WherigoZonePoint(0.0, 0.0, 0.0);
+  WherigoZonePoint zonePoint = WHERIGO_NULLPOINT;
   String type = '';
   String gender = '';
 
   bool _sectionDescription = true;
 
- for (int i = 0; i < lines.length; i++) {
+  for (int i = 0; i < lines.length; i++) {
     lines[i] = lines[i].trim();
     if (RegExp(r'( Wherigo.ZCharacter\()').hasMatch(lines[i])) {
       LUAname = getLUAName(lines[i]);
@@ -81,14 +81,15 @@ WherigoCharacterData _analyzeAndExtractCharacterSectionData(List<String> lines) 
     }
 
     if (lines[i].trim().startsWith(LUAname + '.ObjectLocation')) {
-      location =
-          lines[i].trim().replaceAll(LUAname + '.ObjectLocation', '').replaceAll(' ', '').replaceAll('=', '');
+      location = lines[i].trim().replaceAll(LUAname + '.ObjectLocation', '').replaceAll(' ', '').replaceAll('=', '');
       if (location.endsWith('INVALID_ZONEPOINT')) {
         location = '';
       } else if (location.startsWith('ZonePoint')) {
         location = location.replaceAll('ZonePoint(', '').replaceAll(')', '').replaceAll(' ', '');
-        zonePoint = WherigoZonePoint(double.parse(location.split(',')[0]), double.parse(location.split(',')[1]),
-            double.parse(location.split(',')[2]));
+        zonePoint = WherigoZonePoint(
+            Latitude: double.parse(location.split(',')[0]),
+            Longitude: double.parse(location.split(',')[1]),
+            Altitude: double.parse(location.split(',')[2]));
         location = 'ZonePoint';
       } else {
         location = getLineData(lines[i], LUAname, 'ObjectLocation', _obfuscatorFunction, _obfuscatorTable);
@@ -104,6 +105,16 @@ WherigoCharacterData _analyzeAndExtractCharacterSectionData(List<String> lines) 
     }
   }
   return WherigoCharacterData(
-    LUAname, id, name, description, visible, media, icon, location, zonePoint, container, gender, type
-  );
+      CharacterLUAName: LUAname,
+      CharacterID: id,
+      CharacterName: name,
+      CharacterDescription: description,
+      CharacterVisible: visible,
+      CharacterMediaName: media,
+      CharacterIconName: icon,
+      CharacterLocation: location,
+      CharacterZonepoint: zonePoint,
+      CharacterContainer: container,
+      CharacterGender: gender,
+      CharacterType: type);
 }

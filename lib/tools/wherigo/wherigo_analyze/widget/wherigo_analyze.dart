@@ -512,8 +512,10 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               _openInMap(
                   _currentZonePoints(
                       WherigoCartridgeGWCData.CartridgeLUAName,
-                      WherigoZonePoint(WherigoCartridgeGWCData.Latitude, WherigoCartridgeGWCData.Longitude,
-                          WherigoCartridgeGWCData.Altitude)),
+                      WherigoZonePoint(
+                          Latitude: WherigoCartridgeGWCData.Latitude,
+                          Longitude: WherigoCartridgeGWCData.Longitude,
+                          Altitude: WherigoCartridgeGWCData.Altitude)),
                   []);
             },
           ),
@@ -842,9 +844,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                     _currentZonePoints(
                         WherigoCartridgeLUAData.Characters[_characterIndex - 1].CharacterName,
                         WherigoZonePoint(
-                            WherigoCartridgeLUAData.Characters[_characterIndex - 1].CharacterZonepoint.Latitude,
-                            WherigoCartridgeLUAData.Characters[_characterIndex - 1].CharacterZonepoint.Longitude,
-                            WherigoCartridgeLUAData.Characters[_characterIndex - 1].CharacterZonepoint.Altitude)),
+                            Latitude: WherigoCartridgeLUAData.Characters[_characterIndex - 1].CharacterZonepoint.Latitude,
+                            Longitude: WherigoCartridgeLUAData.Characters[_characterIndex - 1].CharacterZonepoint.Longitude,
+                            Altitude: WherigoCartridgeLUAData.Characters[_characterIndex - 1].CharacterZonepoint.Altitude)),
                     []);
               },
             ),
@@ -1047,7 +1049,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         children: <Widget>[
           GCWColumnedMultilineOutput(
               data: _buildOutputListAnswers(context, WherigoCartridgeLUAData.Inputs[_inputIndex - 1],
-                  WherigoAnswerData('', '', [])
+                  WherigoAnswerData(AnswerAnswer: '', AnswerHash: '', AnswerActions: [])
                   //WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers[_answerIndex - 1]
               ),
               copyColumn: 1,
@@ -1059,7 +1061,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             child: Column(
                 children: _outputAnswerActionsWidgets(
                     context,
-                    WherigoAnswerData('', '', [])
+                    WherigoAnswerData(AnswerAnswer: '', AnswerHash: '', AnswerActions: [])
                     //WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers[_answerIndex - 1]
                 )
             ),
@@ -1233,9 +1235,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                     _currentZonePoints(
                         WherigoCartridgeLUAData.Items[_itemIndex - 1].ItemName,
                         WherigoZonePoint(
-                            WherigoCartridgeLUAData.Items[_itemIndex - 1].ItemZonepoint.Latitude,
-                            WherigoCartridgeLUAData.Items[_itemIndex - 1].ItemZonepoint.Longitude,
-                            WherigoCartridgeLUAData.Items[_itemIndex - 1].ItemZonepoint.Altitude)),
+                            Latitude: WherigoCartridgeLUAData.Items[_itemIndex - 1].ItemZonepoint.Latitude,
+                            Longitude: WherigoCartridgeLUAData.Items[_itemIndex - 1].ItemZonepoint.Longitude,
+                            Altitude: WherigoCartridgeLUAData.Items[_itemIndex - 1].ItemZonepoint.Altitude)),
                     []);
               },
             ),
@@ -1532,7 +1534,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           Timers: [],
           Media: [],
           Messages: [],
-          Answers: [],
           Variables: [],
           NameToObject: {},
           Builder: WHERIGO_BUILDER.UNKNOWN,

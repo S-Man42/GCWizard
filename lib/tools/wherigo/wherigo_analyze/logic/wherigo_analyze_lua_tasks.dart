@@ -83,5 +83,15 @@ WherigoTaskData _analyzeAndExtractTaskSectionData(List<String> lines) {
       complete = getLineData(lines[i], LUAname, 'Complete', _obfuscatorFunction, _obfuscatorTable);
     }
   }
-  return WherigoTaskData(LUAname, id, name, description, visible, media, icon, active, complete, correctstate);
+  return WherigoTaskData(
+      TaskLUAName: LUAname,
+      TaskID: id,
+      TaskName: name,
+      TaskDescription: description,
+      TaskVisible: visible,
+      TaskMedia: media,
+      TaskIcon: icon,
+      TaskActive: active,
+      TaskComplete: complete,
+      TaskCorrectstate: correctstate);
 }

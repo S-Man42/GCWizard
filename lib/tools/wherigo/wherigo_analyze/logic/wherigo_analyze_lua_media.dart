@@ -77,12 +77,12 @@ WherigoMediaData _analyzeAndExtractMediaSectionData(List<String> lines) {
   }
 
   return WherigoMediaData(
-    LUAname,
-    id,
-    name,
-    description,
-    alttext,
-    type,
-    medianame,
+    MediaLUAName: LUAname,
+    MediaID: id,
+    MediaName: name,
+    MediaDescription: description,
+    MediaAltText: alttext,
+    MediaType: type,
+    MediaFilename: medianame,
   );
 }
