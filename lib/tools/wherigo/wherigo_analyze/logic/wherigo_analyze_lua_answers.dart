@@ -8,9 +8,23 @@ bool _insideSectionOnGetInput(String currentLine, String nextLine) {
   return true;
 }
 
-void _analyzeAndExtractOnGetInputSectionData(List<String> lines) {
+WherigoAnswer _analyzeAndExtractOnGetInputSectionData(List<String> lines) {
+  List<WherigoAnswerData> resultAnswerData = [];
   bool _insideInputFunction = true;
+
+  List<WherigoActionMessageElementData> _answerActions = [];
+  List<String> _answerList = [];
+  String _answerHash = '';
+
+  String resultInputFunction = '';
+
+
   for (int i = 0; i < lines.length; i++) {
+    // getting name of input function
+    if (lines[i].endsWith(':OnGetInput(input)')) {
+      resultInputFunction = lines[i].replaceAll('function ', '').replaceAll(':OnGetInput(input)', '').trim();
+    }
+
     if (lines[i].trim().endsWith('= tonumber(input)')) {
       _answerVariable = lines[i].trim().replaceAll(' = tonumber(input)', '');
     } else if (lines[i].trim().endsWith(' = input')) {
@@ -33,11 +47,11 @@ void _analyzeAndExtractOnGetInputSectionData(List<String> lines) {
       if (_insideInputFunction) {
         for (var answer in _answerList) {
           if (answer != 'NIL') {
-            if (_Answers[_inputObject] == null) {
-              continue; // TODO Thomas Maybe not necessary if concrete return value is used
-            }
+            //if (_Answers[_inputObject] == null) {
+            //  continue; // TODO Thomas Maybe not necessary if concrete return value is used
+            //}
 
-            _Answers[_inputObject]!.add(WherigoAnswerData(
+            resultAnswerData.add(WherigoAnswerData(
               AnswerAnswer: answer,
               AnswerHash: _answerHash,
               AnswerActions: _answerActions,
@@ -51,10 +65,10 @@ void _analyzeAndExtractOnGetInputSectionData(List<String> lines) {
       if (_insideInputFunction) {
         _insideInputFunction = false;
         for (var answer in _answerList) {
-          if (_Answers[_inputObject] == null) continue;
+          //if (_Answers[_inputObject] == null) continue;
 
           if (answer != 'NIL') {
-            _Answers[_inputObject]!.add(WherigoAnswerData(
+            resultAnswerData.add(WherigoAnswerData(
               AnswerAnswer: answer,
               AnswerHash: _answerHash,
               AnswerActions: _answerActions,
@@ -90,4 +104,8 @@ void _analyzeAndExtractOnGetInputSectionData(List<String> lines) {
       }
     } // end if other line content
   }
+  return WherigoAnswer(
+      InputFunction: resultInputFunction,
+      InputAnswers: resultAnswerData,
+  );
 }
