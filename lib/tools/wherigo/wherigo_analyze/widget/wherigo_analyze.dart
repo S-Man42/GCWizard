@@ -1049,8 +1049,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         children: <Widget>[
           GCWColumnedMultilineOutput(
               data: _buildOutputListAnswers(context, WherigoCartridgeLUAData.Inputs[_inputIndex - 1],
-                  WherigoAnswerData(AnswerAnswer: '', AnswerHash: '', AnswerActions: [])
-                  //WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers[_answerIndex - 1]
+                (WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers.isNotEmpty) ? WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers[_answerIndex - 1] : WherigoAnswerData(AnswerAnswer: '', AnswerHash: '', AnswerActions: []),
               ),
               copyColumn: 1,
               flexValues: const[2, 3, 3]),
@@ -1061,8 +1060,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             child: Column(
                 children: _outputAnswerActionsWidgets(
                     context,
-                    WherigoAnswerData(AnswerAnswer: '', AnswerHash: '', AnswerActions: [])
-                    //WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers[_answerIndex - 1]
+                    (WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers.isNotEmpty) ? WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers[_answerIndex - 1] : WherigoAnswerData(AnswerAnswer: '', AnswerHash: '', AnswerActions: []),
                 )
             ),
           ),

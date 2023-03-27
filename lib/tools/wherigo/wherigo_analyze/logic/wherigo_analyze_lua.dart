@@ -46,23 +46,7 @@ List<WherigoActionMessageElementData> _singleMessageDialog = [];
 String _inputObject = '';
 List<WherigoInputData> _resultInputs = [];
 
-List<WherigoActionMessageElementData> _answerActions = [];
-List<String> _answerList = [];
-String _answerHash = '';
-// TODO Thomas As all of such constructions, please use explicit class types for values which make it better to check for Nullability
-// this is not feasibla at this point. Because if there is no input then there will be no answer.
-// This construction eases the access to answers. Otherwise the list of answers will be repeatedly searched for the correct answers corresponding with the input
-Map<String, List<WherigoAnswerData>> _Answers = {};
-// class WherigoAnswer {
-//   final String InputFunction;
-//   final List<WherigoAnswerData> InputAnswers;
-//
-//   WherigoAnswer(
-//     this.InputFunction,
-//     this.InputAnswers,
-//   );
-// }
-// List<WherigoAnswer> _Answers = [];
+List <WherigoAnswer> _Answers = [];
 
 Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonline, {SendPort? sendAsyncPort}) async {
   WHERIGO_FILE_LOAD_STATE _LUAchecksToDo = WHERIGO_FILE_LOAD_STATE.NULL;
@@ -423,16 +407,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
     //
     try {
       if (lines[i].endsWith(':OnGetInput(input)')) {
-        for (int j = 0; j < _numberOfInputs; j++) {
-          _inputObject = '';
-          _answerActions = [];
-          _answerVariable = '';
-
-          // getting name of input function
-          if (lines[i].endsWith(':OnGetInput(input)')) {
-            _inputObject = lines[i].replaceAll('function ', '').replaceAll(':OnGetInput(input)', '').trim();
-          }
-          _Answers[_inputObject] = [];
+        for (int j = 0; j < _cartridgeInputs.length; j++) {
 
           analyzeLines = [];
           do {
@@ -443,7 +418,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
               sendAsyncPort.send(DoubleText('progress', i / lines.length / 2));
             }
           } while (_insideSectionOnGetInput(lines[i], lines[i + 1]) && (i < lines.length - 1));
-          _analyzeAndExtractOnGetInputSectionData(analyzeLines);
+          _Answers.add(_analyzeAndExtractOnGetInputSectionData(analyzeLines));
         }
       } // end if identify input function
     } catch (exception) {
@@ -455,40 +430,21 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
   // ------------------------------------------------------------------------------------------------------------------
   // Save Answers to Input Objects
   //
-  for (var inputObject in _cartridgeInputs) {
-    // _Answers.forEach((answer) {
-    //   if (answer.InputLUAName == inputObject.InputLUAName) {
-    //     _resultInputs.add(WherigoInputData(
-    //         inputObject.InputLUAName,
-    //         inputObject.InputID,
-    //         inputObject.InputVariableID,
-    //         inputObject.InputName,
-    //         inputObject.InputDescription,
-    //         inputObject.InputVisible,
-    //         inputObject.InputMedia,
-    //         inputObject.InputIcon,
-    //         inputObject.InputType,
-    //         inputObject.InputText,
-    //         inputObject.InputChoices,
-    //         answer.InputAnswers));
-    //   }
-    //   }
-    // });
+  //for (var inputObject in _cartridgeInputs) {
+  for (int i = 0; i < _cartridgeInputs.length; i++) {
     _resultInputs.add(WherigoInputData(
-        InputLUAName: inputObject.InputLUAName,
-        InputID: inputObject.InputID,
-        InputVariableID: inputObject.InputVariableID,
-        InputName: inputObject.InputName,
-        InputDescription: inputObject.InputDescription,
-        InputVisible: inputObject.InputVisible,
-        InputMedia: inputObject.InputMedia,
-        InputIcon: inputObject.InputIcon,
-        InputType: inputObject.InputType,
-        InputText: inputObject.InputText,
-        InputChoices: inputObject.InputChoices,
-        // TODO Thomas I can not check if logically correct to send empty list as exception. However this can be removed when using explicit values
-        // it is logically correct. If there is no input then there will be no answer
-        InputAnswers: _Answers[inputObject.InputLUAName] ?? []));
+        InputLUAName: _cartridgeInputs[i].InputLUAName,
+        InputID: _cartridgeInputs[i].InputID,
+        InputVariableID: _cartridgeInputs[i].InputVariableID,
+        InputName: _cartridgeInputs[i].InputName,
+        InputDescription: _cartridgeInputs[i].InputDescription,
+        InputVisible: _cartridgeInputs[i].InputVisible,
+        InputMedia: _cartridgeInputs[i].InputMedia,
+        InputIcon: _cartridgeInputs[i].InputIcon,
+        InputType: _cartridgeInputs[i].InputType,
+        InputText: _cartridgeInputs[i].InputText,
+        InputChoices: _cartridgeInputs[i].InputChoices,
+        InputAnswers: _Answers[i].InputAnswers));
   }
   _cartridgeInputs = _resultInputs;
 
