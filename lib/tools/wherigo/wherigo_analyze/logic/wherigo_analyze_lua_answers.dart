@@ -8,20 +8,17 @@ bool _insideSectionOnGetInput(String currentLine) {
 }
 
 WherigoAnswer _analyzeAndExtractOnGetInputSectionData(List<String> lines) {
-  List<WherigoAnswerData> resultAnswerData = [];
-  bool _insideInputFunction = true;
-
-  List<WherigoActionMessageElementData> _answerActions = [];
-  List<String> _answerList = [];
-  String _answerHash = '';
-
   String resultInputFunction = '';
+  List<WherigoAnswerData> resultAnswerData = [];
+
+  List<String> _answerAnswerList = [];
+  String _answerHash = '';
+  List<WherigoActionMessageElementData> _answerActions = [];
+
 
   for (int i = 0; i < lines.length; i++) {
-    // getting name of input function
     if (lines[i].endsWith(':OnGetInput(input)')) {
       resultInputFunction = lines[i].replaceAll('function ', '').replaceAll(':OnGetInput(input)', '').trim();
-      print('found ongetinput '+resultInputFunction);
     }
 
     if (lines[i].trim().endsWith('= tonumber(input)')) {
@@ -42,14 +39,11 @@ WherigoAnswer _analyzeAndExtractOnGetInputSectionData(List<String> lines) {
       } while (!_sectionAnalysed); // end of section
     } // end of NIL
 
-    else if (_OnGetInputSectionEnd(lines[i])) {
-      print('found answer '+lines[i]);
-      if (_insideInputFunction) {
-        for (var answer in _answerList) {
+    else if (_OnGetInputSectionEnd(lines[i])) { // found Answer
+      _answerActions = [];
+      _answerAnswerList = _getAnswers(i, lines[i], lines[i - 1], _cartridgeVariables);
+        for (var answer in _answerAnswerList) {
           if (answer != 'NIL') {
-            //if (_Answers[_inputObject] == null) {
-            //  continue; // TODO Thomas Maybe not necessary if concrete return value is used
-            //}
 
             resultAnswerData.add(WherigoAnswerData(
               AnswerAnswer: answer,
@@ -58,27 +52,6 @@ WherigoAnswer _analyzeAndExtractOnGetInputSectionData(List<String> lines) {
             ));
           }
         }
-        _answerActions = [];
-        _answerList = _getAnswers(i, lines[i], lines[i - 1], _cartridgeVariables);
-      }
-    } else if ((i + 1 < lines.length - 1) && _OnGetInputFunctionEnd(lines[i], lines[i + 1].trim())) {
-      if (_insideInputFunction) {
-        _insideInputFunction = false;
-        for (var answer in _answerList) {
-          //if (_Answers[_inputObject] == null) continue;
-
-          if (answer != 'NIL') {
-            resultAnswerData.add(WherigoAnswerData(
-              AnswerAnswer: answer,
-              AnswerHash: _answerHash,
-              AnswerActions: _answerActions,
-            ));
-          }
-        }
-        _answerActions = [];
-        _answerList = [];
-        _answerVariable = '';
-      }
     } else if (lines[i].trimLeft().startsWith('Buttons')) {
       do {
         i++;
@@ -241,9 +214,4 @@ bool _OnGetInputSectionEnd(String line) {
   } else {
     return false;
   }
-}
-
-bool _OnGetInputFunctionEnd(String line1, String line2) {
-  return (line1.trimLeft().startsWith('end') &&
-      (line2.trimLeft().startsWith('function') || line2.trimLeft().startsWith('return')));
 }
