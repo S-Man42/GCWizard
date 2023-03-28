@@ -1,31 +1,5 @@
 part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze.dart';
 
-bool _OnGetInputSectionEnd(String line) {
-  if (line.trim().startsWith('if input == ') ||
-      line.trim().startsWith('if input >= ') ||
-      line.trim().startsWith('if input <= ') ||
-      line.trim().startsWith('elseif input == ') ||
-      line.trim().startsWith('elseif input >= ') ||
-      line.trim().startsWith('elseif input <= ') ||
-      line.trim().startsWith('if _Urwigo.Hash(') ||
-      line.trim().startsWith('if (_Urwigo.Hash(') ||
-      line.trim().startsWith('elseif _Urwigo.Hash(') ||
-      line.trim().startsWith('elseif (_Urwigo.Hash(') ||
-      line.trim().startsWith('if Wherigo.NoCaseEquals(') ||
-      line.trim().startsWith('elseif Wherigo.NoCaseEquals(') ||
-      line.trim().startsWith('if ' + _answerVariable + ' == ') ||
-      line.trim().startsWith('elseif ' + _answerVariable + ' == ')) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
-bool _OnGetInputFunctionEnd(String line1, String line2) {
-  return (line1.trimLeft().startsWith('end') &&
-      (line2.trimLeft().startsWith('function') || line2.trimLeft().startsWith('return')));
-}
-
 bool _insideSectionInput(String currentLine) {
   if (RegExp(r'( Wherigo.ZInput\()').hasMatch(currentLine)) {
     return false;
