@@ -167,7 +167,10 @@ class SymbolReplacerImage {
       double? similarityCompareLevel = 80,
       bool groupSymbols = true,
       double? mergeDistance}) {
-    _bmp ??= Image.decodeImage(_image);
+
+    var decoder = Image.findDecoderForData(_image);
+    if (decoder == null) return;
+    _bmp ??= decoder.decode(_image, frame: 0);
     if (_bmp == null) return;
 
     // detect changed parameter -> recalc
