@@ -408,16 +408,15 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
     try {
       if (lines[i].endsWith(':OnGetInput(input)')) {
         for (int j = 0; j < _cartridgeInputs.length; j++) {
-
           analyzeLines = [];
           do {
-            i++;
             analyzeLines.add(lines[i].trim());
+            i++;
 
             if (sendAsyncPort != null && (i % progressStep == 0)) {
               sendAsyncPort.send(DoubleText('progress', i / lines.length / 2));
             }
-          } while (_insideSectionOnGetInput(lines[i], lines[i + 1]) && (i < lines.length - 1));
+          } while (_insideSectionOnGetInput(lines[i]) && (i < lines.length - 1));
           _Answers.add(_analyzeAndExtractOnGetInputSectionData(analyzeLines));
         }
       } // end if identify input function
