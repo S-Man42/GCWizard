@@ -32,7 +32,6 @@ String _answerVariable = '';
 
 List<WherigoInputData> _cartridgeInputs = [];
 List<List<WherigoActionMessageElementData>> _cartridgeMessages = [];
-List<WherigoAnswerData> _cartridgeAnswers = [];
 List<WherigoVariableData> _cartridgeVariables = [];
 Map<String, WherigoObjectData> _cartridgeNameToObject = {};
 
@@ -43,7 +42,6 @@ List<String> _declaration = [];
 
 List<WherigoActionMessageElementData> _singleMessageDialog = [];
 
-String _inputObject = '';
 List<WherigoInputData> _resultInputs = [];
 
 List <WherigoAnswer> _Answers = [];
@@ -374,7 +372,6 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
     // search and get Input Object
     //
     late WherigoInputData cartridgeInputData;
-    int _numberOfInputs = 0;
     try {
       if (RegExp(r'( Wherigo.ZInput\()').hasMatch(lines[i])) {
         currentObjectSection = WHERIGO_OBJECT_TYPE.INPUT;
@@ -392,7 +389,6 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           cartridgeInputData = _analyzeAndExtractInputSectionData(analyzeLines);
 
           _cartridgeInputs.add(cartridgeInputData);
-          _numberOfInputs++;
           _cartridgeNameToObject[cartridgeInputData.InputLUAName] = WherigoObjectData(cartridgeInputData.InputID, 0,
               cartridgeInputData.InputName, cartridgeInputData.InputMedia, WHERIGO_OBJECT_TYPE.INPUT);
         } while (_notDoneWithInputs(lines[i]) && (i + 1 < lines.length - 1));

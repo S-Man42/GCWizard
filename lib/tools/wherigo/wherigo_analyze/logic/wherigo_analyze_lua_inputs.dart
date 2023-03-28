@@ -131,18 +131,6 @@ WherigoInputData _analyzeAndExtractInputSectionData(List<String> lines) {
   );
 }
 
-bool _singleLine(String nextLine, String LUAname){
-  if (RegExp(r'( Wherigo.ZInput)').hasMatch(nextLine) ||
-      nextLine.startsWith(LUAname + '.Media') ||
-      RegExp(r'(.Commands)').hasMatch(nextLine.trim()) ||
-      nextLine.startsWith(LUAname + '.Visible') ||
-      nextLine.startsWith('function') ||
-      RegExp(r'(:OnProximity)').hasMatch(nextLine.trim())) {
-    return true;
-  }
-  return false;
-}
-
 bool _notEndOfInputText(String nextLine, String LUAname){
  if (RegExp(r'( Wherigo.ZInput)').hasMatch(nextLine) ||
       nextLine.startsWith('function')) {
