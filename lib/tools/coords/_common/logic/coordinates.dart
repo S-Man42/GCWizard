@@ -24,6 +24,7 @@ import 'package:gc_wizard/tools/coords/format_converter/logic/slippy_map.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/swissgrid.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/utm.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/xyz.dart';
+import 'package:gc_wizard/tools/coords/format_converter/logic/gc8k7rc.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
@@ -942,6 +943,33 @@ class Quadtree extends BaseCoordinate {
   @override
   String toString() {
     return coords.join();
+  }
+}
+
+class GC8K7RC extends BaseCoordinate {
+  double v;
+  double d;
+
+  GC8K7RC(this.v, this.d) {
+    format = CoordinateFormat(CoordinateFormatKey.GC8K7RC);
+  }
+
+  @override
+  LatLng toLatLng() {
+    return GC8K7RCToLatLon(this);
+  }
+
+  static GC8K7RC fromLatLon(LatLng coord) {
+    return latLonToGC8K7RC(coord);
+  }
+
+  static GC8K7RC? parse(String input) {
+    return parseGC8K7RC(input);
+  }
+
+  @override
+  String toString() {
+    return '$v\n$d';
   }
 }
 

@@ -41,6 +41,7 @@ part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_input
 part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/degrees_latlon/gcw_coords_dms.dart';
 part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/gcw_coords_dutchgrid.dart';
 part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/gcw_coords_gausskrueger.dart';
+part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/gcw_coords_gc8k7rc.dart';
 part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/gcw_coords_lambert.dart';
 part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/gcw_coords_mercator.dart';
 part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/gcw_coords_openlocationcode.dart';
@@ -416,6 +417,19 @@ class GCWCoordsState extends State<GCWCoords> {
           },
         ),
       ),
+       _GCWCoordWidget(
+         CoordinateFormatKey.GC8K7RC,
+         _GCWCoordsGC8K7RC(
+           coordinates: _pastedCoords is GC8K7RC
+               ? _pastedCoords as GC8K7RC
+               : buildCoordinatesByFormat(CoordinateFormat(CoordinateFormatKey.GC8K7RC), defaultCoordinate) as GC8K7RC,
+           onChanged: (newValue) {
+             setState(() {
+               _setCurrentValueAndEmitOnChange(newValue);
+             });
+           },
+         ),
+       ),
     ];
 
     // TODO Mike: Please check if this is really nullable. If so, all coordinate specific _GCWCoords* widgets need to have nullable coordinates fields which yields even more nullable stuff...
