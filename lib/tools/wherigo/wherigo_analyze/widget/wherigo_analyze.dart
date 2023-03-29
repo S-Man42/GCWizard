@@ -195,7 +195,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   void _setGWCData(Uint8List bytes) {
-
     _GWCbytes = bytes;
     _GWCFileStructure = _buildOutputListByteCodeStructure(context, _GWCbytes);
 
@@ -248,7 +247,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             _widgetOpenGWCFile(context),
 
             // Show Button if GWC File loaded and not httpError
-            _widgetShowDecompileButton(context),
             if (_fileLoadedState == WHERIGO_FILE_LOAD_STATE.GWC && _nohttpError) _widgetShowDecompileButton(context),
 
             // Show OpenFileDialog if GWC File loaded an get LUA offline
@@ -256,6 +254,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
             // show dropdown if files are loaded
             if (_fileLoadedState != WHERIGO_FILE_LOAD_STATE.NULL) _widgetShowDropDown(context),
+
             _buildOutput(context)
           ],
         ));
@@ -463,7 +462,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     }
   }
 
-  Widget _buildWidgetToDisplayAnalyzeResultsData(List<dynamic> _errorMsg) {
+  Widget _buildWidgetToDisplayAnalyzeResultsData(List<String> _errorMsg) {
     _errorMsg.addAll(errorMsg_MediaFiles);
     return GCWDefaultOutput(
       child: GCWOutputText(
@@ -844,9 +843,12 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                     _currentZonePoints(
                         WherigoCartridgeLUAData.Characters[_characterIndex - 1].CharacterName,
                         WherigoZonePoint(
-                            Latitude: WherigoCartridgeLUAData.Characters[_characterIndex - 1].CharacterZonepoint.Latitude,
-                            Longitude: WherigoCartridgeLUAData.Characters[_characterIndex - 1].CharacterZonepoint.Longitude,
-                            Altitude: WherigoCartridgeLUAData.Characters[_characterIndex - 1].CharacterZonepoint.Altitude)),
+                            Latitude:
+                                WherigoCartridgeLUAData.Characters[_characterIndex - 1].CharacterZonepoint.Latitude,
+                            Longitude:
+                                WherigoCartridgeLUAData.Characters[_characterIndex - 1].CharacterZonepoint.Longitude,
+                            Altitude:
+                                WherigoCartridgeLUAData.Characters[_characterIndex - 1].CharacterZonepoint.Altitude)),
                     []);
               },
             ),
@@ -1008,7 +1010,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputMedia),
       GCWColumnedMultilineOutput(
           data: _buildOutputListOfInputData(context, WherigoCartridgeLUAData.Inputs[_inputIndex - 1]),
-          flexValues: const[1, 3]),
+          flexValues: const [1, 3]),
       Row(
         children: <Widget>[
           GCWIconButton(
@@ -1048,21 +1050,26 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       Column(
         children: <Widget>[
           GCWColumnedMultilineOutput(
-              data: _buildOutputListAnswers(context, WherigoCartridgeLUAData.Inputs[_inputIndex - 1],
-                (WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers.isNotEmpty) ? WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers[_answerIndex - 1] : WherigoAnswerData(AnswerAnswer: '', AnswerHash: '', AnswerActions: []),
+              data: _buildOutputListAnswers(
+                context,
+                WherigoCartridgeLUAData.Inputs[_inputIndex - 1],
+                (WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers.isNotEmpty)
+                    ? WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers[_answerIndex - 1]
+                    : WherigoAnswerData(AnswerAnswer: '', AnswerHash: '', AnswerActions: []),
               ),
               copyColumn: 1,
-              flexValues: const[2, 3, 3]),
+              flexValues: const [2, 3, 3]),
           GCWExpandableTextDivider(
             expanded: false,
             text: i18n(context, 'wherigo_output_answeractions'),
             suppressTopSpace: false,
             child: Column(
                 children: _outputAnswerActionsWidgets(
-                    context,
-                    (WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers.isNotEmpty) ? WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers[_answerIndex - 1] : WherigoAnswerData(AnswerAnswer: '', AnswerHash: '', AnswerActions: []),
-                )
-            ),
+              context,
+              (WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers.isNotEmpty)
+                  ? WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers[_answerIndex - 1]
+                  : WherigoAnswerData(AnswerAnswer: '', AnswerHash: '', AnswerActions: []),
+            )),
           ),
         ],
       ),
@@ -1390,7 +1397,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         _analyseGWCCartridgeFileAsync();
         break;
       case WHERIGO_CARTRIDGE_DATA_TYPE.LUA:
-        _analyseLuaCartridgeFileAsync();
+        _analyseLUACartridgeFileAsync();
         break;
       default:
         {}
@@ -1418,7 +1425,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     );
   }
 
-  void _analyseLuaCartridgeFileAsync() async {
+  void _analyseLUACartridgeFileAsync() async {
     await showDialog<bool>(
       context: context,
       barrierDismissible: false,
@@ -1615,9 +1622,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     });
   }
 
-  bool _GCWandLUAareFromDifferentCartridges(){
+  bool _GCWandLUAareFromDifferentCartridges() {
     return ((WherigoCartridgeGWCData.CartridgeGUID != WherigoCartridgeLUAData.CartridgeGUID &&
-        WherigoCartridgeLUAData.CartridgeGUID != '') &&
+            WherigoCartridgeLUAData.CartridgeGUID != '') &&
         (WherigoCartridgeGWCData.CartridgeLUAName != WherigoCartridgeLUAData.CartridgeLUAName &&
             WherigoCartridgeLUAData.CartridgeLUAName != ''));
   }
