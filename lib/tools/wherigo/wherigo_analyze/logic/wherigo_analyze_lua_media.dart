@@ -15,7 +15,8 @@ bool _notDoneWithMedias(String currentLine) {
       RegExp(r'(Wherigo.ZTimer\()').hasMatch(currentLine) ||
       RegExp(r'(Wherigo.ZInput\()').hasMatch(currentLine) ||
       RegExp(r'(function)').hasMatch(currentLine) ||
-      RegExp(r'(Wherigo.Zone\()').hasMatch(currentLine)) {
+      RegExp(r'(Wherigo.Zone\()').hasMatch(currentLine) ||
+      currentLine.startsWith(_CartridgeLUAName + '.')) {
     return false;
   }
   return true;

@@ -44,7 +44,7 @@ List<WherigoActionMessageElementData> _singleMessageDialog = [];
 
 List<WherigoInputData> _resultInputs = [];
 
-List <WherigoAnswer> _Answers = [];
+List<WherigoAnswer> _Answers = [];
 
 Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonline, {SendPort? sendAsyncPort}) async {
   WHERIGO_FILE_LOAD_STATE _LUAchecksToDo = WHERIGO_FILE_LOAD_STATE.NULL;
@@ -131,7 +131,6 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
     }
 
     _checkAndGetCartridgeName(lines[i]);
-    _checkAndGetCartridgeMetaData(lines[i]);
 
     // ----------------------------------------------------------------------------------------------------------------
     // search and get Media Object
@@ -161,6 +160,21 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
       _LUAAnalyzeStatus = WHERIGO_ANALYSE_RESULT_STATUS.ERROR_LUA;
       _LUAAnalyzeResults.addAll(addExceptionErrorMessage(i, 'wherigo_error_lua_media', exception));
     }
+
+    // ----------------------------------------------------------------------------------------------------------------
+    // search and get Cartridge Meta Data
+    //
+    try {
+      if (_CartridgeLUAName != '') {
+        if (lines[i].startsWith(_CartridgeLUAName)) {
+          _checkAndGetCartridgeMetaData(lines[i]);
+        }
+      }
+    } catch (exception) {
+      _LUAAnalyzeStatus = WHERIGO_ANALYSE_RESULT_STATUS.ERROR_LUA;
+      _LUAAnalyzeResults.addAll(addExceptionErrorMessage(i, 'wherigo_error_lua_cartridge_meta_data', exception));
+    }
+
 
     // ----------------------------------------------------------------------------------------------------------------
     // search and get Zone Object
