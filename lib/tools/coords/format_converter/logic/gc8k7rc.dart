@@ -8,11 +8,11 @@ const rEarth = 6378.90594503519;
 const vEquator = 464;
 
 LatLng GC8K7RCToLatLon(GC8K7RC coordsGC8K7RC) {
-  double u = coordsGC8K7RC.v * 24 * 60 * 60;
+  double u = coordsGC8K7RC.velocity * 24 * 60 * 60;
   double r = u / 2 / pi;
   double lat = acos(r / rEarth);
 
-  double long = 360 * coordsGC8K7RC.d / u;
+  double long = 360 * coordsGC8K7RC.distance / u;
   return decToLatLon(DEC(lat, long));
 }
 

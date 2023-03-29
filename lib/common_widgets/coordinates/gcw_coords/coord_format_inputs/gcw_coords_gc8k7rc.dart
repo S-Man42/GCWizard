@@ -11,59 +11,59 @@ class _GCWCoordsGC8K7RC extends StatefulWidget {
 }
 
 class _GCWCoordsGC8K7RCState extends State<_GCWCoordsGC8K7RC> {
-  late TextEditingController _ControllerA;
-  late TextEditingController _ControllerB;
+  late TextEditingController _ControllerVelocity;
+  late TextEditingController _ControllerDistance;
 
-  final FocusNode _FocusNodeA = FocusNode();
-  final FocusNode _FocusNodeB = FocusNode();
+  final FocusNode _FocusNodeVelocity = FocusNode();
+  final FocusNode _FocusNodeDistance = FocusNode();
 
-  var _currentA = '';
-  var _currentB = '';
+  var _currentVelocity = '';
+  var _currentDistance = '';
 
   @override
   void initState() {
     super.initState();
-    _ControllerA = TextEditingController(text: _currentA);
-    _ControllerB = TextEditingController(text: _currentB);
+    _ControllerVelocity = TextEditingController(text: _currentVelocity);
+    _ControllerDistance = TextEditingController(text: _currentDistance);
   }
 
   @override
   void dispose() {
-    _ControllerA.dispose();
-    _ControllerB.dispose();
+    _ControllerVelocity.dispose();
+    _ControllerDistance.dispose();
 
-    _FocusNodeA.dispose();
-    _FocusNodeB.dispose();
+    _FocusNodeVelocity.dispose();
+    _FocusNodeDistance.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     var GC8K7RC = widget.coordinates;
-    _currentA = GC8K7RC.v.toString();
-    _currentB = GC8K7RC.d.toString();
+    _currentVelocity = GC8K7RC.velocity.toString();
+    _currentDistance = GC8K7RC.distance.toString();
 
-    _ControllerA.text = _currentA.toString();
-    _ControllerB.text = _currentB.toString();
+    _ControllerVelocity.text = _currentVelocity.toString();
+    _ControllerDistance.text = _currentDistance.toString();
 
     return Column(children: <Widget>[
       GCWDoubleTextField(
-        controller: _ControllerA,
-        focusNode: _FocusNodeA,
+        controller: _ControllerVelocity,
+        focusNode: _FocusNodeVelocity,
         onChanged: (value) {
-          _currentA = value as String;
+          _currentVelocity = value as String;
 
-          FocusScope.of(context).requestFocus(_FocusNodeB);
+          FocusScope.of(context).requestFocus(_FocusNodeDistance);
           _setCurrentValueAndEmitOnChange();
         },
       ),
       GCWDoubleTextField(
-        controller: _ControllerB,
-        focusNode: _FocusNodeB,
+        controller: _ControllerDistance,
+        focusNode: _FocusNodeDistance,
         onChanged: (value) {
-          _currentB = value as String;
+          _currentDistance = value as String;
 
-          FocusScope.of(context).requestFocus(_FocusNodeA);
+          FocusScope.of(context).requestFocus(_FocusNodeVelocity);
           _setCurrentValueAndEmitOnChange();
         },
       ),
@@ -71,6 +71,6 @@ class _GCWCoordsGC8K7RCState extends State<_GCWCoordsGC8K7RC> {
   }
 
   void _setCurrentValueAndEmitOnChange() {
-    widget.onChanged(GC8K7RC.parse(_currentA.toString() + '\n' + _currentB.toString()));
+    widget.onChanged(GC8K7RC.parse(_currentVelocity.toString() + '\n' + _currentDistance.toString()));
   }
 }

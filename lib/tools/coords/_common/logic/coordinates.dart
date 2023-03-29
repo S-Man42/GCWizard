@@ -947,10 +947,10 @@ class Quadtree extends BaseCoordinate {
 }
 
 class GC8K7RC extends BaseCoordinate {
-  double v;
-  double d;
+  double velocity;
+  double distance;
 
-  GC8K7RC(this.v, this.d) {
+  GC8K7RC(this.velocity, this.distance) {
     format = CoordinateFormat(CoordinateFormatKey.GC8K7RC);
   }
 
@@ -969,7 +969,7 @@ class GC8K7RC extends BaseCoordinate {
 
   @override
   String toString() {
-    return '$v\n$d';
+    return '$velocity\n$distance';
   }
 }
 
