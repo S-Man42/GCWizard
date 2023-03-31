@@ -174,6 +174,7 @@ import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/heat
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/humidex/widget/humidex.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/summer_simmer/widget/summer_simmer.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/wet_bulb_temperature/widget/wet_bulb_temperature.dart';
+import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/wet_bulb_globe_temperature/widget/wet_bulb_globe_temperature.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/windchill/widget/windchill.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/moon_position/widget/moon_position.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/moon_rise_set/widget/moon_rise_set.dart';
@@ -258,6 +259,7 @@ import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
+
 
 class MainView extends StatefulWidget {
   const MainView({Key? key}) : super(key: key);
@@ -683,6 +685,7 @@ void _initStaticToolList() {
       className(const WaypointProjection()),
       className(const Weekday()),
       className(const WetBulbTemperature()),
+      className(const WetBulbGlobeTemperature()),
       className(const WherigoSelection()),
       className(const WheatstoneCookeNeedleTelegraph()),
       className(const WhitespaceLanguage()),

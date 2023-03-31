@@ -268,6 +268,7 @@ import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/heat
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/humidex/widget/humidex.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/summer_simmer/widget/summer_simmer.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/wet_bulb_temperature/widget/wet_bulb_temperature.dart';
+import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/wet_bulb_globe_temperature/widget/wet_bulb_globe_temperature.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/windchill/widget/windchill.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/easter/easter_date/widget/easter_date.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/easter/easter_years/widget/easter_years.dart';
@@ -1247,6 +1248,10 @@ void initializeRegistry(BuildContext context) {
     GCWTool(tool: const WetBulbTemperature(), id: 'wet_bulb_temperature', searchKeys: const [
       'apparenttemperature',
       'apparenttemperature_wet_bulb_temperature',
+    ]),
+    GCWTool(tool: const WetBulbGlobeTemperature(), id: 'wet_bulb_globe_temperature', searchKeys: const [
+      'apparenttemperature',
+      'apparenttemperature_wet_bulb_globe_temperature',
     ]),
 
     GCWTool(tool: const Zodiac(), id: 'zodiac', searchKeys: const [

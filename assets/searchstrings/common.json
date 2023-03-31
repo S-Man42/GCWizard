@@ -14,6 +14,7 @@
   "apparenttemperature_humidex": "humidex ",
   "apparenttemperature_summersimmerindex": "ssi summersimmerindex",
   "apparenttemperature_windchill": "windchill  ",
+  "apparenttemperature_wet_bulb_globe_temperature": "wbgt wetbulbglobetemperature",
   "asciivalues": "ascii utf8 unicode ",
   "astronomy": "",
   "astronomy_moon": "lunar",
