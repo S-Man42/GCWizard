@@ -8,6 +8,7 @@ import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/humi
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/summer_simmer/widget/summer_simmer.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/wet_bulb_temperature/widget/wet_bulb_temperature.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/windchill/widget/windchill.dart';
+import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/utci/widget/utci.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 
 class ApparentTemperatureSelection extends GCWSelection {
@@ -21,7 +22,8 @@ class ApparentTemperatureSelection extends GCWSelection {
         className(const Humidex()),
         className(const SummerSimmerIndex()),
         className(const Windchill()),
-        className(const WetBulbTemperature())
+        className(const WetBulbTemperature()),
+        className(const UTCI()),
       ].contains(className(element.tool));
     }).toList();
 
