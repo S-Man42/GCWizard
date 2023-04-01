@@ -33,7 +33,7 @@ class WetBulbGlobeTemperature extends StatefulWidget {
 }
 
 class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
-  var _currentDateTime = DateTimeTimezone(datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
+  DateTimeTimezone _currentDateTime = DateTimeTimezone(datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
   BaseCoordinate _currentCoords = defaultBaseCoordinate;
 
   double _currentTemperature = 0.0;

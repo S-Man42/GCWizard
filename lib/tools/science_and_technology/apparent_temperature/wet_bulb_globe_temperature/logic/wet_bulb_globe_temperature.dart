@@ -12,10 +12,10 @@ import 'dart:core';
 import 'dart:math';
 import 'package:latlong2/latlong.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/_common/logic/julian_date.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/sun_position/logic/sun_position.dart' as sunposition;
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/wet_bulb_globe_temperature/logic/liljegren.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 
 
 enum CLOUD_COVER {CLEAR_0, FEW_1, FEW_2, SCATTERED_3, SCATTERED_4, BROKEN_5, BROKEN_6, BROKEN_7, OVERCAST_8, OBSCURED_9, NULL}
@@ -79,7 +79,7 @@ WBGTOutput calculateWetBulbGlobeTemperature(DateTimeTimezone dateTime, LatLng co
   var sunPosition = sunposition.SunPosition(
       LatLng(coords.latitude, coords.longitude),
       JulianDate(dateTime),
-      defaultEllipsoid
+      Ellipsoid(ELLIPSOID_NAME_WGS84, 6378137.0, 298.257223563)
   );
 
   double solar = calc_solar_irradiance(solarElevationAngle: sunPosition.altitude, cloudcover: cloudcover
