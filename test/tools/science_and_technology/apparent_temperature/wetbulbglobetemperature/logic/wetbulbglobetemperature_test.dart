@@ -12,29 +12,29 @@ void main() {
   double _currentAirPressure = 1013.25;
   bool _currentAreaUrban = false;
   CLOUD_COVER _currentCloudCover = CLOUD_COVER.CLEAR_0;
-  double C30inF = 86.0;
-  double C40inF = 104.0;
-  double C50inF = 122.0;
+  double F86inC = 30.0;
+  double F104inC = 40.0;
+  double F122inC = 50.0;
 
 
   group("wet_bulb_temperature.calculate.WBT:", () {
     // https://wbgt.app/
     List<Map<String, Object?>> _inputsToExpected = [
-      {'temperature' : C30inF, 'humidity' : 50.0, 'expectedOutput' : 6.13},
-      {'temperature' : C40inF, 'humidity' : 50.0, 'expectedOutput' : 13.59},
-      {'temperature' : C50inF, 'humidity' : 50.0, 'expectedOutput' : 15.24},
+      {'temperature' : F86inC, 'humidity' : 50.0, 'expectedOutput' : 16.006507649716013},
+      {'temperature' : F104inC, 'humidity' : 50.0, 'expectedOutput' : 26.549330636018627},
+      {'temperature' : F122inC, 'humidity' : 50.0, 'expectedOutput' : 36.812275689130125},
 
-      {'temperature' : C30inF, 'humidity' : 60.0, 'expectedOutput' : 6.13},
-      {'temperature' : C40inF, 'humidity' : 60.0, 'expectedOutput' : 13.59},
-      {'temperature' : C50inF, 'humidity' : 60.0, 'expectedOutput' : 15.24},
+      {'temperature' : F86inC, 'humidity' : 60.0, 'expectedOutput' : 17.61299187172026},
+      {'temperature' : F104inC, 'humidity' : 60.0, 'expectedOutput' : 28.44354666875012},
+      {'temperature' : F122inC, 'humidity' : 60.0, 'expectedOutput' : 38.973904999739204},
 
-      {'temperature' : C30inF, 'humidity' : 70.0, 'expectedOutput' : 6.13},
-      {'temperature' : C40inF, 'humidity' : 70.0, 'expectedOutput' : 13.59},
-      {'temperature' : C50inF, 'humidity' : 70.0, 'expectedOutput' : 15.24},
+      {'temperature' : F86inC, 'humidity' : 70.0, 'expectedOutput' : 19.096757658323263},
+      {'temperature' : F104inC, 'humidity' : 70.0, 'expectedOutput' : 30.169935090250426},
+      {'temperature' : F122inC, 'humidity' : 70.0, 'expectedOutput' : 40.906615297195245},
 
-      {'temperature' : C30inF, 'humidity' : 80.0, 'expectedOutput' : 6.13},
-      {'temperature' : C40inF, 'humidity' : 80.0, 'expectedOutput' : 13.59},
-      {'temperature' : C50inF, 'humidity' : 80.0, 'expectedOutput' : 15.24},
+      {'temperature' : F86inC, 'humidity' : 80.0, 'expectedOutput' : 20.475487634750024},
+      {'temperature' : F104inC, 'humidity' : 80.0, 'expectedOutput' : 31.744414628454166},
+      {'temperature' : F122inC, 'humidity' : 80.0, 'expectedOutput' : 42.65849268513075},
     ];
 
     for (var elem in _inputsToExpected) {
