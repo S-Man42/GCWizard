@@ -79,6 +79,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/widget/alph
 import 'package:gc_wizard/tools/crypto_and_encodings/amsco/widget/amsco.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/atbash/widget/atbash.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/bacon/widget/bacon.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/battleship/widget/battleship.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/beghilos/widget/beghilos.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/bifid/widget/bifid.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/book_cipher/widget/book_cipher.dart';
@@ -258,6 +259,7 @@ import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
+
 
 class MainView extends StatefulWidget {
   const MainView({Key? key}) : super(key: key);
@@ -475,6 +477,7 @@ void _initStaticToolList() {
       className(const BabylonNumbersSelection()),
       className(const Bacon()),
       className(const BaseSelection()),
+      className(const Battleship()),
       className(const BCDSelection()),
       className(const Beatnik()),
       className(const BeaufortSelection()),
