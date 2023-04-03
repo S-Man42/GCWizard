@@ -86,6 +86,7 @@ const WherigoCartridgeGWC _WHERIGO_EMPTYCARTRIDGE_GWC = WherigoCartridgeGWC(
 );
 
 const String WHERIGO_NULLDATE = '0-01-01 00:00:00.000';
+final WherigoZonePoint WHERIGO_NULLPOINT = WherigoZonePoint(Latitude: 0.0, Longitude: 0.0, Altitude: 0.0);
 
 const WherigoCartridgeLUA WHERIGO_EMPTYCARTRIDGE_LUA = WherigoCartridgeLUA(
     LUAFile: '',
@@ -101,7 +102,7 @@ const WherigoCartridgeLUA WHERIGO_EMPTYCARTRIDGE_LUA = WherigoCartridgeLUA(
     Timers: [],
     Media: [],
     Messages: [],
-    Answers: [],
+    //Answers: [],
     Variables: [],
     NameToObject: {},
     ResultStatus: WHERIGO_ANALYSE_RESULT_STATUS.NONE,
@@ -119,7 +120,7 @@ const WherigoCartridgeLUA WHERIGO_EMPTYCARTRIDGE_LUA = WherigoCartridgeLUA(
     httpCode: 0,
     httpMessage: '');
 
-const Map<bool, Map<WHERIGO_FILE_LOAD_STATE, Map<WHERIGO_OBJECT, String>>> WHERIGO_DATA = {
+const Map<bool, Map<WHERIGO_FILE_LOAD_STATE, Map<WHERIGO_OBJECT, String>>> WHERIGO_DROPDOWN_DATA = {
   _WHERIGO_EXPERT_MODE: {
     WHERIGO_FILE_LOAD_STATE.NULL: {},
     WHERIGO_FILE_LOAD_STATE.GWC: _WHERIGO_DATA_GWC_EXPERT,

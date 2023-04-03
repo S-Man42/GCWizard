@@ -48,20 +48,6 @@ const Map<String, List<String>> _PASLEY_MODIFIER = {
   'NUMBERFOLLOWS': ['2', '6'],
 };
 
-const Map<String, String> _DigitToLetter = {
-  '1': 'A',
-  '2': 'B',
-  '3': 'C',
-  '4': 'D',
-  '5': 'E',
-  '6': 'F',
-  '7': 'G',
-  '8': 'H',
-  '9': 'I',
-  '0': 'J',
-  ' ': ' '
-};
-
 const Map<String, String> _LetterToDigit = {
   'A': '1',
   'B': '2',
@@ -104,19 +90,6 @@ const List<String> _LETTER = [
   'X',
   'Y',
   'Z',
-];
-const List<String> _DIGIT = [
-  ' ',
-  '1',
-  '2',
-  '3',
-  '4',
-  '5',
-  '6',
-  '7',
-  '8',
-  '9',
-  '0',
 ];
 
 Segments encodePasley(String input) {
