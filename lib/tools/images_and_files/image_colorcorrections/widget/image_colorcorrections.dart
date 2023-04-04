@@ -37,6 +37,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
   GCWFile? _originalData;
   Uint8List? _convertedOutputImage;
 
+  Image.Image? _originalImage;
   Image.Image? _currentPreview;
   Image.Image? _originalPreview;
 
@@ -80,14 +81,14 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
   Image.Image? _currentDataInit({int? previewSize}) {
     var previewHeight = previewSize ?? Prefs.getInt(PREFERENCE_IMAGECOLORCORRECTIONS_MAXPREVIEWHEIGHT);
 
-    Image.Image? image = _decodeImage(_originalData?.bytes);
-    if(image == null) return null;
+    _originalImage = _decodeImage(_originalData?.bytes);
+    if(_originalImage == null) return null;
 
-    if (image.height > previewHeight) {
-      Image.Image resized = Image.copyResize(image, height: previewHeight);
+    if (_originalImage!.height > previewHeight) {
+      Image.Image resized = Image.copyResize(_originalImage!, height: previewHeight);
       return resized;
     } else {
-      return image;
+      return _originalImage!.clone();
     }
   }
 
@@ -371,10 +372,9 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
   }
 
   Future<GCWAsyncExecuterParameters?> _buildJobDataAdjustColor() async {
-    var image = _decodeImage(_originalData?.bytes);
-    if (image == null) return null;
+    if (_originalImage == null) return null;
     return GCWAsyncExecuterParameters(_AdjustColorInput(
-        image: image,
+        image: _originalImage!,
         invert: _currentInvert,
         grayscale: _currentGrayscale,
         edgeDetection: _currentEdgeDetection,
