@@ -20,6 +20,10 @@ class _GCWCoordsNaturalAreaCodeState extends State<_GCWCoordsNaturalAreaCode> {
   void initState() {
     super.initState();
 
+    var naturalAreaCode = widget.coordinates;
+    _currentX = naturalAreaCode.x;
+    _currentY = naturalAreaCode.y;
+
     _controllerX = TextEditingController(text: _currentX);
     _controllerY = TextEditingController(text: _currentY);
   }
@@ -34,12 +38,6 @@ class _GCWCoordsNaturalAreaCodeState extends State<_GCWCoordsNaturalAreaCode> {
 
   @override
   Widget build(BuildContext context) {
-    var naturalAreaCode = widget.coordinates;
-    _currentX = naturalAreaCode.x;
-    _currentY = naturalAreaCode.y;
-
-    _controllerX.text = _currentX;
-    _controllerY.text = _currentY;
 
     return Column(children: <Widget>[
       GCWTextField(

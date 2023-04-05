@@ -28,9 +28,15 @@ class _GCWCoordsReverseWherigoWaldmeisterState extends State<_GCWCoordsReverseWh
   @override
   void initState() {
     super.initState();
-    _ControllerA = TextEditingController(text: _currentA.toString());
-    _ControllerB = TextEditingController(text: _currentB.toString());
-    _ControllerC = TextEditingController(text: _currentC.toString());
+
+    var waldmeister = widget.coordinates;
+    _currentA = waldmeister.a;
+    _currentB = waldmeister.b;
+    _currentC = waldmeister.c;
+
+    _ControllerA = TextEditingController(text: waldmeister.a.toString().padLeft(6, '0'));
+    _ControllerB = TextEditingController(text: waldmeister.b.toString().padLeft(6, '0'));
+    _ControllerC = TextEditingController(text: waldmeister.c.toString().padLeft(6, '0'));
   }
 
   @override
@@ -47,14 +53,6 @@ class _GCWCoordsReverseWherigoWaldmeisterState extends State<_GCWCoordsReverseWh
 
   @override
   Widget build(BuildContext context) {
-    var waldmeister = widget.coordinates;
-    _currentA = waldmeister.a;
-    _currentB = waldmeister.b;
-    _currentC = waldmeister.c;
-
-    _ControllerA.text = waldmeister.a.toString().padLeft(6, '0');
-    _ControllerB.text = waldmeister.b.toString().padLeft(6, '0');
-    _ControllerC.text = waldmeister.c.toString().padLeft(6, '0');
 
     return Column(children: <Widget>[
       GCWTextField(
