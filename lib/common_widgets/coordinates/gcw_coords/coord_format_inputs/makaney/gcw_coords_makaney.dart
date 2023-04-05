@@ -17,6 +17,9 @@ class _GCWCoordsMakaneyState extends State<_GCWCoordsMakaney> {
   @override
   void initState() {
     super.initState();
+
+    _currentCoord = widget.coordinates.text;
+
     _controller = TextEditingController(text: _currentCoord);
   }
 
@@ -28,10 +31,6 @@ class _GCWCoordsMakaneyState extends State<_GCWCoordsMakaney> {
 
   @override
   Widget build(BuildContext context) {
-    var makaney = widget.coordinates;
-    _currentCoord = makaney.toString();
-
-    _controller.text = _currentCoord;
 
     return Column(children: <Widget>[
       GCWTextField(

@@ -20,8 +20,13 @@ class _GCWCoordsMercatorState extends State<_GCWCoordsMercator> {
   @override
   void initState() {
     super.initState();
-    _EastingController = TextEditingController(text: _currentEasting.text);
-    _NorthingController = TextEditingController(text: _currentNorthing.text);
+
+    var mercator = widget.coordinates;
+    _currentEasting.value = mercator.easting;
+    _currentNorthing.value = mercator.northing;
+
+    _EastingController = TextEditingController(text: _currentEasting.value.toString());
+    _NorthingController = TextEditingController(text:  _currentNorthing.value.toString());
   }
 
   @override
@@ -33,12 +38,6 @@ class _GCWCoordsMercatorState extends State<_GCWCoordsMercator> {
 
   @override
   Widget build(BuildContext context) {
-    var mercator = widget.coordinates;
-    _currentEasting.value = mercator.easting;
-    _currentNorthing.value = mercator.northing;
-
-    _EastingController.text = _currentEasting.value.toString();
-    _NorthingController.text = _currentNorthing.value.toString();
 
     return Column(children: <Widget>[
       GCWDoubleTextField(

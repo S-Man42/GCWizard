@@ -19,6 +19,9 @@ class _GCWCoordsQuadtreeState extends State<_GCWCoordsQuadtree> {
   @override
   void initState() {
     super.initState();
+
+    _currentCoord = widget.coordinates.toString();
+
     _controller = TextEditingController(text: _currentCoord);
   }
 
@@ -30,10 +33,6 @@ class _GCWCoordsQuadtreeState extends State<_GCWCoordsQuadtree> {
 
   @override
   Widget build(BuildContext context) {
-    var quadtree = widget.coordinates;
-    _currentCoord = quadtree.toString();
-
-    _controller.text = _currentCoord;
 
     return Column(children: <Widget>[
       GCWTextField(

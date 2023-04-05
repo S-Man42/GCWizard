@@ -17,6 +17,9 @@ class _GCWCoordsGeoHexState extends State<_GCWCoordsGeoHex> {
   @override
   void initState() {
     super.initState();
+
+    _currentCoord = widget.coordinates.text;
+
     _controller = TextEditingController(text: _currentCoord);
   }
 
@@ -28,10 +31,6 @@ class _GCWCoordsGeoHexState extends State<_GCWCoordsGeoHex> {
 
   @override
   Widget build(BuildContext context) {
-    var geohHex = widget.coordinates;
-    _currentCoord = geohHex.text;
-
-    _controller.text = _currentCoord;
 
     return Column(children: <Widget>[
       GCWTextField(
