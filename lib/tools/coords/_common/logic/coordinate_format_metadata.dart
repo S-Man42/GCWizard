@@ -11,7 +11,7 @@ class CoordinateFormatMetadata {
   CoordinateFormatMetadata(this.type, this.persistenceKey, this.name, this.example, {this.subtypes});
 }
 
-List<CoordinateFormatMetadata> allCoordinateFormatMetadata = [
+final List<CoordinateFormatMetadata> allCoordinateFormatMetadata = [
   CoordinateFormatMetadata(CoordinateFormatKey.DEC, 'coords_dec', 'DEC: DD.DDD°', '45.29100, -122.41333'),
   CoordinateFormatMetadata(CoordinateFormatKey.DMM, 'coords_dmm', 'DMM: DD° MM.MMM\'', 'N 45° 17.460\' W 122° 24.800\''),
   CoordinateFormatMetadata(CoordinateFormatKey.DMS, 'coords_dms', 'DMS: DD° MM\' SS.SSS"', 'N 45° 17\' 27.60" W 122° 24\' 48.00"'),
