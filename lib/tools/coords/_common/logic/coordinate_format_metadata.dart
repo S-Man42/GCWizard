@@ -111,7 +111,7 @@ List<CoordinateFormatMetadata> _getAllSubtypeCoordinateFormats() {
 }
 
 CoordinateFormatMetadata coordinateFormatMetadataByKey(CoordinateFormatKey key) {
-  var allFormats = allCoordinateFormatMetadata;
+  var allFormats = allCoordinateFormatMetadata.toList();
   allFormats.addAll(_getAllSubtypeCoordinateFormats());
 
   return allFormats.firstWhere((format) => format.type == key);
