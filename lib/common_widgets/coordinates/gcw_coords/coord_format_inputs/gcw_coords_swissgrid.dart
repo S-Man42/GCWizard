@@ -20,8 +20,15 @@ class _GCWCoordsSwissGridState extends State<_GCWCoordsSwissGrid> {
   @override
   void initState() {
     super.initState();
-    _EastingController = TextEditingController(text: _currentEasting.text);
-    _NorthingController = TextEditingController(text: _currentNorthing.text);
+
+    var swissGrid = widget.coordinates is SwissGrid
+        ? widget.coordinates as SwissGrid
+        : SwissGrid.fromLatLon(widget.coordinates.toLatLng() ?? defaultCoordinate, defaultEllipsoid);
+    _currentEasting.value = swissGrid.easting;
+    _currentNorthing.value = swissGrid.northing;
+
+    _EastingController = TextEditingController(text: _currentEasting.value.toString());
+    _NorthingController = TextEditingController(text: _currentNorthing.value.toString());
   }
 
   @override
@@ -33,14 +40,6 @@ class _GCWCoordsSwissGridState extends State<_GCWCoordsSwissGrid> {
 
   @override
   Widget build(BuildContext context) {
-    var swissGrid = widget.coordinates is SwissGrid
-        ? widget.coordinates as SwissGrid
-        : SwissGrid.fromLatLon(widget.coordinates.toLatLng() ?? defaultCoordinate, defaultEllipsoid);
-    _currentEasting.value = swissGrid.easting;
-    _currentNorthing.value = swissGrid.northing;
-
-    _EastingController.text = _currentEasting.value.toString();
-    _NorthingController.text = _currentNorthing.value.toString();
 
     return Column(children: <Widget>[
       GCWDoubleTextField(

@@ -39,11 +39,7 @@ CoordinateFormat get defaultCoordinateFormat {
     format = _fallbackDefaultCoordFormatKey;
   } else {
     var _format = coordinateFormatMetadataByPersistenceKey(formatStr);
-    if (_format == null) {
-      format = _fallbackDefaultCoordFormatKey;
-    } else {
-      format = _format.type;
-    }
+    format = (_format == null) ? _fallbackDefaultCoordFormatKey : _format.type;
   }
 
   return CoordinateFormat(format, defaultCoordinateFormatSubtypeForFormat(format));
@@ -79,16 +75,9 @@ CoordinateFormatKey? defaultCoordinateFormatSubtypeForFormat(CoordinateFormatKey
   } else {
 
     var _subtype = coordinateFormatMetadataSubtypeByPersistenceKey(subtypeStr);
-    if (_subtype == null || !isSubtypeOfCoordinateFormat(format, _subtype.type)) {
-
-      subtype = _getDefaultSubtypeForFormat(format)!;
-
-    } else {
-
-      subtype = _subtype.type;
-
-    }
-
+    subtype = (_subtype == null || !isSubtypeOfCoordinateFormat(format, _subtype.type))
+      ? _getDefaultSubtypeForFormat(format)!
+      : _subtype.type;
   }
 
   var persistenceKeyForSubtype = coordinateFormatMetadataByKey(subtype).persistenceKey;

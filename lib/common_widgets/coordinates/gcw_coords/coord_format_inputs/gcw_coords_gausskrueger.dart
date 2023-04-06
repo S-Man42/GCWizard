@@ -24,8 +24,13 @@ class _GCWCoordsGaussKruegerState extends State<_GCWCoordsGaussKrueger> {
   void initState() {
     super.initState();
 
-    _eastingController = TextEditingController(text: _currentEasting.text);
-    _northingController = TextEditingController(text: _currentNorthing.text);
+    var gausskrueger = widget.coordinates;
+    _currentEasting.value = gausskrueger.easting;
+    _currentNorthing.value = gausskrueger.northing;
+    _currentSubtype = gausskrueger.format.subtype!;
+
+    _eastingController = TextEditingController(text: _currentEasting.value.toString());
+    _northingController = TextEditingController(text: _currentNorthing.value.toString());
   }
 
   @override
@@ -40,14 +45,6 @@ class _GCWCoordsGaussKruegerState extends State<_GCWCoordsGaussKrueger> {
   Widget build(BuildContext context) {
     if (_subtypeChanged()) {
       WidgetsBinding.instance.addPostFrameCallback((_) => _setCurrentValueAndEmitOnChange());
-    } else {
-      var gausskrueger = widget.coordinates;
-      _currentEasting.value = gausskrueger.easting;
-      _currentNorthing.value = gausskrueger.northing;
-      _currentSubtype = gausskrueger.format.subtype!;
-
-      _eastingController.text = _currentEasting.value.toString();
-      _northingController.text = _currentNorthing.value.toString();
     }
 
     return Column(children: <Widget>[

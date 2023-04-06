@@ -24,8 +24,13 @@ class _GCWCoordsLambertState extends State<_GCWCoordsLambert> {
   void initState() {
     super.initState();
 
-    _eastingController = TextEditingController(text: _currentEasting.text);
-    _northingController = TextEditingController(text: _currentNorthing.text);
+    var lambert = widget.coordinates;
+    _currentEasting.value = lambert.easting;
+    _currentNorthing.value = lambert.northing;
+    _currentSubtype = lambert.format.subtype!;
+
+    _eastingController = TextEditingController(text: _currentEasting.value.toString());
+    _northingController = TextEditingController(text: _currentNorthing.value.toString());
   }
 
   @override
@@ -40,14 +45,6 @@ class _GCWCoordsLambertState extends State<_GCWCoordsLambert> {
   Widget build(BuildContext context) {
     if (_subtypeChanged()) {
       WidgetsBinding.instance.addPostFrameCallback((_) => _setCurrentValueAndEmitOnChange());
-    } else {
-      var lambert = widget.coordinates;
-      _currentEasting.value = lambert.easting;
-      _currentNorthing.value = lambert.northing;
-      _currentSubtype = lambert.format.subtype!;
-
-      _eastingController.text = _currentEasting.value.toString();
-      _northingController.text = _currentNorthing.value.toString();
     }
 
     return Column(children: <Widget>[

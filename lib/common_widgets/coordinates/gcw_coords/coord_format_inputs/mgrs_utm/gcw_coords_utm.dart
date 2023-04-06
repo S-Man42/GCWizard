@@ -23,10 +23,19 @@ class _GCWCoordsUTMState extends State<_GCWCoordsUTM> {
   @override
   void initState() {
     super.initState();
-    _LonZoneController = TextEditingController(text: _currentLonZone.text);
 
-    _EastingController = TextEditingController(text: _currentEasting.text);
-    _NorthingController = TextEditingController(text: _currentNorthing.text);
+    var utm = widget.coordinates is UTMREF
+        ? widget.coordinates as UTMREF
+        : UTMREF.fromLatLon(widget.coordinates.toLatLng() ?? defaultCoordinate, defaultEllipsoid);
+    _currentLonZone.value = utm.zone.lonZone;
+    _currentEasting.value = utm.easting;
+    _currentNorthing.value = utm.northing;
+    _currentLatZone = utm.zone.latZone;
+
+    _LonZoneController = TextEditingController(text: _currentLonZone.value.toString());
+
+    _EastingController = TextEditingController(text: _currentEasting.value.toString());
+    _NorthingController = TextEditingController(text: _currentNorthing.value.toString());
   }
 
   @override
@@ -39,17 +48,6 @@ class _GCWCoordsUTMState extends State<_GCWCoordsUTM> {
 
   @override
   Widget build(BuildContext context) {
-    var utm = widget.coordinates is UTMREF
-        ? widget.coordinates as UTMREF
-        : UTMREF.fromLatLon(widget.coordinates.toLatLng() ?? defaultCoordinate, defaultEllipsoid);
-    _currentLonZone.value = utm.zone.lonZone;
-    _currentEasting.value = utm.easting;
-    _currentNorthing.value = utm.northing;
-    _currentLatZone = utm.zone.latZone;
-
-    _LonZoneController.text = _currentLonZone.value.toString();
-    _EastingController.text = _currentEasting.value.toString();
-    _NorthingController.text = _currentNorthing.value.toString();
 
     return Column(children: <Widget>[
       Row(
