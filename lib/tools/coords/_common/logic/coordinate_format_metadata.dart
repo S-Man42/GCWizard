@@ -92,6 +92,8 @@ const List<CoordinateFormatMetadata> allCoordinateFormatMetadata = [
   CoordinateFormatMetadata(CoordinateFormatKey.GEO3X3, 'coords_geo3x3', 'Geo3x3', 'W7392967941169'),
 ];
 
+const CoordinateFormatMetadataALL = CoordinateFormatMetadata(CoordinateFormatKey.ALL, '', '', '');
+
 CoordinateFormatMetadata? coordinateFormatMetadataByPersistenceKey(String key) {
   return allCoordinateFormatMetadata.firstWhereOrNull((format) => format.persistenceKey == key);
 }
@@ -111,6 +113,9 @@ List<CoordinateFormatMetadata> _getAllSubtypeCoordinateFormats() {
 }
 
 CoordinateFormatMetadata coordinateFormatMetadataByKey(CoordinateFormatKey key) {
+  if (key == CoordinateFormatMetadataALL.type) {
+    return CoordinateFormatMetadataALL;
+  }
   var allFormats = List<CoordinateFormatMetadata>.from(allCoordinateFormatMetadata);
   allFormats.addAll(_getAllSubtypeCoordinateFormats());
 
