@@ -27,12 +27,11 @@ class ShadowLength extends StatefulWidget {
 
 class ShadowLengthState extends State<ShadowLength> {
   var _currentDateTime = DateTimeTimezone(datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
-  var _currentCoords = defaultBaseCoordinate;
+  var _currentInputCoords = defaultBaseCoordinate;
   var _currentHeight = 0.0;
 
   final Length _currentInputLength = defaultLengthUnit;
-  var _currentOutput = GCWCoordsOutputFormatDistanceValue(
-      defaultCoordinateFormat, defaultLengthUnit);
+  var _currentOutputFormat = GCWCoordsOutputFormatDistanceValue(defaultCoordinateFormat, defaultLengthUnit);
 
   @override
   Widget build(BuildContext context) {
@@ -40,10 +39,10 @@ class ShadowLengthState extends State<ShadowLength> {
       children: <Widget>[
         GCWCoords(
           title: i18n(context, 'common_location'),
-          coordsFormat: _currentCoords.format,
+          coordsFormat: _currentInputCoords.format,
           onChanged: (ret) {
             setState(() {
-              _currentCoords = ret;
+              _currentInputCoords = ret;
             });
           },
         ),
@@ -71,10 +70,10 @@ class ShadowLengthState extends State<ShadowLength> {
           },
         ),
         GCWCoordsOutputFormatDistance(
-          coordFormat: _currentOutput.format,
+          coordFormat: _currentOutputFormat.format,
           onChanged: (value) {
             setState(() {
-              _currentOutput = _currentOutput;
+              _currentOutputFormat = value;
             });
           },
         ),
@@ -85,39 +84,41 @@ class ShadowLengthState extends State<ShadowLength> {
 
   Widget _buildOutput() {
     var shadowLen = shadowLength(
-        _currentHeight, _currentCoords.toLatLng() ?? defaultCoordinate, defaultEllipsoid, _currentDateTime);
+        _currentHeight, _currentInputCoords.toLatLng() ?? defaultCoordinate, defaultEllipsoid, _currentDateTime);
 
-    var lengthOutput = '';
-    var _currentLength = shadowLen.length;
+    String lengthOutput = '';
+    double _currentLength = shadowLen.length;
 
-    var format = NumberFormat('0.000');
+    NumberFormat format = NumberFormat('0.000');
     double? _currentFormattedLength;
     if (_currentLength < 0) {
       lengthOutput = i18n(context, 'shadowlength_no_shadow');
     } else {
-      _currentFormattedLength = _currentOutput.lengthUnit.fromMeter(_currentLength);
-      lengthOutput = format.format(_currentFormattedLength) + ' ' + _currentOutput.lengthUnit.symbol;
+      _currentFormattedLength = _currentOutputFormat.lengthUnit.fromMeter(_currentLength);
+      lengthOutput = format.format(_currentFormattedLength) + ' ' + _currentOutputFormat.lengthUnit.symbol;
     }
 
-    var outputShadow = GCWOutput(
+    Widget outputShadow = GCWOutput(
       title: i18n(context, 'shadowlength_length'),
       child: lengthOutput,
       copyText: _currentFormattedLength == null ? null : _currentLength.toString(),
     );
 
-    var outputLocation = GCWCoordsOutput(
+    Widget outputLocation = GCWCoordsOutput(
       title: i18n(context, 'shadowlength_location'),
-      outputs: [buildCoordinatesByFormat(_currentCoords.format, shadowLen.shadowEndPosition, defaultEllipsoid).toString()],
+      outputs: [
+        buildCoordinatesByFormat(_currentOutputFormat.format, shadowLen.shadowEndPosition, defaultEllipsoid).toString()
+      ],
       points: [
         GCWMapPoint(
-            point: _currentCoords.toLatLng() ?? defaultCoordinate,
+            point: shadowLen.shadowEndPosition,
             markerText: i18n(context, 'coords_waypointprojection_start'),
-            coordinateFormat: _currentCoords.format),
+            coordinateFormat: _currentOutputFormat.format),
         GCWMapPoint(
             point: shadowLen.shadowEndPosition,
             color: COLOR_MAP_CALCULATEDPOINT,
             markerText: i18n(context, 'coords_waypointprojection_end'),
-            coordinateFormat: _currentCoords.format)
+            coordinateFormat: _currentOutputFormat.format)
       ],
     );
 
@@ -126,10 +127,8 @@ class ShadowLengthState extends State<ShadowLength> {
       [i18n(context, 'astronomy_position_altitude'), format.format(shadowLen.sunPosition.altitude) + '°'],
     ];
 
-    var rowsSunData = GCWColumnedMultilineOutput(
-        firstRows: [GCWTextDivider(text: i18n(context, 'astronomy_sunposition_title'))],
-        data: outputsSun
-    );
+    Widget rowsSunData = GCWColumnedMultilineOutput(
+        firstRows: [GCWTextDivider(text: i18n(context, 'astronomy_sunposition_title'))], data: outputsSun);
 
     return Column(children: [outputShadow, outputLocation, rowsSunData]);
   }
