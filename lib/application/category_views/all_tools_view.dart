@@ -149,6 +149,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/tapir/widget/tapir.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/text_analysis/widget/text_analysis.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/trifid/widget/trifid.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/trithemius/widget/trithemius.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/upsidedown/widget/upsidedown.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/vigenere/widget/vigenere.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/wasd/widget/wasd.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/zamonian_numbers/widget/zamonian_numbers.dart';
@@ -675,6 +676,7 @@ void _initStaticToolList() {
       className(const Trithemius()),
       className(const TTS()),
       className(const UnitConverter()),
+      className(const UpsideDown()),
       className(const UrwigoHashBreaker()),
       className(const UrwigoTextDeobfuscation()),
       className(const VanitySelection()),
