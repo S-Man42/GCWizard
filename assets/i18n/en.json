@@ -2682,6 +2682,8 @@
   "keyboard_mode_qwerty_us_int_colemak_dvorak": "QWERTY, Colemak, Dvorak (US, int.)",
   "languagegames_selection_title": "Language Games",
   "languagegames_selection_description": "Secret languages for children",
+  "leetspeak_title": "Leet Speak",
+  "leetspeak_example": "LEET SPEAK → l33t 5p34k",
   "licenses_title": "Licenses",
   "licenses_usedflutterlibraries": "Used Code Libraries (Flutter/Dart)",
   "licenses_additionalcode": "Additional Code",
