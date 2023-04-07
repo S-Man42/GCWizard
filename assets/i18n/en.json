@@ -3852,6 +3852,8 @@
   "scrabble_version_pl_until2000": "Polish (until 2000)",
   "scrabbleoverview_title": "Scrabble Overview",
   "scrabbleoverview_description": "Displays all letters of a specific Scrabble set with their values and frequencies",
+  "scripting_selection_title": "Scripting",
+  "scripting_selection_description": "Tools for writing Scripts/Macros",
   "segmentdisplay_selection_title": "Segment Display",
   "segmentdisplay_selection_description": "Encoding and decoding of 7, 14 or 16 segment displays",
   "segmentdisplay_selection_example": "2 → abdeg",

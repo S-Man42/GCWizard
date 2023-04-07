@@ -15,9 +15,9 @@ int _bww(dynamic text, dynamic opt_alph, dynamic opt_itqs) {
   }
   int wordValue = 0;
   List<int> values = AlphabetValues().textToValues(text as String).cast<int>();
-  values.forEach((number) {
+  for (int number in values ) {
     wordValue = wordValue + number;
-  });
+  }
   switch (opt_itqs as int) {
     case 0:
       return wordValue;

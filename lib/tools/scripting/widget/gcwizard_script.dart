@@ -2,8 +2,10 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
+import 'package:gc_wizard/tools/coords/map_view/widget/gcw_mapview.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:intl/intl.dart';
 
@@ -48,8 +50,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
   bool _loadFile = false;
 
   bool _loadCoords = false;
-  var _currentCoords = defaultCoordinate;
-  var _currentCoordsFormat = defaultCoordFormat();
+  var _currentCoords = defaultBaseCoordinate;
 
   @override
   void initState() {
@@ -89,13 +90,12 @@ class GCWizardScriptState extends State<GCWizardScript> {
             if (_loadCoords)
               GCWCoords(
                 title: i18n(context, 'gcwizard_script_coords'),
-                coordsFormat: _currentCoordsFormat,
+                coordsFormat: _currentCoords.format,
                 onChanged: (ret) {
                   setState(() {
-                    _currentCoordsFormat = ret['coordsFormat'];
-                    _currentCoords = ret['value'];
-                    GCWizardScript_LAT = _currentCoords.latitude;
-                    GCWizardScript_LON = _currentCoords.longitude;
+                    _currentCoords = ret;
+                    GCWizardScript_LAT = _currentCoords.toLatLng()!.latitude;
+                    GCWizardScript_LON = _currentCoords.toLatLng()!.longitude;
                   });
                 },
               ),
@@ -177,7 +177,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
           GCWDefaultOutput(
             child: GCWImageView(
               imageData: GCWImageViewData(GCWFile(bytes: _outGraphicData)),
-              suppressOpenInTool: {
+              suppressOpenInTool: const {
                 GCWImageViewOpenInTools.METADATA,
                 GCWImageViewOpenInTools.HIDDENDATA,
                 GCWImageViewOpenInTools.HEXVIEW
@@ -275,6 +275,9 @@ class GCWizardScriptState extends State<GCWizardScript> {
       case GCWizardScriptFileType.OUTPUT:
         filename = 'out_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.out';
         break;
+      case GCWizardScriptFileType.WAYPOINT:
+        filename = 'out_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.wpt';
+        break;
     }
     value = await saveByteDataToFile(context, data, filename);
     if (value) showExportedFileDialog(context);
@@ -287,29 +290,27 @@ class GCWizardScriptState extends State<GCWizardScript> {
     return false;
   }
 
-  void _openInMap(
-    List<GCWMapPoint> points,
-  ) {
+  void _openInMap(List<GCWMapPoint> points,) {
     Navigator.push(
         context,
-        MaterialPageRoute(
+        MaterialPageRoute<GCWTool>(
             builder: (context) => GCWTool(
                 tool: GCWMapView(
                   points: List<GCWMapPoint>.from(points),
                   isEditable: false, // false: open in Map
                   // true:  open in FreeMap
                 ),
-                i18nPrefix: 'coords_map_view',
+                id: 'coords_map_view',
                 autoScroll: false,
                 suppressToolMargin: true)));
   }
 
   String _buildWayPointList(List<GCWMapPoint> points) {
     List<String> result = [];
-    points.forEach((point) {
+    for (GCWMapPoint point in points) {
       result.add(
           point.point.latitude.toStringAsFixed(6).padLeft(10) + point.point.longitude.toStringAsFixed(6).padLeft(12));
-    });
+    }
     return result.join('\n');
   }
 
@@ -328,7 +329,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
       ..strokeWidth = pointsize.toDouble();
 
     canvas.drawRect(Rect.fromLTWH(0, 0, width, height), paint);
-    commands.forEach((command) {
+    for (String command in commands) {
       graphicCommand = command.split(' ');
       switch (graphicCommand[0]) {
         case 'TEXT': // TEXT(T,X,Y,S)
@@ -342,7 +343,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
           final paragraphBuilder = ui.ParagraphBuilder(paragraphStyle)
             ..pushStyle(textStyle)
             ..addText(graphicCommand[1].replaceAll('⟳', ' '));
-          final constraints = ui.ParagraphConstraints(width: 300);
+          const constraints = ui.ParagraphConstraints(width: 300);
           final paragraph = paragraphBuilder.build();
           paragraph.layout(constraints);
           canvas.drawParagraph(paragraph, Offset(double.parse(graphicCommand[2]), double.parse(graphicCommand[3])));
@@ -414,7 +415,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
           paint.strokeWidth = double.parse(graphicCommand[1]);
           break;
       }
-    });
+    }
 
     final img = await canvasRecorder.endRecording().toImage(width.floor(), height.floor());
     final data = await img.toByteData(format: ui.ImageByteFormat.png);

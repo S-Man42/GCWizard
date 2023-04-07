@@ -1,22 +1,26 @@
 import 'dart:core';
 import 'dart:math';
 import 'dart:io';
+
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
+
+import 'package:stack/stack.dart' as datastack;
+import 'package:latlong2/latlong.dart';
+
+import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
+import 'package:gc_wizard/tools/coords/centerpoint/logic/centerpoint.dart';
 import 'package:gc_wizard/tools/coords/centroid/centroid_arithmetic_mean/logic/centroid_arithmetic_mean.dart';
 import 'package:gc_wizard/tools/coords/centroid/centroid_center_of_gravity/logic/centroid_center_of_gravity.dart';
+import 'package:gc_wizard/tools/coords/distance_and_bearing/logic/distance_and_bearing.dart';
+import 'package:gc_wizard/tools/coords/waypoint_projection/logic/projection.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/logic/alphabet_values.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/hashes/logic/hashes.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/roman_numbers/roman_numbers/logic/roman_numbers.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rotation/logic/rotator.dart';
 import 'package:gc_wizard/tools/science_and_technology/cross_sums/logic/crosstotals.dart';
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
-import 'package:stack/stack.dart' as datastack;
-import 'package:flutter/services.dart';
-import 'package:latlong2/latlong.dart';
-
 import 'package:gc_wizard/tools/crypto_and_encodings/base/_common/logic/base.dart';
-
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 
 part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_test_datatypes.dart';
@@ -114,10 +118,11 @@ class GCWizardScriptClassLabelStack {
     }
   }
 
-  int get(String key) {
+  int? get(String key) {
     return _contents[key];
   }
 
+  @override
   String toString() {
     String result = '';
     _contents.forEach((key, value) {
@@ -132,9 +137,9 @@ class GCWizardScriptClassLabelStack {
 }
 
 class GCWizardScriptClassForLoopInfo {
-  int loopVariable; // counter variable
-  double targetValue; // target value
-  int loopStart; // index in source code to loop to
+  late int loopVariable; // counter variable
+  late double targetValue; // target value
+  late int loopStart; // index in source code to loop to
 }
 
 double GCWizardScript_LAT = 0.0;
@@ -146,7 +151,7 @@ int GCWizardSCriptScreenColors = 0;
 
 int _scriptIndex = 0;
 
-Random _random = new Random();
+Random _random = Random();
 double _randomNumber = 0.0;
 
 GCWizardSCript_SCREENMODE GCWizardScriptScreenMode = GCWizardSCript_SCREENMODE.TEXT;
@@ -277,10 +282,10 @@ class GCWizardSCriptInterpreter {
   String STDOUT = '';
   double step = 0.0;
 
-  String token;
-  int tokenType;
+  String token = '';
+  int tokenType = 0;
 
-  int keywordToken;
+  int keywordToken = 0;
 
   bool executeElse = false;
 
@@ -374,7 +379,7 @@ class GCWizardSCriptInterpreter {
     step = 1.0;
     listDATA = [];
     pointerDATA = 0;
-    _waypointsics = [];
+    _waypoints = [];
 
     getLabels(); // find the labels in the program
     return scriptInterpreter(); // execute
@@ -402,13 +407,12 @@ class GCWizardSCriptInterpreter {
     return GCWizardScriptOutput(
         STDOUT: STDOUT,
         Graphic: _graphics,
-        Points: waypoints,
+        Points: _waypoints,
         ErrorMessage: _errorMessage,
         ErrorPosition: _errorPosition);
   }
 
   void getLabels() {
-    int i;
     int result;
 
     _scriptIndex = 0;
@@ -624,7 +628,7 @@ class GCWizardSCriptInterpreter {
     }
     for (int i = 1; i < maxBeep; i++) {
       SystemSound.play(SystemSoundType.click);
-      sleep(Duration(seconds: 1));
+      sleep(const Duration(seconds: 1));
     }
   }
 
@@ -694,16 +698,16 @@ class GCWizardSCriptInterpreter {
   }
 
   void executeCommandGOTO() {
-    int loc;
+    int? location;
 
     getToken();
 
-    loc = labelTable.get(token);
+    location = labelTable.get(token);
 
-    if (loc == null) {
+    if (location == null) {
       _handleError(LABELNOTDEFINED);
     } else {
-      _scriptIndex = loc;
+      _scriptIndex = location;
     }
   }
 
@@ -917,7 +921,7 @@ class GCWizardSCriptInterpreter {
   }
 
   void executeCommandFOR() {
-    GCWizardScriptClassForLoopInfo stckvar = new GCWizardScriptClassForLoopInfo();
+    GCWizardScriptClassForLoopInfo stckvar = GCWizardScriptClassForLoopInfo();
     controlStack.push(FORLOOP);
     dynamic value;
     String vname;
@@ -967,7 +971,7 @@ class GCWizardSCriptInterpreter {
       }
     }
 
-    if (value >= variables[stckvar.loopVariable]) {
+    if ((value as num) >= (variables[stckvar.loopVariable] as num)) {
       stckvar.loopStart = _scriptIndex;
       forStack.push(stckvar);
     } else {
@@ -1023,7 +1027,7 @@ class GCWizardSCriptInterpreter {
       stckvar = forStack.pop();
       variables[stckvar.loopVariable] = variables[stckvar.loopVariable] + step;
 
-      if (variables[stckvar.loopVariable] > stckvar.targetValue) return;
+      if ((variables[stckvar.loopVariable] as num) > stckvar.targetValue) return;
 
       forStack.push(stckvar);
       _scriptIndex = stckvar.loopStart;
@@ -1189,7 +1193,7 @@ class GCWizardSCriptInterpreter {
   }
 
   void executeCommandGOSUB() {
-    int location;
+    int? location;
 
     getToken();
 
@@ -1280,25 +1284,25 @@ class GCWizardSCriptInterpreter {
     dynamic partialResult5;
     dynamic partialResult6;
     dynamic result;
-    if (FUNCTIONS[command].functionParamCount == 0) {
+    if (FUNCTIONS[command]!.functionParamCount == 0) {
       partialResult1 = evaluateExpressionParantheses();
-      if (FUNCTIONS[command].functionReturn) {
-        result = FUNCTIONS[command].functionName();
+      if (FUNCTIONS[command]!.functionReturn) {
+        result = FUNCTIONS[command]!.functionName();
       }
       else {
-        FUNCTIONS[command].functionName();
+        FUNCTIONS[command]!.functionName();
       }
       _scriptIndex = _scriptIndex + 2;
-    } else if (FUNCTIONS[token].functionParamCount == 1) {
+    } else if (FUNCTIONS[token]!.functionParamCount == 1) {
       getToken();
       partialResult1 = evaluateExpressionParantheses();
-      if (FUNCTIONS[command].functionReturn) {
-        result = FUNCTIONS[command].functionName(partialResult1);
+      if (FUNCTIONS[command]!.functionReturn) {
+        result = FUNCTIONS[command]!.functionName(partialResult1);
       }
       else {
-        FUNCTIONS[command].functionName(partialResult1);
+        FUNCTIONS[command]!.functionName(partialResult1);
       }
-    } else if (FUNCTIONS[command].functionParamCount == 2) {
+    } else if (FUNCTIONS[command]!.functionParamCount == 2) {
       getToken();
       if (token == "(") {
         getToken();
@@ -1311,13 +1315,13 @@ class GCWizardSCriptInterpreter {
       } else {
         _handleError(UNBALANCEDPARENTHESES);
       }
-      if (FUNCTIONS[command].functionReturn) {
-        result = FUNCTIONS[command].functionName(partialResult1, partialResult2);
+      if (FUNCTIONS[command]!.functionReturn) {
+        result = FUNCTIONS[command]!.functionName(partialResult1, partialResult2);
       }
       else {
-        FUNCTIONS[command].functionName(partialResult1, partialResult2);
+        FUNCTIONS[command]!.functionName(partialResult1, partialResult2);
       }
-    } else if (FUNCTIONS[token].functionParamCount == 3) {
+    } else if (FUNCTIONS[token]!.functionParamCount == 3) {
       getToken();
       if (token == "(") {
         getToken();
@@ -1333,12 +1337,12 @@ class GCWizardSCriptInterpreter {
       } else {
         _handleError(UNBALANCEDPARENTHESES);
       }
-      if (FUNCTIONS[command].functionReturn) {
-        result = FUNCTIONS[command].functionName(partialResult1, partialResult2, partialResult3);
+      if (FUNCTIONS[command]!.functionReturn) {
+        result = FUNCTIONS[command]!.functionName(partialResult1, partialResult2, partialResult3);
       } else {
-        FUNCTIONS[command].functionName(partialResult1, partialResult2, partialResult3);
+        FUNCTIONS[command]!.functionName(partialResult1, partialResult2, partialResult3);
       }
-    } else if (FUNCTIONS[token].functionParamCount == 4) {
+    } else if (FUNCTIONS[token]!.functionParamCount == 4) {
       getToken();
       if (token == "(") {
         getToken();
@@ -1357,12 +1361,12 @@ class GCWizardSCriptInterpreter {
       } else {
         _handleError(UNBALANCEDPARENTHESES);
       }
-      if (FUNCTIONS[command].functionReturn) {
-        result = FUNCTIONS[command].functionName(partialResult1, partialResult2, partialResult3, partialResult4);
+      if (FUNCTIONS[command]!.functionReturn) {
+        result = FUNCTIONS[command]!.functionName(partialResult1, partialResult2, partialResult3, partialResult4);
       } else {
-        FUNCTIONS[command].functionName(partialResult1, partialResult2, partialResult3, partialResult4);
+        FUNCTIONS[command]!.functionName(partialResult1, partialResult2, partialResult3, partialResult4);
       }
-    } else if (FUNCTIONS[token].functionParamCount == 5) {
+    } else if (FUNCTIONS[token]!.functionParamCount == 5) {
       getToken();
       if (token == "(") {
         getToken();
@@ -1384,13 +1388,13 @@ class GCWizardSCriptInterpreter {
       } else {
         _handleError(UNBALANCEDPARENTHESES);
       }
-      if (FUNCTIONS[command].functionReturn) {
-        result = FUNCTIONS[command]
+      if (FUNCTIONS[command]!.functionReturn) {
+        result = FUNCTIONS[command]!
             .functionName(partialResult1, partialResult2, partialResult3, partialResult4, partialResult5);
       } else {
-        FUNCTIONS[command].functionName(partialResult1, partialResult2, partialResult3, partialResult4, partialResult5);
+        FUNCTIONS[command]!.functionName(partialResult1, partialResult2, partialResult3, partialResult4, partialResult5);
       }
-    } else if (FUNCTIONS[token].functionParamCount == 5) {
+    } else if (FUNCTIONS[token]!.functionParamCount == 5) {
       getToken();
       if (token == "(") {
         getToken();
@@ -1415,11 +1419,11 @@ class GCWizardSCriptInterpreter {
       } else {
         _handleError(UNBALANCEDPARENTHESES);
       }
-      if (FUNCTIONS[command].functionReturn) {
-        result = FUNCTIONS[command].functionName(
+      if (FUNCTIONS[command]!.functionReturn) {
+        result = FUNCTIONS[command]!.functionName(
             partialResult1, partialResult2, partialResult3, partialResult4, partialResult5, partialResult6);
       } else {
-        FUNCTIONS[command].functionName(
+        FUNCTIONS[command]!.functionName(
             partialResult1, partialResult2, partialResult3, partialResult4, partialResult5, partialResult6);
       }
     }
@@ -1438,7 +1442,6 @@ class GCWizardSCriptInterpreter {
     dynamic result;
 
     getToken();
-    print(token);
     if (token == EOP) _handleError(NOEXPRESSION);
 
     result = evaluateExpressionRelationalOperation();
@@ -1461,71 +1464,98 @@ class GCWizardSCriptInterpreter {
     if (isRelationalOperator(op)) {
       l_temp = result;
       getToken();
-      print(token);
+
       r_temp = evaluateExpressionRelationalOperation();
-      print(l_temp);
-      print(r_temp);
+
       if (_differentDataTypes(l_temp, r_temp)) {
         _handleError(INVALIDTYPECAST);
         result = 0.0;
       } else {
-        switch (op) {
-          case '<':
-            if (l_temp < r_temp) {
-              result = 1.0;
-            } else {
-              result = 0.0;
-            }
-            break;
-          case LE:
-            if (l_temp <= r_temp) {
-              result = 1.0;
-            } else {
-              result = 0.0;
-            }
-            break;
-          case '>':
-            if (l_temp > r_temp) {
-              result = 1.0;
-            } else {
-              result = 0.0;
-            }
-            break;
-          case GE:
-            if (l_temp >= r_temp) {
-              result = 1.0;
-            } else {
-              result = 0.0;
-            }
-            break;
-          case '=':
-            if (l_temp == r_temp) {
-              result = 1.0;
-            } else {
-              result = 0.0;
-            }
-            break;
-          case NE:
-            if (l_temp != r_temp) {
-              result = 1.0;
-            } else {
-              result = 0.0;
-            }
-            break;
-          case OR:
-            if (l_temp == 0.0 && r_temp == 0.0) {
-              result = 0.0;
-            } else {
-              result = 1.0;
-            }
-            break;
-          case AND:
-            if (l_temp != 0.0 && r_temp != 0.0) {
-              result = 1.0;
-            } else {
-              result = 0.0;
-            }
-            break;
+        if (_isString(l_temp)) {
+          switch (op) {
+            case '<':
+            case LE:
+            case '>':
+            case GE:
+            case OR:
+            case AND:
+            _handleError(INVALIDTYPECAST);
+            result = 0.0;
+              break;
+            case '=':
+              if ((l_temp as String) == (r_temp as String)) {
+                result = 1.0;
+              } else {
+                result = 0.0;
+              }
+              break;
+            case NE:
+              if ((l_temp as String) != (r_temp as String)) {
+                result = 1.0;
+              } else {
+                result = 0.0;
+              }
+              break;
+          }
+        } else {
+          switch (op) {
+            case '<':
+              if ((l_temp as num) < (r_temp as num)) {
+                result = 1.0;
+              } else {
+                result = 0.0;
+              }
+              break;
+            case LE:
+              if ((l_temp as num) <= (r_temp as num)) {
+                result = 1.0;
+              } else {
+                result = 0.0;
+              }
+              break;
+            case '>':
+              if ((l_temp as num) > (r_temp as num)) {
+                result = 1.0;
+              } else {
+                result = 0.0;
+              }
+              break;
+            case GE:
+              if ((l_temp as num) >= (r_temp as num)) {
+                result = 1.0;
+              } else {
+                result = 0.0;
+              }
+              break;
+            case '=':
+              if (l_temp == r_temp) {
+                result = 1.0;
+              } else {
+                result = 0.0;
+              }
+              break;
+            case NE:
+              if (l_temp != r_temp) {
+                result = 1.0;
+              } else {
+                result = 0.0;
+              }
+              break;
+            case OR:
+              if (l_temp == 0.0 && r_temp == 0.0) {
+                result = 0.0;
+              } else {
+                result = 1.0;
+              }
+              break;
+            case AND:
+              if (l_temp != 0.0 && r_temp != 0.0) {
+                result = 1.0;
+              } else {
+                result = 0.0;
+              }
+              break;
+          }
         }
       }
     }
@@ -1960,7 +1990,6 @@ class GCWizardSCriptInterpreter {
   }
 
   int lookUpToken(String s) {
-    int i;
 
     s = s.toLowerCase();
 

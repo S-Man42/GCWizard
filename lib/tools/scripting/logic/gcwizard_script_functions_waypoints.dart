@@ -60,13 +60,13 @@ void _wptscenter(dynamic x) {
     return;
   }
   List<LatLng> coords = [];
-  _waypoints.forEach((waypoint) {
+  for (GCWMapPoint waypoint in _waypoints) {
     coords.add(LatLng(waypoint.point.latitude, waypoint.point.longitude));
-  });
-  LatLng coord = centroidCenterOfGravity(coords);
+  }
+  LatLng coord = centroidCenterOfGravity(coords)!;
   if (x.toInt() == 0) {
     // arithmetic
-    coord = centroidArithmeticMean(coords, coord);
+    coord = centroidArithmeticMean(coords, coord)!;
     GCWizardScript_LAT = coord.latitude;
     GCWizardScript_LON = coord.longitude;
   } else {

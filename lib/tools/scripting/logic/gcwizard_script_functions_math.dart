@@ -262,7 +262,7 @@ int _kgv(dynamic x, dynamic y) {
     return 0;
   }
 
-  return (((x as int) * (y as int)).abs() / _ggt(x, y)).toInt();
+  return (((x as int) * (y as int)).abs() / _ggt(x, y)) as int;
 }
 
 String _convert(dynamic value, dynamic startBase, dynamic destinationBase) {

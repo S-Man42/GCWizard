@@ -249,6 +249,7 @@ import 'package:gc_wizard/tools/science_and_technology/teletypewriter/tts/widget
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/z22/widget/z22.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/zc1/widget/zc1.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/widget/unit_converter.dart';
+import 'package:gc_wizard/tools/scripting/widget/gcwizard_script.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_replacer.dart';
 import 'package:gc_wizard/tools/uncategorized/zodiac/widget/zodiac.dart';
 import 'package:gc_wizard/tools/wherigo/earwigo_text_deobfuscation/widget/earwigo_text_deobfuscation.dart';
@@ -258,6 +259,8 @@ import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
+
+import 'selector_lists/scripting_selection.dart';
 
 class MainView extends StatefulWidget {
   const MainView({Key? key}) : super(key: key);
@@ -549,6 +552,7 @@ void _initStaticToolList() {
       className(const Gade()),
       className(const GaussWeberTelegraph()),
       className(const GCCode()),
+      className(const GCWizardScript()),
       className(const Gray()),
       className(const Gronsfeld()),
       className(const HeatIndex()),
@@ -709,6 +713,7 @@ void _initStaticToolList() {
       className(const ImagesAndFilesSelection()),
       className(const ScienceAndTechnologySelection()),
       className(const SymbolTableSelection()),
+      className(const ScriptingSelection()),
     ].contains(className(element.tool));
   }).toList();
 

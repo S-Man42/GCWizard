@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/application/category_views/selector_lists/scripting_selection.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/main_menu/about.dart';
 import 'package:gc_wizard/application/main_menu/call_for_contribution.dart';
@@ -404,6 +405,7 @@ import 'package:gc_wizard/tools/science_and_technology/vanity/vanity_singletap/w
 import 'package:gc_wizard/tools/science_and_technology/vanity/vanity_words_list/widget/vanity_words_list.dart';
 import 'package:gc_wizard/tools/science_and_technology/vanity/vanity_words_search/widget/vanity_words_search.dart';
 import 'package:gc_wizard/tools/science_and_technology/weather_symbols/widget/weather_symbols.dart';
+import 'package:gc_wizard/tools/scripting/widget/gcwizard_script.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_replacer.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_tables_examples_select/widget/symbol_tables_examples_select.dart';
 import 'package:gc_wizard/tools/symbol_tables/_common/widget/gcw_symbol_table_tool.dart';
@@ -1035,6 +1037,10 @@ void initializeRegistry(BuildContext context) {
         id: 'scrabble_selection',
         categories: const [ToolCategory.GAMES],
         searchKeys: const ['games']),
+    GCWTool(
+        tool: const ScriptingSelection(),
+        id: 'scripting_selection',
+        searchKeys: const []),
     GCWTool(
         tool: const SegmentDisplaySelection(),
         id: 'segmentdisplay_selection',
@@ -3013,6 +3019,14 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWTool(tool: const ScrabbleOverview(), id: 'scrabbleoverview', searchKeys: const [
       'games_scrabble',
+    ]),
+
+    //Scripting Selection *****************************************************************************************
+
+    GCWTool(tool: const GCWizardScript(), id: 'gcwizard_script',
+        categories: const [ToolCategory.SCRIPTING],
+        searchKeys: const [
+      'gcwizard_script',
     ]),
 
     //Segments Display *******************************************************************************************
