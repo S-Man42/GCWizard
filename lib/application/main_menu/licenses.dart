@@ -67,6 +67,7 @@ class LicensesState extends State<Licenses> {
       const GCWColumnedMultilineOutput(
         data: [
           ['Astronomy Functions', 'astronomie.info, jgiesen.de', 'Personal Permission'],
+          ['Ballistics', 'Thomas "KoenigDickbauch" Bornhaupt', 'Personal Permission'],
           ['Base58', 'Dark Launch', null],
           ['Base91', 'Joachim Henke', 'BSD-3-Clause License'],
           ['Base122', 'Kevin Alberston\nPatrick Favre-Bulle', 'MIT License\nApache License, Version 2.0'],

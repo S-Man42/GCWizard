@@ -182,6 +182,7 @@ import 'package:gc_wizard/tools/science_and_technology/astronomy/seasons/widget/
 import 'package:gc_wizard/tools/science_and_technology/astronomy/shadow_length/widget/shadow_length.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/sun_position/widget/sun_position.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/sun_rise_set/widget/sun_rise_set.dart';
+import 'package:gc_wizard/tools/science_and_technology/ballistics/widget/ballistics.dart';
 import 'package:gc_wizard/tools/science_and_technology/binary/widget/binary.dart';
 import 'package:gc_wizard/tools/science_and_technology/blood_alcohol_content/widget/blood_alcohol_content.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/color_tool/widget/color_tool.dart';
@@ -474,6 +475,7 @@ void _initStaticToolList() {
       className(const AtomicNumbersToText()),
       className(const BabylonNumbersSelection()),
       className(const Bacon()),
+      className(const Ballistics()),
       className(const BaseSelection()),
       className(const BCDSelection()),
       className(const Beatnik()),
