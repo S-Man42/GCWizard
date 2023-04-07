@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits.dart';
 import 'package:gc_wizard/tools/science_and_technology/checkdigits/widget/base/checkdigits_calculate_checkdigit.dart';
 import 'package:gc_wizard/tools/science_and_technology/checkdigits/widget/base/checkdigits_calculate_missingdigit.dart';
@@ -5,13 +6,13 @@ import 'package:gc_wizard/tools/science_and_technology/checkdigits/widget/base/c
 
 
 class CheckDigitsDETaxIDCheckNumber extends CheckDigitsCheckNumber {
-  CheckDigitsDETaxIDCheckNumber() : super(mode: CheckDigitsMode.DETAXID);
+  const CheckDigitsDETaxIDCheckNumber({Key? key}) : super(key: key, mode: CheckDigitsMode.DETAXID);
 }
 
 class CheckDigitsDETaxIDCalculateCheckDigit extends CheckDigitsCalculateCheckDigit {
-  CheckDigitsDETaxIDCalculateCheckDigit() : super(mode: CheckDigitsMode.DETAXID);
+  const CheckDigitsDETaxIDCalculateCheckDigit({Key? key}) : super(key: key, mode: CheckDigitsMode.DETAXID);
 }
 
 class CheckDigitsDETaxIDCalculateMissingDigit extends CheckDigitsCalculateMissingDigits {
-  CheckDigitsDETaxIDCalculateMissingDigit() : super(mode: CheckDigitsMode.DETAXID);
+  const CheckDigitsDETaxIDCalculateMissingDigit({Key? key}) : super(key: key, mode: CheckDigitsMode.DETAXID);
 }

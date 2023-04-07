@@ -11,8 +11,7 @@ import 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdi
 
 class CheckDigitsCalculateMissingDigits extends StatefulWidget {
   final CheckDigitsMode mode;
-  final int maxIndex;
-  const CheckDigitsCalculateMissingDigits({required Key key, required this.mode, required this.maxIndex})
+  const CheckDigitsCalculateMissingDigits({Key? key, required this.mode, })
       : super(key: key);
 
   @override
@@ -62,7 +61,7 @@ class CheckDigitsCalculateMissingDigitsState extends State<CheckDigitsCalculateM
 
   Widget _buildOutput() {
     if (_numbers.join('') == '') {
-      return GCWDefaultOutput(
+      return const GCWDefaultOutput(
         child: '',
       );
     }
@@ -79,7 +78,7 @@ class CheckDigitsCalculateMissingDigitsState extends State<CheckDigitsCalculateM
       );
     }
 
-    Map output = {};
+    Map<String, String> output = {};
     for (int i = 0; i < _numbers.length; i++) {
       output[(i + 1).toString() + '.'] = _numbers[i];
     }
@@ -112,7 +111,7 @@ class CheckDigitsCalculateMissingDigitsState extends State<CheckDigitsCalculateM
   }
 
   Widget _showInvalidBankNumbers() {
-    Map output = {};
+    Map<String, String> output = {};
     int count = 1;
     for (int i = 0; i < _numbers.length; i++) {
       if (BANK_NUMBERS_ACCOUNT_METHODS[_numbers[i].substring(4, 12)] == null) {

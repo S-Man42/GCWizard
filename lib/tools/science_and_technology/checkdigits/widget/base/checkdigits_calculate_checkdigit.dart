@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
@@ -10,8 +9,7 @@ import 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdi
 
 class CheckDigitsCalculateCheckDigit extends StatefulWidget {
   final CheckDigitsMode mode;
-  final int maxIndex;
-  const CheckDigitsCalculateCheckDigit({required Key key, required this.mode, required this.maxIndex}) : super(key: key);
+  const CheckDigitsCalculateCheckDigit({Key? key, required this.mode, }) : super(key: key);
 
   @override
   CheckDigitsCalculateCheckDigitState createState() => CheckDigitsCalculateCheckDigitState();
@@ -41,7 +39,7 @@ class CheckDigitsCalculateCheckDigitState extends State<CheckDigitsCalculateChec
         (widget.mode == CheckDigitsMode.EAN || widget.mode == CheckDigitsMode.DETAXID || widget.mode == CheckDigitsMode.IMEI)
             ? GCWIntegerSpinner(
           min: 0,
-          max: (maxInt[widget.mode]! as int) ~/ 10,
+          max: (maxInt[widget.mode]!) ~/ 10,
           value: _currentInputNInt,
           onChanged: (value) {
             setState(() {
@@ -52,8 +50,8 @@ class CheckDigitsCalculateCheckDigitState extends State<CheckDigitsCalculateChec
         )
             : GCWTextField( // CheckDigitsMode.ISBN, CheckDigitsMode.IBAN, CheckDigitsMode.EURO, CheckDigitsMode.DEPERSID
           controller: currentInputController,
-          inputFormatters: [INPUTFORMATTERS[widget.mode]! as TextInputFormatter],
-          hintText: INPUTFORMATTERS_HINT[widget.mode]! as String,
+          inputFormatters: [INPUTFORMATTERS[widget.mode]!],
+          hintText: INPUTFORMATTERS_HINT[widget.mode]!,
           onChanged: (text) {
             setState(() {
               _currentInputNString = text;

@@ -34,7 +34,6 @@ bool checkUIC(String number) {
 String  calculateUICCheckDigit(String number) {
   int sum = 0;
   int product = 0;
-  int checkdigit = 0;
   String digits = '';
   for (int i = 0; i < number.length; i++) {
     if (i % 2 == 0) {
