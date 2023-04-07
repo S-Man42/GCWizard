@@ -1,4 +1,4 @@
-import 'package:gc_wizard/logic/tools/science_and_technology/check_digits/base/check_digits.dart';
+part of 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits.dart';
 
 // http://www.pruefziffernberechnung.de/I/IBAN.shtml
 // https://de.wikipedia.org/wiki/Internationale_Bankkontonummer
@@ -16,20 +16,22 @@ import 'package:gc_wizard/logic/tools/science_and_technology/check_digits/base/c
 
 CheckDigitOutput CheckIBANNumber(String number){
   number = number.toUpperCase();
-  if (number == null || number == '' || number.length < 5)
+  if (number == '' || number.length < 5) {
     return CheckDigitOutput(false, 'checkdigits_invalid_length', ['']);
-  if (checkNumber(number, checkIBAN))
+  }
+  if (checkNumber(number, checkIBAN)) {
     return CheckDigitOutput(true, '', ['']);
-  else {
+  } else {
     return CheckDigitOutput(false, CalculateNumber(number, CalculateIBANNumber), CalculateGlitch(number, checkIBAN));
   }
 }
 
 String CalculateIBANNumber(String number){
-  if (number.length < 5)
+  if (number.length < 5) {
     return ('checkdigits_invalid_length');
-  else
-    return number.substring(0,2) + calculateIBANCheckDigit(number) + number.substring(4);
+  } else {
+    return number.substring(0, 2) + calculateIBANCheckDigit(number) + number.substring(4);
+  }
 }
 
 List<String> CalculateIBANDigits(String number){
@@ -37,16 +39,17 @@ List<String> CalculateIBANDigits(String number){
 }
 
 bool checkIBAN(String number) {
-  number = number.substring(4) + ID_LETTERCODE[number[0]] + ID_LETTERCODE[number[1]] + number[2] + number[3];
+  number = number.substring(4) + ID_LETTERCODE[number[0]].toString() + ID_LETTERCODE[number[1]].toString() + number[2] + number[3];
   return (BigInt.parse(number) % BigInt.from(97) == BigInt.one);
 }
 
 String calculateIBANCheckDigit(String number) {
-  number = number.substring(4) + ID_LETTERCODE[number[0]] + ID_LETTERCODE[number[1]] + '00';
+  number = number.substring(4) + ID_LETTERCODE[number[0]].toString() + ID_LETTERCODE[number[1]].toString() + '00';
   BigInt checkDigit = BigInt.from(98) - BigInt.parse(number) % BigInt.from(97);
-  if (checkDigit < BigInt.from(10))
-    number =  '0' + checkDigit.toString();
-  else
-    number =  checkDigit.toString();
+  if (checkDigit < BigInt.from(10)) {
+    number = '0' + checkDigit.toString();
+  } else {
+    number = checkDigit.toString();
+  }
   return number;
 }

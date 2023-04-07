@@ -1,3 +1,5 @@
+part of 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits.dart';
+
 final Map<String, String> BANK_NUMBERS_ACCOUNT_METHODS = { // Bank Number, Calculation method
   "10000000" : "9",
   "10010010" : "24",

@@ -1,11 +1,10 @@
-import 'package:gc_wizard/logic/tools/science_and_technology/check_digits/base/check_digits.dart';
-
+part of 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits.dart';
 
 CheckDigitOutput CheckUICNumber(String number){
   if (number.length == 12) {
-    if (checkNumber(number, checkUIC))
+    if (checkNumber(number, checkUIC)) {
       return CheckDigitOutput(true, '', ['']);
-    else {
+    } else {
       return CheckDigitOutput(false, CalculateNumber(number.substring(0, number.length - 1), CalculateUICNumber), CalculateGlitch(number, checkUIC));
     }
   }
@@ -22,8 +21,9 @@ String CalculateUICNumber(String number){
 List<String> CalculateUICDigits(String number){
   if (number.length == 12 && int.tryParse(number[number.length - 1]) != null) {
     return CalculateDigits(number, checkUIC);
-  } else
+  } else {
     return ['checkdigits_invalid_length'];
+  }
 }
 
 
@@ -37,13 +37,15 @@ String  calculateUICCheckDigit(String number) {
   int checkdigit = 0;
   String digits = '';
   for (int i = 0; i < number.length; i++) {
-    if (i % 2 == 0)
+    if (i % 2 == 0) {
       product = 1 * int.parse(number[i]);
-    else
+    } else {
       product = 2 * int.parse(number[i]);
+    }
     digits = digits + product.toString();
   }
-  for (int i = 0; i < digits.length; i++)
+  for (int i = 0; i < digits.length; i++) {
     sum = sum + int.parse(digits[i]);
+  }
   return (10 * (sum /~ 10 + 1) - sum).toString();
 }
