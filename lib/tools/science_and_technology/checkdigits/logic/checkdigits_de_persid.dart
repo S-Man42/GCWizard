@@ -1,0 +1,55 @@
+// https://www.php-einfach.de/diverses/personalausweis-ueberpruefen/
+// http://www.pruefziffernberechnung.de/P/Personalausweis-DE.shtml
+
+import 'package:gc_wizard/logic/tools/science_and_technology/check_digits/base/check_digits.dart';
+
+
+CheckDigitOutput CheckDEPersIDNumber(String number){
+  if (number.length == 25) {
+    if (checkNumber(number, checkDEPersID))
+      return CheckDigitOutput(true, '', ['']);
+    else {
+      return CheckDigitOutput(false, CalculateNumber(number.substring(0, number.length - 1), CalculateDEPersIDNumber), CalculateGlitch(number, checkDEPersID));
+    }
+  }
+  return CheckDigitOutput(false, 'checkdigits_invalid_length', ['']);
+}
+
+String CalculateDEPersIDNumber(String number){
+
+  return '';
+}
+
+List<String> CalculateDEPersIDDigits(String number){
+
+  return [''];
+}
+
+bool checkDEPersID(String number) {
+  String cdSerial = _calcCD(number.substring(0, 10));
+  String cdDateBirth = _calcCD(number.substring(10, 16));
+  String cdDateValid = _calcCD(number.substring(17, 23));
+  String cdTotal = _calcCD(number.substring(0,24));
+
+  if (cdSerial == number[9] && cdDateBirth == number[16] && cdDateValid == number[23] && cdTotal == number[24])
+    return true;
+  else
+    return false;
+}
+
+String _calcCD(String number){
+  int result = 0;
+  final weight = {0 : 7, 1 : 3, 2: 1};
+
+  for (int i = 0; i < number.length; i++)
+    result = result + _number(number[i]) * weight[i % 3] % 10;
+  result = result % 10;
+  return result.toString();
+}
+
+int _number(String digit){
+  if (int.tryParse(digit) == null)
+    return ID_LETTERCODE[digit];
+  else
+    return int.parse(digit);
+}
