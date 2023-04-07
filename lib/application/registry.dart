@@ -287,6 +287,11 @@ import 'package:gc_wizard/tools/science_and_technology/astronomy/sun_rise_set/wi
 import 'package:gc_wizard/tools/science_and_technology/beaufort/widget/beaufort.dart';
 import 'package:gc_wizard/tools/science_and_technology/binary/widget/binary.dart';
 import 'package:gc_wizard/tools/science_and_technology/blood_alcohol_content/widget/blood_alcohol_content.dart';
+import 'package:gc_wizard/tools/science_and_technology/checkdigits/widget/checkdigits_de_taxid.dart';
+import 'package:gc_wizard/tools/science_and_technology/checkdigits/widget/checkdigits_ean.dart';
+import 'package:gc_wizard/tools/science_and_technology/checkdigits/widget/checkdigits_iban.dart';
+import 'package:gc_wizard/tools/science_and_technology/checkdigits/widget/checkdigits_imei.dart';
+import 'package:gc_wizard/tools/science_and_technology/checkdigits/widget/checkdigits_isbn.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/color_tool/widget/color_tool.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/pantone_color_codes/widget/pantone_color_codes.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/ral_color_codes/widget/ral_color_codes.dart';

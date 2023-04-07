@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/science_and_technology/check_digits/base/check_digits.dart';
-import 'package:gc_wizard/logic/tools/science_and_technology/check_digits/de_bank_number.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
-import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
-import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+
+import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
+
+import 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits.dart';
 
 class CheckDigitsCalculateMissingDigits extends StatefulWidget {
   final CheckDigitsMode mode;
   final int maxIndex;
-  const CheckDigitsCalculateMissingDigits({Key key, this.mode, this.maxIndex}) : super(key: key);
+  const CheckDigitsCalculateMissingDigits({required Key key, required this.mode, required this.maxIndex})
+      : super(key: key);
 
   @override
   CheckDigitsCalculateMissingDigitsState createState() => CheckDigitsCalculateMissingDigitsState();
@@ -20,8 +21,8 @@ class CheckDigitsCalculateMissingDigits extends StatefulWidget {
 
 class CheckDigitsCalculateMissingDigitsState extends State<CheckDigitsCalculateMissingDigits> {
   String _currentInputN = '';
-  TextEditingController currentInputController;
-  List<String> _numbers = new List<String>();
+  late TextEditingController currentInputController;
+  List<String> _numbers = <String>[];
 
   @override
   void initState() {
@@ -59,40 +60,39 @@ class CheckDigitsCalculateMissingDigitsState extends State<CheckDigitsCalculateM
     );
   }
 
-  _buildOutput() {
-    if (_numbers.join('') == '')
-      return  GCWDefaultOutput(
+  Widget _buildOutput() {
+    if (_numbers.join('') == '') {
+      return GCWDefaultOutput(
         child: '',
       );
+    }
 
-    if (_numbers[0].startsWith('checkdigits_invalid_length'))
-      return  GCWDefaultOutput(
+    if (_numbers[0].startsWith('checkdigits_invalid_length')) {
+      return GCWDefaultOutput(
         child: i18n(context, _numbers[0]),
       );
+    }
 
-    if (_numbers.length == 1)
+    if (_numbers.length == 1) {
       return GCWDefaultOutput(
-        child:  _numbers.join(''),
+        child: _numbers.join(''),
       );
+    }
 
-    Map output = new Map();
-    for (int i = 0; i < _numbers.length; i++)
-      output[(i + 1).toString()+'.'] = _numbers[i];
+    Map output = {};
+    for (int i = 0; i < _numbers.length; i++) {
+      output[(i + 1).toString() + '.'] = _numbers[i];
+    }
 
-    if (widget.mode == CheckDigitsMode.IBAN && _numbers.length > 1)
+    if (widget.mode == CheckDigitsMode.IBAN && _numbers.length > 1) {
       return Column(
         children: <Widget>[
           GCWDefaultOutput(
-              child: Column(
-                  children: columnedMultiLineOutput(
-                      context,
-                      output.entries.map((entry) {
-                        return [entry.key, entry.value];
-                      }).toList(),
-                      flexValues: [1,4]
-                  )
-              )
-          ),
+              child: GCWColumnedMultilineOutput(
+                  data: output.entries.map((entry) {
+                    return [entry.key, entry.value];
+                  }).toList(),
+                  flexValues: const [1, 4])),
           GCWOutput(
             title: i18n(context, 'checkdigits_hint'),
             suppressCopyButton: true,
@@ -101,40 +101,31 @@ class CheckDigitsCalculateMissingDigitsState extends State<CheckDigitsCalculateM
           _showInvalidBankNumbers(),
         ],
       );
-    else
+    } else {
       return GCWDefaultOutput(
-          child: Column(
-              children: columnedMultiLineOutput(
-                  context,
-                  output.entries.map((entry) {
-                    return [entry.key, entry.value];
-                  }).toList(),
-                  flexValues: [1,4]
-              )
-          )
-      );
+          child: GCWColumnedMultilineOutput(
+              data: output.entries.map((entry) {
+                return [entry.key, entry.value];
+              }).toList(),
+              flexValues: const [1, 4]));
+    }
   }
 
-
-  _showInvalidBankNumbers(){
-    Map output = new Map();
+  Widget _showInvalidBankNumbers() {
+    Map output = {};
     int count = 1;
     for (int i = 0; i < _numbers.length; i++) {
-      if (BANK_NUMBERS_ACCOUNT_METHODS[_numbers[i].substring(4,12)] == null)
-        output[count.toString()+'.'] = _numbers[i];
+      if (BANK_NUMBERS_ACCOUNT_METHODS[_numbers[i].substring(4, 12)] == null) {
+        output[count.toString() + '.'] = _numbers[i];
+      }
     }
 
     return GCWOutput(
         title: i18n(context, 'checkdigits_iban_invalid_banknumbers'),
-        child: Column(
-            children: columnedMultiLineOutput(
-                context,
-                output.entries.map((entry) {
-                  return [entry.key, entry.value];
-                }).toList(),
-                flexValues: [1,4]
-            )
-        ));
+        child: GCWColumnedMultilineOutput(
+            data: output.entries.map((entry) {
+              return [entry.key, entry.value];
+            }).toList(),
+            flexValues: const [1, 4]));
   }
-
 }

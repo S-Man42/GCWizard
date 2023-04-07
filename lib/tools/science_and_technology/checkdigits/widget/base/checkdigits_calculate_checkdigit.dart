@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/science_and_technology/check_digits/base/check_digits.dart';
-import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
-import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
+import 'package:flutter/services.dart';
+
+import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
+
+import 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits.dart';
 
 class CheckDigitsCalculateCheckDigit extends StatefulWidget {
   final CheckDigitsMode mode;
   final int maxIndex;
-  const CheckDigitsCalculateCheckDigit({Key key, this.mode, this.maxIndex}) : super(key: key);
+  const CheckDigitsCalculateCheckDigit({required Key key, required this.mode, required this.maxIndex}) : super(key: key);
 
   @override
   CheckDigitsCalculateCheckDigitState createState() => CheckDigitsCalculateCheckDigitState();
@@ -17,7 +20,7 @@ class CheckDigitsCalculateCheckDigit extends StatefulWidget {
 class CheckDigitsCalculateCheckDigitState extends State<CheckDigitsCalculateCheckDigit> {
   String _currentInputNString = '';
   int _currentInputNInt= 0;
-  TextEditingController currentInputController;
+  late TextEditingController currentInputController;
 
   @override
   void initState() {
@@ -38,7 +41,7 @@ class CheckDigitsCalculateCheckDigitState extends State<CheckDigitsCalculateChec
         (widget.mode == CheckDigitsMode.EAN || widget.mode == CheckDigitsMode.DETAXID || widget.mode == CheckDigitsMode.IMEI)
             ? GCWIntegerSpinner(
           min: 0,
-          max: maxInt[widget.mode] ~/ 10,
+          max: (maxInt[widget.mode]! as int) ~/ 10,
           value: _currentInputNInt,
           onChanged: (value) {
             setState(() {
@@ -49,8 +52,8 @@ class CheckDigitsCalculateCheckDigitState extends State<CheckDigitsCalculateChec
         )
             : GCWTextField( // CheckDigitsMode.ISBN, CheckDigitsMode.IBAN, CheckDigitsMode.EURO, CheckDigitsMode.DEPERSID
           controller: currentInputController,
-          inputFormatters: [INPUTFORMATTERS[widget.mode]],
-          hintText: INPUTFORMATTERS_HINT[widget.mode],
+          inputFormatters: [INPUTFORMATTERS[widget.mode]! as TextInputFormatter],
+          hintText: INPUTFORMATTERS_HINT[widget.mode]! as String,
           onChanged: (text) {
             setState(() {
               _currentInputNString = text;
@@ -62,10 +65,11 @@ class CheckDigitsCalculateCheckDigitState extends State<CheckDigitsCalculateChec
     );
   }
 
-  _buildOutput() {
+  Widget _buildOutput() {
     String output = checkDigitsCalculateNumber(widget.mode, _currentInputNString);
-    if (output.startsWith('check'))
+    if (output.startsWith('check')) {
       output = i18n(context, output);
+    }
     return GCWDefaultOutput(
       child: output,
     );

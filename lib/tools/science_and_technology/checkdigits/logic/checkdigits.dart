@@ -1,6 +1,7 @@
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 part 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits_datatypes.dart';
+part 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits_de_banknumber_data.dart';
 part 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits_ean.dart';
 part 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits_de_persid.dart';
 part 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits_de_taxid.dart';
