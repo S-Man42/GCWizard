@@ -3,6 +3,12 @@ import 'dart:math';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
+import 'package:gc_wizard/tools/coords/centroid/centroid_arithmetic_mean/logic/centroid_arithmetic_mean.dart';
+import 'package:gc_wizard/tools/coords/centroid/centroid_center_of_gravity/logic/centroid_center_of_gravity.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/logic/alphabet_values.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/roman_numbers/roman_numbers/logic/roman_numbers.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/rotation/logic/rotator.dart';
+import 'package:gc_wizard/tools/science_and_technology/cross_sums/logic/crosstotals.dart';
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
 import 'package:stack/stack.dart' as datastack;
 import 'package:flutter/services.dart';
@@ -14,6 +20,9 @@ import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 
 part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_test_datatypes.dart';
 part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_error_handling.dart';
+part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_definitions.dart';
+part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_datetime.dart';
+part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_geocaching.dart';
 part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_math.dart';
 part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_string.dart';
 part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_waypoints.dart';
@@ -301,102 +310,6 @@ class GCWizardSCriptInterpreter {
 
   List<String> relationOperators = [AND, OR, GE, NE, LE, '<', '>', '=', '0'];
 
-  List<String> Functions_2 = [
-    'LN(',
-    'PI(',
-  ];
-  List<String> Functions_3 = [
-    'ABS(',
-    'ARC(',
-    'ASC(',
-    'BOX(',
-    'BWW(',
-    'COS(',
-    'DEG(',
-    'EXP(',
-    'FAC(',
-    'GGT(',
-    'KGV(',
-    'LEN(',
-    'LOG(',
-    'MID(',
-    'MOD(',
-    'PIE(',
-    'POW(',
-    'RAD(',
-    'RND(',
-    'SGN(',
-    'SIN(',
-    'SQR(',
-    'STR(',
-    'TAN(',
-    'VAL(',
-  ];
-  List<String> Functions_4 = [
-    'ACOS(',
-    'ASIN(',
-    'ATAN(',
-    'BASE(',
-    'CEIL(',
-    'CHAR(',
-    'DATE(',
-    'FILL(',
-    'FRAC(',
-    'HASH(',
-    'LEFT(',
-    'LINE(',
-    'OVAL(',
-    'QSUM(',
-    'ROTX(',
-    'SQRT(',
-    'TEXT(',
-    'TIME(',
-  ];
-  List<String> Functions_5 = [
-    'COLOR(',
-    'FLOOR(',
-    'IQSUM(',
-    'POINT(',
-    'RIGHT(',
-    'TRUNC(',
-    'WGS84(',
-  ];
-  List<String> Functions_6 = [
-    'CIRCLE(',
-    'GETLAT(',
-    'GETLON(',
-    'SETLAT(',
-    'SETLON(',
-    'STROKE(',
-  ];
-  List<String> Functions_7 = [
-    'BEARING(',
-    'CONVERT(',
-    'WPTSADD(',
-    'WPTSLAT(',
-    'WPTSLON(',
-  ];
-  List<String> Functions_8 = [
-    'DISTANCE(',
-  ];
-  List<String> Functions_9 = [
-    'WPTSCLEAR('
-        'WPTSCOUNT(',
-  ];
-  List<String> Functions_10 = [
-    'DECTOROMAN(',
-    'PROJECTION(',
-    'ROMANTODEC(',
-    'WPTSCENTER(',
-  ];
-  List<String> Functions_15 = [
-    'CENTERTWOPINTS(',
-  ];
-  List<String> Functions_17 = [
-    'CENTERTHREEPOINTS(',
-  ];
-
-  Map<String, GCWizardScriptClassFunctionDefinition> FUNCTIONS = {};
 
   GCWizardSCriptInterpreter(this.script, this.inputData) {
     script = script.toUpperCase().replaceAll('RND()', 'RND(1)') + '\n';
@@ -409,99 +322,6 @@ class GCWizardSCriptInterpreter {
         STDIN.add(element);
       }
     });
-    FUNCTIONS = {
-      // graphic
-      'STROKE': GCWizardScriptClassFunctionDefinition(_stroke, 1, functionReturn: false),
-      'CIRCLE': GCWizardScriptClassFunctionDefinition(_circle, 3, functionReturn: false),
-      'LINE': GCWizardScriptClassFunctionDefinition(_line, 4, functionReturn: false),
-      'POINT': GCWizardScriptClassFunctionDefinition(_point, 2, functionReturn: false),
-      'ARC': GCWizardScriptClassFunctionDefinition(_arc, 5, functionReturn: false),
-      'PIE': GCWizardScriptClassFunctionDefinition(_pie, 5, functionReturn: false),
-      'COLOR': GCWizardScriptClassFunctionDefinition(_color, 3, functionReturn: false),
-      'FILL': GCWizardScriptClassFunctionDefinition(_fill, 1, functionReturn: false),
-      'TEXT': GCWizardScriptClassFunctionDefinition(_text, 4, functionReturn: false),
-      'BOX': GCWizardScriptClassFunctionDefinition(_box, 4, functionReturn: false),
-      'OVAL': GCWizardScriptClassFunctionDefinition(_oval, 4, functionReturn: false),
-      // waypoints
-      'WPTSADD': GCWizardScriptClassFunctionDefinition(_wptsadd, 2, functionReturn: false),
-      'WPTSCLEAR': GCWizardScriptClassFunctionDefinition(_wptsclear, 0, functionReturn: false),
-      'WPTSCOUNT': GCWizardScriptClassFunctionDefinition(_wptscount, 0, functionReturn: false),
-      'WPTSLON': GCWizardScriptClassFunctionDefinition(
-        _wptslon,
-        1,
-      ),
-      'WPTSLAT': GCWizardScriptClassFunctionDefinition(
-        _wptslat,
-        1,
-      ),
-      'WPTSCENTER': GCWizardScriptClassFunctionDefinition(_wptscenter, 1, functionReturn: false),
-      // date, time
-      'DATE': GCWizardScriptClassFunctionDefinition(_date, 0),
-      'TIME': GCWizardScriptClassFunctionDefinition(_time, 0),
-      // math
-      'MOD': GCWizardScriptClassFunctionDefinition(_mod, 2),
-      'SGN': GCWizardScriptClassFunctionDefinition(_sgn, 1),
-      'PI': GCWizardScriptClassFunctionDefinition(_pi, 0),
-      'TRUNC': GCWizardScriptClassFunctionDefinition(_trunc, 1),
-      'GGT': GCWizardScriptClassFunctionDefinition(_ggt, 2),
-      'KGV': GCWizardScriptClassFunctionDefinition(_kgv, 2),
-      'FAC': GCWizardScriptClassFunctionDefinition(_fac, 1),
-      'FRAC': GCWizardScriptClassFunctionDefinition(_frac, 1),
-      'SIN': GCWizardScriptClassFunctionDefinition(_sin, 1),
-      'COS': GCWizardScriptClassFunctionDefinition(_cos, 1),
-      'TAN': GCWizardScriptClassFunctionDefinition(_tan, 1),
-      'ATAN': GCWizardScriptClassFunctionDefinition(_atan, 1),
-      'EXP': GCWizardScriptClassFunctionDefinition(_exp, 1),
-      'LOG': GCWizardScriptClassFunctionDefinition(_log10, 1),
-      'LN': GCWizardScriptClassFunctionDefinition(_ln, 1),
-      'SQRT': GCWizardScriptClassFunctionDefinition(_sqrt, 1),
-      'SQR': GCWizardScriptClassFunctionDefinition(_sqr, 1),
-      'DEG': GCWizardScriptClassFunctionDefinition(_deg, 1),
-      'RAD': GCWizardScriptClassFunctionDefinition(_rad, 1),
-      'RND': GCWizardScriptClassFunctionDefinition(_rnd, 1),
-      'CEIL': GCWizardScriptClassFunctionDefinition(_ceil, 1),
-      'FLOOR': GCWizardScriptClassFunctionDefinition(_floor, 1),
-      'ASIN': GCWizardScriptClassFunctionDefinition(_asin, 1),
-      'ACOS': GCWizardScriptClassFunctionDefinition(_acos, 1),
-      'ABS': GCWizardScriptClassFunctionDefinition(_abs, 1),
-      'POW': GCWizardScriptClassFunctionDefinition(_pow, 2),
-      'QSUM': GCWizardScriptClassFunctionDefinition(_qsum, 1),
-      'IQSUM': GCWizardScriptClassFunctionDefinition(_iqsum, 1),
-      'CONVERT': GCWizardScriptClassFunctionDefinition(_convert, 4),
-      // String
-      'STR': GCWizardScriptClassFunctionDefinition(_str, 1),
-      'VAL': GCWizardScriptClassFunctionDefinition(_val, 1),
-      'LEN': GCWizardScriptClassFunctionDefinition(_len, 1),
-      'CHAR': GCWizardScriptClassFunctionDefinition(_char, 1),
-      'ASC': GCWizardScriptClassFunctionDefinition(_asc, 1),
-      'LEFT': GCWizardScriptClassFunctionDefinition(_left, 2),
-      'RIGHT': GCWizardScriptClassFunctionDefinition(_right, 2),
-      'MID': GCWizardScriptClassFunctionDefinition(_mid, 3),
-      // geocaching
-      'DECTOROMAN': GCWizardScriptClassFunctionDefinition(
-        _dectoroman,
-        1,
-      ),
-      'ROMANTODEC': GCWizardScriptClassFunctionDefinition(
-        _romantodec,
-        1,
-      ),
-      'ROTX': GCWizardScriptClassFunctionDefinition(_rotx, 2),
-      'BWW': GCWizardScriptClassFunctionDefinition(_bww, 3),
-      'BASE': GCWizardScriptClassFunctionDefinition(_base, 3),
-      'HASH': GCWizardScriptClassFunctionDefinition(_hash, 5),
-      // coordinates
-      'GETLAT': GCWizardScriptClassFunctionDefinition(_getlat, 0),
-      'GETLON': GCWizardScriptClassFunctionDefinition(_getlon, 0),
-      'SETLAT': GCWizardScriptClassFunctionDefinition(_setlat, 1),
-      'SETLON': GCWizardScriptClassFunctionDefinition(_setlon, 1),
-      'WGS84': GCWizardScriptClassFunctionDefinition(_wgs84, 2),
-      'DISTANCE': GCWizardScriptClassFunctionDefinition(_distance, 4),
-      'BEARING': GCWizardScriptClassFunctionDefinition(_bearing, 3),
-      'PROJECTION': GCWizardScriptClassFunctionDefinition(_projection, 2),
-      'CENTERTWOPOINTS': GCWizardScriptClassFunctionDefinition(_centertwopoints, 4, functionReturn: false),
-      'CENTERTHREEPOINTS': GCWizardScriptClassFunctionDefinition(_centerthreepoints, 6, functionReturn: false),
-    };
   }
 
   GCWizardScriptOutput run() {
@@ -1928,57 +1748,57 @@ class GCWizardSCriptInterpreter {
   }
 
   bool isTokenAFunction() {
-    if (Functions_2.contains(
+    if (_Functions_2.contains(
         script.substring(_scriptIndex, (_scriptIndex + 3 < script.length) ? _scriptIndex + 3 : _scriptIndex))) {
       token = script.substring(_scriptIndex, _scriptIndex + 2);
       _scriptIndex += 2;
       return true;
-    } else if (Functions_3.contains(
+    } else if (_Functions_3.contains(
         script.substring(_scriptIndex, (_scriptIndex + 4 < script.length) ? _scriptIndex + 4 : _scriptIndex))) {
       token = script.substring(_scriptIndex, _scriptIndex + 3);
       _scriptIndex += 3;
       return true;
-    } else if (Functions_4.contains(
+    } else if (_Functions_4.contains(
         script.substring(_scriptIndex, (_scriptIndex + 5 < script.length) ? _scriptIndex + 5 : _scriptIndex))) {
       token = script.substring(_scriptIndex, _scriptIndex + 4);
       _scriptIndex += 4;
       return true;
-    } else if (Functions_5.contains(
+    } else if (_Functions_5.contains(
         script.substring(_scriptIndex, (_scriptIndex + 6 < script.length) ? _scriptIndex + 6 : _scriptIndex))) {
       token = script.substring(_scriptIndex, _scriptIndex + 5);
       _scriptIndex += 5;
       return true;
-    } else if (Functions_6.contains(
+    } else if (_Functions_6.contains(
         script.substring(_scriptIndex, (_scriptIndex + 7 < script.length) ? _scriptIndex + 7 : _scriptIndex))) {
       token = script.substring(_scriptIndex, _scriptIndex + 6);
       _scriptIndex += 6;
       return true;
-    } else if (Functions_7.contains(
+    } else if (_Functions_7.contains(
         script.substring(_scriptIndex, (_scriptIndex + 8 < script.length) ? _scriptIndex + 8 : _scriptIndex))) {
       token = script.substring(_scriptIndex, _scriptIndex + 7);
       _scriptIndex += 7;
       return true;
-    } else if (Functions_8.contains(
+    } else if (_Functions_8.contains(
         script.substring(_scriptIndex, (_scriptIndex + 9 < script.length) ? _scriptIndex + 9 : _scriptIndex))) {
       token = script.substring(_scriptIndex, _scriptIndex + 8);
       _scriptIndex += 8;
       return true;
-    } else if (Functions_9.contains(
+    } else if (_Functions_9.contains(
         script.substring(_scriptIndex, (_scriptIndex + 10 < script.length) ? _scriptIndex + 10 : _scriptIndex))) {
       token = script.substring(_scriptIndex, _scriptIndex + 9);
       _scriptIndex += 9;
       return true;
-    } else if (Functions_10.contains(
+    } else if (_Functions_10.contains(
         script.substring(_scriptIndex, (_scriptIndex + 11 < script.length) ? _scriptIndex + 11 : _scriptIndex))) {
       token = script.substring(_scriptIndex, _scriptIndex + 10);
       _scriptIndex += 10;
       return true;
-    } else if (Functions_15.contains(
+    } else if (_Functions_15.contains(
         script.substring(_scriptIndex, (_scriptIndex + 16 < script.length) ? _scriptIndex + 16 : _scriptIndex))) {
       token = script.substring(_scriptIndex, _scriptIndex + 15);
       _scriptIndex += 15;
       return true;
-    } else if (Functions_17.contains(
+    } else if (_Functions_17.contains(
         script.substring(_scriptIndex, (_scriptIndex + 18 < script.length) ? _scriptIndex + 18 : _scriptIndex))) {
       token = script.substring(_scriptIndex, _scriptIndex + 17);
       _scriptIndex += 17;
@@ -2154,51 +1974,4 @@ class GCWizardSCriptInterpreter {
     if (_isLetter(vname)) return false;
     return true;
   }
-
-
-  // gecocaching functions -----------------------------------------------------------
-  String _rotx(dynamic text, dynamic rot) {
-    if (_isNotString(text) || _isString(rot)) {
-      _handleError(INVALIDTYPECAST);
-      return '';
-    }
-    return Rotator().rotate(text, rot.toInt());
-  }
-
-  int _bww(dynamic text, dynamic opt_alph, dynamic opt_itqs) {
-    if (_isNotString(text) || _isString(opt_alph) || _isString(opt_itqs)) {
-      _handleError(INVALIDTYPECAST);
-      return 0;
-    }
-    int wordValue = 0;
-    List<int> values = AlphabetValues().textToValues(text);
-    values.forEach((number) {
-      wordValue = wordValue + number;
-    });
-    switch (opt_itqs.toInt()) {
-      case 0:
-        return wordValue;
-      case 1:
-        return sumCrossSum(values).toInt();
-      case 2:
-        return sumCrossSumIterated(values).toInt();
-    }
-  }
-
-  String _dectoroman(dynamic x) {
-    if (_isString(x)) {
-      _handleError(INVALIDTYPECAST);
-      return '';
-    }
-    return encodeRomanNumbers(x, type: RomanNumberType.USE_SUBTRACTION_RULE);
-  }
-
-  int _romantodec(dynamic x) {
-    if (isInt(x) || _isDouble(x)) {
-      _handleError(INVALIDTYPECAST);
-      return 0;
-    }
-    return decodeRomanNumbers(x, type: RomanNumberType.USE_SUBTRACTION_RULE);
-  }
-
 }
