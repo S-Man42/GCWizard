@@ -495,6 +495,7 @@ class TriangleState extends State<Triangle> {
   }
 
   void _createGraphicOutput() {
+    _triangleImage = Uint8List.fromList([]);
     triangleData2Image(
       A: _A,
       B: _B,
