@@ -259,6 +259,8 @@ import 'package:gc_wizard/utils/string_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 
+import 'selector_lists/checkdigits/checkdigits_selection.dart';
+
 class MainView extends StatefulWidget {
   const MainView({Key? key}) : super(key: key);
 
@@ -500,6 +502,7 @@ void _initStaticToolList() {
       className(const CentroidCenterOfGravity()),
       className(const Chao()),
       className(const ChappeTelegraph()),
+      className(const CheckDigitsSelection()),
       className(const Chef()),
       className(const ChickenLanguage()),
       className(const Chronogram()),

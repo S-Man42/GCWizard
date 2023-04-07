@@ -13,6 +13,12 @@ import 'package:gc_wizard/application/category_views/selector_lists/bcd_selectio
 import 'package:gc_wizard/application/category_views/selector_lists/beaufort_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/braille_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/bundeswehr_talkingboard.dart';
+import 'package:gc_wizard/application/category_views/selector_lists/checkdigits/checkdigits_de_taxid_selection.dart';
+import 'package:gc_wizard/application/category_views/selector_lists/checkdigits/checkdigits_ean_selection.dart';
+import 'package:gc_wizard/application/category_views/selector_lists/checkdigits/checkdigits_iban_selection.dart';
+import 'package:gc_wizard/application/category_views/selector_lists/checkdigits/checkdigits_imei_selection.dart';
+import 'package:gc_wizard/application/category_views/selector_lists/checkdigits/checkdigits_isbn_selection.dart';
+import 'package:gc_wizard/application/category_views/selector_lists/checkdigits/checkdigits_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/ccitt_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/cistercian_numbers_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/colors_selection.dart';
@@ -586,6 +592,8 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'cipherwheel',
     ]),
+    GCWTool(
+        tool: CheckDigitsSelection(), id: 'checkdigits_selection', categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY], searchKeys: []),
     GCWTool(
         tool: const CistercianNumbersSelection(),
         id: 'cistercian_selection',
@@ -1458,6 +1466,83 @@ void initializeRegistry(BuildContext context) {
       'ccitt',
       'ccitt_ccir_476',
       'teletypewriter',
+    ]),
+
+    //CheckDigitsSelection  ********************************************************************************************
+    GCWTool(tool: CheckDigitsDETaxIDSelection(), id: 'checkdigits_de_taxid_selection', searchKeys: []),
+    GCWTool(tool: CheckDigitsEANSelection(), id: 'checkdigits_ean_selection', searchKeys: []),
+    GCWTool(tool: CheckDigitsIBANSelection(), id: 'checkdigits_iban_selection', searchKeys: []),
+    GCWTool(tool: CheckDigitsIMEISelection(), id: 'checkdigits_imei_selection', searchKeys: []),
+    GCWTool(tool: CheckDigitsISBNSelection(), id: 'checkdigits_isbn_selection', searchKeys: []),
+
+    //CheckDigitsDETINSelection  ********************************************************************************************
+    GCWTool(tool: CheckDigitsDETaxIDCheckNumber(), id: 'checkdigits_de_taxid_checknumber', searchKeys: [
+      'checkdigits',
+      'checkdigits_de_tin',
+    ]),
+    GCWTool(tool: CheckDigitsDETaxIDCalculateCheckDigit(), id: 'checkdigits_de_taxid_calculate_digit', searchKeys: [
+      'checkdigits',
+      'checkdigits_ean',
+    ]),
+    GCWTool(tool: CheckDigitsDETaxIDCalculateMissingDigit(), id: 'checkdigits_de_taxid_calculate_number', searchKeys: [
+      'checkdigits',
+      'checkdigits_ean',
+    ]),
+
+    //CheckDigitsEANSelection  ********************************************************************************************
+    GCWTool(tool: CheckDigitsEANCheckNumber(), id: 'checkdigits_ean_checknumber', searchKeys: [
+      'checkdigits',
+      'checkdigits_ean',
+    ]),
+    GCWTool(tool: CheckDigitsEANCalculateCheckDigit(), id: 'checkdigits_ean_calculate_digit', searchKeys: [
+      'checkdigits',
+      'checkdigits_ean',
+    ]),
+    GCWTool(tool: CheckDigitsEANCalculateMissingDigit(), id: 'checkdigits_ean_calculate_number', searchKeys: [
+      'checkdigits',
+      'checkdigits_ean',
+    ]),
+
+    //CheckDigitsIBANSelection  ********************************************************************************************
+    GCWTool(tool: CheckDigitsIBANCheckNumber(), id: 'checkdigits_iban_checknumber', searchKeys: [
+      'checkdigits',
+      'checkdigits_iban',
+    ]),
+    GCWTool(tool: CheckDigitsIBANCalculateCheckDigit(), id: 'checkdigits_iban_calculate_digit', searchKeys: [
+      'checkdigits',
+      'checkdigits_iban',
+    ]),
+    GCWTool(tool: CheckDigitsIBANCalculateMissingDigit(), id: 'checkdigits_iban_calculate_number', searchKeys: [
+      'checkdigits',
+      'checkdigits_iban',
+    ]),
+
+    //CheckDigitsIMEISelection  ********************************************************************************************
+    GCWTool(tool: CheckDigitsIMEICheckNumber(), id: 'checkdigits_imei_checknumber', searchKeys: [
+      'checkdigits',
+      'checkdigits_imei',
+    ]),
+    GCWTool(tool: CheckDigitsIMEICalculateCheckDigit(), id: 'checkdigits_imei_calculate_digit', searchKeys: [
+      'checkdigits',
+      'checkdigits_imei',
+    ]),
+    GCWTool(tool: CheckDigitsIMEICalculateMissingDigit(), id: 'checkdigits_imei_calculate_number', searchKeys: [
+      'checkdigits',
+      'checkdigits_imei',
+    ]),
+
+    //CheckDigitsISBNSelection  ********************************************************************************************
+    GCWTool(tool: CheckDigitsISBNCheckNumber(), id: 'checkdigits_isbn_checknumber', searchKeys: [
+      'checkdigits',
+      'checkdigits_isbn',
+    ]),
+    GCWTool(tool: CheckDigitsISBNCalculateCheckDigit(), id: 'checkdigits_isbn_calculate_digit', searchKeys: [
+      'checkdigits',
+      'checkdigits_isbn',
+    ]),
+    GCWTool(tool: CheckDigitsISBNCalculateMissingDigit(), id: 'checkdigits_isbn_calculate_number', searchKeys: [
+      'checkdigits',
+      'checkdigits_isbn',
     ]),
 
     //Cistercian Selection *****************************************************************************************
