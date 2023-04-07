@@ -113,7 +113,7 @@ class BallisticsState extends State<Ballistics> {
         _currentAirResistanceMode != AIR_RESISTANCE.NONE
             ? Column(
                 children: <Widget>[
-                  GCWUnitInput(
+                  GCWUnitInput<Mass>(
                     value: _currentInputMass,
                     title: i18n(context, 'unitconverter_category_mass'),
                     unitCategory: UNITCATEGORY_MASS,
@@ -178,13 +178,13 @@ class BallisticsState extends State<Ballistics> {
     }
 
     double outputDistanceValue =
-        _currentOutputDistanceUnit['unit'].fromReference(output.Distance) / _currentOutputDistanceUnit['prefix'].value;
+        _currentOutputDistanceUnit.value.fromReference(output.Distance) / _currentOutputDistanceUnit.prefix.value;
     double outputTimeValue =
-        _currentOutputTimeUnit['unit'].fromReference(output.Time) / _currentOutputTimeUnit['prefix'].value;
+        _currentOutputTimeUnit.value.fromReference(output.Time) / _currentOutputTimeUnit.prefix.value;
     double outputMaxSpeedValue =
-        _currentOutputMaxSpeedUnit['unit'].fromReference(output.maxSpeed) / _currentOutputMaxSpeedUnit['prefix'].value;
+        _currentOutputMaxSpeedUnit.value.fromReference(output.maxSpeed) / _currentOutputMaxSpeedUnit.prefix.value;
     double outputHeightValue =
-        _currentOutputHeightUnit['unit'].fromReference(output.Height) / _currentOutputHeightUnit['prefix'].value;
+        _currentOutputHeightUnit.value.fromReference(output.Height) / _currentOutputHeightUnit.prefix.value;
 
     return Column(
       children: <Widget>[
@@ -199,8 +199,8 @@ class BallisticsState extends State<Ballistics> {
               onChanged: (GCWUnitsValue value) {
                 setState(() {
                   _currentOutputDistanceUnit = value ;
-                  outputDistanceValue = _currentOutputDistanceUnit['unit'].fromReference(output.Distance) /
-                      _currentOutputDistanceUnit['prefix'].value;
+                  outputDistanceValue = _currentOutputDistanceUnit.value.fromReference(output.Distance) /
+                      _currentOutputDistanceUnit.prefix.value;
                 });
               },
             )),
@@ -241,11 +241,11 @@ class BallisticsState extends State<Ballistics> {
               unitCategory: UNITCATEGORY_TIME,
               onlyShowPrefixSymbols: false,
               onlyShowUnitSymbols: false,
-              onChanged: (value) {
+              onChanged: (GCWUnitsValue value) {
                 setState(() {
                   _currentOutputTimeUnit = value;
-                  outputDistanceValue = _currentOutputTimeUnit['unit'].fromReference(output.Time) /
-                      _currentOutputTimeUnit['prefix'].value;
+                  outputDistanceValue = _currentOutputTimeUnit.value.fromReference(output.Time) /
+                      _currentOutputTimeUnit.prefix.value;
                 });
               },
             )),
@@ -286,11 +286,11 @@ class BallisticsState extends State<Ballistics> {
               unitCategory: UNITCATEGORY_LENGTH,
               onlyShowPrefixSymbols: false,
               onlyShowUnitSymbols: false,
-              onChanged: (value) {
+              onChanged: (GCWUnitsValue value) {
                 setState(() {
                   _currentOutputHeightUnit = value;
-                  outputHeightValue = _currentOutputHeightUnit['unit'].fromReference(output.Height) /
-                      _currentOutputHeightUnit['prefix'].value;
+                  outputHeightValue = _currentOutputHeightUnit.value.fromReference(output.Height) /
+                      _currentOutputHeightUnit.prefix.value;
                 });
               },
             )),
@@ -331,11 +331,11 @@ class BallisticsState extends State<Ballistics> {
               unitCategory: UNITCATEGORY_VELOCITY,
               onlyShowPrefixSymbols: false,
               onlyShowUnitSymbols: false,
-              onChanged: (value) {
+              onChanged: (GCWUnitsValue value) {
                 setState(() {
                   _currentOutputMaxSpeedUnit = value;
-                  outputMaxSpeedValue = _currentOutputMaxSpeedUnit['unit'].fromReference(output.maxSpeed) /
-                      _currentOutputMaxSpeedUnit['prefix'].value;
+                  outputMaxSpeedValue = _currentOutputMaxSpeedUnit.value.fromReference(output.maxSpeed) /
+                      _currentOutputMaxSpeedUnit.prefix.value;
                 });
               },
             )),
