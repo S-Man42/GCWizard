@@ -1,4 +1,3 @@
-import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
 import 'package:intl/intl.dart';
@@ -36,9 +35,11 @@ class BallisticsState extends State<Ballistics> {
   double _currentInputDrag = 0.0;
   double _currentInputMass = 0.0;
 
-  GCWUnitsValue<Unit> _currentOutputDistanceUnit = GCWUnitsValue<Unit>(UNITCATEGORY_LENGTH.defaultUnit, UNITPREFIX_NONE);
+  GCWUnitsValue<Unit> _currentOutputDistanceUnit =
+      GCWUnitsValue<Unit>(UNITCATEGORY_LENGTH.defaultUnit, UNITPREFIX_NONE);
   GCWUnitsValue<Unit> _currentOutputTimeUnit = GCWUnitsValue<Unit>(UNITCATEGORY_TIME.defaultUnit, UNITPREFIX_NONE);
-  GCWUnitsValue<Unit> _currentOutputMaxSpeedUnit = GCWUnitsValue<Unit>(UNITCATEGORY_VELOCITY.defaultUnit, UNITPREFIX_NONE);
+  GCWUnitsValue<Unit> _currentOutputMaxSpeedUnit =
+      GCWUnitsValue<Unit>(UNITCATEGORY_VELOCITY.defaultUnit, UNITPREFIX_NONE);
   GCWUnitsValue<Unit> _currentOutputHeightUnit = GCWUnitsValue<Unit>(UNITCATEGORY_LENGTH.defaultUnit, UNITPREFIX_NONE);
 
   AIR_RESISTANCE _currentAirResistanceMode = AIR_RESISTANCE.NONE;
@@ -100,13 +101,10 @@ class BallisticsState extends State<Ballistics> {
               _currentAirResistanceMode = value as AIR_RESISTANCE;
             });
           },
-          items: SplayTreeMap.from(
-                  AIR_RESISTANCE_LIST).map((key, value) => MapEntry(i18n(context, key), value))
-              .entries
-              .map((mode) {
+          items: AIR_RESISTANCE_LIST.entries.map((mode) {
             return GCWDropDownMenuItem(
-              value: mode.value,
-              child: mode.key,
+              value: mode.key,
+              child: i18n(context, mode.value),
             );
           }).toList(),
         ),
@@ -198,7 +196,7 @@ class BallisticsState extends State<Ballistics> {
               onlyShowUnitSymbols: false,
               onChanged: (GCWUnitsValue value) {
                 setState(() {
-                  _currentOutputDistanceUnit = value ;
+                  _currentOutputDistanceUnit = value;
                   outputDistanceValue = _currentOutputDistanceUnit.value.fromReference(output.Distance) /
                       _currentOutputDistanceUnit.prefix.value;
                 });
@@ -207,30 +205,32 @@ class BallisticsState extends State<Ballistics> {
         Row(
           children: <Widget>[
             Expanded(
+              flex: 2,
               child: Container(
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                   right: DOUBLE_DEFAULT_MARGIN,
                 ),
               ),
-              flex: 2,
             ),
             Expanded(
-                child: Container(
-                  child: GCWOutputText(
-                    text: NumberFormat('0.0' + '#').format(outputDistanceValue),
-                  ),
-                  padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN, left: DOUBLE_DEFAULT_MARGIN),
+              flex: 6,
+              child: Container(
+                padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN, left: DOUBLE_DEFAULT_MARGIN),
+                child: GCWOutputText(
+                  text: NumberFormat('0.0' + '#').format(outputDistanceValue),
                 ),
-                flex: 6),
+              ),
+            ),
             Expanded(
-                child: Container(
-                  child: GCWOutputText(
-                    text: _currentOutputDistanceUnit.prefix.symbol,
-                    suppressCopyButton: true,
-                  ),
-                  padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
+              flex: 2,
+              child: Container(
+                padding: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
+                child: GCWOutputText(
+                  text: _currentOutputDistanceUnit.prefix.symbol + _currentOutputDistanceUnit.value.symbol,
+                  suppressCopyButton: true,
                 ),
-                flex: 2),
+              ),
+            ),
           ],
         ),
         GCWExpandableTextDivider(
@@ -244,38 +244,40 @@ class BallisticsState extends State<Ballistics> {
               onChanged: (GCWUnitsValue value) {
                 setState(() {
                   _currentOutputTimeUnit = value;
-                  outputDistanceValue = _currentOutputTimeUnit.value.fromReference(output.Time) /
-                      _currentOutputTimeUnit.prefix.value;
+                  outputDistanceValue =
+                      _currentOutputTimeUnit.value.fromReference(output.Time) / _currentOutputTimeUnit.prefix.value;
                 });
               },
             )),
         Row(
           children: <Widget>[
             Expanded(
+              flex: 2,
               child: Container(
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                   right: DOUBLE_DEFAULT_MARGIN,
                 ),
               ),
-              flex: 2,
             ),
             Expanded(
-                child: Container(
-                  child: GCWOutputText(
-                    text: NumberFormat('0.0' + '#').format(outputTimeValue),
-                  ),
-                  padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN, left: DOUBLE_DEFAULT_MARGIN),
+              flex: 6,
+              child: Container(
+                padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN, left: DOUBLE_DEFAULT_MARGIN),
+                child: GCWOutputText(
+                  text: NumberFormat('0.0' + '#').format(outputTimeValue),
                 ),
-                flex: 6),
+              ),
+            ),
             Expanded(
-                child: Container(
-                  child: GCWOutputText(
-                    text: _currentOutputTimeUnit.prefix.symbol,
-                    suppressCopyButton: true,
-                  ),
-                  padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
+              flex: 2,
+              child: Container(
+                padding: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
+                child: GCWOutputText(
+                  text: _currentOutputTimeUnit.prefix.symbol + _currentOutputTimeUnit.value.symbol,
+                  suppressCopyButton: true,
                 ),
-                flex: 2),
+              ),
+            ),
           ],
         ),
         GCWExpandableTextDivider(
@@ -297,30 +299,32 @@ class BallisticsState extends State<Ballistics> {
         Row(
           children: <Widget>[
             Expanded(
+              flex: 2,
               child: Container(
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                   right: DOUBLE_DEFAULT_MARGIN,
                 ),
               ),
-              flex: 2,
             ),
             Expanded(
-                child: Container(
-                  child: GCWOutputText(
-                    text: NumberFormat('0.0' + '#').format(outputHeightValue),
-                  ),
-                  padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN, left: DOUBLE_DEFAULT_MARGIN),
+              flex: 6,
+              child: Container(
+                padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN, left: DOUBLE_DEFAULT_MARGIN),
+                child: GCWOutputText(
+                  text: NumberFormat('0.0' + '#').format(outputHeightValue),
                 ),
-                flex: 6),
+              ),
+            ),
             Expanded(
-                child: Container(
-                  child: GCWOutputText(
-                    text: _currentOutputHeightUnit.prefix.symbol,
-                    suppressCopyButton: true,
-                  ),
-                  padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
+              flex: 2,
+              child: Container(
+                padding: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
+                child: GCWOutputText(
+                  text: _currentOutputHeightUnit.prefix.symbol + _currentOutputHeightUnit.value.symbol,
+                  suppressCopyButton: true,
                 ),
-                flex: 2),
+              ),
+            ),
           ],
         ),
         GCWExpandableTextDivider(
@@ -342,34 +346,36 @@ class BallisticsState extends State<Ballistics> {
         Row(
           children: <Widget>[
             Expanded(
+              flex: 2,
               child: Container(
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                   right: DOUBLE_DEFAULT_MARGIN,
                 ),
               ),
-              flex: 2,
             ),
             Expanded(
-                child: Container(
-                  child: GCWOutputText(
-                    text: (outputMaxSpeedValue > 0)
-                        ? NumberFormat('0.0' + '#').format(outputMaxSpeedValue)
-                        : i18n(context, 'ballistics_not_implemented_yet'),
-                  ),
-                  padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN, left: DOUBLE_DEFAULT_MARGIN),
+              flex: 6,
+              child: Container(
+                padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN, left: DOUBLE_DEFAULT_MARGIN),
+                child: GCWOutputText(
+                  text: (outputMaxSpeedValue > 0)
+                      ? NumberFormat('0.0' + '#').format(outputMaxSpeedValue)
+                      : i18n(context, 'ballistics_not_implemented_yet'),
                 ),
-                flex: 6),
+              ),
+            ),
             Expanded(
-                child: (outputMaxSpeedValue > 0)
-                    ? Container(
-                        child: GCWOutputText(
-                          text: _currentOutputMaxSpeedUnit.prefix.symbol,
-                          suppressCopyButton: true,
-                        ),
-                        padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
-                      )
-                    : Container(),
-                flex: 2),
+              flex: 2,
+              child: (outputMaxSpeedValue > 0)
+                  ? Container(
+                      padding: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
+                      child: GCWOutputText(
+                        text: _currentOutputMaxSpeedUnit.prefix.symbol + _currentOutputMaxSpeedUnit.value.symbol,
+                        suppressCopyButton: true,
+                      ),
+                    )
+                  : Container(),
+            ),
           ],
         ),
       ],
