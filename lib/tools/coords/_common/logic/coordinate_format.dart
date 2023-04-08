@@ -22,6 +22,11 @@ class CoordinateFormat{
       return CoordinateFormat(coordFormat.type);
     }
   }
+
+  @override
+  String toString() {
+    return 'type: $type; subtype: $subtype';
+  }
 }
 
 bool isCoordinateFormatWithSubtype(CoordinateFormatKey format) {

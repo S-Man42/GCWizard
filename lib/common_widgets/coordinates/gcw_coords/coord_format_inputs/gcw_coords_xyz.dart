@@ -22,14 +22,6 @@ class _GCWCoordsXYZState extends State<_GCWCoordsXYZ> {
   @override
   void initState() {
     super.initState();
-
-    var xyz = widget.coordinates is XYZ
-        ? widget.coordinates as XYZ
-        : XYZ.fromLatLon(widget.coordinates.toLatLng() ?? defaultCoordinate, defaultEllipsoid);
-    _currentX = xyz.x;
-    _currentY = xyz.y;
-    _currentZ = xyz.z;
-
     _ControllerX = TextEditingController(text: _currentX.toString());
     _ControllerY = TextEditingController(text: _currentY.toString());
     _ControllerZ = TextEditingController(text: _currentZ.toString());
@@ -45,6 +37,16 @@ class _GCWCoordsXYZState extends State<_GCWCoordsXYZ> {
 
   @override
   Widget build(BuildContext context) {
+    var xyz = widget.coordinates is XYZ
+        ? widget.coordinates as XYZ
+        : XYZ.fromLatLon(widget.coordinates.toLatLng() ?? defaultCoordinate, defaultEllipsoid);
+    _currentX = xyz.x;
+    _currentY = xyz.y;
+    _currentZ = xyz.z;
+
+    _ControllerX.text = _currentX.toString();
+    _ControllerY.text = _currentY.toString();
+    _ControllerZ.text = _currentZ.toString();
 
     return Column(children: <Widget>[
       GCWDistance(

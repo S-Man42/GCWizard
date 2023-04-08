@@ -17,9 +17,6 @@ class _GCWCoordsMaidenheadState extends State<_GCWCoordsMaidenhead> {
   @override
   void initState() {
     super.initState();
-
-    _currentCoord = widget.coordinates.text;
-
     _controller = TextEditingController(text: _currentCoord);
   }
 
@@ -31,6 +28,10 @@ class _GCWCoordsMaidenheadState extends State<_GCWCoordsMaidenhead> {
 
   @override
   Widget build(BuildContext context) {
+    var maidenhead = widget.coordinates;
+    _currentCoord = maidenhead.text;
+
+    _controller.text = _currentCoord;
 
     return Column(children: <Widget>[
       GCWTextField(

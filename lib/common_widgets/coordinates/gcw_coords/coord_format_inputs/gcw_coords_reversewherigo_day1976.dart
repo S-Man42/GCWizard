@@ -23,11 +23,6 @@ class _GCWCoordsReverseWherigoDay1976State extends State<_GCWCoordsReverseWherig
   @override
   void initState() {
     super.initState();
-
-    var day1976 = widget.coordinates;
-    _currentA = day1976.s;
-    _currentB = day1976.t;
-
     _ControllerA = TextEditingController(text: _currentA);
     _ControllerB = TextEditingController(text: _currentB);
   }
@@ -44,6 +39,12 @@ class _GCWCoordsReverseWherigoDay1976State extends State<_GCWCoordsReverseWherig
 
   @override
   Widget build(BuildContext context) {
+    var day1976 = widget.coordinates;
+    _currentA = day1976.s;
+    _currentB = day1976.t;
+
+    _ControllerA.text = _currentA.toString();
+    _ControllerB.text = _currentB.toString();
 
     return Column(children: <Widget>[
       GCWTextField(

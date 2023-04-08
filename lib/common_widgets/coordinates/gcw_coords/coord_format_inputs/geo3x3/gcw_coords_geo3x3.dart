@@ -17,9 +17,6 @@ class _GCWCoordsGeo3x3State extends State<_GCWCoordsGeo3x3> {
   @override
   void initState() {
     super.initState();
-
-    _currentCoord = widget.coordinates.text;
-
     _controller = TextEditingController(text: _currentCoord);
   }
 
@@ -31,6 +28,10 @@ class _GCWCoordsGeo3x3State extends State<_GCWCoordsGeo3x3> {
 
   @override
   Widget build(BuildContext context) {
+    var geo3x3 = widget.coordinates;
+    _currentCoord = geo3x3.text;
+
+    _controller.text = _currentCoord;
 
     return Column(children: <Widget>[
       GCWTextField(

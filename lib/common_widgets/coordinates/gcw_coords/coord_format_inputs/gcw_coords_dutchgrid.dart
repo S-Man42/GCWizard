@@ -20,13 +20,8 @@ class _GCWCoordsDutchGridState extends State<_GCWCoordsDutchGrid> {
   @override
   void initState() {
     super.initState();
-
-    var dutchGrid = widget.coordinates;
-    _currentX.value = dutchGrid.x;
-    _currentY.value = dutchGrid.y;
-
-    _xController = TextEditingController(text: _currentX.value.toString());
-    _yController = TextEditingController(text: _currentY.value.toString());
+    _xController = TextEditingController(text: _currentX.text);
+    _yController = TextEditingController(text: _currentY.text);
   }
 
   @override
@@ -38,6 +33,12 @@ class _GCWCoordsDutchGridState extends State<_GCWCoordsDutchGrid> {
 
   @override
   Widget build(BuildContext context) {
+    var dutchGrid = widget.coordinates;
+    _currentX.value = dutchGrid.x;
+    _currentY.value = dutchGrid.y;
+
+    _xController.text = _currentX.value.toString();
+    _yController.text = _currentY.value.toString();
 
     return Column(children: <Widget>[
       GCWDoubleTextField(

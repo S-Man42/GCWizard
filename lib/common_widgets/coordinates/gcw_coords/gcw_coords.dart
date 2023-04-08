@@ -510,11 +510,13 @@ class GCWCoordsState extends State<GCWCoords> {
     if (pastedCoords.isEmpty) return;
 
     var _coordsForCurrentFormat = pastedCoords.firstWhereOrNull((BaseCoordinate coords) => coords.format.type == _currentCoords.format.type);
+
     if (_coordsForCurrentFormat == null) {
       _coordsForCurrentFormat = pastedCoords.first;
       _currentCoords.format = pastedCoords.first.format;
     }
 
+    _pastedCoords = _coordsForCurrentFormat;
     _setPastedCoordsFormat();
     _currentCoords = _coordsForCurrentFormat;
 

@@ -21,9 +21,6 @@ class _GCWCoordsOpenLocationCodeState extends State<_GCWCoordsOpenLocationCode> 
   @override
   void initState() {
     super.initState();
-
-    _currentCoord = widget.coordinates.text;
-
     _controller = TextEditingController(text: _currentCoord);
   }
 
@@ -35,6 +32,10 @@ class _GCWCoordsOpenLocationCodeState extends State<_GCWCoordsOpenLocationCode> 
 
   @override
   Widget build(BuildContext context) {
+    var openLocationCode = widget.coordinates;
+    _currentCoord = openLocationCode.text;
+
+    _controller.text = _currentCoord;
 
     return Column(children: <Widget>[
       GCWTextField(
