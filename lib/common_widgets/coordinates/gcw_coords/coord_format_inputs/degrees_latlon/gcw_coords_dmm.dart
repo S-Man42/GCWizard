@@ -3,8 +3,9 @@ part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart
 class _GCWCoordsDMM extends StatefulWidget {
   final void Function(DMM) onChanged;
   final DMM coordinates;
+  final bool isDefault;
 
-  const _GCWCoordsDMM({Key? key, required this.onChanged, required this.coordinates}) : super(key: key);
+  const _GCWCoordsDMM({Key? key, required this.onChanged, required this.coordinates, this.isDefault = true}) : super(key: key);
 
   @override
   _GCWCoordsDMMState createState() => _GCWCoordsDMMState();
@@ -65,27 +66,29 @@ class _GCWCoordsDMMState extends State<_GCWCoordsDMM> {
 
   @override
   Widget build(BuildContext context) {
-    var dmm = widget.coordinates;
-    var lat = dmm.latitude.formatParts(10);
-    var lon = dmm.longitude.formatParts(10);
+    if (!widget.isDefault) {
+      var dmm = widget.coordinates;
+      var lat = dmm.latitude.formatParts(10);
+      var lon = dmm.longitude.formatParts(10);
 
-    _currentLatDegrees = lat.degrees;
-    _currentLatMinutes = lat.minutes.split('.')[0];
-    _currentLatMilliMinutes = lat.minutes.split('.')[1];
-    _currentLatSign = lat.sign.value;
+      _currentLatDegrees = lat.degrees;
+      _currentLatMinutes = lat.minutes.split('.')[0];
+      _currentLatMilliMinutes = lat.minutes.split('.')[1];
+      _currentLatSign = lat.sign.value;
 
-    _currentLonDegrees = lon.degrees;
-    _currentLonMinutes = lon.minutes.split('.')[0];
-    _currentLonMilliMinutes = lon.minutes.split('.')[1];
-    _currentLonSign = lon.sign.value;
+      _currentLonDegrees = lon.degrees;
+      _currentLonMinutes = lon.minutes.split('.')[0];
+      _currentLonMilliMinutes = lon.minutes.split('.')[1];
+      _currentLonSign = lon.sign.value;
 
-    _LatDegreesController.text = _currentLatDegrees;
-    _LatMinutesController.text = _currentLatMinutes;
-    _LatMilliMinutesController.text = _currentLatMilliMinutes;
+      _LatDegreesController.text = _currentLatDegrees;
+      _LatMinutesController.text = _currentLatMinutes;
+      _LatMilliMinutesController.text = _currentLatMilliMinutes;
 
-    _LonDegreesController.text = _currentLonDegrees;
-    _LonMinutesController.text = _currentLonMinutes;
-    _LonMilliMinutesController.text = _currentLonMilliMinutes;
+      _LonDegreesController.text = _currentLonDegrees;
+      _LonMinutesController.text = _currentLonMinutes;
+      _LonMilliMinutesController.text = _currentLonMilliMinutes;
+    }
 
     return Column(children: <Widget>[
       Row(

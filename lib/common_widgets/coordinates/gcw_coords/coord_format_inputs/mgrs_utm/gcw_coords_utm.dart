@@ -3,8 +3,9 @@ part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart
 class _GCWCoordsUTM extends StatefulWidget {
   final void Function(UTMREF) onChanged;
   final BaseCoordinate coordinates;
+  final bool isDefault;
 
-  const _GCWCoordsUTM({Key? key, required this.onChanged, required this.coordinates}) : super(key: key);
+  const _GCWCoordsUTM({Key? key, required this.onChanged, required this.coordinates, this.isDefault = true}) : super(key: key);
 
   @override
   _GCWCoordsUTMState createState() => _GCWCoordsUTMState();
@@ -39,17 +40,19 @@ class _GCWCoordsUTMState extends State<_GCWCoordsUTM> {
 
   @override
   Widget build(BuildContext context) {
-    var utm = widget.coordinates is UTMREF
-        ? widget.coordinates as UTMREF
-        : UTMREF.fromLatLon(widget.coordinates.toLatLng() ?? defaultCoordinate, defaultEllipsoid);
-    _currentLonZone.value = utm.zone.lonZone;
-    _currentEasting.value = utm.easting;
-    _currentNorthing.value = utm.northing;
-    _currentLatZone = utm.zone.latZone;
+    if (!widget.isDefault) {
+      var utm = widget.coordinates is UTMREF
+          ? widget.coordinates as UTMREF
+          : UTMREF.fromLatLon(widget.coordinates.toLatLng() ?? defaultCoordinate, defaultEllipsoid);
+      _currentLonZone.value = utm.zone.lonZone;
+      _currentEasting.value = utm.easting;
+      _currentNorthing.value = utm.northing;
+      _currentLatZone = utm.zone.latZone;
 
-    _LonZoneController.text = _currentLonZone.value.toString();
-    _EastingController.text = _currentEasting.value.toString();
-    _NorthingController.text = _currentNorthing.value.toString();
+      _LonZoneController.text = _currentLonZone.value.toString();
+      _EastingController.text = _currentEasting.value.toString();
+      _NorthingController.text = _currentNorthing.value.toString();
+    }
 
     return Column(children: <Widget>[
       Row(

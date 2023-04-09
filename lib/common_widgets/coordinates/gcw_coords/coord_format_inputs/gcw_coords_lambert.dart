@@ -3,8 +3,9 @@ part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart
 class _GCWCoordsLambert extends StatefulWidget {
   final void Function(Lambert) onChanged;
   final Lambert coordinates;
+  final bool isDefault;
 
-  const _GCWCoordsLambert({Key? key, required this.onChanged, required this.coordinates})
+  const _GCWCoordsLambert({Key? key, required this.onChanged, required this.coordinates, this.isDefault = true})
       : super(key: key);
 
   @override
@@ -40,7 +41,7 @@ class _GCWCoordsLambertState extends State<_GCWCoordsLambert> {
   Widget build(BuildContext context) {
     if (_subtypeChanged()) {
       WidgetsBinding.instance.addPostFrameCallback((_) => _setCurrentValueAndEmitOnChange());
-    } else {
+    } else if (!widget.isDefault) {
       var lambert = widget.coordinates;
       _currentEasting.value = lambert.easting;
       _currentNorthing.value = lambert.northing;

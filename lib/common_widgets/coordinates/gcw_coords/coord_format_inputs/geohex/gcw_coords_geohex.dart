@@ -3,8 +3,9 @@ part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart
 class _GCWCoordsGeoHex extends StatefulWidget {
   final void Function(GeoHex?) onChanged;
   final GeoHex coordinates;
+  final bool isDefault;
 
-  const _GCWCoordsGeoHex({Key? key, required this.onChanged, required this.coordinates}) : super(key: key);
+  const _GCWCoordsGeoHex({Key? key, required this.onChanged, required this.coordinates, this.isDefault = true}) : super(key: key);
 
   @override
   _GCWCoordsGeoHexState createState() => _GCWCoordsGeoHexState();
@@ -28,10 +29,12 @@ class _GCWCoordsGeoHexState extends State<_GCWCoordsGeoHex> {
 
   @override
   Widget build(BuildContext context) {
-    var geohHex = widget.coordinates;
-    _currentCoord = geohHex.text;
+    if (!widget.isDefault) {
+      var geohHex = widget.coordinates;
+      _currentCoord = geohHex.text;
 
-    _controller.text = _currentCoord;
+      _controller.text = _currentCoord;
+    }
 
     return Column(children: <Widget>[
       GCWTextField(
