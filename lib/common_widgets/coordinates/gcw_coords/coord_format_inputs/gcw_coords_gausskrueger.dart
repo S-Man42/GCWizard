@@ -18,7 +18,7 @@ class _GCWCoordsGaussKruegerState extends State<_GCWCoordsGaussKrueger> {
   var _currentEasting = defaultDoubleText;
   var _currentNorthing = defaultDoubleText;
 
-  late CoordinateFormatKey _currentSubtype;
+  CoordinateFormatKey _currentSubtype = defaultGaussKruegerType;
 
   @override
   void initState() {
@@ -44,6 +44,7 @@ class _GCWCoordsGaussKruegerState extends State<_GCWCoordsGaussKrueger> {
       var gausskrueger = widget.coordinates;
       _currentEasting.value = gausskrueger.easting;
       _currentNorthing.value = gausskrueger.northing;
+
       _currentSubtype = gausskrueger.format.subtype!;
 
       _eastingController.text = _currentEasting.value.toString();
