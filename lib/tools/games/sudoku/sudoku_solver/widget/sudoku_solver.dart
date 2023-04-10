@@ -116,14 +116,7 @@ class SudokuSolverState extends State<SudokuSolver> {
                     text: i18n(context, 'sudokusolver_clearcalculated'),
                     onPressed: () {
                       setState(() {
-                        for (int i = 0; i < 9; i++) {
-                          for (int j = 0; j < 9; j++) {
-                            if (_currentBoard.getFillType(i, j) == SudokuFillType.CALCULATED) {
-                              _currentBoard.setValue(i, j, null);
-                            }
-                          }
-                        }
-                        _currentBoard.solutions = null;
+                        _currentBoard.removeCalculated();
                       });
                     },
                   ),
@@ -158,7 +151,7 @@ class SudokuSolverState extends State<SudokuSolver> {
       for (int j = 0; j < 9; j++) {
         if (_currentBoard.getFillType(i, j) == SudokuFillType.USER_FILLED) continue;
         _currentBoard.setValue(i, j, _currentBoard.solutions![_currentSolution].getValue(i, j),
-            type: SudokuFillType.CALCULATED);
+            SudokuFillType.CALCULATED);
       }
     }
   }
