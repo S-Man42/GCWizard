@@ -483,11 +483,10 @@ class GCWCoordsState extends State<GCWCoords> {
       onChanged: (CoordinateFormat newFormat) {
         setState(() {
           // TODO Mike Please check against previous code. The change made here is not quite simple and clear if logic still does the same here for changing Coords Format and Subtypes
+          // for map_view, change the format, but use the same coordinates
           if (_currentCoords.format.type != newFormat.type) {
             if (widget.restoreCoordinates != null && widget.restoreCoordinates!) {
               _currentCoords = _currentCoords;
-            } else if (_currentCoords.format.subtype == newFormat.subtype) {  // TODO Mike: If they have the same subtype, the format type could not have been changed...
-              _currentCoords = defaultBaseCoordinate;
             }
 
             _currentCoords = buildUninitializedCoordinatesByFormat(newFormat);
