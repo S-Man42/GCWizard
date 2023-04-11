@@ -39,13 +39,14 @@ class _GCWCoordsLambertState extends State<_GCWCoordsLambert> {
 
   @override
   Widget build(BuildContext context) {
+    _currentSubtype = widget.coordinates.format.subtype!;
+
     if (_subtypeChanged()) {
       WidgetsBinding.instance.addPostFrameCallback((_) => _setCurrentValueAndEmitOnChange());
     } else if (!widget.isDefault) {
       var lambert = widget.coordinates;
       _currentEasting.value = lambert.easting;
       _currentNorthing.value = lambert.northing;
-      _currentSubtype = lambert.format.subtype!;
 
       _eastingController.text = _currentEasting.value.toString();
       _northingController.text = _currentNorthing.value.toString();
