@@ -947,7 +947,7 @@ class Quadtree extends BaseCoordinate {
   }
 }
 
-BaseCoordinate buildUninitializedCoordinatesByFormat(CoordinateFormat format) {
+BaseCoordinate buildUninitializedCoordinateByFormat(CoordinateFormat format) {
   if (isCoordinateFormatWithSubtype(format.type)) {
     if (format.subtype == null || !isSubtypeOfCoordinateFormat(format.type, format.subtype!)) {
       format.subtype = defaultCoordinateFormatSubtypeForFormat(format.type);
@@ -1002,15 +1002,15 @@ BaseCoordinate buildUninitializedCoordinatesByFormat(CoordinateFormat format) {
     case CoordinateFormatKey.REVERSE_WIG_DAY1976:
       return ReverseWherigoDay1976('','');
     default:
-      return buildDefaultFormatByCoordinates(defaultCoordinate);
+      return buildDefaultCoordinateByCoordinates(defaultCoordinate);
   }
 }
 
-BaseCoordinate buildDefaultFormatByCoordinates(LatLng coords) {
-  return buildFormatByCoordinates(defaultCoordinateFormat, coords, defaultEllipsoid);
+BaseCoordinate buildDefaultCoordinateByCoordinates(LatLng coords) {
+  return buildCoordinate(defaultCoordinateFormat, coords, defaultEllipsoid);
 }
 
-BaseCoordinate buildFormatByCoordinates(CoordinateFormat format, LatLng coords, [Ellipsoid? ellipsoid]) {
+BaseCoordinate buildCoordinate(CoordinateFormat format, LatLng coords, [Ellipsoid? ellipsoid]) {
   if (isCoordinateFormatWithSubtype(format.type)) {
     if (format.subtype == null || !isSubtypeOfCoordinateFormat(format.type, format.subtype!)) {
       format.subtype = defaultCoordinateFormatSubtypeForFormat(format.type);
@@ -1067,6 +1067,6 @@ BaseCoordinate buildFormatByCoordinates(CoordinateFormat format, LatLng coords, 
     case CoordinateFormatKey.REVERSE_WIG_DAY1976:
       return ReverseWherigoDay1976.fromLatLon(coords);
     default:
-      return buildDefaultFormatByCoordinates(coords);
+      return buildDefaultCoordinateByCoordinates(coords);
   }
 }

@@ -29,6 +29,10 @@ class CoordinateFormat{
   }
 }
 
+bool equalsCoordinateFormats(CoordinateFormat a, CoordinateFormat b) {
+  return a.type == b.type && a.subtype == b.subtype;
+}
+
 bool isCoordinateFormatWithSubtype(CoordinateFormatKey format) {
   var coordFormat = coordinateFormatMetadataByKey(format);
   return coordFormat.subtypes != null;
