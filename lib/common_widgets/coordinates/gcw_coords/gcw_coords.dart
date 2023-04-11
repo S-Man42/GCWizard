@@ -101,6 +101,9 @@ class GCWCoordsState extends State<GCWCoords> {
     super.initState();
 
     _currentCoords = buildCoordinate(widget.coordsFormat, widget.coordinates ?? defaultCoordinate);
+    if (widget.coordinates != null) {
+      _hasSetCoords = true;
+    }
   }
   
   @override
