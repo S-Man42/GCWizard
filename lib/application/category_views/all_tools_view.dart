@@ -367,6 +367,7 @@ class _MainViewState extends State<MainView> {
             backgroundColor: colors.primaryBackground(),
             foregroundColor: colors.mainFont(),
             bottom: TabBar(
+              indicatorColor: themeColors().secondary(),
               onTap: (value) {
                 Prefs.setInt(PREFERENCE_TABS_LAST_VIEWED_TAB, value);
               },
