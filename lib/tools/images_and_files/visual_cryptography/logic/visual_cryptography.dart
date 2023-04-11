@@ -25,9 +25,14 @@ Future<Uint8List?> decodeImagesAsync(GCWAsyncExecuterParameters? jobData) async 
 }
 
 Future<Uint8List?> _decodeImages(Uint8List image1, Uint8List image2, int offsetX, int offsetY) {
-  var _image1 = Image.decodeImage(image1);
-  var _image2 = Image.decodeImage(image2);
+  if (image1.isEmpty || image2.isEmpty) return Future.value(null);
 
+  var decoder1 = Image.findDecoderForData(image1);
+  var decoder2 = Image.findDecoderForData(image2);
+  if (decoder1 == null || decoder2 == null) return Future.value(null);
+
+  var _image1 = decoder1.decode(image1);
+  var _image2 = decoder2.decode(image2);
   if (_image1 == null || _image2 == null) return Future.value(null);
 
   var image = Image.Image(width: max(_image1.width, _image2.width) + offsetX.abs(),
