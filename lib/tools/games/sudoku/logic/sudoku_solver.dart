@@ -69,6 +69,16 @@ class SudokuBoard {
     }
     solutions = null;
   }
+
+  void mergeSolution(int solutionIndex) {
+    if (solutions == null || solutionIndex < 0 || solutionIndex >= solutions!.length) return;
+    for (int i = 0; i < 9; i++) {
+      for (int j = 0; j < 9; j++) {
+        if (getFillType(i, j) == SudokuFillType.USER_FILLED) continue;
+        setValue(i, j, solutions![solutionIndex].getValue(i, j), SudokuFillType.CALCULATED);
+      }
+    }
+  }
 }
 
 class _SudokuSolution {
