@@ -362,7 +362,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
 
   Image.Image? _decodeImage(Uint8List? bytes) {
     if (bytes == null) return null;
-    var image = Image.decodeImage(_originalData!.bytes);
+    var image = Image.decodeImage(bytes);
     if (image == null) return null;
 
     if (image.numChannels != 4 || image.format != Image.Format.uint8) {
