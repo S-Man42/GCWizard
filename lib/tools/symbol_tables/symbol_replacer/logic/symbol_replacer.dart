@@ -7,6 +7,7 @@ import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_param
 import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_replacer_symboldata.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
+import 'package:gc_wizard/utils/image_utils.dart';
 import 'package:image/image.dart' as Image;
 import 'package:tuple/tuple.dart';
 
@@ -169,7 +170,7 @@ class SymbolReplacerImage {
       double? mergeDistance}) {
 
 
-    _bmp ??= _decodeImage(_image);
+    _bmp ??= decodeImage4ChannelFormat(_image);
     if (_bmp == null) return;
 
     // detect changed parameter -> recalc
@@ -958,17 +959,6 @@ Future<List<Map<String, SymbolReplacerSymbolData>>?> searchSymbolTable(
     sendAsyncPort?.send(DoubleText('progress', progress / compareSymbols.length));
   }
   return Future.value(maxPercentSymbolTable);
-}
-
-Image.Image? _decodeImage(Uint8List? bytes) {
-  if (bytes == null) return null;
-  var image = Image.decodeImage(bytes);
-  if (image == null) return null;
-
-  if (image.numChannels != 4 || image.format != Image.Format.uint8) {
-    image = image.convert(format: Image.Format.uint8, numChannels: 4);
-  }
-  return image;
 }
 
 /// <summary>
