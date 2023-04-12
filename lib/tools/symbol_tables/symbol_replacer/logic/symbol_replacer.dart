@@ -168,9 +168,8 @@ class SymbolReplacerImage {
       bool groupSymbols = true,
       double? mergeDistance}) {
 
-    var decoder = Image.findDecoderForData(_image);
-    if (decoder == null) return;
-    _bmp ??= decoder.decode(_image, frame: 0);
+
+    _bmp ??= _decodeImage(_image);
     if (_bmp == null) return;
 
     // detect changed parameter -> recalc
@@ -959,6 +958,17 @@ Future<List<Map<String, SymbolReplacerSymbolData>>?> searchSymbolTable(
     sendAsyncPort?.send(DoubleText('progress', progress / compareSymbols.length));
   }
   return Future.value(maxPercentSymbolTable);
+}
+
+Image.Image? _decodeImage(Uint8List? bytes) {
+  if (bytes == null) return null;
+  var image = Image.decodeImage(bytes);
+  if (image == null) return null;
+
+  if (image.numChannels != 4 || image.format != Image.Format.uint8) {
+    image = image.convert(format: Image.Format.uint8, numChannels: 4);
+  }
+  return image;
 }
 
 /// <summary>
