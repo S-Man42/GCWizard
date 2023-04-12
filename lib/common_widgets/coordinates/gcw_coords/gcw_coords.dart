@@ -606,7 +606,8 @@ class GCWCoordsState extends State<GCWCoords> {
         } else {
           _coords = LatLng(locationData.latitude!, locationData.longitude!);
         }
-        _currentCoords = buildDefaultCoordinateByCoordinates(_coords);
+        _currentCoords = buildCoordinate(_currentCoords.format, _coords);
+        _hasSetCoords = true;
 
         _isOnLocationAccess = false;
         _setCurrentValueAndEmitOnChange();
