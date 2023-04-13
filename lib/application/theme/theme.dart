@@ -97,8 +97,6 @@ ThemeData buildTheme() {
       appBarTheme: AppBarTheme(
         backgroundColor: colors.primaryBackground(),
         foregroundColor: colors.mainFont()),
-      // listTileTheme: ListTileThemeData(
-      //   textColor: colors.mainFont()),
       cardColor: colors.messageBackground(), 
       colorScheme: ColorScheme.fromSwatch(
         primarySwatch: _generateMaterialColor(colors.primaryBackground()))
