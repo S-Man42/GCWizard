@@ -90,6 +90,7 @@ ThemeData buildTheme() {
         contentPadding: const EdgeInsets.all(10.0),
       ),
       unselectedWidgetColor: colors.secondary(),
+      indicatorColor: colors.secondary(),
       cardColor: colors.messageBackground(), 
       colorScheme: ColorScheme.fromSwatch(
         primarySwatch: _generateMaterialColor(colors.primaryBackground())).copyWith(secondary: colors.secondary(),
