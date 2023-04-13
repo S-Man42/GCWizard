@@ -48,7 +48,7 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
 
     if (_init) {
       _fillSymbolDataItems(widget.symbolImage.compareSymbols);
-      _currentSymbolData = widget.symbolImage.compareSymbols?.first;  // TODO Mike: I needed to make _currentSymbolData nullsafe; therefore I changed ?.first to !.first here. Please chacke if compareSymbols can be null here nonetheless
+      _currentSymbolData = widget.symbolImage.compareSymbols?.first;
       _fillSymbolMap(widget.symbolImage, widget.viewSymbols);
 
       // select all
@@ -80,11 +80,11 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
         if (_symbolData?.values.first.displayName != _displayText) {
           _symbolMap[symbol] = _cloneSymbolData(_symbolData!, _displayText);
         }
+      } else {
+        _symbolMap.addAll({
+          symbol: {'': SymbolData(path: '', bytes: symbol.getImage(), displayName: symbol.symbolGroup?.text ?? '')}
+        });
       }
-      // else //ToDo Mike Nullsafety
-      //   _symbolMap.addAll({
-      //     symbol: {null: SymbolData(bytes: symbol.getImage(), displayName: symbol?.symbolGroup?.text ?? '')}
-      //   });
     });
   }
 

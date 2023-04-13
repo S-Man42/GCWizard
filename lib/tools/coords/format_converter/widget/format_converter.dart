@@ -91,7 +91,7 @@ class FormatConverterState extends State<FormatConverter> {
       _currentAllOutput = _calculateAllOutput(context);
     } else {
       if (_currentCoords.toLatLng() != null) {
-        _currentOutputs = [buildFormatByCoordinates(_currentOutputFormat, _currentCoords.toLatLng()!)];
+        _currentOutputs = [buildCoordinate(_currentOutputFormat, _currentCoords.toLatLng()!)];
       } else {
         _currentOutputs = [];
       }

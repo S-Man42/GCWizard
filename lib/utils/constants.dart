@@ -1,6 +1,12 @@
 import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:intl/intl.dart';
 
+const int MAX_INT = 9007199254740992;
+const int MIN_INT = -9007199254740991;
+
+const double MAX_DOUBLE = 9007199254740992.0;
+const double MIN_DOUBLE = -9007199254740991.0;
+
 const double practical_epsilon = 0.5e-15;
 const double theoretical_epsilon = double.minPositive;
 const double doubleTolerance = 1.0e-9;

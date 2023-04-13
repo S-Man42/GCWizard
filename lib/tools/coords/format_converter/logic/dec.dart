@@ -1,5 +1,6 @@
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_parser.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
+import 'package:gc_wizard/utils/coordinate_utils.dart';
 import 'package:latlong2/latlong.dart';
 
 LatLng decToLatLon(DEC dec) {
@@ -32,36 +33,9 @@ String? prepareInput(String text, {bool wholeString = false}) {
   return text;
 }
 
-// ignore: unused_element
-double _normalizeLat(double lat) {
-  if (lat > 90.0) return _normalizeLat(180.0 - lat);
-  if (lat < -90.0) return _normalizeLat(-180.0 + -lat);
-
-  return lat;
-}
-
-double _normalizeLon(double lon) {
-  if (lon > 180.0) return _normalizeLon(lon - 360.0);
-  if (lon < -180.0) return _normalizeLon(360.0 + lon);
-
-  return lon;
-}
-
 DEC normalizeDEC(DEC coord) {
-  var normalizedLat = coord.latitude;
-  var normalizedLon = coord.longitude;
-
-  while (normalizedLat > 90.0 || normalizedLat < -90) {
-    if (normalizedLat > 90.0) {
-      normalizedLat = 180.0 - normalizedLat;
-    } else {
-      normalizedLat = -180.0 + -normalizedLat;
-    }
-
-    normalizedLon += 180.0;
-  }
-
-  normalizedLon = _normalizeLon(normalizedLon);
+  var normalizedLat = normalizeLat(coord.latitude);
+  var normalizedLon = normalizeLon(coord.longitude);
 
   return DEC(normalizedLat, normalizedLon);
 }

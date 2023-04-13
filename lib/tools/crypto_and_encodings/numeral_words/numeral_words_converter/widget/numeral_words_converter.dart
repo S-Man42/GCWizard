@@ -48,7 +48,7 @@ class NumeralWordsConverterState extends State<NumeralWordsConverter> {
   @override
   Widget build(BuildContext context) {
     _LANGUAGES ??= SplayTreeMap.from(
-          switchMapKeyValue(NUMERALWORDS_LANGUAGES_CONVERTER).map((key, value) => MapEntry(i18n(context, key), value)));
+        switchMapKeyValue(NUMERALWORDS_LANGUAGES_CONVERTER).map((key, value) => MapEntry(i18n(context, key), value)));
 
     return Column(
       children: <Widget>[
@@ -85,8 +85,8 @@ class NumeralWordsConverterState extends State<NumeralWordsConverter> {
           )
         else // encode
           GCWIntegerSpinner(
-            min: MIN_MAX_NUMBER[_currentLanguage]?[0],
-            max: MIN_MAX_NUMBER[_currentLanguage]?[1],
+            min: MIN_MAX_NUMBER[_currentLanguage]![0],
+            max: MIN_MAX_NUMBER[_currentLanguage]![1],
             value: _currentNumber,
             onChanged: (value) {
               setState(() {
@@ -123,7 +123,10 @@ class NumeralWordsConverterState extends State<NumeralWordsConverter> {
             GCWTextDivider(text: i18n(context, output.title)),
             GCWOutputText(
               text: output.numbersystem,
-            )
+            ),
+            (_currentMode == GCWSwitchPosition.right) // decode
+                ? const GCWTextDivider(text: 'decimal')
+                : Container(),
           ],
         ),
       if (_currentMode == GCWSwitchPosition.right) // decode
