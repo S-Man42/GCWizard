@@ -92,7 +92,9 @@ ThemeData buildTheme() {
       unselectedWidgetColor: colors.secondary(),
       cardColor: colors.messageBackground(), 
       colorScheme: ColorScheme.fromSwatch(
-        primarySwatch: _generateMaterialColor(colors.primaryBackground())).copyWith(secondary: colors.secondary(),
+        primarySwatch: _generateMaterialColor(colors.primaryBackground())
+      ).copyWith(
+        secondary: colors.secondary(),
         brightness: base.brightness,
       )
   );
