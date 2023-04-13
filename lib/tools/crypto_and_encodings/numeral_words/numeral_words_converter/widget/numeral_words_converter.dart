@@ -85,8 +85,8 @@ class NumeralWordsConverterState extends State<NumeralWordsConverter> {
           )
         else // encode
           GCWIntegerSpinner(
-            min: MIN_MAX_NUMBER[_currentLanguage]?[0],
-            max: MIN_MAX_NUMBER[_currentLanguage]?[1],
+            min: MIN_MAX_NUMBER[_currentLanguage]![0],
+            max: MIN_MAX_NUMBER[_currentLanguage]![1],
             value: _currentNumber,
             onChanged: (value) {
               setState(() {
@@ -125,7 +125,7 @@ class NumeralWordsConverterState extends State<NumeralWordsConverter> {
               text: output.numbersystem,
             ),
             (_currentMode == GCWSwitchPosition.right) // decode
-                ? GCWTextDivider(text: 'decimal')
+                ? const GCWTextDivider(text: 'decimal')
                 : Container(),
           ],
         ),
