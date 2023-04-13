@@ -350,7 +350,6 @@ class _MainViewState extends State<MainView> {
 
   @override
   Widget build(BuildContext context) {
-    ThemeColors colors = themeColors();
     if (registeredTools.isEmpty) initializeRegistry(context);
     if (_mainToolList.isEmpty) _initStaticToolList();
     Favorites.initialize();
@@ -364,10 +363,7 @@ class _MainViewState extends State<MainView> {
       child: Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
-            backgroundColor: colors.primaryBackground(),
-            foregroundColor: colors.mainFont(),
             bottom: TabBar(
-              indicatorColor: themeColors().secondary(),
               onTap: (value) {
                 Prefs.setInt(PREFERENCE_TABS_LAST_VIEWED_TAB, value);
               },
