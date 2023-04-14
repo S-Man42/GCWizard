@@ -365,7 +365,6 @@ List<VanityWordsDecodeOutput> decodeVanityWords(String? text, NumeralWordsLangua
   String hWord = '';
   text = text.replaceAll('\n', ' ');
   //text = text.replaceAll('\n', '').replaceAll('0', '').replaceAll('1', '').replaceAll(' ', '');
-  print(VANITY_WORDS[language]);
   while (text!.isNotEmpty) {
     found = false;
     ambigous = false;
@@ -373,7 +372,6 @@ List<VanityWordsDecodeOutput> decodeVanityWords(String? text, NumeralWordsLangua
     hWord = '';
     decodingTable.forEach((digits, word) {
       if (text!.startsWith(digits)) {
-        print(digits);
         if (!found) {
           hDigits = digits;
           hWord = word;
@@ -388,7 +386,6 @@ List<VanityWordsDecodeOutput> decodeVanityWords(String? text, NumeralWordsLangua
         }
       }
     }); // end decodingTable.forEach
-    print(hWord + ' => ' + NUMERAL_WORDS[language]![hWord.toLowerCase()].toString());
     if (found && !ambigous) {
       if (NUMERAL_WORDS[language]![removeAccents(hWord.toLowerCase())] != null) {
         output.add(VanityWordsDecodeOutput(
