@@ -228,10 +228,9 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
   void _selectSymbolDataItem(SymbolData symbolData) {
     var compareSymbol = _getSymbol(_symbolMap, symbolData)?.symbolGroup?.compareSymbol;
     if ((widget.symbolImage.compareSymbols != null) && (compareSymbol != null)) {
-      for (GCWDropDownMenuItem item in _symbolDataItems) {
-        if ((item.value is Map<String, SymbolReplacerSymbolData>) &&
-            ((item.value as Map<String, SymbolReplacerSymbolData>).values.first == compareSymbol)) {
-          _currentSymbolData = item.value as Map<String, SymbolReplacerSymbolData>;
+      for (var item in _symbolDataItems) {
+        if (item.value.values.first == compareSymbol) {
+          _currentSymbolData = item.value;
           break;
         }
       }
