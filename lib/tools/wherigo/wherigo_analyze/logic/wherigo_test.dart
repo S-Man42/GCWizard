@@ -1,14 +1,17 @@
 part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze.dart';
 
-WherigoTest wherigo_test(dynamic dataToTest, WHERIGO_OBJECT typeOfTest){
+WherigoTest wherigoTest(dynamic dataToTest, WHERIGO_OBJECT typeOfTest){
   WherigoTest result = WherigoTest(
     cartridgeGWC: _WHERIGO_EMPTYCARTRIDGE_GWC,
     cartridgeTestTask: WHERIGO_EMPTYTESTTASK_LUA,
-    cartridgeTimerTask: WHERIGO_EMPTYTESTTIMER_LUA,
-    cartridgeZoneTask: WHERIGO_EMPTYTESTZONE_LUA,
-    cartridgeCharacterTask: WHERIGO_EMPTYTESTCHARACTER_LUA,
-    cartridgeItemTask: WHERIGO_EMPTYTESTITEM_LUA,
-    cartridgeInputTask: WHERIGO_EMPTYTESTINPUT_LUA,
+    cartridgeTestTimer: WHERIGO_EMPTYTESTTIMER_LUA,
+    cartridgeTestZone: WHERIGO_EMPTYTESTZONE_LUA,
+    cartridgeTestCharacter: WHERIGO_EMPTYTESTCHARACTER_LUA,
+    cartridgeTestItem: WHERIGO_EMPTYTESTITEM_LUA,
+    cartridgeTestInput: WHERIGO_EMPTYTESTINPUT_LUA,
+    cartridgeTestObfuscation: WHERIGO_EMPTYTESTOBFUSCATION_LUA,
+    cartridgeTestVariable: [],
+    cartridgeTestMessageDialog: [],
   );
 
   switch (typeOfTest){
@@ -20,99 +23,126 @@ WherigoTest wherigo_test(dynamic dataToTest, WHERIGO_OBJECT typeOfTest){
       result = WherigoTest(
         cartridgeGWC: _WHERIGO_EMPTYCARTRIDGE_GWC,
         cartridgeTestTask: WHERIGO_EMPTYTESTTASK_LUA,
-        cartridgeTimerTask: WHERIGO_EMPTYTESTTIMER_LUA,
-        cartridgeZoneTask: WHERIGO_EMPTYTESTZONE_LUA,
-        cartridgeCharacterTask: _analyzeAndExtractCharacterSectionData(dataToTest as List<String>),
-        cartridgeItemTask: WHERIGO_EMPTYTESTITEM_LUA,
-        cartridgeInputTask: WHERIGO_EMPTYTESTINPUT_LUA,
+        cartridgeTestTimer: WHERIGO_EMPTYTESTTIMER_LUA,
+        cartridgeTestZone: WHERIGO_EMPTYTESTZONE_LUA,
+        cartridgeTestCharacter: _analyzeAndExtractCharacterSectionData((dataToTest as String).split('\n')),
+        cartridgeTestItem: WHERIGO_EMPTYTESTITEM_LUA,
+        cartridgeTestInput: WHERIGO_EMPTYTESTINPUT_LUA,
+        cartridgeTestObfuscation: WHERIGO_EMPTYTESTOBFUSCATION_LUA,
+        cartridgeTestVariable: [],
+        cartridgeTestMessageDialog: [],
       );
       break;
     case WHERIGO_OBJECT.ITEMS:
       result = WherigoTest(
         cartridgeGWC: _WHERIGO_EMPTYCARTRIDGE_GWC,
         cartridgeTestTask: WHERIGO_EMPTYTESTTASK_LUA,
-        cartridgeTimerTask: WHERIGO_EMPTYTESTTIMER_LUA,
-        cartridgeZoneTask: WHERIGO_EMPTYTESTZONE_LUA,
-        cartridgeCharacterTask: WHERIGO_EMPTYTESTCHARACTER_LUA,
-        cartridgeItemTask: _analyzeAndExtractItemSectionData(dataToTest as List<String>),
-        cartridgeInputTask: WHERIGO_EMPTYTESTINPUT_LUA,
+        cartridgeTestTimer: WHERIGO_EMPTYTESTTIMER_LUA,
+        cartridgeTestZone: WHERIGO_EMPTYTESTZONE_LUA,
+        cartridgeTestCharacter: WHERIGO_EMPTYTESTCHARACTER_LUA,
+        cartridgeTestItem: _analyzeAndExtractItemSectionData((dataToTest as String).split('\n')),
+        cartridgeTestInput: WHERIGO_EMPTYTESTINPUT_LUA,
+        cartridgeTestObfuscation: WHERIGO_EMPTYTESTOBFUSCATION_LUA,
+        cartridgeTestVariable: [],
+        cartridgeTestMessageDialog: [],
       );
       break;
     case WHERIGO_OBJECT.ZONES:
       result = WherigoTest(
         cartridgeGWC: _WHERIGO_EMPTYCARTRIDGE_GWC,
         cartridgeTestTask: WHERIGO_EMPTYTESTTASK_LUA,
-        cartridgeTimerTask: WHERIGO_EMPTYTESTTIMER_LUA,
-        cartridgeZoneTask: _analyzeAndExtractZoneSectionData(dataToTest as List<String>),
-        cartridgeCharacterTask: WHERIGO_EMPTYTESTCHARACTER_LUA,
-        cartridgeItemTask: WHERIGO_EMPTYTESTITEM_LUA,
-        cartridgeInputTask: WHERIGO_EMPTYTESTINPUT_LUA,
+        cartridgeTestTimer: WHERIGO_EMPTYTESTTIMER_LUA,
+        cartridgeTestZone: _analyzeAndExtractZoneSectionData((dataToTest as String).split('\n')),
+        cartridgeTestCharacter: WHERIGO_EMPTYTESTCHARACTER_LUA,
+        cartridgeTestItem: WHERIGO_EMPTYTESTITEM_LUA,
+        cartridgeTestInput: WHERIGO_EMPTYTESTINPUT_LUA,
+        cartridgeTestObfuscation: WHERIGO_EMPTYTESTOBFUSCATION_LUA,
+        cartridgeTestVariable: [],
+        cartridgeTestMessageDialog: [],
       );
       break;
     case WHERIGO_OBJECT.INPUTS:
       result = WherigoTest(
         cartridgeGWC: _WHERIGO_EMPTYCARTRIDGE_GWC,
         cartridgeTestTask: WHERIGO_EMPTYTESTTASK_LUA,
-        cartridgeTimerTask: WHERIGO_EMPTYTESTTIMER_LUA,
-        cartridgeZoneTask: WHERIGO_EMPTYTESTZONE_LUA,
-        cartridgeCharacterTask: WHERIGO_EMPTYTESTCHARACTER_LUA,
-        cartridgeItemTask: WHERIGO_EMPTYTESTITEM_LUA,
-        cartridgeInputTask: WHERIGO_EMPTYTESTINPUT_LUA,
+        cartridgeTestTimer: WHERIGO_EMPTYTESTTIMER_LUA,
+        cartridgeTestZone: WHERIGO_EMPTYTESTZONE_LUA,
+        cartridgeTestCharacter: WHERIGO_EMPTYTESTCHARACTER_LUA,
+        cartridgeTestItem: WHERIGO_EMPTYTESTITEM_LUA,
+        cartridgeTestInput: WHERIGO_EMPTYTESTINPUT_LUA,
+        cartridgeTestObfuscation: WHERIGO_EMPTYTESTOBFUSCATION_LUA,
+        cartridgeTestVariable: [],
+        cartridgeTestMessageDialog: [],
       );
       break;
     case WHERIGO_OBJECT.TASKS:
       result = WherigoTest(
         cartridgeGWC: _WHERIGO_EMPTYCARTRIDGE_GWC,
-        cartridgeTestTask: _analyzeAndExtractTaskSectionData(dataToTest as List<String>),
-        cartridgeTimerTask: WHERIGO_EMPTYTESTTIMER_LUA,
-        cartridgeZoneTask: WHERIGO_EMPTYTESTZONE_LUA,
-        cartridgeCharacterTask: WHERIGO_EMPTYTESTCHARACTER_LUA,
-        cartridgeItemTask: WHERIGO_EMPTYTESTITEM_LUA,
-        cartridgeInputTask: WHERIGO_EMPTYTESTINPUT_LUA,
+        cartridgeTestTask: _analyzeAndExtractTaskSectionData((dataToTest as String).split('\n')),
+        cartridgeTestTimer: WHERIGO_EMPTYTESTTIMER_LUA,
+        cartridgeTestZone: WHERIGO_EMPTYTESTZONE_LUA,
+        cartridgeTestCharacter: WHERIGO_EMPTYTESTCHARACTER_LUA,
+        cartridgeTestItem: WHERIGO_EMPTYTESTITEM_LUA,
+        cartridgeTestInput: WHERIGO_EMPTYTESTINPUT_LUA,
+        cartridgeTestObfuscation: WHERIGO_EMPTYTESTOBFUSCATION_LUA,
+        cartridgeTestVariable: [],
+        cartridgeTestMessageDialog: [],
       );
       break;
     case WHERIGO_OBJECT.TIMERS:
       result = WherigoTest(
         cartridgeGWC: _WHERIGO_EMPTYCARTRIDGE_GWC,
         cartridgeTestTask: WHERIGO_EMPTYTESTTASK_LUA,
-        cartridgeTimerTask: _analyzeAndExtractTimerSectionData(dataToTest as List<String>),
-        cartridgeZoneTask: WHERIGO_EMPTYTESTZONE_LUA,
-        cartridgeCharacterTask: WHERIGO_EMPTYTESTCHARACTER_LUA,
-        cartridgeItemTask: WHERIGO_EMPTYTESTITEM_LUA,
-        cartridgeInputTask: WHERIGO_EMPTYTESTINPUT_LUA,
+        cartridgeTestTimer: WHERIGO_EMPTYTESTTIMER_LUA,
+        cartridgeTestZone: WHERIGO_EMPTYTESTZONE_LUA,
+        cartridgeTestCharacter: WHERIGO_EMPTYTESTCHARACTER_LUA,
+        cartridgeTestItem: WHERIGO_EMPTYTESTITEM_LUA,
+        cartridgeTestInput: WHERIGO_EMPTYTESTINPUT_LUA,
+        cartridgeTestObfuscation: WHERIGO_EMPTYTESTOBFUSCATION_LUA,
+        cartridgeTestVariable: [],
+        cartridgeTestMessageDialog: [],
       );
       break;
     case WHERIGO_OBJECT.MESSAGES:
       result = WherigoTest(
         cartridgeGWC: _WHERIGO_EMPTYCARTRIDGE_GWC,
         cartridgeTestTask: WHERIGO_EMPTYTESTTASK_LUA,
-        cartridgeTimerTask: WHERIGO_EMPTYTESTTIMER_LUA,
-        cartridgeZoneTask: WHERIGO_EMPTYTESTZONE_LUA,
-        cartridgeCharacterTask: WHERIGO_EMPTYTESTCHARACTER_LUA,
-        cartridgeItemTask: WHERIGO_EMPTYTESTITEM_LUA,
-        cartridgeInputTask: WHERIGO_EMPTYTESTINPUT_LUA,
+        cartridgeTestTimer: WHERIGO_EMPTYTESTTIMER_LUA,
+        cartridgeTestZone: WHERIGO_EMPTYTESTZONE_LUA,
+        cartridgeTestCharacter: WHERIGO_EMPTYTESTCHARACTER_LUA,
+        cartridgeTestItem: WHERIGO_EMPTYTESTITEM_LUA,
+        cartridgeTestInput: WHERIGO_EMPTYTESTINPUT_LUA,
+        cartridgeTestObfuscation: WHERIGO_EMPTYTESTOBFUSCATION_LUA,
+        cartridgeTestVariable: [],
+        cartridgeTestMessageDialog: [],
       );
       break;
-    case WHERIGO_OBJECT.IDENTIFIER:
+    case WHERIGO_OBJECT.VARIABLES:
       result = WherigoTest(
         cartridgeGWC: _WHERIGO_EMPTYCARTRIDGE_GWC,
         cartridgeTestTask: WHERIGO_EMPTYTESTTASK_LUA,
-        cartridgeTimerTask: WHERIGO_EMPTYTESTTIMER_LUA,
-        cartridgeZoneTask: WHERIGO_EMPTYTESTZONE_LUA,
-        cartridgeCharacterTask: WHERIGO_EMPTYTESTCHARACTER_LUA,
-        cartridgeItemTask: WHERIGO_EMPTYTESTITEM_LUA,
-        cartridgeInputTask: WHERIGO_EMPTYTESTINPUT_LUA,
+        cartridgeTestTimer: WHERIGO_EMPTYTESTTIMER_LUA,
+        cartridgeTestZone: WHERIGO_EMPTYTESTZONE_LUA,
+        cartridgeTestCharacter: WHERIGO_EMPTYTESTCHARACTER_LUA,
+        cartridgeTestItem: WHERIGO_EMPTYTESTITEM_LUA,
+        cartridgeTestInput: WHERIGO_EMPTYTESTINPUT_LUA,
+        cartridgeTestObfuscation: WHERIGO_EMPTYTESTOBFUSCATION_LUA,
+        cartridgeTestVariable: [],
+        cartridgeTestMessageDialog: [],
       );
       break;
     case WHERIGO_OBJECT.MEDIAFILES:
       result = WherigoTest(
         cartridgeGWC: _WHERIGO_EMPTYCARTRIDGE_GWC,
         cartridgeTestTask: WHERIGO_EMPTYTESTTASK_LUA,
-        cartridgeTimerTask: WHERIGO_EMPTYTESTTIMER_LUA,
-        cartridgeZoneTask: WHERIGO_EMPTYTESTZONE_LUA,
-        cartridgeCharacterTask: WHERIGO_EMPTYTESTCHARACTER_LUA,
-        cartridgeItemTask: WHERIGO_EMPTYTESTITEM_LUA,
-        cartridgeInputTask: WHERIGO_EMPTYTESTINPUT_LUA,
+        cartridgeTestTimer: WHERIGO_EMPTYTESTTIMER_LUA,
+        cartridgeTestZone: WHERIGO_EMPTYTESTZONE_LUA,
+        cartridgeTestCharacter: WHERIGO_EMPTYTESTCHARACTER_LUA,
+        cartridgeTestItem: WHERIGO_EMPTYTESTITEM_LUA,
+        cartridgeTestInput: WHERIGO_EMPTYTESTINPUT_LUA,
+        cartridgeTestObfuscation: WHERIGO_EMPTYTESTOBFUSCATION_LUA,
+        cartridgeTestVariable: [],
+        cartridgeTestMessageDialog: [],
       );
       break;
     default:

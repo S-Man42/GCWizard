@@ -288,7 +288,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                   _displayedCartridgeData == WHERIGO_OBJECT.LUAFILE ||
                   _displayedCartridgeData == WHERIGO_OBJECT.TASKS ||
                   _displayedCartridgeData == WHERIGO_OBJECT.TIMERS ||
-                  _displayedCartridgeData == WHERIGO_OBJECT.IDENTIFIER ||
+                  _displayedCartridgeData == WHERIGO_OBJECT.VARIABLES ||
                   _displayedCartridgeData == WHERIGO_OBJECT.RESULTS_GWC ||
                   _displayedCartridgeData == WHERIGO_OBJECT.RESULTS_LUA) {
                 _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
@@ -454,7 +454,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       case WHERIGO_OBJECT.MESSAGES:
         return _buildWidgetToDisplayMessagesData(context);
 
-      case WHERIGO_OBJECT.IDENTIFIER:
+      case WHERIGO_OBJECT.VARIABLES:
         return _buildWidgetToDisplayIdentifierData(context);
 
       default:

@@ -89,7 +89,7 @@ const Map<WHERIGO_OBJECT, String> _WHERIGO_DATA_FULL_EXPERT = {
   WHERIGO_OBJECT.TASKS: 'wherigo_data_task_list',
   WHERIGO_OBJECT.TIMERS: 'wherigo_data_timer_list',
   WHERIGO_OBJECT.MESSAGES: 'wherigo_data_message_list',
-  WHERIGO_OBJECT.IDENTIFIER: 'wherigo_data_identifier_list',
+  WHERIGO_OBJECT.VARIABLES: 'wherigo_data_identifier_list',
   WHERIGO_OBJECT.RESULTS_GWC: 'wherigo_data_results_gwc',
   WHERIGO_OBJECT.RESULTS_LUA: 'wherigo_data_results_lua',
 };
@@ -113,7 +113,7 @@ const Map<WHERIGO_OBJECT, String> _WHERIGO_DATA_LUA_EXPERT = {
   WHERIGO_OBJECT.TASKS: 'wherigo_data_task_list',
   WHERIGO_OBJECT.TIMERS: 'wherigo_data_timer_list',
   WHERIGO_OBJECT.MESSAGES: 'wherigo_data_message_list',
-  WHERIGO_OBJECT.IDENTIFIER: 'wherigo_data_identifier_list',
+  WHERIGO_OBJECT.VARIABLES: 'wherigo_data_identifier_list',
   WHERIGO_OBJECT.RESULTS_LUA: 'wherigo_data_results_lua',
 };
 
@@ -356,7 +356,7 @@ const WherigoZoneData WHERIGO_EMPTYTESTZONE_LUA = WherigoZoneData(
   ZoneProximityRangeUOM: '',
   ZoneOutOfRange: '',
   ZoneInRange: '',
- ZonePoints: [],
+  ZonePoints: [],
 );
 const WherigoItemData WHERIGO_EMPTYTESTITEM_LUA = WherigoItemData(
   ItemLUAName: '',
@@ -408,4 +408,12 @@ const WherigoInputData WHERIGO_EMPTYTESTINPUT_LUA = WherigoInputData(
   InputText: '',
   InputChoices: [],
   InputAnswers: [],
+);
+const WherigoObfuscationData WHERIGO_EMPTYTESTOBFUSCATION_LUA = WherigoObfuscationData(
+  ObfuscationTable: '',
+  ObfuscationName: '',
+);
+const WherigoVariableData WHERIGO_EMPTYTESTVARIABLE_LUA = WherigoVariableData(
+  VariableLUAName: '',
+  VariableName: '',
 );

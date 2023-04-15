@@ -31,12 +31,12 @@ class WherigoObjectData {
   final WHERIGO_OBJECT_TYPE ObjectType;
 
   WherigoObjectData(
-    this.ObjectID,
-    this.ObjectIndex,
-    this.ObjectName,
-    this.ObjectMedia,
-    this.ObjectType,
-  );
+      this.ObjectID,
+      this.ObjectIndex,
+      this.ObjectName,
+      this.ObjectMedia,
+      this.ObjectType,
+      );
 }
 
 class WherigoZonePoint {
@@ -224,7 +224,14 @@ class WherigoVariableData {
   final String VariableLUAName;
   final String VariableName;
 
-  WherigoVariableData({required this.VariableLUAName, required this.VariableName});
+  const WherigoVariableData({required this.VariableLUAName, required this.VariableName});
+}
+
+class WherigoObfuscationData {
+  final String ObfuscationTable;
+  final String ObfuscationName;
+
+  const WherigoObfuscationData({required this.ObfuscationTable, required this.ObfuscationName});
 }
 
 class WherigoItemData {
@@ -418,19 +425,25 @@ class WherigoJobData {
 class WherigoTest{
   final WherigoCartridgeGWC cartridgeGWC;
   final WherigoTaskData cartridgeTestTask;
-  final WherigoTimerData cartridgeTimerTask;
-  final WherigoZoneData cartridgeZoneTask;
-  final WherigoCharacterData cartridgeCharacterTask;
-  final WherigoItemData cartridgeItemTask;
-  final WherigoInputData cartridgeInputTask;
+  final WherigoTimerData cartridgeTestTimer;
+  final WherigoZoneData cartridgeTestZone;
+  final WherigoCharacterData cartridgeTestCharacter;
+  final WherigoItemData cartridgeTestItem;
+  final WherigoInputData cartridgeTestInput;
+  final WherigoObfuscationData cartridgeTestObfuscation;
+  final List<WherigoVariableData> cartridgeTestVariable;
+  final List<List<WherigoActionMessageElementData>> cartridgeTestMessageDialog;
 
   WherigoTest({
     required this.cartridgeGWC,
     required this.cartridgeTestTask,
-    required this.cartridgeTimerTask,
-    required this.cartridgeZoneTask,
-    required this.cartridgeCharacterTask,
-    required this.cartridgeItemTask,
-    required this.cartridgeInputTask,
+    required this.cartridgeTestTimer,
+    required this.cartridgeTestZone,
+    required this.cartridgeTestCharacter,
+    required this.cartridgeTestItem,
+    required this.cartridgeTestInput,
+    required this.cartridgeTestObfuscation,
+    required this.cartridgeTestVariable,
+    required this.cartridgeTestMessageDialog,
 });
 }
