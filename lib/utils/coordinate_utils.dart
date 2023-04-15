@@ -22,23 +22,35 @@ double normalizeBearing(double bearing) {
   return modulo360(bearing).toDouble();
 }
 
-double normalizeLat(double lat) {
-  while (lat > 90.0 || lat < -90) {
-    if (lat > 90.0) {
-      lat = 180.0 - lat;
+// Normalizing Lat without keeping an eye on Lon is problematic, that's why there's no single "normalizeLat"
+// E.g. Lat 92 means: The Lat value turns 2 degrees more then 90, which is in fact 88. But on the other side of the
+// northern hemisphere. So in fact, it changes the Lon value by 180 degrees: (92, 10) == (88, -170)
+
+LatLng normalizeLatLon(double lat, double lon) {
+  var normalizedLat = lat;
+  var normalizedLon = lon;
+
+  while (normalizedLat > 90.0 || normalizedLat < -90) {
+    if (normalizedLat > 90.0) {
+      normalizedLat = 180.0 - normalizedLat;
     } else {
-      lat = -180.0 + -lat;
+      normalizedLat = -180.0 + -normalizedLat;
     }
 
-    lat += 180.0;
+    normalizedLon += 180.0;
   }
 
-  return lat;
+  normalizedLon = normalizeLon(normalizedLon);
+
+  return LatLng(normalizedLat, normalizedLon);
 }
 
 double normalizeLon(double lon) {
-  if (lon > 180.0) return normalizeLon(lon - 360.0);
-  if (lon < -180.0) return normalizeLon(360.0 + lon);
+  lon = modulo360(lon).toDouble();
+
+  if (lon > 180) {
+    return lon - 360;
+  }
 
   return lon;
 }
