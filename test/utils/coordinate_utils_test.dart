@@ -67,4 +67,132 @@ void main() {
       });
     }
   });
+
+  group('CoordinateUtils.normalizeLatLon:', () {
+    List<Map<String, double>> _inputsToExpected = [
+      {'lat' : -89.0, 'expectedLat': -89.0, 'expectedLon': 10},
+      {'lat' : -90.0, 'expectedLat': -90.0, 'expectedLon': 10},
+      {'lat' : -91.0, 'expectedLat': -89.0, 'expectedLon': -170},
+      {'lat' : -179.0, 'expectedLat': -1.0, 'expectedLon': -170},
+      {'lat' : -180.0, 'expectedLat': 0.0, 'expectedLon': -170},
+      {'lat' : -181.0, 'expectedLat': 1.0, 'expectedLon': -170},
+      {'lat' : -269.0, 'expectedLat': 89.0, 'expectedLon': -170},
+      {'lat' : -270.0, 'expectedLat': 90.0, 'expectedLon': -170},
+      {'lat' : -271.0, 'expectedLat': 89.0, 'expectedLon': 10},
+      {'lat' : -359.0, 'expectedLat': 1.0, 'expectedLon': 10},
+      {'lat' : -360.0, 'expectedLat': 0.0, 'expectedLon': 10},
+      {'lat' : -361.0, 'expectedLat': -1.0, 'expectedLon': 10},
+      {'lat' : -449.0, 'expectedLat': -89.0, 'expectedLon': 10},
+      {'lat' : -450.0, 'expectedLat': -90.0, 'expectedLon': 10},
+      {'lat' : -451.0, 'expectedLat': -89.0, 'expectedLon': -170},
+      {'lat' : -539.0, 'expectedLat': -1.0, 'expectedLon': -170},
+      {'lat' : -540.0, 'expectedLat': 0.0, 'expectedLon': -170},
+      {'lat' : -541.0, 'expectedLat': 1.0, 'expectedLon': -170},
+      {'lat' : -629.0, 'expectedLat': 89.0, 'expectedLon': -170},
+      {'lat' : -630.0, 'expectedLat': 90.0, 'expectedLon': -170},
+      {'lat' : -631.0, 'expectedLat': 89.0, 'expectedLon': 10},
+      {'lat' : -719.0, 'expectedLat': 1.0, 'expectedLon': 10},
+      {'lat' : -720.0, 'expectedLat': 0.0, 'expectedLon': 10},
+      {'lat' : -721.0, 'expectedLat': -1.0, 'expectedLon': 10},
+
+      {'lat' : -1.0, 'expectedLat': -1.0, 'expectedLon': 10},
+      {'lat' : 0.0, 'expectedLat': 0.0, 'expectedLon': 10},
+      {'lat' : 1.0, 'expectedLat': 1.0, 'expectedLon': 10},
+      {'lat' : 89.0, 'expectedLat': 89.0, 'expectedLon': 10},
+      {'lat' : 90.0, 'expectedLat': 90.0, 'expectedLon': 10},
+      {'lat' : 91.0, 'expectedLat': 89.0, 'expectedLon': -170},
+      {'lat' : 179.0, 'expectedLat': 1.0, 'expectedLon': -170},
+      {'lat' : 180.0, 'expectedLat': 0.0, 'expectedLon': -170},
+      {'lat' : 181.0, 'expectedLat': -1.0, 'expectedLon': -170},
+      {'lat' : 269.0, 'expectedLat': -89.0, 'expectedLon': -170},
+      {'lat' : 270.0, 'expectedLat': -90.0, 'expectedLon': -170},
+      {'lat' : 271.0, 'expectedLat': -89.0, 'expectedLon': 10},
+      {'lat' : 359.0, 'expectedLat': -1.0, 'expectedLon': 10},
+      {'lat' : 360.0, 'expectedLat': 0.0, 'expectedLon': 10},
+      {'lat' : 361.0, 'expectedLat': 1.0, 'expectedLon': 10},
+      {'lat' : 449.0, 'expectedLat': 89.0, 'expectedLon': 10},
+      {'lat' : 450.0, 'expectedLat': 90.0, 'expectedLon': 10},
+      {'lat' : 451.0, 'expectedLat': 89.0, 'expectedLon': -170},
+      {'lat' : 539.0, 'expectedLat': 1.0, 'expectedLon': -170},
+      {'lat' : 540.0, 'expectedLat': 0.0, 'expectedLon': -170},
+      {'lat' : 541.0, 'expectedLat': -1.0, 'expectedLon': -170},
+      {'lat' : 629.0, 'expectedLat': -89.0, 'expectedLon': -170},
+      {'lat' : 630.0, 'expectedLat': -90.0, 'expectedLon': -170},
+      {'lat' : 631.0, 'expectedLat': -89.0, 'expectedLon': 10},
+      {'lat' : 719.0, 'expectedLat': -1.0, 'expectedLon': 10},
+      {'lat' : 720.0, 'expectedLat': 0.0, 'expectedLon': 10},
+      {'lat' : 721.0, 'expectedLat': 1.0, 'expectedLon': 10},
+    ];
+
+    for (var elem in _inputsToExpected) {
+      test('lat: ${elem['lat']}', () {
+        var _actual = normalizeLatLon(elem['lat']!, 10);
+        expect(_actual, LatLng(elem['expectedLat']!, elem['expectedLon']!));
+      });
+    }
+  });
+
+  group('CoordinateUtils.normalizeLon:', () {
+    List<Map<String, double>> _inputsToExpected = [
+      {'lon' : -89.0, 'expectedOutput': -89.0},
+      {'lon' : -90.0, 'expectedOutput': -90.0},
+      {'lon' : -91.0, 'expectedOutput': -91.0},
+      {'lon' : -179.0, 'expectedOutput': -179.0},
+      {'lon' : -180.0, 'expectedOutput': 180.0},
+      {'lon' : -181.0, 'expectedOutput': 179.0},
+      {'lon' : -269.0, 'expectedOutput': 91.0},
+      {'lon' : -270.0, 'expectedOutput': 90.0},
+      {'lon' : -271.0, 'expectedOutput': 89.0},
+      {'lon' : -359.0, 'expectedOutput': 1.0},
+      {'lon' : -360.0, 'expectedOutput': 0.0},
+      {'lon' : -361.0, 'expectedOutput': -1.0},
+      {'lon' : -449.0, 'expectedOutput': -89.0},
+      {'lon' : -450.0, 'expectedOutput': -90.0},
+      {'lon' : -451.0, 'expectedOutput': -91.0},
+      {'lon' : -539.0, 'expectedOutput': -179.0},
+      {'lon' : -540.0, 'expectedOutput': 180.0},
+      {'lon' : -541.0, 'expectedOutput': 179.0},
+      {'lon' : -629.0, 'expectedOutput': 91.0},
+      {'lon' : -630.0, 'expectedOutput': 90.0},
+      {'lon' : -631.0, 'expectedOutput': 89.0},
+      {'lon' : -719.0, 'expectedOutput': 1.0},
+      {'lon' : -720.0, 'expectedOutput': 0.0},
+      {'lon' : -721.0, 'expectedOutput': -1.0},
+
+      {'lon' : -1.0, 'expectedOutput': -1.0},
+      {'lon' : 0.0, 'expectedOutput': 0.0},
+      {'lon' : 1.0, 'expectedOutput': 1.0},
+      {'lon' : 89.0, 'expectedOutput': 89.0},
+      {'lon' : 90.0, 'expectedOutput': 90.0},
+      {'lon' : 91.0, 'expectedOutput': 91.0},
+      {'lon' : 179.0, 'expectedOutput': 179.0},
+      {'lon' : 180.0, 'expectedOutput': 180.0},
+      {'lon' : 181.0, 'expectedOutput': -179.0},
+      {'lon' : 269.0, 'expectedOutput': -91.0},
+      {'lon' : 270.0, 'expectedOutput': -90.0},
+      {'lon' : 271.0, 'expectedOutput': -89.0},
+      {'lon' : 359.0, 'expectedOutput': -1.0},
+      {'lon' : 360.0, 'expectedOutput': 0.0},
+      {'lon' : 361.0, 'expectedOutput': 1.0},
+      {'lon' : 449.0, 'expectedOutput': 89.0},
+      {'lon' : 450.0, 'expectedOutput': 90.0},
+      {'lon' : 451.0, 'expectedOutput': 91.0},
+      {'lon' : 539.0, 'expectedOutput': 179.0},
+      {'lon' : 540.0, 'expectedOutput': 180.0},
+      {'lon' : 541.0, 'expectedOutput': -179.0},
+      {'lon' : 629.0, 'expectedOutput': -91.0},
+      {'lon' : 630.0, 'expectedOutput': -90.0},
+      {'lon' : 631.0, 'expectedOutput': -89.0},
+      {'lon' : 719.0, 'expectedOutput': -1.0},
+      {'lon' : 720.0, 'expectedOutput': 0.0},
+      {'lon' : 721.0, 'expectedOutput': 1.0},
+    ];
+
+    for (var elem in _inputsToExpected) {
+      test('lon: ${elem['lon']}', () {
+        var _actual = normalizeLon(elem['lon']!);
+        expect(_actual, elem['expectedOutput']);
+      });
+    }
+  });
 }

@@ -17,7 +17,7 @@ LatLng slippyMapToLatLon(SlippyMap slippyMap) {
   var n = pi - 2.0 * pi * slippyMap.y / pow(2.0, subtype);
   var lat = 180.0 / pi * atan(0.5 * (exp(n) - exp(-n)));
 
-  return LatLng(normalizeLat(lat), normalizeLon(lon));
+  return normalizeLatLon(lat, lon);
 }
 
 SlippyMap latLonToSlippyMap(LatLng coords, CoordinateFormatKey subtype) {

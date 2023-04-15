@@ -104,7 +104,7 @@ LatLng UTMREFtoLatLon(UTMREF coord, Ellipsoid ells) {
 
   lng = zcm + lng / _drad;
 
-  return LatLng(normalizeLat(lat), normalizeLon(lng));
+  return normalizeLatLon(lat, lng);
 }
 
 UTMZone _getZone(LatLng coord) {
