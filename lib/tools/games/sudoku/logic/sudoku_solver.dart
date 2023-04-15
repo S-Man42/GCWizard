@@ -23,7 +23,7 @@ class SudokuBoard {
       for (int i = 0; i < min(board.length, this.board.length); i++ ) {
         for (int j = 0; j < min(board[i].length, this.board[i].length); j++ ) {
           if (board[i][j] > 0 && board[i][j] <= 9) {
-            setValue(i, j, board[i][j], SudokuFillType.CALCULATED);
+            setValue(i, j, board[i][j], SudokuFillType.USER_FILLED);
           }
         }
       }
