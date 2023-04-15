@@ -44,7 +44,7 @@ class WherigoZonePoint {
   final double Longitude;
   final double Altitude;
 
-  WherigoZonePoint({this.Latitude = 0.0, this.Longitude = 0.0, this.Altitude = 0.0});
+  const WherigoZonePoint({this.Latitude = 0.0, this.Longitude = 0.0, this.Altitude = 0.0});
 }
 
 class WherigoZoneData {
@@ -66,7 +66,7 @@ class WherigoZoneData {
   final String ZoneInRange;
   final List<WherigoZonePoint> ZonePoints;
 
-  WherigoZoneData(
+  const WherigoZoneData(
       {required this.ZoneLUAName,
       required this.ZoneID,
       required this.ZoneName,
@@ -100,7 +100,7 @@ class WherigoCharacterData {
   final String CharacterGender;
   final String CharacterType;
 
-  WherigoCharacterData(
+  const WherigoCharacterData(
       {required this.CharacterLUAName,
         required this.CharacterID,
         required this.CharacterName,
@@ -129,7 +129,7 @@ class WherigoInputData {
   final List<String> InputChoices;
   final List<WherigoAnswerData> InputAnswers;
 
-  WherigoInputData(
+  const WherigoInputData(
       {required this.InputLUAName,
         required this.InputID,
         required this.InputVariableID,
@@ -188,7 +188,7 @@ class WherigoTaskData {
   final String TaskComplete;
   final String TaskCorrectstate;
 
-  WherigoTaskData(
+  const WherigoTaskData(
       {required this.TaskLUAName,
         required this.TaskID,
         required this.TaskName,
@@ -210,7 +210,7 @@ class WherigoMediaData {
   final String MediaType;
   final String MediaFilename;
 
-  WherigoMediaData(
+  const WherigoMediaData(
       {required this.MediaLUAName,
         required this.MediaID,
         required this.MediaName,
@@ -241,7 +241,7 @@ class WherigoItemData {
   final String ItemLocked;
   final String ItemOpened;
 
-  WherigoItemData(
+  const WherigoItemData(
       {required this.ItemLUAName,
         required this.ItemID,
         required this.ItemName,
@@ -265,7 +265,7 @@ class WherigoTimerData {
   final String TimerDuration;
   final String TimerType;
 
-  WherigoTimerData(
+  const WherigoTimerData(
       {required this.TimerLUAName,
         required this.TimerID,
         required this.TimerName,
@@ -413,4 +413,24 @@ class WherigoJobData {
     required this.jobDataMode,
     required this.jobDataType,
   });
+}
+
+class WherigoTest{
+  final WherigoCartridgeGWC cartridgeGWC;
+  final WherigoTaskData cartridgeTestTask;
+  final WherigoTimerData cartridgeTimerTask;
+  final WherigoZoneData cartridgeZoneTask;
+  final WherigoCharacterData cartridgeCharacterTask;
+  final WherigoItemData cartridgeItemTask;
+  final WherigoInputData cartridgeInputTask;
+
+  WherigoTest({
+    required this.cartridgeGWC,
+    required this.cartridgeTestTask,
+    required this.cartridgeTimerTask,
+    required this.cartridgeZoneTask,
+    required this.cartridgeCharacterTask,
+    required this.cartridgeItemTask,
+    required this.cartridgeInputTask,
+});
 }
