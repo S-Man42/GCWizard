@@ -21,6 +21,8 @@ class _GCWCoordsLambertState extends State<_GCWCoordsLambert> {
 
   var _currentSubtype = defaultLambertType;
 
+  bool _initialized = false;
+
   @override
   void initState() {
     super.initState();
@@ -43,13 +45,15 @@ class _GCWCoordsLambertState extends State<_GCWCoordsLambert> {
 
     if (_subtypeChanged()) {
       WidgetsBinding.instance.addPostFrameCallback((_) => _setCurrentValueAndEmitOnChange());
-    } else if (!widget.isDefault) {
+    } else if (!widget.isDefault && !_initialized) {
       var lambert = widget.coordinates;
       _currentEasting.value = lambert.easting;
       _currentNorthing.value = lambert.northing;
 
       _eastingController.text = _currentEasting.value.toString();
       _northingController.text = _currentNorthing.value.toString();
+
+      _initialized = true;
     }
 
     return Column(children: <Widget>[

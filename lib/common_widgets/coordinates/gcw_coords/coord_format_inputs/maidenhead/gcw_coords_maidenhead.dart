@@ -15,6 +15,8 @@ class _GCWCoordsMaidenheadState extends State<_GCWCoordsMaidenhead> {
   late TextEditingController _controller;
   var _currentCoord = '';
 
+  bool _initialized = false;
+
   @override
   void initState() {
     super.initState();
@@ -29,11 +31,13 @@ class _GCWCoordsMaidenheadState extends State<_GCWCoordsMaidenhead> {
 
   @override
   Widget build(BuildContext context) {
-    if (!widget.isDefault) {
+    if (!widget.isDefault && !_initialized) {
       var maidenhead = widget.coordinates;
       _currentCoord = maidenhead.text;
 
       _controller.text = _currentCoord;
+
+      _initialized = true;
     }
 
     return Column(children: <Widget>[

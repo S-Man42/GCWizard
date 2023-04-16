@@ -40,6 +40,8 @@ class _GCWCoordsDMSState extends State<_GCWCoordsDMS> {
   String _currentLonSeconds = '';
   String _currentLonMilliSeconds = '';
 
+  bool _initialized = false;
+
   @override
   void initState() {
     super.initState();
@@ -77,7 +79,7 @@ class _GCWCoordsDMSState extends State<_GCWCoordsDMS> {
 
   @override
   Widget build(BuildContext context) {
-    if (!widget.isDefault) {
+    if (!widget.isDefault && !_initialized) {
       var dms = widget.coordinates;
       var lat = dms.latitude.formatParts(10);
       var lon = dms.longitude.formatParts(10);
@@ -103,6 +105,8 @@ class _GCWCoordsDMSState extends State<_GCWCoordsDMS> {
       _LonMinutesController.text = _currentLonMinutes;
       _LonSecondsController.text = _currentLonSeconds;
       _LonMilliSecondsController.text = _currentLonMilliSeconds;
+
+      _initialized = true;
     }
 
     return Column(children: <Widget>[

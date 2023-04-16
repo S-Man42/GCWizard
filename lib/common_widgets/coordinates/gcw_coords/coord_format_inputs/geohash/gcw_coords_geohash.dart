@@ -15,6 +15,8 @@ class _GCWCoordsGeohashState extends State<_GCWCoordsGeohash> {
   late TextEditingController _controller;
   var _currentCoord = '';
 
+  bool _initialized = false;
+
   @override
   void initState() {
     super.initState();
@@ -29,11 +31,13 @@ class _GCWCoordsGeohashState extends State<_GCWCoordsGeohash> {
 
   @override
   Widget build(BuildContext context) {
-    if (!widget.isDefault) {
+    if (!widget.isDefault && !_initialized) {
       var geohash = widget.coordinates;
       _currentCoord = geohash.text;
 
       _controller.text = _currentCoord;
+
+      _initialized = true;
     }
 
     return Column(children: <Widget>[

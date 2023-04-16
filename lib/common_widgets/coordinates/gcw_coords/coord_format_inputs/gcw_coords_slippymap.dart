@@ -20,6 +20,8 @@ class _GCWCoordsSlippyMapState extends State<_GCWCoordsSlippyMap> {
 
   late int _currentZoom;
 
+  bool _initialized = false;
+
   @override
   void initState() {
     super.initState();
@@ -43,13 +45,15 @@ class _GCWCoordsSlippyMapState extends State<_GCWCoordsSlippyMap> {
     if (_subtypeChanged()) {
       _currentZoom = _slippyMapZoom();
       WidgetsBinding.instance.addPostFrameCallback((_) => _setCurrentValueAndEmitOnChange());
-    } else if (!widget.isDefault) {
+    } else if (!widget.isDefault && !_initialized) {
       var slippyMap = widget.coordinates;
       _currentX.value = slippyMap.x;
       _currentY.value = slippyMap.y;
 
       _xController.text = _currentX.value.toString();
       _yController.text = _currentY.value.toString();
+
+      _initialized = true;
     }
 
     return Column(children: <Widget>[

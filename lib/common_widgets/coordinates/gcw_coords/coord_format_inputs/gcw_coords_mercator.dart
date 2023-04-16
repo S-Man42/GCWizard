@@ -18,6 +18,8 @@ class _GCWCoordsMercatorState extends State<_GCWCoordsMercator> {
   var _currentEasting = defaultDoubleText;
   var _currentNorthing = defaultDoubleText;
 
+  bool _initialized = false;
+
   @override
   void initState() {
     super.initState();
@@ -34,13 +36,15 @@ class _GCWCoordsMercatorState extends State<_GCWCoordsMercator> {
 
   @override
   Widget build(BuildContext context) {
-    if (!widget.isDefault) {
+    if (!widget.isDefault && !_initialized) {
       var mercator = widget.coordinates;
       _currentEasting.value = mercator.easting;
       _currentNorthing.value = mercator.northing;
 
       _EastingController.text = _currentEasting.value.toString();
       _NorthingController.text = _currentNorthing.value.toString();
+
+      _initialized = true;
     }
 
     return Column(children: <Widget>[

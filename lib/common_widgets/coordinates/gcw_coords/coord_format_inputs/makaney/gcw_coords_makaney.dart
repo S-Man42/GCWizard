@@ -15,6 +15,8 @@ class _GCWCoordsMakaneyState extends State<_GCWCoordsMakaney> {
   late TextEditingController _controller;
   var _currentCoord = '';
 
+  bool _initialized = false;
+
   @override
   void initState() {
     super.initState();
@@ -29,11 +31,13 @@ class _GCWCoordsMakaneyState extends State<_GCWCoordsMakaney> {
 
   @override
   Widget build(BuildContext context) {
-    if (!widget.isDefault) {
+    if (!widget.isDefault && !_initialized) {
       var makaney = widget.coordinates;
       _currentCoord = makaney.toString();
 
       _controller.text = _currentCoord;
+
+      _initialized = true;
     }
 
     return Column(children: <Widget>[
