@@ -25,10 +25,16 @@ void main(){
       { 'input': 'tsivolaw', 'language': NumeralWordsLanguage.NAVI,        'expectedOutput': OutputConvertToNumber(33, '', '', '')},
     // https://james-camerons-avatar.fandom.com/de/wiki/Oktale_Arithmetik
       { 'input': 'pxevozamkizampxevomun', 'language': NumeralWordsLanguage.NAVI,        'expectedOutput': OutputConvertToNumber(2010, '', '', '')},
-      { 'input': 'mezazampxevozamtsìzamevol', 'language': NumeralWordsLanguage.NAVI,        'expectedOutput': OutputConvertToNumber(10000, '', '', '')},
+      { 'input': 'mezazampxevozamtsìzammevol', 'language': NumeralWordsLanguage.NAVI,        'expectedOutput': OutputConvertToNumber(10000, '', '', '')},
     // https://www.geocaching.com/geocache/GC2FVKX_pankepark-sudpanke-bnd?guid=0f760dd5-bd97-4c57-86de-fe7ff2f779d8
       { 'input': 'kizazampuvozamtsìzampuvopey', 'language': NumeralWordsLanguage.NAVI,        'expectedOutput': OutputConvertToNumber(32051, '', '', '')},
       { 'input': 'mrrzazampxevozampuzamvol', 'language': NumeralWordsLanguage.NAVI,        'expectedOutput': OutputConvertToNumber(22408, '', '', '')},
+    // selmade
+      { 'input': 'mrrzazamrrvozapuzamrrvol', 'language': NumeralWordsLanguage.NAVI,        'expectedOutput': OutputConvertToNumber(23464, '', '', '')},
+      { 'input': 'mrrzazamrrvozapuzamun', 'language': NumeralWordsLanguage.NAVI,        'expectedOutput': OutputConvertToNumber(23424, '', '', '')},
+      { 'input': 'mevozapxezamevomun', 'language': NumeralWordsLanguage.NAVI,        'expectedOutput': OutputConvertToNumber(1234, '', '', '')},
+      { 'input': 'zazamevozapuzapuvopey', 'language': NumeralWordsLanguage.NAVI,        'expectedOutput': OutputConvertToNumber(5555, '', '', '')},
+
     ];
 
     for (var elem in _inputsToExpected) {
