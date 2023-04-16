@@ -2811,11 +2811,9 @@ OutputConvertToNumber decodeNumeralWordToNumber(NumeralWordsLanguage _currentLan
 
   if (_currentLanguage == NumeralWordsLanguage.ROU) {
     if (_isROU(currentDecodeInput)) {
+      String number = _decodeROU(currentDecodeInput);
       return OutputConvertToNumber(
-          // TODO Thomas:
-          //    1. using of convertBase: Why are you converting the base from 10 to 10? It does nothing!
-          //    2. twice calling _decodeROU(currentDecodeInput). Please use a temp variable instead
-          int.parse(_decodeROU(currentDecodeInput)), convertBase(_decodeROU(currentDecodeInput), 10, 10), '', '');
+          int.parse(number), number, '', '');
     } else {
       return OutputConvertToNumber(0, '', '', 'numeralwords_converter_error_rou');
     }
@@ -3467,15 +3465,25 @@ OutputConvertToNumeralWord _encodeNavi(int currentNumber) {
         break;
     }
   }
+  // normalize - Hinweis: Das m von zam fällt weg, wenn der Rest mit einem Konsonant beginnt.
+  numeralWord = numeralWord
+      .replaceAll('zamk', 'zak')
+      .replaceAll('zamp', 'zap')
+      .replaceAll('zams', 'zas')
+      .replaceAll('zamt', 'zat')
+      .replaceAll('zamv', 'zav')
+      .replaceAll('zamm', 'zam');
+
+  // normalize - inweis: Das l von vol fällt weg, wenn der Rest mit einem Konsonant beginnt.
+  numeralWord = numeralWord
+      .replaceAll('volk', 'vok')
+      .replaceAll('volp', 'vop')
+      .replaceAll('volt', 'vot')
+      .replaceAll('volm', 'vom')
+      .replaceAll('voaw', 'volaw');
+
   return OutputConvertToNumeralWord(
-      numeralWord
-          .replaceAll('zamk', 'zak')
-          .replaceAll('zamm', 'zam')
-          .replaceAll('zamp', 'zap')
-          .replaceAll('zams', 'zas')
-          .replaceAll('zamt', 'zat')
-          .replaceAll('zamv', 'zav')
-          .replaceAll('voaw', 'volaw'),
+      numeralWord,
       convertBase(currentNumber.toString(), 10, 8),
       'common_numeralbase_octenary',
       '');
@@ -3613,7 +3621,25 @@ bool _isMinion(String element) {
 }
 
 bool _isNavi(String element) {
-  element = element.replaceAll('zame', 'zamme').replaceAll('zamrr', 'zammrr');
+  element = element
+      //.replaceAll('zam', 'zamm')
+      .replaceAll('zak', 'zamk')
+      .replaceAll('zap', 'zamp')
+      .replaceAll('zamr', 'zammr')
+      .replaceAll('zas', 'zams')
+      .replaceAll('zat', 'zamt')
+      .replaceAll('zav', 'zamv')
+      .replaceAll('zamu', 'zammu')
+      .replaceAll('zame', 'zamme');
+  if (element.endsWith('mm')){element = element.substring(0, element.length - 1);}
+  element = element
+      .replaceAll('vok', 'volk')
+      .replaceAll('vom', 'volm')
+      .replaceAll('vop', 'volp')
+      .replaceAll('vot', 'volt')
+      .replaceAll('voz', 'volz')
+      .replaceAll('volaw', 'volaw');
+
   element = element
       .replaceAll('mezazam', '')
       .replaceAll('pxezazam', '')
@@ -3666,7 +3692,6 @@ bool _isNavi(String element) {
       .replaceAll('sing', '')
       .replaceAll('za', '')
       .replaceAll('ki', '');
-
   return (element.isEmpty);
 }
 
