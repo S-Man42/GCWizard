@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
+import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 
 // https://de.wikibrief.org/wiki/Romanian_numbers
@@ -2235,10 +2236,10 @@ final Map<Locale, NumeralWordsLanguage> SUPPORTED_LANGUAGES_LOCALES = {
 Map<NumeralWordsLanguage, String>? _languageList;
 
 final Map<NumeralWordsLanguage, List<int>> MIN_MAX_NUMBER = {
-  NumeralWordsLanguage.KLI: [(pow(-2, 53)).toInt(), (pow(2, 53) - 1).toInt()],
+  NumeralWordsLanguage.KLI: [MIN_INT, MAX_INT],
   NumeralWordsLanguage.MIN: [1, 100],
   NumeralWordsLanguage.NAVI: [0, 32767],
-  NumeralWordsLanguage.SHA: [0, (pow(2, 53) - 1).toInt()],
+  NumeralWordsLanguage.SHA: [0, MAX_INT],
   NumeralWordsLanguage.ROU: [0, 999999],
 };
 

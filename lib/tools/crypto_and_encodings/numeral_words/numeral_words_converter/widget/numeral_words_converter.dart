@@ -57,6 +57,16 @@ class NumeralWordsConverterState extends State<NumeralWordsConverter> {
           onChanged: (value) {
             setState(() {
               _currentLanguage = value;
+
+              if (_currentMode == GCWSwitchPosition.left) {
+                var min = MIN_MAX_NUMBER[_currentLanguage]![0];
+                var max = MIN_MAX_NUMBER[_currentLanguage]![1];
+                if (_currentNumber <  min) {
+                  _currentNumber = min;
+                } else if (_currentNumber > max) {
+                  _currentNumber = max;
+                }
+              }
             });
           },
           items: _LANGUAGES!.entries.map((mode) {
