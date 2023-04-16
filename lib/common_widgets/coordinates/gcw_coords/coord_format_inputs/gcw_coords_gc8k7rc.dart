@@ -3,8 +3,9 @@ part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart
 class _GCWCoordsGC8K7RC extends StatefulWidget {
   final void Function(GC8K7RC?) onChanged;
   final GC8K7RC coordinates;
+  final bool isDefault;
 
-  const _GCWCoordsGC8K7RC({Key? key, required this.onChanged, required this.coordinates}) : super(key: key);
+  const _GCWCoordsGC8K7RC({Key? key, required this.onChanged, required this.coordinates, required this.isDefault}) : super(key: key);
 
   @override
   _GCWCoordsGC8K7RCState createState() => _GCWCoordsGC8K7RCState();
@@ -17,14 +18,16 @@ class _GCWCoordsGC8K7RCState extends State<_GCWCoordsGC8K7RC> {
   final FocusNode _FocusNodeVelocity = FocusNode();
   final FocusNode _FocusNodeDistance = FocusNode();
 
-  var _currentVelocity = '';
-  var _currentDistance = '';
+  var _currentVelocity = defaultDoubleText;
+  var _currentDistance = defaultDoubleText;
+
+  bool _initialized = false;
 
   @override
   void initState() {
     super.initState();
-    _ControllerVelocity = TextEditingController(text: _currentVelocity);
-    _ControllerDistance = TextEditingController(text: _currentDistance);
+    _ControllerVelocity = TextEditingController(text: _currentVelocity.text);
+    _ControllerDistance = TextEditingController(text: _currentDistance.text);
   }
 
   @override
@@ -39,31 +42,31 @@ class _GCWCoordsGC8K7RCState extends State<_GCWCoordsGC8K7RC> {
 
   @override
   Widget build(BuildContext context) {
-    var GC8K7RC = widget.coordinates;
-    _currentVelocity = GC8K7RC.velocity.toString();
-    _currentDistance = GC8K7RC.distance.toString();
+    if (!widget.isDefault && !_initialized) {
+      var gc8K7RC = widget.coordinates;
+      _currentVelocity = gc8K7RC.velocity as DoubleText;
+      _currentDistance = gc8K7RC.distance as DoubleText;
 
-    _ControllerVelocity.text = _currentVelocity.toString();
-    _ControllerDistance.text = _currentDistance.toString();
+      _ControllerVelocity.text = _currentVelocity.value.toString();
+      _ControllerDistance.text = _currentDistance.value.toString();
+
+      _initialized = true;
+    }
 
     return Column(children: <Widget>[
       GCWDoubleTextField(
+        hintText: i18n(context, 'coords_formatconverter_gc8k7rc_velocity'),
         controller: _ControllerVelocity,
-        focusNode: _FocusNodeVelocity,
         onChanged: (value) {
-          _currentVelocity = value as String;
-
-          FocusScope.of(context).requestFocus(_FocusNodeDistance);
+          _currentVelocity = value;
           _setCurrentValueAndEmitOnChange();
         },
       ),
       GCWDoubleTextField(
+        hintText: i18n(context, 'coords_formatconverter_gc8k7rc_distance'),
         controller: _ControllerDistance,
-        focusNode: _FocusNodeDistance,
         onChanged: (value) {
-          _currentDistance = value as String;
-
-          FocusScope.of(context).requestFocus(_FocusNodeVelocity);
+          _currentDistance = value;
           _setCurrentValueAndEmitOnChange();
         },
       ),
@@ -71,6 +74,7 @@ class _GCWCoordsGC8K7RCState extends State<_GCWCoordsGC8K7RC> {
   }
 
   void _setCurrentValueAndEmitOnChange() {
-    widget.onChanged(GC8K7RC.parse(_currentVelocity.toString() + '\n' + _currentDistance.toString()));
+    var gc8K7RC = GC8K7RC(_currentVelocity.value, _currentDistance.value,);
+    widget.onChanged(gc8K7RC);
   }
 }

@@ -952,7 +952,7 @@ class GC8K7RC extends BaseCoordinate {
   double velocity;
   double distance;
 
-  GC8K7RC(this.velocity, this.distance) {
+  GC8K7RC(this.velocity, this.distance,) {
     _format = CoordinateFormat(CoordinateFormatKey.GC8K7RC);
   }
 
@@ -1030,7 +1030,7 @@ BaseCoordinate buildUninitializedCoordinateByFormat(CoordinateFormat format) {
     case CoordinateFormatKey.REVERSE_WIG_DAY1976:
       return ReverseWherigoDay1976('','');
     case CoordinateFormatKey.GC8K7RC:
-      return GC8K7RC(0,0);
+      return GC8K7RC(0,0,);
     default:
       return buildDefaultCoordinateByCoordinates(defaultCoordinate);
   }

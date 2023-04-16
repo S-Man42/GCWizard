@@ -8,17 +8,31 @@ const rEarth = 6378.90594503519;
 const vEquator = 464;
 
 LatLng GC8K7RCToLatLon(GC8K7RC coordsGC8K7RC) {
+  print('tolatlon');
+  print(coordsGC8K7RC.velocity);
+  print(coordsGC8K7RC.distance);
   double u = coordsGC8K7RC.velocity * 24 * 60 * 60;
-  double r = u / 2 / pi;
+  double r = u.abs() / 2 / pi;
   double lat = acos(r / rEarth);
 
-  double long = 360 * coordsGC8K7RC.distance / u;
+  if (u < 0) {
+    lat = -lat;
+  }
+
+  double long = 360 * coordsGC8K7RC.distance / u.abs();
   return decToLatLon(DEC(lat, long));
 }
 
 GC8K7RC latLonToGC8K7RC(LatLng coord) {
+  double lat = coord.latitude;
+  double lon = coord.longitude;
 
-  return GC8K7RC(0.0, 0.0);
+  double u = cos(lat) * rEarth * 2 * pi;
+  double velocity = u / 24 / 60 / 60;
+
+  double distance = lon * u / 360;
+
+  return GC8K7RC(velocity, distance,);
 }
 
 GC8K7RC? parseGC8K7RC(String input) {

@@ -441,19 +441,20 @@ class GCWCoordsState extends State<GCWCoords> {
           },
         ),
       ),
-      // _GCWCoordWidget(
-      //   CoordinateFormatKey.GC8K7RC,
-      //   _GCWCoordsGC8K7RC(
-      //     coordinates: _pastedCoords is GC8K7RC
-      //         ? _pastedCoords as GC8K7RC
-      //         : buildCoordinatesByFormat(CoordinateFormat(CoordinateFormatKey.GC8K7RC), defaultCoordinate) as GC8K7RC,
-      //     onChanged: (newValue) {
-      //       setState(() {
-      //         _setCurrentValueAndEmitOnChange(newValue);
-      //       });
-      //     },
-      //   ),
-      // ),
+     _GCWCoordWidget(
+         CoordinateFormatKey.GC8K7RC,
+         _GCWCoordsGC8K7RC(
+           isDefault: !_hasSetCoords,
+           coordinates: _currentCoords is GC8K7RC
+               ? _currentCoords as GC8K7RC
+               : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.GC8K7RC)) as GC8K7RC,
+           onChanged: (newValue) {
+             setState(() {
+               _setCurrentValueAndEmitOnChange(newValue);
+             });
+           },
+         ),
+       ),
     ];
 
     Column _widget;
