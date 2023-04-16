@@ -99,26 +99,29 @@ class NumeralWordsOutput {
 
   NumeralWordsOutput(this.state, this.output, this.language);
 }
+
 class OutputConvertBase {
   final String numbersystem;
-  final String title;
+  final String nameOfNumberSystem;
   final String error;
 
-  OutputConvertBase(this.numbersystem, this.title, this.error);
+  OutputConvertBase({required this.numbersystem, required this.nameOfNumberSystem, required this.error});
 }
 
 class OutputConvertToNumber extends OutputConvertBase {
   final int number;
 
-  OutputConvertToNumber(this.number, String numbersystem, String title, String error)
-      : super(numbersystem, title, error);
+  OutputConvertToNumber(
+      {required this.number, required String numbersystem, required String title, required String error})
+      : super(numbersystem: numbersystem, nameOfNumberSystem: title, error: error);
 }
 
 class OutputConvertToNumeralWord extends OutputConvertBase {
   final String numeralWord;
 
-  OutputConvertToNumeralWord(this.numeralWord, String numbersystem, String title, String error)
-      : super(numbersystem, title, error);
+  OutputConvertToNumeralWord(
+      {required this.numeralWord, required String targetNumberSystem, required String title, required String errorMessage})
+      : super(numbersystem: targetNumberSystem, nameOfNumberSystem: title, error: errorMessage);
 }
 
 const Map<String, String> _AMHWordToNum = {
@@ -2236,11 +2239,11 @@ final Map<Locale, NumeralWordsLanguage> SUPPORTED_LANGUAGES_LOCALES = {
 Map<NumeralWordsLanguage, String>? _languageList;
 
 final Map<NumeralWordsLanguage, List<int>> MIN_MAX_NUMBER = {
-  NumeralWordsLanguage.KLI: [MIN_INT, MAX_INT],
-  NumeralWordsLanguage.MIN: [1, 100],
-  NumeralWordsLanguage.NAVI: [0, 32767],
-  NumeralWordsLanguage.SHA: [0, MAX_INT],
-  NumeralWordsLanguage.ROU: [0, 999999],
+  NumeralWordsLanguage.KLI: [MIN_INT, MAX_INT], // 0-9 decimal
+  NumeralWordsLanguage.MIN: [1, 100], // 1-3 decimal
+  NumeralWordsLanguage.NAVI: [0, 32767], // 0-7 octal
+  NumeralWordsLanguage.SHA: [0, MAX_INT], // 0-3 quaternery
+  NumeralWordsLanguage.ROU: [0, 999999], // 0-9 decimal
 };
 
 const Map<NumeralWordsLanguage, String> NUMERALWORDS_LANGUAGES = {
@@ -2534,7 +2537,7 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
     expr = RegExp(r'(redodo|remimi|refafa|resolsol|relala|resisi|mimido|mimire|mimifa) farere');
     if (expr.hasMatch(helpText)) {
       helpText1 = helpText.replaceAllMapped(expr, (Match m) {
-        return (m.group(0) != ' ') ?  m.group(0)!.replaceAll(' ', '') : '';
+        return (m.group(0) != ' ') ? m.group(0)!.replaceAll(' ', '') : '';
       });
     } else {
       helpText1 = helpText;
@@ -2545,7 +2548,7 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
         r'(fafare|fafami|fafasol|fafala|fafasi|fadodo) (mimisol|mimila|mimisi|midodo|mirere|mifafa|misolsol|milala|misisi|fafado|redodo|remimi|refafa|resolsol|relala|resisi|mimido|mimire|mimifa)');
     if (expr.hasMatch(helpText1)) {
       helpText = helpText1.replaceAllMapped(expr, (Match m) {
-        return (m.group(0) != ' ') ?  m.group(0)!.replaceAll(' ', '') : '';
+        return (m.group(0) != ' ') ? m.group(0)!.replaceAll(' ', '') : '';
       });
     } else {
       helpText = helpText1;
@@ -2554,7 +2557,7 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
     expr = RegExp(r'mimisol (redodo|remimi|refafa|resolsol|relala|resisi|mimido|mimire|mimifa)');
     if (expr.hasMatch(helpText)) {
       helpText1 = helpText.replaceAllMapped(expr, (Match m) {
-        return (m.group(0) != ' ') ?  m.group(0)!.replaceAll(' ', '') : '';
+        return (m.group(0) != ' ') ? m.group(0)!.replaceAll(' ', '') : '';
       });
     } else {
       helpText1 = helpText;
@@ -2565,7 +2568,7 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
         r'(redodo|remimi|refafa|resolsol|relala|resisi|mimido|mimire|mimifa)farere (fafare|fafami|fafasol|fafala|fafasi|fadodo|mimisol|mimila|mimisi|midodo|mirere|mifafa|misolsol|milala|misisi|fafado|redodo|remimi|refafa|resolsol|relala|resisi|mimido|mimire|mimifa)');
     if (expr.hasMatch(helpText1)) {
       helpText = helpText1.replaceAllMapped(expr, (Match m) {
-        return (m.group(0) != ' ') ?  m.group(0)!.replaceAll(' ', '') : '';
+        return (m.group(0) != ' ') ? m.group(0)!.replaceAll(' ', '') : '';
       });
     } else {
       helpText = helpText1;
@@ -2576,7 +2579,7 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
         r'famimi (farere|fafare|fafami|fafasol|fafala|fafasi|fadodo|mimisol|mimila|mimisi|midodo|mirere|mifafa|misolsol|milala|misisi|fafado|redodo|remimi|refafa|resolsol|relala|resisi|mimido|mimire|mimifa)');
     if (expr.hasMatch(helpText)) {
       helpText1 = helpText.replaceAllMapped(expr, (Match m) {
-        return (m.group(0) != ' ') ?  m.group(0)!.replaceAll(' ', '') : '';
+        return (m.group(0) != ' ') ? m.group(0)!.replaceAll(' ', '') : '';
       });
     } else {
       helpText1 = helpText;
@@ -2587,7 +2590,7 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
         r'(farere|fafare|fafami|fafasol|fafala|fafasi|fadodo|mimisol|mimila|mimisi|midodo|mirere|mifafa|misolsol|milala|misisi|fafado|redodo|remimi|refafa|resolsol|relala|resisi|mimido|mimire|mimifa) famimi');
     if (expr.hasMatch(helpText1)) {
       helpText = helpText1.replaceAllMapped(expr, (Match m) {
-        return (m.group(0) != ' ') ?  m.group(0)!.replaceAll(' ', '') : '';
+        return (m.group(0) != ' ') ? m.group(0)!.replaceAll(' ', '') : '';
       });
     } else {
       helpText = helpText1;
@@ -2665,19 +2668,20 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
           output.add(NumeralWordsDecodeOutput(element, element, ''));
         } else if (_isShadoks(element) &&
             (language == NumeralWordsLanguage.ALL || language == NumeralWordsLanguage.SHA)) {
-          output
-              .add(NumeralWordsDecodeOutput(_decodeShadoks(element), element, _languageList?[NumeralWordsLanguage.SHA] ?? ''));
+          output.add(NumeralWordsDecodeOutput(
+              _decodeShadoks(element), element, _languageList?[NumeralWordsLanguage.SHA] ?? ''));
         } else if (_isMinion(element) &&
             (language == NumeralWordsLanguage.ALL || language == NumeralWordsLanguage.MIN)) {
-          output
-              .add(NumeralWordsDecodeOutput(_decodeMinion(element), element, _languageList?[NumeralWordsLanguage.MIN] ?? ''));
+          output.add(NumeralWordsDecodeOutput(
+              _decodeMinion(element), element, _languageList?[NumeralWordsLanguage.MIN] ?? ''));
         } else if (_isKlingon(element) &&
             (language == NumeralWordsLanguage.ALL || language == NumeralWordsLanguage.KLI)) {
-          output.add(NumeralWordsDecodeOutput(
-              _decodeKlingon(element), element.replaceAll('€', ' ').trim(), _languageList?[NumeralWordsLanguage.KLI] ?? ''));
+          output.add(NumeralWordsDecodeOutput(_decodeKlingon(element), element.replaceAll('€', ' ').trim(),
+              _languageList?[NumeralWordsLanguage.KLI] ?? ''));
         } else if (_isNavi(element) &&
             (language == NumeralWordsLanguage.ALL || language == NumeralWordsLanguage.NAVI)) {
-          output.add(NumeralWordsDecodeOutput(_decodeNavi(element), element, _languageList?[NumeralWordsLanguage.NAVI] ?? ''));
+          output.add(
+              NumeralWordsDecodeOutput(_decodeNavi(element), element, _languageList?[NumeralWordsLanguage.NAVI] ?? ''));
         } else if (_isNumeral(element)) {
           // checks - if is a number/digit
           output.add(NumeralWordsDecodeOutput(element, element, _languageList?[NumeralWordsLanguage.NUM] ?? ''));
@@ -2707,7 +2711,8 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
       output.add(NumeralWordsDecodeOutput('', '', 'numeralwords_language_empty'));
     }
     return output;
-  } else  { // entire parts - search parts of words: weight => eight => 8
+  } else {
+    // entire parts - search parts of words: weight => eight => 8
 
     input = input
         .replaceAll(RegExp(r'[\s]'), '')
@@ -2770,7 +2775,8 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
                 } else {
                   oldValueInt = int.parse(value);
                 }
-                output.add(NumeralWordsDecodeOutput(value, removeAccents(key), NUMERALWORDS_LANGUAGES[_language] ?? ''));
+                output
+                    .add(NumeralWordsDecodeOutput(value, removeAccents(key), NUMERALWORDS_LANGUAGES[_language] ?? ''));
               } else {
                 if (int.tryParse(value) == null) {
                   if (oldValueStr == value) {
@@ -2783,7 +2789,8 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
                 } else if (oldValueInt == int.parse(value)) {
                   output.add(NumeralWordsDecodeOutput('', removeAccents(key), NUMERALWORDS_LANGUAGES[_language] ?? ''));
                 } else {
-                  output.add(NumeralWordsDecodeOutput(value, removeAccents(key), NUMERALWORDS_LANGUAGES[_language] ?? ''));
+                  output.add(
+                      NumeralWordsDecodeOutput(value, removeAccents(key), NUMERALWORDS_LANGUAGES[_language] ?? ''));
                 }
               }
             }
@@ -2808,37 +2815,45 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
 }
 
 OutputConvertToNumber decodeNumeralWordToNumber(NumeralWordsLanguage _currentLanguage, String currentDecodeInput) {
-  if (currentDecodeInput.isEmpty) return OutputConvertToNumber(0, '', '', '');
+  if (currentDecodeInput.isEmpty) return OutputConvertToNumber(number: 0, numbersystem: '', title: '', error: '');
 
   if (_currentLanguage == NumeralWordsLanguage.ROU) {
     if (_isROU(currentDecodeInput)) {
       String number = _decodeROU(currentDecodeInput);
-      return OutputConvertToNumber(
-          int.parse(number), number, '', '');
+      return OutputConvertToNumber(number: int.parse(number), numbersystem: number, title: '', error: '');
     } else {
-      return OutputConvertToNumber(0, '', '', 'numeralwords_converter_error_rou');
+      return OutputConvertToNumber(number: 0, numbersystem: '', title: '', error: 'numeralwords_converter_error_rou');
     }
   }
   if (_currentLanguage == NumeralWordsLanguage.NAVI) {
     if (_isNavi(currentDecodeInput)) {
-      return OutputConvertToNumber(int.parse(_decodeNavi(currentDecodeInput)),
-          convertBase(_decodeNavi(currentDecodeInput), 10, 8), 'common_numeralbase_octenary', '');
+      return OutputConvertToNumber(
+          number: int.parse(_decodeNavi(currentDecodeInput)),
+          numbersystem: convertBase(_decodeNavi(currentDecodeInput), 10, 8),
+          title: 'common_numeralbase_octenary',
+          error: '');
     } else {
-      return OutputConvertToNumber(0, '', '', 'numeralwords_converter_error_navi');
+      return OutputConvertToNumber(number: 0, numbersystem: '', title: '', error: 'numeralwords_converter_error_navi');
     }
   }
   if (_currentLanguage == NumeralWordsLanguage.SHA) {
     if (_isShadoks(currentDecodeInput)) {
-      return OutputConvertToNumber(int.parse(_decodeShadoks(currentDecodeInput)),
-          convertBase(_decodeShadoks(currentDecodeInput), 10, 4), 'common_numeralbase_quaternary', '');
+      return OutputConvertToNumber(
+          number: int.parse(_decodeShadoks(currentDecodeInput)),
+          numbersystem: convertBase(_decodeShadoks(currentDecodeInput), 10, 4),
+          title: 'common_numeralbase_quaternary',
+          error: '');
     } else {
-      return OutputConvertToNumber(0, '', '', 'numeralwords_converter_error_shadoks');
+      return OutputConvertToNumber(
+          number: 0, numbersystem: '', title: '', error: 'numeralwords_converter_error_shadoks');
     }
   } else if (_currentLanguage == NumeralWordsLanguage.MIN) {
     if (_isMinion(currentDecodeInput)) {
-      return OutputConvertToNumber(int.parse(_decodeMinion(currentDecodeInput)), '', '', '');
+      return OutputConvertToNumber(
+          number: int.parse(_decodeMinion(currentDecodeInput)), numbersystem: '', title: '', error: '');
     } else {
-      return OutputConvertToNumber(0, '', '', 'numeralwords_converter_error_minion');
+      return OutputConvertToNumber(
+          number: 0, numbersystem: '', title: '', error: 'numeralwords_converter_error_minion');
     }
   } else if (_currentLanguage == NumeralWordsLanguage.KLI) {
     if (_isKlingon(currentDecodeInput)) {
@@ -2851,17 +2866,20 @@ OutputConvertToNumber decodeNumeralWordToNumber(NumeralWordsLanguage _currentLan
         currentDecodeInput = helpText;
       }
       return OutputConvertToNumber(
-          int.parse(_decodeMultipleKlingon(currentDecodeInput.replaceAll(' ', ''))), '', '', '');
+          number: int.parse(_decodeMultipleKlingon(currentDecodeInput.replaceAll(' ', ''))),
+          numbersystem: '',
+          title: '',
+          error: '');
     } else {
-      return OutputConvertToNumber(0, '', '', 'numeralwords_converter_error_klingon');
+      return OutputConvertToNumber(
+          number: 0, numbersystem: '', title: '', error: 'numeralwords_converter_error_klingon');
     }
   } else {
-    return OutputConvertToNumber(0, '', '', '');
+    return OutputConvertToNumber(number: 0, numbersystem: '', title: '', error: '');
   }
 }
 
 OutputConvertToNumeralWord encodeNumberToNumeralWord(NumeralWordsLanguage _currentLanguage, int currentNumber) {
-
   switch (_currentLanguage) {
     case NumeralWordsLanguage.NAVI:
       return _encodeNavi(currentNumber);
@@ -2874,7 +2892,7 @@ OutputConvertToNumeralWord encodeNumberToNumeralWord(NumeralWordsLanguage _curre
     case NumeralWordsLanguage.ROU:
       return _encodeROU(currentNumber);
     default:
-      return OutputConvertToNumeralWord('', '', '', '');
+      return OutputConvertToNumeralWord(numeralWord: '', targetNumberSystem: '', title: '', errorMessage: '');
   }
 }
 
@@ -3130,7 +3148,8 @@ String _decodeROU(String element) {
 
       syllables = element.split('si');
       if (syllables.length == 2) {
-        return int.parse((ROU_numbers[syllables[0].trim()] ?? '')) + int.parse((ROU_numbers[syllables[1].trim()] ?? ''));
+        return int.parse((ROU_numbers[syllables[0].trim()] ?? '')) +
+            int.parse((ROU_numbers[syllables[1].trim()] ?? ''));
       } else {
         return int.parse((ROU_numbers[syllables[0].trim()] ?? ''));
       }
@@ -3170,7 +3189,9 @@ String _decodeShadoks(String element) {
 OutputConvertToNumeralWord _encodeKlingon(int currentNumber) {
   String numeralWord = '';
   numeralWord = '';
-  if (currentNumber == 0) return OutputConvertToNumeralWord('pagh', '', '', '');
+  if (currentNumber == 0) {
+    return OutputConvertToNumeralWord(numeralWord: 'pagh', targetNumberSystem: '', title: '', errorMessage: '');
+  }
 
   bool negative = false;
   if (currentNumber < 0) {
@@ -3241,12 +3262,12 @@ OutputConvertToNumeralWord _encodeKlingon(int currentNumber) {
     tenth = tenth ~/ 10;
   }
   if (negative) numeralWord = numeralWord + ' Dop';
-  return OutputConvertToNumeralWord(numeralWord, '', '', '');
+  return OutputConvertToNumeralWord(numeralWord: numeralWord, targetNumberSystem: '', title: '', errorMessage: '');
 }
 
 OutputConvertToNumeralWord _encodeMinion(int currentNumber) {
   String numeralWord = '';
-  if (currentNumber < 1) return OutputConvertToNumeralWord('', '', '', '');
+  if (currentNumber < 1) return OutputConvertToNumeralWord(numeralWord: '', targetNumberSystem: '', title: '', errorMessage: '');
   List<String> digits = [];
   numeralWord = '';
   while (currentNumber >= 3) {
@@ -3262,7 +3283,7 @@ OutputConvertToNumeralWord _encodeMinion(int currentNumber) {
     digits.add('1');
   }
   numeralWord = digits.join('').replaceAll('3', 'SAE').replaceAll('2', 'DUL').replaceAll('1', 'HANA');
-  return OutputConvertToNumeralWord(numeralWord, '', '', '');
+  return OutputConvertToNumeralWord(numeralWord: numeralWord, targetNumberSystem: '', title: '', errorMessage: '');
 }
 
 OutputConvertToNumeralWord _encodeNavi(int currentNumber) {
@@ -3484,10 +3505,7 @@ OutputConvertToNumeralWord _encodeNavi(int currentNumber) {
       .replaceAll('voaw', 'volaw');
 
   return OutputConvertToNumeralWord(
-      numeralWord,
-      convertBase(currentNumber.toString(), 10, 8),
-      'common_numeralbase_octenary',
-      '');
+      numeralWord: numeralWord, targetNumberSystem: convertBase(currentNumber.toString(), 10, 8), title: 'common_numeralbase_octenary', errorMessage: '');
 }
 
 OutputConvertToNumeralWord _encodeROU(int currentNumber) {
@@ -3504,7 +3522,9 @@ OutputConvertToNumeralWord _encodeROU(int currentNumber) {
 
     if (currentNumber < 100) {
       if (currentNumber % 10 == 0) return (ROU_numbers[(currentNumber ~/ 10 * 10).toString()] ?? '');
-      return (ROU_numbers[(currentNumber ~/ 10 * 10).toString()] ?? '') + ' şi ' + (ROU_numbers[(currentNumber % 10).toString()] ?? '');
+      return (ROU_numbers[(currentNumber ~/ 10 * 10).toString()] ?? '') +
+          ' şi ' +
+          (ROU_numbers[(currentNumber % 10).toString()] ?? '');
     }
 
     if (currentNumber < 120) {
@@ -3532,45 +3552,62 @@ OutputConvertToNumeralWord _encodeROU(int currentNumber) {
             ? (ROU_numbers[one.toString()] ?? '')
             : (ten == 1)
                 ? (ROU_numbers[(ten * 10 + one).toString()] ?? '')
-                : (ROU_numbers[(ten * 10).toString()] ?? '') + (one == 0 ? '' : ' şi ' + (ROU_numbers[one.toString()] ?? '')));
+                : (ROU_numbers[(ten * 10).toString()] ?? '') +
+                    (one == 0 ? '' : ' şi ' + (ROU_numbers[one.toString()] ?? '')));
   }
 
   Map<String, String> ROU_numbers = switchMapKeyValue(_ROUWordToNum);
   if (currentNumber < 20) {
     return OutputConvertToNumeralWord(
-        (ROU_numbers[currentNumber.toString()] ?? ''), currentNumber.toString(), 'common_numeralbase_decenary', '');
+        numeralWord: (ROU_numbers[currentNumber.toString()] ?? ''),
+        targetNumberSystem: currentNumber.toString(),
+        title: '',
+        errorMessage: '');
   }
   if (currentNumber < 100) {
     if (currentNumber % 10 == 0) {
       return OutputConvertToNumeralWord(
-          (ROU_numbers[(currentNumber ~/ 10 * 10).toString()]  ?? ''), currentNumber.toString(), 'common_numeralbase_decenary', '');
+          numeralWord: (ROU_numbers[(currentNumber ~/ 10 * 10).toString()] ?? ''),
+          targetNumberSystem: currentNumber.toString(),
+          title: '',
+          errorMessage: '');
     }
     return OutputConvertToNumeralWord(
-        (ROU_numbers[(currentNumber ~/ 10 * 10).toString()] ?? '') + ' şi ' + (ROU_numbers[(currentNumber % 10).toString()] ?? ''),
-        currentNumber.toString(),
-        'common_numeralbase_decenary',
-        '');
+        numeralWord: (ROU_numbers[(currentNumber ~/ 10 * 10).toString()] ?? '') +
+            ' şi ' +
+            (ROU_numbers[(currentNumber % 10).toString()] ?? ''),
+        targetNumberSystem: currentNumber.toString(),
+        title: '',
+        errorMessage: '');
   }
   if (currentNumber < 1000) {
     return OutputConvertToNumeralWord(
-        encodeTripel(currentNumber, ROU_numbers), currentNumber.toString(), 'common_numeralbase_decenary', '');
+        numeralWord: encodeTripel(currentNumber, ROU_numbers),
+        targetNumberSystem: currentNumber.toString(),
+        title: '',
+        errorMessage: '');
   }
   if (currentNumber < 2000) {
-    return OutputConvertToNumeralWord('oh mie ' + encodeTripel(currentNumber - 1000, ROU_numbers),
-        currentNumber.toString(), 'common_numeralbase_decenary', '');
+    return OutputConvertToNumeralWord(
+        numeralWord: 'oh mie ' + encodeTripel(currentNumber - 1000, ROU_numbers),
+        targetNumberSystem: currentNumber.toString(),
+        title: '',
+        errorMessage: '');
   }
   if (currentNumber < 10000) {
     return OutputConvertToNumeralWord(
-        (ROU_numbers[(currentNumber ~/ 1000).toString()] ?? '') + ' mii ' + encodeTripel(currentNumber % 1000, ROU_numbers),
-        currentNumber.toString(),
-        'common_numeralbase_decenary',
-        '');
+        numeralWord: (ROU_numbers[(currentNumber ~/ 1000).toString()] ?? '') +
+            ' mii ' +
+            encodeTripel(currentNumber % 1000, ROU_numbers),
+        targetNumberSystem: currentNumber.toString(),
+        title: '',
+        errorMessage: '');
   }
   return OutputConvertToNumeralWord(
-      encodeTripel(currentNumber ~/ 1000, ROU_numbers) + ' de mii ' + encodeTripel(currentNumber % 1000, ROU_numbers),
-      currentNumber.toString(),
-      'common_numeralbase_decenary',
-      '');
+      numeralWord: encodeTripel(currentNumber ~/ 1000, ROU_numbers) + ' de mii ' + encodeTripel(currentNumber % 1000, ROU_numbers),
+      targetNumberSystem: currentNumber.toString(),
+      title: '',
+      errorMessage: '');
 }
 
 OutputConvertToNumeralWord _encodeShadok(int currentNumber) {
@@ -3582,7 +3619,10 @@ OutputConvertToNumeralWord _encodeShadok(int currentNumber) {
       .replaceAll('2', 'ZO')
       .replaceAll('3', 'MEU');
   return OutputConvertToNumeralWord(
-      numeralWord, convertBase(currentNumber.toString(), 10, 4), 'common_numeralbase_quaternary', '');
+      numeralWord: numeralWord,
+      targetNumberSystem: convertBase(currentNumber.toString(), 10, 4),
+      title: 'common_numeralbase_quaternary',
+      errorMessage: '');
 }
 
 bool _isKlingon(String element) {
@@ -3632,7 +3672,9 @@ bool _isNavi(String element) {
       .replaceAll('zav', 'zamv')
       .replaceAll('zamu', 'zammu')
       .replaceAll('zame', 'zamme');
-  if (element.endsWith('mm')){element = element.substring(0, element.length - 1);}
+  if (element.endsWith('mm')) {
+    element = element.substring(0, element.length - 1);
+  }
   element = element
       .replaceAll('vok', 'volk')
       .replaceAll('vom', 'volm')
@@ -3842,7 +3884,8 @@ NumeralWordsOutput _isNumeralWord10(String input, NumeralWordsLanguage language,
   return NumeralWordsOutput(state, output, _languageList?[language]);
 }
 
-NumeralWordsOutput _isNumeralWordBelow100(String input, NumeralWordsLanguage language, Map<String, String> decodingTable) {
+NumeralWordsOutput _isNumeralWordBelow100(
+    String input, NumeralWordsLanguage language, Map<String, String> decodingTable) {
   bool state = false;
   String output = '';
   NumeralWordsOutput result;
@@ -3860,7 +3903,8 @@ NumeralWordsOutput _isNumeralWordBelow100(String input, NumeralWordsLanguage lan
   return NumeralWordsOutput(state, output, _languageList?[language]);
 }
 
-NumeralWordsOutput _isNumeralWordBelow1000(String input, NumeralWordsLanguage language, Map<String, String> decodingTable) {
+NumeralWordsOutput _isNumeralWordBelow1000(
+    String input, NumeralWordsLanguage language, Map<String, String> decodingTable) {
   bool state = false;
   String output = '';
   String pattern = '';
