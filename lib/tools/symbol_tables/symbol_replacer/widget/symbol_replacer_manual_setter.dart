@@ -48,7 +48,7 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
 
     if (_init) {
       _fillSymbolDataItems(widget.symbolImage.compareSymbols);
-      _currentSymbolData = widget.symbolImage.compareSymbols?.first;  // TODO Mike: I needed to make _currentSymbolData nullsafe; therefore I changed ?.first to !.first here. Please chacke if compareSymbols can be null here nonetheless
+      _currentSymbolData = widget.symbolImage.compareSymbols?.first;
       _fillSymbolMap(widget.symbolImage, widget.viewSymbols);
 
       // select all
@@ -80,11 +80,11 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
         if (_symbolData?.values.first.displayName != _displayText) {
           _symbolMap[symbol] = _cloneSymbolData(_symbolData!, _displayText);
         }
+      } else {
+        _symbolMap.addAll({
+          symbol: {'': SymbolData(path: '', bytes: symbol.getImage(), displayName: symbol.symbolGroup?.text ?? '')}
+        });
       }
-      // else //ToDo Mike Nullsafety
-      //   _symbolMap.addAll({
-      //     symbol: {null: SymbolData(bytes: symbol.getImage(), displayName: symbol?.symbolGroup?.text ?? '')}
-      //   });
     });
   }
 
@@ -228,10 +228,9 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
   void _selectSymbolDataItem(SymbolData symbolData) {
     var compareSymbol = _getSymbol(_symbolMap, symbolData)?.symbolGroup?.compareSymbol;
     if ((widget.symbolImage.compareSymbols != null) && (compareSymbol != null)) {
-      for (GCWDropDownMenuItem item in _symbolDataItems) {
-        if ((item.value is Map<String, SymbolReplacerSymbolData>) &&
-            ((item.value as Map<String, SymbolReplacerSymbolData>).values.first == compareSymbol)) {
-          _currentSymbolData = item.value as Map<String, SymbolReplacerSymbolData>;
+      for (var item in _symbolDataItems) {
+        if (item.value.values.first == compareSymbol) {
+          _currentSymbolData = item.value;
           break;
         }
       }

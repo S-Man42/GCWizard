@@ -7,6 +7,7 @@ import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_param
 import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_replacer_symboldata.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
+import 'package:gc_wizard/utils/image_utils.dart';
 import 'package:image/image.dart' as Image;
 import 'package:tuple/tuple.dart';
 
@@ -168,9 +169,8 @@ class SymbolReplacerImage {
       bool groupSymbols = true,
       double? mergeDistance}) {
 
-    var decoder = Image.findDecoderForData(_image);
-    if (decoder == null) return;
-    _bmp ??= decoder.decode(_image, frame: 0);
+
+    _bmp ??= decodeImage4ChannelFormat(_image);
     if (_bmp == null) return;
 
     // detect changed parameter -> recalc
