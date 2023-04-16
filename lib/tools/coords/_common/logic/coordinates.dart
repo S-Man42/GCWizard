@@ -1000,7 +1000,7 @@ BaseCoordinate buildUninitializedCoordinateByFormat(CoordinateFormat format) {
     case CoordinateFormatKey.REVERSE_WIG_WALDMEISTER:
       return ReverseWherigoWaldmeister(0,0,0);
     case CoordinateFormatKey.REVERSE_WIG_DAY1976:
-      return ReverseWherigoDay1976('','');
+      return ReverseWherigoDay1976('00000','00000');
     default:
       return buildDefaultCoordinateByCoordinates(defaultCoordinate);
   }
