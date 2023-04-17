@@ -12,20 +12,26 @@ LatLng GC8K7RCToLatLon(GC8K7RC coordsGC8K7RC) {
   double u = coordsGC8K7RC.velocity * secondsPerDay;
   double r = u.abs() / 2 / pi;
 
-  double lat = acos(r / rEarth);
+  double lat = 0;
+  if (r / rEarth >= 1) {
+    lat = 0;
+  } else {
+    lat = acos(r / rEarth);
+  }
   lat = lat * 180 / pi;
 
   if (u < 0) {
     lat = -lat;
   }
 
-  double long = 0.0;
+  double lon = 0.0;
   if (u != 0) {
-    long = 360 * coordsGC8K7RC.distance / u.abs();
+    lon = 360 * coordsGC8K7RC.distance / u.abs();
   } else {
-    long = 0;
+    lon = 0;
   }
-  return decToLatLon(DEC(lat, long));
+  
+  return decToLatLon(DEC(lat, lon));
 }
 
 GC8K7RC latLonToGC8K7RC(LatLng coord) {
@@ -37,7 +43,10 @@ GC8K7RC latLonToGC8K7RC(LatLng coord) {
 
   double distance = lon * u / 360;
 
-  return GC8K7RC(velocity, distance,);
+  return GC8K7RC(
+    velocity,
+    distance,
+  );
 }
 
 GC8K7RC? parseGC8K7RC(String input) {
