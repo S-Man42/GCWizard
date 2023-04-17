@@ -139,11 +139,12 @@ const Map<FileType, FileTypeInfo> _FILE_TYPES = {
     file_class: FileClass.ARCHIVE
   ),
   FileType._7Z: FileTypeInfo(
-    extensions: ['7z'],
+    extensions: ['7z', '7zip'],
     magic_bytes: <List<int>>[
-      [0x37, 0x7A, 0xBC, 0xAF, 0x27, 0x1C]
+      [0x37, 0x7A, 0xBC, 0xAF, 0x27, 0x1C],
+      [0x30, 0x26, 0xB2, 0x75]
     ],
-    mime_types: ['application/x-7z-compressed'],
+    mime_types: ['application/x-7z-compressed', 'application/octet-stream'],
     file_class: FileClass.ARCHIVE
   ),
   FileType.TAR: FileTypeInfo(
@@ -163,14 +164,6 @@ const Map<FileType, FileTypeInfo> _FILE_TYPES = {
       [0x52, 0x61, 0x72, 0x21, 0x1A, 0x07, 0x01, 0x00]
     ],
     mime_types: ['application/x-rar-compressed', 'application/octet-stream'],
-    file_class: FileClass.ARCHIVE
-  ),
-  FileType.SEVEN_ZIP: FileTypeInfo(
-    extensions: ['7z', '7zip'],
-    magic_bytes: <List<int>>[
-      [0x30, 0x26, 0xB2, 0x75]
-    ],
-    mime_types: ['application/x-7z-compressed', 'application/octet-stream'],
     file_class: FileClass.ARCHIVE
   ),
   FileType.GZIP: FileTypeInfo(
