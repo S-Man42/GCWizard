@@ -5,6 +5,7 @@
 import 'dart:convert';
 import 'dart:isolate';
 import 'dart:async';
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:http/http.dart' as http;
 import 'package:latlong2/latlong.dart';
@@ -12,19 +13,21 @@ import 'package:latlong2/latlong.dart';
 part 'package:gc_wizard/tools/images_and_files/adventure_labs/logic/adventure_labs_classes.dart';
 part 'package:gc_wizard/tools/images_and_files/adventure_labs/logic/adventure_labs_data_types.dart';
 
-Future<Adventures> getAdventureDataAsync(dynamic jobData) async {
+Future<Adventures> getAdventureDataAsync(GCWAsyncExecuterParameters? jobData) async {
+  if (jobData?.parameters is! AdventureLabJobData) return Future.value(Adventures(AdventureList: [], httpCode: '', httpMessage: ''));
+  var adventure = jobData!.parameters as AdventureLabJobData;
   var output = await getAdventureData(
-      jobData.parameters["coordinate"] as LatLng,
-      jobData.parameters["radius"] as int,
+      adventure.jobDataCoordinate.toLatLng(),
+      adventure.jobDataRadius,
       sendAsyncPort: jobData.sendAsyncPort as SendPort);
 
   if (jobData.sendAsyncPort != null) {
-    jobData.sendAsyncPort.send(output);
+    jobData.sendAsyncPort?.send(output);
   }
   return output;
 }
 
-Future<Adventures> getAdventureData(LatLng coordinate, int radius, {required SendPort sendAsyncPort}) async {
+Future<Adventures> getAdventureData(LatLng? coordinate, int radius, {required SendPort sendAsyncPort}) async {
   String httpCode = '';
   String httpCodeStages = '';
   String httpMessage = '';
@@ -34,9 +37,9 @@ Future<Adventures> getAdventureData(LatLng coordinate, int radius, {required Sen
   try {
     final response = await http.get(
       Uri.parse(
-        SEARCH_ADDRESSV3 +
+        SEARCH_ADDRESSV4 +
             '?radiusMeters=' + radius.toString() +
-            '&origin.latitude=' + coordinate.latitude.toString() +
+            '&origin.latitude=' + coordinate!.latitude.toString() +
             '&origin.longitude=' + coordinate.longitude.toString()),
       headers: HEADERS,
     );
@@ -128,6 +131,9 @@ Future<Adventures> getAdventureData(LatLng coordinate, int radius, {required Sen
             httpMessage: httpMessage);
     }
     else {
+      print('NOT OK');
+      print(httpCode);
+      print(httpMessage);
       return Adventures(
             AdventureList: [],
             httpCode: httpCode,

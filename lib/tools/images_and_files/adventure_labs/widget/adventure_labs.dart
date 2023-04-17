@@ -79,7 +79,6 @@ class AdventureLabsState extends State<AdventureLabs> {
     );
   }
 
-
   void _getAdventureDataAsync() async {
     await showDialog<bool>(
       context: context,
@@ -102,7 +101,8 @@ class AdventureLabsState extends State<AdventureLabs> {
   }
 
   Future<GCWAsyncExecuterParameters?> _buildAdventureJobData() async {
-    return GCWAsyncExecuterParameters(AdventureLabJobData(jobDataCoordinate: _currentCoords, jobDataRadius: _currentRadius));
+    return GCWAsyncExecuterParameters(
+        AdventureLabJobData(jobDataCoordinate: _currentCoords, jobDataRadius: _currentRadius));
   }
 
   void _showAdventuresOutput(Adventures output) {
@@ -244,7 +244,7 @@ class AdventureLabsState extends State<AdventureLabs> {
     }
     result.add(GCWColumnedMultilineOutput(
       data: _outputAdventureStageData(stage),
-      flexValues: [1, 3],
+      flexValues: const [1, 3],
     ));
     if (stage.AwardImageUrl != 'null') {
       result.add(
@@ -256,10 +256,10 @@ class AdventureLabsState extends State<AdventureLabs> {
     }
     result.add(GCWColumnedMultilineOutput(
       data: _outputAdventureStageCompletionData(stage),
-      flexValues: [1, 3],
+      flexValues: const [1, 3],
     ));
     result.add(
-      GCWColumnedMultilineOutput(data: _outputAdventureStageExpertData(stage), flexValues: [1, 3]),
+      GCWColumnedMultilineOutput(data: _outputAdventureStageExpertData(stage), flexValues: const [1, 3]),
     );
     return result;
   }
@@ -331,52 +331,68 @@ class AdventureLabsState extends State<AdventureLabs> {
     }
     result.add(GCWColumnedMultilineOutput(
       data: _outputAdventureData(adventure),
-      flexValues: [1, 3],
+      flexValues: const [1, 3],
     ));
     return result;
   }
 
+  Widget _buildOutputAdventure() {
+    return Column(children: <Widget>[
+      GCWTextDivider(
+        text: i18n(context, 'adventure_labs_lab_all_location'),
+        trailing: Row(children: <Widget>[
+          GCWIconButton(
+            icon: Icons.my_location,
+            size: IconButtonSize.SMALL,
+            iconColor: themeColors().mainFont(),
+            onPressed: () {
+              _openInMap(_getAllPoints(_adventureList));
+            },
+          ),
+          GCWIconButton(
+            icon: Icons.save,
+            size: IconButtonSize.SMALL,
+            iconColor: themeColors().mainFont(),
+            onPressed: () {
+              _exportCoordinates(context, _getAllPoints(_adventureList));
+            },
+          ),
+        ]),
+      ),
+      GCWDropDownSpinner(
+        index: _currentAdventureIndex,
+        items: _currentAdventureList.map((item) => Text(item.toString(), style: gcwTextStyle())).toList(),
+        onChanged: (value) {
+          setState(() {
+            _currentAdventureIndex = value;
+          });
+        },
+      ),
+      _buildOutputAdventureMain(_adventureList[_currentAdventureIndex]),
+      _buildOutputAdventureStages(_adventureList[_currentAdventureIndex].Stages),
+    ]);
+  }
+
+  Widget _buildOutputError() {
+    return Column(children: <Widget>[
+      GCWTextDivider(
+        text: 'Error',
+      ),
+      GCWColumnedMultilineOutput(
+        data: [
+          ['httpCode', _outData.httpCode],
+          ['httpMessage', _outData.httpMessage],
+        ],
+        flexValues: const [2, 3],
+      )
+    ]);
+  }
+
   Widget _buildOutput() {
-    return Column(
-      children: [
-        if (_currentAdventureList.isNotEmpty)
-          Column(children: <Widget>[
-            GCWTextDivider(
-              text: i18n(context, 'adventure_labs_lab_all_location'),
-              trailing: Row(children: <Widget>[
-                GCWIconButton(
-                  icon: Icons.my_location,
-                  size: IconButtonSize.SMALL,
-                  iconColor: themeColors().mainFont(),
-                  onPressed: () {
-                    _openInMap(_getAllPoints(_adventureList));
-                  },
-                ),
-                GCWIconButton(
-                  icon: Icons.save,
-                  size: IconButtonSize.SMALL,
-                  iconColor: themeColors().mainFont(),
-                  onPressed: () {
-                    _exportCoordinates(context, _getAllPoints(_adventureList));
-                  },
-                ),
-              ]),
-            ),
-            GCWDropDownSpinner(
-              index: _currentAdventureIndex,
-              items: _currentAdventureList.map((item) => Text(item.toString(), style: gcwTextStyle())).toList(),
-              onChanged: (value) {
-                setState(() {
-                  _currentAdventureIndex = value;
-                });
-              },
-            ),
-            _buildOutputAdventureMain(_adventureList[_currentAdventureIndex]),
-            _buildOutputAdventureStages(_adventureList[_currentAdventureIndex].Stages),
-          ])
-        else
-          Container()
-      ],
-    );
+    if (_currentAdventureList.isNotEmpty) {
+      return _buildOutputAdventure();
+    } else {
+      return _buildOutputError();
+    }
   }
 }
