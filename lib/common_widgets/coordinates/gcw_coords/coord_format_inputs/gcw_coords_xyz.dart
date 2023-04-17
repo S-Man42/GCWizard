@@ -20,6 +20,8 @@ class _GCWCoordsXYZState extends State<_GCWCoordsXYZ> {
   var _currentY = 0.0;
   var _currentZ = 0.0;
 
+  bool _initialized = false;
+
   @override
   void initState() {
     super.initState();
@@ -38,7 +40,7 @@ class _GCWCoordsXYZState extends State<_GCWCoordsXYZ> {
 
   @override
   Widget build(BuildContext context) {
-    if (!widget.isDefault) {
+    if (!widget.isDefault && !_initialized) {
       var xyz = widget.coordinates is XYZ
           ? widget.coordinates as XYZ
           : XYZ.fromLatLon(widget.coordinates.toLatLng() ?? defaultCoordinate, defaultEllipsoid);
@@ -49,6 +51,8 @@ class _GCWCoordsXYZState extends State<_GCWCoordsXYZ> {
       _ControllerX.text = _currentX.toString();
       _ControllerY.text = _currentY.toString();
       _ControllerZ.text = _currentZ.toString();
+
+      _initialized = true;
     }
 
     return Column(children: <Widget>[

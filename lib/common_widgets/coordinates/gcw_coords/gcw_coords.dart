@@ -127,7 +127,6 @@ class GCWCoordsState extends State<GCWCoords> {
               : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.DEC)) as DEC,
           onChanged: (newValue) {
             setState(() {
-              _hasSetCoords = false;
               _setCurrentValueAndEmitOnChange(newValue);
             });
           },
@@ -142,7 +141,6 @@ class GCWCoordsState extends State<GCWCoords> {
               : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.DMM)) as DMM,
           onChanged: (newValue) {
             setState(() {
-              _hasSetCoords = false;
               _setCurrentValueAndEmitOnChange(newValue);
             });
           },
@@ -157,7 +155,6 @@ class GCWCoordsState extends State<GCWCoords> {
               : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.DMS)) as DMS,
           onChanged: (newValue) {
             setState(() {
-              _hasSetCoords = false;
               _setCurrentValueAndEmitOnChange(newValue);
             });
           },
@@ -172,7 +169,6 @@ class GCWCoordsState extends State<GCWCoords> {
               : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.UTM)) as UTMREF,
           onChanged: (newValue) {
             setState(() {
-              _hasSetCoords = false;
               _setCurrentValueAndEmitOnChange(newValue);
             });
           },
@@ -187,7 +183,6 @@ class GCWCoordsState extends State<GCWCoords> {
               : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.MGRS)) as MGRS,
           onChanged: (newValue) {
             setState(() {
-              _hasSetCoords = false;
               _setCurrentValueAndEmitOnChange(newValue);
             });
           },
@@ -202,7 +197,6 @@ class GCWCoordsState extends State<GCWCoords> {
               : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.XYZ)) as XYZ,
           onChanged: (newValue) {
             setState(() {
-              _hasSetCoords = false;
               _setCurrentValueAndEmitOnChange(newValue);
             });
           },
@@ -217,7 +211,6 @@ class GCWCoordsState extends State<GCWCoords> {
               : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.SWISS_GRID)) as SwissGrid,
           onChanged: (newValue) {
             setState(() {
-              _hasSetCoords = false;
               _setCurrentValueAndEmitOnChange(newValue);
             });
           },
@@ -232,7 +225,6 @@ class GCWCoordsState extends State<GCWCoords> {
               : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.SWISS_GRID_PLUS)) as SwissGridPlus,
           onChanged: (newValue) {
             setState(() {
-              _hasSetCoords = false;
               _setCurrentValueAndEmitOnChange(newValue);
             });
           },
@@ -247,7 +239,6 @@ class GCWCoordsState extends State<GCWCoords> {
               : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.GAUSS_KRUEGER)) as GaussKrueger,
           onChanged: (newValue) {
             setState(() {
-              _hasSetCoords = false;
               _setCurrentValueAndEmitOnChange(newValue);
             });
           },
@@ -262,7 +253,6 @@ class GCWCoordsState extends State<GCWCoords> {
               : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.LAMBERT)) as Lambert,
           onChanged: (newValue) {
             setState(() {
-              _hasSetCoords = false;
               _setCurrentValueAndEmitOnChange(newValue);
             });
           },
@@ -277,7 +267,6 @@ class GCWCoordsState extends State<GCWCoords> {
               : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.DUTCH_GRID)) as DutchGrid,
           onChanged: (newValue) {
             setState(() {
-              _hasSetCoords = false;
               _setCurrentValueAndEmitOnChange(newValue);
             });
           },
@@ -292,7 +281,6 @@ class GCWCoordsState extends State<GCWCoords> {
               : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.MAIDENHEAD)) as Maidenhead,
           onChanged: (newValue) {
             setState(() {
-              _hasSetCoords = false;
               _setCurrentValueAndEmitOnChange(newValue);
             });
           },
@@ -307,7 +295,6 @@ class GCWCoordsState extends State<GCWCoords> {
               : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.MERCATOR)) as Mercator,
           onChanged: (newValue) {
             setState(() {
-              _hasSetCoords = false;
               _setCurrentValueAndEmitOnChange(newValue);
             });
           },
@@ -322,7 +309,6 @@ class GCWCoordsState extends State<GCWCoords> {
               : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.NATURAL_AREA_CODE)) as NaturalAreaCode,
           onChanged: (newValue) {
             setState(() {
-              _hasSetCoords = false;
               _setCurrentValueAndEmitOnChange(newValue);
             });
           },
@@ -337,7 +323,6 @@ class GCWCoordsState extends State<GCWCoords> {
               : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.SLIPPY_MAP)) as SlippyMap,
           onChanged: (newValue) {
             setState(() {
-              _hasSetCoords = false;
               _setCurrentValueAndEmitOnChange(newValue);
             });
           },
@@ -352,7 +337,6 @@ class GCWCoordsState extends State<GCWCoords> {
               : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.MAKANEY)) as Makaney,
           onChanged: (newValue) {
             setState(() {
-              _hasSetCoords = false;
               _setCurrentValueAndEmitOnChange(newValue);
             });
           },
@@ -367,7 +351,6 @@ class GCWCoordsState extends State<GCWCoords> {
               : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.GEOHASH)) as Geohash,
           onChanged: (newValue) {
             setState(() {
-              _hasSetCoords = false;
               _setCurrentValueAndEmitOnChange(newValue);
             });
           },
@@ -382,7 +365,6 @@ class GCWCoordsState extends State<GCWCoords> {
               : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.GEOHEX)) as GeoHex,
           onChanged: (newValue) {
             setState(() {
-              _hasSetCoords = false;
               _setCurrentValueAndEmitOnChange(newValue);
             });
           },
@@ -397,7 +379,6 @@ class GCWCoordsState extends State<GCWCoords> {
               : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.GEO3X3)) as Geo3x3,
           onChanged: (newValue) {
             setState(() {
-              _hasSetCoords = false;
               _setCurrentValueAndEmitOnChange(newValue);
             });
           },
@@ -412,7 +393,6 @@ class GCWCoordsState extends State<GCWCoords> {
               : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.OPEN_LOCATION_CODE)) as OpenLocationCode,
           onChanged: (newValue) {
             setState(() {
-              _hasSetCoords = false;
               _setCurrentValueAndEmitOnChange(newValue);
             });
           },
@@ -427,7 +407,6 @@ class GCWCoordsState extends State<GCWCoords> {
               : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.QUADTREE)) as Quadtree,
           onChanged: (newValue) {
             setState(() {
-              _hasSetCoords = false;
               _setCurrentValueAndEmitOnChange(newValue);
             });
           },
@@ -442,7 +421,6 @@ class GCWCoordsState extends State<GCWCoords> {
               : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.REVERSE_WIG_WALDMEISTER)) as ReverseWherigoWaldmeister,
           onChanged: (newValue) {
             setState(() {
-              _hasSetCoords = false;
               _setCurrentValueAndEmitOnChange(newValue);
             });
           },
@@ -457,7 +435,6 @@ class GCWCoordsState extends State<GCWCoords> {
               : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.REVERSE_WIG_DAY1976)) as ReverseWherigoDay1976,
           onChanged: (newValue) {
             setState(() {
-              _hasSetCoords = false;
               _setCurrentValueAndEmitOnChange(newValue);
             });
           },

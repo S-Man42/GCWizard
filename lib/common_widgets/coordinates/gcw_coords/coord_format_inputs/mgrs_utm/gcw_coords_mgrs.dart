@@ -24,6 +24,8 @@ class _GCWCoordsMGRSState extends State<_GCWCoordsMGRS> {
   var _currentEasting = defaultDoubleText;
   var _currentNorthing = defaultDoubleText;
 
+  bool _initialized = false;
+
   @override
   void initState() {
     super.initState();
@@ -43,7 +45,7 @@ class _GCWCoordsMGRSState extends State<_GCWCoordsMGRS> {
 
   @override
   Widget build(BuildContext context) {
-    if (!widget.isDefault) {
+    if (!widget.isDefault && !_initialized) {
       var mgrs = widget.coordinates;
       _currentEasting.value = mgrs.easting;
       _currentNorthing.value = mgrs.northing;
@@ -56,6 +58,8 @@ class _GCWCoordsMGRSState extends State<_GCWCoordsMGRS> {
       _LonZoneController.text = _currentLonZone.value.toString();
       _EastingController.text = _currentEasting.value.toString();
       _NorthingController.text = _currentNorthing.value.toString();
+
+      _initialized = true;
     }
 
     return Column(children: <Widget>[

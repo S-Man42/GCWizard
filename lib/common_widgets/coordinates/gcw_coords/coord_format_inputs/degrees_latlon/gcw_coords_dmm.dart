@@ -35,6 +35,8 @@ class _GCWCoordsDMMState extends State<_GCWCoordsDMM> {
   final FocusNode _lonMinutesFocusNode = FocusNode();
   final FocusNode _lonMilliMinutesFocusNode = FocusNode();
 
+  bool _initialized = false;
+
   @override
   void initState() {
     super.initState();
@@ -66,7 +68,7 @@ class _GCWCoordsDMMState extends State<_GCWCoordsDMM> {
 
   @override
   Widget build(BuildContext context) {
-    if (!widget.isDefault) {
+    if (!widget.isDefault && !_initialized) {
       var dmm = widget.coordinates;
       var lat = dmm.latitude.formatParts(10);
       var lon = dmm.longitude.formatParts(10);
@@ -88,6 +90,8 @@ class _GCWCoordsDMMState extends State<_GCWCoordsDMM> {
       _LonDegreesController.text = _currentLonDegrees;
       _LonMinutesController.text = _currentLonMinutes;
       _LonMilliMinutesController.text = _currentLonMilliMinutes;
+
+      _initialized = true;
     }
 
     return Column(children: <Widget>[

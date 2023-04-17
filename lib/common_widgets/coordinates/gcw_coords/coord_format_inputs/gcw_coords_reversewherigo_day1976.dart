@@ -18,8 +18,10 @@ class _GCWCoordsReverseWherigoDay1976State extends State<_GCWCoordsReverseWherig
   final FocusNode _FocusNodeA = FocusNode();
   final FocusNode _FocusNodeB = FocusNode();
 
-  var _currentA = "";
-  var _currentB = "";
+  var _currentA = '';
+  var _currentB = '';
+
+  bool _initialized = false;
 
   @override
   void initState() {
@@ -40,13 +42,15 @@ class _GCWCoordsReverseWherigoDay1976State extends State<_GCWCoordsReverseWherig
 
   @override
   Widget build(BuildContext context) {
-    if (!widget.isDefault) {
+    if (!widget.isDefault && !_initialized) {
       var day1976 = widget.coordinates;
       _currentA = day1976.s;
       _currentB = day1976.t;
 
       _ControllerA.text = _currentA.toString();
       _ControllerB.text = _currentB.toString();
+
+      _initialized = true;
     }
 
     return Column(children: <Widget>[
