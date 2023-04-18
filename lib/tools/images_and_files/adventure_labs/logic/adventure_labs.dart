@@ -14,11 +14,11 @@ part 'package:gc_wizard/tools/images_and_files/adventure_labs/logic/adventure_la
 part 'package:gc_wizard/tools/images_and_files/adventure_labs/logic/adventure_labs_data_types.dart';
 
 Future<Adventures> getAdventureDataAsync(GCWAsyncExecuterParameters? jobData) async {
-  if (jobData?.parameters is! AdventureLabJobData) return Future.value(Adventures(AdventureList: [], httpCode: '', httpMessage: ''));
+  if (jobData?.parameters is! AdventureLabJobData) {
+    return Future.value(Adventures(AdventureList: [], httpCode: '', httpMessage: '', httpBody: ''));
+  }
   var adventure = jobData!.parameters as AdventureLabJobData;
-  var output = await getAdventureData(
-      adventure.jobDataCoordinate.toLatLng(),
-      adventure.jobDataRadius,
+  var output = await getAdventureData(adventure.jobDataCoordinate.toLatLng(), adventure.jobDataRadius,
       sendAsyncPort: jobData.sendAsyncPort as SendPort);
 
   if (jobData.sendAsyncPort != null) {
@@ -31,26 +31,37 @@ Future<Adventures> getAdventureData(LatLng? coordinate, int radius, {required Se
   String httpCode = '';
   String httpCodeStages = '';
   String httpMessage = '';
-  var httpMessageStages = '';
+  String httpBody = '';
 
   List<AdventureStages> Stages = [];
   try {
-    final response = await http.get(
-      Uri.parse(
-        SEARCH_ADDRESSV4 +
-            '?radiusMeters=' + radius.toString() +
-            '&origin.latitude=' + coordinate!.latitude.toString() +
-            '&origin.longitude=' + coordinate.longitude.toString()),
-      headers: HEADERS,
-    );
-    final Map<String, dynamic> responseJson = json.decode(response.body) as Map<String, dynamic>;
+    //final response = await http.get(
+    //  Uri.parse(
+    //    SEARCH_ADDRESSV3 +
+    //        '?radiusMeters=' + radius.toString() +
+    //        '&origin.latitude=' + coordinate!.latitude.toString() +
+    //        '&origin.longitude=' + coordinate.longitude.toString()),
+    //  headers: HEADERS,
+    //);
+    final bodyData = {
+      'Origin': {'Latitude': coordinate!.latitude, 'Longitude': coordinate.longitude},
+      'RadiusInMeters': radius
+    };
+    String body = jsonEncode(bodyData);
+    final response = await http.post(Uri.parse(SEARCH_ADDRESSV4), headers: HEADERS, body: body);
+
     httpCode = response.statusCode.toString();
     httpMessage = response.reasonPhrase!;
-    if (httpCode == '200') {
+    httpBody = response.body;
+
+    final Map<String, dynamic> responseJson = json.decode(response.body) as Map<String, dynamic>;
+    int totalCount = responseJson["TotalCount"] as int;
+    if (httpCode == '200' || totalCount > 0) {
+      httpCode = '200';
       List<AdventureData> AdventureList = [];
-      int totalCount = responseJson["TotalCount"] as int;
       List<dynamic> responseItems = responseJson["Items"] as List<dynamic>;
       for (int i = 0; i < totalCount; i++) {
+        try {
         Map<String, dynamic> item = responseItems[i] as Map<String, dynamic>;
 
         String AdventureGuid = item["AdventureGuid"].toString();
@@ -68,14 +79,14 @@ Future<Adventures> getAdventureData(LatLng? coordinate, int radius, {required Se
         String OwnerUsername = '';
         String OwnerId = '';
 
+
         // get Details for LabCache with ID
         final responseStages = await http.get(
-          Uri.parse(DETAIL_ADDRESS + Id),
+          Uri.parse(DETAIL_ADDRESS + '?id='+Id),
           headers: HEADERS,
         );
         final Map<String, dynamic> responseJsonStages = json.decode(responseStages.body) as Map<String, dynamic>;
         httpCodeStages = responseStages.statusCode.toString();
-        httpMessageStages = responseStages.reasonPhrase!;
 
         if (httpCodeStages == '200') {
           Description = responseJsonStages["Description"].toString();
@@ -84,67 +95,55 @@ Future<Adventures> getAdventureData(LatLng? coordinate, int radius, {required Se
 
           Stages = [];
           responseJsonStages["GeocacheSummaries"].forEach((Map<String, dynamic> stage) {
-            Stages.add(
-                AdventureStages(
-                  Id: stage["Id"].toString(),
-                  Title: stage["Title"].toString(),
-                  Description: stage["Description"].toString(),
-                  AwardImageUrl: stage["AwardImageUrl"].toString(),
-                  AwardVideoYouTubeId: stage["AwardVideoYouTubeId"].toString(),
-                  CompletionAwardMessage: stage["CompletionAwardMessage"].toString(),
-                  CompletionCode: stage["CompletionCode"].toString(),
-                  GeofencingRadius: stage["GeofencingRadius"].toString(),
-                  Question: stage["Question"].toString(),
-                  KeyImage: stage["KeyImage"].toString(),
-                  KeyImageUrl: stage["KeyImageUrl"].toString(),
-                  Latitude: stage["Location"]["Latitude"].toString(),
-                  Longitude: stage["Location"]["Longitude"].toString(),
-                  MultiChoiceOptions: stage["MultiChoiceOptions"].toString(),
-                )
-            );
+            Stages.add(AdventureStages(
+              Id: stage["Id"].toString(),
+              Title: stage["Title"].toString(),
+              Description: stage["Description"].toString(),
+              AwardImageUrl: stage["AwardImageUrl"].toString(),
+              AwardVideoYouTubeId: stage["AwardVideoYouTubeId"].toString(),
+              CompletionAwardMessage: stage["CompletionAwardMessage"].toString(),
+              CompletionCode: stage["CompletionCode"].toString(),
+              GeofencingRadius: stage["GeofencingRadius"].toString(),
+              Question: stage["Question"].toString(),
+              KeyImage: stage["KeyImage"].toString(),
+              KeyImageUrl: stage["KeyImageUrl"].toString(),
+              Latitude: stage["Location"]["Latitude"].toString(),
+              Longitude: stage["Location"]["Longitude"].toString(),
+              MultiChoiceOptions: stage["MultiChoiceOptions"].toString(),
+            ));
           });
         }
 
-        AdventureList.add(
-          AdventureData(
-            AdventureGuid: AdventureGuid,
-            Id: Id,
-            Title: Title,
-            KeyImageUrl: KeyImageUrl,
-            DeepLink: DeepLink,
-            Description: Description,
-            OwnerPublicGuid: OwnerPublicGuid,
-            RatingsAverage: RatingsAverage,
-            RatingsTotalCount: RatingsTotalCount,
-            Latitude: Latitude,
-            Longitude: Longitude,
-            AdventureThemes: AdventureThemes,
-            OwnerId: OwnerId,
-            OwnerUsername: OwnerUsername,
-            Stages: Stages,
-          )
-        );
+        AdventureList.add(AdventureData(
+          AdventureGuid: AdventureGuid,
+          Id: Id,
+          Title: Title,
+          KeyImageUrl: KeyImageUrl,
+          DeepLink: DeepLink,
+          Description: Description,
+          OwnerPublicGuid: OwnerPublicGuid,
+          RatingsAverage: RatingsAverage,
+          RatingsTotalCount: RatingsTotalCount,
+          Latitude: Latitude,
+          Longitude: Longitude,
+          AdventureThemes: AdventureThemes,
+          OwnerId: OwnerId,
+          OwnerUsername: OwnerUsername,
+          Stages: Stages,
+        ));
+        } catch (exception) {
+          httpCode = 'stage exception';
+          httpMessage = exception.toString();
+          return Adventures(AdventureList: AdventureList, httpCode: httpCode, httpMessage: httpMessage, httpBody: httpBody);
+        }
       }
-      return Adventures(
-            AdventureList: AdventureList,
-            httpCode: httpCode,
-            httpMessage: httpMessage);
-    }
-    else {
-      print('NOT OK');
-      print(httpCode);
-      print(httpMessage);
-      return Adventures(
-            AdventureList: [],
-            httpCode: httpCode,
-            httpMessage: httpMessage);
+      return Adventures(AdventureList: AdventureList, httpCode: httpCode, httpMessage: httpMessage, httpBody: httpBody);
+    } else {
+      return Adventures(AdventureList: [], httpCode: httpCode, httpMessage: httpMessage, httpBody: httpBody);
     }
   } catch (exception) {
     httpCode = '503';
     httpMessage = exception.toString();
-    return Adventures(
-          AdventureList: [],
-          httpCode: httpCode,
-          httpMessage: httpMessage);
+    return Adventures(AdventureList: [], httpCode: httpCode, httpMessage: httpMessage, httpBody: httpBody);
   } // end catch exception
 }

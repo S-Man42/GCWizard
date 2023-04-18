@@ -4,11 +4,13 @@ class Adventures {
   final List<AdventureData> AdventureList;
   final String httpCode;
   final String httpMessage;
+  final String httpBody;
 
   Adventures({
     required this.AdventureList,
     required this.httpCode,
     required this.httpMessage,
+    required this.httpBody,
   });
 }
 

@@ -13,8 +13,8 @@ import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_dropdown_spinner.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/map_view/widget/gcw_mapview.dart';
@@ -22,7 +22,6 @@ import 'package:gc_wizard/tools/images_and_files/adventure_labs/logic/adventure_
 
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:prefs/prefs.dart';
 
 class AdventureLabs extends StatefulWidget {
   const AdventureLabs({Key? key}) : super(key: key);
@@ -32,13 +31,17 @@ class AdventureLabs extends StatefulWidget {
 }
 
 class AdventureLabsState extends State<AdventureLabs> {
-  var _currentCoords = defaultBaseCoordinate;
-  var _currentRadius = 1000;
+  BaseCoordinate _currentCoords = defaultBaseCoordinate;
+  int _currentRadius = 1000;
   List<AdventureData> _adventureList = [];
-  var _currentAdventureIndex = 0;
-  var _currentAdventureList = [];
+  int _currentAdventureIndex = 0;
+  final List<String> _currentAdventureList = [];
 
-  late Adventures _outData;
+  Adventures _outData = Adventures(
+      AdventureList: [],
+      httpCode: '',
+      httpMessage: '',
+      httpBody: '');
 
   @override
   Widget build(BuildContext context) {
@@ -110,9 +113,9 @@ class AdventureLabsState extends State<AdventureLabs> {
 
     _adventureList = _outData.AdventureList;
     _currentAdventureList.clear();
-    _adventureList.forEach((element) {
+    for (var element in _adventureList) {
       _currentAdventureList.add(element.Title);
-    });
+    }
     // outData != null
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -146,34 +149,34 @@ class AdventureLabsState extends State<AdventureLabs> {
         markerText: adventure.Title,
         point: LatLng(double.parse(adventure.Latitude), double.parse(adventure.Longitude)),
         color: Colors.red));
-    adventure.Stages.forEach((stage) {
+    for (var stage in adventure.Stages) {
       result.add(GCWMapPoint(
           uuid: 'StagePoint',
           markerText: adventure.Title + '\n' + stage.Title,
           point: LatLng(double.parse(stage.Latitude), double.parse(stage.Longitude)),
           color: Colors.black));
-    });
+    }
 
     return result;
   }
 
   List<GCWMapPoint> _getAllPoints(List<AdventureData> adventures) {
     List<GCWMapPoint> result = [];
-    adventures.forEach((adventure) {
+    for (var adventure in adventures) {
       result.add(GCWMapPoint(
           uuid: 'OriginalPoint',
           markerText: adventure.Title,
           point: LatLng(double.parse(adventure.Latitude), double.parse(adventure.Longitude)),
           color: Colors.red));
-      adventure.Stages.forEach((stage) {
+      for (var stage in adventure.Stages) {
         result.add(GCWMapPoint(
             uuid: 'StagePoint',
             markerText:
                 (adventure.Title.length > 27 ? adventure.Title.substring(0, 27) : adventure.Title) + '\n' + stage.Title,
             point: LatLng(double.parse(stage.Latitude), double.parse(stage.Longitude)),
             color: Colors.black));
-      });
-    });
+      }
+    }
 
     return result;
   }
@@ -189,8 +192,10 @@ class AdventureLabsState extends State<AdventureLabs> {
       [i18n(context, 'adventure_labs_lab_ratingstotalcount'), adventure.RatingsTotalCount],
       [
         i18n(context, 'adventure_labs_lab_location'),
-        formatCoordOutput(LatLng(double.parse(adventure.Latitude), double.parse(adventure.Longitude)),
-            {'format': Prefs.get('coord_default_format')} as CoordinateFormat, defaultEllipsoid)
+        formatCoordOutput(
+            LatLng(double.parse(adventure.Latitude), double.parse(adventure.Longitude)),
+            _currentCoords.format,
+            defaultEllipsoid)
       ],
       [i18n(context, 'adventure_labs_lab_adventurethemes'), adventure.AdventureThemes],
     ];
@@ -223,7 +228,7 @@ class AdventureLabsState extends State<AdventureLabs> {
       [
         i18n(context, 'adventure_labs_lab_location'),
         formatCoordOutput(LatLng(double.parse(stage.Latitude), double.parse(stage.Longitude)),
-            {'format': Prefs.get('coord_default_format')} as CoordinateFormat, defaultEllipsoid)
+            _currentCoords.format, defaultEllipsoid)
       ],
       [i18n(context, 'adventure_labs_lab_stages_geofencingradius'), stage.GeofencingRadius],
       [i18n(context, 'adventure_labs_lab_stages_question'), stage.Question],
@@ -269,7 +274,7 @@ class AdventureLabsState extends State<AdventureLabs> {
     result.add(GCWTextDivider(
       text: i18n(context, 'adventure_labs_lab_stages'),
     ));
-    stages.forEach((stage) {
+    for (var stage in stages) {
       result.add(
         GCWExpandableTextDivider(
           expanded: false,
@@ -277,7 +282,7 @@ class AdventureLabsState extends State<AdventureLabs> {
           child: Column(children: _buildOutputAdventureStagesData(stage)),
         ),
       );
-    });
+    }
     return Column(
       children: result,
     );
@@ -376,12 +381,13 @@ class AdventureLabsState extends State<AdventureLabs> {
   Widget _buildOutputError() {
     return Column(children: <Widget>[
       GCWTextDivider(
-        text: 'Error',
+        text: i18n(context, 'adventure_labs_lab_error'),
       ),
       GCWColumnedMultilineOutput(
         data: [
-          ['httpCode', _outData.httpCode],
-          ['httpMessage', _outData.httpMessage],
+          [i18n(context, 'adventure_labs_lab_http_code'), _outData.httpCode],
+          [i18n(context, 'adventure_labs_lab_http_message'), _outData.httpMessage],
+          [i18n(context, 'adventure_labs_lab_http_body'), _outData.httpBody],
         ],
         flexValues: const [2, 3],
       )
@@ -392,7 +398,12 @@ class AdventureLabsState extends State<AdventureLabs> {
     if (_currentAdventureList.isNotEmpty) {
       return _buildOutputAdventure();
     } else {
-      return _buildOutputError();
+      if (_outData.httpCode == '') {
+        return Container();
+      }
+      else {
+        return _buildOutputError();
+      }
     }
   }
 }
