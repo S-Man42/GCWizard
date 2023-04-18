@@ -1,18 +1,21 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _GCWCoordsGeo3x3 extends StatefulWidget {
-  final Function onChanged;
-  final BaseCoordinates coordinates;
+  final void Function(Geo3x3?) onChanged;
+  final Geo3x3 coordinates;
+  final bool isDefault;
 
-  const _GCWCoordsGeo3x3({Key key, this.onChanged, this.coordinates}) : super(key: key);
+  const _GCWCoordsGeo3x3({Key? key, required this.onChanged, required this.coordinates, this.isDefault = true}) : super(key: key);
 
   @override
   _GCWCoordsGeo3x3State createState() => _GCWCoordsGeo3x3State();
 }
 
 class _GCWCoordsGeo3x3State extends State<_GCWCoordsGeo3x3> {
-  TextEditingController _controller;
+  late TextEditingController _controller;
   var _currentCoord = '';
+
+  bool _initialized = false;
 
   @override
   void initState() {
@@ -28,13 +31,13 @@ class _GCWCoordsGeo3x3State extends State<_GCWCoordsGeo3x3> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.coordinates != null) {
-      var geo3x3 = widget.coordinates is Geo3x3
-          ? widget.coordinates as Geo3x3
-          : Geo3x3.fromLatLon(widget.coordinates.toLatLng(), 20);
+    if (!widget.isDefault && !_initialized) {
+      var geo3x3 = widget.coordinates;
       _currentCoord = geo3x3.text;
 
       _controller.text = _currentCoord;
+
+      _initialized = true;
     }
 
     return Column(children: <Widget>[
@@ -51,7 +54,7 @@ class _GCWCoordsGeo3x3State extends State<_GCWCoordsGeo3x3> {
     ]);
   }
 
-  _setCurrentValueAndEmitOnChange() {
+  void _setCurrentValueAndEmitOnChange() {
     try {
       widget.onChanged(Geo3x3.parse(_currentCoord));
     } catch (e) {}

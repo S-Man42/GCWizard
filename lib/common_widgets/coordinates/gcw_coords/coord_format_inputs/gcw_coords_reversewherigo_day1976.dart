@@ -1,33 +1,33 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _GCWCoordsReverseWherigoDay1976 extends StatefulWidget {
-  final Function onChanged;
-  final BaseCoordinates coordinates;
+  final void Function(ReverseWherigoDay1976?) onChanged;
+  final ReverseWherigoDay1976 coordinates;
+  final bool isDefault;
 
-  const _GCWCoordsReverseWherigoDay1976({Key key, this.onChanged, this.coordinates}) : super(key: key);
+  const _GCWCoordsReverseWherigoDay1976({Key? key, required this.onChanged, required this.coordinates, this.isDefault = true}) : super(key: key);
 
   @override
   _GCWCoordsReverseWherigoDay1976State createState() => _GCWCoordsReverseWherigoDay1976State();
 }
 
 class _GCWCoordsReverseWherigoDay1976State extends State<_GCWCoordsReverseWherigoDay1976> {
-  var _ControllerA;
-  var _ControllerB;
+  late TextEditingController _ControllerA;
+  late TextEditingController _ControllerB;
 
-  FocusNode _FocusNodeA;
-  FocusNode _FocusNodeB;
+  final FocusNode _FocusNodeA = FocusNode();
+  final FocusNode _FocusNodeB = FocusNode();
 
-  var _currentA = "";
-  var _currentB = "";
+  var _currentA = '';
+  var _currentB = '';
+
+  bool _initialized = false;
 
   @override
   void initState() {
     super.initState();
     _ControllerA = TextEditingController(text: _currentA);
     _ControllerB = TextEditingController(text: _currentB);
-
-    _FocusNodeA = FocusNode();
-    _FocusNodeB = FocusNode();
   }
 
   @override
@@ -42,15 +42,15 @@ class _GCWCoordsReverseWherigoDay1976State extends State<_GCWCoordsReverseWherig
 
   @override
   Widget build(BuildContext context) {
-    if (widget.coordinates != null) {
-      var day1976 = widget.coordinates is ReverseWherigoDay1976
-          ? widget.coordinates as ReverseWherigoDay1976
-          : ReverseWherigoDay1976.fromLatLon(widget.coordinates.toLatLng());
+    if (!widget.isDefault && !_initialized) {
+      var day1976 = widget.coordinates;
       _currentA = day1976.s;
       _currentB = day1976.t;
 
       _ControllerA.text = _currentA.toString();
       _ControllerB.text = _currentB.toString();
+
+      _initialized = true;
     }
 
     return Column(children: <Widget>[
@@ -77,7 +77,7 @@ class _GCWCoordsReverseWherigoDay1976State extends State<_GCWCoordsReverseWherig
     ]);
   }
 
-  _setCurrentValueAndEmitOnChange() {
+  void _setCurrentValueAndEmitOnChange() {
     widget.onChanged(ReverseWherigoDay1976.parse(_currentA.toString() + '\n' + _currentB.toString()));
   }
 }

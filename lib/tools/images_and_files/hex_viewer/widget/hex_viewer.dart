@@ -18,21 +18,21 @@ import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 
 class HexViewer extends StatefulWidget {
-  final GCWFile platformFile;
+  final GCWFile? file;
 
-  const HexViewer({Key key, this.platformFile}) : super(key: key);
+  const HexViewer({Key? key, this.file}) : super(key: key);
 
   @override
   HexViewerState createState() => HexViewerState();
 }
 
 class HexViewerState extends State<HexViewer> {
-  ScrollController _scrollControllerHex;
-  ScrollController _scrollControllerASCII;
+  late ScrollController _scrollControllerHex;
+  late ScrollController _scrollControllerASCII;
 
-  String _hexData;
-  double _hexDataLines;
-  Uint8List _bytes;
+  String? _hexData;
+  double? _hexDataLines;
+  Uint8List? _bytes;
 
   final _MAX_LINES = 100;
   final _CHARS_PER_LINE = 16 * 2;
@@ -58,37 +58,34 @@ class HexViewerState extends State<HexViewer> {
     super.dispose();
   }
 
-  _setData(Uint8List bytes) {
+  void _setData(Uint8List bytes) {
     _bytes = bytes;
     _hexData = file2hexstring(bytes);
-    _hexDataLines = _hexData.length / _CHARS_PER_LINE;
+    _hexDataLines = (_hexData?.length ?? 0) / _CHARS_PER_LINE;
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_hexData == null && widget.platformFile != null) {
-      _setData(widget.platformFile.bytes);
+    if (_hexData == null && widget.file != null) {
+      _setData(widget.file!.bytes);
     }
 
     return Column(
       children: <Widget>[
         GCWOpenFile(
-          onLoaded: (_file) {
+          onLoaded: (GCWFile? value) {
             _currentLines = 0;
-            if (_file == null) {
+            if (value == null) {
               showToast(i18n(context, 'common_loadfile_exception_notloaded'));
               return;
             }
 
-            if (_file != null) {
-              _setData(_file.bytes);
+            _setData(value.bytes);
 
-              setState(() {});
-            }
+            setState(() {});
           },
         ),
         GCWDefaultOutput(
-            child: _buildOutput(),
             trailing: Row(
               children: [
                 GCWIconButton(
@@ -102,36 +99,41 @@ class HexViewerState extends State<HexViewer> {
                   icon: Icons.copy,
                   size: IconButtonSize.SMALL,
                   onPressed: () {
-                    insertIntoGCWClipboard(context, _hexData);
+                    if (_hexData != null) insertIntoGCWClipboard(context, _hexData!);
                   },
                 ),
               ],
-            ))
+            ),
+            child: _buildOutput())
       ],
     );
   }
 
-  _resetScrollViews() {
+  void _resetScrollViews() {
     _scrollControllerASCII.jumpTo(0.0);
     _scrollControllerHex.jumpTo(0.0);
   }
 
-  _buildOutput() {
-    if (_hexData == null) return null;
+  Widget _buildOutput() {
+    if (_hexData == null || _hexDataLines == null) return Container();
 
     var hexStrStart = _currentLines * _CHARS_PER_LINE;
     var hexStrEnd = hexStrStart + _CHARS_PER_LINE * _MAX_LINES;
-    var hexDataStr = _hexData.substring(hexStrStart, min(hexStrEnd, _hexData.length));
+    var hexDataStr = _hexData!.substring(hexStrStart, min(hexStrEnd, _hexData!.length));
     var hexText = insertEveryNthCharacter(hexDataStr, _CHARS_PER_LINE, '\n');
     var hexTextList = hexText.split('\n').map((line) => insertSpaceEveryNthCharacter(line, 2) + ' ').toList();
     hexText = hexTextList.join('\n');
 
     var asciiText = hexTextList.map((line) {
       return line.split(' ').map((hexValue) {
-        if (hexValue == null || hexValue.isEmpty) return '';
+        if (hexValue.isEmpty) return '';
 
         var charCode = int.tryParse(hexValue, radix: 16);
-        if (charCode < 32) return '.';
+        if (charCode == null) return '';
+        if (charCode < 32 || charCode == 127) return '.';
+        // Bug in Text Widget which does not convert this manually for some reasons since a few Flutter versions.
+        // Instead it adds a linebreak to the end... weird
+        if (charCode == 133) return '…';
 
         return String.fromCharCode(charCode);
       }).join();
@@ -139,111 +141,69 @@ class HexViewerState extends State<HexViewer> {
 
     return Column(
       children: [
-        if (_hexData.length > _MAX_LINES)
-          Container(
-            child: Row(
-              children: [
-                GCWIconButton(
-                  icon: Icons.arrow_back_ios,
-                  onPressed: () {
-                    setState(() {
-                      _currentLines -= _MAX_LINES;
-                      if (_currentLines < 0) {
-                        _currentLines = (_hexDataLines.floor() ~/ _MAX_LINES) * _MAX_LINES;
-                      }
 
-                      _resetScrollViews();
-                    });
-                  },
-                ),
-                Expanded(
-                  child: GCWText(
-                    text:
-                        '${i18n(context, 'hexviewer_lines')}: ${_currentLines + 1} - ${min(_currentLines + _MAX_LINES, _hexDataLines.ceil())} / ${_hexDataLines.ceil()}',
-                    align: Alignment.center,
-                  ),
-                ),
-                GCWIconButton(
-                  icon: Icons.arrow_forward_ios,
-                  onPressed: () {
-                    setState(() {
-                      _currentLines += _MAX_LINES;
-                      if (_currentLines > _hexDataLines) {
-                        _currentLines = 0;
-                      }
-
-                      _resetScrollViews();
-                    });
-                  },
-                )
-              ],
-            ),
-            padding: EdgeInsets.only(bottom: 10),
-          ),
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(
-              child: Container(
+              flex: 15,
+              child: NotificationListener<ScrollNotification>(
+                  child: SingleChildScrollView(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      controller: _scrollControllerHex,
+                      scrollDirection: Axis.horizontal,
+                      child: GCWText(
+                        text: hexText,
+                        style: gcwMonotypeTextStyle(),
+                      ),
+                ),
+                onNotification: (ScrollNotification scrollNotification) {
+                  if (_isASCIIScrolling) return false;
+
+                  if (scrollNotification is ScrollStartNotification) {
+                    _isHexScrolling = true;
+                  } else if (scrollNotification is ScrollEndNotification) {
+                    _isHexScrolling = false;
+                  } else if (scrollNotification is ScrollUpdateNotification) {
+                    _scrollControllerASCII.position.jumpTo(_scrollControllerASCII.position.maxScrollExtent *
+                        _scrollControllerHex.position.pixels /
+                        _scrollControllerHex.position.maxScrollExtent);
+                  }
+
+                  return true;
+                },
+              ),
+            ),
+            Expanded(flex: 1, child: Container()),
+            Expanded(
+                flex: 5,
                 child: NotificationListener<ScrollNotification>(
-                    child: SingleChildScrollView(
-                        physics: AlwaysScrollableScrollPhysics(),
-                        controller: _scrollControllerHex,
-                        scrollDirection: Axis.horizontal,
-                        child: GCWText(
-                          text: hexText,
-                          style: gcwMonotypeTextStyle(),
-                        ),
+                  child: SingleChildScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    controller: _scrollControllerASCII,
+                    scrollDirection: Axis.horizontal,
+                    child: GCWText(
+                      text: asciiText,
+                      style: gcwMonotypeTextStyle(),
+                    ),
                   ),
                   onNotification: (ScrollNotification scrollNotification) {
-                    if (_isASCIIScrolling) return false;
+                    if (_isHexScrolling) return false;
 
                     if (scrollNotification is ScrollStartNotification) {
-                      _isHexScrolling = true;
+                      _isASCIIScrolling = true;
                     } else if (scrollNotification is ScrollEndNotification) {
-                      _isHexScrolling = false;
+                      _isASCIIScrolling = false;
                     } else if (scrollNotification is ScrollUpdateNotification) {
-                      _scrollControllerASCII.position.jumpTo(_scrollControllerASCII.position.maxScrollExtent *
-                          _scrollControllerHex.position.pixels /
-                          _scrollControllerHex.position.maxScrollExtent);
+                      _scrollControllerHex.position.jumpTo(_scrollControllerHex.position.maxScrollExtent *
+                          _scrollControllerASCII.position.pixels /
+                          _scrollControllerASCII.position.maxScrollExtent);
                     }
 
                     return true;
                   },
-                ),
-              ),
-              flex: 15,
-            ),
-            Expanded(child: Container(), flex: 1),
-            Expanded(
-                child: Container(
-                  child: NotificationListener<ScrollNotification>(
-                    child: SingleChildScrollView(
-                      physics: AlwaysScrollableScrollPhysics(),
-                      controller: _scrollControllerASCII,
-                      scrollDirection: Axis.horizontal,
-                      child: GCWText(
-                        text: asciiText,
-                        style: gcwMonotypeTextStyle(),
-                      ),
-                    ),
-                    onNotification: (ScrollNotification scrollNotification) {
-                      if (_isHexScrolling) return false;
-
-                      if (scrollNotification is ScrollStartNotification) {
-                        _isASCIIScrolling = true;
-                      } else if (scrollNotification is ScrollEndNotification) {
-                        _isASCIIScrolling = false;
-                      } else if (scrollNotification is ScrollUpdateNotification) {
-                        _scrollControllerHex.position.jumpTo(_scrollControllerHex.position.maxScrollExtent *
-                            _scrollControllerASCII.position.pixels /
-                            _scrollControllerASCII.position.maxScrollExtent);
-                      }
-
-                      return true;
-                    },
-                  ),
-                ),
-                flex: 5)
+                ))
           ],
         )
       ],
@@ -251,10 +211,10 @@ class HexViewerState extends State<HexViewer> {
   }
 }
 
-openInHexViewer(BuildContext context, GCWFile file) {
+void openInHexViewer(BuildContext context, GCWFile file) {
   Navigator.push(
       context,
-      NoAnimationMaterialPageRoute(
+      NoAnimationMaterialPageRoute<GCWTool>(
           builder: (context) => GCWTool(
-              tool: HexViewer(platformFile: file), toolName: i18n(context, 'hexviewer_title'), i18nPrefix: '')));
+              tool: HexViewer(file: file), toolName: i18n(context, 'hexviewer_title'), id: 'hexviewer')));
 }
