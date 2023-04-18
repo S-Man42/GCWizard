@@ -887,9 +887,9 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'navajo',
     ]),
-    GCWTool(tool: NumberPyramidSolver(), i18nPrefix: 'numberpyramidsolver', categories: [
+    GCWTool(tool: const NumberPyramidSolver(), id: 'numberpyramidsolver', categories: const [
       ToolCategory.GAMES
-    ], searchKeys: [
+    ], searchKeys: const [
       'games',
       'games_numberpyramidsolver',
     ]),

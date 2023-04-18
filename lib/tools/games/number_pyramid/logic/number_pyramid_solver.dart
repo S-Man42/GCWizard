@@ -2,28 +2,43 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:gc_wizard/tools/games/number_pyramid/logic/dennistreysa_number_pyramid_solver/pyramid.dart';
+import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
+import 'package:gc_wizard/utils/json_utils.dart';
 
 enum NumberPyramidFillType { USER_FILLED, CALCULATED }
 
-List<List<List<int>>> solvePyramid(List<List<int>> pyramid, int maxSolutions) {
-	return solve(pyramid, maxSolutions: maxSolutions);
+class NumberPyramidBoardValue {
+	NumberPyramidFillType type;
+	int? value;
+
+	NumberPyramidBoardValue(this.value, this.type);
 }
 
+
 class NumberPyramid {
-	List<List<Map<String, dynamic>>> pyramid;
-	var rowCount;
+	late List<List<NumberPyramidBoardValue?>> pyramid;
+	List<_NumberPyramidSolution>? solutions;
+	int rowCount = 1;
 
-	NumberPyramid(int rowCount, {NumberPyramid oldPyramid}) {
-		this.rowCount = rowCount;
-		pyramid = List<List<Map<String, dynamic>>>.generate(
-				rowCount, (index) => List<Map<String, dynamic>>.generate(index+1, (index) => null));
+	NumberPyramid(this.rowCount, {NumberPyramid? pyramid, List<List<int?>>? pyramidList}) {
+		this.pyramid = List<List<NumberPyramidBoardValue?>>.generate(
+				rowCount, (index) => List<NumberPyramidBoardValue?>.generate(index + 1, (index) => null));
 
-		if (oldPyramid != null) {
-			for (var layer=0; layer < min(oldPyramid.getRowsCount(), rowCount); layer++) {
-				for (var brick=0; brick < pyramid[layer].length; brick++) {
-					if (oldPyramid.pyramid[layer][brick] != null)
-						pyramid[layer][brick]= oldPyramid.pyramid[layer][brick];
-				}
+		if (pyramid != null) {
+			for (var layer=0; layer < min(pyramid.getRowsCount(), rowCount); layer++) {
+				for (var brick=0; brick < this.pyramid[layer].length; brick++) {
+					if (pyramid.pyramid[layer][brick] != null) {
+            this.pyramid[layer][brick] = pyramid.pyramid[layer][brick];
+          }
+        }
+			}
+		} else if (pyramidList != null) {
+			for (var layer = 0; layer < min(pyramidList.length, rowCount); layer++) {
+				for (var brick = 0; brick < min(pyramidList[layer].length, this.pyramid[layer].length); brick++) {
+					if (pyramidList[layer][brick] != null) {
+						setValue(layer, brick, pyramidList[layer][brick], NumberPyramidFillType.USER_FILLED);
+          }
+        }
 			}
 		}
 	}
@@ -36,58 +51,74 @@ class NumberPyramid {
 		return row + 1;
 	}
 
-	int getValue(int x, int y) {
-		if (!validPosition(x, y) || pyramid[y][x] == null)
-			return null;
-		return pyramid[y][x]['value'];
+	int? getValue(int x, int y) {
+		if (!validPosition(x, y) || pyramid[y][x] == null) {
+      return null;
+    }
+    return pyramid[y][x]?.value;
 	}
 
-	/// return value changed
-	bool setValue(int x, int y, int value, NumberPyramidFillType type) {
-		int oldValue;
+	/// return valid position
+	bool setValue(int x, int y, int? value, NumberPyramidFillType type) {
+		int? oldValue;
 		bool valueChanged = false;
 		if (!validPosition(x, y)) return false;
 
 		oldValue = getValue(x, y);
-		if (value != oldValue)
-			valueChanged = true;
+		if (value != oldValue) {
+      valueChanged = true;
+    }
 
-		pyramid[y][x] = {'value': value, 'type': type};
+    pyramid[y][x] =NumberPyramidBoardValue(value, type);
 
 		return valueChanged;
 	}
 
-	NumberPyramidFillType getType(int x, int y) {
+	NumberPyramidFillType? getFillType(int x, int y) {
 		if (!validPosition(x, y)) return null;
 
-		if (pyramid[y][x] != null)
-			return pyramid[y][x]['type'];
-
-		return null;
+		return (pyramid[y][x] == null || pyramid[y][x]!.type == NumberPyramidFillType.CALCULATED)
+				? NumberPyramidFillType.CALCULATED
+				: NumberPyramidFillType.USER_FILLED;
 	}
 
 	bool validPosition(int x, int y) {
-		return !(pyramid == null || x == null || y == null ||
-				y < 0 || y >= pyramid.length || pyramid[y] == null ||
-				x < 0 || x >= pyramid[y].length);
+		return !(y < 0 || y >= pyramid.length || x < 0 || x >= pyramid[y].length);
 	}
 
-	List<List<int>> solveableBoard() {
-		var board = <List<int>>[];
+	void solvePyramid(int maxSolutions) {
+		var solutions = solve(_solveableBoard(), maxSolutions: maxSolutions);
+		if (solutions == null) return;
+
+		this.solutions = solutions.map((solution) => _NumberPyramidSolution(solution)).toList();
+	}
+
+	List<List<int?>> _solveableBoard() {
+		var _pyramid = <List<int?>>[];
 		for (var y = 0; y < pyramid.length; y++) {
-			var row = <int>[];
+			var row = <int?>[];
 			for (var x = 0; x < pyramid[y].length; x++) {
-				row.add(getType(x, y) == NumberPyramidFillType.USER_FILLED ? getValue(x, y) : null);
+				row.add(getFillType(x, y) == NumberPyramidFillType.USER_FILLED ? getValue(x, y) : null);
 			}
-			board.add(row);
+			_pyramid.add(row);
 		}
-		return board;
+		return _pyramid;
 	}
 
-	removeCalculated() {
+	void removeCalculated() {
 		for (var y = 0; y < pyramid.length; y++) {
 			for (var x = 0; x < pyramid[y].length; x++) {
-				if (getType(x, y) == NumberPyramidFillType.CALCULATED) setValue(x, y, null, NumberPyramidFillType.CALCULATED);
+				if (getFillType(x, y) == NumberPyramidFillType.CALCULATED) setValue(x, y, null, NumberPyramidFillType.CALCULATED);
+			}
+		}
+	}
+
+	void mergeSolution(int solutionIndex) {
+		if (solutions == null || solutionIndex < 0 || solutionIndex >= solutions!.length) return;
+		for (var y = 0; y < pyramid.length; y++) {
+			for (var x = 0; x < pyramid[y].length; x++) {
+				if (getFillType(x, y) == NumberPyramidFillType.USER_FILLED) continue;
+				setValue(x, y, solutions![solutionIndex].getValue(x, y), NumberPyramidFillType.CALCULATED);
 			}
 		}
 	}
@@ -97,7 +128,7 @@ class NumberPyramid {
 		for(var y = 0; y < pyramid.length; y++) {
 			for (var x = 0; x < pyramid[y].length; x++) {
 				var value = getValue(x, y);
-				var type = getType(x, y);
+				var type = getFillType(x, y);
 				if (value != null) {
 					var entryList = <String, dynamic>{'x': x, 'y': y, 'value': value};
 					if (type == NumberPyramidFillType.USER_FILLED) entryList.addAll({'ud': true});
@@ -105,37 +136,46 @@ class NumberPyramid {
 				}
 			}
 		}
-
 		var json = jsonEncode({'columns': getColumnsCount(rowCount), 'rows': rowCount, 'values': jsonEncode(list)});
 
 		return json;
 	}
 
 
-	static NumberPyramid fromJson(String text) {
-		if (text == null) return null;
-		var json = jsonDecode(text);
+	static NumberPyramid? fromJson(String text) {
+		var json = asJsonMapOrNull(jsonDecode(text));
 		if (json == null) return null;
 
 		NumberPyramid pyramid;
-		var rowCount = json['rows'];
-		var values = json['values'];
+		var rowCount = toIntOrNull(json['rows']);
+		var values = toStringListOrNull(json['values']) ;
 		if (rowCount == null) return null;
 
 		pyramid = NumberPyramid(rowCount);
 		if (values != null) {
-			for (var jsonElement in jsonDecode(values)) {
+			for (var jsonElement in values) {
 				var element = jsonDecode(jsonElement);
-				var x = element['x'];
-				var y = element['y'];
-				var value = element['v'];
-				var ud = element['ud'];
+				var x = toIntOrNull(element['x']);
+				var y = toIntOrNull(element['y']);
+				var value = toIntOrNull(element['v']);
+				var ud = toBoolOrNull(element['ud']);
 				if (x != null && y != null && value != null) {
 					var type = (ud == true) ? NumberPyramidFillType.USER_FILLED : NumberPyramidFillType.CALCULATED;
-					pyramid.setValue(y, x, int.tryParse(value), type);
+					pyramid.setValue(y, x, value, type);
 				}
 			}
 		}
 		return pyramid;
+	}
+}
+
+class _NumberPyramidSolution {
+	final List<List<int?>> solution;
+
+	_NumberPyramidSolution(this.solution);
+
+	int? getValue (int i, int j) {
+		if (i < 0 || i >= solution.length || j < 0 || j >= solution[i].length) return null;
+		return solution[i][j];
 	}
 }

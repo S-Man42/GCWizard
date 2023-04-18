@@ -87,6 +87,7 @@ class _SudokuSolution {
   _SudokuSolution(this.solution);
 
   int? getValue (int i, int j) {
+    if (i < 0 || i >= solution.length || j < 0 || j >= solution[i].length) return null;
     return solution[i][j];
   }
 }

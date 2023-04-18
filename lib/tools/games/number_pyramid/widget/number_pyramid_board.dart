@@ -1,19 +1,15 @@
-import 'dart:math';
-import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/theme/theme.dart';
-import 'package:gc_wizard/application/theme/theme_colors.dart';
-import 'package:gc_wizard/tools/games/number_pyramid/logic/number_pyramid_solver.dart';
-import 'package:touchable/touchable.dart';
+part of 'package:gc_wizard/tools/games/number_pyramid/widget/number_pyramid_solver.dart';
 
-Point<int> selectedBox;
+Point<int>? selectedBox;
 
 class NumberPyramidBoard extends StatefulWidget {
   final NumberPyramidFillType type;
-  final Function(int, int) showBoxValue;
-  final Function onChanged;
+  final void Function(int, int) showBoxValue;
+  final void Function(NumberPyramid) onChanged;
   final NumberPyramid board;
 
-  NumberPyramidBoard({Key key, this.onChanged, this.showBoxValue, this.board, this.type: NumberPyramidFillType.CALCULATED})
+  const NumberPyramidBoard({Key? key, required this.onChanged, required this.showBoxValue,
+    required this.board, this.type = NumberPyramidFillType.CALCULATED})
       : super(key: key);
 
   @override
@@ -29,15 +25,16 @@ class NumberPyramidBoardState extends State<NumberPyramidBoard> {
             child: AspectRatio(
                 aspectRatio: 1 / 0.5,
                 child: CanvasTouchDetector(
-                  gesturesToOverride: [GestureType.onTapDown],
+                  gesturesToOverride: const [GestureType.onTapDown],
                   builder: (context) {
                     return CustomPaint(
                       painter: NumberPyramidBoardPainter(context, widget.type, widget.board, (x, y, value) {
                           setState(() {
-                            if (value == null)
+                            if (value == null) {
                               widget.board.setValue(x, y, null, NumberPyramidFillType.CALCULATED);
-                            else
+                            } else {
                               widget.board.setValue(x, y, value, NumberPyramidFillType.USER_FILLED);
+                            }
 
                             widget.onChanged(widget.board);
                           });
@@ -53,8 +50,8 @@ class NumberPyramidBoardState extends State<NumberPyramidBoard> {
 }
 
 class NumberPyramidBoardPainter extends CustomPainter {
-  final Function(int, int, int) setBoxValue;
-  final Function(int, int) showBoxValue;
+  final void Function(int, int, int?) setBoxValue;
+  final void Function(int, int) showBoxValue;
   final NumberPyramid board;
   final BuildContext context;
   final NumberPyramidFillType type;
@@ -68,23 +65,23 @@ class NumberPyramidBoardPainter extends CustomPainter {
 
     var paint = Paint();
     var paintBack = Paint();
-    Rect selectedRect;
+    var selectedRect = const Rect.fromLTRB(0, 0, 0, 0);
     paint.strokeWidth = 1;
     paint.style = PaintingStyle.stroke;
-    paint.color = colors.accent();
+
     paintBack.style = PaintingStyle.fill;
     paintBack.color = colors.gridBackground();
 
     const border = 2;
-    double widthOuter = size.width - 2*border;
-    double heightOuter = size.height - 2*border;
+    double widthOuter = size.width - 2 * border;
+    double heightOuter = size.height - 2 * border;
     double xOuter = border.toDouble();
     double yOuter = border.toDouble();
     double widthInner = widthOuter / board.getRowsCount();
     double heightInner = min(heightOuter /  board.getRowsCount(), widthInner / 2);
 
     for (int y = 0; y < board.getRowsCount(); y++) {
-      double xInner = (widthOuter + xOuter - (y+1) * widthInner) / 2;
+      double xInner = (widthOuter + xOuter - (y + 1) * widthInner) / 2;
       double yInner = yOuter + y * heightInner;
 
       for (int x = 0; x < board.getColumnsCount(y); x++) {
@@ -97,18 +94,19 @@ class NumberPyramidBoardPainter extends CustomPainter {
               showBoxValue(boardX, boardY);
             });
 
-        if (selectedBox != null && selectedBox.x == x && selectedBox.y == y)
+        if (selectedBox != null && selectedBox!.x == x && selectedBox!.y == y) {
           selectedRect = Rect.fromLTWH(xInner, yInner, widthInner, heightInner);
+        }
 
         _touchCanvas.drawRect(Rect.fromLTWH(xInner, yInner, widthInner, heightInner), paint);
 
         if (board.getValue(boardX, boardY) != null) {
           var textColor =
-              board.getType(boardX, boardY) == NumberPyramidFillType.USER_FILLED ? colors.accent() : colors.mainFont();
+            board.getFillType(boardX, boardY) == NumberPyramidFillType.USER_FILLED ? colors.secondary() : colors.mainFont();
 
           var fontsize = heightInner * 0.8;
-          var text = board.getValue(boardX, boardY).toString();
-          var textPainter = _buildTextPainter(text, textColor, fontsize);
+          var text = board.getValue(boardX, boardY)?.toString();
+          var textPainter = _buildTextPainter(text ?? '', textColor, fontsize);
 
           while (textPainter.width > widthInner) {
             fontsize *= 0.95;
@@ -119,8 +117,7 @@ class NumberPyramidBoardPainter extends CustomPainter {
               textPainter = _buildTextPainter(text, textColor, fontsize);
               break;
             }
-
-            textPainter = _buildTextPainter(text, textColor, fontsize);
+            textPainter = _buildTextPainter(text ?? '', textColor, fontsize);
           }
 
           textPainter.paint(
@@ -133,7 +130,7 @@ class NumberPyramidBoardPainter extends CustomPainter {
       }
     }
 
-    if (selectedRect != null) {
+    if (!selectedRect.isEmpty) {
       paint.color = colors.focused();
       _touchCanvas.drawRect(selectedRect, paint);
     }

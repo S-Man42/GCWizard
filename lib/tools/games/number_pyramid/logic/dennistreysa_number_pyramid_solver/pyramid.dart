@@ -6,25 +6,25 @@
 */
 import 'dart:math';
 
-var _MAX_SOLUTIONS = 10;
+const MAX_SOLUTIONS_DEFAULT = 10;
+var _max_solutions = MAX_SOLUTIONS_DEFAULT;
 var _globalMaxValue = 1000;
-List<List<List<int>>> _solutions;
+List<List<List<int?>>> _solutions = [];
 
 /* Asserts that a given pyramid is valid
 			Keyword arguments:
 			pyramid -- The pyramid to be checked
 */
-bool _assertValidPyramid(List<List<int>> pyramid) {
+bool _assertValidPyramid(List<List<int?>> pyramid) {
 
-  if (pyramid == null) return false;
   for (var layer=0; layer < pyramid.length - 1; layer++) {
-    if (pyramid[layer] == null) return false;
+    if (pyramid[layer].isEmpty) return false;
     if (pyramid[layer].length != layer + 1) return false;
   }
   return true;
 }
 
-bool _isSolved(List<List<int>> pyramid) {
+bool _isSolved(List<List<int?>> pyramid) {
 
   for (var layer=0; layer < pyramid.length - 1; layer++) {
     for (var brick=0; brick < pyramid[layer].length; brick++) {
@@ -33,11 +33,13 @@ bool _isSolved(List<List<int>> pyramid) {
       var leftChild = pyramid[layer + 1][brick];
       var rightChild = pyramid[layer + 1][brick + 1];
 
-      if ((brickValue == null) | (leftChild == null) | (rightChild == null))
+      if ((brickValue == null) || (leftChild == null) || (rightChild == null)) {
         return false;
+      }
 
-      if (brickValue != (leftChild + rightChild))
+      if (brickValue != (leftChild + rightChild)) {
         return false;
+      }
     }
   }
   return true;
@@ -47,7 +49,7 @@ bool _isSolved(List<List<int>> pyramid) {
 			Keyword arguments:
 			pyramid -- The pyramid to be checked
 */
-bool _isSolveable(List<List<int>> pyramid) {
+bool _isSolveable(List<List<int?>> pyramid) {
 
   for (var layer=0; layer < pyramid.length - 1; layer++) {
     for (var brick=0; brick < pyramid[layer].length; brick++) {
@@ -55,13 +57,15 @@ bool _isSolveable(List<List<int>> pyramid) {
       if (brickValue != null) {
         // left child
         var leftChild = pyramid[layer + 1][brick];
-        if (leftChild != null && leftChild > brickValue)
+        if (leftChild != null && leftChild > brickValue) {
           return false;
+        }
 
         // right child
         var rightChild = pyramid[layer + 1][brick + 1];
-        if (rightChild != null && rightChild > brickValue)
+        if (rightChild != null && rightChild > brickValue) {
           return false;
+        }
       }
     }
   }
@@ -73,17 +77,18 @@ bool _isSolveable(List<List<int>> pyramid) {
 			pyramid -- The pyramid
 			layer/brick -- The location of the brick to get the max value for
 */
-int _getMaxValue(List<List<int>> pyramid, int layer, int brick) {
-
+int? _getMaxValue(List<List<int?>> pyramid, int layer, int brick) {
 
   // if brick already has a value, this is the maximum
-  if (pyramid[layer][brick] != null)
+  if (pyramid[layer][brick] != null) {
     return pyramid[layer][brick];
+  }
 
   // recursively search for parent value
   var left = (layer > 0 && brick > 0) ? _getMaxValue(pyramid, layer - 1, brick - 1) : _globalMaxValue;
   var right = (layer > 0 && brick < layer) ? _getMaxValue(pyramid, layer - 1, brick) : _globalMaxValue;
 
+  if ((left == null) || (right == null)) return null;
   return min(left, right);
 }
 
@@ -92,16 +97,17 @@ int _getMaxValue(List<List<int>> pyramid, int layer, int brick) {
 			pyramid -- The pyramid
 			brick -- Index of the brick (always bottom layer!)
 */
-void _solveGuess(List<List<int>> pyramid, int brick) {
-  if (_solutions.length >= _MAX_SOLUTIONS)
+void _solveGuess(List<List<int?>> pyramid, int brick) {
+  if (_solutions.length >= _max_solutions) {
     return;
+  }
 
   var lastLayer = pyramid.length - 1 ;
   var brickValue = pyramid[lastLayer][brick];
   var startValue = (brickValue != null) ? brickValue : 0;
   var endValue = (brickValue != null) ? brickValue + 1 : _getMaxValue(pyramid, lastLayer, brick);
 
-  for (var currentValue=startValue; currentValue <= endValue; currentValue++) {
+  for (var currentValue = startValue; currentValue <= (endValue ?? 0); currentValue++) {
     pyramid[lastLayer][brick] = currentValue;
 
     // is the pyramid solveable with these values
@@ -109,19 +115,21 @@ void _solveGuess(List<List<int>> pyramid, int brick) {
       // try to repair
       var repairedPyramid = _solveRepair(_copyPyramid(pyramid));
       if (!_isSolved(repairedPyramid)) {
-        if ((brick + 1) < pyramid.length)
+        if ((brick + 1) < pyramid.length) {
           _solveGuess(repairedPyramid, brick + 1);
-      } else if (_solutions.length < _MAX_SOLUTIONS)
+        }
+      } else if (_solutions.length < _max_solutions) {
         _solutions.add(repairedPyramid);
+      }
     }
   }
 }
 
-List<List<int>> _copyPyramid(List<List<int>> pyramid) {
+List<List<int>> _copyPyramid(List<List<int?>> pyramid) {
   var copy = <List<int>>[];
-  pyramid.forEach((layer) {
+  for (var layer in pyramid) {
     copy.add( List<int>.from(layer));
-  });
+  }
   return copy;
 }
 
@@ -129,7 +137,7 @@ List<List<int>> _copyPyramid(List<List<int>> pyramid) {
 			Keyword arguments:
 			pyramid -- The pyramid
 */
-List<List<int>> _solveRepair(List<List<int>> pyramid) {
+List<List<int?>> _solveRepair(List<List<int?>> pyramid) {
   var repairedSomething = true;
 
   while (repairedSomething) {
@@ -167,18 +175,19 @@ List<List<int>> _solveRepair(List<List<int>> pyramid) {
 	Keyword arguments:
 	pyramid -- The pyramid
 */
-List<List<List<int>>> solve(List<List<int>> pyramid, {int maxSolutions}) {
-  if (maxSolutions != null && maxSolutions > 0) _MAX_SOLUTIONS = maxSolutions;
+List<List<List<int?>>>? solve(List<List<int?>> pyramid, {int? maxSolutions = MAX_SOLUTIONS_DEFAULT}) {
+  if (maxSolutions != null && maxSolutions > 0) _max_solutions = maxSolutions;
 
   if (!_assertValidPyramid(pyramid)) return null;
 
   _solutions = [];
 
   pyramid = _solveRepair(pyramid);
-  if (!_isSolved(pyramid))
+  if (!_isSolved(pyramid)) {
     _solveGuess(pyramid, 0);
-  else
+  } else {
     _solutions.add(pyramid);
+  }
 
-  return _solutions  == null || _solutions.length == 0 ? null : _solutions;
+  return _solutions.isEmpty ? null : _solutions;
 }
