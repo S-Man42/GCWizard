@@ -125,10 +125,10 @@ void _solveGuess(List<List<int?>> pyramid, int brick) {
   }
 }
 
-List<List<int>> _copyPyramid(List<List<int?>> pyramid) {
-  var copy = <List<int>>[];
+List<List<int?>> _copyPyramid(List<List<int?>> pyramid) {
+  var copy = <List<int?>>[];
   for (var layer in pyramid) {
-    copy.add( List<int>.from(layer));
+    copy.add(List<int?>.from(layer));
   }
   return copy;
 }

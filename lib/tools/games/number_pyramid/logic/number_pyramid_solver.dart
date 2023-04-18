@@ -21,6 +21,13 @@ class NumberPyramid {
 	int rowCount = 1;
 
 	NumberPyramid(this.rowCount, {NumberPyramid? pyramid, List<List<int?>>? pyramidList}) {
+		if (pyramid != null) {
+			rowCount = pyramid.rowCount;
+		} else if (pyramidList != null) {
+			rowCount = pyramidList.length;
+		}
+		rowCount = max(1, rowCount);
+
 		this.pyramid = List<List<NumberPyramidBoardValue?>>.generate(
 				rowCount, (index) => List<NumberPyramidBoardValue?>.generate(index + 1, (index) => null));
 
@@ -28,7 +35,8 @@ class NumberPyramid {
 			for (var layer=0; layer < min(pyramid.getRowsCount(), rowCount); layer++) {
 				for (var brick=0; brick < this.pyramid[layer].length; brick++) {
 					if (pyramid.pyramid[layer][brick] != null) {
-            this.pyramid[layer][brick] = pyramid.pyramid[layer][brick];
+            setValue(brick, layer, pyramid.getValue(brick, layer), pyramid.getFillType(brick, layer)
+									?? NumberPyramidFillType.CALCULATED);
           }
         }
 			}
@@ -36,7 +44,7 @@ class NumberPyramid {
 			for (var layer = 0; layer < min(pyramidList.length, rowCount); layer++) {
 				for (var brick = 0; brick < min(pyramidList[layer].length, this.pyramid[layer].length); brick++) {
 					if (pyramidList[layer][brick] != null) {
-						setValue(layer, brick, pyramidList[layer][brick], NumberPyramidFillType.USER_FILLED);
+						setValue(brick, layer, pyramidList[layer][brick], NumberPyramidFillType.USER_FILLED);
           }
         }
 			}
@@ -174,8 +182,8 @@ class _NumberPyramidSolution {
 
 	_NumberPyramidSolution(this.solution);
 
-	int? getValue (int i, int j) {
-		if (i < 0 || i >= solution.length || j < 0 || j >= solution[i].length) return null;
-		return solution[i][j];
+	int? getValue (int x, int y) {
+		if (y < 0 || y >= solution.length || x < 0 || x >= solution[y].length) return null;
+		return solution[y][x];
 	}
 }

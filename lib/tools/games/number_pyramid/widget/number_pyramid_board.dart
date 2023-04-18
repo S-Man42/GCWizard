@@ -68,6 +68,7 @@ class NumberPyramidBoardPainter extends CustomPainter {
     var selectedRect = const Rect.fromLTRB(0, 0, 0, 0);
     paint.strokeWidth = 1;
     paint.style = PaintingStyle.stroke;
+    paint.color = colors.secondary();
 
     paintBack.style = PaintingStyle.fill;
     paintBack.color = colors.gridBackground();

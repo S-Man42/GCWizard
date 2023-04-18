@@ -146,13 +146,16 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
           title: i18n(context, 'common_value'),
           controller: _currentInputController,
           inputFormatters: [_integerInputFormatter],
+          keyboardType: const TextInputType.numberWithOptions(),
           autofocus: true,
           focusNode: _currentValueFocusNode,
           onChanged: (value) {
             setState(() {
               _currentValue = int.tryParse(value);
+              var type = NumberPyramidFillType.USER_FILLED;
+              if (_currentValue == null) type = NumberPyramidFillType.CALCULATED;
               if (_boardX != null && _boardY != null &&
-                  _currentBoard.setValue(_boardX!, _boardY!, _currentValue, NumberPyramidFillType.USER_FILLED)) {
+                  _currentBoard.setValue(_boardX!, _boardY!, _currentValue, type)) {
                 _currentBoard.removeCalculated();
               }
             });
