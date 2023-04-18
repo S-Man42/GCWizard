@@ -1,8 +1,8 @@
 part of 'package:gc_wizard/tools/images_and_files/waveform/logic/waveform.dart';
 
-final WAV_FORMAT_PCM = 1;
-final WAV_FORMAT_IEEEFLOAT32 = 3;
-final Map<int, String> WAV_FORMAT_CODE = {
+const WAV_FORMAT_PCM = 1;
+const WAV_FORMAT_IEEEFLOAT32 = 3;
+const Map<int, String> WAV_FORMAT_CODE = {
   // http://www-mmsp.ece.mcgill.ca/Documents/AudioFormats/WAVE/Docs/rfc2361.txt
   0: '?',
   1: 'PCM',
@@ -56,7 +56,7 @@ final Map<int, String> WAV_FORMAT_CODE = {
   1027: 'Olivetti OPR',
 };
 
-final Map<String, String> LIST_INFO_CODE = {
+const Map<String, String> LIST_INFO_CODE = {
   'IARL': 'Location where the subject of the file is archived',
   'IART': 'Artist of the original subject of the file',
   'ICMS': 'Name of the person or organization that commissioned the original subject of the file',

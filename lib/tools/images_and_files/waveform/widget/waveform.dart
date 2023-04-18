@@ -62,7 +62,7 @@ class WaveFormState extends State<WaveForm> {
     return Column(
       children: <Widget>[
         GCWOpenFile(
-          supportedFileTypes: [FileType.WAV],
+          supportedFileTypes: const [FileType.WAV],
           onLoaded: (_file) {
             if (_file == null) {
               showToast(i18n(context, 'common_loadfile_exception_notloaded'));
@@ -116,7 +116,7 @@ class WaveFormState extends State<WaveForm> {
                 children: <Widget>[
                   GCWImageView(
                     imageData: GCWImageViewData(GCWFile(bytes: _soundfileImage)),
-                    suppressOpenInTool: {GCWImageViewOpenInTools.METADATA},
+                    suppressOpenInTool: const {GCWImageViewOpenInTools.METADATA},
                   ),
                   GCWExpandableTextDivider(
                     text: i18n(context, 'waveform_settings'),
@@ -339,7 +339,7 @@ class WaveFormState extends State<WaveForm> {
   List<Widget> _SoundfileStructure(Uint8List bytes) {
     List<Widget> result = [];
 
-    _soundfileData.structure.forEach((section) {
+    for (var section in _soundfileData.structure) {
       List<List<dynamic>> content = [];
       content = [
         [
@@ -348,20 +348,20 @@ class WaveFormState extends State<WaveForm> {
           i18n(context, 'waveform_output_value'),
         ]
       ];
-      section.SectionContent.forEach((element) {
+      for (var element in section.SectionContent){
         content.add([i18n(context, 'waveform_output_' + element.Meaning), element.Bytes, element.Value]);
-      });
+      }
       result.add(GCWExpandableTextDivider(
         text: i18n(context, 'waveform_output_section_' + section.SectionTitle),
         expanded: false,
         child: GCWColumnedMultilineOutput(
           data: content,
-          flexValues: [2, 3, 2],
+          flexValues: const [2, 3, 2],
           suppressCopyButtons: true,
           hasHeader: true,
         ),
       ));
-    });
+    }
 
     return result;
   }

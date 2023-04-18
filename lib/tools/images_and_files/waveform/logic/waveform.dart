@@ -14,15 +14,15 @@ SoundfileData getSoundfileData(Uint8List bytes){
   switch (getFileType(bytes)) {
     case FileType.WAV:
       return WAVContent(bytes);
+    default: return SoundfileData(
+        structure: [],
+        PCMformat: 0,
+        bits: 0,
+        channels: 0,
+        sampleRate: 0,
+        duration: 0.0,
+        amplitudesData: Uint8List.fromList([]));
   }
-  return SoundfileData(
-    structure: [],
-    PCMformat: 0,
-    bits: 0,
-    channels: 0,
-    sampleRate: 0,
-    duration: 0.0,
-    amplitudesData: Uint8List.fromList([]));
 }
 
 Future<MorseData> PCMamplitudes2Image({required double duration, required List<double> RMSperPoint, required double maxAmplitude, required int pointsize, required int hScalefactor, required int volume}) async {
@@ -60,8 +60,8 @@ Future<MorseData> PCMamplitudes2Image({required double duration, required List<d
 
   List<bool> morseCode = [];
 
-  int durationScaleH = (RMSperPoint.length / duration).toInt();
-  int durationScaleV = (maxAmplitude / 100).toInt();
+  int durationScaleH = RMSperPoint.length ~/ duration;
+  int durationScaleV = maxAmplitude ~/ 100;
 
   final canvasRecorder = ui.PictureRecorder();
   final canvas = ui.Canvas(canvasRecorder, ui.Rect.fromLTWH(0, 0, width, height));
