@@ -42,13 +42,13 @@ class MultiDecoderState extends State<MultiDecoder> {
   Widget build(BuildContext context) {
     if (_firstBuild && multiDecoderTools.isEmpty) {
       _initializeMultiToolDecoder(context);
+      _firstBuild = false;
     }
 
     _refreshMDTTools();
 
-    if (_firstBuild) {
+    if (_currentInput.isEmpty) {
       _calculateOutput();
-      _firstBuild = false;
     }
 
     return Column(
@@ -63,9 +63,7 @@ class MultiDecoderState extends State<MultiDecoder> {
                       onChanged: (text) {
                         _currentInput = text;
                         if (_currentInput.isEmpty) {
-                          setState(() {
-                            _calculateOutput();
-                          });
+                          setState(() {});
                         }
                       },
                     ))),
@@ -157,12 +155,10 @@ class MultiDecoderState extends State<MultiDecoder> {
 
       try {
         if (_currentInput.isEmpty) {
-          return GCWOutput(
-              title: _toolTitle(tool),
-              child: null
-          );
+          return GCWOutput(title: _toolTitle(tool), child: Container());
         } else if (!tool.optionalKey &&
-            ((tool.requiresKey && _currentKey.isEmpty) || !tool.requiresKey && (_currentKey.isNotEmpty))) {
+            ((tool.requiresKey && _currentKey.isEmpty) ||
+            (!tool.requiresKey && _currentKey.isNotEmpty))) {
           return Container();
         } else {
           result = tool.onDecode(_currentInput, _currentKey);
@@ -183,8 +179,7 @@ class MultiDecoderState extends State<MultiDecoder> {
         return FutureBuilder<String?>(
             future: result,
             builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
-              if (snapshot.hasData && snapshot.data != null &&
-                  snapshot.data!.isNotEmpty) {
+              if (snapshot.hasData && snapshot.data != null && snapshot.data!.isNotEmpty) {
                 return GCWOutput(title: _toolTitle(tool), child: snapshot.data);
               } else {
                 return Container();
@@ -219,13 +214,9 @@ class MultiDecoderState extends State<MultiDecoder> {
               }
             });
       } else if (result != null && result.toString().isNotEmpty) {
-        return GCWOutput(
-          title: _toolTitle(tool),
-          child: result.toString(),
-        );
-      } else {
-        return Container();
+        return GCWOutput(title: _toolTitle(tool), child: result.toString());
       }
+      return Container();
     }).toList();
 
     _currentOutput = Column(children: results);
