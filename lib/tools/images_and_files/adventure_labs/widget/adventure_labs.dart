@@ -396,7 +396,7 @@ class AdventureLabsState extends State<AdventureLabs> {
       ),
       GCWColumnedMultilineOutput(
         data: [
-          [i18n(context, 'adventure_labs_lab_other_code'), _outData.httpCode],
+          [i18n(context, 'adventure_labs_lab_other_code'), i18n(context, _outData.httpCode)],
           [i18n(context, 'adventure_labs_lab_other_message'), _outData.httpMessage],
           [i18n(context, 'adventure_labs_lab_other_body'), _outData.httpBody],
         ],

@@ -66,6 +66,8 @@
   "adventure_labs_lab_http_message": "http message",
   "adventure_labs_lab_http_body": "http body",
   "adventure_labs_lab_other_code": "Error code",
+  "adventure_labs_lab_other_exception_adventure": "Exception while reading Adventure",
+  "adventure_labs_lab_other_exception_stage": "Exception while reading Stage of Adventure",
   "adventure_labs_lab_other_message": "Error message",
   "adventure_labs_lab_other_body": "Error details",
   "adventure_labs_lab_id": "ID",
