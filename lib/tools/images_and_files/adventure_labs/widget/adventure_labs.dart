@@ -38,10 +38,7 @@ class AdventureLabsState extends State<AdventureLabs> {
   final List<String> _currentAdventureList = [];
 
   Adventures _outData = Adventures(
-      AdventureList: [],
-      httpCode: '',
-      httpMessage: '',
-      httpBody: '');
+      AdventureList: [], resultCode: ANALYSE_RESULT_STATUS.NONE, httpCode: '', httpMessage: '', httpBody: '');
 
   @override
   Widget build(BuildContext context) {
@@ -192,10 +189,8 @@ class AdventureLabsState extends State<AdventureLabs> {
       [i18n(context, 'adventure_labs_lab_ratingstotalcount'), adventure.RatingsTotalCount],
       [
         i18n(context, 'adventure_labs_lab_location'),
-        formatCoordOutput(
-            LatLng(double.parse(adventure.Latitude), double.parse(adventure.Longitude)),
-            _currentCoords.format,
-            defaultEllipsoid)
+        formatCoordOutput(LatLng(double.parse(adventure.Latitude), double.parse(adventure.Longitude)),
+            _currentCoords.format, defaultEllipsoid)
       ],
       [i18n(context, 'adventure_labs_lab_adventurethemes'), adventure.AdventureThemes],
     ];
@@ -227,8 +222,8 @@ class AdventureLabsState extends State<AdventureLabs> {
       [i18n(context, 'adventure_labs_lab_description'), stage.Description],
       [
         i18n(context, 'adventure_labs_lab_location'),
-        formatCoordOutput(LatLng(double.parse(stage.Latitude), double.parse(stage.Longitude)),
-            _currentCoords.format, defaultEllipsoid)
+        formatCoordOutput(LatLng(double.parse(stage.Latitude), double.parse(stage.Longitude)), _currentCoords.format,
+            defaultEllipsoid)
       ],
       [i18n(context, 'adventure_labs_lab_stages_geofencingradius'), stage.GeofencingRadius],
       [i18n(context, 'adventure_labs_lab_stages_question'), stage.Question],
@@ -378,7 +373,7 @@ class AdventureLabsState extends State<AdventureLabs> {
     ]);
   }
 
-  Widget _buildOutputError() {
+  Widget _buildOutputErrorHTTP() {
     return Column(children: <Widget>[
       GCWTextDivider(
         text: i18n(context, 'adventure_labs_lab_error'),
@@ -394,16 +389,42 @@ class AdventureLabsState extends State<AdventureLabs> {
     ]);
   }
 
+  Widget _buildOutputErrorOTHER() {
+    return Column(children: <Widget>[
+      GCWTextDivider(
+        text: i18n(context, 'adventure_labs_lab_error'),
+      ),
+      GCWColumnedMultilineOutput(
+        data: [
+          [i18n(context, 'adventure_labs_lab_other_code'), _outData.httpCode],
+          [i18n(context, 'adventure_labs_lab_other_message'), _outData.httpMessage],
+          [i18n(context, 'adventure_labs_lab_other_body'), _outData.httpBody],
+        ],
+        flexValues: const [2, 3],
+      )
+    ]);
+  }
+
   Widget _buildOutput() {
-    if (_currentAdventureList.isNotEmpty) {
-      return _buildOutputAdventure();
-    } else {
-      if (_outData.httpCode == '') {
-        return Container();
-      }
-      else {
-        return _buildOutputError();
-      }
+    late Widget result;
+    switch (_outData.resultCode) {
+      case ANALYSE_RESULT_STATUS.NONE:
+        result = Container();
+        break;
+      case ANALYSE_RESULT_STATUS.OK:
+        if (_currentAdventureList.isNotEmpty) {
+          result =  _buildOutputAdventure();
+        } else {
+          result = Container();
+        }
+        break;
+      case ANALYSE_RESULT_STATUS.ERROR_HTTP:
+        result = _buildOutputErrorHTTP();
+        break;
+      case ANALYSE_RESULT_STATUS.ERROR_OTHER:
+        result = _buildOutputErrorOTHER();
+        break;
     }
+    return result;
   }
 }

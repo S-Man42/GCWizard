@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/images_and_files/adventure_labs/logic/adventure_labs.dart';
 
-enum ANALYSE_RESULT_STATUS { OK, ERROR_HTTP, NONE}
+enum ANALYSE_RESULT_STATUS { OK, ERROR_HTTP, ERROR_OTHER, NONE}
 
 const X_CONSUMER_KEY = 'A01A9CA1-29E0-46BD-A270-9D894A527B91';
 //const SEARCH_ADDRESSV3 = 'https://labs-api.geocaching.com/Api/Adventures/SearchV3';

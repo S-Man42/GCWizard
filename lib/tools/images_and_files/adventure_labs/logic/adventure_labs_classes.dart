@@ -2,6 +2,7 @@ part of 'package:gc_wizard/tools/images_and_files/adventure_labs/logic/adventure
 
 class Adventures {
   final List<AdventureData> AdventureList;
+  final ANALYSE_RESULT_STATUS resultCode;
   final String httpCode;
   final String httpMessage;
   final String httpBody;
@@ -9,6 +10,7 @@ class Adventures {
   Adventures({
     required this.AdventureList,
     required this.httpCode,
+    required this.resultCode,
     required this.httpMessage,
     required this.httpBody,
   });

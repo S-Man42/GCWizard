@@ -15,7 +15,7 @@ part 'package:gc_wizard/tools/images_and_files/adventure_labs/logic/adventure_la
 
 Future<Adventures> getAdventureDataAsync(GCWAsyncExecuterParameters? jobData) async {
   if (jobData?.parameters is! AdventureLabJobData) {
-    return Future.value(Adventures(AdventureList: [], httpCode: '', httpMessage: '', httpBody: ''));
+    return Future.value(Adventures(AdventureList: [], resultCode: ANALYSE_RESULT_STATUS.NONE, httpCode: '', httpMessage: '', httpBody: ''));
   }
   var adventure = jobData!.parameters as AdventureLabJobData;
   var output = await getAdventureData(adventure.jobDataCoordinate.toLatLng(), adventure.jobDataRadius,
@@ -33,8 +33,10 @@ Future<Adventures> getAdventureData(LatLng? coordinate, int radius, {required Se
   String httpMessage = '';
   String httpBody = '';
 
+  ANALYSE_RESULT_STATUS resultCode = ANALYSE_RESULT_STATUS.NONE;
+
   List<AdventureStages> Stages = [];
-  try {
+  //try {
     //final response = await http.get(
     //  Uri.parse(
     //    SEARCH_ADDRESSV3 +
@@ -57,11 +59,12 @@ Future<Adventures> getAdventureData(LatLng? coordinate, int radius, {required Se
     final Map<String, dynamic> responseJson = json.decode(response.body) as Map<String, dynamic>;
     int totalCount = responseJson["TotalCount"] as int;
     if (httpCode == '200' || totalCount > 0) {
+      resultCode = ANALYSE_RESULT_STATUS.OK;
       httpCode = '200';
       List<AdventureData> AdventureList = [];
       List<dynamic> responseItems = responseJson["Items"] as List<dynamic>;
       for (int i = 0; i < totalCount; i++) {
-        try {
+        //try {
         Map<String, dynamic> item = responseItems[i] as Map<String, dynamic>;
 
         String AdventureGuid = item["AdventureGuid"].toString();
@@ -87,7 +90,7 @@ Future<Adventures> getAdventureData(LatLng? coordinate, int radius, {required Se
         );
         final Map<String, dynamic> responseJsonStages = json.decode(responseStages.body) as Map<String, dynamic>;
         httpCodeStages = responseStages.statusCode.toString();
-
+print(responseJsonStages.toString());
         if (httpCodeStages == '200') {
           Description = responseJsonStages["Description"].toString();
           OwnerUsername = responseJsonStages["OwnerUsername"].toString();
@@ -131,19 +134,19 @@ Future<Adventures> getAdventureData(LatLng? coordinate, int radius, {required Se
           OwnerUsername: OwnerUsername,
           Stages: Stages,
         ));
-        } catch (exception) {
-          httpCode = 'stage exception';
-          httpMessage = exception.toString();
-          return Adventures(AdventureList: AdventureList, httpCode: httpCode, httpMessage: httpMessage, httpBody: httpBody);
-        }
+        //} catch (exception) {
+        //  httpCode = 'stage exception';
+        //  httpMessage = exception.toString();
+        //  return Adventures(AdventureList: AdventureList, httpCode: httpCode, httpMessage: httpMessage, httpBody: httpBody);
+        //}
       }
-      return Adventures(AdventureList: AdventureList, httpCode: httpCode, httpMessage: httpMessage, httpBody: httpBody);
+      return Adventures(AdventureList: AdventureList, resultCode: resultCode, httpCode: httpCode, httpMessage: httpMessage, httpBody: httpBody);
     } else {
-      return Adventures(AdventureList: [], httpCode: httpCode, httpMessage: httpMessage, httpBody: httpBody);
+      return Adventures(AdventureList: [], resultCode: resultCode, httpCode: httpCode, httpMessage: httpMessage, httpBody: httpBody);
     }
-  } catch (exception) {
-    httpCode = '503';
-    httpMessage = exception.toString();
-    return Adventures(AdventureList: [], httpCode: httpCode, httpMessage: httpMessage, httpBody: httpBody);
-  } // end catch exception
+  //} catch (exception) {
+  //  httpCode = '503';
+  //  httpMessage = exception.toString();
+  //  return Adventures(AdventureList: [], httpCode: httpCode, httpMessage: httpMessage, httpBody: httpBody);
+  //} // end catch exception
 }
