@@ -11,6 +11,7 @@ import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_dropdown_spinner.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
@@ -358,6 +359,10 @@ class AdventureLabsState extends State<AdventureLabs> {
             },
           ),
         ]),
+      ),
+      GCWOutputText(
+        text: i18n(context, 'adventure_labs_lab_number') + ': '+ _outData.AdventureList.length.toString(),
+        suppressCopyButton: true,
       ),
       GCWDropDownSpinner(
         index: _currentAdventureIndex,
