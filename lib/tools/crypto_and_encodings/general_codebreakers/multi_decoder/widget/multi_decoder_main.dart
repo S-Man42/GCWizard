@@ -42,10 +42,14 @@ class MultiDecoderState extends State<MultiDecoder> {
   Widget build(BuildContext context) {
     if (_firstBuild && multiDecoderTools.isEmpty) {
       _initializeMultiToolDecoder(context);
-      _firstBuild = false;
     }
 
     _refreshMDTTools();
+
+    if (_firstBuild) {
+      _calculateOutput();
+      _firstBuild = false;
+    }
 
     return Column(
       children: <Widget>[
@@ -60,7 +64,7 @@ class MultiDecoderState extends State<MultiDecoder> {
                         _currentInput = text;
                         if (_currentInput.isEmpty) {
                           setState(() {
-                            _currentOutput = Container();
+                            _calculateOutput();
                           });
                         }
                       },
@@ -152,9 +156,14 @@ class MultiDecoderState extends State<MultiDecoder> {
       Object? result;
 
       try {
-        if (!tool.optionalKey &&
+        if (_currentInput.isEmpty) {
+          return GCWOutput(
+              title: _toolTitle(tool),
+              child: null
+          );
+        } else if (!tool.optionalKey &&
             ((tool.requiresKey && _currentKey.isEmpty) || !tool.requiresKey && (_currentKey.isNotEmpty))) {
-          result = null;
+          return Container();
         } else {
           result = tool.onDecode(_currentInput, _currentKey);
         }
