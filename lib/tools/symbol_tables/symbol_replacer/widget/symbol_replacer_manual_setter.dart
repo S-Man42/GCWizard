@@ -48,7 +48,7 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
 
     if (_init) {
       _fillSymbolDataItems(widget.symbolImage.compareSymbols);
-      _currentSymbolData = widget.symbolImage.compareSymbols?.first;
+      _currentSymbolData = widget.symbolImage.compareSymbols?.firstOrNull;
       _fillSymbolMap(widget.symbolImage, widget.viewSymbols);
 
       // select all
@@ -267,5 +267,5 @@ Map<String, SymbolData> _cloneSymbolData(Map<String, SymbolData> image, String t
 }
 
 Symbol? _getSymbol(Map<Symbol, Map<String, SymbolData>> _symbolMap, SymbolData? imageData) {
-  return _symbolMap.entries.firstWhere((entry) => entry.value.values.first == imageData).key;
+  return _symbolMap.entries.firstWhereOrNull((entry) => entry.value.values.first == imageData)?.key;
 }

@@ -245,20 +245,30 @@ class SymbolReplacerImage {
   /// </summary>
   void addToGroup(Symbol symbol, SymbolGroup? symbolGroup) {
     if (symbolGroup == null) return;
-    if (symbol.symbolGroup != null) {
-      symbol.symbolGroup?.symbols.remove(symbol);
-      if (symbol.symbolGroup!.symbols.isEmpty) symbolGroups.remove(symbol.symbolGroup);
-    }
-    symbolGroup.symbols = <Symbol>[];
+    _removeSymbolFromGroup(symbol);
 
     _addSymbolToGroup(symbol, symbolGroup);
+  }
+
+  /// <summary>
+  /// remove Symbol from SymbolGroup
+  /// delete SymbolGroup if empty
+  /// </summary>
+  void _removeSymbolFromGroup(Symbol symbol) {
+    if (symbol.symbolGroup != null) {
+      // remove symbol from
+      symbol.symbolGroup?.symbols.remove(symbol);
+      // delete empty SymbolGroup
+      if (symbol.symbolGroup!.symbols.isEmpty) symbolGroups.remove(symbol.symbolGroup);
+      symbol.symbolGroup = null;
+    }
   }
 
   /// <summary>
   /// remove Symbol from SymbolGroup (create new SymbolGroup)
   /// </summary>
   void removeFromGroup(Symbol symbol) {
-    if (symbol.symbolGroup != null) symbol.symbolGroup?.symbols.remove(symbol);
+    _removeSymbolFromGroup(symbol);
     var symbolGroup = SymbolGroup();
     symbolGroups.add(symbolGroup);
 
