@@ -185,6 +185,11 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     } else {
       _setLUAData(WherigoCartridgeGWCData.MediaFilesContents[0].MediaFileBytes);
       _analyseCartridgeFileAsync(WHERIGO_CARTRIDGE_DATA_TYPE.LUA);
+
+      _fileLoadedState = WHERIGO_FILE_LOAD_STATE.FULL;
+
+      _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
+      _displayCartridgeDataList = _setDisplayCartridgeDataList();
     }
   }
 
