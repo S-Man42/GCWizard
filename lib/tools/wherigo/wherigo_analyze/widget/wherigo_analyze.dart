@@ -251,61 +251,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           children: <Widget>[
             _widgetOpenGWCFile(context),
 
-            GCWExpandableTextDivider(
-              text: i18n(context, 'wherigo_open_lua'),
-              suppressTopSpace: false,
-              suppressBottomSpace: false,
-              child: Row(children: <Widget>[
-//              if (_fileLoadedState == WHERIGO_FILE_LOAD_STATE.GWC && _nohttpError)
-                if (_fileLoadedState != WHERIGO_FILE_LOAD_STATE.NULL)
-                  SizedBox(
-                      width: 70,
-                      height: 160,
-                      child: GCWButton(
-                        text: i18n(context, 'wherigo_decompile_button'),
-                        onPressed: () {
-                          _askForOnlineDecompiling();
-                        },
-                      )),
-                if (_fileLoadedState != WHERIGO_FILE_LOAD_STATE.NULL)
-                  Expanded(
-                      child: Padding(
-                          padding: const EdgeInsets.only(
-                            left: 2 * DOUBLE_DEFAULT_MARGIN,
-                          ),
-                          child: GCWOpenFile(
-                            title: i18n(context, 'wherigo_open_lua'),
-                            onLoaded: (_LUAfile) {
-                              if (_LUAfile == null) {
-                                showToast(i18n(context, 'common_loadfile_exception_notloaded'));
-                                return;
-                              }
-
-                              if (isInvalidLUASourcecode(String.fromCharCodes(_LUAfile.bytes.sublist(0, 18)))) {
-                                showToast(i18n(context, 'common_loadfile_exception_wrongtype_lua'));
-                                return;
-                              }
-
-                              _setLUAData(_LUAfile.bytes);
-
-                              _resetIndices();
-
-                              _analyseCartridgeFileAsync(WHERIGO_CARTRIDGE_DATA_TYPE.LUA);
-
-                              setState(() {
-                                _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
-                                _displayCartridgeDataList = _setDisplayCartridgeDataList();
-                              });
-                            },
-                          ))),
-              ]),
-            ),
-
-            // Show Button if GWC File loaded and not httpError
-//            if (_fileLoadedState == WHERIGO_FILE_LOAD_STATE.GWC && _nohttpError) _widgetShowDecompileButton(context),
-
-            // Show OpenFileDialog if GWC File loaded an get LUA offline
-//            if (_fileLoadedState != WHERIGO_FILE_LOAD_STATE.NULL && !_getLUAOnline) _widgetOpenLUAFile(context),
+            if (_fileLoadedState != WHERIGO_FILE_LOAD_STATE.NULL) _widgetOpenLUAFile(context),
 
             // show dropdown if files are loaded
             if (_fileLoadedState != WHERIGO_FILE_LOAD_STATE.NULL) _widgetShowDropDown(context),
@@ -367,48 +313,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     );
   }
 
-  Widget _widgetShowDecompileButton(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-            child: GCWButton(
-          text: i18n(context, 'wherigo_decompile_button'),
-          onPressed: () {
-            _askForOnlineDecompiling();
-          },
-        ))
-      ],
-    );
-  }
-
-  Widget _widgetOpenLUAFile(BuildContext context) {
-    return GCWOpenFile(
-      title: i18n(context, 'wherigo_open_lua'),
-      onLoaded: (_LUAfile) {
-        if (_LUAfile == null) {
-          showToast(i18n(context, 'common_loadfile_exception_notloaded'));
-          return;
-        }
-
-        if (isInvalidLUASourcecode(String.fromCharCodes(_LUAfile.bytes.sublist(0, 18)))) {
-          showToast(i18n(context, 'common_loadfile_exception_wrongtype_lua'));
-          return;
-        }
-
-        _setLUAData(_LUAfile.bytes);
-
-        _resetIndices();
-
-        _analyseCartridgeFileAsync(WHERIGO_CARTRIDGE_DATA_TYPE.LUA);
-
-        setState(() {
-          _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
-          _displayCartridgeDataList = _setDisplayCartridgeDataList();
-        });
-      },
-    );
-  }
-
   Widget _widgetOpenGWCFile(BuildContext context) {
     return GCWOpenFile(
       title: i18n(context, 'wherigo_open_gwc'),
@@ -438,6 +342,55 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           _displayCartridgeDataList = _setDisplayCartridgeDataList();
         });
       },
+    );
+  }
+
+  Widget _widgetOpenLUAFile(BuildContext context) {
+    return GCWExpandableTextDivider(
+      text: i18n(context, 'wherigo_open_lua'),
+      suppressTopSpace: false,
+      suppressBottomSpace: false,
+      child: Row(children: <Widget>[
+        SizedBox(
+            width: 70,
+            height: 160,
+            child: GCWButton(
+              text: i18n(context, 'wherigo_decompile_button'),
+              onPressed: () {
+                _askForOnlineDecompiling();
+              },
+            )),
+        Expanded(
+            child: Padding(
+                padding: const EdgeInsets.only(
+                  left: 2 * DOUBLE_DEFAULT_MARGIN,
+                ),
+                child: GCWOpenFile(
+                  title: i18n(context, 'wherigo_open_lua'),
+                  onLoaded: (_LUAfile) {
+                    if (_LUAfile == null) {
+                      showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+                      return;
+                    }
+
+                    if (isInvalidLUASourcecode(String.fromCharCodes(_LUAfile.bytes.sublist(0, 18)))) {
+                      showToast(i18n(context, 'common_loadfile_exception_wrongtype_lua'));
+                      return;
+                    }
+
+                    _setLUAData(_LUAfile.bytes);
+
+                    _resetIndices();
+
+                    _analyseCartridgeFileAsync(WHERIGO_CARTRIDGE_DATA_TYPE.LUA);
+
+                    setState(() {
+                      _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
+                      _displayCartridgeDataList = _setDisplayCartridgeDataList();
+                    });
+                  },
+                ))),
+      ]),
     );
   }
 
