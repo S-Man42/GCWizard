@@ -86,7 +86,7 @@ class BattleshipState extends State<Battleship> {
                   ? GCWTextField(
                       controller: _encodeTextController,
                       inputFormatters: [
-                        FilteringTextInputFormatter.allow(RegExp('[0-9 a-zA-Z^°!"§\$%&/()=?\\{}[]<>|,;.:-_#+*~\']')),
+                        FilteringTextInputFormatter.allow(RegExp(r'[0-9 a-zA-Z^°!"§$%&/()=?\{}[]<>|,;.:-_#+~]')),
                       ],
                       onChanged: (text) {
                         setState(() {
