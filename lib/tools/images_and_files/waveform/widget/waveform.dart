@@ -28,11 +28,11 @@ class WaveForm extends StatefulWidget {
 }
 
 class WaveFormState extends State<WaveForm> {
-  late Uint8List _bytes;
+  Uint8List _bytes = Uint8List.fromList([]);
   Uint8List _soundfileImage = Uint8List.fromList([]);
-  late SoundfileData _soundfileData;
-  late AmplitudeData _amplitudesData;
-  late MorseCodeOutput? _decodedMorse;
+  SoundfileData _soundfileData = SoundfileData(PCMformat: 0, bits: 0, channels: 0, sampleRate: 0, structure: [], duration: 0.0, amplitudesData: Uint8List.fromList([]));
+  AmplitudeData _amplitudesData = AmplitudeData(maxAmplitude: 0.0, Amplitudes: []);
+  MorseCodeOutput? _decodedMorse = MorseCodeOutput('', '');
   List<bool> _soundfileMorsecode = [];
 
   int _currentPointsize = 1;
