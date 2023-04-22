@@ -23,6 +23,7 @@ import 'package:gc_wizard/tools/coords/format_converter/logic/reverse_wherigo_wa
 import 'package:gc_wizard/tools/coords/format_converter/logic/slippy_map.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/swissgrid.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/utm.dart';
+import 'package:gc_wizard/tools/coords/format_converter/logic/what3words.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/xyz.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
@@ -944,6 +945,34 @@ class Quadtree extends BaseCoordinate {
   @override
   String toString() {
     return coords.join();
+  }
+}
+
+class What3Words extends BaseCoordinate {
+  String word1;
+  String word2;
+  String word3;
+
+  What3Words(this.word1, this.word2, this.word3) {
+    _format = CoordinateFormat(CoordinateFormatKey.WHAT3WORDS);
+  }
+
+  @override
+  LatLng toLatLng() {
+    return What3WordsToLatLon(this);
+  }
+
+  static What3Words? parse(String input) {
+    return parseWhat3Words(input);
+  }
+
+  static What3Words fromLatLon(LatLng coord, [int precision = 40]) {
+    return latLonToWhat3Words(coord, precision: precision);
+  }
+
+  @override
+  String toString() {
+    return word1 + '.' + word2 + '.' + word3;
   }
 }
 

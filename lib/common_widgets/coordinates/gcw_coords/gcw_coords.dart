@@ -51,6 +51,7 @@ part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_input
 part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/gcw_coords_swissgrid.dart';
 part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/gcw_coords_swissgridplus.dart';
 part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/gcw_coords_xyz.dart';
+part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/gcw_coords_w3w.dart';
 part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/geo3x3/gcw_coords_geo3x3.dart';
 part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/geo3x3/geo3x3_textinputformatter.dart';
 part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/geohash/gcw_coords_geohash.dart';
@@ -433,6 +434,20 @@ class GCWCoordsState extends State<GCWCoords> {
           coordinates: _currentCoords is ReverseWherigoDay1976
               ? _currentCoords as ReverseWherigoDay1976
               : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.REVERSE_WIG_DAY1976)) as ReverseWherigoDay1976,
+          onChanged: (newValue) {
+            setState(() {
+              _setCurrentValueAndEmitOnChange(newValue);
+            });
+          },
+        ),
+      ),
+      _GCWCoordWidget(
+        CoordinateFormatKey.WHAT3WORDS,
+        _GCWCoordsWhat3Words(
+          isDefault: !_hasSetCoords,
+          coordinates: _currentCoords is What3Words
+              ? _currentCoords as What3Words
+              : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.WHAT3WORDS)) as What3Words,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
