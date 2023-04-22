@@ -1753,6 +1753,8 @@
   "coords_formatconverter_w3w_pl" : "Polish",
   "coords_formatconverter_w3w_it" : "Italian",
   "coords_formatconverter_w3w_nl" : "Dutch",
+  "coords_formatconverter_w3w_error": "Error",
+  "coords_formatconverter_w3w_no_apikey": "API-Key is missing",
   "coords_formatconverter_w3w_locator" : "What3Words",
   "coords_intersection_title": "Intersection",
   "coords_intersection_description": "From 2 given points the angles between the bearing to each other and a third one are known; Calculates the third point",

@@ -6,7 +6,7 @@ const int _DEFAULT_PRECISION = 40;
 
 What3Words latLonToWhat3Words(LatLng coord, {int precision = _DEFAULT_PRECISION}) {
 
-  return What3Words('', '', '');
+  return What3Words('test1', 'test2', 'test3');
 }
 
 LatLng What3WordsToLatLon(What3Words What3Words) {
