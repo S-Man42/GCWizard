@@ -59,6 +59,7 @@ dependencies:
   url_launcher: ^6.1.10
   utility: ^1.0.3
   week_of_year: ^2.0.0
+  what3words: ^3.1.0
   xml: ^6.1.0
 
 dev_dependencies:

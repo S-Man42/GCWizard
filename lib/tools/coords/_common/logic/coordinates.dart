@@ -952,8 +952,11 @@ class What3Words extends BaseCoordinate {
   String word1;
   String word2;
   String word3;
+  CoordinateFormatKey language;
 
-  What3Words(this.word1, this.word2, this.word3) {
+  static const String _ERROR_INVALID_SUBTYPE = 'No valid What3Words subtype given.';
+
+  What3Words(this.word1, this.word2, this.word3, this.language) {
     _format = CoordinateFormat(CoordinateFormatKey.WHAT3WORDS);
   }
 
@@ -966,8 +969,12 @@ class What3Words extends BaseCoordinate {
     return parseWhat3Words(input);
   }
 
-  static What3Words fromLatLon(LatLng coord, [int precision = 40]) {
-    return latLonToWhat3Words(coord, precision: precision);
+
+  static What3Words fromLatLon(LatLng coord, CoordinateFormatKey subtype ) {
+    if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.WHAT3WORDS, subtype)) {
+      throw Exception(_ERROR_INVALID_SUBTYPE);
+    }
+    return latLonToWhat3Words(coord, );
   }
 
   @override
@@ -1030,6 +1037,8 @@ BaseCoordinate buildUninitializedCoordinateByFormat(CoordinateFormat format) {
       return ReverseWherigoWaldmeister(0,0,0);
     case CoordinateFormatKey.REVERSE_WIG_DAY1976:
       return ReverseWherigoDay1976('00000','00000');
+    case CoordinateFormatKey.WHAT3WORDS:
+      return What3Words('','', '', '');
     default:
       return buildDefaultCoordinateByCoordinates(defaultCoordinate);
   }
@@ -1095,6 +1104,8 @@ BaseCoordinate buildCoordinate(CoordinateFormat format, LatLng coords, [Ellipsoi
       return ReverseWherigoWaldmeister.fromLatLon(coords);
     case CoordinateFormatKey.REVERSE_WIG_DAY1976:
       return ReverseWherigoDay1976.fromLatLon(coords);
+    case CoordinateFormatKey.WHAT3WORDS:
+      return What3Words.fromLatLon(coords, format.subtype!,);
     default:
       return buildDefaultCoordinateByCoordinates(coords);
   }

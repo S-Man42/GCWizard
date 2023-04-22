@@ -140,6 +140,12 @@ void initDefaultSettings(PreferencesInitMode mode, {String reinitSinglePreferenc
     Prefs.setStringList(PREFERENCE_COORD_VARIABLECOORDINATE_FORMULAS, []);
   }
 
+  if (reinitSinglePreference == PREFERENCE_COORD_DEFAULT_W3W_APIKEY ||
+      _reinitAll ||
+      Prefs.get(PREFERENCE_COORD_DEFAULT_W3W_APIKEY) == null) {
+    Prefs.setString(PREFERENCE_COORD_DEFAULT_W3W_APIKEY, THOMPSON);
+  }
+
   if (reinitSinglePreference == PREFERENCE_DEFAULT_LENGTH_UNIT ||
       _reinitAll ||
       Prefs.get(PREFERENCE_DEFAULT_LENGTH_UNIT) == null) {

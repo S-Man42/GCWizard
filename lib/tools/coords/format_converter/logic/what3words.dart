@@ -22,3 +22,5 @@ What3Words? parseWhat3Words(String input) {
   List<String> words = input.split('.');
   return What3Words(words[0], words[1], words[2]);
 }
+
+

@@ -22,6 +22,8 @@ CoordinateFormatKey? _getDefaultSubtypeForFormat(CoordinateFormatKey format) {
       return defaultLambertType;
     case CoordinateFormatKey.SLIPPY_MAP:
       return defaultSlippyMapType;
+    case CoordinateFormatKey.WHAT3WORDS:
+      return defaultWhat3WordsType;
     default: return null;
   }
 }
