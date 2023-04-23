@@ -166,7 +166,6 @@ String _normalizeDecodingInput(String input, List<String> controlSet) {
 
 String decodeWASD(String input, List<String> controlSet) {
   if (input.isEmpty) return '';
-
   controlSet = _normalizeControlSet(controlSet);
 
   List<String> resultDecode = [];
