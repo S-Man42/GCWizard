@@ -1,4 +1,13 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
+
+final Map<String, AssetSource> MORSE_TONE = {
+  '.' : AssetSource('audio/morseSymbolDit.mp3'),  // 1 dit
+  '-' : AssetSource('audio/morseSymbolDah.mp3'),  // 1 dah = 3 dit
+  ',' : AssetSource('audio/morseSpaceSymbol.mp3'),  // 1 dit Pause zwischen dit/dah
+  String.fromCharCode(8195) : AssetSource('audio/morseSpaceLetter.mp3'),  // 3 dit Pause zwischen Buchstaben
+  '|' : AssetSource('audio/morseSpaceWord.mp3'),  // 7 dit Pause zwischen Wörter
+};
 
 const Map<String, String> AZToMorse = {
   'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.', 'G': '--.', 'H': '....', 'I': '..',
