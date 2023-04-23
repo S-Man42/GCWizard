@@ -72,3 +72,19 @@ const Map<int, CoordinateFormatKey> WHAT3WORDS_CODE = {
   12: CoordinateFormatKey.WHAT3WORDS_CZ,
   13: CoordinateFormatKey.WHAT3WORDS_PL,
 };
+
+const Map<CoordinateFormatKey, String> WHAT3WORDS_LANGUAGE = {
+  CoordinateFormatKey.WHAT3WORDS_DE: 'common_language_german',
+  CoordinateFormatKey.WHAT3WORDS_EN: 'common_language_english',
+  CoordinateFormatKey.WHAT3WORDS_FR: 'common_language_french',
+  CoordinateFormatKey.WHAT3WORDS_IT: 'common_language_italian',
+  CoordinateFormatKey.WHAT3WORDS_RU: 'common_language_russian',
+  CoordinateFormatKey.WHAT3WORDS_NL: 'common_language_dutch',
+  CoordinateFormatKey.WHAT3WORDS_SP: 'common_language_spanish',
+  CoordinateFormatKey.WHAT3WORDS_KO: 'common_language_korean',
+  CoordinateFormatKey.WHAT3WORDS_JA:'common_language_japanese' ,
+  CoordinateFormatKey.WHAT3WORDS_ZH: 'common_language_chinese',
+  CoordinateFormatKey.WHAT3WORDS_DK:'common_language_danish' ,
+  CoordinateFormatKey.WHAT3WORDS_CZ: 'common_language_czech',
+  CoordinateFormatKey.WHAT3WORDS_PL: 'common_language_polish',
+};
