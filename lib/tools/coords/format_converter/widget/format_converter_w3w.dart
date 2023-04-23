@@ -13,6 +13,7 @@ import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
@@ -35,6 +36,8 @@ class FormatConverterW3W extends StatefulWidget {
 
 class FormatConverterW3WState extends State<FormatConverterW3W> {
   LatLng _currentCoordsLatLng = LatLng(0.0, 0.0);
+  String _currentCoordsW3W = '';
+
   var _currentCoords = defaultBaseCoordinate;
   List<BaseCoordinate> _currentOutputs = [];
 
@@ -82,170 +85,159 @@ class FormatConverterW3WState extends State<FormatConverterW3W> {
             : Column(
                 children: <Widget>[
                   GCWTwoOptionsSwitch(
-                    onChanged: (value ) {
+                    onChanged: (value) {
                       setState(() {
                         _currentMode = value;
                       });
                     },
                     value: _currentMode,
                   ),
-                  (_currentMode == GCWSwitchPosition.right)
-                  ? _buildDecode()
-                  : _buildEncode(),
+                  (_currentMode == GCWSwitchPosition.right) ? _buildDecode() : _buildEncode(),
                   GCWSubmitButton(
                     onPressed: () {
                       setState(() {
                         if (_currentMode == GCWSwitchPosition.right) {
                           _calculateLatLonFromW3W();
                         } else {
-                          _currentCoordsLatLng = _currentCoords.toLatLng as LatLng;
+                          _calculateW3WFromLatLng();
                         }
                         _calculateOutput(context);
                       });
                     },
                   ),
                   _buildOutput()
-
                 ],
               ),
       ],
     );
   }
 
-  Widget _buildDecode(){
-    return Column(
-      children: <Widget>[
-        Row(
-          children: <Widget>[
-            Expanded(
-              flex: 1,
-              child: GCWTextField(
-                  hintText: i18n(context, 'coords_formatconverter_w3w_w1'),
-                  controller: _ControllerW1,
-                  onChanged: (ret) {
-                    setState(() {
-                      _currentW1 = ret;
-                    });
-                  }),
-            ),
-            Expanded(
-              flex: 1,
-              child: GCWTextField(
-                  hintText: i18n(context, 'coords_formatconverter_w3w_w2'),
-                  controller: _ControllerW2,
-                  onChanged: (ret) {
-                    setState(() {
-                      _currentW2 = ret;
-                    });
-                  }),
-            ),
-            Expanded(
-              flex: 1,
-              child: GCWTextField(
-                  hintText: i18n(context, 'coords_formatconverter_w3w_w3'),
-                  controller: _ControllerW3,
-                  onChanged: (ret) {
-                    setState(() {
-                      _currentW3 = ret;
-                    });
-                  }),
-            ),
-          ],
-        ),
-        GCWDropDown<CoordinateFormatKey>(
-          value: _currentLanguage,
-          items: WHAT3WORDS_LANGUAGE.entries.map((mode) {
-            return GCWDropDownMenuItem(
-              value: mode.key,
-              child: i18n(context, mode.value),
-            );
-          }).toList(),
-          onChanged: (value) {
-            setState(() {
-              _currentLanguage = value;
-            });
-          },
-        ),
-        GCWTextDivider(
-          text: i18n(context, 'coords_output_format'),
-        ),
-        _GCWCoordsFormatSelectorAll(
-          format: _currentOutputFormat,
-          onChanged: (CoordinateFormat value) {
-            setState(() {
-              if (value.type == CoordinateFormatKey.ALL) {
-                _currentOutputs = [];
-                _currentAllOutput = const GCWDefaultOutput();
-              }
-              _currentOutputFormat = value;
-            });
-          },
-        ),
-      ]
-    );
+  Widget _buildDecode() {
+    return Column(children: <Widget>[
+      Row(
+        children: <Widget>[
+          Expanded(
+            flex: 1,
+            child: GCWTextField(
+                hintText: i18n(context, 'coords_formatconverter_w3w_w1'),
+                controller: _ControllerW1,
+                onChanged: (ret) {
+                  setState(() {
+                    _currentW1 = ret;
+                  });
+                }),
+          ),
+          Expanded(
+            flex: 1,
+            child: GCWTextField(
+                hintText: i18n(context, 'coords_formatconverter_w3w_w2'),
+                controller: _ControllerW2,
+                onChanged: (ret) {
+                  setState(() {
+                    _currentW2 = ret;
+                  });
+                }),
+          ),
+          Expanded(
+            flex: 1,
+            child: GCWTextField(
+                hintText: i18n(context, 'coords_formatconverter_w3w_w3'),
+                controller: _ControllerW3,
+                onChanged: (ret) {
+                  setState(() {
+                    _currentW3 = ret;
+                  });
+                }),
+          ),
+        ],
+      ),
+      GCWDropDown<CoordinateFormatKey>(
+        value: _currentLanguage,
+        items: WHAT3WORDS_LANGUAGE.entries.map((mode) {
+          return GCWDropDownMenuItem(
+            value: mode.key,
+            child: i18n(context, mode.value),
+          );
+        }).toList(),
+        onChanged: (value) {
+          setState(() {
+            _currentLanguage = value;
+          });
+        },
+      ),
+      GCWTextDivider(
+        text: i18n(context, 'coords_output_format'),
+      ),
+      _GCWCoordsFormatSelectorAll(
+        format: _currentOutputFormat,
+        onChanged: (CoordinateFormat value) {
+          setState(() {
+            if (value.type == CoordinateFormatKey.ALL) {
+              _currentOutputs = [];
+              _currentAllOutput = const GCWDefaultOutput();
+            }
+            _currentOutputFormat = value;
+          });
+        },
+      ),
+    ]);
   }
 
-  Widget _buildEncode(){
-    return Column(
-      children: <Widget>[
-        GCWCoords(
-          title: i18n(context, 'coords_formatconverter_coord'),
-          coordsFormat: _currentCoords.format,
-          onChanged: (BaseCoordinate ret) {
-            setState(() {
-              if (ret.toLatLng() != null) {
-                _currentCoords = ret;
-              }
-            });
-          },
-        ),
-        GCWDropDown<CoordinateFormatKey>(
-          value: _currentLanguage,
-          items: WHAT3WORDS_LANGUAGE.entries.map((mode) {
-            return GCWDropDownMenuItem(
-              value: mode.key,
-              child: i18n(context, mode.value),
-            );
-          }).toList(),
-          onChanged: (value) {
-            setState(() {
-              _currentLanguage = value;
-            });
-          },
-        ),
-      ]
-    );
+  Widget _buildEncode() {
+    return Column(children: <Widget>[
+      GCWCoords(
+        title: i18n(context, 'coords_formatconverter_coord'),
+        coordsFormat: _currentCoords.format,
+        onChanged: (BaseCoordinate ret) {
+          setState(() {
+            if (ret.toLatLng() != null) {
+              _currentCoords = ret;
+            }
+          });
+        },
+      ),
+      GCWDropDown<CoordinateFormatKey>(
+        value: _currentLanguage,
+        items: WHAT3WORDS_LANGUAGE.entries.map((mode) {
+          return GCWDropDownMenuItem(
+            value: mode.key,
+            child: i18n(context, mode.value),
+          );
+        }).toList(),
+        onChanged: (value) {
+          setState(() {
+            _currentLanguage = value;
+          });
+        },
+      ),
+    ]);
   }
 
   Widget _buildOutput() {
-
     if (_currentOutputFormat.type == CoordinateFormatKey.ALL) {
       return _currentAllOutput;
     } else {
-      return GCWCoordsOutput(
-          outputs: _currentOutputs,
-          points: _currentOutputs.map((element) {
-            return GCWMapPoint(point: element.toLatLng()!, coordinateFormat: _currentOutputFormat);
-          }).toList());
+      if (_currentMode == GCWSwitchPosition.right) {
+        return GCWCoordsOutput(
+            outputs: _currentOutputs,
+            points: _currentOutputs.map((element) {
+              return GCWMapPoint(point: element.toLatLng()!, coordinateFormat: _currentOutputFormat);
+            }).toList());
+      } else {
+        return GCWOutputText(
+          text: _currentCoordsW3W,
+        );
+      }
     }
   }
 
   void _calculateOutput(BuildContext context) {
     if (_currentMode == GCWSwitchPosition.right) {
+      // W3W to LatLng
       if (_currentOutputFormat.type == CoordinateFormatKey.ALL) {
         _currentAllOutput = _calculateAllOutput(context);
       } else {
         _currentOutputs = [buildCoordinate(_currentOutputFormat, _currentCoordsLatLng)];
-      }
-    } else {
-      if (_currentOutputFormat.type == CoordinateFormatKey.ALL) {
-        _currentAllOutput = _calculateAllOutput(context);
-      } else {
-        if (_currentCoords.toLatLng() != null) {
-          _currentOutputs = [buildCoordinate(_currentOutputFormat, _currentCoords.toLatLng()!)];
-        } else {
-          _currentOutputs = [];
-        }
       }
     }
   }
@@ -268,21 +260,21 @@ class FormatConverterW3WState extends State<FormatConverterW3W> {
         return [name, formatCoordOutput(_currentCoordsLatLng, format, ellipsoid)];
       }).toList();
     } else {
-      children =_currentCoords.toLatLng() == null
+      children = _currentCoords.toLatLng() == null
           ? []
           : allCoordinateFormatMetadata.map((CoordinateFormatMetadata coordFormat) {
-        var format = CoordinateFormat(coordFormat.type);
-        var name = i18n(context, coordFormat.name, ifTranslationNotExists: coordFormat.name);
-        if (format.subtype != null) {
-          var subtypeMetadata = coordinateFormatMetadataByKey(format.subtype!);
-          var subtypeName = i18n(context, subtypeMetadata.name);
-          if (subtypeName.isNotEmpty) {
-            name += '\n' + subtypeName;
-          }
-        }
+              var format = CoordinateFormat(coordFormat.type);
+              var name = i18n(context, coordFormat.name, ifTranslationNotExists: coordFormat.name);
+              if (format.subtype != null) {
+                var subtypeMetadata = coordinateFormatMetadataByKey(format.subtype!);
+                var subtypeName = i18n(context, subtypeMetadata.name);
+                if (subtypeName.isNotEmpty) {
+                  name += '\n' + subtypeName;
+                }
+              }
 
-        return [name, formatCoordOutput(_currentCoords.toLatLng()!, format, ellipsoid)];
-      }).toList();
+              return [name, formatCoordOutput(_currentCoords.toLatLng()!, format, ellipsoid)];
+            }).toList();
     }
     return GCWDefaultOutput(child: GCWColumnedMultilineOutput(data: children));
   }
@@ -313,7 +305,7 @@ class FormatConverterW3WState extends State<FormatConverterW3W> {
   }
 
   Future<GCWAsyncExecuterParameters?> _buildJobDataLatLonFromW3W() async {
-    return GCWAsyncExecuterParameters( _currentW1 + '.' + _currentW2 + '.' + _currentW3);
+    return GCWAsyncExecuterParameters(_currentW1 + '.' + _currentW2 + '.' + _currentW3);
   }
 
   Future<LatLng> _convertLatLonFromW3Wasync(GCWAsyncExecuterParameters? jobData) async {
@@ -339,6 +331,63 @@ class FormatConverterW3WState extends State<FormatConverterW3W> {
 
   void _showLatLon(LatLng output) {
     _currentCoordsLatLng = output;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {});
+    });
+  }
+
+  void _calculateW3WFromLatLng() async {
+    await showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return Center(
+          child: SizedBox(
+            height: 220,
+            width: 150,
+            child: GCWAsyncExecuter<String>(
+              isolatedFunction: _convertW3WFromLatLngAsync,
+              parameter: _buildJobDataW3WFromLatLng,
+              onReady: (data) => _showW3W(data),
+              isOverlay: true,
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<GCWAsyncExecuterParameters?> _buildJobDataW3WFromLatLng() async {
+    return GCWAsyncExecuterParameters(_currentCoords);
+  }
+
+  Future<String> _convertW3WFromLatLngAsync(GCWAsyncExecuterParameters? jobData) async {
+    if (jobData?.parameters is! BaseCoordinate) {
+      return Future.value('');
+    }
+
+    var buildW3Wjob = jobData!.parameters as BaseCoordinate;
+    var output = await _getW3WFromLatLng(buildW3Wjob.toLatLng()!, sendAsyncPort: jobData.sendAsyncPort!);
+
+    jobData.sendAsyncPort?.send(output);
+
+    return output;
+  }
+
+  Future<String> _getW3WFromLatLng(LatLng coordinates, {required SendPort sendAsyncPort}) async {
+    var api = What3WordsV3(_APIKey);
+
+    var words = await api
+        .convertTo3wa(Coordinates(51.508344, -0.12549900))
+        .language(_convertLanguageFromFormatKey(_currentLanguage))
+        .execute();
+
+    return words.data()?.words as String;
+  }
+
+  void _showW3W(String output) {
+    _currentCoordsW3W = output;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {});
@@ -377,7 +426,6 @@ class FormatConverterW3WState extends State<FormatConverterW3W> {
         return 'en';
     }
   }
-
 }
 
 class buildLatLonJobData {
