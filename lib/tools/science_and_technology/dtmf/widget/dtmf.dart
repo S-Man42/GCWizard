@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:uuid/uuid.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
@@ -32,6 +35,56 @@ class DTMFState extends State<DTMF> {
 
   final _maskInputFormatter =
       WrapperForMaskTextInputFormatter(mask: '#' * 10000, filter: {"#": RegExp(r'[0-9\*\#a-dA-D]')});
+
+  var player = AudioPlayer(playerId: Uuid().v4(),);
+  int _index = 0;
+  String _playlist = '';
+
+  // https://discord.com/channels/509714518008528896/533299043686940692/threads/990854105394216970
+  //Walter — 27.06.2022 17:28
+  //void playSound(
+  //     String path, [
+  //     void Function()? funcAfterwards,
+  //   ]) {
+  //     print('playSound $path');
+  //
+  //     player.play(
+  //       AssetSource(path),
+  //       volume: 1,
+  //     );
+  //     if (funcAfterwards != null) {
+  //       player.onPlayerComplete.listen((event) {
+  //         funcAfterwards();
+  //       });
+  //     }
+  //   }
+
+  //The following approach works
+  //     if (funcAfterwards != null) {
+  //       // player.onPlayerComplete.listen((event) {
+  //       //   funcAfterwards();
+  //       // });
+  //
+  //       StreamSubscription<void> subscription = player.onPlayerComplete.listen((event) => 0);
+  //       subscription = player.onPlayerComplete.listen((event) {
+  //         funcAfterwards();
+  //         subscription.cancel();
+  //       });
+  //     }
+  //
+  void playSound(int index) {
+    if (index < _playlist.length) {
+      player.play(DTMFSOUND[_playlist[index]]!);
+      if (index + 1 < _playlist.length) {
+        StreamSubscription<void> subscription = player.onPlayerComplete.listen((event) => 0);
+        subscription = player.onPlayerComplete.listen((event) {
+          index++;
+          playSound(index,);
+          subscription.cancel();
+        });
+      }
+    }
+  }
 
   @override
   void initState() {
@@ -146,8 +199,24 @@ class DTMFState extends State<DTMF> {
       output = decodeDTMF(_currentDecodeInput);
     }
 
-    return GCWOutputText(
-      text: output,
-    );
+    return Column(children: <Widget>[
+      GCWOutputText(
+        text: output,
+      ),
+      GCWIconButton(
+        icon: Icons.play_arrow,
+        onPressed: () {
+          _index = 0;
+          if (_currentMode == GCWSwitchPosition.left) {
+            _playlist = _currentEncodeInput;
+          } else {
+            _playlist = _currentDecodeInput;
+          }
+          if (_playlist.isNotEmpty) {
+            playSound(_index);
+          }
+        },
+      ),
+    ]);
   }
 }

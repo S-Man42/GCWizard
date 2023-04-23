@@ -78,6 +78,7 @@ flutter:
         - asset: assets/fonts/Roboto/Roboto-Regular.ttf
   uses-material-design: true
   assets:
+    - assets/audio/
     - assets/i18n/
     - assets/logo/
     - assets/icons/coords/
