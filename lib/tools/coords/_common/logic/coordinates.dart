@@ -1038,7 +1038,7 @@ BaseCoordinate buildUninitializedCoordinateByFormat(CoordinateFormat format) {
     case CoordinateFormatKey.REVERSE_WIG_DAY1976:
       return ReverseWherigoDay1976('00000','00000');
     case CoordinateFormatKey.WHAT3WORDS:
-      return What3Words('','', '', '');
+      return What3Words('','', '', CoordinateFormatKey.WHAT3WORDS_DE);
     default:
       return buildDefaultCoordinateByCoordinates(defaultCoordinate);
   }

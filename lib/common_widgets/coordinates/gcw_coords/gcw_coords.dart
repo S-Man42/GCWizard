@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:isolate';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
@@ -33,7 +36,7 @@ import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/data_type_utils/double_type_utils.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 import 'package:intl/intl.dart';
-import 'package:location/location.dart';
+import 'package:location/location.dart' as location;
 import 'package:collection/collection.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:prefs/prefs.dart';
@@ -99,7 +102,7 @@ class GCWCoordsState extends State<GCWCoords> {
 
   Widget? _currentWidget;
 
-  final _location = Location();
+  final _location = location.Location();
   bool _isOnLocationAccess = false;
 
   @override
@@ -580,7 +583,7 @@ class GCWCoordsState extends State<GCWCoords> {
         return;
       }
 
-      _location.getLocation().then((LocationData locationData) {
+      _location.getLocation().then((location.LocationData locationData) {
         if (locationData.accuracy == null || locationData.accuracy! > LOW_LOCATION_ACCURACY) {
           showToast(i18n(context, 'coords_common_location_lowaccuracy',
               parameters: [NumberFormat('0.0').format(locationData.accuracy)]));
