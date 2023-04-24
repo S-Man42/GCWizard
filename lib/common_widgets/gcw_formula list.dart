@@ -22,21 +22,23 @@ import 'package:gc_wizard/utils/json_utils.dart';
 import 'package:gc_wizard/utils/math_utils.dart';
 import 'package:gc_wizard/utils/variable_string_expander.dart';
 
+import 'dialogs/gcw_delete_alertdialog.dart';
+
 
 class GCWFormulaListEditor extends StatefulWidget {
   final GCWTool Function(String name) buildGCWTool;
-  final void Function(String, String, FormulaValueType, BuildContext)? onAddEntry;
+  final void Function(String)? onAddEntry;
   final String? newEntryHintText;
   final Widget? middleWidget;
   final List<Formula>? formulaList;
   final List<FormulaGroup>? formulaGroupList;
-  final void Function(Object, String, String, FormulaValueType)? onUpdateEntry;
+  final void Function(int, String)? onUpdateEntry;
   final void Function(Object, BuildContext)? onRemoveEntry;
 
   const GCWFormulaListEditor({
     Key? key,
     required this.buildGCWTool,
-    this.onAddEntry,
+    required this.onAddEntry,
     this.newEntryHintText,
     this.middleWidget,
     this.formulaList,
@@ -55,7 +57,7 @@ class _GCWFormulaListEditor extends State<GCWFormulaListEditor> {
   var _currentNewName = '';
   var _currentEditedName = '';
 
-  Object? _currentEditId;
+  int? _currentEditId;
 
   late FocusNode _focusNodeEditValue;
 
@@ -230,12 +232,12 @@ class _GCWFormulaListEditor extends State<GCWFormulaListEditor> {
                 ? GCWIconButton(
               icon: Icons.check,
               onPressed: () {
-                formula.name = _currentEditedName;
-                _updateFormula();
-
                 setState(() {
-                  _currentEditId = null;
-                  _editFormulaController.clear();
+                  if (widget.onUpdateEntry != null && _currentEditId != null) {
+                    widget.onUpdateEntry!(_currentEditId!, _currentEditedName);
+
+                    _currentEditId = null;
+                    _editEntryController.clear();
                 });
               },
             )
@@ -276,7 +278,7 @@ class _GCWFormulaListEditor extends State<GCWFormulaListEditor> {
   }
 
 
-  void _addEntry(String key, String value, {bool clearInput = true, FormulaValueType formulaType = FormulaValueType.FIXED}) {
+  void _addEntry(String key, String value) {
     if (widget.onAddEntry != null) {
       widget.onAddEntry!(key, value, formulaType, context);
     }
