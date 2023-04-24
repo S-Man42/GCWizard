@@ -61,7 +61,7 @@ final _initialOptions = <String, Map<String, Object>>{
     MDT_CCITT2_OPTION_MODE: MDT_CCITT2_OPTION_MODE_BINARY
   },
   MDT_INTERNALNAMES_COORDINATEFORMATS: {
-    MDT_COORDINATEFORMATS_OPTION_FORMAT: CoordinateFormatKey.UTM
+    MDT_COORDINATEFORMATS_OPTION_FORMAT: coordinateFormatMetadataByKey(CoordinateFormatKey.UTM).persistenceKey
   },
   MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BEATNIK: {
     MDT_ESOTERIC_LANGUAGE_BEATNIK_OPTION_MODE: scrabbleID_EN
@@ -459,69 +459,80 @@ void _initializeMultiToolDecoder(BuildContext context) {
         ]),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS),
         MDT_INTERNALNAMES_COORDINATEFORMATS, options: [
-      MultiDecoderToolOption(MDT_COORDINATEFORMATS_OPTION_FORMAT, CoordinateFormatKey.UTM.name)
+      MultiDecoderToolOption(MDT_COORDINATEFORMATS_OPTION_FORMAT,
+          coordinateFormatMetadataByKey(CoordinateFormatKey.UTM).persistenceKey)
     ]),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS),
         MDT_INTERNALNAMES_COORDINATEFORMATS, options: [
-      MultiDecoderToolOption(MDT_COORDINATEFORMATS_OPTION_FORMAT, CoordinateFormatKey.MGRS.name)
+      MultiDecoderToolOption(MDT_COORDINATEFORMATS_OPTION_FORMAT,
+          coordinateFormatMetadataByKey(CoordinateFormatKey.MGRS).persistenceKey)
     ]),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS),
         MDT_INTERNALNAMES_COORDINATEFORMATS, options: [
-      MultiDecoderToolOption(MDT_COORDINATEFORMATS_OPTION_FORMAT, CoordinateFormatKey.XYZ.name)
+      MultiDecoderToolOption(MDT_COORDINATEFORMATS_OPTION_FORMAT,
+          coordinateFormatMetadataByKey(CoordinateFormatKey.XYZ).persistenceKey)
     ]),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS),
         MDT_INTERNALNAMES_COORDINATEFORMATS, options: [
       MultiDecoderToolOption(
-          MDT_COORDINATEFORMATS_OPTION_FORMAT, CoordinateFormatKey.MAIDENHEAD.name)
+          MDT_COORDINATEFORMATS_OPTION_FORMAT,
+          coordinateFormatMetadataByKey(CoordinateFormatKey.MAIDENHEAD).persistenceKey)
     ]),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS),
         MDT_INTERNALNAMES_COORDINATEFORMATS,
         options: [
           MultiDecoderToolOption(
-              MDT_COORDINATEFORMATS_OPTION_FORMAT, CoordinateFormatKey.NATURAL_AREA_CODE.name)
+              MDT_COORDINATEFORMATS_OPTION_FORMAT,
+              coordinateFormatMetadataByKey(CoordinateFormatKey.NATURAL_AREA_CODE).persistenceKey)
         ]),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS),
         MDT_INTERNALNAMES_COORDINATEFORMATS, options: [
       MultiDecoderToolOption(
-          MDT_COORDINATEFORMATS_OPTION_FORMAT, CoordinateFormatKey.GEOHASH.name)
+          MDT_COORDINATEFORMATS_OPTION_FORMAT,
+          coordinateFormatMetadataByKey(CoordinateFormatKey.GEOHASH).persistenceKey)
     ]),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS),
         MDT_INTERNALNAMES_COORDINATEFORMATS, options: [
       MultiDecoderToolOption(
-          MDT_COORDINATEFORMATS_OPTION_FORMAT, CoordinateFormatKey.GEOHEX.name)
+          MDT_COORDINATEFORMATS_OPTION_FORMAT,
+          coordinateFormatMetadataByKey(CoordinateFormatKey.GEOHEX).persistenceKey)
     ]),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS),
         MDT_INTERNALNAMES_COORDINATEFORMATS, options: [
       MultiDecoderToolOption(
-          MDT_COORDINATEFORMATS_OPTION_FORMAT, CoordinateFormatKey.GEO3X3.name)
+          MDT_COORDINATEFORMATS_OPTION_FORMAT,
+          coordinateFormatMetadataByKey(CoordinateFormatKey.GEO3X3).persistenceKey)
     ]),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS),
         MDT_INTERNALNAMES_COORDINATEFORMATS, options: [
       MultiDecoderToolOption(
-          MDT_COORDINATEFORMATS_OPTION_FORMAT, CoordinateFormatKey.MAKANEY.name)
+          MDT_COORDINATEFORMATS_OPTION_FORMAT,
+          coordinateFormatMetadataByKey(CoordinateFormatKey.MAKANEY).persistenceKey)
     ]),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS),
         MDT_INTERNALNAMES_COORDINATEFORMATS,
         options: [
           MultiDecoderToolOption(
-              MDT_COORDINATEFORMATS_OPTION_FORMAT, CoordinateFormatKey.OPEN_LOCATION_CODE.name)
+              MDT_COORDINATEFORMATS_OPTION_FORMAT,
+              coordinateFormatMetadataByKey(CoordinateFormatKey.OPEN_LOCATION_CODE).persistenceKey)
         ]),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS),
         MDT_INTERNALNAMES_COORDINATEFORMATS, options: [
       MultiDecoderToolOption(
-          MDT_COORDINATEFORMATS_OPTION_FORMAT, CoordinateFormatKey.QUADTREE.name)
+          MDT_COORDINATEFORMATS_OPTION_FORMAT,
+          coordinateFormatMetadataByKey(CoordinateFormatKey.QUADTREE).persistenceKey)
     ]),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS),
         MDT_INTERNALNAMES_COORDINATEFORMATS,
         options: [
           MultiDecoderToolOption(MDT_COORDINATEFORMATS_OPTION_FORMAT,
-              CoordinateFormatKey.REVERSE_WIG_WALDMEISTER.name)
+  coordinateFormatMetadataByKey(CoordinateFormatKey.REVERSE_WIG_WALDMEISTER).persistenceKey)
         ]),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS),
         MDT_INTERNALNAMES_COORDINATEFORMATS,
         options: [
           MultiDecoderToolOption(MDT_COORDINATEFORMATS_OPTION_FORMAT,
-              CoordinateFormatKey.REVERSE_WIG_DAY1976.name)
+  coordinateFormatMetadataByKey(CoordinateFormatKey.REVERSE_WIG_DAY1976).persistenceKey)
         ]),
     MultiDecoderToolEntity(
         i18n(context, MDT_INTERNALNAMES_VIGENERE), MDT_INTERNALNAMES_VIGENERE),
