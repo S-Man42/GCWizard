@@ -36,12 +36,6 @@ int insertFormula(Formula formula) {
   return id;
 }
 
-void deleteFormula(int formulaId) {
-  formulas.removeWhere((formula) => formula.id == formulaId);
-
-  _saveData();
-}
-
 void updateFormula(Formula formula) {
   _updateFormula(formula);
   _saveData();
