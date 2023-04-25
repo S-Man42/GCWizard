@@ -321,13 +321,14 @@ Future<Object?> _downloadFileAsync(GCWAsyncExecuterParameters? jobData) async {
   if (uri == null) return null;
   var request = http.Request("GET", uri);
   var client = http.Client();
-  await client.send(request).timeout(const Duration(seconds: 10), onTimeout: () {
+  var r = await client.send(request).timeout(const Duration(seconds: 10), onTimeout: () {
     //sendAsyncPort?.send(null);
-    return http.StreamedResponse(Stream.fromIterable([]), 500); //http.Response('Error', 500);
-  }).then((http.StreamedResponse response) async {
+    return http.StreamedResponse(Stream.empty(), 500); //http.Response('Error', 500);
+   // return Future(() => IOStreamedResponse(Stream.empty(), 500));
+  }).then<http.StreamedResponse?>((http.StreamedResponse response) async {
     if (response.statusCode != 200) {
       sendAsyncPort?.send('common_loadfile_exception_responsestatus');
-      return 'common_loadfile_exception_responsestatus';
+      return http.StreamedResponse(Stream.empty(), 500); //'common_loadfile_exception_responsestatus';
     }
     _total = response.contentLength ?? 0;
     int progressStep = max(_total ~/ 100, 1);
