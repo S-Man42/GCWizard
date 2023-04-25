@@ -274,8 +274,8 @@ class _GCWFormulaListEditor extends State<GCWFormulaListEditor> {
               exportFile(text, mode, context);
             },
           ),
-          const GCWDialogButton(
-            text: 'OK',
+          GCWDialogButton(
+            text: i18n(context, 'common_ok'),
           )
         ],
         cancelButton: false);
