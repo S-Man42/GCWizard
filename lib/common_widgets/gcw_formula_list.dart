@@ -10,6 +10,7 @@ import 'package:gc_wizard/tools/formula_solver/persistence/model.dart';
 
 
 import 'dialogs/gcw_delete_alertdialog.dart';
+import 'gcw_popup_menu.dart';
 
 
 class GCWFormulaListEditor extends StatefulWidget {
@@ -124,6 +125,82 @@ class _GCWFormulaListEditor extends State<GCWFormulaListEditor> {
     }
 
     Widget output;
+
+    var row = InkWell(
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              flex: 1,
+              child: _currentEditId == entry.id
+                  ? Padding(
+                padding: const EdgeInsets.only(
+                  right: 2,
+                ),
+                child: GCWTextField(
+                  controller: _editEntryController,
+                  autofocus: true,
+                  onChanged: (text) {
+                    setState(() {
+                      _currentEditedName = text;
+                    });
+                  },
+                ),
+              )
+                  : IgnorePointer(
+                  child: Column(
+                    children: <Widget>[
+                      GCWText(text: entry.name),
+                      Container(
+                        padding: const EdgeInsets.only(left: DEFAULT_DESCRIPTION_MARGIN),
+                        child: GCWText(
+                          text: '${group.formulas.length} ' +
+                              i18n(context,
+                                  group.formulas.length == 1 ? 'formulasolver_formula' : 'formulasolver_formulas'),
+                          style: gcwDescriptionTextStyle(),
+                        ),
+                      )
+                    ],
+                  )),
+            ),
+            _currentEditId == entry.id
+                ? GCWIconButton(
+              icon: Icons.check,
+              onPressed: () {
+                _updateEntry(_currentEditId!, _currentEditedName);
+
+                setState(() {
+                  _currentEditId = null;
+                  _editEntryController.clear();
+                });
+              },
+            )
+                : Container(),
+            GCWPopupMenu(
+                iconData: Icons.settings,
+                menuItemBuilder: (context) => [
+                  GCWPopupMenuItem(
+                      child: iconedGCWPopupMenuItem(context, Icons.edit, 'formulasolver_groups_editgroup'),
+                      action: (index) => setState(() {
+                        _currentEditId = entry.id;
+                        _currentEditedName = entry.name;
+                        _editEntryController.text = entry.name;
+                      })),
+                  GCWPopupMenuItem(
+                      child: iconedGCWPopupMenuItem(context, Icons.delete, 'formulasolver_groups_removegroup'),
+                      action: (index) => showDeleteAlertDialog(context, entry.name, () {
+                        if (entry.id != null) _removeEntry(entry.id!);
+                        setState(() {});
+                      })),
+                  GCWPopupMenuItem(
+                      child: iconedGCWPopupMenuItem(context, Icons.forward, 'formulasolver_groups_exportgroup'),
+                      action: (index) => _exportGroup(group)),
+                ])
+          ],
+        ),
+        onTap: () {
+          _navigateToSubPage(context);
+        });
+
 
     var row = InkWell(
         child: Row(
