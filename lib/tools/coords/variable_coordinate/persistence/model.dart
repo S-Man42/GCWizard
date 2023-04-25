@@ -36,14 +36,12 @@ class ProjectionData {
   }
 }
 
-class Formula {
-  int? id;
-  late String name;
+class Formula extends FormulaBase {
   String formula = '';
   ProjectionData? projection;
   List<FormulaValue> values = [];
 
-  Formula(this.name);
+  Formula(String name) : super (name);
 
   Map<String, Object?> toMap() => {
         'id': id,
@@ -53,22 +51,23 @@ class Formula {
         'values': values.map((value) => value.toMap()).toList(),
       };
 
-  Formula.fromJson(Map<String, Object?> json) {
-    name = toStringOrNull(json['name']) ?? ''; // TODO Proper default types if key is not in map
-    id = toIntOrNull(json['id']);
-    formula = toStringOrNull(json['formula']) ?? '';
-    projection = ProjectionData.fromJson(asJsonMapOrNull(json['projection']) ?? <String, Object?>{});
+  static Formula fromJson(Map<String, Object?> json) {
+    var newFormula = Formula(toStringOrNull(json['name']) ?? ''); // TODO Proper default types if key is not in map
+    newFormula.id = toIntOrNull(json['id']);
+    newFormula.formula = toStringOrNull(json['formula']) ?? '';
+    newFormula.projection = ProjectionData.fromJson(asJsonMapOrNull(json['projection']) ?? <String, Object?>{});
 
     var valuesRaw = toObjectWithNullableContentListOrNull(json['values']);
-    values = <FormulaValue>[];
+    newFormula.values = <FormulaValue>[];
     if (valuesRaw != null) {
       for (var element in valuesRaw) {
         var value = asJsonMapOrNull(element);
         if (value == null) continue;
 
-        values.add(FormulaValue.fromJson(value));
+        newFormula.values.add(FormulaValue.fromJson(value));
       }
     }
+    return newFormula;
   }
 
   @override
