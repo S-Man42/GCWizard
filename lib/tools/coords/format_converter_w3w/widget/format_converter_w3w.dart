@@ -1,5 +1,3 @@
-import 'dart:isolate';
-
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
@@ -22,10 +20,12 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_metadata.
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
+import 'package:gc_wizard/tools/coords/format_converter_w3w/logic/format_converter_w3w.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
+
 import 'package:latlong2/latlong.dart';
 import 'package:prefs/prefs.dart';
-import 'package:what3words/what3words.dart';
+
 
 class FormatConverterW3W extends StatefulWidget {
   const FormatConverterW3W({Key? key}) : super(key: key);
@@ -293,7 +293,7 @@ class FormatConverterW3WState extends State<FormatConverterW3W> {
             height: 220,
             width: 150,
             child: GCWAsyncExecuter<LatLng>(
-              isolatedFunction: _convertLatLonFromW3Wasync,
+              isolatedFunction: convertLatLonFromW3Wasync,
               parameter: _buildJobDataLatLonFromW3W,
               onReady: (data) => _showLatLon(data),
               isOverlay: true,
@@ -305,29 +305,9 @@ class FormatConverterW3WState extends State<FormatConverterW3W> {
   }
 
   Future<GCWAsyncExecuterParameters?> _buildJobDataLatLonFromW3W() async {
-    return GCWAsyncExecuterParameters(_currentW1 + '.' + _currentW2 + '.' + _currentW3);
+    return GCWAsyncExecuterParameters(LatLngFromW3WJobData(_currentW1 + '.' + _currentW2 + '.' + _currentW3, _APIKey));
   }
 
-  Future<LatLng> _convertLatLonFromW3Wasync(GCWAsyncExecuterParameters? jobData) async {
-    if (jobData?.parameters is! String) {
-      return Future.value(LatLng(0.0, 0.0));
-    }
-
-    var buildLatLonjob = jobData!.parameters as String;
-    var output = await _getLatLonFromW3W(buildLatLonjob, sendAsyncPort: jobData.sendAsyncPort!);
-
-    jobData.sendAsyncPort?.send(output);
-
-    return output;
-  }
-
-  Future<LatLng> _getLatLonFromW3W(String words, {required SendPort sendAsyncPort}) async {
-    var api = What3WordsV3(_APIKey);
-
-    var coordinates = await api.convertToCoordinates(words).execute();
-
-    return LatLng(coordinates.data()!.coordinates.lat, coordinates.data()!.coordinates.lng);
-  }
 
   void _showLatLon(LatLng output) {
     _currentCoordsLatLng = output;
@@ -347,7 +327,7 @@ class FormatConverterW3WState extends State<FormatConverterW3W> {
             height: 220,
             width: 150,
             child: GCWAsyncExecuter<String>(
-              isolatedFunction: _convertW3WFromLatLngAsync,
+              isolatedFunction: convertW3WFromLatLngAsync,
               parameter: _buildJobDataW3WFromLatLng,
               onReady: (data) => _showW3W(data),
               isOverlay: true,
@@ -359,31 +339,7 @@ class FormatConverterW3WState extends State<FormatConverterW3W> {
   }
 
   Future<GCWAsyncExecuterParameters?> _buildJobDataW3WFromLatLng() async {
-    return GCWAsyncExecuterParameters(_currentCoords);
-  }
-
-  Future<String> _convertW3WFromLatLngAsync(GCWAsyncExecuterParameters? jobData) async {
-    if (jobData?.parameters is! BaseCoordinate) {
-      return Future.value('');
-    }
-
-    var buildW3Wjob = jobData!.parameters as BaseCoordinate;
-    var output = await _getW3WFromLatLng(buildW3Wjob.toLatLng()!, sendAsyncPort: jobData.sendAsyncPort!);
-
-    jobData.sendAsyncPort?.send(output);
-
-    return output;
-  }
-
-  Future<String> _getW3WFromLatLng(LatLng coordinates, {required SendPort sendAsyncPort}) async {
-    var api = What3WordsV3(_APIKey);
-
-    var words = await api
-        .convertTo3wa(Coordinates(51.508344, -0.12549900))
-        .language(_convertLanguageFromFormatKey(_currentLanguage))
-        .execute();
-
-    return words.data()?.words as String;
+    return GCWAsyncExecuterParameters(W3WFromLatLngJobData(_currentCoords.toLatLng()!, _currentLanguage, _APIKey));
   }
 
   void _showW3W(String output) {
@@ -394,38 +350,6 @@ class FormatConverterW3WState extends State<FormatConverterW3W> {
     });
   }
 
-  String _convertLanguageFromFormatKey(CoordinateFormatKey formatKey) {
-    switch (formatKey) {
-      case CoordinateFormatKey.WHAT3WORDS_DE:
-        return 'de';
-      case CoordinateFormatKey.WHAT3WORDS_EN:
-        return 'en';
-      case CoordinateFormatKey.WHAT3WORDS_FR:
-        return 'fr';
-      case CoordinateFormatKey.WHAT3WORDS_ZH:
-        return 'zh';
-      case CoordinateFormatKey.WHAT3WORDS_DK:
-        return 'da';
-      case CoordinateFormatKey.WHAT3WORDS_NL:
-        return 'nl';
-      case CoordinateFormatKey.WHAT3WORDS_IT:
-        return 'it';
-      case CoordinateFormatKey.WHAT3WORDS_JA:
-        return 'ja';
-      case CoordinateFormatKey.WHAT3WORDS_KO:
-        return 'ko';
-      case CoordinateFormatKey.WHAT3WORDS_PL:
-        return 'pl';
-      case CoordinateFormatKey.WHAT3WORDS_RU:
-        return 'ru';
-      case CoordinateFormatKey.WHAT3WORDS_SP:
-        return 'sp';
-      case CoordinateFormatKey.WHAT3WORDS_CZ:
-        return 'cs';
-      default:
-        return 'en';
-    }
-  }
 }
 
 class buildLatLonJobData {
