@@ -21,12 +21,13 @@ import 'gcw_text_export.dart';
 
 
 class GCWFormulaListEditor extends StatefulWidget {
+  final List<FormulaBase> formulaList;
   final GCWTool? Function(int id) buildGCWTool;
   final void Function(String)? onAddEntry;
   final void Function()? onListChanged;
   final String? newEntryHintText;
   final Widget? middleWidget;
-  final List<FormulaBase> formulaList;
+  final bool formulaGroups;
 
   const GCWFormulaListEditor({
     Key? key,
@@ -36,6 +37,7 @@ class GCWFormulaListEditor extends StatefulWidget {
     this.onListChanged,
     this.newEntryHintText,
     this.middleWidget,
+    this.formulaGroups = false,
   }) : super(key: key);
 
   @override
@@ -50,24 +52,18 @@ class _GCWFormulaListEditor extends State<GCWFormulaListEditor> {
 
   int? _currentEditId;
 
-  late FocusNode _focusNodeEditValue;
-
   @override
   void initState() {
     super.initState();
 
     _newEntryController = TextEditingController(text: _currentNewName);
     _editEntryController = TextEditingController(text: _currentEditedName);
-
-    _focusNodeEditValue = FocusNode();
   }
 
   @override
   void dispose() {
     _newEntryController.dispose();
     _editEntryController.dispose();
-
-    _focusNodeEditValue.dispose();
 
     super.dispose();
   }
@@ -153,7 +149,7 @@ class _GCWFormulaListEditor extends State<GCWFormulaListEditor> {
                       child: Column(
                         children: <Widget>[
                           GCWText(text: entry.name),
-                          (entry.subFormulaCount >= 0)
+                          (widget.formulaGroups)
                             ? Container(
                                 padding: const EdgeInsets.only(left: DEFAULT_DESCRIPTION_MARGIN),
                                 child: GCWText(
@@ -185,20 +181,23 @@ class _GCWFormulaListEditor extends State<GCWFormulaListEditor> {
                 iconData: Icons.settings,
                 menuItemBuilder: (context) => [
                   GCWPopupMenuItem(
-                      child: iconedGCWPopupMenuItem(context, Icons.edit, 'formulasolver_groups_editgroup'),
+                      child: iconedGCWPopupMenuItem(context, Icons.edit,
+                          widget.formulaGroups ? 'formulasolver_groups_editgroup' : 'formulasolver_formulas_editformula'),
                       action: (index) => setState(() {
                         _currentEditId = entry.id;
                         _currentEditedName = entry.name;
                         _editEntryController.text = entry.name;
                       })),
                   GCWPopupMenuItem(
-                      child: iconedGCWPopupMenuItem(context, Icons.delete, 'formulasolver_groups_removegroup'),
+                      child: iconedGCWPopupMenuItem(context, Icons.delete,
+                          widget.formulaGroups ? 'formulasolver_groups_removegroup' : 'formulasolver_formulas_removeformula'),
                       action: (index) => showDeleteAlertDialog(context, entry.name, () {
                         if (entry.id != null) _removeEntry(entry.id!);
                         setState(() {});
                       })),
                   GCWPopupMenuItem(
-                      child: iconedGCWPopupMenuItem(context, Icons.forward, 'formulasolver_groups_exportgroup'),
+                      child: iconedGCWPopupMenuItem(context, Icons.forward,
+                          widget.formulaGroups ? 'formulasolver_groups_exportgroup' : 'formulasolver_formulas_exportformula'),
                       action: (index) => _exportGroup(entry)),
                 ])
           ],
@@ -266,7 +265,7 @@ class _GCWFormulaListEditor extends State<GCWFormulaListEditor> {
     );
     showGCWDialog(
         context,
-        i18n(context, 'formulasolver_groups_exportgroup'),
+        i18n(context, widget.formulaGroups ? 'formulasolver_groups_exportgroup' : 'formulasolver_formulas_exportformula'),
         contentWidget,
         [
           GCWDialogButton(

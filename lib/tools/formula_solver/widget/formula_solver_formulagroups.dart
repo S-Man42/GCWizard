@@ -81,6 +81,7 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
           onListChanged: () => updateFormulaGroups(),
           newEntryHintText: i18n(context, 'formulasolver_groups_newgroup_hint'),
           middleWidget: GCWTextDivider(text: i18n(context, 'formulasolver_groups_currentgroups')),
+          formulaGroups: true,
         ),
       ],
     );
