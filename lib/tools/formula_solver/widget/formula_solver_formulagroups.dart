@@ -57,7 +57,6 @@ class FormulaSolverFormulaGroups extends StatefulWidget {
 }
 
 class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> {
-  // ThemeColors _themeColors = themeColors();
 
   @override
   void initState() {

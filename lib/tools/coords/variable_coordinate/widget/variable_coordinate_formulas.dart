@@ -1,12 +1,19 @@
+import 'dart:convert';
+
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_paste_button.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_formula_list.dart';
+import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/tools/coords/variable_coordinate/persistence/json_provider.dart';
 import 'package:gc_wizard/tools/coords/variable_coordinate/persistence/model.dart';
 import 'package:gc_wizard/tools/coords/variable_coordinate/widget/variable_coordinate.dart';
+import 'package:gc_wizard/utils/json_utils.dart';
+import 'package:gc_wizard/utils/string_utils.dart';
 
 class VariableCoordinateFormulas extends StatefulWidget {
   const VariableCoordinateFormulas({Key? key}) : super(key: key);
@@ -28,7 +35,9 @@ class VariableCoordinateFormulasState extends State<VariableCoordinateFormulas> 
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWTextDivider(text: i18n(context, 'coords_variablecoordinate_newformula')),
+        GCWTextDivider(
+            text: i18n(context, 'coords_variablecoordinate_newformula'),
+            trailing: GCWPasteButton(iconSize: IconButtonSize.SMALL, onSelected: _importFromClipboard)),
         GCWFormulaListEditor(
           formulaList: formulas,
           buildGCWTool: (id) => _buildNavigateGCWTool(id),
@@ -39,6 +48,34 @@ class VariableCoordinateFormulasState extends State<VariableCoordinateFormulas> 
         ),
       ],
     );
+  }
+  String _createImportName(String currentName) {
+    var baseName = '[${i18n(context, 'common_import')}] $currentName';
+
+    var existingNames = formulas.map((f) => f.name).toList();
+
+    int i = 1;
+    var name = baseName;
+    while (existingNames.contains(name)) {
+      name = baseName + ' (${i++})';
+    }
+
+    return name;
+  }
+
+  void _importFromClipboard(String data) {
+    try {
+      data = normalizeCharacters(data);
+      var formula = Formula.fromJson(asJsonMap(jsonDecode(data)));
+      formula.name = _createImportName(formula.name);
+
+      setState(() {
+        insertFormula(formula);
+      });
+      showToast(i18n(context, 'formulasolver_groups_imported'));
+    } catch (e) {
+      showToast(i18n(context, 'formulasolver_groups_importerror'));
+    }
   }
 
   void _addNewFormula(String name) {
