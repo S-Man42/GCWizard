@@ -7,12 +7,21 @@ class FormulaBase {
   int? id;
   String name;
 
+  int get subFormulaCount {
+    return -1; //inactive
+  }
+
   FormulaBase(this.name);
 }
 
 class FormulaGroup  extends FormulaBase {
   List<Formula> formulas = [];
   List<FormulaValue> values = [];
+
+  @override
+  int get subFormulaCount {
+    return formulas.length;
+  }
 
   FormulaGroup(String name) :super(name);
 
