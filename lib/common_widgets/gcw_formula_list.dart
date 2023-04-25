@@ -21,7 +21,7 @@ import 'gcw_text_export.dart';
 
 
 class GCWFormulaListEditor extends StatefulWidget {
-  final GCWTool Function(String name) buildGCWTool;
+  final GCWTool? Function(int id) buildGCWTool;
   final void Function(String)? onAddEntry;
   final void Function()? onListChanged;
   final String? newEntryHintText;
@@ -30,12 +30,12 @@ class GCWFormulaListEditor extends StatefulWidget {
 
   const GCWFormulaListEditor({
     Key? key,
+    required this.formulaList,
     required this.buildGCWTool,
     required this.onAddEntry,
     this.onListChanged,
     this.newEntryHintText,
     this.middleWidget,
-    required this.formulaList,
   }) : super(key: key);
 
   @override
@@ -100,7 +100,11 @@ class _GCWFormulaListEditor extends State<GCWFormulaListEditor> {
           icon: Icons.add,
           onPressed: () {
             _addEntry(_currentNewName);
-            setState(() {});
+
+            setState(() {
+              _currentNewName = '';
+              _newEntryController.clear();
+            });
           },
         )
       ],
@@ -108,7 +112,7 @@ class _GCWFormulaListEditor extends State<GCWFormulaListEditor> {
   }
 
   Widget _buildMiddleWidget() {
-    return widget.middleWidget ?? Container();
+    return (widget.formulaList.isEmpty || widget.middleWidget == null) ? Container() : widget.middleWidget!;
   }
 
   Widget _buildList() {
@@ -123,14 +127,6 @@ class _GCWFormulaListEditor extends State<GCWFormulaListEditor> {
   }
 
   Widget _buildRow(FormulaBase entry, bool odd) {
-    var formulaTool = widget.buildGCWTool(entry.name);
-
-    Future<void> _navigateToSubPage(BuildContext context) async {
-      Navigator.push(context, NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => formulaTool)).whenComplete(() {
-        setState(() {});
-      });
-    }
-
     Widget output;
 
     var row = InkWell(
@@ -208,7 +204,16 @@ class _GCWFormulaListEditor extends State<GCWFormulaListEditor> {
           ],
         ),
         onTap: () {
-          _navigateToSubPage(context);
+          if (entry.id != null) {
+            var formulaTool = widget.buildGCWTool(entry.id!);
+            if (formulaTool != null) {
+              Navigator.push(context, NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => formulaTool))
+                  .whenComplete(() {
+                setState(() {});
+              });
+            }
+          }
+          //_navigateToSubPage(context);
         });
 
     if (odd) {
