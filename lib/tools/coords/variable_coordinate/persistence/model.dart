@@ -43,6 +43,7 @@ class Formula extends FormulaBase {
 
   Formula(String name) : super (name);
 
+  @override
   Map<String, Object?> toMap() => {
         'id': id,
         'name': name,

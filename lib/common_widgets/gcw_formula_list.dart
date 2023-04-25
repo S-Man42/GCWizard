@@ -1,16 +1,19 @@
+import 'dart:convert';
+
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
+import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/formula_solver/persistence/model.dart';
+import 'package:gc_wizard/utils/string_utils.dart';
 
 
-import '../application/theme/theme.dart';
 import 'dialogs/gcw_delete_alertdialog.dart';
 import 'dialogs/gcw_dialog.dart';
 import 'gcw_popup_menu.dart';
@@ -137,49 +140,50 @@ class _GCWFormulaListEditor extends State<GCWFormulaListEditor> {
               flex: 1,
               child: _currentEditId == entry.id
                   ? Padding(
-                padding: const EdgeInsets.only(
-                  right: 2,
-                ),
-                child: GCWTextField(
-                  controller: _editEntryController,
-                  autofocus: true,
-                  onChanged: (text) {
-                    setState(() {
-                      _currentEditedName = text;
-                    });
-                  },
-                ),
-              )
+                      padding: const EdgeInsets.only(
+                        right: 2,
+                      ),
+                      child: GCWTextField(
+                        controller: _editEntryController,
+                        autofocus: true,
+                        onChanged: (text) {
+                          setState(() {
+                            _currentEditedName = text;
+                          });
+                        },
+                      ),
+                    )
                   : IgnorePointer(
-                  child: Column(
-                    children: <Widget>[
-                      GCWText(text: entry.name),
-                      (entry.subFormulaCount >= 0)
-                        ? Container(
-                            padding: const EdgeInsets.only(left: DEFAULT_DESCRIPTION_MARGIN),
-                            child: GCWText(
-                              text: '${entry.subFormulaCount} ' +
-                                  i18n(context,
-                                      entry.subFormulaCount == 1 ? 'formulasolver_formula' : 'formulasolver_formulas'),
-                              style: gcwDescriptionTextStyle(),
-                            ),
-                          )
-                        : Container(),
-                    ],
-                  )),
+                      child: Column(
+                        children: <Widget>[
+                          GCWText(text: entry.name),
+                          (entry.subFormulaCount >= 0)
+                            ? Container(
+                                padding: const EdgeInsets.only(left: DEFAULT_DESCRIPTION_MARGIN),
+                                child: GCWText(
+                                  text: '${entry.subFormulaCount} ' +
+                                      i18n(context,
+                                          entry.subFormulaCount == 1 ? 'formulasolver_formula' : 'formulasolver_formulas'),
+                                  style: gcwDescriptionTextStyle(),
+                                ),
+                              )
+                            : Container(),
+                        ],
+                      )
+                    ),
             ),
             _currentEditId == entry.id
                 ? GCWIconButton(
-              icon: Icons.check,
-              onPressed: () {
-                _updateEntry(_currentEditId!, _currentEditedName);
+                    icon: Icons.check,
+                    onPressed: () {
+                      _updateEntry(_currentEditId!, _currentEditedName);
 
-                setState(() {
-                  _currentEditId = null;
-                  _editEntryController.clear();
-                });
-              },
-            )
+                      setState(() {
+                        _currentEditId = null;
+                        _editEntryController.clear();
+                      });
+                    }
+                  )
                 : Container(),
             GCWPopupMenu(
                 iconData: Icons.settings,
@@ -199,7 +203,7 @@ class _GCWFormulaListEditor extends State<GCWFormulaListEditor> {
                       })),
                   GCWPopupMenuItem(
                       child: iconedGCWPopupMenuItem(context, Icons.forward, 'formulasolver_groups_exportgroup'),
-                      action: (index) => _exportGroup(group)),
+                      action: (index) => _exportGroup(entry)),
                 ])
           ],
         ),
@@ -244,9 +248,9 @@ class _GCWFormulaListEditor extends State<GCWFormulaListEditor> {
     }
   }
 
-  void _exportGroup(FormulaGroup group) {
+  void _exportGroup(FormulaBase entry) {
     var mode = TextExportMode.QR;
-    String text = jsonEncode(group.toMap()).toString();
+    String text = jsonEncode(entry.toMap()).toString();
     text = normalizeCharacters(text);
 
     var contentWidget = GCWTextExport(

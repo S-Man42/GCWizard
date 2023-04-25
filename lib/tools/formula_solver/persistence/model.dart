@@ -12,6 +12,11 @@ class FormulaBase {
   }
 
   FormulaBase(this.name);
+
+  Map<String, Object?> toMap() => {
+    'id': id,
+    'name': name,
+  };
 }
 
 class FormulaGroup  extends FormulaBase {
@@ -25,6 +30,7 @@ class FormulaGroup  extends FormulaBase {
 
   FormulaGroup(String name) :super(name);
 
+  @override
   Map<String, Object?> toMap() => {
         'id': id,
         'name': name,
