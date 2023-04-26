@@ -6,7 +6,7 @@ void _getAllMessagesAndDialogsFromLUA(int progress, List<String> lines, SendPort
   for (int i = 0; i < lines.length; i++) {
     progress++;
     if (sendAsyncPort != null && (progress % progressStep == 0)) {
-      sendAsyncPort.send(DoubleText('progress', progress / lines.length / 2));
+      sendAsyncPort.send(DoubleText(PROGRESS, progress / lines.length / 2));
     }
 
     lines[i] = lines[i].trim();

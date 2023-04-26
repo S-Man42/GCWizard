@@ -73,7 +73,7 @@ Future<AnimatedImageOutput?> analyseImage(Uint8List bytes,
 
         progress++;
         if (sendAsyncPort != null && (progress % progressStep == 0)) {
-          sendAsyncPort.send(DoubleText('progress', progress / animation.length));
+          sendAsyncPort.send(DoubleText(PROGRESS, progress / animation.length));
         }
       }
     }

@@ -240,7 +240,7 @@ Tuple2<Uint8List?, MagicEyeErrorCode>? _generateImage(
   var generatedLines = 0;
   var _progressStep = max(_rows ~/ 100, 1); // 100 steps
 
-  sendAsyncPort?.send(DoubleText('progress', 0.0));
+  sendAsyncPort?.send(DoubleText(PROGRESS, 0.0));
 
   _initHoroptic();
 
@@ -248,7 +248,7 @@ Tuple2<Uint8List?, MagicEyeErrorCode>? _generateImage(
     _doLineHoroptic(y);
 
     if (sendAsyncPort != null && (generatedLines % _progressStep == 0)) {
-      sendAsyncPort.send(DoubleText('progress', y / _rows));
+      sendAsyncPort.send(DoubleText(PROGRESS, y / _rows));
     }
   }
 

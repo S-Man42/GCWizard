@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'dart:isolate';
 import 'dart:math';
 
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
 
 final RegExp VARIABLESTRING =
@@ -196,7 +197,7 @@ class VariableStringExpander {
 
       progress++;
       if (sendAsyncPort != null && (progress % progressStep == 0)) {
-        sendAsyncPort!.send(DoubleText('progress', progress / _countCombinations));
+        sendAsyncPort!.send(DoubleText(PROGRESS, progress / _countCombinations));
       }
     } while (_setIndexes() == false);
   }
