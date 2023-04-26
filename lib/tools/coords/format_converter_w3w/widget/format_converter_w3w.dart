@@ -95,12 +95,12 @@ class FormatConverterW3WState extends State<FormatConverterW3W> {
                   (_currentMode == GCWSwitchPosition.right) ? _buildDecode() : _buildEncode(),
                   GCWSubmitButton(
                     onPressed: () {
+                      if (_currentMode == GCWSwitchPosition.right) {
+                        _calculateLatLonFromW3W();
+                      } else {
+                        _calculateW3WFromLatLng();
+                      }
                       setState(() {
-                        if (_currentMode == GCWSwitchPosition.right) {
-                          _calculateLatLonFromW3W();
-                        } else {
-                          _calculateW3WFromLatLng();
-                        }
                         _calculateOutput(context);
                       });
                     },
@@ -313,7 +313,7 @@ class FormatConverterW3WState extends State<FormatConverterW3W> {
     _currentCoordsLatLng = output;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      setState(() {});
+      setState(() {_calculateOutput(context);});
     });
   }
 
@@ -346,18 +346,10 @@ class FormatConverterW3WState extends State<FormatConverterW3W> {
     _currentCoordsW3W = output;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      setState(() {});
+      setState(() {_calculateOutput(context);});
     });
   }
 
-}
-
-class buildLatLonJobData {
-  final What3Words jobDataCoordinates;
-
-  buildLatLonJobData({
-    required this.jobDataCoordinates,
-  });
 }
 
 class _GCWCoordsFormatSelectorAll extends GCWCoordsFormatSelector {
