@@ -321,41 +321,44 @@ Future<Object?> _downloadFileAsync(GCWAsyncExecuterParameters? jobData) async {
   if (uri == null) return null;
   var request = http.Request("GET", uri);
   var client = http.Client();
-  var r = await client.send(request).timeout(const Duration(seconds: 10), onTimeout: () {
-    //sendAsyncPort?.send(null);
-    return http.StreamedResponse(Stream.empty(), 500); //http.Response('Error', 500);
-   // return Future(() => IOStreamedResponse(Stream.empty(), 500));
-  }).then<http.StreamedResponse?>((http.StreamedResponse response) async {
-    if (response.statusCode != 200) {
-      sendAsyncPort?.send('common_loadfile_exception_responsestatus');
-      return http.StreamedResponse(Stream.empty(), 500); //'common_loadfile_exception_responsestatus';
-    }
-    _total = response.contentLength ?? 0;
-    int progressStep = max(_total ~/ 100, 1);
-
-    response.stream.listen((value) {
-      _bytes.addAll(value);
-
-      if (_total != 0 &&
-          sendAsyncPort != null &&
-          (_received % progressStep > (_received + value.length) % progressStep)) {
-        sendAsyncPort.send(DoubleText('progress', (_received + value.length) / _total));
-      }
-      _received += value.length;
-    },
-        onDone: () {
-          if (_bytes.isEmpty) {
-            outString = 'common_loadfile_exception_nofile';
-            sendAsyncPort?.send(outString);
-          } else {
-            var uint8List = Uint8List.fromList(_bytes);
-            sendAsyncPort?.send(uint8List);
-            result = Future.value(uint8List);
-          }
+  try {
+    await client.send(request).timeout(const Duration(seconds: 10))
+      .then<http.StreamedResponse?>((http.StreamedResponse response) async {
+        if (response.statusCode != 200) {
+          sendAsyncPort?.send('common_loadfile_exception_responsestatus');
+          return http.StreamedResponse(const Stream.empty(), 500); //'common_loadfile_exception_responsestatus';
         }
-    );
-  });
+        _total = response.contentLength ?? 0;
+        int progressStep = max(_total ~/ 100, 1);
 
+        response.stream.listen((value) {
+          _bytes.addAll(value);
+
+          if (_total != 0 &&
+              sendAsyncPort != null &&
+              (_received % progressStep > (_received + value.length) % progressStep)) {
+            sendAsyncPort.send(DoubleText('progress', (_received + value.length) / _total));
+          }
+          _received += value.length;
+        },
+          onDone: () {
+            if (_bytes.isEmpty) {
+              outString = 'common_loadfile_exception_nofile';
+              sendAsyncPort?.send(outString);
+            } else {
+              var uint8List = Uint8List.fromList(_bytes);
+              sendAsyncPort?.send(uint8List);
+              result = Future.value(uint8List);
+            }
+          }
+      );
+    });
+  } on TimeoutException catch (_) {
+    sendAsyncPort?.send('common_loadfile_exception_responsestatus');
+    return http.StreamedResponse(const Stream.empty(), 500);
+  } on SocketException catch (_) {
+    // Other exception
+  }
   if (outString != null) return outString!;
 
   await result;
