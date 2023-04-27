@@ -14,15 +14,15 @@ class GCWDoubleSpinner extends StatefulWidget {
   final void Function(double) onChanged;
   final String? title;
   final double value;
-  final double min;
-  final double max;
+  double min;
+  double max;
   final TextEditingController? controller;
   final int numberDecimalDigits;
   final SpinnerLayout layout;
   final FocusNode? focusNode;
   final bool suppressOverflow;
 
-  const GCWDoubleSpinner(
+  GCWDoubleSpinner(
       {Key? key,
         required this.onChanged,
         this.title,

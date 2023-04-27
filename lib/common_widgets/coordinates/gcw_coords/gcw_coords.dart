@@ -100,12 +100,21 @@ class GCWCoordsState extends State<GCWCoords> {
   void initState() {
     super.initState();
 
-    _currentCoords = buildCoordinate(widget.coordsFormat, widget.coordinates ?? defaultCoordinate);
     if (widget.coordinates != null) {
       _hasSetCoords = true;
     }
+
+    _currentCoords = buildCoordinate(widget.coordsFormat, widget.coordinates ?? defaultCoordinate);
   }
-  
+
+  BaseCoordinate _buildCoord(CoordinateFormat format) {
+    if (_hasSetCoords && _currentCoords.toLatLng() != null) {
+      return buildCoordinate(format, _currentCoords.toLatLng()!);
+    } else {
+      return buildUninitializedCoordinateByFormat(format);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final List<_GCWCoordWidget> _coordsWidgets = [
@@ -433,9 +442,6 @@ class GCWCoordsState extends State<GCWCoords> {
       ),
     ];
 
-    // TODO Mike: Please check if this is really nullable. If so, all coordinate specific _GCWCoords* widgets need to have nullable coordinates fields which yields even more nullable stuff...
-    // _currentCoords = null;
-
     Column _widget;
     if (widget.notitle != null && widget.notitle! && widget.title != null && widget.title!.isNotEmpty) {
       _widget = Column(
@@ -481,12 +487,11 @@ class GCWCoordsState extends State<GCWCoords> {
           }
 
           if (_currentCoords.format.type != newFormat.type) {
-            _currentCoords = buildUninitializedCoordinateByFormat(newFormat);
+            _currentCoords = _buildCoord(newFormat);
           } else if (_currentCoords.format.subtype != newFormat.subtype) {
             _currentCoords.format.subtype = newFormat.subtype;
           }
 
-          _hasSetCoords = false;
           _setCurrentValueAndEmitOnChange();
 
           FocusScope.of(context).requestFocus(FocusNode()); //Release focus from previously edited field
@@ -537,45 +542,6 @@ class GCWCoordsState extends State<GCWCoords> {
 
     _setCurrentValueAndEmitOnChange();
   }
-
-  // void _setPastedCoordsFormat() {
-  //   switch (_currentCoords.format.type) {
-  //     case CoordinateFormatKey.DEC:
-  //     case CoordinateFormatKey.DMM:
-  //     case CoordinateFormatKey.DMS:
-  //     case CoordinateFormatKey.UTM:
-  //     case CoordinateFormatKey.MGRS:
-  //     case CoordinateFormatKey.XYZ:
-  //     case CoordinateFormatKey.SWISS_GRID:
-  //     case CoordinateFormatKey.SWISS_GRID_PLUS:
-  //       break;
-  //     case CoordinateFormatKey.GAUSS_KRUEGER:
-  //       _currentCoords.format.subtype = defaultGaussKruegerType;
-  //       break;
-  //     case CoordinateFormatKey.LAMBERT:
-  //       _currentCoords.format.subtype = defaultLambertType;
-  //       break;
-  //     case CoordinateFormatKey.DUTCH_GRID:
-  //     case CoordinateFormatKey.MAIDENHEAD:
-  //     case CoordinateFormatKey.MERCATOR:
-  //     case CoordinateFormatKey.NATURAL_AREA_CODE:
-  //       break;
-  //     case CoordinateFormatKey.SLIPPY_MAP:
-  //       _currentCoords.format.subtype = defaultSlippyMapType;
-  //       break;
-  //     case CoordinateFormatKey.GEOHASH:
-  //     case CoordinateFormatKey.GEOHEX:
-  //     case CoordinateFormatKey.GEO3X3:
-  //     case CoordinateFormatKey.OPEN_LOCATION_CODE:
-  //     case CoordinateFormatKey.QUADTREE:
-  //     case CoordinateFormatKey.MAKANEY:
-  //     case CoordinateFormatKey.REVERSE_WIG_WALDMEISTER:
-  //     case CoordinateFormatKey.REVERSE_WIG_DAY1976:
-  //       break;
-  //     default:
-  //       _currentCoords.format = defaultCoordinateFormat;
-  //   }
-  // }
 
   void _setUserLocationCoords() {
     if (_isOnLocationAccess) return;

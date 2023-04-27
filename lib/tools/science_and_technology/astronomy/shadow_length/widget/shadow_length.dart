@@ -83,8 +83,10 @@ class ShadowLengthState extends State<ShadowLength> {
   }
 
   Widget _buildOutput() {
+    var _startCoords = _currentInputCoords.toLatLng() ?? defaultCoordinate;
+
     var shadowLen = shadowLength(
-        _currentHeight, _currentInputCoords.toLatLng() ?? defaultCoordinate, defaultEllipsoid, _currentDateTime);
+        _currentHeight, _startCoords, defaultEllipsoid, _currentDateTime);
 
     String lengthOutput = '';
     double _currentLength = shadowLen.length;
@@ -104,21 +106,26 @@ class ShadowLengthState extends State<ShadowLength> {
       copyText: _currentFormattedLength == null ? null : _currentLength.toString(),
     );
 
+    var _currentMapPoints = [
+      GCWMapPoint(
+          point: _startCoords,
+          markerText: i18n(context, 'coords_waypointprojection_start'),
+          coordinateFormat: _currentOutputFormat.format),
+      GCWMapPoint(
+          point: shadowLen.shadowEndPosition,
+          color: COLOR_MAP_CALCULATEDPOINT,
+          markerText: i18n(context, 'coords_waypointprojection_end'),
+          coordinateFormat: _currentOutputFormat.format)
+    ];
+
     Widget outputLocation = GCWCoordsOutput(
       title: i18n(context, 'shadowlength_location'),
       outputs: [
         buildCoordinate(_currentOutputFormat.format, shadowLen.shadowEndPosition, defaultEllipsoid).toString()
       ],
-      points: [
-        GCWMapPoint(
-            point: shadowLen.shadowEndPosition,
-            markerText: i18n(context, 'coords_waypointprojection_start'),
-            coordinateFormat: _currentOutputFormat.format),
-        GCWMapPoint(
-            point: shadowLen.shadowEndPosition,
-            color: COLOR_MAP_CALCULATEDPOINT,
-            markerText: i18n(context, 'coords_waypointprojection_end'),
-            coordinateFormat: _currentOutputFormat.format)
+      points: _currentMapPoints,
+      polylines: [
+        GCWMapPolyline(points: [_currentMapPoints[0], _currentMapPoints[1]])
       ],
     );
 

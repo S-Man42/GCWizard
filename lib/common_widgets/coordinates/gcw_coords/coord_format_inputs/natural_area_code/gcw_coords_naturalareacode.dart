@@ -17,6 +17,8 @@ class _GCWCoordsNaturalAreaCodeState extends State<_GCWCoordsNaturalAreaCode> {
   var _currentX = '';
   var _currentY = '';
 
+  bool _initialized = false;
+
   @override
   void initState() {
     super.initState();
@@ -35,13 +37,15 @@ class _GCWCoordsNaturalAreaCodeState extends State<_GCWCoordsNaturalAreaCode> {
 
   @override
   Widget build(BuildContext context) {
-    if (!widget.isDefault) {
+    if (!widget.isDefault && !_initialized) {
       var naturalAreaCode = widget.coordinates;
       _currentX = naturalAreaCode.x;
       _currentY = naturalAreaCode.y;
 
       _controllerX.text = _currentX;
       _controllerY.text = _currentY;
+
+      _initialized = true;
     }
 
     return Column(children: <Widget>[

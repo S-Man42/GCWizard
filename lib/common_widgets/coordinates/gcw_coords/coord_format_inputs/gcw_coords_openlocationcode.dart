@@ -19,6 +19,8 @@ class _GCWCoordsOpenLocationCodeState extends State<_GCWCoordsOpenLocationCode> 
       mask: '**#################',
       filter: {"*": RegExp(r'[23456789CFGHJMPQRVcfghjmpqrv]'), "#": RegExp(r'[23456789CFGHJMPQRVWXcfghjmpqrvwx+]')});
 
+  bool _initialized = false;
+
   @override
   void initState() {
     super.initState();
@@ -33,11 +35,13 @@ class _GCWCoordsOpenLocationCodeState extends State<_GCWCoordsOpenLocationCode> 
 
   @override
   Widget build(BuildContext context) {
-    if (!widget.isDefault) {
+    if (!widget.isDefault && !_initialized) {
       var openLocationCode = widget.coordinates;
       _currentCoord = openLocationCode.text;
 
       _controller.text = _currentCoord;
+
+      _initialized = true;
     }
 
     return Column(children: <Widget>[

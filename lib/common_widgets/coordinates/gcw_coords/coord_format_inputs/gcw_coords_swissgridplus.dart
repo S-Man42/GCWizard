@@ -18,6 +18,8 @@ class _GCWCoordsSwissGridPlusState extends State<_GCWCoordsSwissGridPlus> {
   var _currentEasting = defaultDoubleText;
   var _currentNorthing = defaultDoubleText;
 
+  bool _initialized = false;
+
   @override
   void initState() {
     super.initState();
@@ -34,7 +36,7 @@ class _GCWCoordsSwissGridPlusState extends State<_GCWCoordsSwissGridPlus> {
 
   @override
   Widget build(BuildContext context) {
-    if (!widget.isDefault) {
+    if (!widget.isDefault && !_initialized) {
       var swissGridPlus = widget.coordinates is SwissGridPlus
           ? widget.coordinates as SwissGridPlus
           : SwissGridPlus.fromLatLon(widget.coordinates.toLatLng() ?? defaultCoordinate, defaultEllipsoid);
@@ -43,6 +45,8 @@ class _GCWCoordsSwissGridPlusState extends State<_GCWCoordsSwissGridPlus> {
 
       _EastingController.text = _currentEasting.value.toString();
       _NorthingController.text = _currentNorthing.value.toString();
+
+      _initialized = true;
     }
 
     return Column(children: <Widget>[

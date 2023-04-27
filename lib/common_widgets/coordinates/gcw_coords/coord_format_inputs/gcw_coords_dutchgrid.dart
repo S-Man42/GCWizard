@@ -18,6 +18,8 @@ class _GCWCoordsDutchGridState extends State<_GCWCoordsDutchGrid> {
   var _currentX = defaultDoubleText;
   var _currentY = defaultDoubleText;
 
+  bool _initialized = false;
+
   @override
   void initState() {
     super.initState();
@@ -35,13 +37,15 @@ class _GCWCoordsDutchGridState extends State<_GCWCoordsDutchGrid> {
 
   @override
   Widget build(BuildContext context) {
-    if (!widget.isDefault) {
+    if (!widget.isDefault && !_initialized) {
       var dutchGrid = widget.coordinates;
       _currentX.value = dutchGrid.x;
       _currentY.value = dutchGrid.y;
 
       _xController.text = _currentX.value.toString();
       _yController.text = _currentY.value.toString();
+
+      _initialized = true;
     }
 
     return Column(children: <Widget>[

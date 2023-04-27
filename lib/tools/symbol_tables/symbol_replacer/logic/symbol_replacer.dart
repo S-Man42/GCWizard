@@ -245,20 +245,30 @@ class SymbolReplacerImage {
   /// </summary>
   void addToGroup(Symbol symbol, SymbolGroup? symbolGroup) {
     if (symbolGroup == null) return;
-    if (symbol.symbolGroup != null) {
-      symbol.symbolGroup?.symbols.remove(symbol);
-      if (symbol.symbolGroup!.symbols.isEmpty) symbolGroups.remove(symbol.symbolGroup);
-    }
-    symbolGroup.symbols = <Symbol>[];
+    _removeSymbolFromGroup(symbol);
 
     _addSymbolToGroup(symbol, symbolGroup);
+  }
+
+  /// <summary>
+  /// remove Symbol from SymbolGroup
+  /// delete SymbolGroup if empty
+  /// </summary>
+  void _removeSymbolFromGroup(Symbol symbol) {
+    if (symbol.symbolGroup != null) {
+      // remove symbol from
+      symbol.symbolGroup?.symbols.remove(symbol);
+      // delete empty SymbolGroup
+      if (symbol.symbolGroup!.symbols.isEmpty) symbolGroups.remove(symbol.symbolGroup);
+      symbol.symbolGroup = null;
+    }
   }
 
   /// <summary>
   /// remove Symbol from SymbolGroup (create new SymbolGroup)
   /// </summary>
   void removeFromGroup(Symbol symbol) {
-    if (symbol.symbolGroup != null) symbol.symbolGroup?.symbols.remove(symbol);
+    _removeSymbolFromGroup(symbol);
     var symbolGroup = SymbolGroup();
     symbolGroups.add(symbolGroup);
 
@@ -943,7 +953,7 @@ Future<List<Map<String, SymbolReplacerSymbolData>>?> searchSymbolTable(
   imageTmp._similarityLevel = 0;
   imageTmp._gap = image._gap;
 
-  sendAsyncPort?.send(DoubleText('progress', 0.0));
+  sendAsyncPort?.send(DoubleText(PROGRESS, 0.0));
 
   for (var symbolTable in compareSymbols) {
     imageTmp.resetGroupText();
@@ -956,7 +966,7 @@ Future<List<Map<String, SymbolReplacerSymbolData>>?> searchSymbolTable(
       }
     }
     progress++;
-    sendAsyncPort?.send(DoubleText('progress', progress / compareSymbols.length));
+    sendAsyncPort?.send(DoubleText(PROGRESS, progress / compareSymbols.length));
   }
   return Future.value(maxPercentSymbolTable);
 }

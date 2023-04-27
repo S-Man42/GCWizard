@@ -127,7 +127,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
     lines[i] = lines[i].trim();
 
     if (sendAsyncPort != null && (i % progressStep == 0)) {
-      sendAsyncPort.send(DoubleText('progress', i / lines.length / 2));
+      sendAsyncPort.send(DoubleText(PROGRESS, i / lines.length / 2));
     }
 
     _checkAndGetCartridgeName(lines[i]);
@@ -145,7 +145,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           do {
             analyzeLines.add(lines[i].trim());
             if (sendAsyncPort != null && (i % progressStep == 0)) {
-              sendAsyncPort.send(DoubleText('progress', i / lines.length / 2));
+              sendAsyncPort.send(DoubleText(PROGRESS, i / lines.length / 2));
             }
             i++;
           } while (_insideSectionMedia(lines[i]) && (i + 1 < lines.length - 1));
@@ -188,7 +188,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           do {
             analyzeLines.add(lines[i].trim());
             if (sendAsyncPort != null && (i % progressStep == 0)) {
-              sendAsyncPort.send(DoubleText('progress', i / lines.length / 2));
+              sendAsyncPort.send(DoubleText(PROGRESS, i / lines.length / 2));
             }
             i++;
           } while (_insideSectionZone(lines[i]) && (i + 1 < lines.length - 1));
@@ -217,7 +217,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           do {
             analyzeLines.add(lines[i].trim());
             if (sendAsyncPort != null && (i % progressStep == 0)) {
-              sendAsyncPort.send(DoubleText('progress', i / lines.length / 2));
+              sendAsyncPort.send(DoubleText(PROGRESS, i / lines.length / 2));
             }
             i++;
           } while (_insideSectionCharacter(lines[i]) && (i + 1 < lines.length - 1));
@@ -250,7 +250,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           do {
             analyzeLines.add(lines[i].trim());
             if (sendAsyncPort != null && (i % progressStep == 0)) {
-              sendAsyncPort.send(DoubleText('progress', i / lines.length / 2));
+              sendAsyncPort.send(DoubleText(PROGRESS, i / lines.length / 2));
             }
             i++;
           } while (_insideSectionItem(lines[i]) && (i + 1 < lines.length - 1));
@@ -278,7 +278,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           do {
             analyzeLines.add(lines[i].trim());
             if (sendAsyncPort != null && (i % progressStep == 0)) {
-              sendAsyncPort.send(DoubleText('progress', i / lines.length / 2));
+              sendAsyncPort.send(DoubleText(PROGRESS, i / lines.length / 2));
             }
             i++;
           } while (_insideSectionTask(lines[i]) && (i + 1 < lines.length - 1));
@@ -365,7 +365,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           do {
             analyzeLines.add(lines[i].trim());
             if (sendAsyncPort != null && (i % progressStep == 0)) {
-              sendAsyncPort.send(DoubleText('progress', i / lines.length / 2));
+              sendAsyncPort.send(DoubleText(PROGRESS, i / lines.length / 2));
             }
             i++;
           } while (_insideSectionTimer(lines[i]) && (i + 1 < lines.length - 1));
@@ -395,7 +395,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
           do {
             analyzeLines.add(lines[i].trim());
             if (sendAsyncPort != null && (i % progressStep == 0)) {
-              sendAsyncPort.send(DoubleText('progress', i / lines.length / 2));
+              sendAsyncPort.send(DoubleText(PROGRESS, i / lines.length / 2));
             }
             i++;
           } while (_insideSectionInput(lines[i]) && (i + 1 < lines.length - 1));
@@ -424,7 +424,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
             i++;
 
             if (sendAsyncPort != null && (i % progressStep == 0)) {
-              sendAsyncPort.send(DoubleText('progress', i / lines.length / 2));
+              sendAsyncPort.send(DoubleText(PROGRESS, i / lines.length / 2));
             }
           } while (_insideSectionOnGetInput(lines[i]) && (i < lines.length - 1));
           _Answers.add(_analyzeAndExtractOnGetInputSectionData(analyzeLines));

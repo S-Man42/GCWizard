@@ -344,7 +344,7 @@ class GCWMapViewState extends State<GCWMapView> {
       }
 
       List<Widget> children = data
-          .map((elem) => GCWOutputText(
+          .map<Widget>((elem) => GCWOutputText(
               text: elem.text,
               copyText: elem.value.toString(),
               style: gcwDialogTextStyle(),

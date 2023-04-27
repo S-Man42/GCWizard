@@ -321,6 +321,7 @@ Future<Object?> _downloadFileAsync(GCWAsyncExecuterParameters? jobData) async {
   if (uri == null) return null;
   var request = http.Request("GET", uri);
   var client = http.Client();
+
   try {
     await client.send(request).timeout(const Duration(seconds: 10))
       .then<http.StreamedResponse?>((http.StreamedResponse response) async {
@@ -337,7 +338,7 @@ Future<Object?> _downloadFileAsync(GCWAsyncExecuterParameters? jobData) async {
           if (_total != 0 &&
               sendAsyncPort != null &&
               (_received % progressStep > (_received + value.length) % progressStep)) {
-            sendAsyncPort.send(DoubleText('progress', (_received + value.length) / _total));
+            sendAsyncPort.send(DoubleText(PROGRESS, (_received + value.length) / _total));
           }
           _received += value.length;
         },

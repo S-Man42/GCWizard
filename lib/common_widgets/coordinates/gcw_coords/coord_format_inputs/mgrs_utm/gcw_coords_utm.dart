@@ -21,6 +21,8 @@ class _GCWCoordsUTMState extends State<_GCWCoordsUTM> {
   var _currentEasting = defaultDoubleText;
   var _currentNorthing = defaultDoubleText;
 
+  bool _initialized = false;
+
   @override
   void initState() {
     super.initState();
@@ -40,7 +42,7 @@ class _GCWCoordsUTMState extends State<_GCWCoordsUTM> {
 
   @override
   Widget build(BuildContext context) {
-    if (!widget.isDefault) {
+    if (!widget.isDefault && !_initialized) {
       var utm = widget.coordinates is UTMREF
           ? widget.coordinates as UTMREF
           : UTMREF.fromLatLon(widget.coordinates.toLatLng() ?? defaultCoordinate, defaultEllipsoid);
@@ -52,6 +54,8 @@ class _GCWCoordsUTMState extends State<_GCWCoordsUTM> {
       _LonZoneController.text = _currentLonZone.value.toString();
       _EastingController.text = _currentEasting.value.toString();
       _NorthingController.text = _currentNorthing.value.toString();
+
+      _initialized = true;
     }
 
     return Column(children: <Widget>[

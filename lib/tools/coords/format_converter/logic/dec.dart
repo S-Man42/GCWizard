@@ -4,8 +4,7 @@ import 'package:gc_wizard/utils/coordinate_utils.dart';
 import 'package:latlong2/latlong.dart';
 
 LatLng decToLatLon(DEC dec) {
-  var normalized = normalizeDEC(dec);
-  return LatLng(normalized.latitude, normalized.longitude);
+  return normalizeLatLon(dec.latitude, dec.longitude);
 }
 
 DEC latLonToDEC(LatLng coord) {
@@ -31,13 +30,6 @@ String? prepareInput(String text, {bool wholeString = false}) {
   if (text.isEmpty) return null;
 
   return text;
-}
-
-DEC normalizeDEC(DEC coord) {
-  var normalizedLat = normalizeLat(coord.latitude);
-  var normalizedLon = normalizeLon(coord.longitude);
-
-  return DEC(normalizedLat, normalizedLon);
 }
 
 DEC? parseDEC(String input, {bool wholeString = false}) {

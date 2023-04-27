@@ -28,6 +28,8 @@ class _GCWCoordsDECState extends State<_GCWCoordsDEC> {
   String _currentLonDegrees = '';
   String _currentLonMilliDegrees = '';
 
+  bool _initialized = false;
+
   @override
   void initState() {
     super.initState();
@@ -54,7 +56,7 @@ class _GCWCoordsDECState extends State<_GCWCoordsDEC> {
 
   @override
   Widget build(BuildContext context) {
-    if (!widget.isDefault) {
+    if (!widget.isDefault && !_initialized) {
       var dec = widget.coordinates;
       _currentLatDegrees = dec.latitude.abs().floor().toString();
       _currentLatMilliDegrees = dec.latitude.toString().split('.')[1];
@@ -69,6 +71,8 @@ class _GCWCoordsDECState extends State<_GCWCoordsDEC> {
 
       _LonDegreesController.text = _currentLonDegrees;
       _LonMilliDegreesController.text = _currentLonMilliDegrees;
+
+      _initialized = true;
     }
 
     return Column(children: <Widget>[

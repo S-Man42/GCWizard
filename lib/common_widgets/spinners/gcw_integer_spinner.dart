@@ -18,15 +18,15 @@ class GCWIntegerSpinner extends StatefulWidget {
   final void Function(int) onChanged;
   final String? title;
   final int value;
-  final int min;
-  final int max;
+  int min;
+  int max;
   final int? leftPadZeros;
   final TextEditingController? controller;
   final SpinnerLayout layout;
   final FocusNode? focusNode;
   final SpinnerOverflowType overflow;
 
-  const GCWIntegerSpinner(
+  GCWIntegerSpinner(
       {Key? key,
       required this.onChanged,
       this.title,
