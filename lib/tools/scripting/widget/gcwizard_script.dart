@@ -190,7 +190,6 @@ class GCWizardScriptState extends State<GCWizardScript> {
             trailing: GCWIconButton(
               icon: Icons.save,
               size: IconButtonSize.SMALL,
-              iconColor: themeColors().inActive(),
               onPressed: () {
                 _exportFile(context, Uint8List.fromList(_currentScriptOutput.codeUnits), GCWizardScriptFileType.OUTPUT);
               },
@@ -208,7 +207,6 @@ class GCWizardScriptState extends State<GCWizardScript> {
                 GCWIconButton(
                   icon: Icons.my_location,
                   size: IconButtonSize.SMALL,
-                  iconColor: themeColors().mainFont(),
                   onPressed: () {
                     _openInMap(_currentOutput.Points);
                   },
@@ -216,7 +214,6 @@ class GCWizardScriptState extends State<GCWizardScript> {
                 GCWIconButton(
                   icon: Icons.save,
                   size: IconButtonSize.SMALL,
-                  iconColor: themeColors().mainFont(),
                   onPressed: () {
                     _exportCoordinates(context, _currentOutput.Points);
                   },
