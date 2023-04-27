@@ -120,6 +120,7 @@ String ID3TextEncoding(Uint8List bytes){
 }
 
 List<SoundfileDataSectionContent> analyzeID3Chunk(Uint8List bytes){
+  print('id3 analyzeID3chunk');
   List<SoundfileDataSectionContent> result = [];
   result.add(SoundfileDataSectionContent(Meaning: 'sign', Bytes: bytes.sublist(0, 3).join(' '), Value: String.fromCharCodes(bytes.sublist(0, 3)))); // 3 Byte ASCII
   result.add(SoundfileDataSectionContent(Meaning: 'version', Bytes: bytes.sublist(3, 5).join(' '), Value: bytes[3].toString() + '.' + bytes[4].toString())); // 2 Byte
@@ -136,19 +137,28 @@ List<SoundfileDataSectionContent> analyzeID3Chunk(Uint8List bytes){
   String frame = '';
 //  String frameText = '';
   while (index < bytes.length) {
+    print(index);
     result.add(SoundfileDataSectionContent(Meaning: 'frame',
         Bytes: bytes.sublist(index, index + 4).join(' '),
         Value: String.fromCharCodes(bytes.sublist(index, index + 4)))); // 4 Byte ASCII
+    index = index + 4;
+
     frame = String.fromCharCodes(bytes.sublist(index, index + 4));
     result.add(SoundfileDataSectionContent(Meaning: '',
         Bytes: ID3_FRAMES[String.fromCharCodes(bytes.sublist(index, index + 4))].toString(),
         Value: '')); // 4 Byte ASCII
-    size = sizeID3(bytes.sublist(index + 4, index + 8));
+    index = index + 4;
+
+    size = sizeID3(bytes.sublist(index, index + 4));
     result.add(SoundfileDataSectionContent(Meaning: 'size',
-        Bytes: bytes.sublist(index + 4, index + 8).join(' '),
+        Bytes: bytes.sublist(index, index + 4).join(' '),
         Value: size.toString() + ' Byte')); // 4 Bytes, special Format
+    index = index + 4;
+
     result.add(SoundfileDataSectionContent(
-        Meaning: 'flags', Bytes: bytes.sublist(index + 8, index + 10).join(' '), Value: '')); // 4 Bytes, special Format
+        Meaning: 'flags', Bytes: bytes.sublist(index, index + 2).join(' '), Value: '')); // 4 Bytes, special Format
+    index = index + 2;
+
     if (ID3FrameFlags(bytes.sublist(index + 8, index + 10)) != '') {
       result.add(SoundfileDataSectionContent(
           Meaning: '', Bytes: ID3FrameFlags(bytes.sublist(index + 8, index + 10)), Value: '')); // 4 Byte ASCII}

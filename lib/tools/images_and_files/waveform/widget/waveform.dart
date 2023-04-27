@@ -68,9 +68,11 @@ class WaveFormState extends State<WaveForm> {
               showToast(i18n(context, 'common_loadfile_exception_notloaded'));
               return;
             }
-
+print('file loaded ----------------------------------------------------------');
+            print(_file.bytes);
             _setData(_file.bytes);
             _soundfileData = getSoundfileData(_bytes);
+            print('calculate aamplitudes -----------------------------------------');
             _amplitudesData = calculateRMSAmplitudes(
                 PCMformat: _soundfileData.PCMformat,
                 bits: _soundfileData.bits,
@@ -79,6 +81,7 @@ class WaveFormState extends State<WaveForm> {
                 PCMamplitudesData: _soundfileData.amplitudesData,
                 blocksize: _blocksizes[_currentBlocksize],
                 vScalefactor: _currentVScalefactor * 1000);
+            print('PCMamplitudes2Image -----------------------------------------');
             PCMamplitudes2Image(
                     duration: _soundfileData.duration,
                     RMSperPoint: _amplitudesData.Amplitudes,

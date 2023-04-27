@@ -1,8 +1,8 @@
 part of 'package:gc_wizard/tools/images_and_files/waveform/logic/waveform.dart';
 
-const WAV_FORMAT_PCM = 1;
-const WAV_FORMAT_IEEEFLOAT32 = 3;
-const Map<int, String> WAV_FORMAT_CODE = {
+const _WAV_FORMAT_PCM = 1;
+const _WAV_FORMAT_IEEEFLOAT32 = 3;
+const Map<int, String> _WAV_FORMAT_CODE = {
   // http://www-mmsp.ece.mcgill.ca/Documents/AudioFormats/WAVE/Docs/rfc2361.txt
   0: '?',
   1: 'PCM',
@@ -56,7 +56,7 @@ const Map<int, String> WAV_FORMAT_CODE = {
   1027: 'Olivetti OPR',
 };
 
-const Map<String, String> LIST_INFO_CODE = {
+const Map<String, String> _LIST_INFO_CODE = {
   'IARL': 'Location where the subject of the file is archived',
   'IART': 'Artist of the original subject of the file',
   'ICMS': 'Name of the person or organization that commissioned the original subject of the file',
@@ -119,6 +119,7 @@ SoundfileData WAVContent(Uint8List bytes) {
   // https://web.archive.org/web/20101207002408/http://www.it.fht-esslingen.de/~schmidt/vorlesungen/mm/seminar/ss00/HTML/node107.html
   // https://www.recordingblogs.com/wiki/wave-file-format
 
+  print('get wav content ---------------------------------------------------');
   List<SoundfileDataSection> WaveFormDataSectionList = [];
   SoundfileDataSection section;
   List<SoundfileDataSectionContent> sectionContentList = [];
@@ -132,7 +133,14 @@ SoundfileData WAVContent(Uint8List bytes) {
   Uint8List amplitudesData = Uint8List.fromList([]);
 
   int index = 0;
+  print(bytes.length);
   while (index < bytes.length) {
+    print('=> '+index.toString());
+    if (index + 4 < bytes.length) {
+      print(index.toString()+'  '+String.fromCharCodes(bytes.sublist(index, index + 4)));
+    } else {
+      print(index.toString()+'  '+String.fromCharCodes(bytes.sublist(index)));
+    }
     switch (index + 4 < bytes.length
         ? String.fromCharCodes(bytes.sublist(index, index + 4))
         : String.fromCharCodes(bytes.sublist(index))) {
@@ -172,7 +180,7 @@ SoundfileData WAVContent(Uint8List bytes) {
         PCMformat = ByteData.sublistView(bytes).getInt16(index + 8, Endian.little);
         sectionContentList.add(SoundfileDataSectionContent(
             Meaning: '',
-            Bytes: WAV_FORMAT_CODE[ByteData.sublistView(bytes).getInt16(index + 8, Endian.little)]!,
+            Bytes: _WAV_FORMAT_CODE[ByteData.sublistView(bytes).getInt16(index + 8, Endian.little)]!,
             Value: ''));
         sectionContentList.add(SoundfileDataSectionContent(
             Meaning: 'channel',
@@ -274,7 +282,7 @@ SoundfileData WAVContent(Uint8List bytes) {
                 Value: String.fromCharCodes(bytes.sublist(listIndex, listIndex + 4)))); // 4 Byte
             sectionContentList.add(SoundfileDataSectionContent(
                 Meaning: '',
-                Bytes: LIST_INFO_CODE[String.fromCharCodes(bytes.sublist(listIndex, listIndex + 4))].toString(),
+                Bytes: _LIST_INFO_CODE[String.fromCharCodes(bytes.sublist(listIndex, listIndex + 4))].toString(),
                 Value: ''));
             sectionContentList.add(SoundfileDataSectionContent(
                 Meaning: 'size',
@@ -299,19 +307,22 @@ SoundfileData WAVContent(Uint8List bytes) {
         index = index + 8 + size;
         break;
       case 'id3 ':
+        print('section id3');
       // https://id3.org/id3v2.3.0#Private_frame
         sectionContentList = [];
         sectionContentList.add(SoundfileDataSectionContent(
             Meaning: 'sign',
             Bytes: bytes.sublist(index, index + 4).join(' '),
             Value: String.fromCharCodes(bytes.sublist(index, index + 4)))); // 4 Byte Big Endian
+        print('section added sign');
         sectionContentList.add(SoundfileDataSectionContent(
             Meaning: 'size',
             Bytes: bytes.sublist(index + 4, index + 8).join(' '),
             Value: ByteData.sublistView(bytes).getInt32(index + 4, Endian.little).toString() + ' Byte')); // 4 Byte
+        print('section added size');
         int size = ByteData.sublistView(bytes).getInt32(index + 4, Endian.little);
 //        sectionContentList.add(SoundfileDataSectionContent(Meaning: 'data', Bytes: bytes.sublist(index + 8, index + 8 + size).join(' '), Value: String.fromCharCodes(bytes.sublist(index + 8, index + 8 + size)))); // 4 Byte
-        sectionContentList.addAll(analyzeID3Chunk(bytes.sublist(index + 8, index + 8 + size)));
+        //sectionContentList.addAll(analyzeID3Chunk(bytes.sublist(index + 8, index + 8 + size)));
         section = SoundfileDataSection(SectionTitle: 'id3_chunk', SectionContent: sectionContentList);
         WaveFormDataSectionList.add(section);
         index = index + 8 + size;
@@ -390,7 +401,7 @@ AmplitudeData calculateRMSAmplitudes(
           }
           break;
         case 32:
-          if (PCMformat == WAV_FORMAT_PCM) {
+          if (PCMformat == _WAV_FORMAT_PCM) {
             // PCM
             if (sample + 8 < PCMamplitudesData.length) {
               for (int i = 0; i < channels; i++) {
@@ -398,7 +409,7 @@ AmplitudeData calculateRMSAmplitudes(
               }
               amplitude = amplitude / channels / 2147483648;
             }
-          } else if (PCMformat == WAV_FORMAT_IEEEFLOAT32) {
+          } else if (PCMformat == _WAV_FORMAT_IEEEFLOAT32) {
             // IEEE Float 32
             if (sample + 8 < PCMamplitudesData.length) {
               for (int i = 0; i < channels; i++) {
