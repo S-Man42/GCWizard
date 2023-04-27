@@ -3,8 +3,9 @@ part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart
 class _GCWCoordsSwissGridPlus extends StatefulWidget {
   final void Function(SwissGridPlus) onChanged;
   final BaseCoordinate coordinates;
+  final bool isDefault;
 
-  const _GCWCoordsSwissGridPlus({Key? key, required this.onChanged, required this.coordinates}) : super(key: key);
+  const _GCWCoordsSwissGridPlus({Key? key, required this.onChanged, required this.coordinates, this.isDefault = true}) : super(key: key);
 
   @override
   _GCWCoordsSwissGridPlusState createState() => _GCWCoordsSwissGridPlusState();
@@ -17,18 +18,13 @@ class _GCWCoordsSwissGridPlusState extends State<_GCWCoordsSwissGridPlus> {
   var _currentEasting = defaultDoubleText;
   var _currentNorthing = defaultDoubleText;
 
+  bool _initialized = false;
+
   @override
   void initState() {
     super.initState();
-
-    var swissGridPlus = widget.coordinates is SwissGridPlus
-        ? widget.coordinates as SwissGridPlus
-        : SwissGridPlus.fromLatLon(widget.coordinates.toLatLng() ?? defaultCoordinate, defaultEllipsoid);
-    _currentEasting.value = swissGridPlus.easting;
-    _currentNorthing.value = swissGridPlus.northing;
-
-    _EastingController = TextEditingController(text: _currentEasting.value.toString());
-    _NorthingController = TextEditingController(text: _currentNorthing.value.toString());
+    _EastingController = TextEditingController(text: _currentEasting.text);
+    _NorthingController = TextEditingController(text: _currentNorthing.text);
   }
 
   @override
@@ -40,6 +36,18 @@ class _GCWCoordsSwissGridPlusState extends State<_GCWCoordsSwissGridPlus> {
 
   @override
   Widget build(BuildContext context) {
+    if (!widget.isDefault && !_initialized) {
+      var swissGridPlus = widget.coordinates is SwissGridPlus
+          ? widget.coordinates as SwissGridPlus
+          : SwissGridPlus.fromLatLon(widget.coordinates.toLatLng() ?? defaultCoordinate, defaultEllipsoid);
+      _currentEasting.value = swissGridPlus.easting;
+      _currentNorthing.value = swissGridPlus.northing;
+
+      _EastingController.text = _currentEasting.value.toString();
+      _NorthingController.text = _currentNorthing.value.toString();
+
+      _initialized = true;
+    }
 
     return Column(children: <Widget>[
       GCWDoubleTextField(

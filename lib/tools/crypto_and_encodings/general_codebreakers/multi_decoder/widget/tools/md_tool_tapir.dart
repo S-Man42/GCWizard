@@ -18,6 +18,5 @@ class MultiDecoderToolTapir extends AbstractMultiDecoderTool {
             onDecode: (String input, String key) {
               return decryptTapir(input, key);
             },
-            requiresKey: true,
             options: options);
 }

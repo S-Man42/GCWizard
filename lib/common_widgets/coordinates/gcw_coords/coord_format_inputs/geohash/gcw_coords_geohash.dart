@@ -3,8 +3,9 @@ part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart
 class _GCWCoordsGeohash extends StatefulWidget {
   final void Function(Geohash?) onChanged;
   final Geohash coordinates;
+  final bool isDefault;
 
-  const _GCWCoordsGeohash({Key? key, required this.onChanged, required this.coordinates}) : super(key: key);
+  const _GCWCoordsGeohash({Key? key, required this.onChanged, required this.coordinates, this.isDefault = true}) : super(key: key);
 
   @override
   _GCWCoordsGeohashState createState() => _GCWCoordsGeohashState();
@@ -14,12 +15,11 @@ class _GCWCoordsGeohashState extends State<_GCWCoordsGeohash> {
   late TextEditingController _controller;
   var _currentCoord = '';
 
+  bool _initialized = false;
+
   @override
   void initState() {
     super.initState();
-
-    _currentCoord = widget.coordinates.text;
-
     _controller = TextEditingController(text: _currentCoord);
   }
 
@@ -31,6 +31,14 @@ class _GCWCoordsGeohashState extends State<_GCWCoordsGeohash> {
 
   @override
   Widget build(BuildContext context) {
+    if (!widget.isDefault && !_initialized) {
+      var geohash = widget.coordinates;
+      _currentCoord = geohash.text;
+
+      _controller.text = _currentCoord;
+
+      _initialized = true;
+    }
 
     return Column(children: <Widget>[
       GCWTextField(
