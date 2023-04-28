@@ -108,6 +108,7 @@ class MultiDecoderToolCoordinateFormats extends AbstractMultiDecoderTool {
 
                 return formatCoordOutput(latlng, defaultCoordinateFormat, defaultEllipsoid);
               } catch (e) {}
+              return null;
             },
             options: options,
             configurationWidget: MultiDecoderToolConfiguration(widgets: {

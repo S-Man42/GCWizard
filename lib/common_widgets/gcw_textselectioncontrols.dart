@@ -41,7 +41,7 @@ class GCWTextSelectionControls extends MaterialTextSelectionControls {
       handleCopy: canCopy(delegate)
           ? () {
               insertIntoGCWClipboard(
-                  context, delegate.textEditingValue.selection.textInside(delegate.textEditingValue.text));
+                  context, selectedText(delegate));
               handleCopy(delegate, clipboardStatus);
             }
           : () {},
@@ -71,16 +71,53 @@ class GCWTextSelectionControls extends MaterialTextSelectionControls {
       handleCut: canCut(delegate)
           ? () {
               insertIntoGCWClipboard(
-                  context, delegate.textEditingValue.selection.textInside(delegate.textEditingValue.text));
+                  context, selectedText(delegate));
               handleCut(delegate, clipboardStatus);
             }
           :  () {},
       // handlePaste: canPaste(delegate) && handlePaste != null
       //     ? () => handlePaste(delegate)
       //     : null,
-      handleSelectAll: canSelectAll(delegate) ? () => handleSelectAll(delegate) : () => {},
+      handleSelectAll: canSelectAll(delegate) ? () => handleSelectAll1(delegate) : () => {},
     );
   }
+}
+
+bool canCopy(TextSelectionDelegate delegate) {
+  return delegate.copyEnabled && !delegate.textEditingValue.selection.isCollapsed;
+}
+
+void handleCopy(TextSelectionDelegate delegate, ClipboardStatusNotifier? clipboardStatus) {
+    delegate.copySelection(SelectionChangedCause.toolbar);
+}
+
+bool canCut(TextSelectionDelegate delegate) {
+  return delegate.cutEnabled && !delegate.textEditingValue.selection.isCollapsed;
+}
+
+void handleCut(TextSelectionDelegate delegate, ClipboardStatusNotifier? clipboardStatus) {
+  delegate.cutSelection(SelectionChangedCause.toolbar);
+}
+
+bool canPaste(TextSelectionDelegate delegate) {
+  return delegate.pasteEnabled;
+}
+
+String selectedText(TextSelectionDelegate delegate) {
+  return delegate.textEditingValue.selection.textInside(delegate.textEditingValue.text);
+}
+
+bool canSelectAll(TextSelectionDelegate delegate) {
+  // Android allows SelectAll when selection is not collapsed, unless
+  // everything has already been selected.
+  final TextEditingValue value = delegate.textEditingValue;
+  return delegate.selectAllEnabled &&
+      value.text.isNotEmpty &&
+      !(value.selection.start == 0 && value.selection.end == value.text.length);
+}
+
+void handleSelectAll1(TextSelectionDelegate delegate) {
+  return delegate.selectAll(SelectionChangedCause.toolbar);
 }
 
 class _GCWTextSelectionToolbar extends StatefulWidget {
