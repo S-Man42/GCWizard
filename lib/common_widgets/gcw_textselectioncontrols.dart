@@ -83,22 +83,27 @@ class GCWTextSelectionControls extends MaterialTextSelectionControls {
   }
 }
 
+/// copy of deprecated function
 bool canCopy(TextSelectionDelegate delegate) {
   return delegate.copyEnabled && !delegate.textEditingValue.selection.isCollapsed;
 }
 
+/// copy of deprecated function
 void handleCopy(TextSelectionDelegate delegate, ClipboardStatusNotifier? clipboardStatus) {
     delegate.copySelection(SelectionChangedCause.toolbar);
 }
 
+/// copy of deprecated function
 bool canCut(TextSelectionDelegate delegate) {
   return delegate.cutEnabled && !delegate.textEditingValue.selection.isCollapsed;
 }
 
+/// copy of deprecated function
 void handleCut(TextSelectionDelegate delegate, ClipboardStatusNotifier? clipboardStatus) {
   delegate.cutSelection(SelectionChangedCause.toolbar);
 }
 
+/// copy of deprecated function
 bool canPaste(TextSelectionDelegate delegate) {
   return delegate.pasteEnabled;
 }
