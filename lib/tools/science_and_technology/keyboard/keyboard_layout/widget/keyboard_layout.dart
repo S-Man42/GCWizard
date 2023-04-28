@@ -20,8 +20,8 @@ class KeyboardLayoutState extends State<KeyboardLayout> {
 
   String _currentInput = '';
 
-  var _currentKeyboardFrom = KeyboardType.QWERTZ_T1;
-  var _currentKeyboardTo = KeyboardType.QWERTY_US_INT;
+  var _currentKeyboardFrom = KEYBOARD_TYPE.QWERTZ_T1;
+  var _currentKeyboardTo = KEYBOARD_TYPE.QWERTY_US_INT;
 
   @override
   void initState() {
@@ -55,7 +55,7 @@ class KeyboardLayoutState extends State<KeyboardLayout> {
                 child: Column(
                   children: <Widget>[
                     GCWTextDivider(text: i18n(context, 'keyboard_from')),
-                    GCWDropDown<KeyboardType>(
+                    GCWDropDown<KEYBOARD_TYPE>(
                       value: _currentKeyboardFrom,
                       onChanged: (value) {
                         setState(() {
@@ -77,7 +77,7 @@ class KeyboardLayoutState extends State<KeyboardLayout> {
                 child: Column(
                   children: <Widget>[
                     GCWTextDivider(text: i18n(context, 'keyboard_to')),
-                    GCWDropDown<KeyboardType>(
+                    GCWDropDown<KEYBOARD_TYPE>(
                       value: _currentKeyboardTo,
                       onChanged: (value) {
                         setState(() {

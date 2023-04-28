@@ -5,8 +5,6 @@
 //
 // 678068550685506386047230386303863 07865807432360386308437
 
-// ignore_for_file: equal_keys_in_map
-
 import 'package:gc_wizard/tools/crypto_and_encodings/numeral_words/_common/logic/numeral_words.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 
@@ -263,15 +261,14 @@ const VanityToVOL = {
   '5635': 'JOEL',
   '9835': 'ZUEL',
 };
-final VanityToEPO = {
+const VanityToEPO = {
   '6856': 'NULO',
   '868': 'UNU',
   '38': 'DU',
   '874': 'TRI',
   '5927': 'KVAR',
   '5946': 'KVIN',
-  '737': 'SES', //double entry ??
-  '737': 'SEP',
+  '737': 'SES/SEP',
   '65': 'OK',
   '628': 'NAŬ',
 };
@@ -303,7 +300,7 @@ const VanityToLAT = {
   '66836': 'NOVEM',
 };
 
-final Map<NumeralWordsLanguage, Map<String, String>> VANITY_WORDS = {
+const Map<NumeralWordsLanguage, Map<String, String>> VANITY_WORDS = {
   NumeralWordsLanguage.DEU: VanityToDEU,
   NumeralWordsLanguage.ENG: VanityToENG,
   NumeralWordsLanguage.FRA: VanityToFRA,
