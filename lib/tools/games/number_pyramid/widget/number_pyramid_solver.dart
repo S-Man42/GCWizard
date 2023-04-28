@@ -50,6 +50,7 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
     _integerInputFormatter = GCWIntegerTextInputFormatter(min: 0, max: 999999);
 
     _currentBoard = NumberPyramid(_rowCount);
+    _showBoxValue(0, 0);
   }
 
   @override

@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/games/number_pyramid/widget/number_pyramid_solver.dart';
 
-Point<int>? selectedBox;
+Point<int>? selectedBox = Point<int>(0, 0);
 
 class NumberPyramidBoard extends StatefulWidget {
   final NumberPyramidFillType type;
