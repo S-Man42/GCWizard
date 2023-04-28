@@ -1,8 +1,6 @@
 // https://www.history.navy.mil/research/library/online-reading-room/title-list-alphabetically/n/navajo-code-talker-dictionary.html
 // https://www.ancestrycdn.com/aa-k12/1112/assets/Navajo-Code-Talkers-dictionary.pdf
 
-// ignore_for_file: equal_keys_in_map
-
 import 'dart:math';
 
 import 'package:gc_wizard/utils/collection_utils.dart';
