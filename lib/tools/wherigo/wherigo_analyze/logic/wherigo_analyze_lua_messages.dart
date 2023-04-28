@@ -12,9 +12,9 @@ void _getAllMessagesAndDialogsFromLUA(int progress, List<String> lines, SendPort
     lines[i] = lines[i].trim();
     try {
       if (RegExp(r'(Wherigo.ZCartridge\()').hasMatch(lines[i])) {
-        currentObjectSection = WHERIGO_OBJECT_TYPE.MESSAGES;
+        WHERIGOcurrentObjectSection = WHERIGO_OBJECT_TYPE.MESSAGES;
       }
-      if (currentObjectSection == WHERIGO_OBJECT_TYPE.MESSAGES) {
+      if (WHERIGOcurrentObjectSection == WHERIGO_OBJECT_TYPE.MESSAGES) {
         if (lines[i].trimLeft().startsWith('_Urwigo.MessageBox(') ||
             lines[i].trimLeft().startsWith('Wherigo.MessageBox(')) {
           _singleMessageDialog = [];

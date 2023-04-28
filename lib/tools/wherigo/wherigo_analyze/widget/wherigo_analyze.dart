@@ -107,7 +107,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   @override
   void initState() {
     super.initState();
-    wherigoExpertMode = Prefs.getBool(PREFERENCE_WHERIGOANALYZER_EXPERTMODE);
+    WHERIGOExpertMode = Prefs.getBool(PREFERENCE_WHERIGOANALYZER_EXPERTMODE);
 
     _codeControllerHighlightedLUA = TextEditingController(text: _LUA_SourceCode);
   }
@@ -268,8 +268,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           customIcon: Stack(
             alignment: Alignment.center,
             children: [
-              Icon(wherigoExpertMode ? Icons.psychology : Icons.psychology_outlined, color: themeColors().mainFont()),
-              wherigoExpertMode
+              Icon(WHERIGOExpertMode ? Icons.psychology : Icons.psychology_outlined, color: themeColors().mainFont()),
+              WHERIGOExpertMode
                   ? Container()
                   : Stack(
                       alignment: Alignment.center,
@@ -279,11 +279,11 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           ),
           onPressed: () {
             setState(() {
-              wherigoExpertMode = !wherigoExpertMode;
-              Prefs.setBool(PREFERENCE_WHERIGOANALYZER_EXPERTMODE, wherigoExpertMode);
+              WHERIGOExpertMode = !WHERIGOExpertMode;
+              Prefs.setBool(PREFERENCE_WHERIGOANALYZER_EXPERTMODE, WHERIGOExpertMode);
               _displayCartridgeDataList = _setDisplayCartridgeDataList();
-              showToast(wherigoExpertMode ? i18n(context, 'wherigo_mode_expert') : i18n(context, 'wherigo_mode_user'));
-              if (!wherigoExpertMode && (_displayedCartridgeData == WHERIGO_OBJECT.LUABYTECODE) ||
+              showToast(WHERIGOExpertMode ? i18n(context, 'wherigo_mode_expert') : i18n(context, 'wherigo_mode_user'));
+              if (!WHERIGOExpertMode && (_displayedCartridgeData == WHERIGO_OBJECT.LUABYTECODE) ||
                   _displayedCartridgeData == WHERIGO_OBJECT.GWCFILE ||
                   _displayedCartridgeData == WHERIGO_OBJECT.OBFUSCATORTABLE ||
                   _displayedCartridgeData == WHERIGO_OBJECT.LUAFILE ||
@@ -471,7 +471,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   Widget _buildWidgetToDisplayAnalyzeResultsData(List<String> _errorMsg) {
-    _errorMsg.addAll(errorMsg_MediaFiles);
+    _errorMsg.addAll(WHERIGOerrorMsg_MediaFiles);
     return GCWDefaultOutput(
       child: GCWOutputText(
         text: _errorMsg.join('\n'),
@@ -528,7 +528,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           ),
         ]),
       ),
-      GCWColumnedMultilineOutput(data: (outputHeader.join('') == '[]') ? [<Object>[]] : outputHeader)
+      GCWColumnedMultilineOutput(data: (WHERIGOoutputHeader.join('') == '[]') ? [<Object>[]] : WHERIGOoutputHeader)
     ]);
   }
 
@@ -631,7 +631,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     }
     if (WherigoCartridgeLUAData.Media.isNotEmpty) {
       filename = WherigoCartridgeLUAData.Media[_mediaFileIndex - 1].MediaFilename;
-      if (wherigoExpertMode) {
+      if (WHERIGOExpertMode) {
         _outputMedia = [
           [i18n(context, 'wherigo_media_id'), WherigoCartridgeLUAData.Media[_mediaFileIndex - 1].MediaID],
           [i18n(context, 'wherigo_media_luaname'), WherigoCartridgeLUAData.Media[_mediaFileIndex - 1].MediaLUAName],
@@ -1471,7 +1471,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
     WherigoCartridgeLUAData = _outData.cartridgeLUA;
 
-    NameToObject = WherigoCartridgeLUAData.NameToObject;
+    WHERIGONameToObject = WherigoCartridgeLUAData.NameToObject;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {});
@@ -1654,12 +1654,12 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     // Build data
     for (var item in WherigoCartridgeLUAData.Items) {
       if (item.ItemZonepoint.Latitude != 0.0 && item.ItemZonepoint.Longitude != 0.0) {
-        if (NameToObject[item.ItemLUAName] == null) continue;
+        if (WHERIGONameToObject[item.ItemLUAName] == null) continue;
 
         _ItemPoints.add(// add location of item
             GCWMapPoint(
-                uuid: 'Point ' + NameToObject[item.ItemLUAName]!.ObjectName,
-                markerText: NameToObject[item.ItemLUAName]!.ObjectName,
+                uuid: 'Point ' + WHERIGONameToObject[item.ItemLUAName]!.ObjectName,
+                markerText: WHERIGONameToObject[item.ItemLUAName]!.ObjectName,
                 point: LatLng(item.ItemZonepoint.Latitude, item.ItemZonepoint.Longitude),
                 color: Colors.black));
       }
@@ -1672,12 +1672,12 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     // Build data
     for (var character in WherigoCartridgeLUAData.Characters) {
       if (character.CharacterLocation == 'ZonePoint') {
-        if (NameToObject[character.CharacterLUAName] == null) continue;
+        if (WHERIGONameToObject[character.CharacterLUAName] == null) continue;
 
         _CharacterPoints.add(// add location of character
             GCWMapPoint(
-                uuid: 'Point ' + NameToObject[character.CharacterLUAName]!.ObjectName,
-                markerText: NameToObject[character.CharacterLUAName]!.ObjectName,
+                uuid: 'Point ' + WHERIGONameToObject[character.CharacterLUAName]!.ObjectName,
+                markerText: WHERIGONameToObject[character.CharacterLUAName]!.ObjectName,
                 point: LatLng(character.CharacterZonepoint.Latitude, character.CharacterZonepoint.Longitude),
                 color: Colors.black));
       }
@@ -1693,12 +1693,12 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     // Build data
 
     for (WherigoZoneData zone in WherigoCartridgeLUAData.Zones) {
-      if (NameToObject[zone.ZoneLUAName] == null) return;
+      if (WHERIGONameToObject[zone.ZoneLUAName] == null) return;
 
       _ZonePoints.add(// add originalpoint of zone
           GCWMapPoint(
-              uuid: 'Original Point ' + NameToObject[zone.ZoneLUAName]!.ObjectName,
-              markerText: NameToObject[zone.ZoneLUAName]!.ObjectName,
+              uuid: 'Original Point ' + WHERIGONameToObject[zone.ZoneLUAName]!.ObjectName,
+              markerText: WHERIGONameToObject[zone.ZoneLUAName]!.ObjectName,
               point: LatLng(zone.ZoneOriginalPoint.Latitude, zone.ZoneOriginalPoint.Longitude),
               color: Colors.black87));
 
@@ -1747,7 +1747,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       for (var element in WherigoCartridgeLUAData.Media) {
         LUAFile = LUAFile.replaceAll(element.MediaLUAName, 'objMedia_' + element.MediaName);
       }
-      NameToObject.forEach((key, value) {
+      WHERIGONameToObject.forEach((key, value) {
         LUAFile = LUAFile.replaceAll(key, 'objVariable_' + key);
       });
 
@@ -1803,7 +1803,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   List<GCWDropDownMenuItem<WHERIGO_OBJECT>> _setDisplayCartridgeDataList() {
-    var loadedState = WHERIGO_DROPDOWN_DATA[wherigoExpertMode]?[_fileLoadedState];
+    var loadedState = WHERIGO_DROPDOWN_DATA[WHERIGOExpertMode]?[_fileLoadedState];
     if (loadedState == null) return <GCWDropDownMenuItem<WHERIGO_OBJECT>>[];
 
     return SplayTreeMap<String, WHERIGO_OBJECT>.from(switchMapKeyValue(loadedState)
