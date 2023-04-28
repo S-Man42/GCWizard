@@ -4,6 +4,7 @@ import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_stateful_dropdown.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_metadata.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/multi_decoder.dart';
@@ -102,9 +103,10 @@ class MultiDecoderToolCoordinateFormats extends AbstractMultiDecoderTool {
                   default:
                     coords = null;
                 }
+                var latlng = coords?.toLatLng();
+                if (latlng == null) return null;
 
-                return (coords == null) ? null : coords.toString();
-
+                return formatCoordOutput(latlng, defaultCoordinateFormat, defaultEllipsoid);
               } catch (e) {}
             },
             options: options,
