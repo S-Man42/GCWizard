@@ -88,7 +88,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   bool _currentSyntaxHighlighting = false;
   bool _WherigoShowLUASourcecodeDialog = true;
   bool _getLUAOnline = true;
-  bool _nohttpError = true;
 
   late TextEditingController _codeControllerHighlightedLUA;
   String _LUA_SourceCode = '';
@@ -332,7 +331,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         _resetIndices();
 
         _getLUAOnline = true;
-        _nohttpError = true;
         _WherigoShowLUASourcecodeDialog = true;
 
         _analyseCartridgeFileAsync(WHERIGO_CARTRIDGE_DATA_TYPE.GWC);
@@ -1481,7 +1479,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       case WHERIGO_ANALYSE_RESULT_STATUS.OK:
         toastMessage = i18n(context, 'wherigo_data_loaded') + ': LUA';
         toastDuration = 5;
-        _nohttpError = false;
 
         // check if GWC and LUA are from the same cartridge
         if ((WherigoCartridgeGWCData.CartridgeGUID != WherigoCartridgeLUAData.CartridgeGUID &&
@@ -1516,7 +1513,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
       case WHERIGO_ANALYSE_RESULT_STATUS.ERROR_HTTP:
         _fileLoadedState = WHERIGO_FILE_LOAD_STATE.GWC;
-        _nohttpError = false;
         _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
         toastMessage = i18n(context, 'wherigo_http_code') +
             ' ' +
@@ -1612,7 +1608,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       // files belong to different cartridges
       WherigoCartridgeLUAData = _resetLUA('wherigo_error_diff_gwc_lua_1');
       _getLUAOnline = true;
-      _nohttpError = true;
       _WherigoShowLUASourcecodeDialog = true;
       showToast(i18n(context, 'wherigo_error_diff_gwc_lua_1') + '\n' + i18n(context, 'wherigo_error_diff_gwc_lua_2'),
           duration: 30);
