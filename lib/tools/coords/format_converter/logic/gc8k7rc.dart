@@ -1,14 +1,26 @@
 import 'dart:math';
 
+import 'package:gc_wizard/application/settings/logic/preferences.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/dec.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
-import 'package:latlong2/latlong.dart';
 
-const rEarth = 6378905.94503519;
-const vEquator = 464;
+import 'package:latlong2/latlong.dart';
+import 'package:prefs/prefs.dart';
+
+
+const rEarthListing = 6378905.94503519;
 const secondsPerDay = 24 * 60 * 60;
 
 LatLng GC8K7RCToLatLon(GC8K7RC coordsGC8K7RC) {
+
+  double rEarth = 0.0;
+  if (Prefs.getString(PREFERENCE_COORD_GC8K7RC_USE_DEFAULT_ELLIPSOID) == 'left') {
+    rEarth = defaultEllipsoid.a;
+  } else {
+    rEarth = rEarthListing;
+  }
+
   double u = coordsGC8K7RC.velocity * secondsPerDay;
   double r = u.abs() / 2 / pi;
 
@@ -30,13 +42,20 @@ LatLng GC8K7RCToLatLon(GC8K7RC coordsGC8K7RC) {
   } else {
     lon = 0;
   }
-  
+
   return decToLatLon(DEC(lat, lon));
 }
 
 GC8K7RC latLonToGC8K7RC(LatLng coord) {
   double lat = coord.latitude;
   double lon = coord.longitude;
+
+  double rEarth = 0.0;
+  if (Prefs.getString(PREFERENCE_COORD_GC8K7RC_USE_DEFAULT_ELLIPSOID) == 'left') {
+    rEarth = defaultEllipsoid.a;
+  } else {
+    rEarth = rEarthListing;
+  }
 
   double u = cos(lat * pi / 180) * rEarth * 2 * pi;
   double velocity = u / 24 / 60 / 60;

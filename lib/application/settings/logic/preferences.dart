@@ -14,6 +14,7 @@ const PREFERENCE_COORD_DEFAULT_FORMAT_SUBTYPE = 'coord_default_format_subtype';
 const PREFERENCE_COORD_DEFAULT_HEMISPHERE_LATITUDE = 'coord_default_hemisphere_latitude';
 const PREFERENCE_COORD_DEFAULT_HEMISPHERE_LONGITUDE = 'coord_default_hemisphere_longitude';
 const PREFERENCE_COORD_VARIABLECOORDINATE_FORMULAS = 'coord_variablecoordinate_formulas';
+const PREFERENCE_COORD_GC8K7RC_USE_DEFAULT_ELLIPSOID = 'coord_gc8k7rc_use_default_ellipsoid';
 const PREFERENCE_DEFAULT_LENGTH_UNIT = 'default_length_unit';
 const PREFERENCE_FAVORITES = 'favorites';
 const PREFERENCE_FORMULASOLVER_FORMULAS = 'formulasolver_formulas';
