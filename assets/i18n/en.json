@@ -1289,6 +1289,7 @@
   "common_month_october": "October",
   "common_month_november": "November",
   "common_month_december": "December",
+  "common_numeralbase": "Numeral Base",
   "common_numeralbase_binary": "Binary",
   "common_numeralbase_ternary": "Ternary",
   "common_numeralbase_quaternary": "Quaternary",
