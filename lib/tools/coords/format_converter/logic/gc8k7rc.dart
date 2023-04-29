@@ -35,6 +35,7 @@ LatLng GC8K7RCToLatLon(GC8K7RC coordsGC8K7RC) {
   if (u < 0) {
     lat = -lat;
   }
+  lat = num.parse(lat.toStringAsFixed(3)) as double;
 
   double lon = 0.0;
   if (u != 0) {
@@ -42,6 +43,7 @@ LatLng GC8K7RCToLatLon(GC8K7RC coordsGC8K7RC) {
   } else {
     lon = 0;
   }
+  lon = num.parse(lon.toStringAsFixed(3)) as double;
 
   return decToLatLon(DEC(lat, lon));
 }

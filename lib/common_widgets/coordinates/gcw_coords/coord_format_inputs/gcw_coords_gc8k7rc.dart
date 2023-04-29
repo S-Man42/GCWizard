@@ -115,7 +115,8 @@ class _GCWCoordsGC8K7RCState extends State<_GCWCoordsGC8K7RC> {
   }
 
   void _setCurrentValueAndEmitOnChange() {
-    var gc8K7RC = GC8K7RC(convert(_currentVelocity.value, _currentUnitVelocity.value, VELOCITY_MS),
+    var gc8K7RC = GC8K7RC(
+        convert(_currentVelocity.value, _currentUnitVelocity.value, VELOCITY_MS),
         convert(_currentDistance.value * _currentUnitDistance.prefix.value, _currentUnitDistance.value, LENGTH_METER));
     widget.onChanged(gc8K7RC);
   }
