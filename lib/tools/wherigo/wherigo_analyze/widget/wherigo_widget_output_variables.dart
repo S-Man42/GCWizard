@@ -10,7 +10,7 @@ List<List<String>> _buildOutputListOfVariables(BuildContext context, WherigoVari
 List<List<String>> _buildOutputListOfVariablesDetails(BuildContext context, WherigoVariableData data) {
   List<List<String>> result = [];
 
-  if (NameToObject[data.VariableName] == null) {
+  if (WHERIGONameToObject[data.VariableName] == null) {
     result = [
       [i18n(context, 'wherigo_output_identifier_no_detail'), '']
     ];
@@ -18,11 +18,11 @@ List<List<String>> _buildOutputListOfVariablesDetails(BuildContext context, Wher
     result = [
       [
         i18n(context, 'wherigo_output_identifier_detail_title'),
-        NameToObject[data.VariableName]!.ObjectType.toString().split('.')[1]
+        WHERIGONameToObject[data.VariableName]!.ObjectType.toString().split('.')[1]
       ]
     ];
 
-    switch (NameToObject[data.VariableName]!.ObjectType) {
+    switch (WHERIGONameToObject[data.VariableName]!.ObjectType) {
       case WHERIGO_OBJECT_TYPE.CHARACTER:
         result.addAll(_addDetailsCharacter(context, data));
         break;

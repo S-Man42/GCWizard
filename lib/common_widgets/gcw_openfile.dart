@@ -106,7 +106,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
                 child: SizedBox(
                   height: 220,
                   width: 150,
-                  child: GCWAsyncExecuter<Object?>(
+                  child: GCWAsyncExecuter<Uint8ListText?>(
                     isolatedFunction: _downloadFileAsync,
                     parameter: _buildJobDataDownload,
                     onReady: (data) => _saveDownload(data),
@@ -178,13 +178,13 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
     }
   }
 
-  void _saveDownload(Object? data) {
+  void _saveDownload(Uint8ListText? data) {
     _loadedFile = null;
-    if (data is Uint8List && _currentUrl != null) {
+    if (data != null && data.value.isNotEmpty && _currentUrl != null) {
       _loadedFile =
-          GCWFile(name: Uri.decodeFull(_currentUrl!).split('/').last.split('?').first, path: _currentUrl, bytes: data);
-    } else if (data is String) {
-      showToast(i18n(context, data));
+          GCWFile(name: Uri.decodeFull(_currentUrl!).split('/').last.split('?').first, path: _currentUrl, bytes: data.value);
+    } else if (data != null && data.text.isNotEmpty) {
+      showToast(i18n(context, data.text));
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -309,56 +309,60 @@ void showOpenFileDialog(BuildContext context, List<FileType> supportedFileTypes,
       []);
 }
 
-Future<Object?> _downloadFileAsync(GCWAsyncExecuterParameters? jobData) async {
+Future<Uint8ListText?> _downloadFileAsync(GCWAsyncExecuterParameters? jobData) async {
+  if (jobData?.parameters is! Uri) return null;
   int _total = 0;
   int _received = 0;
   List<int> _bytes = [];
-  Future<Uint8List>? result;
+  Future<Uint8List>? resultBytes;
   SendPort? sendAsyncPort = jobData?.sendAsyncPort;
-  Uri? uri = jobData?.parameters is Uri ? jobData!.parameters as Uri : null;
-  String? outString;
+  Uri? uri = jobData!.parameters as Uri;
+  var result = Uint8ListText('', Uint8List.fromList(_bytes));
 
-  if (uri == null) return null;
   var request = http.Request("GET", uri);
   var client = http.Client();
-  await client.send(request).timeout(const Duration(seconds: 10), onTimeout: () {
-    //sendAsyncPort?.send(null);
-    return http.StreamedResponse(Stream.fromIterable([]), 500); //http.Response('Error', 500);
-  }).then((http.StreamedResponse response) async {
-    if (response.statusCode != 200) {
-      sendAsyncPort?.send('common_loadfile_exception_responsestatus');
-      return 'common_loadfile_exception_responsestatus';
-    }
-    _total = response.contentLength ?? 0;
-    int progressStep = max(_total ~/ 100, 1);
 
-    response.stream.listen((value) {
-      _bytes.addAll(value);
+  try {
+    await client.send(request).timeout(const Duration(seconds: 10))
+      .then<http.StreamedResponse?>((http.StreamedResponse response) async {
+        if (response.statusCode != 200) {
+          result = Uint8ListText('common_loadfile_exception_responsestatus', Uint8List(0));
+        } else {
+          _total = response.contentLength ?? 0;
+          int progressStep = max(_total ~/ 100, 1);
 
-      if (_total != 0 &&
-          sendAsyncPort != null &&
-          (_received % progressStep > (_received + value.length) % progressStep)) {
-        sendAsyncPort.send(DoubleText('progress', (_received + value.length) / _total));
-      }
-      _received += value.length;
-    },
-        onDone: () {
-          if (_bytes.isEmpty) {
-            outString = 'common_loadfile_exception_nofile';
-            sendAsyncPort?.send(outString);
-          } else {
-            var uint8List = Uint8List.fromList(_bytes);
-            sendAsyncPort?.send(uint8List);
-            result = Future.value(uint8List);
-          }
+          response.stream.listen((value) async {
+            _bytes.addAll(value);
+
+            if (_total != 0 &&
+                sendAsyncPort != null &&
+                (_received % progressStep > (_received + value.length) % progressStep)) {
+              sendAsyncPort.send(DoubleText(PROGRESS, (_received + value.length) / _total));
+            }
+            _received += value.length;
+          },
+              onDone: () {
+                if (_bytes.isEmpty) {
+                  result = Uint8ListText('common_loadfile_exception_nofile', Uint8List(0));
+                } else {
+                  sendAsyncPort?.send(Uint8ListText('', Uint8List.fromList(_bytes)));
+                  result = Uint8ListText('', Uint8List.fromList(_bytes));
+                }
+              },
+          );
         }
-    );
-  });
+    });
+  } on TimeoutException catch (_) {
+    result = Uint8ListText('common_loadfile_exception_responsestatus', Uint8List(0));
+  } on SocketException catch (_) {
+    result = Uint8ListText('common_loadfile_exception_nofile', Uint8List(0));
+  }
 
-  if (outString != null) return outString!;
-
-  await result;
-  return result;
+// ToDo only working with AsncPort (await not working)
+  if (result.text.isNotEmpty) {
+    sendAsyncPort?.send(result);
+  }
+  return  Future.value(result);
 }
 
 /// Open File Picker dialog

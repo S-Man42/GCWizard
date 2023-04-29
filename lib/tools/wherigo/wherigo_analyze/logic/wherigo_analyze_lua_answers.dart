@@ -190,9 +190,7 @@ List<String> _getAnswers(int i, String line, String lineBefore, List<WherigoVari
     }
     return [line];
   }
-
-  throw Exception(
-      'No Answers found'); // TODO Thomas: Please check if empty list instead is logically meaningful; I chose Exception because I believe this line should never be reached.
+  return [];
 }
 
 bool _OnGetInputSectionEnd(String line) {
