@@ -1,4 +1,4 @@
-import 'dart:math';
+//import 'dart:math';
 
 import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/brainfk/logic/brainfk.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
@@ -57,28 +57,35 @@ class BrainfkDerivatives {
   String interpretBrainfkDerivatives(String code, {String? input}) {
     if (code.isEmpty) return '';
 
-    var brainfk = '';
-    code = _sanitizeCode(code);
-
-    Map<String, String> _sanitizedSubstitutions = {};
-    for (MapEntry<String, String> entry in substitutions.entries) {
-      _sanitizedSubstitutions.putIfAbsent(entry.key.toUpperCase().replaceAll(RegExp(r'\s'), ''), () => entry.value);
-    }
-
-    while (code.isNotEmpty) {
-      var chunk = '';
-      var i = 0;
-      while (_sanitizedSubstitutions[chunk] == null && i < code.length) {
-        i++;
-        chunk = code.substring(0, min(i, code.length));
+    String brainfk = '';
+    // code = _sanitizeCode(code);
+    //
+    // Map<String, String> _sanitizedSubstitutions = {};
+    // for (MapEntry<String, String> entry in substitutions.entries) {
+    //   _sanitizedSubstitutions.putIfAbsent(entry.key.toUpperCase().replaceAll(RegExp(r'\s'), ''), () => entry.value);
+    // }
+    //
+    // while (code.isNotEmpty) {
+    //   var chunk = '';
+    //   var i = 0;
+    //   while (_sanitizedSubstitutions[chunk] == null && i < code.length) {
+    //     i++;
+    //     chunk = code.substring(0, min(i, code.length));
+    //   }
+    //
+    //   try {
+    //     brainfk += _sanitizedSubstitutions[chunk] ?? '';
+    //   } catch (e) {} //if there is no fitting substitution, ignore it.
+    //
+    //   code = code.substring(min(i, code.length));
+    // }
+    List<String> codeList = [];
+    code.split(commandDelimiter!).forEach((command) {
+      if (substitutions[command] != null) {
+        codeList.add(substitutions[command]!);
       }
-
-      try {
-        brainfk += _sanitizedSubstitutions[chunk] ?? '';
-      } catch (e) {} //if there is no fitting substitution, ignore it.
-
-      code = code.substring(min(i, code.length));
-    }
+    });
+    brainfk = codeList.join('');
 
     return interpretBrainfk(brainfk, input: input);
   }
@@ -150,7 +157,8 @@ final BrainfkDerivatives BRAINFKDERIVATIVE_COLONOSCOPY = BrainfkDerivatives(
     outputInstruction: ';;;};',
     inputInstruction: ';;;{;',
     startLoopInstruction: '{{;',
-    endLoopInstruction: '}};');
+    endLoopInstruction: '}};',
+    commandDelimiter: ' ');
 
 final BrainfkDerivatives _BRAINFKDERIVATIVE_KONFK = BrainfkDerivatives(
     pointerShiftRightInstruction: 'うんうんうん',
@@ -160,7 +168,8 @@ final BrainfkDerivatives _BRAINFKDERIVATIVE_KONFK = BrainfkDerivatives(
     outputInstruction: 'たんうんうん',
     inputInstruction: 'たんうんたん',
     startLoopInstruction: 'たんたんうん',
-    endLoopInstruction: 'たんたんたん');
+    endLoopInstruction: 'たんたんたん',
+    commandDelimiter: ' ');
 
 final BrainfkDerivatives BRAINFKDERIVATIVE_FKBEES = BrainfkDerivatives(
     pointerShiftRightInstruction: 'f',
@@ -170,7 +179,8 @@ final BrainfkDerivatives BRAINFKDERIVATIVE_FKBEES = BrainfkDerivatives(
     outputInstruction: 'b',
     inputInstruction: 'e',
     startLoopInstruction: 'E',
-    endLoopInstruction: 's');
+    endLoopInstruction: 's',
+    commandDelimiter: ' ');
 
 final BrainfkDerivatives _BRAINFKDERIVATIVE_PSSCRIPT = BrainfkDerivatives(
     pointerShiftRightInstruction: '8=D',
@@ -180,7 +190,8 @@ final BrainfkDerivatives _BRAINFKDERIVATIVE_PSSCRIPT = BrainfkDerivatives(
     outputInstruction: '8=====D',
     inputInstruction: '8======D',
     startLoopInstruction: '8=======D',
-    endLoopInstruction: '8========D');
+    endLoopInstruction: '8========D',
+    commandDelimiter: ' ');
 
 final BrainfkDerivatives _BRAINFKDERIVATIVE_ALPHK = BrainfkDerivatives(
     pointerShiftRightInstruction: 'a',
@@ -210,7 +221,8 @@ final BrainfkDerivatives _BRAINFKDERIVATIVE_BTJZXGQUARTFRQIFJLV = BrainfkDerivat
     outputInstruction: 'lv',
     inputInstruction: 'j',
     startLoopInstruction: 'btj',
-    endLoopInstruction: 'zxg');
+    endLoopInstruction: 'zxg',
+    commandDelimiter: ' ');
 
 final BrainfkDerivatives _BRAINFKDERIVATIVE_BINARYFK = BrainfkDerivatives(
     pointerShiftRightInstruction: '010',
@@ -220,7 +232,8 @@ final BrainfkDerivatives _BRAINFKDERIVATIVE_BINARYFK = BrainfkDerivatives(
     outputInstruction: '100',
     inputInstruction: '101',
     startLoopInstruction: '110',
-    endLoopInstruction: '111');
+    endLoopInstruction: '111',
+    commandDelimiter: ' ');
 
 final BrainfkDerivatives _BRAINFKDERIVATIVE_TERNARY = BrainfkDerivatives(
     pointerShiftRightInstruction: '01',
@@ -230,7 +243,8 @@ final BrainfkDerivatives _BRAINFKDERIVATIVE_TERNARY = BrainfkDerivatives(
     outputInstruction: '20',
     inputInstruction: '21',
     startLoopInstruction: '02',
-    endLoopInstruction: '12');
+    endLoopInstruction: '12',
+    commandDelimiter: ' ');
 
 final BrainfkDerivatives BRAINFKDERIVATIVE_KENNYSPEAK = BrainfkDerivatives(
     pointerShiftRightInstruction: 'mmp',
@@ -240,7 +254,8 @@ final BrainfkDerivatives BRAINFKDERIVATIVE_KENNYSPEAK = BrainfkDerivatives(
     outputInstruction: 'fmm',
     inputInstruction: 'fpm',
     startLoopInstruction: 'mmf',
-    endLoopInstruction: 'mpf');
+    endLoopInstruction: 'mpf',
+    commandDelimiter: ' ');
 
 final BrainfkDerivatives BRAINFKDERIVATIVE_MORSEFK = BrainfkDerivatives(
     pointerShiftRightInstruction: '.--',
@@ -250,7 +265,8 @@ final BrainfkDerivatives BRAINFKDERIVATIVE_MORSEFK = BrainfkDerivatives(
     outputInstruction: '-.-',
     inputInstruction: '.-.',
     startLoopInstruction: '---',
-    endLoopInstruction: '...');
+    endLoopInstruction: '...',
+    commandDelimiter: ' ');
 
 final BrainfkDerivatives BRAINFKDERIVATIVE_AAA = BrainfkDerivatives(
     pointerShiftRightInstruction: 'aAaA',
@@ -293,7 +309,8 @@ final BrainfkDerivatives BRAINFKDERIVATIVE_SHORTOOK = BrainfkDerivatives(
     outputInstruction: '!.',
     inputInstruction: '.!',
     startLoopInstruction: '!?',
-    endLoopInstruction: '?!');
+    endLoopInstruction: '?!',
+    commandDelimiter: ' ');
 
 final BrainfkDerivatives BRAINFKDERIVATIVE_NAK = BrainfkDerivatives(
     pointerShiftRightInstruction: 'Nak. Nak?',
@@ -347,7 +364,8 @@ final BrainfkDerivatives BRAINFKDERIVATIVE_ZZZ = BrainfkDerivatives(
     outputInstruction: 'zzz',
     inputInstruction: '-zzz',
     startLoopInstruction: 'z+z',
-    endLoopInstruction: 'z-z');
+    endLoopInstruction: 'z-z',
+    commandDelimiter: ' ');
 
 final BrainfkDerivatives _BRAINFKDERIVATIVE_SCREAMCODE = BrainfkDerivatives(
     pointerShiftRightInstruction: 'AAAH',
@@ -368,7 +386,8 @@ final BrainfkDerivatives _BRAINFKDERIVATIVE_FLUFFLEPUFF = BrainfkDerivatives(
     outputInstruction: '!',
     inputInstruction: '?',
     startLoopInstruction: '*gasp*',
-    endLoopInstruction: '*pomf*');
+    endLoopInstruction: '*pomf*',
+    commandDelimiter: ' ');
 
 final BrainfkDerivatives _BRAINFKDERIVATIVE_TRIPLET = BrainfkDerivatives(
     pointerShiftRightInstruction: '001',
@@ -378,7 +397,8 @@ final BrainfkDerivatives _BRAINFKDERIVATIVE_TRIPLET = BrainfkDerivatives(
     outputInstruction: '010',
     inputInstruction: '101',
     startLoopInstruction: '110',
-    endLoopInstruction: '011');
+    endLoopInstruction: '011',
+    commandDelimiter: ' ');
 
 final BrainfkDerivatives _BRAINFKDERIVATIVE_UWU = BrainfkDerivatives(
     pointerShiftRightInstruction: 'OwO',
@@ -399,7 +419,8 @@ final BrainfkDerivatives BRAINFKDERIVATIVE___FK = BrainfkDerivatives(
     outputInstruction: '!!!!!!!!!!#',
     inputInstruction: '!!!!!!!!!#',
     startLoopInstruction: '!!!!!!!!!!!#',
-    endLoopInstruction: '!!!!!!!!!!!!#');
+    endLoopInstruction: '!!!!!!!!!!!!#',
+    commandDelimiter: ' ');
 
 final BrainfkDerivatives BRAINFKDERIVATIVE_CUSTOM = BrainfkDerivatives(
     pointerShiftRightInstruction: '',
@@ -409,7 +430,8 @@ final BrainfkDerivatives BRAINFKDERIVATIVE_CUSTOM = BrainfkDerivatives(
     outputInstruction: '',
     inputInstruction: '',
     startLoopInstruction: '',
-    endLoopInstruction: '');
+    endLoopInstruction: '',
+    commandDelimiter: ' ');
 
 // NEVER EVER CHANGE THE NAMES! (the value strings of the map);
 // They are used as keys in the multi decoder
