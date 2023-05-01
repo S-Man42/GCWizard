@@ -70,6 +70,7 @@ class ChefState extends State<Chef> {
 
   @override
   Widget build(BuildContext context) {
+    _currentLanguage = _defaultLanguage(context);
     return Column(
       children: <Widget>[
         GCWTwoOptionsSwitch(
@@ -235,5 +236,14 @@ class ChefState extends State<Chef> {
       }
     }
     return output;
+  }
+
+  GCWSwitchPosition _defaultLanguage(BuildContext context) {
+    final Locale appLocale = Localizations.localeOf(context);
+    if (appLocale == Locale('de')) {
+      return GCWSwitchPosition.left;
+    } else {
+      return GCWSwitchPosition.right;
+    }
   }
 }
