@@ -1,4 +1,4 @@
-//import 'dart:math';
+import 'dart:math';
 
 import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/brainfk/logic/brainfk.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
@@ -18,7 +18,8 @@ class BrainfkDerivatives {
       required String endLoopInstruction,
       required String inputInstruction,
       required String outputInstruction,
-      this.commandDelimiter}) {
+      this.commandDelimiter,
+  }) {
     substitutions = {
       pointerShiftRightInstruction: '>',
       pointerShiftLeftInstruction: '<',
@@ -58,34 +59,36 @@ class BrainfkDerivatives {
     if (code.isEmpty) return '';
 
     String brainfk = '';
-    // code = _sanitizeCode(code);
-    //
-    // Map<String, String> _sanitizedSubstitutions = {};
-    // for (MapEntry<String, String> entry in substitutions.entries) {
-    //   _sanitizedSubstitutions.putIfAbsent(entry.key.toUpperCase().replaceAll(RegExp(r'\s'), ''), () => entry.value);
-    // }
-    //
-    // while (code.isNotEmpty) {
-    //   var chunk = '';
-    //   var i = 0;
-    //   while (_sanitizedSubstitutions[chunk] == null && i < code.length) {
-    //     i++;
-    //     chunk = code.substring(0, min(i, code.length));
-    //   }
-    //
-    //   try {
-    //     brainfk += _sanitizedSubstitutions[chunk] ?? '';
-    //   } catch (e) {} //if there is no fitting substitution, ignore it.
-    //
-    //   code = code.substring(min(i, code.length));
-    // }
-    List<String> codeList = [];
-    code.split(commandDelimiter!).forEach((command) {
-      if (substitutions[command] != null) {
-        codeList.add(substitutions[command]!);
+    code = _sanitizeCode(code);
+
+    Map<String, String> _sanitizedSubstitutions = {};
+    for (MapEntry<String, String> entry in substitutions.entries) {
+      _sanitizedSubstitutions.putIfAbsent(entry.key.toUpperCase().replaceAll(RegExp(r'\s'), ''), () => entry.value);
+    }
+
+    while (code.isNotEmpty) {
+      var chunk = '';
+      var i = 0;
+      while (_sanitizedSubstitutions[chunk] == null && i < code.length) {
+        i++;
+        chunk = code.substring(0, min(i, code.length));
       }
-    });
-    brainfk = codeList.join('');
+           try {
+        brainfk += _sanitizedSubstitutions[chunk] ?? '';
+      } catch (e) {} //if there is no fitting substitution, ignore it.
+           code = code.substring(min(i, code.length));
+    }
+    // if (commandType == 1) {
+    //   List<String> codeList = [];
+    //   code.split(commandDelimiter!).forEach((command) {
+    //     if (substitutions[command] != null) {
+    //       codeList.add(substitutions[command]!);
+    //     }
+    //   });
+    //   brainfk = codeList.join('');
+    // } else {
+    //
+    // }
 
     return interpretBrainfk(brainfk, input: input);
   }
@@ -124,7 +127,7 @@ final BrainfkDerivatives _BRAINFKDERIVATIVE_REVOLUTION9 = BrainfkDerivatives(
     inputInstruction: 'Paul is dead',
     startLoopInstruction: 'Revolution 1',
     endLoopInstruction: 'Revolution 9',
-    commandDelimiter: ' ');
+    commandDelimiter: '\n');
 
 final BrainfkDerivatives BRAINFKDERIVATIVE_DETAILEDFK = BrainfkDerivatives(
     pointerShiftRightInstruction: 'MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT',
