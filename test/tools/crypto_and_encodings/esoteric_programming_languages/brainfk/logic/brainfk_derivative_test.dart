@@ -2,7 +2,7 @@ import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/brainfk/logic/brainfk_derivative.dart';
 
 void main() {
-  group("GC8PXAD", () {
+  group("test conversion with GC8PXAD", () {
     String brainfck =    "++++++++++[>+>+++>+++++++>++++++++++<<<<-]>>>++++++++.<++.++++++++++++++++++++.++++.+++++++.-----------.----.--.++.++++++.++.-----------------.-------.>---------.--------------.++++++++.----------.-----.--.++++.++..";
     String result =      "N 48?40.068' E7?50.244";
     //https://esolangs.org/wiki/Trivial_brainfuck_substitution
@@ -32,9 +32,9 @@ void main() {
       {'derivat': 'ZZZ', 'code' : ZZZ, 'expectedOutput' : result},
       {'derivat': 'Fuck', 'code' : Fuck, 'expectedOutput' : result},
       {'derivat': 'Morsefuck', 'code' : Morsefuck, 'expectedOutput' : result},
-//      {'derivat': 'Nak', 'code' : Nak, 'expectedOutput' : result},
-//      {'derivat': 'Ook', 'code' : Ook, 'expectedOutput' : result},
-//      {'derivat': 'Blub', 'code' : Blub, 'expectedOutput' : result},
+      {'derivat': 'Nak', 'code' : Nak, 'expectedOutput' : result},
+      {'derivat': 'Ook', 'code' : Ook, 'expectedOutput' : result},
+      {'derivat': 'Blub', 'code' : Blub, 'expectedOutput' : result},
 
     ];
 
