@@ -1,3 +1,4 @@
+import 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.dart';
 import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 import 'package:gc_wizard/utils/json_utils.dart';
 
@@ -104,19 +105,32 @@ FormulaValueType _readType(String? jsonType) {
   }
 }
 
-class FormulaValue {
-  int? id;
-  String key;
-  String value;
+class FormulaValue extends KeyValueBase{
+  // int? id;
+  // String key;
+  // String value;
+  // int? _id;
+  // @override
+  // int? get id => _id;
+  // //@override
+  // set id(int? id) => _id = id;
+
   FormulaValueType? type;
 
-  FormulaValue(this.key, this.value, {this.type});
+  FormulaValue(String key, String value, {this.type})
+      : super ('', key, value);
   
-  FormulaValue.fromJson(Map<String, Object?> json)
-      : id = toIntOrNull(json['id']),
-        key = toStringOrNull(json['key']) ?? '',  // TODO Proper default types if key is not in map
-        value = toStringOrNull(json['value']) ?? '',
-        type = _readType(json['type'] as String?);
+  static FormulaValue fromJson(Map<String, Object?> json) {
+    var id = toIntOrNull(json['id']);
+    var key = toStringOrNull(json['key']) ?? '';  // TODO Proper default types if key is not in map
+    var value = toStringOrNull(json['value']) ?? '';
+    var type = _readType(json['type'] as String?);
+
+    var newFormulaValue =FormulaValue(key, value, type: type);
+    newFormulaValue.id = id;
+
+    return newFormulaValue;
+  }
 
   Map<String, Object?> toMap() {
     var map = {

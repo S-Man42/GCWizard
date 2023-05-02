@@ -3,17 +3,19 @@ part of 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.
 
 class GCWKeyValueRow extends StatefulWidget {
   KeyValueBase keyValueEntry;
-  bool odd;
-  List<TextInputFormatter>? keyInputFormatters;
-  List<TextInputFormatter>? valueInputFormatters;
+  _KeyValueEditorControl keyValueEditorControl;
+  final bool odd;
+  final List<TextInputFormatter>? keyInputFormatters;
+  final List<TextInputFormatter>? valueInputFormatters;
   final bool editAllowed;
 
-  final void Function(Object, String, String, FormulaValueType)? onUpdateEntry;
-  final void Function(Object, BuildContext)? onRemoveEntry;
+  final void Function(KeyValueBase)? onUpdateEntry;
+  final void Function(KeyValueBase, BuildContext)? onRemoveEntry;
 
   GCWKeyValueRow(
      {Key? key,
        required this.keyValueEntry,
+       required this.keyValueEditorControl,
 
        required this.odd,
        this.keyInputFormatters,
@@ -32,7 +34,6 @@ class GCWKeyValueRowState extends State<GCWKeyValueRow> {
   late TextEditingController _editKeyController;
   late TextEditingController _editValueController;
   late FocusNode _focusNodeEditValue;
-
 
   var _currentEditedKey = '';
   var _currentEditedValue = '';
@@ -54,7 +55,6 @@ class GCWKeyValueRowState extends State<GCWKeyValueRow> {
 
     _focusNodeEditValue.dispose();
 
-
     super.dispose();
   }
 
@@ -64,53 +64,11 @@ class GCWKeyValueRowState extends State<GCWKeyValueRow> {
 
     var row = Row(
       children: <Widget>[
-        Expanded(
-          flex: 1,
-          child: Container(
-            margin: const EdgeInsets.only(left: 10),
-            child: _currentEditId == widget.keyValueEntry.id
-                ? GCWTextField(
-              controller: _editKeyController,
-              inputFormatters: widget.keyInputFormatters,
-              onChanged: (text) {
-                setState(() {
-                  _currentEditedKey = text;
-                });
-              },
-            )
-                : GCWText(text: widget.keyValueEntry.key),
-          ),
-        ),
-        Icon(
-          Icons.arrow_forward,
-          color: themeColors().mainFont(),
-        ),
-        Expanded(
-            flex: 3,
-            child: Container(
-              margin: const EdgeInsets.only(left: 10),
-              child: _currentEditId == widget.keyValueEntry.id
-                  ? GCWTextField(
-                controller: _editValueController,
-                focusNode: _focusNodeEditValue,
-                inputFormatters: widget.valueInputFormatters,
-                onChanged: (text) {
-                  setState(() {
-                    _currentEditedValue = text;
-                  });
-                },
-              )
-                  : GCWText(text: widget.keyValueEntry.value),
-            )),
-        _editButton(entry),
-        GCWIconButton(
-          icon: Icons.remove,
-          onPressed: () {
-            setState(() {
-              if (widget.onRemoveEntry != null) widget.onRemoveEntry!(widget.keyValueEntry.id, context);
-            });
-          },
-        )
+        _keyWidget(),
+        _arrowIcon(),
+        _valueWidget(),
+        _editButton(),
+        _removeButton(),
       ],
     );
 
@@ -123,53 +81,94 @@ class GCWKeyValueRowState extends State<GCWKeyValueRow> {
     return output;
   }
 
+  Widget _keyWidget() {
+    return Expanded(
+      flex: 1,
+      child: Container(
+        margin: const EdgeInsets.only(left: 10),
+        child: widget.keyValueEditorControl.currentEditId == widget.keyValueEntry.id
+            ? GCWTextField(
+          controller: _editKeyController,
+          inputFormatters: widget.keyInputFormatters,
+          onChanged: (text) {
+            setState(() {
+              _currentEditedKey = text;
+            });
+          },
+        )
+            : GCWText(text: widget.keyValueEntry.key),
+      ),
+    );
+  }
+
+  Widget _arrowIcon() {
+    return Icon(
+      Icons.arrow_forward,
+      color: themeColors().mainFont(),
+    );
+  }
+
+  Widget _valueWidget() {
+    return Expanded(
+        flex: 3,
+        child: Container(
+          margin: const EdgeInsets.only(left: 10),
+          child: widget.keyValueEditorControl.currentEditId == widget.keyValueEntry.id
+              ? GCWTextField(
+                  controller: _editValueController,
+                  focusNode: _focusNodeEditValue,
+                  inputFormatters: widget.valueInputFormatters,
+                  onChanged: (text) {
+                    setState(() {
+                      _currentEditedValue = text;
+                    });
+                  },
+                )
+              : GCWText(text: widget.keyValueEntry.value),
+        )
+    );
+  }
+
   Widget _editButton() {
     if (!widget.editAllowed) return Container();
 
-    return _currentEditId == _getEntryId(entry)
+    return widget.keyValueEditorControl.currentEditId == widget.keyValueEntry.id
         ? GCWIconButton(
-      icon: Icons.check,
-      onPressed: () {
-        if (widget.onUpdateEntry != null) {
-          if (widget.formulaValueList == null && _currentEditId != null) {
-            widget.onUpdateEntry!(_currentEditId!, _currentEditedKey, _currentEditedValue, _currentEditedFormulaValueTypeInput);
-          } else {
-            if (_currentEditedFormulaValueTypeInput == FormulaValueType.INTERPOLATED) {
-              if (!VARIABLESTRING.hasMatch(_currentEditedValue.toLowerCase())) {
-                showToast(i18n(context, 'formulasolver_values_novalidinterpolated'));
-                return;
+            icon: Icons.check,
+            onPressed: () {
+              if (widget.keyValueEditorControl.currentEditId != null) {
+                widget.keyValueEntry.value = _currentEditedValue;
+                if (widget.onUpdateEntry != null) widget.onUpdateEntry!(widget.keyValueEntry);
               }
-            }
-            if (_currentEditId != null) {
-              widget.onUpdateEntry!(
-                  _currentEditId!, _currentEditedKey, _currentEditedValue, _currentEditedFormulaValueTypeInput);
-            }
-          }
-        }
-
-        setState(() {
-          _currentEditId = null;
-          _editKeyController.clear();
-          _editValueController.clear();
-        });
-      },
-    )
+              setState(() {
+                widget.keyValueEditorControl.currentEditId = null;
+                _editKeyController.clear();
+                _editValueController.clear();
+              });
+            },
+          )
         : GCWIconButton(
-      icon: Icons.edit,
+            icon: Icons.edit,
+            onPressed: () {
+              setState(() {
+                FocusScope.of(context).requestFocus(_focusNodeEditValue);
+
+                widget.keyValueEditorControl.currentEditId = widget.keyValueEntry.id;
+                _editKeyController.text = widget.keyValueEntry.key;
+                _editValueController.text = widget.keyValueEntry.value;
+                _currentEditedKey = widget.keyValueEntry.key;
+                _currentEditedValue = widget.keyValueEntry.value;
+              });
+            },
+          );
+  }
+
+  Widget _removeButton() {
+    return GCWIconButton(
+      icon: Icons.remove,
       onPressed: () {
         setState(() {
-          FocusScope.of(context).requestFocus(_focusNodeEditValue);
-
-          _currentEditId = widget.id;
-          _editKeyController.text = widget.key_;
-          _editValueController.text = widget.value;
-          _currentEditedKey = widget.key_;
-          _currentEditedValue = widget.value;
-
-          if (widget.formulaValueList != null) {
-            _currentEditedFormulaValueTypeInput =
-                widget.formulaValueList!.firstWhere((element) => element.id == _currentEditId).type ?? FormulaValueType.FIXED;
-          }
+          if (widget.onRemoveEntry != null) widget.onRemoveEntry!(widget.keyValueEntry, context);
         });
       },
     );
