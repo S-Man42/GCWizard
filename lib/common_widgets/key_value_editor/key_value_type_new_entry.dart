@@ -10,7 +10,7 @@ class GCWKeyValueTypeNewEntry extends GCWKeyValueNewEntry {
        TextEditingController? keyController,
        List<TextInputFormatter>? keyInputFormatters,
        List<TextInputFormatter>? valueInputFormatters,
-       void Function(String, String, FormulaValueType, BuildContext)? onAddEntry,
+       void Function(KeyValueBase, FormulaValueType, BuildContext)? onAddEntry,
        void Function(KeyValueBase, BuildContext)? onNewEntryChanged,
        int? valueFlex,
      })
