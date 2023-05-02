@@ -233,7 +233,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
       onNewEntryChanged: _updateNewEntry,
       onDispose: _disposeEntry,
       keyValueMap: widget.formula.values,
-      varcoords: true,
+      formulaFormat: true,
       onUpdateEntry: _updateEntry,
       onRemoveEntry: (Object id, BuildContext context) {
         if (id is int) {
