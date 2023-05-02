@@ -49,7 +49,7 @@ class _OhlsenSegmentDisplay extends NSegmentDisplay {
               var width = size.height / _OHLSEN_RELATIVE_DISPLAY_HEIGHT * _OHLSEN_RADIUS;
               var heightRect = size.height / _OHLSEN_RELATIVE_DISPLAY_HEIGHT * _OHLSEN_RADIUS / 3;
 
-              var shutterSegments = {
+              const shutterSegments = {
                 '1': 'a1o',
                 '2': 'a1m',
                 '3': 'a1u',

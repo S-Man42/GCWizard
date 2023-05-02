@@ -178,10 +178,9 @@ class AnimatedImageState extends State<AnimatedImage> {
 
     // restore image references (problem with sendPort, lose references)
     if (_outData != null) {
-      var images = _outData!.images;
       var linkList = _outData!.linkList;
-      for (int i = 0; i < images.length; i++) {
-        images[i] = images[linkList[i]];
+      for (int i = 0; i < _outData!.images.length; i++) {
+        _outData!.images[i] = _outData!.images[linkList[i]];
       }
     } else {
       showToast(i18n(context, 'common_loadfile_exception_notloaded'));

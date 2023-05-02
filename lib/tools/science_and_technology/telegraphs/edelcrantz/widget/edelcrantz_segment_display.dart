@@ -38,7 +38,7 @@ class _EdelcrantzSegmentDisplay extends NSegmentDisplay {
               var SEGMENTS_COLOR_ON = segment_color_on;
               var SEGMENTS_COLOR_OFF = segment_color_off;
 
-              var shutterSegments = {
+              const shutterSegments = {
                 '0': 't0',
                 '1': 'a1',
                 '2': 'a2',
@@ -50,7 +50,7 @@ class _EdelcrantzSegmentDisplay extends NSegmentDisplay {
                 '8': 'c2',
                 '9': 'c3',
               };
-              var shutters = {
+              const shutters = {
                 '0': [30, 10],
                 '1': [10, 40],
                 '2': [10, 70],

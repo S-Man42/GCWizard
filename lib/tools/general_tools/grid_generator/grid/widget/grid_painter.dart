@@ -60,7 +60,9 @@ class _GridPainterState extends State<_GridPainter> {
   List<String>? _fillBoxEnumeration() {
     if (widget.boxEnumeration.isEmpty) return null;
 
-    List<List<String?>> helper = List.filled(widget.countRows, List.filled(widget.countColumns, null));
+    var helper = List<List<String?>>.generate(
+        widget.countRows, (index) => List<String?>.generate(widget.countColumns, (index) => null));
+
     List<String> boxEnumeration;
     if (widget.boxEnumeration.length > widget.countColumns * widget.countRows) {
       boxEnumeration = widget.boxEnumeration.sublist(0, widget.countRows * widget.countColumns);
@@ -235,7 +237,7 @@ class _GridPainterState extends State<_GridPainter> {
     var output = <String>[];
     for (int i = 0; i < widget.countRows; i++) {
       for (int j = 0; j < widget.countColumns; j++) {
-        output.add(helper[i][j]!);
+        output.add(helper[i][j] ?? '');
       }
     }
 

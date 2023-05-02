@@ -1,40 +1,128 @@
 // https://www.history.navy.mil/research/library/online-reading-room/title-list-alphabetically/n/navajo-code-talker-dictionary.html
 // https://www.ancestrycdn.com/aa-k12/1112/assets/Navajo-Code-Talkers-dictionary.pdf
 
-// ignore_for_file: equal_keys_in_map
+import 'dart:math';
 
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
-const Map<String, String> _NAVAJO_ENCODE_ALPHABET = {
-  // although the dictionary has several encodings, these are used by kryptografie.de
-  // dcode.fr uses all letters randomly for encoding
-  'A': 'WOL-LA-CHEE',
-  'B': 'SHUSH',
-  'C': 'MOASI',
-  'D': 'BE',
-  'E': 'DZEH',
-  'F': 'MA-E',
-  'G': 'KLIZZIE',
-  'H': 'LIN',
-  'I': 'TKIN',
-  'J': 'TKELE-CHO-G',
-  'K': 'KLIZZIE-YAZZIE',
-  'L': 'DIBEH-YAZZIE',
-  'M': 'NA-AS-TSO-SI',
-  'N': 'NESH-CHEE',
-  'O': 'NE-AHS-JAH',
-  'P': 'BI-SO-DIH',
-  'Q': 'CA-YEILTH',
-  'R': 'GAH',
-  'S': 'DIBEH',
-  'T': 'THAN-ZIE',
-  'U': 'NO-DA-IH',
-  'V': 'A-KEH-DI-GLINI',
-  'W': 'GLOE-IH',
-  'X': 'AL-NA-AS-DZOH',
-  'Y': 'TSAH-AS-ZIH',
-  'Z': 'BESH-DO-TLIZ',
+const Map<String, List<String>> _NAVAJO_ENCODE_ALPHABET = {
+  'A': [
+    'WOL-LA-CHEE',
+    'BE-LA-SANA',
+    'TSE-NILL',
+  ],
+  'B': [
+    'SHUSH',
+    'NA-HASH-CHID',
+    'TOISH-JEH',
+  ],
+  'C': [
+    'MOASI',
+    'TLA-GIN',
+    'BA-GOSHI',
+  ],
+  'D': [
+    'BE',
+    'CHINDI',
+    'LHA-CHA-EH',
+  ],
+  'E': [
+    'DZEH',
+    'AH-JAH',
+    'AH-NAH',
+  ],
+  'F': [
+    'MA-E',
+    'CHUO',
+    'TSA-E-DONIN-EE',
+  ],
+  'G': [
+    'KLIZZIE',
+    'AH-TAD',
+    'JEHA',
+  ],
+  'H': [
+    'LIN',
+    'TSE-GAH',
+    'CHA',
+  ],
+  'I': [
+    'TKIN',
+    'YEH-HES',
+    'A-CHI',
+  ],
+  'J': [
+    'TKELE-CHO-G',
+    'AH-YA-TSINNE',
+    'YIL-DOI',
+  ],
+  'K': [
+    'KLIZZIE-YAZZIE',
+    'JAD-HO-LONI',
+    'BA-AH-NE-DI-TININ',
+  ],
+  'L': [
+    'DIBEH-YAZZIE',
+    'AH-JAD',
+    'NASH-DOIE-TSO',
+  ],
+  'M': [
+    'NA-AS-TSO-SI',
+    'TSIN-TLITI',
+    'BE-TAS-TNI',
+  ],
+  'N': [
+    'NESH-CHEE',
+    'TSAH',
+    'A-CHIN',
+  ],
+  'O': [
+    'NE-AHS-JAH',
+    'A-KHA',
+    'TLO-CHIN',
+  ],
+  'P': [
+    'BI-SO-DIH',
+    'CLA-GI-AIH',
+    'NE-ZHONI',
+  ],
+  'Q': [
+    'CA-YEILTH',
+  ],
+  'R': [
+    'GAH',
+    'DAH-NES-TSA',
+    'AH-LOSZ',
+  ],
+  'S': [
+    'DIBEH',
+    'KLESH',
+  ],
+  'T': [
+    'THAN-ZIE',
+    'D-AH',
+    'A-WOH',
+  ],
+  'U': [
+    'NO-DA-IH',
+    'SHI-DA',
+  ],
+  'V': [
+    'A-KEH-DI-GLINI',
+  ],
+  'W': [
+    'GLOE-IH',
+  ],
+  'X': [
+    'AL-NA-AS-DZOH',
+  ],
+  'Y': [
+    'TSAH-AS-ZIH',
+  ],
+  'Z': [
+    'BESH-DO-TLIZ',
+  ],
 };
 
 final Map<String, String> _NAVAJO_ENCODE_DICTIONARY = {
@@ -72,6 +160,7 @@ final Map<String, String> _NAVAJO_ENCODE_DICTIONARY = {
   'RUSSIA': 'SILA-GOL-CHI-IH',
   'SOUTHAMERICA': 'SHA-DE-AH-NE-HI-MAH',
   'SPAIN': 'DEBA-DE-NIH',
+  // name of airplanes
   'PLANES': 'WO-TAH-DE-NE-IH',
   'DIVEBOMBER': 'GINI',
   'TORPEDOPLANE': 'TAS-CHIZZIE',
@@ -79,7 +168,8 @@ final Map<String, String> _NAVAJO_ENCODE_DICTIONARY = {
   'FIGHTERPLANE': 'DA-HE-TIH-HI',
   'BOMBERPLANE': 'JAY-SHO',
   'PATROLPLANE': 'GA-GIH',
-  'TRANSPORT': 'ATSAH', //double entry ??
+  'TRANSPORT': 'ATSAH',
+  // name of ships
   'SHIPS': 'TOH-DINEH-IH',
   'BATTLESHIP': 'LO-TSO',
   'AIRCRAFT': 'TSIDI-MOFFA-YE-HI',
@@ -656,7 +746,72 @@ final Map<String, String> _NAVAJO_ENCODE_DICTIONARY = {
 
 final Map<String, String> _NAVAJO_DECODE_DICTIONARY = switchMapKeyValue(_NAVAJO_ENCODE_DICTIONARY);
 
-final Map<String, String> _NAVAJO_DECODE_ALPHABET = switchMapKeyValue(_NAVAJO_ENCODE_ALPHABET);
+const Map<String, String> _NAVAJO_DECODE_ALPHABET = {
+    'WOL-LA-CHEE':'A',
+    'BE-LA-SANA':'A',
+    'TSE-NILL':'A',
+    'SHUSH':'B',
+    'NA-HASH-CHID':'B',
+    'TOISH-JEH':'B',
+    'MOASI':'C',
+    'TLA-GIN':'C',
+    'BA-GOSHI':'C',
+    'BE':'D',
+    'CHINDI':'D',
+    'LHA-CHA-EH':'D',
+    'DZEH':'E',
+    'AH-JAH':'E',
+    'AH-NAH':'E',
+    'MA-E':'F',
+    'CHUO':'F',
+    'TSA-E-DONIN-EE':'F',
+    'KLIZZIE':'G',
+    'AH-TAD':'G',
+    'JEHA':'G',
+    'LIN':'H',
+    'TSE-GAH':'H',
+    'CHA':'H',
+    'TKIN':'I',
+    'YEH-HES':'I',
+    'A-CHI':'I',
+    'TKELE-CHO-G':'J',
+    'AH-YA-TSINNE':'J',
+    'YIL-DOI':'J',
+    'KLIZZIE-YAZZIE':'K',
+    'JAD-HO-LONI':'K',
+    'BA-AH-NE-DI-TININ':'K',
+    'DIBEH-YAZZIE':'L',
+    'AH-JAD':'L',
+    'NASH-DOIE-TSO':'L',
+    'NA-AS-TSO-SI':'M',
+    'TSIN-TLITI':'M',
+    'BE-TAS-TNI':'M',
+    'NESH-CHEE':'N',
+    'TSAH':'N',
+    'A-CHIN':'N',
+    'NE-AHS-JAH':'O',
+    'A-KHA':'O',
+    'TLO-CHIN':'O',
+    'BI-SO-DIH':'P',
+    'CLA-GI-AIH':'P',
+    'NE-ZHONI':'P',
+    'CA-YEILTH':'Q',
+    'GAH':'R',
+    'DAH-NES-TSA':'R',
+    'AH-LOSZ':'R',
+    'DIBEH':'S',
+    'KLESH':'S',
+    'THAN-ZIE':'T',
+    'D-AH':'T',
+    'A-WOH':'T',
+    'NO-DA-IH' :'U',
+    'SHI-DA':'U',
+  'A-KEH-DI-GLINI': 'V',
+  'GLOE-IH': 'W',
+  'AL-NA-AS-DZOH': 'X',
+  'TSAH-AS-ZIH': 'Y',
+  'BESH-DO-TLIZ': 'Z',
+};
 
 String shrinkText(String input) {
   return input
@@ -790,10 +945,11 @@ String decodeNavajo(String cipherText, bool useOnlyAlphabet) {
             result.add(UNKNOWN_ELEMENT);
           } else {
             result.add(enfoldText(_NAVAJO_DECODE_DICTIONARY[element]!));
+            result.add(' ');
           }
         }
       } else {
-        result.add(_NAVAJO_DECODE_ALPHABET[element]!); // ToDo Thomas double else ??
+        result.add(_NAVAJO_DECODE_ALPHABET[element]!);
       }
     });
     result.add(' ');
@@ -819,12 +975,13 @@ String encodeNavajo(String plainText, bool useOnlyAlphabet) {
 }
 
 String encodeLetterWise(String plainText) {
+
   List<String> result = <String>[];
   plainText.split('').forEach((element) {
     if (_NAVAJO_ENCODE_ALPHABET[element] == null) {
       result.add(element);
     } else {
-      result.add(_NAVAJO_ENCODE_ALPHABET[element]!);
+      result.add(_NAVAJO_ENCODE_ALPHABET[element]![Random().nextInt(_NAVAJO_ENCODE_ALPHABET[element]!.length)]);
     }
   });
   return result.join(' ');

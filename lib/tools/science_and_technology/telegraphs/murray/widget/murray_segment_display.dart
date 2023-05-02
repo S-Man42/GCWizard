@@ -27,7 +27,7 @@ class _MurraySegmentDisplay extends NSegmentDisplay {
               var SEGMENTS_COLOR_ON = segment_color_on;
               var SEGMENTS_COLOR_OFF = segment_color_off;
 
-              var shutters = {
+              const shutters = {
                 '1': [5, 20],
                 '2': [25, 20],
                 '3': [5, 50],

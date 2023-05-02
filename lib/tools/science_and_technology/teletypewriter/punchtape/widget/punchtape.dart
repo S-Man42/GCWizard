@@ -37,7 +37,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
   var _currentDecodeMode = GCWSwitchPosition.right; // text - visual
   var _currentDecodeTextMode = GCWSwitchPosition.right; // decimal - binary
 
-  var _currentCode = TeletypewriterCodebook.BAUDOT;
+  var _currentCode = TeletypewriterCodebook.BAUDOT_12345;
 
   @override
   void initState() {

@@ -7,6 +7,7 @@ import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_param
 import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_replacer_symboldata.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
+import 'package:gc_wizard/utils/image_utils.dart';
 import 'package:image/image.dart' as Image;
 import 'package:tuple/tuple.dart';
 
@@ -167,7 +168,9 @@ class SymbolReplacerImage {
       double? similarityCompareLevel = 80,
       bool groupSymbols = true,
       double? mergeDistance}) {
-    _bmp ??= Image.decodeImage(_image);
+
+
+    _bmp ??= decodeImage4ChannelFormat(_image);
     if (_bmp == null) return;
 
     // detect changed parameter -> recalc
@@ -242,20 +245,30 @@ class SymbolReplacerImage {
   /// </summary>
   void addToGroup(Symbol symbol, SymbolGroup? symbolGroup) {
     if (symbolGroup == null) return;
-    if (symbol.symbolGroup != null) {
-      symbol.symbolGroup?.symbols.remove(symbol);
-      if (symbol.symbolGroup!.symbols.isEmpty) symbolGroups.remove(symbol.symbolGroup);
-    }
-    symbolGroup.symbols = <Symbol>[];
+    _removeSymbolFromGroup(symbol);
 
     _addSymbolToGroup(symbol, symbolGroup);
+  }
+
+  /// <summary>
+  /// remove Symbol from SymbolGroup
+  /// delete SymbolGroup if empty
+  /// </summary>
+  void _removeSymbolFromGroup(Symbol symbol) {
+    if (symbol.symbolGroup != null) {
+      // remove symbol from
+      symbol.symbolGroup?.symbols.remove(symbol);
+      // delete empty SymbolGroup
+      if (symbol.symbolGroup!.symbols.isEmpty) symbolGroups.remove(symbol.symbolGroup);
+      symbol.symbolGroup = null;
+    }
   }
 
   /// <summary>
   /// remove Symbol from SymbolGroup (create new SymbolGroup)
   /// </summary>
   void removeFromGroup(Symbol symbol) {
-    if (symbol.symbolGroup != null) symbol.symbolGroup?.symbols.remove(symbol);
+    _removeSymbolFromGroup(symbol);
     var symbolGroup = SymbolGroup();
     symbolGroups.add(symbolGroup);
 
@@ -411,7 +424,7 @@ class SymbolReplacerImage {
         symbol.bmp.height,
       );
 
-      var color = Image.ColorRgb8(Colors.blue.red, Colors.blue.green, Colors.blue.blue);
+      var color = Image.ColorRgb8(Colors.orangeAccent.red, Colors.orangeAccent.green, Colors.orangeAccent.blue);
       Image.drawRect(bmp, x1: rect.left, y1: rect.top, x2: rect.right, y2: rect.bottom, color: color);
       Image.drawRect(bmp, x1: rect.left - 1, y1: rect.top - 1, x2: rect.right + 1,y2:  rect.bottom + 1, color: color);
     }
@@ -940,7 +953,7 @@ Future<List<Map<String, SymbolReplacerSymbolData>>?> searchSymbolTable(
   imageTmp._similarityLevel = 0;
   imageTmp._gap = image._gap;
 
-  sendAsyncPort?.send(DoubleText('progress', 0.0));
+  sendAsyncPort?.send(DoubleText(PROGRESS, 0.0));
 
   for (var symbolTable in compareSymbols) {
     imageTmp.resetGroupText();
@@ -953,7 +966,7 @@ Future<List<Map<String, SymbolReplacerSymbolData>>?> searchSymbolTable(
       }
     }
     progress++;
-    sendAsyncPort?.send(DoubleText('progress', progress / compareSymbols.length));
+    sendAsyncPort?.send(DoubleText(PROGRESS, progress / compareSymbols.length));
   }
   return Future.value(maxPercentSymbolTable);
 }

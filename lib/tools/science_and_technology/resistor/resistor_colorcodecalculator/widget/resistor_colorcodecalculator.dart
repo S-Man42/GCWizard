@@ -262,13 +262,13 @@ class ResistorColorCodeCalculatorState extends State<ResistorColorCodeCalculator
           i18n(context, 'resistor_value_range'),
           formatResistorTolerancedValueInterval(resistorValue.tolerancedValueInterval)
         ],
-        resistorValue.temperatureCoefficient != null
-            ? [
-                i18n(context, 'resistor_temperaturecoefficient'),
-                formatResistorTemperatureCoefficient(resistorValue.temperatureCoefficient!, gcwTextStyle())
-              ]
-            : []
       ];
+      if (resistorValue.temperatureCoefficient != null) {
+        outputs.add([
+          i18n(context, 'resistor_temperaturecoefficient'),
+          formatResistorTemperatureCoefficient(resistorValue.temperatureCoefficient!, gcwTextStyle())
+        ]);
+      }
     }
 
     return GCWColumnedMultilineOutput(

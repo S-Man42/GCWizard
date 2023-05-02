@@ -45,10 +45,7 @@ GCWBaseColor convertColorSpace(GCWColorValue color, ColorSpaceKey newColorSpace)
     return color.color;
   }
 
-  var rgb = color as RGB;
-  if (color.colorSpace != ColorSpaceKey.RGB) {
-    rgb = color.color.toRGB();
-  }
+  var rgb = color.color.toRGB();
 
   switch (newColorSpace) {
     case ColorSpaceKey.RGB:

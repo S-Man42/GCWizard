@@ -120,9 +120,9 @@ class GridState extends State<Grid> {
   late _GridType _currentConfigType;
   late int _currentConfigColumns;
   late int _currentConfigRows;
-  late String _currentConfigBoxEnumeration;
-  late String _currentConfigColumnEnumeration;
-  late String _currentConfigRowEnumeration;
+  String? _currentConfigBoxEnumeration;
+  String? _currentConfigColumnEnumeration;
+  String? _currentConfigRowEnumeration;
   late _GridEnumerationStart _currentConfigBoxEnumerationStart;
   late _GridBoxEnumerationStartDirection _currentConfigBoxEnumerationStartDirection;
   late _GridBoxEnumerationBehaviour _currentConfigBoxEnumerationBehaviour;
@@ -137,11 +137,11 @@ class GridState extends State<Grid> {
   void initState() {
     super.initState();
 
+    _initializeDefaultGrid();
+
     _boxEnumerationController = TextEditingController(text: _currentConfigBoxEnumeration);
     _columnEnumerationController = TextEditingController(text: _currentConfigColumnEnumeration);
     _rowEnumerationController = TextEditingController(text: _currentConfigRowEnumeration);
-
-    _initializeDefaultGrid();
   }
 
   @override
@@ -167,10 +167,6 @@ class GridState extends State<Grid> {
             _GridBoxEnumerationStartDirection.RIGHT;
     _currentConfigBoxEnumerationBehaviour =
         _GRID_CONFIGURATIONS[_currentGridConfiguration]?.enumerationBehaviour ?? _GridBoxEnumerationBehaviour.ALIGNED;
-
-    _boxEnumerationController.text = _currentConfigBoxEnumeration;
-    _columnEnumerationController.text = _currentConfigColumnEnumeration;
-    _rowEnumerationController.text = _currentConfigRowEnumeration;
 
     _currentConfigBoxEnumerationStartDirections = _possibleStartDirections();
   }
@@ -213,11 +209,11 @@ class GridState extends State<Grid> {
                     _currentConfigColumns = _GRID_CONFIGURATIONS[_currentGridConfiguration]?.width ?? 10;
                     _currentConfigRows = _GRID_CONFIGURATIONS[_currentGridConfiguration]?.height ?? 10;
                     _currentConfigBoxEnumeration = _GRID_CONFIGURATIONS[_currentGridConfiguration]?.enumeration ?? '';
-                    _boxEnumerationController.text = _currentConfigBoxEnumeration;
+                    _boxEnumerationController.text = _currentConfigBoxEnumeration ?? '';
                     _currentConfigColumnEnumeration = _GRID_CONFIGURATIONS[_currentGridConfiguration]?.columnEnumeration ?? '';
-                    _columnEnumerationController.text = _currentConfigColumnEnumeration;
+                    _columnEnumerationController.text = _currentConfigColumnEnumeration ?? '';
                     _currentConfigRowEnumeration = _GRID_CONFIGURATIONS[_currentGridConfiguration]?.rowEnumeration ?? '';
-                    _rowEnumerationController.text = _currentConfigRowEnumeration;
+                    _rowEnumerationController.text = _currentConfigRowEnumeration ?? '';
                     _currentConfigBoxEnumerationStart =
                         _GRID_CONFIGURATIONS[_currentGridConfiguration]?.enumerationStart ?? _GridEnumerationStart.TOP_LEFT;
                     _currentConfigBoxEnumerationStartDirection =
@@ -464,9 +460,9 @@ class GridState extends State<Grid> {
             type: _currentConfigType,
             countColumns: _currentConfigColumns,
             countRows: _currentConfigRows,
-            boxEnumeration: _getEnumeration(_currentConfigBoxEnumeration),
-            columnEnumeration: _getEnumeration(_currentConfigColumnEnumeration),
-            rowEnumeration: _getEnumeration(_currentConfigRowEnumeration),
+            boxEnumeration: _getEnumeration(_currentConfigBoxEnumeration ?? ''),
+            columnEnumeration: _getEnumeration(_currentConfigColumnEnumeration ?? ''),
+            rowEnumeration: _getEnumeration(_currentConfigRowEnumeration ?? ''),
             boxEnumerationStart: _currentConfigBoxEnumerationStart,
             boxEnumerationStartDirection: _currentConfigBoxEnumerationStartDirection,
             boxEnumerationBehaviour: _currentConfigBoxEnumerationBehaviour,

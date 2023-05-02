@@ -73,7 +73,7 @@ class GeneralSettingsState extends State<GeneralSettings> {
                             value: currentLocale != null && isLocaleSupported(currentLocale)
                                 ? currentLocale.languageCode
                                 : DEFAULT_LOCALE.languageCode,
-                            onChanged: (String newValue) {
+                            onChanged: (newValue) {
                               appLanguage.changeLanguage(newValue);
                             });
                       }
@@ -276,4 +276,5 @@ class GeneralSettingsState extends State<GeneralSettings> {
       ],
     );
   }
+
 }

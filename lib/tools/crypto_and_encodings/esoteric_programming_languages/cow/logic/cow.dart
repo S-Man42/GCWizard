@@ -74,7 +74,6 @@ const _mnemonicList = {
 };
 
 const _MEMORY_SIZE = 256;
-const _MAX_NUMBER_OF_INSTRUCTIONS = 512;
 const _MAX_ITERATIONS = 9999999;
 
 class CowOutput {
