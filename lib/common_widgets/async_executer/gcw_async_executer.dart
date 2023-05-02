@@ -65,7 +65,7 @@ class _GCWAsyncExecuterState<T> extends State<GCWAsyncExecuter<T>> {
         if (_cancel) _cancelProcess();
 
         await for (var event in _receivePort!) {
-          if (event is DoubleText && event.text == 'progress') {
+          if (event is DoubleText && event.text == PROGRESS) {
             yield event.value;
           } else if (event is T) {
             _result = event;

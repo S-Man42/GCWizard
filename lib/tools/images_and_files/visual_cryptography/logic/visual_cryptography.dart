@@ -95,7 +95,7 @@ Future<Tuple2<int, int>?> _offsetAutoCalc(Uint8List image1, Uint8List image2, in
   int _countCombinations = max(((maxX - minX + 1) * (maxY - minY + 1)).toInt(), 1);
   int _progressStep = max(_countCombinations ~/ 100, 1); // 100 steps
 
-  sendAsyncPort?.send(DoubleText('progress', 0.0));
+  sendAsyncPort?.send(DoubleText(PROGRESS, 0.0));
 
   for (var y = minY; y <= maxY; y++) {
     var solutionsRow = <int>[];
@@ -104,7 +104,7 @@ Future<Tuple2<int, int>?> _offsetAutoCalc(Uint8List image1, Uint8List image2, in
 
       progress++;
       if (sendAsyncPort != null && (progress % _progressStep == 0)) {
-        sendAsyncPort.send(DoubleText('progress', progress / _countCombinations));
+        sendAsyncPort.send(DoubleText(PROGRESS, progress / _countCombinations));
       }
     }
     solutionsAll.add(_highPassFilter(0.2, solutionsRow));

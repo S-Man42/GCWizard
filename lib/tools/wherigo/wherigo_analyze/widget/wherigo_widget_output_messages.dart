@@ -37,15 +37,15 @@ List<Widget> _buildOutputListOfMessageData(BuildContext context, List<WherigoAct
         if (element.ActionMessageContent.startsWith('Wherigo.PlayAudio')) {
           String LUAName = element.ActionMessageContent.replaceAll('Wherigo.PlayAudio(', '').replaceAll(')', '');
           if (
-          NameToObject[LUAName] == null ||
-              NameToObject[LUAName]!.ObjectIndex >= WherigoCartridgeGWCData.MediaFilesContents.length
+          WHERIGONameToObject[LUAName] == null ||
+              WHERIGONameToObject[LUAName]!.ObjectIndex >= WherigoCartridgeGWCData.MediaFilesContents.length
           ) {
             break;
           }
           resultWidget.add(GCWSoundPlayer(
             file: GCWFile(
-                bytes: WherigoCartridgeGWCData.MediaFilesContents[NameToObject[LUAName]!.ObjectIndex].MediaFileBytes,
-                name: NameToObject[LUAName]!.ObjectMedia),
+                bytes: WherigoCartridgeGWCData.MediaFilesContents[WHERIGONameToObject[LUAName]!.ObjectIndex].MediaFileBytes,
+                name: WHERIGONameToObject[LUAName]!.ObjectMedia),
           ));
         } else {
           resultWidget.add(GCWOutput(

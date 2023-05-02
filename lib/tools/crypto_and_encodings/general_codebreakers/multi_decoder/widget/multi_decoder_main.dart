@@ -132,8 +132,9 @@ class MultiDecoderState extends State<MultiDecoder> {
       String result = value.toString();
 
       if (tool.internalToolName == MDT_INTERNALNAMES_COORDINATEFORMATS) {
-        if (CoordinateFormatKey.values.contains(value)) {
-          result = coordinateFormatMetadataByKey(value as CoordinateFormatKey).name;
+        var coordFormat = coordinateFormatMetadataByPersistenceKey((value ?? '').toString());
+        if (coordFormat != null) {
+          result = coordFormat.name;
         }
       }
       if ([MDT_INTERNALNAMES_BASE, MDT_INTERNALNAMES_BCD].contains(tool.internalToolName)) {

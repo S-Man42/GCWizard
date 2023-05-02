@@ -96,7 +96,7 @@ class TeletypewriterState extends State<Teletypewriter> {
           },
         ),
         GCWTwoOptionsSwitch(
-          title: i18n(context, 'ccitt2_numeralbase'),
+          title: i18n(context, 'common_numeralbase'),
           leftValue: i18n(context, 'common_numeralbase_denary'),
           rightValue: i18n(context, 'common_numeralbase_binary'),
           value: _currentRadix,
