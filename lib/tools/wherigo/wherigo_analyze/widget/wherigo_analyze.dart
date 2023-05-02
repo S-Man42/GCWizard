@@ -761,7 +761,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 GCWIconButton(
                   icon: Icons.save,
                   size: IconButtonSize.SMALL,
-                  iconColor: themeColors().inActive(),
+                  iconColor: themeColors().mainFont(),
                   onPressed: () {
                     _exportFile(
                         context,
