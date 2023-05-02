@@ -21,7 +21,10 @@ import 'package:gc_wizard/utils/math_utils.dart';
 import 'package:gc_wizard/utils/variable_string_expander.dart';
 
 part "package:gc_wizard/common_widgets/key_value_editor/alphabet_widgets.dart";
+part "package:gc_wizard/common_widgets/key_value_editor/key_value_new_entry.dart";
+part "package:gc_wizard/common_widgets/key_value_editor/key_value_type_new_entry.dart";
 part "package:gc_wizard/common_widgets/key_value_editor/key_value_row.dart";
+part "package:gc_wizard/common_widgets/key_value_editor/key_value_type_row.dart";
 
 /*
   TODO: TECHNICAL DEBT:
@@ -51,19 +54,11 @@ part "package:gc_wizard/common_widgets/key_value_editor/key_value_row.dart";
 
  */
 class KeyValueBase {
-  String _id;
-  String get id => _id;
-  set id(String id) => _id = id;
+  Object? id;
+  String key;
+  String value;
 
-  String _key;
-  String get key => _key;
-  set key(String key) => _key = key;
-
-  String _value;
-  String get value => _value;
-  set value(String value) => _value = value;
-
-  KeyValueBase(this._id, this._key, this._value);
+  KeyValueBase(this.id, this.key, this.value);
 }
 
 class KeyValueString extends KeyValueBase {
@@ -74,17 +69,21 @@ class KeyValueString extends KeyValueBase {
 
 class KeyValueFormulaValue extends KeyValueBase {
   @override
-  String get id => _key;
+  String get id => key;
   @override
-  set id(String id) => _key = id;
+  set id(Object? id) => key = id == null ? '': id.toString();
 
   KeyValueFormulaValue(FormulaValue entry)
       : super (entry.id?.toString() ?? '', entry.key, entry.value);
 }
 
+class _KeyValueEditorControl {
+  Object? currentEditId;
+}
 
 class GCWKeyValueEditor <T, U> extends StatefulWidget {
-  final void Function(String, String, BuildContext)? onNewEntryChanged;
+  final List<KeyValueBase> entries;
+  final void Function(KeyValueBase, BuildContext)? onNewEntryChanged;
   final String? keyHintText;
   final TextEditingController? keyController;
   final List<TextInputFormatter>? keyInputFormatters;
@@ -103,11 +102,12 @@ class GCWKeyValueEditor <T, U> extends StatefulWidget {
   final bool varcoords;
   final String? dividerText;
   final bool editAllowed;
-  final void Function(Object, String, String, FormulaValueType)? onUpdateEntry;
-  final void Function(Object, BuildContext)? onRemoveEntry;
+  final void Function(KeyValueBase)? onUpdateEntry;
+  final void Function(KeyValueBase, BuildContext)? onRemoveEntry;
 
   const GCWKeyValueEditor({
     Key? key,
+    required this.entries,
     this.keyHintText,
     this.keyController,
     this.keyInputFormatters,
@@ -146,10 +146,10 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
   var _currentValueInput = '';
   var _currentFormulaValueTypeInput = FormulaValueType.FIXED;
 
-  var _currentEditedKey = '';
-  var _currentEditedValue = '';
-  var _currentEditedFormulaValueTypeInput = FormulaValueType.FIXED;
-  Object? _currentEditId;
+  // var _currentEditedKey = '';
+  // var _currentEditedValue = '';
+  // var _currentEditedFormulaValueTypeInput = FormulaValueType.FIXED;
+  var keyValueEditorControl = _KeyValueEditorControl();
 
   late FocusNode _focusNodeEditValue;
 
@@ -327,12 +327,12 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
     var odd = false;
     List<Widget>? rows;
 
-    rows = widget.keyValueMap?.entries.map((entry) {
+    rows = widget.entries.map((entry) {
       odd = !odd;
       return _buildRow(entry, odd);
     }).toList();
 
-    if (rows != null) {
+    if (rows.isNotEmpty) {
       rows.insert(
         0,
         GCWTextDivider(
@@ -355,9 +355,32 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
       );
     }
 
-    return rows == null ? Container() : Column(children: rows);
+    return rows.isEmpty ? Container() : Column(children: rows);
   }
 
+  Widget _buildRow(KeyValueBase entry, bool odd) {
+    if (entry is FormulaValue) {
+      return GCWKeyValueTypeRow(
+          keyValueEntry: entry,
+          keyValueEditorControl:keyValueEditorControl,
+          odd: odd,
+          keyInputFormatters: widget.keyInputFormatters,
+          valueInputFormatters: widget.valueInputFormatters,
+          editAllowed: widget.editAllowed,
+          onUpdateEntry: widget.onUpdateEntry,
+          onRemoveEntry: widget.onRemoveEntry);
+    } else {
+      return GCWKeyValueRow(
+          keyValueEntry: entry,
+          keyValueEditorControl:keyValueEditorControl,
+          odd: odd,
+          keyInputFormatters: widget.keyInputFormatters,
+          valueInputFormatters: widget.valueInputFormatters,
+          editAllowed: widget.editAllowed,
+          onUpdateEntry: widget.onUpdateEntry,
+          onRemoveEntry: widget.onRemoveEntry);
+    }
+  }
 
   IconData _formulaValueTypeIcon(FormulaValueType formulaValueType) {
     switch (formulaValueType) {
