@@ -63,9 +63,9 @@ class GCWKeyValueEditor extends StatefulWidget {
   final List<TextInputFormatter>? valueInputFormatters;
   final String valueHintText;
   final int? valueFlex;
-  final void Function(String, String, FormulaValueType, BuildContext)? onAddEntry;
-  final void Function(String, String, BuildContext)? onAddEntry2;
-  final void Function(String, String, BuildContext)? onDispose;
+  final void Function(KeyValueBase, FormulaValueType, BuildContext)? onAddEntry;
+  final void Function(KeyValueBase, BuildContext)? onAddEntry2;
+  final void Function(KeyValueBase, BuildContext)? onDispose;
   final String? alphabetInstertButtonLabel;
   final String? alphabetAddAndAdjustLetterButtonLabel;
 

@@ -11,7 +11,7 @@ class GCWKeyValueAlphabetNewEntry extends GCWKeyValueNewEntry {
        TextEditingController? keyController,
        List<TextInputFormatter>? keyInputFormatters,
        List<TextInputFormatter>? valueInputFormatters,
-       void Function(String, String, FormulaValueType, BuildContext)? onAddEntry,
+       void Function(KeyValueBase, FormulaValueType, BuildContext)? onAddEntry,
        void Function(KeyValueBase, BuildContext)? onNewEntryChanged,
        int? valueFlex,
        required this.entries,
@@ -67,7 +67,7 @@ class GCWKeyValueAlphabetNewEntryState extends GCWKeyValueNewEntryState {
           text: i18n(context, 'alphabetvalues_edit_mode_customize_addletter'),
           onPressed: () {
             setState(() {
-              _addEntry(_currentKeyInput, _currentValueInput);
+              _addEntry(KeyValueBase(null, _currentKeyInput, _currentValueInput));
             });
           },
         ));
@@ -81,7 +81,7 @@ class GCWKeyValueAlphabetNewEntryState extends GCWKeyValueNewEntryState {
           onPressed: () => _isAddAndAdjustEnabled()
               ? () {
             setState(() {
-              if (widget.onAddEntry2 != null) widget.onAddEntry2!(_currentKeyInput, _currentValueInput, context);
+              if (widget.onAddEntry2 != null) widget.onAddEntry2!(KeyValueBase(null, _currentKeyInput, _currentValueInput), context);
 
               _onNewEntryChanged(true);
             });
