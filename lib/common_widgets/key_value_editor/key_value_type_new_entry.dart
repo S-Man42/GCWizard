@@ -10,6 +10,7 @@ class GCWKeyValueTypeNewEntry extends GCWKeyValueNewEntry {
        TextEditingController? keyController,
        List<TextInputFormatter>? keyInputFormatters,
        List<TextInputFormatter>? valueInputFormatters,
+       void Function(String, String, FormulaValueType, BuildContext)? onAddEntry,
        void Function(KeyValueBase, BuildContext)? onNewEntryChanged,
        int? valueFlex,
      })
@@ -20,6 +21,7 @@ class GCWKeyValueTypeNewEntry extends GCWKeyValueNewEntry {
         keyController: keyController,
         keyInputFormatters: keyInputFormatters,
         valueInputFormatters: valueInputFormatters,
+        onAddEntry: onAddEntry,
         onNewEntryChanged: onNewEntryChanged,
         valueFlex: valueFlex
   );
@@ -30,31 +32,6 @@ class GCWKeyValueTypeNewEntry extends GCWKeyValueNewEntry {
 
 class GCWKeyValueTypeNewEntryState extends GCWKeyValueNewEntryState {
   var _currentType = FormulaValueType.FIXED;
-
-  @override
-  void initState() {
-    super.initState();
-
-    // if (widget.keyController == null) {
-    //   _keyController = TextEditingController(text: _currentKey);
-    // } else {
-    //   _keyController = widget.keyController!;
-    //   _currentKey = _keyController.text;
-    // }
-    // _valueController = TextEditingController(text: _currentValue);
-    //
-    // _focusNodeEditValue = FocusNode();
-  }
-
-  @override
-  void dispose() {
-    // if (widget.keyController == null) _keyController.dispose();
-    // _valueController.dispose();
-    //
-    // _focusNodeEditValue.dispose();
-
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
