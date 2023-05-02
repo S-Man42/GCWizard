@@ -43,41 +43,67 @@ class AdventureLabsState extends State<AdventureLabs> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        GCWCoords(
-          title: i18n(context, 'adventure_labs_start'),
-          coordsFormat: _currentCoords.format,
-          onChanged: (ret) {
-            setState(() {
-              _currentCoords = ret;
-            });
-          },
-        ),
-        GCWTextDivider(
-          text: i18n(context, 'adventure_labs_radius'),
-        ),
-        GCWIntegerSpinner(
-          min: 0,
-          max: 9999,
-          value: _currentRadius,
-          onChanged: (value) {
-            setState(() {
-              _currentRadius = value;
-            });
-          },
-        ),
-        GCWButton(
-          text: i18n(context, 'adventure_labs_search'),
-          onPressed: () {
-            setState(() {
-              _getAdventureDataAsync();
-            });
-          },
-        ),
-        _buildOutput(),
-      ],
-    );
+    // https://www.kindacode.com/article/flutter-ask-for-confirmation-when-back-button-pressed/
+    return WillPopScope(
+        onWillPop: () async {
+          bool willLeave = false;
+          // show the confirm dialog
+          await showDialog<bool>(
+              context: context,
+              builder: (_) => AlertDialog(
+                title: Text(i18n(context, 'adventure_labs_exit_title')),
+                titleTextStyle: const TextStyle(color: Colors.black, fontSize: 16.0, fontWeight: FontWeight.bold),
+                content: Text(i18n(context, 'adventure_labs_exit_message')),
+                contentTextStyle: const TextStyle(color: Colors.black, fontSize: 16.0),
+                backgroundColor: themeColors().dialog(),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        willLeave = true;
+                        Navigator.of(context).pop();
+                      },
+                      child: Text(i18n(context, 'common_yes'))),
+                  ElevatedButton(
+                      onPressed: () => Navigator.of(context).pop(), child: Text(i18n(context, 'common_no')))
+                ],
+              ));
+          return willLeave;
+        },
+        child: Column(
+          children: <Widget>[
+            GCWCoords(
+              title: i18n(context, 'adventure_labs_start'),
+              coordsFormat: _currentCoords.format,
+              onChanged: (ret) {
+                setState(() {
+                  _currentCoords = ret;
+                });
+              },
+            ),
+            GCWTextDivider(
+              text: i18n(context, 'adventure_labs_radius'),
+            ),
+            GCWIntegerSpinner(
+              min: 0,
+              max: 9999,
+              value: _currentRadius,
+              onChanged: (value) {
+                setState(() {
+                  _currentRadius = value;
+                });
+              },
+            ),
+            GCWButton(
+              text: i18n(context, 'adventure_labs_search'),
+              onPressed: () {
+                setState(() {
+                  _getAdventureDataAsync();
+                });
+              },
+            ),
+            _buildOutput()
+          ],
+        ));
   }
 
   void _getAdventureDataAsync() async {

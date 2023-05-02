@@ -59,6 +59,8 @@
   "adventure_labs_start": "Search location",
   "adventure_labs_radius": "Radius (Meter)",
   "adventure_labs_search": "Search",
+  "adventure_labs_exit_title": "Leaving the Adventure Labs Viewer",
+  "adventure_labs_exit_message": "Do you really want to leave the Adventure Labs Viewer?",
   "adventure_labs_lab_adventureguid": "GUID",
   "adventure_labs_lab_number": "Number of Lab Caches",
   "adventure_labs_lab": "Lab Cache",
