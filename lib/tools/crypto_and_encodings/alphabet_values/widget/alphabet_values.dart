@@ -1,6 +1,6 @@
-import 'dart:collection';
 import 'dart:convert';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
@@ -46,7 +46,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
 
   late String _currentAlphabetKey;
   late Map<String, String> _currentAlphabet;
-  Map<String, String>? _currentCustomizedAlphabet;
+  List<KeyValueBase>? _currentCustomizedAlphabet;
   var _currentIsEditingAlphabet = false;
   var _currentReverseAlphabet = GCWSwitchPosition.left;
   String _reverseSwitchTitleLeft = '';
@@ -126,6 +126,16 @@ class AlphabetValuesState extends State<AlphabetValues> {
     return alphabet.map((key, value) => MapEntry(key, _setValueOffset(value)));
   }
 
+  List<KeyValueBase> _setOffsetList(List<KeyValueBase> alphabet) {
+    // Map<String, String> map = {};
+    // for (var entry in alphabet) {
+    //   map.addAll({entry.key: _setValueOffset(entry.value)});
+    // }
+    // return map;
+    // alphabet.map((entry) => MapEntry(entry.key, _setValueOffset(entry.value)));
+    return alphabet.map((entry) => KeyValueBase(null, entry.key, _setValueOffset(entry.value))).toList();
+  }
+
   Map<String, String> _setReverse(Map<String, String> alphabet) {
     if (_currentReverseAlphabet == GCWSwitchPosition.left) return alphabet;
 
@@ -138,6 +148,20 @@ class AlphabetValuesState extends State<AlphabetValues> {
     }
 
     return Map<String, String>.fromEntries(reversedMap.entries);
+  }
+
+  List<KeyValueBase> _setReverseList(List<KeyValueBase> alphabet) {
+    if (_currentReverseAlphabet == GCWSwitchPosition.left) return alphabet;
+
+    var reversedMap = <String, String>{};
+    var entries = alphabet;
+    var length = entries.length;
+
+    for (int i = 0; i < length; i++) {
+      reversedMap.putIfAbsent(entries[length - i - 1].key, () => entries[i].value);
+    }
+
+    return _convertToEditingAlphabet(reversedMap); // Map<String, String>.fromEntries(reversedMap.entries);
   }
 
   void _addNewLetter2(String letter, String value, BuildContext context) {
@@ -157,14 +181,14 @@ class AlphabetValuesState extends State<AlphabetValues> {
     if (_currentCustomizedAlphabet == null) return;
 
     letter = letter.toUpperCase();
-    if (_currentCustomizedAlphabet!.containsKey(letter)) {
+    if (_currentCustomizedAlphabet!.firstWhereOrNull((entry) => entry.key == letter) != null) {
       showGCWDialog(context, i18n(context, 'alphabetvalues_edit_mode_customize_addletter_replace_title'),
           Text(i18n(context, 'alphabetvalues_edit_mode_customize_addletter_replace_text', parameters: [letter])), [
         GCWDialogButton(
             text: i18n(context, 'alphabetvalues_edit_mode_customize_addletter_replace'),
             onPressed: () {
               setState(() {
-                _currentCustomizedAlphabet!.addAll({letter: value});
+                _currentCustomizedAlphabet!.add(KeyValueBase(null, letter, value));
               });
             })
       ]);
@@ -173,8 +197,8 @@ class AlphabetValuesState extends State<AlphabetValues> {
         if (adjust) {
           var insertedValue = int.tryParse(value);
           if (insertedValue != null) {
-            _currentCustomizedAlphabet = _currentCustomizedAlphabet!.map((currentKey, currentValue) {
-              var newValue = currentValue.split(',').map((value) {
+            _currentCustomizedAlphabet = _currentCustomizedAlphabet!.map((entry) {
+              var newValue = entry.value.split(',').map((value) {
                 var intValue = int.tryParse(value);
                 if (intValue == null) return '';
                 if (intValue >= insertedValue) intValue++;
@@ -182,18 +206,21 @@ class AlphabetValuesState extends State<AlphabetValues> {
                 return intValue.toString();
               }).join(',');
 
-              return MapEntry(currentKey, newValue);
-            });
+              return KeyValueBase(null, entry.key, newValue);
+            }).toList();
           }
         }
-        _currentCustomizedAlphabet!.putIfAbsent(letter, () => value);
+        if (_currentCustomizedAlphabet!.firstWhereOrNull((entry) => entry.key == letter) == null) {
+          _currentCustomizedAlphabet!.add(KeyValueBase(null, letter, value));
+        }
+        //_currentCustomizedAlphabet!.putIfAbsent(letter, () => value);
       });
     }
   }
 
   void _removeEntry(Object id, BuildContext context) {
     if (_currentCustomizedAlphabet == null) return;
-    var _valueToDelete = _currentCustomizedAlphabet![id];
+    var _valueToDelete = _currentCustomizedAlphabet!.firstWhereOrNull((entry) => entry.key == id)?.value;
     if (_valueToDelete == null) return;
     var _isList = _valueToDelete.contains(',');
 
@@ -214,8 +241,8 @@ class AlphabetValuesState extends State<AlphabetValues> {
         text: i18n(context, 'alphabetvalues_edit_mode_customize_deleteletter_removeandadjust'),
         onPressed: () {
           if (deleteValue != null) {
-            _currentCustomizedAlphabet = _currentCustomizedAlphabet!.map((currentKey, currentValue) {
-              var newValue = currentValue.split(',').map((value) {
+            _currentCustomizedAlphabet = _currentCustomizedAlphabet!.map((entry) {
+              var newValue = entry.value.split(',').map((value) {
                 var intValue = int.tryParse(value);
                 if (intValue == null) return '';
                 if (intValue > deleteValue) intValue--;
@@ -223,8 +250,8 @@ class AlphabetValuesState extends State<AlphabetValues> {
                 return intValue.toString();
               }).join(',');
 
-              return MapEntry(currentKey, newValue);
-            });
+              return KeyValueBase(null, entry.key, newValue);
+            }).toList();
             setState(() {
               _currentCustomizedAlphabet!.remove(id);
             });
@@ -341,9 +368,9 @@ class AlphabetValuesState extends State<AlphabetValues> {
               _currentCustomizeAlphabet = value;
 
               if (_currentCustomizeAlphabet == GCWSwitchPosition.right) {
-                _currentCustomizedAlphabet = Map<String, String>.from(_currentAlphabet);
-                _currentCustomizedAlphabet = _setOffset(_currentCustomizedAlphabet!);
-                _currentCustomizedAlphabet = _setReverse(_currentCustomizedAlphabet!);
+                _currentCustomizedAlphabet = _convertToEditingAlphabet(_currentAlphabet);
+                _currentCustomizedAlphabet = _setOffsetList(_currentCustomizedAlphabet!);
+                _currentCustomizedAlphabet = _setReverseList(_currentCustomizedAlphabet!);
               } else {
                 _currentCustomizedAlphabet = null;
               }
@@ -355,6 +382,14 @@ class AlphabetValuesState extends State<AlphabetValues> {
             : _buildEditingAlphabetCustomizing()
       ],
     );
+  }
+
+  List<KeyValueBase> _convertToEditingAlphabet(Map<String, String> alphabet) {
+    return _currentAlphabet.entries.map((entry) => KeyValueBase(null, entry.key, entry.value)).toList();
+  }
+
+  Map<String, String> _convertFromEditingAlphabet(List<KeyValueBase> alphabet) {
+    return { for (var entry in alphabet) entry.key : entry.value };
   }
 
   Widget _buildEditingAlphabetCustomizing() {
@@ -403,7 +438,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
                 i18n(context, 'alphabetvalues_edit_mode_customize_addandadjustletter'),
             onAddEntry: _addNewLetter,
             onAddEntry2: _addNewLetter2,
-            keyValueMap: _currentCustomizedAlphabet,
+            entries: _currentCustomizedAlphabet ?? [],
             onRemoveEntry: _removeEntry,
             editAllowed: false),
         const GCWDivider()
@@ -489,7 +524,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
               }
 
               if (_currentCustomizedAlphabet == null) return;
-              var entries = _currentCustomizedAlphabet!.entries.toList();
+              var entries = _currentCustomizedAlphabet!;
               entries.sort((a, b) {
                 var intA = int.tryParse(a.value.split(',')[0]);
                 var intB = int.tryParse(b.value.split(',')[0]);
@@ -497,7 +532,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
                 if (intA == null || intB == null) return 0;
                 return intA.compareTo(intB);
               });
-              var orderedAlphabet = LinkedHashMap.fromEntries(entries);
+              var orderedAlphabet = _convertFromEditingAlphabet(entries);
 
               var newAlphabet = Alphabet(
                   key: UniqueKey().toString(), name: name, type: AlphabetType.CUSTOM, alphabet: orderedAlphabet);
@@ -517,7 +552,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
   Map<String, String> _getFinalAlphabet() {
     var alphabet = _currentAlphabet;
     if (_currentCustomizeAlphabet == GCWSwitchPosition.right) {
-      alphabet = _currentCustomizedAlphabet ?? {};
+      alphabet = _currentCustomizedAlphabet != null ? _convertFromEditingAlphabet(_currentCustomizedAlphabet!) : {};
     } else {
       alphabet = _setOffset(alphabet);
       alphabet = _setReverse(alphabet);

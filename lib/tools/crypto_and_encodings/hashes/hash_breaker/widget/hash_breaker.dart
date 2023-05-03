@@ -40,7 +40,7 @@ class _HashBreakerState extends State<HashBreaker> {
 
   var _currentOutput = '';
   Function _currentHashFunction = md5Digest;
-  final _currentSubstitutions = <int, MapEntry<String, String>>{};
+  final List<KeyValueBase> _currentSubstitutions = [];
 
   @override
   void initState() {
@@ -65,7 +65,7 @@ class _HashBreakerState extends State<HashBreaker> {
   }
 
   void _updateEntry(Object id, String key, String value, FormulaValueType type) {
-    _currentSubstitutions[id as int] = MapEntry<String, String>(key, value);
+    _currentSubstitutions[id as int] = KeyValueBase(null, key, value);
   }
 
   void _updateNewEntry(String currentFromInput, String currentToInput, BuildContext context) {
@@ -179,8 +179,8 @@ class _HashBreakerState extends State<HashBreaker> {
 
   Map<String, String> _getSubstitutions() {
     var _substitutions = <String, String>{};
-    for (var entry in _currentSubstitutions.entries) {
-      _substitutions.putIfAbsent(entry.value.key, () => entry.value.value);
+    for (var entry in _currentSubstitutions) {
+      _substitutions.putIfAbsent(entry.key, () => entry.value);
     }
 
     if (_currentFromInput.isNotEmpty &&
