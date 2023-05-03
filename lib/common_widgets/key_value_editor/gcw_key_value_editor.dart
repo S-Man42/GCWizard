@@ -10,6 +10,7 @@ import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_paste_button.dart';
 import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard.dart';
+import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_popup_menu.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
@@ -56,15 +57,14 @@ class _KeyValueEditorControl {
 
 class GCWKeyValueEditor extends StatefulWidget {
   final List<KeyValueBase> entries;
-  final void Function(KeyValueBase, BuildContext)? onNewEntryChanged;
   final String? keyHintText;
   final TextEditingController? keyController;
   final List<TextInputFormatter>? keyInputFormatters;
   final List<TextInputFormatter>? valueInputFormatters;
   final String valueHintText;
   final int? valueFlex;
-  final void Function(KeyValueBase, FormulaValueType, BuildContext)? onAddEntry;
-  final void Function(KeyValueBase, BuildContext)? onAddEntry2;
+  final KeyValueBase Function(KeyValueBase)? onGetNewEntry;
+  final void Function(KeyValueBase, BuildContext)? onNewEntryChanged;
   final void Function(KeyValueBase, BuildContext)? onDispose;
   final String? alphabetInstertButtonLabel;
   final String? alphabetAddAndAdjustLetterButtonLabel;
@@ -76,7 +76,7 @@ class GCWKeyValueEditor extends StatefulWidget {
   final String? dividerText;
   final bool editAllowed;
   final void Function(KeyValueBase)? onUpdateEntry;
-  final void Function(KeyValueBase, BuildContext)? onRemoveEntry;
+  //final void Function(KeyValueBase, BuildContext)? onRemoveEntry;
 
   const GCWKeyValueEditor({
     Key? key,
@@ -88,8 +88,7 @@ class GCWKeyValueEditor extends StatefulWidget {
     required this.valueHintText,
     this.valueInputFormatters,
     this.valueFlex,
-    this.onAddEntry,
-    this.onAddEntry2,
+    this.onGetNewEntry,
     this.onDispose,
     this.alphabetInstertButtonLabel,
     this.alphabetAddAndAdjustLetterButtonLabel,
@@ -99,7 +98,6 @@ class GCWKeyValueEditor extends StatefulWidget {
     this.formulaFormat = false,
     this.alphabetFormat = false,
     this.onUpdateEntry,
-    this.onRemoveEntry,
   }) : super(key: key);
 
   @override
@@ -119,35 +117,37 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
   Widget _buildInput() {
     if (widget.formulaFormat) {
       return GCWKeyValueTypeNewEntry(
+        entries: widget.entries,
         keyHintText: widget.keyHintText,
         valueHintText: widget.valueHintText,
         keyController: widget.keyController,
         keyInputFormatters: widget.keyInputFormatters,
         valueInputFormatters: widget.valueInputFormatters,
-        onAddEntry: widget.onAddEntry,
+        onGetNewEntry: widget.onGetNewEntry,
         onNewEntryChanged: widget.onNewEntryChanged,
         valueFlex: widget.valueFlex,
       );
     } else if (widget.alphabetFormat) {
       return GCWKeyValueAlphabetNewEntry(
+        entries: widget.entries,
         keyHintText: widget.keyHintText,
         valueHintText: widget.valueHintText,
         keyController: widget.keyController,
         keyInputFormatters: widget.keyInputFormatters,
         valueInputFormatters: widget.valueInputFormatters,
-        onAddEntry: widget.onAddEntry,
+        onGetNewEntry: widget.onGetNewEntry,
         onNewEntryChanged: widget.onNewEntryChanged,
         valueFlex: widget.valueFlex,
-        entries: widget.entries
       );
     } else {
       return GCWKeyValueNewEntry(
+        entries: widget.entries,
         keyHintText: widget.keyHintText,
         valueHintText: widget.valueHintText,
         keyController: widget.keyController,
         keyInputFormatters: widget.keyInputFormatters,
         valueInputFormatters: widget.valueInputFormatters,
-        onAddEntry: widget.onAddEntry,
+        onGetNewEntry: widget.onGetNewEntry,
         onNewEntryChanged: widget.onNewEntryChanged,
         valueFlex: widget.valueFlex,
       );
@@ -196,74 +196,35 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
   Widget _buildRow(KeyValueBase entry, bool odd) {
     if (widget.formulaFormat) {
       return GCWKeyValueTypeRow(
-          keyValueEntry: entry,
-          keyValueEditorControl:keyValueEditorControl,
-          odd: odd,
-          keyInputFormatters: widget.keyInputFormatters,
-          valueInputFormatters: widget.valueInputFormatters,
-          editAllowed: widget.editAllowed,
-          onUpdateEntry: widget.onUpdateEntry,
-          onRemoveEntry: widget.onRemoveEntry);
+        entries: widget.entries,
+        keyValueEntry: entry,
+        keyValueEditorControl:keyValueEditorControl,
+        odd: odd,
+        keyInputFormatters: widget.keyInputFormatters,
+        valueInputFormatters: widget.valueInputFormatters,
+        editAllowed: widget.editAllowed,
+        onUpdateEntry: widget.onUpdateEntry
+      );
     } else {
       return GCWKeyValueRow(
-          keyValueEntry: entry,
-          keyValueEditorControl:keyValueEditorControl,
-          odd: odd,
-          keyInputFormatters: widget.keyInputFormatters,
-          valueInputFormatters: widget.valueInputFormatters,
-          editAllowed: widget.editAllowed,
-          onUpdateEntry: widget.onUpdateEntry,
-          onRemoveEntry: widget.onRemoveEntry);
+        entries: widget.entries,
+        keyValueEntry: entry,
+        keyValueEditorControl:keyValueEditorControl,
+        odd: odd,
+        keyInputFormatters: widget.keyInputFormatters,
+        valueInputFormatters: widget.valueInputFormatters,
+        editAllowed: widget.editAllowed,
+        onUpdateEntry: widget.onUpdateEntry
+      );
     }
   }
 
-  IconData _formulaValueTypeIcon(FormulaValueType formulaValueType) {
-    switch (formulaValueType) {
-      case FormulaValueType.TEXT:
-        return Icons.text_fields;
-      case FormulaValueType.INTERPOLATED:
-        return Icons.expand;
-      case FormulaValueType.FIXED:
-        return Icons.vertical_align_center_outlined;
+  KeyValueBase _getNewEntry(KeyValueBase entry) {
+    if (widget.onGetNewEntry == null) {
+      return entry;
+    } else {
+      return widget.onGetNewEntry!(entry);
     }
-  }
-
-
-
-  Object _getEntryId(Object entry) {
-    if (entry is FormulaValue && entry.id != null) {
-      return entry.id!;
-    } else if (entry is MapEntry<String, String>) {
-      return entry.key;
-    } else if (entry is MapEntry<int, Map<String, String>>) {
-      return entry.key;
-    }
-
-    throw Exception('Wrong entry id type');
-  }
-
-  String _getEntryKey(Object entry) {
-    if (entry is FormulaValue) {
-      return entry.key;
-    } else if (entry is MapEntry<String, String>) {
-      return entry.key;
-    } else if (entry is MapEntry<int, Map<String, String>>) {
-      return entry.value.keys.first;
-    }
-
-    throw Exception('Wrong entry key type');
-  }
-
-  String _getEntryValue(Object entry) {
-    if (entry is FormulaValue) {
-      return (entry).value;
-    } else if (entry is MapEntry<String, String>) {
-      return (entry).value;
-    } else if (entry is MapEntry<int, Map<String, String>>) {
-      return (entry).value.values.first;
-    }
-
-    throw Exception('Wrong entry value type');
   }
 
   String? _toJson() {
@@ -287,7 +248,8 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
 
     if (list != null) {
       for (var mapEntry in list) {
-        _addEntry(mapEntry.key, mapEntry.value, clearInput: false);
+        _addEntry()
+        widget.entries.add(_getNewEntry(KeyValueBase(null, mapEntry.key, mapEntry.value)), clearInput: false);
       }
       setState(() {});
     }
