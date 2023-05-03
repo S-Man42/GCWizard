@@ -41,7 +41,7 @@ class _HomophoneState extends State<Homophone> {
   int _currentRotation = 1;
   int _currentMultiplierIndex = 0;
   String _currentCustomKeyList = '';
-  final _currentSubstitutions = <String, String>{};
+  final List<KeyValueBase> _currentSubstitutions = [];
 
   final _mask = '#';
   final _filter = {"#": RegExp(r'\D')};
@@ -67,13 +67,13 @@ class _HomophoneState extends State<Homophone> {
   String _maxLetter() {
     int maxLetterIndex = 0;
     var alphabetTable = getLetterFrequenciesFromAlphabet(_currentAlphabet);
-    _currentSubstitutions.forEach((key, value) {
-      if (key.length != 1) return;
+    for (var entry in _currentSubstitutions) {
+      if (entry.key.length != 1) continue;
 
-      if (alphabetTable.containsKey(key.toUpperCase())) {
-        maxLetterIndex = max(maxLetterIndex, alphabetTable.keys.toList().indexOf(key.toUpperCase()) + 1);
+      if (alphabetTable.containsKey(entry.key.toUpperCase())) {
+        maxLetterIndex = max(maxLetterIndex, alphabetTable.keys.toList().indexOf(entry.key.toUpperCase()) + 1);
       }
-    });
+    }
 
     if (maxLetterIndex < alphabetTable.length) {
       return alphabetTable.keys.elementAt(maxLetterIndex);
@@ -302,7 +302,7 @@ class _HomophoneState extends State<Homophone> {
         keyInputFormatters: [_keyMaskInputFormatter],
         valueHintText: i18n(context, 'homophone_own_key_hint'),
         valueFlex: 4,
-        keyValueMap: _currentSubstitutions,
+        entries: _currentSubstitutions,
         //onNewEntryChanged: _updateNewEntry,
         onAddEntry: _addEntry,
         onUpdateEntry: _updateEntry,

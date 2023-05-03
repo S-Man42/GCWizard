@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.dart';
@@ -26,7 +27,7 @@ class _SubstitutionState extends State<Substitution> {
   var _currentCaseSensitive = false;
 
   var _currentIdCount = 0;
-  final _currentSubstitutions = <int, MapEntry<String, String>>{};
+  final List<KeyValueBase> _currentSubstitutions = [];
 
   String _output = '';
 
@@ -36,7 +37,11 @@ class _SubstitutionState extends State<Substitution> {
 
     if (widget.substitutions != null) {
       for (var element in widget.substitutions!.entries) {
-        _currentSubstitutions.putIfAbsent(++_currentIdCount, () => MapEntry<String, String>(element.key, element.value));
+        _currentIdCount++;
+        if (_currentSubstitutions.firstWhereOrNull((entry) => entry.id == _currentIdCount) == null) {
+          _currentSubstitutions.add( KeyValueBase (_currentIdCount, element.key, element.value));
+        }
+        //_currentSubstitutions.putIfAbsent(++_currentIdCount, () => MapEntry<String, String>(element.key, element.value));
       }
     }
 
@@ -70,7 +75,7 @@ class _SubstitutionState extends State<Substitution> {
 
   void _updateEntry(Object id, String key, String value, FormulaValueType type) {
     if (id is! int) return;
-    _currentSubstitutions[id] = MapEntry<String, String>(key, value);
+    _currentSubstitutions[id] = KeyValueBase(null, key, value);
     _calculateOutput();
   }
 
