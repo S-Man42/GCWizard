@@ -3,26 +3,27 @@ part of 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.
 
 class GCWKeyValueNewEntry extends StatefulWidget {
 
+  final List<KeyValueBase> entries;
   final String? keyHintText;
   final String valueHintText;
   final TextEditingController? keyController;
   final List<TextInputFormatter>? keyInputFormatters;
   final List<TextInputFormatter>? valueInputFormatters;
-  final void Function(KeyValueBase, FormulaValueType, BuildContext)? onAddEntry;
+  final KeyValueBase Function(KeyValueBase)? onGetNewEntry;
   final void Function(KeyValueBase, BuildContext)? onNewEntryChanged;
   final int? valueFlex;
 
   const GCWKeyValueNewEntry(
      {Key? key,
+      required this.entries,
       this.keyHintText,
       required this.valueHintText,
       this.keyController,
       this.keyInputFormatters,
       this.valueInputFormatters,
-      this.onAddEntry,
+      this.onGetNewEntry,
       this.onNewEntryChanged,
       this.valueFlex,
-
      })
      : super(key: key);
 
@@ -119,7 +120,7 @@ class GCWKeyValueNewEntryState extends State<GCWKeyValueNewEntry> {
     );
   }
 
-  void _addEntry(KeyValueBase entry, {bool clearInput = true, FormulaValueType formulaType = FormulaValueType.FIXED}) {
+  void _addEntry(KeyValueBase entry, {bool clearInput = true}) {
     if (widget.onAddEntry != null) {
       widget.onAddEntry!(entry, formulaType, context);
     }

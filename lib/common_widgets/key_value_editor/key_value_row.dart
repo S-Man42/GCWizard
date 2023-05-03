@@ -2,18 +2,19 @@ part of 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.
 
 
 class GCWKeyValueRow extends StatefulWidget {
+
+  final List<KeyValueBase> entries;
   KeyValueBase keyValueEntry;
   _KeyValueEditorControl keyValueEditorControl;
   final bool odd;
   final List<TextInputFormatter>? keyInputFormatters;
   final List<TextInputFormatter>? valueInputFormatters;
   final bool editAllowed;
-
   final void Function(KeyValueBase)? onUpdateEntry;
-  final void Function(KeyValueBase, BuildContext)? onRemoveEntry;
 
   GCWKeyValueRow(
      {Key? key,
+       required this.entries,
        required this.keyValueEntry,
        required this.keyValueEditorControl,
 
@@ -22,7 +23,6 @@ class GCWKeyValueRow extends StatefulWidget {
        this.valueInputFormatters,
        this.editAllowed = true,
        this.onUpdateEntry,
-       this.onRemoveEntry,
      })
      : super(key: key);
 

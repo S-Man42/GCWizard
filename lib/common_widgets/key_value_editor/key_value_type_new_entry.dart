@@ -5,23 +5,25 @@ class GCWKeyValueTypeNewEntry extends GCWKeyValueNewEntry {
 
   const GCWKeyValueTypeNewEntry(
      {Key? key,
+       required List<KeyValueBase> entries,
        String? keyHintText,
        required String valueHintText,
        TextEditingController? keyController,
        List<TextInputFormatter>? keyInputFormatters,
        List<TextInputFormatter>? valueInputFormatters,
-       void Function(KeyValueBase, FormulaValueType, BuildContext)? onAddEntry,
+       KeyValueBase Function(KeyValueBase)? onGetNewEntry,
        void Function(KeyValueBase, BuildContext)? onNewEntryChanged,
        int? valueFlex,
      })
      : super(
         key: key,
+        entries: entries,
         keyHintText: keyHintText,
         valueHintText: valueHintText,
         keyController: keyController,
         keyInputFormatters: keyInputFormatters,
         valueInputFormatters: valueInputFormatters,
-        onAddEntry: onAddEntry,
+        onGetNewEntry: onGetNewEntry,
         onNewEntryChanged: onNewEntryChanged,
         valueFlex: valueFlex
   );

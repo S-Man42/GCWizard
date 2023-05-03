@@ -5,6 +5,7 @@ class GCWKeyValueTypeRow extends GCWKeyValueRow {
 
   GCWKeyValueTypeRow(
      {Key? key,
+       required List<KeyValueBase> entries,
        required KeyValueBase keyValueEntry,
        required _KeyValueEditorControl keyValueEditorControl,
 
@@ -13,18 +14,17 @@ class GCWKeyValueTypeRow extends GCWKeyValueRow {
        List<TextInputFormatter>? valueInputFormatters,
        bool editAllowed = true,
        void Function(KeyValueBase)? onUpdateEntry,
-       void Function(KeyValueBase, BuildContext)? onRemoveEntry,
      })
      : super(
-      key: key,
-      keyValueEntry: keyValueEntry,
-      keyValueEditorControl: keyValueEditorControl,
-      odd: odd,
-      keyInputFormatters: keyInputFormatters,
-      valueInputFormatters: valueInputFormatters,
-      editAllowed: editAllowed,
-      onUpdateEntry: onUpdateEntry,
-      onRemoveEntry: onRemoveEntry
+        key: key,
+        entries: entries,
+        keyValueEntry: keyValueEntry,
+        keyValueEditorControl: keyValueEditorControl,
+        odd: odd,
+        keyInputFormatters: keyInputFormatters,
+        valueInputFormatters: valueInputFormatters,
+        editAllowed: editAllowed,
+        onUpdateEntry: onUpdateEntry,
   );
 
   @override
