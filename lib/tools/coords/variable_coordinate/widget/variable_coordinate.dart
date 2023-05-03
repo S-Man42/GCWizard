@@ -111,17 +111,29 @@ class _VariableCoordinateState extends State<VariableCoordinate> {
     }
   }
 
-  void _updateNewEntry(String currentFromInput, String currentToInput, BuildContext context) {
-    _currentFromInput = currentFromInput;
-    _currentToInput = currentToInput;
+  void _updateNewEntry(KeyValueBase entry, BuildContext context) {
+    _currentFromInput = entry.key;
+    _currentToInput = entry.value;
   }
 
-  void _updateEntry(dynamic id, String key, String value, formula_base.FormulaValueType type) {
-    var entry = widget.formula.values.firstWhere((element) => element.id == id);
-    entry.key = key;
-    entry.value = value;
-    entry.type = formula_base.FormulaValueType.INTERPOLATED;
+  KeyValueBase? _getNewEntry(KeyValueBase entry) {
+    if (entry.key.isNotEmpty) {
+      entry = formula_base.FormulaValue(entry.key, entry.value);
+      entry.id = newID(widget.group.values.map((value) => (value.id as int?)).toList());
+      //insertFormulaValue(newValue, widget.group);
+
+      return entry;
+    }
+    return null;
+  }
+
+  void _updateEntry(KeyValueBase entry) {
+    // var entry = widget.formula.values.firstWhere((element) => element.id == id);
+    // entry.key = key;
+    // entry.value = value;
+    // entry.type = formula_base.FormulaValueType.INTERPOLATED;
     _updateValue(entry);
+    setState(() {});
   }
 
   void _removeEntry(int id, BuildContext context) {

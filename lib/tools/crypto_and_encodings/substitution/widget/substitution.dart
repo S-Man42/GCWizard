@@ -62,20 +62,27 @@ class _SubstitutionState extends State<Substitution> {
 
   void _addEntry(String currentFromInput, String currentToInput, FormulaValueType type, BuildContext context) {
     if (currentFromInput.isNotEmpty) {
-      _currentSubstitutions.putIfAbsent(++_currentIdCount, () => MapEntry<String, String>(currentFromInput, currentToInput));
+      //_currentSubstitutions.putIfAbsent(++_currentIdCount, () => MapEntry<String, String>(currentFromInput, currentToInput));
     }
     _calculateOutput();
   }
 
-  void _updateNewEntry(String currentFromInput, String currentToInput, BuildContext context) {
-    _currentFromInput = currentFromInput;
-    _currentToInput = currentToInput;
-    _calculateOutput();
+  KeyValueBase? _getNewEntry(KeyValueBase entry) {
+    _currentIdCount++;
+    if (_currentSubstitutions.firstWhereOrNull((_entry) => _entry.id == _currentIdCount) == null) {
+      entry.id = _currentIdCount;
+      return entry;
+    }
+    return null;
   }
 
-  void _updateEntry(Object id, String key, String value, FormulaValueType type) {
-    if (id is! int) return;
-    _currentSubstitutions[id] = KeyValueBase(null, key, value);
+  void _updateNewEntry(KeyValueBase entry, BuildContext context) {
+    _currentFromInput = entry.key;
+    _currentToInput = entry.value;
+  }
+
+  void _updateEntry(KeyValueBase entry) {
+
     _calculateOutput();
   }
 
@@ -105,8 +112,6 @@ class _SubstitutionState extends State<Substitution> {
     return GCWKeyValueEditor(
         keyHintText: i18n(context, 'substitution_from'),
         valueHintText: i18n(context, 'substitution_to'),
-        onNewEntryChanged: _updateNewEntry,
-        onAddEntry: _addEntry,
         middleWidget: Column(children: <Widget>[
           GCWOnOffSwitch(
             title: i18n(context, 'common_case_sensitive'),
@@ -118,15 +123,18 @@ class _SubstitutionState extends State<Substitution> {
           ),
         ]),
         dividerText: i18n(context, 'substitution_current_substitutions'),
+
         entries: _currentSubstitutions,
-        onUpdateEntry: _updateEntry,
-        onRemoveEntry: _removeEntry);
+        onNewEntryChanged: _updateNewEntry,
+        onGetNewEntry: (entry) => _getNewEntry(entry),
+        onUpdateEntry: (entry) => _updateEntry,
+    );
   }
 
   void _calculateOutput() {
     var _substitutions = <String, String>{};
-    for (var entry in _currentSubstitutions.entries) {
-      _substitutions.putIfAbsent(entry.value.key, () => entry.value.value);
+    for (var entry in _currentSubstitutions) {
+      _substitutions.putIfAbsent(entry.key, () => entry.value);
     }
 
     if (_currentFromInput.isNotEmpty) {
