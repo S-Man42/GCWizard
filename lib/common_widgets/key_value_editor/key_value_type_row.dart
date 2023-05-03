@@ -66,24 +66,25 @@ class GCWKeyValueTypeRowState extends GCWKeyValueRowState {
         ? GCWIconButton(
             icon: Icons.check,
             onPressed: () {
-              if (widget.onUpdateEntry != null && widget.keyValueEditorControl.currentEditId != null) {
+              //if (widget.keyValueEditorControl.currentEditId != null) {
                 if (_currentType == FormulaValueType.INTERPOLATED) {
-                  if (!VARIABLESTRING.hasMatch(_currentEditedValue.toLowerCase())) {
+                  if (!VARIABLESTRING.hasMatch(_currentValue.toLowerCase())) {
                     showToast(i18n(context, 'formulasolver_values_novalidinterpolated'));
                     return;
                   }
                 }
 
-                if (widget.keyValueEditorControl.currentEditId != null) {
-                  widget.keyValueEntry.value = _currentEditedValue;
+                //if (widget.keyValueEditorControl.currentEditId != null) {
+                  widget.keyValueEntry.value = _currentValue;
+                  (widget.keyValueEntry as FormulaValue).type =_currentType;
                   if (widget.onUpdateEntry != null) widget.onUpdateEntry!(widget.keyValueEntry);
-                }
-              }
+                //}
+              //}
 
               setState(() {
                 widget.keyValueEditorControl.currentEditId = null;
-                _editKeyController.clear();
-                _editValueController.clear();
+                _keyController.clear();
+                _valueController.clear();
               });
             },
           )
@@ -94,10 +95,10 @@ class GCWKeyValueTypeRowState extends GCWKeyValueRowState {
                 FocusScope.of(context).requestFocus(_focusNodeEditValue);
 
                 widget.keyValueEditorControl.currentEditId = widget.keyValueEntry.id;
-                _editKeyController.text = widget.keyValueEntry.key;
-                _editValueController.text = widget.keyValueEntry.value;
-                _currentEditedKey = widget.keyValueEntry.key;
-                _currentEditedValue = widget.keyValueEntry.value;
+                _keyController.text = widget.keyValueEntry.key;
+                _valueController.text = widget.keyValueEntry.value;
+                _currentKey = widget.keyValueEntry.key;
+                _currentValue = widget.keyValueEntry.value;
 
                 _currentType = (widget.keyValueEntry as FormulaValue).type ?? FormulaValueType.FIXED;
               });

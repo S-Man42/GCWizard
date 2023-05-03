@@ -11,6 +11,7 @@ class GCWKeyValueNewEntry extends StatefulWidget {
   final List<TextInputFormatter>? valueInputFormatters;
   final KeyValueBase Function(KeyValueBase)? onGetNewEntry;
   final void Function(KeyValueBase, BuildContext)? onNewEntryChanged;
+  final void Function(KeyValueBase)? onUpdateEntry;
   final int? valueFlex;
 
   const GCWKeyValueNewEntry(
@@ -23,6 +24,7 @@ class GCWKeyValueNewEntry extends StatefulWidget {
       this.valueInputFormatters,
       this.onGetNewEntry,
       this.onNewEntryChanged,
+      this.onUpdateEntry,
       this.valueFlex,
      })
      : super(key: key);
@@ -121,11 +123,14 @@ class GCWKeyValueNewEntryState extends State<GCWKeyValueNewEntry> {
   }
 
   void _addEntry(KeyValueBase entry, {bool clearInput = true}) {
-    if (widget.onAddEntry != null) {
-      widget.onAddEntry!(entry, formulaType, context);
-    }
+    widget.entries.add(_getNewEntry(entry));
 
+    _finishAddEntry(entry, clearInput);
+  }
+
+  void _finishAddEntry(KeyValueBase entry, bool clearInput) {
     if (clearInput) _onNewEntryChanged(true);
+    if (widget.onUpdateEntry != null) widget.onUpdateEntry!(entry);
   }
 
   void _onNewEntryChanged(bool resetInput) {
@@ -141,6 +146,67 @@ class GCWKeyValueNewEntryState extends State<GCWKeyValueNewEntry> {
       _currentValue = '';
     }
     if (widget.onNewEntryChanged != null) widget.onNewEntryChanged!(KeyValueBase(null, _currentKey, _currentValue), context);
+  }
+
+  KeyValueBase _getNewEntry(KeyValueBase entry) {
+    if (widget.onGetNewEntry == null) {
+      return entry;
+    } else {
+      return widget.onGetNewEntry!(entry);
+    }
+  }
+
+  void pasteClipboard(String text) {
+    Object? json = jsonDecode(text);
+    List<MapEntry<String, String>>? list;
+    if (isJsonArray(json)) {
+      list = _fromJson(json as List<Object?>);
+    } else {
+      list = _parseClipboardText(text);
+    }
+
+    if (list != null) {
+      for (var mapEntry in list) {
+        _addEntry(KeyValueBase(null, mapEntry.key, mapEntry.value), clearInput: false);
+      }
+    }
+  }
+
+  List<MapEntry<String, String>>? _fromJson(List<Object?> json) {
+    var list = <MapEntry<String, String>>[];
+    String? key;
+    String? value;
+
+    for (var jsonEntry in json) {
+      if (jsonEntry == null || jsonEntry is! String) {
+        continue;
+      }
+
+      var json = jsonDecode(jsonEntry);
+      key = toStringOrNull(json['key']);
+      value = toStringOrNull(json['value']);
+
+      if (key != null && value != null) list.add(MapEntry(key, value));
+    }
+
+    return list.isEmpty ? null : list;
+  }
+
+  List<MapEntry<String, String>>? _parseClipboardText(String? text) {
+    var list = <MapEntry<String, String>>[];
+    if (text == null) return null;
+
+    List<String> lines = const LineSplitter().convert(text);
+
+    for (var line in lines) {
+      var regExp = RegExp(r"^([\s]*)([\S])([\s]*)([=]?)([\s]*)([\s*\S+]+)([\s]*)");
+      var match = regExp.firstMatch(line);
+      if (match != null && match.group(2) != null && match.group(6) != null) {
+        list.add(MapEntry(match.group(2)!, match.group(6)!));
+      }
+    }
+
+    return list.isEmpty ? null : list;
   }
 }
 

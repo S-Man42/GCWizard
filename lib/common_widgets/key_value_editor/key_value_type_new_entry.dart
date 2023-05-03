@@ -13,6 +13,7 @@ class GCWKeyValueTypeNewEntry extends GCWKeyValueNewEntry {
        List<TextInputFormatter>? valueInputFormatters,
        KeyValueBase Function(KeyValueBase)? onGetNewEntry,
        void Function(KeyValueBase, BuildContext)? onNewEntryChanged,
+       void Function(KeyValueBase)? onUpdateEntry,
        int? valueFlex,
      })
      : super(
@@ -25,6 +26,7 @@ class GCWKeyValueTypeNewEntry extends GCWKeyValueNewEntry {
         valueInputFormatters: valueInputFormatters,
         onGetNewEntry: onGetNewEntry,
         onNewEntryChanged: onNewEntryChanged,
+        onUpdateEntry: onUpdateEntry,
         valueFlex: valueFlex
   );
 
@@ -82,6 +84,15 @@ class GCWKeyValueTypeNewEntryState extends GCWKeyValueNewEntryState {
               })),
         ],
       )));
+  }
+
+  @override
+  void _addEntry(KeyValueBase entry, {bool clearInput = true}) {
+    var _entry = _getNewEntry(entry);
+    (_entry as FormulaValue).type =_currentType;
+    widget.entries.add(_entry);
+
+    _finishAddEntry(entry, clearInput);
   }
 }
 
