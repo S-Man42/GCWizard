@@ -26,7 +26,7 @@ class _SubstitutionState extends State<Substitution> {
   var _currentCaseSensitive = false;
 
   var _currentIdCount = 0;
-  final _currentSubstitutions = <int, Map<String, String>>{};
+  final _currentSubstitutions = <int, MapEntry<String, String>>{};
 
   String _output = '';
 
@@ -36,7 +36,7 @@ class _SubstitutionState extends State<Substitution> {
 
     if (widget.substitutions != null) {
       for (var element in widget.substitutions!.entries) {
-        _currentSubstitutions.putIfAbsent(++_currentIdCount, () => {element.key: element.value});
+        _currentSubstitutions.putIfAbsent(++_currentIdCount, () => MapEntry<String, String>(element.key, element.value));
       }
     }
 
@@ -57,7 +57,7 @@ class _SubstitutionState extends State<Substitution> {
 
   void _addEntry(String currentFromInput, String currentToInput, FormulaValueType type, BuildContext context) {
     if (currentFromInput.isNotEmpty) {
-      _currentSubstitutions.putIfAbsent(++_currentIdCount, () => {currentFromInput: currentToInput});
+      _currentSubstitutions.putIfAbsent(++_currentIdCount, () => MapEntry<String, String>(currentFromInput, currentToInput));
     }
     _calculateOutput();
   }
@@ -70,7 +70,7 @@ class _SubstitutionState extends State<Substitution> {
 
   void _updateEntry(Object id, String key, String value, FormulaValueType type) {
     if (id is! int) return;
-    _currentSubstitutions[id] = {key: value};
+    _currentSubstitutions[id] = MapEntry<String, String>(key, value);
     _calculateOutput();
   }
 
@@ -113,7 +113,7 @@ class _SubstitutionState extends State<Substitution> {
           ),
         ]),
         dividerText: i18n(context, 'substitution_current_substitutions'),
-        keyKeyValueMap: _currentSubstitutions,
+        entries: _currentSubstitutions,
         onUpdateEntry: _updateEntry,
         onRemoveEntry: _removeEntry);
   }
@@ -121,7 +121,7 @@ class _SubstitutionState extends State<Substitution> {
   void _calculateOutput() {
     var _substitutions = <String, String>{};
     for (var entry in _currentSubstitutions.entries) {
-      _substitutions.putIfAbsent(entry.value.keys.first, () => entry.value.values.first);
+      _substitutions.putIfAbsent(entry.value.key, () => entry.value.value);
     }
 
     if (_currentFromInput.isNotEmpty) {
