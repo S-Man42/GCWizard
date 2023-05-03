@@ -66,8 +66,8 @@ class GCWKeyValueEditor extends StatefulWidget {
   final KeyValueBase Function(KeyValueBase)? onGetNewEntry;
   final void Function(KeyValueBase, BuildContext)? onNewEntryChanged;
   final void Function(KeyValueBase, BuildContext)? onDispose;
-  final String? alphabetInstertButtonLabel;
-  final String? alphabetAddAndAdjustLetterButtonLabel;
+  // final String? alphabetInstertButtonLabel;
+  // final String? alphabetAddAndAdjustLetterButtonLabel;
 
   final Widget? middleWidget;
 
@@ -90,8 +90,8 @@ class GCWKeyValueEditor extends StatefulWidget {
     this.valueFlex,
     this.onGetNewEntry,
     this.onDispose,
-    this.alphabetInstertButtonLabel,
-    this.alphabetAddAndAdjustLetterButtonLabel,
+    // this.alphabetInstertButtonLabel,
+    // this.alphabetAddAndAdjustLetterButtonLabel,
     this.middleWidget,
     this.dividerText,
     this.editAllowed = true,
@@ -106,8 +106,8 @@ class GCWKeyValueEditor extends StatefulWidget {
 
 class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
 
-
   var keyValueEditorControl = _KeyValueEditorControl();
+  final GlobalKey<GCWKeyValueNewEntryState> _newEntryState = GlobalKey<GCWKeyValueNewEntryState>();
 
   @override
   Widget build(BuildContext context) {
@@ -117,6 +117,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
   Widget _buildInput() {
     if (widget.formulaFormat) {
       return GCWKeyValueTypeNewEntry(
+        key: _newEntryState,
         entries: widget.entries,
         keyHintText: widget.keyHintText,
         valueHintText: widget.valueHintText,
@@ -129,6 +130,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
       );
     } else if (widget.alphabetFormat) {
       return GCWKeyValueAlphabetNewEntry(
+        key: _newEntryState,
         entries: widget.entries,
         keyHintText: widget.keyHintText,
         valueHintText: widget.valueHintText,
@@ -141,6 +143,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
       );
     } else {
       return GCWKeyValueNewEntry(
+        key: _newEntryState,
         entries: widget.entries,
         keyHintText: widget.keyHintText,
         valueHintText: widget.valueHintText,
@@ -175,7 +178,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
             trailing: Row(children: <Widget>[
               GCWPasteButton(
                 iconSize: IconButtonSize.SMALL,
-                onSelected: _pasteClipboard,
+                onSelected: (text) => _newEntryState.currentState?.pasteClipboard(text),
               ),
               GCWIconButton(
                 size: IconButtonSize.SMALL,
@@ -219,14 +222,6 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
     }
   }
 
-  KeyValueBase _getNewEntry(KeyValueBase entry) {
-    if (widget.onGetNewEntry == null) {
-      return entry;
-    } else {
-      return widget.onGetNewEntry!(entry);
-    }
-  }
-
   String? _toJson() {
     var list = widget.entries.map((e) {
       return jsonEncode({'key': e.key, 'value': e.value});
@@ -237,58 +232,4 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
     return jsonEncode(list);
   }
 
-  void _pasteClipboard(String text) {
-    Object? json = jsonDecode(text);
-    List<MapEntry<String, String>>? list;
-    if (isJsonArray(json)) {
-      list = _fromJson(json as List<Object?>);
-    } else {
-      list = _parseClipboardText(text);
-    }
-
-    if (list != null) {
-      for (var mapEntry in list) {
-        _addEntry()
-        widget.entries.add(_getNewEntry(KeyValueBase(null, mapEntry.key, mapEntry.value)), clearInput: false);
-      }
-      setState(() {});
-    }
-  }
-
-  List<MapEntry<String, String>>? _fromJson(List<Object?> json) {
-    var list = <MapEntry<String, String>>[];
-    String? key;
-    String? value;
-
-    for (var jsonEntry in json) {
-      if (jsonEntry == null || jsonEntry is! String) {
-        continue;
-      }
-
-      var json = jsonDecode(jsonEntry);
-      key = toStringOrNull(json['key']);
-      value = toStringOrNull(json['value']);
-
-      if (key != null && value != null) list.add(MapEntry(key, value));
-    }
-
-    return list.isEmpty ? null : list;
-  }
-
-  List<MapEntry<String, String>>? _parseClipboardText(String? text) {
-    var list = <MapEntry<String, String>>[];
-    if (text == null) return null;
-
-    List<String> lines = const LineSplitter().convert(text);
-
-    for (var line in lines) {
-      var regExp = RegExp(r"^([\s]*)([\S])([\s]*)([=]?)([\s]*)([\s*\S+]+)([\s]*)");
-      var match = regExp.firstMatch(line);
-      if (match != null && match.group(2) != null && match.group(6) != null) {
-        list.add(MapEntry(match.group(2)!, match.group(6)!));
-      }
-    }
-
-    return list.isEmpty ? null : list;
-  }
 }
