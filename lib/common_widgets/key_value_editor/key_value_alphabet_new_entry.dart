@@ -11,7 +11,7 @@ class GCWKeyValueAlphabetNewEntry extends GCWKeyValueNewEntry {
        TextEditingController? keyController,
        List<TextInputFormatter>? keyInputFormatters,
        List<TextInputFormatter>? valueInputFormatters,
-       KeyValueBase Function(KeyValueBase)? onGetNewEntry,
+       KeyValueBase? Function(KeyValueBase)? onGetNewEntry,
        void Function(KeyValueBase, BuildContext)? onNewEntryChanged,
        void Function(KeyValueBase)? onUpdateEntry,
        int? valueFlex,

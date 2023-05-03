@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
@@ -84,7 +85,7 @@ class HomophoneState extends State<Homophone> {
 
   void _addEntry(String currentFromInput, String currentToInput, FormulaValueType type, BuildContext context) {
     if (currentFromInput.isNotEmpty) {
-      _currentSubstitutions.putIfAbsent(currentFromInput.toUpperCase(), () => currentToInput);
+      // _currentSubstitutions.putIfAbsent(currentFromInput.toUpperCase(), () => currentToInput);
     }
 
     _newKeyController.text = _maxLetter();
@@ -92,8 +93,18 @@ class HomophoneState extends State<Homophone> {
     setState(() {});
   }
 
-  void _updateEntry(Object id, String key, String value, FormulaValueType type) {
-    _currentSubstitutions[id as String] = value;
+  KeyValueBase? _getNewEntry(KeyValueBase entry) {
+    entry.key = entry.key.toUpperCase();
+    if (_currentSubstitutions.firstWhereOrNull((_entry) => _entry.key == entry.key) != null) {
+      return entry;
+    }
+    return null;
+  }
+
+  void _updateEntry(KeyValueBase entry) {
+    // _currentSubstitutions[id as String] = value;
+    // setState(() {});
+    _newKeyController.text = _maxLetter();
     setState(() {});
   }
 
@@ -243,8 +254,8 @@ class HomophoneState extends State<Homophone> {
               encryptHomophoneWithKeyList(_currentInput, _currentAlphabet, textToIntList(_currentCustomKeyList));
           break;
         case _KeyType.CUSTOM_KEY_MAP:
-          _currentOutput = encryptHomophoneWithKeyMap(
-              _currentInput, _currentSubstitutions.map((key, value) => MapEntry(key, textToIntList(value))));
+          _currentOutput = encryptHomophoneWithKeyMap(_currentInput,
+              Map.fromEntries(_currentSubstitutions.map((entry) => MapEntry(entry.key, textToIntList(entry.value)))));
           break;
       }
     } else {
@@ -258,8 +269,8 @@ class HomophoneState extends State<Homophone> {
               decryptHomophoneWithKeyList(_currentInput, _currentAlphabet, textToIntList(_currentCustomKeyList));
           break;
         case _KeyType.CUSTOM_KEY_MAP:
-          _currentOutput = decryptHomophoneWithKeyMap(
-              _currentInput, _currentSubstitutions.map((key, value) => MapEntry(key, textToIntList(value))));
+          _currentOutput = decryptHomophoneWithKeyMap(_currentInput,
+              Map.fromEntries(_currentSubstitutions.map((entry) => MapEntry(entry.key, textToIntList(entry.value)))));
           break;
       }
     }
@@ -304,8 +315,8 @@ class HomophoneState extends State<Homophone> {
         valueFlex: 4,
         entries: _currentSubstitutions,
         //onNewEntryChanged: _updateNewEntry,
-        onAddEntry: _addEntry,
+        onGetNewEntry: (entry) => _getNewEntry(entry),
         onUpdateEntry: _updateEntry,
-        onRemoveEntry: _removeEntry);
+    );
   }
 }

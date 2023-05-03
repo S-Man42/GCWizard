@@ -57,14 +57,30 @@ class _FormulaSolverFormulaValuesState extends State<_FormulaSolverFormulaValues
     }
   }
 
-  void _updateEntry(Object id, String key, String value, FormulaValueType type) {
-    var entry = widget.group.values.firstWhere((element) => element.id == id);
-    entry.key = key;
-    entry.value = value;
-    entry.type = type;
-    setState(() {
-      _updateValue(entry);
-    });
+  KeyValueBase? _getNewEntry(KeyValueBase entry) {
+    if (entry.key.isNotEmpty) {
+      entry = FormulaValue(entry.key, entry.value);
+      entry.id = newID(widget.group.values.map((value) => (value.id as int?)).toList());
+      //insertFormulaValue(newValue, widget.group);
+
+      return entry;
+    }
+    return null;
+  }
+
+
+  void _updateEntry(KeyValueBase entry) {
+    updateAndSave(widget.group);
+
+    _newKeyController.text = _maxLetter();
+    setState(() {});
+    // var entry = widget.group.values.firstWhere((element) => element.id == id);
+    // entry.key = key;
+    // entry.value = value;
+    // entry.type = type;
+    // setState(() {
+    //   _updateValue(entry);
+    // });
   }
 
   void _removeEntry(Object id, BuildContext context) {
@@ -80,11 +96,10 @@ class _FormulaSolverFormulaValuesState extends State<_FormulaSolverFormulaValues
           keyHintText: i18n(context, 'formulasolver_values_key'),
           keyController: _newKeyController,
           valueHintText: i18n(context, 'formulasolver_values_value'),
-          onAddEntry: _addEntry,
           dividerText: i18n(context, 'formulasolver_values_currentvalues'),
           entries: widget.group.values,
+          onGetNewEntry: (entry) => _getNewEntry(entry),
           onUpdateEntry: _updateEntry,
-          onRemoveEntry: _removeEntry,
         ),
       ],
     );

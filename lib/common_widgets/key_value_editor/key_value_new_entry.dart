@@ -9,7 +9,7 @@ class GCWKeyValueNewEntry extends StatefulWidget {
   final TextEditingController? keyController;
   final List<TextInputFormatter>? keyInputFormatters;
   final List<TextInputFormatter>? valueInputFormatters;
-  final KeyValueBase Function(KeyValueBase)? onGetNewEntry;
+  final KeyValueBase? Function(KeyValueBase)? onGetNewEntry;
   final void Function(KeyValueBase, BuildContext)? onNewEntryChanged;
   final void Function(KeyValueBase)? onUpdateEntry;
   final int? valueFlex;
@@ -123,9 +123,12 @@ class GCWKeyValueNewEntryState extends State<GCWKeyValueNewEntry> {
   }
 
   void _addEntry(KeyValueBase entry, {bool clearInput = true}) {
-    widget.entries.add(_getNewEntry(entry));
+    var _entry = _getNewEntry(entry);
+    if (_entry != null) {
+      widget.entries.add(_entry);
 
-    _finishAddEntry(entry, clearInput);
+      _finishAddEntry(entry, clearInput);
+    }
   }
 
   void _finishAddEntry(KeyValueBase entry, bool clearInput) {
@@ -148,7 +151,7 @@ class GCWKeyValueNewEntryState extends State<GCWKeyValueNewEntry> {
     if (widget.onNewEntryChanged != null) widget.onNewEntryChanged!(KeyValueBase(null, _currentKey, _currentValue), context);
   }
 
-  KeyValueBase _getNewEntry(KeyValueBase entry) {
+  KeyValueBase? _getNewEntry(KeyValueBase entry) {
     if (widget.onGetNewEntry == null) {
       return entry;
     } else {

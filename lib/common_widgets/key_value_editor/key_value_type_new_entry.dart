@@ -11,7 +11,7 @@ class GCWKeyValueTypeNewEntry extends GCWKeyValueNewEntry {
        TextEditingController? keyController,
        List<TextInputFormatter>? keyInputFormatters,
        List<TextInputFormatter>? valueInputFormatters,
-       KeyValueBase Function(KeyValueBase)? onGetNewEntry,
+       KeyValueBase? Function(KeyValueBase)? onGetNewEntry,
        void Function(KeyValueBase, BuildContext)? onNewEntryChanged,
        void Function(KeyValueBase)? onUpdateEntry,
        int? valueFlex,
@@ -89,10 +89,12 @@ class GCWKeyValueTypeNewEntryState extends GCWKeyValueNewEntryState {
   @override
   void _addEntry(KeyValueBase entry, {bool clearInput = true}) {
     var _entry = _getNewEntry(entry);
-    (_entry as FormulaValue).type =_currentType;
-    widget.entries.add(_entry);
+    if (_entry != null) {
+      (_entry as FormulaValue).type = _currentType;
+      widget.entries.add(_entry);
 
-    _finishAddEntry(entry, clearInput);
+      _finishAddEntry(entry, clearInput);
+    }
   }
 }
 

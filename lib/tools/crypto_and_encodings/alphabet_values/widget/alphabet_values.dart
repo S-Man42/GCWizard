@@ -433,13 +433,8 @@ class AlphabetValuesState extends State<AlphabetValues> {
             keyHintText: i18n(context, 'alphabetvalues_edit_mode_customize_letter'),
             valueHintText: i18n(context, 'alphabetvalues_edit_mode_customize_value'),
             valueInputFormatters: [GCWOnlyDigitsAndCommaInputFormatter()],
-            alphabetInstertButtonLabel: i18n(context, 'alphabetvalues_edit_mode_customize_addletter'),
-            alphabetAddAndAdjustLetterButtonLabel:
-                i18n(context, 'alphabetvalues_edit_mode_customize_addandadjustletter'),
-            onAddEntry: _addNewLetter,
-            onAddEntry2: _addNewLetter2,
             entries: _currentCustomizedAlphabet ?? [],
-            onRemoveEntry: _removeEntry,
+            onUpdateEntry: (entry) => setState(() {}),
             editAllowed: false),
         const GCWDivider()
       ],

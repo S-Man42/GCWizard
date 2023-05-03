@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
@@ -60,7 +61,7 @@ class _HashBreakerState extends State<HashBreaker> {
 
   void _addEntry(String currentFromInput, String currentToInput, FormulaValueType type, BuildContext context) {
     if (currentFromInput.isNotEmpty) {
-      _currentSubstitutions.putIfAbsent(++_currentIdCount, () => MapEntry<String, String>(currentFromInput, currentToInput));
+      //_currentSubstitutions.putIfAbsent(++_currentIdCount, () => MapEntry<String, String>(currentFromInput, currentToInput));
     }
   }
 
@@ -68,9 +69,19 @@ class _HashBreakerState extends State<HashBreaker> {
     _currentSubstitutions[id as int] = KeyValueBase(null, key, value);
   }
 
-  void _updateNewEntry(String currentFromInput, String currentToInput, BuildContext context) {
-    _currentFromInput = currentFromInput;
-    _currentToInput = currentToInput;
+
+  KeyValueBase? _getNewEntry(KeyValueBase entry) {
+    _currentIdCount++;
+    if (_currentSubstitutions.firstWhereOrNull((_entry) => _entry.id == _currentIdCount) == null) {
+      entry.id = _currentIdCount;
+      return entry;
+    }
+    return null;
+  }
+
+  void _updateNewEntry(KeyValueBase entry, BuildContext context) {
+    _currentFromInput = entry.key;
+    _currentToInput = entry.value;
   }
 
   void _removeEntry(Object id, BuildContext context) {
@@ -129,10 +140,10 @@ class _HashBreakerState extends State<HashBreaker> {
         valueInputFormatters: [VariableStringTextInputFormatter()],
         valueFlex: 4,
         onNewEntryChanged: _updateNewEntry,
-        onAddEntry: _addEntry,
+        onGetNewEntry: (entry) => _getNewEntry(entry),
+        onUpdateEntry: (entry) => setState(() {}),
         entries: _currentSubstitutions, //keyKeyValueMap
-        onUpdateEntry: _updateEntry,
-        onRemoveEntry: _removeEntry);
+      );
   }
 
   void _onDoCalculation() async {
