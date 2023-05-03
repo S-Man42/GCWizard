@@ -224,7 +224,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
   }
 
   Widget _buildVariablesEditor() {
-    return GCWKeyValueEditor<int, Formula>(
+    return GCWKeyValueEditor(
       keyHintText: i18n(context, 'coords_variablecoordinate_variable'),
       valueHintText: i18n(context, 'coords_variablecoordinate_possiblevalues'),
       valueInputFormatters: [VariableStringTextInputFormatter()],
@@ -232,7 +232,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
       onAddEntry: _addEntry,
       onNewEntryChanged: _updateNewEntry,
       onDispose: _disposeEntry,
-      keyValueMap: widget.formula.values,
+      entries: widget.formula.values, //keyValueMap
       formulaFormat: true,
       onUpdateEntry: _updateEntry,
       onRemoveEntry: (Object id, BuildContext context) {

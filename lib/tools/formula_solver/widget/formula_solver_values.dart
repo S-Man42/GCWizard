@@ -82,7 +82,7 @@ class _FormulaSolverFormulaValuesState extends State<_FormulaSolverFormulaValues
           valueHintText: i18n(context, 'formulasolver_values_value'),
           onAddEntry: _addEntry,
           dividerText: i18n(context, 'formulasolver_values_currentvalues'),
-          formulaValueList: widget.group.values,
+          entries: widget.group.values,
           onUpdateEntry: _updateEntry,
           onRemoveEntry: _removeEntry,
         ),
