@@ -71,9 +71,8 @@ class AlphabetValuesState extends State<AlphabetValues> {
           key: toStringOrDefault(alphabet['key'], ''),
           name: toStringOrNull(alphabet['name']),
           type: AlphabetType.CUSTOM,
-          alphabet: Map<String, String>.from(alphabet['alphabet'] is Map<String, String>
-                                              ? alphabet['alphabet'] as Map<String, String>
-                                              : {}));
+          alphabet: toStringMapOrNull(asJsonMapOrNull(alphabet['alphabet'])) ?? {}
+      );
     }).toList());
 
     _currentAlphabetKey = Prefs.getString(PREFERENCE_ALPHABET_DEFAULT_ALPHABET);
@@ -105,6 +104,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
   }
 
   void _setReverseLabels() {
+    if (_currentAlphabet.isEmpty) return;
     var firstEntry = _currentAlphabet.entries.first;
     var lastEntry = _currentAlphabet.entries.last;
 
