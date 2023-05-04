@@ -44,6 +44,9 @@ class GCWKeyValueRowState extends State<GCWKeyValueRow> {
   void initState() {
     super.initState();
 
+    _currentKey = widget.keyValueEntry.key;
+    _currentValue = widget.keyValueEntry.value;
+
     _keyController = TextEditingController(text: _currentKey);
     _valueController = TextEditingController(text: _currentValue);
 
@@ -138,16 +141,7 @@ class GCWKeyValueRowState extends State<GCWKeyValueRow> {
         ? GCWIconButton(
             icon: Icons.check,
             onPressed: () {
-              //if (widget.keyValueEditorControl.currentEditId != null) {
-                widget.keyValueEntry.key = _currentKey;
-                widget.keyValueEntry.value = _currentValue;
-                if (widget.onUpdateEntry != null) widget.onUpdateEntry!(widget.keyValueEntry);
-              //}
-              setState(() {
-                widget.keyValueEditorControl.currentEditId = null;
-                _keyController.clear();
-                _valueController.clear();
-              });
+              _updateEntry();
             },
           )
         : GCWIconButton(
@@ -157,10 +151,10 @@ class GCWKeyValueRowState extends State<GCWKeyValueRow> {
                 FocusScope.of(context).requestFocus(_focusNodeEditValue);
 
                 widget.keyValueEditorControl.currentEditId = widget.keyValueEntry.id;
-                _keyController.text = widget.keyValueEntry.key;
-                _valueController.text = widget.keyValueEntry.value;
                 _currentKey = widget.keyValueEntry.key;
                 _currentValue = widget.keyValueEntry.value;
+                _keyController.text = _currentKey;
+                _valueController.text = _currentValue;
               });
             },
           );
@@ -176,6 +170,18 @@ class GCWKeyValueRowState extends State<GCWKeyValueRow> {
         if (widget.onSetState != null) widget.onSetState!();
       },
     );
+  }
+
+  void _updateEntry() {
+    widget.keyValueEntry.key = _currentKey;
+    widget.keyValueEntry.value = _currentValue;
+    if (widget.onUpdateEntry != null) widget.onUpdateEntry!(widget.keyValueEntry);
+    //}
+    setState(() {
+      widget.keyValueEditorControl.currentEditId = null;
+      _keyController.clear();
+      _valueController.clear();
+    });
   }
 
   void _removeEntry() {
