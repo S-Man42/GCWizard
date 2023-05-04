@@ -6,7 +6,6 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
-import 'package:gc_wizard/tools/formula_solver/persistence/model.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
 
 class Substitution extends StatefulWidget {
@@ -42,7 +41,6 @@ class _SubstitutionState extends State<Substitution> {
         if (_currentSubstitutions.firstWhereOrNull((entry) => entry.id == _currentIdCount) == null) {
           _currentSubstitutions.add( KeyValueBase (_currentIdCount, element.key, element.value));
         }
-        //_currentSubstitutions.putIfAbsent(++_currentIdCount, () => MapEntry<String, String>(element.key, element.value));
       }
     }
 
@@ -61,13 +59,6 @@ class _SubstitutionState extends State<Substitution> {
     super.dispose();
   }
 
-  void _addEntry(String currentFromInput, String currentToInput, FormulaValueType type, BuildContext context) {
-    if (currentFromInput.isNotEmpty) {
-      //_currentSubstitutions.putIfAbsent(++_currentIdCount, () => MapEntry<String, String>(currentFromInput, currentToInput));
-    }
-    _calculateOutput();
-  }
-
   KeyValueBase? _getNewEntry(KeyValueBase entry) {
     _currentIdCount++;
     if (_currentSubstitutions.firstWhereOrNull((_entry) => _entry.id == _currentIdCount) == null) {
@@ -77,18 +68,12 @@ class _SubstitutionState extends State<Substitution> {
     return null;
   }
 
-  void _updateNewEntry(KeyValueBase entry, BuildContext context) {
+  void _updateNewEntry(KeyValueBase entry) {
     _currentFromInput = entry.key;
     _currentToInput = entry.value;
   }
 
   void _updateEntry(KeyValueBase entry) {
-
-    _calculateOutput();
-  }
-
-  void _removeEntry(Object id, BuildContext context) {
-    _currentSubstitutions.remove(id);
     _calculateOutput();
   }
 

@@ -44,24 +44,10 @@ class _FormulaSolverFormulaValuesState extends State<_FormulaSolverFormulaValues
     return '';
   }
 
-  void _updateValue(FormulaValue value) {
-    updateFormulaValue(value, widget.group);
-  }
-
-  void _addEntry(String currentFromInput, String currentToInput, FormulaValueType type, BuildContext context) {
-    if (currentFromInput.isNotEmpty) {
-      var newValue = FormulaValue(currentFromInput, currentToInput, type: type);
-      insertFormulaValue(newValue, widget.group);
-
-      _newKeyController.text = _maxLetter();
-    }
-  }
-
   KeyValueBase? _getNewEntry(KeyValueBase entry) {
     if (entry.key.isNotEmpty) {
       entry = FormulaValue(entry.key, entry.value);
       entry.id = newID(widget.group.values.map((value) => (value.id as int?)).toList());
-      //insertFormulaValue(newValue, widget.group);
 
       return entry;
     }
@@ -73,18 +59,6 @@ class _FormulaSolverFormulaValuesState extends State<_FormulaSolverFormulaValues
     updateAndSave(widget.group);
 
     _newKeyController.text = _maxLetter();
-    //setState(() {});
-    // var entry = widget.group.values.firstWhere((element) => element.id == id);
-    // entry.key = key;
-    // entry.value = value;
-    // entry.type = type;
-    // setState(() {
-    //   _updateValue(entry);
-    // });
-  }
-
-  void _removeEntry(Object id, BuildContext context) {
-    deleteFormulaValue(id as int, widget.group);
   }
 
   @override

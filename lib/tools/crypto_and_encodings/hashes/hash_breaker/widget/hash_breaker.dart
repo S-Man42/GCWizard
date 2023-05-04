@@ -12,7 +12,6 @@ import 'package:gc_wizard/common_widgets/text_input_formatters/variablestring_te
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/hashes/hash_breaker/logic/hash_breaker.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/hashes/logic/hashes.dart';
-import 'package:gc_wizard/tools/formula_solver/persistence/model.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/variable_string_expander.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
@@ -59,17 +58,6 @@ class _HashBreakerState extends State<HashBreaker> {
     super.dispose();
   }
 
-  void _addEntry(String currentFromInput, String currentToInput, FormulaValueType type, BuildContext context) {
-    if (currentFromInput.isNotEmpty) {
-      //_currentSubstitutions.putIfAbsent(++_currentIdCount, () => MapEntry<String, String>(currentFromInput, currentToInput));
-    }
-  }
-
-  void _updateEntry(Object id, String key, String value, FormulaValueType type) {
-    _currentSubstitutions[id as int] = KeyValueBase(null, key, value);
-  }
-
-
   KeyValueBase? _getNewEntry(KeyValueBase entry) {
     _currentIdCount++;
     if (_currentSubstitutions.firstWhereOrNull((_entry) => _entry.id == _currentIdCount) == null) {
@@ -79,14 +67,11 @@ class _HashBreakerState extends State<HashBreaker> {
     return null;
   }
 
-  void _updateNewEntry(KeyValueBase entry, BuildContext context) {
+  void _updateNewEntry(KeyValueBase entry) {
     _currentFromInput = entry.key;
     _currentToInput = entry.value;
   }
 
-  void _removeEntry(Object id, BuildContext context) {
-    _currentSubstitutions.remove(id);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -141,7 +126,6 @@ class _HashBreakerState extends State<HashBreaker> {
         valueFlex: 4,
         onNewEntryChanged: _updateNewEntry,
         onGetNewEntry: (entry) => _getNewEntry(entry),
-        onUpdateEntry: (entry) => setState(() {}),
         entries: _currentSubstitutions, //keyKeyValueMap
       );
   }

@@ -29,22 +29,6 @@ part "package:gc_wizard/common_widgets/key_value_editor/key_value_row.dart";
 part "package:gc_wizard/common_widgets/key_value_editor/key_value_type_row.dart";
 part "package:gc_wizard/common_widgets/key_value_editor/key_value_alphabet_row.dart";
 
-// class KeyValueString extends KeyValueBase {
-//
-//   KeyValueString(MapEntry<String, String> entry)
-//     : super (entry.key, entry.key, entry.value);
-// }
-
-// class KeyValueFormulaValue extends KeyValueBase {
-//   @override
-//   String get id => key;
-//   @override
-//   set id(Object? id) => key = id == null ? '': id.toString();
-//
-//   KeyValueFormulaValue(FormulaValue entry)
-//       : super (entry.id?.toString() ?? '', entry.key, entry.value);
-// }
-
 class _KeyValueEditorControl {
   Object? currentEditId;
 }
@@ -58,9 +42,7 @@ class GCWKeyValueEditor extends StatefulWidget {
   final String valueHintText;
   final int? valueFlex;
   final KeyValueBase? Function(KeyValueBase)? onGetNewEntry;
-  final void Function(KeyValueBase, BuildContext)? onNewEntryChanged;
-  // final String? alphabetInstertButtonLabel;
-  // final String? alphabetAddAndAdjustLetterButtonLabel;
+  final void Function(KeyValueBase)? onNewEntryChanged;
 
   final Widget? middleWidget;
 
@@ -70,7 +52,6 @@ class GCWKeyValueEditor extends StatefulWidget {
   final String? dividerText;
   final bool editAllowed;
   final void Function(KeyValueBase)? onUpdateEntry;
-  //final void Function(KeyValueBase, BuildContext)? onRemoveEntry;
 
   const GCWKeyValueEditor({
     Key? key,
@@ -83,8 +64,6 @@ class GCWKeyValueEditor extends StatefulWidget {
     this.valueInputFormatters,
     this.valueFlex,
     this.onGetNewEntry,
-    // this.alphabetInstertButtonLabel,
-    // this.alphabetAddAndAdjustLetterButtonLabel,
     this.middleWidget,
     this.dividerText,
     this.editAllowed = true,

@@ -17,7 +17,6 @@ import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/text_input_formatters/wrapper_for_masktextinputformatter.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/homophone/logic/homophone.dart';
-import 'package:gc_wizard/tools/formula_solver/persistence/model.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
@@ -84,16 +83,6 @@ class _HomophoneState extends State<Homophone> {
     return '';
   }
 
-  void _addEntry(String currentFromInput, String currentToInput, FormulaValueType type, BuildContext context) {
-    if (currentFromInput.isNotEmpty) {
-      // _currentSubstitutions.putIfAbsent(currentFromInput.toUpperCase(), () => currentToInput);
-    }
-
-    _newKeyController.text = _maxLetter();
-
-    setState(() {});
-  }
-
   KeyValueBase? _getNewEntry(KeyValueBase entry) {
     entry.key = entry.key.toUpperCase();
     if (_currentSubstitutions.firstWhereOrNull((_entry) => _entry.key == entry.key) != null) {
@@ -103,15 +92,7 @@ class _HomophoneState extends State<Homophone> {
   }
 
   void _updateEntry(KeyValueBase entry) {
-    // _currentSubstitutions[id as String] = value;
-    // setState(() {});
     _newKeyController.text = _maxLetter();
-    setState(() {});
-  }
-
-  void _removeEntry(Object id, BuildContext context) {
-    _currentSubstitutions.remove(id);
-    setState(() {});
   }
 
   @override
@@ -315,7 +296,6 @@ class _HomophoneState extends State<Homophone> {
         valueHintText: i18n(context, 'homophone_own_key_hint'),
         valueFlex: 4,
         entries: _currentSubstitutions,
-        //onNewEntryChanged: _updateNewEntry,
         onGetNewEntry: (entry) => _getNewEntry(entry),
         onUpdateEntry: _updateEntry,
     );
