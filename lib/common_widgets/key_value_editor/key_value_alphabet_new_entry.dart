@@ -76,8 +76,7 @@ class GCWKeyValueAlphabetNewEntryState extends GCWKeyValueNewEntryState {
             setState(() {
               var entry = KeyValueBase(null, _currentKey.toUpperCase(), _currentValue);
               _addNewLetter(entry, adjust: false);
-              //_addEntry(KeyValueBase(null, _currentKey, _currentValue));
-            });
+             });
           },
         ));
   }
@@ -91,7 +90,6 @@ class GCWKeyValueAlphabetNewEntryState extends GCWKeyValueNewEntryState {
             var entry = KeyValueBase(null, _currentKey.toUpperCase(), _currentValue);
             if (_isAddAndAdjustEnabled(entry)) {
               setState(() {
-                //if (widget.onAddEntry2 != null) widget.onAddEntry2!(KeyValueBase(null, _currentKeyInput, _currentValueInput), context);
                 _addNewLetter(entry, adjust: true);
               });
             }
@@ -142,7 +140,6 @@ class GCWKeyValueAlphabetNewEntryState extends GCWKeyValueNewEntryState {
         }
       }
       _addEntry(entry);
-      //_currentCustomizedAlphabet!.putIfAbsent(letter, () => value);
     }
   }
 }

@@ -104,6 +104,7 @@ class _AlphabetValuesState extends State<AlphabetValues> {
   }
 
   void _setReverseLabels() {
+    if (_currentAlphabet.isEmpty) return;
     var firstEntry = _currentAlphabet.entries.first;
     var lastEntry = _currentAlphabet.entries.last;
 
