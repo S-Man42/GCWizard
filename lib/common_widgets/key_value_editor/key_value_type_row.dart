@@ -60,59 +60,11 @@ class GCWKeyValueTypeRowState extends GCWKeyValueRowState {
     return output;
   }
 
-  @override
-  Widget _editButton() {
-    if (!widget.editAllowed) return Container();
-
-    return widget.keyValueEditorControl.currentEditId == widget.keyValueEntry.id
-        ? GCWIconButton(
-            icon: Icons.check,
-            onPressed: () {
-              //if (widget.keyValueEditorControl.currentEditId != null) {
-                if (_currentType == FormulaValueType.INTERPOLATED) {
-                  if (!VARIABLESTRING.hasMatch(_currentValue.toLowerCase())) {
-                    showToast(i18n(context, 'formulasolver_values_novalidinterpolated'));
-                    return;
-                  }
-                }
-
-                //if (widget.keyValueEditorControl.currentEditId != null) {
-                  widget.keyValueEntry.value = _currentValue;
-                  (widget.keyValueEntry as FormulaValue).type =_currentType;
-                  if (widget.onUpdateEntry != null) widget.onUpdateEntry!(widget.keyValueEntry);
-                //}
-              //}
-
-              setState(() {
-                widget.keyValueEditorControl.currentEditId = null;
-                _keyController.clear();
-                _valueController.clear();
-              });
-            },
-          )
-        : GCWIconButton(
-            icon: Icons.edit,
-            onPressed: () {
-              setState(() {
-                FocusScope.of(context).requestFocus(_focusNodeEditValue);
-
-                widget.keyValueEditorControl.currentEditId = widget.keyValueEntry.id;
-                _keyController.text = widget.keyValueEntry.key;
-                _valueController.text = widget.keyValueEntry.value;
-                _currentKey = widget.keyValueEntry.key;
-                _currentValue = widget.keyValueEntry.value;
-
-                _currentType = (widget.keyValueEntry as FormulaValue).type ?? FormulaValueType.FIXED;
-              });
-            },
-          );
-  }
-
   Widget _typeButton() {
     return widget.keyValueEntry is FormulaValue
         ? Expanded(
-        flex: 1,
-        child: Container(
+          flex: 1,
+          child: Container(
             padding: const EdgeInsets.only(left: DEFAULT_MARGIN),
             child: GCWPopupMenu(
               iconData: _formulaValueTypeIcon(_currentType),
@@ -141,6 +93,17 @@ class GCWKeyValueTypeRowState extends GCWKeyValueRowState {
               ],
             )))
         : Container();
+  }
+
+  @override
+  void _updateEntry() {
+    if (_currentType == FormulaValueType.INTERPOLATED) {
+      if (!VARIABLESTRING.hasMatch(_currentValue.toLowerCase())) {
+        showToast(i18n(context, 'formulasolver_values_novalidinterpolated'));
+        return;
+      }
+    }
+    super._updateEntry();
   }
 }
 

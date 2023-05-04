@@ -37,19 +37,15 @@ class GCWKeyValueAlphabetRowState extends GCWKeyValueRowState {
 
   @override
   void _removeEntry() {
-    widget.entries.remove(widget.keyValueEntry);
-    if (widget.onUpdateEntry != null) widget.onUpdateEntry!(widget.keyValueEntry);
-
     var _isList = widget.keyValueEntry.value.contains(',');
 
     var buttons = [
       GCWDialogButton(
           text: i18n(context, 'alphabetvalues_edit_mode_customize_deleteletter_remove'),
           onPressed: () {
-            setState(() {
-              widget.entries.remove(widget.keyValueEntry);
-            });
-          })
+            super._removeEntry();
+          }
+      )
     ];
 
     if (!_isList) {
@@ -59,7 +55,7 @@ class GCWKeyValueAlphabetRowState extends GCWKeyValueRowState {
         text: i18n(context, 'alphabetvalues_edit_mode_customize_deleteletter_removeandadjust'),
         onPressed: () {
           if (deleteValue != null) {
-            for (var entry in (widget as GCWKeyValueAlphabetNewEntry).entries) {
+            for (var entry in widget.entries) {
               var newValue = entry.value.split(',').map((value) {
                 var intValue = int.tryParse(value);
                 if (intValue == null) return '';
@@ -70,9 +66,7 @@ class GCWKeyValueAlphabetRowState extends GCWKeyValueRowState {
 
               entry.value = newValue;
             }
-            setState(() {
-              widget.entries.remove(widget.keyValueEntry);
-            });
+            super._removeEntry();
           }
         },
       ));
