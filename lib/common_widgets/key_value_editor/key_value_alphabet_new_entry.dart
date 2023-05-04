@@ -90,8 +90,9 @@ class GCWKeyValueAlphabetNewEntryState extends GCWKeyValueNewEntryState {
             if (_isAddAndAdjustEnabled()) {
               setState(() {
                 //if (widget.onAddEntry2 != null) widget.onAddEntry2!(KeyValueBase(null, _currentKeyInput, _currentValueInput), context);
-                _addNewLetter(KeyValueBase(null, _currentKey, _currentValue), adjust: true);
-                _onNewEntryChanged(true);
+                if (_addNewLetter(KeyValueBase(null, _currentKey, _currentValue), adjust: true)) {
+                  _onNewEntryChanged(true);
+                }
               });
             }
           }
@@ -99,8 +100,9 @@ class GCWKeyValueAlphabetNewEntryState extends GCWKeyValueNewEntryState {
       );
   }
 
-  void _addNewLetter(KeyValueBase entry, {bool adjust = false}) {
-    if (entry.key.isEmpty) return;
+  bool _addNewLetter(KeyValueBase entry, {bool adjust = false}) {
+    var returnValue = false;
+    if (entry.key.isEmpty) return returnValue;
 
     entry.value = entry.value
         .split(',')
@@ -108,7 +110,7 @@ class GCWKeyValueAlphabetNewEntryState extends GCWKeyValueNewEntryState {
         .map((character) => character.toUpperCase())
         .join(',');
 
-    if (entry.value.isEmpty) return;
+    if (entry.value.isEmpty) return returnValue;
 
     entry.key = entry.key.toUpperCase();
     if (widget.entries.firstWhereOrNull((_entry) => _entry.key == entry.key) != null) {
@@ -119,33 +121,32 @@ class GCWKeyValueAlphabetNewEntryState extends GCWKeyValueNewEntryState {
                 onPressed: () {
                   setState(() {
                     widget.entries.add(KeyValueBase(null, entry.key, entry.value));
+                    returnValue = true;
                   });
                 })
           ]);
     } else {
-      setState(() {
-        if (adjust) {
-          var insertedValue = int.tryParse(entry.value);
-          if (insertedValue != null) {
-            for (var entry in widget.entries) {
-              var newValue = entry.value.split(',').map((value) {
-                var intValue = int.tryParse(value);
-                if (intValue == null) return '';
-                if (intValue >= insertedValue) intValue++;
+      if (adjust) {
+        var insertedValue = int.tryParse(entry.value);
+        if (insertedValue != null) {
+          for (var entry in widget.entries) {
+            var newValue = entry.value.split(',').map((value) {
+              var intValue = int.tryParse(value);
+              if (intValue == null) return '';
+              if (intValue >= insertedValue) intValue++;
 
-                return intValue.toString();
-              }).join(',');
+              return intValue.toString();
+            }).join(',');
 
-              entry.value = newValue;
-            }
+            entry.value = newValue;
           }
         }
-        if (widget.entries.firstWhereOrNull((entry) => entry.key == entry.key) == null) {
-          widget.entries.add(KeyValueBase(null, entry.key, entry.value));
-        }
-        //_currentCustomizedAlphabet!.putIfAbsent(letter, () => value);
-      });
+      }
+      widget.entries.add(KeyValueBase(null, entry.key, entry.value));
+      returnValue = true;
+      //_currentCustomizedAlphabet!.putIfAbsent(letter, () => value);
     }
+    return returnValue;
   }
 
 }
