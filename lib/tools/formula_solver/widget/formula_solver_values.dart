@@ -73,7 +73,7 @@ class _FormulaSolverFormulaValuesState extends State<_FormulaSolverFormulaValues
     updateAndSave(widget.group);
 
     _newKeyController.text = _maxLetter();
-    setState(() {});
+    //setState(() {});
     // var entry = widget.group.values.firstWhere((element) => element.id == id);
     // entry.key = key;
     // entry.value = value;
@@ -100,6 +100,7 @@ class _FormulaSolverFormulaValuesState extends State<_FormulaSolverFormulaValues
           entries: widget.group.values,
           onGetNewEntry: (entry) => _getNewEntry(entry),
           onUpdateEntry: _updateEntry,
+          formulaFormat: true,
         ),
       ],
     );

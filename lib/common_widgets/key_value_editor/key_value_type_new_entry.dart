@@ -14,7 +14,9 @@ class GCWKeyValueTypeNewEntry extends GCWKeyValueNewEntry {
        KeyValueBase? Function(KeyValueBase)? onGetNewEntry,
        void Function(KeyValueBase, BuildContext)? onNewEntryChanged,
        void Function(KeyValueBase)? onUpdateEntry,
+       required bool addOnDispose,
        int? valueFlex,
+       void Function()? onSetState,
      })
      : super(
         key: key,
@@ -27,7 +29,9 @@ class GCWKeyValueTypeNewEntry extends GCWKeyValueNewEntry {
         onGetNewEntry: onGetNewEntry,
         onNewEntryChanged: onNewEntryChanged,
         onUpdateEntry: onUpdateEntry,
-        valueFlex: valueFlex
+        addOnDispose: addOnDispose,
+        valueFlex: valueFlex,
+        onSetState: onSetState,
   );
 
   @override
@@ -44,6 +48,7 @@ class GCWKeyValueTypeNewEntryState extends GCWKeyValueNewEntryState {
         Row(
           children: <Widget>[
             _keyWidget(),
+            _arrowIcon(),
             _valueWidget(),
             _typeButton(),
             _addIcon(),
@@ -84,6 +89,17 @@ class GCWKeyValueTypeNewEntryState extends GCWKeyValueNewEntryState {
               })),
         ],
       )));
+  }
+
+  @override
+  bool _validInput() {
+    if (_currentType == FormulaValueType.INTERPOLATED) {
+      if (!VARIABLESTRING.hasMatch(_currentValue.toLowerCase())) {
+        showToast(i18n(context, 'formulasolver_values_novalidinterpolated'));
+        return false;
+      }
+    }
+    return true;
   }
 
   @override

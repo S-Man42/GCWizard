@@ -14,7 +14,9 @@ class GCWKeyValueAlphabetNewEntry extends GCWKeyValueNewEntry {
        KeyValueBase? Function(KeyValueBase)? onGetNewEntry,
        void Function(KeyValueBase, BuildContext)? onNewEntryChanged,
        void Function(KeyValueBase)? onUpdateEntry,
+       required bool addOnDispose,
        int? valueFlex,
+       void Function()? onSetState,
      })
      : super(
         key: key,
@@ -27,7 +29,9 @@ class GCWKeyValueAlphabetNewEntry extends GCWKeyValueNewEntry {
         onGetNewEntry: onGetNewEntry,
         onNewEntryChanged: onNewEntryChanged,
         onUpdateEntry: onUpdateEntry,
-        valueFlex: valueFlex
+        addOnDispose: addOnDispose,
+        valueFlex: valueFlex,
+        onSetState: onSetState,
   );
 
   @override

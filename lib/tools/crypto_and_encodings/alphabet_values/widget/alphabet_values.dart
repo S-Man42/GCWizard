@@ -22,6 +22,7 @@ import 'package:gc_wizard/tools/formula_solver/persistence/model.dart';
 import 'package:gc_wizard/tools/science_and_technology/cross_sums/widget/crosstotal_output.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 import 'package:gc_wizard/utils/json_utils.dart';
@@ -434,7 +435,9 @@ class _AlphabetValuesState extends State<AlphabetValues> {
             valueInputFormatters: [GCWOnlyDigitsAndCommaInputFormatter()],
             entries: _currentCustomizedAlphabet ?? [],
             onUpdateEntry: (entry) => setState(() {}),
-            editAllowed: false),
+            editAllowed: false,
+            alphabetFormat: true,
+        ),
         const GCWDivider()
       ],
     );
