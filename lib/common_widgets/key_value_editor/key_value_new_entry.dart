@@ -153,7 +153,7 @@ class GCWKeyValueNewEntryState extends State<GCWKeyValueNewEntry> {
     if (_entry != null) {
       widget.entries.add(_entry);
 
-      _finishAddEntry(entry, clearInput);
+      _finishAddEntry(_entry, clearInput);
     }
   }
 

@@ -44,22 +44,14 @@ class GCWKeyValueRowState extends State<GCWKeyValueRow> {
   void initState() {
     super.initState();
 
-    _currentKey = widget.keyValueEntry.key;
-    _currentValue = widget.keyValueEntry.value;
-
-    _keyController = TextEditingController(text: _currentKey);
-    _valueController = TextEditingController(text: _currentValue);
+    _initValues();
 
     _focusNodeEditValue = FocusNode();
   }
 
   @override
   void didUpdateWidget(GCWKeyValueRow oldWidget) {
-    _currentKey = widget.keyValueEntry.key;
-    _currentValue = widget.keyValueEntry.value;
-
-    _keyController = TextEditingController(text: _currentKey);
-    _valueController = TextEditingController(text: _currentValue);
+    _initValues();
   }
 
   @override
@@ -70,6 +62,14 @@ class GCWKeyValueRowState extends State<GCWKeyValueRow> {
     _focusNodeEditValue.dispose();
 
     super.dispose();
+  }
+
+  void _initValues() {
+    _currentKey = widget.keyValueEntry.key;
+    _currentValue = widget.keyValueEntry.value;
+
+    _keyController = TextEditingController(text: _currentKey);
+    _valueController = TextEditingController(text: _currentValue);
   }
 
   @override
@@ -100,7 +100,7 @@ class GCWKeyValueRowState extends State<GCWKeyValueRow> {
       flex: 1,
       child: Container(
         margin: const EdgeInsets.only(left: 10),
-        child: widget.keyValueEditorControl.currentEditId == widget.keyValueEntry.id
+        child: widget.keyValueEditorControl.currentEditId == entryId(widget.keyValueEntry)
             ? GCWTextField(
                 controller: _keyController,
                 inputFormatters: widget.keyInputFormatters,
@@ -127,7 +127,7 @@ class GCWKeyValueRowState extends State<GCWKeyValueRow> {
         flex: 3,
         child: Container(
           margin: const EdgeInsets.only(left: 10),
-          child: widget.keyValueEditorControl.currentEditId == widget.keyValueEntry.id
+          child: widget.keyValueEditorControl.currentEditId == entryId(widget.keyValueEntry)
               ? GCWTextField(
                   controller: _valueController,
                   focusNode: _focusNodeEditValue,
@@ -146,7 +146,7 @@ class GCWKeyValueRowState extends State<GCWKeyValueRow> {
   Widget _editButton() {
     if (!widget.editAllowed) return Container();
 
-    return widget.keyValueEditorControl.currentEditId == widget.keyValueEntry.id
+    return widget.keyValueEditorControl.currentEditId == entryId(widget.keyValueEntry)
         ? GCWIconButton(
             icon: Icons.check,
             onPressed: () {
@@ -159,7 +159,7 @@ class GCWKeyValueRowState extends State<GCWKeyValueRow> {
               setState(() {
                 FocusScope.of(context).requestFocus(_focusNodeEditValue);
 
-                widget.keyValueEditorControl.currentEditId = widget.keyValueEntry.id;
+                widget.keyValueEditorControl.currentEditId = entryId(widget.keyValueEntry);
                 _currentKey = widget.keyValueEntry.key;
                 _currentValue = widget.keyValueEntry.value;
                 _keyController.text = _currentKey;
@@ -167,6 +167,10 @@ class GCWKeyValueRowState extends State<GCWKeyValueRow> {
               });
             },
           );
+  }
+
+  Object? entryId(KeyValueBase entry) {
+    return widget.keyValueEntry.id ?? widget.keyValueEntry.key;
   }
 
   Widget _removeButton() {

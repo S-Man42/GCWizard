@@ -63,14 +63,6 @@ int insertFormulaValue(formula_model.FormulaValue formulaValue, Formula formula)
 }
 
 void updateFormulaValue(KeyValueBase formulaValue, Formula formula) {
-  formula.values.removeWhere((value) => value.id != formulaValue.id);
-
-  updateFormula(formula);
-}
-
-void deleteFormulaValue(int formulaValueId, Formula formula) {
-  formula.values.removeWhere((value) => value.id == formulaValueId);
-
   updateFormula(formula);
 }
 

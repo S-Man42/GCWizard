@@ -109,7 +109,7 @@ class GCWKeyValueTypeNewEntryState extends GCWKeyValueNewEntryState {
       (_entry as FormulaValue).type = _currentType;
       widget.entries.add(_entry);
 
-      _finishAddEntry(entry, clearInput);
+      _finishAddEntry(_entry, clearInput);
     }
   }
 }
