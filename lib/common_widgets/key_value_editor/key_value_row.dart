@@ -11,6 +11,7 @@ class GCWKeyValueRow extends StatefulWidget {
   final List<TextInputFormatter>? valueInputFormatters;
   final bool editAllowed;
   final void Function(KeyValueBase)? onUpdateEntry;
+  final void Function()? onSetState;
 
   GCWKeyValueRow(
      {Key? key,
@@ -23,6 +24,7 @@ class GCWKeyValueRow extends StatefulWidget {
        this.valueInputFormatters,
        this.editAllowed = true,
        this.onUpdateEntry,
+       this.onSetState
      })
      : super(key: key);
 
@@ -169,11 +171,16 @@ class GCWKeyValueRowState extends State<GCWKeyValueRow> {
       icon: Icons.remove,
       onPressed: () {
         setState(() {
-          widget.entries.remove(widget.keyValueEntry);
-          if (widget.onUpdateEntry != null) widget.onUpdateEntry!(widget.keyValueEntry);
+          _removeEntry();
         });
+        if (widget.onSetState != null) widget.onSetState!();
       },
     );
+  }
+
+  void _removeEntry() {
+    widget.entries.remove(widget.keyValueEntry);
+    if (widget.onUpdateEntry != null) widget.onUpdateEntry!(widget.keyValueEntry);
   }
 }
 

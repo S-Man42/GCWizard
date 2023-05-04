@@ -28,7 +28,9 @@ import 'package:gc_wizard/tools/coords/variable_coordinate/persistence/model.dar
 import 'package:gc_wizard/tools/formula_solver/persistence/model.dart' as formula_base;
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/default_units_getter.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/length.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/constants.dart';
+import 'package:gc_wizard/utils/persistence_utils.dart';
 import 'package:gc_wizard/utils/variable_string_expander.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
@@ -119,7 +121,8 @@ class VariableCoordinateState extends State<VariableCoordinate> {
   KeyValueBase? _getNewEntry(KeyValueBase entry) {
     if (entry.key.isNotEmpty) {
       entry = formula_base.FormulaValue(entry.key, entry.value);
-      entry.id = newID(widget.group.values.map((value) => (value.id as int?)).toList());
+      entry.id = newID(widget.formula.values.map((value) => (value.id as int?)).toList());
+      (entry as formula_base.FormulaValue).type = formula_base.FormulaValueType.INTERPOLATED;
       //insertFormulaValue(newValue, widget.group);
 
       return entry;
@@ -132,7 +135,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
     // entry.key = key;
     // entry.value = value;
     // entry.type = formula_base.FormulaValueType.INTERPOLATED;
-    _updateValue(entry);
+    _updateValue(entry as formula_base.FormulaValue);
     setState(() {});
   }
 
@@ -140,10 +143,10 @@ class VariableCoordinateState extends State<VariableCoordinate> {
     deleteFormulaValue(id, widget.formula);
   }
 
-  void _disposeEntry(String currentFromInput, String currentToInput, BuildContext context) {
-    if (currentFromInput.isNotEmpty && currentToInput.isNotEmpty) {
-      _addEntry(currentFromInput, currentToInput, formula_base.FormulaValueType.INTERPOLATED, context);
-    }
+  void _disposeEntry(KeyValueBase entry, BuildContext context) {
+    // if (entry.key.isNotEmpty && enty.value.isNotEmpty) {
+    //   _addEntry(currentFromInput, currentToInput, formula_base.FormulaValueType.INTERPOLATED, context);
+    // }
   }
 
   @override
@@ -241,17 +244,12 @@ class VariableCoordinateState extends State<VariableCoordinate> {
       valueHintText: i18n(context, 'coords_variablecoordinate_possiblevalues'),
       valueInputFormatters: [VariableStringTextInputFormatter()],
       valueFlex: 4,
-      onAddEntry: _addEntry,
+      onGetNewEntry: (entry) => _getNewEntry(entry),
       onNewEntryChanged: _updateNewEntry,
-      onDispose: _disposeEntry,
       entries: widget.formula.values, //keyValueMap
-      formulaFormat: true,
       onUpdateEntry: _updateEntry,
-      onRemoveEntry: (Object id, BuildContext context) {
-        if (id is int) {
-          _removeEntry(id, context);
-        }
-      },
+      addOnDispose: true,
+
     );
   }
 

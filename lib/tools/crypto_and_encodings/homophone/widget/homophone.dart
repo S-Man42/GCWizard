@@ -20,6 +20,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/homophone/logic/homophone.d
 import 'package:gc_wizard/tools/formula_solver/persistence/model.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 
 enum _KeyType { CUSTOM_KEY_LIST, CUSTOM_KEY_MAP, GENERATED }
 

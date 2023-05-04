@@ -1,4 +1,4 @@
-import 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 import 'package:gc_wizard/utils/json_utils.dart';
 
@@ -105,7 +105,7 @@ FormulaValueType _readType(String? jsonType) {
   }
 }
 
-class FormulaValue extends KeyValueBase{
+class FormulaValue extends KeyValueBase {
   // int? id;
   // String key;
   // String value;

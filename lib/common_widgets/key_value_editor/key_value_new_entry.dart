@@ -12,7 +12,9 @@ class GCWKeyValueNewEntry extends StatefulWidget {
   final KeyValueBase? Function(KeyValueBase)? onGetNewEntry;
   final void Function(KeyValueBase, BuildContext)? onNewEntryChanged;
   final void Function(KeyValueBase)? onUpdateEntry;
+  final bool addOnDispose;
   final int? valueFlex;
+  final void Function()? onSetState;
 
   const GCWKeyValueNewEntry(
      {Key? key,
@@ -25,7 +27,9 @@ class GCWKeyValueNewEntry extends StatefulWidget {
       this.onGetNewEntry,
       this.onNewEntryChanged,
       this.onUpdateEntry,
+      required this.addOnDispose,
       this.valueFlex,
+      this.onSetState
      })
      : super(key: key);
 
@@ -58,6 +62,9 @@ class GCWKeyValueNewEntryState extends State<GCWKeyValueNewEntry> {
 
   @override
   void dispose() {
+    if (widget.addOnDispose && _currentKey.isNotEmpty  && _currentValue.isNotEmpty) {
+      _addEntry(KeyValueBase(null, _currentKey, _currentValue));
+    }
     if (widget.keyController == null) _keyController.dispose();
     _valueController.dispose();
 
@@ -73,6 +80,7 @@ class GCWKeyValueNewEntryState extends State<GCWKeyValueNewEntry> {
         Row(
           children: <Widget>[
             _keyWidget(),
+            _arrowIcon(),
             _valueWidget(),
             _addIcon(),
           ],
@@ -98,11 +106,25 @@ class GCWKeyValueNewEntryState extends State<GCWKeyValueNewEntry> {
     );
   }
 
-  Widget _addIcon() {
+  Widget _arrowIcon() {
     return Icon(
       Icons.arrow_forward,
       color: themeColors().mainFont(),
     );
+  }
+
+  Widget _addIcon() {
+    return GCWIconButton(
+        icon: Icons.add,
+        onPressed: () {
+          if (!_validInput()) {
+            return;
+          }
+
+          setState(() {
+            _addEntry(KeyValueBase(null, _currentKey, _currentValue));
+          });
+        });
   }
 
   Widget _valueWidget() {
@@ -122,6 +144,10 @@ class GCWKeyValueNewEntryState extends State<GCWKeyValueNewEntry> {
     );
   }
 
+  bool _validInput() {
+    return true;
+  }
+
   void _addEntry(KeyValueBase entry, {bool clearInput = true}) {
     var _entry = _getNewEntry(entry);
     if (_entry != null) {
@@ -134,6 +160,8 @@ class GCWKeyValueNewEntryState extends State<GCWKeyValueNewEntry> {
   void _finishAddEntry(KeyValueBase entry, bool clearInput) {
     if (clearInput) _onNewEntryChanged(true);
     if (widget.onUpdateEntry != null) widget.onUpdateEntry!(entry);
+
+    if (widget.onSetState != null) widget.onSetState!();
   }
 
   void _onNewEntryChanged(bool resetInput) {
@@ -148,7 +176,9 @@ class GCWKeyValueNewEntryState extends State<GCWKeyValueNewEntry> {
       _valueController.clear();
       _currentValue = '';
     }
-    if (widget.onNewEntryChanged != null) widget.onNewEntryChanged!(KeyValueBase(null, _currentKey, _currentValue), context);
+    if (widget.onNewEntryChanged != null) {
+      widget.onNewEntryChanged!(KeyValueBase(null, _currentKey, _currentValue), context);
+    }
   }
 
   KeyValueBase? _getNewEntry(KeyValueBase entry) {

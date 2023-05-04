@@ -14,6 +14,7 @@ class GCWKeyValueTypeRow extends GCWKeyValueRow {
        List<TextInputFormatter>? valueInputFormatters,
        bool editAllowed = true,
        void Function(KeyValueBase)? onUpdateEntry,
+       void Function()? onSetState,
      })
      : super(
         key: key,
@@ -25,6 +26,7 @@ class GCWKeyValueTypeRow extends GCWKeyValueRow {
         valueInputFormatters: valueInputFormatters,
         editAllowed: editAllowed,
         onUpdateEntry: onUpdateEntry,
+        onSetState: onSetState,
   );
 
   @override

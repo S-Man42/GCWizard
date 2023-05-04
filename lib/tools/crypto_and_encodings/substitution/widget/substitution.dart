@@ -7,6 +7,7 @@ import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
 import 'package:gc_wizard/tools/formula_solver/persistence/model.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 
 class Substitution extends StatefulWidget {
   final String? input;
