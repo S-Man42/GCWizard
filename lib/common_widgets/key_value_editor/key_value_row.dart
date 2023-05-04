@@ -54,6 +54,15 @@ class GCWKeyValueRowState extends State<GCWKeyValueRow> {
   }
 
   @override
+  void didUpdateWidget(GCWKeyValueRow oldWidget) {
+    _currentKey = widget.keyValueEntry.key;
+    _currentValue = widget.keyValueEntry.value;
+
+    _keyController = TextEditingController(text: _currentKey);
+    _valueController = TextEditingController(text: _currentValue);
+  }
+
+  @override
   void dispose() {
     _keyController.dispose();
     _valueController.dispose();
@@ -93,14 +102,14 @@ class GCWKeyValueRowState extends State<GCWKeyValueRow> {
         margin: const EdgeInsets.only(left: 10),
         child: widget.keyValueEditorControl.currentEditId == widget.keyValueEntry.id
             ? GCWTextField(
-          controller: _keyController,
-          inputFormatters: widget.keyInputFormatters,
-          onChanged: (text) {
-            setState(() {
-              _currentKey = text;
-            });
-          },
-        )
+                controller: _keyController,
+                inputFormatters: widget.keyInputFormatters,
+                onChanged: (text) {
+                  setState(() {
+                    _currentKey = text;
+                  });
+                },
+              )
             : GCWText(text: widget.keyValueEntry.key),
       ),
     );
