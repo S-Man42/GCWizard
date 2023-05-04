@@ -240,7 +240,7 @@ class ChefState extends State<Chef> {
 
   GCWSwitchPosition _defaultLanguage(BuildContext context) {
     final Locale appLocale = Localizations.localeOf(context);
-    if (appLocale == Locale('de')) {
+    if (appLocale == const Locale('de')) {
       return GCWSwitchPosition.left;
     } else {
       return GCWSwitchPosition.right;
