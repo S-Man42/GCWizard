@@ -20,6 +20,7 @@ import 'package:gc_wizard/tools/formula_solver/persistence/model.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 import 'package:gc_wizard/utils/json_utils.dart';
+import 'package:gc_wizard/utils/math_utils.dart';
 import 'package:gc_wizard/utils/variable_string_expander.dart';
 
 part "package:gc_wizard/common_widgets/key_value_editor/key_value_new_entry.dart";

@@ -37,6 +37,14 @@ class GCWKeyValueTypeRowState extends GCWKeyValueRowState {
   var _currentType = FormulaValueType.FIXED;
 
   @override
+  void _initValues() {
+    super._initValues();
+    _currentType = (widget.keyValueEntry is FormulaValue)
+                    ? (widget.keyValueEntry as FormulaValue).type ?? _currentType
+                    : _currentType;
+  }
+
+  @override
   Widget build(BuildContext context) {
     Widget output;
 
@@ -61,38 +69,44 @@ class GCWKeyValueTypeRowState extends GCWKeyValueRowState {
   }
 
   Widget _typeButton() {
-    return widget.keyValueEntry is FormulaValue
-        ? Expanded(
+    return Expanded(
           flex: 1,
           child: Container(
-            padding: const EdgeInsets.only(left: DEFAULT_MARGIN),
-            child: GCWPopupMenu(
-              iconData: _formulaValueTypeIcon(_currentType),
-              rotateDegrees: _currentType == FormulaValueType.TEXT ? 0.0 : 90.0,
-              menuItemBuilder: (context) => [
-                GCWPopupMenuItem(
-                    child: iconedGCWPopupMenuItem(context, Icons.vertical_align_center_outlined,
-                        i18n(context, 'formulasolver_values_type_fixed'),
-                        rotateDegrees: 90.0),
-                    action: (index) => setState(() {
-                      _currentType = FormulaValueType.FIXED;
-                    })),
-                GCWPopupMenuItem(
-                    child: iconedGCWPopupMenuItem(
-                        context, Icons.expand, i18n(context, 'formulasolver_values_type_interpolated'),
-                        rotateDegrees: 90.0),
-                    action: (index) => setState(() {
-                      _currentType = FormulaValueType.INTERPOLATED;
-                    })),
-                GCWPopupMenuItem(
-                    child: iconedGCWPopupMenuItem(
-                        context, Icons.text_fields, i18n(context, 'formulasolver_values_type_text')),
-                    action: (index) => setState(() {
-                      _currentType = FormulaValueType.TEXT;
-                    })),
-              ],
-            )))
-        : Container();
+            child: widget.keyValueEditorControl.currentEditId == entryId(widget.keyValueEntry)
+              ? Container(
+                padding: const EdgeInsets.only(left: DEFAULT_MARGIN),
+                child: GCWPopupMenu(
+                  iconData: _formulaValueTypeIcon(_currentType),
+                  rotateDegrees: _currentType == FormulaValueType.TEXT ? 0.0 : 90.0,
+                  menuItemBuilder: (context) => [
+                    GCWPopupMenuItem(
+                        child: iconedGCWPopupMenuItem(context, Icons.vertical_align_center_outlined,
+                            i18n(context, 'formulasolver_values_type_fixed'),
+                            rotateDegrees: 90.0),
+                        action: (index) => setState(() {
+                          _currentType = FormulaValueType.FIXED;
+                        })),
+                    GCWPopupMenuItem(
+                        child: iconedGCWPopupMenuItem(
+                            context, Icons.expand, i18n(context, 'formulasolver_values_type_interpolated'),
+                            rotateDegrees: 90.0),
+                        action: (index) => setState(() {
+                          _currentType = FormulaValueType.INTERPOLATED;
+                        })),
+                    GCWPopupMenuItem(
+                        child: iconedGCWPopupMenuItem(
+                            context, Icons.text_fields, i18n(context, 'formulasolver_values_type_text')),
+                        action: (index) => setState(() {
+                          _currentType = FormulaValueType.TEXT;
+                        })),
+                  ],
+                ))
+                : Transform.rotate(
+                  angle: degreesToRadian(_currentType == FormulaValueType.TEXT ? 0.0 : 90.0),
+                  child: Icon(_formulaValueTypeIcon(_currentType), color: themeColors().mainFont()),
+                )
+            )
+    );
   }
 
   @override
@@ -103,6 +117,10 @@ class GCWKeyValueTypeRowState extends GCWKeyValueRowState {
         return;
       }
     }
+    if (widget.keyValueEntry is FormulaValue) {
+      (widget.keyValueEntry as FormulaValue).type = _currentType;
+    }
+
     super._updateEntry();
   }
 }

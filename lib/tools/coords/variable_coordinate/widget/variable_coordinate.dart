@@ -101,10 +101,6 @@ class _VariableCoordinateState extends State<VariableCoordinate> {
     super.dispose();
   }
 
-  void _updateValue(formula_base.FormulaValue value) {
-    updateFormulaValue(value, widget.formula);
-  }
-
   void _updateNewEntry(KeyValueBase entry) {
     _currentFromInput = entry.key;
     _currentToInput = entry.value;
@@ -122,8 +118,7 @@ class _VariableCoordinateState extends State<VariableCoordinate> {
   }
 
   void _updateEntry(KeyValueBase entry) {
-    _updateValue(entry as formula_base.FormulaValue);
-    setState(() {});
+    updateFormulaValue(entry, widget.formula);
   }
 
   @override
