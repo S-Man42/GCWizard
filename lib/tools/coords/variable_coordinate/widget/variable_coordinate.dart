@@ -105,15 +105,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
     updateFormulaValue(value, widget.formula);
   }
 
-  void _addEntry(String currentFromInput, String currentToInput, formula_base.FormulaValueType type, BuildContext context) {
-    if (currentFromInput.isNotEmpty) {
-      insertFormulaValue(
-          formula_base.FormulaValue(currentFromInput, currentToInput, type: formula_base.FormulaValueType.INTERPOLATED),
-          widget.formula);
-    }
-  }
-
-  void _updateNewEntry(KeyValueBase entry, BuildContext context) {
+  void _updateNewEntry(KeyValueBase entry) {
     _currentFromInput = entry.key;
     _currentToInput = entry.value;
   }
@@ -123,7 +115,6 @@ class VariableCoordinateState extends State<VariableCoordinate> {
       entry = formula_base.FormulaValue(entry.key, entry.value);
       entry.id = newID(widget.formula.values.map((value) => (value.id as int?)).toList());
       (entry as formula_base.FormulaValue).type = formula_base.FormulaValueType.INTERPOLATED;
-      //insertFormulaValue(newValue, widget.group);
 
       return entry;
     }
@@ -131,22 +122,8 @@ class VariableCoordinateState extends State<VariableCoordinate> {
   }
 
   void _updateEntry(KeyValueBase entry) {
-    // var entry = widget.formula.values.firstWhere((element) => element.id == id);
-    // entry.key = key;
-    // entry.value = value;
-    // entry.type = formula_base.FormulaValueType.INTERPOLATED;
     _updateValue(entry as formula_base.FormulaValue);
     setState(() {});
-  }
-
-  void _removeEntry(int id, BuildContext context) {
-    deleteFormulaValue(id, widget.formula);
-  }
-
-  void _disposeEntry(KeyValueBase entry, BuildContext context) {
-    // if (entry.key.isNotEmpty && enty.value.isNotEmpty) {
-    //   _addEntry(currentFromInput, currentToInput, formula_base.FormulaValueType.INTERPOLATED, context);
-    // }
   }
 
   @override
@@ -246,10 +223,9 @@ class VariableCoordinateState extends State<VariableCoordinate> {
       valueFlex: 4,
       onGetNewEntry: (entry) => _getNewEntry(entry),
       onNewEntryChanged: _updateNewEntry,
-      entries: widget.formula.values, //keyValueMap
+      entries: widget.formula.values,
       onUpdateEntry: _updateEntry,
       addOnDispose: true,
-
     );
   }
 

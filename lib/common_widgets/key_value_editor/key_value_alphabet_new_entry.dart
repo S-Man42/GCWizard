@@ -12,7 +12,7 @@ class GCWKeyValueAlphabetNewEntry extends GCWKeyValueNewEntry {
        List<TextInputFormatter>? keyInputFormatters,
        List<TextInputFormatter>? valueInputFormatters,
        KeyValueBase? Function(KeyValueBase)? onGetNewEntry,
-       void Function(KeyValueBase, BuildContext)? onNewEntryChanged,
+       void Function(KeyValueBase)? onNewEntryChanged,
        void Function(KeyValueBase)? onUpdateEntry,
        required bool addOnDispose,
        int? valueFlex,
@@ -57,8 +57,8 @@ class GCWKeyValueAlphabetNewEntryState extends GCWKeyValueNewEntryState {
     );
   }
 
-  bool _isAddAndAdjustEnabled() {
-    if (widget.entries.firstWhereOrNull((entry) => entry.key == _currentKey.toUpperCase()) != null) {
+  bool _isAddAndAdjustEnabled(KeyValueBase entry) {
+    if (widget.entries.firstWhereOrNull((_entry) => _entry.key == entry.key) != null) {
       return false;
     } else if (_currentValue.contains(',')) {
       return false;
@@ -74,7 +74,8 @@ class GCWKeyValueAlphabetNewEntryState extends GCWKeyValueNewEntryState {
           text: i18n(context, 'alphabetvalues_edit_mode_customize_addletter'),
           onPressed: () {
             setState(() {
-              _addNewLetter(KeyValueBase(null, _currentKey, _currentValue), adjust: false);
+              var entry = KeyValueBase(null, _currentKey.toUpperCase(), _currentValue);
+              _addNewLetter(entry, adjust: false);
               //_addEntry(KeyValueBase(null, _currentKey, _currentValue));
             });
           },
@@ -87,12 +88,11 @@ class GCWKeyValueAlphabetNewEntryState extends GCWKeyValueNewEntryState {
         child: GCWButton(
           text: i18n(context, 'alphabetvalues_edit_mode_customize_addandadjustletter'),
           onPressed: () {
-            if (_isAddAndAdjustEnabled()) {
+            var entry = KeyValueBase(null, _currentKey.toUpperCase(), _currentValue);
+            if (_isAddAndAdjustEnabled(entry)) {
               setState(() {
                 //if (widget.onAddEntry2 != null) widget.onAddEntry2!(KeyValueBase(null, _currentKeyInput, _currentValueInput), context);
-                if (_addNewLetter(KeyValueBase(null, _currentKey, _currentValue), adjust: true)) {
-                  _onNewEntryChanged(true);
-                }
+                _addNewLetter(entry, adjust: true);
               });
             }
           }
@@ -100,9 +100,8 @@ class GCWKeyValueAlphabetNewEntryState extends GCWKeyValueNewEntryState {
       );
   }
 
-  bool _addNewLetter(KeyValueBase entry, {bool adjust = false}) {
-    var returnValue = false;
-    if (entry.key.isEmpty) return returnValue;
+  void _addNewLetter(KeyValueBase entry, {bool adjust = false}) {
+    if (entry.key.isEmpty) return;
 
     entry.value = entry.value
         .split(',')
@@ -110,19 +109,19 @@ class GCWKeyValueAlphabetNewEntryState extends GCWKeyValueNewEntryState {
         .map((character) => character.toUpperCase())
         .join(',');
 
-    if (entry.value.isEmpty) return returnValue;
+    if (entry.value.isEmpty) return;
 
-    entry.key = entry.key.toUpperCase();
-    if (widget.entries.firstWhereOrNull((_entry) => _entry.key == entry.key) != null) {
+    var existEntry = widget.entries.firstWhereOrNull((_entry) => _entry.key == entry.key);
+    if (existEntry != null) {
       showGCWDialog(context, i18n(context, 'alphabetvalues_edit_mode_customize_addletter_replace_title'),
           Text(i18n(context, 'alphabetvalues_edit_mode_customize_addletter_replace_text', parameters: [entry.key])), [
             GCWDialogButton(
                 text: i18n(context, 'alphabetvalues_edit_mode_customize_addletter_replace'),
                 onPressed: () {
-                  setState(() {
-                    widget.entries.add(KeyValueBase(null, entry.key, entry.value));
-                    returnValue = true;
-                  });
+                  existEntry.key = entry.key;
+                  existEntry.value = entry.value;
+
+                  _finishAddEntry(existEntry, true);
                 })
           ]);
     } else {
@@ -142,12 +141,9 @@ class GCWKeyValueAlphabetNewEntryState extends GCWKeyValueNewEntryState {
           }
         }
       }
-      widget.entries.add(KeyValueBase(null, entry.key, entry.value));
-      returnValue = true;
+      _addEntry(entry);
       //_currentCustomizedAlphabet!.putIfAbsent(letter, () => value);
     }
-    return returnValue;
   }
-
 }
 

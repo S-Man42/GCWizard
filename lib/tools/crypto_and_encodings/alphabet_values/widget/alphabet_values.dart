@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
@@ -18,7 +17,6 @@ import 'package:gc_wizard/common_widgets/text_input_formatters/gcw_onlydigitsand
 import 'package:gc_wizard/common_widgets/textfields/gcw_integer_list_textfield.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/logic/alphabet_values.dart' as logic;
-import 'package:gc_wizard/tools/formula_solver/persistence/model.dart';
 import 'package:gc_wizard/tools/science_and_technology/cross_sums/widget/crosstotal_output.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
@@ -128,12 +126,6 @@ class AlphabetValuesState extends State<AlphabetValues> {
   }
 
   List<KeyValueBase> _setOffsetList(List<KeyValueBase> alphabet) {
-    // Map<String, String> map = {};
-    // for (var entry in alphabet) {
-    //   map.addAll({entry.key: _setValueOffset(entry.value)});
-    // }
-    // return map;
-    // alphabet.map((entry) => MapEntry(entry.key, _setValueOffset(entry.value)));
     return alphabet.map((entry) => KeyValueBase(null, entry.key, _setValueOffset(entry.value))).toList();
   }
 
@@ -162,108 +154,9 @@ class AlphabetValuesState extends State<AlphabetValues> {
       reversedMap.putIfAbsent(entries[length - i - 1].key, () => entries[i].value);
     }
 
-    return _convertToEditingAlphabet(reversedMap); // Map<String, String>.fromEntries(reversedMap.entries);
+    return _convertToEditingAlphabet(reversedMap);
   }
 
-  void _addNewLetter2(String letter, String value, BuildContext context) {
-    _addNewLetter(letter, value, FormulaValueType.FIXED, context, adjust: true);
-  }
-
-  void _addNewLetter(String letter, String value, FormulaValueType type, BuildContext context, {bool adjust = false}) {
-    if (letter.isEmpty) return;
-
-    value = value
-        .split(',')
-        .where((character) => character.isNotEmpty)
-        .map((character) => character.toUpperCase())
-        .join(',');
-
-    if (value.isEmpty) return;
-    if (_currentCustomizedAlphabet == null) return;
-
-    letter = letter.toUpperCase();
-    if (_currentCustomizedAlphabet!.firstWhereOrNull((entry) => entry.key == letter) != null) {
-      showGCWDialog(context, i18n(context, 'alphabetvalues_edit_mode_customize_addletter_replace_title'),
-          Text(i18n(context, 'alphabetvalues_edit_mode_customize_addletter_replace_text', parameters: [letter])), [
-        GCWDialogButton(
-            text: i18n(context, 'alphabetvalues_edit_mode_customize_addletter_replace'),
-            onPressed: () {
-              setState(() {
-                _currentCustomizedAlphabet!.add(KeyValueBase(null, letter, value));
-              });
-            })
-      ]);
-    } else {
-      setState(() {
-        if (adjust) {
-          var insertedValue = int.tryParse(value);
-          if (insertedValue != null) {
-            _currentCustomizedAlphabet = _currentCustomizedAlphabet!.map((entry) {
-              var newValue = entry.value.split(',').map((value) {
-                var intValue = int.tryParse(value);
-                if (intValue == null) return '';
-                if (intValue >= insertedValue) intValue++;
-
-                return intValue.toString();
-              }).join(',');
-
-              return KeyValueBase(null, entry.key, newValue);
-            }).toList();
-          }
-        }
-        if (_currentCustomizedAlphabet!.firstWhereOrNull((entry) => entry.key == letter) == null) {
-          _currentCustomizedAlphabet!.add(KeyValueBase(null, letter, value));
-        }
-        //_currentCustomizedAlphabet!.putIfAbsent(letter, () => value);
-      });
-    }
-  }
-
-  void _removeEntry(Object id, BuildContext context) {
-    if (_currentCustomizedAlphabet == null) return;
-    var _valueToDelete = _currentCustomizedAlphabet!.firstWhereOrNull((entry) => entry.key == id)?.value;
-    if (_valueToDelete == null) return;
-    var _isList = _valueToDelete.contains(',');
-
-    var buttons = [
-      GCWDialogButton(
-          text: i18n(context, 'alphabetvalues_edit_mode_customize_deleteletter_remove'),
-          onPressed: () {
-            setState(() {
-              _currentCustomizedAlphabet!.remove(id);
-            });
-          })
-    ];
-
-    if (!_isList) {
-      var deleteValue = int.tryParse(_valueToDelete);
-
-      buttons.add(GCWDialogButton(
-        text: i18n(context, 'alphabetvalues_edit_mode_customize_deleteletter_removeandadjust'),
-        onPressed: () {
-          if (deleteValue != null) {
-            _currentCustomizedAlphabet = _currentCustomizedAlphabet!.map((entry) {
-              var newValue = entry.value.split(',').map((value) {
-                var intValue = int.tryParse(value);
-                if (intValue == null) return '';
-                if (intValue > deleteValue) intValue--;
-
-                return intValue.toString();
-              }).join(',');
-
-              return KeyValueBase(null, entry.key, newValue);
-            }).toList();
-            setState(() {
-              _currentCustomizedAlphabet!.remove(id);
-            });
-          }
-        },
-      ));
-    }
-
-    showGCWDialog(context, i18n(context, 'alphabetvalues_edit_mode_customize_deleteletter_title'),
-        Text(i18n(context, 'alphabetvalues_edit_mode_customize_deleteletter_text', parameters: [id])), buttons);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -435,7 +328,6 @@ class AlphabetValuesState extends State<AlphabetValues> {
             valueHintText: i18n(context, 'alphabetvalues_edit_mode_customize_value'),
             valueInputFormatters: [GCWOnlyDigitsAndCommaInputFormatter()],
             entries: _currentCustomizedAlphabet ?? [],
-            onUpdateEntry: (entry) => setState(() {}),
             editAllowed: false,
             alphabetFormat: true,
         ),
