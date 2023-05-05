@@ -51,6 +51,7 @@ class GCWKeyValueRowState extends State<GCWKeyValueRow> {
 
   @override
   void didUpdateWidget(GCWKeyValueRow oldWidget) {
+    super.didUpdateWidget(oldWidget);
     _initValues();
   }
 
