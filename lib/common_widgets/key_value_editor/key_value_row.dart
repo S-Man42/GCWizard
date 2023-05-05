@@ -200,7 +200,13 @@ class GCWKeyValueRowState extends State<GCWKeyValueRow> {
 
   void _removeEntry() {
     widget.entries.remove(widget.keyValueEntry);
-    if (widget.onUpdateEntry != null) widget.onUpdateEntry!(widget.keyValueEntry);
+    _finishRemoveEntry(widget.keyValueEntry);
+  }
+
+  void _finishRemoveEntry(KeyValueBase entry) {
+    if (widget.onUpdateEntry != null) widget.onUpdateEntry!(entry);
+
+    if (widget.onSetState != null) widget.onSetState!();
   }
 }
 

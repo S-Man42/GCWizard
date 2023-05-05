@@ -73,7 +73,7 @@ class GCWKeyValueAlphabetRowState extends GCWKeyValueRowState {
     }
 
     showGCWDialog(context, i18n(context, 'alphabetvalues_edit_mode_customize_deleteletter_title'),
-        Text(i18n(context, 'alphabetvalues_edit_mode_customize_deleteletter_text', parameters: [widget.keyValueEntry.id])), buttons);
+        Text(i18n(context, 'alphabetvalues_edit_mode_customize_deleteletter_text', parameters: [widget.keyValueEntry.key])), buttons);
   }
 }
 
