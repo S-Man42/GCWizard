@@ -31,8 +31,7 @@ dependencies:
   highlight: ^0.7.0
   http: ^0.13.5
   http_parser: ^4.0.2
-  image:
-    git: https://github.com/brendan-duncan/image
+  image: ^4.0.16
   intl: ^0.17.0
   latlong2: ^0.8.1
   location: ^4.4.0
