@@ -189,7 +189,7 @@ class GCWKeyValueRowState extends State<GCWKeyValueRow> {
     widget.keyValueEntry.key = _currentKey;
     widget.keyValueEntry.value = _currentValue;
     if (widget.onUpdateEntry != null) widget.onUpdateEntry!(widget.keyValueEntry);
-    //}
+
     setState(() {
       widget.keyValueEditorControl.currentEditId = null;
       _keyController.clear();

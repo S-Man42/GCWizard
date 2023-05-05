@@ -84,8 +84,9 @@ class HomophoneState extends State<Homophone> {
   }
 
   KeyValueBase? _getNewEntry(KeyValueBase entry) {
+    if (entry.key.isEmpty) return null;
     entry.key = entry.key.toUpperCase();
-    if (_currentSubstitutions.firstWhereOrNull((_entry) => _entry.key == entry.key) != null) {
+    if (_currentSubstitutions.firstWhereOrNull((_entry) => _entry.key == entry.key) == null) {
       return entry;
     }
     return null;
@@ -297,7 +298,7 @@ class HomophoneState extends State<Homophone> {
         valueFlex: 4,
         entries: _currentSubstitutions,
         onGetNewEntry: (entry) => _getNewEntry(entry),
-        onUpdateEntry: _updateEntry,
+        onUpdateEntry: (entry) => _updateEntry(entry),
     );
   }
 }

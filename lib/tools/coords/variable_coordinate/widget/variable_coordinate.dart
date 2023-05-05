@@ -108,9 +108,8 @@ class VariableCoordinateState extends State<VariableCoordinate> {
 
   KeyValueBase? _getNewEntry(KeyValueBase entry) {
     if (entry.key.isNotEmpty) {
-      entry = formula_base.FormulaValue(entry.key, entry.value);
+      entry = formula_base.FormulaValue(entry.key, entry.value, type: formula_base.FormulaValueType.INTERPOLATED);
       entry.id = newID(widget.formula.values.map((value) => (value.id as int?)).toList());
-      (entry as formula_base.FormulaValue).type = formula_base.FormulaValueType.INTERPOLATED;
 
       return entry;
     }
@@ -216,10 +215,10 @@ class VariableCoordinateState extends State<VariableCoordinate> {
       valueHintText: i18n(context, 'coords_variablecoordinate_possiblevalues'),
       valueInputFormatters: [VariableStringTextInputFormatter()],
       valueFlex: 4,
-      onGetNewEntry: (entry) => _getNewEntry(entry),
       onNewEntryChanged: _updateNewEntry,
       entries: widget.formula.values,
-      onUpdateEntry: _updateEntry,
+      onGetNewEntry: (entry) => _getNewEntry(entry),
+      onUpdateEntry: (entry) => _updateEntry(entry),
       addOnDispose: true,
     );
   }
