@@ -123,7 +123,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
   List<String> analyzeLines = [];
 
   lines = _LUAFile.split('\n');
-  for (int i = 0; i < lines.length; i++) {
+  for (int i = 0; i < lines.length - 2; i++) {
     lines[i] = lines[i].trim();
 
     if (sendAsyncPort != null && (i % progressStep == 0)) {
@@ -438,7 +438,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
             if (sendAsyncPort != null && (i % progressStep == 0)) {
               sendAsyncPort.send(DoubleText(PROGRESS, i / lines.length / 2));
             }
-          } while (_insideSectionOnGetInput(lines[i]) && (i < lines.length - 1));
+          } while (_insideSectionOnGetInput(lines[i]) && (i < lines.length - 3));
           _Answers.add(_analyzeAndExtractOnGetInputSectionData(analyzeLines));
         }
       } // end if identify input function
