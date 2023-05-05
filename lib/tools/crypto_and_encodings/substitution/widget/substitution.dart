@@ -39,7 +39,7 @@ class _SubstitutionState extends State<Substitution> {
       for (var element in widget.substitutions!.entries) {
         _currentIdCount++;
         if (_currentSubstitutions.firstWhereOrNull((entry) => entry.id == _currentIdCount) == null) {
-          _currentSubstitutions.add( KeyValueBase (_currentIdCount, element.key, element.value));
+          _currentSubstitutions.add(KeyValueBase(_currentIdCount, element.key, element.value));
         }
       }
     }
@@ -60,6 +60,7 @@ class _SubstitutionState extends State<Substitution> {
   }
 
   KeyValueBase? _getNewEntry(KeyValueBase entry) {
+    if (entry.key.isEmpty) return null;
     _currentIdCount++;
     if (_currentSubstitutions.firstWhereOrNull((_entry) => _entry.id == _currentIdCount) == null) {
       entry.id = _currentIdCount;
@@ -71,6 +72,7 @@ class _SubstitutionState extends State<Substitution> {
   void _updateNewEntry(KeyValueBase entry) {
     _currentFromInput = entry.key;
     _currentToInput = entry.value;
+    _calculateOutput();
   }
 
   void _updateEntry(KeyValueBase entry) {
@@ -111,9 +113,9 @@ class _SubstitutionState extends State<Substitution> {
         dividerText: i18n(context, 'substitution_current_substitutions'),
 
         entries: _currentSubstitutions,
-        onNewEntryChanged: _updateNewEntry,
+        onNewEntryChanged: (entry) => _updateNewEntry(entry),
         onGetNewEntry: (entry) => _getNewEntry(entry),
-        onUpdateEntry: (entry) => _updateEntry,
+        onUpdateEntry: (entry) => _updateEntry(entry),
     );
   }
 

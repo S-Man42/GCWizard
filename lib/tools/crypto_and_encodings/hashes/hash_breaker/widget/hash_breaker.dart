@@ -59,6 +59,7 @@ class _HashBreakerState extends State<HashBreaker> {
   }
 
   KeyValueBase? _getNewEntry(KeyValueBase entry) {
+    if (entry.key.isEmpty) return null;
     _currentIdCount++;
     if (_currentSubstitutions.firstWhereOrNull((_entry) => _entry.id == _currentIdCount) == null) {
       entry.id = _currentIdCount;
@@ -124,9 +125,9 @@ class _HashBreakerState extends State<HashBreaker> {
         valueHintText: i18n(context, 'coords_variablecoordinate_possiblevalues'),
         valueInputFormatters: [VariableStringTextInputFormatter()],
         valueFlex: 4,
-        onNewEntryChanged: _updateNewEntry,
+        entries: _currentSubstitutions,
+        onNewEntryChanged: (entry) => _updateNewEntry(entry),
         onGetNewEntry: (entry) => _getNewEntry(entry),
-        entries: _currentSubstitutions, //keyKeyValueMap
       );
   }
 
