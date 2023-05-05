@@ -29,7 +29,7 @@ dependencies:
   flutter_map_tappable_polyline: ^4.0.0+1
   fluttertoast: ^8.2.1
   highlight: ^0.7.0
-  http: ^0.13.5
+  http: ^0.13.6
   http_parser: ^4.0.2
   image: ^4.0.16
   intl: ^0.17.0
@@ -37,7 +37,7 @@ dependencies:
   location: ^4.4.0
   mask_text_input_formatter: ^2.4.0
   math_expressions: ^2.4.0
-  package_info_plus: ^3.0.3
+  package_info_plus: ^3.1.2
   path: ^1.8.2
   path_provider: ^2.0.14
   permission_handler: ^10.1.0
@@ -47,7 +47,7 @@ dependencies:
   provider: ^6.0.4
   qr: ^3.0.1
   r_scan: ^0.1.6+1
-  scrollable_positioned_list: ^0.3.5
+  scrollable_positioned_list: ^0.3.7
   shared_preferences: ^2.1.0
   touchable: ^1.0.2
   tuple: ^2.0.1
@@ -57,7 +57,7 @@ dependencies:
   url_launcher: ^6.1.10
   utility: ^1.0.3
   week_of_year: ^2.0.0
-  xml: ^6.1.0
+  xml: ^6.2.2
 
 dev_dependencies:
   flutter_test:
