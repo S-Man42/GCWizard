@@ -191,8 +191,48 @@ void main() {
         .replaceAll('+', 'INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n')
         .replaceAll('-', 'DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n')
         .replaceAll('.', 'PRINT THE CELL UNDER THE MEMORY POINTER' "'" 'S VALUE AS AN ASCII CHARACTER\n')
-        .replaceAll('[', 'IF THE CELL UNDER THE MEMORY POINTER' "'" 'S VALUE IS ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE ] COMMAND IN BRAINFUCK\n')
-        .replaceAll(']', 'IF THE CELL UNDER THE MEMORY POINTER' "'" 'S VALUE IS NOT ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE [ COMMAND IN BRAINFUCK\n');
+        .replaceAll(']', 'IF THE CELL UNDER THE MEMORY POINTER' "'" 'S VALUE IS ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE ] COMMAND IN BRAINFUCK\n')
+        .replaceAll('[', 'IF THE CELL UNDER THE MEMORY POINTER' "'" 'S VALUE IS NOT ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE [ COMMAND IN BRAINFUCK\n');
+    String wepmlrIo = brainfck
+        .replaceAll('>', 'r ')
+        .replaceAll('<', 'l ')
+        .replaceAll('+', 'p ')
+        .replaceAll('-', 'm ')
+        .replaceAll('.', 'o ')
+        .replaceAll('[', 'w ')
+        .replaceAll(']', 'e ');
+    String htpf = brainfck
+        .replaceAll('>', '> ')
+        .replaceAll('<', '< ')
+        .replaceAll('+', '= ')
+        .replaceAll('-', '/ ')
+        .replaceAll('.', '" ')
+        .replaceAll('[', '& ')
+        .replaceAll(']', '; ');
+    String mierda = brainfck
+        .replaceAll('>', 'Derecha ')
+        .replaceAll('<', 'Izquierda ')
+        .replaceAll('+', 'Mas ')
+        .replaceAll('-', 'Menos ')
+        .replaceAll('.', 'Decir ')
+        .replaceAll('[', 'Iniciar Bucle ')
+        .replaceAll(']', 'Terminar Bucle ');
+    String gibmerol = brainfck
+        .replaceAll('>', 'G ')
+        .replaceAll('<', 'i ')
+        .replaceAll('+', 'b ')
+        .replaceAll('-', 'M ')
+        .replaceAll('.', 'e ')
+        .replaceAll('[', 'o ')
+        .replaceAll(']', 'l ');
+    String nagawoosli = brainfck
+        .replaceAll('>', 'na ')
+        .replaceAll('<', 'ga ')
+        .replaceAll('+', 'woo ')
+        .replaceAll('-', 'ski ')
+        .replaceAll('.', 'an ')
+        .replaceAll('[', 'oow ')
+        .replaceAll(']', 'iks ');
 
     List<Map<String, Object?>> _inputsToExpected = [
       {'derivat': 'brainfck', 'code': brainfck, 'expectedOutput': result},
@@ -222,6 +262,11 @@ void main() {
       {'derivat': 'omam', 'code': omam, 'expectedOutput': result},
       {'derivat': 'revo9', 'code': revo9, 'expectedOutput': result},
       {'derivat': 'detail', 'code': detail, 'expectedOutput': result},
+      {'derivat': 'wepmlrIo', 'code': wepmlrIo, 'expectedOutput': result},
+      {'derivat': 'htpf', 'code': htpf, 'expectedOutput': result},
+      {'derivat': 'mierda', 'code': mierda, 'expectedOutput': result},
+      {'derivat': 'gibmerol', 'code': gibmerol, 'expectedOutput': result},
+      {'derivat': 'nagawoosli', 'code': nagawoosli, 'expectedOutput': result},
     ];
 
     for (var elem in _inputsToExpected) {
@@ -329,6 +374,26 @@ void main() {
             break;
           case 'detail':
             var _actual = BRAINFKDERIVATIVE_DETAILEDFK.interpretBrainfkDerivatives(elem['code'] as String);
+            expect(_actual, elem['expectedOutput']);
+            break;
+          case 'wepmlrIo':
+            var _actual = BRAINFKDERIVATIVE_WEPMLRIO.interpretBrainfkDerivatives(elem['code'] as String);
+            expect(_actual, elem['expectedOutput']);
+            break;
+          case 'htpf':
+            var _actual = BRAINFKDERIVATIVE_HTPF.interpretBrainfkDerivatives(elem['code'] as String);
+            expect(_actual, elem['expectedOutput']);
+            break;
+          case 'mierda':
+            var _actual = BRAINFKDERIVATIVE_MIERDA.interpretBrainfkDerivatives(elem['code'] as String);
+            expect(_actual, elem['expectedOutput']);
+            break;
+          case 'gibmerol':
+            var _actual = BRAINFKDERIVATIVE_GIBMEROL.interpretBrainfkDerivatives(elem['code'] as String);
+            expect(_actual, elem['expectedOutput']);
+            break;
+          case 'nagawoosli':
+            var _actual = BRAINFKDERIVATIVE_NAGAWOOSKI.interpretBrainfkDerivatives(elem['code'] as String);
             expect(_actual, elem['expectedOutput']);
             break;
         }
