@@ -12,6 +12,7 @@ import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 const _ABOUT_MAINTAINER = 'Mark \'S-Man42\' Lorenz';
+const _ABOUT_PACKAGE_INFO_UNKNOWN = 'unknown';
 
 class About extends StatefulWidget {
   const About({Key? key}) : super(key: key);
@@ -22,12 +23,12 @@ class About extends StatefulWidget {
 
 class AboutState extends State<About> {
   PackageInfo _packageInfo = PackageInfo(
-    appName: 'Unknown',
-    packageName: 'Unknown',
-    version: 'Unknown',
-    buildNumber: 'Unknown',
-    buildSignature: 'Unknown',
-    installerStore: 'Unknown',
+    appName: _ABOUT_PACKAGE_INFO_UNKNOWN,
+    packageName: _ABOUT_PACKAGE_INFO_UNKNOWN,
+    version: _ABOUT_PACKAGE_INFO_UNKNOWN,
+    buildNumber: _ABOUT_PACKAGE_INFO_UNKNOWN,
+    buildSignature: _ABOUT_PACKAGE_INFO_UNKNOWN,
+    installerStore: _ABOUT_PACKAGE_INFO_UNKNOWN,
   );
 
   @override
