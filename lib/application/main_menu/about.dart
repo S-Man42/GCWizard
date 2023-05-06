@@ -21,7 +21,14 @@ class About extends StatefulWidget {
 }
 
 class AboutState extends State<About> {
-  late PackageInfo _packageInfo;
+  PackageInfo _packageInfo = PackageInfo(
+    appName: 'Unknown',
+    packageName: 'Unknown',
+    version: 'Unknown',
+    buildNumber: 'Unknown',
+    buildSignature: 'Unknown',
+    installerStore: 'Unknown',
+  );
 
   @override
   void initState() {
