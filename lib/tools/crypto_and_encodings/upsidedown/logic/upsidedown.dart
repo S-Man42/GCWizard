@@ -1,13 +1,13 @@
-// https://de.wikipedia.org/wiki/Leetspeak
+// https://de.wikipedia.org/wiki/Upside_Down_Text
 
 import 'package:gc_wizard/utils/collection_utils.dart';
 
 
 final Map<String, String> UPSIDE_DOWN_ENCODE = {
   'A' : 'ɐ',
-  'B' : 'q',
+  'B' : 'q', // ok
   'C' : 'ɔ',
-  'D' : 'p',
+  'D' : 'p', // ok
   'E' : 'ǝ',
   'F' : 'ɟ',
   'G' : 'ƃ',
@@ -17,31 +17,31 @@ final Map<String, String> UPSIDE_DOWN_ENCODE = {
   'K' : 'ʞ',
   'L' : 'l',
   'M' : 'ɯ',
-  'N' : 'u',
-  'O' : 'o',
-  'P' : 'd',
-  'Q' : 'b',
+  'N' : 'u', // ok
+  'O' : 'o', // ok
+  'P' : 'd', // ok
+  'Q' : 'b', // ok
   'R' : 'ɹ',
-  'S' : 's',
+  'S' : 's', // ok
   'T' : 'ʇ',
-  'U' : 'n',
+  'U' : 'n', // ok
   'V' : 'ʌ',
   'W' : 'ʍ',
-  'X' : 'x',
+  'X' : 'x', // ok
   'Y' : 'ʎ',
-  'Z' : 'z',
+  'Z' : 'z', // ok
   '.' : "'",
   '?' : '¿',
   '!' : '¡',
-  '(' : '(',
-  ')' : ')',
-  '+' : '+',
-  '-' : '-',
-  '*' : '*',
-  '[' : '[',
-  ']' : ']',
-  '/' : '\\',
-  '\\' : '/',
+  '(' : '(',// ok
+  ')' : ')',// ok
+  '+' : '+',// ok
+  '-' : '-',// ok
+  '*' : '*',// ok
+  '[' : '[',// ok
+  ']' : ']',// ok
+  '/' : '\\',// ok
+  '\\' : '/',// ok
   ' ' : ' ',
 };
 
