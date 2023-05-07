@@ -1406,6 +1406,7 @@
   "common_unit_density_lbusliqgal_name": "Pound Per US Liquid Gallon",
   "common_unit_density_ozusliqgal_name": "Ounce Per US Liquid Gallon",
   "common_unit_density_lbusbu_name": "Pound Per US Bushel",
+  "common_unit_drag": "Drag coefficient",
   "common_unit_energy_j_name": "Joule",
   "common_unit_energy_cal_name": "Calorie",
   "common_unit_energy_btu_name": "British Thermal Unit",

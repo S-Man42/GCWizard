@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/drag.dart';
 import 'package:intl/intl.dart';
 
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
-import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/units/gcw_unit_input.dart';
@@ -13,6 +12,10 @@ import 'package:gc_wizard/common_widgets/units/gcw_units.dart';
 
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/density.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/mass.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/acceleration.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/angle.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/length.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit_category.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit_prefix.dart';
 
@@ -63,7 +66,7 @@ class BallisticsState extends State<Ballistics> {
             });
           },
         ),
-        GCWUnitInput(
+        GCWUnitInput<Angle>(
           value: _currentInputAngle,
           title: i18n(context, 'unitconverter_category_angle'),
           unitCategory: UNITCATEGORY_ANGLE,
@@ -73,7 +76,7 @@ class BallisticsState extends State<Ballistics> {
             });
           },
         ),
-        GCWUnitInput(
+        GCWUnitInput<Length>(
           value: _currentInputHeight,
           title: i18n(context, 'ballistics_height'),
           unitCategory: UNITCATEGORY_LENGTH,
@@ -83,7 +86,7 @@ class BallisticsState extends State<Ballistics> {
             });
           },
         ),
-        GCWUnitInput(
+        GCWUnitInput<Acceleration>(
           value: _currentInputAcceleration,
           title: i18n(context, 'unitconverter_category_acceleration'),
           unitCategory: UNITCATEGORY_ACCELERATION,
@@ -122,7 +125,7 @@ class BallisticsState extends State<Ballistics> {
                       });
                     },
                   ),
-                  GCWUnitInput(
+                  GCWUnitInput<Length>(
                     value: _currentInputDiameter,
                     title: i18n(context, 'ballistics_diameter'),
                     unitCategory: UNITCATEGORY_LENGTH,
@@ -132,7 +135,7 @@ class BallisticsState extends State<Ballistics> {
                       });
                     },
                   ),
-                  GCWUnitInput(
+                  GCWUnitInput<Density>(
                     value: _currentInputDensity,
                     title: i18n(context, 'unitconverter_category_density'),
                     unitCategory: UNITCATEGORY_DENSITY,
@@ -142,9 +145,10 @@ class BallisticsState extends State<Ballistics> {
                       });
                     },
                   ),
-                  GCWUnitInput(
+                  GCWUnitInput<Drag>(
                     value: _currentInputDrag,
                     title: i18n(context, 'ballistics_cw'),
+                    unitCategory: UNITCATEGORY_DRAG,
                     onChanged: (value) {
                       setState(() {
                         _currentInputDrag = value;
@@ -186,34 +190,17 @@ class BallisticsState extends State<Ballistics> {
 
     return Column(
       children: <Widget>[
-        GCWExpandableTextDivider(
-            text: i18n(context, 'ballistics_distance'),
-            expanded: false,
-            child: GCWUnits(
-              value: _currentOutputDistanceUnit,
-              unitCategory: UNITCATEGORY_LENGTH,
-              onlyShowPrefixSymbols: false,
-              onlyShowUnitSymbols: false,
-              onChanged: (GCWUnitsValue value) {
-                setState(() {
-                  _currentOutputDistanceUnit = value;
-                  outputDistanceValue = _currentOutputDistanceUnit.value.fromReference(output.Distance) /
-                      _currentOutputDistanceUnit.prefix.value;
-                });
-              },
-            )),
         Row(
           children: <Widget>[
             Expanded(
               flex: 2,
-              child: Container(
-                padding: const EdgeInsets.only(
-                  right: DOUBLE_DEFAULT_MARGIN,
-                ),
+              child: GCWOutputText(
+                text: i18n(context, 'ballistics_distance'),
+                suppressCopyButton: true,
               ),
             ),
             Expanded(
-              flex: 6,
+              flex: 2,
               child: Container(
                 padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN, left: DOUBLE_DEFAULT_MARGIN),
                 child: GCWOutputText(
@@ -222,45 +209,33 @@ class BallisticsState extends State<Ballistics> {
               ),
             ),
             Expanded(
-              flex: 2,
-              child: Container(
-                padding: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
-                child: GCWOutputText(
-                  text: _currentOutputDistanceUnit.prefix.symbol + _currentOutputDistanceUnit.value.symbol,
-                  suppressCopyButton: true,
-                ),
-              ),
-            ),
+                flex: 5,
+                child: GCWUnits(
+                  value: _currentOutputDistanceUnit,
+                  unitCategory: UNITCATEGORY_LENGTH,
+                  onlyShowPrefixSymbols: false,
+                  onlyShowUnitSymbols: false,
+                  onChanged: (GCWUnitsValue value) {
+                    setState(() {
+                      _currentOutputDistanceUnit = value;
+                      outputDistanceValue = _currentOutputDistanceUnit.value.fromReference(output.Distance) /
+                          _currentOutputDistanceUnit.prefix.value;
+                    });
+                  },
+                )),
           ],
         ),
-        GCWExpandableTextDivider(
-            text: i18n(context, 'ballistics_time'),
-            expanded: false,
-            child: GCWUnits(
-              value: _currentOutputTimeUnit,
-              unitCategory: UNITCATEGORY_TIME,
-              onlyShowPrefixSymbols: false,
-              onlyShowUnitSymbols: false,
-              onChanged: (GCWUnitsValue value) {
-                setState(() {
-                  _currentOutputTimeUnit = value;
-                  outputDistanceValue =
-                      _currentOutputTimeUnit.value.fromReference(output.Time) / _currentOutputTimeUnit.prefix.value;
-                });
-              },
-            )),
         Row(
           children: <Widget>[
             Expanded(
               flex: 2,
-              child: Container(
-                padding: const EdgeInsets.only(
-                  right: DOUBLE_DEFAULT_MARGIN,
-                ),
+              child: GCWOutputText(
+                text: i18n(context, 'ballistics_time'),
+                suppressCopyButton: true,
               ),
             ),
             Expanded(
-              flex: 6,
+              flex: 2,
               child: Container(
                 padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN, left: DOUBLE_DEFAULT_MARGIN),
                 child: GCWOutputText(
@@ -269,45 +244,36 @@ class BallisticsState extends State<Ballistics> {
               ),
             ),
             Expanded(
-              flex: 2,
+              flex: 5,
               child: Container(
-                padding: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
-                child: GCWOutputText(
-                  text: _currentOutputTimeUnit.prefix.symbol + _currentOutputTimeUnit.value.symbol,
-                  suppressCopyButton: true,
-                ),
-              ),
+                  padding: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
+                  child: GCWUnits(
+                    value: _currentOutputTimeUnit,
+                    unitCategory: UNITCATEGORY_TIME,
+                    onlyShowPrefixSymbols: false,
+                    onlyShowUnitSymbols: false,
+                    onChanged: (GCWUnitsValue value) {
+                      setState(() {
+                        _currentOutputTimeUnit = value;
+                        outputDistanceValue = _currentOutputTimeUnit.value.fromReference(output.Time) /
+                            _currentOutputTimeUnit.prefix.value;
+                      });
+                    },
+                  )),
             ),
           ],
         ),
-        GCWExpandableTextDivider(
-            text: i18n(context, 'ballistics_height'),
-            expanded: false,
-            child: GCWUnits(
-              value: _currentOutputHeightUnit,
-              unitCategory: UNITCATEGORY_LENGTH,
-              onlyShowPrefixSymbols: false,
-              onlyShowUnitSymbols: false,
-              onChanged: (GCWUnitsValue value) {
-                setState(() {
-                  _currentOutputHeightUnit = value;
-                  outputHeightValue = _currentOutputHeightUnit.value.fromReference(output.Height) /
-                      _currentOutputHeightUnit.prefix.value;
-                });
-              },
-            )),
         Row(
           children: <Widget>[
             Expanded(
               flex: 2,
-              child: Container(
-                padding: const EdgeInsets.only(
-                  right: DOUBLE_DEFAULT_MARGIN,
-                ),
+              child: GCWOutputText(
+                text: i18n(context, 'ballistics_height'),
+                suppressCopyButton: true,
               ),
             ),
             Expanded(
-              flex: 6,
+              flex: 2,
               child: Container(
                 padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN, left: DOUBLE_DEFAULT_MARGIN),
                 child: GCWOutputText(
@@ -316,65 +282,57 @@ class BallisticsState extends State<Ballistics> {
               ),
             ),
             Expanded(
-              flex: 2,
-              child: Container(
-                padding: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
-                child: GCWOutputText(
-                  text: _currentOutputHeightUnit.prefix.symbol + _currentOutputHeightUnit.value.symbol,
-                  suppressCopyButton: true,
-                ),
-              ),
-            ),
+                flex: 5,
+                child: GCWUnits(
+                  value: _currentOutputHeightUnit,
+                  unitCategory: UNITCATEGORY_LENGTH,
+                  onlyShowPrefixSymbols: false,
+                  onlyShowUnitSymbols: false,
+                  onChanged: (GCWUnitsValue value) {
+                    setState(() {
+                      _currentOutputHeightUnit = value;
+                      outputHeightValue = _currentOutputHeightUnit.value.fromReference(output.Height) /
+                          _currentOutputHeightUnit.prefix.value;
+                    });
+                  },
+                )),
           ],
         ),
-        GCWExpandableTextDivider(
-            text: i18n(context, 'ballistics_maxspeed'),
-            expanded: false,
-            child: GCWUnits(
-              value: _currentOutputMaxSpeedUnit,
-              unitCategory: UNITCATEGORY_VELOCITY,
-              onlyShowPrefixSymbols: false,
-              onlyShowUnitSymbols: false,
-              onChanged: (GCWUnitsValue value) {
-                setState(() {
-                  _currentOutputMaxSpeedUnit = value;
-                  outputMaxSpeedValue = _currentOutputMaxSpeedUnit.value.fromReference(output.maxSpeed) /
-                      _currentOutputMaxSpeedUnit.prefix.value;
-                });
-              },
-            )),
         Row(
           children: <Widget>[
             Expanded(
               flex: 2,
-              child: Container(
-                padding: const EdgeInsets.only(
-                  right: DOUBLE_DEFAULT_MARGIN,
-                ),
+              child: GCWOutputText(
+                text: i18n(context, 'ballistics_maxspeed'),
+                suppressCopyButton: true,
               ),
             ),
             Expanded(
-              flex: 6,
+              flex: 2,
               child: Container(
                 padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN, left: DOUBLE_DEFAULT_MARGIN),
                 child: GCWOutputText(
                   text: (outputMaxSpeedValue > 0)
                       ? NumberFormat('0.0' + '#').format(outputMaxSpeedValue)
-                      : i18n(context, 'ballistics_not_implemented_yet'),
+                      : NumberFormat('0.0' + '#').format(_currentInputVelocity),
                 ),
               ),
             ),
             Expanded(
-              flex: 2,
-              child: (outputMaxSpeedValue > 0)
-                  ? Container(
-                      padding: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
-                      child: GCWOutputText(
-                        text: _currentOutputMaxSpeedUnit.prefix.symbol + _currentOutputMaxSpeedUnit.value.symbol,
-                        suppressCopyButton: true,
-                      ),
-                    )
-                  : Container(),
+              flex: 5,
+              child: GCWUnits(
+                value: _currentOutputMaxSpeedUnit,
+                unitCategory: UNITCATEGORY_VELOCITY,
+                onlyShowPrefixSymbols: false,
+                onlyShowUnitSymbols: false,
+                onChanged: (GCWUnitsValue value) {
+                  setState(() {
+                    _currentOutputMaxSpeedUnit = value;
+                    outputMaxSpeedValue = _currentOutputMaxSpeedUnit.value.fromReference(output.maxSpeed) /
+                        _currentOutputMaxSpeedUnit.prefix.value;
+                  });
+                },
+              ),
             ),
           ],
         ),
