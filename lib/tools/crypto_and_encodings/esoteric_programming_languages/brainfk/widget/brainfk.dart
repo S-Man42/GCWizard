@@ -30,18 +30,18 @@ class BrainfkState extends State<Brainfk> {
   late TextEditingController _inputController_startLoop;
   late TextEditingController _inputController_endLoop;
 
-  var _currentDerivate = BRAINFKDERIVATIVE_OOK;
+  BrainfkDerivatives _currentDerivate = BRAINFKDERIVATIVE_OOK;
 
-  var _currentText = '';
-  var _currentInput = '';
-  var _currentInput_shiftRight = '';
-  var _currentInput_shiftLeft = '';
-  var _currentInput_increaseValue = '';
-  var _currentInput_decreaseValue = '';
-  var _currentInput_output = '';
-  var _currentInput_input = '';
-  var _currentInput_startLoop = '';
-  var _currentInput_endLoop = '';
+  String _currentText = '';
+  String _currentInput = '';
+  String _currentInput_shiftRight = '';
+  String _currentInput_shiftLeft = '';
+  String _currentInput_increaseValue = '';
+  String _currentInput_decreaseValue = '';
+  String _currentInput_output = '';
+  String _currentInput_input = '';
+  String _currentInput_startLoop = '';
+  String _currentInput_endLoop = '';
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
   GCWSwitchPosition _currentOriginal = GCWSwitchPosition.left;
@@ -242,7 +242,8 @@ class BrainfkState extends State<Brainfk> {
                     outputInstruction: _currentInput_output,
                     inputInstruction: _currentInput_input,
                     startLoopInstruction: _currentInput_startLoop,
-                    endLoopInstruction: _currentInput_endLoop)
+                    endLoopInstruction: _currentInput_endLoop,
+            )
                 .interpretBrainfkDerivatives(_currentText, input: _currentInput);
           } catch (e) {
             return printErrorMessage(context, 'brainfk_error_customundefined');
@@ -265,7 +266,8 @@ class BrainfkState extends State<Brainfk> {
                     outputInstruction: _currentInput_output,
                     inputInstruction: _currentInput_input,
                     startLoopInstruction: _currentInput_startLoop,
-                    endLoopInstruction: _currentInput_endLoop)
+                    endLoopInstruction: _currentInput_endLoop,
+            )
                 .generateBrainfkDerivative(_currentText);
           } catch (e) {
             return printErrorMessage(context, 'brainfk_error_customundefined');
