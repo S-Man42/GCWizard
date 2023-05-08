@@ -1,5 +1,6 @@
 name: gcw_server
 description: GC Wizard API
+version: 3.0.0+1
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
