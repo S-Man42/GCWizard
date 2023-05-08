@@ -40,8 +40,8 @@ Response _echoRequest(Request _request) {
 
 WebParameter? parseUrl(Request settings) {
 
-  var uri = Uri.parse(settings.handlerPath);
-  var title = uri.pathSegments[0];
+  var uri = Uri.parse(settings.url.toString());
+  var title = uri.pathSegments.isNotEmpty ? uri.pathSegments[0] : '';
 
   // MultiDecoder?input=Test%20String
   //Morse?input=Test%20String&modeencode=true
@@ -56,11 +56,10 @@ WebParameter? parseUrl(Request settings) {
   //coords_formatconverter?input=N48%C2%B023.123%20E9%C2%B012.456&result=json     N48°23.123 E9°12.456
   //coords_formatconverter?input=N48%C2%B023.123%20E9%C2%B012.456&toformat=coords_utm&result=json
   //coords_formatconverter?input=N48%C2%B023.123%20E9%C2%B012.456&toformat=coords_all&result=json
-  //rotation_general?input=test&parameter1=4&result=json
+  //rotate?input=test&parameter1=4&result=json
 
   // toolname?parameter1=xxx&parameter2=xxx
   return WebParameter(title: title, arguments: uri.queryParameters, settings: settings);
-  // }
 }
 
 
