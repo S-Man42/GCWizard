@@ -31,7 +31,7 @@ part "package:gc_wizard/common_widgets/key_value_editor/key_value_type_row.dart"
 part "package:gc_wizard/common_widgets/key_value_editor/key_value_alphabet_row.dart";
 
 class _KeyValueEditorControl {
-  Object? currentEditId;
+  KeyValueBase? currentInProgress;
 }
 
 class GCWKeyValueEditor extends StatefulWidget {

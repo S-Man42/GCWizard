@@ -101,7 +101,7 @@ class GCWKeyValueRowState extends State<GCWKeyValueRow> {
       flex: 1,
       child: Container(
         margin: const EdgeInsets.only(left: 10),
-        child: widget.keyValueEditorControl.currentEditId == entryId(widget.keyValueEntry)
+        child: widget.keyValueEditorControl.currentInProgress == widget.keyValueEntry
             ? GCWTextField(
                 controller: _keyController,
                 inputFormatters: widget.keyInputFormatters,
@@ -128,7 +128,7 @@ class GCWKeyValueRowState extends State<GCWKeyValueRow> {
         flex: 3,
         child: Container(
           margin: const EdgeInsets.only(left: 10),
-          child: widget.keyValueEditorControl.currentEditId == entryId(widget.keyValueEntry)
+          child: widget.keyValueEditorControl.currentInProgress == widget.keyValueEntry
               ? GCWTextField(
                   controller: _valueController,
                   focusNode: _focusNodeEditValue,
@@ -147,11 +147,12 @@ class GCWKeyValueRowState extends State<GCWKeyValueRow> {
   Widget _editButton() {
     if (!widget.editAllowed) return Container();
 
-    return widget.keyValueEditorControl.currentEditId == entryId(widget.keyValueEntry)
+    return widget.keyValueEditorControl.currentInProgress == widget.keyValueEntry
         ? GCWIconButton(
             icon: Icons.check,
             onPressed: () {
               _updateEntry();
+              widget.keyValueEditorControl.currentInProgress = null;
             },
           )
         : GCWIconButton(
@@ -160,19 +161,17 @@ class GCWKeyValueRowState extends State<GCWKeyValueRow> {
               setState(() {
                 FocusScope.of(context).requestFocus(_focusNodeEditValue);
 
-                widget.keyValueEditorControl.currentEditId = entryId(widget.keyValueEntry);
+                widget.keyValueEditorControl.currentInProgress = widget.keyValueEntry;
                 _currentKey = widget.keyValueEntry.key;
                 _currentValue = widget.keyValueEntry.value;
                 _keyController.text = _currentKey;
                 _valueController.text = _currentValue;
               });
+              if (widget.onSetState != null) widget.onSetState!();
             },
           );
   }
 
-  Object? entryId(KeyValueBase entry) {
-    return widget.keyValueEntry.id ?? widget.keyValueEntry.key;
-  }
 
   Widget _removeButton() {
     return GCWIconButton(
@@ -192,7 +191,7 @@ class GCWKeyValueRowState extends State<GCWKeyValueRow> {
     if (widget.onUpdateEntry != null) widget.onUpdateEntry!(widget.keyValueEntry);
 
     setState(() {
-      widget.keyValueEditorControl.currentEditId = null;
+      widget.keyValueEditorControl.currentInProgress = null;
       _keyController.clear();
       _valueController.clear();
     });

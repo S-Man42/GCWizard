@@ -72,7 +72,7 @@ class GCWKeyValueTypeRowState extends GCWKeyValueRowState {
     return Expanded(
           flex: 1,
           child: Container(
-            child: widget.keyValueEditorControl.currentEditId == entryId(widget.keyValueEntry)
+            child: widget.keyValueEditorControl.currentInProgress == widget.keyValueEntry
               ? Container(
                 padding: const EdgeInsets.only(left: DEFAULT_MARGIN),
                 child: GCWPopupMenu(
