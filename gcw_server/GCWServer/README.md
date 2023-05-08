@@ -1,3 +1,9 @@
+Start -> Terminal
+cd gcw_server
+cd GCWServer
+dart run
+
+
 # JSON example
 
 This example demonstrates writing a function that accepts and returns JSON.
