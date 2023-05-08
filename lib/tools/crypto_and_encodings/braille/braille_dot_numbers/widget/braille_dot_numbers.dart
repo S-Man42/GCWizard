@@ -117,7 +117,6 @@ class BrailleDotNumbersState extends State<BrailleDotNumbers> {
       if (_currentDecodeInput.isEmpty) {
         return const GCWDefaultOutput();
       }
-
       var segments = decodeBraille(
           _currentDecodeInput.split(RegExp(r'\s+')).toList(),
           _currentLanguage,

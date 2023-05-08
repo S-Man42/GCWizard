@@ -276,4 +276,5 @@ class GeneralSettingsState extends State<GeneralSettings> {
       ],
     );
   }
+
 }

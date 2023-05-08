@@ -17,8 +17,6 @@
 // - CCITT_USTTY        according to 2., 4.
 //
 
-// ignore_for_file: equal_keys_in_map
-
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 

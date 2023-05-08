@@ -7,7 +7,6 @@ import 'package:gc_wizard/application/i18n/supported_locales.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/category_views/favorites.dart';
-import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/gcw_selection.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
@@ -159,8 +158,6 @@ class _GCWToolState extends State<GCWTool> {
 
   @override
   Widget build(BuildContext context) {
-    ThemeColors colors = themeColors();
-
     // this is the case when tool is not called by Registry but as subpage of another tool
     _toolName = widget.toolName ?? i18n(context, widget.id + '_title');
 
@@ -170,8 +167,6 @@ class _GCWToolState extends State<GCWTool> {
     return Scaffold(
         resizeToAvoidBottomInset: widget.autoScroll,
         appBar: AppBar(
-          backgroundColor: colors.primaryBackground(),
-          foregroundColor: colors.mainFont(),
           title: Text(_toolName),
           actions: _buildButtons(),
         ),
