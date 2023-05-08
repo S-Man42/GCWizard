@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/common_widgets/gcw_web_statefulwidget.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
@@ -7,8 +8,8 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rotation/logic/rotator.dart';
 import 'package:gc_wizard/utils/math_utils.dart';
 
-class RotationGeneral extends StatefulWidget {
-  const RotationGeneral({Key? key}) : super(key: key);
+class RotationGeneral extends GCWWebStatefulWidget {
+  RotationGeneral({Key? key}) : super(key: key);
 
   @override
   RotationGeneralState createState() => RotationGeneralState();
@@ -23,6 +24,13 @@ class RotationGeneralState extends State<RotationGeneral> {
   @override
   void initState() {
     super.initState();
+
+    if (widget.hasWebParameter()) {
+      _currentInput = widget.getWebParameter(WebParameter.input) ?? _currentInput;
+      var key = widget.getWebParameter(WebParameter.parameter1);
+      if (key != null) _currentKey = int.tryParse(key) ?? _currentKey;
+    }
+
     _controller = TextEditingController(text: _currentInput);
   }
 
