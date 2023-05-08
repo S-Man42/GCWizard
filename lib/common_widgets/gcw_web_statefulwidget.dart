@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/widgets/main_menu/deep_link.dart';
 
 abstract class GCWWebStatefulWidget extends StatefulWidget {
-  Map<String, String> webParameter;
+  Map<String, String> webParameter = {};
   bool webParameterInitActive = true;
 
-  GCWWebStatefulWidget({Key key, this.webParameter}): super(key: key);
+  GCWWebStatefulWidget({Key? key, required this.webParameter}): super(key: key);
 
-  void set webQueryParameter(Map<String, String> parameter) {
-    this.webParameter = parameter;
+  set webQueryParameter(Map<String, String> parameter) {
+    webParameter = parameter;
   }
 
   bool hasWebParameter() {
-    return webParameter != null;
+    return webParameter.isEmpty;
   }
 
-  String getWebParameter(WebParameter parameter) {
+  String? getWebParameter(WebParameter parameter) {
     return webParameter[parameter.name];
   }
 

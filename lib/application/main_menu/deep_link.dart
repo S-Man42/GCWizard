@@ -1,38 +1,45 @@
-import 'package:http/http.dart' as http;
+import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
+import 'package:gc_wizard/application/registry.dart';
+import 'package:gc_wizard/common_widgets/gcw_tool.dart';
+import 'package:gc_wizard/common_widgets/gcw_web_statefulwidget.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_web_statefulwidget.dart';
-import 'package:gc_wizard/widgets/common/gcw_tool.dart';
-import 'package:gc_wizard/widgets/registry.dart';
-import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
-import 'package:tuple/tuple.dart';
 
+
+class WebParameter {
+  String title;
+  Map<String, String> arguments;
+  RouteSettings? settings;
+
+  WebParameter({required this.title, required this.arguments, required this.settings});
+}
 
 // A Widget that accepts the necessary arguments via the
 // constructor.
-NoAnimationMaterialPageRoute createRoute (BuildContext context, Map<String, dynamic> arguments) {
+NoAnimationMaterialPageRoute? createRoute (BuildContext context, WebParameter arguments) {
 
   var gcwTool = findGCWTool(arguments);
+  if (gcwTool == null) return null;
 
   if (gcwTool.tool is GCWWebStatefulWidget) {
     try {
-      (gcwTool.tool as GCWWebStatefulWidget).webQueryParameter = arguments['arguments'];
+      (gcwTool.tool as GCWWebStatefulWidget).webQueryParameter = arguments.arguments;
     } catch (e) {}
   }
 
   // arguments settings only for view the path in the url
-  return NoAnimationMaterialPageRoute(builder: (context) => gcwTool, settings: arguments['settings']);
+  return NoAnimationMaterialPageRoute(builder: (context) => gcwTool.tool, settings: arguments.settings);
 }
 
-GCWTool findGCWTool(Map<String, dynamic> arguments) {
-  if (arguments['title'] == null || registeredTools == null) return null;
-  var name = arguments['title'].toLowerCase();
-  List<GCWTool> tools = <GCWTool>[];
-  try {
-    tools = registeredTools.where((tool) => tool.i18nPrefix == name).toList();
-  } catch (e) {}
-  if (tools == null || tools.isEmpty) return null;
+GCWTool? findGCWTool(WebParameter arguments) {
+  if (arguments.title.isEmpty) return null;
+  var name = arguments.title.toLowerCase();
 
-  return tools.first;
+  try {
+    return registeredTools.firstWhereOrNull((_tool) => _tool.id == name);
+  } catch (e) {}
+
+  return null;
 }
 
 void sendWebResult(String json) {
@@ -83,9 +90,10 @@ void sendWebResult(String json) {
 // }
 
 
-Map<String, dynamic> parseUrl(String url, {settings}) {
+WebParameter? parseUrl(RouteSettings settings) {
 
-    var uri = Uri.parse(url);
+    if (settings.name == null) return null;
+    var uri = Uri.parse(settings.name!);
     var title = uri.pathSegments[0];
 
     // MultiDecoder?input=Test%20String
@@ -104,6 +112,6 @@ Map<String, dynamic> parseUrl(String url, {settings}) {
     //rotation_general?input=test&parameter1=4&result=json
 
     // toolname?parameter1=xxx&parameter2=xxx
-    return {'title': title, 'arguments': uri.queryParameters, 'settings': settings};
+    return WebParameter(title: title, arguments: uri.queryParameters, settings: settings);
   // }
 }

@@ -2,7 +2,7 @@ name: gcw_server
 description: GC Wizard API
 
 environment:
-  sdk: ">=2.2.2 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   shelf: ^1.4.0

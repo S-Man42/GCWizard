@@ -1,5 +1,5 @@
 import 'APIMapper.dart';
- import '../../../lib/logic/tools/crypto_and_encodings/reverse.dart';
+ import '../../../lib/tools/crypto_and_encodings/reverse/logic/reverse.dart';
  // import 'D:/GitHub/GCWizard/lib/logic/tools/crypto_and_encodings/reverse.dart';
 
 class RotatorAPIMapper extends APIMapper {
@@ -13,7 +13,7 @@ class RotatorAPIMapper extends APIMapper {
   }
 
   @override
-  Map<String, String> toMap(dynamic stuff) {
-    return Map<String, String>();
+  Map<String, String> toMap(Object stuff) {
+    return <String, String>{};
   }
 }

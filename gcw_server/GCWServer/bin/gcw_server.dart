@@ -2,12 +2,19 @@ import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 
  // import '../../../lib/widgets/main_menu/deep_link.dart';
-import '../../../lib/logic/tools/crypto_and_encodings/rotator.dart';
+//import '../../../lib/tools/crypto_and_encodings/rotation/logic/rotator.dart';
 import 'Controller.dart';
 //http://localhost:4044/?sortIndex=2&sortAsc=0&offset=100&pageSize=50
 
+class WebParameter {
+  String title;
+  Map<String, String> arguments;
+  Request? settings;
 
-Future main() async {
+  WebParameter({required this.title, required this.arguments, required this.settings});
+}
+
+void main() async {
   var handler =
   const Pipeline().addMiddleware(logRequests()).addHandler(_echoRequest);
 
@@ -22,16 +29,18 @@ Future main() async {
 }
 
 Response _echoRequest(Request _request) {
-  var arguments = parseUrl(_request.handlerPath);
+  var arguments = parseUrl(_request);
 
-  request(arguments['title'],arguments);
+  if (arguments == null) return Response.notFound('Request for "${_request.url}"  ' + DateTime.now().toString());
+  request(arguments);
   // var gcwTool = findGCWTool(arguments);
 
   return Response.ok('Request for "${_request.url}"  ' + DateTime.now().toString());
 }
-Map<String, dynamic> parseUrl(String url, {settings}) {
 
-  var uri = Uri.parse(url);
+WebParameter? parseUrl(Request settings) {
+
+  var uri = Uri.parse(settings.handlerPath);
   var title = uri.pathSegments[0];
 
   // MultiDecoder?input=Test%20String
@@ -50,7 +59,7 @@ Map<String, dynamic> parseUrl(String url, {settings}) {
   //rotation_general?input=test&parameter1=4&result=json
 
   // toolname?parameter1=xxx&parameter2=xxx
-  return {'title': title, 'arguments': uri.queryParameters, 'settings': settings};
+  return WebParameter(title: title, arguments: uri.queryParameters, settings: settings);
   // }
 }
 

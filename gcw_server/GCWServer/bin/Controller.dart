@@ -2,14 +2,16 @@ import 'dart:convert';
 
 import 'APIMapper.dart';
 import 'RotatorAPIMapper.dart';
+import 'gcw_server.dart';
 
-String request(String toolName, Map<String, String> queryParams) {
-  APIMapper myAPIMapper;
-  switch  (toolName) {
-    case 'rotate': myAPIMapper = new RotatorAPIMapper();
+String? request(WebParameter parameter) {
+  APIMapper? myAPIMapper;
+  switch  (parameter.title) {
+    case 'rotate': myAPIMapper = RotatorAPIMapper();
   }
 
-  myAPIMapper.setParams(queryParams);
+  if (myAPIMapper == null) return null;
+  myAPIMapper.setParams(parameter.arguments);
 
  // x = myAPIMapper.Logic()
  //  myAPIMapper.safety(x);
