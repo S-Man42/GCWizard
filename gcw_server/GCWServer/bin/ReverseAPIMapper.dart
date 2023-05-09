@@ -5,7 +5,7 @@ class ReverseAPIMapper extends APIMapper {
 
   @override
   String doLogic() {
-    var input = params[WEBPARAMETER.input.name];
+    var input = getWebParameter(WEBPARAMETER.input);
     if (input == null) {
       return '';
     }

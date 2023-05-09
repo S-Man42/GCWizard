@@ -64,13 +64,13 @@ class AlphabetValuesState extends State<AlphabetValues> {
     super.initState();
 
     if (widget.hasWebParameter()) {
-      if (widget.getWebParameter(WebParameter.modeencode) != null) {
+      if (widget.getWebParameter(WEBPARAMETER.modeencode) != null) {
         _currentMode = GCWSwitchPosition.right;
       }
       if (_currentMode == GCWSwitchPosition.left) {
-        _currentEncodeInput = widget.getWebParameter(WebParameter.input) ?? _currentEncodeInput;
+        _currentEncodeInput = widget.getWebParameter(WEBPARAMETER.input) ?? _currentEncodeInput;
       } else {
-        var webInput = widget.getWebParameter(WebParameter.input);
+        var webInput = widget.getWebParameter(WEBPARAMETER.input);
         _currentDecodeInput = webInput == null
             ? _currentDecodeInput
             : IntegerListText(webInput, textToIntList(webInput));

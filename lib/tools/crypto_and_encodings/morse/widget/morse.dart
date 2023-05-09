@@ -32,13 +32,13 @@ class MorseState extends State<Morse> {
     super.initState();
 
     if (widget.hasWebParameter()) {
-      if (widget.getWebParameter(WebParameter.modeencode) != null) {
+      if (widget.getWebParameter(WEBPARAMETER.modeencode) != null) {
         _currentMode = GCWSwitchPosition.left;
       }
       if (_currentMode == GCWSwitchPosition.left) {
-        _currentEncodeInput = widget.getWebParameter(WebParameter.input) ?? _currentEncodeInput;
+        _currentEncodeInput = widget.getWebParameter(WEBPARAMETER.input) ?? _currentEncodeInput;
       } else {
-        _currentDecodeInput = widget.getWebParameter(WebParameter.input) ?? _currentDecodeInput;
+        _currentDecodeInput = widget.getWebParameter(WEBPARAMETER.input) ?? _currentDecodeInput;
       }
     }
 

@@ -9,7 +9,7 @@ environment:
 dependencies:
   shelf: ^1.4.0
   gc_wizard:
-    git: https://github.com/S-Man42/GCWizard/tree/Refactoring_3.0_NullSafety
+    git: https://github.com/S-Man42/GCWizard
 
 dev_dependencies:
 

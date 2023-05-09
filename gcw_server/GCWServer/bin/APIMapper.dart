@@ -9,10 +9,10 @@ enum WEBPARAMETER {
 }
 
 abstract class APIMapper {
-  Map<String, String> params = {};
+  Map<String, String> webParameter = {};
 
   void setParams(Map<String, String> parameter) {
-    params = parameter;
+    webParameter = parameter;
   }
 
   String doLogic() {
@@ -23,5 +23,9 @@ abstract class APIMapper {
 
   Map<String, String> calculate() {
     return toMap(doLogic());
+  }
+
+  String? getWebParameter(WEBPARAMETER parameter) {
+    return webParameter[parameter.name];
   }
 }

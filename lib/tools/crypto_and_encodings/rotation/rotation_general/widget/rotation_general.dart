@@ -26,8 +26,8 @@ class RotationGeneralState extends State<RotationGeneral> {
     super.initState();
 
     if (widget.hasWebParameter()) {
-      _currentInput = widget.getWebParameter(WebParameter.input) ?? _currentInput;
-      var key = widget.getWebParameter(WebParameter.parameter1);
+      _currentInput = widget.getWebParameter(WEBPARAMETER.input) ?? _currentInput;
+      var key = widget.getWebParameter(WEBPARAMETER.parameter1);
       if (key != null) _currentKey = int.tryParse(key) ?? _currentKey;
     }
 

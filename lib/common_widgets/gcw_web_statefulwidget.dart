@@ -14,7 +14,7 @@ abstract class GCWWebStatefulWidget extends StatefulWidget {
     return webParameter == null || webParameter!.isEmpty;
   }
 
-  String? getWebParameter(WebParameter parameter) {
+  String? getWebParameter(WEBPARAMETER parameter) {
     return webParameter?[parameter.name];
   }
 
@@ -28,7 +28,7 @@ abstract class GCWWebStatefulWidget extends StatefulWidget {
   // }
 }
 
-enum WebParameter {
+enum WEBPARAMETER {
   input,
   modeencode,
   parameter1,

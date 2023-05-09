@@ -1,16 +1,15 @@
 import 'APIMapper.dart';
 import '../../../lib/tools/crypto_and_encodings/rotation/logic/rotator.dart';
-//import '../../../lib/utils/string_utils.dart';
 
 class RotatorAPIMapper extends APIMapper {
 
   @override
   String doLogic() {
-    var input = params[WEBPARAMETER.input.name];
+    var input = getWebParameter(WEBPARAMETER.input);
     if (input == null) {
       return '';
     }
-    var parameter1 = params[WEBPARAMETER.parameter1.name];
+    var parameter1 = getWebParameter(WEBPARAMETER.parameter1);
     var key = 0;
     if (parameter1 != null && parameter1.isNotEmpty) {
       key = int.parse(parameter1);
