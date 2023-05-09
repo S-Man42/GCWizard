@@ -1,34 +1,34 @@
 import 'package:flutter/material.dart';
 
 abstract class GCWWebStatefulWidget extends StatefulWidget {
-  Map<String, String> webParameter = {};
+  Map<String, String>? webParameter;
   bool webParameterInitActive = true;
 
-  GCWWebStatefulWidget({Key? key, required this.webParameter}): super(key: key);
+  GCWWebStatefulWidget({Key? key, this.webParameter}): super(key: key);
 
   set webQueryParameter(Map<String, String> parameter) {
     webParameter = parameter;
   }
 
   bool hasWebParameter() {
-    return webParameter.isEmpty;
+    return webParameter == null || webParameter!.isEmpty;
   }
 
-  String? getWebParameter(WEBPARAMETER parameter) {
-    return webParameter[parameter.name];
+  String? getWebParameter(WebParameter parameter) {
+    return webParameter?[parameter.name];
   }
 
-  bool sendJsonResultToWeb() {
-    return getWebParameter(WEBPARAMETER.result) == 'json';
-  }
-
-  void sendResultToWeb(String json) {
-    print(json);
-    //sendWebResult(json);
-  }
+  // bool sendJsonResultToWeb() {
+  //   return getWebParameter(WebParameter.result) == 'json';
+  // }
+  //
+  // void sendResultToWeb(String json) {
+  //   print(json);
+  //   //sendWebResult(json);
+  // }
 }
 
-enum WEBPARAMETER {
+enum WebParameter {
   input,
   modeencode,
   parameter1,

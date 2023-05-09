@@ -11,6 +11,7 @@ import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/gcw_key_value_editor.dart';
+import 'package:gc_wizard/common_widgets/gcw_web_statefulwidget.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
@@ -22,13 +23,14 @@ import 'package:gc_wizard/tools/formula_solver/persistence/model.dart';
 import 'package:gc_wizard/tools/science_and_technology/cross_sums/widget/crosstotal_output.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 import 'package:gc_wizard/utils/json_utils.dart';
 import 'package:prefs/prefs.dart';
 
-class AlphabetValues extends StatefulWidget {
-  const AlphabetValues({Key? key}) : super(key: key);
+class AlphabetValues extends GCWWebStatefulWidget {
+  AlphabetValues({Key? key}) : super(key: key);
 
   @override
   AlphabetValuesState createState() => AlphabetValuesState();
@@ -60,6 +62,20 @@ class AlphabetValuesState extends State<AlphabetValues> {
   @override
   void initState() {
     super.initState();
+
+    if (widget.hasWebParameter()) {
+      if (widget.getWebParameter(WebParameter.modeencode) != null) {
+        _currentMode = GCWSwitchPosition.right;
+      }
+      if (_currentMode == GCWSwitchPosition.left) {
+        _currentEncodeInput = widget.getWebParameter(WebParameter.input) ?? _currentEncodeInput;
+      } else {
+        var webInput = widget.getWebParameter(WebParameter.input);
+        _currentDecodeInput = webInput == null
+            ? _currentDecodeInput
+            : IntegerListText(webInput, textToIntList(webInput));
+      }
+    }
 
     _encodeController = TextEditingController(text: _currentEncodeInput);
     _decodeController = TextEditingController(text: _currentDecodeInput.text);
