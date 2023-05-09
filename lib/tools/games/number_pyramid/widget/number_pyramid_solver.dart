@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
@@ -19,7 +20,7 @@ import 'package:gc_wizard/tools/games/number_pyramid/logic/number_pyramid_solver
 import 'package:touchable/touchable.dart';
 
 part 'package:gc_wizard/tools/games/number_pyramid/widget/number_pyramid_board.dart';
-
+part 'package:gc_wizard/tools/games/number_pyramid/widget/number_pyramid_board1.dart';
 
 class NumberPyramidSolver extends StatefulWidget {
   const NumberPyramidSolver({Key? key}) : super(key: key);
@@ -127,7 +128,8 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
               physics: const AlwaysScrollableScrollPhysics(),
               child: Container(
                 constraints: BoxConstraints(maxWidth: 100.0 * _rowCount * _scale),
-                child: NumberPyramidBoard(
+                child: Row( children: <Widget>[
+                  NumberPyramidBoard(
                   board: _currentBoard,
                   onChanged: (newBoard) {
                     setState(() {
@@ -138,6 +140,8 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
                   },
                   showBoxValue: _showBoxValue,
                 ),
+                   //SizedBox (width: 30, height: 20, child: Column(children: [textBox()])), //Positioned(top: 15.0, right: 15.0, child:
+                ]),
               ),
             ),
         ),
