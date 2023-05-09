@@ -1,3 +1,13 @@
+enum WEBPARAMETER {
+  input,
+  modeencode,
+  parameter1,
+  parameter2,
+  fromformat,
+  toformat,
+  result
+}
+
 abstract class APIMapper {
   Map<String, String> params = {};
 
@@ -5,11 +15,13 @@ abstract class APIMapper {
     params = parameter;
   }
 
-  Function doLogic();
+  String doLogic() {
+    return '';
+  }
 
-  Map<String, String> toMap(Object stuff);
+  Map<String, String> toMap(Object result);
 
   Map<String, String> calculate() {
-    return toMap(() => doLogic());
+    return toMap(doLogic());
   }
 }

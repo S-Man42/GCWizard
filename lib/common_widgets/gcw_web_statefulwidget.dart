@@ -14,12 +14,12 @@ abstract class GCWWebStatefulWidget extends StatefulWidget {
     return webParameter.isEmpty;
   }
 
-  String? getWebParameter(WebParameter parameter) {
+  String? getWebParameter(WEBPARAMETER parameter) {
     return webParameter[parameter.name];
   }
 
   bool sendJsonResultToWeb() {
-    return getWebParameter(WebParameter.result) == 'json';
+    return getWebParameter(WEBPARAMETER.result) == 'json';
   }
 
   void sendResultToWeb(String json) {
@@ -28,7 +28,7 @@ abstract class GCWWebStatefulWidget extends StatefulWidget {
   }
 }
 
-enum WebParameter {
+enum WEBPARAMETER {
   input,
   modeencode,
   parameter1,

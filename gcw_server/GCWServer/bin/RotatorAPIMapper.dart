@@ -1,19 +1,26 @@
 import 'APIMapper.dart';
- import '../../../lib/tools/crypto_and_encodings/reverse/logic/reverse.dart';
- // import 'D:/GitHub/GCWizard/lib/logic/tools/crypto_and_encodings/reverse.dart';
+import '../../../lib/tools/crypto_and_encodings/rotation/logic/rotator.dart';
+//import '../../../lib/utils/string_utils.dart';
 
 class RotatorAPIMapper extends APIMapper {
 
   @override
-  Function doLogic() {
-    return logic; //Rotator().rot13;
-  }
-  String logic(String text) {
-    return reverse('test');
+  String doLogic() {
+    var input = params[WEBPARAMETER.input.name];
+    if (input == null) {
+      return '';
+    }
+    var parameter1 = params[WEBPARAMETER.parameter1.name];
+    var key = 0;
+    if (parameter1 != null && parameter1.isNotEmpty) {
+      key = int.parse(parameter1);
+    }
+
+    return Rotator().rotate(input, key);
   }
 
   @override
-  Map<String, String> toMap(Object stuff) {
-    return <String, String>{};
+  Map<String, String> toMap(Object result) {
+    return <String, String>{WEBPARAMETER.result.name : result.toString()};
   }
 }

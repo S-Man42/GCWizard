@@ -1,13 +1,15 @@
 name: gcw_server
 description: GC Wizard API
 version: 3.0.0+1
+publish_to: none
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   shelf: ^1.4.0
-
+  gc_wizard:
+    git: https://github.com/S-Man42/GCWizard/tree/Refactoring_3.0_NullSafety
 
 dev_dependencies:
 

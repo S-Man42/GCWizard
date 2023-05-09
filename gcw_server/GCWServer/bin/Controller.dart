@@ -7,7 +7,8 @@ import 'gcw_server.dart';
 String? request(WebParameter parameter) {
   APIMapper? myAPIMapper;
   switch  (parameter.title) {
-    case 'rotate': myAPIMapper = RotatorAPIMapper();
+    case 'rotate': myAPIMapper = RotatorAPIMapper(); break;
+    case 'reverse': myAPIMapper = RotatorAPIMapper(); break;
   }
 
   if (myAPIMapper == null) return null;
