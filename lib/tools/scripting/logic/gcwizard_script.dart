@@ -1,9 +1,13 @@
 import 'dart:core';
+import 'dart:isolate';
 import 'dart:math';
 import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 
 import 'package:stack/stack.dart' as datastack;
 import 'package:latlong2/latlong.dart';
@@ -61,12 +65,33 @@ part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_coordina
 // FIELD, GET, PUT
 // http://www.mopsos.net/Script.html
 
-GCWizardScriptOutput interpretScript(String code, String input) {
-  if (code == '') {
-    return GCWizardScriptOutput(STDOUT: '', Graphic: [], Points: [], ErrorMessage: '', ErrorPosition: 0);
+class InterpreterJobData {
+  final String jobDataScript;
+  final String jobDataInput;
+
+  InterpreterJobData({required this.jobDataScript, required this.jobDataInput});
+}
+
+Future<GCWizardScriptOutput> interpretGCWScriptAsync(GCWAsyncExecuterParameters? jobData) async {
+  if (jobData?.parameters is! InterpreterJobData) {
+    return Future.value(GCWizardScriptOutput(
+        STDOUT: '', Graphic: [], Points: [], ErrorMessage: '', ErrorPosition: 0, VariableDump: ''));
+  }
+  var interpreter = jobData!.parameters as InterpreterJobData;
+  var output =
+      await interpretScript(interpreter.jobDataScript, interpreter.jobDataInput, sendAsyncPort: jobData.sendAsyncPort);
+
+  jobData.sendAsyncPort?.send(output);
+  return output;
+}
+
+Future<GCWizardScriptOutput> interpretScript(String script, String input, {SendPort? sendAsyncPort}) async {
+  if (script == '') {
+    return GCWizardScriptOutput(
+        STDOUT: '', Graphic: [], Points: [], ErrorMessage: '', ErrorPosition: 0, VariableDump: '');
   }
 
-  GCWizardSCriptInterpreter interpreter = GCWizardSCriptInterpreter(code, input);
+  GCWizardSCriptInterpreter interpreter = GCWizardSCriptInterpreter(script, input, sendAsyncPort);
   return interpreter.run();
 }
 
@@ -84,6 +109,7 @@ class GCWizardScriptOutput {
   final List<GCWMapPoint> Points;
   final String ErrorMessage;
   final int ErrorPosition;
+  final String VariableDump;
 
   GCWizardScriptOutput({
     required this.STDOUT,
@@ -91,6 +117,7 @@ class GCWizardScriptOutput {
     required this.Points,
     required this.ErrorMessage,
     required this.ErrorPosition,
+    required this.VariableDump,
   });
 }
 
@@ -161,7 +188,8 @@ List<GCWMapPoint> _waypoints = [];
 
 class GCWizardSCriptInterpreter {
   static const SCRIPT_LENGTH = 10000;
-  static const MAXITERATIONS = 10000;
+  static const MAXITERATIONS = 1000000000;
+  final PROGRESS_STEP = MAXITERATIONS / 100;
 
   // internal representation of loop types
   static const FORLOOP = 0;
@@ -278,6 +306,8 @@ class GCWizardSCriptInterpreter {
 
   String script;
   String inputData;
+  SendPort? sendAsyncPort;
+
   List<dynamic> STDIN = [];
   String STDOUT = '';
   double step = 0.0;
@@ -316,8 +346,7 @@ class GCWizardSCriptInterpreter {
 
   List<String> relationOperators = [AND, OR, GE, NE, LE, '<', '>', '=', '0'];
 
-
-  GCWizardSCriptInterpreter(this.script, this.inputData) {
+  GCWizardSCriptInterpreter(this.script, this.inputData, this.sendAsyncPort) {
     script = script.toUpperCase().replaceAll('RND()', 'RND(1)') + '\n';
     inputData.split(' ').forEach((element) {
       if (int.tryParse(element) != null) {
@@ -332,11 +361,8 @@ class GCWizardSCriptInterpreter {
 
   GCWizardScriptOutput run() {
     if (script == '') {
-      return GCWizardScriptOutput(STDOUT: '',
-          Graphic: [],
-          Points: [],
-          ErrorMessage: '',
-          ErrorPosition: 0);
+      return GCWizardScriptOutput(
+          STDOUT: '', Graphic: [], Points: [], ErrorMessage: '', ErrorPosition: 0, VariableDump: '');
     }
 
     // Initialize for new program run.
@@ -391,7 +417,8 @@ class GCWizardSCriptInterpreter {
     do {
       getToken();
 
-      if (tokenType == NUMBER) {} else if (tokenType == VARIABLE) {
+      if (tokenType == NUMBER) {
+      } else if (tokenType == VARIABLE) {
         putBack();
         executeAssignment();
       } else if (tokenType == FUNCTION) {
@@ -400,16 +427,30 @@ class GCWizardSCriptInterpreter {
         executeCommand();
       }
       iterations++;
+      if (sendAsyncPort != null && iterations % PROGRESS_STEP == 0) {
+        sendAsyncPort?.send(DoubleText(PROGRESS, (iterations / PROGRESS_STEP)));
+      }
+
     } while (token != EOP && !_halt && iterations < MAXITERATIONS);
 
     if (iterations == MAXITERATIONS) _handleError(INFINITELOOP);
 
     return GCWizardScriptOutput(
-        STDOUT: STDOUT,
-        Graphic: _graphics,
-        Points: _waypoints,
-        ErrorMessage: _errorMessage,
-        ErrorPosition: _errorPosition);
+      STDOUT: STDOUT,
+      Graphic: _graphics,
+      Points: _waypoints,
+      ErrorMessage: _errorMessage,
+      ErrorPosition: _errorPosition,
+      VariableDump: _variableDump(),
+    );
+  }
+
+  String _variableDump() {
+    String dump = '';
+    for (int i = 0; i < 26; i++) {
+      dump = dump + String.fromCharCode(65 + i) + ' ' + variables[i].toString() + '\n';
+    }
+    return dump;
   }
 
   void getLabels() {
@@ -650,8 +691,7 @@ class GCWizardSCriptInterpreter {
 
   void executeCommandPRINT() {
     dynamic result;
-    int len = 0,
-        spaces;
+    int len = 0, spaces;
     String lastDelimiter = "";
 
     do {
@@ -669,9 +709,7 @@ class GCWizardSCriptInterpreter {
         STDOUT = STDOUT + result.toString();
 
         dynamic t = result;
-        len += t
-            .toString()
-            .length; // save length
+        len += t.toString().length; // save length
       }
       lastDelimiter = token;
 
@@ -1288,8 +1326,7 @@ class GCWizardSCriptInterpreter {
       partialResult1 = evaluateExpressionParantheses();
       if (FUNCTIONS[command]!.functionReturn) {
         result = FUNCTIONS[command]!.functionName();
-      }
-      else {
+      } else {
         FUNCTIONS[command]!.functionName();
       }
       _scriptIndex = _scriptIndex + 2;
@@ -1298,8 +1335,7 @@ class GCWizardSCriptInterpreter {
       partialResult1 = evaluateExpressionParantheses();
       if (FUNCTIONS[command]!.functionReturn) {
         result = FUNCTIONS[command]!.functionName(partialResult1);
-      }
-      else {
+      } else {
         FUNCTIONS[command]!.functionName(partialResult1);
       }
     } else if (FUNCTIONS[command]!.functionParamCount == 2) {
@@ -1317,8 +1353,7 @@ class GCWizardSCriptInterpreter {
       }
       if (FUNCTIONS[command]!.functionReturn) {
         result = FUNCTIONS[command]!.functionName(partialResult1, partialResult2);
-      }
-      else {
+      } else {
         FUNCTIONS[command]!.functionName(partialResult1, partialResult2);
       }
     } else if (FUNCTIONS[token]!.functionParamCount == 3) {
@@ -1392,7 +1427,8 @@ class GCWizardSCriptInterpreter {
         result = FUNCTIONS[command]!
             .functionName(partialResult1, partialResult2, partialResult3, partialResult4, partialResult5);
       } else {
-        FUNCTIONS[command]!.functionName(partialResult1, partialResult2, partialResult3, partialResult4, partialResult5);
+        FUNCTIONS[command]!
+            .functionName(partialResult1, partialResult2, partialResult3, partialResult4, partialResult5);
       }
     } else if (FUNCTIONS[token]!.functionParamCount == 5) {
       getToken();
@@ -1479,8 +1515,8 @@ class GCWizardSCriptInterpreter {
             case GE:
             case OR:
             case AND:
-            _handleError(INVALIDTYPECAST);
-            result = 0.0;
+              _handleError(INVALIDTYPECAST);
+              result = 0.0;
               break;
             case '=':
               if ((l_temp as String) == (r_temp as String)) {
@@ -1990,7 +2026,6 @@ class GCWizardSCriptInterpreter {
   }
 
   int lookUpToken(String s) {
-
     s = s.toLowerCase();
 
     if (registeredKeywords[s] != null) {
