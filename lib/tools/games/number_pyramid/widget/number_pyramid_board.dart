@@ -1,7 +1,12 @@
 part of 'package:gc_wizard/tools/games/number_pyramid/widget/number_pyramid_solver.dart';
 
-Point<int>? selectedBox;
-Rect? selectedBoxRect;
+Point<int>? _selectedBox;
+Rect? _selectedBoxRect;
+
+void _unselectBoardBox() {
+  _selectedBox = null;
+  _selectedBoxRect = null;
+}
 
 class NumberPyramidBoard extends StatefulWidget {
   final NumberPyramidFillType type;
@@ -61,27 +66,29 @@ class NumberPyramidBoardState extends State<NumberPyramidBoard> {
   }
 
   Widget _editWidget() {
+    const int hightOffset = 4;
     ThemeColors colors = themeColors();
-    if (selectedBoxRect != null && selectedBox  != null) {
-      _currentValue = widget.board.getValue(selectedBox!.x, selectedBox!.y);
+    if (_selectedBoxRect != null && _selectedBox  != null) {
+      if (widget.board.getFillType(_selectedBox!.x, _selectedBox!.y) == NumberPyramidFillType.USER_FILLED) {
+        _currentValue = widget.board.getValue(_selectedBox!.x, _selectedBox!.y);
+      } else {
+        _currentValue = null;
+      }
       _currentInputController.text = _currentValue?.toString() ?? '';
 
       return Positioned(
-          left: selectedBoxRect!.left,
-          top: selectedBoxRect!.top,
-          width: selectedBoxRect!.width,
-          height: selectedBoxRect!.height,
-          child: TextFormField(
-              textAlign: TextAlign.center,
-              //textAlignVertical: TextAlignVertical.center,
+          left: _selectedBoxRect!.left,
+          top: _selectedBoxRect!.top - hightOffset,
+          width: _selectedBoxRect!.width,
+          height: _selectedBoxRect!.height + 2 * hightOffset +1,
+          child: GCWTextField(
               controller: _currentInputController,
               inputFormatters: [_integerInputFormatter],
               keyboardType: const TextInputType.numberWithOptions(),
               autofocus: true,
               focusNode: _currentValueFocusNode,
               style: TextStyle(
-                //height: selectedBoxRect!.height-5,
-                fontSize: selectedBoxRect!.height * 0.8,
+                fontSize: _selectedBoxRect!.height * 0.6,
                 color: colors.secondary(),
               ),
               onChanged: (value) {
@@ -89,8 +96,8 @@ class NumberPyramidBoardState extends State<NumberPyramidBoard> {
                   _currentValue = int.tryParse(value);
                   var type = NumberPyramidFillType.USER_FILLED;
                   if (_currentValue == null) type = NumberPyramidFillType.CALCULATED;
-                  if (selectedBox != null &&
-                      widget.board.setValue(selectedBox!.x, selectedBox!.y, _currentValue, type)) {
+                  if (_selectedBox != null &&
+                      widget.board.setValue(_selectedBox!.x, _selectedBox!.y, _currentValue, type)) {
                     widget.board.removeCalculated();
                   }
                 });
@@ -103,7 +110,7 @@ class NumberPyramidBoardState extends State<NumberPyramidBoard> {
 
   void _showBoxValue(Point<int>? selectedBox) {
     setState(() {
-
+      _currentValueFocusNode.requestFocus();
     });
   }
 }
@@ -150,17 +157,17 @@ class NumberPyramidBoardPainter extends CustomPainter {
         var rect = Rect.fromLTWH(xInner, yInner, widthInner, heightInner);
         _touchCanvas.drawRect(rect, paintBack,
             onTapDown: (tapDetail) {
-              selectedBox = Point<int>(boardX, boardY);
-              selectedBoxRect = rect;
-              showBoxValue(selectedBox);
+              _selectedBox = Point<int>(boardX, boardY);
+              _selectedBoxRect = rect;
+              showBoxValue(_selectedBox);
             }
         );
 
-        if (selectedBox != null && selectedBox!.x == x && selectedBox!.y == y) {
-          selectedRect = Rect.fromLTWH(xInner, yInner, widthInner, heightInner);
+        if (_selectedBox != null && _selectedBox!.x == x && _selectedBox!.y == y) {
+          selectedRect = rect;
         }
 
-        _touchCanvas.drawRect(Rect.fromLTWH(xInner, yInner, widthInner, heightInner), paint);
+        _touchCanvas.drawRect(rect, paint);
 
         if (board.getValue(boardX, boardY) != null) {
           var textColor =

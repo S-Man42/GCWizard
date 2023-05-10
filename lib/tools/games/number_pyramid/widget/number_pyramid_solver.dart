@@ -14,6 +14,7 @@ import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/text_input_formatters/gcw_integer_textinputformatter.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/games/number_pyramid/logic/number_pyramid_solver.dart';
 import 'package:touchable/touchable.dart';
 
@@ -107,21 +108,23 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
           child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               physics: const AlwaysScrollableScrollPhysics(),
-              child: Container(
-                constraints: BoxConstraints(maxWidth: 100.0 * _rowCount * _scale),
-                child: Row( children: <Widget>[
-                  NumberPyramidBoard(
-                  board: _currentBoard,
-                  onChanged: (newBoard) {
-                    setState(() {
-                      _currentBoard = newBoard;
-                      selectedBox = null;
-                      //_showBoxValue(null, null);
-                    });
-                  },
+              child: GestureDetector(
+                onTap: () => _unselectBoardBox(),
+                behavior : HitTestBehavior.opaque,
+                child: Container(
+                  constraints: BoxConstraints(maxWidth: 100.0 * _rowCount * _scale),
+                  child: Row( children: <Widget>[
+                    NumberPyramidBoard(
+                      board: _currentBoard,
+                      onChanged: (newBoard) {
+                        setState(() {
+                          _currentBoard = newBoard;
+                          _selectedBox = null;
+                        });
+                      },
+                    ),
+                  ]),
                 ),
-                   //SizedBox (width: 30, height: 20, child: Column(children: [textBox()])), //Positioned(top: 15.0, right: 15.0, child:
-                ]),
               ),
             ),
         ),
@@ -173,6 +176,7 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
                   text: i18n(context, 'sudokusolver_solve'),
                   onPressed: () {
                     setState(() {
+                      _unselectBoardBox();
                       _currentBoard.solvePyramid(_MAX_SOLUTIONS);
                       if (_currentBoard.solutions == null) {
                         showToast(i18n(context, 'sudokusolver_error'));
@@ -192,6 +196,7 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
                     text: i18n(context, 'sudokusolver_clearcalculated'),
                     onPressed: () {
                       setState(() {
+                        _unselectBoardBox();
                         _currentBoard.removeCalculated();
                       });
                     },
@@ -205,6 +210,7 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
                     text: i18n(context, 'sudokusolver_clearall'),
                     onPressed: () {
                       setState(() {
+                        _unselectBoardBox();
                         _currentBoard = NumberPyramid(_rowCount);
                       });
                     },
@@ -220,6 +226,7 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
     _currentBoard.mergeSolution(_currentSolution);
   }
 
+
   void _parseClipboard(String text) {
     setState(() {
       var pyramid = NumberPyramid.fromJson(text);
@@ -230,8 +237,8 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
         _rowCount = pyramid.rowCount;
         _currentBoard = pyramid;
       }
-      selectedBox = null;
-      selectedBoxRect = null;
+      _selectedBox = null;
+      _selectedBoxRect = null;
     });
   }
 }
