@@ -80,7 +80,7 @@ class NumberPyramidBoardState extends State<NumberPyramidBoard> {
           left: _selectedBoxRect!.left,
           top: _selectedBoxRect!.top - hightOffset,
           width: _selectedBoxRect!.width,
-          height: _selectedBoxRect!.height + 2 * hightOffset +1,
+          height: _selectedBoxRect!.height + 2 * hightOffset,
           child: GCWTextField(
               controller: _currentInputController,
               inputFormatters: [_integerInputFormatter],
@@ -130,7 +130,6 @@ class NumberPyramidBoardPainter extends CustomPainter {
 
     var paint = Paint();
     var paintBack = Paint();
-    var selectedRect = const Rect.fromLTRB(0, 0, 0, 0);
     paint.strokeWidth = 1;
     paint.style = PaintingStyle.stroke;
     paint.color = colors.secondary();
@@ -163,10 +162,6 @@ class NumberPyramidBoardPainter extends CustomPainter {
             }
         );
 
-        if (_selectedBox != null && _selectedBox!.x == x && _selectedBox!.y == y) {
-          selectedRect = rect;
-        }
-
         _touchCanvas.drawRect(rect, paint);
 
         if (board.getValue(boardX, boardY) != null) {
@@ -189,7 +184,7 @@ class NumberPyramidBoardPainter extends CustomPainter {
             textPainter = _buildTextPainter(text ?? '', textColor, fontsize);
           }
 
-          if (selectedRect.isEmpty) {
+          if (!((_selectedBox!.x == x) && (_selectedBox!.y == y))) {
             textPainter.paint(
                 canvas,
                 Offset(xInner + (widthInner  - textPainter.width) * 0.5,
@@ -200,20 +195,6 @@ class NumberPyramidBoardPainter extends CustomPainter {
         xInner += widthInner;
       }
     }
-
-    if (!selectedRect.isEmpty) {
-      paint.color = colors.focused();
-      _touchCanvas.drawRect(selectedRect, paint);
-    }
-
-    // var rect =
-    // _touchCanvas.drawRect(rect, paintBack,
-    //     onTapDown: (tapDetail) {
-    //       selectedBox = Point<int>(boardX, boardY);
-    //       selectedBoxRect = rect;
-    //       showBoxValue(boardX, boardY);
-    //     }
-    // );
   }
 
   TextPainter _buildTextPainter(String text, Color color, double fontsize) {
