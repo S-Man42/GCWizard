@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
@@ -15,12 +14,10 @@ import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/text_input_formatters/gcw_integer_textinputformatter.dart';
-import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/games/number_pyramid/logic/number_pyramid_solver.dart';
 import 'package:touchable/touchable.dart';
 
 part 'package:gc_wizard/tools/games/number_pyramid/widget/number_pyramid_board.dart';
-part 'package:gc_wizard/tools/games/number_pyramid/widget/number_pyramid_board1.dart';
 
 class NumberPyramidSolver extends StatefulWidget {
   const NumberPyramidSolver({Key? key}) : super(key: key);
@@ -36,29 +33,13 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
   final int _MAX_SOLUTIONS = 10;
   var _rowCount = 3;
   var _currentExpanded = true;
-  int? _currentValue;
-  int? _boardX;
-  int? _boardY;
   double _scale = 1;
-  late TextEditingController _currentInputController;
-  late GCWIntegerTextInputFormatter _integerInputFormatter;
-  final _currentValueFocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
-    _currentInputController = TextEditingController();
-    _integerInputFormatter = GCWIntegerTextInputFormatter(min: 0, max: 999999);
 
     _currentBoard = NumberPyramid(_rowCount);
-  }
-
-  @override
-  void dispose() {
-    _currentInputController.dispose();
-    _currentValueFocusNode.dispose();
-
-    super.dispose();
   }
 
   @override
@@ -135,36 +116,16 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
                     setState(() {
                       _currentBoard = newBoard;
                       selectedBox = null;
-                      _showBoxValue(null, null);
+                      //_showBoxValue(null, null);
                     });
                   },
-                  showBoxValue: _showBoxValue,
                 ),
                    //SizedBox (width: 30, height: 20, child: Column(children: [textBox()])), //Positioned(top: 15.0, right: 15.0, child:
                 ]),
               ),
             ),
         ),
-        Container(height: 10),
-        // GCWTextField(
-        //   title: i18n(context, 'common_value'),
-        //   controller: _currentInputController,
-        //   inputFormatters: [_integerInputFormatter],
-        //   keyboardType: const TextInputType.numberWithOptions(),
-        //   autofocus: true,
-        //   focusNode: _currentValueFocusNode,
-        //   onChanged: (value) {
-        //     setState(() {
-        //       _currentValue = int.tryParse(value);
-        //       var type = NumberPyramidFillType.USER_FILLED;
-        //       if (_currentValue == null) type = NumberPyramidFillType.CALCULATED;
-        //       if (_boardX != null && _boardY != null &&
-        //           _currentBoard.setValue(_boardX!, _boardY!, _currentValue, type)) {
-        //         _currentBoard.removeCalculated();
-        //       }
-        //     });
-        //   },
-        // ),
+
         if (_currentBoard.solutions != null && _currentBoard.solutions!.length > 1)
           Container(
             margin: const EdgeInsets.only(top: 5 * DOUBLE_DEFAULT_MARGIN),
@@ -259,25 +220,6 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
     _currentBoard.mergeSolution(_currentSolution);
   }
 
-  void _showBoxValue(int? x, int? y) {
-    setState(() {
-      _boardX = x;
-      _boardY = y;
-      if (x != null && y != null) {
-        _currentValue = _currentBoard.getValue(x, y);
-      } else {
-        _currentValue = null;
-      }
-      _currentInputController.text = _currentValue == null ? '' : _currentValue.toString();
-
-      if (x != null && y != null && _currentBoard.validPosition(x, y)) {
-        _currentValueFocusNode.requestFocus();
-      } else {
-        _currentValueFocusNode.unfocus();
-      }
-    });
-  }
-
   void _parseClipboard(String text) {
     setState(() {
       var pyramid = NumberPyramid.fromJson(text);
@@ -289,7 +231,7 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
         _currentBoard = pyramid;
       }
       selectedBox = null;
-      _showBoxValue(null, null);
+      selectedBoxRect = null;
     });
   }
 }
