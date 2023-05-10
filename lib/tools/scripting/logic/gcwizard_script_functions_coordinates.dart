@@ -45,7 +45,7 @@ double _distance(dynamic x1, dynamic y1, dynamic x2, dynamic y2) {
   if (_isString(x1) || _isString(y1) || _isString(x2) || _isString(y2)) {
     _handleError(INVALIDTYPECAST);
   }
-  return distanceBearing(LatLng(x1 as double, y1 as double), LatLng(x2 as double, y2 as double), Ellipsoid(ELLIPSOID_NAME_WGS84, 6378137.0, 298.257223563)).distance;
+  return distanceBearing(LatLng(x1 as double, y1 as double), LatLng(x2 as double, y2 as double), const Ellipsoid(ELLIPSOID_NAME_WGS84, 6378137.0, 298.257223563)).distance;
 }
 
 double _bearing(dynamic x1, dynamic y1, dynamic x2, dynamic y2) {
