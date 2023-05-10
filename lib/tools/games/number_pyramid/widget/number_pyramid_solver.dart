@@ -146,25 +146,25 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
             ),
         ),
         Container(height: 10),
-        GCWTextField(
-          title: i18n(context, 'common_value'),
-          controller: _currentInputController,
-          inputFormatters: [_integerInputFormatter],
-          keyboardType: const TextInputType.numberWithOptions(),
-          autofocus: true,
-          focusNode: _currentValueFocusNode,
-          onChanged: (value) {
-            setState(() {
-              _currentValue = int.tryParse(value);
-              var type = NumberPyramidFillType.USER_FILLED;
-              if (_currentValue == null) type = NumberPyramidFillType.CALCULATED;
-              if (_boardX != null && _boardY != null &&
-                  _currentBoard.setValue(_boardX!, _boardY!, _currentValue, type)) {
-                _currentBoard.removeCalculated();
-              }
-            });
-          },
-        ),
+        // GCWTextField(
+        //   title: i18n(context, 'common_value'),
+        //   controller: _currentInputController,
+        //   inputFormatters: [_integerInputFormatter],
+        //   keyboardType: const TextInputType.numberWithOptions(),
+        //   autofocus: true,
+        //   focusNode: _currentValueFocusNode,
+        //   onChanged: (value) {
+        //     setState(() {
+        //       _currentValue = int.tryParse(value);
+        //       var type = NumberPyramidFillType.USER_FILLED;
+        //       if (_currentValue == null) type = NumberPyramidFillType.CALCULATED;
+        //       if (_boardX != null && _boardY != null &&
+        //           _currentBoard.setValue(_boardX!, _boardY!, _currentValue, type)) {
+        //         _currentBoard.removeCalculated();
+        //       }
+        //     });
+        //   },
+        // ),
         if (_currentBoard.solutions != null && _currentBoard.solutions!.length > 1)
           Container(
             margin: const EdgeInsets.only(top: 5 * DOUBLE_DEFAULT_MARGIN),

@@ -1,6 +1,7 @@
 part of 'package:gc_wizard/tools/games/number_pyramid/widget/number_pyramid_solver.dart';
 
 Point<int>? selectedBox;
+Rect? selectedBoxRect;
 
 class NumberPyramidBoard extends StatefulWidget {
   final NumberPyramidFillType type;
@@ -17,38 +18,88 @@ class NumberPyramidBoard extends StatefulWidget {
 }
 
 class NumberPyramidBoardState extends State<NumberPyramidBoard> {
+  int? _currentValue;
+  late TextEditingController _currentInputController;
+  late GCWIntegerTextInputFormatter _integerInputFormatter;
+  final _currentValueFocusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+
+    _currentInputController = TextEditingController();
+    _integerInputFormatter = GCWIntegerTextInputFormatter(min: 0, max: 999999);
+  }
+
+  @override
+  void dispose() {
+    _currentInputController.dispose();
+    _currentValueFocusNode.dispose();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
+    return
         Expanded(
-            child: AspectRatio(
-                aspectRatio: 1 / 0.5,
-                child: CanvasTouchDetector(
-                  gesturesToOverride: const [GestureType.onTapDown],
-                  builder: (context) {
-                    return CustomPaint(
-                      painter: NumberPyramidBoardPainter(context, widget.type, widget.board, (x, y, value) {
-                          setState(() {
-                            if (value == null) {
-                              widget.board.setValue(x, y, null, NumberPyramidFillType.CALCULATED);
-                            } else {
-                              widget.board.setValue(x, y, value, NumberPyramidFillType.USER_FILLED);
-                            }
+            child:
+                Stack(children:<Widget>[
+            // Row(
+            //     children: <Widget>[
+                  AspectRatio(
+                      aspectRatio: 1 / 0.5,
+                      child: CanvasTouchDetector(
+                        gesturesToOverride: const [GestureType.onTapDown],
+                        builder: (context) {
+                          return CustomPaint(
+                            painter: NumberPyramidBoardPainter(context, widget.type, widget.board, (x, y, value) {
+                                setState(() {
+                                  if (value == null) {
+                                    widget.board.setValue(x, y, null, NumberPyramidFillType.CALCULATED);
+                                  } else {
+                                    widget.board.setValue(x, y, value, NumberPyramidFillType.USER_FILLED);
+                                  }
 
-                            widget.onChanged(widget.board);
-                          });
+                                  widget.onChanged(widget.board);
+                                });
+                              },
+                              widget.showBoxValue)
+                          );
                         },
-                        widget.showBoxValue)
-                    );
-                  },
-                ))
-        )
-      ],
+                      )
+                  ),
+                  _editWidget()
+                ])
+        // ])
     );
   }
-}
 
+
+  Widget _editWidget() {
+    ThemeColors colors = themeColors();
+    return (selectedBoxRect != null)
+        ? Positioned(
+        left: selectedBoxRect!.left,
+        top: selectedBoxRect!.top,
+        width: selectedBoxRect!.width,
+        height: selectedBoxRect!.height,
+        child: TextFormField(
+          controller: _currentInputController,
+          inputFormatters: [_integerInputFormatter],
+          keyboardType: const TextInputType.numberWithOptions(),
+          autofocus: true,
+          focusNode: _currentValueFocusNode,
+          style: TextStyle(
+            //height: selectedBoxRect!.height-5,
+            fontSize: selectedBoxRect!.height-5,
+            color: colors.mainFont(),
+          ),
+        )
+    ) //SizedBox (width: 60, child: Column(children: [textBox()])))
+    : Container();
+  }
+}
 class NumberPyramidBoardPainter extends CustomPainter {
   final void Function(int, int, int?) setBoxValue;
   final void Function(int, int) showBoxValue;
@@ -89,9 +140,11 @@ class NumberPyramidBoardPainter extends CustomPainter {
         var boardY = y;
         var boardX = x;
 
-        _touchCanvas.drawRect(Rect.fromLTWH(xInner, yInner, widthInner, heightInner), paintBack,
+        var rect = Rect.fromLTWH(xInner, yInner, widthInner, heightInner);
+        _touchCanvas.drawRect(rect, paintBack,
             onTapDown: (tapDetail) {
               selectedBox = Point<int>(boardX, boardY);
+              selectedBoxRect = rect;
               showBoxValue(boardX, boardY);
             });
 
