@@ -4,6 +4,7 @@ Point<int>? _selectedBox;
 Rect? _selectedBoxRect;
 
 void _unselectBoardBox() {
+  print('unselect');
   _selectedBox = null;
   _selectedBoxRect = null;
 }
@@ -108,17 +109,20 @@ class NumberPyramidBoardState extends State<NumberPyramidBoard> {
     return Container();
   }
 
-  void _showBoxValue(Point<int>? selectedBox) {
+  void _showBoxValue(Point<int>? selectedBox, Rect? selectedBoxRect) {
     setState(() {
+      print(selectedBox.toString() + ' ' + selectedBoxRect.toString());
+      _selectedBox = selectedBox;
+      _selectedBoxRect = selectedBoxRect;
       _currentValueFocusNode.requestFocus();
     });
-    _currentValueFocusNode.requestFocus();
+    // _currentValueFocusNode.requestFocus();
   }
 }
 
 class NumberPyramidBoardPainter extends CustomPainter {
   final BuildContext context;
-  final void Function(Point<int>?) showBoxValue;
+  final void Function(Point<int>?, Rect?) showBoxValue;
   final NumberPyramidFillType type;
   final NumberPyramid board;
 
@@ -140,7 +144,7 @@ class NumberPyramidBoardPainter extends CustomPainter {
     paintBack.color = colors.gridBackground();
 
     paintBackground.color = Colors.transparent;
-    paintBackground.style = PaintingStyle.stroke;
+    paintBackground.style = PaintingStyle.fill;
 
     const border = 2;
     double widthOuter = size.width - 2 * border;
@@ -153,6 +157,11 @@ class NumberPyramidBoardPainter extends CustomPainter {
     Rect rect = Rect.zero;
 
 
+    rect = Rect.fromLTWH(0, 0, size.width, size.height);
+    _touchCanvas.drawRect(rect, paintBackground,
+        onTapDown: (tapDetail)  => _unselectBoardBox()
+    );
+
     for (int y = 0; y < board.getRowsCount(); y++) {
       double xInner = (widthOuter + xOuter - (y + 1) * widthInner) / 2;
       double yInner = yOuter + y * heightInner;
@@ -161,11 +170,13 @@ class NumberPyramidBoardPainter extends CustomPainter {
         var boardY = y;
         var boardX = x;
 
-        rect = Rect.fromLTWH(xInner, yInner, widthInner, heightInner);
+        var rect = Rect.fromLTWH(xInner, yInner, widthInner, heightInner);
         _touchCanvas.drawRect(rect, paintBack,
             onTapDown: (tapDetail) {
-              _selectedBox = Point<int>(boardX, boardY);
-              showBoxValue(_selectedBox);
+              print('select');
+              // _selectedBox = Point<int>(boardX, boardY);
+              // _selectedBoxRect = rect;
+              showBoxValue(Point<int>(boardX, boardY), rect);
             }
         );
 
@@ -195,7 +206,7 @@ class NumberPyramidBoardPainter extends CustomPainter {
             textPainter = _buildTextPainter(text ?? '', textColor, fontsize);
           }
 
-          if (!((_selectedBox!.x == x) && (_selectedBox!.y == y))) {
+          if ((_selectedBox == null) || !((_selectedBox!.x == x) && (_selectedBox!.y == y))) {
             textPainter.paint(
                 canvas,
                 Offset(xInner + (widthInner  - textPainter.width) * 0.5,
@@ -206,11 +217,6 @@ class NumberPyramidBoardPainter extends CustomPainter {
         xInner += widthInner;
       }
     }
-
-    // rect = Rect.fromLTWH(0, 0, size.width, size.height);
-    // _touchCanvas.drawRect(rect, paintBackground,
-    //     onTapDown: (tapDetail)  => _unselectBoardBox()
-    // );
   }
 
   TextPainter _buildTextPainter(String text, Color color, double fontsize) {
