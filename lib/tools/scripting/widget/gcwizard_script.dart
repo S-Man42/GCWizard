@@ -127,10 +127,8 @@ class GCWizardScriptState extends State<GCWizardScript> {
             GCWButton(
               text: i18n(context, 'gcwizard_script_interpret'),
               onPressed: () {
+                _interpretGCWScriptAsync();
                 setState(() {
-                  _interpretGCWScriptAsync();
-                  //_currentOutput = interpretScript(_currentProgram.toUpperCase().replaceAll('  ', ' '), _currentInput);
-                  _currentScriptOutput = _buildOutputText(_currentOutput);
                   if (GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.GRAPHIC ||
                       GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXTGRAPHIC) {
                     _createImage(_currentOutput.Graphic).then((value) {
@@ -160,6 +158,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
               text: i18n(context, 'gcwizard_script_clear'),
               onPressed: () {
                 setState(() {
+                  _currentOutput = GCWizardScriptOutput(STDOUT: '', Graphic: [], Points: [], ErrorMessage: '', ErrorPosition: 0, VariableDump: '');
                   _currentScriptOutput = '';
                 });
               },
@@ -174,6 +173,15 @@ class GCWizardScriptState extends State<GCWizardScript> {
             ),
           ],
         ),
+        _buildOutput(context),
+
+      ],
+    );
+  }
+
+  Widget _buildOutput(BuildContext context) {
+    return Column(
+      children: <Widget>[
         if (GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.GRAPHIC ||
             GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXTGRAPHIC)
           GCWDefaultOutput(
@@ -217,7 +225,6 @@ class GCWizardScriptState extends State<GCWizardScript> {
                   icon: Icons.save,
                   size: IconButtonSize.SMALL,
                   onPressed: () {
-                    _currentOutput = GCWizardScriptOutput(STDOUT: '', Graphic: [], Points: [], ErrorMessage: '', ErrorPosition: 0, VariableDump: '');
                     _exportCoordinates(context, _currentOutput.Points);
                   },
                 ),
@@ -260,6 +267,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
 
   void _showInterpreterOutputGWC(GCWizardScriptOutput output) {
     _currentOutput = output;
+    _currentScriptOutput = _buildOutputText(_currentOutput);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {});

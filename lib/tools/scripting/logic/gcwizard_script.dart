@@ -95,7 +95,7 @@ Future<GCWizardScriptOutput> interpretScript(String script, String input, {SendP
 class GCWizardSCriptInterpreter {
   static const SCRIPT_LENGTH = 10000;
   static const MAXITERATIONS = 1000000000;
-  final PROGRESS_STEP = MAXITERATIONS / 100;
+  static const PROGRESS_STEP = 10000.0;
 
   // internal representation of loop types
   static const FORLOOP = 0;
@@ -334,7 +334,7 @@ class GCWizardSCriptInterpreter {
       }
       iterations++;
       if (sendAsyncPort != null && iterations % PROGRESS_STEP == 0) {
-        sendAsyncPort?.send(DoubleText(PROGRESS, (iterations / PROGRESS_STEP)));
+        sendAsyncPort?.send(DoubleText(PROGRESS, (iterations / MAXITERATIONS)));
       }
 
     } while (token != EOP && !_halt && iterations < MAXITERATIONS);
@@ -970,7 +970,6 @@ class GCWizardSCriptInterpreter {
     try {
       stckvar = forStack.pop();
       variables[stckvar.loopVariable] = variables[stckvar.loopVariable] + step;
-
       if ((variables[stckvar.loopVariable] as num) > stckvar.targetValue) return;
 
       forStack.push(stckvar);

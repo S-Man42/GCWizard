@@ -86,9 +86,11 @@ class GCWizardScriptVariable {
   void toInt(){}
 
   void toDouble(){}
-  
+
   @override
-  void toString(){}
+  String toString(){
+    return variableValue.toString();
+  }
 
   int length(){
     return 0;
