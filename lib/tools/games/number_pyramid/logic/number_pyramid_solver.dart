@@ -21,9 +21,7 @@ class NumberPyramid {
 	int rowCount = 1;
 
 	NumberPyramid(this.rowCount, {NumberPyramid? pyramid, List<List<int?>>? pyramidList}) {
-		if (pyramid != null) {
-			rowCount = pyramid.rowCount;
-		} else if (pyramidList != null) {
+		if (pyramidList != null) {
 			rowCount = pyramidList.length;
 		}
 		rowCount = max(1, rowCount);

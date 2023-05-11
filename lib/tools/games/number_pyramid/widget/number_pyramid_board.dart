@@ -112,6 +112,7 @@ class NumberPyramidBoardState extends State<NumberPyramidBoard> {
     setState(() {
       _currentValueFocusNode.requestFocus();
     });
+    _currentValueFocusNode.requestFocus();
   }
 }
 
@@ -130,12 +131,16 @@ class NumberPyramidBoardPainter extends CustomPainter {
 
     var paint = Paint();
     var paintBack = Paint();
+    var paintBackground = Paint();
     paint.strokeWidth = 1;
     paint.style = PaintingStyle.stroke;
     paint.color = colors.secondary();
 
     paintBack.style = PaintingStyle.fill;
     paintBack.color = colors.gridBackground();
+
+    paintBackground.color = Colors.transparent;
+    paintBackground.style = PaintingStyle.stroke;
 
     const border = 2;
     double widthOuter = size.width - 2 * border;
@@ -144,6 +149,9 @@ class NumberPyramidBoardPainter extends CustomPainter {
     double yOuter = border.toDouble();
     double widthInner = widthOuter / board.getRowsCount();
     double heightInner = min(heightOuter /  board.getRowsCount(), widthInner / 2);
+    var fontsize = heightInner * 0.8;
+    Rect rect = Rect.zero;
+
 
     for (int y = 0; y < board.getRowsCount(); y++) {
       double xInner = (widthOuter + xOuter - (y + 1) * widthInner) / 2;
@@ -153,22 +161,25 @@ class NumberPyramidBoardPainter extends CustomPainter {
         var boardY = y;
         var boardX = x;
 
-        var rect = Rect.fromLTWH(xInner, yInner, widthInner, heightInner);
+        rect = Rect.fromLTWH(xInner, yInner, widthInner, heightInner);
         _touchCanvas.drawRect(rect, paintBack,
             onTapDown: (tapDetail) {
               _selectedBox = Point<int>(boardX, boardY);
-              _selectedBoxRect = rect;
               showBoxValue(_selectedBox);
             }
         );
 
+        if ((_selectedBox != null) && (_selectedBox!.x == x) && (_selectedBox!.y == y)) {
+          _selectedBoxRect = rect;
+        }
+
         _touchCanvas.drawRect(rect, paint);
 
         if (board.getValue(boardX, boardY) != null) {
-          var textColor =
-            board.getFillType(boardX, boardY) == NumberPyramidFillType.USER_FILLED ? colors.secondary() : colors.mainFont();
+          var textColor = board.getFillType(boardX, boardY) == NumberPyramidFillType.USER_FILLED
+                                                                ? colors.secondary()
+                                                                : colors.mainFont();
 
-          var fontsize = heightInner * 0.8;
           var text = board.getValue(boardX, boardY)?.toString();
           var textPainter = _buildTextPainter(text ?? '', textColor, fontsize);
 
@@ -195,6 +206,11 @@ class NumberPyramidBoardPainter extends CustomPainter {
         xInner += widthInner;
       }
     }
+
+    // rect = Rect.fromLTWH(0, 0, size.width, size.height);
+    // _touchCanvas.drawRect(rect, paintBackground,
+    //     onTapDown: (tapDetail)  => _unselectBoardBox()
+    // );
   }
 
   TextPainter _buildTextPainter(String text, Color color, double fontsize) {

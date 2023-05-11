@@ -108,9 +108,9 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
           child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               physics: const AlwaysScrollableScrollPhysics(),
-              child: GestureDetector(
-                onTap: () => _unselectBoardBox(),
-                behavior : HitTestBehavior.opaque,
+              // child: GestureDetector(
+              //   onTap: () => _unselectBoardBox(),
+              //   behavior : HitTestBehavior.opaque,
                 child: Container(
                   constraints: BoxConstraints(maxWidth: 100.0 * _rowCount * _scale),
                   child: Row( children: <Widget>[
@@ -125,7 +125,7 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
                     ),
                   ]),
                 ),
-              ),
+              // ),
             ),
         ),
 
