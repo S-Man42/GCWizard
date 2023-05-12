@@ -29,7 +29,7 @@ class CrossSumRangeState extends State<CrossSumRange> {
   var _currentRangeStart = 0;
   var _currentRangeEnd = 100;
 
-  var _currentOutput = [];
+  var _currentOutput = <Widget>[];
 
   late TextEditingController _endController;
 
