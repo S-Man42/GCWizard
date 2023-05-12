@@ -42,6 +42,8 @@ class GCWClipboardEditorState extends State<GCWClipboardEditor> {
 
   @override
   Widget build(BuildContext context) {
+    print('AAAAAAAAAAAAA');
+
     var entries = Prefs.getStringList(PREFERENCE_CLIPBOARD_ITEMS);
 
     var children = <Widget>[

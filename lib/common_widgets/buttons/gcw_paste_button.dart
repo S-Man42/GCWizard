@@ -83,12 +83,12 @@ class GCWPasteButtonState extends State<GCWPasteButton> {
               icon: Icons.settings,
               size: IconButtonSize.SMALL,
               iconColor: themeColors().dialogText(),
-              onPressed: () => {},
+              onPressed: () => _openClipboardEditor(),
             ),
             text: '', // TODO: A GCWTextDivider without any text is a simple GCWDivider, but the GCWDivider currently does not support 'suppressTopSpace' and 'trailing'; Move both attributes to GCWDivider
           ),
           action: (index) {
-            NavigationService.instance.navigateTo('clipboard_editor');
+            _openClipboardEditor();
           })
     ];
 
@@ -146,5 +146,9 @@ class GCWPasteButtonState extends State<GCWPasteButton> {
 
     menuItems.addAll(gcwClipboard);
     return menuItems;
+  }
+
+  void _openClipboardEditor() {
+    NavigationService.instance.navigateTo('clipboard_editor');
   }
 }
