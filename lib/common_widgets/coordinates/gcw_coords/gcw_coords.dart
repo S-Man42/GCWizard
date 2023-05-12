@@ -478,6 +478,8 @@ class GCWCoordsState extends State<GCWCoords> {
   }
 
   GCWCoordsFormatSelector _buildInputFormatSelector() {
+    print(_currentCoords.format);
+
     return GCWCoordsFormatSelector(
       format: _currentCoords.format,
       onChanged: (CoordinateFormat newFormat) {
