@@ -91,6 +91,8 @@ void main() {
       {'input' : '32{2,3}14', 'expectedOutputCount' : 20, 'expectedOutputFirst': 58267, 'expectedValueFirst': '32214'},
       {'input' : '32{2,3}1?4', 'expectedOutputCount' : 153, 'expectedOutputFirst': 16402, 'expectedValueFirst': '3224'},
       {'input' : '32{2}1.', 'expectedOutputCount' : 127, 'expectedOutputFirst': 12811, 'expectedValueFirst': '32211'},
+
+      {'input' : '32ABC14', 'expectedOutputCount' : 116, 'expectedOutputFirst': 2842, 'expectedValueFirst': '3214'},
     ];
 
     for (var elem in _inputsToExpected) {
