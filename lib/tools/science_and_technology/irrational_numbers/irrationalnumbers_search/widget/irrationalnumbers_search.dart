@@ -114,7 +114,7 @@ class IrrationalNumbersSearchState extends State<IrrationalNumbersSearch> {
     var _solution = _solutions[_currentSolution];
 
     var output = [
-      _hasWildCards ? [i18n(context, 'common_value'), _solution.value] : <String>[],
+      if (_hasWildCards) [i18n(context, 'common_value'), _solution.value],
       [i18n(context, 'common_start'), _solution.start],
       [i18n(context, 'common_end'), _solution.end]
     ];
