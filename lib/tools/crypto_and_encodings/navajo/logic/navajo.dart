@@ -746,7 +746,7 @@ final Map<String, String> _NAVAJO_ENCODE_DICTIONARY = {
 
 final Map<String, String> _NAVAJO_DECODE_DICTIONARY = switchMapKeyValue(_NAVAJO_ENCODE_DICTIONARY);
 
-const Map<String, String> _NAVAJO_DECODE_ALPHABET = {
+final Map<String, String> _NAVAJO_DECODE_ALPHABET = {
     'WOL-LA-CHEE':'A',
     'BE-LA-SANA':'A',
     'TSE-NILL':'A',
@@ -954,7 +954,7 @@ String decodeNavajo(String cipherText, bool useOnlyAlphabet) {
     });
     result.add(' ');
   });
-  return result.join('');
+  return enfoldText(result.join('').trim());
 }
 
 String encodeNavajo(String plainText, bool useOnlyAlphabet) {
