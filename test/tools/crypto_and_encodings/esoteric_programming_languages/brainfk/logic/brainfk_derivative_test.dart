@@ -29,6 +29,22 @@ void main() {
       {'code': 'aAaA AAAA aaAA aAaa aaaa aaaA AAAA AAaa aAaA AAaa AaAa', 'derivative': BRAINFKDERIVATIVE_AAA, 'expectedOutput': '>+[,.]+<><-'},
       {'code': 'aAaAAAAAaaAAaAaaaaaaaaaAAAAAAAaaaAaAAAaaAaAa', 'derivative': BRAINFKDERIVATIVE_AAA, 'expectedOutput': '>+[,.]+<><-'},
       {'code': 'aAaAAAAaaAAaAaaaaaaaaAAAAAAaaaAaAAaaAaAa', 'derivative': BRAINFKDERIVATIVE_AAA, 'expectedOutput': '>.<-'},
+
+      {'code': "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
+          "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+          "IF THE CELL UNDER THE MEMORY POINTER'S VALUE IS ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE ] COMMAND IN BRAINFUCK\n" +
+          "REPLACE THE CELL UNDER THE MEMORY POINTER'S VALUE WITH THE ASCII CHARACTER CODE OF USER INPUT\n" +
+          "IF THE CELL UNDER THE MEMORY POINTER'S VALUE IS ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE ] COMMAND IN BRAINFUCK\n" +
+          "IF THE CELL UNDER THE MEMORY POINTER'S VALUE IS NOT ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE [ COMMAND IN BRAINFUCK\n" +
+          "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
+          "IF THE CELL UNDER THE MEMORY POINTER'S VALUE IS NOT ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE [ COMMAND IN BRAINFUCK\n" +
+          "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+          "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" +
+          "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
+          "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" +
+        "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n",
+        'derivative': BRAINFKDERIVATIVE_DETAILEDFK, 'expectedOutput': '>+[,[].]+<><-'},
+
     ];
 
     for (var elem in _inputsToExpected) {
@@ -43,6 +59,235 @@ void main() {
     String brainfck =
         "++++++++++[>+>+++>+++++++>++++++++++<<<<-]>>>++++++++.<++.++++++++++++++++++++.++++.+++++++.-----------.----.--.++.++++++.++.-----------------.-------.>---------.--------------.++++++++.----------.-----.--.++++.++..";
     String result = "N 48?40.068' E7?50.244";
+
+    //https://esolangs.org/wiki/Trivial_brainfuck_substitution
+    String Pewlang = brainfck
+        .replaceAll('>', 'pew ')
+        .replaceAll('<', 'Pew ')
+        .replaceAll('+', 'pEw ')
+        .replaceAll('-', 'peW ')
+        .replaceAll('.', 'PEw ')
+        .replaceAll('[', 'PeW ')
+        .replaceAll(']', 'PEW ');
+    String Roadrunner = brainfck
+        .replaceAll('>', 'meeP ')
+        .replaceAll('<', 'Meep ')
+        .replaceAll('+', 'mEEp ')
+        .replaceAll('-', 'MeeP ')
+        .replaceAll('.', 'MEEP ')
+        .replaceAll('[', 'mEEP ')
+        .replaceAll(']', 'MEEp ');
+    String Kenny = brainfck
+        .replaceAll('>', 'mmp ')
+        .replaceAll('<', 'mmm ')
+        .replaceAll('+', 'mpp ')
+        .replaceAll('-', 'pmm ')
+        .replaceAll('.', 'fmm ')
+        .replaceAll('[', 'mmf ')
+        .replaceAll(']', 'mpf ');
+    String pikaLang =
+        "pi pi pi pi pi pi pi pi pi pi pika pipi pi pipi pi pi pi pipi pi pi pi pi pi pi pi pipi pi pi pi pi pi pi pi pi pi pi pichu pichu pichu pichu ka chu pipi pipi pipi pi pi pi pi pi pi pi pi pikachu pichu pi pi pikachu pi pi pi pi pi pi pi pi pi pi pi pi pi pi pi pi pi pi pi pi pikachu pi pi pi pi pikachu pi pi pi pi pi pi pi pikachu ka ka ka ka ka ka ka ka ka ka ka pikachu ka ka ka ka pikachu ka ka pikachu pi pi pikachu pi pi pi pi pi pi pikachu pi pi pikachu ka ka ka ka ka ka ka ka ka ka ka ka ka ka ka ka ka pikachu ka ka ka ka ka ka ka pikachu pipi ka ka ka ka ka ka ka ka ka pikachu ka ka ka ka ka ka ka ka ka ka ka ka ka ka pikachu pi pi pi pi pi pi pi pi pikachu ka ka ka ka ka ka ka ka ka ka pikachu ka ka ka ka ka pikachu ka ka pikachu pi pi pi pi pikachu pi pi pikachu pikachu";
+    String AAA = brainfck
+        .replaceAll('>', 'aAaA ')
+        .replaceAll('<', 'AAaa ')
+        .replaceAll('+', 'AAAA ')
+        .replaceAll('-', 'AaAa ')
+        .replaceAll('.', 'aaaa ')
+        .replaceAll('[', 'aaAA ')
+        .replaceAll(']', 'aaaA ');
+    String Colonoscopy = brainfck
+        .replaceAll('>', ';}; ')
+        .replaceAll('<', ';{; ')
+        .replaceAll('+', ';;}; ')
+        .replaceAll('-', ';;{; ')
+        .replaceAll('.', ';;;}; ')
+        .replaceAll('[', '{{; ')
+        .replaceAll(']', '}}; ');
+    String fuckbeEs = brainfck
+        .replaceAll('>', 'f ')
+        .replaceAll('<', 'u ')
+        .replaceAll('+', 'c ')
+        .replaceAll('-', 'k ')
+        .replaceAll('.', 'b ')
+        .replaceAll('[', 'E ')
+        .replaceAll(']', 's ');
+    String ZZZ = brainfck
+        .replaceAll('-', '-z ')
+        .replaceAll('>', 'zz ')
+        .replaceAll('<', '-zz ')
+        .replaceAll('+', 'z ')
+        .replaceAll('.', 'zzz ')
+        .replaceAll('[', 'z+z ')
+        .replaceAll(']', 'z-z ');
+    String Fuck = brainfck
+        .replaceAll('>', '!!!!!# ')
+        .replaceAll('<', '!!!!!!# ')
+        .replaceAll('+', '!!!!!!!# ')
+        .replaceAll('-', '!!!!!!!!# ')
+        .replaceAll('.', '!!!!!!!!!!# ')
+        .replaceAll('[', '!!!!!!!!!!!# ')
+        .replaceAll(']', '!!!!!!!!!!!!# ');
+    String Morsefuck = brainfck
+        .replaceAll('-', '-xx ')
+        .replaceAll('.', '-x- ')
+        .replaceAll('>', 'x-- ')
+        .replaceAll('<', '--x ')
+        .replaceAll('+', 'xx- ')
+        .replaceAll('[', '--- ')
+        .replaceAll(']', 'xxx ')
+        .replaceAll('x', '.');
+    String Nak =
+        "Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak! Nak? Nak. Nak? +Nak. Nak? Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak? Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak? Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak? Nak. Nak? Nak. Nak? Nak. Nak? Nak. Nak! Nak! Nak? Nak! Nak. Nak? Nak. Nak? Nak. Nak? Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak! Nak. Nak? Nak. Nak. Nak. Nak. Nak. Nak! Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak! Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak! Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak! Nak. Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak. Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak. Nak! Nak! Nak! Nak! Nak! Nak. Nak. Nak. Nak. Nak. Nak! Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak! Nak. Nak. Nak. Nak. Nak. Nak! Nak. Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak. Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak. Nak. Nak? Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak. Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak! Nak. Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak. Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak! Nak. Nak! Nak! Nak! Nak! Nak! Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak. Nak! Nak. Nak. Nak. Nak. Nak. Nak! Nak. Nak! Nak.";
+    String Ook =
+        "Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook! Ook? Ook. Ook? +Ook. Ook? Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook? Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook? Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook? Ook. Ook? Ook. Ook? Ook. Ook? Ook. Ook! Ook! Ook? Ook! Ook. Ook? Ook. Ook? Ook. Ook? Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook! Ook. Ook? Ook. Ook. Ook. Ook. Ook. Ook! Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook! Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook! Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook! Ook. Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook. Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook. Ook! Ook! Ook! Ook! Ook! Ook. Ook. Ook. Ook. Ook. Ook! Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook! Ook. Ook. Ook. Ook. Ook. Ook! Ook. Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook. Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook. Ook. Ook? Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook. Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook! Ook. Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook. Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook. Ook! Ook! Ook! Ook! Ook! Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook! Ook. Ook. Ook. Ook. Ook. Ook! Ook. Ook! Ook. ";
+    String Blub =
+        "Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub! Blub? Blub. Blub? +Blub. Blub? Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub? Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub? Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub? Blub. Blub? Blub. Blub? Blub. Blub? Blub. Blub! Blub! Blub? Blub! Blub. Blub? Blub. Blub? Blub. Blub? Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub! Blub. Blub? Blub. Blub. Blub. Blub. Blub. Blub! Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub! Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub! Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub! Blub. Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub. Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub. Blub! Blub! Blub! Blub! Blub! Blub. Blub. Blub. Blub. Blub. Blub! Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub! Blub. Blub. Blub. Blub. Blub. Blub! Blub. Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub. Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub. Blub. Blub? Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub. Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub! Blub. Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub. Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub! Blub. Blub! Blub! Blub! Blub! Blub! Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub. Blub! Blub. Blub. Blub. Blub. Blub. Blub! Blub. Blub! Blub. ";
+    String Triplet = brainfck
+        .replaceAll('>', '001 ')
+        .replaceAll('<', '100 ')
+        .replaceAll('+', '111 ')
+        .replaceAll('-', '000 ')
+        .replaceAll('.', '010 ')
+        .replaceAll('[', '110 ')
+        .replaceAll(']', '011 ');
+    String Ternary = brainfck
+        .replaceAll('>', '01 ')
+        .replaceAll('<', '00 ')
+        .replaceAll('+', '11 ')
+        .replaceAll('-', '10 ')
+        .replaceAll('.', '20 ')
+        .replaceAll('[', '02 ')
+        .replaceAll(']', '12 ');
+    String BinaryFk = brainfck
+        .replaceAll('>', '010 ')
+        .replaceAll('<', '011 ')
+        .replaceAll('+', '000 ')
+        .replaceAll('-', '001 ')
+        .replaceAll('.', '100 ')
+        .replaceAll('[', '110 ')
+        .replaceAll(']', '111 ');
+    String Screamcode = brainfck
+        .replaceAll('>', 'AAAH ')
+        .replaceAll('<', 'AAAAGH ')
+        .replaceAll('+', 'F*CK ')
+        .replaceAll('-', 'SHIT ')
+        .replaceAll('.', '!!!!!! ')
+        .replaceAll('[', 'OW ')
+        .replaceAll(']', 'OWIE ');
+    String FlufflPuff = brainfck
+        .replaceAll('>', 'b ')
+        .replaceAll('<', 't ')
+        .replaceAll('+', 'pf ')
+        .replaceAll('-', 'bl ')
+        .replaceAll('.', '! ')
+        .replaceAll('[', '*gasp* ')
+        .replaceAll(']', '*pomf* ');
+    String UWU = brainfck
+        .replaceAll('>', 'OwO ')
+        .replaceAll('<', '°w° ')
+        .replaceAll('+', 'UwU ')
+        .replaceAll('-', 'QwQ ')
+        .replaceAll('.', '@w@ ')
+        .replaceAll('[', '~w~ ')
+        .replaceAll(']', '-w- ');
+    String ShortOOK = brainfck
+        .replaceAll('>', 'x? ')
+        .replaceAll('<', '?x ')
+        .replaceAll('+', 'xx ')
+        .replaceAll('-', '!! ')
+        .replaceAll('.', '!. ')
+        .replaceAll('[', '!? ')
+        .replaceAll(']', '?! ')
+        .replaceAll('x', '.');
+    String frqiquartf = brainfck
+        .replaceAll('>', 'f ')
+        .replaceAll('<', 'rqi ')
+        .replaceAll('+', 'qua ')
+        .replaceAll('-', 'rtf ')
+        .replaceAll('.', 'lv ')
+        .replaceAll('[', 'btj ')
+        .replaceAll(']', 'zxg ');
+    String alphk = brainfck
+        .replaceAll('>', 'a ')
+        .replaceAll('<', 'c ')
+        .replaceAll('+', 'e ')
+        .replaceAll('-', 'i ')
+        .replaceAll('.', 'j ')
+        .replaceAll('[', 'p ')
+        .replaceAll(']', 's ');
+    String pscript = brainfck
+        .replaceAll('>', '8=D ')
+        .replaceAll('<', '8==D ')
+        .replaceAll('+', '8===D ')
+        .replaceAll('-', '8====D ')
+        .replaceAll('.', '8=====D ')
+        .replaceAll('[', '8=======D ')
+        .replaceAll(']', '8========D ');
+    String omam = brainfck
+        .replaceAll('>', 'hold your horses now\n')
+        .replaceAll('<', 'sleep until the sun goes down\n')
+        .replaceAll('+', 'through the woods we ran\n')
+        .replaceAll('-', 'deep into the mountain sound\n')
+        .replaceAll('.', 'don' "'" 't listen to a word i say\n')
+        .replaceAll('[', 'though the truth may vary\n')
+        .replaceAll(']', 'this ship will carry\n');
+    String revo9 = brainfck
+        .replaceAll('>', 'It' "'" 's alright\n')
+        .replaceAll('<', 'turn me on, dead man\n')
+        .replaceAll('+', 'Number 9\n')
+        .replaceAll('-', 'if you become naked\n')
+        .replaceAll('.', 'The Beatles\n')
+        .replaceAll('[', 'Revolution 1\n')
+        .replaceAll(']', 'Revolution 9\n');
+    String detail = brainfck
+        .replaceAll('>', 'MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n')
+        .replaceAll('<', 'MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n')
+        .replaceAll('+', 'INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n')
+        .replaceAll('-', 'DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n')
+        .replaceAll('.', 'PRINT THE CELL UNDER THE MEMORY POINTER' "'" 'S VALUE AS AN ASCII CHARACTER\n')
+        .replaceAll('[', 'IF THE CELL UNDER THE MEMORY POINTER' "'" 'S VALUE IS ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE # COMMAND IN BRAINFUCK\n')
+        .replaceAll(']', 'IF THE CELL UNDER THE MEMORY POINTER' "'" 'S VALUE IS NOT ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE [ COMMAND IN BRAINFUCK\n')
+        .replaceAll('#', ']');
+    String wepmlrIo = brainfck
+        .replaceAll('>', 'r ')
+        .replaceAll('<', 'l ')
+        .replaceAll('+', 'p ')
+        .replaceAll('-', 'm ')
+        .replaceAll('.', 'o ')
+        .replaceAll('[', 'w ')
+        .replaceAll(']', 'e ');
+    String htpf = brainfck
+        .replaceAll('>', '> ')
+        .replaceAll('<', '< ')
+        .replaceAll('+', '= ')
+        .replaceAll('-', '/ ')
+        .replaceAll('.', '" ')
+        .replaceAll('[', '& ')
+        .replaceAll(']', '; ');
+    String mierda = brainfck
+        .replaceAll('>', 'Derecha ')
+        .replaceAll('<', 'Izquierda ')
+        .replaceAll('+', 'Mas ')
+        .replaceAll('-', 'Menos ')
+        .replaceAll('.', 'Decir ')
+        .replaceAll('[', 'Iniciar Bucle ')
+        .replaceAll(']', 'Terminar Bucle ');
+    String gibmerol = brainfck
+        .replaceAll('>', 'G ')
+        .replaceAll('<', 'i ')
+        .replaceAll('+', 'b ')
+        .replaceAll('-', 'M ')
+        .replaceAll('.', 'e ')
+        .replaceAll('[', 'o ')
+        .replaceAll(']', 'l ');
+    String nagawoosli = brainfck
+        .replaceAll('>', 'na ')
+        .replaceAll('<', 'ga ')
+        .replaceAll('+', 'woo ')
+        .replaceAll('-', 'ski ')
+        .replaceAll('.', 'an ')
+        .replaceAll('[', 'oow ')
+        .replaceAll(']', 'iks ');
 
     for (var elem in BRAINFK_DERIVATIVES.entries) {
       if (elem.value == 'Custom') {
@@ -149,71 +394,117 @@ void main() {
   });
 
   group("BrainfkDerivat.interpretDetailedFk:", () {
+    // https://esolangs.org/wiki/DetailedFuck
     List<Map<String, Object?>> _inputsToExpected = [
       {
         'code': "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
-            "IF THE CELL UNDER THE MEMORY POINTER'S VALUE IS ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE ] COMMAND IN BRAINFUCK\n" +
-            "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
-            "IF THE CELL UNDER THE MEMORY POINTER'S VALUE IS ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE ] COMMAND IN BRAINFUCK\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" +
-            "IF THE CELL UNDER THE MEMORY POINTER'S VALUE IS ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE ] COMMAND IN BRAINFUCK\n" +
-            "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
-            "IF THE CELL UNDER THE MEMORY POINTER'S VALUE IS ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE ] COMMAND IN BRAINFUCK\n" +
-            "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
-            "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
-            "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
-            "IF THE CELL UNDER THE MEMORY POINTER'S VALUE IS NOT ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE [ COMMAND IN BRAINFUCK\n" +
-            "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
-            "IF THE CELL UNDER THE MEMORY POINTER'S VALUE IS ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE ] COMMAND IN BRAINFUCK\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" +
-            "IF THE CELL UNDER THE MEMORY POINTER'S VALUE IS NOT ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE [ COMMAND IN BRAINFUCK\n" +
-            "IF THE CELL UNDER THE MEMORY POINTER'S VALUE IS NOT ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE [ COMMAND IN BRAINFUCK\n" +
-            "IF THE CELL UNDER THE MEMORY POINTER'S VALUE IS NOT ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE [ COMMAND IN BRAINFUCK\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
-            "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
-            "IF THE CELL UNDER THE MEMORY POINTER'S VALUE IS NOT ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE [ COMMAND IN BRAINFUCK\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
-            "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
-            "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
-            "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
-            "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
-            "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
-            "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
-            "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
-            "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
-            "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" +
-            "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
-            "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" +
-            "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
-            "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
-            "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
-            "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" +
-            "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" +
-            "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
-            "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER",
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "IF THE CELL UNDER THE MEMORY POINTER'S VALUE IS ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE ] COMMAND IN BRAINFUCK\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "IF THE CELL UNDER THE MEMORY POINTER'S VALUE IS ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE ] COMMAND IN BRAINFUCK\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" +
+        "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "IF THE CELL UNDER THE MEMORY POINTER'S VALUE IS NOT ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE [ COMMAND IN BRAINFUCK\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
+        "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "IF THE CELL UNDER THE MEMORY POINTER'S VALUE IS ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE ] COMMAND IN BRAINFUCK\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" +
+        "IF THE CELL UNDER THE MEMORY POINTER'S VALUE IS NOT ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE [ COMMAND IN BRAINFUCK\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" +
+        "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "IF THE CELL UNDER THE MEMORY POINTER'S VALUE IS NOT ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE [ COMMAND IN BRAINFUCK\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
+        "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
+        "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
+        "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
+        "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" +
+        "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" +
+        "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
+        "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
+        "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n",
         'input': '',
-        'expectedOutput': 'hello world'
+        'expectedOutput': 'Hello World!\n'
       },
     ];
 
