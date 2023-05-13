@@ -480,8 +480,7 @@ final BrainfkDerivatives BRAINFKDERIVATIVE_NAGAWOOSKI = BrainfkDerivatives(
     outputInstruction: 'an',
     inputInstruction: 'ag',
     startLoopInstruction: 'oow',
-    endLoopInstruction: 'iks',
-    outputCommandDelimiter: '');
+    endLoopInstruction: 'iks');
 
 final BrainfkDerivatives BRAINFKDERIVATIVE_MIERDA = BrainfkDerivatives(
     pointerShiftRightInstruction: 'Derecha',
