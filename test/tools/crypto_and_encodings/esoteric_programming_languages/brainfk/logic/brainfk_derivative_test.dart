@@ -1,5 +1,8 @@
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/brainfk/logic/brainfk_derivative.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
+import 'package:gc_wizard/utils/collection_utils.dart';
+import 'package:gc_wizard/utils/string_utils.dart';
 
 void main() {
   group("BrainfkDerivatives.convertToBrainfk:", () {
@@ -56,6 +59,7 @@ void main() {
     String brainfck =
         "++++++++++[>+>+++>+++++++>++++++++++<<<<-]>>>++++++++.<++.++++++++++++++++++++.++++.+++++++.-----------.----.--.++.++++++.++.-----------------.-------.>---------.--------------.++++++++.----------.-----.--.++++.++..";
     String result = "N 48?40.068' E7?50.244";
+
     //https://esolangs.org/wiki/Trivial_brainfuck_substitution
     String Pewlang = brainfck
         .replaceAll('>', 'pew ')
@@ -285,44 +289,19 @@ void main() {
         .replaceAll('[', 'oow ')
         .replaceAll(']', 'iks ');
 
-    List<Map<String, Object?>> _inputsToExpected = [
-      {'derivative': BRAINFKDERIVATIVE_PEWLANG, 'code': Pewlang, 'expectedOutput': result},
-      {'derivative': BRAINFKDERIVATIVE_ROADRUNNER, 'code': Roadrunner, 'expectedOutput': result},
-      {'derivative': BRAINFKDERIVATIVE_KENNYSPEAK, 'code': Kenny, 'expectedOutput': result},
-      {'derivative': BRAINFKDERIVATIVE_PIKALANG, 'code': pikaLang, 'expectedOutput': result},
-      {'derivative': BRAINFKDERIVATIVE_AAA, 'code': AAA, 'expectedOutput': result},
-      {'derivative': BRAINFKDERIVATIVE_COLONOSCOPY, 'code': Colonoscopy, 'expectedOutput': result},
-      {'derivative': BRAINFKDERIVATIVE_FKBEES, 'code': fuckbeEs, 'expectedOutput': result},
-      {'derivative': BRAINFKDERIVATIVE_ZZZ, 'code': ZZZ, 'expectedOutput': result},
-      {'derivative': BRAINFKDERIVATIVE___FK, 'code': Fuck, 'expectedOutput': result},
-      {'derivative': BRAINFKDERIVATIVE_MORSEFK, 'code': Morsefuck, 'expectedOutput': result},
-      {'derivative': BRAINFKDERIVATIVE_NAK, 'code': Nak, 'expectedOutput': result},
-      {'derivative': BRAINFKDERIVATIVE_OOK, 'code': Ook, 'expectedOutput': result},
-      {'derivative': BRAINFKDERIVATIVE_BLUB, 'code': Blub, 'expectedOutput': result},
-      {'derivative': BRAINFKDERIVATIVE_TRIPLET, 'code': Triplet, 'expectedOutput': result},
-      {'derivative': BRAINFKDERIVATIVE_TERNARY, 'code': Ternary, 'expectedOutput': result},
-      {'derivative': BRAINFKDERIVATIVE_BINARYFK, 'code': BinaryFk, 'expectedOutput': result},
-      {'derivative': BRAINFKDERIVATIVE_SCREAMCODE, 'code': Screamcode, 'expectedOutput': result},
-      {'derivative': BRAINFKDERIVATIVE_FLUFFLEPUFF, 'code': FlufflPuff, 'expectedOutput': result},
-      {'derivative': BRAINFKDERIVATIVE_UWU, 'code': UWU, 'expectedOutput': result},
-      {'derivative': BRAINFKDERIVATIVE_SHORTOOK, 'code': ShortOOK, 'expectedOutput': result},
-      {'derivative': BRAINFKDERIVATIVE_BTJZXGQUARTFRQIFJLV, 'code': frqiquartf, 'expectedOutput': result},
-      {'derivative': BRAINFKDERIVATIVE_ALPHK, 'code': alphk, 'expectedOutput': result},
-      {'derivative': BRAINFKDERIVATIVE_PSSCRIPT, 'code': pscript, 'expectedOutput': result},
-      {'derivative': BRAINFKDERIVATIVE_OMAM, 'code': omam, 'expectedOutput': result},
-      {'derivative': BRAINFKDERIVATIVE_REVOLUTION9, 'code': revo9, 'expectedOutput': result},
-      {'derivative': BRAINFKDERIVATIVE_DETAILEDFK, 'code': detail, 'expectedOutput': result},
-      {'derivative': BRAINFKDERIVATIVE_WEPMLRIO, 'code': wepmlrIo, 'expectedOutput': result},
-      {'derivative': BRAINFKDERIVATIVE_HTPF, 'code': htpf, 'expectedOutput': result},
-      {'derivative': BRAINFKDERIVATIVE_MIERDA, 'code': mierda, 'expectedOutput': result},
-      {'derivative': BRAINFKDERIVATIVE_GIBMEROL, 'code': gibmerol, 'expectedOutput': result},
-      {'derivative': BRAINFKDERIVATIVE_NAGAWOOSKI, 'code': nagawoosli, 'expectedOutput': result},
-    ];
+    for (var elem in BRAINFK_DERIVATIVES.entries) {
+      if (elem.value == 'Custom') {
+        continue;
+      }
 
-    for (var elem in _inputsToExpected) {
-      test('code: ${elem['code']}', () {
-        var _actual = (elem['derivative'] as BrainfkDerivatives).interpretBrainfkDerivatives(elem['code'] as String);
-        expect(_actual, elem['expectedOutput']);
+      test('derivative: ${elem.value}', () {
+        var derivative = elem.key;
+        var generateCodeFromBf = brainfck;
+        generateCodeFromBf = insertEveryNthCharacter(generateCodeFromBf, 1, ' ');
+        generateCodeFromBf = substitution(generateCodeFromBf, switchMapKeyValue(derivative.substitutions));
+
+        var _actual = derivative.interpretBrainfkDerivatives(generateCodeFromBf);
+        expect(_actual, result);
       });
     }
   });
