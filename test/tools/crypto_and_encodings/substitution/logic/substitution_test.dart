@@ -27,6 +27,8 @@ void main() {
 
       {'input' : 'CADBEFAGB', 'substitution': {'A': 'B', 'B': 'A'}, 'caseSensitive': true, 'expectedOutput' : 'CBDAEFBGA'},
       {'input' : 'CADBEFAGB', 'substitution': {'A': 'B', 'B': 'C', 'C': 'A'}, 'caseSensitive': true, 'expectedOutput' : 'ABDCEFBGC'},
+
+      {'input' : 'Ook', 'substitution': {'ook': ']', 'BC': '2', 'BCD': '3'}, 'caseSensitive': true, 'expectedOutput' : '13'},
     ];
 
     for (var elem in _inputsToExpected) {
