@@ -28,8 +28,8 @@ const _BEFUNGE_EMPTY_LINE = '                                                   
 const MAX_LENGTH_PROGRAM = 80 * 25;
 const _LINEWIDTH = 80;
 const _PAGEHEIGHT = 25;
-const _SCREENWIDTH = _LINEWIDTH - 1;
-const _SCREENHEIGHT = _PAGEHEIGHT - 1;
+const _SCREENWIDTH = _LINEWIDTH;
+const _SCREENHEIGHT = _PAGEHEIGHT;
 
 const _MAX_ITERATIONS = 9999;
 const _MAX_OUTPUT_LENGTH = 160;
@@ -592,7 +592,7 @@ String generateBefunge(String OutputText) {
     if (oddRow) {
       befungeLine = befungeLine + code[i];
       column++;
-      if (column % (_SCREENWIDTH - 1) == 0) {
+      if (column % (_SCREENWIDTH - 2) == 0) {
         befungeLine = befungeLine + 'v';
         oddRow = !oddRow;
         befunge.add(befungeLine);
@@ -601,7 +601,7 @@ String generateBefunge(String OutputText) {
     } else {
       befungeLine = code[i] + befungeLine;
       column++;
-      if (column % (_SCREENWIDTH - 1) == 0) {
+      if (column % (_SCREENWIDTH - 2) == 0) {
         befungeLine = 'v' + befungeLine;
         oddRow = !oddRow;
         befunge.add(befungeLine);
