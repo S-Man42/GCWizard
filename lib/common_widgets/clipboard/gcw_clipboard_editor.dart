@@ -42,8 +42,6 @@ class GCWClipboardEditorState extends State<GCWClipboardEditor> {
 
   @override
   Widget build(BuildContext context) {
-    print('AAAAAAAAAAAAA');
-
     var entries = Prefs.getStringList(PREFERENCE_CLIPBOARD_ITEMS);
 
     var children = <Widget>[
@@ -87,7 +85,7 @@ class GCWClipboardEditorState extends State<GCWClipboardEditor> {
         .asMap()
         .map<int, Widget?>((int index, String entry) {
           var item = ClipboardItem.fromJson(entry);
-          if (item == null) return MapEntry(index, null);
+          if (item == null) return MapEntry<int, Widget?>(index, null);
 
           Widget child;
           if (_currentEditId != null && _currentEditId == index) {
@@ -111,7 +109,7 @@ class GCWClipboardEditorState extends State<GCWClipboardEditor> {
                       item.text = _currentEditText;
 
                       var newEntries = List<String>.from(entries);
-                      newEntries[index] = jsonEncode(item);
+                      newEntries[index] = item.toJson();
                       Prefs.setStringList(PREFERENCE_CLIPBOARD_ITEMS, newEntries);
                     }
 
