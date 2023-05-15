@@ -93,7 +93,7 @@ class _ExifReaderState extends State<ExifReader> {
     LatLng? _point;
     Map<String, List<List<dynamic>>>? _tableTags;
     try {
-      if (tags != null) {
+      if (tags.isNotEmpty) {
         _thumbnail = completeThumbnail(tags);
         _tableTags = buildTablesExif(tags);
         var xmpTags = buildXmpTags(_file, _tableTags);
