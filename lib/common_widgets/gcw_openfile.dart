@@ -314,7 +314,6 @@ Future<Uint8ListText?> _downloadFileAsync(GCWAsyncExecuterParameters? jobData) a
   int _total = 0;
   int _received = 0;
   List<int> _bytes = [];
-  Future<Uint8List>? resultBytes;
   SendPort? sendAsyncPort = jobData?.sendAsyncPort;
   Uri? uri = jobData!.parameters as Uri;
   var result = Uint8ListText('', Uint8List.fromList(_bytes));
@@ -351,6 +350,7 @@ Future<Uint8ListText?> _downloadFileAsync(GCWAsyncExecuterParameters? jobData) a
               },
           );
         }
+        return response;
     });
   } on TimeoutException catch (_) {
     result = Uint8ListText('common_loadfile_exception_responsestatus', Uint8List(0));
