@@ -65,7 +65,7 @@ class ZodiacState extends State<Zodiac> {
           GCWDropDown<_ZODIACSIGNS_ATTRIBUTES>(
             value: _currentAttribute,
             items: _ZODIACSIGNS_ATTRIBUTES.values.map((attribute) {
-              return GCWDropDownMenuItem(value: attribute, child: i18n(context, attribute.name));
+              return GCWDropDownMenuItem(value: attribute, child: i18n(context, attribute.toString()));
             }).toList(),
             onChanged: (value) {
               setState(() {
