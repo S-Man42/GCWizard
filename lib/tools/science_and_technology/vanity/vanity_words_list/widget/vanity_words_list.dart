@@ -58,9 +58,7 @@ class VanityWordsListState extends State<VanityWordsList> {
     var vanityWordsOverview = VANITY_WORDS[_currentLanguage];
     if (vanityWordsOverview == null) return Container();
 
-    if (_currentLanguage == NumeralWordsLanguage.DEU) NUMERAL_WORDS[_currentLanguage]?['fünf'] = '5';
-
-    return GCWDefaultOutput(
+     return GCWDefaultOutput(
         child: GCWColumnedMultilineOutput(
             data: vanityWordsOverview.entries.map((entry) {
                     return [

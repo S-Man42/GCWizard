@@ -438,8 +438,7 @@ const Map<String, String> _CZEWordToNum = {
   'západní': 'numeralwords_w',
   'jih': 'numeralwords_s',
 };
-//not change to const (vanity_words_list.dart line 61)
-final Map<String, String> _DEUWordToNum = {
+const Map<String, String> _DEUWordToNum = {
   'null': '0',
   'eins': '1',
   'zwei': '2',
@@ -447,6 +446,7 @@ final Map<String, String> _DEUWordToNum = {
   'drei': '3',
   'vier': '4',
   'fuenf': '5',
+  'fünf': '5',
   'sechs': '6',
   'sieben': '7',
   'acht': '8',
@@ -454,9 +454,11 @@ final Map<String, String> _DEUWordToNum = {
   'zehn': '10',
   'elf': '11',
   'zwoelf': '12',
+  'zwölf': '12',
   'dreizehn': '13',
   'vierzehn': '14',
   'fuenfzehn': '15',
+  'fünfzehn': '15',
   'sechzehn': '16',
   'siebzehn': '17',
   'achtzehn': '18',
@@ -465,6 +467,7 @@ final Map<String, String> _DEUWordToNum = {
   'dreissig': '30',
   'vierzig': '40',
   'fuenfzig': '50',
+  'fünfzig': '50',
   'sechzig': '60',
   'siebzig': '70',
   'achtzig': '80',
