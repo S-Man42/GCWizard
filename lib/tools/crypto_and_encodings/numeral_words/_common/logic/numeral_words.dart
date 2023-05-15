@@ -438,7 +438,8 @@ const Map<String, String> _CZEWordToNum = {
   'západní': 'numeralwords_w',
   'jih': 'numeralwords_s',
 };
-const Map<String, String> _DEUWordToNum = {
+//not change to const (vanity_words_list.dart line 61)
+final Map<String, String> _DEUWordToNum = {
   'null': '0',
   'eins': '1',
   'zwei': '2',
