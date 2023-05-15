@@ -42,6 +42,8 @@ String? _fileStructureToString(List<GCWFile>? structure, {int offset = 0}) {
 }
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+  
   group("hidden_data.hiddenData:", () {
     List<Map<String, Object?>> _inputsToExpected = [
 
