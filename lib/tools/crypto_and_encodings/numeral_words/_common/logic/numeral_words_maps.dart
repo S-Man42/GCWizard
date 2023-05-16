@@ -420,6 +420,7 @@ const Map<String, String> _DEUWordToNum = {
   'neunzehn': '19',
   'zwanzig': '20',
   'dreissig': '30',
+  'dreißig': '30',
   'vierzig': '40',
   'fuenfzig': '50',
   'fünfzig': '50',

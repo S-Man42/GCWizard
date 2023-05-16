@@ -358,7 +358,7 @@ String _decodeROU(String element) {
   } else {
     syllables = element.split('mii');
   }
-  Map<String, String> ROU_numbers = _normalize(_ROUWordToNum);
+  Map<String, String> ROU_numbers = _normalize(_ROUWordToNum, NumeralWordsLanguage.ROU);
   if (syllables.length == 1) {
     return decodeTripel(syllables[0].trim(), ROU_numbers).toString();
   } else {

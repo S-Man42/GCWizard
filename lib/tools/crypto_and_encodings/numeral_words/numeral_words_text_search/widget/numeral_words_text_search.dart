@@ -145,7 +145,7 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
       _codeControllerHighlighted.text = _currentDecodeInput.toLowerCase();
     } else {
       _codeControllerHighlighted.text =
-          removeAccents(_currentDecodeInput.toLowerCase()).replaceAll(RegExp(r'[^a-z0-9]'), '');
+          _currentDecodeInput.toLowerCase().replaceAll(RegExp(r'[^a-zäöüß0-9]'), '');
     }
 
     return Column(
