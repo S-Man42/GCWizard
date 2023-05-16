@@ -107,8 +107,8 @@ class _GCWAsyncExecuterState<T> extends State<GCWAsyncExecuter<T>> {
                       ),
                     ),
                   ]))
-                : Expanded(
-                    child: Stack(fit: StackFit.expand, children: const [
+                : const Expanded(
+                    child: Stack(fit: StackFit.expand, children: [
                     CircularProgressIndicator(
                       backgroundColor: Colors.white,
                       valueColor: AlwaysStoppedAnimation<Color>(Colors.amber),
