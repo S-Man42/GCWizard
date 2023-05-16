@@ -176,6 +176,7 @@ final Map<String, String> _NAVAJO_ENCODE_DICTIONARY = {
   'SUBMARINE': 'BESH-LO',
   'MINESWEEPER': 'CHA',
   'DESTROYER': 'CA-LO',
+  // ignore: equal_keys_in_map
   'TRANSPORT': 'DINEH-NAY-YE-HI',
   'CRUISER': 'LO-TSO-YAZZIE',
   'MOSQUITOBOAT': 'TSE-E',
