@@ -7,7 +7,6 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/numeral_words/_common/logic/numeral_words.dart';
-import 'package:gc_wizard/utils/string_utils.dart';
 
 class NumeralWordsIdentifyLanguages extends StatefulWidget {
   const NumeralWordsIdentifyLanguages({Key? key}) : super(key: key);
@@ -67,7 +66,7 @@ class NumeralWordsIdentifyLanguagesState extends State<NumeralWordsIdentifyLangu
     List<NumeralWordsDecodeOutput> detailedOutput;
     String output = '';
     detailedOutput = decodeNumeralwords(
-      input: removeAccents(_currentDecodeInput.toLowerCase()),
+      input: _currentDecodeInput,
       language: NumeralWordsLanguage.ALL,
       decodeModeWholeWords: _currentDecodeMode == GCWSwitchPosition.left,
     );
