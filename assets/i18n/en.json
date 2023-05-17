@@ -2681,6 +2681,8 @@
   "keyboard_mode_fra_bepo": "NF Z71-300 BEPO (French)",
   "keyboard_mode_qwertz_ristome_dvorak": "QWERTZ, Ristome, Dvorak (German)",
   "keyboard_mode_qwerty_us_int_colemak_dvorak": "QWERTY, Colemak, Dvorak (US, int.)",
+  "keyboard_mode_iphone_de": "iPhone (German)",
+  "keyboard_mode_iphone_en": "iPhone (US)",
   "languagegames_selection_title": "Language Games",
   "languagegames_selection_description": "Secret languages for children",
   "licenses_title": "Licenses",

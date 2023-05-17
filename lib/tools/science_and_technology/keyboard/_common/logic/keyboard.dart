@@ -139,6 +139,34 @@ const Map<String, String> _QWERTY_USNumberToSymbol = {
   ' ': ' ',
   '.': '.'
 };
+const Map<String, String> _IPhoneEnNumberToSymbol = {
+  '1': '-',
+  '2': '/',
+  '3': ':',
+  '4': ';',
+  '5': '(',
+  '6': ')',
+  '7': '\$',
+  '8': '&',
+  '9': '@',
+  '0': '"',
+  ' ': ' ',
+  '.': '.'
+};
+const Map<String, String> _IPhoneDeNumberToSymbol = {
+  '1': '-',
+  '2': '/',
+  '3': ':',
+  '4': ';',
+  '5': '(',
+  '6': ')',
+  '7': '€',
+  '8': '&',
+  '9': '@',
+  '0': '"',
+  ' ': ' ',
+  '.': '.'
+};
 const Map<String, String> _SymbolToQWERTZ_T1Number = {
   '!': '1',
   '"': '2',
@@ -159,7 +187,6 @@ const Map<String, String> _SymbolToQWERTZ_T1Number = {
   ' ': ' ',
   '.': '.'
 };
-
 const Map<String, String> _SymbolToAZERTYNumber = {
   '&': '1',
   'é': '2',
@@ -265,6 +292,8 @@ const Map<String, String> _SymbolToNeo6Number = {
 };
 final Map<String, String> _SymbolToQWERTY_USNumber = switchMapKeyValue(_QWERTY_USNumberToSymbol);
 final Map<String, String> _SymbolToDvorakNumber = _SymbolToQWERTY_USNumber;
+final Map<String, String> _SymbolToIPhoneEnNumber = switchMapKeyValue(_IPhoneEnNumberToSymbol);
+final Map<String, String> _SymbolToIPhoneDeNumber = switchMapKeyValue(_IPhoneDeNumberToSymbol);
 
 const Map<String, String> _QWERTZ_T1toNormal = {
   '°': '100o',
@@ -1698,6 +1727,8 @@ List<List<String>> encodeKeyboardNumbers(String input) {
   output.add(['keyboard_mode_fra_azerty', _convert(input, _AZERTYNumberToSymbol)]);
   output.add(['keyboard_mode_fra_bepo', _convert(input, _BEPONumberToSymbol)]);
   output.add(['keyboard_mode_qwerty_us_int_colemak_dvorak', _convert(input, _QWERTY_USNumberToSymbol)]);
+  output.add(['keyboard_mode_iphone_de', _convert(input, _IPhoneDeNumberToSymbol)]);
+  output.add(['keyboard_mode_iphone_en', _convert(input, _IPhoneEnNumberToSymbol)]);
 
   return output;
 }
@@ -1711,6 +1742,8 @@ final Map<String, String Function(String)> keyboardNumbersByName = {
   'keyboard_mode_fra_azerty': (String input) => _convert(input, _SymbolToAZERTYNumber),
   'keyboard_mode_fra_bepo': (String input) => _convert(input, _SymbolToBEPONumber),
   'keyboard_mode_qwerty_us_int_colemak_dvorak': (String input) => _convert(input, _SymbolToDvorakNumber),
+  'keyboard_mode_iphone_de': (String input) => _convert(input, _SymbolToIPhoneDeNumber),
+  'keyboard_mode_iphone_en': (String input) => _convert(input, _SymbolToIPhoneEnNumber),
 };
 
 List<List<String>> decodeKeyboardNumbers(String input) {
