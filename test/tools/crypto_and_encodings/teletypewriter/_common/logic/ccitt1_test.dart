@@ -43,7 +43,7 @@ void main() {
     }
   });
 
-  group("CCITT1.decodeCCITT1:", () { // Mark test
+  group("CCITT1.decodeCCITT1:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'input' : <int>[], 'expectedOutput' : ''},
 
@@ -68,6 +68,41 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decodeTeletypewriter(elem['input'] as List<int>, TeletypewriterCodebook.BAUDOT_54123);
+        expect(_actual, elem['expectedOutput']);
+      });
+    }
+  });
+
+  group("CCITT1.encodeCCITT_ITA1_UK:", () {
+    List<Map<String, Object?>> _inputsToExpected = [
+      {'input' : '', 'expectedOutput' : ''},
+
+      {'input' : 'A 1', 'expectedOutput' : '1 8 1'},
+      {'input' : '3', 'expectedOutput' : '8 6'},
+      {'input' : '¹', 'expectedOutput' : '8 11'},
+    ];
+
+    for (var elem in _inputsToExpected) {
+      test('input: ${elem['input']}', () {
+        var _actual = encodeTeletypewriter(elem['input'] as String, TeletypewriterCodebook.CCITT_ITA1_UK);
+        expect(_actual, elem['expectedOutput']);
+      });
+    }
+  });
+
+  group("CCITT1.decodeCCITT_ITA1_UK:", () {
+    List<Map<String, Object?>> _inputsToExpected = [
+      {'input' : <int>[], 'expectedOutput' : ''},
+
+      {'expectedOutput' : 'A 1', 'input' : [1, 8, 1]},
+      {'expectedOutput' : '3', 'input' : [8, 6]},
+      {'expectedOutput' : '¹', 'input' : [8, 11]},
+      {'expectedOutput' : '¹', 'input' : [8, 23]},
+    ];
+
+    for (var elem in _inputsToExpected) {
+      test('input: ${elem['input']}', () {
+        var _actual = decodeTeletypewriter(elem['input'] as List<int>, TeletypewriterCodebook.CCITT_ITA1_UK);
         expect(_actual, elem['expectedOutput']);
       });
     }

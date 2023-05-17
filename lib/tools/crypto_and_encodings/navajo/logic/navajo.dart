@@ -176,8 +176,6 @@ final Map<String, String> _NAVAJO_ENCODE_DICTIONARY = {
   'SUBMARINE': 'BESH-LO',
   'MINESWEEPER': 'CHA',
   'DESTROYER': 'CA-LO',
-  // ignore: equal_keys_in_map
-  'TRANSPORT': 'DINEH-NAY-YE-HI',
   'CRUISER': 'LO-TSO-YAZZIE',
   'MOSQUITOBOAT': 'TSE-E',
   'JANUARY': 'ATSAH-BE-YAZ',
@@ -394,7 +392,6 @@ final Map<String, String> _NAVAJO_ENCODE_DICTIONARY = {
   'ESTABLISH': 'HAS-TAY-DZAH',
   'ESTIMATE': 'BIH-KE-TSE-HOD-DES-KEZ',
   'EVACUATE': 'HA-NA',
-  // 'EXCEPT': 'NEH-DIH', // double entry
   'EXCEPT': 'NA-WOL-NE',
   'EXCHANGE': 'ALH-NAHL-YAH',
   'EXECUTE': 'A-DO-NIL',
@@ -745,7 +742,8 @@ final Map<String, String> _NAVAJO_ENCODE_DICTIONARY = {
   'ZONE': 'BIH-NA-HAS-DZOH',
 };
 
-final Map<String, String> _NAVAJO_DECODE_DICTIONARY = switchMapKeyValue(_NAVAJO_ENCODE_DICTIONARY);
+final Map<String, String> _NAVAJO_DECODE_DICTIONARY = _addSpecialEntries(
+    switchMapKeyValue(_NAVAJO_ENCODE_DICTIONARY), {'DINEH-NAY-YE-HI' : 'TRANSPORT', 'NEH-DIH' : 'EXCEPT'});
 
 final Map<String, String> _NAVAJO_DECODE_ALPHABET = {
     'WOL-LA-CHEE':'A',
@@ -814,7 +812,12 @@ final Map<String, String> _NAVAJO_DECODE_ALPHABET = {
   'BESH-DO-TLIZ': 'Z',
 };
 
-String shrinkText(String input) {
+Map<String, String> _addSpecialEntries(Map<String, String> source, Map<String, String> special) {
+  source.addAll(special);
+  return source;
+}
+
+String _shrinkText(String input) {
   return input
       .replaceAll('COMMANDING GEN.', 'COMMANDINGGEN')
       .replaceAll('MAJOR GEN.', 'MAJORGEN')
@@ -850,7 +853,7 @@ String shrinkText(String input) {
       .replaceAll('TRAFFIC DIAGRAM', 'TRAFFICDIAGRAM');
 }
 
-String enfoldText(String input) {
+String _enfoldText(String input) {
   return input
       .replaceAll('COMMANDINGGEN', 'COMMANDING GEN.')
       .replaceAll('MAJORGEN', 'MAJOR GEN.')
@@ -945,7 +948,7 @@ String decodeNavajo(String cipherText, bool useOnlyAlphabet) {
           if (_NAVAJO_DECODE_DICTIONARY[element] == null) {
             result.add(UNKNOWN_ELEMENT);
           } else {
-            result.add(enfoldText(_NAVAJO_DECODE_DICTIONARY[element]!));
+            result.add(_enfoldText(_NAVAJO_DECODE_DICTIONARY[element]!));
             result.add(' ');
           }
         }
@@ -955,14 +958,14 @@ String decodeNavajo(String cipherText, bool useOnlyAlphabet) {
     });
     result.add(' ');
   });
-  return enfoldText(result.join('').trim());
+  return _enfoldText(result.join('').trim());
 }
 
 String encodeNavajo(String plainText, bool useOnlyAlphabet) {
   List<String> result = <String>[];
   if (plainText.isEmpty) return '';
 
-  shrinkText(plainText.toUpperCase()).split(' ').forEach((element) {
+  _shrinkText(plainText.toUpperCase()).split(' ').forEach((element) {
     if (useOnlyAlphabet) {
       result.add(encodeLetterWise(element));
     } else if (_NAVAJO_ENCODE_DICTIONARY[element] == null) {
