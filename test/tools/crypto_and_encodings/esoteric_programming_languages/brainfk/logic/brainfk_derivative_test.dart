@@ -60,7 +60,7 @@ void main() {
         "++++++++++[>+>+++>+++++++>++++++++++<<<<-]>>>++++++++.<++.++++++++++++++++++++.++++.+++++++.-----------.----.--.++.++++++.++.-----------------.-------.>---------.--------------.++++++++.----------.-----.--.++++.++..";
     String result = "N 48?40.068' E7?50.244";
 
-    //https://esolangs.org/wiki/Trivial_brainfuck_substitution
+/*    //https://esolangs.org/wiki/Trivial_brainfuck_substitution
     String Pewlang = brainfck
         .replaceAll('>', 'pew ')
         .replaceAll('<', 'Pew ')
@@ -287,7 +287,7 @@ void main() {
         .replaceAll('-', 'ski ')
         .replaceAll('.', 'an ')
         .replaceAll('[', 'oow ')
-        .replaceAll(']', 'iks ');
+        .replaceAll(']', 'iks ');*/
 
     for (var elem in BRAINFK_DERIVATIVES.entries) {
       if (elem.value == 'Custom') {
