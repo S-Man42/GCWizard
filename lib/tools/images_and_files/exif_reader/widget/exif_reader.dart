@@ -246,12 +246,28 @@ class _ExifReaderState extends State<ExifReader> {
                     [i18n(context, 'exif_filename'), file.name ?? ''],
                     [i18n(context, 'exif_filesize_bytes'), file.bytes.length],
                     [i18n(context, 'exif_filesize_kb'), (file.bytes.length / 1024).ceil()],
-                    ['lastModified', formatDate(_file?.lastModifiedSync())],
-                    ['lastAccessed', formatDate(_file?.lastAccessedSync())],
+                    ['lastModified', formatDate(_lastModified(_file))],
+                    ['lastAccessed', formatDate(_lastAccessed(_file))],
                     [i18n(context, 'exif_extension'), file.extension]
                   ],
           )
       ));
+    }
+  }
+
+  DateTime? _lastModified(File? _file) {
+    try {
+      return _file?.lastModifiedSync();
+    } catch (e) {
+      return null;
+    }
+  }
+
+  DateTime? _lastAccessed(File? _file) {
+    try {
+      return _file?.lastAccessedSync();
+    } catch (e) {
+      return null;
     }
   }
 
