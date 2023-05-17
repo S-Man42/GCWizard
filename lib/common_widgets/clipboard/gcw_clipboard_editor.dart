@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
@@ -85,7 +83,7 @@ class GCWClipboardEditorState extends State<GCWClipboardEditor> {
         .asMap()
         .map<int, Widget?>((int index, String entry) {
           var item = ClipboardItem.fromJson(entry);
-          if (item == null) return MapEntry(index, null);
+          if (item == null) return MapEntry<int, Widget?>(index, null);
 
           Widget child;
           if (_currentEditId != null && _currentEditId == index) {
@@ -109,7 +107,7 @@ class GCWClipboardEditorState extends State<GCWClipboardEditor> {
                       item.text = _currentEditText;
 
                       var newEntries = List<String>.from(entries);
-                      newEntries[index] = jsonEncode(item);
+                      newEntries[index] = item.toJson();
                       Prefs.setStringList(PREFERENCE_CLIPBOARD_ITEMS, newEntries);
                     }
 

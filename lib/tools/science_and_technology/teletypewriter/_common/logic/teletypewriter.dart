@@ -17,8 +17,6 @@
 // - CCITT_USTTY        according to 2., 4.
 //
 
-// ignore_for_file: equal_keys_in_map
-
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 
@@ -816,6 +814,7 @@ final Map<String, int> _NumbersToCCITT_ITA1_UK = {
   '-': 28,
   '7/': 20,
   '²': 21,
+  // ignore: equal_keys_in_map
   '¹': 23,
   '?': 22,
   '9/': 18,

@@ -26,7 +26,7 @@ CoordinateFormatKey? _getDefaultSubtypeForFormat(CoordinateFormatKey format) {
 }
 
 BaseCoordinate get defaultBaseCoordinate {
-  return buildCoordinatesByFormat(defaultCoordinateFormat, defaultCoordinate, defaultEllipsoid);
+  return buildCoordinate(defaultCoordinateFormat, defaultCoordinate, defaultEllipsoid);
 }
 
 const CoordinateFormatKey _fallbackDefaultCoordFormatKey = CoordinateFormatKey.DMM;
