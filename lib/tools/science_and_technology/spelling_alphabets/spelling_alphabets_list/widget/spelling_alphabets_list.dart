@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:gc_wizard/tools/science_and_technology/spelling_alphabets/logic/spelling_alphabets.dart';
+import 'package:gc_wizard/tools/science_and_technology/spelling_alphabets/_common/spelling_alphabets_data.dart';
 
 import 'package:gc_wizard/application/i18n/supported_locales.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
@@ -9,14 +9,14 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 
 
-class SpellingAlphabets extends StatefulWidget {
-  const SpellingAlphabets({Key? key}) : super(key: key);
+class SpellingAlphabetsList extends StatefulWidget {
+  const SpellingAlphabetsList({Key? key}) : super(key: key);
 
   @override
-  SpellingAlphabetsState createState() => SpellingAlphabetsState();
+  SpellingAlphabetsListState createState() => SpellingAlphabetsListState();
 }
 
-class SpellingAlphabetsState extends State<SpellingAlphabets> {
+class SpellingAlphabetsListState extends State<SpellingAlphabetsList> {
 
   SPELLING _currentLanguage = SPELLING.DEU2022;
   bool _setDefaultLanguage = false;

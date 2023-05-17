@@ -5,8 +5,6 @@
 // https://en.wikipedia.org/wiki/Russian_spelling_alphabet
 // https://en.wikipedia.org/wiki/Greek_spelling_alphabet
 
-part of 'package:gc_wizard/tools/science_and_technology/spelling_alphabets/logic/spelling_alphabets.dart';
-
 enum SPELLING {
   ICAO1947,
   NATO,
