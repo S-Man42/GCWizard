@@ -1478,7 +1478,7 @@ const Map<String, String> _NLDWordToNum = {
   'zuid': 'numeralwords_s'
 };
 const Map<String, String> _NORWordToNum = {
-  'nul': '0',
+  'null': '0',
   'en': '1',
   'ett': '1',
   'to': '2',
@@ -1510,7 +1510,7 @@ const Map<String, String> _NORWordToNum = {
   'nitti': '90',
   'hundre': '100',
   'tusen': '1000',
-  'grad': '°',
+  'grader': '°',
   'punkt': '.',
   'komma': ',',
   'nord': 'numeralwords_n',
