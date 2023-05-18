@@ -15,7 +15,29 @@ const _SCREENHEIGHT = 25;
 
 const BEFUNGE_MAX_LENGTH_PROGRAM = _SCREENWIDTH * _SCREENHEIGHT;
 
-const _MAX_ITERATIONS = 1000;
+const _MAX_ITERATIONS = 10000;
 const _MAX_OUTPUT_LENGTH = 160;
 
-
+final Map<String, TextStyle> BEFUNGE_SYNTAX = {
+  // https://en.wikipedia.org/wiki/Befunge
+  "+": const TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
+  "-": const TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
+  "*": const TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
+  "/": const TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
+  "%": const TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
+  "!": const TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
+  ">": const TextStyle(fontWeight: FontWeight.bold, color: Colors.blue),
+  "<": const TextStyle(fontWeight: FontWeight.bold, color: Colors.blue),
+  "v": const TextStyle(fontWeight: FontWeight.bold, color: Colors.blue),
+  "^": const TextStyle(fontWeight: FontWeight.bold, color: Colors.blue),
+  "?": const TextStyle(fontWeight: FontWeight.bold, color: Colors.blue),
+  "|": const TextStyle(fontWeight: FontWeight.bold, color: Colors.green),
+  "_": const TextStyle(fontWeight: FontWeight.bold, color: Colors.green),
+  ":": const TextStyle(fontWeight: FontWeight.bold, color: Colors.orange),
+  "\\": const TextStyle(fontWeight: FontWeight.bold, color: Colors.orange),
+  "\$": const TextStyle(fontWeight: FontWeight.bold, color: Colors.orange),
+  "&": const TextStyle(fontWeight: FontWeight.bold, color: Colors.yellow),
+  "~": const TextStyle(fontWeight: FontWeight.bold, color: Colors.yellow),
+  ".": const TextStyle(fontWeight: FontWeight.bold, color: Colors.yellow),
+  ",": const TextStyle(fontWeight: FontWeight.bold, color: Colors.yellow),
+};

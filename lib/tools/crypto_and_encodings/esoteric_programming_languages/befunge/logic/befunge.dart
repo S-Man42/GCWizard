@@ -16,10 +16,11 @@
 
 import 'dart:math';
 
+import 'package:flutter/material.dart';
+
 part 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/befunge/logic/befunge_const.dart';
 part 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/befunge/logic/befunge_classes.dart';
 part 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/befunge/logic/befunge_data.dart';
-
 
 int _x = 0;
 int _y = 0;
@@ -70,7 +71,15 @@ bool _isDigit(String char) {
 BefungeOutput interpretBefunge(String program, {String input = ''}) {
   if (program.isEmpty) {
     return BefungeOutput(
-        Output: '', Error: '', Iteration: '', curPosX: '', curPosY: '',BefungeStack: _BefungeStack, PC: _PC, Command: _Command, Mnemonic: _Mnemonic);
+        Output: '',
+        Error: '',
+        Iteration: '',
+        curPosX: '',
+        curPosY: '',
+        BefungeStack: _BefungeStack,
+        PC: _PC,
+        Command: _Command,
+        Mnemonic: _Mnemonic);
   }
 
   if (_correctBefungeProgramLength(program)) {
@@ -103,7 +112,7 @@ BefungeOutput interpretBefunge(String program, {String input = ''}) {
       if (_infiniteLoop()) {
         _BefungeStack.add(stack.toString());
         return BefungeOutput(
-            Output: STDOUT.join(''),
+            Output: STDOUT.join('').trim(),
             Error: _BEFUNGE_ERROR_INFINITE_LOOP,
             Iteration: _iterations.toString(),
             curPosX: _x.toString(),
@@ -117,7 +126,7 @@ BefungeOutput interpretBefunge(String program, {String input = ''}) {
       if (_outOfBounds()) {
         _BefungeStack.add(stack.toString());
         return BefungeOutput(
-            Output: STDOUT.join(''),
+            Output: STDOUT.join('').trim(),
             Error: _BEFUNGE_ERROR_NULL_COMMAND,
             Iteration: _iterations.toString(),
             curPosX: _x.toString(),
@@ -223,7 +232,7 @@ BefungeOutput interpretBefunge(String program, {String input = ''}) {
                 if (STDIN.isEmpty) {
                   _BefungeStack.add(stack.toString());
                   return BefungeOutput(
-                      Output: STDOUT.join(''),
+                      Output: STDOUT.join('').trim(),
                       Error: _BEFUNGE_ERROR_NO_INPUT,
                       Iteration: _iterations.toString(),
                       curPosX: _x.toString(),
@@ -237,7 +246,7 @@ BefungeOutput interpretBefunge(String program, {String input = ''}) {
                 if (int.tryParse(STDIN.last) == null) {
                   _BefungeStack.add(stack.toString());
                   return BefungeOutput(
-                      Output: STDOUT.join(''),
+                      Output: STDOUT.join('').trim(),
                       Error: _BEFUNGE_ERROR_INVALID_INPUT,
                       Iteration: _iterations.toString(),
                       curPosX: _x.toString(),
@@ -296,7 +305,7 @@ BefungeOutput interpretBefunge(String program, {String input = ''}) {
               _Mnemonic.add('dublicate ' + a.toString());
               break;
 
-            case '! ': //logical not
+            case '!': //logical not
               a = stack.pop();
               if (a == BigInt.zero) {
                 stack.push(BigInt.one);
@@ -343,7 +352,7 @@ BefungeOutput interpretBefunge(String program, {String input = ''}) {
               if (STDIN.isEmpty || STDIN.join('').isEmpty) {
                 _BefungeStack.add(stack.toString());
                 return BefungeOutput(
-                    Output: STDOUT.join(''),
+                    Output: STDOUT.join('').trim(),
                     Error: _BEFUNGE_ERROR_NO_INPUT,
                     Iteration: _iterations.toString(),
                     curPosX: _x.toString(),
@@ -357,7 +366,7 @@ BefungeOutput interpretBefunge(String program, {String input = ''}) {
               if (int.tryParse(STDIN.last) == null) {
                 _BefungeStack.add(stack.toString());
                 return BefungeOutput(
-                    Output: STDOUT.join(''),
+                    Output: STDOUT.join('').trim(),
                     Error: _BEFUNGE_ERROR_INVALID_INPUT,
                     Iteration: _iterations.toString(),
                     curPosX: _x.toString(),
@@ -377,7 +386,7 @@ BefungeOutput interpretBefunge(String program, {String input = ''}) {
               if (STDIN.isEmpty || STDIN.join('').isEmpty) {
                 _BefungeStack.add(stack.toString());
                 return BefungeOutput(
-                    Output: STDOUT.join(''),
+                    Output: STDOUT.join('').trim(),
                     Error: _BEFUNGE_ERROR_NO_INPUT,
                     Iteration: _iterations.toString(),
                     curPosX: _x.toString(),
@@ -399,8 +408,12 @@ BefungeOutput interpretBefunge(String program, {String input = ''}) {
               if (_outOfBoundsAccess(x: x, y: y)) {
                 _BefungeStack.add(stack.toString());
                 return BefungeOutput(
-                    Output:
-                        STDOUT.join('') + '\n\nget(' + x.toString().padLeft(2) + '|' + y.toString().padLeft(2) + ')',
+                    Output: STDOUT.join('').trim() +
+                        '\n\nget(' +
+                        x.toString().padLeft(2) +
+                        '|' +
+                        y.toString().padLeft(2) +
+                        ')',
                     Error: _BEFUNGE_ERROR_OUT_OF_BOUNDS_ACCESS,
                     Iteration: _iterations.toString(),
                     curPosX: _x.toString(),
@@ -430,8 +443,12 @@ BefungeOutput interpretBefunge(String program, {String input = ''}) {
               if (_outOfBoundsAccess(x: x, y: y)) {
                 _BefungeStack.add(stack.toString());
                 return BefungeOutput(
-                    Output:
-                        STDOUT.join('') + '\n\nput(' + x.toString().padLeft(2) + '|' + y.toString().padLeft(2) + ')',
+                    Output: STDOUT.join('').trim() +
+                        '\n\nput(' +
+                        x.toString().padLeft(2) +
+                        '|' +
+                        y.toString().padLeft(2) +
+                        ')',
                     Error: _BEFUNGE_ERROR_OUT_OF_BOUNDS_ACCESS,
                     Iteration: _iterations.toString(),
                     curPosX: _x.toString(),
@@ -468,7 +485,8 @@ BefungeOutput interpretBefunge(String program, {String input = ''}) {
                   Iteration: _iterations.toString(),
                   curPosX: _x.toString(),
                   curPosY: _y.toString(),
-                  BefungeStack: [], PC: [],
+                  BefungeStack: [],
+                  PC: [],
                   Command: [],
                   Mnemonic: []);
           } // switch cur
@@ -483,7 +501,7 @@ BefungeOutput interpretBefunge(String program, {String input = ''}) {
     } // while
 
     return BefungeOutput(
-        Output: STDOUT.join(''),
+        Output: STDOUT.join('').trim(),
         Error: '',
         Iteration: '',
         curPosX: '',
@@ -499,13 +517,14 @@ BefungeOutput interpretBefunge(String program, {String input = ''}) {
         Iteration: '',
         curPosX: '',
         curPosY: '',
-        BefungeStack: [], PC: [],
+        BefungeStack: [],
+        PC: [],
         Command: [],
         Mnemonic: []);
   }
 }
 
-void _calculateNewX(int dx){
+void _calculateNewX(int dx) {
   _x = _x + dx;
   if (_x < 0) {
     _x = _SCREENWIDTH - 1;
@@ -514,7 +533,7 @@ void _calculateNewX(int dx){
   }
 }
 
-void _calculateNewY(int dy){
+void _calculateNewY(int dy) {
   _y = _y + dy;
   if (_y < 0) {
     _y = _SCREENHEIGHT - 1;
@@ -633,4 +652,3 @@ String generateBefunge(String OutputText) {
 
   return befunge.join('\n');
 }
-
