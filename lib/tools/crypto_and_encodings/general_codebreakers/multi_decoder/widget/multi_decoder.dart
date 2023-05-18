@@ -78,4 +78,3 @@ part 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_de
 part 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/md_tools.dart';
 part 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/multi_decoder_configuration.dart';
 part 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/multi_decoder_main.dart';
-part 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/multi_decoder_tool_configuration.dart';

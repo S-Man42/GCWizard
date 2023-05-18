@@ -28,17 +28,30 @@ class MultiDecoderToolPolybios extends AbstractMultiDecoderTool {
               return polybiosOutput?.output;
             },
             requiresKey: true,
-            options: options,
-            configurationWidget: MultiDecoderToolConfiguration(widgets: {
-              MDT_POLYBIOS_OPTION_MODE: GCWAlphabetModificationDropDown(
-                suppressTitle: true,
-                value:  _parseStringToEnum(stringNullableTypeCheck(options[MDT_POLYBIOS_OPTION_MODE], null)),
-                onChanged: (newValue) {
-                  options[MDT_POLYBIOS_OPTION_MODE] =
-                      alphabetModeName(newValue);
-                },
-              )
-            }));
+            options: options);
+  @override
+  State<StatefulWidget> createState() => _MultiDecoderToolPolybiosState();
+}
+
+class _MultiDecoderToolPolybiosState extends State<MultiDecoderToolPolybios> {
+  @override
+  Widget build(BuildContext context) {
+    return createMultiDecoderToolConfiguration(
+        context, {
+      MDT_POLYBIOS_OPTION_MODE: GCWAlphabetModificationDropDown(
+        suppressTitle: true,
+        value:  _parseStringToEnum(stringNullableTypeCheck(widget.options[MDT_POLYBIOS_OPTION_MODE], null)),
+        onChanged: (newValue) {
+          setState(() {
+            widget.options[MDT_POLYBIOS_OPTION_MODE] =
+                alphabetModeName(newValue);
+          });
+
+        },
+      )
+    }
+    );
+  }
 }
 
 AlphabetModificationMode _parseStringToEnum(String? item) {

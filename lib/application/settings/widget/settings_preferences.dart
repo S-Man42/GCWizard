@@ -224,7 +224,7 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
                   _editedValue = '';
                   _controllers.first.text = '';
                 } else {
-                  _editedValue = [];
+                  _editedValue = <String>[];
                   _controllers = [];
                 }
               });

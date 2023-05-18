@@ -95,7 +95,7 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
   }
 
   void _increaseValue() {
-    setState(() {
+    // setState(() {
       if (_currentValue < widget.max || widget.overflow == SpinnerOverflowType.OVERFLOW_MIN) {
         _currentValue++;
       } else if ([SpinnerOverflowType.ALLOW_OVERFLOW, SpinnerOverflowType.OVERFLOW_MAX].contains(widget.overflow) &&
@@ -104,7 +104,7 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
       }
 
       _setCurrentValueAndEmitOnChange(setTextFieldText: true);
-    });
+    // });
   }
 
   Widget _buildTitle() {
@@ -178,6 +178,8 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
 
       _controller.text = text;
     }
+
+    // print(_currentValue);
 
     widget.onChanged(_currentValue);
   }
