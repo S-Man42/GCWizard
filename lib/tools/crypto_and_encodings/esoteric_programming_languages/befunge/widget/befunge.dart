@@ -70,7 +70,7 @@ class BefungeState extends State<Befunge> {
               style: gcwMonotypeTextStyle(),
               hintText: i18n(context, 'common_programming_hint_sourcecode'),
               maxLines: 5,
-              maxLength: MAX_LENGTH_PROGRAM,
+              maxLength: BEFUNGE_MAX_LENGTH_PROGRAM,
               onChanged: (text) {
                 setState(() {
                   _currentInterpret = text;
@@ -108,7 +108,10 @@ class BefungeState extends State<Befunge> {
       if (output.Error.isEmpty) {
         outputText = output.Output;
       } else {
-        outputText = output.Output + '\n' + i18n(context, output.Error);
+        outputText = output.Output + '\n' +
+            i18n(context, output.Error) + '\n' +
+            i18n(context, 'common_programming_iteration') + ': ' + output.Iteration + '\n' +
+            i18n(context, 'common_programming_cursorposition') + ': (' + output.curPosX + '|' + output.curPosY + ')' + '\n';
       }
 
       List<List<String>> columnData = <List<String>>[];
