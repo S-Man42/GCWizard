@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gc_wizard/tools/images_and_files/hidden_data/logic/hidden_data.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
+import 'package:gc_wizard/utils/string_utils.dart';
 import 'package:path/path.dart' as path;
 
 var testDirPath = 'test/tools/images_and_files/hidden_data/resources/';
@@ -18,7 +19,7 @@ String _fileDescription(GCWFile file) {
 
   output += (file.name ?? '') + ', ';
   var fileType = file.fileType;
-  output += fileType.toString() + ', ';
+  output += enumName(fileType.toString()) + ', ';
   output += file.bytes.length.toString() + ' bytes, ';
 
   return output;
