@@ -12,10 +12,10 @@ class Countries extends StatefulWidget {
   const Countries({Key? key, required this.fields}) : super(key: key);
 
   @override
-  CountriesState createState() => CountriesState();
+ _CountriesState createState() => _CountriesState();
 }
 
-class CountriesState extends State<Countries> {
+class _CountriesState extends State<Countries> {
   var _currentSwitchSort = GCWSwitchPosition.left;
   var _currentSort = 0;
   final List<String> _currentSortList = ['common_countries'];

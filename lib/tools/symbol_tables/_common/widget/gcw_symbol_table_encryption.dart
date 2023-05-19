@@ -34,10 +34,10 @@ class GCWSymbolTableEncryption extends StatefulWidget {
       : super(key: key);
 
   @override
-  GCWSymbolTableEncryptionState createState() => GCWSymbolTableEncryptionState();
+ _GCWSymbolTableEncryptionState createState() => _GCWSymbolTableEncryptionState();
 }
 
-class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
+class _GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
   String _currentEncryptionInput = '';
   late TextEditingController _encryptionInputController;
 

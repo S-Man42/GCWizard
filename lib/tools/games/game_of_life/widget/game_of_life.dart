@@ -17,12 +17,12 @@ class GameOfLife extends StatefulWidget {
   const GameOfLife({Key? key}) : super(key: key);
 
   @override
-  GameOfLifeState createState() => GameOfLifeState();
+ _GameOfLifeState createState() => _GameOfLifeState();
 }
 
 const _KEY_CUSTOM_RULES = 'gameoflife_custom';
 
-class GameOfLifeState extends State<GameOfLife> {
+class _GameOfLifeState extends State<GameOfLife> {
   late List<List<List<bool>>> _boards;
   List<List<bool>> _currentBoard = [];
   var _currentStep = 0;

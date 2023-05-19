@@ -33,10 +33,10 @@ class AnimatedImageMorseCode extends StatefulWidget {
   const AnimatedImageMorseCode({Key? key, this.file}) : super(key: key);
 
   @override
-  AnimatedImageMorseCodeState createState() => AnimatedImageMorseCodeState();
+ _AnimatedImageMorseCodeState createState() => _AnimatedImageMorseCodeState();
 }
 
-class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
+class _AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
   AnimatedImageMorseOutput? _outData;
   List<bool> _marked = [];
   MorseCodeOutput? _outText;
@@ -92,7 +92,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
   Widget _decodeWidgets() {
     return Column(children: <Widget>[
       GCWOpenFile(
-        supportedFileTypes: AnimatedImageState.allowedExtensions,
+        supportedFileTypes: ANIMATED_IMAGE_ALLOWED_FILETYPES,
         onLoaded: (GCWFile? value) {
           if (value == null) {
             showToast(i18n(context, 'common_loadfile_exception_notloaded'));
@@ -204,7 +204,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
         Expanded(
           child: Column(children: [
             GCWOpenFile(
-              supportedFileTypes: AnimatedImageState.allowedExtensions,
+              supportedFileTypes: ANIMATED_IMAGE_ALLOWED_FILETYPES,
               onLoaded: (GCWFile? value) {
                 if (value != null) {
                   setState(() {
@@ -218,7 +218,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
         Expanded(
           child: Column(children: [
             GCWOpenFile(
-              supportedFileTypes: AnimatedImageState.allowedExtensions,
+              supportedFileTypes: ANIMATED_IMAGE_ALLOWED_FILETYPES,
               onLoaded: (GCWFile? value) {
                 if (value != null) {
                   setState(() {

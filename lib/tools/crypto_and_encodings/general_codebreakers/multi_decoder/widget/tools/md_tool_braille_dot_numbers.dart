@@ -24,4 +24,13 @@ class MultiDecoderToolBrailleDotNumbers extends AbstractMultiDecoderTool {
               return out;
             },
             options: options);
+  @override
+  State<StatefulWidget> createState() => _MultiDecoderToolBrailleDotNumbersState();
+}
+
+class _MultiDecoderToolBrailleDotNumbersState extends State<MultiDecoderToolBrailleDotNumbers> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
 }

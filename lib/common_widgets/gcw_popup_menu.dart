@@ -35,10 +35,10 @@ class GCWPopupMenu extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  GCWPopupMenuState createState() => GCWPopupMenuState();
+ _GCWPopupMenuState createState() => _GCWPopupMenuState();
 }
 
-class GCWPopupMenuState extends State<GCWPopupMenu> {
+class _GCWPopupMenuState extends State<GCWPopupMenu> {
   List<PopupMenuEntry<int>>? _menuItems;
   List<void Function(int)>? _menuAction;
 

@@ -66,10 +66,10 @@ class GCWMapView extends StatefulWidget {
   }
 
   @override
-  GCWMapViewState createState() => GCWMapViewState();
+ _GCWMapViewState createState() => _GCWMapViewState();
 }
 
-class GCWMapViewState extends State<GCWMapView> {
+class _GCWMapViewState extends State<GCWMapView> {
   final MapController _mapController = MapControllerImpl();
   final _GCWMapPopupController _popupLayerController = _GCWMapPopupController();
 

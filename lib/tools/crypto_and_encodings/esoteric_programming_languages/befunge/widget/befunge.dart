@@ -18,10 +18,10 @@ class Befunge extends StatefulWidget {
   const Befunge({Key? key}) : super(key: key);
 
   @override
-  BefungeState createState() => BefungeState();
+ _BefungeState createState() => _BefungeState();
 }
 
-class BefungeState extends State<Befunge> {
+class _BefungeState extends State<Befunge> {
   late TextEditingController _befungeGenerateController;
   late CodeController _befungeInterpretCodeController;
   late TextEditingController _inputController;

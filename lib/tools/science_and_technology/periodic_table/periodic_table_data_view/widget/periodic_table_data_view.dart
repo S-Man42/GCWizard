@@ -20,10 +20,10 @@ class PeriodicTableDataView extends StatefulWidget {
   const PeriodicTableDataView({Key? key, required this.atomicNumber}) : super(key: key);
 
   @override
-  PeriodicTableDataViewState createState() => PeriodicTableDataViewState();
+ _PeriodicTableDataViewState createState() => _PeriodicTableDataViewState();
 }
 
-class PeriodicTableDataViewState extends State<PeriodicTableDataView> {
+class _PeriodicTableDataViewState extends State<PeriodicTableDataView> {
   var _newCategory = true;
   var _currentCategory = PeriodicTableCategory.ELEMENT_NAME;
   late Object _currentValueCategoryValue;

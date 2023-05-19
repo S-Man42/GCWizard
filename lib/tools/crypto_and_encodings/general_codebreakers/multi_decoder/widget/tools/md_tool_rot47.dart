@@ -19,4 +19,13 @@ class MultiDecoderToolROT47 extends AbstractMultiDecoderTool {
               return Rotator().rot47(input);
             },
             options: options);
+  @override
+  State<StatefulWidget> createState() => _MultiDecoderToolROT47State();
+}
+
+class _MultiDecoderToolROT47State extends State<MultiDecoderToolROT47> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
 }

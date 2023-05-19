@@ -10,10 +10,10 @@ class Chronogram extends StatefulWidget {
   const Chronogram({Key? key}) : super(key: key);
 
   @override
-  ChronogramState createState() => ChronogramState();
+ _ChronogramState createState() => _ChronogramState();
 }
 
-class ChronogramState extends State<Chronogram> {
+class _ChronogramState extends State<Chronogram> {
   var _currentInput = '';
   var _currentJUToIV = false;
   var _currentYToII = false;

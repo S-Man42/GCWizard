@@ -10,10 +10,10 @@ class MapPolylineEditor extends StatefulWidget {
   const MapPolylineEditor({Key? key, required this.polyline}) : super(key: key);
 
   @override
-  MapPolylineEditorState createState() => MapPolylineEditorState();
+ _MapPolylineEditorState createState() => _MapPolylineEditorState();
 }
 
-class MapPolylineEditorState extends State<MapPolylineEditor> {
+class _MapPolylineEditorState extends State<MapPolylineEditor> {
   late HSVColor _currentColorPickerColor;
 
   @override

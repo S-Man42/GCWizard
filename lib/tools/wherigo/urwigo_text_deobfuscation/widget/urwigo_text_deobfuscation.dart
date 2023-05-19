@@ -10,10 +10,10 @@ class UrwigoTextDeobfuscation extends StatefulWidget {
   const UrwigoTextDeobfuscation({Key? key}) : super(key: key);
 
   @override
-  UrwigoTextDeobfuscationState createState() => UrwigoTextDeobfuscationState();
+ _UrwigoTextDeobfuscationState createState() => _UrwigoTextDeobfuscationState();
 }
 
-class UrwigoTextDeobfuscationState extends State<UrwigoTextDeobfuscation> {
+class _UrwigoTextDeobfuscationState extends State<UrwigoTextDeobfuscation> {
   late TextEditingController _inputController;
   late TextEditingController _inputObfuscateController;
   late TextEditingController _dtableController;

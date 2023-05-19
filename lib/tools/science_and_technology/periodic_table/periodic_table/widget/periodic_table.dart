@@ -18,10 +18,10 @@ class PeriodicTable extends StatefulWidget {
   const PeriodicTable({Key? key}) : super(key: key);
 
   @override
-  PeriodicTableState createState() => PeriodicTableState();
+ _PeriodicTableState createState() => _PeriodicTableState();
 }
 
-class PeriodicTableState extends State<PeriodicTable> {
+class _PeriodicTableState extends State<PeriodicTable> {
   late double _cellWidth;
   late double _maxCellHeight;
   final BorderSide _border = const BorderSide(width: 1.0, color: Colors.black87);

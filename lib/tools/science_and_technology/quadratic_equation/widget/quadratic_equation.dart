@@ -14,10 +14,10 @@ class QuadraticEquation extends StatefulWidget {
   const QuadraticEquation({Key? key}) : super(key: key);
 
   @override
-  QuadraticEquationState createState() => QuadraticEquationState();
+ _QuadraticEquationState createState() => _QuadraticEquationState();
 }
 
-class QuadraticEquationState extends State<QuadraticEquation> {
+class _QuadraticEquationState extends State<QuadraticEquation> {
   var _currentA = '0.0';
   var _currentB = '0.0';
   var _currentC = '0.0';

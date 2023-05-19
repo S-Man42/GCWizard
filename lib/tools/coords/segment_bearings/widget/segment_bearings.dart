@@ -25,10 +25,10 @@ class SegmentBearings extends StatefulWidget {
   const SegmentBearings({Key? key}) : super(key: key);
 
   @override
-  SegmentBearingsState createState() => SegmentBearingsState();
+ _SegmentBearingsState createState() => _SegmentBearingsState();
 }
 
-class SegmentBearingsState extends State<SegmentBearings> {
+class _SegmentBearingsState extends State<SegmentBearings> {
   var _currentCoordsStart = defaultBaseCoordinate;
   var _currentCoords1 = defaultBaseCoordinate;
   var _currentCoords2 = defaultBaseCoordinate;

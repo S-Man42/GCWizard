@@ -20,10 +20,10 @@ class CenterThreePoints extends StatefulWidget {
   const CenterThreePoints({Key? key}) : super(key: key);
 
   @override
-  CenterThreePointsState createState() => CenterThreePointsState();
+ _CenterThreePointsState createState() => _CenterThreePointsState();
 }
 
-class CenterThreePointsState extends State<CenterThreePoints> {
+class _CenterThreePointsState extends State<CenterThreePoints> {
   LatLng _currentCenter = defaultCoordinate;
   double _currentDistance = 0.0;
 

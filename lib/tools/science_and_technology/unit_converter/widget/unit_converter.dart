@@ -70,10 +70,10 @@ class UnitConverter extends StatefulWidget {
   const UnitConverter({Key? key}) : super(key: key);
 
   @override
-  UnitConverterState createState() => UnitConverterState();
+ _UnitConverterState createState() => _UnitConverterState();
 }
 
-class UnitConverterState extends State<UnitConverter> {
+class _UnitConverterState extends State<UnitConverter> {
   var _currentValue = 1.0;
   late GCWUnitsValue _currentFromUnit;
   late GCWUnitsValue _currentToUnit;

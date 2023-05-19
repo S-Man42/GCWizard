@@ -11,10 +11,10 @@ class Piano extends StatefulWidget {
   const Piano({Key? key}) : super(key: key);
 
   @override
-  PianoState createState() => PianoState();
+ _PianoState createState() => _PianoState();
 }
 
-class PianoState extends State<Piano> {
+class _PianoState extends State<Piano> {
   var _currentSort = 0;
   var _currentIndex = 9; // Key number 1
   final List<String> _currentSortList = [

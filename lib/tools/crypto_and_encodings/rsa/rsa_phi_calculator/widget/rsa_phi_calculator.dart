@@ -11,10 +11,10 @@ class RSAPhiCalculator extends StatefulWidget {
   const RSAPhiCalculator({Key? key}) : super(key: key);
 
   @override
-  RSAPhiCalculatorState createState() => RSAPhiCalculatorState();
+ _RSAPhiCalculatorState createState() => _RSAPhiCalculatorState();
 }
 
-class RSAPhiCalculatorState extends State<RSAPhiCalculator> {
+class _RSAPhiCalculatorState extends State<RSAPhiCalculator> {
   String _currentP = '';
   String _currentQ = '';
 
