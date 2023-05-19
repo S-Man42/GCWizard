@@ -23,7 +23,7 @@ class Befunge extends StatefulWidget {
 
 class _BefungeState extends State<Befunge> {
   late TextEditingController _befungeGenerateController;
-  late CodeController _befungeInterpretController;
+  late CodeController _befungeInterpretCodeController;
   late TextEditingController _inputController;
   late TextEditingController _codeGenerateController;
 
@@ -38,9 +38,9 @@ class _BefungeState extends State<Befunge> {
   void initState() {
     super.initState();
     _befungeGenerateController = TextEditingController(text: _currentGenerate);
-    _befungeInterpretController = CodeController(
-        text: _currentInterpret,
-        stringMap: BEFUNGE_SYNTAX,
+    _befungeInterpretCodeController = CodeController(
+      text: _currentInterpret,
+      //stringMap: BEFUNGE_SYNTAX,
     );
     _inputController = TextEditingController(text: _currentInput);
     _codeGenerateController = TextEditingController(text: _sourceCodeGenerated);
@@ -49,7 +49,7 @@ class _BefungeState extends State<Befunge> {
   @override
   void dispose() {
     _befungeGenerateController.dispose();
-    _befungeInterpretController.dispose();
+    _befungeInterpretCodeController.dispose();
     _inputController.dispose();
     _codeGenerateController.dispose();
     super.dispose();
@@ -57,6 +57,7 @@ class _BefungeState extends State<Befunge> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeColors colors = themeColors();
     _codeGenerateController.text = generateBefunge(_currentGenerate);
 
     return Column(children: <Widget>[
@@ -72,8 +73,9 @@ class _BefungeState extends State<Befunge> {
       ),
       _currentMode == GCWSwitchPosition.left
           ? CodeField(
-              controller: _befungeInterpretController,
+              controller: _befungeInterpretCodeController,
               textStyle: gcwMonotypeTextStyle(),
+              background: colors.primaryBackground(),
               lineNumbers: true,
               readOnly: false,
               onChanged: (text) {
