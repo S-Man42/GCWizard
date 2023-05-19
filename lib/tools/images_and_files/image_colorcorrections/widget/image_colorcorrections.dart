@@ -31,10 +31,10 @@ class ImageColorCorrections extends StatefulWidget {
   const ImageColorCorrections({Key? key, this.file}) : super(key: key);
 
   @override
-  ImageColorCorrectionsState createState() => ImageColorCorrectionsState();
+ _ImageColorCorrectionsState createState() => _ImageColorCorrectionsState();
 }
 
-class ImageColorCorrectionsState extends State<ImageColorCorrections> {
+class _ImageColorCorrectionsState extends State<ImageColorCorrections> {
   GCWFile? _originalData;
   Uint8List? _convertedOutputImage;
 

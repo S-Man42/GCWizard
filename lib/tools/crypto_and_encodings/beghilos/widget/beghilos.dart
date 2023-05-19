@@ -14,10 +14,10 @@ class Beghilos extends StatefulWidget {
   const Beghilos({Key? key}) : super(key: key);
 
   @override
-  BeghilosState createState() => BeghilosState();
+ _BeghilosState createState() => _BeghilosState();
 }
 
-class BeghilosState extends State<Beghilos> {
+class _BeghilosState extends State<Beghilos> {
   late TextEditingController _inputControllerDecode;
   late TextEditingController _inputControllerEncode;
 

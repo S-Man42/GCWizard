@@ -13,10 +13,10 @@ class Gade extends StatefulWidget {
   const Gade({Key? key}) : super(key: key);
 
   @override
-  GadeState createState() => GadeState();
+ _GadeState createState() => _GadeState();
 }
 
-class GadeState extends State<Gade> {
+class _GadeState extends State<Gade> {
   late TextEditingController _GadeInputController;
   String _currentGadeInput = '';
 

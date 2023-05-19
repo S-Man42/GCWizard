@@ -17,10 +17,10 @@ class GCWClipboardEditor extends StatefulWidget {
   const GCWClipboardEditor({Key? key}) : super(key: key);
 
   @override
-  GCWClipboardEditorState createState() => GCWClipboardEditorState();
+ _GCWClipboardEditorState createState() => _GCWClipboardEditorState();
 }
 
-class GCWClipboardEditorState extends State<GCWClipboardEditor> {
+class _GCWClipboardEditorState extends State<GCWClipboardEditor> {
   late TextEditingController _editController;
   int? _currentEditId;
   String _currentEditText = '';

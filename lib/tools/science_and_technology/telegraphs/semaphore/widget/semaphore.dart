@@ -19,10 +19,10 @@ class SemaphoreTelegraph extends StatefulWidget {
   const SemaphoreTelegraph({Key? key}) : super(key: key);
 
   @override
-  SemaphoreTelegraphState createState() => SemaphoreTelegraphState();
+ _SemaphoreTelegraphState createState() => _SemaphoreTelegraphState();
 }
 
-class SemaphoreTelegraphState extends State<SemaphoreTelegraph> {
+class _SemaphoreTelegraphState extends State<SemaphoreTelegraph> {
   String _currentEncodeInput = '';
   late TextEditingController _encodeController;
 

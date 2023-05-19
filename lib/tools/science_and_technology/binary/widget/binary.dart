@@ -10,10 +10,10 @@ class Binary extends StatefulWidget {
   const Binary({Key? key}) : super(key: key);
 
   @override
-  BinaryState createState() => BinaryState();
+ _BinaryState createState() => _BinaryState();
 }
 
-class BinaryState extends State<Binary> {
+class _BinaryState extends State<Binary> {
   var _currentDecimalValue = '';
   var _currentBinaryValue = '';
   late TextEditingController _binaryController;

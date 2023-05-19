@@ -29,10 +29,10 @@ class GeneralSettings extends StatefulWidget {
   const GeneralSettings({Key? key}) : super(key: key);
 
   @override
-  GeneralSettingsState createState() => GeneralSettingsState();
+ _GeneralSettingsState createState() => _GeneralSettingsState();
 }
 
-class GeneralSettingsState extends State<GeneralSettings> {
+class _GeneralSettingsState extends State<GeneralSettings> {
   @override
   Widget build(BuildContext context) {
     var appLanguage = Provider.of<AppLanguage>(context);

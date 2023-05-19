@@ -23,10 +23,10 @@ class Zodiac extends StatefulWidget {
   const Zodiac({Key? key}) : super(key: key);
 
   @override
-  ZodiacState createState() => ZodiacState();
+ _ZodiacState createState() => _ZodiacState();
 }
 
-class ZodiacState extends State<Zodiac> {
+class _ZodiacState extends State<Zodiac> {
   var _currentMode = GCWSwitchPosition.left;
   var _currentZodiacSign = 0;
   var _currentAttribute = _ZODIACSIGNS_ATTRIBUTES.values.first;

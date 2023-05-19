@@ -11,10 +11,10 @@ class DNANucleicAcidSequence extends StatefulWidget {
   const DNANucleicAcidSequence({Key? key}) : super(key: key);
 
   @override
-  DNANucleicAcidSequenceState createState() => DNANucleicAcidSequenceState();
+ _DNANucleicAcidSequenceState createState() => _DNANucleicAcidSequenceState();
 }
 
-class DNANucleicAcidSequenceState extends State<DNANucleicAcidSequence> {
+class _DNANucleicAcidSequenceState extends State<DNANucleicAcidSequence> {
   var _currentMode = GCWSwitchPosition.right;
   var _currentInput = '';
   var _currentDNAMode = GCWSwitchPosition.left;

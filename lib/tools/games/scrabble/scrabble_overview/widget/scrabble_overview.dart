@@ -9,10 +9,10 @@ class ScrabbleOverview extends StatefulWidget {
   const ScrabbleOverview({Key? key}) : super(key: key);
 
   @override
-  ScrabbleOverviewState createState() => ScrabbleOverviewState();
+ _ScrabbleOverviewState createState() => _ScrabbleOverviewState();
 }
 
-class ScrabbleOverviewState extends State<ScrabbleOverview> {
+class _ScrabbleOverviewState extends State<ScrabbleOverview> {
   var _currentScrabbleVersion = scrabbleID_EN;
 
   @override

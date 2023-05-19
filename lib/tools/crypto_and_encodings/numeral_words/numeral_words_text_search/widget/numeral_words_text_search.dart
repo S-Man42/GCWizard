@@ -20,10 +20,10 @@ class NumeralWordsTextSearch extends StatefulWidget {
   const NumeralWordsTextSearch({Key? key}) : super(key: key);
 
   @override
-  NumeralWordsTextSearchState createState() => NumeralWordsTextSearchState();
+ _NumeralWordsTextSearchState createState() => _NumeralWordsTextSearchState();
 }
 
-class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
+class _NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
   late TextEditingController _decodeController;
   late TextEditingController _codeControllerHighlighted;
 

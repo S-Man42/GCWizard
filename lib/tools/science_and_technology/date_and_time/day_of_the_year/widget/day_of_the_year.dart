@@ -17,10 +17,10 @@ class DayOfTheYear extends StatefulWidget {
   const DayOfTheYear({Key? key}) : super(key: key);
 
   @override
-  DayOfTheYearState createState() => DayOfTheYearState();
+ _DayOfTheYearState createState() => _DayOfTheYearState();
 }
 
-class DayOfTheYearState extends State<DayOfTheYear> {
+class _DayOfTheYearState extends State<DayOfTheYear> {
   var _currentMode = GCWSwitchPosition.right;
   late DateTime _currentEncodeDate;
   late DateTime _currentDecodeDate;

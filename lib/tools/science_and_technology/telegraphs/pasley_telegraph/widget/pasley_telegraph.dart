@@ -20,10 +20,10 @@ class PasleyTelegraph extends StatefulWidget {
   const PasleyTelegraph({Key? key}) : super(key: key);
 
   @override
-  PasleyTelegraphState createState() => PasleyTelegraphState();
+ _PasleyTelegraphState createState() => _PasleyTelegraphState();
 }
 
-class PasleyTelegraphState extends State<PasleyTelegraph> {
+class _PasleyTelegraphState extends State<PasleyTelegraph> {
   String _currentEncodeInput = '';
   late TextEditingController _encodeController;
 

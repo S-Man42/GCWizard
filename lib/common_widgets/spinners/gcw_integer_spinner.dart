@@ -43,10 +43,10 @@ class GCWIntegerSpinner extends StatefulWidget {
       : super(key: key);
 
   @override
-  GCWIntegerSpinnerState createState() => GCWIntegerSpinnerState();
+ _GCWIntegerSpinnerState createState() => _GCWIntegerSpinnerState();
 }
 
-class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
+class _GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
   late TextEditingController _controller;
   var _currentValue = 0;
 

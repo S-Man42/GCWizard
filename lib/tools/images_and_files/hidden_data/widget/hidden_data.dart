@@ -27,10 +27,10 @@ class HiddenData extends StatefulWidget {
   const HiddenData({Key? key, this.file}) : super(key: key);
 
   @override
-  HiddenDataState createState() => HiddenDataState();
+ _HiddenDataState createState() => _HiddenDataState();
 }
 
-class HiddenDataState extends State<HiddenData> {
+class _HiddenDataState extends State<HiddenData> {
   late TextEditingController _hideController;
 
   GCWFile? _unHideFile;

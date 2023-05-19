@@ -15,10 +15,10 @@ class EllipsoidTransform extends StatefulWidget {
   const EllipsoidTransform({Key? key}) : super(key: key);
 
   @override
-  EllipsoidTransformState createState() => EllipsoidTransformState();
+ _EllipsoidTransformState createState() => _EllipsoidTransformState();
 }
 
-class EllipsoidTransformState extends State<EllipsoidTransform> {
+class _EllipsoidTransformState extends State<EllipsoidTransform> {
   var _currentCoords = defaultBaseCoordinate;
 
   var _currentOutputFormat = defaultCoordinateFormat;

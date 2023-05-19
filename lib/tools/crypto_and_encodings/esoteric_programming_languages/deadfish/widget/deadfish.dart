@@ -9,10 +9,10 @@ class Deadfish extends StatefulWidget {
   const Deadfish({Key? key}) : super(key: key);
 
   @override
-  DeadfishState createState() => DeadfishState();
+ _DeadfishState createState() => _DeadfishState();
 }
 
-class DeadfishState extends State<Deadfish> {
+class _DeadfishState extends State<Deadfish> {
   var _currentInput = '';
   var _currentMode = GCWSwitchPosition.left;
   var _currentDeadfishMode = GCWSwitchPosition.left;

@@ -16,10 +16,10 @@ class Calendar extends StatefulWidget {
   const Calendar({Key? key}) : super(key: key);
 
   @override
-  CalendarState createState() => CalendarState();
+ _CalendarState createState() => _CalendarState();
 }
 
-class CalendarState extends State<Calendar> {
+class _CalendarState extends State<Calendar> {
   CalendarSystem _currentCalendarSystem = CalendarSystem.JULIANDATE;
   double _currentJulianDate = 0.0;
   late DateTime _currentDate;

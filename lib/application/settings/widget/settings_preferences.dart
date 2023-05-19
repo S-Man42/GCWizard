@@ -22,10 +22,10 @@ class SettingsPreferences extends StatefulWidget {
   const SettingsPreferences({Key? key}) : super(key: key);
 
   @override
-  SettingsPreferencesState createState() => SettingsPreferencesState();
+ _SettingsPreferencesState createState() => _SettingsPreferencesState();
 }
 
-class SettingsPreferencesState extends State<SettingsPreferences> {
+class _SettingsPreferencesState extends State<SettingsPreferences> {
   late List<String> _keys;
   String? _editKey;
   Object? _editedValue;

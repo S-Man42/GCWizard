@@ -21,10 +21,10 @@ class CrossSumRange extends StatefulWidget {
   const CrossSumRange({Key? key, this.type = CrossSumType.NORMAL}) : super(key: key);
 
   @override
-  CrossSumRangeState createState() => CrossSumRangeState();
+ _CrossSumRangeState createState() => _CrossSumRangeState();
 }
 
-class CrossSumRangeState extends State<CrossSumRange> {
+class _CrossSumRangeState extends State<CrossSumRange> {
   var _currentCrossSum = 1;
   var _currentRangeStart = 0;
   var _currentRangeEnd = 100;
