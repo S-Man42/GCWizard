@@ -529,7 +529,7 @@ void _calculateNewX(int dx) {
   if (_x < 0) {
     _x = _SCREENWIDTH - 1;
   } else {
-    if (_x == _SCREENWIDTH - 1) _x = 0;
+    if (_x == _SCREENWIDTH) _x = 0;
   }
 }
 
@@ -538,7 +538,7 @@ void _calculateNewY(int dy) {
   if (_y < 0) {
     _y = _SCREENHEIGHT - 1;
   } else {
-    if (_y == _SCREENHEIGHT - 1) _y = 0;
+    if (_y == _SCREENHEIGHT) _y = 0;
   }
 }
 
