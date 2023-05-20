@@ -19,10 +19,10 @@ class SudokuSolver extends StatefulWidget {
   const SudokuSolver({Key? key}) : super(key: key);
 
   @override
-  SudokuSolverState createState() => SudokuSolverState();
+ _SudokuSolverState createState() => _SudokuSolverState();
 }
 
-class SudokuSolverState extends State<SudokuSolver> {
+class _SudokuSolverState extends State<SudokuSolver> {
   late SudokuBoard _currentBoard;
   int _currentSolution = 0;
 

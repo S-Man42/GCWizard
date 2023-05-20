@@ -26,10 +26,10 @@ class MusicNotes extends StatefulWidget {
   const MusicNotes({Key? key}) : super(key: key);
 
   @override
-  MusicNotesState createState() => MusicNotesState();
+ _MusicNotesState createState() => _MusicNotesState();
 }
 
-class MusicNotesState extends State<MusicNotes> {
+class _MusicNotesState extends State<MusicNotes> {
   String _currentEncodeInput = '';
   late TextEditingController _encodeController;
   final _gcwTextStyle = gcwTextStyle();

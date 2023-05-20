@@ -22,10 +22,10 @@ class ShadowLength extends StatefulWidget {
   const ShadowLength({Key? key}) : super(key: key);
 
   @override
-  ShadowLengthState createState() => ShadowLengthState();
+ _ShadowLengthState createState() => _ShadowLengthState();
 }
 
-class ShadowLengthState extends State<ShadowLength> {
+class _ShadowLengthState extends State<ShadowLength> {
   var _currentDateTime = DateTimeTimezone(datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
   var _currentInputCoords = defaultBaseCoordinate;
   var _currentHeight = 0.0;

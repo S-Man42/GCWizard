@@ -10,10 +10,10 @@ class Houdini extends StatefulWidget {
   const Houdini({Key? key}) : super(key: key);
 
   @override
-  HoudiniState createState() => HoudiniState();
+ _HoudiniState createState() => _HoudiniState();
 }
 
-class HoudiniState extends State<Houdini> {
+class _HoudiniState extends State<Houdini> {
   String _currentInput = '';
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;

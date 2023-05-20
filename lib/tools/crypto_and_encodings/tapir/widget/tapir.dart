@@ -11,10 +11,10 @@ class Tapir extends StatefulWidget {
   const Tapir({Key? key}) : super(key: key);
 
   @override
-  TapirState createState() => TapirState();
+ _TapirState createState() => _TapirState();
 }
 
-class TapirState extends State<Tapir> {
+class _TapirState extends State<Tapir> {
   late TextEditingController _inputController;
   late TextEditingController _otpController;
 

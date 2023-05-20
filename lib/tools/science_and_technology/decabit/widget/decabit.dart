@@ -15,10 +15,10 @@ class Decabit extends StatefulWidget {
   const Decabit({Key? key}) : super(key: key);
 
   @override
-  DecabitState createState() => DecabitState();
+ _DecabitState createState() => _DecabitState();
 }
 
-class DecabitState extends State<Decabit> {
+class _DecabitState extends State<Decabit> {
   late TextEditingController _inputController;
   late TextEditingController _aController;
   late TextEditingController _bController;

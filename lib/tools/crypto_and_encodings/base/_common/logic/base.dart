@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:base32/base32.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/ascii85/logic/ascii85.dart';
+import 'package:gc_wizard/utils/constants.dart';
 
 const Map<String, String Function(String)> BASE_FUNCTIONS = {
   'base_base16': decodeBase16,
@@ -87,12 +88,24 @@ String encodeBase85(String input) {
 String decodeBase85(String input) {
   if (input.isEmpty) return '';
 
+  if (_invalidBase85(input)) return UNKNOWN_ELEMENT;
+
   if (input.startsWith('<~')) input = input.substring(2);
 
   if (input.endsWith('~>')) input = input.substring(0, input.length - 2);
 
   var decoded = decodeASCII85(input);
   return decoded == null ? '' : utf8.decode(decoded);
+}
+
+const List<String> _INVALID_BASE85_LETTERS = ['"', "'", ",", ".", "/", ":", "[", "\\", "]"];
+
+bool _invalidBase85(String base85){
+  bool result = false;
+  base85.split('').forEach((letter) {
+    if (letter.codeUnitAt(0) > 127 || letter.codeUnitAt(0) < 32 || _INVALID_BASE85_LETTERS.contains(letter)) result = true;
+  });
+  return result;
 }
 
 String decode(String input, String Function(String) function) {

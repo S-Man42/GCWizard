@@ -15,10 +15,10 @@ class BurrowsWheeler extends StatefulWidget {
   const BurrowsWheeler({Key? key}) : super(key: key);
 
   @override
-  BurrowsWheelerState createState() => BurrowsWheelerState();
+ _BurrowsWheelerState createState() => _BurrowsWheelerState();
 }
 
-class BurrowsWheelerState extends State<BurrowsWheeler> {
+class _BurrowsWheelerState extends State<BurrowsWheeler> {
   late TextEditingController plainController;
   late TextEditingController cipherController;
   late TextEditingController indexNumberController;

@@ -18,4 +18,14 @@ class MultiDecoderToolASCII extends AbstractMultiDecoderTool {
               return String.fromCharCodes(input.split(RegExp(r'\D')).map((value) => int.tryParse(value) ?? 0).toList());
             },
             options: options);
+
+  @override
+  State<StatefulWidget> createState() => _MultiDecoderToolASCIIState();
+}
+
+class _MultiDecoderToolASCIIState extends State<MultiDecoderToolASCII> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
 }

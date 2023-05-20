@@ -12,10 +12,10 @@ class NumberSequenceContainsDigits extends StatefulWidget {
   const NumberSequenceContainsDigits({Key? key, required this.mode, required this.maxIndex}) : super(key: key);
 
   @override
-  NumberSequenceContainsDigitsState createState() => NumberSequenceContainsDigitsState();
+ _NumberSequenceContainsDigitsState createState() => _NumberSequenceContainsDigitsState();
 }
 
-class NumberSequenceContainsDigitsState extends State<NumberSequenceContainsDigits> {
+class _NumberSequenceContainsDigitsState extends State<NumberSequenceContainsDigits> {
   int currentInputN = 0;
 
   Widget _currentOutput = const GCWDefaultOutput();

@@ -14,10 +14,10 @@ class SunRiseSet extends StatefulWidget {
   const SunRiseSet({Key? key}) : super(key: key);
 
   @override
-  SunRiseSetState createState() => SunRiseSetState();
+ _SunRiseSetState createState() => _SunRiseSetState();
 }
 
-class SunRiseSetState extends State<SunRiseSet> {
+class _SunRiseSetState extends State<SunRiseSet> {
   var _currentDateTime = DateTimeTimezone(datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
   var _currentCoords = defaultBaseCoordinate;
 

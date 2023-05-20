@@ -11,10 +11,10 @@ class Kenny extends StatefulWidget {
   const Kenny({Key? key}) : super(key: key);
 
   @override
-  KennyState createState() => KennyState();
+ _KennyState createState() => _KennyState();
 }
 
-class KennyState extends State<Kenny> {
+class _KennyState extends State<Kenny> {
   late TextEditingController _inputController;
   late TextEditingController _mController;
   late TextEditingController _pController;

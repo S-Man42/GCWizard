@@ -13,10 +13,10 @@ class Affine extends StatefulWidget {
   const Affine({Key? key}) : super(key: key);
 
   @override
-  AffineState createState() => AffineState();
+ _AffineState createState() => _AffineState();
 }
 
-class AffineState extends State<Affine> {
+class _AffineState extends State<Affine> {
   late TextEditingController _encodeController;
   late TextEditingController _decodeController;
 

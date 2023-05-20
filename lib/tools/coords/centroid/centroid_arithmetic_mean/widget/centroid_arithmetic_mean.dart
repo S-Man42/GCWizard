@@ -17,10 +17,10 @@ class CentroidArithmeticMean extends StatefulWidget {
   const CentroidArithmeticMean({Key? key}) : super(key: key);
 
   @override
-  CentroidArithmeticMeanState createState() => CentroidArithmeticMeanState();
+ _CentroidArithmeticMeanState createState() => _CentroidArithmeticMeanState();
 }
 
-class CentroidArithmeticMeanState extends State<CentroidArithmeticMean> {
+class _CentroidArithmeticMeanState extends State<CentroidArithmeticMean> {
   var _currentCountCoords = 1;
   final _currentCoords = [defaultBaseCoordinate];
 

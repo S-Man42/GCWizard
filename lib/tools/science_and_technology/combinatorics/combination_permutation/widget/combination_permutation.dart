@@ -13,10 +13,10 @@ class CombinationPermutation extends StatefulWidget {
   const CombinationPermutation({Key? key}) : super(key: key);
 
   @override
-  CombinationPermutationState createState() => CombinationPermutationState();
+ _CombinationPermutationState createState() => _CombinationPermutationState();
 }
 
-class CombinationPermutationState extends State<CombinationPermutation> {
+class _CombinationPermutationState extends State<CombinationPermutation> {
   var _currentInput = '';
   bool _currentShowDuplicates = false;
 

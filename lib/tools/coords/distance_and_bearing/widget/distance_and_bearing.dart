@@ -19,10 +19,10 @@ class DistanceBearing extends StatefulWidget {
   const DistanceBearing({Key? key}) : super(key: key);
 
   @override
-  DistanceBearingState createState() => DistanceBearingState();
+ _DistanceBearingState createState() => _DistanceBearingState();
 }
 
-class DistanceBearingState extends State<DistanceBearing> {
+class _DistanceBearingState extends State<DistanceBearing> {
   var _currentCoords1 = defaultBaseCoordinate;
   var _currentCoords2 = defaultBaseCoordinate;
 

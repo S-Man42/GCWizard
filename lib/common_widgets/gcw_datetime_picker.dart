@@ -123,10 +123,10 @@ class GCWDateTimePicker extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  GCWDateTimePickerState createState() => GCWDateTimePickerState();
+ _GCWDateTimePickerState createState() => _GCWDateTimePickerState();
 }
 
-class GCWDateTimePickerState extends State<GCWDateTimePicker> {
+class _GCWDateTimePickerState extends State<GCWDateTimePicker> {
   var _currentSign = 1;
   var _currentYear = 0;
   var _currentMonth = 1;

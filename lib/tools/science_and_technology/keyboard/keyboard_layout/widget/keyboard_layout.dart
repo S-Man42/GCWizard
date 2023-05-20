@@ -12,10 +12,10 @@ class KeyboardLayout extends StatefulWidget {
   const KeyboardLayout({Key? key}) : super(key: key);
 
   @override
-  KeyboardLayoutState createState() => KeyboardLayoutState();
+ _KeyboardLayoutState createState() => _KeyboardLayoutState();
 }
 
-class KeyboardLayoutState extends State<KeyboardLayout> {
+class _KeyboardLayoutState extends State<KeyboardLayout> {
   late TextEditingController _inputController;
 
   String _currentInput = '';

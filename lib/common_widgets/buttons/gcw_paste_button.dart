@@ -38,10 +38,10 @@ class GCWPasteButton extends StatefulWidget {
       : super(key: key);
 
   @override
-  GCWPasteButtonState createState() => GCWPasteButtonState();
+ _GCWPasteButtonState createState() => _GCWPasteButtonState();
 }
 
-class GCWPasteButtonState extends State<GCWPasteButton> {
+class _GCWPasteButtonState extends State<GCWPasteButton> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

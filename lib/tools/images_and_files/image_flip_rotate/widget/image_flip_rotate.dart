@@ -22,10 +22,10 @@ class ImageFlipRotate extends StatefulWidget {
   const ImageFlipRotate({Key? key, this.file}) : super(key: key);
 
   @override
-  ImageFlipRotateState createState() => ImageFlipRotateState();
+ _ImageFlipRotateState createState() => _ImageFlipRotateState();
 }
 
-class ImageFlipRotateState extends State<ImageFlipRotate> {
+class _ImageFlipRotateState extends State<ImageFlipRotate> {
   GCWFile? _originalData;
 
   Image.Image? _currentImage;

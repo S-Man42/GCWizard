@@ -14,10 +14,10 @@ class NumeralBases extends StatefulWidget {
   const NumeralBases({Key? key}) : super(key: key);
 
   @override
-  NumeralBasesState createState() => NumeralBasesState();
+ _NumeralBasesState createState() => _NumeralBasesState();
 }
 
-class NumeralBasesState extends State<NumeralBases> {
+class _NumeralBasesState extends State<NumeralBases> {
   late TextEditingController _controller;
 
   String _currentInput = '';

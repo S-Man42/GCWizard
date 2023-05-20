@@ -10,10 +10,10 @@ class Navajo extends StatefulWidget {
   const Navajo({Key? key}) : super(key: key);
 
   @override
-  NavajoState createState() => NavajoState();
+ _NavajoState createState() => _NavajoState();
 }
 
-class NavajoState extends State<Navajo> {
+class _NavajoState extends State<Navajo> {
   late TextEditingController _decodeController;
   late TextEditingController _encodeController;
 

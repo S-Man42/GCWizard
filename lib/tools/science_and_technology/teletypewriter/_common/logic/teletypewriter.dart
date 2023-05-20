@@ -789,7 +789,7 @@ const Map<String, int> _AZToCCITT_ITA1_UK = {
 };
 final Map<int, String> _CCITT_ITA1_UKToAZ = switchMapKeyValue(_AZToCCITT_ITA1_UK);
 
-final Map<String, int> _NumbersToCCITT_ITA1_UK = {
+const Map<String, int> _NumbersToCCITT_ITA1_UK = {
   // https://en.wikipedia.org/wiki/Baudot_code
   '1': 1,
   '1/': 3,
@@ -803,7 +803,7 @@ final Map<String, int> _NumbersToCCITT_ITA1_UK = {
   '0': 15,
   '5/': 14,
   '7': 10,
-  '¹': 11, //double entry ??
+  '¹': 11,
   '6': 12,
   '(': 25,
   '=': 27,
@@ -814,14 +814,13 @@ final Map<String, int> _NumbersToCCITT_ITA1_UK = {
   '-': 28,
   '7/': 20,
   '²': 21,
-  // ignore: equal_keys_in_map
-  '¹': 23,
   '?': 22,
   '9/': 18,
   ':': 19,
   '.': 17,
 };
-final Map<int, String> _CCITT_ITA1_UKToNumbers = switchMapKeyValue(_NumbersToCCITT_ITA1_UK);
+final Map<int, String> _CCITT_ITA1_UKToNumbers = _addSpecialEntries(
+    switchMapKeyValue(_NumbersToCCITT_ITA1_UK), {23: '¹'});
 
 const Map<String, int> _AZToCCITT_ITA2_MTK2 = {
   //according to ENG Wikipedia, Bit-Order 54321
@@ -1793,6 +1792,11 @@ const Map<TeletypewriterCodebook, int> _LETTERS_FOLLOW = {
   TeletypewriterCodebook.ILLIAC: 20,
   TeletypewriterCodebook.ALGOL: 54,
 };
+
+Map<int, String> _addSpecialEntries(Map<int, String> source, Map<int, String> special) {
+  source.addAll(special);
+  return source;
+}
 
 int? _EncodeAZ(TeletypewriterCodebook language, String text) {
   switch (language) {
