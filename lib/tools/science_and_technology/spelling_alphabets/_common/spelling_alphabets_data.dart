@@ -642,8 +642,9 @@ Map<String, String> _spellingEPO = {
   "Z": "Zinko"
 };
 Map<String, String> _spellingNLD = {
-  "A": "Anna/Anton",
-  "B": "Bern(h)ard",
+  //http://www.spellingsalfabet.nl/
+  "A": "Anna",
+  "B": "Bernhard",
   "C": "Cornelis",
   "D": "Dirk",
   "E": "Eduard",
@@ -651,24 +652,25 @@ Map<String, String> _spellingNLD = {
   "G": "Gerard",
   "H": "Hendrik",
   "I": "Izaak",
-  "IJ": "IJmuiden/IJsbrand",
-  "J": "Johan/Jacob/Julius",
+  "IJ": "IJmuiden",
+  "J": "Jan",
   "K": "Karel",
-  "L": "Lodewijk/Leo",
+  "L": "Lodewijk",
   "M": "Maria",
   "N": "Nico",
   "O": "Otto",
   "P": "Pieter",
-  "Q": "Quirinus/Quinten, Qutient",
-  "R": "Richard/Rudolf",
+  "Q": "Qutient",
+  "R": "Rudolf",
   "S": "Simon",
-  "T": "Theodor",
+  "T": "Teunis",
   "U": "Utrecht",
   "V": "Victor",
   "W": "Willem",
-  "X": "Xant(h)ippe",
+  "X": "Xantippe",
   "Y": "Ypsilon",
-  "Z": "Zaandam/Zacharias"
+  "Z": "Zaandam",
+  "IJ": "IJmuiden",
 };
 Map<String, String> _spellingBEL = {
   "A": "Arthur",
