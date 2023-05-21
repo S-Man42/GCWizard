@@ -31,6 +31,35 @@ void main() {
     }
   });
 
+  group("Base85.encode:", () {
+    List<Map<String, Object?>> _inputsToExpected = [
+      {'input' : '', 'expectedOutput' : ''},
+      {'input' : 'cache bei 12.345 09.768', 'expectedOutput' : '<~@prk\\AKYGnBco,c/i,=A+>>f.2`<V~>'},
+    ];
+
+    for (var elem in _inputsToExpected) {
+      test('input: ${elem['input']}', () {
+        var _actual = encodeBase85(elem['input'] as String);
+        expect(_actual, elem['expectedOutput']);
+      });
+    }
+  });
+
+  group("Base85.decode:", () {
+    List<Map<String, Object?>> _inputsToExpected = [
+      {'input' : '', 'expectedOutput' : ''},
+      {'input' : '<~@prk\\AKYGnBco,c/i,=A+>>f.2`<V~>', 'expectedOutput' : 'cache bei 12.345 09.768'},
+      {'input' : "'*<%>y<p; %F'4(Ay<p;Y *4& n?y8& z<' r<!8% '4o8y?rAx4y>(?nGvB! t8z4p;' *8%7rA >nA![ F\":nE 8vA E\"Gab <&G @Ö:y<p;[ &Bq8y8Y u<rE A(A 7v8 >\"B%7vAnGrAY q<r w4 9ÜE 7nF 9vAq8! rEsB%7rEy<p; FvAqg A\"Eq -Jr<(Asü!9-<t tEn7 ^`[e_^ (Aq \"F' r?s tEn7 ][eaa[", 'expectedOutput' : '<?>'},
+    ];
+
+    for (var elem in _inputsToExpected) {
+      test('input: ${elem['input']}', () {
+        var _actual = decodeBase85(elem['input'] as String);
+        expect(_actual, elem['expectedOutput']);
+      });
+    }
+  });
+
   group("Base91.encode:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'input' : '', 'expectedOutput' : ''},
