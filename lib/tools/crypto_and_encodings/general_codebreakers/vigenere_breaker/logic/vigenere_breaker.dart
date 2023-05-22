@@ -85,7 +85,7 @@ Future<VigenereBreakerResult> break_cipherAsync(GCWAsyncExecuterParameters? jobD
 void progressCounter() {
   _progress++;
   if (_sendAsyncPort != null && (_progress % _progressStep == 0)) {
-    _sendAsyncPort!.send(DoubleText('progress', _progress / _countCombinations));
+    _sendAsyncPort!.send(DoubleText(PROGRESS, _progress / _countCombinations));
   }
 }
 

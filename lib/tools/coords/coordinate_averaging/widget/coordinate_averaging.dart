@@ -20,10 +20,10 @@ class CoordinateAveraging extends StatefulWidget {
   const CoordinateAveraging({Key? key}) : super(key: key);
 
   @override
-  CoordinateAveragingState createState() => CoordinateAveragingState();
+ _CoordinateAveragingState createState() => _CoordinateAveragingState();
 }
 
-class CoordinateAveragingState extends State<CoordinateAveraging> {
+class _CoordinateAveragingState extends State<CoordinateAveraging> {
   bool? _currentLocationPermissionGranted;
   StreamSubscription<LocationData>? _locationSubscription;
   final Location _currentLocation = Location();

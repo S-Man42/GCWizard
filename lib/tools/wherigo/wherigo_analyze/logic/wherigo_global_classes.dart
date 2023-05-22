@@ -31,12 +31,12 @@ class WherigoObjectData {
   final WHERIGO_OBJECT_TYPE ObjectType;
 
   WherigoObjectData(
-    this.ObjectID,
-    this.ObjectIndex,
-    this.ObjectName,
-    this.ObjectMedia,
-    this.ObjectType,
-  );
+      this.ObjectID,
+      this.ObjectIndex,
+      this.ObjectName,
+      this.ObjectMedia,
+      this.ObjectType,
+      );
 }
 
 class WherigoZonePoint {
@@ -44,7 +44,7 @@ class WherigoZonePoint {
   final double Longitude;
   final double Altitude;
 
-  WherigoZonePoint({this.Latitude = 0.0, this.Longitude = 0.0, this.Altitude = 0.0});
+  const WherigoZonePoint({this.Latitude = 0.0, this.Longitude = 0.0, this.Altitude = 0.0});
 }
 
 class WherigoZoneData {
@@ -66,7 +66,7 @@ class WherigoZoneData {
   final String ZoneInRange;
   final List<WherigoZonePoint> ZonePoints;
 
-  WherigoZoneData(
+  const WherigoZoneData(
       {required this.ZoneLUAName,
       required this.ZoneID,
       required this.ZoneName,
@@ -100,7 +100,7 @@ class WherigoCharacterData {
   final String CharacterGender;
   final String CharacterType;
 
-  WherigoCharacterData(
+  const WherigoCharacterData(
       {required this.CharacterLUAName,
         required this.CharacterID,
         required this.CharacterName,
@@ -129,7 +129,7 @@ class WherigoInputData {
   final List<String> InputChoices;
   final List<WherigoAnswerData> InputAnswers;
 
-  WherigoInputData(
+  const WherigoInputData(
       {required this.InputLUAName,
         required this.InputID,
         required this.InputVariableID,
@@ -188,7 +188,7 @@ class WherigoTaskData {
   final String TaskComplete;
   final String TaskCorrectstate;
 
-  WherigoTaskData(
+  const WherigoTaskData(
       {required this.TaskLUAName,
         required this.TaskID,
         required this.TaskName,
@@ -210,7 +210,7 @@ class WherigoMediaData {
   final String MediaType;
   final String MediaFilename;
 
-  WherigoMediaData(
+  const WherigoMediaData(
       {required this.MediaLUAName,
         required this.MediaID,
         required this.MediaName,
@@ -224,7 +224,14 @@ class WherigoVariableData {
   final String VariableLUAName;
   final String VariableName;
 
-  WherigoVariableData({required this.VariableLUAName, required this.VariableName});
+  const WherigoVariableData({required this.VariableLUAName, required this.VariableName});
+}
+
+class WherigoObfuscationData {
+  final String ObfuscationTable;
+  final String ObfuscationName;
+
+  const WherigoObfuscationData({required this.ObfuscationTable, required this.ObfuscationName});
 }
 
 class WherigoItemData {
@@ -241,7 +248,7 @@ class WherigoItemData {
   final String ItemLocked;
   final String ItemOpened;
 
-  WherigoItemData(
+  const WherigoItemData(
       {required this.ItemLUAName,
         required this.ItemID,
         required this.ItemName,
@@ -265,7 +272,7 @@ class WherigoTimerData {
   final String TimerDuration;
   final String TimerType;
 
-  WherigoTimerData(
+  const WherigoTimerData(
       {required this.TimerLUAName,
         required this.TimerID,
         required this.TimerName,
@@ -413,4 +420,30 @@ class WherigoJobData {
     required this.jobDataMode,
     required this.jobDataType,
   });
+}
+
+class WherigoTest{
+  final WherigoCartridgeGWC cartridgeGWC;
+  final WherigoTaskData cartridgeTestTask;
+  final WherigoTimerData cartridgeTestTimer;
+  final WherigoZoneData cartridgeTestZone;
+  final WherigoCharacterData cartridgeTestCharacter;
+  final WherigoItemData cartridgeTestItem;
+  final WherigoInputData cartridgeTestInput;
+  final WherigoObfuscationData cartridgeTestObfuscation;
+  final List<WherigoVariableData> cartridgeTestVariable;
+  final List<List<WherigoActionMessageElementData>> cartridgeTestMessageDialog;
+
+  WherigoTest({
+    required this.cartridgeGWC,
+    required this.cartridgeTestTask,
+    required this.cartridgeTestTimer,
+    required this.cartridgeTestZone,
+    required this.cartridgeTestCharacter,
+    required this.cartridgeTestItem,
+    required this.cartridgeTestInput,
+    required this.cartridgeTestObfuscation,
+    required this.cartridgeTestVariable,
+    required this.cartridgeTestMessageDialog,
+});
 }

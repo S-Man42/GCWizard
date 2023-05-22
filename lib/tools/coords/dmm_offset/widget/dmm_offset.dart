@@ -15,10 +15,10 @@ class DMMOffset extends StatefulWidget {
   const DMMOffset({Key? key}) : super(key: key);
 
   @override
-  DMMOffsetState createState() => DMMOffsetState();
+ _DMMOffsetState createState() => _DMMOffsetState();
 }
 
-class DMMOffsetState extends State<DMMOffset> {
+class _DMMOffsetState extends State<DMMOffset> {
   var _currentCoords = defaultBaseCoordinate;
 
   var _currentValues = [defaultCoordinate];

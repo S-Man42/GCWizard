@@ -18,10 +18,10 @@ class GeneralCharsetValues extends StatefulWidget {
   const GeneralCharsetValues({Key? key, required this.encode, required this.decode, required this.charsetName}) : super(key: key);
 
   @override
-  GeneralCharsetValuesState createState() => GeneralCharsetValuesState();
+ _GeneralCharsetValuesState createState() => _GeneralCharsetValuesState();
 }
 
-class GeneralCharsetValuesState extends State<GeneralCharsetValues> {
+class _GeneralCharsetValuesState extends State<GeneralCharsetValues> {
   late TextEditingController _encodeController;
   late TextEditingController _decodeController;
 

@@ -13,10 +13,10 @@ class EnigmaRotorDropDown extends StatefulWidget {
       : super(key: key);
 
   @override
-  EnigmaRotorDropDownState createState() => EnigmaRotorDropDownState();
+ _EnigmaRotorDropDownState createState() => _EnigmaRotorDropDownState();
 }
 
-class EnigmaRotorDropDownState extends State<EnigmaRotorDropDown> {
+class _EnigmaRotorDropDownState extends State<EnigmaRotorDropDown> {
   late String _currentRotor;
   var _currentOffset = 1;
   var _currentSetting = 1;

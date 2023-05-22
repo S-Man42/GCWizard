@@ -11,10 +11,10 @@ class OneTimePad extends StatefulWidget {
   const OneTimePad({Key? key}) : super(key: key);
 
   @override
-  OneTimePadState createState() => OneTimePadState();
+ _OneTimePadState createState() => _OneTimePadState();
 }
 
-class OneTimePadState extends State<OneTimePad> {
+class _OneTimePadState extends State<OneTimePad> {
   late TextEditingController _inputController;
   late TextEditingController _keyController;
 

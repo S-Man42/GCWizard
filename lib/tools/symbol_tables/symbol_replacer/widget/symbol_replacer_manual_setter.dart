@@ -13,10 +13,10 @@ class SymbolReplacerManualSetter extends StatefulWidget {
       : super(key: key);
 
   @override
-  SymbolReplacerManualSetterState createState() => SymbolReplacerManualSetterState();
+ _SymbolReplacerManualSetterState createState() => _SymbolReplacerManualSetterState();
 }
 
-class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> {
+class _SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> {
   final _symbolMap = <Symbol, Map<String, SymbolData>>{};
   List<GCWDropDownMenuItem<Map<String, SymbolReplacerSymbolData>>> _symbolDataItems = [];
   final _gcwTextStyle = gcwTextStyle();
@@ -139,7 +139,7 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
   Widget _buildEditRow() {
     return Column(
       children: <Widget>[
-        (widget.symbolImage.compareSymbols == null)
+        (widget.symbolImage.compareSymbols == null || widget.symbolImage.compareSymbols!.isEmpty)
             ? Container()
             : GCWTwoOptionsSwitch(
                 leftValue: i18n(context, 'symbol_replacer_from_symboltable'),
@@ -168,7 +168,7 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
                   autofocus: true,
                 )
               : GCWDropDown<Map<String, SymbolReplacerSymbolData>>(
-                  value: _currentSymbolData ?? _symbolDataItems.first.value,
+                  value: _currentSymbolData ?? _symbolDataItems.firstOrNull?.value ?? {},
                   onChanged: (value) {
                     setState(() {
                       _currentSymbolData = value;

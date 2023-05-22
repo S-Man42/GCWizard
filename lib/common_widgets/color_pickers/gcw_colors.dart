@@ -31,10 +31,10 @@ class GCWColors extends StatefulWidget {
   const GCWColors({Key? key, required this.onChanged, required this.colorsValue}) : super(key: key);
 
   @override
-  GCWColorsState createState() => GCWColorsState();
+ _GCWColorsState createState() => _GCWColorsState();
 }
 
-class GCWColorsState extends State<GCWColors> {
+class _GCWColorsState extends State<GCWColors> {
   late HSVColor _currentColorPickerColor;
   late GCWColorValue _currentColorsValue;
 

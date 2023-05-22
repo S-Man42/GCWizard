@@ -28,6 +28,8 @@ const SAFED_FUNCTION_MARKER = '\x01';
 const SAFED_RECURSIVE_FORMULA_MARKER = '\x02';
 
 const _PHI = 1.6180339887498948482045868343656381177;
+const _SQRT3 = 1.73205080756887729352744634150587236;
+const _SQRT5 = 2.23606797749978969640917366873127623;
 
 class FormulaParser {
   final ContextModel _context = ContextModel();
@@ -40,8 +42,8 @@ class FormulaParser {
   static const Map<String, double> CONSTANTS = {
     'ln10': ln10,
     'ln2': ln2,
-    'log2e': log2e,
-    'log10e': log10e,
+    // 'log2e': log2e,    // not supported due to a problem by the math expression lib: https://github.com/fkleon/math-expressions/issues/35
+    // 'log10e': log10e,  // not supported due to a problem by the math expression lib: https://github.com/fkleon/math-expressions/issues/35
     'pi': pi,
     '\u03A0': pi,
     '\u03C0': pi,
@@ -52,8 +54,10 @@ class FormulaParser {
     '\u03C6': _PHI,
     '\u03d5': _PHI,
     '\u0278': _PHI,
-    'sqrt1_2': sqrt1_2,
+    // 'sqrt1_2': sqrt1_2, // not supported due to a problem by the math expression lib: https://github.com/fkleon/math-expressions/issues/35
     'sqrt2': sqrt2,
+    'sqrt3': _SQRT3,
+    'sqrt5': _SQRT5,
   };
 
   static const List<String> _BUILTIN_FUNCTIONS = [

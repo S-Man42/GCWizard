@@ -162,3 +162,7 @@ List<String> allCharacters() {
   }
   return characters.toSet().toList();
 }
+
+String enumName(String fullName) {
+  return fullName.split('.').last;
+}

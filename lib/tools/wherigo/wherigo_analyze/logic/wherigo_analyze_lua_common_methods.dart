@@ -35,10 +35,15 @@ WherigoZonePoint _getPoint(String line) {
 
 bool _isMessageActionElement(String line) {
   if (line.startsWith('Wherigo.PlayAudio') ||
+      line.startsWith('Wherigo.ShowScreen') ||
       line.startsWith('Wherigo.GetInput') ||
       line.startsWith('Text = ') ||
       line.startsWith('Media = ') ||
-      line.startsWith('Buttons = ')) {
+      line.startsWith('Buttons = ') ||
+      line.contains(':MoveTo') ||
+      line.endsWith('= true') ||
+      line.endsWith('= false')
+  ) {
     return true;
   } else {
     return false;
@@ -51,6 +56,10 @@ WherigoActionMessageElementData _handleAnswerLine(String line) {
     return WherigoActionMessageElementData(
         ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND,
         ActionMessageContent: line.trim());
+  } else if (line.startsWith('Wherigo.ShowScreen')) {
+    return WherigoActionMessageElementData(
+        ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND,
+        ActionMessageContent: line.trim().replaceAll('Wherigo.', '').replaceAll('(', ' ').replaceAll(')', ''));
   } else if (line.startsWith('Wherigo.GetInput')) {
     return WherigoActionMessageElementData(
         ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND,

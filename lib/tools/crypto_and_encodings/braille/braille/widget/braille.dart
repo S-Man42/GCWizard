@@ -19,10 +19,10 @@ class Braille extends StatefulWidget {
   const Braille({Key? key}) : super(key: key);
 
   @override
-  BrailleState createState() => BrailleState();
+ _BrailleState createState() => _BrailleState();
 }
 
-class BrailleState extends State<Braille> {
+class _BrailleState extends State<Braille> {
   String _currentEncodeInput = '';
   late TextEditingController _encodeController;
 

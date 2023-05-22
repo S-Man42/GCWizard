@@ -10,10 +10,10 @@ class Caesar extends StatefulWidget {
   const Caesar({Key? key}) : super(key: key);
 
   @override
-  CaesarState createState() => CaesarState();
+ _CaesarState createState() => _CaesarState();
 }
 
-class CaesarState extends State<Caesar> {
+class _CaesarState extends State<Caesar> {
   late TextEditingController _controller;
 
   String _currentInput = '';

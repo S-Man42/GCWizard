@@ -17,10 +17,10 @@ class Teletypewriter extends StatefulWidget {
   const Teletypewriter({Key? key, required this.defaultCodebook, required this.codebook}) : super(key: key);
 
   @override
-  TeletypewriterState createState() => TeletypewriterState();
+ _TeletypewriterState createState() => _TeletypewriterState();
 }
 
-class TeletypewriterState extends State<Teletypewriter> {
+class _TeletypewriterState extends State<Teletypewriter> {
   late TextEditingController _encodeController;
   late TextEditingController _decodeController;
 
@@ -96,7 +96,7 @@ class TeletypewriterState extends State<Teletypewriter> {
           },
         ),
         GCWTwoOptionsSwitch(
-          title: i18n(context, 'ccitt2_numeralbase'),
+          title: i18n(context, 'common_numeralbase'),
           leftValue: i18n(context, 'common_numeralbase_denary'),
           rightValue: i18n(context, 'common_numeralbase_binary'),
           value: _currentRadix,

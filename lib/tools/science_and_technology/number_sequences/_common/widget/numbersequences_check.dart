@@ -11,10 +11,10 @@ class NumberSequenceCheckNumber extends StatefulWidget {
   const NumberSequenceCheckNumber({Key? key, required this.mode, required this.maxIndex}) : super(key: key);
 
   @override
-  NumberSequenceCheckNumberState createState() => NumberSequenceCheckNumberState();
+ _NumberSequenceCheckNumberState createState() => _NumberSequenceCheckNumberState();
 }
 
-class NumberSequenceCheckNumberState extends State<NumberSequenceCheckNumber> {
+class _NumberSequenceCheckNumberState extends State<NumberSequenceCheckNumber> {
   String _currentInputN = '0';
   late TextEditingController currentInputController;
 

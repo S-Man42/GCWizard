@@ -4,25 +4,25 @@ import 'package:collection/collection.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 
 // Add keyboard layouts
-// 1. adapt enum
+// 1. adapt enum KeyboardType
 // 2. add Map xxxToNormal
 // 3. adapt List<KeyboardData> allKeyboards
 // 4. adapt buildConvertingMap
 
 enum _ConvertDirection { toNormal, fromNormal }
 
-enum KeyboardType {
+enum KEYBOARD_TYPE {
   QWERTZ_T1,
   QWERTY_US_INT,
-  Dvorak,
-  Dvorak_II_DEU,
+  DVORAK,
+  DVORAK_I_DEU1,
+  DVORAK_I_DEU2,
+  DVORAK_I_DEU3,
+  DVORAK_II_DEU,
   RISTOME,
   NEO,
   BONE,
   COLEMAK,
-  Dvorak_I_DEU1,
-  Dvorak_I_DEU2,
-  Dvorak_I_DEU3,
   FRA_AZERTY,
   FRA_BEPO
 }
@@ -382,7 +382,7 @@ final Map<String, String> _Dvorak_II_DEUtoNormal = {
   '\$': '104o',
   '%': '105o',
   '&': '106o',
-  '/': '107o', //double entry ??
+  '/': '107o',
   '(': '108o',
   ')': '109o',
   '=': '110o',
@@ -1569,7 +1569,7 @@ const Map<String, String> _BEPOToNormal = {
 };
 
 class KeyboardData {
-  final KeyboardType type;
+  final KEYBOARD_TYPE type;
   String name;
   String example;
 
@@ -1577,69 +1577,69 @@ class KeyboardData {
 }
 
 List<KeyboardData> allKeyboards = [
-  KeyboardData(KeyboardType.QWERTY_US_INT, 'keyboard_mode_qwerty_us_int', 'QWERTY'),
-  KeyboardData(KeyboardType.QWERTZ_T1, 'keyboard_mode_qwertz_t1', 'QWERTZ'),
-  KeyboardData(KeyboardType.FRA_AZERTY, 'keyboard_mode_fra_azerty', 'AZERTY'),
-  KeyboardData(KeyboardType.Dvorak, 'keyboard_mode_dvorak', '"<>PYF'),
-  KeyboardData(KeyboardType.Dvorak_I_DEU1, 'keyboard_mode_dvorak_I1', 'Ä;:PYF'),
-  KeyboardData(KeyboardType.Dvorak_I_DEU2, 'keyboard_mode_dvorak_I2', 'ÖÜÄPYF'),
-  KeyboardData(KeyboardType.Dvorak_I_DEU3, 'keyboard_mode_dvorak_I3', 'ÄÖÜPYF'),
-  KeyboardData(KeyboardType.Dvorak_II_DEU, 'keyboard_mode_dvorak_II', 'Ü;:PYF'),
-  KeyboardData(KeyboardType.RISTOME, 'keyboard_mode_ristome', 'QPROCB'),
-  KeyboardData(KeyboardType.NEO, 'keyboard_mode_neo', 'XVLCWK'),
-  KeyboardData(KeyboardType.BONE, 'keyboard_mode_bone', 'JDUAXP'),
-  KeyboardData(KeyboardType.COLEMAK, 'keyboard_mode_colemak', 'QWFPGJ'),
-  KeyboardData(KeyboardType.FRA_BEPO, 'keyboard_mode_fra_bepo', 'BÉPOÈ!'),
+  KeyboardData(KEYBOARD_TYPE.QWERTY_US_INT, 'keyboard_mode_qwerty_us_int', 'QWERTY'),
+  KeyboardData(KEYBOARD_TYPE.QWERTZ_T1, 'keyboard_mode_qwertz_t1', 'QWERTZ'),
+  KeyboardData(KEYBOARD_TYPE.FRA_AZERTY, 'keyboard_mode_fra_azerty', 'AZERTY'),
+  KeyboardData(KEYBOARD_TYPE.DVORAK, 'keyboard_mode_dvorak', '"<>PYF'),
+  KeyboardData(KEYBOARD_TYPE.DVORAK_I_DEU1, 'keyboard_mode_dvorak_I1', 'Ä;:PYF'),
+  KeyboardData(KEYBOARD_TYPE.DVORAK_I_DEU2, 'keyboard_mode_dvorak_I2', 'ÖÜÄPYF'),
+  KeyboardData(KEYBOARD_TYPE.DVORAK_I_DEU3, 'keyboard_mode_dvorak_I3', 'ÄÖÜPYF'),
+  KeyboardData(KEYBOARD_TYPE.DVORAK_II_DEU, 'keyboard_mode_dvorak_II', 'Ü;:PYF'),
+  KeyboardData(KEYBOARD_TYPE.RISTOME, 'keyboard_mode_ristome', 'QPROCB'),
+  KeyboardData(KEYBOARD_TYPE.NEO, 'keyboard_mode_neo', 'XVLCWK'),
+  KeyboardData(KEYBOARD_TYPE.BONE, 'keyboard_mode_bone', 'JDUAXP'),
+  KeyboardData(KEYBOARD_TYPE.COLEMAK, 'keyboard_mode_colemak', 'QWFPGJ'),
+  KeyboardData(KEYBOARD_TYPE.FRA_BEPO, 'keyboard_mode_fra_bepo', 'BÉPOÈ!'),
 ];
 
-KeyboardData? getKeyboardByType(KeyboardType type) {
+KeyboardData? getKeyboardByType(KEYBOARD_TYPE type) {
   return allKeyboards.firstWhereOrNull((element) => element.type == type);
 }
 
-KeyboardType? getKeyboardTypeByName(String name) {
+KEYBOARD_TYPE? getKeyboardTypeByName(String name) {
   return allKeyboards.firstWhereOrNull((element) => element.name == name)?.type;
 }
 
-Map<String, String> _buildConvertingMap(KeyboardType type, _ConvertDirection direction) {
+Map<String, String> _buildConvertingMap(KEYBOARD_TYPE type, _ConvertDirection direction) {
   Map<String, String> keyboardMap;
   switch (type) {
-    case KeyboardType.QWERTZ_T1:
+    case KEYBOARD_TYPE.QWERTZ_T1:
       keyboardMap = _QWERTZ_T1toNormal;
       break;
-    case KeyboardType.RISTOME:
+    case KEYBOARD_TYPE.RISTOME:
       keyboardMap = _RistomeToNormal;
       break;
-    case KeyboardType.NEO:
+    case KEYBOARD_TYPE.NEO:
       keyboardMap = _NeoToNormal;
       break;
-    case KeyboardType.BONE:
+    case KEYBOARD_TYPE.BONE:
       keyboardMap = _BoneToNormal;
       break;
-    case KeyboardType.Dvorak_I_DEU1:
+    case KEYBOARD_TYPE.DVORAK_I_DEU1:
       keyboardMap = _Dvorak_I_DEU1toNormal;
       break;
-    case KeyboardType.Dvorak_I_DEU2:
+    case KEYBOARD_TYPE.DVORAK_I_DEU2:
       keyboardMap = _Dvorak_I_DEU2toNormal;
       break;
-    case KeyboardType.Dvorak_I_DEU3:
+    case KEYBOARD_TYPE.DVORAK_I_DEU3:
       keyboardMap = _Dvorak_I_DEU3toNormal;
       break;
-    case KeyboardType.Dvorak_II_DEU:
+    case KEYBOARD_TYPE.DVORAK_II_DEU:
       keyboardMap = _Dvorak_II_DEUtoNormal;
       break;
-    case KeyboardType.FRA_AZERTY:
+    case KEYBOARD_TYPE.FRA_AZERTY:
       keyboardMap = _AZERTYToNormal;
       break;
-    case KeyboardType.FRA_BEPO:
+    case KEYBOARD_TYPE.FRA_BEPO:
       keyboardMap = _BEPOToNormal;
       break;
-    case KeyboardType.QWERTY_US_INT:
+    case KEYBOARD_TYPE.QWERTY_US_INT:
       keyboardMap = _QWERTY_US_INTtoNormal;
       break;
-    case KeyboardType.Dvorak:
+    case KEYBOARD_TYPE.DVORAK:
       keyboardMap = _DvoraktoNormal;
       break;
-    case KeyboardType.COLEMAK:
+    case KEYBOARD_TYPE.COLEMAK:
       keyboardMap = _ColemakToNormal;
       break;
   }
@@ -1650,7 +1650,7 @@ Map<String, String> _buildConvertingMap(KeyboardType type, _ConvertDirection dir
   }
 }
 
-String encodeKeyboard(String input, KeyboardType keyboardFrom, KeyboardType keyboardTo) {
+String encodeKeyboard(String input, KEYBOARD_TYPE keyboardFrom, KEYBOARD_TYPE keyboardTo) {
   Map<String, String> mapSourceToNormal = <String, String>{};
   Map<String, String> mapNormalToTarget = <String, String>{};
 

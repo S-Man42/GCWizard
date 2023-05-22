@@ -17,10 +17,10 @@ class MayaCalendar extends StatefulWidget {
   const MayaCalendar({Key? key}) : super(key: key);
 
   @override
-  MayaCalendarState createState() => MayaCalendarState();
+ _MayaCalendarState createState() => _MayaCalendarState();
 }
 
-class MayaCalendarState extends State<MayaCalendar> {
+class _MayaCalendarState extends State<MayaCalendar> {
   int _currentEncodeInput = 0;
   final String _currentLongCount = '';
   late TextEditingController _longCountController;
