@@ -7,7 +7,7 @@ class GCWAlphabetDropDown<T> extends StatefulWidget {
   final void Function(T) onChanged;
   final void Function(String)? onCustomAlphabetChanged;
   final Map<T, String> items;
-  final Object customModeKey;
+  final T customModeKey;
   final T value;
   final TextEditingController? textFieldController;
   final String? textFieldHintText;
