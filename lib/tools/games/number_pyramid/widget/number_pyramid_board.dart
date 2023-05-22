@@ -76,6 +76,7 @@ class NumberPyramidBoardState extends State<NumberPyramidBoard> {
         _currentValue = null;
       }
       _currentInputController.text = _currentValue?.toString() ?? '';
+      _currentInputController.selection....
 
       return Positioned(
           left: _selectedBoxRect!.left,
