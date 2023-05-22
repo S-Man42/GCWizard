@@ -14,10 +14,10 @@ class VanityWordsTextSearch extends StatefulWidget {
   const VanityWordsTextSearch({Key? key}) : super(key: key);
 
   @override
-  VanityWordsTextSearchState createState() => VanityWordsTextSearchState();
+ _VanityWordsTextSearchState createState() => _VanityWordsTextSearchState();
 }
 
-class VanityWordsTextSearchState extends State<VanityWordsTextSearch> {
+class _VanityWordsTextSearchState extends State<VanityWordsTextSearch> {
   late TextEditingController _decodeController;
 
   var _currentDecodeInput = '';

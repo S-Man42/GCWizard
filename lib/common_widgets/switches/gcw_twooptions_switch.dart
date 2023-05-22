@@ -28,10 +28,10 @@ class GCWTwoOptionsSwitch extends StatefulWidget {
       : super(key: key);
 
   @override
-  GCWTwoOptionsSwitchState createState() => GCWTwoOptionsSwitchState();
+ _GCWTwoOptionsSwitchState createState() => _GCWTwoOptionsSwitchState();
 }
 
-class GCWTwoOptionsSwitchState extends State<GCWTwoOptionsSwitch> {
+class _GCWTwoOptionsSwitchState extends State<GCWTwoOptionsSwitch> {
   @override
   Widget build(BuildContext context) {
     var _currentValue = widget.value ?? GCWSwitchPosition.left;

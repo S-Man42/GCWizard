@@ -28,10 +28,10 @@ class CoordinatesSettings extends StatefulWidget {
   const CoordinatesSettings({Key? key}) : super(key: key);
 
   @override
-  CoordinatesSettingsState createState() => CoordinatesSettingsState();
+ _CoordinatesSettingsState createState() => _CoordinatesSettingsState();
 }
 
-class CoordinatesSettingsState extends State<CoordinatesSettings> {
+class _CoordinatesSettingsState extends State<CoordinatesSettings> {
   late CoordinateFormat _currentDefaultFormat;
   var _currentDefaultHemisphereLatitude = Prefs.getString(PREFERENCE_COORD_DEFAULT_HEMISPHERE_LATITUDE);
   var _currentDefaultHemisphereLongitude = Prefs.getString(PREFERENCE_COORD_DEFAULT_HEMISPHERE_LONGITUDE);

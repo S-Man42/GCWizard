@@ -10,10 +10,10 @@ class Kamasutra extends StatefulWidget {
   const Kamasutra({Key? key}) : super(key: key);
 
   @override
-  KamasutraState createState() => KamasutraState();
+ _KamasutraState createState() => _KamasutraState();
 }
 
-class KamasutraState extends State<Kamasutra> {
+class _KamasutraState extends State<Kamasutra> {
   var _currentInput = '';
   var _currentAlphabet = '';
   var _currentAlphabetMode = GCWSwitchPosition.left;

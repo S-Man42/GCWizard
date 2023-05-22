@@ -7,10 +7,10 @@ class DNAAminoAcidsTable extends StatefulWidget {
   const DNAAminoAcidsTable({Key? key}) : super(key: key);
 
   @override
-  DNAAminoAcidsTableState createState() => DNAAminoAcidsTableState();
+ _DNAAminoAcidsTableState createState() => _DNAAminoAcidsTableState();
 }
 
-class DNAAminoAcidsTableState extends State<DNAAminoAcidsTable> {
+class _DNAAminoAcidsTableState extends State<DNAAminoAcidsTable> {
   @override
   Widget build(BuildContext context) {
     List<List<Object>> acids = aminoAcids.map((acid) {

@@ -87,10 +87,10 @@ class GCWCoords extends StatefulWidget {
       : super(key: key);
 
   @override
-  GCWCoordsState createState() => GCWCoordsState();
+ _GCWCoordsState createState() => _GCWCoordsState();
 }
 
-class GCWCoordsState extends State<GCWCoords> {  
+class _GCWCoordsState extends State<GCWCoords> {  
   BaseCoordinate _currentCoords = defaultBaseCoordinate;
   bool _hasSetCoords = false;
 

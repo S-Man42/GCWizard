@@ -20,10 +20,10 @@ class MapPointEditor extends StatefulWidget {
   MapPointEditor({Key? key, required this.mapPoint, required this.lengthUnit}) : super(key: key);
 
   @override
-  MapPointEditorState createState() => MapPointEditorState();
+ _MapPointEditorState createState() => _MapPointEditorState();
 }
 
-class MapPointEditorState extends State<MapPointEditor> {
+class _MapPointEditorState extends State<MapPointEditor> {
   late TextEditingController _nameController;
 
   var _currentRadius = _DEFAULT_RADIUS;

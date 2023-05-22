@@ -12,10 +12,10 @@ class ADFGVX extends StatefulWidget {
   const ADFGVX({Key? key}) : super(key: key);
 
   @override
-  ADFGVXState createState() => ADFGVXState();
+ _ADFGVXState createState() => _ADFGVXState();
 }
 
-class ADFGVXState extends State<ADFGVX> {
+class _ADFGVXState extends State<ADFGVX> {
   late TextEditingController _inputController;
   late TextEditingController _substitutionKeyController;
   late TextEditingController _transpositionKeyController;

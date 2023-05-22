@@ -8,10 +8,10 @@ class Licenses extends StatefulWidget {
   const Licenses({Key? key}) : super(key: key);
 
   @override
-  LicensesState createState() => LicensesState();
+ _LicensesState createState() => _LicensesState();
 }
 
-class LicensesState extends State<Licenses> {
+class _LicensesState extends State<Licenses> {
   @override
   Widget build(BuildContext context) {
     var content = Column(children: [

@@ -10,10 +10,10 @@ class Bacon extends StatefulWidget {
   const Bacon({Key? key}) : super(key: key);
 
   @override
-  BaconState createState() => BaconState();
+ _BaconState createState() => _BaconState();
 }
 
-class BaconState extends State<Bacon> {
+class _BaconState extends State<Bacon> {
   late TextEditingController _controller;
 
   var _currentInput = '';

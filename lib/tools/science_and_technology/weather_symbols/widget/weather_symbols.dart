@@ -12,10 +12,10 @@ class WeatherSymbols extends StatefulWidget {
   const WeatherSymbols({Key? key}) : super(key: key);
 
   @override
-  WeatherSymbolsState createState() => WeatherSymbolsState();
+ _WeatherSymbolsState createState() => _WeatherSymbolsState();
 }
 
-class WeatherSymbolsState extends State<WeatherSymbols> {
+class _WeatherSymbolsState extends State<WeatherSymbols> {
   var _currentWeatherSymbolClazz = 'ww';
 
   final Map<String, SymbolTableData> _data = {};

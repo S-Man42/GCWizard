@@ -13,10 +13,10 @@ class UrwigoHashBreaker extends StatefulWidget {
   const UrwigoHashBreaker({Key? key}) : super(key: key);
 
   @override
-  UrwigoHashBreakerState createState() => UrwigoHashBreakerState();
+ _UrwigoHashBreakerState createState() => _UrwigoHashBreakerState();
 }
 
-class UrwigoHashBreakerState extends State<UrwigoHashBreaker> {
+class _UrwigoHashBreakerState extends State<UrwigoHashBreaker> {
   var _currentInput = 0;
   String _currentOutputNumeric = '29735'; // Value for initial Hash == 0;
   String _currentOutputAlphabetical = 'bgqv'; // Value for initial Hash == 0;

@@ -424,7 +424,7 @@ class SymbolReplacerImage {
         symbol.bmp.height,
       );
 
-      var color = Image.ColorRgb8(Colors.blue.red, Colors.blue.green, Colors.blue.blue);
+      var color = Image.ColorRgb8(Colors.orangeAccent.red, Colors.orangeAccent.green, Colors.orangeAccent.blue);
       Image.drawRect(bmp, x1: rect.left, y1: rect.top, x2: rect.right, y2: rect.bottom, color: color);
       Image.drawRect(bmp, x1: rect.left - 1, y1: rect.top - 1, x2: rect.right + 1,y2:  rect.bottom + 1, color: color);
     }
@@ -953,7 +953,7 @@ Future<List<Map<String, SymbolReplacerSymbolData>>?> searchSymbolTable(
   imageTmp._similarityLevel = 0;
   imageTmp._gap = image._gap;
 
-  sendAsyncPort?.send(DoubleText('progress', 0.0));
+  sendAsyncPort?.send(DoubleText(PROGRESS, 0.0));
 
   for (var symbolTable in compareSymbols) {
     imageTmp.resetGroupText();
@@ -966,7 +966,7 @@ Future<List<Map<String, SymbolReplacerSymbolData>>?> searchSymbolTable(
       }
     }
     progress++;
-    sendAsyncPort?.send(DoubleText('progress', progress / compareSymbols.length));
+    sendAsyncPort?.send(DoubleText(PROGRESS, progress / compareSymbols.length));
   }
   return Future.value(maxPercentSymbolTable);
 }

@@ -20,10 +20,10 @@ class FormatConverter extends StatefulWidget {
   const FormatConverter({Key? key}) : super(key: key);
 
   @override
-  FormatConverterState createState() => FormatConverterState();
+ _FormatConverterState createState() => _FormatConverterState();
 }
 
-class FormatConverterState extends State<FormatConverter> {
+class _FormatConverterState extends State<FormatConverter> {
   var _currentCoords = defaultBaseCoordinate;
   List<BaseCoordinate> _currentOutputs = [];
 

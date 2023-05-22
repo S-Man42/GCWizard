@@ -11,10 +11,10 @@ class RSADCalculator extends StatefulWidget {
   const RSADCalculator({Key? key}) : super(key: key);
 
   @override
-  RSADCalculatorState createState() => RSADCalculatorState();
+ _RSADCalculatorState createState() => _RSADCalculatorState();
 }
 
-class RSADCalculatorState extends State<RSADCalculator> {
+class _RSADCalculatorState extends State<RSADCalculator> {
   String _currentE = '';
   String _currentP = '';
   String _currentQ = '';

@@ -10,10 +10,10 @@ class RSADChecker extends StatefulWidget {
   const RSADChecker({Key? key}) : super(key: key);
 
   @override
-  RSADCheckerState createState() => RSADCheckerState();
+ _RSADCheckerState createState() => _RSADCheckerState();
 }
 
-class RSADCheckerState extends State<RSADChecker> {
+class _RSADCheckerState extends State<RSADChecker> {
   String _currentD = '';
   String _currentP = '';
   String _currentQ = '';

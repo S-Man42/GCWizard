@@ -24,4 +24,13 @@ class MultiDecoderToolEsotericLanguageHohoho extends AbstractMultiDecoderTool {
               return null;
             },
             options: options);
+  @override
+  State<StatefulWidget> createState() => _MultiDecoderToolEsotericLanguageHohohoState();
+}
+
+class _MultiDecoderToolEsotericLanguageHohohoState extends State<MultiDecoderToolEsotericLanguageHohoho> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
 }

@@ -27,10 +27,10 @@ class VisualCryptography extends StatefulWidget {
   const VisualCryptography({Key? key}) : super(key: key);
 
   @override
-  VisualCryptographyState createState() => VisualCryptographyState();
+ _VisualCryptographyState createState() => _VisualCryptographyState();
 }
 
-class VisualCryptographyState extends State<VisualCryptography> {
+class _VisualCryptographyState extends State<VisualCryptography> {
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
   GCWFile? _decodeImage1;

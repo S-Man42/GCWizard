@@ -20,10 +20,10 @@ class WaypointProjection extends StatefulWidget {
   const WaypointProjection({Key? key}) : super(key: key);
 
   @override
-  WaypointProjectionState createState() => WaypointProjectionState();
+ _WaypointProjectionState createState() => _WaypointProjectionState();
 }
 
-class WaypointProjectionState extends State<WaypointProjection> {
+class _WaypointProjectionState extends State<WaypointProjection> {
   var _currentCoords = defaultBaseCoordinate;
   var _currentDistance = 0.0;
   var _currentBearing = defaultDoubleText;

@@ -20,13 +20,25 @@ class MultiDecoderToolRotation extends AbstractMultiDecoderTool {
             onDecode: (String input, String key) {
               return Rotator().rotate(input, checkIntFormatOrDefaultOption(MDT_INTERNALNAMES_ROTATION, options, MDT_ROTATION_OPTION_KEY));
             },
-            options: options,
-            configurationWidget: MultiDecoderToolConfiguration(widgets: {
-              MDT_ROTATION_OPTION_KEY: GCWABCSpinner(
-                value: checkIntFormatOrDefaultOption(MDT_INTERNALNAMES_ROTATION, options, MDT_ROTATION_OPTION_KEY),
-                onChanged: (value) {
-                  options[MDT_ROTATION_OPTION_KEY] = value;
-                },
-              )
-            }));
+            options: options);
+  @override
+  State<StatefulWidget> createState() => _MultiDecoderToolRotationState();
+}
+
+class _MultiDecoderToolRotationState extends State<MultiDecoderToolRotation> {
+  @override
+  Widget build(BuildContext context) {
+    return createMultiDecoderToolConfiguration(
+        context, {
+      MDT_ROTATION_OPTION_KEY: GCWABCSpinner(
+        value: checkIntFormatOrDefaultOption(MDT_INTERNALNAMES_ROTATION, widget.options, MDT_ROTATION_OPTION_KEY),
+        onChanged: (value) {
+          setState(() {
+            widget.options[MDT_ROTATION_OPTION_KEY] = value;
+          });
+        },
+      )
+    }
+    );
+  }
 }

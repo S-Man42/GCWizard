@@ -21,10 +21,10 @@ class CrossBearing extends StatefulWidget {
   const CrossBearing({Key? key}) : super(key: key);
 
   @override
-  CrossBearingState createState() => CrossBearingState();
+ _CrossBearingState createState() => _CrossBearingState();
 }
 
-class CrossBearingState extends State<CrossBearing> {
+class _CrossBearingState extends State<CrossBearing> {
   LatLng? _currentIntersection;
 
   var _currentCoords1 = defaultBaseCoordinate;
