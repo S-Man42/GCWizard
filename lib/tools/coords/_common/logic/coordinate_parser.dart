@@ -8,7 +8,7 @@ var regexEnd = '';
 //wholeString == true: The whole text must be a valid coord - for var coords
 List<BaseCoordinate> parseCoordinates(String text, {bool wholeString = false}) {
   var coords = <BaseCoordinate>[];
-  coordinateFormats.first()
+
   try {
     BaseCoordinate? coord = DMS.parse(text, wholeString: wholeString);
     if (coord != null) coords.add(coord);

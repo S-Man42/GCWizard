@@ -31,7 +31,7 @@ import 'package:gc_wizard/utils/constants.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 
-//abstract class BaseCoordFormatKey{}
+abstract class BaseCoordFormatKey{}
 
 String _dmmAndDMSNumberFormat([int precision = 6]) {
   var formatString = '00.';
@@ -67,14 +67,6 @@ int getCoordinateSignFromString(String text, bool isLatitude) {
   return _sign;
 }
 
-List<BaseCoordinateParse> coordinateFormats = [
-DEC
-];
-
-mixin BaseCoordinateParse {
-  static BaseCoordinate? parse(String input) {return null;}
-}
-
 abstract class BaseCoordinate {
   late double _latitude;
   late double _longitude;
@@ -86,8 +78,6 @@ abstract class BaseCoordinate {
     _latitude = latitude ?? defaultCoordinate.latitude;
     _longitude = longitude ?? defaultCoordinate.longitude;
   }
-
-  // BaseCoordinate? parse(String input);
 
   // TODO: Make this null-safe. Some inheriting CoordFormats may return null here. This shall be avoided.
   LatLng? toLatLng() {
@@ -102,7 +92,7 @@ abstract class BaseCoordinate {
 
 abstract class BaseCoordinateWithSubtypes extends BaseCoordinate {}
 
-class DEC extends BaseCoordinate with BaseCoordinateParse {
+class DEC extends BaseCoordinate {
   double latitude;
   double longitude;
 
@@ -119,12 +109,7 @@ class DEC extends BaseCoordinate with BaseCoordinateParse {
     return latLonToDEC(coord);
   }
 
-  @override
-  static DEC? parse(String input) { //, {bool wholeString = false}
-    return parseDEC(input, wholeString: false);
-  }
-
-  DEC? parseExtended(String input, {bool wholeString = false}) {
+  static DEC? parse(String input, {bool wholeString = false}) {
     return parseDEC(input, wholeString: wholeString);
   }
 
