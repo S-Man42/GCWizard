@@ -2,7 +2,6 @@ import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 
 import 'Controller.dart';
-//http://localhost:4044/?sortIndex=2&sortAsc=0&offset=100&pageSize=50
 
 class WebParameter {
   String title;

@@ -13,6 +13,7 @@ class ReverseAPIMapper extends APIMapper {
     return reverse(input);
   }
 
+  /// convert doLogic output to map
   @override
   Map<String, String> toMap(Object result) {
     return <String, String>{enumName(WEBPARAMETER.result.toString()) : result.toString()};

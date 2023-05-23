@@ -19,6 +19,7 @@ abstract class APIMapper {
     return '';
   }
 
+  /// convert doLogic output to map
   Map<String, String> toMap(Object result);
 
   Map<String, String> calculate() {
