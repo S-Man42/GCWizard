@@ -13,10 +13,10 @@ class GaussWeberTelegraph extends StatefulWidget {
   const GaussWeberTelegraph({Key? key, this.mode = GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL}) : super(key: key);
 
   @override
-  GaussWeberTelegraphState createState() => GaussWeberTelegraphState();
+ _GaussWeberTelegraphState createState() => _GaussWeberTelegraphState();
 }
 
-class GaussWeberTelegraphState extends State<GaussWeberTelegraph> {
+class _GaussWeberTelegraphState extends State<GaussWeberTelegraph> {
   late TextEditingController _decodeController;
   late TextEditingController _encodeController;
 

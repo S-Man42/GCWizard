@@ -7,10 +7,10 @@ class Recycling extends StatefulWidget {
   const Recycling({Key? key}) : super(key: key);
 
   @override
-  RecyclingState createState() => RecyclingState();
+ _RecyclingState createState() => _RecyclingState();
 }
 
-class RecyclingState extends State<Recycling> {
+class _RecyclingState extends State<Recycling> {
   @override
   Widget build(BuildContext context) {
     List<List<dynamic>> data = RECYCLING_CODES.entries.map((entry) {

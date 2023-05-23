@@ -15,10 +15,10 @@ class DTMF extends StatefulWidget {
   const DTMF({Key? key}) : super(key: key);
 
   @override
-  DTMFState createState() => DTMFState();
+ _DTMFState createState() => _DTMFState();
 }
 
-class DTMFState extends State<DTMF> {
+class _DTMFState extends State<DTMF> {
   late TextEditingController _encodeController;
   late TextEditingController _decodeController;
 

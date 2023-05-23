@@ -11,10 +11,10 @@ class PhysicalConstants extends StatefulWidget {
   const PhysicalConstants({Key? key}) : super(key: key);
 
   @override
-  PhysicalConstantsState createState() => PhysicalConstantsState();
+ _PhysicalConstantsState createState() => _PhysicalConstantsState();
 }
 
-class PhysicalConstantsState extends State<PhysicalConstants> {
+class _PhysicalConstantsState extends State<PhysicalConstants> {
   var _currentConstant = PHYSICAL_CONSTANTS.entries.first.key;
 
   final List<String> _constants = [];

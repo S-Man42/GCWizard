@@ -10,10 +10,10 @@ class EnclosedAreas extends StatefulWidget {
   const EnclosedAreas({Key? key}) : super(key: key);
 
   @override
-  EnclosedAreasState createState() => EnclosedAreasState();
+ _EnclosedAreasState createState() => _EnclosedAreasState();
 }
 
-class EnclosedAreasState extends State<EnclosedAreas> {
+class _EnclosedAreasState extends State<EnclosedAreas> {
   var _currentInput = '';
   var _with4On = GCWSwitchPosition.left;
   var _currentSimpleMode = GCWSwitchPosition.left;

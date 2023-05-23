@@ -14,10 +14,10 @@ class Abaddon extends StatefulWidget {
   const Abaddon({Key? key}) : super(key: key);
 
   @override
-  AbaddonState createState() => AbaddonState();
+ _AbaddonState createState() => _AbaddonState();
 }
 
-class AbaddonState extends State<Abaddon> {
+class _AbaddonState extends State<Abaddon> {
   late TextEditingController _inputController;
   late TextEditingController _aController;
   late TextEditingController _bController;

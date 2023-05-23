@@ -16,10 +16,10 @@ class BundeswehrTalkingBoardObfuscation extends StatefulWidget {
   const BundeswehrTalkingBoardObfuscation({Key? key}) : super(key: key);
 
   @override
-  BundeswehrTalkingBoardObfuscationState createState() => BundeswehrTalkingBoardObfuscationState();
+ _BundeswehrTalkingBoardObfuscationState createState() => _BundeswehrTalkingBoardObfuscationState();
 }
 
-class BundeswehrTalkingBoardObfuscationState extends State<BundeswehrTalkingBoardObfuscation> {
+class _BundeswehrTalkingBoardObfuscationState extends State<BundeswehrTalkingBoardObfuscation> {
   late TextEditingController _encodeController;
   late TextEditingController _decodeController;
   late TextEditingController _numeralCodeCustomXaxis;

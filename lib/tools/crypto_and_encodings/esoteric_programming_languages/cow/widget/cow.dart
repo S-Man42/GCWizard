@@ -10,10 +10,10 @@ class Cow extends StatefulWidget {
   const Cow({Key? key}) : super(key: key);
 
   @override
-  CowState createState() => CowState();
+ _CowState createState() => _CowState();
 }
 
-class CowState extends State<Cow> {
+class _CowState extends State<Cow> {
   late TextEditingController _textController;
   late TextEditingController _inputController;
 

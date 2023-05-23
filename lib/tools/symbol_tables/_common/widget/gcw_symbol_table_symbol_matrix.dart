@@ -39,10 +39,10 @@ class GCWSymbolTableSymbolMatrix extends StatefulWidget {
       : super(key: key);
 
   @override
-  GCWSymbolTableSymbolMatrixState createState() => GCWSymbolTableSymbolMatrixState();
+ _GCWSymbolTableSymbolMatrixState createState() => _GCWSymbolTableSymbolMatrixState();
 }
 
-class GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> {
+class _GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> {
   late bool _currentShowOverlayedSymbols;
   late Iterable<Map<String, SymbolData>> _imageData;
 

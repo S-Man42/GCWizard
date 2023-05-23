@@ -19,10 +19,10 @@ class VariableCoordinateFormulas extends StatefulWidget {
   const VariableCoordinateFormulas({Key? key}) : super(key: key);
 
   @override
-  VariableCoordinateFormulasState createState() => VariableCoordinateFormulasState();
+ _VariableCoordinateFormulasState createState() => _VariableCoordinateFormulasState();
 }
 
-class VariableCoordinateFormulasState extends State<VariableCoordinateFormulas> {
+class _VariableCoordinateFormulasState extends State<VariableCoordinateFormulas> {
 
   @override
   void initState() {

@@ -16,10 +16,10 @@ class Polybios extends StatefulWidget {
   const Polybios({Key? key}) : super(key: key);
 
   @override
-  PolybiosState createState() => PolybiosState();
+ _PolybiosState createState() => _PolybiosState();
 }
 
-class PolybiosState extends State<Polybios> {
+class _PolybiosState extends State<Polybios> {
   late TextEditingController _inputController;
   late TextEditingController _keyController;
   late TextEditingController _alphabetController;

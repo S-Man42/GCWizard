@@ -109,10 +109,10 @@ class Grid extends StatefulWidget {
   const Grid({Key? key}) : super(key: key);
 
   @override
-  GridState createState() => GridState();
+ _GridState createState() => _GridState();
 }
 
-class GridState extends State<Grid> {
+class _GridState extends State<Grid> {
   var _currentColor = _GridPaintColor.RED;
   var _currentGridConfiguration = 'grid_boxes_10x10';
 

@@ -31,10 +31,10 @@ class AlphabetValues extends StatefulWidget {
   const AlphabetValues({Key? key}) : super(key: key);
 
   @override
-  AlphabetValuesState createState() => AlphabetValuesState();
+ _AlphabetValuesState createState() => _AlphabetValuesState();
 }
 
-class AlphabetValuesState extends State<AlphabetValues> {
+class _AlphabetValuesState extends State<AlphabetValues> {
   late List<Alphabet> _alphabets;
 
   late TextEditingController _encodeController;
@@ -72,9 +72,8 @@ class AlphabetValuesState extends State<AlphabetValues> {
           key: toStringOrDefault(alphabet['key'], ''),
           name: toStringOrNull(alphabet['name']),
           type: AlphabetType.CUSTOM,
-          alphabet: Map<String, String>.from(alphabet['alphabet'] is Map<String, String>
-                                              ? alphabet['alphabet'] as Map<String, String>
-                                              : {}));
+          alphabet: toStringMapOrNull(asJsonMapOrNull(alphabet['alphabet'])) ?? {}
+      );
     }).toList());
 
     _currentAlphabetKey = Prefs.getString(PREFERENCE_ALPHABET_DEFAULT_ALPHABET);

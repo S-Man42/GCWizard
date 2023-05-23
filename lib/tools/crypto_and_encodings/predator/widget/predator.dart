@@ -18,10 +18,10 @@ class Predator extends StatefulWidget {
   const Predator({Key? key}) : super(key: key);
 
   @override
-  PredatorState createState() => PredatorState();
+ _PredatorState createState() => _PredatorState();
 }
 
-class PredatorState extends State<Predator> {
+class _PredatorState extends State<Predator> {
   String _currentEncodeInput = '';
   late TextEditingController _encodeController;
 

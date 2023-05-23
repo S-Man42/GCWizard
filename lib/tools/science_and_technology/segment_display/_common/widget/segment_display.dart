@@ -21,10 +21,10 @@ class SegmentDisplay extends StatefulWidget {
   const SegmentDisplay({Key? key, required this.type}) : super(key: key);
 
   @override
-  SegmentDisplayState createState() => SegmentDisplayState();
+ _SegmentDisplayState createState() => _SegmentDisplayState();
 }
 
-class SegmentDisplayState extends State<SegmentDisplay> {
+class _SegmentDisplayState extends State<SegmentDisplay> {
   late TextEditingController _inputEncodeController;
   late TextEditingController _inputDecodeController;
   var _currentEncodeInput = '';

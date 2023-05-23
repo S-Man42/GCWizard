@@ -11,10 +11,10 @@ abstract class AbstractBase extends StatefulWidget {
   const AbstractBase({Key? key, required this.encode, required this.decode}) : super(key: key);
 
   @override
-  AbstractBaseState createState() => AbstractBaseState();
+ _AbstractBaseState createState() => _AbstractBaseState();
 }
 
-class AbstractBaseState extends State<AbstractBase> {
+class _AbstractBaseState extends State<AbstractBase> {
   late TextEditingController _inputController;
 
   String _currentInput = '';

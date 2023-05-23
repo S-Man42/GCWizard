@@ -12,10 +12,10 @@ class RailFence extends StatefulWidget {
   const RailFence({Key? key}) : super(key: key);
 
   @override
-  RailFenceState createState() => RailFenceState();
+ _RailFenceState createState() => _RailFenceState();
 }
 
-class RailFenceState extends State<RailFence> {
+class _RailFenceState extends State<RailFence> {
   String _currentInput = '';
   var _currentKey = 2;
   String _currentPassword = '';

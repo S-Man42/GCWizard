@@ -25,10 +25,10 @@ class SaveRestoreSettings extends StatefulWidget {
   const SaveRestoreSettings({Key? key}) : super(key: key);
 
   @override
-  SaveRestoreSettingsState createState() => SaveRestoreSettingsState();
+ _SaveRestoreSettingsState createState() => _SaveRestoreSettingsState();
 }
 
-class SaveRestoreSettingsState extends State<SaveRestoreSettings> {
+class _SaveRestoreSettingsState extends State<SaveRestoreSettings> {
   @override
   Widget build(BuildContext context) {
     return Column(

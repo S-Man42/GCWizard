@@ -23,10 +23,10 @@ class EdelcrantzTelegraph extends StatefulWidget {
   const EdelcrantzTelegraph({Key? key}) : super(key: key);
 
   @override
-  EdelcrantzTelegraphState createState() => EdelcrantzTelegraphState();
+ _EdelcrantzTelegraphState createState() => _EdelcrantzTelegraphState();
 }
 
-class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
+class _EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
   var _currentEncodeInput = '';
   late TextEditingController _encodeInputController;
 
