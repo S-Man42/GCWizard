@@ -843,6 +843,34 @@ class Geohash extends BaseCoordinate {
   }
 }
 
+class Geohashing extends BaseCoordinate {
+  DateTime date;
+  LatLng location;
+
+
+  Geohashing(this.date, this.location) {
+    _format = CoordinateFormat(CoordinateFormatKey.GEOHASHING);
+  }
+
+  @override
+  LatLng? toLatLng() {
+    return geohashingToLatLon(this);
+  }
+
+  static Geohash fromLatLon(LatLng coord, [int geohashLength = 14]) {
+    return latLonToGeohash(coord, geohashLength);
+  }
+
+  static Geohashing? parse(String input) {
+    return parseGeohash(input);
+  }
+
+  @override
+  String toString() {
+    return text;
+  }
+}
+
 class GeoHex extends BaseCoordinate {
   String text;
 

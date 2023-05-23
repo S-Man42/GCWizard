@@ -14,6 +14,7 @@ class _GCWCoordsGeohashing extends StatefulWidget {
 class _GCWCoordsGeohashingState extends State<_GCWCoordsGeohashing> {
   late TextEditingController _EastingController;
   late TextEditingController _NorthingController;
+  late DateTime _currentDate;
 
   var _currentEasting = defaultDoubleText;
   var _currentNorthing = defaultDoubleText;
@@ -23,6 +24,10 @@ class _GCWCoordsGeohashingState extends State<_GCWCoordsGeohashing> {
   @override
   void initState() {
     super.initState();
+
+    DateTime now = DateTime.now();
+    _currentDate = DateTime(now.year, now.month, now.day);
+
     _EastingController = TextEditingController(text: _currentEasting.text);
     _NorthingController = TextEditingController(text: _currentNorthing.text);
   }
@@ -48,15 +53,14 @@ class _GCWCoordsGeohashingState extends State<_GCWCoordsGeohashing> {
     }
 
     return Column(children: <Widget>[
-      GCW(
-          hintText: i18n(context, 'coords_formatconverter_easting'),
-          controller: _EastingController,
-          onChanged: (ret) {
-            setState(() {
-              _currentEasting = ret;
-              _setCurrentValueAndEmitOnChange();
-            });
-          }),
+      GCWDatePicker(
+          date: _currentDate,
+          onChanged: (value) {
+          setState(() {
+            _currentDate = value;
+          });
+        },
+      ),
       GCWDoubleTextField(
           hintText: i18n(context, 'coords_formatconverter_northing'),
           controller: _NorthingController,
