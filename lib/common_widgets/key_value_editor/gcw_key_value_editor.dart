@@ -81,7 +81,7 @@ class GCWKeyValueEditor extends StatefulWidget {
 class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
 
   var keyValueEditorControl = _KeyValueEditorControl();
-  final GlobalKey<GCWKeyValueNewEntryState> _newEntryState = GlobalKey<GCWKeyValueNewEntryState>();
+  final GlobalKey<_GCWKeyValueNewEntryState> _newEntryState = GlobalKey<_GCWKeyValueNewEntryState>();
 
   @override
   Widget build(BuildContext context) {

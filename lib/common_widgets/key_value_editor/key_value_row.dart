@@ -29,10 +29,10 @@ class GCWKeyValueRow extends StatefulWidget {
      : super(key: key);
 
  @override
- GCWKeyValueRowState createState() => GCWKeyValueRowState();
+ _GCWKeyValueRowState createState() => _GCWKeyValueRowState();
 }
 
-class GCWKeyValueRowState extends State<GCWKeyValueRow> {
+class _GCWKeyValueRowState extends State<GCWKeyValueRow> {
   late TextEditingController _keyController;
   late TextEditingController _valueController;
   late FocusNode _focusNodeEditValue;
