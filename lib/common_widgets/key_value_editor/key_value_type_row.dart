@@ -30,10 +30,10 @@ class GCWKeyValueTypeRow extends GCWKeyValueRow {
   );
 
   @override
-  GCWKeyValueRowState createState() => GCWKeyValueTypeRowState();
+  _GCWKeyValueRowState createState() => _GCWKeyValueTypeRowState();
 }
 
-class GCWKeyValueTypeRowState extends GCWKeyValueRowState {
+class _GCWKeyValueTypeRowState extends _GCWKeyValueRowState {
   var _currentType = FormulaValueType.FIXED;
 
   @override

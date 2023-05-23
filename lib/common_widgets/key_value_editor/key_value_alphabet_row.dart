@@ -30,10 +30,10 @@ class GCWKeyValueAlphabetRow extends GCWKeyValueRow {
   );
 
   @override
-  GCWKeyValueRowState createState() => GCWKeyValueAlphabetRowState();
+  _GCWKeyValueRowState createState() => _GCWKeyValueAlphabetRowState();
 }
 
-class GCWKeyValueAlphabetRowState extends GCWKeyValueRowState {
+class _GCWKeyValueAlphabetRowState extends _GCWKeyValueRowState {
 
   @override
   void _removeEntry() {
