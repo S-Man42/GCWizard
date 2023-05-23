@@ -1,5 +1,6 @@
+import 'package:gc_wizard/tools/crypto_and_encodings/reverse/logic/reverse.dart';
+
 import 'APIMapper.dart';
-import '../../../lib/tools/crypto_and_encodings/reverse/logic/reverse.dart';
 
 class ReverseAPIMapper extends APIMapper {
 

@@ -1,5 +1,6 @@
+import 'package:gc_wizard/tools/crypto_and_encodings/rotation/logic/rotator.dart';
+
 import 'APIMapper.dart';
-import '../../../lib/tools/crypto_and_encodings/rotation/logic/rotator.dart';
 
 class RotatorAPIMapper extends APIMapper {
 

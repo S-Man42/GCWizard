@@ -1,22 +1,19 @@
 import 'dart:convert';
 
 import 'APIMapper.dart';
+import 'ReverseAPIMapper.dart';
 import 'RotatorAPIMapper.dart';
 import 'gcw_server.dart';
 
 String? request(WebParameter parameter) {
-  APIMapper? myAPIMapper;
+  APIMapper? apiMapper;
   switch  (parameter.title) {
-    case 'rotate': myAPIMapper = RotatorAPIMapper(); break;
-    case 'reverse': myAPIMapper = RotatorAPIMapper(); break;
+    case 'rotate': apiMapper = RotatorAPIMapper(); break;
+    case 'reverse': apiMapper = ReverseAPIMapper(); break;
   }
 
-  if (myAPIMapper == null) return null;
-  myAPIMapper.setParams(parameter.arguments);
+  if (apiMapper == null) return null;
+  apiMapper.setParams(parameter.arguments);
 
- // x = myAPIMapper.Logic()
- //  myAPIMapper.safety(x);
-
-
-  return jsonEncode(myAPIMapper.calculate());
+  return jsonEncode(apiMapper.calculate());
 }
