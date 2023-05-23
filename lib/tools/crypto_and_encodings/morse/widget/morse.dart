@@ -15,7 +15,7 @@ class Morse extends StatefulWidget {
   const Morse({Key? key}) : super(key: key);
 
   @override
-  _MorseState createState() => _MorseState();
+ _MorseState createState() => _MorseState();
 }
 
 class _MorseState extends State<Morse> {

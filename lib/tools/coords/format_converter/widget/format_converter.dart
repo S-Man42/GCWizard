@@ -20,7 +20,7 @@ class FormatConverter extends StatefulWidget {
   const FormatConverter({Key? key}) : super(key: key);
 
   @override
-  _FormatConverterState createState() => _FormatConverterState();
+ _FormatConverterState createState() => _FormatConverterState();
 }
 
 class _FormatConverterState extends State<FormatConverter> {
@@ -78,10 +78,10 @@ class _FormatConverterState extends State<FormatConverter> {
       return _currentAllOutput;
     } else {
       return GCWCoordsOutput(
-          outputs: _currentOutputs,
-          points: _currentOutputs.map((element) {
-            return GCWMapPoint(point: element.toLatLng()!, coordinateFormat: _currentOutputFormat);
-          }).toList()
+        outputs: _currentOutputs,
+        points: _currentOutputs.map((element) {
+          return GCWMapPoint(point: element.toLatLng()!, coordinateFormat: _currentOutputFormat);
+        }).toList()
       );
     }
   }
@@ -104,18 +104,18 @@ class _FormatConverterState extends State<FormatConverter> {
     List<List<String>> children =_currentCoords.toLatLng() == null
         ? []
         : allCoordinateFormatMetadata.map((CoordinateFormatMetadata coordFormat) {
-      var format = CoordinateFormat(coordFormat.type);
-      var name = i18n(context, coordFormat.name, ifTranslationNotExists: coordFormat.name);
-      if (format.subtype != null) {
-        var subtypeMetadata = coordinateFormatMetadataByKey(format.subtype!);
-        var subtypeName = i18n(context, subtypeMetadata.name);
-        if (subtypeName.isNotEmpty) {
-          name += '\n' + subtypeName;
-        }
-      }
+            var format = CoordinateFormat(coordFormat.type);
+            var name = i18n(context, coordFormat.name, ifTranslationNotExists: coordFormat.name);
+            if (format.subtype != null) {
+              var subtypeMetadata = coordinateFormatMetadataByKey(format.subtype!);
+              var subtypeName = i18n(context, subtypeMetadata.name);
+              if (subtypeName.isNotEmpty) {
+                name += '\n' + subtypeName;
+              }
+            }
 
-      return [name, formatCoordOutput(_currentCoords.toLatLng()!, format, ellipsoid)];
-    }).toList();
+            return [name, formatCoordOutput(_currentCoords.toLatLng()!, format, ellipsoid)];
+          }).toList();
 
     return GCWDefaultOutput(child: GCWColumnedMultilineOutput( data: children));
   }

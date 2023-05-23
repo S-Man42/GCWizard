@@ -11,7 +11,7 @@ class RotationGeneral extends StatefulWidget {
   const RotationGeneral({Key? key}) : super(key: key);
 
   @override
-  _RotationGeneralState createState() => _RotationGeneralState();
+ _RotationGeneralState createState() => _RotationGeneralState();
 }
 
 class _RotationGeneralState extends State<RotationGeneral> {

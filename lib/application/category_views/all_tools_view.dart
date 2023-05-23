@@ -334,7 +334,7 @@ class _MainViewState extends State<MainView> {
           context,
           i18n(context, 'common_support_title'),
           i18n(context, 'common_support_text', parameters: [Prefs.getInt(PREFERENCE_APP_COUNT_OPENED)]),
-              () => launchUrl(Uri.parse(i18n(context, 'common_support_link'))),
+          () => launchUrl(Uri.parse(i18n(context, 'common_support_link'))),
         );
       }
     });
@@ -407,10 +407,10 @@ class _MainViewState extends State<MainView> {
   Widget _buildTitleAndSearchTextField() {
     return _isSearching
         ? GCWTextField(
-        autofocus: true,
-        controller: _searchController,
-        icon: Icon(Icons.search, color: themeColors().mainFont()),
-        hintText: i18n(context, 'common_search') + '...')
+            autofocus: true,
+            controller: _searchController,
+            icon: Icon(Icons.search, color: themeColors().mainFont()),
+            hintText: i18n(context, 'common_search') + '...')
         : Text(i18n(context, 'common_app_title'));
   }
 

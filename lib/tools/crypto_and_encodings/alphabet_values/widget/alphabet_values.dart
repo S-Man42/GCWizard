@@ -31,7 +31,7 @@ class AlphabetValues extends StatefulWidget {
   const AlphabetValues({Key? key}) : super(key: key);
 
   @override
-  _AlphabetValuesState createState() => _AlphabetValuesState();
+ _AlphabetValuesState createState() => _AlphabetValuesState();
 }
 
 class _AlphabetValuesState extends State<AlphabetValues> {
@@ -159,14 +159,14 @@ class _AlphabetValuesState extends State<AlphabetValues> {
     if (_currentCustomizedAlphabet!.containsKey(letter)) {
       showGCWDialog(context, i18n(context, 'alphabetvalues_edit_mode_customize_addletter_replace_title'),
           Text(i18n(context, 'alphabetvalues_edit_mode_customize_addletter_replace_text', parameters: [letter])), [
-            GCWDialogButton(
-                text: i18n(context, 'alphabetvalues_edit_mode_customize_addletter_replace'),
-                onPressed: () {
-                  setState(() {
-                    _currentCustomizedAlphabet!.addAll({letter: value});
-                  });
-                })
-          ]);
+        GCWDialogButton(
+            text: i18n(context, 'alphabetvalues_edit_mode_customize_addletter_replace'),
+            onPressed: () {
+              setState(() {
+                _currentCustomizedAlphabet!.addAll({letter: value});
+              });
+            })
+      ]);
     } else {
       setState(() {
         if (adjust) {
@@ -242,21 +242,21 @@ class _AlphabetValuesState extends State<AlphabetValues> {
       children: <Widget>[
         _currentMode == GCWSwitchPosition.left
             ? GCWTextField(
-          controller: _encodeController,
-          onChanged: (text) {
-            setState(() {
-              _currentEncodeInput = text;
-            });
-          },
-        )
+                controller: _encodeController,
+                onChanged: (text) {
+                  setState(() {
+                    _currentEncodeInput = text;
+                  });
+                },
+              )
             : GCWIntegerListTextField(
-          controller: _decodeController,
-          onChanged: (values) {
-            setState(() {
-              _currentDecodeInput = values;
-            });
-          },
-        ),
+                controller: _decodeController,
+                onChanged: (values) {
+                  setState(() {
+                    _currentDecodeInput = values;
+                  });
+                },
+              ),
         Column(
           children: [
             Row(
@@ -367,13 +367,13 @@ class _AlphabetValuesState extends State<AlphabetValues> {
               flex: isCustomAlphabet ? 2 : 1,
               child: isCustomAlphabet
                   ? Container(
-                padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
-                child: GCWButton(
-                    text: i18n(context, 'alphabetvalues_edit_mode_customize_deletealphabet'),
-                    onPressed: () {
-                      _removeAlphabet();
-                    }),
-              )
+                      padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
+                      child: GCWButton(
+                          text: i18n(context, 'alphabetvalues_edit_mode_customize_deletealphabet'),
+                          onPressed: () {
+                            _removeAlphabet();
+                          }),
+                    )
                   : Container(),
             ),
             Expanded(
@@ -399,7 +399,7 @@ class _AlphabetValuesState extends State<AlphabetValues> {
             valueInputFormatters: [GCWOnlyDigitsAndCommaInputFormatter()],
             alphabetInstertButtonLabel: i18n(context, 'alphabetvalues_edit_mode_customize_addletter'),
             alphabetAddAndAdjustLetterButtonLabel:
-            i18n(context, 'alphabetvalues_edit_mode_customize_addandadjustletter'),
+                i18n(context, 'alphabetvalues_edit_mode_customize_addandadjustletter'),
             onAddEntry: _addNewLetter,
             onAddEntry2: _addNewLetter2,
             keyValueMap: _currentCustomizedAlphabet,
