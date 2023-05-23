@@ -13,8 +13,6 @@ import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:prefs/prefs.dart';
 import 'package:provider/provider.dart';
 
-import 'application/main_menu/deep_link.dart';
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -55,25 +53,13 @@ class App extends StatelessWidget {
               home: MainView(), // Warning says, it must be "const", but in that case theme changes (theme color or font size) will not set properly
               navigatorKey: NavigationService.instance.navigationKey,
               routes: {
-                  // Required extra way because normal Navigator.of(context) way
-                  // crashes because of some NULL problems on TextSelectionControls menu
-                  'clipboard_editor': (BuildContext context) => GCWTool(
-                      tool: const GCWClipboardEditor(), toolName: i18n(context, 'clipboardeditor_title'), id: '')
-                },
-              onGenerateRoute: (RouteSettings settings) {
-                // Cast the arguments to the correct
-                // type: ScreenArguments.
-                final args = parseUrl(settings);
-                if (args != null) {
-                  var route = createRoute(context, args);
-
-                  return route;
-                } else {
-                  return null;
-                }
+                // Required extra way because normal Navigator.of(context) way
+                // crashes because of some NULL problems on TextSelectionControls menu
+                'clipboard_editor': (BuildContext context) => GCWTool(
+                    tool: const GCWClipboardEditor(), toolName: i18n(context, 'clipboardeditor_title'), id: '')
+              },
+            );
           });
-        });
-      })
-    );
+        }));
   }
 }

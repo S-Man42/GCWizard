@@ -5,18 +5,17 @@ import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_toolbar.dart';
-import 'package:gc_wizard/common_widgets/gcw_web_statefulwidget.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/morse/logic/morse.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/text_widget_utils.dart';
 
-class Morse extends GCWWebStatefulWidget {
-  Morse({Key? key}) : super(key: key);
+class Morse extends StatefulWidget {
+  const Morse({Key? key}) : super(key: key);
 
   @override
- _MorseState createState() => _MorseState();
+  _MorseState createState() => _MorseState();
 }
 
 class _MorseState extends State<Morse> {
@@ -30,17 +29,6 @@ class _MorseState extends State<Morse> {
   @override
   void initState() {
     super.initState();
-
-    if (widget.hasWebParameter()) {
-      if (widget.getWebParameter(WEBPARAMETER.modeencode) != null) {
-        _currentMode = GCWSwitchPosition.left;
-      }
-      if (_currentMode == GCWSwitchPosition.left) {
-        _currentEncodeInput = widget.getWebParameter(WEBPARAMETER.input) ?? _currentEncodeInput;
-      } else {
-        _currentDecodeInput = widget.getWebParameter(WEBPARAMETER.input) ?? _currentDecodeInput;
-      }
-    }
 
     _encodeController = TextEditingController(text: _currentEncodeInput);
     _decodeController = TextEditingController(text: _currentDecodeInput);
@@ -69,21 +57,21 @@ class _MorseState extends State<Morse> {
         _buildMorseButtons(context),
         _currentMode == GCWSwitchPosition.left
             ? GCWTextField(
-                controller: _encodeController,
-                onChanged: (text) {
-                  setState(() {
-                    _currentEncodeInput = text;
-                  });
-                },
-              )
+          controller: _encodeController,
+          onChanged: (text) {
+            setState(() {
+              _currentEncodeInput = text;
+            });
+          },
+        )
             : GCWTextField(
-                controller: _decodeController,
-                onChanged: (text) {
-                  setState(() {
-                    _currentDecodeInput = text;
-                  });
-                },
-              ),
+          controller: _decodeController,
+          onChanged: (text) {
+            setState(() {
+              _currentDecodeInput = text;
+            });
+          },
+        ),
         GCWTextDivider(text: i18n(context, 'common_output')),
         _buildOutput(context)
       ],

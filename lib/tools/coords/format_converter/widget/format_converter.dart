@@ -6,7 +6,6 @@ import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords_forma
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coords_output.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
-import 'package:gc_wizard/common_widgets/gcw_web_statefulwidget.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
@@ -17,11 +16,11 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 
-class FormatConverter extends GCWWebStatefulWidget {
-  FormatConverter({Key? key}) : super(key: key);
+class FormatConverter extends StatefulWidget {
+  const FormatConverter({Key? key}) : super(key: key);
 
   @override
- _FormatConverterState createState() => _FormatConverterState();
+  _FormatConverterState createState() => _FormatConverterState();
 }
 
 class _FormatConverterState extends State<FormatConverter> {
@@ -30,32 +29,6 @@ class _FormatConverterState extends State<FormatConverter> {
 
   var _currentOutputFormat = defaultCoordinateFormat;
   Widget _currentAllOutput = const GCWDefaultOutput();
-
-  @override
-  void initState() {
-    super.initState();
-
-    // if (widget.hasWebParameter()) {
-    //   var formatString = widget.getWebParameter(WebParameter.fromformat);
-    //   if (formatString != null) {
-    //     try {
-    //       var format = coordinateFormatMetadataByPersistenceKey(formatString);
-    //       if (format != null) _currentCoords.format = formatString;
-    //     } catch (e) {}
-    //   }
-    //   formatString = widget.getWebParameter(WebParameter.toformat);
-    //   if (formatString != null) {
-    //     try {
-    //       if (formatString == keyCoordsALL)
-    //         _currentOutputFormat = {'format': formatString};
-    //       else {
-    //         var format = coordinateFormatMetadataByPersistenceKey(formatString);
-    //         if (format != null) _currentOutputFormat = {'format': formatString};
-    //       }
-    //     } catch (e) {}
-    //   }
-    // }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -105,10 +78,10 @@ class _FormatConverterState extends State<FormatConverter> {
       return _currentAllOutput;
     } else {
       return GCWCoordsOutput(
-        outputs: _currentOutputs,
-        points: _currentOutputs.map((element) {
-          return GCWMapPoint(point: element.toLatLng()!, coordinateFormat: _currentOutputFormat);
-        }).toList()
+          outputs: _currentOutputs,
+          points: _currentOutputs.map((element) {
+            return GCWMapPoint(point: element.toLatLng()!, coordinateFormat: _currentOutputFormat);
+          }).toList()
       );
     }
   }
@@ -131,18 +104,18 @@ class _FormatConverterState extends State<FormatConverter> {
     List<List<String>> children =_currentCoords.toLatLng() == null
         ? []
         : allCoordinateFormatMetadata.map((CoordinateFormatMetadata coordFormat) {
-            var format = CoordinateFormat(coordFormat.type);
-            var name = i18n(context, coordFormat.name, ifTranslationNotExists: coordFormat.name);
-            if (format.subtype != null) {
-              var subtypeMetadata = coordinateFormatMetadataByKey(format.subtype!);
-              var subtypeName = i18n(context, subtypeMetadata.name);
-              if (subtypeName.isNotEmpty) {
-                name += '\n' + subtypeName;
-              }
-            }
+      var format = CoordinateFormat(coordFormat.type);
+      var name = i18n(context, coordFormat.name, ifTranslationNotExists: coordFormat.name);
+      if (format.subtype != null) {
+        var subtypeMetadata = coordinateFormatMetadataByKey(format.subtype!);
+        var subtypeName = i18n(context, subtypeMetadata.name);
+        if (subtypeName.isNotEmpty) {
+          name += '\n' + subtypeName;
+        }
+      }
 
-            return [name, formatCoordOutput(_currentCoords.toLatLng()!, format, ellipsoid)];
-          }).toList();
+      return [name, formatCoordOutput(_currentCoords.toLatLng()!, format, ellipsoid)];
+    }).toList();
 
     return GCWDefaultOutput(child: GCWColumnedMultilineOutput( data: children));
   }

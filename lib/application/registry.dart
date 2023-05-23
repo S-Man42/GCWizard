@@ -443,7 +443,7 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'algol',
     ]),
-    GCWTool(tool: AlphabetValues(), id: 'alphabetvalues', categories: const [
+    GCWTool(tool: const AlphabetValues(), id: 'alphabetvalues', categories: const [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
       'alphabetvalues',
@@ -871,7 +871,7 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWTool(
         tool: const MorseSelection(), id: 'morse_selection', categories: const [ToolCategory.CRYPTOGRAPHY], searchKeys: const []),
-    GCWTool(tool: MultiDecoder(), id: 'multidecoder', categories: const [
+    GCWTool(tool: const MultiDecoder(), id: 'multidecoder', categories: const [
       ToolCategory.GENERAL_CODEBREAKERS
     ], searchKeys: const [
       'multidecoder',
@@ -1519,7 +1519,7 @@ void initializeRegistry(BuildContext context) {
           'coordinates_distancebearing',
         ]),
     GCWTool(
-        tool: FormatConverter(),
+        tool: const FormatConverter(),
         id: 'coords_formatconverter',
         iconPath: 'assets/icons/coords/icon_format_converter.png',
         categories: const [
@@ -2273,7 +2273,7 @@ void initializeRegistry(BuildContext context) {
     ]),
 
     //Morse Selection ****************************************************************
-    GCWTool(tool: Morse(), id: 'morse', searchKeys: const [
+    GCWTool(tool: const Morse(), id: 'morse', searchKeys: const [
       'morse',
     ]),
 
@@ -2979,7 +2979,7 @@ void initializeRegistry(BuildContext context) {
       'rotation',
       'rotation_rot123',
     ]),
-    GCWTool(tool: RotationGeneral(), id: 'rotation_general', searchKeys: const [
+    GCWTool(tool: const RotationGeneral(), id: 'rotation_general', searchKeys: const [
       'rotation',
     ]),
 
