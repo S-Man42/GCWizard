@@ -443,7 +443,7 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'algol',
     ]),
-    GCWTool(tool: const AlphabetValues(), id: 'alphabetvalues', categories: const [
+    GCWTool(tool: AlphabetValues(), id: 'alphabetvalues', categories: const [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
       'alphabetvalues',
@@ -2273,7 +2273,7 @@ void initializeRegistry(BuildContext context) {
     ]),
 
     //Morse Selection ****************************************************************
-    GCWTool(tool: const Morse(), id: 'morse', searchKeys: const [
+    GCWTool(tool: Morse(), id: 'morse', searchKeys: const [
       'morse',
     ]),
 
@@ -2979,7 +2979,7 @@ void initializeRegistry(BuildContext context) {
       'rotation',
       'rotation_rot123',
     ]),
-    GCWTool(tool: const RotationGeneral(), id: 'rotation_general', searchKeys: const [
+    GCWTool(tool: RotationGeneral(), id: 'rotation_general', searchKeys: const [
       'rotation',
     ]),
 
