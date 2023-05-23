@@ -1,7 +1,7 @@
 part of 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/multi_decoder.dart';
 
-class MultiDecoder extends StatefulWidget {
-  const MultiDecoder({Key? key}) : super(key: key);
+class MultiDecoder extends GCWWebStatefulWidget {
+  MultiDecoder({Key? key}) : super(key: key);
 
   @override
  _MultiDecoderState createState() => _MultiDecoderState();
@@ -21,6 +21,11 @@ class _MultiDecoderState extends State<MultiDecoder> {
   @override
   void initState() {
     super.initState();
+
+    if (widget.hasWebParameter()) {
+      _currentInput = widget.getWebParameter(WEBPARAMETER.input) ?? _currentInput;
+    }
+
     _controller = TextEditingController(text: _currentInput);
 
     refreshMultiDecoderTools();

@@ -871,7 +871,7 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWTool(
         tool: const MorseSelection(), id: 'morse_selection', categories: const [ToolCategory.CRYPTOGRAPHY], searchKeys: const []),
-    GCWTool(tool: const MultiDecoder(), id: 'multidecoder', categories: const [
+    GCWTool(tool: MultiDecoder(), id: 'multidecoder', categories: const [
       ToolCategory.GENERAL_CODEBREAKERS
     ], searchKeys: const [
       'multidecoder',

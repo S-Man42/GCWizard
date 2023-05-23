@@ -591,7 +591,7 @@ void _initStaticToolList() {
       className(const MusicNotes()),
       className(const Navajo()),
       className(const NumberSequenceSelection()),
-      className(const MultiDecoder()),
+      className(MultiDecoder()),
       className(const NumeralBases()),
       className(const NumeralWordsSelection()),
       className(const OhlsenTelegraph()),
