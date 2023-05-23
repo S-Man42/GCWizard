@@ -1,18 +1,21 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _GCWCoordsMaidenhead extends StatefulWidget {
-  final Function onChanged;
-  final BaseCoordinates coordinates;
+  final void Function(Maidenhead?) onChanged;
+  final Maidenhead coordinates;
+  final bool isDefault;
 
-  const _GCWCoordsMaidenhead({Key key, this.onChanged, this.coordinates}) : super(key: key);
+  const _GCWCoordsMaidenhead({Key? key, required this.onChanged, required this.coordinates, this.isDefault = true}) : super(key: key);
 
   @override
   _GCWCoordsMaidenheadState createState() => _GCWCoordsMaidenheadState();
 }
 
 class _GCWCoordsMaidenheadState extends State<_GCWCoordsMaidenhead> {
-  TextEditingController _controller;
+  late TextEditingController _controller;
   var _currentCoord = '';
+
+  bool _initialized = false;
 
   @override
   void initState() {
@@ -28,13 +31,13 @@ class _GCWCoordsMaidenheadState extends State<_GCWCoordsMaidenhead> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.coordinates != null) {
-      var maidenhead = widget.coordinates is Maidenhead
-          ? widget.coordinates as Maidenhead
-          : Maidenhead.fromLatLon(widget.coordinates.toLatLng());
+    if (!widget.isDefault && !_initialized) {
+      var maidenhead = widget.coordinates;
       _currentCoord = maidenhead.text;
 
       _controller.text = _currentCoord;
+
+      _initialized = true;
     }
 
     return Column(children: <Widget>[
@@ -51,7 +54,7 @@ class _GCWCoordsMaidenheadState extends State<_GCWCoordsMaidenhead> {
     ]);
   }
 
-  _setCurrentValueAndEmitOnChange() {
+  void _setCurrentValueAndEmitOnChange() {
     var maidenhead = _currentCoord;
     if (maidenhead.length % 2 == 1) maidenhead = maidenhead.substring(0, maidenhead.length - 1);
 

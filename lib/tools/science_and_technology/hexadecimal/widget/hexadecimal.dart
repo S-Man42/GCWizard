@@ -7,15 +7,17 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
 
 class Hexadecimal extends StatefulWidget {
+  const Hexadecimal({Key? key}) : super(key: key);
+
   @override
-  HexadecimalState createState() => HexadecimalState();
+ _HexadecimalState createState() => _HexadecimalState();
 }
 
-class HexadecimalState extends State<Hexadecimal> {
+class _HexadecimalState extends State<Hexadecimal> {
   var _currentDecimalValue = '';
   var _currentHexValue = '';
-  var _hexController;
-  var _decimalController;
+  late TextEditingController _hexController;
+  late TextEditingController _decimalController;
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
@@ -69,7 +71,7 @@ class HexadecimalState extends State<Hexadecimal> {
     );
   }
 
-  _buildOutput() {
+  String _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       return _currentDecimalValue.split(' ').map((value) => convertBase(value, 10, 16)).join(' ');
     } else {

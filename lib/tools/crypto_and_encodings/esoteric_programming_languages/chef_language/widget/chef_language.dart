@@ -10,18 +10,20 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/logic/chef_language.dart';
 
 class Chef extends StatefulWidget {
+  const Chef({Key? key}) : super(key: key);
+
   @override
-  ChefState createState() => ChefState();
+ _ChefState createState() => _ChefState();
 }
 
-class ChefState extends State<Chef> {
-  var _recipeController;
-  var _inputController;
-  var _titleController;
-  var _remarkController;
-  var _timeController;
-  var _temperatureController;
-  var _outputController;
+class _ChefState extends State<Chef> {
+  late TextEditingController _recipeController;
+  late TextEditingController _inputController;
+  late TextEditingController _titleController;
+  late TextEditingController _remarkController;
+  late TextEditingController _timeController;
+  late TextEditingController _temperatureController;
+  late TextEditingController _outputController;
 
   var _currentRecipe = '';
   var _currentInput = '';
@@ -32,11 +34,11 @@ class ChefState extends State<Chef> {
   var _currentOutput = '';
 
   var TimeInputFormatter = WrapperForMaskTextInputFormatter(mask: '#' * 3, // allow 3 characters input
-      filter: {"#": RegExp(r'[0-9]')});
+      filter: {"#": RegExp(r'\d')});
   var TemperatureInputFormatter = WrapperForMaskTextInputFormatter(mask: '#' * 3, // allow 3 characters input
-      filter: {"#": RegExp(r'[0-9]')});
+      filter: {"#": RegExp(r'\d')});
   var DigitSpacesInputFormatter = WrapperForMaskTextInputFormatter(mask: '#' * 1000, // allow 1000 characters input
-      filter: {"#": RegExp(r'[0-9] ')});
+      filter: {"#": RegExp(r'\d ')});
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left; // interpret
   GCWSwitchPosition _currentLanguage = GCWSwitchPosition.right; // english
@@ -68,6 +70,7 @@ class ChefState extends State<Chef> {
 
   @override
   Widget build(BuildContext context) {
+    _currentLanguage = _defaultLanguage(context);
     return Column(
       children: <Widget>[
         GCWTwoOptionsSwitch(
@@ -193,27 +196,29 @@ class ChefState extends State<Chef> {
     if (_currentLanguage == GCWSwitchPosition.left) language = 'DEU';
     if (_currentMode == GCWSwitchPosition.right) {
       // generate chef
-      if (_currentTitle == '') {
-        output = buildOutputText(['chef_error_structure_recipe', 'chef_error_structure_recipe_missing_title']);
-      } else if (_currentOutput == '')
-        output = buildOutputText(['chef_error_structure_recipe', 'chef_error_structure_recipe_missing_output']);
-      else
+      if (_currentTitle.isEmpty) {
+        output = chefBuildOutputText(context, ['chef_error_structure_recipe', 'chef_error_structure_recipe_missing_title']);
+      } else if (_currentOutput.isEmpty) {
+        output = chefBuildOutputText(context, ['chef_error_structure_recipe', 'chef_error_structure_recipe_missing_output']);
+      } else {
         output = generateChef(language, _currentTitle, _currentRemark, _currentTime, _currentTemperature,
             _currentOutput, _auxilaryRecipes);
+      }
     } else {
       // interpret chef
       if (isValid(_currentInput)) {
         try {
-          output = buildOutputText(interpretChef(language, _currentRecipe, _currentInput));
+          output = chefBuildOutputText(context, interpretChef(language, _currentRecipe, _currentInput));
         } catch (e) {
-          output = buildOutputText([
+          output = chefBuildOutputText(context, [
             'common_programming_error_runtime',
             'chef_error_runtime_exception',
             'chef_error_structure_recipe_missing_title'
           ]);
         }
-      } else
-        output = buildOutputText(['common_programming_error_runtime', 'chef_error_runtime_invalid_input']);
+      } else {
+        output = chefBuildOutputText(context, ['common_programming_error_runtime', 'chef_error_runtime_invalid_input']);
+      }
     }
     return GCWOutputText(
       text: output.trim(),
@@ -221,14 +226,24 @@ class ChefState extends State<Chef> {
     );
   }
 
-  String buildOutputText(List<String> outputList) {
-    String output = '';
-    outputList.forEach((element) {
-      if (element != null) if (element.startsWith('chef_') || element.startsWith('common_programming')) {
-        output = output + i18n(context, element) + '\n';
-      } else
-        output = output + element + '\n';
-    });
-    return output;
+  GCWSwitchPosition _defaultLanguage(BuildContext context) {
+    final Locale appLocale = Localizations.localeOf(context);
+    if (appLocale == const Locale('de')) {
+      return GCWSwitchPosition.left;
+    } else {
+      return GCWSwitchPosition.right;
+    }
   }
+}
+
+String chefBuildOutputText(BuildContext context, List<String> outputList) {
+  String output = '';
+  for (var element in outputList) {
+    if (element.startsWith('chef_') || element.startsWith('common_programming')) {
+      output = output + i18n(context, element) + '\n';
+    } else {
+      output = output + element + '\n';
+    }
+  }
+  return output;
 }

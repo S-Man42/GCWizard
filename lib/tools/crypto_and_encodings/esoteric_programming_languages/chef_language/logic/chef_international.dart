@@ -114,7 +114,7 @@ final RegExp _CHEF_MeasureDry = RegExp(r'^g(r)?$|^kg$|^pinch(es)?$|^prise(n)$');
 final RegExp _CHEF_MeasureLiquid = RegExp(r'^ml$|^l$|^dash(es)?$|^drop(s)?$|^spritzer$|^tropfen$');
 final RegExp _CHEF_MeasureElse = RegExp(r'^cup(s)?$|^tasse(n)?$|^teaspoon(s)?$|^tablespoon(s)?$|^teeloeffel$|^essloeffel$');
 
-final Map _CHEF_Messages = {
+const Map<String, Map<String, String>> _CHEF_Messages = {
   'DEU': {
     "chef_error_structure_recipe": "chef_error_structure_recipe",
     "chef_error_structure_subrecipe": "chef_error_structure_subrecipe",
@@ -227,19 +227,19 @@ final Map _CHEF_Messages = {
   }
 };
 
-final List<String> _CHEF_liquidMeasuresDEU = ['ml', 'l', 'Spritzer', 'Tropfen'];
+const List<String> _CHEF_liquidMeasuresDEU = ['ml', 'l', 'Spritzer', 'Tropfen'];
 
-final List<String> _CHEF_liquidMeasuresENG = ['ml', 'l', 'dashes', 'drops'];
+const List<String> _CHEF_liquidMeasuresENG = ['ml', 'l', 'dashes', 'drops'];
 
-final List<String> _CHEF_dryMeasuresDEU = ['g', 'kg', 'Prisen'];
+const List<String> _CHEF_dryMeasuresDEU = ['g', 'kg', 'Prisen'];
 
-final List<String> _CHEF_dryMeasuresENG = ['g', 'kg', 'pinches'];
+const List<String> _CHEF_dryMeasuresENG = ['g', 'kg', 'pinches'];
 
-final List<String> _CHEF_measuresDEU = ['Teelöffel', 'Esslöffel', 'Tasse'];
+const List<String> _CHEF_measuresDEU = ['Teelöffel', 'Esslöffel', 'Tasse'];
 
-final List<String> _CHEF_measuresENG = ['teaspoons', 'tablespoons', 'cups'];
+const List<String> _CHEF_measuresENG = ['teaspoons', 'tablespoons', 'cups'];
 
-final List<String> _CHEF_itemListLiquidENG = [
+const List<String> _CHEF_itemListLiquidENG = [
   'milk',
   'water',
   'oil',
@@ -295,7 +295,7 @@ final List<String> _CHEF_itemListLiquidENG = [
   'lillet'
 ];
 
-final List<String> _CHEF_itemListLiquidDEU = [
+const List<String> _CHEF_itemListLiquidDEU = [
   'Milch',
   'Wasser',
   'Öl',
@@ -351,7 +351,7 @@ final List<String> _CHEF_itemListLiquidDEU = [
   'Lillet'
 ];
 
-final List<String> _CHEF_itemListDryENG = [
+const List<String> _CHEF_itemListDryENG = [
   'flour',
   'white sugar',
   'salt',
@@ -404,7 +404,7 @@ final List<String> _CHEF_itemListDryENG = [
   'banana chips'
 ];
 
-final List<String> _CHEF_itemListDryDEU = [
+const List<String> _CHEF_itemListDryDEU = [
   'Mehl',
   'weißer Zucker',
   'Salz',
@@ -455,102 +455,113 @@ final List<String> _CHEF_itemListDryDEU = [
   'Bananenchips'
 ];
 
-final List<List<String>> _CHEF_itemListAuxiliaryDEU = [
+const List<List<String>> _CHEF_itemListAuxiliaryDEU = [
   ['fluffige ', 'leichte ', 'cremige ', 'schwere ', 'luftige '],
   ['bittere ', 'sauere ', 'süße ', 'scharfe ', 'salzige '],
   ['Honig', 'Senf', 'Ketchup', 'Curry', 'Preiselbeeren'],
   ['soße', 'dressings', 'toppings', 'chips', 'relish']
 ];
 
-final List<List<String>> _CHEF_itemListAuxiliaryENG = [
+const List<List<String>> _CHEF_itemListAuxiliaryENG = [
   ['fluffy ', 'light ', 'creamy ', 'heavy ', 'uncongested '],
   ['bitter ', 'sour ', 'sweet ', 'hot ', 'salty '],
   ['honey', 'mustard', 'ketchup', 'curry', 'cranberry'],
   ['sauce', 'dressing', 'topping', 'chips', 'relish']
 ];
 
-String _getText(_CHEF_textId id, String parameter, language) {
+String _getText(_CHEF_textId id, String parameter, String language) {
   var text = '';
   switch (id) {
     case _CHEF_textId.Put:
-      if (language == 'ENG')
+      if (language == 'ENG') {
         text = 'Put %1 into the mixing bowl.';
-      else
+      } else {
         text = '%1 in die Schüssel geben.';
+      }
       break;
     case _CHEF_textId.Add:
-      if (language == 'ENG')
+      if (language == 'ENG') {
         text = 'Add %1 into the mixing bowl.';
-      else
+      } else {
         text = '%1 dazugeben.';
+      }
       break;
     case _CHEF_textId.Combine:
-      if (language == 'ENG')
+      if (language == 'ENG') {
         text = 'Combine %1 into mixing bowl.';
-      else
+      } else {
         text = '%1 kombinieren.';
+      }
       break;
     case _CHEF_textId.Ingredients:
-      if (language == 'ENG')
+      if (language == 'ENG') {
         text = 'Ingredients.';
-      else
+      } else {
         text = 'Zutaten:';
+      }
       break;
     case _CHEF_textId.Cooking_time:
-      if (language == 'ENG')
+      if (language == 'ENG') {
         text = 'Cooking time: %1 minutes.';
-      else
+      } else {
         text = 'Garzeit: %1 Minuten.';
+      }
       break;
     case _CHEF_textId.Pre_heat_oven:
-      if (language == 'ENG')
+      if (language == 'ENG') {
         text = 'Pre-heat oven to %1 degrees Celsius.';
-      else
+      } else {
         text = 'Ofen auf %1 Grad Celsius vorheizen.';
+      }
       break;
     case _CHEF_textId.Method:
-      if (language == 'ENG')
+      if (language == 'ENG') {
         text = 'Method.';
-      else
+      } else {
         text = 'Zubereitung:';
+      }
       break;
     case _CHEF_textId.Liquefy:
-      if (language == 'ENG')
+      if (language == 'ENG') {
         text = 'Liquefy %1.';
-      else
+      } else {
         text = '%1 zerlassen.';
+      }
       break;
     case _CHEF_textId.Liquefy_contents:
-      if (language == 'ENG')
+      if (language == 'ENG') {
         text = 'Liquefy contents of the mixing bowl.';
-      else
+      } else {
         text = 'Inhalt der Schüssel auf dem Stövchen erhitzen.';
+      }
       break;
     case _CHEF_textId.Pour:
-      if (language == 'ENG')
+      if (language == 'ENG') {
         text = 'Pour contents of the mixing bowl into the baking dish.';
-      else
+      } else {
         text = 'Schüssel in eine Servierschale stürzen.';
+      }
       break;
     case _CHEF_textId.Serves:
-      if (language == 'ENG')
+      if (language == 'ENG') {
         text = 'Serves 1.';
-      else
+      } else {
         text = 'Portionen: 1.';
+      }
       break;
     case _CHEF_textId.Serve_with:
-      if (language == 'ENG')
+      if (language == 'ENG') {
         text = 'Serve with %1.';
-      else
+      } else {
         text = 'Serviere mit %1.';
-      break;
+      }
       break;
     case _CHEF_textId.Clean:
-      if (language == 'ENG')
+      if (language == 'ENG') {
         text = 'Clean %1 mixing bowl.';
-      else
+      } else {
         text = '%1 Schüssel abwaschen.';
-      break;
+      }
       break;
   }
 

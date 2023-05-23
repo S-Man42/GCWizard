@@ -6,15 +6,15 @@ class _MultiDecoderConfiguration extends StatefulWidget {
 }
 
 class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> {
-  TextEditingController _editingToolNameController;
+  late TextEditingController _editingToolNameController;
 
-  int _currentChosenTool;
+  int? _currentChosenTool;
   String _editingToolName = '';
 
-  int _currentEditId;
+  int? _currentEditId;
 
-  List<String> _sortedToolRegistry;
-  List<AbstractMultiDecoderTool> mdtTools;
+  List<String> _sortedToolRegistry = [];
+  List<AbstractMultiDecoderTool> mdtTools = [];
 
   @override
   void initState() {
@@ -31,7 +31,7 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
     super.dispose();
   }
 
-  _nameExists(name) {
+  bool _nameExists(String name) {
     return mdtTools.indexWhere((tool) => tool.name == name) >= 0;
   }
 
@@ -47,21 +47,21 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
     return name;
   }
 
-  _addNewTool() {
-    var chosenInternalName = _sortedToolRegistry[_currentChosenTool];
+  void _addNewTool() {
+    var chosenInternalName =  _currentChosenTool != null ? _sortedToolRegistry[_currentChosenTool!] : '';
     var name = _createName(chosenInternalName);
 
     var nameOccurrences = mdtTools.where((tool) => tool.name == name).length;
     if (nameOccurrences > 0) name = '$name ${nameOccurrences + 1}';
 
-    var tool = model.MultiDecoderToolEntity(
+    var tool = MultiDecoderToolEntity(
       name,
       chosenInternalName,
     );
 
     var mdtTool = _multiDecoderToolToGCWMultiDecoderTool(context, tool);
     tool.options = mdtTool.options.entries.map((option) {
-      return model.MultiDecoderToolOption(option.key, option.value);
+      return MultiDecoderToolOption(option.key, option.value);
     }).toList();
 
     _currentEditId = insertMultiDecoderTool(tool);
@@ -71,34 +71,33 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
     mdtTools.insert(0, _multiDecoderToolToGCWMultiDecoderTool(context, tool));
   }
 
-  _updateTool(AbstractMultiDecoderTool tool) {
-    var multiDecoderTool = model.findMultiDecoderToolById(tool.id);
+  void _updateTool(AbstractMultiDecoderTool tool) {
+    var multiDecoderTool = findMultiDecoderToolById(tool.id);
     multiDecoderTool.name = tool.name;
     multiDecoderTool.options = tool.options.entries.map((option) {
-      return model.MultiDecoderToolOption(option.key, option.value);
+      return MultiDecoderToolOption(option.key, option.value);
     }).toList();
 
     updateMultiDecoderTool(multiDecoderTool);
   }
 
-  _deleteTool(int id) {
+  void _deleteTool(int id) {
     deleteMultiDecoderTool(id);
     mdtTools.removeWhere((tool) => tool.id == id);
   }
 
-  _clearTools() {
+  void _clearTools() {
     clearMultiDecoderTools();
     mdtTools.clear();
   }
 
-  _refreshMDTTools() {
-    mdtTools = model.multiDecoderTools.map((mdtTool) {
+  void _refreshMDTTools() {
+    mdtTools = multiDecoderTools.map((mdtTool) {
       return _multiDecoderToolToGCWMultiDecoderTool(context, mdtTool);
     }).toList();
-    mdtTools.removeWhere((mdtTool) => mdtTool == null);
   }
 
-  _moveUp(int id) {
+  void _moveUp(int id) {
     var oldIndex = moveMultiDecoderToolUp(id);
     if (oldIndex > 0) {
       var mdtTool = mdtTools.removeAt(oldIndex);
@@ -106,7 +105,7 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
     }
   }
 
-  _moveDown(int id) {
+  void _moveDown(int id) {
     var oldIndex = moveMultiDecoderToolDown(id);
     if (oldIndex < mdtTools.length - 1) {
       var mdtTool = mdtTools.removeAt(oldIndex);
@@ -116,15 +115,17 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
 
   @override
   Widget build(BuildContext context) {
-    _refreshMDTTools();
+    if (mdtTools.isEmpty) {
+      _refreshMDTTools();
 
-    if (_sortedToolRegistry == null) {
-      _sortedToolRegistry = List.from(_mdtToolsRegistry);
-      _sortedToolRegistry.sort((a, b) {
-        return i18n(context, a).compareTo(i18n(context, b));
-      });
+      if (_sortedToolRegistry.isEmpty) {
+        _sortedToolRegistry = List.from(_mdtToolsRegistry);
+        _sortedToolRegistry.sort((a, b) {
+          return i18n(context, a).compareTo(i18n(context, b));
+        });
 
-      _currentChosenTool = _sortedToolRegistry.indexOf(MDT_INTERNALNAMES_ROTATION);
+        _currentChosenTool = _sortedToolRegistry.indexOf(MDT_INTERNALNAMES_ROTATION);
+      }
     }
 
     return Column(
@@ -146,8 +147,9 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
         Row(children: [
           Expanded(
             child: Container(
-                child: GCWDropDown(
-                  value: _currentChosenTool,
+                padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
+                child: GCWDropDown<int>(
+                  value: _currentChosenTool ?? -1,
                   onChanged: (value) {
                     setState(() {
                       _currentChosenTool = value;
@@ -166,19 +168,18 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
                       })
                       .values
                       .toList(),
-                ),
-                padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN)),
+                )),
           ),
           GCWIconButton(
             icon: Icons.add,
             iconColor: _currentEditId == null ? null : themeColors().inActive(),
-            onPressed: _currentEditId == null
-                ? () {
-                    setState(() {
-                      _addNewTool();
-                    });
-                  }
-                : null,
+            onPressed: () {
+                if (_currentEditId == null) {
+                  setState(() {
+                    _addNewTool();
+                  });
+                }
+              }
           ),
         ]),
         GCWTextDivider(
@@ -189,7 +190,7 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
     );
   }
 
-  _buildToollist() {
+  Widget _buildToollist() {
     var odd = true;
     var rows = mdtTools.map((tool) {
       var row = Row(
@@ -197,43 +198,44 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
           Expanded(
               child: _currentEditId == tool.id
                   ? Container(
+                      padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
                       child: Column(children: [
                         Row(
                           children: [
-                            Expanded(child: GCWText(text: i18n(context, 'multidecoder_configuration_name')), flex: 1),
+                            Expanded(flex: 1, child: GCWText(text: i18n(context, 'multidecoder_configuration_name'))),
                             Expanded(
+                                flex: 3,
                                 child: GCWTextField(
                                   controller: _editingToolNameController,
                                   onChanged: (value) {
                                     _editingToolName = value;
                                   },
-                                ),
-                                flex: 3)
+                                ))
                           ],
                         ),
-                        tool.configurationWidget ?? Container()
-                      ]),
-                      padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN))
+                        tool
+                        // tool.configurationWidget ?? Container()
+                      ]))
                   : Column(
                       children: [
                         GCWText(text: tool.name),
                         Container(
+                          padding: const EdgeInsets.only(left: DEFAULT_DESCRIPTION_MARGIN),
                           child: GCWText(
                             text: tool.options.entries.map((entry) {
-                              var value = entry.value;
+                              var value = entry.value.toString();
 
                               if (tool.internalToolName == MDT_INTERNALNAMES_COORDINATEFORMATS) {
-                                value = getCoordinateFormatByKey(entry.value).name;
+                                value = coordinateFormatMetadataByPersistenceKey(value)?.name ?? UNKNOWN_ELEMENT;
                               } else if ([MDT_INTERNALNAMES_BASE, MDT_INTERNALNAMES_BCD]
                                   .contains(tool.internalToolName)) {
                                 value += '_title';
                               }
 
-                              return '${i18n(context, entry.key)}: ${i18n(context, value.toString()) ?? value}';
+                              return '${i18n(context, entry.key)}: ${i18n(context, value.toString(), ifTranslationNotExists: value)}';
                             }).join('\n'),
                             style: gcwDescriptionTextStyle(),
                           ),
-                          padding: EdgeInsets.only(left: DEFAULT_DESCRIPTION_MARGIN),
                         )
                       ],
                     )),
@@ -243,7 +245,7 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
                   ? GCWIconButton(
                       icon: Icons.check,
                       onPressed: () {
-                        if (_editingToolName.length > 0) {
+                        if (_editingToolName.isNotEmpty) {
                           tool.name = _editingToolName;
                         }
                         _updateTool(tool);
@@ -318,4 +320,16 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
       children: rows,
     );
   }
+}
+
+Column createMultiDecoderToolConfiguration(BuildContext context, Map<String, Widget> widgets) {
+  return Column(
+      children: widgets.entries.map((entry) {
+        return Row(
+          children: [
+            Expanded(flex: 1, child: GCWText(text: i18n(context, entry.key))),
+            Expanded(flex: 3, child: entry.value),
+          ],
+        );
+      }).toList());
 }

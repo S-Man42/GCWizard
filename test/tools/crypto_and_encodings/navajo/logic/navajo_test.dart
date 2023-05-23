@@ -7,12 +7,12 @@ void main() {
   String in2 =  'TWO';
   String in3 =  'BEISPIEL';
   String in4 =  'CACHE AT NORTH FIVE SUX EIGHT EAST ZERO ONE NINE';
-  String o1k =  'COMMANDING GEN<?> MILLER ATTACK BOMBER PLANE NORTH FOUR FIVE ZERO PILL BOX TWO ';
-  String o1d =  'COMMANDINGGEN<?>MILLERATTACKBOMBERPLANENORTHFOURFIVEZEROPILLBOXTWO ';
-  String o2 =  'TWO ';
-  String o3 =  'BEISPIEL ';
-  String o4k =  'CACHE AT NORTH FIVE SUX EIGHT EAST ZERO ONE NINE ';
-  String o4d =  'CACHEATNORTHFIVESUXEIGHTEASTZEROONENINE ';
+  String o1k =  'COMMANDING GEN . <?>MILLER ATTACK BOMBER PLANE NORTH FOUR FIVE ZERO PILL BOX TWO';
+  String o1d =  'COMMANDING GEN. . MILLERATTACKBOMBER PLANENORTHFOURFIVEZEROPILL BOXTWO';
+  String o2 =  'TWO';
+  String o3 =  'BEISPIEL';
+  String o4k =  'CACHE AT NORTH FIVE SUX EIGHT EAST ZERO ONE NINE';
+  String o4d =  'CACHEATNORTHFIVESUXEIGHTEASTZEROONENINE';
   // encodings from kryptografie.de
   String oK11 = 'MOASI NE-AHS-JAH NA-AS-TSO-SI NA-AS-TSO-SI WOL-LA-CHEE NESH-CHEE BE TKIN NESH-CHEE KLIZZIE  KLIZZIE DZEH NESH-CHEE .  NA-AS-TSO-SI TKIN DIBEH-YAZZIE DIBEH-YAZZIE DZEH GAH  WOL-LA-CHEE THAN-ZIE THAN-ZIE WOL-LA-CHEE MOASI KLIZZIE-YAZZIE  SHUSH NE-AHS-JAH NA-AS-TSO-SI SHUSH DZEH GAH  BI-SO-DIH DIBEH-YAZZIE WOL-LA-CHEE NESH-CHEE DZEH  NESH-CHEE NE-AHS-JAH GAH THAN-ZIE LIN  MA-E NE-AHS-JAH NO-DA-IH GAH  MA-E TKIN A-KEH-DI-GLINI DZEH  BESH-DO-TLIZ DZEH GAH NE-AHS-JAH  BI-SO-DIH TKIN DIBEH-YAZZIE DIBEH-YAZZIE  SHUSH NE-AHS-JAH AL-NA-AS-DZOH  THAN-ZIE GLOE-IH NE-AHS-JAH';
   String oK12 = 'MOASI NE-AHS-JAH NA-AS-TSO-SI NA-AS-TSO-SI WOL-LA-CHEE NESH-CHEE BE TKIN NESH-CHEE KLIZZIE KLIZZIE DZEH NESH-CHEE  NA-AS-TSO-SI TKIN DIBEH-YAZZIE DIBEH-YAZZIE DZEH GAH  WOL-LA-CHEE THAN-ZIE THAN-ZIE WOL-LA-CHEE MOASI KLIZZIE-YAZZIE  SHUSH NE-AHS-JAH NA-AS-TSO-SI SHUSH DZEH GAH BI-SO-DIH DIBEH-YAZZIE WOL-LA-CHEE NESH-CHEE DZEH  NESH-CHEE NE-AHS-JAH GAH THAN-ZIE LIN  MA-E NE-AHS-JAH NO-DA-IH GAH  MA-E TKIN A-KEH-DI-GLINI DZEH  BESH-DO-TLIZ DZEH GAH NE-AHS-JAH  BI-SO-DIH TKIN DIBEH-YAZZIE DIBEH-YAZZIE SHUSH NE-AHS-JAH AL-NA-AS-DZOH  THAN-ZIE GLOE-IH NE-AHS-JAH';
@@ -27,9 +27,8 @@ void main() {
   String oD4 = 'BA-GOSHI TSE-NILL MOASI LIN AH-JAH WOL-LA-CHEE A-WOH NESH-CHEE TLO-CHIN AH-LOSZ THAN-ZIE LIN TSA-E-DONIN-EE YEH-HES A-KEH-DI-GLINI DZEH DIBEH NO-DA-IH AL-NA-AS-DZOH AH-JAH A-CHI JEHA LIN A-WOH AH-JAH BE-LA-SANA KLESH A-WOH BESH-DO-TLIZ AH-NAH GAH A-KHA A-KHA TSAH AH-JAH A-CHIN TKIN A-CHIN DZEH';
 
   group("Navajo.decrypt:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
-      {'input' : '', 'expectedOutput' : ''},
+    List<Map<String, Object?>> _inputsToExpected = [
+      {'input' : '', 'alphabet' : true, 'expectedOutput' : ''},
 
       {'expectedOutput' : o1k, 'alphabet' : true, 'input' : oK11},
       {'expectedOutput' : o1d, 'alphabet' : true, 'input' : oD1},
@@ -41,18 +40,17 @@ void main() {
       {'expectedOutput' : o4d, 'alphabet' : true, 'input' : oD4},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeNavajo(elem['input'], elem['alphabet']);
+        var _actual = decodeNavajo(elem['input'] as String, elem['alphabet'] as bool);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Navajo.encrypt:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
-      {'input' : '', 'expectedOutput' : ''},
+    List<Map<String, Object?>> _inputsToExpected = [
+      {'input' : '', 'alphabet' : true, 'expectedOutput' : ''},
 
       {'input' : in1, 'alphabet' : true, 'expectedOutput' : oK12},
       {'input' : in2, 'alphabet' : true, 'expectedOutput' : oK2},
@@ -60,11 +58,11 @@ void main() {
       {'input' : in4, 'alphabet' : true, 'expectedOutput' : oK4},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeNavajo(elem['input'], elem['alphabet']);
-        expect(_actual, elem['expectedOutput']);
+        var _actual = decodeNavajo(encodeNavajo(elem['input'] as String, elem['alphabet'] as bool), elem['alphabet'] as bool);
+        expect(_actual, elem['input']);
       });
-    });
+    }
   });
 }

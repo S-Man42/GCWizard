@@ -9,39 +9,39 @@ import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_langua
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 
 class Brainfk extends StatefulWidget {
-  final Function interpret;
-  final Function generate;
+  final String Function(String, {String? input})? interpret;
+  final String Function(String)? generate;
 
-  const Brainfk({Key key, this.interpret, this.generate}) : super(key: key);
+  const Brainfk({Key? key, this.interpret, this.generate}) : super(key: key);
 
   @override
-  BrainfkState createState() => BrainfkState();
+ _BrainfkState createState() => _BrainfkState();
 }
 
-class BrainfkState extends State<Brainfk> {
-  var _textController;
-  var _inputController;
-  var _inputController_shiftRight;
-  var _inputController_shiftLeft;
-  var _inputController_increaseValue;
-  var _inputController_decreaseValue;
-  var _inputController_output;
-  var _inputController_input;
-  var _inputController_startLoop;
-  var _inputController_endLoop;
+class _BrainfkState extends State<Brainfk> {
+  late TextEditingController _textController;
+  late TextEditingController _inputController;
+  late TextEditingController _inputController_shiftRight;
+  late TextEditingController _inputController_shiftLeft;
+  late TextEditingController _inputController_increaseValue;
+  late TextEditingController _inputController_decreaseValue;
+  late TextEditingController _inputController_output;
+  late TextEditingController _inputController_input;
+  late TextEditingController _inputController_startLoop;
+  late TextEditingController _inputController_endLoop;
 
-  var _currentDerivate = BRAINFKDERIVATIVE_OOK;
+  BrainfkDerivatives _currentDerivate = BRAINFKDERIVATIVE_OOK;
 
-  var _currentText = '';
-  var _currentInput = '';
-  var _currentInput_shiftRight;
-  var _currentInput_shiftLeft;
-  var _currentInput_increaseValue;
-  var _currentInput_decreaseValue;
-  var _currentInput_output;
-  var _currentInput_input;
-  var _currentInput_startLoop;
-  var _currentInput_endLoop;
+  String _currentText = '';
+  String _currentInput = '';
+  String _currentInput_shiftRight = '';
+  String _currentInput_shiftLeft = '';
+  String _currentInput_increaseValue = '';
+  String _currentInput_decreaseValue = '';
+  String _currentInput_output = '';
+  String _currentInput_input = '';
+  String _currentInput_startLoop = '';
+  String _currentInput_endLoop = '';
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
   GCWSwitchPosition _currentOriginal = GCWSwitchPosition.left;
@@ -103,7 +103,7 @@ class BrainfkState extends State<Brainfk> {
         _currentOriginal == GCWSwitchPosition.left
             ? Container()
             : Column(children: <Widget>[
-                GCWDropDown(
+                GCWDropDown<BrainfkDerivatives>(
                   value: _currentDerivate,
                   onChanged: (value) {
                     setState(() {
@@ -221,18 +221,18 @@ class BrainfkState extends State<Brainfk> {
     );
   }
 
-  _calculateOutput() {
+  Object _calculateOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
-      if (_currentOriginal == GCWSwitchPosition.left)
+      if (_currentOriginal == GCWSwitchPosition.left) {
         try {
           return widget.interpret == null
               ? interpretBrainfk(_currentText, input: _currentInput)
-              : widget.interpret(_currentText, input: _currentInput);
+              : widget.interpret!(_currentText, input: _currentInput);
         } on FormatException catch (e) {
           return printErrorMessage(context, e.message);
         }
-      else {
-        if (_currentDerivate == BRAINFKDERIVATIVE_CUSTOM)
+      } else {
+        if (_currentDerivate == BRAINFKDERIVATIVE_CUSTOM) {
           try {
             return BrainfkDerivatives(
                     pointerShiftRightInstruction: _currentInput_shiftRight,
@@ -242,19 +242,21 @@ class BrainfkState extends State<Brainfk> {
                     outputInstruction: _currentInput_output,
                     inputInstruction: _currentInput_input,
                     startLoopInstruction: _currentInput_startLoop,
-                    endLoopInstruction: _currentInput_endLoop)
+                    endLoopInstruction: _currentInput_endLoop,
+            )
                 .interpretBrainfkDerivatives(_currentText, input: _currentInput);
           } catch (e) {
             return printErrorMessage(context, 'brainfk_error_customundefined');
           }
-        else
+        } else {
           return _currentDerivate.interpretBrainfkDerivatives(_currentText, input: _currentInput);
+        }
       }
     } else {
-      if (_currentOriginal == GCWSwitchPosition.left)
-        return widget.generate == null ? generateBrainfk(_currentText) : widget.generate(_currentText);
-      else {
-        if (_currentDerivate == BRAINFKDERIVATIVE_CUSTOM)
+      if (_currentOriginal == GCWSwitchPosition.left) {
+        return widget.generate == null ? generateBrainfk(_currentText) : widget.generate!(_currentText);
+      } else {
+        if (_currentDerivate == BRAINFKDERIVATIVE_CUSTOM) {
           try {
             return BrainfkDerivatives(
                     pointerShiftRightInstruction: _currentInput_shiftRight,
@@ -264,13 +266,15 @@ class BrainfkState extends State<Brainfk> {
                     outputInstruction: _currentInput_output,
                     inputInstruction: _currentInput_input,
                     startLoopInstruction: _currentInput_startLoop,
-                    endLoopInstruction: _currentInput_endLoop)
+                    endLoopInstruction: _currentInput_endLoop,
+            )
                 .generateBrainfkDerivative(_currentText);
           } catch (e) {
             return printErrorMessage(context, 'brainfk_error_customundefined');
           }
-        else
+        } else {
           return _currentDerivate.generateBrainfkDerivative(_currentText);
+        }
       }
     }
   }

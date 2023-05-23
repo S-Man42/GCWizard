@@ -8,12 +8,13 @@ void main(){
   // bool decodeModeEntireParts = true => decodeMode = false
 
     group("NumeralWords.decodeNumeralwordsEntireWordsDEU:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
 
       {'input' : 'huit dwa seize six one two eins',
         'language' : NumeralWordsLanguage.ALL,
         'decodeMode' : true,
-        'expectedOutput' : [NumeralWordsDecodeOutput('8', 'huit', 'common_language_french'),
+        'expectedOutput' : [
+          NumeralWordsDecodeOutput('8', 'huit', 'common_language_french'),
           NumeralWordsDecodeOutput('2', 'dwa', 'common_language_bulgarian'),
           NumeralWordsDecodeOutput('', '', 'common_language_polish'),
           NumeralWordsDecodeOutput('', '', 'common_language_russian'),
@@ -87,21 +88,21 @@ void main(){
       },
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
-        var _actual = decodeNumeralwords(input: removeAccents(elem['input'].toString().toLowerCase()), language: elem['language'], decodeModeWholeWords: elem['decodeMode']);
-        var length = elem['expectedOutput'].length;
+        var _actual = decodeNumeralwords(input: elem['input'] as String, language: elem['language'] as NumeralWordsLanguage, decodeModeWholeWords: elem['decodeMode'] as bool);
+        var length = (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>).length;
         for (int i = 0; i < length; i++) {
-          expect(_actual[i].number, elem['expectedOutput'][i].number);
-          expect(_actual[i].numWord, elem['expectedOutput'][i].numWord);
-          expect(_actual[i].language, elem['expectedOutput'][i].language);
+          expect(_actual[i].number, (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>)[i].number);
+          expect(_actual[i].numWord, (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>)[i].numWord);
+          expect(_actual[i].language, (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>)[i].language);
         }
       });
-    });
+    }
   });
 
   group("NumeralWords.decodeNumeralwordsEntireWordsAsParts:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
        {'input' : 'huit cinq seize sis one two eins', 'language' : NumeralWordsLanguage.ALL, 'decodeMode' : false,
          'expectedOutput' : [
            NumeralWordsDecodeOutput('8', 'huit', 'common_language_french'),
@@ -147,21 +148,21 @@ void main(){
       },
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
-        var _actual = decodeNumeralwords(input: removeAccents(elem['input'].toString().toLowerCase()), language: elem['language'], decodeModeWholeWords: elem['decodeMode']);
-        var length = elem['expectedOutput'].length;
+        var _actual = decodeNumeralwords(input: elem['input'] as String, language: elem['language'] as NumeralWordsLanguage, decodeModeWholeWords: elem['decodeMode'] as bool);
+        var length = (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>).length;
         for (int i = 0; i < length; i++) {
-          expect(_actual[i].number, elem['expectedOutput'][i].number);
-          expect(_actual[i].numWord, elem['expectedOutput'][i].numWord);
-          expect(_actual[i].language, elem['expectedOutput'][i].language);
+          expect(_actual[i].number, (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>)[i].number);
+          expect(_actual[i].numWord, (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>)[i].numWord);
+          expect(_actual[i].language, (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>)[i].language);
         }
       });
-    });
+    }
   });
 
   group("NumeralWords.decodeNumeralwordsWordParts:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'input' : 'Susi wacht einsam während Vater und Mutter zweifelnd Sand sieben. Null Bock, denkt sich Jörg. Ich lasse fünfe grade sein und kegel lieber alle Neune!',
         'language' : NumeralWordsLanguage.ALL,
         'decodeMode' : false,
@@ -327,22 +328,21 @@ void main(){
        },
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
-        var _actual = decodeNumeralwords(input: removeAccents(elem['input'].toString().toLowerCase()), language: elem['language'], decodeModeWholeWords: elem['decodeMode']);
-        var length = elem['expectedOutput'].length;
+        var _actual = decodeNumeralwords(input: elem['input'] as String, language: elem['language'] as NumeralWordsLanguage, decodeModeWholeWords: elem['decodeMode'] as bool);
+        var length = (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>).length;
         for (int i = 0; i < length; i++) {
-          print(_actual[i].number.toString()+' '+_actual[i].numWord.toString()+' '+_actual[i].language.toString());
-          expect(_actual[i].number, elem['expectedOutput'][i].number);
-          expect(_actual[i].numWord, elem['expectedOutput'][i].numWord);
-          expect(_actual[i].language, elem['expectedOutput'][i].language);
+          expect(_actual[i].number, (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>)[i].number);
+          expect(_actual[i].numWord, (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>)[i].numWord);
+          expect(_actual[i].language, (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>)[i].language);
         }
       });
-    });
+    }
   });
 
   group("NumeralWords.GC97P76:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {
         'input': 'hat nocht arat hai bir dau mann satu hamar',
         'language': NumeralWordsLanguage.ALL,
@@ -361,22 +361,22 @@ void main(){
       },
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test(
           'input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
-        var _actual = decodeNumeralwords(input: removeAccents(elem['input'].toString().toLowerCase()), language: elem['language'], decodeModeWholeWords: elem['decodeMode']);
-        var length = elem['expectedOutput'].length;
+        var _actual = decodeNumeralwords(input: removeAccents(elem['input'].toString().toLowerCase()), language: elem['language'] as NumeralWordsLanguage, decodeModeWholeWords: elem['decodeMode'] as bool);
+        var length = (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>).length;
         for (int i = 0; i < length; i++) {
-          expect(_actual[i].number, elem['expectedOutput'][i].number);
-          expect(_actual[i].numWord, elem['expectedOutput'][i].numWord);
-          expect(_actual[i].language, elem['expectedOutput'][i].language);
+          expect(_actual[i].number, (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>)[i].number);
+          expect(_actual[i].numWord, (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>)[i].numWord);
+          expect(_actual[i].language, (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>)[i].language);
         }
       });
-    });
+    }
   });
 
   group("NumeralWords.Klingon:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {// GC8J08H
         'input': "north         cha'maH-jav         cha' wa'vatlh 'ej loSmaH-Hut       chan         nineteen        pagh-wej-chorgh",
         'language': NumeralWordsLanguage.ALL,
@@ -478,22 +478,22 @@ void main(){
       },
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test(
           'input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
-        var _actual = decodeNumeralwords(input: removeAccents(elem['input'].toString().toLowerCase()), language: elem['language'], decodeModeWholeWords: elem['decodeMode']);
-        var length = elem['expectedOutput'].length;
+        var _actual = decodeNumeralwords(input: removeAccents(elem['input'].toString().toLowerCase()), language: elem['language'] as NumeralWordsLanguage, decodeModeWholeWords: elem['decodeMode'] as bool);
+        var length = (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>).length;
         for (int i = 0; i < length; i++) {
-          expect(_actual[i].number, elem['expectedOutput'][i].number);
-          expect(_actual[i].numWord, elem['expectedOutput'][i].numWord);
-          expect(_actual[i].language, elem['expectedOutput'][i].language);
+          expect(_actual[i].number, (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>)[i].number);
+          expect(_actual[i].numWord, (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>)[i].numWord);
+          expect(_actual[i].language, (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>)[i].language);
         }
       });
-    });
+    }
   });
 
   group("NumeralWords.unicode languages:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {
         'input': 'шестнадцать 十八 じゅうしち 이십 열다섯 百 единайсет สามสิบ',
         'language': NumeralWordsLanguage.ALL,
@@ -531,18 +531,18 @@ void main(){
       },
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test(
           'input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
-        var _actual = decodeNumeralwords(input: removeAccents(elem['input'].toString().toLowerCase()), language: elem['language'], decodeModeWholeWords: elem['decodeMode']);
-        var length = elem['expectedOutput'].length;
+        var _actual = decodeNumeralwords(input: removeAccents(elem['input'].toString().toLowerCase()), language: elem['language'] as NumeralWordsLanguage, decodeModeWholeWords: elem['decodeMode'] as bool);
+        var length = (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>).length;
         for (int i = 0; i < length; i++) {
-          expect(_actual[i].number, elem['expectedOutput'][i].number);
-          expect(_actual[i].numWord, elem['expectedOutput'][i].numWord);
-          expect(_actual[i].language, elem['expectedOutput'][i].language);
+          expect(_actual[i].number, (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>)[i].number);
+          expect(_actual[i].numWord, (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>)[i].numWord);
+          expect(_actual[i].language, (elem['expectedOutput'] as List<NumeralWordsDecodeOutput>)[i].language);
         }
       });
-    });
+    }
   });
   
 }

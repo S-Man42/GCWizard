@@ -5,11 +5,13 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/language_games/robber_language/logic/robber_language.dart';
 
 class RobberLanguage extends StatefulWidget {
+  const RobberLanguage({Key? key}) : super(key: key);
+
   @override
-  RobberLanguageState createState() => RobberLanguageState();
+ _RobberLanguageState createState() => _RobberLanguageState();
 }
 
-class RobberLanguageState extends State<RobberLanguage> {
+class _RobberLanguageState extends State<RobberLanguage> {
   var _currentInput = '';
   var _currentMode = GCWSwitchPosition.right;
 
@@ -35,9 +37,7 @@ class RobberLanguageState extends State<RobberLanguage> {
     );
   }
 
-  _buildOutput() {
-    if (_currentInput == null) return '';
-
+  String _buildOutput() {
     var out = _currentMode == GCWSwitchPosition.left
         ? encryptRobberLanguage(_currentInput)
         : decryptRobberLanguage(_currentInput);

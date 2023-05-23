@@ -6,14 +6,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:gc_wizard/tools/images_and_files/exif_reader/logic/exif_reader.dart';
 
-runSamplesTest(FileSystemEntity file) async {
+Future<void> runSamplesTest(FileSystemEntity file, bool emtyTags) async {
   Uint8List content = _getFileData(file.path);
 
   var tags = await readExifFromBytes(content);
-  expect(tags.length, isNonZero);
+  expect(tags.length, emtyTags ? isZero : isNonZero);
 }
 
-runSamplesTestGps(
+Future<void> runSamplesTestGps(
   FileSystemEntity file,
   double expectedLatitude,
   double expectedLongitude,
@@ -25,11 +25,10 @@ runSamplesTestGps(
   // var tags = await readExifFromBytes(content);
 
   var tags = await parseExif(platformFile);
-  expect(tags?.length, isNonZero);
+  expect(tags.length, isNonZero);
   expect(tags, contains("GPS GPSLatitude"));
-  var lat = tags?["GPS GPSLatitude"];
 
-  var _point = completeGPSData(tags!);
+  var _point = completeGPSData(tags);
   expect(_point, isNotNull);
   expect(_point?.latitude, equals(expectedLatitude));
   expect(_point?.longitude, equals(expectedLongitude));

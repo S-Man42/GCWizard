@@ -7,12 +7,14 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rotation/logic/rotator.dart';
 
 class Caesar extends StatefulWidget {
+  const Caesar({Key? key}) : super(key: key);
+
   @override
-  CaesarState createState() => CaesarState();
+ _CaesarState createState() => _CaesarState();
 }
 
-class CaesarState extends State<Caesar> {
-  var _controller;
+class _CaesarState extends State<Caesar> {
+  late TextEditingController _controller;
 
   String _currentInput = '';
   int _currentKey = 13;
@@ -65,7 +67,7 @@ class CaesarState extends State<Caesar> {
     );
   }
 
-  _buildOutput() {
+  Widget _buildOutput() {
     var _key = _currentMode == GCWSwitchPosition.right ? -_currentKey : _currentKey;
     var _output = Rotator().rotate(_currentInput, _key);
 

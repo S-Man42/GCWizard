@@ -1,20 +1,23 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _GCWCoordsNaturalAreaCode extends StatefulWidget {
-  final Function onChanged;
-  final BaseCoordinates coordinates;
+  final void Function(NaturalAreaCode) onChanged;
+  final NaturalAreaCode coordinates;
+  final bool isDefault;
 
-  const _GCWCoordsNaturalAreaCode({Key key, this.onChanged, this.coordinates}) : super(key: key);
+  const _GCWCoordsNaturalAreaCode({Key? key, required this.onChanged, required this.coordinates, this.isDefault = true}) : super(key: key);
 
   @override
   _GCWCoordsNaturalAreaCodeState createState() => _GCWCoordsNaturalAreaCodeState();
 }
 
 class _GCWCoordsNaturalAreaCodeState extends State<_GCWCoordsNaturalAreaCode> {
-  TextEditingController _controllerX;
-  TextEditingController _controllerY;
+  late TextEditingController _controllerX;
+  late TextEditingController _controllerY;
   var _currentX = '';
   var _currentY = '';
+
+  bool _initialized = false;
 
   @override
   void initState() {
@@ -34,15 +37,15 @@ class _GCWCoordsNaturalAreaCodeState extends State<_GCWCoordsNaturalAreaCode> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.coordinates != null) {
-      var naturalAreaCode = widget.coordinates is NaturalAreaCode
-          ? widget.coordinates as NaturalAreaCode
-          : NaturalAreaCode.fromLatLon(widget.coordinates.toLatLng());
+    if (!widget.isDefault && !_initialized) {
+      var naturalAreaCode = widget.coordinates;
       _currentX = naturalAreaCode.x;
       _currentY = naturalAreaCode.y;
 
       _controllerX.text = _currentX;
       _controllerY.text = _currentY;
+
+      _initialized = true;
     }
 
     return Column(children: <Widget>[
@@ -69,7 +72,7 @@ class _GCWCoordsNaturalAreaCodeState extends State<_GCWCoordsNaturalAreaCode> {
     ]);
   }
 
-  _setCurrentValueAndEmitOnChange() {
+  void _setCurrentValueAndEmitOnChange() {
     widget.onChanged(NaturalAreaCode(_currentX, _currentY));
   }
 }

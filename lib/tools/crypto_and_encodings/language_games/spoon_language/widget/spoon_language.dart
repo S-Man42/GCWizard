@@ -5,11 +5,13 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/language_games/spoon_language/logic/spoon_language.dart';
 
 class SpoonLanguage extends StatefulWidget {
+  const SpoonLanguage({Key? key}) : super(key: key);
+
   @override
-  SpoonLanguageState createState() => SpoonLanguageState();
+ _SpoonLanguageState createState() => _SpoonLanguageState();
 }
 
-class SpoonLanguageState extends State<SpoonLanguage> {
+class _SpoonLanguageState extends State<SpoonLanguage> {
   var _currentInput = '';
   var _currentMode = GCWSwitchPosition.right;
 
@@ -35,9 +37,7 @@ class SpoonLanguageState extends State<SpoonLanguage> {
     );
   }
 
-  _buildOutput() {
-    if (_currentInput == null) return '';
-
+  String _buildOutput() {
     var out = _currentMode == GCWSwitchPosition.left
         ? encryptSpoonLanguage(_currentInput)
         : decryptSpoonLanguage(_currentInput);

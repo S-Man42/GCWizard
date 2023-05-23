@@ -5,11 +5,13 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/language_games/chicken_language/logic/chicken_language.dart';
 
 class ChickenLanguage extends StatefulWidget {
+  const ChickenLanguage({Key? key}) : super(key: key);
+
   @override
-  ChickenLanguageState createState() => ChickenLanguageState();
+ _ChickenLanguageState createState() => _ChickenLanguageState();
 }
 
-class ChickenLanguageState extends State<ChickenLanguage> {
+class _ChickenLanguageState extends State<ChickenLanguage> {
   var _currentInput = '';
   var _currentMode = GCWSwitchPosition.right;
 
@@ -35,9 +37,7 @@ class ChickenLanguageState extends State<ChickenLanguage> {
     );
   }
 
-  _buildOutput() {
-    if (_currentInput == null) return '';
-
+  String _buildOutput() {
     var out = _currentMode == GCWSwitchPosition.left
         ? encryptChickenLanguage(_currentInput)
         : decryptChickenLanguage(_currentInput);

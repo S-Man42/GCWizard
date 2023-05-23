@@ -6,20 +6,22 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/tools/games/scrabble/logic/scrabble_sets.dart';
 
 class ScrabbleOverview extends StatefulWidget {
+  const ScrabbleOverview({Key? key}) : super(key: key);
+
   @override
-  ScrabbleOverviewState createState() => ScrabbleOverviewState();
+ _ScrabbleOverviewState createState() => _ScrabbleOverviewState();
 }
 
-class ScrabbleOverviewState extends State<ScrabbleOverview> {
+class _ScrabbleOverviewState extends State<ScrabbleOverview> {
   var _currentScrabbleVersion = scrabbleID_EN;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWDropDown(
+        GCWDropDown<String>(
           value: _currentScrabbleVersion,
-          onChanged: (value) {
+          onChanged: (String value) {
             setState(() {
               _currentScrabbleVersion = value;
               _calculateOutput();
@@ -38,14 +40,18 @@ class ScrabbleOverviewState extends State<ScrabbleOverview> {
   }
 
   Widget _calculateOutput() {
-    var data = <List<dynamic>>[
+    var data = <List<Object>>[
       [
         i18n(context, 'common_letter'),
         i18n(context, 'common_value'),
         i18n(context, 'scrabble_mode_frequency'),
       ]
     ];
-    data.addAll(scrabbleSets[_currentScrabbleVersion].letters.entries.map((entry) {
+
+    var scrabbleSet = scrabbleSets[_currentScrabbleVersion];
+    if (scrabbleSet == null) return Container();
+
+    data.addAll(scrabbleSet.letters.entries.map((entry) {
       return [entry.key.replaceAll(' ', String.fromCharCode(9251)), entry.value.value, entry.value.frequency];
     }).toList());
 

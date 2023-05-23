@@ -6,11 +6,13 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/games/catan/logic/catan.dart';
 
 class Catan extends StatefulWidget {
+  const Catan({Key? key}) : super(key: key);
+
   @override
-  CatanState createState() => CatanState();
+ _CatanState createState() => _CatanState();
 }
 
-class CatanState extends State<Catan> {
+class _CatanState extends State<Catan> {
   String _currentInput = '';
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
 

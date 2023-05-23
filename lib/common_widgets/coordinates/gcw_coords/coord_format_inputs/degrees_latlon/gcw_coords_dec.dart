@@ -1,23 +1,24 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _GCWCoordsDEC extends StatefulWidget {
-  final Function onChanged;
-  BaseCoordinates coordinates;
+  final void Function(DEC) onChanged;
+  DEC coordinates;
+  final bool isDefault;
 
-  _GCWCoordsDEC({Key key, this.onChanged, this.coordinates}) : super(key: key);
+  _GCWCoordsDEC({Key? key, required this.onChanged, required this.coordinates, this.isDefault = true}) : super(key: key);
 
   @override
   _GCWCoordsDECState createState() => _GCWCoordsDECState();
 }
 
 class _GCWCoordsDECState extends State<_GCWCoordsDEC> {
-  TextEditingController _LatDegreesController;
-  TextEditingController _LatMilliDegreesController;
-  TextEditingController _LonDegreesController;
-  TextEditingController _LonMilliDegreesController;
+  late TextEditingController _LatDegreesController;
+  late TextEditingController _LatMilliDegreesController;
+  late TextEditingController _LonDegreesController;
+  late TextEditingController _LonMilliDegreesController;
 
-  FocusNode _latMilliDegreesFocusNode;
-  FocusNode _lonMilliDegreesFocusNode;
+  final FocusNode _latMilliDegreesFocusNode = FocusNode();
+  final FocusNode _lonMilliDegreesFocusNode = FocusNode();
 
   int _currentLatSign = defaultHemiphereLatitude();
   int _currentLonSign = defaultHemiphereLongitude();
@@ -26,6 +27,8 @@ class _GCWCoordsDECState extends State<_GCWCoordsDEC> {
   String _currentLatMilliDegrees = '';
   String _currentLonDegrees = '';
   String _currentLonMilliDegrees = '';
+
+  bool _initialized = false;
 
   @override
   void initState() {
@@ -36,9 +39,6 @@ class _GCWCoordsDECState extends State<_GCWCoordsDEC> {
 
     _LonDegreesController = TextEditingController(text: _currentLonDegrees);
     _LonMilliDegreesController = TextEditingController(text: _currentLonMilliDegrees);
-
-    _latMilliDegreesFocusNode = FocusNode();
-    _lonMilliDegreesFocusNode = FocusNode();
   }
 
   @override
@@ -48,26 +48,31 @@ class _GCWCoordsDECState extends State<_GCWCoordsDEC> {
     _LonDegreesController.dispose();
     _LonMilliDegreesController.dispose();
 
+    _latMilliDegreesFocusNode.dispose();
+    _lonMilliDegreesFocusNode.dispose();
+
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (widget.coordinates != null) {
-      var dec = widget.coordinates is DEC ? widget.coordinates as DEC : DEC.fromLatLon(widget.coordinates.toLatLng());
+    if (!widget.isDefault && !_initialized) {
+      var dec = widget.coordinates;
       _currentLatDegrees = dec.latitude.abs().floor().toString();
       _currentLatMilliDegrees = dec.latitude.toString().split('.')[1];
-      _currentLatSign = widget.coordinates.isDefault() ? defaultHemiphereLatitude() : coordinateSign(dec.latitude);
+      _currentLatSign = sign(dec.latitude);
 
       _currentLonDegrees = dec.longitude.abs().floor().toString();
       _currentLonMilliDegrees = dec.longitude.toString().split('.')[1];
-      _currentLonSign = widget.coordinates.isDefault() ? defaultHemiphereLongitude() : coordinateSign(dec.longitude);
+      _currentLonSign = sign(dec.longitude);
 
       _LatDegreesController.text = _currentLatDegrees;
       _LatMilliDegreesController.text = _currentLatMilliDegrees;
 
       _LonDegreesController.text = _currentLonDegrees;
       _LonMilliDegreesController.text = _currentLonMilliDegrees;
+
+      _initialized = true;
     }
 
     return Column(children: <Widget>[
@@ -76,7 +81,7 @@ class _GCWCoordsDECState extends State<_GCWCoordsDEC> {
           Expanded(
             flex: 6,
             child: GCWSignDropDown(
-                itemList: ['+', '-'],
+                itemList: const ['+', '-'],
                 value: _currentLatSign,
                 onChanged: (value) {
                   setState(() {
@@ -88,22 +93,23 @@ class _GCWCoordsDECState extends State<_GCWCoordsDEC> {
           Expanded(
               flex: 6,
               child: Container(
+                padding: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
                 child: GCWIntegerTextField(
                     hintText: 'DD',
                     textInputFormatter: _DegreesLatTextInputFormatter(allowNegativeValues: false),
                     controller: _LatDegreesController,
-                    onChanged: (ret) {
+                    onChanged: (IntegerText ret) {
                       setState(() {
-                        _currentLatDegrees = ret['text'];
+                        _currentLatDegrees = ret.text;
                         _setCurrentValueAndEmitOnChange();
 
-                        if (_currentLatDegrees.length == 2)
+                        if (_currentLatDegrees.length == 2) {
                           FocusScope.of(context).requestFocus(_latMilliDegreesFocusNode);
+                        }
                       });
                     }),
-                padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
               )),
-          Expanded(
+          const Expanded(
             flex: 1,
             child: GCWText(align: Alignment.center, text: '.'),
           ),
@@ -116,12 +122,12 @@ class _GCWCoordsDECState extends State<_GCWCoordsDEC> {
                 focusNode: _latMilliDegreesFocusNode,
                 onChanged: (ret) {
                   setState(() {
-                    _currentLatMilliDegrees = ret['text'];
+                    _currentLatMilliDegrees = ret.text;
                     _setCurrentValueAndEmitOnChange();
                   });
                 }),
           ),
-          Expanded(
+          const Expanded(
             flex: 1,
             child: GCWText(align: Alignment.center, text: '°'),
           ),
@@ -132,7 +138,7 @@ class _GCWCoordsDECState extends State<_GCWCoordsDEC> {
           Expanded(
             flex: 6,
             child: GCWSignDropDown(
-                itemList: ['+', '-'],
+                itemList: const ['+', '-'],
                 value: _currentLonSign,
                 onChanged: (value) {
                   setState(() {
@@ -144,22 +150,23 @@ class _GCWCoordsDECState extends State<_GCWCoordsDEC> {
           Expanded(
               flex: 6,
               child: Container(
+                padding: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
                 child: GCWIntegerTextField(
                     hintText: 'DD',
                     textInputFormatter: _DegreesLonTextInputFormatter(allowNegativeValues: false),
                     controller: _LonDegreesController,
-                    onChanged: (ret) {
+                    onChanged: (IntegerText ret) {
                       setState(() {
-                        _currentLonDegrees = ret['text'];
+                        _currentLonDegrees = ret.text;
                         _setCurrentValueAndEmitOnChange();
 
-                        if (_currentLonDegrees.length == 3)
+                        if (_currentLonDegrees.length == 3) {
                           FocusScope.of(context).requestFocus(_lonMilliDegreesFocusNode);
+                        }
                       });
                     }),
-                padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
               )),
-          Expanded(
+          const Expanded(
             flex: 1,
             child: GCWText(align: Alignment.center, text: '.'),
           ),
@@ -170,14 +177,14 @@ class _GCWCoordsDECState extends State<_GCWCoordsDEC> {
                 min: 0,
                 controller: _LonMilliDegreesController,
                 focusNode: _lonMilliDegreesFocusNode,
-                onChanged: (ret) {
+                onChanged: (IntegerText ret) {
                   setState(() {
-                    _currentLonMilliDegrees = ret['text'];
+                    _currentLonMilliDegrees = ret.text;
                     _setCurrentValueAndEmitOnChange();
                   });
                 }),
           ),
-          Expanded(
+          const Expanded(
             flex: 1,
             child: GCWText(align: Alignment.center, text: '°'),
           ),
@@ -186,7 +193,7 @@ class _GCWCoordsDECState extends State<_GCWCoordsDEC> {
     ]);
   }
 
-  _setCurrentValueAndEmitOnChange() {
+  void _setCurrentValueAndEmitOnChange() {
     int _degrees = ['', '-'].contains(_currentLatDegrees) ? 0 : int.parse(_currentLatDegrees);
     double _degreesD = double.parse('$_degrees.$_currentLatMilliDegrees');
     double _currentLat = _currentLatSign * _degreesD;

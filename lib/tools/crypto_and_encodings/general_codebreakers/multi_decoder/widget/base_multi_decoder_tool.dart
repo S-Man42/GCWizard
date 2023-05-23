@@ -1,23 +1,46 @@
 part of 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/multi_decoder.dart';
 
-abstract class AbstractMultiDecoderTool {
+abstract class AbstractMultiDecoderTool extends StatefulWidget {
   final int id;
   String name;
   final String internalToolName;
-  final Function onDecode;
-  final MultiDecoderToolConfiguration configurationWidget;
+  final Object? Function(String, String) onDecode;
   final bool requiresKey;
   final bool optionalKey;
-  Map<String, dynamic> options = {};
+  late final Map<String, Object?> options;
 
   AbstractMultiDecoderTool(
-      {Key key,
-      this.id,
-      this.name,
-      this.internalToolName,
-      this.onDecode,
-      this.requiresKey: false,
-      this.optionalKey: false,
-      this.configurationWidget,
-      this.options});
+      {Key? key,
+      required this.id,
+      required this.name,
+      required this.internalToolName,
+      required this.onDecode,
+      this.requiresKey = false,
+      this.optionalKey = false,
+        required this.options}) : super(key: key);
+}
+
+class MultiDecoderToolDummy extends AbstractMultiDecoderTool {
+  MultiDecoderToolDummy()
+      : super(
+      key: null,
+      id: -1,
+      name: '',
+      internalToolName: '',
+      onDecode: (String input, String key) {return null;},
+      options: {});
+
+  @override
+  State<StatefulWidget> createState() => _MultiDecoderToolDummyState();
+}
+
+class _MultiDecoderToolDummyState extends State<MultiDecoderToolDummy> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
+String? stringNullableTypeCheck(Object? value, String? defaultValue) {
+  return (isString(String) || value == null) ? value as String? : defaultValue;
 }

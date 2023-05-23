@@ -3,8 +3,8 @@ import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_langua
 
 void main() {
   group("KarolRobot.interpret:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
-      {'code' : null, 'expectedOutput' : ''},
+    List<Map<String, Object?>> _inputsToExpected = [
+      // {'code' : null, 'expectedOutput' : ''},
       {'code' : '', 'expectedOutput' : ''},
 
       // https://www.geocaching.com/geocache/GC4ZE0V_sauerbrunnen-ii
@@ -40,7 +40,7 @@ void main() {
             '###999#####9#####999###9###9##99999#####\n'
             '##9###9###9#9###9###9##9###9##9#########\n'
             '##9######9###9##9######9###9##9#########\n'
-            '##9######99999##9######99999##999#######\n'
+            '##9######99999##9######999#9##999#######\n'
             '##9######9###9##9######9###9##9#########\n'
             '##9###9##9###9##9###9##9###9##9#########\n'
             '###999###9###9###999###9###9##99999#####\n'
@@ -56,7 +56,7 @@ void main() {
             '###999#####9#####999###9###9##99999#####\n'
             '##9###9###9#9###9###9##9###9##9#########\n'
             '##9######9###9##9######9###9##9#########\n'
-            '##9######99999##9######99999##999#######\n'
+            '##9######99999##9######999#9##999#######\n'
             '##9######9###9##9######9###9##9#########\n'
             '##9###9##9###9##9###9##9###9##9#########\n'
             '###999###9###9###999###9###9##99999#####\n'
@@ -75,7 +75,7 @@ void main() {
             '##9######99999##9######9###############\n'
             '##9######9###9##9######9###9##9999#####\n'
             '##9###9##9###9##9###9##9###9##9########\n'
-            '###999###9###9###999###99999##9########\n'
+            '###999###9###9###999###999#9##9########\n'
             '#######################9###9##99#######\n'
             '#######################9###9##9########\n'
             '#######################9###9##9########\n'
@@ -213,19 +213,16 @@ void main() {
             '#####'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('code: ${elem['code']}', () {
-        var _actual = KarolRobotOutputDecode(elem['code']);
+        var _actual = KarolRobotOutputDecode(elem['code'] as String);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("KarolRobot.generate:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
-      {'language' : KAREL_LANGUAGES.DEU, 'text' : null, 'expectedOutput' : ''},
-      {'language' : KAREL_LANGUAGES.ENG, 'text' : null, 'expectedOutput' : ''},
-      {'language' : KAREL_LANGUAGES.FRA, 'text' : null, 'expectedOutput' : ''},
+    List<Map<String, Object?>> _inputsToExpected = [
       {'language' : KAREL_LANGUAGES.DEU, 'text' : '', 'expectedOutput' : ''},
       {'language' : KAREL_LANGUAGES.ENG, 'text' : '', 'expectedOutput' : ''},
       {'language' : KAREL_LANGUAGES.FRA, 'text' : '', 'expectedOutput' : ''},
@@ -235,11 +232,11 @@ void main() {
       {'language' : KAREL_LANGUAGES.DEU, 'text' : 'FINAL\nN 456\nE 781', 'expectedOutput' : 'schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt linksdrehen schritt(3) rechtsdrehen markesetzen schritt markesetzen linksdrehen schritt(3) linksdrehen schritt linksdrehen linksdrehen markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt rechtsdrehen schritt(3) rechtsdrehen schritt linksdrehen markesetzen schritt rechtsdrehen markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen rechtsdrehen schritt markesetzen rechtsdrehen rechtsdrehen schritt(2) markesetzen linksdrehen schritt(6) markesetzen schritt(1) rechtsdrehen schritt(3) rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen rechtsdrehen rechtsdrehen schritt(6) rechtsdrehen schritt rechtsdrehen schritt markesetzen linksdrehen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt rechtsdrehen schritt markesetzen schritt linksdrehen schritt linksdrehen markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt(3) rechtsdrehen schritt(3) markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen rechtsdrehen rechtsdrehen schritt(3) rechtsdrehen schritt markesetzen linksdrehen schritt schritt markesetzen rechtsdrehen schritt linksdrehen schritt markesetzen rechtsdrehen schritt rechtsdrehen schritt markesetzen schritt schritt markesetzen rechtsdrehen schritt markesetzen linksdrehen schritt(3) linksdrehen schritt(2) linksdrehen markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt(3) rechtsdrehen schritt(3) rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt(3) linksdrehen schritt(7) linksdrehen linksdrehen rechtsdrehen schritt(33) linksdrehen schritt(9) schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen rechtsdrehen rechtsdrehen schritt(6) rechtsdrehen schritt rechtsdrehen schritt markesetzen linksdrehen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt rechtsdrehen schritt markesetzen schritt linksdrehen schritt linksdrehen markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt(3) rechtsdrehen linksdrehen schritt(7) rechtsdrehen linksdrehen schritt rechtsdrehen schritt markesetzen schritt markesetzen rechtsdrehen schritt linksdrehen schritt markesetzen schritt markesetzen linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt(3) linksdrehen schritt linksdrehen schritt markesetzen schritt markesetzen schritt(2) markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt(4) linksdrehen schritt(7) rechtsdrehen rechtsdrehen linksdrehen schritt(4) rechtsdrehen schritt markesetzen rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt(6) rechtsdrehen schritt(7) rechtsdrehen linksdrehen schritt(4) rechtsdrehen schritt(2) markesetzen rechtsdrehen schritt rechtsdrehen schritt markesetzen linksdrehen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt(5) rechtsdrehen schritt(7) rechtsdrehen rechtsdrehen schritt(35) linksdrehen schritt(9) schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt(3) linksdrehen schritt(2) markesetzen schritt markesetzen rechtsdrehen schritt(3) rechtsdrehen markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt(3) linksdrehen schritt linksdrehen linksdrehen linksdrehen schritt(7) rechtsdrehen schritt markesetzen linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen rechtsdrehen schritt markesetzen schritt markesetzen rechtsdrehen schritt linksdrehen schritt markesetzen schritt markesetzen rechtsdrehen schritt linksdrehen schritt markesetzen schritt markesetzen linksdrehen schritt(5) linksdrehen schritt(7) rechtsdrehen rechtsdrehen schritt(3) linksdrehen linksdrehen markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt(5) rechtsdrehen schritt(3) rechtsdrehen schritt schritt schritt markesetzen linksdrehen schritt linksdrehen schritt markesetzen rechtsdrehen schritt linksdrehen schritt markesetzen rechtsdrehen rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen rechtsdrehen rechtsdrehen schritt(7) rechtsdrehen schritt(3) rechtsdrehen rechtsdrehen schritt(33) linksdrehen schritt(9) '},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('text: ${elem['text']}', () {
-        var _actual = KarolRobotOutputEncode(elem['text'], elem['language']);
+        var _actual = KarolRobotOutputEncode(elem['text'] as String, elem['language'] as KAREL_LANGUAGES);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

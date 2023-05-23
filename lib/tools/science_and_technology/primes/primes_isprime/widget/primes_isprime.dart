@@ -5,11 +5,13 @@ import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/tools/science_and_technology/primes/_common/logic/primes.dart';
 
 class IsPrime extends StatefulWidget {
+  const IsPrime({Key? key}) : super(key: key);
+
   @override
-  IsPrimeState createState() => IsPrimeState();
+ _IsPrimeState createState() => _IsPrimeState();
 }
 
-class IsPrimeState extends State<IsPrime> {
+class _IsPrimeState extends State<IsPrime> {
   var _currentNumber = 1;
 
   @override

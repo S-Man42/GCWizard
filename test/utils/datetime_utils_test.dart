@@ -3,7 +3,7 @@ import 'package:gc_wizard/utils/datetime_utils.dart';
 
 void main() {
   group("Calender.JulianDateToGregorianCalendar:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'jd' : 0.0, 'expectedOutput' : DateTime(-4713, 11, 24, 12)},
       {'jd' : 0.0, 'expectedOutput' : DateTime(-4713, 11, 24)},
       {'jd' : 1507231.5, 'expectedOutput' : DateTime(-586, 7, 24)},  //30.7. -586
@@ -20,22 +20,20 @@ void main() {
       {'jd' : 2451544.5, 'expectedOutput' : DateTime(2000, 1, 1)},
       {'jd' : 2459346.5, 'expectedOutput' : DateTime(2021, 5, 12)},
     ];
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('jd: ${elem['jd']}', () {
-        var _actual = julianDateToGregorianCalendar(elem['jd']);
-        if (_actual == null)
-          expect(_actual, elem['expectedOutput']);
-        else {
-          expect(_actual.day, elem['expectedOutput'].day);
-          expect(_actual.month, elem['expectedOutput'].month);
-          expect(_actual.year, elem['expectedOutput'].year);
-        }
+        var _actual = julianDateToGregorianCalendar(elem['jd'] as double);
+
+        expect(_actual.day, (elem['expectedOutput'] as DateTime).day);
+        expect(_actual.month, (elem['expectedOutput'] as DateTime).month);
+        expect(_actual.year, (elem['expectedOutput'] as DateTime).year);
+
       });
-    });
+    }
   });
 
   group("Calender.JulianDateToJulianCalendar:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'jd' : 0.0, 'expectedOutput' : DateTime(-4712, 1, 1)},
       {'jd' : -38.5, 'expectedOutput' : DateTime(-4713, 11, 24)},
       {'jd' : 1507231.5, 'expectedOutput' : DateTime(-586, 7, 30)},  //30.7. -586
@@ -53,22 +51,19 @@ void main() {
       {'jd' : 2451544.5, 'expectedOutput' : DateTime(1999, 12, 19)},
       {'jd' : 2459346.5, 'expectedOutput' : DateTime(2021, 4, 29)},
     ];
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('jd: ${elem['jd']}', () {
-        var _actual = julianDateToJulianCalendar(elem['jd']);
-        if (_actual == null)
-          expect(_actual, elem['expectedOutput']);
-        else {
-          expect(_actual.day, elem['expectedOutput'].day);
-          expect(_actual.month, elem['expectedOutput'].month);
-          expect(_actual.year, elem['expectedOutput'].year);
-        }
+        var _actual = julianDateToJulianCalendar(elem['jd'] as double);
+
+        expect(_actual.day, (elem['expectedOutput'] as DateTime).day);
+        expect(_actual.month, (elem['expectedOutput'] as DateTime).month);
+        expect(_actual.year, (elem['expectedOutput'] as DateTime).year);
       });
-    });
+    }
   });
 
   group("Calender.GregorianCalendarToJulianDate:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'expectedOutput' : -0.5, 'date' : DateTime(-4713, 11, 24)},
       {'expectedOutput' : 1507231.5, 'date' : DateTime(-586, 7, 24)},  //30.7. -586
       {'expectedOutput' : 1721419.5, 'date' : DateTime(0, 12, 26)}, //28.12.0
@@ -86,16 +81,16 @@ void main() {
       {'expectedOutput' : 2459346.5, 'date' : DateTime(2021, 5, 12)},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('date: ${elem['date']}', () {
-        var _actual = gregorianCalendarToJulianDate(elem['date']);
+        var _actual = gregorianCalendarToJulianDate(elem['date'] as DateTime);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Calender.JulianCalendarToJulianDate:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, Object?>> _inputsToExpected = [
       {'date' : DateTime(-4712,1,1), 'expectedOutput' : -0.5},
       {'date' : DateTime(-4713,11,24), 'expectedOutput' : -38.5},
       {'date' : DateTime(-668,5,30), 'expectedOutput' : 1477220.5},
@@ -114,44 +109,44 @@ void main() {
       {'date' : DateTime(2021,4,29), 'expectedOutput' : 2459346.5},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('date: ${elem['date']}', () {
-        var _actual = julianCalendarToJulianDate(elem['date']);
+        var _actual = julianCalendarToJulianDate(elem['date'] as DateTime);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Calender.formatDurationToHHmmss:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : null},
-      {'input' : Duration(days: 1, hours: 10, seconds: 33, milliseconds: 100), 'days': true, 'milliseconds': true, 'limitHours': true, 'expectedOutput' : '1:10:00:33.000'},
-      {'input' : Duration(days: 1, hours: 10, seconds: 33, milliseconds: 100), 'days': true, 'milliseconds': false, 'limitHours': true, 'expectedOutput' : '1:10:00:33'},
-      {'input' : Duration(days: 1, hours: 10, seconds: 33, milliseconds: 100), 'days': false, 'milliseconds': true, 'limitHours': true, 'expectedOutput' : '10:00:33.000'},
-      {'input' : Duration(days: 1, hours: 10, seconds: 33, milliseconds: 100), 'days': false, 'milliseconds': false, 'limitHours': true, 'expectedOutput' : '10:00:33'},
-      {'input' : Duration(days: 1, hours: 10, seconds: 33, milliseconds: 100), 'days': false, 'milliseconds': false, 'limitHours': false, 'expectedOutput' : '34:00:33'},
-      {'input' : Duration(days: 1, hours: 10, seconds: 33, milliseconds: 100), 'days': true, 'milliseconds': true, 'limitHours': true, 'expectedOutput' : '1:10:00:33.000'},
-      {'input' : Duration(days: 1, hours: 10, seconds: 33, milliseconds: 100), 'days': true, 'milliseconds': true, 'limitHours': false, 'expectedOutput' : '1:10:00:33.000'},
-      {'input' : Duration(days: 1, hours: 10, seconds: 33, milliseconds: 100), 'days': true, 'milliseconds': false, 'limitHours': false, 'expectedOutput' : '1:10:00:33'},
+    List<Map<String, Object?>> _inputsToExpected = [
+      // {'input' : null, 'expectedOutput' : null},
+      {'input' : const Duration(days: 1, hours: 10, seconds: 33, milliseconds: 100), 'days': true, 'milliseconds': true, 'limitHours': true, 'expectedOutput' : '1:10:00:33.000'},
+      {'input' : const Duration(days: 1, hours: 10, seconds: 33, milliseconds: 100), 'days': true, 'milliseconds': false, 'limitHours': true, 'expectedOutput' : '1:10:00:33'},
+      {'input' : const Duration(days: 1, hours: 10, seconds: 33, milliseconds: 100), 'days': false, 'milliseconds': true, 'limitHours': true, 'expectedOutput' : '10:00:33.000'},
+      {'input' : const Duration(days: 1, hours: 10, seconds: 33, milliseconds: 100), 'days': false, 'milliseconds': false, 'limitHours': true, 'expectedOutput' : '10:00:33'},
+      {'input' : const Duration(days: 1, hours: 10, seconds: 33, milliseconds: 100), 'days': false, 'milliseconds': false, 'limitHours': false, 'expectedOutput' : '34:00:33'},
+      {'input' : const Duration(days: 1, hours: 10, seconds: 33, milliseconds: 100), 'days': true, 'milliseconds': true, 'limitHours': true, 'expectedOutput' : '1:10:00:33.000'},
+      {'input' : const Duration(days: 1, hours: 10, seconds: 33, milliseconds: 100), 'days': true, 'milliseconds': true, 'limitHours': false, 'expectedOutput' : '1:10:00:33.000'},
+      {'input' : const Duration(days: 1, hours: 10, seconds: 33, milliseconds: 100), 'days': true, 'milliseconds': false, 'limitHours': false, 'expectedOutput' : '1:10:00:33'},
 
-      {'input' : Duration(days: -1, hours: -33, seconds: -33, milliseconds: -100), 'days': true, 'milliseconds': false, 'limitHours': false, 'expectedOutput' : '-2:09:00:33'},
-      {'input' : Duration(days: -1, hours: -33, seconds: -33, milliseconds: -100), 'days': true, 'milliseconds': false, 'limitHours': true, 'expectedOutput' : '-2:09:00:33'},
-      {'input' : Duration(days: -1, hours: -33, seconds: -33, milliseconds: -100), 'days': false, 'milliseconds': false, 'limitHours': true, 'expectedOutput' : '-09:00:33'},
-      {'input' : Duration(hours: -33, seconds: -33, milliseconds: -100), 'days': true, 'milliseconds': false, 'limitHours': false, 'expectedOutput' : '-1:09:00:33'},
-      {'input' : Duration(hours: -10, seconds: -33, milliseconds: -100), 'days': true, 'milliseconds': false, 'limitHours': true, 'expectedOutput' : '-0:10:00:33'},
+      {'input' : const Duration(days: -1, hours: -33, seconds: -33, milliseconds: -100), 'days': true, 'milliseconds': false, 'limitHours': false, 'expectedOutput' : '-2:09:00:33'},
+      {'input' : const Duration(days: -1, hours: -33, seconds: -33, milliseconds: -100), 'days': true, 'milliseconds': false, 'limitHours': true, 'expectedOutput' : '-2:09:00:33'},
+      {'input' : const Duration(days: -1, hours: -33, seconds: -33, milliseconds: -100), 'days': false, 'milliseconds': false, 'limitHours': true, 'expectedOutput' : '-09:00:33'},
+      {'input' : const Duration(hours: -33, seconds: -33, milliseconds: -100), 'days': true, 'milliseconds': false, 'limitHours': false, 'expectedOutput' : '-1:09:00:33'},
+      {'input' : const Duration(hours: -10, seconds: -33, milliseconds: -100), 'days': true, 'milliseconds': false, 'limitHours': true, 'expectedOutput' : '-0:10:00:33'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, days: ${elem['days']}, milliseconds: ${elem['milliseconds']}, limitHours: ${elem['limitHours']}', () {
-        var _actual = formatDurationToHHmmss(elem['input'], days: elem['days'], milliseconds: elem['milliseconds'], limitHours: elem['limitHours']);
+        var _actual = formatDurationToHHmmss(elem['input'] as Duration, days: elem['days'] as bool, milliseconds: elem['milliseconds'] as bool, limitHours: elem['limitHours'] as bool);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 
   group("Calender.formatHoursToHHmmss:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : null},
+    List<Map<String, Object?>> _inputsToExpected = [
+      // {'input' : null, 'expectedOutput' : null},
       {'input' : 1.23456789, 'milliseconds': true, 'limitHours': true, 'expectedOutput' : '01:14:04.444'},
       {'input' : 1.23456789, 'milliseconds': false, 'limitHours': true, 'expectedOutput' : '01:14:04'},
       {'input' : 1.23456789, 'milliseconds': true, 'limitHours': false, 'expectedOutput' : '01:14:04.444'},
@@ -163,11 +158,11 @@ void main() {
       {'input' : 99.23456789, 'milliseconds': false, 'limitHours': false, 'expectedOutput' : '99:14:04'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, milliseconds: ${elem['milliseconds']}, limitHours: ${elem['limitHours']}', () {
-        var _actual = formatHoursToHHmmss(elem['input'], milliseconds: elem['milliseconds'], limitHours: elem['limitHours']);
+        var _actual = formatHoursToHHmmss(elem['input'] as double, milliseconds: elem['milliseconds'] as bool, limitHours: elem['limitHours'] as bool);
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

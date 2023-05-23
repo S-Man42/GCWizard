@@ -9,17 +9,19 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/science_and_technology/keyboard/_common/logic/keyboard.dart';
 
 class KeyboardLayout extends StatefulWidget {
+  const KeyboardLayout({Key? key}) : super(key: key);
+
   @override
-  KeyboardLayoutState createState() => KeyboardLayoutState();
+ _KeyboardLayoutState createState() => _KeyboardLayoutState();
 }
 
-class KeyboardLayoutState extends State<KeyboardLayout> {
-  var _inputController;
+class _KeyboardLayoutState extends State<KeyboardLayout> {
+  late TextEditingController _inputController;
 
   String _currentInput = '';
 
-  var _currentKeyboardFrom = KeyboardType.QWERTZ_T1;
-  var _currentKeyboardTo = KeyboardType.QWERTY_US_INT;
+  var _currentKeyboardFrom = KEYBOARD_TYPE.QWERTZ_T1;
+  var _currentKeyboardTo = KEYBOARD_TYPE.QWERTY_US_INT;
 
   @override
   void initState() {
@@ -49,10 +51,11 @@ class KeyboardLayoutState extends State<KeyboardLayout> {
           children: <Widget>[
             Expanded(
               child: Container(
+                padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
                 child: Column(
                   children: <Widget>[
                     GCWTextDivider(text: i18n(context, 'keyboard_from')),
-                    GCWDropDown(
+                    GCWDropDown<KEYBOARD_TYPE>(
                       value: _currentKeyboardFrom,
                       onChanged: (value) {
                         setState(() {
@@ -66,15 +69,15 @@ class KeyboardLayoutState extends State<KeyboardLayout> {
                     ),
                   ],
                 ),
-                padding: EdgeInsets.only(right: DEFAULT_MARGIN),
               ),
             ),
             Expanded(
               child: Container(
+                padding: const EdgeInsets.only(left: DEFAULT_MARGIN),
                 child: Column(
                   children: <Widget>[
                     GCWTextDivider(text: i18n(context, 'keyboard_to')),
-                    GCWDropDown(
+                    GCWDropDown<KEYBOARD_TYPE>(
                       value: _currentKeyboardTo,
                       onChanged: (value) {
                         setState(() {
@@ -88,7 +91,6 @@ class KeyboardLayoutState extends State<KeyboardLayout> {
                     ),
                   ],
                 ),
-                padding: EdgeInsets.only(left: DEFAULT_MARGIN),
               ),
             ),
           ],
@@ -98,7 +100,7 @@ class KeyboardLayoutState extends State<KeyboardLayout> {
     );
   }
 
-  _buildOutput() {
+  Widget _buildOutput() {
     return GCWDefaultOutput(
         child: GCWOutputText(
       text: encodeKeyboard(_currentInput, _currentKeyboardFrom, _currentKeyboardTo),
