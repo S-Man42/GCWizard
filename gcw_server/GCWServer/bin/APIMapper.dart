@@ -26,6 +26,10 @@ abstract class APIMapper {
   }
 
   String? getWebParameter(WEBPARAMETER parameter) {
-    return webParameter[parameter.name];
+    return webParameter[enumName(parameter.toString())];
   }
+}
+
+String enumName(String fullName) {
+  return fullName.split('.').last;
 }

@@ -20,6 +20,6 @@ class RotatorAPIMapper extends APIMapper {
 
   @override
   Map<String, String> toMap(Object result) {
-    return <String, String>{WEBPARAMETER.result.name : result.toString()};
+    return <String, String>{enumName(WEBPARAMETER.result.toString()) : result.toString()};
   }
 }
