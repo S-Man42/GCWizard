@@ -1,4 +1,8 @@
+import 'dart:math';
+
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/hashes/logic/hashes.dart';
+import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:collection/collection.dart';
 
@@ -21,10 +25,7 @@ String _generateBinaryFromCoord(double coord, double lowerBound, double upperBou
 }
 
 Geohash latLonToGeohashing(LatLng coords, int geohashLength) {
-  int binaryCoordLength = (geohashLength / 2).floor() * _binaryLength;
-
-  String latBinaryOut = _generateBinaryFromCoord(coords.latitude, -90.0, 90.0, binaryCoordLength);
-  String lonBinaryOut = _generateBinaryFromCoord(coords.longitude, -180.0, 180.0, binaryCoordLength);
+  String date =
 
   var binary = '';
   int i = 0;
@@ -37,27 +38,9 @@ Geohash latLonToGeohashing(LatLng coords, int geohashLength) {
 }
 
 LatLng? geohashingToLatLon(Geohashing geohashing) {
-  try {
-    var _geohash = geohash.text.toLowerCase();
-    var binary = _geohash.split('').map((character) => _getBinaryByCharacter(character)).where((element) => element != null).join();
-
-    var latBinary = '';
-    var lonBinary = '';
-
-    var i = 0;
-    while (i < binary.length) {
-      lonBinary += binary[i];
-      if ((i + 1) < binary.length) latBinary += binary[i + 1];
-      i += 2;
-    }
-
-    var lat = _getCoordFromBinary(latBinary, -90.0, 90.0);
-    var lon = _getCoordFromBinary(lonBinary, -180.0, 180.0);
-
-    if (lat == 0.0 && lon == 0.0) return null;
-
-    return LatLng(lat, lon);
-  } catch (e) {}
+  var date = DateFormat('yyyy-dd-MM').format(geohashing.date);
+  var md5 = md5Digest(date);
+  md5.sp
 
   return null;
 }
@@ -70,20 +53,19 @@ Geohash? parseGeohash(String input) {
   return geohashToLatLon(_geohash) == null ? null : _geohash;
 }
 
-double _getCoordFromBinary(String binary, double lowerBound, double upperBound) {
-  var coord = 0.0;
+const _VALID_CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
-  binary.split('').forEach((bit) {
-    var middle = (lowerBound + upperBound) / 2.0;
+double _hexToDec(String input) {
+  var memo = 0.0;
+  _toValidChars(input).split('').toList().mapIndexed((index, char) => memo += _charToValue(char, index));
 
-    if (bit == '1') {
-      lowerBound = middle;
-    } else {
-      upperBound = middle;
-    }
+  return memo;
+}
 
-    coord = (lowerBound + upperBound) / 2.0;
-  });
+String _toValidChars(String input) {
+  return input = input.toUpperCase().replaceAll(RegExp('[^' + _VALID_CHARS +']'), '');
+}
 
-  return coord;
+double _charToValue (String char, int index) {
+  return _VALID_CHARS.indexOf(char) * pow(16, -(index + 1)).toDouble();
 }
