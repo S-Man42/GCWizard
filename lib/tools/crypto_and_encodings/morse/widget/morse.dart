@@ -57,21 +57,21 @@ class _MorseState extends State<Morse> {
         _buildMorseButtons(context),
         _currentMode == GCWSwitchPosition.left
             ? GCWTextField(
-          controller: _encodeController,
-          onChanged: (text) {
-            setState(() {
-              _currentEncodeInput = text;
-            });
-          },
-        )
+                controller: _encodeController,
+                onChanged: (text) {
+                  setState(() {
+                    _currentEncodeInput = text;
+                  });
+                },
+              )
             : GCWTextField(
-          controller: _decodeController,
-          onChanged: (text) {
-            setState(() {
-              _currentDecodeInput = text;
-            });
-          },
-        ),
+                controller: _decodeController,
+                onChanged: (text) {
+                  setState(() {
+                    _currentDecodeInput = text;
+                  });
+                },
+              ),
         GCWTextDivider(text: i18n(context, 'common_output')),
         _buildOutput(context)
       ],
