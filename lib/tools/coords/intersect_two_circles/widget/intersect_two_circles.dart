@@ -18,10 +18,10 @@ class IntersectTwoCircles extends StatefulWidget {
   const IntersectTwoCircles({Key? key}) : super(key: key);
 
   @override
-  IntersectTwoCirclesState createState() => IntersectTwoCirclesState();
+ _IntersectTwoCirclesState createState() => _IntersectTwoCirclesState();
 }
 
-class IntersectTwoCirclesState extends State<IntersectTwoCircles> {
+class _IntersectTwoCirclesState extends State<IntersectTwoCircles> {
   var _currentIntersections = <LatLng>[];
 
   var _currentCoords1 = defaultBaseCoordinate;

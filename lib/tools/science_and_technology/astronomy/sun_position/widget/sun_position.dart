@@ -16,10 +16,10 @@ class SunPosition extends StatefulWidget {
   const SunPosition({Key? key}) : super(key: key);
 
   @override
-  SunPositionState createState() => SunPositionState();
+ _SunPositionState createState() => _SunPositionState();
 }
 
-class SunPositionState extends State<SunPosition> {
+class _SunPositionState extends State<SunPosition> {
   var _currentDateTime = DateTimeTimezone(datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
   var _currentCoords = defaultBaseCoordinate;
 

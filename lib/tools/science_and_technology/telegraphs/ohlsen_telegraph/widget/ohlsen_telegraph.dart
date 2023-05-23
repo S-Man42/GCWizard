@@ -22,10 +22,10 @@ class OhlsenTelegraph extends StatefulWidget {
   const OhlsenTelegraph({Key? key}) : super(key: key);
 
   @override
-  OhlsenTelegraphState createState() => OhlsenTelegraphState();
+ _OhlsenTelegraphState createState() => _OhlsenTelegraphState();
 }
 
-class OhlsenTelegraphState extends State<OhlsenTelegraph> {
+class _OhlsenTelegraphState extends State<OhlsenTelegraph> {
   var _currentEncodeInput = '';
   late TextEditingController _dncodeInputController;
 

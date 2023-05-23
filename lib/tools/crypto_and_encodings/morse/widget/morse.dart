@@ -16,10 +16,10 @@ class Morse extends GCWWebStatefulWidget {
   Morse({Key? key}) : super(key: key);
 
   @override
-  MorseState createState() => MorseState();
+ _MorseState createState() => _MorseState();
 }
 
-class MorseState extends State<Morse> {
+class _MorseState extends State<Morse> {
   late TextEditingController _encodeController;
   late TextEditingController _decodeController;
 

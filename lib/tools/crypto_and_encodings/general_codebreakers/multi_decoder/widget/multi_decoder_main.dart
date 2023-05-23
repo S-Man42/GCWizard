@@ -4,10 +4,10 @@ class MultiDecoder extends GCWWebStatefulWidget {
   MultiDecoder({Key? key}) : super(key: key);
 
   @override
-  MultiDecoderState createState() => MultiDecoderState();
+ _MultiDecoderState createState() => _MultiDecoderState();
 }
 
-class MultiDecoderState extends State<MultiDecoder> {
+class _MultiDecoderState extends State<MultiDecoder> {
   late TextEditingController _controller;
   List<AbstractMultiDecoderTool> mdtTools = [];
 

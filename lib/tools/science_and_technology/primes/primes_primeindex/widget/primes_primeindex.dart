@@ -8,10 +8,10 @@ class PrimeIndex extends StatefulWidget {
   const PrimeIndex({Key? key}) : super(key: key);
 
   @override
-  PrimeIndexState createState() => PrimeIndexState();
+ _PrimeIndexState createState() => _PrimeIndexState();
 }
 
-class PrimeIndexState extends State<PrimeIndex> {
+class _PrimeIndexState extends State<PrimeIndex> {
   var _currentNumber = 1;
 
   @override

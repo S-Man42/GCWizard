@@ -20,10 +20,10 @@ class MurrayTelegraph extends StatefulWidget {
   const MurrayTelegraph({Key? key}) : super(key: key);
 
   @override
-  MurrayTelegraphState createState() => MurrayTelegraphState();
+ _MurrayTelegraphState createState() => _MurrayTelegraphState();
 }
 
-class MurrayTelegraphState extends State<MurrayTelegraph> {
+class _MurrayTelegraphState extends State<MurrayTelegraph> {
   String _currentEncodeInput = '';
   late TextEditingController _encodeController;
 

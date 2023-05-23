@@ -21,10 +21,10 @@ class VigenereBreaker extends StatefulWidget {
   const VigenereBreaker({Key? key}) : super(key: key);
 
   @override
-  VigenereBreakerState createState() => VigenereBreakerState();
+ _VigenereBreakerState createState() => _VigenereBreakerState();
 }
 
-class VigenereBreakerState extends State<VigenereBreaker> {
+class _VigenereBreakerState extends State<VigenereBreaker> {
   String _currentInput = '';
   VigenereBreakerAlphabet _currentAlphabet = VigenereBreakerAlphabet.GERMAN;
   VigenereBreakerResult? _currentOutput;

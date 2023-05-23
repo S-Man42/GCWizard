@@ -15,10 +15,10 @@ class IrrationalNumbersSearch extends StatefulWidget {
   const IrrationalNumbersSearch({Key? key, required this.irrationalNumber}) : super(key: key);
 
   @override
-  IrrationalNumbersSearchState createState() => IrrationalNumbersSearchState();
+ _IrrationalNumbersSearchState createState() => _IrrationalNumbersSearchState();
 }
 
-class IrrationalNumbersSearchState extends State<IrrationalNumbersSearch> {
+class _IrrationalNumbersSearchState extends State<IrrationalNumbersSearch> {
   var _currentInput = '';
   late IrrationalNumberCalculator _calculator;
   var _hasWildCards = false;
@@ -114,7 +114,7 @@ class IrrationalNumbersSearchState extends State<IrrationalNumbersSearch> {
     var _solution = _solutions[_currentSolution];
 
     var output = [
-      _hasWildCards ? [i18n(context, 'common_value'), _solution.value] : <String>[],
+      if (_hasWildCards) [i18n(context, 'common_value'), _solution.value],
       [i18n(context, 'common_start'), _solution.start],
       [i18n(context, 'common_end'), _solution.end]
     ];

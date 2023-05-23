@@ -24,10 +24,10 @@ class IntersectGeodeticAndCircle extends StatefulWidget {
   const IntersectGeodeticAndCircle({Key? key}) : super(key: key);
 
   @override
-  IntersectBearingAndCircleState createState() => IntersectBearingAndCircleState();
+ _IntersectBearingAndCircleState createState() => _IntersectBearingAndCircleState();
 }
 
-class IntersectBearingAndCircleState extends State<IntersectGeodeticAndCircle> {
+class _IntersectBearingAndCircleState extends State<IntersectGeodeticAndCircle> {
   var _currentIntersections = <LatLng>[];
 
   var _currentCoordsStart = defaultBaseCoordinate;

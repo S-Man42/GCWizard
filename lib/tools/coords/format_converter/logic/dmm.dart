@@ -53,7 +53,7 @@ DMM? parseDMM(String input, {bool leftPadMilliMinutes = false, bool wholeString 
   var parsedTrailingSigns = _parseDMMTrailingSigns(_input, leftPadMilliMinutes);
   if (parsedTrailingSigns != null) return parsedTrailingSigns;
 
-  RegExp regex = RegExp(PATTERN_DMM + regexEnd, caseSensitive: false);
+  RegExp regex = RegExp(_PATTERN_DMM + regexEnd, caseSensitive: false);
   if (regex.hasMatch(_input)) {
     RegExpMatch matches = regex.firstMatch(_input)!;
 
@@ -129,7 +129,7 @@ double _leftPadDMMMilliMinutes(String minutes, String milliMinutes) {
 }
 
 DMM? _parseDMMTrailingSigns(String text, bool leftPadMilliMinutes) {
-  RegExp regex = RegExp(PATTERN_DMM_TRAILINGSIGN + regexEnd, caseSensitive: false);
+  RegExp regex = RegExp(_PATTERN_DMM_TRAILINGSIGN + regexEnd, caseSensitive: false);
 
   if (regex.hasMatch(text)) {
     RegExpMatch matches = regex.firstMatch(text)!;
@@ -197,7 +197,7 @@ DMM? _parseDMMTrailingSigns(String text, bool leftPadMilliMinutes) {
   return null;
 }
 
-const PATTERN_DMM_TRAILINGSIGN = '^\\s*?'
+const _PATTERN_DMM_TRAILINGSIGN = '^\\s*?'
     '(\\d{1,3})\\s*?[\\s°]\\s*?' //lat degrees + symbol
     '([0-5]?\\d)\\s*?' //lat minutes
     '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?' //lat milliminutes
@@ -213,7 +213,7 @@ const PATTERN_DMM_TRAILINGSIGN = '^\\s*?'
     '([EWO]$LETTER*?|[\\+\\-])' //lon sign;
     '\\s*?';
 
-const PATTERN_DMM = '^\\s*?'
+const _PATTERN_DMM = '^\\s*?'
     '([NS]$LETTER*?|[\\+\\-])?\\s*?' //lat sign
     '(\\d{1,3})\\s*?[\\s°]\\s*?' //lat degrees + symbol
     '([0-5]?\\d)\\s*?' //lat minutes

@@ -15,10 +15,10 @@ class VanityMultitap extends StatefulWidget {
   const VanityMultitap({Key? key}) : super(key: key);
 
   @override
-  VanityMultitapState createState() => VanityMultitapState();
+ _VanityMultitapState createState() => _VanityMultitapState();
 }
 
-class VanityMultitapState extends State<VanityMultitap> {
+class _VanityMultitapState extends State<VanityMultitap> {
   late TextEditingController _encodeController;
   late TextEditingController _decodeController;
 

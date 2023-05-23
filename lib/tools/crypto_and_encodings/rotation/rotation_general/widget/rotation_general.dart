@@ -12,10 +12,10 @@ class RotationGeneral extends GCWWebStatefulWidget {
   RotationGeneral({Key? key}) : super(key: key);
 
   @override
-  RotationGeneralState createState() => RotationGeneralState();
+ _RotationGeneralState createState() => _RotationGeneralState();
 }
 
-class RotationGeneralState extends State<RotationGeneral> {
+class _RotationGeneralState extends State<RotationGeneral> {
   late TextEditingController _controller;
 
   String _currentInput = '';

@@ -21,10 +21,10 @@ class GCWABCSpinner extends StatefulWidget {
       : super(key: key);
 
   @override
-  GCWABCSpinnerState createState() => GCWABCSpinnerState();
+ _GCWABCSpinnerState createState() => _GCWABCSpinnerState();
 }
 
-class GCWABCSpinnerState extends State<GCWABCSpinner> {
+class _GCWABCSpinnerState extends State<GCWABCSpinner> {
   int? _currentValue;
 
   @override

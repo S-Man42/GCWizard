@@ -13,10 +13,10 @@ class AtomicNumbersToText extends StatefulWidget {
   const AtomicNumbersToText({Key? key}) : super(key: key);
 
   @override
-  AtomicNumbersToTextState createState() => AtomicNumbersToTextState();
+ _AtomicNumbersToTextState createState() => _AtomicNumbersToTextState();
 }
 
-class AtomicNumbersToTextState extends State<AtomicNumbersToText> {
+class _AtomicNumbersToTextState extends State<AtomicNumbersToText> {
   late TextEditingController _encryptController;
 
   String _currentEncryptInput = '';

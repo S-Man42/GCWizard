@@ -58,9 +58,9 @@ class XMP {
               if (tags.isNotEmpty) {
                 for (var element in tags) {
                   var textList =
-                      element.descendants.where((node) => node is XmlText && node.text.trim().isNotEmpty).toList();
+                      element.descendants.where((node) => node is XmlText && node.innerText.trim().isNotEmpty).toList();
                   for (var text in textList) {
-                    _addAttributeList(raw ? tag : camelToNormal(tag), text.text, result);
+                    _addAttributeList(raw ? tag : camelToNormal(tag), text.innerText, result);
                   }
                 }
               }

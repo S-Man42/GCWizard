@@ -18,10 +18,10 @@ class About extends StatefulWidget {
   const About({Key? key}) : super(key: key);
 
   @override
-  AboutState createState() => AboutState();
+ _AboutState createState() => _AboutState();
 }
 
-class AboutState extends State<About> {
+class _AboutState extends State<About> {
   PackageInfo _packageInfo = PackageInfo(
     appName: _ABOUT_PACKAGE_INFO_UNKNOWN,
     packageName: _ABOUT_PACKAGE_INFO_UNKNOWN,

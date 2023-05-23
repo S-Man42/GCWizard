@@ -9,10 +9,10 @@ class Weekday extends StatefulWidget {
   const Weekday({Key? key}) : super(key: key);
 
   @override
-  WeekdayState createState() => WeekdayState();
+ _WeekdayState createState() => _WeekdayState();
 }
 
-class WeekdayState extends State<Weekday> {
+class _WeekdayState extends State<Weekday> {
   late DateTime _currentDate;
 
   @override

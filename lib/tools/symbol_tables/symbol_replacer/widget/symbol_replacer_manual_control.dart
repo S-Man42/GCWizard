@@ -28,10 +28,10 @@ class SymbolReplacerManualControl extends StatefulWidget {
   const SymbolReplacerManualControl({Key? key, required this.symbolImage}) : super(key: key);
 
   @override
-  SymbolReplacerManualControlState createState() => SymbolReplacerManualControlState();
+ _SymbolReplacerManualControlState createState() => _SymbolReplacerManualControlState();
 }
 
-class SymbolReplacerManualControlState extends State<SymbolReplacerManualControl> {
+class _SymbolReplacerManualControlState extends State<SymbolReplacerManualControl> {
   final _symbolMap = <Symbol, Map<String, SymbolData>>{};
   SymbolData? _selectedSymbolData;
   var _removeActiv = false;

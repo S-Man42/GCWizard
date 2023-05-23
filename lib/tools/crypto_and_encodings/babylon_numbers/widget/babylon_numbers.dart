@@ -19,10 +19,10 @@ class BabylonNumbers extends StatefulWidget {
   const BabylonNumbers({Key? key}) : super(key: key);
 
   @override
-  BabylonNumbersState createState() => BabylonNumbersState();
+ _BabylonNumbersState createState() => _BabylonNumbersState();
 }
 
-class BabylonNumbersState extends State<BabylonNumbers> {
+class _BabylonNumbersState extends State<BabylonNumbers> {
   var _currentEncodeInput = 0;
 
   var _currentDisplays = Segments.Empty();

@@ -75,15 +75,25 @@ void main() {
       //Trim empty space
       {'formula' : 'sin(0) ', 'values': <String, String>{}, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '0', 'state': 'ok'}]}}, //Not working because S in Values and so the s of sin will be replaced
 
+      //constants
+      {'formula' : 'phi', 'expectedOutput' : {'state': 'ok', 'output': [{'result': '1.61803398875', 'state': 'ok'}]}},
+      {'formula' : 'pi', 'expectedOutput' : {'state': 'ok', 'output': [{'result': '3.14159265359', 'state': 'ok'}]}},
+      {'formula' : '\u220F', 'expectedOutput' : {'state': 'ok', 'output': [{'result': '3.14159265359', 'state': 'ok'}]}},
+      {'formula' : 'ln2', 'expectedOutput' : {'state': 'ok', 'output': [{'result': '0.69314718056', 'state': 'ok'}]}},
+      {'formula' : 'ln10', 'expectedOutput' : {'state': 'ok', 'output': [{'result': '2.302585092994', 'state': 'ok'}]}},
+      {'formula' : 'sqrt2', 'expectedOutput' : {'state': 'ok', 'output': [{'result': '1.414213562373', 'state': 'ok'}]}},
+      {'formula' : 'sqrt3', 'expectedOutput' : {'state': 'ok', 'output': [{'result': '1.732050807569', 'state': 'ok'}]}},
+      {'formula' : 'sqrt5', 'expectedOutput' : {'state': 'ok', 'output': [{'result': '2.2360679775', 'state': 'ok'}]}},
+
       //math library testing
       {'formula' : '36^(1:2)', 'expectedOutput' : {'state': 'ok', 'output': [{'result': '6', 'state': 'ok'}]}},
       {'formula' : 'phi × 2', 'expectedOutput' : {'state': 'ok', 'output': [{'result': '3.2360679775', 'state': 'ok'}]}},
       {'formula' : 'log(100,10)', 'expectedOutput' : {'state': 'ok', 'output': [{'result': '0.5', 'state': 'ok'}]}},
       {'formula' : 'log(10,100)', 'expectedOutput' : {'state': 'ok', 'output': [{'result': '2', 'state': 'ok'}]}},
-      {'formula' : 'pi', 'expectedOutput' : {'state': 'ok', 'output': [{'result': '3.14159265359', 'state': 'ok'}]}},
       {'formula' : '\u1D28 * \u03A0', 'expectedOutput' : {'state': 'ok', 'output': [{'result': '9.869604401089', 'state': 'ok'}]}},
       {'formula' : '\u03a6 * \u03c6 + 1', 'expectedOutput' : {'state': 'ok', 'output': [{'result': '3.61803398875', 'state': 'ok'}]}},
       {'formula' : 'A + 1', 'values': {'A': '\u03a6'}, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '2.61803398875', 'state': 'ok'}]}},
+      {'formula' : '5! + 1', 'expectedOutput' : {'state': 'ok', 'output': [{'result': '121', 'state': 'ok'}]}},
 
       //Referencing values
       {'formula' : 'F', 'values': values, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '1', 'state': 'ok'}]}},

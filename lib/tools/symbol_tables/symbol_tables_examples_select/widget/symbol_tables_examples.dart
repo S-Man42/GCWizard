@@ -17,10 +17,10 @@ class SymbolTableExamples extends StatefulWidget {
   const SymbolTableExamples({Key? key, required this.symbolKeys}) : super(key: key);
 
   @override
-  SymbolTableExamplesState createState() => SymbolTableExamplesState();
+ _SymbolTableExamplesState createState() => _SymbolTableExamplesState();
 }
 
-class SymbolTableExamplesState extends State<SymbolTableExamples> {
+class _SymbolTableExamplesState extends State<SymbolTableExamples> {
   late TextEditingController _controller;
   String _currentInput = 'ABC123';
 
