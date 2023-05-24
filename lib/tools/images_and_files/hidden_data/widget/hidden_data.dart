@@ -19,7 +19,6 @@ import 'package:gc_wizard/tools/images_and_files/hidden_data/logic/hidden_data.d
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
-import 'package:intl/intl.dart';
 
 class HiddenData extends StatefulWidget {
   final GCWFile? file;
