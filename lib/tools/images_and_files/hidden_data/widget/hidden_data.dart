@@ -147,7 +147,7 @@ class _HiddenDataState extends State<HiddenData> {
             }
             _exportFile(
                 context,
-                data == null ? null : GCWFile(name: 'hidden_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()), bytes: data));
+                data == null ? null : GCWFile(name: buildFileNameWithDate('hidden_', null), bytes: data));
           },
         )
       ],
