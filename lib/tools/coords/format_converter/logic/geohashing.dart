@@ -6,59 +6,48 @@ import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:collection/collection.dart';
 
+const _VALID_CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
-String _generateBinaryFromCoord(double coord, double lowerBound, double upperBound, int length) {
-  var binaryOut = '';
-
-  while (binaryOut.length < length) {
-    var middle = (lowerBound + upperBound) / 2.0;
-    if (coord >= middle) {
-      binaryOut += '1';
-      lowerBound = middle;
-    } else {
-      binaryOut += '0';
-      upperBound = middle;
-    }
-  }
-
-  return binaryOut;
-}
-
-Geohash latLonToGeohashing(LatLng coords, int geohashLength) {
-  String date =
-
-  var binary = '';
-  int i = 0;
-  while (i < latBinaryOut.length) {
-    binary += lonBinaryOut[i] + latBinaryOut[i];
-    i++;
-  }
-
-  return Geohashing(_splitIntoBinaryChunks(binary).map((chunk) => _getCharacterByBinary(chunk)).where((element) => element != null).join());
+Geohashing latLonToGeohashing(LatLng coords, int geohashLength) {
+  return Geohashing(DateTime.now(), LatLng(0, 0));
 }
 
 LatLng? geohashingToLatLon(Geohashing geohashing) {
   var date = DateFormat('yyyy-dd-MM').format(geohashing.date);
   var md5 = md5Digest(date);
-  md5.sp
+  var lat = _hexToDec(md5.substring(0, 15));
+  var lng = _hexToDec(md5.substring(16));
 
+  return LatLng(geohashing.location.latitude.truncateToDouble() +  lat,
+                geohashing.location.longitude.truncateToDouble() +  lng);
+}
+
+Geohashing? parseGeohashing(String input) {
+  var regExp = RegExp(r'(\d{4})-(\d{2})-(\d{2})');
+  if (regExp.hasMatch(input)) {
+    var match = regExp.firstMatch(input);
+    var decString = input.substring(0, match!.start);
+    var dec = DEC.parse(decString, wholeString: false); // test before date
+    if (dec == null) {
+      decString = input.substring(match.end);
+      dec = DEC.parse(decString, wholeString: false); // test after date
+    }
+    if (dec != null) {
+      return Geohashing(DateTime (
+            int.parse(match.group(1)!),
+            int.parse(match.group(2)!),
+            int.parse(match.group(3)!)),
+            dec.toLatLng());
+    }
+  }
   return null;
 }
 
-Geohash? parseGeohash(String input) {
-  input = input.trim();
-  if (input == '') return null;
-
-  var _geohash = Geohash(input);
-  return geohashToLatLon(_geohash) == null ? null : _geohash;
-}
-
-const _VALID_CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
 double _hexToDec(String input) {
   var memo = 0.0;
-  _toValidChars(input).split('').toList().mapIndexed((index, char) => memo += _charToValue(char, index));
+  var t = _toValidChars(input).split('').toList().mapIndexed((index, char) => memo += _charToValue(char, index));
 
+  print(t);
   return memo;
 }
 

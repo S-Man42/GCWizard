@@ -9,6 +9,7 @@ import 'package:gc_wizard/tools/coords/format_converter/logic/dutchgrid.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/gauss_krueger.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/geo3x3.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/geohash.dart';
+import 'package:gc_wizard/tools/coords/format_converter/logic/geohashing.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/geohex.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/lambert.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/maidenhead.dart';
@@ -862,12 +863,12 @@ class Geohashing extends BaseCoordinate {
   }
 
   static Geohashing? parse(String input) {
-    return parseGeohash(input);
+    return parseGeohashing(input);
   }
 
   @override
   String toString() {
-    return text;
+    return location.toString() + ' ' + DateFormat('yyyy-dd-MM').format(date);
   }
 }
 
