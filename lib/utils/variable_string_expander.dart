@@ -181,6 +181,10 @@ class VariableStringExpander {
     var progress = 0;
     int progressStep = max(_countCombinations ~/ 100, 1); // 100 steps
 
+    if (sendAsyncPort != null && (progress % progressStep == 0)) {
+      sendAsyncPort!.send(DoubleText(PROGRESS, progress / _countCombinations));
+    }
+
     do {
       _substitute();
 
@@ -189,16 +193,16 @@ class VariableStringExpander {
         _result = onAfterExpandedText!(_result!);
       }
 
+      progress++;
+      if (sendAsyncPort != null && (progress % progressStep == 0)) {
+        sendAsyncPort!.send(DoubleText(PROGRESS, progress / _countCombinations));
+      }
+
       if (_result == null || _uniqueResults.contains(_result)) continue;
 
       _results.add(VariableStringExpanderValue(text: _result, variables: _getCurrentVariables()));
 
       if (breakCondition == VariableStringExpanderBreakCondition.BREAK_ON_FIRST_FOUND) break;
-
-      progress++;
-      if (sendAsyncPort != null && (progress % progressStep == 0)) {
-        sendAsyncPort!.send(DoubleText(PROGRESS, progress / _countCombinations));
-      }
     } while (_setIndexes() == false);
   }
 
