@@ -21,10 +21,10 @@ class PantoneColorCodes extends StatefulWidget {
   const PantoneColorCodes({Key? key}) : super(key: key);
 
   @override
-  PantoneColorCodesState createState() => PantoneColorCodesState();
+ _PantoneColorCodesState createState() => _PantoneColorCodesState();
 }
 
-class PantoneColorCodesState extends State<PantoneColorCodes> {
+class _PantoneColorCodesState extends State<PantoneColorCodes> {
   late PantoneColor _currentValue;
   List<PantoneColor> _colors = [];
 

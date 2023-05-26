@@ -15,10 +15,10 @@ class GCWAlphabetModificationDropDown extends StatefulWidget {
       : super(key: key);
 
   @override
-  GCWAlphabetModificationDropDownState createState() => GCWAlphabetModificationDropDownState();
+ _GCWAlphabetModificationDropDownState createState() => _GCWAlphabetModificationDropDownState();
 }
 
-class GCWAlphabetModificationDropDownState extends State<GCWAlphabetModificationDropDown> {
+class _GCWAlphabetModificationDropDownState extends State<GCWAlphabetModificationDropDown> {
   AlphabetModificationMode? _currentValue;
   late Map<AlphabetModificationMode, String> modifications;
 

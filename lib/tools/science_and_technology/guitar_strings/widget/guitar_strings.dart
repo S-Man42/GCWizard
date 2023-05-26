@@ -18,10 +18,10 @@ class GuitarStrings extends StatefulWidget {
   const GuitarStrings({Key? key}) : super(key: key);
 
   @override
-  GuitarStringsState createState() => GuitarStringsState();
+ _GuitarStringsState createState() => _GuitarStringsState();
 }
 
-class GuitarStringsState extends State<GuitarStrings> {
+class _GuitarStringsState extends State<GuitarStrings> {
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
   var _currentEncryptionText = '';

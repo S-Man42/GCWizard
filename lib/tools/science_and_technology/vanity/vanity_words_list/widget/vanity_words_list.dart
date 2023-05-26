@@ -10,10 +10,10 @@ class VanityWordsList extends StatefulWidget {
   const VanityWordsList({Key? key}) : super(key: key);
 
   @override
-  VanityWordsListState createState() => VanityWordsListState();
+ _VanityWordsListState createState() => _VanityWordsListState();
 }
 
-class VanityWordsListState extends State<VanityWordsList> {
+class _VanityWordsListState extends State<VanityWordsList> {
   late TextEditingController _decodeController;
 
   final _currentDecodeInput = '';
@@ -55,12 +55,10 @@ class VanityWordsListState extends State<VanityWordsList> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    var vanityWordsOverview = VanWords[_currentLanguage];
+    var vanityWordsOverview = VANITY_WORDS[_currentLanguage];
     if (vanityWordsOverview == null) return Container();
 
-    if (_currentLanguage == NumeralWordsLanguage.DEU) NUMERAL_WORDS[_currentLanguage]?['fünf'] = '5';
-
-    return GCWDefaultOutput(
+     return GCWDefaultOutput(
         child: GCWColumnedMultilineOutput(
             data: vanityWordsOverview.entries.map((entry) {
                     return [

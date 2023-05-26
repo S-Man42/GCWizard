@@ -10,10 +10,10 @@ class EarwigoTextDeobfuscation extends StatefulWidget {
   const EarwigoTextDeobfuscation({Key? key}) : super(key: key);
 
   @override
-  EarwigoTextDeobfuscationState createState() => EarwigoTextDeobfuscationState();
+ _EarwigoTextDeobfuscationState createState() => _EarwigoTextDeobfuscationState();
 }
 
-class EarwigoTextDeobfuscationState extends State<EarwigoTextDeobfuscation> {
+class _EarwigoTextDeobfuscationState extends State<EarwigoTextDeobfuscation> {
   late TextEditingController _inputController;
   late TextEditingController _inputObfuscateController;
 

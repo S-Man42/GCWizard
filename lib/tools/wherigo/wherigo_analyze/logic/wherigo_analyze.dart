@@ -33,6 +33,7 @@ part 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze_lua_
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze_lua_variables.dart';
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze_lua_zones.dart';
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze_lua_obfuscation.dart';
+part 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_test.dart';
 
 Future<WherigoCartridge> getGcwCartridgeAsync(GCWAsyncExecuterParameters? jobData) async {
   if (jobData?.parameters is! WherigoJobData) return Future.value(WherigoCartridge());

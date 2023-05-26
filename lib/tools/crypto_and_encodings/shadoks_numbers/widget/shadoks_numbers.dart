@@ -19,10 +19,10 @@ class ShadoksNumbers extends StatefulWidget {
   const ShadoksNumbers({Key? key}) : super(key: key);
 
   @override
-  ShadoksNumbersState createState() => ShadoksNumbersState();
+ _ShadoksNumbersState createState() => _ShadoksNumbersState();
 }
 
-class ShadoksNumbersState extends State<ShadoksNumbers> {
+class _ShadoksNumbersState extends State<ShadoksNumbers> {
   static const Map<String, String> _segmentToWord = {
     'a': 'GA',
     'b': 'BU',

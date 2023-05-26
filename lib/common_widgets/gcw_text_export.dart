@@ -31,10 +31,10 @@ class GCWTextExport extends StatefulWidget {
       : super(key: key);
 
   @override
-  GCWTextExportState createState() => GCWTextExportState();
+ _GCWTextExportState createState() => _GCWTextExportState();
 }
 
-class GCWTextExportState extends State<GCWTextExport> {
+class _GCWTextExportState extends State<GCWTextExport> {
   var _currentMode = TextExportMode.QR;
 
   late TextEditingController _textExportController;

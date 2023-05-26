@@ -12,10 +12,10 @@ class Gronsfeld extends StatefulWidget {
   const Gronsfeld({Key? key}) : super(key: key);
 
   @override
-  GronsfeldState createState() => GronsfeldState();
+ _GronsfeldState createState() => _GronsfeldState();
 }
 
-class GronsfeldState extends State<Gronsfeld> {
+class _GronsfeldState extends State<Gronsfeld> {
   late TextEditingController _inputController;
   late TextEditingController _keyController;
 

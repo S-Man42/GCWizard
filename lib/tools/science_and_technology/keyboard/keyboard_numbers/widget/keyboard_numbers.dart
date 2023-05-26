@@ -11,10 +11,10 @@ class KeyboardNumbers extends StatefulWidget {
   const KeyboardNumbers({Key? key}) : super(key: key);
 
   @override
-  KeyboardNumbersState createState() => KeyboardNumbersState();
+ _KeyboardNumbersState createState() => _KeyboardNumbersState();
 }
 
-class KeyboardNumbersState extends State<KeyboardNumbers> {
+class _KeyboardNumbersState extends State<KeyboardNumbers> {
   late TextEditingController _encodeController;
   late TextEditingController _decodeController;
 

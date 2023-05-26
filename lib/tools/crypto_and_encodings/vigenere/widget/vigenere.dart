@@ -11,10 +11,10 @@ class Vigenere extends StatefulWidget {
   const Vigenere({Key? key}) : super(key: key);
 
   @override
-  VigenereState createState() => VigenereState();
+ _VigenereState createState() => _VigenereState();
 }
 
-class VigenereState extends State<Vigenere> {
+class _VigenereState extends State<Vigenere> {
   late TextEditingController _inputController;
   late TextEditingController _keyController;
 

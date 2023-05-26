@@ -66,10 +66,10 @@ class GCWMapView extends StatefulWidget {
   }
 
   @override
-  GCWMapViewState createState() => GCWMapViewState();
+ _GCWMapViewState createState() => _GCWMapViewState();
 }
 
-class GCWMapViewState extends State<GCWMapView> {
+class _GCWMapViewState extends State<GCWMapView> {
   final MapController _mapController = MapControllerImpl();
   final _GCWMapPopupController _popupLayerController = _GCWMapPopupController();
 
@@ -344,7 +344,7 @@ class GCWMapViewState extends State<GCWMapView> {
       }
 
       List<Widget> children = data
-          .map((elem) => GCWOutputText(
+          .map<Widget>((elem) => GCWOutputText(
               text: elem.text,
               copyText: elem.value.toString(),
               style: gcwDialogTextStyle(),

@@ -14,10 +14,10 @@ class MoonRiseSet extends StatefulWidget {
   const MoonRiseSet({Key? key}) : super(key: key);
 
   @override
-  MoonRiseSetState createState() => MoonRiseSetState();
+ _MoonRiseSetState createState() => _MoonRiseSetState();
 }
 
-class MoonRiseSetState extends State<MoonRiseSet> {
+class _MoonRiseSetState extends State<MoonRiseSet> {
   var _currentDateTime = DateTimeTimezone(datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
   var _currentCoords = defaultBaseCoordinate;
 

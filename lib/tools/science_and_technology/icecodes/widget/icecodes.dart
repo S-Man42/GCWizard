@@ -9,10 +9,10 @@ class IceCodes extends StatefulWidget {
   const IceCodes({Key? key}) : super(key: key);
 
   @override
-  IceCodesState createState() => IceCodesState();
+ _IceCodesState createState() => _IceCodesState();
 }
 
-class IceCodesState extends State<IceCodes> {
+class _IceCodesState extends State<IceCodes> {
   IceCodeSystem _currentIceCodeSystem = IceCodeSystem.BALTIC;
   IceCodeSubSystem _currentIceCodeSubSystemBaltic = IceCodeSubSystem.A;
   IceCodeSubSystem _currentIceCodeSubSystemEU = IceCodeSubSystem.CONDITION;

@@ -14,10 +14,10 @@ class Scrabble extends StatefulWidget {
   const Scrabble({Key? key}) : super(key: key);
 
   @override
-  ScrabbleState createState() => ScrabbleState();
+ _ScrabbleState createState() => _ScrabbleState();
 }
 
-class ScrabbleState extends State<Scrabble> {
+class _ScrabbleState extends State<Scrabble> {
   late TextEditingController _controller;
 
   var _currentInput = '';
